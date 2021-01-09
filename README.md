@@ -17,9 +17,19 @@ npx vite
 
 or
 
+yarn dev
+
+or
+
 npm run dev
 ```
 
 ## 访问
 
 [http://localhost:3000/](http://localhost:3000/)
+
+## 生产打包
+
+```
+yarn build
+```

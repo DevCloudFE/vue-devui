@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vuedx-typecheck . && vite build"
+    "build": "vite build"
   },
   "dependencies": {
     "vue": "^3.0.5"
