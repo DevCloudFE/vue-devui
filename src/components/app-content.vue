@@ -23,6 +23,12 @@
       </ul>
       <nav class="side-nav">
         <!--TODO: 左侧组件导航-->
+        <div v-for="category in componentsData" v-bind:key="category">
+          {{ category.title }}
+          <div v-for="component in category.children" v-bind:key="component">
+            {{ component.title }}
+          </div>
+        </div>
       </nav>
     </div>
     <div class="doc-viewer-container">
@@ -34,8 +40,62 @@
 </template>
 
 <script lang="ts">
+import { groupBy, map } from 'lodash-es';
+import { routesConfig } from '../route-config';
+
 export default {
-  name: 'app-content'
+  name: 'app-content',
+  data(): any {
+    return {
+      componentsData: []
+    }
+  },
+  created() {
+    this.generateComponentData();
+  },
+  methods: {
+    generateComponentData() {
+      // TODO: 补充类型
+      const routesWithData = map(routesConfig, (route: any) => {
+        if (!route.data) {
+          route.data = {};
+        }
+        return route;
+      });
+      const groupedRoutesObj = groupBy(routesWithData,
+        (route: any) => {
+          return (route as any).data.type || '通用';
+        });
+      for (const key in groupedRoutesObj) {
+        if (key) {
+          const group = groupedRoutesObj[key].map((item: any) => {
+            if (item.data.name) {
+              return {
+                title: item.data.name + ' ' + item.data.cnName,
+                link: item.path,
+              };
+            } else {
+              return {};
+            }
+          }
+          ).filter((item: any) => Object.keys(item).length !== 0)
+            .sort(function (s1: any, s2: any) {
+              const prev = (s1.title).toUpperCase();
+              const next = (s2.title).toUpperCase();
+              if (prev < next) {
+                return -1;
+              }
+              if (prev > next) {
+                return 1;
+              }
+              return 0;
+            });
+          const componentItem: any = { title: key, children: group, open: true };
+          this.componentsData.push(componentItem);
+        }
+      }
+    }
+  },
 }
 </script>
 
