@@ -4,7 +4,7 @@
       <span></span>
     </div>
     <div class="devui-components-search">
-      <!--TODO: 搜索框-->
+      <!-- TODO: 搜索框 -->
     </div>
     <div class="sidebar">
       <ul class="devui-menu" style="margin-bottom: 0">
@@ -22,7 +22,7 @@
         </li>
       </ul>
       <nav class="side-nav">
-        <!--TODO: 左侧组件导航-->
+        <!-- TODO: 左侧组件导航 d-accordion -->
         <div v-for="category in componentsData" v-bind:key="category">
           {{ category.title }}
           <div v-for="component in category.children" v-bind:key="component">
@@ -33,7 +33,7 @@
     </div>
     <div class="doc-viewer-container">
       <div class="main">
-        <!--TODO: 文档主体内容-->
+        <!-- TODO: 文档主体内容 -->
       </div>
     </div>
   </div>
