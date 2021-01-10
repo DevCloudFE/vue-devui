@@ -34,17 +34,22 @@
     <div class="doc-viewer-container">
       <div class="main">
         <!-- TODO: 文档主体内容 -->
+        <app-demo-cell></app-demo-cell>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { groupBy, map } from 'lodash-es';
-import { routesConfig } from '../route-config';
+import { groupBy, map } from 'lodash-es'
+import { routesConfig } from '../route-config'
+import AppDemoCell from './app-demo-cell.vue'
 
 export default {
   name: 'app-content',
+  components: {
+    AppDemoCell,
+  },
   data(): any {
     return {
       componentsData: []
