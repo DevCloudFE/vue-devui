@@ -121,6 +121,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '../devui/style/devui';
 @import '../devui/style/theme/color';
 @import '../devui/style/core/font';
 
