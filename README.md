@@ -10,6 +10,24 @@ or
 npm i
 ```
 
+### 安装单个依赖包
+
+```
+yarn add dayjs
+```
+
+### 安装开发依赖包
+
+```
+yarn add -D @commitlint/cli @commitlint/config-conventional husky
+```
+
+### 移除依赖包
+
+```
+yarn remove dayjs
+```
+
 ## 启动
 
 ```
