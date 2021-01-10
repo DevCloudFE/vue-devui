@@ -3,7 +3,7 @@
 ## 安装依赖
 
 ```
-yarn
+yarn(推荐)
 
 or
 
@@ -13,11 +13,11 @@ npm i
 ## 启动
 
 ```
-npx vite
+yarn dev(推荐)
 
 or
 
-yarn dev
+npx vite
 
 or
 
@@ -31,5 +31,9 @@ npm run dev
 ## 生产打包
 
 ```
-yarn build
+yarn build(推荐)
+
+or
+
+npm run build
 ```
