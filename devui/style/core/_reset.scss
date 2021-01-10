@@ -1,0 +1,106 @@
+@import '../theme/color';
+
+body {
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  font-size: $devui-font-size;
+  font-family: $font-family;
+  font-variant: $font-variant-base;
+  line-height: $line-height-base;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+button {
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  outline: 0;
+  -webkit-appearance: button;
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:hover,
+a:focus,
+a:active,
+a:visited {
+  text-decoration: none;
+}
+
+:-ms-input-placeholder {
+  color: $devui-placeholder;
+}
+
+::-moz-placeholder {
+  color: $devui-placeholder;
+}
+
+::-webkit-input-placeholder {
+  color: $devui-placeholder;
+}
+
+//******************滚动条*************************/
+.devui-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.devui-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.devui-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: $devui-line;
+}
+
+.devui-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: $devui-placeholder; // TODO: Color-Question
+}
+
+body > * ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body > * ::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+body > * ::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: $devui-line;
+}
+
+body > * ::-webkit-scrollbar-thumb:hover {
+  background-color: $devui-placeholder; // TODO: Color-Question
+}
+
+body > * ::-webkit-scrollbar-corner {
+  background-color: transparent;
+}

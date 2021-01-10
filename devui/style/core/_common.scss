@@ -1,0 +1,93 @@
+.over-flow-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.clear-fix {
+  zoom: 1;
+}
+
+.clear-fix::after {
+  content: '';
+  display: block;
+  width: 0;
+  clear: both;
+}
+
+.devui-close {
+  float: right;
+  font-weight: bold;
+  line-height: 20px;
+  height: 20px;
+  color: $devui-text;
+  text-shadow: 0 1px 0 #ffffff;
+  filter: alpha(opacity=20);
+  opacity: 0.2;
+
+  &:hover,
+  &:focus {
+    color: $devui-text;
+    text-decoration: none;
+    cursor: pointer;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+  }
+}
+
+button.devui-close {
+  -webkit-appearance: none;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
+
+a:hover,
+a:focus {
+  color: $devui-link;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+.devui-link {
+  color: $devui-link;
+
+  &:hover {
+    color: $devui-link-active;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.devui-link-light {
+  color: $devui-link-light;
+
+  &:hover {
+    color: $devui-link-light-active;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.devui-disabled {
+  &,
+  &.devui-input-group-addon {
+    border-color: $devui-disabled-line;
+  }
+
+  &,
+  & > input,
+  & > .devui-input-group-addon {
+    color: $devui-disabled-text;
+    background-color: $devui-disabled-bg;
+    cursor: not-allowed;
+  }
+}
+
+.devui-body-scrollblock {
+  width: 100%;
+}

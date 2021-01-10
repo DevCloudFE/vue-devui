@@ -16,6 +16,7 @@
     "@vuedx/typecheck": "^0.4.1",
     "@vuedx/typescript-plugin-vue": "^0.4.1",
     "husky": "^4.3.7",
+    "sass": "^1.32.2",
     "typescript": "^4.1.3",
     "vite": "^2.0.0-beta.12"
   },
