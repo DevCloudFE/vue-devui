@@ -32,10 +32,8 @@
       </nav>
     </div>
     <div class="doc-viewer-container">
-      <div class="main">
-        <!-- TODO: 文档主体内容 -->
-        <app-demo-cell></app-demo-cell>
-      </div>
+      <!-- TODO: 文档主体内容 -->
+      <app-demo-cell></app-demo-cell>
     </div>
   </div>
 </template>

@@ -83,19 +83,19 @@
             <span>版本历程</span>
           </a>
           <span class="main-nav-item">
-            <!--TODO: 版本下拉框-->
+            <!-- TODO: 版本下拉框 d-select -->
           </span>
           <span class="main-nav-item">
-            <!-- TODO: 主题选择器 -->
+            <!-- TODO: 主题选择器 d-dropdown -->
           </span>
         </div>
         <div id="headerMenu" class="header-menu"><span></span></div>
       </header>
     </div>
     <app-content></app-content>
+    <d-button @click="confirm">Confirm</d-button>
+    <d-button @click="cancel">Cancel</d-button>
   </div>
-  <d-button @click="confirm">Confirm</d-button>
-  <d-button @click="cancel">Cancel</d-button>
 </template>
 
 <script lang="ts">
