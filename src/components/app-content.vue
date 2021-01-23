@@ -33,7 +33,8 @@
     </div>
     <div class="doc-viewer-container">
       <!-- TODO: 文档主体内容 -->
-      <app-demo-cell></app-demo-cell>
+      <!-- <app-demo-cell></app-demo-cell> -->
+      <router-view></router-view>
     </div>
   </div>
 </template>

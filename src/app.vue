@@ -92,7 +92,8 @@
         <div id="headerMenu" class="header-menu"><span></span></div>
       </header>
     </div>
-    <app-content></app-content>
+    <!-- <app-content></app-content> -->
+    <router-view></router-view>
     <d-button @click="confirm">Confirm</d-button>
     <d-button @click="cancel">Cancel</d-button>
   </div>
