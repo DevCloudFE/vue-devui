@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AppContent from '../components/app-content.vue'
-import AppContentRoutes from './app-content-routes'
+import AppContentRoutes from './components/component.route'
+import AppContent from './components/app-content.vue'
 
 const routerHistory = createWebHistory()
 

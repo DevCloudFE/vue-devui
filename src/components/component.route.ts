@@ -1,5 +1,5 @@
-import ExamplePanelComponent from '../components/app-demo-cell.vue'
-import GetStartedComponent from '../components/app-demo-cell.vue'
+import ExamplePanelComponent from './app-demo-cell.vue'
+import GetStartedComponent from './app-demo-cell.vue'
 const ColorComponent = null
 const ThemeGuideComponent = null
 
