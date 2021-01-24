@@ -26,7 +26,7 @@
         <div v-for="category in componentsData" v-bind:key="category">
           {{ category.title }}
           <div v-for="component in category.children" v-bind:key="component">
-            {{ component.title }}
+            <router-link :to="component.link">{{ component.title }}</router-link>
           </div>
         </div>
       </nav>
@@ -34,7 +34,7 @@
     <div class="doc-viewer-container">
       <!-- TODO: 文档主体内容 -->
       <!-- <app-demo-cell></app-demo-cell> -->
-      <router-view></router-view>
+      <router-view :key="key"></router-view>
     </div>
   </div>
 </template>
@@ -52,6 +52,11 @@ export default {
   data(): any {
     return {
       componentsData: []
+    }
+  },
+  computed: {
+    key() {
+      return +new Date()
     }
   },
   created() {
