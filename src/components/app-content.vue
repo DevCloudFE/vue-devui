@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     key() {
-      return +new Date()
+      return this.$route.fullPath
     }
   },
   created() {
