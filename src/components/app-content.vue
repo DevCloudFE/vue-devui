@@ -23,12 +23,7 @@
       </ul>
       <nav class="side-nav">
         <!-- TODO: 左侧组件导航 d-accordion -->
-        <div v-for="category in componentsData" v-bind:key="category">
-          {{ category.title }}
-          <div v-for="component in category.children" v-bind:key="component">
-            <router-link :to="component.link">{{ component.title }}</router-link>
-          </div>
-        </div>
+        <d-accordion :data="componentsData" :linkType="'routerLink'"></d-accordion>
       </nav>
     </div>
     <div class="doc-viewer-container">
@@ -41,13 +36,15 @@
 
 <script lang="ts">
 import { groupBy, map } from 'lodash-es'
-import { routesConfig } from '../route-config'
+import { routesConfig } from './component.route'
 import AppDemoCell from './app-demo-cell.vue'
+import DevUIAccordion from '../../devui/accordion/accordion.vue'
 
 export default {
   name: 'app-content',
   components: {
     AppDemoCell,
+    'd-accordion': DevUIAccordion
   },
   data(): any {
     return {
@@ -66,21 +63,21 @@ export default {
     generateComponentData() {
       // TODO: 补充类型
       const routesWithData = map(routesConfig, (route: any) => {
-        if (!route.data) {
-          route.data = {};
+        if (!route.meta) {
+          route.meta = {};
         }
         return route;
       });
       const groupedRoutesObj = groupBy(routesWithData,
         (route: any) => {
-          return (route as any).data.type || '通用';
+          return (route as any).meta.type || '通用';
         });
       for (const key in groupedRoutesObj) {
         if (key) {
           const group = groupedRoutesObj[key].map((item: any) => {
-            if (item.data.name) {
+            if (item.meta.name) {
               return {
-                title: item.data.name + ' ' + item.data.cnName,
+                title: item.meta.name + ' ' + item.meta.cnName,
                 link: item.path,
               };
             } else {

@@ -1,6 +1,8 @@
 {
   "name": "vue-devui",
   "version": "0.0.0",
+  "license": "MIT",
+  "description": "DevUI components based on Vite and Vue3",
   "scripts": {
     "dev": "vite",
     "build": "vite build"

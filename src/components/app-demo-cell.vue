@@ -5,7 +5,7 @@
       <div style="margin-bottom: 40px;">{{ data.description }}</div>
       <div v-if="data.tmw">
         <h3>何时使用</h3>
-        <div style="margin-bottom: 20px;">{{ data.tmw }}</div>
+        <div style="margin-bottom: 20px;" v-html="data.tmw"></div>
       </div>
       <!-- TODO: d-tabs -->
     </div>

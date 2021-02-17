@@ -1,6 +1,10 @@
 # Vue DevUI
 
-## 安装依赖
+Vue3版本的DevUI组件库，基于[https://github.com/devcloudfe/ng-devui](https://github.com/devcloudfe/ng-devui)
+
+DevUI官方网站：[https://devui.design](https://devui.design)
+
+## 1 安装依赖
 
 ```
 yarn(推荐)
@@ -28,7 +32,7 @@ yarn add -D @commitlint/cli @commitlint/config-conventional husky
 yarn remove dayjs
 ```
 
-## 启动
+## 2 启动
 
 ```
 yarn dev(推荐)
@@ -42,11 +46,11 @@ or
 npm run dev
 ```
 
-## 访问
+## 3 访问
 
 [http://localhost:3000/](http://localhost:3000/)
 
-## 生产打包
+## 4 生产打包
 
 ```
 yarn build(推荐)

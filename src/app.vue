@@ -108,7 +108,7 @@ export default defineComponent({
   name: 'App',
   components: {
     AppContent,
-    DevUIButton,
+    'd-button': DevUIButton,
   },
   methods: {
     confirm() {
