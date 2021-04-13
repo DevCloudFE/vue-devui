@@ -1,0 +1,182 @@
+@import '../devui/style/devui';
+// @import '~@devui-design/icons/icomoon/devui-icon.css';
+@import '../devui/style/theme/_font';
+
+.markdown {
+  color: $devui-text;
+  font-size: $devui-font-size-page-title;
+  line-height: 1.8;
+
+  a {
+    color: $devui-link;
+
+    &:hover {
+      color: $devui-link-active;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
+.highlight {
+  line-height: 1.5;
+  position: relative;
+}
+
+code[class*='language-'],
+pre[class*='language-'],
+pre code {
+  white-space: pre;
+  font-family: Lucida Console, Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+}
+
+pre {
+  display: block;
+  margin: 0 0 10px;
+  line-height: 1.42857143;
+  color: $devui-text;
+  word-break: break-all;
+  word-wrap: break-word;
+  border: 1px solid $devui-dividing-line;
+  border-radius: 1px;
+}
+
+.hljs {
+  background: $devui-area;
+  color: $devui-text;
+  font-size: $devui-font-size;
+}
+
+pre code {
+  display: block;
+  color: $devui-text;
+  background: $devui-base-bg;
+  line-height: 1.5;
+  padding: 10px 15px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: Consolas, Menlo, Courier, monospace;
+}
+
+section {
+  margin-bottom: 0 !important;
+}
+
+.markdown {
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+
+  table {
+    font-size: $devui-font-size;
+  }
+
+  p {
+    margin: 1em 0;
+  }
+
+  a code {
+    text-decoration: underline;
+  }
+
+  pre code {
+    font-size: $devui-font-size;
+    padding: 0.5em;
+    background-color: $devui-area;
+  }
+}
+
+.markdown table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  border: 1px solid $devui-line;
+  width: 100%;
+  margin: 8px 0 16px;
+
+  th,
+  td {
+    border: 1px solid $devui-dividing-line;
+    padding: 8px 16px;
+    text-align: left;
+  }
+
+  th {
+    background: $devui-area;
+    white-space: nowrap;
+    color: $devui-text;
+    font-weight: 600;
+  }
+}
+
+.markdown h2 {
+  font-size: 22px;
+}
+
+.markdown h3 {
+  font-size: 18px;
+}
+
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  color: $devui-text;
+  margin: 1.6em 0 0.6em;
+  font-weight: 500;
+  clear: both;
+}
+
+code {
+  padding: 2px 4px;
+  // font-size: 90%;
+  color: #c7254e;
+  background-color: $devui-area;
+  border-radius: 1px;
+}
+
+.readme {
+  h1 {
+    // font-size: 30px;
+    @include font-title();
+
+    padding: 20px 0;
+  }
+
+  h2 {
+    // font-size: 24px;
+    @include font-title($devui-font-size-card-title);
+
+    padding: 40px 0 15px;
+  }
+
+  h3 {
+    // font-size: 18px;
+    @include font-title($devui-font-size-card-title);
+
+    padding: 30px 0 10px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    // font-weight: 300;
+    margin: 0;
+  }
+
+  pre code {
+    padding: 0.5em;
+  }
+}
+
+[dTextInput]::-ms-clear,
+[dTextInput]::-ms-reveal {
+  display: none;
+}

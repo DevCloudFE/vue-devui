@@ -94,34 +94,25 @@
     </div>
     <!-- <app-content></app-content> -->
     <router-view></router-view>
-    <d-button @click="confirm">Confirm</d-button>
-    <d-button @click="cancel">Cancel</d-button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import AppContent from './components/app-content.vue'
-import DevUIButton from '../devui/button/button.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     AppContent,
-    'd-button': DevUIButton,
   },
   methods: {
-    confirm() {
-      console.log('confirm')
-    },
-    cancel() {
-      console.log('cancel')
-    }
   }
 })
 </script>
 
 <style lang="scss">
+@import './assets/styles.scss';
 @import '../devui/style/devui';
 @import '../devui/style/theme/color';
 @import '../devui/style/core/font';
