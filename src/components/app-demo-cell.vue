@@ -13,7 +13,7 @@
         :showContent="false"
         @activeTabChange="activeTabChange($event)"
       >
-        <d-tab id="demo" title="demo" tabId="demo"> </d-tab>
+        <d-tab id="demo" title="Demo" tabId="demo"> </d-tab>
         <d-tab id="api" title="API" tabId="api"> </d-tab>
       </d-tabs>
     </div>

@@ -22,7 +22,7 @@ export default defineComponent({
     const sourceData  = props.sourceData;
     const expanded = ref(false);
     const _copied = ref(false);
-    let codeTabID = 'TSX';
+    let codeTabID = ref('TSX');
     let componentCode: Array<any>;
 
     const toggleCode = () => {
@@ -75,11 +75,10 @@ export default defineComponent({
           </section>
           <section class={{ 'highlight-wrapper': true, 'highlight-wrapper-expand': expanded.value }}>
             <div style="padding: 0 20px">
-              {/* TODO: 待完善tabs */}
-              <DevuiTabs>
+              <DevuiTabs v-model={codeTabID.value}>
                 {sourceData.map(item => {
                   return (
-                    <DevuiTab>
+                    <DevuiTab title={item.title} id={item.title}>
                       <div class="highlight">
                         <div class="code-box-actions">
                           <span onClick={() => copyCode(item.code.default || item.code)}>
