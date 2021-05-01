@@ -1,0 +1,159 @@
+@import '../style/theme/color';
+.devui-panel {
+    line-height: 1.5;
+    background-color: $devui-base-bg;
+
+    .devui-panel-heading {
+        padding: 12px 20px;
+        color: $devui-text;
+
+        d-panel-header {
+            line-height: 1.5;
+        }
+    }
+
+    .devui-panel-body {
+        display: flex;
+        position: relative;
+        border-top: 1px solid $devui-dividing-line;
+
+        .d-panel-body {
+            line-height: 1.5;
+            padding: 15px;
+            background: $devui-base-bg;
+            flex: 1;
+        }
+
+        &.devui-panel-body-collapse {
+            &::before {
+                content: '';
+                width: 30px;
+                height: 100%;
+            }
+
+            .d-panel-body {
+                border-left: 2px solid $devui-dividing-line;
+            }
+        }
+    }
+
+    .devui-panel-footer {
+        padding: 10px 15px;
+        color: $devui-text;
+        background-color: $devui-area;
+
+        d-panel-footer {
+            line-height: 1.5;
+        }
+    }
+
+    &.devui-panel-default {
+        .devui-panel-heading,
+        .devui-panel-body {
+            background-color: $devui-default-bg;
+        }
+    }
+
+    &.devui-panel-primary {
+        .devui-panel-heading,
+        .devui-panel-body {
+            background-color: $devui-primary-bg;
+        }
+
+        .devui-panel-body-collapse {
+            .d-panel-body {
+                border-color: $devui-primary-line;
+            }
+        }
+    }
+
+    &.devui-panel-info {
+        .devui-panel-heading,
+        .devui-panel-body {
+            background-color: $devui-info-bg;
+        }
+
+        .devui-panel-body-collapse {
+            .d-panel-body {
+                border-color: $devui-info-line;
+            }
+        }
+    }
+
+    &.devui-panel-success {
+        .devui-panel-heading,
+        .devui-panel-body {
+            background-color: $devui-success-bg;
+        }
+
+        .devui-panel-body-collapse {
+            .d-panel-body {
+                border-color: $devui-success-line;
+            }
+        }
+    }
+
+    &.devui-panel-warning {
+        .devui-panel-heading,
+        .devui-panel-body {
+            background-color: $devui-warning-bg;
+        }
+
+        .devui-panel-body-collapse {
+            .d-panel-body {
+                border-color: $devui-warning-line;
+            }
+        }
+    }
+
+    &.devui-panel-danger {
+        .devui-panel-heading,
+        .devui-panel-body {
+            background-color: $devui-danger-bg;
+        }
+
+        .devui-panel-body-collapse {
+            .d-panel-body {
+                border-color: $devui-danger-line;
+            }
+        }
+    }
+
+    .devui-panel-leave-active {
+        transition: all .3s ease-in-out;
+        animation: panelUpOut .3s ease-in-out;
+        animation-fill-mode: both;
+    }
+    
+    .devui-panel-enter-active {
+        transition: all .3s ease-in-out;
+        animation: panelUpIn .3s ease-in-out;
+        animation-fill-mode: both;
+    }
+
+    @keyframes panelUpOut {
+        0% {
+            transform: scaleY(1);
+            transform-origin: 0% 0%;
+            opacity: 1;
+        }
+        100% {
+            transform: scaleY(0);
+            transform-origin: 0% 0%;
+            opacity: 0;
+        }
+    }
+
+    @keyframes panelUpIn {
+        0% {
+            transform: scaleY(0);
+            transform-origin: 0% 0%;
+            opacity: 0;
+        }
+        100% {
+            transform: scaleY(1);
+            transform-origin: 0% 0%;
+            opacity: 1;
+        }
+    }
+}
