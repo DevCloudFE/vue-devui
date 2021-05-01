@@ -61,7 +61,7 @@
                 </g>
               </svg>
             </span>
-            <span class="text">DevUI</span>
+            <span class="text">Vue DevUI</span>
           </a>
         </h1>
         <div class="main-nav">
@@ -197,6 +197,8 @@ body {
     box-shadow: 0 2px 4px 0 $devui-shadow;
 
     a {
+      display: inline-flex;
+      align-items: center;
       line-height: $line-height-base;
       color: $devui-text;
       text-decoration: none;
@@ -220,6 +222,11 @@ body {
     .text {
       display: inline-block;
       vertical-align: top;
+    }
+
+    .logo {
+      margin-right: 6px;
+      line-height: 1;
     }
 
     .ui {
