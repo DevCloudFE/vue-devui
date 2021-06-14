@@ -61,6 +61,13 @@ npm run build
 
 排名不分先后（按首字母排序）
 
+## brenner8023
+
+[brenner8023](https://gitee.com/brenner8023)
+
+目前主要负责：
+- Jest 单元测试环境搭建
+
 ## flxy1028
 
 [flxy1028](https://github.com/flxy1028)
