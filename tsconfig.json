@@ -9,7 +9,10 @@
     "lib": ["esnext", "dom"],
     "types": ["vite/client", "jest"],
     "esModuleInterop": true,
-    "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }]
+    "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
+    "paths": {
+      "hooks/*": ["./devui/shared/hooks/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
