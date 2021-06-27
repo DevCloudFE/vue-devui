@@ -2053,10 +2053,10 @@
   resolved "https://r.cnpmjs.org/@vue/shared/download/@vue/shared-3.1.1.tgz#2287cfc3dc20e5b20aeb65c2c3a56533bdca801c"
   integrity sha1-IofPw9wg5bIK62XCw6VlM73KgBw=
 
-"@vue/test-utils@^2.0.0-rc.6":
-  version "2.0.0-rc.6"
-  resolved "https://r.cnpmjs.org/@vue/test-utils/download/@vue/test-utils-2.0.0-rc.6.tgz#d0aac24d20450d379e183f70542c0822670b8783"
-  integrity sha1-0KrCTSBFDTeeGD9wVCwIImcLh4M=
+"@vue/test-utils@^2.0.0-rc.9":
+  version "2.0.0-rc.9"
+  resolved "https://r.cnpmjs.org/@vue/test-utils/download/@vue/test-utils-2.0.0-rc.9.tgz#b3f817d710a1d0ae2084143520c9d8d3c552bfa6"
+  integrity sha1-s/gX1xCh0K4ghBQ1IMnY08VSv6Y=
 
 "@vuedx/analyze@0.4.1":
   version "0.4.1"

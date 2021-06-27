@@ -1,0 +1,16 @@
+.devui-radio-group {
+  .devui-radio {
+    display: block;
+    height: 28px;
+  }
+}
+
+.devui-radio-horizontal {
+  .devui-radio {
+    display: inline-block;
+
+    &:not(:last-child) {
+      padding-right: 20px;
+    }
+  }
+}
