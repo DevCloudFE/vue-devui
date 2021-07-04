@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+
+.devui-checkbox-list-inline {
+  min-height: 28px;
+  line-height: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin: -8px 0 0 0;
+
+  & div:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  & > * {
+    margin-top: 8px;
+  }
+}
