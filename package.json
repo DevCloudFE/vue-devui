@@ -1,15 +1,20 @@
 {
   "name": "vue-devui",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "description": "DevUI components based on Vite and Vue3",
+  "main": "vue-devui.umd.js",
+  "module": "vue-devui.es.js",
+  "style": "style.css",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:lib": "vite build --config vite.config.build.ts && cp package.json dist",
     "test": "jest --config jest.config.js",
     "lint": "eslint \"{src,devui}/**/*.{vue,js,ts,jsx,tsx}\"",
     "lint:fix": "eslint --fix \"{src,devui}/**/*.{vue,js,ts,jsx,tsx}\"",
-    "convert:route": "node ./scripts/convert-component-route.js"
+    "convert:route": "node ./scripts/convert-component-route.js",
+    "publish": "cd dist && npm publish"
   },
   "dependencies": {
     "@types/lodash-es": "^4.17.4",
