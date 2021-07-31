@@ -70,7 +70,8 @@ npm run build
 - Radio
 - CheckBox
 - Toggle
-- Tags
+- TagsInput
+- TextInput
 
 ## flxy1028
 
