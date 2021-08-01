@@ -3,18 +3,18 @@ import { defineComponent } from 'vue';
 import CodeBox from '../../shared/devui-codebox/devui-codebox';
 import AlertBasic from './basic/basic';
 import AlertClose from './close/close';
-import AlertWithoutIcon from './withoutIcon/withoutIcon';
+import AlertWithoutIcon from './without-icon/without-icon';
 import { DevuiSourceData } from '../../shared/devui-codebox/devui-source-data';
 
 //code
 import BasicCode from './basic/basic.tsx?raw';
 import CloseCode from './close/close.tsx?raw';
-import WithoutIconCode from './withoutIcon/withoutIcon.tsx?raw';
+import WithoutIconCode from './without-icon/without-icon.tsx?raw';
 
 import './alert-demo.scss';
 
 export default defineComponent({
-  name: 'd-alert-demo',
+  name: 'DAlertDemo',
   props: {
   },
   setup(props, ctx) {

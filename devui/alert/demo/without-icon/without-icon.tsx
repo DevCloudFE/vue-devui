@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 import DevuiAlert from '../../alert';
 
 export default defineComponent({
-    name: 'd-alert-withoutIcon',
+    name: 'DAlertWithoutIcon',
     setup() {
         return () => {
             return (

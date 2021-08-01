@@ -31,7 +31,7 @@
   border: 1px solid $devui-line;
   border-radius: $devui-border-radius;
   height: 100%;
-  transition: border-color .3s cubic-bezier(.645,.045,.355,1);
+  transition: border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
   &:hover {
     border-color: $devui-list-item-hover-bg;

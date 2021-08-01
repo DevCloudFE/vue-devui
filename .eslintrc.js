@@ -12,6 +12,7 @@ module.exports = {
   env: {
     browser: true,
     node: true,
+    jest: true,
     es6: true
   },
   plugins: ['@typescript-eslint'],
@@ -21,6 +22,7 @@ module.exports = {
   ],
   rules: {
     quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
+    'no-undef': 2,
     'vue/max-attributes-per-line': 'off',
     'vue/no-multiple-template-root': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
