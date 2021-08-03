@@ -1,7 +1,7 @@
 import { defineComponent, PropType } from 'vue';
-import './toggle.scss';
+import './switch.scss';
 
-const toggleProps = {
+const switchProps = {
   size: {
     type: String as PropType<'sm' | '' | 'lg'>,
     default: ''
@@ -33,8 +33,8 @@ const toggleProps = {
 } as const;
 
 export default defineComponent({
-  name: 'DToggle',
-  props: toggleProps,
+  name: 'DSwitch',
+  props: switchProps,
   emits: ['change', 'update:checked'],
   setup(props, ctx) {
     const canChange = () => {
@@ -73,8 +73,8 @@ export default defineComponent({
     } = this;
 
     const outerCls = {
-      'devui-toggle': true,
-      [`devui-toggle-${size}`]: size !== '',
+      'devui-switch': true,
+      [`devui-switch-${size}`]: size !== '',
       'devui-checked': checked,
       'devui-disabled': disabled
     };
@@ -85,8 +85,8 @@ export default defineComponent({
 
     return (
       <span class={outerCls} style={outerStyle} onClick={toggle}>
-        <span class="devui-toggle-inner-wrapper">
-            <div class="devui-toggle-inner">
+        <span class="devui-switch-inner-wrapper">
+            <div class="devui-switch-inner">
               { checked ? this.$slots.checkedContent?.() : this.$slots.uncheckedContent?.() }
             </div>
         </span>

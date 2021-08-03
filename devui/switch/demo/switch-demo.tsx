@@ -6,7 +6,7 @@ import DemoCustom from './demo-custom';
 import DemoCustomCode from './demo-custom?raw';
 
 export default defineComponent({
-  name: 'ToggleDemo',
+  name: 'SwitchDemo',
   render () {
     return useDemo([
       {

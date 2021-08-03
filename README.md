@@ -69,7 +69,7 @@ npm run build
 - Jest 单元测试环境搭建
 - Radio
 - CheckBox
-- Toggle
+- Switch
 - TagsInput
 - TextInput
 

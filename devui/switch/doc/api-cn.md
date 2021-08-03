@@ -1,16 +1,16 @@
 # 如何使用
 在module中引入：
 ```ts
-import { ToggleModule } from 'ng-devui/toggle';
+import { SwitchModule } from 'ng-devui/switch';
 ```
 
 在页面中使用：
 ```html
-<d-toggle></d-toggle>
+<d-switch></d-switch>
 ```
-# Toggle
+# Switch
 
-## d-toggle 参数
+## d-switch 参数
 
 |     参数     |              类型               | 默认  | 说明                                                                        | 跳转 Demo                                   |
 | :----------: | :-----------------------------: | :---: | :-------------------------------------------------------------------------- | ------------------------------------------- |
@@ -21,7 +21,7 @@ import { ToggleModule } from 'ng-devui/toggle';
 |   disabled   |            `boolean`            | false | 可选，是否禁用开关                                                          | [基本用法](demo#basic-usage) |
 | beforeChange | `Function\|Promise\|()=> Observable<boolean>` |  --   | 可选，开关变化前的回调函数,返回 boolean 类型，返回 false 可以阻止开关的变化 | [双向绑定](demo#two-binding) |
 
-## d-toggle 事件
+## d-switch 事件
 
 |  事件  |          类型           | 说明                                  | 跳转 Demo                                   |
 | :----: | :---------------------: | :------------------------------------ | ------------------------------------------- |

@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div id="menuLink" class="menu-link">
-      <span></span>
+      <span />
     </div>
     <div class="devui-components-search">
       <!-- TODO: 搜索框 -->
@@ -12,8 +12,7 @@
           <a href="/get-start">快速开始</a>
         </li>
         <li class="devui-menu-item">
-          <a href="/color" style="position: relative"
-            >颜色变量
+          <a href="/color" style="position: relative">颜色变量
             <sup class="devui-beta-label">Beta</sup>
           </a>
         </li>
@@ -23,13 +22,13 @@
       </ul>
       <nav class="side-nav">
         <!-- TODO: 左侧组件导航 d-accordion -->
-        <d-accordion :data="componentsData" :linkType="'routerLink'"></d-accordion>
+        <d-accordion :data="componentsData" :link-type="'routerLink'" />
       </nav>
     </div>
     <div class="doc-viewer-container">
       <!-- TODO: 文档主体内容 -->
       <!-- <app-demo-cell></app-demo-cell> -->
-      <router-view :key="key"></router-view>
+      <router-view :key="key" />
     </div>
   </div>
 </template>
@@ -37,13 +36,13 @@
 <script lang="ts">
 import { groupBy, map } from 'lodash-es'
 import { routesConfig } from './component.route'
-import AppDemoCell from './app-demo-cell.vue'
+// import AppDemoCell from './app-demo-cell.vue'
 import Accordion from '../../devui/accordion/accordion'
 
 export default {
-  name: 'app-content',
+  name: 'AppContent',
   components: {
-    AppDemoCell,
+    // AppDemoCell,
     'd-accordion': Accordion
   },
   data(): any {
@@ -79,6 +78,7 @@ export default {
               return {
                 title: item.meta.name + ' ' + item.meta.cnName,
                 link: '/components/' + item.path + '/demo',
+                ...item.meta,
               };
             } else {
               return {};

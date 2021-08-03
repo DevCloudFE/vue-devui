@@ -2,7 +2,7 @@ import { defineComponent } from 'vue'
 import { AccordionMenuItem } from './accordion.type'
 
 export default defineComponent({
-  name: 'd-accordion-list',
+  name: 'DAccordionList',
   inheritAttrs: false,
   props: {
     data: Array as () => Array<AccordionMenuItem>,
@@ -14,11 +14,9 @@ export default defineComponent({
     innerListTemplate: Boolean,
   },
   setup(props, ctx) {
-    const { data, deepth, innerListTemplate } = props;
-
     return () => {
-      return (!innerListTemplate || deepth === 0) && <ul class="devui-accordion-list" {...ctx.attrs}>
-        { data.map(item => {
+      return (!props.innerListTemplate || props.deepth === 0) && <ul class="devui-accordion-list" {...ctx.attrs}>
+        { props.data.map(item => {
           return <li class="devui-accordion-item" key={item.title}>
             {
               // TODO 菜单类型 d-accordion-menu
@@ -39,6 +37,7 @@ export default defineComponent({
                         <router-link to={component.link}>
                           <div class="devui-accordion-splitter" style="left: 30px;"></div>
                           { component.title }
+                          { component.done && <span class="tag-done">已完成</span> }
                         </router-link>
                       </div>
                     </li>

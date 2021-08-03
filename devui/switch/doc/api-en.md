@@ -1,16 +1,16 @@
 # How to use
 Import into module:
 ```ts
-import { ToggleModule } from 'ng-devui/toggle';
+import { SwitchModule } from 'ng-devui/switch';
 ```
 
 In the page:
 ```html
-<d-toggle></d-toggle>
+<d-switch></d-switch>
 ```
-# Toggle
+# Switch
 
-### d-toggle parameter
+### d-switch parameter
 
 | Parameter | Type | Default | Description | Jump to Demo |
 | :----------: | :-----------------------------: | :---: | :-------------------------------------------------------------------------- | ------------------------------------------- |
@@ -21,7 +21,7 @@ In the page:
 | disabled | `boolean` | false | Optional. Indicating whether to disable the function. | [Basic Usage](demo#basic-usage) |
 | beforeChange | `Function\|Promise\|()=> Observable<boolean>` | -- |Optional. Callback function before a switch is changed. The return value is of the boolean type. If false is returned, the switch is not changed. | [Two-way Binding](demo#two-binding) |
 
-### d-toggle event
+### d-switch event
 
 | Event | Type | Description | Jump to Demo |
 | :----: | :---------------------: | :------------------------------------ | ------------------------------------------- |
