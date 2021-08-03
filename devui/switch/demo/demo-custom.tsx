@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue';
-import DToggle from '../src/toggle';
+import DSwitch from '../src/switch';
 
 export default defineComponent({
   name: 'DemoCustom',
@@ -26,16 +26,16 @@ export default defineComponent({
 
     return (
       <div>
-        <DToggle color="#0f0" checked={checked} {...{'onUpdate:checked': doUpdate}} size="lg"></DToggle>
+        <DSwitch color="#fecc55" checked={checked} {...{'onUpdate:checked': doUpdate}} size="lg"></DSwitch>
         <div style="margin-bottom: 10px;"></div>
-        <DToggle
+        <DSwitch
           checked={checked2}
           {...{'onUpdate:checked': doUpdate2}}
           v-slots={{
             checkedContent: () => '开',
             uncheckedContent: () => '关'
           }}>
-        </DToggle>
+        </DSwitch>
       </div>
     );
   }

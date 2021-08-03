@@ -59,7 +59,7 @@ import timeAxisRoutes from '../../devui/time-axis/demo/time-axis.route'
 import timePickerRoutes from '../../devui/time-picker/demo/time-picker.route'
 
 import toastRoutes from '../../devui/toast/demo/toast.route'
-import toggleRoutes from '../../devui/toggle/demo/toggle.route'
+import switchRoutes from '../../devui/switch/demo/switch.route'
 import tooltipRoutes from '../../devui/tooltip/demo/tooltip.route'
 import transferRoutes from '../../devui/transfer/demo/transfer.route'
 import treeRoutes from '../../devui/tree/demo/tree.route'
@@ -580,13 +580,13 @@ export const routesConfig = [
     },
   },
   {
-    path: 'toggle',
+    path: 'switch',
     component: ExamplePanelComponent,
-    children: toggleRoutes,
+    children: switchRoutes,
     meta: {
       type: '数据录入',
       enType: 'Data Entry',
-      name: 'Toggle',
+      name: 'Switch',
       cnName: '开关',
       done: true,
     },

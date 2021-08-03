@@ -56,7 +56,7 @@ const COMPONENTS = [
   'time-picker',
 
   'toast',
-  'toggle',
+  'switch',
   'tooltip',
   'transfer',
   'tree',

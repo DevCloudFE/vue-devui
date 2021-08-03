@@ -2661,10 +2661,10 @@
         "async-usage": "异步获取数据"
       }
     },
-    "toggle": {
-      "name": "Toggle 开关",
+    "switch": {
+      "name": "Switch 开关",
       "type": "数据录入",
-      "path": "toggle",
+      "path": "switch",
       "description": "开/关切换组件。",
       "tmw": "当两种状态需要来回切换控制时，比如启用/禁用。",
       "basicDemo": {

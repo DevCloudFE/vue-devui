@@ -6,11 +6,11 @@ import Checkbox from './checkbox/src/checkbox';
 import Panel from './panel/panel';
 import Radio from './radio/src/radio';
 import Tabs from './tabs/tabs';
-import Toggle from './toggle/src/toggle';
+import Switch from './switch/src/switch';
 
 function install(app: App) {
   const packages = [
-    Alert, Button, Checkbox, Panel, Radio, Tabs, Toggle,
+    Alert, Button, Checkbox, Panel, Radio, Tabs, Switch,
   ];
   packages.forEach((item:any) => {
     if (item.install) {
@@ -22,7 +22,7 @@ function install(app: App) {
 }
 
 export {
-  Alert, Button, Checkbox, Panel, Radio, Tabs, Toggle,
+  Alert, Button, Checkbox, Panel, Radio, Tabs, Switch,
 };
 
 export default { install, version: '0.0.1' };

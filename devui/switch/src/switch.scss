@@ -8,7 +8,7 @@
   vertical-align: middle;
 }
 
-.devui-toggle {
+.devui-switch {
   width: 36px;
   height: 18px;
   border-radius: (20px/2);
@@ -36,21 +36,22 @@
     border-color: $devui-brand-active;
   }
 
-  .devui-toggle-inner-wrapper {
+  .devui-switch-inner-wrapper {
     display: inline-block;
     width: 100%;
     height: 100%;
     padding-left: 16px;
     font-size: $devui-font-size;
+    color: $devui-global-bg;
 
-    .devui-toggle-inner {
+    .devui-switch-inner {
       width: 100%;
       height: 100%;
       text-align: center;
     }
   }
 
-  &.devui-checked .devui-toggle-inner-wrapper {
+  &.devui-checked .devui-switch-inner-wrapper {
     padding-left: unset;
     padding-right: 16px;
   }
@@ -70,17 +71,17 @@
     left: 19px;
   }
 
-  &.devui-toggle-lg {
+  &.devui-switch-lg {
     width: 58px;
     height: 30px;
     border-radius: (32px/2);
 
-    .devui-toggle-inner-wrapper {
+    .devui-switch-inner-wrapper {
       padding-left: 28px;
       font-size: $devui-font-size-modal-title;
     }
 
-    &.devui-checked .devui-toggle-inner-wrapper {
+    &.devui-checked .devui-switch-inner-wrapper {
       padding-left: unset;
       padding-right: 28px;
     }
@@ -98,17 +99,17 @@
     }
   }
 
-  &.devui-toggle-sm {
+  &.devui-switch-sm {
     width: 30px;
     height: 14px;
     border-radius: (16px/2);
 
-    .devui-toggle-inner-wrapper {
+    .devui-switch-inner-wrapper {
       padding-left: 12px;
       font-size: $devui-font-size;
     }
 
-    &.devui-checked .devui-toggle-inner-wrapper {
+    &.devui-checked .devui-switch-inner-wrapper {
       padding-left: unset;
       padding-right: 12px;
     }

@@ -1,14 +1,14 @@
 import { mount } from '@vue/test-utils';
 import { ref, nextTick } from 'vue';
-import DToggle from '../src/toggle';
+import DSwitch from '../src/switch';
 
-describe('d-toggle', () => {
-  it('toggle render work', async () => {
+describe('d-switch', () => {
+  it('switch render work', async () => {
     const checked = ref(false);
     const wrapper = mount({
-      components: { DToggle },
+      components: { DSwitch },
       template: `
-        <d-toggle v-model:checked="checked"></d-toggle>
+        <d-switch v-model:checked="checked"></d-switch>
       `,
       setup () {
         return {
@@ -17,7 +17,7 @@ describe('d-toggle', () => {
       }
     });
 
-    expect(wrapper.classes()).toContain('devui-toggle');
+    expect(wrapper.classes()).toContain('devui-switch');
     expect(wrapper.classes()).not.toContain('devui-checked');
 
     checked.value = true;
@@ -26,9 +26,9 @@ describe('d-toggle', () => {
     expect(wrapper.classes()).toContain('devui-checked');
   });
 
-  it('toggle disabled work', async () => {
+  it('switch disabled work', async () => {
     const onChange = jest.fn();
-    const wrapper = mount(DToggle, {
+    const wrapper = mount(DSwitch, {
       props: {
         disabled: true,
         onChange
@@ -49,26 +49,26 @@ describe('d-toggle', () => {
     expect(onChange).toBeCalledTimes(1);
   });
 
-  it('toggle size work', async () => {
-    const wrapper = mount(DToggle, {
+  it('switch size work', async () => {
+    const wrapper = mount(DSwitch, {
       props: {
         size: 'sm'
       }
     });
 
-    expect(wrapper.classes()).toContain('devui-toggle-sm');
+    expect(wrapper.classes()).toContain('devui-switch-sm');
 
     await wrapper.setProps({
       size: 'lg'
     });
-    expect(wrapper.classes()).not.toContain('devui-toggle-sm');
-    expect(wrapper.classes()).toContain('devui-toggle-lg');
+    expect(wrapper.classes()).not.toContain('devui-switch-sm');
+    expect(wrapper.classes()).toContain('devui-switch-lg');
   });
 
-  it('toggle beforeChange work', async () => {
+  it('switch beforeChange work', async () => {
     const beforeChange = jest.fn(() => false);
     const onChange = jest.fn();
-    const wrapper = mount(DToggle, {
+    const wrapper = mount(DSwitch, {
       props: {
         beforeChange,
         onChange
@@ -85,15 +85,15 @@ describe('d-toggle', () => {
     expect(onChange).toBeCalledTimes(1);
   });
 
-  it('toggle slot work', async () => {
+  it('switch slot work', async () => {
     const isChecked = ref(false);
     const wrapper = mount({
-      components: { DToggle },
+      components: { DSwitch },
       template: `
-        <d-toggle :checked="isChecked">
+        <d-switch :checked="isChecked">
           <template v-slot:checkedContent>开</template>
           <template v-slot:uncheckedContent>关</template>
-        </d-toggle>
+        </d-switch>
       `,
       setup () {
         return {
