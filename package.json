@@ -21,7 +21,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:lib": "vite build --config vite.config.build.ts && cp package.json dist",
+    "build:lib": "vite build --config vite.config.build.ts && cp package.json dist && cp README.md dist",
     "test": "jest --config jest.config.js",
     "ls-lint": "ls-lint",
     "lint": "eslint \"{src,devui}/**/*.{vue,js,ts,jsx,tsx}\"",
