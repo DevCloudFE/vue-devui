@@ -97,6 +97,7 @@ export const routesConfig = [
       enType: 'Navigation',
       name: 'Accordion',
       cnName: '手风琴',
+      done: true,
     },
   },
   {
@@ -108,6 +109,7 @@ export const routesConfig = [
       enType: 'Feedback',
       name: 'Alert',
       cnName: '警告',
+      done: true,
     },
   },
   {
@@ -141,6 +143,7 @@ export const routesConfig = [
       enType: 'Data Display',
       name: 'Avatar',
       cnName: '头像',
+      done: true,
     },
   },
   {
@@ -183,6 +186,7 @@ export const routesConfig = [
     meta: {
       name: 'Button',
       cnName: '按钮',
+      done: true,
     },
   },
   {
@@ -205,6 +209,7 @@ export const routesConfig = [
       enType: 'Data Display',
       name: 'Card',
       cnName: '卡片',
+      done: true,
     },
   },
   {
@@ -227,6 +232,7 @@ export const routesConfig = [
       enType: 'Data Entry',
       name: 'CheckBox',
       cnName: '复选框',
+      done: true,
     },
   },
   {
@@ -384,6 +390,7 @@ export const routesConfig = [
     meta: {
       name: 'Panel',
       cnName: '面板',
+      done: true,
     },
   },
   {
@@ -428,6 +435,7 @@ export const routesConfig = [
       enType: 'Data Entry',
       name: 'Radio',
       cnName: '单选框',
+      done: true,
     },
   },
   {
@@ -499,6 +507,7 @@ export const routesConfig = [
       enType: 'Navigation',
       name: 'Tabs',
       cnName: '选项卡切换',
+      done: true,
     },
   },
   {
@@ -521,6 +530,7 @@ export const routesConfig = [
       enType: 'Data Entry',
       name: 'TagsInput',
       cnName: '标签输入',
+      done: true,
     },
   },
   {
@@ -578,6 +588,7 @@ export const routesConfig = [
       enType: 'Data Entry',
       name: 'Toggle',
       cnName: '开关',
+      done: true,
     },
   },
   {
@@ -677,6 +688,7 @@ export const routesConfig = [
       enType: 'Data Entry',
       name: 'TextInput',
       cnName: '文本框',
+      done: true,
     },
   },
   {

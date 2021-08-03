@@ -1,5 +1,6 @@
 @import '../style/mixins/index';
 @import '../style/theme/color';
+@import '../style/theme/font';
 @import '../style/theme/shadow';
 @import '../style/theme/corner';
 
@@ -246,8 +247,24 @@ d-accordion-item-routerlink {
 
 .devui-accordion-item > a {
   padding: 0 10px 0 20px;
-  color: var(--devui-text-weak,#575d6c);
+  color: var(--devui-text-weak, #575d6c);
   display: block;
   text-decoration: none;
   width: 100%;
+}
+
+.devui-accordion-item-title .tag-done {
+  display: inline-block;
+  height: 18px;
+  min-height: 20px;
+  padding: 0 10px;
+  margin-left: 8px;
+  line-height: 18px;
+  color: #fa9841;
+  border: solid 1px #fa9841;
+  background: $devui-base-bg;
+  font-size: $devui-font-size;
+  border-radius: $devui-border-radius;
+  text-indent: 0;
+  cursor: default;
 }
