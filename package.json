@@ -3,6 +3,18 @@
   "version": "0.0.1",
   "license": "MIT",
   "description": "DevUI components based on Vite and Vue3",
+  "keywords": [
+    "frontend",
+    "typescript",
+    "ui-component",
+    "components",
+    "vue-components",
+    "vue",
+    "vue3",
+    "vite",
+    "jsx",
+    "devui"
+  ],
   "main": "vue-devui.umd.js",
   "module": "vue-devui.es.js",
   "style": "style.css",
