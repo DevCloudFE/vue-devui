@@ -57,6 +57,7 @@
     "@vuedx/typescript-plugin-vue": "^0.4.1",
     "babel-jest": "^27.0.2",
     "commander": "^7.1.0",
+    "esbuild-register": "^2.6.0",
     "eslint": "^7.28.0",
     "eslint-plugin-vue": "^7.11.1",
     "husky": "^4.3.7",
