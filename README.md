@@ -67,39 +67,46 @@ npm run build
 
 目前主要负责：
 - Jest 单元测试环境搭建
-- Radio
-- CheckBox
-- Switch
-- TagsInput
-- TextInput
+- Radio 单选框
+- CheckBox 复选框
+- Switch 开关
+- TagsInput 标签输入
+- TextInput 文本框
 
 ## flxy1028
 
 [flxy1028](https://github.com/flxy1028)
 
 目前负责的责任田有：
-- Tabs
+- Tabs 选项卡
 
 ## kagol
 
 [kagol](https://github.com/kagol)
 
 目前负责的责任田有：
-- Accordion
+- Accordion 手风琴
 
 ## to0simple
 
 [to0simple](https://github.com/to0simple)
 
 目前负责的责任田有：
-- Alert
-- Panel
-- Codebox
-- Highlight
+- Alert 警告
+- Panel 面板
+- Codebox 代码盒子
+- Highlight 代码高亮
 
 ## Zcating
 
 [Zcating](https://github.com/Zcating)
 
 目前负责的责任田有：
-- Button
+- Button 按钮
+
+## zzzautumn(~zZ.Lucky)
+
+[zzzautumn](https://gitee.com/zzzautumn)
+
+目前负责的责任田有：
+- Rate 等级评估
