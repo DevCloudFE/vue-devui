@@ -8,8 +8,7 @@ const DataPickerInputIcon = defineComponent({
     marginRight: { type: Number, default: 0 },
   },
   setup(props, ctx) {
-    const marginLeft = props.marginLeft || 0
-    const marginRight = props.marginRight || 0
+    const { marginLeft = 0, marginRight = 0 } = props || {}
     return () => <i class="datepicker-input-icon" style={{
       marginLeft: `${marginLeft}px`,
       marginRight: `${marginRight}px`,
@@ -23,7 +22,7 @@ const DataPickerInput = defineComponent({
     width: { type: Number, default: 160 }
   },
   setup(props, ctx) {
-    const width = props.width || 160
+    const { width = 160 } = props || {}
     return () => {
       return (
         <div class="datapicker-input-border" style={{ width: `${width}px` }}>
