@@ -96,6 +96,13 @@ npm run build
 目前主要负责：
 - EditableSelect 可输入下拉选择框
 
+## Dr_HHH
+
+[Dr_HHH](https://gitee.com/Dr_HHH)
+
+目前主要负责：
+- TimePicker 时间选择器
+
 ## fayeahli
 
 [fayeahli](https://gitee.com/fayeahli)
@@ -256,6 +263,13 @@ npm run build
 - BackTop 回到顶部
 - StepsGuide 操作指引
 
+## yqsheng
+
+[yqsheng](https://gitee.com/yqsheng)
+
+目前负责的责任田有：
+- InputNumber 数字输入框
+
 ## YuanZiWRY
 
 [YuanZiWRY](https://gitee.com/YuanZiWRY)
@@ -277,3 +291,4 @@ npm run build
 
 目前负责的责任田有：
 - Rate 等级评估
+- Upload 上传
