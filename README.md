@@ -87,6 +87,19 @@ npm run build
 目前负责的责任田有：
 - Accordion 手风琴
 
+## lwl(laiweilun)
+
+[lwl](https://gitee.com/laiweilun)
+
+- Search 搜索
+
+## sise209(duqingyu)
+
+[sise209](https://gitee.com/sise209)
+
+- Badge 徽标
+- ImagePreview 图片预览
+
 ## to0simple
 
 [to0simple](https://github.com/to0simple)
