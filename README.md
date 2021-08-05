@@ -91,7 +91,14 @@ npm run build
 
 [lwl](https://gitee.com/laiweilun)
 
+- Cascader 级联菜单
 - Search 搜索
+
+## RootWater(lel)
+
+[RootWater](https://gitee.com/RootWater)
+
+- Toast 全局通知
 
 ## sise209(duqingyu)
 
@@ -106,9 +113,23 @@ npm run build
 
 目前负责的责任田有：
 - Alert 警告
+- Avatar 头像
 - Panel 面板
 - Codebox 代码盒子
 - Highlight 代码高亮
+
+## vergil_lu(Vergil)
+
+[vergil_lu](https://gitee.com/vergil_lu)
+
+- Card 卡片
+
+## xiao_jius_father(小九九的爸爸)
+
+[xiao_jius_father](https://gitee.com/xiao_jius_father)
+
+- Slider 滑动输入条
+- Tooltip 提示
 
 ## Zcating
 
