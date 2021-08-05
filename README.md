@@ -89,6 +89,13 @@ npm run build
 - TextInput 文本框
 - Popover 悬浮提示
 
+## chengxi_24
+
+[chengxi_24](https://gitee.com/chengxi_24)
+
+目前主要负责：
+- EditableSelect 可输入下拉选择框
+
 ## fayeahli
 
 [fayeahli](https://gitee.com/fayeahli)
@@ -117,6 +124,14 @@ npm run build
 目前负责的责任田有：
 - Transfer 穿梭框
 
+## gxuud
+
+[gxuud](https://gitee.com/gxuud)
+
+目前负责的责任田有：
+- Tree 树
+- TreeSelect 树形选择框
+
 ## Jecyu
 
 [Jecyu](https://gitee.com/Jecyu)
@@ -124,6 +139,14 @@ npm run build
 目前负责的责任田有：
 - DragDrop 拖拽
 - Splitter 分割器
+
+## jenson-miao
+
+[jenson-miao](https://gitee.com/jenson-miao)
+
+目前负责的责任田有：
+- Status 状态
+- Time Axis 时间轴
 
 ## johhny_idowe
 
