@@ -61,6 +61,14 @@ npm run build
 
 排名不分先后（按首字母排序）
 
+## binghai1
+
+[binghai1](https://gitee.com/binghai1)
+
+目前负责的责任田有：
+- Layout 布局
+- Tags 标签
+
 ## brenner8023
 
 [brenner8023](https://gitee.com/brenner8023)
@@ -72,6 +80,14 @@ npm run build
 - Switch 开关
 - TagsInput 标签输入
 - TextInput 文本框
+- Popover 悬浮提示
+
+## fayeahli
+
+[fayeahli](https://gitee.com/fayeahli)
+
+目前主要负责：
+- Fullscreen 全屏
 
 ## flxy1028(fang-ng4)
 
@@ -80,6 +96,13 @@ npm run build
 目前负责的责任田有：
 - Tabs 选项卡
 
+## guaimeengmengxiaoxiong
+
+[guaimeengmengxiaoxiong](https://gitee.com/guaimeengmengxiaoxiong)
+
+目前负责的责任田有：
+- Transfer 穿梭框
+
 ## kagol
 
 [kagol](https://github.com/kagol)
@@ -87,23 +110,55 @@ npm run build
 目前负责的责任田有：
 - Accordion 手风琴
 
+## kd554246839
+
+[kd554246839](https://gitee.com/kd554246839)
+
+目前负责的责任田有：
+- Pagination 分页
+- Loading 加载
+
+## johhny_idowe
+
+[johhny_idowe](https://gitee.com/johhny_idowe)
+
+目前负责的责任田有：
+- DataTable 表格
+
+## lao--hu
+
+[lao--hu](https://gitee.com/lao--hu)
+
+目前负责的责任田有：
+- Progress 进度条
+
 ## lwl(laiweilun)
 
 [lwl](https://gitee.com/laiweilun)
 
+目前负责的责任田有：
 - Cascader 级联菜单
 - Search 搜索
+
+## onlyoupon
+
+[onlyoupon](https://gitee.com/onlyoupon)
+
+目前负责的责任田有：
+- Carousel 走马灯
 
 ## RootWater(lel)
 
 [RootWater](https://gitee.com/RootWater)
 
+目前负责的责任田有：
 - Toast 全局通知
 
 ## sise209(duqingyu)
 
 [sise209](https://gitee.com/sise209)
 
+目前负责的责任田有：
 - Badge 徽标
 - ImagePreview 图片预览
 
@@ -122,14 +177,24 @@ npm run build
 
 [vergil_lu](https://gitee.com/vergil_lu)
 
+目前负责的责任田有：
 - Card 卡片
 
 ## xiao_jius_father(小九九的爸爸)
 
 [xiao_jius_father](https://gitee.com/xiao_jius_father)
 
+目前负责的责任田有：
 - Slider 滑动输入条
 - Tooltip 提示
+
+## YuanZiWRY
+
+[YuanZiWRY](https://gitee.com/YuanZiWRY)
+
+目前负责的责任田有：
+- Menu 导航
+- Breadcrumb 面包屑
 
 ## Zcating
 
