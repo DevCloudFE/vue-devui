@@ -103,12 +103,34 @@ npm run build
 目前负责的责任田有：
 - Tabs 选项卡
 
+## foryangxuechen
+
+[foryangxuechen](https://gitee.com/foryangxuechen)
+
+目前负责的责任田有：
+- Textarea 多行文本框
+
 ## guaimeengmengxiaoxiong
 
 [guaimeengmengxiaoxiong](https://gitee.com/guaimeengmengxiaoxiong)
 
 目前负责的责任田有：
 - Transfer 穿梭框
+
+## Jecyu
+
+[Jecyu](https://gitee.com/Jecyu)
+
+目前负责的责任田有：
+- DragDrop 拖拽
+- Splitter 分割器
+
+## johhny_idowe
+
+[johhny_idowe](https://gitee.com/johhny_idowe)
+
+目前负责的责任田有：
+- DataTable 表格
 
 ## kagol
 
@@ -125,13 +147,6 @@ npm run build
 - Pagination 分页
 - Loading 加载
 
-## johhny_idowe
-
-[johhny_idowe](https://gitee.com/johhny_idowe)
-
-目前负责的责任田有：
-- DataTable 表格
-
 ## lao--hu
 
 [lao--hu](https://gitee.com/lao--hu)
@@ -146,6 +161,14 @@ npm run build
 目前负责的责任田有：
 - Cascader 级联菜单
 - Search 搜索
+
+## nowisfuture
+
+[nowisfuture](https://gitee.com/nowisfuture)
+
+目前负责的责任田有：
+- MultiAutoComplete 多项自动补全
+- Quadrant Diagram 象限图
 
 ## onlyoupon
 
@@ -201,6 +224,14 @@ npm run build
 
 目前负责的责任田有：
 - Drawer 抽屉板
+
+## yonsunzhen
+
+[yonsunzhen](https://gitee.com/yonsunzhen)
+
+目前负责的责任田有：
+- BackTop 回到顶部
+- StepsGuide 操作指引
 
 ## YuanZiWRY
 
