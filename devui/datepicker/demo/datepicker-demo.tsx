@@ -1,12 +1,13 @@
 import { defineComponent } from 'vue'
+import DatePicker from '../datepicker'
 
 export default defineComponent({
-  name: 'd-datepicker-demo',
+  name: 'DDatepickerDemo',
   props: {
   },
   setup(props, ctx) {
     return () => {
-      return <div>devui-datepicker-demo</div>
+      return <DatePicker />
     }
   }
 })
