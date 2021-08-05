@@ -1,0 +1,16 @@
+.d-search {
+  span {
+    width: auto;
+    pointer-events: all;
+    cursor: pointer;
+    height: 100%;
+    line-height: 28px;
+    padding: 0 10px;
+  }
+
+  &__sm {
+    width: 34px;
+    height: 26px;
+    line-height: 26px;
+  }
+}
