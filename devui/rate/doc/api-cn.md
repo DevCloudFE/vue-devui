@@ -3,7 +3,7 @@
 在 module 中引入：
 
 ```ts
-import { DRate } from "devui";
+import { DRate } from "vue-devui";
 ```
 
 在页面中使用：

@@ -3,7 +3,7 @@
 Import into module:
 
 ```ts
-import { DRate } from "devui";
+import { DRate } from "vue-devui";
 ```
 
 In the page:

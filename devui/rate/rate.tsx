@@ -7,13 +7,13 @@ export default defineComponent({
   props: rateProps,
   emits: ['change', 'update:value'],
   setup(props, ctx) {
-    const totalLevel_array = reactive<Record<string, any>[]>([]);
+    const totalLevelArray = reactive<Record<string, any>[]>([]);
     const chooseValue = ref(0);
 
     // 根据mouseMove，mouseLeave,select等操作，改变颜色与是否选中
     const setChange = (start: number, end: number, width: string) => {
       for (let i = start; i < end; i++) {
-        totalLevel_array[i]['width'] = width;
+        totalLevelArray[i]['width'] = width;
       }
     };
 
@@ -23,21 +23,20 @@ export default defineComponent({
         return;
       }
       chooseValue.value = props.value - 1;
-      const half_star = chooseValue.value % 1;
-      const int_current_level = Math.floor(chooseValue.value);
-      setChange(0, int_current_level + 1, '100%');
-      if (half_star > 0) {
-        totalLevel_array[int_current_level + 1]['width'] =
-          half_star * 100 + '%';
-        setChange(int_current_level + 2, props.count, '0');
+      const halfStar = chooseValue.value % 1;
+      const intCurrentLevel = Math.floor(chooseValue.value);
+      setChange(0, intCurrentLevel + 1, '100%');
+      if (halfStar > 0) {
+        totalLevelArray[intCurrentLevel + 1]['width'] = halfStar * 100 + '%';
+        setChange(intCurrentLevel + 2, props.count, '0');
       } else {
-        setChange(int_current_level + 1, props.count, '0');
+        setChange(intCurrentLevel + 1, props.count, '0');
       }
     };
 
     onMounted(() => {
       for (let i = 0; i < props.count; i++) {
-        totalLevel_array.push({ width: '0' });
+        totalLevelArray.push({ width: '0' });
       }
       initRating();
     });
@@ -71,7 +70,7 @@ export default defineComponent({
       ctx.emit('update:value', index + 1);
     };
     return {
-      totalLevel_array,
+      totalLevelArray,
       chooseValue,
       hoverToggle,
       selectValue,
@@ -79,7 +78,7 @@ export default defineComponent({
   },
   render() {
     const {
-      totalLevel_array,
+      totalLevelArray,
       chooseValue,
       icon,
       character,
@@ -94,12 +93,12 @@ export default defineComponent({
         class="devui-star-container"
         onMouseleave={(e) => hoverToggle(e, chooseValue, true)}
       >
-        {totalLevel_array.map((item, index) => (
+        {totalLevelArray.map((item, index) => (
           <div
             class={`devui-star-align devui-pointer ${
               read ? 'devui-only-read' : ''
             }`}
-            key={`${index}`}
+            key={index}
             onMouseover={(e) => hoverToggle(e, index)}
             onClick={() => selectValue(index)}
           >
