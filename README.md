@@ -139,6 +139,13 @@ npm run build
 - Tree 树
 - TreeSelect 树形选择框
 
+## hyhup
+
+[hyhup](https://gitee.com/hyhup)
+
+目前负责的责任田有：
+- ReadTip 阅读提示
+
 ## Jecyu
 
 [Jecyu](https://gitee.com/Jecyu)
@@ -183,6 +190,13 @@ npm run build
 
 目前负责的责任田有：
 - Progress 进度条
+
+## lihuiwang
+
+[lihuiwang](https://gitee.com/lihuiwang)
+
+目前负责的责任田有：
+- Gantt 甘特图
 
 ## lwl(laiweilun)
 
@@ -239,6 +253,13 @@ npm run build
 
 目前负责的责任田有：
 - Card 卡片
+
+## wangy0311
+
+[wangy0311](https://gitee.com/wangy0311)
+
+目前负责的责任田有：
+- DropDown 下拉菜单
 
 ## xiao_jius_father(小九九的爸爸)
 
