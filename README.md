@@ -73,7 +73,7 @@ npm run build
 - TagsInput 标签输入
 - TextInput 文本框
 
-## flxy1028
+## flxy1028(fang-ng4)
 
 [flxy1028](https://github.com/flxy1028)
 
@@ -107,7 +107,7 @@ npm run build
 - Badge 徽标
 - ImagePreview 图片预览
 
-## to0simple
+## to0simple(NAN)
 
 [to0simple](https://github.com/to0simple)
 
