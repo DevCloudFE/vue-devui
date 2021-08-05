@@ -61,6 +61,13 @@ npm run build
 
 排名不分先后（按首字母排序）
 
+## big_also
+
+[big_also](https://gitee.com/big_also)
+
+目前负责的责任田有：
+- Modal 模态框
+
 ## binghai1
 
 [binghai1](https://gitee.com/binghai1)
@@ -187,6 +194,13 @@ npm run build
 目前负责的责任田有：
 - Slider 滑动输入条
 - Tooltip 提示
+
+## xyantelope
+
+[xyantelope](https://gitee.com/xyantelope)
+
+目前负责的责任田有：
+- Drawer 抽屉板
 
 ## YuanZiWRY
 
