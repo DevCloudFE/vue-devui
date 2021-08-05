@@ -1,7 +1,7 @@
 
 import { defineComponent, computed } from 'vue'
 import '../status.scss';
-export type IStatusType = 'success' | 'error' | 'reset' | 'initial' |'waiting'|'running'|'invalid';
+export type IStatusType = 'success' | 'error' | 'initial' | 'warning' | 'waiting' | 'running' | 'invalid';
 
 export default defineComponent({
   name: 'DStatus',
