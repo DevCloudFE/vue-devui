@@ -219,6 +219,7 @@ npm run build
 目前负责的责任田有：
 - Cascader 级联菜单
 - Search 搜索
+- CategorySearch 分类搜索
 
 ## maizhiyuan
 
@@ -226,6 +227,13 @@ npm run build
 
 目前负责的责任田有：
 - Sticky 便贴
+
+## mewcoder
+
+[mewcoder](https://gitee.com/mewcoder)
+
+目前负责的责任田有：
+- DatePickerPro 日期选择器
 
 ## mrundef
 
