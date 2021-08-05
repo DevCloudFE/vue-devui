@@ -61,6 +61,13 @@ npm run build
 
 排名不分先后（按首字母排序）
 
+## asian-TMac
+
+[asian-TMac](https://gitee.com/asian-TMac)
+
+目前负责的责任田有：
+- Anchor 锚点
+
 ## big_also
 
 [big_also](https://gitee.com/big_also)
@@ -198,6 +205,13 @@ npm run build
 目前负责的责任田有：
 - Gantt 甘特图
 
+## lookforwhat
+
+[lookforwhat](https://gitee.com/lookforwhat)
+
+目前负责的责任田有：
+- Select 下拉选择框
+
 ## lwl(laiweilun)
 
 [lwl](https://gitee.com/laiweilun)
@@ -205,6 +219,20 @@ npm run build
 目前负责的责任田有：
 - Cascader 级联菜单
 - Search 搜索
+
+## maizhiyuan
+
+[maizhiyuan](https://gitee.com/maizhiyuan)
+
+目前负责的责任田有：
+- Sticky 便贴
+
+## mrundef
+
+[mrundef](https://gitee.com/mrundef)
+
+目前负责的责任田有：
+- DatePicker 日期选择器
 
 ## nowisfuture
 
@@ -253,6 +281,13 @@ npm run build
 
 目前负责的责任田有：
 - Card 卡片
+
+## waittutu
+
+[waittutu](https://gitee.com/waittutu)
+
+目前负责的责任田有：
+- AutoComplete 自动补全
 
 ## wangy0311
 
