@@ -1,4 +1,4 @@
-import { defineComponent, ref, reactive, onUpdated, onBeforeUpdate, SetupContext, EmitsOptions } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 import './index.css'
 
@@ -23,8 +23,6 @@ export default defineComponent({
 		children: { type: Object }
 	},
 	setup(props) {
-
-		console.log(props)
 
 		const container = ref<Element>()
 

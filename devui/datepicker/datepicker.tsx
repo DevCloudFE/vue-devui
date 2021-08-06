@@ -1,6 +1,7 @@
 import { defineComponent, ref, reactive, onMounted, onUnmounted } from 'vue'
 import Input from './components/input/index'
 import PopPanel from './components/pop-panel/index'
+import Calendar from './components/calendar/index'
 
 import './datepicker.css'
 
@@ -146,12 +147,19 @@ export default defineComponent({
           <Input width={140} onActive={handleActive} />
           <div ref={popCont} class="datepicker-pop-container" style={{ left: state.pointX, top: state.pointY }}>
             <PopPanel
+              // show={state.showPanel}
               show={state.showPanel}
               xPosition={state.panelXPos}
               yPosition={state.panelYPos}
-              xOffset={3}
-              yOffset={1}
-              children={<div style={{ padding: '20px', whiteSpace: 'nowrap', width: '340px', height: '180px' }}>Hello Pop Panel</div>}
+              xOffset={0}
+              yOffset={0}
+              children={
+                <div style={{
+                  padding: '0px', margin: '0px 0px',
+                  whiteSpace: 'nowrap',
+                  boxShadow: `0 0 4px 2px rgba(0, 0, 0, 0.2)`
+                }}><Calendar mode="range" /></div>
+              }
             />
           </div>
         </div>
