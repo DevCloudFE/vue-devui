@@ -1200,6 +1200,11 @@
   resolved "https://registry.nlark.com/@commitlint/types/download/@commitlint/types-11.0.0.tgz#719cf05fcc1abb6533610a2e0f5dd1e61eac14fe"
   integrity sha1-cZzwX8wau2UzYQouD13R5h6sFP4=
 
+"@devui-design/icons@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.nlark.com/@devui-design/icons/download/@devui-design/icons-1.3.0.tgz#5a3006a31ee4f62e3f9837b68c031898ff148b88"
+  integrity sha1-WjAGox7k9i4/mDe2jAMYmP8Ui4g=
+
 "@docsearch/css@^1.0.0-alpha.28":
   version "1.0.0-alpha.28"
   resolved "https://registry.nlark.com/@docsearch/css/download/@docsearch/css-1.0.0-alpha.28.tgz#c8a2cd8c1bb3a6855c51892e9dbdab5d42fe6e23"
