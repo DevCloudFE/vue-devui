@@ -1,5 +1,6 @@
 import { defineComponent, computed } from 'vue';
 import { inputProps } from './use-input';
+import './text-input.scss'
 
 export default defineComponent({
   name: 'DTextInput',

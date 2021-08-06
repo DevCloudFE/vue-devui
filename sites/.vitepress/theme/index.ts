@@ -1,5 +1,5 @@
 import DevUI from '../../../devui/vue-devui'
-import Theme from 'vitepress/dist/client/theme-default'
+import Theme from '../devui-theme'
 
 export default {
   ...Theme,
