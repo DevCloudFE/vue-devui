@@ -1,29 +1,21 @@
-
-import { defineComponent, computed } from 'vue'
-import '../status.scss';
-export type IStatusType = 'success' | 'error' | 'initial' | 'warning' | 'waiting' | 'running' | 'invalid';
-
+import { defineComponent } from 'vue'
+import CodeBox from '../../shared/devui-codebox/devui-codebox'
+import Status from './code/status-code'
+import StatusCode from './code/status-code.tsx?raw'
 export default defineComponent({
-  name: 'DStatus',
-  props: {
-    type:{
-      default: 'invalid',
-      value: String as () => IStatusType
-    }
-  },
-  setup(props, ctx) {
-
-    const typeClass = computed(() => {
-      const { type } = props;
-      const typeClassStr = `devui-status devui-status-bg-${type}`;
-      return typeClassStr;
-    });
-
+  name: 'DStatusDemo',
+  setup() {
+    const StatusSource: any[] = [{title: 'TSX', language: 'TSX', code: StatusCode}];
     return () => {
-    
-      return  <span class={typeClass.value}>
-                  {ctx.slots.default?.()}
-              </span>
+      return <div class="demo-container">
+      <div class="demo-example">
+        <div class="demo-title">{ '基本用法' }</div>
+        <div class="demo-text"></div>
+        <CodeBox id="components-button-primary" sourceData={StatusSource}>
+            <Status></Status>
+        </CodeBox>
+      </div>
+    </div>
     }
   }
 })

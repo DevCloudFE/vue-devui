@@ -8,19 +8,22 @@ export default defineComponent({
   props: {
     type:{
       default: 'invalid',
-      value: String as () => IStatusType
+      value: (val:IStatusType):IStatusType => {
+        return val
+      }
     }
   },
   setup(props, ctx) {
-
     const typeClass = computed(() => {
       const { type } = props;
-      const typeClassStr = `devui-status devui-status-bg-${type}`;
+      const typeStatus = ['success' , 'error' , 'initial' , 'warning' , 'waiting' , 'running' , 'invalid'];
+      let typeClassStr = `devui-status devui-status-bg-invalid`;
+      if(typeStatus.includes(type)){
+        typeClassStr = `devui-status devui-status-bg-${type}`;
+      }
       return typeClassStr;
     });
-
     return () => {
-    
       return  <span class={typeClass.value}>
                   {ctx.slots.default?.()}
               </span>
