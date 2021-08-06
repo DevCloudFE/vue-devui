@@ -123,6 +123,7 @@ npm run build
 
 目前负责的责任田有：
 - Tabs 选项卡
+- NavSprite 导航精灵
 
 ## foryangxuechen
 
@@ -263,6 +264,7 @@ npm run build
 
 目前负责的责任田有：
 - Toast 全局通知
+- Mention 提及
 
 ## sise209(duqingyu)
 
