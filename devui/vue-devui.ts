@@ -6,7 +6,7 @@ import Panel from './panel/panel';
 
 // 导航
 import Tabs from './tabs/tabs';
-
+import Anchor from './anchor/anchor';
 // 反馈
 import Alert from './alert/alert';
 
@@ -24,6 +24,7 @@ function install(app: App) {
   const packages = [
     Button, Panel,
     Tabs,
+    Anchor,
     Alert,
     Checkbox, Radio, Switch, TagsInput, TextInput,
     Avatar,
@@ -40,6 +41,7 @@ function install(app: App) {
 export {
   Button, Panel,
   Tabs,
+  Anchor,
   Alert,
   Checkbox, Radio, Switch, TagsInput, TextInput,
   Avatar,
