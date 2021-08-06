@@ -199,13 +199,6 @@ npm run build
 目前负责的责任田有：
 - Progress 进度条
 
-## lihuiwang
-
-[lihuiwang](https://gitee.com/lihuiwang)
-
-目前负责的责任田有：
-- Gantt 甘特图
-
 ## lookforwhat
 
 [lookforwhat](https://gitee.com/lookforwhat)
