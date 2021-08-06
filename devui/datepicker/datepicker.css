@@ -1,44 +1,5 @@
 .datapicker-container {
   border: 1px solid #000000;
-  padding: 1em;
+  padding: 5px;
   position: relative;
-}
-
-.datepicker-input-icon {
-  width: 16px;
-  height: 16px;
-  box-sizing: border-box;
-  border-radius: 0;
-  flex-shrink: 0;
-  flex-grow: 0;
-  background-color: #cccccc;
-}
-
-.datapicker-input-container {
-  position: relative;
-}
-
-.datapicker-input-border {
-  border: 1px solid #526ecc;
-  padding: 0 5px;
-  border-radius: 4px;
-  box-sizing: border-box;
-  height: 28px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.datapicker-input {
-  border: none;
-  outline: none;
-  position: relative;
-  padding: 0;
-  line-height: 16px;
-  height: 16px;
-  font-size: 12px;
-  flex-shrink: 1;
-  flex-grow: 1;
-  width: 100%;
 }
