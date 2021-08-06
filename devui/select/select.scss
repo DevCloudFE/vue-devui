@@ -1,0 +1,20 @@
+@import '../style/mixins/index';
+@import '../style/theme/color';
+@import '../style/theme/corner';
+
+.devui-select {
+  position: relative;
+  width: 100%;
+}
+
+.devui-select-dropdown {
+  position: absolute;
+  max-height: 200px;
+  overflow: auto;
+  top: 100%;
+  left: 0;
+  margin: 5px 0;
+  border-radius: 2px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+}
