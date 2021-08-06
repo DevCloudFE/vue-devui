@@ -7,7 +7,32 @@ export default defineComponent({
   },
   setup(props, ctx) {
     return () => {
-      return <DatePicker />
+      return (
+        <div>
+          <DatePicker />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <DatePicker />
+        </div>
+      )
     }
   }
 })
