@@ -1,5 +1,5 @@
 
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed } from 'vue';
 import './status.scss';
 export type IStatusType = 'success' | 'error' | 'initial' | 'warning' | 'waiting' | 'running' | 'invalid';
 
@@ -8,9 +8,7 @@ export default defineComponent({
   props: {
     type:{
       default: 'invalid',
-      value: (val:IStatusType):IStatusType => {
-        return val
-      }
+      type: String as () => IStatusType
     }
   },
   setup(props, ctx) {

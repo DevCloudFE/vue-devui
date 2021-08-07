@@ -1,7 +1,7 @@
-import { defineComponent } from 'vue'
-import CodeBox from '../../shared/devui-codebox/devui-codebox'
-import Status from './code/status-code'
-import StatusCode from './code/status-code.tsx?raw'
+import { defineComponent } from 'vue';
+import CodeBox from '../../shared/devui-codebox/devui-codebox';
+import Status from './code/status-code';
+import StatusCode from './code/status-code.tsx?raw';
 export default defineComponent({
   name: 'DStatusDemo',
   setup() {

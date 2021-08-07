@@ -2,63 +2,42 @@ import { mount } from '@vue/test-utils';
 import Status from '../status';
 
 describe('d-status', () => {
-
-  it('type', () => {
+  it('type', async () => {
     const wrapper = mount(Status, {
-      props: { type: 'success' },
+      props: { type: 'success' }
     });
+    
     expect(wrapper.classes()).toContain('devui-status-bg-success');
-  });
 
-  it('type', () => {
-    const wrapper = mount(Status, {
-      props: { type: 'error' },
-    });
+    await wrapper.setProps({ type: 'error' });
+
     expect(wrapper.classes()).toContain('devui-status-bg-error');
-  });
 
-  it('type', () => {
-    const wrapper = mount(Status, {
-      props: { type: 'warning' },
-    });
+    await wrapper.setProps({ type: 'warning' });
+
     expect(wrapper.classes()).toContain('devui-status-bg-warning');
-  });
 
-  it('type', () => {
-    const wrapper = mount(Status, {
-      props: { type: 'initial' },
-    });
+    await wrapper.setProps({type: 'initial'});
+    
     expect(wrapper.classes()).toContain('devui-status-bg-initial');
-  });
 
-  it('type', () => {
-    const wrapper = mount(Status, {
-      props: { type: 'waiting' },
-    });
+    await wrapper.setProps({type: 'waiting'});
+
     expect(wrapper.classes()).toContain('devui-status-bg-waiting');
-  });
 
-  it('type', () => {
-    const wrapper = mount(Status, {
-      props: { type: 'running' },
-    });
+    await wrapper.setProps({type: 'running'});
+
     expect(wrapper.classes()).toContain('devui-status-bg-running');
-  });
 
-  it('type', () => {
-    const wrapper = mount(Status, {
-      props: { type: 'invalid' },
-    });
+    await wrapper.setProps({type: 'invalid'});
+    
     expect(wrapper.classes()).toContain('devui-status-bg-invalid');
   });
-
-
-  
 
   it('slot', () => {
     const statusText = 'vue3 devui';
     const wrapper = mount(Status, {
-      slots:  {
+      slots: {
         default: statusText
       }
     });
