@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, renderSlot } from 'vue'
 
 import './index.css'
 
@@ -22,19 +22,22 @@ export default defineComponent({
 		yOffset: { type: Number },
 		children: { type: Object }
 	},
-	setup(props) {
-
+	setup(props, ctx) {
+		
 		const container = ref<Element>()
 
 		return () => {
 			if (!props.show) {
 				return null
 			}
+
+
 			const {
 				xPosition = 'left', yPosition = 'top',
 				xOffset = 0, yOffset = 0,
-				children = null,
 			} = props
+
+			const children: any = renderSlot(ctx.slots, 'default')
 
 			return (
 				<div

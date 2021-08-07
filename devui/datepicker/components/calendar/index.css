@@ -1,5 +1,9 @@
 .calendar-container {
   border: 0 solid #aaaaaa;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .calendar {
@@ -38,7 +42,12 @@
 }
 
 .calendar-cell.innerday {
-  background-color: #eeeeee;
+  background-color: #f1f1f1;
+}
+
+.calendar-cell.disabled {
+  background-color: #ffffff;
+  color: #bbbbbb;
 }
 
 .calenday-cell-text {

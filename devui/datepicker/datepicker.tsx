@@ -5,18 +5,6 @@ import Calendar from './components/calendar/index'
 
 import './datepicker.css'
 
-/**
- * 对`getBoundingClientRect`获取到的DOMRect做浅拷贝
- * @param rect 
- * @returns 
- */
-const cloneDOMRect = (rect: DOMRect) => {
-  const {        
-    left, top, width, height, right = left + width, bottom = top + height, x, y
-  } = rect
-  return { x, y, left, top, width, height, right, bottom }
-}
-
 const isIn = (start: Node | null, target: Node | null) => {
   if(!target) {
     return false
@@ -88,6 +76,9 @@ export default defineComponent({
       panelYPos: 'top' | 'bottom'
       pointX: string
       pointY: string
+      dateStart?: Date
+      dateEnd?: Date
+      dateHover?: Date
     }>({
       showPanel: false,
       panelXPos: 'left',
@@ -139,6 +130,7 @@ export default defineComponent({
     }
 
     return () => {
+      
       return (
         <div
           ref={container}
@@ -147,20 +139,25 @@ export default defineComponent({
           <Input width={140} onActive={handleActive} />
           <div ref={popCont} class="datepicker-pop-container" style={{ left: state.pointX, top: state.pointY }}>
             <PopPanel
-              // show={state.showPanel}
               show={state.showPanel}
               xPosition={state.panelXPos}
               yPosition={state.panelYPos}
               xOffset={0}
               yOffset={0}
-              children={
-                <div style={{
-                  padding: '0px', margin: '0px 0px',
-                  whiteSpace: 'nowrap',
-                  boxShadow: `0 0 4px 2px rgba(0, 0, 0, 0.2)`
-                }}><Calendar mode="range" /></div>
-              }
-            />
+            ><Calendar
+              mode="range"
+              dateStart={state.dateStart}
+              dateEnd={state.dateEnd}
+              dateHover={state.dateHover}
+              onReset={(date: Date) => {
+                state.dateEnd = state.dateHover = undefined
+                state.dateStart = date
+              }}
+              onSelected={(date: Date) => state.dateStart = date}
+              onSelectStart={(date: Date) => state.dateStart = date}
+              onSelectEnd={(date: Date) => state.dateEnd = date}
+              onSelecting={(date: Date) => state.dateHover = date}
+            /></PopPanel>
           </div>
         </div>
       )
