@@ -2,6 +2,7 @@ import { App } from 'vue';
 
 // 通用
 import Button from './button/button';
+import Icon from './icon/src/icon';
 import Panel from './panel/panel';
 
 // 导航
@@ -22,7 +23,7 @@ import Avatar from './avatar/avatar';
 
 function install(app: App) {
   const packages = [
-    Button, Panel,
+    Button, Icon, Panel,
     Tabs,
     Alert,
     Checkbox, Radio, Switch, TagsInput, TextInput,
@@ -38,7 +39,7 @@ function install(app: App) {
 }
 
 export {
-  Button, Panel,
+  Button, Icon, Panel,
   Tabs,
   Alert,
   Checkbox, Radio, Switch, TagsInput, TextInput,
