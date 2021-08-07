@@ -9,7 +9,6 @@
 
 .devui-select-dropdown {
   position: absolute;
-  max-height: 200px;
   width: calc(100% - 2px);
   overflow: auto;
   top: 100%;
@@ -18,4 +17,66 @@
   border-radius: 2px;
   background: #ffffff;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.devui-select-dropdown-list {
+  max-height: 300px;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.devui-select-item {
+  font-size: var(--devui-font-size, 12px);
+  display: block;
+  min-height: 36px;
+  line-height: 1.5;
+  width: 100%;
+  padding: 10px;
+  clear: both;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border: 0;
+  color: $devui-text;
+
+  &:hover:not(.active) {
+    color: $devui-list-item-hover-text;
+    background-color: $devui-list-item-hover-bg;
+  }
+
+  &.active {
+    color: $devui-list-item-active-text;
+    background-color: $devui-list-item-active-bg;
+  }
+}
+
+.devui-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: var(--devui-line, #adb0b8);
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
