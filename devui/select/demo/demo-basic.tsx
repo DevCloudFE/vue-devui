@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import DSelect from '../select'
+import DSelect from '../src/select'
 
 export default defineComponent({
   name: 'DSelectDemo',

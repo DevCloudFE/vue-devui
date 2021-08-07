@@ -1,6 +1,6 @@
-@import '../style/mixins/index';
-@import '../style/theme/color';
-@import '../style/theme/corner';
+@import '../../style/mixins/index';
+@import '../../style/theme/color';
+@import '../../style/theme/corner';
 
 .devui-select {
   position: relative;
@@ -10,6 +10,7 @@
 .devui-select-dropdown {
   position: absolute;
   max-height: 200px;
+  width: calc(100% - 2px);
   overflow: auto;
   top: 100%;
   left: 0;
