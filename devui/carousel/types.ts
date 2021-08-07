@@ -37,4 +37,7 @@ export const carouselProps = {
     type: Number,
     default: 0
   },
+  activeIndexChange: {
+    type: Function as unknown as () => ((index: number) => void)
+  },
 } as const;

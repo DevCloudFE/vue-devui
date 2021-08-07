@@ -36,7 +36,7 @@ export default defineComponent({
   render() {
     return (
       <div>
-        <Carousel ref="carousel" height="200px" arrowTrigger="never" onActiveIndexChange={ this.onChange }>
+        <Carousel ref="carousel" height="200px" arrowTrigger="never" activeIndexChange={ this.onChange }>
           {
             items.map(item => <Item key={ item }>{ item }</Item>)
           }
