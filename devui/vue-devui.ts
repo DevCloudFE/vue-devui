@@ -39,7 +39,7 @@ function install(app: App) {
 }
 
 export {
-  Button, Panel,
+  Button, Icon, Panel,
   Tabs,
   Alert,
   Checkbox, Radio, Switch, TagsInput, TextInput,
