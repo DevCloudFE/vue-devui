@@ -20,14 +20,16 @@ import TextInput from './text-input/src/text-input';
 
 // 数据展示
 import Avatar from './avatar/avatar';
+import Card from './card/src/card';
 
-function install(app: App) {
+function install(app: App):any {
   const packages = [
     Button, Icon, Panel,
     Tabs,
     Alert,
     Checkbox, Radio, Switch, TagsInput, TextInput,
     Avatar,
+    Card
   ];
   packages.forEach((item:any) => {
     if (item.install) {
@@ -44,6 +46,7 @@ export {
   Alert,
   Checkbox, Radio, Switch, TagsInput, TextInput,
   Avatar,
+  Card
 };
 
 export default { install, version: '0.0.1' };
