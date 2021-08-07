@@ -24,8 +24,8 @@ export default defineComponent({
     };
     const handleEnter = ($event: KeyboardEvent) => {
       if ($event.target instanceof HTMLInputElement) {
-        console.log(($event.target as HTMLInputElement).value)
-        const value = ($event.target as HTMLInputElement).value
+        console.log($event.target.value)
+        const value = $event.target.value
         if (value.length > 0) {
           ctx.emit('searchFn', value)
         }
