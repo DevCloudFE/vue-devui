@@ -5,7 +5,7 @@ import "./carousel.scss";
 
 export default defineComponent({
   name: "d-carousel",
-  emits: ["update:activeIndex"],
+  emits: ["update:activeIndex", "activeIndexChange"],
   props: carouselProps,
   setup(props, { emit }) {
     const { arrowTrigger, autoplay, autoplaySpeed, dotTrigger, activeIndex } =
@@ -105,6 +105,7 @@ export default defineComponent({
 
       currentIndex.value = latestIndex;
       emit("update:activeIndex", latestIndex);
+      emit("activeIndexChange", latestIndex);
       autoScheduleTransition();
     };
     // 向前切换

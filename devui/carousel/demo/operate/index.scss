@@ -1,0 +1,17 @@
+@import '../../../style/devui.scss';
+
+.d-carousel-item {
+    text-align: center;
+    line-height: 200px;
+    background: $devui-global-bg;
+}
+.carousel-demo-operate{
+    margin-top: 10px;
+
+    display: flex;
+    align-items: center;
+
+    > * {
+        margin-right: 20px;
+    }
+}
