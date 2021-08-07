@@ -1,16 +1,32 @@
 import { App } from 'vue';
 
-import Alert from './alert/alert';
+// 通用
 import Button from './button/button';
-import Checkbox from './checkbox/src/checkbox';
 import Panel from './panel/panel';
-import Radio from './radio/src/radio';
+
+// 导航
 import Tabs from './tabs/tabs';
+
+// 反馈
+import Alert from './alert/alert';
+
+// 数据录入
+import Checkbox from './checkbox/src/checkbox';
+import Radio from './radio/src/radio';
 import Switch from './switch/src/switch';
+import TagsInput from './tags-input/src/tags-input';
+import TextInput from './text-input/src/text-input';
+
+// 数据展示
+import Avatar from './avatar/avatar';
 
 function install(app: App) {
   const packages = [
-    Alert, Button, Checkbox, Panel, Radio, Tabs, Switch,
+    Button, Panel,
+    Tabs,
+    Alert,
+    Checkbox, Radio, Switch, TagsInput, TextInput,
+    Avatar,
   ];
   packages.forEach((item:any) => {
     if (item.install) {
@@ -22,7 +38,11 @@ function install(app: App) {
 }
 
 export {
-  Alert, Button, Checkbox, Panel, Radio, Tabs, Switch,
+  Button, Panel,
+  Tabs,
+  Alert,
+  Checkbox, Radio, Switch, TagsInput, TextInput,
+  Avatar,
 };
 
 export default { install, version: '0.0.1' };
