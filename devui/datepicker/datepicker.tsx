@@ -35,16 +35,6 @@ const detachEvent = (el: Node | Window, name: string, cb: (e?: any) => any, capt
   el.removeEventListener(name, cb, capture)
 }
 
-const getScrollOffset = (el: Element) => {
-  let x = 0, y = 0
-  while(el.parentElement) {
-    el = el.parentElement
-    x += el.scrollLeft
-    y += el.scrollTop
-  }
-  return [x, y]
-}
-
 const getHostRange = (host: Element): {
   left: number
   right: number
@@ -70,21 +60,31 @@ export default defineComponent({
     const popCont = ref<Element>()
     const events: { el: Node | Window; cb: (e: any) => void; name: string; capture: boolean; }[] = []
 
-    const state = reactive<{
+    const inputState = reactive<{
       showPanel: boolean
       panelXPos: 'left' | 'right'
       panelYPos: 'top' | 'bottom'
       pointX: string
       pointY: string
-      dateStart?: Date
-      dateEnd?: Date
-      dateHover?: Date
     }>({
       showPanel: false,
       panelXPos: 'left',
       panelYPos: 'top',
       pointX: '0px',
       pointY: '0px',
+    })
+
+    const dateState = reactive<{
+      type?: 'normal' | 'range'
+      dateCurrent?: Date
+      dateNext?: Date
+      dateStart?: Date
+      dateEnd?: Date
+      dateHover?: Date
+    }>({
+      type: 'range',
+      dateCurrent: new Date(),
+      dateNext: new Date(2021, 8, 2)
     })
 
     onMounted(() => {
@@ -94,7 +94,7 @@ export default defineComponent({
       }
       
       const handleAutoClosePanel = factoryAutoClosePanel(cont, () => {
-        state.showPanel = false
+        inputState.showPanel = false
       })
       events.push(attachEvent(document, 'click', handleAutoClosePanel, false))
       // // 窗口失焦点时隐藏弹窗
@@ -107,56 +107,83 @@ export default defineComponent({
     })
 
     const handleActive = (e: Element) => {
-      if(state.showPanel) {
+      if(inputState.showPanel) {
         return
       }
       const range = getHostRange(e)
       if(range.left > range.right) {
-        state.panelXPos = 'right'
-        state.pointX = `${range.width}px`
+        inputState.panelXPos = 'right'
+        inputState.pointX = `${range.width}px`
       } else {
-        state.panelXPos = 'left'
-        state.pointX = '0px'
+        inputState.panelXPos = 'left'
+        inputState.pointX = '0px'
       }
 
       if(range.top > range.bottom) {
-        state.panelYPos = 'bottom'
-        state.pointY = '0px'
+        inputState.panelYPos = 'bottom'
+        inputState.pointY = '0px'
       } else {
-        state.panelYPos = 'top'
-        state.pointY = `${range.height}px`
+        inputState.panelYPos = 'top'
+        inputState.pointY = `${range.height}px`
       }
-      state.showPanel = true
+      inputState.showPanel = true
+    }
+
+    const handleSwitch = (index: number, pos: number, date: Date) => {
+      switch(index) {
+        case 0: // previous year
+          const preYear = new Date(date)
+          preYear.setFullYear(preYear.getFullYear() - 1)
+          pos === 0 ? (dateState.dateCurrent = preYear) : (dateState.dateNext = preYear)
+          break
+        case 1: // previous month
+          const preMonth = new Date(date)
+          preMonth.setMonth(preMonth.getMonth() - 1)
+          pos === 0 ? (dateState.dateCurrent = preMonth) : (dateState.dateNext = preMonth)
+          break
+        case 2: // next month
+          const nextMonth = new Date(date)
+          nextMonth.setMonth(nextMonth.getMonth() + 1)
+          pos === 0 ? (dateState.dateCurrent = nextMonth) : (dateState.dateNext = nextMonth)
+          break
+        case 3: // next year
+          const nextYear = new Date(date)
+          nextYear.setFullYear(nextYear.getFullYear() + 1)
+          pos === 0 ? (dateState.dateCurrent = nextYear) : (dateState.dateNext = nextYear)
+          break
+      }
     }
 
     return () => {
-      
       return (
-        <div
-          ref={container}
-          class="datapicker-container"
-        >
+        <div ref={container} class="datapicker-container">
           <Input width={140} onActive={handleActive} />
-          <div ref={popCont} class="datepicker-pop-container" style={{ left: state.pointX, top: state.pointY }}>
+          <div ref={popCont} class="datepicker-pop-container" style={{ left: inputState.pointX, top: inputState.pointY }}>
             <PopPanel
-              show={state.showPanel}
-              xPosition={state.panelXPos}
-              yPosition={state.panelYPos}
+              show={inputState.showPanel}
+              xPosition={inputState.panelXPos}
+              yPosition={inputState.panelYPos}
               xOffset={0}
               yOffset={0}
             ><Calendar
-              mode="range"
-              dateStart={state.dateStart}
-              dateEnd={state.dateEnd}
-              dateHover={state.dateHover}
+              type="range"
+              current={dateState.dateCurrent}
+              next={dateState.dateNext}
+              dateStart={dateState.dateStart}
+              dateEnd={dateState.dateEnd}
+              dateHover={dateState.dateHover}
               onReset={(date: Date) => {
-                state.dateEnd = state.dateHover = undefined
-                state.dateStart = date
+                dateState.dateEnd = dateState.dateHover = undefined
+                dateState.dateStart = date
               }}
-              onSelected={(date: Date) => state.dateStart = date}
-              onSelectStart={(date: Date) => state.dateStart = date}
-              onSelectEnd={(date: Date) => state.dateEnd = date}
-              onSelecting={(date: Date) => state.dateHover = date}
+              onSelected={(date: Date) => dateState.dateStart = date}
+              onSelectStart={(date: Date) => dateState.dateStart = date}
+              onSelectEnd={(date: Date) => dateState.dateEnd = date}
+              onSelecting={(date: Date) => dateState.dateHover = date}
+              onPreviousYear={(date: Date, pos: number) => handleSwitch(0, pos, date)}
+              onPreviousMonth={(date: Date, pos: number) => handleSwitch(1, pos, date)}
+              onNextMonth={(date: Date, pos: number) => handleSwitch(2, pos, date)}
+              onNextYear={(date: Date, pos: number) => handleSwitch(3, pos, date)}
             /></PopPanel>
           </div>
         </div>
