@@ -4,7 +4,7 @@ import Item from '../../item';
 
 import './index.scss'
 
-const items = ["item 1", 'item 2', 'item 3', 'item 4']
+const items = ["page 1", 'page 2', 'page 3', 'page 4']
 export default defineComponent({
   name: 'd-button-primary',
   setup() {
@@ -17,7 +17,7 @@ export default defineComponent({
   render() {
     return (
       <div>
-        <Carousel height="200px" v-model={ [this.activeIndex, 'activeIndex'] } autoplay>
+        <Carousel height="200px" v-model={ [this.activeIndex, 'activeIndex'] } autoplay autoplaySpeed={ 3000 }>
           {
             items.map(item => <Item key={ item }>{ item }</Item>)
           }

@@ -7,7 +7,7 @@ export type DotPosition = 'bottom' | 'top';
 export const carouselProps = {
   arrowTrigger: {
     type: String as PropType<ArrowTrigger>,
-    default: 'always'
+    default: 'hover'
   },
   autoplay: {
     type: Boolean,
