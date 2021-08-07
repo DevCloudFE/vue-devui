@@ -1,12 +1,14 @@
 import { defineComponent } from 'vue'
 
+import Demo1 from './demo1'
+
 export default defineComponent({
   name: 'd-carousel-demo',
-  props: {
-  },
   setup(props, ctx) {
     return () => {
-      return <div>devui-carousel-demo</div>
+      return <div class="d-carousel-item" >
+        <Demo1 />
+      </div>
     }
   }
 })
