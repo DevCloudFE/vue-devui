@@ -1,7 +1,13 @@
 # Card 卡片
 
+通用卡片容器。
 
-### 主要按钮
+### 何时使用
+
+基础卡片容器，其中可包含文字，列表，图片，段落，用于概览展示时。
+
+
+### 基本用法
 
 <d-card class="d-card">
   <template v-slot:cardAvatar>
@@ -59,6 +65,8 @@
 
 ### 使用图片
 
+通过align可设置d-card-actions操作区域对齐方式：起始对齐、尾部对齐、拉伸对齐。
+
 <d-card class="d-card" src="https://devui.design/components/assets/image1.png">
   <template v-slot:cardAvatar>
     <d-avatar name="DevUI"></d-avatar>
@@ -113,7 +121,7 @@
 </d-card>
 ```
 
-### 自定义
+### 自定义区域
 
 <d-card class="d-card" align="spaceBetween">
   <div class="custom-avatar">
