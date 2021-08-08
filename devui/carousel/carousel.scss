@@ -9,7 +9,7 @@
   cursor: pointer;
   width: 36px;
   height: 36px;
-  border-radius: (36px/2);
+  border-radius: 18px;
   background: $devui-highlight-overlay;
   box-shadow: $devui-shadow-length-hover $devui-light-shadow;
   display: inline-flex;
@@ -71,6 +71,8 @@
     justify-content: center;
     width: 100%;
 
+    list-style: none;
+
     &.bottom {
       bottom: 8px;
     }
@@ -82,7 +84,7 @@
     .dot-item {
       width: 6px;
       height: 6px;
-      border-radius: (6px/2);
+      border-radius: 3px;
       margin-right: 8px;
       background: $devui-icon-fill;
 

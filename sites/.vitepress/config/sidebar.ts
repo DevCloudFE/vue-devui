@@ -35,8 +35,9 @@ const sidebar = {
       text: '数据展示',
       children: [
         { text: 'Avatar 头像', link: '/components/avatar/' },
+        { text: '走马灯', link: '/components/carousel/' },
       ]
-    }
+    },
   ],
 }
 
