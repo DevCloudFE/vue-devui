@@ -10,7 +10,7 @@ import Tabs from './tabs';
 
 // 反馈
 import Alert from './alert/alert';
-import Loading, { LoadingService, dLoading } from './loading';
+import DLoading, { LoadingService, Loading } from './loading';
 
 // 数据录入
 import Checkbox from './checkbox';
@@ -24,7 +24,7 @@ import Avatar from './avatar';
 import Carousel from './carousel';
 
 function install(app: App): void {
-  const packages = [ Button, Icon, Panel, Tabs, Alert, Loading, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel ];
+  const packages = [ Button, Icon, Panel, Tabs, Alert, DLoading, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel ];
   packages.forEach((item: any) => {
     if (item.install) {
       app.use(item);
@@ -34,5 +34,5 @@ function install(app: App): void {
   });
 }
 
-export { Button, Icon, Panel, Tabs, Alert, LoadingService, Loading: dLoading, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel };
+export { Button, Icon, Panel, Tabs, Alert, LoadingService, Loading, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel };
 export default { install, version: '0.0.1' };
