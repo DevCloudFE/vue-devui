@@ -1,4 +1,4 @@
-import { CSSProperties, ExtractPropTypes, PropType, VNode } from 'vue'
+import { ExtractPropTypes, PropType, VNode } from 'vue'
 
 type PositionType = 'static' | 'relative' | 'absolute' | 'fixed' |'sticky'
 

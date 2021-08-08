@@ -65,11 +65,13 @@ const toggleLoading = (el: TargetHTMLElement, binding: BindingType) => {
     cacheInstance.add(el)
 
     if (vals) {
+      console.log(vals, el.textContent)
       Promise.all(vals).then((res: Array<boolean>) => {
-        if (res.some((val: boolean) => !val)) {
-          console.error(new Error('Promise handling errors'))
-          return
-        }
+        console.log(res)
+      }).catch((err: any) => {
+        console.error(new Error('Promise handling errors'), err)
+      }).finally(() => {
+        console.log(1111)
         unmount(el)
       })
     }
@@ -80,7 +82,6 @@ const toggleLoading = (el: TargetHTMLElement, binding: BindingType) => {
 
 const removeAttribute = (el: TargetHTMLElement) => {
   el.removeAttribute('zindex')
-  el.removeAttribute('showloading')
   el.removeAttribute('positiontype')
   el.removeAttribute('backdrop')
   el.removeAttribute('message')
@@ -111,10 +112,6 @@ const handleProps = (el: TargetHTMLElement, vprops: LoadingProps) => {
 const loadingDirective = {
   mounted: function (el: TargetHTMLElement, binding: BindingType, vnode: any) {
 
-    if (binding.value === undefined) {
-      binding.value = vnode.props.showLoading
-    }
-
     handleProps(el, vnode.props)
 
     removeAttribute(el)
@@ -123,9 +120,6 @@ const loadingDirective = {
   },
 
   updated: function (el: TargetHTMLElement, binding: BindingType, vnode: any) {
-    if (binding.value === undefined) {
-      binding.value = vnode.props.showLoading
-    }
 
     if ((!isEmpty(binding.value) && cacheInstance.has(el)) ||
         (isEmpty(binding.value) && !cacheInstance.has(el))) return

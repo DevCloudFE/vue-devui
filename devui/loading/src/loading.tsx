@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { CSSProperties, defineComponent, ref } from 'vue'
 import { componentProps, ComponentProps } from './types'
 
 import './loading.scss';
@@ -9,7 +9,7 @@ export default defineComponent({
   props: componentProps,
   setup(props: ComponentProps) {
 
-    const style: any = {
+    const style: CSSProperties = {
       top: props.view.top,
       left: props.view.left,
       zIndex: props.zIndex

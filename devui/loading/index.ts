@@ -5,7 +5,11 @@ import LoadingService from './src/service'
 export default {
   install(app: App) {
     app.directive('dLoading', dLoading)
-  },
+    app.config.globalProperties.$loadingService = LoadingService
+  }
+}
+
+export {
   LoadingService,
   dLoading
 }

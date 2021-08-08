@@ -16,7 +16,7 @@ describe('Loading as directive', () => {
   it('loading init render', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading :showLoading="true"></div>`
+        template: `<div v-dLoading="true"></div>`
       },
       {
         global: globalOption
@@ -33,7 +33,7 @@ describe('Loading as directive', () => {
   it('loading test mask', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading :showLoading="true" :backdrop="false"></div>`
+        template: `<div v-dLoading="true" :backdrop="false"></div>`
       },
       {
         global: globalOption
@@ -47,7 +47,7 @@ describe('Loading as directive', () => {
   it('loading test positionType', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading id="testLoading" :showLoading="true" positionType="absolute"></div>`
+        template: `<div v-dLoading="true" id="testLoading" positionType="absolute"></div>`
       },
       {
         global: globalOption
@@ -64,7 +64,7 @@ describe('Loading as directive', () => {
   it('loading test loadingTemplateRef', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading id="testLoading" :showLoading="true" :loadingTemplateRef="ele"></div>`,
+        template: `<div v-dLoading="true" id="testLoading" :loadingTemplateRef="ele"></div>`,
         data() {
           return {
             ele: h('div', {
@@ -87,13 +87,13 @@ describe('Loading as directive', () => {
     expect(loadingContainer.exists()).toBeFalsy()
   })
 
-  it('loading test showLoading', async () => {
+  it('loading test vLoading', async () => {
     const wrapper = mount(
       {
         template: `
           <div>
             <button id="testbtn" @click="click"></button>
-            <div v-dLoading :showLoading="isShow"></div>
+            <div v-dLoading="isShow"></div>
           </div>
         `,
         setup() {
