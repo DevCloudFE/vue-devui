@@ -1,3 +1,5 @@
+import { TDateCell } from './types'
+
 const getHumanDate = (d: Date) => {
 	const year = d.getFullYear()
 	const month = d.getMonth() + 1
@@ -16,8 +18,6 @@ const getHumanDate = (d: Date) => {
 		ms,
 	}
 }
-
-export type TDateCell = { date: Date; current: -1 | 0 | 1; }
 
 const getMonthDays = (year: number, month: number) => {
 	const first = new Date(year, month - 1, 1)
@@ -45,7 +45,7 @@ const getMonthDays = (year: number, month: number) => {
 }
 
 export const getMonthWeeklyDays = (date: any = new Date()) => {
-	if(!(date instanceof Date)) {
+	if (!(date instanceof Date)) {
 		date = new Date()
 	}
 	const { year, month } = getHumanDate(date)
@@ -61,4 +61,25 @@ export const WEEK_DAYS = ['日', '一', '二', '三', '四', '五', '六']
 
 export const invokeCallback = (cb: any, ...args: any[]) => {
 	typeof cb === 'function' && cb(...args)
+}
+
+export /**
+* 比较日期单位
+* @param small 相对早的日期
+* @param big 相对晚的日期
+* @param mode 比较单位
+* @param min 不能小于这个值
+* @returns 
+*/
+const compareDate = (small: Date | undefined, big: Date | undefined, mode: 'year' | 'month', min: number) => {
+	if (!small || !big) {
+		return true
+	}
+	if (mode === 'year') {
+		return big.getFullYear() - small.getFullYear() > min
+	} else {
+		const bigMonth = big.getFullYear() * 12 + big.getMonth()
+		const smallMonth = small.getFullYear() * 12 + small.getMonth()
+		return bigMonth - smallMonth > min
+	}
 }

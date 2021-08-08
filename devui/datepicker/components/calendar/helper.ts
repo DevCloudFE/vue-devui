@@ -1,34 +1,11 @@
-import { invokeCallback, TDateCell } from './utils'
+import { invokeCallback } from './utils'
+import { TDateCell, TDatePanelDataProps, TDatePanelProps } from './types'
 
-export type TEventCallback = (date: Date, position?: number) => void
-
-export type TProps = ({
-    type: 'select'
-} | {
-    type: 'range'
-    next: Date
-}) & {
-    current: Date
-    mode: 'month' | 'year'
-    dateStart?: Date
-    dateHover?: Date
-    dateEnd?: Date
-    onSelected?: TEventCallback
-    onReset?: TEventCallback
-    onSelectStart?: TEventCallback
-    onSelectEnd?: TEventCallback
-    onSelecting?: TEventCallback
-    onPreviousYear?: TEventCallback
-    onPreviousMonth?: TEventCallback
-    onNextMonth?: TEventCallback
-    onNextYear?: TEventCallback
-}
-
-export const getDateKey = (date: Date) => {
+export const getDateKey = (date: Date): string => {
     return date.toDateString()
 }
 
-export const cellClassName = (props: TProps, day: TDateCell) => {
+export const cellClassName = (props: TDatePanelDataProps, day: TDateCell): string => {
     if(day.current !== 0) {
         return 'calendar-cell disabled'
     }
@@ -55,7 +32,7 @@ export const cellClassName = (props: TProps, day: TDateCell) => {
     }
 }
 
-export const trigEvent = (props: TProps, day: TDateCell) => {
+export const trigEvent = (props: TDatePanelProps, day: TDateCell): void => {
     if(day.current !== 0) {
         return
     }
@@ -72,7 +49,7 @@ export const trigEvent = (props: TProps, day: TDateCell) => {
     }
 }
 
-export const handleDateEnter = (props: TProps, day: TDateCell) => {
+export const handleDateEnter = (props: TDatePanelProps, day: TDateCell): void => {
     if(day.current !== 0) {
         return
     }

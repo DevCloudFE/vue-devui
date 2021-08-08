@@ -1,0 +1,42 @@
+.calendar-toolbar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  user-select: none;
+  font-weight: bold;
+}
+
+.calendar-toolbar a {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.calendar-toolbar a:hover {
+  color: #0066cc;
+}
+
+.calendar-toolbar-button {
+  display: block;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border: 1px soild #000000;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.calendar-toolbar-button.title {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.calendar-toolbar-button.disabled {
+  color: #aaaaaa;
+  cursor: not-allowed;
+}
+
+.calendar-toolbar-button.disabled:hover {
+  color: #aaaaaa;
+}

@@ -1,7 +1,7 @@
 import { defineComponent, ref, reactive, onMounted, onUnmounted } from 'vue'
-import Input from './components/input/index'
-import PopPanel from './components/pop-panel/index'
-import Calendar from './components/calendar/index'
+import Input from './components/input'
+import PopPanel from './components/pop-panel'
+import Calendar from './components/calendar'
 
 import './datepicker.css'
 
@@ -75,7 +75,7 @@ export default defineComponent({
     })
 
     const dateState = reactive<{
-      type?: 'normal' | 'range'
+      type?: 'select' | 'range'
       dateCurrent?: Date
       dateNext?: Date
       dateStart?: Date
