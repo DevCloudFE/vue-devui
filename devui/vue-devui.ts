@@ -14,6 +14,7 @@ import Alert from './alert/alert';
 // 数据录入
 import Checkbox from './checkbox/src/checkbox';
 import Radio from './radio/src/radio';
+import Select from './select/src/select'
 import Switch from './switch/src/switch';
 import TagsInput from './tags-input/src/tags-input';
 import TextInput from './text-input/src/text-input';
@@ -26,7 +27,7 @@ function install(app: App) {
     Button, Icon, Panel,
     Tabs,
     Alert,
-    Checkbox, Radio, Switch, TagsInput, TextInput,
+    Checkbox, Radio, Select, Switch, TagsInput, TextInput,
     Avatar,
   ];
   packages.forEach((item:any) => {
@@ -42,7 +43,7 @@ export {
   Button, Icon, Panel,
   Tabs,
   Alert,
-  Checkbox, Radio, Switch, TagsInput, TextInput,
+  Checkbox, Radio, Select, Switch, TagsInput, TextInput,
   Avatar,
 };
 

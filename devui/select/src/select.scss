@@ -1,10 +1,101 @@
 @import '../../style/mixins/index';
 @import '../../style/theme/color';
 @import '../../style/theme/corner';
+@import '@devui-design/icons/icomoon/devui-icon.css';
+
+$border-change-time: 300ms;
+$border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+
+@mixin border-transition {
+  transition: border-color $border-change-time $border-change-function;
+}
 
 .devui-select {
   position: relative;
   width: 100%;
+}
+
+.devui-select-underlined {
+  border-bottom: 1px solid $devui-form-control-line;
+  @include border-transition();
+
+  &:not([disabled]):not(.disabled) {
+    &:hover {
+      border-color: $devui-form-control-line-hover;
+    }
+
+    &.devui-select-open {
+      border-color: $devui-form-control-line-active;
+    }
+  }
+
+  .devui-select-input {
+    border: none;
+  }
+}
+
+.devui-select-open {
+  .devui-select-arrow {
+    transform: rotate3d(0, 0, 1, 180deg);
+  }
+}
+
+.devui-select-selection {
+  position: relative;
+}
+
+.devui-select-input {
+  cursor: pointer;
+  width: 100%;
+  height: 28px;
+  padding: 4px 28px 4px 10px;
+  color: $devui-text;
+  vertical-align: middle;
+  border: 1px solid $devui-form-control-line;
+  border-radius: $devui-border-radius;
+  outline: none;
+  background-color: $devui-base-bg;
+  @include border-transition();
+
+  &:not([disabled]):not(.disabled) {
+    &:hover {
+      border-color: $devui-form-control-line-hover;
+    }
+
+    &:focus {
+      border-color: $devui-form-control-line-active;
+    }
+  }
+
+  &[disabled],
+  &.disabled {
+    &:hover {
+      cursor: not-allowed;
+      background-color: $devui-disabled-bg;
+      border-color: $devui-disabled-line;
+      color: $devui-disabled-text;
+    }
+  }
+
+  &.devui-select-input-lg {
+    height: 44px;
+  }
+
+  &.devui-select-input-sm {
+    height: 24px;
+  }
+}
+
+.devui-select-arrow {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 28px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotate3d(0, 0, 1, 0deg);
+  transition: transform 0.25s ease-out;
 }
 
 .devui-select-dropdown {
@@ -24,6 +115,8 @@
   max-height: 300px;
   width: 100%;
   overflow-y: auto;
+  padding: 0;
+  margin: 0;
 }
 
 .devui-select-item {
@@ -39,6 +132,7 @@
   text-overflow: ellipsis;
   border: 0;
   color: $devui-text;
+  cursor: pointer;
 
   &:hover:not(.active) {
     color: $devui-list-item-hover-text;
@@ -73,10 +167,15 @@
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease;
+  transform: scale3d(0, 1, 0, 0.9999) translate3d(0, 1, 0, 0);
+  transform-origin: 0 0%;
+  opacity: 1;
+  transition: transform, opacity 0.25s ease-out;
 }
 
 .fade-enter-from,
 .fade-leave-to {
+  transform: scale3d(0, 1, 0, 0) translate3d(0, 1, 0, -4px);
   opacity: 0;
+  transition: transform, opacity 0.25s ease-in;
 }
