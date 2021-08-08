@@ -1,5 +1,8 @@
+/**
+ * 定义组件class
+ */
 import { computed, ComputedRef } from 'vue';
-import { SearchProps } from './use-search'
+import { SearchProps } from '../use-search'
 const SIZE_CLASS = {
   lg: 'lg',
   sm: 'sm',
@@ -11,6 +14,8 @@ const ICON_POSITION = {
 export const getRootClass = (props: SearchProps): ComputedRef => {
   return computed(() => ({
     'd-search': true,
+    'd-search__disbaled': props.disabled,
+    'd-search__no-border': props.noBorder,
     [`d-search__${props.size}`]: SIZE_CLASS[props.size],
     [`d-search__${props.iconPosition}`]: ICON_POSITION[props.iconPosition],
   }))

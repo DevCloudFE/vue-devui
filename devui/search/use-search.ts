@@ -41,7 +41,15 @@ export const searchProps = {
   cssClass: {
     type: String,
     default: ''
-  }
+  },
+  modelValue: {
+    type: String,
+    default: '',
+  },
+  'onUpdate:value': {
+    type: Function as PropType<(v: string) => void>,
+    default: undefined
+  },
 }
 
 export type SearchProps = ExtractPropTypes<typeof searchProps>
