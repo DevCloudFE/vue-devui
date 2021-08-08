@@ -6,6 +6,21 @@
 
 当执行指令时间较长（需要数秒以上）时，向用户展示正在执行的状态。
 
+### 参数
+
+| **参数**           | **类型**                                                     | **默认**                  | **说明**                                                     | **跳转 Demo**                |
+| ------------------ | ------------------------------------------------------------ | ------------------------- | ------------------------------------------------------------ | ---------------------------- |
+| v-dLoading         | Promise\<any\> / Array\<Promise\<any\>\> / Boolean / undefined | --                        | 可选，指令方式，控制 loading 状态                            | [基本用法](#基本用法)        |
+| target             | Element                                                      | document.body             | 可选，服务方式，Loading 需要覆盖的 DOM 节点                  | [服务方式调用](#服务方式调用) |
+| message            | String                                                       | --                        | 可选，loading 时的提示信息                                   | [多promise](#多promise)      |
+| loadingTemplateRef | VNode                                                        | --                        | 可选，自定义 loading 模板                                    | [自定义样式](#自定义样式)     |
+| backdrop           | Boolean                                                      | true                      | 可选，loading 时是否显示遮罩                                 | [基本用法](#基本用法)        |
+| positionType       | String                                                       | relative                  | 可选，指定`dLoading`宿主元素的定位类型,取值与 css position 属性一致。 | [基本用法](#基本用法)        |
+| view               | {top?:string,left?:string}                                   | {top: '50%', left: '50%'} | 可选，调整 loading 的显示位置，相对于宿主元素的顶部距离与左侧距离 | [基本用法](#基本用法)        |
+| zIndex             | Number                                                       | --                        | 可选，loading加载提示的 z-index 值                           | [基本用法](#基本用法)        |
+
+
+
 
 ### 基本用法
 展示加载表格数据的场景中的基本使用方法。
@@ -13,6 +28,10 @@
 <d-button @click="fetchTableData" style="margin-top: 8px">click me!</d-button>
 <table
   v-dLoading="loadingStatus"
+  :backdrop="true"
+  positionType="relative"
+  :view="{top: '50%', left: '50%'}"
+  :zIndex="100"
   style="width: 100%; text-align: left;"
 >
   <thead>
@@ -29,9 +48,15 @@
 
 ```html
 <template>
-  <d-button @click.native="fetchTableData" style="margin-top: 8px">click me!</d-button>
-
-  <table v-dLoading="loadingStatus" style="width: 100%; text-align: left;">
+  <d-button @click="fetchTableData" style="margin-top: 8px">click me!</d-button>
+  <table
+    v-dLoading="loadingStatus"
+    :backdrop="true"
+    positionType="relative"
+    :view="{top: '50%', left: '50%'}"
+    :zIndex="100"
+    style="width: 100%; text-align: left;"
+  >
     <thead>
       <tr>
         <th>序号</th><th>姓名</th><th>队伍</th><th>操作</th>
@@ -89,7 +114,6 @@ export default defineComponent({
 
   <div
     v-dLoading="promises.value"
-    :backdrop="true"
     message="One moment please..."
     style="margin-top: 20px; width: 100%; height: 80px; padding: 10px;"
   >loading will show here2</div>
@@ -222,7 +246,7 @@ export default defineComponent({
   :width="220"
   @click="showLoading1"
   style="margin-right: 8px; display: inline-block;">Loading Style 1</d-button>
-  
+
 <d-button
   :width="220"
   v-dLoading="isShowLoading2"
@@ -513,7 +537,7 @@ $time: 1800ms;
 
 
 
-<script lang="ts">
+<script lang="tsx">
 import { defineComponent, ref, Ref, reactive, shallowReactive, h } from 'vue'
 import { LoadingService } from '../../../devui/vue-devui'
 import ShowLoading1 from './showLoading1.tsx'
@@ -533,7 +557,7 @@ export default defineComponent({
         loadingStatus.value = false
       }, 2000)
     }
-    
+  
     // 多个promise
     const promises: any = shallowReactive({
       value: []
@@ -551,16 +575,16 @@ export default defineComponent({
       }
       promises.value = list
     }
-
+    
     // 服务方式
     const serviceToBody = () => {
       const results = LoadingService.open()
-
+    
       setTimeout(() => {
         results.loadingInstance.close()
       }, 2000)
     }
-
+    
     const isShow = ref(true)
     let resultTarget: any
     const openTargetLoading = () => {
@@ -572,17 +596,17 @@ export default defineComponent({
       })
       isShow.value = false
     }
-
+    
     const closeTargetLoading = () => {
       resultTarget.loadingInstance.close()
       isShow.value = true
     }
-
+    
     // 自定义样式
     const temp1 = h(ShowLoading1)
     const temp2 = h(ShowLoading2)
     const temp3 = h(ShowLoading3)
-
+    
     const isShowLoading1: Ref<Promise<unknown> | false> = ref(false)
     const showLoading1 = () => {
       isShowLoading1.value = new Promise((res: any) => {
@@ -591,7 +615,7 @@ export default defineComponent({
         }, 1000)
       })
     }
-
+    
     const isShowLoading2: Ref<Promise<unknown> | false> = ref(false)
     const showLoading2 = () => {
       isShowLoading2.value = new Promise((res: any) => {
@@ -600,23 +624,23 @@ export default defineComponent({
         }, 1000)
       })
     }
-
+    
     return {
       // 基本使用
       datas,
       loadingStatus,
       fetchTableData,
-
+    
       // 多promise
       promises,
       fetchMutiplePromise,
-
+    
       // 服务方式
       isShow,
       serviceToBody,
       openTargetLoading,
       closeTargetLoading,
-
+    
       // 自定义样式
       temp1,
       temp2,
