@@ -38,7 +38,8 @@ export default defineComponent({
       () => activeIndex,
       () => {
         currentIndex.value = activeIndex;
-      }
+      },
+      { immediate: true }
     );
 
     // 翻页位移
