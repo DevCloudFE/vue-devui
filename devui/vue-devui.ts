@@ -10,6 +10,7 @@ import Tabs from './tabs/tabs';
 
 // 反馈
 import Alert from './alert/alert';
+import Loading from './loading';
 
 // 数据录入
 import Checkbox from './checkbox/src/checkbox';
@@ -25,7 +26,7 @@ function install(app: App) {
   const packages = [
     Button, Icon, Panel,
     Tabs,
-    Alert,
+    Alert, Loading,
     Checkbox, Radio, Switch, TagsInput, TextInput,
     Avatar,
   ];
@@ -41,7 +42,7 @@ function install(app: App) {
 export {
   Button, Icon, Panel,
   Tabs,
-  Alert,
+  Alert, Loading,
   Checkbox, Radio, Switch, TagsInput, TextInput,
   Avatar,
 };
