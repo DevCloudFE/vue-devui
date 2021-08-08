@@ -1,15 +1,23 @@
-import { defineComponent, ref, watch, onMounted, Fragment, Comment } from "vue";
-import { carouselProps, DotTrigger } from "./types";
+import { defineComponent, ref, watch, onMounted, Fragment, Comment } from 'vue';
+import { carouselProps, DotTrigger } from './types';
 
-import "./carousel.scss";
+import Icon from '../icon/src/icon'
+
+import './carousel.scss';
 
 export default defineComponent({
-  name: "d-carousel",
-  emits: ["update:activeIndex"],
+  name: 'DCarousel',
   props: carouselProps,
+  emits: ['update:activeIndex'],
   setup(props, { emit }) {
-    const { arrowTrigger, autoplay, autoplaySpeed, dotTrigger, activeIndex, activeIndexChange } =
-      props;
+    const {
+      arrowTrigger,
+      autoplay,
+      autoplaySpeed,
+      dotTrigger,
+      activeIndex,
+      activeIndexChange
+    } = props;
     const transitionSpeed = 500;
 
     const itemCount = ref(0);
@@ -22,7 +30,7 @@ export default defineComponent({
     watch(
       () => arrowTrigger,
       () => {
-        showArrow.value = arrowTrigger === "always";
+        showArrow.value = arrowTrigger === 'always';
       },
       { immediate: true }
     );
@@ -40,9 +48,9 @@ export default defineComponent({
     // 调整首尾翻页后的动画
     const adjustTransition = (targetEl: HTMLElement) => {
       setTimeout(() => {
-        if (containerRef.value) containerRef.value.style.transition = "";
+        if (containerRef.value) containerRef.value.style.transition = '';
 
-        targetEl.style.transform = "";
+        targetEl.style.transform = '';
         translatePosition(currentIndex.value);
       }, transitionSpeed);
     };
@@ -64,8 +72,9 @@ export default defineComponent({
         index === currentIndex.value ||
         !wrapperRef.value ||
         !containerRef.value
-      )
+      ) {
         return;
+      }
 
       containerRef.value.style.transition = `left ${transitionSpeed}ms ease`;
 
@@ -96,15 +105,17 @@ export default defineComponent({
         latestIndex =
           index < 0
             ? 0
-            : index > itemCount.value - 1
-            ? itemCount.value - 1
-            : index;
+            : (
+              index > itemCount.value - 1
+                ? itemCount.value - 1
+                : index
+            )
 
         translatePosition(latestIndex);
       }
 
       currentIndex.value = latestIndex;
-      emit("update:activeIndex", latestIndex);
+      emit('update:activeIndex', latestIndex);
       activeIndexChange?.(latestIndex)
       autoScheduleTransition();
     };
@@ -118,10 +129,10 @@ export default defineComponent({
     };
 
     // 切换箭头监听事件，用于处理hover方式
-    const arrowMouseEvent = (type: "enter" | "leave") => {
-      if (arrowTrigger !== "hover") return;
+    const arrowMouseEvent = (type: 'enter' | 'leave') => {
+      if (arrowTrigger !== 'hover') return;
 
-      showArrow.value = type === "enter";
+      showArrow.value = type === 'enter';
     };
     // 指示器触发切换函数
     const switchStep = (index: number, type: DotTrigger) => {
@@ -152,7 +163,7 @@ export default defineComponent({
     onMounted(() => {
       if (containerRef.value) {
         containerRef.value.style.transition = `left ${transitionSpeed}ms ease`;
-        containerRef.value.style.left = "0%";
+        containerRef.value.style.left = '0%';
       }
 
       autoScheduleTransition();
@@ -211,44 +222,18 @@ export default defineComponent({
       <div
         class="devui-carousel-container"
         style={{ height }}
-        onMouseenter={() => arrowMouseEvent("enter")}
-        onMouseleave={() => arrowMouseEvent("leave")}
+        onMouseenter={() => arrowMouseEvent('enter')}
+        onMouseleave={() => arrowMouseEvent('leave')}
       >
         {/* carousel arrow */}
-        {arrowTrigger !== "never" && showArrow ? (
+        {arrowTrigger !== 'never' && showArrow ? (
           <div class="devui-carousel-arrow">
+            
             <button class="arrow-left" onClick={() => prev()}>
-              <svg width="18px" height="18px" viewBox="0 0 16 16" version="1.1">
-                <g
-                  stroke="none"
-                  stroke-width="1"
-                  fill="none"
-                  fill-rule="evenodd"
-                >
-                  <polygon
-                    fill="#293040"
-                    fill-rule="nonzero"
-                    points="10.7071068 12.2928932 9.29289322 13.7071068 3.58578644 8 9.29289322 2.29289322 10.7071068 3.70710678 6.41421356 8"
-                  ></polygon>
-                </g>
-              </svg>
+              <Icon name="arrow-left"   />
             </button>
             <button class="arrow-right" onClick={() => next()}>
-              <svg width="18px" height="18px" viewBox="0 0 16 16" version="1.1">
-                <g
-                  stroke="none"
-                  stroke-width="1"
-                  fill="none"
-                  fill-rule="evenodd"
-                >
-                  <polygon
-                    fill="#293040"
-                    fill-rule="nonzero"
-                    transform="translate(8.146447, 8.000000) scale(-1, 1) translate(-8.146447, -8.000000) "
-                    points="11.7071068 12.2928932 10.2928932 13.7071068 4.58578644 8 10.2928932 2.29289322 11.7071068 3.70710678 7.41421356 8"
-                  ></polygon>
-                </g>
-              </svg>
+              <Icon name="arrow-right" />
             </button>
           </div>
         ) : null}
@@ -267,12 +252,12 @@ export default defineComponent({
 
         {/* carousel dots */}
         {itemCount > 0 && showDots ? (
-          <ul class={["devui-carousel-dots", dotPosition]}>
+          <ul class={['devui-carousel-dots', dotPosition]}>
             {children.map((_, index) => (
               <li
-                class={{ "dot-item": true, active: currentIndex === index }}
-                onClick={() => switchStep(index, "click")}
-                onMouseenter={() => switchStep(index, "hover")}
+                class={{ 'dot-item': true, active: currentIndex === index }}
+                onClick={() => switchStep(index, 'click')}
+                onMouseenter={() => switchStep(index, 'hover')}
               />
             ))}
           </ul>

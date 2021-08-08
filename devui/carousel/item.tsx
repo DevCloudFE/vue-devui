@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'd-carousel-demo',
+  name: 'DCarouselItem',
   render() {
     const {
       $slots
