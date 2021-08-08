@@ -56,7 +56,3 @@ import 'my-icon.css';
 ```html
 <d-icon class-prefix="my-icon" name="right" />
 ```
-
-<style lang="scss">
-@import '@devui-design/icons/icomoon/devui-icon.css'
-</style>
