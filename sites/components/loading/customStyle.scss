@@ -1,78 +1,20 @@
-$len: 170px;
-$time: 1800ms;
-
 .devui-infinity-loading {
-  svg {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-  }
-}
-
-#infinity-outline {
-  stroke-dasharray: $len * 0.01, $len;
-  stroke-dashoffset: 0;
-  animation: anim $time linear infinite;
-  opacity: 1;
-}
-
-#infinity-bg {
-  stroke: #3b5885;
-}
-
-@keyframes anim {
-  0% {
-    stroke-dasharray: $len * 0, $len;
-    stroke-dashoffset: -$len * 0;
-  }
-
-  55% {
-    stroke-dasharray: $len * 0.24, $len;
-    stroke-dashoffset: -$len * 0.36;
-  }
-
-  100% {
-    stroke-dasharray: -$len * 0.93, $len;
-    stroke-dashoffset: -$len * 0.93;
-  }
-}
-
-.devui-circle-loading-container {
   position: absolute;
-  top: 5px;
-  left: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .devui-circle-loading-container-2 {
   position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.devui-circle-loading-container-3 {
+  position: absolute;
   right: -20px;
-  top: 5px;
-}
-
-.devui-circle-loading {
-  animation: loadingCircle 1s linear infinite;
-}
-
-@keyframes loadingCircle {
-  0% {
-    stroke-dasharray: 1, 50;
-    stroke-dashoffset: 0;
-  }
-
-  60% {
-    stroke-dasharray: 30, 50;
-    stroke-dashoffset: -30;
-  }
-
-  100% {
-    stroke-dasharray: 1, 50;
-    stroke-dashoffset: -50;
-  }
-}
-
-.loading-container {
-  height: 150px;
+  top: 50%;
+  transform: translateY(-50%);
 }

@@ -65,13 +65,10 @@ const toggleLoading = (el: TargetHTMLElement, binding: BindingType) => {
     cacheInstance.add(el)
 
     if (vals) {
-      console.log(vals, el.textContent)
       Promise.all(vals).then((res: Array<boolean>) => {
-        console.log(res)
       }).catch((err: any) => {
         console.error(new Error('Promise handling errors'), err)
       }).finally(() => {
-        console.log(1111)
         unmount(el)
       })
     }
