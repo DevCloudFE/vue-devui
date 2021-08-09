@@ -1,6 +1,6 @@
-import { App,createApp } from 'vue'
+import { App } from 'vue'
 import Anchor from './anchor'
-const app = createApp({})
+ 
 const directives = {
   'only': {
     // 当被绑定的元素挂载到 DOM 中时……
