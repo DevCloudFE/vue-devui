@@ -23,6 +23,7 @@ import TextInput from './text-input'
 // 数据展示
 import Avatar from './avatar'
 import Carousel from './carousel'
+import CarouselItem from './carousel/item'
 
 function install(app: App): void {
   const packages = [
@@ -40,7 +41,8 @@ function install(app: App): void {
     TagsInput,
     TextInput,
     Avatar,
-    Carousel
+    Carousel,
+    CarouselItem,
   ]
   packages.forEach((item: any) => {
     if (item.install) {
@@ -67,6 +69,7 @@ export {
   TagsInput,
   TextInput,
   Avatar,
-  Carousel
+  Carousel,
+  CarouselItem,
 }
 export default { install, version: '0.0.1' }
