@@ -1,14 +1,15 @@
-import { computed, defineComponent, onUnmounted, ref, Teleport, watch } from 'vue'
+import './toast.scss'
+
+import { computed, defineComponent, nextTick, onUnmounted, ref, watch } from 'vue'
 import { Message, ToastProps, toastProps } from './toast.type'
 import DToastIconClose from './toast-icon-close'
 import DToastImage from './toast-image'
-import { cloneDeep, defaults, isEqual, throttle } from 'lodash-es'
+import { cloneDeep, isEqual, merge, omit, throttle } from 'lodash-es'
+import { useToastEvent } from '../hooks/use-toast-event'
+import { useToastHelper } from '../hooks/use-toast-helper'
+import { useToastConstant } from '../hooks/use-toast-constant'
 
-import './toast.scss'
-
-const ANIMATION_TIME = 300
-const ANIMATION_NAME = 'slide-in'
-const ID_PREFIX = 'toast-message'
+const { ANIMATION_NAME, ANIMATION_TIME, ID_PREFIX } = useToastConstant()
 
 export default defineComponent({
   name: 'DToast',
@@ -16,6 +17,9 @@ export default defineComponent({
   props: toastProps,
   emits: ['closeEvent', 'valueChange'],
   setup(props: ToastProps, ctx) {
+    const { onCloseEvent, onHidden, onValueChange } = useToastEvent()
+    const { severityDelay } = useToastHelper()
+
     const removeThrottle = throttle(remove, ANIMATION_TIME)
 
     const messages = ref<Message[]>([])
@@ -42,8 +46,14 @@ export default defineComponent({
       (value) => {
         if (value.length === 0) return
 
-        initValue()
-        handleValueChange()
+        if (hasMsgAnimation()) {
+          initValue()
+        }
+
+        nextTick(() => {
+          initValue(value)
+          handleValueChange()
+        })
       },
       { deep: true, immediate: true }
     )
@@ -68,19 +78,9 @@ export default defineComponent({
       }
     })
 
-    function severityDelay(msg: Message) {
-      switch (msg.severity) {
-        case 'warn':
-        case 'error':
-          return 10e3
-        default:
-          return 5e3
-      }
-    }
-
-    function initValue() {
-      const cloneValue = cloneDeep(props.value)
-      messages.value = cloneValue.map((v, i) => defaults(v, { id: `${ID_PREFIX}-${i}` }))
+    function initValue(value: Message[] = []) {
+      const cloneValue = cloneDeep(value)
+      messages.value = cloneValue.map((v, i) => merge(v, { id: `${ID_PREFIX}-${i}` }))
       msgAnimations.value = []
     }
 
@@ -117,15 +117,15 @@ export default defineComponent({
     function singleModeRemove(msg: Message, i: number) {
       removeMsgAnimation(msg)
       setTimeout(() => {
-        ctx.emit('closeEvent', msg)
+        onCloseEvent(msg)
 
         if (hasMsgAnimation()) {
           messages.value.splice(i, 1)
-          ctx.emit('valueChange', messages.value)
         } else {
           messages.value = []
-          ctx.emit('valueChange', messages.value)
         }
+
+        onValueChange(messages.value)
       }, ANIMATION_TIME)
     }
 
@@ -162,11 +162,11 @@ export default defineComponent({
       removeMsgAnimation(messages.value[i])
 
       setTimeout(() => {
-        ctx.emit('closeEvent', messages.value[i])
+        onCloseEvent(messages.value[i])
 
         messages.value.splice(i, 1)
 
-        ctx.emit('valueChange', messages.value)
+        onValueChange(messages.value)
 
         if (props.lifeMode === 'global') {
           removeReset()
@@ -179,11 +179,11 @@ export default defineComponent({
         msgAnimations.value = []
 
         setTimeout(() => {
-          messages.value.forEach((msg) => ctx.emit('closeEvent', msg))
+          messages.value.forEach((msg) => onCloseEvent(msg))
 
           messages.value = []
 
-          ctx.emit('valueChange', messages.value)
+          onValueChange(messages.value)
         }, ANIMATION_TIME)
       }
     }
@@ -212,12 +212,25 @@ export default defineComponent({
     }
 
     function removeMsgThrottle(msg: Message) {
-      const index = messages.value.findIndex((_msg) => isEqual(_msg, msg))
+      const ignoreDiffKeys = ['id']
+      const index = messages.value.findIndex((_msg) => isEqual(omit(_msg, ignoreDiffKeys), omit(msg, ignoreDiffKeys)))
       removeIndexThrottle(index)
     }
 
     function removeMsgAnimation(msg: Message) {
       msgAnimations.value = msgAnimations.value.filter((_msg) => _msg !== msg)
+    }
+
+    function close(params?: number | Message): void {
+      if (params === undefined) {
+        return removeAll()
+      }
+
+      if (typeof params === 'number') {
+        removeIndexThrottle(params)
+      } else {
+        removeMsgThrottle(params)
+      }
     }
 
     function msgItemRef(i: number) {
@@ -228,10 +241,6 @@ export default defineComponent({
       return msgAnimations.value.length > 0
     }
 
-    function onHidden() {
-      setTimeout(() => (ctx.attrs.onHidden as () => void)?.(), ANIMATION_TIME)
-    }
-
     return {
       messages,
       msgAnimations,
@@ -239,11 +248,9 @@ export default defineComponent({
       containerRef,
       msgItemRefs,
       interrupt,
-      remove,
       removeReset,
       removeThrottle,
-      removeMsgThrottle,
-      removeAll,
+      close,
       msgItemRef
     }
   },
@@ -280,24 +287,41 @@ export default defineComponent({
     const showContent = (msg: Message) => !!msg.content
     const showDetail = (msg: Message) => !showContent(msg) && !!msg.detail
 
-    const msgContent = (msg: Message) => (msg.content ? $slots[msg.content]?.(msg) ?? msg.content : null)
+    const msgContent = (msg: Message) => {
+      if (typeof msg.content === 'function') {
+        return msg.content(msg)
+      }
+
+      if ([null, undefined].includes(msg.content)) {
+        return null
+      }
+
+      const slotPrefix = 'slot:'
+      const isSlot = String(msg.content).startsWith(slotPrefix)
+
+      if (isSlot) {
+        return $slots[msg.content.slice(slotPrefix.length)]?.(msg)
+      }
+
+      return msg.content
+    }
 
     return (
-      <div ref='containerRef' style={wrapperStyles} class={wrapperCls} {...$attrs}>
+      <div ref="containerRef" style={wrapperStyles} class={wrapperCls} {...$attrs}>
         {messages.map((msg, i) => (
           <div
             ref={(el) => (msgItemRefs[i] = el)}
             key={msg.id}
             class={msgCls(msg)}
-            aria-live='polite'
+            aria-live="polite"
             onMouseenter={() => interrupt(i)}
             onMouseleave={() => removeReset(i, msg)}
           >
             <div class={`${prefixCls}-item`}>
               {showClose(msg) ? <DToastIconClose prefixCls={prefixCls} onClick={() => removeThrottle(i)} /> : null}
               {showImage(msg) ? <DToastImage prefixCls={prefixCls} severity={msg.severity} /> : null}
-              <div class='devui-toast-message'>
-                {showSummary(msg) ? <span class='devui-toast-title'>{msg.summary}</span> : null}
+              <div class="devui-toast-message">
+                {showSummary(msg) ? <span class="devui-toast-title">{msg.summary}</span> : null}
                 {showContent(msg) ? msgContent(msg) : null}
                 {showDetail(msg) ? <p innerHTML={msg.detail}></p> : null}
               </div>

@@ -1,4 +1,4 @@
-import type { CSSProperties, ExtractPropTypes, PropType } from 'vue'
+import type { CSSProperties, ExtractPropTypes, PropType, h } from 'vue'
 
 export type IToastLifeMode = 'single' | 'global'
 export type IToastSeverity = 'common' | 'success' | 'error' | 'warn' | 'info' | string
@@ -23,7 +23,7 @@ export interface Message {
   /**
    * 消息内容，支持纯文本和插槽，推荐使用。
    */
-  content?: string
+  content?: string | `slot:${string}` | ((message: Message) => ReturnType<typeof h>)
   /**
    * 单个消息超时时间，需设置 lifeMode 为 single 。
    * 每个消息使用自己的超时时间，开启该模式却未设置时按 severity 判断超时时间。

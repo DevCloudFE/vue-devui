@@ -1,9 +1,9 @@
-@import '../style/mixins/index';
-@import '../style/theme/color';
-@import '../style/theme/shadow';
-@import '../style/theme/corner';
-@import '../style/core/_font';
-@import '../style/core/animation';
+@import '../../style/mixins/index';
+@import '../../style/theme/color';
+@import '../../style/theme/shadow';
+@import '../../style/theme/corner';
+@import '../../style/core/_font';
+@import '../../style/core/animation';
 
 .devui-toast {
   position: fixed;
@@ -60,8 +60,8 @@
   right: 10px;
   cursor: pointer;
 
-  .devui-toast-close-icon {
-    fill: $devui-light-text;
+  & i.icon {
+    color: $devui-light-text !important;
   }
 }
 
@@ -82,27 +82,24 @@
   top: 14px;
   padding: 0;
 
-  &.devui-toast-image-warn {
-    path.devui-icon-warning-outer {
-      fill: $devui-warning-line;
-    }
-
-    path.devui-icon-warning-inner {
-      fill: $devui-light-text;
-      stroke: $devui-light-text;
-    }
+  & i.icon {
+    vertical-align: 0;
   }
 
-  &.devui-toast-image-info {
-    background-color: $devui-info;
+  &.devui-toast-image-warn i.icon {
+    color: $devui-warning !important;
   }
 
-  &.devui-toast-image-error {
-    background-color: $devui-danger;
+  &.devui-toast-image-info i.icon {
+    color: $devui-info !important;
   }
 
-  &.devui-toast-image-success {
-    background-color: $devui-success;
+  &.devui-toast-image-error i.icon {
+    color: $devui-danger !important;
+  }
+
+  &.devui-toast-image-success i.icon {
+    color: $devui-success !important;
   }
 
   .devui-toast-image-info-path,
