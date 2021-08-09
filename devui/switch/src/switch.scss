@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @import '../../style/theme/color';
 @import '../../style/theme/font';
 @import '../../style/core/animation';
@@ -11,7 +13,7 @@
 .devui-switch {
   width: 36px;
   height: 18px;
-  border-radius: (20px/2);
+  border-radius: math.div(20px, 2);
   background: $devui-line;
   border: 1px solid $devui-line;
   position: relative;
@@ -74,7 +76,7 @@
   &.devui-switch-lg {
     width: 58px;
     height: 30px;
-    border-radius: (32px/2);
+    border-radius: math.div(32px, 2);
 
     .devui-switch-inner-wrapper {
       padding-left: 28px;
@@ -102,7 +104,7 @@
   &.devui-switch-sm {
     width: 30px;
     height: 14px;
-    border-radius: (16px/2);
+    border-radius: math.div(16px, 2);
 
     .devui-switch-inner-wrapper {
       padding-left: 12px;

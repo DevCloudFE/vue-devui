@@ -1,18 +1,30 @@
 import { App } from 'vue';
 
-import Alert from './alert/alert';
-import Button from './button/button';
-import Checkbox from './checkbox/src/checkbox';
-import Panel from './panel/panel';
-import Radio from './radio/src/radio';
-import Tabs from './tabs/tabs';
-import Switch from './switch/src/switch';
+// 通用
+import Button from './button';
+import Icon from './icon';
+import Panel from './panel';
 
-function install(app: App) {
-  const packages = [
-    Alert, Button, Checkbox, Panel, Radio, Tabs, Switch,
-  ];
-  packages.forEach((item:any) => {
+// 导航
+import Tabs from './tabs';
+
+// 反馈
+import Alert from './alert';
+
+// 数据录入
+import Checkbox from './checkbox';
+import Radio from './radio';
+import Switch from './switch';
+import TagsInput from './tags-input';
+import TextInput from './text-input';
+
+// 数据展示
+import Avatar from './avatar';
+import Carousel from './carousel';
+
+function install(app: App): void {
+  const packages = [ Button, Icon, Panel, Tabs, Alert, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel ];
+  packages.forEach((item: any) => {
     if (item.install) {
       app.use(item);
     } else if (item.name) {
@@ -21,8 +33,5 @@ function install(app: App) {
   });
 }
 
-export {
-  Alert, Button, Checkbox, Panel, Radio, Tabs, Switch,
-};
-
+export { Button, Icon, Panel, Tabs, Alert, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel };
 export default { install, version: '0.0.1' };
