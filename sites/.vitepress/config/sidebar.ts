@@ -19,6 +19,7 @@ const sidebar = {
       text: '反馈',
       children: [
         { text: 'Alert 警告', link: '/components/alert/' },
+        { text: 'Loading 加载提示', link: '/components/loading/' },
       ]
     },
     {
@@ -36,8 +37,9 @@ const sidebar = {
       text: '数据展示',
       children: [
         { text: 'Avatar 头像', link: '/components/avatar/' },
+        { text: 'Carousel 走马灯', link: '/components/carousel/' },
       ]
-    }
+    },
   ],
 }
 
