@@ -10,7 +10,7 @@
 
 推荐使用@vite/cli创建你的项目
 
-```
+```sh
 yarn create vite my-vue-app --template vue-ts
 ```
 
@@ -18,7 +18,7 @@ yarn create vite my-vue-app --template vue-ts
 
 进入你的项目文件夹，使用yarn安装DevUI
 
-```
+```sh
 yarn add vue-devui
 
 # 可选，字体图标库, 部分Demo依赖此字体库
@@ -29,7 +29,7 @@ yarn add vue-devui
 
 main.ts
 
-```
+```js
 import DevUI from 'vue-devui'
 import 'vue-devui/style.css'
 
@@ -38,6 +38,6 @@ createApp(App).use(DevUI).mount(#app)
 
 ### 4. 启动开发调试
 
-```
+```sh
 yarn dev
 ```
