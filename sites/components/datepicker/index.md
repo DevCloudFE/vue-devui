@@ -8,10 +8,29 @@
 - 选择日期区间
 - 限制日期输入
 
-### 简单使用
-
-<d-datepicker />
+### 日期选择
 
 ```jsx
 <d-datepicker />
 ```
+
+<d-datepicker />
+
+### 日期区域选择
+
+```jsx
+<d-datepicker type="range" />
+```
+
+<d-datepicker type="range" />
+
+### 自动关闭
+
+```jsx
+<d-datepicker auto-complete />
+<d-datepicker auto-complete type="range" />
+```
+
+<d-datepicker auto-complete />
+<d-datepicker auto-complete type="range" />
+

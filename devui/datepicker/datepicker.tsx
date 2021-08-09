@@ -54,6 +54,9 @@ const getHostRange = (host: Element): {
 export default defineComponent({
   name: 'DDatepicker',
   props: {
+    type: { type: String, default: 'select' },
+    autoComplete: { type: Boolean, default: false },
+    onDateChange: { type: Function }
   },
   setup(props, ctx) {
     const container = ref<Element>()
@@ -66,12 +69,14 @@ export default defineComponent({
       panelYPos: 'top' | 'bottom'
       pointX: string
       pointY: string
+      value: string
     }>({
       showPanel: false,
       panelXPos: 'left',
       panelYPos: 'top',
       pointX: '0px',
       pointY: '0px',
+      value: 'y/MM/dd'
     })
 
     const dateState = reactive<{
@@ -154,10 +159,32 @@ export default defineComponent({
       }
     }
 
+    const handleSelected = (date: Date) => {
+      dateState.dateStart = date
+      inputState.value = date.toDateString()
+      if(props.autoComplete) {
+        inputState.showPanel = false
+      }
+      if(typeof props.onDateChange === 'function') {
+        props.onDateChange(date)
+      }
+    }
+
+    const handleSelectEnd = (date: Date) => {
+      dateState.dateEnd = date
+      inputState.value = (dateState.dateStart as Date).toDateString() + ' - ' +  date.toDateString()
+      if(props.autoComplete) {
+        inputState.showPanel = false
+      }
+      if(typeof props.onDateChange === 'function') {
+        props.onDateChange(date)
+      }
+    }
+
     return () => {
       return (
         <div ref={container} class="datapicker-container">
-          <Input width={140} onActive={handleActive} />
+          <Input width={140} onActive={handleActive} value={inputState.value} />
           <div ref={popCont} class="datepicker-pop-container" style={{ left: inputState.pointX, top: inputState.pointY }}>
             <PopPanel
               show={inputState.showPanel}
@@ -166,7 +193,7 @@ export default defineComponent({
               xOffset={0}
               yOffset={0}
             ><Calendar
-              type="range"
+              type={props.type || 'select'}
               current={dateState.dateCurrent}
               next={dateState.dateNext}
               dateStart={dateState.dateStart}
@@ -176,9 +203,9 @@ export default defineComponent({
                 dateState.dateEnd = dateState.dateHover = undefined
                 dateState.dateStart = date
               }}
-              onSelected={(date: Date) => dateState.dateStart = date}
+              onSelected={handleSelected}
               onSelectStart={(date: Date) => dateState.dateStart = date}
-              onSelectEnd={(date: Date) => dateState.dateEnd = date}
+              onSelectEnd={handleSelectEnd}
               onSelecting={(date: Date) => dateState.dateHover = date}
               onPreviousYear={(date: Date, pos: number) => handleSwitch(0, pos, date)}
               onPreviousMonth={(date: Date, pos: number) => handleSwitch(1, pos, date)}
