@@ -26,7 +26,7 @@ export default defineComponent({
     const currentIndex = ref(0);
     const wrapperRef = ref<HTMLElement | null>(null);
     const containerRef = ref<HTMLElement | null>(null);
-    const scheduledId = ref<number | null>(null);
+    const scheduledId = ref<ReturnType<typeof setTimeout> | null>(null);
 
     watch(
       () => arrowTrigger,
@@ -170,6 +170,9 @@ export default defineComponent({
 
       autoScheduleTransition();
     });
+    onBeforeUnmount(() => {
+      clearScheduledTransition()
+    })
 
     return {
       wrapperRef,
