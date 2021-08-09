@@ -6,7 +6,7 @@ export type TEventCallback = (date: Date, position?: number) => void
 export type TDateConfig = {
     type?: TDatePanelType
     mode?: TDatePanelMode
-    current?: Date
+    current: Date
 }
 
 export type TDateSelectingBase = {

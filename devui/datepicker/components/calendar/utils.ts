@@ -50,7 +50,7 @@ export const getMonthWeeklyDays = (date: any = new Date()) => {
 	}
 	const { year, month } = getHumanDate(date)
 	const days = getMonthDays(year, month)
-	const dayRows = []
+	const dayRows: TDateCell[][] = []
 	while (days.length > 0) {
 		dayRows.push(days.splice(0, 7))
 	}
