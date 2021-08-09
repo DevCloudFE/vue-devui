@@ -13,13 +13,11 @@
 <br/>
 <d-select v-model="selectValue1" :options="selectOptions1" size="lg"></d-select>
 <br/>
-<br/>
 
 #### Middle
 
 <br/>
 <d-select v-model="selectValue2" :options="selectOptions2" placeholder="这是默认选择框"></d-select>
-<br/>
 <br/>
 
 #### Small
@@ -27,13 +25,11 @@
 <br/>
 <d-select v-model="selectValue3" :options="selectOptions3" size="sm"></d-select>
 <br/>
-<br/>
 
 #### Underlined
 
 <br/>
 <d-select v-model="selectValue4" :options="selectOptions4" size="lg" overview="underlined"></d-select>
-<br/>
 <br/>
 
 ```html

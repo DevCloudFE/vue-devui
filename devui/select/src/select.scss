@@ -5,6 +5,14 @@
 
 $border-change-time: 300ms;
 $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+$select-input-height-sm: 24px;
+$select-input-height-md: 28px;
+$select-input-height-lg: 44px;
+$select-arrow-width: 28px;
+$transition-base-time: 0.25s;
+$select-dropdown-max-height: 300px;
+$select-item-font-size: var(--devui-font-size, 12px);
+$select-item-min-height: 36px;
 
 @mixin border-transition {
   transition: border-color $border-change-time $border-change-function;
@@ -47,8 +55,8 @@ $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 .devui-select-input {
   cursor: pointer;
   width: 100%;
-  height: 28px;
-  padding: 4px 28px 4px 10px;
+  height: $select-input-height-md;
+  padding: 4px $select-arrow-width 4px 10px;
   color: $devui-text;
   vertical-align: middle;
   border: 1px solid $devui-form-control-line;
@@ -78,11 +86,11 @@ $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
   }
 
   &.devui-select-input-lg {
-    height: 44px;
+    height: $select-input-height-lg;
   }
 
   &.devui-select-input-sm {
-    height: 24px;
+    height: $select-input-height-sm;
   }
 }
 
@@ -90,12 +98,12 @@ $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
   position: absolute;
   right: 0;
   height: 100%;
-  width: 28px;
+  width: $select-arrow-width;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   transform: rotate3d(0, 0, 1, 0deg);
-  transition: transform 0.25s ease-out;
+  transition: transform $transition-base-time ease-out;
 }
 
 .devui-select-dropdown {
@@ -105,14 +113,14 @@ $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
   top: 100%;
   left: 0;
   margin: 5px 0;
-  border-radius: 2px;
-  background: #ffffff;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: $devui-border-radius;
+  background: $devui-base-bg;
+  box-shadow: 0 2px 5px 0 $devui-shadow;
   z-index: 999;
 }
 
 .devui-select-dropdown-list {
-  max-height: 300px;
+  max-height: $select-dropdown-max-height;
   width: 100%;
   overflow-y: auto;
   padding: 0;
@@ -120,9 +128,9 @@ $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .devui-select-item {
-  font-size: var(--devui-font-size, 12px);
+  font-size: $select-item-font-size;
   display: block;
-  min-height: 36px;
+  min-height: $select-item-min-height;
   line-height: 1.5;
   width: 100%;
   padding: 10px;
@@ -170,12 +178,12 @@ $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
   transform: scale3d(0, 1, 0, 0.9999) translate3d(0, 1, 0, 0);
   transform-origin: 0 0%;
   opacity: 1;
-  transition: transform, opacity 0.25s ease-out;
+  transition: transform, opacity $transition-base-time ease-out;
 }
 
 .fade-enter-from,
 .fade-leave-to {
   transform: scale3d(0, 1, 0, 0) translate3d(0, 1, 0, -4px);
   opacity: 0;
-  transition: transform, opacity 0.25s ease-in;
+  transition: transform, opacity $transition-base-time ease-in;
 }
