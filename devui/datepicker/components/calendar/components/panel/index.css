@@ -1,19 +1,19 @@
 
-.calendar {
+.calendar-panel {
   border: 1px solid #dddddd;
   padding: 5px;
   width: 240px;
   box-sizing: border-box;
 }
 
-.calendar-row {
+.calendar-panel-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   height: 28px;
 }
 
-.calendar-cell {
+.calendar-panel-cell {
   width: 100%;
   text-align: center;
   flex-grow: 1;
@@ -24,39 +24,40 @@
   justify-content: center;
 }
 
-.calendar-body .calendar-cell:hover {
+.calendar-panel-body .calendar-panel-cell:hover {
   background-color: #eeeeee;
   color: #000000;
 }
 
-.calendar-cell.selected {
+.calendar-panel-cell.selected {
   background-color: #0066cc;
   color: #ffffff;
   border-radius: 6px;
 }
 
-.calendar-cell.selected:hover {
+.calendar-panel-cell.selected:hover {
   background-color: #0066cc;
   color: #ffffff;
 }
 
-.calendar-cell.innerday {
+.calendar-panel-cell.innerday {
   background-color: #f1f1f1;
 }
 
-.calendar-cell.disabled {
+.calendar-panel-cell.disabled {
   background-color: #ffffff;
   color: #bbbbbb;
 }
 
-.calenday-cell-text {
+.calendar-head-cell-text,
+.calendar-panel-cell-text {
   font-weight: normal;
   font-style: normal;
   font-size: 12px;
   text-align: center;
 }
 
-.calendar-header {
+.calendar-panel-header {
   height: 32px;
   cursor: default;
   padding: 0;
@@ -64,7 +65,7 @@
   list-style: none;
 }
 
-.calendar-body {
+.calendar-panel-body {
   display: flex;
   flex-direction: column;
   cursor: pointer;

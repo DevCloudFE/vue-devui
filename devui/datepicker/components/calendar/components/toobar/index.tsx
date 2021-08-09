@@ -1,5 +1,6 @@
-import { defineComponent } from 'vue'
+import { defineComponent, DefineComponent } from 'vue'
 import { invokeCallback, compareDate } from '../../utils'
+import { Year, Month } from './icons'
 import './index.css'
 
 const CalendaToolbarItem = defineComponent({
@@ -7,21 +8,26 @@ const CalendaToolbarItem = defineComponent({
     props: {
         disabled: { type: Boolean },
         text: { type: String },
+        rotate: { type: Number },
         cb: { type: Function },
         pos: { type: Number },
-        date: { type: Date }
+        date: { type: Date },
+        button: { type: Object },
     },
     setup(props) {
         return () => {
+            const Btn = (props.button || Year) as DefineComponent<{ color: StringConstructor; rotate: NumberConstructor; }>
+            const color = props.disabled ? '#cfd0d3' : '#585d6b'
+            const rotate = props.rotate || 0
             return (
                 <a
-                    class={`calendar-toolbar-button ${props.disabled ? 'disabled' : ''}`}
+                    className={`calendar-toolbar-button ${props.disabled ? 'disabled' : ''}`}
                     onClick={
                         props.disabled
                             ? undefined
                             : () => invokeCallback(props.cb, props.date, props.pos)
                     }
-                >{props.text}</a>
+                ><Btn color={color} rotate={rotate} /></a>
             )
         }
     }
@@ -76,13 +82,13 @@ const CalendaToolbar = defineComponent({
             }
             return (
                 <div class="calendar-toolbar">
-                    <CalendaToolbarItem disabled={dis[0]} date={current} pos={pos} text={'<<'} cb={onPreviousYear} />
-                    <CalendaToolbarItem disabled={dis[1]} date={current} pos={pos} text={'<'} cb={onPreviousMonth} />
+                    <CalendaToolbarItem disabled={dis[0]} date={current} pos={pos} button={Year} cb={onPreviousYear} />
+                    <CalendaToolbarItem disabled={dis[1]} date={current} pos={pos} button={Month} rotate={-90} text={'<'} cb={onPreviousMonth} />
                     <a class="calendar-toolbar-button title">{
                         `${current.getFullYear()}年${(current.getMonth() + 1 + '').padStart(2, '0')}月`
                     }</a>
-                    <CalendaToolbarItem disabled={dis[2]} date={current} pos={pos} text={'>'} cb={onNextMonth} />
-                    <CalendaToolbarItem disabled={dis[3]} date={current} pos={pos} text={'>>'} cb={onNextYear} />
+                    <CalendaToolbarItem disabled={dis[2]} date={current} pos={pos} button={Month} rotate={90} cb={onNextMonth} />
+                    <CalendaToolbarItem disabled={dis[3]} date={current} pos={pos} button={Year} rotate={180} cb={onNextYear} />
                 </div>
             )
         }

@@ -5,30 +5,30 @@ export const getDateKey = (date: Date): string => {
     return date.toDateString()
 }
 
-export const cellClassName = (props: TDatePanelDataProps, day: TDateCell): string => {
+export const cellClassName = (props: TDatePanelDataProps, day: TDateCell, base = 'calendar-panel-cell'): string => {
     if(day.current !== 0) {
-        return 'calendar-cell disabled'
+        return `${base} disabled`
     }
     const key = getDateKey(day.date)
     if (props.type === 'range') {
         if (props.dateStart) {
             if (getDateKey(props.dateStart) === key) {
-                return `calendar-cell selected`
+                return `${base} selected`
             }
             if (props.dateEnd && getDateKey(props.dateEnd) === key) {
-                return `calendar-cell selected`
+                return `${base} selected`
             }
             const innerEnd = props.dateEnd || props.dateHover
             if (innerEnd) {
                 const range = innerEnd > props.dateStart ? [props.dateStart, innerEnd] : [innerEnd, props.dateStart]
                 if (day.date > range[0] && day.date < range[1]) {
-                    return `calendar-cell innerday`
+                    return `${base} innerday`
                 }
             }
         }
-        return `calendar-cell`
+        return base
     } else {
-        return props.dateStart && getDateKey(props.dateStart) === key ? `calendar-cell selected` : `calendar-cell`
+        return props.dateStart && getDateKey(props.dateStart) === key ? `${base} selected` : base
     }
 }
 

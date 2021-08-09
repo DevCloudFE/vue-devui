@@ -32,7 +32,7 @@ const CalendaDatePanel = defineComponent({
         const props = _props as TDatePanelProps
         return () => {
             return (
-                <div class="calendar">
+                <div class="calendar-panel">
                     <CalendaToolbar
                         current={props.current}
                         compare={props.compare}
@@ -43,18 +43,18 @@ const CalendaDatePanel = defineComponent({
                         onNextMonth={props.onNextMonth}
                         onNextYear={props.onNextYear}
                     />
-                    <ol class="calendar-header calendar-row">{
-                        WEEK_DAYS.map(day => <li class="calendar-cell"><b class="calenday-cell-text">{day}</b></li>)
+                    <ol class="calendar-panel-header calendar-panel-row">{
+                        WEEK_DAYS.map(day => <li class="calendar-panel-cell"><b class="calendar-head-cell-text">{day}</b></li>)
                     }</ol>
-                    <ul class="calendar-body">{
-                        getMonthWeeklyDays(props.current).map((row, idx0) => <li class="calendar-row">{
+                    <ul class="calendar-panel-body">{
+                        getMonthWeeklyDays(props.current).map((row, idx0) => <li class="calendar-panel-row">{
                             row.map((day, idx1) => {
                                 return (
                                     <span
                                         class={cellClassName(props as TDatePanelProps, day)}
                                         onClick={() => trigEvent(props as TDatePanelProps, day)}
                                         onMouseenter={() => handleDateEnter(props as TDatePanelProps, day)}
-                                    ><i class="calenday-cell-text">{day.date.getDate()}</i></span>
+                                    ><i class="calendar-panel-cell-text">{day.date.getDate()}</i></span>
                                 )
                             })
                         }</li>)

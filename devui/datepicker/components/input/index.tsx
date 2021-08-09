@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue'
-import DataPickerInputIcon from '../icon/index'
+import Icon from '../../../icon'
 
 import './index.css'
 
@@ -28,7 +28,7 @@ export default defineComponent({
                     onClick={handleClick}
                 >
                     <input class="datapicker-input" type="text" />
-                    <DataPickerInputIcon marginLeft={3} />
+                    <Icon name="calendar" size="16px" />
                 </div>
             )
         }
