@@ -25,6 +25,7 @@ const sidebar = {
       text: '数据录入',
       children: [
         { text: 'Checkbox 复选框', link: '/components/checkbox/' },
+        { text: 'DatePicker 日期选择器', link: '/components/datepicker/' },
         { text: 'Radio 单选框', link: '/components/radio/' },
         { text: 'Switch 开关', link: '/components/switch/' },
         { text: 'TagsInput 标签输入', link: '/components/tags-input/' },

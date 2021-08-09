@@ -13,6 +13,7 @@ import Alert from './alert';
 
 // 数据录入
 import Checkbox from './checkbox';
+import DatePicker from './datepicker';
 import Radio from './radio';
 import Switch from './switch';
 import TagsInput from './tags-input';
@@ -23,7 +24,7 @@ import Avatar from './avatar';
 import Carousel from './carousel';
 
 function install(app: App): void {
-  const packages = [ Button, Icon, Panel, Tabs, Alert, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel ];
+  const packages = [ Button, Icon, Panel, Tabs, Alert, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel, DatePicker ];
   packages.forEach((item: any) => {
     if (item.install) {
       app.use(item);
@@ -33,5 +34,5 @@ function install(app: App): void {
   });
 }
 
-export { Button, Icon, Panel, Tabs, Alert, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel };
+export { Button, Icon, Panel, Tabs, Alert, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel, DatePicker };
 export default { install, version: '0.0.1' };

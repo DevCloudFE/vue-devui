@@ -26,12 +26,18 @@
 
 .calendar-body .calendar-cell:hover {
   background-color: #eeeeee;
+  color: #000000;
 }
 
 .calendar-cell.selected {
   background-color: #0066cc;
   color: #ffffff;
   border-radius: 6px;
+}
+
+.calendar-cell.selected:hover {
+  background-color: #0066cc;
+  color: #ffffff;
 }
 
 .calendar-cell.innerday {
@@ -53,10 +59,16 @@
 .calendar-header {
   height: 32px;
   cursor: default;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .calendar-body {
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
