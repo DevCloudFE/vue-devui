@@ -22,9 +22,10 @@ import TextInput from './text-input';
 // 数据展示
 import Avatar from './avatar';
 import Carousel from './carousel';
+import CarouselItem from './carousel/item'
 
 function install(app: App): void {
-  const packages = [ Button, Icon, Panel, Tabs, Alert, DLoading, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel ];
+  const packages = [ Button, Icon, Panel, Tabs, Alert, DLoading, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel, CarouselItem ];
   packages.forEach((item: any) => {
     if (item.install) {
       app.use(item);
@@ -34,5 +35,5 @@ function install(app: App): void {
   });
 }
 
-export { Button, Icon, Panel, Tabs, Alert, LoadingService, Loading, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel };
+export { Button, Icon, Panel, Tabs, Alert, LoadingService, Loading, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel, CarouselItem };
 export default { install, version: '0.0.1' };
