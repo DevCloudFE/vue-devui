@@ -13,6 +13,7 @@ const sidebar = {
       text: '导航',
       children: [
         { text: 'Tabs 选项卡切换', link: '/components/tabs/' },
+        { text: 'Anchor 锚点', link: '/components/Anchor/' },
       ]
     },
     {
