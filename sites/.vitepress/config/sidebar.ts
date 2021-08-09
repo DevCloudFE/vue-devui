@@ -12,6 +12,7 @@ const sidebar = {
     {
       text: '导航',
       children: [
+        { text: 'Pagination 分页', link: '/components/pagination/' },
         { text: 'Tabs 选项卡切换', link: '/components/tabs/' },
       ]
     },
