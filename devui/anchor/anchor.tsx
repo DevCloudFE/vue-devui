@@ -1,12 +1,22 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'd-anchor',
+  name: 'DAnchor',
+  directives: {
+    focus: {
+      // 指令的定义
+      mounted(el) {
+        el.focus()
+      }
+    }
+  },
   props: {
   },
   setup(props, ctx) {
     return () => {
-      return <div>devui-anchor</div>
+      return (
+        <input v-focus /> 
+      )
     }
   }
 })

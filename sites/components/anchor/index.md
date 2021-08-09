@@ -7,7 +7,29 @@
 ```ts
 import { AnchorModule } from 'ng-devui';
 ```
-
+<!-- <div v-demo='s1'> </div> -->
+<!-- <div v-dAnchorBox='s1'>
+          <ul>
+            <li v-dAnchorLink="anchorlink-one">anchorlink-one</li>
+            <li v-dAnchorLink="anchorlink-two">anchorlink-two</li>
+            <li v-dAnchorLink="anchorlink-three">anchorlink-three</li>
+            <li v-dAnchorLink="anchorlink-four">anchorlink-four</li>
+          </ul>
+          <div>
+            <div v-dAnchor="anchorlink-one">
+              anchorlink-one
+            </div>
+            <div v-dAnchor="anchorlink-two">
+              anchorlink-two
+            </div>
+            <div v-dAnchor="anchorlink-three">
+              anchorlink-three
+            </div>
+            <div v-dAnchor="anchorlink-four">
+              anchorlink-four
+            </div>
+          </div>
+        </div> -->
 在页面中使用：
 
 ```html
