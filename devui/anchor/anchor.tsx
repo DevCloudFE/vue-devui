@@ -15,7 +15,7 @@ export default defineComponent({
   setup(props, ctx) {
     return () => {
       return (
-        <input v-focus /> 
+        <input v-only2 /> 
       )
     }
   }
