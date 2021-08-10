@@ -6,7 +6,8 @@ const sidebar = {
       children: [
         { text: 'Button 按钮', link: '/components/button/' },
         { text: 'Icon 图标', link: '/components/icon/' },
-        { text: 'Panel 面板', link: '/components/panel/' }
+        { text: 'Panel 面板', link: '/components/panel/' },
+        { text: 'Search 搜索框', link: '/components/search/' },
       ]
     },
     {
