@@ -39,7 +39,11 @@ export const formatDate = (fmt: string, d: Date) => {
 }
 
 export const formatRange = (fmt: string, a: Date, b: Date, conn = '-') => {
-    return `${formatDate(fmt, a)} ${conn} ${formatDate(fmt, b)}`
+    const ab = [a, b]
+    if(a.getTime() > b.getTime()) {
+        ab.reverse()
+    }
+    return `${formatDate(fmt, ab[0])} ${conn} ${formatDate(fmt, ab[1])}`
 }
 
 /**

@@ -38,8 +38,17 @@ const getMonthDays = (year: number, month: number) => {
 	}
 
 	day = last.getDay()
+	let tail: Date = last
 	for (let i = day; i < 6; i++) {
-		dates.push({ date: new Date(year, month, i - day + 1), current: 1 })
+		tail = new Date(year, month, i - day + 1)
+		dates.push({ date: tail, current: 1 })
+	}
+	if(dates.length < 42) {
+		day = tail.getDate()
+		for (let i = 1; i <= 7; i++) {
+			tail = new Date(year, month, day + i)
+			dates.push({ date: tail, current: 1 })
+		}
 	}
 	return dates
 }
@@ -63,7 +72,30 @@ export const invokeCallback = (cb: any, ...args: any[]) => {
 	typeof cb === 'function' && cb(...args)
 }
 
-export /**
+/**
+ * a - b 的月数
+ */
+export const subDateMonth = (a: Date, b: Date) => {
+	const am = a.getFullYear() * 12 + a.getMonth()
+	const bm = b.getFullYear() * 12 + b.getMonth()
+	return am - bm
+}
+
+const ONE_DAY = 1000 * 60 * 60 * 24
+
+/**
+ * a - b 的天数
+ * @param a 
+ * @param b 
+ * @returns 
+ */
+export const subDateDay = (a: Date, b: Date) => {
+	const ad = new Date(a.getFullYear(), a.getMonth(), a.getDate()).getTime()
+	const bd = new Date(b.getFullYear(), b.getMonth(), b.getDate()).getTime()
+	return (ad - bd) / ONE_DAY
+}
+
+/**
 * 比较日期单位
 * @param small 相对早的日期
 * @param big 相对晚的日期
@@ -71,15 +103,14 @@ export /**
 * @param min 不能小于这个值
 * @returns 
 */
-const compareDate = (small: Date | undefined, big: Date | undefined, mode: 'year' | 'month', min: number) => {
+export const compareDate = (small: Date | undefined, big: Date | undefined, mode: 'year' | 'month', min: number) => {
 	if (!small || !big) {
 		return true
 	}
 	if (mode === 'year') {
 		return big.getFullYear() - small.getFullYear() > min
 	} else {
-		const bigMonth = big.getFullYear() * 12 + big.getMonth()
-		const smallMonth = small.getFullYear() * 12 + small.getMonth()
-		return bigMonth - smallMonth > min
+		return subDateMonth(big, small) > min
 	}
 }
+
