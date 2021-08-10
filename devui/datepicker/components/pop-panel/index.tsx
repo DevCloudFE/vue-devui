@@ -3,12 +3,13 @@ import { defineComponent, ref, renderSlot, SetupContext } from 'vue'
 import './index.css'
 
 type TProps = {
-	show: boolean
+	show?: boolean
 	background?: string
 	xPosition?: 'left' | 'right'
 	yPosition?: 'top' | 'bottom'
 	xOffset?: number
 	yOffset?: number
+	children?: any
 }
 
 const PopPanel = (props: TProps, ctx: SetupContext) => {

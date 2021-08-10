@@ -19,18 +19,18 @@
 ### 日期区域选择
 
 ```jsx
-<d-datepicker type="range" />
+<d-datepicker range />
 ```
 
-<d-datepicker type="range" />
+<d-datepicker range />
 
 ### 自动关闭
 
 ```jsx
 <d-datepicker auto-complete />
-<d-datepicker auto-complete type="range" />
+<d-datepicker auto-complete range />
 ```
 
 <d-datepicker auto-complete />
-<d-datepicker auto-complete type="range" />
+<d-datepicker auto-complete range />
 

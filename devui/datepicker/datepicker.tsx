@@ -2,6 +2,7 @@ import { defineComponent, ref, reactive, onMounted, onUnmounted } from 'vue'
 import Input from './components/input'
 import PopPanel from './components/pop-panel'
 import Calendar from './components/calendar'
+import { formatDate, formatRange } from './utils'
 
 import './datepicker.css'
 
@@ -54,9 +55,11 @@ const getHostRange = (host: Element): {
 export default defineComponent({
   name: 'DDatepicker',
   props: {
-    type: { type: String, default: 'select' },
     autoComplete: { type: Boolean, default: false },
-    onDateChange: { type: Function }
+    onDateChange: { type: Function },
+    range: { type: Boolean, default: false },
+    format: { type: String, default: 'y/MM/dd' },
+    rangeSpliter: { type: String, default: '-' }
   },
   setup(props, ctx) {
     const container = ref<Element>()
@@ -76,18 +79,18 @@ export default defineComponent({
       panelYPos: 'top',
       pointX: '0px',
       pointY: '0px',
-      value: 'y/MM/dd'
+      value: ''
     })
 
     const dateState = reactive<{
-      type?: 'select' | 'range'
+      range: boolean
       dateCurrent?: Date
       dateNext?: Date
       dateStart?: Date
       dateEnd?: Date
       dateHover?: Date
     }>({
-      type: 'range',
+      range: false,
       dateCurrent: new Date(),
       dateNext: new Date(2021, 8, 2)
     })
@@ -159,9 +162,22 @@ export default defineComponent({
       }
     }
 
+    const setInputValue = () => {
+      const { format = 'y/MM/dd', range, rangeSpliter = '-' } = props || {}
+      if(range) {
+        inputState.value = formatRange(format,
+          dateState.dateStart,
+          dateState.dateEnd,
+          rangeSpliter
+        )
+      } else {
+        inputState.value = formatDate(format, dateState.dateStart)
+      }
+    }
+
     const handleSelected = (date: Date) => {
       dateState.dateStart = date
-      inputState.value = date.toDateString()
+      setInputValue()
       if(props.autoComplete) {
         inputState.showPanel = false
       }
@@ -172,7 +188,7 @@ export default defineComponent({
 
     const handleSelectEnd = (date: Date) => {
       dateState.dateEnd = date
-      inputState.value = (dateState.dateStart as Date).toDateString() + ' - ' +  date.toDateString()
+      setInputValue()
       if(props.autoComplete) {
         inputState.showPanel = false
       }
@@ -182,9 +198,11 @@ export default defineComponent({
     }
 
     return () => {
+      const { format = 'y/MM/dd', rangeSpliter = '-' } = props || {}
+      const placeholder = props.range ? `${format} ${rangeSpliter} ${format}` : format
       return (
         <div ref={container} class="datapicker-container">
-          <Input width={140} onActive={handleActive} value={inputState.value} />
+          <Input width={140} onActive={handleActive} value={inputState.value} placeholder={placeholder} />
           <div ref={popCont} class="datepicker-pop-container" style={{ left: inputState.pointX, top: inputState.pointY }}>
             <PopPanel
               show={inputState.showPanel}
@@ -193,7 +211,7 @@ export default defineComponent({
               xOffset={0}
               yOffset={0}
             ><Calendar
-              type={props.type || 'select'}
+              type={props.range ? 'range' : 'select'}
               current={dateState.dateCurrent}
               next={dateState.dateNext}
               dateStart={dateState.dateStart}

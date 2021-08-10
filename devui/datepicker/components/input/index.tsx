@@ -5,11 +5,12 @@ import './index.css'
 type TProps = {
     width?: number
     value?: string
+    placeholder?: string
     onActive?: (el: Element) => void
 }
 
 const DatepickerInput = (props: TProps) => {
-    const { width = 160, value = '', onActive } = props
+    const { width = 160, placeholder = '', value = '', onActive } = props
     const container = ref<Element>()
     const handleClick = () => {
         if(container.value && typeof onActive === 'function') {
@@ -23,7 +24,7 @@ const DatepickerInput = (props: TProps) => {
             style={{ width: `${width}px` }}
             onClick={handleClick}
         >
-            <input className="datapicker-input" type="text" value={value} />
+            <input className="datapicker-input" type="text" value={value} placeholder={placeholder} />
             <Icon name="calendar" size="16px" />
         </div>
     )
