@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { defineComponent, ref, watch, onMounted, Fragment, Comment } from 'vue';
+import { defineComponent, ref, watch, onMounted, onBeforeUnmount, Fragment, Comment } from 'vue';
 import { carouselProps, DotTrigger } from './types';
 
 import Icon from '../icon/src/icon'
