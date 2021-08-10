@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue'
-import DSearch from '../search'
+import DSearch from '../src/search'
 
 export default defineComponent({
   setup() {

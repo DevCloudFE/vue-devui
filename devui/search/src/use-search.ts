@@ -1,4 +1,4 @@
-import { PropType, ExtractPropTypes } from 'vue'
+import { PropType, ExtractPropTypes, Ref, ComputedRef } from 'vue'
 type Size = 'lg' | 'sm'
 type IconPosition = 'right' | 'left'
 export const searchProps = {
@@ -46,10 +46,21 @@ export const searchProps = {
     type: String,
     default: '',
   },
-  'onUpdate:value': {
+  'onUpdate:modelValue': {
     type: Function as PropType<(v: string) => void>,
     default: undefined
   },
 }
 
 export type SearchProps = ExtractPropTypes<typeof searchProps>
+
+export interface KeywordsReturnTypes {
+  keywords: Ref<string>
+  clearIconShow: ComputedRef<boolean>
+  onClearHandle: () => void
+}
+
+export interface KeydownReturnTypes {
+  onInputKeydown: (e: KeyboardEvent) => void
+  onClickHandle: (e: MouseEvent) => void
+}

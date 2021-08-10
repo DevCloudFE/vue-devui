@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import Search from './search'
+import Search from './src/search'
 
 Search.install = function(Vue: App) {
   Vue.component(Search.name, Search)
