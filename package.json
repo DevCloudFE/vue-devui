@@ -36,6 +36,7 @@
     "convert:route": "node ./scripts/convert-component-route.js",
     "publish": "cd dist && npm publish",
     "generate:devui": "node scripts/generate-devui.js",
+    "predev": "devui-cli create -t vue-devui",
     "postinstall": "npm link"
   },
   "dependencies": {
@@ -54,6 +55,7 @@
     "@types/chalk": "^2.2.0",
     "@types/commander": "^2.12.2",
     "@types/jest": "^26.0.23",
+    "@types/ora": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
     "@vitejs/plugin-vue": "^1.3.0",

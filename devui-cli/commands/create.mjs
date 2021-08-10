@@ -1,8 +1,17 @@
 import logger from '../shared/logger.mjs'
-import { bigCamelCase } from '../shared/utils.mjs'
+import { bigCamelCase, resolveDirFilesInfo, parseExportByFileInfo } from '../shared/utils.mjs'
 import fs from 'fs-extra'
 import { resolve } from 'path'
-import { DEVUI_NAMESPACE, DEVUI_DIR, TESTS_DIR_NAME, COMPONENT_PARTS_MAP } from '../shared/constant.js'
+import {
+  DEVUI_NAMESPACE,
+  DEVUI_DIR,
+  TESTS_DIR_NAME,
+  COMPONENT_PARTS_MAP,
+  INDEX_FILE_NAME,
+  VUE_DEVUI_FILE,
+  VUE_DEVUI_IGNORE_DIRS,
+  VUE_DEVUI_FILE_NAME
+} from '../shared/constant.js'
 import { isEmpty, kebabCase } from 'lodash-es'
 import inquirer from 'inquirer'
 import { selectCreateType } from '../inquirers/create.mjs'
@@ -16,6 +25,8 @@ import {
   createIndexTemplate,
   createTestsTemplate
 } from '../templates/component.mjs'
+import { createVueDevuiTemplate } from '../templates/vue-devui.mjs'
+import ora from 'ora'
 
 export function validateCreateType(type) {
   const flag = /^(component|(vue-devui)|(vitepress\/sidebar))$/.test(type)
@@ -33,18 +44,29 @@ export async function create(cwd) {
     type = result.type
   }
 
-  if (type !== 'component') {
+  if (['vitepress/sidebar'].includes(type)) {
     logger.info('抱歉，该功能暂未完成！')
     return process.exit(0)
   }
 
-  const result = await inquirer.prompt([typeName(), typeTitle(), selectCategory(), selectParts()])
-  result.hasComponent = result.parts.includes(COMPONENT_PARTS_MAP.get('component'))
-  result.hasDirective = result.parts.includes(COMPONENT_PARTS_MAP.get('directive'))
-  result.hasService = result.parts.includes(COMPONENT_PARTS_MAP.get('service'))
-
   try {
-    await createComponent(result)
+    switch (type) {
+      case 'component':
+        const result = await inquirer.prompt([typeName(), typeTitle(), selectCategory(), selectParts()])
+        result.hasComponent = result.parts.includes(COMPONENT_PARTS_MAP.get('component'))
+        result.hasDirective = result.parts.includes(COMPONENT_PARTS_MAP.get('directive'))
+        result.hasService = result.parts.includes(COMPONENT_PARTS_MAP.get('service'))
+
+        await createComponent(result)
+        break
+      case 'vue-devui':
+        await createVueDevui()
+        break
+      case 'vitepress/sidebar':
+        break
+      default:
+        break
+    }
   } catch (e) {
     logger.error(e.toString())
     process.exit(1)
@@ -88,31 +110,65 @@ async function createComponent(params = {}) {
     return process.exit(1)
   }
 
-  await Promise.all([fs.mkdirs(componentDir), fs.mkdirs(srcDir), fs.mkdirs(testsDir)])
+  let spinner = ora(`创建组件 ${bigCamelCase(componentName)} 开始...`).start()
 
-  const writeFiles = [fs.writeFile(resolve(componentDir, `index.ts`), indexTemplate)]
+  try {
+    await Promise.all([fs.mkdirs(componentDir), fs.mkdirs(srcDir), fs.mkdirs(testsDir)])
 
-  if (hasComponent || hasService) {
-    writeFiles.push(fs.writeFile(resolve(srcDir, `${typesName}.ts`), typesTemplate))
+    const writeFiles = [fs.writeFile(resolve(componentDir, INDEX_FILE_NAME), indexTemplate)]
+
+    if (hasComponent || hasService) {
+      writeFiles.push(fs.writeFile(resolve(srcDir, `${typesName}.ts`), typesTemplate))
+    }
+
+    if (hasComponent) {
+      writeFiles.push(
+        fs.writeFile(resolve(srcDir, `${componentName}.tsx`), componentTemplate),
+        fs.writeFile(resolve(srcDir, `${styleName}.scss`), styleTemplate)
+      )
+    }
+
+    if (hasDirective) {
+      writeFiles.push(fs.writeFile(resolve(srcDir, `${directiveName}.ts`), directiveTemplate))
+    }
+
+    if (hasService) {
+      writeFiles.push(fs.writeFile(resolve(srcDir, `${serviceName}.ts`), serviceTemplate))
+    }
+
+    await Promise.all(writeFiles)
+
+    spinner.succeed(`创建组件 ${bigCamelCase(componentName)} 成功！`)
+    logger.info(`组件目录：${componentDir}`)
+  } catch (e) {
+    spinner.fail(e.toString())
+    process.exit(1)
   }
+}
 
-  if (hasComponent) {
-    writeFiles.push(
-      fs.writeFile(resolve(srcDir, `${componentName}.tsx`), componentTemplate),
-      fs.writeFile(resolve(srcDir, `${styleName}.scss`), styleTemplate)
-    )
+async function createVueDevui() {
+  const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS)
+  const exportModules = []
+
+  fileInfo.forEach((f) => {
+    const em = parseExportByFileInfo(f)
+
+    if (isEmpty(em)) return
+
+    exportModules.push(em)
+  })
+
+  const template = createVueDevuiTemplate(exportModules)
+
+  let spinner = ora(`创建 ${VUE_DEVUI_FILE_NAME} 文件开始...`).start()
+
+  try {
+    await fs.writeFile(VUE_DEVUI_FILE, template, { encoding: 'utf-8' })
+
+    spinner.succeed(`创建 ${VUE_DEVUI_FILE_NAME} 文件成功！`)
+    logger.info(`文件地址：${VUE_DEVUI_FILE}`)
+  } catch (e) {
+    spinner.fail(e.toString())
+    process.exit(1)
   }
-
-  if (hasDirective) {
-    writeFiles.push(fs.writeFile(resolve(srcDir, `${directiveName}.ts`), directiveTemplate))
-  }
-
-  if (hasService) {
-    writeFiles.push(fs.writeFile(resolve(srcDir, `${serviceName}.ts`), serviceTemplate))
-  }
-
-  await Promise.all(writeFiles)
-
-  logger.info(`组件目录：${componentDir}`)
-  logger.success('创建成功!')
 }
