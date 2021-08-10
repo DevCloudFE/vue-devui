@@ -16,6 +16,7 @@ type TState = {
   hover?: Date
   show?: boolean
   input?: string
+  st?: boolean
 }
 
 /**
@@ -110,6 +111,7 @@ export default defineComponent({
       current: new Date(),
       show: false,
       input: props.attachInputDom,
+      st: true
     })
 
     const pos = reactive<{
@@ -133,6 +135,7 @@ export default defineComponent({
       if(!el) {
         return null
       }
+      state.st = false
       return el
     }
 
@@ -204,12 +207,12 @@ export default defineComponent({
     return () => {
       handlePosition()
       return (
-        <div className="datepicker-global-viewport">
+        <div className={state.st ? `` : `datepicker-global-viewport`}>
           <div
             ref={container}
             class="datepicker-container"
             style={{
-              transform: `translateX(${pos.x}) translateY(${pos.y})`
+              transform: state.st ? '' : `translateX(${pos.x}) translateY(${pos.y})`
             }}
           >
             <Calendar

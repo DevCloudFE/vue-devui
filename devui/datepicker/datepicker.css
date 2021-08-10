@@ -12,8 +12,8 @@
 .datepicker-container {
   margin: 0;
   padding: 0;
-  position: absolute;
+  position: relative;
+  display: inline-block;
   border: 1px solid #cccccc;
-  z-index: 99;
   background-color: #ffffff;
 }
