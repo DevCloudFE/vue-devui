@@ -99,16 +99,19 @@ export default defineComponent({
     range: { type: Boolean, default: false },
     format: { type: String, default: 'y/MM/dd' },
     rangeSpliter: { type: String, default: '-' },
-    attachInputDom: { type: String }
+    attachInputDom: { type: String },
   },
   setup(props, ctx) {
 
     const container = ref<Element>()
     const evtman = new EventManager()
 
+    const current = new Date()
+
     const state = reactive<TState>({
       range: !!props.range,
-      current: new Date(),
+      current,
+      next: new Date(current.getFullYear(), current.getMonth() + 1, 1),
       show: false,
       input: props.attachInputDom,
       st: true
