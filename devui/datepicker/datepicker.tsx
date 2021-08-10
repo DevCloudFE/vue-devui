@@ -1,5 +1,9 @@
 import { defineComponent, reactive, onMounted, onUnmounted, ref } from 'vue'
-import { formatDate, formatRange } from './utils'
+import {
+  EventManager,
+  formatDate, formatRange, isIn,
+  traceNode, invokeFunction,
+} from './utils'
 import Calendar from './components/calendar'
 import './datepicker.css'
 
@@ -14,36 +18,13 @@ type TState = {
   input?: string
 }
 
-const isIn = (start: Node | null, target: Node | null) => {
-  if(!target) {
-    return false
-  }
-  while(start) {
-    if(start === target) {
-      return true
-    }
-    start = start.parentNode
-  }
-  return false
-}
-
-const factoryAutoClosePanel = (cont: Element, cb: () => void) => (e: MouseEvent) => {
-  const { target } = e
-  if(isIn(target as Node, cont)) {
-    return
-  }
-  cb()
-}
-
-const attachEvent = (el: Node | Window, name: string, cb: (e?: any) => any, capture: boolean) => {
-  el.addEventListener(name, cb, capture)
-  return { el, name, cb, capture }
-}
-
-const detachEvent = (el: Node | Window, name: string, cb: (e?: any) => any, capture: boolean) => {
-  el.removeEventListener(name, cb, capture)
-}
-
+/**
+ * Calendar 面板年月切换逻辑
+ * @param state 
+ * @param index 
+ * @param pos 
+ * @param date 
+ */
 const handleCalendarSwitchState = (state: TState, index: number, pos: number, date: Date) => {
   switch(index) {
     case 0: // previous year
@@ -69,6 +50,12 @@ const handleCalendarSwitchState = (state: TState, index: number, pos: number, da
   }
 }
 
+/**
+ * 格式化日期
+ * @param state 
+ * @param props 
+ * @returns 
+ */
 const formatOutputValue = (state: TState, props: any) => {
   const { format = 'y/MM/dd', range, rangeSpliter = '-' } = props || {}
   if(range) {
@@ -82,6 +69,18 @@ const formatOutputValue = (state: TState, props: any) => {
   }
 }
 
+const getPlaceholder = (props: any) => {
+  if(!props) return ''
+  const format = props.format || `y/MM/dd`
+  const sp = props.rangeSpliter || '-'
+  return props.range ? `${format} ${sp} ${format}` : format
+}
+
+/**
+ * 输出日期选择结果
+ * @param id 
+ * @param output 
+ */
 const handleDomOutput = (id: string | undefined, output: string) => {
   if(id && typeof id === 'string') {
     const el = document.querySelector(id)
@@ -89,25 +88,6 @@ const handleDomOutput = (id: string | undefined, output: string) => {
       el.value = output
     }
   }
-}
-
-const invokeFunction = (fn: any, ...args: any[]) => {
-  if(typeof fn === 'function') {
-    fn(...args)
-  }
-}
-
-const traceScroll = (el: Node, callback: (e: Event) => void) => {
-  const cb = (e: Event) => {
-    typeof callback === 'function' && callback(e)
-  }
-  const els: Node[] = [], name = 'scroll'
-  while(el.parentNode) {
-    els.push(el.parentNode)
-    el.parentNode.addEventListener(name, cb)
-    el = el.parentNode
-  }
-  return { elements: els, callback: cb, name }
 }
 
 export default defineComponent({
@@ -123,12 +103,13 @@ export default defineComponent({
   setup(props, ctx) {
 
     const container = ref<Element>()
-    const events: { el: Node | Window; cb: (e: any) => void; name: string; capture: boolean; }[] = []
+    const evtman = new EventManager()
 
     const state = reactive<TState>({
       range: !!props.range,
       current: new Date(),
       show: false,
+      input: props.attachInputDom,
     })
 
     const pos = reactive<{
@@ -139,6 +120,10 @@ export default defineComponent({
       y: '0',
     })
 
+    /**
+     * 获取绑定节点
+     * @returns 
+     */
     const getAttachInputDom = () => {
       const { attachInputDom } = props || {}
       if(!attachInputDom || typeof attachInputDom !== 'string') {
@@ -151,6 +136,10 @@ export default defineComponent({
       return el
     }
 
+    /**
+     * 绑定弹出层场景，计算弹出层位置。
+     * @returns 
+     */
     const handlePosition = () => {
       if(!state.show) {
         pos.x = `-100%`
@@ -173,49 +162,49 @@ export default defineComponent({
       
     }
 
-    const handleAttachInputDom = () => {
+    onMounted(() => {
+      // 获取绑定节点（默认input）
       const el = getAttachInputDom()
+      // 绑定节点不存在，作为普通组件展示。
       if(!el) {
+        // 显示组件
         state.show = true
         return
+      } else {
+        // 作为弹出层，先隐藏
+        state.show = false
       }
 
+      // 判断节点原生DOM类型
+      // 对input节点的值处理
       if(el instanceof HTMLInputElement) {
-        const format = props.format || `y/MM/dd`
-        const sp = props.rangeSpliter || '-'
-        el.placeholder = props.range ? `${format} ${sp} ${format}` : format
+        // 设置水印文字
+        el.placeholder = getPlaceholder(props)
       }
-      state.show = false
-      state.input = props.attachInputDom
-      events.push(attachEvent(el, 'click', () => !state.show && (state.show = true), false))
-      events.push(attachEvent(document, 'click', (e: MouseEvent) => {
+
+      // 绑定节点click事件处理弹出层显示
+      evtman.append(el, 'click', () => !state.show && (state.show = true))
+      // document层处理`点击其他区域隐藏`
+      evtman.append(document, 'click', (e: MouseEvent) => {
         if(!state.show || e.target === el || isIn(e.target as Node, container.value)) {
           return
         }
         state.show = false
-      }, false))
-      const tracing = traceScroll(el, () => {
-        // console.log(111)
-        handlePosition()
       })
-      tracing.elements.forEach(node => {
-        events.push({ el: node, cb: tracing.callback, name: tracing.name, capture: false })
+      // 对绑定节点做scroll跟踪，并绑定跟踪事件
+      traceNode(el).forEach(node => {
+        evtman.append(node, 'scroll', handlePosition)
       })
-    }
-
-    onMounted(() => {
-      handleAttachInputDom()
     })
 
     onUnmounted(() => {
-      events.forEach(({ el, cb, name, capture }) => detachEvent(el, name, cb, capture))
-      events.splice(0, events.length)
+      evtman.dispose()
     })
 
     return () => {
       handlePosition()
       return (
-        <div class="datepicker-global-viewport">
+        <div className="datepicker-global-viewport">
           <div
             ref={container}
             class="datepicker-container"

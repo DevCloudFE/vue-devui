@@ -25,7 +25,7 @@ export const formatDate = (fmt: string, d: Date) => {
     let res = fmt
     res = res.replace(/y+/g, m => {
         const year = usage[0] + ''
-        if(m.length === 2) {
+        if (m.length === 2) {
             return year.substring(2)
         }
         return year
@@ -40,4 +40,60 @@ export const formatDate = (fmt: string, d: Date) => {
 
 export const formatRange = (fmt: string, a: Date, b: Date, conn = '-') => {
     return `${formatDate(fmt, a)} ${conn} ${formatDate(fmt, b)}`
+}
+
+/**
+ * 判断节点a是否在节点b中
+ * @param a 
+ * @param b 
+ * @returns 
+ */
+export const isIn = (a: Node | null, b: Node | null) => {
+    if (!b) {
+        return false
+    }
+    while (a) {
+        if (a === b) {
+            return true
+        }
+        a = a.parentNode
+    }
+    return false
+}
+
+type EventItem = { el: Node | Window; cb: (...args: any[]) => any; name: string; capture: boolean; }
+export class EventManager {
+    private readonly items: EventItem[]
+    constructor() {
+        this.items = []
+    }
+
+    append(el: Node | Window, name: string, cb: (...args: any[]) => any, capture = false) {
+        el.addEventListener(name, cb, capture)
+        this.items.push({ el, name, cb, capture })
+    }
+
+    dispose() {
+        this.items.splice(0, this.items.length).forEach(({ el, name, cb, capture }) => {
+            el.removeEventListener(name, cb, capture)
+        })
+    }
+}
+
+export const traceNode = (el: Node) => {
+    const els: Node[] = [], name = 'scroll'
+    while (el.parentNode) {
+        els.push(el.parentNode)
+        el = el.parentNode
+    }
+    return els
+}
+
+/**
+ * 函数安全调用
+ */
+export const invokeFunction = (fn: any, ...args: any[]) => {
+    if (typeof fn === 'function') {
+        fn(...args)
+    }
 }
