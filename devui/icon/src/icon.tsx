@@ -1,12 +1,5 @@
 import { defineComponent } from 'vue'
 
-type IIconSize = 'sm' | 'md' | 'lg'
-const SIZE_MAP = {
-  sm: '12px',
-  md: '16px',
-  lg: '24px'
-}
-
 export default defineComponent({
   name: 'DIcon',
   props: {
@@ -15,11 +8,8 @@ export default defineComponent({
       required: true
     },
     size: {
-      type: String as () => IIconSize,
-      default: 'md',
-      validator: (value: string) => {
-        return Object.keys(SIZE_MAP).includes(value)
-      }
+      type: String,
+      default: '16px'
     },
     color: {
       type: String,
@@ -39,8 +29,8 @@ export default defineComponent({
     const { name, size, color, classPrefix } = this
 
     return (
-      <i className={`${classPrefix} ${classPrefix}-${name}`} style={{
-        fontSize: SIZE_MAP[size],
+      <i class={`${classPrefix} ${classPrefix}-${name}`} style={{
+        fontSize: size,
         color
       }}></i>
     )

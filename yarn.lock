@@ -7312,6 +7312,11 @@ yargs@^16.0.0, yargs@^16.0.3:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
+yarn@^1.22.11:
+  version "1.22.11"
+  resolved "https://registry.nlark.com/yarn/download/yarn-1.22.11.tgz?cache=0&sync_timestamp=1627322569698&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fyarn%2Fdownload%2Fyarn-1.22.11.tgz#d0104043e7349046e0e2aec977c24be106925ed6"
+  integrity sha1-0BBAQ+c0kEbg4q7Jd8JL4QaSXtY=
+
 yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npm.taobao.org/yocto-queue/download/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
