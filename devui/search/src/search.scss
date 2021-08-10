@@ -1,0 +1,133 @@
+@import '../../style/mixins/size';
+@import '../../style/mixins/flex';
+@import '../../style/theme/color';
+
+.devui-search {
+  position: relative;
+  @include flex;
+
+  input {
+    padding: 5px 60px 5px 10px;
+  }
+
+  svg.svg-icon-clear path,
+  svg.svg-icon-search path {
+    fill: $devui-icon-text;
+  }
+
+  &__clear {
+    position: absolute;
+    right: 36px;
+    cursor: pointer;
+    height: 100%;
+    font-size: 10px;
+    @include size(30px, 100%);
+    @include flex;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 46%;
+      border-left: 1px solid $devui-dividing-line;
+    }
+  }
+
+  &__icon {
+    pointer-events: all;
+    cursor: pointer;
+    padding: 0 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 16px;
+    @include size(36px, 28px);
+    @include flex;
+  }
+
+  &__sm {
+    input {
+      &.devui-textinput-sm {
+        padding-right: 56px;
+      }
+    }
+
+    .devui-search__icon {
+      font-size: 14px;
+      @include size(34px, 26px);
+    }
+
+    .devui-search__clear {
+      @include size(26px, 100%);
+
+      right: 34px;
+    }
+  }
+
+  &__lg {
+    input {
+      padding: 5px 36px 5px 10px;
+
+      &.devui-textinput-lg {
+        padding-right: 71px;
+      }
+    }
+
+    .devui-search__icon {
+      font-size: 18px;
+      @include size(46px, 46px);
+    }
+
+    .devui-search__clear {
+      @include size(30px, 100%);
+
+      right: 46px;
+    }
+  }
+
+  &__disbaled {
+    .devui-search__icon {
+      cursor: not-allowed;
+    }
+
+    svg.svg-icon-search path {
+      fill: $devui-disabled-text;
+    }
+  }
+
+  &__left {
+    input {
+      padding: 5px 26px 5px 30px;
+
+      &.devui-textinput-lg {
+        padding-right: 30px;
+        padding-left: 46px;
+      }
+
+      &.devui-textinput-sm {
+        padding-right: 26px;
+      }
+    }
+
+    .devui-search__clear {
+      right: 0;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .devui-search__icon {
+      left: 0;
+    }
+  }
+
+  &__no-border {
+    input {
+      border: none;
+    }
+  }
+}
