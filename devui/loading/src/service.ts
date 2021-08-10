@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { defineComponent } from 'vue'
 import { createComponent } from './component'
 import Loading from './loading'

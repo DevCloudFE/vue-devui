@@ -25,6 +25,7 @@ module.exports = {
     'no-undef': 2,
     'vue/max-attributes-per-line': 'off',
     'vue/no-multiple-template-root': 'off',
+    'vue/script-setup-uses-vars': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/member-delimiter-style': [
       'error',
