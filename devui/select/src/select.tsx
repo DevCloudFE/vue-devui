@@ -1,8 +1,8 @@
-import './select.scss';
 import { defineComponent, ref, Transition, toRefs } from 'vue';
 import { selectProps, SelectProps, OptionItem } from './use-select';
 import DIcon from '../../icon/src/icon';
 import { className } from './utils';
+import './select.scss';
 
 export default defineComponent({
   name: 'DSelect',
