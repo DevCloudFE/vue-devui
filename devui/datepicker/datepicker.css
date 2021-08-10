@@ -1,13 +1,19 @@
-.datapicker-container {
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
-
-.datepicker-pop-container {
-  position: absolute;
-  width: 0;
-  height: 0;
+.datepicker-global-viewport {
+  position: fixed;
   left: 0;
   top: 0;
+  width: 0;
+  height: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 99;
+  overflow: visible;
+}
+
+.datepicker-container {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  border: 1px solid #cccccc;
+  z-index: 99;
+  background-color: #ffffff;
 }

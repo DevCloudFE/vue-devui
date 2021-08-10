@@ -35,6 +35,7 @@ export type TDatePanelEventProps = TDateToolbarEventProps & {
     onSelectStart?: TEventCallback
     onSelectEnd?: TEventCallback
     onSelecting?: TEventCallback
+    onChange?: (type: TDatePanelType, config: TDateSelectingBase) => void
 }
 
 export type TDatePanelDataProps = TDateToolbarDataProps & TDateSelectingBase

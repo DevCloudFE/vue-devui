@@ -11,26 +11,30 @@
 ### 日期选择
 
 ```jsx
-<d-datepicker />
+<input type="text" id="datepicker-input" />
+<input type="text" id="datepicker-input-autoclose" />
+<d-datepicker attach-input-dom="#datepicker-input" />
+<d-datepicker auto-close attach-input-dom="#datepicker-input-autoclose" />
 ```
 
-<d-datepicker />
+<input type="text" id="datepicker-input" />
+<input type="text" id="datepicker-input-autoclose" />
+<d-datepicker attach-input-dom="#datepicker-input" />
+<d-datepicker auto-close attach-input-dom="#datepicker-input-autoclose" />
 
-### 日期区域选择
+### 区域选择
 
 ```jsx
-<d-datepicker range />
+<input type="text" id="datepicker-input-range" />
+<d-datepicker range attach-input-dom="#datepicker-input-range" />
 ```
 
-<d-datepicker range />
+<input type="text" id="datepicker-input-range" />
+<d-datepicker range attach-input-dom="#datepicker-input-range" />
 
-### 自动关闭
 
-```jsx
-<d-datepicker auto-complete />
-<d-datepicker auto-complete range />
-```
+### Scroll位置跟踪
 
-<d-datepicker auto-complete />
-<d-datepicker auto-complete range />
+
+
 

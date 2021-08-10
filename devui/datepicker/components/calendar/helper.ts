@@ -41,11 +41,13 @@ export const trigEvent = (props: TDatePanelProps, day: TDateCell): void => {
             invokeCallback(props.onSelectStart, day.date)
         } else if (!props.dateEnd) {
             invokeCallback(props.onSelectEnd, day.date)
+            typeof props.onChange === 'function' && props.onChange(props.type, props)
         } else {
             invokeCallback(props.onReset, day.date)
         }
     } else {
         invokeCallback(props.onSelected, day.date)
+        typeof props.onChange === 'function' && props.onChange(props.type, props)
     }
 }
 

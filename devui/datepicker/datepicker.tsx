@@ -1,10 +1,18 @@
-import { defineComponent, ref, reactive, onMounted, onUnmounted } from 'vue'
-import Input from './components/input'
-import PopPanel from './components/pop-panel'
-import Calendar from './components/calendar'
+import { defineComponent, reactive, onMounted, onUnmounted, ref } from 'vue'
 import { formatDate, formatRange } from './utils'
-
+import Calendar from './components/calendar'
 import './datepicker.css'
+
+type TState = {
+  range?: boolean
+  current?: Date
+  next?: Date
+  start?: Date
+  end?: Date
+  hover?: Date
+  show?: boolean
+  input?: string
+}
 
 const isIn = (start: Node | null, target: Node | null) => {
   if(!target) {
@@ -36,77 +44,167 @@ const detachEvent = (el: Node | Window, name: string, cb: (e?: any) => any, capt
   el.removeEventListener(name, cb, capture)
 }
 
-const getHostRange = (host: Element): {
-  left: number
-  right: number
-  top: number
-  bottom: number
-  width: number
-  height: number
-} => {
-  const { left, top, width, height } = host.getBoundingClientRect()
-  const right = window.innerWidth - left - width
-  const bottom = window.innerHeight - top - height
+const handleCalendarSwitchState = (state: TState, index: number, pos: number, date: Date) => {
+  switch(index) {
+    case 0: // previous year
+      const preYear = new Date(date)
+      preYear.setFullYear(preYear.getFullYear() - 1)
+      pos === 0 ? (state.current = preYear) : (state.next = preYear)
+      break
+    case 1: // previous month
+      const preMonth = new Date(date)
+      preMonth.setMonth(preMonth.getMonth() - 1)
+      pos === 0 ? (state.current = preMonth) : (state.next = preMonth)
+      break
+    case 2: // next month
+      const nextMonth = new Date(date)
+      nextMonth.setMonth(nextMonth.getMonth() + 1)
+      pos === 0 ? (state.current = nextMonth) : (state.next = nextMonth)
+      break
+    case 3: // next year
+      const nextYear = new Date(date)
+      nextYear.setFullYear(nextYear.getFullYear() + 1)
+      pos === 0 ? (state.current = nextYear) : (state.next = nextYear)
+      break
+  }
+}
 
-  // console.log(left, right, top, bottom)
-  return { left, right, top, bottom, width, height }
+const formatOutputValue = (state: TState, props: any) => {
+  const { format = 'y/MM/dd', range, rangeSpliter = '-' } = props || {}
+  if(range) {
+    return formatRange(format,
+      state.start,
+      state.end,
+      rangeSpliter
+    )
+  } else {
+    return formatDate(format, state.start)
+  }
+}
+
+const handleDomOutput = (id: string | undefined, output: string) => {
+  if(id && typeof id === 'string') {
+    const el = document.querySelector(id)
+    if(el instanceof HTMLInputElement) {
+      el.value = output
+    }
+  }
+}
+
+const invokeFunction = (fn: any, ...args: any[]) => {
+  if(typeof fn === 'function') {
+    fn(...args)
+  }
+}
+
+const traceScroll = (el: Node, callback: (e: Event) => void) => {
+  const cb = (e: Event) => {
+    typeof callback === 'function' && callback(e)
+  }
+  const els: Node[] = [], name = 'scroll'
+  while(el.parentNode) {
+    els.push(el.parentNode)
+    el.parentNode.addEventListener(name, cb)
+    el = el.parentNode
+  }
+  return { elements: els, callback: cb, name }
 }
 
 export default defineComponent({
   name: 'DDatepicker',
   props: {
-    autoComplete: { type: Boolean, default: false },
-    onDateChange: { type: Function },
+    selectedDateChange: { type: Function },
+    autoClose: { type: Boolean, default: false },
     range: { type: Boolean, default: false },
     format: { type: String, default: 'y/MM/dd' },
-    rangeSpliter: { type: String, default: '-' }
+    rangeSpliter: { type: String, default: '-' },
+    attachInputDom: { type: String }
   },
   setup(props, ctx) {
+
     const container = ref<Element>()
-    const popCont = ref<Element>()
     const events: { el: Node | Window; cb: (e: any) => void; name: string; capture: boolean; }[] = []
 
-    const inputState = reactive<{
-      showPanel: boolean
-      panelXPos: 'left' | 'right'
-      panelYPos: 'top' | 'bottom'
-      pointX: string
-      pointY: string
-      value: string
-    }>({
-      showPanel: false,
-      panelXPos: 'left',
-      panelYPos: 'top',
-      pointX: '0px',
-      pointY: '0px',
-      value: ''
+    const state = reactive<TState>({
+      range: !!props.range,
+      current: new Date(),
+      show: false,
     })
 
-    const dateState = reactive<{
-      range: boolean
-      dateCurrent?: Date
-      dateNext?: Date
-      dateStart?: Date
-      dateEnd?: Date
-      dateHover?: Date
+    const pos = reactive<{
+      x: string
+      y: string
     }>({
-      range: false,
-      dateCurrent: new Date(),
-      dateNext: new Date(2021, 8, 2)
+      x: '0',
+      y: '0',
     })
 
-    onMounted(() => {
-      const { value: cont } = container
-      if(!cont) {
+    const getAttachInputDom = () => {
+      const { attachInputDom } = props || {}
+      if(!attachInputDom || typeof attachInputDom !== 'string') {
+        return null
+      }
+      const el = document.querySelector(attachInputDom)
+      if(!el) {
+        return null
+      }
+      return el
+    }
+
+    const handlePosition = () => {
+      if(!state.show) {
+        pos.x = `-100%`
+        pos.y = `-100%`
         return
       }
+      const el = getAttachInputDom()
+      if(!el) {
+        return
+      }
+      const { left, top, width, height } = el.getBoundingClientRect()
+      const { width: _width, height: _height } = container.value.getBoundingClientRect()
+      const bottom = window.innerHeight - top - height
+      pos.x = `${left}px`
+      if(bottom > top) {
+        pos.y = `${top + height}px`
+      } else {
+        pos.y = `${top - _height}px`
+      }
       
-      const handleAutoClosePanel = factoryAutoClosePanel(cont, () => {
-        inputState.showPanel = false
+    }
+
+    const handleAttachInputDom = () => {
+      const el = getAttachInputDom()
+      if(!el) {
+        state.show = true
+        return
+      }
+
+      if(el instanceof HTMLInputElement) {
+        const format = props.format || `y/MM/dd`
+        const sp = props.rangeSpliter || '-'
+        el.placeholder = props.range ? `${format} ${sp} ${format}` : format
+      }
+      state.show = false
+      state.input = props.attachInputDom
+      events.push(attachEvent(el, 'click', () => !state.show && (state.show = true), false))
+      events.push(attachEvent(document, 'click', (e: MouseEvent) => {
+        if(!state.show || e.target === el || isIn(e.target as Node, container.value)) {
+          return
+        }
+        state.show = false
+      }, false))
+      const tracing = traceScroll(el, () => {
+        // console.log(111)
+        handlePosition()
       })
-      events.push(attachEvent(document, 'click', handleAutoClosePanel, false))
-      // // 窗口失焦点时隐藏弹窗
-      // events.push(attachEvent(window, 'blur', () => { state.showPanel = false }, false))
+      tracing.elements.forEach(node => {
+        events.push({ el: node, cb: tracing.callback, name: tracing.name, capture: false })
+      })
+    }
+
+    onMounted(() => {
+      handleAttachInputDom()
     })
 
     onUnmounted(() => {
@@ -114,122 +212,45 @@ export default defineComponent({
       events.splice(0, events.length)
     })
 
-    const handleActive = (e: Element) => {
-      if(inputState.showPanel) {
-        return
-      }
-      const range = getHostRange(e)
-      if(range.left > range.right) {
-        inputState.panelXPos = 'right'
-        inputState.pointX = `${range.width}px`
-      } else {
-        inputState.panelXPos = 'left'
-        inputState.pointX = '0px'
-      }
-
-      if(range.top > range.bottom) {
-        inputState.panelYPos = 'bottom'
-        inputState.pointY = '0px'
-      } else {
-        inputState.panelYPos = 'top'
-        inputState.pointY = `${range.height}px`
-      }
-      inputState.showPanel = true
-    }
-
-    const handleSwitch = (index: number, pos: number, date: Date) => {
-      switch(index) {
-        case 0: // previous year
-          const preYear = new Date(date)
-          preYear.setFullYear(preYear.getFullYear() - 1)
-          pos === 0 ? (dateState.dateCurrent = preYear) : (dateState.dateNext = preYear)
-          break
-        case 1: // previous month
-          const preMonth = new Date(date)
-          preMonth.setMonth(preMonth.getMonth() - 1)
-          pos === 0 ? (dateState.dateCurrent = preMonth) : (dateState.dateNext = preMonth)
-          break
-        case 2: // next month
-          const nextMonth = new Date(date)
-          nextMonth.setMonth(nextMonth.getMonth() + 1)
-          pos === 0 ? (dateState.dateCurrent = nextMonth) : (dateState.dateNext = nextMonth)
-          break
-        case 3: // next year
-          const nextYear = new Date(date)
-          nextYear.setFullYear(nextYear.getFullYear() + 1)
-          pos === 0 ? (dateState.dateCurrent = nextYear) : (dateState.dateNext = nextYear)
-          break
-      }
-    }
-
-    const setInputValue = () => {
-      const { format = 'y/MM/dd', range, rangeSpliter = '-' } = props || {}
-      if(range) {
-        inputState.value = formatRange(format,
-          dateState.dateStart,
-          dateState.dateEnd,
-          rangeSpliter
-        )
-      } else {
-        inputState.value = formatDate(format, dateState.dateStart)
-      }
-    }
-
-    const handleSelected = (date: Date) => {
-      dateState.dateStart = date
-      setInputValue()
-      if(props.autoComplete) {
-        inputState.showPanel = false
-      }
-      if(typeof props.onDateChange === 'function') {
-        props.onDateChange(date)
-      }
-    }
-
-    const handleSelectEnd = (date: Date) => {
-      dateState.dateEnd = date
-      setInputValue()
-      if(props.autoComplete) {
-        inputState.showPanel = false
-      }
-      if(typeof props.onDateChange === 'function') {
-        props.onDateChange(date)
-      }
-    }
-
     return () => {
-      const { format = 'y/MM/dd', rangeSpliter = '-' } = props || {}
-      const placeholder = props.range ? `${format} ${rangeSpliter} ${format}` : format
+      handlePosition()
       return (
-        <div ref={container} class="datapicker-container">
-          <Input width={140} onActive={handleActive} value={inputState.value} placeholder={placeholder} />
-          <div ref={popCont} class="datepicker-pop-container" style={{ left: inputState.pointX, top: inputState.pointY }}>
-            <PopPanel
-              show={inputState.showPanel}
-              xPosition={inputState.panelXPos}
-              yPosition={inputState.panelYPos}
-              xOffset={0}
-              yOffset={0}
-            ><Calendar
+        <div class="datepicker-global-viewport">
+          <div
+            ref={container}
+            class="datepicker-container"
+            style={{
+              transform: `translateX(${pos.x}) translateY(${pos.y})`
+            }}
+          >
+            <Calendar
               type={props.range ? 'range' : 'select'}
-              current={dateState.dateCurrent}
-              next={dateState.dateNext}
-              dateStart={dateState.dateStart}
-              dateEnd={dateState.dateEnd}
-              dateHover={dateState.dateHover}
+              current={state.current}
+              next={state.next}
+              dateStart={state.start}
+              dateEnd={state.end}
+              dateHover={state.hover}
               onReset={(date: Date) => {
-                dateState.dateEnd = dateState.dateHover = undefined
-                dateState.dateStart = date
+                state.end = state.hover = undefined
+                state.start = date
               }}
-              onSelected={handleSelected}
-              onSelectStart={(date: Date) => dateState.dateStart = date}
-              onSelectEnd={handleSelectEnd}
-              onSelecting={(date: Date) => dateState.dateHover = date}
-              onPreviousYear={(date: Date, pos: number) => handleSwitch(0, pos, date)}
-              onPreviousMonth={(date: Date, pos: number) => handleSwitch(1, pos, date)}
-              onNextMonth={(date: Date, pos: number) => handleSwitch(2, pos, date)}
-              onNextYear={(date: Date, pos: number) => handleSwitch(3, pos, date)}
-            /></PopPanel>
+              onChange={() => {
+                const output = formatOutputValue(state, props)
+                handleDomOutput(state.input, output)
+                invokeFunction(props.selectedDateChange, output)
+                if(props.autoClose) {
+                  state.show = false
+                }
+              }}
+              onSelected={(date: Date) => state.start = date}
+              onSelectStart={(date: Date) => state.start = date}
+              onSelectEnd={(date: Date) => state.end = date}
+              onSelecting={(date: Date) => state.hover = date}
+              onPreviousYear={(date: Date, pos: number) => handleCalendarSwitchState(state, 0, pos, date)}
+              onPreviousMonth={(date: Date, pos: number) => handleCalendarSwitchState(state, 1, pos, date)}
+              onNextMonth={(date: Date, pos: number) => handleCalendarSwitchState(state, 2, pos, date)}
+              onNextYear={(date: Date, pos: number) => handleCalendarSwitchState(state, 3, pos, date)}
+            />
           </div>
         </div>
       )
