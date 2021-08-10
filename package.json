@@ -36,7 +36,7 @@
     "convert:route": "node ./scripts/convert-component-route.js",
     "publish": "cd dist && npm publish",
     "generate:devui": "node scripts/generate-devui.js",
-    "predev": "devui-cli create -t vue-devui",
+    "predev": "devui-cli create -t vue-devui --ignore-parse-error",
     "postinstall": "npm link"
   },
   "dependencies": {

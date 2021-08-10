@@ -25,7 +25,7 @@ export function resolveDirFilesInfo(targetDir, ignoreDirs = []) {
     }))
 }
 
-export function parseExportByFileInfo(fileInfo) {
+export function parseExportByFileInfo(fileInfo, ignoreParseError) {
   const exportModule = {}
   const indexContent = fs.readFileSync(fileInfo.path, { encoding: 'utf-8' })
 
@@ -34,12 +34,22 @@ export function parseExportByFileInfo(fileInfo) {
 
   if (!defaultRe.test(indexContent)) {
     logger.error(`${fileInfo.path} must have "export default".`)
-    return process.exit(1)
+
+    if (ignoreParseError) {
+      return exportModule
+    } else {
+      process.exit(1)
+    }
   }
 
   if (!partRe.test(indexContent)) {
     logger.error(`${fileInfo.path} must have "export {}".`)
-    return process.exit(1)
+
+    if (ignoreParseError) {
+      return exportModule
+    } else {
+      process.exit(1)
+    }
   }
 
   const parts = []

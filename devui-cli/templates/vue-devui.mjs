@@ -37,7 +37,7 @@ export {
 export default {
   version: '${VERSION}',
   install(app: App) {
-    installs.forEach((p) => app.use(p))
+    installs.forEach((p) => app.use(p as any))
   }
 }
 `

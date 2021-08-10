@@ -37,7 +37,7 @@ export function validateCreateType(type) {
 }
 
 export async function create(cwd) {
-  let { type } = cwd
+  let { type, ignoreParseError } = cwd
 
   if (isEmpty(type)) {
     const result = await inquirer.prompt([selectCreateType()])
@@ -60,7 +60,7 @@ export async function create(cwd) {
         await createComponent(result)
         break
       case 'vue-devui':
-        await createVueDevui()
+        await createVueDevui(ignoreParseError)
         break
       case 'vitepress/sidebar':
         break
@@ -146,12 +146,12 @@ async function createComponent(params = {}) {
   }
 }
 
-async function createVueDevui() {
+async function createVueDevui(ignoreParseError) {
   const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS)
   const exportModules = []
 
   fileInfo.forEach((f) => {
-    const em = parseExportByFileInfo(f)
+    const em = parseExportByFileInfo(f, ignoreParseError)
 
     if (isEmpty(em)) return
 
