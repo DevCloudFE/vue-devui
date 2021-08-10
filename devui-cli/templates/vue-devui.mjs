@@ -1,6 +1,5 @@
 import { relative } from 'path'
-import { INDEX_FILE_NAME, VERSION } from '../shared/constant.js'
-import { VUE_DEVUI_FILE } from '/own-files/own-workspace/vue-devui/devui-cli/shared/constant.js'
+import { INDEX_FILE_NAME, VERSION, VUE_DEVUI_FILE } from '../shared/constant.js'
 
 export function createVueDevuiTemplate(exportModules = []) {
   const packages = []
