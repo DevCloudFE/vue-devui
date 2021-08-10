@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { defineComponent } from 'vue'
 import Loading from './loading'
 import { LoadingProps, BindingType, TargetHTMLElement } from './types'

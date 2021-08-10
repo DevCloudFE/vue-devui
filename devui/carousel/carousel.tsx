@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { defineComponent, ref, watch, onMounted, Fragment, Comment } from 'vue';
 import { carouselProps, DotTrigger } from './types';
 
