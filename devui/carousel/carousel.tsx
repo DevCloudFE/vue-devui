@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { defineComponent, ref, watch, onMounted, Fragment, Comment } from 'vue';
+import { defineComponent, ref, watch, onMounted, onBeforeUnmount, Fragment, Comment } from 'vue';
 import { carouselProps, DotTrigger } from './types';
 
 import Icon from '../icon/src/icon'
@@ -26,7 +26,7 @@ export default defineComponent({
     const currentIndex = ref(0);
     const wrapperRef = ref<HTMLElement | null>(null);
     const containerRef = ref<HTMLElement | null>(null);
-    const scheduledId = ref<number | null>(null);
+    const scheduledId = ref<ReturnType<typeof setTimeout> | null>(null);
 
     watch(
       () => arrowTrigger,
@@ -170,6 +170,9 @@ export default defineComponent({
 
       autoScheduleTransition();
     });
+    onBeforeUnmount(() => {
+      clearScheduledTransition()
+    })
 
     return {
       wrapperRef,
