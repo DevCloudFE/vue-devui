@@ -1,4 +1,4 @@
-import { invokeCallback } from './utils'
+import { invokeCallback, subDateDay } from './utils'
 import { TDateCell, TDatePanelDataProps, TDatePanelProps } from './types'
 
 export const getDateKey = (date: Date): string => {
@@ -40,8 +40,10 @@ export const trigEvent = (props: TDatePanelProps, day: TDateCell): void => {
         if (!props.dateStart) {
             invokeCallback(props.onSelectStart, day.date)
         } else if (!props.dateEnd) {
-            invokeCallback(props.onSelectEnd, day.date)
-            typeof props.onChange === 'function' && props.onChange(props.type, props)
+            if(subDateDay(props.dateStart, day.date) !== 0) {
+                invokeCallback(props.onSelectEnd, day.date)
+                typeof props.onChange === 'function' && props.onChange(props.type, props)
+            }
         } else {
             invokeCallback(props.onReset, day.date)
         }

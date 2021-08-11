@@ -4,4 +4,42 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
+  user-select: none;
+  position: relative;
+}
+
+.calendar-panel-time-head {
+  background-color: #f1f1f1;
+  text-align: center;
+  font-size: 16px;
+  padding: 8px 0;
+}
+
+.calendar-panel-time-select {
+  display: flex;
+  flex-direction: row;
+  width: 150px;
+  justify-content: space-around;
+  height: 220px;
+}
+
+.calendar-panel-time-column {
+  cursor: default;
+  overflow: auto;
+  width: 60px;
+}
+
+.calendar-panel-time-column span {
+  display: block;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.calendar-panel-time-column span.timepicker-selected {
+  background-color: #00aaff;
+  color: #ffffff;
 }
