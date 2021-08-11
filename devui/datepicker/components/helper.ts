@@ -5,7 +5,7 @@ export const getDateKey = (date: Date): string => {
     return date.toDateString()
 }
 
-export const cellClassName = (props: TDatePanelDataProps, day: TDateCell, base = 'calendar-panel-cell'): string => {
+export const cellClassName = (props: TDatePanelDataProps, day: TDateCell, base = 'cell'): string => {
     if(day.current !== 0) {
         return `${base} disabled`
     }

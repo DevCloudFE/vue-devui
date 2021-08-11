@@ -1,8 +1,35 @@
-import { compareDate } from '../utils'
-import { Year, Month } from '../icon'
-import { TDateToolbarProps } from '../types'
-import Item, { CalendarToolbarTitle as Title } from '../toolbar-item'
-import './index.css'
+import { compareDate, invokeCallback } from '../utils'
+import { Year, Month } from './svg-icon'
+import { TCalendarToolbarItemProps, TDateToolbarProps } from '../types'
+import './index.scss'
+
+const Item = (props: TCalendarToolbarItemProps) => {
+    const {
+        button: Btn,
+        disabled = false,
+        rotate = 0,
+        date,
+        pos,
+        cb,
+    } = props
+    const color = disabled ? '#cfd0d3' : '#585d6b'
+    const className = `${disabled ? 'disabled' : ''}`
+    const handleClick = disabled ? undefined : () => invokeCallback(props.cb, date, pos)
+    return (
+        <a className={className} onClick={handleClick}>
+            <Btn color={color} rotate={rotate} />
+        </a>
+    )
+}
+
+export const Title = (props: { date: Date; }) => {
+    const { date } = props
+    return (
+        <a className="title">{
+            `${date.getFullYear()}年${(date.getMonth() + 1 + '').padStart(2, '0')}月`
+        }</a>
+    )
+}
 
 const CalendarToolbar = (props: TDateToolbarProps) => {
     const {
@@ -25,7 +52,7 @@ const CalendarToolbar = (props: TDateToolbarProps) => {
     }
 
     return (
-        <div className="calendar-toolbar">
+        <div className="devui-calendar-toolbar">
             <Item disabled={dis[0]} date={current} pos={pos} button={Year} cb={onPreviousYear} />
             <Item disabled={dis[1]} date={current} pos={pos} button={Month} rotate={-90} cb={onPreviousMonth} />
             <Title date={current} />

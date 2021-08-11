@@ -5,7 +5,7 @@ import {
   traceNode, invokeFunction,
 } from './utils'
 import Calendar from './components/calendar'
-import './datepicker.css'
+import './datepicker.scss'
 
 type TState = {
   range?: boolean
@@ -211,10 +211,10 @@ export default defineComponent({
     return () => {
       handlePosition()
       return (
-        <div class={state.st ? `` : `datepicker-global-viewport`}>
+        <div class={state.st ? `` : `devui-datepicker-global-viewport`}>
           <div
             ref={container}
-            class="datepicker-container"
+            class="devui-datepicker-container"
             style={{
               transform: state.st ? '' : `translateX(${pos.x}) translateY(${pos.y})`
             }}

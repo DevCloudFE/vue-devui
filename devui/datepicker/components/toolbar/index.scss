@@ -1,0 +1,45 @@
+@import '../../../style/devui.scss';
+
+$toolbar-height: 32px;
+$cell-size: 28px;
+
+.devui-calendar-toolbar {
+  height: $toolbar-height;
+  font-weight: $font-title-weight;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+
+  a {
+    width: $cell-size;
+    height: $cell-size;
+    line-height: $cell-size;
+    color: $text-color;
+    display: block;
+    text-align: center;
+    flex-shrink: 1;
+    flex-grow: 0;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      color: $text-color;
+      text-decoration: none;
+    }
+
+    &.disabled {
+      color: $devui-disabled-text;
+      cursor: not-allowed;
+
+      &:hover {
+        color: $devui-disabled-text;
+      }
+    }
+
+    &.title {
+      flex-grow: 1;
+      flex-shrink: 1;
+    }
+  }
+}

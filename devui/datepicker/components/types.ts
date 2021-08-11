@@ -56,3 +56,12 @@ export type TIconSvgProps = {
     rotate?: number
 }
 export type TIconSvg = (props: TIconSvgProps) => any
+
+export type TCalendarToolbarItemProps = {
+    disabled?: boolean
+    rotate?: number
+    cb?: (...args: any[]) => void
+    pos: number
+    date: Date
+    button: TIconSvg
+}
