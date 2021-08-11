@@ -1,6 +1,5 @@
-import { defineComponent, onMounted, ref } from 'vue'
-import { TProps } from '../types'
-import CalendarDatePanel from '../panel'
+import { defineComponent, onMounted, ref, reactive } from 'vue'
+import VerticalSliderFunction from '../vertical-slider'
 
 import './index.scss'
 
@@ -9,64 +8,47 @@ const TimePicker = defineComponent({
     time: { type: Date }
   },
   setup(props) {
-    const hour = ref<Element>()
-    const minute = ref<Element>()
-    const second = ref<Element>()
-    const idxes = [0, 0, 0]
-    const size = 24
-    onMounted(() => {
-      if(hour.value) {
-        // hour.value.scrollTop = idxes[0] * size
-        hour.value.scrollTop = idxes[0] * size
-        console.log(idxes[0] * size)
-      }
-      if(minute.value) {
-        minute.value.scrollTop = idxes[1] * size
-      }
-      if(second.value) {
-        second.value.scrollTop = idxes[2] * size
-      }
+
+    const { time = new Date() } = props || {}
+    const state = reactive({
+      hour: time.getHours(),
+      minute: time.getMinutes(),
+      second: time.getSeconds()
     })
 
+    const hours = Array(24).fill(0).map((_, i) => `${i}`.padStart(2, '0'))
+    const minutes = Array(60).fill(0).map((_, i) => `${i}`.padStart(2, '0'))
+
     return () => {
-      const { time = new Date() } = props || {}
-      const h = time.getHours(), m = time.getMinutes(), s = time.getSeconds()
       return (
         <div className="devui-calendar-timepicker">
           <div className="head">
-            <span>{`00:00:00`}</span>
+            <div className="chars">
+              {/* <span>{`:`}</span>
+              <span>{`:`}</span> */}
+              <span>
+                {state.hour.toString().padStart(2, '0')}:
+                {state.minute.toString().padStart(2, '0')}:
+                {state.second.toString().padStart(2, '0')}
+              </span>
+            </div>
           </div>
           <div className="select">
-            <div ref={hour} className="column">{
-              Array(24).fill(0).map((_, i) => {
-                let className = ''
-                if (h === i) {
-                  className = 'selected'
-                  idxes[0] = i
-                }
-                return <span className={className}>{(i + '').padStart(2, '0')}</span>
-              })
-            }</div>
-            <div ref={minute} className="column">{
-              Array(60).fill(0).map((_, i) => {
-                let className = ''
-                if (m === i) {
-                  className = 'selected'
-                  idxes[1] = i
-                }
-                return <span className={className}>{(i + '').padStart(2, '0')}</span>
-              })
-            }</div>
-            <div ref={second} className="column">{
-              Array(60).fill(0).map((_, i) => {
-                let className = ''
-                if (s === i) {
-                  className = 'selected'
-                  idxes[2] = i
-                }
-                return <span className={className}>{(i + '').padStart(2, '0')}</span>
-              })
-            }</div>
+            <VerticalSliderFunction
+              items={hours}
+              selectedIndex={state.hour}
+              onChange={(_: any, idx: number) => state.hour = idx}
+            />
+            <VerticalSliderFunction
+              items={minutes}
+              selectedIndex={state.minute}
+              onChange={(_: any, idx: number) => state.minute = idx}
+            />
+            <VerticalSliderFunction
+              items={minutes}
+              selectedIndex={state.second}
+              onChange={(_: any, idx: number) => state.second = idx}
+            />
           </div>
         </div>
       )
