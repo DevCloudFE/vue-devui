@@ -1,8 +1,8 @@
-import logger from '../shared/logger.mjs'
-import { bigCamelCase, resolveDirFilesInfo, parseExportByFileInfo } from '../shared/utils.mjs'
-import fs from 'fs-extra'
-import { resolve } from 'path'
-import {
+const logger = require('../shared/logger')
+const { bigCamelCase, resolveDirFilesInfo, parseExportByFileInfo } = require('../shared/utils')
+const fs = require('fs-extra')
+const { resolve } = require('path')
+const {
   DEVUI_NAMESPACE,
   DEVUI_DIR,
   TESTS_DIR_NAME,
@@ -11,12 +11,12 @@ import {
   VUE_DEVUI_FILE,
   VUE_DEVUI_IGNORE_DIRS,
   VUE_DEVUI_FILE_NAME
-} from '../shared/constant.js'
-import { isEmpty, kebabCase } from 'lodash-es'
-import inquirer from 'inquirer'
-import { selectCreateType } from '../inquirers/create.mjs'
-import { selectCategory, selectParts, typeName, typeTitle } from '../inquirers/component.mjs'
-import {
+} = require('../shared/constant')
+const { isEmpty, kebabCase } = require('lodash')
+const inquirer = require('inquirer')
+const { selectCreateType } = require('../inquirers/create')
+const { selectCategory, selectParts, typeName, typeTitle } = require('../inquirers/component')
+const {
   createComponentTemplate,
   createStyleTemplate,
   createTypesTemplate,
@@ -24,11 +24,11 @@ import {
   createServiceTemplate,
   createIndexTemplate,
   createTestsTemplate
-} from '../templates/component.mjs'
-import { createVueDevuiTemplate } from '../templates/vue-devui.mjs'
-import ora from 'ora'
+} = require('../templates/component')
+const { createVueDevuiTemplate } = require('../templates/vue-devui')
+const ora = require('ora')
 
-export function validateCreateType(type) {
+exports.validateCreateType = (type) => {
   const flag = /^(component|(vue-devui)|(vitepress\/sidebar))$/.test(type)
 
   !flag && logger.error('类型错误，可选类型为：component, vue-devui, vitepress/sidebar')
@@ -36,7 +36,7 @@ export function validateCreateType(type) {
   return flag ? type : null
 }
 
-export async function create(cwd) {
+exports.create = async (cwd) => {
   let { type, ignoreParseError } = cwd
 
   if (isEmpty(type)) {

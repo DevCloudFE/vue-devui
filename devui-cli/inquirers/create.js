@@ -1,4 +1,4 @@
-export const selectCreateType = () => ({
+exports.selectCreateType = () => ({
   name: 'type',
   type: 'list',
   message: '（必填）请选择创建类型：',
