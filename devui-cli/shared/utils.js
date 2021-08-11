@@ -1,14 +1,14 @@
-import { camelCase, upperFirst } from 'lodash-es'
-import { INDEX_FILE_NAME } from './constant.js'
-import { resolve } from 'path'
-import logger from './logger.mjs'
-import fs from 'fs-extra'
+const { camelCase, upperFirst } = require('lodash')
+const { INDEX_FILE_NAME } = require('./constant')
+const { resolve } = require('path')
+const logger = require('./logger')
+const fs = require('fs-extra')
 
-export function bigCamelCase(str) {
+exports.bigCamelCase = (str) => {
   return upperFirst(camelCase(str))
 }
 
-export function resolveDirFilesInfo(targetDir, ignoreDirs = []) {
+exports.resolveDirFilesInfo = (targetDir, ignoreDirs = []) => {
   return fs
     .readdirSync(targetDir)
     .filter(
@@ -19,13 +19,13 @@ export function resolveDirFilesInfo(targetDir, ignoreDirs = []) {
         fs.existsSync(resolve(targetDir, dir, INDEX_FILE_NAME))
     )
     .map((dir) => ({
-      name: bigCamelCase(dir),
+      name: this.bigCamelCase(dir),
       dirname: dir,
       path: resolve(targetDir, dir, INDEX_FILE_NAME)
     }))
 }
 
-export function parseExportByFileInfo(fileInfo, ignoreParseError) {
+exports.parseExportByFileInfo = (fileInfo, ignoreParseError) => {
   const exportModule = {}
   const indexContent = fs.readFileSync(fileInfo.path, { encoding: 'utf-8' })
 

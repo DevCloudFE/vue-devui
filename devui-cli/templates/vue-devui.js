@@ -1,7 +1,7 @@
-import { relative } from 'path'
-import { INDEX_FILE_NAME, VERSION, VUE_DEVUI_FILE } from '../shared/constant.js'
+const { relative } = require('path')
+const { INDEX_FILE_NAME, VERSION, VUE_DEVUI_FILE } = require('../shared/constant')
 
-export function createVueDevuiTemplate(exportModules = []) {
+exports.createVueDevuiTemplate = (exportModules = []) => {
   const packages = []
   const imports = []
   const installs = []

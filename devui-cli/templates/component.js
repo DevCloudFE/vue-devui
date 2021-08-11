@@ -1,8 +1,8 @@
-import { DEVUI_NAMESPACE } from '../shared/constant.js'
-import { camelCase } from 'lodash-es'
-import { bigCamelCase } from '../shared/utils.mjs'
+const { DEVUI_NAMESPACE } = require('../shared/constant')
+const { camelCase } = require('lodash')
+const { bigCamelCase } = require('../shared/utils')
 
-export const createComponentTemplate = ({ styleName, componentName, typesName }) => `\
+exports.createComponentTemplate = ({ styleName, componentName, typesName }) => `\
 import './${styleName}.scss'
 
 import { defineComponent } from 'vue'
@@ -23,7 +23,7 @@ export default defineComponent({
 })
 `
 
-export const createTypesTemplate = ({ componentName }) => `\
+exports.createTypesTemplate = ({ componentName }) => `\
 import type { PropType, ExtractPropTypes } from 'vue'
 
 export const ${camelCase(componentName)}Props = {
@@ -35,7 +35,7 @@ export const ${camelCase(componentName)}Props = {
 export type ${bigCamelCase(componentName)}Props = ExtractPropTypes<typeof ${camelCase(componentName)}Props>
 `
 
-export const createDirectiveTemplate = () => `\
+exports.createDirectiveTemplate = () => `\
 // can export function.
 export default {
   created() { },
@@ -48,7 +48,7 @@ export default {
 }
 `
 
-export const createServiceTemplate = ({ componentName, typesName, serviceName }) => `\
+exports.createServiceTemplate = ({ componentName, typesName, serviceName }) => `\
 import { ${bigCamelCase(componentName)}Props } from './${typesName}'
 
 const ${bigCamelCase(serviceName)} = {
@@ -58,13 +58,13 @@ const ${bigCamelCase(serviceName)} = {
 export default ${bigCamelCase(serviceName)}
 `
 
-export const createStyleTemplate = ({ componentName }) => `\
+exports.createStyleTemplate = ({ componentName }) => `\
 .${DEVUI_NAMESPACE}-${componentName} {
   //
 }
 `
 
-export const createIndexTemplate = ({
+exports.createIndexTemplate = ({
   title,
   category,
   hasComponent,
@@ -124,5 +124,5 @@ export default {
 `
 }
 
-export const createTestsTemplate = () => `\
+exports.createTestsTemplate = () => `\
 `

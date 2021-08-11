@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import { Command } from 'commander'
-import { create, validateCreateType } from './commands/create.mjs'
-import { VERSION } from './shared/constant.js'
+const { Command } = require('commander')
+const { create, validateCreateType } = require('./commands/create')
+const { VERSION } = require('./shared/constant')
 
 const program = new Command()
 
