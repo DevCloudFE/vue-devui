@@ -28,41 +28,40 @@ const TimePicker = defineComponent({
     return () => {
       const { time = new Date() } = props || {}
       const h = time.getHours(), m = time.getMinutes(), s = time.getSeconds()
-      console.log(h,m,s)
       return (
-        <div className="calendar-panel-time">
-          <div className="calendar-panel-time-head">
+        <div class="calendar-panel-time">
+          <div class="calendar-panel-time-head">
             <span>{`00:00:00`}</span>
           </div>
-          <div className="calendar-panel-time-select">
-            <div ref={hour} className="calendar-panel-time-column">{
+          <div class="calendar-panel-time-select">
+            <div ref={hour} class="calendar-panel-time-column">{
               Array(24).fill(0).map((_, i) => {
                 let className = ''
                 if (h === i) {
                   className = 'timepicker-selected'
                   idxes[0] = i
                 }
-                return <span className={className}>{(i + '').padStart(2, '0')}</span>
+                return <span class={className}>{(i + '').padStart(2, '0')}</span>
               })
             }</div>
-            <div ref={minute} className="calendar-panel-time-column">{
+            <div ref={minute} class="calendar-panel-time-column">{
               Array(60).fill(0).map((_, i) => {
                 let className = ''
                 if (m === i) {
                   className = 'timepicker-selected'
                   idxes[1] = i
                 }
-                return <span className={className}>{(i + '').padStart(2, '0')}</span>
+                return <span class={className}>{(i + '').padStart(2, '0')}</span>
               })
             }</div>
-            <div ref={second} className="calendar-panel-time-column">{
+            <div ref={second} class="calendar-panel-time-column">{
               Array(60).fill(0).map((_, i) => {
                 let className = ''
                 if (s === i) {
                   className = 'timepicker-selected'
                   idxes[2] = i
                 }
-                return <span className={className}>{(i + '').padStart(2, '0')}</span>
+                return <span class={className}>{(i + '').padStart(2, '0')}</span>
               })
             }</div>
           </div>
@@ -83,7 +82,7 @@ const Calendar = (props: TProps) => {
       next = new Date(current.getFullYear(), current.getMonth() + 1, 1)
     }
     return (
-      <div className="calendar-container">
+      <div class="calendar-container">
         <CalendarDatePanel {...props} pos={0} current={current} compare={next} />
         <TimePicker time={current} />
         <CalendarDatePanel {...props} pos={1} current={next} compare={current} />
@@ -92,7 +91,7 @@ const Calendar = (props: TProps) => {
     )
   } else {
     return (
-      <div className="calendar-container">
+      <div class="calendar-container">
         <CalendarDatePanel {...props} pos={0} current={current} />
         <TimePicker time={current} />
       </div>
