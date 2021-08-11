@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from 'vue';
 
 export type IButtonType = 'button' | 'submit' | 'reset';
 export type IButtonStyle = 'common' | 'primary' | 'text' | 'text-dark' | 'danger';
@@ -8,7 +8,7 @@ export type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 import './button.scss';
 
 export default defineComponent({
-  name: 'd-button',
+  name: 'DButton',
   inheritAttrs: false,
   props: {
     id: {
