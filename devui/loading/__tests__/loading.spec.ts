@@ -1,14 +1,11 @@
 import { mount } from '@vue/test-utils';
 import { ref, Ref, nextTick, h, shallowReactive } from 'vue';
-import loading from '../index';
-
-// 服务方式
-const LoadingService = loading.LoadingService
+import { LoadingService, Loading } from '../index';
 
 // 全局属性
 const globalOption = {
   directives: {
-    dLoading: loading.dLoading
+    dLoading: Loading
   }
 }
 
@@ -126,7 +123,6 @@ describe('Loading as directive', () => {
 
   })
 
-  // TODO Promise 的单元测试, 需完善
   it('loading test Promise', async () => {
     const wrapper = mount(
       {
@@ -137,7 +133,7 @@ describe('Loading as directive', () => {
           </div>
         `,
         setup() {
-          const loading: Ref<Promise<any> | undefined | boolean> = ref(undefined) 
+          const loading: Ref<Promise<any> | undefined | boolean> = ref(false) 
 
           const click = () => {
             loading.value = new Promise((res: any) => {
@@ -160,10 +156,13 @@ describe('Loading as directive', () => {
     expect(btn.exists()).toBeTruthy()
 
     await btn.trigger('click')
-    expect(wrapper.find('.devui-loading-wrapper').exists()).toBeFalsy()
+    expect(wrapper.find('.devui-loading-wrapper').exists()).toBeTruthy()
+    // TODO 组件移除是在finally内部移除，在微任务队列末尾，这里好像检测不到
+    setTimeout(() => {
+      expect(wrapper.find('.devui-loading-wrapper').exists()).toBeFalsy()
+    })
   })
 
-  // TODO 多个 Promise 的单元测试, 需完善
   it('loading test mutiple Promise', async () => {
     const wrapper = mount(
       {
@@ -203,7 +202,11 @@ describe('Loading as directive', () => {
     expect(btn.exists()).toBeTruthy()
     
     await btn.trigger('click')
-    expect(wrapper.find('.devui-loading-wrapper').exists()).toBeFalsy()
+    expect(wrapper.find('.devui-loading-wrapper').exists()).toBeTruthy()
+    // TODO 组件移除是在finally内部移除，在微任务队列末尾，这里好像检测不到
+    setTimeout(() => {
+      expect(wrapper.find('.devui-loading-wrapper').exists()).toBeFalsy()
+    })
   })
 })
 

@@ -1,3 +1,3 @@
-import Pagination from './pagination'
+import Pagination from './src/pagination'
 
 export default Pagination

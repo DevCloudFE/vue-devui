@@ -1,0 +1,53 @@
+.devui-pagination {
+  font-size: var(--devui-font-size,12px);
+  ul, li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  a {
+    text-decoration: none;
+    color: #3eaf7c;
+  }
+  .devui-pagination-list {
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    li {
+      cursor: pointer;
+      &.active {
+        a.devui-pagination-link {
+          text-decoration: none;
+          background-color: var(--devui-list-item-active-bg,#5e7ce0);
+          color: var(--devui-list-item-active-text,#fff);
+        }
+      }
+      .devui-pagination-link {
+        margin-left: 5px;
+        padding: 3px 7px;
+        line-height: 1.5;
+        border-radius: var(--devui-border-radius,2px);
+        color: var(--devui-text-weak,#575d6c);
+        display: flex;
+        align-items: center;
+        &:hover {
+          text-decoration: none;
+          background-color: var(--devui-list-item-hover-bg,#f2f5fc);
+          color: var(--devui-list-item-hover-text,#526ecc);
+        }
+      }
+    }
+  }
+  .devui-jump-container {
+    display: inline-block;
+    position: relative;
+    margin: 0 10px;
+    vertical-align: middle;
+    .devui-input {
+      display: inline-block;
+      width: 3.5em;
+      vertical-align: middle;
+      margin: 0 3px;
+    }
+  }
+}
