@@ -7,6 +7,7 @@ export type TDateConfig = {
     type?: TDatePanelType
     mode?: TDatePanelMode
     current: Date
+    showTime: boolean
 }
 
 export type TDateSelectingBase = {

@@ -6,17 +6,10 @@
 
 ```jsx
 // 默认 range=false
-<d-datepicker />
+<d-datepicker range={state.range} showTime={state.showTime} />
 ```
 
-<d-datepicker />
-
-```jsx
-// 日期区间选择 range=true
-<d-datepicker range />
-```
-
-<d-datepicker range />
+<d-datepicker-demo-1 />
 
 ### 绑定原生`<input>`
 

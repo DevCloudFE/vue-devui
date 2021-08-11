@@ -72,6 +72,7 @@ const TimePicker = defineComponent({
 })
 
 const Calendar = (props: TProps) => {
+  const { showTime = false } = props
   let { current } = props
   if (!(current instanceof Date)) {
     current = new Date
@@ -84,16 +85,16 @@ const Calendar = (props: TProps) => {
     return (
       <div class="calendar-container">
         <CalendarDatePanel {...props} pos={0} current={current} compare={next} />
-        <TimePicker time={current} />
+        { showTime ? <TimePicker time={current} /> : null }
         <CalendarDatePanel {...props} pos={1} current={next} compare={current} />
-        <TimePicker time={next} />
+        { showTime ? <TimePicker time={next} /> : null }
       </div>
     )
   } else {
     return (
       <div class="calendar-container">
         <CalendarDatePanel {...props} pos={0} current={current} />
-        <TimePicker time={current} />
+        { showTime ? <TimePicker time={current} /> : null }
       </div>
     )
   }

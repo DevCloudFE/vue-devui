@@ -97,6 +97,7 @@ export default defineComponent({
     selectedDateChange: { type: Function },
     autoClose: { type: Boolean, default: false },
     range: { type: Boolean, default: false },
+    showTime: { type: Boolean, default: false },
     format: { type: String, default: 'y/MM/dd' },
     rangeSpliter: { type: String, default: '-' },
     attachInputDom: { type: String },
@@ -210,7 +211,7 @@ export default defineComponent({
     return () => {
       handlePosition()
       return (
-        <div className={state.st ? `` : `datepicker-global-viewport`}>
+        <div class={state.st ? `` : `datepicker-global-viewport`}>
           <div
             ref={container}
             class="datepicker-container"
@@ -220,6 +221,7 @@ export default defineComponent({
           >
             <Calendar
               type={props.range ? 'range' : 'select'}
+              showTime={props.showTime}
               current={state.current}
               next={state.next}
               dateStart={state.start}
