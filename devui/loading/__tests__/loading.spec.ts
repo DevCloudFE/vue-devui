@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { mount } from '@vue/test-utils';
 import { ref, Ref, nextTick, h, shallowReactive } from 'vue';
 import loading from '../index';

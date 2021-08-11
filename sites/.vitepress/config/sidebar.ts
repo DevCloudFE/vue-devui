@@ -27,6 +27,7 @@ const sidebar = {
         { text: 'Checkbox 复选框', link: '/components/checkbox/' },
         { text: 'DatePicker 日期选择器', link: '/components/datepicker/' },
         { text: 'Radio 单选框', link: '/components/radio/' },
+        { text: 'Select 下拉选择框', link: '/components/select/' },
         { text: 'Switch 开关', link: '/components/switch/' },
         { text: 'TagsInput 标签输入', link: '/components/tags-input/' },
         { text: 'TextInput 文本框', link: '/components/text-input/' }
