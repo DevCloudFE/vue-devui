@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { mount } from '@vue/test-utils';
 import { ref, Ref, nextTick, h, shallowReactive } from 'vue';
 import { LoadingService, Loading } from '../index';
@@ -51,9 +52,8 @@ describe('Loading as directive', () => {
       }
     )
 
-    const loadingPType = wrapper.find('#testLoading')
+    const loadingPType: any = wrapper.find('#testLoading')
     expect(loadingPType).toBeTruthy()
-    // @ts-ignore
     const targetEle = loadingPType.wrapperElement.instance.vnode.el
     expect(targetEle.parentNode.style.position).toEqual('absolute')
   })
@@ -267,11 +267,9 @@ describe('Loading as Service', () => {
     await nextTick()
     let ele = document.querySelector('.devui-loading-contanier')
     expect(ele).toBeTruthy()
-    // @ts-ignore
-    expect(ele.parentNode.style.position).toBe('absolute')
+    expect((ele.parentNode as HTMLDivElement).style.position).toBe('absolute')
 
-    let loadingEle = ele.querySelector('.devui-loading-area')
-    // @ts-ignore
+    let loadingEle: HTMLDivElement = ele.querySelector('.devui-loading-area')
     const style = loadingEle.style
     expect(style.top).toBe('40%')
     expect(style.left).toBe('60%')

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { defineComponent } from 'vue'
 import { createComponent } from './component'
 import Loading from './loading'
@@ -39,9 +40,9 @@ const loading = {
 
     const close = instance.proxy.close
     instance.loadingInstance = instance.proxy
-    instance.loadingInstance.close = () => {
+    instance.loadingInstance.close = (...arg: any[]) => {
       cacheTarget.delete(parent)
-      close.apply(null, arguments)
+      close(...arg)
     }
 
     return instance
