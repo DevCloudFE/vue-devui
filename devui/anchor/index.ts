@@ -1,23 +1,12 @@
 import { App } from 'vue'
 import Anchor from './anchor'
- 
+import dAnchorBox from './d-anchor-box'
+import dAnchorLink from './d-anchor-link'
+import dAnchor from './d-anchor'
 const directives = {
-  'only': {
-    // 当被绑定的元素挂载到 DOM 中时……
-    mounted(el) {
-      // 聚焦元素
-      el.focus();
-      el.value = 5;
-    }
-  },
-  'only2': {
-    // 当被绑定的元素挂载到 DOM 中时……
-    mounted(el) {
-      // 聚焦元素
-      el.focus();
-      el.value = 6;
-    }
-  }
+  'd-anchor-box': dAnchorBox,
+  'd-anchor-link': dAnchorLink,
+  'd-anchor': dAnchor 
 };
 Anchor.install = function(Vue: App) {
   for (const key in directives) {
