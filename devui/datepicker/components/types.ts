@@ -50,3 +50,9 @@ export type TProps = ({
     type: 'range'
     next: Date
 }) & TDateConfig & TDateSelectingBase & TDatePanelEventProps
+
+export type TIconSvgProps = {
+    color?: string
+    rotate?: number
+}
+export type TIconSvg = (props: TIconSvgProps) => any

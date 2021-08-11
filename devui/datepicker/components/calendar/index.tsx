@@ -1,6 +1,6 @@
 import { defineComponent, onMounted, ref } from 'vue'
-import { TProps } from './types'
-import CalendarDatePanel from './components/panel'
+import { TProps } from '../types'
+import CalendarDatePanel from '../panel'
 
 import './index.css'
 

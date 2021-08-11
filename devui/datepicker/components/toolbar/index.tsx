@@ -1,7 +1,7 @@
-import { compareDate } from '../../utils'
-import { Year, Month } from './icons'
-import { TDateToolbarProps } from '../../types'
-import Item, { CalendarToolbarTitle as Title } from './toolbar-item'
+import { compareDate } from '../utils'
+import { Year, Month } from '../icon'
+import { TDateToolbarProps } from '../types'
+import Item, { CalendarToolbarTitle as Title } from '../toolbar-item'
 import './index.css'
 
 const CalendarToolbar = (props: TDateToolbarProps) => {

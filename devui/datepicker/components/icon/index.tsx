@@ -1,8 +1,4 @@
-export type TIconSvgProps = {
-    color?: string
-    rotate?: number
-}
-export type TIconSvg = (props: TIconSvgProps) => any
+import { TIconSvgProps } from '../types'
 
 export const Year = (props: TIconSvgProps) => {
     const { color = '#585d6b', rotate = 0 } = props

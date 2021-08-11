@@ -1,6 +1,6 @@
-import { invokeCallback } from '../../utils'
-import { TIconSvg } from './icons'
-import './toolbar-item.css'
+import { invokeCallback } from '../utils'
+import { TIconSvg } from '../types'
+import './index.css'
 
 export type TCalendarToolbarItemProps = {
     disabled?: boolean
