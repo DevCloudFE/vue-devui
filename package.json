@@ -22,7 +22,6 @@
     "devui-cli": "./devui-cli/index.js"
   },
   "scripts": {
-    "predev": "npm run generate:devui",
     "dev": "vitepress dev sites",
     "build": "vitepress build sites",
     "serve": "vitepress serve sites",
