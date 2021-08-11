@@ -1,6 +1,6 @@
-import { COMPONENT_PARTS_MAP } from '../shared/constant.js'
+const { COMPONENT_PARTS_MAP } = require('../shared/constant')
 
-export const typeName = () => ({
+exports.typeName = () => ({
   name: 'name',
   type: 'input',
   message: '（必填）请输入组件 name ，将用作目录及文件名：',
@@ -12,7 +12,7 @@ export const typeName = () => ({
   }
 })
 
-export const typeTitle = () => ({
+exports.typeTitle = () => ({
   name: 'title',
   type: 'input',
   message: '（必填）请输入组件中文名称，将用作文档列表显示：',
@@ -24,7 +24,7 @@ export const typeTitle = () => ({
   }
 })
 
-export const selectCategory = () => ({
+exports.selectCategory = () => ({
   name: 'category',
   type: 'list',
   message: '（必填）请选择组件分类，将用作文档列表分类：',
@@ -32,13 +32,13 @@ export const selectCategory = () => ({
   default: 0
 })
 
-export const typeAliasName = () => ({
+exports.typeAliasName = () => ({
   name: 'alias',
   type: 'input',
   message: '（选填）请输入组件 name 别名，将用作组件别名被导出：'
 })
 
-export const selectParts = () => ({
+exports.selectParts = () => ({
   name: 'parts',
   type: 'checkbox',
   message: '（必填）请选择包含部件，将自动生成部件文件：',
