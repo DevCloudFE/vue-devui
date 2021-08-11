@@ -1,10 +1,13 @@
 import { App } from 'vue'
 import DatePicker from './datepicker'
+import DatePickerDemo1 from './doc-demo/demo1'
 
-DatePicker.install = function(Vue: App) {
-  Vue.component(DatePicker.name, DatePicker)
-};
+export { DatePicker, DatePickerDemo1 }
 
-DatePicker.version = '0.0.1'
-
-export default DatePicker
+export default {
+  install(app: App) {
+    DatePicker.version = '0.0.1'
+    app.component(DatePicker.name, DatePicker)
+    app.component(DatePickerDemo1.name, DatePickerDemo1)
+  }
+}

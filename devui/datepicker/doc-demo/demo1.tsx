@@ -1,5 +1,5 @@
 import { defineComponent, reactive } from 'vue'
-import DatePicker from '..'
+import DatePicker from '../datepicker'
 import './demo1.scss'
 
 export default defineComponent({
