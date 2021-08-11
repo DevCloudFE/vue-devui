@@ -37,7 +37,8 @@
     "publish": "cd dist && npm publish",
     "generate:devui": "node scripts/generate-devui.js",
     "clean:cli": "npm uninstall -g devui-cli & npm uninstall -g vue-devui",
-    "predev": "devui-cli create -t vue-devui --ignore-parse-error"
+    "cli:create": "node ./devui-cli/index.js create",
+    "predev": "node ./devui-cli/index.js create -t vue-devui --ignore-parse-error"
   },
   "dependencies": {
     "@devui-design/icons": "^1.3.0",
