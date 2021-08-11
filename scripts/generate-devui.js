@@ -9,6 +9,8 @@ console.log('config:', config);
 let importStr = `import { App } from 'vue';\n\n`;
 const components = [];
 
+const getDocDemos = require('./get-doc-demos')
+
 config['/'].forEach(({ text: ctext, children }) => {
   if (ctext !== '快速开始') {
     importStr += `// ${ctext}\n`;
@@ -20,6 +22,11 @@ config['/'].forEach(({ text: ctext, children }) => {
       const filename = linkItem[1];
       importStr += `import ${name} from './${filename}';\n`;
       components.push(name);
+
+      getDocDemos(filename).forEach(({ name, from }) => {
+        importStr += `import ${name} from './${from}';\n`;
+        components.push(name);
+      })
     })
     importStr += `\n`;
   }
