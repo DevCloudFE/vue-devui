@@ -1,5 +1,7 @@
 <template>
-  Vue DevUI
+  <div>
+    Vue DevUI
+  </div>
 </template>
 
 <script lang="ts">

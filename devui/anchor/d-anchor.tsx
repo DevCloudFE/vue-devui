@@ -7,11 +7,11 @@ export default  {
     
     console.log(parent )
     }
-    el.className = 'section-block  ';
+    el.className = 'section-block';
     // anchor-active-by-scroll
-    console.log(el)
-      // 聚焦元素
-      el.focus();
+    el.setAttribute('name',el.innerText);
+    console.log(el,'d-anchor')
+     
     //   el.innerHTML = '5';
     }
   };

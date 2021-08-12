@@ -1,46 +1,54 @@
 export default  {
+    beforeMount(el: HTMLElement, vnode:Object) {
+        console.log(vnode,'DivNodesinserted0000000000000')
+    },
     // 当被绑定的元素挂载到 DOM 中时……
     mounted(el: HTMLElement) {
+       
       // 聚焦元素
-        el.className = 'mymain'
-        let AllNodes:HTMLCollection = el.children ;
-        let UlNodes:string, DivNodes:string;
-        for (let m in AllNodes) {
+        el.className = 'mycontainer mymain'
+        // let AllNodes:HTMLCollection = el.children ;
+        // console.log( AllNodes,'DivNodesinserted0');
+        // let UlNodes:string, DivNodes:string;
+        // for (let m in AllNodes) {
            
                
-                 if (AllNodes[m].className == 'step-nav') {
-                    UlNodes = m
-                    // console.log(AllNodes[m].className,'AllNodes[m].className',m)
-                 } else if (AllNodes[m].className == 'mycontent') {
-                    DivNodes = m
-                 }
+        //          if (AllNodes[m].className == 'step-nav') {
+        //             UlNodes = m
+        //             // console.log(AllNodes[m].className,'AllNodes[m].className',m)
+        //          } else if (AllNodes[m].className == 'mycontent') {
+        //             DivNodes = m
+        //          }
               
             
            
-        }
-        // let containerDiv  = parseDom('<div _ngcontent-pls-c237="" class="mysidebar"> <d-sticky _ngcontent-pls-c237="" style="position: relative;"> <div class="ulDivArea" style="top: auto; left: auto; position: static;"> </div> </d-sticky> </div>') ;
-        // console.log(AllNodes,'stinnerHTML')
-        // el.appendChild(containerDiv[0])
-        // el.innerHTML = `<div _ngcontent-pls-c237="" class="mysidebar"> <d-sticky _ngcontent-pls-c237="" style="position: relative;"> <div class="ulDivArea" style="top: auto; left: auto; position: static;"> `
+        // }
+        // console.log(HTMLDOMtoString(AllNodes[UlNodes]),HTMLDOMtoString(AllNodes[DivNodes]),'DivNodes????????')
+        // el.innerHTML = '<div _ngcontent-pls-c237="" class="mysidebar"> <d-sticky _ngcontent-pls-c237="" style="position: relative;"> <div class="ulDivArea" style="top: auto; left: auto; position: static;"> '
         //                 +HTMLDOMtoString(AllNodes[UlNodes])
-        //                 +`</div> </d-sticky> </div>`
+        //                 +'</div> </d-sticky> </div>'
         //                 +HTMLDOMtoString(AllNodes[DivNodes])
-        // console.log(HTMLDOMtoString(AllNodes[UlNodes]),DivNodes,'DivNodes');
+
     }
   };
 
-  function parseDom(arg:string) {
+//   function parseDom(arg:string) {
 
-    　　 var objE = document.createElement("div");
+//     　　 var objE = document.createElement("div");
     
-    　　 objE.innerHTML = arg;
+//     　　 objE.innerHTML = arg;
     
-    　　 return objE.childNodes;
+//     　　 return objE.childNodes;
     
-    };
-    function HTMLDOMtoString (HTMLDOM) {
-        const div = document.createElement("div")
-        div.appendChild(HTMLDOM)
-        return div.innerHTML
-    }
+//     };
+    // function HTMLDOMtoString (HTMLDOM: HTMLElement) {
+    //     if (HTMLDOM)  {
+    //         let divA = document.createElement("div")
+    //         console.log(HTMLDOM,"__________HTMLDOM")
+    //         divA.appendChild(HTMLDOM) 
+    //         return divA.innerHTML
+    //     }
+      
+    // }
+   
  
