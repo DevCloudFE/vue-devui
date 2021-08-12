@@ -1,10 +1,16 @@
-import { App } from 'vue'
-import Accordion from './accordion'
+import type { App } from 'vue'
+import Accordion from './src/accordion'
 
-Accordion.install = function(Vue: App) {
-  Vue.component(Accordion.name, Accordion)
-};
+Accordion.install = function(app: App) {
+  app.component(Accordion.name, Accordion)
+}
 
-Accordion.version = '0.0.1'
+export { Accordion }
 
-export default Accordion
+export default {
+  title: 'Accordion 手风琴',
+  category: '导航',
+  install(app: App): void {    
+		app.use(Accordion as any)
+  }
+}

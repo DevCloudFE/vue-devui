@@ -6,20 +6,6 @@
 
 当执行指令时间较长（需要数秒以上）时，向用户展示正在执行的状态。
 
-### 参数
-
-| **参数**           | **类型**                                                     | **默认**                  | **说明**                                                     | **跳转 Demo**                |
-| ------------------ | ------------------------------------------------------------ | ------------------------- | ------------------------------------------------------------ | ---------------------------- |
-| v-dLoading         | Promise\<any\> / Array\<Promise\<any\>\> / Boolean / undefined | --                        | 可选，指令方式，控制 loading 状态                            | [基本用法](#基本用法)        |
-| target             | Element                                                      | document.body             | 可选，服务方式，Loading 需要覆盖的 DOM 节点                  | [服务方式调用](#服务方式调用) |
-| message            | String                                                       | --                        | 可选，loading 时的提示信息                                   | [多promise](#多promise)      |
-| loadingTemplateRef | VNode                                                        | --                        | 可选，自定义 loading 模板                                    | [自定义样式](#自定义样式)     |
-| backdrop           | Boolean                                                      | true                      | 可选，loading 时是否显示遮罩                                 | [基本用法](#基本用法)        |
-| positionType       | String                                                       | relative                  | 可选，指定`dLoading`宿主元素的定位类型,取值与 css position 属性一致。 | [基本用法](#基本用法)        |
-| view               | {top?:string,left?:string}                                   | {top: '50%', left: '50%'} | 可选，调整 loading 的显示位置，相对于宿主元素的顶部距离与左侧距离 | [基本用法](#基本用法)        |
-| zIndex             | Number                                                       | --                        | 可选，loading加载提示的 z-index 值                           | [基本用法](#基本用法)        |
-
-
 
 
 ### 基本用法
@@ -353,6 +339,20 @@ export default defineComponent({
 })
 </script>
 ```
+
+### 参数
+
+| **参数**           | **类型**                                                     | **默认**                  | **说明**                                                     | **跳转 Demo**                |
+| ------------------ | ------------------------------------------------------------ | ------------------------- | ------------------------------------------------------------ | ---------------------------- |
+| v-dLoading         | Promise\<any\> / Array\<Promise\<any\>\> / Boolean / undefined | --                        | 可选，指令方式，控制 loading 状态                            | [基本用法](#基本用法)        |
+| target             | Element                                                      | document.body             | 可选，服务方式，Loading 需要覆盖的 DOM 节点                  | [服务方式调用](#服务方式调用) |
+| message            | String                                                       | --                        | 可选，loading 时的提示信息                                   | [多promise](#多promise)      |
+| loadingTemplateRef | VNode                                                        | --                        | 可选，自定义 loading 模板                                    | [自定义样式](#自定义样式)     |
+| backdrop           | Boolean                                                      | true                      | 可选，loading 时是否显示遮罩                                 | [基本用法](#基本用法)        |
+| positionType       | String                                                       | relative                  | 可选，指定`dLoading`宿主元素的定位类型,取值与 css position 属性一致。 | [基本用法](#基本用法)        |
+| view               | {top?:string,left?:string}                                   | {top: '50%', left: '50%'} | 可选，调整 loading 的显示位置，相对于宿主元素的顶部距离与左侧距离 | [基本用法](#基本用法)        |
+| zIndex             | Number                                                       | --                        | 可选，loading加载提示的 z-index 值                           | [基本用法](#基本用法)        |
+
 
 <script lang="tsx">
 import { defineComponent, ref, Ref, reactive, shallowReactive, h } from 'vue'
