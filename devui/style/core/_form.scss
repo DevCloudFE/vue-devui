@@ -16,17 +16,17 @@ $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 
 .devui-form-controls input[type='text'],
 .devui-form-controls input[type='password'],
-[dTextInput] {
+[dInput] {
   width: 100%;
   height: 28px;
   font-size: $devui-font-size;
 
-  &.devui-textinput-sm {
+  &.devui-input-sm {
     font-size: $devui-font-size-sm;
     height: 26px;
   }
 
-  &.devui-textinput-lg {
+  &.devui-input-lg {
     font-size: $devui-font-size-lg;
     height: 46px;
   }
@@ -37,7 +37,7 @@ $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .devui-form-controls textarea,
-[dTextInput],
+[dInput],
 [dTextarea] {
   box-sizing: border-box;
   padding: 4px 10px;
@@ -327,9 +327,9 @@ input::-webkit-input-placeholder {
 /* status style start */
 
 /* border color and background */
-[dTextInput]:not([disabled]):not(.disabled):not(.devui-disabled).error,
+[dInput]:not([disabled]):not(.disabled):not(.devui-disabled).error,
 [dTextarea]:not([disabled]):not(.disabled):not(.devui-disabled).error,
-[dTextInput]:not([disabled]):not(.disabled):not(.devui-disabled).devui-error,
+[dInput]:not([disabled]):not(.disabled):not(.devui-disabled).devui-error,
 [dTextarea]:not([disabled]):not(.disabled):not(.devui-disabled).devui-error {
   border-color: $devui-danger-line;
   background-color: $devui-danger-bg;
@@ -450,21 +450,21 @@ d-form-control {
 }
 
 .devui-form-controls.devui-form-control-has-suffix {
-  [dTextInput],
+  [dInput],
   [dTextArea] {
     padding-right: 28px;
   }
 }
 
 .devui-form-controls.devui-form-control-has-suffix.devui-form-control-has-feedback {
-  [dTextInput],
+  [dInput],
   [dTextArea] {
     padding-right: 56px;
   }
 }
 
 .devui-form-controls.devui-form-control-has-feedback {
-  [dTextInput],
+  [dInput],
   [dTextarea] {
     padding-right: 28px;
   }

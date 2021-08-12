@@ -8,7 +8,7 @@ Small
 Middle
 <d-search style="width: 200px"></d-search>
 Large
-<d-search size="lg" style="width: 200px"></d-search>
+<d-search iconPosition="left" size="lg" style="width: 200px"></d-search>
 Disabled
 <d-search disabled style="width: 200px"></d-search>
 </p>

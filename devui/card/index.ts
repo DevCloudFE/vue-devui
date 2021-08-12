@@ -1,10 +1,16 @@
-import { App } from 'vue'
-import Card from './card'
+import type { App } from 'vue'
+import Card from './src/card'
 
-Card.install = function(Vue: App) {
-  Vue.component(Card.name, Card)
-};
+Card.install = function(app: App) {
+  app.component(Card.name, Card)
+}
 
-Card.version = '0.0.1'
+export { Card }
 
-export default Card
+export default {
+  title: 'Card 卡片',
+  category: '数据展示',
+  install(app: App): void {    
+		app.use(Card as any)
+  }
+}
