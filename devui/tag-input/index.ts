@@ -10,7 +10,7 @@ export { TagInput }
 export default {
   title: 'TagInput 标签输入框',
   category: '数据录入',
-  install(app: App): void {    
-		app.use(TagInput as any)
+  install(app: App): void {
+    app.use(TagInput as any)
   }
 }
