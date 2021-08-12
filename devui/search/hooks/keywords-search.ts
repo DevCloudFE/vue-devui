@@ -2,7 +2,7 @@
  * 输入框内容定义、删改操作
  */
 import { ref, watch, computed } from 'vue'
-import { SearchProps } from '../use-search'
+import { SearchProps } from '../src/use-search'
 
 export const keywordsHandles = (props: SearchProps): any => {
   const keywords: any = ref('') // 输入框内容

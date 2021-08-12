@@ -1,10 +1,16 @@
-import { App } from 'vue'
-import Carousel from './carousel'
+import type { App } from 'vue'
+import Carousel from './src/carousel'
 
-Carousel.install = function(Vue: App) {
-  Vue.component(Carousel.name, Carousel)
-};
+Carousel.install = function(app: App) {
+  app.component(Carousel.name, Carousel)
+}
 
-Carousel.version = '0.0.1'
+export { Carousel }
 
-export default Carousel
+export default {
+  title: 'Carousel 走马灯',
+  category: '数据展示',
+  install(app: App): void {    
+		app.use(Carousel as any)
+  }
+}
