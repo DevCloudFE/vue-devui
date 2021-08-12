@@ -1,3 +1,8 @@
+<script lang="ts">
+import * as Vue from 'vue'
+import Demo1 from './demo/demo1'
+</script>
+
 # DatePicker 日期选择器
 
 日期、时间可视化输入。

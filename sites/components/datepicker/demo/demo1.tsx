@@ -1,8 +1,8 @@
-import { defineComponent, reactive } from 'vue'
-import DatePicker from '../datepicker'
+import { defineComponent, reactive, App } from 'vue'
+import DatePicker from '../../../../devui/datepicker/datepicker'
 import './demo1.scss'
 
-export default defineComponent({
+const Demo1 = defineComponent({
     name: 'DDatepickerDemo1',
     setup() {
         const state = reactive<{
@@ -29,3 +29,9 @@ export default defineComponent({
         }
     }
 })
+
+export default {
+    install(app: App) {
+        app.component(Demo1.name, Demo1)
+    }
+}
