@@ -21,9 +21,9 @@ const TimePicker = defineComponent({
 
     return () => {
       return (
-        <div className="devui-calendar-timepicker">
-          <div className="head">
-            <div className="chars">
+        <div class="devui-calendar-timepicker">
+          <div class="head">
+            <div class="chars">
               {/* <span>{`:`}</span>
               <span>{`:`}</span> */}
               <span>
@@ -33,7 +33,7 @@ const TimePicker = defineComponent({
               </span>
             </div>
           </div>
-          <div className="select">
+          <div class="select">
             <VerticalSliderFunction
               items={hours}
               selectedIndex={state.hour}

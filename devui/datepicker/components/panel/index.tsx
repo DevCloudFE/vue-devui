@@ -6,7 +6,7 @@ import './index.scss'
 
 const CalendarDatePanel = (props: TDatePanelProps) => {
     return (
-        <div className="devui-calendar-panel">
+        <div class="devui-calendar-panel">
             <Toolbar
                 current={props.current}
                 compare={props.compare}
@@ -18,15 +18,15 @@ const CalendarDatePanel = (props: TDatePanelProps) => {
                 onNextMonth={props.onNextMonth}
                 onNextYear={props.onNextYear}
             />
-            <ol className="head row">{
-                WEEK_DAYS.map(day => <li className="cell">{day}</li>)
+            <ol class="head row">{
+                WEEK_DAYS.map(day => <li class="cell">{day}</li>)
             }</ol>
-            <ul className="body">{
-                getMonthWeeklyDays(props.current).map(row => <li className="row">{
+            <ul class="body">{
+                getMonthWeeklyDays(props.current).map(row => <li class="row">{
                     row.map(day => {
                         return (
                             <span
-                                className={cellClassName(props as TDatePanelProps, day)}
+                            class={cellClassName(props as TDatePanelProps, day)}
                                 onClick={() => trigEvent(props as TDatePanelProps, day)}
                                 onMouseenter={() => handleDateEnter(props as TDatePanelProps, day)}
                             >{day.date.getDate()}</span>

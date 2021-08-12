@@ -16,7 +16,7 @@ const Item = (props: TCalendarToolbarItemProps) => {
     const className = `${disabled ? 'disabled' : ''}`
     const handleClick = disabled ? undefined : () => invokeCallback(props.cb, date, pos)
     return (
-        <a className={className} onClick={handleClick}>
+        <a class={className} onClick={handleClick}>
             <Btn color={color} rotate={rotate} />
         </a>
     )
@@ -25,7 +25,7 @@ const Item = (props: TCalendarToolbarItemProps) => {
 export const Title = (props: { date: Date; }) => {
     const { date } = props
     return (
-        <a className="title">{
+        <a class="title">{
             `${date.getFullYear()}年${(date.getMonth() + 1 + '').padStart(2, '0')}月`
         }</a>
     )
@@ -52,7 +52,7 @@ const CalendarToolbar = (props: TDateToolbarProps) => {
     }
 
     return (
-        <div className="devui-calendar-toolbar">
+        <div class="devui-calendar-toolbar">
             <Item disabled={dis[0]} date={current} pos={pos} button={Year} cb={onPreviousYear} />
             <Item disabled={dis[1]} date={current} pos={pos} button={Month} rotate={-90} cb={onPreviousMonth} />
             <Title date={current} />

@@ -16,7 +16,7 @@ const Calendar = (props: TProps) => {
       next = new Date(current.getFullYear(), current.getMonth() + 1, 1)
     }
     return (
-      <div className="devui-calendar-container">
+      <div class="devui-calendar-container">
         <CalendarDatePanel {...props} pos={0} current={current} compare={next} />
         { showTime ? <TimePicker time={current} /> : null }
         <CalendarDatePanel {...props} pos={1} current={next} compare={current} />
@@ -25,7 +25,7 @@ const Calendar = (props: TProps) => {
     )
   } else {
     return (
-      <div className="devui-calendar-container">
+      <div class="devui-calendar-container">
         <CalendarDatePanel {...props} pos={0} current={current} />
         { showTime ? <TimePicker time={current} /> : null }
       </div>

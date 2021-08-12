@@ -91,8 +91,8 @@ const VerticalSlider = defineComponent({
 
     return () => {
       return (
-        <div ref={container} className={`devui-vertical-slider ${className}`}>
-          <div ref={movbar} className="movable-bar" style={{
+        <div ref={container} class={`devui-vertical-slider ${className}`}>
+          <div ref={movbar} class="movable-bar" style={{
             opacity: state.barOpacity,
             transform: `translateY(${state.y}px)`,
             transition: state.transition,
@@ -100,12 +100,12 @@ const VerticalSlider = defineComponent({
             {
               items.map((c, i) => {
                 const className = i === state.selectedIndex ? itemClassSelected : itemClassNormal
-                return <span className={`slider-item ${className}`} style={{ height: `${size}px`, lineHeight: `${size}px` }}>{c}</span>
+                return <span class={`slider-item ${className}`} style={{ height: `${size}px`, lineHeight: `${size}px` }}>{c}</span>
               })
             }
           </div>
            <div
-            className="slider-mask"
+            class="slider-mask"
             onMousedown={handleMouseDown}
             onMousemove={handleMouseMove}
             onMouseup={handleMouseUp}
