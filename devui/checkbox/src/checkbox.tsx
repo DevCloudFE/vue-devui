@@ -5,14 +5,14 @@ import { checkboxGroupInjectionKey, checkboxProps, CheckboxProps } from './use-c
 export default defineComponent({
   name: 'DCheckbox',
   props: checkboxProps,
-  emits: ['change', 'update:checked'],
+  emits: ['change', 'update:modelValue'],
   setup (props: CheckboxProps, ctx) {
     const checkboxGroupConf = inject(checkboxGroupInjectionKey, null);
     const mergedDisabled = computed(() => {
       return checkboxGroupConf?.disabled.value || props.disabled;
     });
     const mergedChecked = computed(() => {
-      return checkboxGroupConf ? checkboxGroupConf.isItemChecked(props.value) : props.checked;
+      return checkboxGroupConf ? checkboxGroupConf.isItemChecked(props.value) : props.modelValue;
     });
     const mergedIsShowTitle = computed(() => {
       return checkboxGroupConf ? checkboxGroupConf.isShowTitle : props.isShowTitle;
@@ -42,13 +42,13 @@ export default defineComponent({
       return Promise.resolve(true);
     };
     const toggle = () => {
-      const isChecked = !props.checked;
+      const isChecked = !props.modelValue;
       checkboxGroupConf?.toggleGroupVal(props.value);
-      ctx.emit('update:checked', isChecked);
+      ctx.emit('update:modelValue', isChecked);
       ctx.emit('change', isChecked);
     };
     const handleClick = () => {
-      canChange(!props.checked, props.value).then(res => res && toggle());
+      canChange(!props.modelValue, props.value).then(res => res && toggle());
     };
 
     return {

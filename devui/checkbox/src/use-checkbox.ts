@@ -35,13 +35,13 @@ export const checkboxProps = {
     type: Boolean,
     default: false
   },
-  checked: {
+  modelValue: {
     type: Boolean,
     default: false
   },
   value: {
     type: String,
-    required: true
+    default: ''
   },
   label: {
     type: String,
@@ -51,7 +51,7 @@ export const checkboxProps = {
     type: String,
     default: undefined
   },
-  'onUpdate:checked' : {
+  'onUpdate:modelValue' : {
     type: Function as PropType<(v: boolean) => void>,
     default: undefined
   },

@@ -47,6 +47,15 @@ $select-item-min-height: 36px;
   }
 }
 
+.devui-dropdown-menu-multiple {
+  .devui-select-item {
+    &.active {
+      color: $devui-list-item-active-text;
+      background-color: transparent;
+    }
+  }
+}
+
 .devui-select-selection {
   position: relative;
 }

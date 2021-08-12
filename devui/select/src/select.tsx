@@ -1,7 +1,13 @@
-import { defineComponent, ref, Transition, toRefs } from 'vue';
-import { selectProps, SelectProps, OptionItem } from './use-select';
-import DIcon from '../../icon/src/icon';
+import { defineComponent, ref, Transition, toRefs, computed } from 'vue';
+import {
+  selectProps,
+  SelectProps,
+  OptionObjectItem,
+} from './use-select';
+import { Icon } from '../../icon';
+import { Checkbox } from '../../checkbox';
 import { className } from './utils';
+import useCacheOptions from '../hooks/use-cache-options';
 import './select.scss';
 
 export default defineComponent({
@@ -15,52 +21,69 @@ export default defineComponent({
       ctx.emit('toggleChange', bool);
     }
 
-    const inputValue = ref<string>(props.modelValue + '');
-    initInputValue();
-
-    function initInputValue() {
-      props.options.forEach((item) => {
-        if (typeof item === 'object' && item.value === props.modelValue) {
-          inputValue.value = item.name;
+    const mergeOptions = computed(() => {
+      return props.options.map((item) => {
+        let option: OptionObjectItem;
+        if (typeof item === 'object') {
+          option = {
+            name: item.name ? item.name : item.value + '',
+            value: item.value,
+            checked: false,
+            ...item,
+          };
+        } else {
+          option = {
+            name: item + '',
+            value: item,
+            checked: false,
+          };
         }
-      });
-    }
 
-    function valueChange(item: OptionItem, index: number) {
-      const value = typeof item === 'object' ? item.value : item;
-      inputValue.value = getInputValue(item);
-      ctx.emit('update:modelValue', value);
-      ctx.emit('valueChange', item, index);
+        return option;
+      });
+    });
+
+    const getValuesOption = useCacheOptions(mergeOptions);
+
+    const inputValue = computed(() => {
+      if (props.multiple && Array.isArray(props.modelValue)) {
+        const selectedOptions = getValuesOption(props.modelValue);
+        return selectedOptions.map((item) => item.name).join(',');
+      } else if (!Array.isArray(props.modelValue)) {
+        return getValuesOption([props.modelValue])[0]?.name || '';
+      }
+      return ''
+    });
+
+    function valueChange(item: OptionObjectItem, index: number) {
+      ctx.emit('update:modelValue', item.value);
+      ctx.emit('valueChange', props.options[index], index);
       toggleChange(false);
     }
 
-    function getItemClassName(item: OptionItem) {
-      const value = typeof item === 'object' ? item.value : item;
+    function getItemClassName(item: OptionObjectItem) {
       return className('devui-select-item', {
-        active: value === props.modelValue,
+        active: item.value === props.modelValue,
       });
     }
 
-    function getInputValue(item: OptionItem) {
-      const value = typeof item === 'object' ? item.name : item;
-      return value + '';
-    }
-
     return {
+      ...toRefs(props),
       isOpen,
       inputValue,
+      mergeOptions,
       valueChange,
       toggleChange,
       getItemClassName,
-      ...toRefs(props),
     };
   },
   render() {
     const {
-      options,
+      mergeOptions,
       isOpen,
       inputValue,
       size,
+      multiple,
       placeholder,
       overview,
       valueChange,
@@ -70,6 +93,7 @@ export default defineComponent({
 
     const selectClassName = className('devui-select', {
       'devui-select-open': isOpen,
+      'devui-dropdown-menu-multiple': multiple,
       'devui-select-lg': size === 'lg',
       'devui-select-sm': size === 'sm',
       'devui-select-underlined': overview === 'underlined',
@@ -90,16 +114,16 @@ export default defineComponent({
             placeholder={placeholder}
             readonly
             onClick={() => toggleChange(!isOpen)}
-            onBlur={() => toggleChange(false)}
+            // onBlur={() => toggleChange(false)}
           />
           <span class="devui-select-arrow">
-            <DIcon name="select-arrow" />
+            <Icon name="select-arrow" />
           </span>
         </div>
         <Transition name="fade">
           <div v-show={isOpen} class="devui-select-dropdown">
             <ul class="devui-select-dropdown-list devui-scrollbar">
-              {options.map((item, i) => (
+              {mergeOptions.map((item, i) => (
                 <li
                   onClick={() => {
                     valueChange(item, i);
@@ -107,7 +131,11 @@ export default defineComponent({
                   class={getItemClassName(item)}
                   key={i}
                 >
-                  {typeof item === 'object' ? item.name : item}
+                  {multiple ? (
+                    <Checkbox v-model={item.checked} label={item.name} />
+                  ) : (
+                    item.name
+                  )}
                 </li>
               ))}
             </ul>
