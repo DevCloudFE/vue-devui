@@ -3,7 +3,7 @@ import { SearchProps, searchProps } from './search-types'
 import { getRootClass } from '../hooks/use-search-class'
 import { keywordsHandles } from '../hooks/use-search-keywords'
 import { keydownHandles } from '../hooks/use-search-keydown'
-import Dinput from '../../input/src/input';
+import DInput from '../../input/src/input';
 import './search.scss'
 
 export default defineComponent({
@@ -32,14 +32,14 @@ export default defineComponent({
               <d-icon name="search" size="inherit"></d-icon>
             </div>
           }
-          <Dinput
+          <DInput
             size={props.size}
             disabled={props.disabled}
             value={keywords.value}
             placeholder={props.placeholder}
             onKeydown={onInputKeydown}
             onUpdate:value={onInputUpdate}
-          ></Dinput>
+          ></DInput>
             {clearIconShow.value &&
               <div
                 className="devui-search__clear"
