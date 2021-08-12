@@ -1,6 +1,53 @@
+<style lang="scss">
+.devui-datepicker-demo {
+    margin: 10px 0px;
+    padding: 10px 0px;
+
+    label {
+        border: 1px solid #aaa;
+        padding: 0px 5px;
+        height: 2em;
+        line-height: 2em;
+        display: inline-block;
+        margin: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+        user-select: none;
+        cursor: pointer;
+
+        input[type=checkbox] {
+            transform: translateY(1px);
+            margin-left: 3px;
+        }
+    }
+
+    .input-binder {
+        width: 200px;
+        padding: 5px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+}
+</style>
+
 <script lang="ts">
-import * as Vue from 'vue'
-import Demo1 from './demo/demo1'
+import { defineComponent, ref } from 'vue'
+export default defineComponent({
+  setup() {
+    const range = ref<boolean>(false)
+    const rangeSwitch = () => range.value = !range.value
+
+    const showTime = ref<boolean>(false)
+    const showTimeSwitch = () => showTime.value = !showTime.value
+
+    return {
+      range,
+      rangeSwitch,
+      showTime,
+      showTimeSwitch,
+    }
+  }
+})
 </script>
 
 # DatePicker 日期选择器
@@ -9,44 +56,61 @@ import Demo1 from './demo/demo1'
 
 ### 作为UI组件
 
-```jsx
-// 默认 range=false
-<d-datepicker range={state.range} showTime={state.showTime} />
-```
+<section class="devui-datepicker-demo">
+    <label>日期区间<input type="checkbox" @click="rangeSwitch" /></label>
+    <label>显示时间<input type="checkbox" @click="showTimeSwitch" /></label>
+    <d-datepicker :range="range" :show-time="showTime" />
+</section>
 
-<d-datepicker-demo-1 />
+```jsx
+<section class="devui-datepicker-demo">
+    <label>日期区间<input type="checkbox" @click="rangeSwitch" /></label>
+    <label>显示时间<input type="checkbox" @click="showTimeSwitch" /></label>
+    <d-datepicker :range="range" :show-time="showTime" />
+</section>
+```
 
 ### 绑定原生`<input>`
 
 暂定通过`querySelector`查找节点，绑定真实`dom`节点。此方案待定。
 
 ```jsx
-// 选取完成后保留弹层
-<input style="width:200px;padding:5px;font-size:16px;border-radius:5px;" id="datepicker-input" />
-<d-datepicker attach-input-dom="#datepicker-input" />
+<section class="devui-datepicker-demo">
+    <input class="input-binder" id="datepicker-input" />
+    <d-datepicker attach-input-dom="#datepicker-input" />
+</section>
 ```
 
-<input style="width:200px;padding:5px;font-size:16px;border-radius:5px;" id="datepicker-input" />
-<d-datepicker attach-input-dom="#datepicker-input" />
+<section class="devui-datepicker-demo">
+    <input class="input-binder" id="datepicker-input" />
+    <d-datepicker attach-input-dom="#datepicker-input" />
+</section>
 
 ```jsx
-// auto-close=true 选取完成后自动关闭
-<input style="width:200px;padding:5px;font-size:16px;border-radius:5px;" id="datepicker-input-autoclose" />
-<d-datepicker auto-close attach-input-dom="#datepicker-input-autoclose" />
+<section class="devui-datepicker-demo">
+    <input class="input-binder" id="datepicker-input-autoclose" />
+    <d-datepicker auto-close attach-input-dom="#datepicker-input-autoclose" />
+</section>
 ```
 
-<input style="width:200px;padding:5px;font-size:16px;border-radius:5px;" id="datepicker-input-autoclose" />
-<d-datepicker auto-close attach-input-dom="#datepicker-input-autoclose" />
+<section class="devui-datepicker-demo">
+    <input class="input-binder" id="datepicker-input-autoclose" />
+    <d-datepicker auto-close attach-input-dom="#datepicker-input-autoclose" />
+</section>
 
 ### 区域选择
 
 ```jsx
-<input style="width:200px;padding:5px;font-size:16px;border-radius:5px;" id="datepicker-input-range" />
-<d-datepicker range attach-input-dom="#datepicker-input-range" />
+<section class="devui-datepicker-demo">
+    <input class="input-binder" id="datepicker-input-range" />
+    <d-datepicker range attach-input-dom="#datepicker-input-range" />
+</section>
 ```
 
-<input style="width:200px;padding:5px;font-size:16px;border-radius:5px;" id="datepicker-input-range" />
-<d-datepicker range attach-input-dom="#datepicker-input-range" />
+<section class="devui-datepicker-demo">
+    <input class="input-binder" id="datepicker-input-range" />
+    <d-datepicker range attach-input-dom="#datepicker-input-range" />
+</section>
 
 
 ### Scroll位置跟踪
@@ -56,74 +120,5 @@ import Demo1 from './demo/demo1'
 这个做法是根据`ng`的组件效果实现的。
 
 TODO: 跟踪节流。
-
-```jsx
-<div style="border:1px solid #aaa;height:300px;overflow:auto;">
-    <br />
-    // ...
-    <i>占行</i>
-    // ...
-    <input style="margin-left:100px;width:200px;padding:5px;font-size:16px;border-radius:5px;" id="datepicker-input-tracing" />
-    <d-datepicker auto-close range attach-input-dom="#datepicker-input-tracing" />
-    // ...
-    <br />
-    <i>占行</i>
-    // ...
-</div>
-```
-
-<div style="border:1px solid #aaa;height:500px;overflow:auto;">
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <input style="margin-left:100px;width:200px;padding:5px;font-size:16px;border-radius:5px;" id="datepicker-input-tracing" />
-    <d-datepicker auto-close range attach-input-dom="#datepicker-input-tracing" />
-    <br />
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <br />
-    <i>占行</i>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <i>占行</i>
-</div>
 
 
