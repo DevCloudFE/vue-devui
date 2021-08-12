@@ -50,6 +50,8 @@ export default defineComponent({
 })
 </script>
 
+<d-stick-slider />
+
 # DatePicker 日期选择器
 
 日期、时间可视化输入。
