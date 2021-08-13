@@ -114,3 +114,36 @@ export const compareDate = (small: Date | undefined, big: Date | undefined, mode
 	}
 }
 
+export const parseDate = (str?: string) : Date | null => {
+	if(!str || typeof str !== 'string') {
+		return null
+	}
+
+	const [dateStr = '', timeStr = ''] = str.split(/([ ]|T)+/)
+	if(!dateStr) {
+		return null
+	}
+	const [y, m, d] = dateStr.split(/[^\d]+/)
+	const year = _parseInt(y), month = _parseInt(m), date = _parseInt(d) || 1
+	if(!year || !month) {
+		return null
+	}
+	const time = parseTime(timeStr)
+	return new Date(year, month - 1, date, ...time)
+}
+
+const _parseInt = (str: any, dftVal?: number) => {
+	if(!str || typeof str !== 'string') {
+		return dftVal
+	}
+	const n = parseInt(str)
+	if(isNaN(n)) {
+		return dftVal
+	}
+	return n
+}
+
+export const parseTime = (str?: string) : [number, number, number, number] => {
+	const [h, m, s, ms] = str.split(/[\:\.]+/)
+	return [_parseInt(h, 0), _parseInt(m, 0), _parseInt(s, 0), _parseInt(ms, 0)]
+}

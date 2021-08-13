@@ -16,6 +16,7 @@ import {
 import Calendar from './components/calendar'
 
 import './date-picker.scss'
+import { parseDate } from './components/utils'
 
 export default defineComponent({
   name: 'DDatepicker',
@@ -27,6 +28,8 @@ export default defineComponent({
     format: { type: String, default: 'y/MM/dd' },
     rangeSpliter: { type: String, default: '-' },
     attachInputDom: { type: String },
+    dateMin: { type: String },
+    dateMax: { type: String },
   },
   setup(props, ctx) {
 
@@ -131,6 +134,8 @@ export default defineComponent({
               showTime={props.showTime}
               current={state.current}
               next={state.next}
+              dateMin={parseDate(props.dateMin)}
+              dateMax={parseDate(props.dateMax)}
               dateStart={state.start}
               dateEnd={state.end}
               dateHover={state.hover}

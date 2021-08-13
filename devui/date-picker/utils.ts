@@ -101,3 +101,10 @@ export const invokeFunction = (fn: any, ...args: any[]) => {
         fn(...args)
     }
 }
+
+export const getMinDate = (a?: Date, b?: Date) => {
+    if(a && b) {
+        return a > b ? b : a
+    }
+    return a || b || undefined
+}

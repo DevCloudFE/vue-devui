@@ -1,4 +1,4 @@
-import { compareDate, invokeCallback } from '../utils'
+import { compareDate, invokeCallback, subDateMonth } from '../utils'
 import { Year, Month } from './svg-icon'
 import { TCalendarToolbarItemProps, TDateToolbarProps } from '../types'
 import './index.scss'
@@ -34,6 +34,7 @@ export const Title = (props: { date: Date; }) => {
 const CalendarToolbar = (props: TDateToolbarProps) => {
     const {
         type, current, compare, pos,
+        dateMax, dateMin,
         onPreviousYear,
         onPreviousMonth,
         onNextMonth,
@@ -41,14 +42,24 @@ const CalendarToolbar = (props: TDateToolbarProps) => {
     } = props
 
     const dis = [false, false, false, false]
+
     if (type === 'range') {
         if (pos === 1) {
             dis[0] = !compareDate(compare, current, 'year', 1)
             dis[1] = !compareDate(compare, current, 'month', 1)
+            dis[2] = !compareDate(current, dateMax, 'month', 0)
+            dis[3] = !compareDate(current, dateMax, 'year', 0)
         } else {
+            dis[0] = !compareDate(dateMin, current, 'year', 0)
+            dis[1] = !compareDate(dateMin, current, 'month', 0)
             dis[2] = !compareDate(current, compare, 'month', 1)
             dis[3] = !compareDate(current, compare, 'year', 1)
         }
+    } else {
+        dis[0] = !compareDate(dateMin, current, 'year', 0)
+        dis[1] = !compareDate(dateMin, current, 'month', 0)
+        dis[2] = !compareDate(current, dateMax, 'month', 0)
+        dis[3] = !compareDate(current, dateMax, 'year', 0)
     }
 
     return (

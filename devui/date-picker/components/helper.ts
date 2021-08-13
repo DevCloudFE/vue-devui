@@ -9,6 +9,13 @@ export const cellClassName = (props: TDatePanelDataProps, day: TDateCell, base =
     if(day.current !== 0) {
         return `${base} disabled`
     }
+    const { dateMin, dateMax } = props
+    if(dateMin && subDateDay(day.date, dateMin) < 0) {
+        return `${base} disabled`
+    }
+    if(dateMax && subDateDay(dateMax, day.date) < 0) {
+        return `${base} disabled`
+    }
     const key = getDateKey(day.date)
     if (props.type === 'range') {
         if (props.dateStart) {
@@ -55,6 +62,13 @@ export const trigEvent = (props: TDatePanelProps, day: TDateCell): void => {
 
 export const handleDateEnter = (props: TDatePanelProps, day: TDateCell): void => {
     if(day.current !== 0) {
+        return
+    }
+    const { dateMin, dateMax } = props
+    if(dateMin && subDateDay(day.date, dateMin) < 0) {
+        return
+    }
+    if(dateMax && subDateDay(dateMax, day.date) < 0) {
         return
     }
     if (props.type === 'range') {

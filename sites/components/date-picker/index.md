@@ -91,8 +91,7 @@ export default defineComponent({
 ```jsx
 <d-datepicker />
 ```
-
-#### 区间
+#### 区域选择
 
 <section class="devui-datepicker-demo">
     <d-datepicker range />
@@ -101,6 +100,25 @@ export default defineComponent({
 ```jsx
 <d-datepicker range />
 ```
+
+### 区间限制
+
+<section class="devui-datepicker-demo">
+    <d-datepicker date-min="2021-8-9" date-max="2021-9-20" />
+</section>
+
+```jsx
+<d-datepicker date-min="2021-8-9" date-max="2021-9-20" />
+```
+
+<section class="devui-datepicker-demo">
+    <d-datepicker range date-min="2021-8-9" date-max="2022-3-20" />
+</section>
+
+```jsx
+<d-datepicker range date-min="2021-8-9" date-max="2022-3-20" />
+```
+
 
 ### 绑定原生`<input>`
 

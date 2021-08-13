@@ -8,6 +8,8 @@ export type TDateConfig = {
     mode?: TDatePanelMode
     current: Date
     showTime: boolean
+    dateMin?: Date
+    dateMax?: Date
 }
 
 export type TDateSelectingBase = {

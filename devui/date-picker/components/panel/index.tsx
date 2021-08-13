@@ -17,6 +17,8 @@ const CalendarDatePanel = (props: TDatePanelProps) => {
                 onPreviousMonth={props.onPreviousMonth}
                 onNextMonth={props.onNextMonth}
                 onNextYear={props.onNextYear}
+                dateMax={props.dateMax}
+                dateMin={props.dateMin}
             />
             <ol class="head row">{
                 WEEK_DAYS.map(day => <li class="cell">{day}</li>)
