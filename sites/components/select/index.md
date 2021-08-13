@@ -32,6 +32,12 @@
 <d-select v-model="selectValue4" :options="selectOptions4" size="lg" overview="underlined"></d-select>
 <br/>
 
+#### Mutiple
+
+<br/>
+<MutipleSelectDemo/>
+<br/>
+
 ```html
 <d-select v-model="baseSelectValue" :options="baseSelectOptions" size="lg"></d-select>
 
@@ -44,8 +50,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive } from 'vue'
+import MutipleSelectDemo from './mutiple-select-demo.vue'
 
 export default defineComponent({
+  components: {
+    MutipleSelectDemo
+  },
   setup() {
     const selectValue1 = ref('')
     const selectValue2 = ref('')

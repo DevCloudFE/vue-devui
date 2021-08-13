@@ -21,7 +21,7 @@ export const selectProps = {
     default: '',
   },
   'onUpdate:modelValue': {
-    type: Function as PropType<(val: string | number) => void>,
+    type: Function as PropType<(val: ModelValue) => void>,
     default: undefined,
   },
   options: {
