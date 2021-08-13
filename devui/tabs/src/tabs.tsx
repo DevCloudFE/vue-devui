@@ -1,5 +1,5 @@
 import { computed, defineComponent, provide, reactive } from 'vue'
-import './tab.scss';
+import './tabs.scss';
 
 export type Active = string | number | null;
 export type TabsType = 'tabs' | 'pills' | 'options' | 'wrapped' | 'slider'
@@ -12,7 +12,7 @@ interface TabsState {
   active: any
 }
 export default defineComponent({
-  name: 'DTab',
+  name: 'DTabs',
   props: {
     modelValue: {
       type: [String, Number],

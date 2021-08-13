@@ -10,7 +10,7 @@ export { Button }
 export default {
   title: 'Button 按钮',
   category: '通用',
-  install(app: App) {    
-		app.use(Button as any)
+  install(app: App): void {
+    app.use(Button as any)
   }
 }

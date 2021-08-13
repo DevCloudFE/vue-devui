@@ -10,7 +10,7 @@ export { Alert }
 export default {
   title: 'Alert 警告',
   category: '反馈',
-  install(app: App): void {    
-		app.use(Alert as any)
+  install(app: App): void {
+    app.use(Alert as any)
   }
 }

@@ -10,7 +10,7 @@ export { Radio }
 export default {
   title: 'Radio 单选框',
   category: '数据录入',
-  install(app: App): void {    
-		app.use(Radio as any)
+  install(app: App): void {
+    app.use(Radio as any)
   }
 }

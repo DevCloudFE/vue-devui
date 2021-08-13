@@ -10,7 +10,7 @@ export { Avatar }
 export default {
   title: 'Avatar 头像',
   category: '数据展示',
-  install(app: App): void {    
-		app.use(Avatar as any)
+  install(app: App): void {
+    app.use(Avatar as any)
   }
 }
