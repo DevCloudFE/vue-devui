@@ -22,7 +22,7 @@
     }
 
     .input-binder {
-        width: 200px;
+        width: 300px;
         padding: 5px;
         font-size: 16px;
         border-radius: 5px;
@@ -37,14 +37,30 @@ export default defineComponent({
     const range = ref<boolean>(false)
     const rangeSwitch = () => range.value = !range.value
 
+    const range2 = ref<boolean>(false)
+    const rangeSwitch2 = () => range2.value = !range2.value
+
     const showTime = ref<boolean>(false)
     const showTimeSwitch = () => showTime.value = !showTime.value
+
+    const spliter = ref<boolean>('-')
+    const setSpliter = (v: string) => spliter.value = v
+
+    const handleRangeChange = (e: Event) => {
+        const { selectedIndex, value } = e.target
+        setSpliter(value)
+    }
 
     return {
       range,
       rangeSwitch,
+      range2,
+      rangeSwitch2,
       showTime,
       showTimeSwitch,
+      spliter,
+      setSpliter,
+      handleRangeChange,
     }
   }
 })
@@ -65,15 +81,13 @@ export default defineComponent({
 
 <section class="devui-datepicker-demo">
     <label>日期区间<input type="checkbox" @click="rangeSwitch" /></label>
-    <label>显示时间<input type="checkbox" @click="showTimeSwitch" /></label>
-    <d-datepicker :range="range" :show-time="showTime" />
+    <d-datepicker :range="range" />
 </section>
 
 ```jsx
 <section class="devui-datepicker-demo">
     <label>日期区间<input type="checkbox" @click="rangeSwitch" /></label>
-    <label>显示时间<input type="checkbox" @click="showTimeSwitch" /></label>
-    <d-datepicker :range="range" :show-time="showTime" />
+    <d-datepicker :range="range" />
 </section>
 ```
 
@@ -90,35 +104,18 @@ export default defineComponent({
 
 <section class="devui-datepicker-demo">
     <input class="input-binder" id="datepicker-input" />
-    <d-datepicker attach-input-dom="#datepicker-input" />
+    <label>日期区间<input type="checkbox" @click="rangeSwitch2" /></label>
+    <label>分隔符
+        <select @change="handleRangeChange" :disabled="!range2">
+            <option>-</option>
+            <option>~</option>
+            <option>--</option>
+            <option>～</option>
+            <option>***</option>
+        </select>
+    </label>    
+    <d-datepicker attach-input-dom="#datepicker-input" :range="range2" :range-spliter="spliter" />
 </section>
-
-```jsx
-<section class="devui-datepicker-demo">
-    <input class="input-binder" id="datepicker-input-autoclose" />
-    <d-datepicker auto-close attach-input-dom="#datepicker-input-autoclose" />
-</section>
-```
-
-<section class="devui-datepicker-demo">
-    <input class="input-binder" id="datepicker-input-autoclose" />
-    <d-datepicker auto-close attach-input-dom="#datepicker-input-autoclose" />
-</section>
-
-### 区域选择
-
-```jsx
-<section class="devui-datepicker-demo">
-    <input class="input-binder" id="datepicker-input-range" />
-    <d-datepicker range attach-input-dom="#datepicker-input-range" />
-</section>
-```
-
-<section class="devui-datepicker-demo">
-    <input class="input-binder" id="datepicker-input-range" />
-    <d-datepicker range attach-input-dom="#datepicker-input-range" />
-</section>
-
 
 ### Scroll位置跟踪
 
@@ -128,4 +125,25 @@ export default defineComponent({
 
 TODO: 跟踪节流。
 
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 

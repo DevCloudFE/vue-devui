@@ -1,95 +1,21 @@
 import { defineComponent, reactive, onMounted, onUnmounted, ref } from 'vue'
 import {
-  EventManager,
-  formatDate, formatRange, isIn,
+  EventManager, isIn,
   traceNode, invokeFunction,
 } from './utils'
+
+import {
+  TState,
+  handlePositionFactory,
+  handleCalendarSwitchState,
+  formatValue,
+  formatPlaceholder,
+  getAttachInputDom,
+} from './helper'
+
 import Calendar from './components/calendar'
+
 import './date-picker.scss'
-
-type TState = {
-  range?: boolean
-  current?: Date
-  next?: Date
-  start?: Date
-  end?: Date
-  hover?: Date
-  show?: boolean
-  input?: string
-  st?: boolean
-}
-
-/**
- * Calendar 面板年月切换逻辑
- * @param state 
- * @param index 
- * @param pos 
- * @param date 
- */
-const handleCalendarSwitchState = (state: TState, index: number, pos: number, date: Date) => {
-  switch(index) {
-    case 0: // previous year
-      const preYear = new Date(date)
-      preYear.setFullYear(preYear.getFullYear() - 1)
-      pos === 0 ? (state.current = preYear) : (state.next = preYear)
-      break
-    case 1: // previous month
-      const preMonth = new Date(date)
-      preMonth.setMonth(preMonth.getMonth() - 1)
-      pos === 0 ? (state.current = preMonth) : (state.next = preMonth)
-      break
-    case 2: // next month
-      const nextMonth = new Date(date)
-      nextMonth.setMonth(nextMonth.getMonth() + 1)
-      pos === 0 ? (state.current = nextMonth) : (state.next = nextMonth)
-      break
-    case 3: // next year
-      const nextYear = new Date(date)
-      nextYear.setFullYear(nextYear.getFullYear() + 1)
-      pos === 0 ? (state.current = nextYear) : (state.next = nextYear)
-      break
-  }
-}
-
-/**
- * 格式化日期
- * @param state 
- * @param props 
- * @returns 
- */
-const formatOutputValue = (state: TState, props: any) => {
-  const { format = 'y/MM/dd', range, rangeSpliter = '-' } = props || {}
-  if(range) {
-    return formatRange(format,
-      state.start,
-      state.end,
-      rangeSpliter
-    )
-  } else {
-    return formatDate(format, state.start)
-  }
-}
-
-const getPlaceholder = (props: any) => {
-  if(!props) return ''
-  const format = props.format || `y/MM/dd`
-  const sp = props.rangeSpliter || '-'
-  return props.range ? `${format} ${sp} ${format}` : format
-}
-
-/**
- * 输出日期选择结果
- * @param id 
- * @param output 
- */
-const handleDomOutput = (id: string | undefined, output: string) => {
-  if(id && typeof id === 'string') {
-    const el = document.querySelector(id)
-    if(el instanceof HTMLInputElement) {
-      el.value = output
-    }
-  }
-}
 
 export default defineComponent({
   name: 'DDatepicker',
@@ -106,7 +32,6 @@ export default defineComponent({
 
     const container = ref<Element>()
     const evtman = new EventManager()
-
     const current = new Date()
 
     const state = reactive<TState>({
@@ -115,65 +40,50 @@ export default defineComponent({
       next: new Date(current.getFullYear(), current.getMonth() + 1, 1),
       show: false,
       input: props.attachInputDom,
-      st: true
-    })
-
-    const pos = reactive<{
-      x: string
-      y: string
-    }>({
+      st: true,
       x: '0',
       y: '0',
     })
 
-    /**
-     * 获取绑定节点
-     * @returns 
-     */
-    const getAttachInputDom = () => {
-      const { attachInputDom } = props || {}
-      if(!attachInputDom || typeof attachInputDom !== 'string') {
-        return null
+    // 弹出层跟踪
+    const handlePosition = handlePositionFactory(state, props, container)
+
+    // 绑定层显示值、placehoder值设置
+    const setBindingDom = (el: any = getAttachInputDom(state, props)) => {
+
+      const value = formatValue(state, props)
+      const placeholder = formatPlaceholder(props)
+
+      // 判断节点原生DOM类型
+      // 对input节点的值处理
+      if (el instanceof HTMLInputElement) {
+        // 设置水印文字
+        el.placeholder = placeholder
+        // 设置显示值
+        el.value = value
+        return el.value
       }
-      const el = document.querySelector(attachInputDom)
-      if(!el) {
-        return null
-      }
-      state.st = false
-      return el
+      return value
     }
 
-    /**
-     * 绑定弹出层场景，计算弹出层位置。
-     * @returns 
-     */
-    const handlePosition = () => {
-      if(!state.show) {
-        pos.x = `-100%`
-        pos.y = `-100%`
-        return
-      }
-      const el = getAttachInputDom()
-      if(!el) {
-        return
-      }
-      const { left, top, width, height } = el.getBoundingClientRect()
-      const { width: _width, height: _height } = container.value.getBoundingClientRect()
-      const bottom = window.innerHeight - top - height
-      pos.x = `${left}px`
-      if(bottom > top) {
-        pos.y = `${top + height}px`
+    const reset = () => {
+      state.hover = null
+      state.current = null
+      state.next = null
+      if (state.start) {
+        if (state.end && Math.abs(state.end.getMonth() - state.start.getMonth()) > 0) {
+          state.next = state.end
+        }
       } else {
-        pos.y = `${top - _height}px`
+        state.end = null
       }
-      
     }
 
     onMounted(() => {
       // 获取绑定节点（默认input）
-      const el = getAttachInputDom()
+      const el = getAttachInputDom(state, props)
       // 绑定节点不存在，作为普通组件展示。
-      if(!el) {
+      if (!el) {
         // 显示组件
         state.show = true
         return
@@ -182,21 +92,17 @@ export default defineComponent({
         state.show = false
       }
 
-      // 判断节点原生DOM类型
-      // 对input节点的值处理
-      if(el instanceof HTMLInputElement) {
-        // 设置水印文字
-        el.placeholder = getPlaceholder(props)
-      }
+      setBindingDom(el)
 
       // 绑定节点click事件处理弹出层显示
       evtman.append(el, 'click', () => !state.show && (state.show = true))
       // document层处理`点击其他区域隐藏`
       evtman.append(document, 'click', (e: MouseEvent) => {
-        if(!state.show || e.target === el || isIn(e.target as Node, container.value)) {
+        if (!state.show || e.target === el || isIn(e.target as Node, container.value)) {
           return
         }
         state.show = false
+        reset()
       })
       // 对绑定节点做scroll跟踪，并绑定跟踪事件
       traceNode(el).forEach(node => {
@@ -210,13 +116,14 @@ export default defineComponent({
 
     return () => {
       handlePosition()
+      setBindingDom()
       return (
         <div class={state.st ? `` : `devui-datepicker-global-viewport`}>
           <div
             ref={container}
             class="devui-datepicker-container"
             style={{
-              transform: state.st ? '' : `translateX(${pos.x}) translateY(${pos.y})`
+              transform: state.st ? '' : `translateX(${state.x}) translateY(${state.y})`
             }}
           >
             <Calendar
@@ -228,14 +135,13 @@ export default defineComponent({
               dateEnd={state.end}
               dateHover={state.hover}
               onReset={(date: Date) => {
-                state.end = state.hover = undefined
+                state.current = state.end = state.hover = undefined
                 state.start = date
               }}
               onChange={() => {
-                const output = formatOutputValue(state, props)
-                handleDomOutput(state.input, output)
+                const output = setBindingDom()
                 invokeFunction(props.selectedDateChange, output)
-                if(props.autoClose) {
+                if (props.autoClose) {
                   state.show = false
                 }
               }}
