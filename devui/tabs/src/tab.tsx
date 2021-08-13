@@ -1,8 +1,8 @@
 import { defineComponent, inject } from 'vue'
-import { Tabs } from './tab';
+import { Tabs } from './tabs';
 
 export default defineComponent({
-  name: 'DTabItem',
+  name: 'DTab',
   props: {
     title: {
       default: null,

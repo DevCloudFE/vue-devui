@@ -10,7 +10,7 @@ export { Anchor }
 export default {
   title: 'Anchor 锚点',
   category: '导航',
-  install(app: App): void {    
-		app.use(Anchor as any)
+  install(app: App): void {
+    app.use(Anchor as any)
   }
 }

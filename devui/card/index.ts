@@ -10,7 +10,7 @@ export { Card }
 export default {
   title: 'Card 卡片',
   category: '数据展示',
-  install(app: App): void {    
-		app.use(Card as any)
+  install(app: App): void {
+    app.use(Card as any)
   }
 }
