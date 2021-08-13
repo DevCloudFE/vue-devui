@@ -79,16 +79,27 @@ export default defineComponent({
 
 ### 作为UI组件
 
+---------
+
+
+#### 最简
+
 <section class="devui-datepicker-demo">
-    <label>日期区间<input type="checkbox" @click="rangeSwitch" /></label>
-    <d-datepicker :range="range" />
+    <d-datepicker />
 </section>
 
 ```jsx
+<d-datepicker />
+```
+
+#### 区间
+
 <section class="devui-datepicker-demo">
-    <label>日期区间<input type="checkbox" @click="rangeSwitch" /></label>
-    <d-datepicker :range="range" />
+    <d-datepicker range />
 </section>
+
+```jsx
+<d-datepicker range />
 ```
 
 ### 绑定原生`<input>`
@@ -104,7 +115,6 @@ export default defineComponent({
 
 <section class="devui-datepicker-demo">
     <input class="input-binder" id="datepicker-input" />
-    <label>日期区间<input type="checkbox" @click="rangeSwitch2" /></label>
     <label>分隔符
         <select @change="handleRangeChange" :disabled="!range2">
             <option>-</option>
@@ -114,7 +124,7 @@ export default defineComponent({
             <option>***</option>
         </select>
     </label>    
-    <d-datepicker attach-input-dom="#datepicker-input" :range="range2" :range-spliter="spliter" />
+    <d-datepicker attach-input-dom="#datepicker-input" range :range-spliter="spliter" />
 </section>
 
 ### Scroll位置跟踪
