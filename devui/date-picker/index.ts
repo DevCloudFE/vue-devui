@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import DatePicker from './datepicker'
+import DatePicker from './date-picker'
 import StickSlider from './stick-slider'
 
 export { DatePicker, StickSlider }

@@ -5,7 +5,7 @@ import {
   traceNode, invokeFunction,
 } from './utils'
 import Calendar from './components/calendar'
-import './datepicker.scss'
+import './date-picker.scss'
 
 type TState = {
   range?: boolean

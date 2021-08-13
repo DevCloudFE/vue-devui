@@ -49,7 +49,7 @@ const sidebar = {
         { text: 'Cascader 级联菜单', link: '/components/cascader/' },
         { text: 'CategorySearch 分类搜索', link: '/components/category-search/' },
         { text: 'Checkbox 复选框', link: '/components/checkbox/' },
-        { text: 'DatePicker 日期选择器', link: '/components/datepicker/' },
+        { text: 'DatePicker 日期选择器', link: '/components/date-picker/' },
         { text: 'DatePickerPro 日期选择器', link: '/components/date-picker-pro/' },
         { text: 'EditableSelect 可编辑下拉框', link: '/components/editable-select/' },
         { text: 'Form 表单', link: '/components/form/' },
