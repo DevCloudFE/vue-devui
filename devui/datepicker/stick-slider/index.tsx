@@ -42,8 +42,7 @@ const StickSlider = defineComponent({
                                 return (<div
                                     class={`button ${i === state.selectedIndex ? 'selected' : ''}`}
                                     onMouseenter={() => state.selectedIndex = i}
-                                    onMouseleave={() => state.selectedIndex = -1}
-                                >[{i}]</div>)
+                                >{i}</div>)
                             })
                         }
                     </div>

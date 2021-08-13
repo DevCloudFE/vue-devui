@@ -50,7 +50,12 @@ export default defineComponent({
 })
 </script>
 
-<d-stick-slider />
+# 扩展
+
+<div style="margin:100px;">
+    <d-stick-slider />
+</div>
+
 
 # DatePicker 日期选择器
 
