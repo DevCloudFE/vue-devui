@@ -21,11 +21,11 @@ const sidebar = {
         { text: 'Anchor 锚点', link: '/components/anchor/' },
         { text: 'BackTop 回到顶部', link: '/components/back-top/' },
         { text: 'Breadcrumb 面包屑', link: '/components/breadcrumb/' },
-        { text: 'DropDown 下拉菜单', link: '/components/dropdown/' },
+        { text: 'Dropdown 下拉菜单', link: '/components/dropdown/' },
         { text: 'NavSprite 导航精灵', link: '/components/nav-sprite/' },
         { text: 'Pagination 分页', link: '/components/pagination/' },
         { text: 'StepsGuide 操作指引', link: '/components/steps-guide/' },
-        { text: 'Tab 选项卡', link: '/components/tab/' },
+        { text: 'Tabs 选项卡', link: '/components/tabs/' },
       ]
     },
     {

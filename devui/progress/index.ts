@@ -10,7 +10,7 @@ export { Progress }
 export default {
   title: 'Progress 进度条',
   category: '反馈',
-  install(app: App): void {    
-		app.use(Progress as any)
+  install(app: App): void {
+    app.use(Progress as any)
   }
 }
