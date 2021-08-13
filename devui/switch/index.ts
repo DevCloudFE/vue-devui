@@ -10,7 +10,7 @@ export { Switch }
 export default {
   title: 'Switch 开关',
   category: '数据录入',
-  install(app: App): void {    
-		app.use(Switch as any)
+  install(app: App): void {
+    app.use(Switch as any)
   }
 }

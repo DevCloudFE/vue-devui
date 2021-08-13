@@ -10,7 +10,7 @@ export { Select }
 export default {
   title: 'Select 下拉框',
   category: '数据录入',
-  install(app: App): void {    
-		app.use(Select as any)
+  install(app: App): void {
+    app.use(Select as any)
   }
 }

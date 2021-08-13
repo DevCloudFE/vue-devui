@@ -10,7 +10,7 @@ export { Carousel }
 export default {
   title: 'Carousel 走马灯',
   category: '数据展示',
-  install(app: App): void {    
-		app.use(Carousel as any)
+  install(app: App): void {
+    app.use(Carousel as any)
   }
 }
