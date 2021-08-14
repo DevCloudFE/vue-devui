@@ -28,7 +28,7 @@ export default defineComponent({
       return (
         <div class={rootClasses.value}>
           {props.iconPosition === 'left' &&
-            <div className="devui-search__icon" onClick={onClickHandle}>
+            <div class="devui-search__icon" onClick={onClickHandle}>
               <d-icon name="search" size="inherit"></d-icon>
             </div>
           }
@@ -42,14 +42,14 @@ export default defineComponent({
           ></DInput>
             {clearIconShow.value &&
               <div
-                className="devui-search__clear"
+                class="devui-search__clear"
                 onClick={onClearHandle}
               >
                 <d-icon name="close" size="inherit"></d-icon>
               </div>
             }
             {props.iconPosition === 'right' &&
-              <div className="devui-search__icon" onClick={onClickHandle}>
+              <div class="devui-search__icon" onClick={onClickHandle}>
                 <d-icon name="search" size="inherit"></d-icon>
               </div>
             }
