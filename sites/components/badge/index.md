@@ -10,10 +10,10 @@
 
 基本徽章类型，当有包裹元素时在右上角显示徽章和数目。
 
-<d-badge :count='6' status="danger" class="d-badge-item">未读消息</d-badge>
-<d-badge :count='7' status="waiting" class="d-badge-item">未读消息</d-badge>
-<d-badge :count='8' status="success" class="d-badge-item">未读消息</d-badge>
-<d-badge :count='100' status="info" class="d-badge-item">未读消息</d-badge>
+<d-badge :count='6' status="danger" class="devui-badge-item">未读消息</d-badge>
+<d-badge :count='7' status="waiting" class="devui-badge-item">未读消息</d-badge>
+<d-badge :count='8' status="success" class="devui-badge-item">未读消息</d-badge>
+<d-badge :count='100' status="info" class="devui-badge-item">未读消息</d-badge>
 
 ```html
 <d-badge :count="6" status="danger">未读消息</d-badge>
@@ -26,12 +26,12 @@
 
 点状徽章类型，当有包裹元素且 showDot 参数为 true 时为点状徽章，默认在右上角展示小点不显示数目。
 
-<d-badge status="danger" showDot class="d-badge-item">未读消息</d-badge>
-<d-badge status="waiting" showDot class="d-badge-item">未读消息</d-badge>
-<d-badge status="warning" showDot class="d-badge-item">
+<d-badge status="danger" showDot class="devui-badge-item">未读消息</d-badge>
+<d-badge status="waiting" showDot class="devui-badge-item">未读消息</d-badge>
+<d-badge status="warning" showDot class="devui-badge-item">
 <d-icon name="like" />
 </d-badge>
-<d-badge status="info" showDot class="d-badge-item">
+<d-badge status="info" showDot class="devui-badge-item">
 <d-icon name="like" />
 </d-badge>
 
@@ -50,24 +50,24 @@
 
 当徽章独立使用且不包裹任何元素时，只展示徽章状态色和数目。
 
-<ul class="d-badge-list">
-  <li class="d-badge-list-item">
+<ul class="devui-badge-list">
+  <li class="devui-badge-list-item">
     <span>系统消息</span>
     <d-badge status="danger" :count="50"></d-badge>
   </li>
-  <li class="d-badge-list-item">
+  <li class="devui-badge-list-item">
     <span>个人消息</span>
     <d-badge status="info" :count="500"></d-badge>
   </li>
 </ul>
 
 ```html
-<ul class="d-badge-list">
-  <li class="d-badge-list-item">
+<ul class="devui-badge-list">
+  <li class="devui-badge-list-item">
     <span>系统消息</span>
     <d-badge status="danger" :count="50"></d-badge>
   </li>
-  <li class="d-badge-list-item">
+  <li class="devui-badge-list-item">
     <span>个人消息</span>
     <d-badge status="danger" :count="500"></d-badge>
   </li>
@@ -96,11 +96,11 @@
 
 通过 badgePos 参数设置徽章位置。
 
-<d-badge :count='6' status="danger" badgePos="top-left" class="d-badge-item">未读消息</d-badge>
-<d-badge :count='7' status="waiting" badgePos="top-right" class="d-badge-item">未读消息</d-badge>
-<d-badge :count='8' status="success" badgePos="bottom-left" class="d-badge-item">
+<d-badge :count='6' status="danger" badgePos="top-left" class="devui-badge-item">未读消息</d-badge>
+<d-badge :count='7' status="waiting" badgePos="top-right" class="devui-badge-item">未读消息</d-badge>
+<d-badge :count='8' status="success" badgePos="bottom-left" class="devui-badge-item">
 <d-icon name="emoji" /></d-badge>
-<d-badge :count='100' status="info" badgePos="bottom-right" class="d-badge-item">
+<d-badge :count='100' status="info" badgePos="bottom-right" class="devui-badge-item">
 <d-icon name="notice" />
 </d-badge>
 
@@ -156,20 +156,20 @@
 
 <style lang="scss">
 @import '@devui-design/icons/icomoon/devui-icon.css';
-.d-badge-item {
+.devui-badge-item {
   background: #f3f6f8; 
   margin-right:20px;
   border-radius: 8px;
   padding: 4px 10px;
   font-size: 14px;
 }
-.d-badge-list {
+.devui-badge-list {
   width: 180px;
   padding: 4px 20px;
   background: #f3f6f8;
   font-size: 14px;
   border-radius: 8px;
-  .d-badge-list-item {
+  .devui-badge-list-item {
     display: flex;
     justify-content: space-between;
     align-items: center;

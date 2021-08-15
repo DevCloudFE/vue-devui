@@ -1,11 +1,11 @@
 @import '../../style/theme/color';
 @import '../../style/theme/font';
 
-.d-badge {
+.devui-badge {
   position: relative;
   display: inline-block;
 
-  .d-badge-content {
+  .devui-badge-content {
     font-size: $devui-font-size;
     color: $devui-light-text;
 

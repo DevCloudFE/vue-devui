@@ -9,7 +9,7 @@ export default defineComponent({
   emits: [],
   setup(props: BadgeProps, ctx) {
     const className = computed(() => {
-      const base = 'd-badge-content'
+      const base = 'devui-badge-content'
       return [
         base,
         props.showDot ? `${base}-dot` : `${base}-count`,
@@ -53,7 +53,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class="d-badge">
+        <div class="devui-badge">
           {ctx.slots.default?.()}
           <div class={className.value} style={style.value}>
             {text.value}
