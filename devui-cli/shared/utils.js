@@ -86,6 +86,7 @@ exports.parseComponentInfo = (name) => {
     const reStartIndex = indexContent.indexOf('export default {')
     componentInfo.title = this.extractStr(indexContent, 'title:', ',', reStartIndex).replace(/['"]/g, '')
     componentInfo.category = this.extractStr(indexContent, 'category:', ',', reStartIndex).replace(/['"]/g, '')
+    componentInfo.status = this.extractStr(indexContent, 'status:', ',', reStartIndex).replace(/['"]/g, '')
   }
 
   componentInfo.name = this.bigCamelCase(name)
@@ -96,5 +97,8 @@ exports.parseComponentInfo = (name) => {
 exports.extractStr = (content = '', startKeywords = '', endKeywords = '', startIndex = 0) => {
   const keywordsStartIndex = content.indexOf(startKeywords, startIndex) + startKeywords.length
   const keywordsEndIndex = content.indexOf(endKeywords, keywordsStartIndex)
+
+  if ([keywordsStartIndex - startIndex, keywordsEndIndex].some((index) => index < 0)) return ''
+
   return content.slice(keywordsStartIndex, keywordsEndIndex).trim()
 }

@@ -2,8 +2,8 @@ const { kebabCase } = require('lodash')
 const { SITES_COMPONENTS_DIR_NAME, VITEPRESS_SIDEBAR_CATEGORY } = require('../shared/constant')
 const logger = require('../shared/logger')
 
-function buildComponentOptions(text, name) {
-  return { text, link: `/${SITES_COMPONENTS_DIR_NAME}/${kebabCase(name)}/` }
+function buildComponentOptions(text, name, status) {
+  return { text, link: `/${SITES_COMPONENTS_DIR_NAME}/${kebabCase(name)}/`, status }
 }
 
 function buildCategoryOptions(text, children = []) {
@@ -16,7 +16,7 @@ exports.createVitepressSidebarTemplate = (componentsInfo) => {
 
   ;(componentsInfo || []).forEach((info) => {
     if (categoryMap.has(info.category)) {
-      categoryMap.get(info.category).push(buildComponentOptions(info.title, info.name))
+      categoryMap.get(info.category).push(buildComponentOptions(info.title, info.name, info.status))
     } else {
       logger.warning(`组件 ${info.name} 的分类 ${info.category} 不存在！`)
     }

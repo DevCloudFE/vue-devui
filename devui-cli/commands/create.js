@@ -88,8 +88,6 @@ exports.create = async (cwd) => {
 async function createComponent(params = {}) {
   let { name, hasComponent, hasDirective, hasService } = params
 
-  name = name.replace(new RegExp(`^${DEVUI_NAMESPACE}`, 'i'), '')
-
   const componentName = kebabCase(name)
   const styleName = kebabCase(name)
   const typesName = kebabCase(name) + '-types'
