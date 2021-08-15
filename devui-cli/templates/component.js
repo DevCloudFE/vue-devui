@@ -101,7 +101,7 @@ import type { App } from 'vue'\
 ${importStr}
 ${
   hasComponent
-    ? `\n${bigCamelCase(componentName)}.install = function(app: App) {
+    ? `\n${bigCamelCase(componentName)}.install = function(app: App): void {
   app.component(${bigCamelCase(componentName)}.name, ${bigCamelCase(componentName)})
 }\n`
     : ''
@@ -117,8 +117,8 @@ export { ${[
 export default {
   title: '${bigCamelCase(componentName)} ${title}',
   category: '${category}',
-  install(app: App): void {\
-${installStr}
+  install(app: App): void {
+    ${installStr}
   }
 }
 `
