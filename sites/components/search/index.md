@@ -2,7 +2,7 @@
 
 ### 基本用法
 
-:::demo
+:::demo 使用`sm`，`''`，`lg`来定义`Search`基本类型
 
 ```vue
 <template>
@@ -22,7 +22,7 @@
 
 ### 搜索图标左置
 
-:::demo
+:::demo 使用`left`，`right`来定义`Search`搜索图标位置， 默认`right`
 
 ```vue
 <template>
@@ -35,7 +35,7 @@
 
 ### 无边框
 
-:::demo
+:::demo 使用`noBorder`来定义`Search`无边框
 
 ```vue
 <template>
@@ -64,7 +64,7 @@ export default defineComponent({
   },
 })
 </script> -->
-:::demo
+:::demo 使用`v-model`双向绑定
 
 ```vue
 
