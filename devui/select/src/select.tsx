@@ -1,5 +1,5 @@
-import { defineComponent, ref, Transition, toRefs, computed } from 'vue';
-import { selectProps, SelectProps, OptionItem, OptionObjectItem } from './use-select';
+import { defineComponent, ref, Transition, toRefs } from 'vue';
+import { selectProps, SelectProps, OptionItem } from './use-select';
 import DIcon from '../../icon/src/icon';
 import { className } from './utils';
 import './select.scss';
@@ -15,30 +15,16 @@ export default defineComponent({
       ctx.emit('toggleChange', bool);
     }
 
-    const inputValue = computed({
-      get() {
-        for(let i = 0; i < props.options.length; i++) {
-          if (typeof props.options[i] === 'object' && (props.options[i] as OptionObjectItem).value === props.modelValue) {
-            return (props.options[i] as OptionObjectItem).name;
-          }
-        }
-        return props.modelValue
-      },
-      set(val: string | number) {
-        ctx.emit('update:modelValue', val);
-      }
-    })
+    const inputValue = ref<string>(props.modelValue + '');
+    initInputValue();
 
-    // const inputValue = ref<string>(props.modelValue + '');
-    // initInputValue();
-
-    // function initInputValue() {
-    //   props.options.forEach((item) => {
-    //     if (typeof item === 'object' && item.value === props.modelValue) {
-    //       inputValue.value = item.name;
-    //     }
-    //   });
-    // }
+    function initInputValue() {
+      props.options.forEach((item) => {
+        if (typeof item === 'object' && item.value === props.modelValue) {
+          inputValue.value = item.name;
+        }
+      });
+    }
 
     function valueChange(item: OptionItem, index: number) {
       const value = typeof item === 'object' ? item.value : item;
