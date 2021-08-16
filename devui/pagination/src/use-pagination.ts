@@ -1,18 +1,18 @@
-import { PropType, ExtractPropTypes } from "vue";
+import { PropType, ExtractPropTypes } from 'vue';
 
 type AppendToBodyDirection = 'rightDown' | 'rightUp' | 'leftUp' | 'leftDown' | 'centerDown' | 'centerUp';
 
 interface ConnectedPosition {
-  originX     : 'start' | 'center' | 'end';
-  originY     : 'top' | 'center' | 'bottom';
+  originX     : 'start' | 'center' | 'end'
+  originY     : 'top' | 'center' | 'bottom'
 
-  overlayX    : 'start' | 'center' | 'end';
-  overlayY    : 'top' | 'center' | 'bottom';
+  overlayX    : 'start' | 'center' | 'end'
+  overlayY    : 'top' | 'center' | 'bottom'
 
-  weight      ?: number;
-  offsetX     ?: number;
-  offsetY     ?: number;
-  panelClass  ?: string | string[];
+  weight      ?: number
+  offsetX     ?: number
+  offsetY     ?: number
+  panelClass  ?: string | string[]
 }
 
 type Size = 'lg' | '' | 'sm'
@@ -43,10 +43,12 @@ export const componentProps = {
     default: 10
   },
   preLink: {
-    type: String
+    type: String,
+    default: '&lt;'
   },
   nextLink: {
-    type: String
+    type: String,
+    default: '&gt;'
   },
   size: {
     type: String as PropType<Size>,
@@ -99,8 +101,20 @@ export const componentProps = {
   autoHide: {
     type: Boolean,
     default: false
+  },
+  'onUpdate:pageIndex': {
+    type: Function as PropType<(v: number) => void>
+  },
+  'onUpdate:pageSize': {
+    type: Function as PropType<(v: number) => void>
+  },
+  'onPageIndexChange': {
+    type: Function as PropType<(v: number) => void>
+  },
+  'onPageSizeChange': {
+    type: Function as PropType<(v: number) => void>
   }
-}
+} as const
 
 // 组件props
 export type ComponentProps = ExtractPropTypes<typeof componentProps>

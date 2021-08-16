@@ -1,53 +1,219 @@
+@import '../../style/theme/color';
+@import '../../style/core/_font';
+
 .devui-pagination {
-  font-size: var(--devui-font-size,12px);
-  ul, li {
+  font-size: var(--devui-font-size, 12px);
+
+  .devui-page-size {
+    display: inline-block;
+    max-width: 100px;
+    line-height: 24px;
+    margin: 0 12px 0 0;
+    position: relative;
+    vertical-align: middle;
+  }
+
+  .devui-select-input {
+    height: 24px;
+  }
+
+  .devui-total-size {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    margin: 0 12px 0 0;
+    color: var(--devui-text-weak, #575d6c);
+  }
+
+  .devui-pagination-list,
+  .devui-pagination-item {
     padding: 0;
     margin: 0;
     list-style: none;
   }
+
   a {
     text-decoration: none;
     color: #3eaf7c;
   }
+
   .devui-pagination-list {
     vertical-align: middle;
     display: inline-flex;
     align-items: center;
-    li {
+
+    li.devui-pagination-item {
       cursor: pointer;
+
       &.active {
         a.devui-pagination-link {
           text-decoration: none;
-          background-color: var(--devui-list-item-active-bg,#5e7ce0);
-          color: var(--devui-list-item-active-text,#fff);
+          background-color: var(--devui-list-item-active-bg, #5e7ce0);
+          color: var(--devui-list-item-active-text, #ffffff);
         }
       }
+
+      &.disabled {
+        a.devui-pagination-link {
+          cursor: not-allowed;
+          opacity: 0.5;
+          background-color: #ffffff;
+          color: var(--devui-text-weak, #575d6c);
+        }
+      }
+
       .devui-pagination-link {
         margin-left: 5px;
         padding: 3px 7px;
         line-height: 1.5;
-        border-radius: var(--devui-border-radius,2px);
-        color: var(--devui-text-weak,#575d6c);
+        border-radius: var(--devui-border-radius, 2px);
+        color: var(--devui-text-weak, #575d6c);
         display: flex;
         align-items: center;
+        // transition: background-color var(--devui-animation-duration-slow, .3s) var(--devui-animation-ease-in-out-smooth, cubic-bezier(.645,.045,.355,1));
         &:hover {
           text-decoration: none;
-          background-color: var(--devui-list-item-hover-bg,#f2f5fc);
-          color: var(--devui-list-item-hover-text,#526ecc);
+          background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+          color: var(--devui-list-item-hover-text, #526ecc);
         }
       }
     }
   }
+
   .devui-jump-container {
-    display: inline-block;
+    display: inline-flex;
     position: relative;
-    margin: 0 10px;
+    margin: 0 12px;
     vertical-align: middle;
+    align-items: center;
+
     .devui-input {
       display: inline-block;
       width: 3.5em;
+      height: 24px;
       vertical-align: middle;
       margin: 0 3px;
     }
+  }
+
+  .devui-jump-button {
+    display: inline-flex;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--devui-border-radius, 2px);
+    border: 1px solid var(--devui-line, #adb0b8);
+    cursor: pointer;
+    margin-left: 4px;
+    align-items: center;
+    justify-content: center;
+
+    .devui-pagination-go {
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-left: 6px solid #252b3a;
+      border-left: 6px solid var(--devui-icon-text, #252b3a);
+      border-bottom: 6px solid transparent;
+    }
+  }
+
+  .devui-pagination-config {
+    color: var(--devui-text, #252b3a);
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 4px;
+  }
+
+  .devui-setup-icon {
+    line-height: 30px;
+    cursor: pointer;
+    display: flex;
+  }
+
+  .devui-config-container {
+    padding: 4px 0;
+    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 20%);
+    box-shadow: var(--devui-shadow-connected-overlay, 0 2px 8px 0) var(--devui-shadow, rgba(0, 0, 0, 0.2));
+    border-radius: 2px;
+    border-radius: var(--devui-border-radius, 2px);
+    width: 150px;
+    background-color: #ffffff;
+    background-color: var(--devui-connected-overlay-bg, #ffffff);
+    line-height: 26px;
+    position: absolute;
+    left: -136px;
+    top: 28px;
+    cursor: auto;
+    z-index: 1052;
+    z-index: var(--devui-z-index-dropdown, 1052);
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* 配置中的每一项，自定义项建议应用此样式或在此基础上修改 */
+  .pagination-config-item {
+    padding-bottom: 8px;
+    padding-top: 4px;
+    border-bottom: 1px solid $devui-line;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  /* 配置中每一项的标题样式，自定义项建议应用此样式或在此基础上修改 */
+  .config-item-title {
+    color: $devui-line;
+    padding-left: 8px;
+    font-size: $devui-font-size;
+    line-height: 1.5;
+  }
+
+  .devui-page-number {
+    padding-left: 8px;
+    margin-top: 4px;
+    display: flex;
+
+    div {
+      color: var(--devui-text, #252b3a);
+      cursor: pointer;
+      border-top: 1px solid var(--devui-line, #adb0b8);
+      border-bottom: 1px solid var(--devui-line, #adb0b8);
+      border-right: 1px solid var(--devui-line, #adb0b8);
+      text-align: center;
+      height: 26px;
+      width: 26px;
+
+      &:first-child {
+        border-left: 1px solid var(--devui-line, #adb0b8);
+      }
+
+      &:hover {
+        background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        color: var(--devui-list-item-hover-text, #526ecc);
+      }
+
+      &.choosed {
+        color: var(--devui-list-item-active-text, #ffffff);
+        background-color: var(--devui-list-item-active-bg, #5e7ce0) !important;
+        cursor: auto !important;
+      }
+    }
+  }
+
+  .config-item-words {
+    color: $devui-text;
+    padding-left: 8px;
+    font-size: $devui-font-size;
+    margin-top: 4px;
+  }
+
+  .config-item-words:hover {
+    background-color: $devui-area;
+    cursor: pointer;
   }
 }

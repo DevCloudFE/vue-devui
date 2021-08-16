@@ -11,14 +11,10 @@ const sidebar = {
     },
     {
       text: '导航',
-<<<<<<< HEAD
       children: [
         { text: 'Pagination 分页', link: '/components/pagination/' },
         { text: 'Tabs 选项卡切换', link: '/components/tabs/' },
       ]
-=======
-      children: [{ text: 'Tabs 选项卡切换', link: '/components/tabs/' }]
->>>>>>> dev
     },
     {
       text: '反馈',
