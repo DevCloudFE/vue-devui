@@ -66,8 +66,11 @@ const toggleLoading = (el: TargetHTMLElement, binding: BindingType) => {
     cacheInstance.add(el)
 
     if (vals) {
-      Promise.all(vals).then((res: Array<boolean>) => {
-      }).catch((err: any) => {
+      Promise.all(vals)
+      // eslint不允许空的then执行体 @mrundef-210810
+      // .then((res: Array<boolean>) => {
+      // })
+      .catch((err: any) => {
         console.error(new Error('Promise handling errors'), err)
       }).finally(() => {
         unmount(el)
@@ -93,7 +96,7 @@ const handleProps = (el: TargetHTMLElement, vprops: LoadingProps) => {
     ...vprops
   }
 
-  let loadingTemplateRef = props.loadingTemplateRef
+  const loadingTemplateRef = props.loadingTemplateRef
 
   const loadingInstance = createComponent(
     loadingConstructor,
@@ -128,8 +131,8 @@ const loadingDirective = {
 
     toggleLoading(el, binding)
   },
-
-  unmounted: function () { }
+  // eslint不允许控的unmounted执行体
+  // unmounted: function () { }
 }
 
 export default loadingDirective

@@ -1,10 +1,16 @@
-import { App } from 'vue'
-import Search from './search'
+import type { App } from 'vue'
+import Search from './src/search'
 
-Search.install = function(Vue: App) {
-  Vue.component(Search.name, Search)
-};
+Search.install = function(app: App) {
+  app.component(Search.name, Search)
+}
 
-Search.version = '0.0.1'
+export { Search }
 
-export default Search
+export default {
+  title: 'Search 搜索框',
+  category: '通用',
+  install(app: App): void {
+    app.use(Search as any)
+  }
+}

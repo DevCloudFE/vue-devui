@@ -28,18 +28,18 @@
 
 .devui-toast-item-container {
   position: relative;
-  left: 150%;
+  transform: translateX(100%);
   margin: 0 0 10px 0;
   opacity: 0.95;
   filter: alpha(opacity=95);
   box-shadow: $devui-shadow-length-feedback-overlay $devui-shadow;
   border-radius: $devui-border-radius-feedback;
   color: $devui-feedback-overlay-text;
-  transition: all $devui-animation-duration-slow $devui-animation-ease-in-smooth;
+  transition: all $devui-animation-duration-slow $devui-animation-ease-in-out;
   background-color: $devui-feedback-overlay-bg;
 
   &.slide-in {
-    left: 0;
+    transform: translateX(0);
   }
 }
 

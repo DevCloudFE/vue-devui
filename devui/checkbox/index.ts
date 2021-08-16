@@ -1,10 +1,16 @@
-import { App } from 'vue'
+import type { App } from 'vue'
 import Checkbox from './src/checkbox'
 
-Checkbox.install = function(Vue: App) {
-  Vue.component(Checkbox.name, Checkbox)
-};
+Checkbox.install = function(app: App) {
+  app.component(Checkbox.name, Checkbox)
+}
 
-Checkbox.version = '0.0.1'
+export { Checkbox }
 
-export default Checkbox
+export default {
+  title: 'Checkbox 复选框',
+  category: '数据录入',
+  install(app: App): void {
+    app.use(Checkbox as any)
+  }
+}

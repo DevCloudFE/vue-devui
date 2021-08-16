@@ -1,10 +1,16 @@
-import { App } from 'vue'
+import type { App } from 'vue'
 import Radio from './src/radio'
 
-Radio.install = function(Vue: App) {
-  Vue.component(Radio.name, Radio)
-};
+Radio.install = function(app: App) {
+  app.component(Radio.name, Radio)
+}
 
-Radio.version = '0.0.1'
+export { Radio }
 
-export default Radio
+export default {
+  title: 'Radio 单选框',
+  category: '数据录入',
+  install(app: App): void {
+    app.use(Radio as any)
+  }
+}

@@ -43,7 +43,9 @@ export default defineComponent({
     // 当前页码
     const cursor = computed({
       get() {
+        // 是否需要修正错误的pageIndex
         if (!props.showTruePageIndex && props.pageIndex > totalPages.value) {
+          emit('update:pageIndex', totalPages.value || 1)
           return totalPages.value || 1
         }
         return props.pageIndex || 1
@@ -158,6 +160,7 @@ export default defineComponent({
     const {
       total,
       pageSizeOptions,
+      // TODO 依赖select组件，待完善
       // pageSizeDirection,
       preLink,
       nextLink,
@@ -199,7 +202,7 @@ export default defineComponent({
       : <div class="devui-pagination">
         {
           canChangePageSize && !lite &&
-          <div class="devui-page-size">
+          <div class={['devui-page-size', size ? 'devui-page-size-' + size : '']}>
             <d-select
               options={pageSizeOptions}
               modelValue={currentPageSize}
@@ -224,7 +227,7 @@ export default defineComponent({
           </div>
         }
 
-        <ul class={'devui-pagination-list'}>
+        <ul class={['devui-pagination-list', size ? 'devui-pagination-' + size : '']}>
           {/* 左侧上一页按钮 */}
           <li onClick={prevChange.bind(null, -1)} class={{'devui-pagination-item': true, disabled: cursor <= 1}}>
             <a v-html={preLink} class="devui-pagination-link"></a>
@@ -302,18 +305,20 @@ export default defineComponent({
           <div class="devui-jump-container">
             {goToText}
 
-            <d-text-input
+            <d-input
               class={['devui-input', size ? 'devui-input-' + size : '']}
               value={String(inputPageNum)}
               onUpdate:value={jumpPageChange}
               onKeydown={jump}
             />
 
-            {/* TODO 加入国际化后，替换为当前语言为中文的时候加上 '页' */}
-            {goToText === '跳至' && '页'}
+            {
+              // TODO 加入国际化后，替换为当前语言为中文的时候加上 '页'
+              goToText === '跳至' && '页'
+            }
             {
               showJumpButton &&
-              <div class="devui-jump-button" onClick={jump.bind(null, 'btn')} title="跳至">
+              <div class={['devui-jump-button', size ? 'devui-jump-size-' + size : 'devui-jump-size-default']} onClick={jump.bind(null, 'btn')} title="跳至">
                 <div class="devui-pagination-go"></div>
               </div>
             }

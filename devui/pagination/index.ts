@@ -5,4 +5,12 @@ Pagination.install = (app: App): void => {
   app.component(Pagination.name, Pagination)
 }
 
-export default Pagination
+export { Pagination }
+
+export default {
+  title: 'Pagination 分页',
+  category: '导航',
+  install(app: App): void {
+    app.use(Pagination as any)
+  }
+}

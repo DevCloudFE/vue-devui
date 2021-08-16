@@ -1,10 +1,16 @@
-import { App } from 'vue'
-import Panel from './panel'
+import type { App } from 'vue'
+import Panel from './src/panel'
 
-Panel.install = function(Vue: App) {
-  Vue.component(Panel.name, Panel)
-};
+Panel.install = function(app: App) {
+  app.component(Panel.name, Panel)
+}
 
-Panel.version = '0.0.1'
+export { Panel }
 
-export default Panel
+export default {
+  title: 'Panel 面板',
+  category: '通用',
+  install(app: App): void {
+    app.use(Panel as any)
+  }
+}

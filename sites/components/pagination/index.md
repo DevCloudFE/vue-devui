@@ -65,6 +65,53 @@
 />
 
 ```html
+size = 'sm'
+<d-pagination
+  size="sm"
+  :total="pager.total"
+  v-model:pageSize="pager.pageSize"
+  v-model:pageIndex="pager.pageIndex"
+  :canViewTotal="true"
+  :canChangePageSize="true"
+  :canJumpPage="true"
+  :maxItems="5"
+/>
+
+size = 'md'
+<d-pagination
+  :total="pager.total"
+  v-model:pageSize="pager.pageSize"
+  v-model:pageIndex="pager.pageIndex"
+  :canViewTotal="true"
+  :canChangePageSize="true"
+  :canJumpPage="true"
+  :maxItems="5"
+/>
+
+size = 'lg'
+<d-pagination
+  size="lg"
+  :total="pager.total"
+  v-model:pageSize="pager.pageSize"
+  v-model:pageIndex="pager.pageIndex"
+  :canViewTotal="true"
+  :canChangePageSize="true"
+  :canJumpPage="true"
+  :maxItems="5"
+/>
+
+Custom Style
+<d-pagination
+  :total="pager.total"
+  v-model:pageSize="pager.pageSize"
+  v-model:pageIndex="pager.pageIndex"
+  :canViewTotal="true"
+  :canChangePageSize="true"
+  :canJumpPage="true"
+  goToText="Jump to"
+  :preLink="preLink"
+  :nextLink="nextLink"
+/>
 ```
 
 
@@ -97,7 +144,7 @@
 />
 
 
-**[haveConfigMenu] = "true"**
+**haveConfigMenu = "true"**
 
 <d-pagination
   size="sm"
@@ -121,6 +168,82 @@
     </div>
   </div>
 </d-pagination>
+
+```html
+Simple Mode
+<d-pagination
+  :total="pager.total"
+  v-model:pageSize="pager.pageSize"
+  totalItemText="Total"
+  v-model:pageIndex="pager.pageIndex"
+  :canViewTotal="true"
+  :canChangePageSize="true"
+  :lite="true"
+/>
+
+Super Simple Mode
+<d-pagination
+  size="sm"
+  :total="pager.total"
+  v-model:pageSize="pager.pageSize"
+  :showPageSelector="false"
+  v-model:pageIndex="pager.pageIndex"
+  :canChangePageSize="true"
+  :lite="true"
+/>
+
+haveConfigMenu = "true"
+<d-pagination
+  size="sm"
+  :total="pager.total"
+  v-model:pageSize="pager.pageSize"
+  :showPageSelector="false"
+  v-model:pageIndex="pager.pageIndex"
+  :canChangePageSize="true"
+  :lite="true"
+  :haveConfigMenu="true"
+>
+  <div class="pagination-config-item">
+    <div class="config-item-title">show field</div>
+    <div class="config-item-words">setting</div>
+  </div>
+  <div class="pagination-config-item">
+    <div class="config-item-title">display method</div>
+    <div style="padding-left: 8px; margin-top: 4px">
+      <i class="icon-list-view"></i>
+      <i class="icon-veIcon-briefcase"></i>
+    </div>
+  </div>
+</d-pagination>
+```
+```less
+/* 配置中的每一项，自定义项建议应用此样式或在此基础上修改 */
+.pagination-config-item {
+  padding-bottom: 8px;
+  padding-top: 4px;
+  border-bottom: 1px solid $devui-line;
+}
+
+/* 配置中每一项的标题样式，自定义项建议应用此样式或在此基础上修改 */
+.config-item-title {
+  color: $devui-line;
+  padding-left: 8px;
+  font-size: $devui-font-size;
+  line-height: 1.5;
+}
+
+.config-item-words {
+  color: $devui-text;
+  padding-left: 8px;
+  font-size: $devui-font-size;
+  margin-top: 4px;
+}
+
+.config-item-words:hover {
+  background-color: $devui-area;
+  cursor: pointer;
+}
+```
 
 
 ### 多种配置
@@ -174,6 +297,51 @@
   :pageSizeOptions="pager.pageSizeOptions"
   :pageSizeDirection="['centerUp']"
 />
+
+```html
+<d-pagination
+  size="sm"
+  :total="pager.total"
+  v-model:pageSize="pager.pageSize"
+  v-model:pageIndex="pager.pageIndex"
+  :maxItems="10"
+  :canViewTotal="true"
+  :canJumpPage="true"
+  :canChangePageSize="true"
+  @pageIndexChange="pageIndexChange"
+  @pageSizeChange="pageSizeChange"
+/>
+
+<d-pagination
+  size="sm"
+  :total="pager.total"
+  v-model:pageSize="pager.pageSize"
+  v-model:pageIndex="pager.pageIndex"
+  :maxItems="10"
+  :canViewTotal="true"
+  :canJumpPage="true"
+  :showJumpButton="true"
+  @pageIndexChange="pageIndexChange"
+  @pageSizeChange="pageSizeChange"
+/>
+
+<d-pagination
+  size="sm"
+  :total="pager.total"
+  v-model:pageSize="pager.pageSize"
+  v-model:pageIndex="pager.pageIndex"
+  :maxItems="10"
+  :canViewTotal="true"
+  :canChangePageSize="true"
+  :canJumpPage="true"
+  :autoFixPageIndex="false"
+  :autoHide="false"
+  @pageIndexChange="pageIndexChangeWithoutFix"
+  @pageSizeChange="pageSizeChangeWithoutFix"
+  :pageSizeOptions="pager.pageSizeOptions"
+  :pageSizeDirection="['centerUp']"
+/>
+```
 
 
 ### 特殊情况
@@ -253,6 +421,74 @@ When the value of <code>pageIndex</code> exceeds the maximum page number, the <c
   <d-button bsStyle="common" circled="true" size="sm" @click="setIndex(2)" :width="200">index = 2</d-button>
   <d-button bsStyle="common" circled="true" size="sm" @click="setIndex(3)" :width="200">index = 3</d-button>
 </div>
+
+```html
+<h5 style="margin-bottom: 20px;">
+When the value of <code>pageIndex</code> exceeds the maximum page number, enable <code>showTruePageIndex</code> to display the value of  <code>pageIndex</code>
+</h5>
+<d-pagination
+  size="sm"
+  :total="pager1.total"
+  v-model:pageSize="pager1.pageSize"
+  v-model:pageIndex="pager1.pageIndex"
+  :maxItems="5"
+  :canViewTotal="true"
+  :canChangePageSize="true"
+  :canJumpPage="true"
+  :showTruePageIndex="true"
+/>
+
+<h5 style="margin: 20px 0;">
+When the value of <code>pageIndex</code> exceeds the maximum page number, the <code>showTruePageIndex</code> function is disabled and only the maximum page number is displayed.
+</h5>
+<d-pagination
+  size="sm"
+  :total="pager2.total"
+  v-model:pageSize="pager2.pageSize"
+  v-model:pageIndex="pager2.pageIndex"
+  :canViewTotal="true"
+  :canChangePageSize="true"
+  :canJumpPage="true"
+  :maxItems="5"
+  :showTruePageIndex="false"
+/>
+
+<h5 style="margin: 20px 0;">Default Mode</h5>
+<d-pagination
+  size="sm"
+  :total="defaultPager.total"
+  v-model:pageSize="defaultPager.pageSize"
+  v-model:pageIndex="defaultPager.pageIndex"
+  :canViewTotal="true"
+  :canChangePageSize="true"
+  :canJumpPage="true"
+  :maxItems="5"
+/>
+<div style="display: flex; margin-top: 10px;">
+  <d-button bsStyle="primary" circled="true" size="sm" @click="setTotal(0)" :width="200">total = 0</d-button>
+  <d-button bsStyle="common" circled="true" size="sm" @click="setTotal(5)" :width="200">total = 5</d-button>
+  <d-button bsStyle="common" circled="true" size="sm" @click="setTotal(15)" :width="200">total = 15</d-button>
+</div>
+
+<h5 style="margin: 20px 0;">Simple Mode</h5>
+<d-pagination
+  :total="litePager.total"
+  v-model:pageSize="litePager.pageSize"
+  totalItemText="total"
+  v-model:pageIndex="litePager.pageIndex"
+  :canViewTotal="true"
+  :canChangePageSize="true"
+  :lite="true"
+/>
+<div style="display: flex; margin-top: 10px;">
+  <d-button bsStyle="primary" circled="true" size="sm" @click="setLiteTotal(0)" :width="200">total = 0</d-button>
+  <d-button bsStyle="common" circled="true" size="sm" @click="setLiteTotal(20)" :width="200">total = 20</d-button>
+  <d-button bsStyle="common" circled="true" size="sm" @click="setLiteTotal(30000)" :width="200">total = 30000</d-button>
+  <d-button bsStyle="common" circled="true" size="sm" @click="setLiteTotal(100000)" :width="200">total = 100000</d-button>
+  <d-button bsStyle="common" circled="true" size="sm" @click="setIndex(2)" :width="200">index = 2</d-button>
+  <d-button bsStyle="common" circled="true" size="sm" @click="setIndex(3)" :width="200">index = 3</d-button>
+</div>
+```
 
 <script lang="tsx">
 import { defineComponent, shallowReactive } from 'vue'

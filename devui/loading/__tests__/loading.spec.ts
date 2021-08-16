@@ -54,7 +54,9 @@ describe('Loading as directive', () => {
 
     const loadingPType: any = wrapper.find('#testLoading')
     expect(loadingPType).toBeTruthy()
-    const targetEle = loadingPType.wrapperElement.instance.vnode.el
+    // @_ts-ignore
+    // 不支持`ts-ignore`，强行修改确保eslint通过。@mrundef-210810
+    const targetEle = (loadingPType as any).wrapperElement.instance.vnode.el
     expect(targetEle.parentNode.style.position).toEqual('absolute')
   })
   
@@ -173,11 +175,11 @@ describe('Loading as directive', () => {
           </div>
         `,
         setup() {
-          let promises: any = shallowReactive({
+          const promises: any = shallowReactive({
             value: []
           })
           const fetchMutiplePromise = () => {
-            let list = []
+            const list = []
             for (let i = 0; i < 3; i++) {
               list.push(new Promise((res: any) => {
                 res(true)
@@ -215,13 +217,13 @@ describe('Loading as Service', () => {
     const loading = LoadingService.open()
 
     await nextTick()
-    let ele = document.querySelector('.devui-loading-contanier')
+    const ele = document.querySelector('.devui-loading-contanier')
     expect(ele).toBeTruthy()
     expect(ele.parentNode == document.body).toBe(true)
 
     loading.loadingInstance.close()
     await nextTick()
-    let ele2 = document.querySelector('.devui-loading-contanier')
+    const ele2 = document.querySelector('.devui-loading-contanier')
     expect(ele2).toBe(null)
   })
 
@@ -234,7 +236,7 @@ describe('Loading as Service', () => {
     })
 
     await nextTick()
-    let ele = document.querySelector('.devui-loading-contanier')
+    const ele = document.querySelector('.devui-loading-contanier')
     expect(ele).toBeTruthy()
     expect(ele.parentNode === div).toBe(true)
     
@@ -247,7 +249,7 @@ describe('Loading as Service', () => {
     })
 
     await nextTick()
-    let ele = document.querySelector('.devui-loading-contanier')
+    const ele = document.querySelector('.devui-loading-contanier')
     expect(ele).toBeTruthy()
     expect(ele.textContent).toBe('正在加载中...')
     
@@ -265,12 +267,16 @@ describe('Loading as Service', () => {
     })
 
     await nextTick()
-    let ele = document.querySelector('.devui-loading-contanier')
+    const ele = document.querySelector('.devui-loading-contanier')
     expect(ele).toBeTruthy()
-    expect((ele.parentNode as HTMLDivElement).style.position).toBe('absolute')
+    // @_ts-ignore
+    // 不支持`ts-ignore`，强行修改确保eslint通过。@mrundef-210810
+    expect((ele.parentNode as any).style.position).toBe('absolute')
 
-    let loadingEle: HTMLDivElement = ele.querySelector('.devui-loading-area')
-    const style = loadingEle.style
+    const loadingEle = ele.querySelector('.devui-loading-area')
+    // @_ts-ignore
+    // 不支持`ts-ignore`，强行修改确保eslint通过。@mrundef-210810
+    const style = (loadingEle as any).style
     expect(style.top).toBe('40%')
     expect(style.left).toBe('60%')
     expect(style.zIndex).toBe('1000')

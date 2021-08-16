@@ -40,9 +40,12 @@ const loading = {
 
     const close = instance.proxy.close
     instance.loadingInstance = instance.proxy
-    instance.loadingInstance.close = (...arg: any[]) => {
+    instance.loadingInstance.close = (...args: any[]) => {
       cacheTarget.delete(parent)
-      close(...arg)
+      // 1. 箭头函数内部并没有内置arguments对象 @mrundef-210810
+      // 2. 如果没有上下文要求`apply(null)`，不必使用apply/call
+      // close.apply(null, arguments)
+      close(...args)
     }
 
     return instance

@@ -1,10 +1,16 @@
-import { App } from 'vue'
-import Avatar from './avatar'
+import type { App } from 'vue'
+import Avatar from './src/avatar'
 
-Avatar.install = function(Vue: App) {
-  Vue.component(Avatar.name, Avatar)
-};
+Avatar.install = function(app: App) {
+  app.component(Avatar.name, Avatar)
+}
 
-Avatar.version = '0.0.1'
+export { Avatar }
 
-export default Avatar
+export default {
+  title: 'Avatar 头像',
+  category: '数据展示',
+  install(app: App): void {
+    app.use(Avatar as any)
+  }
+}

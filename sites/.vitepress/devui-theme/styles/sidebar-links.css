@@ -105,3 +105,14 @@ a.sidebar-link-item.active {
   font-size: 0.9rem;
   font-weight: 400;
 }
+
+.sidebar .sidebar-link-status {
+  display: inline-block;
+  min-height: 20px;
+  margin: 0 8px;
+  padding: 0 8px;
+  border: solid 1px #50d4ab;
+  border-radius: 2px;
+  color: #50d4ab;
+  font-size: 12px;
+}
