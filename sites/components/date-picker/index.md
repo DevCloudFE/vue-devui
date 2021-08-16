@@ -66,13 +66,6 @@ export default defineComponent({
 })
 </script>
 
-# 扩展
-
-<div style="margin:100px;">
-    <d-stick-slider />
-</div>
-
-
 # DatePicker 日期选择器
 
 日期、时间可视化输入。
