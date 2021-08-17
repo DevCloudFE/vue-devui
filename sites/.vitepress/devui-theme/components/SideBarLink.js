@@ -8,6 +8,8 @@ export const SideBarLink = (props) => {
     const maxDepth = frontmatter.value.sidebarDepth || Infinity;
     const headers = route.data.headers;
     const text = props.item.text;
+    const status = props.item.status;
+    console.log('text status:', text, status);
     const link = resolveLink(site.value.base, props.item.link);
     const children = props.item.children;
     const active = isActive(route, props.item.link);
@@ -18,7 +20,12 @@ export const SideBarLink = (props) => {
         h(link ? 'a' : 'p', {
             class: { 'sidebar-link-item': true, active },
             href: link
-        }, text),
+        }, [
+            text,
+            status && h('span', {
+                class: 'sidebar-link-status'
+            }, status),
+        ]),
         childItems
     ]);
 };
