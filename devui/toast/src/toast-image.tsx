@@ -1,6 +1,6 @@
 import { defineComponent, PropType } from 'vue'
-import { IToastSeverity } from './toast.type'
-import DIcon from '../../icon'
+import { IToastSeverity } from './toast-types'
+import { Icon } from '../../icon'
 
 export default defineComponent({
   name: 'DToastImage',
@@ -22,6 +22,6 @@ export default defineComponent({
 
     const showIcon = () => severity !== 'common'
 
-    return <span class={wrapperCls}>{showIcon() ? <DIcon name={severityIconMap[severity]} /> : null}</span>
+    return <span class={wrapperCls}>{showIcon() ? <Icon name={severityIconMap[severity]} size="14px" /> : null}</span>
   }
 })

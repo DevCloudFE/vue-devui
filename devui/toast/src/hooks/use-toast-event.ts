@@ -1,5 +1,5 @@
 import { getCurrentInstance } from 'vue'
-import { Message } from '../src/toast.type'
+import { Message } from '../toast-types'
 import { useToastConstant } from './use-toast-constant'
 
 const { ANIMATION_TIME } = useToastConstant()
