@@ -38,6 +38,12 @@
 <MutipleSelectDemo/>
 <br/>
 
+#### Disabled
+
+<br/>
+<DisabledSelectDemo/>
+<br/>
+
 ```html
 <d-select v-model="baseSelectValue" :options="baseSelectOptions" size="lg"></d-select>
 
@@ -51,10 +57,12 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from 'vue'
 import MutipleSelectDemo from './mutiple-select-demo.vue'
+import DisabledSelectDemo from './disabled-select-demo.vue'
 
 export default defineComponent({
   components: {
-    MutipleSelectDemo
+    MutipleSelectDemo,
+    DisabledSelectDemo
   },
   setup() {
     const selectValue1 = ref('')

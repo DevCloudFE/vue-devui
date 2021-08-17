@@ -3,7 +3,7 @@ import { PropType, ExtractPropTypes } from 'vue';
 export interface OptionObjectItem {
   name: string
   value: string | number
-  checked: boolean
+  _checked: boolean
   [key: string]: any
 }
 
@@ -43,6 +43,14 @@ export const selectProps = {
   multiple: {
     type: Boolean,
     default: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  optionDisabledKey: {
+    type: String,
+    default: ''
   },
   onToggleChange: {
     type: Function as PropType<(bool: boolean) => void>,

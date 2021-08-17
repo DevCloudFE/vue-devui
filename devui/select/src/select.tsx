@@ -1,9 +1,5 @@
-import { defineComponent, ref, Transition, toRefs, computed } from 'vue';
-import {
-  selectProps,
-  SelectProps,
-  OptionObjectItem,
-} from './use-select';
+import { defineComponent, ref, Transition, computed } from 'vue';
+import { selectProps, SelectProps, OptionObjectItem } from './use-select';
 import { Icon } from '../../icon';
 import { Checkbox } from '../../checkbox';
 import { className } from './utils';
@@ -16,14 +12,15 @@ export default defineComponent({
   props: selectProps,
   emits: ['toggleChange', 'valueChange', 'update:modelValue'],
   setup(props: SelectProps, ctx) {
-    const containerRef = ref(null)
-    const dropdownRef = ref(null)
+    const containerRef = ref(null);
+    const dropdownRef = ref(null);
     const isOpen = ref<boolean>(false);
     function toggleChange(bool: boolean) {
+      if (props.disabled) return;
       isOpen.value = bool;
       ctx.emit('toggleChange', bool);
     }
-    useSelectOutsideClick([containerRef, dropdownRef], isOpen, toggleChange)
+    useSelectOutsideClick([containerRef, dropdownRef], isOpen, toggleChange);
 
     const mergeOptions = computed(() => {
       return props.options.map((item) => {
@@ -32,14 +29,14 @@ export default defineComponent({
           option = {
             name: item.name ? item.name : item.value + '',
             value: item.value,
-            checked: false,
+            _checked: false,
             ...item,
           };
         } else {
           option = {
             name: item + '',
             value: item,
-            checked: false,
+            _checked: false,
           };
         }
 
@@ -56,14 +53,18 @@ export default defineComponent({
       } else if (!Array.isArray(props.modelValue)) {
         return getValuesOption([props.modelValue])[0]?.name || '';
       }
-      return ''
+      return '';
     });
 
     function valueChange(item: OptionObjectItem, index: number) {
-      let { modelValue } = props
-      if (props.multiple) {
-        item.checked = !item.checked
-        modelValue = mergeOptions.value.filter(item => item.checked).map(item => item.value)
+      const { multiple, optionDisabledKey: disabledKey } = props;
+      let { modelValue } = props;
+      if (disabledKey && !!item[disabledKey]) return;
+      if (multiple) {
+        item._checked = !item._checked;
+        modelValue = mergeOptions.value
+          .filter((item) => item._checked)
+          .map((item) => item.value);
         ctx.emit('update:modelValue', modelValue);
       } else {
         ctx.emit('update:modelValue', item.value);
@@ -73,13 +74,14 @@ export default defineComponent({
     }
 
     function getItemClassName(item: OptionObjectItem) {
+      const { optionDisabledKey: disabledKey } = props;
       return className('devui-select-item', {
         active: item.value === props.modelValue,
+        disabled: disabledKey ? !!item[disabledKey] : false,
       });
     }
 
     return {
-      ...toRefs(props),
       isOpen,
       containerRef,
       dropdownRef,
@@ -97,6 +99,8 @@ export default defineComponent({
       inputValue,
       size,
       multiple,
+      disabled,
+      optionDisabledKey: disabledKey,
       placeholder,
       overview,
       valueChange,
@@ -110,6 +114,7 @@ export default defineComponent({
       'devui-select-lg': size === 'lg',
       'devui-select-sm': size === 'sm',
       'devui-select-underlined': overview === 'underlined',
+      'devui-select-disabled': disabled,
     });
 
     const inputClassName = className('devui-select-input', {
@@ -119,14 +124,17 @@ export default defineComponent({
 
     return (
       <div class={selectClassName} ref="containerRef">
-        <div class="devui-select-selection">
+        <div
+          class="devui-select-selection"
+          onClick={() => toggleChange(!isOpen)}
+        >
           <input
             value={inputValue}
             type="text"
             class={inputClassName}
             placeholder={placeholder}
             readonly
-            onClick={() => toggleChange(!isOpen)}
+            disabled={disabled}
           />
           <span class="devui-select-arrow">
             <Icon name="select-arrow" />
@@ -138,15 +146,19 @@ export default defineComponent({
               {mergeOptions.map((item, i) => (
                 <li
                   onClick={(e: MouseEvent) => {
-                    e.preventDefault()
-                    e.stopPropagation()
+                    e.preventDefault();
+                    e.stopPropagation();
                     valueChange(item, i);
                   }}
                   class={getItemClassName(item)}
                   key={i}
                 >
                   {multiple ? (
-                    <Checkbox modelValue={item.checked} label={item.name}/>
+                    <Checkbox
+                      modelValue={item._checked}
+                      label={item.name}
+                      disabled={disabledKey ? !!item[disabledKey] : false}
+                    />
                   ) : (
                     item.name
                   )}
