@@ -30,6 +30,7 @@ export default defineComponent({
     attachInputDom: { type: String },
     dateMin: { type: String },
     dateMax: { type: String },
+    showToday: { type: Boolean, default: false },
   },
   setup(props, ctx) {
 
@@ -132,6 +133,7 @@ export default defineComponent({
             <Calendar
               type={props.range ? 'range' : 'select'}
               showTime={props.showTime}
+              showToday={props.showToday}
               current={state.current}
               next={state.next}
               dateMin={parseDate(props.dateMin)}
@@ -144,6 +146,15 @@ export default defineComponent({
                 state.start = date
               }}
               onChange={() => {
+                const output = setBindingDom()
+                invokeFunction(props.selectedDateChange, output)
+                if (props.autoClose) {
+                  state.show = false
+                }
+              }}
+              onToday={(date: Date) => {
+                state.current = date
+                state.start = date
                 const output = setBindingDom()
                 invokeFunction(props.selectedDateChange, output)
                 if (props.autoClose) {

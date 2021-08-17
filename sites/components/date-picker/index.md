@@ -78,11 +78,11 @@ export default defineComponent({
 #### 最简
 
 <section class="devui-datepicker-demo">
-    <d-datepicker />
+    <d-datepicker show-today />
 </section>
 
 ```jsx
-<d-datepicker />
+<d-datepicker show-today />
 ```
 #### 区域选择
 
