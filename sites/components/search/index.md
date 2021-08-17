@@ -2,49 +2,53 @@
 
 ### 基本用法
 
-<p>
-Small
-<d-search size="sm" style="width: 200px"></d-search>
-Middle
-<d-search style="width: 200px"></d-search>
-Large
-<d-search iconPosition="left" size="lg" style="width: 200px"></d-search>
-Disabled
-<d-search disabled style="width: 200px"></d-search>
-</p>
+:::demo 使用`sm`，`''`，`lg`来定义`Search`基本类型
 
-```html
-<!-- small -->
-<d-search size="sm"></d-search>
-<!-- middle 默认 -->
-<d-search></d-search>
-<!-- large -->
-<d-search size="lg"></d-search>
-<!-- disabled -->
-<d-search disabled></d-search>
+```vue
+<template>
+  <div>
+    Small
+    <d-search size="sm" style="width: 200px"></d-search>
+    Middle
+    <d-search style="width: 200px"></d-search>
+    Large
+    <d-search iconPosition="left" size="lg" style="width: 200px"></d-search>
+    Disabled
+    <d-search disabled style="width: 200px"></d-search>
+  </div>
+</template>
 ```
+:::
 
 ### 搜索图标左置
-<p>
-  <d-search iconPosition="left" style="width: 200px"></d-search>
-</p>
 
-```html
-<d-search iconPosition="left"></d-search>
+:::demo 使用`left`，`right`来定义`Search`搜索图标位置， 默认`right`
+
+```vue
+<template>
+  <div>
+    <d-search iconPosition="left" style="width: 200px"></d-search>
+  </div>
+</template>
 ```
+:::
 
 ### 无边框
-<p>
-  <d-search iconPosition="left" noBorder style="width: 200px"></d-search>
-</p>
 
-```html
-<d-search iconPosition="left" noBorder></d-search>
+:::demo 使用`noBorder`来定义`Search`无边框
+
+```vue
+<template>
+  <div>
+    <d-search iconPosition="left" noBorder style="width: 200px"></d-search>
+  </div>
+</template>
 ```
+:::
 
 ### 双向绑定
 
-<p>
+<!-- <p>
   <d-search v-model="searchText" style="width: 200px"></d-search>
 </p>
 
@@ -59,12 +63,16 @@ export default defineComponent({
     }
   },
 })
-</script>
+</script> -->
+:::demo 使用`v-model`双向绑定
 
-```html
-<d-search v-model="searchText"></d-search>
+```vue
 
-<script lang="ts">
+<template>
+  <d-search v-model="searchText" style="width: 200px"></d-search>
+</template>
+
+<script>
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -78,4 +86,4 @@ export default defineComponent({
 </script>
 ```
 
-
+:::
