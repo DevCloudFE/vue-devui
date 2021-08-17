@@ -94,6 +94,8 @@ export default defineComponent({
 <d-datepicker range />
 ```
 
+**在区域选择`type=range`模式下，设置显示当日按钮`show-today`无效。**
+
 ### 区间限制
 
 <section class="devui-datepicker-demo">
@@ -118,16 +120,37 @@ export default defineComponent({
 暂定通过`querySelector`查找节点，绑定真实`dom`节点。此方案待定。
 
 ```jsx
+<input class="input-binder" id="datepicker-input-single" />
+<d-datepicker
+    attach-input-dom="#datepicker-input-single"
+    show-today
+    auto-close
+/>
+```
+
 <section class="devui-datepicker-demo">
-    <input class="input-binder" id="datepicker-input" />
-    <d-datepicker attach-input-dom="#datepicker-input" />
+    <input class="input-binder" id="datepicker-input-single" />
+    <d-datepicker
+        attach-input-dom="#datepicker-input-single"
+        show-today
+        auto-close
+    />
 </section>
+
+
+```jsx
+<input class="input-binder" id="datepicker-input" />
+<d-datepicker
+    attach-input-dom="#datepicker-input"
+    range
+    :range-spliter="spliter"
+/>
 ```
 
 <section class="devui-datepicker-demo">
     <input class="input-binder" id="datepicker-input" />
     <label>分隔符
-        <select @change="handleRangeChange" :disabled="!range2">
+        <select @change="handleRangeChange">
             <option>-</option>
             <option>~</option>
             <option>--</option>
