@@ -64,7 +64,7 @@ exports.parseExportByFileInfo = (fileInfo, ignoreParseError) => {
       .split(',')
       .forEach((p) => parts.push(p))
 
-    searchContent = indexContent.slice(partEndIndex)
+    searchContent = indexContent.slice(reStartIndex + partContent.length)
   }
 
   exportModule.default = fileInfo.name + 'Install'
@@ -81,17 +81,33 @@ exports.parseComponentInfo = (name) => {
   const defaultRe = /export default/
 
   if (!defaultRe.test(indexContent)) {
-    logger.warning(`${fileInfo.path} must have "export default" and component info.`)
+    logger.warning(`${this.bigCamelCase(name)} must have "export default" and component info.`)
   } else {
     const reStartIndex = indexContent.indexOf('export default {')
-    componentInfo.title = this.extractStr(indexContent, 'title:', ',', reStartIndex).replace(/['"]/g, '')
-    componentInfo.category = this.extractStr(indexContent, 'category:', ',', reStartIndex).replace(/['"]/g, '')
-    componentInfo.status = this.extractStr(indexContent, 'status:', ',', reStartIndex).replace(/['"]/g, '')
+    const extraRe = /((^['"])|(['"]$))/g
+
+    componentInfo.title = this.extractStr(indexContent, 'title:', ',', reStartIndex).trim().replace(extraRe, '')
+    componentInfo.category = this.extractStr(indexContent, 'category:', ',', reStartIndex).trim().replace(extraRe, '')
+    componentInfo.status = this.transformNullishStr(
+      this.extractStr(indexContent, 'status:', ',', reStartIndex).trim().replace(extraRe, '')
+    )
   }
 
   componentInfo.name = this.bigCamelCase(name)
 
   return componentInfo
+}
+
+exports.transformNullishStr = (str) => {
+  console.log(str)
+  switch (str) {
+    case 'null':
+      return null
+    case 'undefined':
+      return undefined
+    default:
+      return str
+  }
 }
 
 exports.extractStr = (content = '', startKeywords = '', endKeywords = '', startIndex = 0) => {
@@ -100,5 +116,5 @@ exports.extractStr = (content = '', startKeywords = '', endKeywords = '', startI
 
   if ([keywordsStartIndex - startIndex, keywordsEndIndex].some((index) => index < 0)) return ''
 
-  return content.slice(keywordsStartIndex, keywordsEndIndex).trim()
+  return content.slice(keywordsStartIndex, keywordsEndIndex)
 }
