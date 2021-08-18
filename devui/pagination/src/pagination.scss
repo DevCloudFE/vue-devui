@@ -1,0 +1,313 @@
+@import '../../style/theme/color';
+@import '../../style/theme/_corner';
+@import '../../style/core/_font';
+
+.devui-pagination {
+  font-size: var(--devui-font-size, 12px);
+
+  .devui-page-size {
+    display: inline-block;
+    max-width: 100px;
+    line-height: 24px;
+    margin: 0 12px 0 0;
+    position: relative;
+    vertical-align: middle;
+
+    &.devui-page-size-sm {
+      max-width: 80px;
+
+      .devui-select-input {
+        height: 24px;
+      }
+    }
+
+    &.devui-page-size-lg {
+      max-width: 100px;
+
+      .devui-select-input {
+        height: 44px;
+      }
+
+      .devui-select-item {
+        height: 44px;
+      }
+    }
+  }
+
+  .devui-select-input {
+    height: 26px;
+  }
+
+  .devui-total-size {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    margin: 0 12px 0 0;
+    color: var(--devui-text-weak, #575d6c);
+  }
+
+  .devui-pagination-list,
+  .devui-pagination-item {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: #3eaf7c;
+  }
+
+  .devui-pagination-list {
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+
+    li.devui-pagination-item {
+      cursor: pointer;
+
+      &.active {
+        a.devui-pagination-link {
+          text-decoration: none;
+          background-color: var(--devui-list-item-active-bg, #5e7ce0);
+          color: var(--devui-list-item-active-text, #ffffff);
+        }
+      }
+
+      &.disabled {
+        a.devui-pagination-link {
+          cursor: not-allowed;
+          opacity: 0.5;
+          background-color: #ffffff;
+          color: var(--devui-text-weak, #575d6c);
+        }
+      }
+
+      .devui-pagination-link {
+        margin-left: 5px;
+        padding: 3px 7px;
+        line-height: 1.5;
+        border-radius: var(--devui-border-radius, 2px);
+        color: var(--devui-text-weak, #575d6c);
+        display: flex;
+        align-items: center;
+        transition: background-color var(--devui-animation-duration-slow, 0.3s) var(--devui-animation-ease-in-out-smooth, cubic-bezier(0.645, 0.045, 0.355, 1));
+
+        &:hover {
+          text-decoration: none;
+          background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+          color: var(--devui-list-item-hover-text, #526ecc);
+        }
+      }
+    }
+  }
+
+  .devui-pagination-sm > li.devui-pagination-item > a.devui-pagination-link {
+    padding: 0 5px;
+    min-width: 18px;
+    height: 22px;
+    line-height: 1.5;
+    font-size: $devui-font-size-sm;
+  }
+
+  .devui-pagination-lg > li.devui-pagination-item > a.devui-pagination-link {
+    padding: 0 12px;
+    height: 38px;
+    font-size: $devui-font-size-lg;
+    line-height: 1.5;
+  }
+
+  .devui-jump-container {
+    display: inline-flex;
+    position: relative;
+    margin: 0 12px;
+    vertical-align: middle;
+    align-items: center;
+
+    .devui-input {
+      display: inline-block;
+      width: 42px;
+      height: 28px;
+      vertical-align: middle;
+      margin: 0 3px;
+
+      &.devui-input-sm {
+        height: 24px;
+        padding: 4px 4px;
+        font-size: $devui-font-size;
+        line-height: 1.5;
+        border-radius: $devui-border-radius;
+      }
+
+      &.devui-input-lg {
+        width: 56px;
+        height: 46px;
+      }
+    }
+  }
+
+  .devui-jump-button {
+    display: inline-flex;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--devui-border-radius, 2px);
+    border: 1px solid var(--devui-line, #adb0b8);
+    cursor: pointer;
+    margin-left: 4px;
+    align-items: center;
+    justify-content: center;
+
+    .devui-pagination-go {
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-left: 6px solid var(--devui-icon-text, #252b3a);
+      border-bottom: 6px solid transparent;
+    }
+
+    &:hover {
+      border-color: $devui-brand-active;
+
+      .devui-pagination-go {
+        border-left-color: $devui-brand-active;
+      }
+    }
+  }
+
+  .devui-jump-size-default {
+    width: 28px;
+    height: 28px;
+
+    .devui-pagination-go {
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-left: 10px solid $devui-icon-text;
+      border-bottom: 8px solid transparent;
+    }
+  }
+
+  .devui-jump-size-sm {
+    width: 24px;
+    height: 24px;
+
+    .devui-pagination-go {
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-left: 6px solid $devui-icon-text;
+      border-bottom: 6px solid transparent;
+    }
+
+    .devui-pagination-link {
+      height: 30px;
+      line-height: 32px;
+    }
+  }
+
+  .devui-jump-size-lg {
+    width: 46px;
+    height: 46px;
+
+    .devui-pagination-go {
+      width: 0;
+      height: 0;
+      border-top: 14px solid transparent;
+      border-left: 14px solid $devui-icon-text;
+      border-bottom: 14px solid transparent;
+    }
+  }
+
+  .devui-pagination-config {
+    color: var(--devui-text, #252b3a);
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 4px;
+  }
+
+  .devui-setup-icon {
+    line-height: 30px;
+    cursor: pointer;
+    display: flex;
+  }
+
+  .devui-config-container {
+    padding: 4px 0;
+    box-shadow: var(--devui-shadow-connected-overlay, 0 2px 8px 0) var(--devui-shadow, rgba(0, 0, 0, 0.2));
+    border-radius: var(--devui-border-radius, 2px);
+    width: 150px;
+    background-color: var(--devui-connected-overlay-bg, #ffffff);
+    line-height: 26px;
+    position: absolute;
+    left: -136px;
+    top: 28px;
+    cursor: auto;
+    z-index: var(--devui-z-index-dropdown, 1052);
+    user-select: none;
+  }
+
+  /* 配置中的每一项，自定义项建议应用此样式或在此基础上修改 */
+  .pagination-config-item {
+    padding-bottom: 8px;
+    padding-top: 4px;
+    border-bottom: 1px solid $devui-line;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  /* 配置中每一项的标题样式，自定义项建议应用此样式或在此基础上修改 */
+  .config-item-title {
+    color: $devui-line;
+    padding-left: 8px;
+    font-size: $devui-font-size;
+    line-height: 1.5;
+  }
+
+  .devui-page-number {
+    padding-left: 8px;
+    margin-top: 4px;
+    display: flex;
+
+    div {
+      color: var(--devui-text, #252b3a);
+      cursor: pointer;
+      border-top: 1px solid var(--devui-line, #adb0b8);
+      border-bottom: 1px solid var(--devui-line, #adb0b8);
+      border-right: 1px solid var(--devui-line, #adb0b8);
+      text-align: center;
+      height: 26px;
+      width: 26px;
+
+      &:first-child {
+        border-left: 1px solid var(--devui-line, #adb0b8);
+      }
+
+      &:hover {
+        background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+        color: var(--devui-list-item-hover-text, #526ecc);
+      }
+
+      &.choosed {
+        color: var(--devui-list-item-active-text, #ffffff);
+        background-color: var(--devui-list-item-active-bg, #5e7ce0) !important;
+        cursor: auto !important;
+      }
+    }
+  }
+
+  .config-item-words {
+    color: $devui-text;
+    padding-left: 8px;
+    font-size: $devui-font-size;
+    margin-top: 4px;
+  }
+
+  .config-item-words:hover {
+    background-color: $devui-area;
+    cursor: pointer;
+  }
+}
