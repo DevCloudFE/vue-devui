@@ -29,8 +29,9 @@ export default  {
           //scrollTop就是触发滚轮事件时滚轮的高度
           windoScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       
-          if (windoScrollTop > mysidebar.clientHeight) {
-            console.log("滚动距离" + windoScrollTop);
+          if (windoScrollTop > (mysidebar.clientHeight+div.getBoundingClientRect().top) ) {
+            // 看不见滚动区域
+            console.log("windoScrollTop > mysidebar.clientHeight滚动距离" + windoScrollTop);
               mysidebar.style.position = 'absolute';
               mysidebar.style.top = div.getBoundingClientRect().top-windoScrollTop +'px';
               mysidebar.style.left =  '0px';
