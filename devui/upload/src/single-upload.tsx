@@ -123,7 +123,7 @@ export default defineComponent({
             if (file) {
               ctx.emit('fileSelect', file)
             }
-            if (autoUpload) {
+            if (autoUpload.value) {
               fileUpload()
             }
           },
@@ -215,7 +215,11 @@ export default defineComponent({
               </div>
             )}
             {!!filename && (
-              <div class="devui-file-tag devui-file-item" title={filename}>
+              <div
+                class="devui-file-tag devui-file-item"
+                title={filename}
+                style="display: inline-block; margin: 0 2px 2px 0"
+              >
                 <span
                   class={`devui-filename ${
                     fileUploaders[0]?.status === UploadStatus.failed
