@@ -1,44 +1,31 @@
-import { defineComponent, computed, ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { defineComponent, computed, ref, nextTick } from 'vue'
 import { ComponentProps, componentProps } from './use-pagination'
-import { handlePages, liteSelectOptions } from './utils'
+import { liteSelectOptions } from './utils'
+
+import clickoutsideDirective from './directive'
+
+import ConfigMenu from './components/config-menu'
+import JumpPage from './components/jump-page'
+import PageNumBtn from './components/page-nums'
 
 import './pagination.scss'
 
 export default defineComponent({
   name: 'DPagination',
+  directives: {
+    clickoutside: clickoutsideDirective
+  },
+  components: {
+    ConfigMenu,
+    JumpPage,
+    PageNumBtn
+  },
   props: componentProps,
   emits: ['pageIndexChange', 'pageSizeChange', 'update:pageSize', 'update:pageIndex'],
   setup(props: ComponentProps, { emit }) {
-
-    const isShowConfig = ref(false)
-    const paginationConfig = ref(null)
-    const changeConfigDispaly = () => {
-      isShowConfig.value = !isShowConfig.value
-    }
-
-    const clickCallback = (e: Event) => {
-      if (isShowConfig.value && paginationConfig.value && paginationConfig.value !== e.target) {
-        isShowConfig.value = false
-      }
-    }
-    onMounted(() => {
-      if (props.lite && props.haveConfigMenu) {
-        document.addEventListener('click', clickCallback)
-      }
-    })
-    onUnmounted(() => {
-      if (props.lite && props.haveConfigMenu) {
-        document.removeEventListener('click', clickCallback)
-      }
-    })
-
-    // 页码较多时，计算中间的显示页码的起始页码数
-    const showPageNum = computed(() => handlePages(cursor.value, props.maxItems, totalPages.value))
     
     // 极简模式下，可选的下拉选择页码
-    const litePageOptions = computed(() => {
-      return liteSelectOptions(totalPages.value)
-    })
+    const litePageOptions = computed(() =>  liteSelectOptions(totalPages.value))
 
     // 当前页码
     const cursor = computed({
@@ -54,7 +41,7 @@ export default defineComponent({
         emit('update:pageIndex', val)
       }
     })
-    const changePageNo = ref(props.pageSize)
+    const changePageNo = ref(props.pageIndex)
     // 输入框显示的页码
     const inputPageNum = computed({
       get() {
@@ -74,12 +61,11 @@ export default defineComponent({
       }
     })
     // 总页数
-    const totalPages = computed(() => {
-      return Math.ceil(props.total / props.pageSize)
-    })
+    const totalPages = computed(() => Math.ceil(props.total / props.pageSize))
 
     const changeCursorEmit = (val: number) => {
       cursor.value = val
+      changePageNo.value = val
       emit('pageIndexChange', val)
     }
     // 输入跳转页码
@@ -91,30 +77,10 @@ export default defineComponent({
       }
       inputPageNum.value = curPage
     }
+    // 跳转指定页码
     const jump = (e: KeyboardEvent | 'btn') => {
-      if (e === 'btn' || e.key === 'Enter') {
+      if ((e === 'btn' || e.key === 'Enter') && cursor.value !== changePageNo.value) {
         cursor.value = changePageNo.value
-      }
-    }
-    // 点击页码
-    const changeCursor = (pageSize: number) => {
-      if (isNaN(pageSize)) return
-      const page = pageSize < 1 ? 1 : pageSize > totalPages.value ? totalPages.value : pageSize | 0
-
-      changeCursorEmit(page)
-    }
-    // 上一页
-    const prevChange = (page: number) => {
-      if (cursor.value > 1) {
-        const toPage = page === -1 ? cursor.value - 1 : page
-        changeCursorEmit(toPage)
-      }
-    }
-    // 下一页
-    const nextChange = (page: number) => {
-      if (cursor.value < totalPages.value) {
-        const toPage = page === -1 ? cursor.value + 1 : page
-        changeCursorEmit(toPage)
       }
     }
     // 每页条数改变
@@ -132,27 +98,20 @@ export default defineComponent({
     }
     // 极简模式下的跳转页码
     const litePageIndexChange = (page: {name: string; value: number;}) => {
-      cursor.value = page.value
-      emit('pageIndexChange', page.value)
+      changeCursorEmit(page.value)
     }
     
     return {
       cursor,
       totalPages,
-      prevChange,
-      nextChange,
       jump,
+      changeCursorEmit,
       inputPageNum,
       jumpPageChange,
       currentPageSize,
       pageSizeChange,
-      changeCursor,
-      showPageNum,
       litePageOptions,
-      litePageIndexChange,
-      isShowConfig,
-      paginationConfig,
-      changeConfigDispaly
+      litePageIndexChange
     }
   },
   render() {
@@ -170,6 +129,7 @@ export default defineComponent({
       canViewTotal,
       totalItemText,
       goToText,
+      maxItems,
       showJumpButton,
       showTruePageIndex,
       lite,
@@ -180,19 +140,14 @@ export default defineComponent({
 
       cursor,
       totalPages,
-      prevChange,
-      nextChange,
       jump,
       inputPageNum,
       jumpPageChange,
       currentPageSize,
       pageSizeChange,
-      changeCursor,
-      showPageNum,
+      changeCursorEmit,
       litePageOptions,
-      litePageIndexChange,
-      isShowConfig,
-      changeConfigDispaly
+      litePageIndexChange
     } = this
 
     return (
@@ -211,6 +166,7 @@ export default defineComponent({
           </div>
         }
         {
+          // 总页数显示
           ((!lite || (lite && showPageSelector)) && canViewTotal) &&
           <div class="devui-total-size">{totalItemText}: {total}</div>
         }
@@ -227,128 +183,47 @@ export default defineComponent({
           </div>
         }
 
-        <ul class={['devui-pagination-list', size ? 'devui-pagination-' + size : '']}>
-          {/* 左侧上一页按钮 */}
-          <li onClick={prevChange.bind(null, -1)} class={{'devui-pagination-item': true, disabled: cursor <= 1}}>
-            <a v-html={preLink} class="devui-pagination-link"></a>
-          </li>
-          {
-            !lite &&
-            <>
-              {/* 页码展示 */}
-              {/* 单独展示第一页 */}
-              <li onClick={changeCursor.bind(null, 1)} class={{'devui-pagination-item': true, active: cursor === 1}}>
-                <a class="devui-pagination-link">{1}</a>
-              </li>
-              {
-                // 是否展示第一个 ...
-                showPageNum[0] > 2 && (
-                  <li onClick={prevChange.bind(null, showPageNum[0] - 1)} class={{'devui-pagination-item': true}}>
-                    <a class="devui-pagination-link">...</a>
-                  </li>
-                )
-              }
-              {
-                // 中间显示页码
-                (() => {
-                  const list = []
-                  for(let i = showPageNum[0]; i <= showPageNum[1]; i++) {
-                    list.push(
-                      <li onClick={changeCursor.bind(null, i)} class={{'devui-pagination-item': true, active: cursor === i}}>
-                        <a class="devui-pagination-link">{i}</a>
-                      </li>
-                    )
-                  }
-                  return list
-                })()
-              }
-              {
-                // 是否展示第二个 ...
-                showPageNum[1] < totalPages - 1 && (
-                  <li onClick={nextChange.bind(null, showPageNum[1] + 1)} class="devui-pagination-item">
-                    <a class="devui-pagination-link">...</a>
-                  </li>
-                )
-              }
-              {
-                // 是否单独展示最后一页
-                showPageNum[1] < totalPages && (
-                  <li onClick={changeCursor.bind(null, totalPages)} class={{'devui-pagination-item': true, active: cursor === totalPages}}>
-                    <a class="devui-pagination-link">{totalPages}</a>
-                  </li>
-                ) 
-              }
-              {
-                // 在默认页码超出总页码的时候
-                showTruePageIndex && cursor > totalPages && totalPages > 0 &&
-                <>
-                  {
-                    cursor > totalPages + 1 &&
-                    <li class="devui-pagination-item disabled">
-                      <a class="devui-pagination-link">...</a>
-                    </li>
-                  }
-                  <li class="devui-pagination-item disabled active">
-                    <a class="devui-pagination-link">{ cursor }</a>
-                  </li>
-                </>
-              }
-            </>
-          }
-          {/* 右侧下一页按钮 */}
-          <li onClick={nextChange.bind(null, -1)} class={{'devui-pagination-item': true, disabled: cursor >= totalPages}}>
-            <a v-html={nextLink} class="devui-pagination-link"></a>
-          </li>
-        </ul>
+        {/* 页码展示 */}
+        <page-num-btn
+          {...{
+            cursor,
+            totalPages,
+            size,
+            lite,
+            maxItems,
+            preLink,
+            nextLink,
+            showTruePageIndex
+          }}
+          onChangeCursorEmit={changeCursorEmit}
+        />
+
         {
+          // 跳转页码
           canJumpPage && !lite &&
-          <div class="devui-jump-container">
-            {goToText}
-
-            <d-input
-              class={['devui-input', size ? 'devui-input-' + size : '']}
-              value={String(inputPageNum)}
-              onUpdate:value={jumpPageChange}
-              onKeydown={jump}
-            />
-
-            {
-              // TODO 加入国际化后，替换为当前语言为中文的时候加上 '页'
-              goToText === '跳至' && '页'
-            }
-            {
-              showJumpButton &&
-              <div class={['devui-jump-button', size ? 'devui-jump-size-' + size : 'devui-jump-size-default']} onClick={jump.bind(null, 'btn')} title="跳至">
-                <div class="devui-pagination-go"></div>
-              </div>
-            }
-          </div>
+          <jump-page 
+            {...{
+              goToText,
+              size,
+              inputPageNum,
+              jumpPageChange,
+              jump,
+              showJumpButton
+            }}
+          />
         }
         {
           // 极简模式下是否显示配置
           lite && haveConfigMenu &&
-          <div class="devui-pagination-config">
-            <div class="devui-setup-icon" onClick={changeConfigDispaly}>
-              <i class="icon-setting" style="font-weight: bold;" ref="paginationConfig"></i>
-            </div>
-            {
-              isShowConfig &&
-              <div class="devui-config-container">
-                {$slots.default?.()}
-                
-                <div class="pagination-config-item">
-                  <div class="config-item-title">每页条数</div>
-                  <div class="devui-page-number">
-                    {
-                      pageSizeOptions.map((v: number) => {
-                        return <div class={{choosed: v === currentPageSize}} onClick={pageSizeChange.bind(null, v)}>{v}</div>
-                      })
-                    }
-                  </div>
-                </div>
-              </div>
-            }
-          </div>
+          <config-menu
+            {...{
+              currentPageSize,
+              pageSizeChange,
+              pageSizeOptions
+            }}
+          >
+            {$slots.default?.()}
+          </config-menu>
         }
       </div>
     )

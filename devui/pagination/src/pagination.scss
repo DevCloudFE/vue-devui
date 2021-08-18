@@ -91,8 +91,8 @@
         color: var(--devui-text-weak, #575d6c);
         display: flex;
         align-items: center;
-        // TODO jsx方式，换页的动画不好实现，先待定
-        // transition: background-color var(--devui-animation-duration-slow, .3s) var(--devui-animation-ease-in-out-smooth, cubic-bezier(.645,.045,.355,1));
+        transition: background-color var(--devui-animation-duration-slow, 0.3s) var(--devui-animation-ease-in-out-smooth, cubic-bezier(0.645, 0.045, 0.355, 1));
+
         &:hover {
           text-decoration: none;
           background-color: var(--devui-list-item-hover-bg, #f2f5fc);
