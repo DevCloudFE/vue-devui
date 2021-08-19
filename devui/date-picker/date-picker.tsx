@@ -1,8 +1,7 @@
+import type { UnwrapRef } from 'vue'
 import { defineComponent, reactive, onMounted, onUnmounted, ref } from 'vue'
-import {
-  EventManager, isIn,
-  traceNode, invokeFunction,
-} from './utils'
+import { EventManager, isIn, traceNode, invokeFunction } from './utils'
+import { compareDate, compareDateSort } from './components/utils'
 
 import {
   TState,
@@ -17,6 +16,39 @@ import Calendar from './components/calendar'
 
 import './date-picker.scss'
 import { parseDate } from './components/utils'
+
+const formatProps = (props: any): TState => {
+  const state: TState = {
+    range: !!props.range,
+    x: '0',
+    y: '0',
+    st: true,
+    show: false,
+    input: props.attachInputDom,
+  }
+  state.current = parseDate(props.dateMin) || new Date()
+  state.next = new Date(state.current.getFullYear(), state.current.getMonth() + 1, 1)
+  return state
+}
+
+const formatRange = (state: UnwrapRef<TState>) => {
+  const [start, end] = [state.start, state.end].sort((a, b) => a.getTime() - b.getTime())
+  
+  state.start = start
+  state.end = end
+
+  if(compareDateSort(start, end, 'm') !== 0) {
+    state.current = start
+    state.next = end
+  } else {
+    if(compareDateSort(start, state.current) < 0) {
+      state.current = start
+    }
+    if(compareDateSort(state.next, end) < 0) {
+      state.next = end
+    }
+  }
+}
 
 export default defineComponent({
   name: 'DDatepicker',
@@ -36,18 +68,8 @@ export default defineComponent({
 
     const container = ref<Element>()
     const evtman = new EventManager()
-    const current = new Date()
 
-    const state = reactive<TState>({
-      range: !!props.range,
-      current,
-      next: new Date(current.getFullYear(), current.getMonth() + 1, 1),
-      show: false,
-      input: props.attachInputDom,
-      st: true,
-      x: '0',
-      y: '0',
-    })
+    const state = reactive<TState>(formatProps(props))
 
     // 弹出层跟踪
     const handlePosition = handlePositionFactory(state, props, container)
@@ -133,7 +155,6 @@ export default defineComponent({
             <Calendar
               type={props.range ? 'range' : 'select'}
               showTime={props.showTime}
-              showToday={props.showToday}
               current={state.current}
               next={state.next}
               dateMin={parseDate(props.dateMin)}
@@ -142,7 +163,7 @@ export default defineComponent({
               dateEnd={state.end}
               dateHover={state.hover}
               onReset={(date: Date) => {
-                state.current = state.end = state.hover = undefined
+                state.end = state.hover = undefined
                 state.start = date
               }}
               onChange={() => {
@@ -161,9 +182,17 @@ export default defineComponent({
                   state.show = false
                 }
               }}
-              onSelected={(date: Date) => state.start = date}
+              onSelected={(date: Date) => {
+                state.start = date
+                if(compareDateSort(state.current, date) !== 0) {
+                  state.current = date
+                }
+              }}
               onSelectStart={(date: Date) => state.start = date}
-              onSelectEnd={(date: Date) => state.end = date}
+              onSelectEnd={(date: Date) => {
+                state.end = date
+                formatRange(state)
+              }}
               onSelecting={(date: Date) => state.hover = date}
               onPreviousYear={(date: Date, pos: number) => handleCalendarSwitchState(state, 0, pos, date)}
               onPreviousMonth={(date: Date, pos: number) => handleCalendarSwitchState(state, 1, pos, date)}

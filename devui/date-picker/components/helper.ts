@@ -1,4 +1,4 @@
-import { invokeCallback, subDateDay } from './utils'
+import { invokeCallback, subDateDay, betweenDate } from './utils'
 import { TDateCell, TDatePanelDataProps, TDatePanelProps } from './types'
 
 export const getDateKey = (date: Date): string => {
@@ -6,16 +6,13 @@ export const getDateKey = (date: Date): string => {
 }
 
 export const cellClassName = (props: TDatePanelDataProps, day: TDateCell, base = 'cell'): string => {
-    if(day.current !== 0) {
+    
+    if(!betweenDate(day.date, props.dateMin, props.dateMax)) {
         return `${base} disabled`
+    } else if(day.current !== 0) {
+        return `${base} not-current`
     }
-    const { dateMin, dateMax } = props
-    if(dateMin && subDateDay(day.date, dateMin) < 0) {
-        return `${base} disabled`
-    }
-    if(dateMax && subDateDay(dateMax, day.date) < 0) {
-        return `${base} disabled`
-    }
+
     const key = getDateKey(day.date)
     if (props.type === 'range') {
         if (props.dateStart) {
@@ -40,9 +37,10 @@ export const cellClassName = (props: TDatePanelDataProps, day: TDateCell, base =
 }
 
 export const trigEvent = (props: TDatePanelProps, day: TDateCell): void => {
-    if(day.current !== 0) {
+    if(!betweenDate(day.date, props.dateMin, props.dateMax)) {
         return
     }
+
     if (props.type === 'range') {
         if (!props.dateStart) {
             invokeCallback(props.onSelectStart, day.date)
