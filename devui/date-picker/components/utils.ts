@@ -147,3 +147,13 @@ export const parseTime = (str?: string) : [number, number, number, number] => {
 	const [h, m, s, ms] = str.split(/[\:\.]+/)
 	return [_parseInt(h, 0), _parseInt(m, 0), _parseInt(s, 0), _parseInt(ms, 0)]
 }
+
+export const compareDateSort = (d1: Date, d2: Date) => {
+    const t1 = d1.getTime(), t2 = d2.getTime()
+    return t1 < t2 ? -1 : t1 > t2 ? 1 : 0
+}
+export const borderDateFactory = (factor: (d1: Date, d2: Date) => Date) => (...ds: Date[]) => {
+    return ds.length < 2 ? ds[0] || new Date() : ds.reduce((r, v) => factor(r, v))
+}
+export const getMinDate = borderDateFactory((d1: Date, d2: Date) => compareDateSort(d1, d2) < 0 ? d1 : d2)
+export const getMaxDate = borderDateFactory((d1: Date, d2: Date) => compareDateSort(d1, d2) < 0 ? d2 : d1)
