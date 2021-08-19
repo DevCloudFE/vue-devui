@@ -78,11 +78,11 @@ export default defineComponent({
 #### 最简
 
 <section class="devui-datepicker-demo">
-    <d-datepicker show-today />
+    <d-datepicker />
 </section>
 
 ```jsx
-<d-datepicker show-today />
+<d-datepicker />
 ```
 #### 区域选择
 
@@ -94,12 +94,10 @@ export default defineComponent({
 <d-datepicker range />
 ```
 
-**在区域选择`type=range`模式下，设置显示当日按钮`show-today`无效。**
-
 ### 区间限制
 
 <section class="devui-datepicker-demo">
-    <d-datepicker date-min="2021-8-9" date-max="2021-9-20" />
+    <d-datepicker date-min="2021-5-9" date-max="2021-6-20" />
 </section>
 
 ```jsx
@@ -153,9 +151,8 @@ export default defineComponent({
         <select @change="handleRangeChange">
             <option>-</option>
             <option>~</option>
-            <option>--</option>
+            <option>-></option>
             <option>～</option>
-            <option>***</option>
         </select>
     </label>    
     <d-datepicker attach-input-dom="#datepicker-input" range :range-spliter="spliter" />

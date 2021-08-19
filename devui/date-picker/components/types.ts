@@ -49,7 +49,6 @@ export type TDatePanelProps = { showToday?: boolean; } & TDatePanelDataProps & T
 
 export type TProps = ({
     type: 'select'
-    showToday?: boolean
 } | {
     type: 'range'
     next: Date
