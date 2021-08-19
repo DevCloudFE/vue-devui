@@ -37,11 +37,13 @@ const CalendarDatePanel = (props: TDatePanelProps) => {
                     })
                 }</li>)
             }</ul>
-            {props.type !== 'range' && props.showToday ? (<div class="today-container">
-                <TodayDefault onSelected={today => {
-                    typeof props.onToday === 'function' && props.onToday(today, 0)
-                }} />
-            </div>) : null}
+            {props.type !== 'range' ? (
+                <div class="today-container">
+                    <TodayDefault onSelected={today => {
+                        typeof props.onToday === 'function' && props.onToday(today, 0)
+                    }} />
+                </div>
+            ) : null}
         </div>
     )
 }
