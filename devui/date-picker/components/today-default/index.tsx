@@ -1,12 +1,18 @@
-const TodayDefault = (props: { onSelected?: (date: Date) => void; }) => {
-    const { onSelected = () => 0 } = props
+type TProps = {
+    onSelected?: (date: Date) => void
+    disabled?: boolean
+}
+
+const TodayDefault = (props: TProps) => {
+    const { onSelected = () => 0, disabled = false } = props
     return (
-        <button style={{
-            border: '1px solid #06c',
-            borderRadius: '3px',
-            padding: '2px 20px',
-            fontSize: '12px',
-        }} onClick={() => onSelected(new Date())}>今天</button>
+        <div class={`today-container ${disabled ? 'disabled' : ''}`}>
+            <button
+                class="today-button"
+                disabled={disabled}
+                onClick={disabled ? undefined : () => onSelected(new Date())}
+            >今天</button>
+        </div>
     )
 }
 
