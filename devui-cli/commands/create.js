@@ -1,5 +1,5 @@
 const logger = require('../shared/logger')
-const { bigCamelCase, resolveDirFilesInfo, parseExportByFileInfo } = require('../shared/utils')
+const { bigCamelCase, resolveDirFilesInfo, parseExportByFileInfo, parseComponentInfo } = require('../shared/utils')
 const fs = require('fs-extra')
 const { resolve } = require('path')
 const {
@@ -10,7 +10,13 @@ const {
   INDEX_FILE_NAME,
   VUE_DEVUI_FILE,
   VUE_DEVUI_IGNORE_DIRS,
-  VUE_DEVUI_FILE_NAME
+  VUE_DEVUI_FILE_NAME,
+  CREATE_SUPPORT_TYPES,
+  CREATE_UNFINISHED_TYPES,
+  CREATE_SUPPORT_TYPE_MAP,
+  SITES_COMPONENTS_DIR,
+  VITEPRESS_SIDEBAR_FILE,
+  VITEPRESS_SIDEBAR_FILE_NAME
 } = require('../shared/constant')
 const { isEmpty, kebabCase } = require('lodash')
 const inquirer = require('inquirer')
@@ -27,42 +33,48 @@ const {
 } = require('../templates/component')
 const { createVueDevuiTemplate } = require('../templates/vue-devui')
 const ora = require('ora')
+const { createVitepressSidebarTemplate } = require('../templates/vitepress-sidebar')
 
 exports.validateCreateType = (type) => {
-  const flag = /^(component|(vue-devui)|(vitepress\/sidebar))$/.test(type)
+  const re = new RegExp('^(' + CREATE_SUPPORT_TYPES.map((t) => `(${t})`).join('|') + ')$')
+  const flag = re.test(type)
 
-  !flag && logger.error('类型错误，可选类型为：component, vue-devui, vitepress/sidebar')
+  !flag && logger.error(`类型错误，可选类型为：${CREATE_SUPPORT_TYPES.join(', ')}`)
 
   return flag ? type : null
 }
 
+// TODO: 待优化代码结构
 exports.create = async (cwd) => {
-  let { type, ignoreParseError } = cwd
+  let { type } = cwd
 
   if (isEmpty(type)) {
     const result = await inquirer.prompt([selectCreateType()])
     type = result.type
   }
 
-  if (['vitepress/sidebar'].includes(type)) {
+  if (CREATE_UNFINISHED_TYPES.includes(type)) {
     logger.info('抱歉，该功能暂未完成！')
-    return process.exit(0)
+    process.exit(0)
   }
+
+  let params = {}
 
   try {
     switch (type) {
-      case 'component':
-        const result = await inquirer.prompt([typeName(), typeTitle(), selectCategory(), selectParts()])
-        result.hasComponent = result.parts.includes(COMPONENT_PARTS_MAP.get('component'))
-        result.hasDirective = result.parts.includes(COMPONENT_PARTS_MAP.get('directive'))
-        result.hasService = result.parts.includes(COMPONENT_PARTS_MAP.get('service'))
+      case CREATE_SUPPORT_TYPE_MAP.component:
+        params = await inquirer.prompt([typeName(), typeTitle(), selectCategory(), selectParts()])
+        params.hasComponent = params.parts.includes(COMPONENT_PARTS_MAP.get('component'))
+        params.hasDirective = params.parts.includes(COMPONENT_PARTS_MAP.get('directive'))
+        params.hasService = params.parts.includes(COMPONENT_PARTS_MAP.get('service'))
 
-        await createComponent(result)
+        await createComponent(params, cwd)
         break
-      case 'vue-devui':
-        await createVueDevui(ignoreParseError)
+      case CREATE_SUPPORT_TYPE_MAP['vue-devui']:
+        await createVueDevui(params, cwd)
         break
-      case 'vitepress/sidebar':
+      case CREATE_SUPPORT_TYPE_MAP['vitepress/sidebar']:
+        await createVitepressSidebar(params, cwd)
         break
       default:
         break
@@ -75,8 +87,6 @@ exports.create = async (cwd) => {
 
 async function createComponent(params = {}) {
   let { name, hasComponent, hasDirective, hasService } = params
-
-  name = name.replace(new RegExp(`^${DEVUI_NAMESPACE}`, 'i'), '')
 
   const componentName = kebabCase(name)
   const styleName = kebabCase(name)
@@ -99,6 +109,7 @@ async function createComponent(params = {}) {
   const directiveTemplate = createDirectiveTemplate(_params)
   const serviceTemplate = createServiceTemplate(_params)
   const indexTemplate = createIndexTemplate(_params)
+  // TODO: 增加测试模板
   const testsTemplate = createTestsTemplate(_params)
 
   const componentDir = resolve(DEVUI_DIR, componentName)
@@ -107,7 +118,7 @@ async function createComponent(params = {}) {
 
   if (fs.pathExistsSync(componentDir)) {
     logger.error(`${bigCamelCase(componentName)} 组件目录已存在！`)
-    return process.exit(1)
+    process.exit(1)
   }
 
   let spinner = ora(`创建组件 ${bigCamelCase(componentName)} 开始...`).start()
@@ -146,7 +157,7 @@ async function createComponent(params = {}) {
   }
 }
 
-async function createVueDevui(ignoreParseError) {
+async function createVueDevui(params, { ignoreParseError }) {
   const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS)
   const exportModules = []
 
@@ -167,6 +178,38 @@ async function createVueDevui(ignoreParseError) {
 
     spinner.succeed(`创建 ${VUE_DEVUI_FILE_NAME} 文件成功！`)
     logger.info(`文件地址：${VUE_DEVUI_FILE}`)
+  } catch (e) {
+    spinner.fail(e.toString())
+    process.exit(1)
+  }
+}
+
+async function createVitepressSidebar(params, { cover }) {
+  if (fs.pathExistsSync(VITEPRESS_SIDEBAR_FILE) && !cover) {
+    logger.warning(`${VITEPRESS_SIDEBAR_FILE_NAME} 文件已存在！`)
+    process.exit(0)
+  }
+
+  const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS)
+  const componentsInfo = []
+
+  fileInfo.forEach((f) => {
+    const info = parseComponentInfo(f.dirname)
+
+    if (isEmpty(info)) return
+
+    componentsInfo.push(info)
+  })
+
+  const template = createVitepressSidebarTemplate(componentsInfo)
+
+  let spinner = ora(`创建 ${VITEPRESS_SIDEBAR_FILE_NAME} 文件开始...`).start()
+
+  try {
+    await fs.writeFile(VITEPRESS_SIDEBAR_FILE, template, { encoding: 'utf-8' })
+
+    spinner.succeed(`创建 ${VITEPRESS_SIDEBAR_FILE_NAME} 文件成功！`)
+    logger.info(`文件地址：${VITEPRESS_SIDEBAR_FILE}`)
   } catch (e) {
     spinner.fail(e.toString())
     process.exit(1)
