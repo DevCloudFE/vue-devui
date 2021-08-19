@@ -10,9 +10,6 @@ export type TState = {
     hover?: Date
     show?: boolean
     input?: string
-    st?: boolean
-    x?: string
-    y?: string
 }
 
 /**
@@ -109,8 +106,8 @@ export const handleValue = (id: string | undefined, output: string) => {
  * 获取绑定节点
  * @returns 
  */
-export const getAttachInputDom = (state: TState, props: any) => {
-    const { attachInputDom } = props || {}
+export const getAttachInputDom = (props: any) => {
+    const { attach, attachInputDom = attach } = props || {}
     if (!attachInputDom || typeof attachInputDom !== 'string') {
         return null
     }
@@ -118,7 +115,6 @@ export const getAttachInputDom = (state: TState, props: any) => {
     if (!el) {
         return null
     }
-    state.st = false
     return el
 }
 
@@ -129,14 +125,21 @@ export const getAttachInputDom = (state: TState, props: any) => {
  * @param container 
  * @returns 
  */
-export const handlePositionFactory = (state: TState, props: any, container: Ref<Element>) => () => {
+export const handlePositionFactory = (state: {
+    x?: string
+    y?: string
+    attachInputDom?: string
+    show?: boolean
+    st?: boolean
+}, props: any, container: Ref<Element>) => () => {
     if (!state.show) {
         state.x = `-100%`
         state.y = `-100%`
         return
     }
-    const el = getAttachInputDom(state, props)
+    const el = getAttachInputDom(props)
     if (!el) {
+        state.st = true
         return
     }
     const { left, top, width, height } = el.getBoundingClientRect()
