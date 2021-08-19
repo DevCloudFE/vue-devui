@@ -1,10 +1,12 @@
 import { TDatePanelProps } from '../types'
-import { getMonthWeeklyDays, WEEK_DAYS } from '../utils'
+import { getMonthWeeklyDays, WEEK_DAYS, betweenDate } from '../utils'
 import { handleDateEnter, cellClassName, trigEvent } from '../helper'
 import Toolbar from '../toolbar'
+import TodayDefault from '../today-default'
 import './index.scss'
 
 const CalendarDatePanel = (props: TDatePanelProps) => {
+    const today = new Date()
     return (
         <div class="devui-calendar-panel">
             <Toolbar
@@ -28,14 +30,22 @@ const CalendarDatePanel = (props: TDatePanelProps) => {
                     row.map(day => {
                         return (
                             <span
-                            class={cellClassName(props as TDatePanelProps, day)}
-                                onClick={() => trigEvent(props as TDatePanelProps, day)}
-                                onMouseenter={() => handleDateEnter(props as TDatePanelProps, day)}
+                                class={cellClassName(props, day)}
+                                onClick={() => trigEvent(props, day)}
+                                onMouseenter={() => handleDateEnter(props, day)}
                             >{day.date.getDate()}</span>
                         )
                     })
                 }</li>)
             }</ul>
+            {props.type !== 'range' ? (
+                <TodayDefault
+                    disabled={!betweenDate(today, props.dateMin, props.dateMax)}
+                    onSelected={today => {
+                        typeof props.onToday === 'function' && props.onToday(today, 0)
+                    }}
+                />
+            ) : null}
         </div>
     )
 }
