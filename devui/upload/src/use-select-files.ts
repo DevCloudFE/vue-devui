@@ -1,14 +1,15 @@
+import { ref } from 'vue'
 import { from, Observable } from 'rxjs'
 import { mergeMap } from 'rxjs/operators'
 import { IFileOptions, IUploadOptions } from './upload-types'
+import {
+  getNotAllowedFileTypeMsg,
+  getBeyondMaximalFileSizeMsg,
+  getAllFilesBeyondMaximalFileSizeMsg,
+} from './i18n-upload'
 
 export const useSelectFiles = () => {
-  const getNotAllowedFileTypeMsg = (filename, scope) => {
-    return `支持的文件类型: "${scope}", 您上传的文件"${filename}"不在允许范围内，请重新选择文件`
-  }
-  const getBeyondMaximalFileSizeMsg = (filename, maximalSize) => {
-    return `最大支持上传${maximalSize}MB的文件, 您上传的文件"${filename}"超过可上传文件大小`
-  }
+  const BEYOND_MAXIMAL_FILE_SIZE_MSG = ref('')
   const simulateClickEvent = (input) => {
     const evt = document.createEvent('MouseEvents')
     evt.initMouseEvent(
@@ -140,9 +141,17 @@ export const useSelectFiles = () => {
       mergeMap((file) => <any>file)
     )
   }
+  const checkAllFilesSize = (fileSize, maximumSize) => {
+    if (beyondMaximalSize(fileSize, maximumSize)) {
+      BEYOND_MAXIMAL_FILE_SIZE_MSG.value =
+        getAllFilesBeyondMaximalFileSizeMsg(maximumSize)
+      return { checkError: true, errorMsg: BEYOND_MAXIMAL_FILE_SIZE_MSG.value }
+    }
+  }
   return {
     triggerSelectFiles,
     _validateFiles,
     triggerDropFiles,
+    checkAllFilesSize,
   }
 }

@@ -94,7 +94,7 @@ export const useUpload = () => {
     return from(Promise.reject('no files'))
   }
 
-  const oneTimeUpload = () => {
+  const _oneTimeUpload = () => {
     const uploads = fileUploaders.value.filter(
       (fileUploader) => fileUploader.status !== UploadStatus.uploaded
     )
@@ -128,6 +128,6 @@ export const useUpload = () => {
     removeFiles,
     getSameNameFiles,
     resetSameNameFiles,
-    oneTimeUpload,
+    _oneTimeUpload,
   }
 }
