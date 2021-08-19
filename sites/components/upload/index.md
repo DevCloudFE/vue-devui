@@ -35,13 +35,12 @@ export default {
       webkitdirectory: false,
     })
     const uploadOptions = reactive({
-      uri: '/upload',
+      uri: 'http://localhost:4000/files/upload',
       headers: {},
       additionalParameter,
       maximumSize: 0.5,
       method: 'POST',
-      fileFieldName: 'dFile',
-      withCredentials: true,
+      fileFieldName: 'file',
       responseType: 'json',
     })
     return {
@@ -71,10 +70,10 @@ export default {
     :without-btn="true"
     file-path="name"
     :before-upload="beforeUpload"
-    :success-event="onSuccess"
-    :error-event="onError"
-    :file-drop="fileDrop"
-    :file-over="fileOver"
+    @success-event="onSuccess"
+    @error-event="onError"
+    @file-drop="fileDrop"
+    @file-over="fileOver"
   />
   <div style="margin-top: 8px">
     <d-button>Upload</d-button>
@@ -150,8 +149,8 @@ export default {
     placeholder-text="Upload"
     file-path="name"
     :before-upload="beforeUpload"
-    :success-event="onSuccess"
-    :error-event="onError"
+    @success-event="onSuccess"
+    @error-event="onError"
     :disabled="true"
   />
 </template>
@@ -217,10 +216,10 @@ export default {
     :upload-options="uploadOptions"
     :uploaded-files="uploadedFiles"
     filePath="name"
-    :success-event="onSuccess"
-    :error-event="onError"
+    @success-event="onSuccess"
+    @error-event="onError"
     :showTip="true"
-    :file-select="fileSelect"
+    @file-select="fileSelect"
   />
 </template>
 <script>
@@ -286,10 +285,10 @@ export default {
     :upload-options="uploadOptions"
     :uploaded-files="uploadedFiles"
     filePath="name"
-    :success-event="onSuccess"
-    :error-event="onError"
+    @success-event="onSuccess"
+    @error-event="onError"
     :showTip="true"
-    :file-select="fileSelect"
+    @file-select="fileSelect"
   />
 </template>
 <script>
@@ -354,14 +353,14 @@ export default {
     :upload-options="uploadOptions"
     :uploaded-files="uploadedFiles"
     filePath="name"
-    :success-event="onSuccess"
-    :error-event="onError"
+    @success-event="onSuccess"
+    @error-event="onError"
     :showTip="true"
-    :file-select="fileSelect"
+    @file-select="fileSelect"
     :one-time-upload="true"
-    :file-drop="fileDrop"
-    :file-over="fileOver"
-    :delete-uploaded-file-event="deleteUploadedFile"
+    @file-drop="fileDrop"
+    @file-over="fileOver"
+    @delete-uploaded-file-event="deleteUploadedFile"
   />
 </template>
 <script>
@@ -437,8 +436,8 @@ export default {
     placeholder-text="Upload"
     file-path="name"
     :before-upload="beforeUpload"
-    :success-event="onSuccess"
-    :error-event="onError"
+    @success-event="onSuccess"
+    @error-event="onError"
     :disabled="true"
   />
 </template>
@@ -481,6 +480,68 @@ export default {
       beforeUpload,
       onSuccess,
       onError,
+    }
+  },
+}
+</script>
+```
+
+:::
+
+### 自动上传
+
+通过 autoUpload 设置自动上传。
+
+:::demo
+
+```vue
+<template>
+  <d-multiple-upload
+    :file-options="fileOptions"
+    :upload-options="uploadOptions"
+    :uploaded-files="uploadedFiles"
+    placeholder-text="选择文件"
+    file-path="name"
+    @success-event="onSuccess1"
+    @error-event="onError"
+    :on-delete-uploaded-file-event="deleteUploadedFile"
+    :showTip="true"
+  />
+</template>
+<script>
+import { reactive, ref } from 'vue'
+
+export default {
+  setup() {
+    const additionalParameter = { name: 'tom', age: 11 }
+    const uploadedFiles = ref([])
+    const fileOptions = reactive({
+      multiple: true,
+      accept: '.xls,.xlsx,.pages,.mp3,.png',
+    })
+    const uploadOptions = reactive({
+      uri: 'http://localhost:4000/files/upload',
+      method: 'post',
+      additionalParameter: additionalParameter,
+      maximumSize: 20,
+      checkSameName: true,
+    })
+    const onSuccess1 = (result) => {
+      console.log('success', result, uploadedFiles)
+    }
+    const onError = (error) => {
+      console.log(error)
+    }
+    const deleteUploadedFile = (filePath) => {
+      console.log(`delete ${filePath}`)
+    }
+    return {
+      fileOptions,
+      uploadedFiles,
+      uploadOptions,
+      onSuccess1,
+      onError,
+      deleteUploadedFile,
     }
   },
 }

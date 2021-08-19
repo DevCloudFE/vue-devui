@@ -38,7 +38,7 @@ export default defineComponent({
       useSelectFiles()
     const filename = computed(() => (getFiles()[0] || {}).name || '')
 
-    const alertMsg = (errorMsg) => {
+    const alertMsg = (errorMsg: string) => {
       ToastService.open({
         value: [{ severity: 'warn', content: errorMsg }],
       })
@@ -145,19 +145,19 @@ export default defineComponent({
       _dealFiles(triggerSelectFiles(fileOptions.value))
     }
 
-    const onDeleteFile = (event) => {
+    const onDeleteFile = (event: Event) => {
       event.stopPropagation()
       const files = getFiles()
       deleteFile(files[0])
     }
-    const onFileDrop = (files) => {
+    const onFileDrop = (files: File[]) => {
       isDropOVer.value = false
       _dealFiles(
         triggerDropFiles(fileOptions.value, uploadOptions.value, files)
       )
       ctx.emit('fileDrop', files[0])
     }
-    const onFileOver = (event) => {
+    const onFileOver = (event: boolean) => {
       isDropOVer.value = event
       ctx.emit('fileOver', event)
     }
@@ -233,8 +233,9 @@ export default defineComponent({
                   >
                     {filename}
                   </span>
-                  <span
-                    class={`icon icon-close ${
+                  <d-icon
+                    name="close"
+                    class={`${
                       fileUploaders[0]?.status === UploadStatus.failed
                         ? 'devui-upload-delete-file-button'
                         : ''
@@ -245,8 +246,8 @@ export default defineComponent({
                         : ''
                     }`}
                     onClick={(event) => onDeleteFile(event)}
-                  ></span>
-                  {fileUploaders[0]?.status === UploadStatus.uploaded && (
+                  />
+                  {fileUploaders[0]?.status === UploadStatus.uploading && (
                     <div class="icon devui-upload-progress">
                       <d-progress
                         isCircle={true}
@@ -258,10 +259,10 @@ export default defineComponent({
                     </div>
                   )}
                   {fileUploaders[0].status === UploadStatus.failed && (
-                    <span class="icon icon-running" onClick={fileUpload}></span>
+                    <d-icon name="running" onClick={fileUpload} />
                   )}
                   {fileUploaders[0].status === UploadStatus.uploaded && (
-                    <span class="icon icon-right"></span>
+                    <d-icon name="right" color="#50d4ab" />
                   )}
                 </div>
               )}
@@ -305,20 +306,20 @@ export default defineComponent({
         </div>
         {showTip && (
           <div class="devui-upload-tip">
-            {fileUploaders[0].status === UploadStatus.uploading && (
+            {fileUploaders[0]?.status === UploadStatus.uploading && (
               <span class="devui-loading">{i18nText.uploading}</span>
             )}
-            {fileUploaders[0].status === UploadStatus.uploaded && (
+            {fileUploaders[0]?.status === UploadStatus.uploaded && (
               <div class="devui-loaded">
-                <i class="icon icon-right-o"></i>
+                <d-icon name="right-o" />
                 <span style="vertical-align: middle">
                   {i18nText.uploadSuccess}
                 </span>
               </div>
             )}
-            {fileUploaders[0].status === UploadStatus.failed && (
+            {fileUploaders[0]?.status === UploadStatus.failed && (
               <div class="devui-upload-failed">
-                <i class="icon icon-info-o"></i>
+                <d-icon name="info-o" />
                 <span style="vertical-align: middle">
                   <span style="margin-right: 8px">{i18nText.uploadFailed}</span>
                   <a>{i18nText.reUpload}</a>

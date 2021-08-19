@@ -129,6 +129,10 @@ export const uploadProps = {
     type: Function as PropType<(v: { file: File; response: any; }[]) => void>,
     default: undefined,
   },
+  deleteUploadedFileEvent: {
+    type: Function as PropType<(v: string) => void>,
+    default: undefined,
+  },
 } as const
 export const singleUploadViewProps = {
   uploadOptions: {
@@ -238,6 +242,10 @@ export const multiUploadProps = {
   },
   successEvent: {
     type: Function as PropType<(v: { file: File; response: any; }[]) => void>,
+    default: undefined,
+  },
+  deleteUploadedFileEvent: {
+    type: Function as PropType<(v: string) => void>,
     default: undefined,
   },
 }

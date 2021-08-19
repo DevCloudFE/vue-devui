@@ -4,12 +4,7 @@ import { defineComponent, toRefs, ref } from 'vue'
 import { Observable } from 'rxjs'
 import { last, map, debounceTime } from 'rxjs/operators'
 import { ToastService } from '../../toast'
-import {
-  uploadProps,
-  UploadProps,
-  UploadStatus,
-  multiUploadProps,
-} from './upload-types'
+import { UploadStatus, multiUploadProps } from './upload-types'
 import { useSelectFiles } from './use-select-files'
 import { useUpload } from './use-upload'
 import {
@@ -18,11 +13,19 @@ import {
   getUploadingFilesCount,
   i18nText,
 } from './i18n-upload'
+import { FileUploader } from './file-uploader'
 
 export default defineComponent({
   name: 'DMultipleUpload',
   props: multiUploadProps,
-  emits: [],
+  emits: [
+    'fileDrop',
+    'fileOver',
+    'fileSelect',
+    'successEvent',
+    'errorEvent',
+    'deleteUploadedFileEvent',
+  ],
   setup(props, ctx) {
     const {
       uploadOptions,
@@ -113,20 +116,21 @@ export default defineComponent({
       _dealFiles(triggerSelectFiles(fileOptions.value))
     }
 
-    const onFileDrop = (files) => {
+    const onFileDrop = (files: File[]) => {
       isDropOVer.value = false
       _dealFiles(
         triggerDropFiles(fileOptions.value, uploadOptions.value, files)
       )
       ctx.emit('fileDrop', files)
     }
-    const onFileOver = (event) => {
+    const onFileOver = (event: boolean) => {
       isDropOVer.value = event
       ctx.emit('fileOver', event)
     }
-    const onDeleteFile = (event, file) => {
+    const onDeleteFile = (event: Event, file: File) => {
       event.stopPropagation()
       deleteFile(file)
+      ctx.emit('deleteUploadedFileEvent', file)
     }
     const canUpload = () => {
       let uploadResult = Promise.resolve(true)
@@ -144,7 +148,7 @@ export default defineComponent({
       }
       return uploadResult
     }
-    const fileUpload = (event, fileUploader?) => {
+    const fileUpload = (event: Event, fileUploader?: FileUploader) => {
       if (event) {
         event.stopPropagation()
       }
@@ -156,6 +160,20 @@ export default defineComponent({
         const uploadObservable = oneTimeUpload.value
           ? _oneTimeUpload()
           : upload(fileUploader)
+        uploadObservable.pipe(last()).subscribe(
+          (results: Array<{ file: File; response: any; }>) => {
+            console.log('results', results)
+
+            ctx.emit('successEvent', results)
+            results.forEach((result) => {
+              // TODO
+              // uploadedFiles add file
+            })
+          },
+          (error) => {
+            ctx.emit('errorEvent', error)
+          }
+        )
       })
     }
 
@@ -190,6 +208,16 @@ export default defineComponent({
       }
     }
 
+    // 取消上传
+    const cancelUpload = () => {
+      fileUploaders.value = fileUploaders.value.map((fileUploader) => {
+        if (fileUploader.status === UploadStatus.uploading) {
+          fileUploader.status = UploadStatus.failed
+        }
+        return fileUploader
+      })
+    }
+
     return {
       uploadOptions,
       fileOptions,
@@ -210,12 +238,11 @@ export default defineComponent({
       showTip,
       getStatus,
       uploadTips,
+      cancelUpload,
     }
   },
   render() {
     const {
-      uploadOptions,
-      fileOptions,
       placeholderText,
       autoUpload,
       withoutBtn,
@@ -233,6 +260,7 @@ export default defineComponent({
       showTip,
       getStatus,
       uploadTips,
+      cancelUpload,
     } = this
 
     return (
@@ -269,8 +297,9 @@ export default defineComponent({
                     >
                       {fileUploader.file.name}
                     </span>
-                    <span
-                      class={`icon icon-close ${
+                    <d-icon
+                      name="close"
+                      class={`${
                         fileUploader?.status === UploadStatus.failed
                           ? 'devui-upload-delete-file-button'
                           : ''
@@ -283,8 +312,8 @@ export default defineComponent({
                       onClick={(event) =>
                         onDeleteFile(event, fileUploader.file)
                       }
-                    ></span>
-                    {fileUploader.status === UploadStatus.uploaded && (
+                    />
+                    {fileUploader.status === UploadStatus.uploading && (
                       <div class="icon devui-upload-progress">
                         <d-progress
                           isCircle={true}
@@ -296,10 +325,10 @@ export default defineComponent({
                       </div>
                     )}
                     {fileUploader.status === UploadStatus.failed && (
-                      <span class="icon icon-running"></span>
+                      <d-icon name="running" />
                     )}
                     {fileUploader.status === UploadStatus.uploaded && (
-                      <span class="icon icon-right"></span>
+                      <d-icon name="right" color="#50d4ab" />
                     )}
                   </li>
                 ))}
@@ -336,12 +365,12 @@ export default defineComponent({
             {getStatus() === 'uploading' && (
               <span class="devui-loading">
                 <span style="margin-right: 8px">{uploadTips}</span>
-                <a>{i18nText.cancelUpload}</a>
+                <a onClick={cancelUpload}>{i18nText.cancelUpload}</a>
               </span>
             )}
             {getStatus() === 'uploaded' && (
               <div class="devui-loaded">
-                <i class="icon icon-right-o"></i>
+                <d-icon name="right-o" />
                 <span style="vertical-align: middle">
                   {i18nText.uploadSuccess}
                 </span>
@@ -349,10 +378,10 @@ export default defineComponent({
             )}
             {getStatus() === 'failed' && (
               <div class="devui-upload-failed">
-                <i class="icon icon-info-o"></i>
+                <d-icon name="info-o" />
                 <span style="vertical-align: middle">
                   <span style="margin-right: 8px">{uploadTips}</span>
-                  <a>{i18nText.reUpload}</a>
+                  <a onClick={fileUpload}>{i18nText.reUpload}</a>
                 </span>
               </div>
             )}

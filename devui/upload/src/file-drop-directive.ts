@@ -72,7 +72,7 @@ const onDrop = (el: HTMLElement, binding: BindingType) => {
 }
 
 const fileDropDirective = {
-  mounted: (el: HTMLElement, binding: BindingType) => {
+  mounted: (el: HTMLElement, binding: BindingType): void => {
     const { enableDrop } = binding.value
     if (!enableDrop) {
       return

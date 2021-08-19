@@ -12,7 +12,7 @@ export class FileUploader {
     this.status = UploadStatus.preLoad
   }
 
-  send(uploadFiles?): Promise<{ file: File; response: any; }> {
+  send(uploadFiles?: FileUploader[]): Promise<{ file: File; response: any; }> {
     return new Promise((resolve, reject) => {
       const {
         uri,
@@ -94,7 +94,10 @@ export class FileUploader {
     })
   }
 
-  parallelUploadFiles(fileFieldName_, additionalParameter) {
+  parallelUploadFiles(
+    fileFieldName_: string,
+    additionalParameter: Record<string, any>
+  ): FormData {
     const formData = new FormData()
     formData.append(fileFieldName_, this.file, this.file.name)
     if (additionalParameter) {
@@ -105,7 +108,11 @@ export class FileUploader {
     return formData
   }
 
-  oneTimeUploadFiles(fileFieldName_, additionalParameter, uploadFiles) {
+  oneTimeUploadFiles(
+    fileFieldName_: string,
+    additionalParameter: Record<string, any>,
+    uploadFiles: FileUploader[]
+  ): FormData {
     const formData = new FormData()
     uploadFiles.forEach((element) => {
       formData.append(fileFieldName_, element.file, element.file.name)
@@ -118,7 +125,7 @@ export class FileUploader {
     return formData
   }
 
-  cancel() {
+  cancel(): void {
     if (this.xhr) {
       this.xhr.abort()
     }
