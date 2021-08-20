@@ -12,7 +12,7 @@ Upload.install = function (app: App) {
 export { Upload, MultiUpload }
 
 export default {
-  title: 'Upload Upload 上传',
+  title: 'Upload 上传',
   category: '数据录入',
   install(app: App): void {
     app.use(Upload as any)

@@ -37,3 +37,6 @@ export const getNotAllowedFileTypeMsg = (
 ): string => {
   return `支持的文件类型: "${scope}", 您上传的文件"${filename}"不在允许范围内，请重新选择文件`
 }
+export const getExistSameNameFilesMsg = (sameNames: string): string => {
+  return `您上传的 "${sameNames}" 存在重名文件, 请重新选择文件`
+}

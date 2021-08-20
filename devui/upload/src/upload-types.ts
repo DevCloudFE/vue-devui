@@ -1,5 +1,6 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 import { Observable } from 'rxjs'
+import { FileUploader } from './file-uploader'
 export class IUploadOptions {
   // 上传接口地址
   uri: string
@@ -188,7 +189,7 @@ export const multiUploadProps = {
     default: false,
   },
   uploadedFiles: {
-    type: Array,
+    type: Array as PropType<File[]>,
     default: () => [],
   },
   enableDrop: {
@@ -246,6 +247,12 @@ export const multiUploadProps = {
   },
   deleteUploadedFileEvent: {
     type: Function as PropType<(v: string) => void>,
+    default: undefined,
+  },
+  setCustomUploadOptions: {
+    type: Function as PropType<
+      (files: File[], uploadOptions: IUploadOptions) => IUploadOptions
+    >,
     default: undefined,
   },
 }

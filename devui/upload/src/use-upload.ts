@@ -102,6 +102,10 @@ export const useUpload = () => {
   }
 
   const deleteFile = (file) => {
+    const deleteUploadFile = fileUploaders.value.find(
+      (fileUploader) => fileUploader.file === file
+    )
+    deleteUploadFile.cancel()
     fileUploaders.value = fileUploaders.value.filter((fileUploader) => {
       return file !== fileUploader.file
     })

@@ -11,7 +11,14 @@ import { i18nText } from './i18n-upload'
 export default defineComponent({
   name: 'DSingleUpload',
   props: uploadProps,
-  emits: ['fileDrop', 'fileOver', 'fileSelect', 'successEvent', 'errorEvent'],
+  emits: [
+    'fileDrop',
+    'fileOver',
+    'fileSelect',
+    'successEvent',
+    'errorEvent',
+    'update:uploadedFiles',
+  ],
   setup(props: UploadProps, ctx) {
     const {
       uploadOptions,
@@ -24,6 +31,7 @@ export default defineComponent({
       beforeUpload,
       enableDrop,
       showTip,
+      uploadedFiles,
     } = toRefs<UploadProps>(props)
     const isDropOVer = ref(false)
     const {
@@ -73,18 +81,15 @@ export default defineComponent({
           .subscribe(
             (results: Array<{ file: File; response: any; }>) => {
               ctx.emit('successEvent', results)
-              // results.forEach((result) => {
-              //   this.singleUploadViewComponent.uploadedFilesComponent.addAndOverwriteFile(
-              //     result.file
-              //   )
-              // })
+              const newFiles = results.map((result) => result.file)
+              const newUploadedFiles = [...newFiles, ...uploadedFiles.value]
+              ctx.emit('update:uploadedFiles', newUploadedFiles)
             },
             (error) => {
               console.error(error)
               if (fileUploaders.value[0]) {
                 fileUploaders.value[0].percentage = 0
               }
-              // this.singleUploadViewComponent.uploadedFilesComponent.cleanUploadedFiles()
               ctx.emit('errorEvent', error)
             }
           )
@@ -115,7 +120,6 @@ export default defineComponent({
         )
         .subscribe(
           () => {
-            // this.singleUploadViewComponent.uploadedFilesComponent.cleanUploadedFiles();
             checkValid()
             const file = fileUploaders[0]?.file
             if (props.onChange) {
@@ -253,7 +257,7 @@ export default defineComponent({
                         isCircle={true}
                         percentage={fileUploaders[0].percentage}
                         barbgcolor="#50D4AB"
-                        strokeWidth="8"
+                        strokeWidth={8}
                         showContent={false}
                       ></d-progress>
                     </div>
@@ -311,7 +315,7 @@ export default defineComponent({
             )}
             {fileUploaders[0]?.status === UploadStatus.uploaded && (
               <div class="devui-loaded">
-                <d-icon name="right-o" />
+                <d-icon name="right-o" color="#50d4ab" />
                 <span style="vertical-align: middle">
                   {i18nText.uploadSuccess}
                 </span>
@@ -319,10 +323,10 @@ export default defineComponent({
             )}
             {fileUploaders[0]?.status === UploadStatus.failed && (
               <div class="devui-upload-failed">
-                <d-icon name="info-o" />
+                <d-icon name="info-o" color="#f66f6a" />
                 <span style="vertical-align: middle">
                   <span style="margin-right: 8px">{i18nText.uploadFailed}</span>
-                  <a>{i18nText.reUpload}</a>
+                  <a onClick={fileUpload}>{i18nText.reUpload}</a>
                 </span>
               </div>
             )}

@@ -12,6 +12,7 @@ import {
   getSelectedFilesCount,
   getUploadingFilesCount,
   i18nText,
+  getExistSameNameFilesMsg,
 } from './i18n-upload'
 import { FileUploader } from './file-uploader'
 
@@ -25,6 +26,7 @@ export default defineComponent({
     'successEvent',
     'errorEvent',
     'deleteUploadedFileEvent',
+    'update:uploadedFiles',
   ],
   setup(props, ctx) {
     const {
@@ -39,6 +41,7 @@ export default defineComponent({
       enableDrop,
       oneTimeUpload,
       showTip,
+      uploadedFiles,
     } = toRefs(props)
     const {
       triggerSelectFiles,
@@ -56,6 +59,7 @@ export default defineComponent({
       resetSameNameFiles,
       removeFiles,
       _oneTimeUpload,
+      getSameNameFiles,
     } = useUpload()
     const isDropOVer = ref(false)
     const uploadTips = ref('')
@@ -104,9 +108,28 @@ export default defineComponent({
           }),
           debounceTime(100)
         )
-        .subscribe(() => {
-          checkValid()
-        })
+        .subscribe(
+          () => {
+            checkValid()
+            const sameNameFiles = getSameNameFiles()
+            if (uploadOptions.value.checkSameName && sameNameFiles.length) {
+              alertMsg(getExistSameNameFilesMsg(sameNameFiles))
+            }
+            // TODO: onChange事件
+            const selectedFiles = fileUploaders.value
+              .filter(
+                (fileUploader) => fileUploader.status === UploadStatus.preLoad
+              )
+              .map((fileUploader) => fileUploader.file)
+            ctx.emit('fileSelect', selectedFiles)
+            if (autoUpload.value) {
+              upload()
+            }
+          },
+          (error: Error) => {
+            alertMsg(error.message)
+          }
+        )
     }
 
     const handleClick = () => {
@@ -130,7 +153,14 @@ export default defineComponent({
     const onDeleteFile = (event: Event, file: File) => {
       event.stopPropagation()
       deleteFile(file)
+    }
+    // 删除已上传文件
+    const deleteUploadedFile = (file: File) => {
+      const newUploadedFiles = uploadedFiles.value.filter((uploadedFile) => {
+        return uploadedFile.name !== file.name
+      })
       ctx.emit('deleteUploadedFileEvent', file)
+      ctx.emit('update:uploadedFiles', newUploadedFiles)
     }
     const canUpload = () => {
       let uploadResult = Promise.resolve(true)
@@ -162,13 +192,10 @@ export default defineComponent({
           : upload(fileUploader)
         uploadObservable.pipe(last()).subscribe(
           (results: Array<{ file: File; response: any; }>) => {
-            console.log('results', results)
-
             ctx.emit('successEvent', results)
-            results.forEach((result) => {
-              // TODO
-              // uploadedFiles add file
-            })
+            const newFiles = results.map((result) => result.file)
+            const newUploadedFiles = [...newFiles, ...uploadedFiles.value]
+            ctx.emit('update:uploadedFiles', newUploadedFiles)
           },
           (error) => {
             ctx.emit('errorEvent', error)
@@ -212,6 +239,8 @@ export default defineComponent({
     const cancelUpload = () => {
       fileUploaders.value = fileUploaders.value.map((fileUploader) => {
         if (fileUploader.status === UploadStatus.uploading) {
+          // 取消上传请求
+          fileUploader.cancel()
           fileUploader.status = UploadStatus.failed
         }
         return fileUploader
@@ -239,6 +268,7 @@ export default defineComponent({
       getStatus,
       uploadTips,
       cancelUpload,
+      deleteUploadedFile,
     }
   },
   render() {
@@ -261,8 +291,9 @@ export default defineComponent({
       getStatus,
       uploadTips,
       cancelUpload,
+      uploadedFiles,
+      deleteUploadedFile,
     } = this
-
     return (
       <>
         <div
@@ -319,13 +350,13 @@ export default defineComponent({
                           isCircle={true}
                           percentage={fileUploader.percentage}
                           barbgcolor="#50D4AB"
-                          strokeWidth="8"
+                          strokeWidth={8}
                           showContent={false}
                         ></d-progress>
                       </div>
                     )}
                     {fileUploader.status === UploadStatus.failed && (
-                      <d-icon name="running" />
+                      <d-icon name="running" onClick={fileUpload} />
                     )}
                     {fileUploader.status === UploadStatus.uploaded && (
                       <d-icon name="right" color="#50d4ab" />
@@ -370,7 +401,7 @@ export default defineComponent({
             )}
             {getStatus() === 'uploaded' && (
               <div class="devui-loaded">
-                <d-icon name="right-o" />
+                <d-icon name="right-o" color="#50d4ab" />
                 <span style="vertical-align: middle">
                   {i18nText.uploadSuccess}
                 </span>
@@ -378,7 +409,7 @@ export default defineComponent({
             )}
             {getStatus() === 'failed' && (
               <div class="devui-upload-failed">
-                <d-icon name="info-o" />
+                <d-icon name="info-o" color="#f66f6a" />
                 <span style="vertical-align: middle">
                   <span style="margin-right: 8px">{uploadTips}</span>
                   <a onClick={fileUpload}>{i18nText.reUpload}</a>
@@ -387,6 +418,18 @@ export default defineComponent({
             )}
           </div>
         )}
+        <div>
+          {this.$slots.preloadFiles?.({
+            fileUploaders,
+            deleteFile: onDeleteFile,
+          })}
+        </div>
+        <div>
+          {this.$slots.uploadedFiles?.({
+            uploadedFiles,
+            deleteFile: deleteUploadedFile,
+          })}
+        </div>
       </>
     )
   },
