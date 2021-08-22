@@ -8,18 +8,22 @@ export default defineComponent({
   emits: ['change', 'update:modelValue'],
   setup(props: ExtractPropTypes<typeof radioProps>, { emit }) {
     const radioGroupConf = inject(radioGroupInjectionKey, null);
-    /** 是否禁用 */
-    const _disabled = props.disabled || radioGroupConf?.disabled;
 
+    /** 是否禁用 */
+    const isDisabled = computed(() => {
+      return props.disabled || radioGroupConf?.disabled.value
+    });
     /** 判断是否勾选 */
     const isChecked = computed(() => {
       const _value = radioGroupConf ? radioGroupConf.modelValue.value : props.modelValue;
 
       return props.value === _value;
     });
+    /** radio 的 name 属性 */
     const radioName = computed(() => {
       return radioGroupConf ? radioGroupConf.name.value : props.name;
     });
+
     /** 判断是否允许切换 */
     const judgeCanChange = (_value: string) => {
       const beforeChange = props.beforeChange || (radioGroupConf ? radioGroupConf.beforeChange : null);
@@ -42,7 +46,7 @@ export default defineComponent({
     return {
       isChecked,
       radioName,
-      disabled: _disabled,
+      disabled: isDisabled,
       handleChange: async (event: Event) => {
         const _value = props.value;
         const canChange = await judgeCanChange(_value);
@@ -67,7 +71,6 @@ export default defineComponent({
       $slots,
       handleChange
     } = this;
-    console.log('--this', this)
     const labelCls = [
       'devui-radio',
       {

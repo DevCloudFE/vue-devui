@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import DRadio from '../src/radio'
 
 describe('Radio', () => {
+  /** 测试是否正常渲染 */
   it('radio render work', async () => {
     const onChange = jest.fn()
     const wrapper = mount({
@@ -26,6 +27,7 @@ describe('Radio', () => {
     expect(onChange).toBeCalledTimes(1)
   })
 
+  /** 测试 value */
   it('radio value work', () => {
     const wrapper = mount(DRadio, {
       props: {
@@ -36,6 +38,7 @@ describe('Radio', () => {
     expect(input.attributes()['value']).toEqual('Item1')
   })
 
+  /** 测试 disabled */
   it('radio disabled work', async () => {
     const onChange = jest.fn()
     const wrapper = mount(DRadio, {
@@ -51,6 +54,24 @@ describe('Radio', () => {
     expect(onChange).toBeCalledTimes(0)
   })
 
+  /** 测试 disabled 切换 */
+  it('radio disabled change', async () => {
+    const onChange = jest.fn()
+    const wrapper = mount(DRadio, {
+      props: {
+        value: 'Item1',
+        disabled: true,
+        onChange,
+      },
+    })
+    expect(wrapper.classes()).toContain('disabled')
+    await wrapper.setProps({
+      disabled: false,
+    })
+    expect(wrapper.classes()).not.toContain('disabled')
+  })
+
+  /** 测试 beforeChange */
   it('radio beforeChange work', async () => {
     const beforeChange = jest.fn(() => true)
     const onChange = jest.fn()
