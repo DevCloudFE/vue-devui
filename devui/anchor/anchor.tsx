@@ -4,10 +4,10 @@ export default defineComponent({
   name: 'DAnchor',
   props: {
   },
-  setup(props, ctx) {
+  setup() {
     return () => {
       return (
-        <div v-d-anchor-box>
+        <div v-d-anchor-box class="scrollTarget">
           <ul>
             <li v-d-anchor-link="anchorlink-one">anchorlink-one</li>
             <li v-d-anchor-link="anchorlink-two">anchorlink-two</li>
