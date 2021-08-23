@@ -34,7 +34,6 @@ const Axis = defineComponent({
 
     const axisConfigsVal: IAxisConfigs = axisConfigs.value;
     const viewVal: IViewConfigs = view.value;
-    let contextVal: any = context.value;
 
 
     onMounted(() => {
@@ -58,7 +57,7 @@ const Axis = defineComponent({
     }
 
     const setAxisData = () => {
-      contextVal = quadrantAxis.value.getContext('2d');
+      context.value = quadrantAxis.value.getContext('2d');
       axisInnerAttr.axisOrigin = axisConfigsVal.axisOrigin;
       axisInnerAttr.axisTop = axisConfigsVal.axisTop;
       axisInnerAttr.axisRight = axisConfigsVal.axisRight;
@@ -74,41 +73,41 @@ const Axis = defineComponent({
      * 执行绘制 
      */
     const drawAxis = () => {
-      contextVal.save();
-      contextVal.fillStyle = AXIS_COLOR.value;
-      contextVal.strokeStyle = AXIS_COLOR.value;
+      context.value.save();
+      context.value.fillStyle = AXIS_COLOR.value;
+      context.value.strokeStyle = AXIS_COLOR.value;
       drawXAxis();
       drawYAxis();
-      contextVal.lineWidth = 0.5;
+      context.value.lineWidth = 0.5;
       drawXAxisTicks();
       drawYAxisTicks();
-      contextVal.restore();
+      context.value.restore();
     }
 
     /**
      * 绘制 XY 轴
      */
     const drawYAxis = () => {
-      contextVal.beginPath();
-      contextVal.moveTo(axisInnerAttr.axisOrigin.x, axisInnerAttr.axisOrigin.y);
-      contextVal.lineTo(axisInnerAttr.axisOrigin.x, axisInnerAttr.axisTop - axisConfigsVal.axisMargin);
-      contextVal.stroke();
-      contextVal.moveTo(axisInnerAttr.axisOrigin.x, axisInnerAttr.axisTop - axisConfigsVal.axisMargin);
-      contextVal.lineTo(axisInnerAttr.axisOrigin.x + 5, axisInnerAttr.axisTop - axisConfigsVal.axisMargin + 10);
-      contextVal.lineTo(axisInnerAttr.axisOrigin.x - 5, axisInnerAttr.axisTop - axisConfigsVal.axisMargin + 10);
-      contextVal.fill();
+      context.value.beginPath();
+      context.value.moveTo(axisInnerAttr.axisOrigin.x, axisInnerAttr.axisOrigin.y);
+      context.value.lineTo(axisInnerAttr.axisOrigin.x, axisInnerAttr.axisTop - axisConfigsVal.axisMargin);
+      context.value.stroke();
+      context.value.moveTo(axisInnerAttr.axisOrigin.x, axisInnerAttr.axisTop - axisConfigsVal.axisMargin);
+      context.value.lineTo(axisInnerAttr.axisOrigin.x + 5, axisInnerAttr.axisTop - axisConfigsVal.axisMargin + 10);
+      context.value.lineTo(axisInnerAttr.axisOrigin.x - 5, axisInnerAttr.axisTop - axisConfigsVal.axisMargin + 10);
+      context.value.fill();
 
     }
     const drawXAxis = () => {
-      contextVal.beginPath();
-      contextVal.moveTo(axisInnerAttr.axisOrigin.x, axisInnerAttr.axisOrigin.y);
-      contextVal.lineTo(axisInnerAttr.axisRight + axisConfigsVal.axisMargin - 10, axisInnerAttr.axisOrigin.y);
-      contextVal.stroke();
+      context.value.beginPath();
+      context.value.moveTo(axisInnerAttr.axisOrigin.x, axisInnerAttr.axisOrigin.y);
+      context.value.lineTo(axisInnerAttr.axisRight + axisConfigsVal.axisMargin - 10, axisInnerAttr.axisOrigin.y);
+      context.value.stroke();
       // 绘制坐标轴三角形
-      contextVal.moveTo(axisInnerAttr.axisRight + axisConfigsVal.axisMargin, axisInnerAttr.axisOrigin.y);
-      contextVal.lineTo(axisInnerAttr.axisRight + axisConfigsVal.axisMargin - 10, axisInnerAttr.axisOrigin.y + 5);
-      contextVal.lineTo(axisInnerAttr.axisRight + axisConfigsVal.axisMargin - 10, axisInnerAttr.axisOrigin.y - 5);
-      contextVal.fill();
+      context.value.moveTo(axisInnerAttr.axisRight + axisConfigsVal.axisMargin, axisInnerAttr.axisOrigin.y);
+      context.value.lineTo(axisInnerAttr.axisRight + axisConfigsVal.axisMargin - 10, axisInnerAttr.axisOrigin.y + 5);
+      context.value.lineTo(axisInnerAttr.axisRight + axisConfigsVal.axisMargin - 10, axisInnerAttr.axisOrigin.y - 5);
+      context.value.fill();
     }
 
     /**
@@ -117,75 +116,75 @@ const Axis = defineComponent({
     const drawXAxisTicks = () => {
       let deltaY;
       for (let i = 1; i < axisInnerAttr.xAxisTicksNum; i++) {
-        contextVal.beginPath();
+        context.value.beginPath();
         // 判断显示长刻度还是短刻度
         if (i % axisConfigsVal.xAxisRange.step === 0) {
           deltaY = axisConfigsVal.tickWidth;
         } else {
           deltaY = axisConfigsVal.tickWidth / 2;
         }
-        contextVal.moveTo(axisInnerAttr.axisOrigin.x + i * axisInnerAttr.xTickSpacing,
+        context.value.moveTo(axisInnerAttr.axisOrigin.x + i * axisInnerAttr.xTickSpacing,
           axisInnerAttr.axisOrigin.y - deltaY);
-        contextVal.lineTo(axisInnerAttr.axisOrigin.x + i * axisInnerAttr.xTickSpacing,
+        context.value.lineTo(axisInnerAttr.axisOrigin.x + i * axisInnerAttr.xTickSpacing,
           axisInnerAttr.axisOrigin.y + deltaY);
-        contextVal.stroke();
+        context.value.stroke();
       }
 
     }
     const drawYAxisTicks = () => {
       let deltaX;
       for (let i = 1; i < axisInnerAttr.yAxisTicksNum; i++) {
-        contextVal.beginPath();
+        context.value.beginPath();
         if (i % axisConfigsVal.yAxisRange.step === 0) {
           deltaX = axisConfigsVal.tickWidth;
         } else {
           deltaX = axisConfigsVal.tickWidth / 2;
         }
-        contextVal.moveTo(axisInnerAttr.axisOrigin.x - deltaX,
+        context.value.moveTo(axisInnerAttr.axisOrigin.x - deltaX,
           axisInnerAttr.axisOrigin.y - i * axisInnerAttr.yTickSpacing);
-        contextVal.lineTo(axisInnerAttr.axisOrigin.x + deltaX,
+        context.value.lineTo(axisInnerAttr.axisOrigin.x + deltaX,
           axisInnerAttr.axisOrigin.y - i * axisInnerAttr.yTickSpacing);
-        contextVal.stroke();
+        context.value.stroke();
       }
     }
 
     const drawAxisLabels = () => {
-      contextVal.save();
-      contextVal.fillStyle = AXIS_LABEL_COLOR.value;
+      context.value.save();
+      context.value.fillStyle = AXIS_LABEL_COLOR.value;
       drawXTicksLabels();
       drawYTicksLabels();
-      contextVal.restore();
+      context.value.restore();
       drawAxisTitle();
     }
 
     const drawXTicksLabels = () => {
-      contextVal.textAlign = 'center';
-      contextVal.textBaseline = 'top';
+      context.value.textAlign = 'center';
+      context.value.textBaseline = 'top';
       for (let i = 0; i <= axisInnerAttr.xAxisTicksNum; i++) {
         if (i % axisConfigsVal.xAxisRange.step === 0) {
-          contextVal.fillText(i, axisInnerAttr.axisOrigin.x + i * axisInnerAttr.xTickSpacing,
+          context.value.fillText(i, axisInnerAttr.axisOrigin.x + i * axisInnerAttr.xTickSpacing,
             axisInnerAttr.axisOrigin.y + axisConfigsVal.spaceBetweenLabelsAxis);
         }
       }
     };
     const drawYTicksLabels = () => {
-      contextVal.textAlign = 'center';
-      contextVal.textBaseline = 'middle';
+      context.value.textAlign = 'center';
+      context.value.textBaseline = 'middle';
       for (let i = 0; i <= axisInnerAttr.yAxisTicksNum; i++) {
         if (i % axisConfigsVal.yAxisRange.step === 0) {
-          contextVal.fillText(i, axisInnerAttr.axisOrigin.x - axisConfigsVal.spaceBetweenLabelsAxis,
+          context.value.fillText(i, axisInnerAttr.axisOrigin.x - axisConfigsVal.spaceBetweenLabelsAxis,
             axisInnerAttr.axisOrigin.y - i * axisInnerAttr.yTickSpacing);
         }
       }
     };
     const drawAxisTitle = () => {
-      contextVal.font = '12px Microsoft YaHei';
-      contextVal.textAlign = 'left';
-      contextVal.fillStyle = AXIS_LABEL_COLOR.value;
-      const xLabelWidth = contextVal.measureText(axisConfigsVal.xAxisLabel).width;
+      context.value.font = '12px Microsoft YaHei';
+      context.value.textAlign = 'left';
+      context.value.fillStyle = AXIS_LABEL_COLOR.value;
+      const xLabelWidth = context.value.measureText(axisConfigsVal.xAxisLabel).width;
       rotateLabel(axisConfigsVal.xAxisLabel, axisInnerAttr.axisRight + axisConfigsVal.axisMargin / 2,
         axisInnerAttr.axisOrigin.y - xLabelWidth - AXIS_TITLE_SPACE);
-      contextVal.fillText(axisConfigsVal.yAxisLabel,
+      context.value.fillText(axisConfigsVal.yAxisLabel,
         axisInnerAttr.axisOrigin.x + AXIS_TITLE_SPACE, axisInnerAttr.axisTop - axisConfigsVal.axisMargin / 2);
     };
 
@@ -193,19 +192,19 @@ const Axis = defineComponent({
       for (let i = 0; i < name.length; i++) {
         const str = name.slice(i, i + 1).toString();
         if (str.match(/[A-Za-z0-9]/)) {
-          contextVal.save();
-          contextVal.translate(x, y);
-          contextVal.rotate(Math.PI / 180 * 90);
-          contextVal.textBaseline = 'bottom';
-          contextVal.fillText(str, 0, 0);
-          contextVal.restore();
-          y += contextVal.measureText(str).width;
+          context.value.save();
+          context.value.translate(x, y);
+          context.value.rotate(Math.PI / 180 * 90);
+          context.value.textBaseline = 'bottom';
+          context.value.fillText(str, 0, 0);
+          context.value.restore();
+          y += context.value.measureText(str).width;
         } else if (str.match(/[\u4E00-\u9FA5]/)) {
-          contextVal.save();
-          contextVal.textBaseline = 'top';
-          contextVal.fillText(str, x, y);
-          contextVal.restore();
-          y += contextVal.measureText(str).width;
+          context.value.save();
+          context.value.textBaseline = 'top';
+          context.value.fillText(str, x, y);
+          context.value.restore();
+          y += context.value.measureText(str).width;
         }
       }
     }
