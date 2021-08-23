@@ -68,9 +68,12 @@
   left: 0;
   height: auto;
 }
-
+.scrollTarget {
+  height: 450px!important;
+}
 .mycontainer {
-  height: 450px;
+  height: auto;
+  
   overflow-y: auto;
 }
 

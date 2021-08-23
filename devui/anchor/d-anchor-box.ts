@@ -55,9 +55,12 @@ export default  {
                 console.log(2222222222)
               }
           }else {
-            mysidebar.style.position = 'absolute';
-            mysidebar.style.top =   '0px';
-            mysidebar.style.left = '0px';
+             // 刚开始滚动
+             toTheBottom = false;
+             mysidebar.style.position = 'absolute';
+             mysidebar.style.top = div.scrollTop+'px';
+             mysidebar.style.left =  '0px';
+            console.log(2222222222)
           }
           
         }
@@ -76,8 +79,6 @@ export default  {
               // mysidebar.style.position = 'absolute';
               // mysidebar.style.top =  '0px';
               // mysidebar.style.left =  '0px';
-            
-         
               // mysidebar.style.height =  'auto';
             } else if(document.getElementsByClassName('scrollTarget').length ){
              
@@ -88,27 +89,8 @@ export default  {
               console.log('div滚动距离' + scrollTop);
             }
        });
-        // let AllNodes:HTMLCollection = el.children ;
-        // console.log( AllNodes,'DivNodesinserted0');
-        // let UlNodes:string, DivNodes:string;
-        // for (let m in AllNodes) {
-           
-               
-        //          if (AllNodes[m].className == 'step-nav') {
-        //             UlNodes = m
-        //             // console.log(AllNodes[m].className,'AllNodes[m].className',m)
-        //          } else if (AllNodes[m].className == 'mycontent') {
-        //             DivNodes = m
-        //          }
-              
-            
-           
-        // }
-        // console.log(HTMLDOMtoString(AllNodes[UlNodes]),HTMLDOMtoString(AllNodes[DivNodes]),'DivNodes????????')
-        // el.innerHTML = '<div _ngcontent-pls-c237="" class="mysidebar"> <d-sticky _ngcontent-pls-c237="" style="position: relative;"> <div class="ulDivArea" style="top: auto; left: auto; position: static;"> '
-        //                 +HTMLDOMtoString(AllNodes[UlNodes])
-        //                 +'</div> </d-sticky> </div>'
-        //                 +HTMLDOMtoString(AllNodes[DivNodes])
+       
+      //  监听window滚动或滚动容器滚动，切换link+active,改变#
 
     }
   };
@@ -122,22 +104,4 @@ export default  {
     }
     
    })();
-
-//   function parseDom(arg:string) {
-
-//     　　 var objE = document.createElement("div");
-    
-//     　　 objE.innerHTML = arg;
-    
-//     　　 return objE.childNodes;
-    
-//     };
-    // function HTMLDOMtoString (HTMLDOM: HTMLElement) {
-    //     if (HTMLDOM)  {
-    //         let divA = document.createElement("div")
-    //         console.log(HTMLDOM,"__________HTMLDOM")
-    //         divA.appendChild(HTMLDOM) 
-    //         return divA.innerHTML
-    //     }
-      
-    // }
+ 
