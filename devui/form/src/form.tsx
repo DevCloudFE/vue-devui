@@ -10,8 +10,14 @@ export default defineComponent({
   emits: ['submit'],
   setup(props: FormProps, ctx) {
     const formMitt = mitt();
-
     const fields: IFormItem[] =  [];
+    const resetFormFields = () => {
+      console.log('resetFormFields fields', fields);
+      fields.forEach((field: IFormItem) => {
+        console.log('resetFormFields field', field);
+        field.resetField();
+      })
+    }
 
     formMitt.on(dFormEvents.addField, (field: any) => {
       console.log('dFormEvents.addField field', field);
@@ -28,8 +34,7 @@ export default defineComponent({
       console.log('dFormEvents.removeField field', field);
       
     })
-
-
+    
     provide('dForm', {
       formData: props.formData,
       formMitt,
@@ -42,13 +47,18 @@ export default defineComponent({
 
     console.log('form props', props);
     
-    return () => {
-      return (
-        <form>
-          {ctx.slots.default?.()}
-        </form>
-      );
+    return {
+      formMitt,
+      fields,
+      resetFormFields,
     }
   },
+  render() {
+    return (
+      <form>
+        {this.$slots.default?.()}
+      </form>
+    );
+  }
 
 })

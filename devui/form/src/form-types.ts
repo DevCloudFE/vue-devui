@@ -1,3 +1,4 @@
+import { Emitter } from 'mitt'
 import type { PropType, ExtractPropTypes } from 'vue'
 
 export const formProps = {
@@ -45,6 +46,7 @@ export interface ILabel {
 export interface IForm {
   formData: any
   labelData: ILabel
+  formMitt: Emitter<any>
 } 
 
 export type FormProps = ExtractPropTypes<typeof formProps>
@@ -52,6 +54,7 @@ export type FormLabelProps = ExtractPropTypes<typeof formLabelProps>
 
 export interface IFormItem {
   dHasFeedback: boolean
+  resetField(): void
 }
 
 export const dFormEvents = {
