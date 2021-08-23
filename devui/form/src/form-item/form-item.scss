@@ -1,0 +1,9 @@
+.form-item {
+  display: flex;
+  // align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-item-vertical {
+  flex-direction: column;
+}
