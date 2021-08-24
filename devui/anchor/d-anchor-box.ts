@@ -1,10 +1,12 @@
+import {setActiveLink ,onScroll} from './util'
 export default  {
     // 滚动区域
     // 1.监听window滚动或滚动容器滚动，切换link+active,改变#
     // 2.
     // 当被绑定的元素挂载到 DOM 中时……
     mounted(el: HTMLElement):void {
-       
+      setActiveLink();
+      window.addEventListener('scroll', onScroll);
       // 添加ng class名
       const classList   =  el.classList;
       console.error(classList)
