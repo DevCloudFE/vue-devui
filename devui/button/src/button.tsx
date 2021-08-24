@@ -44,7 +44,7 @@ export default defineComponent({
     },
     width: {
       type: Number,
-      default: 0
+      default: null
     },
     disabled: {
       type: Boolean,
