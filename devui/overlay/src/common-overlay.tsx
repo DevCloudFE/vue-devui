@@ -6,7 +6,7 @@ export const CommonOverlay = defineComponent({
     return () => (
       <Teleport to="#d-overlay-anchor">
         <Transition name="d-overlay-fade">
-          {renderSlot(ctx.slots, 'defalut')}
+          {renderSlot(ctx.slots, 'default')}
         </Transition>
       </Teleport>
     )

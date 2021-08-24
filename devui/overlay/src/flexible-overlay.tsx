@@ -1,7 +1,7 @@
-import { ComponentPublicInstance, CSSProperties, defineComponent, isRef, nextTick, onBeforeUnmount, onMounted, reactive, ref, Ref, renderSlot, toRef, watch } from 'vue';
+import { ComponentPublicInstance, CSSProperties, defineComponent, getCurrentInstance, isRef, nextTick, onBeforeUnmount, onMounted, reactive, ref, Ref, renderSlot, toRef, watch } from 'vue';
 import { CommonOverlay } from './common-overlay';
 import { overlayProps } from './overlay-types';
-import { overlayVisible } from './utils';
+import { useOverlayLogic } from './utils';
 
 
 /**
@@ -12,7 +12,7 @@ export const FlexibleOverlay = defineComponent({
   props: {
     origin: {
       type: Object as () => OriginOrDomRef,
-      default: () => ({ x: 0, y: 0 })
+      require: true
     },
     position: {
       type: Object as () => ConnectionPosition,
@@ -20,13 +20,12 @@ export const FlexibleOverlay = defineComponent({
     },
     ...overlayProps
   },
+  emits: ['onUpdate:visible'],
   setup(props, ctx) {
+    // lift cycle
     const overlayRef = ref<Element | null>(null);
     const positionedStyle = reactive<CSSProperties>({ position: 'absolute' });
-
-    const visible = overlayVisible(toRef(props, 'backgroundBlock'));
-
-    // lift cycle
+    const instance = getCurrentInstance();
     onMounted(async () => {
       await nextTick();
 
@@ -53,7 +52,16 @@ export const FlexibleOverlay = defineComponent({
       };
       const handleChange = () => handleRectChange(overlay.getBoundingClientRect());
 
-      flexibleLayoutChange(visible, handleChange);
+      watch(toRef(props, 'visible'), (visible, ov, onInvalidate) => {
+        if (visible) {
+          subscribeLayoutEvent(handleChange);
+        } else {
+          unsbscribeLayoutEvent(handleChange);
+        }
+        onInvalidate(() => {
+          unsbscribeLayoutEvent(handleChange);
+        });
+      });
 
       const resizeObserver = new ResizeObserver((entries) => {
         handleRectChange(entries[0].contentRect);
@@ -61,7 +69,7 @@ export const FlexibleOverlay = defineComponent({
       resizeObserver.observe(overlay as unknown as Element);
       onBeforeUnmount(() => {
         resizeObserver.disconnect();
-      });
+      }, instance);
 
       if (origin instanceof Element) {
         // Only when the style changing, you can change
@@ -72,35 +80,23 @@ export const FlexibleOverlay = defineComponent({
         });
         onBeforeUnmount(() => {
           observer.disconnect();
-        });
+        }, instance);
       }
-    });
+    }, instance);
 
-    const clickBackground = (event: Event) => {
-      event.preventDefault();
+    const { containerClass, panelClass, handleBackdropClick } = useOverlayLogic(props);
 
-      props.backdropClick?.();
-      if (props.backdropClose) {
-        visible.value = false;
-      }
-    };
 
-    return (
+    return () => (
       <CommonOverlay>
         <div
-          v-show={visible.value}
-          class={[
-            'd-overlay-container',
-            {
-              [props.backgroundClass]: props.hasBackdrop,
-              'd-overlay-container__disabled': !props.hasBackdrop
-            }
-          ]}
+          v-show={props.visible}
+          class={containerClass}
         >
           <div
-            class={['d-overlay-panel', !props.hasBackdrop ? 'd-overlay-container__disabled' : '']}
+            class={panelClass}
             style={{ position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh', display: 'flex' }}
-            onClick={clickBackground}
+            onClick={handleBackdropClick}
           >
             <div
               ref={overlayRef}
@@ -263,22 +259,14 @@ function getOriginPoint(originRect: ClientRect, position: ConnectionPosition): P
   return { x, y };
 }
 
+const subscribeLayoutEvent = (event: (e?: Event) => void) => {
+  window.addEventListener('scroll', event, true);
+  window.addEventListener('resize', event);
+  window.addEventListener('orientationchange', event);
+};
 
-const flexibleLayoutChange = (visible: Ref<boolean>, event: (e?: Event) => void) => {
-  watch(visible, (v, ov, onInvalidate) => {
-    if (visible) {
-      window.addEventListener('scroll', event, true);
-      window.addEventListener('resize', event);
-      window.addEventListener('orientationchange', event);
-    } else {
-      window.removeEventListener('scroll', event, true);
-      window.removeEventListener('resize', event);
-      window.removeEventListener('orientationchange', event);
-    }
-    onInvalidate(() => {
-      window.removeEventListener('scroll', event, true);
-      window.removeEventListener('resize', event);
-      window.removeEventListener('orientationchange', event);
-    });
-  });
+const unsbscribeLayoutEvent = (event: (e?: Event) => void) => {
+  window.removeEventListener('scroll', event, true);
+  window.removeEventListener('resize', event);
+  window.removeEventListener('orientationchange', event);
 }
