@@ -1,0 +1,58 @@
+.d-overlay-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  &__disabled {
+    pointer-events: none;
+  }
+
+  &__background {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .d-overlay-panel {
+    position: relative;
+    z-index: 1000;
+  }
+
+  .d-overlay {
+    pointer-events: auto;
+  }
+}
+
+.d-overlay-fade {
+  @mixin d-overlay-fade-animation {
+    animation-name: d-overlay-fade;
+    animation-duration: 0.3s;
+  }
+  @keyframes d-overlay-fade {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  &-enter {
+    opacity: 0;
+  }
+
+  &-enter-active {
+    @include d-overlay-fade-animation;
+  }
+
+  &-leave {
+    opacity: 1;
+  }
+
+  &-leave-active {
+    @include d-overlay-fade-animation;
+
+    animation-direction: reverse;
+  }
+}
