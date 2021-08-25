@@ -1,16 +1,16 @@
-import {setActiveLink ,onScroll} from './util'
+import {setActiveLink ,onScroll ,randomId} from './util'
 export default  {
     // 滚动区域
     // 1.监听window滚动或滚动容器滚动，切换link+active,改变#
     // 2.
     // 当被绑定的元素挂载到 DOM 中时……
     mounted(el: HTMLElement):void {
-      setActiveLink();
-      window.addEventListener('scroll', onScroll);
+      const timeId = 'm'+randomId(8);
+  
       // 添加ng class名
       const classList   =  el.classList;
       console.error(classList)
-      classList.add('mycontainer','mymain');
+      classList.add('mycontainer','mymain', timeId);
         // 监听window
         let windoScrollTop;
         let toTheBottom = false;
@@ -29,40 +29,29 @@ export default  {
                 // 看不见 d-anchor-box区域
                 console.log('windoScrollTop > mysidebar.clientHeight滚动距离' + windoScrollTop);
                 toTheBottom = true;
-                // windoScrollTop-mysidebar.clientHeight
-                mysidebar.style.position = 'absolute';
-                mysidebar.style.top = div.clientHeight -mysidebarHeight-8 +  'px';
-                mysidebar.style.left ='0px';
-                console.log(2222222222)
+              
+                cssChange(mysidebar,'absolute', div.clientHeight -mysidebarHeight-8, 0)
               }else  if (windoScrollTop > div.offsetTop){
                 // 即将隐藏部分 box
                 toTheBottom = false;
-                mysidebar.style.position = 'fixed';
-                mysidebar.style.top = div.offsetTop+'px';
-                mysidebar.style.left = div.getBoundingClientRect().left+'px';
-                console.log(2222222222)
+               
+                cssChange(mysidebar,'fixed', div.offsetTop, div.getBoundingClientRect().left)
               }else if (div.offsetTop >=  windoScrollTop && windoScrollTop >= 0) {
                 // 刚开始滚动
                 toTheBottom = false;
-                mysidebar.style.position = 'absolute';
-                mysidebar.style.top =  '0px';
-                mysidebar.style.left =  '0px';
-                console.log(2222222222)
+              
+                cssChange(mysidebar,'absolute', 0, 0)
               }else {
                 // 
                 toTheBottom = true;
-                mysidebar.style.position = 'absolute';
-                mysidebar.style.top =  div.clientHeight - mysidebarHeight - 8 +  'px';
-                mysidebar.style.left = '0px';
-                console.log(2222222222)
+           
+                cssChange(mysidebar,'absolute', div.clientHeight - mysidebarHeight - 8, 0)
               }
           }else {
              // 刚开始滚动
-             toTheBottom = false;
-             mysidebar.style.position = 'absolute';
-             mysidebar.style.top = div.scrollTop+'px';
-             mysidebar.style.left =  '0px';
-            console.log(2222222222)
+            toTheBottom = false;
+ 
+            cssChange(mysidebar,'absolute', div.scrollTop, 0)
           }
           
         }
@@ -78,25 +67,26 @@ export default  {
             if((scrollTop + height) >= scrollHeight && toTheBottom) {
               console.log(scrollHeight,'到底了');
               console.log('window滚动距离' + windoScrollTop);
-              // mysidebar.style.position = 'absolute';
-              // mysidebar.style.top =  '0px';
-              // mysidebar.style.left =  '0px';
-              // mysidebar.style.height =  'auto';
+       
             } else if(document.getElementsByClassName('scrollTarget').length ){
-             
-              mysidebar.style.position = 'fixed';
-              mysidebar.style.top = div.getBoundingClientRect().top+'px';
-              mysidebar.style.left = div.getBoundingClientRect().left+'px';
-              // mysidebar.style.height = height+'px';
+            
+              cssChange(mysidebar,'fixed',div.getBoundingClientRect().top,div.getBoundingClientRect().left);
               console.log('div滚动距离' + scrollTop);
             }
        });
        
       //  监听window滚动或滚动容器滚动，切换link+active,改变#
-
+      setActiveLink(timeId);
+      window.addEventListener('scroll', onScroll);
     }
   };
 
+
+  const cssChange = (mysidebar:HTMLElement,postion:string,top:number,left:number) => {
+    mysidebar.style.position = postion;
+    mysidebar.style.top =  top+'px';
+    mysidebar.style.left = left+'px';
+  }
   const addEvent = (function(){
     if(window.addEventListener){
      return function(elm, type, handle){

@@ -69,13 +69,15 @@ export function hightLightFn(hashName:string):void {
 }
 let activeLink = null;
 let rootActiveLink = null;
-
-export const setActiveLink = ():void => {
-  const sidebarLinks = getSidebarLinks();
+const rootClassName = '';
+export const setActiveLink = (timeId:string):void => {
+ console.log(document.getElementsByClassName(timeId))
+  const sidebarLinks = getSidebarLinks(timeId);
   const anchors = getAnchors(sidebarLinks);
+  console.error(sidebarLinks,typeof sidebarLinks)
   for (let i = 0; i < anchors.length; i++) {
-      const anchor = anchors[i];
-      const nextAnchor = anchors[i + 1];
+      const anchor:HTMLAnchorElement = anchors[i];
+      const nextAnchor:HTMLAnchorElement = anchors[i + 1];
       const [isActive, hash] = isAnchorActive(i, anchor, nextAnchor);
       if (isActive) {
           history.replaceState(null, document.title, hash ? hash as string : ' ');
@@ -84,11 +86,29 @@ export const setActiveLink = ():void => {
       }
   }
 }
-
+function throttleAndDebounce(fn:any, delay:number):any {
+  let timeout:any;
+  let called = false;
+  return () => {
+      if (timeout) {
+          clearTimeout(timeout);
+      }
+      if (!called) {
+          fn();
+          called = true;
+          setTimeout(() => {
+              called = false;
+          }, delay);
+      }
+      else {
+          timeout = setTimeout(fn, delay);
+      }
+  };
+}
 export const onScroll = throttleAndDebounce(setActiveLink, 300);
 
 
-function activateLink(hash) {
+function activateLink(hash:string | boolean) {
   deactiveLink(activeLink);
   deactiveLink(rootActiveLink);
   activeLink = document.querySelector(`.sidebar a[href="${hash}"]`);
@@ -106,19 +126,19 @@ function activateLink(hash) {
       rootActiveLink = null;
   }
 }
-function deactiveLink(link) {
+function deactiveLink(link:HTMLElement):void {
   link && link.classList.remove('active');
 }
-function getPageOffset() {
+function getPageOffset():number {
   return (document.querySelector('.nav-bar') as HTMLElement).offsetHeight;
 }
 
-function getAnchorTop(anchor) {
+function getAnchorTop(anchor:HTMLAnchorElement):number {
   const pageOffset = getPageOffset();
   return anchor.parentElement.offsetTop - pageOffset - 15;
 }
 
-function isAnchorActive(index, anchor, nextAnchor) {
+function isAnchorActive(index:number, anchor:HTMLAnchorElement, nextAnchor:HTMLAnchorElement) {
   const scrollTop = window.scrollY;
   if (index === 0 && scrollTop === 0) {
       return [true, null];
@@ -132,33 +152,26 @@ function isAnchorActive(index, anchor, nextAnchor) {
   return [false, null];
 }
 
-function getSidebarLinks():Array<number> {
-  return [].slice.call(document.querySelectorAll('.sidebar a.sidebar-link-item'));
+function getSidebarLinks(rootClassName:string):Array<HTMLAnchorElement> {
+  // .step-nav > li.active, .step-nav > li:hover
+  console.log(`.${rootClassName} > .mysidebar > li.bar-link-item`,'__________________________')
+  return [].slice.call(document.querySelectorAll(`.${rootClassName} > .step-nav > li.bar-link-item`));
 }
 
-function getAnchors(sidebarLinks) {
+function getAnchors(sidebarLinks:Array<HTMLAnchorElement>):Array<HTMLAnchorElement> {
   return [].slice
       .call(document.querySelectorAll('.header-anchor'))
-      .filter((anchor) => sidebarLinks.some((sidebarLink) => sidebarLink.hash === anchor.hash));
+      .filter((anchor:HTMLAnchorElement) => sidebarLinks.some(( sidebarLink:HTMLAnchorElement  ) =>  sidebarLink.hash === anchor.hash ));
 }
 
-function throttleAndDebounce(fn, delay) {
-    let timeout;
-    let called = false;
-    return () => {
-        if (timeout) {
-            clearTimeout(timeout);
-        }
-        if (!called) {
-            fn();
-            called = true;
-            setTimeout(() => {
-                called = false;
-            }, delay);
-        }
-        else {
-            timeout = setTimeout(fn, delay);
-        }
-    };
+ 
+export const randomId = function(n=8):string { // 生成n位长度的字符串
+    const str = 'abcdefghijklmnopqrstuvwxyz0123456789'; // 可以作为常量放到random外面
+    let result = '';
+    for(let i = 0; i < n; i++) {
+        result += str[parseInt((Math.random() * str.length).toString())];
+    }
+    return result;
 }
+
 
