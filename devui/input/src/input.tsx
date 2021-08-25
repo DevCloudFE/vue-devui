@@ -1,6 +1,7 @@
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, inject, reactive } from 'vue';
 import { inputProps } from './use-input';
 import './input.scss'
+import mitt from 'mitt';
 
 export default defineComponent({
   name: 'DInput',
@@ -14,6 +15,7 @@ export default defineComponent({
         [sizeCls.value]: props.size !== ''
       }
     });
+    const formItem: any = reactive(inject('dFormItem'));
     const inputType = computed(() => props.showPassword ? 'password' : 'text');
     const onInput = ($event: Event) => {
       ctx.emit('update:value', ($event.target as HTMLInputElement).value);
@@ -23,6 +25,10 @@ export default defineComponent({
       },
       onBlur = () => {
         ctx.emit('blur');
+        formItem.formItemMitt.emit('d.form.inputBlur');
+        // console.log('formItem', formItem);
+        
+        
       },
       onChange = ($event: Event) => {
         ctx.emit('change', ($event.target as HTMLInputElement).value);

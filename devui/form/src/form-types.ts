@@ -7,7 +7,7 @@ export const formProps = {
   } */
   formData: {
     type: Object as PropType<{ key: ''; }>,
-    default: null
+    default: {}
   },
   layout: {
     type: String,
@@ -22,8 +22,8 @@ export const formProps = {
     default: 'start', // 'start' | 'center' | 'end'
   },
   rules: {
-    type: Object as PropType<{key: '';}>,
-    default: null, 
+    type: Array,
+    default: [], 
   },
 } as const
 
@@ -65,4 +65,5 @@ export interface IFormItem {
 export const dFormEvents = {
   addField: 'd.form.addField',
   removeField: 'd.form.removeField',
+  inputBlur: 'd.form.inputBlur',
 } as const

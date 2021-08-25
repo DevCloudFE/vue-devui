@@ -12,31 +12,31 @@
 
 <section>
   <d-form ref="dForm1" :form-data="formModel" labelSize="lg" labelAlign="end" layout="vertical" style="margin-top: 20px" @submit="onConfirm">
-    <d-form-item  cname="name" prop="name">
+    <d-form-item prop="name">
       <d-form-label :required="true" >Name</d-form-label>
       <d-form-control>
         <d-input v-model:value="formModel.name" />
       </d-form-control>
     </d-form-item>
-    <d-form-item cname="description" prop="description">
+    <d-form-item prop="description">
       <d-form-label>Description</d-form-label>
       <d-form-control>
         <d-input v-model:value="formModel.description" />
       </d-form-control>
     </d-form-item>
-    <d-form-item cname="select" prop="select">
+    <d-form-item prop="select">
       <d-form-label :required="true">Select</d-form-label>
       <d-form-control>
         <d-select v-model="formModel.select" :options="baseSelectOptions" placeholder="这是默认选择框"></d-select>
       </d-form-control>
     </d-form-item>
-    <d-form-item cname="multipleOptions" prop="multipleOptions">
+    <d-form-item prop="multipleOptions">
       <d-form-label>Multiple options</d-form-label>
       <d-form-control>
         <d-input v-model:value="formModel.multipleOptions" />
       </d-form-control>
     </d-form-item>
-    <d-form-item cname="tags" prop="tags">
+    <d-form-item prop="tags">
       <d-form-label>Tags</d-form-label>
       <d-form-control>
         <d-tag-input
@@ -48,7 +48,7 @@
         ></d-tag-input>
       </d-form-control>
     </d-form-item>
-    <d-form-item cname="radio" prop="radio">
+    <d-form-item prop="radio">
       <d-form-label>Radio</d-form-label>
       <d-form-control>
         <d-radio v-model="formModel.radio" value="0">
@@ -59,13 +59,13 @@
         </d-radio>
       </d-form-control>
     </d-form-item>
-    <d-form-item cname="switch" prop="switch">
+    <d-form-item prop="switch">
       <d-form-label>Switch</d-form-label>
       <d-form-control>
         <d-switch v-model:checked="formModel.switch"></d-switch>
       </d-form-control>
     </d-form-item>
-    <d-form-item cname="executionDay" prop="executionDay">
+    <d-form-item prop="executionDay">
       <d-form-label>Execution day</d-form-label>
       <d-form-control>
         <d-checkbox label="Checked" :isShowTitle="false" v-model:checked="formModel.executionDay"> </d-checkbox>
@@ -81,13 +81,13 @@
 ```html
 <section>
   <d-form ref="dForm1" :form-data="formModel" labelSize="lg" labelAlign="end" layout="vertical" style="margin-top: 20px" @submit="onConfirm">
-    <d-form-item  cname="username" prop="username">
+    <d-form-item prop="username">
       <d-form-label :required="true" >用户名</d-form-label>
       <d-form-control>
         <d-input v-model:value="formModel.username" />
       </d-form-control>
     </d-form-item>
-    <d-form-item dHasFeedback cname="password" prop="password">
+    <d-form-item dHasFeedback prop="password">
       <d-form-label :required="true">密码</d-form-label>
       <d-form-control>
         <d-input v-model:value="formModel.password" />

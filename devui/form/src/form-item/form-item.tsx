@@ -1,7 +1,8 @@
-import { defineComponent, reactive, inject, onMounted} from 'vue';
+import { defineComponent, reactive, inject, onMounted, provide} from 'vue';
 import { dFormEvents, IForm } from '../form-types';
 import './form-item.scss';
 import AsyncValidator, { Rules } from 'async-validator';
+import mitt from 'mitt';
 
 export default defineComponent({
 	name: 'DFormItem',
@@ -10,23 +11,17 @@ export default defineComponent({
 			type: Boolean,
 			default: false
 		},
-		cname: {
-			type: String,
-			default: 'd-form-item'
-		},
 		prop: {
 			type: String,
 			default: ''
 		}
 	},
 	setup(props, ctx) {
-
+		const formItemMitt = mitt();
 		const dForm: IForm = reactive(inject('dForm', {} as IForm));
 		const formData = reactive(dForm.formData);
 		const labelData = reactive(dForm.labelData);
 		const rules = reactive(dForm.rules);
-
-		
 		
 		const resetField = () => {
 			switch(typeof formData[props.prop]) {
@@ -51,16 +46,17 @@ export default defineComponent({
 
 		const formItem = reactive({
 			dHasFeedback: props.dHasFeedback,
-			cname: props.cname,
 			prop: props.prop,
+			formItemMitt,
 			resetField			
 		})
+		provide('dFormItem', formItem);
 
 		const isHorizontal = labelData.layout === 'horizontal';
 		const isVertical = labelData.layout === 'vertical';
 		const isColumns = labelData.layout === 'columns';
 
-		const nameField = rules.name;
+		const nameField = rules ? rules.name : [];
 
 		const descriptor: Rules = {
 			name: {
@@ -88,9 +84,10 @@ export default defineComponent({
 
 		onMounted(() => {
 			dForm.formMitt.emit(dFormEvents.addField, formItem);
-
-
-
+			dForm.formMitt.on('d.form.inputBlur', (e) => {
+				console.log('test-> form-item 监听输入框blur事件', e);
+				
+			});
 			validator.validate({ name: 'muji222'}).then(() => {
 				// validation passed or without error message
 				console.log('validator success');
@@ -99,8 +96,6 @@ export default defineComponent({
 				console.log('validator errors', errors);
 				console.log('validator fields', fields);
 				nameField && console.log('validator nameField', nameField[0].message);
-				
-				
 			});
 		})
 		return {
@@ -122,7 +117,6 @@ export default defineComponent({
 		return <div class={`form-item${isHorizontal ? '' : (isVertical ? ' form-item-vertical' : ' form-item-columns')} `}>
 				{this.$slots.default?.()}
 				<div>{rules.name && rules.name[0].message}</div>
-				
 			</div>
 	}
 })
