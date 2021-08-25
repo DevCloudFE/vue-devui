@@ -8,7 +8,7 @@ export default defineComponent({
   name: 'DForm',
   props: formProps,
   emits: ['submit'],
-  setup(props: FormProps, ctx) {
+  setup(props: FormProps) {
     const formMitt = mitt();
     const fields: IFormItem[] =  [];
     const resetFormFields = () => {
@@ -42,7 +42,8 @@ export default defineComponent({
         layout: props.layout,
         labelSize: props.labelSize,
         labelAlign: props.labelAlign,
-      }
+      },
+      rules: props.rules,
     });
 
     console.log('form props', props);

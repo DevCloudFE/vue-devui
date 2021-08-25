@@ -8,6 +8,8 @@
 
 ### 基础用法
 
+基本用法当中，Label是在数据框的上面。
+
 <section>
   <d-form ref="dForm1" :form-data="formModel" labelSize="lg" labelAlign="end" layout="vertical" style="margin-top: 20px" @submit="onConfirm">
     <d-form-item  cname="name" prop="name">
@@ -35,7 +37,7 @@
       </d-form-control>
     </d-form-item>
     <d-form-item cname="tags" prop="tags">
-      <d-form-label :required="true">Tags</d-form-label>
+      <d-form-label>Tags</d-form-label>
       <d-form-control>
         <d-tag-input
           v-model:tags="formModel.tags"
@@ -49,10 +51,10 @@
     <d-form-item cname="radio" prop="radio">
       <d-form-label>Radio</d-form-label>
       <d-form-control>
-        <d-radio v-model="formModel.radio" :value="formModel.radio">
+        <d-radio v-model="formModel.radio" value="0">
           男
         </d-radio>
-        <d-radio v-model="formModel.radio" :value="formModel.radio">
+        <d-radio v-model="formModel.radio" value="1">
           女
         </d-radio>
       </d-form-control>
@@ -60,13 +62,13 @@
     <d-form-item cname="switch" prop="switch">
       <d-form-label>Switch</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.switch" />
+        <d-switch v-model:checked="formModel.switch"></d-switch>
       </d-form-control>
     </d-form-item>
     <d-form-item cname="executionDay" prop="executionDay">
       <d-form-label>Execution day</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.executionDay" />
+        <d-checkbox label="Checked" :isShowTitle="false" v-model:checked="formModel.executionDay"> </d-checkbox>
       </d-form-control>
     </d-form-item>
     <d-form-operation style="display: flex;">
@@ -100,6 +102,8 @@
 ```
 
 ### 横向排列
+
+Label左右布局方式。
 
 <section>
 <d-form ref="dForm2" :form-data="formModel2" labelSize="lg" labelAlign="start" layout="horizontal" style="margin-top: 20px">
@@ -170,15 +174,35 @@
 多列表单。
 
 <section>
-<d-form style="margin-top: 20px">
-
+<d-form style="margin-top: 20px" layout="columns">
+  <div class="grid">
+    <div class="u-1-3" v-for="item in 10" :key="item">
+      <d-form-item prop="name">
+        <d-form-label :required="true" >Name</d-form-label>
+        <d-form-control class="form-control-width">
+          <d-input v-model:value="formModel.name" />
+        </d-form-control>
+      </d-form-item>
+    </div>
+  </div>
 </d-form>
 </section>
 
 
 ```html
 <section>
-<d-form></d-form>
+<d-form style="margin-top: 20px" layout="columns">
+  <div class="grid">
+    <div class="u-1-3" v-for="item in 10" :key="item">
+      <d-form-item prop="name">
+        <d-form-label :required="true" >Name</d-form-label>
+        <d-form-control class="form-control-width">
+          <d-input v-model:value="formModel.name" />
+        </d-form-control>
+      </d-form-item>
+    </div>
+  </div>
+</d-form>
 </section>
 ```
 
@@ -208,8 +232,13 @@
 模板中绑定formGroup、formControlName、formControl，使用dValidateRules配置校验规则。
 
 <section>
-<d-form style="margin-top: 20px">
-
+<d-form style="margin-top: 20px" :rules="rules">
+  <d-form-item prop="name">
+    <d-form-label :required="true" >Name</d-form-label>
+    <d-form-control>
+      <d-input v-model:value="formModel.name" />
+    </d-form-control>
+  </d-form-item>
 </d-form>
 </section>
 
@@ -305,9 +334,10 @@ export default defineComponent({
       select: '',
       multipleOptions: '',
       tags: [{name: 'Option1'}],
-      radio: '',
-      switch: '',
-      executionDay: 'Option1',
+      radio: 0,
+      radio2: 1,
+      switch: false,
+      executionDay: true,
     });
 
     let formModel2: IFormModel = reactive({
@@ -362,7 +392,11 @@ export default defineComponent({
       {name: 'Option1'},
       {name: 'Option2'},
       {name: 'Option3'},
-    ])
+    ]);
+
+    const rules = reactive({
+      name: [{ required: true, message: '不能为空', trigger: 'blur'}]
+    })
 
     return {
       formModel,
@@ -376,7 +410,27 @@ export default defineComponent({
       dForm2,
       baseSelectOptions,
       suggestionList,
+      rules,
     }
   }
 })
 </script>
+
+<style lang="scss">
+
+.grid {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+
+  .u-1-3 {
+    width: 33.3%
+  }
+
+  .form-control-width {
+    width: 160px;
+  }
+}
+
+</style>
+
