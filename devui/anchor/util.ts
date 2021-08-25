@@ -69,12 +69,13 @@ export function hightLightFn(hashName:string):void {
 }
 let activeLink = null;
 let rootActiveLink = null;
-const rootClassName = '';
+let rootClassName = '';
 export const setActiveLink = (timeId:string):void => {
- console.log(document.getElementsByClassName(timeId))
-  const sidebarLinks = getSidebarLinks(timeId);
+  rootClassName = timeId;
+ console.log(document.getElementsByClassName(rootClassName))
+  const sidebarLinks = getSidebarLinks(rootClassName);
   const anchors = getAnchors(sidebarLinks);
-  console.error(sidebarLinks,typeof sidebarLinks)
+  console.error(sidebarLinks,anchors)
   for (let i = 0; i < anchors.length; i++) {
       const anchor:HTMLAnchorElement = anchors[i];
       const nextAnchor:HTMLAnchorElement = anchors[i + 1];
@@ -155,12 +156,12 @@ function isAnchorActive(index:number, anchor:HTMLAnchorElement, nextAnchor:HTMLA
 function getSidebarLinks(rootClassName:string):Array<HTMLAnchorElement> {
   // .step-nav > li.active, .step-nav > li:hover
   console.log(`.${rootClassName} > .mysidebar > li.bar-link-item`,'__________________________')
-  return [].slice.call(document.querySelectorAll(`.${rootClassName} > .step-nav > li.bar-link-item`));
+  return [].slice.call(document.querySelectorAll(`.${rootClassName} > .step-nav > li.bar-link-item > a`));
 }
 
 function getAnchors(sidebarLinks:Array<HTMLAnchorElement>):Array<HTMLAnchorElement> {
   return [].slice
-      .call(document.querySelectorAll('.header-anchor'))
+      .call(document.querySelectorAll('.d-d-anchor'))
       .filter((anchor:HTMLAnchorElement) => sidebarLinks.some(( sidebarLink:HTMLAnchorElement  ) =>  sidebarLink.hash === anchor.hash ));
 }
 

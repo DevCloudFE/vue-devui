@@ -17,7 +17,7 @@ export default  {
         console.log(parent,'link-insert' )
       }
       el.className = 'bar-link-item'
-      el.innerHTML += '<a style="display:none" href="'+binding.value+'">?</a>'
+      el.innerHTML += '<a class="d-d-anchor" style="display:none" href="'+binding.value+'">?</a>'
        
       
       el.setAttribute('id', binding.value)

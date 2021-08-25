@@ -5,6 +5,7 @@ export function useActiveSidebarLinks() {
     const onScroll = throttleAndDebounce(setActiveLink, 300);
     function setActiveLink() {
         const sidebarLinks = getSidebarLinks();
+        console.log(sidebarLinks,"sidebarLinks_________________")
         const anchors = getAnchors(sidebarLinks);
         for (let i = 0; i < anchors.length; i++) {
             const anchor = anchors[i];
