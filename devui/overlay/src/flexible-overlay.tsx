@@ -1,21 +1,21 @@
-import { ComponentPublicInstance, CSSProperties, defineComponent, getCurrentInstance, isRef, nextTick, onBeforeUnmount, onMounted, reactive, ref, Ref, renderSlot, toRef, watch } from 'vue';
+import { ComponentPublicInstance, CSSProperties, defineComponent, getCurrentInstance, isRef, nextTick, onBeforeUnmount, onMounted, PropType, reactive, ref, Ref, renderSlot, toRef, watch } from 'vue';
 import { CommonOverlay } from './common-overlay';
 import { overlayProps } from './overlay-types';
 import { useOverlayLogic } from './utils';
 
 
 /**
- * 
+ * 弹性的 Overlay，用于连接固定的和相对点
  */
 export const FlexibleOverlay = defineComponent({
   name: 'DFlexibleOverlay',
   props: {
     origin: {
-      type: Object as () => OriginOrDomRef,
+      type: Object as PropType<OriginOrDomRef>,
       require: true
     },
     position: {
-      type: Object as () => ConnectionPosition,
+      type: Object as PropType<ConnectionPosition>,
       default: () => ({ originX: 'left', originY: 'top', overlayX: 'left', overlayY: 'top' })
     },
     ...overlayProps
@@ -86,7 +86,6 @@ export const FlexibleOverlay = defineComponent({
 
     const { containerClass, panelClass, handleBackdropClick } = useOverlayLogic(props);
 
-
     return () => (
       <CommonOverlay>
         <div
@@ -113,6 +112,11 @@ export const FlexibleOverlay = defineComponent({
   }
 });
 
+/**
+ * 提取 Vue Intance 中的元素，如果本身就是元素，直接返回。
+ * @param {any} element 
+ * @returns 
+ */
 function getElement(element: Element | { $el: Element; } | null): Element | null {
   if (element instanceof Element) {
     return element;
@@ -160,6 +164,11 @@ interface ConnectionPosition {
   overlayY: VerticalConnectionPos
 }
 
+/**
+ * 获取原点，可能是 Element 或者 Rect
+ * @param {OriginOrDomRef} origin 
+ * @returns {Origin}
+ */
 function getOrigin(origin: OriginOrDomRef): Origin {
   // Check for Element so SVG elements are also supported.
   if (origin instanceof Element) {
@@ -174,13 +183,19 @@ function getOrigin(origin: OriginOrDomRef): Origin {
   return origin;
 }
 
-
+/**
+ * 计算坐标系
+ * @param {ConnectionPosition} position  
+ * @param {HTMLElement | DOMRect} panelOrRect 
+ * @param {Origin} origin 
+ * @returns 
+ */
 function calculatePosition(position: ConnectionPosition, panelOrRect: HTMLElement | DOMRect, origin: Origin): Point {
   // get overlay rect
   const originRect = getOriginRect(origin);
 
   // calculate the origin point
-  const originPoint = getOriginPoint(originRect, position);
+  const originPoint = getOriginRelativePoint(originRect, position);
 
   let rect: DOMRect;
   if (panelOrRect instanceof HTMLElement) {
@@ -194,7 +209,11 @@ function calculatePosition(position: ConnectionPosition, panelOrRect: HTMLElemen
 }
 
 
-/** Returns the ClientRect of the current origin. */
+/**
+ * 返回原点元素的 ClientRect
+ * @param origin 
+ * @returns {ClientRect}
+ */
 function getOriginRect(origin: Origin): ClientRect {
   if (origin instanceof Element) {
     return origin.getBoundingClientRect();
@@ -215,7 +234,13 @@ function getOriginRect(origin: Origin): ClientRect {
 }
 
 
-
+/**
+ * 获取浮层的左上角坐标
+ * @param {Point} originPoint 
+ * @param {DOMRect} rect 
+ * @param {ConnectionPosition} position 
+ * @returns 
+ */
 function getOverlayPoint(originPoint: Point, rect: DOMRect, position: ConnectionPosition): Point {
   let x: number;
   const { width, height } = rect;
@@ -237,9 +262,12 @@ function getOverlayPoint(originPoint: Point, rect: DOMRect, position: Connection
 
 
 /**
- * Gets the (x, y) coordinate of a connection point on the origin based on a relative position.
+ * 获取原点相对于 position 的坐标 (x, y) 
+ * @param originRect 
+ * @param position 
+ * @returns 
  */
-function getOriginPoint(originRect: ClientRect, position: ConnectionPosition): Point {
+function getOriginRelativePoint(originRect: ClientRect, position: ConnectionPosition): Point {
   let x: number;
   if (position.originX == 'center') {
     x = originRect.left + (originRect.width / 2);
@@ -259,13 +287,21 @@ function getOriginPoint(originRect: ClientRect, position: ConnectionPosition): P
   return { x, y };
 }
 
-const subscribeLayoutEvent = (event: (e?: Event) => void) => {
+/**
+ * 订阅 layout 变化事件
+ * @param event 
+ */
+function subscribeLayoutEvent(event: (e?: Event) => void) {
   window.addEventListener('scroll', event, true);
   window.addEventListener('resize', event);
   window.addEventListener('orientationchange', event);
-};
+}
 
-const unsbscribeLayoutEvent = (event: (e?: Event) => void) => {
+/**
+ * 取消 layout 变化事件
+ * @param event 
+ */
+function unsbscribeLayoutEvent(event: (e?: Event) => void) {
   window.removeEventListener('scroll', event, true);
   window.removeEventListener('resize', event);
   window.removeEventListener('orientationchange', event);

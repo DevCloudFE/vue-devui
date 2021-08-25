@@ -10,14 +10,15 @@ export const FixedOverlay = defineComponent({
   name: 'DFixedOverlay',
   props: {
     ...overlayProps,
-    wrapperStyle: {
+    overlayStyle: {
       type: Object as PropType<CSSProperties>
     },
   },
   setup(props, ctx) {
     const { containerClass, panelClass, handleBackdropClick } = useOverlayLogic(props);
+
     const overlayRef = ref<HTMLDivElement | null>(null);
-    const positionedStyle = reactive<CSSProperties>({ position: 'absolute' });
+    const handleBubbleCancel = (event: Event) => event.cancelBubble = true;
 
     return () => (
       <CommonOverlay>
@@ -33,8 +34,8 @@ export const FixedOverlay = defineComponent({
             <div
               ref={overlayRef}
               class="d-overlay"
-              style={props.wrapperStyle}
-              onClick={event => event.cancelBubble = true}
+              style={props.overlayStyle}
+              onClick={handleBubbleCancel}
             >
               {renderSlot(ctx.slots, 'default')}
             </div>

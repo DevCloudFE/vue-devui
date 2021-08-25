@@ -2,7 +2,7 @@
 
 ### 固定浮层
 <d-button @click="() => fixedVisible = !fixedVisible">{{fixedVisible ? '隐藏' : '显示固定浮层' }}</d-button>
-<d-fixed-overlay v-model:visible="fixedVisible" wrapperClass="justify-center items-center">
+<d-fixed-overlay v-model:visible="fixedVisible" wrapperClass="justify-center items-center" backgroundBlock>
   <div style="height: 100px; width: 100px; background: red;">hello world</div>
 </d-fixed-overlay>
 
@@ -38,38 +38,38 @@ export default defineComponent({
 })
 </script>
 <style>
-flex {
+.display-flex {
   display: flex;
 }
-items-center {
+.items-center {
   align-items: center;
 }
 
-justify-center {
+.justify-center {
   justify-content: center;
 }
 
-h-100 {
+.h-100 {
   height: 100px;
 }
 
-w-100 {
+.w-100 {
   width: 100px;
 }
 
-text-white {
+.text-white {
   color: white;
 }
 
-bg-gray {
+.bg-gray {
   background: gray;
 }
 
-h-1000 {
+.h-1000 {
   height: 1000px;
 }
 
-w-full {
+.w-full {
   width: 100%;
 }
 

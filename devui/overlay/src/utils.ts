@@ -1,7 +1,13 @@
-import { onUnmounted, watch, computed } from 'vue';
+import { onUnmounted, watch, computed, ComputedRef } from 'vue';
 import { OverlayProps } from './overlay-types';
 
-export function useOverlayLogic(props: OverlayProps) {
+interface CommonInfo {
+  containerClass: ComputedRef<string[]>
+  panelClass: ComputedRef<string[]>
+  handleBackdropClick: (e: Event) => void
+}
+
+export function useOverlayLogic(props: OverlayProps): CommonInfo {
   const containerClass = computed(() => {
     if (props.hasBackdrop) {
       return ['d-overlay-container', props.backgroundClass];
