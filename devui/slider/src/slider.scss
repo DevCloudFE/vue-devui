@@ -1,0 +1,77 @@
+@import '../../style/mixins/index';
+@import '../../style/theme/color';
+@import '../../style/theme/shadow';
+@import '../../style/theme/corner';
+@import '../../style/theme/font';
+
+.devui-slider {
+  position: relative;
+  width: 70%;
+  display: block;
+  //
+  .devui-slider__runway {
+    position: relative;
+    width: 100%;
+    padding: 4px 0;
+    margin: 4px 0;
+    cursor: pointer;
+    box-sizing: border-box;
+    height: 5px;
+    display: flex;
+    align-items: center;
+    background-color: $devui-default-bg;
+
+    .devui-slider__bar {
+      height: 6px;
+      background-color: $devui-default-line;
+      border-top-left-radius: $devui-border-radius;
+      border-bottom-left-radius: $devui-border-radius;
+      position: absolute;
+    }
+
+    .devui-slider__button {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border: 2px solid $devui-default-line;
+      background-color: $devui-default-bg;
+      border-radius: 50%;
+      margin-left: -7px;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .devui-slider__button:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  .devui-min_count {
+    position: absolute;
+    top: 15px;
+    font-size: $devui-font-size;
+    color: $devui-text;
+    font-family: HuaweiFont, Helvetica, Arial, PingFangSC-Regular, Hiragino Sans GB, Microsoft YaHei, 微软雅黑, Microsoft JhengHei;
+  }
+
+  .devui-max_count {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    font-size: $devui-font-size;
+    color: $devui-text;
+    font-family: HuaweiFont, Helvetica, Arial, PingFangSC-Regular, Hiragino Sans GB, Microsoft YaHei, 微软雅黑, Microsoft JhengHei;
+  }
+
+  .devui-input__wrap {
+    position: absolute;
+    right: -60px;
+    top: -12px;
+    padding: 5px 10px;
+    cursor: text;
+    margin-left: 20px;
+
+    input {
+      width: 40px;
+    }
+  }
+}
