@@ -6,7 +6,7 @@ export default  {
     // 当被绑定的元素挂载到 DOM 中时……
     mounted(el: HTMLElement):void {
       const timeId = 'm'+randomId(8);
-  
+      el.id = timeId;
       // 添加ng class名
       const classList   =  el.classList;
       console.error(classList)
@@ -77,7 +77,10 @@ export default  {
        
       //  监听window滚动或滚动容器滚动，切换link+active,改变#
       setActiveLink(timeId);
-      window.addEventListener('scroll', onScroll);
+      document.getElementsByClassName('scrollTarget').length 
+          ? addEvent(div,'scroll', onScroll) 
+          : window.addEventListener('scroll', onScroll)
+      
     }
   };
 

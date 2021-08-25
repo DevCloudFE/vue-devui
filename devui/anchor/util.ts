@@ -71,8 +71,9 @@ let activeLink = null;
 let rootActiveLink = null;
 let rootClassName = '';
 export const setActiveLink = (timeId:string):void => {
-  rootClassName = timeId;
- console.log(document.getElementsByClassName(rootClassName))
+  timeId ? rootClassName = timeId : rootClassName = document.getElementsByClassName('mymain')[0].id
+  console.log(document.getElementsByClassName('mymain')[0].id)
+  console.log(document.getElementsByClassName(rootClassName))
   const sidebarLinks = getSidebarLinks(rootClassName);
   const anchors = getAnchors(sidebarLinks);
   console.error(sidebarLinks,anchors)
@@ -80,6 +81,7 @@ export const setActiveLink = (timeId:string):void => {
       const anchor:HTMLAnchorElement = anchors[i];
       const nextAnchor:HTMLAnchorElement = anchors[i + 1];
       const [isActive, hash] = isAnchorActive(i, anchor, nextAnchor);
+      console.log(hash,'hash______________________________')
       if (isActive) {
           history.replaceState(null, document.title, hash ? hash as string : ' ');
           activateLink(hash);
@@ -140,10 +142,14 @@ function getAnchorTop(anchor:HTMLAnchorElement):number {
 }
 
 function isAnchorActive(index:number, anchor:HTMLAnchorElement, nextAnchor:HTMLAnchorElement) {
-  const scrollTop = window.scrollY;
+  let scrollTop:number;
+  document.getElementsByClassName('scrollTarget').length 
+    ?  scrollTop = document.getElementsByClassName('scrollTarget')[0].scrollTop
+    :  scrollTop = window.scrollY
   if (index === 0 && scrollTop === 0) {
       return [true, null];
   }
+  console.log(getAnchorTop(anchor),anchor,'getAnchorTop(anchor)???????????????????')
   if (scrollTop < getAnchorTop(anchor)) {
       return [false, null];
   }
