@@ -9,6 +9,6 @@ export const CommonOverlay = defineComponent({
           {renderSlot(ctx.slots, 'default')}
         </Transition>
       </Teleport>
-    )
-  }
+    );
+  },
 });

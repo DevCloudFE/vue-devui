@@ -38,7 +38,7 @@ export default defineComponent({
 })
 </script>
 <style>
-.display-flex {
+.flex {
   display: flex;
 }
 .items-center {

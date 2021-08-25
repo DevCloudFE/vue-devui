@@ -1,8 +1,23 @@
-import { ComponentPublicInstance, CSSProperties, defineComponent, getCurrentInstance, isRef, nextTick, onBeforeUnmount, onMounted, PropType, reactive, ref, Ref, renderSlot, toRef, watch } from 'vue';
+import {
+  ComponentPublicInstance,
+  CSSProperties,
+  defineComponent,
+  getCurrentInstance,
+  isRef,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  PropType,
+  reactive,
+  ref,
+  Ref,
+  renderSlot,
+  toRef,
+  watch,
+} from 'vue';
 import { CommonOverlay } from './common-overlay';
 import { overlayProps } from './overlay-types';
 import { useOverlayLogic } from './utils';
-
 
 /**
  * 弹性的 Overlay，用于连接固定的和相对点
@@ -12,13 +27,18 @@ export const FlexibleOverlay = defineComponent({
   props: {
     origin: {
       type: Object as PropType<OriginOrDomRef>,
-      require: true
+      require: true,
     },
     position: {
       type: Object as PropType<ConnectionPosition>,
-      default: () => ({ originX: 'left', originY: 'top', overlayX: 'left', overlayY: 'top' })
+      default: () => ({
+        originX: 'left',
+        originY: 'top',
+        overlayX: 'left',
+        overlayY: 'top',
+      }),
     },
-    ...overlayProps
+    ...overlayProps,
   },
   emits: ['onUpdate:visible'],
   setup(props, ctx) {
@@ -46,11 +66,12 @@ export const FlexibleOverlay = defineComponent({
         const point = calculatePosition(props.position, rect, origin);
 
         // set the current position style's value.
-        // the current position style is a 'ref'. 
+        // the current position style is a 'ref'.
         positionedStyle.left = `${point.x}px`;
         positionedStyle.top = `${point.y}px`;
       };
-      const handleChange = () => handleRectChange(overlay.getBoundingClientRect());
+      const handleChange = () =>
+        handleRectChange(overlay.getBoundingClientRect());
 
       watch(toRef(props, 'visible'), (visible, ov, onInvalidate) => {
         if (visible) {
@@ -84,49 +105,59 @@ export const FlexibleOverlay = defineComponent({
       }
     }, instance);
 
-    const { containerClass, panelClass, handleBackdropClick } = useOverlayLogic(props);
+    const { containerClass, panelClass, handleBackdropClick } =
+      useOverlayLogic(props);
 
     return () => (
       <CommonOverlay>
-        <div
-          v-show={props.visible}
-          class={containerClass}
-        >
+        <div v-show={props.visible} class={containerClass}>
           <div
             class={panelClass}
-            style={{ position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh', display: 'flex' }}
+            style={{
+              position: 'fixed',
+              top: '0',
+              left: '0',
+              width: '100vw',
+              height: '100vh',
+              display: 'flex',
+            }}
             onClick={handleBackdropClick}
           >
             <div
               ref={overlayRef}
               class="d-overlay"
               style={positionedStyle}
-              onClick={event => event.cancelBubble = true}
+              onClick={(event) => (event.cancelBubble = true)}
             >
               {renderSlot(ctx.slots, 'default')}
             </div>
           </div>
         </div>
       </CommonOverlay>
-    )
-  }
+    );
+  },
 });
 
 /**
  * 提取 Vue Intance 中的元素，如果本身就是元素，直接返回。
- * @param {any} element 
- * @returns 
+ * @param {any} element
+ * @returns
  */
-function getElement(element: Element | { $el: Element; } | null): Element | null {
+function getElement(
+  element: Element | { $el: Element; } | null
+): Element | null {
   if (element instanceof Element) {
     return element;
   }
-  if (element && typeof element === 'object' && element.$el instanceof Element) {
+  if (
+    element &&
+    typeof element === 'object' &&
+    element.$el instanceof Element
+  ) {
     return element.$el;
   }
   return null;
 }
-
 
 interface ClientRect {
   bottom: number
@@ -149,8 +180,10 @@ interface Rect {
   height?: number
 }
 
-
-type OriginOrDomRef = Element | Ref<ComponentPublicInstance | Element | undefined | null> | Rect;
+type OriginOrDomRef =
+  | Element
+  | Ref<ComponentPublicInstance | Element | undefined | null>
+  | Rect;
 
 type Origin = Element | Rect;
 
@@ -166,7 +199,7 @@ interface ConnectionPosition {
 
 /**
  * 获取原点，可能是 Element 或者 Rect
- * @param {OriginOrDomRef} origin 
+ * @param {OriginOrDomRef} origin
  * @returns {Origin}
  */
 function getOrigin(origin: OriginOrDomRef): Origin {
@@ -185,12 +218,16 @@ function getOrigin(origin: OriginOrDomRef): Origin {
 
 /**
  * 计算坐标系
- * @param {ConnectionPosition} position  
- * @param {HTMLElement | DOMRect} panelOrRect 
- * @param {Origin} origin 
- * @returns 
+ * @param {ConnectionPosition} position
+ * @param {HTMLElement | DOMRect} panelOrRect
+ * @param {Origin} origin
+ * @returns
  */
-function calculatePosition(position: ConnectionPosition, panelOrRect: HTMLElement | DOMRect, origin: Origin): Point {
+function calculatePosition(
+  position: ConnectionPosition,
+  panelOrRect: HTMLElement | DOMRect,
+  origin: Origin
+): Point {
   // get overlay rect
   const originRect = getOriginRect(origin);
 
@@ -208,10 +245,9 @@ function calculatePosition(position: ConnectionPosition, panelOrRect: HTMLElemen
   return getOverlayPoint(originPoint, rect, position);
 }
 
-
 /**
  * 返回原点元素的 ClientRect
- * @param origin 
+ * @param origin
  * @returns {ClientRect}
  */
 function getOriginRect(origin: Origin): ClientRect {
@@ -229,48 +265,53 @@ function getOriginRect(origin: Origin): ClientRect {
     left: origin.x,
     right: origin.x + width,
     height,
-    width
+    width,
   };
 }
 
-
 /**
  * 获取浮层的左上角坐标
- * @param {Point} originPoint 
- * @param {DOMRect} rect 
- * @param {ConnectionPosition} position 
- * @returns 
+ * @param {Point} originPoint
+ * @param {DOMRect} rect
+ * @param {ConnectionPosition} position
+ * @returns
  */
-function getOverlayPoint(originPoint: Point, rect: DOMRect, position: ConnectionPosition): Point {
+function getOverlayPoint(
+  originPoint: Point,
+  rect: DOMRect,
+  position: ConnectionPosition
+): Point {
   let x: number;
   const { width, height } = rect;
   if (position.overlayX == 'center') {
     x = originPoint.x - width / 2;
   } else {
-    x = position.overlayX == 'left' ? originPoint.x : (originPoint.x - width);
+    x = position.overlayX == 'left' ? originPoint.x : originPoint.x - width;
   }
 
   let y: number;
   if (position.overlayY == 'center') {
-    y = originPoint.y - (height / 2);
+    y = originPoint.y - height / 2;
   } else {
-    y = position.overlayY == 'top' ? originPoint.y : (originPoint.y - height);
+    y = position.overlayY == 'top' ? originPoint.y : originPoint.y - height;
   }
 
   return { x, y };
 }
 
-
 /**
- * 获取原点相对于 position 的坐标 (x, y) 
- * @param originRect 
- * @param position 
- * @returns 
+ * 获取原点相对于 position 的坐标 (x, y)
+ * @param originRect
+ * @param position
+ * @returns
  */
-function getOriginRelativePoint(originRect: ClientRect, position: ConnectionPosition): Point {
+function getOriginRelativePoint(
+  originRect: ClientRect,
+  position: ConnectionPosition
+): Point {
   let x: number;
   if (position.originX == 'center') {
-    x = originRect.left + (originRect.width / 2);
+    x = originRect.left + originRect.width / 2;
   } else {
     const startX = originRect.left;
     const endX = originRect.right;
@@ -279,7 +320,7 @@ function getOriginRelativePoint(originRect: ClientRect, position: ConnectionPosi
 
   let y: number;
   if (position.originY == 'center') {
-    y = originRect.top + (originRect.height / 2);
+    y = originRect.top + originRect.height / 2;
   } else {
     y = position.originY == 'top' ? originRect.top : originRect.bottom;
   }
@@ -289,7 +330,7 @@ function getOriginRelativePoint(originRect: ClientRect, position: ConnectionPosi
 
 /**
  * 订阅 layout 变化事件
- * @param event 
+ * @param event
  */
 function subscribeLayoutEvent(event: (e?: Event) => void) {
   window.addEventListener('scroll', event, true);
@@ -299,7 +340,7 @@ function subscribeLayoutEvent(event: (e?: Event) => void) {
 
 /**
  * 取消 layout 变化事件
- * @param event 
+ * @param event
  */
 function unsbscribeLayoutEvent(event: (e?: Event) => void) {
   window.removeEventListener('scroll', event, true);
