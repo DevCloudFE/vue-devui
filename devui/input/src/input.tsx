@@ -15,7 +15,7 @@ export default defineComponent({
         [sizeCls.value]: props.size !== ''
       }
     });
-    const formItem: any = reactive(inject('dFormItem'));
+    const formItem: any = inject('dFormItem');
     const inputType = computed(() => props.showPassword ? 'password' : 'text');
     const onInput = ($event: Event) => {
       ctx.emit('update:value', ($event.target as HTMLInputElement).value);
@@ -26,7 +26,9 @@ export default defineComponent({
       onBlur = () => {
         ctx.emit('blur');
         formItem.formItemMitt.emit('d.form.inputBlur');
-        // console.log('formItem', formItem);
+        console.log('formItem', formItem);
+        console.log('test-> input blur');
+        
         
         
       },

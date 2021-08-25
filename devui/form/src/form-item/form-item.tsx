@@ -84,7 +84,7 @@ export default defineComponent({
 
 		onMounted(() => {
 			dForm.formMitt.emit(dFormEvents.addField, formItem);
-			dForm.formMitt.on('d.form.inputBlur', (e) => {
+			formItem.formItemMitt.on('d.form.inputBlur', (e) => {
 				console.log('test-> form-item 监听输入框blur事件', e);
 				
 			});
