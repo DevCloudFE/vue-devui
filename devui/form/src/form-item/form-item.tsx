@@ -1,4 +1,4 @@
-import { defineComponent, reactive, inject, onMounted, provide} from 'vue';
+import { defineComponent, reactive, inject, onMounted, provide, ref} from 'vue';
 import { dFormEvents, IForm } from '../form-types';
 import './form-item.scss';
 import AsyncValidator, { Rules } from 'async-validator';
@@ -22,6 +22,10 @@ export default defineComponent({
 		const formData = reactive(dForm.formData);
 		const labelData = reactive(dForm.labelData);
 		const rules = reactive(dForm.rules);
+
+		rules.name && console.log('test-> formData', formData);
+		// console.log('test-> rules', rules);
+		
 		
 		const resetField = () => {
 			switch(typeof formData[props.prop]) {
@@ -57,66 +61,71 @@ export default defineComponent({
 		const isColumns = labelData.layout === 'columns';
 
 		const nameField = rules ? rules.name : [];
+		const showMessage = ref(false);
 
 		const descriptor: Rules = {
 			name: {
 				type: 'string',
 				required: true,
-				validator: (rule, value) => value === 'muji',
+				validator: (rule, value) => value.length !== 0,
 			},
 			age: {
 				type: 'number',
-				asyncValidator: (rule, value) => {
-					return new Promise((resolve, reject) => {
-						if (value < 18) {
-							reject('too young');  // reject with error message
-						} else {
-							resolve(value);
-						}
-					});
-				},
+				validator: (rule, value) => value > 0,
+				// asyncValidator: (rule, value) => {
+				// 	return new Promise((resolve, reject) => {
+				// 		if (value < 18) {
+				// 			reject('too young');  // reject with error message
+				// 		} else {
+				// 			resolve(value);
+				// 		}
+				// 	});
+				// },
 			},
 		};
-
-		rules.name && console.log('test-> form-item rules toRefs', rules.name[0].message);
 
 		const validator = new AsyncValidator(descriptor);
 
 		onMounted(() => {
 			dForm.formMitt.emit(dFormEvents.addField, formItem);
-			formItem.formItemMitt.on('d.form.inputBlur', (e) => {
-				console.log('test-> form-item 监听输入框blur事件', e);
-				
-			});
-			validator.validate({ name: 'muji222'}).then(() => {
-				// validation passed or without error message
-				console.log('validator success');
 
-			}).catch(({ errors, fields }) => {
-				console.log('validator errors', errors);
-				console.log('validator fields', fields);
-				nameField && console.log('validator nameField', nameField[0].message);
+			props.prop && rules && formItem.formItemMitt.on('d.form.inputBlur', (e) => {
+				validator.validate({ ...formData }).then(() => {
+					// validation passed or without error message
+					console.log('validator success');
+					showMessage.value = false;
+	
+				}).catch(({ errors, fields }) => {
+					console.log('validator errors', errors);
+					console.log('validator fields', fields);
+					showMessage.value = true;
+				});
 			});
+
 		})
 		return {
 			isHorizontal,
 			isVertical,
 			isColumns,
 			resetField,
-			rules
+			rules,
+			showMessage
 		}
 	},
 
-	render() {
+	render(props) {
+		console.log('props', props);
+		
 		const {
 			isHorizontal,
 			isVertical,
 			isColumns,
 			rules,
+			showMessage,
 		} = this;
 		return <div class={`form-item${isHorizontal ? '' : (isVertical ? ' form-item-vertical' : ' form-item-columns')} `}>
 				{this.$slots.default?.()}
-				<div>{rules.name && rules.name[0].message}</div>
+				<div>{showMessage && rules[props.prop] && rules[props.prop][0].message}</div>
 			</div>
 	}
 })

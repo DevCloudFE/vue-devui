@@ -8,7 +8,7 @@ export default defineComponent({
 	},
 	setup(props, ctx) {
 		const dForm = inject('dForm', {});
-		console.log('form-control dForm', dForm);
+		// console.log('form-control dForm', dForm);
 		
 		return () => {
 			return <div class="form-control">

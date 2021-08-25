@@ -12,26 +12,26 @@ export default defineComponent({
     const formMitt = mitt();
     const fields: IFormItem[] =  [];
     const resetFormFields = () => {
-      console.log('resetFormFields fields', fields);
+      // console.log('resetFormFields fields', fields);
       fields.forEach((field: IFormItem) => {
-        console.log('resetFormFields field', field);
+        // console.log('resetFormFields field', field);
         field.resetField();
       })
     }
 
     formMitt.on(dFormEvents.addField, (field: any) => {
-      console.log('dFormEvents.addField field', field);
+      // console.log('dFormEvents.addField field', field);
 
       if(field) {
         fields.push(field);
       }
 
-      console.log('dFormEvents.addField fields', fields);
+      // console.log('dFormEvents.addField fields', fields);
 
     })
 
     formMitt.on(dFormEvents.removeField, field => {
-      console.log('dFormEvents.removeField field', field);
+      // console.log('dFormEvents.removeField field', field);
       
     })
     
@@ -46,7 +46,7 @@ export default defineComponent({
       rules: props.rules,
     });
 
-    console.log('form props', props);
+    // console.log('form props', props);
     
     return {
       formMitt,

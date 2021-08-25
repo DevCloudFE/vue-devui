@@ -232,11 +232,17 @@ Label左右布局方式。
 模板中绑定formGroup、formControlName、formControl，使用dValidateRules配置校验规则。
 
 <section>
-<d-form style="margin-top: 20px" :rules="rules">
+<d-form :form-data="validateFormModel" style="margin-top: 20px" :rules="rules">
   <d-form-item prop="name">
     <d-form-label :required="true" >Name</d-form-label>
     <d-form-control>
-      <d-input v-model:value="formModel.name" />
+      <d-input v-model:value="validateFormModel.name" />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="age">
+    <d-form-label :required="true" >Age</d-form-label>
+    <d-form-control>
+      <d-input v-model:value="validateFormModel.age" />
     </d-form-control>
   </d-form-item>
 </d-form>
@@ -344,15 +350,20 @@ export default defineComponent({
       username: 'haha2'
     });
 
-    console.log('form formModel', formModel);
+    let validateFormModel: IFormModel = reactive({
+      name: 'AlanLee97',
+      age: 24,
+    });
+
+    // console.log('form formModel', formModel);
 
     const dForm1 = ref(null);
     const dForm2 = ref(null);
 
 
     onMounted(() => {
-      console.log('dForm1', dForm1.value);
-      console.log('dForm2', dForm2.value);
+      // console.log('dForm1', dForm1.value);
+      // console.log('dForm2', dForm2.value);
 
     });
 
@@ -395,7 +406,9 @@ export default defineComponent({
     ]);
 
     const rules = reactive({
-      name: [{ required: true, message: '不能为空', trigger: 'blur'}]
+      name: [{ required: true, message: '不能为空', trigger: 'blur'}],
+      age: [{ required: true, message: '年龄不能小于0', trigger: 'blur'}],
+
     })
 
     return {
@@ -411,6 +424,7 @@ export default defineComponent({
       baseSelectOptions,
       suggestionList,
       rules,
+      validateFormModel,
     }
   }
 })
