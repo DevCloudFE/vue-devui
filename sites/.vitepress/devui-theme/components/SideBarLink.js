@@ -9,7 +9,6 @@ export const SideBarLink = (props) => {
     const headers = route.data.headers;
     const text = props.item.text;
     const status = props.item.status;
-    console.log('text status:', text, status);
     const link = resolveLink(site.value.base, props.item.link);
     const children = props.item.children;
     const active = isActive(route, props.item.link);
