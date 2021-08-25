@@ -98,12 +98,12 @@ export default defineComponent({
 
       if(newPosition<0){
         newPosition=0;
-      }else if(newPosition>=sliderWidth){
+      }else if(Math.ceil(newPosition) >=Math.ceil(sliderWidth) ){
         
-       
+     
         //当到达类似98%时,进行边界判定，设置值为100%
         currentPosition.value=sliderWidth
-        inputValue.value=100
+        inputValue.value=props.max
         percentDispaly.value= '100%'
      
         return
