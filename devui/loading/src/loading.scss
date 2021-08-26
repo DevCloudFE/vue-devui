@@ -2,16 +2,21 @@
 
 @keyframes devui-busy-spinner-anim {
   0% {
-    transform:rotate(0deg)
-    scale(1)
+    transform:
+      rotate(0deg)
+      scale(1);
   }
+
   50% {
-    transform:rotate(135deg)
-    scale(1.5)
+    transform:
+      rotate(135deg)
+      scale(1.5);
   }
+
   to {
-    transform:rotate(270deg)
-    scale(1)
+    transform:
+      rotate(270deg)
+      scale(1);
   }
 }
 
@@ -22,11 +27,13 @@
   bottom: 0;
   top: 0;
   background-color: $devui-line;
-  opacity: .3;
+  opacity: 0.3;
 }
+
 .devui-loading-wrapper {
   text-align: center;
 }
+
 .devui-loading--full {
   position: fixed;
   left: 0;
@@ -35,9 +42,11 @@
   top: 0;
   z-index: 9999;
 }
+
 .devui-loading--hidden {
   overflow: hidden;
 }
+
 .devui-loading-text {
   vertical-align: super;
   margin-left: 10px;
@@ -48,15 +57,17 @@
   position: absolute;
   transform: translate(-50%, -50%);
   padding: 12px 14px;
-  background: var(--devui-base-bg, #fff);
+  background: var(--devui-base-bg, #ffffff);
   border-radius: var(--devui-border-radius-card, 6px);
 }
+
 .devui-busy-default-spinner {
   position: relative;
   display: inline-block;
   width: 15px;
   height: 15px;
   animation: devui-busy-spinner-anim 1s linear infinite;
+
   div {
     position: absolute;
     left: 44.5%;
@@ -65,28 +76,32 @@
     height: 6px;
     border-radius: 50%;
   }
+
   .devui-loading-bar1 {
     top: 0;
     left: 0;
     background: #5e7ce0;
-    background: var(--devui-brand,#5e7ce0);
+    background: var(--devui-brand, #5e7ce0);
   }
+
   .devui-loading-bar2 {
     top: 0;
     left: 9px;
     background: #859bff;
-    background: var(--devui-brand-foil,#859bff);
+    background: var(--devui-brand-foil, #859bff);
   }
+
   .devui-loading-bar3 {
     top: 9px;
     left: 0;
     background: #859bff;
-    background: var(--devui-brand-foil,#859bff);
+    background: var(--devui-brand-foil, #859bff);
   }
+
   .devui-loading-bar4 {
     top: 9px;
     left: 9px;
     background: #5e7ce0;
-    background: var(--devui-brand,#5e7ce0);
+    background: var(--devui-brand, #5e7ce0);
   }
 }

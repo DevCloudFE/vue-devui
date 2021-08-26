@@ -4,7 +4,7 @@ import { componentProps, ComponentProps } from './types'
 import './loading.scss';
 
 export default defineComponent({
-  name: 'd-loading',
+  name: 'DLoading',
   inheritAttrs: false,
   props: componentProps,
   setup(props: ComponentProps) {

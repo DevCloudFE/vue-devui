@@ -1,8 +1,8 @@
 import { App } from 'vue'
-import Anchor from './anchor'
-import dAnchorBox from './d-anchor-box'
-import dAnchorLink from './d-anchor-link'
-import dAnchor from './d-anchor'
+import Anchor from './src/anchor'
+import dAnchorBox from './src/d-anchor-box'
+import dAnchorLink from './src/d-anchor-link'
+import dAnchor from './src/d-anchor'
 const directives = {
   'd-anchor-box': dAnchorBox,
   'd-anchor-link': dAnchorLink,
@@ -18,7 +18,18 @@ Anchor.install = function(Vue: App) {
   console.log(Vue,'install')
   Vue.component(Anchor.name, Anchor)
 };
+ 
 
-Anchor.version = '0.0.1'
+Anchor.install = function(app: App) {
+  app.component(Anchor.name, Anchor)
+}
 
-export default Anchor
+export { Anchor }
+
+export default {
+  title: 'Anchor 锚点',
+  category: '导航',
+  install(app: App): void {
+    app.use(Anchor as any)
+  }
+}

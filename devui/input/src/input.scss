@@ -1,0 +1,20 @@
+@import '../../style/core/form';
+@import '../../style/mixins/flex';
+
+.devui-input {
+  &__wrap {
+    position: relative;
+    @include flex('space-between');
+  }
+
+  &__preview {
+    position: absolute;
+    width: 32px;
+    height: 16px;
+    right: 0;
+    text-align: center;
+    line-height: 16px;
+    @include flex;
+    @include flex-direction;
+  }
+}

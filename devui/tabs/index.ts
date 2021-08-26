@@ -1,10 +1,16 @@
-import { App } from 'vue'
-import Tabs from './tabs'
+import type { App } from 'vue'
+import Tabs from './src/tabs'
 
-Tabs.install = function(Vue: App) {
-  Vue.component(Tabs.name, Tabs)
-};
+Tabs.install = function(app: App) {
+  app.component(Tabs.name, Tabs)
+}
 
-Tabs.version = '0.0.1'
+export { Tabs }
 
-export default Tabs
+export default {
+  title: 'Tabs 选项卡',
+  category: '导航',
+  install(app: App): void {
+    app.use(Tabs as any)
+  }
+}

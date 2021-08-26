@@ -6,27 +6,27 @@ import './checkbox-group.scss';
 export default defineComponent({
   name: 'DCheckboxGroup',
   props: checkboxGroupProps,
-  emits: ['change', 'update:value'],
-  setup (props: ExtractPropTypes<typeof checkboxGroupProps>, ctx) {
-    const valList = toRef(props, 'value');
+  emits: ['change', 'update:modelValue'],
+  setup(props: ExtractPropTypes<typeof checkboxGroupProps>, ctx) {
+    const valList = toRef(props, 'modelValue');
     const defaultOpt = {
       checked: false,
       isShowTitle: true,
       halfchecked: false,
       showAnimation: true,
-      disabled: false
+      disabled: false,
     };
 
     const toggleGroupVal = (val: string) => {
-      const index = valList.value.findIndex(item => item === val);
+      const index = valList.value.findIndex((item) => item === val);
       if (index === -1) {
         const res = [...valList.value, val];
-        ctx.emit('update:value', res);
+        ctx.emit('update:modelValue', res);
         ctx.emit('change', res);
         return;
       }
       valList.value.splice(index, 1);
-      ctx.emit('update:value', valList.value);
+      ctx.emit('update:modelValue', valList.value);
       ctx.emit('change', valList.value);
     };
     const isItemChecked = (itemVal: string) => valList.value.includes(itemVal);
@@ -40,35 +40,30 @@ export default defineComponent({
       isItemChecked,
       toggleGroupVal,
       itemWidth: toRef(props, 'itemWidth'),
-      direction: toRef(props, 'direction')
+      direction: toRef(props, 'direction'),
     });
 
     return {
-      defaultOpt
+      defaultOpt,
     };
   },
-  render () {
-    const {
-      direction,
-      $slots,
-      defaultOpt,
-      options
-    } = this;
+  render() {
+    const { direction, $slots, defaultOpt, options } = this;
     let children = $slots.default?.();
 
     if (options?.length > 0) {
-      children = options.map(opt => {
+      children = options.map((opt) => {
         const mergedOpt = Object.assign({}, defaultOpt, opt);
-        return (<DCheckbox {...mergedOpt}></DCheckbox>);
+        return <DCheckbox {...mergedOpt}></DCheckbox>;
       });
     }
 
     return (
       <div class="devui-checkbox-group">
         <div class={{ 'devui-checkbox-list-inline': direction === 'row' }}>
-          { children }
+          {children}
         </div>
       </div>
     );
-  }
+  },
 });

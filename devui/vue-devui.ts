@@ -1,39 +1,101 @@
-import { App } from 'vue';
+import type { App } from 'vue'
 
-// 通用
-import Button from './button';
-import Icon from './icon';
-import Panel from './panel';
+import AccordionInstall, { Accordion } from './accordion'
+import AlertInstall, { Alert } from './alert'
+import AnchorInstall, { Anchor } from './anchor'
+import AvatarInstall, { Avatar } from './avatar'
+import BadgeInstall, { Badge } from './badge'
+import ButtonInstall, { Button } from './button'
+import CardInstall, { Card } from './card'
+import CarouselInstall, { Carousel } from './carousel'
+import CheckboxInstall, { Checkbox } from './checkbox'
+import DatePickerInstall, { DatePicker, StickSlider } from './date-picker'
+import IconInstall, { Icon } from './icon'
+import InputInstall, { Input } from './input'
+import LoadingInstall, { LoadingService, Loading } from './loading'
+import PaginationInstall, { Pagination } from './pagination'
+import PanelInstall, { Panel } from './panel'
+import ProgressInstall, { Progress } from './progress'
+import QuadrantDiagramInstall, { QuadrantDiagram } from './quadrant-diagram'
+import RadioInstall, { Radio, RadioGroup } from './radio'
+import RateInstall, { Rate } from './rate'
+import SearchInstall, { Search } from './search'
+import SelectInstall, { Select } from './select'
+import StatusInstall, { Status } from './status'
+import SwitchInstall, { Switch } from './switch'
+import TabsInstall, { Tabs } from './tabs'
+import TagInputInstall, { TagInput } from './tag-input'
+import ToastInstall, { Toast, ToastService } from './toast'
+import UploadInstall, { Upload, MultiUpload } from './upload'
 
-// 导航
-import Tabs from './tabs';
-import Anchor from './Anchor';
+const installs = [
+  AccordionInstall,
+	AlertInstall,
+	AnchorInstall,
+	AvatarInstall,
+	BadgeInstall,
+	ButtonInstall,
+	CardInstall,
+	CarouselInstall,
+	CheckboxInstall,
+	DatePickerInstall,
+	IconInstall,
+	InputInstall,
+	LoadingInstall,
+	PaginationInstall,
+	PanelInstall,
+	ProgressInstall,
+	QuadrantDiagramInstall,
+	RadioInstall,
+	RateInstall,
+	SearchInstall,
+	SelectInstall,
+	StatusInstall,
+	SwitchInstall,
+	TabsInstall,
+	TagInputInstall,
+	ToastInstall,
+	UploadInstall
+]
 
-// 反馈
-import Alert from './alert';
-import Loading from './loading';
-
-// 数据录入
-import Checkbox from './checkbox';
-import Radio from './radio';
-import Switch from './switch';
-import TagsInput from './tags-input';
-import TextInput from './text-input';
-
-// 数据展示
-import Avatar from './avatar';
-import Carousel from './carousel';
-
-function install(app: App): void {
-  const packages = [ Button, Icon, Panel, Tabs, Anchor, Alert, Loading, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel ];
-  packages.forEach((item: any) => {
-    if (item.install) {
-      app.use(item);
-    } else if (item.name) {
-      app.component(item.name, item);
-    }
-  });
+export {
+  Accordion,
+	Alert,
+	Anchor,
+	Avatar,
+	Badge,
+	Button,
+	Card,
+	Carousel,
+	Checkbox,
+	DatePicker,
+	StickSlider,
+	Icon,
+	Input,
+	LoadingService,
+	Loading,
+	Pagination,
+	Panel,
+	Progress,
+	QuadrantDiagram,
+	Radio,
+	RadioGroup,
+	Rate,
+	Search,
+	Select,
+	Status,
+	Switch,
+	Tabs,
+	TagInput,
+	Toast,
+	ToastService,
+	Upload,
+	MultiUpload
 }
 
-export { Button, Icon, Panel, Tabs, Anchor, Alert, Loading, Checkbox, Radio, Switch, TagsInput, TextInput, Avatar, Carousel };
-export default { install, version: '0.0.1' };
+export default {
+  version: '0.0.1',
+  install(app: App): void {
+    installs.forEach((p) => app.use(p as any))
+  }
+}

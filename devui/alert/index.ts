@@ -1,10 +1,16 @@
-import { App } from 'vue'
-import Alert from './alert'
+import type { App } from 'vue'
+import Alert from './src/alert'
 
-Alert.install = function(Vue: App) {
-  Vue.component(Alert.name, Alert)
-};
+Alert.install = function(app: App) {
+  app.component(Alert.name, Alert)
+}
 
-Alert.version = '0.0.1'
+export { Alert }
 
-export default Alert
+export default {
+  title: 'Alert 警告',
+  category: '反馈',
+  install(app: App): void {
+    app.use(Alert as any)
+  }
+}

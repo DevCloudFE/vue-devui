@@ -1,10 +1,16 @@
-import { App } from 'vue'
+import type { App } from 'vue'
 import Switch from './src/switch'
 
-Switch.install = function(Vue: App) {
-  Vue.component(Switch.name, Switch)
-};
+Switch.install = function(app: App) {
+  app.component(Switch.name, Switch)
+}
 
-Switch.version = '0.0.1'
+export { Switch }
 
-export default Switch
+export default {
+  title: 'Switch 开关',
+  category: '数据录入',
+  install(app: App): void {
+    app.use(Switch as any)
+  }
+}

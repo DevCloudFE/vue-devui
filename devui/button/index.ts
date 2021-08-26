@@ -1,10 +1,16 @@
-import { App } from 'vue'
-import Button from './button'
+import type { App } from 'vue'
+import Button from './src/button'
 
-Button.install = function(Vue: App) {
-  Vue.component(Button.name, Button)
-};
+Button.install = function(app: App) {
+  app.component(Button.name, Button)
+}
 
-Button.version = '0.0.1'
+export { Button }
 
-export default Button
+export default {
+  title: 'Button 按钮',
+  category: '通用',
+  install(app: App): void {
+    app.use(Button as any)
+  }
+}
