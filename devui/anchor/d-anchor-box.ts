@@ -13,8 +13,11 @@ export default  {
         // 监听window
         let windoScrollTop;
         let toTheBottom = false;
-        const div = document.getElementsByClassName('mycontainer')[0] as HTMLElement;
-        const mysidebar  =  document.getElementsByClassName('mysidebar')[0] as HTMLElement
+   
+        const div = document.querySelector(`#${timeId}`) as HTMLElement;
+      
+        const mysidebar  = document.querySelector(`#${timeId} .mysidebar`) as HTMLElement
+       
         const mysidebarHeight =    mysidebar.clientHeight;   
         // mysidebar.children[0].classList.add('active')
         window.addEventListener('resize',()=>{

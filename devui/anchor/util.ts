@@ -2,7 +2,7 @@ let repeatCount = 0;
 let cTimeout;
 const timeoutIntervalSpeed = 10;
 let hashName:string;
-function elementPosition(obj: HTMLElement,container: HTMLElement) {
+function elementPosition(obj: HTMLElement ) {
   let curleft = 0, curtop = 0;
   
     curleft = obj.offsetLeft;
@@ -13,7 +13,7 @@ function elementPosition(obj: HTMLElement,container: HTMLElement) {
 export function ScrollToControl(elem: HTMLElement, container: HTMLElement):void {
     hashName = elem.getAttribute('name');
     const tops = container.scrollTop>=0 ? container.scrollTop  : -(document.getElementsByClassName('mycontainer')[0] as HTMLElement).offsetTop;
-    let scrollPos: number = elementPosition(elem, container).y - tops ;
+    let scrollPos: number = elementPosition(elem).y - tops ;
     
     scrollPos = scrollPos - document.documentElement.scrollTop;
     const remainder: number = scrollPos % timeoutIntervalSpeed;
