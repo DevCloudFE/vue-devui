@@ -9,7 +9,6 @@ export default  {
       el.id = timeId;
       // 添加ng class名
       const classList   =  el.classList;
-      // console.error(classList)
       classList.add('mycontainer','mymain', timeId);
         // 监听window
         let windoScrollTop;
@@ -25,12 +24,10 @@ export default  {
           //为了保证兼容性，这里取两个值，哪个有值取哪一个
           //scrollTop就是触发滚轮事件时滚轮的高度
           windoScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-          // console.log(mysidebar.clientHeight,'mysidebar.clientHeight__________________',windoScrollTop,div.getBoundingClientRect().top)
           // 16为padding 8px *2 (上下边距)
           if (!document.getElementsByClassName('scrollTarget').length ) {
               if ( (windoScrollTop + mysidebarHeight-16) >= (div.offsetTop + div.clientHeight)  ) {
                 // 看不见 d-anchor-box区域
-                console.log('windoScrollTop > mysidebar.clientHeight滚动距离' + windoScrollTop);
                 toTheBottom = true;
               
                 cssChange(mysidebar,'absolute', div.clientHeight -mysidebarHeight-8, 0)
@@ -64,7 +61,6 @@ export default  {
             const scrollHeight = div.scrollHeight;
             const scrollTop    = div.scrollTop;
             const height       = div.clientHeight;
-            // console.log(scrollTop,"scroll________")
             
             console.log()
             if((scrollTop + height) >= scrollHeight && toTheBottom) {
@@ -96,7 +92,6 @@ export default  {
   const addEvent = (function(){
     if(window.addEventListener){
      return function(elm, type, handle){
-       console.log(elm,'__________')
        elm.addEventListener(type, handle, false);
      }
     }
