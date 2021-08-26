@@ -20,10 +20,7 @@ Anchor.install = function(Vue: App) {
 };
  
 
-Anchor.install = function(app: App) {
-  app.component(Anchor.name, Anchor)
-}
-
+ 
 export { Anchor }
 
 export default {
