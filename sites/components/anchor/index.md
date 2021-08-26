@@ -1,5 +1,5 @@
 # anchor 锚点
-
+<d-anchor />
 # 如何使用
 
  
