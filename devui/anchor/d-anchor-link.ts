@@ -9,15 +9,12 @@ export default  {
     // 2.到对应位置后，改变url后hash
 
     mounted(el: HTMLElement,binding: Bind):void {
-      console.log(binding,'binding')
       const parent: Element = el.parentNode  as Element;
       if (!parent.className) {
         parent.className = 'mysidebar step-nav '  
-        
-        console.log(parent,'link-insert' )
       }
       el.className = 'bar-link-item'
-      el.innerHTML += '<a class="d-d-anchor" style="display:none" href="'+binding.value+'">?</a>'
+      el.innerHTML += '<a class="d-d-anchor" style="display:none" href="#'+binding.value+'">?</a>'
        
       
       el.setAttribute('id', binding.value)
@@ -25,14 +22,11 @@ export default  {
       el.onclick = () => {
           let scrollContainer:any;
           const scollToDomY = document.getElementsByName(binding.value)[0];
-          console.log(scollToDomY,'scollToDomY>???????????????????')
           document.getElementsByClassName('scrollTarget').length 
               ? scrollContainer= document.getElementsByClassName('scrollTarget')[0]
               : scrollContainer=window;   
-          console.log(scrollContainer,'scrollContainer_____________________+')
           ScrollToControl(scollToDomY,scrollContainer)
           
       }
-        // if (el.parentNode.className)
     }
   };

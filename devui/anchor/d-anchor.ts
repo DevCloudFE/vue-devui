@@ -13,7 +13,7 @@ export default  {
     if (!parent.className) {
         parent.className = 'mycontent'
     }
-   
+    el.innerHTML = '<a class="box-anchor"  href="#'+binding.value+'">?</a>' + el.innerHTML
     el.className = 'section-block';
     // anchor-active-by-scroll
     el.setAttribute('name',binding.value);

@@ -9,7 +9,7 @@ export default  {
       el.id = timeId;
       // 添加ng class名
       const classList   =  el.classList;
-      console.error(classList)
+      // console.error(classList)
       classList.add('mycontainer','mymain', timeId);
         // 监听window
         let windoScrollTop;
@@ -17,12 +17,15 @@ export default  {
         const div = document.getElementsByClassName('mycontainer')[0] as HTMLElement;
         const mysidebar  =  document.getElementsByClassName('mysidebar')[0] as HTMLElement
         const mysidebarHeight =    mysidebar.clientHeight;   
-        mysidebar.children[0].classList.add('active')
+        // mysidebar.children[0].classList.add('active')
+        window.addEventListener('resize',()=>{
+          cssChange(mysidebar,'absolute', 0, 0)
+        })
         window.onscroll = function() {
           //为了保证兼容性，这里取两个值，哪个有值取哪一个
           //scrollTop就是触发滚轮事件时滚轮的高度
           windoScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-          console.log(mysidebar.clientHeight,'mysidebar.clientHeight__________________',windoScrollTop,div.getBoundingClientRect().top)
+          // console.log(mysidebar.clientHeight,'mysidebar.clientHeight__________________',windoScrollTop,div.getBoundingClientRect().top)
           // 16为padding 8px *2 (上下边距)
           if (!document.getElementsByClassName('scrollTarget').length ) {
               if ( (windoScrollTop + mysidebarHeight-16) >= (div.offsetTop + div.clientHeight)  ) {
@@ -65,13 +68,13 @@ export default  {
             
             console.log()
             if((scrollTop + height) >= scrollHeight && toTheBottom) {
-              console.log(scrollHeight,'到底了');
-              console.log('window滚动距离' + windoScrollTop);
+              // console.log(scrollHeight,'到底了');
+              // console.log('window滚动距离' + windoScrollTop);
        
             } else if(document.getElementsByClassName('scrollTarget').length ){
             
               cssChange(mysidebar,'fixed',div.getBoundingClientRect().top,div.getBoundingClientRect().left);
-              console.log('div滚动距离' + scrollTop);
+              // console.log('div滚动距离' + scrollTop);
             }
        });
        

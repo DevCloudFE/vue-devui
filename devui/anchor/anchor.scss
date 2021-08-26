@@ -70,11 +70,12 @@
 }
 .scrollTarget {
   height: 450px!important;
+  overflow-y: auto;
 }
 .mycontainer {
   height: auto;
   
-  overflow-y: auto;
+  // overflow-y: auto;
 }
 
 .devui-scrollbar::-webkit-scrollbar {

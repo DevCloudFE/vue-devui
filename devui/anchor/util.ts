@@ -7,24 +7,18 @@ function elementPosition(obj: HTMLElement,container: HTMLElement) {
   
     curleft = obj.offsetLeft;
     curtop = obj.offsetTop;
-    
-    console.table({
-      'curleft':curleft,
-      'curtop':curtop,
-      'container.offsetLeft': container.offsetLeft,
-      'container.offsetTop':container.offsetTop
-    })
  
   return { x: curleft, y: curtop };
 }
 export function ScrollToControl(elem: HTMLElement, container: HTMLElement):void {
     hashName = elem.getAttribute('name');
-    let scrollPos: number = elementPosition(elem, container).y - container.scrollTop;
+    const tops = container.scrollTop>=0 ? container.scrollTop  : -(document.getElementsByClassName('mycontainer')[0] as HTMLElement).offsetTop;
+    let scrollPos: number = elementPosition(elem, container).y - tops ;
+    
     scrollPos = scrollPos - document.documentElement.scrollTop;
     const remainder: number = scrollPos % timeoutIntervalSpeed;
     const repeatTimes = Math.abs((scrollPos - remainder) / timeoutIntervalSpeed);
-    if (scrollPos < 0 || elem.getBoundingClientRect().top < container.offsetTop) {
-      console.log(elem.getBoundingClientRect().top, container.offsetTop,'container.offsetTop888888888888888888888888888')
+    if (scrollPos < 0 && container || elem.getBoundingClientRect().top < container.offsetTop) {
       window.scrollBy(0, elem.getBoundingClientRect().top-container.offsetTop-16)
     }
     
@@ -34,8 +28,7 @@ export function ScrollToControl(elem: HTMLElement, container: HTMLElement):void 
  
 
 function ScrollSmoothly(scrollPos: number, repeatTimes: number, container: HTMLElement):void {
-  
-    console.log(repeatCount)
+   
     if (repeatCount < repeatTimes) {
       scrollPos > 0
         ? container.scrollBy(0, timeoutIntervalSpeed)
@@ -44,7 +37,7 @@ function ScrollSmoothly(scrollPos: number, repeatTimes: number, container: HTMLE
     else {
       repeatCount = 0;
       clearTimeout(cTimeout);
-      console.log(hashName)
+   
       history.replaceState(null, null, document.location.pathname + '#' + hashName);
       hightLightFn(hashName)
       return ;
@@ -54,7 +47,7 @@ function ScrollSmoothly(scrollPos: number, repeatTimes: number, container: HTMLE
     cTimeout = setTimeout(() => {
       ScrollSmoothly(scrollPos, repeatTimes, container)
     }, 10)
-    // cTimeout = setTimeout("ScrollSmoothly('"+scrollPos+"','"+repeatTimes+"','"+container+"')",10);
+  
 }
 
 // 高亮切换
@@ -72,22 +65,26 @@ let rootActiveLink = null;
 let rootClassName = '';
 export const setActiveLink = (timeId:string):void => {
   timeId ? rootClassName = timeId : rootClassName = document.getElementsByClassName('mymain')[0].id
-  console.log(document.getElementsByClassName('mymain')[0].id)
-  console.log(document.getElementsByClassName(rootClassName))
+ 
   const sidebarLinks = getSidebarLinks(rootClassName);
   const anchors = getAnchors(sidebarLinks);
-  console.error(sidebarLinks,anchors)
-  for (let i = 0; i < anchors.length; i++) {
-      const anchor:HTMLAnchorElement = anchors[i];
-      const nextAnchor:HTMLAnchorElement = anchors[i + 1];
-      const [isActive, hash] = isAnchorActive(i, anchor, nextAnchor);
-      console.log(hash,'hash______________________________')
-      if (isActive) {
-          history.replaceState(null, document.title, hash ? hash as string : ' ');
-          activateLink(hash);
-          return;
-      }
-  }
+  try {
+    anchors.forEach((index,i)=> {
+         
+          const anchor:HTMLAnchorElement = anchors[i];
+          const nextAnchor:HTMLAnchorElement = anchors[i + 1];
+          
+          const [isActive, hash] = isAnchorActive(i, anchor, nextAnchor);
+          if (isActive) {
+              history.replaceState(null, document.title, hash ? hash as string : ' ');
+              activateLink(hash);
+              throw Error(hash+'');
+          }
+        })
+    } catch (e) {
+    }
+ 
+  
 }
 function throttleAndDebounce(fn:any, delay:number):any {
   let timeout:any;
@@ -114,13 +111,15 @@ export const onScroll = throttleAndDebounce(setActiveLink, 300);
 function activateLink(hash:string | boolean) {
   deactiveLink(activeLink);
   deactiveLink(rootActiveLink);
-  activeLink = document.querySelector(`.sidebar a[href="${hash}"]`);
+  hash
+    ? activeLink = document.querySelector(`${hash}`)
+    : activeLink = document.querySelector(`.${rootClassName} ul li`)
   if (!activeLink) {
       return;
   }
   activeLink.classList.add('active');
   // also add active class to parent h2 anchors
-  const rootLi = activeLink.closest('.sidebar-links > ul > li');
+  const rootLi = activeLink.closest('.mycontainer > ul > li');
   if (rootLi && rootLi !== activeLink.parentElement) {
       rootActiveLink = rootLi.querySelector('a');
       rootActiveLink && rootActiveLink.classList.add('active');
@@ -133,41 +132,41 @@ function deactiveLink(link:HTMLElement):void {
   link && link.classList.remove('active');
 }
 function getPageOffset():number {
-  return (document.querySelector('.nav-bar') as HTMLElement).offsetHeight;
+  return (document.querySelector('.mysidebar ') as HTMLElement).getBoundingClientRect().y;
 }
 
 function getAnchorTop(anchor:HTMLAnchorElement):number {
   const pageOffset = getPageOffset();
-  return anchor.parentElement.offsetTop - pageOffset - 15;
+  return anchor.parentElement.offsetTop - pageOffset - 5;
 }
 
 function isAnchorActive(index:number, anchor:HTMLAnchorElement, nextAnchor:HTMLAnchorElement) {
   let scrollTop:number;
   document.getElementsByClassName('scrollTarget').length 
     ?  scrollTop = document.getElementsByClassName('scrollTarget')[0].scrollTop
-    :  scrollTop = window.scrollY
+    :  scrollTop = document.documentElement.scrollTop || document.body.scrollTop
   if (index === 0 && scrollTop === 0) {
       return [true, null];
   }
-  console.log(getAnchorTop(anchor),anchor,'getAnchorTop(anchor)???????????????????')
+ 
   if (scrollTop < getAnchorTop(anchor)) {
       return [false, null];
   }
   if (!nextAnchor || scrollTop < getAnchorTop(nextAnchor)) {
+   
       return [true, decodeURIComponent(anchor.hash)];
   }
+ 
   return [false, null];
 }
 
 function getSidebarLinks(rootClassName:string):Array<HTMLAnchorElement> {
-  // .step-nav > li.active, .step-nav > li:hover
-  console.log(`.${rootClassName} > .mysidebar > li.bar-link-item`,'__________________________')
   return [].slice.call(document.querySelectorAll(`.${rootClassName} > .step-nav > li.bar-link-item > a`));
 }
 
 function getAnchors(sidebarLinks:Array<HTMLAnchorElement>):Array<HTMLAnchorElement> {
   return [].slice
-      .call(document.querySelectorAll('.d-d-anchor'))
+      .call(document.querySelectorAll('.box-anchor'))
       .filter((anchor:HTMLAnchorElement) => sidebarLinks.some(( sidebarLink:HTMLAnchorElement  ) =>  sidebarLink.hash === anchor.hash ));
 }
 
