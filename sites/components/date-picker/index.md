@@ -70,12 +70,7 @@ export default defineComponent({
 
 日期、时间可视化输入。
 
-### 作为UI组件
-
----------
-
-
-#### 最简
+### 最简应用
 
 <section class="devui-datepicker-demo">
     <d-datepicker />
@@ -84,6 +79,17 @@ export default defineComponent({
 ```jsx
 <d-datepicker />
 ```
+
+### 自动关闭
+
+<section class="devui-datepicker-demo">
+    <d-datepicker auto-close />
+</section>
+
+```jsx
+<d-datepicker auto-close />
+```
+
 #### 区域选择
 
 <section class="devui-datepicker-demo">
@@ -112,41 +118,9 @@ export default defineComponent({
 <d-datepicker range date-min="2021-8-9" date-max="2022-3-20" />
 ```
 
-
-### 绑定原生`<input>`
-
-暂定通过`querySelector`查找节点，绑定真实`dom`节点。此方案待定。
-
-```jsx
-<input class="input-binder" id="datepicker-input-single" />
-<d-datepicker
-    attach-input-dom="#datepicker-input-single"
-    show-today
-    auto-close
-/>
-```
+### 自定义分隔符
 
 <section class="devui-datepicker-demo">
-    <input class="input-binder" id="datepicker-input-single" />
-    <d-datepicker
-        attach-input-dom="#datepicker-input-single"
-        show-today
-        auto-close
-    />
-</section>
-
-
-```jsx
-<input class="input-binder" id="datepicker-input" />
-<d-datepicker
-    attach-input-dom="#datepicker-input"
-    range
-    :range-spliter="spliter"
-/>
-```
-
-<section class="devui-datepicker-demo">
-    <input class="input-binder" id="datepicker-input" />
     <label>分隔符
         <select @change="handleRangeChange">
             <option>-</option>
@@ -157,34 +131,4 @@ export default defineComponent({
     </label>    
     <d-datepicker attach-input-dom="#datepicker-input" range :range-spliter="spliter" />
 </section>
-
-### Scroll位置跟踪
-
-在对宿主`<input>`绑定的过程中，对宿主的父级节点做了`scroll`追踪；当任何一级发生`scroll`时，都会更新弹出层位置，确保能让弹出层与`<input>`正确贴合。
-
-这个做法是根据`ng`的组件效果实现的。
-
-TODO: 跟踪节流。
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 

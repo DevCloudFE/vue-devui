@@ -10,6 +10,8 @@ export type TState = {
     hover?: Date
     show?: boolean
     input?: string
+    value?: string
+    placeholder?: string
 }
 
 /**
