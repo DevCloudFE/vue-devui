@@ -147,3 +147,40 @@ export const parseTime = (str?: string) : [number, number, number, number] => {
 	const [h, m, s, ms] = str.split(/[\:\.]+/)
 	return [_parseInt(h, 0), _parseInt(m, 0), _parseInt(s, 0), _parseInt(ms, 0)]
 }
+
+type TDateCounterType = 'd' | 'm' | 'y'
+
+export const compareDateSort = (d1: Date, d2: Date, type: TDateCounterType = 'd') => {
+    const t1 = dateCounter(d1, type), t2 = dateCounter(d2, type)
+    return t1 < t2 ? -1 : t1 > t2 ? 1 : 0
+}
+
+export const dateCounter = (date: Date, type: TDateCounterType) => {
+	switch(type) {
+		case 'y': return date.getFullYear()
+		case 'm': return date.getFullYear() * 12 + date.getMonth()
+	}
+	return date.getTime() / ONE_DAY >> 0
+}
+export const borderDateFactory = (factor: (d1: Date, d2: Date) => Date) => (...ds: Date[]) => {
+    return ds.length < 2 ? ds[0] || new Date() : ds.reduce((r, v) => factor(r, v))
+}
+export const getMinDate = borderDateFactory((d1: Date, d2: Date) => compareDateSort(d1, d2) < 0 ? d1 : d2)
+export const getMaxDate = borderDateFactory((d1: Date, d2: Date) => compareDateSort(d1, d2) < 0 ? d2 : d1)
+
+/**
+ * d 是否在 [left, right] 区间
+ * @param date 日期
+ * @param left 最小日期
+ * @param right 最大日期
+ * @returns boolean
+ */
+export const betweenDate = (date: Date, left: any, right: any): boolean => {
+	if(left instanceof Date && compareDateSort(left, date, 'd') > 0) {
+		return false
+	}
+	if(right instanceof Date && compareDateSort(date, right, 'd') > 0) {
+		return false
+	}
+	return true
+}

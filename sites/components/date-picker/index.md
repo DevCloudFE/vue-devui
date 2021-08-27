@@ -97,7 +97,7 @@ export default defineComponent({
 ### 区间限制
 
 <section class="devui-datepicker-demo">
-    <d-datepicker date-min="2021-8-9" date-max="2021-9-20" />
+    <d-datepicker date-min="2021-5-9" date-max="2021-6-20" />
 </section>
 
 ```jsx
@@ -118,21 +118,41 @@ export default defineComponent({
 暂定通过`querySelector`查找节点，绑定真实`dom`节点。此方案待定。
 
 ```jsx
+<input class="input-binder" id="datepicker-input-single" />
+<d-datepicker
+    attach-input-dom="#datepicker-input-single"
+    show-today
+    auto-close
+/>
+```
+
 <section class="devui-datepicker-demo">
-    <input class="input-binder" id="datepicker-input" />
-    <d-datepicker attach-input-dom="#datepicker-input" />
+    <input class="input-binder" id="datepicker-input-single" />
+    <d-datepicker
+        attach-input-dom="#datepicker-input-single"
+        show-today
+        auto-close
+    />
 </section>
+
+
+```jsx
+<input class="input-binder" id="datepicker-input" />
+<d-datepicker
+    attach-input-dom="#datepicker-input"
+    range
+    :range-spliter="spliter"
+/>
 ```
 
 <section class="devui-datepicker-demo">
     <input class="input-binder" id="datepicker-input" />
     <label>分隔符
-        <select @change="handleRangeChange" :disabled="!range2">
+        <select @change="handleRangeChange">
             <option>-</option>
             <option>~</option>
-            <option>--</option>
+            <option>-></option>
             <option>～</option>
-            <option>***</option>
         </select>
     </label>    
     <d-datepicker attach-input-dom="#datepicker-input" range :range-spliter="spliter" />
