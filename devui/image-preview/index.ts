@@ -8,7 +8,7 @@ export default {
   title: 'ImagePreview 图片预览',
   category: '数据展示',
   install(app: App): void {
-    app.directive('ImagePreview', ImagePreviewDirective)
+    app.directive('dImagePreview', ImagePreviewDirective)
     app.config.globalProperties.$imagePreviewService = ImagePreviewService
   }
 }

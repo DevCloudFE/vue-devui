@@ -8,14 +8,14 @@
 
 ### 基本用法
 
-使用 image-preview 指令，对容器内图片进行预览。
+使用 v-dImagePreview 指令，对容器内图片进行预览。
 
-<div v-image-preview class="devui-image-preview-demo">
+<div v-dImagePreview class="devui-image-preview-demo">
   <img v-for="src in imageList" :src="src" :key="src" />
 </div>
 
 ```html
-<div v-image-preview class="devui-image-preview-demo">
+<div v-dImagePreview class="devui-image-preview-demo">
   <img v-for="src in imageList" :src="src" :key="src" />
 </div>
 
@@ -38,14 +38,14 @@
 
 传入 custom 参数,指令会自动注入 open 方法，通过 custom.open 开启预览窗口
 
-<div v-image-preview="{custom: image.custom, disableDefault:true }" class="devui-image-preview-demo">
+<div v-dImagePreview="{custom: image.custom, disableDefault:true }" class="devui-image-preview-demo">
   <img v-for="src in imageList" :src="src" :key="src" />
 </div>
 <d-button @click="open" class="btn">自定义</d-button>
 
 ```html
 <div
-  v-image-preview="{custom: image.custom, disableDefault:true }"
+  v-dImagePreview="{custom: image.custom, disableDefault:true }"
   class="devui-image-preview-demo"
 >
   <img v-for="src in image.imageList" :src="src" :key="src" />
