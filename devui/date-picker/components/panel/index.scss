@@ -13,7 +13,6 @@ $panel-cell-active-hover-color: #ffffff;
 
 .devui-calendar-panel {
   width: $panel-width;
-  height: $panel-height;
   padding: $panel-padding;
   box-sizing: border-box;
   overflow: hidden;
@@ -55,8 +54,13 @@ $panel-cell-active-hover-color: #ffffff;
         background-color: $devui-disabled-bg;
       }
 
-      &.disabled {
+      &.disabled,
+      &.not-current {
         color: $devui-disabled-text;
+      }
+
+      &.disabled {
+        cursor: not-allowed;
       }
     }
   }
@@ -74,5 +78,26 @@ $panel-cell-active-hover-color: #ffffff;
     flex-direction: column;
     cursor: pointer;
     list-style: none;
+  }
+
+  .today-container {
+    padding: 8px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    &.disabled {
+      .today-button {
+        border: 1px solid #cccccc;
+        cursor: not-allowed;
+      }
+    }
+
+    .today-button {
+      border: 1px solid #0066cc;
+      border-radius: 3px;
+      padding: 2px 20px;
+      font-size: 12px;
+    }
   }
 }

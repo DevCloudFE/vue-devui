@@ -12,13 +12,13 @@ describe('RadioGroup', () => {
         DRadio
       },
       template: `
-        <d-radio-group v-model:value="radioVal" @change="onChange">
-          <d-radio value="ab">AB</d-radio>
-          <d-radio value="cd">CD</d-radio>
+        <d-radio-group v-model="radioVal" @change="onChange">
+          <d-radio value="Item1">Item1</d-radio>
+          <d-radio value="Item2">Item2</d-radio>
         </d-radio-group>
       `,
       setup () {
-        const radioVal = ref('ab');
+        const radioVal = ref('Item1');
         return {
           radioVal,
           onChange
@@ -44,20 +44,20 @@ describe('RadioGroup', () => {
   it('radioGroup cssStyle work', async () => {
     const wrapper = mount(DRadioGroup, {
       props: {
-        value: 'AA'
+        value: 'Item1'
       }
     });
-    expect(wrapper.html()).not.toMatch('devui-radio-horizontal');
+    expect(wrapper.html()).not.toMatch('is-row');
 
     await wrapper.setProps({
-      value: 'AA',
+      value: 'Item1',
       cssStyle: 'row'
     });
-    expect(wrapper.html()).toMatch('devui-radio-horizontal');
+    expect(wrapper.html()).toMatch('is-row');
   });
 
   it('radioGroup beforeChange work', async () => {
-    const beforeChange = jest.fn(v => v !== 'bb');
+    const beforeChange = jest.fn(v => v !== 'Item2');
     const onChange = jest.fn();
     const wrapper = mount({
       components: {
@@ -65,14 +65,14 @@ describe('RadioGroup', () => {
         DRadio
       },
       template: `
-        <d-radio-group v-model:value="radioVal" @change="onChange" :before-change="beforeChange">
-          <d-radio value="aa">AA</d-radio>
-          <d-radio value="bb">BB</d-radio>
-          <d-radio value="cc">CC</d-radio>
+        <d-radio-group v-model="radioVal" @change="onChange" :before-change="beforeChange">
+          <d-radio value="Item1">Item1</d-radio>
+          <d-radio value="Item2">Item2</d-radio>
+          <d-radio value="Item3">Item3</d-radio>
         </d-radio-group>
       `,
       setup () {
-        const radioVal = ref('aa');
+        const radioVal = ref('Item1');
         return {
           radioVal,
           onChange,
@@ -81,18 +81,18 @@ describe('RadioGroup', () => {
       }
     });
 
-    const [radioA, radioB, radioC] = wrapper.findAllComponents({ name: 'DRadio' });
-    expect(radioA.classes()).toContain('active');
+    const [radio1, radio2, radio3] = wrapper.findAllComponents({ name: 'DRadio' });
+    expect(radio1.classes()).toContain('active');
 
-    await radioB.find('input').trigger('change');
-    expect(radioA.classes()).toContain('active');
+    await radio2.find('input').trigger('change');
+    expect(radio1.classes()).toContain('active');
     expect(beforeChange).toBeCalledTimes(1);
     expect(onChange).toBeCalledTimes(0);
 
     beforeChange.mockReset();
-    await radioC.find('input').trigger('change');
-    expect(radioA.classes()).not.toContain('active');
-    expect(radioC.classes()).toContain('active');
+    await radio3.find('input').trigger('change');
+    expect(radio1.classes()).not.toContain('active');
+    expect(radio3.classes()).toContain('active');
     expect(beforeChange).toBeCalledTimes(1);
     expect(onChange).toBeCalledTimes(1);
   });
@@ -105,13 +105,13 @@ describe('RadioGroup', () => {
         DRadio
       },
       template: `
-        <d-radio-group v-model:value="radioVal" @change="onChange">
-          <d-radio value="ee">EE</d-radio>
-          <d-radio value="ff" :disabled="true">FF</d-radio>
+        <d-radio-group v-model="radioVal" @change="onChange">
+          <d-radio value="Item1">Item1</d-radio>
+          <d-radio value="Item2" disabled>Item2</d-radio>
         </d-radio-group>
       `,
       setup () {
-        const radioVal = ref('ee');
+        const radioVal = ref('Item1');
         return {
           radioVal,
           onChange
@@ -119,11 +119,11 @@ describe('RadioGroup', () => {
       }
     });
 
-    const radioF = wrapper.findAllComponents({ name: 'DRadio' })[1];
-    const inputF = wrapper.findAll('input')[1];
+    const radio2 = wrapper.findAllComponents({ name: 'DRadio' })[1];
+    const input2 = wrapper.findAll('input')[1];
 
-    await inputF.trigger('change');
-    expect(radioF.classes()).not.toContain('active');
+    await input2.trigger('change');
+    expect(radio2.classes()).not.toContain('active');
     expect(onChange).toHaveBeenCalledTimes(0);
   });
 });
