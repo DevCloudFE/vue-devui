@@ -8,8 +8,14 @@
   position: relative;
   width: 70%;
   display: block;
-  //
-  .devui-slider__runway {
+
+  &.disabled {
+    cursor: not-allowed;
+    background-color: $devui-disabled-line;
+    border-color: $devui-disabled-line;
+  }
+
+  &__runway {
     position: relative;
     width: 100%;
     padding: 4px 0;
@@ -21,12 +27,25 @@
     align-items: center;
     background-color: $devui-default-bg;
 
+    &.disabled {
+      cursor: not-allowed;
+    }
+
     .devui-slider__bar {
       height: 6px;
       background-color: $devui-default-line;
       border-top-left-radius: $devui-border-radius;
       border-bottom-left-radius: $devui-border-radius;
       position: absolute;
+
+      &.disabled {
+        background-color: $devui-disabled-line;
+        border-color: $devui-disabled-line;
+      }
+
+      &.disabled:hover {
+        cursor: not-allowed;
+      }
     }
 
     .devui-slider__button {
@@ -34,14 +53,24 @@
       width: 14px;
       height: 14px;
       border: 2px solid $devui-default-line;
-      background-color: $devui-default-bg;
+      background-color: $devui-base-bg;
       border-radius: 50%;
       margin-left: -7px;
       transition: transform 0.2s ease-in-out;
-    }
 
-    .devui-slider__button:hover {
-      transform: scale(1.2);
+      &:hover {
+        transform: scale(1.2);
+      }
+
+      &.disabled {
+        background-color: $devui-base-bg;
+        border-color: $devui-disabled-line;
+      }
+
+      &.disabled:hover {
+        cursor: not-allowed;
+        transform: none;
+      }
     }
   }
 
@@ -50,7 +79,6 @@
     top: 15px;
     font-size: $devui-font-size;
     color: $devui-text;
-    font-family: HuaweiFont, Helvetica, Arial, PingFangSC-Regular, Hiragino Sans GB, Microsoft YaHei, 微软雅黑, Microsoft JhengHei;
   }
 
   .devui-max_count {
@@ -59,7 +87,6 @@
     right: 0;
     font-size: $devui-font-size;
     color: $devui-text;
-    font-family: HuaweiFont, Helvetica, Arial, PingFangSC-Regular, Hiragino Sans GB, Microsoft YaHei, 微软雅黑, Microsoft JhengHei;
   }
 
   .devui-input__wrap {

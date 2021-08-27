@@ -20,12 +20,19 @@
 <d-slider :min="0" :max="40" :step="3"></d-slider>
 <br />
 
+### 禁止输入态
+<br />
+<d-slider :min="0" :max="40" :step="3" :disabled="true"></d-slider>
+<br />
+
 ```html
 <d-slider :min="0" :max="40" ></d-slider>
 
 <d-slider :min="0" :max="40"  showInput></d-slider>
 
 <d-slider :min="0" :max="40"  :step="3"></d-slider>
+
+<d-slider :min="0" :max="40"  :disabled="true"></d-slider>
 ```
 
 
