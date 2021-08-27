@@ -114,7 +114,7 @@ const Axis = defineComponent({
      * 绘制轴线刻度
      */
     const drawXAxisTicks = () => {
-      let deltaY;
+      let deltaY: number;
       for (let i = 1; i < axisInnerAttr.xAxisTicksNum; i++) {
         context.value.beginPath();
         // 判断显示长刻度还是短刻度
@@ -132,7 +132,7 @@ const Axis = defineComponent({
 
     }
     const drawYAxisTicks = () => {
-      let deltaX;
+      let deltaX: number;
       for (let i = 1; i < axisInnerAttr.yAxisTicksNum; i++) {
         context.value.beginPath();
         if (i % axisConfigsVal.yAxisRange.step === 0) {
@@ -147,7 +147,9 @@ const Axis = defineComponent({
         context.value.stroke();
       }
     }
-
+    /**
+     * 绘制轴线标签
+     */
     const drawAxisLabels = () => {
       context.value.save();
       context.value.fillStyle = AXIS_LABEL_COLOR.value;

@@ -1,7 +1,7 @@
 import { defineComponent, toRefs, ref, onMounted, reactive } from 'vue'
-import { quadrantDiagramProps, QuadrantDiagramProps } from './quadrant-diagram-types'
-import DQuadrantDiagramAxis from './components/axis';
-import { DEFAULT_AXIS_CONFIGS } from '../config';
+import { quadrantDiagramProps, QuadrantDiagramProps } from './types'
+import DQuadrantDiagramAxis from '../components/axis';
+import { DEFAULT_AXIS_CONFIGS } from '../../config';
 
 export default defineComponent({
   name: 'DQuadrantDiagram',
@@ -54,7 +54,7 @@ export default defineComponent({
     const { diagramId, calAxisConfig, viewVal } = this;
 
     return (
-      <div class="devui-quadrant-diagram" id={diagramId}>
+      <div className="devui-quadrant-diagram" id={diagramId}>
         <DQuadrantDiagramAxis diagramId={diagramId} axisConfigs={calAxisConfig} view={viewVal} />
       </div>
     )

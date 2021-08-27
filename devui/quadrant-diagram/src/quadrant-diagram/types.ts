@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { DEFAULT_AXIS_CONFIGS } from '../config';
-import { IViewConfigs, IAxisConfigs } from '../type';
+import { DEFAULT_AXIS_CONFIGS, DEFAULT_VIEW_CONFIGS } from '../../config';
+import { IViewConfigs, IAxisConfigs } from '../../type';
 
 export const quadrantDiagramProps = {
   diagramId: {
@@ -13,7 +13,7 @@ export const quadrantDiagramProps = {
   },
   view: {
     type: Object as PropType<IViewConfigs>,
-    default: { height: 720, width: 720 },
+    default: DEFAULT_VIEW_CONFIGS,
   },
 } as const
 
