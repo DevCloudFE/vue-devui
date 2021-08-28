@@ -59,6 +59,8 @@ export type FormLabelProps = ExtractPropTypes<typeof formLabelProps>
 
 export interface IFormItem {
   dHasFeedback: boolean
+  prop: string
+  formItemMitt: Emitter<any>
   resetField(): void
 }
 
@@ -66,4 +68,10 @@ export const dFormEvents = {
   addField: 'd.form.addField',
   removeField: 'd.form.removeField',
   inputBlur: 'd.form.inputBlur',
+} as const
+
+export const dFormItemEvents = {
+  blur: 'd.form.blur',
+  change: 'd.form.change',
+  input: 'd.form.input',
 } as const

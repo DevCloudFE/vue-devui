@@ -239,6 +239,12 @@ Label左右布局方式。
       <d-input v-model:value="validateFormModel.name" />
     </d-form-control>
   </d-form-item>
+  <d-form-item prop="nickname">
+    <d-form-label :required="true" >NickName</d-form-label>
+    <d-form-control>
+      <d-input v-model:value="validateFormModel.nickname" />
+    </d-form-control>
+  </d-form-item>
   <d-form-item prop="age">
     <d-form-label :required="true" >Age</d-form-label>
     <d-form-control>
@@ -351,7 +357,8 @@ export default defineComponent({
     });
 
     let validateFormModel: IFormModel = reactive({
-      name: 'AlanLee97',
+      name: 'AlanLee',
+      nickname: 'AlanLee97',
       age: 24,
     });
 
@@ -407,7 +414,21 @@ export default defineComponent({
 
     const rules = reactive({
       name: [{ required: true, message: '不能为空', trigger: 'blur'}],
-      age: [{ required: true, message: '年龄不能小于0', trigger: 'blur'}],
+      nickname: { required: true, message: '不能为空', trigger: 'blur'},
+      age: [
+        { 
+          required: true, 
+          message: '年龄不能小于0', 
+          trigger: 'blur',
+          validator: (rule, value) => value > 0
+        },
+        { 
+          required: true, 
+          message: '年龄不能大于120', 
+          trigger: 'input',
+          validator: (rule, value) => value < 120
+        }
+      ],
 
     })
 
