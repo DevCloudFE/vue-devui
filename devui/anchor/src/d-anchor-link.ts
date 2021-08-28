@@ -1,4 +1,4 @@
-import {ScrollToControl} from './util'
+import { ScrollToControl } from './util';
 interface Bind {
   value: string
 }        
@@ -11,21 +11,19 @@ export default  {
     mounted(el: HTMLElement,binding: Bind):void {
       const parent: Element = el.parentNode  as Element;
       if (!parent.className) {
-        parent.className = 'mysidebar step-nav '  
+        parent.className = 'mysidebar step-nav';  
       }
-      el.className = 'bar-link-item'
-      el.innerHTML += '<a class="d-d-anchor" style="display:none" href="#'+binding.value+'">?</a>'
-       
-      
-      el.setAttribute('id', binding.value)
+      el.className = 'bar-link-item';
+      el.innerHTML += '<a class="d-d-anchor" style="display:none" href="#'+binding.value+'">?</a>';
+      el.setAttribute('id', binding.value);
       
       el.onclick = () => {
-          let scrollContainer:any;
+          let scrollContainer: any;
           const scollToDomY = document.getElementsByName(binding.value)[0];
-          document.getElementsByClassName('scrollTarget').length 
-              ? scrollContainer= document.getElementsByClassName('scrollTarget')[0]
-              : scrollContainer=window;   
-          ScrollToControl(scollToDomY,scrollContainer)
+          document.getElementsByClassName('scrollTarget').length
+              ? scrollContainer = document.getElementsByClassName('scrollTarget')[0]
+              : scrollContainer = window   
+          ScrollToControl(scollToDomY, scrollContainer);
           
       }
     }
