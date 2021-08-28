@@ -8,6 +8,8 @@
 
 ### 基础用法
 
+> done
+
 基本用法当中，Label是在数据框的上面。
 
 <section>
@@ -73,35 +75,159 @@
     </d-form-item>
     <d-form-operation style="display: flex;">
       <d-button type="submit">确定</d-button>
-      <d-button style="margin-left: 20px" @click="resetDFrom1">重置</d-button>
+      <d-button style="margin-left: 20px" @click="resetDForm1">重置</d-button>
     </d-form-operation>
   </d-form>
 </section>
 
 ```html
 <section>
-  <d-form ref="dForm1" :form-data="formModel" labelSize="lg" labelAlign="end" layout="vertical" style="margin-top: 20px" @submit="onConfirm">
-    <d-form-item prop="username">
-      <d-form-label :required="true" >用户名</d-form-label>
+  <d-form ref="dForm" :form-data="formModel" labelSize="lg" labelAlign="end" layout="vertical" style="margin-top: 20px" @submit="onConfirm">
+    <d-form-item prop="name">
+      <d-form-label :required="true" >Name</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.username" />
+        <d-input v-model:value="formModel.name" />
       </d-form-control>
     </d-form-item>
-    <d-form-item dHasFeedback prop="password">
-      <d-form-label :required="true">密码</d-form-label>
+    <d-form-item prop="description">
+      <d-form-label>Description</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.password" />
+        <d-input v-model:value="formModel.description" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="select">
+      <d-form-label :required="true">Select</d-form-label>
+      <d-form-control>
+        <d-select v-model="formModel.select" :options="baseSelectOptions" placeholder="这是默认选择框"></d-select>
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="multipleOptions">
+      <d-form-label>Multiple options</d-form-label>
+      <d-form-control>
+        <d-input v-model:value="formModel.multipleOptions" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="tags">
+      <d-form-label>Tags</d-form-label>
+      <d-form-control>
+        <d-tag-input
+          v-model:tags="formModel.tags"
+          v-model:suggestionList="suggestionList"
+          display-property="name"
+          placeholder="请输入名字"
+          no-data="暂无数据"
+        ></d-tag-input>
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="radio">
+      <d-form-label>Radio</d-form-label>
+      <d-form-control>
+        <d-radio v-model="formModel.radio" value="0">
+          男
+        </d-radio>
+        <d-radio v-model="formModel.radio" value="1">
+          女
+        </d-radio>
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="switch">
+      <d-form-label>Switch</d-form-label>
+      <d-form-control>
+        <d-switch v-model:checked="formModel.switch"></d-switch>
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="executionDay">
+      <d-form-label>Execution day</d-form-label>
+      <d-form-control>
+        <d-checkbox label="Checked" :isShowTitle="false" v-model:checked="formModel.executionDay"> </d-checkbox>
       </d-form-control>
     </d-form-item>
     <d-form-operation style="display: flex;">
-      <d-button @click="onConfirm">确定</d-button>
-      <d-button @click="resetDFrom1" style="margin-left: 20px">重置</d-button>
+      <d-button type="submit">确定</d-button>
+      <d-button style="margin-left: 20px" @click="resetDForm">重置</d-button>
     </d-form-operation>
   </d-form>
 </section>
 ```
 
+```ts
+<script lang="ts">
+import { defineComponent, ref, reactive, toRef, toRefs, onMounted } from 'vue';
+import DFormLabel from '../../../devui/form/src/form-label/form-label';
+import DFormItem from '../../../devui/form/src/form-item/form-item';
+import DFormControl from '../../../devui/form/src/form-control/form-control';
+import DFormOperation from '../../../devui/form/src/form-operation/form-operation';
+
+export default defineComponent({
+  // name: 'DFormDemo',
+  components: {DFormLabel, DFormItem, DFormControl, DFormOperation},
+  props: {
+  },
+  setup(props, ctx) {
+
+
+    let formModel = reactive({
+      name: 'AlanLee',
+      description: '',
+      select: '',
+      multipleOptions: '',
+      tags: [{name: 'Option1'}],
+      radio: 0,
+      radio2: 1,
+      switch: false,
+      executionDay: true,
+    });
+
+    const dForm = ref(null);
+    onMounted(() => {
+
+    });
+
+    const onInputChange = (e: any) => {
+
+    }
+
+    const onUpdateValue = (e: any) => {
+      formModel.name = e;
+    }
+
+    const onConfirm = () => {
+      console.log('form md onConfirm', formModel);
+    }
+
+
+    const resetDForm = () => {
+      dForm1.value.resetFormFields();
+    }
+
+    const baseSelectOptions = reactive([
+      'Option1','Option2','Option3'
+    ])
+
+    const suggestionList = reactive([
+      {name: 'Option1'},
+      {name: 'Option2'},
+      {name: 'Option3'},
+    ]);
+
+    return {
+      formModel,
+      onInputChange,
+      onConfirm,
+      onUpdateValue,
+      resetDForm,
+      dForm,
+      baseSelectOptions,
+      suggestionList,
+    }
+  }
+})
+</script>
+```
+
 ### 横向排列
+
+> done
 
 Label左右布局方式。
 
@@ -227,7 +353,7 @@ Label左右布局方式。
 
 ### 响应式表单验证
 
-> todo
+> done
 
 模板中绑定formGroup、formControlName、formControl，使用dValidateRules配置校验规则。
 
@@ -257,8 +383,77 @@ Label左右布局方式。
 
 ```html
 <section>
-<d-form></d-form>
+<d-form ref="dForm" :form-data="validateFormModel" style="margin-top: 20px" :rules="rules">
+  <d-form-item prop="name">
+    <d-form-label :required="true" >Name</d-form-label>
+    <d-form-control>
+      <d-input v-model:value="validateFormModel.name" />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="nickname">
+    <d-form-label :required="true" >NickName</d-form-label>
+    <d-form-control>
+      <d-input v-model:value="validateFormModel.nickname" />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="age">
+    <d-form-label :required="true" >Age</d-form-label>
+    <d-form-control>
+      <d-input v-model:value="validateFormModel.age" />
+    </d-form-control>
+  </d-form-item>
+</d-form>
 </section>
+```
+
+```ts
+<script lang="ts">
+import { defineComponent, ref, reactive, toRef, toRefs, onMounted } from 'vue';
+import DFormLabel from '../../../devui/form/src/form-label/form-label';
+import DFormItem from '../../../devui/form/src/form-item/form-item';
+import DFormControl from '../../../devui/form/src/form-control/form-control';
+import DFormOperation from '../../../devui/form/src/form-operation/form-operation';
+
+export default defineComponent({
+  // name: 'DFormDemo',
+  components: {DFormLabel, DFormItem, DFormControl, DFormOperation},
+  props: {
+  },
+  setup(props, ctx) {
+    const dForm = ref(null);
+
+    let validateFormModel: IFormModel = reactive({
+      name: 'AlanLee',
+      nickname: 'AlanLee97',
+      age: 24,
+    });
+    const rules = reactive({
+      name: [{ required: true, message: '不能为空', trigger: 'blur'}],
+      nickname: { required: true, message: '不能为空', trigger: 'blur'},
+      age: [
+        { 
+          required: true, 
+          message: '年龄不能小于0', 
+          trigger: 'blur',
+          validator: (rule, value) => value > 0
+        },
+        { 
+          required: true, 
+          message: '年龄不能大于120', 
+          trigger: 'input',
+          validator: (rule, value) => value < 120
+        }
+      ],
+    });
+
+    return {
+      dForm,
+      rules,
+      validateFormModel,
+    }
+  }
+})
+</script>
 ```
 
 ### 指定表单Feedback状态
@@ -398,7 +593,7 @@ export default defineComponent({
       console.log('form md onConfirm2', toRefs(formModel2));
     }
 
-    const resetDFrom1 = () => {
+    const resetDForm1 = () => {
       dForm1.value.resetFormFields();
     }
 
@@ -439,7 +634,7 @@ export default defineComponent({
       onConfirm,
       onConfirm2,
       onUpdateValue,
-      resetDFrom1,
+      resetDForm1,
       dForm1,
       dForm2,
       baseSelectOptions,
