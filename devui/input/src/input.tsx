@@ -1,7 +1,7 @@
-import { defineComponent, computed, inject, reactive } from 'vue';
+import { defineComponent, computed, inject } from 'vue';
 import { inputProps } from './use-input';
 import './input.scss'
-import mitt from 'mitt';
+import { dFormItemEvents, IFormItem } from '../../form/src/form-types';
 
 export default defineComponent({
   name: 'DInput',
@@ -15,25 +15,22 @@ export default defineComponent({
         [sizeCls.value]: props.size !== ''
       }
     });
-    const formItem: any = inject('dFormItem');
+    const formItem: IFormItem = inject('dFormItem');
     const inputType = computed(() => props.showPassword ? 'password' : 'text');
     const onInput = ($event: Event) => {
       ctx.emit('update:value', ($event.target as HTMLInputElement).value);
+      formItem.formItemMitt.emit(dFormItemEvents.input);
     },
       onFocus = () => {
         ctx.emit('focus');
       },
       onBlur = () => {
         ctx.emit('blur');
-        formItem.formItemMitt.emit('d.form.inputBlur');
-        console.log('formItem', formItem);
-        console.log('test-> input blur');
-        
-        
-        
+        formItem.formItemMitt.emit(dFormItemEvents.blur);
       },
       onChange = ($event: Event) => {
         ctx.emit('change', ($event.target as HTMLInputElement).value);
+        formItem.formItemMitt.emit(dFormItemEvents.change);
       },
       onKeydown = ($event: KeyboardEvent) => {
         ctx.emit('keydown', $event);
