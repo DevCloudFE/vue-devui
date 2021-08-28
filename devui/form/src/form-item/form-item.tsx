@@ -20,28 +20,12 @@ export default defineComponent({
 		const formItemMitt = mitt();
 		const dForm: IForm = reactive(inject('dForm', {} as IForm));
 		const formData = reactive(dForm.formData);
+		const initFormTemData = formData[props.prop];
 		const labelData = reactive(dForm.labelData);
 		const rules = reactive(dForm.rules);
 		
 		const resetField = () => {
-			switch(typeof formData[props.prop]) {
-				case 'string': 
-					formData[props.prop] = '';
-					break;
-				case 'number':
-					formData[props.prop] = undefined;
-					break;
-				case 'boolean':
-					formData[props.prop] = false;
-					break;
-			}
-			if(Array.isArray(formData[props.prop])) {
-				formData[props.prop] = [];
-			}
-			if(typeof props.prop === 'object') {
-				formData[props.prop] = null;
-			}
-			console.log('form-item resetField formData', formData);
+			formData[props.prop] = initFormTemData;
 		}
 
 		const formItem = reactive({

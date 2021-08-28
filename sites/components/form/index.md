@@ -72,8 +72,8 @@
       </d-form-control>
     </d-form-item>
     <d-form-operation style="display: flex;">
-      <d-button @click="onConfirm">确定</d-button>
-      <d-button @click="resetDFrom1" style="margin-left: 20px">重置</d-button>
+      <d-button type="submit">确定</d-button>
+      <d-button style="margin-left: 20px" @click="resetDFrom1">重置</d-button>
     </d-form-operation>
   </d-form>
 </section>

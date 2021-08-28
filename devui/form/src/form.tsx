@@ -8,7 +8,7 @@ export default defineComponent({
   name: 'DForm',
   props: formProps,
   emits: ['submit'],
-  setup(props: FormProps) {
+  setup(props: FormProps, ctx) {
     const formMitt = mitt();
     const fields: IFormItem[] =  [];
     const resetFormFields = () => {
@@ -46,17 +46,29 @@ export default defineComponent({
       rules: props.rules,
     });
 
+    const onSubmit = (e) => {
+      // console.log(e);
+      e.preventDefault();
+      
+      console.log('form onSubmit e', e);
+      
+      ctx.emit('submit');
+
+    }
+
+
     // console.log('form props', props);
     
     return {
       formMitt,
       fields,
       resetFormFields,
+      onSubmit,
     }
   },
   render() {
     return (
-      <form>
+      <form onSubmit={this.onSubmit}>
         {this.$slots.default?.()}
       </form>
     );
