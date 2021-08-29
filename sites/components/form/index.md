@@ -234,7 +234,7 @@ Label左右布局方式。
 <section>
 <d-form ref="dForm2" :form-data="formModel2" labelSize="lg" labelAlign="start" layout="horizontal" style="margin-top: 20px">
   <d-form-item>
-    <d-form-label :required="true" hasHelp helpTips="?">用户名</d-form-label>
+    <d-form-label :required="true" hasHelp helpTips="提示内容">用户名</d-form-label>
     <d-form-control extraInfo="Enter a short name that meets reading habits, up to 30 characters, cannot be a system field, and cannot be the same as an existing field.">
       <d-input v-model:value="formModel2.username" />
     </d-form-control>
@@ -458,7 +458,7 @@ export default defineComponent({
 
 ### 指定表单Feedback状态
 
-> doing
+> done
 
 你可通过对d-form-control设置feedbackStatus手动指定反馈状态。当前已支持状态：success、error、pending。
 
@@ -509,7 +509,47 @@ export default defineComponent({
 
 ```html
 <section>
-<d-form></d-form>
+<d-form ref="dForm4" :form-data="formModel4" style="margin-top: 20px">
+  <d-form-item prop="name">
+    <d-form-label :required="true" >Name</d-form-label>
+    <d-form-control feedbackStatus="pending">
+      <d-input name="pendingInput" v-model:value="formModel4.name" />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="nickname">
+    <d-form-label :required="true" >Nickname</d-form-label>
+    <d-form-control feedbackStatus="success">
+      <d-input v-model:value="formModel4.nickname" />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="age">
+    <d-form-label :required="true" >Age</d-form-label>
+    <d-form-control feedbackStatus="error">
+      <d-input v-model:value="formModel4.age" />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="sex">
+    <d-form-label :required="true">Sex</d-form-label>
+    <d-form-control feedbackStatus="error">
+      <d-select v-model="formModel4.sex" :options="sexSelectOptions" placeholder="Select your sex"></d-select>
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="city">
+    <d-form-label :required="true" >City</d-form-label>
+    <d-form-control>
+      <d-input v-model:value="formModel4.city" />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="city">
+    <d-form-label :required="true" >City</d-form-label>
+    <d-form-control suffixTemplate="">
+      <d-input v-model:value="formModel4.city" />
+      <template v-slot:suffixTemplate>
+        <d-icon name="right-o" color="rgb(61, 204, 166)" />
+      </template>
+    </d-form-control>
+  </d-form-item>
+</d-form>
 </section>
 ```
 

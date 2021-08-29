@@ -1,6 +1,7 @@
 import { defineComponent, inject, reactive, computed } from 'vue';
 import { IForm, formLabelProps, FormLabelProps } from '../form-types';
 import './form-label.scss';
+import Icon from '../../../icon/src/icon';
 
 export default defineComponent({
 	name: 'DFormLabel',
@@ -23,7 +24,11 @@ export default defineComponent({
 			return <span class={wrapperCls} style={style}>
 				<span class={className} >
 					{ctx.slots.default?.()} 
-					{props.hasHelp && <span class="form-label-help">{(props.hasHelp ? props.helpTips : '?')}</span>}
+					{
+						props.hasHelp && 
+						<span class="form-label-help">
+							{(props.hasHelp ? <Icon name="helping" color="#252b3a"></Icon> : null)}
+						</span>}
 				</span>
 			</span>
 		}
