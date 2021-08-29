@@ -1,0 +1,69 @@
+@import '../../../style/devui.scss';
+@import '../panel/index.scss';
+
+$calendar-timepicker-width: 100px;
+$head-height: 32px;
+
+.devui-calendar-timepicker {
+  width: $calendar-timepicker-width;
+  height: $panel-height;
+  overflow: hidden;
+  position: relative;
+
+  .head {
+    height: $head-height;
+    line-height: $head-height;
+    background-color: #f1f1f1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    // position: absolute;
+    // width: 100%;
+    // top: 50%;
+    // margin-top: -($head-height / 2);
+
+    // z-index: 20;
+
+    // .chars {
+    //   width: 38%;
+    //   display: flex;
+    //   justify-content: space-between;
+
+    //   span {
+    //     color: #000;
+    //     // font-size: 16px;
+    //     // margin-top: -2px
+    //   }
+    // }
+  }
+
+  .select {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: $panel-height - $head-height;
+    // height: $panel-height;
+    .column {
+      cursor: default;
+      overflow: auto;
+      flex-grow: 1;
+
+      span {
+        display: block;
+        font-size: 11px;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        overflow: hidden;
+        border-radius: 100%;
+        background-color: #f6f6f6;
+
+        &.selected {
+          background-color: #00aaff;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}

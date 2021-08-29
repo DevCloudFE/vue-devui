@@ -1,0 +1,20 @@
+@import '../style/devui.scss';
+
+$cell-font-size: 13px;
+$border-width: 1px;
+$border-style: solid;
+$border-color: #dddddd;
+
+.devui-datepicker-container {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: inline-block;
+  border-width: $border-width;
+  border-style: $border-style;
+  border-color: $border-color;
+  border-radius: $devui-border-radius-card;
+  box-shadow: $devui-shadow-length-base $devui-shadow;
+  background-color: $devui-base-bg;
+  font-size: $cell-font-size;
+}

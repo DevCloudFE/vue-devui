@@ -1,4 +1,4 @@
-import { defineComponent, computed, inject } from 'vue';
+import { defineComponent, computed, inject, ref, watch, toRefs } from 'vue';
 import { inputProps } from './use-input';
 import './input.scss'
 import { dFormItemEvents, IFormItem } from '../../form/src/form-types';
@@ -59,20 +59,25 @@ export default defineComponent({
       onKeydown,
       value
     } = this;
-
     return (
-      <input
-        {...{dinput: true}}
-        value={value}
-        disabled={disabled}
-        type={inputType}
-        placeholder={placeholder}
-        class={inputCls}
-        onInput={onInput}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onChange={onChange}
-        onKeydown={onKeydown} />
+      <div class="devui-input__wrap">
+        <input
+          {...{dinput: true}}
+          value={value}
+          disabled={disabled}
+          type={inputType}
+          placeholder={placeholder}
+          class={inputCls}
+          onInput={onInput}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onChange={onChange}
+          onKeydown={onKeydown} 
+        />
+        {/* <div class="devui-input__preview">
+          <d-icon name="preview" size="12px"></d-icon>
+        </div> */}
+      </div>
     );
   }
 });

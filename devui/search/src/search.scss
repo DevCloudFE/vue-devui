@@ -93,8 +93,8 @@
       cursor: not-allowed;
     }
 
-    svg.svg-icon-search path {
-      fill: $devui-disabled-text;
+    .icon-search {
+      color: $devui-disabled-text !important;
     }
   }
 

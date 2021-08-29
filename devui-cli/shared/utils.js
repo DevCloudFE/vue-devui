@@ -1,5 +1,5 @@
 const { camelCase, upperFirst } = require('lodash')
-const { INDEX_FILE_NAME } = require('./constant')
+const { INDEX_FILE_NAME, DEVUI_DIR } = require('./constant')
 const { resolve } = require('path')
 const logger = require('./logger')
 const fs = require('fs-extra')
@@ -57,17 +57,14 @@ exports.parseExportByFileInfo = (fileInfo, ignoreParseError) => {
 
   while (searchContent.search(partRe) !== -1) {
     const reStartIndex = indexContent.search(partRe)
-    const partStartIndex = indexContent.indexOf('{', reStartIndex) + 1
-    const partEndIndex = indexContent.indexOf('}', partStartIndex) - 1
-
-    const partContent = indexContent.slice(partStartIndex, partEndIndex)
+    const partContent = this.extractStr(indexContent, '{', '}', reStartIndex)
 
     partContent
       .replace(/(\s|\r|\n|\t)/g, '')
       .split(',')
       .forEach((p) => parts.push(p))
 
-    searchContent = indexContent.slice(partEndIndex)
+    searchContent = indexContent.slice(reStartIndex + partContent.length)
   }
 
   exportModule.default = fileInfo.name + 'Install'
@@ -75,4 +72,49 @@ exports.parseExportByFileInfo = (fileInfo, ignoreParseError) => {
   exportModule.fileInfo = fileInfo
 
   return exportModule
+}
+
+exports.parseComponentInfo = (name) => {
+  const componentInfo = {}
+  const indexContent = fs.readFileSync(resolve(DEVUI_DIR, name, INDEX_FILE_NAME), { encoding: 'utf-8' })
+
+  const defaultRe = /export default/
+
+  if (!defaultRe.test(indexContent)) {
+    logger.warning(`${this.bigCamelCase(name)} must have "export default" and component info.`)
+  } else {
+    const reStartIndex = indexContent.indexOf('export default {')
+    const extraRe = /((^['"])|(['"]$))/g
+
+    componentInfo.title = this.extractStr(indexContent, 'title:', ',', reStartIndex).trim().replace(extraRe, '')
+    componentInfo.category = this.extractStr(indexContent, 'category:', ',', reStartIndex).trim().replace(extraRe, '')
+    componentInfo.status = this.transformNullishStr(
+      this.extractStr(indexContent, 'status:', ',', reStartIndex).trim().replace(extraRe, '')
+    )
+  }
+
+  componentInfo.name = this.bigCamelCase(name)
+
+  return componentInfo
+}
+
+exports.transformNullishStr = (str) => {
+  console.log(str)
+  switch (str) {
+    case 'null':
+      return null
+    case 'undefined':
+      return undefined
+    default:
+      return str
+  }
+}
+
+exports.extractStr = (content = '', startKeywords = '', endKeywords = '', startIndex = 0) => {
+  const keywordsStartIndex = content.indexOf(startKeywords, startIndex) + startKeywords.length
+  const keywordsEndIndex = content.indexOf(endKeywords, keywordsStartIndex)
+
+  if ([keywordsStartIndex - startIndex, keywordsEndIndex].some((index) => index < 0)) return ''
+
+  return content.slice(keywordsStartIndex, keywordsEndIndex)
 }
