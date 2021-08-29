@@ -366,7 +366,7 @@ Label左右布局方式。
     </d-form-control>
   </d-form-item>
   <d-form-item prop="nickname">
-    <d-form-label :required="true" >NickName</d-form-label>
+    <d-form-label :required="true" >Nickname</d-form-label>
     <d-form-control>
       <d-input v-model:value="validateFormModel.nickname" />
     </d-form-control>
@@ -391,7 +391,7 @@ Label左右布局方式。
     </d-form-control>
   </d-form-item>
   <d-form-item prop="nickname">
-    <d-form-label :required="true" >NickName</d-form-label>
+    <d-form-label :required="true" >Nickname</d-form-label>
     <d-form-control>
       <d-input v-model:value="validateFormModel.nickname" />
     </d-form-control>
@@ -458,13 +458,42 @@ export default defineComponent({
 
 ### 指定表单Feedback状态
 
-> todo
+> doing
 
 你可通过对d-form-control设置feedbackStatus手动指定反馈状态。当前已支持状态：success、error、pending。
 
 <section>
-<d-form style="margin-top: 20px">
-
+<d-form ref="dForm4" :form-data="formModel4" style="margin-top: 20px">
+  <d-form-item prop="name">
+    <d-form-label :required="true" >Name</d-form-label>
+    <d-form-control feedbackStatus="pending">
+      <d-input name="pendingInput" v-model:value="formModel4.name" />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="nickname">
+    <d-form-label :required="true" >Nickname</d-form-label>
+    <d-form-control feedbackStatus="success">
+      <d-input v-model:value="formModel4.nickname" />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="age">
+    <d-form-label :required="true" >Age</d-form-label>
+    <d-form-control feedbackStatus="error">
+      <d-input v-model:value="formModel4.age" />
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="sex">
+    <d-form-label :required="true">Sex</d-form-label>
+    <d-form-control feedbackStatus="error">
+      <d-select v-model="formModel4.sex" :options="sexSelectOptions" placeholder="Select your sex"></d-select>
+    </d-form-control>
+  </d-form-item>
+  <d-form-item prop="city">
+    <d-form-label :required="true" >City</d-form-label>
+    <d-form-control>
+      <d-input v-model:value="formModel4.city" />
+    </d-form-control>
+  </d-form-item>
 </d-form>
 </section>
 
@@ -521,21 +550,17 @@ import DFormItem from '../../../devui/form/src/form-item/form-item';
 import DFormControl from '../../../devui/form/src/form-control/form-control';
 import DFormOperation from '../../../devui/form/src/form-operation/form-operation';
 
-
-interface IFormModel {
-  username: string,
-  password: string,
-}
-
 export default defineComponent({
   // name: 'DFormDemo',
   components: {DFormLabel, DFormItem, DFormControl, DFormOperation},
   props: {
   },
   setup(props, ctx) {
+    const dForm1 = ref(null);
+    const dForm2 = ref(null);
+    const dForm4 = ref(null);
 
-
-    let formModel: IFormModel = reactive({
+    let formModel = reactive({
       name: 'AlanLee',
       description: '',
       select: '',
@@ -547,25 +572,26 @@ export default defineComponent({
       executionDay: true,
     });
 
-    let formModel2: IFormModel = reactive({
+    let formModel2 = reactive({
       username: 'haha2'
     });
 
-    let validateFormModel: IFormModel = reactive({
+    let validateFormModel = reactive({
       name: 'AlanLee',
       nickname: 'AlanLee97',
       age: 24,
     });
 
-    // console.log('form formModel', formModel);
-
-    const dForm1 = ref(null);
-    const dForm2 = ref(null);
+    let formModel4 = reactive({
+      name: 'AlanLee',
+      nickname: 'AlanLee97',
+      age: 24,
+      sex: '',
+      city: '深圳',
+    });
 
 
     onMounted(() => {
-      // console.log('dForm1', dForm1.value);
-      // console.log('dForm2', dForm2.value);
 
     });
 
@@ -573,7 +599,6 @@ export default defineComponent({
 
     const onInputChange = (e: any) => {
       console.log('form onInputChange', e);
-      // text.value = e;
       
     }
 
@@ -582,8 +607,6 @@ export default defineComponent({
       // formModel.username = e;
       
     }
-
-    // const username = toRefs(formModel);
 
     const onConfirm = () => {
       console.log('form md onConfirm', formModel);
@@ -599,6 +622,10 @@ export default defineComponent({
 
     const baseSelectOptions = reactive([
       'Option1','Option2','Option3'
+    ])
+
+    const sexSelectOptions = reactive([
+      '男', '女'
     ])
 
     const suggestionList = reactive([
@@ -630,6 +657,7 @@ export default defineComponent({
     return {
       formModel,
       formModel2,
+      formModel4,
       onInputChange,
       onConfirm,
       onConfirm2,
@@ -637,7 +665,9 @@ export default defineComponent({
       resetDForm1,
       dForm1,
       dForm2,
+      dForm4,
       baseSelectOptions,
+      sexSelectOptions,
       suggestionList,
       rules,
       validateFormModel,

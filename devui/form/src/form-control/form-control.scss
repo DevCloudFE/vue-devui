@@ -2,4 +2,53 @@
   .star {
     color: red;
   }
+
+  .devui-form-control-container {
+    position: relative;
+
+    .feedback-status {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      z-index: 1;
+      width: 32px;
+      height: 16px;
+      margin-top: -7px;
+      line-height: 16px;
+      text-align: center;
+      visibility: visible;
+      pointer-events: none;
+    }
+  }
+
+  .has-feedback {
+    display: flex;
+    align-items: center;
+
+    input {
+      padding-right: 28px;
+    }
+  }
+
+  .feedback-error {
+    border: 1px solid #f66f6a;
+    border-radius: 2px;
+
+    input {
+      background-color: #ffeeed;
+      border-color: transparent;
+
+      &:hover {
+        border-color: transparent !important;
+      }
+
+      &:focus {
+        border-color: transparent !important;
+      }
+    }
+
+    .devui-select-arrow {
+      right: 24px !important;
+    }
+  }
 }
