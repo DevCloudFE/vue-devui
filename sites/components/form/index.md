@@ -235,13 +235,13 @@ Label左右布局方式。
 <d-form ref="dForm2" :form-data="formModel2" labelSize="lg" labelAlign="start" layout="horizontal" style="margin-top: 20px">
   <d-form-item>
     <d-form-label :required="true" hasHelp helpTips="?">用户名</d-form-label>
-    <d-form-control>
+    <d-form-control extraInfo="Enter a short name that meets reading habits, up to 30 characters, cannot be a system field, and cannot be the same as an existing field.">
       <d-input v-model:value="formModel2.username" />
     </d-form-control>
   </d-form-item>
   <d-form-item>
     <d-form-label :required="true">密码</d-form-label>
-    <d-form-control>
+    <d-form-control style="width: 100%;">
       <d-input v-model:value="formModel2.password" />
     </d-form-control>
   </d-form-item>

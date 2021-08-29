@@ -44,6 +44,7 @@ export default defineComponent({
 		return () => {
 			const {
 				feedbackStatus,
+				extraInfo,
 			} = props;
 			return <div class="form-control" ref={formControl}>
 				
@@ -56,6 +57,8 @@ export default defineComponent({
 						</span>
 					}
 				</div>
+
+				{extraInfo && <div class="devui-form-control-extra-info">{extraInfo}</div>}
 				
 			</div>
 		}
