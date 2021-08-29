@@ -24,7 +24,6 @@ export default defineComponent({
 
 		onMounted(() => {
 			const dom = formControl.value;
-			console.log('dom', dom);
 			
 		});
 
@@ -51,9 +50,10 @@ export default defineComponent({
 				<div class={`devui-form-control-container${feedbackStatus ? ' has-feedback' : ''}${feedbackStatus === 'error' ? ' feedback-error' : ''}`}>
 					{ctx.slots.default?.()}
 					{
-						feedbackStatus &&
+						(feedbackStatus || ctx.slots.suffixTemplate?.()) &&
 						<span class="feedback-status">
-							<Icon name={iconData.value.name} color={iconData.value.color}></Icon>
+							
+							{ctx.slots.suffixTemplate?.() ? ctx.slots.suffixTemplate?.() : <Icon name={iconData.value.name} color={iconData.value.color}></Icon>}
 						</span>
 					}
 				</div>

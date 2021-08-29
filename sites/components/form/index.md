@@ -494,6 +494,15 @@ export default defineComponent({
       <d-input v-model:value="formModel4.city" />
     </d-form-control>
   </d-form-item>
+  <d-form-item prop="city">
+    <d-form-label :required="true" >City</d-form-label>
+    <d-form-control suffixTemplate="">
+      <d-input v-model:value="formModel4.city" />
+      <template v-slot:suffixTemplate>
+        <d-icon name="right-o" color="rgb(61, 204, 166)" />
+      </template>
+    </d-form-control>
+  </d-form-item>
 </d-form>
 </section>
 
