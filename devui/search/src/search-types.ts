@@ -48,6 +48,10 @@ export const searchProps = {
     type: String,
     default: '',
   },
+  searchFn: {
+    type: Function as PropType<(v: string) => void>,
+    default: undefined
+  },
   'onUpdate:modelValue': {
     type: Function as PropType<(v: string) => void>,
     default: undefined
