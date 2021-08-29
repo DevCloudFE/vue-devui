@@ -115,7 +115,7 @@ export default defineComponent({
 		}
 	},
 
-	render() {
+	render(props) {
 		
 		const {
 			isHorizontal,
@@ -123,7 +123,9 @@ export default defineComponent({
 			showMessage,
 			tipMessage,
 		} = this;
-		return <div className={`form-item${isHorizontal ? '' : (isVertical ? ' form-item-vertical' : ' form-item-columns')} `}>
+		console.log('form-item props', props);
+		
+		return <div class={`form-item${isHorizontal ? '' : (isVertical ? ' form-item-vertical' : ' form-item-columns')} `}>
 				{this.$slots.default?.()}
 				<div>{showMessage && tipMessage}</div>
 			</div>

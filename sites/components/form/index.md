@@ -19,10 +19,10 @@
 
 ```vue
 <template>
-  <d-form ref="dForm" :formData="formModel" layout="vertical" @submit="onSubmitForm">
+  <d-form ref="dFormBasic" :formData="formModel" layout="vertical" @submit="onSubmitForm">
     <d-form-item prop="name">
-      <d-form-label required>Name</d-form-label>
-      <d-form-control>
+      <d-form-label required hasHelp>Name</d-form-label>
+      <d-form-control extraInfo="这行是说明文字，可以不用理，你尽管填你的姓名。">
         <d-input v-model:value="formModel.name" />
       </d-form-control>
     </d-form-item>
@@ -88,7 +88,7 @@ import {defineComponent, reactive, ref} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    const dForm = ref(null);
+    const dFormBasic = ref(null);
     let formModel = reactive({
       name: 'AlanLee',
       age: '24',
@@ -103,14 +103,14 @@ export default defineComponent({
       '北京', '上海', '广州', '深圳'
     ]);
     const resetForm = () => {
-      console.log('dForm', dForm.value);
-      dForm.value.resetFormFields();
+      console.log('dFormBasic', dFormBasic.value);
+      dFormBasic.value.resetFormFields();
     }
     const onSubmitForm = () => {
       console.log('onSubmitForm formModel', formModel)
     }
     return {
-      dForm,
+      dFormBasic,
       formModel,
       selectOptions,
       resetForm,
@@ -148,7 +148,7 @@ Label左右布局方式。
 
 ```vue
 <template>
-  <d-form ref="dForm" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
+  <d-form ref="dFormHorizontal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
     <d-form-item prop="name">
       <d-form-label required>Name</d-form-label>
       <d-form-control>
@@ -217,7 +217,7 @@ import {defineComponent, reactive, ref} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    const dForm = ref(null);
+    const dFormHorizontal = ref(null);
     let formModel = reactive({
       name: 'AlanLee',
       age: '24',
@@ -232,14 +232,14 @@ export default defineComponent({
       '北京', '上海', '广州', '深圳'
     ]);
     const resetForm = () => {
-      console.log('dForm', dForm.value);
-      dForm.value.resetFormFields();
+      console.log('dFormHorizontal', dFormHorizontal.value);
+      dFormHorizontal.value.resetFormFields();
     }
     const onSubmitForm = () => {
       console.log('onSubmitForm formModel', formModel)
     }
     return {
-      dForm,
+      dFormHorizontal,
       formModel,
       selectOptions,
       resetForm,
@@ -276,7 +276,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dForm" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
+  <d-form ref="dFormModal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
     <d-form-item prop="name">
       <d-form-label required>Name</d-form-label>
       <d-form-control>
@@ -345,7 +345,7 @@ import {defineComponent, reactive, ref} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    const dForm = ref(null);
+    const dFormModal = ref(null);
     let formModel = reactive({
       name: 'AlanLee',
       age: '24',
@@ -360,14 +360,14 @@ export default defineComponent({
       '北京', '上海', '广州', '深圳'
     ]);
     const resetForm = () => {
-      console.log('dForm', dForm.value);
+      console.log('dFormModal', dFormModal.value);
       dForm.value.resetFormFields();
     }
     const onSubmitForm = () => {
       console.log('onSubmitForm formModel', formModel)
     }
     return {
-      dForm,
+      dFormModal,
       formModel,
       selectOptions,
       resetForm,
@@ -393,6 +393,138 @@ export default defineComponent({
 :::
 
 
+### 多列表单
+
+> todo
+
+多列表单。
+
+
+:::demo
+
+```vue
+<template>
+  <d-form ref="dFormColumn" layout="column" :formData="formModel" @submit="onSubmitForm">
+    <div class="demo-column-form">
+      <d-form-item prop="name" v-for="(item) in 6" :key="item" class="u-1-3 column-item">
+        <d-form-label required>Name</d-form-label>
+        <d-form-control>
+          <d-input />
+        </d-form-control>
+      </d-form-item>
+
+      <d-form-item prop="loveFruits" class="u-1-3 column-item">
+        <d-form-label>Love Fruits</d-form-label>
+        <d-form-control>
+          <d-tag-input
+            v-model:tags="formModel.loveFruits"
+            v-model:suggestionList="formModel.suggestionList"
+            display-property="name"
+            placeholder="请输入喜欢的水果"
+            no-data="暂无数据"
+          ></d-tag-input>
+        </d-form-control>
+      </d-form-item>
+      <d-form-item prop="sex" class="u-1-3 column-item">
+        <d-form-label>Sex</d-form-label>
+        <d-form-control>
+          <d-radio v-model="formModel.sex" value="0">男</d-radio>
+          <d-radio v-model="formModel.sex" value="1">女</d-radio>
+        </d-form-control>
+      </d-form-item>
+      <d-form-item prop="goOffWork" class="u-1-3 column-item">
+        <d-form-label>Go off work</d-form-label>
+        <d-form-control>
+          <d-switch v-model:checked="formModel.goOffWork"></d-switch>
+        </d-form-control>
+      </d-form-item>
+      <d-form-item prop="ladySupport" class="u-1-3 column-item">
+        <d-form-label>Support lady</d-form-label>
+        <d-form-control>
+          <d-checkbox-group v-model="formModel.ladySupport" label="1818黄金眼">
+            <d-checkbox label="郑女士" value="ladyZheng" />
+            <d-checkbox label="小毛" value="ladyMao" />
+            <d-checkbox label="小刘" value="ladyLiu" />
+            <d-checkbox label="小蒋" value="ladyJiang" />
+            <d-checkbox label="小滕" value="ladyTeng" />
+          </d-checkbox-group>
+        </d-form-control>
+      </d-form-item>
+    </div>
+
+    <d-form-operation class="demo-form-operation">
+      <d-button type="submit" class="demo-btn">提交</d-button>
+      <d-button bsStyle="common" @click="resetForm">重置</d-button>
+    </d-form-operation>
+  </d-form>
+
+</template>
+
+<script>
+import {defineComponent, reactive, ref} from 'vue';
+
+export default defineComponent({
+  setup(props, ctx) {
+    const dFormColumn = ref(null);
+    let formModel = reactive({
+      name: 'AlanLee',
+      age: '24',
+      city: '',
+      loveFruits: [{name: 'apple'}],
+      suggestionList: [{name: 'apple'}, {name: 'watermalon'}, {name: 'peach'}],
+      sex: '0',
+      goOffWork: true,
+      ladySupport: ['ladyZheng'],
+    });
+    const selectOptions = reactive([
+      '北京', '上海', '广州', '深圳'
+    ]);
+    const resetForm = () => {
+      console.log('dFormColumn', dFormColumn.value);
+      dFormColumn.value.resetFormFields();
+    }
+    const onSubmitForm = () => {
+      console.log('onSubmitForm formModel', formModel)
+    }
+    return {
+      dFormColumn,
+      formModel,
+      selectOptions,
+      resetForm,
+      onSubmitForm
+    }
+  }
+})
+</script>
+
+<style>
+.demo-form-operation {
+  display: flex;
+  align-items: center;
+}
+.demo-btn {
+  margin-right: 10px;
+}
+.demo-column-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+.column-item {
+  margin-bottom: 20px;
+}
+.column-item .form-control {
+  width: 200px !important;
+}
+.u-1-3 {
+  width: 33.3%;
+}
+</style>
+
+```
+
+:::
+
+
 
 ### 模板驱动表单验证
 
@@ -405,7 +537,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dForm" :formData="formModel" labelSize="lg">
+  <d-form ref="dFormTemplateValidate" :formData="formModel" labelSize="lg">
     <d-form-item prop="name">
       <d-form-label required>Name</d-form-label>
       <d-form-control>
@@ -417,6 +549,7 @@ export default defineComponent({
       <d-form-control>
         <d-input v-model:value="formModel.age" />
       </d-form-control>
+    </d-form-item>
   </d-form>
 
 </template>
@@ -426,14 +559,14 @@ import {defineComponent, reactive, ref} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    const dForm = ref(null);
+    const dFormTemplateValidate = ref(null);
     let formModel = reactive({
       name: 'AlanLee',
       age: '24',
     });
 
     return {
-      dForm,
+      dFormTemplateValidate,
       formModel,
     }
   }
@@ -467,7 +600,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form :form-data="validateFormModel" :rules="rules">
+  <d-form ref="dFormReactiveValidate" :form-data="validateFormModel" :rules="rules">
     <d-form-item prop="name">
       <d-form-label :required="true" >Name</d-form-label>
       <d-form-control>
@@ -489,7 +622,7 @@ import {defineComponent, reactive, ref} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    const dForm = ref(null);
+    const dFormReactiveValidate = ref(null);
     let validateFormModel = reactive({
       name: 'AlanLee',
       age: '24',
@@ -513,7 +646,7 @@ export default defineComponent({
     });
 
     return {
-      dForm,
+      dFormReactiveValidate,
       rules,
       validateFormModel,
     }
@@ -548,7 +681,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dForm" :form-data="formModel">
+  <d-form ref="dFormFeedback" :form-data="formModel">
     <d-form-item prop="name">
       <d-form-label :required="true" >Name</d-form-label>
       <d-form-control feedbackStatus="pending">
@@ -596,7 +729,7 @@ import {defineComponent, reactive, ref} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    const dForm = ref(null);
+    const dFormFeedback = ref(null);
     let formModel = reactive({
       name: 'AlanLee',
       nickname: 'AlanLee97',
@@ -611,7 +744,7 @@ export default defineComponent({
     ])
     
     return {
-      dForm,
+      dFormFeedback,
       formModel,
       sexSelectOptions,
     }
@@ -646,7 +779,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dForm" :form-data="formModel">
+  <d-form ref="dFormTogetherValidate" :form-data="formModel">
     <d-form-item prop="name">
       <d-form-label :required="true" >Name</d-form-label>
       <d-form-control>
@@ -667,14 +800,14 @@ import {defineComponent, reactive, ref} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    const dForm = ref(null);
+    const dFormTogetherValidate = ref(null);
     let formModel = reactive({
       name: 'AlanLee',
       age: '24',
     });
 
     return {
-      dForm,
+      dFormTogetherValidate,
       formModel,
     }
   }
@@ -707,7 +840,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dForm" :form-data="formModel">
+  <d-form ref="dFormWithComponent" :form-data="formModel">
     <d-form-item prop="name">
       <d-form-label :required="true" >Name</d-form-label>
       <d-form-control>
@@ -728,14 +861,14 @@ import {defineComponent, reactive, ref} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    const dForm = ref(null);
+    const dFormWithComponent = ref(null);
     let formModel = reactive({
       name: 'AlanLee',
       age: '24',
     });
 
     return {
-      dForm,
+      dFormWithComponent,
       formModel,
     }
   }
@@ -754,3 +887,34 @@ export default defineComponent({
 
 ```
 :::
+
+
+
+### Form Attributes
+
+| 参数       | 说明                                                         | 类型   | 可选值                              | 默认值       |
+| ---------- | ------------------------------------------------------------ | ------ | ----------------------------------- | ------------ |
+| layout     | 可选，设置表单的排列方式                                     | string | `horizontal`、`vertical`、`columns` | `horizontal` |
+| labelSize  | 可选，设置 label 的占宽，未设置默认为 100px，'sm'对应 80px，'lg'对应 150px | string | `sm`、` `、`lg`                     | ` `          |
+| labelAlign | 可选，设置水平布局方式下，label 对齐方式                     | string | `start`、`center`、`end`            | `start`      |
+
+
+
+### Form Methods
+
+| 方法名 | 说明                                                | 参数 |
+| ------ | --------------------------------------------------- | ---- |
+| submit | 可选，使用 dFormSubmit 绑定元素触发提交时，响应事件 | --   |
+
+
+
+### Form-Item Attributes
+
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+| ---- | ---- | ---- | ------ | ------ |
+|      |      |      |        |        |
+|      |      |      |        |        |
+|      |      |      |        |        |
+|      |      |      |        |        |
+|      |      |      |        |        |
+
