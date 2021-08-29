@@ -20,12 +20,12 @@ export default defineComponent({
 		const formItemMitt = mitt();
 		const dForm: IForm = reactive(inject('dForm', {} as IForm));
 		const formData = reactive(dForm.formData);
-		const initFormTemData = formData[props.prop];
+		const initFormItemData = formData[props.prop];
 		const labelData = reactive(dForm.labelData);
 		const rules = reactive(dForm.rules);
 		
 		const resetField = () => {
-			formData[props.prop] = initFormTemData;
+			formData[props.prop] = initFormItemData;
 		}
 
 		const formItem = reactive({
@@ -123,7 +123,7 @@ export default defineComponent({
 			showMessage,
 			tipMessage,
 		} = this;
-		return <div class={`form-item${isHorizontal ? '' : (isVertical ? ' form-item-vertical' : ' form-item-columns')} `}>
+		return <div className={`form-item${isHorizontal ? '' : (isVertical ? ' form-item-vertical' : ' form-item-columns')} `}>
 				{this.$slots.default?.()}
 				<div>{showMessage && tipMessage}</div>
 			</div>

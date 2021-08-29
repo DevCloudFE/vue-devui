@@ -22,8 +22,8 @@ export const formProps = {
     default: 'start', // 'start' | 'center' | 'end'
   },
   rules: {
-    type: Array,
-    default: [], 
+    type: Object,
+    default: {}, 
   },
 } as const
 
