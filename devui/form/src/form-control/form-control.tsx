@@ -1,6 +1,7 @@
-import { defineComponent, inject, onMounted, nextTick, ref, computed } from 'vue';
+import { defineComponent, inject, onMounted, ref, computed, reactive } from 'vue';
 import './form-control.scss';
-import Icon from '../../../icon/src/icon'
+import Icon from '../../../icon/src/icon';
+import {IForm} from '../form-types';
 
 export default defineComponent({
 	name: 'DFormControl',
@@ -21,6 +22,9 @@ export default defineComponent({
 	setup(props, ctx) {
 
 		const formControl = ref();
+		const dForm: IForm = reactive(inject('dForm', {} as IForm));
+		const labelData = reactive(dForm.labelData);
+		const isHorizontal = labelData.layout === 'horizontal';
 
 		onMounted(() => {
 			const dom = formControl.value;
@@ -47,7 +51,7 @@ export default defineComponent({
 			} = props;
 			return <div class="form-control" ref={formControl}>
 				
-				<div class={`devui-form-control-container${feedbackStatus ? ' has-feedback' : ''}${feedbackStatus === 'error' ? ' feedback-error' : ''}`}>
+				<div class={`devui-form-control-container${isHorizontal ? ' devui-form-control-container-horizontal' : ''}${feedbackStatus ? ' has-feedback' : ''}${feedbackStatus === 'error' ? ' feedback-error' : ''}`}>
 					{ctx.slots.default?.()}
 					{
 						(feedbackStatus || ctx.slots.suffixTemplate?.()) &&

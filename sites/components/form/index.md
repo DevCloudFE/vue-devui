@@ -407,7 +407,7 @@ export default defineComponent({
   <d-form ref="dFormColumn" layout="column" :formData="formModel" @submit="onSubmitForm">
     <div class="demo-column-form">
       <d-form-item prop="name" v-for="(item) in 6" :key="item" class="u-1-3 column-item">
-        <d-form-label required>Name</d-form-label>
+        <d-form-label required hasHelp>Name</d-form-label>
         <d-form-control>
           <d-input />
         </d-form-control>
@@ -895,7 +895,7 @@ export default defineComponent({
 | 参数       | 说明                                                         | 类型   | 可选值                              | 默认值       |
 | ---------- | ------------------------------------------------------------ | ------ | ----------------------------------- | ------------ |
 | layout     | 可选，设置表单的排列方式                                     | string | `horizontal`、`vertical`、`columns` | `horizontal` |
-| labelSize  | 可选，设置 label 的占宽，未设置默认为 100px，'sm'对应 80px，'lg'对应 150px | string | `sm`、` `、`lg`                     | ` `          |
+| labelSize  | 可选，设置 label 的占宽，未设置默认为 100px，'sm'对应 80px，'lg'对应 150px | string | `sm`、`lg`                          | --           |
 | labelAlign | 可选，设置水平布局方式下，label 对齐方式                     | string | `start`、`center`、`end`            | `start`      |
 
 
@@ -910,11 +910,29 @@ export default defineComponent({
 
 ### Form-Item Attributes
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-| ---- | ---- | ---- | ------ | ------ |
-|      |      |      |        |        |
-|      |      |      |        |        |
-|      |      |      |        |        |
-|      |      |      |        |        |
-|      |      |      |        |        |
+| 参数         | 说明                                        | 类型    | 可选值          | 默认值  |
+| ------------ | ------------------------------------------- | ------- | --------------- | ------- |
+| dHasFeedback | 可选，设置当前 formControl 是否显示反馈图标 | boolean | `true`、`false` | `false` |
+
+
+
+### Form-Lable Attributes
+
+| 参数     | 说明                                               | 类型    | 可选值          | 默认值  |
+| -------- | -------------------------------------------------- | ------- | --------------- | ------- |
+| required | 可选，表单选项是否必填                             | boolean | `true`、`false` | `false` |
+| hasHelp  | 可选，表单项是否需要帮助指引                       | boolean | `true`、`false` | `false` |
+| helpTips | 可选，表单项帮助指引提示内容，需配合 `hasHelp`使用 | string  |                 | --      |
+
+
+
+### Form-Control Attributes
+
+| 参数           | 说明                                                       | 类型    | 可选值          | 默认值  |
+| -------------- | ---------------------------------------------------------- | ------- | --------------- | ------- |
+| extraInfo      | 可选，附件信息，一般用于补充表单选项的说明                 | string  |                 | --      |
+| feedbackStatus | 可选，手动指定当前 control 状态反馈                        | boolean | `true`、`false` | `false` |
+| suffixTemplate | 可选，可传入图标模板作为输入框后缀（通过插槽传入icon组件） |         |                 | --      |
+
+
 
