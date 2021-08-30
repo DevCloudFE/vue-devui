@@ -22,7 +22,7 @@ export default defineComponent({
 
 ## 属性 auto-close
 
-|名称|说明|
+|项目|说明|
 |----|----|
 |名称|auto-close / autoClose|
 |类型|boolean|
@@ -45,7 +45,7 @@ export default defineComponent({
 
 ## 属性 range
 
-|名称|说明|
+|项目|说明|
 |----|----|
 |名称|range|
 |类型|boolean|
@@ -67,7 +67,7 @@ export default defineComponent({
 
 ## 属性 format
 
-|名称|类型|
+|项目|类型|
 |----|----|
 |名称|format|
 |类型|string|
@@ -96,7 +96,7 @@ export default defineComponent({
 
 ## 属性 range-spliter
 
-|名称|类型|
+|项目|类型|
 |----|----|
 |名称|range-spliter / rangeSpliter|
 |类型|string|
