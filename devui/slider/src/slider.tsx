@@ -1,4 +1,4 @@
-import { defineComponent, ref,computed } from 'vue';
+import { defineComponent, ref, computed, onMounted } from 'vue';
 import { sliderProps } from './slider-types';
 import { Input } from '../../input';
 import './slider.scss';
@@ -9,35 +9,39 @@ export default defineComponent({
     Input,
   },
   props: sliderProps,
-  emits: [],
-  setup(props) {
+  emits: ['update:modelValue'],
+  setup(props, ctx) {
     let isClick = true;
-    let currentX = 0;
-    let startX = 0;
-    //移动或者点击后的实际偏移的像素
-    let pxOffset = 0;
     let startPosition = 0;
-    //用以定位button的位置
-    const currentPosition = ref<any>(0);
+    let startX = 0;
+
+    const inputValue = ref<number>(props.modelValue);
+    const currentPosition = ref<number>(0);
+    const newPostion = ref<number>(0);
     //当前的位置以百分比显示
     const percentDispaly = ref<string>('');
-    //输入后的值
-    const inputValue = ref<number>(props.min);
-    const newPostion = ref<number>(0);
     const renderShowInput = () => {
-      return props.showInput ? (
-        <d-input
-          onInput={handleOnInput}
-          value={inputValue.value + ''}
-        ></d-input>
-      ) : (
-        ''
-      );
+      return props.showInput ? <d-input onInput={handleOnInput} value={inputValue.value + ''}></d-input> : '';
     };
+
+    //当传入modelValue时用以定位button的位置
+    if (props.modelValue > props.max) {
+      percentDispaly.value = '100%';
+    } else if (props.modelValue < props.min) {
+      percentDispaly.value = '0%';
+    } else {
+      percentDispaly.value = ((props.modelValue - props.min) * 100) / (props.max - props.min) + '%';
+    }
+
+    //一挂载就进行当前位置的计算，以后的移动基于当前的位置移动
+    onMounted(() => {
+      const sliderWidth = document.querySelector('.devui-slider__runway').clientWidth;
+      currentPosition.value = (sliderWidth * (inputValue.value - props.min)) / (props.max - props.min);
+    });
+
     function handleonMousedown(event: MouseEvent) {
       //props.disabled状态是不能点击拖拽的
       if (props.disabled || props.disabled) return;
-      
       //阻止默认事件
       event.preventDefault();
       dragStart(event);
@@ -52,6 +56,7 @@ export default defineComponent({
       //获取当前的x坐标值
       startX = event.clientX;
       //把当前值给startPosition，以便后面再重新拖拽时,会以当前的位置计算偏移
+
       startPosition = currentPosition.value;
       newPostion.value = startPosition;
     }
@@ -63,10 +68,11 @@ export default defineComponent({
      *
      */
     function onDragging(event: MouseEvent) {
-      currentX = event.clientX;
-      pxOffset = currentX - startX;
+      const currentX = event.clientX;
+      const pxOffset = currentX - startX;
       //移动的x方向上的偏移+初始位置等于新位置
       newPostion.value = startPosition + pxOffset;
+
       setPostion(newPostion.value);
     }
     function onDragEnd() {
@@ -78,45 +84,43 @@ export default defineComponent({
       window.removeEventListener('mousemove', onDragging);
       window.removeEventListener('mouseup', onDragEnd);
     }
-
     function setPostion(newPosition: number) {
       //获取slider的实际长度的像素
-      const sliderWidth: number = document.querySelector(
-        '.devui-slider__runway'
-      ).clientWidth;
+      const sliderWidth: number = Math.round(document.querySelector('.devui-slider__runway').clientWidth);
+
       if (newPosition < 0) {
         newPosition = 0;
-      } else if (Math.ceil(newPosition) >= Math.ceil(sliderWidth)) {
-        //当到达类似98%时,进行边界判定，设置值为100%
-        currentPosition.value = sliderWidth;
-        inputValue.value = props.max;
-        percentDispaly.value = '100%';
-        return;
       }
       //计算slider的实际像素每段的长度
-      const LengthPerStep =
-        sliderWidth / ((props.max - props.min) / props.step);
+      const LengthPerStep = sliderWidth / ((props.max - props.min) / props.step);
       //计算实际位移的取整段数
       const steps = Math.round(newPosition / LengthPerStep);
       //实际的偏移像素
       const value: number = steps * LengthPerStep;
 
-      //这个是向左偏移百分比的值
+      //要是刚好划过半段切刚好超出最大长度的情况进行限定
+      if (Math.round(value) >= sliderWidth) {
+        currentPosition.value = sliderWidth;
+        inputValue.value = props.max;
+        percentDispaly.value = '100%';
+        ctx.emit('update:modelValue', props.max);
+        return;
+      }
+
+      //向左偏移百分比的值
       percentDispaly.value = Math.round((value * 100) / sliderWidth) + '%';
       //更新输入框的值
-      inputValue.value =
-        Math.round((value * (props.max - props.min)) / sliderWidth) + props.min;
+      inputValue.value = Math.round((value * (props.max - props.min)) / sliderWidth) + props.min;
       //设置当前所在的位置
-      currentPosition.value = value;
-
-      //比如props.max为50 setp等于3 滑到48时，再滑动不能到51
+      currentPosition.value = newPosition;
+      ctx.emit('update:modelValue', inputValue.value);
     }
 
+    //当点击滑动条时,
     function handleClick(event) {
-       if (!props.disabled&&isClick) {
+      if (!props.disabled && isClick) {
         startX = event.target.getBoundingClientRect().left;
-        currentX = event.clientX;
-
+        const currentX = event.clientX;
         setPostion(currentX - startX);
       } else {
         return;
@@ -137,55 +141,28 @@ export default defineComponent({
         }
         const re = /^(?:[1-9]?\d|100)$/;
         if (re.test(`${inputValue.value}`)) {
-          percentDispaly.value =
-            ((inputValue.value - props.min) * 100) / (props.max - props.min) +
-            '%';
+          percentDispaly.value = ((inputValue.value - props.min) * 100) / (props.max - props.min) + '%';
         }
       }
     }
-
-    const outerCls={
-      'devui-slider':true,
-      'devui-disabled':props.disabled
-    }
-
-    const runwayClazz=computed(()=>{
-      
-      return props.disabled ? 'devui-slider__runway disabled':'devui-slider__runway'
-         
-    })
-
-    const barClazz=computed(()=>{
-      
-      return props.disabled ? 'devui-slider__bar disabled':'devui-slider__bar'
-         
-    })
-    const btnClazz=computed(()=>{
-      
-      return props.disabled ? 'devui-slider__button disabled':'devui-slider__button'
-         
-    })
-
+    //添加disabled类
+    const disableClzz = computed(() => {
+      return props.disabled ? ' disabled' : '';
+    });
     return () => (
-      <div class="devui-slider">
+      <div class='devui-slider'>
         {/* 整个的长度 */}
-        <div class={runwayClazz.value} onClick={handleClick}>
+        <div class={'devui-slider__runway' + disableClzz.value} onClick={handleClick}>
           {/* 滑动后左边的进度条 */}
+          <div class={'devui-slider__bar' + disableClzz.value} style={{ width: percentDispaly.value }}></div>
           <div
-            class={barClazz.value}
-            
-            style={{ width: percentDispaly.value }}
-          ></div>
-          <div
-            class={btnClazz.value}
-            // style={{left:newPostion+'px'}}
+            class={'devui-slider__button' + disableClzz.value}
             style={{ left: percentDispaly.value }}
             onMousedown={handleonMousedown}
           ></div>
         </div>
-        <span class="devui-min_count">{props.min}</span>
-        <span class="devui-max_count">{props.max}</span>
-        {/* <d-input onInput={handleOnInput} value={inputValue.value}></d-input> */}
+        <span class='devui-min_count'>{props.min}</span>
+        <span class='devui-max_count'>{props.max}</span>
         {renderShowInput()}
       </div>
     );
