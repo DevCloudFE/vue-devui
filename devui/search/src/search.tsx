@@ -36,7 +36,9 @@ export default defineComponent({
             size={props.size}
             disabled={props.disabled}
             value={keywords.value}
+            maxLength={props.maxLength}
             placeholder={props.placeholder}
+            cssClass={props.cssClass}
             onKeydown={onInputKeydown}
             onUpdate:value={onInputUpdate}
           ></DInput>
