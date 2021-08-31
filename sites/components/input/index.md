@@ -96,4 +96,4 @@ export default defineComponent({
 |    disabled    | `boolean` | false | 可选，文本框是否被禁用           | [基本用法](#基本用法)             ||
 | error | `boolean` |  false   | 可选，文本框是否出现输入错误 | [基本用法](#基本用法) ||
 | size | `'sm'\|''\|'lg'` |  ''   | 可选，文本框尺寸，有三种选择`'lg'`,`''`,`'sm'` | [基本用法](#尺寸) ||
-
+| cssClass | `string` |  ''  | 可选，支持传入类名到输入框上 |  ||
