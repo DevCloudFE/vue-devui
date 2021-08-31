@@ -18,7 +18,7 @@ export default defineComponent({
 		
 		const wrapperCls = `form-label${isHorizontal ? (isSm ? ' form-label_sm' : (isLg ? ' form-label_lg' : ' form-label_sd')) : ''}${isCenter ? ' form-label_center' : (isEnd ? ' form-label_end' : '')}`;
 		const className = `${props.required ? ' devui-required' : ''}`;
-		const style = {display: isHorizontal ? 'inline' : 'block'};
+		const style = {display: isHorizontal ? 'inline' : 'inline-block'};
 		
 		return () => {
 			return <span class={wrapperCls} style={style}>

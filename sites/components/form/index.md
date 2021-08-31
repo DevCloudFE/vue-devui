@@ -35,7 +35,7 @@
     <d-form-item prop="city">
       <d-form-label>City</d-form-label>
       <d-form-control>
-        <d-select v-model:value="formModel.city" :options="selectOptions" />
+        <d-select v-model="formModel.city" :options="selectOptions" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="loveFruits">
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import {defineComponent, reactive, ref} from 'vue';
+import {defineComponent, reactive, ref, nextTick} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
@@ -92,7 +92,7 @@ export default defineComponent({
     let formModel = reactive({
       name: 'AlanLee',
       age: '24',
-      city: '',
+      city: '深圳',
       loveFruits: [{name: 'apple'}],
       suggestionList: [{name: 'apple'}, {name: 'watermalon'}, {name: 'peach'}],
       sex: '0',
@@ -103,8 +103,9 @@ export default defineComponent({
       '北京', '上海', '广州', '深圳'
     ]);
     const resetForm = () => {
-      console.log('dFormBasic', dFormBasic.value);
+      console.log('formData reset before', dFormBasic.value.formData);
       dFormBasic.value.resetFormFields();
+      console.log('formData reset after', dFormBasic.value.formData);
     }
     const onSubmitForm = () => {
       console.log('onSubmitForm formModel', formModel)
@@ -395,7 +396,7 @@ export default defineComponent({
 
 ### 多列表单
 
-> todo
+> done
 
 多列表单。
 
@@ -404,60 +405,56 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormColumn" layout="column" :formData="formModel" @submit="onSubmitForm">
-    <div class="demo-column-form">
-      <d-form-item prop="name" v-for="(item) in 6" :key="item" class="u-1-3 column-item">
-        <d-form-label required hasHelp>Name</d-form-label>
-        <d-form-control>
-          <d-input />
-        </d-form-control>
-      </d-form-item>
-
-      <d-form-item prop="loveFruits" class="u-1-3 column-item">
-        <d-form-label>Love Fruits</d-form-label>
-        <d-form-control>
-          <d-tag-input
-            v-model:tags="formModel.loveFruits"
-            v-model:suggestionList="formModel.suggestionList"
-            display-property="name"
-            placeholder="请输入喜欢的水果"
-            no-data="暂无数据"
-          ></d-tag-input>
-        </d-form-control>
-      </d-form-item>
-      <d-form-item prop="sex" class="u-1-3 column-item">
-        <d-form-label>Sex</d-form-label>
-        <d-form-control>
-          <d-radio v-model="formModel.sex" value="0">男</d-radio>
-          <d-radio v-model="formModel.sex" value="1">女</d-radio>
-        </d-form-control>
-      </d-form-item>
-      <d-form-item prop="goOffWork" class="u-1-3 column-item">
-        <d-form-label>Go off work</d-form-label>
-        <d-form-control>
-          <d-switch v-model:checked="formModel.goOffWork"></d-switch>
-        </d-form-control>
-      </d-form-item>
-      <d-form-item prop="ladySupport" class="u-1-3 column-item">
-        <d-form-label>Support lady</d-form-label>
-        <d-form-control>
-          <d-checkbox-group v-model="formModel.ladySupport" label="1818黄金眼">
-            <d-checkbox label="郑女士" value="ladyZheng" />
-            <d-checkbox label="小毛" value="ladyMao" />
-            <d-checkbox label="小刘" value="ladyLiu" />
-            <d-checkbox label="小蒋" value="ladyJiang" />
-            <d-checkbox label="小滕" value="ladyTeng" />
-          </d-checkbox-group>
-        </d-form-control>
-      </d-form-item>
-    </div>
+  <d-form ref="dFormColumn" layout="columns" :formData="formModel" @submit="onSubmitForm">
+    <d-form-item prop="name" v-for="(item) in 6" :key="item" class="column-item">
+      <d-form-label required hasHelp>Name</d-form-label>
+      <d-form-control>
+        <d-input />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="loveFruits" class="column-item">
+      <d-form-label>Love Fruits</d-form-label>
+      <d-form-control>
+        <d-tag-input
+          v-model:tags="formModel.loveFruits"
+          v-model:suggestionList="formModel.suggestionList"
+          display-property="name"
+          placeholder="请输入喜欢的水果"
+          no-data="暂无数据"
+        ></d-tag-input>
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="sex" class="column-item">
+      <d-form-label>Sex</d-form-label>
+      <d-form-control>
+        <d-radio v-model="formModel.sex" value="0">男</d-radio>
+        <d-radio v-model="formModel.sex" value="1">女</d-radio>
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="goOffWork" class="column-item">
+      <d-form-label>Go off work</d-form-label>
+      <d-form-control>
+        <d-switch v-model:checked="formModel.goOffWork"></d-switch>
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="ladySupport" class="column-item">
+      <d-form-label>Support lady</d-form-label>
+      <d-form-control>
+        <d-checkbox-group v-model="formModel.ladySupport" label="1818黄金眼">
+          <d-checkbox label="郑女士" value="ladyZheng" />
+          <d-checkbox label="小毛" value="ladyMao" />
+          <d-checkbox label="小刘" value="ladyLiu" />
+          <d-checkbox label="小蒋" value="ladyJiang" />
+          <d-checkbox label="小滕" value="ladyTeng" />
+        </d-checkbox-group>
+      </d-form-control>
+    </d-form-item>
 
     <d-form-operation class="demo-form-operation">
       <d-button type="submit" class="demo-btn">提交</d-button>
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
-
 </template>
 
 <script>
@@ -504,19 +501,6 @@ export default defineComponent({
 }
 .demo-btn {
   margin-right: 10px;
-}
-.demo-column-form {
-  display: flex;
-  flex-wrap: wrap;
-}
-.column-item {
-  margin-bottom: 20px;
-}
-.column-item .form-control {
-  width: 200px !important;
-}
-.u-1-3 {
-  width: 33.3%;
 }
 </style>
 

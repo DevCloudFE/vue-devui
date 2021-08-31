@@ -68,7 +68,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} class="d-form">
         {this.$slots.default?.()}
       </form>
     );

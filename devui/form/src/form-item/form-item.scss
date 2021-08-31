@@ -10,4 +10,15 @@
 
 .form-item-columns {
   flex-direction: column;
+  display: inline-block !important;
+}
+// .u-1-3 {
+//   width: 33.3%;
+// }
+.column-item {
+  margin-bottom: 20px;
+}
+
+.column-item .form-control {
+  width: 60% !important;
 }
