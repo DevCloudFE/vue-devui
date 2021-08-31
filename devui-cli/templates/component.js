@@ -78,9 +78,9 @@ exports.createIndexTemplate = ({
   const importDirectiveStr = `\nimport ${bigCamelCase(directiveName)} from './src/${directiveName}'`
   const importServiceStr = `\nimport ${bigCamelCase(serviceName)} from './src/${serviceName}'`
 
-  const installComponentStr = `\n\t\tapp.use(${bigCamelCase(componentName)} as any)`
-  const installDirectiveStr = `\n\t\tapp.directive('${bigCamelCase(componentName)}', ${bigCamelCase(directiveName)})`
-  const installServiceStr = `\n\t\tapp.config.globalProperties.$${camelCase(serviceName)} = ${bigCamelCase(
+  const installComponentStr = `\n    app.use(${bigCamelCase(componentName)} as any)`
+  const installDirectiveStr = `\n    app.directive('${bigCamelCase(componentName)}', ${bigCamelCase(directiveName)})`
+  const installServiceStr = `\n    app.config.globalProperties.$${camelCase(serviceName)} = ${bigCamelCase(
     serviceName
   )}`
 
@@ -101,7 +101,7 @@ import type { App } from 'vue'\
 ${importStr}
 ${
   hasComponent
-    ? `\n${bigCamelCase(componentName)}.install = function(app: App) {
+    ? `\n${bigCamelCase(componentName)}.install = function(app: App): void {
   app.component(${bigCamelCase(componentName)}.name, ${bigCamelCase(componentName)})
 }\n`
     : ''
@@ -117,7 +117,8 @@ export { ${[
 export default {
   title: '${bigCamelCase(componentName)} ${title}',
   category: '${category}',
-  install(app: App) {\
+  status: undefined, \/\/ TODO: 组件若开发完成则填入"已完成"，并删除该注释
+  install(app: App): void {
     ${installStr}
   }
 }

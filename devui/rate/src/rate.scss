@@ -60,6 +60,10 @@
   color: $devui-dividing-line;
   line-height: 1.5;
 
+  .icon {
+    color: $devui-dividing-line !important;
+  }
+
   svg g {
     fill: $devui-dividing-line;
   }

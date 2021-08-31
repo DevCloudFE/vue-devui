@@ -1,80 +1,80 @@
-import { defineComponent, onMounted, reactive, ref } from 'vue';
-import { rateProps } from './use-rate';
-import './rate.scss';
+import { defineComponent, onMounted, reactive, ref } from 'vue'
+import { rateProps } from './use-rate'
+import './rate.scss'
 
 export default defineComponent({
   name: 'DRate',
   props: rateProps,
-  emits: ['change', 'update:value'],
+  emits: ['change', 'update:modelValue'],
   setup(props, ctx) {
-    const totalLevelArray = reactive<Record<string, any>[]>([]);
-    const chooseValue = ref(0);
+    const totalLevelArray = reactive<Record<string, any>[]>([])
+    const chooseValue = ref(0)
 
     // 根据mouseMove，mouseLeave,select等操作，改变颜色与是否选中
     const setChange = (start: number, end: number, width: string) => {
       for (let i = start; i < end; i++) {
-        totalLevelArray[i]['width'] = width;
+        totalLevelArray[i]['width'] = width
       }
-    };
+    }
 
     // 初始化设置
     const initRating = () => {
-      if (!props.value) {
-        return;
+      if (!props.modelValue) {
+        return
       }
-      chooseValue.value = props.value - 1;
-      const halfStar = chooseValue.value % 1;
-      const intCurrentLevel = Math.floor(chooseValue.value);
-      setChange(0, intCurrentLevel + 1, '100%');
+      chooseValue.value = props.modelValue - 1
+      const halfStar = chooseValue.value % 1
+      const intCurrentLevel = Math.floor(chooseValue.value)
+      setChange(0, intCurrentLevel + 1, '100%')
       if (halfStar > 0) {
-        totalLevelArray[intCurrentLevel + 1]['width'] = halfStar * 100 + '%';
-        setChange(intCurrentLevel + 2, props.count, '0');
+        totalLevelArray[intCurrentLevel + 1]['width'] = halfStar * 100 + '%'
+        setChange(intCurrentLevel + 2, props.count, '0')
       } else {
-        setChange(intCurrentLevel + 1, props.count, '0');
+        setChange(intCurrentLevel + 1, props.count, '0')
       }
-    };
+    }
 
     onMounted(() => {
       for (let i = 0; i < props.count; i++) {
-        totalLevelArray.push({ width: '0' });
+        totalLevelArray.push({ width: '0' })
       }
-      initRating();
-    });
+      initRating()
+    })
 
     const hoverToggle = (_, index: number, reset = false) => {
       if (props.read) {
-        return;
+        return
       }
       if (reset) {
         if (chooseValue.value >= 0) {
-          setChange(0, chooseValue.value + 1, '100%');
-          setChange(chooseValue.value + 1, props.count, '0');
+          setChange(0, chooseValue.value + 1, '100%')
+          setChange(chooseValue.value + 1, props.count, '0')
         } else {
-          setChange(0, props.count, '0');
+          setChange(0, props.count, '0')
         }
       } else {
-        setChange(0, index + 1, '100%');
-        setChange(index + 1, props.count, '0');
+        setChange(0, index + 1, '100%')
+        setChange(index + 1, props.count, '0')
       }
-    };
+    }
 
     const selectValue = (index: number) => {
       if (props.read) {
-        return;
+        return
       }
-      setChange(0, index + 1, '100%');
-      setChange(index + 1, props.count, '0');
-      chooseValue.value = index;
-      props.onChange && props.onChange(index + 1);
-      props.onTouched && props.onTouched();
-      ctx.emit('update:value', index + 1);
-    };
+      setChange(0, index + 1, '100%')
+      setChange(index + 1, props.count, '0')
+      chooseValue.value = index
+      props.onChange && props.onChange(index + 1)
+      props.onTouched && props.onTouched()
+      ctx.emit('update:modelValue', index + 1)
+    }
     return {
       totalLevelArray,
       chooseValue,
       hoverToggle,
       selectValue,
-    };
+    }
   },
   render() {
     const {
@@ -87,7 +87,7 @@ export default defineComponent({
       color,
       hoverToggle,
       selectValue,
-    } = this;
+    } = this
     return (
       <div
         class="devui-star-container"
@@ -102,9 +102,16 @@ export default defineComponent({
             onMouseover={(e) => hoverToggle(e, index)}
             onClick={() => selectValue(index)}
           >
-            <span class={`devui-star-color ${icon}`}>
-              {character}
-              {!icon && !character && (
+            {icon && !character && (
+              <span class="devui-star-color">
+                <d-icon name={icon} />
+              </span>
+            )}
+            {character && !icon && (
+              <span class="devui-star-color">{character}</span>
+            )}
+            {!icon && !character && (
+              <span class="devui-star-color">
                 <svg
                   width="16px"
                   height="16px"
@@ -124,14 +131,29 @@ export default defineComponent({
                     </g>
                   </g>
                 </svg>
-              )}
-            </span>
-            <span
-              class={`devui-star-color-active devui-active-star devui-star-color-${type} ${icon}`}
-              style={{ color: color, width: item.width }}
-            >
-              {character}
-              {!icon && !character && (
+              </span>
+            )}
+            {icon && !character && (
+              <span
+                class={`devui-star-color-active devui-active-star devui-star-color-${type}`}
+                style={{ width: item.width }}
+              >
+                <d-icon name={icon} color={color} />
+              </span>
+            )}
+            {character && !icon && (
+              <span
+                class={`devui-star-color-active devui-active-star devui-star-color-${type}`}
+                style={{ color: color, width: item.width }}
+              >
+                {character}
+              </span>
+            )}
+            {!character && !icon && (
+              <span
+                class={`devui-star-color-active devui-active-star devui-star-color-${type}`}
+                style={{ color: color, width: item.width }}
+              >
                 <svg
                   width="16px"
                   height="16px"
@@ -151,11 +173,11 @@ export default defineComponent({
                     </g>
                   </g>
                 </svg>
-              )}
-            </span>
+              </span>
+            )}
           </div>
         ))}
       </div>
-    );
+    )
   },
-});
+})
