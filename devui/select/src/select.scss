@@ -122,6 +122,17 @@ $select-item-min-height: 36px;
   }
 }
 
+.devui-select-clearable:hover {
+  .devui-select-clear {
+    display: inline-flex;
+  }
+
+  .devui-select-arrow {
+    display: none;
+  }
+}
+
+.devui-select-clear,
 .devui-select-arrow {
   position: absolute;
   right: 0;
@@ -130,6 +141,17 @@ $select-item-min-height: 36px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+}
+
+.devui-select-clear {
+  display: none;
+
+  &:hover {
+    color: $devui-icon-fill-active;
+  }
+}
+
+.devui-select-arrow {
   transform: rotate3d(0, 0, 1, 0deg);
   transition: transform $transition-base-time ease-out;
 }

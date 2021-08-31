@@ -48,6 +48,10 @@ export const selectProps = {
     type: Boolean,
     default: false
   },
+  allowClear: {
+    type: Boolean,
+    default: false
+  },
   optionDisabledKey: {
     type: String,
     default: ''

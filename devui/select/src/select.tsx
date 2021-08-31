@@ -23,6 +23,7 @@ export default defineComponent({
     useSelectOutsideClick([containerRef, dropdownRef], isOpen, toggleChange);
 
     const mergeOptions = computed(() => {
+      const { multiple, modelValue} = props
       return props.options.map((item) => {
         let option: OptionObjectItem;
         if (typeof item === 'object') {
@@ -39,6 +40,13 @@ export default defineComponent({
             _checked: false,
           };
         }
+        if (multiple) {
+          if (Array.isArray(modelValue)) {
+            option._checked = modelValue.includes(option.name)
+          } else {
+            option._checked = false
+          }
+        }
 
         return option;
       });
@@ -46,7 +54,7 @@ export default defineComponent({
 
     const getValuesOption = useCacheOptions(mergeOptions);
 
-    const inputValue = computed(() => {
+    const inputValue = computed<string>(() => {
       if (props.multiple && Array.isArray(props.modelValue)) {
         const selectedOptions = getValuesOption(props.modelValue);
         return selectedOptions.map((item) => item.name).join(',');
@@ -55,6 +63,10 @@ export default defineComponent({
       }
       return '';
     });
+
+    const mergeClearable = computed<boolean>(() => {
+      return !props.disabled && props.allowClear && inputValue.value.length > 0
+    })
 
     function valueChange(item: OptionObjectItem, index: number) {
       const { multiple, optionDisabledKey: disabledKey } = props;
@@ -81,15 +93,28 @@ export default defineComponent({
       });
     }
 
+    function handleClear (e: MouseEvent) {
+      e.preventDefault()
+      e.stopPropagation()
+      if (props.multiple) {
+        ctx.emit('update:modelValue', [])
+
+      } else {
+        ctx.emit('update:modelValue', '')
+      }
+    }
+
     return {
       isOpen,
       containerRef,
       dropdownRef,
       inputValue,
       mergeOptions,
+      mergeClearable,
       valueChange,
       toggleChange,
       getItemClassName,
+      handleClear,
     };
   },
   render() {
@@ -106,9 +131,11 @@ export default defineComponent({
       valueChange,
       toggleChange,
       getItemClassName,
+      mergeClearable,
+      handleClear,
     } = this;
 
-    const selectClassName = className('devui-select', {
+    const selectCls = className('devui-select', {
       'devui-select-open': isOpen,
       'devui-dropdown-menu-multiple': multiple,
       'devui-select-lg': size === 'lg',
@@ -117,25 +144,32 @@ export default defineComponent({
       'devui-select-disabled': disabled,
     });
 
-    const inputClassName = className('devui-select-input', {
+    const inputCls = className('devui-select-input', {
       'devui-select-input-lg': size === 'lg',
       'devui-select-input-sm': size === 'sm',
     });
 
+    const selectionCls = className('devui-select-selection', {
+      'devui-select-clearable': mergeClearable
+    })
+
     return (
-      <div class={selectClassName} ref="containerRef">
+      <div class={selectCls} ref="containerRef">
         <div
-          class="devui-select-selection"
+          class={selectionCls}
           onClick={() => toggleChange(!isOpen)}
         >
           <input
             value={inputValue}
             type="text"
-            class={inputClassName}
+            class={inputCls}
             placeholder={placeholder}
             readonly
             disabled={disabled}
           />
+          <span onClick={handleClear} class="devui-select-clear">
+            <Icon name="close" />
+          </span>
           <span class="devui-select-arrow">
             <Icon name="select-arrow" />
           </span>

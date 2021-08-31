@@ -44,6 +44,12 @@
 <DisabledSelectDemo/>
 <br/>
 
+#### AllowClear
+
+<br/>
+<AllowClearSelectDemo/>
+<br/>
+
 ```html
 <d-select v-model="baseSelectValue" :options="baseSelectOptions" size="lg"></d-select>
 
@@ -58,11 +64,13 @@
 import { defineComponent, ref, reactive } from 'vue'
 import MutipleSelectDemo from './mutiple-select-demo.vue'
 import DisabledSelectDemo from './disabled-select-demo.vue'
+import AllowClearSelectDemo from './allow-clear-select-demo.vue'
 
 export default defineComponent({
   components: {
     MutipleSelectDemo,
-    DisabledSelectDemo
+    DisabledSelectDemo,
+    AllowClearSelectDemo
   },
   setup() {
     const selectValue1 = ref('')
