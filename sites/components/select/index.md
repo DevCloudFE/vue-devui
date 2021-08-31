@@ -14,7 +14,7 @@
 <d-select v-model="selectValue1" :options="selectOptions1" size="lg"></d-select>
 <br/>
 
-#### Middle
+#### Middle(default)
 
 <br/>
 <d-select v-model="selectValue2" :options="selectOptions2" placeholder="这是默认选择框"></d-select>
@@ -51,13 +51,23 @@
 <br/>
 
 ```html
+<!-- Large -->
 <d-select v-model="baseSelectValue" :options="baseSelectOptions" size="lg"></d-select>
-
+<!-- Middle(default) -->
 <d-select v-model="baseSelectValue" :options="baseSelectOptions" placeholder="这是默认选择框"></d-select>
-
+<!-- Small -->
 <d-select v-model="baseSelectValue" :options="baseSelectOptions" size="sm"></d-select>
-
+<!-- Underlined -->
 <d-select v-model="baseSelectValue" :options="baseSelectOptions" size="lg" overview="underlined"></d-select>
+<!-- Mutiple -->
+<d-select v-model="value" :options="options" :multiple="true" />
+<!-- Disabled -->
+<d-select v-model="value" :options="options" :disabled="true" />
+<d-select v-model="value" :options="options" option-disabled-key="disabled" />
+<d-select v-model="value" :options="options" :multiple="true" option-disabled-key="disabled" />
+<!-- AllowClear -->
+<d-select v-model="value1" :options="options1" :allow-clear="true" />
+<d-select v-model="value2" :options="options2" :multiple="true" :allow-clear="true" />
 ```
 
 <script lang="ts">

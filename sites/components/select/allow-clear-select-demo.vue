@@ -11,9 +11,8 @@ export default defineComponent({
   setup () {
     const value1 = ref('')
     const options1 = reactive(['可以清除',2,3])
-    let value2 = ref(['多选','当然','也可以','清除'])
+    const value2 = ref(['多选','当然','也可以','清除'])
     const options2 = reactive(['多选','当然','也可以','清除'])
-    console.log(value2);
     
 
     return {

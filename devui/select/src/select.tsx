@@ -41,8 +41,11 @@ export default defineComponent({
           };
         }
         if (multiple) {
+          // TODO: 这里mergeOptions依赖了modelValue
+          // 但是下面点击item更新的时候modelValue又是根据mergeOptions来算出来的
+          // 因此可能会多更新一次，后续优化
           if (Array.isArray(modelValue)) {
-            option._checked = modelValue.includes(option.name)
+            option._checked = modelValue.includes(option.value)
           } else {
             option._checked = false
           }

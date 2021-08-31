@@ -7,7 +7,7 @@ import { defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
   setup () {
-    const value = ref([])
+    const value = ref([1])
     const options = reactive([1,2,3])
 
     return {
