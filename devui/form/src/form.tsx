@@ -44,6 +44,7 @@ export default defineComponent({
         labelAlign: props.labelAlign,
       },
       rules: props.rules,
+      columnsClass: props.columnsClass
     });
 
     const onSubmit = (e) => {

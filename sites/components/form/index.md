@@ -405,7 +405,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormColumn" layout="columns" :formData="formModel" @submit="onSubmitForm">
+  <d-form ref="dFormColumn" layout="columns" columnsClass="u-1-3" :formData="formModel" @submit="onSubmitForm">
     <d-form-item prop="name" v-for="(item) in 6" :key="item" class="column-item">
       <d-form-label required hasHelp>Name</d-form-label>
       <d-form-control>

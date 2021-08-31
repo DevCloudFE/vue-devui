@@ -25,6 +25,10 @@ export const formProps = {
     type: Object,
     default: {}, 
   },
+  columnsClass: {
+    type: String,
+    default: '', 
+  },
 } as const
 
 export const formLabelProps = {
@@ -52,6 +56,7 @@ export interface IForm {
   labelData: ILabel
   formMitt: Emitter<any>
   rules: any
+  columnsClass: string
 } 
 
 export type FormProps = ExtractPropTypes<typeof formProps>
