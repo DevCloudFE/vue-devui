@@ -398,7 +398,7 @@ export default defineComponent({
 
 > done
 
-多列表单。
+多列表单。layout的属性为`columns`，同时搭配columnsClass属性，值为"u-[row]-[col]"，例如`u-1-3`为1行3列。
 
 
 :::demo
