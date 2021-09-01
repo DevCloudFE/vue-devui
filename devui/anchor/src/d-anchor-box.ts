@@ -2,8 +2,6 @@ import { setActiveLink, onScroll, randomId } from './util';
 export default {
   // 滚动区域
   // 1.监听window滚动或滚动容器滚动，切换link+active,改变#
-  // 2.
-  // 当被绑定的元素挂载到 DOM 中时……
   mounted(el: HTMLElement): void {
     const timeId = 'm' + randomId(8);
     el.id = timeId;
@@ -12,8 +10,6 @@ export default {
     classList.add('mycontainer', 'mymain', timeId);
     // 监听window
     let windoScrollTop;
-    let toTheBottom = false;
-
     const div = document.querySelector(`#${timeId}`) as HTMLElement;
 
     const mysidebar = document.querySelector(
@@ -21,7 +17,6 @@ export default {
     ) as HTMLElement;
 
     const mysidebarHeight = mysidebar.clientHeight;
-    // mysidebar.children[0].classList.add('active')
     window.addEventListener('resize', () => {
       cssChange(mysidebar, 'absolute', 0, 0);
     });
@@ -33,8 +28,6 @@ export default {
       if (!document.getElementsByClassName('scrollTarget').length) {
         if ( windoScrollTop + mysidebarHeight - 16 >= div.offsetTop + div.clientHeight ) {
           // 看不见 d-anchor-box区域
-          toTheBottom = true;
-
           cssChange(
             mysidebar,
             'absolute',
@@ -43,8 +36,6 @@ export default {
           );
         } else if (windoScrollTop > div.offsetTop) {
           // 即将隐藏部分 box
-          toTheBottom = false;
-
           cssChange(
             mysidebar,
             'fixed',
@@ -53,24 +44,12 @@ export default {
           );
         } else if (div.offsetTop >= windoScrollTop && windoScrollTop >= 0) {
           // 刚开始滚动
-          toTheBottom = false;
-
           cssChange(mysidebar, 'absolute', 0, 0);
         } else {
-          //
-          toTheBottom = true;
-
-          cssChange(
-            mysidebar,
-            'absolute',
-            div.clientHeight - mysidebarHeight - 8,
-            0
-          );
+          cssChange(mysidebar, 'absolute', div.clientHeight - mysidebarHeight - 8, 0);
         }
       } else {
         // 刚开始滚动
-        toTheBottom = false;
-
         cssChange(mysidebar, 'absolute', div.scrollTop, 0);
       }
     };
