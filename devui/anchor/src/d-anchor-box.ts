@@ -76,10 +76,6 @@ export default {
     };
 
     addEvent(div, 'scroll', function () {
-      const scrollHeight = div.scrollHeight;
-      const scrollTop = div.scrollTop;
-      const height = div.clientHeight;
-
       if (document.getElementsByClassName('scrollTarget').length) {
         cssChange(
           mysidebar,
