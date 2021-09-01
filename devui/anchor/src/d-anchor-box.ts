@@ -28,14 +28,10 @@ export default {
     window.onscroll = function () {
       //为了保证兼容性，这里取两个值，哪个有值取哪一个
       //scrollTop就是触发滚轮事件时滚轮的高度
-      windoScrollTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
+      windoScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       // 16为padding 8px *2 (上下边距)
       if (!document.getElementsByClassName('scrollTarget').length) {
-        if (
-          windoScrollTop + mysidebarHeight - 16 >=
-          div.offsetTop + div.clientHeight
-        ) {
+        if ( windoScrollTop + mysidebarHeight - 16 >= div.offsetTop + div.clientHeight ) {
           // 看不见 d-anchor-box区域
           toTheBottom = true;
 
@@ -84,18 +80,13 @@ export default {
       const scrollTop = div.scrollTop;
       const height = div.clientHeight;
 
-      console.log();
-      if (scrollTop + height >= scrollHeight && toTheBottom) {
-        // console.log(scrollHeight,'到底了');
-        // console.log('window滚动距离' + windoScrollTop);
-      } else if (document.getElementsByClassName('scrollTarget').length) {
+      if (document.getElementsByClassName('scrollTarget').length) {
         cssChange(
           mysidebar,
           'fixed',
           div.getBoundingClientRect().top,
           div.getBoundingClientRect().left
         );
-        // console.log('div滚动距离' + scrollTop);
       }
     });
 
