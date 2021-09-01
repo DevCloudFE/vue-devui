@@ -1,0 +1,103 @@
+@import '../../../style/devui.scss';
+
+$panel-width: 230px;
+$panel-height: 210px;
+$panel-padding: 5px;
+$panel-row-height: 24px;
+$panel-cell-bg: #ffffff;
+$panel-cell-color: #000000;
+$panel-cell-active-bg: #0066cc;
+$panel-cell-active-color: #f1f1f1;
+$panel-cell-active-hover-bg: #0088dd;
+$panel-cell-active-hover-color: #ffffff;
+
+.devui-calendar-panel {
+  width: $panel-width;
+  padding: $panel-padding;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: $panel-row-height;
+
+    .cell {
+      width: 100%;
+      text-align: center;
+      flex-grow: 1;
+      flex-shrink: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      border-radius: $devui-border-radius;
+      background-color: $panel-cell-bg;
+      color: $panel-cell-color;
+
+      &:hover {
+        background-color: $devui-disabled-bg;
+      }
+
+      &.selected {
+        background-color: $panel-cell-active-bg;
+        color: $panel-cell-active-color;
+
+        &:hover {
+          background-color: $panel-cell-active-hover-bg;
+          color: $panel-cell-active-hover-color;
+        }
+      }
+
+      &.innerday {
+        background-color: $devui-disabled-bg;
+      }
+
+      &.disabled,
+      &.not-current {
+        color: $devui-disabled-text;
+      }
+
+      &.disabled {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .head {
+    cursor: default;
+    padding: 0;
+    margin: 0;
+  }
+
+  .body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .today-container {
+    padding: 8px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    &.disabled {
+      .today-button {
+        border: 1px solid #cccccc;
+        cursor: not-allowed;
+      }
+    }
+
+    .today-button {
+      border: 1px solid #0066cc;
+      border-radius: 3px;
+      padding: 2px 20px;
+      font-size: 12px;
+    }
+  }
+}

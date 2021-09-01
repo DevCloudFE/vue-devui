@@ -1,4 +1,4 @@
-const { COMPONENT_PARTS_MAP } = require('../shared/constant')
+const { COMPONENT_PARTS_MAP, VITEPRESS_SIDEBAR_CATEGORY } = require('../shared/constant')
 
 exports.typeName = () => ({
   name: 'name',
@@ -28,7 +28,7 @@ exports.selectCategory = () => ({
   name: 'category',
   type: 'list',
   message: '（必填）请选择组件分类，将用作文档列表分类：',
-  choices: ['通用', '导航', '反馈', '扩展服务', '数据录入', '数据展示', '布局'],
+  choices: VITEPRESS_SIDEBAR_CATEGORY,
   default: 0
 })
 

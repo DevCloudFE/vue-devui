@@ -1,19 +1,19 @@
 module.exports = {
-
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
 
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': [
-      'babel-jest', {
+      'babel-jest',
+      {
         presets: [
           ['@babel/preset-env', { targets: { node: 'current' } }],
-          ['@babel/preset-typescript']
+          ['@babel/preset-typescript'],
         ],
-        plugins: ['@vue/babel-plugin-jsx']
-      }
-    ]
+        plugins: ['@vue/babel-plugin-jsx'],
+      },
+    ],
   },
 
   // The glob patterns Jest uses to detect test files
@@ -32,5 +32,6 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/'],
 
   // The test environment that will be used for testing
-  testEnvironment: 'jest-environment-jsdom'
-};
+  testEnvironment: 'jest-environment-jsdom',
+  setupFiles: ['<rootDir>/jest.setup.js'],
+}

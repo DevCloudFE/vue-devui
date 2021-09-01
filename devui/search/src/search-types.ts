@@ -1,6 +1,8 @@
-import { PropType, ExtractPropTypes } from 'vue'
-type Size = 'lg' | 'sm'
-type IconPosition = 'right' | 'left'
+import type { PropType, ExtractPropTypes, Ref, ComputedRef } from 'vue'
+
+export type Size = 'lg' | 'sm'
+export type IconPosition = 'right' | 'left'
+
 export const searchProps = {
   size: {
     type: String as PropType<Size>,
@@ -41,7 +43,30 @@ export const searchProps = {
   cssClass: {
     type: String,
     default: ''
-  }
-}
+  },
+  modelValue: {
+    type: String,
+    default: '',
+  },
+  searchFn: {
+    type: Function as PropType<(v: string) => void>,
+    default: undefined
+  },
+  'onUpdate:modelValue': {
+    type: Function as PropType<(v: string) => void>,
+    default: undefined
+  },
+} as const
 
 export type SearchProps = ExtractPropTypes<typeof searchProps>
+
+export interface KeywordsReturnTypes {
+  keywords: Ref<string>
+  clearIconShow: ComputedRef<boolean>
+  onClearHandle: () => void
+}
+
+export interface KeydownReturnTypes {
+  onInputKeydown: (e: KeyboardEvent) => void
+  onClickHandle: () => void
+}

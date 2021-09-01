@@ -41,7 +41,6 @@ export const checkboxProps = {
   },
   value: {
     type: String,
-    required: true
   },
   label: {
     type: String,
@@ -51,13 +50,19 @@ export const checkboxProps = {
     type: String,
     default: undefined
   },
-  'onUpdate:checked' : {
+  'onUpdate:checked': {
     type: Function as PropType<(v: boolean) => void>,
     default: undefined
   },
   onChange: {
     type: Function as PropType<(v: boolean) => void>,
     default: undefined
+  },
+  modelValue: {
+    type: String,
+  },
+  'onUpdate:modelValue': {
+    type: Function as PropType<(v: boolean) => void>
   }
 } as const;
 
@@ -65,9 +70,9 @@ export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>;
 
 export const checkboxGroupProps = {
   ...commonProps,
-  value: {
+  modelValue: {
     type: Array as PropType<string[]>,
-    required: true
+    required: true,
   },
   direction: {
     type: String as PropType<Direction>,
@@ -78,14 +83,14 @@ export const checkboxGroupProps = {
     default: undefined
   },
   options: {
-    type: Array as PropType<({value: string;} & Partial<CheckboxProps>)[]>,
+    type: Array as PropType<({ value: string; } & Partial<CheckboxProps>)[]>,
     default: () => []
   },
   onChange: {
     type: Function as PropType<(v: string[]) => void>,
     default: undefined
   },
-  'onUpdate:value': {
+  'onUpdate:modelValue': {
     type: Function as PropType<(v: string[]) => void>,
     default: undefined
   }

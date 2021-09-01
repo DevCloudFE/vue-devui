@@ -2,13 +2,14 @@
 import './toast.scss'
 
 import { computed, defineComponent, nextTick, onUnmounted, ref, watch } from 'vue'
-import { Message, ToastProps, toastProps } from './toast.type'
-import DToastIconClose from './toast-icon-close'
-import DToastImage from './toast-image'
+import { Message, ToastProps, toastProps } from './toast-types'
+import ToastIconClose from './toast-icon-close'
+import ToastImage from './toast-image'
 import { cloneDeep, isEqual, merge, omit, throttle } from 'lodash-es'
-import { useToastEvent } from '../hooks/use-toast-event'
-import { useToastHelper } from '../hooks/use-toast-helper'
-import { useToastConstant } from '../hooks/use-toast-constant'
+import { useToastEvent } from './hooks/use-toast-event'
+import { useToastHelper } from './hooks/use-toast-helper'
+import { useToastConstant } from './hooks/use-toast-constant'
+import { toastZIndex, toastIncrease } from './hooks/use-toast-z-index'
 
 const { ANIMATION_NAME, ANIMATION_TIME, ID_PREFIX } = useToastConstant()
 
@@ -25,7 +26,6 @@ export default defineComponent({
 
     const messages = ref<Message[]>([])
     const msgAnimations = ref<Message[]>([])
-    const zIndex = ref(1060)
 
     const containerRef = ref<any>()
     const msgItemRefs = ref<any[]>([])
@@ -86,7 +86,7 @@ export default defineComponent({
     }
 
     function handleValueChange() {
-      zIndex.value++
+      toastIncrease()
 
       setTimeout(() => {
         messages.value.forEach((msg) => msgAnimations.value.push(msg))
@@ -245,7 +245,6 @@ export default defineComponent({
     return {
       messages,
       msgAnimations,
-      zIndex,
       containerRef,
       msgItemRefs,
       interrupt,
@@ -259,7 +258,6 @@ export default defineComponent({
     const {
       style: extraStyle,
       styleClass: extraClass,
-      zIndex,
       messages,
       msgAnimations,
       msgItemRefs,
@@ -273,7 +271,7 @@ export default defineComponent({
 
     const prefixCls = 'devui-toast'
 
-    const wrapperStyles = [`z-index: ${zIndex}`, extraStyle]
+    const wrapperStyles = [`z-index: ${toastZIndex}`, extraStyle]
     const wrapperCls = [prefixCls, extraClass]
 
     const msgCls = (msg: Message) => [
@@ -319,8 +317,8 @@ export default defineComponent({
             onMouseleave={() => removeReset(i, msg)}
           >
             <div class={`${prefixCls}-item`}>
-              {showClose(msg) ? <DToastIconClose prefixCls={prefixCls} onClick={() => removeThrottle(i)} /> : null}
-              {showImage(msg) ? <DToastImage prefixCls={prefixCls} severity={msg.severity} /> : null}
+              {showClose(msg) ? <ToastIconClose prefixCls={prefixCls} onClick={() => removeThrottle(i)} /> : null}
+              {showImage(msg) ? <ToastImage prefixCls={prefixCls} severity={msg.severity} /> : null}
               <div class="devui-toast-message">
                 {showSummary(msg) ? <span class="devui-toast-title">{msg.summary}</span> : null}
                 {showContent(msg) ? msgContent(msg) : null}
