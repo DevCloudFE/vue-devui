@@ -15,7 +15,6 @@ Anchor.install = function(Vue: App) {
       Vue.directive(key, directives[key]);
     }
   }
-  console.log(Vue,'install')
   Vue.component(Anchor.name, Anchor)
 };
  
