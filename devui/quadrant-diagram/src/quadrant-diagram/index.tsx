@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, ref, onMounted, reactive } from 'vue'
+import { defineComponent, toRefs, reactive, watch } from 'vue'
 import { quadrantDiagramProps, QuadrantDiagramProps } from './types'
 import DQuadrantDiagramAxis from '../components/axis';
 import { DEFAULT_AXIS_CONFIGS } from '../../config';
@@ -7,7 +7,7 @@ export default defineComponent({
   name: 'DQuadrantDiagram',
   props: quadrantDiagramProps,
   emits: [],
-  setup(props, ctx) {
+  setup(props: QuadrantDiagramProps) {
     const { diagramId, axisConfigs, view } = toRefs(props);
 
     const axisConfigsVal = axisConfigs.value;
@@ -48,14 +48,18 @@ export default defineComponent({
 
     initAxisData();
 
-    return { diagramId, calAxisConfig, viewVal };
+    watch(viewVal, () => {
+      initAxisData();
+    })
+
+    return { diagramId, calAxisConfig, view };
   },
   render() {
-    const { diagramId, calAxisConfig, viewVal } = this;
+    const { diagramId, calAxisConfig, view } = this;
 
     return (
-      <div className="devui-quadrant-diagram" id={diagramId}>
-        <DQuadrantDiagramAxis diagramId={diagramId} axisConfigs={calAxisConfig} view={viewVal} />
+      <div class="devui-quadrant-diagram" id={diagramId}>
+        <DQuadrantDiagramAxis diagramId={diagramId} axisConfigs={calAxisConfig} view={view} />
       </div>
     )
   }

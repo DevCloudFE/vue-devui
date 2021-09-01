@@ -1,15 +1,15 @@
-import { defineComponent, toRefs, onMounted, ExtractPropTypes, reactive, ref } from 'vue'
+import { defineComponent, toRefs, onMounted, ExtractPropTypes, reactive, ref, watch } from 'vue'
 import { IViewConfigs, IAxisConfigs } from '../../../type';
 import { AXIS_TITLE_SPACE } from '../../../config';
-import { quadrantDiagramAxisProps } from './types'
+import { quadrantDiagramAxisProps, QuadrantDiagramAxisProps } from './types'
 import { debounce } from 'lodash';
 
 import './index.scss'
 
-const Axis = defineComponent({
+export default defineComponent({
   name: 'DQuadrantDiagramAxis',
   props: quadrantDiagramAxisProps,
-  setup(props: ExtractPropTypes<typeof quadrantDiagramAxisProps>) {
+  setup(props: QuadrantDiagramAxisProps) {
 
     const { diagramId, view, axisConfigs } = toRefs(props);
     const AXIS_COLOR = ref('#0000ff');
@@ -37,6 +37,10 @@ const Axis = defineComponent({
 
 
     onMounted(() => {
+      resetAxis();
+    });
+    
+    watch(viewVal, () => {
       resetAxis();
     });
 
@@ -221,6 +225,4 @@ const Axis = defineComponent({
       </div>
     );
   }
-})
-
-export default Axis;
+});
