@@ -4,12 +4,11 @@ const timeoutIntervalSpeed = 10;
 let hashName:string;
 function elementPosition(obj: HTMLElement ) {
   let curleft = 0, curtop = 0;
-  
-    curleft = obj.offsetLeft;
-    curtop = obj.offsetTop;
- 
+  curleft = obj.offsetLeft;
+  curtop = obj.offsetTop;
   return { x: curleft, y: curtop };
 }
+
 export function ScrollToControl(elem: HTMLElement, container: HTMLElement):void {
     hashName = elem.getAttribute('name');
     const tops = container.scrollTop>=0 ? container.scrollTop  : -(document.getElementsByClassName('mycontainer')[0] as HTMLElement).offsetTop;
@@ -21,9 +20,8 @@ export function ScrollToControl(elem: HTMLElement, container: HTMLElement):void 
     if (scrollPos < 0 && container || elem.getBoundingClientRect().top < container.offsetTop) {
       window.scrollBy(0, elem.getBoundingClientRect().top-container.offsetTop-16)
     }
-    
+    // 多个计时器达到平滑滚动效果
     ScrollSmoothly(scrollPos, repeatTimes, container)
-
 }
  
 
@@ -83,9 +81,9 @@ export const setActiveLink = (timeId:string):void => {
         })
     } catch (e) {
     }
- 
   
 }
+
 function throttleAndDebounce(fn:any, delay:number):any {
   let timeout:any;
   let called = false;
@@ -105,10 +103,10 @@ function throttleAndDebounce(fn:any, delay:number):any {
       }
   };
 }
+
 export const onScroll = throttleAndDebounce(setActiveLink, 300);
 
-
-function activateLink(hash:string | boolean) {
+function activateLink(hash:string | boolean):void {
   deactiveLink(activeLink);
   deactiveLink(rootActiveLink);
   hash
