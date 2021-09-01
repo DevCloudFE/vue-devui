@@ -1,0 +1,23 @@
+.d-tooltip {
+  box-sizing: border-box;
+  position: relative;
+  .tooltip {
+    box-sizing: border-box;
+    position: absolute;
+    width: fit-content;
+    transition: all 0.5s;
+    .arrow {
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+    .tooltipcontent {
+      box-sizing: border-box;
+      padding: 10px;
+      margin-left: 10px;
+      width: fit-content;
+      background-color: rgb(51, 51, 51);
+      color: #fff;
+    }
+  }
+}
