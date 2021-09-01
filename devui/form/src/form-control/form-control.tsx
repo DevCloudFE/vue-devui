@@ -1,35 +1,16 @@
-import { defineComponent, inject, onMounted, ref, computed, reactive } from 'vue';
+import { defineComponent, inject, ref, computed, reactive } from 'vue';
 import './form-control.scss';
 import Icon from '../../../icon/src/icon';
-import {IForm} from '../form-types';
+import {IForm, formControlProps} from '../form-types';
 
 export default defineComponent({
 	name: 'DFormControl',
-	props: {
-		feedbackStatus: {
-			type: String,
-			default: ''
-		},
-		extraInfo: {
-			type: String,
-			default: ''
-		},
-		suffixTemplate: {
-			type: String,
-			default: ''
-		}
-	},
+	props: formControlProps,
 	setup(props, ctx) {
-
 		const formControl = ref();
 		const dForm: IForm = reactive(inject('dForm', {} as IForm));
 		const labelData = reactive(dForm.labelData);
 		const isHorizontal = labelData.layout === 'horizontal';
-
-		onMounted(() => {
-			const dom = formControl.value;
-			
-		});
 
 		const iconData = computed(() => {
 			switch(props.feedbackStatus) {
@@ -50,20 +31,16 @@ export default defineComponent({
 				extraInfo,
 			} = props;
 			return <div class="form-control" ref={formControl}>
-				
 				<div class={`devui-form-control-container${isHorizontal ? ' devui-form-control-container-horizontal' : ''}${feedbackStatus ? ' has-feedback' : ''}${feedbackStatus === 'error' ? ' feedback-error' : ''}`}>
 					{ctx.slots.default?.()}
 					{
 						(feedbackStatus || ctx.slots.suffixTemplate?.()) &&
 						<span class="feedback-status">
-							
 							{ctx.slots.suffixTemplate?.() ? ctx.slots.suffixTemplate?.() : <Icon name={iconData.value.name} color={iconData.value.color}></Icon>}
 						</span>
 					}
 				</div>
-
 				{extraInfo && <div class="devui-form-control-extra-info">{extraInfo}</div>}
-				
 			</div>
 		}
 	}

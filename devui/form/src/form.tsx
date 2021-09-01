@@ -11,28 +11,22 @@ export default defineComponent({
   setup(props: FormProps, ctx) {
     const formMitt = mitt();
     const fields: IFormItem[] =  [];
-    const resetFormFields = () => {
-      // console.log('resetFormFields fields', fields);
-      fields.forEach((field: IFormItem) => {
-        // console.log('resetFormFields field', field);
-        field.resetField();
-      })
-    }
+    // const resetFormFields = () => {
+    //   fields.forEach((field: IFormItem) => {
+    //     field.resetField();
+    //   })
+    // }
 
     formMitt.on(dFormEvents.addField, (field: any) => {
-      // console.log('dFormEvents.addField field', field);
-
       if(field) {
         fields.push(field);
       }
-
-      // console.log('dFormEvents.addField fields', fields);
-
     })
 
-    formMitt.on(dFormEvents.removeField, field => {
-      // console.log('dFormEvents.removeField field', field);
-      
+    formMitt.on(dFormEvents.removeField, (field: any) => {
+      if(field.prop) {
+        fields.splice(fields.indexOf(field), 1);
+      }
     })
     
     provide('dForm', {
@@ -48,31 +42,16 @@ export default defineComponent({
     });
 
     const onSubmit = (e) => {
-      // console.log(e);
       e.preventDefault();
-      
-      console.log('form onSubmit e', e);
-      
       ctx.emit('submit');
-
     }
-
-
-    // console.log('form props', props);
     
-    return {
-      formMitt,
-      fields,
-      resetFormFields,
-      onSubmit,
+    return () => {
+      return (
+        <form onSubmit={onSubmit} class="d-form">
+          {ctx.slots.default?.()}
+        </form>
+      );
     }
   },
-  render() {
-    return (
-      <form onSubmit={this.onSubmit} class="d-form">
-        {this.$slots.default?.()}
-      </form>
-    );
-  }
-
 })

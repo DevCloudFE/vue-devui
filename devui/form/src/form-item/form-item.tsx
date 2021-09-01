@@ -1,22 +1,13 @@
 import { defineComponent, reactive, inject, onMounted, onBeforeUnmount, provide, ref} from 'vue';
-import { dFormEvents, dFormItemEvents, IForm } from '../form-types';
+import { dFormEvents, dFormItemEvents, IForm, formItemProps } from '../form-types';
 import './form-item.scss';
 import AsyncValidator, { Rules } from 'async-validator';
 import mitt from 'mitt';
 
 export default defineComponent({
 	name: 'DFormItem',
-	props: {
-		dHasFeedback: {
-			type: Boolean,
-			default: false
-		},
-		prop: {
-			type: String,
-			default: ''
-		}
-	},
-	setup(props) {
+	props: formItemProps,
+	setup(props, ctx) {
 		const formItemMitt = mitt();
 		const dForm: IForm = reactive(inject('dForm', {} as IForm));
 		const formData = reactive(dForm.formData);
@@ -59,7 +50,6 @@ export default defineComponent({
 				tipMessage.value = '';
 			}).catch(({ errors }) => {
 				console.log('validator errors', errors);
-				
 				showMessage.value = true;
 				tipMessage.value = errors[0].message;
 			});
@@ -67,7 +57,6 @@ export default defineComponent({
 		const validateEvents = [];
 
 		const addValidateEvents = () => {
-			
 			if(rules && rules[props.prop]) {
 				const ruleItem = rules[props.prop];
 				let eventName = ruleItem['trigger'];
@@ -101,36 +90,16 @@ export default defineComponent({
 		});
 
 		onBeforeUnmount(() => {
-			console.log('onBeforeUnmount');
-			
+			dForm.formMitt.emit(dFormEvents.removeField, formItem);
 			removeValidateEvents();
 		});
-		return {
-			isHorizontal,
-			isVertical,
-			isColumns,
-			columnsClass,
-			resetField,
-			rules,
-			showMessage,
-			tipMessage
+		return () => {
+			return (
+				<div class={`form-item${isHorizontal ? '' : (isVertical ? ' form-item-vertical' : ' form-item-columns')}${isColumns ? ' column-item ' + columnsClass.value : ''}`}>
+					{ctx.slots.default?.()}
+					<div>{showMessage.value && tipMessage.value}</div>
+				</div>
+			)
 		}
 	},
-
-	render(props) {
-		
-		const {
-			isHorizontal,
-			isVertical,
-			isColumns,
-			columnsClass,
-			showMessage,
-			tipMessage,
-		} = this;
-		
-		return <div class={`form-item${isHorizontal ? '' : (isVertical ? ' form-item-vertical' : ' form-item-columns')}${isColumns ? ' column-item ' + columnsClass : ''}`}>
-				{this.$slots.default?.()}
-				<div>{showMessage && tipMessage}</div>
-			</div>
-	}
 })
