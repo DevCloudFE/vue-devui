@@ -2,7 +2,7 @@ import { defineComponent, computed, ref, nextTick } from 'vue'
 import { ComponentProps, componentProps } from './use-pagination'
 import { liteSelectOptions } from './utils'
 
-import clickoutsideDirective from './directive'
+import clickoutsideDirective from '../../shared/devui-directive/clickoutside'
 
 import ConfigMenu from './components/config-menu'
 import JumpPage from './components/jump-page'
@@ -119,8 +119,7 @@ export default defineComponent({
     const {
       total,
       pageSizeOptions,
-      // TODO 依赖select组件，待完善
-      // pageSizeDirection,
+      pageSizeDirection,
       preLink,
       nextLink,
       size,
@@ -162,6 +161,7 @@ export default defineComponent({
               options={pageSizeOptions}
               modelValue={currentPageSize}
               onValueChange={pageSizeChange}
+              pageSizeDirection={pageSizeDirection}
             />
           </div>
         }
@@ -179,6 +179,7 @@ export default defineComponent({
               disabled={total === 0}
               modelValue={cursor}
               onValueChange={litePageIndexChange}
+              pageSizeDirection={pageSizeDirection}
             />
           </div>
         }
