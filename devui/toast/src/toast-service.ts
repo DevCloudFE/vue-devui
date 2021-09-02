@@ -1,9 +1,9 @@
-import { App, ComponentPublicInstance, createApp, onUnmounted } from 'vue'
-import { ToastProps } from './toast.type'
-import DToast from './toast'
+import { createApp, onUnmounted } from 'vue'
+import { ToastProps } from './toast-types'
+import Toast from './toast'
 
 function createToastApp(props: Record<string, any>) {
-  return createApp(DToast, props)
+  return createApp(Toast, props)
 }
 
 class ToastService {

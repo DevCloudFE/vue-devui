@@ -1,5 +1,5 @@
 import { defineComponent, PropType } from 'vue'
-import DIcon from '../../icon'
+import { Icon } from '../../icon'
 
 export default defineComponent({
   name: 'DToastIconClose',
@@ -15,7 +15,7 @@ export default defineComponent({
 
     return (
       <div class={wrapperCls} onClick={(e) => $emit('click', e)}>
-        <DIcon name="close" size="14px" />
+        <Icon name="close" size="14px" />
       </div>
     )
   }

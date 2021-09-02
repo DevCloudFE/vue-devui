@@ -1,0 +1,76 @@
+@import '../../style/theme/color';
+@import '../../style/theme/font';
+
+.devui-badge {
+  position: relative;
+  display: inline-block;
+
+  .devui-badge-content {
+    font-size: $devui-font-size;
+    color: $devui-light-text;
+
+    &-count {
+      padding: 0 4px;
+      min-width: 16px;
+      height: 16px;
+      line-height: 16px;
+      border-radius: 8px;
+      background: $devui-brand;
+      text-align: center;
+    }
+
+    &-danger {
+      background: $devui-danger;
+    }
+
+    &-warning {
+      background: $devui-warning;
+    }
+
+    &-waiting {
+      background: $devui-waiting;
+    }
+
+    &-success {
+      background: $devui-success;
+    }
+
+    &-info {
+      background: $devui-info;
+    }
+
+    &-top-left {
+      left: 0;
+      top: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    &-top-right {
+      right: 0;
+      top: 0;
+      transform: translate(50%, -50%);
+    }
+
+    &-bottom-left {
+      left: 0;
+      bottom: 0;
+      transform: translate(-50%, 50%);
+    }
+
+    &-bottom-right {
+      right: 0;
+      bottom: 0;
+      transform: translate(50%, 50%);
+    }
+
+    &-fixed {
+      position: absolute;
+    }
+
+    &-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+  }
+}

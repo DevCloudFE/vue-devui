@@ -1,6 +1,6 @@
 import type { PropType, ExtractPropTypes, Ref, ComputedRef } from 'vue'
 
-export type Size = 'lg' | 'sm'
+export type Size = 'lg' | 'sm' | ''
 export type IconPosition = 'right' | 'left'
 
 export const searchProps = {
@@ -47,6 +47,10 @@ export const searchProps = {
   modelValue: {
     type: String,
     default: '',
+  },
+  searchFn: {
+    type: Function as PropType<(v: string) => void>,
+    default: undefined
   },
   'onUpdate:modelValue': {
     type: Function as PropType<(v: string) => void>,

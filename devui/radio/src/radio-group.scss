@@ -1,13 +1,19 @@
 .devui-radio-group {
-  .devui-radio {
-    display: block;
-    height: 28px;
-  }
-}
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
 
-.devui-radio-horizontal {
+  &.is-row {
+    flex-direction: row;
+  }
+
+  &.is-column {
+    flex-direction: column;
+  }
+
   .devui-radio {
-    display: inline-block;
+    line-height: 28px;
 
     &:not(:last-child) {
       padding-right: 20px;

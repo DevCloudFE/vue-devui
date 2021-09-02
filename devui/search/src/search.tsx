@@ -13,7 +13,7 @@ export default defineComponent({
   setup(props: SearchProps, ctx) {
     const rootClasses = getRootClass(props)
     // 输入框内容定义、删改
-    const {keywords, clearIconShow, onClearHandle} = keywordsHandles(props)
+    const {keywords, clearIconShow, onClearHandle} = keywordsHandles(ctx, props)
 
     // 键盘回车事件
     const { onInputKeydown, onClickHandle } = keydownHandles(ctx, keywords)
@@ -36,7 +36,9 @@ export default defineComponent({
             size={props.size}
             disabled={props.disabled}
             value={keywords.value}
+            maxLength={props.maxLength}
             placeholder={props.placeholder}
+            cssClass={props.cssClass}
             onKeydown={onInputKeydown}
             onUpdate:value={onInputUpdate}
           ></DInput>

@@ -12,6 +12,7 @@ const sidebar = {
         { text: 'Search 搜索框', link: '/components/search/', status: '已完成' },
         { text: 'Status 状态', link: '/components/status/', status: '已完成' },
         { text: 'Sticky 便贴', link: '/components/sticky/' },
+        { text: 'Overlay 浮层', link: '/components/overlay/'}
       ]
     },
     {
@@ -23,7 +24,7 @@ const sidebar = {
         { text: 'Breadcrumb 面包屑', link: '/components/breadcrumb/' },
         { text: 'Dropdown 下拉菜单', link: '/components/dropdown/' },
         { text: 'NavSprite 导航精灵', link: '/components/nav-sprite/' },
-        { text: 'Pagination 分页', link: '/components/pagination/' },
+        { text: 'Pagination 分页', link: '/components/pagination/', status: '开发中' },
         { text: 'StepsGuide 操作指引', link: '/components/steps-guide/' },
         { text: 'Tabs 选项卡', link: '/components/tabs/', status: '已完成' },
       ]
@@ -49,7 +50,7 @@ const sidebar = {
         { text: 'Cascader 级联菜单', link: '/components/cascader/' },
         { text: 'CategorySearch 分类搜索', link: '/components/category-search/' },
         { text: 'Checkbox 复选框', link: '/components/checkbox/', status: '已完成' },
-        { text: 'DatePicker 日期选择器', link: '/components/date-picker/' },
+        { text: 'DatePicker 日期选择器', link: '/components/date-picker/', status: '开发中' },
         { text: 'DatePickerPro 日期选择器', link: '/components/date-picker-pro/' },
         { text: 'EditableSelect 可编辑下拉框', link: '/components/editable-select/' },
         { text: 'Form 表单', link: '/components/form/' },
@@ -57,7 +58,7 @@ const sidebar = {
         { text: 'InputNumber 数字输入框', link: '/components/input-number/' },
         { text: 'MultiAutoComplete 多项自动补全', link: '/components/multi-auto-complete/' },
         { text: 'Radio 单选框', link: '/components/radio/', status: '已完成' },
-        { text: 'Select 下拉选择框', link: '/components/select/', status: '已完成' },
+        { text: 'Select 下拉选择框', link: '/components/select/', status: '开发中' },
         { text: 'Slider 滑块', link: '/components/slider/' },
         { text: 'Switch 开关', link: '/components/switch/', status: '已完成' },
         { text: 'TagInput 标签输入', link: '/components/tag-input/', status: '已完成' },
@@ -65,14 +66,14 @@ const sidebar = {
         { text: 'TimePicker 时间选择器', link: '/components/time-picker/' },
         { text: 'Transfer 穿梭框', link: '/components/transfer/' },
         { text: 'TreeSelect 树形选择框', link: '/components/tree-select/' },
-        { text: 'Upload 上传', link: '/components/upload/' },
+        { text: 'Upload 上传', link: '/components/upload/', status: '开发中' },
       ]
     },
     {
       text: '数据展示',
       children: [
         { text: 'Avatar 头像', link: '/components/avatar/', status: '已完成' },
-        { text: 'Badge 徽标', link: '/components/badge/' },
+        { text: 'Badge 徽标', link: '/components/badge/', status: '已完成' },
         { text: 'Card 卡片', link: '/components/card/', status: '已完成' },
         { text: 'Carousel 走马灯', link: '/components/carousel/', status: '已完成' },
         { text: 'DataTable 表格', link: '/components/data-table/' },

@@ -2,69 +2,61 @@
 
 ### 基本用法
 
-<p>
-Small
-<d-search size="sm" style="width: 200px"></d-search>
-Middle
-<d-search style="width: 200px"></d-search>
-Large
-<d-search iconPosition="left" size="lg" style="width: 200px"></d-search>
-Disabled
-<d-search disabled style="width: 200px"></d-search>
-</p>
+:::demo 使用`sm`，`''`，`lg`来定义`Search`基本类型
 
-```html
-<!-- small -->
-<d-search size="sm"></d-search>
-<!-- middle 默认 -->
-<d-search></d-search>
-<!-- large -->
-<d-search size="lg"></d-search>
-<!-- disabled -->
-<d-search disabled></d-search>
+```vue
+<template>
+  <div>
+    Small
+    <d-search size="sm" style="width: 200px"></d-search>
+    Middle
+    <d-search style="width: 200px"></d-search>
+    Large
+    <d-search iconPosition="left" size="lg" style="width: 200px"></d-search>
+    Disabled
+    <d-search disabled style="width: 200px"></d-search>
+  </div>
+</template>
 ```
+:::
 
 ### 搜索图标左置
-<p>
-  <d-search iconPosition="left" style="width: 200px"></d-search>
-</p>
 
-```html
-<d-search iconPosition="left"></d-search>
+:::demo 使用`left`，`right`来定义`Search`搜索图标位置， 默认`right`
+
+```vue
+<template>
+  <div>
+    <d-search iconPosition="left" style="width: 200px" placeholder="请输入"></d-search>
+  </div>
+</template>
 ```
+:::
 
 ### 无边框
-<p>
-  <d-search iconPosition="left" noBorder style="width: 200px"></d-search>
-</p>
 
-```html
-<d-search iconPosition="left" noBorder></d-search>
+:::demo 使用`noBorder`来定义`Search`无边框
+
+```vue
+<template>
+  <div>
+    <d-search iconPosition="left" noBorder style="width: 200px"></d-search>
+  </div>
+</template>
 ```
+:::
 
 ### 双向绑定
 
-<p>
-  <d-search v-model="searchText" style="width: 200px"></d-search>
-</p>
+:::demo 使用`v-model`双向绑定
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+```vue
 
-export default defineComponent({
-  setup() {
-    const searchText = ref('')
-    return {
-      searchText,
-    }
-  },
-})
-</script>
+<template>
+  <d-search cssClass="ipt" v-model="searchText" :maxLength="5" style="width: 200px"></d-search>
+</template>
 
-```html
-<d-search v-model="searchText"></d-search>
-
-<script lang="ts">
+<script>
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -78,4 +70,23 @@ export default defineComponent({
 </script>
 ```
 
+:::
+
+### API
+
+|    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         | 全局配置项 |
+| :---------: | :------: | :-------: | :----------------------- | --------------------------------- | --------- |
+|    size     | `'sm'\|''\|'lg'` |    ''     | 可选，搜索框尺寸，有三种选择 lg、''、sm  | [基本用法](#基本用法)             ||
+|    placeholder     | `string` |  --   | 可选，输入框 placeholder     | [搜索图标左置](#搜索图标左置)             ||
+|    maxLength     | `number` |  --   | 可选，输入框的 max-length    |  [双向绑定](#双向绑定)  ||
+|    disabled    | `boolean` | false | 可选，输入框是否被禁用           | [基本用法](#基本用法)             ||
+| iconPosition | `string` |  'right'   | 可选，搜索图标位置，有两种选择'left' / 'right' | [搜索图标左置](#搜索图标左置) ||
+| noBorder | `boolean` |  false  | 可选，是否显示边框 | [无边框](#无边框) ||
+| cssClass | `string` |  ''  | 可选，支持传入类名到输入框上 | [双向绑定](#双向绑定) ||
+
+### d-search 事件
+
+|    事件     |   类型  | 说明                     | 跳转 Demo |
+| :---------: | :------: | :--------------------: | :---------: |
+| searchFn |	`string` |	回车或点击搜索按钮触发的回调函数，返回文本框输入的值 |	[基本用法](#基本用法) |
 

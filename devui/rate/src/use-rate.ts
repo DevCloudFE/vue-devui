@@ -1,7 +1,8 @@
-import { PropType } from 'vue';
+import { PropType } from 'vue'
 
+type RateStatusType = PropType<'success' | 'warning' | 'error'>
 export const rateProps = {
-  value: {
+  modelValue: {
     type: Number,
   },
   read: {
@@ -13,7 +14,7 @@ export const rateProps = {
     default: 5,
   },
   type: {
-    type: String as PropType<'success' | 'warning' | 'error'>,
+    type: String as RateStatusType,
     default: '',
   },
   color: {
@@ -36,4 +37,4 @@ export const rateProps = {
     type: Function as PropType<() => void>,
     default: undefined,
   },
-};
+}

@@ -9,6 +9,14 @@ export const inputProps = {
     type: Boolean,
     default: false
   },
+  maxLength: {
+    type: Number,
+    default: Number.MAX_SAFE_INTEGER
+  },
+  cssClass: {
+    type: String,
+    default: ''
+  },
   error: {
     type: Boolean,
     default: false
@@ -46,3 +54,6 @@ export const inputProps = {
     default: undefined
   }
 } as const;
+
+export type PreviewIconType = 'preview' | 'icon-preview-forbidden'
+export type InputType = 'password' | 'text'

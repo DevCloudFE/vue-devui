@@ -9,11 +9,11 @@ export default defineComponent({
     },
     size: {
       type: String,
-      default: '16px'
+      default: 'inherit'
     },
     color: {
       type: String,
-      default: '#252b3a'
+      default: 'inherit'
     },
     classPrefix: {
       type: String,
