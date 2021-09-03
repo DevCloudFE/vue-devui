@@ -23,7 +23,7 @@
     <d-form-item prop="name">
       <d-form-label required hasHelp>Name</d-form-label>
       <d-form-control extraInfo="这行是说明文字，可以不用理，你尽管填你的姓名。">
-        <d-input v-model:value="formModel.name" />
+        <d-input v-model:value="formModel.name"  v-d-validate-rules="[{maxlength: 3}]" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
