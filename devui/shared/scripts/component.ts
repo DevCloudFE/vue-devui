@@ -20,5 +20,5 @@ export function createComponent(Component: any, props: any, children: any = null
  * @param {*} ComponnetInstance 通过createComponent方法得到的组件实例对象
  */
 export function unmountComponent(ComponnetInstance: any) {
-  render(null, ComponnetInstance.vnode[COMPONENT_CONTAINER_SYMBOL])
+  render(null, ComponnetInstance?.vnode[COMPONENT_CONTAINER_SYMBOL])
 }
