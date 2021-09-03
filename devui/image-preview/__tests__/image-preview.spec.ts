@@ -19,7 +19,7 @@ describe('image-preview', () => {
     const wrapper = mount(
       {
         template: `
-          <div v-dImagePreview>
+          <div v-d-image-preview>
             ${imageTemplate}
           </div>
         `
@@ -40,7 +40,7 @@ describe('image-preview', () => {
     const wrapper = mount(
       {
         template: `
-          <div v-dImagePreview="{disableDefault: true}">
+          <div v-d-image-preview="{disableDefault: true}">
             ${imageTemplate}
           </div>
         `
@@ -61,7 +61,7 @@ describe('image-preview', () => {
     const wrapper = mount(
       {
         template: `
-          <div v-dImagePreview="{custom, disableDefault:true}">
+          <div v-d-image-preview="{custom, disableDefault:true}">
             ${imageTemplate}
           </div>
           <button id="open" @click="open">open</button>
