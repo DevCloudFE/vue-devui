@@ -14,6 +14,7 @@ export default defineComponent({
   setup(props: SelectProps, ctx) {
     const containerRef = ref(null);
     const dropdownRef = ref(null);
+    // 控制弹窗开合
     const isOpen = ref<boolean>(false);
     function toggleChange(bool: boolean) {
       if (props.disabled) return;
@@ -22,8 +23,9 @@ export default defineComponent({
     }
     useSelectOutsideClick([containerRef, dropdownRef], isOpen, toggleChange);
 
+    // 这里对options做统一处理
     const mergeOptions = computed(() => {
-      const { multiple, modelValue} = props
+      const { multiple, modelValue } = props;
       return props.options.map((item) => {
         let option: OptionObjectItem;
         if (typeof item === 'object') {
@@ -41,22 +43,24 @@ export default defineComponent({
           };
         }
         if (multiple) {
-          // TODO: 这里mergeOptions依赖了modelValue
-          // 但是下面点击item更新的时候modelValue又是根据mergeOptions来算出来的
-          // 因此可能会多更新一次，后续优化
+          /**
+           * TODO: 这里mergeOptions依赖了modelValue
+           * 但是下面点击item更新的时候modelValue又是根据mergeOptions来算出来的
+           * 因此可能会多更新一次，后续优化
+           */
           if (Array.isArray(modelValue)) {
-            option._checked = modelValue.includes(option.value)
+            option._checked = modelValue.includes(option.value);
           } else {
-            option._checked = false
+            option._checked = false;
           }
         }
 
         return option;
       });
     });
-
+    // 缓存options，用value来获取对应的optionItem
     const getValuesOption = useCacheOptions(mergeOptions);
-
+    // 控制输入框的显示内容
     const inputValue = computed<string>(() => {
       if (props.multiple && Array.isArray(props.modelValue)) {
         const selectedOptions = getValuesOption(props.modelValue);
@@ -66,10 +70,10 @@ export default defineComponent({
       }
       return '';
     });
-
+    // 是否可清空
     const mergeClearable = computed<boolean>(() => {
-      return !props.disabled && props.allowClear && inputValue.value.length > 0
-    })
+      return !props.disabled && props.allowClear && inputValue.value.length > 0;
+    });
 
     function valueChange(item: OptionObjectItem, index: number) {
       const { multiple, optionDisabledKey: disabledKey } = props;
@@ -96,14 +100,13 @@ export default defineComponent({
       });
     }
 
-    function handleClear (e: MouseEvent) {
-      e.preventDefault()
-      e.stopPropagation()
+    function handleClear(e: MouseEvent) {
+      e.preventDefault();
+      e.stopPropagation();
       if (props.multiple) {
-        ctx.emit('update:modelValue', [])
-
+        ctx.emit('update:modelValue', []);
       } else {
-        ctx.emit('update:modelValue', '')
+        ctx.emit('update:modelValue', '');
       }
     }
 
@@ -153,15 +156,12 @@ export default defineComponent({
     });
 
     const selectionCls = className('devui-select-selection', {
-      'devui-select-clearable': mergeClearable
-    })
+      'devui-select-clearable': mergeClearable,
+    });
 
     return (
       <div class={selectCls} ref="containerRef">
-        <div
-          class={selectionCls}
-          onClick={() => toggleChange(!isOpen)}
-        >
+        <div class={selectionCls} onClick={() => toggleChange(!isOpen)}>
           <input
             value={inputValue}
             type="text"
