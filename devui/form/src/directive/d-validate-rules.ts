@@ -138,10 +138,13 @@ function hasKey(obj, key): boolean {
 export default {
 
   mounted(el: HTMLElement, binding: any, vnode: VNode): void {
-    const isCustomValidator = isObject(binding.value) && (hasKey(binding.value, 'validators') || hasKey(binding.value, 'asyncValidators'));
-    console.log('isCustomValidator', isCustomValidator);
+    const hasOptions = isObject(binding.value) && hasKey(binding.value, 'options');
+    const bindRules = hasOptions ? binding.value.rules : (binding.value.rules ? binding.value.rules : binding.value);
+    const bindOptions = hasOptions ? binding.value.options : null;
+
+    const isCustomValidator = bindRules && isObject(bindRules) && (hasKey(bindRules, 'validators') || hasKey(bindRules, 'asyncValidators'));
     
-    const rules = Array.isArray(binding.value) ? binding.value : [binding.value];
+    const rules = Array.isArray(bindRules) ? bindRules : [bindRules];
     const tipEl = document.createElement('span');
     el.parentNode.append(tipEl);
 
@@ -163,7 +166,7 @@ export default {
     // 使用自定义的验证器
     if(isCustomValidator) {
       descriptor.modelName = [];
-      const {validators, asyncValidators} = binding.value;
+      const {validators, asyncValidators} = bindRules;
 
       // 校验器
       validators && validators.forEach(rule => {
@@ -193,12 +196,11 @@ export default {
       });
     }
 
-    console.log('descriptor', descriptor);
-    
-
+    // 设置监听事件名
+    const updateOn = bindOptions ? bindOptions.updateOn : 'change';
     const validator = new AsyncValidator(descriptor);
     let modelValue = vnode.children[0].props.value;
-    vnode.children[0].el.addEventListener('input', (e) => {
+    vnode.children[0].el.addEventListener(updateOn, (e) => {
       // console.log('onInput', e.target.value);
       modelValue = e.target.value;
       validator.validate({modelName: modelValue}).then(() => {

@@ -678,6 +678,107 @@ export default defineComponent({
 
 :::
 
+
+#### 验证单个元素，配置错误更新策略errorStrategy、校验时机updateOn
+
+> doing
+
+设置errorStrategy元素初始化时若校验不通过，错误是否会进行提示， 默认配置为dirty，若需要在初始化时将错误抛出，可配置为pristine。
+errorStrategy可继承。
+设置updateOn，指定校验的时机。 校验器updateOn基于你绑定的模型的updateOn设置， 在模板中你可以通过ngModelOptions来指定， 默认为change，可选值还有blur、submit， 设置为submit，则当元素所在表单进行提交时将触发校验。
+
+:::demo
+
+```vue
+<template>
+  <d-form ref="dFormTemplateValidate3" :formData="formModel" labelSize="lg" >
+    <d-form-item prop="sum">
+      <d-form-label>计算：1 + 1 = ？</d-form-label>
+      <d-form-control extraInfo="updateOn为change，当输入完成时，输入框的值发生改变。此时触发验证规则">
+        <d-input v-model:value="formModel.sum" v-d-validate-rules="{
+          rules: {
+            validators: [
+              {message: '不对喔！', validator: customValidator},
+              {message: '答对啦！', validator: customValidator2}
+            ]
+          },
+          options: {
+            updateOn: 'change'
+          }
+        }" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="asyncSum">
+      <d-form-label>计算：1 + 2 = ？（async）</d-form-label>
+      <d-form-control extraInfo="updateOn为input，当正在输入时，输入框的值发生改变。此时触发验证规则">
+        <d-input v-model:value="formModel.asyncSum" v-d-validate-rules="{
+          rules: {
+            asyncValidators: [
+              {message: '不对喔！（async）', asyncValidator: customAsyncValidator},
+              {message: '答对啦！（async）', asyncValidator: customAsyncValidator2}
+            ]
+          },
+          options: {
+            updateOn: 'input'
+          }
+        }" />
+      </d-form-control>
+    </d-form-item>
+  </d-form>
+
+</template>
+
+<script>
+import {defineComponent, reactive, ref} from 'vue';
+
+export default defineComponent({
+  setup(props, ctx) {
+    const dFormTemplateValidate3 = ref(null);
+    let formModel = reactive({
+      sum: '',
+      asyncSum: '',
+    });
+
+    const customValidator = (value) => {
+      return value == "2"; // value值等于2的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！”）
+    }
+    const customValidator2 = (value) => {
+      return value != "2"; // value值不等于2的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！”）
+    }
+
+    const customAsyncValidator = (value) => {
+      return value == "3"; // value值等于3的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！（async）”）
+    }
+    const customAsyncValidator2 = (value) => {
+      return value != "3"; // value值不等于3的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！（async）”）
+    }
+    return {
+      dFormTemplateValidate3,
+      formModel,
+      customValidator,
+      customValidator2,
+      customAsyncValidator,
+      customAsyncValidator2,
+    }
+  }
+})
+</script>
+
+
+<style>
+.demo-form-operation {
+  display: flex;
+  align-items: center;
+}
+.demo-btn {
+  margin-right: 10px;
+}
+</style>
+
+```
+
+:::
+
 ### 响应式表单验证
 
 > done
