@@ -23,7 +23,7 @@
     <d-form-item prop="name">
       <d-form-label required hasHelp>Name</d-form-label>
       <d-form-control extraInfo="这行是说明文字，可以不用理，你尽管填你的姓名。">
-        <d-input v-model:value="formModel.name"  v-d-validate-rules="[{maxlength: 3}]" />
+        <d-input v-model:value="formModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
@@ -512,26 +512,42 @@ export default defineComponent({
 
 ### 模板驱动表单验证
 
-> todo
+> doing
 
 模板中绑定ngModel、ngGroupModel、ngForm的元素，可使用dValidateRules配置校验规则。
 
+
+#### 验证单个元素，使用内置校验器，配置error message
+
+> done
+
+当前DevUI支持的内置校验器有：`required`、`minlength`、`maxlength`、`min`、`max`、`requiredTrue`、`email`、`pattern`、`whitespace`。<br>
+若需限制用户输入不能全为空格，可使用`whitespace`内置校验器<br>
+若需限制用户输入长度，将最大限制设置为实际校验值`+1`是一个好的办法。<br>
+除`pattern`外，其他内置校验器我们也提供了内置的错误提示信息，在你未自定义提示消息时，我们将使用默认的提示信息。<br>
+message配置支持string与object两种形式（支持国际化词条配置，如`'zh-cn'`，默认将取`'default'`）。
 
 :::demo
 
 ```vue
 <template>
-  <d-form ref="dFormTemplateValidate" :formData="formModel" labelSize="lg">
+  <d-form ref="dFormTemplateValidate1" :formData="formModel" labelSize="lg" >
     <d-form-item prop="name">
       <d-form-label required>Name</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.name" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="age">
-      <d-form-label>Age</d-form-label>
-      <d-form-control>
-        <d-input v-model:value="formModel.age" />
+        <d-input v-model:value="formModel.name" v-d-validate-rules="[
+          {
+            maxlength: 8,
+          },
+          {
+            pattern: /^[a-zA-Z\d]+(\s+[a-zA-Z\d]+)*$/, 
+            message: {
+              'zh-cn': '只能包含数字与大小写字符', 
+              'en-us': 'The value cannot contain characters except uppercase and lowercase letters.', 
+              default: '只能包含数字与大小写字符'
+            }
+          }
+        ]" />
       </d-form-control>
     </d-form-item>
   </d-form>
@@ -543,14 +559,13 @@ import {defineComponent, reactive, ref} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    const dFormTemplateValidate = ref(null);
+    const dFormTemplateValidate1 = ref(null);
     let formModel = reactive({
       name: 'AlanLee',
-      age: '24',
     });
 
     return {
-      dFormTemplateValidate,
+      dFormTemplateValidate1,
       formModel,
     }
   }
@@ -572,6 +587,96 @@ export default defineComponent({
 
 :::
 
+#### 验证单个元素，自定义校验器
+
+> done
+
+一个校验器需要一个唯一的`id`标识，你可显式声明此`id`，也可声明一个与保留字不冲突的`key`，此`key`将被识别为`id`， 其`value`作为校验器。
+自定义校验器，你可以简单返回`true | false `来标识当前校验是否通过， 也可以返回`string | null`，来标识当前是否错误并返回错误消息，适用于动态错误提示。
+如果是异步校验器，你需要将你的值以Observable对象方式返回。
+更多地，DevUI兼容原生angular校验器， 你可将`isNgValidator`设置为`true`。
+
+:::demo
+
+```vue
+<template>
+  <d-form ref="dFormTemplateValidate2" :formData="formModel" labelSize="lg" >
+    <d-form-item prop="sum">
+      <d-form-label>计算：1 + 1 = ？</d-form-label>
+      <d-form-control>
+        <d-input v-model:value="formModel.sum" v-d-validate-rules="{
+          validators: [
+            {message: '不对喔！', validator: customValidator},
+            {message: '答对啦！', validator: customValidator2}
+          ]
+        }" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="asyncSum">
+      <d-form-label>计算：1 + 2 = ？（async）</d-form-label>
+      <d-form-control>
+        <d-input v-model:value="formModel.asyncSum" v-d-validate-rules="{
+          asyncValidators: [
+            {message: '不对喔！（async）', asyncValidator: customAsyncValidator},
+            {message: '答对啦！（async）', asyncValidator: customAsyncValidator2}
+          ]
+        }" />
+      </d-form-control>
+    </d-form-item>
+  </d-form>
+
+</template>
+
+<script>
+import {defineComponent, reactive, ref} from 'vue';
+
+export default defineComponent({
+  setup(props, ctx) {
+    const dFormTemplateValidate2 = ref(null);
+    let formModel = reactive({
+      sum: '',
+      asyncSum: '',
+    });
+
+    const customValidator = (value) => {
+      return value == "2"; // value值等于2的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！”）
+    }
+    const customValidator2 = (value) => {
+      return value != "2"; // value值不等于2的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！”）
+    }
+
+    const customAsyncValidator = (value) => {
+      return value == "3"; // value值等于3的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！（async）”）
+    }
+    const customAsyncValidator2 = (value) => {
+      return value != "3"; // value值不等于3的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！（async）”）
+    }
+    return {
+      dFormTemplateValidate2,
+      formModel,
+      customValidator,
+      customValidator2,
+      customAsyncValidator,
+      customAsyncValidator2,
+    }
+  }
+})
+</script>
+
+
+<style>
+.demo-form-operation {
+  display: flex;
+  align-items: center;
+}
+.demo-btn {
+  margin-right: 10px;
+}
+</style>
+
+```
+
+:::
 
 ### 响应式表单验证
 
