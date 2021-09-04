@@ -91,6 +91,8 @@ $devui-transfer-body-list-item-height: 36px;
           border-radius: 50%;
           border: none;
           cursor: pointer;
+          padding: 0;
+          min-width: 36px !important;
         }
 
         &-right {

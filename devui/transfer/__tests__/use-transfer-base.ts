@@ -1,17 +1,19 @@
-import { computed, ExtractPropTypes, PropType, ComputedRef, SetupContext } from 'vue'
-import { ISourceOption } from './use-transfer'
+import { computed, ExtractPropTypes, PropType, ComputedRef } from 'vue'
+import { IItem, TState, TResult } from '../types'
+import { TransferProps } from '../__tests__/use-transfer'
 
+export type TransferOperationProps = ExtractPropTypes<typeof transferBaseProps>
 
 export const transferBaseProps = {
     sourceOption: {
-        type: Array as () => ISourceOption[],
-        default(): Array<ISourceOption> {
+        type: Array as () => IItem[],
+        default(): Array<IItem> {
             return []
         }
     },
     targetOption: {
-        type: Array as () => ISourceOption[],
-        default(): Array<ISourceOption> {
+        type: Array as () => IItem[],
+        default(): Array<IItem> {
             return []
         }
     },
@@ -23,7 +25,7 @@ export const transferBaseProps = {
         type: String,
         default: 'Source'
     },
-    filterable: {
+    search: {
         type: Boolean,
         default: false
     },
@@ -43,20 +45,25 @@ export const transferBaseProps = {
         type: Number,
         default: (): number => 0
     },
+    checkedValues: {
+        type: Array,
+        default: []
+    },
     scopedSlots: {
         type: Object
     },
-    onChangeSource: {
-        // type: Function as unknown as () => ((item: ISourceOption, idx: number) => void)
-        type: Function as PropType<(item: ISourceOption, idx: number) => void>
-    },
     onChangeAllSource: {
-        type: Function as unknown as () => (() => void)
+        type: Function as unknown as () => ((val: boolean) => void)
     },
     onChangeQuery: {
         type: Function as PropType<(val: string) => void>
+    },
+    onUpdateCheckeds: {
+        type: Function as PropType<(val: string[]) => void>
     }
 }
+
+export type TransferBaseProps = ExtractPropTypes<typeof transferBaseProps>
 
 export const transferOperationProps = {
     sourceDisabled: {
@@ -75,8 +82,35 @@ export const transferOperationProps = {
     }
 }
 
+const getFilterData = (props, type: string): TResult => {
+    const newModel: string[] = [];
+    const data: IItem[] = type === 'source' ? props.sourceOption : props.targetOption
+    const resultData: IItem[] = data.map((item: IItem) => {
+        const checked = props.modelValue.some(cur => cur === item.value)
+        checked && newModel.push(item.value)
+        return item
+    })
+    return {
+        model: newModel,
+        data: resultData
+    }
+}
 
-export type TransferOperationProps = ExtractPropTypes<typeof transferBaseProps>
+
+
+export const initState = (props: TransferProps, type: string): TState => {
+    const initModel: TResult = getFilterData(props, type);
+    const state: TState = {
+        data: initModel.data,
+        allChecked: false,
+        disabled: false,
+        checkedNum: initModel.model.length,
+        query: '',
+        checkedValues: initModel.model,
+        filterData: initModel.data
+    }
+    return state
+}
 
 export const TransferBaseClass = (props: TransferOperationProps): ComputedRef => {
     return computed(() => {

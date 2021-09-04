@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType } from 'vue'
+
 
 export const transferOperationProps = {
     sourceDisabled: {
@@ -8,6 +8,10 @@ export const transferOperationProps = {
     targetDisabled: {
         type: Boolean,
         default: (): boolean => true
+    },
+    disabled: {
+        type: Boolean,
+        default: (): boolean => false
     },
     onUpdateSourceData: {
         type: Function as unknown as () => (() => void)

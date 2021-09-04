@@ -1,7 +1,9 @@
-import { defineComponent, reactive, computed } from 'vue'
+import { defineComponent, reactive, watch, ref } from 'vue'
+import { TState } from '../types'
 import DTransferBase from './transfer-base'
 import DTransferOperation from './transfer-operation'
-import { transferProps, TransferProps, IItem } from '../__tests__/use-transfer'
+import { initState } from '../__tests__/use-transfer-base'
+import { transferProps, TransferProps } from '../__tests__/use-transfer'
 import DCheckbox from '../..//checkbox/src/checkbox'
 import './transfer.scss'
 
@@ -13,181 +15,137 @@ export default defineComponent({
     DCheckbox
   },
   props: transferProps,
-  setup(props: TransferProps, ctx) {
-    const sourceDataOptions = reactive({
-      data: props.sourceOption,
-      allChecked: false,
-      disabled: true,
-      checkedNum: props.modelValue.length,
-      query: '',
-      modelValue: props.modelValue,
-      filterData: computed(() => {
-        return sourceDataOptions.data.filter((item) => {
-          if (item.key.indexOf(sourceDataOptions.query) !== -1) {
-            return Object.assign(item, {
-              checked: sourceDataOptions.modelValue.some(cur => cur === item.value)
-            })
-          }
-        })
-      }),
-      changeAllSource: (): void => {
-        sourceDataOptions.allChecked = !sourceDataOptions.allChecked
-        if (sourceDataOptions.allChecked) {
-          sourceDataOptions.filterData.map(item => {
-            if (!item.disabled && !item.checked) {
-              sourceDataOptions.modelValue.push(item.value)
-            }
-          })
-        } else {
-          sourceDataOptions.modelValue = []
-        }
-        sourceDataOptions.setCheckedNum()
-        targetDataOptions.setDisabled(!sourceDataOptions.modelValue.length ? true : false)
-      },
-      sourceChangeSource: (item: IItem, idx: number): void => {
-        if (!item.checked) {
-          sourceDataOptions.modelValue.push(item.value)
-        } else {
-          sourceDataOptions.modelValue = sourceDataOptions.modelValue.filter(cur => cur !== item.value)
-        }
-        sourceDataOptions.setCheckedNum()
-        targetDataOptions.setDisabled(!sourceDataOptions.modelValue.length ? true : false)
-      },
-      updateData: (): void => {
-        targetDataOptions.data = targetDataOptions.data.filter(item => {
-          if (item.checked) {
-            sourceDataOptions.data.push({
-              ...item,
-              checked: false
-            })
-            targetDataOptions.modelValue = targetDataOptions.modelValue.filter(cur => cur !== item.value)
-          }
-          return item.checked !== true;
-        })
-        targetDataOptions.setState()
-      },
-      setDisabled: (value: boolean): void => {
-        sourceDataOptions.disabled = value
-      },
-      setState: (): void => {
-        targetDataOptions.disabled = true
-        sourceDataOptions.checkedNum = 0
-        sourceDataOptions.allChecked = false
-      },
-      changeQuery: (val: string): void => {
-        sourceDataOptions.query = val;
-      },
-      setCheckedNum: (): void => {
-        sourceDataOptions.checkedNum = sourceDataOptions.modelValue.length
-        sourceDataOptions.allChecked = sourceDataOptions.checkedNum === sourceDataOptions.filterData.length
-      }
-    })
+  setup(props: TransferProps) {
+    /** data start **/
+    const leftOptions = reactive<TState>(initState(props, 'source'))
+    const rightOptions = reactive<TState>(initState(props, 'target'))
+    const origin = ref(null);
+    /** data end **/
 
-    const targetDataOptions = reactive({
-      data: props.targetOption,
-      allChecked: false,
-      query: '',
-      disabled: props.modelValue.length ? false : true,
-      checkedNum: 0,
-      modelValue: [],
-      filterData: computed(() => {
-        return targetDataOptions.data.filter((item) => {
-          if (item.key.indexOf(targetDataOptions.query) !== -1) {
-            return Object.assign(item, {
-              checked: targetDataOptions.modelValue.some(cur => cur === item.value)
-            })
-          }
-        })
-      }),
-      changeAllTarget: (): void => {
-        targetDataOptions.allChecked = !targetDataOptions.allChecked
-        if (targetDataOptions.allChecked) {
-          targetDataOptions.data.map(item => {
-            if (!item.disabled && !item.checked) {
-              targetDataOptions.modelValue.push(item.value)
-            }
-          })
-        } else {
-          targetDataOptions.modelValue = []
-        }
-        targetDataOptions.setCheckedNum()
-        sourceDataOptions.setDisabled(!targetDataOptions.modelValue.length ? true : false)
-      },
-      targetChangeSource: (item: IItem, idx: number): void => {
-        if (!item.checked) {
-          targetDataOptions.modelValue.push(item.value)
-        } else {
-          targetDataOptions.modelValue = targetDataOptions.modelValue.filter(cur => cur !== item.value)
-        }
-        targetDataOptions.setCheckedNum()
-        sourceDataOptions.setDisabled(!targetDataOptions.modelValue.length ? true : false)
-      },
-      updateData: (): void => {
-        sourceDataOptions.data = sourceDataOptions.data.filter(item => {
-          if (item.checked) {
-            targetDataOptions.data.push({
-              ...item,
-              checked: false
-            })
-            sourceDataOptions.modelValue = sourceDataOptions.modelValue.filter(cur => cur !== item.value)
-          }
-          return item.checked !== true
-        })
-        sourceDataOptions.setState()
-      },
-      setDisabled: (value: boolean): void => {
-        targetDataOptions.disabled = value
-      },
-      setState: (): void => {
-        sourceDataOptions.disabled = true
-        targetDataOptions.checkedNum = 0
-        targetDataOptions.allChecked = false
-      },
-      changeQuery: (val: string): void => {
-        targetDataOptions.query = val
-      },
-      setCheckedNum: (): void => {
-        targetDataOptions.checkedNum = targetDataOptions.modelValue.length
-        targetDataOptions.allChecked = targetDataOptions.checkedNum === targetDataOptions.filterData.length
+    /** watch start **/
+    watch(
+      () => leftOptions.query,
+      (nVal: string): void => {
+        leftOptions.filterData = leftOptions.data.filter(item => item.key.indexOf(nVal) !== -1)
       }
-    })
-    const transferStyle = {
-      height: props.height,
+    )
+
+    watch(
+      () => leftOptions.checkedValues,
+      (values: string[]): void => {
+        leftOptions.checkedNum = values.length
+        setAllCheckedState(leftOptions, values)
+      },
+      {
+        deep: true
+      }
+    )
+
+    watch(
+      () => rightOptions.query,
+      (nVal: string): void => {
+        rightOptions.filterData = rightOptions.data.filter(item => item.key.indexOf(nVal) !== -1)
+      },
+    )
+
+    watch(
+      () => rightOptions.checkedValues,
+      (values: string[]): void => {
+        rightOptions.checkedNum = values.length;
+        setAllCheckedState(rightOptions, values)
+      },
+      {
+        deep: true
+      }
+    )
+
+    /** watch end **/
+
+    /** methods start **/
+    const setAllCheckedState = (source: TState, value: string[]): void => {
+      if (origin.value === 'click') {
+        source.allChecked = false
+      } else {
+        source.allChecked = value.length === source.filterData.filter(item => !item.disabled).length ? true : false
+      }
     }
+
+    const updateFilterData = (source: TState, target: TState): void => {
+      const newData = []
+      source.filterData = source.data = source.filterData.filter(item => {
+        const hasInclues = source.checkedValues.includes(item.value)
+        hasInclues && newData.push(item)
+        return !hasInclues
+      })
+      target.filterData = target.data = target.filterData.concat(newData)
+      source.checkedValues = []
+      target.disabled = !target.disabled
+      setOrigin('click')
+    }
+    const changeAllSource = (source: TState, value: boolean): void => {
+      if (source.filterData.every(item => item.disabled)) return
+      source.allChecked = value
+      if (value) {
+        source.checkedValues = source.filterData.filter(item => !item.disabled)
+          .map(item => item.value)
+      } else {
+        source.checkedValues = []
+      }
+      setOrigin('change')
+    }
+    const updateLeftCheckeds = (values: string[]): void => {
+      leftOptions.checkedValues = values
+      setOrigin('change')
+    }
+    const updateRightCheckeds = (values: string[]): void => {
+      rightOptions.checkedValues = values
+      setOrigin('change')
+    }
+    const setOrigin = (value: string): void => {
+      origin.value = value
+    }
+    /** methods end **/
 
     return () => {
       return <div class="devui-transfer">
         <DTransferBase
-          style={transferStyle}
-          sourceOption={sourceDataOptions.filterData}
+          style={{
+            height: props.height
+          }}
+          sourceOption={leftOptions.filterData}
           title={props.titles[0]}
           type="source"
-          filterable={props.filterable}
-          allChecked={sourceDataOptions.allChecked}
-          checkedNum={sourceDataOptions.checkedNum}
-          query={sourceDataOptions.query}
-          onChangeSource={sourceDataOptions.sourceChangeSource}
-          onChangeAllSource={sourceDataOptions.changeAllSource}
-          onChangeQuery={sourceDataOptions.changeQuery}
+          search={props.isSearch}
+          allChecked={leftOptions.allChecked}
+          checkedNum={leftOptions.checkedNum}
+          query={leftOptions.query}
+          checkedValues={leftOptions.checkedValues}
+          onChangeAllSource={(value) => changeAllSource(leftOptions, value)}
+          onUpdateCheckeds={updateLeftCheckeds}
+          onChangeQuery={(value) => leftOptions.query = value}
         />
         <DTransferOperation
-          sourceDisabled={sourceDataOptions.disabled}
-          targetDisabled={targetDataOptions.disabled}
-          onUpdateSourceData={sourceDataOptions.updateData}
-          onUpdateTargetData={targetDataOptions.updateData}
+          disabled={props.disabled}
+          sourceDisabled={rightOptions.checkedNum > 0 ? false : true}
+          targetDisabled={leftOptions.checkedNum > 0 ? false : true}
+          onUpdateSourceData={() => { updateFilterData(rightOptions, leftOptions) }}
+          onUpdateTargetData={() => { updateFilterData(leftOptions, rightOptions) }}
         />
         <DTransferBase
-          style={transferStyle}
-          sourceOption={targetDataOptions.filterData}
+          style={{
+            height: props.height
+          }}
+          sourceOption={rightOptions.filterData}
           title={props.titles[1]}
           type="target"
-          filterable={props.filterable}
-          allChecked={targetDataOptions.allChecked}
-          checkedNum={targetDataOptions.checkedNum}
-          query={targetDataOptions.query}
-          onChangeSource={targetDataOptions.targetChangeSource}
-          onChangeAllSource={targetDataOptions.changeAllTarget}
-          onChangeQuery={targetDataOptions.changeQuery}
+          search={props.isSearch}
+          allChecked={rightOptions.allChecked}
+          checkedNum={rightOptions.checkedNum}
+          query={rightOptions.query}
+          checkedValues={rightOptions.checkedValues}
+          onChangeAllSource={(value) => changeAllSource(rightOptions, value)}
+          onUpdateCheckeds={updateRightCheckeds}
+          onChangeQuery={(value) => rightOptions.query = value}
         />
       </div>
     }

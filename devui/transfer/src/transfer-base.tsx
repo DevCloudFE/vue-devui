@@ -1,49 +1,49 @@
-import { defineComponent, computed, ref, watch } from 'vue';
-import { ISourceOption } from '../__tests__/use-transfer'
-import { transferBaseProps, TransferBaseClass, Query } from '../__tests__/use-transfer-base'
+import { defineComponent, computed } from 'vue'
+import { transferBaseProps, TransferBaseClass } from '../__tests__/use-transfer-base'
+import { TransferBaseProps } from '../__tests__/use-transfer-base'
 import DCheckbox from '../../checkbox/src/checkbox'
+import DCheckboxGroup from '../../checkbox/src/checkbox-group'
 import DSearch from '../../search/src/search'
 export default defineComponent({
     name: 'DTransferBase',
     components: {
-        DCheckbox,
-        DSearch
+        DSearch,
+        DCheckboxGroup,
+        DCheckbox
     },
     props: transferBaseProps,
-    setup(props, ctx) {
+    setup(props: TransferBaseProps, ctx) {
+        /** data start **/
+        const modelValues = computed(() => props.checkedValues)
+        const searchQuery = computed(() => props.query)
         const baseClass = TransferBaseClass(props)
-        const searchQuery = Query(props)
-        const allSourceChecked = (): void => {
-            ctx.emit('changeAllSource')
-        }
-        const updateChecked = (item: ISourceOption, idx: number): void => {
-            ctx.emit('changeSource', item, idx)
-        }
-        const setSearchQuery = (val: string) => ctx.emit('changeQuery', val)
+        /** data end **/
+
+        /** watch start **/
+        /** watch start **/
+
+        /** methods start **/
+        const updateSearchQuery = (val: string): void => ctx.emit('changeQuery', val)
+        /** methods start **/
 
         return {
             baseClass,
             searchQuery,
-            allSourceChecked,
-            updateChecked,
-            setSearchQuery
+            modelValues,
+            updateSearchQuery
         }
-    },
-    data() {
-        return {}
     },
     render() {
         const {
             title,
             baseClass,
             checkedNum,
-            allSourceChecked,
             allChecked,
-            updateChecked,
             sourceOption,
-            setSearchQuery,
-            filterable,
-            searchQuery
+            updateSearchQuery,
+            search,
+            searchQuery,
+            modelValues
         } = this
 
         return (
@@ -52,9 +52,8 @@ export default defineComponent({
                     this.$slots.Header ? this.$slots.Header() : (<div class="devui-transfer-panel-header">
                         <div class="devui-transfer-panel-header-allChecked">
                             <DCheckbox
-                                value="allChecked"
-                                checked={allChecked}
-                                onUpdate:checked={allSourceChecked}>
+                                modelValue={allChecked}
+                                onChange={(value: boolean) => this.$emit('changeAllSource', value)}>
                                 {title}
                             </DCheckbox>
                         </div>
@@ -63,25 +62,29 @@ export default defineComponent({
                 }
                 {
                     this.$slots.Body ? this.$slots.Body() : <div class="devui-transfer-panel-body">
-                        {filterable && <div class="devui-transfer-panel-body-search">
-                            <DSearch modelValue={searchQuery} onUpdate:modelValue={setSearchQuery}></DSearch>
+                        {search && <div class="devui-transfer-panel-body-search">
+                            <DSearch modelValue={searchQuery} onUpdate:modelValue={updateSearchQuery} />
                         </div>}
                         <div class="devui-transfer-panel-body-list"
                             style={{
-                                height: `calc(100% - 40px - ${filterable ? 42 : 0}px)`
+                                height: `calc(100% - 40px - ${search ? 42 : 0}px)`
                             }}>
                             {
-                                sourceOption.length ? sourceOption.map((item, idx) => {
-                                    return <DCheckbox
-                                        class="devui-transfer-panel-body-list-item"
-                                        value={item.value}
-                                        checked={item.checked}
-                                        disabled={item.disabled || false}
-                                        onUpdate:checked={() => updateChecked(item, idx)}
-                                        key={idx}>
-                                        {item.key}
-                                    </DCheckbox>
-                                }) : <div class="devui-transfer-panel-body-list-empty">无数据</div>
+                                sourceOption.length ? <DCheckboxGroup modelValue={modelValues}
+                                    onChange={(values: string[]): void => this.$emit('updateCheckeds', values)}>
+                                    {
+                                        sourceOption.map((item, idx) => {
+                                            return <DCheckbox
+                                                class="devui-transfer-panel-body-list-item"
+                                                label={item.key}
+                                                value={item.value}
+                                                disabled={item.disabled}
+                                                key={idx}>
+                                            </DCheckbox>
+                                        })
+                                    }
+                                </DCheckboxGroup> :
+                                    <div class="devui-transfer-panel-body-list-empty">无数据</div>
                             }
                         </div>
                     </div>

@@ -1,42 +1,24 @@
 import { ExtractPropTypes, PropType } from 'vue'
-export interface ISourceOption {
-    key: string
-    value: string | number
-    disabled: boolean
-}
-
-export interface IItem extends ISourceOption {
-    checked: boolean
-}
-
-interface ITitles {
-    [index: number]: string
-}
-
-interface IModel {
-    [index: number]: string | number
-}
+import { IItem, ITitles, IModel } from '../types'
 
 export const transferProps = {
     sourceOption: {
-        type: Array as () => ISourceOption[],
+        type: Array as () => IItem[],
         require: true,
-        default(): ISourceOption[] {
+        default(): IItem[] {
             return []
         }
     },
     targetOption: {
-        type: Array as () => ISourceOption[],
+        type: Array as () => IItem[],
         require: true,
-        default(): ISourceOption[] {
+        default(): IItem[] {
             return []
         }
     },
     titles: {
         type: Array as PropType<ITitles>,
-        default(): ITitles[] {
-            return ['Source', 'Target']
-        }
+        default: () => (): ITitles[] => ['Source', 'Target']
     },
     modelValue: {
         type: Array as PropType<string | number[]>,
@@ -46,7 +28,7 @@ export const transferProps = {
         type: String,
         default: '320px'
     },
-    filterable: {
+    isSearch: {
         type: Boolean,
         default: false
     },
