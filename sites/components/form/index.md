@@ -724,6 +724,22 @@ errorStrategy可继承。
         }" />
       </d-form-control>
     </d-form-item>
+    <d-form-item prop="errorSum">
+      <d-form-label>计算：1 + 1 = ？</d-form-label>
+      <d-form-control extraInfo="errorStrategy为pristine，初始化时触发验证规则">
+        <d-input v-model:value="formModel.errorSum" v-d-validate-rules="{
+          errorStrategy: 'pristine',
+          rules: {
+            validators: [
+              {message: '不对喔！', validator: customValidator3},
+            ]
+          },
+          options: {
+            updateOn: 'input'
+          }
+        }" />
+      </d-form-control>
+    </d-form-item>
   </d-form>
 
 </template>
@@ -737,6 +753,7 @@ export default defineComponent({
     let formModel = reactive({
       sum: '',
       asyncSum: '',
+      errorSum: '3',
     });
 
     const customValidator = (value) => {
@@ -752,6 +769,10 @@ export default defineComponent({
     const customAsyncValidator2 = (value) => {
       return value != "3"; // value值不等于3的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！（async）”）
     }
+
+    const customValidator3 = (value) => {
+      return value == "2"; // value值等于2的时候，校验规则通过，不提示本规则中自定义的message
+    }
     return {
       dFormTemplateValidate3,
       formModel,
@@ -759,6 +780,7 @@ export default defineComponent({
       customValidator2,
       customAsyncValidator,
       customAsyncValidator2,
+      customValidator3,
     }
   }
 })

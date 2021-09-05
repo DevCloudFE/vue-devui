@@ -1,5 +1,6 @@
 import AsyncValidator from 'async-validator';
 import { VNode } from 'vue';
+import './style.scss';
 
 // 获取async-validator可用的规则名
 function getAvaliableRuleObj(ruleName: string, value) {
@@ -135,12 +136,32 @@ function hasKey(obj, key): boolean {
   return Object.prototype.hasOwnProperty.call(obj, key);
 }
 
+function handleErrorStrategy(el: HTMLElement): void {
+  const classList: Array<string> =  [...el.classList];
+  classList.push('d-validate-rules-error-pristine');
+  el.setAttribute('class', classList.join(' '));
+}
+
+function handleErrorStrategyPass(el: HTMLElement): void {
+  console.log('handleErrorStrategyPass');
+  
+  const classList: Array<string> =  [...el.classList];
+  const index = classList.indexOf('d-validate-rules-error-pristine');
+  index !== -1 && classList.splice(index, 1);
+  console.log('handleErrorStrategyPass classList', classList);
+  
+  el.setAttribute('class', classList.join(' '));
+}
+
 export default {
 
   mounted(el: HTMLElement, binding: any, vnode: VNode): void {
     const hasOptions = isObject(binding.value) && hasKey(binding.value, 'options');
-    const bindRules = hasOptions ? binding.value.rules : (binding.value.rules ? binding.value.rules : binding.value);
-    const bindOptions = hasOptions ? binding.value.options : null;
+    const {rules: bindingRules, options = {}} = binding.value;
+    let {errorStrategy} = binding.value;
+
+    // 判断是否有options，有就取binding.value对象中的rules对象，再判断有没有rules对象，没有就取binding.value
+    const bindRules = hasOptions ? bindingRules : (bindingRules ? bindingRules : binding.value);
 
     const isCustomValidator = bindRules && isObject(bindRules) && (hasKey(bindRules, 'validators') || hasKey(bindRules, 'asyncValidators'));
     
@@ -196,8 +217,12 @@ export default {
       });
     }
 
-    // 设置监听事件名
-    const updateOn = bindOptions ? bindOptions.updateOn : 'change';
+    // errorStrategy可配置在options对象中
+    const { updateOn = 'change', errorStrategy: optionsErrorStrategy = 'dirty'} = options;
+    if(!errorStrategy) {
+      errorStrategy = optionsErrorStrategy;
+    }
+
     const validator = new AsyncValidator(descriptor);
     let modelValue = vnode.children[0].props.value;
     vnode.children[0].el.addEventListener(updateOn, (e) => {
@@ -205,6 +230,7 @@ export default {
       modelValue = e.target.value;
       validator.validate({modelName: modelValue}).then(() => {
         tipEl.style.display = 'none';
+        handleErrorStrategyPass(el);
       }).catch((err) => {
         // console.log('validate error', err);
         const { errors } = err;
@@ -219,9 +245,16 @@ export default {
         }
         tipEl.innerText = '' + msg;
         tipEl.style.display = 'inline-flex';
-        // className "d-validate-tip" 定义在form.scss文件中
         tipEl.setAttribute('class', 'd-validate-tip');
+        handleErrorStrategy(el);
       })
     });
+
+    // 设置errorStrategy
+    if(errorStrategy === 'pristine') {
+      handleErrorStrategy(el);
+      // pristine为初始化验证，初始化时需改变下原始值才能出发验证
+      vnode.children[0].props.value = '' + vnode.children[0].props.value;
+    }
   }
 }
