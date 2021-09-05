@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes } from 'vue'
 
 export type DevTooltip = 'top' | 'right' | 'bottom' | 'left';
 export const DevTooltipShowAnimation = true;
