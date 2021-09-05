@@ -1,5 +1,7 @@
 const EventListener = {
     listen: function (target, eventType, callback) {
+        console.log('target:', target);
+        console.log('eventType:', eventType);
         if (target.addEventListener){
             target.addEventListener(eventType, callback, false);
             return {
