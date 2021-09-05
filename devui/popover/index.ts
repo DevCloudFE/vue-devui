@@ -1,6 +1,6 @@
 import type { App } from 'vue'
 import Popover from './src/popover'
-import PopoverDirective from './src/popover-directive'
+import PopoverDirective from './src/directive'
 
 Popover.install = function (app: App): void {
   app.component(Popover.name, Popover)

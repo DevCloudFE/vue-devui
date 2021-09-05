@@ -37,7 +37,7 @@ const sidebar = {
         { text: 'Loading 加载提示', link: '/components/loading/', status: '已完成' },
         { text: 'Mention 提及', link: '/components/mention/' },
         { text: 'Modal 模态弹窗', link: '/components/modal/' },
-        { text: 'Popover 悬浮提示', link: '/components/popover/' },
+        { text: 'Popover 悬浮提示', link: '/components/popover/',status:"开发中" },
         { text: 'ReadTip 阅读提示', link: '/components/read-tip/' },
         { text: 'Toast 全局通知', link: '/components/toast/', status: '已完成' },
         { text: 'Tooltip 提示', link: '/components/tooltip/' },

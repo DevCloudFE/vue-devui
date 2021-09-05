@@ -1,12 +1,10 @@
-import type { PropType, ExtractPropTypes, VNode } from 'vue'
-
-export const popoverProps = {
+export default {
   visible: {
     type: Boolean,
     default: false
   },
   content: {
-    type: [String, Object as PropType<() => VNode>],
+    type: String,
     default: ''
   },
 
@@ -22,11 +20,8 @@ export const popoverProps = {
     default: false
   },
 
-  popType: {
+  propType: {
     type: String,
     default: 'default'
   }
-
-} as const
-
-export type PopoverProps = ExtractPropTypes<typeof popoverProps>
+}
