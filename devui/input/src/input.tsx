@@ -16,7 +16,6 @@ export default defineComponent({
   props: inputProps,
   emits: ['update:value', 'focus', 'blur', 'change', 'keydown'],
   setup(props, ctx) {
-    const iptDom = ref(null)
     const sizeCls = computed(() => `devui-input-${props.size}`);
     const showPwdIcon = ref(false)
     const inputType = ref<InputType>('text')
@@ -55,7 +54,6 @@ export default defineComponent({
         inputType.value = inputType.value === 'password' ? 'text' : 'password'
       }
     return {
-      iptDom,
       inputCls,
       inputType,
       showPreviewIcon,
