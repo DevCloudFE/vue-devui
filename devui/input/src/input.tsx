@@ -1,12 +1,22 @@
-import { defineComponent, computed, ref, watch, toRef } from 'vue';
+import { defineComponent, computed, ref, watch, nextTick, onMounted, toRefs } from 'vue';
 import { inputProps, InputType } from './use-input';
 import './input.scss'
 
 export default defineComponent({
   name: 'DInput',
+  directives: {
+    focus: {
+      mounted: function (el, binding) {
+        if (binding.value) {
+          el.focus()
+        }
+      }
+    }
+  },
   props: inputProps,
   emits: ['update:value', 'focus', 'blur', 'change', 'keydown'],
   setup(props, ctx) {
+    const iptDom = ref(null)
     const sizeCls = computed(() => `devui-input-${props.size}`);
     const showPwdIcon = ref(false)
     const inputType = ref<InputType>('text')
@@ -23,7 +33,7 @@ export default defineComponent({
     }, { immediate: true })
 
     watch(() => props.value, value => {
-      value && value.length > 0 ? showPwdIcon.value = true : showPwdIcon.value = false
+      (value && value.length > 0 && showPreviewIcon.value) ? showPwdIcon.value = true : showPwdIcon.value = false
     })
 
     const onInput = ($event: Event) => {
@@ -44,8 +54,8 @@ export default defineComponent({
       onChangeInputType = () => {
         inputType.value = inputType.value === 'password' ? 'text' : 'password'
       }
-
     return {
+      iptDom,
       inputCls,
       inputType,
       showPreviewIcon,
@@ -66,6 +76,7 @@ export default defineComponent({
       inputCls,
       inputType,
       maxLength,
+      autoFocus,
       placeholder,
       disabled,
       onInput,
@@ -78,6 +89,7 @@ export default defineComponent({
     return (
       <div class="devui-input__wrap">
         <input
+          v-focus={autoFocus}
           {...{dinput: true}}
           value={value}
           disabled={disabled}
