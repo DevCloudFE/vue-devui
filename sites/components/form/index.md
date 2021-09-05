@@ -638,17 +638,17 @@ export default defineComponent({
       asyncSum: '',
     });
 
-    const customValidator = (value) => {
+    const customValidator = (rule, value) => {
       return value == "2"; // value值等于2的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！”）
     }
-    const customValidator2 = (value) => {
+    const customValidator2 = (rule, value) => {
       return value != "2"; // value值不等于2的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！”）
     }
 
-    const customAsyncValidator = (value) => {
+    const customAsyncValidator = (rule, value) => {
       return value == "3"; // value值等于3的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！（async）”）
     }
-    const customAsyncValidator2 = (value) => {
+    const customAsyncValidator2 = (rule, value) => {
       return value != "3"; // value值不等于3的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！（async）”）
     }
     return {
@@ -715,7 +715,7 @@ errorStrategy可继承。
           rules: {
             asyncValidators: [
               {message: '不对喔！（async）', asyncValidator: customAsyncValidator},
-              {message: '答对啦！（async）', asyncValidator: customAsyncValidator2}
+              {message: '只能输入数字！', asyncValidator: customAsyncValidator2}
             ]
           },
           options: {
@@ -756,21 +756,22 @@ export default defineComponent({
       errorSum: '3',
     });
 
-    const customValidator = (value) => {
+    const customValidator = (rule, value) => {
       return value == "2"; // value值等于2的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！”）
     }
-    const customValidator2 = (value) => {
+    const customValidator2 = (rule, value) => {
       return value != "2"; // value值不等于2的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！”）
     }
 
-    const customAsyncValidator = (value) => {
+    const customAsyncValidator = (rule, value) => {
       return value == "3"; // value值等于3的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！（async）”）
     }
-    const customAsyncValidator2 = (value) => {
-      return value != "3"; // value值不等于3的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！（async）”）
+    const customAsyncValidator2 = (rule, value) => {
+      let reg = /^[\d]+(\s+[\d]+)*$/;
+      return reg.test(value); 
     }
 
-    const customValidator3 = (value) => {
+    const customValidator3 = (rule, value) => {
       return value == "2"; // value值等于2的时候，校验规则通过，不提示本规则中自定义的message
     }
     return {
@@ -865,11 +866,11 @@ export default defineComponent({
       asyncSum: '',
     });
 
-    const customValidator = (value) => {
+    const customValidator = (rule, value) => {
       return value == "2"; // value值等于2的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！”）
     }
 
-    const customAsyncValidator = (value) => {
+    const customAsyncValidator = (rule, value) => {
       return value == "3"; // value值等于3的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！（async）”）
     }
 
@@ -877,6 +878,79 @@ export default defineComponent({
       dFormTemplateValidate4,
       formModel,
       customValidator,
+      customAsyncValidator,
+    }
+  }
+})
+</script>
+
+
+<style>
+.demo-form-operation {
+  display: flex;
+  align-items: center;
+}
+.demo-btn {
+  margin-right: 10px;
+}
+</style>
+
+```
+
+:::
+
+
+
+#### 验证单个元素，自定义asyncDebounceTime
+
+> done
+
+
+我们对于异步校验器，提供默认300ms debounce time。
+也可在dValidateRules中设置asyncDebounceTime显示设置（单位ms）。
+若你的同步校验器也需要debounce time，则其表现已为异步校验，你可将其转换为异步校验器。
+此配置可继承。
+
+:::demo
+
+```vue
+<template>
+  <d-form ref="dFormTemplateValidate5" :formData="formModel" labelSize="lg" >
+    <d-form-item prop="asyncSum">
+      <d-form-label>计算：1 + 2 = ？（async）</d-form-label>
+      <d-form-control extraInfo="asyncDebounceTime为500">
+        <d-input v-model:value="formModel.asyncSum" v-d-validate-rules="{
+          rules: {
+            asyncValidators: [
+              {message: '不对喔！（async）', asyncValidator: customAsyncValidator}
+            ]
+          },
+          options: {
+            updateOn: 'input',
+            asyncDebounceTime: 500
+          }
+        }" />
+      </d-form-control>
+    </d-form-item>
+  </d-form>
+</template>
+
+<script>
+import {defineComponent, reactive, ref} from 'vue';
+
+export default defineComponent({
+  setup(props, ctx) {
+    const dFormTemplateValidate5 = ref(null);
+    let formModel = reactive({
+      asyncSum: '',
+    });
+
+    const customAsyncValidator = (rule, value) => {
+      return value == "3"; // value值等于3的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！（async）”）
+    }
+    return {
+      dFormTemplateValidate5,
+      formModel,
       customAsyncValidator,
     }
   }

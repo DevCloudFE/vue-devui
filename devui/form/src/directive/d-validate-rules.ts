@@ -1,6 +1,7 @@
 import AsyncValidator from 'async-validator';
 import { VNode } from 'vue';
 import './style.scss';
+import { debounce } from 'lodash';
 
 // 获取async-validator可用的规则名
 function getAvaliableRuleObj(ruleName: string, value) {
@@ -143,22 +144,35 @@ function handleErrorStrategy(el: HTMLElement): void {
 }
 
 function handleErrorStrategyPass(el: HTMLElement): void {
-  console.log('handleErrorStrategyPass');
-  
   const classList: Array<string> =  [...el.classList];
   const index = classList.indexOf('d-validate-rules-error-pristine');
   index !== -1 && classList.splice(index, 1);
-  console.log('handleErrorStrategyPass classList', classList);
-  
   el.setAttribute('class', classList.join(' '));
 }
 
+function handleValidateError(el: HTMLElement, tipEl: HTMLElement, message: string): void {
+  tipEl.innerText = '' + message;
+  tipEl.style.display = 'inline-flex';
+  tipEl.setAttribute('class', 'd-validate-tip');
+  handleErrorStrategy(el);
+}
+
+function handleValidatePass(el: HTMLElement, tipEl: HTMLElement): void {
+  tipEl.style.display = 'none';
+  handleErrorStrategyPass(el);
+}
 export default {
 
   mounted(el: HTMLElement, binding: any, vnode: VNode): void {
     const hasOptions = isObject(binding.value) && hasKey(binding.value, 'options');
     const {rules: bindingRules, options = {}, messageShowType = 'popover'} = binding.value;
     let {errorStrategy} = binding.value;
+    // errorStrategy可配置在options对象中
+    const { updateOn = 'change', errorStrategy: optionsErrorStrategy = 'dirty', asyncDebounceTime = 300} = options;
+
+    if(!errorStrategy) {
+      errorStrategy = optionsErrorStrategy;
+    }
 
     // 判断是否有options，有就取binding.value对象中的rules对象，再判断有没有rules对象，没有就取binding.value
     const bindRules = hasOptions ? bindingRules : (bindingRules ? bindingRules : binding.value);
@@ -172,7 +186,7 @@ export default {
     if(messageShowType !== 'none') {
       el.parentNode.append(tipEl);
     }
-    
+
     const descriptor = {
       modelName: []
     };
@@ -194,49 +208,39 @@ export default {
       const {validators, asyncValidators} = bindRules;
 
       // 校验器
-      validators && validators.forEach(rule => {
+      validators && validators.forEach(item => {
         const ruleObj = {
-          message: rule?.message || '',
-          validator: (r, value) => rule.validator(value),
+          message: item?.message || '',
+          validator: (rule, value) => item.validator(rule, value),
         }
         descriptor.modelName.push(ruleObj);
       });
 
       // 异步校验器
-      asyncValidators && asyncValidators.forEach(rule => {
+      asyncValidators && asyncValidators.forEach(item => {
         const ruleObj = {
-          message: rule?.message || '',
-          asyncValidator: (r, value, callback) => {
-            return new Promise((resolve, reject) => {
-              const res = rule.asyncValidator(value, callback);
+          message: item?.message || '',
+          asyncValidator: (rule, value, callback) => {
+            return new Promise(debounce((resolve, reject) => {
+              const res = item.asyncValidator(rule, value);
               if(res) {
                 resolve('');
               }else {
-                reject(r.message);
+                reject(rule.message);
               }
-            })
-          },
+            }, asyncDebounceTime))
+          }, 
         }
         descriptor.modelName.push(ruleObj);
       });
     }
-
-    // errorStrategy可配置在options对象中
-    const { updateOn = 'change', errorStrategy: optionsErrorStrategy = 'dirty'} = options;
-    if(!errorStrategy) {
-      errorStrategy = optionsErrorStrategy;
-    }
-
     const validator = new AsyncValidator(descriptor);
     let modelValue = vnode.children[0].props.value;
     vnode.children[0].el.addEventListener(updateOn, (e) => {
-      // console.log('onInput', e.target.value);
       modelValue = e.target.value;
       validator.validate({modelName: modelValue}).then(() => {
-        tipEl.style.display = 'none';
-        handleErrorStrategyPass(el);
+        handleValidatePass(el, tipEl);
       }).catch((err) => {
-        // console.log('validate error', err);
         const { errors } = err;
         if(!errors || errors.length === 0) return;
         let msg = '';
@@ -247,9 +251,7 @@ export default {
         }else {
           msg = errors[0].message;
         }
-        tipEl.innerText = '' + msg;
-        tipEl.style.display = 'inline-flex';
-        tipEl.setAttribute('class', 'd-validate-tip');
+        handleValidateError(el, tipEl, msg);
         handleErrorStrategy(el);
       })
     });
