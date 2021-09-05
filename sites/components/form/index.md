@@ -973,6 +973,89 @@ export default defineComponent({
 :::
 
 
+
+#### Form验证与提交
+
+> doing
+
+dValidateRules也可作用于已绑定ngForm、ngModelGroup元素上， 进行表单状态与错误消息的统一管理。
+对于非边框类元素，建议在d-form-item容器上配置dHasFeedback为true 进行错误反馈提示。
+对于dForm，可使用dFormSubmit、dFormReset 指令关联将用于触发提交与重置操作的元素。
+若表单设置了异步校验，可将对应按钮loading与表单pending状态关联起来。
+
+:::demo
+
+```vue
+<template>
+  <d-form ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" >
+    <d-form-item prop="name">
+      <d-form-label>Name</d-form-label>
+      <d-form-control>
+        <d-input v-model:value="formModel.name" v-d-validate-rules="{
+          rules: {minlength: 2, message: '不能小于2个字符'},
+          options: {
+            updateOn: 'input',
+          }
+        }" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="age">
+      <d-form-label>Age</d-form-label>
+      <d-form-control>
+        <d-input v-model:value="formModel.age" v-d-validate-rules="{
+          rules: {min: 1, message: '年龄需大于0'},
+          options: {
+            updateOn: 'input',
+          }
+        }" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-operation class="demo-form-operation">
+      <d-button type="submit" class="demo-btn">提交</d-button>
+      <d-button bsStyle="common" @click="resetForm">重置</d-button>
+    </d-form-operation>
+  </d-form>
+</template>
+
+<script>
+import {defineComponent, reactive, ref} from 'vue';
+
+export default defineComponent({
+  setup(props, ctx) {
+    const dFormTemplateValidate6 = ref(null);
+    let formModel = reactive({
+      name: '',
+      age: '',
+    });
+
+    const resetForm = () => {
+      dFormTemplateValidate6.value.resetFormFields();
+    }
+
+    return {
+      dFormTemplateValidate6,
+      formModel,
+      resetForm,
+    }
+  }
+})
+</script>
+
+
+<style>
+.demo-form-operation {
+  display: flex;
+  align-items: center;
+}
+.demo-btn {
+  margin-right: 10px;
+}
+</style>
+
+```
+
+:::
+
 ### 响应式表单验证
 
 > done
