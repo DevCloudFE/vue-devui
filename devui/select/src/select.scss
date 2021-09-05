@@ -41,14 +41,43 @@ $select-item-min-height: 36px;
   }
 }
 
+.devui-select-disabled {
+  cursor: not-allowed;
+  background-color: $devui-disabled-bg;
+  border-color: $devui-disabled-line;
+  color: $devui-disabled-text;
+
+  .devui-select-input {
+    cursor: not-allowed;
+    background-color: $devui-disabled-bg;
+    border-color: $devui-disabled-line;
+    color: $devui-disabled-text;
+  }
+
+  .devui-select-arrow {
+    cursor: not-allowed;
+    color: $devui-disabled-text;
+  }
+}
+
 .devui-select-open {
   .devui-select-arrow {
     transform: rotate3d(0, 0, 1, 180deg);
   }
 }
 
+.devui-dropdown-menu-multiple {
+  .devui-select-item {
+    &.active {
+      color: $devui-list-item-active-text;
+      background-color: transparent;
+    }
+  }
+}
+
 .devui-select-selection {
   position: relative;
+  cursor: pointer;
 }
 
 .devui-select-input {
@@ -93,6 +122,17 @@ $select-item-min-height: 36px;
   }
 }
 
+.devui-select-clearable:hover {
+  .devui-select-clear {
+    display: inline-flex;
+  }
+
+  .devui-select-arrow {
+    display: none;
+  }
+}
+
+.devui-select-clear,
 .devui-select-arrow {
   position: absolute;
   right: 0;
@@ -101,6 +141,17 @@ $select-item-min-height: 36px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+}
+
+.devui-select-clear {
+  display: none;
+
+  &:hover {
+    color: $devui-icon-fill-active;
+  }
+}
+
+.devui-select-arrow {
   transform: rotate3d(0, 0, 1, 0deg);
   transition: transform $transition-base-time ease-out;
 }
@@ -141,7 +192,7 @@ $select-item-min-height: 36px;
   color: $devui-text;
   cursor: pointer;
 
-  &:hover:not(.active) {
+  &:hover:not(.active):not(.disabled) {
     color: $devui-list-item-hover-text;
     background-color: $devui-list-item-hover-bg;
   }
@@ -149,6 +200,12 @@ $select-item-min-height: 36px;
   &.active {
     color: $devui-list-item-active-text;
     background-color: $devui-list-item-active-bg;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    background-color: $devui-disabled-bg;
+    color: $devui-disabled-text;
   }
 }
 

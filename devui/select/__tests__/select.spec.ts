@@ -111,4 +111,107 @@ describe('select', () => {
     expect(valueChange).toBeCalledTimes(1);
     expect(value.value).toBe('test');
   });
+
+  it('select v-model work', async () => {
+    const value = ref()
+    const options = reactive([1,2,3])
+    const wrapper = mount({
+      components: { DSelect },
+      template: `<d-select v-model="value" :options="options" />`,
+      setup() {
+        return {
+          value,
+          options,
+        };
+      },
+    });
+
+    const container = wrapper.find('.devui-select');
+    const item = container.findAll('.devui-select-item');
+
+    await container.trigger('click')
+    await item[1].trigger('click')
+    expect(value.value).toBe(2)
+    value.value = 1
+    await nextTick()
+    const input = container.find<HTMLInputElement>('.devui-select-input')
+    expect(input.element.value).toBe('1')
+    
+  });
+
+  it('select disabled work', async () => {
+    const wrapper = mount(DSelect, {
+      props: {
+        disabled: true,
+      },
+    });
+
+    const container = wrapper.find('.devui-select');
+    expect(container.classes()).toContain('devui-select-disabled');
+
+    const input = wrapper.find('.devui-select-input');
+    expect(input.attributes()).toHaveProperty('disabled')
+  });
+
+  it('select item disabled work', async () => {
+    const value = ref([])
+    const options = reactive([
+        {
+            name: '多选',
+            value: 0
+        }, {
+            name: '多选很重要呢',
+            value: 1,
+            disabled: true
+        }, {
+            name: '多选真的很重要呢',
+            value: 2,
+            disabled: false
+        }
+    ])
+    const wrapper = mount({
+      components: { DSelect },
+      template: `<d-select v-model="value" :options="options" :multiple="true" option-disabled-key="disabled" />`,
+      setup() {
+        return {
+          value,
+          options,
+        };
+      },
+    });
+
+    const container = wrapper.find('.devui-select');
+    const item = container.findAll('.devui-select-item');
+
+    await container.trigger('click')
+    await nextTick()
+    expect(item[1].classes()).toContain('disabled')
+    await item[1].trigger('click')
+    expect(value.value).toEqual([])
+    await item[0].trigger('click')
+    expect(value.value).toEqual([0])
+
+  });
+
+  it('select clear work', async () => {
+    const value = ref(1)
+    const options = reactive([1,2,3])
+    const wrapper = mount({
+      components: { DSelect },
+      template: `<d-select v-model="value" :options="options" :allow-clear="true" />`,
+      setup() {
+        return {
+          value,
+          options,
+        };
+      },
+    });
+
+    const container = wrapper.find('.devui-select');
+    const clearIcon = container.find('.devui-select-clear');
+
+    expect(clearIcon.exists()).toBeTruthy()
+    await clearIcon.trigger('click')
+    expect(value.value).toBe('')
+  });
 });

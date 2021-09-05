@@ -17,3 +17,5 @@ export function className(
 
   return classname;
 }
+
+export type KeyType<T, K extends keyof T> = T[K]

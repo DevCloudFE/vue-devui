@@ -6,6 +6,10 @@
 
 需要显示图标时。
 
+所有内置的图标可在DevUI官网进行查看：
+
+[https://devui.design/icon/ruleResource](https://devui.design/icon/ruleResource)
+
 ### 基本用法
 
 <d-icon name="emoji"></d-icon>
