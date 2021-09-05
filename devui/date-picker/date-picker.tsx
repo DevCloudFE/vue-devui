@@ -48,7 +48,6 @@ export default defineComponent({
     attachInputDom: { type: String },
     dateMin: { type: String },
     dateMax: { type: String },
-    showToday: { type: Boolean, default: false },
   },
   setup(props, ctx) {
 

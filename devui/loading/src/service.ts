@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { defineComponent } from 'vue'
-import { createComponent } from './component'
+import { createComponent } from '../../shared/scripts/component'
 import Loading from './loading'
 
 import { LoadingProps } from './types'
