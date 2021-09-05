@@ -11,11 +11,11 @@ export default defineComponent({
   setup(props: FormProps, ctx) {
     const formMitt = mitt();
     const fields: IFormItem[] =  [];
-    // const resetFormFields = () => {
-    //   fields.forEach((field: IFormItem) => {
-    //     field.resetField();
-    //   })
-    // }
+    const resetFormFields = () => {
+      fields.forEach((field: IFormItem) => {
+        field.resetField();
+      })
+    }
 
     formMitt.on(dFormEvents.addField, (field: any) => {
       if(field) {
@@ -46,12 +46,19 @@ export default defineComponent({
       ctx.emit('submit');
     }
     
-    return () => {
-      return (
-        <form onSubmit={onSubmit} class="d-form">
-          {ctx.slots.default?.()}
-        </form>
-      );
+    return {
+      fields,
+      formMitt,
+      onSubmit,
+      resetFormFields
     }
   },
+  render() {
+    const {onSubmit} = this;
+    return (
+      <form onSubmit={onSubmit} class="d-form">
+        {this.$slots.default?.()}
+      </form>
+    );
+  }
 })
