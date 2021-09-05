@@ -66,7 +66,7 @@ export default defineComponent({
       if (origin.value === 'click') {
         source.allChecked = false
       } else {
-        source.allChecked = value.length === source.filterData.filter(item => !item.disabled).length ? true : false
+        source.allChecked = value.length === source.data.filter(item => !item.disabled).length ? true : false
       }
     }
 
@@ -120,6 +120,7 @@ export default defineComponent({
           checkedNum={leftOptions.checkedNum}
           query={leftOptions.query}
           checkedValues={leftOptions.checkedValues}
+          allCount={leftOptions.data.length}
           onChangeAllSource={(value) => changeAllSource(leftOptions, value)}
           onUpdateCheckeds={updateLeftCheckeds}
           onChangeQuery={(value) => leftOptions.query = value}
@@ -143,6 +144,7 @@ export default defineComponent({
           checkedNum={rightOptions.checkedNum}
           query={rightOptions.query}
           checkedValues={rightOptions.checkedValues}
+          allCount={rightOptions.data.length}
           onChangeAllSource={(value) => changeAllSource(rightOptions, value)}
           onUpdateCheckeds={updateRightCheckeds}
           onChangeQuery={(value) => rightOptions.query = value}

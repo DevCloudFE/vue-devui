@@ -40,6 +40,7 @@ export default defineComponent({
             checkedNum,
             allChecked,
             sourceOption,
+            allCount,
             updateSearchQuery,
             search,
             searchQuery,
@@ -57,7 +58,7 @@ export default defineComponent({
                                 {title}
                             </DCheckbox>
                         </div>
-                        <div class="devui-transfer-panel-header-num">{checkedNum}/{sourceOption.length}</div>
+                        <div class="devui-transfer-panel-header-num">{checkedNum}/{allCount}</div>
                     </div>)
                 }
                 {

@@ -19,15 +19,15 @@ export const transferBaseProps = {
     },
     type: {
         type: String,
-        default: 'source'
+        default: (): string => 'source'
     },
     title: {
         type: String,
-        default: 'Source'
+        default: (): string => 'Source'
     },
     search: {
         type: Boolean,
-        default: false
+        default: (): boolean => false
     },
     allChecked: {
         type: Boolean,
@@ -47,7 +47,11 @@ export const transferBaseProps = {
     },
     checkedValues: {
         type: Array,
-        default: []
+        default: (): string[] => []
+    },
+    allCount: {
+        type: Number,
+        default: (): number => 0
     },
     scopedSlots: {
         type: Object
