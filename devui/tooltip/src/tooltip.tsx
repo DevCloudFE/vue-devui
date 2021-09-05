@@ -31,6 +31,10 @@ export default defineComponent({
         let enterEvent;
         let leaveEvent;
 
+        const arrowStyle = (attr, value)=>{
+          arrow.value.style[attr] = value;
+        };
+
         // 延迟显示
         const delayShowTrue = function (fn, delay){
             let start;
@@ -75,6 +79,7 @@ export default defineComponent({
                 // 鼠标悬浮为true，显示提示框
                 tooltip.value.style.opacity = '1';
                 tooltip.value.style.zIndex = '500';
+                arrow.value.style.border = '10px solid transparent';
                 // 具体的判定规则
                 switch (props.position){
                   case 'top':
@@ -82,10 +87,7 @@ export default defineComponent({
                     position.left = slotElement.value.children[0].offsetLeft - tooltip.value.offsetWidth / 2 + slotElement.value.children[0].offsetWidth / 2;
                     position.top = slotElement.value.children[0].offsetTop - 10 - tooltipcontent.value.offsetHeight;
                     // 设置箭头的样式 
-                    arrow.value.style.borderLeft = '10px solid transparent';
-                    arrow.value.style.borderRight = '10px solid transparent';
-                    arrow.value.style.borderBottom = '10px solid transparent';
-                    arrow.value.style.borderTop = '10px solid cornflowerblue';
+                    arrowStyle('borderTop', '10px solid cornflowerblue');
                     arrow.value.style.top = `${tooltipcontent.value.offsetHeight}px`;
                     arrow.value.style.left = `${tooltipcontent.value.offsetWidth/2 - 5}px`;
                     break;
@@ -95,10 +97,7 @@ export default defineComponent({
                     position.left = slotElement.value.children[0].offsetLeft + slotElement.value.children[0].offsetWidth;
                     position.top = slotElement.value.children[0].offsetTop + slotElement.value.children[0].offsetHeight/2 - tooltipcontent.value.offsetHeight/2;
                     // 设置箭头的样式
-                    arrow.value.style.borderLeft = '10px solid transparent';
-                    arrow.value.style.borderRight = '10px solid cornflowerblue';
-                    arrow.value.style.borderBottom = '10px solid transparent';
-                    arrow.value.style.borderTop = '10px solid transparent';
+                    arrowStyle('borderRight', '10px solid cornflowerblue');
                     arrow.value.style.top = `${tooltipcontent.value.offsetHeight/2 - 10}px`;
                     arrow.value.style.left = '-10px';
                     break;
@@ -108,10 +107,7 @@ export default defineComponent({
                     position.top = slotElement.value.children[0].offsetHeight + slotElement.value.children[0].offsetTop + 10;
                     position.left = slotElement.value.children[0].offsetLeft + slotElement.value.children[0].offsetWidth/2 - tooltipcontent.value.offsetWidth/2;
                      // 设置arrow.value的样式
-                    arrow.value.style.borderBottom = '10px solid orange';
-                    arrow.value.style.borderRight = '10px solid transparent';
-                    arrow.value.style.borderTop = '10px solid transparent';
-                    arrow.value.style.borderLeft = '10px solid transparent';
+                    arrowStyle('borderBottom', '10px solid cornflowerblue')
                     arrow.value.style.top = '-20px';
                     arrow.value.style.left = `${tooltipcontent.value.offsetWidth/2 - 10}px`;
                     break;
@@ -120,10 +116,7 @@ export default defineComponent({
                     position.top = slotElement.value.children[0].offsetTop + slotElement.value.children[0].offsetHeight/2 - tooltipcontent.value.offsetHeight/2;
                     position.left = slotElement.value.children[0].offsetLeft - 20 - tooltipcontent.value.offsetWidth;
                     // 设置arrow.value的样式
-                    arrow.value.style.borderLeft = '10px solid cornflowerblue';
-                    arrow.value.style.borderRight = '10px solid transparent';
-                    arrow.value.style.borderBottom = '10px solid transparent';
-                    arrow.value.style.borderTop = '10px solid transparent';
+                    arrowStyle('borderLeft', '10px solid cornflowerblue');
                     arrow.value.style.left = `${tooltipcontent.value.offsetWidth + 10}px`
                     arrow.value.style.top = `${tooltipcontent.value.offsetHeight/2 - 10}px`;
                     break;
