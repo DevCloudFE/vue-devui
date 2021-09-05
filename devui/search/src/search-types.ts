@@ -69,4 +69,5 @@ export interface KeywordsReturnTypes {
 export interface KeydownReturnTypes {
   onInputKeydown: (e: KeyboardEvent) => void
   onClickHandle: () => void
+  useEmitKeyword: (e: string) => void
 }
