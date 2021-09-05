@@ -1,7 +1,7 @@
 import './tooltip.scss'
 
 import { defineComponent, reactive, ref, watch, onMounted, getCurrentInstance, onBeforeUnmount, renderSlot, useSlots} from 'vue'
-import { tooltipProps, TooltipProps } from './tooltip-types'
+import { tooltipProps } from './tooltip-types'
 import EventListener from '../utils/EventListener'
 
 /**
@@ -114,7 +114,7 @@ export default defineComponent({
                     arrow.value.style.borderRight = '10px solid transparent';
                     arrow.value.style.borderTop = '10px solid transparent';
                     arrow.value.style.borderLeft = '10px solid transparent';
-                    arrow.value.style.top = `${-20}px`;
+                    arrow.value.style.top = '-20px';
                     arrow.value.style.left = `${tooltipcontent.value.offsetWidth/2 - 10}px`;
                     break;
         
