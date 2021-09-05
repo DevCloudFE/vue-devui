@@ -107,8 +107,8 @@ export default defineComponent({
         
                   case 'bottom':
                     // 设置tooltip的样式
-                    position.top = `${slotElement.value.children[0].offsetHeight + slotElement.value.children[0].offsetTop + 10}`;
-                    position.left = `${slotElement.value.children[0].offsetLeft + slotElement.value.children[0].offsetWidth/2 - tooltipcontent.value.offsetWidth/2}`;
+                    position.top = slotElement.value.children[0].offsetHeight + slotElement.value.children[0].offsetTop + 10;
+                    position.left = slotElement.value.children[0].offsetLeft + slotElement.value.children[0].offsetWidth/2 - tooltipcontent.value.offsetWidth/2;
                      // 设置arrow.value的样式
                     arrow.value.style.borderBottom = '10px solid orange';
                     arrow.value.style.borderRight = '10px solid transparent';
@@ -119,8 +119,8 @@ export default defineComponent({
                     break;
         
                   case 'left':
-                    position.top = `${slotElement.value.children[0].offsetTop + slotElement.value.children[0].offsetHeight/2 - tooltipcontent.value.offsetHeight/2}`;
-                    position.left = `${slotElement.value.children[0].offsetLeft - 20 - tooltipcontent.value.offsetWidth}`;
+                    position.top = slotElement.value.children[0].offsetTop + slotElement.value.children[0].offsetHeight/2 - tooltipcontent.value.offsetHeight/2;
+                    position.left = slotElement.value.children[0].offsetLeft - 20 - tooltipcontent.value.offsetWidth;
                     // 设置arrow.value的样式
                     arrow.value.style.borderLeft = '10px solid cornflowerblue';
                     arrow.value.style.borderRight = '10px solid transparent';
