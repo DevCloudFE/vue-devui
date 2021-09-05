@@ -157,7 +157,7 @@ export default {
 
   mounted(el: HTMLElement, binding: any, vnode: VNode): void {
     const hasOptions = isObject(binding.value) && hasKey(binding.value, 'options');
-    const {rules: bindingRules, options = {}} = binding.value;
+    const {rules: bindingRules, options = {}, messageShowType = 'popover'} = binding.value;
     let {errorStrategy} = binding.value;
 
     // 判断是否有options，有就取binding.value对象中的rules对象，再判断有没有rules对象，没有就取binding.value
@@ -167,8 +167,12 @@ export default {
     
     const rules = Array.isArray(bindRules) ? bindRules : [bindRules];
     const tipEl = document.createElement('span');
-    el.parentNode.append(tipEl);
 
+    // messageShowType控制是否显示文字提示
+    if(messageShowType !== 'none') {
+      el.parentNode.append(tipEl);
+    }
+    
     const descriptor = {
       modelName: []
     };

@@ -681,7 +681,7 @@ export default defineComponent({
 
 #### 验证单个元素，配置错误更新策略errorStrategy、校验时机updateOn
 
-> doing
+> done
 
 设置errorStrategy元素初始化时若校验不通过，错误是否会进行提示， 默认配置为dirty，若需要在初始化时将错误抛出，可配置为pristine。
 errorStrategy可继承。
@@ -800,6 +800,104 @@ export default defineComponent({
 ```
 
 :::
+
+
+#### 验证单个元素，自定义管理消息提示
+
+> doing
+
+配置messageShowType可选择消息自动提示的方式，默认为popover。
+设置为popover错误信息将在元素聚焦时以popover形式呈现。
+设置为text错误信息将自动以文本方式显示在元素下方(需要与表单控件容器配合使用)。
+设置为none错误信息将不会自动呈现到视图， 可在模板中获取message或通过监听messageChange事件获取错误message， 或在模板中直接通过引用获取。
+此配置可继承。
+配置popPosition可在消息提示方式为popover时，自定义popover内容弹出方向。 默认为['right', 'bottom']。
+此配置可继承。
+
+:::demo
+
+```vue
+<template>
+  <d-form ref="dFormTemplateValidate4" :formData="formModel" labelSize="lg" >
+    <d-form-item prop="sum">
+      <d-form-label>计算：1 + 1 = ？</d-form-label>
+      <d-form-control extraInfo="messageShowType为none，不显示提示文字">
+        <d-input v-model:value="formModel.sum" v-d-validate-rules="{
+          messageShowType: 'none',
+          rules: {
+            validators: [
+              {message: '不对喔！', validator: customValidator}
+            ]
+          },
+          options: {
+            updateOn: 'change'
+          }
+        }" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="asyncSum">
+      <d-form-label>计算：1 + 2 = ？</d-form-label>
+      <d-form-control extraInfo="messageShowType为popover，使用popover进行提示（todo，待引入popover组件）">
+        <d-input v-model:value="formModel.asyncSum" v-d-validate-rules="{
+          rules: {
+            asyncValidators: [
+              {message: '不对喔！（async）', asyncValidator: customAsyncValidator}
+            ]
+          },
+          options: {
+            updateOn: 'input'
+          }
+        }" />
+      </d-form-control>
+    </d-form-item>
+  </d-form>
+
+</template>
+
+<script>
+import {defineComponent, reactive, ref} from 'vue';
+
+export default defineComponent({
+  setup(props, ctx) {
+    const dFormTemplateValidate4 = ref(null);
+    let formModel = reactive({
+      sum: '',
+      asyncSum: '',
+    });
+
+    const customValidator = (value) => {
+      return value == "2"; // value值等于2的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！”）
+    }
+
+    const customAsyncValidator = (value) => {
+      return value == "3"; // value值等于3的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！（async）”）
+    }
+
+    return {
+      dFormTemplateValidate4,
+      formModel,
+      customValidator,
+      customAsyncValidator,
+    }
+  }
+})
+</script>
+
+
+<style>
+.demo-form-operation {
+  display: flex;
+  align-items: center;
+}
+.demo-btn {
+  margin-right: 10px;
+}
+</style>
+
+```
+
+:::
+
 
 ### 响应式表单验证
 
