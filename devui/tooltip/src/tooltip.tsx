@@ -92,8 +92,6 @@ export default defineComponent({
                   
                   case 'right':
                     // 设置tooltip 内容的样式
-                    position.left = 0;
-                    position.top = 0;
                     position.left = slotElement.value.children[0].offsetLeft + slotElement.value.children[0].offsetWidth;
                     position.top = slotElement.value.children[0].offsetTop + slotElement.value.children[0].offsetHeight/2 - tooltipcontent.value.offsetHeight/2;
                     // 设置箭头的样式
