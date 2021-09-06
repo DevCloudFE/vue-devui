@@ -26,7 +26,6 @@ const sidebar = {
         { text: 'Pagination 分页', link: '/components/pagination/', status: '开发中' },
         { text: 'StepsGuide 操作指引', link: '/components/steps-guide/' },
         { text: 'Tabs 选项卡', link: '/components/tabs/', status: '已完成' },
-        { text: 'Tabs 选项卡切换', link: '/components/tabs/' },
         { text: 'Anchor 锚点', link: '/components/Anchor/' },
       ]
     },
