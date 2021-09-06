@@ -1,6 +1,6 @@
 import { computed, ExtractPropTypes, PropType, ComputedRef } from 'vue'
 import { IItem, TState, TResult } from '../types'
-import { TransferProps } from '../__tests__/use-transfer'
+import { TransferProps } from './use-transfer'
 
 export type TransferOperationProps = ExtractPropTypes<typeof transferBaseProps>
 

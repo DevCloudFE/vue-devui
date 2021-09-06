@@ -2,8 +2,8 @@ import { defineComponent, reactive, watch, ref } from 'vue'
 import { TState } from '../types'
 import DTransferBase from './transfer-base'
 import DTransferOperation from './transfer-operation'
-import { initState } from '../__tests__/use-transfer-base'
-import { transferProps, TransferProps } from '../__tests__/use-transfer'
+import { initState } from '../common/use-transfer-base'
+import { transferProps, TransferProps } from '../common/use-transfer'
 import DCheckbox from '../..//checkbox/src/checkbox'
 import './transfer.scss'
 
@@ -26,7 +26,7 @@ export default defineComponent({
     watch(
       () => leftOptions.query,
       (nVal: string): void => {
-        leftOptions.filterData = leftOptions.data.filter(item => item.key.indexOf(nVal) !== -1)
+        searchFilterData(leftOptions)
       }
     )
 
@@ -44,7 +44,7 @@ export default defineComponent({
     watch(
       () => rightOptions.query,
       (nVal: string): void => {
-        rightOptions.filterData = rightOptions.data.filter(item => item.key.indexOf(nVal) !== -1)
+        searchFilterData(rightOptions)
       },
     )
 
@@ -72,14 +72,16 @@ export default defineComponent({
 
     const updateFilterData = (source: TState, target: TState): void => {
       const newData = []
-      source.filterData = source.data = source.filterData.filter(item => {
+      source.data = source.data.filter(item => {
         const hasInclues = source.checkedValues.includes(item.value)
         hasInclues && newData.push(item)
         return !hasInclues
       })
-      target.filterData = target.data = target.filterData.concat(newData)
+      target.data = target.data.concat(newData)
       source.checkedValues = []
       target.disabled = !target.disabled
+      searchFilterData(source)
+      searchFilterData(target)
       setOrigin('click')
     }
     const changeAllSource = (source: TState, value: boolean): void => {
@@ -100,6 +102,9 @@ export default defineComponent({
     const updateRightCheckeds = (values: string[]): void => {
       rightOptions.checkedValues = values
       setOrigin('change')
+    }
+    const searchFilterData = (source: TState): void => {
+      source.filterData = source.data.filter(item => item.key.indexOf(source.query) !== -1)
     }
     const setOrigin = (value: string): void => {
       origin.value = value

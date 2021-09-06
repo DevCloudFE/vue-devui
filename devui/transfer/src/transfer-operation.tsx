@@ -1,6 +1,6 @@
 import { defineComponent, computed } from 'vue';
 import DButton from '../../button/src/button'
-import { transferOperationProps } from '../__tests__/use-transfer-operation'
+import { transferOperationProps } from '../common/use-transfer-operation'
 
 export default defineComponent({
     name: 'DTransferOperation',
