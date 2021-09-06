@@ -3,6 +3,7 @@ import './form.scss'
 import { defineComponent, provide } from 'vue'
 import { formProps, FormProps, IFormItem, dFormEvents } from './form-types'
 import mitt from 'mitt'
+import EventBus from './util/event-bus'
 
 export default defineComponent({
   name: 'DForm',
@@ -43,7 +44,8 @@ export default defineComponent({
 
     const onSubmit = (e) => {
       e.preventDefault();
-      ctx.emit('submit');
+      ctx.emit('submit', e);
+      EventBus.emit(`formSubmit:${props.name}`);
     }
     
     return {

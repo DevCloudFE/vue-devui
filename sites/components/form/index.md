@@ -987,7 +987,7 @@ dValidateRules也可作用于已绑定ngForm、ngModelGroup元素上， 进行�
 
 ```vue
 <template>
-  <d-form ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" >
+  <d-form name="userInfoForm" ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" @submit="onSubmit">
     <d-form-item prop="name">
       <d-form-label>Name</d-form-label>
       <d-form-control>
@@ -1032,9 +1032,14 @@ export default defineComponent({
       dFormTemplateValidate6.value.resetFormFields();
     }
 
+    const onSubmit = (e) => {
+      console.log('@submit')
+    }
+
     return {
       dFormTemplateValidate6,
       formModel,
+      onSubmit,
       resetForm,
     }
   }

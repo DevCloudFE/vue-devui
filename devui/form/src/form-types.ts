@@ -29,6 +29,10 @@ export const formProps = {
     type: String as PropType<'u-1-3'>,
     default: '', 
   },
+  name: {
+    type: String,
+    default: '', 
+  },
 } as const
 
 export const formItemProps = {

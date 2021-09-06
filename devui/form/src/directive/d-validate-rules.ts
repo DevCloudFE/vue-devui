@@ -2,6 +2,7 @@ import AsyncValidator from 'async-validator';
 import { VNode } from 'vue';
 import './style.scss';
 import { debounce } from 'lodash';
+import EventBus from '../util/event-bus';
 
 // 获取async-validator可用的规则名
 function getAvaliableRuleObj(ruleName: string, value) {
@@ -161,8 +162,35 @@ function handleValidatePass(el: HTMLElement, tipEl: HTMLElement): void {
   tipEl.style.display = 'none';
   handleErrorStrategyPass(el);
 }
-export default {
 
+// 获取表单name
+function getFormName(vnode): string {
+  const _refs = vnode.dirs[0].instance.$refs;
+  const key = Object.keys(_refs)[0];
+  return _refs[key]['name'];
+}
+
+// 校验处理函数
+function validateFn({validator, modelValue, el, tipEl}) {
+  validator.validate({modelName: modelValue}).then(() => {
+    handleValidatePass(el, tipEl);
+  }).catch((err) => {
+    const { errors } = err;
+    if(!errors || errors.length === 0) return;
+    let msg = '';
+
+    // todo: 待支持国际化
+    if(typeof errors[0].message === 'object') {
+      msg = errors[0].message.default;
+    }else {
+      msg = errors[0].message;
+    }
+    handleValidateError(el, tipEl, msg);
+    handleErrorStrategy(el);
+  })
+}
+
+export default {
   mounted(el: HTMLElement, binding: any, vnode: VNode): void {
     const hasOptions = isObject(binding.value) && hasKey(binding.value, 'options');
     const {rules: bindingRules, options = {}, messageShowType = 'popover'} = binding.value;
@@ -234,33 +262,32 @@ export default {
         descriptor.modelName.push(ruleObj);
       });
     }
+
+    // 校验器对象
     const validator = new AsyncValidator(descriptor);
-    let modelValue = vnode.children[0].props.value;
-    vnode.children[0].el.addEventListener(updateOn, (e) => {
-      modelValue = e.target.value;
-      validator.validate({modelName: modelValue}).then(() => {
-        handleValidatePass(el, tipEl);
-      }).catch((err) => {
-        const { errors } = err;
-        if(!errors || errors.length === 0) return;
-        let msg = '';
 
-        // todo: 待支持国际化
-        if(typeof errors[0].message === 'object') {
-          msg = errors[0].message.default;
-        }else {
-          msg = errors[0].message;
-        }
-        handleValidateError(el, tipEl, msg);
-        handleErrorStrategy(el);
-      })
-    });
+    const htmlEventValidateHandler = (e) => {
+      const modelValue = e.target.value;
+      validateFn({validator, modelValue, el, tipEl});
+    }
 
+    // 监听事件验证
+    vnode.children[0].el.addEventListener(updateOn, htmlEventValidateHandler);
+    
     // 设置errorStrategy
     if(errorStrategy === 'pristine') {
       handleErrorStrategy(el);
       // pristine为初始化验证，初始化时需改变下原始值才能出发验证
       vnode.children[0].props.value = '' + vnode.children[0].props.value;
     }
+
+    const formName = getFormName(vnode);
+    // 处理表单提交验证
+    formName && EventBus.on(`formSubmit:${formName}`, () => {
+      const modelValue = vnode.children[0].el.value;
+      // 进行提交验证
+      validateFn({validator, modelValue, el, tipEl});
+    });
+    
   }
 }
