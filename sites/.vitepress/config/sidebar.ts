@@ -17,6 +17,15 @@ const sidebar = {
     {
       text: '导航',
       children: [
+        { text: 'Accordion 手风琴', link: '/components/accordion/' },
+        { text: 'Anchor 锚点', link: '/components/anchor/' },
+        { text: 'BackTop 回到顶部', link: '/components/back-top/' },
+        { text: 'Breadcrumb 面包屑', link: '/components/breadcrumb/' },
+        { text: 'Dropdown 下拉菜单', link: '/components/dropdown/' },
+        { text: 'NavSprite 导航精灵', link: '/components/nav-sprite/' },
+        { text: 'Pagination 分页', link: '/components/pagination/', status: '开发中' },
+        { text: 'StepsGuide 操作指引', link: '/components/steps-guide/' },
+        { text: 'Tabs 选项卡', link: '/components/tabs/', status: '已完成' },
         { text: 'Tabs 选项卡切换', link: '/components/tabs/' },
         { text: 'Anchor 锚点', link: '/components/Anchor/' },
       ]
