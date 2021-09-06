@@ -54,7 +54,9 @@ const buildAll = async () => {
   }))
 }
 
-const runBuild = async () => {
+exports.build = async () => {
+  await buildAll()
+
   const components = fs.readdirSync(entryDir).filter(name => {
     const componentDir = path.resolve(entryDir, name)
     const isDir = fs.lstatSync(componentDir).isDirectory()
@@ -64,8 +66,4 @@ const runBuild = async () => {
   for(const name of components) {
     await buildSingle(name)
   }
-
-  await buildAll()
 }
-
-runBuild()
