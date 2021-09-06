@@ -1,6 +1,4 @@
 import { ref } from 'vue'
-import { from, merge } from 'rxjs'
-import { toArray } from 'rxjs/operators'
 import { FileUploader } from './file-uploader'
 import { UploadStatus } from './upload-types'
 
@@ -64,11 +62,20 @@ export const useUpload = () => {
     return finalUploads
   }
 
-  const upload = (oneFile?) => {
+  const upload = async (
+    oneFile?
+  ): Promise<
+    | never
+    | {
+        file: File
+        response: any
+      }[]
+  > => {
     let uploads: any[] = []
     if (oneFile) {
       oneFile.percentage = 0
-      uploads.push(from(oneFile.send()))
+      const uploadedFile = await oneFile.send()
+      uploads.push(uploadedFile)
     } else {
       const preFiles = fileUploaders.value.filter(
         (fileUploader) => fileUploader.status === UploadStatus.preLoad
@@ -77,28 +84,26 @@ export const useUpload = () => {
         (fileUploader) => fileUploader.status === UploadStatus.failed
       )
       const uploadFiles = preFiles.length > 0 ? preFiles : failedFiles
-      uploads = uploadFiles.map((fileUploader) => {
-        fileUploader.percentage = 0
-        return from(fileUploader.send())
-      })
+      uploads = await Promise.all(
+        uploadFiles.map(async (fileUploader) => {
+          fileUploader.percentage = 0
+          const uploadedFile = await fileUploader.send()
+          return uploadedFile
+        })
+      )
     }
     if (uploads.length > 0) {
-      return merge<
-        {
-          file: File
-          response: any
-        }[]
-      >(...uploads).pipe(toArray())
+      return Promise.resolve(uploads)
     }
 
-    return from(Promise.reject('no files'))
+    return Promise.reject('no files')
   }
 
   const _oneTimeUpload = () => {
     const uploads = fileUploaders.value.filter(
       (fileUploader) => fileUploader.status !== UploadStatus.uploaded
     )
-    return from(dealOneTimeUploadFiles(uploads))
+    return dealOneTimeUploadFiles(uploads)
   }
 
   const deleteFile = (file) => {
