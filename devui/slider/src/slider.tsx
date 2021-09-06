@@ -15,6 +15,7 @@ export default defineComponent({
     let startPosition = 0;
     let startX = 0;
 
+    const sliderRunway = ref<HTMLDivElement>(null);
     const inputValue = ref<number>(props.modelValue);
     const currentPosition = ref<number>(0);
     const newPostion = ref<number>(0);
@@ -35,7 +36,7 @@ export default defineComponent({
 
     //一挂载就进行当前位置的计算，以后的移动基于当前的位置移动
     onMounted(() => {
-      const sliderWidth = document.querySelector('.devui-slider__runway').clientWidth;
+      const sliderWidth = sliderRunway.value.clientWidth;
       currentPosition.value = (sliderWidth * (inputValue.value - props.min)) / (props.max - props.min);
     });
 
@@ -86,8 +87,7 @@ export default defineComponent({
     }
     function setPostion(newPosition: number) {
       //获取slider的实际长度的像素
-      const sliderWidth: number = Math.round(document.querySelector('.devui-slider__runway').clientWidth);
-
+      const sliderWidth: number = Math.round(sliderRunway.value.clientWidth);
       if (newPosition < 0) {
         newPosition = 0;
       }
@@ -146,17 +146,17 @@ export default defineComponent({
       }
     }
     //添加disabled类
-    const disableClzz = computed(() => {
+    const disableClass = computed(() => {
       return props.disabled ? ' disabled' : '';
     });
     return () => (
       <div class='devui-slider'>
         {/* 整个的长度 */}
-        <div class={'devui-slider__runway' + disableClzz.value} onClick={handleClick}>
+        <div ref={sliderRunway} class={'devui-slider__runway' + disableClass.value} onClick={handleClick}>
           {/* 滑动后左边的进度条 */}
-          <div class={'devui-slider__bar' + disableClzz.value} style={{ width: percentDispaly.value }}></div>
+          <div class={'devui-slider__bar' + disableClass.value} style={{ width: percentDispaly.value }}></div>
           <div
-            class={'devui-slider__button' + disableClzz.value}
+            class={'devui-slider__button' + disableClass.value}
             style={{ left: percentDispaly.value }}
             onMousedown={handleonMousedown}
           ></div>
