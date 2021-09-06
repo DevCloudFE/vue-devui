@@ -12,7 +12,13 @@
 
 ```vue
 <template>
-  <d-radio v-for="item in list" v-model="choose" :key="item" :value="item">
+  <d-radio
+    v-for="item in list"
+    v-model="choose"
+    :key="item"
+    :value="item"
+    :style="{ marginBottom: '20px' }"
+  >
     The Radio value is: {{ item }}
   </d-radio>
 </template>
@@ -48,6 +54,7 @@ export default defineComponent({
     :key="item"
     :value="item"
     :beforeChange="beforeChange"
+    :style="{ marginBottom: '20px' }"
     @change="valChange"
   >
     The Radio value is: {{ item }}
@@ -130,7 +137,14 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-radio v-for="item in list" v-model="choose" :key="item" :value="item" disabled>
+  <d-radio
+    v-for="item in list"
+    v-model="choose"
+    :key="item"
+    :value="item"
+    :style="{ marginBottom: '20px' }"
+    disabled
+  >
     The Radio value is: {{ item }}
   </d-radio>
 </template>
@@ -263,11 +277,11 @@ export default defineComponent({
 
 d-radio 参数
 
-|     参数     |         类型         | 默认  | 说明                                                                            | 跳转 Demo                              |
-| :----------: | :------------------: | :---: | :------------------------------------------------------------------------------ | -------------------------------------- |
-|     name     |       `string`       |  --   | 可选，单选项名称                                                                | [互相独立的单选项](#相互独立的单选项)  |
-|    value     |       `string`       |  --   | 必选，单选项值                                                                  | [互相独立的单选项](#相互独立的单选项)  |
-|   disabled   |      `boolean`       | false | 可选，是否禁用该单选项                                                          | [禁用](#禁用)                          |
+|     参数     |         类型         | 默认  | 说明                                                                            | 跳转 Demo                               |
+| :----------: | :------------------: | :---: | :------------------------------------------------------------------------------ | --------------------------------------- |
+|     name     |       `string`       |  --   | 可选，单选项名称                                                                | [互相独立的单选项](#相互独立的单选项)   |
+|    value     |       `string`       |  --   | 必选，单选项值                                                                  | [互相独立的单选项](#相互独立的单选项)   |
+|   disabled   |      `boolean`       | false | 可选，是否禁用该单选项                                                          | [禁用](#禁用)                           |
 | beforeChange | `Function / Promise` |  --   | 可选，radio 切换前的回调函数，返回 boolean 类型，返回 false 可以阻止 radio 切换 | [回调切换](#radio-根据条件终止切换操作) |
 
 d-radio 事件

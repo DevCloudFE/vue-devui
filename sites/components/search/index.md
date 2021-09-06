@@ -27,7 +27,7 @@
 ```vue
 <template>
   <div>
-    <d-search iconPosition="left" style="width: 200px"></d-search>
+    <d-search iconPosition="left" style="width: 200px" placeholder="请输入"></d-search>
   </div>
 </template>
 ```
@@ -48,28 +48,12 @@
 
 ### 双向绑定
 
-<!-- <p>
-  <d-search v-model="searchText" style="width: 200px"></d-search>
-</p>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
-  setup() {
-    const searchText = ref('')
-    return {
-      searchText,
-    }
-  },
-})
-</script> -->
 :::demo 使用`v-model`双向绑定
 
 ```vue
 
 <template>
-  <d-search v-model="searchText" style="width: 200px"></d-search>
+  <d-search cssClass="ipt" v-model="searchText" :maxLength="5" style="width: 200px"></d-search>
 </template>
 
 <script>
@@ -87,3 +71,22 @@ export default defineComponent({
 ```
 
 :::
+
+### API
+
+|    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         | 全局配置项 |
+| :---------: | :------: | :-------: | :----------------------- | --------------------------------- | --------- |
+|    size     | `'sm'\|''\|'lg'` |    ''     | 可选，搜索框尺寸，有三种选择 lg、''、sm  | [基本用法](#基本用法)             ||
+|    placeholder     | `string` |  --   | 可选，输入框 placeholder     | [搜索图标左置](#搜索图标左置)             ||
+|    maxLength     | `number` |  --   | 可选，输入框的 max-length    |  [双向绑定](#双向绑定)  ||
+|    disabled    | `boolean` | false | 可选，输入框是否被禁用           | [基本用法](#基本用法)             ||
+| iconPosition | `string` |  'right'   | 可选，搜索图标位置，有两种选择'left' / 'right' | [搜索图标左置](#搜索图标左置) ||
+| noBorder | `boolean` |  false  | 可选，是否显示边框 | [无边框](#无边框) ||
+| cssClass | `string` |  ''  | 可选，支持传入类名到输入框上 | [双向绑定](#双向绑定) ||
+
+### d-search 事件
+
+|    事件     |   类型  | 说明                     | 跳转 Demo |
+| :---------: | :------: | :--------------------: | :---------: |
+| searchFn |	`string` |	回车或点击搜索按钮触发的回调函数，返回文本框输入的值 |	[基本用法](#基本用法) |
+

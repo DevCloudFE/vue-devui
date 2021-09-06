@@ -11,10 +11,6 @@
   cursor: pointer;
   color: $devui-text;
 
-  &:not(:last-child) {
-    margin-bottom: 20px;
-  }
-
   &:hover {
     .devui-radio-label {
       color: $devui-primary-hover;
