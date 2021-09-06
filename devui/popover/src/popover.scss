@@ -1,3 +1,61 @@
-.d-popover {
-  //
+@import '../../style/theme/color';
+@import '../../style//theme//corner';
+@import '../../style//theme/font';
+
+@mixin someDisplay {
+  display: inline-block;
+}
+$devui-popover-margin:-6px;
+$devui-popover-left:-8px;
+
+.devui-popover {
+  position: relative;
+  @include someDisplay;
+
+  &::after {
+    content: '';
+    width: 12px;
+    display: none;
+    height: 12px;
+    transform: rotate(45deg);
+    position: absolute;
+    background-color: $devui-feedback-overlay-bg;
+  }
+
+  .devui-popover-content {
+    position: absolute;
+    display: none;
+    padding: 5px 14px;
+    line-height: 1.5;
+    border-radius: $devui-border-radius-feedback;
+    transform: translateX(-100%);
+    color: $devui-feedback-overlay-text;
+    background-color: $devui-feedback-overlay-bg;
+    font-size: $devui-font-size-sm;
+  }
+
+  &.left {
+    .devui-popover-content {
+      left: $devui-popover-left;
+    }
+
+    &::after {
+      left: $devui-popover-left;
+      top: 50%;
+      margin-top: $devui-popover-margin;
+      margin-left: $devui-popover-margin;
+    }
+  }
+}
+
+.devui-popover {
+  &.devui-popover-isVisible {
+    .devui-popover-content {
+      @include someDisplay;
+    }
+
+    &::after {
+      @include someDisplay;
+    }
+  }
 }
