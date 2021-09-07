@@ -23,7 +23,7 @@ on(document, 'mouseup', (e: Event) => {
 })
 
 function createDocumentHandler(el: HTMLElement, binding: Record<string, any>, vnode: any) {
-  return function(mousedown: Event, mouseup: Event) {
+  return function(mouseup: Event, mousedown: Event) {
     if (
       !vnode ||
       !binding.instance ||

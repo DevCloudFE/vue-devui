@@ -2,87 +2,174 @@
 
 用于从列表中选择单个或者多个数据
 
-### 何时使用
-
-需要从列表中选择单个或者多个数据
-
 ### 基本用法
 
-#### Large
+:::demo 通过`size`：`sm`，`md(默认)`，`lg`来设置`Select`大小，通过`overview`：`underlined`设置只有下边框样式
 
-<br/>
-<d-select v-model="selectValue1" :options="selectOptions1" size="lg"></d-select>
-<br/>
+```vue
+<template>
+  <div>
+    Small
+    <d-select v-model="value1" :options="options" size="sm"></d-select>
 
-#### Middle
+    Middle
+    <d-select v-model="value2" :options="options"></d-select>
 
-<br/>
-<d-select v-model="selectValue2" :options="selectOptions2" placeholder="这是默认选择框"></d-select>
-<br/>
+    Large
+    <d-select v-model="value3" :options="options" size="lg"></d-select>
 
-#### Small
+    Underlined
+    <d-select v-model="value4" :options="options" size="lg" overview="underlined"></d-select>
+  </div>
+</template>
 
-<br/>
-<d-select v-model="selectValue3" :options="selectOptions3" size="sm"></d-select>
-<br/>
-
-#### Underlined
-
-<br/>
-<d-select v-model="selectValue4" :options="selectOptions4" size="lg" overview="underlined"></d-select>
-<br/>
-
-```html
-<d-select v-model="baseSelectValue" :options="baseSelectOptions" size="lg"></d-select>
-
-<d-select v-model="baseSelectValue" :options="baseSelectOptions" placeholder="这是默认选择框"></d-select>
-
-<d-select v-model="baseSelectValue" :options="baseSelectOptions" size="sm"></d-select>
-
-<d-select v-model="baseSelectValue" :options="baseSelectOptions" size="lg" overview="underlined"></d-select>
-```
-
-<script lang="ts">
-import { defineComponent, ref, reactive } from 'vue'
+<script>
+import { defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
-  setup() {
-    const selectValue1 = ref('')
-    const selectValue2 = ref('')
-    const selectValue3 = ref('')
-    const selectValue4 = ref(0)
-    const selectOptions1 = reactive([
-      1,2,3
-    ])
-    const selectOptions2 = reactive([
-      'test','string','text'
-    ])
-    const selectOptions3 = reactive([
-      1,2,3,'test',4,5,6,'string','text'
-    ])
-    const selectOptions4 = reactive([
+  setup () {
+    const value1 = ref('')
+    const value2 = ref('')
+    const value3 = ref('')
+    const value4 = ref('')
+    const items = new Array(6).fill(0).map((item, i) => `Option ${i+1}`)
+    const options = reactive(items)
+
+    return {
+      value1,
+      value2,
+      value3,
+      value4,
+      options
+    }
+  },
+})
+</script>
+```
+:::
+
+#### 多选
+
+:::demo 通过`multiple`：`true`来开启多选
+
+```vue
+<template>
+  <d-select v-model="value" :options="options" :multiple="true" />
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue'
+
+export default defineComponent({
+  setup () {
+    const value = ref([])
+    const items = new Array(6).fill(0).map((item, i) => `Option ${i+1}`)
+    const options = reactive(items)
+
+    return {
+      value,
+      options
+    }
+  },
+})
+</script>
+```
+:::
+
+#### 禁用
+
+:::demo 通过`disabled`：`true`来禁用`Select`，通过`option-disabled-key`来设置单个选项禁用，比如设置`disabled`字段，则对象上disabled为`true`时不可选择
+
+```vue
+<template>
+  <d-select v-model="value1" :options="options1" :disabled="true" />
+  <br>
+  <d-select v-model="value2" :options="options2" option-disabled-key="disabled" />
+  <br>
+  <d-select v-model="value3" :options="options3" :multiple="true" option-disabled-key="notAllow" />
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue'
+
+export default defineComponent({
+  setup () {
+    const value1 = ref('')
+    const value2 = ref('')
+    const value3 = ref([])
+    const items = new Array(6).fill(0).map((item, i) => `Option ${i+1}`)
+    const options1 = reactive(items)
+    const options2 = reactive([
       {
-        name: '我',
+        name: 'Option 1',
         value: 0
       }, {
-        name: '看看',
+        name: 'Option 2',
         value: 1
       }, {
-        name: '什么情况',
+        name: 'Option 3',
+        value: 2,
+        disabled: true
+      }
+    ])
+    const options3 = reactive([
+      {
+        name: 'Option 1',
+        value: 0
+      }, {
+        name: 'Option 2',
+        value: 1,
+        notAllow: true
+      }, {
+        name: 'Option 3',
         value: 2
       }
     ])
-    
+
     return {
-      selectValue1,
-      selectValue2,
-      selectValue3,
-      selectValue4,
-      selectOptions1,
-      selectOptions2,
-      selectOptions3,
-      selectOptions4,
+      value1,
+      value2,
+      value3,
+      options1,
+      options2,
+      options3
     }
-  }
+  },
 })
 </script>
+
+```
+:::
+
+#### 可清空
+
+:::demo 通过`allow-clear`：`true`来设置`Select`可清空
+
+```vue
+<template>
+  <d-select v-model="value1" :options="options" :allow-clear="true" />
+  <br>
+  <d-select v-model="value2" :options="options" :multiple="true" :allow-clear="true" />
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue'
+
+export default defineComponent({
+  setup () {
+    const value1 = ref('')
+    const value2 = ref([])
+    const items = new Array(6).fill(0).map((item, i) => `Option ${i+1}`)
+    const options = reactive(items)
+
+    return {
+      value1,
+      value2,
+      options
+    }
+  },
+})
+</script>
+
+```
+:::

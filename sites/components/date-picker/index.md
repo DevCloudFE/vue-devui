@@ -1,66 +1,16 @@
-<style lang="scss">
-.devui-datepicker-demo {
-    margin: 10px 0px;
-    padding: 10px 0px;
-
-    label {
-        border: 1px solid #aaa;
-        padding: 0px 5px;
-        height: 2em;
-        line-height: 2em;
-        display: inline-block;
-        margin: 5px;
-        font-size: 14px;
-        border-radius: 5px;
-        user-select: none;
-        cursor: pointer;
-
-        input[type=checkbox] {
-            transform: translateY(1px);
-            margin-left: 3px;
-        }
-    }
-
-    .input-binder {
-        width: 300px;
-        padding: 5px;
-        font-size: 16px;
-        border-radius: 5px;
-    }
-}
-</style>
-
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup() {
-    const range = ref<boolean>(false)
-    const rangeSwitch = () => range.value = !range.value
 
-    const range2 = ref<boolean>(false)
-    const rangeSwitch2 = () => range2.value = !range2.value
-
-    const showTime = ref<boolean>(false)
-    const showTimeSwitch = () => showTime.value = !showTime.value
-
-    const spliter = ref<boolean>('-')
-    const setSpliter = (v: string) => spliter.value = v
-
-    const handleRangeChange = (e: Event) => {
-        const { selectedIndex, value } = e.target
-        setSpliter(value)
+    const eventValue = ref<string>('')
+    const handleEventValue = (val: string) => {
+        eventValue.value = val
     }
 
     return {
-      range,
-      rangeSwitch,
-      range2,
-      rangeSwitch2,
-      showTime,
-      showTimeSwitch,
-      spliter,
-      setSpliter,
-      handleRangeChange,
+      eventValue,
+      handleEventValue,
     }
   }
 })
@@ -70,121 +20,102 @@ export default defineComponent({
 
 日期、时间可视化输入。
 
-### 作为UI组件
+## 属性 auto-close
 
----------
+|项目|说明|
+|----|----|
+|名称|auto-close / autoClose|
+|类型|boolean|
+|必填|否|
+|默认|false|
+|说明|选择日期后，是否自动关闭日期面板|
 
+```vue
+<!-- 开启 -->
+<d-datepicker auto-close />
+<d-datepicker :auto-close="true" />
 
-#### 最简
-
-<section class="devui-datepicker-demo">
-    <d-datepicker />
-</section>
-
-```jsx
+<!-- 关闭 -->
 <d-datepicker />
+<d-datepicker :auto-close="false" />
 ```
-#### 区域选择
 
-<section class="devui-datepicker-demo">
-    <d-datepicker range />
-</section>
+<d-datepicker auto-close />
+<d-datepicker />
 
-```jsx
+## 属性 range
+
+|项目|说明|
+|----|----|
+|名称|range|
+|类型|boolean|
+|必填|否|
+|默认|false|
+|说明|是否开启区间选择|
+
+```vue
+<!-- 开启 -->
 <d-datepicker range />
+<d-datepicker :range="true" />
+
+<!-- 关闭 -->
+<d-datepicker />
+<d-datepicker :range="false" />
 ```
 
-### 区间限制
+<d-datepicker range />
 
-<section class="devui-datepicker-demo">
-    <d-datepicker date-min="2021-5-9" date-max="2021-6-20" />
-</section>
+## 属性 format
 
-```jsx
-<d-datepicker date-min="2021-8-9" date-max="2021-9-20" />
+|项目|类型|
+|----|----|
+|名称|format|
+|类型|string|
+|必填|否|
+|默认|y/MM/dd|
+|说明|日期值格式|
+
+<d-datepicker format="yyyy-MM-dd hh:mm:ss" />
+<d-datepicker format="yy-MM-dd" range />
+
+```vue
+<d-datepicker format="yyyy-MM-dd hh:mm:ss" />
+<d-datepicker format="yy-MM-dd" range />
 ```
 
-<section class="devui-datepicker-demo">
-    <d-datepicker range date-min="2021-8-9" date-max="2022-3-20" />
-</section>
+**日期格式化字符**
 
-```jsx
-<d-datepicker range date-min="2021-8-9" date-max="2022-3-20" />
+|字符|说明|规则|
+|----|----|----|
+|y, yy, yyyy|year|使用`yy`时，只显示后2位年份，其他情况显示4位年份。比如`yy/MM/dd -> 21/01/02`， `y/MM/dd -> 2021/01/02`|
+|M,MM|month|使用`MM`时，一位数数字左侧自动补`0`。比如`y/MM/dd -> 2021/01/02`，`y/M/d -> 2021/1/2`|
+|d,dd|date|规则同`M`|
+|h,hh|hour|规则同`M`；使用24小时表示。|
+|m,mm|minute|规则同`M`|
+|s,ss|second|规则同`M`|
+
+## 属性 range-spliter
+
+|项目|类型|
+|----|----|
+|名称|range-spliter / rangeSpliter|
+|类型|string|
+|必填|否|
+|默认|-|
+|说明|在区间选择模式下，分隔起止时间的字符。|
+
+```vue
+<d-datepicker range range-spliter="至" />
 ```
 
+<d-datepicker range range-spliter="至" />
 
-### 绑定原生`<input>`
+## 事件 selectedDateChange
 
-暂定通过`querySelector`查找节点，绑定真实`dom`节点。此方案待定。
-
-```jsx
-<input class="input-binder" id="datepicker-input-single" />
-<d-datepicker
-    attach-input-dom="#datepicker-input-single"
-    show-today
-    auto-close
-/>
+```vue
+<input :value="eventValue" readonly>
+<d-datepicker :selected-date-change="handleEventValue" />
 ```
 
-<section class="devui-datepicker-demo">
-    <input class="input-binder" id="datepicker-input-single" />
-    <d-datepicker
-        attach-input-dom="#datepicker-input-single"
-        show-today
-        auto-close
-    />
-</section>
-
-
-```jsx
-<input class="input-binder" id="datepicker-input" />
-<d-datepicker
-    attach-input-dom="#datepicker-input"
-    range
-    :range-spliter="spliter"
-/>
-```
-
-<section class="devui-datepicker-demo">
-    <input class="input-binder" id="datepicker-input" />
-    <label>分隔符
-        <select @change="handleRangeChange">
-            <option>-</option>
-            <option>~</option>
-            <option>-></option>
-            <option>～</option>
-        </select>
-    </label>    
-    <d-datepicker attach-input-dom="#datepicker-input" range :range-spliter="spliter" />
-</section>
-
-### Scroll位置跟踪
-
-在对宿主`<input>`绑定的过程中，对宿主的父级节点做了`scroll`追踪；当任何一级发生`scroll`时，都会更新弹出层位置，确保能让弹出层与`<input>`正确贴合。
-
-这个做法是根据`ng`的组件效果实现的。
-
-TODO: 跟踪节流。
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-
+<input :value="eventValue" readonly>
+<d-datepicker :selected-date-change="handleEventValue" />

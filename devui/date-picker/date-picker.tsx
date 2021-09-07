@@ -1,32 +1,21 @@
-import type { UnwrapRef } from 'vue'
-import { defineComponent, reactive, onMounted } from 'vue'
-import { invokeFunction } from './utils'
+import { onUnmounted, UnwrapRef } from 'vue'
+import { defineComponent, reactive, onMounted, ref } from 'vue'
+import { invokeFunction, isIn } from './utils'
 import { compareDateSort } from './components/utils'
-import Popup from './components/popup'
+import { Input } from '../input'
+import { Icon } from '../icon'
 
 import {
   TState,
   handleCalendarSwitchState,
   formatValue,
   formatPlaceholder,
-  getAttachInputDom,
 } from './helper'
 
 import Calendar from './components/calendar'
 
 import './date-picker.scss'
 import { parseDate } from './components/utils'
-
-const formatProps = (props: any): TState => {
-  const state: TState = {
-    range: !!props.range,
-    show: false,
-    input: props.attachInputDom,
-  }
-  state.current = parseDate(props.dateMin) || new Date()
-  state.next = new Date(state.current.getFullYear(), state.current.getMonth() + 1, 1)
-  return state
-}
 
 const formatRange = (state: UnwrapRef<TState>) => {
   const [start, end] = [state.start, state.end].sort((a, b) => a.getTime() - b.getTime())
@@ -59,46 +48,62 @@ export default defineComponent({
     attachInputDom: { type: String },
     dateMin: { type: String },
     dateMax: { type: String },
-    showToday: { type: Boolean, default: false },
   },
   setup(props, ctx) {
 
-    const state = reactive<TState>(formatProps(props))
+    const panel = ref<Node>(null)
+    const input = ref<Node>(null)
 
-    // 绑定层显示值、placehoder值设置
-    const setBindingDom = (el: any = getAttachInputDom(props)) => {
+    const current = parseDate(props.dateMin) || new Date()
+    const next = new Date(current.getFullYear(), current.getMonth() + 1, 1)
 
-      const value = formatValue(state, props)
-      const placeholder = formatPlaceholder(props)
 
-      // 判断节点原生DOM类型
-      // 对input节点的值处理
-      if (el instanceof HTMLInputElement) {
-        // 设置水印文字
-        el.placeholder = placeholder
-        // 设置显示值
-        el.value = value
-        return el.value
+    const state = reactive<TState>({
+      show: false,
+      value: '',
+      placeholder: formatPlaceholder(props),
+      current, 
+      next,
+    })
+
+    state.value = formatValue(state, props)
+    state.placeholder = formatPlaceholder(props)
+
+    const documentClick = (e: MouseEvent) => {
+      e.stopPropagation()
+
+      if(
+        isIn(e.target as Node, panel.value)
+        || isIn(e.target as Node, input.value)
+      ) {
+        return
       }
-      return value
+      state.show = false
     }
 
     onMounted(() => {
-      setBindingDom()
+      document.addEventListener('click', documentClick)
+    })
+
+    onUnmounted(() => {
+      document.removeEventListener('click', documentClick)
     })
 
     return () => {
       return (
-        <Popup
-          attach={props.attachInputDom}
-          show={state.show}
-          onOpen={() => state.show = true}
-          onClosed={() => {
-            state.show = false
-          }}
-        >
-          <div class="devui-datepicker-container">
-            <Calendar
+        <div class="devui-datepicker-container">
+          <div class="input-container" ref={input}>
+            <Input
+              ref={input}
+              class="datepicker-input"
+              value={state.value}
+              placeholder={state.placeholder}
+              onFocus={() => state.show = true }
+            />
+            <Icon size="small" name="calendar" class="datepicker-input-icon" />
+          </div>
+          <div class="devui-datepicker-panel" ref={panel}>
+            {state.show ? <Calendar
               type={props.range ? 'range' : 'select'}
               showTime={props.showTime}
               current={state.current}
@@ -112,9 +117,10 @@ export default defineComponent({
                 state.end = state.hover = undefined
                 state.start = date
               }}
-              onChange={() => {
-                const output = setBindingDom()
-                invokeFunction(props.selectedDateChange, output)
+              onChange={(type, config) => {
+                state.value = formatValue(state, props)
+                state.placeholder = formatPlaceholder(props)
+                invokeFunction(props.selectedDateChange, state.value)
                 if (props.autoClose) {
                   state.show = false
                 }
@@ -122,8 +128,9 @@ export default defineComponent({
               onToday={(date: Date) => {
                 state.current = date
                 state.start = date
-                const output = setBindingDom()
-                invokeFunction(props.selectedDateChange, output)
+                state.value = formatValue(state, props)
+                state.placeholder = formatPlaceholder(props)
+                invokeFunction(props.selectedDateChange, state.value)
                 if (props.autoClose) {
                   state.show = false
                 }
@@ -144,9 +151,9 @@ export default defineComponent({
               onPreviousMonth={(date: Date, pos: number) => handleCalendarSwitchState(state, 1, pos, date)}
               onNextMonth={(date: Date, pos: number) => handleCalendarSwitchState(state, 2, pos, date)}
               onNextYear={(date: Date, pos: number) => handleCalendarSwitchState(state, 3, pos, date)}
-            />
+            /> : null}
           </div>
-        </Popup>
+        </div>
       )
     }
   }

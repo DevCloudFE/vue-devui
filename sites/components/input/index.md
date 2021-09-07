@@ -66,10 +66,22 @@
 
 ```vue
 <template>
-  <div>
-    <d-input class="dinput" placeholder="Please Enter" showPassword></d-input>
+  <div class="aaa" id="aaa">
+    <d-input v-model:value="searchText" class="dinput" placeholder="Please Enter" showPassword></d-input>
   </div>
 </template>
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const searchText = ref('')
+    return {
+      searchText
+    }
+  },
+})
+</script>
 ```
 
 :::
@@ -78,8 +90,9 @@
 
 |    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         | 全局配置项 |
 | :---------: | :------: | :-------: | :----------------------- | --------------------------------- | --------- |
-|    id     | `string` |    --     | 可选，文本框 id          | [基本用法](#基本用法)             ||
-|    placeholder     | `string` |  '--'   | 可选，文本框 placeholder | [基本用法](#基本用法)             ||
+|    id     | `string` |    --     | 可选，文本框 id             | [基本用法](#基本用法)             ||
+|    placeholder     | `string` |  --   | 可选，文本框 placeholder     | [基本用法](#基本用法)             ||
+|    maxLength     | `number` |  Number.MAX_SAFE_INTEGER   | 可选，输入框的 max-length    |            ||
 |    disabled    | `boolean` | false | 可选，文本框是否被禁用           | [基本用法](#基本用法)             ||
 | error | `boolean` |  false   | 可选，文本框是否出现输入错误 | [基本用法](#基本用法) ||
 | size | `'sm'\|''\|'lg'` |  ''   | 可选，文本框尺寸，有三种选择`'lg'`,`''`,`'sm'` | [基本用法](#尺寸) ||

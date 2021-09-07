@@ -3,7 +3,7 @@ import { defineComponent } from 'vue'
 import Loading from './loading'
 import { LoadingProps, BindingType, TargetHTMLElement } from './types'
 
-import { createComponent, unmountComponent } from './component'
+import { createComponent, unmountComponent } from '../../shared/scripts/component'
 
 const loadingConstructor = defineComponent(Loading)
 

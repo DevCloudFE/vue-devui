@@ -52,7 +52,7 @@ export const formatRange = (fmt: string, a: Date, b: Date, conn = '-') => {
  * @param b 
  * @returns 
  */
-export const isIn = (a: Node | null, b: Node | null) => {
+export const isIn = (a: Node | null, b: any) => {
     if (!b) {
         return false
     }
