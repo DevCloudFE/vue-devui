@@ -976,7 +976,7 @@ export default defineComponent({
 
 #### Form验证与提交
 
-> doing
+> done
 
 dValidateRules也可作用于已绑定ngForm、ngModelGroup元素上， 进行表单状态与错误消息的统一管理。
 对于非边框类元素，建议在d-form-item容器上配置dHasFeedback为true 进行错误反馈提示。
@@ -1038,6 +1038,97 @@ export default defineComponent({
 
     return {
       dFormTemplateValidate6,
+      formModel,
+      onSubmit,
+      resetForm,
+    }
+  }
+})
+</script>
+
+
+<style>
+.demo-form-operation {
+  display: flex;
+  align-items: center;
+}
+.demo-btn {
+  margin-right: 10px;
+}
+</style>
+
+```
+
+:::
+
+
+#### Form验证与提交，用户注册场景
+
+> doing
+
+针对表单场景复杂的校验规则，我们推荐在控制器中组织，可更好地组织与复用你的校验规则。
+对于自动错误提示的方式，在form中， 建议在dForm层统一设置messageShowType。
+对于由dFormSubmit触发的提交事件， 你可在dForm层绑定dSubmit监听， 可获取到当前form验证状态与对应的directive引用。
+若表单在提交时，已不在视觉中心，那么你可以使用一个提示来引导用户视觉，对于表单提交时的提示，我们推荐使用d-toast显示。
+
+:::demo
+
+```vue
+<template>
+  <d-form name="userInfoForm2" ref="dFormTemplateValidate7" :formData="formModel" labelSize="lg" @submit="onSubmit" v-d-validate-rules="{
+          rules: {message: '表单验证未通过'},
+          messageShowType: 'toast'
+        }">
+    <d-form-item prop="name">
+      <d-form-label>Name</d-form-label>
+      <d-form-control>
+        <d-input v-model:value="formModel.name" v-d-validate-rules="{
+          rules: {minlength: 2, message: '不能小于2个字符'},
+          options: {
+            updateOn: 'input',
+          }
+        }" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="age">
+      <d-form-label>Age</d-form-label>
+      <d-form-control>
+        <d-input v-model:value="formModel.age" v-d-validate-rules="{
+          rules: {min: 1, message: '年龄需大于0'},
+          options: {
+            updateOn: 'input',
+          }
+        }" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-operation class="demo-form-operation">
+      <d-button type="submit" class="demo-btn">提交</d-button>
+      <d-button bsStyle="common" @click="resetForm">重置</d-button>
+    </d-form-operation>
+  </d-form>
+</template>
+
+<script>
+import {defineComponent, reactive, ref} from 'vue';
+
+export default defineComponent({
+  setup(props, ctx) {
+    const dFormTemplateValidate7 = ref(null);
+    let formModel = reactive({
+      name: '',
+      age: '',
+    });
+
+    const resetForm = () => {
+      dFormTemplateValidate6.value.resetFormFields();
+    }
+
+    const onSubmit = (e) => {
+      console.log('@submit')
+    }
+
+    return {
+      dFormTemplateValidate7,
       formModel,
       onSubmit,
       resetForm,

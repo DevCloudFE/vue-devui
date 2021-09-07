@@ -151,7 +151,14 @@ function handleErrorStrategyPass(el: HTMLElement): void {
   el.setAttribute('class', classList.join(' '));
 }
 
-function handleValidateError(el: HTMLElement, tipEl: HTMLElement, message: string): void {
+function handleValidateError(el: HTMLElement, tipEl: HTMLElement, message: string, isFormTag: boolean, messageShowType: string): void {
+  // 如果该指令用在form标签上，这里做特殊处理
+  if(isFormTag && messageShowType === 'toast') {
+    // todo：待替换为toast
+    alert(message);
+    return;
+  }
+
   tipEl.innerText = '' + message;
   tipEl.style.display = 'inline-flex';
   tipEl.setAttribute('class', 'd-validate-tip');
@@ -171,7 +178,7 @@ function getFormName(vnode): string {
 }
 
 // 校验处理函数
-function validateFn({validator, modelValue, el, tipEl}) {
+function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType}) {
   validator.validate({modelName: modelValue}).then(() => {
     handleValidatePass(el, tipEl);
   }).catch((err) => {
@@ -185,15 +192,19 @@ function validateFn({validator, modelValue, el, tipEl}) {
     }else {
       msg = errors[0].message;
     }
-    handleValidateError(el, tipEl, msg);
-    handleErrorStrategy(el);
+
+    handleValidateError(el, tipEl, msg, isFormTag, messageShowType);
   })
 }
 
 export default {
   mounted(el: HTMLElement, binding: any, vnode: VNode): void {
+    const isFormTag = el.tagName === 'FORM';
+
     const hasOptions = isObject(binding.value) && hasKey(binding.value, 'options');
     const {rules: bindingRules, options = {}, messageShowType = 'popover'} = binding.value;
+    isFormTag && console.log('messageShowType', messageShowType);
+    
     let {errorStrategy} = binding.value;
     // errorStrategy可配置在options对象中
     const { updateOn = 'change', errorStrategy: optionsErrorStrategy = 'dirty', asyncDebounceTime = 300} = options;
@@ -268,12 +279,12 @@ export default {
 
     const htmlEventValidateHandler = (e) => {
       const modelValue = e.target.value;
-      validateFn({validator, modelValue, el, tipEl});
+      validateFn({validator, modelValue, el, tipEl, isFormTag: false, messageShowType});
     }
 
     // 监听事件验证
-    vnode.children[0].el.addEventListener(updateOn, htmlEventValidateHandler);
-    
+    vnode.children[0].el.addEventListener(updateOn, htmlEventValidateHandler); 
+
     // 设置errorStrategy
     if(errorStrategy === 'pristine') {
       handleErrorStrategy(el);
@@ -284,9 +295,10 @@ export default {
     const formName = getFormName(vnode);
     // 处理表单提交验证
     formName && EventBus.on(`formSubmit:${formName}`, () => {
-      const modelValue = vnode.children[0].el.value;
+      const modelValue = isFormTag ? '' : vnode.children[0].el.value;
+      
       // 进行提交验证
-      validateFn({validator, modelValue, el, tipEl});
+      validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType});
     });
     
   }
