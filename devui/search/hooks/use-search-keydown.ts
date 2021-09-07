@@ -31,7 +31,6 @@ export const keydownHandles = (ctx: SetupContext<(EmitProps)[]>, keywords: Ref<s
     useEmitKeyword(keywords.value)
   }
   const useEmitKeyword = debounce((value: string) => {
-    console.log(value)
     ctx.emit('searchFn', value)
   }, delay)
   return {
