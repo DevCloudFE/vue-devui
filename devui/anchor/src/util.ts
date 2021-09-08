@@ -2,6 +2,8 @@ let repeatCount = 0;
 let cTimeout;
 const timeoutIntervalSpeed = 10;
 let hashName:string;
+// 滚动是由于点击产生
+let scollFlag = false;
 function elementPosition(obj: HTMLElement ) {
   let curleft = 0, curtop = 0;
   curleft = obj.offsetLeft;
@@ -9,8 +11,9 @@ function elementPosition(obj: HTMLElement ) {
   return { x: curleft, y: curtop };
 }
 
-export function ScrollToControl(elem: HTMLElement, container: HTMLElement):void {
+export function scrollToControl(elem: HTMLElement, container: HTMLElement):void {
     hashName = elem.getAttribute('name');
+    scollFlag = true;
     const tops = container.scrollTop>=0 ? container.scrollTop  : -(document.getElementsByClassName('mycontainer')[0] as HTMLElement).offsetTop;
     let scrollPos: number = elementPosition(elem).y - tops ;
     
@@ -21,13 +24,13 @@ export function ScrollToControl(elem: HTMLElement, container: HTMLElement):void 
       window.scrollBy(0, elem.getBoundingClientRect().top-container.offsetTop-16)
     }
     // 多个计时器达到平滑滚动效果
-    ScrollSmoothly(scrollPos, repeatTimes, container)
+    scrollSmoothly(scrollPos, repeatTimes, container)
 }
  
 
-function ScrollSmoothly(scrollPos: number, repeatTimes: number, container: HTMLElement):void {
+function scrollSmoothly(scrollPos: number, repeatTimes: number, container: HTMLElement):void {
    
-    if (repeatCount < repeatTimes) {
+    if (repeatCount <= repeatTimes) {
       scrollPos > 0
         ? container.scrollBy(0, timeoutIntervalSpeed)
         : container.scrollBy(0, -timeoutIntervalSpeed)
@@ -35,33 +38,44 @@ function ScrollSmoothly(scrollPos: number, repeatTimes: number, container: HTMLE
     else {
       repeatCount = 0;
       clearTimeout(cTimeout);
-   
       history.replaceState(null, null, document.location.pathname + '#' + hashName);
+      
       hightLightFn(hashName)
+      setTimeout(() => {
+        scollFlag = false;
+      }, 310)
       return ;
         
     }
     repeatCount++;
     cTimeout = setTimeout(() => {
-      ScrollSmoothly(scrollPos, repeatTimes, container)
+      scrollSmoothly(scrollPos, repeatTimes, container)
     }, 10)
-  
+    
 }
 
 // 高亮切换
 export function hightLightFn(hashName:string):void {
-  const childLength = document.getElementsByClassName('mysidebar')[0].children.length
-  for (let i =0; i< childLength; i++) {
+ 
+  const childLength = document.getElementsByClassName('mysidebar')[0].children.length;
+  
+  for (let i = 0; i < childLength; i++) {
+   
     if (document.getElementsByClassName('mysidebar')[0].children[i].classList.value.indexOf('active') > -1) {
+    
       document.getElementsByClassName('mysidebar')[0].children[i].classList.remove('active')
     }
   }
-  document.getElementById(hashName).classList.add('active')
+  document.getElementById(hashName).classList.add('active');
+
+ 
+
 }
 let activeLink = null;
 let rootActiveLink = null;
 let rootClassName = '';
 export const setActiveLink = (timeId:string):void => {
+  if (scollFlag) { return }
   timeId ? rootClassName = timeId : rootClassName = document.getElementsByClassName('mymain')[0].id
  
   const sidebarLinks = getSidebarLinks(rootClassName);
@@ -115,11 +129,18 @@ function activateLink(hash:string | boolean):void {
   if (!activeLink) {
       return;
   }
-  activeLink.classList.add('active');
+ 
+  if (!scollFlag) {
+    hash ? hightLightFn((hash as string).split('#')[1] ) : console.log(hash)
+  }else {
+    hightLightFn(hashName)
+  }
+  // 
   // also add active class to parent h2 anchors
   const rootLi = activeLink.closest('.mycontainer > ul > li');
+  // console.log(rootLi,'9999999')
   if (rootLi && rootLi !== activeLink.parentElement) {
-      rootActiveLink = rootLi.querySelector('a');
+      rootActiveLink = rootLi;
       rootActiveLink && rootActiveLink.classList.add('active');
   }
   else {

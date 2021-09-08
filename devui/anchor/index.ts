@@ -1,12 +1,14 @@
 import { App } from 'vue'
-import Anchor from './src/anchor'
+import Anchor from '../../sites/components/anchor/demo'
 import dAnchorBox from './src/d-anchor-box'
 import dAnchorLink from './src/d-anchor-link'
 import dAnchor from './src/d-anchor'
+import './src/anchor.scss';
 const directives = {
-  'd-anchor-box': dAnchorBox,
+  'd-anchor': dAnchor,
   'd-anchor-link': dAnchorLink,
-  'd-anchor': dAnchor 
+  'd-anchor-box': dAnchorBox,
+
 };
 Anchor.install = function(Vue: App) {
   for (const key in directives) {

@@ -1,4 +1,4 @@
-import { ScrollToControl } from './util';
+import { scrollToControl } from './util';
 interface Bind {
   value: string
 }        
@@ -23,7 +23,7 @@ export default  {
           document.getElementsByClassName('scrollTarget').length
               ? scrollContainer = document.getElementsByClassName('scrollTarget')[0]
               : scrollContainer = window   
-          ScrollToControl(scollToDomY, scrollContainer);
+          scrollToControl(scollToDomY, scrollContainer);
           
       }
     }
