@@ -21,17 +21,17 @@
 ```vue
 <template>
   <d-tooltip position='top' content='I am a HTML Element!'>
-        <div class='example'>上面</div>
-    </d-tooltip>
-    <d-tooltip position='bottom' content='I am a HTML Element!'>
-        <div class='example'>下面</div>
-    </d-tooltip>
-    <d-tooltip position='left' content='I am a HTML Element!'>
-        <div class='example'>左面</div>
-    </d-tooltip>
-    <d-tooltip position='right' content='I am a HTML Element!'>
-        <div class='example'>右面</div>
-    </d-tooltip>
+    <div class='example'>上面</div>
+  </d-tooltip>
+  <d-tooltip position='bottom' content='I am a HTML Element!'>
+    <div class='example'>下面</div>
+  </d-tooltip>
+  <d-tooltip position='left' content='I am a HTML Element!'>
+    <div class='example'>左面</div>
+  </d-tooltip>
+  <d-tooltip position='right' content='I am a HTML Element!'>
+    <div class='example'>右面</div>
+  </d-tooltip>
 </template>
 ```
 

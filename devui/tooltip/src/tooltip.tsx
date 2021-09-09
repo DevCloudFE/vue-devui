@@ -3,11 +3,6 @@ import { defineComponent, reactive, ref, watch, onMounted, getCurrentInstance, o
 import { tooltipProps } from './tooltip-types'
 import EventListener from '../utils/EventListener'
 
-/**
- *   使用： <d-tooltip position='top'>
- *              <button>上面</button>
- *          </d-tooltip>
- */
 export default defineComponent({
     name: 'DTooltip',
     props: tooltipProps,
@@ -72,9 +67,8 @@ export default defineComponent({
 
             // 注册鼠标移除事件
             leaveEvent = EventListener.listen(slotElement.value.children[0], 'mouseleave', function (){
-                // show.value = false
                 setTimeout(function (){
-                  show.value = false;
+                  show.value = false
                 }, props.mouseLeaveDelay)
             })
         })
@@ -149,12 +143,12 @@ export default defineComponent({
           const defaultSlot = renderSlot(useSlots(), 'default')
           return (
             <div class="d-tooltip">
-                <div class='slotElement' ref={slotElement}>
+                <div class="slotElement" ref={slotElement}>
                     {defaultSlot}
-                </div>                                                                        
-                <div class='tooltip'  ref={tooltip}>                          {/** tooltip 提示框 */}
-                  <div class='arrow'  ref={arrow}></div>                           {/** tooltip 提示框箭头 */}
-                  <div class='tooltipcontent' ref={tooltipcontent}>      {/** tooltip提示的内容 */}
+                </div>                           
+                <div class="tooltip" ref={tooltip}>
+                  <div class="arrow" ref={arrow}></div>
+                  <div class="tooltipcontent" ref={tooltipcontent}>
                       {props.content}
                   </div>                                                                     
                 </div>

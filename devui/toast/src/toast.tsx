@@ -1,4 +1,3 @@
-
 import './toast.scss'
 
 import { computed, defineComponent, nextTick, onUnmounted, ref, watch } from 'vue'

@@ -4,9 +4,6 @@ export type DevTooltip = 'top' | 'right' | 'bottom' | 'left';
 export const DevTooltipShowAnimation = true;
 
 export const tooltipProps = {
-  /* test: {
-    type: Object as PropType<{ xxx: xxx }>
-  } */
   position: {
     type: String,
     default: 'top'

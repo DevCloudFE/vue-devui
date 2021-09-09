@@ -8,7 +8,7 @@ Tooltip.install = function(app: App) {
 export { Tooltip }
 
 export default {
-  title: 'Tooltip tooltip提示',
+  title: 'Tooltip提示',
   category: '反馈',
   install(app: App): void {
     app.use(Tooltip as any)
