@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const { Command } = require('commander')
 const { create, validateCreateType } = require('./commands/create')
+const { build } = require('./commands/build')
 const { VERSION, CREATE_SUPPORT_TYPES } = require('./shared/constant')
 
 const program = new Command()
@@ -12,5 +13,10 @@ program
   .option('--ignore-parse-error', '忽略解析错误', false)
   .option('--cover', '覆盖原文件', false)
   .action(create)
+
+program
+  .command('build')
+  .description('打包组件库')
+  .action(build)
 
 program.parse().version(VERSION)
