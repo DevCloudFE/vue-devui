@@ -1,7 +1,7 @@
 import type { ExtractPropTypes } from 'vue'
 
-export type DevTooltip = 'top' | 'right' | 'bottom' | 'left';
-export const DevTooltipShowAnimation = true;
+export type DTooltip = 'top' | 'right' | 'bottom' | 'left';
+export const DTooltipShowAnimation = true;
 
 export const tooltipProps = {
   position: {
