@@ -1,8 +1,6 @@
 import './sticky.scss'
 
 import { defineComponent, onMounted, reactive, ref, watch } from 'vue'
-import { stickyProps, StickyProps } from './sticky-types'
-
 
 export default defineComponent({
   name: 'DSticky',
