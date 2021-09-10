@@ -1,3 +1,5 @@
+@import '@devui/styles-var/devui-var';
+
 code {
   margin: 0;
   border-radius: 3px;
@@ -19,7 +21,7 @@ code .token.inserted {
 div[class*='language-'] {
   position: relative;
   margin: 1rem -1.5rem;
-  background-color: var(--code-bg-color);
+  background-color: $devui-text;
   overflow-x: auto;
 }
 

@@ -29,20 +29,24 @@ defineEmit(['toggle'])
 
     <div class="flex-grow" />
 
-    <div class="nav">
-      <NavLinks />
-    </div>
+    <div class="flex">
+      <div class="nav">
+        <NavLinks />
+      </div>
 
-    <div class="flex items-center mt-xxs ml-xs">
-      <d-switch v-model:checked="darkMode"></d-switch>
-      {{switchText}}
+      <div class="flex items-center ml-xs">
+        <d-switch v-model:checked="darkMode"></d-switch>
+        {{switchText}}
+      </div>
     </div>
 
     <slot name="search" />
   </header>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@devui/styles-var/devui-var';
+
 .nav-bar {
   position: fixed;
   top: 0;
@@ -52,20 +56,16 @@ defineEmit(['toggle'])
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--c-divider);
+  border-bottom: 1px solid $devui-dividing-line;
   padding: 0.7rem 1.5rem 0.7rem 4rem;
   height: var(--header-height);
-  background-color: var(--c-bg);
+  background-color: $devui-base-bg;
 }
 
 @media (min-width: 720px) {
   .nav-bar {
     padding: 0.7rem 1.5rem;
   }
-}
-
-.flex-grow {
-  flex-grow: 1;
 }
 
 .nav {

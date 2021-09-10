@@ -19,11 +19,13 @@ const { site, theme, localePath } = useData()
   </a>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@devui/styles-var/devui-var';
+
 .nav-bar-title {
   font-size: 1.3rem;
   font-weight: 600;
-  color: var(--c-text);
+  color: $devui-text;
 }
 
 .nav-bar-title:hover {

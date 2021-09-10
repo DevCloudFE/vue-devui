@@ -23,14 +23,16 @@ const { props: linkProps, isExternal } = useNavLink(propsRefs.item)
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@devui/styles-var/devui-var';
+
 .item {
   display: block;
   padding: 0 1.5rem 0 2.5rem;
   line-height: 32px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--c-text);
+  color: $devui-text;
   white-space: nowrap;
 }
 
@@ -40,7 +42,7 @@ const { props: linkProps, isExternal } = useNavLink(propsRefs.item)
     line-height: 32px;
     font-size: 0.85rem;
     font-weight: 500;
-    color: var(--c-text);
+    color: $devui-text;
     white-space: nowrap;
   }
 
@@ -52,12 +54,12 @@ const { props: linkProps, isExternal } = useNavLink(propsRefs.item)
 .item:hover,
 .item.active {
   text-decoration: none;
-  color: var(--c-brand);
+  color: $devui-brand;
 }
 
 .item.external:hover {
   border-bottom-color: transparent;
-  color: var(--c-text);
+  color: $devui-text;
 }
 
 @media (min-width: 720px) {

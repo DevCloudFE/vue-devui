@@ -1,0 +1,128 @@
+// 间距
+$direction: (
+  t: top,
+  r: right,
+  b: bottom,
+  l: left
+);
+
+// DevUI规范的间距都是4的倍数
+$size: (
+  xxs: 4px,
+  xs: 8px,
+  s: 12px,
+  m: 16px,
+  l: 20px,
+  xl: 24px,
+  xxl: 32px,
+);
+
+@each $dir-key, $dir-value in $direction {
+  @each $size-key, $size-value in $size {
+    .m#{$dir-key}-#{$size-key} {
+      margin-#{$dir-value}: $size-value;
+    }
+    .m#{$dir-key}-#{$size-key} {
+      padding-#{$dir-value}: $size-value;
+    }
+    .#{$dir-value}-#{$size-key} {
+      #{$dir-value}: $size-value;
+    }
+  }
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.hidden {
+  display: none;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-baseline {
+  align-items: baseline;
+}
+
+.items-stretch {
+  align-items: stretch;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.justify-evently {
+  justify-content: space-evenly;
+}

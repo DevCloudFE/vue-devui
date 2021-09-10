@@ -20,16 +20,18 @@ defineProps({
   </aside>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@devui/styles-var/devui-var';
+
 .sidebar {
   position: fixed;
   top: var(--header-height);
   bottom: 0;
   left: 0;
   z-index: var(--z-index-sidebar);
-  border-right: 1px solid var(--c-divider);
+  border-right: 1px solid $devui-dividing-line;
   width: 16.4rem;
-  background-color: var(--c-bg);
+  background-color: $devui-base-bg;
   overflow-y: auto;
   transform: translateX(-100%);
   transition: transform 0.25s ease;
