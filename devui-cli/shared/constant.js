@@ -29,7 +29,8 @@ exports.COMPONENT_PARTS_MAP = new Map([
 exports.CREATE_SUPPORT_TYPE_MAP = Object.freeze({
   component: 'component',
   'vue-devui': 'vue-devui',
-  'vitepress/sidebar': 'vitepress/sidebar'
+  'vitepress/sidebar': 'vitepress/sidebar',
+  'theme-variable': 'theme-variable',
 })
 exports.CREATE_SUPPORT_TYPES = Object.keys(this.CREATE_SUPPORT_TYPE_MAP)
 exports.CREATE_UNFINISHED_TYPES = []
