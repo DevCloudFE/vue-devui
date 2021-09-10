@@ -8,3 +8,4 @@ pnpm-lock.yaml
 .history
 .vscode
 devui/vue-devui.ts
+devui/theme/theme.scss

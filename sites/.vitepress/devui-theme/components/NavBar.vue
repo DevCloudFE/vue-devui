@@ -1,8 +1,22 @@
 <script setup lang="ts">
-import { defineEmit } from 'vue'
+import { defineEmit, ref, watch } from 'vue'
+import Theme from '@devui/theme'
 import NavBarTitle from './NavBarTitle.vue'
 import NavLinks from './NavLinks.vue'
 import ToggleSideBarButton from './ToggleSideBarButton.vue'
+
+const theme = new Theme('light')
+
+const darkMode = ref(false)
+const switchText = ref('浅色')
+
+watch(
+  () => darkMode.value,
+  (darkMode, prevDarkMode) => {
+    theme.applyTheme(darkMode ? 'dark' : 'light')
+    switchText.value = darkMode ? '深色' : '浅色'
+  }
+)
 
 defineEmit(['toggle'])
 </script>
@@ -17,6 +31,11 @@ defineEmit(['toggle'])
 
     <div class="nav">
       <NavLinks />
+    </div>
+
+    <div class="flex items-center mt-xxs ml-xs">
+      <d-switch v-model:checked="darkMode"></d-switch>
+      {{switchText}}
     </div>
 
     <slot name="search" />
