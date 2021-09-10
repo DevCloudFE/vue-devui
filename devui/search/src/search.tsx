@@ -16,10 +16,13 @@ export default defineComponent({
     const {keywords, clearIconShow, onClearHandle} = keywordsHandles(ctx, props)
 
     // 键盘回车事件
-    const { onInputKeydown, onClickHandle } = keydownHandles(ctx, keywords)
+    const { onInputKeydown, onClickHandle, useEmitKeyword } = keydownHandles(ctx, keywords, props.delay)
     
     // 双向绑定
     const onInputUpdate = (event: string) => {
+      if (props.isKeyupSearch) {
+        useEmitKeyword(event)
+      }
       keywords.value = event
       ctx.emit('update:modelValue', event)
     }
@@ -35,6 +38,7 @@ export default defineComponent({
           <DInput
             size={props.size}
             disabled={props.disabled}
+            autoFocus={props.autoFocus}
             value={keywords.value}
             maxLength={props.maxLength}
             placeholder={props.placeholder}

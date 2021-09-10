@@ -9,6 +9,10 @@ export const inputProps = {
     type: Boolean,
     default: false
   },
+  autoFocus: {
+    type: Boolean,
+    default: false
+  },
   maxLength: {
     type: Number,
     default: Number.MAX_SAFE_INTEGER

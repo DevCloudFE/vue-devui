@@ -6993,7 +6993,7 @@ vite@^2.3.7, vite@^2.4.4:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vitepress-theme-demoblock@^1.0.7:
+vitepress-theme-demoblock@1.0.7:
   version "1.0.7"
   resolved "https://registry.nlark.com/vitepress-theme-demoblock/download/vitepress-theme-demoblock-1.0.7.tgz#03010923025a8dd6e591cb5828af15693b37d63f"
   integrity sha1-AwEJIwJajdblkctYKK8VaTs31j8=
