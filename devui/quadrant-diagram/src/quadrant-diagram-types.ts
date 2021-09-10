@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { DEFAULT_AXIS_CONFIGS, DEFAULT_VIEW_CONFIGS } from '../../config';
-import { IViewConfigs, IAxisConfigs } from '../../type';
+import { DEFAULT_AXIS_CONFIGS, DEFAULT_VIEW_CONFIGS } from '../config';
+import { IViewConfigs, IAxisConfigs } from '../type';
 
 export const quadrantDiagramProps = {
   diagramId: {

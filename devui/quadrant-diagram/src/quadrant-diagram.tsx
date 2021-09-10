@@ -1,7 +1,7 @@
 import { defineComponent, toRefs, reactive, watch } from 'vue'
-import { quadrantDiagramProps, QuadrantDiagramProps } from './types'
-import DQuadrantDiagramAxis from '../components/axis';
-import { DEFAULT_AXIS_CONFIGS } from '../../config';
+import { quadrantDiagramProps, QuadrantDiagramProps } from './quadrant-diagram-types'
+import DQuadrantDiagramAxis from './components/axis';
+import { DEFAULT_AXIS_CONFIGS } from '../config';
 
 export default defineComponent({
   name: 'DQuadrantDiagram',
@@ -52,7 +52,7 @@ export default defineComponent({
       initAxisData();
     })
 
-    return { diagramId, calAxisConfig, view };
+    return { diagramId, calAxisConfig, };
   },
   render() {
     const { diagramId, calAxisConfig, view } = this;

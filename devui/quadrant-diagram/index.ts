@@ -1,5 +1,5 @@
 import type { App } from 'vue'
-import QuadrantDiagram from './src/quadrant-diagram/index'
+import QuadrantDiagram from './src/quadrant-diagram'
 
 QuadrantDiagram.install = function (app: App) {
   app.component(QuadrantDiagram.name, QuadrantDiagram)
