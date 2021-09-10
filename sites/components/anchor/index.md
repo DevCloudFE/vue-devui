@@ -1,6 +1,15 @@
 # anchor 锚点
-
-<d-anchor /> 
+<script lang="ts">
+  import { defineComponent } from 'vue'
+  import deAnchor from './demo'
+  export default defineComponent({
+    components: {
+      deAnchor
+    }
+  })
+</script>
+<de-anchor /> 
+ 
 # 如何使用
 
  
@@ -8,6 +17,7 @@
 在页面中使用：
 
 ```html
+<!--  class="scrollTarget" 加上这个类名是局部滚动,不加是全局滚动 -->
 <div v-d-anchor-box class="scrollTarget">
   <ul>
     <li v-d-anchor-link="anchorlink-one">anchorlink-one</li>

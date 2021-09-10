@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import Anchor from '../../sites/components/anchor/demo'
+import Anchor from './src/anchor'
 import dAnchorBox from './src/d-anchor-box'
 import dAnchorLink from './src/d-anchor-link'
 import dAnchor from './src/d-anchor'

@@ -138,7 +138,6 @@ function activateLink(hash:string | boolean):void {
   // 
   // also add active class to parent h2 anchors
   const rootLi = activeLink.closest('.mycontainer > ul > li');
-  // console.log(rootLi,'9999999')
   if (rootLi && rootLi !== activeLink.parentElement) {
       rootActiveLink = rootLi;
       rootActiveLink && rootActiveLink.classList.add('active');
