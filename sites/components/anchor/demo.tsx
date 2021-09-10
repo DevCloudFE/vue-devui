@@ -7,7 +7,7 @@ export default defineComponent({
   setup() {
     return () => {
       return (
-        <div v-d-anchor-box class="scrollTarget">
+        <div v-d-anchor-box className="scrollTarget">
             <ul>
               <li v-d-anchor-link="anchorlink-one">anchorlink-one</li>
               <li v-d-anchor-link="anchorlink-two">anchorlink-two</li>
