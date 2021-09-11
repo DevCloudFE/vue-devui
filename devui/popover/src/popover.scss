@@ -5,6 +5,7 @@
 @mixin someDisplay {
   display: inline-block;
 }
+
 $devui-popover-margin:-6px;
 $devui-popover-left:-8px;
 
@@ -22,21 +23,49 @@ $devui-popover-left:-8px;
     background-color: $devui-feedback-overlay-bg;
   }
 
+  &.is-hover:hover::after {
+    @include someDisplay;
+  }
+
+  &.is-hover:hover .devui-popover-content {
+    @include someDisplay;
+  }
+
   .devui-popover-content {
     position: absolute;
     display: none;
     padding: 5px 14px;
     line-height: 1.5;
     border-radius: $devui-border-radius-feedback;
-    transform: translateX(-100%);
     color: $devui-feedback-overlay-text;
     background-color: $devui-feedback-overlay-bg;
     font-size: $devui-font-size-sm;
   }
+}
 
+.devui-popover {
   &.left {
     .devui-popover-content {
       left: $devui-popover-left;
+      top: 50%;
+      transform: translate(-100%, -50%);
+    }
+
+    &::after {
+      left: $devui-popover-left;
+      top: 50%;
+      margin-top: $devui-popover-margin;
+      margin-left: $devui-popover-margin;
+    }
+  }
+}
+
+.devui-popover {
+  &.left-top {
+    .devui-popover-content {
+      left: $devui-popover-left;
+      top: 0;
+      transform: translate(-100%, 0);
     }
 
     &::after {
