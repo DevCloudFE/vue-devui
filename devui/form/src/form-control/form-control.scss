@@ -21,6 +21,12 @@
       visibility: visible;
       pointer-events: none;
     }
+
+    .devui-radio {
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
   }
 
   .devui-form-control-container-horizontal {
