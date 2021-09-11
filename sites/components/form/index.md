@@ -550,18 +550,21 @@ export default defineComponent({
 
 > doing
 
-模板中绑定ngModel、ngGroupModel、ngForm的元素，可使用dValidateRules配置校验规则。
+在`d-form`、`d-input`等表单类组件上使用`v-d-validate-rules`指令，配置校验规则。
 
 
 #### 验证单个元素，使用内置校验器，配置error message
 
 > done
+>
+> 待支持国际化词条配置
 
 当前DevUI支持的内置校验器有：`required`、`minlength`、`maxlength`、`min`、`max`、`requiredTrue`、`email`、`pattern`、`whitespace`。<br>
-若需限制用户输入不能全为空格，可使用`whitespace`内置校验器<br>
-若需限制用户输入长度，将最大限制设置为实际校验值`+1`是一个好的办法。<br>
-除`pattern`外，其他内置校验器我们也提供了内置的错误提示信息，在你未自定义提示消息时，我们将使用默认的提示信息。<br>
-message配置支持string与object两种形式（支持国际化词条配置，如`'zh-cn'`，默认将取`'default'`）。
+
+- 若需限制用户输入不能全为空格，可使用`whitespace`内置校验器<br>
+- 若需限制用户输入长度，将最大限制设置为实际校验值`+1`是一个好的办法。<br>
+- 除`pattern`外，其他内置校验器我们也提供了内置的错误提示信息，在你未自定义提示消息时，我们将使用默认的提示信息。<br>
+- message配置支持string与object两种形式（支持国际化词条配置，如`'zh-cn'`，默认将取`'default'`）。
 
 :::demo
 
@@ -627,10 +630,7 @@ export default defineComponent({
 
 > done
 
-一个校验器需要一个唯一的`id`标识，你可显式声明此`id`，也可声明一个与保留字不冲突的`key`，此`key`将被识别为`id`， 其`value`作为校验器。
-自定义校验器，你可以简单返回`true | false `来标识当前校验是否通过， 也可以返回`string | null`，来标识当前是否错误并返回错误消息，适用于动态错误提示。
-如果是异步校验器，你需要将你的值以Observable对象方式返回。
-更多地，DevUI兼容原生angular校验器， 你可将`isNgValidator`设置为`true`。
+自定义校验器，可传入`validators`字段配置校验规则，你可以简单返回`true | false `来标识当前校验是否通过，来标识当前是否错误并返回错误消息，适用于动态错误提示。如果是异步校验器，可传入`asyncValidators`字段配置校验规则。
 
 :::demo
 
@@ -719,9 +719,9 @@ export default defineComponent({
 
 > done
 
-设置errorStrategy元素初始化时若校验不通过，错误是否会进行提示， 默认配置为dirty，若需要在初始化时将错误抛出，可配置为pristine。
-errorStrategy可继承。
-设置updateOn，指定校验的时机。 校验器updateOn基于你绑定的模型的updateOn设置， 在模板中你可以通过ngModelOptions来指定， 默认为change，可选值还有blur、submit， 设置为submit，则当元素所在表单进行提交时将触发校验。
+设置`errorStrategy`属性初始化时是否进行校验， 默认配置为`dirty`，校验不通过进行错误提示；若需要在初始化时将错误抛出，可配置为`pristine`。
+
+设置`updateOn`，指定校验的时机。 校验器`updateOn`基于你绑定的模型的`updateOn`设置， 你可以通过`options`来指定， 默认为`change`，可选值还有`blur` 、`input`、`submit`、 设置为`submit`，则当元素所在表单进行提交时将触发校验。（待实现submit）
 
 :::demo
 
@@ -842,14 +842,15 @@ export default defineComponent({
 #### 验证单个元素，自定义管理消息提示
 
 > doing
+>
+> 待引入popover组件
 
-配置messageShowType可选择消息自动提示的方式，默认为popover。
-设置为popover错误信息将在元素聚焦时以popover形式呈现。
-设置为text错误信息将自动以文本方式显示在元素下方(需要与表单控件容器配合使用)。
-设置为none错误信息将不会自动呈现到视图， 可在模板中获取message或通过监听messageChange事件获取错误message， 或在模板中直接通过引用获取。
-此配置可继承。
-配置popPosition可在消息提示方式为popover时，自定义popover内容弹出方向。 默认为['right', 'bottom']。
-此配置可继承。
+配置`messageShowType`可选择消息自动提示的方式，默认为`popover`。
+
+- 设置为`popover`错误信息将在元素聚焦时以`popover`形式呈现。
+- 设置为`text`错误信息将自动以文本方式显示在元素下方(需要与表单控件容器配合使用)。 
+- 设置为`none`错误信息将不会自动呈现到视图， 可在模板中获取`message`或通过监听`messageChange`事件获取错误`message`， 或在模板中直接通过引用获取。
+- 配置`popPosition`可在消息提示方式为`popover`时，自定义`popover`内容弹出方向。 默认为`['right', 'bottom']`。
 
 :::demo
 
@@ -942,10 +943,8 @@ export default defineComponent({
 > done
 
 
-我们对于异步校验器，提供默认300ms debounce time。
-也可在dValidateRules中设置asyncDebounceTime显示设置（单位ms）。
-若你的同步校验器也需要debounce time，则其表现已为异步校验，你可将其转换为异步校验器。
-此配置可继承。
+对于异步校验器，提供默认300ms debounce time。在options中设置`asyncDebounceTime`显示设置（单位ms）。
+
 
 :::demo
 
@@ -1014,10 +1013,7 @@ export default defineComponent({
 
 > done
 
-dValidateRules也可作用于已绑定ngForm、ngModelGroup元素上， 进行表单状态与错误消息的统一管理。
-对于非边框类元素，建议在d-form-item容器上配置dHasFeedback为true 进行错误反馈提示。
-对于dForm，可使用dFormSubmit、dFormReset 指令关联将用于触发提交与重置操作的元素。
-若表单设置了异步校验，可将对应按钮loading与表单pending状态关联起来。
+点击提交按钮时进行验证，需绑定d-form标签的submit事件才能生效。
 
 :::demo
 
@@ -1102,10 +1098,7 @@ export default defineComponent({
 
 > doing
 
-针对表单场景复杂的校验规则，我们推荐在控制器中组织，可更好地组织与复用你的校验规则。
-对于自动错误提示的方式，在form中， 建议在dForm层统一设置messageShowType。
-对于由dFormSubmit触发的提交事件， 你可在dForm层绑定dSubmit监听， 可获取到当前form验证状态与对应的directive引用。
-若表单在提交时，已不在视觉中心，那么你可以使用一个提示来引导用户视觉，对于表单提交时的提示，我们推荐使用d-toast显示。
+待实现在dForm层统一设置messageShowType。
 
 :::demo
 
@@ -1192,7 +1185,7 @@ export default defineComponent({
 
 > done
 
-模板中绑定formGroup、formControlName、formControl，使用dValidateRules配置校验规则。
+在`d-form`标签中指定校验规则rules，同时在`d-form-item`中指定`prop`的值为校验字段名。
 
 
 :::demo
@@ -1273,7 +1266,7 @@ export default defineComponent({
 
 > done
 
-你可通过对d-form-control设置feedbackStatus手动指定反馈状态。当前已支持状态：success、error、pending。
+你可通过对d-form-control设置feedbackStatus手动指定反馈状态。当前已支持状态：`success`、`error`、`pending`。
 
 
 :::demo
@@ -1305,21 +1298,6 @@ export default defineComponent({
         <d-select v-model="formModel.sex" :options="sexSelectOptions" placeholder="Select your sex"></d-select>
       </d-form-control>
     </d-form-item>
-    <d-form-item prop="city">
-      <d-form-label :required="true" >City</d-form-label>
-      <d-form-control>
-        <d-input v-model:value="formModel.city" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="address">
-      <d-form-label :required="true" >Address</d-form-label>
-      <d-form-control suffixTemplate="">
-        <d-input v-model:value="formModel.address" />
-        <template v-slot:suffixTemplate>
-          <d-icon name="right-o" color="rgb(61, 204, 166)" />
-        </template>
-      </d-form-control>
-    </d-form-item>
   </d-form>
 </template>
 
@@ -1334,8 +1312,6 @@ export default defineComponent({
       nickname: 'AlanLee97',
       age: '24',
       sex: '男',
-      city: '深圳',
-      address: '深圳南山区',
     });
 
     const sexSelectOptions = reactive([
@@ -1367,11 +1343,54 @@ export default defineComponent({
 :::
 
 
+可通过对具名插槽suffixTemplate在d-form-control中自定义反馈状态icon。
+
+
+:::demo
+
+```vue
+<template>
+  <d-form ref="dFormFeedback2" :form-data="formModel">
+    <d-form-item prop="address">
+      <d-form-label :required="true" >Address</d-form-label>
+      <d-form-control>
+        <d-input v-model:value="formModel.address" />
+        <template v-slot:suffixTemplate>
+          <d-icon name="right-o" color="rgb(61, 204, 166)" />
+        </template>
+      </d-form-control>
+    </d-form-item>
+  </d-form>
+</template>
+
+<script>
+import {defineComponent, reactive, ref} from 'vue';
+
+export default defineComponent({
+  setup(props, ctx) {
+    const dFormFeedback2 = ref(null);
+    let formModel = reactive({
+      address: '深圳南山区',
+    });
+
+    return {
+      dFormFeedback2,
+      formModel,
+    }
+  }
+})
+</script>
+
+```
+
+:::
+
+
 ### 表单协同验证
 
-> todo
+> done
 
-在一些场景下，你的多个表单组件互相依赖，需共同校验（如注册场景中的密码输入与确认密码），此时你需要用协同验证指令dValidateSyncKey来为需要系统校验的组件指定相同的keydValidateSyncKey指令支持模板驱动表单与响应式表单，以下示例以模板驱动表单为例：password与confirmPassword设置相同的dValidateSyncKey值，在其中一个组件值变更时，另一个组件也将进行校验。
+在一些场景下，你的多个表单组件互相依赖，需共同校验（如注册场景中的密码输入与确认密码），通过自定义校验器实现校验规则（将密码输入与确认密码的值进行比较）。
 
 
 :::demo
@@ -1545,11 +1564,15 @@ export default defineComponent({
 
 ### Form Attributes
 
-| 参数       | 说明                                                         | 类型   | 可选值                              | 默认值       |
-| ---------- | ------------------------------------------------------------ | ------ | ----------------------------------- | ------------ |
-| layout     | 可选，设置表单的排列方式                                     | string | `horizontal`、`vertical`、`columns` | `horizontal` |
-| labelSize  | 可选，设置 label 的占宽，未设置默认为 100px，'sm'对应 80px，'lg'对应 150px | string | `sm`、`lg`                          | --           |
-| labelAlign | 可选，设置水平布局方式下，label 对齐方式                     | string | `start`、`center`、`end`            | `start`      |
+| 参数         | 说明                                                         | 类型   | 可选值                              | 默认值       |
+| ------------ | ------------------------------------------------------------ | ------ | ----------------------------------- | ------------ |
+| name         | 可选，设置表单name属性                                       | string |                                     |              |
+| formData     | 必选，表单数据                                               | object |                                     |              |
+| layout       | 可选，设置表单的排列方式                                     | string | `horizontal`、`vertical`、`columns` | `horizontal` |
+| labelSize    | 可选，设置 label 的占宽，未设置默认为 100px，'sm'对应 80px，'lg'对应 150px | string | `sm`、`lg`                          | --           |
+| labelAlign   | 可选，设置水平布局方式下，label 对齐方式                     | string | `start`、`center`、`end`            | `start`      |
+| columnsClass | 可选，设置多列表单样式                                       | string |                                     |              |
+| rules        | 可选，设置表单校验规则                                       | object |                                     |              |
 
 
 
@@ -1563,9 +1586,10 @@ export default defineComponent({
 
 ### Form-Item Attributes
 
-| 参数         | 说明                                        | 类型    | 可选值          | 默认值  |
-| ------------ | ------------------------------------------- | ------- | --------------- | ------- |
-| dHasFeedback | 可选，设置当前 formControl 是否显示反馈图标 | boolean | `true`、`false` | `false` |
+| 参数         | 说明                                                 | 类型    | 可选值          | 默认值  |
+| ------------ | ---------------------------------------------------- | ------- | --------------- | ------- |
+| prop         | 可选，指定验证表单需验证的字段，验证表单时必选该属性 |         |                 |         |
+| dHasFeedback | 可选，设置当前 formControl 是否显示反馈图标          | boolean | `true`、`false` | `false` |
 
 
 
@@ -1589,3 +1613,39 @@ export default defineComponent({
 
 
 
+### Directives
+
+#### v-d-validate-rules
+
+| 参数    | 说明               | 类型   | 可选值                      | 默认值 |
+| ------- | ------------------ | ------ | --------------------------- | ------ |
+| rules   | 必选，表单校验规则 | object |                             | --     |
+| options | 可选，配置选项     | object | `errorStrategy`、`updateOn` |        |
+
+> 该指令仅在`d-form`标签或`d-input`等表单类组件上使用有效。
+
+
+
+- rules格式如下
+
+```js
+{[validatorKey]: validatorValue, message: 'some tip messages.'}
+```
+
+当前DevUI支持的内置校验器validatorKey有：`required`、`minlength`、`maxlength`、`min`、`max`、`requiredTrue`、`email`、`pattern`、`whitespace`。<br>
+
+
+
+<br>
+
+- options支持以下字段
+  - errorStrategy，错误更新策略：`dirty`（默认）、`prestine`
+
+  - updateOn，校验时机，可选值有：`change`（默认）、 `blur`、 `input`
+
+
+<style>
+  ul, ol {
+    list-style: unset !important;
+  }
+</style>
