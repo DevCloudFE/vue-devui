@@ -53,7 +53,7 @@ const sidebar = {
         { text: 'DatePicker 日期选择器', link: '/components/date-picker/', status: '开发中' },
         { text: 'DatePickerPro 日期选择器', link: '/components/date-picker-pro/' },
         { text: 'EditableSelect 可编辑下拉框', link: '/components/editable-select/' },
-        { text: 'Form 表单', link: '/components/form/' },
+        { text: 'Form 表单', link: '/components/form/', status: '开发中' },
         { text: 'Input 文本框', link: '/components/input/', status: '已完成' },
         { text: 'InputNumber 数字输入框', link: '/components/input-number/' },
         { text: 'MultiAutoComplete 多项自动补全', link: '/components/multi-auto-complete/' },
