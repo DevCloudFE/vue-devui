@@ -97,7 +97,7 @@ export default defineComponent({
 			return (
 				<div class={`form-item${isHorizontal ? '' : (isVertical ? ' form-item-vertical' : ' form-item-columns')}${isColumns ? ' column-item ' + columnsClass.value : ''}`}>
 					{ctx.slots.default?.()}
-					<div>{showMessage.value && tipMessage.value}</div>
+					<div class={`d-validate-tip${isHorizontal ? ' d-validate-tip-horizontal' : ''}`}>{showMessage.value && tipMessage.value}</div>
 				</div>
 			)
 		}
