@@ -268,7 +268,8 @@ export default defineComponent({
 
 ### 弹框表单
 
-> todo
+> todo <br>
+> 待替换为Modal组件
 
 弹框表单，弹框建议是400px，550px，700px，900px，建议宽高比是16: 9、3: 2。
 
@@ -277,67 +278,70 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormModal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
-    <d-form-item prop="name">
-      <d-form-label required>Name</d-form-label>
-      <d-form-control>
-        <d-input v-model:value="formModel.name" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="age">
-      <d-form-label>Age</d-form-label>
-      <d-form-control>
-        <d-input v-model:value="formModel.age" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="city">
-      <d-form-label>City</d-form-label>
-      <d-form-control>
-        <d-select v-model:value="formModel.city" :options="selectOptions" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="loveFruits">
-      <d-form-label>Love Fruits</d-form-label>
-      <d-form-control>
-        <d-tag-input
-          v-model:tags="formModel.loveFruits"
-          v-model:suggestionList="formModel.suggestionList"
-          display-property="name"
-          placeholder="请输入喜欢的水果"
-          no-data="暂无数据"
-        ></d-tag-input>
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="sex">
-      <d-form-label>Sex</d-form-label>
-      <d-form-control>
-        <d-radio v-model="formModel.sex" value="0">男</d-radio>
-        <d-radio v-model="formModel.sex" value="1">女</d-radio>
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="goOffWork">
-      <d-form-label>Go off work</d-form-label>
-      <d-form-control>
-        <d-switch v-model:checked="formModel.goOffWork"></d-switch>
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="ladySupport">
-      <d-form-label>Support lady</d-form-label>
-      <d-form-control>
-        <d-checkbox-group v-model="formModel.ladySupport" label="1818黄金眼">
-          <d-checkbox label="郑女士" value="ladyZheng" />
-          <d-checkbox label="小毛" value="ladyMao" />
-          <d-checkbox label="小刘" value="ladyLiu" />
-          <d-checkbox label="小蒋" value="ladyJiang" />
-          <d-checkbox label="小滕" value="ladyTeng" />
-        </d-checkbox-group>
-      </d-form-control>
-    </d-form-item>
-    <d-form-operation class="demo-form-operation">
-      <d-button type="submit" class="demo-btn">提交</d-button>
-      <d-button bsStyle="common" @click="resetForm">重置</d-button>
-    </d-form-operation>
-  </d-form>
+  <d-button @click="openModal">Open Modal</d-button>
+  <div class="my-modal" v-show="showModal" @click="closeModal">
+    <d-form ref="dFormModal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm" class="my-form" @click.stop="() => {}">
+      <d-form-item prop="name">
+        <d-form-label required>Name</d-form-label>
+        <d-form-control>
+          <d-input v-model:value="formModel.name" />
+        </d-form-control>
+      </d-form-item>
+      <d-form-item prop="age">
+        <d-form-label>Age</d-form-label>
+        <d-form-control>
+          <d-input v-model:value="formModel.age" />
+        </d-form-control>
+      </d-form-item>
+      <d-form-item prop="city">
+        <d-form-label>City</d-form-label>
+        <d-form-control>
+          <d-select v-model:value="formModel.city" :options="selectOptions" />
+        </d-form-control>
+      </d-form-item>
+      <d-form-item prop="loveFruits">
+        <d-form-label>Love Fruits</d-form-label>
+        <d-form-control>
+          <d-tag-input
+            v-model:tags="formModel.loveFruits"
+            v-model:suggestionList="formModel.suggestionList"
+            display-property="name"
+            placeholder="请输入喜欢的水果"
+            no-data="暂无数据"
+          ></d-tag-input>
+        </d-form-control>
+      </d-form-item>
+      <d-form-item prop="sex">
+        <d-form-label>Sex</d-form-label>
+        <d-form-control>
+          <d-radio v-model="formModel.sex" value="0">男</d-radio>
+          <d-radio v-model="formModel.sex" value="1">女</d-radio>
+        </d-form-control>
+      </d-form-item>
+      <d-form-item prop="goOffWork">
+        <d-form-label>Go off work</d-form-label>
+        <d-form-control>
+          <d-switch v-model:checked="formModel.goOffWork"></d-switch>
+        </d-form-control>
+      </d-form-item>
+      <d-form-item prop="ladySupport">
+        <d-form-label>Support lady</d-form-label>
+        <d-form-control>
+          <d-checkbox-group v-model="formModel.ladySupport" label="1818黄金眼">
+            <d-checkbox label="郑女士" value="ladyZheng" />
+            <d-checkbox label="小毛" value="ladyMao" />
+            <d-checkbox label="小刘" value="ladyLiu" />
+            <d-checkbox label="小蒋" value="ladyJiang" />
+            <d-checkbox label="小滕" value="ladyTeng" />
+          </d-checkbox-group>
+        </d-form-control>
+      </d-form-item>
+      <d-form-operation class="demo-form-operation">
+        <d-button type="submit" class="demo-btn">提交</d-button>
+        <d-button bsStyle="common" @click="resetForm">重置</d-button>
+      </d-form-operation>
+    </d-form>
+  </div>
 
 </template>
 
@@ -362,17 +366,27 @@ export default defineComponent({
     ]);
     const resetForm = () => {
       console.log('dFormModal', dFormModal.value);
-      dForm.value.resetFormFields();
+      dFormModal.value.resetFormFields();
     }
     const onSubmitForm = () => {
       console.log('onSubmitForm formModel', formModel)
+    }
+    const showModal = ref(false);
+    const openModal = () => {
+      showModal.value = true;
+    }
+    const closeModal = () => {
+      showModal.value = false;
     }
     return {
       dFormModal,
       formModel,
       selectOptions,
       resetForm,
-      onSubmitForm
+      onSubmitForm,
+      showModal,
+      openModal,
+      closeModal
     }
   }
 })
@@ -386,6 +400,28 @@ export default defineComponent({
 }
 .demo-btn {
   margin-right: 10px;
+}
+
+.my-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-form {
+  background-color: #fff;
+  width: 60vw;
+  padding: 20px;
 }
 </style>
 
