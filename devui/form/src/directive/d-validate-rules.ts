@@ -231,7 +231,7 @@ export default {
     };
 
     rules.forEach((rule) => {
-      const kvObjList = getKeyValueOfObjectList(rule);
+      const kvObjList = !Array.isArray(rule) && getKeyValueOfObjectList(rule);
       let ruleObj = {};
       let avaliableRuleObj = {};
       kvObjList.forEach(item => {
@@ -243,7 +243,7 @@ export default {
 
     // 使用自定义的验证器
     if(isCustomValidator) {
-      descriptor.modelName = [];
+      // descriptor.modelName = [];
       const {validators, asyncValidators} = bindRules;
 
       // 校验器

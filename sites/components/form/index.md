@@ -1120,7 +1120,7 @@ export default defineComponent({
     });
 
     const resetForm = () => {
-      dFormTemplateValidate6.value.resetFormFields();
+      dFormTemplateValidate7.value.resetFormFields();
     }
 
     const onSubmit = (e) => {
@@ -1342,19 +1342,29 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormTogetherValidate" :form-data="formModel">
-    <d-form-item prop="name">
-      <d-form-label :required="true" >Name</d-form-label>
+  <d-form name="togetherValidateForm" ref="dFormTogetherValidate" :form-data="formModel" labelSize="lg" @submit="onSubmit">
+    <d-form-item prop="username">
+      <d-form-label :required="true" >Username</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.name" />
+        <d-input v-model:value="formModel.username" v-d-validate-rules="formRules.userNameRule" />
       </d-form-control>
     </d-form-item>
-    <d-form-item prop="age">
-      <d-form-label :required="true" >Age</d-form-label>
+    <d-form-item prop="password">
+      <d-form-label :required="true" >Password</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.age" />
+        <d-input v-model:value="formModel.password" v-d-validate-rules="formRules.passwordRule" />
       </d-form-control>
     </d-form-item>
+    <d-form-item prop="confirmPassword">
+      <d-form-label :required="true" >Confirm Password</d-form-label>
+      <d-form-control>
+        <d-input v-model:value="formModel.confirmPassword" v-d-validate-rules="formRules.confirmPasswordRule" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-operation class="demo-form-operation">
+      <d-button type="submit" class="demo-btn">提交</d-button>
+      <d-button bsStyle="common" @click="resetForm">重置</d-button>
+    </d-form-operation>
   </d-form>
 </template>
 
@@ -1365,13 +1375,57 @@ export default defineComponent({
   setup(props, ctx) {
     const dFormTogetherValidate = ref(null);
     let formModel = reactive({
-      name: 'AlanLee',
-      age: '24',
+      username: '',
+      password: '',
+      confirmPassword: '',
     });
+
+    const formRules = {
+      userNameRule: {
+        rules: {
+          minlength: 6,
+          message: '最小6个字符'
+        }
+      },
+      passwordRule: {
+        rules: {
+          minlength: 6,
+          message: '最小6个字符'
+        }
+      },
+      confirmPasswordRule: {
+        options: {
+          updateOn: 'input',
+        },
+        rules: {
+          minlength: 6,
+          message: '最小6个字符',
+          validators: [
+            {
+              message: '确认密码与密码不相符',
+              validator: (rule, value) => {
+                return value === formModel.password
+              }
+            }
+          ]
+        }
+      }
+    }
+
+    const resetForm = () => {
+      dFormTogetherValidate.value.resetFormFields();
+    }
+
+    const onSubmit = (e) => {
+      console.log('@submit')
+    }
 
     return {
       dFormTogetherValidate,
       formModel,
+      formRules,
+      resetForm,
+      onSubmit,
     }
   }
 })
