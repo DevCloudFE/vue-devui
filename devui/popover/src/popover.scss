@@ -3,11 +3,12 @@
 @import '../../style//theme/font';
 
 @mixin someDisplay {
-  display: inline-block;
+  display: inline-flex;
 }
 
 $devui-popover-margin:-6px;
 $devui-popover-left:-8px;
+$devui-popover-top:-8px;
 
 .devui-popover {
   position: relative;
@@ -23,19 +24,23 @@ $devui-popover-left:-8px;
     background-color: $devui-feedback-overlay-bg;
   }
 
-  &.is-hover:hover::after {
-    @include someDisplay;
+  &.devui-popover-isVisible {
+    .devui-popover-content {
+      @include someDisplay;
+    }
+
+    &::after {
+      @include someDisplay;
+    }
   }
 
-  &.is-hover:hover .devui-popover-content {
-    @include someDisplay;
-  }
 
   .devui-popover-content {
     position: absolute;
     display: none;
     padding: 5px 14px;
-    line-height: 1.5;
+    align-items: center;
+    white-space: nowrap;
     border-radius: $devui-border-radius-feedback;
     color: $devui-feedback-overlay-text;
     background-color: $devui-feedback-overlay-bg;
@@ -47,48 +52,88 @@ $devui-popover-left:-8px;
   }
 }
 
+//left方向系列
 .devui-popover {
+  @mixin left-postion {
+    &::after {
+      left: $devui-popover-left;
+      top: 50%;
+      margin-top: $devui-popover-margin;
+      margin-left: $devui-popover-margin;
+    }
+  }
+
   &.left {
     .devui-popover-content {
       left: $devui-popover-left;
       top: 50%;
       transform: translate(-100%, -50%);
     }
-
-    &::after {
-      left: $devui-popover-left;
-      top: 50%;
-      margin-top: $devui-popover-margin;
-      margin-left: $devui-popover-margin;
-    }
+    @include left-postion;
   }
-}
 
-.devui-popover {
   &.left-top {
     .devui-popover-content {
       left: $devui-popover-left;
       top: 0;
       transform: translate(-100%, 0);
     }
+    @include left-postion;
+  }
 
-    &::after {
+  &.left-bottom {
+    .devui-popover-content {
       left: $devui-popover-left;
-      top: 50%;
-      margin-top: $devui-popover-margin;
-      margin-left: $devui-popover-margin;
+      bottom: 0;
+      transform: translate(-100%, 0);
     }
+    @include left-postion;
   }
 }
 
 .devui-popover {
-  &.devui-popover-isVisible {
+  &.top {
     .devui-popover-content {
-      @include someDisplay;
+      top: $devui-popover-top;
+      left: 50%;
+      transform: translate(-50%, -100%);
     }
 
     &::after {
-      @include someDisplay;
+      left: 50%;
+      top: $devui-popover-top;
+      margin-top: $devui-popover-margin;
+      margin-left: $devui-popover-margin;
+    }
+  }
+
+  &.top-left {
+    .devui-popover-content {
+      top: $devui-popover-top;
+      left: 0;
+      transform: translate(0, -100%);
+    }
+
+    &::after {
+      left: 14px;
+      top: $devui-popover-top;
+      margin-top: $devui-popover-margin;
+      margin-left: $devui-popover-margin;
+    }
+  }
+
+  &.top-right {
+    .devui-popover-content {
+      top: $devui-popover-top;
+      right: 0;
+      transform: translate(0, -100%);
+    }
+
+    &::after {
+      right: 14px;
+      top: $devui-popover-top;
+      margin-top: $devui-popover-margin;
+      margin-right: $devui-popover-margin;
     }
   }
 }
