@@ -1013,7 +1013,7 @@ export default defineComponent({
 
 > done
 
-点击提交按钮时进行验证，需绑定d-form标签的submit事件才能生效。
+点击提交按钮时进行验证，需指定name属性，并同时绑定d-form标签的submit事件才能生效。
 
 :::demo
 
@@ -1504,8 +1504,7 @@ export default defineComponent({
 
 > todo
 
-当前Angular Form默认暂不支持跨组件共享表单校验状态，对于响应式表单，你可使用统一管理model，向下透传的方式进行组件组织。
-针对模板驱动表单，你可使用在子组件声明时进行容器注入的方式，将你需要的ngModelGroup或NgForm容器进行注入，以供模板中表单元素自动获取父容器。
+
 
 
 :::demo
@@ -1566,7 +1565,7 @@ export default defineComponent({
 
 | 参数         | 说明                                                         | 类型   | 可选值                              | 默认值       |
 | ------------ | ------------------------------------------------------------ | ------ | ----------------------------------- | ------------ |
-| name         | 可选，设置表单name属性                                       | string |                                     |              |
+| name         | 可选，设置表单name属性，进行表单提交验证时必选。             | string |                                     |              |
 | formData     | 必选，表单数据                                               | object |                                     |              |
 | layout       | 可选，设置表单的排列方式                                     | string | `horizontal`、`vertical`、`columns` | `horizontal` |
 | labelSize    | 可选，设置 label 的占宽，未设置默认为 100px，'sm'对应 80px，'lg'对应 150px | string | `sm`、`lg`                          | --           |
@@ -1578,9 +1577,9 @@ export default defineComponent({
 
 ### Form Methods
 
-| 方法名 | 说明                                                | 参数 |
-| ------ | --------------------------------------------------- | ---- |
-| submit | 可选，使用 dFormSubmit 绑定元素触发提交时，响应事件 | --   |
+| 方法名 | 说明               | 参数 |
+| ------ | ------------------ | ---- |
+| submit | 可选，提交表单事件 | --   |
 
 
 
