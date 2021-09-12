@@ -4,6 +4,12 @@ import clickoutsideDirective from '../../shared/devui-directive/clickoutside'
 type positionType = 'top' | 'right' | 'bottom' | 'left'
 type triggerType = 'click' | 'hover'
 type popType = 'success' | 'error' | 'warning' | 'info' | 'default'
+const popTypeClass = {
+  success: { name: 'right-o', color: 'rgb(61, 204, 166)' },
+  error: { name: 'error-o', color: 'rgb(249, 95, 91)' },
+  info: { name: 'info-o', color: 'rgb(81, 112, 255)' },
+  default: ''
+}
 export default defineComponent({
   name: 'DPopover',
 
@@ -46,14 +52,8 @@ export default defineComponent({
   setup(props, ctx) {
     const visible = ref(props.visible);
     const { position, content, zIndex, trigger, popType } = toRefs(props);
-    const popTypeClass = {
-      success: { name: 'right-o', color: 'rgb(61, 204, 166)' },
-      error: { name: 'error-o', color: 'rgb(249, 95, 91)' },
-      info: { name: 'info-o', color: 'rgb(81, 112, 255)' },
-      default: ''
-    }
     const isClick = trigger.value === 'click'
-    const iconType = reactive(popTypeClass[popType.value])
+    const iconType = popTypeClass[popType.value]
     const event = function () {
       if (visible.value) {
         visible.value = false;
