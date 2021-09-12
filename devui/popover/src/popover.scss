@@ -40,6 +40,10 @@ $devui-popover-left:-8px;
     color: $devui-feedback-overlay-text;
     background-color: $devui-feedback-overlay-bg;
     font-size: $devui-font-size-sm;
+
+    .devui-popover-icon {
+      margin-right: 5px;
+    }
   }
 }
 
