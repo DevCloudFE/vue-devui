@@ -8,8 +8,8 @@
 
 
 ### 基本用法
-
-:::demo 展示加载表格数据的场景中的基本使用方法。
+展示加载表格数据的场景中的基本使用方法。
+:::demo 
 
 ```vue
 <template>
@@ -64,8 +64,8 @@ export default defineComponent({
 
 
 ### 多promise
-
-:::demo 支持多个promise。
+支持多个promise。
+:::demo 
 
 ```vue
 <template>
@@ -109,7 +109,8 @@ export default defineComponent({
 :::
 
 ### 自定义样式
-:::demo 通过 templateRef 自定义loading样式。
+通过 templateRef 自定义loading样式。
+:::demo 
 
 ```vue
 <template>
@@ -218,8 +219,8 @@ export default defineComponent({
 :::
 
 ### 服务方式调用
-
-:::demo 使用服务的方式全屏加载loading组件或者在指定宿主上加载loading组件。
+使用服务的方式全屏加载loading组件或者在指定宿主上加载loading组件。
+:::demo 
 
 ```vue
 <template>
@@ -246,57 +247,89 @@ export default defineComponent({
 
 <script>
 import { defineComponent, ref } from 'vue'
-// import { LoadingService } from 'vue-devui'
+// import { LoadingService } from '@devui/loading'
 
-export default defineComponent({
-  setup() {
-    const serviceToBody = () => {
-      const results = LoadingService.open()
+export default {
+  data() {
+    return {
+      isShow: true,
+      resultTarget: null
+    }
+  },
+  methods: {
+    serviceToBody() {
+      const results = this.$loadingService.open()
 
       setTimeout(() => {
         results.loadingInstance.close()
       }, 2000)
-    }
-
-    const isShow = ref(true)
-    let resultTarget = null
-    const openTargetLoading = () => {
-      resultTarget = LoadingService.open({
+    },
+    openTargetLoading() {
+      this.resultTarget = this.$loadingService.open({
         target: document.querySelector('#me'),
         message: 'One moment please...',
         positionType: 'relative',
         zIndex: 1,
       })
-      isShow.value = false
-    }
-
-    const closeTargetLoading = () => {
-      resultTarget.loadingInstance.close()
-      isShow.value = true
-    }
-
-    return {
-      isShow,
-      serviceToBody,
-      openTargetLoading,
-      closeTargetLoading
+      this.isShow = false
+    },
+    closeTargetLoading() {
+      this.resultTarget.loadingInstance.close()
+      this.isShow = true
     }
   }
-})
+}
+
+// export default defineComponent({
+//   setup() {
+//     const serviceToBody = () => {
+//       const results = LoadingService.open()
+
+//       setTimeout(() => {
+//         results.loadingInstance.close()
+//       }, 2000)
+//     }
+
+//     const isShow = ref(true)
+//     let resultTarget = null
+//     const openTargetLoading = () => {
+//       resultTarget = LoadingService.open({
+//         target: document.querySelector('#me'),
+//         message: 'One moment please...',
+//         positionType: 'relative',
+//         zIndex: 1,
+//       })
+//       isShow.value = false
+//     }
+
+//     const closeTargetLoading = () => {
+//       resultTarget.loadingInstance.close()
+//       isShow.value = true
+//     }
+
+//     return {
+//       isShow,
+//       serviceToBody,
+//       openTargetLoading,
+//       closeTargetLoading
+//     }
+//   }
+// })
 </script>
 ```
 :::
 
 ### 参数
+dLoading 参数
 
 | **参数**           | **类型**                                                     | **默认**                  | **说明**                                                     | **跳转 Demo**                |
 | ------------------ | ------------------------------------------------------------ | ------------------------- | ------------------------------------------------------------ | ---------------------------- |
-| v-dLoading         | Promise\<any\> / Array\<Promise\<any\>\> / Boolean / undefined | --                        | 可选，指令方式，控制 loading 状态                            | [基本用法](#基本用法)        |
-| target             | Element                                                      | document.body             | 可选，服务方式，Loading 需要覆盖的 DOM 节点                  | [服务方式调用](#服务方式调用) |
-| message            | String                                                       | --                        | 可选，loading 时的提示信息                                   | [多promise](#多promise)      |
-| loadingTemplateRef | VNode                                                        | --                        | 可选，自定义 loading 模板                                    | [自定义样式](#自定义样式)     |
-| backdrop           | Boolean                                                      | true                      | 可选，loading 时是否显示遮罩                                 | [基本用法](#基本用法)        |
-| positionType       | String                                                       | relative                  | 可选，指定`dLoading`宿主元素的定位类型,取值与 css position 属性一致。 | [基本用法](#基本用法)        |
-| view               | {top?:string,left?:string}                                   | {top: '50%', left: '50%'} | 可选，调整 loading 的显示位置，相对于宿主元素的顶部距离与左侧距离 | [基本用法](#基本用法)        |
-| zIndex             | Number                                                       | --                        | 可选，loading加载提示的 z-index 值                           | [基本用法](#基本用法)        |
+| v-dLoading         | `Promise<any> \| Array<Promise<any>> \| Boolean \| undefined` | --                        | 可选，指令方式，控制 loading 状态                            | [基本用法](#基本用法)        |
+| target             | `element`                                                      | document.body             | 可选，服务方式，Loading 需要覆盖的 DOM 节点                  | [服务方式调用](#服务方式调用) |
+| message            | `string`                                                       | --                        | 可选，loading 时的提示信息                                   | [多promise](#多promise)      |
+| loadingTemplateRef | `VNode`                                                        | --                        | 可选，自定义 loading 模板                                    | [自定义样式](#自定义样式)     |
+| backdrop           | `boolean`                                                      | true                      | 可选，loading 时是否显示遮罩                                 | [基本用法](#基本用法)        |
+| positionType       | `string`                                                       | relative                  | 可选，指定`dLoading`宿主元素的定位类型,取值与 css position 属性一致。 | [基本用法](#基本用法)        |
+| view               | `{top?:string,left?:string} `                                  | {top: '50%', left: '50%'} | 可选，调整 loading 的显示位置，相对于宿主元素的顶部距离与左侧距离 | [基本用法](#基本用法)        |
+| zIndex             | `number`                                                       | --                        | 可选，loading加载提示的 z-index 值                           | [基本用法](#基本用法)        |
 
