@@ -1,7 +1,7 @@
-import './tooltip.scss'
 import { defineComponent, reactive, ref, watch, onMounted, getCurrentInstance, onBeforeUnmount, renderSlot, useSlots} from 'vue'
 import { tooltipProps } from './tooltip-types'
 import EventListener from '../utils/EventListener'
+import './tooltip.scss'
 
 export default defineComponent({
     name: 'DTooltip',
@@ -67,9 +67,11 @@ export default defineComponent({
 
             // 注册鼠标移除事件
             leaveEvent = EventListener.listen(slotElement.value.children[0], 'mouseleave', function (){
-                setTimeout(function (){
-                  show.value = false
-                }, props.mouseLeaveDelay)
+                if (show.value){
+                  setTimeout(function (){
+                    show.value = false
+                  }, props.mouseLeaveDelay)
+                }
             })
         })
 
@@ -142,7 +144,7 @@ export default defineComponent({
         return ()=>{
           const defaultSlot = renderSlot(useSlots(), 'default')
           return (
-            <div class="d-tooltip">
+            <div class="devui-tooltip">
                 <div class="slotElement" ref={slotElement}>
                     {defaultSlot}
                 </div>                           
