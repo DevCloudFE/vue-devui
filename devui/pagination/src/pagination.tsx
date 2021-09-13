@@ -1,8 +1,6 @@
-import { defineComponent, computed, ref, nextTick } from 'vue'
+import { defineComponent, computed, nextTick } from 'vue'
 import { ComponentProps, componentProps } from './use-pagination'
 import { liteSelectOptions } from './utils'
-
-import clickoutsideDirective from '../../shared/devui-directive/clickoutside'
 
 import ConfigMenu from './components/config-menu'
 import JumpPage from './components/jump-page'
@@ -12,9 +10,6 @@ import './pagination.scss'
 
 export default defineComponent({
   name: 'DPagination',
-  directives: {
-    clickoutside: clickoutsideDirective
-  },
   components: {
     ConfigMenu,
     JumpPage,
@@ -41,16 +36,6 @@ export default defineComponent({
         emit('update:pageIndex', val)
       }
     })
-    const changePageNo = ref(props.pageIndex)
-    // 输入框显示的页码
-    const inputPageNum = computed({
-      get() {
-        return props.pageIndex
-      },
-      set(val: number) {
-        changePageNo.value = val
-      }
-    })
     // 每页显示最大条目数量
     const currentPageSize = computed({
       get() {
@@ -65,27 +50,12 @@ export default defineComponent({
 
     const changeCursorEmit = (val: number) => {
       cursor.value = val
-      changePageNo.value = val
       emit('pageIndexChange', val)
     }
-    // 输入跳转页码
-    const jumpPageChange = (currentPage: string) => {
-      const curPage = +currentPage
-      if (isNaN(curPage) || curPage < 1 || curPage > totalPages.value) {
-        inputPageNum.value = props.pageIndex
-        return
-      }
-      inputPageNum.value = curPage
-    }
-    // 跳转指定页码
-    const jump = (e: KeyboardEvent | 'btn') => {
-      if ((e === 'btn' || e.key === 'Enter') && cursor.value !== changePageNo.value) {
-        cursor.value = changePageNo.value
-      }
-    }
+
     // 每页条数改变
-    const pageSizeChange = (value: number) => {
-      currentPageSize.value = value
+    const pageSizeChange = (val: Record<string, string | number>) => {
+      currentPageSize.value = val.value as number
       // 页数改变后，如果当前页码超出最大页码时修正
       if (props.autoFixPageIndex) {
         nextTick(() => {
@@ -94,7 +64,7 @@ export default defineComponent({
           }
         })
       }
-      emit('pageSizeChange', value)
+      emit('pageSizeChange', val.value as number)
     }
     // 极简模式下的跳转页码
     const litePageIndexChange = (page: {name: string; value: number;}) => {
@@ -104,10 +74,7 @@ export default defineComponent({
     return {
       cursor,
       totalPages,
-      jump,
       changeCursorEmit,
-      inputPageNum,
-      jumpPageChange,
       currentPageSize,
       pageSizeChange,
       litePageOptions,
@@ -118,6 +85,7 @@ export default defineComponent({
 
     const {
       total,
+      pageIndex,
       pageSizeOptions,
       pageSizeDirection,
       preLink,
@@ -139,9 +107,6 @@ export default defineComponent({
 
       cursor,
       totalPages,
-      jump,
-      inputPageNum,
-      jumpPageChange,
       currentPageSize,
       pageSizeChange,
       changeCursorEmit,
@@ -206,11 +171,12 @@ export default defineComponent({
             {...{
               goToText,
               size,
-              inputPageNum,
-              jumpPageChange,
-              jump,
+              pageIndex,
+              totalPages,
+              cursor,
               showJumpButton
             }}
+            onChangeCursorEmit={changeCursorEmit}
           />
         }
         {
