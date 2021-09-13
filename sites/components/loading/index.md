@@ -247,7 +247,6 @@ export default defineComponent({
 
 <script>
 import { defineComponent, ref } from 'vue'
-// import { LoadingService } from '@devui/loading'
 
 export default {
   data() {
@@ -279,42 +278,6 @@ export default {
     }
   }
 }
-
-// export default defineComponent({
-//   setup() {
-//     const serviceToBody = () => {
-//       const results = LoadingService.open()
-
-//       setTimeout(() => {
-//         results.loadingInstance.close()
-//       }, 2000)
-//     }
-
-//     const isShow = ref(true)
-//     let resultTarget = null
-//     const openTargetLoading = () => {
-//       resultTarget = LoadingService.open({
-//         target: document.querySelector('#me'),
-//         message: 'One moment please...',
-//         positionType: 'relative',
-//         zIndex: 1,
-//       })
-//       isShow.value = false
-//     }
-
-//     const closeTargetLoading = () => {
-//       resultTarget.loadingInstance.close()
-//       isShow.value = true
-//     }
-
-//     return {
-//       isShow,
-//       serviceToBody,
-//       openTargetLoading,
-//       closeTargetLoading
-//     }
-//   }
-// })
 </script>
 ```
 :::
