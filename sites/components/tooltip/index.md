@@ -88,3 +88,13 @@
 }
 ```
 :::
+
+### Tooltip Api
+
+|    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         | 全局配置项 |
+| :---------: | :------: | :-------: | :----------------------- | --------------------------------- | --------- |
+|    content     | `string|DOMString` |    --     | 必选，tooltip显示内容             | [基本用法](#基本用法)             ||
+|    position     | `PositionType | PositionType[]` |  ['top', 'right', 'bottom', 'left']   | 可选，tooltip显示位置     | [基本用法](#基本用法)             ||
+|    showAnimation     | `boolean` |  true   | 可选，是否显示划出动画    |            |✔|
+|    mouseEnterDelay    | `number` | 150 | 可选，鼠标移入后延时多少才显示Tooltip，单位是ms           | [基本用法](#延时触发)             ||
+| mouseLeaveDelay | `number` |  100   | 可选，鼠标移出后延时多少才隐藏Tooltip，单位是ms | [基本用法](#延时触发) ||

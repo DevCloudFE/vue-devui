@@ -1,6 +1,6 @@
 import { defineComponent, reactive, ref, watch, onMounted, getCurrentInstance, onBeforeUnmount, renderSlot, useSlots} from 'vue'
 import { tooltipProps } from './tooltip-types'
-import EventListener from '../utils/EventListener'
+import EventListener from '../utils/event-listener'
 import './tooltip.scss'
 
 export default defineComponent({
