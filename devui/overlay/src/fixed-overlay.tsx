@@ -20,22 +20,14 @@ export const FixedOverlay = defineComponent({
     const overlayRef = ref<HTMLDivElement | null>(null);
     const handleBubbleCancel = (event: Event) => (event.cancelBubble = true);
 
-    const panelStyle: CSSProperties = {
-      position: 'fixed',
-      top: '0',
-      left: '0',
-      width: '100vw',
-      height: '100vh',
-      display: 'flex',
-    };
     return () => (
       <CommonOverlay>
-        <div v-show={props.visible} class={containerClass}>
-          <div
-            class={panelClass}
-            style={panelStyle}
-            onClick={handleBackdropClick}
-          >
+        <div
+          v-show={props.visible}
+          class={containerClass.value}
+          onClick={handleBackdropClick}
+        >
+          <div class={panelClass.value}>
             <div
               ref={overlayRef}
               class="d-overlay"

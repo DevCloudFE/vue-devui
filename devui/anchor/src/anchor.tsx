@@ -6,7 +6,9 @@ export default defineComponent({
   },
   setup() {
     return () => {
-      return <div>devui-anchor</div>
+      return (
+        <div> </div>
+      )
     }
   }
 })
