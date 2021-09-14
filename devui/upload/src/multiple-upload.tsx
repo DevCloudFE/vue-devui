@@ -95,9 +95,9 @@ export default defineComponent({
       }
     }
 
-    const _dealFiles = (observale: Promise<File[]>) => {
+    const _dealFiles = (promise: Promise<File[]>) => {
       resetSameNameFiles()
-      observale
+      promise
         .then((files) => {
           files.forEach((file) => {
             addFile(file, uploadOptions.value)

@@ -105,8 +105,8 @@ export default defineComponent({
       })
     }
 
-    const _dealFiles = (observale: Promise<File[]>) => {
-      observale
+    const _dealFiles = (promise: Promise<File[]>) => {
+      promise
         .then((files) => {
           files.forEach((file) => {
             // 单文件上传前先清空数组
