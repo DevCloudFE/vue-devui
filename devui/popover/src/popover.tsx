@@ -1,6 +1,6 @@
-import './popover.scss'
 import { defineComponent, toRefs, ref, CSSProperties, reactive } from 'vue'
 import clickoutsideDirective from '../../shared/devui-directive/clickoutside'
+import './popover.scss'
 type positionType = 'top' | 'right' | 'bottom' | 'left'
 type triggerType = 'click' | 'hover'
 type popType = 'success' | 'error' | 'warning' | 'info' | 'default'
@@ -12,7 +12,6 @@ const popTypeClass = {
 }
 export default defineComponent({
   name: 'DPopover',
-
   directives: {
     clickoutside: clickoutsideDirective
   },
@@ -74,7 +73,6 @@ export default defineComponent({
       const style: CSSProperties = {
         zIndex: zIndex.value
       }
-      console.log(iconType.length);
 
       return (
         <div class={['devui-popover',

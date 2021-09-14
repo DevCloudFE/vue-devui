@@ -6,11 +6,11 @@
   display: inline-flex;
 }
 
-$devui-popover-margin:-6px;
-$devui-popover-left:-8px;
-$devui-popover-top:-8px;
-
 .devui-popover {
+  --devui-popover-margin: -8px;
+  --devui-popover-width: -6px;
+  --devui-popover-offset: 8px;
+
   position: relative;
   @include someDisplay;
 
@@ -21,6 +21,7 @@ $devui-popover-top:-8px;
     height: 12px;
     transform: rotate(45deg);
     position: absolute;
+    z-index: 1060;
     background-color: $devui-feedback-overlay-bg;
   }
 
@@ -33,7 +34,6 @@ $devui-popover-top:-8px;
       @include someDisplay;
     }
   }
-
 
   .devui-popover-content {
     position: absolute;
@@ -52,88 +52,232 @@ $devui-popover-top:-8px;
   }
 }
 
-//left方向系列
+//left等方向
 .devui-popover {
-  @mixin left-postion {
-    &::after {
-      left: $devui-popover-left;
-      top: 50%;
-      margin-top: $devui-popover-margin;
-      margin-left: $devui-popover-margin;
-    }
+  @mixin left-postion--content {
+    left: var(--devui-popover-margin);
+    top: 0;
+    transform: translate(-100%, 0);
+  }
+  @mixin left-postion--after {
+    left: var(--devui-popover-margin);
+    top: 50%;
+    margin-top: var(--devui-popover-width);
+    margin-left: var(--devui-popover-width);
   }
 
   &.left {
     .devui-popover-content {
-      left: $devui-popover-left;
+      @include left-postion--content();
+
       top: 50%;
       transform: translate(-100%, -50%);
     }
-    @include left-postion;
+
+    &::after {
+      @include left-postion--after;
+    }
   }
 
   &.left-top {
     .devui-popover-content {
-      left: $devui-popover-left;
-      top: 0;
-      transform: translate(-100%, 0);
+      @include left-postion--content;
     }
-    @include left-postion;
+
+    &::after {
+      @include left-postion--after;
+
+      top: var(--devui-popover-offset);
+      margin-top: auto;
+    }
   }
 
   &.left-bottom {
     .devui-popover-content {
-      left: $devui-popover-left;
+      @include left-postion--content;
+
+      top: auto;
       bottom: 0;
-      transform: translate(-100%, 0);
     }
-    @include left-postion;
+
+    &::after {
+      @include left-postion--after;
+
+      bottom: var(--devui-popover-offset);
+      margin-top: auto;
+    }
   }
 }
 
+//top等方向
 .devui-popover {
+  @mixin top-postion--content {
+    top: var(--devui-popover-margin);
+    left: 0;
+    transform: translate(0, -100%);
+  }
+  @mixin top-postion--after {
+    top: var(--devui-popover-margin);
+    margin-top: var(--devui-popover-width);
+    margin-left: var(--devui-popover-width);
+  }
+
   &.top {
     .devui-popover-content {
-      top: $devui-popover-top;
+      @include top-postion--content;
+
       left: 50%;
       transform: translate(-50%, -100%);
     }
 
     &::after {
       left: 50%;
-      top: $devui-popover-top;
-      margin-top: $devui-popover-margin;
-      margin-left: $devui-popover-margin;
+      @include top-postion--after;
     }
   }
 
   &.top-left {
     .devui-popover-content {
-      top: $devui-popover-top;
-      left: 0;
-      transform: translate(0, -100%);
+      @include top-postion--content;
     }
 
     &::after {
-      left: 14px;
-      top: $devui-popover-top;
-      margin-top: $devui-popover-margin;
-      margin-left: $devui-popover-margin;
+      @include top-postion--after;
+
+      left: var(--devui-popover-offset);
+      margin-left: auto;
+      margin-right: var(--devui-popover-width);
     }
   }
 
   &.top-right {
     .devui-popover-content {
-      top: $devui-popover-top;
+      @include top-postion--content;
+
+      left: auto;
       right: 0;
-      transform: translate(0, -100%);
     }
 
     &::after {
-      right: 14px;
-      top: $devui-popover-top;
-      margin-top: $devui-popover-margin;
-      margin-right: $devui-popover-margin;
+      @include top-postion--after;
+
+      right: var(--devui-popover-offset);
+    }
+  }
+}
+
+//right等方向
+.devui-popover {
+  @mixin right-postion--content {
+    right: var(--devui-popover-margin);
+    top: 50%;
+    transform: translate(100%, 0);
+  }
+  @mixin right-postion--after {
+    right: var(--devui-popover-margin);
+    margin-right: var(--devui-popover-width);
+    top: var(--devui-popover-offset);
+  }
+
+  &.right {
+    .devui-popover-content {
+      @include right-postion--content;
+
+      transform: translate(100%, -50%);
+    }
+
+    &::after {
+      @include right-postion--after;
+
+      top: 50%;
+      margin-top: var(--devui-popover-width);
+    }
+  }
+
+  &.right-top {
+    .devui-popover-content {
+      @include right-postion--content;
+
+      top: 0;
+    }
+
+    &::after {
+      @include right-postion--after;
+    }
+  }
+
+  &.right-bottom {
+    .devui-popover-content {
+      @include right-postion--content;
+
+      bottom: 0;
+      top: auto;
+    }
+
+    &::after {
+      @include right-postion--after;
+
+      bottom: var(--devui-popover-offset);
+    }
+  }
+}
+
+//bottom等方向
+.devui-popover {
+  @mixin bottom-postion--content {
+    left: 0;
+    bottom: 0;
+    margin-bottom: var(--devui-popover-width);
+    transform: translate(0, 100%);
+  }
+  @mixin bottom-postion--after {
+    left: var(--devui-popover-offset);
+    bottom: var(--devui-popover-margin);
+    margin-bottom: var(--devui-popover-width);
+    margin-right: var(--devui-popover-width);
+  }
+
+  &.bottom {
+    .devui-popover-content {
+      @include bottom-postion--content;
+
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, 100%);
+    }
+
+    &::after {
+      @include bottom-postion--after;
+
+      left: 50%;
+    }
+  }
+
+  &.bottom-left {
+    .devui-popover-content {
+      @include bottom-postion--content;
+    }
+
+    &::after {
+      @include bottom-postion--after;
+    }
+  }
+
+  &.bottom-right {
+    .devui-popover-content {
+      @include bottom-postion--content;
+
+      left: auto;
+      right: 0;
+    }
+
+    &::after {
+      @include bottom-postion--after;
+
+      left: auto;
+      margin-right: auto;
+      right: var(--devui-popover-offset);
+      margin-left: var(--devui-popover-width);
     }
   }
 }
