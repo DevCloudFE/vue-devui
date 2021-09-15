@@ -1,200 +1,314 @@
 # Popover 悬浮提示  
+简单的文字提示气泡框。
 
-<div>
-  <d-popover content="default" style="margin-left:5px;" position="left">
-    <template #content>
-        <div>left</div>
-      </template>
+### 何时使用
+用来通知用户非关键性问题或提示某控件处于某特殊情况。
+
+### 基本用法
+当Popover弹出时，会基于`reference`插槽的内容进行定位。
+
+<div class="popover">
+  <d-popover>
     <template #reference>
       <d-button bsStyle="common">default</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="left-top" popType="info">
-    <template #content>
-        <div>left-top</div>
-    </template>
+  <d-popover  content="info!" popType="info" position="top">
     <template #reference>
-      <d-button bsStyle="primary">left-top</d-button>
+      <d-button  bsStyle="primary">info</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="left-bottom" popType="error">
-    <template #content>
-        <span>left-bottom</span>
-      </template>
+  <d-popover  content="error!" popType="error" position="left">
     <template #reference>
-      <d-button bsStyle="danger">left-bottom</d-button>
+      <d-button  bsStyle="danger">error</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="top" popType="error">
-    <template #content>
-        <span >top</span>
-      </template>
+    <d-popover  content="success!" popType="success" position="right">
     <template #reference>
-      <d-button bsStyle="danger">top</d-button>
-    </template>
-  </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="top-left" popType="error">
-    <template #content>
-        <span >top-left</span>
-      </template>
-    <template #reference>
-      <d-button bsStyle="danger">top-left</d-button>
-    </template>
-  </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="top-right" popType="error">
-    <template #content>
-        <span >top-right</span>
-      </template>
-    <template #reference>
-      <d-button bsStyle="danger">top-right</d-button>
-    </template>
-  </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="right" popType="error">
-    <template #content>
-        <span >right</span>
-      </template>
-    <template #reference>
-      <d-button bsStyle="danger">right</d-button>
-    </template>
-  </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="right-top" popType="error">
-    <template #content>
-        <span >right-top</span>
-      </template>
-    <template #reference>
-      <d-button bsStyle="danger">right-top</d-button>
-    </template>
-  </d-popover>
-    <d-popover content="popover" style="margin-left:5px;" position="right-bottom" popType="error">
-    <template #content>
-        <span >right-bottom</span>
-      </template>
-    <template #reference>
-      <d-button bsStyle="danger">right-bottom</d-button>
-    </template>
-  </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="bottom" popType="error">
-    <template #content>
-        <span >bottom</span>
-      </template>
-    <template #reference>
-      <d-button bsStyle="danger">bottom</d-button>
-    </template>
-  </d-popover>
-    <d-popover content="popover" style="margin-left:5px;" position="bottom-left" popType="error">
-    <template #content>
-        <span >bottom-left</span>
-      </template>
-    <template #reference>
-      <d-button bsStyle="danger">bottom-left</d-button>
-    </template>
-  </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="bottom-right" popType="error">
-    <template #content>
-        <span >bottom-right</span>
-      </template>
-    <template #reference>
-      <d-button bsStyle="danger">bottom-right</d-button>
+      <d-button  bsStyle="success">success</d-button>
     </template>
   </d-popover>
 </div>
 
 ```html
-  <d-popover content="default" style="margin-left:5px;" position="left">
-    <template #content>
-        <div>left</div>
-      </template>
+  <d-popover>
     <template #reference>
       <d-button bsStyle="common">default</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="left-top" popType="info">
+  <d-popover  content="info!" popType="info" position="top">
+    <template #reference>
+      <d-button  bsStyle="primary">info</d-button>
+    </template>
+  </d-popover>
+  <d-popover  content="error!" popType="error" position="left">
+    <template #reference>
+      <d-button  bsStyle="danger">error</d-button>
+    </template>
+  </d-popover>
+    <d-popover  content="success!" popType="success" position="right">
+    <template #reference>
+      <d-button  bsStyle="success">success</d-button>
+    </template>
+  </d-popover>
+```
+
+### 自定义内容  
+自定义`reference`插槽的内容与弹出提示内容。
+
+<div>
+  <d-popover content="自定义内容">
+    <template #reference>
+      <d-button bsStyle="primary">自定义内容</d-button>
+    </template>
+  </d-popover>
+</div>
+
+```html
+<div>
+  <d-popover content="自定义内容">
+    <template #reference>
+      <d-button bsStyle="primary">自定义内容</d-button>
+    </template>
+  </d-popover>
+</div>
+```
+
+### 弹出位置
+总共支持12个弹出位置。
+
+<div>
+  <d-popover  position="left">
+  <template #content>
+      <div>left</div>
+    </template>
+  <template #reference>
+    <d-button bsStyle="common">left</d-button>
+  </template>
+  </d-popover>
+  <d-popover  position="left-top" >
     <template #content>
+        <div >left-top</div>
         <div>left-top</div>
     </template>
     <template #reference>
-      <d-button bsStyle="primary">left-top</d-button>
+      <d-button bsStyle="common">left-top</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="left-bottom" popType="error">
+  <d-popover  position="left-bottom" >
     <template #content>
-        <span>left-bottom</span>
+        <div>left-bottom</div>
+        <div>left-bottom</div>
       </template>
     <template #reference>
-      <d-button bsStyle="danger">left-bottom</d-button>
+      <d-button bsStyle="common">left-bottom</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="top" popType="error">
+</div>
+
+<div style="margin-top:10px;">
+  <d-popover   position="top" >
     <template #content>
         <span >top</span>
       </template>
     <template #reference>
-      <d-button bsStyle="danger">top</d-button>
+      <d-button bsStyle="common">top</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="top-left" popType="error">
+  <d-popover  position="top-left" >
     <template #content>
         <span >top-left</span>
       </template>
     <template #reference>
-      <d-button bsStyle="danger">top-left</d-button>
+      <d-button bsStyle="common">top-left</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="top-right" popType="error">
+  <d-popover  position="top-right" >
     <template #content>
         <span >top-right</span>
       </template>
     <template #reference>
-      <d-button bsStyle="danger">top-right</d-button>
+      <d-button bsStyle="common">top-right</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="right" popType="error">
+</div>
+
+<div style="margin-top:10px;">
+  <d-popover   position="right" >
     <template #content>
-        <span >right</span>
+        <div >right</div>
       </template>
     <template #reference>
-      <d-button bsStyle="danger">right</d-button>
+      <d-button bsStyle="common">right</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="right-top" popType="error">
+  <d-popover   position="right-top" >
     <template #content>
-        <span >right-top</span>
+        <div >right-top</div>
+        <div >right-top</div>
       </template>
     <template #reference>
-      <d-button bsStyle="danger">right-top</d-button>
+      <d-button bsStyle="common">right-top</d-button>
     </template>
   </d-popover>
-    <d-popover content="popover" style="margin-left:5px;" position="right-bottom" popType="error">
+    <d-popover  position="right-bottom" >
     <template #content>
-        <span >right-bottom</span>
+        <div >right-bottom</div>
+        <div >right-bottom</div>
       </template>
     <template #reference>
-      <d-button bsStyle="danger">right-bottom</d-button>
+      <d-button bsStyle="common">right-bottom</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="bottom" popType="error">
+</div>
+
+<div style="margin-top:10px;">
+  <d-popover   position="bottom" >
     <template #content>
-        <span >bottom</span>
+        <div >bottom</div>
       </template>
     <template #reference>
-      <d-button bsStyle="danger">bottom</d-button>
+      <d-button bsStyle="common">bottom</d-button>
     </template>
   </d-popover>
-    <d-popover content="popover" style="margin-left:5px;" position="bottom-left" popType="error">
+    <d-popover  position="bottom-left" >
     <template #content>
-        <span >bottom-left</span>
+        <div >bottom-left</div>
       </template>
     <template #reference>
-      <d-button bsStyle="danger">bottom-left</d-button>
+      <d-button bsStyle="common">bottom-left</d-button>
     </template>
   </d-popover>
-  <d-popover content="popover" style="margin-left:5px;" position="bottom-right" popType="error">
+  <d-popover  position="bottom-right" >
     <template #content>
-        <span >bottom-right</span>
+        <div >bottom-right</div>
       </template>
     <template #reference>
-      <d-button bsStyle="danger">bottom-right</d-button>
+      <d-button bsStyle="common">bottom-right</d-button>
     </template>
   </d-popover>
-```
+</div>
+
+
+
+
+
+
+
+
+
+
+```html
+<div>
+  <d-popover  position="left">
+  <template #content>
+      <div>left</div>
+    </template>
+  <template #reference>
+    <d-button bsStyle="common">left</d-button>
+  </template>
+  </d-popover>
+  <d-popover  position="left-top" >
+    <template #content>
+        <div >left-top</div>
+        <div>left-top</div>
+    </template>
+    <template #reference>
+      <d-button bsStyle="common">left-top</d-button>
+    </template>
+  </d-popover>
+  <d-popover  position="left-bottom" >
+    <template #content>
+        <div>left-bottom</div>
+        <div>left-bottom</div>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common">left-bottom</d-button>
+    </template>
+  </d-popover>
+</div>
+
+<div style="margin-top:10px;">
+  <d-popover   position="top" >
+    <template #content>
+        <span >top</span>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common">top</d-button>
+    </template>
+  </d-popover>
+  <d-popover  position="top-left" >
+    <template #content>
+        <span >top-left</span>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common">top-left</d-button>
+    </template>
+  </d-popover>
+  <d-popover  position="top-right" >
+    <template #content>
+        <span >top-right</span>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common">top-right</d-button>
+    </template>
+  </d-popover>
+</div>
+
+<div style="margin-top:10px;">
+  <d-popover   position="right" >
+    <template #content>
+        <div >right</div>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common">right</d-button>
+    </template>
+  </d-popover>
+  <d-popover   position="right-top" >
+    <template #content>
+        <div >right-top</div>
+        <div >right-top</div>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common">right-top</d-button>
+    </template>
+  </d-popover>
+    <d-popover  position="right-bottom" >
+    <template #content>
+        <div >right-bottom</div>
+        <div >right-bottom</div>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common">right-bottom</d-button>
+    </template>
+  </d-popover>
+</div>
+
+<div style="margin-top:10px;">
+  <d-popover   position="bottom" >
+    <template #content>
+        <div >bottom</div>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common">bottom</d-button>
+    </template>
+  </d-popover>
+    <d-popover  position="bottom-left" >
+    <template #content>
+        <div >bottom-left</div>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common">bottom-left</d-button>
+    </template>
+  </d-popover>
+  <d-popover  position="bottom-right" >
+    <template #content>
+        <div >bottom-right</div>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common">bottom-right</d-button>
+    </template>
+  </d-popover>
+</div>
+``` 
 

@@ -22,14 +22,12 @@ export default defineComponent({
       default: false
     },
     position: {
-      type: [String as () => positionType, Array],
-      default: () => {
-        return ['top', 'right', 'bottom', 'left']
-      }
+      type: String as () => positionType,
+      default: 'bottom'
     },
     content: {
       type: String,
-      default: ''
+      default: 'default'
     },
 
     trigger: {
@@ -84,9 +82,9 @@ export default defineComponent({
           <div class='devui-popover-reference' onMouseenter={onMouseenter} onMouseleave={onMouseleave} onClick={onClick} v-clickoutside={hiddenContext}>
             {slots.reference?.()}
           </div>
-          <div class='devui-popover-content' style={style}>
+          <div class={['devui-popover-content', iconType.name ? 'is-icon' : '']} style={style}>
             {iconType.name && <d-icon name={iconType.name} color={iconType.color} class="devui-popover-icon" size="16px" />}
-            {slots.content?.() || content.value}
+            {slots.content?.() || <span>{content.value}</span>}
           </div>
         </div>
       )

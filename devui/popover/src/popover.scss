@@ -40,11 +40,16 @@
     display: none;
     padding: 5px 14px;
     align-items: center;
+    flex-wrap: wrap;
     white-space: nowrap;
     border-radius: $devui-border-radius-feedback;
     color: $devui-feedback-overlay-text;
     background-color: $devui-feedback-overlay-bg;
     font-size: $devui-font-size-sm;
+
+    &.is-icon {
+      flex-wrap: nowrap;
+    }
 
     .devui-popover-icon {
       margin-right: 5px;
@@ -250,6 +255,8 @@
       @include bottom-postion--after;
 
       left: 50%;
+      margin-right: auto;
+      margin-left: var(--devui-popover-width);
     }
   }
 
