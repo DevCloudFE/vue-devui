@@ -1,5 +1,5 @@
 import { defineComponent, inject, reactive, computed } from 'vue';
-import { IForm, formLabelProps, FormLabelProps } from '../form-types';
+import { IForm, formLabelProps, FormLabelProps, formInjectionKey } from '../form-types';
 import './form-label.scss';
 import Icon from '../../../icon/src/icon';
 
@@ -7,7 +7,7 @@ export default defineComponent({
 	name: 'DFormLabel',
 	props: formLabelProps,
 	setup(props: FormLabelProps, ctx) {
-		const dForm: IForm = reactive(inject('dForm'));
+		const dForm = reactive(inject(formInjectionKey, {} as IForm));
 		const labelData = reactive(dForm.labelData);
 
 		const isHorizontal = computed(() => labelData.layout === 'horizontal').value;

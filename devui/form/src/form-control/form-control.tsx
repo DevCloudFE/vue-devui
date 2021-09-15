@@ -1,14 +1,14 @@
 import { defineComponent, inject, ref, computed, reactive } from 'vue';
 import './form-control.scss';
 import Icon from '../../../icon/src/icon';
-import {IForm, formControlProps} from '../form-types';
+import {IForm, formControlProps, formInjectionKey} from '../form-types';
 
 export default defineComponent({
 	name: 'DFormControl',
 	props: formControlProps,
 	setup(props, ctx) {
 		const formControl = ref();
-		const dForm: IForm = reactive(inject('dForm', {} as IForm));
+		const dForm = reactive(inject(formInjectionKey, {} as IForm));
 		const labelData = reactive(dForm.labelData);
 		const isHorizontal = labelData.layout === 'horizontal';
 

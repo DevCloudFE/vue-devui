@@ -1,7 +1,7 @@
 import { defineComponent, computed, ref, watch, nextTick, onMounted, toRefs, inject } from 'vue';
 import { inputProps, InputType } from './use-input';
 import './input.scss'
-import { dFormItemEvents, IFormItem } from '../../form/src/form-types';
+import { dFormItemEvents, IFormItem, formItemInjectionKey } from '../../form/src/form-types';
 
 export default defineComponent({
   name: 'DInput',
@@ -17,7 +17,7 @@ export default defineComponent({
   props: inputProps,
   emits: ['update:value', 'focus', 'blur', 'change', 'keydown'],
   setup(props, ctx) {
-    const formItem: IFormItem = inject('dFormItem');
+    const formItem = inject(formItemInjectionKey, {} as IFormItem);
     const sizeCls = computed(() => `devui-input-${props.size}`);
     const showPwdIcon = ref(false)
     const inputType = ref<InputType>('text')

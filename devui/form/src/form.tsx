@@ -1,7 +1,7 @@
 import './form.scss'
 
 import { defineComponent, provide } from 'vue'
-import { formProps, FormProps, IFormItem, dFormEvents } from './form-types'
+import { formProps, FormProps, IFormItem, dFormEvents, formInjectionKey, IForm } from './form-types'
 import mitt from 'mitt'
 import EventBus from './util/event-bus'
 
@@ -30,7 +30,7 @@ export default defineComponent({
       }
     })
     
-    provide('dForm', {
+    provide(formInjectionKey, {
       formData: props.formData,
       formMitt,
       labelData: {

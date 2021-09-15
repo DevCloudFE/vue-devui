@@ -1,5 +1,5 @@
 import { defineComponent, reactive, inject, onMounted, onBeforeUnmount, provide, ref} from 'vue';
-import { dFormEvents, dFormItemEvents, IForm, formItemProps } from '../form-types';
+import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey } from '../form-types';
 import './form-item.scss';
 import AsyncValidator, { Rules } from 'async-validator';
 import mitt from 'mitt';
@@ -9,7 +9,7 @@ export default defineComponent({
 	props: formItemProps,
 	setup(props, ctx) {
 		const formItemMitt = mitt();
-		const dForm: IForm = reactive(inject('dForm', {} as IForm));
+		const dForm = reactive(inject(formInjectionKey, {} as IForm));
 		const formData = reactive(dForm.formData);
 		const columnsClass = ref(dForm.columnsClass);
 		const initFormItemData = formData[props.prop];
