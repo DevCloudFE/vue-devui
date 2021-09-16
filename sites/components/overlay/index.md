@@ -1,8 +1,8 @@
-## 浮层
-浮层属于基础组件，用于构建独立于当前页面布局的组件。
+## 遮罩层
+遮罩层属于基础组件，用于构建独立于当前页面布局的组件。
 ### 何时使用
 当你需要全局弹窗，或者需要元素跟随功能，便可以使用该组件。
-### 固定浮层
+### 固定遮罩层
 
 :::demo 使用`sm`，`''`，`lg`来定义`Search`基本类型
 
@@ -24,7 +24,7 @@ export default defineComponent({
     const origin = ref();
     const visible = ref(false);
     const handleClick = () => visible.value = !visible.value;
-    const title = computed(() => visible.value ? '隐藏' : '显示固定浮层' );
+    const title = computed(() => visible.value ? '隐藏' : '显示固定遮罩层' );
     return {
       visible,
       handleClick,
@@ -37,7 +37,7 @@ export default defineComponent({
 :::
 
 
-### 弹性浮层
+### 弹性遮罩层
 
 :::demo
 ```vue
@@ -172,27 +172,27 @@ export default defineComponent({
 ### API 
 d-fixed-overlay 参数
 
-|       参数       |            类型            | 默认  | 说明                                                              |
-| :--------------: | :------------------------: | :---: | :---------------------------------------------------------------- |
-|     visible      |         `boolean`          | false | 可选，浮层是否可见                                                |
-| onUpdate:visible | `(value: boolean) => void` |  --   | 可选，浮层取消可见事件                                            |
-| backgroundBlock  |         `boolean`          | false | 可选，如果为 true，背景不能滚动                                   |
-| backgroundClass  |          `string`          |  --   | 可选，背景的样式类                                                |
-|   hasBackdrop    |         `boolean`          | true  | 可选，如果为false，背景后下的内容将可以触发                       |
-|  backdropClick   |        `() => void`        |  --   | 可选，点击背景触发的事件                                          |
-|  backdropClose   |         `boolean`          | false | 可选，如果为true，点击背景将触发 `onUpdate:visible`，参数是 false |
-|   overlayStyle   |      `CSSProperties`       |  --   | 可选，浮层的样式                                                  |
+|       参数       |            类型            | 默认  | 说明                                                                  |
+| :--------------: | :------------------------: | :---: | :-------------------------------------------------------------------- |
+|     visible      |         `boolean`          | false | 可选，遮罩层是否可见                                                  |
+| onUpdate:visible | `(value: boolean) => void` |  --   | 可选，遮罩层取消可见事件                                              |
+| backgroundBlock  |         `boolean`          | false | 可选，如果为 true，背景不能滚动                                       |
+| backgroundClass  |          `string`          |  --   | 可选，背景的样式类                                                    |
+|   hasBackdrop    |         `boolean`          | true  | 可选，如果为false，背景后下的内容将可以触发                           |
+|  backdropClick   |        `() => void`        |  --   | 可选，点击背景触发的事件                                              |
+|  backdropClose   |         `boolean`          | false | 可选，如果为true，点击背景将触发 `onUpdate:visible`，默认参数是 false |
+|   overlayStyle   |      `CSSProperties`       |  --   | 可选，遮罩层的样式                                                    |
 
 d-flexible-overlay 参数
 
 |       参数       |                                                                                                    类型                                                                                                    | 默认  | 说明                                                              |
 | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---: | :---------------------------------------------------------------- |
-|     visible      |                                                                                                 `boolean`                                                                                                  | false | 可选，浮层是否可见                                                |
-| onUpdate:visible |                                                                                         `(value: boolean) => void`                                                                                         |  --   | 可选，浮层取消可见事件                                            |
+|     visible      |                                                                                                 `boolean`                                                                                                  | false | 可选，遮罩层是否可见                                              |
+| onUpdate:visible |                                                                                         `(value: boolean) => void`                                                                                         |  --   | 可选，遮罩层取消可见事件                                          |
 | backgroundBlock  |                                                                                                 `boolean`                                                                                                  | false | 可选，如果为 true，背景不能滚动                                   |
 | backgroundClass  |                                                                                                  `string`                                                                                                  |  --   | 可选，背景的样式类                                                |
 |   hasBackdrop    |                                                                                                 `boolean`                                                                                                  | true  | 可选，如果为false，背景后下的内容将可以触发                       |
 |  backdropClick   |                                                                                                `() => void`                                                                                                |  --   | 可选，点击背景触发的事件                                          |
 |  backdropClose   |                                                                                                 `boolean`                                                                                                  | false | 可选，如果为true，点击背景将触发 `onUpdate:visible`，参数是 false |
-|      origin      |                                                     `Element \| ComponentPublicInstance \| { x: number, y: number, width?: number, height?: number }`                                                      | false | 必选，你必须指定起点元素才能让浮层与该元素连接在一起              |
-|     position     | `{originX: HorizontalPos, originY: VerticalPos, overlayX: HorizontalPos, overlayY: VerticalPos } (type HorizontalPos = 'left' \| 'center' \| 'right') ( type VerticalPos = 'top' \| 'center' \| 'bottom')` | false | 可选，指定浮层与原点的连接点                                      |
+|      origin      |                                                     `Element \| ComponentPublicInstance \| { x: number, y: number, width?: number, height?: number }`                                                      | false | 必选，你必须指定起点元素才能让遮罩层与该元素连接在一起            |
+|     position     | `{originX: HorizontalPos, originY: VerticalPos, overlayX: HorizontalPos, overlayY: VerticalPos } (type HorizontalPos = 'left' \| 'center' \| 'right') ( type VerticalPos = 'top' \| 'center' \| 'bottom')` | false | 可选，指定遮罩层与原点的连接点                                    |
