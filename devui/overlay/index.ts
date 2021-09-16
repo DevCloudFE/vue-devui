@@ -13,7 +13,7 @@ FixedOverlay.install = function(app: App) {
 export { FlexibleOverlay, FixedOverlay }
 
 export default {
-  title: 'Overlay 浮层',
+  title: 'Overlay 遮罩层',
   category: '通用',
   install(app: App): void {
     app.use(FixedOverlay as any);
