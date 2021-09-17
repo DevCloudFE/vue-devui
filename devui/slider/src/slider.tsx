@@ -1,6 +1,6 @@
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import { sliderProps } from './slider-types';
-import { Input } from '../../input';
+import  { Input }  from '../../input';
 import './slider.scss';
 
 export default defineComponent({
@@ -22,7 +22,7 @@ export default defineComponent({
     //当前的位置以百分比显示
     const percentDispaly = ref<string>('');
     const renderShowInput = () => {
-      return props.showInput ? <d-input onInput={handleOnInput} value={inputValue.value + ''}></d-input> : '';
+      return props.showInput ? <div class='devui-input__outWrap'><input onInput={handleOnInput} value={inputValue.value + ''}></input></div>  : '';
     };
 
     //当传入modelValue时用以定位button的位置
@@ -128,7 +128,7 @@ export default defineComponent({
     }
     //输入框内的值
     function handleOnInput(event) {
-      inputValue.value = parseInt(event.target.value);
+      inputValue.value=parseInt(event.target.value);
       if (!inputValue.value) {
         inputValue.value = props.min;
         percentDispaly.value = '0%';
@@ -142,6 +142,7 @@ export default defineComponent({
         const re = /^(?:[1-9]?\d|100)$/;
         if (re.test(`${inputValue.value}`)) {
           percentDispaly.value = ((inputValue.value - props.min) * 100) / (props.max - props.min) + '%';
+          ctx.emit('update:modelValue', inputValue.value);
         }
       }
     }
