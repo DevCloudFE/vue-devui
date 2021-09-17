@@ -4,12 +4,14 @@ import dAnchorBox from './src/d-anchor-box'
 import dAnchorLink from './src/d-anchor-link'
 import dAnchor from './src/d-anchor'
 import './src/anchor.scss';
+
 const directives = {
   'd-anchor': dAnchor,
   'd-anchor-link': dAnchorLink,
   'd-anchor-box': dAnchorBox,
 
 };
+
 Anchor.install = function(Vue: App) {
   for (const key in directives) {
     if (directives.hasOwnProperty(key)) {
@@ -19,8 +21,6 @@ Anchor.install = function(Vue: App) {
   }
   Vue.component(Anchor.name, Anchor)
 };
- 
-
  
 export { Anchor }
 
