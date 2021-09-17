@@ -91,7 +91,7 @@ const sidebar = {
       text: '布局',
       children: [
         { text: 'Layout 布局', link: '/components/layout/' },
-        { text: 'Splitter 分割器', link: '/components/splitter/' }
+        { text: 'Splitter 分割器', link: '/components/splitter/', status: '开发中' }
       ]
     },
   ]
