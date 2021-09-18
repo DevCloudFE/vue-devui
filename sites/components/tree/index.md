@@ -12,6 +12,7 @@
 <template>
   <d-tree :data="data"></d-tree>
 </template>
+
 <script>
 import { defineComponent, ref } from 'vue'
 
@@ -54,7 +55,7 @@ export default defineComponent({
     }])
 
     return {
-      data
+      data,
     }
   }
 })
@@ -63,4 +64,15 @@ export default defineComponent({
 
 :::
 
+### API
 
+|    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         |
+| :---------: | :------: | :-------: | :----------------------- | --------------------------------- |
+|    data     | `TreeData` |    --     | 必选，数据源          |              |
+
+### TreeData 数据结构
+
+|    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         |
+| :---------: | :------: | :-------: | :----------------------- | --------------------------------- |
+|    label     | `String` |    --     | 必选，文本内容          |              |
+|    children     | `TreeData` |    --     | 可选，子节点          |              |
