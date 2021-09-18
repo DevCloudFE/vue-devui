@@ -2627,11 +2627,6 @@ babel-walk@3.0.0-canary-5:
   dependencies:
     "@babel/types" "^7.9.6"
 
-babylon@^6.18.0:
-  version "6.18.0"
-  resolved "http://nexus3.ey.com.cn/repository/npm-group/babylon/-/babylon-6.18.0.tgz#af2f3b88fa6f5c1e4c634d1a0f8eac4f55b395e3"
-  integrity sha1-ry87iPpvXB5MY00aD46sT1WzleM=
-
 bail@^1.0.0:
   version "1.0.5"
   resolved "https://registry.nlark.com/bail/download/bail-1.0.5.tgz?cache=0&sync_timestamp=1621401842495&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fbail%2Fdownload%2Fbail-1.0.5.tgz#b6fa133404a392cbc1f8c4bf63f5953351e7a776"
