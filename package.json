@@ -22,9 +22,9 @@
     "devui-cli": "./devui-cli/index.js"
   },
   "scripts": {
-    "dev": "vitepress dev sites",
-    "build": "vitepress build sites",
-    "serve": "vitepress serve sites",
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "serve": "vitepress serve docs",
     "app:dev": "vite",
     "app:build": "vite build",
     "build:lib": "yarn predev && yarn build:components && yarn generate:theme && yarn copy",
