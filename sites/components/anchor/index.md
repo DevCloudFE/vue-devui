@@ -16,7 +16,7 @@
 在页面中使用：
 
 ```html
-<!--  className="scrollTarget" 加上这个类名是局部滚动,不加是全局滚动 -->
+<!--  class="scrollTarget" 加上这个类名是局部滚动,不加是全局滚动 -->
 <div v-d-anchor-box className="scrollTarget">
   <ul>
     <li v-d-anchor-link="anchorlink-one">anchorlink-one</li>
@@ -40,42 +40,38 @@
   </div>
 </div>
 ```
-
-# v-d-anchor-box
-
-定义一个锚点。
-## v-d-anchor-box 参数
-
-|     参数     |   类型   | 默认 |                         说明                          | 基本用法                    |全局配置项| 
-| :----------------: | :----------: | :------: | :--: | :---------------------------------------------------: | ---------------------------- |
-|   className    | `string` |  --  |       可选，className为"scrollTarget"时，为局部滚动。默认全局滚动         | className="scrollTarget" | true
-
-# v-d-anchor
+ 
+# dAnchor
 
 定义一个锚点。
-## v-d-anchor 参数
+### dAnchor 参数
 
-|     参数     |   类型   | 默认 |                         说明                          | 基本用法                    |全局配置项| 
+|     参数     |   类型   | 默认 |                         说明                          | 跳转 Demo                    |全局配置项| 
 | :----------------: | :----------: | :------: | :--: | :---------------------------------------------------: | ---------------------------- |
-|   v-d-anchor    | `string` |  --  |       必选，设置锚点对应的跳转位置         | v-d-anchor="anchorlink-one" | true
+|   dAnchor    | `string` |  --  |               必选，设置一个锚点的名字                | [基本用法](demo#basic-usage) |
+| anchorActive | `string` |  --  | 可选，锚点处于激活状态的时候，模块生效对应的 css 类名 | [基本用法](demo#basic-usage) |
 
-# v-d-anchor-link
-
-定义一个锚点。
-## v-d-anchor-link 参数
-
-|     参数     |   类型   | 默认 |                         说明                          | 基本用法                    |全局配置项| 
-| :----------------: | :----------: | :------: | :--: | :---------------------------------------------------: | ---------------------------- |
-|   v-d-anchor-link    | `string` |  --  |       必选，设置一个锚点的名字         | v-d-anchor-link="anchorlink-one" | true
-
-## dAnchor 锚点激活事件
+### dAnchor 锚点激活事件
 
 自动会给锚点加上以下类对应不同激活的对象。
 
 |           css 类名            |        代表意义        |
 | :---------------------------: | :--------------------: |
-| active  |    点击锚点链接激活    |
+| anchor-active-by-anchor-link  |    点击锚点链接激活    |
+|    anchor-active-by-scroll    | 容器滚动到锚点位置激活 |
+| anchor-active-by-click-inside |  点击锚点内部内容激活  |
+|   anchor-active-by-initial    |  初始化滚动条位置激活  |
 
+# dAnchorLink
+
+定义一个锚点的链接，点击链接会滑动到锚点，锚点处于页面顶部的时候也会激活链接的 class。
+
+### dAnchorLink 参数
+
+|     参数     |   类型   | 默认 |                         说明                          | 跳转 Demo                    |全局配置项| 
+| :----------------: | :----------: | :------: | :--: | :---------------------------------------------------: | ---------------------------- |
+| dAnchorLink  | `string` |  --  |            必选，点击滑动的目标锚点的名字             | [基本用法](demo#basic-usage) |
+| anchorActive | `string` |  --  | 可选，锚点处于激活状态的时候，链接生效对应的 css 类名 | [基本用法](demo#basic-usage) |
 
 # dAnchorBox
 
