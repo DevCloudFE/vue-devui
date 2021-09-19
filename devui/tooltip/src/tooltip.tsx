@@ -7,20 +7,20 @@ export default defineComponent({
     name: 'DTooltip',
     props: tooltipProps,
     setup(props, ctx){
-        let position = reactive({
+        const position = reactive({
             left: 0,
             top: 0
         })
-        let show = ref(false)
+        const show = ref(false)
 
         // slotElement元素的ref
-        let slotElement = ref(null) 
+        const slotElement = ref(null) 
         // tooltip元素的引用
-        let tooltip = ref(null)
+        const tooltip = ref(null)
         // arrow元素的引用
-        let arrow = ref(null)
+        const arrow = ref(null)
         // tooltipcontent的引用
-        let tooltipcontent = ref(null)
+        const tooltipcontent = ref(null)
 
         let enterEvent
         let leaveEvent
