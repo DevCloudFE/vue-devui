@@ -1,0 +1,27 @@
+// @import '../style/theme/color';
+// @import '../style/theme/shadow';
+// @import '../style/theme/corner';
+// @import '../style/core/_font';
+.d-steps-guide {
+  width: 400px;
+  min-height: 160px;
+  // background: $devui-brand;
+  // box-shadow: $devui-shadow-length-feedback-overlay rgba(81, 112, 255, 0.3);
+  // border-radius: $devui-border-radius-feedback;
+  // font-size: $devui-font-size;
+  // color: $devui-light-text;
+  background: rgb(94, 124, 224);
+  box-shadow: rgba(81, 112, 255, 0.3) 0 4px 16px 0;
+  border-radius: 4px;
+  font-size: 12px;
+  color: rgb(255, 255, 255);
+  padding: 20px;
+  position: absolute;
+
+  .devui-title {
+    // font-size: $devui-font-size-page-title;
+    opacity: 1;
+    margin: 0 0 20px 0;
+    padding: 0;
+  }
+}
