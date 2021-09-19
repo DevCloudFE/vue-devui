@@ -40,7 +40,7 @@ const show = computed(() => theme.value.nav || repo.value || localeLinks.value)
 @media (min-width: 720px) {
   .nav-links {
     display: flex;
-    padding: 6px 0 0;
+    padding: 3px 0 0;
     align-items: center;
     border-bottom: 0;
   }
