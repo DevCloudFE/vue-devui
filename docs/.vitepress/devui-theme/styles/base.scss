@@ -22,7 +22,7 @@ $size: (
     .m#{$dir-key}-#{$size-key} {
       margin-#{$dir-value}: $size-value;
     }
-    .m#{$dir-key}-#{$size-key} {
+    .p#{$dir-key}-#{$size-key} {
       padding-#{$dir-value}: $size-value;
     }
     .#{$dir-value}-#{$size-key} {
