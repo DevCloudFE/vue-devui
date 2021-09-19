@@ -1,6 +1,7 @@
 import { defineComponent, toRefs, ref, CSSProperties, reactive } from 'vue'
 import clickoutsideDirective from '../../shared/devui-directive/clickoutside'
 import './popover.scss'
+
 type positionType = 'top' | 'right' | 'bottom' | 'left'
 type triggerType = 'click' | 'hover'
 type popType = 'success' | 'error' | 'warning' | 'info' | 'default'
@@ -10,6 +11,7 @@ const popTypeClass = {
   info: { name: 'info-o', color: 'rgb(81, 112, 255)' },
   default: {}
 }
+
 export default defineComponent({
   name: 'DPopover',
   directives: {
