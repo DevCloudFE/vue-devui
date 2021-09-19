@@ -1,6 +1,4 @@
 import { ref } from 'vue'
-import { from, Observable } from 'rxjs'
-import { mergeMap } from 'rxjs/operators'
 import { IFileOptions, IUploadOptions } from './upload-types'
 import {
   getNotAllowedFileTypeMsg,
@@ -128,18 +126,10 @@ export const useSelectFiles = () => {
 
   const triggerSelectFiles = (fileOptions: IFileOptions) => {
     const { multiple, accept, webkitdirectory } = fileOptions
-    return from(selectFiles({ multiple, accept, webkitdirectory })).pipe(
-      mergeMap((file) => <any>file)
-    )
+    return selectFiles({ multiple, accept, webkitdirectory })
   }
-  const triggerDropFiles = (
-    fileOptions: IFileOptions,
-    uploadOptions: IUploadOptions,
-    files: any
-  ) => {
-    return new Observable((observer) => observer.next(files)).pipe(
-      mergeMap((file) => <any>file)
-    )
+  const triggerDropFiles = (files: File[]) => {
+    return Promise.resolve(files)
   }
   const checkAllFilesSize = (fileSize, maximumSize) => {
     if (beyondMaximalSize(fileSize, maximumSize)) {

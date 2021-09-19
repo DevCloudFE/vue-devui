@@ -19,7 +19,7 @@
   <d-single-upload
     :file-options="fileOptions"
     :upload-options="uploadOptions"
-    :uploaded-files="uploadedFiles"
+    v-model:uploaded-files="uploadedFiles"
   />
 </template>
 <script>
@@ -66,7 +66,7 @@ export default {
     :enable-drop="true"
     :file-options="fileOptions"
     :upload-options="uploadOptions"
-    :uploaded-files="uploadedFiles"
+    v-model:uploaded-files="uploadedFiles"
     placeholder-text="Drag files"
     :without-btn="true"
     file-path="name"
@@ -151,7 +151,7 @@ export default {
   <d-single-upload
     :file-options="fileOptions"
     :upload-options="uploadOptions"
-    :uploaded-files="uploadedFiles"
+    v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
     file-path="name"
     :before-upload="beforeUpload"
@@ -220,7 +220,7 @@ export default {
   <d-multiple-upload
     :file-options="fileOptions"
     :upload-options="uploadOptions"
-    :uploaded-files="uploadedFiles"
+    v-model:uploaded-files="uploadedFiles"
     filePath="name"
     @success-event="onSuccess"
     @error-event="onError"
@@ -289,7 +289,7 @@ export default {
   <d-multiple-upload
     :file-options="fileOptions"
     :upload-options="uploadOptions"
-    :uploaded-files="uploadedFiles"
+    v-model:uploaded-files="uploadedFiles"
     filePath="name"
     @success-event="onSuccess"
     @error-event="onError"
@@ -357,7 +357,7 @@ export default {
     :enable-drop="true"
     :file-options="fileOptions"
     :upload-options="uploadOptions"
-    :uploaded-files="uploadedFiles"
+    v-model:uploaded-files="uploadedFiles"
     filePath="name"
     @success-event="onSuccess"
     @error-event="onError"
@@ -438,7 +438,7 @@ export default {
   <d-multiple-upload
     :file-options="fileOptions"
     :upload-options="uploadOptions"
-    :uploaded-files="uploadedFiles"
+    v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
     file-path="name"
     :before-upload="beforeUpload"
@@ -505,7 +505,7 @@ export default {
   <d-multiple-upload
     :file-options="fileOptions"
     :upload-options="uploadOptions"
-    :uploaded-files="uploadedFiles"
+    v-model:uploaded-files="uploadedFiles"
     placeholder-text="选择文件"
     file-path="name"
     @success-event="onSuccess1"
@@ -574,7 +574,7 @@ export default {
       <d-multiple-upload
         :file-options="fileOptions"
         :upload-options="uploadOptions"
-        :uploaded-files="uploadedFiles"
+        v-model:uploaded-files="uploadedFiles"
         placeholder-text="选择文件"
         file-path="name"
         @success-event="onSuccess"
@@ -794,7 +794,7 @@ export default {
   <d-multiple-upload
     :file-options="fileOptions"
     :upload-options="uploadOptions"
-    :uploaded-files="uploadedFiles"
+    v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
     file-path="name"
     @success-event="onSuccess"
@@ -852,25 +852,357 @@ export default {
 
 :::
 
+### 任意区域上传
+
+用户可通过默认 slot 支持文件任意区域上传。
+:::demo
+
+```vue
+<template>
+  <d-single-upload
+    :file-options="fileOptions"
+    :upload-options="uploadOptions"
+    v-model:uploaded-files="uploadedFiles"
+    placeholder-text="Upload"
+    file-path="name"
+    @success-event="onSuccess"
+    @error-event="onError"
+    :beforeUpload="beforeUpload"
+    showTip="true"
+  >
+    <d-button type="primary">选取文件</d-button>
+    <template v-slot:preloadFiles="slotProps">
+      <table
+        class="table preload-files"
+        v-if="slotProps.fileUploaders.length > 0"
+      >
+        <tr
+          v-for="(fileUploader, index) in slotProps.fileUploaders"
+          :key="index"
+          class="row"
+        >
+          <td width="50%">
+            <span>{{ fileUploader.file.name }}</span>
+          </td>
+
+          <td width="25%">
+            <span v-if="fileUploader.status === UploadStatus.preLoad"
+              >preLoad</span
+            >
+            <span v-if="fileUploader.status === UploadStatus.uploading"
+              >Uploading}</span
+            >
+            <span v-if="fileUploader.status === UploadStatus.uploaded"
+              >Uploaded</span
+            >
+            <span v-if="fileUploader.status === UploadStatus.failed"
+              >Upload Failed</span
+            >
+          </td>
+
+          <td>
+            <d-button
+              size="xs"
+              v-if="fileUploader.status !== UploadStatus.uploaded"
+              :disabled="fileUploader.status === UploadStatus.uploading"
+              @click="(event) => slotProps.deleteFile(event)"
+            >
+              Delete
+            </d-button>
+          </td>
+        </tr>
+      </table>
+    </template>
+    <template v-slot:uploadedFiles="slotProps">
+      <table
+        class="table uploaded-files"
+        v-if="slotProps.uploadedFiles.length > 0"
+      >
+        <tbody>
+          <tr
+            v-for="(uploadedFile, index) in slotProps.uploadedFiles"
+            :key="index"
+            class="row"
+          >
+            <td width="50%">
+              <span>{{ uploadedFile.name }}</span>
+            </td>
+            <td width="25%">
+              <span>Uploaded</span>
+            </td>
+            <td>
+              <d-button
+                size="xs"
+                @click="(event) => slotProps.deleteFile(uploadedFile)"
+              >
+                Delete
+              </d-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+  </d-single-upload>
+</template>
+<script>
+import { reactive, ref, watch } from 'vue'
+
+export default {
+  setup() {
+    const additionalParameter = { name: 'tom', age: 11 }
+    const UploadStatus = ref({
+      preLoad: 0,
+      uploading: 1,
+      uploaded: 2,
+      failed: 3,
+    })
+    const uploadedFiles = ref([])
+    const fileOptions = reactive({
+      accept: '.png',
+      multiple: false,
+      webkitdirectory: false,
+    })
+    const uploadOptions = reactive({
+      uri: 'http://localhost:4000/files/upload',
+      headers: {},
+      additionalParameter,
+      maximumSize: 0.5,
+      method: 'POST',
+      fileFieldName: 'file',
+      responseType: 'json',
+    })
+    const beforeUpload = (file) => {
+      console.log(file)
+      return true
+    }
+    const onSuccess = (result) => {
+      console.log('success', result)
+    }
+    const onError = (error) => {
+      console.log(error)
+    }
+    watch(uploadedFiles, (newValue, oldValue) => {
+      console.log('uploadedFiles', {
+        newValue,
+        oldValue,
+      })
+    })
+    return {
+      fileOptions,
+      uploadedFiles,
+      uploadOptions,
+      beforeUpload,
+      onSuccess,
+      onError,
+      UploadStatus,
+    }
+  },
+}
+</script>
+```
+
+:::
+
+自定义默认 slot，初始显示已上传文件。
+
+:::demo
+
+```vue
+<template>
+  <d-single-upload
+    :file-options="fileOptions"
+    :upload-options="uploadOptions"
+    v-model:uploaded-files="uploadedFiles"
+    placeholder-text="Upload"
+    file-path="name"
+    @success-event="onSuccess"
+    @error-event="onError"
+    :beforeUpload="beforeUpload"
+    showTip="true"
+    withoutBtn="true"
+    class="upload-demo"
+    autoUpload="true"
+  >
+    <div class="upload-trigger">
+      <div>
+        <d-icon name="upload" size="24px" />
+      </div>
+      <div style="marginTop: 20px">
+        将文件拖到此处，或
+        <span class="link">点击上传</span>
+      </div>
+    </div>
+    <template v-slot:preloadFiles="slotProps">
+      <table
+        class="table preload-files"
+        v-if="slotProps.fileUploaders.length > 0"
+      >
+        <tr
+          v-for="(fileUploader, index) in slotProps.fileUploaders"
+          :key="index"
+          class="row"
+        >
+          <td width="50%">
+            <span>{{ fileUploader.file.name }}</span>
+          </td>
+
+          <td width="25%">
+            <span v-if="fileUploader.status === UploadStatus.preLoad"
+              >preLoad</span
+            >
+            <span v-if="fileUploader.status === UploadStatus.uploading"
+              >Uploading</span
+            >
+            <span v-if="fileUploader.status === UploadStatus.uploaded"
+              >Uploaded</span
+            >
+            <span v-if="fileUploader.status === UploadStatus.failed"
+              >Upload Failed</span
+            >
+          </td>
+
+          <td>
+            <d-button
+              size="xs"
+              v-if="fileUploader.status !== UploadStatus.uploaded"
+              :disabled="fileUploader.status === UploadStatus.uploading"
+              @click="(event) => slotProps.deleteFile(event)"
+            >
+              Delete
+            </d-button>
+          </td>
+        </tr>
+      </table>
+    </template>
+    <template v-slot:uploadedFiles="slotProps">
+      <table
+        class="table uploaded-files"
+        v-if="slotProps.uploadedFiles.length > 0"
+      >
+        <tbody>
+          <tr
+            v-for="(uploadedFile, index) in slotProps.uploadedFiles"
+            :key="index"
+            class="row"
+          >
+            <td width="50%">
+              <span>{{ uploadedFile.name }}</span>
+            </td>
+            <td width="25%">
+              <span>Uploaded</span>
+            </td>
+            <td>
+              <d-button
+                size="xs"
+                @click="(event) => slotProps.deleteFile(uploadedFile)"
+              >
+                Delete
+              </d-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+  </d-single-upload>
+</template>
+<script>
+import { reactive, ref, watch } from 'vue'
+
+export default {
+  setup() {
+    const additionalParameter = { name: 'tom', age: 11 }
+    const UploadStatus = ref({
+      preLoad: 0,
+      uploading: 1,
+      uploaded: 2,
+      failed: 3,
+    })
+    const uploadedFiles = ref([])
+    const fileOptions = reactive({
+      accept: '.png',
+      multiple: false,
+      webkitdirectory: false,
+    })
+    const uploadOptions = reactive({
+      uri: 'http://localhost:4000/files/upload',
+      headers: {},
+      additionalParameter,
+      maximumSize: 0.5,
+      method: 'POST',
+      fileFieldName: 'file',
+      responseType: 'json',
+    })
+    const beforeUpload = (file) => {
+      console.log(file)
+      return true
+    }
+    const onSuccess = (result) => {
+      console.log('success', result)
+    }
+    const onError = (error) => {
+      console.log(error)
+    }
+    watch(uploadedFiles, (newValue, oldValue) => {
+      console.log('uploadedFiles', {
+        newValue,
+        oldValue,
+      })
+    })
+    return {
+      fileOptions,
+      uploadedFiles,
+      uploadOptions,
+      beforeUpload,
+      onSuccess,
+      onError,
+      UploadStatus,
+    }
+  },
+}
+</script>
+<style>
+.upload-demo .upload-trigger {
+  background-color: #fff;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: 360px;
+  height: 180px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.upload-demo .upload-trigger .link {
+  color: blue;
+}
+</style>
+```
+
+:::
+
 ### API
 
 d-single-upload 参数
 
-| **参数**               | **类型**                                       | **默认**   | 说明                                                                                     | **跳转 Demo**         |
-| ---------------------- | ---------------------------------------------- | ---------- | ---------------------------------------------------------------------------------------- | --------------------- |
-| fileOptions            | [IFileOptions](#ifileoptions)                  | --         | 必选，待上传文件配置                                                                     | [基本用法](#基本用法) |
-| filePath               | `string`                                       | --         | 必选，文件路径                                                                           | [基本用法](#基本用法) |
-| uploadOptions          | [IUploadOptions](#iuploadoptions)              | \--        | 必选，上传配置                                                                           | [基本用法](#基本用法) |
-| autoUpload             | `boolean`                                      | false      | 可选，是否自动上传                                                                       | [基本用法](#基本用法) |
-| placeholderText        | `string`                                       | '选择文件' | 可选，上传输入框中的 Placeholder 文字                                                    | [基本用法](#基本用法) |
-| uploadText             | `string`                                       | '上传'     | 可选，上传按钮文字                                                                       | [基本用法](#基本用法) |
-| uploadedFiles          | `Array<Object>`                                | []         | 可选，获取已上传的文件列表                                                               | [基本用法](#基本用法) |
-| withoutBtn             | `boolean`                                      | false      | 可选，是否舍弃按钮                                                                       | [基本用法](#基本用法) |
-| enableDrop             | `boolean`                                      | false      | 可选，是否支持拖拽                                                                       | [基本用法](#基本用法) |
-| beforeUpload           | `boolean Promise<boolean> Observable<boolean>` | \--        | 可选，上传前的回调，通过返回`true` or `false` ,控制文件是否上传,参数为文件信息及上传配置 | [基本用法](#基本用法) |
-| dynamicUploadOptionsFn | [IUploadOptions](#iuploadoptions)              | \--        | 为文件动态设置自定义的上传参数, 参数为当前选中文件及`uploadOptions`的值                  | [基本用法](#基本用法) |
-| disabled               | `boolean`                                      | false      | 可选，是否禁用上传组件                                                                   | [基本用法](#基本用法) |
-| showTip                | `boolean`                                      | false      | 可选，是否显示上传提示信息                                                               | [自动上传](#自动上传) |
+| **参数**               | **类型**                          | **默认**   | 说明                                                                                     | **跳转 Demo**         |
+| ---------------------- | --------------------------------- | ---------- | ---------------------------------------------------------------------------------------- | --------------------- |
+| fileOptions            | [IFileOptions](#ifileoptions)     | --         | 必选，待上传文件配置                                                                     | [基本用法](#基本用法) |
+| filePath               | `string`                          | --         | 文件路径                                                                                 | [基本用法](#基本用法) |
+| uploadOptions          | [IUploadOptions](#iuploadoptions) | \--        | 必选，上传配置                                                                           | [基本用法](#基本用法) |
+| autoUpload             | `boolean`                         | false      | 可选，是否自动上传                                                                       | [基本用法](#基本用法) |
+| placeholderText        | `string`                          | '选择文件' | 可选，上传输入框中的 Placeholder 文字                                                    | [基本用法](#基本用法) |
+| uploadText             | `string`                          | '上传'     | 可选，上传按钮文字                                                                       | [基本用法](#基本用法) |
+| uploadedFiles          | `Array<Object>`                   | []         | 可选，获取已上传的文件列表                                                               | [基本用法](#基本用法) |
+| withoutBtn             | `boolean`                         | false      | 可选，是否舍弃按钮                                                                       | [基本用法](#基本用法) |
+| enableDrop             | `boolean`                         | false      | 可选，是否支持拖拽                                                                       | [基本用法](#基本用法) |
+| beforeUpload           | `boolean Promise<boolean> `       | \--        | 可选，上传前的回调，通过返回`true` or `false` ,控制文件是否上传,参数为文件信息及上传配置 | [基本用法](#基本用法) |
+| dynamicUploadOptionsFn | [IUploadOptions](#iuploadoptions) | \--        | 为文件动态设置自定义的上传参数, 参数为当前选中文件及`uploadOptions`的值                  | [基本用法](#基本用法) |
+| disabled               | `boolean`                         | false      | 可选，是否禁用上传组件                                                                   | [基本用法](#基本用法) |
+| showTip                | `boolean`                         | false      | 可选，是否显示上传提示信息                                                               | [自动上传](#自动上传) |
 
 d-single-upload 事件
 
@@ -885,22 +1217,22 @@ d-single-upload 事件
 
 d-multiple-upload 参数
 
-| **参数**               | **类型**                                       | **默认**       | 说明                                                                                     | **跳转 Demo**             |
-| ---------------------- | ---------------------------------------------- | -------------- | ---------------------------------------------------------------------------------------- | ------------------------- |
-| fileOptions            | [IFileOptions](#ifileoptions)                  | --             | 必选，待上传文件配置                                                                     | [多文件上传](#多文件上传) |
-| filePath               | `string`                                       | --             | 必选，文件路径                                                                           | [多文件上传](#多文件上传) |
-| uploadOptions          | [IUploadOptions](#iuploadoptions)              | \--            | 必选，上传配置                                                                           | [多文件上传](#多文件上传) |
-| autoUpload             | `boolean`                                      | false          | 可选，是否自动上传                                                                       | [自动上传](#自动上传)     |
-| placeholderText        | `string`                                       | '选择多个文件' | 可选，上传输入框中的 Placeholder 文字                                                    | [基本用法](#基本用法)     |
-| uploadText             | `string`                                       | '上传'         | 可选，上传按钮文字                                                                       | [基本用法](#基本用法)     |
-| uploadedFiles          | `Array<Object>`                                | []             | 可选，获取已上传的文件列表                                                               | [多文件上传](#多文件上传) |
-| withoutBtn             | `boolean`                                      | false          | 可选，是否舍弃按钮                                                                       | [自定义](#自定义)         |
-| enableDrop             | `boolean`                                      | false          | 可选，是否支持拖拽                                                                       | [多文件上传](#多文件上传) |
-| beforeUpload           | `boolean Promise<boolean> Observable<boolean>` | \--            | 可选，上传前的回调，通过返回`true` or `false` ,控制文件是否上传,参数为文件信息及上传配置 | [多文件上传](#多文件上传) |
-| dynamicUploadOptionsFn | [IUploadOptions](#iuploadoptions)              | \--            | 为文件动态设置自定义的上传参数, 参数为当前选中文件及`uploadOptions`的值                  | [多文件上传](#多文件上传) |
-| disabled               | `boolean`                                      | false          | 可选，是否禁用上传组件                                                                   | [多文件上传](#多文件上传) |
-| showTip                | `boolean`                                      | false          | 可选，是否显示上传提示信息                                                               | [多文件上传](#多文件上传) |
-| setCustomUploadOptions | [IUploadOptions](#iuploadoptions)              | --             | 为每个文件设置自定义的上传参数, 参数为当前选中文件及`uploadOptions`的值                  | [自定义](#自定义)         |
+| **参数**               | **类型**                          | **默认**       | 说明                                                                                     | **跳转 Demo**             |
+| ---------------------- | --------------------------------- | -------------- | ---------------------------------------------------------------------------------------- | ------------------------- |
+| fileOptions            | [IFileOptions](#ifileoptions)     | --             | 必选，待上传文件配置                                                                     | [多文件上传](#多文件上传) |
+| filePath               | `string`                          | --             | 文件路径                                                                                 | [多文件上传](#多文件上传) |
+| uploadOptions          | [IUploadOptions](#iuploadoptions) | \--            | 必选，上传配置                                                                           | [多文件上传](#多文件上传) |
+| autoUpload             | `boolean`                         | false          | 可选，是否自动上传                                                                       | [自动上传](#自动上传)     |
+| placeholderText        | `string`                          | '选择多个文件' | 可选，上传输入框中的 Placeholder 文字                                                    | [基本用法](#基本用法)     |
+| uploadText             | `string`                          | '上传'         | 可选，上传按钮文字                                                                       | [基本用法](#基本用法)     |
+| uploadedFiles          | `Array<Object>`                   | []             | 可选，获取已上传的文件列表                                                               | [多文件上传](#多文件上传) |
+| withoutBtn             | `boolean`                         | false          | 可选，是否舍弃按钮                                                                       | [自定义](#自定义)         |
+| enableDrop             | `boolean`                         | false          | 可选，是否支持拖拽                                                                       | [多文件上传](#多文件上传) |
+| beforeUpload           | `boolean Promise<boolean>`        | \--            | 可选，上传前的回调，通过返回`true` or `false` ,控制文件是否上传,参数为文件信息及上传配置 | [多文件上传](#多文件上传) |
+| dynamicUploadOptionsFn | [IUploadOptions](#iuploadoptions) | \--            | 为文件动态设置自定义的上传参数, 参数为当前选中文件及`uploadOptions`的值                  | [多文件上传](#多文件上传) |
+| disabled               | `boolean`                         | false          | 可选，是否禁用上传组件                                                                   | [多文件上传](#多文件上传) |
+| showTip                | `boolean`                         | false          | 可选，是否显示上传提示信息                                                               | [多文件上传](#多文件上传) |
+| setCustomUploadOptions | [IUploadOptions](#iuploadoptions) | --             | 为每个文件设置自定义的上传参数, 参数为当前选中文件及`uploadOptions`的值                  | [自定义](#自定义)         |
 
 d-multiple-upload 事件
 

@@ -12,7 +12,7 @@ const sidebar = {
         { text: 'Search 搜索框', link: '/components/search/', status: '已完成' },
         { text: 'Status 状态', link: '/components/status/', status: '已完成' },
         { text: 'Sticky 便贴', link: '/components/sticky/' },
-        { text: 'Overlay 浮层', link: '/components/overlay/'}
+        { text: 'Overlay 遮罩层', link: '/components/overlay/'}
       ]
     },
     {
@@ -27,6 +27,7 @@ const sidebar = {
         { text: 'Pagination 分页', link: '/components/pagination/', status: '开发中' },
         { text: 'StepsGuide 操作指引', link: '/components/steps-guide/' },
         { text: 'Tabs 选项卡', link: '/components/tabs/', status: '已完成' },
+        { text: 'Anchor 锚点', link: '/components/Anchor/' },
       ]
     },
     {

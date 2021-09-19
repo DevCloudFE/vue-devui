@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineEmit, ref, watch } from 'vue'
+import { defineEmits, ref, watch } from 'vue'
 import Theme from '@devui/theme'
 import NavBarTitle from './NavBarTitle.vue'
 import NavLinks from './NavLinks.vue'
@@ -18,7 +18,7 @@ watch(
   }
 )
 
-defineEmit(['toggle'])
+defineEmits(['toggle'])
 </script>
 
 <template>
