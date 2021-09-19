@@ -332,10 +332,11 @@
 
 | 参数  | 类型 | 默认值 | 描述 | 跳转Demo |
 | ---- | ---- | ---- | ---- | ---- |
-| content | `string` | defalut |可选    弹出框的显示内容或 | [自定义内容](#自定义内容) |
-| visible | `boolean` | false | 可选    弹框的初始化弹出状态 | [基本用法](#基本用法) |
-| trigger | `string` | click | 可选    弹框触发方式 | [基本用法](#基本用法) |
-| popType | `string`  | default | 可选    弹出框类型，样式不同 | [基本用法](#基本用法) |
-| zIndex | `number` | 1060 | 可选     z-index值用于手动控制层高 | [基本用法](#基本用法) |
-| positionType | `string` | bottom | 可选     positionType控制弹框出现 的方向 | [弹出位置](#弹出位置) |
+| content | `string` | defalut |可选，弹出框的显示内容或 | [自定义内容](#自定义内容) |
+| visible | `boolean` | false | 可选，弹框的初始化弹出状态 | [基本用法](#基本用法) |
+| trigger | `string` | click | 可选，弹框触发方式 | [基本用法](#基本用法) |
+| popType | `string`  | default | 可选，弹出框类型，样式不同 | [基本用法](#基本用法) |
+| zIndex | `number` | 1060 | 可选，z-index值用于手动控制层高 | [基本用法](#基本用法) |
+| positionType | `string` | bottom | 可选，控制弹框出现 的方向 | [弹出位置](#弹出位置) |
+| showAnimation | `boolean` | true | 可选，是否显示动画 | [基本用法](#基本用法) |
 
