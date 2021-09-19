@@ -1,8 +1,9 @@
 @import '../../style/theme/color';
 @import '../../style//theme//corner';
 @import '../../style//theme/font';
+@import '../../style//theme//animation';
 
-@mixin someDisplay {
+@mixin some-display {
   display: inline-flex;
 }
 
@@ -12,7 +13,7 @@
   --devui-popover-offset: 8px;
 
   position: relative;
-  @include someDisplay;
+  @include some-display;
 
   &::after {
     content: '';
@@ -27,11 +28,11 @@
 
   &.devui-popover-isVisible {
     .devui-popover-content {
-      @include someDisplay;
+      @include some-display;
     }
 
     &::after {
-      @include someDisplay;
+      @include some-display;
     }
   }
 
@@ -54,6 +55,35 @@
     .devui-popover-icon {
       margin-right: 5px;
     }
+  }
+}
+
+//动画效果
+.devui-popover {
+  &.devui-popover-animation {
+    @mixin some-animation {
+      animation: some-animation 0.2s $devui-animation-linear 1 forwards;
+    }
+
+    .devui-popover-content {
+      opacity: 0;
+      @include some-animation;
+    }
+
+    &::after {
+      opacity: 0;
+      @include some-animation;
+    }
+  }
+}
+
+@keyframes some-animation {
+  0% {
+    @include some-display;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 

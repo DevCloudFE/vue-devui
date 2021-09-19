@@ -28,7 +28,18 @@
       <d-button  bsStyle="success">success</d-button>
     </template>
   </d-popover>
+  <d-popover  content="warning!" popType="warning" >
+    <template #reference>
+      <d-button  bsStyle="warning">warning</d-button>
+    </template>
+  </d-popover>
+  <d-popover  content="no-animation!" :showAnimation="false">
+    <template #reference>
+      <d-button  bsStyle="common">no-animation</d-button>
+    </template>
+  </d-popover>
 </div>
+
 
 ```html
   <d-popover visible>
@@ -36,19 +47,33 @@
       <d-button bsStyle="common">default</d-button>
     </template>
   </d-popover>
+
   <d-popover  content="info!" popType="info" position="top" trigger="hover">
     <template #reference>
       <d-button  bsStyle="primary">info</d-button>
     </template>
   </d-popover>
+
   <d-popover  content="error!" popType="error" position="left" :zIndex="9999">
     <template #reference>
       <d-button  bsStyle="danger">error</d-button>
     </template>
   </d-popover>
-    <d-popover  content="success!" popType="success" position="right">
+
+  <d-popover  content="success!" popType="success" position="right">
     <template #reference>
       <d-button  bsStyle="success">success</d-button>
+    </template>
+  </d-popover>
+
+  <d-popover  content="warning!" popType="warning" >
+    <template #reference>
+      <d-button  bsStyle="warning">warning</d-button>
+    </template>
+  </d-popover>
+  <d-popover  content="no-animation!" :showAnimation="false">
+    <template #reference>
+      <d-button  bsStyle="common">no-animation</d-button>
     </template>
   </d-popover>
 ```

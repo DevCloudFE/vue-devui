@@ -9,6 +9,7 @@ const popTypeClass = {
   success: { name: 'right-o', color: 'rgb(61, 204, 166)' },
   error: { name: 'error-o', color: 'rgb(249, 95, 91)' },
   info: { name: 'info-o', color: 'rgb(81, 112, 255)' },
+  warning: { name: 'warning-o', color: 'rgb(254, 204, 85)' },
   default: {}
 }
 
@@ -44,13 +45,17 @@ export default defineComponent({
     popType: {
       type: String as () => popType,
       default: 'default'
+    },
+    showAnimation: {
+      type: Boolean,
+      default: true
     }
 
   },
 
   setup(props, ctx) {
     const visible = ref(props.visible);
-    const { position, content, zIndex, trigger, popType } = toRefs(props);
+    const { position, content, zIndex, trigger, popType,showAnimation } = toRefs(props);
     const isClick = trigger.value === 'click'
     const iconType = reactive(popTypeClass[popType.value])
     const event = function () {
@@ -77,7 +82,8 @@ export default defineComponent({
       return (
         <div class={['devui-popover',
           position.value,
-          {
+          { 
+            'devui-popover-animation':showAnimation.value,
             'devui-popover-isVisible': visible.value
           }
         ]}>
