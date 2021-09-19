@@ -328,6 +328,48 @@
 </div>
 ```
 
+### 延时触发
+仅需要在 trigger 为 hover 的时候，鼠标移入的时长超过 [mouseEnterDelay] 毫秒之后才会触发，以防止用户无意划过导致的闪现，默认值是150毫秒；鼠标移出之后，再经过[mouseLeaveDelay]毫秒后，Popover组件才会隐藏，默认值是100毫秒。
+
+<div>
+  <d-popover  position="bottom-right" trigger="hover" :mouseEnterDelay ="500">
+    <template #content>
+        <div > Mouse enter 500ms later. </div>
+        show Me
+      </template>
+    <template #reference>
+      <d-button bsStyle="primary">MouseEnter delay 500ms</d-button>
+    </template>
+  </d-popover>
+  <d-popover  position="bottom-right" trigger="hover" :mouseLeaveDelay="2000">
+    <template #content>
+        <div> Mouse leave 2000ms later. </div>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common"> MouseLeave delay 2000ms</d-button>
+    </template>
+  </d-popover>
+</div>
+
+```html
+  <d-popover  position="bottom-right" >
+    <template #content>
+        <div >bottom-right</div>
+      </template>
+    <template #reference>
+      <d-button bsStyle="primary">bottom-right</d-button>
+    </template>
+  </d-popover>
+  <d-popover  position="bottom-right" >
+    <template #content>
+        <div >bottom-right</div>
+      </template>
+    <template #reference>
+      <d-button bsStyle="common">bottom-right</d-button>
+    </template>
+  </d-popover>
+```
+
 ### dPopover 参数
 
 | 参数  | 类型 | 默认值 | 描述 | 跳转Demo |
@@ -339,4 +381,6 @@
 | zIndex | `number` | 1060 | 可选，z-index值用于手动控制层高 | [基本用法](#基本用法) |
 | positionType | `string` | bottom | 可选，控制弹框出现 的方向 | [弹出位置](#弹出位置) |
 | showAnimation | `boolean` | true | 可选，是否显示动画 | [基本用法](#基本用法) |
+| mouseEnterDelay | `number` | 150 | 可选，仅需要在 trigger 为 hover 的时候，设置鼠标移入后延时多少才显示 Popover，单位是 `ms` | [延时触发](#延时触发) |
+| mouseLeaveDelay | `number` | 100     | 可选，仅需要在 trigger 为 hover 的时候，设置鼠标移出后延时多少才隐藏 popover，单位是 `ms` | [延时触发](#延时触发) |
 

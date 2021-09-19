@@ -49,13 +49,22 @@ export default defineComponent({
     showAnimation: {
       type: Boolean,
       default: true
+    },
+    mouseEnterDelay: {
+      type: Number,
+      default: 150
+    },
+    mouseLeaveDelay: {
+      type: Number,
+      default: 100
     }
-
   },
 
   setup(props, ctx) {
+    let enter = null
+    let leave = null
     const visible = ref(props.visible);
-    const { position, content, zIndex, trigger, popType,showAnimation } = toRefs(props);
+    const { position, content, zIndex, trigger, popType, mouseEnterDelay, mouseLeaveDelay, showAnimation } = toRefs(props);
     const isClick = trigger.value === 'click'
     const iconType = reactive(popTypeClass[popType.value])
     const event = function () {
@@ -66,8 +75,18 @@ export default defineComponent({
       visible.value = true
     }
     const onClick = isClick ? event : null;
-    const onMouseenter = isClick ? null : () => { visible.value = true }
-    const onMouseleave = isClick ? null : () => { visible.value = false }
+    const onMouseenter = isClick ? null : () => {
+      enter && clearTimeout(enter);
+      enter = setTimeout(() => {
+        visible.value = true
+      }, mouseEnterDelay.value)
+    }
+    const onMouseleave = isClick ? null : () => {
+      leave && clearTimeout(leave)
+      leave = setTimeout(() => {
+        visible.value = false
+      }, mouseLeaveDelay.value)
+    }
     const hiddenContext = function () {
       visible.value = false
     }
@@ -80,13 +99,14 @@ export default defineComponent({
       }
 
       return (
-        <div class={['devui-popover',
-          position.value,
-          { 
-            'devui-popover-animation':showAnimation.value,
-            'devui-popover-isVisible': visible.value
-          }
-        ]}>
+        <div class={
+          ['devui-popover',
+            position.value,
+            {
+              'devui-popover-animation': showAnimation.value,
+              'devui-popover-isVisible': visible.value
+            }
+          ]} >
           <div class='devui-popover-reference' onMouseenter={onMouseenter} onMouseleave={onMouseleave} onClick={onClick} v-clickoutside={hiddenContext}>
             {slots.reference?.()}
           </div>
