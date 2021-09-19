@@ -1,43 +1,8 @@
-class Theme {
-  static imports: any = {}
+import Theme from './core/theme'
+import dark from './themes/dark'
+import light from './themes/light'
 
-  static import(name: string): any {
-    return this.imports[name]
-  }
-
-  static register(name: string, target: any): void {
-    this.imports[name] = target
-  }
-
-  constructor(theme: string) {
-    this.applyTheme(theme)
-  }
-
-  applyTheme(name: string): void {
-    const theme = Theme.imports[name]
-    if (!theme) {
-      console.error(`主题 ${theme} 未注册！`)
-      return
-    }
-
-    const id = 'devui-theme-variable'
-    const themeVariable = `:root { ${stringify(theme)} }`
-    let styleElement = document.getElementById(id)
-    if (styleElement) {
-      styleElement.innerText = themeVariable
-    } else {
-      styleElement = document.createElement('style')
-      styleElement.id = id
-      styleElement.innerText = themeVariable
-      document.head.appendChild(styleElement)
-    }
-  }
-}
-
-function stringify(theme: any) {
-  return Object.entries(theme)
-  .map(([key, value]) => `--${key}:${value}`)
-  .join(';')
-}
+Theme.register('dark', dark)
+Theme.register('light', light)
 
 export default Theme
