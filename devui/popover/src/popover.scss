@@ -61,8 +61,9 @@
 //动画效果
 .devui-popover {
   &.devui-popover-animation {
+    $devui-popover-animation-wait:0s;
     @mixin some-animation {
-      animation: some-animation 0.2s $devui-animation-linear 1 forwards;
+      animation: some-animation 0.2s $devui-animation-linear $devui-popover-animation-wait 1 forwards;
     }
 
     .devui-popover-content {
@@ -71,6 +72,8 @@
     }
 
     &::after {
+      $devui-popover-animation-wait:0.1s;
+
       opacity: 0;
       @include some-animation;
     }
