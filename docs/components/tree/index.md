@@ -52,6 +52,8 @@ export default defineComponent({
           label: '三级 3-2-1', level: 3, isLeaf: true,
         }]
       }]
+    }, {
+      label: '一级 4', level: 1, isLeaf: true,
     }])
 
     return {
