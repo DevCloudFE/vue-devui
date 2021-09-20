@@ -1,6 +1,7 @@
 import { defineComponent, toRefs } from 'vue'
 import { treeProps, TreeProps } from './tree-types'
 import { flatten } from './util'
+import useToggle from './composables/use-toggle'
 import IconOpen from './assets/open.svg'
 import IconClose from './assets/close.svg'
 import './tree.scss'
@@ -13,21 +14,7 @@ export default defineComponent({
     const { data } = toRefs(props)
     const flatData = flatten(data.value)
 
-    const openedTree = (tree) => {
-      return tree.reduce((acc, item) => (
-        item.open
-          ? acc.concat(item, openedTree(item.children))
-          : acc.concat(item)
-      ), [])
-    }
-  
-    let openedData = openedTree(data.value)
-  
-    const toggle = (item) => {
-      console.log('toggle', item, item.id, item.open);
-      item.open = !item.open
-      openedData = openedTree(data.value)
-    }
+    const { openedData, toggle } = useToggle(data.value)
 
     const Indent = () => {
       return <span style="display: inline-block; width: 16px; height: 16px;"></span>
@@ -69,7 +56,7 @@ export default defineComponent({
       return (
         <div class="devui-tree">
           {/* { renderTree(data.value) } */}
-          { openedData.map(item => renderNode(item)) }
+          { openedData.value.map(item => renderNode(item)) }
         </div>
       )
     }
