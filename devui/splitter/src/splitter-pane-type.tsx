@@ -63,12 +63,6 @@ export const splitterPaneProps = {
     type: Number,
     default: 36,
   },
-  /**
-   * 内部排版使用，不对外提供，TODO 待优化
-   */
-  order: {
-    type: Number,
-  },
 } as const;
 
 export type SplitterPaneProps = ExtractPropTypes<typeof splitterPaneProps>;

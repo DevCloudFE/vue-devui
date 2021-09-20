@@ -1,34 +1,34 @@
 import type { Directive, DirectiveBinding } from 'vue'
-
-export class ResizeDirectiveProp {
-  enableResize = true // 是否允许拖动
-  onPressEvent = function (...args: any[]): void {
-    /** */
-  }
-  onDragEvent = function (...args: any[]): void {
-    /** */
-  }
-  onReleaseEvent = function (...args: any[]): void {
-    /** */
-  }
+export interface OnResizeEvent {
+  (coordinateInfo: CoordinateInfo): void
+}
+export interface ResizeDirectiveProp {
+  enableResize: true // 是否允许拖动
+  onPressEvent: OnResizeEvent
+  onDragEvent: OnResizeEvent
+  onReleaseEvent: OnResizeEvent
 }
 
-let resizeDirectiveProp: ResizeDirectiveProp
+export interface CoordinateInfo {
+  pageX: number
+  pageY: number
+  clientX: number
+  clientY: number
+  offsetX: number
+  offsetY: number
+  type: string
+  originalEvent: MouseEvent
+}
+
 const resize: Directive = {
-  mounted(
-    el,
-    { value = new ResizeDirectiveProp() }: DirectiveBinding<ResizeDirectiveProp>
-  ) {
-    resizeDirectiveProp = value
+  mounted(el, { value }: DirectiveBinding<ResizeDirectiveProp>) {
+    el.$value = value
     // 是否允许拖动
     if (value.enableResize) {
       bindEvent(el)
     }
   },
-  unmounted(
-    el,
-    { value = new ResizeDirectiveProp() }: DirectiveBinding<ResizeDirectiveProp>
-  ) {
+  unmounted(el, { value }: DirectiveBinding<ResizeDirectiveProp>) {
     if (value.enableResize) {
       unbind(el, 'mousedown', onMousedown)
     }
@@ -50,19 +50,22 @@ function unbind(el, event, callback) {
 }
 
 function onMousedown(e) {
+  const $value = e?.target?.$value
+  if (!$value) return // 提前退出，避免 splitter-bar 子元素响应导致错误
+
   bind(document, 'mousemove', onMousemove)
   bind(document, 'mouseup', onMouseup)
-  resizeDirectiveProp.onPressEvent(normalizeEvent(e))
-}
+  $value.onPressEvent(normalizeEvent(e))
 
-function onMousemove(e) {
-  resizeDirectiveProp.onDragEvent(normalizeEvent(e))
-}
+  function onMousemove(e) {
+    $value.onDragEvent(normalizeEvent(e))
+  }
 
-function onMouseup(e) {
-  unbind(document, 'mousemove', onMousemove)
-  unbind(document, 'mouseup', onMouseup)
-  resizeDirectiveProp.onReleaseEvent(normalizeEvent(e))
+  function onMouseup(e) {
+    unbind(document, 'mousemove', onMousemove)
+    unbind(document, 'mouseup', onMouseup)
+    $value.onReleaseEvent(normalizeEvent(e))
+  }
 }
 
 // 返回常用位置信息

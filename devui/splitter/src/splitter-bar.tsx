@@ -7,8 +7,9 @@ import {
   computed,
   withDirectives,
   onMounted,
+  inject,
 } from 'vue'
-import { useSplitterStore } from './splitter-store'
+import type { SplitterStore } from './splitter-store'
 import { setStyle } from '../../shared/util/set-style'
 import { addClass, removeClass } from '../../shared/util/class'
 import dresize, { ResizeDirectiveProp } from './util/d-resize-directive'
@@ -19,15 +20,7 @@ export default defineComponent({
   name: 'DSplitterBar',
   props: splitterBarProps,
   setup(props: SplitterBarProps) {
-    const {
-      splitterState,
-      getPane,
-      isStaticBar,
-      isResizable,
-      dragState,
-      setSize,
-      tooglePane,
-    } = useSplitterStore()
+    const store: SplitterStore = inject('splitterStore')
     const state = reactive({
       wrapperClass: `devui-splitter-bar devui-splitter-bar-${props.orientation}`,
     })
@@ -45,9 +38,9 @@ export default defineComponent({
     )
 
     watch(
-      () => splitterState.panes,
+      () => store.state.panes,
       () => {
-        if (!isStaticBar(props.index)) {
+        if (!store.isStaticBar(props.index)) {
           state.wrapperClass += ' resizable'
         } else {
           // TODO 禁用的样式处理
@@ -63,44 +56,44 @@ export default defineComponent({
     // TODO 待优化，如何像 angular rxjs 操作一样优雅
     const resizeProp: ResizeDirectiveProp = {
       enableResize: true,
-      onPressEvent: ({ originalEvent }) => {
+      onPressEvent: function ({ originalEvent }): void {
         originalEvent.stopPropagation() // 按下的时候，阻止事件冒泡
-        if (!isResizable(props.index)) return
-        initState = dragState(props.index)
+        if (!store.isResizable(props.index)) return
+        initState = store.dragState(props.index)
         coordinate.originalX = originalEvent.pageX
-        coordinate.originalY = originalEvent.pageX
+        coordinate.originalY = originalEvent.pageY
       },
-      onDragEvent: function ({ originalEvent }) {
+      onDragEvent: function ({ originalEvent }): void {
         originalEvent.stopPropagation() // 移动的时候，阻止事件冒泡
-        if (!isResizable(props.index)) return
+        if (!store.isResizable(props.index)) return
         coordinate.pageX = originalEvent.pageX
-        coordinate.pageY = originalEvent.pageX
+        coordinate.pageY = originalEvent.pageY
         let distance
         if (props.orientation === 'vertical') {
           distance = coordinate.pageY - coordinate.originalY
         } else {
           distance = coordinate.pageX - coordinate.originalX
         }
-        setSize(initState, distance)
+        store.setSize(initState, distance)
       },
-      onReleaseEvent: function ({ originalEvent }) {
+      onReleaseEvent: function ({ originalEvent }): void {
         originalEvent.stopPropagation() // 释放的时候，阻止事件冒泡
-        if (!isResizable(props.index)) return
+        if (!store.isResizable(props.index)) return
         coordinate.pageX = originalEvent.pageX
-        coordinate.pageY = originalEvent.pageX
+        coordinate.pageY = originalEvent.pageY
         let distance
         if (props.orientation === 'vertical') {
           distance = coordinate.pageY - coordinate.originalY
         } else {
           distance = coordinate.pageX - coordinate.originalX
         }
-        setSize(initState, distance)
+        store.setSize(initState, distance)
       },
     }
 
     const queryPanes = (index, nearIndex) => {
-      const pane = getPane(index)
-      const nearPane = getPane(nearIndex)
+      const pane = store.getPane(index)
+      const nearPane = store.getPane(nearIndex)
       return {
         pane,
         nearPane,
@@ -125,10 +118,24 @@ export default defineComponent({
     // 计算前面板收起操作样式
     const prevClass = computed(() => {
       const { pane, nearPane } = queryPanes(props.index, props.index + 1)
+      // TODO 提示文字
+
       // 第一个面板或者其它面板折叠方向不是向后的， 显示操作按钮
       const showIcon =
         pane?.component?.props?.collapseDirection !== 'after' ||
         props.index === 0
+      return generateCollapseClass(pane, nearPane, showIcon)
+    })
+
+    // 计算相邻面板收起操作样式
+    const nextClass = computed(() => {
+      const { pane, nearPane } = queryPanes(props.index + 1, props.index)
+      // TODO 提示文字
+
+      // 最后一个面板或者其它面板折叠方向不是向前的显示操作按钮
+      const showIcon =
+        pane?.component?.props?.collapseDirection !== 'before' ||
+        props.index + 1 === store.state.paneCount - 1
       return generateCollapseClass(pane, nearPane, showIcon)
     })
 
@@ -145,18 +152,19 @@ export default defineComponent({
       }
     }
 
-    const handleCollapsePrePane = (lockStatus?) => {
-      tooglePane(props.index, props.index + 1, lockStatus)
+    const handleCollapsePrePane = (lockStatus?: boolean) => {
+      store.tooglePane(props.index, props.index + 1, lockStatus)
       toggleResize()
     }
 
-    const handleCollapseNextPane = () => {
-      /**TODO */
+    const handleCollapseNextPane = (lockStatus?: boolean) => {
+      store.tooglePane(props.index + 1, props.index, lockStatus)
+      toggleResize()
     }
 
     const initialCollapseStatus = () => {
       handleCollapsePrePane(true)
-      // collapseNextPane(true);
+      handleCollapseNextPane(true)
     }
 
     onMounted(() => {
@@ -169,12 +177,17 @@ export default defineComponent({
           {props.showCollapseButton ? (
             <div
               class={['prev', prevClass.value]}
-              onClick={() => handleCollapsePrePane()}
+              onClick={() => {
+                handleCollapsePrePane()
+              }}
             ></div>
           ) : null}
           <div class="devui-resize-handle"></div>
           {props.showCollapseButton ? (
-            <div class="next" onClick={handleCollapseNextPane}></div>
+            <div
+              class={['next', nextClass.value]}
+              onClick={() => handleCollapseNextPane()}
+            ></div>
           ) : null}
         </div>,
         [[dresize, resizeProp]]

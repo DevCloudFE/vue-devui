@@ -6,7 +6,7 @@
 
 需要动态调整不同页面布局区域大小的时候选择使用。
 
-## 基本用法
+### 基本用法
 
 :::demo
 
@@ -15,7 +15,7 @@
   <section>
     <d-splitter class="splitter-border"  :orientation="orientation" :splitBarSize="splitBarSize" style="height: 300px">
       <template v-slot:DSplitterPane>
-        <d-splitter-pane collapseDirection="before" :size="size" :minSize="minSize" :maxSize="maxSize" :collapsible="true" @sizeChange="sizeChange" @collapsedChange="collapsedChange">
+        <d-splitter-pane collapseDirection="before" :size="size" :minSize="minSize" :collapsible="true" @sizeChange="sizeChange" @collapsedChange="collapsedChange">
           <div class="pane-content">
             <h2>Left</h2>
             <div>width: 30%, min-width: 20%</div>
@@ -90,9 +90,78 @@ export default defineComponent({
 .splitter-border {
   border: 1px solid $devui-dividing-line;
 }-->
-## 组合布局用法【TODO】
 
-## 指定折叠收起方向【TODO】
+### 垂直布局用法
 
-## 折叠收缩显示菜单【TODO】
+:::demo
+
+```vue
+<template>
+  <section>
+    <d-splitter style="height: 500px" class="splitter-border"  orientation="vertical" :disableBarSize="disableBarSize" >
+      <template v-slot:DSplitterPane>
+        <d-splitter-pane size="200px" minSize="150px" :collapsed="collapsed" :collapsible="true" @sizeChange="sizeChange">
+          <div class="pane-content">
+            <h2>Top</h2>
+            <div>height: 200px</div>
+          </div>
+        </d-splitter-pane>
+        <d-splitter-pane style="overflow: hidden">
+          <div class="pane-content">
+            <h2>Center</h2>
+            <div>height: auto</div>
+          </div>
+        </d-splitter-pane>
+        <d-splitter-pane size="150px" :resizable="false" :collapsible="true">
+          <div class="pane-content">
+            <h2>Bottom</h2>
+            <div>height: 150px, resizable: false</div>
+          </div>
+        </d-splitter-pane>
+      </template>
+    </d-splitter>
+  </section>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  name: "DSplitterVerticalBasic",
+  setup() {
+    const collapsed = ref(true);
+    const disableBarSize = '2px';
+
+    const sizeChange = (size) => {
+      console.log(size);
+    }
+
+    return {
+      disableBarSize,
+      collapsed,
+      sizeChange,
+    }
+  },
+})
+</script>
+
+<style> 
+.pane-content {
+  padding: 0 12px;
+}
+
+.splitter-border {
+  border: 1px solid #dfe1e6;
+}
+
+</style>
+```
+
+:::
+
+### 组合布局用法【TODO】
+
+### 指定折叠收起方向【TODO】
+
+### 折叠收缩显示菜单【TODO】
 

@@ -1,8 +1,8 @@
-import { defineComponent, reactive, ref, provide, onMounted } from 'vue'
-import { splitterProps, SplitterProps } from './splitter-types'
-import DSplitterBar from './splitter-bar'
-import { useSplitterStore } from './splitter-store'
-import './splitter.scss'
+import { defineComponent, reactive, ref, provide, onMounted } from 'vue';
+import { splitterProps, SplitterProps } from './splitter-types';
+import DSplitterBar from './splitter-bar';
+import { SplitterStore } from './splitter-store';
+import './splitter.scss';
 
 export default defineComponent({
   name: 'DSplitter',
@@ -12,58 +12,53 @@ export default defineComponent({
   props: splitterProps,
   emits: [],
   setup(props: SplitterProps, ctx) {
-    const { setPanes, setSplitter } = useSplitterStore()
+    const store: SplitterStore = new SplitterStore();
     const state = reactive({
       panes: [], // 内嵌面板
-    })
+    });
 
-    state.panes = ctx.slots.DSplitterPane?.() || []
-    setPanes({ panes: state.panes })
+    state.panes = ctx.slots.DSplitterPane?.() || [];
 
-    const domRef = ref<HTMLElement>()
+    store.setPanes({ panes: state.panes });
 
-    provide('orientation', props.orientation)
-    provide('panes', state.panes)
+    const domRef = ref<HTMLElement>();
+
+    provide('orientation', props.orientation);
+    provide('splitterStore', store);
 
     onMounted(() => {
-      let containerSize = 0
+      let containerSize = 0;
       if (props.orientation === 'vertical') {
-        containerSize = domRef.value.clientHeight
+        containerSize = domRef.value.clientHeight;
       } else {
-        containerSize = domRef.value.clientWidth
+        containerSize = domRef.value.clientWidth;
       }
-      setSplitter({ containerSize })
-    })
+      store.setSplitter({ containerSize });
+    });
 
     return () => {
-      const { splitBarSize, orientation, showCollapseButton } = props
-      const wrapperClass = ['devui-splitter', `devui-splitter-${orientation}`]
+      const { splitBarSize, orientation, showCollapseButton } = props;
+      const wrapperClass = ['devui-splitter', `devui-splitter-${orientation}`];
 
       return (
         <div class={wrapperClass} ref={domRef}>
-          {state.panes.map((pane, index) => {
-            // pane.props = pane.props || reactive({})
-            if (pane.props) {
-              pane.props.order = index * 2 // props 有可能为空，如何处理
-            }
-            return pane
-          })}
+          {state.panes}
           {state.panes
             .filter((pane, index, arr) => index !== arr.length - 1)
             .map((pane, index) => {
               return (
                 <d-splitter-bar
-                  key={pane}
+                  key={index}
                   style={`order: ${index * 2 + 1}`}
                   splitBarSize={splitBarSize}
                   orientation={orientation}
                   index={index}
                   showCollapseButton={showCollapseButton}
                 ></d-splitter-bar>
-              )
+              );
             })}
         </div>
-      )
-    }
+      );
+    };
   },
-})
+});
