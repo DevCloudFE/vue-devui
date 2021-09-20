@@ -13,41 +13,63 @@ export default defineComponent({
     const { data } = toRefs(props)
     const flatData = flatten(data.value)
 
+    const openedTree = (tree) => {
+      return tree.reduce((acc, item) => (
+        item.open
+          ? acc.concat(item, openedTree(item.children))
+          : acc.concat(item)
+      ), [])
+    }
+  
+    let openedData = openedTree(data.value)
+  
+    const toggle = (item) => {
+      console.log('toggle', item, item.id, item.open);
+      item.open = !item.open
+      openedData = openedTree(data.value)
+    }
+
     const Indent = () => {
       return <span style="display: inline-block; width: 16px; height: 16px;"></span>
     }
 
-  const renderNode = (item) => {
-    return (
-      <div class="devui-tree-node" style={{ paddingLeft: `${24 * (item.level - 1)}px` }}>
-        { !item.isLeaf ? <IconOpen class="mr-xs" /> : <Indent /> }
-        { item.label }
-      </div>
-    )
-  }
+    const renderNode = (item) => {
+      return (
+        <div
+          class="devui-tree-node"
+          style={{ paddingLeft: `${24 * (item.level - 1)}px` }}
+          onClick={() => toggle(item)}
+        >
+          {
+            item.children
+              ? item.open ? <IconOpen class="mr-xs" /> : <IconClose class="mr-xs" />
+              : <Indent />
+          }
+          { item.label }
+        </div>
+      )
+    }
 
-  const renderTree = (tree) => {
-    return tree.map(item => {
-      if (!item.children) {
-        return renderNode(item)
-      } else {
-        return (
-          <>
-            {renderNode(item)}
-            {renderTree(item.children)}
-          </>
-        )
-      }
-    })
-  }
+    const renderTree = (tree) => {
+      return tree.map(item => {
+        if (!item.children) {
+          return renderNode(item)
+        } else {
+          return (
+            <>
+              {renderNode(item)}
+              {renderTree(item.children)}
+            </>
+          )
+        }
+      })
+    }
 
     return () => {
       return (
         <div class="devui-tree">
-          <div>直接渲染：</div>
-          { renderTree(data.value) }
-          <div>先把数据拍平再渲染：</div>
-          { flatData.map(item => renderNode(item)) }
+          {/* { renderTree(data.value) } */}
+          { openedData.map(item => renderNode(item)) }
         </div>
       )
     }

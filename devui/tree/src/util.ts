@@ -6,6 +6,6 @@ export const omit = (obj: unknown, key: string): unknown => {
 
 export const flatten = (tree: Array<any>, key = 'children'): Array<any> => {
   return tree.reduce((acc, item) => (
-    !item[key] ? acc.concat(item) : acc.concat(omit(item, key), flatten(item[key], key))
+    !item[key] ? acc.concat(item) : acc.concat(item, flatten(item[key], key))
   ), [])
 }
