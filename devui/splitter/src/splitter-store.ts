@@ -107,7 +107,7 @@ export class SplitterStore {
     )
     let size = ''
     if (this.isPercent(pane.component.props.size)) {
-      size = (100 * newSize) / splitterSize + '%'
+      size = (newSize / splitterSize) * 100 + '%'
     } else {
       size = newSize + 'px'
     }
