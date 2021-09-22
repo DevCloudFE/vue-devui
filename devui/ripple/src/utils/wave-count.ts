@@ -14,7 +14,7 @@ function setWaveCount(el: HTMLElement, count: number) {
   el.dataset[WAVE_COUNT] = count.toString()
 }
 
-export function getWaveCount(el: HTMLElement) {
+export function getWaveCount(el: HTMLElement): number {
   return parseInt(el.dataset[WAVE_COUNT] ?? '0', 10)
 }
 

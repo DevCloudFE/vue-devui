@@ -1,7 +1,8 @@
-// can export function.
+// can export function.  解构参数类型冗余 新定义insterface IRippleDirectiveOptionWithBinding
 import {
   DEFAULT_PLUGIN_OPTIONS,
-  IVWaveDirectiveOptions
+  IVWaveDirectiveOptions,
+  IRippleDirectiveOptionWithBinding
 } from './options'
 import { wave } from './v-wave'
 const optionMap = new WeakMap<
@@ -10,11 +11,11 @@ const optionMap = new WeakMap<
 >()
 const globalOptions = { ...DEFAULT_PLUGIN_OPTIONS }
 export default {
-  mounted(el: HTMLElement, { value }: any) {
-    optionMap.set(el, value ?? {})
+  mounted(el: HTMLElement, binding: IRippleDirectiveOptionWithBinding) {
+    optionMap.set(el, binding.value ?? {})
 
     el.addEventListener('pointerdown', (event) => {
-      const options = optionMap.get(el)!
+      const options = optionMap.get(el)
 
       if (options === false) return
 
@@ -24,7 +25,7 @@ export default {
       })
     })
   },
-  updated(el: HTMLElement, { value }: any) {
-    optionMap.set(el, value ?? {})
+  updated(el: HTMLElement, binding: IRippleDirectiveOptionWithBinding) {
+    optionMap.set(el, binding.value ?? {})
   }
 }

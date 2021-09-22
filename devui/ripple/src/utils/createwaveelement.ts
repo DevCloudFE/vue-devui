@@ -5,7 +5,7 @@ export const createWaveElement = (
   y: number,
   size: number,
   options: IVWaveDirectiveOptions
-) => {
+): HTMLElement => {
   const waveElement = document.createElement('div')
 
   waveElement.style.position = 'absolute'

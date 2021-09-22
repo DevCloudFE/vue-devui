@@ -61,6 +61,12 @@ interface IVWavePluginOptions extends IVWaveDirectiveOptions {
   directive: string
 }
 
+// 给可预见值 value 添加类型
+
+interface IRippleDirectiveOptionWithBinding {
+  value: IVWaveDirectiveOptions
+}
+
 const DEFAULT_PLUGIN_OPTIONS: IVWavePluginOptions = {
   directive: 'wave',
   color: 'currentColor',
@@ -71,4 +77,4 @@ const DEFAULT_PLUGIN_OPTIONS: IVWavePluginOptions = {
   cancellationPeriod: 75
 }
 
-export { DEFAULT_PLUGIN_OPTIONS, IVWavePluginOptions, IVWaveDirectiveOptions }
+export { DEFAULT_PLUGIN_OPTIONS, IVWavePluginOptions, IVWaveDirectiveOptions, IRippleDirectiveOptionWithBinding }

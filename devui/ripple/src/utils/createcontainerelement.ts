@@ -3,7 +3,7 @@ export const createContainer = ({
   borderTopRightRadius,
   borderBottomLeftRadius,
   borderBottomRightRadius
-}: CSSStyleDeclaration) => {
+}: CSSStyleDeclaration): HTMLElement => {
   const waveContainer = document.createElement('div')
   waveContainer.style.top = '0'
   waveContainer.style.left = '0'

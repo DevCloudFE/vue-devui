@@ -4,7 +4,7 @@ export function getDistanceToFurthestCorner(
   x: number,
   y: number,
   { width, height }: DOMRect
-) {
+): number {
   const topLeft = magnitude(x, y, 0, 0)
   const topRight = magnitude(x, y, width, 0)
   const bottomLeft = magnitude(x, y, 0, height)
