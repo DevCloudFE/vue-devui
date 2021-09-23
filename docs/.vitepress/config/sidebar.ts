@@ -77,7 +77,7 @@ const sidebar = {
         { text: 'Badge 徽标', link: '/components/badge/', status: '已完成' },
         { text: 'Card 卡片', link: '/components/card/', status: '已完成' },
         { text: 'Carousel 走马灯', link: '/components/carousel/', status: '已完成' },
-        { text: 'DataTable 表格', link: '/components/data-table/' },
+        { text: 'Table 表格', link: '/components/table/' },
         { text: 'Gantt 甘特图', link: '/components/gantt/' },
         { text: 'ImagePreview 图片预览', link: '/components/image-preview/' },
         { text: 'Progress 进度条', link: '/components/progress/', status: '已完成' },
