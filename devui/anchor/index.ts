@@ -1,10 +1,27 @@
-import type { App } from 'vue'
+import { App } from 'vue'
 import Anchor from './src/anchor'
+import dAnchorBox from './src/d-anchor-box'
+import dAnchorLink from './src/d-anchor-link'
+import dAnchor from './src/d-anchor'
+import './src/anchor.scss';
 
-Anchor.install = function(app: App) {
-  app.component(Anchor.name, Anchor)
-}
+const directives = {
+  'd-anchor': dAnchor,
+  'd-anchor-link': dAnchorLink,
+  'd-anchor-box': dAnchorBox,
 
+};
+
+Anchor.install = function(Vue: App) {
+  for (const key in directives) {
+    if (directives.hasOwnProperty(key)) {
+
+      Vue.directive(key, directives[key]);
+    }
+  }
+  Vue.component(Anchor.name, Anchor)
+};
+ 
 export { Anchor }
 
 export default {

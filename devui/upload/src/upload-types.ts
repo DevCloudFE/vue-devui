@@ -1,6 +1,4 @@
 import type { PropType, ExtractPropTypes } from 'vue'
-import { Observable } from 'rxjs'
-import { FileUploader } from './file-uploader'
 export class IUploadOptions {
   // 上传接口地址
   uri: string
@@ -45,9 +43,7 @@ export enum UploadStatus {
 
 type DynamicUploadOptionsFn = (files, uploadOptions) => IUploadOptions
 type ChangeFn = (_: any) => void
-type BeforeUploadFn = (
-  file: File
-) => boolean | Promise<boolean> | Observable<boolean>
+type BeforeUploadFn = (file: File) => boolean | Promise<boolean>
 export const uploadProps = {
   uploadOptions: {
     type: Object as PropType<IUploadOptions>,
@@ -69,21 +65,13 @@ export const uploadProps = {
     type: String,
     default: '选择文件',
   },
-  // TODO
-  preloadFilesRef: {
-    type: Object,
-  },
   uploadText: {
     type: String,
     default: '上传',
   },
   uploadedFiles: {
-    type: Array,
+    type: Array as PropType<File[]>,
     default: () => [],
-  },
-  // TODO
-  uploadedFilesRef: {
-    type: Object,
   },
   withoutBtn: {
     type: Boolean,
@@ -135,33 +123,7 @@ export const uploadProps = {
     default: undefined,
   },
 } as const
-export const singleUploadViewProps = {
-  uploadOptions: {
-    type: Object as PropType<IUploadOptions>,
-  },
-  // TODO
-  preloadFilesRef: {
-    type: Object,
-  },
-  uploadedFiles: {
-    type: Array,
-  },
-  // TODO
-  uploadedFilesRef: {
-    type: Object,
-  },
-  filePath: {
-    type: String,
-    required: true,
-  },
-  dynamicUploadOptionsFn: {
-    type: Function as PropType<DynamicUploadOptionsFn>,
-  },
-}
 export type UploadProps = ExtractPropTypes<typeof uploadProps>
-export type singleUploadViewProps = ExtractPropTypes<
-  typeof singleUploadViewProps
->
 
 export const multiUploadProps = {
   uploadOptions: {
@@ -174,7 +136,6 @@ export const multiUploadProps = {
   },
   filePath: {
     type: String,
-    required: true,
   },
   autoUpload: {
     type: Boolean,
@@ -196,14 +157,6 @@ export const multiUploadProps = {
     type: Boolean,
     default: false,
   },
-  // TODO
-  uploadedFilesRef: {
-    type: Object,
-  },
-  // TODO
-  preloadFilesRef: {
-    type: Object,
-  },
   placeholderText: {
     type: String,
     default: '选择文件',
@@ -221,9 +174,7 @@ export const multiUploadProps = {
     default: false,
   },
   beforeUpload: {
-    type: Function as PropType<
-      (files: any) => boolean | Promise<boolean> | Observable<boolean>
-    >,
+    type: Function as PropType<(files: any) => boolean | Promise<boolean>>,
   },
   fileDrop: {
     type: Function as PropType<(v: any) => void>,

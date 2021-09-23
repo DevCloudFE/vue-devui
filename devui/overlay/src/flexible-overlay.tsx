@@ -84,6 +84,10 @@ export const FlexibleOverlay = defineComponent({
         });
       });
 
+      watch(toRef(props, 'position'), () => {
+        handleChange();
+      });
+
       const resizeObserver = new ResizeObserver((entries) => {
         handleRectChange(entries[0].contentRect);
       });
@@ -270,7 +274,7 @@ function getOriginRect(origin: Origin): ClientRect {
 }
 
 /**
- * 获取浮层的左上角坐标
+ * 获取遮罩层的左上角坐标
  * @param {Point} originPoint
  * @param {DOMRect} rect
  * @param {ConnectionPosition} position
