@@ -89,7 +89,8 @@
     color: $devui-text;
   }
 
-  .devui-input__outWrap {
+  .devui-input__out-wrap {
+    font-size: $devui-font-size;
     position: absolute;
     right: -60px;
     top: -12px;
