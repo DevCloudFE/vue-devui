@@ -13,13 +13,25 @@ export const inputNumberProps = {
     type: Boolean,
     default: false
   },
+  max: {
+    type: Number,
+    default: Infinity
+  },
+  min: {
+    type: Number,
+    default: -Infinity
+  },
   size: {
     type: String as PropType<'sm' | '' | 'lg'>,
     default: ''
   },
   value: {
-    type: String,
-    default: ''
+    type: Number,
+    default: 0
+  },
+  VModel:{
+    type: Number || String,
+    default: 0
   },
   'onUpdate:value': {
     type: Function as PropType<(v: string) => void>,

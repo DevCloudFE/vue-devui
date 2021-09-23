@@ -5,36 +5,74 @@
 @import '../../style/theme/corner';
 
 .d-input-number {
-}
-.dInputNumber{
   position: relative;
   display: inline-block;
   width: 180px;
   line-height: 38px;
-}
 
-.dInputStyle{
-  outline: none;
-  background-color: #fff;
-  background-color: var(--devui-base-bg,#fff);
-  border: 1px solid #adb0b8;
-  border: 1px solid var(--devui-form-control-line,#adb0b8);
-  border-radius: 2px;
-  border-radius: var(--devui-border-radius,2px);
-  padding: 5px 10px;
-  line-height: 16px;
-  font-size: 12px;
-  font-size: var(--devui-font-size,12px);
-  color: #252b3a;
-  color: var(--devui-text,#252b3a);
-  width: 100%;
-  display: block;
-  cursor: text;
-  height: 28px;
-  transition: border-color .3s cubic-bezier(.645,.045,.355,1);
-  transition: border-color .3s var(--devui-animation-ease-in-out-smooth,cubic-bezier(.645,.045,.355,1));
+  .d-input-item {
+    display: flex;
+    display: -webkit-box;
+    width: 200px;
+    line-height: 38px;
+  }
 
-}
-.disabled{
-  cursor: not-allowed;
+  .d-input-style::-webkit-outer-spin-button,
+  .d-input-style::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .d-add,
+  .d-subtract {
+    display: inline-block;
+    width: 50px;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    font-size: 16px;
+    color: #333333;
+    background: #f5f7fa;
+    cursor: pointer;
+    border: 1px solid #dcdfe6;
+  }
+
+  .d-add {
+    float: right;
+    margin-left: -1px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .d-subtract {
+    float: left;
+    margin-right: -1px;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .d-input-style {
+    display: block;
+    -moz-appearance: textfield;
+  }
+
+  .d-input-style {
+    flex-grow: 1;
+    outline: none;
+    background-color: #ffffff;
+    border: 1px solid #dcdfe6;
+    border-radius: 2px;
+    padding: 5px 10px;
+    line-height: 38px;
+    font-size: 12px;
+    color: #252b3a;
+    width: 80px;
+    display: block;
+    cursor: text;
+    height: 38px;
+    text-align: center;
+    transition: border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+
+  .disabled {
+    cursor: not-allowed;
+  }
 }
