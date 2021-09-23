@@ -9,9 +9,9 @@ export const inputNumberProps = {
     type: Boolean,
     default: false
   },
-  error: {
-    type: Boolean,
-    default: false
+  step:{
+    type: Number,
+    default: 0
   },
   max: {
     type: Number,
@@ -22,15 +22,11 @@ export const inputNumberProps = {
     default: -Infinity
   },
   size: {
-    type: String as PropType<'sm' | '' | 'lg'>,
+    type: String,
     default: ''
   },
   value: {
     type: Number,
-    default: 0
-  },
-  VModel:{
-    type: Number || String,
     default: 0
   },
   'onUpdate:value': {

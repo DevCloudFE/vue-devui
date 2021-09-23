@@ -7,38 +7,62 @@ export default defineComponent({
   props: inputNumberProps,
   emits: [],
   setup(props:InputNumberProps, ctx) {
-    const inputVal = ref(parseInt(props.value))
+    const inputVal = ref(props.value)
+    let isDisabled = ref('')
+    let isSize = ref('')
+
+    // 大小
+    isSize = computed(() => {
+      console.log(props.size)
+      return `d-input-number-${props.size}`
+    })
     
     // 判断是否禁用
-    const isDisabled = computed(() => {
-      return props.disabled
+    isDisabled = computed(() => {
+      return props.disabled?'d-input-disabled':''
     })
 
     //新增
     const add = () => {
+      if(props.disabled) return
       if(inputVal.value >= props.max) return
-      inputVal.value += 1
+      inputVal.value += props.step != 0?props.step:1
+      ctx.emit('change',inputVal.value)
     }
     // 减少
     const subtract = () => {
+      if(props.disabled) return
       if(inputVal.value <= props.min) return
-      inputVal.value -= 1
+      inputVal.value -= props.step != 0?props.step:1
+      ctx.emit('change',inputVal.value)
     }
     const onInput = (val) => {
-      console.log(val)
-      inputVal.value = parseInt(val.data)
-    }
-    const onChange = (val) => {
-      console.log(val)
-
-    }
+      inputVal.value = parseInt(val.data);
+      ctx.emit('input', val.data);
+    };
+    const onFocus = ($event: Event) => {
+      ctx.emit('focus', $event);
+    };
+    const onBlur = ($event: Event) => {
+      ctx.emit('blur', $event);
+    };
+    const onChange = ($event: Event) => {
+      ctx.emit('change', ($event.target as HTMLInputElement).value);
+    };
+    const onKeydown = ($event: KeyboardEvent) => {
+      ctx.emit('keydown', $event);
+    };
     return {
       inputVal,
       isDisabled,
+      isSize,
       add,
       subtract,
       onInput,
-      onChange
+      onChange,
+      onKeydown,
+      onBlur,
+      onFocus
     }
   },
   render() {
@@ -46,22 +70,34 @@ export default defineComponent({
       placeholder,
       add,
       inputVal,
+      isDisabled,
+      isSize,
       subtract,
       onInput,
       onChange,
-      isDisabled
+      onKeydown,
+      onBlur,
+      onFocus
     } = this;
     const dInputNum = [
       'd-input-number',
-      {
-        isDisabled
-      }
+      isDisabled,
+      isSize
     ]
     return (
-      <div class='d-input-number'>
+      <div class={dInputNum}>
         <div class='d-input-item'>
           <span class='d-subtract' onClick={subtract}>-</span>
-          <input type="number" disabled={isDisabled} onInput={onInput} onChange={onChange} value={inputVal} class='d-input-style' placeholder={placeholder} />
+          <input 
+            type="number" 
+            value={inputVal} 
+            class='d-input-style' 
+            placeholder={placeholder}
+            onInput={onInput} 
+            onChange={onChange} 
+            onFocus={onFocus}
+            onBlur={onBlur}
+            onKeydown={onKeydown}/>
           <span class='d-add' onClick={add}>+</span>
         </div>
       </div>

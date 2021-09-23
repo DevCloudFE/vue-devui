@@ -6,9 +6,50 @@
 
 .d-input-number {
   position: relative;
-  display: inline-block;
+  display: block;
   width: 180px;
   line-height: 38px;
+
+  &.d-input-disabled {
+    .d-subtract,
+    .d-add,
+    .d-input-style {
+      cursor: not-allowed;
+      border-color: #e4e7ed;
+      color: #e4e7ed;
+    }
+
+    .d-input-style {
+      background-color: #f5f7fa;
+      color: #c0c4cc;
+    }
+  }
+
+  &.d-input-number-sm {
+    .d-subtract,
+    .d-add {
+      width: 40px;
+      height: 34px;
+      line-height: 34px;
+    }
+
+    .d-input-style {
+      width: 70px;
+      height: 34px;
+      line-height: 34px;
+    }
+  }
+
+  &.d-input-number-lg {
+    .d-subtract,
+    .d-add {
+      width: 60px;
+    }
+
+    .d-input-style {
+      width: 90px;
+    }
+  }
 
   .d-input-item {
     display: flex;
