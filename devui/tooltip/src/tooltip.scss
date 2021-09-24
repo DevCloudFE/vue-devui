@@ -1,3 +1,5 @@
+@import '../../style/theme/color';
+
 .devui-tooltip {
   box-sizing: border-box;
 
@@ -17,9 +19,10 @@
       box-sizing: border-box;
       padding: 10px;
       margin-left: 10px;
+      border-radius: 4px;
       width: fit-content;
-      background-color: rgb(51, 51, 51);
-      color: #ffffff;
+      background-color: $devui-feedback-overlay-bg;
+      color: $devui-feedback-overlay-text;
     }
   }
 }

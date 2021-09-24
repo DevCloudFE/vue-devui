@@ -80,17 +80,17 @@ export default defineComponent({
                 // 鼠标悬浮为true，显示提示框
                 tooltip.value.style.opacity = '1'
                 tooltip.value.style.zIndex = '999'
-                arrow.value.style.border = '10px solid transparent'
+                arrow.value.style.border = '5px solid transparent'
                 // 具体的判定规则
                 switch (props.position){
                   case 'top':
                     // 设置 tooltip 内容的样式
-                    position.left = slotElement.value.children[0].offsetLeft - tooltip.value.offsetWidth / 2 + slotElement.value.children[0].offsetWidth / 2
+                    position.left = (slotElement.value.children[0].offsetLeft - tooltip.value.offsetWidth / 2 + slotElement.value.children[0].offsetWidth / 2) - 5;
                     position.top = slotElement.value.children[0].offsetTop - 10 - tooltipcontent.value.offsetHeight
                     // 设置箭头的样式 
-                    arrowStyle('borderTop', '10px solid cornflowerblue')
+                    arrowStyle('borderTop', '5px solid #464d6e')
                     arrow.value.style.top = `${tooltipcontent.value.offsetHeight}px`
-                    arrow.value.style.left = `${tooltipcontent.value.offsetWidth/2 - 5}px`
+                    arrow.value.style.left = `${tooltipcontent.value.offsetWidth/2 + 5}px`
                     break
                   
                   case 'right':
@@ -98,28 +98,28 @@ export default defineComponent({
                     position.left = slotElement.value.children[0].offsetLeft + slotElement.value.children[0].offsetWidth
                     position.top = slotElement.value.children[0].offsetTop + slotElement.value.children[0].offsetHeight/2 - tooltipcontent.value.offsetHeight/2
                     // 设置箭头的样式
-                    arrowStyle('borderRight', '10px solid cornflowerblue')
-                    arrow.value.style.top = `${tooltipcontent.value.offsetHeight/2 - 10}px`
-                    arrow.value.style.left = '-10px'
+                    arrowStyle('borderRight', '5px solid #464d6e')
+                    arrow.value.style.top = `${tooltipcontent.value.offsetHeight/2 - 5}px`
+                    arrow.value.style.left = '-0px'
                     break
         
                   case 'bottom':
                     // 设置tooltip的样式
                     position.top = slotElement.value.children[0].offsetHeight + slotElement.value.children[0].offsetTop + 10
-                    position.left = slotElement.value.children[0].offsetLeft + slotElement.value.children[0].offsetWidth/2 - tooltipcontent.value.offsetWidth/2
+                    position.left = (slotElement.value.children[0].offsetLeft + slotElement.value.children[0].offsetWidth/2 - tooltipcontent.value.offsetWidth/2) - 5;
                      // 设置arrow.value的样式
-                    arrowStyle('borderBottom', '10px solid cornflowerblue')
-                    arrow.value.style.top = '-20px'
-                    arrow.value.style.left = `${tooltipcontent.value.offsetWidth/2 - 10}px`
+                    arrowStyle('borderBottom', '5px solid #464d6e')
+                    arrow.value.style.top = '-10px'
+                    arrow.value.style.left = `${tooltipcontent.value.offsetWidth/2 + 5}px`
                     break
         
                   case 'left':
                     position.top = slotElement.value.children[0].offsetTop + slotElement.value.children[0].offsetHeight/2 - tooltipcontent.value.offsetHeight/2
                     position.left = slotElement.value.children[0].offsetLeft - 20 - tooltipcontent.value.offsetWidth
                     // 设置arrow.value的样式
-                    arrowStyle('borderLeft', '10px solid cornflowerblue')
+                    arrowStyle('borderLeft', '5px solid #464d6e')
                     arrow.value.style.left = `${tooltipcontent.value.offsetWidth + 10}px`
-                    arrow.value.style.top = `${tooltipcontent.value.offsetHeight/2 - 10}px`
+                    arrow.value.style.top = `${tooltipcontent.value.offsetHeight/2 - 5}px`
                     break
         
                   default:
