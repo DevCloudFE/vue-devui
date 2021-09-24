@@ -25,11 +25,11 @@ export const inputNumberProps = {
     type: String,
     default: ''
   },
-  value: {
+  modelValue: {
     type: Number,
     default: 0
   },
-  'onUpdate:value': {
+  'onUpdate:modelValue': {
     type: Function as PropType<(v: string) => void>,
     default: undefined
   },

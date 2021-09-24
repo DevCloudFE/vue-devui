@@ -10,7 +10,7 @@
 ```vue
 <template>
   <div>
-    <d-input-number v-model:value="num" :max="10" :min="1" :placeholder="'请输入'"></d-input-number>
+    <d-input-number v-model:modelValue="num" @change="onChange" :max="10" :min="1" :placeholder="'请输入'"></d-input-number>
   </div>
 </template>
 <script>
@@ -19,8 +19,12 @@ import { defineComponent, ref } from 'vue'
   export default defineComponent({
     setup(props,ctx){
       const num = ref(0)
+      const onChange = (val) => {
+        console.log(val)
+      }
       return {
-        num
+        num,
+        onChange
       }
     }
   })

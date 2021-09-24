@@ -5,21 +5,21 @@ import './input-number.scss'
 export default defineComponent({
   name: 'DInputNumber',
   props: inputNumberProps,
-  emits: [],
+  emits: ['update:modelValue','change','input','focus','blur','keydown'],
   setup(props:InputNumberProps, ctx) {
-    const inputVal = ref(props.value)
+    const inputVal = ref(props.modelValue)
     let isDisabled = ref('')
     let isSize = ref('')
 
     // 大小
     isSize = computed(() => {
       console.log(props.size)
-      return `d-input-number-${props.size}`
+      return `devui-input-number-${props.size}`
     })
     
     // 判断是否禁用
     isDisabled = computed(() => {
-      return props.disabled?'d-input-disabled':''
+      return props.disabled?'devui-input-disabled':''
     })
 
     //新增
@@ -28,6 +28,7 @@ export default defineComponent({
       if(inputVal.value >= props.max) return
       inputVal.value += props.step != 0?props.step:1
       ctx.emit('change',inputVal.value)
+      ctx.emit('update:modelValue', inputVal.value);
     }
     // 减少
     const subtract = () => {
@@ -35,6 +36,7 @@ export default defineComponent({
       if(inputVal.value <= props.min) return
       inputVal.value -= props.step != 0?props.step:1
       ctx.emit('change',inputVal.value)
+      ctx.emit('update:modelValue', inputVal.value);
     }
     const onInput = (val) => {
       inputVal.value = parseInt(val.data);
@@ -80,25 +82,25 @@ export default defineComponent({
       onFocus
     } = this;
     const dInputNum = [
-      'd-input-number',
+      'devui-input-number',
       isDisabled,
       isSize
     ]
     return (
       <div class={dInputNum}>
-        <div class='d-input-item'>
-          <span class='d-subtract' onClick={subtract}>-</span>
+        <div class='devui-input-item'>
+          <span class='devui-subtract' onClick={subtract}>-</span>
           <input 
             type="number" 
             value={inputVal} 
-            class='d-input-style' 
+            class='devui-input-style' 
             placeholder={placeholder}
             onInput={onInput} 
             onChange={onChange} 
             onFocus={onFocus}
             onBlur={onBlur}
             onKeydown={onKeydown}/>
-          <span class='d-add' onClick={add}>+</span>
+          <span class='devui-add' onClick={add}>+</span>
         </div>
       </div>
     )

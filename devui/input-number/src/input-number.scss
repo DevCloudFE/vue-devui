@@ -4,68 +4,68 @@
 @import '../../style/theme/shadow';
 @import '../../style/theme/corner';
 
-.d-input-number {
+.devui-input-number {
   position: relative;
   display: block;
   width: 180px;
   line-height: 38px;
 
-  &.d-input-disabled {
-    .d-subtract,
-    .d-add,
-    .d-input-style {
+  &.devui-input-disabled {
+    .devui-subtract,
+    .devui-add,
+    .devui-input-style {
       cursor: not-allowed;
       border-color: #e4e7ed;
       color: #e4e7ed;
     }
 
-    .d-input-style {
+    .devui-input-style {
       background-color: #f5f7fa;
       color: #c0c4cc;
     }
   }
 
-  &.d-input-number-sm {
-    .d-subtract,
-    .d-add {
+  &.devui-input-number-sm {
+    .devui-subtract,
+    .devui-add {
       width: 40px;
       height: 34px;
       line-height: 34px;
     }
 
-    .d-input-style {
+    .devui-input-style {
       width: 70px;
       height: 34px;
       line-height: 34px;
     }
   }
 
-  &.d-input-number-lg {
-    .d-subtract,
-    .d-add {
+  &.devui-input-number-lg {
+    .devui-subtract,
+    .devui-add {
       width: 60px;
     }
 
-    .d-input-style {
+    .devui-input-style {
       width: 90px;
     }
   }
 
-  .d-input-item {
+  .devui-input-item {
     display: flex;
     display: -webkit-box;
     width: 200px;
     line-height: 38px;
   }
 
-  .d-input-style::-webkit-outer-spin-button,
-  .d-input-style::-webkit-inner-spin-button {
+  .devui-input-style::-webkit-outer-spin-button,
+  .devui-input-style::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  .d-add,
-  .d-subtract {
+  .devui-add,
+  .devui-subtract {
     display: inline-block;
     width: 50px;
     height: 38px;
@@ -78,24 +78,24 @@
     border: 1px solid #dcdfe6;
   }
 
-  .d-add {
+  .devui-add {
     float: right;
     margin-left: -1px;
     border-radius: 0 4px 4px 0;
   }
 
-  .d-subtract {
+  .devui-subtract {
     float: left;
     margin-right: -1px;
     border-radius: 4px 0 0 4px;
   }
 
-  .d-input-style {
+  .devui-input-style {
     display: block;
     -moz-appearance: textfield;
   }
 
-  .d-input-style {
+  .devui-input-style {
     flex-grow: 1;
     outline: none;
     background-color: #ffffff;
