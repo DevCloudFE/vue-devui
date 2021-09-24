@@ -2,23 +2,23 @@
 @import '../../style/theme/corner';
 @import '../../style/theme/font';
 
-.modal-wrapper {
+.devui-modal-wrapper {
   justify-content: center;
   align-items: center;
   background-color: $devui-shadow;
 }
 
-.modal-content {
+.devui-modal-content {
   background: $devui-fullscreen-overlay-bg;
   border-radius: $devui-border-radius;
 }
 
-.modal-body {
+.devui-modal-body {
   padding: 20px 32px;
   color: $devui-text-weak;
 }
 
-.modal-header {
+.devui-modal-header {
   padding: 32px 32px 0;
   height: 56px;
   position: relative;
@@ -39,7 +39,7 @@
   }
 }
 
-.modal-footer {
+.devui-modal-footer {
   border-top: none;
   text-align: center;
   padding: 0 32px 24px;
