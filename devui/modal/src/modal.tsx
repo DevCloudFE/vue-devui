@@ -43,9 +43,12 @@ export default defineComponent({
         <div style={containerStyle.value} class="devui-modal-content">
           <div class="devui-modal-header">
             {props.title}
-            <Button class="btn-close" bsStyle="common" btnClick={() => props['onUpdate:modelValue']?.(false)}>
-              <Icon name="close" />
-            </Button>
+            <Button
+              class="btn-close"
+              icon="close"
+              bsStyle="common"
+              btnClick={() => props['onUpdate:modelValue']?.(false)}
+            />
           </div>
           <div class="devui-modal-body">
             {ctx.slots.default?.()}
