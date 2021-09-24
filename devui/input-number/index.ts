@@ -10,6 +10,6 @@ export default {
   title: 'InputNumber 数字输入框',
   category: '导航',
   install(app: App):void {    
-		app.use(InputNumber as any)
+	  app.use(InputNumber as any)
   }
 }
