@@ -41,6 +41,7 @@ export default defineComponent({
     const onInput = (val) => {
       inputVal.value = parseInt(val.data);
       ctx.emit('input', val.data);
+      ctx.emit('update:modelValue', val.data);
     };
     const onFocus = ($event: Event) => {
       ctx.emit('focus', $event);

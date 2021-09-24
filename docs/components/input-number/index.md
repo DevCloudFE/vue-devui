@@ -10,7 +10,7 @@
 ```vue
 <template>
   <div>
-    <d-input-number v-model:modelValue="num" @change="onChange" :max="10" :min="1" :placeholder="'请输入'"></d-input-number>
+    <d-input-number v-model="num" @change="onChange" :max="10" :min="1" :placeholder="'请输入'"></d-input-number>
   </div>
 </template>
 <script>
@@ -39,7 +39,7 @@ import { defineComponent, ref } from 'vue'
 ```vue
 <template>
   <div>
-    <d-input-number v-model:value="num" :disabled="true"></d-input-number>
+    <d-input-number v-model="num" :disabled="true"></d-input-number>
   </div>
 </template>
 <script>
@@ -64,7 +64,7 @@ import { defineComponent, ref } from 'vue'
 ```vue
 <template>
   <div>
-    <d-input-number v-model:value="num" :step="2"></d-input-number>
+    <d-input-number v-model="num" :step="2"></d-input-number>
   </div>
 </template>
 <script>
@@ -89,9 +89,9 @@ import { defineComponent, ref } from 'vue'
 ```vue
 <template>
   <div>
-    <d-input-number v-model:value="num1" :size="'lg'"></d-input-number>
-    <d-input-number v-model:value="num2" :size="'normal'"></d-input-number>
-    <d-input-number v-model:value="num3" :size="'sm'"></d-input-number>
+    <d-input-number v-model="num1" :size="'lg'"></d-input-number>
+    <d-input-number v-model="num2" :size="'normal'"></d-input-number>
+    <d-input-number v-model="num3" :size="'sm'"></d-input-number>
   </div>
 </template>
 <script>
