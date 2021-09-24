@@ -12,7 +12,7 @@ const sidebar = {
         { text: 'Search 搜索框', link: '/components/search/', status: '已完成' },
         { text: 'Status 状态', link: '/components/status/', status: '已完成' },
         { text: 'Sticky 便贴', link: '/components/sticky/' },
-        { text: 'Overlay 浮层', link: '/components/overlay/'}
+        { text: 'Overlay 浮层', link: '/components/overlay/' }
       ]
     },
     {
@@ -53,7 +53,7 @@ const sidebar = {
         { text: 'Checkbox 复选框', link: '/components/checkbox/', status: '已完成' },
         { text: 'DatePicker 日期选择器', link: '/components/date-picker/', status: '开发中' },
         { text: 'DatePickerPro 日期选择器', link: '/components/date-picker-pro/' },
-        { text: 'EditableSelect 可编辑下拉框', link: '/components/editable-select/' },
+        { text: 'EditableSelect 可编辑下拉框', link: '/components/editable-select/', status: '开发中' },
         { text: 'Form 表单', link: '/components/form/' },
         { text: 'Input 文本框', link: '/components/input/', status: '已完成' },
         { text: 'InputNumber 数字输入框', link: '/components/input-number/' },

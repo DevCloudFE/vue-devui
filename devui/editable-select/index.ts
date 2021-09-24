@@ -1,14 +1,14 @@
 import type { App } from 'vue'
 import EditableSelect from './src/editable-select'
 import EditableSelectOption from './src/components/option'
-import EditableSelectDropdown from './src/components/dropdown'
+
 EditableSelect.install = function (app: App): void {
   app.component(EditableSelect.name, EditableSelect)
   app.component(EditableSelectOption.name, EditableSelectOption)
-  app.component(EditableSelectDropdown.name, EditableSelectDropdown)
+
 }
 
-export { EditableSelect, EditableSelectOption, EditableSelectDropdown }
+export { EditableSelect, EditableSelectOption }
 
 export default {
   title: 'EditableSelect 可输入下拉选择框',
