@@ -1,4 +1,5 @@
 import { computed, defineComponent, ref } from 'vue';
+import { Icon } from '../../icon';
 
 export type IButtonType = 'button' | 'submit' | 'reset';
 export type IButtonStyle = 'common' | 'primary' | 'text' | 'text-dark' | 'danger';
@@ -60,7 +61,7 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const buttonContent = ref<HTMLSpanElement | null>(null);
-    
+
     const onClick = (e: MouseEvent) => {
       if (props.showLoading) {
         return;
@@ -68,13 +69,11 @@ export default defineComponent({
       props.btnClick?.(e);
     }
 
-    const hasContent = computed(() => {
-      return buttonContent.value && buttonContent.value.innerHTML.trim();
-    })
+    const hasContent = computed(() => ctx.slots.default);
 
     const btnClazz = computed(() => {
-      const {bsStyle, bsSize, bsPosition, bordered, icon} = props;
-      const origin = `devui-btn devui-btn-${ bsStyle } devui-btn-${ bsSize } devui-btn-${ bsPosition }`;
+      const { bsStyle, bsSize, bsPosition, bordered, icon } = props;
+      const origin = `devui-btn devui-btn-${bsStyle} devui-btn-${bsSize} devui-btn-${bsPosition}`;
       const broderedClazz = bordered ? 'bordered' : '';
       const btnIcon = !!icon && !hasContent.value && bsStyle !== 'primary' ? 'd-btn-icon' : '';
       const btnIconWrap = !!icon ? 'd-btn-icon-wrap' : '';
@@ -85,7 +84,7 @@ export default defineComponent({
       if (!props.icon) {
         return;
       }
-      const origin = `devui-icon-fix icon ${ props.icon }`;
+      const origin = 'devui-icon-fix icon';
       if (hasContent.value) {
         return `${origin} clear-right-5`;
       } else {
@@ -96,30 +95,32 @@ export default defineComponent({
     return () => {
       const {
         icon,
-        type, 
-        disabled, 
+        type,
+        disabled,
         showLoading,
         width
       } = props;
       const hasIcon = !!icon;
       return (
-        <button 
-          class={btnClazz.value}
-          type={type}
-          disabled={disabled}
-          style={{ width: width }}
-          onClick={onClick}
-          {...ctx.attrs}
+        <div style="display: inline-block;">
+          <button
+            class={btnClazz.value}
+            type={type}
+            disabled={disabled}
+            style={{ width: width }}
+            onClick={onClick}
+            {...ctx.attrs}
           // dLoading
           // [showLoading]="showLoading"
           // [loadingTemplateRef]="loadingTemplateRef"
           // [dAutoFocus]="autofocus"
-        >
-          {hasIcon ? (<span class={iconClazz.value} />) : null}
-          <span class="button-content" ref={buttonContent}>
-            {ctx.slots.default?.()}
-          </span>
-        </button>
+          >
+            {hasIcon ? (<Icon name={props.icon} class={iconClazz.value} />) : null}
+            <span class="button-content" ref={buttonContent}>
+              {ctx.slots.default?.()}
+            </span>
+          </button>
+        </div>
       );
     }
   }
