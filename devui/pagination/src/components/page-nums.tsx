@@ -12,7 +12,7 @@ const pageNumBtnProps = {
   cursor: Number,
   maxItems: Number,
   totalPages: Number,
-  onChangeCursorEmit: Function,
+  onChangeCursorEmit: Function as PropType<(v: number) => void>,
   showTruePageIndex: Boolean
 } as const
 

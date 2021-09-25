@@ -59,7 +59,7 @@ export const checkboxProps = {
     default: undefined
   },
   modelValue: {
-    type: String,
+    type: Boolean,
   },
   'onUpdate:modelValue': {
     type: Function as PropType<(v: boolean) => void>

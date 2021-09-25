@@ -1,16 +1,16 @@
 /**
  * 清空按钮显示、隐藏
  */
-import { SetupContext, Ref } from 'vue'
+import { SetupContext, Ref, } from 'vue'
 import { KeydownReturnTypes } from '../src/search-types'
-
+import { debounce } from 'lodash'
 const KEYS_MAP = {
   enter: 'Enter'
 } as const
 
 type EmitProps = 'update:modelValue' | 'searchFn'
 
-export const keydownHandles = (ctx: SetupContext<(EmitProps)[]>, keywords: Ref<string>): KeydownReturnTypes => {
+export const keydownHandles = (ctx: SetupContext<(EmitProps)[]>, keywords: Ref<string>, delay: number): KeydownReturnTypes => {
   // 删除按钮显示
   const onInputKeydown = ($event: KeyboardEvent) => {
     switch ($event.key) {
@@ -24,15 +24,18 @@ export const keydownHandles = (ctx: SetupContext<(EmitProps)[]>, keywords: Ref<s
   const handleEnter = ($event: KeyboardEvent) => {
     if ($event.target instanceof HTMLInputElement) {
       const value = $event.target.value
-      ctx.emit('searchFn', value)
+      useEmitKeyword(value)
     }
   }
   const onClickHandle = () => {
-    console.log(keywords.value)
-    ctx.emit('searchFn', keywords.value)
+    useEmitKeyword(keywords.value)
   }
+  const useEmitKeyword = debounce((value: string) => {
+    ctx.emit('searchFn', value)
+  }, delay)
   return {
     onInputKeydown,
+    useEmitKeyword,
     onClickHandle
   }
 }

@@ -29,6 +29,10 @@ export const DEFAULT_QUADRANT_CONFIGS = [
   { title: '不重要不紧急' },
   { title: '不重要紧急' }
 ];
+export const DEFAULT_VIEW_CONFIGS = {
+  height: 900,
+  width: 950,
+}
 export const AXIS_TITLE_SPACE = 15;
 export const SMALL_LABEL_SIZE_CENTER_POINT = {
   x: 6, y: 6
