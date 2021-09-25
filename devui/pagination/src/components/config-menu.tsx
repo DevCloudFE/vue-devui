@@ -61,7 +61,7 @@ export default defineComponent({
                       <div
                         class={{choosed: v === currentPageSize}}
                         key={v}
-                        onClick={pageSizeChange.bind(null, v)}
+                        onClick={pageSizeChange.bind(null, {value: v})}
                       >{v}</div>
                     )
                   })
