@@ -240,7 +240,69 @@ export default defineComponent({
 ```
 
 :::
-### 指定折叠收起方向【TODO】
+
+### 指定折叠收起方向
+
+:::demo
+
+```vue
+<template>
+  <section>
+    <d-splitter class="splitter-border" style="height: 300px">
+      <template v-slot:DSplitterPane>
+        <d-splitter-pane size="30%" minSize="20%" :sizeChange="sizeChange">
+          <div class="pane-content">
+            <h2>Left</h2>
+            <div>width: 30%, min-width: 20%</div>
+          </div>
+        </d-splitter-pane>
+        <d-splitter-pane minSize="15%" :collapsible="true" collapseDirection="before">
+          <div class="pane-content">
+            <h2>Center</h2>
+            <div>Specify the folding and retracting direction to fold forward</div>
+          </div>
+        </d-splitter-pane>
+        <d-splitter-pane minSize="15%">
+          <div class="pane-content">
+            <h2>Right</h2>
+            <div>Content</div>
+          </div>
+        </d-splitter-pane>
+      </template>
+    </d-splitter>
+  </section>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  name: "DSplitterDemoDirection",
+  setup() {
+
+    const sizeChange = (size) => {
+      console.log(size);
+    }
+
+    return {
+      sizeChange,
+    }
+  },
+})
+</script>
+
+<style> 
+.pane-content {
+  padding: 0 12px;
+}
+
+.splitter-border {
+  border: 1px solid #dfe1e6;
+}
+
+</style>
+```
+
+:::
 
 ### 折叠收缩显示菜单【TODO】
-
