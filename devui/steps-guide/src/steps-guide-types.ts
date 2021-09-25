@@ -1,8 +1,11 @@
-import type { ExtractPropTypes } from 'vue'
-
+import type { ExtractPropTypes, PropType } from 'vue'
+type Step = {
+  title: string
+  content: string
+  selector: string
+}
 export const stepsGuideProps = {
-  title: String,
-  content: String
+  steps: Array as PropType<Step[]>
 } as const
 
 export type StepsGuideProps = ExtractPropTypes<typeof stepsGuideProps>
