@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType } from 'vue'
+import { ExtractPropTypes, PropType, SetupContext } from 'vue'
 import { IItem, ITitles, IModel } from '../types'
 
 export const transferProps = {
@@ -54,5 +54,18 @@ export const transferProps = {
 }
 
 export type TransferProps = ExtractPropTypes<typeof transferProps>;
+
+export const headerSlot = (ctx: SetupContext, name: string): unknown => {
+    return !ctx.slots[`${name}-header`] ? null : () => ctx.slots[`${name}-header`] && ctx.slots[`${name}-header`]()
+}
+
+export const bodySlot = (ctx: SetupContext, name: string): unknown => {
+    return !ctx.slots[`${name}-body`] ? null : () => ctx.slots[`${name}-body`] && ctx.slots[`${name}-body`]()
+}
+
+export const opeartionSlot = (ctx: SetupContext): unknown => {
+    return ctx.slots && ctx.slots.operation && ctx.slots.operation() || null
+}
+
 
 
