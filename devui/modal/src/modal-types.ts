@@ -25,7 +25,7 @@ export const modalProps = {
     type: Number,
     default: 1050
   },
-  backDropZIndex: {
+  backdropZIndex: {
     type: Number,
     default: 1049
   },
@@ -54,7 +54,7 @@ export const modalProps = {
   },
   backdropCloseable: {
     type: Boolean,
-    default: true
+    default: false
   },
   bodyScrollable: {
     type: Boolean,
@@ -70,7 +70,7 @@ export const modalProps = {
     type: Function as PropType<() => void>,
   },
   beforeHidden: {
-    type: Object as PropType<Promise<any> | (() => void)>
+    type: Object as PropType<Promise<boolean> | (() => boolean)>
   },
 
   buttons: {

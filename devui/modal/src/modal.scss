@@ -1,6 +1,7 @@
 @import '../../style/theme/color';
 @import '../../style/theme/corner';
 @import '../../style/theme/font';
+@import '../../style/theme/animation';
 
 .devui-modal-wrapper {
   justify-content: center;
@@ -24,6 +25,7 @@
   position: relative;
   border: none;
   cursor: all-scroll;
+  user-select: none;
 
   .btn-close {
     position: absolute;
@@ -44,4 +46,40 @@
   border-top: none;
   text-align: center;
   padding: 0 32px 24px;
+}
+
+.devui-modal-wipe {
+  @mixin wipe-in-out-animation {
+    animation-name: wipe-in-out;
+    animation-duration: 0.3s;
+  }
+  @keyframes wipe-in-out {
+    0% {
+      opacity: 0.2;
+      transform: translateY(-24px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &-enter-from {
+    opacity: 0.2;
+  }
+
+  &-enter-active {
+    @include wipe-in-out-animation;
+  }
+
+  &-leave-to {
+    opacity: 1;
+  }
+
+  &-leave-active {
+    @include wipe-in-out-animation;
+
+    animation-direction: reverse;
+  }
 }

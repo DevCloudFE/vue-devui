@@ -1,4 +1,4 @@
-import { computed, defineComponent, CSSProperties, ref, watch, readonly, reactive } from 'vue'
+import { computed, defineComponent, CSSProperties, ref, watch, readonly, Ref, isRef, Transition } from 'vue'
 import { modalProps, ModalProps } from './modal-types'
 import { FixedOverlay } from '../../overlay'
 import { Button } from '../../button';
@@ -24,8 +24,13 @@ export default defineComponent({
     const containerStyle = computed<CSSProperties>(() => ({
       width: props.width,
       maxHeight: props.maxHeight,
-      transform: `translate(${props.offsetX}, ${props.offsetY})`
+      transform: `translate(${props.offsetX}, ${props.offsetY})`,
+      zIndex: props.zIndex
     }));
+
+    const animatedVisible = computed(() => {
+      return props.showAnimation ? props.modelValue : true;
+    });
 
     // 处理按钮
     const buttons = computed(() => {
@@ -45,30 +50,59 @@ export default defineComponent({
       });
     });
 
+    // 处理取消事件
+    const onVisibleChange = (value: boolean) => {
+      const update = props['onUpdate:modelValue'];
+      if (value) {
+        update?.(value);
+      } else {
+        props.onClose?.();
+        const beforeHidden = props.beforeHidden;
+        if (beforeHidden instanceof Promise) {
+          beforeHidden.then((visible) => {
+            update?.(visible);
+          });
+        } else {
+          const visible = beforeHidden?.() ?? false;
+          update?.(visible);
+        }
+      }
+    }
+
     return () => (
       <FixedOverlay
         visible={props.modelValue}
-        onUpdate:visible={props['onUpdate:modelValue']}
+        onUpdate:visible={onVisibleChange}
         backgroundClass="devui-modal-wrapper"
-        backgroundBlock={props.bodyScrollable}
+        // overlay feature
+        // backgroundStyle={{ zIndex: props.backdropZIndex }}
+        backgroundBlock={!props.bodyScrollable}
+        backdropClose={props.backdropCloseable}
       >
-        <div style={[containerStyle.value, draggingStyle.value]} class="devui-modal-content">
-          <div class="devui-modal-header" ref={elementRef}>
-            {props.title}
-            <Button
-              class="btn-close"
-              icon="close"
-              bsStyle="common"
-              btnClick={() => props['onUpdate:modelValue']?.(false)}
-            />
+        <Transition name="devui-modal-wipe">
+          <div
+            class="devui-modal-content"
+            style={[containerStyle.value, draggingStyle.value]}
+            v-show={animatedVisible.value}
+          >
+            <div class="devui-modal-header" ref={elementRef}>
+              {props.title}
+              {/* TODO: Button icon need to visible */}
+              <Button
+                class="btn-close"
+                icon="close"
+                bsStyle="common"
+                btnClick={() => onVisibleChange(false)}
+              />
+            </div>
+            <div class="devui-modal-body">
+              {ctx.slots.default?.()}
+            </div>
+            <div class="devui-modal-footer">
+              {buttons.value}
+            </div>
           </div>
-          <div class="devui-modal-body">
-            {ctx.slots.default?.()}
-          </div>
-          <div class="devui-modal-footer">
-            {buttons.value}
-          </div>
-        </div>
+        </Transition>
       </FixedOverlay>
     )
   }
@@ -76,10 +110,11 @@ export default defineComponent({
 
 
 // 当前某个元素被拖拽时鼠标的偏移量
-const useDraggable = () => {
+const useDraggable = (draggable: Ref<boolean> | boolean = true) => {
   const draggingX = ref(0);
   const draggingY = ref(0);
   const elementRef = ref<HTMLElement | null>();
+  const enabledDragging = isRef(draggable) ? draggable : ref(draggable);
 
   watch(elementRef, (target, ov, onInvalidate) => {
     if (!(target instanceof HTMLElement)) {
@@ -89,13 +124,27 @@ const useDraggable = () => {
     let startY = 0;
     let prevDraggingX = 0;
     let prevDraggingY = 0;
+    const isEnter = false;
     let isDown = false;
+
     const handleMouseDown = (event: MouseEvent) => {
-      isDown = true;
+      if (!enabledDragging.value) {
+        return;
+      }
       startX = event.clientX;
       startY = event.clientY;
-      prevDraggingX = draggingX.value;
-      prevDraggingY = draggingY.value;
+      const rect = target.getBoundingClientRect();
+      // 判断鼠标点是否在 target 元素内
+      if (
+        rect.x < startX &&
+        rect.y < startY &&
+        (rect.width + rect.x) >= startX &&
+        (rect.height + rect.y) >= startY
+      ) {
+        isDown = true;
+        prevDraggingX = draggingX.value;
+        prevDraggingY = draggingY.value;
+      }
     }
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -113,14 +162,14 @@ const useDraggable = () => {
       isDown = false;
     }
 
-    target.addEventListener('mousedown', handleMouseDown);
-    target.addEventListener('mousemove', handleMouseMove);
-    target.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
     onInvalidate(() => {
-      target.removeEventListener('mousedown', handleMouseDown);
-      target.removeEventListener('mousemove', handleMouseMove);
-      target.removeEventListener('mouseup', handleMouseUp);
-    })
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    });
   });
 
   return {
