@@ -12,11 +12,7 @@ const sidebar = {
         { text: 'Search 搜索框', link: '/components/search/', status: '已完成' },
         { text: 'Status 状态', link: '/components/status/', status: '已完成' },
         { text: 'Sticky 便贴', link: '/components/sticky/' },
-<<<<<<< HEAD:sites/.vitepress/config/sidebar.ts
-        { text: 'Overlay 浮层', link: '/components/overlay/' }
-=======
-        { text: 'Overlay 遮罩层', link: '/components/overlay/'}
->>>>>>> 8b0511c29fd4f7d0182413f0ca67084fc4900087:docs/.vitepress/config/sidebar.ts
+        { text: 'Overlay 遮罩层', link: '/components/overlay/' }
       ]
     },
     {
