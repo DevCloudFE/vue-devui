@@ -1,0 +1,18 @@
+@import '../../style/theme/color';
+@import '../../style/theme/corner';
+
+.devui-splitter {
+  display: flex;
+  width: 100%;
+  height: auto;
+  position: relative;
+  border-radius: $devui-border-radius;
+
+  &.devui-splitter-horizontal {
+    flex-direction: row;
+  }
+
+  &.devui-splitter-vertical {
+    flex-direction: column;
+  }
+}
