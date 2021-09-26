@@ -22,7 +22,13 @@ export default defineComponent({
     //当前的位置以百分比显示
     const percentDispaly = ref<string>('');
     const renderShowInput = () => {
-      return props.showInput ? <d-input onInput={handleOnInput} value={inputValue.value + ''}></d-input> : '';
+      return props.showInput ? (
+        <div class='devui-input__out-wrap'>
+          <input onInput={handleOnInput} value={inputValue.value + ''}></input>
+        </div>
+      ) : (
+        ''
+      );
     };
 
     //当传入modelValue时用以定位button的位置
@@ -142,6 +148,7 @@ export default defineComponent({
         const re = /^(?:[1-9]?\d|100)$/;
         if (re.test(`${inputValue.value}`)) {
           percentDispaly.value = ((inputValue.value - props.min) * 100) / (props.max - props.min) + '%';
+          ctx.emit('update:modelValue', inputValue.value);
         }
       }
     }

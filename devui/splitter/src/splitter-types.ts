@@ -1,0 +1,29 @@
+import type { PropType, ExtractPropTypes } from 'vue';
+export type SplitterOrientation = 'vertical' | 'horizontal';
+export type CollapseDirection = 'before' | 'after' | 'both';
+
+export const splitterProps = {
+  /**
+   * 可选，指定 Splitter 分割方向,可选值'vertical'|'horizontal'
+   */
+  orientation: {
+    type: String as PropType<SplitterOrientation>,
+    default: 'horizontal',
+  },
+  /**
+   * 可选，分隔条大小，默认 2px
+   */
+  splitBarSize: {
+    type: String,
+    default: '2px',
+  },
+  /**
+   * 是否显示展开/收缩按钮
+   */
+  showCollapseButton: {
+    type: Boolean,
+    default: true,
+  },
+} as const;
+
+export type SplitterProps = ExtractPropTypes<typeof splitterProps>;

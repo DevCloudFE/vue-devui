@@ -89,7 +89,8 @@
     color: $devui-text;
   }
 
-  .devui-input__wrap {
+  .devui-input__out-wrap {
+    font-size: $devui-font-size;
     position: absolute;
     right: -60px;
     top: -12px;
@@ -99,6 +100,7 @@
 
     input {
       width: 40px;
+      text-align: center;
     }
   }
 }
