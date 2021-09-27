@@ -44,7 +44,7 @@ interface IVRippleDirectiveOptions {
    * @default
    * 75
    */
-  cancellationPeriod: number
+  delayTime: number
 }
 
 interface IVRipplePluginOptions extends IVRippleDirectiveOptions {
@@ -74,7 +74,7 @@ const DEFAULT_PLUGIN_OPTIONS: IVRipplePluginOptions = {
   finalOpacity: 0.1,
   duration: 0.8,
   easing: 'ease-out',
-  cancellationPeriod: 75
+  delayTime: 75
 }
 
 export { DEFAULT_PLUGIN_OPTIONS, IVRipplePluginOptions, IVRippleDirectiveOptions, IRippleDirectiveOptionWithBinding }

@@ -1,23 +1,23 @@
-const ripple_COUNT = 'vrippleCountInternal'
+const RIPPLE_COUNT = 'vRippleCountInternal'
 
-export function incrementrippleCount(el: HTMLElement) {
-  const count = getrippleCount(el)
-  setrippleCount(el, count + 1)
+export function incrementRippleCount(el: HTMLElement) {
+  const count = getRippleCount(el)
+  setRippleCount(el, count + 1)
 }
 
-export function decrementrippleCount(el: HTMLElement) {
-  const count = getrippleCount(el)
-  setrippleCount(el, count - 1)
+export function decrementRippleCount(el: HTMLElement) {
+  const count = getRippleCount(el)
+  setRippleCount(el, count - 1)
 }
 
-function setrippleCount(el: HTMLElement, count: number) {
-  el.dataset[ripple_COUNT] = count.toString()
+function setRippleCount(el: HTMLElement, count: number) {
+  el.dataset[RIPPLE_COUNT] = count.toString()
 }
 
-export function getrippleCount(el: HTMLElement): number {
-  return parseInt(el.dataset[ripple_COUNT] ?? '0', 10)
+export function getRippleCount(el: HTMLElement): number {
+  return parseInt(el.dataset[RIPPLE_COUNT] ?? '0', 10)
 }
 
-export function deleterippleCount(el: HTMLElement) {
-  delete el.dataset[ripple_COUNT]
+export function deleteRippleCount(el: HTMLElement) {
+  delete el.dataset[RIPPLE_COUNT]
 }

@@ -40,7 +40,7 @@ interface IRippleDirectiveOption {
   /**
    * 取消延迟时间
    */
-  cancellationPeriod: number
+   delayTime: number
 }
 interface IRipplePluginOption extends IRippleDirectiveOption {
   /**
@@ -62,7 +62,7 @@ const DEFAULT_PLUGIN_OPTIONS: IRipplePluginOption = {
   finalOpacity: 0.1,
   duration: 0.4,
   easing: 'ease-out',
-  cancellationPeriod: 75
+  delayTime: 75
 }
 
 export { DEFAULT_PLUGIN_OPTIONS, IRipplePluginOption, IRippleDirectiveOption }

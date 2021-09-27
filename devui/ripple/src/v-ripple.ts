@@ -3,13 +3,13 @@ import { createrippleElement } from './utils/create-ripple-element'
 import { getDistanceToFurthestCorner } from './utils/getdistance-tofurthestcorner'
 import { getRelativePointer } from './utils/getrelative-pointer'
 import {
-  decrementrippleCount,
-  deleterippleCount,
-  getrippleCount,
-  incrementrippleCount
+  decrementRippleCount,
+  deleteRippleCount,
+  getRippleCount,
+  incrementRippleCount
 } from './utils/ripple-count'
 import { IVRippleDirectiveOptions } from './options'
-
+const MULTIPLE_NUMBER = 2.05
 const ripple = (
   event: PointerEvent,
   el: HTMLElement,
@@ -17,14 +17,13 @@ const ripple = (
 ) => {
   const rect = el.getBoundingClientRect()
   const computedStyles = window.getComputedStyle(el)
-
   const { x, y } = getRelativePointer(event, rect)
-  const size = 2.05 * getDistanceToFurthestCorner(x, y, rect) // 2.05 is magic, deal with it.
+  const size = MULTIPLE_NUMBER * getDistanceToFurthestCorner(x, y, rect)
 
   const rippleContainer = createContainer(computedStyles)
   const rippleEl = createrippleElement(x, y, size, options)
 
-  incrementrippleCount(el)
+  incrementRippleCount(el)
 
   let originalPositionValue = ''
   if (computedStyles.position === 'static') {
@@ -53,10 +52,10 @@ const ripple = (
     setTimeout(() => {
       rippleContainer.remove()
 
-      decrementrippleCount(el)
+      decrementRippleCount(el)
 
-      if (getrippleCount(el) === 0) {
-        deleterippleCount(el)
+      if (getRippleCount(el) === 0) {
+        deleteRippleCount(el)
         el.style.position = originalPositionValue
       }
     }, 150)
@@ -74,7 +73,7 @@ const ripple = (
 
       setTimeout(() => releaseripple(), options.duration * 1000)
     })
-  }, options.cancellationPeriod)
+  }, options.delayTime)
 
   const cancelripple = () => {
     clearTimeout(token)
