@@ -148,7 +148,7 @@ export default defineComponent({
 |    color     | `string` |    #00050     | 可选，默认当前文本颜色  |             |
 |    initialOpacity     | `number` |  0.1   | 可选，初始交互效果透明度大小     |             |
 |    finalOpacity     | `number` |  0.1   | 可选，结束交互效果长按透明度大小    |    |
-|    duration     | `number` |  0.4s   | 可选，持续时间    |    ||
+|    duration     | `number` |  0.4s   | 可选，持续时间    |    |
 |    easing    | `string` | ease-out | 可选，缓动动画    |              |
 |    cancellationPeriod    | `number` | 75ms | 可选，延迟debouceTime时间后调用 |
 
