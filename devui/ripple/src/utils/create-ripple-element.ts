@@ -1,10 +1,10 @@
-import { IVRippleDirectiveOptions } from '../options'
+import { IRippleDirectiveOptions } from '../options'
 
 export const createrippleElement = (
   x: number,
   y: number,
   size: number,
-  options: IVRippleDirectiveOptions
+  options: IRippleDirectiveOptions
 ): HTMLElement => {
   const rippleElement = document.createElement('div')
 

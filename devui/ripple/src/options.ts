@@ -1,4 +1,4 @@
-interface IVRippleDirectiveOptions {
+interface IRippleDirectiveOptions {
   /**
    *
    * @remarks
@@ -47,7 +47,7 @@ interface IVRippleDirectiveOptions {
   delayTime: number
 }
 
-interface IVRipplePluginOptions extends IVRippleDirectiveOptions {
+interface IRipplePluginOptions extends IRippleDirectiveOptions {
   /**
    * 用于覆盖指令的名称
    *
@@ -64,10 +64,10 @@ interface IVRipplePluginOptions extends IVRippleDirectiveOptions {
 // 给可预见值 value 添加类型
 
 interface IRippleDirectiveOptionWithBinding {
-  value: IVRippleDirectiveOptions
+  value: IRippleDirectiveOptions
 }
 
-const DEFAULT_PLUGIN_OPTIONS: IVRipplePluginOptions = {
+const DEFAULT_PLUGIN_OPTIONS: IRipplePluginOptions = {
   directive: 'ripple',
   color: 'currentColor',
   initialOpacity: 0.2,
@@ -77,4 +77,4 @@ const DEFAULT_PLUGIN_OPTIONS: IVRipplePluginOptions = {
   delayTime: 75
 }
 
-export { DEFAULT_PLUGIN_OPTIONS, IVRipplePluginOptions, IVRippleDirectiveOptions, IRippleDirectiveOptionWithBinding }
+export { DEFAULT_PLUGIN_OPTIONS, IRipplePluginOptions, IRippleDirectiveOptions, IRippleDirectiveOptionWithBinding }

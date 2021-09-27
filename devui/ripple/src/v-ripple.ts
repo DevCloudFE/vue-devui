@@ -8,12 +8,12 @@ import {
   getRippleCount,
   incrementRippleCount
 } from './utils/ripple-count'
-import { IVRippleDirectiveOptions } from './options'
+import { IRippleDirectiveOptions } from './options'
 const MULTIPLE_NUMBER = 2.05
 const ripple = (
   event: PointerEvent,
   el: HTMLElement,
-  options: IVRippleDirectiveOptions
+  options: IRippleDirectiveOptions
 ) => {
   const rect = el.getBoundingClientRect()
   const computedStyles = window.getComputedStyle(el)
