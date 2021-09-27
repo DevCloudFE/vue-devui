@@ -1,4 +1,4 @@
-interface IVrippleDirectiveOptions {
+interface IVRippleDirectiveOptions {
   /**
    *
    * @remarks
@@ -47,7 +47,7 @@ interface IVrippleDirectiveOptions {
   cancellationPeriod: number
 }
 
-interface IVripplePluginOptions extends IVrippleDirectiveOptions {
+interface IVRipplePluginOptions extends IVRippleDirectiveOptions {
   /**
    * 用于覆盖指令的名称
    *
@@ -64,10 +64,10 @@ interface IVripplePluginOptions extends IVrippleDirectiveOptions {
 // 给可预见值 value 添加类型
 
 interface IRippleDirectiveOptionWithBinding {
-  value: IVrippleDirectiveOptions
+  value: IVRippleDirectiveOptions
 }
 
-const DEFAULT_PLUGIN_OPTIONS: IVripplePluginOptions = {
+const DEFAULT_PLUGIN_OPTIONS: IVRipplePluginOptions = {
   directive: 'ripple',
   color: 'currentColor',
   initialOpacity: 0.2,
@@ -77,4 +77,4 @@ const DEFAULT_PLUGIN_OPTIONS: IVripplePluginOptions = {
   cancellationPeriod: 75
 }
 
-export { DEFAULT_PLUGIN_OPTIONS, IVripplePluginOptions, IVrippleDirectiveOptions, IRippleDirectiveOptionWithBinding }
+export { DEFAULT_PLUGIN_OPTIONS, IVRipplePluginOptions, IVRippleDirectiveOptions, IRippleDirectiveOptionWithBinding }

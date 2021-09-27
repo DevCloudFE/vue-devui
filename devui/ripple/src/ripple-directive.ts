@@ -1,13 +1,13 @@
 // can export function.  解构参数类型冗余 新定义insterface IRippleDirectiveOptionWithBinding
 import {
   DEFAULT_PLUGIN_OPTIONS,
-  IVrippleDirectiveOptions,
+  IVRippleDirectiveOptions,
   IRippleDirectiveOptionWithBinding
 } from './options'
 import { ripple } from './v-ripple'
 const optionMap = new WeakMap<
   HTMLElement,
-  Partial<IVrippleDirectiveOptions> | false
+  Partial<IVRippleDirectiveOptions> | false
 >()
 const globalOptions = { ...DEFAULT_PLUGIN_OPTIONS }
 export default {
