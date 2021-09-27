@@ -9,3 +9,4 @@ yarn-error.log
 .history
 .vscode
 devui/vue-devui.ts
+devui/theme/theme.scss
