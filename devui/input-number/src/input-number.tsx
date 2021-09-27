@@ -8,16 +8,14 @@ export default defineComponent({
   emits: ['update:modelValue', 'change', 'input', 'focus', 'blur', 'keydown'],
   setup(props: InputNumberProps, ctx) {
     const inputVal = ref(props.modelValue);
-    let isDisabled = ref('');
-    let isSize = ref('');
 
     // 大小
-    isSize = computed(() => {
+    const isSize = computed(() => {
       return `devui-input-number-${props.size}`;
     });
 
     // 判断是否禁用
-    isDisabled = computed(() => {
+    const isDisabled = computed(() => {
       return props.disabled ? 'devui-input-disabled' : '';
     });
 
