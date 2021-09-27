@@ -5,13 +5,15 @@
   left: 0;
   height: auto;
 }
+
 .scrollTarget {
-  height: 450px!important;
+  height: 450px !important;
   overflow-y: auto;
 }
+
 .mycontainer {
   height: auto;
-  
+
   // overflow-y: auto;
 }
 
@@ -58,7 +60,7 @@ body > * ::-webkit-scrollbar-thumb:hover {
 body > * ::-webkit-scrollbar-corner {
   background-color: transparent;
 }
- 
+
 .step-nav {
   padding-top: 8px;
   width: 240px;
