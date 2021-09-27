@@ -1,0 +1,119 @@
+@import '../../style/mixins/index';
+@import '../../style/theme/color';
+@import '../../style/theme/font';
+@import '../../style/theme/shadow';
+@import '../../style/theme/corner';
+
+.devui-input-number {
+  position: relative;
+  display: block;
+  width: 180px;
+  line-height: 38px;
+
+  &.devui-input-disabled {
+    .devui-subtract,
+    .devui-add,
+    .devui-input-style {
+      cursor: not-allowed;
+      border-color: #e4e7ed;
+      color: #e4e7ed;
+    }
+
+    .devui-input-style {
+      background-color: #f5f7fa;
+      color: #c0c4cc;
+    }
+  }
+
+  &.devui-input-number-sm {
+    .devui-subtract,
+    .devui-add {
+      width: 40px;
+      height: 34px;
+      line-height: 34px;
+    }
+
+    .devui-input-style {
+      width: 70px;
+      height: 34px;
+      line-height: 34px;
+    }
+  }
+
+  &.devui-input-number-lg {
+    .devui-subtract,
+    .devui-add {
+      width: 60px;
+    }
+
+    .devui-input-style {
+      width: 90px;
+    }
+  }
+
+  .devui-input-item {
+    display: flex;
+    display: -webkit-box;
+    width: 200px;
+    line-height: 38px;
+  }
+
+  .devui-input-style::-webkit-outer-spin-button,
+  .devui-input-style::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .devui-add,
+  .devui-subtract {
+    display: inline-block;
+    width: 50px;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    font-size: 16px;
+    color: #333333;
+    background: #f5f7fa;
+    cursor: pointer;
+    border: 1px solid #dcdfe6;
+  }
+
+  .devui-add {
+    float: right;
+    margin-left: -1px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .devui-subtract {
+    float: left;
+    margin-right: -1px;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .devui-input-style {
+    display: block;
+    -moz-appearance: textfield;
+  }
+
+  .devui-input-style {
+    flex-grow: 1;
+    outline: none;
+    background-color: #ffffff;
+    border: 1px solid #dcdfe6;
+    border-radius: 2px;
+    padding: 5px 10px;
+    line-height: 38px;
+    font-size: 12px;
+    color: #252b3a;
+    width: 80px;
+    display: block;
+    cursor: text;
+    height: 38px;
+    text-align: center;
+    transition: border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+
+  .disabled {
+    cursor: not-allowed;
+  }
+}
