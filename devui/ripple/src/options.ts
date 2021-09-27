@@ -1,4 +1,4 @@
-interface IVWaveDirectiveOptions {
+interface IVrippleDirectiveOptions {
   /**
    *
    * @remarks
@@ -47,7 +47,7 @@ interface IVWaveDirectiveOptions {
   cancellationPeriod: number
 }
 
-interface IVWavePluginOptions extends IVWaveDirectiveOptions {
+interface IVripplePluginOptions extends IVrippleDirectiveOptions {
   /**
    * 用于覆盖指令的名称
    *
@@ -56,7 +56,7 @@ interface IVWavePluginOptions extends IVWaveDirectiveOptions {
    * @example
    *
    * @default
-   * 默认指令 wave
+   * 默认指令 ripple
    */
   directive: string
 }
@@ -64,11 +64,11 @@ interface IVWavePluginOptions extends IVWaveDirectiveOptions {
 // 给可预见值 value 添加类型
 
 interface IRippleDirectiveOptionWithBinding {
-  value: IVWaveDirectiveOptions
+  value: IVrippleDirectiveOptions
 }
 
-const DEFAULT_PLUGIN_OPTIONS: IVWavePluginOptions = {
-  directive: 'wave',
+const DEFAULT_PLUGIN_OPTIONS: IVripplePluginOptions = {
+  directive: 'ripple',
   color: 'currentColor',
   initialOpacity: 0.2,
   finalOpacity: 0.1,
@@ -77,4 +77,4 @@ const DEFAULT_PLUGIN_OPTIONS: IVWavePluginOptions = {
   cancellationPeriod: 75
 }
 
-export { DEFAULT_PLUGIN_OPTIONS, IVWavePluginOptions, IVWaveDirectiveOptions, IRippleDirectiveOptionWithBinding }
+export { DEFAULT_PLUGIN_OPTIONS, IVripplePluginOptions, IVrippleDirectiveOptions, IRippleDirectiveOptionWithBinding }

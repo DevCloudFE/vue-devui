@@ -50,7 +50,7 @@ interface IRipplePluginOption extends IRippleDirectiveOption {
    * @example
    *
    * @default
-   * '默认指令wave
+   * '默认指令ripple
    */
   directive: string
 }
