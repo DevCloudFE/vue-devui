@@ -1,4 +1,4 @@
-import { computed, defineComponent, CSSProperties, ref, watch, readonly, Ref, isRef, Transition } from 'vue'
+import { computed, defineComponent, CSSProperties, ref, watch, readonly, Ref, isRef, Transition, nextTick, onMounted } from 'vue'
 import { modalProps, ModalProps } from './modal-types'
 import { FixedOverlay } from '../../overlay'
 import { Button } from '../../button';
@@ -11,7 +11,12 @@ export default defineComponent({
   setup(props: ModalProps, ctx) {
 
     // 获取鼠标拖拽的偏移量
-    const { draggingX, draggingY, elementRef } = useDraggable();
+    const { draggingX, draggingY, elementRef, containerRef, reset } = useDraggable();
+    watch(() => props.modelValue, (value) => {
+      if (value) {
+        reset();
+      }
+    });
 
     // 拖拽的样式
     const draggingStyle = computed<CSSProperties>(() => ({
@@ -81,6 +86,7 @@ export default defineComponent({
       >
         <Transition name="devui-modal-wipe">
           <div
+            ref={containerRef}
             class="devui-modal-content"
             style={[containerStyle.value, draggingStyle.value]}
             v-show={animatedVisible.value}
@@ -109,41 +115,62 @@ export default defineComponent({
 })
 
 
+const getRangeValueOf = (value: number, min: number, max: number) => {
+  if (value < min) {
+    return min;
+  }
+  if (value > max) {
+    return max;
+  }
+  return value;
+}
+
+
 // 当前某个元素被拖拽时鼠标的偏移量
 const useDraggable = (draggable: Ref<boolean> | boolean = true) => {
   const draggingX = ref(0);
   const draggingY = ref(0);
   const elementRef = ref<HTMLElement | null>();
+  const containerRef = ref<HTMLElement | null>();
   const enabledDragging = isRef(draggable) ? draggable : ref(draggable);
 
-  watch(elementRef, (target, ov, onInvalidate) => {
-    if (!(target instanceof HTMLElement)) {
+  const reset = () => {
+    draggingX.value = 0;
+    draggingY.value = 0;
+  }
+
+  watch([containerRef, elementRef], ([container, target], ov, onInvalidate) => {
+    if (!(target instanceof HTMLElement && container instanceof HTMLElement)) {
       return;
     }
+    const body = window.document.body;
     let startX = 0;
     let startY = 0;
     let prevDraggingX = 0;
     let prevDraggingY = 0;
-    const isEnter = false;
+    let containerRect = container.getBoundingClientRect();
+    let bodyRect = body.getBoundingClientRect();
     let isDown = false;
-
     const handleMouseDown = (event: MouseEvent) => {
       if (!enabledDragging.value) {
         return;
       }
       startX = event.clientX;
       startY = event.clientY;
-      const rect = target.getBoundingClientRect();
+      // 只拿最新的
+      const targetRect = target.getBoundingClientRect();
       // 判断鼠标点是否在 target 元素内
       if (
-        rect.x < startX &&
-        rect.y < startY &&
-        (rect.width + rect.x) >= startX &&
-        (rect.height + rect.y) >= startY
+        targetRect.x < startX &&
+        targetRect.y < startY &&
+        (targetRect.width + targetRect.x) >= startX &&
+        (targetRect.height + targetRect.y) >= startY
       ) {
         isDown = true;
         prevDraggingX = draggingX.value;
         prevDraggingY = draggingY.value;
+        bodyRect = body.getBoundingClientRect();
+        containerRect = container.getBoundingClientRect();
       }
     }
 
@@ -151,8 +178,12 @@ const useDraggable = (draggable: Ref<boolean> | boolean = true) => {
       if (!isDown) {
         return;
       }
-      draggingX.value = prevDraggingX + event.clientX - startX;
-      draggingY.value = prevDraggingY + event.clientY - startY;
+      const currentX = prevDraggingX + event.clientX - startX;
+      const currentY = prevDraggingY + event.clientY - startY;
+      const containerOriginX = containerRect.x - prevDraggingX;
+      const containerOriginY = containerRect.y - prevDraggingY;
+      draggingX.value = getRangeValueOf(currentX, -containerOriginX, bodyRect.width - containerRect.width - containerOriginX);
+      draggingY.value = getRangeValueOf(currentY, -containerOriginY, bodyRect.height - containerRect.height - containerOriginY);
     }
 
     const handleMouseUp = () => {
@@ -175,6 +206,8 @@ const useDraggable = (draggable: Ref<boolean> | boolean = true) => {
   return {
     draggingX: readonly(draggingX),
     draggingY: readonly(draggingY),
-    elementRef
+    elementRef,
+    containerRef,
+    reset
   }
 }
