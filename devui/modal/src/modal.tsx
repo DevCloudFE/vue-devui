@@ -55,9 +55,9 @@ export default defineComponent({
           <Button
             key={index}
             style={{ display: 'inline-block', margin: '0 5px' }}
-            bsStyle={bsStyle}
+            btnStyle={bsStyle}
             disabled={disabled}
-            btnClick={handler}
+            onClick={handler}
           >
             {text}
           </Button>
@@ -107,8 +107,8 @@ export default defineComponent({
               <Button
                 class="btn-close"
                 icon="close"
-                bsStyle="common"
-                btnClick={() => onVisibleChange(false)}
+                btnStyle="text-dark"
+                onClick={() => onVisibleChange(false)}
               />
             </div>
             <div class="devui-modal-body">
