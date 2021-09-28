@@ -23,21 +23,26 @@ export default defineComponent({
     const renderNode = (item) => {
       return (
         <div
-          class="devui-tree-node"
+          class={['devui-tree-node', item.open && 'devui-tree-node__open']}
           style={{ paddingLeft: `${24 * (item.level - 1)}px` }}
           onClick={() => toggle(item)}
         >
-          {
-            item.children
-              ? item.open ? <IconOpen class="mr-xs" /> : <IconClose class="mr-xs" />
-              : <Indent />
-          }
-          { item.label }
+          <div class="devui-tree-node__content">
+            <div class="devui-tree-node__content--value-wrapper">
+              {
+                item.children
+                  ? item.open ? <IconOpen class="mr-xs" /> : <IconClose class="mr-xs" />
+                  : <Indent />
+              }
+              <span class="devui-tree-node__title">{ item.label }</span>
+            </div>
+          </div>
         </div>
       )
     }
 
     const renderTree = (tree) => {
+      
       return tree.map(item => {
         if (!item.children) {
           return renderNode(item)

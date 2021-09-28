@@ -12,7 +12,8 @@ export default function useToggle(data: unknown): any {
   const openedData = ref(openedTree(data))
 
   const toggle = (item) => {
-    console.log('toggle', item, item.id, item.open);
+    if (!item.children) return
+    
     item.open = !item.open
     openedData.value = openedTree(data)
   }
