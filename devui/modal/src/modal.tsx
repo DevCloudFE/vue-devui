@@ -1,4 +1,14 @@
-import { computed, defineComponent, CSSProperties, ref, watch, readonly, Ref, isRef, Transition, nextTick, onMounted } from 'vue'
+import {
+  computed,
+  defineComponent,
+  CSSProperties,
+  ref,
+  watch,
+  readonly,
+  Ref,
+  isRef,
+  Transition
+} from 'vue'
 import { modalProps, ModalProps } from './modal-types'
 import { FixedOverlay } from '../../overlay'
 import { Button } from '../../button';

@@ -17,35 +17,59 @@
   </d-modal>
 </template>
 <script>
-import {ref, defineComponent} from 'vue';
-
+import {ref, defineComponent, inject, onMounted, h} from 'vue';
 export default defineComponent({
   setup() {
-    const visibleRef = ref(false);
+    const modalservice = inject('MODAL_SERVICE_TOKEN');
     const open = () => {
-      visibleRef.value = true;
+      const result = modalservice.open({
+        title: 'Start Snapshot Version',
+        content: () => (
+          h('div', {}, [
+            'Modal Content',
+            h('div', {}, ['name: Tom']),
+            h('div', {}, ['age: 10']),
+            h('div', {}, ['address: Chengdu']),
+          ])
+        ),
+        buttons: [
+          {
+            bsStyle: 'primary',
+            text: 'Ok',
+            disabled: false,
+            handler: () => result.hide(),
+          }, {
+            id: 'btn-cancel',
+            bsStyle: 'common',
+            text: 'Cancel',
+            handler: () => result.hide()
+          },
+        ]
+      });
     }
-    const close = () => {
-      visibleRef.value = false;
-    }
-    const buttons = [
-      {
-        bsStyle: 'primary',
-        text: 'Ok',
-        disabled: false,
-        handler: close,
-      }, {
-        id: 'btn-cancel',
-        bsStyle: 'common',
-        text: 'Cancel',
-        handler: close
-      },
-    ];
+
+    // const visibleRef = ref(false);
+    // const close = () => {
+    //   visibleRef.value = false;
+    // }
+    // const buttons = [
+    //   {
+    //     bsStyle: 'primary',
+    //     text: 'Ok',
+    //     disabled: false,
+    //     handler: close,
+    //   }, {
+    //     id: 'btn-cancel',
+    //     bsStyle: 'common',
+    //     text: 'Cancel',
+    //     handler: close
+    //   },
+    // ];
     return {
-      visible: visibleRef,
       open,
-      buttons,
-      data: {name: 'Tom', age: '10', address: 'Chengdu'}
+      // visible: visibleRef,
+      // buttons,
+      // data: {name: 'Tom', age: '10', address: 'Chengdu'}
     }
   }
 })

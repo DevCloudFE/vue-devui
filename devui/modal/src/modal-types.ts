@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes, Slot } from 'vue'
 import { IButtonStyle } from '../../button/src/button'
 
 interface ButtonProps {
@@ -7,6 +7,28 @@ interface ButtonProps {
   disabled: boolean
   handler: ($event: Event) => void
 }
+
+export interface ModalPropsType {
+  width: string
+  maxHeight: string
+  zIndex: number
+  backdropZIndex: number
+  placement: 'center' | 'top' | 'bottom'
+  offsetX: string
+  offsetY: string
+  showAnimation: boolean
+  backdropCloseable: boolean
+  escapeable: boolean
+  bodyScrollable: boolean
+
+  title: string
+  content: Slot
+  buttons: ButtonProps
+
+  onClose(): void
+  beforeHidden: (() => boolean) | Promise<boolean>
+}
+
 
 export const modalProps = {
   // id: {
