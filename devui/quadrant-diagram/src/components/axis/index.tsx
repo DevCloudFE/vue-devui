@@ -33,14 +33,12 @@ export default defineComponent({
     })
 
     const axisConfigsVal: IAxisConfigs = axisConfigs.value
-    const viewVal: IViewConfigs = view.value
-
-
+    
     onMounted(() => {
       resetAxis()
     })
     
-    watch(viewVal, () => {
+    watch(view.value, () => {
       resetAxis()
     })
 
@@ -56,8 +54,6 @@ export default defineComponent({
      */
     const initAxisData = () => {
       quadrantAxis.value = document.querySelector('#devui-quadrant-axis-' + diagramId.value)
-      quadrantAxis.value.width = viewVal.width
-      quadrantAxis.value.height = viewVal.height
     }
 
     const setAxisData = () => {
@@ -218,10 +214,10 @@ export default defineComponent({
 
   },
   render() {
-    const { diagramId } = this
+    const { diagramId, view } = this
     return (
       <div>
-        <canvas id={'devui-quadrant-axis-' + diagramId}></canvas>
+        <canvas id={'devui-quadrant-axis-' + diagramId} height={view.height} width={view.width}></canvas>
       </div>
     )
   }
