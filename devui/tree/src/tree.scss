@@ -1,3 +1,306 @@
-.devui-tree {
-  //
+@import '../../style/theme/color';
+@import '../../style/theme/variables';
+@import '../../style/mixins/index';
+@import '../../style/theme/corner';
+@import '../../style/core/_font';
+@import '../../style/core/animation';
+
+$keyframe-blue: #5e7ce0;
+
+.devui-text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.devui-tree-node {
+  color: $devui-text-weak;
+  line-height: 1.5;
+  white-space: nowrap;
+  position: relative;
+
+  .devui-tree-node__content {
+    display: inline-flex;
+    align-items: center;
+    font-size: $devui-font-size;
+    padding-right: 10px;
+    width: 100%;
+    border-radius: $devui-border-radius;
+    padding-left: 6px;
+
+    &.active {
+      background-color: $devui-list-item-selected-bg;
+      text-decoration: none;
+      border-color: transparent;
+    }
+
+    &:not(.active):hover {
+      background-color: $devui-list-item-hover-bg;
+    }
+  }
+
+  .devui-tree-node__content--value-wrapper {
+    display: inline-flex;
+    align-items: center;
+    height: 30px;
+    width: 100%;
+  }
+
+  .devui-tree-node__children {
+    padding-left: 10px;
+
+    &:first-child {
+      border-left-color: transparent;
+    }
+
+    .devui-tree-node {
+      margin-left: 8px;
+      content: '';
+      position: relative;
+
+      &:last-child {
+        border-left-color: transparent;
+      }
+    }
+  }
+
+  .devui-tree-node__title {
+    @extend .devui-text-ellipsis;
+
+    margin-left: 5px;
+    display: inline-block;
+    border: 1px dashed transparent;
+    border-radius: $devui-border-radius;
+    max-width: 100%;
+
+    &:not(.disabled) {
+      cursor: pointer;
+    }
+  }
+
+  .devui-tree-node__edit {
+    margin-left: 0.4em;
+    padding: 0.1em;
+
+    > .devui-input-sm {
+      height: 26px;
+
+      &.error,
+      &.error:hover,
+      &.error:focus {
+        border-color: $devui-danger;
+      }
+    }
+  }
+
+  .devui-tree-node__leaf {
+    &:not(.disabled) {
+      cursor: default;
+    }
+
+    .devui-tree-node__leaf--default {
+      color: #f2a71f;
+    }
+
+    .devui-leaf-icon-none {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .devui-tree-node__folder {
+    display: inline-block;
+    vertical-align: middle;
+    user-select: none;
+    font-size: $devui-font-size-icon;
+    height: 16px;
+    line-height: 16px;
+
+    .devui-tree-node__folder--icon {
+      display: inline-block;
+      height: 16px;
+      line-height: 16px;
+
+      &:hover {
+        svg g path {
+          fill: $devui-icon-fill-active;
+        }
+
+        svg g rect {
+          stroke: $devui-icon-fill-active;
+        }
+      }
+    }
+
+    &:not(.disabled) {
+      cursor: pointer;
+    }
+
+    .devui-tree-node__folder--default {
+      color: #f2b806;
+    }
+  }
+
+  .devui-loading-children {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 0.5em;
+    margin-top: 0.15em;
+    color: $devui-info;
+    font-style: italic;
+    font-size: 1em;
+    animation-name: devui-loading-children;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  @keyframes devui-loading-children {
+    0% {
+      color: lighten($keyframe-blue, 0.95);
+    }
+
+    12.5% {
+      color: lighten($keyframe-blue, 0.85);
+    }
+
+    25% {
+      color: lighten($keyframe-blue, 0.75);
+    }
+
+    37.5% {
+      color: lighten($keyframe-blue, 0.65);
+    }
+
+    50% {
+      color: lighten($keyframe-blue, 0.55);
+    }
+
+    62.5% {
+      color: lighten($keyframe-blue, 0.45);
+    }
+
+    75% {
+      color: lighten($keyframe-blue, 0.35);
+    }
+
+    87.5% {
+      color: lighten($keyframe-blue, 0.1);
+    }
+
+    100% {
+      color: $keyframe-blue;
+    }
+  }
+
+  svg.svg-icon path {
+    fill: $devui-icon-text;
+  }
+
+  svg.svg-icon rect {
+    stroke: $devui-icon-text;
+  }
+
+  &.devui-tree-node__open:not(.devui-tree-node__customIcon) {
+    & > .devui-tree-node__content svg.svg-icon path {
+      fill: $devui-icon-fill-active;
+    }
+
+    & > .devui-tree-node__content svg.svg-icon rect {
+      stroke: $devui-icon-fill-active;
+    }
+
+    & > .devui-tree-node__content svg.svg-icon.svg-icon-close rect:last-child {
+      stroke: none;
+      fill: $devui-icon-fill-active;
+    }
+  }
+
+  svg.svg-icon.svg-icon-close rect:last-child {
+    stroke: none;
+    fill: $devui-icon-text;
+  }
+}
+
+::ng-deep .devui-tree-mask {
+  background: $devui-list-item-hover-bg;
+}
+
+/* 视觉融合灰线 */
+.devui-tree-node.devui-tree-without-virtual-scroll {
+  &.devui-tree-node__open {
+    & > .devui-tree-node__content {
+      position: relative;
+    }
+  }
+
+  & > .devui-tree-node__children {
+    position: relative;
+
+    &::before {
+      content: '';
+      width: 1px;
+      height: calc(100% - 15px); // 父级总高度减去半个content的高度
+      background-color: $devui-dividing-line;
+      position: absolute;
+      left: calc(10px - 1px); // 父级10px的padding减去自身1px宽度
+      top: 0;
+    }
+
+    .devui-tree-node__content {
+      // 只要是子级就都存在左边横线
+      position: relative;
+
+      &::before {
+        content: '';
+        width: 8px;
+        height: 1px;
+        background-color: $devui-dividing-line;
+        position: absolute;
+        left: calc(-1px - 8px); // 对接左侧灰线，自身margin为1.2em加上1px的线宽
+        top: 50%;
+      }
+    }
+  }
+}
+
+.devui-tree-vertical-line {
+  width: 1px;
+  background-color: $devui-dividing-line;
+  position: absolute;
+}
+
+.devui-tree-horizontal-line {
+  height: 1px;
+  background-color: $devui-dividing-line;
+  position: absolute;
+  top: 50%;
+  margin-left: -16px;
+}
+
+.toggle-disabled {
+  cursor: not-allowed !important;
+
+  svg.svg-icon rect {
+    stroke: $devui-disabled-text !important;
+  }
+
+  svg.svg-icon.svg-icon-close rect:last-child {
+    stroke: none !important;
+    fill: $devui-disabled-text !important;
+  }
+
+  svg.svg-icon path {
+    fill: $devui-disabled-text !important;
+  }
+}
+
+.select-disabled {
+  color: $devui-disabled-text !important;
+  cursor: not-allowed !important;
+  background-color: transparent !important;
+}
+
+.devui-tree-node__content {
+  transition: color $devui-animation-duration-fast $devui-animation-ease-in-smooth, background-color $devui-animation-duration-fast $devui-animation-ease-in-smooth;
 }
