@@ -30,5 +30,13 @@
         rgba(255, 255, 255, 0) 60%
       )
       #ccc;
+    background-size: 200% 100%;
+    background-position-x: 180%;
+    animation: 1.4s loading ease-in-out infinite;
+  }
+}
+@keyframes loading {
+  to {
+    background-position-x: -20%;
   }
 }
