@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType } from 'vue';
+import { ExtractPropTypes, PropType, CSSProperties } from 'vue';
 
 export const overlayProps = {
   visible: {
@@ -15,9 +15,12 @@ export const overlayProps = {
     type: String,
     default: ''
   },
+  backgroundStyle: {
+    type: [String, Object] as PropType<string | CSSProperties>
+  },
   hasBackdrop: {
     type: Boolean,
-    default: true
+    default: false
   },
   backdropClick: {
     type: Function,

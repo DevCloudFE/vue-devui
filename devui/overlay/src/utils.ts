@@ -2,25 +2,18 @@ import { onUnmounted, watch, computed, ComputedRef } from 'vue';
 import { OverlayProps } from './overlay-types';
 
 interface CommonInfo {
-  containerClass: ComputedRef<string[]>
-  panelClass: ComputedRef<string[]>
+  backgroundClass: ComputedRef<string[]>
+  overlayClass: ComputedRef<string>
   handleBackdropClick: (e: Event) => void
+  handleOverlayBubbleCancel: (e: Event) => void
 }
 
 export function useOverlayLogic(props: OverlayProps): CommonInfo {
-  const containerClass = computed(() => {
-    if (props.hasBackdrop) {
-      return ['d-overlay-container', props.backgroundClass];
-    } else {
-      return ['d-overlay-container', 'd-overlay-container__disabled'];
-    }
+  const backgroundClass = computed(() => {
+    return ['devui-overlay-background', 'devui-overlay-background__color', props.backgroundClass];
   });
-  const panelClass = computed(() => {
-    if (props.hasBackdrop) {
-      return ['d-overlay-panel'];
-    } else {
-      return ['d-overlay-panel', 'd-overlay-container__disabled'];
-    }
+  const overlayClass = computed(() => {
+    return 'devui-overlay';
   });
 
   const handleBackdropClick = (event: Event) => {
@@ -31,6 +24,9 @@ export function useOverlayLogic(props: OverlayProps): CommonInfo {
       props['onUpdate:visible']?.(false);
     }
   };
+
+  const handleOverlayBubbleCancel = (event: Event) => (event.cancelBubble = true);
+
 
   const body = document.body;
   const originOverflow = body.style.overflow;
@@ -45,8 +41,9 @@ export function useOverlayLogic(props: OverlayProps): CommonInfo {
   });
 
   return {
-    containerClass,
-    panelClass,
-    handleBackdropClick
+    backgroundClass,
+    overlayClass,
+    handleBackdropClick,
+    handleOverlayBubbleCancel
   }
 }

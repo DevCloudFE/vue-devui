@@ -1,30 +1,23 @@
-.d-overlay-container {
+.devui-overlay-background {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
 
-  &__disabled {
-    pointer-events: none;
-  }
-
-  &__background {
+  &__color {
     background: rgba(0, 0, 0, 0.4);
   }
 
-  .d-overlay-panel {
+  .devui-overlay {
     position: relative;
     z-index: 1000;
-  }
-
-  .d-overlay {
     pointer-events: auto;
   }
 }
 
-.d-overlay-fade {
+.devui-overlay-fade {
   @mixin d-overlay-fade-animation {
     animation-name: d-overlay-fade;
     animation-duration: 0.3s;
