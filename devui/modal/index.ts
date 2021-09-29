@@ -15,13 +15,13 @@ export default {
   install(app: App): void {
     app.use(Modal as any)
 
-    let anchor = document.getElementById('d-modal-anchor');
-    if (!anchor) {
-      anchor = document.createElement('div');
-      anchor.setAttribute('id', 'd-modal-anchor');
-      document.body.appendChild(anchor);  
+    let anchorsContainer = document.getElementById('d-modal-anchors-container');
+    if (!anchorsContainer) {
+      anchorsContainer = document.createElement('div');
+      anchorsContainer.setAttribute('id', 'd-modal-anchors-container');
+      document.body.appendChild(anchorsContainer);  
     }
     // 新增 modalService
-    app.provide(ModalService.token, new ModalService(anchor));
+    app.provide(ModalService.token, new ModalService(anchorsContainer));
   }
 }
