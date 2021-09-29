@@ -1,0 +1,34 @@
+@import "../../style/mixins/index";
+@import "../../style/theme/color";
+@import "../../style/theme/shadow";
+@import "../../style/theme/corner";
+@import "../../style/theme/font";
+
+.d-skeleton {
+  .d-skeleton__item {
+    width: 100%;
+    height: 16px;
+    background: #f2f2f2;
+    display: inline-block;
+    border-radius: 4px;
+  }
+  .d-skeleton__item:first-child {
+    width: 33%;
+  }
+  .d-skeleton__item:last-child {
+    width: 61%;
+  }
+}
+
+.d-skeleton-animated {
+  .d-skeleton__item {
+    background-color: #ccc;
+    background: linear-gradient(
+        100deg,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 60%
+      )
+      #ccc;
+  }
+}

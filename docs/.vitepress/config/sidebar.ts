@@ -83,6 +83,7 @@ const sidebar = {
         { text: 'Progress 进度条', link: '/components/progress/', status: '已完成' },
         { text: 'QuadrantDiagram 象限图', link: '/components/quadrant-diagram/' },
         { text: 'Rate 等级评估', link: '/components/rate/', status: '已完成' },
+        { text: 'Skeleton 骨架屏', link: '/components/skeleton/', status: '开发中' },
         { text: 'Tag 标签', link: '/components/tag/' },
         { text: 'Tree 树', link: '/components/tree/' },
       ]
