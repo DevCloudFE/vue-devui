@@ -1,8 +1,8 @@
 import type { PropType, ExtractPropTypes, Slot } from 'vue'
 import { IButtonStyle } from '../../button/src/button'
 
-interface ButtonProps {
-  bsStyle: IButtonStyle
+export interface ButtonOption {
+  btnStyle: IButtonStyle
   text: string
   disabled: boolean
   handler: ($event: Event) => void
@@ -23,7 +23,7 @@ export interface ModalPropsType {
 
   title: string
   content: Slot
-  buttons: ButtonProps
+  buttons: ButtonOption[]
 
   onClose(): void
   beforeHidden: (() => boolean) | Promise<boolean>
@@ -96,7 +96,7 @@ export const modalProps = {
   },
 
   buttons: {
-    type: Array as PropType<ButtonProps[]>,
+    type: Array as PropType<ButtonOption[]>,
     default: []
   },
 
