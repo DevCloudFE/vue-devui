@@ -305,4 +305,34 @@ export default defineComponent({
 
 :::
 
-### 折叠收缩显示菜单【TODO】
+### 折叠收缩显示菜单 【TODO】
+
+### API
+
+### d-splitter 参数
+
+|        参数        |     类型     |    默认值     |               描述                | 跳转 Demo                                      |
+| :----------------: | :----------: | :-----------: | :-------------------------------: | :--------------------------------------------- |
+|    orientation     | `'vertical' \| 'horizontal'` |           'horizontal'            | 可选，指定 Splitter 分割方向,可选值 'vertical' \| 'horizontal' | [基本用法](#基本用法)  
+|    splitBarSize    |   `string`   |     '2px'     |    可选，分隔条大小，默认 2px     | [基本用法](#基本用法)                          |
+|  disabledBarSize   |   `string`   |     '1px'     | 可选，pane 设置不可调整宽度时生效 | [垂直布局用法](#垂直布局用法)                  |
+| showCollapseButton |  `boolean`   |     true      |    可选，是否显示收起/展开按钮    | [折叠收缩显示菜单](#折叠收缩显示菜单)          |
+
+### d-splitter-pane 参数
+
+|       参数        |    类型    |  默认值  |                         描述                          | 跳转 Demo                             |
+| :---------------: | :--------: | :------: | :---------------------------------------------------: | :------------------------------------ |
+|       size        |  `string`  |    --    |      可选，指定 pane 宽度，设置像素值或者百分比       | [基本用法](#基本用法)                 |
+|      minSize      |  `string`  |    --    |    可选，指定 pane 最小宽度，设置像素值或者百分比     | [基本用法](#基本用法)                 |
+|      maxSize      |  `string`  |    --    |    可选，指定 pane 最大宽度，设置像素值或者百分比     | [基本用法](#基本用法)                 |
+|     resizable     | `boolean`  |   true   |    可选，指定 pane 是否可调整大小，会影响相邻 pane    | [垂直布局用法](#垂直布局用法)         |
+|    collapsible    | `boolean`  |  false   |            可选，指定 pane 是否可折叠收起             | [基本用法](#基本用法)                 |
+|     collapsed     | `boolean`  |  false   | 可选，指定 pane 初始化是否收起，配合`collapsible`使用 | [垂直布局用法](#垂直布局用法)         |
+| collapseDirection | `'before' \| 'after' \|                        'both'`                        | 'both'                                | 可选，指定非边缘 pane 收起方向，配合`collapsible`使用 | [指定折叠收起方向](#指定折叠收起方向)
+
+### d-splitter-pane 事件
+
+|        事件        |          类型           |                    描述                     | 跳转 Demo                             |
+| :----------------: | :---------------------: | :-----------------------------------------: | ------------------------------------- |
+|     sizeChange     | `EventEmitter<string>`  | 大小变动时，返回改变后的值,像素值或者百分比 | [基本用法](#基本用法)                 |
+|  collapsedChange   | `EventEmitter<boolean>` |    折叠和展开时，返回当前 pane 是否折叠     | [基本用法](#基本用法)                 |
