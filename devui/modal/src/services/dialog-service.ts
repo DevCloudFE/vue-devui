@@ -1,19 +1,41 @@
-import {h, render, InjectionKey, Slots} from 'vue';
-import { ButtonOption, ModalProps, ModalPropsType } from './modal-types';
-import Modal from './modal';
+import { Slot, InjectionKey } from 'vue';
+import { CommonModalService, ModalOpenResult } from './common-modal-service';
+import Dialog from '../dialog';
+import { ButtonOptions, DialogProps } from '../dialog-types';
 
-interface ModalOpenResult {
-  hide(): void
-  updateButtonOptions(buttons: ButtonOption[]): void
+
+export interface DialogOptions {
+  width: string
+  maxHeight: string
+  zIndex: number
+  backdropZIndex: number
+  placement: 'center' | 'top' | 'bottom'
+  offsetX: string
+  offsetY: string
+  showAnimation: boolean
+  backdropCloseable: boolean
+  escapeable: boolean
+  bodyScrollable: boolean
+  dialogtype: 'standard' | 'success' | 'failed' | 'warning'| 'info'
+
+  title: string
+  content: Slot
+  buttons: ButtonOptions[]
+
+  onClose(): void
+  beforeHidden: (() => boolean) | Promise<boolean>
+  
 }
 
-export class ModalService {
+export class DialogService extends CommonModalService<DialogOptions, DialogProps> {
 
-  static token = 'MODAL_SERVICE_TOKEN' as unknown as InjectionKey<ModalService>;
+  static token = 'DIALOG_SERVICE_TOKEN' as unknown as InjectionKey<DialogService>;
 
-  constructor(public anchorContainer: HTMLElement) {}
-
-  open(props: Partial<ModalPropsType> = {}): ModalOpenResult {
+  component(): any {
+    return Dialog;
+  }
+  
+  open(props: Partial<DialogOptions> = {}): ModalOpenResult & {updateButtonOptions(options: ButtonOptions[]): void;} {
     // TODO：手动的方式可能抛弃了 content 内部的响应式，这里需要再优化。
     const anchor = document.createElement('div');
     this.anchorContainer.appendChild(anchor);
@@ -27,7 +49,7 @@ export class ModalService {
     }
 
     // 更新按钮选项
-    const updateButtonOptions = (buttonOptions: ButtonOption[]) => {
+    const updateButtonOptions = (buttonOptions: ButtonOptions[]) => {
       const { buttons, ...innerResProps } = resProps;
       const newButtonOptions = buttons.map((option, index) => ({
         ...option,
@@ -54,20 +76,5 @@ export class ModalService {
     }, {default: content});
     
     return { hide, updateButtonOptions }
-  }
-
-
-
-  private renderModal(anchor: HTMLElement, props: Partial<ModalProps>, children?: Slots) {
-    setTimeout(() => {
-      render(h(Modal as any, props, children), anchor);
-    }, 0);
-  }
-
-  private renderNull(anchor: HTMLElement) {
-    // 动画运行完毕后
-    setTimeout(() => {
-      render(null, anchor);      
-    }, 500);
   }
 }

@@ -1,6 +1,14 @@
 import type { PropType, ExtractPropTypes } from 'vue'
+import { IButtonStyle } from '../../button/src/button'
 
-export const modalProps = {
+export interface ButtonOptions {
+  btnStyle: IButtonStyle
+  text: string
+  disabled: boolean
+  handler: ($event: Event) => void
+}
+
+export const dialogProps = {
   // id: {
   //   type: String,
   //   required: true
@@ -36,6 +44,10 @@ export const modalProps = {
     default: '0px'
   },
 
+  title: {
+    type: String
+  },
+
   showAnimation: {
     type: Boolean,
     default: true
@@ -58,8 +70,19 @@ export const modalProps = {
     type: Function as PropType<() => void>,
   },
   beforeHidden: {
-    type: Object as PropType<Promise<boolean> | (() => boolean)>
+    type: [Promise, Function] as PropType<Promise<boolean> | (() => boolean)>
   },
+
+  buttons: {
+    type: Array as PropType<ButtonOptions[]>,
+    default: []
+  },
+
+  dialogType: {
+    type: String as PropType<'standard' | 'success' | 'failed' | 'warning' | 'info'>,
+    default: 'standard'
+  },
+
 
   modelValue: {
     type: Boolean,
@@ -69,4 +92,4 @@ export const modalProps = {
   }
 } as const
 
-export type ModalProps = ExtractPropTypes<typeof modalProps>
+export type DialogProps = ExtractPropTypes<typeof dialogProps>

@@ -24,7 +24,6 @@
   height: 56px;
   position: relative;
   border: none;
-  cursor: all-scroll;
   user-select: none;
 
   .btn-close {
@@ -39,6 +38,14 @@
     background: transparent;
     border: 0;
     -webkit-appearance: none;
+  }
+
+  .header-alert-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    line-height: 16px;
+    text-align: center;
   }
 }
 

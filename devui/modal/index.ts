@@ -1,6 +1,7 @@
 import type { App } from 'vue'
 import Modal from './src/modal'
-import { ModalService } from './src/modal-service'
+import { ModalService } from './src/services/modal-service'
+import { DialogService } from './src/services/dialog-service'
 
 Modal.install = function(app: App): void {
   app.component(Modal.name, Modal)
@@ -23,5 +24,6 @@ export default {
     }
     // 新增 modalService
     app.provide(ModalService.token, new ModalService(anchorsContainer));
+    app.provide(DialogService.token, new DialogService(anchorsContainer));
   }
 }

@@ -6,48 +6,53 @@ import {
   isRef,
 } from 'vue'
 
-
-interface DraggableResult {
-  draggingX: Ref<number>
-  draggingY: Ref<number>
-  elementRef: Ref<HTMLElement | null>
-  containerRef: Ref<HTMLElement | null>
+export interface MoveableResult {
+  movingX: Ref<number>
+  movingY: Ref<number>
+  // 可拖拽的元素
+  handleRef: Ref<HTMLElement | null>
+  // 可移动的元素
+  moveElRef: Ref<HTMLElement | null>
   reset(): void
 }
 
 // 当前某个元素被拖拽时鼠标的偏移量
-export const useDraggable = (draggable: Ref<boolean> | boolean = true): DraggableResult => {
+export const useMoveable = (moveable: Ref<boolean> | boolean = true): MoveableResult => {
   // X，Y 偏移量
-  const draggingX = ref(0);
-  const draggingY = ref(0);
+  const movingX = ref(0);
+  const movingY = ref(0);
   const reset = () => {
-    draggingX.value = 0;
-    draggingY.value = 0;
+    movingX.value = 0;
+    movingY.value = 0;
   }
 
-  // 获取可拖拽范围需要用的元素
-  const elementRef = ref<HTMLElement | null>();
-  // 获取拖拽边界范围需要用的元素
-  const containerRef = ref<HTMLElement | null>();
+  // 可拖拽的元素
+  const handleRef = ref<HTMLElement | null>();
+  // 可移动的元素
+  const moveElRef = ref<HTMLElement | null>();
   // 是否允许拖拽
-  const enabledDragging = isRef(draggable) ? draggable : ref(draggable);
+  const enabledMoving = isRef(moveable) ? moveable : ref(moveable);
 
   // 可视化
-  watch([containerRef, elementRef], ([container, target], ov, onInvalidate) => {
+  watch([moveElRef, handleRef], ([container, target], ov, onInvalidate) => {
     if (!(target instanceof HTMLElement && container instanceof HTMLElement)) {
       return;
     }
-    const body = window.document.body;
+    // 更改为拖动样式
+    target.style.cursor = 'all-scroll';
+
+    // 初始化内容
     let startX = 0;
     let startY = 0;
-    let prevDraggingX = 0;
-    let prevDraggingY = 0;
+    let prevMovingX = 0;
+    let prevMovingY = 0;
     let containerRect = container.getBoundingClientRect();
-    let bodyRect = body.getBoundingClientRect();
+    let bodyRect = document.body.getBoundingClientRect();
     let isDown = false;
+
     const handleMouseDown = (event: MouseEvent) => {
       event.preventDefault();
-      if (!enabledDragging.value) {
+      if (!enabledMoving.value) {
         return;
       }
       startX = event.clientX;
@@ -63,9 +68,9 @@ export const useDraggable = (draggable: Ref<boolean> | boolean = true): Draggabl
         (targetRect.height + targetRect.y) >= startY
       ) {
         isDown = true;
-        prevDraggingX = draggingX.value;
-        prevDraggingY = draggingY.value;
-        bodyRect = body.getBoundingClientRect();
+        prevMovingX = movingX.value;
+        prevMovingY = movingY.value;
+        bodyRect = document.body.getBoundingClientRect();
         containerRect = container.getBoundingClientRect();
       }
     }
@@ -75,12 +80,12 @@ export const useDraggable = (draggable: Ref<boolean> | boolean = true): Draggabl
       if (!isDown) {
         return;
       }
-      const currentX = prevDraggingX + event.clientX - startX;
-      const currentY = prevDraggingY + event.clientY - startY;
-      const containerOriginX = containerRect.x - prevDraggingX;
-      const containerOriginY = containerRect.y - prevDraggingY;
-      draggingX.value = getRangeValueOf(currentX, -containerOriginX, bodyRect.width - containerRect.width - containerOriginX);
-      draggingY.value = getRangeValueOf(currentY, -containerOriginY, bodyRect.height - containerRect.height - containerOriginY);
+      const currentX = prevMovingX + event.clientX - startX;
+      const currentY = prevMovingY + event.clientY - startY;
+      const containerOriginX = containerRect.x - prevMovingX;
+      const containerOriginY = containerRect.y - prevMovingY;
+      movingX.value = getRangeValueOf(currentX, -containerOriginX, bodyRect.width - containerRect.width - containerOriginX);
+      movingY.value = getRangeValueOf(currentY, -containerOriginY, bodyRect.height - containerRect.height - containerOriginY);
     }
 
     const handleMouseUp = (event: MouseEvent) => {
@@ -102,10 +107,10 @@ export const useDraggable = (draggable: Ref<boolean> | boolean = true): Draggabl
   });
 
   return {
-    draggingX: readonly(draggingX),
-    draggingY: readonly(draggingY),
-    elementRef,
-    containerRef,
+    movingX: readonly(movingX),
+    movingY: readonly(movingY),
+    handleRef,
+    moveElRef,
     reset
   }
 }

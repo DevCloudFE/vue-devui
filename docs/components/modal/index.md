@@ -8,7 +8,7 @@
 import {ref, defineComponent, inject, onMounted, h} from 'vue';
 export default defineComponent({
   setup() {
-    const modalservice = inject('MODAL_SERVICE_TOKEN');
+    const modalservice = inject('DIALOG_SERVICE_TOKEN');
     const open = () => {
       const result = modalservice.open({
         title: 'Start Snapshot Version',
@@ -20,19 +20,17 @@ export default defineComponent({
             h('div', {}, ['address: Chengdu']),
           ])
         ),
-        buttons: [
-          {
-            bsStyle: 'primary',
-            text: 'Ok',
-            disabled: false,
-            handler: () => result.hide(),
-          }, {
-            id: 'btn-cancel',
-            bsStyle: 'common',
-            text: 'Cancel',
-            handler: () => result.hide()
-          },
-        ]
+        dialogType: 'success',
+        buttons: [{
+          btnStyle: 'primary',
+          text: 'Ok',
+          disabled: true,
+          handler: () => result.hide(),
+        }, {
+          btnStyle: 'common',
+          text: 'Cancel',
+          handler: () => result.hide()
+        }]
       });
     }
     return {
@@ -51,17 +49,7 @@ export default defineComponent({
 ```vue
 <template>
   <d-button @click="open">打开 modal</d-button>
-  <d-modal 
-    v-model="visible"
-    :buttons="buttons"
-    title="Start Snapshot Version"
-  >
-    <div>
-      Modal Content
-      <div>name: {{ data.name }}</div>
-      <div>age: {{ data.age }}</div>
-      <div>address: {{ data.address }}</div>
-    </div>
+  <d-modal v-model="visible" :backdropCloseable="true">
   </d-modal>
 </template>
 <script>
