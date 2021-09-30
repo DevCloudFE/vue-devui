@@ -61,7 +61,7 @@ export const useMoveable = (moveable: Ref<boolean> | boolean = true): MoveableRe
       const targetRect = target.getBoundingClientRect();
       // 判断鼠标点是否在 target 元素内
       if (
-        event.target === target &&
+        (target === event.target || target.contains(event.target as Node)) &&
         targetRect.x < startX &&
         targetRect.y < startY &&
         (targetRect.width + targetRect.x) >= startX &&
