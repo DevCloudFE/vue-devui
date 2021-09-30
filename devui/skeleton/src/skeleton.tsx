@@ -6,7 +6,6 @@ import { skeletonProps, SkeletonProps } from './skeleton-types'
 export default defineComponent({
   name: 'DSkeleton',
   props: skeletonProps,
-  emits: [],
   setup(props: SkeletonProps, ctx) {
     const { slots } = ctx;
     let arr = []
