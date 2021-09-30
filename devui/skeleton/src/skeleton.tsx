@@ -16,11 +16,11 @@ export default defineComponent({
       if (props.loading) {
         return <div class={`d-skeleton ${props.animate ? 'd-skeleton-animated' : ''}`}>
           <div class={`d-skeleton__avatar ${props.avatar ? 'is-shown' : ''}`}>
-            <div class="avatar is-animated"></div>
+            <div class="avatar"/>
           </div>
           <div class="d-skeleton__item__group">{
             arr.map(() => {
-              return <div class="d-skeleton__item is-animated" />
+              return <div class="d-skeleton__item" />
             })
           }</div>
         </div>
