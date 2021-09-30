@@ -16,6 +16,19 @@
 ```
 :::
 
+### 显示头像
+通过 avatar 属性显示头像占位图。
+
+:::demo
+
+```vue
+<template>
+  <d-skeleton :row="6" :avatar="true" />
+</template>
+```
+::: 
+
+
 ### 展示子组件
 将 loading 属性设置成 false 表示内容加载完成，此时会隐藏占位图，并显示 Skeleton 的子组件。
 
@@ -24,7 +37,14 @@
 ```vue
 <template>
   <d-skeleton :row="6" :loading="false">
-    <div>实际内容</div>
+    <template #content>
+      <div>
+        <div>content1</div>
+        <div>content2</div>
+        <div>content3</div>
+        <div>content4</div>
+      </div>
+    </template>
   </d-skeleton>
 </template>
 ```
@@ -32,14 +52,10 @@
 
 ### API
 d-skeleton 参数
-|  参数   |   类型    |  默认  | 说明                                          |
-| :-----: | :-------: | :----: | :-------------------------------------------- |
-|   row   | `number`  |  `0`   | 段落占位图行数                                |
-| loading | `boolean` | `true` | 是否显示骨架屏，传 `false` 时会展示子组件内容 |
-| animate | `boolean` | `true` | 是否开启动画                                  |
-|         |           |        |                                               |
-|         |           |        |                                               |
-|         |           |        |                                               |
-|         |           |        |                                               |
-|         |           |        |                                               |
-|         |           |        |                                               |
+|  参数   |   类型    |  默认   | 说明                                          |
+| :-----: | :-------: | :-----: | :-------------------------------------------- |
+|   row   | `number`  |   `0`   | 段落占位图行数                                |
+| loading | `boolean` | `true`  | 是否显示骨架屏，传 `false` 时会展示子组件内容 |
+| animate | `boolean` | `true`  | 是否开启动画                                  |
+| avatar  | `boolean` | `false` | 是否显示头像占位图                            |
+

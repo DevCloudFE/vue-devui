@@ -12,6 +12,10 @@ export const skeletonProps = {
   loading:{
     type: Boolean,
     default: true
+  },
+  avatar:{
+    type: Boolean,
+    default: false
   }
 } as const
 
