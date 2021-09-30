@@ -36,7 +36,8 @@
 
 ```vue
 <template>
-  <d-skeleton :row="6" :loading="false">
+  <d-switch v-model:checked="loading"></d-switch>
+  <d-skeleton :row="4" :loading="loading">
       <div>
         <div>content1</div>
         <div>content2</div>
@@ -45,6 +46,19 @@
       </div>
   </d-skeleton>
 </template>
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup () {
+    const loading = ref(false)
+
+    return {
+      loading,
+    }
+  }
+})
+</script>
 ```
 :::
 
