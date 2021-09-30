@@ -24,10 +24,9 @@ export default defineComponent({
             })
           }</div>
         </div>
-      } else {
-        return <div class={`d-skeleton ${props.animate ? 'd-skeleton-animated' : ''}`}>{slots.content?.()}
-        </div>
       }
+      return <div class={`d-skeleton ${props.animate ? 'd-skeleton-animated' : ''}`}>{slots.default?.()}
+      </div>
     }
   }
 })

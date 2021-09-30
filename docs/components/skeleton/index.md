@@ -37,14 +37,12 @@
 ```vue
 <template>
   <d-skeleton :row="6" :loading="false">
-    <template #content>
       <div>
         <div>content1</div>
         <div>content2</div>
         <div>content3</div>
         <div>content4</div>
       </div>
-    </template>
   </d-skeleton>
 </template>
 ```
