@@ -1,17 +1,17 @@
 import { mount } from '@vue/test-utils';
-import Button from '../button';
+import Button from '../src/button';
 
 describe('d-button', () => {
-  it('bsStyle', () => {
+  it('btnStyle', () => {
     const wrapper = mount(Button, {
-      props: { bsStyle: 'danger' },
+      props: { btnStyle: 'danger' },
     });
-    expect(wrapper.classes()).toContain('devui-btn-danger');
+    expect(wrapper.find('.devui-btn').classes()).toContain('devui-btn-danger');
   });
 
-  it('bsSize', () => {
+  it('size', () => {
     const wrapper = mount(Button, {
-      props: { bsSize: 'sm' },
+      props: { size: 'sm' },
     });
     expect(wrapper.find('.devui-btn-sm').exists()).toBeTruthy();
   });
@@ -19,7 +19,7 @@ describe('d-button', () => {
   it('type', () => {
     const wrapper = mount(Button, {
       props: { type: 'submit' },
-    });
+    }).find('button');
     expect(wrapper.attributes('type')).toBe('submit');
   });
 
@@ -28,24 +28,25 @@ describe('d-button', () => {
     const wrapper = mount(Button, {
       props: {
         showLoading: false,
-        btnClick: handleClick
+        onClick: handleClick
       },
     });
-    await wrapper.trigger('click');
+    await wrapper.find('.devui-btn').trigger('click');
     expect(handleClick).toBeCalled();
   });
 
-  it('loading', async () => {
-    const handleClick = jest.fn();
-    const wrapper = mount(Button, {
-      props: {
-        showLoading: true,
-        btnClick: handleClick
-      },
-    });
-    await wrapper.trigger('click');
-    expect(handleClick).not.toBeCalled();
-  });
+  // 目前还不支持 loading
+  // it('loading', async () => {
+  //   const handleClick = jest.fn();
+  //   const wrapper = mount(Button, {
+  //     props: {
+  //       showLoading: true,
+  //       btnClick: handleClick
+  //     },
+  //   });
+  //   await wrapper.trigger('click');
+  //   expect(handleClick).not.toBeCalled();
+  // });
 
   it('disabled', async () => {
     const handleClick = jest.fn();
@@ -53,7 +54,7 @@ describe('d-button', () => {
       props: {
         showLoading: false,
         disabled: true,
-        btnClick: handleClick
+        onClick: handleClick
       },
     });
     await wrapper.trigger('click');

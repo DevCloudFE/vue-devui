@@ -1,59 +1,12 @@
-import { computed, defineComponent, ref, PropType } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { Icon } from '../../icon';
-
-export type IButtonType = 'button' | 'submit' | 'reset';
-export type IButtonStyle = 'common' | 'primary' | 'text' | 'text-dark' | 'danger';
-export type IButtonPosition = 'left' | 'right' | 'default';
-export type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
+import { buttonProps } from './button-types';
 
 import './button.scss';
 
 export default defineComponent({
   name: 'DButton',
-  props: {
-    type: {
-      type: String as PropType<IButtonType>,
-      default: 'button'
-    },
-    btnStyle: {
-      type: String as PropType<IButtonStyle>,
-      default: 'primary'
-    },
-    size: {
-      type: String as PropType<IButtonSize>,
-      default: 'md'
-    },
-    position: {
-      type: String as PropType<IButtonPosition>,
-      default: 'default'
-    },
-    bordered: {
-      type: Boolean,
-      default: false
-    },
-    icon: {
-      type: String,
-      default: ''
-    },
-    showLoading: {
-      type: Boolean,
-      default: false
-    },
-    width: {
-      type: String,
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    autofocus: {
-      type: Boolean,
-      default: false
-    },
-    onClick: {
-      type: Function as PropType<(event: MouseEvent) => void>
-    }
-  },
+  props: buttonProps,
   setup(props, ctx) {
     const buttonContent = ref<HTMLSpanElement | null>(null);
 
@@ -95,22 +48,22 @@ export default defineComponent({
         showLoading,
         width
       } = props;
-      const hasIcon = !!icon;
       return (
-        <div class="devui-btn-host">
+        <div class="devui-btn-host" {...ctx.attrs}>
           <button
             class={btnClass.value}
             type={type}
             disabled={disabled}
-            style={{ width: width }}
+            style={{ width }}
             onClick={onClick}
-            {...ctx.attrs}
           // dLoading
           // [showLoading]="showLoading"
           // [loadingTemplateRef]="loadingTemplateRef"
           // [dAutoFocus]="autofocus"
           >
-            {hasIcon ? (<Icon name={props.icon} class={iconClass.value} />) : null}
+            {!!icon ? (
+              <Icon name={props.icon} class={iconClass.value} />
+            ) : null}
             <span class="button-content" ref={buttonContent}>
               {ctx.slots.default?.()}
             </span>

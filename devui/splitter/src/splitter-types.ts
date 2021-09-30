@@ -1,6 +1,6 @@
-import type { PropType, ExtractPropTypes } from 'vue';
-export type SplitterOrientation = 'vertical' | 'horizontal';
-export type CollapseDirection = 'before' | 'after' | 'both';
+import type { PropType, ExtractPropTypes } from 'vue'
+export type SplitterOrientation = 'vertical' | 'horizontal'
+export type CollapseDirection = 'before' | 'after' | 'both'
 
 export const splitterProps = {
   /**
@@ -18,12 +18,19 @@ export const splitterProps = {
     default: '2px',
   },
   /**
+   * 可选，pane 设置不可调整宽度时生效
+   */
+  disabledBarSize: {
+    type: String,
+    default: '1px',
+  },
+  /**
    * 是否显示展开/收缩按钮
    */
   showCollapseButton: {
     type: Boolean,
     default: true,
   },
-} as const;
+} as const
 
-export type SplitterProps = ExtractPropTypes<typeof splitterProps>;
+export type SplitterProps = ExtractPropTypes<typeof splitterProps>
