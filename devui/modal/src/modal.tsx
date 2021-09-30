@@ -2,6 +2,7 @@ import {
   computed,
   defineComponent,
   Transition,
+  watch
 } from 'vue'
 import { modalProps, ModalProps } from './modal-types'
 import { FixedOverlay } from '../../overlay'
@@ -22,15 +23,20 @@ export default defineComponent({
       if (value) {
         update?.(value);
       } else {
-        props.onClose?.();
         const beforeHidden = props.beforeHidden;
-        if (beforeHidden instanceof Promise) {
-          beforeHidden.then((visible) => {
-            update?.(visible);
-          });
+        const close = (enabledClose: boolean) => {
+          if (enabledClose) {
+            update?.(false);
+            props.onClose?.();
+          }
+        }
+        // true: 确认关闭
+        // false: 仍然开启
+        const result = (typeof beforeHidden === 'function' ? beforeHidden() : beforeHidden) ?? true;
+        if (result instanceof Promise) {
+          result.then(close);
         } else {
-          const visible = beforeHidden?.() ?? false;
-          update?.(visible);
+          close(result);
         }
       }
     }

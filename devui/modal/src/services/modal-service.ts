@@ -18,7 +18,7 @@ export interface ModalOptions {
   content: Slot
 
   onClose(): void
-  beforeHidden: (() => boolean) | Promise<boolean>
+  beforeHidden: (() => boolean | Promise<boolean>) | Promise<boolean>
 }
 
 
@@ -37,25 +37,41 @@ export class ModalService extends CommonModalService<ModalOptions, ModalProps> {
 
     const {content, ...resProps} = props;
 
-    // 隐藏按钮
-    const hide = () => {
-      this.renderModal(anchor, {...resProps, modelValue: false }, { default: content });
-      this.renderNull(anchor);
+    const needHideOrNot = (value: boolean) => {
+      if (!value) {
+        hide();
+      }
+    }
+    const renderOrigin = (props: typeof resProps, onUpdateModelValue = needHideOrNot) => {
+      return this.renderModal(anchor, {
+        ...props,
+        modelValue: true,
+        'onUpdate:modelValue': onUpdateModelValue
+      }, {default: content});
     }
 
+
+    // 隐藏按钮
+    const hide = () => {
+      const vnode = renderOrigin(resProps, (value: boolean) => {
+        if (!value) {
+          this.renderModal(anchor, {...resProps, modelValue: false});
+          this.renderNull(anchor);
+        } else {
+          renderOrigin(resProps);
+        }
+      });
+      vnode.component.exposed.onVisibleChange?.(false);
+    }
+
+
     // 先渲染一次，触发动画用
-    this.renderModal(anchor, {modelValue: false});
+    this.renderModal(anchor, { modelValue: false });
 
     // 再渲染详细内容
-    this.renderModal(anchor, {
-      ...resProps,
-      modelValue: true, 
-      'onUpdate:modelValue': (value: boolean) => {
-        if (!value) {
-          hide();
-        }
-      }
-    }, {default: content});
+    renderOrigin(resProps);
+    
+    return { hide }
     
     return { hide }
   }

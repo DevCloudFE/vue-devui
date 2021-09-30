@@ -1,4 +1,5 @@
 import { Slot, InjectionKey } from 'vue';
+// import {h, ref, SetupContext, defineComponent, customRef} from 'vue'
 import { CommonModalService, ModalOpenResult } from './common-modal-service';
 import Dialog from '../dialog';
 import { ButtonOptions, DialogProps } from '../dialog-types';
@@ -23,8 +24,7 @@ export interface DialogOptions {
   buttons: ButtonOptions[]
 
   onClose(): void
-  beforeHidden: (() => boolean) | Promise<boolean>
-  
+  beforeHidden: (() => boolean | Promise<boolean>) | Promise<boolean>
 }
 
 export class DialogService extends CommonModalService<DialogOptions, DialogProps> {
@@ -42,10 +42,33 @@ export class DialogService extends CommonModalService<DialogOptions, DialogProps
 
     const {content, ...resProps} = props;
 
+    const needHideOrNot = (value: boolean) => {
+      if (!value) {
+        hide();
+      }
+    }
+
+    const renderOrigin = (props: typeof resProps, onUpdateModelValue = needHideOrNot) => {
+      return this.renderModal(anchor, {
+        ...props,
+        modelValue: true,
+        'onUpdate:modelValue': onUpdateModelValue
+      }, {default: content});
+    }
+    
+    
+
     // 隐藏按钮
     const hide = () => {
-      this.renderModal(anchor, {...resProps, modelValue: false }, { default: content });
-      this.renderNull(anchor);
+      const vnode = renderOrigin(resProps, (value: boolean) => {
+        if (!value) {
+          this.renderModal(anchor, {...resProps, modelValue: false});
+          this.renderNull(anchor);
+        } else {
+          renderOrigin(resProps);
+        }
+      });
+      vnode.component.exposed.closeModal?.();
     }
 
     // 更新按钮选项
@@ -55,26 +78,42 @@ export class DialogService extends CommonModalService<DialogOptions, DialogProps
         ...option,
         ...buttonOptions[index]
       }));
-      this.renderModal(anchor, { 
-        ...innerResProps, 
-        buttons: newButtonOptions 
-      }, { default: content });
+      renderOrigin({...innerResProps, buttons: newButtonOptions});
     }
 
     // 先渲染一次，触发动画用
-    this.renderModal(anchor, {modelValue: false});
+    this.renderModal(anchor, { modelValue: false });
 
     // 再渲染详细内容
-    this.renderModal(anchor, {
-      ...resProps,
-      modelValue: true, 
-      'onUpdate:modelValue': (value: boolean) => {
-        if (!value) {
-          hide();
-        }
-      }
-    }, {default: content});
+    renderOrigin(resProps);
     
     return { hide, updateButtonOptions }
+
+    // TODO: 这个需要再考虑设计
+    // const CurrentDialog = defineComponent((currentProps: typeof props, ctx: SetupContext) => {
+    //   const dialogRef = ref<{closeModal(): void;} | null>();
+    //   const visibleRef = ref(true);
+    //   const buttonsRef = ref(currentProps.buttons);
+    //   ctx.expose({ 
+    //     closeModal() {
+    //       dialogRef.value?.closeModal?.();
+    //     },
+    //     updateButtons(buttons: ButtonOptions) {
+    //       buttonsRef.value = buttonsRef.value.map((option, index) => ({
+    //         ...option,
+    //         ...buttons[index]
+    //       }));
+    //     }
+    //   });
+    //   return () => {
+    //       const {content, ...resProps} = currentProps;
+    //       return h(Dialog, {
+    //       ...resProps,
+    //       ref: dialogRef,
+    //       modelValue: visibleRef.value,
+    //       'onUpdate:modelValue': (value) => visibleRef.value = value
+    //     }, {default: content});
+    //   };
+    // });
   }
 }

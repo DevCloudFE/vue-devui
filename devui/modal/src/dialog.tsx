@@ -84,6 +84,7 @@ export default defineComponent({
     const closeModal = () => {
       modalRef.value?.onVisibleChange?.(false)
     }
+    ctx.expose({ closeModal });
 
     return () => (
       <Modal
