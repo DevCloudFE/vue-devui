@@ -43,8 +43,9 @@ export default defineComponent({
         if (!store.isStaticBar(props.index)) {
           state.wrapperClass += ' resizable'
         } else {
-          // TODO 禁用的样式处理
-          // console.log(666);
+          nextTick(() => {
+            setStyle(domRef.value, { flexBasis: props.disabledBarSize })
+          })
         }
       },
       { deep: true }
