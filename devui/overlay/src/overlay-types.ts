@@ -18,10 +18,6 @@ export const overlayProps = {
   backgroundStyle: {
     type: [String, Object] as PropType<string | CSSProperties>
   },
-  hasBackdrop: {
-    type: Boolean,
-    default: false
-  },
   backdropClick: {
     type: Function,
   },
