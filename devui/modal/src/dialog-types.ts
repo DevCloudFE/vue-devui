@@ -70,7 +70,7 @@ export const dialogProps = {
     type: Function as PropType<() => void>,
   },
   beforeHidden: {
-    type: [Promise, Function] as PropType<Promise<boolean> | (() => boolean)>
+    type: [Promise, Function] as PropType<Promise<boolean> | (() => boolean | Promise<boolean>)>
   },
 
   buttons: {

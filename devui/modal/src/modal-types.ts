@@ -58,7 +58,7 @@ export const modalProps = {
     type: Function as PropType<() => void>,
   },
   beforeHidden: {
-    type: Object as PropType<Promise<boolean> | (() => boolean)>
+    type: [Object, Function] as PropType<Promise<boolean> | (() => boolean| Promise<boolean>)>
   },
 
   modelValue: {
