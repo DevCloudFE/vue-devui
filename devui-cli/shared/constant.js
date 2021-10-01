@@ -5,6 +5,7 @@ exports.VERSION = version
 exports.CWD = process.cwd()
 exports.DEVUI_DIR = resolve(this.CWD, 'devui')
 exports.DEVUI_NAMESPACE = 'd'
+exports.CSS_CLASS_PREFIX = 'devui'
 exports.TESTS_DIR_NAME = '__tests__'
 exports.INDEX_FILE_NAME = 'index.ts'
 exports.VUE_DEVUI_IGNORE_DIRS = ['shared', 'style']

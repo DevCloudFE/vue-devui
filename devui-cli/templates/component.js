@@ -1,4 +1,4 @@
-const { DEVUI_NAMESPACE } = require('../shared/constant')
+const { DEVUI_NAMESPACE, CSS_CLASS_PREFIX } = require('../shared/constant')
 const { camelCase } = require('lodash')
 const { bigCamelCase } = require('../shared/utils')
 
@@ -18,7 +18,7 @@ export default defineComponent({
   render() {
     const {} = this
 
-    return <div class="${DEVUI_NAMESPACE}-${componentName}"></div>
+    return <div class="${CSS_CLASS_PREFIX}-${componentName}"></div>
   }
 })
 `
@@ -59,7 +59,7 @@ export default ${bigCamelCase(serviceName)}
 `
 
 exports.createStyleTemplate = ({ componentName }) => `\
-.${DEVUI_NAMESPACE}-${componentName} {
+.${CSS_CLASS_PREFIX}-${componentName} {
   //
 }
 `
