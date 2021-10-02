@@ -10,11 +10,11 @@ function buildCategoryOptions(text, children = []) {
   return { text, children }
 }
 
-exports.createVitepressSidebarTemplate = (componentsInfo) => {
+exports.createVitepressSidebarTemplate = (componentsInfo = []) => {
   const rootNav = { text: '快速开始', link: '/' }
   const categoryMap = VITEPRESS_SIDEBAR_CATEGORY.reduce((map, cate) => map.set(cate, []), new Map())
 
-  ;(componentsInfo || []).forEach((info) => {
+  componentsInfo.forEach((info) => {
     if (categoryMap.has(info.category)) {
       categoryMap.get(info.category).push(buildComponentOptions(info.title, info.name, info.status))
     } else {

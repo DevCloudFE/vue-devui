@@ -178,7 +178,6 @@ d-fixed-overlay 参数
 | onUpdate:visible | `(value: boolean) => void` |  --   | 可选，遮罩层取消可见事件                                              |
 | backgroundBlock  |         `boolean`          | false | 可选，如果为 true，背景不能滚动                                       |
 | backgroundClass  |          `string`          |  --   | 可选，背景的样式类                                                    |
-|   hasBackdrop    |         `boolean`          | true  | 可选，如果为false，背景后下的内容将可以触发                           |
 |  backdropClick   |        `() => void`        |  --   | 可选，点击背景触发的事件                                              |
 |  backdropClose   |         `boolean`          | false | 可选，如果为true，点击背景将触发 `onUpdate:visible`，默认参数是 false |
 |   overlayStyle   |      `CSSProperties`       |  --   | 可选，遮罩层的样式                                                    |
@@ -191,7 +190,6 @@ d-flexible-overlay 参数
 | onUpdate:visible |                                                                                         `(value: boolean) => void`                                                                                         |  --   | 可选，遮罩层取消可见事件                                          |
 | backgroundBlock  |                                                                                                 `boolean`                                                                                                  | false | 可选，如果为 true，背景不能滚动                                   |
 | backgroundClass  |                                                                                                  `string`                                                                                                  |  --   | 可选，背景的样式类                                                |
-|   hasBackdrop    |                                                                                                 `boolean`                                                                                                  | true  | 可选，如果为false，背景后下的内容将可以触发                       |
 |  backdropClick   |                                                                                                `() => void`                                                                                                |  --   | 可选，点击背景触发的事件                                          |
 |  backdropClose   |                                                                                                 `boolean`                                                                                                  | false | 可选，如果为true，点击背景将触发 `onUpdate:visible`，参数是 false |
 |      origin      |                                                     `Element \| ComponentPublicInstance \| { x: number, y: number, width?: number, height?: number }`                                                      | false | 必选，你必须指定起点元素才能让遮罩层与该元素连接在一起            |
