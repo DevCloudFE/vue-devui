@@ -42,11 +42,7 @@ exports.selectParts = () => ({
   name: 'parts',
   type: 'checkbox',
   message: '（必填）请选择包含部件，将自动生成部件文件：',
-  choices: [
-    COMPONENT_PARTS_MAP.get('component'),
-    COMPONENT_PARTS_MAP.get('directive'),
-    COMPONENT_PARTS_MAP.get('service')
-  ],
+  choices: COMPONENT_PARTS_MAP,
   default: [],
   validate: (value) => {
     if (value.length === 0) {

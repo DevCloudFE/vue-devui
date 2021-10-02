@@ -14,28 +14,27 @@ export const FixedOverlay = defineComponent({
     },
   },
   setup(props, ctx) {
-    const { containerClass, panelClass, handleBackdropClick } =
-      useOverlayLogic(props);
-
-    const overlayRef = ref<HTMLDivElement | null>(null);
-    const handleBubbleCancel = (event: Event) => (event.cancelBubble = true);
+    const {
+      backgroundClass,
+      overlayClass,
+      handleBackdropClick,
+      handleOverlayBubbleCancel
+    } = useOverlayLogic(props);
 
     return () => (
       <CommonOverlay>
         <div
           v-show={props.visible}
-          class={containerClass.value}
+          class={backgroundClass.value}
+          style={props.backgroundStyle}
           onClick={handleBackdropClick}
         >
-          <div class={panelClass.value}>
-            <div
-              ref={overlayRef}
-              class="d-overlay"
-              style={props.overlayStyle}
-              onClick={handleBubbleCancel}
-            >
-              {renderSlot(ctx.slots, 'default')}
-            </div>
+          <div
+            class={overlayClass.value}
+            style={props.overlayStyle}
+            onClick={handleOverlayBubbleCancel}
+          >
+            {renderSlot(ctx.slots, 'default')}
           </div>
         </div>
       </CommonOverlay>

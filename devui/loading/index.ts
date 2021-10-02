@@ -3,6 +3,9 @@ import Loading from './src/directive'
 import LoadingService from './src/service'
 
 export default {
+  title: 'Loading 加载提示',
+  category: '反馈',
+  status: '已完成',
   install(app: App): void {
     app.directive('dLoading', Loading)
     app.config.globalProperties.$loadingService = LoadingService
