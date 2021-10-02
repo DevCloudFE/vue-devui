@@ -1,13 +1,12 @@
-const { DEVUI_NAMESPACE } = require('../shared/constant')
+const { DEVUI_NAMESPACE, CSS_CLASS_PREFIX } = require('../shared/constant')
 const { camelCase } = require('lodash')
 const { bigCamelCase } = require('../shared/utils')
 
 // 创建组件模板
 exports.createComponentTemplate = ({ styleName, componentName, typesName }) => `\
-import './${styleName}.scss'
-
 import { defineComponent } from 'vue'
 import { ${camelCase(componentName)}Props, ${bigCamelCase(componentName)}Props } from './${typesName}'
+import './${styleName}.scss'
 
 export default defineComponent({
   name: '${bigCamelCase(DEVUI_NAMESPACE)}${bigCamelCase(componentName)}',
@@ -15,7 +14,7 @@ export default defineComponent({
   emits: [],
   setup(props: ${bigCamelCase(componentName)}Props, ctx) {
     return (
-      <div class="${DEVUI_NAMESPACE}-${componentName}"></div>
+      <div class="${CSS_CLASS_PREFIX}-${componentName}"></div>
     )
   }
 })
@@ -60,7 +59,7 @@ export default ${bigCamelCase(serviceName)}
 
 // 创建scss模板
 exports.createStyleTemplate = ({ componentName }) => `\
-.${DEVUI_NAMESPACE}-${componentName} {
+.${CSS_CLASS_PREFIX}-${componentName} {
   //
 }
 `
@@ -80,7 +79,7 @@ exports.createIndexTemplate = ({
   const importDirectiveStr = `\nimport ${bigCamelCase(directiveName)} from './src/${directiveName}'`
   const importServiceStr = `\nimport ${bigCamelCase(serviceName)} from './src/${serviceName}'`
 
-  const installComponentStr = `\n    app.use(${bigCamelCase(componentName)} as any)`
+  const installComponentStr = `    app.use(${bigCamelCase(componentName)} as any)`
   const installDirectiveStr = `\n    app.directive('${bigCamelCase(componentName)}', ${bigCamelCase(directiveName)})`
   const installServiceStr = `\n    app.config.globalProperties.$${camelCase(serviceName)} = ${bigCamelCase(
     serviceName
