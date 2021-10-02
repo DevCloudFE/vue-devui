@@ -15,12 +15,12 @@ export default defineComponent({
     return () => {
       if (props.loading) {
         return <div class={`devui-skeleton ${props.animate ? 'devui-skeleton-animated' : ''}`}>
-          <div class={`d-skeleton__avatar ${props.avatar ? 'is-shown' : ''}`}>
+          <div class={`devui-skeleton__avatar ${props.avatar ? 'is-shown' : ''}`}>
             <div class="avatar"/>
           </div>
-          <div class="d-skeleton__item__group">{
+          <div class="devui-skeleton__item__group">{
             arr.map(() => {
-              return <div class="d-skeleton__item" />
+              return <div class="devui-skeleton__item" />
             })
           }</div>
         </div>

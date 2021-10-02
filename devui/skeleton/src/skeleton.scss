@@ -1,7 +1,7 @@
 .devui-skeleton {
   display: flex;
   justify-content: space-between;
-  .d-skeleton__avatar {
+  .devui-skeleton__avatar {
     display: none;
     .avatar {
       width: 40px;
@@ -15,26 +15,26 @@
     display: flex;
     justify-content: center;
   }
-  .d-skeleton__item__group {
+  .devui-skeleton__item__group {
     flex: 7;
-    .d-skeleton__item {
+    .devui-skeleton__item {
       width: 100%;
       height: 16px;
       background-color: #ccc;
       display: inline-block;
       border-radius: 4px;
     }
-    .d-skeleton__item:first-child {
+    .devui-skeleton__item:first-child {
       width: 33%;
     }
-    .d-skeleton__item:last-child {
+    .devui-skeleton__item:last-child {
       width: 61%;
     }
   }
 }
 
-.devui-skeleton-animated > .d-skeleton__avatar > .avatar,
-.devui-skeleton-animated > .d-skeleton__item__group > .d-skeleton__item {
+.devui-skeleton-animated > .devui-skeleton__avatar > .avatar,
+.devui-skeleton-animated > .devui-skeleton__item__group > .devui-skeleton__item {
   background-color: #ccc;
   background: linear-gradient(
       100deg,
@@ -47,7 +47,7 @@
   background-position-x: 180%;
   animation: 2s loading ease-in-out infinite;
 }
-.devui-skeleton-animated > .d-skeleton__avatar > .avatar {
+.devui-skeleton-animated > .devui-skeleton__avatar > .avatar {
   animation-delay: 0.1s;
 }
 
