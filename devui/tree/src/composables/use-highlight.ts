@@ -1,18 +1,18 @@
 import { ref, Ref } from 'vue'
 
-interface TypeHighLightClass {
+interface TypeHighlightClass {
   [key: string]: 'active' | '' | 'isDisabled'
 }
-type TypeUseHighLightNode = () => {
-  nodeClassNameRefelct: Ref<TypeHighLightClass>
+type TypeUseHighlightNode = () => {
+  nodeClassNameRefelct: Ref<TypeHighlightClass>
   handleClickOnNode: (index: string) => void
   handleInitNodeClassNameRefelct: (isDisabled: boolean, ...keys: Array<string>) => string
 }
 
 const HightLightClass = 'active'
 const IsDisabledFlag = 'isDisabled'
-const useHighLightNode: TypeUseHighLightNode = () => {
-  const nodeClassNameRefelctRef = ref<TypeHighLightClass>({})
+const useHighlightNode: TypeUseHighlightNode = () => {
+  const nodeClassNameRefelctRef = ref<TypeHighlightClass>({})
 
   const handleInit = (isDisabled = false, ...keys) => {
     const key = keys.join('-')
@@ -42,4 +42,4 @@ const useHighLightNode: TypeUseHighLightNode = () => {
     handleInitNodeClassNameRefelct: handleInit,
   }
 }
-export default useHighLightNode
+export default useHighlightNode

@@ -2,7 +2,7 @@ import { defineComponent, toRefs } from 'vue'
 import { treeProps, TreeProps } from './tree-types'
 import { flatten } from './util'
 import useToggle from './composables/use-toggle'
-import useHighLightNode from './composables/use-highlight'
+import useHighlightNode from './composables/use-highlight'
 import IconOpen from './assets/open.svg'
 import IconClose from './assets/close.svg'
 import './tree.scss'
@@ -16,7 +16,7 @@ export default defineComponent({
     const flatData = flatten(data.value)
 
     const { openedData, toggle } = useToggle(data.value)
-    const { nodeClassNameRefelct, handleInitNodeClassNameRefelct, handleClickOnNode } = useHighLightNode()
+    const { nodeClassNameRefelct, handleInitNodeClassNameRefelct, handleClickOnNode } = useHighlightNode()
 
     const Indent = () => {
       return <span style="display: inline-block; width: 16px; height: 16px;"></span>
