@@ -1,7 +1,8 @@
-import { defineComponent, toRefs } from 'vue'
+import { defineComponent, toRefs, unref } from 'vue'
 import { treeProps, TreeProps } from './tree-types'
 import { flatten } from './util'
 import useToggle from './composables/use-toggle'
+import useFormat from './composables/use-format'
 import IconOpen from './assets/open.svg'
 import IconClose from './assets/close.svg'
 import './tree.scss'
@@ -14,7 +15,10 @@ export default defineComponent({
     const { data } = toRefs(props)
     const flatData = flatten(data.value)
 
-    const { openedData, toggle } = useToggle(data.value)
+    const { formatData } = useFormat(data.value);
+    console.log(unref(formatData), 'formatData');
+    
+    const { openedData, toggle } = useToggle(formatData.value)
 
     const Indent = () => {
       return <span style="display: inline-block; width: 16px; height: 16px;"></span>

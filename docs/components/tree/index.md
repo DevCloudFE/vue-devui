@@ -171,4 +171,103 @@ export default defineComponent({
 
 :::
 
+## 合并节点
 
+:::demo 当节点下只有一个子节点时，合并该节点。
+
+```vue
+<template>
+  <d-tree :data="data"></d-tree>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+
+    const data = ref([
+      {
+        label: 'parent node 1',
+        children: [
+          {
+            label: 'parent node 11',
+            open: true,
+            children: [
+              {
+                label: 'parent node 111',
+                children: [
+                  {
+                    label: 'parent node 1111',
+                    children: [
+                      {
+                        label: 'leaf node 11111',
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+        ]
+      },
+      {
+        label: 'parent node 2',
+        children: [
+          {
+            label: 'parent node 21',
+            open: true,
+            children: [
+              {
+                label: 'leaf node 211',
+              },
+              {
+                label: 'leaf node 212',
+              },
+              {
+                label: 'leaf node 213',
+              },
+              {
+                label: 'leaf node 214',
+              },
+              {
+                label: 'leaf node 215',
+              },
+            ]
+          },
+        ]
+      },
+      {
+        label: 'parent node 3',
+        children: [
+          {
+            label: 'leaf node 31',
+            children: [
+              {
+                label: 'leaf node 311',
+                children: [
+                  {
+                    label: 'leaf node 3111',
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            label: 'leaf node 32',
+          },
+          {
+            label: 'leaf node 33',
+          }
+        ]
+      }
+    ]);
+    
+    return {
+      data
+    }
+  }
+})
+</script>
+```
+:::
