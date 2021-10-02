@@ -2,6 +2,7 @@ const { DEVUI_NAMESPACE } = require('../shared/constant')
 const { camelCase } = require('lodash')
 const { bigCamelCase } = require('../shared/utils')
 
+// 创建组件模板
 exports.createComponentTemplate = ({ styleName, componentName, typesName }) => `\
 import './${styleName}.scss'
 
@@ -13,16 +14,14 @@ export default defineComponent({
   props: ${camelCase(componentName)}Props,
   emits: [],
   setup(props: ${bigCamelCase(componentName)}Props, ctx) {
-    return {}
-  },
-  render() {
-    const {} = this
-
-    return <div class="${DEVUI_NAMESPACE}-${componentName}"></div>
+    return (
+      <div class="${DEVUI_NAMESPACE}-${componentName}"></div>
+    )
   }
 })
 `
 
+// 创建类型声明模板
 exports.createTypesTemplate = ({ componentName }) => `\
 import type { PropType, ExtractPropTypes } from 'vue'
 
@@ -35,6 +34,7 @@ export const ${camelCase(componentName)}Props = {
 export type ${bigCamelCase(componentName)}Props = ExtractPropTypes<typeof ${camelCase(componentName)}Props>
 `
 
+// 创建指令模板
 exports.createDirectiveTemplate = () => `\
 // can export function.
 export default {
@@ -47,7 +47,7 @@ export default {
   unmounted() { }
 }
 `
-
+// 创建server模板
 exports.createServiceTemplate = ({ componentName, typesName, serviceName }) => `\
 import { ${bigCamelCase(componentName)}Props } from './${typesName}'
 
@@ -58,12 +58,14 @@ const ${bigCamelCase(serviceName)} = {
 export default ${bigCamelCase(serviceName)}
 `
 
+// 创建scss模板
 exports.createStyleTemplate = ({ componentName }) => `\
 .${DEVUI_NAMESPACE}-${componentName} {
   //
 }
 `
 
+// 创建index模板
 exports.createIndexTemplate = ({
   title,
   category,
@@ -86,15 +88,13 @@ exports.createIndexTemplate = ({
 
   const getPartStr = (state, str) => (state ? str : '')
 
-  const importStr =
-    getPartStr(hasComponent, importComponentStr) +
-    getPartStr(hasDirective, importDirectiveStr) +
-    getPartStr(hasService, importServiceStr)
+  const importStr = getPartStr(hasComponent, importComponentStr) +
+                    getPartStr(hasDirective, importDirectiveStr) +
+                    getPartStr(hasService, importServiceStr)
 
-  const installStr =
-    getPartStr(hasComponent, installComponentStr) +
-    getPartStr(hasDirective, installDirectiveStr) +
-    getPartStr(hasService, installServiceStr)
+  const installStr = getPartStr(hasComponent, installComponentStr) +
+                     getPartStr(hasDirective, installDirectiveStr) +
+                     getPartStr(hasService, installServiceStr)
 
   return `\
 import type { App } from 'vue'\
@@ -125,5 +125,89 @@ export default {
 `
 }
 
-exports.createTestsTemplate = () => `\
+// 创建测试模板
+exports.createTestsTemplate = ({
+  componentName,
+  directiveName,
+  serviceName,
+  hasComponent,
+  hasDirective,
+  hasService
+}) => `\
+import { mount } from '@vue/test-utils';
+import { ${[
+    hasComponent ? bigCamelCase(componentName) : null,
+    hasDirective ? bigCamelCase(directiveName) : null,
+    hasService ? bigCamelCase(serviceName) : null
+  ]
+    .filter((p) => p !== null)
+    .join(', ')} } from '../index';
+
+describe('${componentName} test', () => {
+  it('${componentName} init render', async () => {
+    // todo
+  })
+})
+`
+
+// 创建文档模板
+exports.createDocumentTemplate = ({
+  componentName,
+  title
+}) => `\
+# ${bigCamelCase(componentName)} ${title}
+
+// todo 组件描述
+
+### 何时使用
+
+// todo 使用时机描述
+
+
+### 基本用法
+// todo 用法描述
+:::demo // todo 展开代码的内部描述
+
+\`\`\`vue
+<template>
+  <div>{{ msg }}</div>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  setup() {
+    return {
+      msg: '${bigCamelCase(componentName)} ${title} 组件文档示例'
+    }
+  }
+})
+</script>
+
+<style>
+
+</style>
+\`\`\`
+
+:::
+
+### d-${componentName}
+
+d-${componentName} 参数
+
+| 参数 | 类型 | 默认 | 说明 | 跳转 Demo | 全局配置项 |
+| ---- | ---- | ---- | ---- | --------- | --------- |
+|      |      |      |      |           |           |
+|      |      |      |      |           |           |
+|      |      |      |      |           |           |
+
+d-${componentName} 事件
+
+| 事件 | 类型 | 说明 | 跳转 Demo |
+| ---- | ---- | ---- | --------- |
+|      |      |      |           |
+|      |      |      |           |
+|      |      |      |           |
+
 `
