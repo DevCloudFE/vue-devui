@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, unref } from 'vue'
+import { defineComponent, toRefs } from 'vue'
 import { treeProps, TreeProps } from './tree-types'
 import { flatten } from './util'
 import useToggle from './composables/use-toggle'
