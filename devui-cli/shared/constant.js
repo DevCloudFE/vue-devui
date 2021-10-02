@@ -8,6 +8,7 @@ exports.DEVUI_NAMESPACE = 'd'
 exports.CSS_CLASS_PREFIX = 'devui'
 exports.TESTS_DIR_NAME = '__tests__'
 exports.INDEX_FILE_NAME = 'index.ts'
+exports.DOCS_FILE_NAME = 'index.md'
 exports.VUE_DEVUI_IGNORE_DIRS = ['shared', 'style']
 exports.VUE_DEVUI_FILE_NAME = 'vue-devui.ts'
 exports.VUE_DEVUI_FILE = resolve(this.DEVUI_DIR, this.VUE_DEVUI_FILE_NAME)
@@ -21,16 +22,24 @@ exports.VITEPRESS_SIDEBAR_FILE = resolve(this.VITEPRESS_DIR, `config/${this.VITE
 // 这里的分类顺序将会影响最终生成的页面侧边栏顺序
 exports.VITEPRESS_SIDEBAR_CATEGORY = ['通用', '导航', '反馈', '数据录入', '数据展示', '布局']
 
-exports.COMPONENT_PARTS_MAP = new Map([
-  ['component', 'component（组件）'],
-  ['directive', 'directive（指令）'],
-  ['service', 'service（服务）']
-])
+exports.COMPONENT_PARTS_MAP = [
+  {
+    name: 'component（组件）',
+    value: 'component'
+  },
+  {
+    name: 'directive（指令）',
+    value: 'directive'
+  },
+  {
+    name: 'service（服务）',
+    value: 'service'
+  }
+]
 
 exports.CREATE_SUPPORT_TYPE_MAP = Object.freeze({
   component: 'component',
   'vue-devui': 'vue-devui',
-  'vitepress/sidebar': 'vitepress/sidebar',
   'theme-variable': 'theme-variable',
 })
 exports.CREATE_SUPPORT_TYPES = Object.keys(this.CREATE_SUPPORT_TYPE_MAP)

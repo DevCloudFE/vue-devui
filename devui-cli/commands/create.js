@@ -1,5 +1,10 @@
 const logger = require('../shared/logger')
-const { bigCamelCase, resolveDirFilesInfo, parseExportByFileInfo, parseComponentInfo } = require('../shared/utils')
+const {
+  bigCamelCase,
+  resolveDirFilesInfo,
+  parseExportByFileInfo,
+  parseComponentInfo
+} = require('../shared/utils')
 const fs = require('fs-extra')
 const { resolve } = require('path')
 const {
@@ -8,6 +13,7 @@ const {
   TESTS_DIR_NAME,
   COMPONENT_PARTS_MAP,
   INDEX_FILE_NAME,
+  DOCS_FILE_NAME,
   VUE_DEVUI_FILE,
   VUE_DEVUI_IGNORE_DIRS,
   VUE_DEVUI_FILE_NAME,
@@ -29,7 +35,8 @@ const {
   createDirectiveTemplate,
   createServiceTemplate,
   createIndexTemplate,
-  createTestsTemplate
+  createTestsTemplate,
+  createDocumentTemplate
 } = require('../templates/component')
 const { createVueDevuiTemplate } = require('../templates/vue-devui')
 const ora = require('ora')
@@ -64,17 +71,17 @@ exports.create = async (cwd) => {
     switch (type) {
       case CREATE_SUPPORT_TYPE_MAP.component:
         params = await inquirer.prompt([typeName(), typeTitle(), selectCategory(), selectParts()])
-        params.hasComponent = params.parts.includes(COMPONENT_PARTS_MAP.get('component'))
-        params.hasDirective = params.parts.includes(COMPONENT_PARTS_MAP.get('directive'))
-        params.hasService = params.parts.includes(COMPONENT_PARTS_MAP.get('service'))
+        params.hasComponent = params.parts.includes('component')
+        params.hasDirective = params.parts.includes('directive')
+        params.hasService = params.parts.includes('service')
 
         await createComponent(params, cwd)
         break
       case CREATE_SUPPORT_TYPE_MAP['vue-devui']:
+        // 创建 devui/vue-devui.ts
         await createVueDevui(params, cwd)
-        break
-      case CREATE_SUPPORT_TYPE_MAP['vitepress/sidebar']:
-        await createVitepressSidebar(params, cwd)
+        // 创建 docs/.vitepress/config/sidebar.ts
+        await createVitepressSidebar()
         break
       default:
         break
@@ -93,6 +100,7 @@ async function createComponent(params = {}) {
   const typesName = kebabCase(name) + '-types'
   const directiveName = kebabCase(name) + '-directive'
   const serviceName = kebabCase(name) + '-service'
+  const testName = kebabCase(name) + '.spec'
 
   const _params = {
     ...params,
@@ -100,7 +108,8 @@ async function createComponent(params = {}) {
     typesName,
     directiveName,
     serviceName,
-    styleName
+    styleName,
+    testName
   }
 
   const componentTemplate = createComponentTemplate(_params)
@@ -109,12 +118,15 @@ async function createComponent(params = {}) {
   const directiveTemplate = createDirectiveTemplate(_params)
   const serviceTemplate = createServiceTemplate(_params)
   const indexTemplate = createIndexTemplate(_params)
-  // TODO: 增加测试模板
+  // 增加测试模板
   const testsTemplate = createTestsTemplate(_params)
+  // 增加文档模板
+  const docTemplate = createDocumentTemplate(_params)
 
   const componentDir = resolve(DEVUI_DIR, componentName)
   const srcDir = resolve(componentDir, 'src')
   const testsDir = resolve(DEVUI_DIR, componentName, TESTS_DIR_NAME)
+  const docsDir = resolve(SITES_COMPONENTS_DIR, componentName)
 
   if (fs.pathExistsSync(componentDir)) {
     logger.error(`${bigCamelCase(componentName)} 组件目录已存在！`)
@@ -126,7 +138,17 @@ async function createComponent(params = {}) {
   try {
     await Promise.all([fs.mkdirs(componentDir), fs.mkdirs(srcDir), fs.mkdirs(testsDir)])
 
-    const writeFiles = [fs.writeFile(resolve(componentDir, INDEX_FILE_NAME), indexTemplate)]
+    const writeFiles = [
+      fs.writeFile(resolve(componentDir, INDEX_FILE_NAME), indexTemplate),
+      fs.writeFile(resolve(testsDir, `${testName}.ts`), testsTemplate),
+    ]
+
+    if (!fs.existsSync(docsDir)) {
+      fs.mkdirSync(docsDir)
+      writeFiles.push(fs.writeFile(resolve(docsDir, DOCS_FILE_NAME), docTemplate))
+    } else {
+      logger.warning(`\n${bigCamelCase(componentName)} 组件文档已存在：${resolve(docsDir, DOCS_FILE_NAME)}`)
+    }
 
     if (hasComponent || hasService) {
       writeFiles.push(fs.writeFile(resolve(srcDir, `${typesName}.ts`), typesTemplate))
@@ -184,12 +206,7 @@ async function createVueDevui(params, { ignoreParseError }) {
   }
 }
 
-async function createVitepressSidebar(params, { cover }) {
-  if (fs.pathExistsSync(VITEPRESS_SIDEBAR_FILE) && !cover) {
-    logger.warning(`${VITEPRESS_SIDEBAR_FILE_NAME} 文件已存在！`)
-    process.exit(0)
-  }
-
+async function createVitepressSidebar() {
   const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS)
   const componentsInfo = []
 

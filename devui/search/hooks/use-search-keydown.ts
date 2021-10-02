@@ -3,7 +3,7 @@
  */
 import { SetupContext, Ref, } from 'vue'
 import { KeydownReturnTypes } from '../src/search-types'
-import { debounce } from 'lodash'
+import { debounce } from 'lodash-es'
 const KEYS_MAP = {
   enter: 'Enter'
 } as const

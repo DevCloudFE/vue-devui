@@ -1,4 +1,4 @@
-const sidebar = {
+export default {
   '/': [
     { text: '快速开始', link: '/' },
     {
@@ -96,5 +96,3 @@ const sidebar = {
     },
   ]
 }
-
-export default sidebar
