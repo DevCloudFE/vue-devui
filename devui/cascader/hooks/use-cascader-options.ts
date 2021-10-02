@@ -9,7 +9,7 @@ export const optionsHandles = (options?: CascaderItem[]) => {
     cascaderOptions = reactive<[CascaderItem[]]>([ options ])
   }
   /**
-   * 将选中的options下标装进cascaderIndexs
+   * hover时修改展示项
    * @param optionItem - 项
    * @param ulIndex - 当前选中的第几级
    * 

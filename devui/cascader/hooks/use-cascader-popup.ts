@@ -7,7 +7,7 @@ import { PopupTypes } from '../src/cascader-types'
 export const popupHandles = (): PopupTypes => {
   const menuShow = ref(false)
   const menuOpenClass = ref('')
-  const openPopup = (e) => {
+  const openPopup = () => {
     menuShow.value = !menuShow.value
   }
   watch(menuShow, (status) => {
