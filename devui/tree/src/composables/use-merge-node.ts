@@ -24,7 +24,7 @@ export default function useMergeNode(data: Array<any>): any {
     return treeItem;
   };
 
-  const margeNode = (
+  const mergeNode = (
     tree: Array<any>,
     level = 0,
     childName = 'children',
@@ -40,13 +40,13 @@ export default function useMergeNode(data: Array<any>): any {
         currentObject = mergeObject(item);
       }
       return Object.assign({}, currentObject, {
-        [childName]: margeNode(currentObject[childName], level + 1, childName, labelName),
+        [childName]: mergeNode(currentObject[childName], level + 1, childName, labelName),
         level: level + 1,
       });
     });
   };
 
-  const margeData = ref(margeNode(data));
+  const margeData = ref(mergeNode(data));
 
   return {
     margeData,

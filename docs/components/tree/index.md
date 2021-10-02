@@ -171,7 +171,7 @@ export default defineComponent({
 
 :::
 
-## 合并节点
+### 合并节点
 
 :::demo 当节点下只有一个子节点时，合并该节点。
 
