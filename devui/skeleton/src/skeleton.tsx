@@ -14,7 +14,7 @@ export default defineComponent({
     }
     return () => {
       if (props.loading) {
-        return <div class={`d-skeleton ${props.animate ? 'd-skeleton-animated' : ''}`}>
+        return <div class={`devui-skeleton ${props.animate ? 'devui-skeleton-animated' : ''}`}>
           <div class={`d-skeleton__avatar ${props.avatar ? 'is-shown' : ''}`}>
             <div class="avatar"/>
           </div>
@@ -25,7 +25,7 @@ export default defineComponent({
           }</div>
         </div>
       }
-      return <div class={`d-skeleton ${props.animate ? 'd-skeleton-animated' : ''}`}>{slots.default?.()}
+      return <div class={`devui-skeleton ${props.animate ? 'devui-skeleton-animated' : ''}`}>{slots.default?.()}
       </div>
     }
   }

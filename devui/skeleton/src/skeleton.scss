@@ -1,4 +1,4 @@
-.d-skeleton {
+.devui-skeleton {
   display: flex;
   justify-content: space-between;
   .d-skeleton__avatar {
@@ -33,8 +33,8 @@
   }
 }
 
-.d-skeleton-animated > .d-skeleton__avatar > .avatar,
-.d-skeleton-animated > .d-skeleton__item__group > .d-skeleton__item {
+.devui-skeleton-animated > .d-skeleton__avatar > .avatar,
+.devui-skeleton-animated > .d-skeleton__item__group > .d-skeleton__item {
   background-color: #ccc;
   background: linear-gradient(
       100deg,
@@ -47,7 +47,7 @@
   background-position-x: 180%;
   animation: 2s loading ease-in-out infinite;
 }
-.d-skeleton-animated > .d-skeleton__avatar > .avatar {
+.devui-skeleton-animated > .d-skeleton__avatar > .avatar {
   animation-delay: 0.1s;
 }
 
