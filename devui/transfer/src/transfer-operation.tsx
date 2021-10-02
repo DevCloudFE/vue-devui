@@ -10,7 +10,7 @@ export default defineComponent({
     props: transferOperationProps,
     setup(props, ctx) {
         return () => {
-            return <div class="devui-transfer-panel-operation">
+            return ctx.slots.operation && ctx.slots.operation() || <div class="devui-transfer-panel-operation">
                 <div class="devui-transfer-panel-operation-group">
                     <DButton class="devui-transfer-panel-operation-group-left icon-collapse" disabled={props.disabled ? props.disabled : props.sourceDisabled}
                         btnClick={() => ctx.emit('updateSourceData')}></DButton>
@@ -18,8 +18,5 @@ export default defineComponent({
                 </div>
             </div>
         }
-    },
-    data() {
-        return {}
     }
 })
