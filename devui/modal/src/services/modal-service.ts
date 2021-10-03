@@ -35,7 +35,7 @@ export class ModalService extends CommonModalService<ModalOptions, ModalProps> {
     const anchor = document.createElement('div');
     this.anchorContainer.appendChild(anchor);
 
-    const {content, ...resProps} = props;
+    const { content, ...resProps } = props;
 
     const needHideOrNot = (value: boolean) => {
       if (!value) {
@@ -47,7 +47,7 @@ export class ModalService extends CommonModalService<ModalOptions, ModalProps> {
         ...props,
         modelValue: true,
         'onUpdate:modelValue': onUpdateModelValue
-      }, {default: content});
+      }, { default: content });
     }
 
 
@@ -55,7 +55,7 @@ export class ModalService extends CommonModalService<ModalOptions, ModalProps> {
     const hide = () => {
       const vnode = renderOrigin(resProps, (value: boolean) => {
         if (!value) {
-          this.renderModal(anchor, {...resProps, modelValue: false});
+          this.renderModal(anchor, { ...resProps, modelValue: false });
           this.renderNull(anchor);
         } else {
           renderOrigin(resProps);
@@ -70,9 +70,7 @@ export class ModalService extends CommonModalService<ModalOptions, ModalProps> {
 
     // 再渲染详细内容
     renderOrigin(resProps);
-    
-    return { hide }
-    
+
     return { hide }
   }
 }
