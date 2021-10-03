@@ -9,7 +9,7 @@ type TypeUseHighlightNode = () => {
   handleInitNodeClassNameRefelct: (isDisabled: boolean, ...keys: Array<string>) => string
 }
 
-const HightLightClass = 'active'
+const HighlightClass = 'active'
 const IsDisabledFlag = 'devui-tree_isDisabledNode'
 const useHighlightNode: TypeUseHighlightNode = () => {
   const nodeClassNameRefelctRef = ref<TypeHighlightClass>({})
@@ -28,7 +28,7 @@ const useHighlightNode: TypeUseHighlightNode = () => {
       Object.fromEntries(
         Object
           .entries(nodeClassNameRefelctRef.value)
-          .map(([k]) => [k, k !== key ? '' : HightLightClass])
+          .map(([k]) => [k, k !== key ? '' : HighlightClass])
       )
   }
   return {
