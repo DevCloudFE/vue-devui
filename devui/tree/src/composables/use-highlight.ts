@@ -1,7 +1,7 @@
 import { ref, Ref } from 'vue'
 
 interface TypeHighlightClass {
-  [key: string]: 'active' | '' | 'isDisabled'
+  [key: string]: 'active' | '' | 'devui-tree_isDisabledNode'
 }
 type TypeUseHighlightNode = () => {
   nodeClassNameRefelct: Ref<TypeHighlightClass>
@@ -10,7 +10,7 @@ type TypeUseHighlightNode = () => {
 }
 
 const HightLightClass = 'active'
-const IsDisabledFlag = 'isDisabled'
+const IsDisabledFlag = 'devui-tree_isDisabledNode'
 const useHighlightNode: TypeUseHighlightNode = () => {
   const nodeClassNameRefelctRef = ref<TypeHighlightClass>({})
 
@@ -28,12 +28,7 @@ const useHighlightNode: TypeUseHighlightNode = () => {
       Object.fromEntries(
         Object
           .entries(nodeClassNameRefelctRef.value)
-          .map(([k, v]) => {
-            if (k !== key) {
-              return [k, v === IsDisabledFlag ? IsDisabledFlag : '']
-            }
-            return [k, HightLightClass]
-          })
+          .map(([k]) => [k, k !== key ? '' : HightLightClass])
       )
   }
   return {
