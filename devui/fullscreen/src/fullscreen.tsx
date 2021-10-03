@@ -55,7 +55,6 @@ export default defineComponent({
       let isFull = false
       // 判断模式
       if (props.mode === 'normal') { // 浏览器全屏
-        console.log('普通')
         const fullscreen = targetElement.classList.contains('fullscreen')
         if (!fullscreen) { // 进入全屏
           addFullScreenStyle()
@@ -67,7 +66,6 @@ export default defineComponent({
           isFull = false
         }
       } else { // 沉浸式全屏
-        console.log('沉浸式')
         currentTarget = targetElement
         if (document.fullscreenElement || document.msFullscreenElement || document.webkitFullscreenElement) {
           isFull = await exitImmersiveFullScreen(document)
@@ -133,7 +131,6 @@ export default defineComponent({
     }
     
     onMounted (() => {
-      console.log(ctx.slots)
       const btnLaunch = document.querySelector('[fullscreen-launch]')
       if (btnLaunch) { btnLaunch.addEventListener('click', handleFullscreen) }
       document.addEventListener('fullscreenchange', onFullScreenChange)
