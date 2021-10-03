@@ -16,7 +16,7 @@ export default defineComponent({
     const flatData = flatten(data.value)
 
     const { openedData, toggle } = useToggle(data.value)
-    const { nodeClassNameRefelct, handleInitNodeClassNameRefelct, handleClickOnNode } = useHighlightNode()
+    const { nodeClassNameReflect, handleInitNodeClassNameReflect, handleClickOnNode } = useHighlightNode()
 
     const Indent = () => {
       return <span style="display: inline-block; width: 16px; height: 16px;"></span>
@@ -25,14 +25,14 @@ export default defineComponent({
     const renderNode = (item) => {
       // 现在数据里面没有 key , 未来做优化需要 key 值嘛? 
       const { key = '', label, disabled, open, level, children } = item
-      const nodeId = handleInitNodeClassNameRefelct(disabled, key, label)
+      const nodeId = handleInitNodeClassNameReflect(disabled, key, label)
       return (
         <div
           class={['devui-tree-node', open && 'devui-tree-node__open']}
           style={{ paddingLeft: `${24 * (level - 1)}px` }}
         >
           <div
-            class={`devui-tree-node__content ${nodeClassNameRefelct.value[nodeId]}`}
+            class={`devui-tree-node__content ${nodeClassNameReflect.value[nodeId]}`}
             onClick={() => handleClickOnNode(nodeId)}
           >
             <div class="devui-tree-node__content--value-wrapper">

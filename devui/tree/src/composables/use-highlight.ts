@@ -4,37 +4,35 @@ interface TypeHighlightClass {
   [key: string]: 'active' | '' | 'devui-tree_isDisabledNode'
 }
 type TypeUseHighlightNode = () => {
-  nodeClassNameRefelct: Ref<TypeHighlightClass>
+  nodeClassNameReflect: Ref<TypeHighlightClass>
   handleClickOnNode: (index: string) => void
-  handleInitNodeClassNameRefelct: (isDisabled: boolean, ...keys: Array<string>) => string
+  handleInitNodeClassNameReflect: (isDisabled: boolean, ...keys: Array<string>) => string
 }
 
-const HighlightClass = 'active'
-const IsDisabledFlag = 'devui-tree_isDisabledNode'
+const HIGHLIGHT_CLASS = 'active'
+const IS_DISABLED_FLAG = 'devui-tree_isDisabledNode'
 const useHighlightNode: TypeUseHighlightNode = () => {
-  const nodeClassNameRefelctRef = ref<TypeHighlightClass>({})
-
+  const nodeClassNameReflectRef = ref<TypeHighlightClass>({})
   const handleInit = (isDisabled = false, ...keys) => {
     const key = keys.join('-')
-    nodeClassNameRefelctRef.value[key] = isDisabled ? IsDisabledFlag : (nodeClassNameRefelctRef.value[key] || '')
+    nodeClassNameReflectRef.value[key] = isDisabled ? IS_DISABLED_FLAG : (nodeClassNameReflectRef.value[key] || '')
     return key
   }
-
   const handleClick = (key) => {
-    if (nodeClassNameRefelctRef.value[key] === IsDisabledFlag) {
+    if (nodeClassNameReflectRef.value[key] === IS_DISABLED_FLAG) {
       return
     }
-    nodeClassNameRefelctRef.value =
+    nodeClassNameReflectRef.value =
       Object.fromEntries(
         Object
-          .entries(nodeClassNameRefelctRef.value)
-          .map(([k]) => [k, k === key ? HighlightClass : ''])
+          .entries(nodeClassNameReflectRef.value)
+          .map(([k]) => [k, k === key ? HIGHLIGHT_CLASS : ''])
       )
   }
   return {
-    nodeClassNameRefelct: nodeClassNameRefelctRef,
+    nodeClassNameReflect: nodeClassNameReflectRef,
     handleClickOnNode: handleClick,
-    handleInitNodeClassNameRefelct: handleInit,
+    handleInitNodeClassNameReflect: handleInit,
   }
 }
 export default useHighlightNode
