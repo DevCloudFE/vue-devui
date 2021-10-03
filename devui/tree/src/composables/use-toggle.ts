@@ -11,9 +11,9 @@ export default function useToggle(data: unknown): any {
 
   const openedData = ref(openedTree(data))
 
-  const toggle = (item) => {
+  const toggle = (target, item) => {
+    target.stopPropagation()
     if (!item.children) return
-    
     item.open = !item.open
     openedData.value = openedTree(data)
   }
