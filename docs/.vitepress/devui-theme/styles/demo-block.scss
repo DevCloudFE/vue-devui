@@ -1,5 +1,26 @@
 @import '@devui/styles-var/devui-var.scss';
 
+.demo-block {
+  border: solid 1px $devui-dividing-line !important;
+
+  &.hover {
+    box-shadow: $devui-shadow-length-base $devui-shadow !important;
+  }
+}
+
 .demo-block-control {
   background-color: $devui-base-bg !important;
+  border-top: solid 1px $devui-dividing-line !important;
+
+  &:hover {
+    color: $devui-brand !important;
+  }
+
+  .control-button {
+    color: $devui-brand !important;
+  }
+}
+
+.meta {
+  border-top: solid 1px $devui-dividing-line !important;
 }

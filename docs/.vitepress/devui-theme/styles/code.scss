@@ -7,7 +7,7 @@ code {
   font-family: var(--code-font-family);
   font-size: 0.85em;
   color: var(--c-text-light);
-  background-color: var(--code-inline-bg-color);
+  background-color: $devui-area !important;
 }
 
 code .token.deleted {

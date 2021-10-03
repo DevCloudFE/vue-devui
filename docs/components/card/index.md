@@ -125,7 +125,7 @@
 
 <d-card class="d-card" align="spaceBetween">
   <div class="custom-avatar">
-    <d-avatar imgSrc="https://devui.design/components/assets/logo.svg" width=48 height=48 isRound="false"></d-avatar>
+    <d-avatar imgSrc="https://devui.design/components/assets/logo.svg" width=48 height=48 :isRound="false"></d-avatar>
     <div class="icon-star-o custom-star-action"></div>
   </div>
   <template v-slot:cardTitle>
@@ -143,7 +143,7 @@
 ```html
 <d-card class="d-card" align="spaceBetween">
   <div class="custom-avatar">
-    <d-avatar imgSrc="https://devui.design/components/assets/logo.svg" width=48 height=48 isRound="false"></d-avatar>
+    <d-avatar imgSrc="https://devui.design/components/assets/logo.svg" width=48 height=48 :isRound="false"></d-avatar>
     <div class="icon-star-o custom-star-action"></div>
   </div>
   <template v-slot:cardTitle>
