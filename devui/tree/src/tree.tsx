@@ -2,6 +2,7 @@ import { defineComponent, toRefs } from 'vue'
 import { treeProps, TreeProps } from './tree-types'
 import { flatten } from './util'
 import useToggle from './composables/use-toggle'
+import useMergeNode from './composables/use-merge-node'
 import useHighlightNode from './composables/use-highlight'
 import IconOpen from './assets/open.svg'
 import IconClose from './assets/close.svg'
@@ -15,7 +16,9 @@ export default defineComponent({
     const { data } = toRefs(props)
     const flatData = flatten(data.value)
 
-    const { openedData, toggle } = useToggle(data.value)
+    const { mergeData } = useMergeNode(data.value)
+    
+    const { openedData, toggle } = useToggle(mergeData.value)
     const { nodeClassNameReflect, handleInitNodeClassNameReflect, handleClickOnNode } = useHighlightNode()
 
     const Indent = () => {
