@@ -15,9 +15,9 @@ export default defineComponent({
     const { data } = toRefs(props)
     const flatData = flatten(data.value)
 
-    const { margeData } = useMergeNode(data.value);
+    const { mergeData } = useMergeNode(data.value);
     
-    const { openedData, toggle } = useToggle(margeData.value)
+    const { openedData, toggle } = useToggle(mergeData.value)
 
     const Indent = () => {
       return <span style="display: inline-block; width: 16px; height: 16px;"></span>

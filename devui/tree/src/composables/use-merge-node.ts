@@ -46,9 +46,9 @@ export default function useMergeNode(data: Array<any>): any {
     });
   };
 
-  const margeData = ref(mergeNode(data));
+  const mergeData = ref(mergeNode(data));
 
   return {
-    margeData,
+    mergeData,
   };
 }
