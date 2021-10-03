@@ -1,6 +1,7 @@
 # 级联菜单
 下拉级联菜单。
 
+### 基本用法
 :::demo
 
 ```vue
@@ -117,3 +118,28 @@ export default defineComponent({
 ```
 
 :::
+
+### API
+
+|    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         |  全局配置项 |
+| :--------: | :------: | :-------: | :---------------------- | --------------------------------- | --------- |
+| options    |	[`CascaderItem[]`](#CascaderItem) |	[] |	必选，级联器的菜单信息 |  [基本用法](#基本用法) | |
+| placeholder    | `string` |	'' |	可选，没有选择时的输入框展示信息 |  [基本用法](#基本用法) | |
+
+### 接口 & 类型定义
+
+-
+
+#### CascaderItem
+```ts
+interface CascaderItem {
+  label: string;
+  value: number | string;
+  isLeaf?: boolean;
+  children?: CascaderItem[];
+  disabled?: boolean;
+  icon?: string;
+  // 用户可以传入自定义属性，并在dropDownItemTemplate中使用
+  [prop: string]: any;
+}
+```
