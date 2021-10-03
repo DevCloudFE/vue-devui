@@ -28,7 +28,7 @@ const useHighlightNode: TypeUseHighlightNode = () => {
       Object.fromEntries(
         Object
           .entries(nodeClassNameRefelctRef.value)
-          .map(([k]) => [k, k !== key ? '' : HighlightClass])
+          .map(([k]) => [k, k === key ? HighlightClass : ''])
       )
   }
   return {
