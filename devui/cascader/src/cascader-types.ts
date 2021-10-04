@@ -1,4 +1,5 @@
-import type { PropType, ExtractPropTypes, Ref, reactive } from 'vue'
+import type { PropType, ExtractPropTypes, Ref } from 'vue'
+import { UnwrapNestedRefs } from '@vue/reactivity'
 
 type TriggerTypes = 'hover'|'click'
 
@@ -64,6 +65,6 @@ export interface PopupTypes {
 }
 
 export interface OptionsCallback {
-  cascaderOptions: never | [CascaderItem[]]
+  cascaderOptions: never | UnwrapNestedRefs<[CascaderItem[]]>
   changeCascaderIndexs: (optionItem: CascaderItem, ulIndex: number) => void
 }
