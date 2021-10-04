@@ -106,6 +106,7 @@ export default defineComponent({
         } else {
           throw new Error('gender must be "Male" or "Female"')
         }
+        return
       }
       const unicode = char.charCodeAt(0)
       code.value = unicode % 2
