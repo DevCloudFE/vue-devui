@@ -11,7 +11,6 @@ import { optionsHandles } from '../hooks/use-cascader-options'
 export default defineComponent({
   name: 'DCascader',
   props: cascaderProps,
-  emits: [],
   setup(props: CascaderProps, ctx) {
     const origin = ref(null)
     const position = reactive({

@@ -11,16 +11,7 @@ export const popupHandles = (): PopupTypes => {
     menuShow.value = !menuShow.value
   }
   watch(menuShow, (status) => {
-    switch (status) {
-      case false:
-        menuOpenClass.value = ''
-        break
-      case true:
-        menuOpenClass.value = 'devui-drop-menu-wrapper'
-        break
-      default:
-        break
-    }
+    menuOpenClass.value = status ? 'devui-drop-menu-wrapper' : ''
   })
 
   return {

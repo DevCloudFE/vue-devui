@@ -7,7 +7,7 @@ export const cascaderulProps = {
    * @default []
    */
   cascaderlis: {
-    type: Object as PropType<CascaderItem[]>,
+    type: Array as PropType<CascaderItem[]>,
     default: [],
   },
   /**

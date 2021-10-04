@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, Ref } from 'vue'
+import type { PropType, ExtractPropTypes, Ref, reactive } from 'vue'
 
 type TriggerTypes = 'hover'|'click'
 
@@ -30,7 +30,7 @@ export const cascaderProps = {
    * @default []
    */
   options: {
-    type: Object as PropType<CascaderItem[]>,
+    type: Array as PropType<CascaderItem[]>,
     default: [],
     required: true
   },
@@ -61,4 +61,9 @@ export interface PopupTypes {
   menuShow: Ref<boolean>
   menuOpenClass: Ref<string>
   openPopup:  (e?: MouseEvent) => void
+}
+
+export interface OptionsCallback {
+  cascaderOptions: never | [CascaderItem[]]
+  changeCascaderIndexs: (optionItem: CascaderItem, ulIndex: number) => void
 }
