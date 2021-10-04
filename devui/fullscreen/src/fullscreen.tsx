@@ -5,7 +5,6 @@ import {
   useSlots,
   renderSlot,
   onMounted,
-  onUnmounted,
   ref
 } from 'vue'
 import { fullscreenProps, FullscreenProps } from './fullscreen-types'
@@ -18,6 +17,7 @@ export default defineComponent({
 
     let currentTarget = ref(null)
     const isFullscreen = ref(false)
+    const slotElement = ref(null)
     const doc = document
     
     const onFullScreenChange = () => {
@@ -44,6 +44,8 @@ export default defineComponent({
         targetElement.setAttribute('style', `z-index: ${props.zIndex}`)
       }
     }
+
+    // 退出正常全屏
     const exitNormalFullscreen = (targetElement: HTMLElement) => {
       targetElement.classList.remove('fullscreen')
       targetElement.style.zIndex = null
@@ -51,7 +53,8 @@ export default defineComponent({
     
     // 事件监听
     const handleFullscreen = async () => {
-      const targetElement = document.querySelector('[fullscreen-target]')
+      // const targetElement = document.querySelector('[fullscreen-target]')
+      const targetElement = slotElement.value.querySelector('[fullscreen-target]')
       let isFull = false
       // 判断模式
       if (props.mode === 'normal') { // 浏览器全屏
@@ -70,16 +73,15 @@ export default defineComponent({
         if (document.fullscreenElement || document.msFullscreenElement || document.webkitFullscreenElement) {
           isFull = await exitImmersiveFullScreen(document)
         } else {
-          isFull = await launchImmersiveFullScreen(document.documentElement)
+          isFull = await launchImmersiveFullScreen(currentTarget)
         }
       }
-
       isFullscreen.value = isFull
       ctx.emit('fullscreenLaunch', isFullscreen.value)
     }
 
     const addFullScreenStyle = (): void => {
-      document.getElementsByTagName('html')[0].classList.add('devui-fullscreen');
+      document.getElementsByTagName('html')[0].classList.add('devui-fullscreen')
     }
 
     const removeFullScreenStyle = (): void => {
@@ -115,47 +117,36 @@ export default defineComponent({
     }
 
     const handleKeyDown = (event) => {
-      if (event.keyCode === 'ESC_KEYCODE') { // 按ESC键退出全屏
+      if (event.keyCode === 27) { // 按ESC键退出全屏
         if (isFullscreen.value) {
-          const targetElement = document.querySelector('[fullscreen-target]')
+          const targetElement = slotElement.value.querySelector('[fullscreen-target]')
           if (props.mode === 'normal') {
             removeFullScreenStyle()
             exitNormalFullscreen(targetElement)
           } else {
             if (doc.fullscreenElement) { exitImmersiveFullScreen(doc) }
           }
-          ctx.emit('fullscreenLaunch', isFullscreen.value)
           isFullscreen.value = false
+          ctx.emit('fullscreenLaunch', isFullscreen.value)
         }
       }
     }
     
     onMounted (() => {
-      const btnLaunch = document.querySelector('[fullscreen-launch]')
+      const btnLaunch = slotElement.value.querySelector('[fullscreen-launch]')
       if (btnLaunch) { btnLaunch.addEventListener('click', handleFullscreen) }
       document.addEventListener('fullscreenchange', onFullScreenChange)
       document.addEventListener('MSFullscreenChange', onFullScreenChange)
       document.addEventListener('webkitfullscreenchange', onFullScreenChange)
       document.addEventListener('keydown', handleKeyDown)
     })
-    onUnmounted (() => {
-      document.removeEventListener('fullscreenchange', onFullScreenChange)
-      document.removeEventListener('MSFullscreenChange', onFullScreenChange)
-      document.removeEventListener('webkitfullscreenchange', onFullScreenChange)
-      document.removeEventListener('keydown', handleKeyDown)
-      const btnLaunch = document.querySelector('[fullscreen-launch]')
-      if (btnLaunch) { btnLaunch.removeEventListener('click', handleFullscreen) }
-    })
     return () => {
       const defaultSlot = renderSlot(useSlots(), 'default')
       // fullscreen-target 全屏元素属性
       // fullscreen-launch 全屏事件属性
       // if (defaultSlot.children.length === 0) throw new Error('未发现全屏元素')
-      // const targetElement = document.querySelector('[fullscreen-target]')
       return (
-        <div class="d-fullscreen">
-          <div>{ defaultSlot }</div>
-        </div>
+        <div ref={slotElement}>{ defaultSlot }</div>
       )
     }
   }

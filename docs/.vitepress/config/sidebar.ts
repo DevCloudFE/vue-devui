@@ -7,7 +7,7 @@ const sidebar = {
         { text: 'Button 按钮', link: '/components/button/', status: '已完成' },
         { text: 'Icon 图标', link: '/components/icon/', status: '已完成' },
         { text: 'DragDrop 拖拽', link: '/components/dragdrop/' },
-        { text: 'Fullscreen 全屏', link: '/components/fullscreen/' },
+        { text: 'Fullscreen 全屏', link: '/components/fullscreen/', status: '已完成'  },
         { text: 'Panel 面板', link: '/components/panel/', status: '已完成' },
         { text: 'Search 搜索框', link: '/components/search/', status: '已完成' },
         { text: 'Status 状态', link: '/components/status/', status: '已完成' },
