@@ -3,6 +3,8 @@ const { INDEX_FILE_NAME, DEVUI_DIR } = require('./constant')
 const { resolve } = require('path')
 const logger = require('./logger')
 const fs = require('fs-extra')
+const traverse = require("@babel/traverse").default
+const babelParser = require("@babel/parser")
 
 exports.bigCamelCase = (str) => {
   return upperFirst(camelCase(str))
@@ -29,10 +31,38 @@ exports.parseExportByFileInfo = (fileInfo, ignoreParseError) => {
   const exportModule = {}
   const indexContent = fs.readFileSync(fileInfo.path, { encoding: 'utf-8' })
 
-  const defaultRe = /export default/
-  const partRe = /export {/
+  const ast = babelParser.parse(indexContent, {
+    sourceType: 'module',
+    plugins: [
+      'typescript'
+    ]
+  })
 
-  if (!defaultRe.test(indexContent)) {
+  const exportName = []
+  let exportDefault = null
+
+  traverse(ast, {
+    ExportNamedDeclaration({node}) {
+      if (node.specifiers.length) {
+        node.specifiers.forEach(specifier => {
+          exportName.push(specifier.local.name)
+        })
+      } else if (node.declaration) {
+        if (node.declaration.declarations) {
+          node.declaration.declarations.forEach(dec => {
+            exportName.push(dec.id.name)
+          })
+        } else if (node.declaration.id) {
+          exportName.push(node.declaration.id.name)
+        }
+      }
+    },
+    ExportDefaultDeclaration() {
+      exportDefault = fileInfo.name + 'Install'
+    }
+  })
+
+  if (!exportDefault) {
     logger.error(`${fileInfo.path} must have "export default".`)
 
     if (ignoreParseError) {
@@ -42,9 +72,9 @@ exports.parseExportByFileInfo = (fileInfo, ignoreParseError) => {
     }
   }
 
-  if (!partRe.test(indexContent)) {
-    logger.error(`${fileInfo.path} must have "export {}".`)
-
+  if (!exportName.length) {
+    logger.error(`${fileInfo.path} must have "export xxx".`)
+    
     if (ignoreParseError) {
       return exportModule
     } else {
@@ -52,69 +82,43 @@ exports.parseExportByFileInfo = (fileInfo, ignoreParseError) => {
     }
   }
 
-  const parts = []
-  let searchContent = indexContent
-
-  while (searchContent.search(partRe) !== -1) {
-    const reStartIndex = indexContent.search(partRe)
-    const partContent = this.extractStr(indexContent, '{', '}', reStartIndex)
-
-    partContent
-      .replace(/(\s|\r|\n|\t)/g, '')
-      .split(',')
-      .forEach((p) => parts.push(p))
-
-    searchContent = indexContent.slice(reStartIndex + partContent.length)
-  }
-
-  exportModule.default = fileInfo.name + 'Install'
-  exportModule.parts = parts
+  exportModule.default = exportDefault
+  exportModule.parts = exportName
   exportModule.fileInfo = fileInfo
 
   return exportModule
 }
 
 exports.parseComponentInfo = (name) => {
-  const componentInfo = {}
+  const componentInfo = {
+    name: this.bigCamelCase(name)
+  }
+  let hasExportDefault = false
   const indexContent = fs.readFileSync(resolve(DEVUI_DIR, name, INDEX_FILE_NAME), { encoding: 'utf-8' })
 
-  const defaultRe = /export default/
+  const ast = babelParser.parse(indexContent, {
+    sourceType: 'module',
+    plugins: [
+      'typescript'
+    ]
+  })
+  traverse(ast, {
+    ExportDefaultDeclaration({node}) {
+      hasExportDefault = true
+      if (node.declaration && node.declaration.properties) {
+        const properties = node.declaration.properties
+        properties.forEach(pro => {
+          if (pro.type === 'ObjectProperty') {
+            componentInfo[pro.key.name] = pro.value.value
+          }
+        })
+      }
+    }
+  })
 
-  if (!defaultRe.test(indexContent)) {
-    logger.warning(`${this.bigCamelCase(name)} must have "export default" and component info.`)
-  } else {
-    const reStartIndex = indexContent.indexOf('export default {')
-    const extraRe = /((^['"])|(['"]$))/g
-
-    componentInfo.title = this.extractStr(indexContent, 'title:', ',', reStartIndex).trim().replace(extraRe, '')
-    componentInfo.category = this.extractStr(indexContent, 'category:', ',', reStartIndex).trim().replace(extraRe, '')
-    componentInfo.status = this.transformNullishStr(
-      this.extractStr(indexContent, 'status:', ',', reStartIndex).trim().replace(extraRe, '')
-    )
+  if (!hasExportDefault) {
+    logger.warning(`${componentInfo.name} must have "export default" and component info.`)
   }
-
-  componentInfo.name = this.bigCamelCase(name)
 
   return componentInfo
-}
-
-exports.transformNullishStr = (str) => {
-  console.log(str)
-  switch (str) {
-    case 'null':
-      return null
-    case 'undefined':
-      return undefined
-    default:
-      return str
-  }
-}
-
-exports.extractStr = (content = '', startKeywords = '', endKeywords = '', startIndex = 0) => {
-  const keywordsStartIndex = content.indexOf(startKeywords, startIndex) + startKeywords.length
-  const keywordsEndIndex = content.indexOf(endKeywords, keywordsStartIndex)
-
-  if ([keywordsStartIndex - startIndex, keywordsEndIndex].some((index) => index < 0)) return ''
-
-  return content.slice(keywordsStartIndex, keywordsEndIndex)
 }

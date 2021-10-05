@@ -171,8 +171,8 @@ function handleValidatePass(el: HTMLElement, tipEl: HTMLElement): void {
 }
 
 // 获取表单name
-function getFormName(vnode): string {
-  const _refs = vnode.dirs[0].instance.$refs;
+function getFormName(binding): string {
+  const _refs = binding.instance.$refs;
   const key = Object.keys(_refs)[0];
   return _refs[key]['name'];
 }
@@ -292,7 +292,7 @@ export default {
       vnode.children[0].props.value = '' + vnode.children[0].props.value;
     }
 
-    const formName = getFormName(vnode);
+    const formName = getFormName(binding);
     // 处理表单提交验证
     formName && EventBus.on(`formSubmit:${formName}`, () => {
       const modelValue = isFormTag ? '' : vnode.children[0].el.value;

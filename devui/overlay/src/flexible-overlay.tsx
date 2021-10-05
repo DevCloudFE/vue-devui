@@ -84,6 +84,10 @@ export const FlexibleOverlay = defineComponent({
         });
       });
 
+      watch(toRef(props, 'position'), () => {
+        handleChange();
+      });
+
       const resizeObserver = new ResizeObserver((entries) => {
         handleRectChange(entries[0].contentRect);
       });

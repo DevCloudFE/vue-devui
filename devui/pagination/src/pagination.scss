@@ -25,11 +25,11 @@
       max-width: 100px;
 
       .devui-select-input {
-        height: 44px;
+        height: 46px;
       }
 
       .devui-select-item {
-        height: 44px;
+        height: 46px;
       }
     }
   }
@@ -124,25 +124,15 @@
     vertical-align: middle;
     align-items: center;
 
-    .devui-input {
+    .devui-pagination-input {
       display: inline-block;
       width: 42px;
-      height: 28px;
       vertical-align: middle;
       margin: 0 3px;
+    }
 
-      &.devui-input-sm {
-        height: 24px;
-        padding: 4px 4px;
-        font-size: $devui-font-size;
-        line-height: 1.5;
-        border-radius: $devui-border-radius;
-      }
-
-      &.devui-input-lg {
-        width: 56px;
-        height: 46px;
-      }
+    .devui-pagination-input-lg {
+      width: 56px;
     }
   }
 

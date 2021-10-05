@@ -1,25 +1,22 @@
 import { Emitter } from 'mitt'
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes, InjectionKey, Ref } from 'vue'
 
 export const formProps = {
-  /* test: {
-    type: Object as PropType<{ xxx: xxx }>
-  } */
   formData: {
     type: Object,
     default: {}
   },
   layout: {
     type: String as PropType<'horizontal' | 'vertical' | 'columns'>,
-    default: 'horizontal', // 'horizontal'|'vertical'|'columns'
+    default: 'horizontal', 
   },
   labelSize: {
     type: String as PropType<'sm' | '' | 'lg'>,
-    default: '', // 'sm' | '' | 'lg'
+    default: '', 
   },
   labelAlign: {
     type: String as PropType<'start' | 'center' | 'end'>,
-    default: 'start', // 'start' | 'center' | 'end'
+    default: 'start', 
   },
   rules: {
     type: Object,
@@ -63,7 +60,7 @@ export const formLabelProps = {
 
 export const formControlProps = {
   feedbackStatus: {
-    type: String,
+    type: String as PropType<'success' | 'error' | 'pending' | ''>,
     default: ''
   },
   extraInfo: {
@@ -76,6 +73,15 @@ export const dFormEvents = {
   addField: 'd.form.addField',
   removeField: 'd.form.removeField',
 } as const
+
+type LabelData = {
+  layout: string
+  labelSize: string
+  labelAlign: string
+}
+
+export const formInjectionKey: InjectionKey<IForm> = Symbol('dForm');
+export const formItemInjectionKey: InjectionKey<IFormItem> = Symbol('dFormItem');
 
 export const dFormItemEvents = {
   blur: 'd.form.blur',
