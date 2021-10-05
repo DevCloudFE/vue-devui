@@ -10,6 +10,7 @@ export { Pagination }
 export default {
   title: 'Pagination 分页',
   category: '导航',
+  status: '已完成',
   install(app: App): void {
     app.use(Pagination as any)
   }

@@ -88,7 +88,7 @@ export default defineComponent({
                     position.left = (slotElement.value.children[0].offsetLeft - tooltip.value.offsetWidth / 2 + slotElement.value.children[0].offsetWidth / 2) - 5;
                     position.top = slotElement.value.children[0].offsetTop - 10 - tooltipcontent.value.offsetHeight
                     // 设置箭头的样式 
-                    arrowStyle('borderTop', '5px solid #464d6e')
+                    arrowStyle('borderTop', '5px solid rgb(70, 77, 110)')
                     arrow.value.style.top = `${tooltipcontent.value.offsetHeight}px`
                     arrow.value.style.left = `${tooltipcontent.value.offsetWidth/2 + 5}px`
                     break
@@ -98,7 +98,7 @@ export default defineComponent({
                     position.left = slotElement.value.children[0].offsetLeft + slotElement.value.children[0].offsetWidth
                     position.top = slotElement.value.children[0].offsetTop + slotElement.value.children[0].offsetHeight/2 - tooltipcontent.value.offsetHeight/2
                     // 设置箭头的样式
-                    arrowStyle('borderRight', '5px solid #464d6e')
+                    arrowStyle('borderRight', '5px solid rgb(70, 77, 110)')
                     arrow.value.style.top = `${tooltipcontent.value.offsetHeight/2 - 5}px`
                     arrow.value.style.left = '-0px'
                     break
@@ -108,7 +108,7 @@ export default defineComponent({
                     position.top = slotElement.value.children[0].offsetHeight + slotElement.value.children[0].offsetTop + 10
                     position.left = (slotElement.value.children[0].offsetLeft + slotElement.value.children[0].offsetWidth/2 - tooltipcontent.value.offsetWidth/2) - 5;
                      // 设置arrow.value的样式
-                    arrowStyle('borderBottom', '5px solid #464d6e')
+                    arrowStyle('borderBottom', '5px solid rgb(70, 77, 110)')
                     arrow.value.style.top = '-10px'
                     arrow.value.style.left = `${tooltipcontent.value.offsetWidth/2 + 5}px`
                     break
@@ -117,7 +117,7 @@ export default defineComponent({
                     position.top = slotElement.value.children[0].offsetTop + slotElement.value.children[0].offsetHeight/2 - tooltipcontent.value.offsetHeight/2
                     position.left = slotElement.value.children[0].offsetLeft - 20 - tooltipcontent.value.offsetWidth
                     // 设置arrow.value的样式
-                    arrowStyle('borderLeft', '5px solid #464d6e')
+                    arrowStyle('borderLeft', '5px solid rgb(70, 77, 110)')
                     arrow.value.style.left = `${tooltipcontent.value.offsetWidth + 10}px`
                     arrow.value.style.top = `${tooltipcontent.value.offsetHeight/2 - 5}px`
                     break

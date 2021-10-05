@@ -6,12 +6,8 @@ import { DEFAULT_AXIS_CONFIGS } from '../config'
 export default defineComponent({
   name: 'DQuadrantDiagram',
   props: quadrantDiagramProps,
-  emits: [],
   setup(props: QuadrantDiagramProps) {
     const { diagramId, axisConfigs, view } = toRefs(props)
-
-    const axisConfigsVal = axisConfigs.value
-    const viewVal = view.value
 
     const calAxisConfig = reactive({
       axisOrigin: { x: null, y: null },
@@ -33,22 +29,22 @@ export default defineComponent({
         }
       }
       calAxisConfig.axisOrigin = {
-        x: axisConfigsVal.originPosition.left,
-        y: viewVal.height - axisConfigsVal.originPosition.bottom
+        x: axisConfigs.value.originPosition.left,
+        y: view.value.height - axisConfigs.value.originPosition.bottom
       }
-      calAxisConfig.axisTop = axisConfigsVal.axisMargin
-      calAxisConfig.axisRight = viewVal.width - axisConfigsVal.axisMargin
+      calAxisConfig.axisTop = axisConfigs.value.axisMargin
+      calAxisConfig.axisRight = view.value.width - axisConfigs.value.axisMargin
       calAxisConfig.axisWidth = calAxisConfig.axisRight - calAxisConfig.axisOrigin.x
       calAxisConfig.axisHeight = calAxisConfig.axisOrigin.y - calAxisConfig.axisTop
-      calAxisConfig.yAxisTicksNum = axisConfigsVal.yAxisRange.max - axisConfigsVal.yAxisRange.min
-      calAxisConfig.xAxisTicksNum = axisConfigsVal.xAxisRange.max - axisConfigsVal.xAxisRange.min
+      calAxisConfig.yAxisTicksNum = axisConfigs.value.yAxisRange.max - axisConfigs.value.yAxisRange.min
+      calAxisConfig.xAxisTicksNum = axisConfigs.value.xAxisRange.max - axisConfigs.value.xAxisRange.min
       calAxisConfig.xTickSpacing = calAxisConfig.axisWidth / calAxisConfig.xAxisTicksNum
       calAxisConfig.yTickSpacing = calAxisConfig.axisHeight / calAxisConfig.yAxisTicksNum
     }
 
     initAxisData()
 
-    watch(viewVal, () => {
+    watch(view.value, () => {
       initAxisData()
     })
 

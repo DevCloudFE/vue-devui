@@ -20,7 +20,7 @@ export default defineComponent({
 
 日期、时间可视化输入。
 
-## 属性 auto-close
+### 属性 auto-close
 
 |项目|说明|
 |----|----|
@@ -43,7 +43,7 @@ export default defineComponent({
 <d-datepicker auto-close />
 <d-datepicker />
 
-## 属性 range
+### 属性 range
 
 |项目|说明|
 |----|----|
@@ -65,7 +65,7 @@ export default defineComponent({
 
 <d-datepicker range />
 
-## 属性 format
+### 属性 format
 
 |项目|类型|
 |----|----|
@@ -94,7 +94,7 @@ export default defineComponent({
 |m,mm|minute|规则同`M`|
 |s,ss|second|规则同`M`|
 
-## 属性 range-spliter
+### 属性 range-spliter
 
 |项目|类型|
 |----|----|
@@ -110,7 +110,7 @@ export default defineComponent({
 
 <d-datepicker range range-spliter="至" />
 
-## 事件 selectedDateChange
+### 事件 selectedDateChange
 
 ```vue
 <input :value="eventValue" readonly>
