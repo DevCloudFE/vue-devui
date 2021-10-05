@@ -8,7 +8,7 @@ export default defineComponent({
   props: skeletonProps,
   setup(props: SkeletonProps, ctx) {
     const { slots } = ctx;
-    let arr = []
+    const arr = []
     for (let index = 0; index < props.row; index++) {
       arr.push(1)
     }

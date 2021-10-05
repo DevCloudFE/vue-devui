@@ -8,9 +8,39 @@
 
 ### 沉浸式全屏
 
-充满整个显示器屏幕的沉浸式全屏（待完善）。
+充满整个显示器屏幕的沉浸式全屏。
 
+:::demo
 
+```vue
+<template>
+  <d-fullscreen :zIndex='100' @fullscreenLaunch='fullscreenLaunch'>
+    <div fullscreen-target>
+      <d-button fullscreen-launch>{{btnContent}}</d-button>
+    </div>
+  </d-fullscreen>
+</template>
+<script>
+import { ref } from 'vue'
+export default {
+  setup() {
+    const btnContent = ref('FullScreen')
+    const fullscreenLaunch = (val) => {
+      if (val) {
+        btnContent.value = 'Exit'
+      } else {
+        btnContent.value = 'FullScreen'
+      }
+    }
+    return {
+      btnContent,
+      fullscreenLaunch
+    }
+  }
+}
+</script>
+```
+:::
 
 ### 普通全屏
 
@@ -42,7 +72,7 @@ export default {
       btnContent,
       fullscreenLaunch
     }
-  },
+  }
 }
 </script>
 ```
@@ -55,3 +85,9 @@ export default {
 |    mode     | `immersive` 或 `normal` |    `immersive`    | 可选，设置全屏模式          |
 |    zIndex     | `Number` |  10  | 可选，设置全屏层级           |
 |    fullscreenLaunch    | `EventEmitter<boolean>` |  | 可选，全屏之后的回调           |
+
+**fullscreen-target** 选择器
+必含指令，内容投影，设置**需要全屏的元素**沉浸式全屏。
+
+**fullscreen-launch** 选择器
+必含指令，内容投影，设置**触发**进入全屏的按钮沉浸式全屏。
