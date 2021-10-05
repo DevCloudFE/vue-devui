@@ -10,7 +10,7 @@ interface BindingType {
 const getTransfer = (event: any) => {
   return event.dataTransfer
     ? event.dataTransfer
-    : event.originalEvent.dataTransfer
+    : event.originalEvent?.dataTransfer
 }
 
 const haveFiles = (types: any) => {
