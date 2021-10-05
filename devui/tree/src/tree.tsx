@@ -1,18 +1,19 @@
-import { defineComponent, toRefs } from 'vue'
-import { treeProps, TreeProps } from './tree-types'
+import { defineComponent, toRefs, provide } from 'vue'
+import { treeProps, TreeProps, TreeRootType } from './tree-types'
 import { flatten } from './util'
 import useToggle from './composables/use-toggle'
 import useMergeNode from './composables/use-merge-node'
 import useHighlightNode from './composables/use-highlight'
 import IconOpen from './assets/open.svg'
 import IconClose from './assets/close.svg'
+import NodeContent from './tree-node-content'
 import './tree.scss'
 
 export default defineComponent({
   name: 'DTree',
   props: treeProps,
   emits: [],
-  setup(props: TreeProps) {
+  setup(props: TreeProps, ctx) {
     const { data } = toRefs(props)
     const flatData = flatten(data.value)
 
@@ -21,6 +22,7 @@ export default defineComponent({
     const { openedData, toggle } = useToggle(mergeData.value)
     const { nodeClassNameReflect, handleInitNodeClassNameReflect, handleClickOnNode } = useHighlightNode()
 
+    provide<TreeRootType>('treeRoot', { ctx, props });
     const Indent = () => {
       return <span style="display: inline-block; width: 16px; height: 16px;"></span>
     }
@@ -46,9 +48,7 @@ export default defineComponent({
                     : <IconClose class="mr-xs" onClick={(target) => toggle(target, item)} />
                   : <Indent />
               }
-              <span class={['devui-tree-node__title', disabled && 'select-disabled']}>
-                { label }
-              </span>
+              <NodeContent node={item}/>
             </div>
           </div>
         </div>
