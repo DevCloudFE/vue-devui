@@ -9,6 +9,12 @@ export default defineComponent({
     const { store } = toRefs(props)
     const columns = store.value.states._columns.value;
 
+    return {
+      columns,
+    }
+  },
+  render() {
+    const { columns } = this
     return (
       <thead class="devui-thead">
         <tr>
