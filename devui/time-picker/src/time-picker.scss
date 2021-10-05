@@ -1,0 +1,51 @@
+@import '../../style/theme/color';
+@import '../../style/theme/shadow';
+@import '../../style/theme/corner';
+@import '../../style/core/_font';
+
+.devui-time-picker {
+  width: 200px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid $devui-form-control-line;
+  position: relative;
+  transition: 0.2s;
+
+  &:hover {
+    border: 1px solid $devui-form-control-line-hover;
+  }
+
+  .time-input {
+    border: none;
+    outline: none;
+    width: 100%;
+  }
+
+  .time-input-icon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    div {
+      text-align: right;
+      padding: 0 4px;
+    }
+  }
+}
+
+.time-picker-active {
+  border: 1px solid $devui-form-control-line-active !important;
+}
+
+.picker-disabled {
+  background-color: $devui-unavailable;
+  cursor: no-drop;
+
+  * {
+    background-color: $devui-unavailable;
+    cursor: no-drop;
+  }
+}
