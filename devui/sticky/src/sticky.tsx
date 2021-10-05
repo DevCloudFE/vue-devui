@@ -1,4 +1,3 @@
-import './sticky.scss'
 
 import { defineComponent, onMounted, reactive, ref, watch } from 'vue'
 

@@ -109,32 +109,23 @@ export const FlexibleOverlay = defineComponent({
       }
     }, instance);
 
-    const { containerClass, panelClass, handleBackdropClick } =
-      useOverlayLogic(props);
+    const {
+      backgroundClass,
+      overlayClass,
+      handleBackdropClick,
+      handleOverlayBubbleCancel
+    } = useOverlayLogic(props);
 
     return () => (
       <CommonOverlay>
-        <div v-show={props.visible} class={containerClass}>
+        <div v-show={props.visible} class={backgroundClass.value} onClick={handleBackdropClick}>
           <div
-            class={panelClass}
-            style={{
-              position: 'fixed',
-              top: '0',
-              left: '0',
-              width: '100vw',
-              height: '100vh',
-              display: 'flex',
-            }}
-            onClick={handleBackdropClick}
+            ref={overlayRef}
+            class={overlayClass.value}
+            style={positionedStyle}
+            onClick={handleOverlayBubbleCancel}
           >
-            <div
-              ref={overlayRef}
-              class="d-overlay"
-              style={positionedStyle}
-              onClick={(event) => (event.cancelBubble = true)}
-            >
-              {renderSlot(ctx.slots, 'default')}
-            </div>
+            {renderSlot(ctx.slots, 'default')}
           </div>
         </div>
       </CommonOverlay>
@@ -274,7 +265,7 @@ function getOriginRect(origin: Origin): ClientRect {
 }
 
 /**
- * 获取浮层的左上角坐标
+ * 获取遮罩层的左上角坐标
  * @param {Point} originPoint
  * @param {DOMRect} rect
  * @param {ConnectionPosition} position

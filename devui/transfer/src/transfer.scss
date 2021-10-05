@@ -1,4 +1,3 @@
-// @import '../../style/theme/color';
 @import '../../style/theme/color';
 
 $devui-transfer-border-color: #adb0b8;
@@ -63,7 +62,6 @@ $devui-transfer-body-list-item-height: 36px;
 
         &-empty {
           height: 100%;
-          // width: 100%;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -121,31 +119,6 @@ $devui-transfer-body-list-item-height: 36px;
           background: $devui-disabled-bg;
           cursor: not-allowed;
         }
-      }
-    }
-  }
-
-  .custom {
-    &-body {
-      &-header,
-      &-list {
-        display: flex;
-        justify-content: space-around;
-        line-height: $devui-transfer-body-list-item-height;
-        flex-wrap: wrap;
-        margin: 0;
-      }
-
-      &-header {
-        border-bottom: 1px solid $devui-transfer-border-color;
-        width: 100%;
-      }
-
-      &-header > div,
-      &-list > div {
-        width: 25%;
-        display: flex;
-        justify-content: center;
       }
     }
   }
