@@ -142,8 +142,6 @@ export default defineComponent({
     })
     return () => {
       const defaultSlot = renderSlot(useSlots(), 'default')
-      // fullscreen-target 全屏元素属性
-      // fullscreen-launch 全屏事件属性
       // if (defaultSlot.children.length === 0) throw new Error('未发现全屏元素')
       return (
         <div ref={slotElement}>{ defaultSlot }</div>
