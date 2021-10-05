@@ -23,4 +23,11 @@
 
 .meta {
   border-top: solid 1px $devui-dividing-line !important;
+  background-color: $devui-area !important;
+}
+
+.description {
+  border: solid 1px $devui-dividing-line !important;
+  color: $devui-text !important;
+  background-color: $devui-base-bg !important;
 }

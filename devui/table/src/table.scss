@@ -1,0 +1,26 @@
+@import '@devui/styles-var/devui-var.scss';
+
+.devui-table {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  border-spacing: 0;
+  border: none;
+
+  &-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  &-striped {
+    tbody tr:nth-child(even) {
+      background-color: $devui-list-item-strip-bg;
+    }
+  }
+
+  &-empty {
+    width: 100%;
+    font-size: $devui-font-size;
+    text-align: center;
+  }
+}
