@@ -16,12 +16,12 @@ export default defineComponent({
 
     return (
       <tbody class="devui-tbody">
-        {rowColumns.map((row) => {
+        {rowColumns.map((row, rowIndex) => {
           return (
-            <tr>
+            <tr key={rowIndex}>
               {row.columns.map((column, index) => {
                 return (
-                  <td>{column.renderCell({ row, column, $index: index })}</td>
+                  <td key={index}>{column.renderCell({ row, column, $index: index })}</td>
                 );
               })}
             </tr>

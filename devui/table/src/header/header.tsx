@@ -12,8 +12,8 @@ export default defineComponent({
     return (
       <thead class="devui-thead">
         <tr>
-          {columns.map((column) => {
-            return <th>{column.renderHeader()}</th>;
+          {columns.map((column, index) => {
+            return <th key={index}>{column.renderHeader()}</th>;
           })}
         </tr>
       </thead>
