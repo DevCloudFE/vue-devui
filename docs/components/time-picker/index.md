@@ -12,15 +12,15 @@
 <template>
     <div>
       <h4 class='my-10'>basic</h4>
-      <d-timepicker placeholder='请选择时间'/>
+      <d-time-picker placeholder='请选择时间'/>
     </div>
     <div>
       <h4 class='my-10'>default open</h4>
-      <d-timepicker v-model='vModelValue' :time-picker-width='300' :autoOpen='true'/>
+      <d-time-picker v-model='vModelValue' :time-picker-width='300' :autoOpen='true'/>
     </div>
     <div>
       <h4 class='my-10'>disabled</h4>
-      <d-timepicker disabled/>
+      <d-time-picker disabled/>
     </div>
 </template>
 
@@ -48,15 +48,15 @@
 <template>
     <div>
         <h4 class='my-10'>minTime</h4>
-        <d-timepicker min-time='01:04:30' />
+        <d-time-picker min-time='01:04:30' />
     </div>
     <div>
         <h4 class='my-10'>maxTime</h4>
-        <d-timepicker max-time='22:30:30' />
+        <d-time-picker max-time='22:30:30' />
     </div>
     <div>
         <h4 class='my-10'>maxTime && minTime</h4>
-        <d-timepicker min-time='01:04:30' max-time='22:30:30' />
+        <d-time-picker min-time='01:04:30' max-time='22:30:30' />
     </div>
 </template>
 
@@ -69,19 +69,19 @@
 <template>
     <div>
         <h4 class='my-10'>hh:mm:ss</h4>
-        <d-timepicker min-time='01:04:30' />
+        <d-time-picker min-time='01:04:30' />
     </div>
     <div>
         <h4 class='my-10'>mm:HH:ss</h4>
-        <d-timepicker format='mm:HH:ss'/>
+        <d-time-picker format='mm:HH:ss'/>
     </div>
     <div>
         <h4 class='my-10'>hh:mm</h4>
-        <d-timepicker format='hh:mm' />
+        <d-time-picker format='hh:mm' />
     </div>
     <div>
         <h4 class='my-10'>MM:ss</h4>
-        <d-timepicker format='MM:ss' />
+        <d-time-picker format='MM:ss' />
     </div>
 </template>
 ```
@@ -93,14 +93,14 @@
 <template>
     <div>
         <h4 class='my-10'>自定义 customViewTemplate</h4>
-        <d-timepicker ref='slotDemo'>
+        <d-time-picker ref='slotDemo'>
             <template v-slot:customViewTemplate>
                 <div class='slot-box'>
                     <div class='slot-bottom' @click='chooseNowFun'>choose now</div>
                     <div class='slot-bottom' @click='chooseTime' >choose 23:00</div>
                 </div>
             </template>
-        </d-timepicker>
+        </d-time-picker>
     </div>
 </template>
 
@@ -168,13 +168,13 @@ export default defineComponent({
 <template>
     <div>
         <h4 class='my-10'>selectedTimeChage</h4>
-          <d-timepicker @selectedTimeChage='selectedTimeChage'/>
+          <d-time-picker @selectedTimeChage='selectedTimeChage'/>
         <br>
           当前选中时间：<button @click='getNewTimeFun'>{{time1}}</button>
     </div>
     <div>
         <h4 class='my-10'>v-model</h4>
-          <d-timepicker v-model='time2'/>
+          <d-time-picker v-model='time2'/>
         <br>
           当前选中时间：<button @click='getNewTimeFun'>{{time2}}</button>
     </div>

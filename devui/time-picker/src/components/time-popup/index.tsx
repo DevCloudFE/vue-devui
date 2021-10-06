@@ -5,7 +5,7 @@ import { Button } from '../../../../button/index';
 
 import './index.scss'
 export default defineComponent({
-  name:'TTimePopup',
+  name:'DTimePopup',
   components:{
     TimeList,Button
   },
@@ -81,7 +81,7 @@ export default defineComponent({
       return(
         <>
           <div ref={popupDome} 
-            class={`time-popup ${props.showPopup ? 'show-popup' : ''}`} 
+            class={`devui-time-popup ${props.showPopup ? 'devui-show-time-popup' : ''}`} 
             style={{'width': props.popupWidth + 'px','top':props.popupTop+'px','left':props.popupLeft+'px'}}>
               <TimeList 
                 ref={timeListDom}
@@ -93,7 +93,7 @@ export default defineComponent({
                 format={props.popupFormat}
               />
               
-              <div class="popup-btn" >
+              <div class="devui-time-popup-btn" >
                 <div class='popup-slots'>
                   {
                     ctx.slots.default?.()

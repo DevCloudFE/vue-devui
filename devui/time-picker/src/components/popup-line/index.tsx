@@ -1,5 +1,5 @@
 import { ref, defineComponent } from 'vue'
-import { usePopupLine } from './composables/use-popue-line'
+import { usePopupLine } from './composables/use-popup-line'
 import { ArrType } from '../../types'
 import './index.scss'
 
@@ -116,7 +116,7 @@ export default defineComponent({
 
     return ()=>{
       return (
-        <div class='time-list' ref={timeListDom}>
+        <div class='devui-time-list' ref={timeListDom}>
           {
             formatTimeUl()
           }

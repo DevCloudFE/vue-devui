@@ -3,7 +3,7 @@
 @import '../../../../style/theme/corner';
 @import '../../../../style/core/_font';
 
-.time-popup {
+.devui-time-popup {
   height: 310px;
   position: fixed;
   z-index: -1;
@@ -16,39 +16,17 @@
   transition-property: visibility, opacity, z-index;
 }
 
-.show-popup {
+.devui-show-time-popup {
   visibility: visible;
   z-index: 1052;
   opacity: 1;
   transition-property: visibility, opacity, z-index;
 }
 
-.popup-btn {
+.devui-time-popup-btn {
   height: 60px;
   padding: 0 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  .ok-btn {
-    width: 80px;
-    height: 26px;
-    line-height: 26px;
-    text-align: center;
-    background-color: #5e7ce0;
-    font-size: 14px;
-    color: #ffffff;
-    border-radius: 2px;
-    cursor: pointer;
-  }
-
-  .slot-time {
-    font-size: $devui-font-size-card-title;
-    cursor: pointer;
-  }
-
-  .slot-time:hover {
-    color: $devui-primary-hover;
-    text-decoration: underline;
-  }
 }

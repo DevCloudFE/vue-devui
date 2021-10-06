@@ -1,13 +1,13 @@
 import { defineComponent, ref, onMounted, onUnmounted, watch } from 'vue'
 import { TimePickerProps, timePickerProps } from './time-picker-types'
 import { Icon } from '../../icon'
-import usePicker from './composables/use-popup'
+import useTimePicker from './composables/use-time-picker'
 import TimePopup from './components/time-popup/index'
 
 import './time-picker.scss'
 
 export default defineComponent({
-  name: 'DTimepicker',
+  name: 'DTimePicker',
   components: { TimePopup },
   props: timePickerProps,
   emits: ['selectedTimeChage','update:modelValue'],
@@ -34,7 +34,7 @@ export default defineComponent({
       timePopupDom,
       vModeValue,
       getPopupPosition
-    } = usePicker(activeHour,activeMinute,activeSecond,props.minTime,format,props.autoOpen,props.disabled,props.modelValue)
+    } = useTimePicker(activeHour,activeMinute,activeSecond,props.minTime,format,props.autoOpen,props.disabled,props.modelValue)
 
 
     const selectedTimeChage = (e:MouseEvent) => {

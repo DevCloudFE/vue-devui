@@ -2,7 +2,7 @@ import { Ref, ref } from 'vue'
 import { TimeObj } from '../types'
 import { getPositionFun } from '../utils'
 
-export default function usePicker(
+export default function useTimePicker(
   hh:Ref,mm:Ref,ss:Ref,minTime:string,format:string,
   autoOpen:boolean,disabled:boolean,value:string
   ):any{
