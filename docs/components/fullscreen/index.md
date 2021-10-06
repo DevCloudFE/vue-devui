@@ -80,11 +80,11 @@ export default {
 
 ### 参数及API
 
-|    参数     |   类型   |   默认    | 说明                     |
-| :---------: | :------: | :-------: | :----------------------- |
-|    mode     | `immersive` 或 `normal` |    `immersive`    | 可选，设置全屏模式          |
-|    zIndex     | `Number` |  10  | 可选，设置全屏层级           |
-|    fullscreenLaunch    | `EventEmitter<boolean>` |  | 可选，全屏之后的回调           |
+|    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         |
+| :---------: | :------: | :-------: | :----------------------- | --------------------------------- |
+|    mode     | `immersive` 或 `normal` |    `immersive`    | 可选，设置全屏模式          | [沉浸式全屏](#沉浸式全屏)             |
+|    zIndex     | `Number` |  10  | 可选，设置全屏层级           | [普通全屏](#普通全屏)             |
+|    fullscreenLaunch    | `EventEmitter<boolean>` |  | 可选，全屏之后的回调           | [普通全屏](#普通全屏)             |
 
 **fullscreen-target** 选择器
 必含指令，内容投影，设置**需要全屏的元素**沉浸式全屏。
