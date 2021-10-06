@@ -8,10 +8,19 @@ export interface SourceConfig {
 }
 
 export const breadcrumbProps = {
+  /**
+   * 可选，面包屑根据配置的 source 按照默认渲染方式显示
+   */
   source: {
     type: Array as PropType<Array<SourceConfig>>,
-    default: [],
+    default: []
   },
+  /**
+   * 可选，自定义分隔符样式
+   */
+  separatorIcon: {
+    type: String
+  }
 } as const
 
 export type BreadcrumbProps = ExtractPropTypes<typeof breadcrumbProps>

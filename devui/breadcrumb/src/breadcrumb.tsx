@@ -1,19 +1,23 @@
-import { defineComponent } from 'vue'
+import { defineComponent, provide } from 'vue'
 import {
   breadcrumbProps,
   BreadcrumbProps,
-  SourceConfig,
+  SourceConfig
 } from './breadcrumb-types'
 import DBreadcrumbItem from './breadcrumb-item'
+import { getPropsSlot } from '../../shared/util/props-util'
 import './breadcrumb.scss'
 
 export default defineComponent({
   name: 'DBreadcrumb',
   components: {
-    DBreadcrumbItem,
+    DBreadcrumbItem
   },
   props: breadcrumbProps,
   setup(props: BreadcrumbProps, { slots }) {
+    const separatorIcon = getPropsSlot(slots, props, 'separatorIcon') ?? '/'
+    provide('separatorIcon', separatorIcon)
+
     const renderBreadItemList = (source: SourceConfig[]) => {
       return source.map((item: SourceConfig) => {
         return (
@@ -37,5 +41,5 @@ export default defineComponent({
         </div>
       )
     }
-  },
+  }
 })
