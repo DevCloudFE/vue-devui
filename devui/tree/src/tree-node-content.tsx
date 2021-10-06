@@ -16,10 +16,7 @@ export default defineComponent({
       const { disabled, label } = node;
       return tree.ctx.slots.default
         ? tree.ctx.slots.default({ node })
-        : h('span', 
-            { class: ['devui-tree-node__title', disabled && 'select-disabled'], },
-            [label]
-          );
+        : <span class={['devui-tree-node__title', disabled && 'select-disabled']}>{ label }</span>;
     };
   },
 });
