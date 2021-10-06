@@ -51,18 +51,4 @@
   align-items: center;
   position: relative;
   margin-left: 10px;
-
-  &:hover {
-    &::after {
-      position: absolute;
-      z-index: 100;
-      min-width: 200px;
-      content: '提示内容（待替换popover组件）';
-      color: #ffffff;
-      background-color: #e9edfa;
-      top: -80px;
-      padding: 10px;
-      border-radius: 4px;
-    }
-  }
 }

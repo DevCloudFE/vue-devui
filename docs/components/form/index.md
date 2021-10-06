@@ -21,7 +21,7 @@
 <template>
   <d-form ref="dFormBasic" :formData="formModel" layout="vertical" @submit="onSubmitForm">
     <d-form-item prop="name">
-      <d-form-label required hasHelp>Name</d-form-label>
+      <d-form-label required hasHelp helpTips="名字可以随意填">Name</d-form-label>
       <d-form-control extraInfo="这行是说明文字，可以不用理，你尽管填你的姓名。">
         <d-input v-model:value="formModel.name" />
       </d-form-control>
@@ -1594,11 +1594,11 @@ export default defineComponent({
 
 ### Form-Lable Attributes
 
-| 参数     | 说明                                               | 类型    | 可选值          | 默认值  |
-| -------- | -------------------------------------------------- | ------- | --------------- | ------- |
-| required | 可选，表单选项是否必填                             | boolean | `true`、`false` | `false` |
-| hasHelp  | 可选，表单项是否需要帮助指引                       | boolean | `true`、`false` | `false` |
-| helpTips | 可选，表单项帮助指引提示内容，需配合 `hasHelp`使用 | string  |                 | --      |
+| 参数     | 说明                                                         | 类型    | 可选值          | 默认值  |
+| -------- | ------------------------------------------------------------ | ------- | --------------- | ------- |
+| required | 可选，表单选项是否必填                                       | boolean | `true`、`false` | `false` |
+| hasHelp  | 可选，表单项是否需要帮助指引                                 | boolean | `true`、`false` | `false` |
+| helpTips | 可选，表单项帮助指引提示内容，需配合 `hasHelp`使用，且`helpTips`的值不能为空字符串才会生效。 | string  |                 | --      |
 
 
 
