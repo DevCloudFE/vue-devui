@@ -34,16 +34,16 @@ describe('fullscreen', () => {
   it('judge html class correctly', async () => {
 
     // 初始样式
-    expect(document.getElementsByTagName('html')[0].classList).not.toContain('devui-fullscreen')
+    expect(document.getElementsByTagName('html')[0].classList.value).toEqual('')
     // 点击之后，增加class
     await wrapper.find('[test]').trigger('click')
     await nextTick()
-    expect(document.getElementsByTagName('html')[0].classList).not.toContain('devui-fullscreen')
+    expect(document.getElementsByTagName('html')[0].classList.value).not.toContain('devui-fullscreen')
     
     // 再次点击，删除class
     await wrapper.find('[test]').trigger('click')
     await nextTick()
-    expect(document.getElementsByTagName('html')[0].classList).not.toContain('devui-fullscreen')
+    expect(document.getElementsByTagName('html')[0].classList.value).toEqual('')
   })
 
   // 判断属性
