@@ -3,7 +3,9 @@
   justify-content: space-between;
 
   .devui-skeleton__avatar {
-    display: none;
+    display: flex;
+    flex: 1;
+    justify-content: center;
 
     .avatar {
       width: 40px;
@@ -11,12 +13,6 @@
       background-color: #cccccc;
       border-radius: 50%;
     }
-  }
-
-  .is-shown {
-    flex: 1;
-    display: flex;
-    justify-content: center;
   }
 
   .devui-skeleton__item__group {
