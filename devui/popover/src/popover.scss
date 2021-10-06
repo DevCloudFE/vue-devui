@@ -15,14 +15,13 @@
   position: relative;
   @include some-display;
 
-  &::after {
+  .after {
     content: '';
     width: 12px;
     display: none;
     height: 12px;
     transform: rotate(45deg);
     position: absolute;
-    z-index: 1060;
     background-color: $devui-feedback-overlay-bg;
   }
 
@@ -31,7 +30,7 @@
       @include some-display;
     }
 
-    &::after {
+    .after {
       @include some-display;
     }
   }
@@ -39,6 +38,7 @@
   .devui-popover-content {
     position: absolute;
     display: none;
+    overflow: hidden;
     padding: 5px 14px;
     align-items: center;
     flex-wrap: wrap;
@@ -71,8 +71,8 @@
       @include some-animation;
     }
 
-    &::after {
-      $devui-popover-animation-wait:0.1s;
+    .after {
+      $devui-popover-animation-wait:0.02s;
 
       opacity: 0;
       @include some-animation;
@@ -112,7 +112,7 @@
       transform: translate(-100%, -50%);
     }
 
-    &::after {
+    .after {
       @include left-postion--after;
     }
   }
@@ -122,7 +122,7 @@
       @include left-postion--content;
     }
 
-    &::after {
+    .after {
       @include left-postion--after;
 
       top: var(--devui-popover-offset);
@@ -138,7 +138,7 @@
       bottom: 0;
     }
 
-    &::after {
+    .after {
       @include left-postion--after;
 
       bottom: var(--devui-popover-offset);
@@ -168,7 +168,7 @@
       transform: translate(-50%, -100%);
     }
 
-    &::after {
+    .after {
       left: 50%;
       @include top-postion--after;
     }
@@ -179,7 +179,7 @@
       @include top-postion--content;
     }
 
-    &::after {
+    .after {
       @include top-postion--after;
 
       left: var(--devui-popover-offset);
@@ -196,7 +196,7 @@
       right: 0;
     }
 
-    &::after {
+    .after {
       @include top-postion--after;
 
       right: var(--devui-popover-offset);
@@ -224,7 +224,7 @@
       transform: translate(100%, -50%);
     }
 
-    &::after {
+    .after {
       @include right-postion--after;
 
       top: 50%;
@@ -239,7 +239,7 @@
       top: 0;
     }
 
-    &::after {
+    .after {
       @include right-postion--after;
     }
   }
@@ -252,7 +252,7 @@
       top: auto;
     }
 
-    &::after {
+    .after {
       @include right-postion--after;
 
       bottom: var(--devui-popover-offset);
@@ -284,7 +284,7 @@
       transform: translate(-50%, 100%);
     }
 
-    &::after {
+    .after {
       @include bottom-postion--after;
 
       left: 50%;
@@ -298,7 +298,7 @@
       @include bottom-postion--content;
     }
 
-    &::after {
+    .after {
       @include bottom-postion--after;
     }
   }
@@ -311,7 +311,7 @@
       right: 0;
     }
 
-    &::after {
+    .after {
       @include bottom-postion--after;
 
       left: auto;
