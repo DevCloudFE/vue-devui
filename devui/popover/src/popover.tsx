@@ -1,4 +1,5 @@
 import { defineComponent, toRefs, ref, CSSProperties, reactive } from 'vue'
+import debounce from './debounce';
 import clickoutsideDirective from '../../shared/devui-directive/clickoutside'
 import './popover.scss'
 
@@ -42,29 +43,41 @@ export default defineComponent({
       type: Number as () => CSSProperties,
       default: 1060
     },
+
     popType: {
       type: String as () => popType,
       default: 'default'
     },
+
     showAnimation: {
       type: Boolean,
       default: true
     },
+
     mouseEnterDelay: {
       type: Number,
       default: 150
     },
+
     mouseLeaveDelay: {
       type: Number,
       default: 100
+    },
+
+    popMaxWidth: {
+      type: Number,
+      default: undefined
+    },
+
+    popoverStyle: {
+      type: Object,
+      default: () => ({})
     }
   },
 
   setup(props, ctx) {
-    let enter = null
-    let leave = null
     const visible = ref(props.visible);
-    const { position, content, zIndex, trigger, popType, mouseEnterDelay, mouseLeaveDelay, showAnimation } = toRefs(props);
+    const { position, content, zIndex, trigger, popType, popoverStyle, mouseEnterDelay, mouseLeaveDelay, showAnimation, popMaxWidth } = toRefs(props);
     const isClick = trigger.value === 'click'
     const iconType = reactive(popTypeClass[popType.value])
     const event = function () {
@@ -75,28 +88,21 @@ export default defineComponent({
       visible.value = true
     }
     const onClick = isClick ? event : null;
-    const onMouseenter = isClick ? null : () => {
-      enter && clearTimeout(enter);
-      enter = setTimeout(() => {
-        visible.value = true
-      }, mouseEnterDelay.value)
-    }
-    const onMouseleave = isClick ? null : () => {
-      leave && clearTimeout(leave)
-      leave = setTimeout(() => {
-        visible.value = false
-      }, mouseLeaveDelay.value)
-    }
+    const enter = debounce(() => { visible.value = true }, mouseEnterDelay.value)
+    const leave = debounce(() => { visible.value = false }, mouseLeaveDelay.value)
+    const onMouseenter = isClick ? null : enter
+    const onMouseleave = isClick ? null : leave
     const hiddenContext = function () {
       visible.value = false
     }
 
-
     return () => {
       const { slots } = ctx;
       const style: CSSProperties = {
-        zIndex: zIndex.value
+        zIndex: zIndex.value,
+        ...popoverStyle.value
       }
+      popMaxWidth.value && (style.maxWidth = `${popMaxWidth.value}px`)
 
       return (
         <div class={
@@ -107,6 +113,7 @@ export default defineComponent({
               'devui-popover-isVisible': visible.value
             }
           ]} >
+          <span class="after" style={style}></span>
           <div class='devui-popover-reference' onMouseenter={onMouseenter} onMouseleave={onMouseleave} onClick={onClick} v-clickoutside={hiddenContext}>
             {slots.reference?.()}
           </div>
