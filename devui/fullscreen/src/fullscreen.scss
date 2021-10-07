@@ -14,3 +14,7 @@
 .devui-fullscreen {
   overflow: hidden;
 }
+
+:not(:root):fullscreen::backdrop {
+  background: #ffffff;
+}

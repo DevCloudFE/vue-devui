@@ -53,10 +53,6 @@ export const uploadProps = {
     type: Object as PropType<IFileOptions>,
     required: true,
   },
-  filePath: {
-    type: String,
-    required: true,
-  },
   autoUpload: {
     type: Boolean,
     default: false,
@@ -133,9 +129,6 @@ export const multiUploadProps = {
   fileOptions: {
     type: Object as PropType<IFileOptions>,
     required: true,
-  },
-  filePath: {
-    type: String,
   },
   autoUpload: {
     type: Boolean,

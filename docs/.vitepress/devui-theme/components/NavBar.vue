@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineEmits, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import Theme from '@devui/theme/theme'
 import NavBarTitle from './NavBarTitle.vue'
 import NavLinks from './NavLinks.vue'
