@@ -14,6 +14,7 @@
 ```vue
 <template>
   <d-breadcrumb>
+    <d-breadcrumb-item to="{ path: '/' }">Homepage</d-breadcrumb-item>
     <d-breadcrumb-item>
       <a href="/">DevUI</a>
     </d-breadcrumb-item>
@@ -39,7 +40,7 @@ export default defineComponent({
   name: "DBreadcrumbDemoSourceConfig",
   setup() {
     const source = reactive([
-      { title: 'DevUI', link: '/' },
+      { title: 'DevUI', link: '/', linkType: 'routerLink', replace: true },
       { title: 'Breadcrumb', link: 'components/breadcrumb/', noNavigation: true }
     ])  
     return {
@@ -123,19 +124,23 @@ export default defineComponent({
 
 ### d-breadcrumb 参数
 
-|     参数      |                  类型                  |             默认              | 说明                                               | 跳转 Demo                 |
-| :-----------: | :------------------------------------: | :---------------------------: | :------------------------------------------------- | ------------------------- |
-| separatorIcon |               [`string`](#自定义分隔符的面包屑) | '/'                                                | 可选，自定义分隔符样式    | [自定义分隔符的面包屑](#自定义分隔符的面包屑)
-|    source     | [`Array<SourceConfig>`](#SourceConfig) |              []               | 可选，面包屑根据配置的 source 按照默认渲染方式显示 | [传入source](#传入source) |
+|     参数      |                  类型                  | 默认 | 说明                                               | 跳转 Demo                                     |
+| :-----------: | :------------------------------------: | :--: | :------------------------------------------------- | --------------------------------------------- |
+| separatorIcon |   [`string`](#自定义分隔符的面包屑)    | '/'  | 可选，自定义分隔符样式                             | [自定义分隔符的面包屑](#自定义分隔符的面包屑) |
+|    source     | [`Array<SourceConfig>`](#SourceConfig) |  []  | 可选，面包屑根据配置的 source 按照默认渲染方式显示 | [传入source](#传入source)                     |
 
-<!-- ### d-breadcrumb-item 参数
+### d-breadcrumb-item 参数
 
-|   参数   |                类型                | 默认  |                          说明                           | 跳转 Demo                         | 全局配置项 |
-| :------: | :--------------------------------: | :---: | :-----------------------------------------------------: | :-------------------------------- | ---------- |
-| showMenu |             `boolean`              | false |        可选，是否需要显示下拉箭头及下拉列表内容         | [可下拉的面包屑](#可下拉的面包屑) |            |
+|   参数   |                类型                | 默认  |                          说明                           | 跳转 Demo                         | 
+| :------: | :--------------------------------: | :---: | :-----------------------------------------------------: | :-------------------------------- |
+|to	| `string/object` | —	| 路由跳转对象，同 vue-router 的 to	| [基础面包屑](#基础面包屑) | 
+|replace|	`boolean`	|	false | 在使用 to 进行路由跳转时，启用 replace 将不会向 history 添加新记录 | [基础面包屑](#基础面包屑) |
+
+
+<!-- | showMenu |             `boolean`              | false |        可选，是否需要显示下拉箭头及下拉列表内容         | [可下拉的面包屑](#可下拉的面包屑) |            |
 | menuList | [`Array<MenuConfig>`](#menuconfig) |  --   |    可选，showMenu 为 true 时传入，下拉列表的显示内容    | [可下拉的面包屑](#可下拉的面包屑) |            |
-| isSearch |             `boolean`              | false | 可选，showMenu 为 true 时传入，下拉列表是否需要搜索功能 | [可下拉的面包屑](#可下拉的面包屑) |            |
-### d-breadcrumb-item 事件
+| isSearch |             `boolean`              | false | 可选，showMenu 为 true 时传入，下拉列表是否需要搜索功能 | [可下拉的面包屑](#可下拉的面包屑) |            | -->
+<!-- ### d-breadcrumb-item 事件
 
 |    事件     |          类型           |                          说明                           | 跳转 Demo                         |
 | :---------: | :---------------------: | :-----------------------------------------------------: | --------------------------------- |
@@ -159,5 +164,7 @@ export interface SourceConfig {
   link?: string; // 跳转的路径
   target?: string // 规定在何处打开链接文档
   noNavigation?: boolean; // 链接是否不可跳转，一般用于当前所处位置不可跳转的配置
+  linkType?: 'hrefLink' | 'routerLink'; // 链接类型，默认为'hrefLink'方式，可选'hrefLink' 或 'routerLink'
+  replace: Boolean // 在使用 to 进行路由跳转时，启用 replace 将不会向 history 添加新记录
 }
 ```

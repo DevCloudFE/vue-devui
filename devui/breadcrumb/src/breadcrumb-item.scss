@@ -30,6 +30,15 @@
       color $devui-animation-duration-slow
       $devui-animation-ease-in-out-smooth;
   }
+
+  .is-link {
+    cursor: pointer;
+
+    &:hover {
+      color: $devui-text;
+      text-decoration: none;
+    }
+  }
 }
 
 .devui-breadcrumb-separator {
