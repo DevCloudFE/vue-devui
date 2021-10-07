@@ -14,10 +14,8 @@ export default defineComponent({
     }
     return () => {
       if (props.loading) {
-        return <div class={`devui-skeleton ${props.animate ? 'devui-skeleton-animated' : ''}`}>
-          <div class={`devui-skeleton__avatar ${props.avatar ? 'is-shown' : ''}`}>
-            <div class="avatar"/>
-          </div>
+        return <div class={`devui-skeleton ${props.animate ? 'devui-skeleton-animated' : 'devui-skeleton-no-animated'}`}>
+          {props.avatar ? <div class="devui-skeleton__avatar"><div class="avatar" /></div> : null}
           <div class="devui-skeleton__item__group">{
             arr.map(() => {
               return <div class="devui-skeleton__item" />

@@ -3,7 +3,9 @@
   justify-content: space-between;
 
   .devui-skeleton__avatar {
-    display: none;
+    display: flex;
+    flex: 1;
+    justify-content: center;
 
     .avatar {
       width: 40px;
@@ -11,12 +13,6 @@
       background-color: #cccccc;
       border-radius: 50%;
     }
-  }
-
-  .is-shown {
-    flex: 1;
-    display: flex;
-    justify-content: center;
   }
 
   .devui-skeleton__item__group {
@@ -42,14 +38,14 @@
 
 .devui-skeleton-animated > .devui-skeleton__avatar > .avatar,
 .devui-skeleton-animated > .devui-skeleton__item__group > .devui-skeleton__item {
-  background-color: #cccccc;
-  // background: linear-gradient(
-  //     100deg,
-  //     rgba(255, 255, 255, 0) 40%,
-  //     rgba(255, 255, 255, 0.5) 50%,
-  //     rgba(255, 255, 255, 0) 60%
-  //   )
-  //   #ccc;
+  background:
+    linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 60%
+    )
+    #cccccc;
   background-size: 200% 100%;
   background-position-x: 180%;
   animation: 2s loading ease-in-out infinite;
