@@ -1,5 +1,5 @@
 import { defineComponent, reactive, inject, onMounted, onBeforeUnmount, provide, ref} from 'vue';
-import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey } from '../form-types';
+import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey, formItemInjectionKey } from '../form-types';
 import './form-item.scss';
 import AsyncValidator, { Rules } from 'async-validator';
 import mitt from 'mitt';
@@ -26,7 +26,7 @@ export default defineComponent({
 			formItemMitt,
 			resetField			
 		})
-		provide('dFormItem', formItem);
+		provide(formItemInjectionKey, formItem);
 
 		const isHorizontal = labelData.layout === 'horizontal';
 		const isVertical = labelData.layout === 'vertical';
