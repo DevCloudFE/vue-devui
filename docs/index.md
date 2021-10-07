@@ -23,6 +23,8 @@ yarn add vue-devui
 
 # 可选，字体图标库, 部分Demo依赖此字体库
 # yarn add @devui-design/icons
+# main.ts 文件引入
+# import '@devui-design/icons/icomoon/devui-icon.css'
 ```
 
 ### 3. 引入模块和样式
