@@ -259,7 +259,7 @@
 | popMaxWidth | `number` | - | 可选，限制弹出框最大宽度（`px`） | [基本用法](#基本用法) |
 | mouseEnterDelay | `number` | 150 | 可选，仅需要在 trigger 为 hover 的时候，设置鼠标移入后延时多少才显示 Popover，单位是 `ms` | [延时触发](#延时触发) |
 | mouseLeaveDelay | `number` | 100     | 可选，仅需要在 trigger 为 hover 的时候，设置鼠标移出后延时多少才隐藏 popover，单位是 `ms` | [延时触发](#延时触发) |
-| popoverStyle | `{[klass:string]:any;}` | - | 可选，在需要改变弹出层样式时设置，箭头会应用同样的背景色。样式，参见[Angular版本—Popover]([DevUI](https://devui.design/components/zh-cn/popover/api)) | [自定义内容](#自定义内容) |
+| popoverStyle | `{[klass:string]:any;}` | - | 可选，在需要改变弹出层样式时设置，箭头会应用同样的背景色。样式，参见[Angular版本—Popover](https://devui.design/components/zh-cn/popover/api) | [自定义内容](#自定义内容) |
 
 
 
