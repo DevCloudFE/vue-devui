@@ -1,9 +1,11 @@
 import { defineComponent, toRefs } from 'vue'
-import { treeProps, TreeProps } from './tree-types'
-import { flatten } from './util'
+import { treeProps, TreeProps, TreeItem } from './tree-types'
+import { flatten, precheckTree } from './util'
+import Loading from '../../loading/src/service'
 import useToggle from './composables/use-toggle'
 import useMergeNode from './composables/use-merge-node'
 import useHighlightNode from './composables/use-highlight'
+import useLazy from './composables/use-lazy'
 import IconOpen from './assets/open.svg'
 import IconClose from './assets/close.svg'
 import './tree.scss'
@@ -13,42 +15,78 @@ export default defineComponent({
   props: treeProps,
   emits: [],
   setup(props: TreeProps) {
-    const { data } = toRefs(props)
+    const { data } = toRefs({ ...props, data: precheckTree(props.data) })
     const flatData = flatten(data.value)
 
     const { mergeData } = useMergeNode(data.value)
-    
     const { openedData, toggle } = useToggle(mergeData.value)
     const { nodeClassNameReflect, handleInitNodeClassNameReflect, handleClickOnNode } = useHighlightNode()
+    const { lazyNodesReflect, handleInitLazyNodeReflect, getLazyData } = useLazy()
 
     const Indent = () => {
       return <span style="display: inline-block; width: 16px; height: 16px;"></span>
     }
-
-    const renderNode = (item) => {
-      // 现在数据里面没有 key , 未来做优化需要 key 值嘛? 
-      const { key = '', label, disabled, open, level, children } = item
-      const nodeId = handleInitNodeClassNameReflect(disabled, key, label)
+    const renderNode = (item: TreeItem) => {
+      const { id = '', label, disabled, open, isParent, level, children } = item
+      handleInitNodeClassNameReflect(disabled, id)
+      handleInitLazyNodeReflect(item, {
+        id,
+        onGetNodeData: async () => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve([
+                {
+                  id: `It is a test Node-1 ID = ${id}`,
+                  label: `It is a test Node-1 ID = ${id}`,
+                  level: item.level + 1
+                }, {
+                  id: `It is a test Node-2 ID = ${id}`,
+                  label: `It is a test Node-2 ID = ${id}`,
+                  level: item.level + 1
+                }
+              ])
+            }, 4000)
+          })
+        },
+        renderLoading: (id) => {
+          return Loading.open({
+            target: document.getElementById(id),
+            message: '加载中...',
+            positionType: 'relative',
+            zIndex: 1,
+          })
+        }
+      })
+      const renderNodeWithIcon = (item: TreeItem) => {
+        const handleClick = async (target: MouseEvent) => {
+          if (item.isParent) {
+            item.children = await getLazyData(id)  // item 按引用传递
+          }
+          return toggle(target, item)
+        }
+        return (
+          isParent || children
+          ? open
+            ? <IconOpen class="mr-xs" onClick={handleClick} />
+            : <IconClose class="mr-xs" onClick={handleClick} />
+          : <Indent />
+        )
+      }
       return (
         <div
           class={['devui-tree-node', open && 'devui-tree-node__open']}
           style={{ paddingLeft: `${24 * (level - 1)}px` }}
         >
           <div
-            class={`devui-tree-node__content ${nodeClassNameReflect.value[nodeId]}`}
-            onClick={() => handleClickOnNode(nodeId)}
+            class={`devui-tree-node__content ${nodeClassNameReflect.value[id]}`}
+            onClick={() => handleClickOnNode(id)}
           >
             <div class="devui-tree-node__content--value-wrapper">
-              {
-                children
-                  ? open
-                    ? <IconOpen class="mr-xs" onClick={(target) => toggle(target, item)} />
-                    : <IconClose class="mr-xs" onClick={(target) => toggle(target, item)} />
-                  : <Indent />
-              }
+              {renderNodeWithIcon(item)}
               <span class={['devui-tree-node__title', disabled && 'select-disabled']}>
-                { label }
+                {label}
               </span>
+              {item.isParent && <div class='devui-tree-node_loading' id={lazyNodesReflect.value[id].loadingTargetId} />}
             </div>
           </div>
         </div>
@@ -69,7 +107,6 @@ export default defineComponent({
         }
       })
     }
-
     return () => {
       return (
         <div class="devui-tree">

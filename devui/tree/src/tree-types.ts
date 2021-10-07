@@ -1,8 +1,12 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 
 export interface TreeItem {
+  id: string
   label: string
-  children: TreeData
+  isParent?: boolean
+  level: number
+  open?: boolean
+  children?: TreeData
   [key: string]: any
 }
 

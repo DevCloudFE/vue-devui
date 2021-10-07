@@ -70,6 +70,7 @@ export default defineComponent({
             ]
           },
           {
+            id: 'dynamic 12',
             label: 'parent node 13 - without children - dynamic loading',
             isParent: true,
             level: 2,
@@ -189,19 +190,24 @@ export default defineComponent({
     const data = ref([
       {
         label: 'parent node 1',
+        level: 1,
         children: [
           {
             label: 'parent node 11',
             open: true,
+            level: 2,
             children: [
               {
                 label: 'parent node 111',
+                level: 3,
                 children: [
                   {
                     label: 'parent node 1111',
+                    level: 4,
                     children: [
                       {
                         label: 'leaf node 11111',
+                        level: 5,
                       }
                     ]
                   }
@@ -213,25 +219,32 @@ export default defineComponent({
       },
       {
         label: 'parent node 2',
+        level: 1,
         children: [
           {
             label: 'parent node 21',
+            level: 2,
             open: true,
             children: [
               {
                 label: 'leaf node 211',
+                level: 3,
               },
               {
                 label: 'leaf node 212',
+                level: 3,
               },
               {
                 label: 'leaf node 213',
+                level: 3,
               },
               {
                 label: 'leaf node 214',
+                level: 3,
               },
               {
                 label: 'leaf node 215',
+                level: 3,
               },
             ]
           },
@@ -239,15 +252,19 @@ export default defineComponent({
       },
       {
         label: 'parent node 3',
+        level: 1,
         children: [
           {
             label: 'leaf node 31',
+            level: 2,
             children: [
               {
                 label: 'leaf node 311',
+                level: 3,
                 children: [
                   {
                     label: 'leaf node 3111',
+                    level: 4,
                   }
                 ]
               }
@@ -255,9 +272,11 @@ export default defineComponent({
           },
           {
             label: 'leaf node 32',
+            level: 2,
           },
           {
             label: 'leaf node 33',
+            level: 2,
           }
         ]
       }
