@@ -46,7 +46,6 @@ export default defineComponent({
         return
       }
       if (reset) {
-        console.log(chooseValue.value)
         if (chooseValue.value >= 0) {
           setChange(0, chooseValue.value + 1, '100%')
           setChange(chooseValue.value + 1, props.count, '0')
@@ -72,16 +71,13 @@ export default defineComponent({
       setChange(0, index, '100%')
       // 判断是否是半选模式
       if (props.allowHalf && (e.offsetX * 2 <= e.target.clientWidth)) {
-        console.log('半')
         setChange(index, index + 1, '50%')
         chooseValue.value = index - 0.5
       } else {
-        console.log('全')
         setChange(index, index + 1, '100%')
         chooseValue.value = index
       }
       setChange(index + 1, props.count, '0')
-      console.log(index + 1)
       index = chooseValue.value
       props.onChange && props.onChange(index + 1)
       props.onTouched && props.onTouched()
