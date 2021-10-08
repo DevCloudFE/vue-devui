@@ -1,6 +1,7 @@
 import { defineComponent, ref, computed } from 'vue';
 import { inputNumberProps, InputNumberProps } from './input-number-types';
 import './input-number.scss';
+import Icon from '../../icon/src/icon';
 
 export default defineComponent({
   name: 'DInputNumber',
@@ -8,6 +9,8 @@ export default defineComponent({
   emits: ['update:modelValue', 'change', 'input', 'focus', 'blur', 'keydown'],
   setup(props: InputNumberProps, ctx) {
     const inputVal = ref(props.modelValue);
+
+    const focusVal = ref('');
 
     // 大小
     const isSize = computed(() => {
@@ -19,11 +22,15 @@ export default defineComponent({
       return props.disabled ? 'devui-input-disabled' : '';
     });
 
+    const focusClass = computed(() => {
+      return focusVal;
+    });
     //新增
     const add = () => {
       if (props.disabled) return;
       if (inputVal.value >= props.max) return;
       inputVal.value += props.step != 0 ? props.step : 1;
+      focusVal.value = 'active';
       ctx.emit('change', inputVal.value);
       ctx.emit('update:modelValue', inputVal.value);
     };
@@ -32,6 +39,7 @@ export default defineComponent({
       if (props.disabled) return;
       if (inputVal.value <= props.min) return;
       inputVal.value -= props.step != 0 ? props.step : 1;
+      focusVal.value = 'active';
       ctx.emit('change', inputVal.value);
       ctx.emit('update:modelValue', inputVal.value);
     };
@@ -41,9 +49,11 @@ export default defineComponent({
       ctx.emit('update:modelValue', val.data);
     };
     const onFocus = ($event: Event) => {
+      focusVal.value = 'active';
       ctx.emit('focus', $event);
     };
     const onBlur = ($event: Event) => {
+      focusVal.value = '';
       ctx.emit('blur', $event);
     };
     const onChange = ($event: Event) => {
@@ -54,6 +64,7 @@ export default defineComponent({
     };
     return {
       inputVal,
+      focusClass,
       isDisabled,
       isSize,
       add,
@@ -67,6 +78,7 @@ export default defineComponent({
   },
   render() {
     const {
+      focusClass,
       placeholder,
       add,
       inputVal,
@@ -82,24 +94,23 @@ export default defineComponent({
     const dInputNum = ['devui-input-number', isDisabled, isSize];
     return (
       <div class={dInputNum}>
+        <div  onBlur={onBlur} tabindex="1" class={['devui-control-buttons', focusClass.value]}>
+          <span  onClick={add}><Icon size="12px" name="chevron-up"  ></Icon></span>
+          <span  onClick={subtract}><Icon size="12px" name="chevron-down" ></Icon></span>
+        </div>
         <div class="devui-input-item">
-          <span class="devui-subtract" onClick={subtract}>
-            -
-          </span>
           <input
             type="number"
             value={inputVal}
-            class="devui-input-style"
             placeholder={placeholder}
+            disabled={isDisabled == 'devui-input-disabled'? true: false}
+            class={['devui-input-style devui-input-box', focusClass.value]}
             onInput={onInput}
             onChange={onChange}
             onFocus={onFocus}
             onBlur={onBlur}
             onKeydown={onKeydown}
           />
-          <span class="devui-add" onClick={add}>
-            +
-          </span>
         </div>
       </div>
     );
