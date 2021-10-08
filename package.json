@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "vitepress dev docs",
-    "build": "vitepress build docs",
+    "build": "vitepress build docs && cp public/* docs/.vitepress/dist/assets",
     "serve": "vitepress serve docs",
     "app:dev": "vite",
     "app:build": "vite build",
