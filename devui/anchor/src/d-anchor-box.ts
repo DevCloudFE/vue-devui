@@ -1,5 +1,7 @@
 import { setActiveLink, onScroll, randomId } from './util';
+import { inBrowser } from '../../shared/util/common-var';
 export default {
+  name: 'd-anchor-box',
   // 滚动区域
   // 1.监听window滚动或滚动容器滚动，切换link+active,改变#
   mounted(el: HTMLElement): void {
@@ -84,7 +86,7 @@ const cssChange = (
   mysidebar.style.left = left + 'px';
 };
 const addEvent = (function () {
-  if (window.addEventListener) {
+  if (inBrowser && window.addEventListener) {
     return function (elm, type, handle) {
       elm.addEventListener(type, handle, false);
     };
