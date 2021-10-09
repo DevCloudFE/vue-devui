@@ -1,4 +1,4 @@
-import { onUnmounted, watch, computed, ComputedRef } from 'vue';
+import { onUnmounted, watch, computed, ComputedRef, onMounted } from 'vue';
 import { OverlayProps } from './overlay-types';
 
 interface CommonInfo {
@@ -27,28 +27,28 @@ export function useOverlayLogic(props: OverlayProps): CommonInfo {
 
   const handleOverlayBubbleCancel = (event: Event) => (event.cancelBubble = true);
 
-
-  const body = document.body;
-  const originOverflow = body.style.overflow;
-  const originPosition = body.style.position;
-  watch([() => props.visible, () => props.backgroundBlock], ([visible, backgroundBlock]) => {
-    if (backgroundBlock) {
-      const top = body.getBoundingClientRect().y;
-      if (visible) {
-        body.style.overflowY = 'scroll';
-        body.style.position = visible ? 'fixed' : '';
-        body.style.top = `${top}px`;
-      } else {
-        body.style.overflowY = originOverflow;
-        body.style.position = originPosition;
-        body.style.top = '';
-        window.scrollTo(0, -top);
+  onMounted(() => {
+    const body = document.body;
+    const originOverflow = body.style.overflow;
+    const originPosition = body.style.position;
+    watch([() => props.visible, () => props.backgroundBlock], ([visible, backgroundBlock]) => {
+      if (backgroundBlock) {
+        const top = body.getBoundingClientRect().y;
+        if (visible) {
+          body.style.overflowY = 'scroll';
+          body.style.position = visible ? 'fixed' : '';
+          body.style.top = `${top}px`;
+        } else {
+          body.style.overflowY = originOverflow;
+          body.style.position = originPosition;
+          body.style.top = '';
+          window.scrollTo(0, -top);
+        }
       }
-    }
-  });
-
-  onUnmounted(() => {
-    body.style.overflow = originOverflow;
+    });
+    onUnmounted(() => {
+      document.body.style.overflow = originOverflow;
+    });
   });
 
   return {

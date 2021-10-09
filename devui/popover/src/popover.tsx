@@ -16,6 +16,7 @@ const popTypeClass = {
 
 export default defineComponent({
   name: 'DPopover',
+  
   directives: {
     clickoutside: clickoutsideDirective
   },
@@ -25,10 +26,12 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+
     position: {
       type: String as () => positionType,
       default: 'bottom'
     },
+
     content: {
       type: String,
       default: 'default'
@@ -76,8 +79,10 @@ export default defineComponent({
   },
 
   setup(props, ctx) {
+    const { slots } = ctx;
     const visible = ref(props.visible);
     const { position, content, zIndex, trigger, popType, popoverStyle, mouseEnterDelay, mouseLeaveDelay, showAnimation, popMaxWidth } = toRefs(props);
+    const style: CSSProperties = { zIndex: zIndex.value, ...popoverStyle.value }
     const isClick = trigger.value === 'click'
     const iconType = reactive(popTypeClass[popType.value])
     const event = function () {
@@ -92,18 +97,10 @@ export default defineComponent({
     const leave = debounce(() => { visible.value = false }, mouseLeaveDelay.value)
     const onMouseenter = isClick ? null : enter
     const onMouseleave = isClick ? null : leave
-    const hiddenContext = function () {
-      visible.value = false
-    }
+    const hiddenContext = () => { visible.value = false }
+    popMaxWidth.value && (style.maxWidth = `${popMaxWidth.value}px`)
 
     return () => {
-      const { slots } = ctx;
-      const style: CSSProperties = {
-        zIndex: zIndex.value,
-        ...popoverStyle.value
-      }
-      popMaxWidth.value && (style.maxWidth = `${popMaxWidth.value}px`)
-
       return (
         <div class={
           ['devui-popover',
@@ -113,13 +110,13 @@ export default defineComponent({
               'devui-popover-isVisible': visible.value
             }
           ]} >
-          <span class="after" style={style}></span>
           <div class='devui-popover-reference' onMouseenter={onMouseenter} onMouseleave={onMouseleave} onClick={onClick} v-clickoutside={hiddenContext}>
             {slots.reference?.()}
           </div>
           <div class={['devui-popover-content', iconType.name ? 'is-icon' : '']} style={style}>
             {iconType.name && <d-icon name={iconType.name} color={iconType.color} class="devui-popover-icon" size="16px" />}
             {slots.content?.() || <span>{content.value}</span>}
+            <span class="after" style={style}></span>
           </div>
         </div>
       )
