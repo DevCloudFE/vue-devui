@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useToc } from '../composables/useToc'
 
 const headers = useToc()
 // console.log(headers)
+const currentText = ref('')
+const clickItem = (text: string) => {
+  currentText.value = text
+}
+
 </script>
 
 <template>
@@ -13,8 +19,9 @@ const headers = useToc()
         <li
           v-for="{ link, text } in headers"
           :key="link"
+          @click="clickItem(text)"
         >
-          <a :class="{active: link === text}" :href="link">{{ text }}</a>
+          <a :class="{active: currentText === text}" :href="link">{{ text }}</a>
         </li>
       </ul>
     </nav>
@@ -27,7 +34,7 @@ const headers = useToc()
 .devui-content-nav {
   width: 240px;
   position: fixed;
-  top: 90px;
+  top: 50px;
   right: 0;
   height: 100%;
   z-index: 1;
