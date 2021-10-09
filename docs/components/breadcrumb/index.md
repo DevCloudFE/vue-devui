@@ -53,42 +53,6 @@ export default defineComponent({
 :::
 
 ### 可下拉的面包屑【TODO】
-
-<!-- :::demo
-<template>
-  <d-breadcrumb>
-    <d-breadcrumb-item v-for='item in breadData' :showMenu='item.showMenu' :menuList='item.menuList' :isSearch='item.isSearch' @toggleEvent='toggleEvent'>
-      <a :href='item.link'>{{ item.label }}</a>
-    </d-breadcrumb-item>
-  </d-breadcrumb>
-</template>
-<script>
-import { defineComponent, reactive } from 'vue'
-
-export default defineComponent({
-  name: 'DBreadcrumbDemoMenu',
-  setup() {
-    const breadData = reactive([
-      { label: 'DevUI', showMenu: false, link: '/' },
-      {
-        label: 'Breadcrumb', showMenu: true, isSearch: true,
-        menuList: [
-          { name: 'Anchor', link: '/components/anchor/demo' },
-          { name: 'Button', link: '/components/button/demo' }
-        ]
-      }])  
-    const toggleEvent = (event) => {
-      console.log(event);
-    }
-    return {
-      breadData,
-    }
-  },
-})
-</script>
-```
-::: -->
-
 ### 自定义分隔符的面包屑
 
 :::demo
@@ -136,25 +100,7 @@ export default defineComponent({
 |to	| `string/object` | —	| 路由跳转对象，同 vue-router 的 to	| [基础面包屑](#基础面包屑) | 
 |replace|	`boolean`	|	false | 在使用 to 进行路由跳转时，启用 replace 将不会向 history 添加新记录 | [基础面包屑](#基础面包屑) |
 
-
-<!-- | showMenu |             `boolean`              | false |        可选，是否需要显示下拉箭头及下拉列表内容         | [可下拉的面包屑](#可下拉的面包屑) |            |
-| menuList | [`Array<MenuConfig>`](#menuconfig) |  --   |    可选，showMenu 为 true 时传入，下拉列表的显示内容    | [可下拉的面包屑](#可下拉的面包屑) |            |
-| isSearch |             `boolean`              | false | 可选，showMenu 为 true 时传入，下拉列表是否需要搜索功能 | [可下拉的面包屑](#可下拉的面包屑) |            | -->
-<!-- ### d-breadcrumb-item 事件
-
-|    事件     |          类型           |                          说明                           | 跳转 Demo                         |
-| :---------: | :---------------------: | :-----------------------------------------------------: | --------------------------------- |
-| toggleEvent | `EventEmitter<boolean>` | dropdown 菜单展开和收起的事件，返回值为当前菜单是否打开 | [可下拉的面包屑](#可下拉的面包屑) | -->
 ### 接口 & 类型定义
-
-<!-- MenuConfig
-```ts
-export interface MenuConfig {
-  name: string // 显示的名称
-  link: string // 跳转的路径，可为绝对路径与相对路径，注意需要与路由的配置一致
-  target?: string // 规定在何处打开链接文档
-}
-``` -->
 
 ### SourceConfig
 
