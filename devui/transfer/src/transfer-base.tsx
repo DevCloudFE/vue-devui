@@ -46,11 +46,11 @@ export default defineComponent({
             searchQuery,
             modelValues
         } = this
-
+        
         return (
             <div class={baseClass}>
                 {
-                    this.$slots.Header ? this.$slots.Header() : (<div class="devui-transfer-panel-header">
+                    this.$slots.header ? this.$slots.header() : (<div class="devui-transfer-panel-header">
                         <div class="devui-transfer-panel-header-allChecked">
                             <DCheckbox
                                 modelValue={allChecked}
@@ -62,7 +62,7 @@ export default defineComponent({
                     </div>)
                 }
                 {
-                    this.$slots.Body ? this.$slots.Body() : <div class="devui-transfer-panel-body">
+                    this.$slots.body ? this.$slots.body() : <div class="devui-transfer-panel-body">
                         {search && <div class="devui-transfer-panel-body-search">
                             <DSearch modelValue={searchQuery} onUpdate:modelValue={updateSearchQuery} />
                         </div>}

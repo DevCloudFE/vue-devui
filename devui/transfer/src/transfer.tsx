@@ -1,10 +1,10 @@
-import { defineComponent, reactive, watch, ref } from 'vue'
+import { defineComponent, reactive, watch, ref, SetupContext } from 'vue'
 import { TState } from '../types'
 import DTransferBase from './transfer-base'
 import DTransferOperation from './transfer-operation'
 import { initState } from '../common/use-transfer-base'
-import { transferProps, TransferProps } from '../common/use-transfer'
-import DCheckbox from '../..//checkbox/src/checkbox'
+import { transferProps, TransferProps, headerSlot, bodySlot, opeartionSlot } from '../common/use-transfer'
+import DCheckbox from '../../checkbox/src/checkbox'
 import './transfer.scss'
 
 export default defineComponent({
@@ -15,7 +15,7 @@ export default defineComponent({
     DCheckbox
   },
   props: transferProps,
-  setup(props: TransferProps) {
+  setup(props: TransferProps, ctx: SetupContext) {
     /** data start **/
     const leftOptions = reactive<TState>(initState(props, 'source'))
     const rightOptions = reactive<TState>(initState(props, 'target'))
@@ -80,8 +80,8 @@ export default defineComponent({
       target.data = target.data.concat(newData)
       source.checkedValues = []
       target.disabled = !target.disabled
-      searchFilterData(source)
-      searchFilterData(target)
+      searchFilterData(source, target)
+      searchFilterData(target, source)
       setOrigin('click')
     }
     const changeAllSource = (source: TState, value: boolean): void => {
@@ -103,8 +103,11 @@ export default defineComponent({
       rightOptions.checkedValues = values
       setOrigin('change')
     }
-    const searchFilterData = (source: TState): void => {
+    const searchFilterData = (source: TState, target?: TState): void => {
       source.filterData = source.data.filter(item => item.key.indexOf(source.query) !== -1)
+      if (target) {
+        target.allChecked = false
+      }
     }
     const setOrigin = (value: string): void => {
       origin.value = value
@@ -126,11 +129,20 @@ export default defineComponent({
           query={leftOptions.query}
           checkedValues={leftOptions.checkedValues}
           allCount={leftOptions.data.length}
+          v-slots={
+            {
+              header: headerSlot(ctx, 'left'),
+              body: bodySlot(ctx, 'left')
+            }
+          }
           onChangeAllSource={(value) => changeAllSource(leftOptions, value)}
           onUpdateCheckeds={updateLeftCheckeds}
           onChangeQuery={(value) => leftOptions.query = value}
         />
         <DTransferOperation
+          v-slots={{
+            operation: opeartionSlot(ctx)
+          }}
           disabled={props.disabled}
           sourceDisabled={rightOptions.checkedNum > 0 ? false : true}
           targetDisabled={leftOptions.checkedNum > 0 ? false : true}
@@ -138,6 +150,12 @@ export default defineComponent({
           onUpdateTargetData={() => { updateFilterData(leftOptions, rightOptions) }}
         />
         <DTransferBase
+          v-slots={
+            {
+              header: headerSlot(ctx, 'right'),
+              body: bodySlot(ctx, 'right')
+            }
+          }
           style={{
             height: props.height
           }}

@@ -1,3 +1,5 @@
+import { inBrowser } from '../../shared/util/common-var'
+
 class Theme {
   static imports: any = {}
 
@@ -15,6 +17,10 @@ class Theme {
 
   applyTheme(name: string): void {
     const theme = Theme.imports[name]
+    if (!inBrowser) {
+      return;
+    }
+
     if (!theme) {
       console.error(`主题 ${theme} 未注册！`)
       return
