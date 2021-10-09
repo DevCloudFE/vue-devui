@@ -7,7 +7,7 @@ import { className } from './utils'
 export default defineComponent({
   name: 'DTreeSelect',
   props: treeSelectProps,
-  emits: ['toggleChange', 'update:modelValue'],
+  emits: ['toggleChange', 'valueChange', 'update:modelValue'],
   setup(props: TreeSelectProps, ctx) {
     
     const visible = ref<boolean>(false)
@@ -18,17 +18,29 @@ export default defineComponent({
       overlayX: 'left', 
       overlayY: 'top'
     })
+    const inputValue = ref<string>('')
 
     const { treeData } = toRefs(props)
 
-    const inputValue = computed(() => {
-      return ''
+    const mergeClearable = computed<boolean>(() => {
+      return !props.disabled && props.allowClear && inputValue.value.length > 0;
     })
 
     function toggleChange() {
-      if(props.disabled) return
+      if (props.disabled) return
       visible.value = !visible.value
       ctx.emit('toggleChange', visible.value)
+    }
+
+    function valueChange(data) {
+      if (data.isOpen !== undefined) {
+        data.isOpen = !data.isOpen
+      } else {
+        inputValue.value = data.label
+        visible.value = false
+        ctx.emit('update:modelValue', data.label)
+        ctx.emit('toggleChange', visible.value)
+      }
     }
 
     function handleClear(e: MouseEvent) {
@@ -38,6 +50,7 @@ export default defineComponent({
         ctx.emit('update:modelValue', [])
       } else {
         ctx.emit('update:modelValue', '')
+        inputValue.value = ''
       }
     }
 
@@ -45,27 +58,46 @@ export default defineComponent({
       visible,
       origin,
       position,
-      treeData,
       inputValue,
+      mergeClearable,
+      treeData,
       handleClear,
       toggleChange,
+      valueChange,
     }
   },
   render() {
     const {
       origin,
       position,
-      treeData,
       inputValue,
+      mergeClearable,
+      treeData,
       placeholder,
       disabled,
       handleClear,
       toggleChange,
+      valueChange
     } = this
 
+    const treeSelectCls = className('devui-tree-select', {
+      'devui-tree-select-open': this.visible,
+      'devui-tree-select-disabled': disabled,
+    })
+
     const renderNode = (item) => (
-      <div style={{ paddingLeft: `${20 * (item.level - 1)}px` }}>
-        { item.children ? <d-icon name="select-arrow" /> : <span>{'\u00A0\u00A0\u00A0'}</span>}
+      <div 
+        class="devui-tree-select-item" 
+        style={{ paddingLeft: `${20 * (item.level - 1)}px` }}
+        onClick={(e: MouseEvent) => {
+          e.preventDefault()
+          e.stopPropagation()
+          valueChange(item)
+        }}>
+        { item.children ? 
+        <span class={['devui-tree-select-arrow-expand', item.isOpen ? 'devui-tree-select-arrow-open' : '']}>
+          <d-icon name="select-arrow" />
+        </span> : <span>{'\u00A0\u00A0\u00A0'}</span>}
         {item.label}
       </div>
     )
@@ -76,7 +108,7 @@ export default defineComponent({
           return (
             <>
               { renderNode(item) }
-              { renderTree(item.children) }
+              { item.isOpen && renderTree(item.children) }
             </>
           )
         }
@@ -84,14 +116,9 @@ export default defineComponent({
       })
     }
 
-    const treeSelectCls = className('devui-tree-select', {
-      'devui-tree-select-open': this.visible,
-      'devui-tree-select-disabled': disabled,
-    })
-
     return (
       <div class={treeSelectCls}>
-        <div ref="origin" onClick={toggleChange}>
+        <div class={mergeClearable ? 'devui-tree-select-clearable' : ''} ref="origin" onClick={toggleChange}>
           <input
             value={inputValue}
             type="text"
@@ -109,9 +136,8 @@ export default defineComponent({
         </div>
         <d-flexible-overlay origin={origin} v-model={[this.visible, 'visible']} position={position}>
           <div class="devui-tree-select-dropdown">
-            <ul class="devui-tree-select-dropdown-list devui-scrollbar">{renderTree(treeData)}</ul>
+            <ul class="devui-tree-select-dropdown-list">{renderTree(treeData)}</ul>
           </div>
-          {/* {renderTree(treeData)} */}
         </d-flexible-overlay>
       </div>
     )
