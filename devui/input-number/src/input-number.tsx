@@ -19,12 +19,9 @@ export default defineComponent({
 
     // 判断是否禁用
     const isDisabled = computed(() => {
-      return props.disabled ? 'devui-input-disabled' : '';
+      return props.disabled;
     });
 
-    const focusClass = computed(() => {
-      return focusVal;
-    });
     //新增
     const add = () => {
       if (props.disabled) return;
@@ -64,7 +61,7 @@ export default defineComponent({
     };
     return {
       inputVal,
-      focusClass,
+      focusVal,
       isDisabled,
       isSize,
       add,
@@ -78,7 +75,7 @@ export default defineComponent({
   },
   render() {
     const {
-      focusClass,
+      focusVal,
       placeholder,
       add,
       inputVal,
@@ -91,10 +88,10 @@ export default defineComponent({
       onBlur,
       onFocus,
     } = this;
-    const dInputNum = ['devui-input-number', isDisabled, isSize];
+    const dInputNum = ['devui-input-number', isDisabled ? 'devui-input-disabled' : '', isSize];
     return (
       <div class={dInputNum}>
-        <div  onBlur={onBlur} tabindex="1" class={['devui-control-buttons', focusClass.value]}>
+        <div  onBlur={onBlur} tabindex="1" class={['devui-control-buttons', focusVal.value]}>
           <span  onClick={add}><Icon size="12px" name="chevron-up"  ></Icon></span>
           <span  onClick={subtract}><Icon size="12px" name="chevron-down" ></Icon></span>
         </div>
@@ -103,8 +100,8 @@ export default defineComponent({
             type="number"
             value={inputVal}
             placeholder={placeholder}
-            disabled={isDisabled == 'devui-input-disabled'? true: false}
-            class={['devui-input-style devui-input-box', focusClass.value]}
+            disabled={isDisabled}
+            class={['devui-input-style devui-input-box', focusVal.value]}
             onInput={onInput}
             onChange={onChange}
             onFocus={onFocus}
