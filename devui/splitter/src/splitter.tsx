@@ -1,4 +1,4 @@
-import { defineComponent, reactive, ref, provide, nextTick } from 'vue'
+import { defineComponent, reactive, ref, provide, nextTick, onMounted } from 'vue'
 import { splitterProps, SplitterProps } from './splitter-types'
 import DSplitterBar from './splitter-bar'
 import { SplitterStore } from './splitter-store'
@@ -25,16 +25,17 @@ export default defineComponent({
 
     provide('orientation', props.orientation)
     provide('splitterStore', store)
-
-    nextTick(() => {
-      let containerSize = 0
-      if (props.orientation === 'vertical') {
-        containerSize = domRef.value.clientHeight
-      } else {
-        containerSize = domRef.value.clientWidth
-      }
-      store.setSplitter({ containerSize })
-    })
+    onMounted(() => {
+      nextTick(() => {
+        let containerSize = 0
+        if (props.orientation === 'vertical') {
+          containerSize = domRef.value.clientHeight
+        } else {
+          containerSize = domRef.value.clientWidth
+        }
+        store.setSplitter({ containerSize })
+      })
+    });
 
     return () => {
       const { splitBarSize, orientation, showCollapseButton } = props
