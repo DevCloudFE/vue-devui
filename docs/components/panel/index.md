@@ -9,15 +9,15 @@
 ### 基本用法
 
 <section>
-  <d-panel type="primary" :isCollapsed="isCollapsed" :showAnimation="true">
+  <d-panel type="primary" :isCollapsed="isCollapsed" :showAnimation="true" :beforeToggle="(e)=>{return true;}">
     <d-panel-header>
       Panel with foldable
-      <em class="icon icon-chevron-down" [ngClass]="{ open: panel.isCollapsed }"></em>
+      <!-- <em class="icon icon-chevron-down" [ngClass]="{ open: panel.isCollapsed }"></em> -->
     </d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
   <br /><br />
-  <d-panel :isCollapsed="isCollapsed" :hasLeftPadding="false" :showAnimation="true">
+  <d-panel :isCollapsed="true" :hasLeftPadding="false" :showAnimation="true">
     <d-panel-header>
       Panel has no left padding
       <em class="icon icon-chevron-down"></em>
@@ -31,7 +31,6 @@
     <d-panel-footer>This is footer</d-panel-footer>
   </d-panel>
 </section>
-
 
 ```html
 <section>

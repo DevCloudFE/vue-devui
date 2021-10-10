@@ -13,6 +13,18 @@
     }
   }
 
+  .noLeftPadding {
+    &.devui-panel-body-collapse {
+      &::before {
+        display: none;
+      }
+
+      .d-panel-body {
+        border-left: none !important;
+      }
+    }
+  }
+
   .devui-panel-body {
     display: flex;
     position: relative;
