@@ -18,15 +18,28 @@ export default defineComponent({
     const separatorIcon = getPropsSlot(slots, props, 'separatorIcon') ?? '/'
     provide('separatorIcon', separatorIcon)
 
+    const renderBreadcrumbItemRouted = (item) => {
+      return (
+        <d-breadcrumb-item to={`path: ${item.link}`} replace={item.replace}>
+          {item.title}
+        </d-breadcrumb-item>
+      )
+    }
     const renderBreadItemList = (source: SourceConfig[]) => {
       return source.map((item: SourceConfig) => {
+        if (!item.noNavigation && item.linkType === 'routerLink') {
+          return renderBreadcrumbItemRouted(item)
+        }
         return (
           <d-breadcrumb-item>
-            {!item.noNavigation ? (
+            {/* hrefLink */}
+            {!item.noNavigation &&
+            (!item.linkType || item.linkType === 'hrefLink') ? (
               <a href={item.link} target={item.target ? item.target : '_self'}>
                 {item.title}
               </a>
             ) : null}
+            {/* normal */}
             {item.noNavigation ? <span>{item.title}</span> : null}
           </d-breadcrumb-item>
         )
