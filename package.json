@@ -98,7 +98,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "ls-lint && lint-staged && yarn build",
+      "pre-commit": "ls-lint && lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
