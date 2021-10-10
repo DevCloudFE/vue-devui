@@ -19,7 +19,7 @@
         display: none;
       }
 
-      .d-panel-body {
+      .devui-panel-content {
         border-left: none !important;
       }
     }
@@ -30,7 +30,7 @@
     position: relative;
     border-top: 1px solid $devui-dividing-line;
 
-    .d-panel-body {
+    .devui-panel-content {
       line-height: 1.5;
       padding: 15px;
       background: $devui-base-bg;
@@ -44,7 +44,7 @@
         height: 100%;
       }
 
-      .d-panel-body {
+      .devui-panel-content {
         border-left: 2px solid $devui-dividing-line;
       }
     }
@@ -74,7 +74,7 @@
     }
 
     .devui-panel-body-collapse {
-      .d-panel-body {
+      .devui-panel-content {
         border-color: $devui-primary-line;
       }
     }
@@ -87,7 +87,7 @@
     }
 
     .devui-panel-body-collapse {
-      .d-panel-body {
+      .devui-panel-content {
         border-color: $devui-info-line;
       }
     }
@@ -100,7 +100,7 @@
     }
 
     .devui-panel-body-collapse {
-      .d-panel-body {
+      .devui-panel-content {
         border-color: $devui-success-line;
       }
     }
@@ -113,7 +113,7 @@
     }
 
     .devui-panel-body-collapse {
-      .d-panel-body {
+      .devui-panel-content {
         border-color: $devui-warning-line;
       }
     }
@@ -126,7 +126,7 @@
     }
 
     .devui-panel-body-collapse {
-      .d-panel-body {
+      .devui-panel-content {
         border-color: $devui-danger-line;
       }
     }
