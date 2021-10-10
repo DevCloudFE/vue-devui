@@ -5,6 +5,6 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     name: 'DHeader',
     setup (props, { slots }) {
-        return () => <div class="d-header">{ slots.default?.() }</div>
+        return () => <div class="devui-header">{ slots.default?.() }</div>
     }
 })

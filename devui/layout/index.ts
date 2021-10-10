@@ -30,7 +30,7 @@ export { Layout, Content, Header, Footer, Aside }
 export default {
   title: 'Layout 布局',
   category: '布局',
-  status: '已完成', // TODO: 组件若开发完成则填入"已完成"，并删除该注释
+  status: '已完成',
   install(app: App): void {
     app.use(Layout as any)
     app.use(Content as any)

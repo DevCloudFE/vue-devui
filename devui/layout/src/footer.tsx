@@ -5,6 +5,6 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     name: 'DFooter',
     setup (props, { slots }) {
-        return () => <div class="d-footer">{ slots.default?.() }</div>
+        return () => <div class="devui-footer">{ slots.default?.() }</div>
     }
 })
