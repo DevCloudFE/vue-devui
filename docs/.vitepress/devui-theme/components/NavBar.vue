@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { defineEmits, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import Theme from '@devui/theme/theme'
+import { Switch as DSwitch } from '@devui/switch'
 import NavBarTitle from './NavBarTitle.vue'
 import NavLinks from './NavLinks.vue'
 import ToggleSideBarButton from './ToggleSideBarButton.vue'
 
-const theme = new Theme('light')
+const theme = new Theme("light");
 
-const darkMode = ref(false)
-const switchText = ref('浅色')
+const darkMode = ref(false);
+const switchText = ref("浅色");
 
 watch(
   () => darkMode.value,

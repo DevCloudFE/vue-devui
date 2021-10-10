@@ -4,7 +4,7 @@ const timeoutIntervalSpeed = 10;
 let hashName:string;
 // 滚动是由于点击产生
 let scollFlag = false;
-function elementPosition(obj: HTMLElement ) {
+function elementPosition(obj: HTMLElement) {
   let curleft = 0, curtop = 0;
   curleft = obj.offsetLeft;
   curtop = obj.offsetTop;
@@ -12,46 +12,44 @@ function elementPosition(obj: HTMLElement ) {
 }
 
 export function scrollToControl(elem: HTMLElement, container: HTMLElement):void {
-    hashName = elem.getAttribute('name');
-    scollFlag = true;
-    const tops = container.scrollTop>=0 ? container.scrollTop  : -(document.getElementsByClassName('mycontainer')[0] as HTMLElement).offsetTop;
-    let scrollPos: number = elementPosition(elem).y - tops ;
-    
-    scrollPos = scrollPos - document.documentElement.scrollTop;
-    const remainder: number = scrollPos % timeoutIntervalSpeed;
-    const repeatTimes = Math.abs((scrollPos - remainder) / timeoutIntervalSpeed);
-    if (scrollPos < 0 && container || elem.getBoundingClientRect().top < container.offsetTop) {
-      window.scrollBy(0, elem.getBoundingClientRect().top-container.offsetTop-16)
-    }
-    // 多个计时器达到平滑滚动效果
-    scrollSmoothly(scrollPos, repeatTimes, container)
+  hashName = elem.getAttribute('name');
+  scollFlag = true;
+  const tops = container.scrollTop>=0 ? container.scrollTop  : -(document.getElementsByClassName('mycontainer')[0] as HTMLElement).offsetTop;
+  let scrollPos: number = elementPosition(elem).y - tops ;
+  
+  scrollPos = scrollPos - document.documentElement.scrollTop;
+  const remainder: number = scrollPos % timeoutIntervalSpeed;
+  const repeatTimes = Math.abs((scrollPos - remainder) / timeoutIntervalSpeed);
+  if (scrollPos < 0 && container || elem.getBoundingClientRect().top < container.offsetTop) {
+    window.scrollBy(0, elem.getBoundingClientRect().top-container.offsetTop-16)
+  }
+  // 多个计时器达到平滑滚动效果
+  scrollSmoothly(scrollPos, repeatTimes, container)
 }
  
 
 function scrollSmoothly(scrollPos: number, repeatTimes: number, container: HTMLElement):void {
-   
-    if (repeatCount <= repeatTimes) {
-      scrollPos > 0
-        ? container.scrollBy(0, timeoutIntervalSpeed)
-        : container.scrollBy(0, -timeoutIntervalSpeed)
-    }
-    else {
-      repeatCount = 0;
-      clearTimeout(cTimeout);
-      history.replaceState(null, null, document.location.pathname + '#' + hashName);
-      
-      hightLightFn(hashName)
-      setTimeout(() => {
-        scollFlag = false;
-      }, 310)
-      return ;
-        
-    }
-    repeatCount++;
-    cTimeout = setTimeout(() => {
-      scrollSmoothly(scrollPos, repeatTimes, container)
-    }, 10)
+  if (repeatCount <= repeatTimes) {
+    scrollPos > 0
+      ? container.scrollBy(0, timeoutIntervalSpeed)
+      : container.scrollBy(0, -timeoutIntervalSpeed)
+  }
+  else {
+    repeatCount = 0;
+    clearTimeout(cTimeout);
+    history.replaceState(null, null, document.location.pathname + '#' + hashName);
     
+    hightLightFn(hashName)
+    setTimeout(() => {
+      scollFlag = false;
+    }, 310)
+    return ;
+      
+  }
+  repeatCount++;
+  cTimeout = setTimeout(() => {
+    scrollSmoothly(scrollPos, repeatTimes, container)
+  }, 10)
 }
 
 // 高亮切换

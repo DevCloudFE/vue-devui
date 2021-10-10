@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "vitepress dev docs",
-    "build": "vitepress build docs",
+    "build": "vitepress build docs && cp public/* docs/.vitepress/dist/assets",
     "serve": "vitepress serve docs",
     "app:dev": "vite",
     "app:build": "vite build",
@@ -80,6 +80,7 @@
     "jest": "^27.0.4",
     "lint-staged": "^11.0.0",
     "ora": "^5.4.1",
+    "patch-vue-directive-ssr": "^0.0.1",
     "sass": "^1.32.2",
     "shelljs": "^0.8.4",
     "stylelint": "^13.13.1",

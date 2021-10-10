@@ -8,16 +8,14 @@ export default defineComponent({
   props: skeletonProps,
   setup(props: SkeletonProps, ctx) {
     const { slots } = ctx;
-    let arr = []
+    const arr = []
     for (let index = 0; index < props.row; index++) {
       arr.push(1)
     }
     return () => {
       if (props.loading) {
-        return <div class={`devui-skeleton ${props.animate ? 'devui-skeleton-animated' : ''}`}>
-          <div class={`devui-skeleton__avatar ${props.avatar ? 'is-shown' : ''}`}>
-            <div class="avatar"/>
-          </div>
+        return <div class={`devui-skeleton ${props.animate ? 'devui-skeleton-animated' : 'devui-skeleton-no-animated'}`}>
+          {props.avatar ? <div class="devui-skeleton__avatar"><div class="avatar" /></div> : null}
           <div class="devui-skeleton__item__group">{
             arr.map(() => {
               return <div class="devui-skeleton__item" />

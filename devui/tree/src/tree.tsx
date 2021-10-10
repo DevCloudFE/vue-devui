@@ -1,5 +1,5 @@
-import { defineComponent, toRefs } from 'vue'
-import { treeProps, TreeProps, TreeItem } from './tree-types'
+import { defineComponent, toRefs, provide } from 'vue'
+import { treeProps, TreeProps, TreeItem, TreeRootType } from './tree-types'
 import { flatten, precheckTree } from './util'
 import Loading from '../../loading/src/service'
 import useToggle from './composables/use-toggle'
@@ -8,13 +8,14 @@ import useHighlightNode from './composables/use-highlight'
 import useLazy from './composables/use-lazy'
 import IconOpen from './assets/open.svg'
 import IconClose from './assets/close.svg'
+import NodeContent from './tree-node-content'
 import './tree.scss'
 
 export default defineComponent({
   name: 'DTree',
   props: treeProps,
   emits: [],
-  setup(props: TreeProps) {
+  setup(props: TreeProps, ctx) {
     const { data } = toRefs({ ...props, data: precheckTree(props.data) })
     const flatData = flatten(data.value)
 
@@ -23,6 +24,7 @@ export default defineComponent({
     const { nodeClassNameReflect, handleInitNodeClassNameReflect, handleClickOnNode } = useHighlightNode()
     const { lazyNodesReflect, handleInitLazyNodeReflect, getLazyData } = useLazy()
 
+    provide<TreeRootType>('treeRoot', { ctx, props });
     const Indent = () => {
       return <span style="display: inline-block; width: 16px; height: 16px;"></span>
     }
@@ -83,9 +85,7 @@ export default defineComponent({
           >
             <div class="devui-tree-node__content--value-wrapper">
               {renderNodeWithIcon(item)}
-              <span class={['devui-tree-node__title', disabled && 'select-disabled']}>
-                {label}
-              </span>
+              <NodeContent node={item}/>
               {item.isParent && <div class='devui-tree-node_loading' id={lazyNodesReflect.value[id].loadingTargetId} />}
             </div>
           </div>

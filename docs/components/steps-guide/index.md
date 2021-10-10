@@ -14,10 +14,10 @@
   <d-button btnStyle="common" class="step-1">Step 1</d-button>
   <d-button btnStyle="common" class="step-2">Step 2</d-button>
   <d-button btnStyle="common" class="step-3">Step 3</d-button>
-  <d-steps-guide :steps="steps"></d-steps-guide>
+  <d-steps-guide :steps="steps" ref="stepsRef"></d-steps-guide>
 </template>
 <script>
-  import { defineComponent, reactive } from 'vue'
+  import { defineComponent, reactive, ref, onMounted } from 'vue'
   export default defineComponent({
     setup() {
       const steps = reactive([
@@ -25,8 +25,11 @@
           { title: '基础用法2', content: '业务推出新特性，或复杂的业务逻辑需要指引用户时使用。', trigger: '.step-2' },
           { title: '基础用法3', content: '业务推出新特性，或复杂的业务逻辑需要指引用户时使用。', trigger: '.step-3' }
       ]);
+      const stepsRef = ref(null)
+
       return {
-        steps
+        steps,
+        stepsRef
       }
     }
   })
@@ -45,23 +48,23 @@
 ```vue
 <template>
   <div class="top-group">
-    <d-button btnStyle="common" class="top-left" width="120px">Top-left</d-button>
-    <d-button btnStyle="common" class="top" width="120px">Top</d-button>
-    <d-button btnStyle="common" class="top-right" width="120px">Top-right</d-button>
+    <d-button btnStyle="common" class="top-left" width="120px" @click="handleClick(0)">Top-left</d-button>
+    <d-button btnStyle="common" class="top" width="120px" @click="handleClick(1)">Top</d-button>
+    <d-button btnStyle="common" class="top-right" width="120px" @click="handleClick(2)">Top-right</d-button>
   </div>
   <div class="middle-group">
-    <d-button btnStyle="common" class="left" width="120px">Left</d-button>
-    <d-button btnStyle="common" class="right" width="120px">Right</d-button>
+    <d-button btnStyle="common" class="left" width="120px" @click="handleClick(7)">Left</d-button>
+    <d-button btnStyle="common" class="right" width="120px" @click="handleClick(3)">Right</d-button>
   </div>
   <div class="bottom-group">
-    <d-button btnStyle="common" class="bottom-left" width="120px">Bottom-left</d-button>
-    <d-button btnStyle="common" class="bottom" width="120px">Bottom</d-button>
-    <d-button btnStyle="common" class="bottom-right" width="120px">Bottom-right</d-button>
+    <d-button btnStyle="common" class="bottom-left" width="120px" @click="handleClick(6)">Bottom-left</d-button>
+    <d-button btnStyle="common" class="bottom" width="120px" @click="handleClick(5)">Bottom</d-button>
+    <d-button btnStyle="common" class="bottom-right" width="120px" @click="handleClick(4)">Bottom-right</d-button>
   </div>
-  <d-steps-guide :steps="stepsPosition"></d-steps-guide>
+  <d-steps-guide :steps="stepsPosition" ref="stepsPositionRef"></d-steps-guide>
 </template>
 <script>
-  import { defineComponent, reactive } from 'vue'
+  import { defineComponent, reactive, ref } from 'vue'
   export default defineComponent({
     setup() {
       const stepsPosition = reactive([
@@ -80,35 +83,42 @@
             trigger: '.top-right', 
             position: 'top-right'
           },
-          { title: '弹出位置 left', 
-            content: 'Steps Guide', 
-            trigger: '.left', 
-            position: 'left' 
-          },
           { title: '弹出位置 right',
             content: 'Steps Guide', 
             trigger: '.right', 
             position: 'right' 
-          },
-          { title: '弹出位置 bottom-left', 
-            content: 'Steps Guide', 
-            trigger: '.bottom-left', 
-            position: 'bottom-left' 
-          },
-          { title: '弹出位置 bottom', 
-            content: 'Steps Guide', 
-            trigger: '.bottom', 
-            position: 'bottom' 
           },
           { title: '弹出位置 bottom-right', 
             content: 'Steps Guide', 
             trigger: '.bottom-right', 
             position: 'bottom-right' 
           },
+          { title: '弹出位置 bottom', 
+            content: 'Steps Guide', 
+            trigger: '.bottom', 
+            position: 'bottom' 
+          },
+          { title: '弹出位置 bottom-left', 
+            content: 'Steps Guide', 
+            trigger: '.bottom-left', 
+            position: 'bottom-left' 
+          },
+          { title: '弹出位置 left', 
+            content: 'Steps Guide', 
+            trigger: '.left', 
+            position: 'left' 
+          }
       ]);
+
+      const stepsPositionRef = ref(null)
     
+      const handleClick = (index) => {
+        stepsPositionRef.value.setCurrentIndex(index)
+      }
       return {
-        stepsPosition
+        stepsPosition,
+        handleClick,
+        stepsPositionRef
       }
     }
   })
@@ -132,7 +142,7 @@
 ```vue
 <template>
   <d-button btnStyle="common" class="bottom">Custom Position</d-button>
-  <d-steps-guide :steps="customSteps"></d-steps-guide>
+  <d-steps-guide :steps="customSteps" :showDots="false" :showClose="false"></d-steps-guide>
 </template>
 <script>
 import { defineComponent, reactive } from 'vue'
@@ -171,4 +181,5 @@ d-steps-guide 参数
 | 参数  | 类型  | 默认 | 说明                   | 跳转                  |
 | ----- | ----- | ---- | ---------------------- | --------------------- |
 | steps | array | Step[]   | 必选，操作指引步骤数组 | [基本用法](#基本用法) |
-
+| showClose | boolean | true   | 可选，是否显示关闭按钮 | [自定义](#基本用法) |
+| showDots | boolean | true   | 可选，是否显示表示导航指引顺序的圆点 | [自定义](#基本用法) |
