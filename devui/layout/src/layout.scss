@@ -1,0 +1,9 @@
+.d-layout {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+
+  &-aside {
+    flex-direction: row;
+  }
+}
