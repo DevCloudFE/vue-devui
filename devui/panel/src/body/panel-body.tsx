@@ -7,7 +7,8 @@ export default defineComponent({
     props:PanelProps,
     setup(props,ctx){
         const animationName = inject('showAnimation') ? 'devui-panel' : null;
-        const hasLeftPadding = !inject('hasLeftPadding') ? 'noLeftPadding' : null;
+        const hasLeftPadding = !inject('hasLeftPadding') ? 'no-left-padding' : null;
+        
         const keys = Object.keys(Store.state());
         const key = keys.pop();
         const isCollapsed = Store.state();

@@ -2,7 +2,7 @@ import type { App } from 'vue'
 import Panel from './src/panel'
 import PanelHeader from './src/header/panel-header';
 import PanelBody from './src/body/panel-body';
-import PanelFooter from './src/foot/panel-foot';
+import PanelFooter from './src/foot/panel-footer';
 
 Panel.install = function(app: App) {
   app.component(Panel.name, Panel)
