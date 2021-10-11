@@ -12,7 +12,7 @@ export { Breadcrumb }
 export default {
   title: 'Breadcrumb 面包屑',
   category: '导航',
-  status: '开发中',
+  status: '50%',
   install(app: App): void {
     app.use(Breadcrumb as any)
   },
