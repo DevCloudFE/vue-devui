@@ -9,8 +9,8 @@
 :::demo
 ```vue
 <template>
-  <d-editable-select>
-    <d-editable-select-option v-for="item in languages" :key="item">
+  <d-editable-select v-model="selectItem1">
+    <d-editable-select-option v-for="item in languages":key="item" :label="item">
       {{ item }}
     </d-editable-select-option>
     <div slot="empty">not Found data</div>
@@ -23,12 +23,15 @@ export default defineComponent({
   setup() {
     const languages = ref(['C#', 'C', 'C++', 'CPython', 'Java', 'JavaScript', 'Go', 'Python', 'Ruby', 'F#', 'TypeScript', 'SQL',
     'LiveScript', 'CoffeeScript']);
+    const languages1 = ref([{name: 'c'}, {name: 'C++', disabled: true}]);
+    const selectItem1 = ref("")
     return {
       languages,
+      languages1,
+      selectItem1
     };
   },
 });
 </script>
-
 ```
 :::
