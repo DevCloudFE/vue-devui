@@ -44,6 +44,14 @@ $keyframe-blue: #5e7ce0;
     align-items: center;
     height: 30px;
     width: 100%;
+
+    .devui-tree-node_loading {
+      margin-left: 50px;
+
+      .devui-loading-area {
+        background: none;
+      }
+    }
   }
 
   .devui-tree-node__children {
