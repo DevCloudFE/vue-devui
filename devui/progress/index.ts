@@ -9,7 +9,7 @@ export { Progress }
 
 export default {
   title: 'Progress 进度条',
-  category: '反馈',
+  category: '数据展示',
   status: '已完成',
   install(app: App): void {
     app.use(Progress as any)
