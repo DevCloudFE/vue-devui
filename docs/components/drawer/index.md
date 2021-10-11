@@ -12,5 +12,34 @@
 
 <h4>基本用法，可以控制全屏、关闭和设置宽度。</h4>
 
+:::demo
+
 ```vue
+<template>
+  <d-button  @click="drawerShow"> show drawer </d-button>
+  <d-drawer v-if="isShow" @close="drawerClose">
+</template>
+<script>
+import { ref } from 'vue'
+
+export default ({
+  setup() {
+    let isShow = ref(false)
+    const drawerShow = () => {
+      isShow.value = true;
+    }
+
+    const drawerClose = () => {
+      isShow.value = false;
+    }
+    return {
+      isShow,
+      drawerShow,
+      drawerClose,
+    }
+  }
+})
+</script>
 ```
+
+:::
