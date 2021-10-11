@@ -12,6 +12,7 @@ export { Button }
 export default {
   title: 'Button 按钮',
   category: '通用',
+  status: '已完成',
   install(app: App): void {
     app.use(Button as any)
   }

@@ -10,6 +10,7 @@ export { Icon }
 export default {
   title: 'Icon 图标',
   category: '通用',
+  status: '已完成',
   install(app: App): void {
     app.use(Icon as any)
   }

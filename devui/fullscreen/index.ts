@@ -12,7 +12,6 @@ export default {
   category: '通用',
   status: '已完成',
   install(app: App): void {
-    
     app.use(Fullscreen as any)
   }
 }

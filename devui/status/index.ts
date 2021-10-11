@@ -10,6 +10,7 @@ export { Status }
 export default {
   title: 'Status 状态',
   category: '通用',
+  status: '已完成',
   install(app: App): void {
     app.use(Status as any)
   }

@@ -17,6 +17,7 @@ export { Anchor }
 export default {
   title: 'Anchor 锚点',
   category: '导航',
+  status: '50%',
   install(app: App): void {
     app.use(Anchor as any)
   }

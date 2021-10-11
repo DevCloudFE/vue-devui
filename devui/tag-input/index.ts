@@ -10,6 +10,7 @@ export { TagInput }
 export default {
   title: 'TagInput 标签输入框',
   category: '数据录入',
+  status: '10%',
   install(app: App): void {
     app.use(TagInput as any)
   }
