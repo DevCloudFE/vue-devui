@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import PageFooter from './PageFooter.vue'
-import NextAndPrevLinks from './NextAndPrevLinks.vue'
+import PageFooter from "./PageFooter.vue"
+import NextAndPrevLinks from "./NextAndPrevLinks.vue"
+import PageToc from "./PageToc.vue"
 </script>
 
 <template>
@@ -13,6 +14,7 @@ import NextAndPrevLinks from './NextAndPrevLinks.vue'
       <NextAndPrevLinks />
 
       <slot name="bottom" />
+      <PageToc class="toc-warpper" />
     </div>
   </main>
 </template>

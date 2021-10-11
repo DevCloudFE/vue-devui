@@ -41,7 +41,7 @@ export default defineComponent({
       initRating()
     })
 
-    const hoverToggle = (_, index: number, reset = false) => {
+    const hoverToggle = (e, index: number, reset = false) => {
       if (props.read) {
         return
       }
@@ -54,17 +54,31 @@ export default defineComponent({
         }
       } else {
         setChange(0, index + 1, '100%')
+        // 判断是否是半选模式并且判断鼠标所在图标区域
+        if (props.allowHalf && (e.offsetX * 2 <= e.target.clientWidth)) {
+          setChange(index, index + 1, '50%')
+        } else {
+          setChange(index, index + 1, '100%')
+        }
         setChange(index + 1, props.count, '0')
       }
     }
 
-    const selectValue = (index: number) => {
+    const selectValue = (e, index: number) => {
       if (props.read) {
         return
       }
-      setChange(0, index + 1, '100%')
+      setChange(0, index, '100%')
+      // 判断是否是半选模式
+      if (props.allowHalf && (e.offsetX * 2 <= e.target.clientWidth)) {
+        setChange(index, index + 1, '50%')
+        chooseValue.value = index - 0.5
+      } else {
+        setChange(index, index + 1, '100%')
+        chooseValue.value = index
+      }
       setChange(index + 1, props.count, '0')
-      chooseValue.value = index
+      index = chooseValue.value
       props.onChange && props.onChange(index + 1)
       props.onTouched && props.onTouched()
       ctx.emit('update:modelValue', index + 1)
@@ -86,7 +100,7 @@ export default defineComponent({
       type,
       color,
       hoverToggle,
-      selectValue,
+      selectValue
     } = this
     return (
       <div
@@ -95,12 +109,11 @@ export default defineComponent({
       >
         {totalLevelArray.map((item, index) => (
           <div
-            class={`devui-star-align devui-pointer ${
-              read ? 'devui-only-read' : ''
-            }`}
+            class={`devui-star-align devui-pointer ${read ? 'devui-only-read' : ''
+              }`}
             key={index}
             onMouseover={(e) => hoverToggle(e, index)}
-            onClick={() => selectValue(index)}
+            onClick={(e) => selectValue(e, index)}
           >
             {icon && !character && (
               <span class="devui-star-color">

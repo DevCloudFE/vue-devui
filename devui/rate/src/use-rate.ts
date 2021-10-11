@@ -29,6 +29,10 @@ export const rateProps = {
     type: String,
     default: '',
   },
+  allowHalf: {
+    type: Boolean,
+    default: false,
+  },
   onChange: {
     type: Function as PropType<(value: number) => void>,
     default: undefined,
