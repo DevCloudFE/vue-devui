@@ -41,7 +41,7 @@ const sidebar = {
         { text: 'Popover 悬浮提示', link: '/components/popover/', status: "开发中" },
         { text: 'ReadTip 阅读提示', link: '/components/read-tip/' },
         { text: 'Toast 全局通知', link: '/components/toast/', status: '已完成' },
-        { text: 'Tooltip 提示', link: '/components/tooltip/' },
+        { text: 'Tooltip 提示', link: '/components/tooltip/', status: '已完成' },
       ]
     },
     {
