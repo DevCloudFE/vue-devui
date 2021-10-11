@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vitepress'
 import PageFooter from "./PageFooter.vue"
 import NextAndPrevLinks from "./NextAndPrevLinks.vue"
 import PageToc from "./PageToc.vue"
+
+const isComponents = computed(() => useRoute().path.indexOf('components') > -1)
+
 </script>
 
 <template>
@@ -14,7 +19,7 @@ import PageToc from "./PageToc.vue"
       <NextAndPrevLinks />
 
       <slot name="bottom" />
-      <PageToc class="toc-warpper" />
+      <PageToc v-if="isComponents" class="toc-warpper" />
     </div>
   </main>
 </template>
