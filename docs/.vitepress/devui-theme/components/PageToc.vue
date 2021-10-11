@@ -27,7 +27,7 @@ const headers = useToc()
 .devui-content-nav {
   width: 240px;
   position: fixed;
-  top: 90px;
+  top: 50px;
   right: 0;
   height: 100%;
   z-index: 1;
