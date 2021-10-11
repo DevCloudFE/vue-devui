@@ -1,22 +1,29 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import { useToc } from '../composables/useToc'
+import { useActiveSidebarLinks } from '../composables/activeBar'
 
 const headers = useToc()
-// console.log(headers)
+const marker = ref()
+const container = ref()
+// 滚动监听
+useActiveSidebarLinks(container, marker)
 </script>
 
 <template>
-  <aside>
+  <aside ref="container">
     <nav class="devui-content-nav">
       <h3 class="devui-fast-forward">快速前往</h3>
       <ul class="devui-step-nav">
         <li
           v-for="{ link, text } in headers"
           :key="link"
+          class="devui-item"
         >
-          <a :class="{active: link === text}" :href="link">{{ text }}</a>
+          <a class="devui-link" :href="link">{{ text }}</a>
         </li>
       </ul>
+      <div ref="marker" class="devui-marker"></div>
     </nav>
   </aside>
 </template>
@@ -27,7 +34,7 @@ const headers = useToc()
 .devui-content-nav {
   width: 240px;
   position: fixed;
-  top: 90px;
+  top: 50px;
   right: 0;
   height: 100%;
   z-index: 1;
@@ -73,12 +80,12 @@ const headers = useToc()
       a.current {
         color: $devui-link;
       }
-
-      &.active {
-        color: $devui-link;
-      }
     }
   }
+}
+
+.active {
+  color: $devui-link !important;
 }
 
 @media (max-width: 1800px) {
