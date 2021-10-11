@@ -20,13 +20,21 @@ const tagInputProps = {
     type: String,
     default: ''
   },
+  minLength: {
+    type: Number,
+    default: 3
+  },
+  maxLength: {
+    type: Number,
+    default: Number.MAX_SAFE_INTEGER
+  },
   maxTags: {
     type: Number,
     default: Number.MAX_SAFE_INTEGER
   },
   maxTagsText: {
     type: String,
-    default: ''
+    default: '已达到最大个数：'
   },
   spellcheck: {
     type: Boolean,
@@ -39,6 +47,10 @@ const tagInputProps = {
   disabled: {
     type: Boolean,
     default: false
+  },
+  isAddBySpace: {
+    type: Boolean,
+    default: true
   },
   disabledText: {
     type: String,
@@ -125,6 +137,8 @@ export default defineComponent({
     };
     const handleEnter = () => {
       let res = { [props.displayProperty]: tagInputVal.value };
+      // 判断输入框和输入建议是否为空
+      if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) return false
       if (mergedSuggestions.value.length) {
         const target = mergedSuggestions.value[selectIndex.value];
         res = target;
@@ -215,7 +229,8 @@ export default defineComponent({
       isShowSuggestion,
       noData,
       mergedSuggestions,
-      selectIndex
+      selectIndex,
+      maxTags
     } = this;
 
     const inputBoxCls = {
@@ -268,10 +283,10 @@ export default defineComponent({
             onFocus={onInputFocus}
             onBlur={onInputBlur}
             onInput={($event: any) => onInput($event)}
-            placeholder={placeholder}
+            placeholder={isTagsLimit ? `${maxTagsText} ${maxTags}` : placeholder}
             spellcheck={spellcheck}
             disabled={isTagsLimit}
-            title={isTagsLimit ? maxTagsText : ''} />
+          />
         </div>
         {
           !isShowSuggestion ? '' : (

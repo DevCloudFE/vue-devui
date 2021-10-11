@@ -74,6 +74,33 @@ export default {
 }
 </script>
 ```
+:::
+
+### 半选模式
+
+:::demo
+
+```vue
+<template>
+  <d-rate v-model="value" :allowHalf='true' @change="change"/>
+  {{ value }}
+</template>
+<script>
+import { ref } from 'vue'
+export default {
+  setup() {
+    const value = ref(2)
+    const change = (val) => {
+      console.log(val)
+    }
+    return {
+      value,
+      change
+    }
+  },
+}
+</script>
+```
 
 :::
 
@@ -137,3 +164,10 @@ d-rate 参数
 |   color   |            `string`             |   --   | 可选，星星颜色                                           | [动态模式-自定义](#动态模式-自定义) |
 |   icon    |            `string`             |   --   | 可选，评分图标的样式，只支持 devUI 图标库中所有图标      | [动态模式](#动态模式)               |
 | character |            `string`             |   --   | 可选，评分图标的样式，icon 与 character 只能设置其中一个 | [动态模式-自定义](#动态模式-自定义) |
+| allowHalf |            `boolean`            | false  | 可选，动态模式下是否允许半选                             | [半选模式](#半选模式) |
+
+d-rate 事件
+
+| 参数            | 类型                 | 说明                |	回调参数                                       | 跳转 Demo             |
+| --------------- | -------------------- | ----------------------------- | ----------------------------- | --------------------- |
+| change | `EventEmitter<number>` | 分值改变时触发	     |       改变后的分值          | [半选模式](#半选模式) |

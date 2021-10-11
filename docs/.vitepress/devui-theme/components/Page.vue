@@ -2,6 +2,7 @@
 import PageFooter from './PageFooter.vue'
 import NextAndPrevLinks from './NextAndPrevLinks.vue'
 import BackToTop from './BackToTop.vue'
+import PageToc from "./PageToc.vue"
 </script>
 
 <template>
@@ -15,6 +16,7 @@ import BackToTop from './BackToTop.vue'
 
       <slot name="bottom" />
       <BackToTop />
+      <PageToc class="toc-warpper" />
     </div>
   </main>
 </template>
@@ -27,6 +29,7 @@ import BackToTop from './BackToTop.vue'
 @media (min-width: 720px) {
   .page {
     margin-left: 16.4rem;
+    margin-right: 40px;
   }
 }
 

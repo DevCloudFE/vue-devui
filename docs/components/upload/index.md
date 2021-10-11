@@ -69,7 +69,6 @@ export default {
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Drag files"
     :without-btn="true"
-    file-path="name"
     :before-upload="beforeUpload"
     @success-event="onSuccess"
     @error-event="onError"
@@ -153,7 +152,6 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
-    file-path="name"
     :before-upload="beforeUpload"
     @success-event="onSuccess"
     @error-event="onError"
@@ -437,7 +435,6 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
-    file-path="name"
     :before-upload="beforeUpload"
     @success-event="onSuccess"
     @error-event="onError"
@@ -504,7 +501,6 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="选择文件"
-    file-path="name"
     @success-event="onSuccess1"
     @error-event="onError"
     @delete-uploaded-file-event="deleteUploadedFile"
@@ -573,7 +569,6 @@ export default {
         :upload-options="uploadOptions"
         v-model:uploaded-files="uploadedFiles"
         placeholder-text="选择文件"
-        file-path="name"
         @success-event="onSuccess"
         @error-event="onError"
         @delete-uploaded-file-event="deleteUploadedFile"
@@ -793,7 +788,6 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
-    file-path="name"
     @success-event="onSuccess"
     @error-event="onError"
     :beforeUpload="beforeUpload"
@@ -861,11 +855,10 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
-    file-path="name"
     @success-event="onSuccess"
     @error-event="onError"
     :beforeUpload="beforeUpload"
-    showTip="true"
+    :showTip="true"
   >
     <d-button type="primary">选取文件</d-button>
     <template v-slot:preloadFiles="slotProps">
@@ -1011,14 +1004,13 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
-    file-path="name"
     @success-event="onSuccess"
     @error-event="onError"
     :beforeUpload="beforeUpload"
-    showTip="true"
-    withoutBtn="true"
+    :showTip="true"
+    :withoutBtn="true"
     class="upload-demo"
-    autoUpload="true"
+    :autoUpload="true"
   >
     <div class="upload-trigger">
       <div>
@@ -1185,20 +1177,20 @@ export default {
 
 d-single-upload 参数
 
-| **参数**               | **类型**                          | **默认**   | 说明                                                         | **跳转 Demo**         |
-| ---------------------- | --------------------------------- | ---------- | ------------------------------------------------------------ | --------------------- |
-| fileOptions            | [IFileOptions](#ifileoptions)     | --         | 必选，待上传文件配置                                         | [基本用法](#基本用法) |
-| uploadOptions          | [IUploadOptions](#iuploadoptions) | \--        | 必选，上传配置                                               | [基本用法](#基本用法) |
-| autoUpload             | `boolean`                         | false      | 可选，是否自动上传                                           | [基本用法](#基本用法) |
-| placeholderText        | `string`                          | '选择文件' | 可选，上传输入框中的 Placeholder 文字                        | [基本用法](#基本用法) |
-| uploadText             | `string`                          | '上传'     | 可选，上传按钮文字                                           | [基本用法](#基本用法) |
-| uploadedFiles          | `Array<Object>`                   | []         | 可选，获取已上传的文件列表                                   | [基本用法](#基本用法) |
-| withoutBtn             | `boolean`                         | false      | 可选，是否舍弃按钮                                           | [基本用法](#基本用法) |
-| enableDrop             | `boolean`                         | false      | 可选，是否支持拖拽                                           | [基本用法](#基本用法) |
+| **参数**               | **类型**                          | **默认**   | 说明                                                                                     | **跳转 Demo**         |
+| ---------------------- | --------------------------------- | ---------- | ---------------------------------------------------------------------------------------- | --------------------- |
+| fileOptions            | [IFileOptions](#ifileoptions)     | --         | 必选，待上传文件配置                                                                     | [基本用法](#基本用法) |
+| uploadOptions          | [IUploadOptions](#iuploadoptions) | \--        | 必选，上传配置                                                                           | [基本用法](#基本用法) |
+| autoUpload             | `boolean`                         | false      | 可选，是否自动上传                                                                       | [基本用法](#基本用法) |
+| placeholderText        | `string`                          | '选择文件' | 可选，上传输入框中的 Placeholder 文字                                                    | [基本用法](#基本用法) |
+| uploadText             | `string`                          | '上传'     | 可选，上传按钮文字                                                                       | [基本用法](#基本用法) |
+| uploadedFiles          | `Array<Object>`                   | []         | 可选，获取已上传的文件列表                                                               | [基本用法](#基本用法) |
+| withoutBtn             | `boolean`                         | false      | 可选，是否舍弃按钮                                                                       | [基本用法](#基本用法) |
+| enableDrop             | `boolean`                         | false      | 可选，是否支持拖拽                                                                       | [基本用法](#基本用法) |
 | beforeUpload           | `boolean Promise<boolean> `       | \--        | 可选，上传前的回调，通过返回`true` or `false` ,控制文件是否上传,参数为文件信息及上传配置 | [基本用法](#基本用法) |
-| dynamicUploadOptionsFn | [IUploadOptions](#iuploadoptions) | \--        | 为文件动态设置自定义的上传参数, 参数为当前选中文件及`uploadOptions`的值 | [基本用法](#基本用法) |
-| disabled               | `boolean`                         | false      | 可选，是否禁用上传组件                                       | [基本用法](#基本用法) |
-| showTip                | `boolean`                         | false      | 可选，是否显示上传提示信息                                   | [自动上传](#自动上传) |
+| dynamicUploadOptionsFn | [IUploadOptions](#iuploadoptions) | \--        | 为文件动态设置自定义的上传参数, 参数为当前选中文件及`uploadOptions`的值                  | [基本用法](#基本用法) |
+| disabled               | `boolean`                         | false      | 可选，是否禁用上传组件                                                                   | [基本用法](#基本用法) |
+| showTip                | `boolean`                         | false      | 可选，是否显示上传提示信息                                                               | [自动上传](#自动上传) |
 
 d-single-upload 事件
 

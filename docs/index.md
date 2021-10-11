@@ -32,10 +32,45 @@ yarn add vue-devui
 main.ts
 
 ```js
+// 全局引入
 import DevUI from 'vue-devui'
 import 'vue-devui/style.css'
 
 createApp(App).use(DevUI).mount('#app')
+```
+
+```js
+// 按需引入
+// main.ts文件
+import { createApp } from 'vue'
+import App from './App.vue'
+
+// Step 1: 引入单个组件
+import { Button } from 'vue-devui'
+// or import Button from 'vue-devui/button'
+// Step 2: 引入组件样式
+// 方式一：手动引入组件样式
+import 'vue-devui/button/style.css'
+
+// 方式二：自动按需引入组件
+// vite.config.ts文件
+// import styleImport from 'vite-plugin-style-import'
+//   plugins: [
+//       vue(),
+//       styleImport({
+//         libs: [
+//           {
+//             libraryName: 'vue-devui',
+//             esModule: true,
+//             resolveStyle: (name) => `vue-devui/${name}/style`,
+//           },
+//         ],
+//       })
+//     ]
+
+createApp(App)
+.use(Button) // Step 3: 使用组件
+.mount('#app')
 ```
 
 ### 4. 启动开发调试
