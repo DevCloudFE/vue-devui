@@ -26,6 +26,20 @@ export const breadcrumbItemProps = {
   isSearch: {
     type: Boolean,
     dafault: false
+  },
+  /**
+   * 路由跳转对象，同 vue-router 的 to
+   */
+  to: {
+    type: [String, Object] as PropType<string | Record<string, unknown>>,
+    default: ''
+  },
+  /**
+   * 在使用 to 进行路由跳转时，启用 replace 将不会向 history 添加新记录
+   */
+  replace: {
+    type: Boolean,
+    default: false
   }
 } as const
 

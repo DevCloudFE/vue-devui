@@ -21,38 +21,6 @@ export default defineComponent({
     const store: SplitterStore = inject('splitterStore');
     const domRef = ref<null | HTMLElement>();
     const order = ref();
-    watch(
-      () => order.value,
-      (order) => {
-        nextTick(() => {
-          const ele = domRef.value;
-          setStyle(ele, { order });
-        });
-      }
-    );
-
-    // pane 初始化大小
-    const setSizeStyle = (curSize) => {
-      const ele = domRef.value;
-      ele.style.flexBasis = curSize;
-      const paneFixedClass = 'devui-splitter-pane-fixed';
-      if (curSize) {
-        // 设置 flex-grow 和 flex-shrink
-        addClass(ele, paneFixedClass);
-      } else {
-        removeClass(ele, paneFixedClass);
-      }
-    };
-
-    watch(
-      () => props.size,
-      (newSize) => {
-        nextTick(() => {
-          setSizeStyle(newSize);
-        });
-      },
-      { immediate: true }
-    );
 
     const orientation = inject('orientation');
     let initialSize = ''; // 记录初始化挂载传入的大小
@@ -75,37 +43,49 @@ export default defineComponent({
       }
     };
 
-    const toggleCollapseClass = () => {
-      const paneHiddenClass = 'devui-splitter-pane-hidden';
-      nextTick(() => {
-        const el = domRef.value;
-        if (!props.collapsed) {
-          removeClass(el, paneHiddenClass);
-        } else {
-          addClass(el, paneHiddenClass);
-        }
 
-        if (props.collapsed && props.shrink) {
-          removeClass(el, paneHiddenClass);
-          setStyle(el, { flexBasis: `${props.shrinkWidth}px` });
-        } else {
-          setStyle(el, { flexBasis: initialSize });
+    onMounted(() => {
+      watch([order, domRef], ([order, dom]) => {
+        if (!(dom instanceof HTMLElement)) {
+          return;
         }
+        setStyle(dom, { order });
       });
-    };
 
-    watch(
-      () => props.collapsed,
-      () => {
+      watch(() => props.size, (curSize: string) => {
+        const ele = domRef.value;
+        ele.style.flexBasis = curSize;
+        const paneFixedClass = 'devui-splitter-pane-fixed';
+        if (curSize) {
+          // 设置 flex-grow 和 flex-shrink
+          addClass(ele, paneFixedClass);
+        } else {
+          removeClass(ele, paneFixedClass);
+        }
+      }, { immediate: true });
+
+      watch(() => props.collapsed, (collapsed: boolean) => {
+        const paneHiddenClass = 'devui-splitter-pane-hidden';
         nextTick(() => {
-          toggleCollapseClass();
+          const el = domRef.value;
+          if (!collapsed) {
+            removeClass(el, paneHiddenClass);
+          } else {
+            addClass(el, paneHiddenClass);
+          }
+
+          if (collapsed && props.shrink) {
+            removeClass(el, paneHiddenClass);
+            setStyle(el, { flexBasis: `${props.shrinkWidth}px` });
+          } else {
+            setStyle(el, { flexBasis: initialSize });
+          }
         });
-      },
-      { immediate: true }
-    );
+      }, { immediate: true });
+    });
 
     // 收起时用于改变相邻 pane 的 flex-grow 属性来改变非自适应 pane 的 size
-    const toggleNearPaneFlexGrow = (collapsed) => {
+    const toggleNearPaneFlexGrow = (collapsed: boolean) => {
       nextTick(() => {
         const flexGrowClass = 'devui-splitter-pane-grow';
         if (hasClass(domRef.value, flexGrowClass)) {

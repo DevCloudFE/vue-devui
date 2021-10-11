@@ -1,6 +1,6 @@
 import './fullscreen.scss'
 
-import { 
+import {
   defineComponent,
   useSlots,
   renderSlot,
@@ -18,8 +18,7 @@ export default defineComponent({
     let currentTarget = ref(null)
     const isFullscreen = ref(false)
     const slotElement = ref(null)
-    const doc = document
-    
+
     const onFullScreenChange = () => {
       if (currentTarget.value) {
         const targetElement: HTMLElement = currentTarget
@@ -32,11 +31,11 @@ export default defineComponent({
           exitNormalFullscreen(targetElement)
         }
         // F11退出全屏时，需要将全屏状态传出去
-        isFullscreen.value = !!(doc.fullscreenElement)
+        isFullscreen.value = !!(document.fullscreenElement)
         ctx.emit('fullscreenLaunch', isFullscreen.value)
       }
     }
-    
+
     // 页面全屏
     const launchNormalFullscreen = (targetElement: HTMLElement) => {
       targetElement.classList.add('fullscreen')
@@ -50,7 +49,7 @@ export default defineComponent({
       targetElement.classList.remove('fullscreen')
       targetElement.style.zIndex = null
     }
-    
+
     // 事件监听
     const handleFullscreen = async () => {
       // const targetElement = document.querySelector('[fullscreen-target]')
@@ -124,15 +123,15 @@ export default defineComponent({
             removeFullScreenStyle()
             exitNormalFullscreen(targetElement)
           } else {
-            if (doc.fullscreenElement) { exitImmersiveFullScreen(doc) }
+            if (document.fullscreenElement) { exitImmersiveFullScreen(document) }
           }
           isFullscreen.value = false
           ctx.emit('fullscreenLaunch', isFullscreen.value)
         }
       }
     }
-    
-    onMounted (() => {
+
+    onMounted(() => {
       const btnLaunch = slotElement.value.querySelector('[fullscreen-launch]')
       if (btnLaunch) { btnLaunch.addEventListener('click', handleFullscreen) }
       document.addEventListener('fullscreenchange', onFullScreenChange)
@@ -144,7 +143,7 @@ export default defineComponent({
       const defaultSlot = renderSlot(useSlots(), 'default')
       // if (defaultSlot.children.length === 0) throw new Error('未发现全屏元素')
       return (
-        <div ref={slotElement}>{ defaultSlot }</div>
+        <div ref={slotElement}>{defaultSlot}</div>
       )
     }
   }

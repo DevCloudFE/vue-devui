@@ -4,16 +4,24 @@ export type positionConf = {
   left: number
   top: number
   type: string
-} 
+} | positionType
 export type Step = {
   title: string
   content: string
   trigger: string
   target?: string
-  position?: positionType | positionConf
+  position?: positionConf
 }
 export const stepsGuideProps = {
-  steps: Array as PropType<Step[]>
+  steps: Array as PropType<Step[]>,
+  showClose: {
+    type: Boolean,
+    default: true
+  },
+  showDots: {
+    type: Boolean,
+    default: true
+  }
 } as const
 
 export type StepsGuideProps = ExtractPropTypes<typeof stepsGuideProps>
