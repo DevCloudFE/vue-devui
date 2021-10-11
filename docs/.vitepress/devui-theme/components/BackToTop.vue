@@ -27,9 +27,10 @@
   </transition>
 </template>
 
-<script>
+<script lang="ts">
 import { debounce } from 'lodash-es'
-export default {
+import { defineComponent, onMounted, computed, ref } from 'vue'
+export default defineComponent({
   name: 'BackToTop',
   props: {
     threshold: {
@@ -37,40 +38,39 @@ export default {
       default: 300,
     },
   },
-  data() {
-    return {
-      scrollTop: null,
+  setup(props) {
+    const scrollTop = ref<number | null>(null)
+    const show = computed(() => {
+      return scrollTop.value! > props.threshold
+    })
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      scrollTop.value = 0
     }
-  },
-  computed: {
-    show() {
-      return this.scrollTop > this.threshold
-    },
-  },
-  mounted() {
-    this.scrollTop = this.getScrollTop()
-    window.addEventListener(
-      'scroll',
-      debounce(() => {
-        this.scrollTop = this.getScrollTop()
-      }, 100)
-    )
-  },
-  methods: {
-    getScrollTop() {
+    const getScrollTop = () => {
       return (
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop ||
         0
       )
-    },
-    scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      this.scrollTop = 0
-    },
+    }
+    onMounted(() => {
+      scrollTop.value = getScrollTop()
+      window.addEventListener(
+        'scroll',
+        debounce(() => {
+          scrollTop.value = getScrollTop()
+        }, 100)
+      )
+    })
+
+    return {
+      show,
+      scrollToTop,
+    }
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>
