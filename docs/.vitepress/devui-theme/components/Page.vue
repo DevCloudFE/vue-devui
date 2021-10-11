@@ -27,6 +27,7 @@ import PageToc from "./PageToc.vue"
 @media (min-width: 720px) {
   .page {
     margin-left: 16.4rem;
+    margin-right: 40px;
   }
 }
 
