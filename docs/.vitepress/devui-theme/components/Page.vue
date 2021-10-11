@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PageFooter from './PageFooter.vue'
 import NextAndPrevLinks from './NextAndPrevLinks.vue'
+import BackToTop from './BackToTop.vue'
 </script>
 
 <template>
@@ -13,6 +14,7 @@ import NextAndPrevLinks from './NextAndPrevLinks.vue'
       <NextAndPrevLinks />
 
       <slot name="bottom" />
+      <BackToTop />
     </div>
   </main>
 </template>
