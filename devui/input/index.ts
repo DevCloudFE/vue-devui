@@ -10,6 +10,7 @@ export { Input }
 export default {
   title: 'Input 输入框',
   category: '数据录入',
+  status: '已完成',
   install(app: App): void {
     app.use(Input as any)
   }

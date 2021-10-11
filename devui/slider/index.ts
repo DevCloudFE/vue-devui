@@ -10,8 +10,8 @@ export { Slider }
 export default {
   title: 'Slider 滑块',
   category: '数据录入',
+  status: '已完成',
   install(app: App): void {
-    
     app.use(Slider as any)
   }
 }
