@@ -43,7 +43,7 @@ export default defineComponent({
             let header = null;
             if (ctx.slots.default){
                 header = (
-                    <div class="devui-panel-heading" onClick={toggleBody} style={{ 'cursor': isCollapsed.value !== undefined ? 'pointer' : undefined }}>
+                    <div class="devui-panel-heading" onClick={toggleBody} style={{ 'cursor': isCollapsed.value !== undefined ? 'pointer' : 'auto' }}>
                         {ctx.slots.default?.()}
                     </div>
                 )

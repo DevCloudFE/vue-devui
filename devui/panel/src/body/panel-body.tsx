@@ -6,8 +6,8 @@ export default defineComponent({
     name: 'DPanelBody',
     props:PanelProps,
     setup(props,ctx){
-        const animationName = inject('showAnimation') ? 'devui-panel' : null;
-        const hasLeftPadding = !inject('hasLeftPadding') ? 'no-left-padding' : null;
+        const animationName = inject('showAnimation') ? 'devui-panel' : '';
+        const hasLeftPadding = !inject('hasLeftPadding') ? 'no-left-padding' : '';
 
         const keys = Object.keys(Store.state());
         const key = keys.pop();
@@ -40,7 +40,7 @@ export default defineComponent({
             <div class={`devui-panel devui-panel-${props.type} ${props.cssClass}`}>
               <Transition name={animationName} onEnter={ enter } onLeave={leave}>
                 {isCollapsed[key] === undefined || isCollapsed[key] ?
-                <div ref={bodyEl} class={`devui-panel-body ${isCollapsed[key] !== undefined ? 'devui-panel-body-collapse': null} ${hasLeftPadding}`}>
+                <div ref={bodyEl} class={`devui-panel-body ${isCollapsed[key] !== undefined ? 'devui-panel-body-collapse': ''} ${hasLeftPadding}`}>
                   <div class="devui-panel-content">
                     {ctx.slots.default?.()}
                   </div>
