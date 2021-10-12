@@ -6,22 +6,28 @@ module.exports = {
     ecmaVersion: 6,
     ecmaFeatures: {
       jsx: true,
-      tsx: true
-    }
+      tsx: true,
+    },
   },
   env: {
     browser: true,
     node: true,
     jest: true,
-    es6: true
+    es6: true,
   },
   plugins: ['@typescript-eslint'],
   extends: [
     'plugin:@typescript-eslint/recommended',
-    'plugin:vue/vue3-recommended'
+    'plugin:vue/vue3-recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
   ],
   rules: {
-    quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
+    quotes: [
+      'error',
+      'single',
+      { avoidEscape: true, allowTemplateLiterals: true },
+    ],
     'no-undef': 2,
     'vue/max-attributes-per-line': 'off',
     'vue/no-multiple-template-root': 'off',
@@ -39,6 +45,6 @@ module.exports = {
           requireLast: true,
         },
       },
-    ]
-  }
-};
+    ],
+  },
+}
