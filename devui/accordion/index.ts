@@ -10,6 +10,7 @@ export { Accordion }
 export default {
   title: 'Accordion 手风琴',
   category: '导航',
+  status: '10%',
   install(app: App): void {
     app.use(Accordion as any)
   }

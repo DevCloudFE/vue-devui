@@ -1,8 +1,12 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes, SetupContext } from 'vue'
 
 export interface TreeItem {
+  id: string
   label: string
-  children: TreeData
+  isParent?: boolean
+  level: number
+  open?: boolean
+  children?: TreeData
   [key: string]: any
 }
 
@@ -17,3 +21,8 @@ export const treeProps = {
 } as const
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>
+
+export interface TreeRootType {
+  ctx: SetupContext<any>
+  props: TreeProps
+}

@@ -1,0 +1,10 @@
+.devui-breadcrumb {
+  display: flex;
+  align-items: center;
+
+  .devui-breadcrumb-item:last-child {
+    .devui-breadcrumb-separator {
+      display: none;
+    }
+  }
+}

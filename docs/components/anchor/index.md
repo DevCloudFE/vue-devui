@@ -1,4 +1,11 @@
-# anchor 锚点
+# Anchor 锚点
+
+跳转到页面指定位置的组件。
+
+### 何时使用
+
+需要在页面的各个部分之间实现快速跳转时。
+
 <script lang="ts">
   import { defineComponent } from 'vue'
   import Anchor from './demo'
@@ -10,7 +17,7 @@
 </script>
 <anchor /> 
  
-# 如何使用
+### 基本用法
 
  
 在页面中使用：
@@ -41,15 +48,15 @@
 </div>
 ```
  
-# dAnchor
+### dAnchor
 
 定义一个锚点。
 ### dAnchor 参数
 
 |     参数     |   类型   | 默认 |                         说明                          | 跳转 Demo                    |全局配置项| 
 | :----------------: | :----------: | :------: | :--: | :---------------------------------------------------: | ---------------------------- |
-|   dAnchor    | `string` |  --  |               必选，设置一个锚点的名字                | [基本用法](demo#basic-usage) |
-| anchorActive | `string` |  --  | 可选，锚点处于激活状态的时候，模块生效对应的 css 类名 | [基本用法](demo#basic-usage) |
+|   dAnchor    | `string` |  --  |               必选，设置一个锚点的名字                | [基本用法](#基本用法) |
+| anchorActive | `string` |  --  | 可选，锚点处于激活状态的时候，模块生效对应的 css 类名 | [基本用法](#基本用法) |
 
 ### dAnchor 锚点激活事件
 
@@ -62,7 +69,7 @@
 | anchor-active-by-click-inside |  点击锚点内部内容激活  |
 |   anchor-active-by-initial    |  初始化滚动条位置激活  |
 
-# dAnchorLink
+### dAnchorLink
 
 定义一个锚点的链接，点击链接会滑动到锚点，锚点处于页面顶部的时候也会激活链接的 class。
 
@@ -70,10 +77,10 @@
 
 |     参数     |   类型   | 默认 |                         说明                          | 跳转 Demo                    |全局配置项| 
 | :----------------: | :----------: | :------: | :--: | :---------------------------------------------------: | ---------------------------- |
-| dAnchorLink  | `string` |  --  |            必选，点击滑动的目标锚点的名字             | [基本用法](demo#basic-usage) |
-| anchorActive | `string` |  --  | 可选，锚点处于激活状态的时候，链接生效对应的 css 类名 | [基本用法](demo#basic-usage) |
+| dAnchorLink  | `string` |  --  |            必选，点击滑动的目标锚点的名字             | [基本用法](#基本用法) |
+| anchorActive | `string` |  --  | 可选，锚点处于激活状态的时候，链接生效对应的 css 类名 | [基本用法](#基本用法) |
 
-# dAnchorBox
+### dAnchorBox
 
 必须有一个容器，否则功能无法使用。
 

@@ -13,9 +13,9 @@ export default defineComponent({
   props: ${camelCase(componentName)}Props,
   emits: [],
   setup(props: ${bigCamelCase(componentName)}Props, ctx) {
-    return (
-      <div class="${CSS_CLASS_PREFIX}-${componentName}"></div>
-    )
+    return () => {
+      return (<div class="${CSS_CLASS_PREFIX}-${componentName}"></div>)
+    }
   }
 })
 `

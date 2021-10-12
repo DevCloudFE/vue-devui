@@ -1,37 +1,51 @@
 @import '../../style/theme/color';
 @import '../../style/core/animation';
 
-.devui-select-chevron-icon {
-  display: inline-flex;
-  vertical-align: middle;
-  transition:
-    transform $devui-animation-duration-slow
-    $devui-animation-ease-in-out-smooth;
+.devui-form-group {
+  input::-ms-clear {
+    display: none;
+  }
+
+  ul.devui-list-unstyled {
+    margin: 0;
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  .devui-dropdown-bg {
+    background: $devui-list-item-hover-bg;
+  }
+
+  .devui-popup-tips {
+    color: $devui-text-weak;
+    padding: 4px 12px;
+  }
+
+  .devui-form-control {
+    outline: none;
+    padding-right: 24px;
+  }
 }
 
-.devui-select-open .devui-select-chevron-icon {
-  transform: rotate(180deg);
+.devui-select-open {
+  .devui-select-chevron-icon {
+    transform: rotate(180deg);
+
+    svg path {
+      fill: $devui-text-weak; // TODO: Color-Question
+    }
+  }
 }
 
-.devui-select-chevron-icon svg path {
-  fill: $devui-text-weak; // TODO: Color-Question
+.devui-form-control-feedback {
+  .devui-select-chevron-icon {
+    display: inline-flex;
+    vertical-align: middle;
+    transition: transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+  }
 }
 
-input::-ms-clear {
-  display: none;
-}
-
-.devui-no-data-tip {
-  user-select: none;
-  cursor: not-allowed;
-}
-
-.devui-form-control {
-  outline: none;
-  padding-right: 24px;
-}
-
-.devui-form-group.devui-has-feedback > .devui-form-control-feedback {
+.devui-has-feedback > .devui-form-control-feedback {
   line-height: 26px;
 }
 

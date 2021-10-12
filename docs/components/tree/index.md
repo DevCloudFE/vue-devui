@@ -70,6 +70,7 @@ export default defineComponent({
             ]
           },
           {
+            id: 'dynamic 12',
             label: 'parent node 13 - without children - dynamic loading',
             isParent: true,
             level: 2,
@@ -189,19 +190,24 @@ export default defineComponent({
     const data = ref([
       {
         label: 'parent node 1',
+        level: 1,
         children: [
           {
             label: 'parent node 11',
             open: true,
+            level: 2,
             children: [
               {
                 label: 'parent node 111',
+                level: 3,
                 children: [
                   {
                     label: 'parent node 1111',
+                    level: 4,
                     children: [
                       {
                         label: 'leaf node 11111',
+                        level: 5,
                       }
                     ]
                   }
@@ -213,25 +219,32 @@ export default defineComponent({
       },
       {
         label: 'parent node 2',
+        level: 1,
         children: [
           {
             label: 'parent node 21',
+            level: 2,
             open: true,
             children: [
               {
                 label: 'leaf node 211',
+                level: 3,
               },
               {
                 label: 'leaf node 212',
+                level: 3,
               },
               {
                 label: 'leaf node 213',
+                level: 3,
               },
               {
                 label: 'leaf node 214',
+                level: 3,
               },
               {
                 label: 'leaf node 215',
+                level: 3,
               },
             ]
           },
@@ -239,15 +252,19 @@ export default defineComponent({
       },
       {
         label: 'parent node 3',
+        level: 1,
         children: [
           {
             label: 'leaf node 31',
+            level: 2,
             children: [
               {
                 label: 'leaf node 311',
+                level: 3,
                 children: [
                   {
                     label: 'leaf node 3111',
+                    level: 4,
                   }
                 ]
               }
@@ -255,9 +272,11 @@ export default defineComponent({
           },
           {
             label: 'leaf node 32',
+            level: 2,
           },
           {
             label: 'leaf node 33',
+            level: 2,
           }
         ]
       }
@@ -269,5 +288,221 @@ export default defineComponent({
   }
 })
 </script>
+```
+:::
+
+### 自定义图标
+
+:::demo 自定义操作按钮图标、节点图标。
+
+```vue
+<template>
+  <div style="width: 100%">
+    <div class="tree-title">
+      <h4>Node</h4>
+      <h4>Status</h4>
+    </div>
+    <d-tree :data="data">
+      <template #default="{ node }">
+        <span :class="[node?.data?.type && 'my-icon', node?.data?.type]" ></span>
+        <span class="op-title">{{ node.label }}</span>
+        <span class="op-status"></span>
+        <span class="op-icons icon icon-add"></span>
+        <span class="op-icons icon icon-edit"></span>
+        <span class="op-icons icon icon-close"></span>
+        <span class="op-right">{{ node.status }}</span>
+      </template>
+    </d-tree>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+
+    const data = ref([
+      {
+        label: "parent node 1",
+        data: { type: "mix" },
+        open: true,
+        status: "status1",
+        children: [
+          {
+            label: "leaf node 1-1",
+            data: { type: "mix" },
+            open: false,
+            status: "status1",
+            children: [
+              {
+                label: "leaf node 1-1-1",
+                data: { type: "ppt" },
+                status: "status2",
+              },
+              {
+                label: "leaf node 1-1-2",
+                data: { type: "xls" },
+                status: "status2",
+              },
+            ],
+          },
+          {
+            label: "leaf node 1-2",
+            data: { type: "mix" },
+            open: false,
+            status: "status1",
+            children: [
+              {
+                label: "leaf node 1-2-1",
+                data: { type: "ppt" },
+                status: "status2",
+              },
+              {
+                label: "leaf node 1-2-2",
+                data: { type: "doc" },
+                status: "status2",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: "parent node 2",
+        data: { type: "ppt" },
+        open: false,
+        status: "status1",
+        children: [
+          {
+            label: "leaf node 2-1",
+            data: { type: "ppt" },
+            status: "status1",
+          },
+          {
+            label: "leaf node 2-2",
+            data: { type: "ppt" },
+            status: "status1",
+          },
+        ],
+      },
+      {
+        label: "parent node 3",
+        data: { type: "xls" },
+        open: false,
+        status: "status1",
+        children: [
+          {
+            label: "leaf node 3-1",
+            data: { type: "xls" },
+            status: "status1",
+          },
+          {
+            label: "leaf node 3-2",
+            data: { type: "xls" },
+            status: "status1",
+          },
+        ],
+      },
+    ]);
+    
+    return {
+      data
+    }
+  }
+})
+</script>
+<style>
+
+.my-icon::before {
+  width: 16px;
+  height: 16px;
+  font-style: italic;
+  font-size: 12px;
+  line-height: 14px;
+  display: inline-block;
+  text-align: center;
+  color: #fff;
+  border-radius: 2px;
+}
+
+.my-icon.doc::before {
+  content: 'W';
+  background-color: #295396;
+  border: 1px #224488 solid;
+}
+
+.my-icon.pdf::before {
+  content: 'A';
+  background-color: #da0a0a;
+  border: 1px #dd0000 solid;
+}
+
+.my-icon.xls::before {
+  content: 'X';
+  background-color: #207044;
+  border: 1px #18683c solid;
+}
+
+.my-icon.ppt::before {
+  content: 'P';
+  background-color: #d14424;
+  border: 1px #dd4422 solid;
+}
+
+.my-icon.mix::before {
+  content: '?';
+  font-style: normal;
+  background-color: #aaaaaa;
+  border: 1px #999999 solid;
+}
+
+.op-title {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.op-icons {
+  display: inline-block;
+  margin-left: 8px;
+  cursor: pointer;
+  color: #575d6c;
+  font-size: 16px;
+}
+
+.op-status {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #50d4ab;
+}
+
+.op-right {
+  position: absolute;
+  right: 25px;
+}
+
+.status-position {
+  position: absolute;
+  right: 8px;
+}
+
+.tree-title {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 24px;
+  padding-right: 16px;
+}
+
+.op-icons:focus {
+  outline: none;
+}
+
+.devui-tree-node__edit {
+  margin: 0 8px;
+}
+
+
+</style>
 ```
 :::

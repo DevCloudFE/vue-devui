@@ -1,3 +1,11 @@
+# DatePicker 日期选择器
+
+输入或选择日期的组件。
+
+### 何时使用
+
+当用户需要输入一个日期时；需要点击标准输入框，弹出日期面板进行选择时。
+
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 export default defineComponent({
@@ -15,10 +23,6 @@ export default defineComponent({
   }
 })
 </script>
-
-# DatePicker 日期选择器
-
-日期、时间可视化输入。
 
 ### 属性 auto-close
 
