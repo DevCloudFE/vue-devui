@@ -3,8 +3,8 @@ import './switch.scss';
 
 const switchProps = {
   size: {
-    type: String as PropType<'sm' | '' | 'lg'>,
-    default: ''
+    type: String as PropType<'sm' | 'middle' | 'lg'>,
+    default: 'middle'
   },
   color: {
     type: String,
@@ -17,6 +17,14 @@ const switchProps = {
   disabled: {
     type: Boolean,
     default: false
+  },
+  checkedContent: {
+    type: String,
+    default: ''
+  },
+  uncheckedContent: {
+    type: String,
+    default: ''
   },
   beforeChange: {
     type: Function as PropType<(v: boolean) => boolean | Promise<boolean>>,
@@ -63,13 +71,15 @@ export default defineComponent({
     };
   },
 
-  render () {
+  render() {
     const {
       size,
       checked,
       disabled,
       color,
-      toggle
+      toggle,
+      checkedContent,
+      uncheckedContent
     } = this;
 
     const outerCls = {
@@ -86,9 +96,9 @@ export default defineComponent({
     return (
       <span class={outerCls} style={outerStyle} onClick={toggle}>
         <span class="devui-switch-inner-wrapper">
-            <div class="devui-switch-inner">
-              { checked ? this.$slots.checkedContent?.() : this.$slots.uncheckedContent?.() }
-            </div>
+          <div class="devui-switch-inner">
+            {checked ? checkedContent : uncheckedContent}
+          </div>
         </span>
         <small></small>
       </span>

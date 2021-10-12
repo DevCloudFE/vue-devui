@@ -37,15 +37,37 @@
 <br />
 
 <d-switch v-model:checked="checkedLarge" size="lg"></d-switch>
+<br />
+<br />
 
-```html
-<d-switch v-model:checked="checkedSmall" size="sm"></d-switch>
-<d-switch v-model:checked="uncheckedMiddle"></d-switch>
-<d-switch v-model:checked="checkedMiddle"></d-switch>
-<d-switch v-model:checked="checkedLarge" size="lg"></d-switch>
+### disabled
+
+<br />
+
+<d-switch v-model:checked="checkedDisabled" :disabled='true'></d-switch>
+
+<br />
+<br />
+
+### 自定义样式
+
+<br />
+<d-switch v-model:checked="checkedColor" color="#FECC55"></d-switch>
+
+<br />
+<d-switch v-model:checked="checkedContent" :checkedContent="' 开 '" :uncheckedContent="' 关'"></d-switch>
+
+
+``` html
+  <d-switch size="sm"></d-switch>
+  <d-switch v-model:checked="uncheckedMiddle"></d-switch>
+  <d-switch v-model:checked="checkedMiddle"></d-switch>
+  <d-switch v-model:checked="checkedLarge" size="lg"></d-switch>
+  <d-switch v-model:checked="checkedDisabled" :disabled="true"></d-switch>
+  <d-switch v-model:checked="checkedDisabled" :color="#FECC55"></d-switch>
+  <d-switch v-model:checked="checkedContent" :checkedContent="'开'" :uncheckedContent="'关'"></d-switch>
 ```
-
-<script lang="ts">
+<script>
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -54,13 +76,36 @@ export default defineComponent({
     const uncheckedMiddle = ref(false)
     const checkedMiddle = ref(true)
     const checkedLarge = ref(true)
-    
+    const checkedDisabled = ref(true)
+    const checkedColor = ref(true)
+    const checkedContent = ref(false)
+
     return {
       checkedSmall,
       uncheckedMiddle,
       checkedMiddle,
       checkedLarge,
+      checkedDisabled,
+      checkedColor,
+      checkedContent
     }
   }
 })
 </script>
+
+### d-switch 参数
+
+|       参数       |            类型                   | 默认  |               说明                    | 跳转 Demo             
+| :--------------: | :--------------------------: | :---: | :-----------------------: | :--------------------- |
+|       size       |             `sm \| middle \| lg`              |  `middle`   |             可选，开关尺寸大小          | [基本用法](#基本用法) 
+|      color       |                   `string`                    |  --   |             可选，开关打开时的自定义颜色      | [自定义样式](#自定义样式)
+|     checked      |                   `boolean`                   | false |              可选，开关是否打开，默认关闭      | [基本用法](#基本用法) 
+|     disabled     |                   `boolean`                   | false |                    可选，是否禁用开关          | [基本用法](#基本用法) 
+|  checkedContent  |             `string`             |  ''  |             可选，开关打开时说明               | [自定义样式](#自定义样式)
+| uncheckedContent |             `string`             |  ''   |             可选，开关关闭时说明                | [自定义样式](#自定义样式)
+
+### d-switch 事件
+
+|  事件  |          类型           | 说明                                  |
+| :----: | :---------------------: | :------------------------------------ |
+| change | `EventEmitter<boolean>` | 可选,开关打开返回 true,关闭返回 false |
