@@ -60,6 +60,10 @@ const tagInputProps = {
     type: String,
     default: ''
   },
+  caseSensitivity: {
+    type: Boolean,
+    default: false
+  },
   onValueChange: {
     type: Function as PropType<(oldTags: any[], newTags: any[]) => void>,
     default: undefined
@@ -78,7 +82,8 @@ const KEYS_MAP = {
   tab: 'Tab',
   down: 'ArrowDown',
   up: 'ArrowUp',
-  enter: 'Enter'
+  enter: 'Enter',
+  space: ' ',
 } as const;
 
 export default defineComponent({
@@ -103,7 +108,7 @@ export default defineComponent({
       tagInputVal.value = v.trim();
     };
     const mergedSuggestions = computed<Suggestion[]>(() => {
-      const suggestions = props.suggestionList.map((item, index: number) => {
+      let suggestions = props.suggestionList.map((item, index: number) => {
         return {
           __index: index,
           ...item
@@ -112,7 +117,9 @@ export default defineComponent({
       if (tagInputVal.value === '') {
         return suggestions;
       }
-      return suggestions.filter(item => item[props.displayProperty].includes(tagInputVal.value));
+      return suggestions = props.caseSensitivity
+        ? suggestions.filter(item => item[props.displayProperty].indexOf(tagInputVal.value) !== -1)
+        : suggestions.filter(item => item[props.displayProperty].toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1)
     });
 
     const selectIndex = ref(0);
@@ -137,8 +144,16 @@ export default defineComponent({
     };
     const handleEnter = () => {
       let res = { [props.displayProperty]: tagInputVal.value };
-      // 判断输入框和输入建议是否为空
       if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) return false
+      if (props.tags.findIndex((item) => item[props.displayProperty] === tagInputVal.value) > -1) {
+        tagInputVal.value = ''
+        return false
+      }
+      if (mergedSuggestions.value.length === 0 &&
+        (tagInputVal.value.length < props.minLength || tagInputVal.value.length > props.maxLength)) {
+        tagInputVal.value = ''
+        return false
+      }
       if (mergedSuggestions.value.length) {
         const target = mergedSuggestions.value[selectIndex.value];
         res = target;
@@ -154,6 +169,8 @@ export default defineComponent({
       switch ($event.key) {
         case KEYS_MAP.tab:
         case KEYS_MAP.enter:
+        case KEYS_MAP.space:
+          if (!props.isAddBySpace && KEYS_MAP.space) return
           handleEnter();
           break;
         case KEYS_MAP.down:
@@ -208,7 +225,7 @@ export default defineComponent({
       isTagsLimit
     };
   },
-  render () {
+  render() {
     const {
       tagInputVal,
       isInputBoxFocus,
@@ -250,7 +267,7 @@ export default defineComponent({
     ];
 
     const noDataTpl = <li class="devui-suggestion-item devui-disabled">
-      { noData }
+      {noData}
     </li>;
 
     return (
@@ -264,8 +281,8 @@ export default defineComponent({
                     <span>{tag[displayProperty]}</span>
                     {
                       !disabled &&
-                      <a class="remove-button" onMousedown={($event) => removeTag($event,tagIdx)}>
-                        { removeBtnSvg }
+                      <a class="remove-button" onMousedown={($event) => removeTag($event, tagIdx)}>
+                        {removeBtnSvg}
                       </a>
                     }
                   </li>
@@ -298,11 +315,11 @@ export default defineComponent({
                     mergedSuggestions.map((item: any, index: number) => {
                       return (
                         <li
-                          class={{'devui-suggestion-item': true, selected: index === selectIndex}}
+                          class={{ 'devui-suggestion-item': true, selected: index === selectIndex }}
                           onMousedown={($event) => {
                             onSuggestionItemClick($event, index);
                           }}>
-                          { item[displayProperty] }
+                          {item[displayProperty]}
                         </li>
                       );
                     })
@@ -311,7 +328,7 @@ export default defineComponent({
             </div>
           )
         }
-    </div>
+      </div>
     );
   }
 });
