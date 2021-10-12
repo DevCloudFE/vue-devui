@@ -1,14 +1,14 @@
-import './drawer.scss'
-
 import { defineComponent, ref, toRefs } from 'vue'
 import { drawerProps, DrawerProps } from './drawer-types'
 
 import DrawerHeader from './components/drawer-header'
 
+import './drawer.scss'
+
 export default defineComponent({
   name: 'DDrawer',
   props: drawerProps,
-  emits: [],
+  emits: ['close'],
   setup(props: DrawerProps, ctx) {
     const { width } = toRefs(props); // 宽度
     const ZIndex = ref<number>(1000); // z-index
@@ -28,8 +28,8 @@ export default defineComponent({
     const zindex: number = this.ZIndex;
     const fullScreen: boolean = this.fullScreen;
     const width: number = fullScreen ? '100vw' : this.width;
-    const fullScreenEvent: Event = this.fullScreenEvent;
-    const closeDrawer: Event = this.closeDrawer;
+    const fullScreenEvent: any = this.fullScreenEvent;
+    const closeDrawer: any = this.closeDrawer;
 
     return (
       <div class="devui-drawer" style={{ zIndex: zindex }}>

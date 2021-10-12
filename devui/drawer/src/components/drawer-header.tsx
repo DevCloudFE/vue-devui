@@ -1,7 +1,7 @@
-import './drawer-header.scss'
-
 import { defineComponent, toRefs, ref, reactive } from 'vue'
 import { drawerHeaderType, DrawerHeaderType } from './drawer-header-type';
+
+import './drawer-header.scss'
 
 export default defineComponent({
   name: 'DrawerHeader', // 头部
@@ -22,24 +22,19 @@ export default defineComponent({
     return { isFullScreen, handleFullScreen, handleDrawerClose }
   },
   render() {
-    const { handleFullScreen, isFullScreen, handleDrawerClose } = this
-    const fullScreen: string = isFullScreen ? 'icon icon-minimize' : 'icon icon-maxmize'
+    const { handleFullScreen, handleDrawerClose } = this
+    const isFullScreen: string = this.isFullScreen ? 'icon icon-minimize' : 'icon icon-maxmize'
 
     return (
       <div class="devui-drawer-header">
         <div class="devui-drawer-header-item">
-          <span title="More" class="devui-drawer-header-item icon icon-more-operate" />
+          <span class="devui-drawer-header-item icon icon-more-operate" />
         </div>
         <div class="devui-drawer-header-item" onClick={handleFullScreen}>
-          {/* {
-            isFullScreen.value ?
-              <span title="Fullscreen" class="icon icon-maxmize" /> :
-              <span title="Fullscreen" class="icon icon-minimize" />
-          } */}
-          <span title="Fullscreen" class={fullScreen}/>
+          <span class={isFullScreen}/>
         </div>
         <div class="devui-drawer-header-item" onClick={handleDrawerClose}>
-          <span title="Closescreen" class="icon icon-close" />
+          <span class="icon icon-close" />
         </div>
       </div>
     )
