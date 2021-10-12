@@ -22,10 +22,10 @@ export default defineComponent({
     const btnClass = computed(() => {
       const { btnStyle, size, position, bordered, icon } = props;
       const origin = `devui-btn devui-btn-${btnStyle} devui-btn-${size} devui-btn-${position}`;
-      const borderedClazz = bordered ? 'bordered' : '';
+      const borderedClass = bordered ? 'bordered' : '';
       const btnIcon = !!icon && !hasContent.value && btnStyle !== 'primary' ? 'd-btn-icon' : '';
       const btnIconWrap = !!icon ? 'd-btn-icon-wrap' : '';
-      return `${origin} ${borderedClazz} ${btnIcon} ${btnIconWrap}`;
+      return `${origin} ${borderedClass} ${btnIcon} ${btnIconWrap}`;
     });
 
     const iconClass = computed(() => {
