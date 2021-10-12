@@ -8,9 +8,9 @@ import './drawer.scss'
 export default defineComponent({
   name: 'DDrawer',
   props: drawerProps,
-  emits: ['close'],
+  emits: ['close', 'update:visible'],
   setup(props: DrawerProps, ctx) {
-    const { width } = toRefs(props); // 宽度
+    const { width, visible } = toRefs(props); // 宽度
     const ZIndex = ref<number>(1000); // z-index
     const isFullScreen = ref(false);
 
@@ -19,16 +19,26 @@ export default defineComponent({
     }
 
     const closeDrawer = () => {
+      ctx.emit('update:visible', false);
       ctx.emit('close');
     }
     
-    return { ZIndex, isFullScreen, width, fullScreenEvent, closeDrawer };
+    return {
+      ZIndex,
+      isFullScreen,
+      width,
+      visible,
+      fullScreenEvent,
+      closeDrawer, 
+    };
   },
   render() {
     const zindex: number = this.ZIndex;
     const width: number = this.isFullScreen ? '100vw' : this.width;
     const fullScreenEvent: any = this.fullScreenEvent;
     const closeDrawer: any = this.closeDrawer;
+
+    if (!this.visible) return;
 
     return (
       <div class="devui-drawer" style={{ zIndex: zindex }}>
