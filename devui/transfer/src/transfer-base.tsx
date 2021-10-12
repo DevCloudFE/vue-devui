@@ -1,6 +1,5 @@
 import { defineComponent, computed } from 'vue'
-import { transferBaseProps, TransferBaseClass } from '../common/use-transfer-base'
-import { TransferBaseProps } from '../common/use-transfer-base'
+import { transferBaseProps, TransferBaseClass , TransferBaseProps } from '../common/use-transfer-base'
 import DCheckbox from '../../checkbox/src/checkbox'
 import DCheckboxGroup from '../../checkbox/src/checkbox-group'
 import DSearch from '../../search/src/search'
