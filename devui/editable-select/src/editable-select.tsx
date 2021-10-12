@@ -1,55 +1,65 @@
-import './editable-select.scss';
-
-import { defineComponent, ref, reactive, renderSlot } from 'vue';
+import './editable-select.scss'
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  renderSlot,
+  provide,
+  SetupContext,
+} from 'vue'
 import {
   editableSelectProps,
   EditableSelectProps,
-} from './editable-select-types';
-import { Icon } from '../../icon';
-
+  selectKey,
+} from './editable-select-types'
+import { Icon } from '../../icon'
+import { FlexibleOverlay } from '../../overlay'
+import { useSelectStates, useSelect } from './hooks/use-select'
+import { className } from './utils/index'
 export default defineComponent({
   name: 'DEditableSelect',
   props: editableSelectProps,
-  emits: [],
-  setup(props: EditableSelectProps, ctx) {
-    const origin = ref(null);
-    const visible = ref(false);
-    const position = reactive({
-      originX: 'left',
-      originY: 'bottom',
-      overlayX: 'left',
-      overlayY: 'top',
-    });
+  emits: ['update:modelValue'],
 
-    const toggleMenu = () => {
-      visible.value = !visible.value;
-    };
+  setup(props: EditableSelectProps, ctx: SetupContext) {
+    const states = useSelectStates()
+    const { origin, visible } = toRefs(states)
+
+    const inputCls = className('devui-form-control devui-dropdown-origin', {
+      disabled: props.disabled,
+    })
+    const { toggleMenu, handleOptionSelect } = useSelect(props, ctx, states)
+
+    provide(
+      selectKey,
+      reactive({
+        handleOptionSelect,
+      })
+    )
 
     return () => {
       return (
         <>
           <div
-            class="devui-form-group devui-has-feedback devui-select-open"
+            class="devui-form-group devui-has-feedback"
             onClick={toggleMenu}
             ref={origin}
           >
-            <input
-              type="text"
-              class="devui-form-control devui-dropdown-origin"
-            />
+            <input type="text" class={inputCls} value={props.modelValue} />
             <span class="devui-form-control-feedback">
               <span class="devui-select-chevron-icon">
                 <Icon name="select-arrow" />
               </span>
             </span>
           </div>
-          <d-flexible-overlay
+          <FlexibleOverlay
+            backgroundClass="devui-dropdown-bg"
             origin={origin}
             v-model={[visible.value, 'visible']}
-            position={position}
+            position={states.position}
           >
             <div
-              class="devui-dropdown-wrap"
+              class="devui-editable-select"
               style={{ width: props.width + 'px' }}
             >
               <div class="devui-dropdown-menu">
@@ -63,9 +73,9 @@ export default defineComponent({
                 </ul>
               </div>
             </div>
-          </d-flexible-overlay>
+          </FlexibleOverlay>
         </>
-      );
-    };
+      )
+    }
   },
-});
+})
