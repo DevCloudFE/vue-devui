@@ -1,0 +1,62 @@
+.devui-skeleton {
+  display: flex;
+  justify-content: space-between;
+
+  .devui-skeleton__avatar {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      background-color: #cccccc;
+      border-radius: 50%;
+    }
+  }
+
+  .devui-skeleton__item__group {
+    flex: 7;
+
+    .devui-skeleton__item {
+      width: 100%;
+      height: 16px;
+      background-color: #cccccc;
+      display: inline-block;
+      border-radius: 4px;
+    }
+
+    .devui-skeleton__item:first-child {
+      width: 33%;
+    }
+
+    .devui-skeleton__item:last-child {
+      width: 61%;
+    }
+  }
+}
+
+.devui-skeleton-animated > .devui-skeleton__avatar > .avatar,
+.devui-skeleton-animated > .devui-skeleton__item__group > .devui-skeleton__item {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 60%
+    )
+    #cccccc;
+  background-size: 200% 100%;
+  background-position-x: 180%;
+  animation: 2s loading ease-in-out infinite;
+}
+
+.devui-skeleton-animated > .devui-skeleton__avatar > .avatar {
+  animation-delay: 0.1s;
+}
+
+@keyframes loading {
+  to {
+    background-position-x: -20%;
+  }
+}

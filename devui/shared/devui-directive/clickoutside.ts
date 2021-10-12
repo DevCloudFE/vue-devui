@@ -5,6 +5,7 @@
  * <div v-clickoutside="handleClose">
  */
 
+import { inBrowser } from '../util/common-var'
 import { on } from './utils'
 
 const ctx = Symbol('@@clickoutside')
@@ -12,17 +13,21 @@ const nodeList = new Map()
 
 let startClick
 let nid = 0
-
-on(document, 'mousedown', (e: Event) => {
-  startClick = e
-})
-on(document, 'mouseup', (e: Event) => {
-  for (const [id, node] of nodeList) {
-    node[ctx].documentHandler(e, startClick)
-  }
-})
+let isFirst = true;
 
 function createDocumentHandler(el: HTMLElement, binding: Record<string, any>, vnode: any) {
+  if (inBrowser && isFirst) {
+    isFirst = false;
+    on(document, 'mousedown', (e: Event) => {
+      startClick = e
+    })
+    on(document, 'mouseup', (e: Event) => {
+      for (const [id, node] of nodeList) {
+        node[ctx].documentHandler(e, startClick)
+      }
+    })
+  }
+
   return function(mouseup: Event, mousedown: Event) {
     if (
       !vnode ||
@@ -32,8 +37,9 @@ function createDocumentHandler(el: HTMLElement, binding: Record<string, any>, vn
       el.contains(mouseup.target as HTMLElement) ||
       el.contains(mousedown.target as HTMLElement) ||
       el === mouseup.target
-    )
-      return
+    ) {
+      return;
+    }
     el[ctx].bindingFn && el[ctx].bindingFn()
   }
 }

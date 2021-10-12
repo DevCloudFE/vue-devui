@@ -1,0 +1,71 @@
+@import '../../style/mixins/size';
+@import '../../style/mixins/flex';
+@import '../../style/theme/color';
+
+.devui-cascader {
+  @include flex(flex-start);
+
+  position: relative;
+
+  >div:nth-child(1) {
+    width: 100%;
+  }
+
+  &__icon {
+    position: absolute;
+    right: 5px;
+    top: 0;
+    height: 100%;
+    @include flex;
+    @include flex-direction;
+
+    .icon {
+      margin: 0;
+    }
+  }
+
+  input {
+    width: 100%;
+    padding-right: 16px;
+  }
+
+  .devui-drop-menu-wrapper {
+    display: block;
+    margin: 4px 0;
+    font-size: 0;
+    white-space: nowrap;
+    padding: 0;
+  }
+}
+
+.devui-drop-icon-animation {
+  transition: transform 0.2s linear;
+}
+
+.devui-drop-menu-animation {
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  // opacity: 0;
+  // position: absolute;
+  // float: left;
+  z-index: 1000;
+  // transform: scaleY(0.7) translateY(-5px);
+  margin-top: 1px;
+
+  .devui-dropdown-menu {
+    width: auto;
+    padding-bottom: 0;
+    @include flex('flex-start');
+  }
+}
+
+.devui-dropdown__open {
+  .devui-cascader__icon {
+    transform: rotate(180deg);
+  }
+
+  .devui-drop-menu-animation {
+    transform-origin: 0 0%;
+    transform: scaleY(0.9999) translateY(0);
+    opacity: 1;
+  }
+}

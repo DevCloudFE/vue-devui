@@ -1,0 +1,22 @@
+@import '../../../style/mixins/flex';
+@import '../../../style/theme/color';
+@import '../../../style/core/font';
+
+.devui-cascader-li {
+  &.devui-dropdown-item {
+    height: 32px;
+    padding: 8px 12px;
+    color: $devui-text;
+    cursor: pointer;
+    @include flex(flex-start);
+  }
+
+  .dropdown-item-label {
+    display: inline-block;
+    flex: 1;
+    width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: $devui-font-size;
+  }
+}

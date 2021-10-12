@@ -5,8 +5,11 @@ dist-ssr
 build
 *.local
 pnpm-lock.yaml
+package-lock.json
 yarn-error.log
 .history
 .vscode
+.idea
 devui/vue-devui.ts
 devui/theme/theme.scss
+docs/.vitepress/config/sidebar.ts

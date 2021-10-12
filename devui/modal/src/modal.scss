@@ -1,0 +1,92 @@
+@import '../../style/theme/color';
+@import '../../style/theme/corner';
+@import '../../style/theme/font';
+@import '../../style/theme/animation';
+
+.devui-modal-wrapper {
+  justify-content: center;
+  align-items: center;
+  background-color: $devui-shadow;
+}
+
+.devui-modal-content {
+  background: $devui-fullscreen-overlay-bg;
+  border-radius: $devui-border-radius;
+}
+
+.devui-modal-body {
+  padding: 20px 32px;
+  color: $devui-text-weak;
+}
+
+.devui-modal-header {
+  padding: 32px 32px 0;
+  height: 56px;
+  position: relative;
+  border: none;
+  user-select: none;
+
+  .btn-close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: $devui-font-size-icon;
+    font-weight: 700;
+    line-height: 1;
+    color: #000000;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+  }
+
+  .header-alert-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    line-height: 16px;
+    text-align: center;
+  }
+}
+
+.devui-modal-footer {
+  border-top: none;
+  text-align: center;
+  padding: 0 32px 24px;
+}
+
+.devui-modal-wipe {
+  @mixin wipe-in-out-animation {
+    animation-name: wipe-in-out;
+    animation-duration: 0.3s;
+  }
+  @keyframes wipe-in-out {
+    0% {
+      opacity: 0.2;
+      transform: translateY(-24px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &-enter-from {
+    opacity: 0.2;
+  }
+
+  &-enter-active {
+    @include wipe-in-out-animation;
+  }
+
+  &-leave-to {
+    opacity: 1;
+  }
+
+  &-leave-active {
+    @include wipe-in-out-animation;
+
+    animation-direction: reverse;
+  }
+}

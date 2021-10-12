@@ -15,6 +15,7 @@ export { Radio, RadioGroup }
 export default {
   title: 'Radio 单选框',
   category: '数据录入',
+  status: '已完成',
   install(app: App): void {
     app.use(Radio as any)
     app.use(RadioGroup as any)

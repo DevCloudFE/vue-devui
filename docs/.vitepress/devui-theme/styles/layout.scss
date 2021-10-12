@@ -125,7 +125,7 @@ textarea {
 
 a {
   text-decoration: none;
-  color: var(--c-brand);
+  color: $devui-brand;
 }
 
 a:hover {
@@ -157,6 +157,14 @@ img {
 ul,
 ol {
   padding-left: 1.25em;
+}
+
+ul {
+  list-style: disc;
+}
+
+ol {
+  list-style: decimal;
 }
 
 li > ul,

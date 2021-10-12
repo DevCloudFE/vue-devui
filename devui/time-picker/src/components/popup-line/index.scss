@@ -1,0 +1,70 @@
+@import '../../../../style/theme/color';
+@import '../../../../style/theme/shadow';
+@import '../../../../style/theme/corner';
+@import '../../../../style/core/_font';
+
+.devui-time-list {
+  width: 100%;
+  height: 250px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+
+  .time-ul {
+    height: 244px;
+    display: inline-block;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 auto;
+    padding-right: 8px;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    scroll-behavior: smooth;
+    padding-top: 2px;
+    border-top: 1px solid rgba(0, 0, 0, 0);
+
+    &:hover {
+      overflow-y: overlay;
+      // overflow-y:auto ;
+      // padding-right: 0;
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+
+    li {
+      padding: 0;
+      // text-align: center;
+      // padding-left: 40px;
+      text-align: center;
+      height: 30px;
+      line-height: 30px;
+      width: calc(100% + 8px);
+
+      &:last-child {
+        margin-bottom: 214px;
+      }
+
+      &:hover {
+        background-color: #5d7ef80c;
+        color: #8aa2f0;
+      }
+    }
+
+    .active-li {
+      background-color: #5e7ce0;
+      color: #ffffff;
+
+      &:hover {
+        background-color: #5e7ce0;
+        color: #ffffff;
+      }
+    }
+
+    .disabled-li {
+      background-color: $devui-disabled-bg;
+      color: $devui-disabled-text;
+      cursor: not-allowed;
+    }
+  }
+}

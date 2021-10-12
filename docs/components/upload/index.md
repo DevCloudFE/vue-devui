@@ -69,7 +69,6 @@ export default {
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Drag files"
     :without-btn="true"
-    file-path="name"
     :before-upload="beforeUpload"
     @success-event="onSuccess"
     @error-event="onError"
@@ -153,7 +152,6 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
-    file-path="name"
     :before-upload="beforeUpload"
     @success-event="onSuccess"
     @error-event="onError"
@@ -221,7 +219,6 @@ export default {
     :file-options="fileOptions"
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
-    filePath="name"
     @success-event="onSuccess"
     @error-event="onError"
     :showTip="true"
@@ -290,7 +287,6 @@ export default {
     :file-options="fileOptions"
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
-    filePath="name"
     @success-event="onSuccess"
     @error-event="onError"
     :showTip="true"
@@ -358,7 +354,6 @@ export default {
     :file-options="fileOptions"
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
-    filePath="name"
     @success-event="onSuccess"
     @error-event="onError"
     :showTip="true"
@@ -440,7 +435,6 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
-    file-path="name"
     :before-upload="beforeUpload"
     @success-event="onSuccess"
     @error-event="onError"
@@ -507,7 +501,6 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="选择文件"
-    file-path="name"
     @success-event="onSuccess1"
     @error-event="onError"
     @delete-uploaded-file-event="deleteUploadedFile"
@@ -576,7 +569,6 @@ export default {
         :upload-options="uploadOptions"
         v-model:uploaded-files="uploadedFiles"
         placeholder-text="选择文件"
-        file-path="name"
         @success-event="onSuccess"
         @error-event="onError"
         @delete-uploaded-file-event="deleteUploadedFile"
@@ -796,7 +788,6 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
-    file-path="name"
     @success-event="onSuccess"
     @error-event="onError"
     :beforeUpload="beforeUpload"
@@ -864,11 +855,10 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
-    file-path="name"
     @success-event="onSuccess"
     @error-event="onError"
     :beforeUpload="beforeUpload"
-    showTip="true"
+    :showTip="true"
   >
     <d-button type="primary">选取文件</d-button>
     <template v-slot:preloadFiles="slotProps">
@@ -1014,14 +1004,13 @@ export default {
     :upload-options="uploadOptions"
     v-model:uploaded-files="uploadedFiles"
     placeholder-text="Upload"
-    file-path="name"
     @success-event="onSuccess"
     @error-event="onError"
     :beforeUpload="beforeUpload"
-    showTip="true"
-    withoutBtn="true"
+    :showTip="true"
+    :withoutBtn="true"
     class="upload-demo"
-    autoUpload="true"
+    :autoUpload="true"
   >
     <div class="upload-trigger">
       <div>
@@ -1191,7 +1180,6 @@ d-single-upload 参数
 | **参数**               | **类型**                          | **默认**   | 说明                                                                                     | **跳转 Demo**         |
 | ---------------------- | --------------------------------- | ---------- | ---------------------------------------------------------------------------------------- | --------------------- |
 | fileOptions            | [IFileOptions](#ifileoptions)     | --         | 必选，待上传文件配置                                                                     | [基本用法](#基本用法) |
-| filePath               | `string`                          | --         | 文件路径                                                                                 | [基本用法](#基本用法) |
 | uploadOptions          | [IUploadOptions](#iuploadoptions) | \--        | 必选，上传配置                                                                           | [基本用法](#基本用法) |
 | autoUpload             | `boolean`                         | false      | 可选，是否自动上传                                                                       | [基本用法](#基本用法) |
 | placeholderText        | `string`                          | '选择文件' | 可选，上传输入框中的 Placeholder 文字                                                    | [基本用法](#基本用法) |
@@ -1220,7 +1208,6 @@ d-multiple-upload 参数
 | **参数**               | **类型**                          | **默认**       | 说明                                                                                     | **跳转 Demo**             |
 | ---------------------- | --------------------------------- | -------------- | ---------------------------------------------------------------------------------------- | ------------------------- |
 | fileOptions            | [IFileOptions](#ifileoptions)     | --             | 必选，待上传文件配置                                                                     | [多文件上传](#多文件上传) |
-| filePath               | `string`                          | --             | 文件路径                                                                                 | [多文件上传](#多文件上传) |
 | uploadOptions          | [IUploadOptions](#iuploadoptions) | \--            | 必选，上传配置                                                                           | [多文件上传](#多文件上传) |
 | autoUpload             | `boolean`                         | false          | 可选，是否自动上传                                                                       | [自动上传](#自动上传)     |
 | placeholderText        | `string`                          | '选择多个文件' | 可选，上传输入框中的 Placeholder 文字                                                    | [基本用法](#基本用法)     |
