@@ -12,22 +12,21 @@ export default defineComponent({
   setup(props: DrawerProps, ctx) {
     const { width } = toRefs(props); // 宽度
     const ZIndex = ref<number>(1000); // z-index
-    const fullScreen = ref(false);
+    const isFullScreen = ref(false);
 
     const fullScreenEvent = () => {
-      fullScreen.value = !fullScreen.value;
+      isFullScreen.value = !isFullScreen.value;
     }
 
     const closeDrawer = () => {
       ctx.emit('close');
     }
     
-    return { ZIndex, fullScreen, width, fullScreenEvent, closeDrawer };
+    return { ZIndex, isFullScreen, width, fullScreenEvent, closeDrawer };
   },
   render() {
     const zindex: number = this.ZIndex;
-    const fullScreen: boolean = this.fullScreen;
-    const width: number = fullScreen ? '100vw' : this.width;
+    const width: number = this.isFullScreen ? '100vw' : this.width;
     const fullScreenEvent: any = this.fullScreenEvent;
     const closeDrawer: any = this.closeDrawer;
 
