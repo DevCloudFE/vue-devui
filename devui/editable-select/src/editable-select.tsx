@@ -1,4 +1,4 @@
-import './editable-select.scss';
+import './editable-select.scss'
 import {
   defineComponent,
   reactive,
@@ -6,36 +6,36 @@ import {
   renderSlot,
   provide,
   SetupContext,
-} from 'vue';
+} from 'vue'
 import {
   editableSelectProps,
   EditableSelectProps,
   selectKey,
-} from './editable-select-types';
-import { Icon } from '../../icon';
-import { FlexibleOverlay } from '../../overlay';
-import { useSelectStates, useSelect } from './hooks/use-select';
-import { className } from './utils/index';
+} from './editable-select-types'
+import { Icon } from '../../icon'
+import { FlexibleOverlay } from '../../overlay'
+import { useSelectStates, useSelect } from './hooks/use-select'
+import { className } from './utils/index'
 export default defineComponent({
   name: 'DEditableSelect',
   props: editableSelectProps,
   emits: ['update:modelValue'],
 
   setup(props: EditableSelectProps, ctx: SetupContext) {
-    const states = useSelectStates();
-    const { origin, visible } = toRefs(states);
+    const states = useSelectStates()
+    const { origin, visible } = toRefs(states)
 
     const inputCls = className('devui-form-control devui-dropdown-origin', {
       disabled: props.disabled,
-    });
-    const { toggleMenu, handleOptionSelect } = useSelect(props, ctx, states);
+    })
+    const { toggleMenu, handleOptionSelect } = useSelect(props, ctx, states)
 
     provide(
       selectKey,
       reactive({
         handleOptionSelect,
       })
-    );
+    )
 
     return () => {
       return (
@@ -75,7 +75,7 @@ export default defineComponent({
             </div>
           </FlexibleOverlay>
         </>
-      );
-    };
+      )
+    }
   },
-});
+})

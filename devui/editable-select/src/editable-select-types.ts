@@ -26,7 +26,6 @@ export const editableSelectProps = {
   },
   'onUpdate:modelValue': {
     type: Function as PropType<(val: ModelValue) => void>,
-    default: undefined,
   },
 } as const
 

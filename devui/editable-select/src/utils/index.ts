@@ -8,11 +8,11 @@ export function className(
     classStr: string,
     classOpt?: { [key: string]: boolean; }
 ): string {
-    let classname = classStr;
+    let classname = classStr
     if (typeof classOpt === 'object') {
         Object.keys(classOpt).forEach((key) => {
             classOpt[key] && (classname += ` ${key}`);
         });
     }
-    return classname;
+    return classname
 }
