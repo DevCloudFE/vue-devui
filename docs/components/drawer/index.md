@@ -16,24 +16,31 @@
 
 ```vue
 <template>
-  <d-button  @click="drawerShow"> show drawer </d-button>
-  <d-drawer v-if="isShow" @close="drawerClose">
+  <d-button  @click="drawerShow"> drawer {{ btnName }} </d-button>
+  <d-drawer v-model:visible="isDrawerShow" :width="drawerWidth" @close="drawerClose">
 </template>
 <script>
 import { ref } from 'vue'
 
 export default ({
   setup() {
-    let isShow = ref(false)
+    let isDrawerShow = ref(false)
+    let btnName = ref('close')
+    let drawerWidth = ref('15vw')
+
     const drawerShow = () => {
-      isShow.value = true;
+      isDrawerShow.value = true
+      btnName.value = 'open'
     }
 
     const drawerClose = () => {
-      isShow.value = false;
+      btnName.value = 'close'
+      
     }
     return {
-      isShow,
+      isDrawerShow,
+      btnName,
+      drawerWidth,
       drawerShow,
       drawerClose,
     }
