@@ -1,7 +1,6 @@
-import { onUnmounted, UnwrapRef } from 'vue'
-import { defineComponent, reactive, onMounted, ref } from 'vue'
+import { onUnmounted, UnwrapRef , defineComponent, reactive, onMounted, ref } from 'vue'
 import { invokeFunction, isIn } from './utils'
-import { compareDateSort } from './components/utils'
+import { compareDateSort , parseDate } from './components/utils'
 import { Input } from '../input'
 import { Icon } from '../icon'
 
@@ -15,7 +14,6 @@ import {
 import Calendar from './components/calendar'
 
 import './date-picker.scss'
-import { parseDate } from './components/utils'
 
 const formatRange = (state: UnwrapRef<TState>) => {
   const [start, end] = [state.start, state.end].sort((a, b) => a.getTime() - b.getTime())

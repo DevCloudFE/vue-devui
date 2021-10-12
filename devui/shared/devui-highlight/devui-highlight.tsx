@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'd-highlight',
+  name: 'DHighlight',
   props: {
     code: String,
     language: String
