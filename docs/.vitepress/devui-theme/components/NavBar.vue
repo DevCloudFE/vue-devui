@@ -35,9 +35,9 @@ defineEmits(['toggle'])
         <NavLinks />
       </div>
 
-      <div class="flex items-center ml-xs" style="margin-top:4px;">
+      <div class="flex items-center ml-xs mt-xxs">
         <d-switch v-model:checked="darkMode" size="sm"></d-switch>
-        <label style="font-size:0.9rem;margin-top:-3px;">{{switchText}}</label>
+        <label style="font-size:0.9rem;" class="mb-xxs">{{ switchText }}</label>
       </div>
     </div>
 
@@ -46,7 +46,7 @@ defineEmits(['toggle'])
 </template>
 
 <style scoped lang="scss">
-@import '@devui/styles-var/devui-var';
+@import "@devui/styles-var/devui-var";
 
 .nav-bar {
   position: fixed;
