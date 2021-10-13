@@ -2,8 +2,8 @@ import type { ExtractPropTypes } from 'vue'
 
 export const skeletonProps = {
   row: {
-    type: Number || String,
-    default: 0
+    type: Number,
+    required: true
   },
   animate:{
     type: Boolean,

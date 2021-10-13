@@ -9,18 +9,15 @@ export default defineComponent({
   setup(props: SkeletonProps, ctx) {
     const { slots } = ctx;
 
-    function renderAnimate(bool) {
-      return bool ? 'devui-skeleton-animated' : ''
+    function renderAnimate(isAnimate) {
+      return isAnimate ? 'devui-skeleton-animated' : ''
     }
-    function renderAvatar(bool) {
-      return bool ? <div class="devui-skeleton__avatar"><div class="avatar" /></div> : ''
-    }
-    function renderParagraph(num) {
+    function renderParagraph(paragraphRowNum) {
       const arr = []
-      for (let index = 0; index < num; index++) {
+      for (let index = 0; index < paragraphRowNum; index++) {
         arr.push(1)
       }
-      return <div class="devui-skeleton__item__group">{
+      return <div class="devui-skeleton__paragraph" v-show={true}>{
         arr.map(() => {
           return <div class="devui-skeleton__item" />
         })
@@ -30,8 +27,12 @@ export default defineComponent({
     return () => {
       if (props.loading) {
         return <div class={`devui-skeleton ${renderAnimate(props.animate)}`}>
-          {renderAvatar(props.avatar)}
-          {renderParagraph(props.row)}
+          <div class="devui-skeleton__avatar" v-show={props.avatar}>
+            <div class="avatar" />
+          </div>
+          <div class="devui-skeleton__item__group">
+            {renderParagraph(props.row)}
+          </div>
         </div>
       }
       return <div class={`devui-skeleton ${renderAnimate(props.animate)}`}>{slots.default?.()}
