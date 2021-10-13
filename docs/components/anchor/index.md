@@ -2,21 +2,6 @@
 
 跳转到页面指定位置的组件。
 
-### 何时使用
-
-需要在页面的各个部分之间实现快速跳转时。
-
-<script lang="ts">
-  import { defineComponent } from 'vue'
-  import Anchor from './demo'
-  export default defineComponent({
-    components: {
-      Anchor
-    }
-  })
-</script>
-<anchor /> 
- 
 ### 基本用法
 
  
@@ -47,6 +32,21 @@
   </div>
 </div>
 ```
+ 
+### 何时使用
+
+需要在页面的各个部分之间实现快速跳转时。
+
+<script lang="ts">
+  import { defineComponent } from 'vue'
+  import Anchor from './demo'
+  export default defineComponent({
+    components: {
+      Anchor
+    }
+  })
+</script>
+<anchor /> 
  
 ### dAnchor
 
