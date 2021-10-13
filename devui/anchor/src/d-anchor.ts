@@ -21,8 +21,8 @@ export default  {
     el.onclick = e => {
         hightLightFn(binding.value);
   
-        const classList   =  document.getElementById((e.target as HTMLElement).getAttribute('name')).classList;
-        console.log(classList)
+        // const classList   =  document.getElementById((e.target as HTMLElement).getAttribute('name')).classList;
+        // console.log(classList)
         
     }
   }
