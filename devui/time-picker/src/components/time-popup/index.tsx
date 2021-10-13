@@ -56,8 +56,7 @@ export default defineComponent({
     })
 
     watch(()=>[props.showPopup,props.bindData],([showPopup,newTimeVal],[oldShowPopup,oldTimeVal])=>{
-      
-      if(showPopup || newTimeVal != oldTimeVal){
+      if(showPopup ||  newTimeVal != oldTimeVal){
         timeListDom.value.setOutoTime(newTimeVal)
       }else{
         timeListDom.value.restScrooTop()

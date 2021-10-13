@@ -1,11 +1,14 @@
-import { ref, defineComponent } from 'vue'
+import { ref, defineComponent, onMounted } from 'vue'
 import { usePopupLine } from './composables/use-popup-line'
 import { ArrType } from '../../types'
+import TimeScroll from '../time-scroll'
+
 import './index.scss'
 
 
 export default defineComponent({
-  name:'TTimeList',
+  name:'DTimeList',
+  components:{ TimeScroll },
   props:{
     hourList:{
       type:Array,
@@ -32,12 +35,14 @@ export default defineComponent({
       default:'23:59:59'
     }
   },
+
   setup(props,ctx,){
     const timeListDom = ref<Element>()
     const {
       getNewTime,
       activeTimeFun,
-      resetTimeValue
+      resetTimeValue,
+      restScrooTop
     } = usePopupLine(
       props.hourList as Array<ArrType>,
       props.minuteList as Array<ArrType>,
@@ -48,26 +53,20 @@ export default defineComponent({
       timeListDom,
     )
 
-    const restScrooTop = ()=>{
-      for (let i = 0; i < timeListDom.value.children.length; i++) {
-        timeListDom.value.children[i].scrollTop = 0
-      }
-    }
 
     const setOutoTime = (time:string)=>{
       resetTimeValue(time)
     }
-
-
 
     const TimeLi = (timeArr:Array<ArrType>):any=>{
       return (
         timeArr.map((item: ArrType, index: number) => {
           return (
             <li
-                class={`${item.flag}Id-${index} ${item.isActive ? 'active-li' : ''} ${item.isDisabled ? 'disabled-li' : ''}`}
+                class={`time-li ${item.flag}Id-${index} ${item.isActive ? 'active-li' : ''} ${item.isDisabled ? 'disabled-li' : ''}`}
                 onClick={(e) => { activeTimeFun(e, item, index,) }}
-              >{item.time}
+              >
+                <span>{item.time}</span>  
             </li>
           )
         })      
@@ -76,7 +75,13 @@ export default defineComponent({
 
     const TimeUl = (timeList:Array<ArrType>)=>{
       return (
-        <ul class='time-ul' style={{'width':props.format.length>6?'33.33%':'50%'}}> {TimeLi(timeList)}</ul>
+          <div class='time-item' style={{'width':props.format.length>6?'33.333%':'50%'}}>
+            <TimeScroll>
+              <ul class='time-ul'>
+                {TimeLi(timeList)}
+              </ul>
+            </TimeScroll>
+          </div>
       )
     }
 
@@ -98,18 +103,6 @@ export default defineComponent({
       )
     }
 
-    //TODO: 区分浏览器内核,解决firefox中鼠标离开元素不继续滚动的情况
-    const selectTimeFun = (e: MouseEvent) => {
-      e.stopPropagation()
-      console.log(e);
-      
-      // e.stopPropagation()
-      // const ua = navigator.userAgent
-      // if (ua.indexOf('Firefox') > -1) {
-      //   resetTimeValue(activeTime)
-      // }
-    }
-    
     ctx.expose({
       restScrooTop,setOutoTime,getNewTime
     })
