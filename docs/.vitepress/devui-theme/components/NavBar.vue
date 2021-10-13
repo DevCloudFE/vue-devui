@@ -37,7 +37,7 @@ defineEmits(['toggle'])
 
       <div class="flex items-center ml-xs mt-xxs">
         <d-switch v-model:checked="darkMode" size="sm"></d-switch>
-        <label style="font-size:0.9rem;" class="mb-xxs">{{ switchText }}</label>
+        <span style="font-size:0.9rem;" class="mb-xxs">{{ switchText }}</span>
       </div>
     </div>
 
@@ -46,7 +46,7 @@ defineEmits(['toggle'])
 </template>
 
 <style scoped lang="scss">
-@import "@devui/styles-var/devui-var";
+@import '@devui/styles-var/devui-var';
 
 .nav-bar {
   position: fixed;
