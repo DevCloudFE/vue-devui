@@ -68,3 +68,9 @@ export interface OptionsCallback {
   cascaderOptions: never | UnwrapNestedRefs<[CascaderItem[]]>
   changeCascaderIndexs: (optionItem: CascaderItem, ulIndex: number) => void
 }
+
+type cascaderItemExtendsProps = 'trigger'
+export type PickCascader = Pick<CascaderProps, cascaderItemExtendsProps>
+export interface UseCascaderItemCallback {
+  cascaderItemNeedProps: PickCascader
+}

@@ -6,7 +6,7 @@ import { getRootClass } from '../hooks/use-cascader-class'
 import { popupHandles } from '../hooks/use-cascader-popup'
 import DCascaderList from '../components/cascader-list'
 import { optionsHandles } from '../hooks/use-cascader-options'
-
+import { userCascaderItem } from '../hooks/use-cascader-item'
 
 export default defineComponent({
   name: 'DCascader',
@@ -25,9 +25,11 @@ export default defineComponent({
     const rootClasses = getRootClass(props, menuShow)
     // 级联菜单操作，变换ul、li等
     const { cascaderOptions } = optionsHandles(props.options)
+    // 传递给cascaderItem的props
+    const { cascaderItemNeedProps } = userCascaderItem(props)
     return () => (
       <>
-        <div class={rootClasses.value} onClick={openPopup} ref={origin}  {...ctx.attrs}>
+        <div class={rootClasses.value} onClick={openPopup} ref={origin} {...ctx.attrs}>
           <d-input
             disabled={props.disabled}
             placeholder={props.placeholder}
@@ -40,7 +42,7 @@ export default defineComponent({
           <div class="devui-drop-menu-animation">
             <div class={`${menuOpenClass.value} devui-dropdown-menu`}>
               {cascaderOptions.map((item, index) => {
-                return <DCascaderList cascaderlis={item} ul-index={index}></DCascaderList>
+                return <DCascaderList cascaderItems={item} ul-index={index} cascaderItemNeedProps={cascaderItemNeedProps}></DCascaderList>
               })}
             </div>
           </div>

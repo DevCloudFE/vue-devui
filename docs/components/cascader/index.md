@@ -7,6 +7,7 @@
 ```vue
 <template>
   <d-cascader :options="options" placeholder="请选择" style="width: 200px"></d-cascader>
+  <d-cascader :options="options" trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
 </template>
 <script>
 import { defineComponent, reactive } from 'vue'

@@ -1,12 +1,12 @@
 import type { PropType, ExtractPropTypes } from 'vue'
-import { CascaderItem } from '../../src/cascader-types'
+import { CascaderItem, PickCascader } from '../../src/cascader-types'
 export const cascaderulProps = {
   /**
    * 每个ul中的li
    * @type {CascaderItem[]}
    * @default []
    */
-  cascaderlis: {
+  cascaderItems: {
     type: Array as PropType<CascaderItem[]>,
     default: [],
   },
@@ -18,6 +18,10 @@ export const cascaderulProps = {
   ulIndex: {
     type: Number,
     default: 0
+  },
+  cascaderItemNeedProps: {
+    type: Object as PropType<PickCascader>,
+    default: {}
   }
 }
 export type CascaderulProps = ExtractPropTypes<typeof cascaderulProps>

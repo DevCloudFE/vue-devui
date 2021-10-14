@@ -10,8 +10,8 @@ export default defineComponent({
     const rootClasses = getRootClass()
     return () => (
       <ul class={rootClasses.value}>
-        {props.cascaderlis.map((item, index) => {
-          return <DCascaderItem cascaderli={item} liIndex={index} {...props}></DCascaderItem>
+        {props.cascaderItems.map((item, index) => {
+          return <DCascaderItem cascaderItem={item} liIndex={index} {...props}></DCascaderItem>
         })}
       </ul>
     )
