@@ -37,7 +37,7 @@ export default {
 
 ```vue
 <template>
-  <d-rate v-model="value" icon="emoji" />
+  <d-rate v-model="value" icon="star-o" />
 </template>
 <script>
 import { ref } from 'vue'
@@ -74,6 +74,7 @@ export default {
 }
 </script>
 ```
+
 :::
 
 ### 半选模式
@@ -82,7 +83,7 @@ export default {
 
 ```vue
 <template>
-  <d-rate v-model="value" :allowHalf='true' @change="change"/>
+  <d-rate v-model="value" :allowHalf="true" @change="change" />
   {{ value }}
 </template>
 <script>
@@ -95,7 +96,7 @@ export default {
     }
     return {
       value,
-      change
+      change,
     }
   },
 }
@@ -116,7 +117,7 @@ export default {
       :read="true"
       type="success"
       :count="5"
-      icon="ban"
+      icon="star"
     />
   </div>
   <div>
@@ -125,8 +126,7 @@ export default {
       :read="true"
       type="warning"
       :count="5"
-      character="B"
-      color="red"
+      icon="star"
     />
   </div>
   <div>
@@ -164,10 +164,10 @@ d-rate 参数
 |   color   |            `string`             |   --   | 可选，星星颜色                                           | [动态模式-自定义](#动态模式-自定义) |
 |   icon    |            `string`             |   --   | 可选，评分图标的样式，只支持 devUI 图标库中所有图标      | [动态模式](#动态模式)               |
 | character |            `string`             |   --   | 可选，评分图标的样式，icon 与 character 只能设置其中一个 | [动态模式-自定义](#动态模式-自定义) |
-| allowHalf |            `boolean`            | false  | 可选，动态模式下是否允许半选                             | [半选模式](#半选模式) |
+| allowHalf |            `boolean`            | false  | 可选，动态模式下是否允许半选                             | [半选模式](#半选模式)               |
 
 d-rate 事件
 
-| 参数            | 类型                 | 说明                |	回调参数                                       | 跳转 Demo             |
-| --------------- | -------------------- | ----------------------------- | ----------------------------- | --------------------- |
-| change | `EventEmitter<number>` | 分值改变时触发	     |       改变后的分值          | [半选模式](#半选模式) |
+| 参数   | 类型                   | 说明           | 回调参数     | 跳转 Demo             |
+| ------ | ---------------------- | -------------- | ------------ | --------------------- |
+| change | `EventEmitter<number>` | 分值改变时触发 | 改变后的分值 | [半选模式](#半选模式) |
