@@ -3,7 +3,7 @@ import type { ExtractPropTypes } from 'vue'
 export const skeletonProps = {
   row: {
     type: Number,
-    required: true
+    default: 0
   },
   animate:{
     type: Boolean,
@@ -16,6 +16,14 @@ export const skeletonProps = {
   avatar:{
     type: Boolean,
     default: false
+  },
+  title:{
+    type: Boolean,
+    default: true
+  },
+  paragraph:{
+    type: Boolean,
+    default: true
   }
 } as const
 

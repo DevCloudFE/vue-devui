@@ -9,19 +9,22 @@ export default defineComponent({
   setup(props: SkeletonProps, ctx) {
     const { slots } = ctx;
 
-    function renderAnimate(isAnimate) {
-      return isAnimate ? 'devui-skeleton-animated' : ''
+    function renderAnimate(isAnimated) {
+      return isAnimated ? 'devui-skeleton-animated' : ''
     }
     function renderParagraph(paragraphRowNum) {
       const arr = []
       for (let index = 0; index < paragraphRowNum; index++) {
         arr.push(1)
       }
-      return <div class="devui-skeleton__paragraph" v-show={true}>{
+      return <div class="devui-skeleton__paragraph" v-show={props.paragraph}>{
         arr.map(() => {
           return <div class="devui-skeleton__item" />
         })
       }</div>
+    }
+    function renderTitle(isTitleVisble) {
+      return !isTitleVisble ? 'visibility: hidden;' : null
     }
 
     return () => {
@@ -31,6 +34,7 @@ export default defineComponent({
             <div class="avatar" />
           </div>
           <div class="devui-skeleton__item__group">
+            <div class="devui-skeleton__title" style={renderTitle(props.title)} />
             {renderParagraph(props.row)}
           </div>
         </div>

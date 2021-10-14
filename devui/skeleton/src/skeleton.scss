@@ -8,6 +8,7 @@
     display: flex;
     flex: 1;
     justify-content: center;
+    padding-right: 16px;
 
     .avatar {
       width: 40px;
@@ -18,9 +19,10 @@
   }
 
   .devui-skeleton__item__group {
-    flex: 7;
+    flex: 11;
 
-    .devui-skeleton__item {
+    .devui-skeleton__item,
+    .devui-skeleton__title {
       width: 100%;
       height: 16px;
       background-color: #f2f2f2;
@@ -28,8 +30,13 @@
       border-radius: 4px;
     }
 
-    .devui-skeleton__item:first-child {
-      width: 33%;
+    .devui-skeleton__title {
+      margin-top: 24px;
+      width: 55%;
+    }
+
+    .devui-skeleton__paragraph {
+      margin-top: 12px;
     }
 
     .devui-skeleton__item:last-child {
@@ -38,6 +45,7 @@
   }
 }
 
+.devui-skeleton-animated > .devui-skeleton__item__group > .devui-skeleton__title,
 .devui-skeleton-animated > .devui-skeleton__avatar > .avatar,
 .devui-skeleton-animated > .devui-skeleton__item__group > div > .devui-skeleton__item {
   background:
@@ -51,6 +59,11 @@
   background-size: 200% 100%;
   background-position-x: 180%;
   animation: 2s loading ease-in-out infinite;
+}
+
+.devui-skeleton__avatar > .avatar,
+.devui-skeleton__item__group > div > .devui-skeleton__item {
+  margin-top: 12px;
 }
 
 .devui-skeleton-animated > .devui-skeleton__avatar > .avatar {

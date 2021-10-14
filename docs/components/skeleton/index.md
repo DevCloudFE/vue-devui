@@ -11,7 +11,7 @@
 
 ```vue
 <template>
-  <d-skeleton :row="6" />
+  <d-skeleton :row="3" />
 </template>
 ```
 :::
@@ -35,8 +35,16 @@
           显示头像：
          <d-switch v-model:checked="avatar" />
       </div>
+      <div>
+          显示标题：
+         <d-switch v-model:checked="title" />
+      </div>
+      <div>
+          显示段落：
+         <d-switch v-model:checked="paragraph" />
+      </div>
   </div>
-  <d-skeleton :row="4" :animate="animate" :avatar="avatar" :loading="loading">
+  <d-skeleton :row="4" :animate="animate" :avatar="avatar" :title="title" :paragraph="paragraph" :loading="loading">
       <div>
         <div>content1</div>
         <div>content2</div>
@@ -53,11 +61,15 @@ export default defineComponent({
     const loading = ref(true)
     const animate = ref(true)
     const avatar = ref(true)
+    const title = ref(true)
+    const paragraph = ref(true)
 
     return {
       loading,
 	    animate,
-      avatar
+      avatar,
+      title,
+      paragraph
     }
   }
 })
@@ -75,8 +87,10 @@ export default defineComponent({
 d-skeleton 参数
 |  参数   |   类型    |  默认   | 说明                                          |
 | :-----: | :-------: | :-----: | :-------------------------------------------- |
-|   row   | `number`  |   --   | 必选，段落占位图行数                                |
+|   row   | `number`  |   `0`   | 可选，段落占位图行数                                |
 | loading | `boolean` | `true`  | 可选，是否显示骨架屏，传 `false` 时会展示子组件内容 |
 | animate | `boolean` | `true`  | 可选，是否开启动画                               |
 | avatar  | `boolean` | `false` | 可选，是否显示头像占位图                         |
+| title | `boolean` | `true` | 可选，是否显示标题占位图 |
+| paragraph | `boolean` | `true` | 可选，是否显示段落占位图 |
 
