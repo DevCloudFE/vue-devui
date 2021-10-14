@@ -1,9 +1,12 @@
 import type { App } from 'vue'
 import Gantt from './src/gantt'
 import GanttTools from './src/gantt-tools'
+import ganttMarkerDirective from './src/gantt-scale/gantt-marker-directive'
+
 Gantt.install = function (app: App): void {
   app.component(Gantt.name, Gantt)
   app.component(GanttTools.name, GanttTools)
+  app.directive('gantt-marker', ganttMarkerDirective)
 }
 
 export { Gantt }

@@ -5,10 +5,10 @@ import { UnitRole } from '../gantt-model'
 export default defineComponent({
   name: 'DGanttTools',
   props: {
-    // currentUnit: {
-    //   type: String,
-    //   default: null,
-    // },
+    unit: {
+      type: String,
+      default: null,
+    },
     isFullScreen: {
       type: Boolean,
       default: false,
@@ -16,7 +16,7 @@ export default defineComponent({
   },
   emits: ['goToday', 'reduceUnit', 'increaseUnit', 'switchView'],
   setup(props, ctx) {
-    const currentUnitLabel = ref('')
+    const currentUnitLabel = ref(props.unit)
     const views = ref([
       {
         name: 'Day',
@@ -58,38 +58,46 @@ export default defineComponent({
     const { isFullScreen, actionHandle, currentUnitLabel, views, selectView } =
       this
     return (
-      <div
-        class="tools-container"
-        style={{ position: isFullScreen ? 'fixed' : 'absolute' }}
-      >
-        <d-button
-          bsStyle="text-dark"
-          onClick={() => actionHandle('today')}
-          class="tool"
+      <div>
+        <div
+          class="tools-container"
+          style={{ position: isFullScreen ? 'fixed' : 'absolute' }}
         >
-          Today
-        </d-button>
-        <div class="tool">
-          <d-select
-            v-model={currentUnitLabel}
-            options={views}
-            onValueChange={selectView}
-          ></d-select>
+          <d-button
+            btnStyle="common"
+            onClick={() => actionHandle('today')}
+            class="tool"
+          >
+            Today
+          </d-button>
+          <div class="tool">
+            <d-select
+              v-model={currentUnitLabel}
+              options={views}
+              onValueChange={selectView}
+            ></d-select>
+          </div>
+          <d-button
+            btnStyle="common"
+            class={[
+              'tool',
+              currentUnitLabel === UnitRole.day ? 'disabled' : '',
+            ]}
+            disabled={currentUnitLabel === UnitRole.day}
+          >
+            <d-icon name="minus"></d-icon>
+          </d-button>
+          <d-button
+            btnStyle="common"
+            class={[
+              'tool',
+              currentUnitLabel === UnitRole.day ? 'disabled' : '',
+            ]}
+            disabled={currentUnitLabel === UnitRole.day}
+          >
+            <d-icon name="add"></d-icon>
+          </d-button>
         </div>
-        <d-button
-          bsStyle="text-dark"
-          class={['tool', currentUnitLabel === UnitRole.day ? 'disabled' : '']}
-          disabled={currentUnitLabel === UnitRole.day}
-        >
-          <d-icon name="minus"></d-icon>
-        </d-button>
-        <d-button
-          bsStyle="text-dark"
-          class={['tool', currentUnitLabel === UnitRole.day ? 'disabled' : '']}
-          disabled={currentUnitLabel === UnitRole.day}
-        >
-          <d-icon name="add"></d-icon>
-        </d-button>
       </div>
     )
   },

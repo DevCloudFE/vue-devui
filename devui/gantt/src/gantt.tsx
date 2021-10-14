@@ -1,11 +1,12 @@
 import { defineComponent, onMounted, ref, toRefs } from 'vue'
 import DGanttScale from './gantt-scale/index'
+import DGanttTools from './gantt-tools/index'
 import { ganttProps, GanttProps } from './gantt-types'
 import './gantt.scss'
 import { useGantt } from './use-gantt'
 export default defineComponent({
   name: 'DGantt',
-  components: { DGanttScale },
+  components: { DGanttScale, DGanttTools },
   props: ganttProps,
   setup(props: GanttProps, ctx) {
     const { startDate, endDate } = toRefs(props)
@@ -39,6 +40,8 @@ export default defineComponent({
             scrollElement={ganttContainer}
           ></d-gantt-scale>
         </div>
+        <d-gantt-tools unit={unit}></d-gantt-tools>
+        <div class="body" style={{ width: `${ganttScaleWidth}px` }}></div>
       </div>
     )
   },

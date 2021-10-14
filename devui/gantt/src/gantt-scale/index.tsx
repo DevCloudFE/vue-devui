@@ -37,6 +37,9 @@ export default defineComponent({
     scrollElement: {
       type: Object,
     },
+    ganttBarContainerElement: {
+      type: Object,
+    },
   },
   emits: ['addMilestone'],
   setup(props, ctx) {
@@ -61,21 +64,15 @@ export default defineComponent({
       if (scrollElement.value) {
         const containerWidth = scrollElement.value.clientWidth
         const scrollLeft = scrollElement.value.scrollLeft
-        console.log({
-          containerWidth,
-          scrollLeft,
-        })
 
         const start = Math.floor(scrollLeft / scaleWidth.value[unit.value])
         const offset = Math.ceil(containerWidth / scaleWidth.value[unit.value])
         viewScaleRange = [start - 2, start + offset + 2]
-        console.log('viewScaleRange ==>', viewScaleRange)
         viewSCaleData.value = scaleData.value.filter(
           (i: GanttScaleDateInfo) => {
             return i.index >= viewScaleRange[0] && i.index <= viewScaleRange[1]
           }
         )
-        console.log(viewSCaleData.value)
       }
     }
     onMounted(() => {
@@ -116,6 +113,7 @@ export default defineComponent({
       highlight,
       highlightStartText,
       highlightEndText,
+      ganttBarContainerElement,
     } = this
     return (
       <div class="devui-gantt-scale-wrapper">
@@ -125,6 +123,16 @@ export default defineComponent({
             style={{
               left: `${scaleWidth[unit] * data.index}px`,
               width: `${scaleWidth[unit]}px`,
+            }}
+            v-gantt-marker={{
+              ganttBarContainerElement,
+              monthMark: data.monthMark,
+              weekend: data.weekend,
+              milestone: data.milestone,
+              today: data.today,
+              date: data.date,
+              unit: unit,
+              last: index === viewSCaleData.length - 1,
             }}
           >
             <div class={`devui-scale-start ${data.milestone}`}>
