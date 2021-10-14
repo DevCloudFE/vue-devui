@@ -30,22 +30,24 @@ export default function useTimePicker(
     if(disabled) return
 
     const path = (e.composedPath && e.composedPath()) || e.path
-    path.map( item => {
-      if (item == devuiTimePicker.value) {
-        if(firsthandActiveTime.value == '00:00:00'){
-          vModeValue.value == ''
-            ? vModeValue.value = '00:00:00' 
-            : ''
+    const inInputDom = path.includes(devuiTimePicker.value)
+    inInputDom && mouseInIputFun()
+  }
 
-          vModeValue.value > minTime 
-            ? firsthandActiveTime.value = vModeValue.value 
-            : firsthandActiveTime.value = minTime
-        }
-        setInputValue()
-        isActive.value = true
-        showPopup.value = true
-      }
-    })
+  const mouseInIputFun = ()=>{
+    if(firsthandActiveTime.value == '00:00:00'){
+
+      vModeValue.value == ''
+        ? vModeValue.value = '00:00:00' 
+        : ''
+
+      vModeValue.value > minTime 
+        ? firsthandActiveTime.value = vModeValue.value 
+        : firsthandActiveTime.value = minTime
+    }
+    setInputValue()
+    isActive.value = true
+    showPopup.value = true
   }
 
   const getTimeValue = (e:MouseEvent)=>{

@@ -15,7 +15,7 @@ export const timePickerProps = {
     },
     timePickerWidth: { 
         type: Number, 
-        default: 210 
+        default: 212 
     },
     minTime: { 
         type: String, 
