@@ -44,7 +44,7 @@
          <d-switch v-model:checked="paragraph" />
       </div>
   </div>
-  <d-skeleton :row="4" :animate="animate" :avatar="avatar" :title="title" :paragraph="paragraph" :loading="loading">
+  <d-skeleton :row="4" :animate="animate" :avatar="avatar" :avatarshape="avatarShape" :title="title" :paragraph="paragraph" :loading="loading">
       <div>
         <div>content1</div>
         <div>content2</div>
@@ -63,6 +63,7 @@ export default defineComponent({
     const avatar = ref(true)
     const title = ref(true)
     const paragraph = ref(true)
+    const avatarShape = ref('square')
 
     return {
       loading,
@@ -84,13 +85,30 @@ export default defineComponent({
 :::
 
 ### API
-d-skeleton 参数
+d-skeleton
 |  参数   |   类型    |  默认   | 说明                                          |
 | :-----: | :-------: | :-----: | :-------------------------------------------- |
-|   row   | `number`  |   `0`   | 可选，段落占位图行数                                |
-| loading | `boolean` | `true`  | 可选，是否显示骨架屏，传 `false` 时会展示子组件内容 |
-| animate | `boolean` | `true`  | 可选，是否开启动画                               |
-| avatar  | `boolean` | `false` | 可选，是否显示头像占位图                         |
-| title | `boolean` | `true` | 可选，是否显示标题占位图 |
-| paragraph | `boolean` | `true` | 可选，是否显示段落占位图 |
+| loading | `boolean` | `true`  | 是否显示骨架屏，传 `false` 时会展示子组件内容 |
+| animate | `boolean` | `true`  | 是否开启动画                               |
+| avatar  | `boolean` | `false` | 是否显示头像占位图                         |
+| title | `boolean` | `true` | 是否显示标题占位图 |
+| paragraph | `boolean` | `true` | 是否显示段落占位图 |
+
+d-skeleton-avatar-props
+|  参数   |   类型    |  默认   | 说明                                          |
+| :-----: | :-------: | :-----: | :-------------------------------------------- |
+|   avatar-shape   | `string`  |   `round`   | 头像占位图形状，可选值为`square`                                |
+
+
+d-skeleton-title-props
+|  参数   |   类型    |  默认   | 说明                                          |
+| :-----: | :-------: | :-----: | :-------------------------------------------- |
+|   row   | `number`  |   `0`   | 段落占位图行数                                |
+
+
+d-skeleton-paragraph-props
+|  参数   |   类型    |  默认   | 说明                                          |
+| :-----: | :-------: | :-----: | :-------------------------------------------- |
+|   row   | `number`  |   `0`   | 段落占位图行数                                |
+
 
