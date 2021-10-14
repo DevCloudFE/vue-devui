@@ -129,7 +129,7 @@ function activateLink(hash:string | boolean):void {
   }
  
   if (!scollFlag) {
-    hash ? hightLightFn((hash as string).split('#')[1] ) : console.log(hash)
+    hash && hightLightFn((hash as string).split('#')[1] )  
   }else {
     hightLightFn(hashName)
   }
