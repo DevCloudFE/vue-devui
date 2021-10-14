@@ -11,8 +11,10 @@ export default defineComponent({
     provide('showAnimation', props.showAnimation);
     provide('hasLeftPadding', props.hasLeftPadding);
     const isCollapsed = ref(props.isCollapsed);
-
     const bodyEl = ref();
+    const onToggle = ()=> {
+      props.toggle?.(Store.getByKey(`isCollapsed[${timeStamp}]`))
+    };
 
     onMounted(() => {
       if(bodyEl.value) {
@@ -21,26 +23,16 @@ export default defineComponent({
         dom.style.height = `${dom.offsetHeight}px`;
       }
     })
+
     const timeStamp = new Date().getTime().toString();
     Store.setData(`isCollapsed[${timeStamp}]`, isCollapsed.value);
 
-
     return () => {
       return (
-        <div class={`devui-panel devui-panel-${props.type} ${props.cssClass}`}>
+        <div onClick = {onToggle} class={`devui-panel devui-panel-${props.type} ${props.cssClass}`}>
           {ctx.slots.default()}
         </div>
       )
     }
   },
-  render(){
-    const {props,$slots} = this;
-    return () => {
-      return (
-        <div class={`devui-panel devui-panel-${props.type} ${props.cssClass}`}>
-          {$slots.default()}
-        </div>
-      )
-    }
-  }
 })
