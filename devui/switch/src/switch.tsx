@@ -1,9 +1,9 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, renderSlot, useSlots } from 'vue';
 import './switch.scss';
 
 const switchProps = {
   size: {
-    type: String as PropType<'sm' | 'middle' | 'lg'>,
+    type: String as PropType<'small' | 'middle' | 'large'>,
     default: 'middle'
   },
   color: {
@@ -17,14 +17,6 @@ const switchProps = {
   disabled: {
     type: Boolean,
     default: false
-  },
-  checkedContent: {
-    type: String,
-    default: ''
-  },
-  uncheckedContent: {
-    type: String,
-    default: ''
   },
   beforeChange: {
     type: Function as PropType<(v: boolean) => boolean | Promise<boolean>>,
@@ -77,11 +69,8 @@ export default defineComponent({
       checked,
       disabled,
       color,
-      toggle,
-      checkedContent,
-      uncheckedContent
+      toggle
     } = this;
-
     const outerCls = {
       'devui-switch': true,
       [`devui-switch-${size}`]: size !== '',
@@ -93,6 +82,8 @@ export default defineComponent({
       `border-color: ${checked && !disabled ? color : ''}`
     ];
 
+    const checkedContent = renderSlot(useSlots(), 'checkedContent')
+    const uncheckedContent = renderSlot(useSlots(), 'uncheckedContent')
     return (
       <span class={outerCls} style={outerStyle} onClick={toggle}>
         <span class="devui-switch-inner-wrapper">
