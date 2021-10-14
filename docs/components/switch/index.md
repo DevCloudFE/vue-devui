@@ -73,10 +73,10 @@
 
 
 ``` html
-  <d-switch size="sm"></d-switch>
+  <d-switch size="small"></d-switch>
   <d-switch v-model:checked="uncheckedMiddle"></d-switch>
   <d-switch v-model:checked="checkedMiddle"></d-switch>
-  <d-switch v-model:checked="checkedLarge" size="lg"></d-switch>
+  <d-switch v-model:checked="checkedLarge" size="large"></d-switch>
   <d-switch v-model:checked="checkedDisabled" :disabled="true"></d-switch>
   <d-switch v-model:checked="checkedDisabled" :color="#FECC55"></d-switch>
   <d-switch v-model:checked="checkedContent">
@@ -105,7 +105,7 @@ export default defineComponent({
     const checkedDisabled1 = ref(false)
     const checkedColor = ref(true)
     const checkedContent = ref(false)
-    const checkedIcon = ref(false)
+    const checkedIcon = ref(true)
 
     return {
       checkedSmall,
