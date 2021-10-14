@@ -1,4 +1,4 @@
-import { defineComponent, ref, PropType, onMounted, toRefs } from 'vue'
+import { defineComponent, ref, PropType, onMounted, toRefs, watch } from 'vue'
 import './gantt-scale.scss'
 import {
   GanttScaleUnit,
@@ -61,22 +61,42 @@ export default defineComponent({
       if (scrollElement.value) {
         const containerWidth = scrollElement.value.clientWidth
         const scrollLeft = scrollElement.value.scrollLeft
+        console.log({
+          containerWidth,
+          scrollLeft,
+        })
+
         const start = Math.floor(scrollLeft / scaleWidth.value[unit.value])
         const offset = Math.ceil(containerWidth / scaleWidth.value[unit.value])
         viewScaleRange = [start - 2, start + offset + 2]
+        console.log('viewScaleRange ==>', viewScaleRange)
         viewSCaleData.value = scaleData.value.filter(
           (i: GanttScaleDateInfo) => {
             return i.index >= viewScaleRange[0] && i.index <= viewScaleRange[1]
           }
         )
+        console.log(viewSCaleData.value)
       }
     }
     onMounted(() => {
-      if (startDate && endDate) {
+      if (startDate.value && endDate.value) {
         scaleData.value = generateScaleData(startDate.value, endDate.value)
         getViewScaleData()
       }
     })
+
+    watch(
+      () => props.scrollElement,
+      () => {
+        getViewScaleData()
+        ;(props.scrollElement as HTMLDivElement).addEventListener(
+          'scroll',
+          () => {
+            getViewScaleData()
+          }
+        )
+      }
+    )
 
     return {
       viewSCaleData,
@@ -97,61 +117,72 @@ export default defineComponent({
       highlightStartText,
       highlightEndText,
     } = this
-    return viewSCaleData.map((data, index) => (
-      <div
-        class={`devui-gantt-scale ${unit} ${data.today} ${data.milestone}`}
-        style={{
-          left: `${scaleWidth[unit] * data.index}px`,
-          width: `${scaleWidth[unit]}px`,
-        }}
-      >
-        <div class={`devui-scale-start ${data.milestone}`}>
-          {data.milestone && unit === 'day' && <div>{data.milestone}</div>}
-          {!data.milestone &&
-          unit !== 'day' &&
-          data.scaleStartVisable &&
-          (index === 0 || data.monthStart)
-            ? unit === 'month'
-              ? i18nText.zh.yearDisplay(data.yearLabel)
-              : i18nText.zh.yearAndMonthDisplay(data.yearLabel, data.monthLabel)
-            : ''}
-        </div>
-        <div class="devui-scale-unit">
-          {highlight && data.highlightStart && (
-            <div class="scale-highlight">
-              <div style="float: left">{highlightStartText}</div>
-              <div style="float: right">{highlightEndText}</div>
-              <div style="clear: both"></div>
-            </div>
-          )}
-          {(!highlight || !data.highlightStart) && unit === 'day' && (
-            <div class={`border-left ${data.today}`}>
-              {data.today ? i18nText.zh.today : data.dayOfMonthLabel}
-            </div>
-          )}
-          {(!highlight || !data.highlightStart) && unit === 'week' && (
-            <div class={`${data.weekend || index === 0 ? 'border-left' : ''}`}>
-              {index === 0 || data.weekend ? data.dayOfMonthLabel : ''}
-            </div>
-          )}
-          {(!highlight || !data.highlightStart) && unit === 'month' && (
-            <div
-              class={`${data.monthStart || index === 0 ? 'border-left' : ''}`}
-            >
-              {index === 0 || data.monthStart
-                ? i18nText.zh.monthDisplay(data.monthLabel)
+    return (
+      <div class="devui-gantt-scale-wrapper">
+        {viewSCaleData.map((data, index) => (
+          <div
+            class={`devui-gantt-scale ${unit} ${data.today} ${data.milestone}`}
+            style={{
+              left: `${scaleWidth[unit] * data.index}px`,
+              width: `${scaleWidth[unit]}px`,
+            }}
+          >
+            <div class={`devui-scale-start ${data.milestone}`}>
+              {data.milestone && unit === 'day' && <div>{data.milestone}</div>}
+              {!data.milestone &&
+              unit !== 'day' &&
+              data.scaleStartVisable &&
+              (index === 0 || data.monthStart)
+                ? unit === 'month'
+                  ? i18nText.zh.yearDisplay(data.yearLabel)
+                  : i18nText.zh.yearAndMonthDisplay(
+                      data.yearLabel,
+                      data.monthLabel
+                    )
                 : ''}
             </div>
-          )}
-        </div>
-        <div
-          class={`milestone-new ${unit}`}
-          title="milestone"
-          onClick={() => addMilestone(data)}
-        >
-          <d-icon name="add" />
-        </div>
+            <div class="devui-scale-unit">
+              {highlight && data.highlightStart && (
+                <div class="scale-highlight">
+                  <div style="float: left">{highlightStartText}</div>
+                  <div style="float: right">{highlightEndText}</div>
+                  <div style="clear: both"></div>
+                </div>
+              )}
+              {(!highlight || !data.highlightStart) && unit === 'day' && (
+                <div class={`border-left ${data.today}`}>
+                  {data.today ? i18nText.zh.today : data.dayOfMonthLabel}
+                </div>
+              )}
+              {(!highlight || !data.highlightStart) && unit === 'week' && (
+                <div
+                  class={`${data.weekend || index === 0 ? 'border-left' : ''}`}
+                >
+                  {index === 0 || data.weekend ? data.dayOfMonthLabel : ''}
+                </div>
+              )}
+              {(!highlight || !data.highlightStart) && unit === 'month' && (
+                <div
+                  class={`${
+                    data.monthStart || index === 0 ? 'border-left' : ''
+                  }`}
+                >
+                  {index === 0 || data.monthStart
+                    ? i18nText.zh.monthDisplay(data.monthLabel)
+                    : ''}
+                </div>
+              )}
+            </div>
+            <div
+              class={`milestone-new ${unit}`}
+              title="milestone"
+              onClick={() => addMilestone(data)}
+            >
+              <d-icon name="add" />
+            </div>
+          </div>
+        ))}
       </div>
-    ))
+    )
   },
 })
