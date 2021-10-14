@@ -42,7 +42,7 @@ export default defineComponent({
       getNewTime,
       activeTimeFun,
       resetTimeValue,
-      restScrooTop
+      resetScrollTop
     } = usePopupLine(
       props.hourList as Array<ArrType>,
       props.minuteList as Array<ArrType>,
@@ -104,7 +104,7 @@ export default defineComponent({
     }
 
     ctx.expose({
-      restScrooTop,setOutoTime,getNewTime
+      resetScrollTop,setOutoTime,getNewTime
     })
 
     return ()=>{

@@ -230,7 +230,7 @@ const usePopupLine =(
   }
 
   // 回到顶部
-  const restScrooTop = ()=>{
+  const resetScrollTop = ()=>{
     for (let i = 0; i < timeListDom.value.children.length; i++) {
       timeListDom.value.children[i].lastElementChild.children[0].scrollTop = 0
     }
@@ -244,7 +244,7 @@ const usePopupLine =(
     activeTimeFun,
     resetTimeValue,
     getNewTime,
-    restScrooTop
+    resetScrollTop
   }
 }
 

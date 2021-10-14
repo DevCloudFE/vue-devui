@@ -59,7 +59,7 @@ export default defineComponent({
       if(showPopup ||  newTimeVal != oldTimeVal){
         timeListDom.value.setOutoTime(newTimeVal)
       }else{
-        timeListDom.value.restScrooTop()
+        timeListDom.value.resetScrollTop()
       }
     })
 
