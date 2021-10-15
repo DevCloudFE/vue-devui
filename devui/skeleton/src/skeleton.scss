@@ -44,6 +44,12 @@
 .devui-skeleton-animated > .devui-skeleton__item__group > .devui-skeleton__title,
 .devui-skeleton-animated > .devui-skeleton__avatar > .avatar,
 .devui-skeleton-animated > .devui-skeleton__item__group > div > .devui-skeleton__item {
+  @keyframes skeletonLoading {
+    to {
+      background-position-x: -20%;
+    }
+  }
+
   background:
     linear-gradient(
       100deg,
@@ -64,10 +70,4 @@
 
 .devui-skeleton-animated > .devui-skeleton__avatar > .avatar {
   animation-delay: 0.1s;
-}
-
-@keyframes skeletonLoading {
-  to {
-    background-position-x: -20%;
-  }
 }
