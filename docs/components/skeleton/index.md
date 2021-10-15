@@ -128,6 +128,6 @@ d-skeleton-paragraph-props
 |  参数   |   类型    |  默认   | 说明 |
 | :-----: | :-------: | :-----: | :-------------------------------------------- |
 |   row   | `number`  |   `0`   | 段落占位图行数 |
-|   row-width   | `number \| string \| (number \| string)[]`  |   `0`   | 段落占位图宽度，可传数组来设置每一行的宽度 |
+|   row-width   | `number \| string \| (number \| string)[]`  |   `"1"`   | 段落占位图宽度，可传数组来设置每一行的宽度 |
 
 
