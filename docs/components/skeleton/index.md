@@ -52,12 +52,12 @@
          <d-switch v-model:checked="round" />
       </div>
   </div>
-  <d-skeleton :row="4" :animate="animate" :avatar="avatar" :avatar-shape="roundAvatar?'':'square'" :title="title" :paragraph="paragraph" :loading="loading" :round="round">
+  <d-skeleton :row="3" :animate="animate" :avatar="avatar" :avatar-shape="roundAvatar?'':'square'" :title="title" :paragraph="paragraph" :loading="loading" :round="round">
       <div>
-        <div>content1</div>
-        <div>content2</div>
-        <div>content3</div>
-        <div>content4</div>
+        <div>row one</div>
+        <div>row two</div>
+        <div>row three</div>
+        <div>row four</div>
       </div>
   </d-skeleton>
 </template>
@@ -73,7 +73,6 @@ export default defineComponent({
     const paragraph = ref(true)
     const roundAvatar = ref(true)
     const round = ref(false)
-    
 
     return {
       loading,
@@ -95,6 +94,7 @@ export default defineComponent({
 .skeleton-btn{
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 </style>
 ```
@@ -102,31 +102,32 @@ export default defineComponent({
 
 ### API
 d-skeleton
-|  参数   |   类型    |  默认   | 说明                                          |
+|  参数   |   类型    |  默认   | 说明 |
 | :-----: | :-------: | :-----: | :-------------------------------------------- |
 | loading | `boolean` | `true`  | 是否显示骨架屏，传 `false` 时会展示子组件内容 |
-| animate | `boolean` | `true`  | 是否开启动画                               |
-| avatar  | `boolean` | `false` | 是否显示头像占位图                         |
+| animate | `boolean` | `true`  | 是否开启动画 |
+| avatar  | `boolean` | `false` | 是否显示头像占位图 |
 | title | `boolean` | `true` | 是否显示标题占位图 |
 | paragraph | `boolean` | `true` | 是否显示段落占位图 |
 | round | `boolean` | `false` | 是否将标题和段落显示为圆角风格 |
 
 d-skeleton-avatar-props
-|  参数   |   类型    |  默认   | 说明                                          |
+|  参数   |   类型    |  默认   | 说明 |
 | :-----: | :-------: | :-----: | :-------------------------------------------- |
-|   avatar-size   | `number \| string`  |   `40px`   | 头像占位图大小                               |
-|   avatar-shape   | `string`  |   `round`   | 头像占位图形状，可选值为`square`                                |
+|   avatar-size   | `number \| string`  |   `40px`   | 头像占位图大小 |
+|   avatar-shape   | `string`  |   `round`   | 头像占位图形状，可选值为`square` |
 
 
 d-skeleton-title-props
-|  参数   |   类型    |  默认   | 说明                                          |
+|  参数   |   类型    |  默认   | 说明 |
 | :-----: | :-------: | :-----: | :-------------------------------------------- |
-|   title-width   | `number \| string`  |   `40%`   | 设置标题占位图的宽度                                |
+|   title-width   | `number \| string`  |   `40%`   | 设置标题占位图的宽度 |
 
 
 d-skeleton-paragraph-props
-|  参数   |   类型    |  默认   | 说明                                          |
+|  参数   |   类型    |  默认   | 说明 |
 | :-----: | :-------: | :-----: | :-------------------------------------------- |
-|   row   | `number \| string`  |   `0`   | 段落占位图行数                                |
+|   row   | `number`  |   `0`   | 段落占位图行数 |
+|   row-width   | `number \| string \| (number \| string)[]`  |   `0`   | 段落占位图宽度，可传数组来设置每一行的宽度 |
 
 

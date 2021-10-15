@@ -12,45 +12,79 @@ export default defineComponent({
     function renderAnimate(isAnimated) {
       return isAnimated ? 'devui-skeleton-animated' : ''
     }
-    function renderParagraph(paragraphRowNum) {
+    function renderBorderRadius(isRound) {
+      return isRound ? 'border-radius: 1em;' : ''
+    }
+    function renderParagraph(isShown, rowNum, rowWidth, round) {
       const arr = []
-      for (let index = 0; index < paragraphRowNum; index++) {
-        arr.push(1)
+
+      function pushIntoArray(type) {
+        for (let index = 0; index < rowNum; index++) {
+          arr.push({ width: type })
+        }
       }
-      return <div class="devui-skeleton__paragraph" v-show={props.paragraph}>{
-        arr.map(() => {
-          return <div class="devui-skeleton__item" style={renderBorderRadius(props.round)} />
+      (function handleRowWidth() {
+        if (rowWidth instanceof Array) {
+          for (let index = 0; index < rowNum; index++) {
+            if (rowWidth[index]) {
+              switch (typeof rowWidth[index]) {
+                case 'string':
+                  arr.push({ width: rowWidth[index] })
+                  break
+                case 'number':
+                  arr.push({ width: `${rowWidth[index]}px` })
+              }
+            } else {
+              arr.push({ width: 1 })
+            }
+          }
+        } else {
+          switch (typeof rowWidth) {
+            case 'string':
+              pushIntoArray(rowWidth)
+              break
+            case 'number':
+              pushIntoArray(`${rowWidth}px`)
+              break
+          }
+        }
+      })()
+
+      return <div class="devui-skeleton__paragraph" v-show={isShown}>{
+        arr.map(item => {
+          return <div class="devui-skeleton__item" style={round ? 'border-radius: 1em;' : '' + `width: ${item.width}`} />
         })
       }</div>
     }
-    function renderAvatarShape(avatarShape) {
-      return avatarShape === 'square' ? '' : 'border-radius:50%;'
-    }
-    function renderAvatarSize(avatarSize) {
-      if (typeof avatarSize === 'string') {
-        return `width:${avatarSize};height:${avatarSize};`
-      } else if (typeof avatarSize === 'number') {
-        return `width:${avatarSize}px;height:${avatarSize}px;`
-      }
-    }
     function renderAvatarStyle(avatarSize, avatarShape) {
+      function renderAvatarSize(avatarSize) {
+        switch (typeof avatarSize) {
+          case 'string':
+            return `width:${avatarSize};height:${avatarSize};`
+          case 'number':
+            return `width:${avatarSize}px;height:${avatarSize}px;`
+        }
+      }
+      function renderAvatarShape(avatarShape) {
+        return avatarShape === 'square' ? '' : 'border-radius:50%;'
+      }
+
       return (renderAvatarSize(avatarSize) + renderAvatarShape(avatarShape))
     }
-    function renderTitleVisibility(isVisible) {
-      return isVisible ? null : 'visibility: hidden;'
-    }
-    function renderTitleWidth(titleWidth) {
-      if (typeof titleWidth === 'string') {
-        return `width: ${titleWidth};`
-      } else if (typeof titleWidth === 'number') {
-        return `width: ${titleWidth}px;`
-      }
-    }
     function renderTitle(isVisible, titleWidth, isRound) {
+      function renderTitleWidth(titleWidth) {
+        switch (typeof titleWidth) {
+          case 'string':
+            return `width: ${titleWidth};`
+          case 'number':
+            return `width: ${titleWidth}px;`
+        }
+      }
+      function renderTitleVisibility(isVisible) {
+        return isVisible ? null : 'visibility: hidden;'
+      }
+
       return (renderTitleWidth(titleWidth) + renderBorderRadius(isRound) + renderTitleVisibility(isVisible))
-    }
-    function renderBorderRadius(isRound) {
-      return isRound?'border-radius: 1em;':''
     }
 
     return () => {
@@ -61,7 +95,7 @@ export default defineComponent({
           </div>
           <div class="devui-skeleton__item__group">
             <div class="devui-skeleton__title" style={renderTitle(props.title, props.titleWidth, props.round)} />
-            {renderParagraph(props.row)}
+            {renderParagraph(props.paragraph, props.row, props.rowWidth, props.round)}
           </div>
         </div>
       }
