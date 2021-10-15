@@ -1,19 +1,38 @@
 import { getRootClass } from './use-class'
 import { optionsHandles } from '../../hooks/use-cascader-options'
+import { CascaderItem } from '../../src/cascader-types'
+import { CascaderulProps } from '../cascader-list/cascader-list-types'
 import './index.scss'
-export const DCascaderItem = (props) => {
-  // console.log(props)
-  const { cascaderItem, ulIndex } = props
-  const { changeCascaderIndexs } = optionsHandles()
+interface CascaderItemPropsType extends CascaderulProps {
+  cascaderItem: CascaderItem
+  liIndex: number
+}
+export const DCascaderItem = (props: CascaderItemPropsType) => {
+  console.log(props)
+  const { cascaderItem, ulIndex, cascaderOptions, liIndex } = props
+  const { changeCascaderIndexs } = optionsHandles(cascaderOptions)
   const rootClasses = getRootClass()
-  const mouseEvent = () => {
+  const triggerHover = props.cascaderItemNeedProps.trigger === 'hover'
+  const updateValues = () => {
+    console.log(liIndex)
+    // props.value[ulIndex] = liIndex
+    // props.value.splice(0, ulIndex, ulIndex)
+  }
+  const mouseEnter = () => {
+    updateValues()
     changeCascaderIndexs(cascaderItem, ulIndex)
   }
-  const onMouseEvent = {
-    [props.cascaderItemNeedProps.trigger === 'hover' ? 'onMouseenter' : 'onClick']: mouseEvent
-  } 
+  const mouseenter = {
+    [ triggerHover && 'onMouseenter']: mouseEnter
+  }
+  const mouseClick = () => {
+    updateValues()
+    if (triggerHover && cascaderItem?.children?.length === 0) {
+
+    }
+  }
   return (
-    <li class={rootClasses.value} {...onMouseEvent}>
+    <li class={rootClasses.value} {...mouseenter} onClick={mouseClick}>
       <div class="dropdown-item-label">
         <span>{ cascaderItem.label }</span>
       </div>

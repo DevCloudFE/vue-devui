@@ -14,6 +14,8 @@ export interface CascaderItem {
   [prop: string]: any
 }
 
+type CascaderModelValue = number[]
+
 export const cascaderProps = {
   /**
    * 可选，指定展开次级菜单方式
@@ -34,6 +36,24 @@ export const cascaderProps = {
     type: Array as PropType<CascaderItem[]>,
     default: [],
     required: true
+  },
+  /**
+   * 可选，级联器是否开启多选模式，开启后为 checkbox 选择
+   * @type {Boolean}
+   * @default false
+   */
+  multiple: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * 可选，级联器选中的数组下标value
+   * @type {CascaderModelValue | [CascaderModelValue]}
+   * @default []
+   */
+  value: {
+    type: Array as PropType<CascaderModelValue | [CascaderModelValue]>,
+    default: []
   },
   /**
    * 可选，级联器是否禁用
@@ -64,8 +84,9 @@ export interface PopupTypes {
   openPopup:  (e?: MouseEvent) => void
 }
 
+export type CaascaderOptionsType = UnwrapNestedRefs<[CascaderItem[]]>
 export interface OptionsCallback {
-  cascaderOptions: never | UnwrapNestedRefs<[CascaderItem[]]>
+  cascaderOptions: never | CaascaderOptionsType
   changeCascaderIndexs: (optionItem: CascaderItem, ulIndex: number) => void
 }
 

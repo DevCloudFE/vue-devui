@@ -22,6 +22,10 @@ export const cascaderulProps = {
   cascaderItemNeedProps: {
     type: Object as PropType<PickCascader>,
     default: {}
+  },
+  cascaderOptions: {
+    type: Array as unknown as PropType<[CascaderItem[]]>,
+    default: []
   }
 }
 export type CascaderulProps = ExtractPropTypes<typeof cascaderulProps>

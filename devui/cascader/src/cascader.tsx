@@ -1,11 +1,11 @@
 import './cascader.scss'
 
 import { defineComponent, ref, reactive } from 'vue'
-import { cascaderProps, CascaderProps } from './cascader-types'
+import { cascaderProps, CascaderItem, CascaderProps } from './cascader-types'
 import { getRootClass } from '../hooks/use-cascader-class'
 import { popupHandles } from '../hooks/use-cascader-popup'
 import DCascaderList from '../components/cascader-list'
-import { optionsHandles } from '../hooks/use-cascader-options'
+// import { optionsHandles } from '../hooks/use-cascader-options'
 import { userCascaderItem } from '../hooks/use-cascader-item'
 
 export default defineComponent({
@@ -13,6 +13,8 @@ export default defineComponent({
   props: cascaderProps,
   setup(props: CascaderProps, ctx) {
     const origin = ref(null)
+    const cascaderOptions = reactive<[CascaderItem[]]>([ props?.options ])
+    // const value = props.value
     const position = reactive({
       originX: 'left', 
       originY: 'bottom', 
@@ -23,9 +25,8 @@ export default defineComponent({
     const { menuShow, menuOpenClass, openPopup } = popupHandles()
     // 配置class
     const rootClasses = getRootClass(props, menuShow)
-    // 级联菜单操作，变换ul、li等
-    const { cascaderOptions } = optionsHandles(props.options)
     // 传递给cascaderItem的props
+    console.log(ctx.attrs)
     const { cascaderItemNeedProps } = userCascaderItem(props)
     return () => (
       <>
@@ -42,7 +43,13 @@ export default defineComponent({
           <div class="devui-drop-menu-animation">
             <div class={`${menuOpenClass.value} devui-dropdown-menu`}>
               {cascaderOptions.map((item, index) => {
-                return <DCascaderList cascaderItems={item} ul-index={index} cascaderItemNeedProps={cascaderItemNeedProps}></DCascaderList>
+                return <DCascaderList
+                  cascaderItems={item}
+                  ul-index={index}
+                  cascaderItemNeedProps={cascaderItemNeedProps}
+                  cascaderOptions={cascaderOptions}
+                  {...props}
+                ></DCascaderList>
               })}
             </div>
           </div>
