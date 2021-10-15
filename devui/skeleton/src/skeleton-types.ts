@@ -46,7 +46,7 @@ export const skeletonProps = {
   },
   rowWidth:{
     type: [String,Number,Array] as PropType<ArrayModelValue>,
-    default: ['1','1','61%']
+    default: '1'
   }
 } as const
 
