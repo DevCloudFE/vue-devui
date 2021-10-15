@@ -19,7 +19,7 @@ export default defineComponent({
       }
       return <div class="devui-skeleton__paragraph" v-show={props.paragraph}>{
         arr.map(() => {
-          return <div class="devui-skeleton__item" />
+          return <div class="devui-skeleton__item" style={renderBorderRadius(props.round)} />
         })
       }</div>
     }
@@ -42,12 +42,15 @@ export default defineComponent({
     function renderTitleWidth(titleWidth) {
       if (typeof titleWidth === 'string') {
         return `width: ${titleWidth};`
-      }else if (typeof titleWidth === 'number') {
+      } else if (typeof titleWidth === 'number') {
         return `width: ${titleWidth}px;`
       }
     }
-    function renderTitle(isVisible, titleWidth) {
-      return (renderTitleWidth(titleWidth) + renderTitleVisibility(isVisible))
+    function renderTitle(isVisible, titleWidth, isRound) {
+      return (renderTitleWidth(titleWidth) + renderBorderRadius(isRound) + renderTitleVisibility(isVisible))
+    }
+    function renderBorderRadius(isRound) {
+      return isRound?'border-radius: 1em;':''
     }
 
     return () => {
@@ -57,7 +60,7 @@ export default defineComponent({
             <div class="avatar" style={renderAvatarStyle(props.avatarSize, props.avatarShape)} />
           </div>
           <div class="devui-skeleton__item__group">
-            <div class="devui-skeleton__title" style={renderTitle(props.title, props.titleWidth)} />
+            <div class="devui-skeleton__title" style={renderTitle(props.title, props.titleWidth, props.round)} />
             {renderParagraph(props.row)}
           </div>
         </div>

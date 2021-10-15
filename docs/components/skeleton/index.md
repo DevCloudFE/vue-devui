@@ -23,32 +23,36 @@
 ```vue
 <template>
   <div class="skeleton-btn-groups">
-      <div>
+      <div class="skeleton-btn">
           展示骨架屏：
          <d-switch v-model:checked="loading" />
       </div>
-      <div>
+      <div class="skeleton-btn">
           动画：
          <d-switch v-model:checked="animate" />
       </div>
-      <div>
+      <div class="skeleton-btn">
           显示头像：
          <d-switch v-model:checked="avatar" />
       </div>
-      <div>
+      <div class="skeleton-btn">
           显示标题：
          <d-switch v-model:checked="title" />
       </div>
-      <div>
+      <div class="skeleton-btn">
           显示段落：
          <d-switch v-model:checked="paragraph" />
       </div>
-      <div>
+      <div class="skeleton-btn">
           头像圆角：
-         <d-switch v-model:checked="isRound" />
+         <d-switch v-model:checked="roundAvatar" />
+      </div>
+      <div class="skeleton-btn">
+          段落和标题圆角：
+         <d-switch v-model:checked="round" />
       </div>
   </div>
-  <d-skeleton :row="4" :animate="animate" :avatar="avatar" :avatar-shape="isRound?'':'square'" :title="title" :paragraph="paragraph" :loading="loading">
+  <d-skeleton :row="4" :animate="animate" :avatar="avatar" :avatar-shape="roundAvatar?'':'square'" :title="title" :paragraph="paragraph" :loading="loading" :round="round">
       <div>
         <div>content1</div>
         <div>content2</div>
@@ -67,7 +71,9 @@ export default defineComponent({
     const avatar = ref(true)
     const title = ref(true)
     const paragraph = ref(true)
-    const isRound = ref(true)
+    const roundAvatar = ref(true)
+    const round = ref(false)
+    
 
     return {
       loading,
@@ -75,7 +81,8 @@ export default defineComponent({
       avatar,
       title,
       paragraph,
-      isRound
+      roundAvatar,
+      round
     }
   }
 })
@@ -84,6 +91,10 @@ export default defineComponent({
 .skeleton-btn-groups{
   display: flex;
   margin-bottom: 1rem;
+}
+.skeleton-btn{
+  display: flex;
+  flex-direction: column;
 }
 </style>
 ```
@@ -98,6 +109,7 @@ d-skeleton
 | avatar  | `boolean` | `false` | 是否显示头像占位图                         |
 | title | `boolean` | `true` | 是否显示标题占位图 |
 | paragraph | `boolean` | `true` | 是否显示段落占位图 |
+| round | `boolean` | `false` | 是否将标题和段落显示为圆角风格 |
 
 d-skeleton-avatar-props
 |  参数   |   类型    |  默认   | 说明                                          |

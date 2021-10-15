@@ -10,6 +10,10 @@ export const skeletonProps = {
     type: Boolean,
     default: true
   },
+  round:{
+    type: Boolean,
+    default: false
+  },
   loading:{
     type: Boolean,
     default: true
