@@ -35,7 +35,7 @@ export const skeletonProps = {
     default: 'round'
   },
   titleWidth:{
-    type: String,
+    type: String as PropType<ModelValue>,
     default: '40%'
   },
 } as const

@@ -40,7 +40,11 @@ export default defineComponent({
       return isVisible ? null : 'visibility: hidden;'
     }
     function renderTitleWidth(titleWidth) {
-      return `width: ${titleWidth};`
+      if (typeof titleWidth === 'string') {
+        return `width: ${titleWidth};`
+      }else if (typeof titleWidth === 'number') {
+        return `width: ${titleWidth}px;`
+      }
     }
     function renderTitle(isVisible, titleWidth) {
       return (renderTitleWidth(titleWidth) + renderTitleVisibility(isVisible))
