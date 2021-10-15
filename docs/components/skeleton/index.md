@@ -43,8 +43,12 @@
           显示段落：
          <d-switch v-model:checked="paragraph" />
       </div>
+      <div>
+          头像圆角：
+         <d-switch v-model:checked="isRound" />
+      </div>
   </div>
-  <d-skeleton :row="4" :animate="animate" :avatar="avatar" :avatarshape="avatarShape" :title="title" :paragraph="paragraph" :loading="loading">
+  <d-skeleton :row="4" :animate="animate" :avatar="avatar" :avatar-shape="isRound?'':'square'" :title="title" :paragraph="paragraph" :loading="loading" :avatarSize="avatarSize">
       <div>
         <div>content1</div>
         <div>content2</div>
@@ -63,14 +67,17 @@ export default defineComponent({
     const avatar = ref(true)
     const title = ref(true)
     const paragraph = ref(true)
-    const avatarShape = ref('square')
+    const isRound = ref(true)
+    const avatarSize = ref('60px')
 
     return {
       loading,
 	    animate,
       avatar,
       title,
-      paragraph
+      paragraph,
+      isRound,
+      avatarSize
     }
   }
 })
@@ -97,6 +104,7 @@ d-skeleton
 d-skeleton-avatar-props
 |  参数   |   类型    |  默认   | 说明                                          |
 | :-----: | :-------: | :-----: | :-------------------------------------------- |
+|   avatar-size   | `String \| Number`  |   `40px`   | 头像占位图大小                               |
 |   avatar-shape   | `string`  |   `round`   | 头像占位图形状，可选值为`square`                                |
 
 

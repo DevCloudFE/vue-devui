@@ -24,6 +24,14 @@ export const skeletonProps = {
   paragraph:{
     type: Boolean,
     default: true
+  },
+  avatarSize:{
+    type: String,
+    default: '40px'
+  },
+  avatarShape:{
+    type: String,
+    default: 'round'
   }
 } as const
 

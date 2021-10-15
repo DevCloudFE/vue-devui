@@ -26,12 +26,24 @@ export default defineComponent({
     function renderTitle(isTitleVisble) {
       return !isTitleVisble ? 'visibility: hidden;' : null
     }
+    function renderAvatarShape(avatarShape) {
+      return avatarShape === 'square' ? '' : 'border-radius:50%;'
+    }
+    function renderAvatarSize(avatarSize) {
+      return `width:${avatarSize};height:${avatarSize};`
+    }
+    function renderAvatarStyle(avatarSize,avatarShape){
+      let res = ''
+      res += renderAvatarSize(avatarSize)
+      res += renderAvatarShape(avatarShape)
+      return  res
+    }
 
     return () => {
       if (props.loading) {
         return <div class={`devui-skeleton ${renderAnimate(props.animate)}`}>
           <div class="devui-skeleton__avatar" v-show={props.avatar}>
-            <div class="avatar" />
+            <div class="avatar" style={renderAvatarStyle(props.avatarSize,props.avatarShape)} />
           </div>
           <div class="devui-skeleton__item__group">
             <div class="devui-skeleton__title" style={renderTitle(props.title)} />
