@@ -1,10 +1,10 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, renderSlot, useSlots } from 'vue';
 import './switch.scss';
 
 const switchProps = {
   size: {
-    type: String as PropType<'sm' | '' | 'lg'>,
-    default: ''
+    type: String as PropType<'small' | 'middle' | 'large'>,
+    default: 'middle'
   },
   color: {
     type: String,
@@ -63,7 +63,7 @@ export default defineComponent({
     };
   },
 
-  render () {
+  render() {
     const {
       size,
       checked,
@@ -71,7 +71,6 @@ export default defineComponent({
       color,
       toggle
     } = this;
-
     const outerCls = {
       'devui-switch': true,
       [`devui-switch-${size}`]: size !== '',
@@ -83,12 +82,14 @@ export default defineComponent({
       `border-color: ${checked && !disabled ? color : ''}`
     ];
 
+    const checkedContent = renderSlot(useSlots(), 'checkedContent')
+    const uncheckedContent = renderSlot(useSlots(), 'uncheckedContent')
     return (
       <span class={outerCls} style={outerStyle} onClick={toggle}>
         <span class="devui-switch-inner-wrapper">
-            <div class="devui-switch-inner">
-              { checked ? this.$slots.checkedContent?.() : this.$slots.uncheckedContent?.() }
-            </div>
+          <div class="devui-switch-inner">
+            {checked ? checkedContent : uncheckedContent}
+          </div>
         </span>
         <small></small>
       </span>

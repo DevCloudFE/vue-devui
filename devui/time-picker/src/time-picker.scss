@@ -21,6 +21,8 @@
     border: none;
     outline: none;
     width: 100%;
+    background-color: $devui-base-bg;
+    color: $devui-text;
   }
 
   .time-input-icon {
@@ -28,9 +30,12 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    background-color: $devui-base-bg;
 
     div {
       text-align: right;
+      height: 25px;
+      line-height: 22px;
       padding: 0 4px;
     }
   }
@@ -44,7 +49,7 @@
   background-color: $devui-unavailable;
   cursor: no-drop;
 
-  * {
+  :not(.time-input-icon) {
     background-color: $devui-unavailable;
     cursor: no-drop;
   }

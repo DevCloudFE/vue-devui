@@ -35,9 +35,9 @@ defineEmits(['toggle'])
         <NavLinks />
       </div>
 
-      <div class="flex items-center ml-xs">
-        <d-switch v-model:checked="darkMode"></d-switch>
-        {{switchText}}
+      <div class="flex items-center ml-xs mt-xxs">
+        <d-switch v-model:checked="darkMode" size="sm"></d-switch>
+        <span style="font-size:0.9rem;" class="mb-xxs">{{ switchText }}</span>
       </div>
     </div>
 

@@ -4,6 +4,9 @@ import {ref,reactive} from 'vue';
 export const option = reactive({})
 
 class Store {
+    public static getByKey(timeStamp){
+        return option[timeStamp];
+    }
     public static state() {
         return option;
     }

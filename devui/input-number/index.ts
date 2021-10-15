@@ -9,9 +9,9 @@ export { InputNumber }
 
 export default {
   title: 'InputNumber 数字输入框',
-  category: '输入录入',
+  category: '数据录入',
   status: '50%',
-  install(app: App):void {    
+  install(app: App):void {
     app.use(InputNumber as any)
   }
 }
