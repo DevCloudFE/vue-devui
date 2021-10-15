@@ -32,7 +32,11 @@ export const skeletonProps = {
   avatarShape:{
     type: String,
     default: 'round'
-  }
+  },
+  titleWidth:{
+    type: String,
+    default: '40%'
+  },
 } as const
 
 export type SkeletonProps = ExtractPropTypes<typeof skeletonProps>

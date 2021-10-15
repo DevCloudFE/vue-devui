@@ -104,14 +104,14 @@ d-skeleton
 d-skeleton-avatar-props
 |  参数   |   类型    |  默认   | 说明                                          |
 | :-----: | :-------: | :-----: | :-------------------------------------------- |
-|   avatar-size   | `String \| Number`  |   `40px`   | 头像占位图大小                               |
+|   avatar-size   | `string \| number`  |   `40px`   | 头像占位图大小                               |
 |   avatar-shape   | `string`  |   `round`   | 头像占位图形状，可选值为`square`                                |
 
 
 d-skeleton-title-props
 |  参数   |   类型    |  默认   | 说明                                          |
 | :-----: | :-------: | :-----: | :-------------------------------------------- |
-|   row   | `number`  |   `0`   | 段落占位图行数                                |
+|   title-width   | `string`  |   `40%`   | 设置标题占位图的宽度                                |
 
 
 d-skeleton-paragraph-props
