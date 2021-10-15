@@ -1,4 +1,5 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes,PropType } from 'vue'
+export type ModelValue = number | string | Array<number | string>
 
 export const skeletonProps = {
   row: {
@@ -26,7 +27,7 @@ export const skeletonProps = {
     default: true
   },
   avatarSize:{
-    type: String,
+    type: [String,Number] as PropType<ModelValue>,
     default: '40px'
   },
   avatarShape:{

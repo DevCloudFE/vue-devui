@@ -68,7 +68,7 @@ export default defineComponent({
     const title = ref(true)
     const paragraph = ref(true)
     const isRound = ref(true)
-    const avatarSize = ref('60px')
+    const avatarSize = ref(60)
 
     return {
       loading,

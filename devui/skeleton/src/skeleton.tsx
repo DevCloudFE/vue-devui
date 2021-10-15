@@ -27,7 +27,11 @@ export default defineComponent({
       return avatarShape === 'square' ? '' : 'border-radius:50%;'
     }
     function renderAvatarSize(avatarSize) {
-      return `width:${avatarSize};height:${avatarSize};`
+      if (typeof avatarSize === 'string') {
+        return `width:${avatarSize};height:${avatarSize};`
+      } else if (typeof avatarSize === 'number') {
+        return `width:${avatarSize}px;height:${avatarSize}px;`
+      }
     }
     function renderAvatarStyle(avatarSize, avatarShape) {
       return (renderAvatarSize(avatarSize) + renderAvatarShape(avatarShape))
