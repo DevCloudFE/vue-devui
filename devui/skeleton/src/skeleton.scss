@@ -56,7 +56,7 @@
     #f2f2f2;
   background-size: 200% 100%;
   background-position-x: 180%;
-  animation: 2s loading ease-in-out infinite;
+  animation: 2s skeletonLoading ease-in-out infinite;
 }
 
 .devui-skeleton__avatar > .avatar,
@@ -68,7 +68,7 @@
   animation-delay: 0.1s;
 }
 
-@keyframes loading {
+@keyframes skeletonLoading {
   to {
     background-position-x: -20%;
   }
