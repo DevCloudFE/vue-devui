@@ -87,7 +87,7 @@ export default defineComponent({
 :::demo
 ```vue
 <template>
-  <d-panel type="primary" :toggle=handleToggle :isCollapsed=isCollapsed :beforeToggle="beforeToggle">
+  <d-panel type="primary" :toggle=handleToggle :isCollapsed=isCollapsed :beforeToggle="beforeToggle" :showAnimation=showAnimation :hasLeftPadding=hasLeftPadding>
     <d-panel-header>
       Panel with foldable <i :class="`icon-arrow-${toggle ? 'up' : 'down'}`"></i>
     </d-panel-header>
@@ -106,10 +106,11 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup(){
     let isCollapsed = ref(true);
-    let panelToggle = ref(false);
+    let panelToggle = ref(true);
     let toggle = ref(true);
+    let showAnimation = ref(true);
     let state;
-    const handleToggle = (e) => toggle.value = e;
+    const handleToggle = (e) => {toggle.value = e;console.log(showAnimation);}
     const beforeToggle = () => panelToggle.value;
     return {
       state,
@@ -117,7 +118,8 @@ export default defineComponent({
       panelToggle,
       beforeToggle,
       isCollapsed,
-      handleToggle
+      handleToggle,
+      showAnimation
     }
   }
 })
