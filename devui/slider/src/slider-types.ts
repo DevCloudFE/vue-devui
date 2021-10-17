@@ -24,5 +24,9 @@ export const sliderProps = {
     type: Number,
     default: 1,
   },
+  tipsRenderer:{
+    type: String,
+    default: '',
+  }
 } as const;
 export type SliderProps = ExtractPropTypes<typeof sliderProps>;
