@@ -67,4 +67,7 @@ export default ({
 | :---------: | :------: | :-------: | :----------------------- | --------------------------------- |
 | visible | `Boolean` | `false` | 必选，设置抽屉板是否可见 | [基本用法](#基本用法) |
 | width | `String` | `300px` | 可选，设置抽屉板宽度 | [基本用法](#基本用法) |
-| onClose | `Function` | -- | 可选，关闭 drawer 时候调用 |[基本用法](#基本用法) |
+| zIndex | `Number` | `1000` | 1000 | [基本用法](#基本用法) |
+| onClose | `Function` | -- | 可选，关闭 drawer 时候调用 | [基本用法](#基本用法) |
+| escKeyCloseable | `Boolean` | `true` | 可选，设置可否通过 esc 按键来关闭 drawer 层 | [基本用法](#基本用法) |
+| afterOpened | `Function` | -- | 可选，打开 drawer 后时候调用 | [基本用法](#基本用法) |
