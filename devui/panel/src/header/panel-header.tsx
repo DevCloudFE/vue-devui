@@ -1,4 +1,4 @@
-import { defineComponent,ref,inject } from 'vue';
+import { defineComponent,ref,inject,effect } from 'vue';
 import {PanelProps} from '../panel.type';
 import Store from '../store/store';
 
@@ -10,40 +10,57 @@ export default defineComponent({
         const keys = Object.keys(Store.state());
         const key = keys.pop();
         const isCollapsed = ref(Store.state()[key]);
+        // 当beforeToggle为fals时
+        // 最好cursor是default 而不是 pointer；
+        // pointer一般用于可点击的
+        // 用changeFlag
+        let changeFlag = ref();
+        let header = null;
+
 
         const canToggle = (): Promise<boolean> => {
-            let changeResult = Promise.resolve(true);
-            if(beforeToggle) {
-              const result = beforeToggle(isCollapsed);
-              if(typeof result !== undefined) {
-                if(result instanceof Promise) {
-                  changeResult = result;
-                } else {
-                  changeResult = Promise.resolve(result);
-                }
+          let changeResult = Promise.resolve(true);
+          if(beforeToggle) {
+            const result = beforeToggle(isCollapsed);
+            if(typeof result !== undefined) {
+              if(result instanceof Promise) {
+                changeResult = result;
+              } else {
+                changeResult = Promise.resolve(result);
               }
             }
-            return changeResult;
           }
-      
-          const toggleBody = (): void => {
-            canToggle().then((val) => {
-              if (!val){
-                return;
-              }
-              if (isCollapsed.value !== undefined) {
+          return changeResult;
+        }
+
+        // 需要执行一次才能生效；
+        canToggle().then((val)=>changeFlag.value = val)
+        
+        const toggleBody = (): void => {
+          canToggle().then((val) => {
+            changeFlag.value = val;
+            if (!val){
+              // 禁止折叠不影响展开
+              if (!isCollapsed.value){
+                console.log('伸开');
                 Store.setData(`${key}`, !isCollapsed.value);
                 isCollapsed.value = !isCollapsed.value;
                 props.toggle?.(isCollapsed.value);
               }
-            })
-            
-          };
+              return;
+            }
+            if (isCollapsed.value !== undefined) {
+              Store.setData(`${key}`, !isCollapsed.value);
+              isCollapsed.value = !isCollapsed.value;
+              props.toggle?.(isCollapsed.value);
+            }
+          })
+          
+        };
         return () => {
-            let header = null;
             if (ctx.slots.default){
                 header = (
-                    <div class="devui-panel-heading" onClick={toggleBody} style={{ 'cursor': isCollapsed.value !== undefined ? 'pointer' : 'auto' }}>
+                    <div class="devui-panel-heading" onClick={toggleBody} style={{ 'cursor': changeFlag.value ? 'pointer' : 'auto' }}>
                         {ctx.slots.default?.()}
                     </div>
                 )

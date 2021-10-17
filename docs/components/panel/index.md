@@ -11,14 +11,14 @@
 
 ```vue
 <template>
-  <d-panel type="primary" :isCollapsed="true" :showAnimation="true">
+  <d-panel type="primary" :isCollapsed="true" :showAnimation="true" >
     <d-panel-header>
       Panel with foldable
     </d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
   <br /><br />
-  <d-panel :toggle=toggle :isCollapsed="true" :hasLeftPadding="false" :showAnimation="true">
+  <d-panel :toggle=toggle :isCollapsed="true" :showAnimation="true" :hasLeftPadding="false">
     <d-panel-header>
       Panel has no left padding
       <em :class="`icon icon-chevron-${toggleState ? 'down':'up'}`"></em>
@@ -26,7 +26,7 @@
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
   <br /><br />
-  <d-panel>
+  <d-panel :isCollapsed="true" :beforeToggle=beforeToggle>
     <d-panel-header>Panel with header and footer</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
     <d-panel-footer>This is footer</d-panel-footer>
@@ -38,9 +38,11 @@ export default defineComponent({
   setup(){
     const toggleState = ref(true);
     const toggle = (e) => toggleState.value = e;
+    const beforeToggle = () => false;
     return {
       toggle,
       toggleState,
+      beforeToggle
     }
   }
 })
@@ -87,9 +89,9 @@ export default defineComponent({
 :::demo
 ```vue
 <template>
-  <d-panel type="primary" :toggle=handleToggle :isCollapsed=isCollapsed :beforeToggle="beforeToggle" :showAnimation=showAnimation :hasLeftPadding=hasLeftPadding>
+  <d-panel type="primary" :hasLeftPadding=padding :toggle=handleToggle  :beforeToggle=beforeToggle :showAnimation=showAnimation >
     <d-panel-header>
-      Panel with foldable <i :class="`icon-arrow-${toggle ? 'up' : 'down'}`"></i>
+      Panel with foldable <i :class="`icon-arrow-${toggle ? 'down' : 'up'}`"></i>
     </d-panel-header>
     <d-panel-body>
       This is body
@@ -110,8 +112,9 @@ export default defineComponent({
     let toggle = ref(true);
     let showAnimation = ref(true);
     let state;
-    const handleToggle = (e) => {toggle.value = e;console.log(showAnimation);}
-    const beforeToggle = () => panelToggle.value;
+    let padding = ref(false);
+    const handleToggle = (e) => {toggle.value = e;}
+    const beforeToggle = (e) => {console.log(e); return panelToggle.value;}
     return {
       state,
       toggle,
@@ -119,7 +122,43 @@ export default defineComponent({
       beforeToggle,
       isCollapsed,
       handleToggle,
-      showAnimation
+      showAnimation,
+      padding
+    }
+  }
+})
+</script>
+```
+:::
+
+### 动态切换
+
+我们已hasLeftPadding为例
+
+:::demo
+```vue
+<template>
+  <d-panel type="primary" :hasLeftPadding=padding :isCollapsed="true">
+    <d-panel-header>
+      Panel with foldable
+    </d-panel-header>
+    <d-panel-body>
+      This is body
+    </d-panel-body>
+  </d-panel>
+  <br /><br />
+  <d-button @click="padding = !padding" >
+    {{ padding ? '有左填充' : '没有左填充' }}
+  </d-button>
+</template>
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup(){
+    let padding = ref(false);
+    return {
+      padding,
     }
   }
 })
