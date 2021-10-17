@@ -1,4 +1,4 @@
-import { defineComponent,ref,inject,effect } from 'vue';
+import { defineComponent,ref,inject } from 'vue';
 import {PanelProps} from '../panel.type';
 import Store from '../store/store';
 
@@ -42,7 +42,6 @@ export default defineComponent({
             if (!val){
               // 禁止折叠不影响展开
               if (!isCollapsed.value){
-                console.log('伸开');
                 Store.setData(`${key}`, !isCollapsed.value);
                 isCollapsed.value = !isCollapsed.value;
                 props.toggle?.(isCollapsed.value);
