@@ -17,7 +17,12 @@
 ```vue
 <template>
   <d-button  @click="drawerShow"> drawer {{ btnName }} </d-button>
-  <d-drawer v-model:visible="isDrawerShow" :width="drawerWidth" @close="drawerClose">
+  <d-drawer 
+    v-model:visible="isDrawerShow" 
+    :width="drawerWidth" 
+    @close="drawerClose"
+    @afterOpened="drawerAfterOpened"
+  />
 </template>
 <script>
 import { ref } from 'vue'
@@ -35,14 +40,19 @@ export default ({
 
     const drawerClose = () => {
       btnName.value = 'close'
-      
     }
+
+    const drawerAfterOpened = () => {
+      console.log('open');
+    }
+
     return {
       isDrawerShow,
       btnName,
       drawerWidth,
       drawerShow,
       drawerClose,
+      drawerAfterOpened,
     }
   }
 })
@@ -55,6 +65,6 @@ export default ({
 
 | 参数 | 类型 | 默认 | 说明 | 跳转 Demo |
 | :---------: | :------: | :-------: | :----------------------- | --------------------------------- |
-| visible | `Boolean` | `false` | 必选，设置抽屉板是否可见 | [基本用法](###基本用法) |
-| width | `String` | `300px` | 可选，设置抽屉板宽度 | [基本用法](###基本用法) |
-| onClose | `Function` | -- | 可选，关闭 drawer 时候调用 |[基本用法](###基本用法) |
+| visible | `Boolean` | `false` | 必选，设置抽屉板是否可见 | [基本用法](#基本用法) |
+| width | `String` | `300px` | 可选，设置抽屉板宽度 | [基本用法](#基本用法) |
+| onClose | `Function` | -- | 可选，关闭 drawer 时候调用 |[基本用法](#基本用法) |
