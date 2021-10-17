@@ -16,7 +16,8 @@ const usePopupLine =(
       return false
     }else{
       setTimeActive(item,index)
-      e.target.parentElement.scrollTop = index * 30
+      e.target.parentElement.parentElement.scrollTop = index * 32
+
     }
   }
 
@@ -39,9 +40,8 @@ const usePopupLine =(
     }
 
     activeTimeList.map((tiemItem,tiemeIndex)=>{
-      tiemItem.isActive = false
+      tiemItem.isActive = index === tiemeIndex
     })
-    activeTimeList[index].isActive = true
     acitveTimeValue.value = activeTimeList[index].time
 
 
@@ -75,16 +75,13 @@ const usePopupLine =(
     if(item.flag == 'hour'){
       if(item.time == minTimeHour){
         min = minTimeMinute
-        // console.log('11')
         setItemAstrict(minuteListRef,min,max)
         activeMinute.value < minTimeMinute && setItemAstrict(secondListRef,minTimeSecond,max)
       }else if ( item.time == maxTimeHour){
         max = maxTimeMinute
-        // console.log('22')
         setItemAstrict(minuteListRef,min,max)
         setItemAstrict(secondListRef,min,maxTimeSecond)
       }else{
-        // console.log('33')
         setItemAstrict(minuteListRef,min,max)
         setItemAstrict(secondListRef,min,max)
       }
@@ -103,13 +100,10 @@ const usePopupLine =(
       if(activeHour.value == minTimeHour && item.time == minTimeMinute){
         min = minTimeSecond
         setItemAstrict(secondListRef,min,max)
-        // console.log('44')
       }else if(activeHour.value == maxTimeHour && item.time == maxTimeMinute){
         max = maxTimeSecond
-        // console.log('55')
         setItemAstrict(secondListRef,min,max)
       } else{
-        // console.log('66')
         setItemAstrict(secondListRef,min,max)
       }
     }
@@ -143,9 +137,9 @@ const usePopupLine =(
       mm = parseInt(timeValueArr[1])
       ss = parseInt(timeValueArr[2])
 
-      timeListDom.value.children[0].scrollTop = hh * 30
-      timeListDom.value.children[1].scrollTop = mm * 30
-      timeListDom.value.children[2].scrollTop = ss * 30
+      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = hh * 32
+      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = mm * 32
+      timeListDom.value.children[2].lastElementChild.children[0].scrollTop = ss * 32
 
       activeHour.value = timeValueArr[0]
       activeMinute.value = timeValueArr[1]
@@ -164,9 +158,9 @@ const usePopupLine =(
       mm = parseInt(timeValueArr[1])
       ss = parseInt(timeValueArr[2])
 
-      timeListDom.value.children[0].scrollTop = mm * 30
-      timeListDom.value.children[1].scrollTop = hh * 30
-      timeListDom.value.children[2].scrollTop = ss * 30
+      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = mm * 32
+      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = hh * 32
+      timeListDom.value.children[2].lastElementChild.children[0].scrollTop = ss * 32
 
       activeHour.value = timeValueArr[0]
       activeMinute.value = timeValueArr[1]
@@ -184,8 +178,8 @@ const usePopupLine =(
       hh = parseInt(timeValueArr[0])
       mm = parseInt(timeValueArr[1])
 
-      timeListDom.value.children[0].scrollTop = hh * 30
-      timeListDom.value.children[1].scrollTop = mm * 30
+      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = hh * 32
+      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = mm * 32
 
       activeHour.value = timeValueArr[0]
       activeMinute.value = timeValueArr[1]
@@ -200,8 +194,8 @@ const usePopupLine =(
       mm = parseInt(timeValueArr[1])
       ss = parseInt(timeValueArr[2])
 
-      timeListDom.value.children[0].scrollTop = mm * 30
-      timeListDom.value.children[1].scrollTop = ss * 30
+      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = mm * 32
+      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = ss * 32
 
       activeHour.value = minTiveArr[0]
       activeMinute.value = timeValueArr[1]
@@ -212,8 +206,6 @@ const usePopupLine =(
 
       resetTimeAstrict(minuteListRef,activeMinute.value)
     }
-    // activeTime.value = `${activeHour.value}:${activeMinute.value}:${activeSecond.value}`
-
   }
 
   // 解决清空之后，再次打开 最大值最小值限制范围失效
@@ -228,17 +220,20 @@ const usePopupLine =(
   // 指定选中
   const resetTimeActive = (timeArr:Array<ArrType>,itemValue:string) =>{
     timeArr.map( item =>{
-      if(item.time == itemValue){
-        item.isActive = true
-      }else{
-        item.isActive = false
-      }
+      item.isActive = item.time === itemValue
     })
   }
 
   // 暂时返回选中  时 分 秒 
   const getNewTime = ()=>{
     return { activeTime,activeHour,activeMinute,activeSecond }
+  }
+
+  // 回到顶部
+  const resetScrollTop = ()=>{
+    for (let i = 0; i < timeListDom.value.children.length; i++) {
+      timeListDom.value.children[i].lastElementChild.children[0].scrollTop = 0
+    }
   }
 
   return{
@@ -248,7 +243,8 @@ const usePopupLine =(
     activeSecond,
     activeTimeFun,
     resetTimeValue,
-    getNewTime
+    getNewTime,
+    resetScrollTop
   }
 }
 

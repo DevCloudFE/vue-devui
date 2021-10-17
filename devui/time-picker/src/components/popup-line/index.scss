@@ -5,66 +5,72 @@
 
 .devui-time-list {
   width: 100%;
-  height: 250px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  height: 256px;
+  border-bottom: 1px solid $devui-dividing-line;
 
-  .time-ul {
-    height: 244px;
+  .time-item {
+    height: 100%;
     display: inline-block;
-    overflow: hidden;
-    cursor: pointer;
-    padding: 0;
-    margin: 0 auto;
-    padding-right: 8px;
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
-    scroll-behavior: smooth;
-    padding-top: 2px;
-    border-top: 1px solid rgba(0, 0, 0, 0);
-
-    &:hover {
-      overflow-y: overlay;
-      // overflow-y:auto ;
-      // padding-right: 0;
-    }
+    border-right: 1px solid $devui-dividing-line;
+    overflow-y: auto;
 
     &:last-child {
       border-right: none;
     }
 
-    li {
+    .time-ul {
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
       padding: 0;
-      // text-align: center;
-      // padding-left: 40px;
-      text-align: center;
-      height: 30px;
-      line-height: 30px;
-      width: calc(100% + 8px);
+      margin: 0 auto;
+      list-style: none;
 
-      &:last-child {
-        margin-bottom: 214px;
+      .time-li {
+        display: block;
+        box-sizing: border-box;
+        list-style: none;
+        text-align: center;
+        margin: 0;
+        height: 26px;
+        overflow: hidden;
+        line-height: 26px;
+        margin-bottom: 6px;
+        font-size: 0;
+        color: $devui-text;
+
+        &:hover {
+          background-color: $devui-list-item-hover-bg;
+          color: $devui-list-item-hover-text;
+        }
+
+        span {
+          display: block;
+          font-size: 16px;
+        }
       }
 
-      &:hover {
-        background-color: #5d7ef80c;
-        color: #8aa2f0;
+      &:last-child::after {
+        content: '';
+        display: block;
+        height: 224px;
       }
-    }
 
-    .active-li {
-      background-color: #5e7ce0;
-      color: #ffffff;
+      .active-li {
+        background-color: $devui-list-item-active-bg;
+        color: $devui-list-item-active-text;
 
-      &:hover {
-        background-color: #5e7ce0;
-        color: #ffffff;
+        &:hover {
+          background-color: $devui-list-item-active-bg;
+          color: $devui-list-item-active-text;
+        }
       }
-    }
 
-    .disabled-li {
-      background-color: $devui-disabled-bg;
-      color: $devui-disabled-text;
-      cursor: not-allowed;
+      .disabled-li {
+        background-color: $devui-disabled-bg;
+        color: $devui-disabled-text;
+        cursor: not-allowed;
+      }
     }
   }
 }

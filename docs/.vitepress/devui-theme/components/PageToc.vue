@@ -36,7 +36,7 @@ useActiveSidebarLinks(container, marker)
   position: fixed;
   top: 50px;
   right: 0;
-  height: 100%;
+  height: 90%;
   z-index: 1;
 
   .devui-fast-forward {

@@ -46,10 +46,10 @@ defineEmits(['toggle'])
       <div class="nav">
         <NavLinks />
       </div>
-      
-      <div class="flex items-center ml-xs">
-        <d-switch v-model:checked="darkMode"></d-switch>
-        {{switchText}}
+
+      <div class="flex items-center ml-xs mt-xxs">
+        <d-switch v-model:checked="darkMode" size="sm"></d-switch>
+        <span style="font-size:0.9rem;" class="mb-xxs">{{ switchText }}</span>
       </div>
       <div style="margin-left: 10px" @click="() => useTranslation( defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN' )">
         {{defaultLanguage === 'zh-CN' ? 'English' : '中文'}}
