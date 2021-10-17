@@ -1,4 +1,4 @@
-const sidebar = {
+const enSidebar = {
     '/en-US/': [
         { text: 'Quick Start', link: '/en-US/' },
         {
@@ -97,5 +97,5 @@ const sidebar = {
     ]
 }
 
-export default sidebar
+export default enSidebar
   
