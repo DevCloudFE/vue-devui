@@ -80,44 +80,17 @@ $devui-transfer-body-list-item-height: 36px;
       &-group {
         width: 36px;
 
-        &-left,
-        &-right {
+        &-left .devui-btn,
+        &-right .devui-btn {
           width: 36px;
           height: 36px;
-          color: $devui-light-text;
-          background: $devui-primary;
           border-radius: 50%;
-          border: none;
-          cursor: pointer;
           padding: 0;
           min-width: 36px !important;
         }
 
         &-right {
           margin-top: 12px;
-        }
-
-        &-left:hover,
-        &-left span:hover,
-        &-right:hover,
-        &-right span:hover {
-          background: $devui-primary-hover;
-        }
-
-        &-left:active,
-        &-left span:active,
-        &-right:active,
-        &-right span:active {
-          background: $devui-primary-active;
-        }
-
-        &-left:disabled,
-        &-left span:disabled,
-        &-right:disabled,
-        &-right span:disabled {
-          color: $devui-disabled-text;
-          background: $devui-disabled-bg;
-          cursor: not-allowed;
         }
       }
     }

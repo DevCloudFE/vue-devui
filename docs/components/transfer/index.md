@@ -149,11 +149,10 @@ export default defineComponent({
       </div>
     </template>
     <template #operation>
-      <div class="devui-transfer-panel-operation">
-        <div class="devui-transfer-panel-operation-group">
-          <DButton class="devui-transfer-panel-operation-group-left" :disabled="leftOptions.disabled"
-            :btnClick="updateRightFilterData" >Left</DButton>
-          <DButton class="devui-transfer-panel-operation-group-right" :disabled="rightOptions.disabled" :btnClick="updateLeftFilterData">Right</DButton>
+      <div class="custom-transfer__operation">
+        <div class="custom-transfer__operation__group">
+          <DButton :disabled="leftOptions.disabled" @Click="updateRightFilterData" >Left</DButton>
+          <DButton style="margin-top: 12px;" :disabled="rightOptions.disabled" @click="updateLeftFilterData">Right</DButton>
         </div>
       </div>
     </template>
@@ -356,6 +355,16 @@ export default defineComponent({
 }
 .custom-transfer__header, .custom-transfer__body__list {
   padding: 0 10px;
+}
+.custom-transfer__operation {
+  display: flex;
+  width: 10%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.custom-transfer__operation__group , .custom-transfer__operation__group .devui-btn{
+  width: 64px;
 }
 </style>
 ```
