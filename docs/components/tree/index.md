@@ -304,6 +304,7 @@ export default defineComponent({
     </div>
     <d-tree :data="data">
       <template #default="{ node }">
+        <span class="my-icon-next"></span>
         <span :class="[node?.data?.type && 'my-icon', node?.data?.type]" ></span>
         <span class="op-title">{{ node.label }}</span>
         <span class="op-status"></span>
@@ -455,6 +456,9 @@ export default defineComponent({
   background-color: #aaaaaa;
   border: 1px #999999 solid;
 }
+.my-icon-next {
+  margin-left: 8px;
+}
 
 .op-title {
   display: flex;
@@ -504,5 +508,234 @@ export default defineComponent({
 
 
 </style>
+```
+:::
+
+### 可勾选树
+
+:::demo 可以进行勾选的树。
+
+```vue
+<template>
+  <d-tree :data="data" :checkable="true" ></d-tree>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const data = ref([
+      {
+        label: "parent node 1",
+      },
+      {
+        label: "parent node 2",
+        open: true,
+        children: [
+          {
+            label: "leaf node 2-1",
+            children: [
+              {
+                label: "leaf node 2-1-1",
+              },
+              {
+                label: "leaf node 2-1-2",
+              },
+            ],
+          },
+          {
+            label: "leaf node 2-2",
+            open: true,
+            children: [
+              {
+                label: "leaf node 2-2-1",
+                disabled: true,
+                isChecked: true,
+              },
+              {
+                label: "leaf node 2-2-2",
+                disableSelect: true,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: "parent node 3",
+        disableToggle: true,
+        children: [
+          {
+            label: "leaf node 3-1",
+          },
+          {
+            label: "leaf node 3-2",
+          },
+        ],
+      },
+      {
+        label: "parent node 4",
+        children: [
+          {
+            label: "leaf node 4-1",
+          },
+          {
+            label: "leaf node 4-2",
+          },
+        ],
+      },
+      {
+        label: "parent node 5",
+        children: [
+          {
+            label: "leaf node 5-1",
+          },
+          {
+            label: "leaf node 5-2",
+          },
+        ],
+      },
+    ]);
+    
+    return {
+      data,
+    }
+  }
+})
+</script>
+```
+:::
+
+### 控制父子check关系
+
+:::demo 通过 checkableRelation 控制check时父子节点的表现。
+
+```vue
+<template>
+  <h6><p>checkableRelation = "both"</p></h6>
+  <d-tree :data="data" :checkable="true" checkableRelation="both" ></d-tree>
+  <h6><p>checkableRelation = "upward"</p></h6>
+  <d-tree :data="data" :checkable="true" checkableRelation="upward" ></d-tree>
+  <h6><p>checkableRelation = "downward"</p></h6>
+  <d-tree :data="data" :checkable="true" checkableRelation="downward" ></d-tree>
+  <h6><p>checkableRelation = "none"</p></h6>
+  <d-tree :data="data" :checkable="true" checkableRelation="none" ></d-tree>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const data = ref([
+      {
+        label: 'parent node 1 - expanded',
+        open: true,
+        children: [
+          {
+            label: 'parent node 11 - folded',
+            children: [
+              {
+                label: 'leaf node 111',
+              },
+              {
+                label: 'leaf node 112',
+              },
+              {
+                label: 'leaf node 113',
+              },
+              {
+                label: 'leaf node 114',
+              },
+            ],
+          },
+          {
+            label: 'parent node 12 - folded',
+            children: [
+              {
+                label: 'leaf node 121',
+              },
+              {
+                label: 'leaf node 122',
+              },
+              {
+                label: 'leaf node 123',
+              },
+              {
+                label: 'leaf node 124',
+              },
+            ],
+          },
+          {
+            label: 'parent node 13 - without children',
+            isparent: true,
+          },
+        ],
+      },
+      {
+        label: 'parent node 2 - folded',
+        children: [
+          {
+            label: 'parent node 21 - expanded',
+            open: true,
+            children: [
+              {
+                label: 'leaf node 211',
+              },
+              {
+                label: 'leaf node 212',
+              },
+              {
+                label: 'leaf node 213',
+              },
+              {
+                label: 'leaf node 214',
+              },
+            ],
+          },
+          {
+            label: 'parent node 22 - folded',
+            children: [
+              {
+                label: 'leaf node 221',
+              },
+              {
+                label: 'leaf node 222',
+              },
+              {
+                label: 'leaf node 223',
+              },
+              {
+                label: 'leaf node 224',
+              },
+            ],
+          },
+          {
+            label: 'parent node 23 - folded',
+            children: [
+              {
+                label: 'leaf node 231',
+              },
+              {
+                label: 'leaf node 232',
+              },
+              {
+                label: 'leaf node 233',
+              },
+              {
+                label: 'leaf node 234',
+              },
+            ],
+          },
+        ],
+      },
+    ]);
+    
+    return {
+      data,
+    }
+  }
+})
+</script>
 ```
 :::

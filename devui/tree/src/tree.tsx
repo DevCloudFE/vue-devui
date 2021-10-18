@@ -1,10 +1,14 @@
 import { defineComponent, toRefs, provide } from 'vue'
+import type { SetupContext } from 'vue'
 import { treeProps, TreeProps, TreeItem, TreeRootType } from './tree-types'
-import { flatten, precheckTree } from './util'
+import { CHECK_CONFIG } from  './config'
+import { precheckTree } from './util'
 import Loading from '../../loading/src/service'
+import Checkbox from '../../checkbox/src/checkbox'
 import useToggle from './composables/use-toggle'
 import useMergeNode from './composables/use-merge-node'
 import useHighlightNode from './composables/use-highlight'
+import useChecked from './composables/use-checked'
 import useLazy from './composables/use-lazy'
 import IconOpen from './assets/open.svg'
 import IconClose from './assets/close.svg'
@@ -14,20 +18,20 @@ import './tree.scss'
 export default defineComponent({
   name: 'DTree',
   props: treeProps,
-  emits: [],
-  setup(props: TreeProps, ctx) {
-    const { data } = toRefs({ ...props, data: precheckTree(props.data) })
-    const flatData = flatten(data.value)
-
+  emits: ['nodeSelected'],
+  setup(props: TreeProps, ctx: SetupContext) {
+    const { data, checkable, checkableRelation: cbr } = toRefs({ ...props, data: precheckTree(props.data) })
     const { mergeData } = useMergeNode(data.value)
     const { openedData, toggle } = useToggle(mergeData.value)
     const { nodeClassNameReflect, handleInitNodeClassNameReflect, handleClickOnNode } = useHighlightNode()
     const { lazyNodesReflect, handleInitLazyNodeReflect, getLazyData } = useLazy()
+    const { selected, onNodeClick } = useChecked(cbr, ctx, data.value)
 
-    provide<TreeRootType>('treeRoot', { ctx, props });
+    provide<TreeRootType>('treeRoot', { ctx, props })
     const Indent = () => {
-      return <span style="display: inline-block; width: 16px; height: 16px;"></span>
+      return <span style="display: inline-block; width: 16px; height: 16px; margin-left: 8px;"></span>
     }
+    
     const renderNode = (item: TreeItem) => {
       const { id = '', label, disabled, open, isParent, level, children } = item
       handleInitNodeClassNameReflect(disabled, id)
@@ -74,6 +78,7 @@ export default defineComponent({
           : <Indent />
         )
       }
+      const checkState = CHECK_CONFIG[selected.value[id] ?? 'none']
       return (
         <div
           class={['devui-tree-node', open && 'devui-tree-node__open']}
@@ -85,6 +90,7 @@ export default defineComponent({
           >
             <div class="devui-tree-node__content--value-wrapper">
               {renderNodeWithIcon(item)}
+              {checkable.value && <Checkbox key={id} onClick={() => onNodeClick(item)} disabled={disabled} {...checkState} />}
               <NodeContent node={item}/>
               {item.isParent && <div class='devui-tree-node_loading' id={lazyNodesReflect.value[id].loadingTargetId} />}
             </div>
