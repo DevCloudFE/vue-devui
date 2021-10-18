@@ -12,9 +12,15 @@ export default defineComponent({
         return () => {
             return ctx.slots.operation && ctx.slots.operation() || <div class="devui-transfer-panel-operation">
                 <div class="devui-transfer-panel-operation-group">
-                    <DButton class="devui-transfer-panel-operation-group-left icon-collapse" disabled={props.disabled ? props.disabled : props.sourceDisabled}
-                        btnClick={() => ctx.emit('updateSourceData')}></DButton>
-                    <DButton class="devui-transfer-panel-operation-group-right icon-chevron-right" disabled={props.disabled ? props.disabled : props.targetDisabled} btnClick={() => ctx.emit('updateTargetData')}></DButton>
+                    <DButton
+                        class="devui-transfer-panel-operation-group-left"
+                        disabled={props.disabled ? props.disabled : props.sourceDisabled}
+                        onClick={() => ctx.emit('updateSourceData')}>
+                        <span class="icon-collapse"></span>
+                    </DButton>
+                    <DButton class="devui-transfer-panel-operation-group-right" disabled={props.disabled ? props.disabled : props.targetDisabled} onClick={() => ctx.emit('updateTargetData')}>
+                        <span class="icon-chevron-right"></span>
+                    </DButton>
                 </div>
             </div>
         }
