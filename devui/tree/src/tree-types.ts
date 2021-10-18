@@ -21,7 +21,7 @@ export interface ReverseTree {
 
 export type TreeData = Array<TreeItem>
 
-export type CheckableRelationType = 'upward' | 'upward' | 'both' | 'none'
+export type CheckableRelationType = 'downward' | 'upward' | 'both' | 'none'
 
 export const treeProps = {
   data: {
