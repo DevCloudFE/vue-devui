@@ -1,51 +1,50 @@
-import type { ExtractPropTypes,PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 
 export type ModelValue = number | string
-export type ArrayModelValue = number | string | Array<number | string>
 
 export const skeletonProps = {
   row: {
     type: Number,
     default: 0
   },
-  animate:{
+  animate: {
     type: Boolean,
     default: true
   },
-  round:{
+  round: {
     type: Boolean,
     default: false
   },
-  loading:{
+  loading: {
     type: Boolean,
     default: true
   },
-  avatar:{
+  avatar: {
     type: Boolean,
     default: false
   },
-  title:{
+  title: {
     type: Boolean,
     default: true
   },
-  paragraph:{
+  paragraph: {
     type: Boolean,
     default: true
   },
-  avatarSize:{
-    type: [String,Number] as PropType<ModelValue>,
+  avatarSize: {
+    type: [String, Number] as PropType<ModelValue>,
     default: '40px'
   },
-  avatarShape:{
-    type: String,
+  avatarShape: {
+    value: String as PropType<'round' | 'square'>,
     default: 'round'
   },
-  titleWidth:{
-    type: [String,Number] as PropType<ModelValue>,
+  titleWidth: {
+    type: [String, Number] as PropType<ModelValue>,
     default: '40%'
   },
-  rowWidth:{
-    type: [String,Number,Array] as PropType<ArrayModelValue>,
+  rowWidth: {
+    type: [Number, String, Array] as PropType<number | string | Array<number | string>>,
     default: ['100%']
   }
 } as const
