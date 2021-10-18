@@ -1,34 +1,45 @@
 import { getRootClass } from './use-class'
 import { optionsHandles } from '../../hooks/use-cascader-options'
-import { CascaderItem } from '../../src/cascader-types'
+import { CascaderItem, CascaderItemNeedType } from '../../src/cascader-types'
 import { CascaderulProps } from '../cascader-list/cascader-list-types'
 import './index.scss'
 interface CascaderItemPropsType extends CascaderulProps {
   cascaderItem: CascaderItem
   liIndex: number
+  cascaderItemNeedProps: CascaderItemNeedType
 }
 export const DCascaderItem = (props: CascaderItemPropsType) => {
-  console.log(props)
-  const { cascaderItem, ulIndex, cascaderOptions, liIndex } = props
+  // console.log('item index',props)
+  const { cascaderItem, ulIndex, cascaderOptions, liIndex, cascaderItemNeedProps } = props
   const { changeCascaderIndexs } = optionsHandles(cascaderOptions)
   const rootClasses = getRootClass()
   const triggerHover = props.cascaderItemNeedProps.trigger === 'hover'
   const updateValues = () => {
-    console.log(liIndex)
-    // props.value[ulIndex] = liIndex
-    // props.value.splice(0, ulIndex, ulIndex)
+    // 删除当前联动级之后的所有级
+    cascaderItemNeedProps.value.splice(ulIndex, cascaderItemNeedProps.value.length - ulIndex)
+    // 更新当前active的value数组
+    cascaderItemNeedProps.value[ulIndex] = liIndex
   }
+  // 展开或改变下一级列表
+  const changeCascader = () => {
+    // changeCascaderIndexs(cascaderItem, ulIndex)
+  }
+  // 鼠标hover
   const mouseEnter = () => {
     updateValues()
-    changeCascaderIndexs(cascaderItem, ulIndex)
+    changeCascader()
   }
   const mouseenter = {
     [ triggerHover && 'onMouseenter']: mouseEnter
   }
+  // 鼠标click
   const mouseClick = () => {
     updateValues()
-    if (triggerHover && cascaderItem?.children?.length === 0) {
-
+    changeCascader()
+    console.log(cascaderItem)
+    if (triggerHover && (!cascaderItem.children || cascaderItem?.children?.length === 0)) {
+      console.log('确定')
+      cascaderItemNeedProps.confirmInputValueFlg.value = !cascaderItemNeedProps.confirmInputValueFlg.value
     }
   }
   return (

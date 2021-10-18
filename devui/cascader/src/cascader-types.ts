@@ -15,7 +15,7 @@ export interface CascaderItem {
 }
 
 type CascaderModelValue = number[]
-
+export type CascaderValueType = CascaderModelValue | [CascaderModelValue]
 export const cascaderProps = {
   /**
    * 可选，指定展开次级菜单方式
@@ -48,11 +48,11 @@ export const cascaderProps = {
   },
   /**
    * 可选，级联器选中的数组下标value
-   * @type {CascaderModelValue | [CascaderModelValue]}
+   * @type {CascaderValueType}
    * @default []
    */
   value: {
-    type: Array as PropType<CascaderModelValue | [CascaderModelValue]>,
+    type: Array as PropType<CascaderValueType>,
     default: []
   },
   /**
@@ -92,6 +92,11 @@ export interface OptionsCallback {
 
 type cascaderItemExtendsProps = 'trigger'
 export type PickCascader = Pick<CascaderProps, cascaderItemExtendsProps>
+export interface CascaderItemNeedType extends PickCascader {
+  value: CascaderValueType
+  inputValueCache: Ref<string>
+  confirmInputValueFlg: Ref<boolean>
+}
 export interface UseCascaderItemCallback {
-  cascaderItemNeedProps: PickCascader
+  cascaderItemNeedProps: CascaderItemNeedType
 }
