@@ -40,7 +40,6 @@ describe('Card', () => {
         expect(wrapper.find('.devui-card-title').text()).toBe('DEVUI Course')
         expect(wrapper.find('.devui-card-subtitle').text()).toBe('DevUI')
         expect(wrapper.find('.devui-card-content').text()).toBe('DEVUI')
-        expect(wrapper.find('.devui-card-content').text()).toBe('DEVUI')
         expect(wrapper.find('.devui-card-actions').exists()).toBeTruthy();
         expect(wrapper.find('.card-block').text()).toBe('btn')
     });
@@ -79,7 +78,6 @@ describe('Card', () => {
         expect(avatar.find('.devui-avatar-style').text()).toBe('DE')
         expect(wrapper.find('.devui-card-title').text()).toBe('DEVUI Course')
         expect(wrapper.find('.devui-card-subtitle').text()).toBe('DevUI')
-        expect(wrapper.find('.devui-card-content').text()).toBe('DEVUI')
         expect(wrapper.find('.devui-card-content').text()).toBe('DEVUI')
         expect(wrapper.find('.devui-card-actions').exists()).toBeTruthy();
         expect(wrapper.find('.card-block').text()).toBe('btn')
@@ -121,7 +119,6 @@ describe('Card', () => {
         expect(wrapper.find('.devui-card-subtitle').text()).toBe('DevUI')
         expect(wrapper.find('.devui-card-meta').attributes('src').includes('https://devui.design/components/assets/image1.png')).toBeTruthy();
         expect(wrapper.find('.devui-card-content').text()).toBe('DEVUI')
-        expect(wrapper.find('.devui-card-content').text()).toBe('DEVUI')
         expect(wrapper.find('.devui-card-actions').exists()).toBeTruthy();
         expect(wrapper.find('.card-block').text()).toBe('btn')
     });
@@ -161,7 +158,6 @@ describe('Card', () => {
         expect(avatar.find('.devui-avatar-style').text()).toBe('DE')
         expect(wrapper.find('.devui-card-title').text()).toBe('DEVUI Course')
         expect(wrapper.find('.devui-card-subtitle').text()).toBe('DevUI')
-        expect(wrapper.find('.devui-card-content').text()).toBe('DEVUI')
         expect(wrapper.find('.devui-card-content').text()).toBe('DEVUI')
         expect(wrapper.find('.devui-card-actions').exists()).toBeTruthy();
         expect(wrapper.find('.card-block').text()).toBe('btn')
