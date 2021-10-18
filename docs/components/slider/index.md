@@ -125,4 +125,3 @@ d-slider 参数
 | step      | number  | 1     | 可选，滑动输入条的步长，取值必须大于等于1，且必须可被(max-min)整除 |[基本用法](#可设置Step的滑动组件)       |
 | disabled  | boolean | false | 可选，值为 true 时禁止用户输入                          |[基本用法](#禁止输入态)      |
 | showInput | boolean | false | 可选，值为 true 显示输入框                                |[基本用法](#带有输入框的滑动组件)        |
-
