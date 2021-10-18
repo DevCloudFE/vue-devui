@@ -18,16 +18,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
-
-export default defineComponent({
-  setup() {
-    return {};
-  },
-});
-</script>
 <style scoped>
 .ripple-button {
   display: flex;
@@ -131,16 +121,6 @@ Button
     >
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
-
-export default defineComponent({
-  setup() {
-    return {};
-  },
-});
-</script>
 <style scoped>
 .ripple-button {
   display: flex;
@@ -170,23 +150,6 @@ Icon
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
-
-export default defineComponent({
-  setup() {
-    return {};
-  },
-});
-</script>
-<style scoped>
-.ripple-button {
-    display: flex;
-}
-.ripple-icon {
-    padding： 25px;
-}
-</style>
 ```
 
 :::
