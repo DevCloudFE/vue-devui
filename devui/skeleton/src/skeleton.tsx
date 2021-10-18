@@ -86,20 +86,26 @@ export default defineComponent({
 
       return (renderTitleWidth(titleWidth) + renderBorderRadius(isRound) + renderTitleVisibility(isVisible))
     }
+    function renderSkeleton(isLoading) {
+      if (isLoading) {
+        return (
+          <>
+            <div class="devui-skeleton__avatar" v-show={props.avatar}>
+              <div class="avatar" style={renderAvatarStyle(props.avatarSize, props.avatarShape)} />
+            </div>
+            <div class="devui-skeleton__item__group">
+              <div class="devui-skeleton__title" style={renderTitle(props.title, props.titleWidth, props.round)} />
+              {renderParagraph(props.paragraph, props.row, props.rowWidth, props.round)}
+            </div>
+          </>
+        )
+      }
+      return <>{slots.default?.()}</>
+    }
 
     return () => {
-      if (props.loading) {
-        return <div class={`devui-skeleton ${renderAnimate(props.animate)}`}>
-          <div class="devui-skeleton__avatar" v-show={props.avatar}>
-            <div class="avatar" style={renderAvatarStyle(props.avatarSize, props.avatarShape)} />
-          </div>
-          <div class="devui-skeleton__item__group">
-            <div class="devui-skeleton__title" style={renderTitle(props.title, props.titleWidth, props.round)} />
-            {renderParagraph(props.paragraph, props.row, props.rowWidth, props.round)}
-          </div>
-        </div>
-      }
-      return <div class={`devui-skeleton ${renderAnimate(props.animate)}`}>{slots.default?.()}
+      return <div class={`devui-skeleton ${renderAnimate(props.animate)}`}>
+        {renderSkeleton(props.loading)}
       </div>
     }
   }
