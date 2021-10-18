@@ -2,7 +2,6 @@ import type { SetupContext, Ref } from 'vue'
 import { unref, ref } from 'vue'
 import {
   TreeItem,
-  TreeData,
   SelectType,
   ReverseTree,
   CheckableRelationType,
