@@ -12,17 +12,36 @@
 
 ### 基本用法
 
-<d-icon name="emoji"></d-icon>
-<d-icon name="right" color="#3dcca6"></d-icon>
-<d-icon name="error" color="#f95f5b"></d-icon>
-<d-icon name="ban" color="#f95f5b" size="24px"></d-icon>
+:::demo 通过`name`属性，指定需要显示的图标。
 
-```html
-<d-icon name="emoji"></d-icon>
-<d-icon name="right" color="#3dcca6"></d-icon>
-<d-icon name="error" color="#f95f5b"></d-icon>
-<d-icon name="ban" color="#f95f5b" size="24px"></d-icon>
+```vue
+<d-icon name="like"></d-icon>
+<d-icon name="https://devui.design/components/assets/logo.svg" size="16px"></d-icon>
 ```
+
+:::
+
+### 图标颜色
+
+:::demo 通过`color`属性指定图标的颜色。
+
+```vue
+<d-icon name="right-o" color="#50d4ab"></d-icon>
+<d-icon name="error-o" color="#f95f5b"></d-icon>
+```
+
+:::
+
+### 图标大小
+
+:::demo 通过`size`属性，设置图标大小。
+
+```vue
+<d-icon name="experice-new" size="32px"></d-icon>
+<d-icon name="experice-new" size="48px"></d-icon>
+```
+
+:::
 
 ### 自定义字体图标
 
