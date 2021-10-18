@@ -1,7 +1,7 @@
 import { defineComponent, toRefs, provide } from 'vue'
 import type { SetupContext } from 'vue'
 import { treeProps, TreeProps, TreeItem, TreeRootType } from './tree-types'
-import { CHECK_CONFIG } from  './config';
+import { CHECK_CONFIG } from  './config'
 import { precheckTree } from './util'
 import Loading from '../../loading/src/service'
 import Checkbox from '../../checkbox/src/checkbox'
@@ -27,9 +27,9 @@ export default defineComponent({
     const { lazyNodesReflect, handleInitLazyNodeReflect, getLazyData } = useLazy()
     const { selected, onNodeClick } = useChecked(cbr, ctx, data.value)
 
-    provide<TreeRootType>('treeRoot', { ctx, props });
+    provide<TreeRootType>('treeRoot', { ctx, props })
     const Indent = () => {
-      return <span style="display: inline-block; width: 16px; height: 16px; margin-left: 8px"></span>
+      return <span style="display: inline-block; width: 16px; height: 16px; margin-left: 8px;"></span>
     }
     
     const renderNode = (item: TreeItem) => {

@@ -13,7 +13,7 @@ export default function useChecked(
   cbr: Ref<CheckableRelationType>,
   ctx: SetupContext,
   data: any[]
-): any {
+) {
   const selected = ref<SelectType>({})
   const flatData = flatten(data)
 
