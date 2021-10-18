@@ -1,3 +1,5 @@
+@import '../../styles-var/devui-var.scss';
+
 .devui-skeleton {
   display: flex;
   justify-content: space-between;
@@ -6,38 +8,48 @@
     display: flex;
     flex: 1;
     justify-content: center;
+    padding-right: 16px;
 
     .avatar {
       width: 40px;
       height: 40px;
-      background-color: #cccccc;
-      border-radius: 50%;
+      background-color: #f2f2f2;
     }
   }
 
   .devui-skeleton__item__group {
-    flex: 7;
+    flex: 11;
 
-    .devui-skeleton__item {
+    .devui-skeleton__item,
+    .devui-skeleton__title {
       width: 100%;
       height: 16px;
-      background-color: #cccccc;
-      display: inline-block;
-      border-radius: 4px;
+      background-color: #f2f2f2;
     }
 
-    .devui-skeleton__item:first-child {
-      width: 33%;
+    .devui-skeleton__title {
+      margin-top: 24px;
+    }
+
+    .devui-skeleton__paragraph {
+      margin-top: 12px;
     }
 
     .devui-skeleton__item:last-child {
-      width: 61%;
+      width: 60%;
     }
   }
 }
 
+.devui-skeleton-animated > .devui-skeleton__item__group > .devui-skeleton__title,
 .devui-skeleton-animated > .devui-skeleton__avatar > .avatar,
-.devui-skeleton-animated > .devui-skeleton__item__group > .devui-skeleton__item {
+.devui-skeleton-animated > .devui-skeleton__item__group > div > .devui-skeleton__item {
+  @keyframes skeletonLoading {
+    to {
+      background-position-x: -20%;
+    }
+  }
+
   background:
     linear-gradient(
       100deg,
@@ -45,18 +57,17 @@
       rgba(255, 255, 255, 0.5) 50%,
       rgba(255, 255, 255, 0) 60%
     )
-    #cccccc;
+    #f2f2f2;
   background-size: 200% 100%;
   background-position-x: 180%;
-  animation: 2s loading ease-in-out infinite;
+  animation: 2s skeletonLoading ease-in-out infinite;
+}
+
+.devui-skeleton__avatar > .avatar,
+.devui-skeleton__item__group > div > .devui-skeleton__item {
+  margin-top: 12px;
 }
 
 .devui-skeleton-animated > .devui-skeleton__avatar > .avatar {
   animation-delay: 0.1s;
-}
-
-@keyframes loading {
-  to {
-    background-position-x: -20%;
-  }
 }
