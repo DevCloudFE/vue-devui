@@ -114,19 +114,6 @@
     }
   })
 </script>
-
-
-<style lang="scss">
-  @import '@devui/styles-var/devui-var.scss';
-  .devui-tbody tr {
-    &:nth-child(2n) {
-      background-color: $devui-global-bg-normal;
-    }
-    &:hover {
-      background-color: $devui-list-item-hover-bg;
-    }
-  }
-</style>
 ```
 
 :::

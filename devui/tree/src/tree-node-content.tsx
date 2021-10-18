@@ -1,5 +1,5 @@
-import { defineComponent, h, inject } from 'vue';
-import { TreeRootType } from './tree-types';
+import { defineComponent, h, inject } from 'vue'
+import { TreeRootType } from './tree-types'
 
 export default defineComponent({
   name: 'DTreeNodeContent',
@@ -10,13 +10,13 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const tree = inject<TreeRootType>('treeRoot');
+    const tree = inject<TreeRootType>('treeRoot')
     return () => {
-      const node = props.node;
-      const { disabled, label } = node;
+      const node = props.node
+      const { disabled, label } = node
       return tree.ctx.slots.default
         ? tree.ctx.slots.default({ node })
-        : <span class={['devui-tree-node__title', disabled && 'select-disabled']}>{ label }</span>;
-    };
+        : <span class={['devui-tree-node__title', disabled && 'select-disabled']}>{ label }</span>
+    }
   },
-});
+})
