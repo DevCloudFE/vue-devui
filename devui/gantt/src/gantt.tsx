@@ -31,17 +31,19 @@ export default defineComponent({
       ganttScaleWidth,
     } = this
     return (
-      <div class="devui-gantt gantt-container" ref="ganttContainer">
-        <div class="header" style={{ width: `${ganttScaleWidth}px` }}>
-          <d-gantt-scale
-            startDate={startDate}
-            endDate={endDate}
-            unit={unit}
-            scrollElement={ganttContainer}
-          ></d-gantt-scale>
+      <div style={{ position: 'relative' }}>
+        <div class="devui-gantt gantt-container" ref="ganttContainer">
+          <div class="header" style={{ width: `${ganttScaleWidth}px` }}>
+            <d-gantt-scale
+              startDate={startDate}
+              endDate={endDate}
+              unit={unit}
+              scrollElement={ganttContainer}
+            ></d-gantt-scale>
+          </div>
+          <d-gantt-tools unit={unit}></d-gantt-tools>
+          <div class="body" style={{ width: `${ganttScaleWidth}px` }}></div>
         </div>
-        <d-gantt-tools unit={unit}></d-gantt-tools>
-        <div class="body" style={{ width: `${ganttScaleWidth}px` }}></div>
       </div>
     )
   },

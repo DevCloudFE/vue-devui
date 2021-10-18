@@ -28,8 +28,17 @@
     }
   }
 
+  .tool {
+    &.minus,
+    &.add {
+      .devui-btn {
+        min-width: 30px;
+      }
+    }
+  }
+
   .devui-select-selection {
-    width: 120px;
+    width: 90px;
 
     .devui-select-input {
       height: 32px;

@@ -137,8 +137,7 @@ export default defineComponent({
           >
             <div class={`devui-scale-start ${data.milestone}`}>
               {data.milestone && unit === 'day' && <div>{data.milestone}</div>}
-              {!data.milestone &&
-              unit !== 'day' &&
+              {(!data.milestone || unit !== 'day') &&
               data.scaleStartVisable &&
               (index === 0 || data.monthStart)
                 ? unit === 'month'
@@ -158,7 +157,7 @@ export default defineComponent({
                 </div>
               )}
               {(!highlight || !data.highlightStart) && unit === 'day' && (
-                <div class={`border-left ${data.today}`}>
+                <div class={`border-left ${data.today ? 'today' : ''}`}>
                   {data.today ? i18nText.zh.today : data.dayOfMonthLabel}
                 </div>
               )}
