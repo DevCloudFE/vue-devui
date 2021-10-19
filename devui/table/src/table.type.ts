@@ -2,7 +2,7 @@ import { PropType, ExtractPropTypes, ComponentInternalInstance } from 'vue';
 
 export const TableProps = {
   data: {
-    type: Array as PropType<any[]>,
+    type: Array as PropType<Record<string, any>[]>,
     default: [],
   },
   striped: {

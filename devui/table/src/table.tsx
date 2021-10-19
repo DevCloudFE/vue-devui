@@ -1,4 +1,4 @@
-import { provide, defineComponent, getCurrentInstance } from 'vue';
+import { provide, defineComponent, getCurrentInstance, computed } from 'vue';
 import { Table, TableProps, TablePropsTypes } from './table.type';
 import { useTable } from './use-table';
 import { createStore } from './store';
@@ -10,27 +10,26 @@ import './table.scss';
 export default defineComponent({
   name: 'DTable',
   props: TableProps,
-  setup(props: TablePropsTypes) {
+  setup(props: TablePropsTypes, ctx) {
     const table = getCurrentInstance() as Table;
     const store = createStore(props);
     table.store = store;
-    const { classes } = useTable(props);
     provide('table', table);
 
-    return { classes, store };
-  },
-  render() {
-    const { classes, data, store, $slots } = this;
-    return (
+    const classes = useTable(props);
+
+    const isEmpty = computed(() => props.data.length === 0);
+
+    return () => (
       <div class="devui-table-wrapper">
-        {$slots.default()}
-        <table class={classes} cellpadding="0" cellspacing="0">
-          <ColGroup />
-          <TableHeader store={store} />
-          {!!data.length && <TableBody store={store} />}
-        </table>
-        {!data.length && <div class="devui-table-empty">No Data</div>}
-      </div>
+      {ctx.slots.default()}
+      <table class={classes.value} cellpadding="0" cellspacing="0">
+        <ColGroup />
+        <TableHeader store={store} />
+        {!isEmpty.value && <TableBody store={store} />}
+      </table>
+      {isEmpty.value && <div class="devui-table-empty">No Data</div>}
+    </div>
     );
-  },
+  }
 });
