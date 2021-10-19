@@ -1,4 +1,4 @@
-import { defineComponent, inject } from 'vue'
+import { defineComponent, inject } from 'vue';
 import { Tabs } from './tabs';
 
 export default defineComponent({
@@ -17,19 +17,20 @@ export default defineComponent({
       default: false
     }
   },
-  setup(props, {slots}) {
-    const tabs = inject<Tabs>(
-      'tabs'
-    );
+  setup(props, { slots }) {
+    const tabs = inject<Tabs>('tabs');
     tabs.state.data.push(props);
     return () => {
-      const content = tabs.state.showContent &&  tabs.state.active === props.id  ? (
-      <div class="devui-tab-content">
-          <div role="tabpanel" class="devui-tab-pane in active">
-            {slots.default()}
-        </div>
-      </div>): null;
-      return content
-    }
+      const { id } = props;
+      const content =
+        tabs.state.showContent && tabs.state.active === id ? (
+          <div class='devui-tab-content'>
+            <div role='tabpanel' class='devui-tab-pane in active'>
+              {slots.default()}
+            </div>
+          </div>
+        ) : null;
+      return content;
+    };
   }
-})
+});
