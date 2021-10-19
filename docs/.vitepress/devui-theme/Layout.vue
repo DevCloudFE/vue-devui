@@ -81,7 +81,7 @@ const pageClasses = computed(() => {
   ]
 })
 
-// layout组件加载，初始化国际化语言
+// layout组件加载，初始化国际化语言.
 if (location.pathname.indexOf('-') >= 0){
   const result = location.pathname.match(/[a-zA-Z]*-[A-Z]*/)
   localStorage.setItem('preferred_lang', result[0])
