@@ -81,7 +81,8 @@ const pageClasses = computed(() => {
   ]
 })
 
-if (location.pathname.indexOf('-') >= 0){    // 说明此时是一个国际化的路径
+// layout组件加载，初始化国际化语言
+if (location.pathname.indexOf('-') >= 0){
   const result = location.pathname.match(/[a-zA-Z]*-[A-Z]*/)
   localStorage.setItem('preferred_lang', result[0])
 }else {

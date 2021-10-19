@@ -17,9 +17,7 @@ export const useTranslation = () => {
     console.log('当前的 lang:', lang.value)
 
     const switchLang = (targetLang:string) => {
-        console.log('触发国际化事件targetLang:', targetLang)
         if (lang.value === targetLang) return 
-        console.log('useRoute:', route.path)
         const firstSlash = route.path.indexOf('/', 1)
         let goTo
         if (route.path === '/'){

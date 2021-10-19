@@ -13,3 +13,6 @@ yarn-error.log
 devui/vue-devui.ts
 devui/theme/theme.scss
 docs/.vitepress/config/sidebar.ts
+docs/en-US/
+docs/.vitepress/vitepress/composables/lang.ts
+docs/.vitepress/vitepress/composables/translation.ts

@@ -5,8 +5,6 @@ import { watch, reactive, ref } from 'vue'
 
 const items = useSideBar()
 
-console.log('组件树:', items.value);
-console.log('此时的语言:', localStorage.getItem('preferred_lang'))
 const sidebarItem = {
   '/en-US/': [
      {
@@ -38,7 +36,4 @@ const sidebarItem = {
   <ul v-if="items.length > 0" class="sidebar-links">
     <SideBarLink v-for="item of items" :item="item" />
   </ul>
-  <!-- <ul v-if="items.length > 0" class="sidebar-links">
-    <SideBarLink v-for="item of sidebarItem" :item="item" />
-  </ul> -->
 </template>
