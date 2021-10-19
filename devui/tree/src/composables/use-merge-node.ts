@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 export default function useMergeNode(data: Array<any>): any {
 
@@ -7,8 +7,8 @@ export default function useMergeNode(data: Array<any>): any {
     treeItem,
     childName = 'children',
     labelName = 'label'
-  ): any => {
-    const { [childName]: children, [labelName]: label } = treeItem;
+  ) => {
+    const { [childName]: children, [labelName]: label } = treeItem
     if (
       Array.isArray(children) &&
       children.length === 1 &&
@@ -19,10 +19,10 @@ export default function useMergeNode(data: Array<any>): any {
         Object.assign({}, children[0], {
           [labelName]: `${label} \\ ${children[0][labelName]}`,
         })
-      );
+      )
     }
-    return treeItem;
-  };
+    return treeItem
+  }
 
   const mergeNode = (
     tree: Array<any>,
@@ -31,24 +31,24 @@ export default function useMergeNode(data: Array<any>): any {
     labelName = 'label'
   ): Array<any> => {
     return tree.map((item) => {
-      const { [childName]: children } = item;
+      const { [childName]: children } = item
       if (!Array.isArray(children) || !children.length) {
-        return Object.assign({}, item, { level: level + 1 });
+        return Object.assign({}, item, { level: level + 1 })
       }
-      let currentObject = item;
+      let currentObject = item
       if (children.length === 1) {
-        currentObject = mergeObject(item);
+        currentObject = mergeObject(item)
       }
       return Object.assign({}, currentObject, {
         [childName]: mergeNode(currentObject[childName], level + 1, childName, labelName),
         level: level + 1,
-      });
-    });
-  };
+      })
+    })
+  }
 
-  const mergeData = ref(mergeNode(data));
+  const mergeData = ref(mergeNode(data))
 
   return {
     mergeData,
-  };
+  }
 }

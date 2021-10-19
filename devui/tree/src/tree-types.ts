@@ -9,14 +9,33 @@ export interface TreeItem {
   children?: TreeData
   [key: string]: any
 }
+export interface SelectType {
+  [key: string]: 'none' | 'half' | 'select'
+}
+
+export interface ReverseTree {
+  id?: string
+  children?: string[]
+  parent?: ReverseTree 
+}
 
 export type TreeData = Array<TreeItem>
+
+export type CheckableRelationType = 'downward' | 'upward' | 'both' | 'none'
 
 export const treeProps = {
   data: {
     type: Array as PropType<TreeData>,
     required: true,
     default: () => [],
+  },
+  checkable: {
+    type: Boolean,
+    default: false
+  },
+  checkableRelation: {
+    type: String as () => CheckableRelationType,
+    default: 'none',
   }
 } as const
 
