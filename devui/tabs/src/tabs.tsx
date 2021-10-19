@@ -6,7 +6,8 @@ import {
   PropType,
   provide,
   reactive,
-  ref
+  ref,
+  Slot
 } from 'vue';
 import './tabs.scss';
 
@@ -19,6 +20,7 @@ interface TabsState {
   data?: any[]
   showContent: boolean
   active: any
+  slots: Slot[]
 }
 export default defineComponent({
   name: 'DTabs',
@@ -65,7 +67,8 @@ export default defineComponent({
     const state: TabsState = reactive({
       data: [],
       active: props.modelValue,
-      showContent: props.showContent
+      showContent: props.showContent,
+      slots: []
     });
     provide<Tabs>('tabs', {
       state
@@ -157,7 +160,7 @@ export default defineComponent({
             class={`devui-nav devui-nav-${ulClass.join(' ')}`}
             id='devuiTabs11'
           >
-            {state.data.map((item) => {
+            {state.data.map((item, i) => {
               return (
                 <li
                   role='presentation'
@@ -178,7 +181,11 @@ export default defineComponent({
                     data-toggle={item.id}
                     aria-expanded={props.modelValue === (item.id || item.tabId)}
                   >
-                    <span>{item.title}</span>
+                    {state.slots[i] ? (
+                      state.slots[i]()
+                    ) : (
+                      <span>{item.title}</span>
+                    )}
                   </a>
                 </li>
               );
