@@ -1,5 +1,3 @@
-import { TemplateRef } from '@angular/core';
-
 /* 基础数据类型 */
 type AccordionMenuItemLinkType = 'routerLink' | 'hrefLink' | string;
 export interface AccordionBase {
@@ -23,7 +21,7 @@ interface IAccordionLinkable {
 }
 export interface AccordionBaseItem
   extends AccordionBase,
-    IAccordionActiveable {
+  IAccordionActiveable {
 }
 export interface AccordionBaseMenu<T>
   extends AccordionBase,
@@ -37,9 +35,9 @@ export interface AccordionLinkableItem
 }
 export interface AccordionMenuItem
   extends AccordionBase,
-    IAccordionActiveable,
-    IAccordionFoldable<AccordionMenuItem>,
-    IAccordionLinkable {
+  IAccordionActiveable,
+  IAccordionFoldable<AccordionMenuItem>,
+  IAccordionLinkable {
 }
 
 export type AccordionMenuType = Array<AccordionMenuItem>;
@@ -56,38 +54,6 @@ export interface AccordionItemClickEvent {
   prevActiveItem?: any
   parent: any
   event: MouseEvent
-}
-
-/* 通用公共配置数据类型 */
-interface AccordionMenuKeyGroup {
-  titleKey?: string
-  activeKey?: string
-  disabledKey?: string
-  openKey?: string
-  loadingKey?: string
-  childrenKey?: string
-  linkKey?: string
-  linkTargetKey?: string
-  linkTypeKey?: string
-}
-
-type AccordionTemplateRefArray = 'itemTemplate' | 'menuItemTemplate' | 'noContentTemplate' | 'loadingTemplate' | 'innerListTemplate';
-type AccordionTemplateRefGroup = {
-  [p in AccordionTemplateRefArray]: TemplateRef<any>
-};
-interface AccordionConfigOptions {
-  restrictOneOpen?: boolean
-  autoOpenActiveMenu?: boolean
-  showNoContent?: boolean
-  linkDefaultTarget?: string
-  i18nCommonText?: any
-  i18nText?: any
-  linkType: 'routerLink' | 'hrefLink' | 'dependOnLinkTypeKey' | '' | string
-}
-export interface AccordionOptions
-  extends AccordionConfigOptions,
-  AccordionMenuKeyGroup,
-  AccordionTemplateRefGroup {
 }
 
 /* 废弃接口 */
@@ -117,7 +83,7 @@ export interface AccordionSubMenuItemRouterLink {
   [prop: string]: any
 }
 /** @deprecated  use `AccordionLinkableItem` instead*/
-export interface AccordionSubMenuItemDynamicLink  {
+export interface AccordionSubMenuItemDynamicLink {
   title: string
   link: string
   linkType: 'routerLink' | 'hrefLink' | string
