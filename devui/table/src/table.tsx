@@ -1,4 +1,4 @@
-import { provide, defineComponent, getCurrentInstance, computed } from 'vue';
+import { provide, defineComponent, getCurrentInstance, computed, toRef } from 'vue';
 import { Table, TableProps, TablePropsTypes } from './table.type';
 import { useTable } from './use-table';
 import { createStore } from './store';
@@ -12,7 +12,7 @@ export default defineComponent({
   props: TableProps,
   setup(props: TablePropsTypes, ctx) {
     const table = getCurrentInstance() as Table;
-    const store = createStore(props);
+    const store = createStore(toRef(props, 'data'));
     table.store = store;
     provide('table', table);
 
@@ -22,14 +22,14 @@ export default defineComponent({
 
     return () => (
       <div class="devui-table-wrapper">
-      {ctx.slots.default()}
-      <table class={classes.value} cellpadding="0" cellspacing="0">
-        <ColGroup />
-        <TableHeader store={store} />
-        {!isEmpty.value && <TableBody store={store} />}
-      </table>
-      {isEmpty.value && <div class="devui-table-empty">No Data</div>}
-    </div>
+        {ctx.slots.default()}
+        <table class={classes.value} cellpadding="0" cellspacing="0">
+          <ColGroup />
+          <TableHeader store={store} />
+          {!isEmpty.value && <TableBody store={store} />}
+        </table>
+        {isEmpty.value && <div class="devui-table-empty">No Data</div>}
+      </div>
     );
   }
 });

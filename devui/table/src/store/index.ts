@@ -1,20 +1,21 @@
-import { ref, watch } from 'vue';
-import { TablePropsTypes } from '../table.type';
+import { watch, Ref, ref } from 'vue';
 import { Column } from '../column/column.type';
 
-export function createStore(props: TablePropsTypes): any {
-  const _data = ref([]);
-  const _columns = ref([]);
-  updateData();
-
-  watch(() => props.data, updateData, { deep: true });
-
-  function updateData() {
-    _data.value = [];
-    props.data.forEach((item) => {
-      _data.value.push(item);
-    });
+export interface TableStore<T = Record<string, any>> {
+  insertColumn(column: Column): void
+  states: {
+    _data: Ref<T[]>
+    _columns: Ref<Column[]>
   }
+}
+
+export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
+  const _data: Ref<T[]> = ref([]);
+  const _columns: Ref<Column[]> = ref([]);
+
+  watch(dataSource, (value: T[]) => {
+    _data.value = [...value];
+  }, { deep: true, immediate: true });
 
   const insertColumn = (column: Column) => {
     _columns.value.push(column);
