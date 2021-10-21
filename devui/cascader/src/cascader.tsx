@@ -16,7 +16,6 @@ export default defineComponent({
     const origin = ref(null)
     const cascaderOptions = reactive<[CascaderItem[]]>([ props?.options ])
     
-    const value: ValueType = reactive(props.value)
     const inputValue = ref('')
     const position = reactive({
       originX: 'left', 
@@ -25,31 +24,29 @@ export default defineComponent({
       overlayY: 'top'
     } as const)
     // popup弹出层
-    const { menuShow, menuOpenClass, openPopup } = popupHandles()
+    const { menuShow, menuOpenClass, openPopup } = popupHandles(props)
     // 配置class
     const rootClasses = getRootClass(props, menuShow)
     // 传递给cascaderItem的props
-    // console.log(ctx.attrs)
-    const { cascaderItemNeedProps } = useCascaderItem(props, value)
+    const { cascaderItemNeedProps } = useCascaderItem(props)
     /**
      * 
      * @param value value数组
      * @param index 起始项
      */
-    const getCascaderLoop = (value: ValueType, currentOption: CascaderItem[], index: number) => {
+    const getCascaderLoop = (value: CascaderValueType, currentOption: CascaderItem[], index: number) => {
       if (index === value.length) return
       // 区分单选多选模式
       if (!props.multiple) {
         const i = value[index]
-        if (currentOption[i as number].children?.length > 0) {
+        getInputValue(currentOption[i as number]?.label, currentOption[i as number]?.children)
+        if (currentOption[i as number]?.children?.length > 0) {
           // 为下一级增添数据
           cascaderOptions[index + 1] = currentOption[i as number].children
           // 递归添加
-          console.log(currentOption[i as number])
-          getInputValue(currentOption[i as number].label)
           getCascaderLoop(value, currentOption[i as number].children, index + 1)
         } else {
-          // 当最新的ul没有下一级时删除之前选中ul的数据
+          // 当最新的ul(级)没有下一级时删除之前选中ul的数据
           cascaderOptions.splice(index + 1, cascaderOptions.length - 1)
         }
       }
@@ -59,25 +56,22 @@ export default defineComponent({
      * 
      * @param value 当前value数组
      */
-    const getInputValue = (label: string) => {
-      cascaderItemNeedProps.inputValueCache.value += (label + ' / ')
+    const getInputValue = (label: string, arr?: CascaderItem[]) => {
+      cascaderItemNeedProps.inputValueCache.value += (label + (arr?.length > 0 ? ' / ' : ''))
     }
     /**
      * 监听value值的改变
      * 改变cascaderOptions弹窗内容
      * 改变展示值
      */
-    watch(value, (val) => {
-      // cascaderOptions = [ props?.options ]
-      console.log(val)
+    watch(cascaderItemNeedProps.value, (val) => {
       cascaderItemNeedProps.inputValueCache.value = ''
       getCascaderLoop(val, props?.options, 0)
     })
 
-    watch(() => cascaderItemNeedProps.confirmInputValueFlg.value, (val) => {
-      console.log('确定值')
-      // inputValue.value = ''
+    watch(() => cascaderItemNeedProps.confirmInputValueFlg.value, () => {
       inputValue.value = cascaderItemNeedProps.inputValueCache.value
+      menuShow.value = false
     })
     return () => (
       <>

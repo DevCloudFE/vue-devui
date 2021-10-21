@@ -1,5 +1,5 @@
 import type { PropType, ExtractPropTypes } from 'vue'
-import { CascaderItem, PickCascader } from '../../src/cascader-types'
+import { CascaderItem, CascaderItemNeedType } from '../../src/cascader-types'
 export const cascaderulProps = {
   /**
    * 每个ul中的li
@@ -20,7 +20,7 @@ export const cascaderulProps = {
     default: 0
   },
   cascaderItemNeedProps: {
-    type: Object as PropType<PickCascader>,
+    type: Object as PropType<CascaderItemNeedType>,
     default: {}
   },
   cascaderOptions: {
@@ -29,3 +29,9 @@ export const cascaderulProps = {
   }
 }
 export type CascaderulProps = ExtractPropTypes<typeof cascaderulProps>
+
+export interface CascaderItemPropsType extends CascaderulProps {
+  cascaderItem: CascaderItem
+  liIndex: number
+  cascaderItemNeedProps: CascaderItemNeedType
+}

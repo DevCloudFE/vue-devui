@@ -1,7 +1,7 @@
 /**
  * 处理传入options数据
  */
-import { CascaderItem, OptionsCallback, CaascaderOptionsType, CascaderProps } from '../src/cascader-types'
+import { CascaderItem, OptionsCallback, CaascaderOptionsType } from '../src/cascader-types'
 export const optionsHandles = (cascaderOptions?: CaascaderOptionsType): OptionsCallback => {
 
   /**
@@ -19,19 +19,7 @@ export const optionsHandles = (cascaderOptions?: CaascaderOptionsType): OptionsC
       cascaderOptions.splice(ulIndex + 1, cascaderOptions.length - 1 - ulIndex)
     }
   }
-  /**
-   * 根据value，数据反显
-   */
-  // const reflectViewData = (propsData?: CascaderProps) => {
-  //   // 单选模式
-  //   if (!propsData.multiple) {
-  //     for (let i = 0; i < cascaderOptions.length; i++) {
-        
-  //     }
-  //   } else {
-  //     // 多选模式
-  //   }
-  // }
+
   return {
     cascaderOptions,
     changeCascaderIndexs

@@ -9,6 +9,11 @@
     color: $devui-text;
     cursor: pointer;
     @include flex(flex-start);
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   .dropdown-item-label {
@@ -18,5 +23,18 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: $devui-font-size;
+  }
+
+  &.devui-leaf-active {
+    background: $devui-list-item-hover-bg;
+
+    span {
+      color: $devui-brand-active;
+    }
+  }
+
+  &.disabled {
+    background-color: $devui-disabled-bg;
+    cursor: not-allowed;
   }
 }

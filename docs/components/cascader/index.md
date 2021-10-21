@@ -1,13 +1,19 @@
 # 级联菜单
 下拉级联菜单。
-
 ### 基本用法
+
 :::demo
 
 ```vue
 <template>
+  <h4>hover mode</h4>
   <d-cascader :options="options" placeholder="请选择" style="width: 200px"></d-cascader>
+  <h4>click mode</h4>
   <d-cascader :options="options2" trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
+  <h4>data empty</h4>
+  <d-cascader :options="[]" trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
+  <h4>disabled</h4>
+  <d-cascader :options="[]" disabled trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
 </template>
 <script>
 import { defineComponent, reactive } from 'vue'
@@ -217,12 +223,23 @@ export default defineComponent({
 
 :::
 
+<style>
+  h4 {
+    font-weight: 700;
+    color: #575d6c;
+    font-size: 12px;
+    margin: 15px 0;
+  }
+</style>
+
 ### API
 
 |    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         |  全局配置项 |
 | :--------: | :------: | :-------: | :---------------------- | --------------------------------- | --------- |
+| trigger    | ` 'hover'\|'click' ` |	'hover' |	可选，指定展开次级菜单的方式 |  [基本用法](#基本用法) | |
 | options    |	[`CascaderItem[]`](#CascaderItem) |	[] |	必选，级联器的菜单信息 |  [基本用法](#基本用法) | |
 | placeholder    | `string` |	'' |	可选，没有选择时的输入框展示信息 |  [基本用法](#基本用法) | |
+| disabled    | `boolean` |	false |		可选，级联器是否禁用 |  [基本用法](#基本用法) | |
 
 ### 接口 & 类型定义
 
