@@ -8,8 +8,11 @@
 3. 当需要显示一个操作完成的百分比或已完成的步骤/总步骤时。
 
 ### 基本用法
-基本的进度和文字配置。
 
+
+::: demo 基本的进度和文字配置。
+```vue
+<template>
 <section class="devui-code-box-demo">
     <div class="progress-container">
         <d-progress :percentage="80" percentageText="80%"></d-progress>
@@ -18,61 +21,46 @@
         <d-progress :percentage="30" percentageText="30%" barbgcolor="#50D4AB" height="30px"></d-progress>
     </div>
 </section>
-
-
-```html
-<div class="progress-container">
-    <d-progress :percentage="80" percentageText="80%"></d-progress>
-</div>
-<div class="progress-container">
-    <d-progress :percentage="30" percentageText="30%" barbgcolor="#50D4AB" height="30px"></d-progress>
-</div>
-```
-
-```css
+</template>
+<style>
 .progress-container {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
+.devui-code-box-demo{
+    border-bottom: 1px dashed #dfe1e6;
+    padding: 16px 0;
+    .progress-container {
+        margin-bottom: 20px;
+    }
+}
+</style>
 ```
+:::
 
 ### 圆环用法
-基本的进度和文字配置。
-
-<section class="devui-code-box-demo">
-    <div class="progress-container-circle">
-        <d-progress :isCircle="true" :percentage="80" :showContent="false"> </d-progress>
-    </div>
-    <div class="progress-container-circle">
-        <d-progress :isCircle="true" :percentage="80" barbgcolor="#50D4AB" :strokeWidth="8">
-        </d-progress>
-    </div>
-    <div class="progress-container-circle">
-        <d-progress :isCircle="true" :percentage="80" barbgcolor="#50D4AB">
-            <d-icon
-                name="right"
-                color="#3dcca6"
-                class="icon-position"
-            />
-        </d-progress>
-    </div>
-</section>
-
-
-```html
-<div class="progress-container">
-    <d-progress :isCircle="true" :percentage="80" :showContent="false"></d-progress>
-</div>
-<div class="progress-container">
-    <d-progress :isCircle="true" :percentage="80" barbgcolor="#50D4AB" :strokeWidth="8"></d-progress>
-</div>
-<div class="progress-container">
-    <d-progress :isCircle="true" :percentage="80" barbgcolor="#50D4AB">
-        <d-icon name="right" color="#3dcca6" class="icon-position" />
-    </d-progress>
-</div>
-```
-
-```css
+::: demo
+```vue
+<template>
+    <section class="devui-code-box-demo">
+        <div class="progress-container-circle">
+            <d-progress :isCircle="true" :percentage="80" :showContent="false"> </d-progress>
+        </div>
+        <div class="progress-container-circle">
+            <d-progress :isCircle="true" :percentage="80" barbgcolor="#50D4AB" :strokeWidth="8">
+            </d-progress>
+        </div>
+        <div class="progress-container-circle">
+            <d-progress :isCircle="true" :percentage="80" barbgcolor="#50D4AB">
+                <d-icon
+                    name="right"
+                    color="#3dcca6"
+                    class="icon-position"
+                />
+            </d-progress>
+        </div>
+    </section>
+</template>
+<style>
 .progress-container-circle {
     height: 130px;
     width: 130px;
@@ -80,7 +68,6 @@
     display: inline-block;
     margin-right: 10px;
 }
-
 .icon-position {
     position: absolute;
     top: 50%;
@@ -95,7 +82,10 @@
     color: #50d4ab;
     font-size: 24px;
 }
+
+</style>
 ```
+:::
 
 ### API
 #### d-progress 参数
@@ -108,35 +98,3 @@
 | isCircle |  `boolean` | false | 可选， 显示进度条是否为圈形 | [圆环用法](#圆环用法) |
 | strokeWidth |  `number` | 6 | 可选，设置圈形进度条宽度，单位是进度条与画布宽度的百分比 | [圆环用法](#圆环用法) |
 | showContent |  `boolean` | true | 可选，设置圈形进度条内是否展示内容 | [圆环用法](#圆环用法) |
-
-
-<style lang="scss">
-.devui-code-box-demo{
-    border-bottom: 1px dashed #dfe1e6;
-    padding: 16px 0;
-    .progress-container {
-        margin-bottom: 20px;
-    }
-    .progress-container-circle {
-        height: 130px;
-        width: 130px;
-        font-size: 20px;
-        display: inline-block;
-        margin-right: 10px;
-        .icon-position {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            line-height: 1;
-            white-space: normal;
-            text-align: center;
-            transform: translate(-50%, -50%);
-            color: #50d4ab;
-            font-size: 24px;
-        }
-    }
-}
-</style>
