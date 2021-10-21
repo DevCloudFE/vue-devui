@@ -4,11 +4,7 @@
 
 ### 使用
 
-用户 可以在组件 或者 HTML 元素上任意使用 <span color="#409EFF">`v-ripple`</span> 指令 使用基本的 <span color="#409EFF">`v-ripple`</span> 指令， `v-ripple` 接收 一个对象
-
-<div class="ripple-htmlElement" v-ripple="{ duration: 0.5 }">HTML元素 中使用 v-ripple</div>
-
-:::demo
+:::demo 用户 可以在组件 或者 HTML 元素上任意使用 <span color="#409EFF">`v-ripple`</span> 指令 使用基本的 <span color="#409EFF">`v-ripple`</span> 指令， `v-ripple` 接收 一个对象
 
 ```vue
 <template>
