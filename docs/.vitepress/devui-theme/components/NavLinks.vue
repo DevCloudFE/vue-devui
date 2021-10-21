@@ -11,7 +11,6 @@ const { theme } = useData()
 const localeLinks = useLocaleLinks()
 const repo = useRepo()
 const show = computed(() => theme.value.nav || repo.value || localeLinks.value)
-console.log('主题是什么:', theme)
 let translationTheme = computed( () => localStorage.getItem('preferred_lang') === 'zh-CN' ? theme.value.nav : enNav )
 </script>
 

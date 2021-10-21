@@ -42,7 +42,7 @@ defineEmits(['toggle'])
 
     <div class="flex-grow" />
 
-    <div class="flex" style="align-items:center;">
+    <div class="flex items-center">
       <div class="nav">
         <NavLinks />
       </div>
