@@ -18,11 +18,11 @@ export interface NavMenu {
 export const navSpriteProps = {
     // // 爬取目录的容器
     target: {
-        type: HTMLElement
+        type: Object,
     },
     // // 指定滚动的DOM
     scrollTarget: {
-        type: HTMLElement,
+        type: Object,
     },
     // // 矫正参数
     view: {
