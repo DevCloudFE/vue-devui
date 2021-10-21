@@ -150,7 +150,7 @@ Icon
 
 :::
 
-<style scoped>
+<style>
 .ripple-htmlElement {
     width: 600px;
     height: 150px; 
