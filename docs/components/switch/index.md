@@ -101,10 +101,10 @@ export default defineComponent({
 
 |       参数       |            类型            |   默认   |             说明             | 跳转 Demo                 |
 | :--------------: | :------------------------: | :------: | :--------------------------: | :------------------------ |
-|       size       | `small \| middle \| large` | `middle` |      可选，开关尺寸大小      | [基本用法](#基本用法)     |
+|       size       | `small \| middle \| large` | `middle` |      可选，开关尺寸大小      | [size](#size)     |
 |      color       |          `string`          |    --    | 可选，开关打开时的自定义颜色 | [自定义样式](#自定义样式) |
-|     checked      |         `boolean`          |  false   | 可选，开关是否打开，默认关闭 | [基本用法](#基本用法)     |
-|     disabled     |         `boolean`          |  false   |      可选，是否禁用开关      | [基本用法](#基本用法)     |
+|     checked      |         `boolean`          |  false   | 可选，开关是否打开，默认关闭 | [基本用法](#size)     |
+|     disabled     |         `boolean`          |  false   |      可选，是否禁用开关      | [基本用法](#size)     |
 |  checkedContent  |  `string \| HTMLElement`   |    ''    |     可选，开关打开时说明     | [自定义样式](#自定义样式) |
 | uncheckedContent |  `string \| HTMLElement`   |    ''    |     可选，开关关闭时说明     | [自定义样式](#自定义样式) |
 
