@@ -13,7 +13,7 @@
   }
 
   &-striped {
-    tbody tr:nth-child(even) {
+    tbody tr:nth-child(odd) {
       background-color: $devui-list-item-strip-bg;
     }
   }
