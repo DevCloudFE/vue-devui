@@ -8,22 +8,44 @@
 2. 单独使用可以表示在两个状态之间切换，可以和提交操作结合。
 
 ### 基本用法
+:::demo
 
-<d-checkbox label="Checked" :isShowTitle="false" v-model="checked" />
-<d-checkbox label="Not checked" :isShowTitle="false" v-model="unchecked" />
+```vue
+<template>
+  <d-checkbox label="Checked" :isShowTitle="false" v-model="checked" />
+  <d-checkbox label="Not checked" :isShowTitle="false" v-model="unchecked" />
+</template>
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
 
-```html
-<d-checkbox label="Checked" :isShowTitle="false" v-model="checked" />
-<d-checkbox label="Not checked" :isShowTitle="false" v-model="unchecked" />
+export default defineComponent({
+  setup() {
+    const checked = ref(true)
+    const unchecked = ref(false)
+    return {
+      checked,
+      unchecked
+    }
+  }
+})
+</script>
 ```
+:::
+
 
 #### 使用 CheckboxGroup
-<d-checkbox-group v-model="checkedValues" label="爱好">
-  <d-checkbox label="篮球" value="basketball" />
-  <d-checkbox label="足球" value="football" />
-</d-checkbox-group>
-<div>{{ checkedValues.reduce((prev, current) => `${current} ${prev}`, '') }}</div>
+:::demo
 
+```vue
+<template>
+  <d-checkbox-group v-model="checkedValues" label="爱好">
+    <d-checkbox label="篮球" value="basketball" />
+    <d-checkbox label="足球" value="football" />
+  </d-checkbox-group>
+<div>
+  {{ checkedValues.reduce((prev, current) => `${current} ${prev}`, '') }}
+</div>
+</template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
@@ -40,3 +62,5 @@ export default defineComponent({
   }
 })
 </script>
+```
+:::
