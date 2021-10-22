@@ -9,6 +9,10 @@ export const TableProps = {
     type: Boolean,
     default: false,
   },
+  headerBg:{
+    type: Boolean,
+    default: false
+  }
 };
 
 export type TablePropsTypes = ExtractPropTypes<typeof TableProps>;

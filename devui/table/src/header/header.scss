@@ -16,3 +16,11 @@
     }
   }
 }
+
+.header-bg {
+  thead.devui-thead {
+    tr {
+      background: var(--devui-list-item-hover-bg, #f2f5fc);
+    }
+  }
+}
