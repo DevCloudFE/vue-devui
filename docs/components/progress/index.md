@@ -51,11 +51,12 @@
         </div>
         <div class="progress-container-circle">
             <d-progress :isCircle="true" :percentage="80" barbgcolor="#50D4AB">
-                <d-icon
-                    name="right"
-                    color="#3dcca6"
-                    class="icon-position"
-                />
+                <span class="icon-position">
+                    <d-icon
+                        name="right"
+                        color="#3dcca6"
+                    />
+                </span>
             </d-progress>
         </div>
     </section>
