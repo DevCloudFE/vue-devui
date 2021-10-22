@@ -13,7 +13,9 @@ export function useTable(props: TablePropsTypes): TableConfig {
   }));
   const style: ComputedRef<CSSProperties> = computed(() => ({
     maxHeight: props.maxHeight,
-    maxWidth: props.maxWidth    
+    maxWidth: props.maxWidth,
+    height: props.tableHeight,
+    width: props.tableWidth
   }));
   return {classes, style};
 }

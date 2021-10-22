@@ -22,6 +22,13 @@ export const TableProps = {
   maxHeight: {
     type: String,
   },
+  tableWidth: {
+    type: String,
+  },
+  tableHeight: {
+    type: String,
+    default: '360px'
+  },
   size: {
     type: String as PropType<TableSize>,
     validator(value: string): boolean {
@@ -31,6 +38,10 @@ export const TableProps = {
   rowHoveredHighlight: {
     type: Boolean,
     default: true
+  },
+  fixHeader: {
+    type: Boolean,
+    default: false
   }
 };
 
