@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useSideBar } from '../composables/sideBar'
 import { SideBarLink } from './SideBarLink'
-import { watch, reactive, ref } from 'vue'
 
 const items = useSideBar()
 
