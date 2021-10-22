@@ -1,13 +1,19 @@
-import { computed } from 'vue';
+import { computed, ComputedRef } from 'vue';
+import { Column } from '../column/column.type';
 import { TableBodyPropsTypes } from './body.type'
 
-export function useTableBody(props: TableBodyPropsTypes): any {
-  const storeData = props.store.states;
+interface Data {
+  rowColumns: ComputedRef<(Record<string, any> & { columns: Column[]; })[]>
+}
+
+export const useTableBody = (props: TableBodyPropsTypes): Data => {
+  const states = props.store.states;
   const rowColumns = computed(() => {
-    return storeData._data.value.map((row) => {
-      const obj = Object.assign({}, row);
-      obj.columns = storeData._columns.value;
-      return obj;
+    return states._data.value.map((row) => {
+      return {
+        ...row, 
+        columns: states._columns.value
+      };
     });
   });
 
