@@ -16,12 +16,12 @@ export default defineComponent({
     table.store = store;
     provide('table', table);
 
-    const classes = useTable(props);
+    const { classes, style } = useTable(props);
 
     const isEmpty = computed(() => props.data.length === 0);
 
     return () => (
-      <div class="devui-table-wrapper">
+      <div class="devui-table-wrapper" style={style.value}>
         {ctx.slots.default()}
         <table class={classes.value} cellpadding="0" cellspacing="0">
           <ColGroup />
