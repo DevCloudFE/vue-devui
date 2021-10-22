@@ -6,31 +6,64 @@
 
 ### 基本用法
 
-<d-slider :min="minValue" :max="maxValue"  v-model='inputValue'></d-slider>
-
 :::demo
+
 ```vue
+<template>
+  <div class="slider-wrapper" style="padding:20px">
+    <d-slider :min="minValue" :max="maxValue" v-model="inputValue"></d-slider>
+  </div>
+</template>
+
 <script>
-  import { defineComponent, ref } from 'vue'
-  export default defineComponent({
-    setup() {
-      const inputValue = ref(0);
-      const minValue = ref(0);
-      const maxValue = ref(100);
-      return {
-        inputValue,
-        maxValue,
-        minValue
-      };
-    },
-  });
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const inputValue = ref(12);
+    const minValue = ref(0);
+    const maxValue = ref(20);
+    return {
+      inputValue,
+      maxValue,
+      minValue,
+    };
+  },
+});
 </script>
 ```
+
 :::
+
 ### 可设置 Step 的滑动组件
 
-<br />
-<d-slider :min="minValue" :max="maxValue" v-model='inputValue3' :step="step"></d-slider>
+:::demo
+
+```vue
+<template>
+  <div class="slider-wrapper" style="padding:20px">
+    <d-slider :min="minValue" :max="maxValue" v-model="inputValue" :step="step"></d-slider>
+  </div>
+</template>
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const inputValue = ref(8);
+    const minValue = ref(0);
+    const maxValue = ref(20);
+    const step = ref(4);
+    return {
+      inputValue,
+      maxValue,
+      minValue,
+      step,
+    };
+  },
+});
+</script>
+```
+
+:::
 
 ### 带有输入框的滑动组件
 
@@ -38,31 +71,27 @@
 
 ```vue
 <template>
-  <d-slider :min="minValue" :max="maxValue" v-model="inputValue"></d-slider>
-
-  <d-slider :min="minValue" :max="maxValue" v-model="inputValue2" showInput></d-slider>
-
-  <d-slider :min="minValue" :max="maxValue" v-model="inputValue3" :step="step"></d-slider>
+  <div class="slider-wrapper" style="padding:20px">
+    <d-slider :min="minValue" :max="maxValue" v-model="inputValue" showInput></d-slider>
+  </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref } from "vue";
-  export default defineComponent({
-    setup() {
-      const inputValue = ref(0);
-      const minValue = ref(0);
-      const maxValue = ref(100);
-      const step = ref(4);
-
-      return {
-        inputValue,
-        maxValue,
-        minValue,
-        step
-      };
-    },
-  });
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const inputValue = ref(10);
+    const minValue = ref(0);
+    const maxValue = ref(20);
+    return {
+      inputValue,
+      maxValue,
+      minValue,
+    };
+  },
+});
 </script>
 ```
+
 :::
 
 ### 禁止输入态
@@ -70,26 +99,61 @@
 :::demo
 
 ```vue
-<d-slider :min="minValue" :max="maxValue" :disabled="true" v-model='disabledValue'></d-slider>
+<template>
+  <div class="slider-wrapper" style="padding:20px">
+    <d-slider :min="minValue" :max="maxValue" disabled v-model="disabledValue"></d-slider>
+  </div>
+</template>
 <script>
-  import { defineComponent, ref } from 'vue'
-
-  export default defineComponent({
-    setup() {
-      const disabledValue = ref(5);
-      const maxValue = ref(50);
-      const minValue = ref(2);
-
-      return {
-        disabledValue,
-        maxValue,
-        minValue,
-      };
-    },
-  });
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const disabledValue = ref(5);
+    const maxValue = ref(50);
+    const minValue = ref(2);
+    return {
+      disabledValue,
+      maxValue,
+      minValue,
+    };
+  },
+});
 </script>
-
 ```
+
+:::
+
+### 异定制 Popover 的显示内容
+
+通过 tipsRenderer 参数传入函数定制 Popover 内的显示内容。
+:::demo
+
+```vue
+<template>
+<div>
+<div class="slider-wrapper" style="padding:20px">
+  <d-slider  :min="minValue" :max="maxValue" v-model="inputValue" tipsRenderer="apple"></d-slider>
+   <br style="margin-bottom: 20px" />
+  <d-slider :min="minValue" :max="maxValue"  v-model="inputValue" tipsRenderer="null" ></d-slider>
+</div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const inputValue = ref(5);
+    const maxValue = ref(50);
+    const minValue = ref(2);
+    return {
+      inputValue,
+      maxValue,
+      minValue,
+    };
+  },
+});
+</script>
+```
+
 :::
 
 ### API
