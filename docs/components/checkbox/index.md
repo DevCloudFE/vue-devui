@@ -15,6 +15,7 @@
   <d-checkbox label="Checked" :isShowTitle="false" v-model="checked" />
   <d-checkbox label="Not checked" :isShowTitle="false" v-model="unchecked" />
 </template>
+
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
@@ -42,10 +43,11 @@ export default defineComponent({
     <d-checkbox label="篮球" value="basketball" />
     <d-checkbox label="足球" value="football" />
   </d-checkbox-group>
-<div>
-  {{ checkedValues.reduce((prev, current) => `${current} ${prev}`, '') }}
-</div>
+  <div>
+    {{ checkedValues.reduce((prev, current) => `${current} ${prev}`, '') }}
+  </div>
 </template>
+
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
