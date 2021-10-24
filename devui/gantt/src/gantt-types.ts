@@ -13,4 +13,5 @@ export const ganttProps = {
   },
 } as const
 
+
 export type GanttProps = ExtractPropTypes<typeof ganttProps>
