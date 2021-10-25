@@ -1,0 +1,12 @@
+@import '../../style/core/form';
+@import '../../style/mixins/flex';
+
+.devui-textarea-wrap {
+  .devui-textarea-show-count {
+    text-align: right;
+    color: #00000073;
+    white-space: nowrap;
+    pointer-events: none;
+    font-size: $devui-font-size;
+  }
+}
