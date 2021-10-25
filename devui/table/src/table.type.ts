@@ -14,7 +14,7 @@ export const TableProps = {
     default: false
   },
   tableLayout:{
-    type: String,
+    type: String as PropType<'fixed' | 'auto'>,
     default: 'fixed'
   }
 };
