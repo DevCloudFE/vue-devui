@@ -12,6 +12,10 @@ export const TableProps = {
   headerBg:{
     type: Boolean,
     default: false
+  },
+  tableLayout:{
+    type: String,
+    default: 'fixed'
   }
 };
 
