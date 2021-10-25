@@ -220,7 +220,7 @@
 | data         | `Array`             | `[]`      | 显示的数据               |
 | striped      | `Boolean`           | `false`   | 是否显示斑马纹间隔       |
 | header-bg    | `Boolean`           | `false`   | 可选，表头是否显示背景色 |
-| table-layout | `'fixed' \| 'auto'` | `'fixed'` | 可选，表格布局           |
+| table-layout | `String` | `'fixed'` | 表格布局，可选值为`'auto'`|
 
 ### d-column Props
 
