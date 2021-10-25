@@ -20,7 +20,38 @@ export default defineComponent({
   setup(props: SplitterPaneProps, { slots, expose }) {
     const store: SplitterStore = inject('splitterStore');
     const domRef = ref<null | HTMLElement>();
-    const order = ref();
+    const orderRef = ref();
+    watch([orderRef, domRef],
+      ([order, ele]) => {
+        if (!ele) {
+          return;
+        }
+        setStyle(ele, { order });
+      }
+    );
+
+    // pane 初始化大小
+    const setSizeStyle = (curSize: string) => {
+      const ele = domRef.value;
+      if (!ele) {
+        return;
+      }
+
+      ele.style.flexBasis = curSize;
+      const paneFixedClass = 'devui-splitter-pane-fixed';
+      if (curSize) {
+        // 设置 flex-grow 和 flex-shrink
+        addClass(ele, paneFixedClass);
+      } else {
+        removeClass(ele, paneFixedClass);
+      }
+    };
+
+    watch(
+      () => props.size,
+      setSizeStyle,
+      { immediate: true }
+    );
 
     const orientation = inject('orientation');
     let initialSize = ''; // 记录初始化挂载传入的大小
@@ -35,70 +66,59 @@ export default defineComponent({
 
     // 获取当前 pane大小
     const getPaneSize = (): number => {
-      const el = domRef?.value;
+      const ele = domRef.value;
+      if (!ele) {
+        return;
+      }
       if (orientation === 'vertical') {
-        return el.offsetHeight;
+        return ele.offsetHeight;
       } else {
-        return el.offsetWidth;
+        return ele.offsetWidth;
       }
     };
 
 
-    onMounted(() => {
-      watch([order, domRef], ([order, dom]) => {
-        if (!(dom instanceof HTMLElement)) {
+    watch(
+      () => props.collapsed,
+      (collapsed: boolean) => {
+        const ele = domRef.value;
+        if (!ele) {
           return;
         }
-        setStyle(dom, { order });
-      });
-
-      watch(() => props.size, (curSize: string) => {
-        const ele = domRef.value;
-        ele.style.flexBasis = curSize;
-        const paneFixedClass = 'devui-splitter-pane-fixed';
-        if (curSize) {
-          // 设置 flex-grow 和 flex-shrink
-          addClass(ele, paneFixedClass);
-        } else {
-          removeClass(ele, paneFixedClass);
-        }
-      }, { immediate: true });
-
-      watch(() => props.collapsed, (collapsed: boolean) => {
         const paneHiddenClass = 'devui-splitter-pane-hidden';
-        nextTick(() => {
-          const el = domRef.value;
-          if (!collapsed) {
-            removeClass(el, paneHiddenClass);
-          } else {
-            addClass(el, paneHiddenClass);
-          }
+        if (!collapsed) {
+          removeClass(ele, paneHiddenClass);
+        } else {
+          addClass(ele, paneHiddenClass);
+        }
 
-          if (collapsed && props.shrink) {
-            removeClass(el, paneHiddenClass);
-            setStyle(el, { flexBasis: `${props.shrinkWidth}px` });
-          } else {
-            setStyle(el, { flexBasis: initialSize });
-          }
-        });
-      }, { immediate: true });
-    });
+        if (collapsed && props.shrink) {
+          removeClass(ele, paneHiddenClass);
+          setStyle(ele, { flexBasis: `${props.shrinkWidth}px` });
+        } else {
+          setStyle(ele, { flexBasis: initialSize });
+        }
+      },
+      { immediate: true }
+    );
 
     // 收起时用于改变相邻 pane 的 flex-grow 属性来改变非自适应 pane 的 size
     const toggleNearPaneFlexGrow = (collapsed: boolean) => {
-      nextTick(() => {
-        const flexGrowClass = 'devui-splitter-pane-grow';
-        if (hasClass(domRef.value, flexGrowClass)) {
-          removeClass(domRef.value, flexGrowClass);
-        } else if (collapsed) {
-          addClass(domRef.value, flexGrowClass);
-        }
-      });
+      const ele = domRef.value;
+      if (!(ele instanceof HTMLElement)) {
+        return;
+      }
+      const flexGrowClass = 'devui-splitter-pane-grow';
+      if (hasClass(ele, flexGrowClass)) {
+        removeClass(ele, flexGrowClass);
+      } else if (collapsed) {
+        addClass(ele, flexGrowClass);
+      }
     };
 
     // 暴露给外部使用
     expose({
-      order,
+      order: orderRef,
       getPaneSize,
       toggleNearPaneFlexGrow,
     });
