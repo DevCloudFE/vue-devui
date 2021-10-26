@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { textareaProps, TextareaProps } from './textarea-types'
 import './textarea.scss'
 
@@ -7,30 +7,22 @@ export default defineComponent({
 	props: textareaProps,
 	emits: ['update:value', 'focus', 'blur', 'change', 'keydown'],
 	setup(props: TextareaProps, ctx) {
-
-		const showCount = true
-
 		const textareaCls = {
 			error: props.error,
 			[props.cssClass]: true,
 		}
-		console.log('textareaCls: ', textareaCls);
 
 		const curLengthRef = ref<number>(0)
-		console.log('curLength: ', curLengthRef.value);
-
 		const onInput = ($event: Event) => {
 			const inputValue = ($event.target as HTMLInputElement).value
-			console.log('inputValue: ', inputValue);
 			curLengthRef.value = inputValue.length
-			console.log('inputValue.length: ', inputValue.length);
 			ctx.emit('update:value', inputValue);
 		},
-			onFocus = () => {
-				ctx.emit('focus');
+			onFocus = ($event: Event) => {
+				ctx.emit('focus', $event);
 			},
-			onBlur = () => {
-				ctx.emit('blur');
+			onBlur = ($event: Event) => {
+				ctx.emit('blur', $event);
 			},
 			onChange = ($event: Event) => {
 				ctx.emit('change', ($event.target as HTMLInputElement).value);
@@ -40,16 +32,28 @@ export default defineComponent({
 			};
 
 		return {
-			textareaCls, onInput, onFocus, onBlur, onChange, onKeydown, showCount, curLengthRef
+			textareaCls, onInput, onFocus, onBlur, onChange, onKeydown, curLengthRef, ...props
 		};
 
 	},
 	render() {
-		const { id, placeholder, disabled,
-
-			maxLength, resize, textareaCls, onInput, onFocus, onBlur, onChange, onKeydown
-			, showCount, curLengthRef, ...attrs } = this
-		console.log('textareaCls: ', attrs);
+		const {
+			id,
+			value,
+			placeholder,
+			disabled,
+			maxLength,
+			resize,
+			textareaCls,
+			onInput,
+			onFocus,
+			onBlur,
+			onChange,
+			onKeydown,
+			showCount,
+			curLengthRef,
+			...attrs
+		} = this
 		return (
 			<div class='devui-textarea-wrap'
 			>
@@ -57,6 +61,7 @@ export default defineComponent({
 					{...attrs}
 					{...{ DTextarea: true }}
 					id={id}
+					value={value}
 					autofocus={true}
 					placeholder={placeholder}
 					disabled={disabled}

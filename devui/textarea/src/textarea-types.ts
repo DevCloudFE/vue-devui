@@ -9,7 +9,15 @@ export const textareaProps = {
     type: Boolean,
     default: false
 	},
+	showCount: {
+    type: Boolean,
+    default: false
+	},
 	placeholder: {
+    type: String,
+    default: undefined
+	},
+	value: {
     type: String,
     default: undefined
 	},
