@@ -52,7 +52,7 @@ defineEmits(['toggle'])
         <span style="font-size:0.9rem;" class="mb-xxs">{{ switchText }}</span>
       </div>
       <div style="margin-left: 10px" @click="() => useTranslation( defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN' )">
-        {{defaultLanguage === 'zh-CN' ? 'English' : '中文'}}
+        {{defaultLanguage === 'zh-CN' ? '中文' : 'English'}}
       </div>
     </div>
 

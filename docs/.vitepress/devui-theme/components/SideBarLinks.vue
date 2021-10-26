@@ -3,7 +3,6 @@ import { useSideBar } from '../composables/sideBar'
 import { SideBarLink } from './SideBarLink'
 
 const items = useSideBar()
-
 </script>
 
 <template>
