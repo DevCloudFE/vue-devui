@@ -15,7 +15,7 @@ export default defineComponent({
     const isFullScreen = ref(false);
 
     const navWidth = computed(() => isFullScreen.value ? '100vw' : width.value );
-    const wrapperRight = computed(() => position.value === 'right' ? { 'right': width.value } : {} );
+    const navRight = computed(() => position.value === 'right' ? { 'right': 0 } : {'left' : 0} );
 
     const fullScreenEvent = () => {
       isFullScreen.value = !isFullScreen.value;
@@ -50,7 +50,7 @@ export default defineComponent({
       visible,
       slots,
       isCover,
-      wrapperRight,
+      navRight,
       fullScreenEvent,
       closeDrawer, 
     };
@@ -60,15 +60,15 @@ export default defineComponent({
     const fullScreenEvent: any = this.fullScreenEvent;
     const closeDrawer: any = this.closeDrawer;
     const isCover: boolean = this.isCover;
-    const wrapperRight: Record<string, unknown> = this.wrapperRight;
+    const navRight: Record<string, unknown> = this.navRight;
 
     if (!this.visible) return;
 
     return (
       <div class="devui-drawer" style={{ zIndex: zindex }} onClick={ closeDrawer }>
         {isCover ? <div class="devui-overlay-backdrop"/>: ''}
-        <div class="devui-overlay-wrapper" style={ wrapperRight }>
-          <div class="devui-drawer-nav" style={{ 'width': this.navWidth }}>
+        <div class="devui-overlay-wrapper">
+          <div class="devui-drawer-nav" style={{ 'width': this.navWidth, ...navRight}}>
             <div class="devui-drawer-content">
               <DrawerHeader onToggleFullScreen={fullScreenEvent} onClose={closeDrawer} />
               <div> { this.slots.default ? this.slots.default() : <DrawerContainer/>} </div>
