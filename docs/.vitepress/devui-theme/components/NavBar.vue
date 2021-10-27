@@ -11,6 +11,17 @@ const theme = new Theme("light");
 const darkMode = ref(false);
 const switchText = ref("浅色");
 
+const defaultLanguage = ref(localStorage.getItem('preferred_lang'))
+function useTranslation (target){
+  defaultLanguage.value = target
+  localStorage.setItem('preferred_lang', target)
+  if (target === 'en-US'){
+    location.pathname = `/en-US${location.pathname}`
+  }else if (target === 'zh-CN'){
+    location.pathname = `${location.pathname.split('/en-US')[1]}`
+  }
+}
+
 watch(
   () => darkMode.value,
   (darkMode, prevDarkMode) => {
@@ -18,6 +29,7 @@ watch(
     switchText.value = darkMode ? '深色' : '浅色'
   }
 )
+
 
 defineEmits(['toggle'])
 </script>
@@ -30,7 +42,7 @@ defineEmits(['toggle'])
 
     <div class="flex-grow" />
 
-    <div class="flex">
+    <div class="flex items-center">
       <div class="nav">
         <NavLinks />
       </div>
@@ -38,6 +50,9 @@ defineEmits(['toggle'])
       <div class="flex items-center ml-xs mt-xxs">
         <d-switch v-model:checked="darkMode" size="sm"></d-switch>
         <span style="font-size:0.9rem;" class="mb-xxs">{{ switchText }}</span>
+      </div>
+      <div style="margin-left: 10px" @click="() => useTranslation( defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN' )">
+        {{defaultLanguage === 'zh-CN' ? '中文' : 'English'}}
       </div>
     </div>
 
@@ -61,6 +76,9 @@ defineEmits(['toggle'])
   padding: 0.7rem 1.5rem 0.7rem 4rem;
   height: var(--header-height);
   background-color: $devui-base-bg;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 @media (min-width: 720px) {

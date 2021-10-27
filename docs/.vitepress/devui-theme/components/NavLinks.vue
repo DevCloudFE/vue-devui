@@ -5,17 +5,20 @@ import { useLocaleLinks } from '../composables/nav'
 import { useRepo } from '../composables/repo'
 import NavLink from './NavLink.vue'
 import NavDropdownLink from './NavDropdownLink.vue'
+import enNav from '../../config/enNav'
 
 const { theme } = useData()
 const localeLinks = useLocaleLinks()
 const repo = useRepo()
 const show = computed(() => theme.value.nav || repo.value || localeLinks.value)
+let translationTheme = computed( () => localStorage.getItem('preferred_lang') === 'zh-CN' ? theme.value.nav : enNav )
 </script>
 
 <template>
   <nav v-if="show" class="nav-links">
-    <template v-if="theme.nav">
-      <div v-for="item in theme.nav" :key="item.text" class="item">
+    <template v-if="translationTheme">
+      <!-- <div v-for="item in theme.nav" :key="item.text" class="item"> -->
+      <div v-for="item in translationTheme" :key="item.text" class="item">
         <NavDropdownLink v-if="item.items" :item="item" />
         <NavLink v-else :item="item" />
       </div>
