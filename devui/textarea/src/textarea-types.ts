@@ -1,46 +1,48 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue';
 
 export const textareaProps = {
-	id: {
+  id: {
     type: String,
-    default: undefined
-	},
-	autofocus: {
+    default: undefined,
+  },
+  autofocus: {
     type: Boolean,
-    default: false
-	},
-	showCount: {
+    default: false,
+  },
+  showCount: {
     type: Boolean,
-    default: false
-	},
-	placeholder: {
+    default: false,
+  },
+  placeholder: {
     type: String,
-    default: undefined
-	},
-	value: {
+    default: undefined,
+  },
+  value: {
     type: String,
-    default: undefined
-	},
-	maxLength: {
+    default: undefined,
+  },
+  maxLength: {
     type: Number,
-    default: undefined
+    default: undefined,
   },
-	disabled: {
+  disabled: {
     type: Boolean,
-    default: false
-	},
-	error: {
+    default: false,
+  },
+  error: {
     type: Boolean,
-    default: false
-	},
-	cssClass: {
+    default: false,
+  },
+  cssClass: {
     type: String,
-    default: ''
+    default: '',
   },
-	resize: {
-    type: String as PropType<'none' | 'vertical' | 'horizontal'|'both'|'inherit' >,
-    default: 'none'
+  resize: {
+    type: String as PropType<
+      'none' | 'vertical' | 'horizontal' | 'both' | 'inherit'
+    >,
+    default: 'none',
   },
-} as const
+} as const;
 
-export type TextareaProps = ExtractPropTypes<typeof textareaProps>
+export type TextareaProps = ExtractPropTypes<typeof textareaProps>;
