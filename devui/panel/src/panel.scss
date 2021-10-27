@@ -1,5 +1,17 @@
 @import '../../style/theme/color';
 
+.no-left-padding {
+  &.devui-panel-body-collapse {
+    &::before {
+      content: none !important;
+    }
+
+    .devui-panel-content {
+      border-left: none !important;
+    }
+  }
+}
+
 .devui-panel {
   line-height: 1.5;
   background-color: $devui-base-bg;
@@ -13,17 +25,6 @@
     }
   }
 
-  .no-left-padding {
-    &.devui-panel-body-collapse {
-      &::before {
-        display: none;
-      }
-
-      .devui-panel-content {
-        border-left: none !important;
-      }
-    }
-  }
 
   .devui-panel-body {
     display: flex;

@@ -1,4 +1,4 @@
-import { defineComponent,ref,onMounted,Transition,inject } from 'vue';
+import { defineComponent,ref,onMounted,Transition,inject,Ref } from 'vue';
 import { PanelProps } from '../panel.type';
 import Store from '../store/store';
 
@@ -6,9 +6,8 @@ export default defineComponent({
     name: 'DPanelBody',
     props:PanelProps,
     setup(props,ctx){
-        const animationName = inject('showAnimation') ? 'devui-panel' : '';
-        const hasLeftPadding = !inject('hasLeftPadding') ? 'no-left-padding' : '';
-
+        let animationName = inject('showAnimation') as Ref<any>;
+        let hasLeftPadding = inject('hasLeftPadding') as Ref<any>;
         const keys = Object.keys(Store.state());
         const key = keys.pop();
         const isCollapsed = Store.state();
@@ -34,13 +33,12 @@ export default defineComponent({
           const el = (element as HTMLElement);
           el.style.height = '0px';
         }
-        
         return () => {
           return (
             <div class={`devui-panel devui-panel-${props.type} ${props.cssClass}`}>
-              <Transition name={animationName} onEnter={ enter } onLeave={leave}>
+              <Transition name={animationName.value ? 'devui-panel' : ''} onEnter={ enter } onLeave={leave}>
                 {isCollapsed[key] === undefined || isCollapsed[key] ?
-                <div ref={bodyEl} class={`devui-panel-body ${isCollapsed[key] !== undefined ? 'devui-panel-body-collapse': ''} ${hasLeftPadding}`}>
+                <div ref={bodyEl} class={`devui-panel-body ${isCollapsed[key] !== undefined ? 'devui-panel-body-collapse': ''} ${!hasLeftPadding.value ? 'no-left-padding' : ''}`}>
                   <div class="devui-panel-content">
                     {ctx.slots.default?.()}
                   </div>
