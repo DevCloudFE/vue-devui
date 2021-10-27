@@ -22,7 +22,7 @@ export const textareaProps = {
     default: '',
   },
   maxLength: {
-    type: Number,
+    type: [String, Number] as PropType<number | string>,
     default: undefined,
   },
   disabled: {
