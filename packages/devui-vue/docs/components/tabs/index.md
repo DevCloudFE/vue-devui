@@ -262,17 +262,54 @@ export default defineComponent({
 
 :::
 
+### 自定义模板
+
+:::demo
+
+```vue
+<template>
+  <d-tabs type="tabs" v-model="id">
+    <d-tab id="tab1" title="Tab1" tabId="tab1">
+      <template v-slot:dTabTitle> 就是这样 </template>
+      <p>Tab1 Content</p>
+    </d-tab>
+    <d-tab id="tab2" title="Tab2" tabId="tab2">
+      <template v-slot:dTabTitle> 就是这样1 </template>
+      <p>Tab2 Content</p>
+    </d-tab>
+    <d-tab id="tab3" title="Tab3" tabId="tab3">
+      <template v-slot:dTabTitle> 就是这样2 </template>
+      <p>Tab3 Content</p>
+    </d-tab>
+  </d-tabs>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const id = ref('tab3');
+    return {
+      id
+    };
+  }
+});
+</script>
+```
+
+:::
+
 ### API
 
-|     参数     |                      类型                       |  默认  |                                                 说明                                                  |                 |
-| :----------: | :---------------------------------------------: | :----: | :---------------------------------------------------------------------------------------------------: | --------------- |
+|     参数     |                      类型                       |  默认  |                                                 说明                                                  |     |
+| :----------: | :---------------------------------------------: | :----: | :---------------------------------------------------------------------------------------------------: | --- |
 |     type     | `tabs \| pills \| options \| wrapped \| slider` | 'tabs' |                                         可选，选项卡组的类型                                          |
 | showContent  |                    `boolean`                    |  true  |                                    可选，是否显示选项卡对应的内容                                     |
 |   v-model    |                    `string`                     |   --   |                                可选，当前激活的选项卡，值为选项卡的 id                                |
 | customWidth  |                    `string`                     |   --   |                                        可选，自定义选项卡的宽                                         |
 |   vertical   |                    `boolean`                    | false  |                                           可选，是否垂直显                                            |
 | beforeChange |               `function\|Promise`               |   --   |                tab 切换前的回调函数,返回 boolean 类型，返回 false 可以阻止 tab 的切换                 |
-| reactivable  |                    `boolean`                    | false  | 可选，点击当前处于激活态的 tab 时是否触发`activeTabChange`事件，`true`为允许触发，`false`为不允许触发 | [拦截 tab 切换] |
+| reactivable  |                    `boolean`                    | false  | 可选，点击当前处于激活态的 tab 时是否触发`activeTabChange`事件，`true`为允许触发，`false`为不允许触发 |
 
 ### d-tabs 事件
 

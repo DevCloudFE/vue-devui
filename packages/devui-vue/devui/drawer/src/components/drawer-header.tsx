@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, ref, reactive } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { drawerHeaderType, DrawerHeaderType } from './drawer-header-type';
 
 import './drawer-header.scss'
@@ -10,7 +10,8 @@ export default defineComponent({
   setup(props: DrawerHeaderType, ctx) {
     const isFullScreen = ref<boolean>(false);
 
-    const handleFullScreen = () => {
+    const handleFullScreen = (e) => {
+      e.stopPropagation();
       isFullScreen.value = !isFullScreen.value;
       ctx.emit('toggleFullScreen');
     }

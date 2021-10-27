@@ -2,7 +2,9 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "dev": "lerna run dev"
+    "dev": "lerna run dev",
+    "build": "lerna run build",
+    "build:lib": "lerna run build:lib"
   },
   "devDependencies": {
     "lerna": "^4.0.0"

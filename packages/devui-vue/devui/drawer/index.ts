@@ -10,7 +10,7 @@ export { Drawer }
 export default {
   title: 'Drawer 抽屉板',
   category: '反馈',
-  status: '10%',
+  status: '30%',
   install(app: App): void {
     
     app.use(Drawer as any)

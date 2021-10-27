@@ -52,7 +52,6 @@ $devui-popover-offset: 8px;
   }
 }
 
-
 @keyframes some-animation {
   0% {
     opacity: 0;
@@ -77,7 +76,6 @@ $devui-popover-offset: 8px;
   }
 }
 
-
 //left等方向
 .devui-popover {
   @mixin left-postion--content {
@@ -95,6 +93,7 @@ $devui-popover-offset: 8px;
   &.left {
     .devui-popover-content {
       @include left-postion--content;
+
       top: 50%;
       transform: translate(-100%, -50%);
     }
@@ -142,7 +141,7 @@ $devui-popover-offset: 8px;
     transform: translate(0, -100%);
   }
   @mixin top-postion--after {
-    bottom:  $devui-popover-width;
+    bottom: $devui-popover-width;
     margin-left: $devui-popover-width;
   }
 
@@ -190,7 +189,7 @@ $devui-popover-offset: 8px;
   }
 }
 
- //right等方向
+//right等方向
 .devui-popover {
   @mixin right-postion--content {
     right: $devui-popover-margin;
@@ -240,6 +239,7 @@ $devui-popover-offset: 8px;
 
     .after {
       @include right-postion--after;
+
       top: auto;
       bottom: $devui-popover-offset;
     }
@@ -256,7 +256,7 @@ $devui-popover-offset: 8px;
   }
   @mixin bottom-postion--after {
     left: $devui-popover-offset;
-    top:  $devui-popover-width;
+    top: $devui-popover-width;
     margin-bottom: $devui-popover-width;
     margin-right: $devui-popover-width;
   }

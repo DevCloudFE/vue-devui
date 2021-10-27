@@ -6,7 +6,7 @@
 
 .devui-slider {
   position: relative;
-  width: 70%;
+  width: 90%;
   display: block;
 
   &.disabled {
@@ -70,6 +70,35 @@
       &.disabled:hover {
         cursor: not-allowed;
         transform: none;
+      }
+    }
+
+    .devui-slider_popover {
+      position: relative;
+      bottom: 26px;
+      transform: translate(-50%);
+      border-radius: $devui-border-radius-feedback;
+      font-size: $devui-font-size-sm;
+      color: $devui-feedback-overlay-text;
+
+      .devui-slider_popover-arrow {
+        position: absolute;
+        left: 50%;
+        margin-left: -4px;
+        bottom: -4px;
+        width: 8px;
+        height: 8px;
+        transform: rotate(45deg);
+        display: block;
+        z-index: -1;
+        background-color: $devui-feedback-overlay-bg;
+      }
+
+      .devui-slider_popover-content {
+        padding: 5px 14px;
+        text-align: center;
+        border-radius: $devui-border-radius-feedback;
+        background-color: $devui-feedback-overlay-bg;
       }
     }
   }

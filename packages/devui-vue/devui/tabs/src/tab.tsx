@@ -19,6 +19,7 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const tabs = inject<Tabs>('tabs');
+    tabs.state.slots.push(slots.dTabTitle);
     tabs.state.data.push(props);
     return () => {
       const { id } = props;

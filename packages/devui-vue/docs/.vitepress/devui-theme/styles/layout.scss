@@ -183,10 +183,6 @@ tr {
   border-top: 1px solid $devui-dividing-line;
 }
 
-tr:nth-child(2n) {
-  background-color: $devui-area;
-}
-
 th,
 td {
   border: 1px solid $devui-dividing-line;

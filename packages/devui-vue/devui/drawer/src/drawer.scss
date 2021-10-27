@@ -14,6 +14,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
+  width: 100vw;
 }
 
 .devui-overlay-backdrop {
@@ -25,22 +26,18 @@
   height: 100vh;
 }
 
-.devui-drawer-nav,
-.devui-drawer-content {
+.devui-drawer-nav {
   position: absolute;
   top: 0;
   bottom: 0;
   border-radius: $devui-border-radius;
-}
-
-.devui-drawer-nav {
   background: $devui-base-bg;
 }
 
 .devui-drawer-content {
-  left: 0;
-  right: 0;
+  border-radius: $devui-border-radius;
   overflow: auto;
   box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
   padding: 20px;
+  height: 100vh;
 }

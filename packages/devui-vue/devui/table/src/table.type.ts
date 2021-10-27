@@ -9,6 +9,14 @@ export const TableProps = {
     type: Boolean,
     default: false,
   },
+  headerBg:{
+    type: Boolean,
+    default: false
+  },
+  tableLayout:{
+    type: String as PropType<'fixed' | 'auto'>,
+    default: 'fixed'
+  }
 };
 
 export type TablePropsTypes = ExtractPropTypes<typeof TableProps>;
