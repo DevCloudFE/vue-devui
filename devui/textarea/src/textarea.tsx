@@ -12,10 +12,10 @@ export default defineComponent({
 			[props.cssClass]: true,
 		}
 
-		const curLengthRef = ref<number>(0)
+		const curValueRef = ref<string>(props.value)
 		const onInput = ($event: Event) => {
 			const inputValue = ($event.target as HTMLInputElement).value
-			curLengthRef.value = inputValue.length
+			curValueRef.value = inputValue
 			ctx.emit('update:value', inputValue);
 		},
 			onFocus = ($event: Event) => {
@@ -32,14 +32,13 @@ export default defineComponent({
 			};
 
 		return {
-			textareaCls, onInput, onFocus, onBlur, onChange, onKeydown, curLengthRef, ...props
+			textareaCls, onInput, onFocus, onBlur, onChange, onKeydown, curValueRef, autofocus: props.autofocus
 		};
 
 	},
 	render() {
 		const {
 			id,
-			value,
 			placeholder,
 			disabled,
 			maxLength,
@@ -51,18 +50,17 @@ export default defineComponent({
 			onChange,
 			onKeydown,
 			showCount,
-			curLengthRef,
-			...attrs
+			autofocus,
+			curValueRef,
 		} = this
 		return (
 			<div class='devui-textarea-wrap'
 			>
 				<textarea
-					{...attrs}
 					{...{ DTextarea: true }}
 					id={id}
-					value={value}
-					autofocus={true}
+					value={curValueRef}
+					autofocus={autofocus}
 					placeholder={placeholder}
 					disabled={disabled}
 					maxlength={maxLength}
@@ -78,7 +76,7 @@ export default defineComponent({
 				{
 					showCount && <div
 						class='devui-textarea-show-count'>
-						{curLengthRef}
+						{curValueRef.length}
 						{!(maxLength ?? false) ? '' : ' / ' + maxLength}
 					</div>
 				}

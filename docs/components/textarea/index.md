@@ -16,7 +16,7 @@
 
   <d-textarea
     value="我是默认值"
-    autoFocus
+    :autofocus="true"
     id="textArea"
     cssClass="my-text-area"
   ></d-textarea>
@@ -45,23 +45,23 @@
 ```vue
 <template>
   <h4 style="margin: 10px 0">vertical</h4>
-  <d-textarea resize="vertical"></d-textarea>
+  <d-textarea placeholder="我可以缩放" resize="vertical"></d-textarea>
 
   <h4 style="margin: 10px 0">horizontal</h4>
 
-  <d-textarea resize="horizontal" placeholder="Please Enter"></d-textarea>
+  <d-textarea resize="horizontal" placeholder="请输入"></d-textarea>
 
   <h4 style="margin: 10px 0">both</h4>
 
-  <d-textarea resize="both" placeholder="Please Enter"></d-textarea>
+  <d-textarea resize="both" placeholder="请输入"></d-textarea>
 
   <h4 style="margin: 10px 0">none</h4>
 
-  <d-textarea resize="none" placeholder="Please Enter"></d-textarea>
+  <d-textarea resize="none" placeholder="请输入"></d-textarea>
 
   <h4 style="margin: 10px 0">inherit</h4>
 
-  <d-textarea resize="inherit" placeholder="Please Enter"></d-textarea>
+  <d-textarea resize="inherit" placeholder="请输入"></d-textarea>
 </template>
 ```
 
@@ -74,12 +74,12 @@
 ```vue
 <template>
   <h4 style="margin: 10px 0">默认</h4>
-  <d-textarea showCount="true" placeholder="Please Enter"></d-textarea>
+  <d-textarea :showCount="true" placeholder="请输入"></d-textarea>
   <h4 style="margin: 10px 0">显示最大字数</h4>
   <d-textarea
-    showCount="true"
-    maxLength="20"
-    placeholder="Please Enter"
+    :showCount="true"
+    :maxLength="20"
+    placeholder="请输入"
   ></d-textarea>
 </template>
 <style>
@@ -98,8 +98,8 @@
 ```vue
 <template>
   <d-textarea
-    showCount="true"
-    maxLength="20"
+    :showCount="true"
+    :maxLength="20"
     placeholder="打开控制台输入文字看看"
     @update:value="onUpdate"
     @change="onChange"

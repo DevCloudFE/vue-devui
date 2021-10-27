@@ -19,7 +19,7 @@ export const textareaProps = {
   },
   value: {
     type: String,
-    default: undefined,
+    default: '',
   },
   maxLength: {
     type: Number,
