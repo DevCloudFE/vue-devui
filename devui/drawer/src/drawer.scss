@@ -5,6 +5,7 @@
   top: 0;
   left: 0;
   height: 100vh;
+  width: 100vw;
 }
 
 .devui-overlay-wrapper {
@@ -17,7 +18,7 @@
 }
 
 .devui-overlay-backdrop {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background: $devui-shadow;
@@ -30,6 +31,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
+  left: 0;
   border-radius: $devui-border-radius;
 }
 

@@ -1,4 +1,4 @@
-import { defineComponent, ref, toRefs, watch } from 'vue'
+import { defineComponent, ref, toRefs, watch, computed } from 'vue'
 import { drawerProps, DrawerProps } from './drawer-types'
 
 import DrawerHeader from './components/drawer-header'
@@ -11,8 +11,11 @@ export default defineComponent({
   props: drawerProps,
   emits: ['close', 'update:visible', 'afterOpened'],
   setup(props: DrawerProps, { emit, slots }) {
-    const { width, visible, zIndex, isCover, escKeyCloseable } = toRefs(props); // 宽度
+    const { width, visible, zIndex, isCover, escKeyCloseable, position } = toRefs(props); // 宽度
     const isFullScreen = ref(false);
+
+    const navWidth = computed(() => isFullScreen.value ? '100vw' : width.value );
+    const wrapperRight = computed(() => position.value === 'right' ? { 'right': width.value } : {} );
 
     const fullScreenEvent = () => {
       isFullScreen.value = !isFullScreen.value;
@@ -43,29 +46,29 @@ export default defineComponent({
     return {
       zIndex,
       isFullScreen,
-      width,
+      navWidth,
       visible,
       slots,
       isCover,
+      wrapperRight,
       fullScreenEvent,
       closeDrawer, 
     };
   },
   render() {
     const zindex: number = this.zIndex;
-    const width: number = this.isFullScreen ? '100vw' : this.width;
     const fullScreenEvent: any = this.fullScreenEvent;
     const closeDrawer: any = this.closeDrawer;
     const isCover: boolean = this.isCover;
+    const wrapperRight: Record<string, unknown> = this.wrapperRight;
 
     if (!this.visible) return;
 
     return (
-      <div class="devui-drawer" style={{ zIndex: zindex }}>
-        {/* TODO : 有遮罩层时才能点击关闭 onClick={ closeDrawer }*/}
+      <div class="devui-drawer" style={{ zIndex: zindex }} onClick={ closeDrawer }>
         {isCover ? <div class="devui-overlay-backdrop"/>: ''}
-        <div class="devui-overlay-wrapper" >
-          <div class="devui-drawer-nav" style={{ 'left': 0, 'width': width }}>
+        <div class="devui-overlay-wrapper" style={ wrapperRight }>
+          <div class="devui-drawer-nav" style={{ 'width': this.navWidth }}>
             <div class="devui-drawer-content">
               <DrawerHeader onToggleFullScreen={fullScreenEvent} onClose={closeDrawer} />
               <div> { this.slots.default ? this.slots.default() : <DrawerContainer/>} </div>

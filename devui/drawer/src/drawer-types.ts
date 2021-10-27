@@ -1,4 +1,4 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 
 export const drawerProps = {
   width: {
@@ -20,6 +20,10 @@ export const drawerProps = {
   escKeyCloseable: {
     type: Boolean,
     default: true,
+  },
+  position: {
+    type: String as PropType<'left' | 'right'>,
+    default: 'left',
   },
 } as const
 

@@ -20,6 +20,7 @@
   <d-drawer 
     v-model:visible="isDrawerShow" 
     :width="drawerWidth" 
+    position="right"
     @close="drawerClose"
     @afterOpened="drawerAfterOpened"
   />
