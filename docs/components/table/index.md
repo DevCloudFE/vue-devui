@@ -62,13 +62,27 @@
 
 :::
 
-### 斑马纹表格
+### 表格样式
 
-:::demo 通过`d-table`组件上的`striped`属性，可设置带斑马纹的表格，更容易区分不同行的数据。
+:::demo
 
 ```vue
 <template>
-  <d-table striped :data="stripedTableData">
+<div class="table-btn-groups">
+      <div class="table-btn">
+          自动表格布局：
+         <d-switch v-model:checked="tableLayout" />
+      </div>
+      <div class="table-btn">
+          斑马纹：
+         <d-switch v-model:checked="striped" />
+      </div>
+      <div class="table-btn">
+          表头背景色：
+         <d-switch v-model:checked="headerBg" />
+      </div>
+  </div>
+  <d-table :table-layout="tableLayout?'auto':'fixed'" :striped="striped" :header-bg="headerBg" :data="stripedTableData">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -82,7 +96,9 @@
 
   export default defineComponent({
     setup() {
-
+      const tableLayout = ref(false)
+      const striped = ref(false)
+      const headerBg = ref(false)
       const stripedTableData = ref([
         {
           firstName: 'Mark',
@@ -110,10 +126,27 @@
         }
       ])
 
-      return { stripedTableData }
+      return { 
+        stripedTableData,
+        striped,
+        headerBg,
+        tableLayout 
+      }
     }
   })
 </script>
+
+<style lang="scss">
+.table-btn-groups{
+  display: flex;
+  margin-bottom: 1rem;
+}
+.table-btn{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+</style>
 ```
 
 :::
@@ -182,16 +215,18 @@
 
 ### d-table Props
 
-| 参数    | 类型      | 默认值  | 说明               |
-| ------- | --------- | ------- | ------------------ |
-| data    | `Array`   | `[]`     | 显示的数据         |
-| striped | `Boolean` | `false` | 是否显示斑马纹间隔 |
+| 参数         | 类型                | 默认值    | 说明                     |
+| ------------ | ------------------- | --------- | ------------------------ |
+| data         | `Array`             | `[]`      | 显示的数据               |
+| striped      | `Boolean`           | `false`   | 是否显示斑马纹间隔       |
+| header-bg    | `Boolean`           | `false`   | 可选，表头是否显示背景色 |
+| table-layout | `String` | `'fixed'` | 表格布局，可选值为`'auto'`|
 
 ### d-column Props
 
-| 参数   | 类型               | 默认值 | 说明                   |
-| ------ | ------------------ | ------ | ---------------------- |
-| header | `String`           | `-`    | 对应列的标题           |
-| field  | `String`           | `-`    | 对应列内容的字段名     |
-| width  | `String \| Number` | `-`    | 对应列的宽度，单位`px` |
-| min-width | `String \| Number` | `-` | 对应列的最小宽度，单位`px` |
+| 参数      | 类型               | 默认值 | 说明                       |
+| --------- | ------------------ | ------ | -------------------------- |
+| header    | `String`           | `-`    | 对应列的标题               |
+| field     | `String`           | `-`    | 对应列内容的字段名         |
+| width     | `String \| Number` | `-`    | 对应列的宽度，单位`px`     |
+| min-width | `String \| Number` | `-`    | 对应列的最小宽度，单位`px` |
