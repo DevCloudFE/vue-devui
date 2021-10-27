@@ -1,13 +1,9 @@
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import { sliderProps } from './slider-types';
-import { Input } from '../../input';
 import './slider.scss';
 
 export default defineComponent({
   name: 'DSlider',
-  components: {
-    Input,
-  },
   props: sliderProps,
   emits: ['update:modelValue'],
   setup(props, ctx) {
@@ -15,6 +11,7 @@ export default defineComponent({
     let startPosition = 0;
     let startX = 0;
 
+    const popoverShow = ref(false);
     const sliderRunway = ref<HTMLDivElement>(null);
     const inputValue = ref<number>(props.modelValue);
     const currentPosition = ref<number>(0);
@@ -30,7 +27,6 @@ export default defineComponent({
         ''
       );
     };
-
     //当传入modelValue时用以定位button的位置
     if (props.modelValue > props.max) {
       percentDispaly.value = '100%';
@@ -39,14 +35,13 @@ export default defineComponent({
     } else {
       percentDispaly.value = ((props.modelValue - props.min) * 100) / (props.max - props.min) + '%';
     }
-
     //一挂载就进行当前位置的计算，以后的移动基于当前的位置移动
     onMounted(() => {
       const sliderWidth = sliderRunway.value.clientWidth;
       currentPosition.value = (sliderWidth * (inputValue.value - props.min)) / (props.max - props.min);
     });
-
     function handleonMousedown(event: MouseEvent) {
+      popoverShow.value = true;
       //props.disabled状态是不能点击拖拽的
       if (props.disabled || props.disabled) return;
       //阻止默认事件
@@ -63,7 +58,6 @@ export default defineComponent({
       //获取当前的x坐标值
       startX = event.clientX;
       //把当前值给startPosition，以便后面再重新拖拽时,会以当前的位置计算偏移
-
       startPosition = currentPosition.value;
       newPostion.value = startPosition;
     }
@@ -75,14 +69,15 @@ export default defineComponent({
      *
      */
     function onDragging(event: MouseEvent) {
+      popoverShow.value = true;
       const currentX = event.clientX;
       const pxOffset = currentX - startX;
       //移动的x方向上的偏移+初始位置等于新位置
       newPostion.value = startPosition + pxOffset;
-
       setPostion(newPostion.value);
     }
     function onDragEnd() {
+      popoverShow.value = false;
       //防止mouseup后立即执行click事件，mouseup后
       //会立即执行click,但是isClick=true 是100ms才出发，因此不会执行click事件，就跳出来了
       setTimeout(() => {
@@ -112,7 +107,6 @@ export default defineComponent({
         ctx.emit('update:modelValue', props.max);
         return;
       }
-
       //向左偏移百分比的值
       percentDispaly.value = Math.round((value * 100) / sliderWidth) + '%';
       //更新输入框的值
@@ -121,7 +115,6 @@ export default defineComponent({
       currentPosition.value = newPosition;
       ctx.emit('update:modelValue', inputValue.value);
     }
-
     //当点击滑动条时,
     function handleClick(event) {
       if (!props.disabled && isClick) {
@@ -156,6 +149,14 @@ export default defineComponent({
     const disableClass = computed(() => {
       return props.disabled ? ' disabled' : '';
     });
+    const popover = () => {
+      return (
+        <div class='devui-slider_popover' style={{ left: percentDispaly.value, opacity: popoverShow.value ? 1 : 0 }}>
+          <div class='devui-slider_popover-arrow'></div>
+          <div class='devui-slider_popover-content'>{inputValue.value + ' ' + props.tipsRenderer}</div>
+        </div>
+      );
+    };
     return () => (
       <div class='devui-slider'>
         {/* 整个的长度 */}
@@ -166,7 +167,10 @@ export default defineComponent({
             class={'devui-slider__button' + disableClass.value}
             style={{ left: percentDispaly.value }}
             onMousedown={handleonMousedown}
+            onMouseenter={() => (popoverShow.value = true)}
+            onMouseout={() => (popoverShow.value = false)}
           ></div>
+          {props.tipsRenderer === 'null' ? '' : popover()}
         </div>
         <span class='devui-min_count'>{props.min}</span>
         <span class='devui-max_count'>{props.max}</span>
