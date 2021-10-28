@@ -96,6 +96,7 @@ export interface CascaderItemNeedType extends PickCascader {
   value: CascaderValueType
   inputValueCache: Ref<string>
   confirmInputValueFlg: Ref<boolean>
+  multiple: boolean
 }
 export interface UseCascaderItemCallback {
   cascaderItemNeedProps: CascaderItemNeedType

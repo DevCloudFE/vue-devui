@@ -289,7 +289,7 @@ export default defineComponent({
             isLeaf: true
           }
         ],
-        icon: 'icon-folder'
+        icon: 'folder'
       },
       {
         label: 'option2',
@@ -334,7 +334,7 @@ export default defineComponent({
             isLeaf: true
           }
         ],
-        icon: 'icon-folder'
+        icon: 'folder'
       },
       {
         label: 'option3',
@@ -342,7 +342,7 @@ export default defineComponent({
         children: [],
         isLeaf: true,
         disabled: true,
-        icon: 'icon-folder'
+        icon: 'folder'
       }
     ])
     const value1 = [[1, 4, 8], [1, 4, 9, 81], [1, 41]]

@@ -37,4 +37,16 @@
     background-color: $devui-disabled-bg;
     cursor: not-allowed;
   }
+
+  .cascader-li {
+    &__checkbox {
+      margin-right: 4px;
+    }
+
+    &__icon {
+      margin-right: 4px;
+      font-size: $devui-font-size-icon;
+      color: $devui-text;
+    }
+  }
 }

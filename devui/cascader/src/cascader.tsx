@@ -1,21 +1,20 @@
-import './cascader.scss'
-
-import { defineComponent, ref, reactive, watch } from 'vue'
+import { defineComponent, ref, reactive, watch, toRef } from 'vue'
 import { cascaderProps, CascaderItem, CascaderProps, CascaderValueType } from './cascader-types'
 import { getRootClass } from '../hooks/use-cascader-class'
 import { popupHandles } from '../hooks/use-cascader-popup'
 import DCascaderList from '../components/cascader-list'
 // import { optionsHandles } from '../hooks/use-cascader-options'
 import { useCascaderItem } from '../hooks/use-cascader-item'
-import { UnwrapNestedRefs } from '@vue/reactivity'
-type ValueType = UnwrapNestedRefs<CascaderValueType>
+import './cascader.scss'
+// import { UnwrapNestedRefs } from '@vue/reactivity'
+// type ValueType = UnwrapNestedRefs<CascaderValueType>
 export default defineComponent({
   name: 'DCascader',
   props: cascaderProps,
   setup(props: CascaderProps, ctx) {
     const origin = ref(null)
     const cascaderOptions = reactive<[CascaderItem[]]>([ props?.options ])
-    
+    const multiple = toRef(props, 'multiple')
     const inputValue = ref('')
     const position = reactive({
       originX: 'left', 
@@ -37,7 +36,7 @@ export default defineComponent({
     const getCascaderLoop = (value: CascaderValueType, currentOption: CascaderItem[], index: number) => {
       if (index === value.length) return
       // 区分单选多选模式
-      if (!props.multiple) {
+      if (!multiple.value) {
         const i = value[index]
         getInputValue(currentOption[i as number]?.label, currentOption[i as number]?.children)
         if (currentOption[i as number]?.children?.length > 0) {
@@ -68,7 +67,13 @@ export default defineComponent({
      */
     watch(cascaderItemNeedProps.value, (val) => {
       cascaderItemNeedProps.inputValueCache.value = ''
-      getCascaderLoop(val, props?.options, 0)
+      if (!multiple.value) {
+        getCascaderLoop(val, props?.options, 0)
+      } else {
+        console.log(val)
+      }
+    }, {
+      immediate: true
     })
 
     watch(() => cascaderItemNeedProps.confirmInputValueFlg.value, () => {
