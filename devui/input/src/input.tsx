@@ -18,6 +18,7 @@ export default defineComponent({
   emits: ['update:value', 'focus', 'blur', 'change', 'keydown'],
   setup(props, ctx) {
     const formItem = inject(formItemInjectionKey, {} as IFormItem);
+    const hasFormItem = Object.keys(formItem).length > 0;
     const sizeCls = computed(() => `devui-input-${props.size}`);
     const showPwdIcon = ref(false)
     const inputType = ref<InputType>('text')
@@ -39,18 +40,18 @@ export default defineComponent({
 
     const onInput = ($event: Event) => {
       ctx.emit('update:value', ($event.target as HTMLInputElement).value);
-      formItem.formItemMitt.emit(dFormItemEvents.input);
+      hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.input);
     },
       onFocus = () => {
         ctx.emit('focus');
       },
       onBlur = () => {
         ctx.emit('blur');
-        formItem.formItemMitt.emit(dFormItemEvents.blur);
+        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.blur);
       },
       onChange = ($event: Event) => {
         ctx.emit('change', ($event.target as HTMLInputElement).value);
-        formItem.formItemMitt.emit(dFormItemEvents.change);
+        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.change);
       },
       onKeydown = ($event: KeyboardEvent) => {
         ctx.emit('keydown', $event);
