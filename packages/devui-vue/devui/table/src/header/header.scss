@@ -1,0 +1,26 @@
+@import '../../../styles-var/devui-var.scss';
+
+.devui-thead {
+  tr {
+    font-size: $devui-font-size-card-title;
+    color: $devui-text;
+    font-weight: 700;
+    border: none;
+    border-bottom: 1px solid $devui-line;
+    background-color: $devui-global-bg-normal;
+
+    th {
+      text-align: left;
+      padding: 12px 10px;
+      border: none;
+    }
+  }
+}
+
+.header-bg {
+  thead.devui-thead {
+    tr {
+      background: var(--devui-list-item-hover-bg, #f2f5fc);
+    }
+  }
+}
