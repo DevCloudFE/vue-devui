@@ -49,6 +49,8 @@ export default defineComponent({
           // 当最新的ul(级)没有下一级时删除之前选中ul的数据
           cascaderOptions.splice(index + 1, cascaderOptions.length - 1)
         }
+      } else {
+        // 多选模式
       }
     }
 
