@@ -1,29 +1,22 @@
-import {
-  defineComponent,
-  ref,
-  renderSlot,
-  computed,
-  Transition,
-  watch,
-} from 'vue'
+import { defineComponent, ref, renderSlot, computed, Transition } from "vue"
 import {
   OptionItem,
   editableSelectProps,
   EditableSelectProps,
-} from './editable-select-types'
-import './editable-select.scss'
-import { Icon } from '../../icon'
-import ClickOutside from '../../shared/devui-directive/clickoutside'
-import { className } from '../utils'
-import { debounce } from 'lodash'
+} from "./editable-select-types"
+import "./editable-select.scss"
+import { Icon } from "../../icon"
+import ClickOutside from "../../shared/devui-directive/clickoutside"
+import { className } from "./utils"
+import { debounce } from "lodash"
 export default defineComponent({
-  name: 'DEditableSelect',
+  name: "DEditableSelect",
   directives: { ClickOutside },
   props: editableSelectProps,
-  emits: ['update:modelValue'],
+  emits: ["update:modelValue"],
   setup(props: EditableSelectProps, ctx) {
     const inputCls = className(
-      'devui-form-control devui-dropdown-origin devui-dropdown-origin-open',
+      "devui-form-control devui-dropdown-origin devui-dropdown-origin-open",
       {
         disabled: props.disabled,
       }
@@ -31,13 +24,13 @@ export default defineComponent({
 
     const getLiCls = (item) => {
       const { disabledKey } = props
-      return className('devui-dropdown-item', {
+      return className("devui-dropdown-item", {
         disabled: disabledKey ? !!item[disabledKey] : false,
       })
     }
 
     const visible = ref(false)
-    const inputValue = ref('')
+    const inputValue = ref("")
     const query = ref(props.modelValue)
 
     const wait = computed(() => (props.remote ? 300 : 0))
@@ -45,19 +38,19 @@ export default defineComponent({
     const emptyText = computed(() => {
       const options = filteredOptions.value
       if (!props.remote && inputValue.value && options.length === 0) {
-        return '没有相关记录'
+        return "没有相关记录"
       }
       if (options.length === 0) {
-        return '没有数据'
+        return "没有数据"
       }
       return null
     })
     const normalizeOptions = computed(() => {
       let options: OptionItem
       const { disabledKey } = props
-      disabledKey ? disabledKey : 'disabled'
+      disabledKey ? disabledKey : "disabled"
       return props.options.map((item) => {
-        if (typeof item !== 'object') {
+        if (typeof item !== "object") {
           options = {
             name: item,
           }
@@ -113,11 +106,11 @@ export default defineComponent({
     }
     const selectOptionClick = (e, item) => {
       const { disabledKey } = props
-      query.value = item.name
-      if (item[disabledKey]) {
+      if (disabledKey && item[disabledKey]) {
         e.stopPropagation()
       } else {
-        ctx.emit('update:modelValue', item.name)
+        query.value = item.name
+        ctx.emit("update:modelValue", item.name)
       }
     }
     return () => {
@@ -144,7 +137,7 @@ export default defineComponent({
                 <ul
                   class="devui-list-unstyled scroll-height"
                   style={{
-                    maxHeight: props.maxHeight + 'px',
+                    maxHeight: props.maxHeight + "px",
                   }}
                 >
                   {filteredOptions.value.map((item) => {
@@ -155,7 +148,7 @@ export default defineComponent({
                         key={item.name}
                       >
                         {ctx.slots.default
-                          ? renderSlot(ctx.slots, 'default', { item })
+                          ? renderSlot(ctx.slots, "default", { item })
                           : item.name}
                       </li>
                     )
