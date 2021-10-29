@@ -1,3 +1,5 @@
+import { VNode } from 'vue';
+
 /**
  * 动态获取class字符串
  * @param classStr 是一个字符串，固定的class名
@@ -8,11 +10,22 @@ export function className(
     classStr: string,
     classOpt?: { [key: string]: boolean; }
 ): string {
-    let classname = classStr
+    let classname = classStr;
     if (typeof classOpt === 'object') {
         Object.keys(classOpt).forEach((key) => {
             classOpt[key] && (classname += ` ${key}`);
         });
     }
-    return classname
+
+    return classname;
+}
+/**
+ * 
+ * @param condition 渲染条件
+ * @param node1 待渲染的组件
+ * @param node2  
+ * @returns 最终被渲染的组件
+ */
+export function renderCondition(condition: unknown, node1: VNode, node2?: VNode): VNode {
+    return !!condition ? node1 : node2;
 }
