@@ -1,7 +1,7 @@
 import { defineComponent, inject, ref, computed, reactive } from 'vue';
-import './form-control.scss';
-import Icon from '../../../icon/src/icon';
 import {IForm, formControlProps, formInjectionKey} from '../form-types';
+import Icon from '../../../icon/src/icon';
+import './form-control.scss';
 
 export default defineComponent({
   name: 'DFormControl',

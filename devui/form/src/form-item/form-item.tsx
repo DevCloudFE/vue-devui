@@ -1,8 +1,9 @@
 import { defineComponent, reactive, inject, onMounted, onBeforeUnmount, provide, ref} from 'vue';
-import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey, formItemInjectionKey } from '../form-types';
-import './form-item.scss';
 import AsyncValidator, { Rules } from 'async-validator';
 import mitt from 'mitt';
+import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey, formItemInjectionKey } from '../form-types';
+import './form-item.scss';
+
 
 export default defineComponent({
 	name: 'DFormItem',

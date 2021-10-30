@@ -1,8 +1,8 @@
 import { defineComponent, inject, reactive, computed } from 'vue';
 import { IForm, formLabelProps, FormLabelProps, formInjectionKey } from '../form-types';
-import './form-label.scss';
 import Icon from '../../../icon/src/icon';
 import Popover from '../../../popover/src/popover';
+import './form-label.scss';
 
 export default defineComponent({
 	name: 'DFormLabel',
