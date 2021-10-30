@@ -1,11 +1,69 @@
-import AsyncValidator from 'async-validator';
-import { VNode } from 'vue';
+import AsyncValidator, { RuleItem } from 'async-validator';
+import { VNode, DirectiveBinding } from 'vue';
 import './style.scss';
 import { debounce } from 'lodash';
-import EventBus from '../util/event-bus';
+import { EventBus, isObject, hasKey } from '../util';
+
+interface ValidateFnParam {
+  validator: AsyncValidator
+  modelValue: Record<string, unknown>
+  el: HTMLElement
+  tipEl: HTMLElement
+  isFormTag: boolean
+  message: string
+  messageShowType: MessageShowType
+}
+
+interface CustomValidatorRuleObject {
+  message: string
+  validator: (rule, value) => boolean
+  asyncValidator: (rule, value) => Promise<boolean>
+}
+
+interface DirectiveValidateRuleOptions {
+  updateOn?: UpdateOn
+  errorStrategy?: ErrorStrategy
+  asyncDebounceTime?: number
+}
+
+interface DirectiveBindingValue {
+  rules: Partial<DirectiveCustomRuleItem>[]
+  options: DirectiveValidateRuleOptions
+  messageShowType: MessageShowType
+  errorStrategy: ErrorStrategy
+}
+
+interface DirectiveCustomRuleItem extends RuleItem {
+  validators: CustomValidatorRuleObject[]
+  asyncValidators: CustomValidatorRuleObject[]
+}
+
+type MessageShowType = 'popover' | 'text' | 'none' | 'toast';
+type UpdateOn = 'input' | 'focus' | 'change' | 'blur' | 'submit';
+type ErrorStrategy = 'dirty' | 'pristine';
+
+enum ErrorStrategyEnum {
+  dirty = 'dirty',
+  pristine = 'pristine'
+}
+
+enum UpdateOnEnum {
+  input = 'input',
+  focus = 'focus',
+  change = 'change',
+  blur = 'blur',
+  submit = 'submit',
+}
+
+enum MessageShowTypeEnum {
+  popover = 'popover',
+  text = 'text',
+  none = 'none',
+  toast = 'toast'
+}
 
 // 获取async-validator可用的规则名
-function getAvaliableRuleObj(ruleName: string, value) {
+function getAvaliableRuleObj(ruleName: string, value: any) {
   if(!ruleName) {
     console.error("[v-d-validate] validator's key is invalid");
     return null;
@@ -127,17 +185,6 @@ function getKeyValueOfObjectList(obj): {key: string; value: any;}[] {
   return kvArr;
 }
 
-
-function isObject(obj): boolean {
-  return Object.prototype.toString.call(obj).slice(8, -1) === 'Object';
-}
-
-
-function hasKey(obj, key): boolean {
-  if (!isObject(obj)) return false;
-  return Object.prototype.hasOwnProperty.call(obj, key);
-}
-
 function handleErrorStrategy(el: HTMLElement): void {
   const classList: Array<string> =  [...el.classList];
   classList.push('d-validate-rules-error-pristine');
@@ -151,9 +198,9 @@ function handleErrorStrategyPass(el: HTMLElement): void {
   el.setAttribute('class', classList.join(' '));
 }
 
-function handleValidateError(el: HTMLElement, tipEl: HTMLElement, message: string, isFormTag: boolean, messageShowType: string): void {
+function handleValidateError({el, tipEl, message, isFormTag, messageShowType}: Partial<ValidateFnParam>): void {
   // 如果该指令用在form标签上，这里做特殊处理
-  if(isFormTag && messageShowType === 'toast') {
+  if(isFormTag && messageShowType === MessageShowTypeEnum.toast) {
     // todo：待替换为toast
     alert(message);
     return;
@@ -171,14 +218,14 @@ function handleValidatePass(el: HTMLElement, tipEl: HTMLElement): void {
 }
 
 // 获取表单name
-function getFormName(binding): string {
+function getFormName(binding: DirectiveBinding): string {
   const _refs = binding.instance.$refs;
   const key = Object.keys(_refs)[0];
   return _refs[key]['name'];
 }
 
 // 校验处理函数
-function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType}) {
+function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType}: Partial<ValidateFnParam>) {
   validator.validate({modelName: modelValue}).then(() => {
     handleValidatePass(el, tipEl);
   }).catch((err) => {
@@ -193,36 +240,50 @@ function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowTyp
       msg = errors[0].message;
     }
 
-    handleValidateError(el, tipEl, msg, isFormTag, messageShowType);
+    handleValidateError({el, tipEl, message: msg, isFormTag, messageShowType});
   })
 }
 
 export default {
-  mounted(el: HTMLElement, binding: any, vnode: VNode): void {
+  mounted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode): void {
     const isFormTag = el.tagName === 'FORM';
 
     const hasOptions = isObject(binding.value) && hasKey(binding.value, 'options');
-    const {rules: bindingRules, options = {}, messageShowType = 'popover'} = binding.value;
-    isFormTag && console.log('messageShowType', messageShowType);
-    
-    let {errorStrategy} = binding.value;
+
+    // 获取指令绑定的值
+    const { 
+      rules: bindingRules, 
+      options = {}, 
+      messageShowType = MessageShowTypeEnum.popover
+    }: DirectiveBindingValue = binding.value;
+    let { errorStrategy }: DirectiveBindingValue = binding.value;
+
     // errorStrategy可配置在options对象中
-    const { updateOn = 'change', errorStrategy: optionsErrorStrategy = 'dirty', asyncDebounceTime = 300} = options;
+    const { 
+      updateOn = UpdateOnEnum.change, 
+      errorStrategy: ErrorStrategy = ErrorStrategyEnum.dirty, 
+      asyncDebounceTime = 300
+    }: DirectiveValidateRuleOptions = options;
 
     if(!errorStrategy) {
-      errorStrategy = optionsErrorStrategy;
+      errorStrategy = ErrorStrategy;
     }
 
     // 判断是否有options，有就取binding.value对象中的rules对象，再判断有没有rules对象，没有就取binding.value
-    const bindRules = hasOptions ? bindingRules : (bindingRules ? bindingRules : binding.value);
+    let customRule: Partial<DirectiveCustomRuleItem> | DirectiveBindingValue = {};
+    if(hasOptions) {
+      customRule = bindingRules ?? binding.value
+    }else {
+      customRule = binding.value as DirectiveBindingValue
+    }
 
-    const isCustomValidator = bindRules && isObject(bindRules) && (hasKey(bindRules, 'validators') || hasKey(bindRules, 'asyncValidators'));
+    const isCustomValidator = customRule && isObject(customRule) && (hasKey(customRule, 'validators') || hasKey(customRule, 'asyncValidators'));
     
-    const rules = Array.isArray(bindRules) ? bindRules : [bindRules];
+    const rules = Array.isArray(customRule) ? customRule : [customRule];
     const tipEl = document.createElement('span');
 
     // messageShowType控制是否显示文字提示
-    if(messageShowType !== 'none') {
+    if(messageShowType !== MessageShowTypeEnum.none) {
       el.parentNode.append(tipEl);
     }
 
@@ -232,7 +293,7 @@ export default {
 
     rules.forEach((rule) => {
       const kvObjList = !Array.isArray(rule) && getKeyValueOfObjectList(rule);
-      let ruleObj = {};
+      let ruleObj: Partial<CustomValidatorRuleObject> = {};
       let avaliableRuleObj = {};
       kvObjList.forEach(item => {
         avaliableRuleObj = getAvaliableRuleObj(item.key, item.value);
@@ -244,11 +305,11 @@ export default {
     // 使用自定义的验证器
     if(isCustomValidator) {
       // descriptor.modelName = [];
-      const {validators, asyncValidators} = bindRules;
+      const {validators, asyncValidators} = customRule as DirectiveCustomRuleItem;
 
       // 校验器
       validators && validators.forEach(item => {
-        const ruleObj = {
+        const ruleObj: Partial<CustomValidatorRuleObject> = {
           message: item?.message || '',
           validator: (rule, value) => item.validator(rule, value),
         }
@@ -257,9 +318,9 @@ export default {
 
       // 异步校验器
       asyncValidators && asyncValidators.forEach(item => {
-        const ruleObj = {
+        const ruleObj: Partial<CustomValidatorRuleObject> = {
           message: item?.message || '',
-          asyncValidator: (rule, value, callback) => {
+          asyncValidator: (rule, value) => {
             return new Promise(debounce((resolve, reject) => {
               const res = item.asyncValidator(rule, value);
               if(res) {
@@ -286,7 +347,7 @@ export default {
     vnode.children[0].el.addEventListener(updateOn, htmlEventValidateHandler); 
 
     // 设置errorStrategy
-    if(errorStrategy === 'pristine') {
+    if(errorStrategy === ErrorStrategyEnum.pristine) {
       handleErrorStrategy(el);
       // pristine为初始化验证，初始化时需改变下原始值才能出发验证
       vnode.children[0].props.value = '' + vnode.children[0].props.value;
