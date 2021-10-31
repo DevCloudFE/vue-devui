@@ -8,9 +8,15 @@ export const popupHandles = (props: CascaderProps): PopupTypes => {
   const menuShow = ref(false)
   const menuOpenClass = ref('')
   const disabled = computed(() => props.disabled) // select是否被禁用
+  const stopDefault = ref(false)
+  const updateStopDefaultType = () => {
+    stopDefault.value = !menuShow.value
+  }
+
   const openPopup = () => {
     if (disabled.value) return
     menuShow.value = !menuShow.value
+    updateStopDefaultType()
   }
 
   watch(menuShow, (status) => {
@@ -19,7 +25,9 @@ export const popupHandles = (props: CascaderProps): PopupTypes => {
 
   return {
     menuShow,
+    stopDefault,
     menuOpenClass,
+    updateStopDefaultType,
     openPopup,
   }
 }

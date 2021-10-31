@@ -1,15 +1,12 @@
 # Cascader 级联菜单
 
 下拉级联菜单。
-<<<<<<< HEAD:docs/components/cascader/index.md
-=======
 
 ### 何时使用
 
 1. 需要从一组相关联的数据集合进行选择，例如省市区，公司层级，事物分类等。
 2. 从一个较大的数据集合中进行选择时，用多级分类进行分隔，方便选择。
 
->>>>>>> dev:packages/devui-vue/docs/components/cascader/index.md
 ### 基本用法
 
 :::demo
@@ -19,7 +16,7 @@
   <h4>hover mode</h4>
   <d-cascader :options="options" placeholder="请选择" style="width: 200px"></d-cascader>
   <h4>click mode</h4>
-  <d-cascader :options="options2" trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
+  <d-cascader :options="options2" :value="value" showPath trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
   <h4>data empty</h4>
   <d-cascader :options="[]" trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
   <h4>disabled</h4>
@@ -222,9 +219,11 @@ export default defineComponent({
         disabled: true
       }
     ])
+    const value = [1, 4, 9, 81]
     return {
       options,
-      options2
+      options2,
+      value
     }
   },
 })
@@ -388,6 +387,10 @@ export default defineComponent({
 | options    |	[`CascaderItem[]`](#CascaderItem) |	[] |	必选，级联器的菜单信息 |  [基本用法](#基本用法) | |
 | placeholder    | `string` |	'' |	可选，没有选择时的输入框展示信息 |  [基本用法](#基本用法) | |
 | disabled    | `boolean` |	false |		可选，级联器是否禁用 |  [基本用法](#基本用法) | |
+| value    | `number[] \| [number[]]` |	[] |		可选，单选时为`number[]`，多选时为`[number[]]`，选中项的value值集合 |  [基本用法](#基本用法) | |
+| multiple    | `boolean` |	false |	可选，级联器是否开启多选模式，开启后为 checkbox 选择 |  [基本用法](#多选模式) | |
+| disabled   | `boolean` | false | 可选，级联器是否禁用 |  [基本用法](#基本用法) | |
+
 
 ### 接口 & 类型定义
 

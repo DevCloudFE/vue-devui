@@ -47,7 +47,14 @@ export const cascaderProps = {
     default: false
   },
   /**
-   * 可选，级联器选中的数组下标value
+   * 可选，级联器选中项是否显示路径，仅单选模式下生效
+   */
+  showPath: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * 可选，需要选中项的value集合
    * @type {CascaderValueType}
    * @default []
    */
@@ -81,7 +88,9 @@ export type CascaderProps = ExtractPropTypes<typeof cascaderProps>
 export interface PopupTypes {
   menuShow: Ref<boolean>
   menuOpenClass: Ref<string>
+  stopDefault: Ref<boolean>
   openPopup:  (e?: MouseEvent) => void
+  updateStopDefaultType: () => void
 }
 
 export type CaascaderOptionsType = UnwrapNestedRefs<[CascaderItem[]]>
@@ -97,6 +106,7 @@ export interface CascaderItemNeedType extends PickCascader {
   inputValueCache: Ref<string>
   confirmInputValueFlg: Ref<boolean>
   multiple: boolean
+  stopDefault: Ref<boolean>
 }
 export interface UseCascaderItemCallback {
   cascaderItemNeedProps: CascaderItemNeedType

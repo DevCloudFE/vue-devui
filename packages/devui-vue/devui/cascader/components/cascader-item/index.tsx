@@ -1,22 +1,27 @@
-import { getRootClass } from './use-class'
+import { useClassName } from './use-class'
 import { CascaderItemPropsType } from '../cascader-list/cascader-list-types'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { cloneDeep } from 'lodash-es'
+
 import './index.scss'
 export const DCascaderItem = (props: CascaderItemPropsType) => {
-  console.log('item index',props)
+  // console.log('item index',props)
   const { cascaderItem, ulIndex, liIndex, cascaderItemNeedProps } = props
-  const { multiple, value } = cascaderItemNeedProps
+  const { multiple, stopDefault } = cascaderItemNeedProps
   const disbaled = computed(() => cascaderItem?.disabled) // 当前项是否被禁用
+  const { getRootClass } = useClassName()
   const rootClasses = getRootClass(props)
   const triggerHover = cascaderItemNeedProps.trigger === 'hover'
   // 触发联动更新
   const updateValues = () => {
+    if (stopDefault.value) return
     if (!multiple) {
-      // 单选模式
+      // 单选模式：
       // 删除当前联动级之后的所有级
       cascaderItemNeedProps.value.splice(ulIndex, cascaderItemNeedProps.value.length - ulIndex)
       // 更新当前active的value数组
-      cascaderItemNeedProps.value[ulIndex] = liIndex
+      cascaderItemNeedProps.value[ulIndex] = cascaderItem?.value as number
+      // console.log(cascaderItemNeedProps.value)
     } else {
       // 多选模式
       console.log(cascaderItemNeedProps.value)
@@ -28,7 +33,7 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
     updateValues()
   }
   const mouseenter = {
-    [ triggerHover && 'onMouseenter']: mouseEnter
+    [ triggerHover && 'onMouseenter' ]: mouseEnter
   }
   // 鼠标click
   const mouseClick = () => {
@@ -40,9 +45,11 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
   }
   return (
     <li class={rootClasses.value} {...mouseenter} onClick={mouseClick}>
-      <div class="cascader-li__checkbox">
-        <d-checkbox/>
-      </div>
+      { multiple && 
+        <div class="cascader-li__checkbox">
+          <d-checkbox/>
+        </div>
+      }
       { cascaderItem.icon &&
         <div class="cascader-li__icon">
           <d-icon name={ cascaderItem.icon } size="inherit"></d-icon>
