@@ -1,7 +1,10 @@
-// can export function.
 export default {
-  mounted(el: HTMLElement, binding: Record<string, unknown>): void {
-    console.log('draggable el:', el, el.textContent)
-    console.log('draggable binding:', binding)
+  mounted(el: HTMLElement): void {
+    el.setAttribute('draggable', 'true')
+
+    // dragstart/drag/dragend
+    el.addEventListener('dragstart', (event: DragEvent) => {
+      event.dataTransfer.setData('originId', el.id)
+    })
   },
 }

@@ -13,8 +13,11 @@
 ```vue
 <template>
   <div>
-    <div v-d-draggable>拖拽区</div>
-    <div v-d-droppable>放置区</div>
+    <div id="draggable-item" class="draggable-item" v-d-draggable="{
+      dragScope: 'default-css',
+      dragData: { item: 'item', parent: 'list1' },
+    }">拖拽区</div>
+    <div class="droppable-item" v-d-droppable>放置区</div>
   </div>
 </template>
 
@@ -30,8 +33,21 @@ export default defineComponent({
 })
 </script>
 
-<style>
-
+<style class="scss">
+.draggable-item {
+  padding: 0 16px;
+  height: 30px;
+  border: 1px solid #5e7ce0;
+  border: 1px solid var(--devui-brand,#5e7ce0);
+  color: #fff;
+  color: var(--devui-light-text,#fff);
+  margin-bottom: 5px;
+  line-height: 1.5;
+  background-color: #5e7ce0;
+  background-color: var(--devui-brand,#5e7ce0);
+  display: flex;
+  align-items: center;
+}
 </style>
 ```
 
