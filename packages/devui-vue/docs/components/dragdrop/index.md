@@ -12,12 +12,22 @@
 
 ```vue
 <template>
-  <div>
-    <div id="draggable-item" class="draggable-item" v-d-draggable="{
-      dragScope: 'default-css',
-      dragData: { item: 'item', parent: 'list1' },
-    }">拖拽区</div>
-    <div class="droppable-item" v-d-droppable>放置区</div>
+  <div class="dragdrop-card-container">
+    <div class="dragdrop-card">
+      <div class="dragdrop-card-header">Draggable Item</div>
+      <div class="dragdrop-card-block">
+        <div id="draggable-item" class="draggable-item" v-d-draggable="{
+          dragScope: 'default-css',
+          dragData: { item: 'item', parent: 'list1' },
+        }">VSCode</div>
+      </div>
+    </div>
+    <div class="dragdrop-card" v-d-droppable>
+      <div class="dragdrop-card-header">Drop Area</div>
+      <div class="dragdrop-card-block">
+
+      </div>
+    </div>
   </div>
 </template>
 
@@ -33,7 +43,24 @@ export default defineComponent({
 })
 </script>
 
-<style class="scss">
+<style>
+.dragdrop-card-container {
+  display: flex;
+}
+
+.dragdrop-card {
+  padding: 12px;
+  margin-right: 12px;
+  border: 1px solid #dfe1e6;
+  border: 1px solid var(--devui-dividing-line,#dfe1e6);
+}
+
+.dragdrop-card .dragdrop-card-header {
+  padding-bottom: 12px;
+  font-size: 12px;
+  font-size: var(--devui-font-size,12px);
+}
+
 .draggable-item {
   padding: 0 16px;
   height: 30px;
