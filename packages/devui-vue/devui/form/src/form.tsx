@@ -1,9 +1,10 @@
-import './form.scss'
 
 import { defineComponent, provide } from 'vue'
-import { formProps, FormProps, IFormItem, dFormEvents, formInjectionKey, IForm } from './form-types'
 import mitt from 'mitt'
-import EventBus from './util/event-bus'
+import { formProps, FormProps, IFormItem, dFormEvents, formInjectionKey, IForm } from './form-types'
+import { EventBus } from './util'
+import './form.scss'
+
 
 export default defineComponent({
   name: 'DForm',
