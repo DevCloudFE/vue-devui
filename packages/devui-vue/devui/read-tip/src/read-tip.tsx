@@ -28,6 +28,9 @@ export default defineComponent({
 
         if (trigger === 'click') {
           dom.addEventListener('click', () => {
+            rules.forEach(element => {
+              element.status = false
+            });
             rule.status = true
           })
           // dom.addEventListener('mouseleave', () => {
