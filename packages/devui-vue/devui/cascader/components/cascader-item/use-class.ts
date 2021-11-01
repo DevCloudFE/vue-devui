@@ -1,13 +1,12 @@
 /**
  * 定义组件class
  */
- import { computed, ComputedRef } from 'vue';
- import { CascaderItemPropsType } from '../cascader-list/cascader-list-types'
-
- export const useClassName= () => {
-   const getRootClass = (props: CascaderItemPropsType): ComputedRef => {
+import { computed, ComputedRef } from 'vue';
+import { CascaderItemPropsType } from '../cascader-list/cascader-list-types'
+import { UseClassNameType } from './cascader-item-types'
+export const useClassName = (): UseClassNameType => {
+  const getRootClass = (props: CascaderItemPropsType): ComputedRef => {
     const itemProps = props?.cascaderItemNeedProps
-    console.log(itemProps.valueCache)
     const activeFlg = itemProps?.valueCache[props.ulIndex] === props.cascaderItem?.value
     const disabledFlg = props.cascaderItem?.disabled
     return computed(() => ({
@@ -15,9 +14,8 @@
       'devui-leaf-active': activeFlg,
       'disabled': disabledFlg
     }))
-   }
-   return {
+  }
+  return {
     getRootClass
-   }
- }
- 
+  }
+}

@@ -5,7 +5,6 @@ import { DTag } from '../cascader-tag/'
 import { MultiplePropsType } from './use-type'
 import './index.scss'
 export const DMultipleBox = (props: MultiplePropsType) => {
-  console.log(props)
   return (
     <div class="devui-tags-input">
       <div class="devui-tags-box">

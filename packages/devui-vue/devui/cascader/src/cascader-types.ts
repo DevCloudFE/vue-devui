@@ -116,3 +116,11 @@ export interface CascaderItemNeedType extends PickCascader {
 export interface UseCascaderItemCallback {
   cascaderItemNeedProps: CascaderItemNeedType
 }
+
+export interface UseCascaderMultipleCallback {
+  multipleActiveArr: UnwrapNestedRefs<CascaderItem[]>
+  addMultipleIptValue: (a: CascaderItem[], b: CascaderItem) => void
+  initMultipleIptValue: (a: CascaderItem[]) => void
+  getMultipleCascaderItem: (a: CascaderItem[], b: number[], c: number) => void
+  initActiveIndexs: (a: CascaderValueType, b: CascaderItem[], c: number, d: number[]) => void
+}

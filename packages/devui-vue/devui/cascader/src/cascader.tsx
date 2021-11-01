@@ -6,6 +6,7 @@ import DCascaderList from '../components/cascader-list'
 // import { optionsHandles } from '../hooks/use-cascader-options'
 import { useCascaderItem } from '../hooks/use-cascader-item'
 import { DMultipleBox } from '../components/cascader-multiple/index' 
+import { useMultiple } from '../hooks/use-cascader-multiple'
 import { cloneDeep } from 'lodash-es'
 import './cascader.scss'
 // import { UnwrapNestedRefs } from '@vue/reactivity'
@@ -18,8 +19,9 @@ export default defineComponent({
     const cascaderOptions = reactive<[CascaderItem[]]>(cloneDeep([ props?.options ]))
     const multiple = toRef(props, 'multiple')
     const inputValue = ref('')
-    const multipleActiveArr = reactive<CascaderItem[]>([]) // 多选模式下选中的值数组，用于生成tag
-    // let initIptValue = props.value.length > 0 ? true : false // 有value默认值时，初始化输出内容
+    const { multipleActiveArr, initMultipleIptValue, getMultipleCascaderItem, initActiveIndexs } = useMultiple()
+    // const multipleActiveArr = reactive<CascaderItem[]>([]) // 多选模式下选中的值数组，用于生成tag
+    let initIptValue = props.value.length > 0 ? true : false // 有value默认值时，初始化输出内容
     const position = reactive({
       originX: 'left',
       originY: 'bottom',
@@ -45,7 +47,6 @@ export default defineComponent({
       // 当前的子级
       const current = currentOption[i]
       const children = current?.children
-      // getInputValue(current.label, children)
       if (children?.length > 0) {
         // 为下一级增添数据
         cascaderOptions[index + 1] = children
@@ -102,60 +103,13 @@ export default defineComponent({
         cascaderItemNeedProps.inputValueCache.value += (label + (arr?.length > 0 ? ' / ' : ''))
       }
     }
-
-    /**
-     * 多选模式下
-     * 添加选中项
-     * @param arr 当前选中的数组集合
-     * @param singleItem 当前选中项
-     * 
-     */
-    const addMultipleIptValue = (arr: CascaderItem[], singleItem: CascaderItem) => {
-      arr.push(singleItem)
-    }
-    /**
-     * 多选模式下
-     * 初始化选中项，将选中的数组集合置为空
-     * @param arr 当前选中的数组集合
-     */
-    const initMultipleIptValue = (arr: CascaderItem[]) => {
-      arr.splice(0, arr.length)
-    }
+    
     /**
      * 单选模式初始化
      */
     const initSingleIptValue = (inputValueCache: Ref<string>) => {
       inputValueCache.value = ''
     }
-    /**
-     * @param currentOption 选中的某项
-     * @param cascaderUlValues 多选集合中的某一个集合
-     * @param index cascaderUlValues数组的起始项，最开始为0
-     */
-    const getMultipleCascaderItem = (currentOption: CascaderItem[], cascaderUlValues: number[], index: number) => {
-      let nextOption = null
-      // 根据value筛选出当前children中被选中的项
-      for (let i = 0; i < currentOption.length; i++) {
-        if (currentOption[i]?.value === cascaderUlValues[index]) {
-          nextOption = currentOption[i]
-          break
-        }
-      }
-      if (nextOption?.children?.length > 0) {
-        // 递归获取选中节点
-        index += 1
-        getMultipleCascaderItem(nextOption.children, cascaderUlValues, index)
-      } else {
-        // 没有子节点了则说明已经是最终节点
-        addMultipleIptValue(multipleActiveArr, nextOption)
-      }
-    }
-    /**
-     * 触发input内容输出监听
-     */
-    // const triggerUpdateIptValue = () => {
-    //   cascaderItemNeedProps.confirmInputValueFlg.value = !cascaderItemNeedProps.confirmInputValueFlg.value
-    // }
     /**
      * 监听点击最终的节点输出内容
      */
@@ -172,6 +126,10 @@ export default defineComponent({
        // 更新值
       updateCascaderValue(cascaderItemNeedProps.value, props?.options, 0)
       inputValue.value = cascaderItemNeedProps.inputValueCache.value
+      if (initIptValue) { // 因为初始化了value，所以默认回显视图的选中态
+        initActiveIndexs(props.value, props?.options, 0, cascaderItemNeedProps.activeIndexs)
+        initIptValue = false // 只需要初始化一次，之后不再执行
+      }
     }, {
       immediate: true
     })
@@ -180,21 +138,9 @@ export default defineComponent({
      */
     watch(cascaderItemNeedProps.activeIndexs, val => {
       updateCascaderView(val, props?.options, 0)
+    }, {
+      immediate: true
     })
-    /**
-     * 监听value值的改变
-     * 改变cascaderOptions弹出层内容
-     * 改变展示值
-     */
-    // watch(cascaderItemNeedProps.value, (val) => {
-    //   // cascaderItemNeedProps.inputValueCache.value = ''
-    //   // if (initIptValue) { // 因为初始化了value，所以默认输出值
-    //   //   triggerUpdateIptValue()
-    //   //   initIptValue = false // 只需要初始化一次，之后不再执行
-    //   // }
-    // }, {
-    //   immediate: true
-    // })
 
     return () => (
       <>
