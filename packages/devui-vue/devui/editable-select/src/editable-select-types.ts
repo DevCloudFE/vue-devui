@@ -1,56 +1,49 @@
-import type { ExtractPropTypes, Ref, PropType, InjectionKey } from 'vue'
-export type ModelValue = number | string | Array<number | string>
-// porps
+import type { PropType, ExtractPropTypes } from 'vue'
+export interface OptionItem {
+  name: string
+  [key: string]: any
+}
+export type Options = Array<string | OptionItem>
 export const editableSelectProps = {
   /* test: {
     type: Object as PropType<{ xxx: xxx }>
   } */
-  width: {
-    type: Number,
-    default: 450
+  modelValue: {
+    type: [String, Number] as PropType<string | number>
   },
-  appendToBody: {
-    type: Boolean,
-    default: true,
+  options: {
+    type: Array as PropType<Options>,
+    default: () => []
+  },
+  width: {
+    type: Number
   },
   maxHeight: {
-    type: Number,
-    default: 300
+    type: Number
   },
   disabled: {
     type: Boolean,
     default: false
   },
-  modelValue: {
-    type: [String, Number, Array] as PropType<ModelValue>
+  disabledKey: {
+    type: String,
   },
-  'onUpdate:modelValue': {
-    type: Function as PropType<(val: ModelValue) => void>,
+  remote: {
+    type: Boolean,
+    default: false
   },
+  loading: {
+    type: Boolean
+  },
+  remoteMethod: {
+    type: Function as PropType<(inputValue: string) => Array<Options>>
+  },
+  filterMethod: {
+    type: Function as PropType<(inputValue: string) => Array<Options>>
+  },
+  searchFn: {
+    type: Function as PropType<(term: string) => Array<Options>>,
+  }
 } as const
 
 export type EditableSelectProps = ExtractPropTypes<typeof editableSelectProps>
-type HorizontalConnectionPos = 'left' | 'center' | 'right';
-type VerticalConnectionPos = 'top' | 'center' | 'bottom';
-
-interface ConnectionPosition {
-  originX: HorizontalConnectionPos
-  originY: VerticalConnectionPos
-  overlayX: HorizontalConnectionPos
-  overlayY: VerticalConnectionPos
-}
-
-export interface SelectStatesReturnType {
-  visible: boolean
-  origin: Ref<null>
-  position: ConnectionPosition
-}
-export interface SelectReturnType {
-  toggleMenu: () => void
-  handleOptionSelect: (vm: unknown) => void
-}
-
-export const selectKey = 'DSelect' as unknown as InjectionKey<SelectContext>
-export interface SelectContext {
-  handleOptionSelect(vm: unknown): void
-}
