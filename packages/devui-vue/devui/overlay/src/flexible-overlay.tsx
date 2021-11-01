@@ -1,5 +1,4 @@
 import {
-  ComponentPublicInstance,
   CSSProperties,
   defineComponent,
   getCurrentInstance,
@@ -7,41 +6,26 @@ import {
   nextTick,
   onBeforeUnmount,
   onMounted,
-  PropType,
   reactive,
   ref,
-  Ref,
   renderSlot,
   toRef,
   watch,
 } from 'vue';
 import { CommonOverlay } from './common-overlay';
-import { overlayProps } from './overlay-types';
+import { OriginOrDomRef, flexibleOverlayProps, FlexibleOverlayProps, Point, Origin, ConnectionPosition } from './overlay-types';
 import { useOverlayLogic } from './utils';
+
+import { getElement, isComponent } from '../../shared/util/dom';
 
 /**
  * 弹性的 Overlay，用于连接固定的和相对点
  */
 export const FlexibleOverlay = defineComponent({
   name: 'DFlexibleOverlay',
-  props: {
-    origin: {
-      type: Object as PropType<OriginOrDomRef>,
-      require: true,
-    },
-    position: {
-      type: Object as PropType<ConnectionPosition>,
-      default: () => ({
-        originX: 'left',
-        originY: 'top',
-        overlayX: 'left',
-        overlayY: 'top',
-      }),
-    },
-    ...overlayProps,
-  },
+  props: flexibleOverlayProps,
   emits: ['onUpdate:visible'],
-  setup(props, ctx) {
+  setup(props: FlexibleOverlayProps, ctx) {
     // lift cycle
     const overlayRef = ref<Element | null>(null);
     const positionedStyle = reactive<CSSProperties>({ position: 'absolute' });
@@ -70,10 +54,12 @@ export const FlexibleOverlay = defineComponent({
         positionedStyle.left = `${point.x}px`;
         positionedStyle.top = `${point.y}px`;
       };
-      const handleChange = () =>
-        handleRectChange(overlay.getBoundingClientRect());
+      const handleChange = () => handleRectChange(overlay.getBoundingClientRect());
 
-      watch(toRef(props, 'visible'), (visible, ov, onInvalidate) => {
+      const visibleRef = toRef(props, 'visible');
+      const positionRef = toRef(props, 'position');
+
+      watch(visibleRef, (visible, ov, onInvalidate) => {
         if (visible) {
           subscribeLayoutEvent(handleChange);
         } else {
@@ -84,7 +70,7 @@ export const FlexibleOverlay = defineComponent({
         });
       });
 
-      watch(toRef(props, 'position'), () => {
+      watch([visibleRef, positionRef], () => {
         handleChange();
       });
 
@@ -97,8 +83,7 @@ export const FlexibleOverlay = defineComponent({
       }, instance);
 
       if (origin instanceof Element) {
-        // Only when the style changing, you can change
-        // the position.
+        // Only when the style changing, you can change the position.
         const observer = new MutationObserver(handleChange);
         observer.observe(origin, {
           attributeFilter: ['style'],
@@ -118,7 +103,12 @@ export const FlexibleOverlay = defineComponent({
 
     return () => (
       <CommonOverlay>
-        <div v-show={props.visible} class={backgroundClass.value} onClick={handleBackdropClick}>
+        <div
+          v-show={props.visible}
+          style={props.backgroundStyle}
+          class={backgroundClass.value}
+          onClick={handleBackdropClick}
+        >
           <div
             ref={overlayRef}
             class={overlayClass.value}
@@ -133,64 +123,6 @@ export const FlexibleOverlay = defineComponent({
   },
 });
 
-/**
- * 提取 Vue Intance 中的元素，如果本身就是元素，直接返回。
- * @param {any} element
- * @returns
- */
-function getElement(
-  element: Element | { $el: Element; } | null
-): Element | null {
-  if (element instanceof Element) {
-    return element;
-  }
-  if (
-    element &&
-    typeof element === 'object' &&
-    element.$el instanceof Element
-  ) {
-    return element.$el;
-  }
-  return null;
-}
-
-interface ClientRect {
-  bottom: number
-  readonly height: number
-  left: number
-  right: number
-  top: number
-  readonly width: number
-}
-
-interface Point {
-  x: number
-  y: number
-}
-
-interface Rect {
-  x: number
-  y: number
-  width?: number
-  height?: number
-}
-
-type OriginOrDomRef =
-  | Element
-  | Ref<ComponentPublicInstance | Element | undefined | null>
-  | Rect;
-
-type Origin = Element | Rect;
-
-type HorizontalConnectionPos = 'left' | 'center' | 'right';
-type VerticalConnectionPos = 'top' | 'center' | 'bottom';
-
-interface ConnectionPosition {
-  originX: HorizontalConnectionPos
-  originY: VerticalConnectionPos
-  overlayX: HorizontalConnectionPos
-  overlayY: VerticalConnectionPos
-}
 
 /**
  * 获取原点，可能是 Element 或者 Rect
@@ -205,6 +137,10 @@ function getOrigin(origin: OriginOrDomRef): Origin {
 
   if (isRef(origin)) {
     return getElement(origin.value);
+  }
+
+  if (isComponent(origin)) {
+    return getElement(origin);
   }
 
   // is point { x: number, y: number, width: number, height: number }
@@ -243,9 +179,9 @@ function calculatePosition(
 /**
  * 返回原点元素的 ClientRect
  * @param origin
- * @returns {ClientRect}
+ * @returns {DOMRect}
  */
-function getOriginRect(origin: Origin): ClientRect {
+function getOriginRect(origin: Origin): DOMRect {
   if (origin instanceof Element) {
     return origin.getBoundingClientRect();
   }
@@ -261,7 +197,7 @@ function getOriginRect(origin: Origin): ClientRect {
     right: origin.x + width,
     height,
     width,
-  };
+  } as DOMRect;
 }
 
 /**

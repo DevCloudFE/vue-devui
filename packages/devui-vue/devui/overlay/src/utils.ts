@@ -10,7 +10,11 @@ interface CommonInfo {
 
 export function useOverlayLogic(props: OverlayProps): CommonInfo {
   const backgroundClass = computed(() => {
-    return ['devui-overlay-background', 'devui-overlay-background__color', props.backgroundClass];
+    return [
+      'devui-overlay-background',
+      props.backgroundClass,
+      !props.hasBackdrop ? 'devui-overlay-background__disabled' : 'devui-overlay-background__color',
+    ];
   });
   const overlayClass = computed(() => {
     return 'devui-overlay';
