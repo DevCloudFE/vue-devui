@@ -9,7 +9,6 @@ export default defineComponent({
   props: timeAxisProps,
   emits: [],
   setup(props: TimeAxisProps, ctx) {
-
     const timeAxis = ref<null | HTMLElement>();
     let marginLeft = 35;
     onMounted(() => {
@@ -20,14 +19,10 @@ export default defineComponent({
         }
       });
     });
-
-
     return () => {
       return (
         <div class={`devui-time-axis-${props.direction}`} ref={timeAxis} style={{marginLeft:marginLeft+'px'}}>
-          {
-            props.data.map(item=> <TimeAxisItem {...item}/>)
-          }
+          {ctx.slots.default?.()}
         </div>
       )
     }

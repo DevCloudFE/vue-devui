@@ -1,9 +1,6 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 export type DataDirection = 'vertical' | 'horizontal'
-export type LineStyle = {
-    style: 'solid'|'dashed'|'dotted'|'none'
-    color:string
-}
+export type LineStyle = 'solid' | 'dashed' | 'dotted' | 'none'
 
 
 export interface DataItem {
@@ -15,11 +12,12 @@ export interface DataItem {
   dotColor?: string
   //分界线的样式
   lineStyle?: LineStyle
-
-
-
-
+  //分界线的样式
+  lineColor?: string
+  //自定义点
   customDot?: string | HTMLElement
+
+  
   //时间点类型
   type?: 'primary' | 'success' | 'danger' | 'warning'
   status?: 'runned' | 'running' | ''
@@ -36,11 +34,6 @@ export const timeAxisProps = {
   direction: {
     type: String as PropType<DataDirection>,
     default: 'vertical'
-  },
-  //列表数据
-  data: {
-    type: Array as PropType<DataItem[]>,
-    default:()=>[]
   }
 } as const
 

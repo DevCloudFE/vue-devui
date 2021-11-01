@@ -9,6 +9,7 @@ export default defineComponent({
     emits: [],
     setup(props: TimeAxisItemProps, ctx) {
         const itemClass = 'devui-time-axis-item'
+        console.log(ctx.slots)
         return () => {
             return (
                 <div class={itemClass}>
@@ -17,14 +18,18 @@ export default defineComponent({
                             {props.time}
                         </div>
                     </div>
-                    <div class={`${itemClass}-axis`}>
-                        <div class={`${itemClass}-dot ${itemClass}-type-primary`} style={{borderColor: props.dotColor}}
-                        ></div>
-                        <div class={`${itemClass}-line ${itemClass}-line-style-solid`}></div>
+                    <div class={`${itemClass}-axis`} >
+                        {
+                            ctx.slots.dot?
+                                <div  style={{color: props.dotColor}}> {ctx.slots.dot?.()}</div>:
+                                <div  class={`${itemClass}-dot ${itemClass}-type-primary`} style={{borderColor: props.dotColor}}></div>
+                        }
+
+                        <div class={`${itemClass}-line ${itemClass}-line-style-${props.lineStyle}`}  style={{borderColor: props.lineColor}}></div>
                     </div>
                     <div class={`${itemClass}-data-right ${itemClass}-data-bottom`}>
                         <div>
-                            {props.text}
+                            {ctx.slots.default()}
                         </div>
                     </div>
                 </div>
