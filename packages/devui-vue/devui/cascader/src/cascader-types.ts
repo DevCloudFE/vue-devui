@@ -79,8 +79,11 @@ export const cascaderProps = {
   placeholder: {
     type: String,
     default: ''
-  }
-
+  },
+  change: {
+    type: Function as PropType<(v: CascaderValueType, k: CascaderItem[]) => void>,
+    default: undefined
+  },
 } as const
 
 export type CascaderProps = ExtractPropTypes<typeof cascaderProps>
@@ -102,11 +105,13 @@ export interface OptionsCallback {
 type cascaderItemExtendsProps = 'trigger'
 export type PickCascader = Pick<CascaderProps, cascaderItemExtendsProps>
 export interface CascaderItemNeedType extends PickCascader {
+  valueCache: CascaderValueType
   value: CascaderValueType
   inputValueCache: Ref<string>
   confirmInputValueFlg: Ref<boolean>
   multiple: boolean
   stopDefault: Ref<boolean>
+  activeIndexs: number[]
 }
 export interface UseCascaderItemCallback {
   cascaderItemNeedProps: CascaderItemNeedType

@@ -10,8 +10,10 @@ export const useCascaderItem = (props: CascaderProps, stopDefault: Ref<boolean>)
     trigger: props.trigger,
     inputValueCache: ref(''),
     confirmInputValueFlg: ref(false), // 用于监听点击确定时输出选择内容
+    valueCache: reactive(cloneDeep(props.value)), // 操作时缓存选中的值
     value: reactive(cloneDeep(props.value)), // 每级的value
     multiple: props.multiple,
+    activeIndexs: reactive<number[]>([]), // 维护用于视图更新的选中下标
     stopDefault,
   }
   return {

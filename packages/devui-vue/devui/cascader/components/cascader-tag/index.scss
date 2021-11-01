@@ -1,0 +1,39 @@
+@import '../../../style/theme/color';
+@import '../../../style/theme/corner';
+@import '../../../style/core/font';
+.devui-tag {
+  margin: 2px 4px 2px 0;
+  display: inline-block;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 8px 0 8px;
+  background-color: $devui-label-bg;
+  border-radius: $devui-border-radius;
+  border-color: inherit;
+  border: 0 solid;
+  span {
+    min-height: 20px;
+    line-height: 20px;
+    font-size: $devui-font-size;
+    color: $devui-text;
+    position: relative;
+    cursor: default;
+  }
+  &__close {
+    margin-left: 12px;
+    font-size:  $devui-font-size;
+    cursor: pointer;
+    color: #fff;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    background-color: $devui-line;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    &:hover {
+      background-color: $devui-brand;
+    }
+  }
+}

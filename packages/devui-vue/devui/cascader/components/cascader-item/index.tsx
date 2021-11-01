@@ -1,13 +1,12 @@
 import { useClassName } from './use-class'
 import { CascaderItemPropsType } from '../cascader-list/cascader-list-types'
 import { computed, ref } from 'vue'
-import { cloneDeep } from 'lodash-es'
 
 import './index.scss'
 export const DCascaderItem = (props: CascaderItemPropsType) => {
   // console.log('item index',props)
   const { cascaderItem, ulIndex, liIndex, cascaderItemNeedProps } = props
-  const { multiple, stopDefault } = cascaderItemNeedProps
+  const { multiple, stopDefault, valueCache, activeIndexs } = cascaderItemNeedProps
   const disbaled = computed(() => cascaderItem?.disabled) // 当前项是否被禁用
   const { getRootClass } = useClassName()
   const rootClasses = getRootClass(props)
@@ -15,17 +14,14 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
   // 触发联动更新
   const updateValues = () => {
     if (stopDefault.value) return
-    if (!multiple) {
-      // 单选模式：
-      // 删除当前联动级之后的所有级
-      cascaderItemNeedProps.value.splice(ulIndex, cascaderItemNeedProps.value.length - ulIndex)
-      // 更新当前active的value数组
-      cascaderItemNeedProps.value[ulIndex] = cascaderItem?.value as number
-      // console.log(cascaderItemNeedProps.value)
-    } else {
-      // 多选模式
-      console.log(cascaderItemNeedProps.value)
-    }
+    // 删除当前联动级之后的所有级
+    activeIndexs.splice(ulIndex, activeIndexs.length - ulIndex)
+    // 更新当前渲染视图的下标数组
+    activeIndexs[ulIndex] = liIndex
+    // 删除当前联动级之后的所有级
+    valueCache.splice(ulIndex, valueCache.length - ulIndex)
+    // 更新当前active的value数组
+    valueCache[ulIndex] = cascaderItem?.value as number
   }
   // 鼠标hover（多选模式下只能点击操作触发）
   const mouseEnter = () => {

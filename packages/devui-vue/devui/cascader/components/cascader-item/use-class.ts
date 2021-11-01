@@ -7,7 +7,8 @@
  export const useClassName= () => {
    const getRootClass = (props: CascaderItemPropsType): ComputedRef => {
     const itemProps = props?.cascaderItemNeedProps
-    const activeFlg = itemProps?.value[props.ulIndex] === props.cascaderItem?.value
+    console.log(itemProps.valueCache)
+    const activeFlg = itemProps?.valueCache[props.ulIndex] === props.cascaderItem?.value
     const disabledFlg = props.cascaderItem?.disabled
     return computed(() => ({
       'devui-cascader-li devui-dropdown-item': true,
