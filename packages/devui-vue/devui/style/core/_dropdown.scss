@@ -46,7 +46,6 @@
   top: calc(100% - 1px);
   left: 0;
   z-index: 1000;
-  display: none;
   min-width: calc(min(100%, 102px));
   margin: 4px 0;
   padding-bottom: 5px;
@@ -67,9 +66,9 @@
     margin-bottom: -1px;
   }
 
-  .open > & {
-    display: block;
-  }
+  // .open > & {
+  //   display: block;
+  // }
 
   > li {
     position: relative;

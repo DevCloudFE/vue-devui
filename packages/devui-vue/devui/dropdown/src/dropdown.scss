@@ -1,0 +1,27 @@
+@import '@devui/styles-var/devui-var';
+
+.devui-dropdown-menu {
+  box-shadow: $devui-shadow-length-connected-overlay;
+}
+
+.devui-dropdown span {
+  &.icon-chevron-down,
+  &.icon-select-arrow {
+    display: inline-block;
+    vertical-align: text-top;
+  }
+}
+
+.devui-dropdown-animation span {
+  &.icon-chevron-down,
+  &.icon-select-arrow {
+    transition: transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+  }
+}
+
+.devui-dropdown.open span {
+  &.icon-chevron-down,
+  &.icon-select-arrow {
+    transform: rotate(180deg);
+  }
+}
