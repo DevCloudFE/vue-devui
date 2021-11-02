@@ -14,16 +14,80 @@
 ```vue
 <template>
   <d-button ref="origin">More</d-button>
-  <d-dropdown :origin="origin" trigger="hover"></d-dropdown>
+  <d-dropdown :origin="origin" trigger="click">
+    <ul class="devui-dropdown-menu" role="menu">
+      <li role="menuitem">
+        <a class="devui-dropdown-item">Item 1</a>
+      </li>
+      <li class="disabled" role="menuitem">
+        <a class="devui-dropdown-item disabled">Item 2</a>
+      </li>
+      <li role="menuitem">
+        <a class="devui-dropdown-item">Item 3</a>
+      </li>
+      <li role="menuitem">
+        <a class="devui-dropdown-item">Item 4</a>
+      </li>
+    </ul>
+  </d-dropdown>
 </template>
-
 <script>
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
     return {
-      msg: 'Dropdown 下拉菜单 组件文档示例',
+      origin: ref()
+    }
+  }
+})
+</script>
+
+<style>
+.devui-dropdown-menu > ul {
+  list-style: none;
+}
+
+.devui-dropdown-menu > a {
+  color: unset;
+}
+.devui-dropdown-menu > a:hover {
+  text-decoration: none;
+}
+
+</style>
+```
+
+:::
+
+hover 触发
+:::demo // todo 展开代码的内部描述
+```vue
+<template>
+  <d-button ref="origin">More</d-button>
+  <d-dropdown :origin="origin" trigger="hover" closeOnMouseLeaveMenu>
+    <ul class="devui-dropdown-menu" role="menu">
+      <li role="menuitem">
+        <a class="devui-dropdown-item">Item 1</a>
+      </li>
+      <li class="disabled" role="menuitem">
+        <a class="devui-dropdown-item disabled">Item 2</a>
+      </li>
+      <li role="menuitem">
+        <a class="devui-dropdown-item">Item 3</a>
+      </li>
+      <li role="menuitem">
+        <a class="devui-dropdown-item">Item 4</a>
+      </li>
+    </ul>
+  </d-dropdown>
+</template>
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    return {
       origin: ref(),
     }
   }
@@ -31,6 +95,16 @@ export default defineComponent({
 </script>
 
 <style>
+.devui-dropdown-menu > ul {
+  list-style: none;
+}
+
+.devui-dropdown-menu > a {
+  color: unset;
+}
+.devui-dropdown-menu > a:hover {
+  text-decoration: none;
+}
 
 </style>
 ```
