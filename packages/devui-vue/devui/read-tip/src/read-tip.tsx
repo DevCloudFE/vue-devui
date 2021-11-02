@@ -19,7 +19,7 @@ export default defineComponent({
         dom.style.position = 'relative'
         if (trigger === 'hover') {
           dom.addEventListener('mouseenter', () => {
-            rule.status = true
+           show(dom, rule)
           })
           dom.addEventListener('mouseleave', () => {
             rule.status = false
@@ -31,8 +31,17 @@ export default defineComponent({
             rules.forEach(element => {
               element.status = false
             });
-            rule.status = true
+            show(dom, rule)
           })
+          document.addEventListener('click', (e :any) => {
+            rules.forEach(element => {
+              element.status = false
+              if(element.selector.indexOf(e.target.className) != -1) {
+                show(dom, element)
+              }
+            });
+            
+          },false)
           // dom.addEventListener('mouseleave', () => {
           //   rule.status = false
           // }) 
@@ -40,7 +49,9 @@ export default defineComponent({
       })
       return rules
     }
-
+    function show(dom, rule) {
+      rule.status = true
+    }
     const rules = (rules) => {
       if (rules === null) return
       if (typeof rules === 'object' && !Array.isArray(rules)) {
@@ -63,9 +74,9 @@ export default defineComponent({
           ctx.slots?.default()
         }
         {(refRules).map(rule => (rule.status &&
-          // <teleport to={rule.selector} >
+          // <teleport to={`.devui-read-tip ${rule.selector}`} >
             <TipsTemplate defaultTemplateProps={rule} />
-          // </teleport>
+          //  </teleport>
         )
         )}
       </div>)
