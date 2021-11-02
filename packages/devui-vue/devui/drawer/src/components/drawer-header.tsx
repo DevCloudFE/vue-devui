@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue'
-import { drawerHeaderType, DrawerHeaderType } from './drawer-header-type';
+import { drawerHeaderType, DrawerHeaderType } from './drawer-header-type'
 
 import './drawer-header.scss'
 
@@ -8,15 +8,15 @@ export default defineComponent({
   props: drawerHeaderType,
   emits: ['toggleFullScreen', 'close'],
   setup(props: DrawerHeaderType, ctx) {
-    const isFullScreen = ref<boolean>(false);
+    const isFullScreen = ref(false)
 
-    const handleFullScreen = (e) => {
-      e.stopPropagation();
-      isFullScreen.value = !isFullScreen.value;
-      ctx.emit('toggleFullScreen');
+    let handleFullScreen = (e) => {
+      e.stopPropagation()
+      isFullScreen.value = !isFullScreen.value
+      ctx.emit('toggleFullScreen')
     }
 
-    const handleDrawerClose = () => {
+    let handleDrawerClose = () => {
       ctx.emit('close')
     }
 
