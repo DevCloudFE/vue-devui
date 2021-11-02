@@ -8,7 +8,11 @@ export interface CascaderItem {
   value: number | string
   isLeaf?: boolean
   children?: CascaderItem[]
+  checked?: boolean
+  halfChecked?: boolean
   disabled?: boolean
+  active?: boolean
+  _loading?: boolean
   icon?: string
   // 用户可以传入自定义属性，并在dropDownItemTemplate中使用
   [prop: string]: any
@@ -115,6 +119,7 @@ export interface CascaderItemNeedType extends PickCascader {
 }
 export interface UseCascaderItemCallback {
   cascaderItemNeedProps: CascaderItemNeedType
+  getInputValue: (a: string, b?: CascaderItem[]) => void
 }
 
 export interface UseCascaderMultipleCallback {
@@ -122,5 +127,6 @@ export interface UseCascaderMultipleCallback {
   addMultipleIptValue: (a: CascaderItem[], b: CascaderItem) => void
   initMultipleIptValue: (a: CascaderItem[]) => void
   getMultipleCascaderItem: (a: CascaderItem[], b: number[], c: number) => void
+  clickCheckbox: () => void
   initActiveIndexs: (a: CascaderValueType, b: CascaderItem[], c: number, d: number[]) => void
 }

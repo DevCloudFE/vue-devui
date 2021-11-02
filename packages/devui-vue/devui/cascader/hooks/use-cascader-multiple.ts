@@ -2,7 +2,7 @@
  * 多选模式下的一些函数
  */
 import { CascaderItem, CascaderValueType, UseCascaderMultipleCallback } from '../src/cascader-types'
-import { reactive } from 'vue'
+import { reactive, nextTick } from 'vue'
 const multipleActiveArr = reactive<CascaderItem[]>([]) // 多选模式下选中的值数组，用于生成tag
 export const useMultiple = (): UseCascaderMultipleCallback => {
   /**
@@ -36,6 +36,8 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
         break
       }
     }
+    nextOption.checked = true
+    console.log(nextOption, 'nextOption')
     if (nextOption?.children?.length > 0) {
       // 递归获取选中节点
       index += 1
@@ -67,10 +69,19 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
       initActiveIndexs(values, nextOption, index, activeIndexs)
     }
   }
+
+  /**
+   * 多选模式点击checkbox
+   */
+  const clickCheckbox = (event: Event): void => {
+    // 如果是半选状态，更新为false，其他状态则更新为与checked相反
+
+  }
   return {
     multipleActiveArr,
     addMultipleIptValue,
     initMultipleIptValue,
+    clickCheckbox,
     getMultipleCascaderItem,
     initActiveIndexs
   }

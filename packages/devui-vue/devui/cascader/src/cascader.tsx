@@ -7,6 +7,7 @@ import DCascaderList from '../components/cascader-list'
 import { useCascaderItem } from '../hooks/use-cascader-item'
 import { DMultipleBox } from '../components/cascader-multiple/index' 
 import { useMultiple } from '../hooks/use-cascader-multiple'
+import { useSingle } from '../hooks/use-cascader-single'
 import { cloneDeep } from 'lodash-es'
 import './cascader.scss'
 // import { UnwrapNestedRefs } from '@vue/reactivity'
@@ -20,6 +21,7 @@ export default defineComponent({
     const multiple = toRef(props, 'multiple')
     const inputValue = ref('')
     const { multipleActiveArr, initMultipleIptValue, getMultipleCascaderItem, initActiveIndexs } = useMultiple()
+    const { initSingleIptValue } = useSingle()
     // const multipleActiveArr = reactive<CascaderItem[]>([]) // 多选模式下选中的值数组，用于生成tag
     let initIptValue = props.value.length > 0 ? true : false // 有value默认值时，初始化输出内容
     const position = reactive({
@@ -33,7 +35,7 @@ export default defineComponent({
     // 配置class
     const rootClasses = getRootClass(props, menuShow)
     // 传递给cascaderItem的props
-    const { cascaderItemNeedProps } = useCascaderItem(props, stopDefault)
+    const { cascaderItemNeedProps, getInputValue } = useCascaderItem(props, stopDefault)
     /**
      * 控制视图更新
      * 注意视图更新不区分单选或者多选
@@ -90,30 +92,15 @@ export default defineComponent({
       return currentOption.filter(item => item?.value === i)[0]
     }
     /**
-     * 下拉框中输出内容
-     * 需要判断是否是多选
-     * 需要判断单选模式下是否showPath
-     * @param label 当前current的内容
-     * @param arr 当前选中项current的children数组
+     * 监听视图更新
      */
-    const getInputValue = (label: string, arr?: CascaderItem[]) => {
-      if (!props.showPath) {
-        cascaderItemNeedProps.inputValueCache.value = label
-      } else {
-        cascaderItemNeedProps.inputValueCache.value += (label + (arr?.length > 0 ? ' / ' : ''))
-      }
-    }
-    
-    /**
-     * 单选模式初始化
-     */
-    const initSingleIptValue = (inputValueCache: Ref<string>) => {
-      inputValueCache.value = ''
-    }
+    watch(cascaderItemNeedProps.activeIndexs, val => {
+      updateCascaderView(val, props?.options, 0)
+    })
     /**
      * 监听点击最终的节点输出内容
      */
-     watch(() => cascaderItemNeedProps.confirmInputValueFlg.value, () => {
+    watch(() => cascaderItemNeedProps.confirmInputValueFlg.value, () => {
       // 单选和多选模式初始化
       multiple.value
         ? initMultipleIptValue(multipleActiveArr)
@@ -130,14 +117,6 @@ export default defineComponent({
         initActiveIndexs(props.value, props?.options, 0, cascaderItemNeedProps.activeIndexs)
         initIptValue = false // 只需要初始化一次，之后不再执行
       }
-    }, {
-      immediate: true
-    })
-    /**
-     * 监听视图更新
-     */
-    watch(cascaderItemNeedProps.activeIndexs, val => {
-      updateCascaderView(val, props?.options, 0)
     }, {
       immediate: true
     })
