@@ -27,7 +27,6 @@ export const TableProps = {
   },
   tableHeight: {
     type: String,
-    default: '360px'
   },
   size: {
     type: String as PropType<TableSize>,

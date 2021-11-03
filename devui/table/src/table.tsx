@@ -27,13 +27,13 @@ export default defineComponent({
           <div style="overflow: hidden scroll;">
             <table class={classes.value} cellpadding="0" cellspacing="0">
               <ColGroup />
-              <TableHeader store={store} style={{ position: 'relative' }} />
+              <TableHeader store={store} />
             </table>
           </div>
           <div class="scroll-view">
             <table class={classes.value} cellpadding="0" cellspacing="0">
               <ColGroup />
-              {!isEmpty.value && <TableBody store={store} style={{ flex: 1 }} />}
+              {!isEmpty.value && <TableBody store={store} style="flex: 1" />}
             </table>
           </div>
         </div>
@@ -45,11 +45,10 @@ export default defineComponent({
         <table class={classes.value} cellpadding="0" cellspacing="0">
           <ColGroup />
           <TableHeader store={store} style={{ position: 'relative' }} />
-          {!isEmpty.value && <TableBody store={store} style={{ flex: 1 }} />}
+          {!isEmpty.value && <TableBody store={store} />}
         </table>
       )
     });
-
 
     return () => (
       <div class="devui-table-wrapper" style={style.value}>
