@@ -2,13 +2,14 @@ import { watch, Ref, ref, computed } from 'vue';
 import { Column } from '../column/column.type';
 
 export interface TableStore<T = Record<string, any>> {
-  insertColumn(column: Column): void
   states: {
     _data: Ref<T[]>
     _columns: Ref<Column[]>
     _checkAll: Ref<boolean>
     _checkList: Ref<boolean[]>
   }
+  insertColumn(column: Column): void
+  getCheckedRows(): T[]
 }
 
 export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
@@ -34,6 +35,9 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
 
   // checkList 只有全为true的时候
   watch(_checkList, (list) => {
+    if (list.length === 0) {
+      return;
+    }
     let allTrue = true;
     for (let i = 0; i < list.length; i++) {
       if (!list[i]) {
@@ -50,13 +54,18 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
     _columns.value.push(column);
   };
 
+  const getCheckedRows = () => {
+    return _data.value.filter((_, index) => _checkList.value[index]);
+  }
+
   return {
-    insertColumn,
     states: {
       _data,
       _columns,
       _checkList,
       _checkAll
     },
+    insertColumn,
+    getCheckedRows
   };
 }

@@ -1,4 +1,4 @@
-import { provide, defineComponent, getCurrentInstance, computed, toRef } from 'vue';
+import { provide, defineComponent, getCurrentInstance, computed, toRef, defineExpose } from 'vue';
 import { Table, TableProps, TablePropsTypes, TABLE_TOKEN } from './table.type';
 import { useTable } from './use-table';
 import { createStore } from './store';
@@ -48,6 +48,12 @@ export default defineComponent({
           {!isEmpty.value && <TableBody store={store} />}
         </table>
       )
+    });
+
+    ctx.expose({
+      getCheckedRows() {
+        return store.getCheckedRows();
+      }
     });
 
     return () => (

@@ -4,7 +4,7 @@ import {
   TableColumnProps,
   TableColumnPropsTypes,
 } from './column.type'
-import { Table, TABLE_TOKEN } from '../table.type';
+import { TABLE_TOKEN } from '../table.type';
 import { useRender } from './use-column';
 
 export default defineComponent({

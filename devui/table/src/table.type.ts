@@ -62,4 +62,24 @@ export interface Table<T = Record<string, any>> extends ComponentInternalInstanc
   props: TablePropsTypes
 }
 
+
+// export interface TableCheckStatusArg {
+//   pageAllChecked?: boolean; // 全选
+//   pageHalfChecked?: boolean; // 半选
+// }
+
+// export interface RowToggleStatusEventArg {
+//   rowItem: any; // 行数据
+//   open: boolean; // 子表格是否展开
+// }
+
+export interface TableMethods<T = Record<string, any>> {
+  getCheckedRows(): T[]
+  // setRowCheckStatus(arg: TableCheckStatusArg): void
+  // setTableCheckStatus(arg: RowToggleStatusEventArg): void
+  // setRowChildToggleStatus(): void
+  // setTableChildrenToggleStatus(): void
+  // cancelEditingStatus(): void
+}
+
 export const TABLE_TOKEN: InjectionKey<Table> = Symbol();
