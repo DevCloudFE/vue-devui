@@ -1,10 +1,11 @@
-import { defineComponent, inject, computed, ref, PropType, watch } from 'vue';
+import { defineComponent, inject, computed, ref, shallowRef, PropType, watch } from 'vue';
 import { TableHeaderProps, TableHeaderPropsTypes } from './header.type'
 import { SortDirection, TABLE_TOKEN } from '../table.type';
-import { Column } from '../column/column.type';
+import { Column, FilterList } from '../column/column.type';
 
 import { Checkbox } from '../../../checkbox';
 import { Sort } from './sort';
+import { Filter } from './filter';
 
 import './header.scss';
 
@@ -55,10 +56,15 @@ const Th = defineComponent({
         sortData(column.field, direction, column.compareFn);
       }
     }, { immediate: true });
+
+    // 过滤器
+    const filteredRef = shallowRef<FilterList>([]);
+
     return () => (
       <th style="position: relative">
         {props.column.renderHeader()}
         {props.column.sortable && <Sort v-model={directionRef.value} />}
+        {props.column.filterable && <Filter v-model={filteredRef.value} customTemplate={props.column.customFilterTemplate} />}
       </th>
     )
   }

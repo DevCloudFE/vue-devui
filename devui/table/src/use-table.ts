@@ -10,6 +10,8 @@ export function useTable(props: TablePropsTypes): TableConfig {
   const classes = computed(() => ({
     'devui-table': true,
     'devui-table-striped': props.striped,
+    'header-bg': props.headerBg,
+    'table-layout-auto': props.tableLayout === 'auto'
   }));
   const style: ComputedRef<CSSProperties> = computed(() => ({
     maxHeight: props.maxHeight,

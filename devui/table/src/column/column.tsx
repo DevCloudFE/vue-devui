@@ -10,8 +10,13 @@ import { createColumn } from './use-column';
 export default defineComponent({
   name: 'DColumn',
   props: TableColumnProps,
-  setup(props: TableColumnPropsTypes) {
-    const column = createColumn(toRefs(props));
+  setup(props: TableColumnPropsTypes, ctx) {
+    /*
+      ctx.slots : { 
+       customFilterTemplate: Slot 
+      }
+     */
+    const column = createColumn(toRefs(props), ctx.slots);
 
     const parent = inject(TABLE_TOKEN);
 

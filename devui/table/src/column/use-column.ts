@@ -1,25 +1,30 @@
-import { ref, watch, reactive, onBeforeMount, computed, ToRefs } from 'vue';
+import { ref, watch, reactive, onBeforeMount, computed, ToRefs, Slots } from 'vue';
 import { Column, TableColumnPropsTypes } from './column.type'
 import { formatWidth, formatMinWidth } from '../utils';
 
 
-export function createColumn<T extends Record<string, unknown> = any>({
-  field,
-  header,
-  sortable,
-  width,
-  minWidth,
-  formatter,
-  compareFn
-}: ToRefs<TableColumnPropsTypes>): Column<T> {
-
+export function createColumn<T extends Record<string, unknown> = any>(
+  props: ToRefs<TableColumnPropsTypes>,
+  templates: Slots
+): Column<T> {
+  const {
+    field,
+    header,
+    sortable,
+    width,
+    minWidth,
+    formatter,
+    compareFn
+  } = props;
   const column: Column = reactive({});
+
   watch(
     [field, header, sortable],
     ([field, header, sortable]) => {
       column.field = field;
       column.header = header;
       column.sortable = sortable;
+      column.filterable = true;
     },
     { immediate: true }
   );
@@ -32,6 +37,7 @@ export function createColumn<T extends Record<string, unknown> = any>({
     column.renderCell = defaultRenderCell;
     column.formatter = formatter.value;
     column.compareFn = compareFn.value;
+    column.customFilterTemplate = templates.customFilterTemplate;
   });
 
   return column;

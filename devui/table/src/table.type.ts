@@ -56,6 +56,10 @@ export const TableProps = {
   showLoading: {
     type: Boolean,
     default: false
+  },
+  headerBg: {
+    type: Boolean,
+    default: false
   }
 };
 
