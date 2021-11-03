@@ -52,6 +52,10 @@ export const TableProps = {
     validator(v: string) {
       return v === 'fixed' || v === 'auto';
     }
+  },
+  showLoading: {
+    type: Boolean,
+    default: false
   }
 };
 

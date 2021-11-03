@@ -5,6 +5,7 @@ import { createStore } from './store';
 import ColGroup from './colgroup/colgroup';
 import TableHeader from './header/header';
 import TableBody from './body/body';
+
 import './table.scss';
 
 
@@ -57,7 +58,8 @@ export default defineComponent({
     });
 
     return () => (
-      <div class="devui-table-wrapper" style={style.value}>
+      <div class="devui-table-wrapper" style={style.value} v-dLoading={props.showLoading}>
+
         {ctx.slots.default()}
         {props.fixHeader ? fixHeaderCompo.value : normalHeaderCompo.value}
         {isEmpty.value && <div class="devui-table-empty">No Data</div>}
