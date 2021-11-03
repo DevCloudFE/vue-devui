@@ -1,7 +1,10 @@
 import type { PropType, ExtractPropTypes, ComponentPublicInstance } from 'vue'
 
-export const dropdownProps = {
+export type TriggerType = 'click' | 'hover' | 'manually';
+export type CloseScopeArea = 'all' | 'blank' | 'none';
 
+
+export const dropdownProps = {
   origin: {
     type: Object as PropType<Element | ComponentPublicInstance>
   },
@@ -17,12 +20,12 @@ export const dropdownProps = {
   },
 
   trigger: {
-    type: String as PropType<'click' | 'hover' | 'manually'>,
+    type: String as PropType<TriggerType>,
     default: 'click'
   },
 
   closeScope: {
-    type: String as PropType<'all' | 'blank' | 'none'>,
+    type: String as PropType<CloseScopeArea>,
     default: 'all'
   },
 
