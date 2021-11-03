@@ -14,7 +14,7 @@
 ```vue
 <template>
   <d-table :data="baseTableData">
-    <d-column field="firstName" header="First Name"></d-column>
+    <d-column field="firstName" header="First Name" :sortable="true"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
     <d-column field="date" header="Date of birth"></d-column>
@@ -62,13 +62,27 @@
 
 :::
 
-### 斑马纹表格
+### 表格样式
 
-:::demo 通过`d-table`组件上的`striped`属性，可设置带斑马纹的表格，更容易区分不同行的数据。
+:::demo
 
 ```vue
 <template>
-  <d-table striped :data="stripedTableData">
+<div class="table-btn-groups">
+      <div class="table-btn">
+          自动表格布局：
+         <d-switch v-model:checked="tableLayout" />
+      </div>
+      <div class="table-btn">
+          斑马纹：
+         <d-switch v-model:checked="striped" />
+      </div>
+      <div class="table-btn">
+          表头背景色：
+         <d-switch v-model:checked="headerBg" />
+      </div>
+  </div>
+  <d-table :table-layout="tableLayout?'auto':'fixed'" :striped="striped" :header-bg="headerBg" :data="stripedTableData">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -82,7 +96,9 @@
 
   export default defineComponent({
     setup() {
-
+      const tableLayout = ref(false)
+      const striped = ref(false)
+      const headerBg = ref(false)
       const stripedTableData = ref([
         {
           firstName: 'Mark',
@@ -110,22 +126,26 @@
         }
       ])
 
-      return { stripedTableData }
+      return { 
+        stripedTableData,
+        striped,
+        headerBg,
+        tableLayout 
+      }
     }
   })
 </script>
 
-
 <style lang="scss">
-  @import '@devui/styles-var/devui-var.scss';
-  .devui-tbody tr {
-    &:nth-child(2n) {
-      background-color: $devui-global-bg-normal;
-    }
-    &:hover {
-      background-color: $devui-list-item-hover-bg;
-    }
-  }
+.table-btn-groups{
+  display: flex;
+  margin-bottom: 1rem;
+}
+.table-btn{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 </style>
 ```
 
@@ -193,18 +213,93 @@
 :::
 
 
+### test
+:::demo
+```vue
+<template>
+  <div>
+    <d-button type="primary" @click="handleClick">更新数据</d-button>
+    <d-table :data="emptyData">
+      <d-column field="firstName" header="First Name">
+        <template v-slot:customFilterTemplate="props">
+          <div>{{props.value}}</div>
+          <div>{{props.value}}</div>
+        </template>
+      </d-column>
+      <d-column field="lastName" header="Last Name"></d-column>
+      <d-column field="gender" header="Gender"></d-column>
+      <d-column field="date" header="Date of birth"></d-column>
+    </d-table>
+  </div>
+</template>
+
+<script>
+
+  import { defineComponent, ref } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      const emptyData = ref([])
+      const handleClick = () => {
+        emptyData.value = [
+          {
+            firstName: 'po',
+            lastName: 'Lang',
+            gender: 'Male',
+            date: '1990/01/15',
+          },
+          {
+            firstName: 'john',
+            lastName: 'Li',
+            gender: 'Female',
+            date: '1990/01/16',
+          },
+          {
+            firstName: 'peng',
+            lastName: 'Li',
+            gender: 'Male',
+            date: '1990/01/17',
+          },
+          {
+            firstName: 'Dale',
+            lastName: 'Yu',
+            gender: 'Female',
+            date: '1990/01/18',
+          }
+        ]
+      }
+
+      return { emptyData, handleClick, test(props) {console.log(props); return 'hello'} }
+    }
+  })
+</script>
+```
+:::
+
 ### d-table Props
 
-| 参数    | 类型      | 默认值  | 说明               |
-| ------- | --------- | ------- | ------------------ |
-| data    | `Array`   | `[]`     | 显示的数据         |
-| striped | `Boolean` | `false` | 是否显示斑马纹间隔 |
-
+| 参数                  | 类型                | 默认值    | 说明                            |
+| --------------------- | ------------------- | --------- | ------------------------------- |
+| data                  | `Array`             | `[]`      | 显示的数据                      |
+| striped               | `Boolean`           | `false`   | 是否显示斑马纹间隔              |
+| max-width             | `String`            | ` `       | 表格最大宽度                    |
+| max-height            | `Boolean`           | ` `       | 表格最大高度                    |
+| table-width           | `String`            | ` `       | 表格宽度                        |
+| table-height          | `String`            | ` `       | 表格高度                        |
+| row-hovered-highlight | `Boolean`           | `true`    | 鼠标在该行上时，高亮该行        |
+| fix-header            | `Boolean`           | `false`   | 固定头部                        |
+| checkable             | `Boolean`           | `false`   | 在每行的第一列展示一个 checkbox |
+| show-loading          | `Boolean`           | `false`   | 显示加载动画                    |
+| header-bg             | `Boolean`           | `false`   | 头部背景                        |
+| table-layout          | `'fixed' \| 'auto'` | `'fixed'` | 表格布局，可选值为'auto'        |
 ### d-column Props
 
-| 参数   | 类型               | 默认值 | 说明                   |
-| ------ | ------------------ | ------ | ---------------------- |
-| header | `String`           | `-`    | 对应列的标题           |
-| field  | `String`           | `-`    | 对应列内容的字段名     |
-| width  | `String \| Number` | `-`    | 对应列的宽度，单位`px` |
-| min-width | `String \| Number` | `-` | 对应列的最小宽度，单位`px` |
+| 参数      | 类型                                     | 默认值                                 | 说明                           |
+| --------- | ---------------------------------------- | -------------------------------------- | ------------------------------ |
+| header    | `String`                                 | `-`                                    | 对应列的标题                   |
+| field     | `String`                                 | `-`                                    | 对应列内容的字段名             |
+| width     | `String \| Number`                       | `-`                                    | 对应列的宽度，单位`px`         |
+| min-width | `String \| Number`                       | `-`                                    | 对应列的最小宽度，单位`px`     |
+| sortable  | `Boolean`                                | `false`                                | 对行数据按照该列的顺序进行排序 |
+| formatter | `Function`                               | ` `                                    | 对应列的所有单元格的格式       |
+| compareFn | `(field: string, a: T, b: T) => boolean` | `(field, a, b) => a[field] > b[field]` | 用于排序的比较函数             |
