@@ -4,7 +4,7 @@ import {
   TableColumnProps,
   TableColumnPropsTypes,
 } from './column.type'
-import { Table } from '../table.type';
+import { Table, TABLE_TOKEN } from '../table.type';
 import { useRender } from './use-column';
 
 export default defineComponent({
@@ -15,7 +15,7 @@ export default defineComponent({
       field: props.field,
       header: props.header,
     };
-    const parent: Table = inject('table');
+    const parent = inject(TABLE_TOKEN);
     const { setColumnWidth, setColumnRender } = useRender(props);
 
     onBeforeMount(() => {

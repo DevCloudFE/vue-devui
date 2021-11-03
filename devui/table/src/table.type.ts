@@ -1,4 +1,4 @@
-import { PropType, ExtractPropTypes, ComponentInternalInstance } from 'vue';
+import { PropType, ExtractPropTypes, ComponentInternalInstance, InjectionKey } from 'vue';
 import { TableStore } from './store';
 
 export type TableSize = 'sm' | 'md' | 'lg';
@@ -41,6 +41,10 @@ export const TableProps = {
   fixHeader: {
     type: Boolean,
     default: false
+  },
+  checkable: {
+    type: Boolean,
+    default: true
   }
 };
 
@@ -50,3 +54,5 @@ export interface Table<T = Record<string, any>> extends ComponentInternalInstanc
   store: TableStore<T>
   props: TablePropsTypes
 }
+
+export const TABLE_TOKEN: InjectionKey<Table> = Symbol();
