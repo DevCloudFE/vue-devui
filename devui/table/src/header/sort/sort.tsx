@@ -1,7 +1,7 @@
 import { defineComponent, PropType } from 'vue';
+import { SortDirection } from '../../table.type';
 import './sort.scss';
 
-type SortDirection = 'ASC' | 'DESC' | '';
 
 export const Sort = defineComponent({
   props: {

@@ -1,5 +1,6 @@
 import { watch, Ref, ref, computed } from 'vue';
 import { Column } from '../column/column.type';
+import { SortDirection } from '../table.type';
 
 export interface TableStore<T = Record<string, any>> {
   states: {
@@ -12,6 +13,7 @@ export interface TableStore<T = Record<string, any>> {
   insertColumn(column: Column): void
   removeColumn(column: Column): void
   getCheckedRows(): T[]
+  sortData(field: string, direction: SortDirection): void
 }
 
 export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
@@ -53,10 +55,19 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
 
   }, { immediate: true, deep: true });
 
+  /**
+   * 插入当前列
+   * @param {Column} column 
+   */
   const insertColumn = (column: Column) => {
     _columns.value.push(column);
   };
 
+  /**
+   * 移除当前列
+   * @param {Column} column 
+   * @returns 
+   */
   const removeColumn = (column: Column) => {
     const i = _columns.value.findIndex((v) => v === column);
     if (i === -1) {
@@ -65,8 +76,27 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
     _columns.value.splice(i, 1);
   }
 
+  /**
+   * 获取当前已选数据
+   * @returns {T[]}
+   */
   const getCheckedRows = () => {
     return _data.value.filter((_, index) => _checkList.value[index]);
+  }
+
+  /**
+   * 对数据进行排序
+   * @param {string} field 
+   * @param {SortDirection} direction 
+   */
+  const sortData = (field: string, direction: SortDirection) => {
+    if (direction === 'ASC') {
+      _data.value = _data.value.sort((a, b) => a[field] < b[field] ? 1 : -1);
+    } else if (direction === 'DESC') {
+      _data.value = _data.value.sort((a, b) => a[field] > b[field] ? 1 : -1);
+    } else {
+      _data.value = [...dataSource.value];
+    }
   }
 
   return {
@@ -79,6 +109,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
     },
     insertColumn,
     removeColumn,
-    getCheckedRows
+    getCheckedRows,
+    sortData
   };
 }

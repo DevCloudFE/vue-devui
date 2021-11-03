@@ -1,45 +1,48 @@
-import { ref } from 'vue';
+import { ref, watch, reactive, onBeforeMount, computed, ToRefs } from 'vue';
 import { Column, TableColumnPropsTypes } from './column.type'
 import { formatWidth, formatMinWidth } from '../utils';
 
-export function useRender(props: TableColumnPropsTypes): any {
-  const formatedWidth = ref(formatWidth(props.width));
-  const formatedMinWidth = ref(formatMinWidth(props.minWidth));
-  const setColumnWidth = (column: Column) => {
-    column.width = formatedWidth.value;
-    column.minWidth = formatedMinWidth.value;
+
+export function createColumn<T extends Record<string, unknown> = any>({
+  field,
+  header,
+  sortable,
+  width,
+  minWidth,
+  formatter
+}: ToRefs<TableColumnPropsTypes>): Column<T> {
+
+  const column: Column = reactive({});
+  watch(
+    [field, header, sortable],
+    ([field, header, sortable]) => {
+      column.field = field;
+      column.header = header;
+      column.sortable = sortable;
+    },
+    { immediate: true }
+  );
+
+  onBeforeMount(() => {
+    column.width = formatWidth(width.value);
+    column.minWidth = formatMinWidth(minWidth.value);
     column.realWidth = column.width || column.minWidth;
-    return column;
-  };
+    column.renderHeader = defaultRenderHeader;
+    column.renderCell = defaultRenderCell;
+    column.formatter = formatter.value;
+  });
 
-  const setColumnRender = (column: Column) => {
-    column.renderHeader = () => {
-      return defaultRenderHeader(column);
-    };
-    column.renderCell = (data) => {
-      return defaultRenderCell(data);
-    };
-  };
-
-  return { setColumnWidth, setColumnRender };
+  return column;
 }
 
-function defaultRenderHeader(column: Column) {
-  return column.header;
+function defaultRenderHeader(this: Column) {
+  return this.header;
 }
 
-function defaultRenderCell({
-  row,
-  column,
-  $index,
-}: {
-  row: any
-  column: Column
-  $index: number
-}) {
-  const value = row[column.field];
-  if (column.formatter) {
-    return column.formatter(row, column, value, $index);
+function defaultRenderCell<T extends Record<string, unknown>>(this: Column, rowData: T, index: number) {
+  const value = rowData[this.field];
+  if (this.formatter) {
+    return this.formatter(rowData, value, index);
   }
-  return value?.toString?.() || '';
+  return value?.toString?.() ?? '';
 }

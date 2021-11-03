@@ -18,9 +18,7 @@ export const TableColumnProps = {
     default: 80,
   },
   formatter: {
-    type: Function as PropType<
-      (row: any, column: Column, cellValue: any, index: number) => VNode
-    >,
+    type: Function as PropType<Formatter>,
   },
   sortable: {
     type: Boolean,
@@ -31,7 +29,9 @@ export const TableColumnProps = {
 
 export type TableColumnPropsTypes = ExtractPropTypes<typeof TableColumnProps>;
 
-export interface Column {
+export type Formatter<T = any, R = any> = (row: T, cellValue: R, index: number) => VNode;
+
+export interface Column<T extends Record<string, unknown> = any> {
   field?: string
   width?: number
   minWidth?: number
@@ -39,6 +39,6 @@ export interface Column {
   header?: string
   sortable?: boolean
   renderHeader?: () => void
-  renderCell?: (data: any) => void
-  formatter?: (row: any, column: Column, cellValue, index: number) => VNode
+  renderCell?: (row: T, index: number) => void
+  formatter?: Formatter<T>
 }

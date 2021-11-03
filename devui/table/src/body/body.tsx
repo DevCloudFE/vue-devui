@@ -1,7 +1,6 @@
 import { defineComponent, inject, computed } from 'vue';
 import { TableBodyProps, TableBodyPropsTypes } from './body.type'
-import { useTableBody } from './use-body';
-import { Table, TABLE_TOKEN } from '../table.type';
+import { TABLE_TOKEN } from '../table.type';
 import { Checkbox } from '../../../checkbox';
 
 import './body.scss';
@@ -10,11 +9,13 @@ export default defineComponent({
   name: 'DTableBody',
   props: TableBodyProps,
   setup(props: TableBodyPropsTypes) {
-    const { rowColumns } = useTableBody(props);
+    const parent = inject(TABLE_TOKEN);
+    const { _data: data, _columns: columns } = parent.store.states;
 
-    const parent: Table = inject(TABLE_TOKEN);
+    // 移动到行上是否高亮
     const hoverEnabled = computed(() => parent.props.rowHoveredHighlight);
 
+    // 行前的 checkbox
     const renderCheckbox = (index: number) => {
       const checkList = props.store.states._checkList;
       return parent.props.checkable ? (
@@ -26,13 +27,13 @@ export default defineComponent({
 
     return () => (
       <tbody class="devui-tbody">
-        {rowColumns.value.map((row, rowIndex) => {
+        {data.value.map((row, rowIndex) => {
           return (
             <tr key={rowIndex} class={{ 'hover-enabled': hoverEnabled.value }}>
               {renderCheckbox(rowIndex)}
-              {row.columns.map((column, index) => {
+              {columns.value.map((column, index) => {
                 return (
-                  <td key={index}>{column.renderCell({ row, column, $index: index })}</td>
+                  <td key={index}>{column.renderCell(row, index)}</td>
                 );
               })}
             </tr>

@@ -1,6 +1,6 @@
-import { defineComponent, inject, computed, ref, PropType } from 'vue';
+import { defineComponent, inject, computed, ref, PropType, watch } from 'vue';
 import { TableHeaderProps, TableHeaderPropsTypes } from './header.type'
-import { TABLE_TOKEN } from '../table.type';
+import { SortDirection, TABLE_TOKEN } from '../table.type';
 import { Column } from '../column/column.type';
 
 import { Checkbox } from '../../../checkbox';
@@ -48,7 +48,11 @@ const Th = defineComponent({
     }
   },
   setup(props: { column: Column; }) {
-    const directionRef = ref('DESC');
+    const directionRef = ref<SortDirection>('DESC');
+    const { sortData } = inject(TABLE_TOKEN).store;
+    watch([directionRef, () => props.column], ([direction, column]) => {
+      sortData(column.field, direction);
+    });
     return () => (
       <th style="position: relative">
         {props.column.renderHeader()}

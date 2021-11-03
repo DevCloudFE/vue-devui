@@ -66,7 +66,6 @@ export interface Table<T = Record<string, any>> extends ComponentInternalInstanc
   props: TablePropsTypes
 }
 
-
 // export interface TableCheckStatusArg {
 //   pageAllChecked?: boolean; // 全选
 //   pageHalfChecked?: boolean; // 半选
@@ -87,3 +86,5 @@ export interface TableMethods<T = Record<string, any>> {
 }
 
 export const TABLE_TOKEN: InjectionKey<Table> = Symbol();
+
+export type SortDirection = 'ASC' | 'DESC' | '';
