@@ -21,7 +21,6 @@ export default defineComponent({
 
     const isEmpty = computed(() => props.data.length === 0);
 
-
     const fixHeaderCompo = computed(() => {
       return (
         <div class="devui-table-view">

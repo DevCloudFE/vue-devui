@@ -9,9 +9,11 @@ export default defineComponent({
     const columns = parent.store.states._columns;
     return () => (
       <colgroup>
-        {columns.value.map((column, index) => {
-          return <col key={index} width={column.realWidth}></col>;
-        })}
+        {parent.props.tableLayout === 'fixed' ? (
+          columns.value.map((column, index) => {
+            return <col key={index} width={column.realWidth}></col>;
+          })
+        ) : null}
       </colgroup>
     );
   }

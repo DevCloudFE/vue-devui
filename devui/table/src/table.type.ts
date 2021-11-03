@@ -45,6 +45,13 @@ export const TableProps = {
   checkable: {
     type: Boolean,
     default: true
+  },
+  tableLayout: {
+    type: String as PropType<'fixed' | 'auto'>,
+    default: 'auto',
+    validator(v: string) {
+      return v === 'fixed' || v === 'auto';
+    }
   }
 };
 
