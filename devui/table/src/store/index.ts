@@ -5,8 +5,9 @@ export interface TableStore<T = Record<string, any>> {
   states: {
     _data: Ref<T[]>
     _columns: Ref<Column[]>
-    _checkAll: Ref<boolean>
     _checkList: Ref<boolean[]>
+    _checkAll: Ref<boolean>
+    _halfChecked: Ref<boolean>
   }
   insertColumn(column: Column): void
   removeColumn(column: Column): void
@@ -28,6 +29,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
       }
     }
   });
+  const _halfChecked = ref(false);
 
   watch(dataSource, (value: T[]) => {
     _data.value = [...value];
@@ -40,15 +42,15 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
       return;
     }
     let allTrue = true;
+    let allFalse = true;
     for (let i = 0; i < list.length; i++) {
-      if (!list[i]) {
-        allTrue = false;
-        break;
-      }
+      allTrue &&= list[i];
+      allFalse &&= !list[i];
     }
-    if (_checkAllRecord.value !== allTrue) {
-      _checkAllRecord.value = allTrue;
-    }
+
+    _checkAllRecord.value = allTrue;
+    _halfChecked.value = !(allFalse || allTrue);
+
   }, { immediate: true, deep: true });
 
   const insertColumn = (column: Column) => {
@@ -72,7 +74,8 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
       _data,
       _columns,
       _checkList,
-      _checkAll
+      _checkAll,
+      _halfChecked
     },
     insertColumn,
     removeColumn,

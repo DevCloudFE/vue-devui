@@ -14,11 +14,12 @@ export default defineComponent({
   props: TableHeaderProps,
   setup(props: TableHeaderPropsTypes) {
     const table = inject(TABLE_TOKEN);
+    const { _checkAll: checkAll, _halfChecked: halfChecked } = table.store.states;
 
     const checkbox = computed(() => {
       return table.props.checkable ? (
         <th>
-          <Checkbox v-model={table.store.states._checkAll.value} />
+          <Checkbox v-model={checkAll.value} halfchecked={halfChecked.value} />
         </th>
       ) : null
     });
