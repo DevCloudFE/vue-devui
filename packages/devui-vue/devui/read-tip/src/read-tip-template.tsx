@@ -1,17 +1,17 @@
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted, Teleport } from 'vue'
 import { readTipProps, ReadTipProps, } from './read-tip-types'
 import './read-tip.scss'
 
 export default defineComponent({
-    name: 'DReadTip',
+    name: 'DReadTipTemplate',
     props: readTipProps,
     emits: [],
     setup(props: ReadTipProps, ctx) {
-
-
         return () => {
             return (
-                <div class="read-tip-container">
+                <Teleport to={`${props.defaultTemplateProps.selector}`} >
+                    <div   class={['read-tip-container',props.defaultTemplateProps.position]}>
+                    <span class='after' ></span>
                     <div class="title">
                         {props.defaultTemplateProps.title}
                     </div>
@@ -19,6 +19,8 @@ export default defineComponent({
                         {props.defaultTemplateProps.content}
                     </div>
                 </div>
+                </Teleport>
+                
 
             )
         }

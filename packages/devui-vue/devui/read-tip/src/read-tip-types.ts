@@ -15,6 +15,9 @@ export const readTipProps = {
 export type  DefaultTemplateProps = {
   title?: string
   content?: string
+  top?: number
+  selector: string
+  position: string
 }
 
 export interface ReadTipOptions {

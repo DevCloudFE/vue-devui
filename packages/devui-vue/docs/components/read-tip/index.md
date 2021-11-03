@@ -27,6 +27,7 @@ const readTipOptions =  {
     trigger: 'click',
     rules: {
       trigger: 'hover',
+      position:'top',
       selector: '.readtip-target',
       title: 'Name: Jack',
       content: 'This is Jack\'s profile',
@@ -84,13 +85,13 @@ const readTipOptions =  {
     rules: [
       {
         selector: '.first-content',
-        position: 'left',
+        position: 'top',
         title: 'This Is the First Title',
         content: 'Lorem ipsum dolor sit amet, consectetur ad.',
       },
       {
         selector: '.second-content',
-        position: 'top-left',
+        position: 'left',
         title: 'This Is the Second Title',
         content: 'Class aptent taciti sociosqu ad litora torquent per conubia nostra',
         overlayClassName: 'child-class',
@@ -98,7 +99,7 @@ const readTipOptions =  {
       {
         trigger: 'hover',
         selector: '.third-content',
-        position: 'bottom-left',
+        position: 'right',
         title: 'This Is the Third Title',
         content: 'Aenean libero urna, scelerisque tincidunt',
       },
