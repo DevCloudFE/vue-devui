@@ -1,4 +1,4 @@
-import { inject, defineComponent, onBeforeMount, onMounted } from 'vue';
+import { inject, defineComponent, onBeforeMount, onBeforeUnmount, onMounted, reactive, watch } from 'vue';
 import {
   Column,
   TableColumnProps,
@@ -11,10 +11,21 @@ export default defineComponent({
   name: 'DColumn',
   props: TableColumnProps,
   setup(props: TableColumnPropsTypes) {
-    const column: Column = {
+    const column: Column = reactive({
       field: props.field,
       header: props.header,
-    };
+      sortable: props.sortable
+    });
+
+    watch(
+      [() => props.field, () => props.header, () => props.sortable],
+      ([field, header, sortable]) => {
+        column.field = field;
+        column.header = header;
+        column.sortable = sortable;
+      }
+    );
+
     const parent = inject(TABLE_TOKEN);
     const { setColumnWidth, setColumnRender } = useRender(props);
 
@@ -25,6 +36,10 @@ export default defineComponent({
 
     onMounted(() => {
       parent.store.insertColumn(column);
+    });
+
+    onBeforeUnmount(() => {
+      parent.store.removeColumn(column);
     });
   },
   render() {

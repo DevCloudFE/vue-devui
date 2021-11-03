@@ -1,8 +1,13 @@
-import { defineComponent, inject, computed } from 'vue';
+import { defineComponent, inject, computed, ref, PropType } from 'vue';
 import { TableHeaderProps, TableHeaderPropsTypes } from './header.type'
-import './header.scss';
 import { TABLE_TOKEN } from '../table.type';
+import { Column } from '../column/column.type';
+
 import { Checkbox } from '../../../checkbox';
+import { Sort } from './sort';
+
+import './header.scss';
+
 
 export default defineComponent({
   name: 'DTableHeader',
@@ -25,13 +30,29 @@ export default defineComponent({
           <tr>
             {checkbox.value}
             {columns.value.map((column, index) => (
-              <th key={index}>
-                {column.renderHeader()}
-              </th>
+              <Th key={index} column={column} />
             ))}
           </tr>
         </thead>
       )
     }
+  }
+});
+
+const Th = defineComponent({
+  props: {
+    column: {
+      type: Object as PropType<Column>,
+      required: true
+    }
+  },
+  setup(props: { column: Column; }) {
+    const directionRef = ref('DESC');
+    return () => (
+      <th style="position: relative">
+        {props.column.renderHeader()}
+        {props.column.sortable && <Sort v-model={directionRef.value} />}
+      </th>
+    )
   }
 });

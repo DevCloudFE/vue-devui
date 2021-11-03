@@ -9,6 +9,7 @@ export interface TableStore<T = Record<string, any>> {
     _checkList: Ref<boolean[]>
   }
   insertColumn(column: Column): void
+  removeColumn(column: Column): void
   getCheckedRows(): T[]
 }
 
@@ -54,6 +55,14 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
     _columns.value.push(column);
   };
 
+  const removeColumn = (column: Column) => {
+    const i = _columns.value.findIndex((v) => v === column);
+    if (i === -1) {
+      return;
+    }
+    _columns.value.splice(i, 1);
+  }
+
   const getCheckedRows = () => {
     return _data.value.filter((_, index) => _checkList.value[index]);
   }
@@ -66,6 +75,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
       _checkAll
     },
     insertColumn,
+    removeColumn,
     getCheckedRows
   };
 }
