@@ -9,7 +9,8 @@ export function createColumn<T extends Record<string, unknown> = any>({
   sortable,
   width,
   minWidth,
-  formatter
+  formatter,
+  compareFn
 }: ToRefs<TableColumnPropsTypes>): Column<T> {
 
   const column: Column = reactive({});
@@ -30,6 +31,7 @@ export function createColumn<T extends Record<string, unknown> = any>({
     column.renderHeader = defaultRenderHeader;
     column.renderCell = defaultRenderCell;
     column.formatter = formatter.value;
+    column.compareFn = compareFn.value;
   });
 
   return column;

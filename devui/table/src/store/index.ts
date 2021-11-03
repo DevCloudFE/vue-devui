@@ -1,7 +1,6 @@
 import { watch, Ref, ref, computed } from 'vue';
-import { Column } from '../column/column.type';
+import { Column, CompareFn } from '../column/column.type';
 import { SortDirection } from '../table.type';
-
 export interface TableStore<T = Record<string, any>> {
   states: {
     _data: Ref<T[]>
@@ -13,7 +12,7 @@ export interface TableStore<T = Record<string, any>> {
   insertColumn(column: Column): void
   removeColumn(column: Column): void
   getCheckedRows(): T[]
-  sortData(field: string, direction: SortDirection): void
+  sortData(field: string, direction: SortDirection, compareFn: CompareFn<T>): void
 }
 
 export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
@@ -80,7 +79,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
    * 获取当前已选数据
    * @returns {T[]}
    */
-  const getCheckedRows = () => {
+  const getCheckedRows = (): T[] => {
     return _data.value.filter((_, index) => _checkList.value[index]);
   }
 
@@ -88,12 +87,17 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
    * 对数据进行排序
    * @param {string} field 
    * @param {SortDirection} direction 
+   * @param {CompareFn<T>} compareFn
    */
-  const sortData = (field: string, direction: SortDirection) => {
+  const sortData = (
+    field: string,
+    direction: SortDirection,
+    compareFn: CompareFn<T> = (field: string, a: T, b: T) => a[field] > b[field]
+  ) => {
     if (direction === 'ASC') {
-      _data.value = _data.value.sort((a, b) => a[field] < b[field] ? 1 : -1);
+      _data.value = _data.value.sort((a, b) => compareFn(field, a, b) ? 1 : -1);
     } else if (direction === 'DESC') {
-      _data.value = _data.value.sort((a, b) => a[field] > b[field] ? 1 : -1);
+      _data.value = _data.value.sort((a, b) => !compareFn(field, a, b) ? 1 : -1);
     } else {
       _data.value = [...dataSource.value];
     }

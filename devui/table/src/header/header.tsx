@@ -51,8 +51,10 @@ const Th = defineComponent({
     const directionRef = ref<SortDirection>('DESC');
     const { sortData } = inject(TABLE_TOKEN).store;
     watch([directionRef, () => props.column], ([direction, column]) => {
-      sortData(column.field, direction);
-    });
+      if (props.column.sortable) {
+        sortData(column.field, direction, column.compareFn);
+      }
+    }, { immediate: true });
     return () => (
       <th style="position: relative">
         {props.column.renderHeader()}

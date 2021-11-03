@@ -24,13 +24,17 @@ export const TableColumnProps = {
     type: Boolean,
     default: false
   },
-
+  compareFn: {
+    type: Function as PropType<CompareFn>,
+    default: (field: string, a: any, b: any) => a[field] < b[field]
+  }
 };
 
 export type TableColumnPropsTypes = ExtractPropTypes<typeof TableColumnProps>;
 
 export type Formatter<T = any, R = any> = (row: T, cellValue: R, index: number) => VNode;
 
+export type CompareFn<T = any> = (field: string, a: T, b: T) => boolean;
 export interface Column<T extends Record<string, unknown> = any> {
   field?: string
   width?: number
@@ -41,4 +45,5 @@ export interface Column<T extends Record<string, unknown> = any> {
   renderHeader?: () => void
   renderCell?: (row: T, index: number) => void
   formatter?: Formatter<T>
+  compareFn?: CompareFn<T>
 }
