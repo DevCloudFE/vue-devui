@@ -122,11 +122,16 @@ export interface UseCascaderItemCallback {
   getInputValue: (a: string, b?: CascaderItem[]) => void
 }
 
+export type CheckedType = 'checked' | 'halfChecked'
 export interface UseCascaderMultipleCallback {
-  multipleActiveArr: UnwrapNestedRefs<CascaderItem[]>
-  addMultipleIptValue: (a: CascaderItem[], b: CascaderItem) => void
-  initMultipleIptValue: (a: CascaderItem[]) => void
-  getMultipleCascaderItem: (a: CascaderItem[], b: number[], c: number) => void
-  clickCheckbox: () => void
+  tagList: UnwrapNestedRefs<CascaderItem[]>
+  addTagList: (a: CascaderItem[], b: CascaderItem) => void
+  deleteTagList: (a: CascaderItem[], b: CascaderItem) => void
+  initTagList: (a: CascaderItem[]) => void
+  getMultipleCascaderItem: (a: CascaderItem[], b: number[], c: number, d: any) => void
+  updateCheckOptionStatus: (a: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => void
   initActiveIndexs: (a: CascaderValueType, b: CascaderItem[], c: number, d: number[]) => void
+  updateCheckStatusLoop: (a: CascaderItem, b: CheckedType, c?: boolean) => void
+  getParentNode: (a: string | number, b: [CascaderItem[]], c: number) => CascaderItem
+  updateParentNodeStatus: (a: CascaderItem, b: CaascaderOptionsType, c: number) => void
 }

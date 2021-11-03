@@ -12,6 +12,8 @@ import { cloneDeep } from 'lodash-es'
 import './cascader.scss'
 // import { UnwrapNestedRefs } from '@vue/reactivity'
 // type OptionsType = UnwrapNestedRefs<[CascaderItem[]]>
+let cascaderOptionsCache = reactive({})
+
 export default defineComponent({
   name: 'DCascader',
   props: cascaderProps,
@@ -20,9 +22,9 @@ export default defineComponent({
     const cascaderOptions = reactive<[CascaderItem[]]>(cloneDeep([ props?.options ]))
     const multiple = toRef(props, 'multiple')
     const inputValue = ref('')
-    const { multipleActiveArr, initMultipleIptValue, getMultipleCascaderItem, initActiveIndexs } = useMultiple()
+    const { tagList, updateCheckOptionStatus, initTagList, getMultipleCascaderItem, initActiveIndexs } = useMultiple()
     const { initSingleIptValue } = useSingle()
-    // const multipleActiveArr = reactive<CascaderItem[]>([]) // 多选模式下选中的值数组，用于生成tag
+    // const tagList = reactive<CascaderItem[]>([]) // 多选模式下选中的值数组，用于生成tag
     let initIptValue = props.value.length > 0 ? true : false // 有value默认值时，初始化输出内容
     const position = reactive({
       originX: 'left',
@@ -58,6 +60,8 @@ export default defineComponent({
         // 当最新的ul(级)没有下一级时删除之前选中ul的数据
         cascaderOptions.splice(index + 1, cascaderOptions.length - 1)
       }
+      cascaderOptionsCache = cascaderOptions
+      // console.log('cascaderOptions1', cascaderOptionsCache)
     }
     /**
      * 选中项输出
@@ -80,8 +84,10 @@ export default defineComponent({
         }
       } else {
         // 多选模式
-        value.forEach(singleValues => {
-          getMultipleCascaderItem(currentOption, singleValues, index)
+        // console.log('cascaderOptions2', cascaderOptionsCache)
+        value.forEach((singleValues) => {
+          console.log(singleValues)
+          getMultipleCascaderItem(currentOption, singleValues, index, cascaderOptionsCache)
         })
       }
     }
@@ -95,7 +101,8 @@ export default defineComponent({
      * 监听视图更新
      */
     watch(cascaderItemNeedProps.activeIndexs, val => {
-      updateCascaderView(val, props?.options, 0)
+      // cascaderOptions.splice(0, cascaderOptions.length)
+      updateCascaderView(val, cascaderOptions[0], 0)
     })
     /**
      * 监听点击最终的节点输出内容
@@ -103,7 +110,7 @@ export default defineComponent({
     watch(() => cascaderItemNeedProps.confirmInputValueFlg.value, () => {
       // 单选和多选模式初始化
       multiple.value
-        ? initMultipleIptValue(multipleActiveArr)
+        ? initTagList(tagList)
         : initSingleIptValue(cascaderItemNeedProps.inputValueCache)
       // 输出确认的选中值
       cascaderItemNeedProps.value = reactive(cloneDeep(cascaderItemNeedProps.valueCache))
@@ -111,10 +118,10 @@ export default defineComponent({
       // 点击确定过后禁止再次选中
       updateStopDefaultType()
        // 更新值
-      updateCascaderValue(cascaderItemNeedProps.value, props?.options, 0)
+      updateCascaderValue(cascaderItemNeedProps.value, cascaderOptions[0], 0)
       inputValue.value = cascaderItemNeedProps.inputValueCache.value
       if (initIptValue) { // 因为初始化了value，所以默认回显视图的选中态
-        initActiveIndexs(props.value, props?.options, 0, cascaderItemNeedProps.activeIndexs)
+        initActiveIndexs(props.value, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs)
         initIptValue = false // 只需要初始化一次，之后不再执行
       }
     }, {
@@ -125,7 +132,7 @@ export default defineComponent({
       <>
         <div class={rootClasses.value} onClick={openPopup} ref={origin} {...ctx.attrs}>
           { multiple.value
-            ? <DMultipleBox placeholder={props.placeholder} activeOptions={multipleActiveArr}></DMultipleBox>
+            ? <DMultipleBox placeholder={props.placeholder} activeOptions={tagList}></DMultipleBox>
             : <d-input
                 disabled={props.disabled}
                 placeholder={props.placeholder}

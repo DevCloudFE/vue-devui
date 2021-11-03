@@ -4,14 +4,13 @@ import { computed, ref } from 'vue'
 import { useSingle } from '../../hooks/use-cascader-single'
 import { useMultiple } from '../../hooks/use-cascader-multiple'
 import './index.scss'
-import checkbox from '../../../checkbox/src/checkbox'
 export const DCascaderItem = (props: CascaderItemPropsType) => {
   // console.log('item index',props)
-  const { cascaderItem, ulIndex, liIndex, cascaderItemNeedProps } = props
+  const { cascaderItem, ulIndex, liIndex, cascaderItemNeedProps, cascaderOptions } = props
   const { multiple, stopDefault, valueCache, activeIndexs, trigger, confirmInputValueFlg } = cascaderItemNeedProps
   const triggerHover = trigger === 'hover'
   const { singleChoose } = useSingle()
-  const { clickCheckbox } = useMultiple()
+  const { updateCheckOptionStatus, getParentNode, updateParentNodeStatus } = useMultiple()
   const { getRootClass } = useClassName()
   const disbaled = computed(() => cascaderItem?.disabled) // 当前项是否被禁用
   const rootClasses = getRootClass(props)
@@ -22,9 +21,7 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
     activeIndexs.splice(ulIndex, activeIndexs.length - ulIndex)
     // 更新当前渲染视图的下标数组
     activeIndexs[ulIndex] = liIndex
-    if (multiple) {
-      // clickCheckbox()
-    } else {
+    if (!multiple) { // 单选点击选项就更新，多选是通过点击checkbox触发数据更新
       singleChoose(ulIndex, valueCache, cascaderItem)
     }
   }
@@ -40,31 +37,38 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
   const mouseClick = () => {
     if (disbaled.value) return
     updateValues()
-    if (!cascaderItem.children || cascaderItem?.children?.length === 0) {
+    if (!multiple && (!cascaderItem.children || cascaderItem?.children?.length === 0)) {
       confirmInputValueFlg.value = !confirmInputValueFlg.value
     }
   }
-  const checkboxChange = (e) => {
-    console.log(123)
+  const checkboxChange = () => {
+    updateCheckOptionStatus(cascaderItem, cascaderOptions, ulIndex)
+    // const parentNode = getParentNode(cascaderItem.value, cascaderOptions, ulIndex - 1)
+    // updateParentNodeStatus(parentNode, cascaderOptions, ulIndex - 1)
+    // if (!cascaderItem.children || cascaderItem?.children?.length === 0) {
+    //   confirmInputValueFlg.value = !confirmInputValueFlg.value
+    // }
   }
   return (
-    <li class={rootClasses.value} {...mouseenter} onClick={mouseClick}>
+    <li class={rootClasses.value}>
       { multiple && 
         <div class="cascader-li__checkbox">
-          <d-checkbox checked={cascaderItem?.checked} halfchecked={cascaderItem?.halfchecked} onChange={checkboxChange}/>
+          <d-checkbox checked={cascaderItem?.checked} disabled={cascaderItem.disabled} halfchecked={cascaderItem?.halfChecked} onChange={checkboxChange}/>
         </div>
       }
-      { cascaderItem.icon &&
-        <div class="cascader-li__icon">
-          <d-icon name={ cascaderItem.icon } size="inherit"></d-icon>
+      <div class="cascader-li__wraper" {...mouseenter} onClick={mouseClick}>
+        { cascaderItem.icon &&
+          <div class={'cascader-li__icon' + (cascaderItem.disabled ? ' disabled' : '')}>
+            <d-icon name={ cascaderItem.icon } size="inherit"></d-icon>
+          </div>
+        }
+        <div class="dropdown-item-label">
+          <span>{ cascaderItem.label }</span>
         </div>
-      }
-      <div class="dropdown-item-label">
-        <span>{ cascaderItem.label }</span>
+        {
+          cascaderItem?.children?.length > 0 && <d-icon name="chevron-right" size="16px" color="inherit"></d-icon>
+        }
       </div>
-      {
-        cascaderItem?.children?.length > 0 && <d-icon name="chevron-right" size="16px" color="inherit"></d-icon>
-      }
     </li>
   )
 }
