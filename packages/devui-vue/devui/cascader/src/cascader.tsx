@@ -12,7 +12,6 @@ import { cloneDeep } from 'lodash-es'
 import './cascader.scss'
 // import { UnwrapNestedRefs } from '@vue/reactivity'
 // type OptionsType = UnwrapNestedRefs<[CascaderItem[]]>
-let cascaderOptionsCache = reactive({})
 
 export default defineComponent({
   name: 'DCascader',
@@ -26,6 +25,7 @@ export default defineComponent({
     const { initSingleIptValue } = useSingle()
     // const tagList = reactive<CascaderItem[]>([]) // 多选模式下选中的值数组，用于生成tag
     let initIptValue = props.value.length > 0 ? true : false // 有value默认值时，初始化输出内容
+    // console.log('init', props.value)
     const position = reactive({
       originX: 'left',
       originY: 'bottom',
@@ -59,9 +59,8 @@ export default defineComponent({
       } else {
         // 当最新的ul(级)没有下一级时删除之前选中ul的数据
         cascaderOptions.splice(index + 1, cascaderOptions.length - 1)
+        console.log('删除', cascaderOptions)
       }
-      cascaderOptionsCache = cascaderOptions
-      // console.log('cascaderOptions1', cascaderOptionsCache)
     }
     /**
      * 选中项输出
@@ -84,10 +83,9 @@ export default defineComponent({
         }
       } else {
         // 多选模式
-        // console.log('cascaderOptions2', cascaderOptionsCache)
+        console.log('cascaderOptions2', [ ...props?.options ])
         value.forEach((singleValues) => {
-          console.log(singleValues)
-          getMultipleCascaderItem(currentOption, singleValues, index, cascaderOptionsCache)
+          getMultipleCascaderItem(currentOption, singleValues, index, [ ...props?.options ])
         })
       }
     }
@@ -101,7 +99,8 @@ export default defineComponent({
      * 监听视图更新
      */
     watch(cascaderItemNeedProps.activeIndexs, val => {
-      // cascaderOptions.splice(0, cascaderOptions.length)
+      // TODO 多选模式下优化切换选择后的视图切换
+      cascaderOptions.splice(val.length, cascaderOptions.length - 1)
       updateCascaderView(val, cascaderOptions[0], 0)
     })
     /**
@@ -120,7 +119,9 @@ export default defineComponent({
        // 更新值
       updateCascaderValue(cascaderItemNeedProps.value, cascaderOptions[0], 0)
       inputValue.value = cascaderItemNeedProps.inputValueCache.value
-      if (initIptValue) { // 因为初始化了value，所以默认回显视图的选中态
+      // 因为初始化了value，所以默认回显视图的选中态
+      // 多选模式不默认视图打开状态，因为选中了太多个，无法确定展示哪一种选中态
+      if (initIptValue && !multiple.value) {
         initActiveIndexs(props.value, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs)
         initIptValue = false // 只需要初始化一次，之后不再执行
       }

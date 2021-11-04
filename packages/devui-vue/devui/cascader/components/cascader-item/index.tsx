@@ -21,6 +21,7 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
     activeIndexs.splice(ulIndex, activeIndexs.length - ulIndex)
     // 更新当前渲染视图的下标数组
     activeIndexs[ulIndex] = liIndex
+    console.log('activeIndexs更新', activeIndexs)
     if (!multiple) { // 单选点击选项就更新，多选是通过点击checkbox触发数据更新
       singleChoose(ulIndex, valueCache, cascaderItem)
     }

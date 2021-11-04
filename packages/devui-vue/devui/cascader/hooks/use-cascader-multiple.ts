@@ -39,7 +39,7 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
    */
   const getMultipleCascaderItem = (currentOption: CascaderItem[], cascaderUlValues: number[], index: number, cascaderOptions) => {
     const node = currentOption.find(item => item.value === cascaderUlValues[index])
-    // node.checked = true
+
     // console.log(ulIndex)
     if (node?.children?.length > 0) {
       // 递归获取选中节点
@@ -47,13 +47,24 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
       getMultipleCascaderItem(node.children, cascaderUlValues, index, cascaderOptions)
     } else {
       // 没有子节点了则说明已经是最终节点
-      // console.log('node', node, cascaderOptions, index)
+      // 从最终子节点往上开始查找父节点状态
+      node['checked'] = true
+      node['halfChecked'] = false
       const ulIndex = cascaderUlValues.findIndex(item => item === node.value)
-      console.log('node', node, ulIndex)
-      updateCheckOptionStatus(node, cascaderOptions, ulIndex)
+      // console.log('node', node, cascaderOptions, cascaderUlValues)
+      const parentNode = getParentNode2(node.value, cascaderOptions)
+      // const parentNode = getParentNode(node.value, cascaderOptions, ulIndex - 1)
+      console.log('父节点', parentNode)
+ 
+      // updateParentNodeStatus(node, cascaderOptions, ulIndex)
+      // updateCheckOptionStatus(node, cascaderOptions, ulIndex)
       // addTagList(tagList, node)
     }
   }
+
+  // const updateOptionCheckedStatus = (options, targetValue: string | number, checked: boolean) => {
+  // }
+
   /**
    * 多选模式下当有默认选中值时，初始化视图选中状态
    * 通过value集合获取下标集合
@@ -84,11 +95,11 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
     // 如果是半选状态，更新为false，其他状态则更新为与checked相反
     // console.log(node, options, ulIndex)
     if (node?.halfChecked) { // 更新半选状态
-      node.halfChecked = false
-      node.checked = false
+      node['halfChecked'] = false
+      node['checked'] = false
       updateCheckStatusLoop(node, 'halfChecked')
     } else {
-      node.checked = !node.checked
+      node['checked'] = !node.checked
       // 更新是否选中状态
       updateCheckStatusLoop(node, 'checked', node.checked)
     }
@@ -101,8 +112,7 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
    * @param node 节点
    */
   const updateCheckStatusLoop = (node: CascaderItem, type: CheckedType, status?: boolean) => {
-    // console.log(node)
-    if (node.children) {
+    if (node?.children?.length > 0) {
       node.children.forEach(item => {
         // 当需要改变checked时
         // halfChecked一定是false
@@ -122,6 +132,7 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
       })
     } else {
       // 更新tagList
+      // console.log('add node', node)
       !node.checked
       ? deleteTagList(tagList, node)
       : addTagList(tagList, node)
@@ -131,8 +142,10 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
    * 子节点获取父节点
    */
   const getParentNode = (childValue: string | number, options: CaascaderOptionsType, ulIndex: number): CascaderItem => {
+    // console.log('getParentNode', options)
     if (ulIndex < 0) return
     const queue = [...options[ulIndex]]
+    // console.log(queue)
     let cur: CascaderItem
     while(queue.length) {
       cur = queue.shift()
@@ -144,7 +157,31 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
     }
     return cur
   }
-
+  const getParentNode2 = (childValue: string | number, options: any): CascaderItem => {
+    // console.log('childValue', childValue, options)
+    let cur: CascaderItem
+    for (let i = 0; i < options.length; i++) {
+      const queue = [...options[i]?.children]
+      if (childValue === options[i].value) break
+      while(queue.length) {
+        cur = queue.shift()
+        if (cur.value === childValue) {
+          cur = options[i]
+          break
+        }
+        if (cur?.children && cur?.children.find(t => t.value === childValue)) {
+          break
+        } else if (cur?.children) {
+          queue.push(...cur?.children)
+        }
+        cur = null
+      }
+      if (cur) {
+        break
+      }
+    }
+    return cur
+  }
   /**
    * 更新父节点
    */
@@ -163,8 +200,10 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
       node['checked'] = true
       node['halfChecked'] = false
     }
+    console.log('childNode', node, ulIndex)
     ulIndex -= 1
     const parentNode = getParentNode(node.value, options, ulIndex)
+    // console.log('parentNode', parentNode, ulIndex)
     updateParentNodeStatus(parentNode, options, ulIndex)
   }
   return {

@@ -354,7 +354,8 @@ export default defineComponent({
         icon: 'folder'
       }
     ])
-    const value1 = [[1, 4, 8], [1, 4, 9, 81], [1, 41]]
+    // const value1 = [[1, 4, 8], [1, 4, 9, 81], [1, 41]]
+    const value1 = []
     const onToggleChange = (event) => {
       console.log(event)
     }
