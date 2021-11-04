@@ -15,6 +15,7 @@ export default defineComponent({
       isOpen,
       origin,
       trigger,
+      closeScope,
       closeOnMouseLeaveMenu,
     } = toRefs(props);
 
@@ -34,6 +35,7 @@ export default defineComponent({
       visible,
       origin,
       trigger,
+      closeScope,
       closeOnMouseLeaveMenu,
     });
 

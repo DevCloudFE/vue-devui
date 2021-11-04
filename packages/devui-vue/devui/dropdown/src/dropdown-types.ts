@@ -6,7 +6,8 @@ export type CloseScopeArea = 'all' | 'blank' | 'none';
 
 export const dropdownProps = {
   origin: {
-    type: Object as PropType<Element | ComponentPublicInstance>
+    type: Object as PropType<Element | ComponentPublicInstance>,
+    required: true
   },
 
   isOpen: {
