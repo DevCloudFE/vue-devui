@@ -99,7 +99,7 @@ const readTipOptions =  {
       {
         trigger: 'hover',
         selector: '.third-content',
-        position: 'right',
+        position: 'bottom',
         title: 'This Is the Third Title',
         content: 'Aenean libero urna, scelerisque tincidunt',
       },

@@ -1,31 +1,31 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 
 export const readTipProps = {
-  /* test: {
-    type: Object as PropType<{ xxx: xxx }>
-  } */
-  readTipOptions : {
-    type : Object as PropType<ReadTipOptions>
+  readTipOptions: {
+    type: Object as PropType<ReadTipOptions>
   },
-  defaultTemplateProps : {
-    type : Object as PropType<DefaultTemplateProps>
+  defaultTemplateProps: {
+    type: Object as PropType<ReadTipRule>
   }
 } as const
 
-export type  DefaultTemplateProps = {
+export type Position = 'top' | 'left' | 'right' | 'bottom'
+export type Trigger = 'hover' | 'click'
+
+export type DefaultTemplateProps = {
   title?: string
   content?: string
   top?: number
-  selector: string
-  position: string
+  selector?: string
+  position?: string
 }
 
 export interface ReadTipOptions {
-  trigger?: 'hover' | 'click'
+  trigger?: Trigger
   showAnimate?: boolean
   mouseenterTime?: number
   mouseleaveTime?: number
-  position?: 'top' | 'bottom'
+  position?: Position
   overlayClassName?: string
   appendToBody?: boolean
   rules: ReadTipRules
@@ -36,13 +36,13 @@ export type ReadTipRules = ReadTipRule | ReadTipRule[];
 export interface ReadTipRule {
   key?: string
   selector: string
-  trigger?: 'hover' | 'click'
+  trigger?: Trigger
   title?: string
   content?: string
   showAnimate?: boolean
   mouseenterTime?: number
   mouseleaveTime?: number
-  position?: 'top' | 'bottom'
+  position?: Position
   overlayClassName?: string
   appendToBody?: boolean
   //customData与template搭配使用，customData为传入模板的上下文，可以自定义模板内容
