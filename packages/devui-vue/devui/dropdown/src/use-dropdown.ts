@@ -11,9 +11,9 @@ function subscribeEvent<E = Event>(dom: Element | Document, type: string, callba
 
 interface UseDropdownProps {
   visible: Ref<boolean>
-  trigger: Ref<TriggerType>
-  origin: Ref<any>
-  closeOnMouseLeaveMenu: Ref<boolean>
+  trigger: Readonly<Ref<TriggerType>>
+  origin: Readonly<Ref<any>>
+  closeOnMouseLeaveMenu: Readonly<Ref<boolean>>
 }
 
 interface UseDropdownResult {

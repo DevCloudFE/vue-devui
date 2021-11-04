@@ -13,7 +13,7 @@
 
 ```vue
 <template>
-  <d-button ref="origin" v-dDropdown trigger="click">More</d-button>
+  <d-button ref="origin" trigger="click">More</d-button>
   <d-dropdown :origin="origin" trigger="click">
     <ul class="devui-dropdown-menu" role="menu">
       <li role="menuitem">
@@ -44,8 +44,8 @@ export default defineComponent({
 </script>
 
 <style>
-.devui-dropdown-menu > ul {
-  list-style: none;
+ul.devui-dropdown-menu{
+  padding-left: 0;
 }
 .devui-dropdown-menu li {
   padding-left: 0;
@@ -98,9 +98,10 @@ export default defineComponent({
 </script>
 
 <style>
-.devui-dropdown-menu > ul {
-  list-style: none;
+ul.devui-dropdown-menu{
+  padding-left: 0;
 }
+
 .devui-dropdown-menu li {
   padding-left: 0;
 }
@@ -130,12 +131,12 @@ d-dropdown 参数
 | closeOnMouseLeaveMenu | `boolean`        | `false` | 可选，是否进入菜单后离开菜单的时候关闭菜单                                                                      |
 | showAnimation         | `boolean`        | `true`  | 可选，是否开启动画                                                                                              |
 
-TriggerType 参数
+TriggerType 类型
 ```typescript
 type TriggerType = 'click' | 'hover' | 'manually';
 ```
 
-CloseScopeArea 参数
+CloseScopeArea 类型
 ```typescript
 type CloseScopeArea = 'all' | 'blank' | 'none';
 ```

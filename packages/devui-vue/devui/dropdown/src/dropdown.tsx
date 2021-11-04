@@ -1,11 +1,10 @@
-import { defineComponent, watch, ref, cloneVNode, toRefs } from 'vue'
+import { defineComponent, watch, ref, toRefs, Transition, computed } from 'vue'
 import { dropdownProps, DropdownProps } from './dropdown-types'
-import { FlexibleOverlay } from '../../overlay';
-import { getElement } from '../../shared/util/dom';
-
-import './dropdown.scss'
 import { useDropdown } from './use-dropdown';
 
+import { FlexibleOverlay } from '../../overlay';
+
+import './dropdown.scss'
 
 export default defineComponent({
   name: 'DDropdown',
@@ -38,6 +37,10 @@ export default defineComponent({
       closeOnMouseLeaveMenu,
     });
 
+    const animatedVisible = computed(() => {
+      return props.showAnimation ? visible.value : true;
+    });
+
     return () => {
       // let vnodes = ctx.slots.default?.() ?? [];
       return (
@@ -48,9 +51,11 @@ export default defineComponent({
             position={position}
             hasBackdrop={false}
           >
-            <div ref={dropdownEl} style="width:100vw">
-              {ctx.slots.default?.()}
-            </div>
+            <Transition name="devui-dropdown-fade">
+              <div v-show={animatedVisible.value} ref={dropdownEl} style="width:100vw">
+                {ctx.slots.default?.()}
+              </div>
+            </Transition>
           </FlexibleOverlay>
         </>
       )
