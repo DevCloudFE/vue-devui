@@ -33,33 +33,46 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
   }
   /**
    * 获取选中的节点
-   * @param currentOption 选中的某项
-   * @param cascaderUlValues 多选集合中的某一个集合
-   * @param index cascaderUlValues数组的起始项，最开始为0
    */
-  const getMultipleCascaderItem = (currentOption: CascaderItem[], cascaderUlValues: number[], index: number, cascaderOptions) => {
-    const node = currentOption.find(item => item.value === cascaderUlValues[index])
+  const getMultipleCascaderItem = (targetValues: number[], cascaderOptions: CascaderItem[]) => {
+    console.log('init', targetValues, cascaderOptions)
+    // const node = currentOption.find(item => item.value === cascaderUlValues[index])
+    // 找出
 
-    // console.log(ulIndex)
-    if (node?.children?.length > 0) {
-      // 递归获取选中节点
-      index += 1
-      getMultipleCascaderItem(node.children, cascaderUlValues, index, cascaderOptions)
-    } else {
-      // 没有子节点了则说明已经是最终节点
-      // 从最终子节点往上开始查找父节点状态
-      node['checked'] = true
-      node['halfChecked'] = false
-      const ulIndex = cascaderUlValues.findIndex(item => item === node.value)
-      // console.log('node', node, cascaderOptions, cascaderUlValues)
-      const parentNode = getParentNode2(node.value, cascaderOptions)
-      // const parentNode = getParentNode(node.value, cascaderOptions, ulIndex - 1)
-      console.log('父节点', parentNode)
- 
-      // updateParentNodeStatus(node, cascaderOptions, ulIndex)
-      // updateCheckOptionStatus(node, cascaderOptions, ulIndex)
-      // addTagList(tagList, node)
+    const findNextColumn = (targetValues, options, index) => {
+
+      const targetNode = options.find(t => t.value === targetValues[index])
+      console.log('target', targetNode)
+      // if (targetNode?.halfChecked) { // 更新半选状态
+      //   targetNode['halfChecked'] = false
+      //   targetNode['checked'] = false
+      // } else {
+      //   targetNode['checked'] = !targetNode.checked
+      //   // 更新是否选中状态
+      // }
+      if (targetNode?.children?.length > 0) {
+        index += 1
+        findChildrenCheckedStatusToUpdateParent(targetNode)
+        findNextColumn(targetValues, targetNode.children, index)
+      } else {
+        targetNode['checked'] = true
+      }
     }
+    findNextColumn(targetValues, cascaderOptions, 0)
+    // console.log(ulIndex)
+    // if (node?.children?.length > 0) {
+    //   // 递归获取选中节点
+    //   index += 1
+    //   getMultipleCascaderItem(node.children, cascaderUlValues, index, cascaderOptions)
+    // } else {
+    //   // 没有子节点了则说明已经是最终节点
+    //   // 从最终子节点往上开始查找父节点状态
+    //   node['checked'] = true
+    //   node['halfChecked'] = false
+    //   const ulIndex = cascaderUlValues.findIndex(item => item === node.value)
+    //   const parentNode = getParentNode2(node.value, cascaderOptions)
+    //   console.log('父节点', parentNode)
+    // }
   }
 
   // const updateOptionCheckedStatus = (options, targetValue: string | number, checked: boolean) => {
@@ -185,21 +198,28 @@ export const useMultiple = (): UseCascaderMultipleCallback => {
   /**
    * 更新父节点
    */
-  const updateParentNodeStatus = (node: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => {
-    if (ulIndex < 0) return
+   const findChildrenCheckedStatusToUpdateParent = (node) => {
     const checkedChild = node?.children?.find(t => t['checked'])
     const halfcheckedChild = node?.children?.find(t => t['halfChecked'])
     const uncheckedChild = node?.children?.find(t => !t['halfChecked'] && !t['checked'])
+    console.log('check', node, checkedChild, halfcheckedChild, uncheckedChild)
     if (halfcheckedChild || (checkedChild && uncheckedChild)) {
+      console.log('半选')
       node['checked'] = false
       node['halfChecked'] = true
     } else if (!checkedChild && !halfcheckedChild) {
+      console.log('空')
       node['checked'] = false
       node['halfChecked'] = false
     } else {
+      console.log('选中')
       node['checked'] = true
       node['halfChecked'] = false
     }
+  }
+  const updateParentNodeStatus = (node: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => {
+    if (ulIndex < 0) return
+    findChildrenCheckedStatusToUpdateParent(node)
     console.log('childNode', node, ulIndex)
     ulIndex -= 1
     const parentNode = getParentNode(node.value, options, ulIndex)

@@ -128,7 +128,7 @@ export interface UseCascaderMultipleCallback {
   addTagList: (a: CascaderItem[], b: CascaderItem) => void
   deleteTagList: (a: CascaderItem[], b: CascaderItem) => void
   initTagList: (a: CascaderItem[]) => void
-  getMultipleCascaderItem: (a: CascaderItem[], b: number[], c: number, d: any) => void
+  getMultipleCascaderItem: (a: number[], b: CascaderItem[]) => void
   updateCheckOptionStatus: (a: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => void
   initActiveIndexs: (a: CascaderValueType, b: CascaderItem[], c: number, d: number[]) => void
   updateCheckStatusLoop: (a: CascaderItem, b: CheckedType, c?: boolean) => void

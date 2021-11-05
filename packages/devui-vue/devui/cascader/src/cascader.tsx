@@ -59,7 +59,6 @@ export default defineComponent({
       } else {
         // 当最新的ul(级)没有下一级时删除之前选中ul的数据
         cascaderOptions.splice(index + 1, cascaderOptions.length - 1)
-        console.log('删除', cascaderOptions)
       }
     }
     /**
@@ -84,8 +83,8 @@ export default defineComponent({
       } else {
         // 多选模式
         console.log('cascaderOptions2', [ ...props?.options ])
-        value.forEach((singleValues) => {
-          getMultipleCascaderItem(currentOption, singleValues, index, [ ...props?.options ])
+        value.forEach((targetValue) => {
+          getMultipleCascaderItem(targetValue, cascaderOptions[0])
         })
       }
     }
@@ -116,7 +115,7 @@ export default defineComponent({
       menuShow.value = false
       // 点击确定过后禁止再次选中
       updateStopDefaultType()
-       // 更新值
+      // 更新值
       updateCascaderValue(cascaderItemNeedProps.value, cascaderOptions[0], 0)
       inputValue.value = cascaderItemNeedProps.inputValueCache.value
       // 因为初始化了value，所以默认回显视图的选中态
