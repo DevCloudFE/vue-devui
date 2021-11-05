@@ -18,6 +18,9 @@
     <p class="readtip-content">Set selector to display readtip</p>
     <p>The following is the target you want to show readtip</p>
     <span class="readtip-target">@Jack</span>
+    <template #contentTemplate>
+      <h1> 我是潘勇旭</h1>  
+    </template>
   </d-read-tip >
 </template>
 
@@ -122,6 +125,21 @@ const readTipOptions =  {
 
 .readtip-target:hover {
   text-decoration: underline;
+}
+
+.first-content {
+  font-weight: bold;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.second-content {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.third-content {
+  cursor: pointer;
 }
 </style>
 ```

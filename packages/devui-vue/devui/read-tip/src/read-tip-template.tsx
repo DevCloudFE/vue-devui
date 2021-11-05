@@ -7,20 +7,35 @@ export default defineComponent({
     props: readTipProps,
     emits: [],
     setup(props: ReadTipProps, ctx) {
+        // console.log(ctx.slots?.default());
+
+        const query = props.defaultTemplateProps?.id ? `#${props.defaultTemplateProps.id}` : props.defaultTemplateProps.selector
         return () => {
             return (
-                <Teleport to={`${props.defaultTemplateProps.selector}`} >
-                    <div   class={['read-tip-container',props.defaultTemplateProps.position]}>
-                    <span class='after' ></span>
-                    <div class="title">
-                        {props.defaultTemplateProps.title}
+                <Teleport to={query} >
+                    <div class={['read-tip-container', props.defaultTemplateProps.position]}>
+                        <span class='after' ></span>
+                        {
+                            // ctx.slots?.comp ? ctx.slots?.comp() :
+                            (
+                                <>
+                                    <div class="title">
+                                        {props.defaultTemplateProps.title}
+                                    </div>
+                                    <div class="content">
+                                        {props.defaultTemplateProps.content}
+                                    </div>
+                                </>
+                            )
+                        }
+
+                        <slot name="contentTemplate" >
+
+                        </slot>
+
                     </div>
-                    <div class="content">
-                        {props.defaultTemplateProps.content}
-                    </div>
-                </div>
                 </Teleport>
-                
+
 
             )
         }

@@ -5,7 +5,7 @@ export const readTipProps = {
     type: Object as PropType<ReadTipOptions>
   },
   defaultTemplateProps: {
-    type: Object as PropType<ReadTipRule>
+    type: Object as PropType<DefaultTemplateProps>
   }
 } as const
 
@@ -18,6 +18,8 @@ export type DefaultTemplateProps = {
   top?: number
   selector?: string
   position?: string
+  id? : string
+  temp: string
 }
 
 export interface ReadTipOptions {
