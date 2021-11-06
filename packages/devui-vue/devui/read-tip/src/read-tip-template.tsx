@@ -7,8 +7,6 @@ export default defineComponent({
     props: readTipProps,
     emits: [],
     setup(props: ReadTipProps, ctx) {
-        // console.log(ctx.slots?.default());
-
         const query = props.defaultTemplateProps?.id ? `#${props.defaultTemplateProps.id}` : props.defaultTemplateProps.selector
         return () => {
             return (
