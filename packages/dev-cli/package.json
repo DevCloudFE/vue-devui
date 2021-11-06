@@ -1,0 +1,48 @@
+{
+  "name": "dev-cli",
+  "version": "0.0.1",
+  "description": "Cli of dev",
+  "keywords": [
+    "cli",
+    "dev",
+    "devc",
+    "dev-cli"
+  ],
+  "author": "iel",
+  "homepage": "https://gitee.com/devui/vue-devui/tree/dev/packages/devui-vue/dev-cli#README.md",
+  "license": "MIT",
+  "main": "lib/bin.js",
+  "types": "types/bin.d.ts",
+  "bin": {
+    "devc": "lib/bin.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/RootWater/vue-devui.git"
+  },
+  "scripts": {
+    "dev": "esbuild --bundle ./src/bin.ts --format=cjs --platform=node --outfile=./lib/bin.js --external:esbuild --watch",
+    "build": "esbuild --bundle ./src/bin.ts --format=cjs --platform=node --outfile=./lib/bin.js --external:esbuild",
+    "cli": "node ./lib/bin.js"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/lodash-es": "^4.17.5",
+    "@types/node": "^16.11.6",
+    "@types/prompts": "^2.0.14",
+    "commander": "^8.3.0",
+    "fast-glob": "^3.2.7",
+    "fs-extra": "^10.0.0",
+    "kolorist": "^1.5.0",
+    "lodash-es": "^4.17.21",
+    "ora": "^6.0.1",
+    "prompts": "^2.4.2",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "esbuild": "^0.13.12"
+  }
+}
