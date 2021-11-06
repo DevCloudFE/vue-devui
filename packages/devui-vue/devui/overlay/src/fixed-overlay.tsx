@@ -1,19 +1,13 @@
 import { defineComponent, ref, renderSlot, CSSProperties, PropType } from 'vue';
 import { CommonOverlay } from './common-overlay';
-import { overlayProps } from './overlay-types';
+import { fixedOverlayProps, FixedOverlayProps } from './overlay-types';
 import { useOverlayLogic } from './utils';
 import './overlay.scss';
 
 export const FixedOverlay = defineComponent({
   name: 'DFixedOverlay',
-  props: {
-    ...overlayProps,
-    overlayStyle: {
-      type: Object as PropType<CSSProperties>,
-      default: undefined,
-    },
-  },
-  setup(props, ctx) {
+  props: fixedOverlayProps,
+  setup(props: FixedOverlayProps, ctx) {
     const {
       backgroundClass,
       overlayClass,

@@ -1,0 +1,61 @@
+@import '@devui/styles-var/devui-var';
+
+.devui-dropdown span {
+  &.icon-chevron-down,
+  &.icon-select-arrow {
+    display: inline-block;
+    vertical-align: text-top;
+  }
+}
+
+.devui-dropdown-animation span {
+  &.icon-chevron-down,
+  &.icon-select-arrow {
+    transition: transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+  }
+}
+
+.devui-dropdown.open span {
+  &.icon-chevron-down,
+  &.icon-select-arrow {
+    transform: rotate(180deg);
+  }
+}
+
+
+
+.devui-dropdown-fade {
+  @mixin d-dropdown-fade-animation {
+    animation-name: d-dropdown-fade;
+    animation-duration: 0.3s;
+  }
+  @keyframes d-dropdown-fade {
+    0% {
+      opacity: 0;
+      transform: scaleY(0.9999) scaleY(0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scaleY(0.8) scaleY(4px);
+    }
+  }
+
+  &-enter {
+    opacity: 0;
+  }
+
+  &-enter-active {
+    @include d-dropdown-fade-animation;
+  }
+
+  &-leave {
+    opacity: 1;
+  }
+
+  &-leave-active {
+    @include d-dropdown-fade-animation;
+
+    animation-direction: reverse;
+  }
+}

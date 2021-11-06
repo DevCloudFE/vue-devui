@@ -15,6 +15,10 @@
     z-index: 1000;
     pointer-events: auto;
   }
+
+  &__disabled {
+    pointer-events: none;
+  }
 }
 
 .devui-overlay-fade {
