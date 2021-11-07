@@ -2,10 +2,7 @@ import type { PropType, ExtractPropTypes } from 'vue'
 
 export type tagType = 'primary' | 'success' | 'warning' | 'danger'
 
-export const tagsProps = {
-  /* test: {
-    type: Object as PropType<{ xxx: xxx }>
-  } */
+export const tagProps = {
   type: {
     type: String as PropType<tagType>,
     default: ''
@@ -16,4 +13,4 @@ export const tagsProps = {
   }
 } as const
 
-export type TagsProps = ExtractPropTypes<typeof tagsProps>
+export type TagProps = ExtractPropTypes<typeof tagProps>

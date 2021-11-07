@@ -1,4 +1,4 @@
-# Tags 标签
+# Tag 标签
 
 标签展示组件。
 
@@ -12,11 +12,11 @@
 
 ```vue
 <template>
-  <d-tags>标签一</d-tags>
-  <d-tags type="primary">标签二</d-tags>
-  <d-tags type="success">标签三</d-tags>
-  <d-tags type="warning">标签四</d-tags>
-  <d-tags type="danger">标签五</d-tags>
+  <d-tag>标签一</d-tag>
+  <d-tag type="primary">标签二</d-tag>
+  <d-tag type="success">标签三</d-tag>
+  <d-tag type="warning">标签四</d-tag>
+  <d-tag type="danger">标签五</d-tag>
 </template>
 
 <script>
@@ -25,7 +25,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   setup() {
     return {
-      msg: 'Tags 标签 组件文档示例'
+      msg: 'Tag 标签 组件文档示例'
     }
   }
 })

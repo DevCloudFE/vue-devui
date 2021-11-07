@@ -1,10 +1,9 @@
 import { computed } from 'vue'
-import { tagsProps, TagsProps } from '../tags-types'
+import { tagProps, TagProps } from '../tag-types'
 
-export default function (props: TagsProps) {
+export default function (props: TagProps) {
   return computed(() => {
     const { type } = props
-    console.log(type, 'type')
 
     return `devui-tag devui-tag-${type || 'default'}`
   })

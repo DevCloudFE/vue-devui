@@ -1,22 +1,11 @@
-@import '../../style/mixins/index';
-@import '../../style/theme/color';
-@import '../../style/theme/variables';
-@import '../../style/theme/font';
-@import '../../style/theme/corner';
+@import '@devui/styles-var/devui-var';
 
 $devui-tag-normal-config: (
-  // text: (
-  //   color: $devui-brand-active
-  // ),
-  // text-dark: (
-  //   color: $devui-brand-active
-  // ),
-  default:
-    (
-      border: 0,
-      color: $devui-text,
-      background-color: $devui-default-bg // background-color: $devui-label-bg
-    ),
+  default: (
+    border: 0,
+    color: $devui-text,
+    background-color: $devui-default-bg
+  ),
   primary: (
     color: $devui-primary,
     background-color: $devui-primary-bg,
@@ -27,17 +16,11 @@ $devui-tag-normal-config: (
     background-color: $devui-success-bg,
     border-color: $devui-success-line
   ),
-  // info: (
-  //   color: $devui-info,
-  //   background-color: $devui-info-bg,
-  //   border-color: $devui-info-line
-  // ),
-  warning:
-    (
-      color: $devui-warning,
-      background-color: $devui-warning-bg,
-      border-color: $devui-warning-line
-    ),
+  warning: (
+    color: $devui-warning,
+    background-color: $devui-warning-bg,
+    border-color: $devui-warning-line
+  ),
   danger: (
     color: $devui-danger,
     background-color: $devui-danger-bg,
@@ -45,7 +28,7 @@ $devui-tag-normal-config: (
   )
 );
 
-.devui-tags {
+.devui-tag {
   display: inline-block;
   margin: 4px;
 
@@ -57,7 +40,6 @@ $devui-tag-normal-config: (
     line-height: 20px;
     border: 1px solid;
     border-radius: $devui-border-radius;
-    // border-color: inherit;
     display: block;
     align-items: center;
     position: relative;
