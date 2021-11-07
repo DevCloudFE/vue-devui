@@ -1,0 +1,56 @@
+@import '@devui/styles-var/devui-var';
+
+$devui-tag-normal-config: (
+  default: (
+    border: 0,
+    color: $devui-text,
+    background-color: $devui-default-bg
+  ),
+  primary: (
+    color: $devui-primary,
+    background-color: $devui-primary-bg,
+    border-color: $devui-primary-line
+  ),
+  success: (
+    color: $devui-success,
+    background-color: $devui-success-bg,
+    border-color: $devui-success-line
+  ),
+  warning: (
+    color: $devui-warning,
+    background-color: $devui-warning-bg,
+    border-color: $devui-warning-line
+  ),
+  danger: (
+    color: $devui-danger,
+    background-color: $devui-danger-bg,
+    border-color: $devui-danger-line
+  )
+);
+
+.devui-tag {
+  display: inline-block;
+  margin: 4px;
+
+  .devui-tag {
+    padding: 0 8px;
+    min-height: 20px;
+    font-size: 12px;
+    font-size: var(--devui-font-size, 12px);
+    line-height: 20px;
+    border: 1px solid;
+    border-radius: $devui-border-radius;
+    display: block;
+    align-items: center;
+    position: relative;
+    cursor: default;
+
+    @each $type in default, primary, success, warning, danger {
+      &.devui-tag-#{$type} {
+        @each $key, $value in map-get($devui-tag-normal-config, $type) {
+          #{$key}: $value;
+        }
+      }
+    }
+  }
+}
