@@ -94,7 +94,7 @@
     "vite": "^2.4.4",
     "vite-plugin-md": "^0.6.0",
     "vite-svg-loader": "^2.2.0",
-    "vitepress": "^0.15.6",
+    "vitepress": "0.20.1",
     "vitepress-theme-demoblock": "^1.2.2",
     "vue-tsc": "^0.2.2",
     "yarn": "^1.22.11"
