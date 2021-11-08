@@ -9,7 +9,6 @@ export default defineComponent({
     props: timeAxisProps,
     emits: [],
     setup(props: TimeAxisProps, ctx) {
-        console.log(TimeAxisItem)
         const timeAxis = ref<null | HTMLElement>();
         const marginLeft = ref(0);
         const style = reactive({
@@ -45,17 +44,14 @@ export default defineComponent({
         return () => {
             const renderItem = () => {
                 const slots: any[] = ctx.slots.default?.() ?? [];
-                console.log(slots)
                 let children;
                 if (slots.length === 1 && slots[0].type === Fragment) {
                     children = slots[0].children || []
                 } else {
                     children = slots
                 }
-                console.log(children)
                 return children.map((item, index) => {
                     if (props.direction === 'horizontal') {
-                        console.log(item)
                         //判断是否有自定义的位置信息，且是否正确 有，且正确直接用
                         if (item.props?.position === 'top' || item.props?.position === 'bottom') return <item/>
                         //判断是否需要交替
@@ -76,11 +72,14 @@ export default defineComponent({
                     }
                 })
             }
-
+            //防止字段传入错误，导致显示错误
+            const getDirection = () => {
+                return props.direction === 'horizontal' ? 'horizontal' : 'vertical'
+            }
 
             return (
                 <div
-                    class={`devui-time-axis-${props.direction === 'horizontal' ? 'horizontal' : 'vertical'}  ${props.center ? 'devui-time-axis-' + (props.direction === 'horizontal' ? 'horizontal' : 'vertical') + '-center' : ''} `}
+                    class={`devui-time-axis-${getDirection()}  ${props.center ? 'devui-time-axis-' + getDirection() + '-center' : ''} `}
                     ref={timeAxis}
                     style={style}
                 >

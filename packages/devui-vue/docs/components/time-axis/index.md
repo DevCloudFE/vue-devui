@@ -183,7 +183,11 @@ export default defineComponent({
           ></div>
         </div>
       </template>
-
+      <template #extra v-if="index===0">
+        <div style="text-align: center; width: 36px; height: 36px; border-radius: 18px; border: 2px solid #dfe1e6; background: white">
+          <span style="line-height: 32px">2020</span>
+        </div>
+      </template>
     </d-time-axis-item>
   </d-time-axis>
 </template>
@@ -219,7 +223,7 @@ export default defineComponent({
       {
         text: 'Awesome',
         dotColor: 'var(--devui-success)',
-        title: '第三季度交付版本1.0', date: '2020/09/01'
+        title: '第三季度交付版本1.0', date: '2020/11/01'
       },
     ])
     return {timeAxisList}
@@ -277,8 +281,9 @@ export default defineComponent({
 | lineColor |`string`                                        |  --         |   可选，设置线条颜色   | [自定义样式](#自定义样式) | 
 | position |`'top'\|'bottom'\|'left'\|'right'`    |  当`direction`为`vertical`时默认：`right`，当`direction`为`horizontal`时，默认：`bottom`   |   可选，设置内容存在的位置，若有time则time处在相反的位置   | [自定义内容位置](#自定义内容位置) | 
 
-### 插槽
+### d-time-axis-item插槽
 
 | 参数           | 描述        | 跳转 Demo                   |
 | ------------  | ----           | ---------                   | 
 |   dot   |    自定义时间轴点  |     [自定义样式](#自定义样式)    |  
+|   extra   |   自定义两个时间点间附加元素  |     [自定义内容](#自定义内容)    |  

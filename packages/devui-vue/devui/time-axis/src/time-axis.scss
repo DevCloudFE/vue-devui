@@ -27,6 +27,11 @@ $devui-time-axis-item-dot-size: 18px;
         border-left-width: 2px;
         border-left-color: $devui-dividing-line;
 
+        &-extra {
+          position: absolute;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
         &:first-child {
           display: none;
         }
@@ -81,7 +86,8 @@ $devui-time-axis-item-dot-size: 18px;
         &-data-top,
         &-data-bottom {
           text-align: center;
-          padding:0 6px;
+          padding: 0 6px;
+
           > div {
             transform: translateX(-50%);
           }
@@ -107,6 +113,12 @@ $devui-time-axis-item-dot-size: 18px;
         width: calc(100% - #{$devui-time-axis-item-dot-size});
         border-bottom-width: 2px;
         border-bottom-color: $devui-dividing-line;
+
+        &-extra {
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
       }
 
       &:first-child {
@@ -119,7 +131,7 @@ $devui-time-axis-item-dot-size: 18px;
 
       &-data-top,
       &-data-bottom {
-        padding-right:12px;
+        padding-right: 12px;
         flex: 1;
 
       }
@@ -149,6 +161,7 @@ $devui-time-axis-item-dot-size: 18px;
       }
     }
   }
+
 }
 
 .devui-time-axis-item {
