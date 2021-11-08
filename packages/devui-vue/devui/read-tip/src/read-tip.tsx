@@ -143,23 +143,13 @@ export default defineComponent({
           }
         </div>
 
-        {/* <slot v-slot:contentTemplate >
-
-        </slot> */}
 
         {(refRules).map(rule => (
           <div
 
           >
-            {/* {rule.status && temp(rule)} */}
-            {rule.status && (<TipsTemplate defaultTemplateProps={{ ...rule, top: tempTop, }} >
-
-
-              {/* <slot v-slot:contentTemplate='contentTemplate' name="contentTemplate" >
-                </slot> */}
-              {/* <div>
-                  {ctx.slots?.contentTemplate && ctx.slots?.contentTemplate()}
-                </div> */}
+            {rule.status && (<TipsTemplate  defaultTemplateProps={{ ...rule, top: tempTop, }} >
+             
             </TipsTemplate>)
 
             }
