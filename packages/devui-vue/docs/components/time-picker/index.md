@@ -48,17 +48,30 @@
 <template>
     <div>
         <h4 class='my-10'>minTime</h4>
-        <d-time-picker min-time='01:04:30' />
+        <d-time-picker min-time='01:04:30'/>
     </div>
     <div>
         <h4 class='my-10'>maxTime</h4>
-        <d-time-picker max-time='22:30:30' />
+        <d-time-picker max-time='22:30:30' v-model='vModelValues'/>
     </div>
     <div>
         <h4 class='my-10'>maxTime && minTime</h4>
-        <d-time-picker min-time='01:04:30' max-time='22:30:30' />
+        <d-time-picker min-time='02:04:40' max-time='22:30:30' />
     </div>
 </template>
+
+<script>
+  import { ref,defineComponent,watch } from 'vue'
+  export default defineComponent({
+      setup(props,ctx){
+        let vModelValues = ref('23:30:20')
+
+        return{
+          vModelValues
+        }
+      }
+  })
+</script>
 
 ```
 :::
@@ -73,17 +86,33 @@
     </div>
     <div>
         <h4 class='my-10'>mm:HH:ss</h4>
-        <d-time-picker format='mm:HH:ss'/>
+        <d-time-picker format='mm:HH:ss' v-model="vModelValues"/>
     </div>
     <div>
         <h4 class='my-10'>hh:mm</h4>
-        <d-time-picker format='hh:mm' />
+        <d-time-picker format='hh:mm' v-model="vModelValues"/>
     </div>
     <div>
         <h4 class='my-10'>MM:ss</h4>
-        <d-time-picker format='MM:ss' />
+        <d-time-picker format='MM:ss' v-model="vModelValues"/>
     </div>
 </template>
+<script>
+  import { ref,defineComponent,watch } from 'vue'
+  export default defineComponent({
+      setup(props,ctx){
+        let vModelValues = ref('23:30:20')
+
+        watch(vModelValues,(newValue,oldValue)=>{
+          console.log(newValue,oldValue)
+        })
+
+        return{
+          vModelValues
+        }
+      }
+  })
+</script>
 ```
 :::
 
@@ -110,11 +139,6 @@ import { ref,defineComponent,nextTick } from 'vue'
 export default defineComponent({
     setup(props,ctx){
         let slotDemo = ref(null)
-
-        // 返回选中的时间
-        const selectedTimeChage =(timeValue)=>{
-            console.log(timeValue)
-        }
 
         const chooseTime = ()=>{
             let timeObj ={

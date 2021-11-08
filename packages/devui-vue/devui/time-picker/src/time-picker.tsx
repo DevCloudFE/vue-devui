@@ -30,11 +30,12 @@ export default defineComponent({
       getTimeValue,
       clickVerifyFun,
       isOutOpen,
+      vModelIsBeyond,
       clearAll,
       timePopupDom,
       vModeValue,
       getPopupPosition
-    } = useTimePicker(activeHour,activeMinute,activeSecond,props.minTime,format,props.autoOpen,props.disabled,props.modelValue)
+    } = useTimePicker(activeHour,activeMinute,activeSecond,props.minTime,props.maxTime,format,props.autoOpen,props.disabled,props.modelValue)
 
 
     const selectedTimeChage = (e:MouseEvent) => {
@@ -46,6 +47,7 @@ export default defineComponent({
     onMounted(() => {
       getPopupPosition()
       isOutOpen()
+      vModelIsBeyond()
       document.addEventListener('click', clickVerifyFun)
       document.addEventListener('click',getTimeValue)
       document.addEventListener('scroll',getPopupPosition)
@@ -60,7 +62,7 @@ export default defineComponent({
 
     watch(vModeValue,(newValue:string)=>{
       ctx.emit('update:modelValue',vModeValue.value)
-      if(newValue != props.minTime){
+      if(newValue != props.minTime && newValue != '00:00'){
         showClearIcon.value = true
       }else{
         showClearIcon.value = false
