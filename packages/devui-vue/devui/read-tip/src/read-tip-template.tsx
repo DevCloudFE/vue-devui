@@ -8,13 +8,24 @@ export default defineComponent({
     emits: [],
     setup(props: ReadTipProps, ctx) {
         const query = props.defaultTemplateProps?.id ? `#${props.defaultTemplateProps.id}` : props.defaultTemplateProps.selector
+
+        const temp = ref(null)
+        onMounted(() => {
+            // 当定位为top展示时  元素定位高度需要计算弹窗的高度
+            if(props.defaultTemplateProps.position == 'top') {
+                temp.value.style.top = (- temp.value.offsetHeight - 10) + 'px'
+            }
+        })
         return () => {
             return (
                 <Teleport to={query} >
-                    <div class={['read-tip-container', props.defaultTemplateProps.position]}>
+                    <div 
+                    ref={temp}
+                    class={['read-tip-container', props.defaultTemplateProps.position]}
+                    >
                         <span class='after' ></span>
                         {
-                            // ctx.slots?.comp ? ctx.slots?.comp() :
+                            props.defaultTemplateProps.contentTemplate ? ctx.slots?.default() :
                             (
                                 <>
                                     <div class="title">
@@ -27,9 +38,9 @@ export default defineComponent({
                             )
                         }
 
-                        {/* <slot name="contentTemplate" >
-
-                        </slot> */}
+                        {/* {
+                            ctx.slots?.default()
+                        } */}
 
                     </div>
                 </Teleport>

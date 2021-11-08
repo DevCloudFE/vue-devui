@@ -47,6 +47,7 @@ export default defineComponent({
       rules.map(rule => {
         rule.status = false
         trigger = rule.trigger || trigger
+        rule.contentTemplate = !!(ctx.slots.contentTemplate)
         const doms = defaultSlot.value.querySelectorAll(rule.selector);
         [...doms].map((dom, index) => {
           dom.style.position = 'relative'
@@ -122,7 +123,6 @@ export default defineComponent({
           } else
 
             if (dom === e.target) {
-              console.log(2);
               show(dom, rule)
               return
             } else {
@@ -134,7 +134,7 @@ export default defineComponent({
 
     }
     return () => {
-      return (<div class="devui-read-tip" >
+      return (<div class="devui-read-tip"  >
         <div ref={defaultSlot}
           onClick={onClick}
         >
@@ -143,13 +143,14 @@ export default defineComponent({
           }
         </div>
 
-
         {(refRules).map(rule => (
           <div
 
           >
-            {rule.status && (<TipsTemplate  defaultTemplateProps={{ ...rule, top: tempTop, }} >
-             
+            {rule.status && (<TipsTemplate defaultTemplateProps={{ ...rule, top: tempTop, }} >
+              {
+               rule.contentTemplate && ctx.slots?.contentTemplate()
+              }
             </TipsTemplate>)
 
             }

@@ -20,6 +20,7 @@ export type DefaultTemplateProps = {
   position?: string
   id? : string
   temp: string
+  contentTemplate: boolean
 }
 
 export interface ReadTipOptions {

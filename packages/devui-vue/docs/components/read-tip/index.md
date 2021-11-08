@@ -29,7 +29,7 @@ import { defineComponent } from 'vue'
 const readTipOptions =  {
     trigger: 'click',
     rules: {
-      trigger: 'hover',
+      trigger: 'click',
       position:'top',
       selector: '.readtip-target',
       title: 'Name: Jack',
@@ -72,6 +72,7 @@ const readTipOptions =  {
     <p class="second-content">Click here to display second content</p>
     <h3 class="third-content">Hover here to display third content</h3>
     <h3 class="third-content">Another third content with same class name</h3>
+
 </div>
   </d-read-tip >
 </template>
