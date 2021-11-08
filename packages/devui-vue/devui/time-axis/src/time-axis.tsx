@@ -49,7 +49,7 @@ export default defineComponent({
                 let children;
                 if (slots.length === 1 && slots[0].type === Fragment) {
                     children = slots[0].children || []
-                }else {
+                } else {
                     children = slots
                 }
                 console.log(children)
@@ -80,7 +80,7 @@ export default defineComponent({
 
             return (
                 <div
-                    class={`devui-time-axis-${props.direction}  ${props.center ? 'devui-time-axis-' + props.direction + '-center' : ''} `}
+                    class={`devui-time-axis-${props.direction === 'horizontal' ? 'horizontal' : 'vertical'}  ${props.center ? 'devui-time-axis-' + (props.direction === 'horizontal' ? 'horizontal' : 'vertical') + '-center' : ''} `}
                     ref={timeAxis}
                     style={style}
                 >

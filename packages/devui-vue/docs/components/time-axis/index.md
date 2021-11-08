@@ -230,6 +230,34 @@ export default defineComponent({
 
 :::
 
+### 自定义内容位置
+
+:::demo
+
+```vue
+
+<template>
+  <h5><p>当 direction 为 horizontal 时 position 默认为 bottom</p></h5>
+  <d-time-axis direction="horizontal" center>
+    <d-time-axis-item position="top" dot-color="chocolate">Download</d-time-axis-item>
+    <d-time-axis-item dot-color="var(--devui-success)">Check</d-time-axis-item>
+    <d-time-axis-item position="top" dot-color="var(--devui-danger)">Build</d-time-axis-item>
+    <d-time-axis-item dot-color="var(--devui-warning)">Depoy</d-time-axis-item>
+    <d-time-axis-item position="top" dot-color="var(--devui-waiting)">End</d-time-axis-item>
+  </d-time-axis>
+  <h5><p>当 direction 为 vertical 时 position 默认为right</p></h5>
+  <d-time-axis direction="vertical">
+    <d-time-axis-item position="left" dot-color="chocolate">Download</d-time-axis-item>
+    <d-time-axis-item position="right" dot-color="var(--devui-success)">Check</d-time-axis-item>
+    <d-time-axis-item position="left" dot-color="var(--devui-danger)">Build</d-time-axis-item>
+    <d-time-axis-item position="right" dot-color="var(--devui-warning)">Depoy</d-time-axis-item>
+    <d-time-axis-item position="left" dot-color="var(--devui-waiting)">End</d-time-axis-item>
+  </d-time-axis>
+</template>
+```
+
+:::
+
 ### d-time-axis
 
 | 参数           | 类型                            | 默认        | 说明         | 跳转 Demo                   |
@@ -247,7 +275,7 @@ export default defineComponent({
 |   dotColor   |  `string`    |   --   |   可选，自定义时间圈颜色   |   [基本用法](#基本用法)  | 
 |  lineStyle| `'solid'\|'dashed'\|'dotted'\|'none'` |   `solid`   |   可选，设置线条样式   |  [自定义样式](#自定义样式) | 
 | lineColor |`string`                                        |  --         |   可选，设置线条颜色   | [自定义样式](#自定义样式) | 
-| position |`'top'\|'bottom'\|'left'\|'right'`    |  当`direction`为`vertical`时默认：`right`，当`direction`为`horizontal`时，默认：`bottom`   |   可选，设置内容存在的位置，若有time则time处在相反的位置   | [自定义样式](#自定义样式) | 
+| position |`'top'\|'bottom'\|'left'\|'right'`    |  当`direction`为`vertical`时默认：`right`，当`direction`为`horizontal`时，默认：`bottom`   |   可选，设置内容存在的位置，若有time则time处在相反的位置   | [自定义内容位置](#自定义内容位置) | 
 
 ### 插槽
 
