@@ -45,14 +45,19 @@ export default defineComponent({
         return () => {
             const renderItem = () => {
                 const slots: any[] = ctx.slots.default?.() ?? [];
+                console.log(slots)
                 let children;
                 if (slots.length === 1 && slots[0].type === Fragment) {
                     children = slots[0].children || []
+                }else {
+                    children = slots
                 }
+                console.log(children)
                 return children.map((item, index) => {
                     if (props.direction === 'horizontal') {
+                        console.log(item)
                         //判断是否有自定义的位置信息，且是否正确 有，且正确直接用
-                        if (item.props.position === 'top' || item.props.position === 'bottom') return <item/>
+                        if (item.props?.position === 'top' || item.props?.position === 'bottom') return <item/>
                         //判断是否需要交替
                         if (props.mode === 'alternative') {
                             return index % 2 == 0 ? <item position="bottom"/> : <item position="top"/>
@@ -62,7 +67,7 @@ export default defineComponent({
                         }
 
                     } else {
-                        if (item.props.position === 'left' || item.props.position === 'right') return <item/>
+                        if (item.props?.position === 'left' || item.props?.position === 'right') return <item/>
                         if (props.mode === 'alternative') {
                             return index % 2 == 0 ? <item position="left"/> : <item position="right"/>
                         } else {
