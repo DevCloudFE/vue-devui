@@ -18,6 +18,7 @@
 <template>
   <d-button  @click="drawerShow"> drawer {{ btnName }} </d-button>
   <d-drawer
+    v-if="isDrawerShow"
     v-model:visible="isDrawerShow" 
     :width="drawerWidth"
     :isCover="isCover" 

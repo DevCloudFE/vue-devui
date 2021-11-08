@@ -4,19 +4,14 @@ import './drawer-body.scss'
 
 export default defineComponent({
   name: 'DrawerBody',
-  props: {
-    isFullScreen: {
-      type: Boolean,
-      defualt: false,
-    },
-  },
   setup(props, { slots }) {
-    let { isFullScreen } = toRefs(props)
+    const isFullScreen: any = inject('isFullScreen')
     const closeDrawer: any = inject('closeDrawer')
     const zindex: number = inject('zindex')
     const isCover: boolean = inject('isCover')
     const position: any = inject('position')
     const width: any = inject('width')
+    const visible: boolean = inject('visible')
 
     const navRight = computed(() => position.value === 'right' ? { 'right': 0 } : { 'left': 0 })
     const navWidth = computed(() => isFullScreen.value ? '100vw' : width.value)
@@ -32,12 +27,16 @@ export default defineComponent({
       isCover,
       navRight,
       navWidth,
+      visible,
       clickContent,
     }
   },
 
   render() {
-    const { zindex, closeDrawer, slots, isCover, navRight, navWidth } = this
+    const { zindex, closeDrawer, slots, isCover, navRight, navWidth, visible } = this
+
+    if (!visible) return null
+
     return (
       <div class="devui-drawer" style={{ zIndex: zindex }} onClick={closeDrawer} >
         {isCover ? <div class="devui-overlay-backdrop" /> : null}

@@ -1,30 +1,33 @@
-import { defineComponent, ref } from 'vue'
-import { drawerHeaderType, DrawerHeaderType } from './drawer-header-type'
+import { defineComponent, ref, inject, computed, onUnmounted } from 'vue'
 
 import './drawer-header.scss'
 
 export default defineComponent({
   name: 'DrawerHeader', // 头部
-  props: drawerHeaderType,
   emits: ['toggleFullScreen', 'close'],
-  setup(props: DrawerHeaderType, ctx) {
+  setup(props, ctx) {
     const isFullScreen = ref(false)
 
-    let handleFullScreen = (e) => {
+    const visible: boolean = inject('visible')
+
+    const fullScreenClassName = computed(() =>  isFullScreen.value ? 'icon icon-minimize' : 'icon icon-maxmize')
+
+    const handleFullScreen = (e) => {
       e.stopPropagation()
       isFullScreen.value = !isFullScreen.value
       ctx.emit('toggleFullScreen')
     }
 
-    let handleDrawerClose = () => {
+    const handleDrawerClose = () => {
       ctx.emit('close')
     }
 
-    return { isFullScreen, handleFullScreen, handleDrawerClose }
+    return { fullScreenClassName, visible, handleFullScreen, handleDrawerClose, }
   },
   render() {
-    const { handleFullScreen, handleDrawerClose } = this
-    const isFullScreen: string = this.isFullScreen ? 'icon icon-minimize' : 'icon icon-maxmize'
+    const { handleFullScreen, handleDrawerClose, visible, fullScreenClassName } = this
+    
+    if (!visible) return null
 
     return (
       <div class="devui-drawer-header">
@@ -32,7 +35,7 @@ export default defineComponent({
           <span class="devui-drawer-header-item icon icon-more-operate" />
         </div>
         <div class="devui-drawer-header-item" onClick={handleFullScreen}>
-          <span class={isFullScreen}/>
+          <span class={fullScreenClassName}/>
         </div>
         <div class="devui-drawer-header-item" onClick={handleDrawerClose}>
           <span class="icon icon-close" />
