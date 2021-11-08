@@ -19,7 +19,7 @@
     <p>The following is the target you want to show readtip</p>
     <span class="readtip-target">@Jack</span>
     <template #contentTemplate>
-      <h1> 我是潘勇旭</h1>  
+      <p>我是devui 基础用法</p>  
     </template>
   </d-read-tip >
 </template>
@@ -158,4 +158,37 @@ d-read-tip 参数
 | contentTemplate      | `TemplateRef<any>` | --   | 可选，传入模板显示 readtip 内容 | 传入模板显示内容       | --         |
 
 
+
+```
+export interface ReadTipOptions {
+  trigger?: 'hover' | 'click'; // 默认值是 hover
+  showAnimate?: boolean; // 默认值是 false
+  mouseenterTime?: number; // 默认值是 100
+  mouseleaveTime?: number; // 默认值是 100
+  position?: PositionType | PositionType[]; // 默认值是 'top'
+  overlayClassName?: string; // 默认值为空字符串
+  appendToBody?: boolean; // 默认值为true
+  rules: ReadTipRules;
+}
+export type ReadTipRules = ReadTipRule | ReadTipRule[];
+
+export interface ReadTipRule {
+  key?: string;
+  selector: string;
+  trigger?: 'hover' | 'click'; // 可以继承自 ReadTipOptions
+  title?: string;
+  content?: string;
+  showAnimate?: boolean; // 可以继承自 ReadTipOptions
+  mouseenterTime?: number; // 可以继承自 ReadTipOptions
+  mouseleaveTime?: number; // 可以继承自 ReadTipOptions
+  position?: PositionType | PositionType[]; // 可以继承自 ReadTipOptions
+  overlayClassName?: string; // 可以继承自 ReadTipOptions
+  appendToBody?: boolean; //可以继承自 ReadTipOtions
+  //customData与template搭配使用，customData为传入模板的上下文，可以自定义模板内容
+  dataFn?: ({
+    element,
+    rule: ReadTipRule,
+  }) => Observable<{ title?: string; content?: string; template?: TemplateRef<any>; customData?: any }>;
+}
+```
 
