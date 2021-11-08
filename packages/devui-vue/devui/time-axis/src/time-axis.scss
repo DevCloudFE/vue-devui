@@ -75,6 +75,20 @@ $devui-time-axis-item-dot-size: 18px;
     align-items: center;
     position: relative;
 
+    &-center {
+      .devui-time-axis-item {
+
+        &-data-top,
+        &-data-bottom {
+          text-align: center;
+          padding:0 6px;
+          > div {
+            transform: translateX(-50%);
+          }
+        }
+      }
+    }
+
     .devui-time-axis-item {
       display: flex;
       flex-direction: column;
@@ -89,7 +103,7 @@ $devui-time-axis-item-dot-size: 18px;
 
       &-line {
         position: relative;
-        min-width: 20px;
+        min-width: 60px;
         width: calc(100% - #{$devui-time-axis-item-dot-size});
         border-bottom-width: 2px;
         border-bottom-color: $devui-dividing-line;
@@ -105,13 +119,9 @@ $devui-time-axis-item-dot-size: 18px;
 
       &-data-top,
       &-data-bottom {
-        text-align: center;
-        padding: 0 6px;
+        padding-right:12px;
         flex: 1;
 
-        > div {
-          transform: translateX(-50%);
-        }
       }
 
       &-line-style {

@@ -1,5 +1,6 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 import type { LineStyle } from '../../time-axis-types'
+export type Position = 'top' | 'bottom' | 'left' | 'right'
 export const timeAxisItemProps = {
   time: {
     type: String,
@@ -16,6 +17,10 @@ export const timeAxisItemProps = {
   //分界线的样式
   lineColor: {
     type: String
+  },
+  //分界线的样式
+  position: {
+    type: String as PropType<Position>
   },
 } as const
 

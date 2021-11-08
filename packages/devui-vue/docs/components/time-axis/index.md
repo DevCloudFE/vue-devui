@@ -20,8 +20,9 @@
         {{ item }}
       </d-radio>
     </d-radio-group>
-    <d-time-axis :direction="choose">
+    <d-time-axis :direction="choose" center>
       <d-time-axis-item
+          center
           v-for="(item,index) in timeAxisList"
           :key="index"
           :time="item.time"
@@ -29,7 +30,6 @@
       >
         {{item.text}}
       </d-time-axis-item>
-
     </d-time-axis>
   </div>
 </template>
@@ -39,8 +39,8 @@ import {defineComponent, ref} from 'vue'
 
 export default defineComponent({
   setup() {
-    const list = ref(['horizontal', 'vertical'])
-    const choose = ref('horizontal')
+    const list = ref(['vertical', 'horizontal'])
+    const choose = ref('vertical')
     const timeAxisList = ref([
       {
         text: 'Download',
@@ -71,9 +71,6 @@ export default defineComponent({
   }
 })
 </script>
-
-<style>
-</style>
 ```
 
 :::
@@ -85,7 +82,7 @@ export default defineComponent({
 ```vue
 
 <template>
-  <d-time-axis direction="horizontal">
+  <d-time-axis direction="horizontal" center>
     <d-time-axis-item
         v-for="(item,index) in timeAxisList"
         :key="index"
@@ -94,9 +91,9 @@ export default defineComponent({
         :line-style="item.lineStyle"
         :line-color="item.lineColor"
     >
-     <template #dot v-if="item.dot">
-       <d-icon :name="item.dot"></d-icon>
-     </template>
+      <template #dot v-if="item.dot">
+        <d-icon :name="item.dot"></d-icon>
+      </template>
       {{item.text}}
     </d-time-axis-item>
   </d-time-axis>
@@ -112,7 +109,7 @@ export default defineComponent({
         text: 'Start',
         time: '2021-10-1',
         lineStyle: "solid",
-        dot: 'cancel-forbidden',
+        dot: 'cancel-forbidden'
       },
       {
         text: 'Check',
@@ -120,7 +117,7 @@ export default defineComponent({
         dotColor: 'var(--devui-success)',
         lineStyle: "dashed",
         lineColor: 'var(--devui-success)',
-        dot: 'classroom-approve',
+        dot: 'classroom-approve'
       },
       {
         text: 'Debug',
@@ -128,7 +125,7 @@ export default defineComponent({
         dotColor: 'var(--devui-info)',
         lineStyle: "dotted",
         lineColor: 'var(--devui-info)',
-        dot: 'add-bug',
+        dot: 'add-bug'
       },
       {
         text: 'Build',
@@ -136,21 +133,99 @@ export default defineComponent({
         dotColor: 'var(--devui-warning)',
         lineStyle: "none",
         lineColor: 'var(--devui-warning)',
+        dot: 'build-with-tool'
       },
       {
         text: 'Display',
         time: '2021-10-5',
         dotColor: 'var(--devui-danger)',
-        dot: 'go-chart',
+        dot: 'go-chart'
       }
     ])
     return {timeAxisList}
   }
 })
 </script>
+```
 
-<style>
-</style>
+:::
+
+### 自定义内容
+
+:::demo
+
+```vue
+
+<template>
+  <d-time-axis direction="horizontal" mode="alternative">
+    <d-time-axis-item
+        v-for="(item,index) in timeAxisList"
+        :key="index"
+        :dot-color="item.dotColor"
+        line-style="dashed"
+    >
+
+      <template #default="data">
+        <div style="position: relative">
+          <div
+              v-if="data.position === 'bottom'"
+              style="margin-bottom: 4px; position: relative; left: 4px; width: 2px; height: 40px; background-color: #dfe1e6"
+          ></div>
+          <div
+              :style="{'border-left': '4px solid', 'box-shadow': '0 2px 4px 0 rgba(0, 0, 0, 0.1)', padding: '12px 8px',borderColor:item.dotColor,backgroundColor:item.backgroundColor}"
+          >
+            <div style="padding-bottom: 8px; font-size: 14px; font-weight: bold">{{ item.title }}</div>
+            <div style="padding-bottom: 8px">发布日期：{{ item.date }}</div>
+          </div>
+          <div
+              v-if="data.position === 'top'"
+              style="margin-top: 4px; position: relative; left: 4px; width: 2px; height: 40px; background-color: #dfe1e6"
+          ></div>
+        </div>
+      </template>
+
+    </d-time-axis-item>
+  </d-time-axis>
+</template>
+
+<script>
+import {defineComponent, ref} from 'vue'
+
+export default defineComponent({
+  setup() {
+    const timeAxisList = ref([
+      {
+        text: 'hello',
+        dotColor: 'var(--devui-success)',
+        extraElement: {},
+        title: '第四季度交付版本1.0', date: '2019/11/01'
+      },
+      {
+        text: 'world',
+        dotColor: 'var(--devui-danger)',
+        title: '第一季度交付版本2.0', date: '2020/03/01',
+        backgroundColor: 'rgba(255, 230, 230, 0.2)'
+      },
+      {
+        text: 'nihao',
+        dotColor: 'var(--devui-warning)',
+        title: '第二季度交付版本1.0', date: '2020/05/01'
+      },
+      {
+        text: 'DevUI',
+        dotColor: 'var(--devui-danger)',
+        title: '第三季度交付版本1.0', date: '2020/09/01'
+      },
+      {
+        text: 'Awesome',
+        dotColor: 'var(--devui-success)',
+        title: '第三季度交付版本1.0', date: '2020/09/01'
+      },
+    ])
+    return {timeAxisList}
+  }
+})
+</script>
 ```
 
 :::
@@ -160,6 +235,8 @@ export default defineComponent({
 | 参数           | 类型                            | 默认        | 说明         | 跳转 Demo                   |
 | ------------  | ----                            | ----       | ----        | ---------                   | 
 |   direction   |   `'vertical'\|'horizontal'`   | `vertical`  | 设置时间轴方向 |      [基本用法](#基本用法)     |  
+|   center   |   `boolean`| `false`  | 当方向为`horizontal`时，是否将内容设置居中 |      [基本用法](#基本用法)     |  
+|   mode   |   `'normal'\|'alternative'`   | `normal`  | 可选，`normal`模式下内容按默认方向排布， `alternative`模式下内容交替排布 |      [自定义内容](#自定义内容)     |  
 
 ### d-time-axis-item参数
 
@@ -170,6 +247,7 @@ export default defineComponent({
 |   dotColor   |  `string`    |   --   |   可选，自定义时间圈颜色   |   [基本用法](#基本用法)  | 
 |  lineStyle| `'solid'\|'dashed'\|'dotted'\|'none'` |   `solid`   |   可选，设置线条样式   |  [自定义样式](#自定义样式) | 
 | lineColor |`string`                                        |  --         |   可选，设置线条颜色   | [自定义样式](#自定义样式) | 
+| position |`'top'\|'bottom'\|'left'\|'right'`    |  当`direction`为`vertical`时默认：`right`，当`direction`为`horizontal`时，默认：`bottom`   |   可选，设置内容存在的位置，若有time则time处在相反的位置   | [自定义样式](#自定义样式) | 
 
 ### 插槽
 

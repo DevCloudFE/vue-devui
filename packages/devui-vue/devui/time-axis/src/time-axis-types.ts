@@ -1,5 +1,6 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 export type DataDirection = 'vertical' | 'horizontal'
+export type Mode = 'normal' | 'alternative'
 export type LineStyle = 'solid' | 'dashed' | 'dotted' | 'none'
 
 
@@ -34,6 +35,16 @@ export const timeAxisProps = {
   direction: {
     type: String as PropType<DataDirection>,
     default: 'vertical'
+  },
+  //设置居中
+  center: {
+    type: Boolean,
+    default: (): boolean => false
+  },
+  //设置排序方向
+  mode: {
+    type: String as PropType<Mode>,
+    default: 'normal'
   }
 } as const
 
