@@ -1,6 +1,9 @@
 # Tooltip 
 
-Text prompt component。
+Import into module.
+```ts
+import { TooltipModule } from 'devui/tooltip';
+```
 
 ### When to use
 
@@ -10,27 +13,27 @@ The user moves the mouse to the text, and it is used when further prompts are ne
 
 :::demo We can control the display position of the tooltip by controlling the attribute `position`. There are 4 values for `position`, which are `top`, `right`, `bottom`, and `left`. Control the content of the tooltip prompt box through the attribute `content`。
 
-<d-tooltip position='top' content='I am a HTML Element!'><button style="height: 50px; width: 60px; background: cornflowerblue; margin-top: 30px;">上面</button></d-tooltip>
+<d-tooltip position='top' content='I am a HTML Element!'><button style="height: 50px; width: 60px; background: cornflowerblue; margin-top: 30px;">top</button></d-tooltip>
 
-<d-tooltip position='right' content='I am a HTML Element!'><button style="height: 50px; width: 60px; background: cornflowerblue; margin-top: 30px;">右面</button></d-tooltip>
+<d-tooltip position='right' content='I am a HTML Element!'><button style="height: 50px; width: 60px; background: cornflowerblue; margin-top: 30px;">right</button></d-tooltip>
 
-<d-tooltip position='bottom' content='I am a HTML Element!'><button style="height: 50px; width: 60px; background: cornflowerblue; margin-top: 30px;">下面</button></d-tooltip>
+<d-tooltip position='bottom' content='I am a HTML Element!'><button style="height: 50px; width: 60px; background: cornflowerblue; margin-top: 30px;">bottom</button></d-tooltip>
 
-<d-tooltip position='left' content='I am a HTML Element!'><button style="height: 50px; width: 60px; background: cornflowerblue; margin-top: 30px;">左面</button></d-tooltip>
+<d-tooltip position='left' content='I am a HTML Element!'><button style="height: 50px; width: 60px; background: cornflowerblue; margin-top: 30px;">left</button></d-tooltip>
 
 ```vue
 <template>
   <d-tooltip position='top' content='I am a HTML Element!'>
-    <div class='example'>上面</div>
+    <div class='example'>top</div>
   </d-tooltip>
   <d-tooltip position='bottom' content='I am a HTML Element!'>
-    <div class='example'>下面</div>
+    <div class='example'>bottom</div>
   </d-tooltip>
   <d-tooltip position='left' content='I am a HTML Element!'>
-    <div class='example'>左面</div>
+    <div class='example'>left</div>
   </d-tooltip>
   <d-tooltip position='right' content='I am a HTML Element!'>
-    <div class='example'>右面</div>
+    <div class='example'>right</div>
   </d-tooltip>
 </template>
 ```
@@ -93,8 +96,8 @@ The mouse will be triggered after moving in for more than [mouseEnterDelay] mill
 
 |    parameter     |   type   |   default    | description                     | jump Demo                         | Global configuration items |
 | :---------: | :------: | :-------: | :----------------------- | --------------------------------- | --------- |
-|    content     | `string|DOMString` |    --     | Required, tooltip displays content             | [基本用法](#基本用法)             ||
-|    position     | `PositionType | PositionType[]` |  ['top', 'right', 'bottom', 'left']   | Optional, tooltip display position     | [基本用法](#基本用法)             ||
+|    content     | `string|DOMString` |    --     | Required, tooltip displays content             | [Basic Usage](#demo#basic-usage)             ||
+|    position     | `PositionType | PositionType[]` |  ['top', 'right', 'bottom', 'left']   | Optional, tooltip display position     | [Basic Usage](#demo#basic-usage)             ||
 |    showAnimation     | `boolean` |  true   | Optional, whether to show the wipe out animation    |            |✔|
-|    mouseEnterDelay    | `number` | 150 | Optional, how long is the delay before the Tooltip is displayed after the mouse moves in, the unit is ms          | [基本用法](#延时触发)             ||
-| mouseLeaveDelay | `number` |  100   | Optional, after the mouse is moved out, how long is the delay before the Tooltip is hidden, the unit is ms | [基本用法](#延时触发) ||
+|    mouseEnterDelay    | `number` | 150 | Optional, how long is the delay before the Tooltip is displayed after the mouse moves in, the unit is ms          | [Delay Trigger](#delay-trigger)             ||
+| mouseLeaveDelay | `number` |  100   | Optional, after the mouse is moved out, how long is the delay before the Tooltip is hidden, the unit is ms | [Delay Trigger](#delay-trigger) ||
