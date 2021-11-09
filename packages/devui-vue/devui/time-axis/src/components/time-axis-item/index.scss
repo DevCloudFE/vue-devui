@@ -37,71 +37,6 @@
   }
 }
 
-.devui-time-axis-item-vertical-time-bottom {
-  display: flex;
-
-  .devui-time-axis-item-axis {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .devui-time-axis-item-dot {
-    &,
-    & > svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    & > i {
-      font-size: 18px;
-    }
-  }
-
-  .devui-time-axis-item-custom-dot {
-    width: 18px;
-    height: 18px;
-    text-align: center;
-  }
-
-  .devui-time-axis-item-line-time-bottom {
-    position: relative;
-    height: calc(100% - 36px);
-    border-left-width: 2px;
-    border-left-color: $devui-dividing-line;
-  }
-
-  .devui-time-axis-line-style {
-    &-dashed {
-      border-left-style: dashed;
-    }
-
-    &-solid {
-      border-left-style: solid;
-    }
-
-    &-none {
-      border-left-style: none;
-    }
-  }
-
-  .devui-time-axis-middle-zone {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .devui-time-axis-item-data-time-bottom {
-    margin-left: 12px;
-    margin-bottom: 40px;
-  }
-
-  .devui-time-axis-item-template {
-    margin-left: 12px;
-    margin-bottom: 24px;
-  }
-}
-
 @keyframes devui-time-axis-running {
   0% {
     transform: rotate(0deg);
@@ -120,41 +55,4 @@
     color: $devui-success;
     border-color: $devui-success;
   }
-}
-
-.devui-time-axis-item-data-hidden {
-  visibility: hidden;
-}
-
-:host.devui-time-axis-item-horizontal-no-line {
-  width: auto !important;
-
-  .devui-time-axis-item-data-horizontal-top {
-    width: max-content;
-  }
-
-  .devui-time-axis-item-data-horizontal-bottom {
-    width: max-content;
-  }
-}
-
-:host.devui-time-axis-item-vertical-no-line {
-  .devui-time-axis-item-data-time-bottom {
-    margin-bottom: 0;
-  }
-
-  .devui-time-axis-item-data-vertical-left {
-    margin-bottom: 0;
-  }
-
-  .devui-time-axis-item-data-vertical-right {
-    margin-bottom: 0;
-  }
-}
-
-.devui-time-axis-item-horizontal-align-center {
-  position: relative;
-  width: fit-content;
-  transform: translateX(-50%);
-  left: 8px;
 }

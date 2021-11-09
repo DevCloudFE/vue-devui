@@ -86,11 +86,13 @@ export default defineComponent({
     <d-time-axis-item
         v-for="(item,index) in timeAxisList"
         :key="index"
-        :time="item.time"
         :dot-color="item.dotColor"
         :line-style="item.lineStyle"
         :line-color="item.lineColor"
     >
+      <template #time>
+        <div>{{item.time}}</div>
+      </template>
       <template #dot v-if="item.dot">
         <d-icon :name="item.dot"></d-icon>
       </template>
@@ -184,7 +186,9 @@ export default defineComponent({
         </div>
       </template>
       <template #extra v-if="index===0">
-        <div style="text-align: center; width: 36px; height: 36px; border-radius: 18px; border: 2px solid #dfe1e6; background: white">
+        <div
+            style="text-align: center; width: 36px; height: 36px; border-radius: 18px; border: 2px solid #dfe1e6; background: white"
+        >
           <span style="line-height: 32px">2020</span>
         </div>
       </template>
@@ -262,6 +266,25 @@ export default defineComponent({
 
 :::
 
+### 设置时间位置
+
+:::demo
+
+```vue
+<template>
+  <d-time-axis  time-position="bottom">
+    <d-time-axis-item dot-color="chocolate" time="2019" time-position="left">Download</d-time-axis-item>
+    <d-time-axis-item dot-color="var(--devui-success)" time="11-2">Check</d-time-axis-item>
+    <d-time-axis-item dot-color="var(--devui-danger)" time="2020" time-position="left">Build</d-time-axis-item>
+    <d-time-axis-item dot-color="var(--devui-warning)" time="11-4">Depoy</d-time-axis-item>
+    <d-time-axis-item dot-color="var(--devui-waiting)" time="2021" time-position="left">End</d-time-axis-item>
+
+  </d-time-axis>
+</template>
+```
+
+:::
+
 ### d-time-axis
 
 | 参数           | 类型                            | 默认        | 说明         | 跳转 Demo                   |
@@ -269,6 +292,7 @@ export default defineComponent({
 |   direction   |   `'vertical'\|'horizontal'`   | `vertical`  | 设置时间轴方向 |      [基本用法](#基本用法)     |  
 |   center   |   `boolean`| `false`  | 当方向为`horizontal`时，是否将内容设置居中 |      [基本用法](#基本用法)     |  
 |   mode   |   `'normal'\|'alternative'`   | `normal`  | 可选，`normal`模式下内容按默认方向排布， `alternative`模式下内容交替排布 |      [自定义内容](#自定义内容)     |  
+|   time-position   |   `'left'\|'bottom'`   | `left`  | 可选，仅当`direction` 为 `vertical` 时定义时间参数位置(全局设置，当与`mode`属性冲突时以`mode`为准) |      [自定义内容](#自定义内容)     |  
 
 ### d-time-axis-item参数
 
@@ -280,10 +304,12 @@ export default defineComponent({
 |  lineStyle| `'solid'\|'dashed'\|'dotted'\|'none'` |   `solid`   |   可选，设置线条样式   |  [自定义样式](#自定义样式) | 
 | lineColor |`string`                                        |  --         |   可选，设置线条颜色   | [自定义样式](#自定义样式) | 
 | position |`'top'\|'bottom'\|'left'\|'right'`    |  当`direction`为`vertical`时默认：`right`，当`direction`为`horizontal`时，默认：`bottom`   |   可选，设置内容存在的位置，若有time则time处在相反的位置   | [自定义内容位置](#自定义内容位置) | 
+|   time-position   |   `'left'\|'bottom'`   | `left`  | 可选，仅当`direction` 为 `vertical` 时定义时间参数位置(全局设置，当与`position`属性冲突时以`position`为准) |      [自定义内容](#自定义内容)     |  
 
 ### d-time-axis-item插槽
 
 | 参数           | 描述        | 跳转 Demo                   |
 | ------------  | ----           | ---------                   | 
 |   dot   |    自定义时间轴点  |     [自定义样式](#自定义样式)    |  
+|   time   |    自定义时间  |     [自定义样式](#自定义样式)    |  
 |   extra   |   自定义两个时间点间附加元素  |     [自定义内容](#自定义内容)    |  
