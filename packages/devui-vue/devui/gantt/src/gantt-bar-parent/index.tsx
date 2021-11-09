@@ -1,6 +1,7 @@
 import {defineComponent , ref , toRefs } from 'vue';
 import {GanttService} from '../gantt-service'
 import { Subscription } from 'rxjs';
+// import { GanttProps } from '../gantt-types'
 import './gantt-bar-parent.scss';
 const ganttService = new GanttService()
 export default defineComponent({
@@ -25,18 +26,21 @@ export default defineComponent({
         },
         tip:{
             type:String,
+        },
+        ganttScaleStatusHandler:{
+            type:Subscription
         }
     },
     setup(props){
-        const {startDate,endDate,data,id,tip} = toRefs(props)
-        let { progressRate } = toRefs(props)
-        let ganttScaleStatusHandler:Subscription = ref()
+        const {startDate,endDate,data,id,tip  } = toRefs(props)
+        let { progressRate, ganttScaleStatusHandler } = toRefs(props)
+        // const ganttScaleStatusHandler:Subscription = ref<Subscription>()
         const tipHovered = ref(false)
         const percentage = ref(0)
         let left = ref(0)
         let width = ref(0)
-        const max = ref(100)
-        const min = ref(0)
+        let max = 100
+        let min = 0
         let duration = ref('')
 
         const setValue = (value: number | null): void => {
@@ -86,7 +90,7 @@ export default defineComponent({
             
             duration = ganttService.getDuration(startDate, endDate) + 'd';
         
-            this.ganttScaleStatusHandler = ganttService.ganttScaleConfigChange.subscribe((config) => {
+            ganttScaleStatusHandler = ganttService.ganttScaleConfigChange.subscribe((config) => {
                 if (config.startDate) {
                     left = ganttService.getDatePostionOffset(startDate);
                 }
@@ -94,7 +98,7 @@ export default defineComponent({
                     left = ganttService.getDatePostionOffset(startDate);
                     width = ganttService.getDurationWidth(startDate, endDate);
                 }
-            });
+            }) as Subscription;
         }
 
         const ngOnChanges = (changes) => {
@@ -126,24 +130,12 @@ export default defineComponent({
         }
 
         return {
-            // startDate,
-            // endDate,
-            // progressRate,
-            // data,
-            // id,
-            // tip,
             left,
             width
         }
     },
     render() {
         const {
-            // startDate,
-            // endDate,
-            // progressRate,
-            // data,
-            // id,
-            // tip,
             left,
             width
         } = this

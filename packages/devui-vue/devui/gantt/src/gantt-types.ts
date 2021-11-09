@@ -11,6 +11,9 @@ export const ganttProps = {
     type: String as PropType<GanttScaleUnit>,
     default: GanttScaleUnit.day,
   },
+  progressRate:{
+    type:Number
+  },
 } as const
 
 
