@@ -1,6 +1,7 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 import type { LineStyle,TimePosition } from '../../time-axis-types'
 export type Position = 'top' | 'bottom' | 'left' | 'right'
+export type Type = 'primary' | 'success' | 'warning' | 'error'
 export const timeAxisItemProps = {
   time: {
     type: String,
@@ -26,6 +27,11 @@ export const timeAxisItemProps = {
   timePosition: {
     type: String as PropType<TimePosition>,
     default: 'left'
+  },
+  //时间点类型
+  type: {
+    type: String as PropType<Type>,
+    default: 'primary'
   }
 } as const
 

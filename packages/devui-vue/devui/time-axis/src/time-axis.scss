@@ -174,6 +174,7 @@ $devui-time-axis-item-dot-size: 18px;
 
     & > i {
       font-size: $devui-time-axis-item-dot-size;
+      vertical-align: 0;
     }
   }
 
@@ -183,5 +184,58 @@ $devui-time-axis-item-dot-size: 18px;
         display: none;
       }
     }
+  }
+
+  &-type {
+    &-primary {
+      border: 2px solid $devui-placeholder;
+      border-radius: 50%;
+    }
+
+    &-success {
+      i {
+        color: $devui-success;
+      }
+    }
+
+    &-error {
+      i {
+        color: $devui-danger;
+      }
+    }
+
+    &-warning {
+      i {
+        color: $devui-warning;
+      }
+    }
+
+    &-running {
+      line-height: 16px;
+      text-align: center;
+      animation: devui-time-axis-running 1.5s linear infinite;
+      border: 2px solid $devui-success;
+      border-radius: 50%;
+    }
+  }
+}
+
+@keyframes devui-time-axis-running {
+  0% {
+    transform: rotate(0deg);
+    color: $devui-success;
+    border-color: $devui-success;
+  }
+
+  50% {
+    transform: rotate(180deg);
+    color: $devui-success;
+    border-color: $devui-success;
+  }
+
+  100% {
+    transform: rotate(360deg);
+    color: $devui-success;
+    border-color: $devui-success;
   }
 }

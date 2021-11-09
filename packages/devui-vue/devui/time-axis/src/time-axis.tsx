@@ -1,5 +1,5 @@
 import {defineComponent, Fragment, nextTick, onMounted, provide, reactive, ref, toRef, watch} from 'vue'
-import {timeAxisProps, TimeAxisProps,TimeAxisRootType} from './time-axis-types'
+import {timeAxisProps, TimeAxisProps, TimeAxisRootType} from './time-axis-types'
 import TimeAxisItem from './components/time-axis-item'
 import './time-axis.scss'
 
@@ -44,8 +44,8 @@ export default defineComponent({
         })
         return () => {
             const renderPositionNode = (item, position?) => {
-                let timePosition:string = props.timePosition ? props.timePosition : 'left'
-                if(item.props?.timePosition||item.props?.['time-position']){
+                let timePosition: string = props.timePosition ? props.timePosition : 'left'
+                if (item.props?.timePosition || item.props?.['time-position']) {
                     timePosition = item.props.timePosition
                 }
                 return position

@@ -1,15 +1,15 @@
 import {defineComponent, inject, nextTick, onMounted, ref, watch} from 'vue'
-import type { TimeAxisRootType } from '../../time-axis-types'
-
-import {timeAxisItemProps, TimeAxisItemProps} from './types'
-import './index.scss'
+import type {TimeAxisRootType} from '../../time-axis-types'
+import DIcon from '../../../../icon/src/icon'
+import {timeAxisItemProps, TimeAxisItemProps, Type} from './types'
 
 export default defineComponent({
     name: 'DTimeAxisItem',
     props: timeAxisItemProps,
+    components: {DIcon},
     emits: [],
     setup(props: TimeAxisItemProps, ctx) {
-        const timeAxis:TimeAxisRootType = inject('timeAxis')
+        const timeAxis: TimeAxisRootType = inject('timeAxis')
         const itemClass = 'devui-time-axis-item'
         const renderTime = () => {
             return (
@@ -39,34 +39,48 @@ export default defineComponent({
                     return renderTime()
                 } else {
                     //如果有设定time-position,则left显示在这
-                    return props.timePosition === 'left' ? renderTime():''
+                    return props.timePosition === 'left' ? renderTime() : ''
                 }
             }
+        }
+        const setTypeIcon = (type: Type) => {
+            if (type === 'primary') {
+                return ''
+            }
+            return <i class={`icon-${type === 'success' ? 'right' : type}-o`}></i>
+        }
+        const renderDot = () => {
+            if (ctx.slots.dot) {
+                return <div style={{color: props.dotColor}}> {ctx.slots.dot?.()}</div>
+            } else {
+                return (<div class={`${itemClass}-dot ${itemClass}-type-${props.type}`}
+                             style={{borderColor: props.dotColor}}
+                >
+                    {setTypeIcon(props.type)}
+                </div>)
+            }
+
         }
 
         return () => {
             return (
                 <div class={itemClass}>
                     <div class={`${itemClass}-data-left ${itemClass}-data-top`}>
-                        {renderPosition(['top','left'])}
+                        {renderPosition(['top', 'left'])}
                     </div>
                     <div class={`${itemClass}-axis`}>
                         {
-                            ctx.slots.dot
-                                ? <div style={{color: props.dotColor}}> {ctx.slots.dot?.()}</div>
-                                : <div class={`${itemClass}-dot ${itemClass}-type-primary`}
-                                       style={{borderColor: props.dotColor}}
-                                ></div>
+                            renderDot()
                         }
-                        {(timeAxis.props.direction === 'vertical'&&props.timePosition === 'bottom')?renderTime():''}
+                        {(timeAxis.props.direction === 'vertical' && props.timePosition === 'bottom') ? renderTime() : ''}
                         <div class={`${itemClass}-line ${itemClass}-line-style-${props.lineStyle}`}
                              style={{borderColor: props.lineColor}}
                         >
-                            {ctx.slots.extra ? <div class={`${itemClass}-line-extra`}>{ctx.slots.extra()}</div>:''}
+                            {ctx.slots.extra ? <div class={`${itemClass}-line-extra`}>{ctx.slots.extra()}</div> : ''}
                         </div>
                     </div>
                     <div class={`${itemClass}-data-right ${itemClass}-data-bottom`}>
-                        {renderPosition(['right','bottom'])}
+                        {renderPosition(['right', 'bottom'])}
                     </div>
                 </div>
 
