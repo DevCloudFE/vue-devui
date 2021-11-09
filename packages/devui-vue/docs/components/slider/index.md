@@ -123,19 +123,20 @@ export default defineComponent({
 
 :::
 
-### 异定制 Popover 的显示内容
+### 定制 Popover 的显示内容
 
-通过 tipsRenderer 参数传入函数定制 Popover 内的显示内容。
+通过 tipsRenderer 参数传入定制 Popover 内的显示内容。
 :::demo
 
 ```vue
 <template>
-<div>
-<div class="slider-wrapper" style="padding:20px">
-  <d-slider  :min="minValue" :max="maxValue" v-model="inputValue" tipsRenderer="apple"></d-slider>
-   <br style="margin-bottom: 20px" />
-  <d-slider :min="minValue" :max="maxValue"  v-model="inputValue" tipsRenderer="null" ></d-slider>
-</div>
+  <div>
+    <div class="slider-wrapper" style="padding:20px">
+      <d-slider  :min="minValue" :max="maxValue" v-model="inputValue" tipsRenderer="apple"></d-slider>
+      <br style="margin-bottom: 20px" />
+      <d-slider :min="minValue" :max="maxValue"  v-model="inputValue" tipsRenderer="null" ></d-slider>
+    </div>
+  </div>
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
