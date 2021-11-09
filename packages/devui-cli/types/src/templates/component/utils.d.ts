@@ -1,0 +1,16 @@
+import { ComponentMeta } from './meta';
+export declare const coreFileName: (name: string) => string;
+export declare const typesFileName: (name: string) => string;
+export declare const serviceFileName: (name: string) => string;
+export declare const directiveFileName: (name: string) => string;
+export declare const getRealLibPrefix: () => string;
+export declare const getRealClassPrefix: () => string;
+export declare const coreName: (name: string) => string;
+export declare const coreRealName: (name: string) => string;
+export declare const coreClassName: (name: string) => string;
+export declare const propsName: (name: string) => string;
+export declare const propsTypesName: (name: string) => string;
+export declare const serviceName: (name: string) => string;
+export declare const directiveName: (name: string) => string;
+export declare function getComponentMetaFiles(): Promise<string[]>;
+export declare function getComponentsMeta(): Promise<ComponentMeta[]>;
