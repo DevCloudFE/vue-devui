@@ -1,5 +1,5 @@
 import prompts from 'prompts'
-import { devCliConfig } from '../shared/config'
+import { cliConfig } from '../shared/config'
 import genComponent from '../shared/generate-component'
 import logger from '../shared/logger'
 import { canSafelyOverwrite, onPromptsCancel, resolveComponentDir } from '../shared/utils'
@@ -76,9 +76,9 @@ export default async function createComponentAction(names: string[] = [], cmd: C
         },
         {
           name: 'category',
-          type: () => (devCliConfig.componentCategories.includes(category) ? null : 'select'),
+          type: () => (cliConfig.componentCategories.includes(category) ? null : 'select'),
           message: 'Select a component category.',
-          choices: devCliConfig.componentCategories.map((value, index) => ({
+          choices: cliConfig.componentCategories.map((value, index) => ({
             title: value,
             value,
             selected: index === 0

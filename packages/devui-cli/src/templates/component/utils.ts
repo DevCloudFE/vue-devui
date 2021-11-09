@@ -1,7 +1,7 @@
 import glob from 'fast-glob'
 import { readFileSync } from 'fs-extra'
 import { camelCase, kebabCase } from 'lodash-es'
-import { devCliConfig } from '../../shared/config'
+import { cliConfig } from '../../shared/config'
 import { bigCamelCase } from '../../shared/utils'
 import { ComponentMeta } from './meta'
 
@@ -10,9 +10,9 @@ export const typesFileName = (name: string) => kebabCase(name + '-types')
 export const serviceFileName = (name: string) => kebabCase(name + '-service')
 export const directiveFileName = (name: string) => kebabCase(name + '-directive')
 
-export const getRealLibPrefix = () => (devCliConfig.libPrefix ? devCliConfig.libPrefix + '-' : '')
+export const getRealLibPrefix = () => (cliConfig.libPrefix ? cliConfig.libPrefix + '-' : '')
 export const getRealClassPrefix = () =>
-  devCliConfig.libClassPrefix ? devCliConfig.libClassPrefix + '-' : ''
+  cliConfig.libClassPrefix ? cliConfig.libClassPrefix + '-' : ''
 
 export const coreName = (name: string) => bigCamelCase(name)
 export const coreRealName = (name: string) => bigCamelCase(getRealLibPrefix() + name)
@@ -24,7 +24,7 @@ export const directiveName = (name: string) => bigCamelCase(name + 'Directive')
 
 export async function getComponentMetaFiles() {
   return glob('./**/meta.json', {
-    cwd: devCliConfig.cwd,
+    cwd: cliConfig.cwd,
     absolute: true,
     deep: 2
   })

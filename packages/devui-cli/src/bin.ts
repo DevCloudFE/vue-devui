@@ -2,7 +2,7 @@
 import { Command } from 'commander'
 import baseAction from './commands/base'
 import createAction, { validateCreateType } from './commands/create'
-import { detectCliConfig, DevCliConfig } from './shared/config'
+import { CliConfig, detectCliConfig } from './shared/config'
 import { VERSION } from './shared/constant'
 import {
   DEFAULT_CLI_CONFIG_FILE_NAME
@@ -35,11 +35,11 @@ program
   )
   .usage('[command] [options]')
   .version(VERSION, '-v --version')
-  .description('Cli of dev.')
+  .description('Cli of devui.')
   .action(baseAction)
 
 program.parse(process.argv)
 
-export function defineCliConfig(config: Partial<DevCliConfig> = {}) {
+export function defineCliConfig(config: Partial<CliConfig> = {}) {
   return config
 }

@@ -16,7 +16,7 @@ import {
   serviceFileName,
   typesFileName
 } from '../templates/component/utils'
-import { devCliConfig } from './config'
+import { cliConfig } from './config'
 import logger from './logger'
 import { bigCamelCase } from './utils'
 
@@ -40,7 +40,7 @@ export default function genComponent(meta: ComponentMeta) {
     const coreFilePath = resolve(componentDir, coreFileName(meta.name))
     writeFileSync(coreFilePath + '.tsx', genCoreTemplate(meta.name), WRITE_FILE_OPTIONS)
     writeFileSync(
-      coreFilePath + devCliConfig.libStyleFileSuffix,
+      coreFilePath + cliConfig.libStyleFileSuffix,
       genStyleTemplate(meta.name),
       WRITE_FILE_OPTIONS
     )

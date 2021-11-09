@@ -1,3 +1,3 @@
-# `dev-cli`
+# `devui-cli`
 
 > TODO: description

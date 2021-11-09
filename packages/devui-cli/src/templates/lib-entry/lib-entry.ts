@@ -1,7 +1,21 @@
-import { devCliConfig } from '../../shared/config'
+import { relative, resolve } from 'path'
+import { cliConfig } from '../../shared/config'
 import logger from '../../shared/logger'
 import { ComponentMeta, isValidComponentMeta } from '../component/meta'
 import { coreFileName, coreName, directiveName, serviceName } from '../component/utils'
+
+export function resolveImportRelativePath(coreName: string) {
+  const libEntryPath = resolve(cliConfig.cwd, cliConfig.libEntryRootDir)
+  const corePath = resolve(cliConfig.cwd, cliConfig.componentRootDir, coreName)
+
+  let relativePath = relative(libEntryPath, corePath)
+
+  if (relativePath.startsWith(coreName)) {
+    relativePath = './' + relativePath
+  }
+
+  return relativePath.replace(/\\/g, '/')
+}
 
 export function getPartName(part: string, name: string) {
   const partNameFn = {
@@ -34,9 +48,10 @@ export default function genLibEntryTemplate(componentsMeta: ComponentMeta[]) {
 
     const parts = meta.parts.map((part) => getPartName(part, meta.name))
     const install = coreName(meta.name) + 'Install'
+    const importPkgPath = resolveImportRelativePath(coreFileName(meta.name))
 
     installs.push(install)
-    imports.push(`import ${install}, { ${parts.join(', ')} } from './${coreFileName(meta.name)}'`)
+    imports.push(`import ${install}, { ${parts.join(', ')} } from '${importPkgPath}'`)
     packages.push(...parts)
   }
 
@@ -54,7 +69,7 @@ export {
 }
 
 export default {
-  version: '${devCliConfig.version}',
+  version: '${cliConfig.version}',
   install(app: App): void {
     installs.forEach((p) => app.use(p as any))
   }

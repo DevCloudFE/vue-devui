@@ -1601,8 +1601,8 @@ var require_universalify = __commonJS({
         if (typeof args[args.length - 1] === "function")
           fn.apply(this, args);
         else {
-          return new Promise((resolve6, reject) => {
-            fn.call(this, ...args, (err, res) => err != null ? reject(err) : resolve6(res));
+          return new Promise((resolve7, reject) => {
+            fn.call(this, ...args, (err, res) => err != null ? reject(err) : resolve7(res));
           });
         }
       }, "name", { value: fn.name });
@@ -2448,19 +2448,19 @@ var require_fs = __commonJS({
       if (typeof callback === "function") {
         return fs.exists(filename, callback);
       }
-      return new Promise((resolve6) => {
-        return fs.exists(filename, resolve6);
+      return new Promise((resolve7) => {
+        return fs.exists(filename, resolve7);
       });
     };
     exports2.read = function(fd, buffer, offset, length, position, callback) {
       if (typeof callback === "function") {
         return fs.read(fd, buffer, offset, length, position, callback);
       }
-      return new Promise((resolve6, reject) => {
+      return new Promise((resolve7, reject) => {
         fs.read(fd, buffer, offset, length, position, (err, bytesRead, buffer2) => {
           if (err)
             return reject(err);
-          resolve6({ bytesRead, buffer: buffer2 });
+          resolve7({ bytesRead, buffer: buffer2 });
         });
       });
     };
@@ -2468,11 +2468,11 @@ var require_fs = __commonJS({
       if (typeof args[args.length - 1] === "function") {
         return fs.write(fd, buffer, ...args);
       }
-      return new Promise((resolve6, reject) => {
+      return new Promise((resolve7, reject) => {
         fs.write(fd, buffer, ...args, (err, bytesWritten, buffer2) => {
           if (err)
             return reject(err);
-          resolve6({ bytesWritten, buffer: buffer2 });
+          resolve7({ bytesWritten, buffer: buffer2 });
         });
       });
     };
@@ -2481,11 +2481,11 @@ var require_fs = __commonJS({
         if (typeof args[args.length - 1] === "function") {
           return fs.writev(fd, buffers, ...args);
         }
-        return new Promise((resolve6, reject) => {
+        return new Promise((resolve7, reject) => {
           fs.writev(fd, buffers, ...args, (err, bytesWritten, buffers2) => {
             if (err)
               return reject(err);
-            resolve6({ bytesWritten, buffers: buffers2 });
+            resolve7({ bytesWritten, buffers: buffers2 });
           });
         });
       };
@@ -3728,11 +3728,11 @@ var require_symlink = __commonJS({
       });
     }
     function _createSymlink(srcpath, dstpath, type, callback) {
-      symlinkPaths(srcpath, dstpath, (err, relative2) => {
+      symlinkPaths(srcpath, dstpath, (err, relative3) => {
         if (err)
           return callback(err);
-        srcpath = relative2.toDst;
-        symlinkType(relative2.toCwd, type, (err2, type2) => {
+        srcpath = relative3.toDst;
+        symlinkType(relative3.toCwd, type, (err2, type2) => {
           if (err2)
             return callback(err2);
           const dir = path.dirname(dstpath);
@@ -3762,9 +3762,9 @@ var require_symlink = __commonJS({
         if (areIdentical(srcStat, dstStat))
           return;
       }
-      const relative2 = symlinkPathsSync(srcpath, dstpath);
-      srcpath = relative2.toDst;
-      type = symlinkTypeSync(relative2.toCwd, type);
+      const relative3 = symlinkPathsSync(srcpath, dstpath);
+      srcpath = relative3.toDst;
+      type = symlinkTypeSync(relative3.toCwd, type);
       const dir = path.dirname(dstpath);
       const exists = fs.existsSync(dir);
       if (exists)
@@ -4711,7 +4711,7 @@ var require_prompt = __commonJS({
 var require_text = __commonJS({
   "../../node_modules/prompts/dist/elements/text.js"(exports2, module2) {
     "use strict";
-    function asyncGeneratorStep(gen, resolve6, reject, _next, _throw, key, arg) {
+    function asyncGeneratorStep(gen, resolve7, reject, _next, _throw, key, arg) {
       try {
         var info = gen[key](arg);
         var value = info.value;
@@ -4720,7 +4720,7 @@ var require_text = __commonJS({
         return;
       }
       if (info.done) {
-        resolve6(value);
+        resolve7(value);
       } else {
         Promise.resolve(value).then(_next, _throw);
       }
@@ -4728,13 +4728,13 @@ var require_text = __commonJS({
     function _asyncToGenerator(fn) {
       return function() {
         var self2 = this, args = arguments;
-        return new Promise(function(resolve6, reject) {
+        return new Promise(function(resolve7, reject) {
           var gen = fn.apply(self2, args);
           function _next(value) {
-            asyncGeneratorStep(gen, resolve6, reject, _next, _throw, "next", value);
+            asyncGeneratorStep(gen, resolve7, reject, _next, _throw, "next", value);
           }
           function _throw(err) {
-            asyncGeneratorStep(gen, resolve6, reject, _next, _throw, "throw", err);
+            asyncGeneratorStep(gen, resolve7, reject, _next, _throw, "throw", err);
           }
           _next(void 0);
         });
@@ -5471,7 +5471,7 @@ var require_dateparts = __commonJS({
 var require_date = __commonJS({
   "../../node_modules/prompts/dist/elements/date.js"(exports2, module2) {
     "use strict";
-    function asyncGeneratorStep(gen, resolve6, reject, _next, _throw, key, arg) {
+    function asyncGeneratorStep(gen, resolve7, reject, _next, _throw, key, arg) {
       try {
         var info = gen[key](arg);
         var value = info.value;
@@ -5480,7 +5480,7 @@ var require_date = __commonJS({
         return;
       }
       if (info.done) {
-        resolve6(value);
+        resolve7(value);
       } else {
         Promise.resolve(value).then(_next, _throw);
       }
@@ -5488,13 +5488,13 @@ var require_date = __commonJS({
     function _asyncToGenerator(fn) {
       return function() {
         var self2 = this, args = arguments;
-        return new Promise(function(resolve6, reject) {
+        return new Promise(function(resolve7, reject) {
           var gen = fn.apply(self2, args);
           function _next(value) {
-            asyncGeneratorStep(gen, resolve6, reject, _next, _throw, "next", value);
+            asyncGeneratorStep(gen, resolve7, reject, _next, _throw, "next", value);
           }
           function _throw(err) {
-            asyncGeneratorStep(gen, resolve6, reject, _next, _throw, "throw", err);
+            asyncGeneratorStep(gen, resolve7, reject, _next, _throw, "throw", err);
           }
           _next(void 0);
         });
@@ -5697,7 +5697,7 @@ ${i ? ` ` : figures.pointerSmall} ${color.red().italic(l)}`, ``);
 var require_number = __commonJS({
   "../../node_modules/prompts/dist/elements/number.js"(exports2, module2) {
     "use strict";
-    function asyncGeneratorStep(gen, resolve6, reject, _next, _throw, key, arg) {
+    function asyncGeneratorStep(gen, resolve7, reject, _next, _throw, key, arg) {
       try {
         var info = gen[key](arg);
         var value = info.value;
@@ -5706,7 +5706,7 @@ var require_number = __commonJS({
         return;
       }
       if (info.done) {
-        resolve6(value);
+        resolve7(value);
       } else {
         Promise.resolve(value).then(_next, _throw);
       }
@@ -5714,13 +5714,13 @@ var require_number = __commonJS({
     function _asyncToGenerator(fn) {
       return function() {
         var self2 = this, args = arguments;
-        return new Promise(function(resolve6, reject) {
+        return new Promise(function(resolve7, reject) {
           var gen = fn.apply(self2, args);
           function _next(value) {
-            asyncGeneratorStep(gen, resolve6, reject, _next, _throw, "next", value);
+            asyncGeneratorStep(gen, resolve7, reject, _next, _throw, "next", value);
           }
           function _throw(err) {
-            asyncGeneratorStep(gen, resolve6, reject, _next, _throw, "throw", err);
+            asyncGeneratorStep(gen, resolve7, reject, _next, _throw, "throw", err);
           }
           _next(void 0);
         });
@@ -6155,7 +6155,7 @@ Instructions:
 var require_autocomplete = __commonJS({
   "../../node_modules/prompts/dist/elements/autocomplete.js"(exports2, module2) {
     "use strict";
-    function asyncGeneratorStep(gen, resolve6, reject, _next, _throw, key, arg) {
+    function asyncGeneratorStep(gen, resolve7, reject, _next, _throw, key, arg) {
       try {
         var info = gen[key](arg);
         var value = info.value;
@@ -6164,7 +6164,7 @@ var require_autocomplete = __commonJS({
         return;
       }
       if (info.done) {
-        resolve6(value);
+        resolve7(value);
       } else {
         Promise.resolve(value).then(_next, _throw);
       }
@@ -6172,13 +6172,13 @@ var require_autocomplete = __commonJS({
     function _asyncToGenerator(fn) {
       return function() {
         var self2 = this, args = arguments;
-        return new Promise(function(resolve6, reject) {
+        return new Promise(function(resolve7, reject) {
           var gen = fn.apply(self2, args);
           function _next(value) {
-            asyncGeneratorStep(gen, resolve6, reject, _next, _throw, "next", value);
+            asyncGeneratorStep(gen, resolve7, reject, _next, _throw, "next", value);
           }
           function _throw(err) {
-            asyncGeneratorStep(gen, resolve6, reject, _next, _throw, "throw", err);
+            asyncGeneratorStep(gen, resolve7, reject, _next, _throw, "throw", err);
           }
           _next(void 0);
         });
@@ -6841,7 +6841,7 @@ var require_dist = __commonJS({
         arr2[i] = arr[i];
       return arr2;
     }
-    function asyncGeneratorStep(gen, resolve6, reject, _next, _throw, key, arg) {
+    function asyncGeneratorStep(gen, resolve7, reject, _next, _throw, key, arg) {
       try {
         var info = gen[key](arg);
         var value = info.value;
@@ -6850,7 +6850,7 @@ var require_dist = __commonJS({
         return;
       }
       if (info.done) {
-        resolve6(value);
+        resolve7(value);
       } else {
         Promise.resolve(value).then(_next, _throw);
       }
@@ -6858,13 +6858,13 @@ var require_dist = __commonJS({
     function _asyncToGenerator(fn) {
       return function() {
         var self2 = this, args = arguments;
-        return new Promise(function(resolve6, reject) {
+        return new Promise(function(resolve7, reject) {
           var gen = fn.apply(self2, args);
           function _next(value) {
-            asyncGeneratorStep(gen, resolve6, reject, _next, _throw, "next", value);
+            asyncGeneratorStep(gen, resolve7, reject, _next, _throw, "next", value);
           }
           function _throw(err) {
-            asyncGeneratorStep(gen, resolve6, reject, _next, _throw, "throw", err);
+            asyncGeneratorStep(gen, resolve7, reject, _next, _throw, "throw", err);
           }
           _next(void 0);
         });
@@ -13298,26 +13298,26 @@ var require_queue = __commonJS({
       queue.drained = drained;
       return queue;
       function push(value) {
-        var p = new Promise(function(resolve6, reject) {
+        var p = new Promise(function(resolve7, reject) {
           pushCb(value, function(err, result) {
             if (err) {
               reject(err);
               return;
             }
-            resolve6(result);
+            resolve7(result);
           });
         });
         p.catch(noop);
         return p;
       }
       function unshift(value) {
-        var p = new Promise(function(resolve6, reject) {
+        var p = new Promise(function(resolve7, reject) {
           unshiftCb(value, function(err, result) {
             if (err) {
               reject(err);
               return;
             }
-            resolve6(result);
+            resolve7(result);
           });
         });
         p.catch(noop);
@@ -13325,10 +13325,10 @@ var require_queue = __commonJS({
       }
       function drained() {
         var previousDrain = queue.drain;
-        var p = new Promise(function(resolve6) {
+        var p = new Promise(function(resolve7) {
           queue.drain = function() {
             previousDrain();
-            resolve6();
+            resolve7();
           };
         });
         return p;
@@ -13811,9 +13811,9 @@ var require_stream3 = __commonJS({
         });
       }
       _getStat(filepath) {
-        return new Promise((resolve6, reject) => {
+        return new Promise((resolve7, reject) => {
           this._stat(filepath, this._fsStatSettings, (error, stats) => {
-            return error === null ? resolve6(stats) : reject(error);
+            return error === null ? resolve7(stats) : reject(error);
           });
         });
       }
@@ -14161,11 +14161,11 @@ var require_async5 = __commonJS({
         const root2 = this._getRootDirectory(task);
         const options2 = this._getReaderOptions(task);
         const entries = [];
-        return new Promise((resolve6, reject) => {
+        return new Promise((resolve7, reject) => {
           const stream = this.api(root2, task, options2);
           stream.once("error", reject);
           stream.on("data", (entry) => entries.push(options2.transform(entry)));
-          stream.once("end", () => resolve6(entries));
+          stream.once("end", () => resolve7(entries));
         });
       }
       api(root2, task, options2) {
@@ -14423,7 +14423,7 @@ var import_commander = __toModule(require_commander());
 
 // src/commands/base.ts
 var import_fs_extra7 = __toModule(require_lib());
-var import_path5 = __toModule(require("path"));
+var import_path6 = __toModule(require("path"));
 var import_prompts3 = __toModule(require_prompts3());
 
 // src/shared/config.ts
@@ -16063,7 +16063,7 @@ var logger = {
 var logger_default = logger;
 
 // src/shared/generate-config.ts
-var DEFAULT_CLI_CONFIG_NAME = "devc.config";
+var DEFAULT_CLI_CONFIG_NAME = "dc.config";
 var DEFAULT_CLI_CONFIG_EXT_NAME = ".ts";
 var DEFAULT_CLI_CONFIG_FILE_NAME = DEFAULT_CLI_CONFIG_NAME + DEFAULT_CLI_CONFIG_EXT_NAME;
 function generateConfig() {
@@ -16078,7 +16078,7 @@ function generateConfig() {
 }
 
 // src/shared/config.ts
-var devCliConfig = {
+var cliConfig = {
   cwd: CWD,
   componentRootDir: ".",
   componentCategories: ["\u901A\u7528", "\u5BFC\u822A", "\u53CD\u9988", "\u6570\u636E\u5F55\u5165", "\u6570\u636E\u5C55\u793A", "\u5E03\u5C40"],
@@ -16090,7 +16090,7 @@ var devCliConfig = {
   version: "0.0.0"
 };
 function mergeCliConfig(config = {}) {
-  return merge_default(devCliConfig, config);
+  return merge_default(cliConfig, config);
 }
 function detectCliConfig() {
   const re = new RegExp(`^${DEFAULT_CLI_CONFIG_NAME}.(js|ts)$`);
@@ -16112,8 +16112,8 @@ var coreFileName = (name) => kebabCase_default(name);
 var typesFileName = (name) => kebabCase_default(name + "-types");
 var serviceFileName = (name) => kebabCase_default(name + "-service");
 var directiveFileName = (name) => kebabCase_default(name + "-directive");
-var getRealLibPrefix = () => devCliConfig.libPrefix ? devCliConfig.libPrefix + "-" : "";
-var getRealClassPrefix = () => devCliConfig.libClassPrefix ? devCliConfig.libClassPrefix + "-" : "";
+var getRealLibPrefix = () => cliConfig.libPrefix ? cliConfig.libPrefix + "-" : "";
+var getRealClassPrefix = () => cliConfig.libClassPrefix ? cliConfig.libClassPrefix + "-" : "";
 var coreName = (name) => bigCamelCase(name);
 var coreRealName = (name) => bigCamelCase(getRealLibPrefix() + name);
 var coreClassName = (name) => kebabCase_default(getRealClassPrefix() + name);
@@ -16123,7 +16123,7 @@ var serviceName = (name) => bigCamelCase(name + "Service");
 var directiveName = (name) => bigCamelCase(name + "Directive");
 async function getComponentMetaFiles() {
   return (0, import_fast_glob.default)("./**/meta.json", {
-    cwd: devCliConfig.cwd,
+    cwd: cliConfig.cwd,
     absolute: true,
     deep: 2
   });
@@ -16144,10 +16144,10 @@ function canSafelyOverwrite(dir) {
   return !(0, import_fs_extra4.existsSync)(dir) || (0, import_fs_extra4.readdirSync)(dir).length === 0;
 }
 function resolveComponentDir(name) {
-  return (0, import_path3.resolve)(devCliConfig.cwd, devCliConfig.componentRootDir, coreFileName(name));
+  return (0, import_path3.resolve)(cliConfig.cwd, cliConfig.componentRootDir, coreFileName(name));
 }
 function resolveLibEntryDir(name) {
-  return (0, import_path3.resolve)(devCliConfig.cwd, devCliConfig.libEntryRootDir, name);
+  return (0, import_path3.resolve)(cliConfig.cwd, cliConfig.libEntryRootDir, name + ".ts");
 }
 function dynamicImport(path) {
   const tempPath = path.replace((0, import_path3.extname)(path), Date.now() + ".js");
@@ -16178,7 +16178,7 @@ var import_prompts = __toModule(require_prompts3());
 
 // src/shared/generate-component.ts
 var import_fs_extra5 = __toModule(require_lib());
-var import_path4 = __toModule(require("path"));
+var import_path5 = __toModule(require("path"));
 
 // src/templates/component/index.ts
 function genIndexTemplate(name, parts) {
@@ -16256,6 +16256,9 @@ export default {
 }`;
 }
 
+// src/templates/lib-entry/lib-entry.ts
+var import_path4 = __toModule(require("path"));
+
 // src/templates/component/meta.ts
 function isValidComponentMeta(obj) {
   return isPlainObject_default(obj) && !!obj.name && Array.isArray(obj.parts);
@@ -16285,6 +16288,15 @@ function genMetaTemplate(meta = {}) {
 }
 
 // src/templates/lib-entry/lib-entry.ts
+function resolveImportRelativePath(coreName2) {
+  const libEntryPath = (0, import_path4.resolve)(cliConfig.cwd, cliConfig.libEntryRootDir);
+  const corePath = (0, import_path4.resolve)(cliConfig.cwd, cliConfig.componentRootDir, coreName2);
+  let relativePath = (0, import_path4.relative)(libEntryPath, corePath);
+  if (relativePath.startsWith(coreName2)) {
+    relativePath = "./" + relativePath;
+  }
+  return relativePath.replace(/\\/g, "/");
+}
 function getPartName(part, name) {
   const partNameFn = {
     core: coreName,
@@ -16307,8 +16319,9 @@ function genLibEntryTemplate(componentsMeta) {
     }
     const parts = meta.parts.map((part) => getPartName(part, meta.name));
     const install = coreName(meta.name) + "Install";
+    const importPkgPath = resolveImportRelativePath(coreFileName(meta.name));
     installs.push(install);
-    imports.push(`import ${install}, { ${parts.join(", ")} } from './${coreFileName(meta.name)}'`);
+    imports.push(`import ${install}, { ${parts.join(", ")} } from '${importPkgPath}'`);
     packages.push(...parts);
   }
   return `import type { App } from 'vue'
@@ -16324,7 +16337,7 @@ export {
 }
 
 export default {
-  version: '${devCliConfig.version}',
+  version: '${cliConfig.version}',
   install(app: App): void {
     installs.forEach((p) => app.use(p as any))
   }
@@ -16434,9 +16447,9 @@ export type ${propsTypesName(name)}Props = ExtractPropTypes<typeof ${propsName(n
 // src/shared/generate-component.ts
 var WRITE_FILE_OPTIONS = { encoding: "utf-8" };
 function genComponent(meta) {
-  const componentDir = (0, import_path4.resolve)(meta.dir, "src");
-  const docDir = (0, import_path4.resolve)(meta.dir, "docs");
-  const testDir = (0, import_path4.resolve)(meta.dir, "__tests__");
+  const componentDir = (0, import_path5.resolve)(meta.dir, "src");
+  const docDir = (0, import_path5.resolve)(meta.dir, "docs");
+  const testDir = (0, import_path5.resolve)(meta.dir, "__tests__");
   (0, import_fs_extra5.mkdirSync)(componentDir, { recursive: true });
   (0, import_fs_extra5.mkdirSync)(docDir, { recursive: true });
   (0, import_fs_extra5.mkdirSync)(testDir, { recursive: true });
@@ -16444,28 +16457,28 @@ function genComponent(meta) {
   meta = genMetaObj(meta);
   if (meta.parts.includes("core")) {
     needsTypes = true;
-    const coreFilePath = (0, import_path4.resolve)(componentDir, coreFileName(meta.name));
+    const coreFilePath = (0, import_path5.resolve)(componentDir, coreFileName(meta.name));
     (0, import_fs_extra5.writeFileSync)(coreFilePath + ".tsx", genCoreTemplate(meta.name), WRITE_FILE_OPTIONS);
-    (0, import_fs_extra5.writeFileSync)(coreFilePath + devCliConfig.libStyleFileSuffix, genStyleTemplate(meta.name), WRITE_FILE_OPTIONS);
+    (0, import_fs_extra5.writeFileSync)(coreFilePath + cliConfig.libStyleFileSuffix, genStyleTemplate(meta.name), WRITE_FILE_OPTIONS);
   }
   if (meta.parts.includes("service")) {
     needsTypes = true;
-    const serviceFilePath = (0, import_path4.resolve)(componentDir, serviceFileName(meta.name) + ".ts");
+    const serviceFilePath = (0, import_path5.resolve)(componentDir, serviceFileName(meta.name) + ".ts");
     (0, import_fs_extra5.writeFileSync)(serviceFilePath, genServiceTemplate(meta.name), WRITE_FILE_OPTIONS);
   }
   if (meta.parts.includes("directive")) {
-    const directiveFilePath = (0, import_path4.resolve)(componentDir, directiveFileName(meta.name) + ".ts");
+    const directiveFilePath = (0, import_path5.resolve)(componentDir, directiveFileName(meta.name) + ".ts");
     (0, import_fs_extra5.writeFileSync)(directiveFilePath, genDirectiveTemplate(), WRITE_FILE_OPTIONS);
   }
   if (needsTypes) {
-    const typesFilePath = (0, import_path4.resolve)(componentDir, typesFileName(meta.name) + ".ts");
+    const typesFilePath = (0, import_path5.resolve)(componentDir, typesFileName(meta.name) + ".ts");
     (0, import_fs_extra5.writeFileSync)(typesFilePath, genTypesTemplate(meta.name), WRITE_FILE_OPTIONS);
   }
   if (meta.parts.length > 0) {
-    const indexFilePath = (0, import_path4.resolve)(meta.dir, "index.ts");
-    const metaFilePath = (0, import_path4.resolve)(meta.dir, "meta.json");
-    const testFilePath = (0, import_path4.resolve)(testDir, "index.spec.ts");
-    const docFilePath = (0, import_path4.resolve)(docDir, "index.md");
+    const indexFilePath = (0, import_path5.resolve)(meta.dir, "index.ts");
+    const metaFilePath = (0, import_path5.resolve)(meta.dir, "meta.json");
+    const testFilePath = (0, import_path5.resolve)(testDir, "index.spec.ts");
+    const docFilePath = (0, import_path5.resolve)(docDir, "index.md");
     (0, import_fs_extra5.writeFileSync)(indexFilePath, genIndexTemplate(meta.name, meta.parts), WRITE_FILE_OPTIONS);
     (0, import_fs_extra5.writeFileSync)(metaFilePath, genMetaTemplate(meta), WRITE_FILE_OPTIONS);
     (0, import_fs_extra5.writeFileSync)(testFilePath, genTestTemplate(meta), WRITE_FILE_OPTIONS);
@@ -16538,9 +16551,9 @@ async function createComponentAction(names = [], cmd = {}) {
       },
       {
         name: "category",
-        type: () => devCliConfig.componentCategories.includes(category) ? null : "select",
+        type: () => cliConfig.componentCategories.includes(category) ? null : "select",
         message: "Select a component category.",
-        choices: devCliConfig.componentCategories.map((value, index) => ({
+        choices: cliConfig.componentCategories.map((value, index) => ({
           title: value,
           value,
           selected: index === 0
@@ -16600,7 +16613,7 @@ async function genLibEntry(filePath = "") {
 // src/commands/create-lib-entry.ts
 async function createLibEntryAction(names = [], cmd) {
   try {
-    const [name = devCliConfig.libEntryFileName] = names;
+    const [name = cliConfig.libEntryFileName] = names;
     genLibEntry(resolveLibEntryDir(name));
   } catch (e) {
     logger_default.error(e.message);
@@ -16677,18 +16690,18 @@ async function baseAction(cmd) {
 function loadCliConfig(cmd) {
   if (!cmd.config)
     return;
-  let configPath = (0, import_path5.resolve)(CWD, cmd.config);
+  let configPath = (0, import_path6.resolve)(CWD, cmd.config);
   if (!(0, import_fs_extra7.existsSync)(configPath)) {
     logger_default.error(`The path "${configPath}" not exist.`);
     process.exit(1);
   }
-  if ((0, import_fs_extra7.statSync)(configPath).isDirectory() || ![".js", ".ts"].includes((0, import_path5.extname)(configPath))) {
+  if ((0, import_fs_extra7.statSync)(configPath).isDirectory() || ![".js", ".ts"].includes((0, import_path6.extname)(configPath))) {
     logger_default.error(`The path "${configPath}" is not a ".js" or ".ts" file.`);
     process.exit(1);
   }
   const config = dynamicImport(configPath);
-  if (!(0, import_path5.isAbsolute)(config.cwd)) {
-    config.cwd = (0, import_path5.resolve)((0, import_path5.dirname)(configPath), config.cwd);
+  if (!(0, import_path6.isAbsolute)(config.cwd)) {
+    config.cwd = (0, import_path6.resolve)((0, import_path6.dirname)(configPath), config.cwd);
   }
   mergeCliConfig(config);
 }
@@ -16717,7 +16730,7 @@ async function selectCommand() {
 detectCliConfig();
 var program = new import_commander.Command();
 program.command("create [name...]").option("-c --config <config>", `Specify a configuration file. By default, find the file at the beginning of "${DEFAULT_CLI_CONFIG_FILE_NAME}" in the current working directory.`).option("-t --type <type>", "Select create type.", validateCreateType).option("--core", "Include core when creating a component.").option("--service", "Include service when creating a component.").option("--directive", "Include service when creating a component.").option("-f --force", "For force overwriting.").description("Create a component structure, library entry file or other...").action(createAction);
-program.option("--init", "Initialize the cli configuration file in the current working directory.").option("-c --config <config>", `Specify a configuration file. By default, find the file at the beginning of "${DEFAULT_CLI_CONFIG_FILE_NAME}" in the current working directory.`).usage("[command] [options]").version(VERSION, "-v --version").description("Cli of dev.").action(baseAction);
+program.option("--init", "Initialize the cli configuration file in the current working directory.").option("-c --config <config>", `Specify a configuration file. By default, find the file at the beginning of "${DEFAULT_CLI_CONFIG_FILE_NAME}" in the current working directory.`).usage("[command] [options]").version(VERSION, "-v --version").description("Cli of devui.").action(baseAction);
 program.parse(process.argv);
 function defineCliConfig(config = {}) {
   return config;

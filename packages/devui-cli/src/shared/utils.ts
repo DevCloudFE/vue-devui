@@ -3,7 +3,7 @@ import { existsSync, readdirSync, unlinkSync } from 'fs-extra'
 import { camelCase, upperFirst } from 'lodash-es'
 import { extname, relative, resolve } from 'path'
 import { coreFileName } from '../templates/component/utils'
-import { devCliConfig } from './config'
+import { cliConfig } from './config'
 
 export function bigCamelCase(str: string) {
   return upperFirst(camelCase(str))
@@ -18,11 +18,11 @@ export function canSafelyOverwrite(dir: string) {
 }
 
 export function resolveComponentDir(name: string) {
-  return resolve(devCliConfig.cwd, devCliConfig.componentRootDir, coreFileName(name))
+  return resolve(cliConfig.cwd, cliConfig.componentRootDir, coreFileName(name))
 }
 
 export function resolveLibEntryDir(name: string) {
-  return resolve(devCliConfig.cwd, devCliConfig.libEntryRootDir, name)
+  return resolve(cliConfig.cwd, cliConfig.libEntryRootDir, name + '.ts')
 }
 
 export function dynamicImport(path: string) {
