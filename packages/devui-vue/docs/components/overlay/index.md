@@ -169,7 +169,7 @@ export default defineComponent({
 </style>
 
 
-### API 
+### API
 d-fixed-overlay 参数
 
 |       参数       |            类型            | 默认  | 说明                                                                  |
@@ -178,8 +178,10 @@ d-fixed-overlay 参数
 | onUpdate:visible | `(value: boolean) => void` |  --   | 可选，遮罩层取消可见事件                                              |
 | backgroundBlock  |         `boolean`          | false | 可选，如果为 true，背景不能滚动                                       |
 | backgroundClass  |          `string`          |  --   | 可选，背景的样式类                                                    |
+| backgroundStyle  |          `StyleValue`      |  --   | 可选，背景的样式                                                    |
 |  backdropClick   |        `() => void`        |  --   | 可选，点击背景触发的事件                                              |
 |  backdropClose   |         `boolean`          | false | 可选，如果为true，点击背景将触发 `onUpdate:visible`，默认参数是 false |
+|   hasBackdrop    |         `boolean`          | true | 可选，如果为false，背景元素的 `point-event` 会设为 `none`，且不显示默认背景 |
 |   overlayStyle   |      `CSSProperties`       |  --   | 可选，遮罩层的样式                                                    |
 
 d-flexible-overlay 参数
@@ -190,7 +192,33 @@ d-flexible-overlay 参数
 | onUpdate:visible |                                                                                         `(value: boolean) => void`                                                                                         |  --   | 可选，遮罩层取消可见事件                                          |
 | backgroundBlock  |                                                                                                 `boolean`                                                                                                  | false | 可选，如果为 true，背景不能滚动                                   |
 | backgroundClass  |                                                                                                  `string`                                                                                                  |  --   | 可选，背景的样式类                                                |
+| backgroundStyle  |          `StyleValue`      |  --   | 可选，背景的样式                                                    |
 |  backdropClick   |                                                                                                `() => void`                                                                                                |  --   | 可选，点击背景触发的事件                                          |
 |  backdropClose   |                                                                                                 `boolean`                                                                                                  | false | 可选，如果为true，点击背景将触发 `onUpdate:visible`，参数是 false |
-|      origin      |                                                     `Element \| ComponentPublicInstance \| { x: number, y: number, width?: number, height?: number }`                                                      | false | 必选，你必须指定起点元素才能让遮罩层与该元素连接在一起            |
-|     position     | `{originX: HorizontalPos, originY: VerticalPos, overlayX: HorizontalPos, overlayY: VerticalPos } (type HorizontalPos = 'left' \| 'center' \| 'right') ( type VerticalPos = 'top' \| 'center' \| 'bottom')` | false | 可选，指定遮罩层与原点的连接点                                    |
+|  hasBackdrop     |         `boolean`          | true | 可选，如果为false，背景元素的 `point-event` 会设为 `none`，且不显示默认背景 |
+|      origin      | `Element \| ComponentPublicInstance \| Rect` | false | 必选，你必须指定起点元素才能让遮罩层与该元素连接在一起            |
+|     position     | `ConnectionPosition` | false | 可选，指定遮罩层与原点的连接点                                    |
+
+Rect 数据结构
+```typescript
+interface Rect { 
+  x: number 
+  y: number 
+  width?: number
+  height?: number
+}
+```
+
+ConnectionPosition 数据结构
+```typescript
+type HorizontalConnectionPos = 'left' | 'center' | 'right';
+type VerticalConnectionPos = 'top' | 'center' | 'bottom';
+
+export interface ConnectionPosition {
+  originX: HorizontalConnectionPos
+  originY: VerticalConnectionPos
+  overlayX: HorizontalConnectionPos
+  overlayY: VerticalConnectionPos
+}
+```
+
