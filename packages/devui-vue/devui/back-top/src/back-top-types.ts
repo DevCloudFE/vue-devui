@@ -8,7 +8,7 @@ export type Position = {
 
 export const backTopProps = {
   bottom: {
-    type: String as PropType<string>,
+    type: String,
     default: '50px'
   },
   right: {
