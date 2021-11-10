@@ -10,6 +10,8 @@ export default defineComponent({
   emits: [],
   setup(props: BackTopProps, ctx) {
     const position = usePosition(props)
+    const slots = ctx.slots
+
     const scrollToTop = () => {
       // 运行在浏览器则调用该方法
       window &&
@@ -21,8 +23,21 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="devui-back-top" style={{ ...position }} onClick={scrollToTop}>
-        <div class="devui-back-top-content">{<IconTop />}</div>
+      <div
+        class="devui-back-top"
+        //根据属性设置style
+        style={{ ...position }}
+        onClick={scrollToTop}
+      >
+        <div
+          //当用户没有传入插槽则使用默认样式
+          class={[
+            'devui-back-top-base',
+            slots.default ? 'devui-backtop-custom' : 'devui-back-top-content'
+          ]}
+        >
+          {slots.default ? slots.default() : <IconTop />}
+        </div>
       </div>
     )
   }

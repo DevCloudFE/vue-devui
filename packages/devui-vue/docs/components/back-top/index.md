@@ -17,6 +17,9 @@
   <div>
     <div>这里看不到我嘿嘿，下滑试试</div>
     <d-back-top />
+    <d-back-top bottom="100px">
+      <d-icon name="chevron-up"></d-icon>
+    </d-back-top>
   </div>
 </template>
 
@@ -33,6 +36,39 @@ export default defineComponent({
 </script>
 
 <style></style>
+```
+
+:::
+
+### 自定义
+
+回到顶部组件可自定义按钮样式，限制宽高：40px \* 40px。同时可通过 class 个性化设置按钮样式。
+
+:::demo
+
+```vue
+<template>
+  <div>
+    <div>这里看不到我嘿嘿，下滑试试</div>
+    <d-back-top bottom="100px">
+      <d-icon name="chevron-up" color="#fff"></d-icon>
+    </d-back-top>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  setup() {}
+})
+</script>
+
+<style>
+.devui-back-top .devui-backtop-custom {
+  background-color: #5e7ce0;
+}
+</style>
 ```
 
 :::

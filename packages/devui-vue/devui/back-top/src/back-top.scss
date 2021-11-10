@@ -5,12 +5,10 @@
   height: 40px;
   cursor: pointer;
   z-index: 9;
-  .devui-back-top-content {
+  .devui-back-top-base {
     width: 40px;
     height: 40px;
-    background-color: $devui-text-weak;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-    opacity: 0.4;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -19,5 +17,12 @@
     &:hover {
       opacity: 1;
     }
+  }
+  .devui-back-top-content {
+    opacity: 0.4;
+    background-color: $devui-text-weak;
+  }
+  .devui-backtop-custom {
+    background-color: #fff;
   }
 }
