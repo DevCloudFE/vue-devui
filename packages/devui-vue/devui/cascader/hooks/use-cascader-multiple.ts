@@ -200,7 +200,7 @@ export const useMultiple = (cascaderItemNeedProps?: CascaderItemNeedType): UseCa
   const updateParentNodeStatus = (node: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => {
     if (ulIndex < 0) return
     findChildrenCheckedStatusToUpdateParent(node)
-    console.log('childNode', node, ulIndex)
+    // console.log('childNode', node, ulIndex)
     ulIndex -= 1
     const parentNode = getParentNode(node.value, options, ulIndex)
     updateParentNodeStatus(parentNode, options, ulIndex)

@@ -84,7 +84,7 @@ export default defineComponent({
       } else {
         // 多选模式
         value.forEach((targetValue) => {
-          console.log(tagList)
+          // console.log(tagList)
           initMultipleCascaderItem(targetValue, cascaderOptions[0], tagList)
         })
       }
