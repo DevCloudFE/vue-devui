@@ -20,7 +20,7 @@
     <div class="option">
         <d-switch v-model:checked="restrictOneOpen"></d-switch> Only one level-1 menu can be expanded.<!--限制只能展开一个一级菜单-->
     </div>
-    <div class="option"><d-switch @change="switchChange" v-model:checked="accordionTypeEmbed"></d-switch> Embedded menu (no shadow)<!--内嵌菜单形式（无阴影）--></div>
+    <div class="option"><d-switch v-model:checked="accordionTypeEmbed"></d-switch> Embedded menu (no shadow)<!--内嵌菜单形式（无阴影）--></div>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
@@ -28,6 +28,7 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
     name: "accordion",
     setup() {
+        const flag = ref(false)
         const restrictOneOpen = ref(false)
         const accordionTypeEmbed = ref(false)
         const menu = ref([{
@@ -68,8 +69,9 @@ export default defineComponent({
             ]
         }])
 
-        const switchChange = (e) => {
-            console.log(e, accordionTypeEmbed)
+        const changV = (value) => {
+            console.log('v',value)
+            flag.value = value
         }
 
 
@@ -77,7 +79,6 @@ export default defineComponent({
             menu,
             restrictOneOpen,
             accordionTypeEmbed,
-            switchChange
         }
     }
 })
