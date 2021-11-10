@@ -37,7 +37,7 @@ describe('time-axis test', () => {
     expect(timeAxisItems[0].find('.devui-time-axis-item-content').text()).toBe('测试1')
   })
 
-  it('应该显示自定义内容', async () => {
+  it('Custom content should be displayed', async () => {
     //有自定义的时间节点
     expect(timeAxisItems[1].find('.devui-time-axis-item-time div').html()).toBe('<div>2021-11-10</div>')
     //有自定义的内容
@@ -48,7 +48,7 @@ describe('time-axis test', () => {
     expect(timeAxisItems[1].find('.devui-time-axis-item-line-extra span').html()).toBe('<span>附加元素</span>')
   })
 
-  it('type应该正确被渲染', async () => {
+  it('type should be rendered correctly', async () => {
     expect(timeAxisItems[0].find('.devui-time-axis-item-dot').classes()).toContain('devui-time-axis-item-type-primary')
     expect(timeAxisItems[2].find('.devui-time-axis-item-dot').classes()).toContain('devui-time-axis-item-type-success')
     expect(timeAxisItems[3].find('.devui-time-axis-item-dot').classes()).toContain('devui-time-axis-item-type-warning')
@@ -56,7 +56,7 @@ describe('time-axis test', () => {
 
   })
 
-  it('position信息应该正确被渲染', async () => {
+  it('position should be rendered correctly', async () => {
 
     const wrapper = mount({
       components: { DTimeAxis, DTimeAxisItem },
@@ -86,7 +86,7 @@ describe('time-axis test', () => {
 
   })
 
-  it('time-position信息应该正确被渲染', async () => {
+  it('time-position should be rendered correctly', async () => {
     const wrapper = mount({
       components: { DTimeAxis, DTimeAxisItem },
       template: `
@@ -107,7 +107,7 @@ describe('time-axis test', () => {
     expect(timeAxisItems[1].find('.devui-time-axis-item-axis .devui-time-axis-item-time').exists()).toBe(false)
   })
 
-  it('线条样式被正确渲染', async () => {
+  it('line-style should be rendered correctly', async () => {
     const wrapper = mount({
       components: { DTimeAxis, DTimeAxisItem },
       template: `
