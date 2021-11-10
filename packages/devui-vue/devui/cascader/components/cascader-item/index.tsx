@@ -7,10 +7,10 @@ import './index.scss'
 export const DCascaderItem = (props: CascaderItemPropsType) => {
   // console.log('item index',props)
   const { cascaderItem, ulIndex, liIndex, cascaderItemNeedProps, cascaderOptions } = props
-  const { multiple, stopDefault, valueCache, activeIndexs, trigger, confirmInputValueFlg } = cascaderItemNeedProps
+  const { multiple, stopDefault, valueCache, activeIndexs, trigger, confirmInputValueFlg, tagList} = cascaderItemNeedProps
   const triggerHover = trigger === 'hover'
   const { singleChoose } = useSingle()
-  const { updateCheckOptionStatus, getParentNode, updateParentNodeStatus } = useMultiple()
+  const { updateCheckOptionStatus } = useMultiple(cascaderItemNeedProps)
   const { getRootClass } = useClassName()
   const disbaled = computed(() => cascaderItem?.disabled) // 当前项是否被禁用
   const rootClasses = getRootClass(props)
@@ -43,7 +43,7 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
     }
   }
   const checkboxChange = () => {
-    updateCheckOptionStatus(cascaderItem, cascaderOptions, ulIndex)
+    updateCheckOptionStatus(cascaderItem, cascaderOptions, ulIndex, tagList)
     // const parentNode = getParentNode(cascaderItem.value, cascaderOptions, ulIndex - 1)
     // updateParentNodeStatus(parentNode, cascaderOptions, ulIndex - 1)
     // if (!cascaderItem.children || cascaderItem?.children?.length === 0) {

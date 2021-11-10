@@ -7,12 +7,12 @@ import { useMultiple } from '../../hooks/use-cascader-multiple'
 import './index.scss'
 interface PropsType {
   item: CascaderItem
+  tagList: CascaderItem[]
 }
 export const DTag = (props: PropsType) => {
-  const { item } = props
-  const { tagList, deleteTagList } = useMultiple()
+  const { tagList, item } = props
+  const { deleteTagList } = useMultiple()
   const deleteCurrentTag = (e: Event) => {
-    console.log(11)
     e.stopPropagation()
     deleteTagList(tagList, item)
   }

@@ -21,11 +21,10 @@ export default defineComponent({
     const cascaderOptions = reactive<[CascaderItem[]]>(cloneDeep([ props?.options ]))
     const multiple = toRef(props, 'multiple')
     const inputValue = ref('')
-    const { tagList, updateCheckOptionStatus, initTagList, getMultipleCascaderItem, initActiveIndexs } = useMultiple()
+    const tagList = reactive<CascaderItem[]>([]) // 多选模式下选中的值数组，用于生成tag
     const { initSingleIptValue } = useSingle()
-    // const tagList = reactive<CascaderItem[]>([]) // 多选模式下选中的值数组，用于生成tag
     let initIptValue = props.value.length > 0 ? true : false // 有value默认值时，初始化输出内容
-    // console.log('init', props.value)
+
     const position = reactive({
       originX: 'left',
       originY: 'bottom',
@@ -37,7 +36,9 @@ export default defineComponent({
     // 配置class
     const rootClasses = getRootClass(props, menuShow)
     // 传递给cascaderItem的props
-    const { cascaderItemNeedProps, getInputValue } = useCascaderItem(props, stopDefault)
+    const { cascaderItemNeedProps } = useCascaderItem(props, stopDefault, tagList)
+    const { initTagList, initMultipleCascaderItem, initActiveIndexs, getInputValue } = useMultiple(cascaderItemNeedProps)
+
     /**
      * 控制视图更新
      * 注意视图更新不区分单选或者多选
@@ -76,15 +77,15 @@ export default defineComponent({
         // 当前的子级
         const current = getCurrentOption(currentOption, i)
         const children = current?.children
-        getInputValue(current.label, children)
+        getInputValue(current.label, children, cascaderItemNeedProps.inputValueCache, props.showPath)
         if (children?.length > 0) {
           updateCascaderValue(value, children, index + 1)
         }
       } else {
         // 多选模式
-        console.log('cascaderOptions2', [ ...props?.options ])
         value.forEach((targetValue) => {
-          getMultipleCascaderItem(targetValue, cascaderOptions[0])
+          console.log(tagList)
+          initMultipleCascaderItem(targetValue, cascaderOptions[0], tagList)
         })
       }
     }
