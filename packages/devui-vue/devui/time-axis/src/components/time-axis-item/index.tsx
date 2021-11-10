@@ -13,7 +13,7 @@ export default defineComponent({
         const itemClass = 'devui-time-axis-item'
         const renderTime = () => {
             return (
-                <div>
+                <div class={`${itemClass}-time`}>
                     {
                         ctx.slots.time
                             ? ctx.slots.time?.()
@@ -24,7 +24,7 @@ export default defineComponent({
         }
         const renderContent = () => {
             return (
-                <div>
+                <div class={`${itemClass}-content`}>
                     {ctx.slots.default?.(props)}
                 </div>
             )
@@ -51,7 +51,7 @@ export default defineComponent({
         }
         const renderDot = () => {
             if (ctx.slots.dot) {
-                return <div style={{color: props.dotColor}}> {ctx.slots.dot?.()}</div>
+                return <div style={{color: props.dotColor}} class={`${itemClass}-dot`}> {ctx.slots.dot?.()}</div>
             } else {
                 return (<div class={`${itemClass}-dot ${itemClass}-type-${props.type}`}
                              style={{borderColor: props.dotColor}}
@@ -59,7 +59,6 @@ export default defineComponent({
                     {setTypeIcon(props.type)}
                 </div>)
             }
-
         }
 
         return () => {

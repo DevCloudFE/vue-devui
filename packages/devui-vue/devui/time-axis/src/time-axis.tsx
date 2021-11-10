@@ -43,14 +43,10 @@ export default defineComponent({
             setStyle()
         })
         return () => {
-            const renderPositionNode = (item, position?) => {
-                let timePosition: string = props.timePosition ? props.timePosition : 'left'
-                if (item.props?.timePosition || item.props?.['time-position']) {
-                    timePosition = item.props.timePosition
-                }
+            const renderItemPosition = (item, position?) => {
                 return position
-                    ? <item position={position} time-position={timePosition}/>
-                    : <item time-position={timePosition}/>
+                    ? <item position={position}/>
+                    : <item/>
             }
 
 
@@ -63,22 +59,33 @@ export default defineComponent({
                     children = slots
                 }
                 return children.map((item, index) => {
+                    //默认隐藏最后一条线
+                    if ((index + 1) === children.length) {
+                        if (!item.props?.lineStyle && !item.props?.['line-style']) {
+                            item = <item line-style="none"/>
+                        }
+                    }
+                    //如果没有单独设置time-position属性，则以全局为准
+                    if (!item.props?.timePosition && !item.props?.['time-position']) {
+                        item = <item time-position={props.timePosition ? props.timePosition : 'left'}/>
+                    }
+
                     if (props.direction === 'horizontal') {
                         //判断是否有自定义的位置信息，且是否正确 有，且正确直接用
-                        if (item.props?.position === 'top' || item.props?.position === 'bottom') return renderPositionNode(item)
+                        if (item.props?.position === 'top' || item.props?.position === 'bottom') return item
                         //判断是否需要交替
                         if (props.mode === 'alternative') {
-                            return renderPositionNode(item, index % 2 == 0 ? 'bottom' : 'top')
+                            return renderItemPosition(item, index % 2 == 0 ? 'bottom' : 'top')
                         } else {
                             //不需要交替的直接给默认值
-                            return renderPositionNode(item, 'bottom')
+                            return renderItemPosition(item, 'bottom')
                         }
                     } else {
-                        if (item.props?.position === 'left' || item.props?.position === 'right') return renderPositionNode(item)
+                        if (item.props?.position === 'left' || item.props?.position === 'right') return item
                         if (props.mode === 'alternative') {
-                            return renderPositionNode(item, index % 2 == 0 ? 'left' : 'right')
+                            return renderItemPosition(item, index % 2 == 0 ? 'left' : 'right')
                         } else {
-                            return renderPositionNode(item, 'right')
+                            return renderItemPosition(item, 'right')
                         }
                     }
                 })
@@ -90,7 +97,7 @@ export default defineComponent({
 
             return (
                 <div
-                    class={`devui-time-axis-${getDirection()}  ${props.center ? 'devui-time-axis-' + getDirection() + '-center' : ''} `}
+                    class={`devui-time-axis devui-time-axis-${getDirection()}  ${props.center ? 'devui-time-axis-' + getDirection() + '-center' : ''} `}
                     ref={timeAxis}
                     style={style}
                 >

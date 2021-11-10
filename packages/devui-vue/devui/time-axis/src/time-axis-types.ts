@@ -13,7 +13,7 @@ export const timeAxisProps = {
   //设置居中
   center: {
     type: Boolean,
-    default: (): boolean => false
+    default: false
   },
   //设置排序方向
   mode: {

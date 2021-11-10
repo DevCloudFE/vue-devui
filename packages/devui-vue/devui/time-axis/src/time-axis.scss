@@ -178,13 +178,13 @@ $devui-time-axis-item-dot-size: 18px;
     }
   }
 
-  &:last-child {
-    .devui-time-axis-item-line {
-      &:last-child {
-        display: none;
-      }
-    }
-  }
+  //&:last-child {
+  //  .devui-time-axis-item-line {
+  //    &:last-child {
+  //      display: none;
+  //    }
+  //  }
+  //}
 
   &-type {
     &-primary {
