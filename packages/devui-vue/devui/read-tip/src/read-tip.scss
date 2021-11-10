@@ -1,0 +1,79 @@
+@import '../../style/theme/color';
+@import '../../style/theme/variables';
+@import '../../style/mixins/index';
+@import '../../style/theme/shadow';
+@import '../../style/theme/corner';
+@import '../../style/core/_font';
+// @import '../../style/core/z-index';
+.devui-read-tip {
+  position: relative;
+}
+
+.source {
+  overflow: initial;
+}
+
+.read-tip-container {
+  font-size: $devui-font-size;
+  position: absolute;
+  width: max-content;
+  height: max-content;
+  // top: 0;
+  // left: 0;
+  line-height: 1.5;
+  border: none;
+  border-radius: $devui-border-radius-feedback;
+  // z-index: $devui-z-index-pop-up;
+  background-color: $devui-feedback-overlay-bg;
+  color: $devui-feedback-overlay-text;
+  overflow-wrap: break-word;
+  padding: 10px;
+  z-index: 50;
+
+  .after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    transform: rotate(45deg);
+    position: absolute;
+    background-color: $devui-feedback-overlay-bg;
+  }
+  // 定位 top
+  &.top {
+    top: -60px;
+    left: 0;
+
+    .after {
+      bottom: -4px;
+    }
+  }
+
+  // 定位 left
+  &.left {
+    right: calc(100% + 10px);
+    top: -2px;
+
+    .after {
+      right: -4px;
+    }
+  }
+
+  // 定位 right
+  &.right {
+    left: calc(100% + 10px);
+    top: -2px;
+
+    .after {
+      left: -4px;
+    }
+  }
+
+  // 定位 bottom
+  &.bottom {
+    top: calc(100% + 10px);
+
+    .after {
+      top: -4px;
+    }
+  }
+}

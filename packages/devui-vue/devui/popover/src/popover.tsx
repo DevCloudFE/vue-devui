@@ -16,7 +16,7 @@ const popTypeClass = {
 
 export default defineComponent({
   name: 'DPopover',
-  
+
   directives: {
     clickoutside: clickoutsideDirective
   },
@@ -81,7 +81,11 @@ export default defineComponent({
   setup(props, ctx) {
     const { slots } = ctx;
     const visible = ref(props.visible);
-    const { position, content, zIndex, trigger, popType, popoverStyle, mouseEnterDelay, mouseLeaveDelay, showAnimation, popMaxWidth } = toRefs(props);
+    const {
+      position, content, zIndex, trigger, popType,
+      popoverStyle, mouseEnterDelay, mouseLeaveDelay,
+      showAnimation, popMaxWidth
+    } = toRefs(props);
     const style: CSSProperties = { zIndex: zIndex.value, ...popoverStyle.value }
     const isClick = trigger.value === 'click'
     const iconType = reactive(popTypeClass[popType.value])
@@ -110,7 +114,12 @@ export default defineComponent({
               'devui-popover-isVisible': visible.value
             }
           ]} >
-          <div class='devui-popover-reference' onMouseenter={onMouseenter} onMouseleave={onMouseleave} onClick={onClick} v-clickoutside={hiddenContext}>
+          <div
+            class='devui-popover-reference'
+            onMouseenter={onMouseenter}
+            onMouseleave={onMouseleave}
+            onClick={onClick}
+            v-clickoutside={hiddenContext}>
             {slots.reference?.()}
           </div>
           <div class={['devui-popover-content', iconType.name ? 'is-icon' : '']} style={style}>

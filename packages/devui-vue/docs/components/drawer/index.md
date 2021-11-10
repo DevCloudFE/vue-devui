@@ -17,9 +17,11 @@
 ```vue
 <template>
   <d-button  @click="drawerShow"> drawer {{ btnName }} </d-button>
-  <d-drawer 
+  <d-drawer
+    v-if="isDrawerShow"
     v-model:visible="isDrawerShow" 
-    :width="drawerWidth" 
+    :width="drawerWidth"
+    :isCover="isCover" 
     position="right"
     @close="drawerClose"
     @afterOpened="drawerAfterOpened"
@@ -33,6 +35,7 @@ export default ({
     let isDrawerShow = ref(false)
     let btnName = ref('close')
     let drawerWidth = ref('15vw')
+    let isCover = ref(true)
 
     const drawerShow = () => {
       isDrawerShow.value = true
@@ -44,7 +47,7 @@ export default ({
     }
 
     const drawerAfterOpened = () => {
-      console.log('open');
+      console.log('open')
     }
 
     return {
@@ -54,6 +57,7 @@ export default ({
       drawerShow,
       drawerClose,
       drawerAfterOpened,
+      isCover,
     }
   }
 })
@@ -66,9 +70,10 @@ export default ({
 
 | 参数 | 类型 | 默认 | 说明 | 跳转 Demo |
 | :---------: | :------: | :-------: | :----------------------- | --------------------------------- |
-| visible | `Boolean` | `false` | 必选，设置抽屉板是否可见 | [基本用法](#基本用法) |
+| v-model:visible | `Boolean` | `false` | 必选，设置抽屉板是否可见 | [基本用法](#基本用法) |
 | width | `String` | `300px` | 可选，设置抽屉板宽度 | [基本用法](#基本用法) |
-| zIndex | `Number` | `1000` | 1000 | [基本用法](#基本用法) |
+| zIndex | `Number` | `1000` | 可选，设置 drawer 的 z-index 值 | [基本用法](#基本用法) |
+| isCover | `Boolean` | `true` | 可选，是否有遮罩层 | [基本用法](#基本用法) |
 | onClose | `Function` | -- | 可选，关闭 drawer 时候调用 | [基本用法](#基本用法) |
 | escKeyCloseable | `Boolean` | `true` | 可选，设置可否通过 esc 按键来关闭 drawer 层 | [基本用法](#基本用法) |
 | afterOpened | `Function` | -- | 可选，打开 drawer 后时候调用 | [基本用法](#基本用法) |
