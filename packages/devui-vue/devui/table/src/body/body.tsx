@@ -7,23 +7,24 @@ import './body.scss';
 
 export default defineComponent({
   name: 'DTableBody',
-  props: TableBodyProps,
+  // props: TableBodyProps,
   setup(props: TableBodyPropsTypes) {
     const parent = inject(TABLE_TOKEN);
-    const { _data: data, _columns: columns } = parent.store.states;
+    const {
+      _data: data,
+      _columns: columns,
+      _checkList: checkList
+    } = parent.store.states;
 
     // 移动到行上是否高亮
     const hoverEnabled = computed(() => parent.props.rowHoveredHighlight);
 
     // 行前的 checkbox
-    const renderCheckbox = (index: number) => {
-      const checkList = props.store.states._checkList;
-      return parent.props.checkable ? (
-        <td>
-          <Checkbox v-model={checkList.value[index]} />
-        </td>
-      ) : null
-    };
+    const renderCheckbox = (index: number) => parent.props.checkable ? (
+      <td>
+        <Checkbox v-model={checkList.value[index]} />
+      </td>
+    ) : null;
 
     return () => (
       <tbody class="devui-tbody">

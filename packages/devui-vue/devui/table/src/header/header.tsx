@@ -1,7 +1,7 @@
 import { defineComponent, inject, computed, ref, shallowRef, PropType, watch } from 'vue';
-import { TableHeaderProps, TableHeaderPropsTypes } from './header.type'
+import { TableHeaderPropsTypes } from './header.type'
 import { SortDirection, TABLE_TOKEN } from '../table.type';
-import { Column, FilterList } from '../column/column.type';
+import { Column, FilterResults } from '../column/column.type';
 
 import { Checkbox } from '../../../checkbox';
 import { Sort } from './sort';
@@ -12,21 +12,26 @@ import './header.scss';
 
 export default defineComponent({
   name: 'DTableHeader',
-  props: TableHeaderProps,
-  setup(props: TableHeaderPropsTypes) {
+  setup() {
     const table = inject(TABLE_TOKEN);
-    const { _checkAll: checkAll, _halfChecked: halfChecked } = table.store.states;
+    const {
+      _checkAll: checkAll,
+      _halfChecked: halfChecked,
+      _columns: columns
+    } = table.store.states;
 
     const checkbox = computed(() => {
       return table.props.checkable ? (
         <th>
-          <Checkbox v-model={checkAll.value} halfchecked={halfChecked.value} />
+          <Checkbox
+            v-model={checkAll.value}
+            halfchecked={halfChecked.value}
+          />
         </th>
       ) : null
     });
 
     return () => {
-      const columns = props.store.states._columns;
       return (
         <thead class="devui-thead">
           <tr>
@@ -49,8 +54,9 @@ const Th = defineComponent({
     }
   },
   setup(props: { column: Column; }) {
+    // 排序功能
     const directionRef = ref<SortDirection>('DESC');
-    const { sortData } = inject(TABLE_TOKEN).store;
+    const { sortData, filterData } = inject(TABLE_TOKEN).store;
     watch([directionRef, () => props.column], ([direction, column]) => {
       if (props.column.sortable) {
         sortData(column.field, direction, column.compareFn);
@@ -58,13 +64,20 @@ const Th = defineComponent({
     }, { immediate: true });
 
     // 过滤器
-    const filteredRef = shallowRef<FilterList>([]);
+    const filteredRef = shallowRef<FilterResults>();
+    watch(filteredRef, (results) => {
+      filterData(props.column.field, results);
+    });
 
     return () => (
       <th style="position: relative">
         {props.column.renderHeader()}
         {props.column.sortable && <Sort v-model={directionRef.value} />}
-        {props.column.filterable && <Filter v-model={filteredRef.value} customTemplate={props.column.customFilterTemplate} />}
+        {props.column.filterable && <Filter
+          v-model={filteredRef.value}
+          filterList={props.column.filterList}
+          customTemplate={props.column.customFilterTemplate}
+        />}
       </th>
     )
   }

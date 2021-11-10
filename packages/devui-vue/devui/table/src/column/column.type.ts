@@ -26,8 +26,11 @@ export const TableColumnProps = {
   },
   compareFn: {
     type: Function as PropType<CompareFn>,
-    default: (field: string, a: any, b: any) => a[field] < b[field]
-  }
+    default: (field: string, a: any, b: any): boolean => a[field] < b[field]
+  },
+  filterable: Boolean,
+  filterMultiple: Boolean,
+  filterList: Array as PropType<FilterConfig[]>
 };
 
 export type TableColumnPropsTypes = ExtractPropTypes<typeof TableColumnProps>;
@@ -36,15 +39,21 @@ export type Formatter<T = any, R = any> = (row: T, cellValue: R, index: number) 
 
 export type CompareFn<T = any> = (field: string, a: T, b: T) => boolean;
 
-export type FilterList = (string | number)[];
+export type FilterResults = (string | number)[];
 
 export interface CustomFilterProps {
-  value: FilterList;
-  onChange: (value: FilterList) => void;
+  value: FilterResults
+  onChange: (value: FilterResults) => void
 }
 
 export type CustomFilterSlot = (props: CustomFilterProps) => VNode[];
 
+export interface FilterConfig {
+  id: number | string
+  name: string
+  value: any
+  checked?: boolean
+}
 export interface Column<T extends Record<string, unknown> = any> {
   field?: string
   width?: number
@@ -53,9 +62,11 @@ export interface Column<T extends Record<string, unknown> = any> {
   header?: string
   sortable?: boolean
   filterable?: boolean
+  filterMultiple?: boolean
+  filterList?: FilterConfig[]
   renderHeader?: () => void
   renderCell?: (row: T, index: number) => void
   formatter?: Formatter<T>
   compareFn?: CompareFn<T>
-  customFilterTemplate?: CustomFilterSlot;
+  customFilterTemplate?: CustomFilterSlot
 }

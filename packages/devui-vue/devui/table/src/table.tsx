@@ -1,4 +1,4 @@
-import { provide, defineComponent, getCurrentInstance, computed, toRef, defineExpose } from 'vue';
+import { provide, defineComponent, getCurrentInstance, computed, toRef } from 'vue';
 import { Table, TableProps, TablePropsTypes, TABLE_TOKEN } from './table.type';
 import { useTable } from './use-table';
 import { createStore } from './store';
@@ -28,13 +28,13 @@ export default defineComponent({
           <div style="overflow: hidden scroll;">
             <table class={classes.value} cellpadding="0" cellspacing="0">
               <ColGroup />
-              <TableHeader store={store} />
+              <TableHeader />
             </table>
           </div>
           <div class="scroll-view">
             <table class={classes.value} cellpadding="0" cellspacing="0">
               <ColGroup />
-              {!isEmpty.value && <TableBody store={store} style="flex: 1" />}
+              {!isEmpty.value && <TableBody style="flex: 1" />}
             </table>
           </div>
         </div>
@@ -45,8 +45,8 @@ export default defineComponent({
       return (
         <table class={classes.value} cellpadding="0" cellspacing="0">
           <ColGroup />
-          <TableHeader store={store} style={{ position: 'relative' }} />
-          {!isEmpty.value && <TableBody store={store} />}
+          <TableHeader style="position: relative" />
+          {!isEmpty.value && <TableBody />}
         </table>
       )
     });
@@ -59,7 +59,6 @@ export default defineComponent({
 
     return () => (
       <div class="devui-table-wrapper" style={style.value} v-dLoading={props.showLoading}>
-
         {ctx.slots.default()}
         {props.fixHeader ? fixHeaderCompo.value : normalHeaderCompo.value}
         {isEmpty.value && <div class="devui-table-empty">No Data</div>}

@@ -220,12 +220,12 @@
   <div>
     <d-button type="primary" @click="handleClick">更新数据</d-button>
     <d-table :data="emptyData">
-      <d-column field="firstName" header="First Name">
-        <template v-slot:customFilterTemplate="props">
-          <div>{{props.value}}</div>
-          <div>{{props.value}}</div>
-        </template>
-      </d-column>
+      <d-column 
+        field="firstName" 
+        header="First Name" 
+        filterable 
+        :filterList="filterList"
+      ></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
       <d-column field="gender" header="Gender"></d-column>
       <d-column field="date" header="Date of birth"></d-column>
@@ -235,7 +235,7 @@
 
 <script>
 
-  import { defineComponent, ref } from 'vue'
+  import { defineComponent, ref, computed } from 'vue'
 
   export default defineComponent({
     setup() {
@@ -268,8 +268,15 @@
           }
         ]
       }
+      const filterList = computed(() => emptyData.value.map(
+        item => ({name: `${item.firstName} ${item.lastName}`, value: item.firstName})
+      ));
 
-      return { emptyData, handleClick, test(props) {console.log(props); return 'hello'} }
+      return { 
+        emptyData, 
+        handleClick,
+        filterList
+      }
     }
   })
 </script>

@@ -1,4 +1,4 @@
-import { ref, watch, reactive, onBeforeMount, computed, ToRefs, Slots } from 'vue';
+import { watch, reactive, onBeforeMount, ToRefs, Slots } from 'vue';
 import { Column, TableColumnPropsTypes } from './column.type'
 import { formatWidth, formatMinWidth } from '../utils';
 
@@ -14,20 +14,33 @@ export function createColumn<T extends Record<string, unknown> = any>(
     width,
     minWidth,
     formatter,
-    compareFn
+    compareFn,
+    filterable,
+    filterList,
+    filterMultiple
   } = props;
   const column: Column = reactive({});
 
-  watch(
-    [field, header, sortable],
-    ([field, header, sortable]) => {
-      column.field = field;
-      column.header = header;
-      column.sortable = sortable;
-      column.filterable = true;
-    },
-    { immediate: true }
-  );
+  watch([field, header], ([field, header]) => {
+    column.field = field;
+    column.header = header;
+  }, { immediate: true });
+
+  watch([sortable, compareFn], ([sortable, compareFn]) => {
+    column.sortable = sortable;
+    column.compareFn = compareFn;
+  })
+
+  watch([
+    filterable,
+    filterList,
+    filterMultiple,
+  ], ([filterable, filterList, filterMultiple]) => {
+    column.filterable = filterable;
+    column.filterMultiple = filterMultiple;
+    column.filterList = filterList;
+  }, { immediate: true })
+
 
   onBeforeMount(() => {
     column.width = formatWidth(width.value);
@@ -36,7 +49,6 @@ export function createColumn<T extends Record<string, unknown> = any>(
     column.renderHeader = defaultRenderHeader;
     column.renderCell = defaultRenderCell;
     column.formatter = formatter.value;
-    column.compareFn = compareFn.value;
     column.customFilterTemplate = templates.customFilterTemplate;
   });
 
