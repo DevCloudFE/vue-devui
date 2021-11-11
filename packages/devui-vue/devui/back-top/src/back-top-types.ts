@@ -1,7 +1,6 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 
 export type Position = {
-  position: 'fixed'
   bottom: string
   right: string
 }
