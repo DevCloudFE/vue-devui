@@ -1,3 +1,4 @@
 import usePosition from './usePosition.ts'
+import useTarget from './useTarget.ts'
 
-export { usePosition }
+export { usePosition, useTarget }

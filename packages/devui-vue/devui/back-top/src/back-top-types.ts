@@ -13,6 +13,10 @@ export const backTopProps = {
   right: {
     type: String,
     default: '30px'
+  },
+  target: {
+    type: String,
+    default: 'window'
   }
 } as const
 
