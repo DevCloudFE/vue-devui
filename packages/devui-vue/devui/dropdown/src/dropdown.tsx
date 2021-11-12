@@ -27,7 +27,7 @@ export default defineComponent({
     const position = {
       originX: 'left',
       originY: 'bottom',
-      overlayX: 'left',
+      overlayX: 'center',
       overlayY: 'top'
     } as const;
 
