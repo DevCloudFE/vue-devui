@@ -106,17 +106,19 @@ export interface OptionsCallback {
   changeCascaderIndexs: (optionItem: CascaderItem, ulIndex: number) => void
 }
 
-type cascaderItemExtendsProps = 'trigger'
-export type PickCascader = Pick<CascaderProps, cascaderItemExtendsProps>
-export interface CascaderItemNeedType extends PickCascader {
-  valueCache: CascaderValueType
-  value: CascaderValueType
-  inputValueCache: Ref<string>
-  confirmInputValueFlg: Ref<boolean>
-  multiple: boolean
-  stopDefault: Ref<boolean>
-  activeIndexs: number[]
-  tagList: UnwrapNestedRefs<CascaderItem[]>
+// type cascaderItemExtendsProps = 'trigger'
+// export type PickCascader = Pick<CascaderProps, cascaderItemExtendsProps>
+// export interface CascaderItemNeedType extends PickCascader {
+  export interface CascaderItemNeedType {
+  valueCache?: CascaderValueType
+  trigger?: TriggerTypes
+  value?: CascaderValueType
+  inputValueCache?: Ref<string>
+  confirmInputValueFlg?: Ref<boolean>
+  multiple?: boolean
+  stopDefault?: Ref<boolean>
+  activeIndexs?: number[]
+  tagList?: UnwrapNestedRefs<CascaderItem[]>
 }
 export interface UseCascaderItemCallback {
   cascaderItemNeedProps: CascaderItemNeedType
@@ -126,14 +128,14 @@ export interface UseCascaderItemCallback {
 export type CheckedType = 'checked' | 'halfChecked'
 export interface UseCascaderMultipleCallback {
   // tagList: UnwrapNestedRefs<CascaderItem[]>
-  addTagList: (a: CascaderItem[], b: CascaderItem) => void
-  deleteTagList: (a: CascaderItem[], b: CascaderItem) => void
-  initTagList: (a: CascaderItem[]) => void
-  initMultipleCascaderItem: (a: number[], b: CascaderItem[], c: CascaderItem[]) => void
-  updateCheckOptionStatus: (a: CascaderItem, options: CaascaderOptionsType, ulIndex: number, tagList: CascaderItem[]) => void
-  initActiveIndexs: (a: CascaderValueType, b: CascaderItem[], c: number, d: number[]) => void
-  updateCheckStatusLoop: (a: CascaderItem, b: CheckedType, ulIndex: number, c?: boolean) => void
-  getParentNode: (a: string | number, b: [CascaderItem[]], c: number) => CascaderItem
-  updateParentNodeStatus: (a: CascaderItem, b: CaascaderOptionsType, c: number) => void
-  getInputValue: (a: string, b: CascaderItem[], c: Ref<string>, d?: boolean) => void
+  addTagList: (arr: CascaderItem[], singleItem: CascaderItem) => void
+  deleteTagList: (arr: CascaderItem[], singleItem: CascaderItem) => void
+  initTagList: (arr: CascaderItem[]) => void
+  initMultipleCascaderItem: (targetValues: number[], cascaderOptions: CascaderItem[], tagList: CascaderItem[]) => void
+  updateCheckOptionStatus: (node: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => void
+  initActiveIndexs: (values: CascaderValueType, currentOption: CascaderItem[], index: number, activeIndexs: number[]) => void
+  updateCheckStatusLoop: (node: CascaderItem, type: CheckedType,  ulIndex: number, status?: boolean) => void
+  getParentNode: (childValue: string | number, options: CaascaderOptionsType, ulIndex: number) => CascaderItem
+  updateParentNodeStatus: (node: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => void
+  getInputValue: (label: string, arr: CascaderItem[], inputValueCache: Ref<string>, showPath?: boolean) => void
 }

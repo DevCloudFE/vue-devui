@@ -133,7 +133,7 @@ export const useMultiple = (cascaderItemNeedProps?: CascaderItemNeedType): UseCa
    * 父节点改变子节点check状态
    * @param node 节点
    */
-  const updateCheckStatusLoop = (node: CascaderItem, type: CheckedType,  ulIndex: number, status?: boolean,) => {
+  const updateCheckStatusLoop = (node: CascaderItem, type: CheckedType,  ulIndex: number, status?: boolean) => {
     if (node?.children?.length > 0) {
       node.children.forEach(item => {
         // 当需要改变checked时

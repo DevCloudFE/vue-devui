@@ -10,7 +10,7 @@ export const DMultipleBox = (props: MultiplePropsType) => {
       <div class="devui-tags-box">
         { props.activeOptions.length > 0
           ? props.activeOptions.map(item => {
-              return <DTag item={item} tagList={props.activeOptions}></DTag>
+              return <DTag tag={item} tagList={props.activeOptions}></DTag>
             })
           : <div class="devui-tags-placeholder">{ props.placeholder }</div>
         }

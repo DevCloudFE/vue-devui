@@ -1,6 +1,6 @@
+import { computed, ref } from 'vue'
 import { useClassName } from './use-class'
 import { CascaderItemPropsType } from '../cascader-list/cascader-list-types'
-import { computed, ref } from 'vue'
 import { useSingle } from '../../hooks/use-cascader-single'
 import { useMultiple } from '../../hooks/use-cascader-multiple'
 import './index.scss'
@@ -8,7 +8,7 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
   // console.log('item index',props)
   const { cascaderItem, ulIndex, liIndex, cascaderItemNeedProps, cascaderOptions } = props
   const { multiple, stopDefault, valueCache, activeIndexs, trigger, confirmInputValueFlg, tagList} = cascaderItemNeedProps
-  const triggerHover = trigger === 'hover'
+  const isTriggerHover = trigger === 'hover'
   const { singleChoose } = useSingle()
   const { updateCheckOptionStatus } = useMultiple(cascaderItemNeedProps)
   const { getRootClass } = useClassName()
@@ -32,7 +32,7 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
     updateValues()
   }
   const mouseenter = {
-    [ triggerHover && 'onMouseenter' ]: mouseEnter
+    [ isTriggerHover && 'onMouseenter' ]: mouseEnter
   }
   // 鼠标click
   const mouseClick = () => {

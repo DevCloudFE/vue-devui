@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, Ref } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue'
 import { CascaderItem, CascaderItemNeedType } from '../../src/cascader-types'
 export const cascaderulProps = {
   /**
@@ -8,7 +8,10 @@ export const cascaderulProps = {
    */
   cascaderItems: {
     type: Array as PropType<CascaderItem[]>,
-    default: [],
+    default: ():CascaderItem[] => ([{
+      label: '',
+      value: null
+    }]),
   },
   /**
    * 当前选中的ul下标
@@ -21,7 +24,7 @@ export const cascaderulProps = {
   },
   cascaderItemNeedProps: {
     type: Object as PropType<CascaderItemNeedType>,
-    default: {}
+    default: ():CascaderItemNeedType => ({})
   },
   stopDefault: {
     type: Boolean,
@@ -29,7 +32,10 @@ export const cascaderulProps = {
   },
   cascaderOptions: {
     type: Array as unknown as PropType<[CascaderItem[]]>,
-    default: []
+    default: ():[CascaderItem[]] => ([[{
+      label: '',
+      value: null
+    }]])
   }
 }
 export type CascaderulProps = ExtractPropTypes<typeof cascaderulProps>

@@ -6,19 +6,19 @@ import { CascaderItem } from '../../src/cascader-types'
 import { useMultiple } from '../../hooks/use-cascader-multiple'
 import './index.scss'
 interface PropsType {
-  item: CascaderItem
+  tag: CascaderItem
   tagList: CascaderItem[]
 }
 export const DTag = (props: PropsType) => {
-  const { tagList, item } = props
+  const { tagList, tag } = props
   const { deleteTagList } = useMultiple()
   const deleteCurrentTag = (e: Event) => {
     e.stopPropagation()
-    deleteTagList(tagList, item)
+    deleteTagList(tagList, tag)
   }
   return (
     <div class="devui-tag">
-      <span>{ item?.label }</span>
+      <span>{ tag?.label }</span>
       <div class="devui-tag__close" onClick={deleteCurrentTag}>
         <d-icon name="close"></d-icon>
       </div>

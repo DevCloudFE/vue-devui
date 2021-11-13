@@ -402,7 +402,6 @@ export default defineComponent({
 interface CascaderItem {
   label: string;
   value: number | string;
-  isLeaf?: boolean;
   children?: CascaderItem[];
   disabled?: boolean;
   icon?: string;
