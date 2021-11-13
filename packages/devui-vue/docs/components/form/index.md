@@ -841,16 +841,14 @@ export default defineComponent({
 
 #### 验证单个元素，自定义管理消息提示
 
-> doing
->
-> 待引入popover组件
+> done
 
 配置`messageShowType`可选择消息自动提示的方式，默认为`popover`。
 
 - 设置为`popover`错误信息将在元素聚焦时以`popover`形式呈现。
 - 设置为`text`错误信息将自动以文本方式显示在元素下方(需要与表单控件容器配合使用)。 
 - 设置为`none`错误信息将不会自动呈现到视图， 可在模板中获取`message`或通过监听`messageChange`事件获取错误`message`， 或在模板中直接通过引用获取。
-- 配置`popPosition`可在消息提示方式为`popover`时，自定义`popover`内容弹出方向。 默认为`['right', 'bottom']`。
+- 在 `options`中配置  `popPosition`可在消息提示方式为`popover`时，自定义`popover`内容弹出方向， 默认为`['right', 'bottom']`。更多取值参考popover组件。
 
 :::demo
 
@@ -884,6 +882,7 @@ export default defineComponent({
           },
           options: {
             updateOn: 'input',
+            messageShowType: 'popover',
             popPosition: 'bottom'
           }
         }" />
@@ -1617,10 +1616,10 @@ export default defineComponent({
 
 #### v-d-validate-rules
 
-| 参数    | 说明               | 类型   | 可选值                      | 默认值 |
-| ------- | ------------------ | ------ | --------------------------- | ------ |
-| rules   | 必选，表单校验规则 | object |                             | --     |
-| options | 可选，配置选项     | object | `errorStrategy`、`updateOn` |        |
+| 参数    | 说明               | 类型   | 可选值                                     | 默认值 |
+| ------- | ------------------ | ------ | ------------------------------------------ | ------ |
+| rules   | 必选，表单校验规则 | object |                                            | --     |
+| options | 可选，配置选项     | object | `errorStrategy`、`updateOn`、`popPosition` |        |
 
 > 该指令仅在`d-form`标签或`d-input`等表单类组件上使用有效。
 
@@ -1640,12 +1639,8 @@ export default defineComponent({
 
 - options支持以下字段
   - errorStrategy，错误更新策略：`dirty`（默认）、`prestine`
-
   - updateOn，校验时机，可选值有：`change`（默认）、 `blur`、 `input`
+  - popPosition，自定义`popover`内容弹出方向。 默认为`['right', 'bottom']`，更多取值参考popover组件。
 
 
-<style>
-  ul, ol {
-    list-style: unset !important;
-  }
-</style>
+

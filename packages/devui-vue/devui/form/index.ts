@@ -32,7 +32,7 @@ export { Form, FormLabel, FormItem, FormControl, FormOperation }
 export default {
   title: 'Form 表单',
   category: '数据录入',
-  status: '70%',
+  status: '75%',
   install(app: App): void {
     app.use(Form as any);
     app.use(FormLabel as any);
