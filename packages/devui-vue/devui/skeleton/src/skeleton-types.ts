@@ -36,7 +36,7 @@ export const skeletonProps = {
     default: '40px'
   },
   avatarShape: {
-    value: String as PropType<'round' | 'square'>,
+    type: String as PropType<'round' | 'square'>,
     default: 'round'
   },
   titleWidth: {
@@ -46,6 +46,18 @@ export const skeletonProps = {
   rowWidth: {
     type: [Number, String, Array] as PropType<number | string | Array<number | string>>,
     default: ['100%']
+  },
+  shape: {
+    type: String as PropType<'avatar' | 'image' | 'title' | 'paragraph' | 'button'>,
+  },
+  width: {
+    type: [String, Number] as PropType<ModelValue>
+  },
+  height: {
+    type: [String, Number] as PropType<ModelValue>
+  },
+  style:{
+    type: String
   }
 } as const
 
