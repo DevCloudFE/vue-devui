@@ -10,7 +10,7 @@ export { Cascader }
 export default {
   title: 'Cascader 级联菜单',
   category: '数据录入',
-  status: '10%',
+  status: '30%',
   install(app: App): void {
     app.use(Cascader as any)
   }

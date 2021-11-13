@@ -1,9 +1,9 @@
 /**
  * 多选模式下的一些函数
  */
+import { Ref } from 'vue'
 import { CascaderItem, CascaderValueType, CaascaderOptionsType, UseCascaderMultipleCallback, CheckedType, CascaderItemNeedType } from '../src/cascader-types'
 // import { useCascaderItem } from './use-cascader-item'
-import { Ref } from 'vue'
 export const useMultiple = (cascaderItemNeedProps?: CascaderItemNeedType): UseCascaderMultipleCallback => {
   // const { cascaderItemNeedProps } = useCascaderItem()
   /**
