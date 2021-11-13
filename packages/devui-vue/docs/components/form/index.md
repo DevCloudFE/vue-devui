@@ -875,7 +875,7 @@ export default defineComponent({
     </d-form-item>
     <d-form-item prop="asyncSum">
       <d-form-label>计算：1 + 2 = ？</d-form-label>
-      <d-form-control extraInfo="messageShowType为popover，使用popover进行提示（todo，待引入popover组件）">
+      <d-form-control extraInfo="messageShowType为popover，使用popover进行提示">
         <d-input v-model:value="formModel.asyncSum" v-d-validate-rules="{
           rules: {
             asyncValidators: [
@@ -883,7 +883,8 @@ export default defineComponent({
             ]
           },
           options: {
-            updateOn: 'input'
+            updateOn: 'input',
+            popPosition: 'bottom'
           }
         }" />
       </d-form-control>
