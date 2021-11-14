@@ -3,11 +3,9 @@ import type { PropType, ExtractPropTypes, ComponentPublicInstance } from 'vue'
 export type TriggerType = 'click' | 'hover' | 'manually';
 export type CloseScopeArea = 'all' | 'blank' | 'none';
 
-
 export const dropdownProps = {
   origin: {
-    type: Object as PropType<Element | ComponentPublicInstance>,
-    required: true
+    type: Object as PropType<Element | ComponentPublicInstance>
   },
 
   isOpen: {
