@@ -1,27 +1,8 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes,SetupContext } from 'vue'
 export type DataDirection = 'vertical' | 'horizontal'
-
-
-
-export interface DataItem {
-  //时间
-  time: string
-  //文本内容
-  text: string
-  //   lineStyle?: Object<{}>
-  //可选，自定义时间圈颜色
-  dotColor?: string
-  customDot?: string | HTMLElement
-  //时间点类型
-  type?: 'primary' | 'success' | 'danger' | 'warning'
-  status?: 'runned' | 'running' | ''
-  position?: 'top' | 'bottom' | 'left' | 'right'
-  extraElement?: string | HTMLElement
-  iconClass?: string
-  data?: any
-}
-
-
+export type Mode = 'normal' | 'alternative'
+export type TimePosition = 'left' | 'bottom'
+export type LineStyle = 'solid' | 'dashed' | 'dotted' | 'none'
 
 export const timeAxisProps = {
   //设置时间轴方向
@@ -29,11 +10,26 @@ export const timeAxisProps = {
     type: String as PropType<DataDirection>,
     default: 'vertical'
   },
-  //列表数据
-  data: {
-    type: Array as PropType<DataItem[]>,
-    default:()=>[]
+  //设置居中
+  center: {
+    type: Boolean,
+    default: false
+  },
+  //设置排序方向
+  mode: {
+    type: String as PropType<Mode>,
+    default: 'normal'
+  },
+  //设置时间位置
+  timePosition: {
+    type: String as PropType<TimePosition>,
+    default: 'left'
   }
 } as const
 
 export type TimeAxisProps = ExtractPropTypes<typeof timeAxisProps>
+
+export interface TimeAxisRootType {
+  ctx: SetupContext<any>
+  props: TimeAxisProps
+}
