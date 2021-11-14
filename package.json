@@ -1,38 +1,15 @@
 {
-  "name": "vue-devui",
-  "version": "0.0.0",
-  "license": "MIT",
-  "description": "DevUI components based on Vite and Vue3",
+  "name": "root",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "convert:route": "node ./scripts/convert-component-route.js"
-  },
-  "dependencies": {
-    "@types/lodash-es": "^4.17.4",
-    "lodash-es": "^4.17.20",
-    "vue": "^3.0.5",
-    "vue-router": "^4.0.3"
+    "dev": "lerna exec --scope vue-devui yarn dev",
+    "build": "lerna exec --scope vue-devui yarn build",
+    "build:lib": "lerna exec --scope vue-devui yarn build:lib"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
-    "@vitejs/plugin-vue": "^1.0.4",
-    "@vitejs/plugin-vue-jsx": "^1.1.0",
-    "@vue/compiler-sfc": "^3.0.5",
-    "@vuedx/typecheck": "^0.4.1",
-    "@vuedx/typescript-plugin-vue": "^0.4.1",
-    "commander": "^7.1.0",
-    "husky": "^4.3.7",
-    "sass": "^1.32.2",
-    "shelljs": "^0.8.4",
-    "typescript": "^4.1.3",
-    "vite": "^2.0.5",
-    "vite-plugin-md": "^0.6.0"
+    "lerna": "^4.0.0"
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  }
+  "workspaces": [
+    "packages/*"
+  ]
 }

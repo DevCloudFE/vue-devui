@@ -1,0 +1,22 @@
+.devui-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  &.is-row {
+    flex-direction: row;
+  }
+
+  &.is-column {
+    flex-direction: column;
+  }
+
+  .devui-radio {
+    line-height: 28px;
+
+    &:not(:last-child) {
+      padding-right: 20px;
+    }
+  }
+}

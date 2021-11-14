@@ -1,0 +1,34 @@
+@import '../../../../style/theme/color';
+@import '../../../../style/theme/shadow';
+@import '../../../../style/theme/corner';
+@import '../../../../style/theme/z-index';
+
+.devui-time-popup {
+  height: 310px;
+  background-color: $devui-connected-overlay-bg;
+  box-shadow: 0 0 2px 2px $devui-shadow;
+  border-radius: $devui-border-radius;
+  border: 1px solid $devui-line;
+  overflow: hidden;
+  position: fixed;
+  z-index: -1;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s;
+  transition-property: visibility, opacity, z-index;
+}
+
+.devui-show-time-popup {
+  visibility: visible;
+  z-index: $devui-z-index-dropdown;
+  opacity: 1;
+  transition-property: visibility, opacity, z-index;
+}
+
+.devui-time-popup-btn {
+  height: 60px;
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

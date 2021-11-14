@@ -1,0 +1,11 @@
+@import '../../style/core/form';
+
+.devui-textarea-wrap {
+  .devui-textarea-show-count {
+    text-align: right;
+    color: inherit;
+    white-space: nowrap;
+    pointer-events: none;
+    font-size: $devui-font-size;
+  }
+}

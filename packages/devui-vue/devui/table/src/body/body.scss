@@ -1,0 +1,20 @@
+@import '../../../styles-var/devui-var.scss';
+
+.devui-tbody {
+  tr {
+    font-size: $devui-font-size-card-title;
+    color: $devui-text;
+    border: none;
+    border-bottom: 1px solid $devui-dividing-line;
+    background-color: $devui-global-bg-normal;
+
+    &:hover {
+      background-color: $devui-list-item-hover-bg;
+    }
+
+    td {
+      padding: 10px;
+      border: none;
+    }
+  }
+}

@@ -1,0 +1,45 @@
+.devui-vertical-slider {
+  display: flex;
+  flex-direction: column;
+  min-width: 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  flex-grow: 1;
+
+  .movable-bar {
+    position: relative;
+    overflow: visible;
+
+    .slider-item {
+      display: block;
+      flex-grow: 0;
+      flex-shrink: 0;
+      box-sizing: border-box;
+
+      // &.selected {
+      //     background-color: #06c;
+      //     color: #fff;
+      // }
+    }
+  }
+
+  .forcus {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50%;
+    top: 25%;
+  }
+
+  .slider-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent, rgba(0, 0, 0, 0.3));
+    z-index: 99;
+  }
+}

@@ -1,0 +1,15 @@
+ls:
+  /{devui,src}/*:
+    .dir: kebab-case | regex:__[a-z0-9]+__
+    .scss: kebab-case
+    .vue: kebab-case
+    .js: kebab-case
+    .ts: kebab-case
+    .tsx: kebab-case
+    .spec.ts: kebab-case
+    .route.ts: kebab-case
+    .type.ts: kebab-case
+
+ignore:
+  - devui/style
+  - node_modules
