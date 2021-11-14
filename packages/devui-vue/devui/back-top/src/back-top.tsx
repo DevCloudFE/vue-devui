@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import { backTopProps, BackTopProps } from './back-top-types'
 import { usePosition } from './hooks'
 import './back-top.scss'
