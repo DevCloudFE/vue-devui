@@ -17,6 +17,10 @@ export const backTopProps = {
   target: {
     type: String,
     default: 'window'
+  },
+  visibleHeight: {
+    type: Number,
+    default: 300
   }
 } as const
 

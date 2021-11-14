@@ -1,6 +1,6 @@
 import { defineComponent, ref } from 'vue'
 import { backTopProps, BackTopProps } from './back-top-types'
-import { usePosition } from './hooks'
+import { usePosition, useVisibility } from './hooks'
 import './back-top.scss'
 import IconTop from './assets/top.svg'
 
@@ -11,6 +11,7 @@ export default defineComponent({
   setup(props: BackTopProps, ctx) {
     const position = usePosition(props)
     const slots = ctx.slots
+    let isVisible = useVisibility(props)
 
     const scrollToTop = () => {
       // 运行在浏览器则调用该方法
@@ -24,13 +25,14 @@ export default defineComponent({
 
     return () => (
       <div
-        class="devui-back-top"
-        //根据属性设置style
-        style={{ ...position }}
+        class='devui-back-top'
+        style={{
+          ...position,
+          display: isVisible.value ? 'block' : 'none'
+        }}
         onClick={scrollToTop}
       >
         <div
-          //当用户没有传入插槽则使用默认样式
           class={[
             'devui-back-top-base',
             slots.default ? 'devui-backtop-custom' : 'devui-back-top-content'
