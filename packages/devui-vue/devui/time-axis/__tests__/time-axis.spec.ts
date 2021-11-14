@@ -1,8 +1,6 @@
 import { mount } from '@vue/test-utils';
 import DTimeAxis from '../src/time-axis';
 import DTimeAxisItem from '../src/components/time-axis-item'
-//cd packages/devui-vue
-//yarn test --testMatch='**/**/time-axis.spec.ts'
 describe('time-axis test', () => {
   const wrapper = mount({
     components: { DTimeAxis, DTimeAxisItem },
