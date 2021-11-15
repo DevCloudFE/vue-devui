@@ -8,6 +8,10 @@ Vue DevUI 是 Vue3 版本的 DevUI 组件库，基于 [https://github.com/devclo
 
 DevUI 官方网站：[https://devui.design](https://devui.design)
 
+想了解[DevUI](https://devui.design)开源的故事，可以阅读以下文章：
+
+[DevUI开源的故事](https://juejin.cn/post/7029092585452863525/)
+
 # 当前状态: Beta
 
 该项目还处于孵化和演进阶段，欢迎大家参与到 Vue DevUI 项目的建设中来！🎉🎉

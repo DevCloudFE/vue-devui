@@ -2,9 +2,9 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "dev": "lerna run dev",
-    "build": "lerna run build",
-    "build:lib": "lerna run build:lib"
+    "dev": "lerna exec --scope vue-devui yarn dev",
+    "build": "lerna exec --scope vue-devui yarn build",
+    "build:lib": "lerna exec --scope vue-devui yarn build:lib"
   },
   "devDependencies": {
     "lerna": "^4.0.0"

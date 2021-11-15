@@ -40,10 +40,10 @@ export default defineComponent({
       const sliderWidth = sliderRunway.value.clientWidth;
       currentPosition.value = (sliderWidth * (inputValue.value - props.min)) / (props.max - props.min);
     });
-    function handleonMousedown(event: MouseEvent) {
+    function handleButtonMousedown(event: MouseEvent) {
       popoverShow.value = true;
       //props.disabled状态是不能点击拖拽的
-      if (props.disabled || props.disabled) return;
+      if (props.disabled) return;
       //阻止默认事件
       event.preventDefault();
       dragStart(event);
@@ -98,7 +98,6 @@ export default defineComponent({
       const steps = Math.round(newPosition / LengthPerStep);
       //实际的偏移像素
       const value: number = steps * LengthPerStep;
-
       //要是刚好划过半段切刚好超出最大长度的情况进行限定
       if (Math.round(value) >= sliderWidth) {
         currentPosition.value = sliderWidth;
@@ -115,12 +114,13 @@ export default defineComponent({
       currentPosition.value = newPosition;
       ctx.emit('update:modelValue', inputValue.value);
     }
-    //当点击滑动条时,
-    function handleClick(event) {
+    //当在滑动条触发鼠标事件时处理,
+    function handleRunwayMousedown(event) {
       if (!props.disabled && isClick) {
         startX = event.target.getBoundingClientRect().left;
         const currentX = event.clientX;
         setPostion(currentX - startX);
+        handleButtonMousedown(event);
       } else {
         return;
       }
@@ -160,13 +160,17 @@ export default defineComponent({
     return () => (
       <div class='devui-slider'>
         {/* 整个的长度 */}
-        <div ref={sliderRunway} class={'devui-slider__runway' + disableClass.value} onClick={handleClick}>
+        <div
+          ref={sliderRunway} class={'devui-slider__runway' + disableClass.value}
+          onMousedown={handleRunwayMousedown}
+          onMouseout={() => (popoverShow.value = false)}
+        >
           {/* 滑动后左边的进度条 */}
           <div class={'devui-slider__bar' + disableClass.value} style={{ width: percentDispaly.value }}></div>
           <div
             class={'devui-slider__button' + disableClass.value}
             style={{ left: percentDispaly.value }}
-            onMousedown={handleonMousedown}
+            onMousedown={handleButtonMousedown}
             onMouseenter={() => (popoverShow.value = true)}
             onMouseout={() => (popoverShow.value = false)}
           ></div>

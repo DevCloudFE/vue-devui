@@ -1,5 +1,5 @@
-import { defineComponent, inject } from 'vue';
-import { Tabs } from './tabs';
+import { defineComponent, inject } from 'vue'
+import { Tabs } from './tabs'
 
 export default defineComponent({
   name: 'DTab',
@@ -18,11 +18,11 @@ export default defineComponent({
     }
   },
   setup(props, { slots }) {
-    const tabs = inject<Tabs>('tabs');
-    tabs.state.slots.push(slots.dTabTitle);
-    tabs.state.data.push(props);
+    const tabs = inject<Tabs>('tabs')
+    tabs.state.slots.push(slots.dTabTitle)
+    tabs.state.data.push(props)
     return () => {
-      const { id } = props;
+      const { id } = props
       const content =
         tabs.state.showContent && tabs.state.active === id ? (
           <div class='devui-tab-content'>
@@ -30,8 +30,8 @@ export default defineComponent({
               {slots.default()}
             </div>
           </div>
-        ) : null;
-      return content;
-    };
+        ) : null
+      return content
+    }
   }
-});
+})

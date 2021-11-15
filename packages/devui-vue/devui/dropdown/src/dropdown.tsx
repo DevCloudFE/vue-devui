@@ -25,9 +25,9 @@ export default defineComponent({
     }, { immediate: true });
 
     const position = {
-      originX: 'left',
+      originX: 'center',
       originY: 'bottom',
-      overlayX: 'left',
+      overlayX: 'center',
       overlayY: 'top'
     } as const;
 
@@ -54,7 +54,7 @@ export default defineComponent({
             hasBackdrop={false}
           >
             <Transition name="devui-dropdown-fade">
-              <div v-show={animatedVisible.value} ref={dropdownEl} style="width:100vw">
+              <div v-show={animatedVisible.value} ref={dropdownEl} style="min-width:102px">
                 {ctx.slots.default?.()}
               </div>
             </Transition>

@@ -1,0 +1,19 @@
+.devui-row {
+  display: flex;
+}
+
+.devui-row-wrap {
+  flex-wrap: wrap;
+}
+
+@each $prefix, $value in (top, flex-start), (middle, center), (bottom, flex-end) {
+  .devui-row-align-#{$prefix} {
+    align-items: $value;
+  }
+}
+
+@each $prefix, $value in (start, flex-start), (center, center), (end, flex-end), (around, space-around), (between, space-between) {
+  .devui-row-justify-#{$prefix} {
+    justify-content: $value;
+  }
+}

@@ -24,8 +24,15 @@ $devui-time-axis-item-dot-size: 18px;
       &-line {
         position: relative;
         height: calc(100% - #{$devui-time-axis-item-dot-size});
+        min-height: 20px;
         border-left-width: 2px;
         border-left-color: $devui-dividing-line;
+
+        &-extra {
+          position: absolute;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
 
         &:first-child {
           display: none;
@@ -34,16 +41,12 @@ $devui-time-axis-item-dot-size: 18px;
 
       &-data-left {
         text-align: end;
-        margin-bottom: 24px;
-        height: $devui-time-axis-item-dot-size;
-        line-height: $devui-time-axis-item-dot-size;
-        flex: 1;
       }
 
+      &-data-left,
       &-data-right {
         margin-bottom: 24px;
-        height: $devui-time-axis-item-dot-size;
-        line-height: $devui-time-axis-item-dot-size;
+        margin-top: -2px;
         flex: 1;
       }
 
@@ -79,6 +82,20 @@ $devui-time-axis-item-dot-size: 18px;
     align-items: center;
     position: relative;
 
+    &-center {
+      .devui-time-axis-item {
+        &-data-top,
+        &-data-bottom {
+          text-align: center;
+          padding: 0 6px;
+
+          > div {
+            transform: translateX(-50%);
+          }
+        }
+      }
+    }
+
     .devui-time-axis-item {
       display: flex;
       flex-direction: column;
@@ -93,10 +110,16 @@ $devui-time-axis-item-dot-size: 18px;
 
       &-line {
         position: relative;
-        min-width: 20px;
-        width: calc(50% - calc(#{$devui-time-axis-item-dot-size} / 2));
+        min-width: 60px;
+        width: calc(100% - #{$devui-time-axis-item-dot-size});
         border-bottom-width: 2px;
         border-bottom-color: $devui-dividing-line;
+
+        &-extra {
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
       }
 
       &:first-child {
@@ -107,17 +130,9 @@ $devui-time-axis-item-dot-size: 18px;
         }
       }
 
-      &-data-top {
-        text-align: center;
-        display: flex;
-        align-items: flex-end;
-        padding: 0 12px;
-        flex: 1;
-      }
-
+      &-data-top,
       &-data-bottom {
-        text-align: center;
-        padding: 0 12px;
+        padding-right: 12px;
         flex: 1;
       }
 
@@ -154,18 +169,73 @@ $devui-time-axis-item-dot-size: 18px;
     & > svg {
       width: $devui-time-axis-item-dot-size;
       height: $devui-time-axis-item-dot-size;
+      flex-shrink: 0;
     }
 
     & > i {
       font-size: $devui-time-axis-item-dot-size;
+      vertical-align: 0;
     }
   }
 
-  &:last-child {
-    .devui-time-axis-item-line {
-      &:last-child {
-        display: none;
+  //&:last-child {
+  //  .devui-time-axis-item-line {
+  //    &:last-child {
+  //      display: none;
+  //    }
+  //  }
+  //}
+
+  &-type {
+    &-primary {
+      border: 2px solid $devui-placeholder;
+      border-radius: 50%;
+    }
+
+    &-success {
+      i {
+        color: $devui-success;
       }
     }
+
+    &-error {
+      i {
+        color: $devui-danger;
+      }
+    }
+
+    &-warning {
+      i {
+        color: $devui-warning;
+      }
+    }
+
+    &-running {
+      line-height: 16px;
+      text-align: center;
+      animation: devui-time-axis-running 1.5s linear infinite;
+      border: 2px solid $devui-success;
+      border-radius: 50%;
+    }
+  }
+}
+
+@keyframes devui-time-axis-running {
+  0% {
+    transform: rotate(0deg);
+    color: $devui-success;
+    border-color: $devui-success;
+  }
+
+  50% {
+    transform: rotate(180deg);
+    color: $devui-success;
+    border-color: $devui-success;
+  }
+
+  100% {
+    transform: rotate(360deg);
+    color: $devui-success;
+    border-color: $devui-success;
   }
 }

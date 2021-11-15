@@ -6,10 +6,10 @@
 
 当执行指令时间较长（需要数秒以上）时，向用户展示正在执行的状态。
 
-
 ### 基本用法
+
 展示加载表格数据的场景中的基本使用方法。
-:::demo 
+:::demo
 
 ```vue
 <template>
@@ -18,18 +18,24 @@
     v-dLoading="loadingStatus"
     :backdrop="true"
     positionType="relative"
-    :view="{top: '50%', left: '50%'}"
+    :view="{ top: '50%', left: '50%' }"
     :zIndex="100"
     style="width: 100%; text-align: left;"
   >
     <thead>
       <tr>
-        <th>序号</th><th>姓名</th><th>队伍</th><th>操作</th>
+        <th>序号</th>
+        <th>姓名</th>
+        <th>队伍</th>
+        <th>操作</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(val, index) in datas" :key="index">
-        <td>{{index}}</td><td>张家齐</td><td>跳水</td><td>跳水队</td>
+        <td>{{ index }}</td>
+        <td>张家齐</td>
+        <td>跳水</td>
+        <td>跳水队</td>
       </tr>
     </tbody>
   </table>
@@ -46,7 +52,7 @@ export default defineComponent({
       loadingStatus.value = true
 
       setTimeout(() => {
-        datas.push(1,2,3)
+        datas.push(1, 2, 3)
         loadingStatus.value = false
       }, 2000)
     }
@@ -60,12 +66,13 @@ export default defineComponent({
 })
 </script>
 ```
+
 :::
 
+### 多 promise
 
-### 多promise
-支持多个promise。
-:::demo 
+支持多个 promise。
+:::demo
 
 ```vue
 <template>
@@ -75,25 +82,29 @@ export default defineComponent({
     v-dLoading="promises"
     message="One moment please..."
     style="margin-top: 20px; width: 100%; height: 80px; padding: 10px;"
-  >loading will show here2</div>
+  >
+    loading will show here2
+  </div>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  setup() {    
+  setup() {
     const promises = ref([])
     const fetchMutiplePromise = () => {
       let list = []
       for (let i = 0; i < 3; i++) {
-        list.push(new Promise((res, rej) => {
-          setTimeout(() => {
-            res(i)
-          }, (i + 1) * 1000)
-        }).then((res) => {
-          return res
-        }))
+        list.push(
+          new Promise((res, rej) => {
+            setTimeout(() => {
+              res(i)
+            }, (i + 1) * 1000)
+          }).then((res) => {
+            return res
+          })
+        )
       }
       promises.value = list
     }
@@ -106,37 +117,47 @@ export default defineComponent({
 })
 </script>
 ```
+
 :::
 
 ### 自定义样式
-通过 templateRef 自定义loading样式。
-:::demo 
+
+通过 templateRef 自定义 loading 样式。
+:::demo
 
 ```vue
 <template>
-  <d-button
-    :width="220"
-    @click="showLoading1"
-    style="margin-right: 8px; display: inline-block;">Loading Style 1</d-button>
-    
+  <d-button :width="220" @click="showLoading1" style="margin-right: 8px; display: inline-block;">
+    Loading Style 1
+  </d-button>
+
   <d-button
     :width="220"
     v-dLoading="isShowLoading2"
     @click="showLoading2"
     :loadingTemplateRef="temp2"
-    style="margin-right: 8px; display: inline-block;">Loading Style 2</d-button>
+    style="margin-right: 8px; display: inline-block;"
+  >
+    Loading Style 2
+  </d-button>
 
   <d-button
     v-dLoading="true"
     bsStyle="text"
     :width="220"
     :loadingTemplateRef="temp3"
-    style="margin-right: 8px; display: inline-block;">Loading Style 3</d-button>
+    style="margin-right: 8px; display: inline-block;"
+  >
+    Loading Style 3
+  </d-button>
 
   <div
     style="height: 80px; line-height: 80px"
     v-dLoading="isShowLoading1"
-    :loadingTemplateRef="temp1">loading will show here1</div>
+    :loadingTemplateRef="temp1"
+  >
+    loading will show here1
+  </div>
 </template>
 
 <script>
@@ -144,24 +165,36 @@ import { defineComponent, ref, h } from 'vue'
 
 export default defineComponent({
   setup() {
-    const temp1 = h('div', {
-      className: 'devui-infinity-loading'
-    }, h('i', {
-      className: 'icon-refresh'
-    }))
-    
-    const temp2 = h('div', {
-      className: 'devui-circle-loading-container-2'
-    }, h('i', {
-      className: 'icon-refresh'
-    }))
-    
-    const temp3 = h('div', {
-      className: 'devui-circle-loading-container-3'
-    }, h('i', {
-      className: 'icon-refresh'
-    }))
-    
+    const temp1 = h(
+      'div',
+      {
+        className: 'devui-infinity-loading'
+      },
+      h('i', {
+        className: 'icon-refresh'
+      })
+    )
+
+    const temp2 = h(
+      'div',
+      {
+        className: 'devui-circle-loading-container-2'
+      },
+      h('i', {
+        className: 'icon-refresh'
+      })
+    )
+
+    const temp3 = h(
+      'div',
+      {
+        className: 'devui-circle-loading-container-3'
+      },
+      h('i', {
+        className: 'icon-refresh'
+      })
+    )
+
     const isShowLoading1 = ref(false)
     const showLoading1 = () => {
       isShowLoading1.value = new Promise((res) => {
@@ -216,33 +249,42 @@ export default defineComponent({
 }
 </style>
 ```
+
 :::
 
 ### 服务方式调用
-使用服务的方式全屏加载loading组件或者在指定宿主上加载loading组件。
-:::demo 
+
+使用服务的方式全屏加载 loading 组件或者在指定宿主上加载 loading 组件。
+:::demo
 
 ```vue
 <template>
-  <d-button
-    :width="220"
-    @click="serviceToBody"
-    style="margin-right: 8px; display: inline-block;">click me show full screen loading!</d-button>
+  <d-button :width="220" @click="serviceToBody" style="margin-right: 8px; display: inline-block;">
+    click me show full screen loading!
+  </d-button>
 
   <d-button
     :width="200"
     v-if="isShow"
     @click="openTargetLoading"
-    style="margin-right: 8px; display: inline-block;">click me show loading in target!</d-button>
+    style="margin-right: 8px; display: inline-block;"
+  >
+    click me show loading in target!
+  </d-button>
 
   <d-button
     :width="200"
     v-else
     bsStyle="common"
     @click="closeTargetLoading"
-    style="margin-right: 8px; display: inline-block;">click me close loading in target!</d-button>
+    style="margin-right: 8px; display: inline-block;"
+  >
+    click me close loading in target!
+  </d-button>
 
-  <div id="me" style="margin-top: 20px; width: 100%; height: 60px; padding: 10px;">loading will show here3</div>
+  <div id="me" style="margin-top: 20px; width: 100%; height: 60px; padding: 10px;">
+    loading will show here3
+  </div>
 </template>
 
 <script>
@@ -268,7 +310,7 @@ export default {
         target: document.querySelector('#me'),
         message: 'One moment please...',
         positionType: 'relative',
-        zIndex: 1,
+        zIndex: 1
       })
       this.isShow = false
     },
@@ -280,19 +322,20 @@ export default {
 }
 </script>
 ```
+
 :::
 
 ### 参数
+
 dLoading 参数
 
-| **参数**           | **类型**                                                     | **默认**                  | **说明**                                                     | **跳转 Demo**                |
-| ------------------ | ------------------------------------------------------------ | ------------------------- | ------------------------------------------------------------ | ---------------------------- |
-| v-dLoading         | `Promise<any> \| Array<Promise<any>> \| Boolean \| undefined` | --                        | 可选，指令方式，控制 loading 状态                            | [基本用法](#基本用法)        |
-| target             | `element`                                                      | document.body             | 可选，服务方式，Loading 需要覆盖的 DOM 节点                  | [服务方式调用](#服务方式调用) |
-| message            | `string`                                                       | --                        | 可选，loading 时的提示信息                                   | [多promise](#多promise)      |
-| loadingTemplateRef | `VNode`                                                        | --                        | 可选，自定义 loading 模板                                    | [自定义样式](#自定义样式)     |
-| backdrop           | `boolean`                                                      | true                      | 可选，loading 时是否显示遮罩                                 | [基本用法](#基本用法)        |
-| positionType       | `string`                                                       | relative                  | 可选，指定`dLoading`宿主元素的定位类型,取值与 css position 属性一致。 | [基本用法](#基本用法)        |
-| view               | `{top?:string,left?:string} `                                  | {top: '50%', left: '50%'} | 可选，调整 loading 的显示位置，相对于宿主元素的顶部距离与左侧距离 | [基本用法](#基本用法)        |
-| zIndex             | `number`                                                       | --                        | 可选，loading加载提示的 z-index 值                           | [基本用法](#基本用法)        |
-
+| **参数**           | **类型**                                                      | **默认**                    | **说明**                                                              | **跳转 Demo**                 |
+| ------------------ | ------------------------------------------------------------- | --------------------------- | --------------------------------------------------------------------- | ----------------------------- |
+| v-dLoading         | `Promise<any> \| Array<Promise<any>> \| Boolean \| undefined` | --                          | 可选，指令方式，控制 loading 状态                                     | [基本用法](#基本用法)         |
+| target             | `element`                                                     | document.body               | 可选，服务方式，Loading 需要覆盖的 DOM 节点                           | [服务方式调用](#服务方式调用) |
+| message            | `string`                                                      | --                          | 可选，loading 时的提示信息                                            | [多 promise](#多promise)      |
+| loadingTemplateRef | `VNode`                                                       | --                          | 可选，自定义 loading 模板                                             | [自定义样式](#自定义样式)     |
+| backdrop           | `boolean`                                                     | true                        | 可选，loading 时是否显示遮罩                                          | [基本用法](#基本用法)         |
+| positionType       | `string`                                                      | relative                    | 可选，指定`dLoading`宿主元素的定位类型,取值与 css position 属性一致。 | [基本用法](#基本用法)         |
+| view               | `{top?:string,left?:string} `                                 | `{top: '50%', left: '50%'}` | 可选，调整 loading 的显示位置，相对于宿主元素的顶部距离与左侧距离     | [基本用法](#基本用法)         |
+| zIndex             | `number`                                                      | --                          | 可选，loading 加载提示的 z-index 值                                   | [基本用法](#基本用法)         |
