@@ -53,7 +53,7 @@ export const Filter = defineComponent({
       const checkedList = props.modelValue;
       const isContained = (config: FilterConfig) => !!checkedList.find(item => item === config.value);
       return () => (
-        <ul class="devui-dropdown-menu" style="padding:10px">
+        <ul class="devui-dropdown-menu data-table-column-filter-content" style="padding:10px">
           {props.filterList.map((item, index) => {
             return (
               <li style={index > 0 ? 'margin-top:10px' : ''}>

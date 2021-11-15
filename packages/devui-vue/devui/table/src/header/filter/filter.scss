@@ -3,7 +3,7 @@
 .data-table-column-filter-content {
   background: $devui-connected-overlay-bg;
   border-radius: $devui-border-radius;
-
+  box-sizing: content-box;
   .drop-down-item {
     white-space: nowrap;
     text-overflow: ellipsis;
