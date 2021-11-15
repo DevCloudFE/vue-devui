@@ -30,7 +30,7 @@ export const dropdownProps = {
 
   closeOnMouseLeaveMenu: {
     type: Boolean,
-    default: true
+    default: false
   },
 
   showAnimation: {
