@@ -35,6 +35,10 @@ export const editableSelectProps = {
   loading: {
     type: Boolean
   },
+  enableLazyLoad: {
+    type: Boolean,
+    default: false
+  },
   remoteMethod: {
     type: Function as PropType<(inputValue: string) => Array<Options>>
   },
