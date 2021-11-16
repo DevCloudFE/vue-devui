@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { backTopProps, BackTopProps } from './back-top-types'
 import { usePosition, useVisibility } from './hooks'
 import './back-top.scss'
@@ -9,12 +9,14 @@ export default defineComponent({
   props: backTopProps,
   emits: [],
   setup(props: BackTopProps, ctx) {
-    const position = usePosition(props)
     const slots = ctx.slots
-    let isVisible = useVisibility(props)
+    const backTopRef = ref(null)
+
+    const position = usePosition(props)
+    let isVisible = useVisibility(props, backTopRef)
 
     const scrollToTop = () => {
-      // 运行在浏览器则调用该方法
+      // toTop方法暂定
       window &&
         window.scrollTo({
           top: 0,
@@ -26,6 +28,7 @@ export default defineComponent({
     return () => (
       <div
         class='devui-back-top'
+        ref={backTopRef}
         style={{
           ...position,
           display: isVisible.value ? 'block' : 'none'
