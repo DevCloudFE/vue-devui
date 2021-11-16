@@ -1,0 +1,23 @@
+$icon-size: 26px;
+$icon-offset: 4px;
+.d-input-icon-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    label {
+        flex: 1;
+        background-color: #ccc;
+        input {
+            padding-right: $icon-size + $icon-offset;
+        }
+    }
+    span {
+        position: absolute;
+        right: $icon-offset;
+        width: $icon-size;
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+}
