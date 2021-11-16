@@ -1,4 +1,4 @@
-import { inject, defineComponent, onBeforeUnmount, onMounted, toRefs } from 'vue';
+import { inject, defineComponent, onBeforeUnmount, onMounted, toRefs, watch } from 'vue';
 import {
   Column,
   TableColumnProps,
@@ -22,6 +22,9 @@ export default defineComponent({
 
     onMounted(() => {
       parent.store.insertColumn(column);
+      watch(() => column.order, () => {
+        parent.store.sortColumn();
+      });
     });
 
     onBeforeUnmount(() => {

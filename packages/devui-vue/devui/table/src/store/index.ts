@@ -10,6 +10,7 @@ export interface TableStore<T = Record<string, any>> {
     _halfChecked: Ref<boolean>
   }
   insertColumn(column: Column): void
+  sortColumn(): void
   removeColumn(column: Column): void
   getCheckedRows(): T[]
   sortData(field: string, direction: SortDirection, compareFn: CompareFn<T>): void
@@ -23,7 +24,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
     _data.value = [...value];
   }, { deep: true, immediate: true });
 
-  const { _columns, insertColumn, removeColumn } = createColumnGenerator();
+  const { _columns, insertColumn, removeColumn, sortColumn } = createColumnGenerator();
   const { _checkAll, _checkList, _halfChecked, getCheckedRows } = createSelection(dataSource, _data);
   const { sortData } = createSorter(dataSource, _data);
   const { filterData, resetFilterData } = createFilter(dataSource, _data);
@@ -37,6 +38,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
       _halfChecked
     },
     insertColumn,
+    sortColumn,
     removeColumn,
     getCheckedRows,
     sortData,
@@ -51,13 +53,23 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
  */
 const createColumnGenerator = () => {
   const _columns: Ref<Column[]> = ref([]);
+
   /**
    * 插入当前列
    * @param {Column} column 
    */
   const insertColumn = (column: Column) => {
     _columns.value.push(column);
+    // 实际上就是插入排序
+    _columns.value.sort((a, b) => a.order > b.order ? 1 : -1);
   };
+
+  /**
+   * 对 column 进行排序
+   */
+  const sortColumn = () => {
+    _columns.value.sort((a, b) => a.order > b.order ? 1 : -1);
+  }
 
   /**
    * 移除当前列
@@ -71,7 +83,7 @@ const createColumnGenerator = () => {
     }
     _columns.value.splice(i, 1);
   }
-  return { _columns, insertColumn, removeColumn };
+  return { _columns, insertColumn, removeColumn, sortColumn };
 }
 
 /**

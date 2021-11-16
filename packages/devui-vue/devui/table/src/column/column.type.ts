@@ -1,4 +1,4 @@
-import { PropType, ExtractPropTypes, VNode } from 'vue';
+import { PropType, ExtractPropTypes, VNode, Slot } from 'vue';
 
 export const TableColumnProps = {
   header: {
@@ -19,6 +19,10 @@ export const TableColumnProps = {
   },
   formatter: {
     type: Function as PropType<Formatter>,
+  },
+  order: {
+    type: Number,
+    default: 0
   },
   sortable: {
     type: Boolean,
@@ -60,6 +64,7 @@ export interface Column<T extends Record<string, unknown> = any> {
   minWidth?: number
   realWidth?: number
   header?: string
+  order?: number
   sortable?: boolean
   filterable?: boolean
   filterMultiple?: boolean
@@ -69,4 +74,5 @@ export interface Column<T extends Record<string, unknown> = any> {
   formatter?: Formatter<T>
   compareFn?: CompareFn<T>
   customFilterTemplate?: CustomFilterSlot
+  subColumns?: Slot
 }

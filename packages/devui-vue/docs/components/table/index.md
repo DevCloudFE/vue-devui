@@ -225,10 +225,11 @@
         header="First Name" 
         filterable 
         :filterList="filterList"
+        :order="0"
       ></d-column>
-      <d-column field="lastName" header="Last Name"></d-column>
-      <d-column field="gender" header="Gender"></d-column>
-      <d-column field="date" header="Date of birth"></d-column>
+      <d-column field="lastName" header="Last Name" :order="1"></d-column>
+      <d-column field="gender" header="Gender" :order="9"></d-column>
+      <d-column field="date" header="Date of birth" :order="3"></d-column>
     </d-table>
   </div>
 </template>

@@ -17,13 +17,15 @@ export function createColumn<T extends Record<string, unknown> = any>(
     compareFn,
     filterable,
     filterList,
-    filterMultiple
+    filterMultiple,
+    order
   } = props;
   const column: Column = reactive({});
 
-  watch([field, header], ([field, header]) => {
+  watch([field, header, order], ([field, header, order]) => {
     column.field = field;
     column.header = header;
+    column.order = order;
   }, { immediate: true });
 
   watch([sortable, compareFn], ([sortable, compareFn]) => {
@@ -50,6 +52,7 @@ export function createColumn<T extends Record<string, unknown> = any>(
     column.renderCell = defaultRenderCell;
     column.formatter = formatter.value;
     column.customFilterTemplate = templates.customFilterTemplate;
+    column.subColumns = templates.subColumns;
   });
 
   return column;
