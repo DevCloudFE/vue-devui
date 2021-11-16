@@ -2,9 +2,6 @@ import { defineComponent, reactive, PropType } from 'vue'
 import Input from '../../input/src/input'
 import { inputProps } from '../../input/src/use-input'
 import Icon from '../../icon/src/icon'
-// import { inputProps, InputType } from './use-input'
-// import './input.scss'
-// import { dFormItemEvents, IFormItem, formItemInjectionKey } from '../../form/src/form-types'
 
 import './input-icon.scss'
 
