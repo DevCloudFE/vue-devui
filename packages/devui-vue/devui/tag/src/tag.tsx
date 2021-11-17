@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 import { tagProps, TagProps } from './tag-types'
-import { useStyle } from './hooks'
+import { useClass, useColor } from './hooks'
 import './tag.scss'
 // 类型声明
 
@@ -9,12 +9,12 @@ export default defineComponent({
   props: tagProps,
   emits: [],
   setup(props: TagProps, { slots }) {
-    //获取type对应样式
-    const tagClass = useStyle(props)
+    const tagClass = useClass(props)
+    const tagColor = useColor(props)
 
     return () => (
-      <div class="devui-tag">
-        <span class={tagClass.value} style="display: block;">
+      <div class='devui-tag'>
+        <span class={tagClass.value} style={{ ...tagColor.value, display: 'block' }}>
           {slots.default?.()}
         </span>
       </div>
