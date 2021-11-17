@@ -1,65 +1,106 @@
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, onBeforeUpdate, onMounted, ref, SetupContext, toRefs, watch } from 'vue'
 import AccordionList from './accordion-list'
-import { AccordionMenuType } from './accordion.type'
+import { accordionProps, AccordionProps } from './accordion-types'
+import { AccordionItemClickEvent, AccordionMenuItem, AccordionMenuToggleEvent } from './accordion.type'
 import './accordion.scss'
 
 export default defineComponent({
   name: 'DAccordion',
-  props: {
-    data: { 
-      type: Array as () => Array<any> | AccordionMenuType,
-      default: null
-    },
-    /* Key值定义, 用于自定义数据结构 */
-    titleKey: { type : String, default: 'title' }, // 标题的key，item[titleKey]类型为string，为标题显示内容
-    loadingKey: { type : String, default: 'loading' }, // 子菜单动态加载item[loadingKey]类型为boolean
-    childrenKey: { type : String, default: 'children' }, // 子菜单Key
-    disabledKey: { type : String, default: 'disabled' }, // 是否禁用Key
-    activeKey: { type : String, default: 'active' }, // 菜单是否激活/选中
-    openKey: { type : String, default: 'open' }, // 菜单是否打开
+  props: accordionProps,
+  setup(props: AccordionProps, { emit }) {
+    const { data, childrenKey, activeKey, openKey ,accordionType, autoOpenActiveMenu , restrictOneOpen} = toRefs(props)
 
-    /* 菜单模板 */
-    menuItemTemplate: { type: String, default: '' }, // 可展开菜单内容条模板
-    itemTemplate: { type: String, default: '' }, // 可点击菜单内容条模板
+    let clickActiveItem: AccordionMenuItem | undefined = undefined //记录用户点击的激活菜单项
 
-    menuToggle: { 
-      type: Function as unknown as () => ((event: MouseEvent) => void),
-      default: null
-    }, // 可展开菜单展开事件
-    itemClick: { 
-      type: Function as unknown as () => ((event: MouseEvent) => void), 
-      default: null 
-    }, // 可点击菜单点击事件
-    activeItemChange: { 
-      type: Function as unknown as () => ((event: MouseEvent) => void), 
-      default: null 
-    },
+    const flatten = (arr: Array<any>, childrenKey = 'children', includeParent = false, includeLeaf = true) => {
+      return arr.reduce((acc, cur) => {
+        const children = cur[childrenKey];
+        if (children === undefined) {
+          if (includeLeaf) {
+            acc.push(cur);
+          }
+        } else {
+          if (includeParent) {
+            acc.push(cur);
+          }
+          if (Array.isArray(children)) {
+            acc.push(...flatten(children, childrenKey, includeParent));
+          }
+        }
+        return acc;
+      }, []);
+    }
 
-    /** 高级选项和模板 */
-    restrictOneOpen: { type: Boolean, default: false }, // 限制一级菜单同时只能打开一个
-    autoOpenActiveMenu: { type: Boolean, default: false }, // 自动展开活跃菜单
-    showNoContent: { type: Boolean, default: true }, // 没有内容的时候是否显示没有数据
-    noContentTemplate: { type: String, default: '' }, // 没有内容的时候使用自定义模板
-    loadingTemplate: { type: String, default: ''  }, // 加载中使用自定义模板
-    innerListTemplate: { type: String, default: ''  }, // 可折叠菜单内容完全自定义，用做折叠面板
+    const initActiveItem = () => {
+      const activeItem = flatten(data.value, childrenKey.value)
+        .filter(item => item[activeKey.value]).pop();
+      if (activeItem) {
+        if (!clickActiveItem) {
+          activeItemFn(activeItem);
+        }
+      } else {
+        clickActiveItem = undefined;
+      }
+    }
 
-    /* 内置路由/链接/动态判断路由或链接类型 */
-    linkType: { 
-      type: String as () => 'routerLink' | 'hrefLink' | 'dependOnLinkTypeKey' | '' | string, 
-      default: '' 
-    },
-    linkTypeKey: { type: String, default: 'linkType' }, // linkType为'dependOnLinkTypeKey'时指定对象linkType定义区
-    linkKey: { type: String, default: 'link' }, // 链接内容的key
-    linkTargetKey: { type: String, default: 'target' }, // 链接目标窗口的key
-    linkDefaultTarget: { type: String, default: '_self' }, // 不设置target的时候target默认值
+    // 激活子菜单项并去掉其他子菜单的激活
+    const activeItemFn = (item) => {
+      if (clickActiveItem && clickActiveItem[activeKey.value]) {
+        clickActiveItem[activeKey.value] = false;
+      }
+      item[activeKey.value] = true;
+      clickActiveItem = item;
+      emit('activeItemChange', clickActiveItem)
+    }
+    // 打开或关闭一级菜单，如果有限制只能展开一项则关闭其他一级菜单
+    const openMenuFn = (item, open) => {
+      if (open && restrictOneOpen.value) {
+        data.value.forEach(itemtemp => { itemtemp[openKey.value] = false; });
+      }
+      item[openKey.value] = open;
+    }
 
-    accordionType: { type: String as () => 'normal' | 'embed', default: 'normal' },
-  },
-  setup(props) {
-    const { data, accordionType } = reactive(props)
+    // 点击了可点击菜单
+    const itemClickFn = (itemEvent: AccordionItemClickEvent) => {
+      const prevActiveItem = clickActiveItem;
+      activeItemFn(itemEvent.item);
+      emit('itemClick', {...itemEvent, prevActiveItem: prevActiveItem});
+    }
 
+    const linkItemClickFn = (itemEvent: AccordionItemClickEvent) => {
+      const prevActiveItem = clickActiveItem;
+      clickActiveItem = itemEvent.item;
+      emit('itemClick', {...itemEvent, prevActiveItem: prevActiveItem});
+    }
+  
+    // 打开或关闭可折叠菜单
+    const menuToggleFn = (menuEvent: AccordionMenuToggleEvent) => {
+      openMenuFn(menuEvent.item, menuEvent.open);
+      emit('menuToggle', menuEvent);
+    }
+    
+    const cleanOpenData = () => {
+      flatten(data.value, childrenKey.value, true, false).forEach(
+        item => item[openKey.value] = undefined
+      )
+    }
+
+
+    onMounted(() => {
+      if (data.value) {
+        initActiveItem();
+      }
+    })
+    
+    watch(() => autoOpenActiveMenu.value, (current, preV) => {
+      console.log('cur, new', current, preV)
+      if (current && preV === false) {
+        cleanOpenData();
+      }
+    })
+    
     return () => {
-      return <div class={`devui-accordion-menu devui-scrollbar ${accordionType === 'normal'?'devui-accordion-menu-normal':''}`}>
+      return <div class={`devui-accordion-menu devui-scrollbar ${accordionType.value === 'normal'?'devui-accordion-menu-normal':''}`}>
         <AccordionList
           data={data}
           deepth={0}
