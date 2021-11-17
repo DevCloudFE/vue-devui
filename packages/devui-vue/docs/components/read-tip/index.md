@@ -28,6 +28,7 @@
 import { defineComponent } from 'vue'
 const readTipOptions =  {
     trigger: 'click',
+    overlayClassName:'red',
     rules: {
       trigger: 'click',
       position:'top',
@@ -53,6 +54,9 @@ const readTipOptions =  {
 
 .readtip-target:hover {
   text-decoration: underline;
+}
+.red {
+  color: red
 }
 </style>
 ```

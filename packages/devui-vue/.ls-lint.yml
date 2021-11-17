@@ -4,7 +4,7 @@ ls:
     .scss: kebab-case
     .vue: kebab-case
     .js: kebab-case
-    .ts: kebab-case
+    # .ts: kebab-case
     .tsx: kebab-case
     .spec.ts: kebab-case
     .route.ts: kebab-case

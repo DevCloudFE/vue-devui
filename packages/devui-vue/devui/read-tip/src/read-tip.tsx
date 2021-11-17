@@ -135,7 +135,7 @@ export default defineComponent({
     }
     return () => {
       return (
-      <div class="devui-read-tip">
+      <div class="devui-read-tip" >
         <div ref={defaultSlot}
           onClick={onClick}
         >

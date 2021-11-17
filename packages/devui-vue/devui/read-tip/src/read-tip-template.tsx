@@ -21,7 +21,7 @@ export default defineComponent({
                 <Teleport to={query} >
                     <div 
                     ref={temp}
-                    class={['read-tip-container', props.defaultTemplateProps.position]}
+                    class={['read-tip-container', props.defaultTemplateProps.position, props.defaultTemplateProps.overlayClassName]}
                     >
                         <span class='after' ></span>
                         {
