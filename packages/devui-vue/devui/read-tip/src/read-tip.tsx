@@ -50,10 +50,10 @@ export default defineComponent({
         rule.overlayClassName = rule.overlayClassName || options.overlayClassName
         rule.position = rule.position || options.position
         rule.contentTemplate = !!(ctx.slots.contentTemplate)
+        if (!('appendToBody' in rule)) rule.appendToBody = options.appendToBody
         const doms = defaultSlot.value.querySelectorAll(rule.selector);
         [...doms].map((dom, index) => {
-          dom.style.position = 'relative'
-          rule.dom = dom
+          if (rule.appendToBody === false) dom.style.position = 'relative';
           let newRule = reactive({
             id: null
           })
@@ -74,7 +74,6 @@ export default defineComponent({
       return rules
     }
     function show(dom, rule) {
-      dom.id
       rule.status = true
     }
     // 把传入的props.rules统一转为数组对象格式
@@ -137,30 +136,30 @@ export default defineComponent({
     }
     return () => {
       return (
-      <div class="devui-read-tip" >
-        <div ref={defaultSlot}
-          onClick={onClick}
-        >
-          {
-            ctx.slots?.default()
-          }
-        </div>
-
-        {(refRules).map(rule => (
-          <div
-
+        <div class="devui-read-tip" >
+          <div ref={defaultSlot}
+            onClick={onClick}
           >
-            {rule.status && (<TipsTemplate defaultTemplateProps={{ ...rule, top: tempTop, }} >
-              {
-               rule.contentTemplate && ctx.slots?.contentTemplate()
-              }
-            </TipsTemplate>)
-
+            {
+              ctx.slots?.default()
             }
           </div>
-        )
-        )}
-      </div>
+
+          {(refRules).map(rule => (
+            <div
+
+            >
+              {rule.status && (<TipsTemplate defaultTemplateProps={{ ...rule, top: tempTop, }} >
+                {
+                  rule.contentTemplate && ctx.slots?.contentTemplate()
+                }
+              </TipsTemplate>)
+
+              }
+            </div>
+          )
+          )}
+        </div>
       )
     }
   }

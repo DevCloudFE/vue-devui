@@ -76,9 +76,8 @@ const readTipOptions =  {
     <p class="first-content">Click here to display first content</p>
     <p class="second-content">Click here to display second content</p>
     <h3 class="third-content">Hover here to display third content</h3>
-    <h3 class="third-content">Another third content with same class name</h3>
-
-</div>
+    <h3 class="third-content">Hover here to display third content</h3>
+    <h3 class="four-content">4Another third content with same class name</h3>
   </d-read-tip >
 </template>
 
@@ -112,6 +111,13 @@ const readTipOptions =  {
         trigger: 'hover',
         selector: '.third-content',
         position: 'bottom',
+        title: 'This Is the Third Title',
+        content: 'Aenean libero urna, scelerisque tincidunt',
+      }, 
+      {
+        trigger: 'click',
+        selector: '.four-content',
+        position: 'right',
         title: 'This Is the Third Title',
         content: 'Aenean libero urna, scelerisque tincidunt',
       },
