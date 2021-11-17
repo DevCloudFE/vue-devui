@@ -11,10 +11,15 @@ export default defineComponent({
   setup(props: TagProps, { slots }) {
     const tagClass = useClass(props)
     const tagColor = useColor(props)
+    const tagTitle = props.titleContent || ''
 
     return () => (
       <div class='devui-tag'>
-        <span class={tagClass.value} style={{ ...tagColor.value, display: 'block' }}>
+        <span
+          class={tagClass.value}
+          style={{ ...tagColor.value, display: 'block' }}
+          title={tagTitle}
+        >
           {slots.default?.()}
         </span>
       </div>

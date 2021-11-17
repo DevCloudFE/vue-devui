@@ -10,6 +10,10 @@ export const tagProps = {
   color: {
     type: String as PropType<string>,
     default: ''
+  },
+  titleContent: {
+    type: String as PropType<string>,
+    default: ''
   }
 } as const
 
