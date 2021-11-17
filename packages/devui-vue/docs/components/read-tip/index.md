@@ -29,6 +29,8 @@ import { defineComponent } from 'vue'
 const readTipOptions =  {
     trigger: 'click',
     overlayClassName:'red',
+    appendToBody: false,
+    
     rules: {
       trigger: 'click',
       position:'top',
@@ -37,7 +39,6 @@ const readTipOptions =  {
       content: 'This is Jack\'s profile',
     },
   };
-
 </script>
 
 <style>
@@ -90,7 +91,7 @@ const readTipOptions =  {
     mouseleaveTime: 100,
     position: 'top',
     overlayClassName: 'read-tip-container',
-
+    appendToBody: false,
     rules: [
       {
         selector: '.first-content',

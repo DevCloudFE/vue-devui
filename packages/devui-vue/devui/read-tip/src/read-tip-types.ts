@@ -27,6 +27,7 @@ export type DefaultTemplateProps = {
     element,
     rule: ReadTipRule,
   }) => { title?: string; content?: string;  }
+  appendToBody?: boolean
 }
 
 export interface ReadTipOptions {
@@ -38,7 +39,7 @@ export interface ReadTipOptions {
   overlayClassName?: string
   appendToBody?: boolean
   rules: ReadTipRules
-  
+
 }
 
 export type ReadTipRules = ReadTipRule | ReadTipRule[];
