@@ -7,6 +7,10 @@
 // @import '../../style/core/z-index';
 .devui-read-tip {
   position: relative;
+
+  .title {
+    font-size: 16px;
+  }
 }
 
 .source {

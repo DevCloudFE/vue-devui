@@ -90,12 +90,14 @@ const readTipOptions =  {
     mouseleaveTime: 100,
     position: 'top',
     overlayClassName: 'read-tip-container',
+
     rules: [
       {
         selector: '.first-content',
         position: 'top',
         title: 'This Is the First Title',
         content: 'Lorem ipsum dolor sit amet, consectetur ad.',
+        overlayClassName:'red',
       },
       {
         selector: '.second-content',
@@ -103,6 +105,7 @@ const readTipOptions =  {
         title: 'This Is the Second Title',
         content: 'Class aptent taciti sociosqu ad litora torquent per conubia nostra',
         overlayClassName: 'child-class',
+        overlayClassName:'red',
       },
       {
         trigger: 'hover',
@@ -145,6 +148,64 @@ const readTipOptions =  {
 
 .third-content {
   cursor: pointer;
+}
+
+.red {
+  color: red
+}
+</style>
+```
+
+:::
+
+
+
+### 异步获取数据
+
+通过设置selector选择需要显示readtip的元素，传入title和content设置显示的内容。
+:::demo 
+
+```vue
+<template>
+  <d-read-tip :readTipOptions="readTipOptions" >
+    <h1>You can pass data asynchronously</h1>
+  <p class="readtip-content">Using function fullElement to pass data</p>
+  <p>The following is the target you want to show readtip</p>
+  <h4 class="readtip-target">Display readtip</h4>
+</template>
+
+<script setup>
+import { defineComponent } from 'vue'
+const readTipOptions =   {
+    trigger: 'click',
+    rules: { 
+      selector: 'h4',
+      trigger: 'click', 
+      dataFn: getDataFromDB,
+      key: 'GetData' },
+  };
+function getDataFromDB ({ element, rule }) {
+    return { content: element.innerHTML, title: rule.key }
+  }
+</script>
+
+<style>
+.readtip-container {
+  padding: 12px;
+}
+
+.readtip-target {
+  display: inline-block;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+.readtip-target:hover {
+  text-decoration: underline;
+}
+.red {
+  color: red
 }
 </style>
 ```

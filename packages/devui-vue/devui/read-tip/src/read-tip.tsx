@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, reactive, Teleport, onUnmounted } from 'vue'
+import { defineComponent, ref, onMounted, reactive, onUnmounted } from 'vue'
 import { readTipProps, ReadTipProps, ReadTipOptions } from './read-tip-types'
 import './read-tip.scss'
 import TipsTemplate from './read-tip-template';
@@ -47,11 +47,13 @@ export default defineComponent({
       rules.map(rule => {
         rule.status = false
         trigger = rule.trigger || trigger
+        rule.overlayClassName = rule.overlayClassName || options.overlayClassName
+        rule.position = rule.position || options.position
         rule.contentTemplate = !!(ctx.slots.contentTemplate)
         const doms = defaultSlot.value.querySelectorAll(rule.selector);
         [...doms].map((dom, index) => {
           dom.style.position = 'relative'
-
+          rule.dom = dom
           let newRule = reactive({
             id: null
           })
@@ -72,7 +74,7 @@ export default defineComponent({
       return rules
     }
     function show(dom, rule) {
-      const top = dom.offsetTop
+      dom.id
       rule.status = true
     }
     // 把传入的props.rules统一转为数组对象格式

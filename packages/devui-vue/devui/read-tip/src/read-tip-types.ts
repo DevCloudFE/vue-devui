@@ -19,9 +19,14 @@ export type DefaultTemplateProps = {
   selector?: string
   position?: string
   id? : string
-  temp: string
-  contentTemplate: boolean
+  temp?: string
+  dom?: Element
+  contentTemplate?: boolean
   overlayClassName?: string
+  dataFn?: ({
+    element,
+    rule: ReadTipRule,
+  }) => { title?: string; content?: string;  }
 }
 
 export interface ReadTipOptions {
@@ -51,10 +56,10 @@ export interface ReadTipRule {
   overlayClassName?: string
   appendToBody?: boolean
   //customData与template搭配使用，customData为传入模板的上下文，可以自定义模板内容
-  // dataFn?: ({
-  //   element,
-  //   rule: ReadTipRule,
-  // }) => Observable<{ title?: string; content?: string; template?: TemplateRef<any>; customData?: any }>
+  dataFn?: ({
+    element,
+    rule: ReadTipRule,
+  }) => { title?: string; content?: string;  }
 }
 
 
