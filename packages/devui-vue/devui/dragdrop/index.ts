@@ -1,6 +1,6 @@
 import type { App } from 'vue'
-import DraggableDirective from './src/draggable.directive'
-import DroppableDirective from './src/droppable.directive'
+import DraggableDirective from './src/draggable-directive'
+import DroppableDirective from './src/droppable-directive'
 
 export { DraggableDirective, DroppableDirective }
 

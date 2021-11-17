@@ -12,6 +12,8 @@ interface ValidateFnParam {
   isFormTag: boolean
   message: string
   messageShowType: MessageShowType
+  dfcUID: string
+  popPosition: PopPosition | Array<BasePopPosition>
 }
 
 interface CustomValidatorRuleObject {
@@ -24,6 +26,7 @@ interface DirectiveValidateRuleOptions {
   updateOn?: UpdateOn
   errorStrategy?: ErrorStrategy
   asyncDebounceTime?: number
+  popPosition?: PopPosition | Array<BasePopPosition>
 }
 
 interface DirectiveBindingValue {
@@ -38,9 +41,18 @@ interface DirectiveCustomRuleItem extends RuleItem {
   asyncValidators: CustomValidatorRuleObject[]
 }
 
+export interface ShowPopoverErrorMessageEventData {
+  showPopover?: boolean 
+  message?: string
+  uid?: string, 
+  popPosition?: PopPosition
+}
+
 type MessageShowType = 'popover' | 'text' | 'none' | 'toast';
 type UpdateOn = 'input' | 'focus' | 'change' | 'blur' | 'submit';
 type ErrorStrategy = 'dirty' | 'pristine';
+type BasePopPosition = 'left' | 'right' | 'top' | 'bottom';
+type PopPosition = BasePopPosition | 'left-top' | 'left-bottom' | 'top-left' | 'top-right' | 'right-top' | 'right-bottom' | 'bottom-left' | 'bottom-right';
 
 enum ErrorStrategyEnum {
   dirty = 'dirty',
@@ -198,11 +210,17 @@ function handleErrorStrategyPass(el: HTMLElement): void {
   el.setAttribute('class', classList.join(' '));
 }
 
-function handleValidateError({el, tipEl, message, isFormTag, messageShowType}: Partial<ValidateFnParam>): void {
+function handleValidateError({el, tipEl, message, isFormTag, messageShowType, dfcUID, popPosition = 'right-bottom'}: Partial<ValidateFnParam>): void {
   // 如果该指令用在form标签上，这里做特殊处理
   if(isFormTag && messageShowType === MessageShowTypeEnum.toast) {
     // todo：待替换为toast
     alert(message);
+    return;
+  }
+
+  // messageShowType为popover时，设置popover
+  if(MessageShowTypeEnum.popover === messageShowType) {
+    EventBus.emit("showPopoverErrorMessage", {showPopover: true, message, uid: dfcUID, popPosition} as ShowPopoverErrorMessageEventData);
     return;
   }
 
@@ -225,7 +243,7 @@ function getFormName(binding: DirectiveBinding): string {
 }
 
 // 校验处理函数
-function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType}: Partial<ValidateFnParam>) {
+function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType, dfcUID, popPosition}: Partial<ValidateFnParam>) {
   validator.validate({modelName: modelValue}).then(() => {
     handleValidatePass(el, tipEl);
   }).catch((err) => {
@@ -240,13 +258,22 @@ function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowTyp
       msg = errors[0].message;
     }
 
-    handleValidateError({el, tipEl, message: msg, isFormTag, messageShowType});
+    handleValidateError({el, tipEl, message: msg, isFormTag, messageShowType, dfcUID, popPosition});
   })
+}
+
+// 检测popover的position是否是正确值
+function checkValidPopsition(positionStr: string): boolean {
+  const validPosition = ['left', 'right', 'top', 'bottom', 'left-top', 'left-bottom', 'top-left', 'top-right', 'right-top', 'right-bottom', 'bottom-left', 'bottom-right'];
+  const isValid = validPosition.includes(positionStr);
+  !isValid && console.warn(`invalid popPosition value '${positionStr}'.`);
+  return isValid
 }
 
 export default {
   mounted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode): void {
     const isFormTag = el.tagName === 'FORM';
+    const dfcUID = el.parentNode.parentNode.parentElement.dataset.uid;
 
     const hasOptions = isObject(binding.value) && hasKey(binding.value, 'options');
 
@@ -259,11 +286,24 @@ export default {
     let { errorStrategy }: DirectiveBindingValue = binding.value;
 
     // errorStrategy可配置在options对象中
-    const { 
+    let { 
       updateOn = UpdateOnEnum.change, 
       errorStrategy: ErrorStrategy = ErrorStrategyEnum.dirty, 
-      asyncDebounceTime = 300
+      asyncDebounceTime = 300,
+      popPosition = ['right', 'bottom']
     }: DirectiveValidateRuleOptions = options;
+
+    // 设置popover的位置
+    if(messageShowType === MessageShowTypeEnum.popover) {
+      if(Array.isArray(popPosition)) {
+        popPosition = (popPosition.length > 1 ? popPosition.join('-') : popPosition[0]) as PopPosition;
+        if(!checkValidPopsition(popPosition)) {
+          popPosition = 'right-bottom';
+        }
+      }else if(!checkValidPopsition(popPosition)) {
+        popPosition = 'right-bottom';
+      }
+    }
 
     if(!errorStrategy) {
       errorStrategy = ErrorStrategy;
@@ -340,7 +380,10 @@ export default {
 
     const htmlEventValidateHandler = (e) => {
       const modelValue = e.target.value;
-      validateFn({validator, modelValue, el, tipEl, isFormTag: false, messageShowType});
+      if(messageShowType === MessageShowTypeEnum.popover) {
+        EventBus.emit("showPopoverErrorMessage", {showPopover: false, message: "", uid: dfcUID} as ShowPopoverErrorMessageEventData);
+      }
+      validateFn({validator, modelValue, el, tipEl, isFormTag: false, messageShowType, dfcUID, popPosition});
     }
 
     // 监听事件验证
