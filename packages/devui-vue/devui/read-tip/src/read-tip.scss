@@ -44,9 +44,6 @@
   }
   // 定位 top
   &.top {
-    top: -60px;
-    left: 0;
-
     .after {
       bottom: -4px;
     }
@@ -54,9 +51,6 @@
 
   // 定位 left
   &.left {
-    right: calc(100% + 10px);
-    top: -2px;
-
     .after {
       right: -4px;
     }
@@ -64,9 +58,6 @@
 
   // 定位 right
   &.right {
-    left: calc(100% + 10px);
-    top: -2px;
-
     .after {
       left: -4px;
     }
@@ -74,8 +65,6 @@
 
   // 定位 bottom
   &.bottom {
-    top: calc(100% + 10px);
-
     .after {
       top: -4px;
     }

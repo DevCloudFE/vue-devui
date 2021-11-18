@@ -18,21 +18,15 @@
     <p class="readtip-content">Set selector to display readtip</p>
     <p>The following is the target you want to show readtip</p>
     <span class="readtip-target">@Jack</span>
-    <template #contentTemplate>
-      <p>我是devui 基础用法</p>  
-    </template>
   </d-read-tip >
 </template>
 
 <script setup>
 import { defineComponent } from 'vue'
 const readTipOptions =  {
-    trigger: 'click',
-    overlayClassName:'red',
-    appendToBody: false,
-    
+    trigger: 'hover',
     rules: {
-      trigger: 'click',
+      trigger: 'hover',
       position:'top',
       selector: '.readtip-target',
       title: 'Name: Jack',
@@ -42,12 +36,14 @@ const readTipOptions =  {
 </script>
 
 <style>
+.source{
+  overflow: visible;
+}
 .readtip-container {
   padding: 12px;
 }
 
 .readtip-target {
-  display: inline-block;
   font-weight: bold;
   cursor: pointer;
   margin-top: 16px;
@@ -57,7 +53,45 @@ const readTipOptions =  {
   text-decoration: underline;
 }
 .red {
-  color: red
+  /* color: red */
+}
+@import '@devui-design/icons/icomoon/devui-icon.css'
+.icon {
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.icon + span {
+  vertical-align: middle;
+}
+.card-block {
+  margin-right: 16px;
+  i{
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  i + span {
+    vertical-align: middle;
+  }
+}
+.d-card {
+  cursor: pointer;
+  transition:
+    box-shadow .3s cubic-bezier(.645,.045,.355,1),
+    transform .3s cubic-bezier(.645,.045,.355,1);
+  &:hover {
+    box-shadow: 0 4px 16px 0 rgba(0,0,0,.1);
+    transform: translateY(-5px);
+  }
+}
+.card-container {
+  width: 350px;
+}
+.action-text {
+  color: #8a8e99;
 }
 </style>
 ```
@@ -77,7 +111,6 @@ const readTipOptions =  {
     <p class="second-content">Click here to display second content</p>
     <h3 class="third-content">Hover here to display third content</h3>
     <h3 class="third-content">Hover here to display third content</h3>
-    <h3 class="four-content">4Another third content with same class name</h3>
   </d-read-tip >
 </template>
 
@@ -108,7 +141,7 @@ const readTipOptions =  {
         overlayClassName:'red',
       },
       {
-        trigger: 'hover',
+        trigger: 'click',
         selector: '.third-content',
         position: 'bottom',
         title: 'This Is the Third Title',
@@ -127,12 +160,14 @@ const readTipOptions =  {
 </script>
 
 <style>
+.source{
+  overflow: visible;
+}
 .readtip-container {
   padding: 12px;
 }
 
 .readtip-target {
-  display: inline-block;
   font-weight: bold;
   cursor: pointer;
   margin-top: 16px;
@@ -166,6 +201,124 @@ const readTipOptions =  {
 :::
 
 
+
+
+### 传入模板显示内容
+可以通过传入template自定义需要显示的内容，传入template时不必再传入title和content。
+:::demo 
+
+```vue
+<template>
+  <d-read-tip :readTipOptions="readTipOptions" >
+    <h1>You can also pass in template</h1>
+    <p class="readtip-content">Write your own template</p>
+    <p>The following is the target you want to show readtip</p>
+    <p class="readtip-target2">DEVUI Course</p>
+    <p class="readtip-target2">Another DEVUI Course with same class name</p>
+    <template #contentTemplate>
+      <d-card class="d-card">
+        <template #cardAvatar>
+          <d-avatar name="DevUI"></d-avatar>
+        </template>
+        <template #cardTitle>
+          DEVUI Course
+        </template>
+        <template #cardSubtitle class="icon">
+          <d-icon name="company-member"></d-icon><span>DevUI</span>
+        </template>
+        <template #cardContent>
+          DEVUI is a free open-source and common solution for the front end of enterprise mid- and back-end products. Its design values are basedon...
+        </template>
+        <template #cardActions>
+          <div class="card-block">
+            <d-icon name="like"></d-icon ><span>12</span>
+          </div>
+          <div class="card-block">
+            <d-icon name="star-o"></d-icon ><span>8</span>
+          </div>
+          <div class="card-block">
+            <d-icon name="message"></d-icon ><span>8</span>
+          </div>
+        </template>
+      </d-card>  
+    </template>
+  </d-read-tip >
+</template>
+
+<script setup>
+import { defineComponent } from 'vue'
+const readTipOptions =  {
+    trigger: 'click',    
+    rules: {
+      trigger: 'click',
+      position:'top',
+      selector: '.readtip-target2',
+      title: 'Name: Jack',
+      content: 'This is Jack\'s profile',
+    },
+  };
+</script>
+
+<style>
+.readtip-container {
+  padding: 12px;
+}
+
+.readtip-target {
+  display: block;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+.readtip-target:hover {
+  text-decoration: underline;
+}
+.red {
+  /* color: red */
+}
+@import '@devui-design/icons/icomoon/devui-icon.css'
+.icon {
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.icon + span {
+  vertical-align: middle;
+}
+.card-block {
+  margin-right: 16px;
+  i{
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  i + span {
+    vertical-align: middle;
+  }
+}
+.d-card {
+  cursor: pointer;
+  transition:
+    box-shadow .3s cubic-bezier(.645,.045,.355,1),
+    transform .3s cubic-bezier(.645,.045,.355,1);
+  &:hover {
+    box-shadow: 0 4px 16px 0 rgba(0,0,0,.1);
+    transform: translateY(-5px);
+  }
+}
+.card-container {
+  width: 350px;
+}
+.action-text {
+  color: #8a8e99;
+}
+</style>
+```
+
+:::
 
 ### 异步获取数据
 
@@ -202,7 +355,6 @@ function getDataFromDB ({ element, rule }) {
 }
 
 .readtip-target {
-  display: inline-block;
   font-weight: bold;
   cursor: pointer;
   margin-top: 16px;
@@ -225,9 +377,9 @@ d-read-tip 参数
 
 | 参数                 | 类型               | 默认 | 说明                            | 跳转 Demo              | 全局配置项 |
 | -------------------- | ------------------ | ---- | ------------------------------- | ---------------------- | ---------- |
-| readTipOptions       | ReadTipOptions     | --   | 必选，配置提示选项              | 基本用法               | --         |
-| readTipOptions.rules | ReadTipRules       | --   | 必选，配置 readtip 内容         | 包括多个提示的 readtip | --         |
-| contentTemplate      | `TemplateRef<any>` | --   | 可选，传入模板显示 readtip 内容 | 传入模板显示内容       | --         |
+| readTipOptions       | ReadTipOptions     | --   | 必选，配置提示选项              | [基本用法](#基本用法)               | --         |
+| readTipOptions.rules | ReadTipRules       | --   | 必选，配置 readtip 内容         |  [基本用法](#基本用法) | --         |
+| contentTemplate      | `TemplateRef<any>` | --   | 可选，传入模板显示 readtip 内容 |  [传入模板显示内容](#传入模板显示内容)      | --         |
 
 
 
