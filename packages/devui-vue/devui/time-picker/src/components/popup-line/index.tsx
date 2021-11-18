@@ -53,7 +53,6 @@ export default defineComponent({
       timeListDom,
     )
 
-
     const setOutoTime = (time:string)=>{
       resetTimeValue(time)
     }

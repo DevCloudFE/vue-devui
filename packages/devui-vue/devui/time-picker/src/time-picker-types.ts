@@ -40,5 +40,4 @@ export const timePickerProps = {
     }
 } as const;
 
-
 export type TimePickerProps = ExtractPropTypes<typeof timePickerProps>;
