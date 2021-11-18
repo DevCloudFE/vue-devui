@@ -52,47 +52,7 @@ const readTipOptions =  {
 .readtip-target:hover {
   text-decoration: underline;
 }
-.red {
-  /* color: red */
-}
-@import '@devui-design/icons/icomoon/devui-icon.css'
-.icon {
-  cursor: pointer;
-  font-size: 16px;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-.icon + span {
-  vertical-align: middle;
-}
-.card-block {
-  margin-right: 16px;
-  i{
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 8px;
-    vertical-align: middle;
-  }
-  i + span {
-    vertical-align: middle;
-  }
-}
-.d-card {
-  cursor: pointer;
-  transition:
-    box-shadow .3s cubic-bezier(.645,.045,.355,1),
-    transform .3s cubic-bezier(.645,.045,.355,1);
-  &:hover {
-    box-shadow: 0 4px 16px 0 rgba(0,0,0,.1);
-    transform: translateY(-5px);
-  }
-}
-.card-container {
-  width: 350px;
-}
-.action-text {
-  color: #8a8e99;
-}
+
 </style>
 ```
 
@@ -213,8 +173,8 @@ const readTipOptions =  {
     <h1>You can also pass in template</h1>
     <p class="readtip-content">Write your own template</p>
     <p>The following is the target you want to show readtip</p>
-    <p class="readtip-target2">DEVUI Course</p>
-    <p class="readtip-target2">Another DEVUI Course with same class name</p>
+    <h3 class="readtip-target2">DEVUI Course</h3>
+    <h3 class="readtip-target2">Another DEVUI Course with same class name</h3>
     <template #contentTemplate>
       <d-card class="d-card">
         <template #cardAvatar>
@@ -260,24 +220,7 @@ const readTipOptions =  {
 </script>
 
 <style>
-.readtip-container {
-  padding: 12px;
-}
 
-.readtip-target {
-  display: block;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 16px;
-}
-
-.readtip-target:hover {
-  text-decoration: underline;
-}
-.red {
-  /* color: red */
-}
-@import '@devui-design/icons/icomoon/devui-icon.css'
 .icon {
   cursor: pointer;
   font-size: 16px;
