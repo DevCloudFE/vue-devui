@@ -57,10 +57,11 @@ export default defineComponent({
           let newRule = reactive({
             id: null
           })
+          const id = rule.selector.slice(rule.selector[0] === '.' ? 1 : 0) + index; 
           if (index > 0) {
             newRule = { ...rule }
-            dom.id = rule.selector.slice(1) + index
-            newRule.id = rule.selector.slice(1) + index
+            dom.id = id
+            newRule.id = id
             rules.push(newRule)
           }
 
@@ -149,7 +150,7 @@ export default defineComponent({
             <div
 
             >
-              {rule.status && (<TipsTemplate defaultTemplateProps={{ ...rule, top: tempTop, }} >
+              {rule.status && (<TipsTemplate defaultTemplateProps={{ ...rule }} >
                 {
                   rule.contentTemplate && ctx.slots?.contentTemplate()
                 }

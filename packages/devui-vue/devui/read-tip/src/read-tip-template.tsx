@@ -7,15 +7,11 @@ export default defineComponent({
     props: readTipProps,
     emits: [],
     setup(props: ReadTipProps, ctx) {
-        const { defaultTemplateProps } = toRefs(props)
+        const { defaultTemplateProps, } = toRefs(props)
         let rule: DefaultTemplateProps = defaultTemplateProps.value
-        const query = rule?.id ? `#${rule.id}` : rule.selector
-        const domBounding = document.querySelector(query).getBoundingClientRect();  
-        const styles: any = reactive(rule.appendToBody ? {
-            top: domBounding.y + document.documentElement.scrollTop + 'px',
-            left: domBounding.x + 'px',
-            transform: ''
-        } : {})
+        const query = rule?.id ? `#${rule.id}` : rule.selector;
+
+        const styles: any = reactive({});
         if (typeof rule.dataFn === 'function') {
             const dataFn = rule.dataFn({ element: document.querySelector(query), rule })
             rule = { ...rule, ...dataFn }
@@ -23,28 +19,32 @@ export default defineComponent({
 
         const temp = ref(null)
         onMounted(() => {
-            // 当定位为top展示时  元素定位高度需要计算弹窗的高度
-            if (rule.position == 'top' && !rule.appendToBody) {
-                temp.value.style.top = (- temp.value.offsetHeight - 10) + 'px'
-            } else if (rule.appendToBody) {
-                switch(rule.position) {
-                    case 'top': 
-                        styles.transform = 'translate(0px, calc(-100% - 10px))'
-                        break;
-                    case 'left': 
-                        styles.transform = 'translate(calc(-100% - 10px), 0)'
-                        break;
-                    case 'bottom': 
-                        styles.top = domBounding.y + domBounding.height + document.documentElement.scrollTop + 10 + 'px'
-                        break;
-                    case 'right': 
-                    console.log(temp.value)
-                        styles.left = domBounding.x + domBounding.width + 'px'
-                        break;
-                }
-                // const domBounding = rule.dom.getBoundingClientRect();                
-                // styles.top = domBounding.y + document.documentElement.scrollTop - temp.value.offsetHeight - 10 + 'px'
-                // styles.left = domBounding.x + 'px';
+            const domBounding = document.querySelector(query).getBoundingClientRect();
+            const distance = 10;
+            let positionTop = 0;
+            let positionLeft = 0;
+            const targetDom = document.querySelector('.read-tip-container').getBoundingClientRect();
+            if (rule.appendToBody) {
+                positionTop = domBounding.y + document.documentElement.scrollTop;
+                positionLeft = domBounding.x;
+            }
+            switch(rule.position) {
+                case 'top': 
+                    styles.top = positionTop - targetDom.height - distance + 'px';
+                    styles.left = positionLeft + 'px';
+                    break;
+                case 'left': 
+                    styles.top = positionTop + 'px';
+                    styles.left = positionLeft - targetDom.width - distance  + 'px';
+                    break;
+                case 'bottom': 
+                    styles.top = positionTop + domBounding.height + distance + 'px'
+                    styles.left = positionLeft + 'px';
+                    break;
+                case 'right': 
+                    styles.top = positionTop + 'px';
+                    styles.left = positionLeft + domBounding.width + distance  + 'px';
+                    break;
             }
         })
         return () => {

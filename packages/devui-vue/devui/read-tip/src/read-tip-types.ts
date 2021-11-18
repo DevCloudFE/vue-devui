@@ -15,7 +15,6 @@ export type Trigger = 'hover' | 'click'
 export type DefaultTemplateProps = {
   title?: string
   content?: string
-  top?: number
   selector?: string
   position?: string
   id? : string
