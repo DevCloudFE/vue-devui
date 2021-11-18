@@ -2,7 +2,7 @@ import type { ExtractPropTypes, PropType } from 'vue'
 
 export type ModelValue = number | string
 
-export const skeletonProps = {
+export const itemProps = {
   row: {
     type: Number,
     default: 0
@@ -46,7 +46,19 @@ export const skeletonProps = {
   rowWidth: {
     type: [Number, String, Array] as PropType<number | string | Array<number | string>>,
     default: ['100%']
+  },
+  shape: {
+    type: String as PropType<'avatar' | 'image' | 'title' | 'paragraph' | 'button'>,
+  },
+  width: {
+    type: [String, Number] as PropType<ModelValue>
+  },
+  height: {
+    type: [String, Number] as PropType<ModelValue>
+  },
+  style:{
+    type: String
   }
 } as const
 
-export type SkeletonProps = ExtractPropTypes<typeof skeletonProps>
+export type ItemProps = ExtractPropTypes<typeof itemProps>

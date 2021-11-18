@@ -1,21 +1,19 @@
-import './skeleton.scss'
+import './item.scss'
 
 import { defineComponent } from 'vue'
-import { skeletonProps, SkeletonProps } from './skeleton-types'
+import { itemProps, ItemProps } from './item-types'
 
 export default defineComponent({
-  name: 'DSkeleton',
-  props: skeletonProps,
-  setup(props: SkeletonProps, ctx) {
+  name: 'DSkeletonItem',
+  props: itemProps,
+  setup(props: ItemProps, ctx) {
     const { slots } = ctx;
 
     function renderAnimate(isAnimated) {
       return isAnimated ? 'devui-skeleton__animated' : ''
     }
-    function renderBorderRadius(isRound) {
-      return isRound ? 'border-radius: 1em;' : ''
-    }
-    function renderParagraph(isShown, rowNum, rowWidth, round) {
+
+    function renderShapeParagraph(rowNum, rowWidth, round) {
       const arr = []
 
       function pushIntoArray(type) {
@@ -50,9 +48,9 @@ export default defineComponent({
         }
       })()
 
-      return <div class="devui-skeleton__paragraph" v-show={isShown}>{
+      return <div class={`devui-skeleton__shape__paragraph ${renderAnimate(props.animate)}`}>{
         arr.map(item => {
-          return <div class="devui-skeleton__item" style={round ? 'border-radius: 1em;' : '' + `width: ${item.width}`} />
+          return <div class="devui-skeleton__shape__paragraph__item" style={round ? 'border-radius: 1em;' : '' + `width: ${item.width}`} />
         })
       }</div>
     }
@@ -72,38 +70,23 @@ export default defineComponent({
 
       return (renderAvatarSize(avatarSize) + renderAvatarShape(avatarShape))
     }
-    function renderTitle(isVisible, titleWidth, isRound) {
-      function renderTitleWidth(titleWidth) {
-        switch (typeof titleWidth) {
-          case 'string':
-            return `width: ${titleWidth};`
-          case 'number':
-            return `width: ${titleWidth}px;`
-        }
-      }
-      function renderTitleVisibility(isVisible) {
-        return isVisible ? null : 'visibility: hidden;'
-      }
-
-      return (renderTitleWidth(titleWidth) + renderBorderRadius(isRound) + renderTitleVisibility(isVisible))
-    }
-    function renderDefaultSkeleton() {
-      return <>
-        <div class="devui-skeleton__avatar" v-show={props.avatar}>
-          <div class="avatar" style={renderAvatarStyle(props.avatarSize, props.avatarShape)} />
-        </div>
-        <div class="devui-skeleton__group">
-          <div class="devui-skeleton__title" style={renderTitle(props.title, props.titleWidth, props.round)} />
-          {renderParagraph(props.paragraph, props.row, props.rowWidth, props.round)}
-        </div>
-      </>
-    }
 
     return () => {
-      if (props.loading) {
-        return <div class={`devui-skeleton ${renderAnimate(props.animate)}`}>
-          {renderDefaultSkeleton()}
-        </div>
+      if (props.loading && props.shape) {
+        switch (props.shape) {
+          case 'avatar':
+            return <>
+              <div class={`devui-skeleton__shape__avatar ${renderAnimate(props.animate)}`} style={renderAvatarStyle(props.avatarSize, props.avatarShape) + props.style} />
+            </>
+          case 'paragraph':
+            return <>
+              {renderShapeParagraph(props.row, props.rowWidth, props.round)}
+            </>
+          default:
+            return <>
+              <div class={`devui-skeleton__shape__${props.shape} ${renderAnimate(props.animate)}`} style={`${props.style}`} />
+            </>
+        }
       }
       return <>{slots.default?.()}</>
     }

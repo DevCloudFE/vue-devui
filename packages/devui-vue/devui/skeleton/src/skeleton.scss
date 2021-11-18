@@ -46,42 +46,6 @@
   }
 }
 
-.devui-skeleton__shape__avatar,
-.devui-skeleton__shape__image,
-.devui-skeleton__shape__title,
-.devui-skeleton__shape__button {
-  background-color: #f2f2f2;
-}
-.devui-skeleton__shape__avatar {
-  width: 40px;
-  height: 40px;
-  background-color: #f2f2f2;
-}
-.devui-skeleton__shape__image {
-  width: 200px;
-  height: 150px;
-  border-radius: 4px;
-}
-.devui-skeleton__shape__title {
-  width: 40%;
-  height: 24px;
-}
-.devui-skeleton__shape__paragraph {
-  &__item {
-    background-color: #f2f2f2;
-    width: 100%;
-    height: 16px;
-    margin-bottom: 10px;
-  }
-
-  &__item:last-child {
-    width: 60%;
-  }
-}
-.devui-skeleton__shape__button {
-  width: 115px;
-  height: 32px;
-}
 
 @keyframes skeletonLoading {
   to {
@@ -91,13 +55,7 @@
 
 .devui-skeleton__animated > .devui-skeleton__group > .devui-skeleton__title,
 .devui-skeleton__animated > .devui-skeleton__group > div > .devui-skeleton__item,
-.devui-skeleton__animated > .devui-skeleton__avatar > .avatar,
-.devui-skeleton__animated .devui-skeleton__shape__avatar,
-.devui-skeleton__animated.devui-skeleton__shape__avatar,
-.devui-skeleton__animated.devui-skeleton__shape__image,
-.devui-skeleton__animated.devui-skeleton__shape__title,
-.devui-skeleton__animated.devui-skeleton__shape__paragraph > .devui-skeleton__shape__paragraph__item,
-.devui-skeleton__animated.devui-skeleton__shape__button {
+.devui-skeleton__animated > .devui-skeleton__avatar > .avatar {
   background: linear-gradient(
       100deg,
       rgba(255, 255, 255, 0) 40%,

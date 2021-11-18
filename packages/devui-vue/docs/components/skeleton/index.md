@@ -113,11 +113,11 @@ export default defineComponent({
 
 ```vue
 <template>
-<d-skeleton :shape="'avatar'" :avatar-size="80" :style="'margin-left:40px;'" />
-  <d-skeleton :shape="'image'" />
-  <d-skeleton :shape="'title'" />
-  <d-skeleton :shape="'paragraph'" :row="3" :row-width="['75%','50%']" />
-  <d-skeleton :shape="'button'" />
+  <d-skeleton-item :shape="'avatar'" :avatar-size="80" :style="'margin-left:40px;'" />
+  <d-skeleton-item :shape="'image'" />
+  <d-skeleton-item :shape="'title'" />
+  <d-skeleton-item :shape="'paragraph'" :row="3" :row-width="['75%','50%']" />
+  <d-skeleton-item :shape="'button'" />
 </template>
 ```
 
