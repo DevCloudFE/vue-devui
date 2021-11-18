@@ -48,27 +48,19 @@ export default defineComponent({
         }
       })()
 
-      return <div class={`devui-skeleton__shape__paragraph ${renderAnimate(props.animate)}`}>{
+      return <div class={`devui-skeleton__shape__paragraph ${renderAnimate(props.animate)}`} {...ctx.attrs}>{
         arr.map(item => {
           return <div class="devui-skeleton__shape__paragraph__item" style={round ? 'border-radius: 1em;' : '' + `width: ${item.width}`} />
         })
       }</div>
     }
 
-    function renderAvatarStyle(avatarSize, avatarShape) {
+    function renderAvatarStyle(avatarShape) {
       function renderAvatarShape(avatarShape) {
         return avatarShape === 'square' ? '' : 'border-radius:50%;'
       }
-      function renderAvatarSize(avatarSize) {
-        switch (typeof avatarSize) {
-          case 'string':
-            return `width:${avatarSize};height:${avatarSize};`
-          case 'number':
-            return `width:${avatarSize}px;height:${avatarSize}px;`
-        }
-      }
 
-      return (renderAvatarSize(avatarSize) + renderAvatarShape(avatarShape))
+      return (renderAvatarShape(avatarShape))
     }
 
     return () => {
@@ -76,7 +68,7 @@ export default defineComponent({
         switch (props.shape) {
           case 'avatar':
             return <>
-              <div class={`devui-skeleton__shape__avatar ${renderAnimate(props.animate)}`} style={renderAvatarStyle(props.avatarSize, props.avatarShape) + props.style} />
+              <div class={`devui-skeleton__shape__avatar ${renderAnimate(props.animate)}`} style={renderAvatarStyle(props.avatarShape)} {...ctx.attrs} />
             </>
           case 'paragraph':
             return <>
@@ -84,7 +76,7 @@ export default defineComponent({
             </>
           default:
             return <>
-              <div class={`devui-skeleton__shape__${props.shape} ${renderAnimate(props.animate)}`} style={`${props.style}`} />
+              <div class={`devui-skeleton__shape__${props.shape} ${renderAnimate(props.animate)}`} {...ctx.attrs}/>
             </>
         }
       }

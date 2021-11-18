@@ -108,12 +108,12 @@ export default defineComponent({
 
 ### 拼接模式
 
-提供细粒度的骨架屏元素，给予开发者更灵活的定制能力。注意样式需通过
+提供细粒度的骨架屏元素，给予开发者更灵活的定制能力。
 :::demo
 
 ```vue
 <template>
-  <d-skeleton-item :shape="'avatar'" :avatar-size="80" :style="'margin-left:40px;'" />
+  <d-skeleton-item :shape="'avatar'" style="margin-left:55px;width:80px;height:80px;" />
   <d-skeleton-item :shape="'image'" />
   <d-skeleton-item :shape="'title'" />
   <d-skeleton-item :shape="'paragraph'" :row="3" :row-width="['75%','50%']" />
@@ -154,12 +154,16 @@ export default defineComponent({
 |    row    |                  `number`                  |    `0`     | 段落占位图行数                             |
 | row-width | `number \| string \| (number \| string)[]` | `["100%"]` | 段落占位图宽度，可传数组来设置每一行的宽度 |
 
-### 拼接模式
-
+### d-skeleton-item Props
+拼接模式
 |  参数   |   类型    |  默认  | 说明                                                    |
 | :-----: | :-------: | :----: | :------------------------------------------------------ |
 |  shape  | `string`  |   -    | 可选值为`avatar`,`image`,`title`,`paragraph`,`button`。 |
 | animate | `boolean` | `true` | 是否开启动画                                            |
-|  style  | `string`  |   -    | 将 css 样式以字符串的形式传入                           |
 
-> avatar 与 paragraph 的 API 与默认模式相同；
+> paragraph 的 API 与默认模式相同；
+### d-skeleton-item__avatar Props
+
+|     参数     |        类型        |  默认   | 说明                             |
+| :----------: | :----------------: | :-----: | :------------------------------- |
+| avatar-shape |      `string`      | `round` | 头像占位图形状，可选值为`square` |
