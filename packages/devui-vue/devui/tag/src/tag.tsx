@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, toRefs } from 'vue'
 import { tagProps, TagProps } from './tag-types'
 import { useClass, useColor } from './hooks'
 import './tag.scss'
@@ -7,25 +7,31 @@ import './tag.scss'
 export default defineComponent({
   name: 'DTag',
   props: tagProps,
-  emits: [],
-  setup(props: TagProps, { slots }) {
+  emits: ['click'],
+  setup(props: TagProps, { slots, emit }) {
+    const { type, color, checked: ischecked, titleContent } = toRefs(props)
     const tagClass = useClass(props)
     const themeColor = useColor(props)
-    const tagTitle = props.titleContent || ''
-    const type = props.type
-    const color = props.color
-    const checked = ref(props.checked)
-    const change = () => {
-      checked.value = !checked.value
+    const tagTitle = titleContent.value || ''
+    const checked = ref(ischecked)
+    // 子组件的点击事件
+    const Click = () => {
+      emit('click')
     }
     return () => (
-      <div class='devui-tag' onClick={change}>
+      <div class='devui-tag' onClick={Click}>
         <span
           class={tagClass.value}
           style={{
             display: 'block',
             color: checked.value ? '#fff' : themeColor.value,
-            backgroundColor: checked.value ? themeColor.value : type ? '' : !color ? '' : '#fff'
+            backgroundColor: checked.value
+              ? themeColor.value
+              : type.value
+              ? ''
+              : !color.value
+              ? ''
+              : '#fff'
           }}
           title={tagTitle}
         >
