@@ -3,7 +3,7 @@ import debounce from './debounce';
 import clickoutsideDirective from '../../shared/devui-directive/clickoutside'
 import './popover.scss'
 
-type positionType = 'top' | 'right' | 'bottom' | 'left'
+type positionType = 'top' | 'right' | 'bottom' | 'left' | 'left-top' | 'left-bottom' | 'top-left' | 'top-right' | 'right-top' | 'right-bottom' | 'bottom-left' | 'bottom-right'
 type triggerType = 'click' | 'hover'
 type popType = 'success' | 'error' | 'warning' | 'info' | 'default'
 const popTypeClass = {
