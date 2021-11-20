@@ -1,10 +1,10 @@
 /**
  * 多选模式下的内容框
  */
-import { DTag } from '../cascader-tag/'
-import { MultiplePropsType } from './use-type'
+import DTag from '../cascader-tag/'
+import { MultiplePropsType } from '../../src/cascader-types'
 import './index.scss'
-export const DMultipleBox = (props: MultiplePropsType) => {
+export default (props: MultiplePropsType) => {
   return (
     <div class="devui-tags-input">
       <div class="devui-tags-box">

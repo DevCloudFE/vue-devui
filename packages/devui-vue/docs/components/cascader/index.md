@@ -242,13 +242,10 @@ export default defineComponent({
     :options="options"
     :value="value1"
     placeholder="请选择"
-    style="width: 200px"
     trigger="click"
     :width="300"
-    :dropdownWidth="200"
+    :dropdownWidth="300"
     :multiple="true"
-    :allowClear="true"
-    @toggleEvent="onToggleChange"
   ></d-cascader>
 </template>
 <script>
@@ -390,7 +387,8 @@ export default defineComponent({
 | disabled    | `boolean` |	false |		可选，级联器是否禁用 |  [基本用法](#基本用法) | |
 | value    | `number[] \| [number[]]` |	[] |		可选，单选时为`number[]`，多选时为`[number[]]`，选中项的value值集合 |  [基本用法](#基本用法) | |
 | multiple    | `boolean` |	false |	可选，级联器是否开启多选模式，开启后为 checkbox 选择 |  [基本用法](#多选模式) | |
-| disabled   | `boolean` | false | 可选，级联器是否禁用 |  [基本用法](#基本用法) | |
+| width   | `number \| string` | 200 | 可选，单位 px，用于控制组件输入框宽度和下拉的宽度 |  [基本用法](#多选模式) | |
+| dropdownWidth   | `number \| string` | 200 | 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等 |  [基本用法](#多选模式) | |
 
 
 ### 接口 & 类型定义

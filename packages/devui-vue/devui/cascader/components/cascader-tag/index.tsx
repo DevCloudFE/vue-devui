@@ -3,18 +3,17 @@
  * tag组件还未开发完成，所以暂时使用自定义组件
  */
 import { CascaderItem } from '../../src/cascader-types'
-import { useMultiple } from '../../hooks/use-cascader-multiple'
+import { multipleDeleteTag } from '../../hooks/use-cascader-multiple'
 import './index.scss'
 interface PropsType {
   tag: CascaderItem
   tagList: CascaderItem[]
 }
-export const DTag = (props: PropsType) => {
+export default (props: PropsType) => {
   const { tagList, tag } = props
-  const { deleteTagList } = useMultiple()
   const deleteCurrentTag = (e: Event) => {
     e.stopPropagation()
-    deleteTagList(tagList, tag)
+    multipleDeleteTag(tagList, tag)
   }
   return (
     <div class="devui-tag">

@@ -32,6 +32,24 @@ export const cascaderProps = {
     default: 'hover'
   },
   /**
+   * 可选，单位 px，用于控制组件输入框宽度和下拉的宽度
+   * @type { Number | String }
+   * @default 200
+   */
+  width: {
+    type: Number || String,
+    default: 200
+  },
+  /**
+   * 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等
+   * @type { Number | String }
+   * @default 200
+   */
+   dropdownWidth: {
+    type: Number || String,
+    default: 200
+  },
+  /**
    * 必选，级联器的菜单信息
    * @type {CascaderItem[]}
    * @default []
@@ -126,16 +144,75 @@ export interface UseCascaderItemCallback {
 }
 
 export type CheckedType = 'checked' | 'halfChecked'
-export interface UseCascaderMultipleCallback {
-  // tagList: UnwrapNestedRefs<CascaderItem[]>
-  addTagList: (arr: CascaderItem[], singleItem: CascaderItem) => void
-  deleteTagList: (arr: CascaderItem[], singleItem: CascaderItem) => void
-  initTagList: (arr: CascaderItem[]) => void
-  initMultipleCascaderItem: (targetValues: number[], cascaderOptions: CascaderItem[], tagList: CascaderItem[]) => void
-  updateCheckOptionStatus: (node: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => void
-  initActiveIndexs: (values: CascaderValueType, currentOption: CascaderItem[], index: number, activeIndexs: number[]) => void
-  updateCheckStatusLoop: (node: CascaderItem, type: CheckedType,  ulIndex: number, status?: boolean) => void
-  getParentNode: (childValue: string | number, options: CaascaderOptionsType, ulIndex: number) => CascaderItem
-  updateParentNodeStatus: (node: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => void
-  getInputValue: (label: string, arr: CascaderItem[], inputValueCache: Ref<string>, showPath?: boolean) => void
+
+export interface RootStyleFeedback {
+  inputWidth: string
+}
+
+export const cascaderulProps = {
+  /**
+   * 每个ul中的li
+   * @type {CascaderItem[]}
+   * @default []
+   */
+  cascaderItems: {
+    type: Array as PropType<CascaderItem[]>,
+    default: ():CascaderItem[] => ([{
+      label: '',
+      value: null
+    }]),
+  },
+  /**
+   * 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等
+   * @type { Number | String }
+   * @default 200
+   */
+   dropdownWidth: {
+    type: Number || String,
+    default: 200
+  },
+  /**
+   * 当前选中的ul下标
+   * @type {Number}
+   * @default 0
+   */
+  ulIndex: {
+    type: Number,
+    default: 0
+  },
+  cascaderItemNeedProps: {
+    type: Object as PropType<CascaderItemNeedType>,
+    default: ():CascaderItemNeedType => ({})
+  },
+  stopDefault: {
+    type: Boolean,
+    default: false
+  },
+  cascaderOptions: {
+    type: Array as unknown as PropType<[CascaderItem[]]>,
+    default: ():[CascaderItem[]] => ([[{
+      label: '',
+      value: null
+    }]])
+  }
+}
+export type CascaderulProps = ExtractPropTypes<typeof cascaderulProps>
+
+export interface CascaderItemPropsType extends CascaderulProps {
+  cascaderItem: CascaderItem
+  liIndex: number
+  cascaderItemNeedProps: CascaderItemNeedType
+}
+
+export interface DropdownStyleFeedback {
+  dropdownWidth: string
+}
+
+export interface MultiplePropsType {
+  activeOptions: CascaderItem[]
+  placeholder: string
+}
+
+export interface UpdateStatusCallback {
+  updateStatus: (node: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => void
 }

@@ -3,7 +3,7 @@
  */
 import { ref, watch, computed } from 'vue';
 import { PopupTypes, CascaderProps } from '../src/cascader-types'
-
+import { dropdownOpenClass } from './use-cascader-class'
 export const popupHandles = (props: CascaderProps): PopupTypes => {
   const menuShow = ref(false)
   const menuOpenClass = ref('')
@@ -20,7 +20,7 @@ export const popupHandles = (props: CascaderProps): PopupTypes => {
   }
 
   watch(menuShow, (status) => {
-    menuOpenClass.value = status ? 'devui-drop-menu-wrapper' : ''
+    menuOpenClass.value = dropdownOpenClass(status)
   })
 
   return {

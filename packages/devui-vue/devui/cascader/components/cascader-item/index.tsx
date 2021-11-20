@@ -1,19 +1,17 @@
 import { computed, ref } from 'vue'
-import { useClassName } from './use-class'
-import { CascaderItemPropsType } from '../cascader-list/cascader-list-types'
-import { useSingle } from '../../hooks/use-cascader-single'
-import { useMultiple } from '../../hooks/use-cascader-multiple'
+import { CascaderItemPropsType } from '../../src/cascader-types'
+import { useListClassName } from '../../hooks/use-cascader-class'
+import { updateCheckOptionStatus } from '../../hooks/use-cascader-multiple'
+import { singleChoose } from '../../hooks/use-cascader-single'
 import './index.scss'
 export const DCascaderItem = (props: CascaderItemPropsType) => {
   // console.log('item index',props)
   const { cascaderItem, ulIndex, liIndex, cascaderItemNeedProps, cascaderOptions } = props
   const { multiple, stopDefault, valueCache, activeIndexs, trigger, confirmInputValueFlg, tagList} = cascaderItemNeedProps
   const isTriggerHover = trigger === 'hover'
-  const { singleChoose } = useSingle()
-  const { updateCheckOptionStatus } = useMultiple(cascaderItemNeedProps)
-  const { getRootClass } = useClassName()
+  const rootClasses = useListClassName(props)
+  const { updateStatus } = updateCheckOptionStatus(tagList)
   const disbaled = computed(() => cascaderItem?.disabled) // 当前项是否被禁用
-  const rootClasses = getRootClass(props)
   // 触发联动更新
   const updateValues = () => {
     if (stopDefault.value) return
@@ -21,7 +19,6 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
     activeIndexs.splice(ulIndex, activeIndexs.length - ulIndex)
     // 更新当前渲染视图的下标数组
     activeIndexs[ulIndex] = liIndex
-    // console.log('activeIndexs更新', activeIndexs)
     if (!multiple) { // 单选点击选项就更新，多选是通过点击checkbox触发数据更新
       singleChoose(ulIndex, valueCache, cascaderItem)
     }
@@ -43,12 +40,7 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
     }
   }
   const checkboxChange = () => {
-    updateCheckOptionStatus(cascaderItem, cascaderOptions, ulIndex, tagList)
-    // const parentNode = getParentNode(cascaderItem.value, cascaderOptions, ulIndex - 1)
-    // updateParentNodeStatus(parentNode, cascaderOptions, ulIndex - 1)
-    // if (!cascaderItem.children || cascaderItem?.children?.length === 0) {
-    //   confirmInputValueFlg.value = !confirmInputValueFlg.value
-    // }
+    updateStatus(cascaderItem, cascaderOptions, ulIndex)
   }
   return (
     <li class={rootClasses.value}>

@@ -1,18 +1,20 @@
+// 公共库
 import { cloneDeep } from 'lodash-es'
-import { defineComponent, ref, reactive, watch, toRef } from 'vue'
-import { cascaderProps, CascaderItem, CascaderProps, CascaderValueType } from './cascader-types'
-import { getRootClass } from '../hooks/use-cascader-class'
-import { popupHandles } from '../hooks/use-cascader-popup'
-import DCascaderList from '../components/cascader-list'
-// import { optionsHandles } from '../hooks/use-cascader-options'
-import { useCascaderItem } from '../hooks/use-cascader-item'
-import { DMultipleBox } from '../components/cascader-multiple/index' 
-import { useMultiple } from '../hooks/use-cascader-multiple'
-import { useSingle } from '../hooks/use-cascader-single'
-import './cascader.scss'
-// import { UnwrapNestedRefs } from '@vue/reactivity'
-// type OptionsType = UnwrapNestedRefs<[CascaderItem[]]>
+import { defineComponent, ref, Ref, reactive, watch, toRef } from 'vue'
 
+// 组件
+import DCascaderList from '../components/cascader-list'
+import DMultipleBox from '../components/cascader-multiple/index' 
+
+// 事件
+import { cascaderProps, CascaderItem, CascaderProps, CascaderValueType } from './cascader-types'
+import { useCascaderItem } from '../hooks/use-cascader-item'
+import { useRootClassName } from '../hooks/use-cascader-class'
+import { useRootStyle } from '../hooks/use-cascader-style'
+import { popupHandles } from '../hooks/use-cascader-popup'
+import { initMultipleCascaderItem, initTagList } from '../hooks/use-cascader-multiple'
+import { initSingleIptValue, initActiveIndexs } from '../hooks/use-cascader-single'
+import './cascader.scss'
 export default defineComponent({
   name: 'DCascader',
   props: cascaderProps,
@@ -22,9 +24,9 @@ export default defineComponent({
     const multiple = toRef(props, 'multiple')
     const inputValue = ref('')
     const tagList = reactive<CascaderItem[]>([]) // 多选模式下选中的值数组，用于生成tag
-    const { initSingleIptValue } = useSingle()
+    const rootStyle = useRootStyle(props)
     let initIptValue = props.value.length > 0 ? true : false // 有value默认值时，初始化输出内容
-
+    
     const position = reactive({
       originX: 'left',
       originY: 'bottom',
@@ -34,11 +36,16 @@ export default defineComponent({
     // popup弹出层
     const { menuShow, menuOpenClass, openPopup, stopDefault, updateStopDefaultType } = popupHandles(props)
     // 配置class
-    const rootClasses = getRootClass(props, menuShow)
+    const rootClasses = useRootClassName(props, menuShow)
     // 传递给cascaderItem的props
     const { cascaderItemNeedProps } = useCascaderItem(props, stopDefault, tagList)
-    const { initTagList, initMultipleCascaderItem, initActiveIndexs, getInputValue } = useMultiple(cascaderItemNeedProps)
-
+    const getInputValue = (label: string, arr: CascaderItem[], inputValueCache: Ref<string>, showPath?: boolean) => {
+      if (!showPath) {
+        inputValueCache.value = label
+      } else {
+        inputValueCache.value += (label + (arr?.length > 0 ? ' / ' : ''))
+      }
+    }
     /**
      * 控制视图更新
      * 注意视图更新不区分单选或者多选
@@ -83,9 +90,9 @@ export default defineComponent({
         }
       } else {
         // 多选模式
+        const rootColumn = cascaderOptions[0] || [] // 第一列
         value.forEach((targetValue) => {
-          // console.log(tagList)
-          initMultipleCascaderItem(targetValue, cascaderOptions[0], tagList)
+          initMultipleCascaderItem(targetValue, rootColumn, tagList)
         })
       }
     }
@@ -119,7 +126,7 @@ export default defineComponent({
       // 更新值
       updateCascaderValue(cascaderItemNeedProps.value, cascaderOptions[0], 0)
       inputValue.value = cascaderItemNeedProps.inputValueCache.value
-      // 因为初始化了value，所以默认回显视图的选中态
+      // 单选模式默认回显视图的选中态
       // 多选模式不默认视图打开状态，因为选中了太多个，无法确定展示哪一种选中态
       if (initIptValue && !multiple.value) {
         initActiveIndexs(props.value, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs)
@@ -131,7 +138,7 @@ export default defineComponent({
 
     return () => (
       <>
-        <div class={rootClasses.value} onClick={openPopup} ref={origin} {...ctx.attrs}>
+        <div class={rootClasses.value} style={rootStyle.inputWidth} onClick={openPopup} ref={origin} {...ctx.attrs}>
           { multiple.value
             ? <DMultipleBox placeholder={props.placeholder} activeOptions={tagList}></DMultipleBox>
             : <d-input
@@ -144,7 +151,7 @@ export default defineComponent({
             <d-icon name="select-arrow" size="12px"></d-icon>
           </div>
         </div>
-        <d-flexible-overlay origin={origin} v-model={[menuShow.value, 'visible']} position={position}>
+        <d-flexible-overlay origin={origin} backgroundStyle={'background: transparent'} v-model={[menuShow.value, 'visible']} position={position}>
           <div class="devui-drop-menu-animation">
             <div class={`${menuOpenClass.value} devui-dropdown-menu`}>
               {cascaderOptions.map((item, index) => {
@@ -153,6 +160,7 @@ export default defineComponent({
                   ul-index={index}
                   cascaderItemNeedProps={cascaderItemNeedProps}
                   cascaderOptions={cascaderOptions}
+                  dropdownWidth={props.dropdownWidth}
                   {...props}
                 ></DCascaderList>
               })}

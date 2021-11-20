@@ -1,16 +1,19 @@
 import { defineComponent } from 'vue'
-import { getRootClass } from './use-class'
-import './index.scss'
-import { cascaderulProps, CascaderulProps } from './cascader-list-types'
+import { useUlClassName } from '../../hooks/use-cascader-class'
+import { useDropdownStyle } from '../../hooks/use-cascader-style'
+import { cascaderulProps, CascaderulProps } from '../../src/cascader-types'
+
 import { DCascaderItem } from '../cascader-item'
+import './index.scss'
 export default defineComponent({
   name: 'DCascaderList',
   props: cascaderulProps,
   setup(props: CascaderulProps) {
-    const rootClasses = getRootClass(props)
+    const ulClass = useUlClassName(props)
+    const ulStyle = useDropdownStyle(props)
     // console.log('props', props)
     return () => (
-      <ul class={rootClasses.value}>
+      <ul class={ulClass.value} style={ulStyle.dropdownWidth}>
         {
           props?.cascaderItems?.length > 0
           ? props.cascaderItems.map((item, index) => {
