@@ -1,8 +1,8 @@
 @import '../../../style/mixins/flex';
 @import '../../../style/theme/color';
+@import '../../../style/theme/font';
 
 .devui-cascader-ul {
-  width: 200px;
   height: 180px;
   background: $devui-connected-overlay-bg;
   display: block;
@@ -11,4 +11,17 @@
   padding: 0;
   overflow-y: auto;
   border-left: 1px solid $devui-dividing-line;
+
+  &.devui-drop-no-data {
+    color: $devui-disabled-text;
+    padding: 8px;
+    display: block;
+    height: 36px;
+    line-height: 36px;
+    overflow-y: hidden;
+    background-color: $devui-disabled-bg;
+    font-size: $devui-font-size;
+    @include flex(center, flex-start);
+    @include flex-direction();
+  }
 }
