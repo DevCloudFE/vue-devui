@@ -1,72 +1,81 @@
-import { PropType, InjectionKey, Ref, ExtractPropTypes } from 'vue';
+import { PropType, InjectionKey, Ref, ExtractPropTypes } from 'vue'
 
-type Direction = 'row' | 'column';
+type Direction = 'row' | 'column'
 
 const commonProps = {
   name: {
     type: String,
-    default: undefined
+    default: undefined,
+  },
+  halfchecked: {
+    type: Boolean,
+    default: false,
   },
   isShowTitle: {
     type: Boolean,
-    default: true
+    default: true,
+  },
+  title: {
+    type: String,
   },
   color: {
     type: String,
-    default: undefined
+    default: undefined,
   },
   showAnimation: {
     type: Boolean,
-    default: true
+    default: true,
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   beforeChange: {
-    type: Function as PropType<(isChecked: boolean, v: string) => boolean | Promise<boolean>>,
-    default: undefined
-  }
-} as const;
+    type: Function as PropType<
+      (isChecked: boolean, v: string) => boolean | Promise<boolean>
+    >,
+    default: undefined,
+  },
+} as const
 
 export const checkboxProps = {
   ...commonProps,
   halfchecked: {
     type: Boolean,
-    default: false
+    default: false,
   },
   checked: {
     type: Boolean,
-    default: false
+    default: false,
   },
   value: {
     type: String,
   },
   label: {
     type: String,
-    default: undefined
+    default: undefined,
   },
   title: {
     type: String,
-    default: undefined
+    default: undefined,
   },
   'onUpdate:checked': {
     type: Function as PropType<(v: boolean) => void>,
-    default: undefined
+    default: undefined,
   },
   onChange: {
     type: Function as PropType<(v: boolean) => void>,
-    default: undefined
+    default: undefined,
   },
   modelValue: {
     type: Boolean,
   },
   'onUpdate:modelValue': {
-    type: Function as PropType<(v: boolean) => void>
-  }
-} as const;
+    type: Function as PropType<(v: boolean) => void>,
+  },
+} as const
 
-export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>;
+export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>
 
 export const checkboxGroupProps = {
   ...commonProps,
@@ -76,36 +85,39 @@ export const checkboxGroupProps = {
   },
   direction: {
     type: String as PropType<Direction>,
-    default: 'column'
+    default: 'column',
   },
   itemWidth: {
     type: Number,
-    default: undefined
+    default: undefined,
   },
   options: {
     type: Array as PropType<({ value: string; } & Partial<CheckboxProps>)[]>,
-    default: () => []
+    default: () => [],
   },
   onChange: {
     type: Function as PropType<(v: string[]) => void>,
-    default: undefined
+    default: undefined,
   },
   'onUpdate:modelValue': {
     type: Function as PropType<(v: string[]) => void>,
-    default: undefined
-  }
-} as const;
+    default: undefined,
+  },
+} as const
 
 interface checkboxGroupInjection {
   disabled: Ref<boolean>
   isShowTitle: Ref<boolean>
   color: Ref<string | undefined>
   showAnimation: Ref<boolean>
-  beforeChange: undefined | ((isChecked: boolean, v: string) => boolean | Promise<boolean>)
+  beforeChange:
+    | undefined
+    | ((isChecked: boolean, v: string) => boolean | Promise<boolean>)
   toggleGroupVal: (v: string) => void
   isItemChecked: (v: string) => boolean
   itemWidth: Ref<number | undefined>
   direction: Ref<Direction>
 }
 
-export const checkboxGroupInjectionKey: InjectionKey<checkboxGroupInjection> = Symbol('d-checkbox-group');
+export const checkboxGroupInjectionKey: InjectionKey<checkboxGroupInjection> =
+  Symbol('d-checkbox-group')

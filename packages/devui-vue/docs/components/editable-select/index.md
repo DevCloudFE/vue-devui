@@ -19,31 +19,31 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup() {
-    const value = ref("")
+    const value = ref('')
     const options = ref([
-      "C#",
-      "C",
-      "C++",
-      "CPython",
-      "Java",
-      "JavaScript",
-      "Go",
-      "Python",
-      "Ruby",
-      "F#",
-      "TypeScript",
-      "SQL",
-      "LiveScript",
-      "CoffeeScript"
-      ])
+      'C#',
+      'C',
+      'C++',
+      'CPython',
+      'Java',
+      'JavaScript',
+      'Go',
+      'Python',
+      'Ruby',
+      'F#',
+      'TypeScript',
+      'SQL',
+      'LiveScript',
+      'CoffeeScript'
+    ])
     return {
       value,
-      options,
+      options
     }
-  },
+  }
 })
 </script>
 <style>
@@ -54,84 +54,181 @@ export default defineComponent({
 ```
 
 :::
+
 ### 设置禁用选项
+
 支持禁用指定数据。
 :::demo
+
 ```vue
 <template>
-  <d-editable-select v-model="value" :options="options" :maxHeight="300" disabled></d-editable-select>
-  <d-editable-select v-model="value" :options="options1" :maxHeight="300" disabledKey="disable"></d-editable-select>
+  <d-editable-select
+    v-model="value"
+    :options="options"
+    :maxHeight="300"
+    disabled
+  ></d-editable-select>
+  <d-editable-select
+    v-model="value"
+    :options="options1"
+    :maxHeight="300"
+    disabledKey="disable"
+  ></d-editable-select>
 </template>
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup() {
-    const value = ref("")
+    const value = ref('')
     const options = ref([
-      "C#",
-      "C",
-      "C++",
-      "CPython",
-      "Java",
-      "JavaScript",
-      "Go",
-      "Python",
-      "Ruby",
-      "F#",
-      "TypeScript",
-      "SQL",
-      "LiveScript",
-      "CoffeeScript"
-      ])
-    const  options1 = ref([{name: 'c'}, {name: 'C++', disable: true}]);
+      'C#',
+      'C',
+      'C++',
+      'CPython',
+      'Java',
+      'JavaScript',
+      'Go',
+      'Python',
+      'Ruby',
+      'F#',
+      'TypeScript',
+      'SQL',
+      'LiveScript',
+      'CoffeeScript'
+    ])
+    const options1 = ref([{ name: 'c' }, { name: 'C++', disable: true }])
     return {
       value,
       options,
       options1
     }
-  },
+  }
 })
 </script>
 ```
+
 :::
 
-
 ### 异步获取数据源并设置匹配方法
+
 支持异步设置数据源并设置匹配方法。
 :::demo
+
 ```vue
 <template>
   <div class="demo-wrap">
-    <d-editable-select v-model="value" :options="options" :maxHeight="300" remote :remote-method="remoteMethod"></d-editable-select>
+    <d-editable-select
+      v-model="value"
+      :options="options"
+      :maxHeight="300"
+      remote
+      :remote-method="remoteMethod"
+    ></d-editable-select>
   </div>
 </template>
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup() {
     const languages = [
-      "C#",
-      "C",
-      "C++",
-      "CPython",
-      "Java",
-      "JavaScript",
-      "Go",
-      "Python",
-      "Ruby",
-      "F#",
-      "TypeScript",
-      "SQL",
-      "LiveScript",
-      "CoffeeScript"]
-    const value = ref("")
+      'C#',
+      'C',
+      'C++',
+      'CPython',
+      'Java',
+      'JavaScript',
+      'Go',
+      'Python',
+      'Ruby',
+      'F#',
+      'TypeScript',
+      'SQL',
+      'LiveScript',
+      'CoffeeScript'
+    ]
+    const value = ref('')
     const options = ref([])
 
-     const remoteMethod = (query) => {
+    const remoteMethod = (query) => {
       if (query !== '') {
         setTimeout(() => {
           options.value = languages.filter((item) => {
             return item.includes(query)
+          })
+        }, 200)
+      } else {
+        options.value = []
+      }
+    }
+
+    return {
+      value,
+      options,
+      remoteMethod
+    }
+  }
+})
+</script>
+```
+
+:::
+
+### 懒加载
+
+:::demo
+
+```vue
+<template>
+  <div class="demo-wrap">
+    <d-editable-select
+      v-model="value"
+      remote
+      enableLazyLoad
+      :options="options"
+      :maxHeight="300"
+      :remote-method="remoteMethod"
+    ></d-editable-select>
+  </div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue'
+export default defineComponent({
+  setup() {
+    const number = [
+      'C#',
+      'C',
+      'C++',
+      'CPython',
+      'Java',
+      'JavaScript',
+      'Go',
+      'Python',
+      'Ruby',
+      'F#',
+      'TypeScript',
+      'SQL',
+      'LiveScript',
+      'CoffeeScript',
+      'c1',
+      'c2',
+      'c3',
+      'c4',
+      'c5',
+      'c6',
+      'c7'
+    ]
+    const value = ref('')
+    const options = ref([])
+    const remoteMethod = (query) => {
+      if (query !== '') {
+        setTimeout(() => {
+          for (let i = 0; i < 10; i++) {
+            number.push(number.length + 1 + 'C')
+          }
+
+          options.value = number.filter((item) => {
+            console.log
+            return item.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) >= 0
           })
         }, 200)
       } else {
@@ -143,34 +240,35 @@ export default defineComponent({
       options,
       remoteMethod
     }
-  },
+  }
 })
 </script>
 ```
+
 :::
+
 ### d-editable-select
 
 d-editable-select 参数
 
-| 参数         | 类型          | 默认  | 说明                                               | 跳转 Demo    | 全局配置 |
-| ------------ | ------------- | ----- | -------------------------------------------------- | ------------ | -------- |
-| appendToBody | boolean       | false | 可选，下拉是否 appendToBody                        |  [基本用法](#基本用法)     |          |
-| width        | number        | --    | 可选，控制下拉框宽度，搭配 appendToBody 使用（px） | [基本用法](#基本用法)     |          |
-| v-model      | string/number | --    | 绑定值                                             | [基本用法](#基本用法)     |          |
-| options      | Array         | --    | 必选，数据列表                                     | [基本用法](#基本用法)     |          |
-| disabled     | boolean       | false | 可选，值为 true 禁用下拉框                         |              |          |
-| disabledKey  | string        | --    | 可选，设置禁用选项的 Key 值                        | 设置禁用选项 |          |
-| maxHeight    | number        | --    | 可选，下拉菜单的最大高度（px）                     | [基本用法](#基本用法)     |          |
-| remote       | boolean       | false | 可选，远程搜索                                     |              |          |
- 
+| 参数           | 类型          | 默认  | 说明                                               | 跳转 Demo                    | 全局配置 |
+| -------------- | ------------- | ----- | -------------------------------------------------- | ---------------------------- | -------- |
+| appendToBody   | boolean       | false | 可选，下拉是否 appendToBody                        | [基本用法](#基本用法)        |          |
+| width          | number        | --    | 可选，控制下拉框宽度，搭配 appendToBody 使用（px） | [基本用法](#基本用法)        |          |
+| v-model        | string/number | --    | 绑定值                                             | [基本用法](#基本用法)        |          |
+| options        | Array         | --    | 必选，数据列表                                     | [基本用法](#基本用法)        |          |
+| disabled       | boolean       | false | 可选，值为 true 禁用下拉框                         | [设置禁用选项](#设置禁用选项) |          |
+| disabledKey    | string        | --    | 可选，设置禁用选项的 Key 值                        | [设置禁用选项](#设置禁用选项) |          |
+| maxHeight      | number        | --    | 可选，下拉菜单的最大高度（px）                     | [基本用法](#基本用法)        |          |
+| remote         | boolean       | false | 可选，远程搜索                                     |                              |          |
+| enableLazyLoad | boolean       | false | 可选，是否允许懒加载                               | [懒加载](#懒加载)            |          |
 
 d-editable-select 事件
 
-| 事件 | 类型 | 说明 | 跳转 Demo |
-| ---- | ---- | ---- | --------- |
-|      |      |      |           |
-|      |      |      |           |
-|      |      |      |           |
+| 事件         | 类型 | 说明               | 跳转 Demo                                                |
+| ------------ | ---- | ------------------ | -------------------------------------------------------- |
+| filterMethod |      | 自定义筛选函数     |                                                          |
+| remoteMethod |      | 远程搜索对应的函数 | [异步获取数据并设置匹配方法](#异步获取数据并设置匹配方法) |
 
 d-editable-select 插槽
 
