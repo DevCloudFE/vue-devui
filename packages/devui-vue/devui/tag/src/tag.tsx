@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { tagProps, TagProps } from './tag-types'
 import { useClass, useColor } from './hooks'
 import './tag.scss'
@@ -10,14 +10,23 @@ export default defineComponent({
   emits: [],
   setup(props: TagProps, { slots }) {
     const tagClass = useClass(props)
-    const tagColor = useColor(props)
+    const themeColor = useColor(props)
     const tagTitle = props.titleContent || ''
-
+    const type = props.type
+    const color = props.color
+    const checked = ref(props.checked)
+    const change = () => {
+      checked.value = !checked.value
+    }
     return () => (
-      <div class='devui-tag'>
+      <div class='devui-tag' onClick={change}>
         <span
           class={tagClass.value}
-          style={{ ...tagColor.value, display: 'block' }}
+          style={{
+            display: 'block',
+            color: checked.value ? '#fff' : themeColor.value,
+            backgroundColor: checked.value ? themeColor.value : type ? '' : !color ? '' : '#fff'
+          }}
           title={tagTitle}
         >
           {slots.default?.()}

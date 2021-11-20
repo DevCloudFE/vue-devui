@@ -14,6 +14,10 @@ export const tagProps = {
   titleContent: {
     type: String as PropType<string>,
     default: ''
+  },
+  checked: {
+    type: Boolean as PropType<boolean>,
+    default: false
   }
 } as const
 

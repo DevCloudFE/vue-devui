@@ -1,10 +1,15 @@
 import { computed } from 'vue'
-import { tagProps, TagProps } from '../tag-types'
+import { TagProps } from '../tag-types'
 
 export default function (props: TagProps) {
   return computed(() => {
-    const { color } = props
-
+    const { color, type } = props
+    const typeMap = {
+      primary: '#5e7ce0',
+      success: '#50d4ab',
+      warning: '#fac20a',
+      danger: '#f66f6a'
+    }
     const colorMap = {
       'blue-w98': '#3383ff',
       'aqua-w98': '#39afcc',
@@ -17,14 +22,10 @@ export default function (props: TagProps) {
       'purple-w98': '#a97af8'
     }
 
-    if (!color) return {}
+    if (!color && type) return typeMap[type]
     // 判断传入的color是colorMap成员or颜色码
     const themeColor = colorMap[color] || color
     //color无？ 有 值为map？为#？
-    return {
-      color: themeColor,
-      borderColor: themeColor,
-      backgroundColor: '#fff'
-    }
+    return themeColor
   })
 }
