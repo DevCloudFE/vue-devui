@@ -2,7 +2,7 @@ import { computed } from 'vue'
 import type { SetupContext, Ref } from 'vue'
 import { TreeSelectProps } from '../src/tree-select-types'
 
-export default function useToggle(props: TreeSelectProps, ctx: SetupContext, data: Ref): any {
+export default function useClear(props: TreeSelectProps, ctx: SetupContext, data: Ref): any {
 
   const isClearable = computed<boolean>(() => {
     return !props.disabled && props.allowClear && data.value.length > 0;

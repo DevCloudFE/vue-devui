@@ -1,16 +1,14 @@
 import {
   CSSProperties,
   defineComponent,
-  getCurrentInstance,
   isRef,
-  nextTick,
-  onBeforeUnmount,
   onMounted,
   reactive,
   ref,
   renderSlot,
   toRef,
   watch,
+  computed
 } from 'vue';
 import { CommonOverlay } from './common-overlay';
 import { OriginOrDomRef, flexibleOverlayProps, FlexibleOverlayProps, Point, Origin, ConnectionPosition } from './overlay-types';
@@ -29,70 +27,47 @@ export const FlexibleOverlay = defineComponent({
     // lift cycle
     const overlayRef = ref<Element | null>(null);
     const positionedStyle = reactive<CSSProperties>({ position: 'absolute' });
-    const instance = getCurrentInstance();
     onMounted(async () => {
-      await nextTick();
-
-      // 获取背景
-      const overlay = overlayRef.value;
-      if (!overlay) {
-        return;
-      }
-
-      // 获取原点
-      const origin = getOrigin(props.origin);
-      if (!origin) {
-        return;
-      }
-
-      const handleRectChange = (rect: DOMRect) => {
+      const handleRectChange = (position: ConnectionPosition, rect: DOMRect, origin: Origin) => {
         // TODO: add optimize for throttle
-        const point = calculatePosition(props.position, rect, origin);
+        const point = calculatePosition(position, rect, origin);
 
         // set the current position style's value.
         // the current position style is a 'ref'.
         positionedStyle.left = `${point.x}px`;
         positionedStyle.top = `${point.y}px`;
       };
-      const handleChange = () => handleRectChange(overlay.getBoundingClientRect());
+
+      const locationElements = computed(() => {
+        // 获取面板
+        const overlay = overlayRef.value;
+        // 获取原点
+        const origin = getOrigin(props.origin);
+        if (!overlay || !origin) {
+          return;
+        }
+        return { origin, overlay };
+      });
 
       const visibleRef = toRef(props, 'visible');
       const positionRef = toRef(props, 'position');
 
-      watch(visibleRef, (visible, ov, onInvalidate) => {
-        if (visible) {
-          subscribeLayoutEvent(handleChange);
-        } else {
-          unsbscribeLayoutEvent(handleChange);
+      watch([locationElements, visibleRef, positionRef], async ([locationElements, visible, position], ov, onInvalidate) => {
+        if (!visible || !locationElements) {
+          return;
         }
+        const { origin, overlay } = locationElements;
+        handleRectChange(position, overlay.getBoundingClientRect(), origin);
+        const unsubscriptions = [
+          subscribeLayoutEvent(() => handleRectChange(position, overlay.getBoundingClientRect(), origin)),
+          subscribeOverlayResize(overlay, (entries) => handleRectChange(position, entries[0].contentRect, origin)),
+          subscribeOriginResize(origin, () => handleRectChange(position, overlay.getBoundingClientRect(), origin)),
+        ];
         onInvalidate(() => {
-          unsbscribeLayoutEvent(handleChange);
+          unsubscriptions.forEach(fn => fn());
         });
       });
-
-      watch([visibleRef, positionRef], () => {
-        handleChange();
-      });
-
-      const resizeObserver = new ResizeObserver((entries) => {
-        handleRectChange(entries[0].contentRect);
-      });
-      resizeObserver.observe(overlay as unknown as Element);
-      onBeforeUnmount(() => {
-        resizeObserver.disconnect();
-      }, instance);
-
-      if (origin instanceof Element) {
-        // Only when the style changing, you can change the position.
-        const observer = new MutationObserver(handleChange);
-        observer.observe(origin, {
-          attributeFilter: ['style'],
-        });
-        onBeforeUnmount(() => {
-          observer.disconnect();
-        }, instance);
-      }
-    }, instance);
+    });
 
     const {
       backgroundClass,
@@ -156,7 +131,7 @@ function getOrigin(origin: OriginOrDomRef): Origin {
  */
 function calculatePosition(
   position: ConnectionPosition,
-  panelOrRect: HTMLElement | DOMRect,
+  rect: DOMRect,
   origin: Origin
 ): Point {
   // get overlay rect
@@ -164,13 +139,6 @@ function calculatePosition(
 
   // calculate the origin point
   const originPoint = getOriginRelativePoint(originRect, position);
-
-  let rect: DOMRect;
-  if (panelOrRect instanceof HTMLElement) {
-    rect = panelOrRect.getBoundingClientRect();
-  } else {
-    rect = panelOrRect;
-  }
 
   // calculate the overlay anchor point
   return getOverlayPoint(originPoint, rect, position);
@@ -267,14 +235,29 @@ function subscribeLayoutEvent(event: (e?: Event) => void) {
   window.addEventListener('scroll', event, true);
   window.addEventListener('resize', event);
   window.addEventListener('orientationchange', event);
+  return () => {
+    window.removeEventListener('scroll', event, true);
+    window.removeEventListener('resize', event);
+    window.removeEventListener('orientationchange', event);
+  }
 }
 
-/**
- * 取消 layout 变化事件
- * @param event
- */
-function unsbscribeLayoutEvent(event: (e?: Event) => void) {
-  window.removeEventListener('scroll', event, true);
-  window.removeEventListener('resize', event);
-  window.removeEventListener('orientationchange', event);
+function subscribeOverlayResize(overlay: Element, callback: (entries: ResizeObserverEntry[]) => void) {
+  if (overlay instanceof Element) {
+    const resizeObserver = new ResizeObserver(callback);
+    resizeObserver.observe(overlay);
+    return () => resizeObserver.disconnect();
+  }
+  return () => { };
 }
+
+function subscribeOriginResize(origin: any, callback: () => void) {
+  if (origin instanceof Element) {
+    // Only when the style changing, you can change the position.
+    const observer = new MutationObserver(callback);
+    observer.observe(origin, { attributeFilter: ['style'] });
+    return () => observer.disconnect();
+  }
+  return () => { };
+}
+

@@ -1,3 +1,3 @@
-import usePosition from './usePosition.ts'
+import usePosition from './use-position'
 
 export { usePosition }
