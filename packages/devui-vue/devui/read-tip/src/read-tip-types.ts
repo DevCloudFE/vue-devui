@@ -17,7 +17,7 @@ export type DefaultTemplateProps = {
   content?: string
   selector?: string
   position?: string
-  id? : string
+  id?: string
   temp?: string
   dom?: Element
   contentTemplate?: boolean
@@ -25,7 +25,7 @@ export type DefaultTemplateProps = {
   dataFn?: ({
     element,
     rule: ReadTipRule,
-  }) => { title?: string; content?: string;  }
+  }) => { title?: string; content?: string; }
   appendToBody?: boolean
 }
 
@@ -59,7 +59,7 @@ export interface ReadTipRule {
   dataFn?: ({
     element,
     rule: ReadTipRule,
-  }) => { title?: string; content?: string;  }
+  }) => { title?: string; content?: string; }
 }
 
 

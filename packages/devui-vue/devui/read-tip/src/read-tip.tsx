@@ -57,7 +57,7 @@ export default defineComponent({
           let newRule = reactive({
             id: null
           })
-          const id = rule.selector.slice(rule.selector[0] === '.' ? 1 : 0) + index; 
+          const id = rule.selector.slice(rule.selector[0] === '.' ? 1 : 0) + index;
           if (index > 0) {
             newRule = { ...rule }
             dom.id = id

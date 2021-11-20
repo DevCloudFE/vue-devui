@@ -28,22 +28,22 @@ export default defineComponent({
                 positionTop = domBounding.y + document.documentElement.scrollTop;
                 positionLeft = domBounding.x;
             }
-            switch(rule.position) {
-                case 'top': 
+            switch (rule.position) {
+                case 'top':
                     styles.top = positionTop - targetDom.height - distance + 'px';
                     styles.left = positionLeft + 'px';
                     break;
-                case 'left': 
+                case 'left':
                     styles.top = positionTop + 'px';
-                    styles.left = positionLeft - targetDom.width - distance  + 'px';
+                    styles.left = positionLeft - targetDom.width - distance + 'px';
                     break;
-                case 'bottom': 
+                case 'bottom':
                     styles.top = positionTop + domBounding.height + distance + 'px'
                     styles.left = positionLeft + 'px';
                     break;
-                case 'right': 
+                case 'right':
                     styles.top = positionTop + 'px';
-                    styles.left = positionLeft + domBounding.width + distance  + 'px';
+                    styles.left = positionLeft + domBounding.width + distance + 'px';
                     break;
             }
         })
