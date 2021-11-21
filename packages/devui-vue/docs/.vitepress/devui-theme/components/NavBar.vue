@@ -47,12 +47,12 @@ defineEmits(['toggle'])
         <NavLinks />
       </div>
 
-      <div class="flex items-center ml-l">
-        <div class="ml-m" style="font-size: 0;" @click="() => useTranslation( defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN' )">
+      <div class="custom-nav flex items-center ml-l">
+        <div class="custom-nav-item ml-m" style="font-size: 0;" @click="() => useTranslation( defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN' )">
           <ZhLang v-if="defaultLanguage === 'zh-CN'"></ZhLang>
           <EnLang v-else></EnLang>
         </div>
-        <div class="flex items-center ml-m">
+        <div class="custom-nav-item flex items-center ml-m">
           <DarkMode v-if="darkMode" @click="darkMode = !darkMode"></DarkMode>
           <LightMode v-else @click="darkMode = !darkMode"></LightMode>
         </div>
@@ -100,6 +100,16 @@ defineEmits(['toggle'])
 @media (min-width: 720px) {
   .nav {
     display: block;
+  }
+}
+
+.custom-nav svg {
+  fill: $devui-text;
+}
+
+.custom-nav-item:hover {
+  svg, path {
+    fill: $devui-brand;
   }
 }
 </style>
