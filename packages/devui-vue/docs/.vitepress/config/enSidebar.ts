@@ -33,15 +33,15 @@ const enSidebar = {
         {
         text: 'Feedback',
         children: [
-            { text: 'Alert', link: '/components/alert/', status: 'completed' },
-            { text: 'Drawer', link: '/components/drawer/' },
-            { text: 'Loading', link: '/components/loading/', status: 'completed' },
-            { text: 'Mention', link: '/components/mention/' },
-            { text: 'Modal', link: '/components/modal/' },
-            { text: 'Popover', link: '/components/popover/', status: "progress" },
-            { text: 'ReadTip', link: '/components/read-tip/' },
-            { text: 'Toast', link: '/components/toast/', status: 'completed' },
-            { text: 'Tooltip', link: '/components/tooltip/', status: 'completed' },
+            { text: 'Alert', link: '/en-US/components/alert/', status: 'completed' },
+            { text: 'Drawer', link: '/en-US/components/drawer/' },
+            { text: 'Loading', link: '/en-US/components/loading/', status: 'completed' },
+            { text: 'Mention', link: '/en-US/components/mention/' },
+            { text: 'Modal', link: '/en-US/components/modal/' },
+            { text: 'Popover', link: '/en-US/components/popover/', status: "progress" },
+            { text: 'ReadTip', link: '/en-US/components/read-tip/' },
+            { text: 'Toast', link: '/en-US/components/toast/', status: 'completed' },
+            { text: 'Tooltip', link: '/en-US/components/tooltip/', status: 'completed' },
         ]
         },
         {
