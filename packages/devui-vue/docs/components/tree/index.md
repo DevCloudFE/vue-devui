@@ -331,7 +331,7 @@ export default defineComponent({
         status: "status1",
         children: [
           {
-            label: "leaf node 1-1",
+            label: "leaf node 1-112121212",
             data: { type: "mix" },
             open: false,
             status: "status1",
@@ -724,6 +724,197 @@ export default defineComponent({
               },
               {
                 label: 'leaf node 234',
+              },
+            ],
+          },
+        ],
+      },
+    ]);
+    
+    return {
+      data,
+    }
+  }
+})
+</script>
+```
+:::
+
+### 添加子节点，编辑、删除节点
+
+:::demo 通过 checkableRelation 控制check时父子节点的表现。
+
+```vue
+<template>
+  <d-tree :data="data" ></d-tree>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const data = ref([
+      {
+        label: 'parent node 1 - expanded',
+        open: true,
+        addable: 'true',
+        editable: 'true',
+        deletable: 'true',
+        children: [
+          {
+            label: 'parent node 11 - folded',
+            addable: 'true',
+            editable: 'true',
+            deletable: 'true',
+            children: [
+              {
+                label: 'leaf node 111',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 112',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 113',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 114',
+                editable: 'true',
+                deletable: 'true',
+              },
+            ],
+          },
+          {
+            label: 'parent node 12 - folded',
+            addable: 'true',
+            editable: 'true',
+            deletable: 'true',
+            children: [
+              {
+                label: 'leaf node 121',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 122',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 123',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 124',
+                editable: 'true',
+                deletable: 'true',
+              },
+            ],
+          },
+          {
+            label: 'parent node 13 - without children',
+            isparent: true,
+            addable: 'true',
+            editable: 'true',
+            deletable: 'true',
+          },
+        ],
+      },
+      {
+        label: 'parent node 2 - folded',
+        addable: 'true',
+        editable: 'true',
+        deletable: 'true',
+        children: [
+          {
+            label: 'parent node 21 - expanded',
+            open: true,
+            addable: 'true',
+            editable: 'true',
+            deletable: 'true',
+            children: [
+              {
+                label: 'leaf node 211',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 212',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 213',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 214',
+                editable: 'true',
+                deletable: 'true',
+              },
+            ],
+          },
+          {
+            label: 'parent node 22 - folded',
+            addable: 'true',
+            editable: 'true',
+            deletable: 'true',
+            children: [
+              {
+                label: 'leaf node 221',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 222',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 223',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 224',
+                editable: 'true',
+                deletable: 'true',
+              },
+            ],
+          },
+          {
+            label: 'parent node 23 - folded',
+            addable: 'true',
+            editable: 'true',
+            deletable: 'true',
+            children: [
+              {
+                label: 'leaf node 231',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 232',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 233',
+                editable: 'true',
+                deletable: 'true',
+              },
+              {
+                label: 'leaf node 234',
+                editable: 'true',
+                deletable: 'true',
               },
             ],
           },
