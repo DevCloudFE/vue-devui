@@ -1,14 +1,14 @@
 # Quick Start
 
-Guide you how to use DevUI in your project
+Guide you how to use DevUI in your project.
 
 ### Vue version
 
-Vue version currently supported ^3.0.0
+Vue version currently supported ^3.0.0.
 
 ### 1. Create a project
 
-It is recommended to use @vite/cli to create your project
+It is recommended to use @vite/cli to create your project.
 
 ```shell
 yarn create vite my-vue-app --template vue-ts
@@ -16,7 +16,7 @@ yarn create vite my-vue-app --template vue-ts
 
 ### 2. Install
 
-Go to your project folder and use yarn to install DevUI
+Go to your project folder and use yarn to install DevUI.
 
 ```shell
 yarn add vue-devui
@@ -43,14 +43,14 @@ createApp(App).use(DevUI).mount('#app')
 import { createApp } from 'vue'
 import App from './App.vue'
 
-// Step 1: Introduce a single component
+// Step 1: Import a single component
 import { Button } from 'vue-devui'
 // or import Button from 'vue-devui/button'
-// Step 2: Introduce component style
-// 方式一：Manually import component styles
+// Step 2: Import component style
+// Way 1：Manually import component styles
 import 'vue-devui/button/style.css'
 
-// 方式二：Automatically introduce components on demand
+// Way 2：Automatically introduce components on demand
 // vite.config.ts file
 // import styleImport from 'vite-plugin-style-import'
 //   plugins: [
