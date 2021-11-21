@@ -1,8 +1,7 @@
 const enNav = [
-    { text: 'Design disciplines', link: '/en-US/design' },
-    { text: 'Component', link: '/en-US/' },
-    { text: 'Version history', link: '/en-US/version' },
-    { text: 'Theme', link: '/en-US/theme' },
-  ]
+  { text: 'Component', link: '/en-US/' },
+  { text: 'Version history', link: 'https://gitee.com/devui/vue-devui/releases' },
+  { text: 'Design disciplines', link: 'https://devui.design/design-cn/start' },
+]
   
   export default enNav

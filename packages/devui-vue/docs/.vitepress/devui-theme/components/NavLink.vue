@@ -28,7 +28,7 @@ const { props: linkProps, isExternal } = useNavLink(propsRefs.item)
   display: block;
   padding: 0 1.5rem;
   line-height: 36px;
-  font-size: 1rem;
+  font-size: 1rem !important;
   font-weight: 600;
   color: $devui-text;
   white-space: nowrap;
