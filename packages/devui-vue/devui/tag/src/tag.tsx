@@ -9,11 +9,10 @@ export default defineComponent({
   props: tagProps,
   emits: ['click'],
   setup(props: TagProps, { slots, emit }) {
-    const { type, color, checked: ischecked, titleContent } = toRefs(props)
+    const { type, color, checked, titleContent } = toRefs(props)
     const tagClass = useClass(props)
     const themeColor = useColor(props)
     const tagTitle = titleContent.value || ''
-    const checked = ref(ischecked)
     // 子组件的点击事件
     const Click = () => {
       emit('click')
