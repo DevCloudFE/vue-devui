@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import Theme from '@devui/theme/theme'
-import { Switch as DSwitch } from '@devui/switch'
 import NavBarTitle from './NavBarTitle.vue'
 import NavLinks from './NavLinks.vue'
 import ToggleSideBarButton from './ToggleSideBarButton.vue'
+import DarkMode from './icons/DarkMode.vue'
+import LightMode from './icons/LightMode.vue'
 
-const theme = new Theme("light");
+const theme = new Theme('light')
 
-const darkMode = ref(false);
-const switchText = ref("浅色");
+const darkMode = ref(false)
 
 const defaultLanguage = ref(localStorage.getItem('preferred_lang'))
 function useTranslation (target){
@@ -26,10 +26,8 @@ watch(
   () => darkMode.value,
   (darkMode, prevDarkMode) => {
     theme.applyTheme(darkMode ? 'dark' : 'light')
-    switchText.value = darkMode ? '深色' : '浅色'
   }
 )
-
 
 defineEmits(['toggle'])
 </script>
@@ -42,18 +40,21 @@ defineEmits(['toggle'])
 
     <div class="flex-grow" />
 
-    <div class="flex items-center">
+    <div class="flex items-center" style="font-size: 0.9rem;">
       <div class="nav">
         <NavLinks />
       </div>
 
-      <div class="flex items-center ml-xs mt-xxs">
-        <d-switch v-model:checked="darkMode" size="sm"></d-switch>
-        <span style="font-size:0.9rem;" class="mb-xxs">{{ switchText }}</span>
+      <div class="flex items-center ml-m">
+        <DarkMode v-if="darkMode" @click="darkMode = !darkMode"></DarkMode>
+        <LightMode v-else @click="darkMode = !darkMode"></LightMode>
       </div>
-      <div style="margin-left: 10px" @click="() => useTranslation( defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN' )">
+      <div class="ml-m" @click="() => useTranslation( defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN' )">
         {{defaultLanguage === 'zh-CN' ? '中文' : 'English'}}
       </div>
+      <a class="ml-m" style="font-size: 0;" href="https://gitee.com/devui/vue-devui/stargazers">
+        <img :src="`https://gitee.com/devui/vue-devui/badge/star.svg?theme=${darkMode ? 'dark' : 'white'}`" alt="star" />
+      </a>
     </div>
 
     <slot name="search" />
