@@ -32,11 +32,10 @@ useActiveSidebarLinks(container, marker)
 @import '@devui/styles-var/devui-var';
 //内容区导航样式
 .devui-content-nav {
-  width: 240px;
+  width: 200px;
   position: fixed;
   top: 50px;
   right: 0;
-  height: 90%;
   z-index: 1;
 
   .devui-fast-forward {
