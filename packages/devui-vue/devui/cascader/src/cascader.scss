@@ -24,6 +24,12 @@
     }
   }
 
+  &__disbaled {
+    .icon {
+      color: $devui-disabled-text !important;
+    }
+  }
+
   input {
     width: 100%;
     padding-right: 16px;

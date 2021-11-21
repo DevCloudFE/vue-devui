@@ -5,4 +5,6 @@ import light from './themes/light'
 Theme.register('dark', dark)
 Theme.register('light', light)
 
+export { Theme }
+
 export default Theme

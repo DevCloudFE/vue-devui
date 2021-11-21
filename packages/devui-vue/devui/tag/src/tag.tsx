@@ -1,4 +1,4 @@
-import { defineComponent, ref, toRefs, computed } from 'vue'
+import { defineComponent } from 'vue'
 import { tagProps, TagProps } from './tag-types'
 import { useStyle } from './hooks'
 import './tag.scss'

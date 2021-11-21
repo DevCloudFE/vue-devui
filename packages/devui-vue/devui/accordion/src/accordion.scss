@@ -3,6 +3,7 @@
 @import '../../style/theme/font';
 @import '../../style/theme/shadow';
 @import '../../style/theme/corner';
+@import '../../style/core/animation';
 
 :host {
   display: block;
@@ -188,17 +189,40 @@ d-accordion-item-routerlink {
     }
   }
 
+  .devui-accordion-splitter::before {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 18px;
+    background: $devui-form-control-line-active;
+    position: absolute;
+    top: 11px;
+    left: 0;
+    opacity: 0;
+  }
+
   &.devui-router-active,
   &.active {
     &:not(.open) .devui-accordion-splitter::before {
-      content: '';
-      display: block;
-      width: 2px;
-      height: 18px;
-      background: $devui-form-control-line-active;
-      position: absolute;
-      top: 11px;
-      left: 0;
+      opacity: 1;
+    }
+  }
+}
+
+.devui-accordion-show-animate .devui-accordion-item-title {
+  transition:
+    font-weight $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
+    background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
+
+  .devui-accordion-splitter::before {
+    transform: scaleY(0);
+    transition: transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+  }
+
+  &.devui-router-active,
+  &.active {
+    &:not(.open) .devui-accordion-splitter::before {
+      transform: scaleY(1);
     }
   }
 }

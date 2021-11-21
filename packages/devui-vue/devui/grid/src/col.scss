@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 .devui-col {
   position: relative;
   max-width: 100%;
@@ -5,7 +7,8 @@
 }
 
 @function percentage ($i, $sum: 24) {
-  @return $i / $sum * 100%; }
+  @return math.div($i, $sum) * 100%;
+}
 
 .devui-col-span-0 {
   display: none;

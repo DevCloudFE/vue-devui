@@ -3,6 +3,8 @@ node_modules
 dist
 dist-ssr
 build
+lib
+types
 *.local
 pnpm-lock.yaml
 package-lock.json

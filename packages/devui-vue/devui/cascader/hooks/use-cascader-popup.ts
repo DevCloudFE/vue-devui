@@ -1,22 +1,33 @@
 /**
  * 控制窗口打开收起
  */
-import { ref, watch } from 'vue';
-import { PopupTypes } from '../src/cascader-types'
-
-export const popupHandles = (): PopupTypes => {
+import { ref, watch, computed } from 'vue';
+import { PopupTypes, CascaderProps } from '../src/cascader-types'
+import { dropdownOpenClass } from './use-cascader-class'
+export const popupHandles = (props: CascaderProps): PopupTypes => {
   const menuShow = ref(false)
   const menuOpenClass = ref('')
-  const openPopup = () => {
-    menuShow.value = !menuShow.value
+  const disabled = computed(() => props.disabled) // select是否被禁用
+  const stopDefault = ref(false)
+  const updateStopDefaultType = () => {
+    stopDefault.value = !menuShow.value
   }
+
+  const openPopup = () => {
+    if (disabled.value) return
+    menuShow.value = !menuShow.value
+    updateStopDefaultType()
+  }
+
   watch(menuShow, (status) => {
-    menuOpenClass.value = status ? 'devui-drop-menu-wrapper' : ''
+    menuOpenClass.value = dropdownOpenClass(status)
   })
 
   return {
     menuShow,
+    stopDefault,
     menuOpenClass,
+    updateStopDefaultType,
     openPopup,
   }
 }

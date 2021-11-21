@@ -15,12 +15,18 @@ export type Trigger = 'hover' | 'click'
 export type DefaultTemplateProps = {
   title?: string
   content?: string
-  top?: number
   selector?: string
   position?: string
-  id? : string
-  temp: string
-  contentTemplate: boolean
+  id?: string
+  temp?: string
+  dom?: Element
+  contentTemplate?: boolean
+  overlayClassName?: string
+  dataFn?: ({
+    element,
+    rule: ReadTipRule,
+  }) => { title?: string; content?: string; }
+  appendToBody?: boolean
 }
 
 export interface ReadTipOptions {
@@ -32,6 +38,7 @@ export interface ReadTipOptions {
   overlayClassName?: string
   appendToBody?: boolean
   rules: ReadTipRules
+
 }
 
 export type ReadTipRules = ReadTipRule | ReadTipRule[];
@@ -49,10 +56,10 @@ export interface ReadTipRule {
   overlayClassName?: string
   appendToBody?: boolean
   //customData与template搭配使用，customData为传入模板的上下文，可以自定义模板内容
-  // dataFn?: ({
-  //   element,
-  //   rule: ReadTipRule,
-  // }) => Observable<{ title?: string; content?: string; template?: TemplateRef<any>; customData?: any }>
+  dataFn?: ({
+    element,
+    rule: ReadTipRule,
+  }) => { title?: string; content?: string; }
 }
 
 

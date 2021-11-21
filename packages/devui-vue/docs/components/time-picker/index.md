@@ -86,29 +86,30 @@
     </div>
     <div>
         <h4 class='my-10'>mm:HH:ss</h4>
-        <d-time-picker format='mm:HH:ss' v-model="vModelValues"/>
+        <d-time-picker format='mm:HH:ss' v-model="vModelValueFirst"/>
     </div>
     <div>
         <h4 class='my-10'>hh:mm</h4>
-        <d-time-picker format='hh:mm' v-model="vModelValues"/>
+        <d-time-picker format='hh:mm'/>
     </div>
     <div>
         <h4 class='my-10'>MM:ss</h4>
-        <d-time-picker format='MM:ss' v-model="vModelValues"/>
+        <d-time-picker format='MM:ss'/>
     </div>
 </template>
 <script>
   import { ref,defineComponent,watch } from 'vue'
   export default defineComponent({
       setup(props,ctx){
-        let vModelValues = ref('23:30:20')
+        let vModelValueFirst = ref('23:10:20')
 
-        watch(vModelValues,(newValue,oldValue)=>{
+
+        watch(vModelValueFirst,(newValue,oldValue)=>{
           console.log(newValue,oldValue)
         })
 
         return{
-          vModelValues
+          vModelValueFirst
         }
       }
   })
@@ -241,6 +242,7 @@ d-time-picker 参数
 |minTime / min-time|string|'00:00:00'|可选，限制最小可选时间|[格式化](#时间区间限制)|
 |maxTime / max-time|string|'23:59:59'|可选，限制最大可选时间|[格式化](#时间区间限制)|
 |customViewTemplate|TemplateRef|--|可选，自定义快捷设置时间或自定义操作区内容|[传入模板](#传入模板)|
+|showAnimation|boolean| true |可选，是否开启动画|✔|
 
 d-time-picker 事件
 
