@@ -6,6 +6,8 @@ import NavLinks from './NavLinks.vue'
 import ToggleSideBarButton from './ToggleSideBarButton.vue'
 import DarkMode from './icons/DarkMode.vue'
 import LightMode from './icons/LightMode.vue'
+import ZhLang from './icons/ZhLang.vue'
+import EnLang from './icons/EnLang.vue'
 
 const theme = new Theme('light')
 
@@ -45,12 +47,13 @@ defineEmits(['toggle'])
         <NavLinks />
       </div>
 
+      <div class="ml-m" style="font-size: 0;" @click="() => useTranslation( defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN' )">
+        <ZhLang v-if="defaultLanguage === 'zh-CN'"></ZhLang>
+        <EnLang v-else></EnLang>
+      </div>
       <div class="flex items-center ml-m">
         <DarkMode v-if="darkMode" @click="darkMode = !darkMode"></DarkMode>
         <LightMode v-else @click="darkMode = !darkMode"></LightMode>
-      </div>
-      <div class="ml-m" @click="() => useTranslation( defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN' )">
-        {{defaultLanguage === 'zh-CN' ? '中文' : 'English'}}
       </div>
       <a class="ml-m" style="font-size: 0;" href="https://gitee.com/devui/vue-devui/stargazers">
         <img :src="`https://gitee.com/devui/vue-devui/badge/star.svg?theme=${darkMode ? 'dark' : 'white'}`" alt="star" />
