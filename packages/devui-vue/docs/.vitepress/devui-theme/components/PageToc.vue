@@ -30,6 +30,7 @@ useActiveSidebarLinks(container, marker)
 
 <style scoped lang="scss">
 @import '@devui/styles-var/devui-var';
+
 //内容区导航样式
 .devui-content-nav {
   width: 200px;
@@ -81,10 +82,11 @@ useActiveSidebarLinks(container, marker)
       }
     }
   }
-}
 
-.active {
-  color: $devui-link !important;
+  .devui-link:hover, .devui-link.active {
+    color: $devui-brand;
+    text-decoration: none;
+  }
 }
 
 @media (max-width: 1800px) {
