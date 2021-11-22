@@ -1,33 +1,46 @@
-import { defineComponent } from 'vue';
+import { defineComponent, inject, computed } from 'vue';
 import { TableBodyProps, TableBodyPropsTypes } from './body.type'
-import { useTableBody } from './use-body';
+import { TABLE_TOKEN } from '../table.type';
+import { Checkbox } from '../../../checkbox';
+
 import './body.scss';
 
 export default defineComponent({
   name: 'DTableBody',
-  props: TableBodyProps,
+  // props: TableBodyProps,
   setup(props: TableBodyPropsTypes) {
-    const { rowColumns } = useTableBody(props);
+    const parent = inject(TABLE_TOKEN);
+    const {
+      _data: data,
+      _columns: columns,
+      _checkList: checkList
+    } = parent.store.states;
 
-    return { rowColumns };
-  },
-  render() {
-    const { rowColumns } = this;
+    // 移动到行上是否高亮
+    const hoverEnabled = computed(() => parent.props.rowHoveredHighlight);
 
-    return (
+    // 行前的 checkbox
+    const renderCheckbox = (index: number) => parent.props.checkable ? (
+      <td>
+        <Checkbox v-model={checkList.value[index]} />
+      </td>
+    ) : null;
+
+    return () => (
       <tbody class="devui-tbody">
-        {rowColumns.map((row, rowIndex) => {
+        {data.value.map((row, rowIndex) => {
           return (
-            <tr key={rowIndex}>
-              {row.columns.map((column, index) => {
+            <tr key={rowIndex} class={{ 'hover-enabled': hoverEnabled.value }}>
+              {renderCheckbox(rowIndex)}
+              {columns.value.map((column, index) => {
                 return (
-                  <td key={index}>{column.renderCell({ row, column, $index: index })}</td>
+                  <td key={index}>{column.renderCell(row, index)}</td>
                 );
               })}
             </tr>
           );
         })}
       </tbody>
-    );
-  },
+    )
+  }
 });
