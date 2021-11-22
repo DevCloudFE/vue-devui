@@ -1,4 +1,5 @@
-import { computed, ComputedRef, CSSProperties } from 'vue';
+import { computed, ComputedRef, CSSProperties, Ref, ToRefs } from 'vue';
+import { Column } from './column/column.type';
 import { TablePropsTypes } from './table.type';
 
 interface TableConfig {
@@ -19,5 +20,38 @@ export function useTable(props: TablePropsTypes): TableConfig {
     height: props.tableHeight,
     width: props.tableWidth
   }));
-  return {classes, style};
+  return { classes, style };
+}
+
+
+export const useFixedColumn = (column: Ref<Column>): ToRefs<{ stickyCell: string; offsetStyle: string; }> => {
+  const stickyCell = computed(() => {
+    const col = column.value;
+    if (col.fixedLeft) {
+      return `devui-sticky-cell left`;
+    }
+
+    if (col.fixedRight) {
+      return `devui-sticky-cell right`;
+    }
+    return undefined;
+  });
+
+  const offsetStyle = computed(() => {
+    const col = column.value;
+    if (col.fixedLeft) {
+      return `left:${col.fixedLeft}`;
+    }
+
+    if (col.fixedRight) {
+      return `right:${col.fixedRight}`;
+    }
+
+    return undefined;
+  });
+
+  return {
+    stickyCell,
+    offsetStyle
+  };
 }
