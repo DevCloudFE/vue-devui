@@ -1,0 +1,16 @@
+.devui-countdown {
+  font-size: 30px;
+  font-weight: bold;
+
+  span {
+    display: inline-block;
+  }
+
+  .countdown-prefix {
+    margin-right: 4px;
+  }
+
+  .countdown-suffix {
+    margin-left: 4px;
+  }
+}
