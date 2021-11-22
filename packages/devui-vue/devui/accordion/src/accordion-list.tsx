@@ -1,14 +1,16 @@
-import { defineComponent, toRefs } from 'vue'
+import { computed, defineComponent, inject, toRefs, Fragment } from 'vue'
 import type { AccordionMenuItem } from './accordion.type'
 import DAccordionMenu from './accordion-menu'
+import DAccordionItem from './accordion-item'
 import { accordionProps } from './accordion-types'
-
+import './accordion.scss'
 
 export default defineComponent({
   name: 'DAccordionList',
   inheritAttrs: false,
   components: {
-    DAccordionMenu
+    DAccordionMenu,
+    DAccordionItem
   },
   props: {
     data: {
@@ -24,59 +26,59 @@ export default defineComponent({
       default: null
     },
     innerListTemplate: Boolean,
-    ...accordionProps,
+    ...accordionProps
   },
-  setup(props, {attrs, slots}) {
-    const {
-      childrenKey,
-      innerListTemplate,
-      deepth
-    } = toRefs(props)
+  setup(props, { attrs, slots }) {
+    const { childrenKey, innerListTemplate, deepth, parent, data, linkType } = toRefs(props)
+
+    const accordionCtx = inject('accordionContext') as any
+
     return () => {
       return (
         <>
-          {
-            !innerListTemplate.value &&
-            <ul class="devui-accordion-list" {...attrs}>
-              {props.data.map(item => {
-                return <li class="devui-accordion-item" key={item.title}>
-                  {/* // TODO 菜单类型 d-accordion-menu */}
-                  {childrenKey !== undefined && <d-accordion-menu item={item} deepth={props.deepth} parent={props.parent} {...accordionProps}></d-accordion-menu>}
-                  {/* <div class="devui-accordion-menu-item open" title={item.title}>
-                    <div title={item.title} class={`devui-accordion-item-title devui-over-flow-ellipsis open`}>{ item.title }</div>
-                    {
-                      // TODO 子菜单 d-accordion-list
-                    }
-                    <div class="devui-accordion-submenu devui-accordion-show-animate" style="opacity: 1; overflow: hidden;">
-                      <ul class="devui-accordion-list">
-                        { item.children?.map(component => {
-                          return <li class="devui-accordion-item" key={component.title}>
-                            {
-                              // TODO 路由链接 d-accordion-item-routerlink
-                            }
-                            <div class="devui-accordion-item-title devui-over-flow-ellipsis" style="text-indent: 20px;" title={component.title}>
-                              <router-link to={component.link}>
-                                <div class="devui-accordion-splitter" style="left: 30px;"></div>
-                                { component.title }
-                                { component.done && <span class="tag-done">已完成</span> }
-                              </router-link>
-                            </div>
-                          </li>
-                        })}
-                      </ul>
-                    </div>
-                  </div> */}
-                </li>
-              }
-              )}
+          {!innerListTemplate.value && (
+            <ul class='devui-accordion-list devui-accordion-show-animate' {...attrs}>
+              {data.value.map((item) => {
+                return (
+                  <li class='devui-accordion-item' key={item.title}>
+                    {/* // TODO 菜单类型 d-accordion-menu */}
+                    {item[childrenKey.value] !== undefined && (
+                      <d-accordion-menu
+                        item={item}
+                        deepth={deepth.value}
+                        parent={parent.value}
+                      ></d-accordion-menu>
+                    )}
+                    {/* 非菜单类型 */}
+                    {item[childrenKey.value] === undefined && (
+                      <Fragment>
+                        {/* 普通类型 */}
+                        {(!linkType.value || linkType.value === '') && (
+                          <d-accordion-item
+                            item={item}
+                            deepth={deepth.value}
+                            parent={parent.value}
+                          ></d-accordion-item>
+                        )}
+                      </Fragment>
+                    )}
+                  </li>
+                )
+              })}
             </ul>
-          }
-          {
-            innerListTemplate.value && deepth.value !== 0 &&
+          )}
+          {innerListTemplate.value && deepth.value !== 0 && (
             <div>
-              {slots.default ? slots.innerListTemplate() : ''}
+              {slots.innerListTemplate
+                ? slots.innerListTemplate({
+                    item: parent.value,
+                    deepth: deepth.value,
+                    itemClickFn: accordionCtx.itemClickFn,
+                    menuToggleFn: accordionCtx.menuToggleFn
+                  })
+                : ''}
             </div>
-          }
+          )}
         </>
       )
     }

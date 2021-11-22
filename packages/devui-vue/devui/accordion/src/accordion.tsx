@@ -1,4 +1,4 @@
-import { defineComponent, onBeforeUpdate, onMounted, ref, SetupContext, toRefs, watch } from 'vue'
+import { computed, defineComponent, onBeforeUpdate, onMounted, provide, ref, SetupContext, toRefs, watch } from 'vue'
 import AccordionList from './accordion-list'
 import { accordionProps, AccordionProps } from './accordion-types'
 import { AccordionItemClickEvent, AccordionMenuItem, AccordionMenuToggleEvent } from './accordion.type'
@@ -7,7 +7,7 @@ import './accordion.scss'
 export default defineComponent({
   name: 'DAccordion',
   props: accordionProps,
-  setup(props: AccordionProps, { emit }) {
+  setup(props: AccordionProps, { emit, slots }) {
     const { data, childrenKey, activeKey, openKey ,accordionType, autoOpenActiveMenu , restrictOneOpen} = toRefs(props)
 
     let clickActiveItem: AccordionMenuItem | undefined = undefined //记录用户点击的激活菜单项
@@ -62,6 +62,7 @@ export default defineComponent({
 
     // 点击了可点击菜单
     const itemClickFn = (itemEvent: AccordionItemClickEvent) => {
+      data.value.forEach(item=>item[activeKey.value] = null)
       const prevActiveItem = clickActiveItem;
       activeItemFn(itemEvent.item);
       emit('itemClick', {...itemEvent, prevActiveItem: prevActiveItem});
@@ -85,6 +86,12 @@ export default defineComponent({
       )
     }
 
+    provide('accordionContext', {
+      itemClickFn,
+      linkItemClickFn,
+      menuToggleFn
+    })
+
 
     onMounted(() => {
       if (data.value) {
@@ -93,16 +100,16 @@ export default defineComponent({
     })
     
     watch(() => autoOpenActiveMenu.value, (current, preV) => {
-      console.log('cur, new', current, preV)
       if (current && preV === false) {
         cleanOpenData();
       }
     })
+
     
     return () => {
       return <div class={`devui-accordion-menu devui-scrollbar ${accordionType.value === 'normal'?'devui-accordion-menu-normal':''}`}>
         <AccordionList
-          data={data}
+          data={data.value}
           deepth={0}
           parent={null}
           {...props as any}

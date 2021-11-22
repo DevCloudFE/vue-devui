@@ -14,7 +14,9 @@
         <d-accordion
             :data="menu"
             :accordionType="accordionTypeEmbed ? 'embed' : 'normal'"
-        ></d-accordion>
+            :restrictOneOpen="restrictOneOpen"
+        >
+        </d-accordion>
     </div>
     
     <div class="option">
@@ -28,7 +30,11 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
     name: "accordion",
     setup() {
-        const flag = ref(false)
+        const slot = {
+            innerListTemplate: ()=> {
+                return "<p>输出值: </p>"
+            }
+        }
         const restrictOneOpen = ref(false)
         const accordionTypeEmbed = ref(false)
         const menu = ref([{
@@ -69,16 +75,11 @@ export default defineComponent({
             ]
         }])
 
-        const changV = (value) => {
-            console.log('v',value)
-            flag.value = value
-        }
-
-
         return {
             menu,
             restrictOneOpen,
             accordionTypeEmbed,
+            slot
         }
     }
 })
