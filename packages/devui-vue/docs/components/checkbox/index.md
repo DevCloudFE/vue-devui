@@ -380,3 +380,48 @@ export default defineComponent({
 ```
 
 :::
+
+### API
+
+d-checkbox 参数
+
+|     参数     |         类型         | 默认  | 说明                                                                       | 跳转 Demo                               |
+| :----------: | :------------------: | :--------------------: | :------------------------------------------------------------------------ | --------------------------------------- |
+|    name     | `string` |    --     | 可选，表单域名，input 原生 name 属性  | [基本用法](#基本用法)   |
+| label | `string` |  --  | 可选，显示标签 | [基本用法](#基本用法) |
+|    halfchecked    | `boolean` | false | 可选，半选状态 | [基本用法](#基本用法) |
+| isShowTitle | `boolean` |  true   | 可选，是否显示 title 提示，默认显示参数`label`的值 | [基本用法](#基本用法) |
+| title | `string` |  --  | 可选，显示自定义 title 提示内容 | [基本用法](#基本用法) |
+| color | `string` |  --  | 可选，复选框颜色 | [基本用法](#基本用法) |
+| showAnimation | `boolean` |  true  | 可选，控制是否显示动画 | [基本用法](#基本用法) |
+| disabled | `boolean` |  false  | 可选，是否禁用 | [基本用法](#基本用法) |
+| beforeChange | `Function\|Promise<boolean>` |  --  | 可选，checkbox 切换前的回调函数，返回 boolean 类型，返回 false 可以阻止 checkbox 切换 | [基本用法](#基本用法) |
+
+
+d-checkbox 事件
+
+|    事件     |   类型  | 说明                     | 跳转 Demo |
+| :---------: | :------: | :--------------------: | :---------: |
+| onChange |	`string` |	复选框的值改变时发出的事件，值是当前状态 | [基本用法](#基本用法) |
+
+d-checkbox-group 参数
+
+|     参数     |         类型         | 默认  | 说明                                                                       | 跳转 Demo                               |
+| :----------: | :------------------: | :--------------------: | :------------------------------------------------------------------------ | --------------------------------------- |
+|    name     | `string` |    --     | 可选，表单域名，input 原生 name 属性  | [使用CheckBoxGroup](#使用-CheckBoxGroup)   |
+|    direction     | 'row'\|'column' |    'column'     | 可选，显示方向  | [使用CheckBoxGroup](#使用-CheckBoxGroup)   |
+|    itemWidth    | `number` | -- | 可选，表示每一项 checkbox 的宽度（`px`） | [使用CheckBoxGroup](#使用-CheckBoxGroup) |
+|    options    | `array` | [] | 可选，复选框选项数组 | [使用CheckBoxGroup](##使用-CheckBoxGroup) |
+|    halfchecked    | `boolean` | false | 可选，半选状态 | [使用CheckBoxGroup](##使用-CheckBoxGroup) |
+| isShowTitle | `boolean` |  true   | 可选，是否显示 title 提示，默认显示参数`label`的值 | [使用CheckBoxGroup](##使用-CheckBoxGroup) |
+| color | `string` |  --  | 可选，复选框颜色 | [使用CheckBoxGroup](##使用-CheckBoxGroup) |
+| showAnimation | `boolean` |  true  | 可选，控制是否显示动画 | [使用CheckBoxGroup](##使用-CheckBoxGroup) |
+| disabled | `boolean` |  false  | 可选，是否禁用 | [使用CheckBoxGroup](##使用-CheckBoxGroup) |
+| beforeChange | `Function\|Promise<boolean>` |  --  | 可选，checkbox 切换前的回调函数，返回 boolean 类型，返回 false 可以阻止 checkbox 切换 | [使用CheckBoxGroup](#使用-CheckBoxGroup) |
+
+
+d-checkbox-group 事件
+
+|    事件     |   类型  | 说明                     | 跳转 Demo |
+| :---------: | :------: | :--------------------: | :---------: |
+| onChange |	`string` |	checkbox 值改变事件 | [使用CheckBoxGroup](##使用-CheckBoxGroup) |
