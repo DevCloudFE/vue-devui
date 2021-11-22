@@ -1,6 +1,5 @@
-import { inject, defineComponent, Ref } from 'vue';
-import { Table, TABLE_TOKEN } from '../table.type';
-import { Column } from '../column/column.type';
+import { inject, defineComponent } from 'vue';
+import { TABLE_TOKEN } from '../table.type';
 
 export default defineComponent({
   name: 'DColGroup',
@@ -8,13 +7,16 @@ export default defineComponent({
     const parent = inject(TABLE_TOKEN);
     const columns = parent.store.states._columns;
     return () => (
-      <colgroup>
-        {parent.props.tableLayout === 'fixed' ? (
-          columns.value.map((column, index) => {
+      parent.props.tableLayout === 'fixed' ? (
+        <colgroup>
+          {/* 如果是 checkable，那么需要指定 col */}
+          {parent.props.checkable ? <col width={36} /> : null}
+          {columns.value.map((column, index) => {
             return <col key={index} width={column.realWidth}></col>;
-          })
-        ) : null}
-      </colgroup>
+          })}
+        </colgroup>
+      ) : null
+
     );
   }
 });
