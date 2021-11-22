@@ -98,7 +98,7 @@ export default defineComponent({
 
     
     onUnmounted(() => {
-      clearInterval(countdown)
+      clearInterval(countdown);
     })
     
     return () => {
