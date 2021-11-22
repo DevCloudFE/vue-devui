@@ -32,9 +32,18 @@ export const TableColumnProps = {
     type: Function as PropType<CompareFn>,
     default: (field: string, a: any, b: any): boolean => a[field] < b[field]
   },
-  filterable: Boolean,
-  filterMultiple: Boolean,
-  filterList: Array as PropType<FilterConfig[]>
+  filterable: {
+    type: Boolean,
+    default: false
+  },
+  filterMultiple: {
+    type: Boolean,
+    default: false
+  },
+  filterList: {
+    type: Array as PropType<FilterConfig[]>,
+    default: []
+  }
 };
 
 export type TableColumnPropsTypes = ExtractPropTypes<typeof TableColumnProps>;

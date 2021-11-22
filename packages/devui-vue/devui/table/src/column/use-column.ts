@@ -1,4 +1,4 @@
-import { watch, reactive, onBeforeMount, ToRefs, Slots } from 'vue';
+import { watch, reactive, onBeforeMount, ToRefs, Slots, h } from 'vue';
 import { Column, TableColumnPropsTypes } from './column.type'
 import { formatWidth, formatMinWidth } from '../utils';
 
@@ -59,7 +59,7 @@ export function createColumn<T extends Record<string, unknown> = any>(
 }
 
 function defaultRenderHeader(this: Column) {
-  return this.header;
+  return h('span', { class: 'title' }, this.header);
 }
 
 function defaultRenderCell<T extends Record<string, unknown>>(this: Column, rowData: T, index: number) {

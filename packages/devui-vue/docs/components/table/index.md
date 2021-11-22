@@ -219,17 +219,24 @@
 <template>
   <div>
     <d-button type="primary" @click="handleClick">更新数据</d-button>
-    <d-table :data="emptyData">
+    <d-table :data="emptyData" :scrollable="true">
       <d-column 
         field="firstName" 
         header="First Name" 
         filterable 
         :filterList="filterList"
-        :order="0"
+        :order="2"
+        :minWidth="100"
       ></d-column>
-      <d-column field="lastName" header="Last Name" :order="1"></d-column>
-      <d-column field="gender" header="Gender" :order="9"></d-column>
-      <d-column field="date" header="Date of birth" :order="3"></d-column>
+      <d-column field="lastName" header="Last Name" :order="3"></d-column>
+      <d-column field="gender" header="Gender" :order="5"></d-column>
+      <d-column field="date" header="Date of birth" :order="4"></d-column>
+      <d-column field="address" header="Address" :order="6"></d-column>
+      <d-column field="occupation" header="Occupation" :order="7"></d-column>
+      <d-column field="occupation" header="Occupation" :order="7"></d-column>
+      <d-column field="occupation" header="Occupation" :order="7"></d-column>
+      <d-column field="occupation" header="Occupation" :order="7"></d-column>
+      <d-column field="idNo" header="ID Card Number" :order="1"></d-column>
     </d-table>
   </div>
 </template>
@@ -248,24 +255,36 @@
             lastName: 'Lang',
             gender: 'Male',
             date: '1990/01/15',
+            address: 'Shenzhen Guangdong',
+            occupation: 'Worker',
+            idNo: '2000**********9999'
           },
           {
             firstName: 'john',
             lastName: 'Li',
             gender: 'Female',
             date: '1990/01/16',
+            address: 'Shenzhen Guangdong',
+            occupation: 'Worker',
+            idNo: '2000**********9999'
           },
           {
             firstName: 'peng',
             lastName: 'Li',
             gender: 'Male',
             date: '1990/01/17',
+            address: 'Shenzhen Guangdong',
+            occupation: 'Worker',
+            idNo: '2000**********9999'
           },
           {
             firstName: 'Dale',
             lastName: 'Yu',
             gender: 'Female',
             date: '1990/01/18',
+            address: 'Shenzhen Guangdong',
+            occupation: 'Worker',
+            idNo: '2000**********9999'
           }
         ]
       }

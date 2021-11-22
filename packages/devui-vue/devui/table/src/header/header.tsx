@@ -1,6 +1,5 @@
-import { defineComponent, inject, computed, ref, shallowRef, PropType, watch } from 'vue';
-import { TableHeaderPropsTypes } from './header.type'
-import { SortDirection, TABLE_TOKEN } from '../table.type';
+import { defineComponent, inject, computed, ref, shallowRef, PropType, watch, toRefs } from 'vue';
+import { TABLE_TOKEN } from '../table.type';
 import { Column, FilterResults } from '../column/column.type';
 
 import { Checkbox } from '../../../checkbox';
@@ -8,6 +7,8 @@ import { Sort } from './sort';
 import { Filter } from './filter';
 
 import './header.scss';
+import '../body/body.scss';
+import { useFliter, useSort } from './use-header';
 
 
 export default defineComponent({
@@ -20,16 +21,15 @@ export default defineComponent({
       _columns: columns
     } = table.store.states;
 
-    const checkbox = computed(() => {
-      return table.props.checkable ? (
-        <th>
-          <Checkbox
-            v-model={checkAll.value}
-            halfchecked={halfChecked.value}
-          />
-        </th>
-      ) : null
-    });
+    const checkbox = computed(() => table.props.checkable ? (
+      <th class="devui-sticky-cell" style="left:0;">
+        <Checkbox
+          style="padding:10px;"
+          v-model={checkAll.value}
+          halfchecked={halfChecked.value}
+        />
+      </th>
+    ) : null);
 
     return () => {
       return (
@@ -54,30 +54,26 @@ const Th = defineComponent({
     }
   },
   setup(props: { column: Column; }) {
+    const table = inject(TABLE_TOKEN);
+    const { column } = toRefs(props);
+
     // 排序功能
-    const directionRef = ref<SortDirection>('DESC');
-    const { sortData, filterData } = inject(TABLE_TOKEN).store;
-    watch([directionRef, () => props.column], ([direction, column]) => {
-      if (props.column.sortable) {
-        sortData(column.field, direction, column.compareFn);
-      }
-    }, { immediate: true });
+    const directionRef = useSort(table.store, column);
 
     // 过滤器
-    const filteredRef = shallowRef<FilterResults>();
-    watch(filteredRef, (results) => {
-      filterData(props.column.field, results);
-    });
+    const filteredRef = useFliter(table.store, column);
 
     return () => (
-      <th style="position: relative">
-        {props.column.renderHeader()}
+      <th>
+        <div class="header-container">
+          {props.column.renderHeader()}
+          {props.column.filterable && <Filter
+            v-model={filteredRef.value}
+            filterList={props.column.filterList}
+            customTemplate={props.column.customFilterTemplate}
+          />}
+        </div>
         {props.column.sortable && <Sort v-model={directionRef.value} />}
-        {props.column.filterable && <Filter
-          v-model={filteredRef.value}
-          filterList={props.column.filterList}
-          customTemplate={props.column.customFilterTemplate}
-        />}
       </th>
     )
   }
