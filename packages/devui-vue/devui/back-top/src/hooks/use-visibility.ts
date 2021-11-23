@@ -1,6 +1,6 @@
 import { onMounted, computed, ref } from 'vue'
 import { BackTopProps } from '../back-top-types'
-import { useTarget, useEventListener, useThrottle } from '../hooks'
+import { useTarget, useEventListener, useThrottle } from '.'
 export default function (props: BackTopProps, backTopRef) {
   const visibleHeight = props.visibleHeight
   const currScrollTop = ref(0)
