@@ -1,4 +1,4 @@
-import useClass from './useClass'
-import useColor from './useColor'
+import useClass from './use-class'
+import useColor from './use-color'
 
 export { useClass, useColor }

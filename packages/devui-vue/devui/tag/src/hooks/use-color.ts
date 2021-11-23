@@ -25,7 +25,6 @@ export default function (props: TagProps) {
     if (!color && type) return typeMap[type]
     // 判断传入的color是colorMap成员or颜色码
     const themeColor = colorMap[color] || color
-    //color无？ 有 值为map？为#？
     return themeColor
   })
 }
