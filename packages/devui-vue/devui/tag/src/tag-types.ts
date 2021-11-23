@@ -18,6 +18,10 @@ export const tagProps = {
   checked: {
     type: Boolean as PropType<boolean>,
     default: false
+  },
+  deletable: {
+    type: Boolean as PropType<boolean>,
+    default: false
   }
 } as const
 
