@@ -61,6 +61,7 @@ const { hasLinks, prev, next } = useNextAndPrevLinks()
   max-width: 100%;
   font-size: 1rem;
   font-weight: 500;
+  text-decoration: none;
 }
 
 .text {
@@ -77,12 +78,13 @@ const { hasLinks, prev, next } = useNextAndPrevLinks()
   height: 16px;
   fill: var(--c-text);
   transform: translateY(1px);
+  margin-top: -2px;
 }
 
 .icon-prev {
-  margin-right: 8px;
+  margin-right: 6px;
 }
 .icon-next {
-  margin-left: 8px;
+  margin-left: 6px;
 }
 </style>

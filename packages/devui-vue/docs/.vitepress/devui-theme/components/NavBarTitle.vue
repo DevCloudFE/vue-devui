@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { withBase, useData } from 'vitepress'
 const { site, theme, localePath } = useData()
+function gopage (){
+  document.querySelector('.nav-bar-title').setAttribute('href', window.location.pathname);
+  return false;
+};
 </script>
 
 <template>
   <a
     class="nav-bar-title"
-    :href="localePath"
     :aria-label="`${site.title}, back to home`"
+    @click="gopage()"
   >
     <img
       v-if="theme.logo"

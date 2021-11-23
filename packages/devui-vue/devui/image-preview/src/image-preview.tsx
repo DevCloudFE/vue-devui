@@ -1,5 +1,5 @@
 import './image-preview.scss'
-import { defineComponent, ref, computed, onMounted } from 'vue'
+import { defineComponent, ref, computed, onMounted, onUnmounted } from 'vue'
 import { imagePreviewProps, ImagePreviewProps } from './image-preview-types'
 import ImagePreviewService from './image-preview-service'
 import Transform from './transform'
@@ -47,10 +47,32 @@ export default defineComponent({
       transform.setZoomOriginal()
     }
 
+    function onKeyDown(event:KeyboardEvent) {
+      if(event.defaultPrevented) return;
+
+      if(event.code == 'Escape') {
+        onClose();
+      }else if(event.code == 'ArrowLeft') {
+        onPrev();
+      }else if(event.code == 'ArrowRight') {
+        onNext();
+      }
+    }
+    function initKeyboard() {
+      document.addEventListener('keydown', onKeyDown, false)
+    }
+    function unKeyBoard() {
+      document.removeEventListener('keydown', onKeyDown, false)
+    }
+
     onMounted(() => {
       initIndex()
       initTransform()
+      initKeyboard()
     })
+    onUnmounted(()=>{
+      unKeyBoard();
+    }) 
 
     return () => {
       return (

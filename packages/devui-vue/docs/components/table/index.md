@@ -14,7 +14,7 @@
 ```vue
 <template>
   <d-table :data="baseTableData">
-    <d-column field="firstName" header="First Name"></d-column>
+    <d-column field="firstName" header="First Name" :sortable="true"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
     <d-column field="date" header="Date of birth"></d-column>
@@ -212,21 +212,30 @@
 
 :::
 
-
 ### d-table Props
 
-| 参数         | 类型                | 默认值    | 说明                     |
-| ------------ | ------------------- | --------- | ------------------------ |
-| data         | `Array`             | `[]`      | 显示的数据               |
-| striped      | `Boolean`           | `false`   | 是否显示斑马纹间隔       |
-| header-bg    | `Boolean`           | `false`   | 可选，表头是否显示背景色 |
-| table-layout | `String` | `'fixed'` | 表格布局，可选值为`'auto'`|
-
+| 参数                  | 类型                | 默认值    | 说明                            |
+| --------------------- | ------------------- | --------- | ------------------------------- |
+| data                  | `Array`             | `[]`      | 显示的数据                      |
+| striped               | `Boolean`           | `false`   | 是否显示斑马纹间隔              |
+| max-width             | `String`            | ` `       | 表格最大宽度                    |
+| max-height            | `Boolean`           | ` `       | 表格最大高度                    |
+| table-width           | `String`            | ` `       | 表格宽度                        |
+| table-height          | `String`            | ` `       | 表格高度                        |
+| row-hovered-highlight | `Boolean`           | `true`    | 鼠标在该行上时，高亮该行        |
+| fix-header            | `Boolean`           | `false`   | 固定头部                        |
+| checkable             | `Boolean`           | `false`   | 在每行的第一列展示一个 checkbox |
+| show-loading          | `Boolean`           | `false`   | 显示加载动画                    |
+| header-bg             | `Boolean`           | `false`   | 头部背景                        |
+| table-layout          | `'fixed' \| 'auto'` | `'fixed'` | 表格布局，可选值为'auto'        |
 ### d-column Props
 
-| 参数      | 类型               | 默认值 | 说明                       |
-| --------- | ------------------ | ------ | -------------------------- |
-| header    | `String`           | `-`    | 对应列的标题               |
-| field     | `String`           | `-`    | 对应列内容的字段名         |
-| width     | `String \| Number` | `-`    | 对应列的宽度，单位`px`     |
-| min-width | `String \| Number` | `-`    | 对应列的最小宽度，单位`px` |
+| 参数      | 类型                                     | 默认值                                 | 说明                           |
+| --------- | ---------------------------------------- | -------------------------------------- | ------------------------------ |
+| header    | `String`                                 | `-`                                    | 对应列的标题                   |
+| field     | `String`                                 | `-`                                    | 对应列内容的字段名             |
+| width     | `String \| Number`                       | `-`                                    | 对应列的宽度，单位`px`         |
+| min-width | `String \| Number`                       | `-`                                    | 对应列的最小宽度，单位`px`     |
+| sortable  | `Boolean`                                | `false`                                | 对行数据按照该列的顺序进行排序 |
+| formatter | `Function`                               | ` `                                    | 对应列的所有单元格的格式       |
+| compareFn | `(field: string, a: T, b: T) => boolean` | `(field, a, b) => a[field] > b[field]` | 用于排序的比较函数             |
