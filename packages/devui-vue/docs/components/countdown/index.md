@@ -81,6 +81,75 @@ export default defineComponent({
 ```
 :::
 
+### 插槽
+:::demo 
+
+```vue
+<template>
+  <div>
+    <d-countdown :format="format" :value="deadline" @onChange="changeTime" @onFinish="finishTime">
+      <div class="countdown-main">
+        距离活动结束还有
+        <span class="time-num">{{ leftTime.H }}</span>
+        时
+        <span class="time-num">{{ leftTime.m }}</span>
+        分
+        <span class="time-num">{{ leftTime.s }}</span>
+        秒
+      </div>
+    </d-countdown>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref, reactive } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const format = ref("HH:mm:ss");
+    const deadline = ref(new Date().getTime() + 10 * 24 * 60 * 60 *1000 + 5000);
+    const leftTime = reactive({'H':0,'m':0,'s':0})
+    const changeTime = ({dateValue, calculatingTime}) => {
+      
+      for (const k of dateValue.keys()) {
+        // console.log(k);
+        if (k in leftTime) {
+          leftTime[k] = dateValue.get(k);
+          // console.log(dateValue.get(k))
+        }
+      }
+      // ++leftTime.Y
+      console.log(calculatingTime);
+    }
+    const finishTime = () => {
+    }
+    return {
+      msg: 'Countdown 倒计时 组件文档示例',
+      deadline,
+      leftTime,
+      changeTime,
+      finishTime
+    }
+  }
+})
+</script>
+
+<style lang="scss">
+.countdown-main .time-num{
+    font-weight: 400;
+    display: inline-block;
+    border: 1px solid #f4f4f4;
+    padding: 0 4px;
+    border-radius: 4px;
+    min-width: 48px;
+    text-align: center;
+    background-color: #f4f4f4;
+    font-size: 18px;
+  }
+</style>
+```
+:::
+
 ### d-countdown
 
 d-countdown 参数

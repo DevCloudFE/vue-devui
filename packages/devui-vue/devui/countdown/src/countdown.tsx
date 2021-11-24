@@ -1,5 +1,5 @@
 import { defineComponent, ref, onUnmounted } from 'vue'
-import { countdownProps, CountdownProps, DateFormat } from './countdown-types'
+import { countdownProps, CountdownProps } from './countdown-types'
 import './countdown.scss'
 
 export default defineComponent({
@@ -102,16 +102,23 @@ export default defineComponent({
     })
     
     return () => {
-      return (<div class="devui-countdown" style={props.valueStyle}>
-        <span class="countdown-prefix">
-          { props.prefix }
-        </span>
-        <span class="countdown-value">
-          {timeStr.value}
-        </span>
-        <span class="countdown-suffix">
-          { props.suffix }
-        </span>
+      return (<div class="devui-countdown">
+        {
+          ctx.slots.default ? ctx.slots.default() : (
+            <div class="countdown-content" style={props.valueStyle}>
+              <span class="countdown-prefix">
+                { props.prefix }
+              </span>
+              <span class="countdown-value">
+                {timeStr.value}
+              </span>
+              <span class="countdown-suffix">
+                { props.suffix }
+              </span>
+    
+            </div>
+          )
+        }
       </div>
       )
     }
