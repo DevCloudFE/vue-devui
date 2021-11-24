@@ -1,4 +1,4 @@
-import { defineComponent, computed } from 'vue';
+import { defineComponent } from 'vue';
 import DButton from '../../button/src/button'
 import { transferOperationProps } from '../common/use-transfer-operation'
 
