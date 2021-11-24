@@ -61,7 +61,6 @@ export default defineComponent({
     const deadline = ref(new Date().getTime() + 369 * 24 * 60 * 60 *1000 + 5000);
 
     const changeTime = (n) => {
-      // console.log(n)
     }
     const finishTime = () => {
     }
@@ -112,14 +111,10 @@ export default defineComponent({
     const changeTime = ({dateValue, calculatingTime}) => {
       
       for (const k of dateValue.keys()) {
-        // console.log(k);
         if (k in leftTime) {
           leftTime[k] = dateValue.get(k);
-          // console.log(dateValue.get(k))
         }
       }
-      // ++leftTime.Y
-      console.log(calculatingTime);
     }
     const finishTime = () => {
     }
