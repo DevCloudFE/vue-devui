@@ -8,7 +8,7 @@ export default function (props: BackTopProps, backTopRef) {
     if (!targetEl) throw new Error(`props ${target} is not existed`)
 
     // 设置定位
-    targetEl.style.position = 'relative'
+    targetEl.parentElement.style.position = 'relative'
     backTopRef.value.style.position = 'absolute'
     return targetEl
   }
