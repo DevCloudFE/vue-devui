@@ -18,7 +18,9 @@ export function createColumn<T extends Record<string, unknown> = any>(
     filterable,
     filterList,
     filterMultiple,
-    order
+    order,
+    fixedLeft,
+    fixedRight
   } = props;
   const column: Column = reactive({});
 
@@ -28,11 +30,13 @@ export function createColumn<T extends Record<string, unknown> = any>(
     column.order = order;
   }, { immediate: true });
 
+  // 排序功能
   watch([sortable, compareFn], ([sortable, compareFn]) => {
     column.sortable = sortable;
     column.compareFn = compareFn;
   })
 
+  // 过滤功能
   watch([
     filterable,
     filterList,
@@ -43,11 +47,21 @@ export function createColumn<T extends Record<string, unknown> = any>(
     column.filterList = filterList;
   }, { immediate: true })
 
+  // 固定左右功能
+  watch([fixedLeft, fixedRight], ([left, right]) => {
+    column.fixedLeft = left;
+    column.fixedRight = right;
+  }, { immediate: true });
 
-  onBeforeMount(() => {
-    column.width = formatWidth(width.value);
-    column.minWidth = formatMinWidth(minWidth.value);
+  // 宽度
+  watch([width, minWidth], ([width, minWidth]) => {
+    column.width = formatWidth(width);
+    column.minWidth = formatMinWidth(minWidth);
     column.realWidth = column.width || column.minWidth;
+  });
+
+  // 基础渲染功能
+  onBeforeMount(() => {
     column.renderHeader = defaultRenderHeader;
     column.renderCell = defaultRenderCell;
     column.formatter = formatter.value;

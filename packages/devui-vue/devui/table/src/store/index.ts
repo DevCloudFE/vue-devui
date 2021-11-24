@@ -8,6 +8,7 @@ export interface TableStore<T = Record<string, any>> {
     _checkList: Ref<boolean[]>
     _checkAll: Ref<boolean>
     _halfChecked: Ref<boolean>
+    isFixedLeft: Ref<boolean>
   }
   insertColumn(column: Column): void
   sortColumn(): void
@@ -29,13 +30,16 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
   const { sortData } = createSorter(dataSource, _data);
   const { filterData, resetFilterData } = createFilter(dataSource, _data);
 
+  const { isFixedLeft } = createFixedLogic(_columns);
+
   return {
     states: {
       _data,
       _columns,
       _checkList,
       _checkAll,
-      _halfChecked
+      _halfChecked,
+      isFixedLeft
     },
     insertColumn,
     sortColumn,
@@ -203,4 +207,12 @@ const createFilter = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
     _data.value = [...dataSource.value];
   }
   return { filterData, resetFilterData };
+}
+
+const createFixedLogic = (columns: Ref<Column[]>) => {
+  const isFixedLeft = computed(() => {
+    return columns.value.reduce((prev, current) => prev || !!current.fixedLeft, false);
+  });
+
+  return { isFixedLeft }
 }

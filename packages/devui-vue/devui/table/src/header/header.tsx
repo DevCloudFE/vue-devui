@@ -1,6 +1,6 @@
-import { defineComponent, inject, computed, ref, shallowRef, PropType, watch, toRefs } from 'vue';
+import { defineComponent, inject, computed, PropType, toRefs } from 'vue';
 import { TABLE_TOKEN } from '../table.type';
-import { Column, FilterResults } from '../column/column.type';
+import { Column } from '../column/column.type';
 
 import { Checkbox } from '../../../checkbox';
 import { Sort } from './sort';
@@ -9,6 +9,7 @@ import { Filter } from './filter';
 import './header.scss';
 import '../body/body.scss';
 import { useFliter, useSort } from './use-header';
+import { useFixedColumn } from '../use-table';
 
 
 export default defineComponent({
@@ -18,11 +19,16 @@ export default defineComponent({
     const {
       _checkAll: checkAll,
       _halfChecked: halfChecked,
-      _columns: columns
+      _columns: columns,
+      isFixedLeft
     } = table.store.states;
 
+    const thAttrs = computed(() => isFixedLeft.value ? ({
+      class: 'devui-sticky-cell left',
+      style: "left:0;"
+    }) : null);
     const checkbox = computed(() => table.props.checkable ? (
-      <th class="devui-sticky-cell" style="left:0;">
+      <th {...thAttrs.value}>
         <Checkbox
           style="padding:10px;"
           v-model={checkAll.value}
@@ -63,8 +69,11 @@ const Th = defineComponent({
     // 过滤器
     const filteredRef = useFliter(table.store, column);
 
+    // 固定列功能
+    const { stickyCell, offsetStyle } = useFixedColumn(column);
+
     return () => (
-      <th>
+      <th class={stickyCell.value} style={offsetStyle.value}>
         <div class="header-container">
           {props.column.renderHeader()}
           {props.column.filterable && <Filter

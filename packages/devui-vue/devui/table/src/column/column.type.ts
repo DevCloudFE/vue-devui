@@ -43,7 +43,13 @@ export const TableColumnProps = {
   filterList: {
     type: Array as PropType<FilterConfig[]>,
     default: []
-  }
+  },
+  fixedLeft: {
+    type: String,
+  },
+  fixedRight: {
+    type: String,
+  },
 };
 
 export type TableColumnPropsTypes = ExtractPropTypes<typeof TableColumnProps>;
@@ -78,6 +84,8 @@ export interface Column<T extends Record<string, unknown> = any> {
   filterable?: boolean
   filterMultiple?: boolean
   filterList?: FilterConfig[]
+  fixedLeft?: string
+  fixedRight?: string
   renderHeader?: () => void
   renderCell?: (row: T, index: number) => void
   formatter?: Formatter<T>
