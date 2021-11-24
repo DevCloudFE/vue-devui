@@ -1,5 +1,6 @@
 $icon-size: 26px;
-$icon-offset: 4px;
+$icon-offset: 1px;
+$icon-left: 2px;
 .d-input-icon-container {
     display: flex;
     flex-direction: row;
@@ -9,15 +10,18 @@ $icon-offset: 4px;
         flex: 1;
         background-color: #ccc;
         input {
-            padding-right: $icon-size + $icon-offset;
+            padding-right: $icon-size + $icon-offset + $icon-left;
         }
     }
     span {
         position: absolute;
+        top: 1px;
+        bottom: 1px;
         right: $icon-offset;
         width: $icon-size;
         display: flex;
         justify-content: center;
+        align-items: center;
         box-sizing: border-box;
     }
 }

@@ -15,6 +15,14 @@ const inputIconProps = {
     onIconclick: {
         type: Function as PropType<(e: MouseEvent) => void>,
         required: false,
+    },
+    iconBgColor: {
+        type: String,
+        value: 'transparent',
+    },
+    iconColor: {
+        type: String,
+        value: '#000000',
     }
 }
 
@@ -22,7 +30,7 @@ export default defineComponent({
     name: 'DInputIcon',
     props: inputIconProps,
     setup(props, ctx) {
-        const { name, onIconclick, onChange, ...inputProps } = props
+        const { name, onIconclick, onChange, iconBgColor, iconColor, ...inputProps } = props
         const state = reactive({ value: '' })
         const onInputChange = (v: string) => {
             state.value = v
@@ -37,8 +45,8 @@ export default defineComponent({
                     <label>
                         <Input { ...inputProps } onChange={onInputChange} />
                     </label>
-                    <span onClick={onIconClick}>
-                        <Icon size="small" name={name} />
+                    <span onClick={onIconClick} style={{ backgroundColor: iconBgColor }}>
+                        <Icon size="small" name={name} color={iconColor} />
                     </span>
                 </div>
             )
