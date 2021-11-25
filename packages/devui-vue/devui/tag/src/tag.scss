@@ -25,6 +25,9 @@ $devui-tag-normal-config: (
     color: $devui-danger,
     background-color: $devui-danger-bg,
     border-color: $devui-danger-line
+  ),
+  colorful: (
+    background-color: #fff
   )
 );
 
@@ -45,7 +48,7 @@ $devui-tag-normal-config: (
     position: relative;
     cursor: default;
 
-    @each $type in default, primary, success, warning, danger {
+    @each $type in default, primary, success, warning, danger, colorful {
       &.devui-tag-#{$type} {
         @each $key, $value in map-get($devui-tag-normal-config, $type) {
           #{$key}: $value;

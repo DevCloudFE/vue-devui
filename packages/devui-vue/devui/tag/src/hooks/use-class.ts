@@ -3,8 +3,7 @@ import { tagProps, TagProps } from '../tag-types'
 
 export default function (props: TagProps) {
   return computed(() => {
-    const { type } = props
-
-    return `devui-tag devui-tag-${type || 'default'}`
+    const { type, color } = props
+    return `devui-tag devui-tag-${type || (color ? 'colorful' : '') || 'default'}`
   })
 }
