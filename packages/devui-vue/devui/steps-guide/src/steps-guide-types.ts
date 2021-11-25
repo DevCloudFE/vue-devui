@@ -14,6 +14,10 @@ export type Step = {
 }
 export const stepsGuideProps = {
   steps: Array as PropType<Step[]>,
+  stepIndex: {
+    type: Number,
+    default: undefined
+  },
   showClose: {
     type: Boolean,
     default: true
@@ -21,6 +25,20 @@ export const stepsGuideProps = {
   showDots: {
     type: Boolean,
     default: true
+  },
+  scrollToTargetSwitch: {
+    type: Boolean,
+    default: true
+  },
+  zIndex: {
+    type: Number,
+    default: 1100
+  },
+  stepChange: {
+    type: Function,
+    default(){
+      return true
+    }
   }
 } as const
 
