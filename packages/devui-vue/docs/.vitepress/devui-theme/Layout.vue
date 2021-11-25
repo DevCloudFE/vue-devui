@@ -2,7 +2,7 @@
 import { ref, computed, watch, defineAsyncComponent } from 'vue'
 import { useRoute, useData } from 'vitepress'
 import { isSideBarEmpty, getSideBarConfig } from './support/sideBar'
-
+import lang from '../config/lang';
 // components
 import NavBar from './components/NavBar.vue'
 import SideBar from './components/SideBar.vue'
@@ -82,11 +82,13 @@ const pageClasses = computed(() => {
 })
 
 // layout组件加载，初始化国际化语言.
-if (location.pathname.indexOf('-') >= 0){
-  const result = location.pathname.match(/[a-zA-Z]*-[A-Z]*/)
-  localStorage.setItem('preferred_lang', result[0])
-}else {
-  localStorage.setItem('preferred_lang', navigator.language);
+const result = location.pathname.match(/[a-zA-Z]*-[A-Z]*/)
+const langList = Object.keys(lang);
+// 避免短横线分隔 (kebab-case）形式的路由命名导致读取语言错误
+if (result && langList.includes(result[0])) {
+    localStorage.setItem('preferred_lang', result[0])
+} else {
+    localStorage.setItem('preferred_lang', navigator.language);
 }
 </script>
 
