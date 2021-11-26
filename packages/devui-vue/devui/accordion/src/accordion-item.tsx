@@ -16,7 +16,7 @@ export default defineComponent({
     },
     ...accordionProps
   },
-  setup(props, {slots}) {
+  setup(props, { slots }) {
     const {
       item,
       deepth,
@@ -30,9 +30,9 @@ export default defineComponent({
     } = toRefs(props)
 
     const accordionCtx = inject('accordionContext') as any
-    
+
     const itemClick = (itemEvent: AccordionItemClickEvent) => {
-      if(item.value && !item.value.disabled) {
+      if (item.value && !item.value.disabled) {
         accordionCtx.itemClickFn(itemEvent)
       }
     }
@@ -42,13 +42,15 @@ export default defineComponent({
     })
 
     return () => {
-      
       return (
         <>
-        <div
-            class={`devui-accordion-item-title devui-over-flow-ellipsis ${childActived.value ? 'active' : ''} ${
-              item.value[disabledKey.value] ? 'disabled' : ''
-            }`}
+          <div
+            class={[
+              'devui-accordion-item-title',
+              'devui-over-flow-ellipsis',
+              childActived.value && 'active',
+              item.value[disabledKey.value] && 'disabled'
+            ]}
             title={item.value.title}
             style={{ textIndent: deepth.value * 20 + 'px' }}
             onClick={(e) =>
@@ -59,17 +61,12 @@ export default defineComponent({
               })
             }
           >
-          <div
-            class={`devui-accordion-splitter ${deepth.value === 0 ? 'devui-parent-list' : ''}`}
-            style={{ left: deepth.value * 20 + 10 + 'px' }}
-          ></div>
-          {!itemTemplate.value && <Fragment>{item.value.title}</Fragment>}
-          {
-            itemTemplate.value && 
-            <Fragment>
-              {slots.itemTemplate()}
-            </Fragment>
-          }
+            <div
+              class={['devui-accordion-splitter', deepth.value === 0 && 'devui-parent-list']}
+              style={{ left: deepth.value * 20 + 10 + 'px' }}
+            ></div>
+            {!itemTemplate.value && <Fragment>{item.value.title}</Fragment>}
+            {itemTemplate.value && <Fragment>{slots.itemTemplate()}</Fragment>}
           </div>
         </>
         // <ng-template

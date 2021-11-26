@@ -37,7 +37,7 @@ export default defineComponent({
       return (
         <>
           {!innerListTemplate.value && (
-            <ul class='devui-accordion-list devui-accordion-show-animate' {...attrs}>
+            <ul class={['devui-accordion-list', 'devui-accordion-show-animate']} {...attrs}>
               {data.value.map((item) => {
                 return (
                   <li class='devui-accordion-item' key={item.title}>
