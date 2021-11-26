@@ -30,6 +30,10 @@ export const formProps = {
     type: String,
     default: '', 
   },
+  messageShowType: {
+    type: String as PropType<'popover' | 'text' | 'toast' | 'none'>,
+    default: 'popover', 
+  },
 } as const
 
 export const formItemProps = {
@@ -96,6 +100,7 @@ export interface IForm {
   formMitt: Emitter<any>
   rules: any
   columnsClass: string
+  messageShowType: string
 } 
 
 export interface IFormLabel {

@@ -1098,7 +1098,8 @@ export default defineComponent({
 
 > doing
 
-待实现在dForm层统一设置messageShowType。
+对于自动错误提示的方式，在form中， 建议在dForm层统一设置`messageShowType`，需同时设置ref属性才能生效。
+
 
 :::demo
 
@@ -1106,8 +1107,7 @@ export default defineComponent({
 <template>
   <d-form name="userInfoForm2" ref="dFormTemplateValidate7" :formData="formModel" labelSize="lg" @submit="onSubmit" v-d-validate-rules="{
           rules: {message: '表单验证未通过'},
-          messageShowType: 'toast'
-        }">
+        }" messageShowType="text">
     <d-form-item prop="name">
       <d-form-label>Name</d-form-label>
       <d-form-control>
