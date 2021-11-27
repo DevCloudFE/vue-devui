@@ -44,13 +44,7 @@ export default defineComponent({
           style={{
             display: 'block',
             color: checked.value ? '#fff' : themeColor.value,
-            backgroundColor: checked.value
-              ? themeColor.value
-              : type.value
-              ? ''
-              : !color.value
-              ? ''
-              : '#fff'
+            backgroundColor: checked.value ? themeColor.value : (!color.value ? '' : '#fff')
           }}
           title={tagTitle}
         >
