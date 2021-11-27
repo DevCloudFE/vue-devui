@@ -56,4 +56,18 @@ $devui-tag-normal-config: (
       }
     }
   }
+  .remove-button {
+    display: inline-block;
+    margin-left: 12px;
+    font-size: $devui-font-size-icon;
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    border-radius: 50%;
+    text-align: center;
+    position: relative;
+    top: -0.1255em;
+    vertical-align: middle;
+  }
 }
