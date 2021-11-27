@@ -1,7 +1,7 @@
-import { defineComponent, computed, ref, watch, nextTick, onMounted, toRefs, inject } from 'vue';
-import { inputProps, InputType } from './use-input';
+import { defineComponent, computed, ref, watch, inject } from 'vue'
+import { inputProps, InputType } from './use-input'
 import './input.scss'
-import { dFormItemEvents, IFormItem, formItemInjectionKey } from '../../form/src/form-types';
+import { dFormItemEvents, IFormItem, formItemInjectionKey } from '../../form/src/form-types'
 
 export default defineComponent({
   name: 'DInput',
@@ -15,11 +15,11 @@ export default defineComponent({
     }
   },
   props: inputProps,
-  emits: ['update:value', 'focus', 'blur', 'change', 'keydown'],
+  emits: ['update:modelValue', 'focus', 'blur', 'change', 'keydown'],
   setup(props, ctx) {
-    const formItem = inject(formItemInjectionKey, {} as IFormItem);
-    const hasFormItem = Object.keys(formItem).length > 0;
-    const sizeCls = computed(() => `devui-input-${props.size}`);
+    const formItem = inject(formItemInjectionKey, {} as IFormItem)
+    const hasFormItem = Object.keys(formItem).length > 0
+    const sizeCls = computed(() => `devui-input-${props.size}`)
     const showPwdIcon = ref(false)
     const inputType = ref<InputType>('text')
     const inputCls = computed(() => {
@@ -30,31 +30,40 @@ export default defineComponent({
       }
     })
     const showPreviewIcon = computed(() => inputType.value === 'password')
-    watch(() => props.showPassword, flg => {
-      inputType.value = flg ? 'password' : 'text'
-    }, { immediate: true })
+    watch(
+      () => props.showPassword,
+      (flg) => {
+        inputType.value = flg ? 'password' : 'text'
+      },
+      { immediate: true }
+    )
 
-    watch(() => props.value, value => {
-      (value && value.length > 0 && showPreviewIcon.value) ? showPwdIcon.value = true : showPwdIcon.value = false
-    })
+    watch(
+      () => props.modelValue,
+      (value) => {
+        value && value.length > 0 && showPreviewIcon.value
+          ? (showPwdIcon.value = true)
+          : (showPwdIcon.value = false)
+      }
+    )
 
     const onInput = ($event: Event) => {
-      ctx.emit('update:value', ($event.target as HTMLInputElement).value);
-      hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.input);
-    },
+        ctx.emit('update:modelValue', ($event.target as HTMLInputElement).value)
+        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.input)
+      },
       onFocus = () => {
-        ctx.emit('focus');
+        ctx.emit('focus')
       },
       onBlur = () => {
-        ctx.emit('blur');
-        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.blur);
+        ctx.emit('blur')
+        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.blur)
       },
       onChange = ($event: Event) => {
-        ctx.emit('change', ($event.target as HTMLInputElement).value);
-        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.change);
+        ctx.emit('change', ($event.target as HTMLInputElement).value)
+        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.change)
       },
       onKeydown = ($event: KeyboardEvent) => {
-        ctx.emit('keydown', $event);
+        ctx.emit('keydown', $event)
       },
       onChangeInputType = () => {
         inputType.value = inputType.value === 'password' ? 'text' : 'password'
@@ -70,11 +79,11 @@ export default defineComponent({
       onChange,
       onKeydown,
       onChangeInputType
-    };
+    }
   },
-  render () {
+  render() {
     const {
-      value,
+      modelValue,
       showPreviewIcon,
       showPwdIcon,
       inputCls,
@@ -88,14 +97,14 @@ export default defineComponent({
       onBlur,
       onChange,
       onKeydown,
-      onChangeInputType,
-    } = this;
+      onChangeInputType
+    } = this
     return (
-      <div class="devui-input__wrap">
+      <div class='devui-input__wrap'>
         <input
           v-focus={autoFocus}
-          {...{dinput: true}}
-          value={value}
+          {...{ dinput: true }}
+          value={modelValue}
           disabled={disabled}
           type={inputType}
           maxlength={maxLength}
@@ -105,16 +114,18 @@ export default defineComponent({
           onFocus={onFocus}
           onBlur={onBlur}
           onChange={onChange}
-          onKeydown={onKeydown} 
+          onKeydown={onKeydown}
         />
-        {
-          showPwdIcon && <div class="devui-input__preview" onClick={onChangeInputType}>
-          { showPreviewIcon
-            ? <d-icon name="preview" size="12px" key={1}/>
-            : <d-icon name="preview-forbidden" size="12px" key={2} />
-          }
-        </div>}
+        {showPwdIcon && (
+          <div class='devui-input__preview' onClick={onChangeInputType}>
+            {showPreviewIcon ? (
+              <d-icon name='preview' size='12px' key={1} />
+            ) : (
+              <d-icon name='preview-forbidden' size='12px' key={2} />
+            )}
+          </div>
+        )}
       </div>
-    );
+    )
   }
-});
+})
