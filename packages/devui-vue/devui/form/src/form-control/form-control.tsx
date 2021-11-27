@@ -52,10 +52,10 @@ export default defineComponent({
       } = props;
       return <div class="form-control" ref={formControl} data-uid={uid}>
         <div class={`devui-form-control-container${isHorizontal ? ' devui-form-control-container-horizontal' : ''}${feedbackStatus ? ' has-feedback' : ''}${feedbackStatus === 'error' ? ' feedback-error' : ''}`}>
-          <div class="devui-control-content-wrapper">
+          <div class={`devui-control-content-wrapper ${showPopover.value ? 'with-popover' : ''}`}>
             {ctx.slots.default?.()}
-            {showPopover.value &&
-              <div class="devui-popover-wrapper">
+            { showPopover.value && 
+              <div class="devui-popover-wrapper" style={{"z-index": showPopover.value ? 9 : -1}}>
                 <Popover visible={true} content={tipMessage.value} popType={"error"} position={popPosition.value} />
               </div>
             }
