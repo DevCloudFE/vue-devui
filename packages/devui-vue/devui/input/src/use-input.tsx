@@ -1,4 +1,4 @@
-import { PropType } from 'vue';
+import { PropType } from 'vue'
 
 export const inputProps = {
   placeholder: {
@@ -33,31 +33,31 @@ export const inputProps = {
     type: Boolean,
     default: false
   },
-  value: {
+  modelValue: {
     type: String,
     default: ''
   },
-  'onUpdate:value': {
+  'update:modelValue': {
     type: Function as PropType<(v: string) => void>,
     default: undefined
   },
-  'onChange': {
+  onChange: {
     type: Function as PropType<(v: string) => void>,
     default: undefined
   },
-  'onKeydown': {
+  onKeydown: {
     type: Function as PropType<(v: KeyboardEvent) => void>,
     default: undefined
   },
-  'onFocus': {
+  onFocus: {
     type: Function as PropType<() => void>,
     default: undefined
   },
-  'onBlur': {
+  onBlur: {
     type: Function as PropType<() => void>,
     default: undefined
   }
-} as const;
+} as const
 
 export type PreviewIconType = 'preview' | 'icon-preview-forbidden'
 export type InputType = 'password' | 'text'

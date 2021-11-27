@@ -8,7 +8,7 @@
     border-bottom: 1px solid $devui-dividing-line;
     background-color: $devui-global-bg-normal;
 
-    &:hover {
+    &.hover-enabled:hover {
       background-color: $devui-list-item-hover-bg;
     }
 
@@ -16,5 +16,18 @@
       padding: 10px;
       border: none;
     }
+  }
+}
+
+
+.devui-sticky-cell {
+  position: sticky;
+  z-index: 5;
+  background-color: inherit;
+  &.left {
+    box-shadow: rgba(0,0,0,.05) $devui-shadow-length-slide-right;
+  }
+  &.right {
+    box-shadow: rgba(0,0,0,.05) $devui-shadow-length-slide-left;
   }
 }

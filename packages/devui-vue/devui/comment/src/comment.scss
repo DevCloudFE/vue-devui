@@ -1,0 +1,30 @@
+@import '../../styles-var/devui-var.scss';
+.devui-comment {
+  display: flex;
+  align-items: flex-start;
+  &-avatar{
+    margin: 0 16px 0 0;
+  }
+  &-right{
+    
+  }
+  &-head{
+    display: flex;
+    align-items: center;
+  }
+  &-author{
+    padding: 0 8px 0 0;
+    font-size: $devui-font-size;
+    color: $devui-text-weak;
+  }
+  &-datetime{
+    font-size: $devui-font-size;
+    color: $devui-aide-text;
+  }
+  &-content{
+    font-size: $devui-text;
+  }
+  &-actions{
+    margin: 12px 0 0;
+  }
+}

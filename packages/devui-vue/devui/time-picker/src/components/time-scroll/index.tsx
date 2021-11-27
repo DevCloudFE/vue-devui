@@ -1,10 +1,12 @@
 import { defineComponent, onBeforeUnmount, onMounted, onUnmounted } from 'vue'
+import { TimePickerProps, timePickerProps } from '../../time-picker-types'
 import useTimeScroll from './composables/use-time-scroll'
 
 import './index.scss'
 
 export default defineComponent({
   name:'DTimeScroll',
+  props:timePickerProps,
   setup(props,ctx){
     const {
       scrollBoxDom,
@@ -44,7 +46,7 @@ export default defineComponent({
       return (
         <>
           <div ref={scrollBoxDom} class="devui-scroll-box">
-            <div ref={scrollContentDom} class={`box-content ${ isDown.value ? 'box-content-behavior-auto':''}`} 
+            <div ref={scrollContentDom} class={`box-content ${ isDown.value || !props.showAnimation ? 'box-content-behavior-auto':''}`} 
               style={{'margin-right': marginRight + 'px'}}>
                 {
                   ctx.slots.default?.()
@@ -58,6 +60,5 @@ export default defineComponent({
         </>
       )
     }
-     
   }
 })

@@ -36,7 +36,7 @@ export const skeletonProps = {
     default: '40px'
   },
   avatarShape: {
-    value: String as PropType<'round' | 'square'>,
+    type: String as PropType<'round' | 'square'>,
     default: 'round'
   },
   titleWidth: {
