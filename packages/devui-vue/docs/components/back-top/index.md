@@ -83,7 +83,7 @@ export default defineComponent({
 <template>
   <div class="devui-scroll-container">
     <ul class="devui-scroll-content">
-      <li class="item" v-for="(item, index) of list" :key="item">
+      <li class="backtop-demo-item" v-for="(item, index) of list" :key="item">
         {{ index + 1 + '. ' + item }}
       </li>
       <d-back-top
@@ -127,7 +127,7 @@ export default defineComponent({
   list-style-type: none;
 }
 
-.item {
+.backtop-demo-item {
   line-height: 35px;
   border-bottom: 1px solid #dfe1e6;
 }
