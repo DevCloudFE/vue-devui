@@ -411,12 +411,12 @@ d-checkbox-group 参数
 |    name     | `string` |    --     | 可选，表单域名，input 原生 name 属性  | [使用CheckBoxGroup](#使用CheckBoxGroup)   |
 |    direction     | 'row'\|'column' |    'column'     | 可选，显示方向  | [使用CheckBoxGroup](#使用CheckBoxGroup)   |
 |    itemWidth    | `number` | -- | 可选，表示每一项 checkbox 的宽度（`px`） | [使用CheckBoxGroup](#使用CheckBoxGroup) |
-|    options    | `array` | [] | 可选，复选框选项数组 | [使用CheckBoxGroup](##使用CheckBoxGroup) |
-|    halfchecked    | `boolean` | false | 可选，半选状态 | [使用CheckBoxGroup](##使用CheckBoxGroup) |
-| isShowTitle | `boolean` |  true   | 可选，是否显示 title 提示，默认显示参数`label`的值 | [使用CheckBoxGroup](##使用CheckBoxGroup) |
-| color | `string` |  --  | 可选，复选框颜色 | [使用CheckBoxGroup](##使用CheckBoxGroup) |
-| showAnimation | `boolean` |  true  | 可选，控制是否显示动画 | [使用CheckBoxGroup](##使用CheckBoxGroup) |
-| disabled | `boolean` |  false  | 可选，是否禁用 | [使用CheckBoxGroup](##使用CheckBoxGroup) |
+|    options    | `array` | [] | 可选，复选框选项数组 | [使用CheckBoxGroup](#使用CheckBoxGroup) |
+|    halfchecked    | `boolean` | false | 可选，半选状态 | [使用CheckBoxGroup](#使用CheckBoxGroup) |
+| isShowTitle | `boolean` |  true   | 可选，是否显示 title 提示，默认显示参数`label`的值 | [使用CheckBoxGroup](#使用CheckBoxGroup) |
+| color | `string` |  --  | 可选，复选框颜色 | [使用CheckBoxGroup](#使用CheckBoxGroup) |
+| showAnimation | `boolean` |  true  | 可选，控制是否显示动画 | [使用CheckBoxGroup](#使用CheckBoxGroup) |
+| disabled | `boolean` |  false  | 可选，是否禁用 | [使用CheckBoxGroup](#使用CheckBoxGroup) |
 | beforeChange | `Function\|Promise<boolean>` |  --  | 可选，checkbox 切换前的回调函数，返回 boolean 类型，返回 false 可以阻止 checkbox 切换 | [使用CheckBoxGroup](#使用CheckBoxGroup) |
 
 
@@ -424,4 +424,4 @@ d-checkbox-group 事件
 
 |    事件     |   类型  | 说明                     | 跳转 Demo |
 | :---------: | :------: | :--------------------: | :---------: |
-| onChange |	`string` |	checkbox 值改变事件 | [使用CheckBoxGroup](##使用CheckBoxGroup) |
+| onChange |	`string` |	checkbox 值改变事件 | [使用CheckBoxGroup](#使用CheckBoxGroup) |
