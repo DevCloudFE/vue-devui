@@ -57,7 +57,7 @@ describe('read-tip test', () => {
     expect(wrapper.findAll('[data-test="todo"]')).toHaveLength(1)
   })
 
-  it('read-tip init render', async () => {
+  it('read-tip more show tip', async () => {
     // 基础用法
     const readTipOptions = {
       trigger: 'hover',
