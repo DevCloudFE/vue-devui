@@ -230,29 +230,25 @@ export default defineComponent({
 
 d-editable-select 参数
 
-| 参数           | 类型          | 默认  | 说明                                               | 跳转 Demo                    | 全局配置 |
-| -------------- | ------------- | ----- | -------------------------------------------------- | ---------------------------- | -------- |
-| appendToBody   | boolean       | false | 可选，下拉是否 appendToBody                        | [基本用法](#基本用法)        |          |
-| width          | number        | --    | 可选，控制下拉框宽度，搭配 appendToBody 使用（px） | [基本用法](#基本用法)        |          |
-| v-model        | string/number | --    | 绑定值                                             | [基本用法](#基本用法)        |          |
-| options        | Array         | --    | 必选，数据列表                                     | [基本用法](#基本用法)        |          |
+| 参数           | 类型          | 默认  | 说明                                               | 跳转 Demo                     | 全局配置 |
+| -------------- | ------------- | ----- | -------------------------------------------------- | ----------------------------- | -------- |
+| appendToBody   | boolean       | false | 可选，下拉是否 appendToBody                        | [基本用法](#基本用法)         |          |
+| width          | number        | --    | 可选，控制下拉框宽度，搭配 appendToBody 使用（px） | [基本用法](#基本用法)         |          |
+| v-model        | string/number | --    | 绑定值                                             | [基本用法](#基本用法)         |          |
+| options        | Array         | --    | 必选，数据列表                                     | [基本用法](#基本用法)         |          |
 | disabled       | boolean       | false | 可选，值为 true 禁用下拉框                         | [设置禁用选项](#设置禁用选项) |          |
 | disabledKey    | string        | --    | 可选，设置禁用选项的 Key 值                        | [设置禁用选项](#设置禁用选项) |          |
-| maxHeight      | number        | --    | 可选，下拉菜单的最大高度（px）                     | [基本用法](#基本用法)        |          |
-| remote         | boolean       | false | 可选，远程搜索                                     |                              |          |
-| enableLazyLoad | boolean       | false | 可选，是否允许懒加载                               | [懒加载](#懒加载)            |          |
+| maxHeight      | number        | --    | 可选，下拉菜单的最大高度（px）                     | [基本用法](#基本用法)         |          |
+| remote         | boolean       | false | 可选，远程搜索                                     |                               |          |
+| enableLazyLoad | boolean       | false | 可选，是否允许懒加载                               | [懒加载](#懒加载)             |          |
 
 d-editable-select 事件
 
 | 事件         | 类型 | 说明               | 跳转 Demo                                                |
 | ------------ | ---- | ------------------ | -------------------------------------------------------- |
 | filterMethod |      | 自定义筛选函数     |                                                          |
-<<<<<<< HEAD
 | remoteMethod |      | 远程搜索对应的函数 | [异步获取数据并设置匹配方法](异步获取数据并设置匹配方法) |
 | loadMore     |      | 懒加载             | [懒加载](懒加载)                                         |
-=======
-| remoteMethod |      | 远程搜索对应的函数 | [异步获取数据并设置匹配方法](#异步获取数据并设置匹配方法) |
->>>>>>> 93f7035399b1efbc707938bffce4bf956b1da77a
 
 d-editable-select 插槽
 

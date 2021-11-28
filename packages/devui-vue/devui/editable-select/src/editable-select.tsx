@@ -16,11 +16,9 @@ import {
 } from './editable-select-types'
 import SelectDropdown from './components/dropdown'
 import './editable-select.scss'
-import { Icon } from '../../icon'
-import { FlexibleOverlay } from '../../overlay'
 import ClickOutside from '../../shared/devui-directive/clickoutside'
-import { className } from './utils'
 import { debounce } from 'lodash'
+import { className } from './utils'
 export default defineComponent({
   name: 'DEditableSelect',
   directives: { ClickOutside },
@@ -36,7 +34,7 @@ export default defineComponent({
         )
       } else if (condition && type === 1) {
         return (
-          <FlexibleOverlay
+          <d-flexible-overlay
             hasBackdrop={false}
             origin={origin}
             position={position}
@@ -50,10 +48,11 @@ export default defineComponent({
             >
               <SelectDropdown options={filteredOptions.value}></SelectDropdown>
             </div>
-          </FlexibleOverlay>
+          </d-flexible-overlay>
         )
       }
     }
+
     const renderDefaultSlots = (item) => {
       return ctx.slots.default ? renderSlot(ctx.slots, 'default', { item }) : item.name
     }
@@ -119,7 +118,6 @@ export default defineComponent({
         })
         .filter((item) => item !== null)
     })
-
     const findIndex = (o: OptionItem) => {
       return normalizeOptions.value.findIndex((item) => {
         return item.name === o.name
@@ -129,7 +127,7 @@ export default defineComponent({
     const handleClose = () => {
       visible.value = false
     }
-    
+
     const toggleMenu = () => {
       if (!props.disabled) {
         visible.value = !visible.value
@@ -206,7 +204,7 @@ export default defineComponent({
             <input class={inputCls} type='text' onInput={handleInput} value={query.value} />
             <span class='devui-form-control-feedback'>
               <span class='devui-select-chevron-icon'>
-                <Icon name='select-arrow' />
+                <d-icon name='select-arrow' />
               </span>
             </span>
             {renderDropdown(props.appendToBody, 0)}
