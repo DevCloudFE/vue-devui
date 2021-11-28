@@ -12,7 +12,7 @@ export default {
   category: '数据展示',
   status: '已完成', 
   install(app: App): void {
-        app.use(Countdown as any)
+    app.use(Countdown as any)
   }
 }
  

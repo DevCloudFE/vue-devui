@@ -108,11 +108,11 @@ export default defineComponent({
     const format = ref("HH:mm:ss");
     const deadline = ref(new Date().getTime() + 10 * 24 * 60 * 60 *1000 + 5000);
     const leftTime = reactive({'H':0,'m':0,'s':0})
-    const changeTime = ({dateValue, calculatingTime}) => {
+    const changeTime = ({legalTime}) => {
       
-      for (const k of dateValue.keys()) {
+      for (const k of legalTime.keys()) {
         if (k in leftTime) {
-          leftTime[k] = dateValue.get(k);
+          leftTime[k] = legalTime.get(k);
         }
       }
     }
@@ -123,7 +123,8 @@ export default defineComponent({
       deadline,
       leftTime,
       changeTime,
-      finishTime
+      finishTime,
+      format
     }
   }
 })
@@ -163,6 +164,6 @@ d-countdown 事件
 
 | 事件 | 类型 | 说明 |
 | ---- | ---- | ---- |
-|   onChange   |   ({leftTime,timeInitialValue,dateValue}) => void   |   倒计时时间变化时触发。leftTime:倒计时剩余得时间戳；timeInitialValue：年月日时分秒毫秒格式倒计时；dateValue：根据format格式化后的值。	   |
+|   onChange   |   ({leftTime,formatTime,legalTime}) => void   |   倒计时时间变化时触发。leftTime:倒计时剩余得时间戳；formatTime：年月日时分秒毫秒格式倒计时；legalTime：根据format格式化后的值。	   |
 |   onFinish   |   () => void   |   倒计时完成时触发	   |
 
