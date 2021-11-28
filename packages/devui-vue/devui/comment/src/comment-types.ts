@@ -1,23 +1,29 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes, VNode } from 'vue'
+export interface commentPropsITF {
+  [prop: string]: any
+}
 
 export const commentProps = {
   actions: {
-
-  }, 
-  author: {
-
+    type:Object as PropType<commentPropsITF>,
+    default:null
   },
-  avatar: {},
-
+  author: {
+    type:Object as PropType<commentPropsITF>,
+    default:null
+  },
+  avatar: {
+    type:Object as PropType<commentPropsITF>,
+    default:null
+  },
   content: {
-
-  } ,
-  prefixCls: {
-
+    type:Object as PropType<commentPropsITF>,
+    default:null
   },
   datetime: {
-    
-  }
+    type:Object as PropType<commentPropsITF>,
+    default:null
+  },
 
 } as const
 

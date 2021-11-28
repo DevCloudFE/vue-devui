@@ -9,30 +9,19 @@ export default defineComponent({
   slots: ['actions', 'author', 'avatar', 'content', 'datetime'],
   setup(props, { slots }) {
     return () => {
-      const getSlots = function (className: string) {
-        return (
-          <div class={`devui-comment-${className}-nested`}>
-            {slots[className]?.()}
-          </div>
-        )
-      }
-      const setSlot = function (vnode: any) {
-        let vnodeEnum = Object.keys(vnode)
-        vnodeEnum.forEach((item: any) => {
-          getSlots(item)
-        })
-      }
       const actions = props.actions ?? slots.actions?.();
       const author = props.author ?? slots.author?.();
       const avatar = props.avatar ?? slots.avatar?.();
       const content = props.content ?? slots.content?.();
       const datetime = props.datetime ?? slots.datetime?.();
-
+      const avatarDom = (
+        <div class={`devui-comment-avatar`}>
+          {typeof avatar === 'string' ? <img src={avatar} alt="comment-avatar" /> : avatar}
+        </div>
+      );
       return (
         <div class="devui-comment">
-          <div class="devui-comment-avatar">
-            {avatar}
-          </div>
+          {avatarDom}
           <div class="devui-comment-right">
             <div class="devui-comment-head">
               <div class="devui-comment-author">
