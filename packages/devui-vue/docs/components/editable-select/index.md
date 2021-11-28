@@ -14,9 +14,12 @@
 
 ```vue
 <template>
-  <div class="demo-wrap">
-    <d-editable-select v-model="value" :options="options" :maxHeight="300"></d-editable-select>
-  </div>
+  <d-editable-select
+    appendToBody
+    v-model="value"
+    :options="options"
+    :maxHeight="300"
+  ></d-editable-select>
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
@@ -63,12 +66,14 @@ export default defineComponent({
 ```vue
 <template>
   <d-editable-select
+    appendToBody
     v-model="value"
     :options="options"
     :maxHeight="300"
     disabled
   ></d-editable-select>
   <d-editable-select
+    appendToBody
     v-model="value"
     :options="options1"
     :maxHeight="300"
@@ -116,15 +121,14 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div class="demo-wrap">
-    <d-editable-select
-      v-model="value"
-      :options="options"
-      :maxHeight="300"
-      remote
-      :remote-method="remoteMethod"
-    ></d-editable-select>
-  </div>
+  <d-editable-select
+    appendToBody
+    v-model="value"
+    :options="options"
+    :maxHeight="300"
+    remote
+    :remote-method="remoteMethod"
+  ></d-editable-select>
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
@@ -179,67 +183,42 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div class="demo-wrap">
-    <d-editable-select
-      v-model="value"
-      remote
-      enableLazyLoad
-      :options="options"
-      :maxHeight="300"
-      :remote-method="remoteMethod"
-    ></d-editable-select>
-  </div>
+  <d-editable-select
+    appendToBody
+    v-model="value"
+    remote
+    enableLazyLoad
+    :options="options"
+    :maxHeight="300"
+    :remote-method="remoteMethod"
+    :load-more="loadMore"
+  ></d-editable-select>
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup() {
-    const number = [
-      'C#',
-      'C',
-      'C++',
-      'CPython',
-      'Java',
-      'JavaScript',
-      'Go',
-      'Python',
-      'Ruby',
-      'F#',
-      'TypeScript',
-      'SQL',
-      'LiveScript',
-      'CoffeeScript',
-      'c1',
-      'c2',
-      'c3',
-      'c4',
-      'c5',
-      'c6',
-      'c7'
-    ]
-    const value = ref('')
     const options = ref([])
+    const value = ref('')
     const remoteMethod = (query) => {
       if (query !== '') {
         setTimeout(() => {
-          for (let i = 0; i < 10; i++) {
-            number.push(number.length + 1 + 'C')
+          for (let i = 0; i < 20; i++) {
+            options.value.push(options.value.length + 1)
           }
-
-          options.value = number.filter((item) => {
-            console.log
-            return item.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) >= 0
-          })
-        }, 200)
+        }, 1000)
       } else {
-        options.value = []
+        options = []
       }
     }
-    return {
-      value,
-      options,
-      remoteMethod
+    const loadMore = () => {
+      setTimeout(() => {
+        for (let i = 0; i < 20; i++) {
+          options.value.push(options.value.length + 1)
+        }
+      }, 1000)
     }
+    return { options, value, remoteMethod, loadMore }
   }
 })
 </script>
@@ -269,6 +248,7 @@ d-editable-select 事件
 | ------------ | ---- | ------------------ | -------------------------------------------------------- |
 | filterMethod |      | 自定义筛选函数     |                                                          |
 | remoteMethod |      | 远程搜索对应的函数 | [异步获取数据并设置匹配方法](异步获取数据并设置匹配方法) |
+| loadMore     |      | 懒加载             | [懒加载](懒加载)                                         |
 
 d-editable-select 插槽
 
