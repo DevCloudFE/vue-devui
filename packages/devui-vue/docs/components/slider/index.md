@@ -14,7 +14,6 @@
     <d-slider :min="minValue" :max="maxValue" v-model="inputValue"></d-slider>
   </div>
 </template>
-
 <script>
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
@@ -44,7 +43,7 @@ export default defineComponent({
     <d-slider :min="minValue" :max="maxValue" v-model="inputValue" :step="step"></d-slider>
   </div>
 </template>
-<script lang="ts">
+<script>
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
@@ -75,7 +74,7 @@ export default defineComponent({
     <d-slider :min="minValue" :max="maxValue" v-model="inputValue" showInput></d-slider>
   </div>
 </template>
-<script lang="ts">
+<script>
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
@@ -132,7 +131,7 @@ export default defineComponent({
 <template>
   <div>
     <div class="slider-wrapper" style="padding:20px">
-      <d-slider  :min="minValue" :max="maxValue" v-model="inputValue" tipsRenderer="apple"></d-slider>
+      <d-slider  :min="minValue" :max="maxValue" v-model="inputValue" tipsRenderer="apples"></d-slider>
       <br style="margin-bottom: 20px" />
       <d-slider :min="minValue" :max="maxValue"  v-model="inputValue" tipsRenderer="null" ></d-slider>
     </div>
@@ -168,4 +167,4 @@ d-slider 参数
 | step         | number  | 1     | 可选，滑动输入条的步长，取值必须大于等于 1，且必须可被(max-min)整除 | [基本用法](#可设置Step的滑动组件)    |
 | disabled     | boolean | false | 可选，值为 true 时禁止用户输入                                      | [基本用法](#禁止输入态)              |
 | showInput    | boolean | false | 可选，值为 true 显示输入框                                          | [基本用法](#带有输入框的滑动组件)    |
-| tipsRenderer | string  |       | 可选，渲染 Popover 内容的函数，传入 null 时不显示 Popover           | [基本用法](#异定制popover的显示内容) |
+| tipsRenderer | string  |       | 可选，渲染 Popover 内容的函数，传入'null'时不显示 Popover           | [基本用法](#定制popover的显示内容) |

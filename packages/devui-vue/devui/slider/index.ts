@@ -1,7 +1,7 @@
 import type { App } from 'vue'
 import Slider from './src/slider'
 
-Slider.install = function(app: App): void {
+Slider.install = function (app: App): void {
   app.component(Slider.name, Slider)
 }
 
