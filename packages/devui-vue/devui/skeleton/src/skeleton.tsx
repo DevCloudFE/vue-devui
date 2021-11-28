@@ -10,7 +10,7 @@ export default defineComponent({
     const { slots } = ctx;
 
     function renderAnimate(isAnimated) {
-      return isAnimated ? 'devui-skeleton-animated' : ''
+      return isAnimated ? 'devui-skeleton__animated' : ''
     }
     function renderBorderRadius(isRound) {
       return isRound ? 'border-radius: 1em;' : ''
@@ -56,7 +56,11 @@ export default defineComponent({
         })
       }</div>
     }
+
     function renderAvatarStyle(avatarSize, avatarShape) {
+      function renderAvatarShape(avatarShape) {
+        return avatarShape === 'square' ? '' : 'border-radius:50%;'
+      }
       function renderAvatarSize(avatarSize) {
         switch (typeof avatarSize) {
           case 'string':
@@ -64,9 +68,6 @@ export default defineComponent({
           case 'number':
             return `width:${avatarSize}px;height:${avatarSize}px;`
         }
-      }
-      function renderAvatarShape(avatarShape) {
-        return avatarShape === 'square' ? '' : 'border-radius:50%;'
       }
 
       return (renderAvatarSize(avatarSize) + renderAvatarShape(avatarShape))
@@ -86,26 +87,25 @@ export default defineComponent({
 
       return (renderTitleWidth(titleWidth) + renderBorderRadius(isRound) + renderTitleVisibility(isVisible))
     }
-    function renderSkeleton(isLoading) {
-      if (isLoading) {
-        return <>
-          <div class="devui-skeleton__avatar" v-show={props.avatar}>
-            <div class="avatar" style={renderAvatarStyle(props.avatarSize, props.avatarShape)} />
-          </div>
-          <div class="devui-skeleton__item__group">
-            <div class="devui-skeleton__title" style={renderTitle(props.title, props.titleWidth, props.round)} />
-            {renderParagraph(props.paragraph, props.row, props.rowWidth, props.round)}
-          </div>
-        </>
-      }
-
-      return <>{slots.default?.()}</>
+    function renderDefaultSkeleton() {
+      return <>
+        <div class="devui-skeleton__avatar" v-show={props.avatar}>
+          <div class="avatar" style={renderAvatarStyle(props.avatarSize, props.avatarShape)} />
+        </div>
+        <div class="devui-skeleton__group">
+          <div class="devui-skeleton__title" style={renderTitle(props.title, props.titleWidth, props.round)} />
+          {renderParagraph(props.paragraph, props.row, props.rowWidth, props.round)}
+        </div>
+      </>
     }
 
     return () => {
-      return <div class={`devui-skeleton ${renderAnimate(props.animate)}`}>
-        {renderSkeleton(props.loading)}
-      </div>
+      if (props.loading) {
+        return <div class={`devui-skeleton ${renderAnimate(props.animate)}`}>
+          {renderDefaultSkeleton()}
+        </div>
+      }
+      return <>{slots.default?.()}</>
     }
   }
 })

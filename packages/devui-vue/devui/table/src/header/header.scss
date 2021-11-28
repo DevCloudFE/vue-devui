@@ -11,8 +11,26 @@
 
     th {
       text-align: left;
-      padding: 12px 10px;
+      padding: 0;
       border: none;
+    }
+  }
+  
+  .header-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 2px;
+    padding-right: 8px;
+
+    .title {
+      display: inline-block;
+      line-height: 36px;
+      vertical-align: middle;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      cursor: default;
     }
   }
 }

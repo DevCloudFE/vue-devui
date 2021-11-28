@@ -1,15 +1,11 @@
 /**
  * 处理传入options数据
  */
-import { reactive } from 'vue';
-import { CascaderItem, OptionsCallback } from '../src/cascader-types'
-let cascaderOptions
-export const optionsHandles = (options?: CascaderItem[]): OptionsCallback => {
-  if (options) {
-    cascaderOptions = reactive<[CascaderItem[]]>([ options ])
-  }
+import { CascaderItem, OptionsCallback, CaascaderOptionsType } from '../src/cascader-types'
+export const optionsHandles = (cascaderOptions?: CaascaderOptionsType): OptionsCallback => {
+
   /**
-   * hover时修改展示项
+   * change时修改展示项
    * @param optionItem - 项
    * @param ulIndex - 当前选中的第几级
    * 
@@ -23,6 +19,7 @@ export const optionsHandles = (options?: CascaderItem[]): OptionsCallback => {
       cascaderOptions.splice(ulIndex + 1, cascaderOptions.length - 1 - ulIndex)
     }
   }
+
   return {
     cascaderOptions,
     changeCascaderIndexs
