@@ -12,7 +12,7 @@ export { Skeleton,SkeletonItem }
 export default {
   title: 'Skeleton 骨架屏',
   category: '数据展示',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(Skeleton as any)
   }

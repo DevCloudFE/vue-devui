@@ -58,7 +58,8 @@ a.sidebar-link-item.active {
   > .sidebar-links
   > .sidebar-link
   > .sidebar-link-item {
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 0.35rem 1.5rem 0.35rem 2rem;
   line-height: 1.4;
   font-size: 1rem;
@@ -108,11 +109,8 @@ a.sidebar-link-item.active {
 
 .sidebar .sidebar-link-status {
   display: inline-block;
-  min-height: 20px;
-  margin: 0 8px;
-  padding: 0 8px;
-  border: solid 1px $devui-brand;
-  border-radius: 2px;
-  color: $devui-brand;
-  font-size: 12px;
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  border-radius: 50px;
 }

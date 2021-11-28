@@ -14,7 +14,7 @@ export { Upload, MultiUpload }
 export default {
   title: 'Upload 上传',
   category: '数据录入',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(Upload as any)
   }
