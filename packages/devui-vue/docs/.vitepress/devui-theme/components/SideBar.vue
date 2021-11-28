@@ -26,9 +26,8 @@ defineProps({
   position: fixed;
   top: var(--header-height);
   bottom: 0;
-  left: 0;
+  left: calc((100vw - 1440px) / 2);
   z-index: var(--z-index-sidebar);
-  border-right: 1px solid $devui-dividing-line;
   width: 16.4rem;
   background-color: $devui-base-bg;
   overflow-y: auto;
@@ -50,6 +49,8 @@ defineProps({
 
 .sidebar.open {
   transform: translateX(0);
+  left: 0;
+  border-right: 1px solid $devui-dividing-line;
 }
 
 .nav {

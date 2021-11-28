@@ -36,7 +36,7 @@ useActiveSidebarLinks(container, marker)
   width: 200px;
   position: fixed;
   top: 50px;
-  right: 0;
+  right: calc((100vw - 1440px) / 2 - 10px);
   z-index: 1;
 
   .devui-fast-forward {
@@ -46,8 +46,7 @@ useActiveSidebarLinks(container, marker)
     line-height: 24px;
     font-weight: bold;
     padding-bottom: 10px;
-    margin-left: 20px;
-    border-bottom: 1px solid $devui-dividing-line;
+    margin-left: 17px;
   }
 
   .devui-step-nav {
