@@ -55,7 +55,7 @@ export default defineComponent({
           <div class={`devui-control-content-wrapper ${showPopover.value ? 'with-popover' : ''}`}>
             {ctx.slots.default?.()}
             { showPopover.value && 
-              <div class="devui-popover-wrapper" style={{"z-index": showPopover.value ? 9 : -1}}>
+              <div class="devui-popover-wrapper">
                 <Popover visible={true} content={tipMessage.value} popType={"error"} position={popPosition.value} />
               </div>
             }
