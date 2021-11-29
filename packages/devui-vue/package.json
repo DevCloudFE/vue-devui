@@ -28,7 +28,7 @@
     "app:dev": "vite",
     "app:build": "vite build",
     "build:lib": "yarn predev && yarn build:components && yarn copy",
-    "test": "jest --config jest.config.js " ,
+    "test": "jest --config jest.config.js",
     "ls-lint": "ls-lint",
     "lint": "eslint \"{src,devui}/**/*.{vue,js,ts,jsx,tsx}\"",
     "lint:fix": "eslint --fix \"{src,devui}/**/*.{vue,js,ts,jsx,tsx}\"",
