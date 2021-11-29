@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, ref } from 'vue'
+import { defineComponent, toRefs, ref, watch, onUnmounted } from 'vue'
 import { tagProps, TagProps } from './tag-types'
 import { useClass, useColor } from './hooks'
 import IconClose from './assets/close.svg'
@@ -9,7 +9,7 @@ import './tag.scss'
 export default defineComponent({
   name: 'DTag',
   props: tagProps,
-  emits: ['click', 'tagDelete'],
+  emits: ['click', 'tagDelete', 'checkedChange'],
   setup(props: TagProps, { slots, emit }) {
     const { type, color, checked, titleContent, deletable } = toRefs(props)
     const tagClass = useClass(props)
@@ -18,7 +18,7 @@ export default defineComponent({
     const isDefaultTag = () => !type.value && !color.value
     const isShow = ref(true)
     // 子组件的点击事件
-    const Click = () => {
+    const handleClick = () => {
       emit('click')
     }
     const handleDelete = () => {
@@ -38,10 +38,16 @@ export default defineComponent({
         </a>
       ) : null
     }
+    //tag 的 check 状态改变时触发的事件checkedChange
+    const unWatch = watch(checked, (newVal) => {
+      console.log('checkedChange')
 
+      emit('checkedChange', newVal)
+    })
+    onUnmounted(() => unWatch())
     return () =>
       isShow.value && (
-        <div class='devui-tag' onClick={Click} v-show={isShow.value}>
+        <div class='devui-tag' onClick={handleClick} v-show={isShow.value}>
           <span
             class={tagClass.value}
             style={{
