@@ -14,7 +14,12 @@
     backgroundClass="justify-center items-center bg-gray-50" 
     backgroundBlock
   >
-    <div class="h-100 w-100" style="background: red;">hello world</div>
+    <div 
+      class="h-100 w-100 flex justify-center items-center" 
+      style="background: #5e7ce0; color: white;"
+    >
+      hello world
+    </div>
   </d-fixed-overlay>
 </template>
 <script>
@@ -42,7 +47,7 @@ export default defineComponent({
 :::demo
 ```vue
 <template>
-  <div class="h-500 w-full flex flex-column items-center justify-center">
+  <div class="h-900 w-full flex flex-column items-center justify-center">
     <div 
       ref="origin" 
       class="flex items-center justify-center h-100 w-100 text-white bg-gray"
@@ -50,20 +55,37 @@ export default defineComponent({
     <d-button @click="handleVisible" style="margin: 20px;">{{title}}</d-button>
     <div class="w-full mt-20">
       <div class="flex mt-20">
-        <span style="width: 200px">依赖元素的 X 轴：</span>
+        <span style="width: 300px">依赖元素的 X 轴(position.originX)：</span>
         <d-radio-group v-model="position.originX" :values="horizontalProps" css-style="row"/>
       </div>
       <div class="flex mt-20">
-        <span style="width: 200px">依赖元素的 Y 轴：</span>
+        <span style="width: 300px">依赖元素的 Y 轴(position.originY)：</span>
         <d-radio-group v-model="position.originY" :values="verticalProps" css-style="row"/>
       </div>
       <div class="flex mt-20">
-        <span style="width: 200px">Overlay X 轴：</span>
+        <span style="width: 300px">Overlay X 轴(position.overlayX)：</span>
         <d-radio-group v-model="position.overlayX" :values="horizontalProps" css-style="row"/>
       </div>
       <div class="flex mt-20">
-        <span style="width: 200px">Overlay Y 轴：</span>
+        <span style="width: 300px">Overlay Y 轴(position.overlayY)：</span>
         <d-radio-group v-model="position.overlayY" :values="verticalProps" css-style="row"/>
+      </div>
+      <div class="flex mt-20">
+        <span style="width: 300px">背景交互(hasBackdrop)：</span>
+        <d-checkbox v-model="hasBackdrop" :label="hasBackdrop ? '开启': '关闭'" />
+      </div>
+      <div class="flex mt-20">
+        <span style="width: 300px">背景关闭 overlay (backdropClose)：</span>
+        <d-checkbox v-model="backdropClose" :label="backdropClose ? '开启': '关闭'" />
+      </div>
+      <div class="flex mt-20">
+        <span style="width: 300px">背景禁用滚动(backgroundBlock)：</span>
+        <d-checkbox v-model="backgroundBlock" :label="backgroundBlock ? '开启': '关闭'" />
+      </div>
+      <div class="flex mt-20">
+        <span style="width: 300px">点击背景触发事件(backdropClick)：</span>
+        <d-checkbox style="margin-right:20px" v-model="backdropClickEnabled" :label="backdropClickEnabled ? '开启': '关闭'" />
+        <d-input v-if="backdropClickEnabled" v-model:value="backdropClickText" />
       </div>
     </div>
   </div>
@@ -72,10 +94,15 @@ export default defineComponent({
     :origin="origin" 
     v-model:visible="visible"
     :position="position"
+    :hasBackdrop="hasBackdrop"
+    :backdropClose="backdropClose"
+    :backgroundBlock="backgroundBlock"
+    @backdropClick="backdropClick"
   >
     <div 
       class="flex items-center justify-center text-white-50 h-100 w-100"
       style="background: #673ab7;"
+      @click="handleVisible"
     >hello world</div>
   </d-flexible-overlay>
 </template>
@@ -98,6 +125,10 @@ export default defineComponent({
       overlayY: 'top'
     });
 
+    const backdropClickText = ref('点击背景将会触发 alert.');
+    const backdropClickEnabled = ref(false);
+    const backdropClick = computed(() => backdropClickEnabled.value ? () => alert(backdropClickText.value): null);
+
     return {
       origin,
       visible,
@@ -105,7 +136,13 @@ export default defineComponent({
       title,
       position,
       verticalProps, 
-      horizontalProps
+      horizontalProps,
+      hasBackdrop: ref(true),
+      backdropClose: ref(true),
+      backgroundBlock: ref(false),
+      backdropClickText,
+      backdropClickEnabled,
+      backdropClick
     }
   }
 })
@@ -172,32 +209,32 @@ export default defineComponent({
 ### API
 d-fixed-overlay 参数
 
-|       参数       |            类型            | 默认  | 说明                                                                  |
-| :--------------: | :------------------------: | :---: | :-------------------------------------------------------------------- |
-|     visible      |         `boolean`          | false | 可选，遮罩层是否可见                                                  |
-| onUpdate:visible | `(value: boolean) => void` |  --   | 可选，遮罩层取消可见事件                                              |
-| backgroundBlock  |         `boolean`          | false | 可选，如果为 true，背景不能滚动                                       |
-| backgroundClass  |          `string`          |  --   | 可选，背景的样式类                                                    |
-| backgroundStyle  |          `StyleValue`      |  --   | 可选，背景的样式                                                    |
-|  backdropClick   |        `() => void`        |  --   | 可选，点击背景触发的事件                                              |
-|  backdropClose   |         `boolean`          | false | 可选，如果为true，点击背景将触发 `onUpdate:visible`，默认参数是 false |
-|   hasBackdrop    |         `boolean`          | true | 可选，如果为false，背景元素的 `point-event` 会设为 `none`，且不显示默认背景 |
-|   overlayStyle   |      `CSSProperties`       |  --   | 可选，遮罩层的样式                                                    |
+|       参数       |            类型            | 默认  | 说明                                                                        |
+| :--------------: | :------------------------: | :---: | :-------------------------------------------------------------------------- |
+|     visible      |         `boolean`          | false | 可选，遮罩层是否可见                                                        |
+| onUpdate:visible | `(value: boolean) => void` |  --   | 可选，遮罩层取消可见事件                                                    |
+| backgroundBlock  |         `boolean`          | false | 可选，如果为 true，背景不能滚动                                             |
+| backgroundClass  |          `string`          |  --   | 可选，背景的样式类                                                          |
+| backgroundStyle  |        `StyleValue`        |  --   | 可选，背景的样式                                                            |
+| onBackdropClick  |        `() => void`        |  --   | 可选，点击背景触发的事件                                                    |
+|  backdropClose   |         `boolean`          | false | 可选，如果为true，点击背景将触发 `onUpdate:visible`，默认参数是 false       |
+|   hasBackdrop    |         `boolean`          | true  | 可选，如果为false，背景元素的 `point-event` 会设为 `none`，且不显示默认背景 |
+|   overlayStyle   |      `CSSProperties`       |  --   | 可选，遮罩层的样式                                                          |
 
 d-flexible-overlay 参数
 
-|       参数       |                                                                                                    类型                                                                                                    | 默认  | 说明                                                              |
-| :--------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---: | :---------------------------------------------------------------- |
-|     visible      |                                                                                                 `boolean`                                                                                                  | false | 可选，遮罩层是否可见                                              |
-| onUpdate:visible |                                                                                         `(value: boolean) => void`                                                                                         |  --   | 可选，遮罩层取消可见事件                                          |
-| backgroundBlock  |                                                                                                 `boolean`                                                                                                  | false | 可选，如果为 true，背景不能滚动                                   |
-| backgroundClass  |                                                                                                  `string`                                                                                                  |  --   | 可选，背景的样式类                                                |
-| backgroundStyle  |          `StyleValue`      |  --   | 可选，背景的样式                                                    |
-|  backdropClick   |                                                                                                `() => void`                                                                                                |  --   | 可选，点击背景触发的事件                                          |
-|  backdropClose   |                                                                                                 `boolean`                                                                                                  | false | 可选，如果为true，点击背景将触发 `onUpdate:visible`，参数是 false |
-|  hasBackdrop     |         `boolean`          | true | 可选，如果为false，背景元素的 `point-event` 会设为 `none`，且不显示默认背景 |
-|      origin      | `Element \| ComponentPublicInstance \| Rect` | false | 必选，你必须指定起点元素才能让遮罩层与该元素连接在一起            |
-|     position     | `ConnectionPosition` | false | 可选，指定遮罩层与原点的连接点                                    |
+|       参数       |                     类型                     | 默认  | 说明                                                                        |
+| :--------------: | :------------------------------------------: | :---: | :-------------------------------------------------------------------------- |
+|     visible      |                  `boolean`                   | false | 可选，遮罩层是否可见                                                        |
+| onUpdate:visible |          `(value: boolean) => void`          |  --   | 可选，遮罩层取消可见事件                                                    |
+| backgroundBlock  |                  `boolean`                   | false | 可选，如果为 true，背景不能滚动                                             |
+| backgroundClass  |                   `string`                   |  --   | 可选，背景的样式类                                                          |
+| backgroundStyle  |                 `StyleValue`                 |  --   | 可选，背景的样式                                                            |
+| onBackdropClick  |                 `() => void`                 |  --   | 可选，点击背景触发的事件                                                    |
+|  backdropClose   |                  `boolean`                   | false | 可选，如果为true，点击背景将触发 `onUpdate:visible`，参数是 false           |
+|   hasBackdrop    |                  `boolean`                   | true  | 可选，如果为false，背景元素的 `point-event` 会设为 `none`，且不显示默认背景 |
+|      origin      | `Element \| ComponentPublicInstance \| Rect` | false | 必选，你必须指定起点元素才能让遮罩层与该元素连接在一起                      |
+|     position     |             `ConnectionPosition`             | false | 可选，指定遮罩层与原点的连接点                                              |
 
 Rect 数据结构
 ```typescript
