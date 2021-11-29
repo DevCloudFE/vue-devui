@@ -13,7 +13,7 @@ import {
   watch,
 } from 'vue';
 import { CommonOverlay } from './common-overlay';
-import { OriginOrDomRef, flexibleOverlayProps, FlexibleOverlayProps, Point, Origin, ConnectionPosition } from './overlay-types';
+import { OriginOrDomRef, flexibleOverlayProps, FlexibleOverlayProps, Point, Origin, ConnectionPosition, overlayEmits } from './overlay-types';
 import { useOverlayLogic } from './utils';
 
 import { getElement, isComponent } from '../../shared/util/dom';
@@ -24,7 +24,7 @@ import { getElement, isComponent } from '../../shared/util/dom';
 export const FlexibleOverlay = defineComponent({
   name: 'DFlexibleOverlay',
   props: flexibleOverlayProps,
-  emits: ['onUpdate:visible'],
+  emits: overlayEmits,
   setup(props: FlexibleOverlayProps, ctx) {
     // lift cycle
     const overlayRef = ref<Element | null>(null);
