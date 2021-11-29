@@ -16,7 +16,7 @@ export { Panel }
 export default {
   title: 'Panel 面板',
   category: '通用',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(Panel as any)
   }
