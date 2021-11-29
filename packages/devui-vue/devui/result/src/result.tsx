@@ -6,7 +6,6 @@ import './result.scss'
 export default defineComponent({
   name: 'DResult',
   props: resultProps,
-  emits: [],
   setup(props: ResultProps, ctx) {
     enum IconEnum {success = 'right-o', danger='error-o', warning='warning-o', info='info-o'}
     
