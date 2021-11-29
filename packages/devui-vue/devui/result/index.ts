@@ -10,7 +10,7 @@ export { Result }
 export default {
   title: 'Result 结果',
   category: '反馈',
-  status: '10%', // TODO: 组件若开发完成则填入"已完成"，并删除该注释
+  status: '已完成',
   install(app: App): void {
         app.use(Result as any)
   }
