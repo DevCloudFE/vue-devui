@@ -133,7 +133,7 @@ export default defineComponent({
 
 ### 动态切换
 
-我们已hasLeftPadding为例
+我们以hasLeftPadding为例
 
 :::demo
 ```vue
