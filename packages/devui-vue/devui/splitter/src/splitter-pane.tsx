@@ -2,7 +2,6 @@ import {
   defineComponent,
   ref,
   watch,
-  nextTick,
   inject,
   onMounted,
   onUpdated,
@@ -31,12 +30,10 @@ export default defineComponent({
     );
 
     // pane 初始化大小
-    const setSizeStyle = (curSize: string) => {
-      const ele = domRef.value;
+    const setSizeStyle = (curSize: string, ele: HTMLElement) => {
       if (!ele) {
         return;
       }
-
       ele.style.flexBasis = curSize;
       const paneFixedClass = 'devui-splitter-pane-fixed';
       if (curSize) {
@@ -48,8 +45,10 @@ export default defineComponent({
     };
 
     watch(
-      () => props.size,
-      setSizeStyle,
+      [() => props.size, domRef],
+      ([size, ele]) => {
+        setSizeStyle(size, ele);
+      },
       { immediate: true }
     );
 

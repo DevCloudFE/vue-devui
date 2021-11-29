@@ -11,7 +11,7 @@ export { Toast, ToastService }
 export default {
   title: 'Toast 全局提示',
   category: '反馈',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(Toast as any)
     app.config.globalProperties.$toastService = ToastService

@@ -13,7 +13,7 @@ export { Modal }
 export default {
   title: 'Modal 弹窗',
   category: '反馈',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(Modal as any)
 

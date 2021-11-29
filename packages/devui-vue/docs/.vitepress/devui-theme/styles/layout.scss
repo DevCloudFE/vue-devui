@@ -240,3 +240,31 @@ form {
   width: 100vw;
   height: 100vh;
 }
+
+$max-width: 1440px;
+
+.theme {
+  max-width: $max-width;
+  margin: 0 auto;
+
+  .nav-bar-inner {
+    max-width: $max-width;
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    padding-left: 18px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .theme {
+    .nav-bar-inner {
+      padding-left: 0;
+
+      .custom-nav {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
