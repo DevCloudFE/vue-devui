@@ -16,7 +16,7 @@ export default (props: PropsType) => {
     multipleDeleteTag(tagList, tag)
   }
   return (
-    <div class="devui-tag">
+    <div class="devui-cascader-tag">
       <span>{ tag?.label }</span>
       <div class="devui-tag__close" onClick={deleteCurrentTag}>
         <d-icon name="close"></d-icon>
