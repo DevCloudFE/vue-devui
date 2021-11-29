@@ -25,6 +25,13 @@ export const drawerProps = {
     type: String as PropType<'left' | 'right'>,
     default: 'left',
   },
+  backdropCloseable: {
+    type: Boolean,
+    default: true,
+  },
+  beforeHidden: {
+    type: [Promise, Function] as PropType<Promise<boolean> | (() => boolean | Promise<boolean>)>,
+  },
 } as const
 
 export type DrawerProps = ExtractPropTypes<typeof drawerProps>
