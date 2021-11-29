@@ -33,8 +33,11 @@ export const timePickerProps = {
     autoOpen:{
       type:Boolean,
       default:false
+    },
+    showAnimation:{
+      type:Boolean,
+      default:true
     }
 } as const;
-
 
 export type TimePickerProps = ExtractPropTypes<typeof timePickerProps>;

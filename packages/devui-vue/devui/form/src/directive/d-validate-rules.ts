@@ -235,6 +235,13 @@ function handleValidatePass(el: HTMLElement, tipEl: HTMLElement): void {
   handleErrorStrategyPass(el);
 }
 
+// 获取ref的name
+function getRefName(binding: DirectiveBinding): string {
+  const _refs = binding.instance.$refs;
+  const refName = Object.keys(_refs)[0];
+  return refName;
+}
+
 // 获取表单name
 function getFormName(binding: DirectiveBinding): string {
   const _refs = binding.instance.$refs;
@@ -274,16 +281,22 @@ export default {
   mounted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode): void {
     const isFormTag = el.tagName === 'FORM';
     const dfcUID = el.parentNode.parentNode.parentElement.dataset.uid;
+    const refName = getRefName(binding);
 
     const hasOptions = isObject(binding.value) && hasKey(binding.value, 'options');
 
     // 获取指令绑定的值
-    const { 
+    let { 
       rules: bindingRules, 
       options = {}, 
       messageShowType = MessageShowTypeEnum.popover
     }: DirectiveBindingValue = binding.value;
     let { errorStrategy }: DirectiveBindingValue = binding.value;
+
+    if(refName) {
+      // 判断d-form是否传递了messageShowType属性
+      messageShowType = binding.instance[refName]["messageShowType"] ?? "popover";
+    }
 
     // errorStrategy可配置在options对象中
     let { 

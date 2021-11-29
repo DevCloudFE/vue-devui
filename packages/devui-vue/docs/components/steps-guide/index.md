@@ -11,25 +11,94 @@
 :::demo  
 ```vue
 <template>
-  <d-button btnStyle="common" class="step-1">Step 1</d-button>
-  <d-button btnStyle="common" class="step-2">Step 2</d-button>
-  <d-button btnStyle="common" class="step-3">Step 3</d-button>
-  <d-steps-guide :steps="steps" ref="stepsRef"></d-steps-guide>
+  <d-button btnStyle="common" class="step-1" @click="handleClick(0)">Step 1</d-button>
+  <d-button btnStyle="common" class="step-2" @click="handleClick(1)">Step 2</d-button>
+  <d-button btnStyle="common" class="step-3" @click="handleClick(2)">Step 3</d-button>
+  <d-steps-guide ref="stepRef" :steps="steps" v-model:step-index="stepIndex" :step-change="handleStepChange" @guide-close="handleGuideClose"></d-steps-guide>
 </template>
 <script>
   import { defineComponent, reactive, ref, onMounted } from 'vue'
   export default defineComponent({
     setup() {
-      const steps = reactive([
+      const baseSteps = [
           { title: '基础用法1', content: '业务推出新特性，或复杂的业务逻辑需要指引用户时使用。', trigger: '.step-1' },
           { title: '基础用法2', content: '业务推出新特性，或复杂的业务逻辑需要指引用户时使用。', trigger: '.step-2' },
           { title: '基础用法3', content: '业务推出新特性，或复杂的业务逻辑需要指引用户时使用。', trigger: '.step-3' }
-      ]);
-      const stepsRef = ref(null)
-
+      ], positionSteps = 
+          [{ title: '弹出位置 top-left',
+            content: 'Steps Guide', 
+            trigger: '.top-left', 
+            position: 'top-left' 
+          },{ title: '弹出位置 top', 
+            content: 'Steps Guide', 
+            trigger: '.top', 
+            position: 'top' 
+          },{ title: '弹出位置 top-right', 
+            content: 'Steps Guide',
+            trigger: '.top-right', 
+            position: 'top-right'
+          },
+          { title: '弹出位置 right',
+            content: 'Steps Guide', 
+            trigger: '.right', 
+            position: 'right' 
+          },{ title: '弹出位置 bottom-right', 
+            content: 'Steps Guide', 
+            trigger: '.bottom-right', 
+            position: 'bottom-right' 
+          },{ title: '弹出位置 bottom', 
+            content: 'Steps Guide', 
+            trigger: '.bottom', 
+            position: 'bottom' 
+          },{ title: '弹出位置 bottom-left', 
+            content: 'Steps Guide', 
+            trigger: '.bottom-left', 
+            position: 'bottom-left' 
+          },{ title: '弹出位置 left', 
+            content: 'Steps Guide', 
+            trigger: '.left', 
+            position: 'left' 
+          }], 
+            customSteps = 
+              [{ title: '自定义用法',
+                content: '自定义操作指引信息弹出的位置和元素。',
+                trigger: '.custom-1', 
+                position: {
+                  leftFix: 0,
+                  topFix: 0,
+                  type: 'top'
+                } 
+              },{ 
+                title: '自定义用法', 
+                content: '自定义操作指引信息弹出的位置和元素。',
+                trigger: '.custom-2',
+                target: '.nav-links', 
+                position: 'bottom'
+              }]
+      let steps = ref(baseSteps);
+      const stepIndex = ref(0), stepRef = ref(null)
+      const handleClick = index => {
+        steps.value = baseSteps
+        stepRef.value.setCurrentIndex(index)
+      }
+      const handleStepChange = (index, prevIndex) => {
+        /* code */ 
+        return true
+      }
+      const handleGuideClose = (index) => {
+        const stepsLength = steps.value.length
+        if(index === stepsLength - 1 && stepsLength !== 2) {
+          steps.value = (stepsLength === 3 ? positionSteps : customSteps);
+          stepRef.value.setCurrentIndex(0)
+        }
+      }
       return {
+        stepRef,
         steps,
-        stepsRef
+        stepIndex,
+        handleClick,
+        handleStepChange,
+        handleGuideClose
       }
     }
   })
@@ -61,13 +130,13 @@
     <d-button btnStyle="common" class="bottom" width="120px" @click="handleClick(5)">Bottom</d-button>
     <d-button btnStyle="common" class="bottom-right" width="120px" @click="handleClick(4)">Bottom-right</d-button>
   </div>
-  <d-steps-guide :steps="stepsPosition" ref="stepsPositionRef"></d-steps-guide>
+  <d-steps-guide :steps="steps" v-model:step-index="stepIndex" ref="stepsRef"></d-steps-guide>
 </template>
 <script>
-  import { defineComponent, reactive, ref } from 'vue'
+  import { defineComponent, reactive, ref, onMounted } from 'vue'
   export default defineComponent({
     setup() {
-      const stepsPosition = reactive([
+      const steps = reactive([
           { title: '弹出位置 top-left',
             content: 'Steps Guide', 
             trigger: '.top-left', 
@@ -110,15 +179,16 @@
           }
       ]);
 
-      const stepsPositionRef = ref(null)
-    
+      const stepsRef = ref(null), stepIndex = ref(-1);
       const handleClick = (index) => {
-        stepsPositionRef.value.setCurrentIndex(index)
+        stepsRef.value.setCurrentIndex(index)
       }
+     
       return {
-        stepsPosition,
+        steps,
+        stepIndex,
         handleClick,
-        stepsPositionRef
+        stepsRef
       }
     }
   })
@@ -142,10 +212,11 @@
 ```vue
 <template>
   <d-button btnStyle="common" class="bottom">Custom Position</d-button>
-  <d-steps-guide :steps="customSteps" :showDots="false" :showClose="false"></d-steps-guide>
+  <d-button btnStyle="common" class="bottom">Custom Target</d-button>
+  <d-steps-guide ref="stepsRef" :steps="customSteps" :showDots="false" :showClose="false"></d-steps-guide>
 </template>
 <script>
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, ref, onMounted } from 'vue'
 export default defineComponent({
   setup() {
     const customSteps = reactive([
@@ -153,9 +224,9 @@ export default defineComponent({
           content: '自定义操作指引信息弹出的位置和元素。',
           trigger: '.custom-1', 
           position: {
-            left: 0,
-            top: 0,
-            type: 'top-left'
+            leftFix: 0,
+            topFix: 0,
+            type: 'top'
           } },
         { 
           title: '自定义用法', 
@@ -165,8 +236,13 @@ export default defineComponent({
           position: 'bottom'
         },
     ]);
+    const stepsRef = ref(null)
+    onMounted(() => {
+      stepsRef.value.closeGuide('custom')
+    })
     return {
-      customSteps
+      customSteps,
+      stepsRef
     }
   }
 })
@@ -180,6 +256,10 @@ d-steps-guide 参数
 
 | 参数  | 类型  | 默认 | 说明                   | 跳转                  |
 | ----- | ----- | ---- | ---------------------- | --------------------- |
-| steps | array | Step[]   | 必选，操作指引步骤数组 | [基本用法](#基本用法) |
+| steps | array | Step[] | 必选，操作指引步骤数组 | [基本用法](#基本用法) |
+| stepIndex | number | undefined |可选，表示当前指引的索引，为 -1 时表示指引为关闭状态 | [基本用法](#基本用法) |
+| zIndex | number | 1100 | 可选，用于调整指引信息的显示层级 | 
 | showClose | boolean | true   | 可选，是否显示关闭按钮 | [自定义](#基本用法) |
 | showDots | boolean | true   | 可选，是否显示表示导航指引顺序的圆点 | [自定义](#基本用法) |
+| scrollToTargetSwitch | boolean | true | 可选，是否自动滚动页面至指引信息显示的位置 dom | |
+| stepChange | Function | | 可选，在切换步骤时前置执行，返回 boolean 值决定是否显示当前步骤

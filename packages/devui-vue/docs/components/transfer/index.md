@@ -26,9 +26,7 @@ import { defineComponent, reactive } from 'vue'
 
 export default defineComponent({
   setup() {
-    const options = reactive({
-      titles: ['sourceHeader', 'targetHeader'],
-      source: [
+    const originSource = [
         {
           key: '北京',
           value: '北京',
@@ -79,8 +77,8 @@ export default defineComponent({
           value: '重庆',
           disabled: false,
         },
-      ],
-      target: [
+      ]
+    const originTarget = [
         {
           key: '南充',
           value: '南充',
@@ -96,9 +94,16 @@ export default defineComponent({
           value: '绵阳',
           disabled: false,
         },
-      ],
+      ]
+
+    const options = reactive({
+      titles: ['sourceHeader', 'targetHeader'],
+      source: originSource,
+      target: originTarget,
+      originSource,
+      originTarget,
       isSearch: true,
-      modelValues: ['深圳', '成都', '绵阳']
+      modelValues: ['深圳', '成都', '绵阳'],
     })
 
     return {
@@ -373,13 +378,23 @@ export default defineComponent({
 
 
 ### API
+d-transfer 参数
 
 | **参数**           | **类型**                                                     | **默认**                  | **说明**                                                     | **跳转 Demo**                |
 | ------------------ | ------------------------------------------------------------ | ------------------------- | ------------------------------------------------------------ | ---------------------------- |
-| sourceOption   | Array   | []     | 可选参数，穿梭框源数据     |  [基本用法](#基本用法)   |
-| targetOption   | Array   | []     | 可选参数，穿梭框目标数据   |  [基本用法](#基本用法)   |
-| titles         | Array   | []     | 可选参数，穿梭框标题      |  [基本用法](#基本用法)   |
-| height         | string  | 320px  | 可选参数，穿梭框高度      |  [基本用法](#基本用法)   |
-| isSearch       | boolean | true   | 可选参数，是否可以搜索    |  [基本用法](#基本用法)   |
-| disabled       | boolean | false  | 可选参数 穿梭框禁止使用   |  [基本用法](#基本用法)   |  
+| sourceOption   | `Array`   | []     | 可选参数，穿梭框源数据     |  [基本用法](#基本用法)   |
+| targetOption   | `Array`   | []     | 可选参数，穿梭框目标数据   |  [基本用法](#基本用法)   |
+| titles         | `Array`   | []     | 可选参数，穿梭框标题      |  [基本用法](#基本用法)   |
+| height         | `Array`  | 320px  | 可选参数，穿梭框高度      |  [基本用法](#基本用法)   |
+| isSearch       | `Array` | true   | 可选参数，是否可以搜索    |  [基本用法](#基本用法)   |
+| disabled       | `Array` | false  | 可选参数 穿梭框禁止使用   |  [基本用法](#基本用法)   |  
+| beforeTransfer | `(sourceOption, targetOption) => boolean \| Promise<boolean>` |-  | 可选参数 穿梭框禁止使用   |  [基本用法](#基本用法)   |  
 
+d-transfer 事件
+| **事件**           | **类型**                                                     | **说明**                                                     | **跳转 Demo**                |
+| ------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------- |
+| transferToSource   | `EventEmitter<{sourceOption, targetOption}>`   | 当点击右穿梭时，返回穿梭框源和目标数据；     |  [基本用法](#基本用法)   |
+| transferToTarget   | `EventEmitter<{sourceOption, targetOption}>`   | 当点击左穿梭时，返回穿梭框源和目标数据；     |  [基本用法](#基本用法)   |
+| searching   | `EventEmitter<{direction, keyword}>`   | 当搜索时触发，返回目标穿梭框和搜索文字，不设置此事件则会使用默认方法；     |  [基本用法](#基本用法)   |
+| transferring   | `EventEmitter<TransferDirection>`   | 当穿梭时触发，返回目标穿梭框，不设置此事件则会使用默认方法；     |  [基本用法](#基本用法)   |
+| afterTransfer   | `EventEmitter<TransferDirection>`   | 当穿梭完成后，返回目标穿梭框，不设置transferEvent才会触发；     |  [基本用法](#基本用法)   |

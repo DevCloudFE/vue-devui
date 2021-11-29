@@ -1,30 +1,34 @@
-import { inject, defineComponent, onBeforeMount, onMounted } from 'vue';
+import { inject, defineComponent, onBeforeUnmount, onMounted, toRefs, watch } from 'vue';
 import {
   Column,
   TableColumnProps,
   TableColumnPropsTypes,
 } from './column.type'
-import { Table } from '../table.type';
-import { useRender } from './use-column';
+import { TABLE_TOKEN } from '../table.type';
+import { createColumn } from './use-column';
 
 export default defineComponent({
   name: 'DColumn',
   props: TableColumnProps,
-  setup(props: TableColumnPropsTypes) {
-    const column: Column = {
-      field: props.field,
-      header: props.header,
-    };
-    const parent: Table = inject('table');
-    const { setColumnWidth, setColumnRender } = useRender(props);
+  setup(props: TableColumnPropsTypes, ctx) {
+    /*
+      ctx.slots : { 
+       customFilterTemplate: Slot 
+      }
+     */
+    const column = createColumn(toRefs(props), ctx.slots);
 
-    onBeforeMount(() => {
-      setColumnWidth(column);
-      setColumnRender(column);
-    });
+    const parent = inject(TABLE_TOKEN);
 
     onMounted(() => {
       parent.store.insertColumn(column);
+      watch(() => column.order, () => {
+        parent.store.sortColumn();
+      });
+    });
+
+    onBeforeUnmount(() => {
+      parent.store.removeColumn(column);
     });
   },
   render() {

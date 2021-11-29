@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType, SetupContext } from 'vue'
-import { IItem, ITitles, IModel } from '../types'
+import { IItem, ITitles, IModel, TState } from '../types'
 
 export const transferProps = {
     sourceOption: {
@@ -26,30 +26,52 @@ export const transferProps = {
     },
     height: {
         type: String,
-        default: '320px'
+        default: (): string => '320px'
     },
     isSearch: {
         type: Boolean,
-        default: false
+        default: (): boolean => false
     },
     isSourceDroppable: {
         type: Boolean,
-        default: false
+        default: (): boolean => false
     },
     isTargetDroppable: {
         type: Boolean,
-        default: false
+        default: (): boolean => false
     },
     disabled: {
         type: Boolean,
-        default: false
+        default: (): boolean => false
     },
-    showOptionTitle: {
+    showTooltip: {
         type: Boolean,
-        default: false
+        default: (): boolean => false
+    },
+    tooltipPosition: {
+        type: String as PropType<'top' | 'right' | 'bottom' | 'left'>,
+        default: (): string => 'top'
+    },
+    beforeTransfer: {
+        type: Function as unknown as () => ((sourceOption: TState, targetOption: TState) => boolean | Promise<boolean>)
     },
     slots: {
         type: Object
+    },
+    searching: {
+        type: Function as unknown as () => ((direction: string, keyword: string, targetOption: TState) => void)
+    },
+    transferToSource: {
+        type: Function as unknown as () => ((sourceOption: TState, targetOption: TState) => void)
+    },
+    transferToTarget: {
+        type: Function as unknown as () => ((sourceOption: TState, targetOption: TState) => void)
+    },
+    transferring: {
+        type: Function as unknown as () => ((targetOption: TState) => void)
+    },
+    afterTransfer: {
+        type: Function as unknown as () => ((targetOption: TState) => void)
     }
 }
 

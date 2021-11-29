@@ -53,7 +53,6 @@ export default defineComponent({
       timeListDom,
     )
 
-
     const setOutoTime = (time:string)=>{
       resetTimeValue(time)
     }
@@ -75,7 +74,7 @@ export default defineComponent({
 
     const TimeUl = (timeList:Array<ArrType>)=>{
       return (
-          <div class='time-item' style={{'width':props.format.length>6?'33.333%':'50%'}}>
+          <div class='time-item' style={{'flex':1}}>
             <TimeScroll>
               <ul class='time-ul'>
                 {TimeLi(timeList)}

@@ -40,7 +40,8 @@ export default defineComponent({
         labelAlign: props.labelAlign,
       },
       rules: props.rules,
-      columnsClass: props.columnsClass
+      columnsClass: props.columnsClass,
+      messageShowType: "popover"
     });
 
     const onSubmit = (e) => {

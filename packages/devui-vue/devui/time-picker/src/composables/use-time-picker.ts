@@ -37,7 +37,7 @@ export default function useTimePicker(
   const mouseInIputFun = ()=>{
     if(firsthandActiveTime.value == '00:00:00'){
 
-      const vModelValueArr = vModeValue.value.split(':')
+      const vModelValueArr = value.split(':')
       const minTimeValueArr = minTime.split(':')
 
       vModeValue.value == ''
@@ -45,14 +45,13 @@ export default function useTimePicker(
         : ''
       
       if( vModeValue.value > minTime ){
-        firsthandActiveTime.value = vModeValue.value
+        firsthandActiveTime.value = value
         setInputValue(vModelValueArr[0],vModelValueArr[1],vModelValueArr[2])
       }else{
         firsthandActiveTime.value = minTime
         setInputValue(minTimeValueArr[0],minTimeValueArr[1],minTimeValueArr[2])
       }
     }
-
     isActive.value = true
     showPopup.value = true
   }
@@ -70,6 +69,7 @@ export default function useTimePicker(
 
     const vModelValueArr = vModeValue.value.split(':')
     vModeValue.value && setInputValue(vModelValueArr[0],vModelValueArr[1],vModelValueArr[2])
+    
   }
   
 

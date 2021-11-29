@@ -1,15 +1,15 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 
 export interface TreeItem {
-  id?: number | string
-  label?: string
-  data?: any
-  parent?: TreeItem | null
-  children?: Array<TreeItem> | null
+  id: number | string
+  label: string
+  parent?: TreeItem
+  children?: Array<TreeItem>
   level?: number
   loading?: boolean
-  isOpen?: boolean
-  isChecked?: boolean
+  opened?: boolean
+  checked?: boolean
+  halfchecked?: boolean
   disabled?: boolean
   
   [prop: string]: any
@@ -33,10 +33,6 @@ export const treeSelectProps = {
     default: '请选择',
   },
   disabled: {
-    type: Boolean,
-    default: false
-  },
-  expandTree: {
     type: Boolean,
     default: false
   },
