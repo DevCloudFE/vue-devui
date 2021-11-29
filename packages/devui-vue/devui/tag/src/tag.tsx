@@ -1,8 +1,6 @@
 import { defineComponent, toRefs, ref, watch, onUnmounted } from 'vue'
 import { tagProps, TagProps } from './tag-types'
 import { useClass, useColor } from './hooks'
-import IconClose from './assets/close.svg'
-import IconDefaultClose from './assets/defaultClose.svg'
 import './tag.scss'
 // 类型声明
 
@@ -27,14 +25,12 @@ export default defineComponent({
     }
     const closeIconEl = () => {
       return deletable.value ? (
-        <a
-          class='remove-button'
-          style={{
-            color: checked.value ? '#fff' : themeColor.value
-          }}
-          onClick={handleDelete}
-        >
-          {isDefaultTag() ? <IconDefaultClose /> : <IconClose />}
+        <a class='remove-button' onClick={handleDelete}>
+          {isDefaultTag() ? (
+            <d-icon size='12px' name='error-o' color='#adb0b8' />
+          ) : (
+            <d-icon size='12px' name='close' color={themeColor.value} />
+          )}
         </a>
       ) : null
     }
