@@ -39,12 +39,12 @@ export default defineComponent({
             size={props.size}
             disabled={props.disabled}
             autoFocus={props.autoFocus}
-            value={keywords.value}
+            modelValue={keywords.value}
             maxLength={props.maxLength}
             placeholder={props.placeholder}
             cssClass={props.cssClass}
             onKeydown={onInputKeydown}
-            onUpdate:value={onInputUpdate}
+            onUpdate:modelValue={onInputUpdate}
           ></DInput>
             {clearIconShow.value &&
               <div
