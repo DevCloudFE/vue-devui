@@ -149,8 +149,10 @@
 
 <style lang="scss">
 @import '@devui-design/icons/icomoon/devui-icon.css';
+@import '@devui/styles-var/devui-var.scss';
+
 .devui-badge-item {
-  background: #f3f6f8; 
+  background: $devui-default-bg; 
   margin-right:20px;
   border-radius: 8px;
   padding: 4px 10px;
@@ -162,7 +164,7 @@
 }
 .devui-badge-list {
   width: 180px;
-  background: #f3f6f8;
+  background: $devui-default-bg;
   font-size: 14px;
   border-radius: 8px;
   padding: 0;
