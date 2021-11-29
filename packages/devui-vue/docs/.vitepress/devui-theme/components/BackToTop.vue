@@ -82,9 +82,8 @@ export default defineComponent({
   position: fixed;
   display: flex;
   bottom: 2rem;
-  right: 2.5rem;
-  width: 2rem;
-  height: 28px;
+  right: calc((100vw - 1440px) / 2 + 144px);
+  width: 22px;
   color: var(--devui-brand);
   z-index: 1;
 }
