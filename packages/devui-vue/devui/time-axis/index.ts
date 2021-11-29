@@ -13,7 +13,7 @@ export { TimeAxis, TimeAxisItem }
 export default {
   title: 'TimeAxis 时间轴',
   category: '数据展示',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(TimeAxis as any)
     app.use(TimeAxisItem as any)
