@@ -16,7 +16,7 @@ export { FlexibleOverlay, FixedOverlay }
 export default {
   title: 'Overlay 遮罩层',
   category: '通用',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(FixedOverlay as any);
     app.use(FlexibleOverlay as any);

@@ -10,7 +10,7 @@ export { Popover }
 export default {
   title: 'Popover 悬浮提示',
   category: '反馈',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(Popover as any);
   }
