@@ -77,20 +77,6 @@ export default defineComponent({
 ```
 :::
 
-
- <!-- `<style lang="scss"></style>` 的写法，在 `:::demo 语法中` 不起作用， 看了依赖包 `vitepress-theme-demoblock` 源码
-是渲染的正则表达式只匹配 `<style></style>` 这种写法，TODO：待后续优化 
-<style lang="scss"> 
-@import "@devui/style/theme/color";
-
-.pane-content {
-  padding: 0 12px;
-}
-
-.splitter-border {
-  border: 1px solid $devui-dividing-line;
-}-->
-
 ### 垂直布局用法
 
 :::demo

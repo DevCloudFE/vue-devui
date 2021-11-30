@@ -94,7 +94,7 @@ export default defineComponent({
             <Input
               ref={input}
               class="datepicker-input"
-              value={state.value}
+              modelValue={state.value}
               placeholder={state.placeholder}
               onFocus={() => state.show = true }
             />
