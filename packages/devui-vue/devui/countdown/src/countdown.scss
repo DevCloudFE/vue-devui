@@ -1,0 +1,20 @@
+@import '../../style/theme/color';
+
+.devui-countdown {
+  .countdown-content {
+    font-size: 24px;
+
+    span {
+      color: $devui-text;
+      display: inline-block;
+    }
+
+    .countdown-prefix {
+      margin-right: 4px;
+    }
+
+    .countdown-suffix {
+      margin-left: 4px;
+    }
+  }
+}
