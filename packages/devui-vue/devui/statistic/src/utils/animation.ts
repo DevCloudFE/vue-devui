@@ -61,9 +61,9 @@ export class Tween {
     this.to = to
     this.duration = duration
     this.delay = delay
-    this.easing = easing || 'linear'
+    this.easing = easing
     this.onStart = onStart
-    this.onUpdate = onUpdate || function () {}
+    this.onUpdate = onUpdate
     this.onFinish = onFinish
     this.startTime = Date.now() + this.delay
     this.started = false
