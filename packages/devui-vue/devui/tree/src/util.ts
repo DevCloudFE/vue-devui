@@ -1,5 +1,3 @@
-import { Ref } from 'vue'
-import { random } from 'lodash'
 import { TreeData, TreeItem } from './tree-types'
 
 
@@ -19,9 +17,10 @@ export const flatten = (tree: Array<any>, key = 'children'): Array<any> => {
  * 用于设置 Tree Node 的 ID 属性
  * 应用场景: 懒加载 loading 后元素定位
  */
-const getRandomId = (): string => random(10 ** 7, 10 ** 8 - 1).toString()
+const getRandomId = (): string => (Math.random() * 10 ** 9).toString().slice(0,8)
 const preCheckNodeId = (d: TreeItem, postfixId?: string): TreeItem => {
   const randomStr = getRandomId()
+  console.info('randomStr: ', randomStr)
   return { ...d, id: postfixId ? `${postfixId}_${randomStr}` : randomStr }
 }
 export const getId = (id: string): string => {
