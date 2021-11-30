@@ -70,6 +70,14 @@ defineEmits(['toggle'])
             />
           </a>
         </div>
+        <a class="ml-m" style="font-size: 0;user-select:none" href="https://gitee.com/devui/vue-devui/stargazers">
+          <img
+            :src="`https://gitee.com/devui/vue-devui/badge/star.svg?theme=${
+              darkMode ? 'dark' : 'white'
+            }`"
+            alt="star"
+          />
+        </a>
       </div>
 
       <slot name="search" />
@@ -116,6 +124,10 @@ defineEmits(['toggle'])
 
 .custom-nav svg {
   fill: $devui-text;
+}
+
+.custom-nav img {
+  width: 6rem;
 }
 
 .custom-nav-item:hover {
