@@ -1,5 +1,6 @@
 import { TreeData, TreeItem } from './tree-types'
 
+
 export const omit = (obj: unknown, key: string): unknown => {
   return Object.entries(obj)
     .filter(item => item[0] !== key)
@@ -16,23 +17,46 @@ export const flatten = (tree: Array<any>, key = 'children'): Array<any> => {
  * 用于设置 Tree Node 的 ID 属性
  * 应用场景: 懒加载 loading 后元素定位
  */
-const precheckNodeId = (d: TreeItem): TreeItem => {
-  const random = parseInt((Math.random() * (10 ** 8)).toString().padEnd(8, '0'))
-  return { ...d, id: d.id ? `${d.id}_${random}` : `${d.label.replaceAll(' ', '-')}_${random}` }
+const getRandomId = (): string => (Math.random() * 10 ** 9).toString().slice(0,8)
+const preCheckNodeId = (d: TreeItem, postfixId?: string): TreeItem => {
+  const randomStr = getRandomId()
+  console.info('randomStr: ', randomStr)
+  return { ...d, id: postfixId ? `${postfixId}_${randomStr}` : randomStr }
+}
+export const getId = (id: string): string => {
+  const ids = id.split('_')
+  return [...ids.slice(0, ids.length), getRandomId()].join('_')
 }
 
 /**
  * 用于 Tree Node 的数据格式检查
  */
-export const precheckTree = (ds: TreeData): TreeData => {
+export const preCheckTree = (ds: TreeData, postfixId?: string): TreeData => {
   return ds.map(d => {
-    const dd = precheckNodeId(d)
-    if (d.children) {
-      return {
-        ...dd,
-        children: precheckTree(d.children)
+    const dd = preCheckNodeId(d, postfixId)
+    return d.children ? {
+      ...dd,
+      children: preCheckTree(d.children, dd.id)
+    } : dd
+  })
+}
+
+const _deleteNode = (ids: Array<string>, data: Array<TreeItem>, index = 0): Array<TreeItem> => {
+  const curTargetId = ids.slice(0, index + 2).join('_')
+  data.forEach(item => {
+    if (item.id === ids.slice(0, index + 1).join('_')) {
+      if (ids.length === index + 2) {
+        item.children = item.children.filter(({ id: d }) => d !== curTargetId)
+      } else {
+        item.children = _deleteNode(ids, item.children, index + 1)
       }
     }
-    return dd
   })
+  return data
+}
+export const deleteNode = (id: string, data: Array<TreeItem>): Array<TreeItem> => {
+  if (id.includes('_')) {
+    return _deleteNode(id.split('_'), data)
+  }
+  return data.filter(({ id: d }) => d !== id)
 }
