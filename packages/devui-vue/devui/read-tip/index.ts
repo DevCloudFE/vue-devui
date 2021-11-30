@@ -10,7 +10,7 @@ export { ReadTip, }
 export default {
   title: 'ReadTip 阅读提示',
   category: '反馈',
-  status: '50%', // TODO: 组件若开发完成则填入"已完成"，并删除该注释
+  status: '已完成', 
   install(app: App): void {
     app.use(ReadTip as any)
   }

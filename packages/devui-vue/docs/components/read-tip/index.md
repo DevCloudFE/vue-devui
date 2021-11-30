@@ -22,7 +22,6 @@
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
 const readTipOptions =  {
     trigger: 'hover',
     rules: {
@@ -75,7 +74,6 @@ const readTipOptions =  {
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
 const readTipOptions =  {
     trigger: 'click',
     showAnimate: false,
@@ -101,14 +99,14 @@ const readTipOptions =  {
         overlayClassName:'red',
       },
       {
-        trigger: 'click',
+        trigger: 'hover',
         selector: '.third-content',
         position: 'bottom',
         title: 'This Is the Third Title',
         content: 'Aenean libero urna, scelerisque tincidunt',
       }, 
       {
-        trigger: 'click',
+        trigger: 'hover',
         selector: '.four-content',
         position: 'right',
         title: 'This Is the Third Title',
@@ -206,7 +204,6 @@ const readTipOptions =  {
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
 const readTipOptions =  {
     trigger: 'click',    
     rules: {
@@ -275,10 +272,10 @@ const readTipOptions =  {
   <p class="readtip-content">Using function fullElement to pass data</p>
   <p>The following is the target you want to show readtip</p>
   <h4 class="readtip-target">Display readtip</h4>
+  </d-read-tip>
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
 const readTipOptions =   {
     trigger: 'click',
     rules: { 
