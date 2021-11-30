@@ -25,22 +25,21 @@ export default defineComponent({
       wrapperClass: `devui-splitter-bar devui-splitter-bar-${props.orientation}`,
     })
     const domRef = ref<null | HTMLElement>()
-    onMounted(() => {
-      watch([() => props.splitBarSize, domRef], ([curSplitBarSize, ele]) => {
-        if (!(ele instanceof HTMLElement)) {
-          return;
-        }
-        setStyle(ele, { flexBasis: curSplitBarSize })
-      }, { immediate: true })
 
-      watch([() => store.state.panes, domRef], ([panes, ele]) => {
-        if (!store.isStaticBar(props.index)) {
-          state.wrapperClass += ' resizable'
-        } else {
-          setStyle(ele, { flexBasis: props.disabledBarSize })
-        }
-      }, { deep: true })
-    })
+    watch([() => props.splitBarSize, domRef], ([curSplitBarSize, ele]) => {
+      if (!(ele instanceof HTMLElement)) {
+        return;
+      }
+      setStyle(ele, { flexBasis: curSplitBarSize })
+    }, { immediate: true })
+
+    watch([() => store.state.panes, domRef], ([panes, ele]) => {
+      if (!store.isStaticBar(props.index)) {
+        state.wrapperClass += ' resizable'
+      } else {
+        setStyle(ele, { flexBasis: props.disabledBarSize })
+      }
+    }, { deep: true })
 
     // 指令输入值
     const coordinate = { pageX: 0, pageY: 0, originalX: 0, originalY: 0 }

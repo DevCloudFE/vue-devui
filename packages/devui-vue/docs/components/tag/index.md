@@ -58,7 +58,8 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-tag type="primary" :checked="isChecked" @click="tagClick">标签二</d-tag>
+    <d-tag type="primary" :checked="isChecked" @click="tagClick">不要点我呀</d-tag>
+    <d-tag color="#39afcc" :checked="isChecked" @click="tagClick">不要点我呀</d-tag>
   </div>
 </template>
 <script>
@@ -80,20 +81,52 @@ export default defineComponent({
 
 :::
 
+### 可关闭的
+
+:::demo 由`deletable`属性来设置 tag 选中的初始状态，可通过监听点击事件来改变`checked`的值
+
+```vue
+<template>
+  <div>
+    <d-tag deletable @click="handleClose">tag2</d-tag>
+    <d-tag type="primary" deletable @click="handleClose">tag2</d-tag>
+    <d-tag color="#39afcc" deletable @click="handleClose">tag2</d-tag>
+  </div>
+</template>
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const handleClose = () => {
+      console.log('handleClose')
+    }
+    return { handleClose }
+  }
+})
+</script>
+
+<style></style>
+```
+
+:::
+
 ### API
 
 #### Props
 
-|  参数   |   类型    |  默认值   |                    说明                     |              可选值              |    跳转至 Demo    |
-| :-----: | :-------: | :-------: | :-----------------------------------------: | :------------------------------: | :---------------: |
-|  type   | `string`  | 'defalut' | 可选，标签的类型，指定类型后则 color 不生效 | `success\|info\|warning\|danger` | [示例](#基本用法) |
-|  color  | `string`  |    ''     |             可选，标签的主题色              |                                  |                   |
-| checked | `boolean` |   false   |       可选，可选，标签选中的初始状态        |          `true\|false`           | [示例](#基本用法) |
+|     参数     |   类型    |  默认值   |                    说明                     |              可选值              |    跳转至 Demo    |
+| :----------: | :-------: | :-------: | :-----------------------------------------: | :------------------------------: | :---------------: |
+|     type     | `string`  | 'defalut' | 可选，标签的类型，指定类型后则 color 不生效 | `success\|info\|warning\|danger` | [示例](#基本用法) |
+|    color     | `string`  |    ''     |             可选，标签的主题色              |                -                 | [示例](#基本用法) |
+| titleContent | `string`  |    ''     |    可选，设置鼠标悬浮时 title 的显示内容    |                -                 | [示例](#基本用法) |
+|   checked    | `boolean` |   false   |          可选，标签选中的初始状态           |          `true\|false`           | [示例](#可被选中) |
+|  deletable   | `boolean` |   false   |          可选，设置标签是否可删除           |          `true\|false`           | [示例](#可关闭的) |
 
 #### Event
 
-| 名称          | 说明                              |
-| :------------ | --------------------------------- |
-| click         | 点击tag 的时候触发的事件          |
-| tagDelete     | 删除 tag 的时候触发的事件         |
-| checkedChange | tag 的 check 状态改变时触发的事件 |
+| 名称          | 说明                                                        |
+| :------------ | ----------------------------------------------------------- |
+| click         | 点击 tag 的时候触发的事件                                   |
+| tagDelete     | 删除 tag 的时候触发的事件                                   |
+| checkedChange | tag 的 check 状态改变时触发的事件，通过参数接收标签最新状态 |
