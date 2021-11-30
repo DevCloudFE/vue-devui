@@ -22,6 +22,8 @@
     v-model:visible="isDrawerShow" 
     :width="drawerWidth"
     :isCover="isCover" 
+    :backdropCloseable="backdropCloseable"
+    :beforeHidden="beforeHidden"
     position="right"
     @close="drawerClose"
     @afterOpened="drawerAfterOpened"
@@ -35,7 +37,8 @@ export default ({
     let isDrawerShow = ref(false)
     let btnName = ref('close')
     let drawerWidth = ref('15vw')
-    let isCover = ref(true)
+    let isCover = ref(false)
+    let backdropCloseable = ref(true);
 
     const drawerShow = () => {
       isDrawerShow.value = true
@@ -50,6 +53,12 @@ export default ({
       console.log('open')
     }
 
+    const beforeHidden = () => {
+      return new Promise((resolve) => {
+        resolve(false);
+      });
+    }
+
     return {
       isDrawerShow,
       btnName,
@@ -58,6 +67,8 @@ export default ({
       drawerClose,
       drawerAfterOpened,
       isCover,
+      backdropCloseable,
+      beforeHidden,
     }
   }
 })
@@ -74,7 +85,9 @@ export default ({
 | width | `String` | `300px` | 可选，设置抽屉板宽度 | [基本用法](#基本用法) |
 | zIndex | `Number` | `1000` | 可选，设置 drawer 的 z-index 值 | [基本用法](#基本用法) |
 | isCover | `Boolean` | `true` | 可选，是否有遮罩层 | [基本用法](#基本用法) |
-| onClose | `Function` | -- | 可选，关闭 drawer 时候调用 | [基本用法](#基本用法) |
 | escKeyCloseable | `Boolean` | `true` | 可选，设置可否通过 esc 按键来关闭 drawer 层 | [基本用法](#基本用法) |
-| afterOpened | `Function` | -- | 可选，打开 drawer 后时候调用 | [基本用法](#基本用法) |
 | position | `String` | 'right' | 可选，抽屉板出现的位置，'left'或者'right' | [基本用法](#基本用法) |
+| backdropCloseable | `Boolean` | true | 可选，设置可否通过点击背景来关闭 drawer 层 | [基本用法](#基本用法) |
+| beforeHidden | `Function \| Promise` | -- | 可选，关闭窗口之前的回调 | [基本用法](#基本用法) |
+| onClose | `Function` | -- | 可选，关闭 drawer 时候调用 | [基本用法](#基本用法) |
+| onAfterOpened | `Function` | -- | 可选，打开 drawer 后时候调用 | [基本用法](#基本用法) |
