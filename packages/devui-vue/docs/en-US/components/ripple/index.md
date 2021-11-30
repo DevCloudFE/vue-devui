@@ -1,22 +1,22 @@
-# Ripple 水波纹指令
+# RippleDirective
 
-<span color="#409EFF">`v-ripple`</span> 指令 用于用户动作交互场景, 可以应用于任何块级元素 <span color="#409EFF">`注：只能作用于块级元素`</span>
+<span color="#409EFF">`v-ripple`</span>The v-ripple directive is used to show action from a user. It can be applied to any block level element.<span color="#409EFF">`tips: It can be applied to any block level element.`</span>
 
-### 使用
+### When to Use
 
-:::demo 用户 可以在组件 或者 HTML 元素上任意使用 <span color="#409EFF">`v-ripple`</span> 指令 使用基本的 <span color="#409EFF">`v-ripple`</span> 指令， `v-ripple` 接收 一个对象
+:::demo User can be use Basic ripple functionality can be enabled just by using v-ripple directive on a component or an HTML element <span color="#409EFF">`v-ripple`</span>Basic ripple functionality <span color="#409EFF">`v-ripple`</span> Directive `v-ripple` Accept an object
 
 ```vue
 <template>
   <d-row :gutter="50">
     <d-col :span="12">
       <div class="ripple-button">
-        <div class="ripple-htmlElement" v-ripple="{ color: '#5e7ce0',duration: 0.3 }">HTML元素 中使用 v-ripple</div>
+        <div class="ripple-htmlElement" v-ripple="{ color: '#5e7ce0',duration: 0.3 }">HTML element with v-ripple</div>
       </div>
     </d-col>
     <d-col :span="12">
       <div class="ripple-button">
-        <div class="ripple-htmlElement" v-ripple="{ duration: 0.8 }">HTML元素 中使用 v-ripple</div>
+        <div class="ripple-htmlElement" v-ripple="{ duration: 0.8 }">HTML element with v-ripple</div>
       </div>
     </d-col>
   </d-row>
@@ -30,9 +30,9 @@
 
 :::
 
-### 自定义色彩
+### Custom color
 
-### 通过修改文本颜色来动态改变
+### Change the ripple color dynamically by changing the text color or the ripple color
 
 :::demo
 
@@ -43,11 +43,11 @@
       <ul>
         <li
           v-for="item in [
-            { color: '#409EFF', text: '这是一条 Primary 涟漪' },
-            { color: '#67C23A', text: '这是一条 Success 涟漪' },
-            { color: '#E6A23C', text: '这是一条 Warning 涟漪' },
-            { color: '#F56C6C', text: '这是一条 Danger 涟漪' },
-            { color: '#909399', text: '这是一条 Info 涟漪' }
+            { color: '#409EFF', text: 'Item with Primary ripple' },
+            { color: '#67C23A', text: 'Item with Success ripple' },
+            { color: '#E6A23C', text: 'Item with Warning ripple' },
+            { color: '#F56C6C', text: 'Item with Danger ripple' },
+            { color: '#909399', text: 'Item with Info ripple' }
           ]"
           :style="{ color: item.color }"
         >
@@ -61,11 +61,11 @@
       <ul>
         <li
           v-for="(item, index) in [
-            { color: '#409EFF', text: '这是一条 Primary 涟漪' },
-            { color: '#67C23A', text: '这是一条 Success 涟漪' },
-            { color: '#E6A23C', text: '这是一条 Warning 涟漪' },
-            { color: '#F56C6C', text: '这是一条 Danger 涟漪' },
-            { color: '#909399', text: '这是一条 Info 涟漪' }
+            { color: '#409EFF', text: 'Item with Primary ripple' },
+            { color: '#67C23A', text: 'Item with Success ripple' },
+            { color: '#E6A23C', text: 'Item with Warning ripple' },
+            { color: '#F56C6C', text: 'Item with Danger ripple' },
+            { color: '#909399', text: 'Item with Info ripple' }
           ]"
           :style="{ color: item.color }"
         >
@@ -85,9 +85,11 @@
 :::
 
 
-### 应用于其他组件
+### Ripple in components
 
-Button 组件
+### Some components provide the ripple prop that allows you to control the ripple effect.
+
+Button Component
 
 :::demo
 
@@ -95,10 +97,10 @@ Button 组件
 <template>
   <d-row>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" btnStyle="text" style="padding: 3px 8px;margin-right: 20px">Text</d-button>
+      <d-button v-ripple="{duration: 0.5}" btnStyle="text" style="margin-right: 20px">Text</d-button>
     </d-col>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" btnStyle="text-dark" style="padding: 3px 8px;margin-right: 20px">Text dark</d-button>
+      <d-button v-ripple="{duration: 0.5}" btnStyle="text-dark" style="margin-right: 20px">Text dark</d-button>
     </d-col>
         <d-col :span="6">
       <d-button v-ripple="{duration: 0.5}" icon="add" btnStyle="text-dark" title="add"></d-button>
@@ -112,7 +114,7 @@ Button 组件
 
 :::
 
-Card 组件 
+Card Component 
 
 :::demo
 ```vue
@@ -208,12 +210,12 @@ Card 组件
 
 ### API
 
-|      参数       |   类型    |    默认     | 说明                              |
-| :-------------: | :-------: | :---------: | :-------------------------------- |
-|      color      | `string`  | `#00000050` | 可选，默认当前文本颜色            |
-| initial-opacity | `number`  |    `0.1`    | 可选，初始交互效果透明度大小      |
-|  final-opacity  | `number`  |    `0.1`    | 可选，结束交互效果长按透明度大小  |
-|    duration     | `number`  |   `0.4s`    | 可选，持续时间                    |
-|     easing      | `string`  | `ease-out`  | 可选，缓动动画                    |
-|   delay-time    | `number`  |   `75ms`    | 可选，延迟 debouceTime 时间后调用 |
-|    disabled     | `boolean` |   `false`   | 可选，禁止水波效果                |
+|      参数       |   类型    |    默认     | 说明                                                                          |
+| :-------------: | :-------: | :---------: | :---------------------------------------------------------------------------- |
+|      color      | `string`  | `#00000050` | Choose Default current text color                                             |
+| initial-opacity | `number`  |    `0.1`    | Choose Initial interaction Opacity size                                       |
+|  final-opacity  | `number`  |    `0.1`    | Choose, end the interactive effect and press the Opacity size for a long time |
+|    duration     | `number`  |   `0.4s`    | Choose, duration                                                              |
+|     easing      | `string`  | `ease-out`  | Choose, animation easing                                                      |
+|   delay-time    | `number`  |   `75ms`    | Choose, slow animation is delayed after debouceTime time.                     |
+|    disabled     | `boolean` |   `false`   | Choose, disabled ripple effect                                                |
