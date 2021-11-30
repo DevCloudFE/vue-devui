@@ -10,7 +10,7 @@ export { Countdown }
 export default {
   title: 'Countdown 倒计时',
   category: '数据展示',
-  status: '已完成', 
+  status: '100%', 
   install(app: App): void {
     app.use(Countdown as any)
   }
