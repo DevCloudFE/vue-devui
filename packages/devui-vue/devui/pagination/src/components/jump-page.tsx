@@ -76,8 +76,8 @@ export default defineComponent({
         <d-input
           class={['devui-pagination-input', size ? 'devui-pagination-input-' + size : '']}
           size={size}
-          value={String(inputNum)}
-          onUpdate:value={jumpPageChange}
+          modelValue={String(inputNum)}
+          onUpdate:modelValue={jumpPageChange}
           onKeydown={jump}
         /> 
 

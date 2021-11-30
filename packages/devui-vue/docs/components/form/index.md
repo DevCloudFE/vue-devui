@@ -23,13 +23,13 @@
     <d-form-item prop="name">
       <d-form-label required hasHelp helpTips="名字可以随意填">Name</d-form-label>
       <d-form-control extraInfo="这行是说明文字，可以不用理，你尽管填你的姓名。">
-        <d-input v-model:value="formModel.name" />
+        <d-input v-model="formModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
       <d-form-label>Age</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.age" />
+        <d-input v-model="formModel.age" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="city">
@@ -153,19 +153,19 @@ Label左右布局方式。
     <d-form-item prop="name">
       <d-form-label required>Name</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.name" />
+        <d-input v-model="formModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
       <d-form-label>Age</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.age" />
+        <d-input v-model="formModel.age" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="city">
       <d-form-label>City</d-form-label>
       <d-form-control>
-        <d-select v-model:value="formModel.city" :options="selectOptions" />
+        <d-select v-model="formModel.city" :options="selectOptions" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="loveFruits">
@@ -284,19 +284,19 @@ export default defineComponent({
       <d-form-item prop="name">
         <d-form-label required>Name</d-form-label>
         <d-form-control>
-          <d-input v-model:value="formModel.name" />
+          <d-input v-model="formModel.name" />
         </d-form-control>
       </d-form-item>
       <d-form-item prop="age">
         <d-form-label>Age</d-form-label>
         <d-form-control>
-          <d-input v-model:value="formModel.age" />
+          <d-input v-model="formModel.age" />
         </d-form-control>
       </d-form-item>
       <d-form-item prop="city">
         <d-form-label>City</d-form-label>
         <d-form-control>
-          <d-select v-model:value="formModel.city" :options="selectOptions" />
+          <d-select v-model="formModel.city" :options="selectOptions" />
         </d-form-control>
       </d-form-item>
       <d-form-item prop="loveFruits">
@@ -574,7 +574,7 @@ export default defineComponent({
     <d-form-item prop="name">
       <d-form-label required>Name</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.name" v-d-validate-rules="[
+        <d-input v-model="formModel.name" v-d-validate-rules="[
           {
             maxlength: 8,
           },
@@ -640,7 +640,7 @@ export default defineComponent({
     <d-form-item prop="sum">
       <d-form-label>计算：1 + 1 = ？</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.sum" v-d-validate-rules="{
+        <d-input v-model="formModel.sum" v-d-validate-rules="{
           validators: [
             {message: '不对喔！', validator: customValidator},
             {message: '答对啦！', validator: customValidator2}
@@ -651,7 +651,7 @@ export default defineComponent({
     <d-form-item prop="asyncSum">
       <d-form-label>计算：1 + 2 = ？（async）</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.asyncSum" v-d-validate-rules="{
+        <d-input v-model="formModel.asyncSum" v-d-validate-rules="{
           asyncValidators: [
             {message: '不对喔！（async）', asyncValidator: customAsyncValidator},
             {message: '答对啦！（async）', asyncValidator: customAsyncValidator2}
@@ -731,7 +731,7 @@ export default defineComponent({
     <d-form-item prop="sum">
       <d-form-label>计算：1 + 1 = ？</d-form-label>
       <d-form-control extraInfo="updateOn为change，当输入完成时，输入框的值发生改变。此时触发验证规则">
-        <d-input v-model:value="formModel.sum" v-d-validate-rules="{
+        <d-input v-model="formModel.sum" v-d-validate-rules="{
           rules: {
             validators: [
               {message: '不对喔！', validator: customValidator},
@@ -747,7 +747,7 @@ export default defineComponent({
     <d-form-item prop="asyncSum">
       <d-form-label>计算：1 + 2 = ？（async）</d-form-label>
       <d-form-control extraInfo="updateOn为input，当正在输入时，输入框的值发生改变。此时触发验证规则">
-        <d-input v-model:value="formModel.asyncSum" v-d-validate-rules="{
+        <d-input v-model="formModel.asyncSum" v-d-validate-rules="{
           rules: {
             asyncValidators: [
               {message: '不对喔！（async）', asyncValidator: customAsyncValidator},
@@ -763,7 +763,7 @@ export default defineComponent({
     <d-form-item prop="errorSum">
       <d-form-label>计算：1 + 1 = ？</d-form-label>
       <d-form-control extraInfo="errorStrategy为pristine，初始化时触发验证规则">
-        <d-input v-model:value="formModel.errorSum" v-d-validate-rules="{
+        <d-input v-model="formModel.errorSum" v-d-validate-rules="{
           errorStrategy: 'pristine',
           rules: {
             validators: [
@@ -858,7 +858,7 @@ export default defineComponent({
     <d-form-item prop="sum">
       <d-form-label>计算：1 + 1 = ？</d-form-label>
       <d-form-control extraInfo="messageShowType为none，不显示提示文字">
-        <d-input v-model:value="formModel.sum" v-d-validate-rules="{
+        <d-input v-model="formModel.sum" v-d-validate-rules="{
           messageShowType: 'none',
           rules: {
             validators: [
@@ -874,7 +874,7 @@ export default defineComponent({
     <d-form-item prop="asyncSum">
       <d-form-label>计算：1 + 2 = ？</d-form-label>
       <d-form-control extraInfo="messageShowType为popover，使用popover进行提示">
-        <d-input v-model:value="formModel.asyncSum" v-d-validate-rules="{
+        <d-input v-model="formModel.asyncSum" v-d-validate-rules="{
           rules: {
             asyncValidators: [
               {message: '不对喔！（async）', asyncValidator: customAsyncValidator}
@@ -954,7 +954,7 @@ export default defineComponent({
     <d-form-item prop="asyncSum">
       <d-form-label>计算：1 + 2 = ？（async）</d-form-label>
       <d-form-control extraInfo="asyncDebounceTime为500">
-        <d-input v-model:value="formModel.asyncSum" v-d-validate-rules="{
+        <d-input v-model="formModel.asyncSum" v-d-validate-rules="{
           rules: {
             asyncValidators: [
               {message: '不对喔！（async）', asyncValidator: customAsyncValidator}
@@ -1023,7 +1023,7 @@ export default defineComponent({
     <d-form-item prop="name">
       <d-form-label>Name</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.name" v-d-validate-rules="{
+        <d-input v-model="formModel.name" v-d-validate-rules="{
           rules: {minlength: 2, message: '不能小于2个字符'},
           options: {
             updateOn: 'input',
@@ -1034,7 +1034,7 @@ export default defineComponent({
     <d-form-item prop="age">
       <d-form-label>Age</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.age" v-d-validate-rules="{
+        <d-input v-model="formModel.age" v-d-validate-rules="{
           rules: {min: 1, message: '年龄需大于0'},
           options: {
             updateOn: 'input',
@@ -1111,7 +1111,7 @@ export default defineComponent({
     <d-form-item prop="name">
       <d-form-label>Name</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.name" v-d-validate-rules="{
+        <d-input v-model="formModel.name" v-d-validate-rules="{
           rules: {minlength: 2, message: '不能小于2个字符'},
           options: {
             updateOn: 'input',
@@ -1122,7 +1122,7 @@ export default defineComponent({
     <d-form-item prop="age">
       <d-form-label>Age</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.age" v-d-validate-rules="{
+        <d-input v-model="formModel.age" v-d-validate-rules="{
           rules: {min: 1, message: '年龄需大于0'},
           options: {
             updateOn: 'input',
@@ -1196,13 +1196,13 @@ export default defineComponent({
     <d-form-item prop="name">
       <d-form-label :required="true" >Name</d-form-label>
       <d-form-control>
-        <d-input v-model:value="validateFormModel.name" />
+        <d-input v-model="validateFormModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
       <d-form-label :required="true" >Age</d-form-label>
       <d-form-control>
-        <d-input v-model:value="validateFormModel.age" />
+        <d-input v-model="validateFormModel.age" />
       </d-form-control>
     </d-form-item>
   </d-form>
@@ -1277,19 +1277,19 @@ export default defineComponent({
     <d-form-item prop="name">
       <d-form-label :required="true" >Name</d-form-label>
       <d-form-control feedbackStatus="pending">
-        <d-input v-model:value="formModel.name" />
+        <d-input v-model="formModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="nickname">
       <d-form-label :required="true" >Nickname</d-form-label>
       <d-form-control feedbackStatus="success">
-        <d-input v-model:value="formModel.nickname" />
+        <d-input v-model="formModel.nickname" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
       <d-form-label :required="true" >Age</d-form-label>
       <d-form-control feedbackStatus="error">
-        <d-input v-model:value="formModel.age" />
+        <d-input v-model="formModel.age" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="sex">
@@ -1354,7 +1354,7 @@ export default defineComponent({
     <d-form-item prop="address">
       <d-form-label :required="true" >Address</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.address" />
+        <d-input v-model="formModel.address" />
         <template v-slot:suffixTemplate>
           <d-icon name="right-o" color="rgb(61, 204, 166)" />
         </template>
@@ -1401,19 +1401,19 @@ export default defineComponent({
     <d-form-item prop="username">
       <d-form-label :required="true" >Username</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.username" v-d-validate-rules="formRules.userNameRule" />
+        <d-input v-model="formModel.username" v-d-validate-rules="formRules.userNameRule" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="password">
       <d-form-label :required="true" >Password</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.password" v-d-validate-rules="formRules.passwordRule" />
+        <d-input v-model="formModel.password" v-d-validate-rules="formRules.passwordRule" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="confirmPassword">
       <d-form-label :required="true" >Confirm Password</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.confirmPassword" v-d-validate-rules="formRules.confirmPasswordRule" />
+        <d-input v-model="formModel.confirmPassword" v-d-validate-rules="formRules.confirmPasswordRule" />
       </d-form-control>
     </d-form-item>
     <d-form-operation class="demo-form-operation">
@@ -1515,13 +1515,13 @@ export default defineComponent({
     <d-form-item prop="name">
       <d-form-label :required="true" >Name</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.name" />
+        <d-input v-model="formModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
       <d-form-label :required="true" >Age</d-form-label>
       <d-form-control>
-        <d-input v-model:value="formModel.age" />
+        <d-input v-model="formModel.age" />
       </d-form-control>
     </d-form-item>
   </d-form>

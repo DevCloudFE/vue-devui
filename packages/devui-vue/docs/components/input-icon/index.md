@@ -34,12 +34,12 @@ export default defineComponent({
 ```
 
 <div style="max-width:300px;border:1px dashed #ccc;padding:20px;display:flex;flex-direction:column;justify-content:space-around;height:300px;">
-<d-input-icon value="calendar" name="calendar" />
-<d-input-icon value="code" name="code" />
-<d-input-icon value="close" name="close" />
-<d-input-icon value="edit" name="edit" />
-<d-input-icon value="buy" name="buy" />
-<d-input-icon value="letter-a" name="letter-a" />
+<d-input-icon modelValue="calendar" name="calendar" />
+<d-input-icon modelValue="code" name="code" />
+<d-input-icon modelValue="close" name="close" />
+<d-input-icon modelValue="edit" name="edit" />
+<d-input-icon modelValue="buy" name="buy" />
+<d-input-icon modelValue="letter-a" name="letter-a" />
 </div>
 
 ### 属性 `icon-color` `icon-bg-color`
@@ -54,12 +54,12 @@ export default defineComponent({
 ```
 
 <div style="max-width:300px;border:1px dashed #ccc;padding:20px;display:flex;flex-direction:column;justify-content:space-around;height:300px;">
-<d-input-icon value="calendar" name="calendar" icon-bg-color="#afa" icon-color="#33a"/>
-<d-input-icon value="code" name="code" icon-bg-color="#afa" icon-color="#33a" />
-<d-input-icon value="close" name="close" icon-bg-color="#afa" icon-color="#33a" />
-<d-input-icon value="edit" name="edit" icon-bg-color="#afa" icon-color="#33a" />
-<d-input-icon value="buy" name="buy" icon-bg-color="#afa" icon-color="#33a" />
-<d-input-icon value="letter-a" name="letter-a" icon-bg-color="#afa" icon-color="#33a" />
+<d-input-icon modelValue="calendar" name="calendar" icon-bg-color="#afa" icon-color="#33a"/>
+<d-input-icon modelValue="code" name="code" icon-bg-color="#afa" icon-color="#33a" />
+<d-input-icon modelValue="close" name="close" icon-bg-color="#afa" icon-color="#33a" />
+<d-input-icon modelValue="edit" name="edit" icon-bg-color="#afa" icon-color="#33a" />
+<d-input-icon modelValue="buy" name="buy" icon-bg-color="#afa" icon-color="#33a" />
+<d-input-icon modelValue="letter-a" name="letter-a" icon-bg-color="#afa" icon-color="#33a" />
 </div>
 
 ### 事件 `onIconclick`
@@ -71,7 +71,7 @@ export default defineComponent({
 ```
 
 <div style="max-width:300px;border:1px dashed #ccc;padding:20px;display:flex;flex-direction:column;justify-content:space-around;">
-<d-input-icon name="calendar" value="click the icon --->" @iconclick="handleIconClick" />
+<d-input-icon name="calendar" modelValue="click the icon --->" @iconclick="handleIconClick" />
 </div>
 
 ### 传递原始`Input`组件属性
