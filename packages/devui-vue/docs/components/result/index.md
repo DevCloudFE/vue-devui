@@ -13,15 +13,15 @@
 ```vue
 <template>
   <div>
-    <d-row>
-      <d-col :span="6">
+    <d-row wrap>
+      <d-col :lg="6" :xs="24">
         <d-result icon="success" title="操作成功" desc="操作成功描述"></d-result>
       </d-col>
-      <d-col :span="6">
+      <d-col :lg="6" :xs="24">
         <d-result icon="danger" title="操作失败" desc="操作失败描述"></d-result>
       </d-col>
-      <d-col :span="6"><d-result icon="warning" title="操作警告" desc="操作警告描述"></d-result></d-col>
-      <d-col :span="6"><d-result icon="info" title="操作信息" desc="操作信息描述"></d-result></d-col>
+      <d-col :lg="6" :xs="24"><d-result icon="warning" title="操作警告" desc="操作警告描述"></d-result></d-col>
+      <d-col :lg="6" :xs="24"><d-result icon="info" title="操作信息" desc="操作信息描述"></d-result></d-col>
     </d-row>
   </div>
 </template>
