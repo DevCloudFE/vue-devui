@@ -27,4 +27,4 @@
 
 | 参数 |                              类型                              |   默认    |                                     说明                                     |
 | :--: | :------------------------------------------------------------: | :-------: | :--------------------------------------------------------------------------: |
-| type | `success\|error\|warning\|initial\|waiting\|running\| invalid` | 'initial' | 必选，类型，值有 success、error、warning、initial、waiting、running、invalid |
+| type | `success\|error\|warning\|initial\|waiting\|running\| invalid` | 'invalid' | 必选，类型，值有 success、error、warning、initial、waiting、running、invalid |
