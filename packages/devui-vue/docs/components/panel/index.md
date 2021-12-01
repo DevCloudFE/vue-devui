@@ -138,7 +138,7 @@ export default defineComponent({
 :::demo
 ```vue
 <template>
-  <d-panel :type="type" :hasLeftPadding=padding :isCollapsed>
+  <d-panel :hasLeftPadding=padding :isCollapsed="true">
     <d-panel-header>
       Panel with foldable
     </d-panel-header>
@@ -170,12 +170,12 @@ export default defineComponent({
 
 ### API
 
-|参数|  	        类型|	                           默认|	     说明|
-|:-:|:-:|:-:|:-:| 
-|type|	          PanelType|	                    'default'|	    可选，面板的类型|
-|cssClass|	      string|	                        --       |	    可选，自定义 class 名|
-|isCollapsed|	    boolean|	                      false    |      可选，是否展开|
-|hasLeftPadding|	boolean|	                      true     |	    可选，是否显示左侧填充|
-|showAnimation|	  boolean|	                      true     |	    可选，是否展示动画|
-|beforeToggle|	  Function\|Promise\|Observable|	--       |      可选，面板折叠状态改变前的回调函数，返回 boolean 类型，返回 false 可以阻止面板改变折叠状态	根据条件阻止折叠|
-|toggle|          Function|                       --       |      可选，面板当前状态的回调函数，返回boolean类型，返回 false 代表面板被收起，返回 true 代表面板展开
+|      参数      |                                   类型                                   |  默认   |                                                    说明                                                     |
+| :------------: | :----------------------------------------------------------------------: | :-----: | :---------------------------------------------------------------------------------------------------------: |
+|      type      | `'default' \| 'primary' \| 'success' \| 'danger' \| 'warning' \| 'info'` | default |                                              可选，面板的类型                                               |
+|    cssClass    |                                 `string`                                 |   --    |                                            可选，自定义 class 名                                            |
+|  isCollapsed   |                                `boolean`                                 |  false  |                                               可选，是否展开                                                |
+| hasLeftPadding |                                `boolean`                                 |  true   |                                           可选，是否显示左侧填充                                            |
+| showAnimation  |                                `boolean`                                 |  true   |                                             可选，是否展示动画                                              |
+|  beforeToggle  |                     `Function\|Promise\|Observable`                      |   --    | 可选，面板折叠状态改变前的回调函数，返回 boolean 类型，返回 false 可以阻止面板改变折叠状态 根据条件阻止折叠 |
+|     toggle     |                                `Function`                                |   --    |     可选，面板当前状态的回调函数，返回 boolean 类型，返回 false 代表面板被收起，返回 true 代表面板展开      |

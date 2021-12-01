@@ -5,10 +5,7 @@ import {
   IRippleDirectiveOptionWithBinding
 } from './options'
 import { ripple } from './v-ripple'
-const optionMap = new WeakMap<
-  HTMLElement,
-  Partial<IRippleDirectiveOptions> | false
->()
+const optionMap = new WeakMap<HTMLElement, Partial<IRippleDirectiveOptions> | false>()
 const globalOptions = { ...DEFAULT_PLUGIN_OPTIONS }
 export default {
   mounted(el: HTMLElement, binding: IRippleDirectiveOptionWithBinding) {
@@ -16,6 +13,8 @@ export default {
 
     el.addEventListener('pointerdown', (event) => {
       const options = optionMap.get(el)
+      // 必须确保disabled 属性存在 否则指令终止报错
+      if (binding.value && binding.value.disabled) return
 
       if (options === false) return
 

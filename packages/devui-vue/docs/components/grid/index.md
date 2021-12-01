@@ -259,7 +259,7 @@ Col的flex属性支持flex填充。
   <d-row>
     <d-col :xs="2" :sm="4" :md="6" :lg="8" :xl="10">Col</d-col>
     <d-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">Col</d-col>
-    <d-col :xs="2" :sm="4" :md="6" :lg="8" :xl="10">Col</d-col>
+    <d-col :xs="2">Col</d-col>
   </d-row>
 </template>
 ```
@@ -287,7 +287,7 @@ Col的flex属性支持flex填充。
 
 :::
 
-### d-grid
+### API
 
 d-row 参数
 
@@ -295,7 +295,7 @@ d-row 参数
 | ---- | ---- | ---- | ---- | --------- | --------- |
 | align | `string` | `'top'` | flex 布局下的垂直对齐方式：`'top'`，`'middle'`，`'bottom'` | [垂直对齐](#垂直对齐) |  |
 | justify | `string` | `'start'` | flex 布局下的垂直对齐方式：`'start'`，`'end'`，`'center'`，`'space-around'`，`'space-between'` | [垂直对齐](#垂直对齐) |  |
-| gutter |  `number\|array\|object`    |  0   | 栅格间隔，数值形式：水平间距。对象形式支持响应式： { xs: 8, sm: 16, md: 24}。数组形式：[水平间距, 垂直间距]。 |     [对齐](#对齐)      |           |
+| gutter |  `number\|array\|object`    |  0   | 栅格间隔，数值形式：水平间距。对象形式支持响应式： { xs: 8, sm: 16, md: 24}。数组形式：[水平间距, 垂直间距]。 |     [子元素的间隔](#子元素的间隔)      |           |
 | wrap | `boolean` | false | 是否自动换行 |           |           |
 
 d-col 参数
