@@ -14,12 +14,12 @@ const theme = new Theme('light')
 const darkMode = ref(false)
 
 const defaultLanguage = ref(localStorage.getItem('preferred_lang'))
-function useTranslation (target){
+function useTranslation(target) {
   defaultLanguage.value = target
   localStorage.setItem('preferred_lang', target)
-  if (target === 'en-US'){
+  if (target === 'en-US') {
     location.pathname = `/en-US${location.pathname}`
-  }else if (target === 'zh-CN'){
+  } else if (target === 'zh-CN') {
     location.pathname = `${location.pathname.split('/en-US')[1]}`
   }
 }
@@ -36,33 +36,44 @@ defineEmits(['toggle'])
 
 <template>
   <header class="nav-bar">
-    <ToggleSideBarButton @toggle="$emit('toggle')" />
+    <div class="nav-bar-inner">
+      <ToggleSideBarButton @toggle="$emit('toggle')" />
 
-    <NavBarTitle />
+      <NavBarTitle />
 
-    <div class="flex-grow" />
+      <div class="flex-grow" />
 
-    <div class="flex items-center">
-      <div class="nav">
-        <NavLinks />
+      <div class="flex items-center">
+        <div class="nav">
+          <NavLinks />
+        </div>
+
+        <div class="custom-nav flex items-center ml-l">
+          <div
+            class="custom-nav-item ml-m"
+            style="font-size: 0"
+            @click="() => useTranslation(defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN')"
+          >
+            <ZhLang v-if="defaultLanguage === 'zh-CN'"></ZhLang>
+            <EnLang v-else></EnLang>
+          </div>
+          <div class="custom-nav-item flex items-center ml-m">
+            <DarkMode v-if="darkMode" @click="darkMode = !darkMode"></DarkMode>
+            <LightMode v-else @click="darkMode = !darkMode"></LightMode>
+          </div>
+          <a class="ml-m" style="font-size: 0;user-select:none" href="https://gitee.com/devui/vue-devui/stargazers">
+            <img
+              :src="`https://gitee.com/devui/vue-devui/badge/star.svg?theme=${
+                darkMode ? 'dark' : 'white'
+              }`"
+              alt="star"
+            />
+          </a>
+        </div>
       </div>
 
-      <div class="custom-nav flex items-center ml-l">
-        <div class="custom-nav-item ml-m" style="font-size: 0;" @click="() => useTranslation( defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN' )">
-          <ZhLang v-if="defaultLanguage === 'zh-CN'"></ZhLang>
-          <EnLang v-else></EnLang>
-        </div>
-        <div class="custom-nav-item flex items-center ml-m">
-          <DarkMode v-if="darkMode" @click="darkMode = !darkMode"></DarkMode>
-          <LightMode v-else @click="darkMode = !darkMode"></LightMode>
-        </div>
-        <a class="ml-m" style="font-size: 0;" href="https://gitee.com/devui/vue-devui/stargazers">
-          <img :src="`https://gitee.com/devui/vue-devui/badge/star.svg?theme=${darkMode ? 'dark' : 'white'}`" alt="star" />
-        </a>
-      </div>
+      <slot name="search" />
     </div>
-
-    <slot name="search" />
   </header>
 </template>
 
@@ -74,7 +85,7 @@ defineEmits(['toggle'])
   top: 0;
   right: 0;
   left: 0;
-  z-index: var(--z-index-navbar);
+  z-index: 20;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -107,8 +118,13 @@ defineEmits(['toggle'])
   fill: $devui-text;
 }
 
+.custom-nav img {
+  width: 6rem;
+}
+
 .custom-nav-item:hover {
-  svg, path {
+  svg,
+  path {
     fill: $devui-brand;
   }
 }

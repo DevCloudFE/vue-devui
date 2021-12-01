@@ -4,8 +4,11 @@ export interface TreeItem {
   id: string
   label: string
   isParent?: boolean
-  level: number
+  level?: number
   open?: boolean
+  addable?: boolean
+  editable?: boolean
+  deletable?: boolean
   children?: TreeData
   [key: string]: any
 }

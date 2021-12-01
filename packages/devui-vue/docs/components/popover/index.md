@@ -9,7 +9,7 @@
 :::demo
 ```vue
 <template>
-<div class="item" >
+<div class="popover-demo-item" >
   <d-popover visible>
     <template #reference>
       <d-button bsStyle="common">default</d-button>
@@ -43,7 +43,7 @@
 </div>
 </template>
 <style>
-.item > *{
+.popover-demo-item > *{
   margin-right:10px;
 }
 </style>
@@ -57,7 +57,7 @@
 
 ```vue
 <template>
-<div class="item">
+<div class="popover-demo-item">
   <d-popover content="自定义内容" >
     <template #reference>
       <d-button bsStyle="primary"> click me!</d-button>
@@ -72,7 +72,7 @@
 </template>
 
 <style>
-.item > *{
+.popover-demo-item > *{
   margin-right:10px;
 }
 </style>
@@ -200,7 +200,7 @@
 </div>
 </template>
 <style>
-.item > *{
+.popover-demo-item > *{
   margin-right:10px;
 }
 </style>
@@ -236,7 +236,7 @@
   </div>
 </template>
 <style>
-.item > * {
+.popover-demo-item > * {
   margin-right:10px;
 }
 </style>

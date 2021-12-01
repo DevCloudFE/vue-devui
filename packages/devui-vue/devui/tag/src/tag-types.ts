@@ -10,6 +10,18 @@ export const tagProps = {
   color: {
     type: String as PropType<string>,
     default: ''
+  },
+  titleContent: {
+    type: String as PropType<string>,
+    default: ''
+  },
+  checked: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+  deletable: {
+    type: Boolean as PropType<boolean>,
+    default: false
   }
 } as const
 

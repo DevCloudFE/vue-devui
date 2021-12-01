@@ -2,7 +2,6 @@
 import { ref, computed, watch, defineAsyncComponent } from 'vue'
 import { useRoute, useData } from 'vitepress'
 import { isSideBarEmpty, getSideBarConfig } from './support/sideBar'
-
 // components
 import NavBar from './components/NavBar.vue'
 import SideBar from './components/SideBar.vue'
@@ -32,9 +31,7 @@ const isCustomLayout = computed(() => !!frontmatter.value.customLayout)
 const enableHome = computed(() => !!frontmatter.value.home)
 
 // automatic multilang check for AlgoliaSearchBox
-const isMultiLang = computed(
-  () => Object.keys(theme.value.locales || {}).length > 0
-)
+const isMultiLang = computed(() => Object.keys(theme.value.locales || {}).length > 0)
 
 // navbar
 const showNavbar = computed(() => {
@@ -42,9 +39,7 @@ const showNavbar = computed(() => {
   if (frontmatter.value.navbar === false || themeConfig.navbar === false) {
     return false
   }
-  return (
-    site.value.title || themeConfig.logo || themeConfig.repo || themeConfig.nav
-  )
+  return site.value.title || themeConfig.logo || themeConfig.repo || themeConfig.nav
 })
 
 // sidebar
@@ -55,9 +50,7 @@ const showSidebar = computed(() => {
     return false
   }
 
-  return !isSideBarEmpty(
-    getSideBarConfig(theme.value.sidebar, route.data.relativePath)
-  )
+  return !isSideBarEmpty(getSideBarConfig(theme.value.sidebar, route.data.relativePath))
 })
 
 const toggleSidebar = (to?: boolean) => {
@@ -82,11 +75,14 @@ const pageClasses = computed(() => {
 })
 
 // layout组件加载，初始化国际化语言.
-if (location.pathname.indexOf('-') >= 0){
-  const result = location.pathname.match(/[a-zA-Z]*-[A-Z]*/)
+const result = location.pathname.match(/[a-zA-Z]*-[A-Z]*/)
+const langList = ['zh-CN', 'en-US']
+
+// 避免短横线分隔 (kebab-case）形式的路由命名导致读取语言错误
+if (result && langList.includes(result[0])) {
   localStorage.setItem('preferred_lang', result[0])
-}else {
-  localStorage.setItem('preferred_lang', navigator.language);
+} else {
+  localStorage.setItem('preferred_lang', navigator.language)
 }
 </script>
 
@@ -133,10 +129,7 @@ if (location.pathname.indexOf('-') >= 0){
     <Page v-else>
       <template #top>
         <slot name="page-top-ads">
-          <div
-            id="ads-container"
-            v-if="theme.carbonAds && theme.carbonAds.carbon"
-          >
+          <div id="ads-container" v-if="theme.carbonAds && theme.carbonAds.carbon">
             <CarbonAds
               :key="'carbon' + page.relativePath"
               :code="theme.carbonAds.carbon"

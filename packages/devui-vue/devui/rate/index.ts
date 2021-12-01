@@ -10,7 +10,7 @@ export { Rate }
 export default {
   title: 'Rate 评分',
   category: '数据展示',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(Rate as any);
   },

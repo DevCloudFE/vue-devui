@@ -1,21 +1,19 @@
-import { Ref, ref, reactive, computed, nextTick } from 'vue'
-import { Step, positionConf } from '../src/steps-guide-types'
+import { ref, reactive, ComputedRef, nextTick } from 'vue'
+import { Step, positionConf, StepsGuideProps } from '../src/steps-guide-types'
 
-export function useStepsGuideNav(steps: Step[], stepIndex:Ref<number>) {
-  
-  const currentStep = computed<Step>(() => {
-    const _step = steps[stepIndex.value]
-    _step.position = _step.position || 'top'
-    return _step
-  })
+export function useStepsGuidePosition(
+  props: StepsGuideProps, 
+  currentStep: ComputedRef<Step>) {
   const guideClassList = ['devui-steps-guide']
   const stepsRef = ref(null)
   const guidePosition = reactive({
     left: '',
     top: '',
-    zIndex: 1100
+    zIndex: props.zIndex
   })
+ 
   const updateGuidePosition = () => {
+    if(!currentStep.value) return;
     const baseTop = window.pageYOffset - document.documentElement.clientTop
     const baseLeft = window.pageXOffset - document.documentElement.clientLeft
     const currentStepPosition:positionConf = currentStep.value.position
@@ -63,13 +61,14 @@ export function useStepsGuideNav(steps: Step[], stepIndex:Ref<number>) {
     }
     guidePosition.left = _left + 'px'
     guidePosition.top = _top + 'px'
-    nextTick(() => {
-      // 位置更新后滚动视图
-      stepGuideElement.scrollIntoView({behavior: "smooth", block: "nearest", inline: "nearest"})
-    })
+    if(props.scrollToTargetSwitch) {
+      nextTick(() => {
+        // 位置更新后滚动视图
+        stepGuideElement.scrollIntoView({behavior: "smooth", block: "nearest", inline: "nearest"})
+      })
+    }
   }
   return {
-    currentStep,
     stepsRef,
     guidePosition,
     guideClassList,

@@ -22,7 +22,6 @@
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
 const readTipOptions =  {
     trigger: 'hover',
     rules: {
@@ -75,7 +74,6 @@ const readTipOptions =  {
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
 const readTipOptions =  {
     trigger: 'click',
     showAnimate: false,
@@ -101,14 +99,14 @@ const readTipOptions =  {
         overlayClassName:'red',
       },
       {
-        trigger: 'click',
+        trigger: 'hover',
         selector: '.third-content',
         position: 'bottom',
         title: 'This Is the Third Title',
         content: 'Aenean libero urna, scelerisque tincidunt',
       }, 
       {
-        trigger: 'click',
+        trigger: 'hover',
         selector: '.four-content',
         position: 'right',
         title: 'This Is the Third Title',
@@ -206,7 +204,6 @@ const readTipOptions =  {
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
 const readTipOptions =  {
     trigger: 'click',    
     rules: {
@@ -265,7 +262,6 @@ const readTipOptions =  {
 
 ### 异步获取数据
 
-通过设置selector选择需要显示readtip的元素，传入title和content设置显示的内容。
 :::demo 
 
 ```vue
@@ -275,10 +271,10 @@ const readTipOptions =  {
   <p class="readtip-content">Using function fullElement to pass data</p>
   <p>The following is the target you want to show readtip</p>
   <h4 class="readtip-target">Display readtip</h4>
+  </d-read-tip>
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
 const readTipOptions =   {
     trigger: 'click',
     rules: { 
@@ -318,11 +314,11 @@ function getDataFromDB ({ element, rule }) {
 
 d-read-tip 参数
 
-| 参数                 | 类型               | 默认 | 说明                            | 跳转 Demo              | 全局配置项 |
-| -------------------- | ------------------ | ---- | ------------------------------- | ---------------------- | ---------- |
-| readTipOptions       | ReadTipOptions     | --   | 必选，配置提示选项              | [基本用法](#基本用法)               | --         |
-| readTipOptions.rules | ReadTipRules       | --   | 必选，配置 readtip 内容         |  [基本用法](#基本用法) | --         |
-| contentTemplate      | `TemplateRef<any>` | --   | 可选，传入模板显示 readtip 内容 |  [传入模板显示内容](#传入模板显示内容)      | --         |
+| 参数                 | 类型               | 默认 | 说明                            | 跳转 Demo                                       | 全局配置项 |
+| -------------------- | ------------------ | ---- | ------------------------------- | ----------------------------------------------- | ---------- |
+| readTipOptions       | ReadTipOptions     | --   | 必选，配置提示选项              | [基本用法](#基本用法)                           | --         |
+| readTipOptions.rules | ReadTipRules       | --   | 必选，配置 readtip 内容         | [包括多个提示的readtip](#包括多个提示的readtip) | --         |
+| contentTemplate      | `TemplateRef<any>` | --   | 可选，传入模板显示 readtip 内容 | [传入模板显示内容](#传入模板显示内容)           | --         |
 
 
 

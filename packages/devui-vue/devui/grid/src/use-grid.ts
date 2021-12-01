@@ -18,7 +18,7 @@ export function useColClassNames (props: ColPropsBaseClass) {
 }
 
 function setSpace (val:string) {
-    return val && ` ${val.trim()} `
+    return ` ${val.trim()}${val && ' '}`
 }
 
 export function useSize (colSizes: ScreenSizes) {
