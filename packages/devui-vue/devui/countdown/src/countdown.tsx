@@ -20,11 +20,12 @@ export default defineComponent({
         }
         return pre + cur.k;
       }, '')
-      timeStr.value = t;
+      timeStr.value = t; 
     }
 
     const getTime = () => {
-      const leftTime = props.value > new Date().getTime() ? props.value - new Date().getTime() : 0
+      const value = new Date(props.value).getTime();
+      const leftTime = value > new Date().getTime() ? value - new Date().getTime() : 0
       const formatTime = getFormatTime(leftTime);
       const legalTime = getLegalTime(s, formatTime);
       !ctx.slots.default && getTimeStr(legalTime);
