@@ -27,9 +27,9 @@ exports.createTypesTemplate = ({ componentName }) => `\
 import type { PropType, ExtractPropTypes } from 'vue'
 
 export const ${camelCase(componentName)}Props = {
-  \/\* test: {
+  /* test: {
     type: Object as PropType<{ xxx: xxx }>
-  } \*\/
+  } */
 } as const
 
 export type ${bigCamelCase(componentName)}Props = ExtractPropTypes<typeof ${camelCase(
@@ -124,7 +124,7 @@ export { ${[
 export default {
   title: '${bigCamelCase(componentName)} ${title}',
   category: '${category}',
-  status: undefined, \/\/ TODO: 组件若开发完成则填入"100%"，并删除该注释
+  status: undefined, // TODO: 组件若开发完成则填入"100%"，并删除该注释
   install(app: App): void {
     ${installStr}
   }
