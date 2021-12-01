@@ -157,7 +157,7 @@ Theoretically all properties can dynamic change. We only take hasLeftPadding pro
   </d-panel>
   <br /><br />
   <d-button @click="padding = !padding" >
-    {{ padding ? '有左填充' : '没有左填充' }}
+    {{ padding ? 'hasLeftPadding' : 'notLeftPadding' }}
   </d-button>
 </template>
 <script>
