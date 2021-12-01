@@ -316,9 +316,9 @@ d-read-tip parameters
 
 | Parameter                 | Parameter               | Parameter | Parameter                            | Jump to Demo             | 	Global Config |
 | -------------------- | ------------------ | ---- | ------------------------------- | ---------------------- | ---------- |
-| readTipOptions       | ReadTipOptions     | --   | Required. Set readtip options.             | [Basic Usage](#Basic Usage)               | --         |
-| readTipOptions.rules | ReadTipRules       | --   | 	Option. Set the content of readtip         |  [Include Multiple Readtip](#Include Multiple Readtip) | --         |
-| contentTemplate      | `TemplateRef<any>` | --   | Options. Using template to customize content |  [Display Content with Template](#Display Content with Template)      | --         |
+| readTipOptions       | ReadTipOptions     | --   | Required. Set readtip options.             | [Basic Usage](#basic-usage)               | --         |
+| readTipOptions.rules | ReadTipRules       | --   | 	Option. Set the content of readtip         |  [Include Multiple Readtip](#include-multiple-readtip) | --         |
+| contentTemplate      | `TemplateRef<any>` | --   | Options. Using template to customize content |  [Display Content with Template](#display-content-with-template)      | --         |
 
 
 
