@@ -19,19 +19,19 @@ export default defineComponent({
 
     const temp = ref(null);
     const deviation = (x: number) => {
-      let Deviation = x > 24 ? 0 : -(x / 2) + 2
+      let deviationConstant = x > 24 ? 0 : -(x / 2) + 2
       if (x <= 10) {
-        Deviation = -10
+        deviationConstant = -10
       }
 
-      return Deviation
+      return deviationConstant
     }
     onMounted(() => {
       const domBounding = document.querySelector(query).getBoundingClientRect();
       const { width, height } = domBounding
       const distance = 10;
       let positionTop = 0;
-      
+
       // 当前元素如果小于24px 会对渲染模板进行偏移 以免小箭头对不准指向的当前元素
       const heightDeviation = deviation(height)
       const widthDeviation = deviation(width)
