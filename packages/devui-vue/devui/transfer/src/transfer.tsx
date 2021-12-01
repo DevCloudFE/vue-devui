@@ -17,14 +17,28 @@ export default defineComponent({
   props: transferProps,
   setup(props: TransferProps, ctx: SetupContext) {
     /** data start **/
-    const leftOptions = reactive<TState>(initState(props, 'source'))
-    const rightOptions = reactive<TState>(initState(props, 'target'))
+    let leftOptions = reactive<TState>(initState(props, 'source'))
+    let rightOptions = reactive<TState>(initState(props, 'target'))
     const origin = ref(null);
     /** data end **/
 
     /** watch start **/
     watch(
-      () => leftOptions.query,
+      () => props.sourceOption,
+      () => {
+        leftOptions = reactive<TState>(initState(props, 'source'))
+      }
+    )
+
+    watch(
+      () => props.targetOption,
+      () => {
+        rightOptions = reactive<TState>(initState(props, 'target'))
+      }
+    )
+
+    watch(
+      () => leftOptions.keyword,
       (nVal: string): void => {
         searchFilterData(leftOptions)
       }
@@ -42,7 +56,7 @@ export default defineComponent({
     )
 
     watch(
-      () => rightOptions.query,
+      () => rightOptions.keyword,
       (nVal: string): void => {
         searchFilterData(rightOptions)
       },
@@ -70,19 +84,36 @@ export default defineComponent({
       }
     }
 
-    const updateFilterData = (source: TState, target: TState): void => {
-      const newData = []
-      source.data = source.data.filter(item => {
-        const hasInclues = source.checkedValues.includes(item.value)
-        hasInclues && newData.push(item)
-        return !hasInclues
-      })
-      target.data = target.data.concat(newData)
+    const updateFilterData = async (source: TState, target: TState, direction: string): Promise<void> => {
+      if (isFunction('beforeTransfer')) {
+        const res: boolean = await props.beforeTransfer.call(null, source, target)
+        if (typeof res === 'boolean' && res === false) {
+          return
+        }
+      }
+
+      const hasToSource = isFunction('transferToSource')
+      const hasToTarget = isFunction('transferToTarget')
+      const hasTransfering = isFunction('transferring')
+      if (hasToSource || hasToTarget) {
+        direction === 'right' && props.transferToSource.call(null, source, target)
+        direction === 'left' && props.transferToTarget.call(null, source, target)
+      } else {
+        source.data = source.data.filter(item => {
+          const hasInclues = source.checkedValues.includes(item.value)
+          hasInclues && target.data.push(item)
+          return !hasInclues
+        })
+      }
+      if (hasTransfering) {
+        props.transferring.call(null, target)
+      }
       source.checkedValues = []
       target.disabled = !target.disabled
       searchFilterData(source, target)
       searchFilterData(target, source)
       setOrigin('click')
+      isFunction('afterTransfer') && props.afterTransfer.call(null, target)
     }
     const changeAllSource = (source: TState, value: boolean): void => {
       if (source.filterData.every(item => item.disabled)) return
@@ -104,31 +135,43 @@ export default defineComponent({
       setOrigin('change')
     }
     const searchFilterData = (source: TState, target?: TState): void => {
-      source.filterData = source.data.filter(item => item.key.indexOf(source.query) !== -1)
+      source.filterData = source.data.filter(item => item.key.indexOf(source.keyword) !== -1)
       if (target) {
         target.allChecked = false
       }
     }
+
     const setOrigin = (value: string): void => {
       origin.value = value
+    }
+    const changeQueryHandle = (source: TState, direction: string, value: string): void => {
+      if (props?.searching && typeof props.searching === 'function') {
+        props.searching.call(null, direction, value, source)
+        return
+      }
+      source.keyword = value
+    }
+
+    const isFunction = (type: string): boolean => {
+      return props[type] && typeof props[type] === 'function'
     }
     /** methods end **/
 
     return () => {
       return <div class="devui-transfer">
         <DTransferBase
-          style={{
-            height: props.height
-          }}
           sourceOption={leftOptions.filterData}
           title={props.titles[0]}
           type="source"
           search={props.isSearch}
           allChecked={leftOptions.allChecked}
           checkedNum={leftOptions.checkedNum}
-          query={leftOptions.query}
+          filter={leftOptions.keyword}
+          height={props.height}
           checkedValues={leftOptions.checkedValues}
           allCount={leftOptions.data.length}
+          showTooltip={props.showTooltip}
+          tooltipPosition={props.tooltipPosition}
           v-slots={
             {
               header: headerSlot(ctx, 'left'),
@@ -137,7 +180,7 @@ export default defineComponent({
           }
           onChangeAllSource={(value) => changeAllSource(leftOptions, value)}
           onUpdateCheckeds={updateLeftCheckeds}
-          onChangeQuery={(value) => leftOptions.query = value}
+          onChangeQuery={(value) => changeQueryHandle(leftOptions, 'left', value)}
         />
         <DTransferOperation
           v-slots={{
@@ -146,8 +189,8 @@ export default defineComponent({
           disabled={props.disabled}
           sourceDisabled={rightOptions.checkedNum > 0 ? false : true}
           targetDisabled={leftOptions.checkedNum > 0 ? false : true}
-          onUpdateSourceData={() => { updateFilterData(rightOptions, leftOptions) }}
-          onUpdateTargetData={() => { updateFilterData(leftOptions, rightOptions) }}
+          onUpdateSourceData={() => { updateFilterData(rightOptions, leftOptions, 'left') }}
+          onUpdateTargetData={() => { updateFilterData(leftOptions, rightOptions, 'right') }}
         />
         <DTransferBase
           v-slots={
@@ -156,21 +199,21 @@ export default defineComponent({
               body: bodySlot(ctx, 'right')
             }
           }
-          style={{
-            height: props.height
-          }}
           sourceOption={rightOptions.filterData}
           title={props.titles[1]}
           type="target"
           search={props.isSearch}
           allChecked={rightOptions.allChecked}
           checkedNum={rightOptions.checkedNum}
-          query={rightOptions.query}
+          filter={rightOptions.keyword}
+          height={props.height}
           checkedValues={rightOptions.checkedValues}
           allCount={rightOptions.data.length}
+          showTooltip={props.showTooltip}
+          tooltipPosition={props.tooltipPosition}
           onChangeAllSource={(value) => changeAllSource(rightOptions, value)}
           onUpdateCheckeds={updateRightCheckeds}
-          onChangeQuery={(value) => rightOptions.query = value}
+          onChangeQuery={(value) => changeQueryHandle(rightOptions, 'right', value)}
         />
       </div>
     }

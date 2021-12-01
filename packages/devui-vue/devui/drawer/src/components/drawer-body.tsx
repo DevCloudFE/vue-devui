@@ -1,4 +1,4 @@
-import { defineComponent, inject, computed, toRefs, onUnmounted } from 'vue'
+import { defineComponent, inject, computed } from 'vue'
 
 import './drawer-body.scss'
 
@@ -12,16 +12,21 @@ export default defineComponent({
     const position: any = inject('position')
     const width: any = inject('width')
     const visible: boolean = inject('visible')
+    const backdropCloseable: any = inject('backdropCloseable')
 
     const navRight = computed(() => position.value === 'right' ? { 'right': 0 } : { 'left': 0 })
     const navWidth = computed(() => isFullScreen.value ? '100vw' : width.value)
 
-    let clickContent = (e) => {
+    const clickContent = (e) => {
       e.stopPropagation()
     }
 
+    const handleDrawerClose = () => {
+      if (!backdropCloseable.value) return;
+      closeDrawer();
+    }
+
     return {
-      closeDrawer,
       zindex,
       slots,
       isCover,
@@ -29,16 +34,19 @@ export default defineComponent({
       navWidth,
       visible,
       clickContent,
+      handleDrawerClose,
     }
   },
 
   render() {
-    const { zindex, closeDrawer, slots, isCover, navRight, navWidth, visible } = this
+    const {
+      zindex, slots, isCover, navRight, navWidth, visible, handleDrawerClose
+    } = this
 
     if (!visible) return null
 
     return (
-      <div class="devui-drawer" style={{ zIndex: zindex }} onClick={closeDrawer} >
+      <div class="devui-drawer" style={{ zIndex: zindex }} onClick={handleDrawerClose} >
         {isCover ? <div class="devui-overlay-backdrop" /> : null}
         <div class="devui-overlay-wrapper">
           <div class="devui-drawer-nav" style={{ 'width': navWidth, ...navRight }}>

@@ -5,7 +5,9 @@ const { bigCamelCase } = require('../shared/utils')
 // 创建组件模板
 exports.createComponentTemplate = ({ styleName, componentName, typesName }) => `\
 import { defineComponent } from 'vue'
-import { ${camelCase(componentName)}Props, ${bigCamelCase(componentName)}Props } from './${typesName}'
+import { ${camelCase(componentName)}Props, ${bigCamelCase(
+  componentName
+)}Props } from './${typesName}'
 import './${styleName}.scss'
 
 export default defineComponent({
@@ -25,12 +27,14 @@ exports.createTypesTemplate = ({ componentName }) => `\
 import type { PropType, ExtractPropTypes } from 'vue'
 
 export const ${camelCase(componentName)}Props = {
-  \/\* test: {
+  /* test: {
     type: Object as PropType<{ xxx: xxx }>
-  } \*\/
+  } */
 } as const
 
-export type ${bigCamelCase(componentName)}Props = ExtractPropTypes<typeof ${camelCase(componentName)}Props>
+export type ${bigCamelCase(componentName)}Props = ExtractPropTypes<typeof ${camelCase(
+  componentName
+)}Props>
 `
 
 // 创建指令模板
@@ -80,20 +84,24 @@ exports.createIndexTemplate = ({
   const importServiceStr = `\nimport ${bigCamelCase(serviceName)} from './src/${serviceName}'`
 
   const installComponentStr = `    app.use(${bigCamelCase(componentName)} as any)`
-  const installDirectiveStr = `\n    app.directive('${bigCamelCase(componentName)}', ${bigCamelCase(directiveName)})`
-  const installServiceStr = `\n    app.config.globalProperties.$${camelCase(serviceName)} = ${bigCamelCase(
+  const installDirectiveStr = `\n    app.directive('${bigCamelCase(componentName)}', ${bigCamelCase(
+    directiveName
+  )})`
+  const installServiceStr = `\n    app.config.globalProperties.$${camelCase(
     serviceName
-  )}`
+  )} = ${bigCamelCase(serviceName)}`
 
   const getPartStr = (state, str) => (state ? str : '')
 
-  const importStr = getPartStr(hasComponent, importComponentStr) +
-                    getPartStr(hasDirective, importDirectiveStr) +
-                    getPartStr(hasService, importServiceStr)
+  const importStr =
+    getPartStr(hasComponent, importComponentStr) +
+    getPartStr(hasDirective, importDirectiveStr) +
+    getPartStr(hasService, importServiceStr)
 
-  const installStr = getPartStr(hasComponent, installComponentStr) +
-                     getPartStr(hasDirective, installDirectiveStr) +
-                     getPartStr(hasService, installServiceStr)
+  const installStr =
+    getPartStr(hasComponent, installComponentStr) +
+    getPartStr(hasDirective, installDirectiveStr) +
+    getPartStr(hasService, installServiceStr)
 
   return `\
 import type { App } from 'vue'\
@@ -116,7 +124,7 @@ export { ${[
 export default {
   title: '${bigCamelCase(componentName)} ${title}',
   category: '${category}',
-  status: undefined, \/\/ TODO: 组件若开发完成则填入"已完成"，并删除该注释
+  status: undefined, // TODO: 组件若开发完成则填入"100%"，并删除该注释
   install(app: App): void {
     ${installStr}
   }
@@ -135,12 +143,12 @@ exports.createTestsTemplate = ({
 }) => `\
 import { mount } from '@vue/test-utils';
 import { ${[
-    hasComponent ? bigCamelCase(componentName) : null,
-    hasDirective ? bigCamelCase(directiveName) : null,
-    hasService ? bigCamelCase(serviceName) : null
-  ]
-    .filter((p) => p !== null)
-    .join(', ')} } from '../index';
+  hasComponent ? bigCamelCase(componentName) : null,
+  hasDirective ? bigCamelCase(directiveName) : null,
+  hasService ? bigCamelCase(serviceName) : null
+]
+  .filter((p) => p !== null)
+  .join(', ')} } from '../index';
 
 describe('${componentName} test', () => {
   it('${componentName} init render', async () => {
@@ -150,10 +158,7 @@ describe('${componentName} test', () => {
 `
 
 // 创建文档模板
-exports.createDocumentTemplate = ({
-  componentName,
-  title
-}) => `\
+exports.createDocumentTemplate = ({ componentName, title }) => `\
 # ${bigCamelCase(componentName)} ${title}
 
 // todo 组件描述

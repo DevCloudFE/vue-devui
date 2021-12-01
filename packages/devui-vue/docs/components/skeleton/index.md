@@ -106,7 +106,7 @@ export default defineComponent({
 
 :::
 
-### 拼接模式
+### 细粒度模式
 
 提供细粒度的骨架屏元素，给予开发者更灵活的定制能力。
 :::demo
@@ -155,13 +155,13 @@ export default defineComponent({
 | row-width | `number \| string \| (number \| string)[]` | `["100%"]` | 段落占位图宽度，可传数组来设置每一行的宽度 |
 
 ### d-skeleton-item Props
-拼接模式
+细粒度模式
 |  参数   |   类型    |  默认  | 说明                                                    |
 | :-----: | :-------: | :----: | :------------------------------------------------------ |
 |  shape  | `string`  |   -    | 可选值为`avatar`,`image`,`title`,`paragraph`,`button`。 |
 | animate | `boolean` | `true` | 是否开启动画                                            |
 
-> paragraph 的 API 与默认模式相同；
+> paragraph 的 API 与默认模式相同。
 ### d-skeleton-item__avatar Props
 
 |     参数     |        类型        |  默认   | 说明                             |

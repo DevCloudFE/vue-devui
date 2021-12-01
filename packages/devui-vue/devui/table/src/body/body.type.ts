@@ -1,10 +1,6 @@
 import { ExtractPropTypes } from 'vue';
 
 export const TableBodyProps = {
-  store: {
-    type: Object,
-    default: {},
-  },
-};
+} as const;
 
 export type TableBodyPropsTypes = ExtractPropTypes<typeof TableBodyProps>;

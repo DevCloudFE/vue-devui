@@ -1,7 +1,6 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 
 export type Position = {
-  position: 'fixed'
   bottom: string
   right: string
 }
@@ -14,6 +13,14 @@ export const backTopProps = {
   right: {
     type: String,
     default: '30px'
+  },
+  target: {
+    type: String,
+    default: 'window'
+  },
+  visibleHeight: {
+    type: Number,
+    default: 300
   }
 } as const
 

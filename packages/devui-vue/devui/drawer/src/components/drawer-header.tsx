@@ -1,4 +1,4 @@
-import { defineComponent, ref, inject, computed, onUnmounted } from 'vue'
+import { defineComponent, ref, inject, computed } from 'vue'
 
 import './drawer-header.scss'
 

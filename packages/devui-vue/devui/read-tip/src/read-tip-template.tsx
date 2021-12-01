@@ -20,7 +20,8 @@ export default defineComponent({
     const temp = ref(null);
     onMounted(() => {
       const domBounding = document.querySelector(query).getBoundingClientRect();
-      const distance = 10;
+      
+      const distance = 10; 
       let positionTop = 0;
       let positionLeft = 0;
       const targetDom = document.querySelector('.read-tip-container').getBoundingClientRect();

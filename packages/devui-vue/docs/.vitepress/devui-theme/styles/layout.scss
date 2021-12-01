@@ -8,7 +8,7 @@
 
 html {
   line-height: 1.4;
-  font-size: 16px;
+  font-size: 14px;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -19,7 +19,7 @@ body {
   min-height: 100vh;
   line-height: 1.4;
   font-family: var(--font-family-base);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: $devui-text;
   background-color: $devui-base-bg;
@@ -77,7 +77,7 @@ h1 {
 
 @media screen and (min-width: 420px) {
   h1 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
   }
 }
 
@@ -97,7 +97,7 @@ h2 + h3 {
 
 h3 {
   margin-top: 2rem;
-  font-size: 1.35rem;
+  font-size: 1.15rem;
 }
 
 h4 {
@@ -240,3 +240,31 @@ form {
   width: 100vw;
   height: 100vh;
 }
+
+$max-width: 1440px;
+
+.theme {
+  max-width: $max-width;
+  margin: 0 auto;
+
+  .nav-bar-inner {
+    max-width: $max-width;
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    padding-left: 18px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .theme {
+    .nav-bar-inner {
+      padding-left: 0;
+
+      .custom-nav {
+        margin-left: 0;
+      }
+    }
+  }
+}
+

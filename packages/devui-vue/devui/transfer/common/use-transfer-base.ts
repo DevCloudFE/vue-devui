@@ -33,9 +33,13 @@ export const transferBaseProps = {
         type: Boolean,
         default: (): boolean => false
     },
-    query: {
+    filter: {
         type: String,
         default: (): string => ''
+    },
+    height: {
+        type: String,
+        default: (): string => '320px'
     },
     alltargetState: {
         type: Boolean,
@@ -52,6 +56,14 @@ export const transferBaseProps = {
     allCount: {
         type: Number,
         default: (): number => 0
+    },
+    showTooltip: {
+        type: Boolean,
+        default: (): boolean => false
+    },
+    tooltipPosition: {
+        type: String as PropType<'top' | 'right' | 'bottom' | 'left'>,
+        default: (): string => 'top'
     },
     scopedSlots: {
         type: Object
@@ -109,7 +121,7 @@ export const initState = (props: TransferProps, type: string): TState => {
         allChecked: false,
         disabled: false,
         checkedNum: initModel.model.length,
-        query: '',
+        keyword: '',
         checkedValues: initModel.model,
         filterData: initModel.data
     }
@@ -123,6 +135,6 @@ export const TransferBaseClass = (props: TransferOperationProps): ComputedRef =>
 }
 
 export const Query = ((props: TransferOperationProps): ComputedRef => {
-    return computed(() => props.query)
+    return computed(() => props.filter)
 })
 

@@ -17,7 +17,7 @@ export interface TState {
     data: IItem[]
     allChecked: boolean
     checkedNum: number
-    query: string
+    keyword: string
     checkedValues: string[]
     filterData: IItem[]
     disabled: boolean
@@ -30,25 +30,3 @@ export interface TResult {
 
 
 
-// import { ComputedRef } from 'vue'
-// export type TItem = {
-//     key: string
-//     value: string
-//     disabled: boolean
-//     checked?: boolean
-// }
-
-// export type TState = {
-//     data: TItem[]
-//     allChecked: boolean
-//     // disabled: boolean // ComputedRef// 
-//     checkedNum: number
-//     query: string
-//     checkedValues: string[]
-//     filterData: TItem[]
-// }
-
-// export type TResult = {
-//     model: string[]
-//     data: TItem[]
-// }

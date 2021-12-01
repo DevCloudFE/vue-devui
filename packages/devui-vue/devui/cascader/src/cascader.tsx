@@ -144,7 +144,7 @@ export default defineComponent({
             : <d-input
                 disabled={props.disabled}
                 placeholder={props.placeholder}
-                value={inputValue.value}
+                modelValue={inputValue.value}
               ></d-input>
           }
           <div class="devui-cascader__icon devui-drop-icon-animation">

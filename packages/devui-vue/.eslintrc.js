@@ -1,33 +1,29 @@
 module.exports = {
-  parser: 'vue-eslint-parser',
+  root: true,
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    parser: '@typescript-eslint/parser',
     sourceType: 'module',
     ecmaVersion: 6,
     ecmaFeatures: {
       jsx: true,
-      tsx: true,
-    },
+      tsx: true
+    }
   },
   env: {
     browser: true,
     node: true,
     jest: true,
-    es6: true,
+    es6: true
   },
   plugins: ['@typescript-eslint'],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:vue/vue3-recommended',
     'plugin:import/recommended',
-    'plugin:import/typescript',
+    'plugin:import/typescript'
   ],
   rules: {
-    quotes: [
-      'error',
-      'single',
-      { avoidEscape: true, allowTemplateLiterals: true },
-    ],
+    quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
     'no-undef': 2,
     'vue/max-attributes-per-line': 'off',
     'vue/no-multiple-template-root': 'off',
@@ -38,13 +34,15 @@ module.exports = {
       {
         multiline: {
           delimiter: 'none',
-          requireLast: false,
+          requireLast: false
         },
         singleline: {
           delimiter: 'semi',
-          requireLast: true,
-        },
-      },
+          requireLast: true
+        }
+      }
     ],
-  },
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error']
+  }
 }
