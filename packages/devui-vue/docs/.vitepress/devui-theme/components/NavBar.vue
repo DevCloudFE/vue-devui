@@ -61,7 +61,7 @@ defineEmits(['toggle'])
             <DarkMode v-if="darkMode" @click="darkMode = !darkMode"></DarkMode>
             <LightMode v-else @click="darkMode = !darkMode"></LightMode>
           </div>
-          <a class="ml-m" style="font-size: 0" href="https://gitee.com/devui/vue-devui/stargazers">
+          <a class="ml-m" style="font-size: 0;user-select:none" href="https://gitee.com/devui/vue-devui/stargazers">
             <img
               :src="`https://gitee.com/devui/vue-devui/badge/star.svg?theme=${
                 darkMode ? 'dark' : 'white'
@@ -70,14 +70,6 @@ defineEmits(['toggle'])
             />
           </a>
         </div>
-        <a class="ml-m" style="font-size: 0;user-select:none" href="https://gitee.com/devui/vue-devui/stargazers">
-          <img
-            :src="`https://gitee.com/devui/vue-devui/badge/star.svg?theme=${
-              darkMode ? 'dark' : 'white'
-            }`"
-            alt="star"
-          />
-        </a>
       </div>
 
       <slot name="search" />
