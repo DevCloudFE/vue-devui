@@ -207,11 +207,11 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup() {
     const options1 = ref([
-      { name: 'data1', disabled: 'true', value: 1, id: 1 },
-      { name: 'data2', value: 2, id: 2 },
-      { name: 'data3', value: 3, id: 3 },
+      { name: 'data1', disabled: true, value: '1', id: 1 },
+      { name: 'data2', value: '2', id: 2 },
+      { name: 'data3', value: '3', id: 3 },
     ])
-    const values1 = ref([{ name: 'data2', value: 2, id: 2 }])
+    const values1 = ref([{ name: 'data2', value: '2', id: 2 }])
     const options2 = ref([
       'data1',
       'data2',

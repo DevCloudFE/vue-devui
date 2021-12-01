@@ -1,6 +1,6 @@
-import { ref } from 'vue'
+import { ref, Ref, watch } from 'vue'
 
-export default function useToggle(data: unknown): any {
+export default function useToggle(data: Ref<unknown>): any {
   const openedTree = (tree) => {
     return tree.reduce((acc, item) => (
       item.open
@@ -9,13 +9,18 @@ export default function useToggle(data: unknown): any {
     ), [])
   }
 
-  const openedData = ref(openedTree(data))
+  const openedData = ref(openedTree(data.value))
 
+  watch(
+    () => data.value,
+    (d) => openedData.value = openedTree(d),
+    { deep: true }
+  )
   const toggle = (target, item) => {
     target.stopPropagation()
     if (!item.children) return
     item.open = !item.open
-    openedData.value = openedTree(data)
+    openedData.value = openedTree(data.value)
   }
 
   return {

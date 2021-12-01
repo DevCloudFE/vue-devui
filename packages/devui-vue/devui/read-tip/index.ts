@@ -10,7 +10,7 @@ export { ReadTip, }
 export default {
   title: 'ReadTip 阅读提示',
   category: '反馈',
-  status: '已完成', 
+  status: '100%', 
   install(app: App): void {
     app.use(ReadTip as any)
   }

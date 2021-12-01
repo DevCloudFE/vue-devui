@@ -1,14 +1,14 @@
-# ReadTip 阅读提示
+# ReadTip reading tips
 
-阅读提示组件。
+Reading notification component.
 
-### 何时使用
+### When To Use
 
-当html文档中需要对特定内容进行提示时使用。
+When you need to prompt for specific content in the html document.
 
 
-### 基本用法
-通过设置selector选择需要显示readtip的元素，传入title和content设置显示的内容。
+### Basic Usage
+Set selector to select the element to be displayed in the readtip, and transfer title and content to set the content to be displayed.
 :::demo 
 
 ```vue
@@ -57,8 +57,8 @@ const readTipOptions =  {
 
 :::
 
-### 包括多个提示的readtip
-传入多个rule，设置不同元素的readtip显示模式。
+### Include Multiple Readtip
+Set the readtip display mode for different elements when multiple rules are transferred.
 :::demo 
 
 ```vue
@@ -161,8 +161,8 @@ const readTipOptions =  {
 
 
 
-### 传入模板显示内容
-可以通过传入template自定义需要显示的内容，传入template时不必再传入title和content。
+### Display Content with Template
+You can specify the content to be displayed by importing template. When importing template, you do not need to specify title and content.
 :::demo 
 
 ```vue
@@ -260,7 +260,7 @@ const readTipOptions =  {
 
 :::
 
-### 异步获取数据
+### Get Data Asynchronous
 
 :::demo 
 
@@ -312,25 +312,25 @@ function getDataFromDB ({ element, rule }) {
 
 ### d-read-tip
 
-d-read-tip 参数
+d-read-tip parameters
 
-| 参数                 | 类型               | 默认 | 说明                            | 跳转 Demo                                       | 全局配置项 |
-| -------------------- | ------------------ | ---- | ------------------------------- | ----------------------------------------------- | ---------- |
-| readTipOptions       | ReadTipOptions     | --   | 必选，配置提示选项              | [基本用法](#基本用法)                           | --         |
-| readTipOptions.rules | ReadTipRules       | --   | 必选，配置 readtip 内容         | [包括多个提示的readtip](#包括多个提示的readtip) | --         |
-| contentTemplate      | `TemplateRef<any>` | --   | 可选，传入模板显示 readtip 内容 | [传入模板显示内容](#传入模板显示内容)           | --         |
+| Parameter                 | Parameter               | Parameter | Parameter                            | Jump to Demo             | 	Global Config |
+| -------------------- | ------------------ | ---- | ------------------------------- | ---------------------- | ---------- |
+| readTipOptions       | ReadTipOptions     | --   | Required. Set readtip options.             | [Basic Usage](#Basic Usage)               | --         |
+| readTipOptions.rules | ReadTipRules       | --   | 	Option. Set the content of readtip         |  [Include Multiple Readtip](#Include Multiple Readtip) | --         |
+| contentTemplate      | `TemplateRef<any>` | --   | Options. Using template to customize content |  [Display Content with Template](#Display Content with Template)      | --         |
 
 
 
 ```
 export interface ReadTipOptions {
-  trigger?: 'hover' | 'click'; // 默认值是 hover
-  showAnimate?: boolean; // 默认值是 false
-  mouseenterTime?: number; // 默认值是 100
-  mouseleaveTime?: number; // 默认值是 100
-  position?: PositionType | PositionType[]; // 默认值是 'top'
-  overlayClassName?: string; // 默认值为空字符串
-  appendToBody?: boolean; // 默认值为true
+  trigger?: 'hover' | 'click'; // default is hover
+  showAnimate?: boolean; // default is false
+  mouseenterTime?: number; // default is 100
+  mouseleaveTime?: number; // default is 100
+  position?: PositionType | PositionType[]; // default is 'top'
+  overlayClassName?: string; // default is ''
+  appendToBody?: boolean; // defualt is true
   rules: ReadTipRules;
 }
 export type ReadTipRules = ReadTipRule | ReadTipRule[];
@@ -338,16 +338,16 @@ export type ReadTipRules = ReadTipRule | ReadTipRule[];
 export interface ReadTipRule {
   key?: string;
   selector: string;
-  trigger?: 'hover' | 'click'; // 可以继承自 ReadTipOptions
+  trigger?: 'hover' | 'click'; // can inherit from ReadTipOptions
   title?: string;
   content?: string;
-  showAnimate?: boolean; // 可以继承自 ReadTipOptions
-  mouseenterTime?: number; // 可以继承自 ReadTipOptions
-  mouseleaveTime?: number; // 可以继承自 ReadTipOptions
-  position?: PositionType | PositionType[]; // 可以继承自 ReadTipOptions
-  overlayClassName?: string; // 可以继承自 ReadTipOptions
-  appendToBody?: boolean; //可以继承自 ReadTipOtions
-  //customData与template搭配使用，customData为传入模板的上下文，可以自定义模板内容
+  showAnimate?: boolean; // can inherit from ReadTipOptions
+  mouseenterTime?: number; // can inherit from ReadTipOptions
+  mouseleaveTime?: number; // can inherit from ReadTipOptions
+  position?: PositionType | PositionType[]; // can inherit from ReadTipOptions
+  overlayClassName?: string; // can inherit from ReadTipOptions
+  appendToBody?: boolean; // can inherit from ReadTipOptions
+  //customData should be used with template. The context of template is customData so that you can customize your template
   dataFn?: ({
     element,
     rule: ReadTipRule,
