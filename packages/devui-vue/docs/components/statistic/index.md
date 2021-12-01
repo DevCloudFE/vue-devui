@@ -182,10 +182,4 @@ export default {
 | easing             | `string`           | quartOut | 数字动画效果     |
 | start              | `boolean`          | false    | 是否开始动画     |
 
-d-statistic 事件
 
-| 事件 | 类型 | 说明 | 跳转 Demo |
-| ---- | ---- | ---- | --------- |
-|      |      |      |           |
-|      |      |      |           |
-|      |      |      |           |

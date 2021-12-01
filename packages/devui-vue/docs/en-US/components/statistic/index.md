@@ -164,7 +164,7 @@ Prefix and suffix slots
 
 ### d-statistic
 
-| 参数               | 类型               | 默认     | 说明                         |
+| parameter          | type               | default  | introduce                    |
 | ------------------ | ------------------ | -------- | ---------------------------- |
 | title              | `string \| v-slot` | -        | Title of value               |
 | extra              | `string \| v-slot` | -        | Extra content                |
@@ -181,11 +181,3 @@ Prefix and suffix slots
 | animation          | `boolean`          | false    | Turn on animation            |
 | easing             | `string`           | quartOut | Digital animation effect     |
 | start              | `boolean`          | false    | Start animation              |
-
-d-statistic 事件
-
-| 事件 | 类型 | 说明 | 跳转 Demo |
-| ---- | ---- | ---- | --------- |
-|      |      |      |           |
-|      |      |      |           |
-|      |      |      |           |
