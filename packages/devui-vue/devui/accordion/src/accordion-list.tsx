@@ -3,7 +3,6 @@ import type { AccordionMenuItem } from './accordion.type'
 import DAccordionMenu from './accordion-menu'
 import DAccordionItem from './accordion-item'
 import { accordionProps } from './accordion-types'
-import './accordion.scss'
 
 export default defineComponent({
   name: 'DAccordionList',
@@ -37,28 +36,32 @@ export default defineComponent({
       return (
         <>
           {!innerListTemplate.value && (
-            <ul class={['devui-accordion-list', 'devui-accordion-show-animate']} {...attrs}>
+            <ul class={['devui-accordion-list']} {...attrs}>
               {data.value.map((item) => {
                 return (
                   <li class='devui-accordion-item' key={item.title}>
                     {/* // TODO 菜单类型 d-accordion-menu */}
                     {item[childrenKey.value] !== undefined && (
-                      <d-accordion-menu
-                        item={item}
-                        deepth={deepth.value}
-                        parent={parent.value}
-                      ></d-accordion-menu>
+                      <div class="devui-accordion-menu-item">
+                        <d-accordion-menu
+                          item={item}
+                          deepth={deepth.value}
+                          parent={parent.value}
+                        ></d-accordion-menu>
+                      </div>
                     )}
                     {/* 非菜单类型 */}
                     {item[childrenKey.value] === undefined && (
                       <Fragment>
                         {/* 普通类型 */}
                         {(!linkType.value || linkType.value === '') && (
-                          <d-accordion-item
-                            item={item}
-                            deepth={deepth.value}
-                            parent={parent.value}
-                          ></d-accordion-item>
+                          <div class="">
+                            <d-accordion-item
+                              item={item}
+                              deepth={deepth.value}
+                              parent={parent.value}
+                            ></d-accordion-item>
+                          </div>
                         )}
                       </Fragment>
                     )}

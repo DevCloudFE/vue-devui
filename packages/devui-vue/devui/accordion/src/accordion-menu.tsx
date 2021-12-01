@@ -10,6 +10,9 @@ import OpenIcon from './accordion-open-icon'
 
 export default defineComponent({
   name: 'DAccordionMenu',
+  components: {
+    OpenIcon
+  },
   props: {
     item: Object as () => AccordionMenuItem,
     deepth: {
@@ -86,20 +89,20 @@ export default defineComponent({
             ></div>
             {!menuItemTemplate.value && <Fragment>{item.value.title}</Fragment>}
             <span class='devui-accordion-open-icon'>
-              <OpenIcon />
+              <OpenIcon></OpenIcon>
             </span>
           </div>
-          <DAccordionList
-            class={[
-              'devui-accordion-submenu',
-              'devui-accordion-show-animate',
-              !open.value && 'devui-accordion-menu-hidden'
-            ]}
-            // style={ open.value ? {opacity: 1, overflow: 'hidden'} : {opacity: 0, height: 0, overflow: 'hidden'}}
-            deepth={deepth.value + 1}
-            data={item.value.children || []}
-            parent={item.value}
-          ></DAccordionList>
+            <DAccordionList
+              class={[
+                'devui-accordion-submenu',
+                'devui-accordion-show-animate',
+                !open.value && 'devui-accordion-menu-hidden'
+              ]}
+              // style={ open.value ? {opacity: 1, overflow: 'hidden'} : {opacity: 0, height: 0, overflow: 'hidden'}}
+              deepth={deepth.value + 1}
+              data={item.value.children || []}
+              parent={item.value}
+            ></DAccordionList>
         </>
       )
     }
