@@ -27,6 +27,8 @@ function gopage (){
 @import '@devui/styles-var/devui-var';
 
 .nav-bar-title {
+  display: flex;
+  align-items: center;
   font-size: 1.3rem;
   font-weight: 600;
   color: $devui-text;

@@ -36,42 +36,44 @@ defineEmits(['toggle'])
 
 <template>
   <header class="nav-bar">
-    <ToggleSideBarButton @toggle="$emit('toggle')" />
+    <div class="nav-bar-inner">
+      <ToggleSideBarButton @toggle="$emit('toggle')" />
 
-    <NavBarTitle />
+      <NavBarTitle />
 
-    <div class="flex-grow" />
+      <div class="flex-grow" />
 
-    <div class="flex items-center">
-      <div class="nav">
-        <NavLinks />
+      <div class="flex items-center">
+        <div class="nav">
+          <NavLinks />
+        </div>
+
+        <div class="custom-nav flex items-center ml-l">
+          <div
+            class="custom-nav-item ml-m"
+            style="font-size: 0"
+            @click="() => useTranslation(defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN')"
+          >
+            <ZhLang v-if="defaultLanguage === 'zh-CN'"></ZhLang>
+            <EnLang v-else></EnLang>
+          </div>
+          <div class="custom-nav-item flex items-center ml-m">
+            <DarkMode v-if="darkMode" @click="darkMode = !darkMode"></DarkMode>
+            <LightMode v-else @click="darkMode = !darkMode"></LightMode>
+          </div>
+          <a class="ml-m" style="font-size: 0" href="https://gitee.com/devui/vue-devui/stargazers">
+            <img
+              :src="`https://gitee.com/devui/vue-devui/badge/star.svg?theme=${
+                darkMode ? 'dark' : 'white'
+              }`"
+              alt="star"
+            />
+          </a>
+        </div>
       </div>
 
-      <div class="custom-nav flex items-center ml-l">
-        <div
-          class="custom-nav-item ml-m"
-          style="font-size: 0"
-          @click="() => useTranslation(defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN')"
-        >
-          <ZhLang v-if="defaultLanguage === 'zh-CN'"></ZhLang>
-          <EnLang v-else></EnLang>
-        </div>
-        <div class="custom-nav-item flex items-center ml-m">
-          <DarkMode v-if="darkMode" @click="darkMode = !darkMode"></DarkMode>
-          <LightMode v-else @click="darkMode = !darkMode"></LightMode>
-        </div>
-        <a class="ml-m" style="font-size: 0" href="https://gitee.com/devui/vue-devui/stargazers">
-          <img
-            :src="`https://gitee.com/devui/vue-devui/badge/star.svg?theme=${
-              darkMode ? 'dark' : 'white'
-            }`"
-            alt="star"
-          />
-        </a>
-      </div>
+      <slot name="search" />
     </div>
-
-    <slot name="search" />
   </header>
 </template>
 

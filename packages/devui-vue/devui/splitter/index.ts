@@ -12,7 +12,7 @@ export { Splitter }
 export default {
   title: 'Splitter 分割器',
   category: '布局',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(Splitter as any)
   },

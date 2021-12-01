@@ -1,6 +1,24 @@
 import { h } from 'vue';
 import { useRoute, useData } from 'vitepress';
 import { joinUrl, isActive } from '../utils';
+
+// 阶梯访问表
+const stairStepAccessTable = function(source, sourceRangeArray, targetArray) {
+    const maxTarget = targetArray.length - 1;
+    let targetIndex = 0;
+    let target = targetArray[maxTarget];
+    while(target === targetArray[maxTarget] && targetIndex < maxTarget) {
+        if (source <= sourceRangeArray[targetIndex]) { // <= 意味着包含右边界
+            target = targetArray[targetIndex];
+        }
+        targetIndex += 1;
+    }
+    return target;
+}
+
+const statusRange = [ 49, 99 ];
+const colors = [ 'var(--devui-danger, #f66f6a)', 'var(--devui-warning, #fac20a)', 'var(--devui-success, #50d4ab)' ];
+
 export const SideBarLink = (props) => {
     const route = useRoute();
     const { site, frontmatter } = useData();
@@ -8,7 +26,14 @@ export const SideBarLink = (props) => {
     const maxDepth = frontmatter.value.sidebarDepth || Infinity;
     const headers = route.data.headers;
     const text = props.item.text;
-    const status = props.item.status;
+    let status = props.item.status;
+    let dotColor = '';
+    
+    if (status !== undefined) {
+        status = parseInt(props.item.status, 10);
+        dotColor = stairStepAccessTable(status, statusRange, colors);
+    }
+
     const link = resolveLink(site.value.base, props.item.link);
     const children = props.item.children;
     const active = isActive(route, props.item.link);
@@ -20,10 +45,11 @@ export const SideBarLink = (props) => {
             class: { 'sidebar-link-item': true, active },
             href: link
         }, [
-            text,
             status && h('span', {
-                class: 'sidebar-link-status'
-            }, status),
+                class: 'sidebar-link-status',
+                style: `background-color: ${dotColor}`
+            }),
+            text,
         ]),
         childItems
     ]);

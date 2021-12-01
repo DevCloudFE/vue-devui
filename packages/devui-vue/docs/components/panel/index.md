@@ -144,7 +144,7 @@ export default defineComponent({
 :::demo
 ```vue
 <template>
-  <d-panel :type="type" :hasLeftPadding=padding :isCollapsed>
+  <d-panel :hasLeftPadding=padding :isCollapsed>
     <d-panel-header>
       Panel with foldable
     </d-panel-header>
