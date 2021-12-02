@@ -3,11 +3,21 @@ import type { PropType, ExtractPropTypes } from 'vue'
 export const imagePreviewProps = {
   url: {
     type: String,
-    default: ''
+    default: '',
+    required: true
   },
   previewUrlList: {
     type: Array as PropType<string[]>,
-    default: () => []
+    default: () => [],
+    required: true
+  },
+  zIndex: {
+    type: Number,
+    required: false
+  },
+  backDropZIndex: {
+    type: Number,
+    required: false
   }
 } as const
 

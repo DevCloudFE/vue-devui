@@ -9,10 +9,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: calc(#{$devui-z-index-modal} - 1);
-  background: $devui-shadow;
-  border-radius: $devui-border-radius;
-  box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
+  z-index: calc(#{$devui-z-index-modal});
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,4 +109,15 @@
       margin-left: 20px;
     }
   }
+}
+.devui-image-preview-bg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: calc(#{$devui-z-index-modal} - 1);
+  background: $devui-shadow;
+  border-radius: $devui-border-radius;
+  box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
 }
