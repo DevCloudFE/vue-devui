@@ -4,7 +4,7 @@ import { Step, positionConf, StepsGuideProps } from '../src/steps-guide-types'
 export function useStepsGuidePosition(
   props: StepsGuideProps, 
   currentStep: ComputedRef<Step>) {
-  const guideClassList = ['devui-steps-guide']
+  const guideClassList = reactive(['devui-steps-guide'])
   const stepsRef = ref(null)
   const guidePosition = reactive({
     left: '',
