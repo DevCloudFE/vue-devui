@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import { ref } from 'vue';
 import DSkeleton from '../src/skeleton';
 
-describe('skeleton 组件', () => {
+describe('skeleton module', () => {
   it('render basic skeleton', () => {
     const row = ref(4)
     const wrapper = mount({
@@ -14,9 +14,8 @@ describe('skeleton 组件', () => {
         }
       },
     })
-
-    expect(wrapper.classes()).toContain('devui-skeleton')
-    expect(wrapper.classes()).toContain('devui-skeleton-animated')
+    
+    expect(wrapper.classes()).toEqual(['devui-skeleton', 'devui-skeleton__animated'])
     expect(wrapper.element.childElementCount).toBe(2)
     expect(wrapper.element.children[1].children[1].childElementCount).toBe(4)
   })
@@ -49,33 +48,8 @@ describe('skeleton 组件', () => {
         }
       },
     })
-    
+
     expect(wrapper.element.children[1].childElementCount).toBe(2)
   })
 
-  it('hide skeleton and show real content', () => {
-    const row = ref(4)
-    const loading = ref(false)
-    const wrapper = mount({
-      components: { DSkeleton },
-      template: `
-      <d-skeleton :row="4" :loading="loading">
-        <div>
-          <div>content1</div>
-          <div>content2</div>
-          <div>content3</div>
-          <div>content4</div>
-        </div>
-      </d-skeleton>`,
-      setup() {
-        return {
-          row,
-          loading
-        }
-      },
-    })
-
-    expect(wrapper.classes()).toContain('devui-skeleton')
-    expect(wrapper.element.children[0].innerHTML).toBe('<div>content1</div><div>content2</div><div>content3</div><div>content4</div>')
-  })
 })
