@@ -239,7 +239,6 @@ export default defineComponent({
     const stepsRef = ref(null)
     onMounted(() => {
       stepsRef.value.closeGuide('custom')
-      console.log('stepsRef.value', stepsRef.value)
     })
     return {
       customSteps,
