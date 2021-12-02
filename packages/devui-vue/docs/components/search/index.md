@@ -13,13 +13,13 @@
 ```vue
 <template>
   <div>
-    Small
+    <h4>Small</h4>
     <d-search size="sm" autoFocus style="width: 200px" :delay="1000"></d-search>
-    Middle
+    <h4>Middle</h4>
     <d-search style="width: 200px" isKeyupSearch @onSearch="onSearch1"></d-search>
-    Large
+    <h4>Large</h4>
     <d-search iconPosition="left" size="lg" style="width: 200px" @onSearch="onSearch2"></d-search>
-    Disabled
+    <h4>Disabled</h4>
     <d-search disabled style="width: 200px"></d-search>
   </div>
 </template>
@@ -121,3 +121,11 @@ export default defineComponent({
 | :---------: | :------: | :--------------------: | :---------: |
 | onSearch |	`string` |	回车或点击搜索按钮触发的回调函数，返回文本框输入的值 |	[基本用法](#基本用法) |
 
+<style>
+  h4 {
+    font-weight: 700;
+    color: #575d6c;
+    font-size: 12px;
+    margin: 15px 0;
+  }
+</style>
