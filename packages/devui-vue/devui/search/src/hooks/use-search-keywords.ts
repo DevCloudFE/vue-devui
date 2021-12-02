@@ -2,8 +2,8 @@
  * 输入框内容定义、删改操作
  */
 import { ref, watch, computed, SetupContext } from 'vue'
-import { SearchProps, KeywordsReturnTypes } from '../src/search-types'
-type EmitProps = 'update:modelValue' | 'searchFn'
+import { SearchProps, KeywordsReturnTypes } from '../search-types'
+type EmitProps = 'update:modelValue' | 'onSearch'
 
 export const keywordsHandles = (ctx: SetupContext<(EmitProps)[]>, props: SearchProps): KeywordsReturnTypes => {
   const keywords = ref('') // 输入框内容

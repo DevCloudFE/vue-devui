@@ -16,13 +16,31 @@
     Small
     <d-search size="sm" autoFocus style="width: 200px" :delay="1000"></d-search>
     Middle
-    <d-search style="width: 200px" isKeyupSearch></d-search>
+    <d-search style="width: 200px" isKeyupSearch @onSearch="onSearch1"></d-search>
     Large
-    <d-search iconPosition="left" size="lg" style="width: 200px"></d-search>
+    <d-search iconPosition="left" size="lg" style="width: 200px" @onSearch="onSearch2"></d-search>
     Disabled
     <d-search disabled style="width: 200px"></d-search>
   </div>
 </template>
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const onSearch1 = (e) => {
+      console.log(e)
+    }
+    const onSearch2 = (e) => {
+      console.log(e)
+    }
+    return {
+      onSearch1,
+      onSearch2
+    }
+  }
+})
+</script>
 ```
 :::
 
@@ -59,7 +77,7 @@
 ```vue
 
 <template>
-  <d-search cssClass="ipt" v-model="searchText" :maxLength="5" style="width: 200px"></d-search>
+  <d-search cssClass="ipt" v-model="searchText" :maxLength="5" style="width: 200px" @onSearch="search"></d-search>
 </template>
 
 <script>
@@ -68,8 +86,12 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup() {
     const searchText = ref('Devui')
+    const search = (e) => {
+      console.log(`search callback: ${e}，value：${searchText.value}`)
+    }
     return {
-      searchText
+      searchText,
+      search
     }
   },
 })
@@ -88,7 +110,7 @@ export default defineComponent({
 |    delay     | `number` |  300   | 可选，debounceTime 的延迟    |  [基本用法](#基本用法)  ||
 |    disabled    | `boolean` | false | 可选，输入框是否被禁用    | [基本用法](#基本用法)             ||
 |    autoFocus    | `boolean` | false | 可选，输入框是否自动对焦 | [基本用法](#基本用法)             ||
-| isKeyupSearch | `boolean` |  false   | 可选，是否支持输入值立即触发 searchFn | [基本用法](#基本用法) ||
+| isKeyupSearch | `boolean` |  false   | 可选，是否支持输入值立即触发 onSearch | [基本用法](#基本用法) ||
 | iconPosition | `string` |  'right'   | 可选，搜索图标位置，有两种选择'left' / 'right' | [搜索图标左置](#搜索图标左置) ||
 | noBorder | `boolean` |  false  | 可选，是否显示边框 | [无边框](#无边框) ||
 | cssClass | `string` |  ''  | 可选，支持传入类名到输入框上 | [双向绑定](#双向绑定) ||
@@ -97,5 +119,5 @@ export default defineComponent({
 
 |    事件     |   类型  | 说明                     | 跳转 Demo |
 | :---------: | :------: | :--------------------: | :---------: |
-| searchFn |	`string` |	回车或点击搜索按钮触发的回调函数，返回文本框输入的值 |	[基本用法](#基本用法) |
+| onSearch |	`string` |	回车或点击搜索按钮触发的回调函数，返回文本框输入的值 |	[基本用法](#基本用法) |
 

@@ -2,7 +2,7 @@
  * 定义组件class
  */
 import { computed, ComputedRef } from 'vue';
-import { SearchProps } from '../src/search-types'
+import { SearchProps } from '../search-types'
 const SIZE_CLASS = {
   lg: 'lg',
   sm: 'sm',
