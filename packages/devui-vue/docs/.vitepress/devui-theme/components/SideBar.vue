@@ -26,7 +26,7 @@ defineProps({
   position: fixed;
   top: var(--header-height);
   bottom: 0;
-  left: calc((100vw - 1440px) / 2);
+  // left: calc((100vw - 1440px) / 2);
   z-index: var(--z-index-sidebar);
   width: 16.4rem;
   background-color: $devui-base-bg;
