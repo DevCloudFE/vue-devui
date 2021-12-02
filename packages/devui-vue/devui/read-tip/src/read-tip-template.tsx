@@ -18,10 +18,25 @@ export default defineComponent({
     }
 
     const temp = ref(null);
+    const deviation = (x: number) => {
+      let deviationConstant = x > 24 ? 0 : -(x / 2) + 2
+      if (x <= 10) {
+        deviationConstant = -10
+      }
+
+      return deviationConstant
+    }
     onMounted(() => {
       const domBounding = document.querySelector(query).getBoundingClientRect();
+      const { width, height } = domBounding
       const distance = 10;
       let positionTop = 0;
+
+      // 当前元素如果小于24px 会对渲染模板进行偏移 以免小箭头对不准指向的当前元素
+      const heightDeviation = deviation(height)
+      const widthDeviation = deviation(width)
+
+
       let positionLeft = 0;
       const targetDom = document.querySelector('.read-tip-container').getBoundingClientRect();
       if (rule.appendToBody) {
@@ -31,18 +46,18 @@ export default defineComponent({
       switch (rule.position) {
         case 'top':
           styles.top = positionTop - targetDom.height - distance + 'px';
-          styles.left = positionLeft + 'px';
+          styles.left = positionLeft + widthDeviation + 'px';
           break;
         case 'left':
-          styles.top = positionTop + 'px';
+          styles.top = positionTop + heightDeviation + 'px';
           styles.left = positionLeft - targetDom.width - distance + 'px';
           break;
         case 'bottom':
           styles.top = positionTop + domBounding.height + distance + 'px'
-          styles.left = positionLeft + 'px';
+          styles.left = positionLeft + widthDeviation + 'px';
           break;
         case 'right':
-          styles.top = positionTop + 'px';
+          styles.top = positionTop + heightDeviation + 'px';
           styles.left = positionLeft + domBounding.width + distance + 'px';
           break;
       }

@@ -22,8 +22,7 @@ export function useOverlayLogic(props: OverlayProps): CommonInfo {
 
   const handleBackdropClick = (event: Event) => {
     event.preventDefault();
-
-    props.backdropClick?.();
+    props.onBackdropClick?.();
     if (props.backdropClose) {
       props['onUpdate:visible']?.(false);
     }

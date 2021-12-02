@@ -1,7 +1,7 @@
 
 export const RESULT_SCREEN = ['xxl', 'xl', 'lg', 'md', 'sm', 'xs']
 
-const screenMedias = {
+export const screenMedias = {
     xs: 'screen and (max-width: 575px)',
     sm: 'screen and (min-width: 576px)',
     md: 'screen and (min-width: 768px)',

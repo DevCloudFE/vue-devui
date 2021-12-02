@@ -45,6 +45,15 @@ interface IRippleDirectiveOptions {
    * 75
    */
   delayTime: number
+  /**
+   * 禁止 水波
+   *
+   * @note
+   * 类似于 debounceTime
+   * @default
+   * 75
+   */
+  disabled: boolean
 }
 
 interface IRipplePluginOptions extends IRippleDirectiveOptions {
@@ -74,7 +83,13 @@ const DEFAULT_PLUGIN_OPTIONS: IRipplePluginOptions = {
   finalOpacity: 0.1,
   duration: 0.8,
   easing: 'ease-out',
-  delayTime: 75
+  delayTime: 75,
+  disabled: false
 }
 
-export { DEFAULT_PLUGIN_OPTIONS, IRipplePluginOptions, IRippleDirectiveOptions, IRippleDirectiveOptionWithBinding }
+export {
+  DEFAULT_PLUGIN_OPTIONS,
+  IRipplePluginOptions,
+  IRippleDirectiveOptions,
+  IRippleDirectiveOptionWithBinding
+}

@@ -1,0 +1,43 @@
+@import '../../style/theme/color';
+@import '../../style/theme/font';
+
+.devui-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 30px;
+
+  &__icon{
+    &-success::before{
+      color: $devui-success
+    }
+    &-danger::before{
+      color: $devui-danger
+    }
+    &-warning::before{
+      color: $devui-warning
+    }
+    &-info::before{
+      color: $devui-info
+    }
+  }
+
+  &__title {
+    margin-top: 20px;
+    color: $devui-text;
+    font-size: $devui-font-size-lg;
+  }
+
+  &__desc {
+    margin-top: 10px;
+    color: $devui-text-weak;
+    font-size: $devui-font-size-md;
+  }
+
+  &__extra{
+    margin-top: 30px;
+  }
+}
