@@ -1,15 +1,15 @@
 import { defineComponent } from 'vue'
 import { SearchProps, searchProps } from './search-types'
-import { getRootClass } from '../hooks/use-search-class'
-import { keywordsHandles } from '../hooks/use-search-keywords'
-import { keydownHandles } from '../hooks/use-search-keydown'
+import { getRootClass } from './hooks/use-search-class'
+import { keywordsHandles } from './hooks/use-search-keywords'
+import { keydownHandles } from './hooks/use-search-keydown'
 import DInput from '../../input/src/input';
 import './search.scss'
 
 export default defineComponent({
   name: 'DSearch',
   props: searchProps,
-  emits: ['update:modelValue', 'searchFn'],
+  emits: ['update:modelValue', 'onSearch'],
   setup(props: SearchProps, ctx) {
     const rootClasses = getRootClass(props)
     // 输入框内容定义、删改
@@ -32,7 +32,7 @@ export default defineComponent({
         <div class={rootClasses.value}>
           {props.iconPosition === 'left' &&
             <div class="devui-search__icon" onClick={onClickHandle}>
-              <d-icon name="search" size="inherit"></d-icon>
+              <d-icon name="search" size="inherit" key="search"></d-icon>
             </div>
           }
           <DInput
@@ -51,12 +51,12 @@ export default defineComponent({
                 class="devui-search__clear"
                 onClick={onClearHandle}
               >
-                <d-icon name="close" size="inherit"></d-icon>
+                <d-icon name="close" size="inherit" key="close"></d-icon>
               </div>
             }
             {props.iconPosition === 'right' &&
               <div class="devui-search__icon" onClick={onClickHandle}>
-                <d-icon name="search" size="inherit"></d-icon>
+                <d-icon name="search" size="inherit" key="search"></d-icon>
               </div>
             }
         </div>

@@ -2,13 +2,13 @@
  * 清空按钮显示、隐藏
  */
 import { SetupContext, Ref, } from 'vue'
-import { KeydownReturnTypes } from '../src/search-types'
+import { KeydownReturnTypes } from '../search-types'
 import { debounce } from 'lodash-es'
 const KEYS_MAP = {
   enter: 'Enter'
 } as const
 
-type EmitProps = 'update:modelValue' | 'searchFn'
+type EmitProps = 'update:modelValue' | 'onSearch'
 
 export const keydownHandles = (ctx: SetupContext<(EmitProps)[]>, keywords: Ref<string>, delay: number): KeydownReturnTypes => {
   // 删除按钮显示
@@ -31,7 +31,7 @@ export const keydownHandles = (ctx: SetupContext<(EmitProps)[]>, keywords: Ref<s
     useEmitKeyword(keywords.value)
   }
   const useEmitKeyword = debounce((value: string) => {
-    ctx.emit('searchFn', value)
+    ctx.emit('onSearch', value)
   }, delay)
   return {
     onInputKeydown,
