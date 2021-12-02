@@ -1,12 +1,12 @@
-# Status 状态
+# Status
 
-传达交互结果的组件。
+Pass interaction results.
 
-### 何时使用
+### When To Use
 
-表示一个任务的执行结果时使用。
+Indicates the execution result of a task.
 
-### 基本用法
+### Basic Usage
 
 :::demo
 ```vue
@@ -23,8 +23,8 @@
 ```
 :::
 
-### d-status 参数
+### d-status parameter
 
-| 参数 |                              类型                              |   默认    |                                     说明                                     |
+| Parameter |                   Type                              |   Default    |                                 Description                                   |
 | :--: | :------------------------------------------------------------: | :-------: | :--------------------------------------------------------------------------: |
-| type | `success\|error\|warning\|initial\|waiting\|running\| invalid` | 'invalid' | 必选，类型，值有 success、error、warning、initial、waiting、running、invalid |
+| type | `success\|error\|warning\|initial\|waiting\|running\| invalid` | 'invalid' | Required. The value can be success、error、warning、initial、waiting、running、invalid |

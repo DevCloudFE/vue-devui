@@ -7,7 +7,7 @@ export default defineComponent({
   name: 'DStatus',
   props: {
     type:{
-      default: 'initial',
+      default: 'invalid',
       type: String as () => IStatusType
     }
   },
