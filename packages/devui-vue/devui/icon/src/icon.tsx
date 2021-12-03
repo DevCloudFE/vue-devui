@@ -32,7 +32,8 @@ export default defineComponent({
         src={name}
         alt={name.split('/')[name.split('/').length - 1]}
         style={{
-          width: size
+          width: size,
+          verticalAlign: 'text-bottom'
         }}
       />
     ) : (
