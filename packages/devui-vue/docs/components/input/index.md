@@ -12,17 +12,19 @@
 
 ```vue
 <template>
-  <h4>Default</h4>
-
-  <d-input placeholder="请输入" autoFocus id="textInput" class="dinput"></d-input>
-
-  <h4>Disabled</h4>
-
-  <d-input placeholder="请输入" :disabled="true" class="dinput"></d-input>
-
-  <h4>Error</h4>
-
-  <d-input placeholder="请输入" :error="true" class="dinput"></d-input>
+  <div class="devui-input-demo">
+    <h4>Default</h4>
+  
+    <d-input placeholder="请输入" autoFocus id="textInput" class="dinput"></d-input>
+  
+    <h4>Disabled</h4>
+  
+    <d-input placeholder="请输入" :disabled="true" class="dinput"></d-input>
+  
+    <h4>Error</h4>
+  
+    <d-input placeholder="请输入" :error="true" class="dinput"></d-input>
+  </div>
 </template>
 <style>
 .dinput {
@@ -39,17 +41,20 @@
 
 ```vue
 <template>
-  <h4>Small</h4>
+  <div class="devui-input-demo">
 
-  <d-input size="sm" class="dinput" placeholder="请输入"></d-input>
-
-  <h4>Middle</h4>
-
-  <d-input class="dinput" placeholder="请输入"></d-input>
-
-  <h4>Large</h4>
-
-  <d-input size="lg" placeholder="请输入" class="dinput"></d-input>
+    <h4>Small</h4>
+  
+    <d-input size="sm" class="dinput" placeholder="请输入"></d-input>
+  
+    <h4>Middle</h4>
+  
+    <d-input class="dinput" placeholder="请输入"></d-input>
+  
+    <h4>Large</h4>
+  
+    <d-input size="lg" placeholder="请输入" class="dinput"></d-input>
+  </div>
 </template>
 ```
 
@@ -95,10 +100,10 @@ export default defineComponent({
 |       autoFocus       |    `boolean`     |          false          |            可选，输入框是否自动对焦            | [基本用法](#基本用法) |
 
 <style>
-  h4 {
-    font-weight: 700;
-    color: #575d6c;
-    font-size: 12px;
-    margin: 15px 0;
-  }
+.devui-input-demo h4 {
+  font-weight: 700;
+  color: #575d6c;
+  font-size: 12px;
+  margin: 15px 0;
+}
 </style>

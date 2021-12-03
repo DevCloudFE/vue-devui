@@ -12,7 +12,7 @@
 
 ```vue
 <template>
-  <div>
+  <div class="dev-search-demo">
     <h4>Small</h4>
     <d-search size="sm" autoFocus style="width: 200px" :delay="1000"></d-search>
     <h4>Middle</h4>
@@ -122,10 +122,10 @@ export default defineComponent({
 | onSearch |	`string` |	回车或点击搜索按钮触发的回调函数，返回文本框输入的值 |	[基本用法](#基本用法) |
 
 <style>
-  h4 {
-    font-weight: 700;
-    color: #575d6c;
-    font-size: 12px;
-    margin: 15px 0;
-  }
+.dev-search-demo  h4 {
+  font-weight: 700;
+  color: #575d6c;
+  font-size: 12px;
+  margin: 15px 0;
+}
 </style>

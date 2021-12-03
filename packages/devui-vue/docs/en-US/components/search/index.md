@@ -12,7 +12,7 @@ When you need to search for required data in a dataset, you can enter the conten
 
 ```vue
 <template>
-  <div>
+  <div class="devui-search-demo">
     <h4>Small</h4>
     <d-search size="sm" autoFocus placeholder="please enter" style="width: 200px" :delay="1000"></d-search>
     <h4>Middle</h4>
@@ -51,7 +51,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-search iconPosition="left" placeholder="please enter" style="width: 200px" placeholder="请输入"></d-search>
+    <d-search iconPosition="left" placeholder="please enter" style="width: 200px"></d-search>
   </div>
 </template>
 ```
@@ -122,10 +122,10 @@ export default defineComponent({
 | onSearch |	`string` | Callback function triggered by pressing Enter or clicking the search button to return the value entered in the text box. |	[Basic Usage](#basic-usage) |
 
 <style>
-  h4 {
-    font-weight: 700;
-    color: #575d6c;
-    font-size: 12px;
-    margin: 15px 0;
-  }
+.devui-search-demo h4 {
+  font-weight: 700;
+  color: #575d6c;
+  font-size: 12px;
+  margin: 15px 0;
+}
 </style>
