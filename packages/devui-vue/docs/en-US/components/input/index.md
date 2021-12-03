@@ -83,16 +83,16 @@ export default defineComponent({
 
 |      Parameter        |       Type      |      Default     |     Description   |   Jump to Demo |
 | :-------------------: | :--------------: | :---------------------: | :--------------------------------------------: | :-------------------: |
-|          id           |     `string`     |           --            |   Optional, input ID  | [Basic Usage](#BasicUsage) |
-| v-model |     `string`     |           ''            |  Optional, bound value  |   [Password Input](#PasswordInput)   |
-|      placeholder      |     `string`     |           --            |  Optional, input placeholder    | [Basic Usage](#BasicUsage) |
+|          id           |     `string`     |           --            |   Optional, input ID  | [Basic Usage](#basic-usage) |
+| v-model |     `string`     |           ''            |  Optional, bound value  |[Password Input](#password-input)   |
+|      placeholder      |     `string`     |           --            |  Optional, input placeholder    | [Basic Usage](#basic-usage) |
 |       maxLength       |     `number`     | Number.MAX_SAFE_INTEGER |  Optional, the max-length of the input box |         |
-|       disabled        |    `boolean`     |          false          |  Optional, whether the input box is disabled  | [Basic Usage](#BasicUsage) |
-|         error         |    `boolean`     |          false          |  Optional, indicating whether an input error occurs in the input box. | [Basic Usage](#BasicUsage) |
-|         size          | `'sm'\|''\|'lg'` |           ''            | Optional, size of the text box. The value can be 'lg','','sm' |     [Size](#Size)     |
+|       disabled        |    `boolean`     |          false          |  Optional, whether the input box is disabled  | [Basic Usage](#basic-usage) |
+|         error         |    `boolean`     |          false          |  Optional, indicating whether an input error occurs in the input box. | [Basic Usage](#basic-usage) |
+|         size          | `'sm'\|''\|'lg'` |           ''            | Optional, size of the text box. The value can be 'lg','','sm' |     [Size](#size)     |
 |       cssClass        |     `string`     |           ''            |  Optional, support to pass in the class name to the input box   |                       |
-|     showPassword      |    `boolean`     |          false          |  Optional, password input box   |   [Password Input](#PasswordInput)   |
-|       autoFocus       |    `boolean`     |          false          |  Optional, whether the input box is auto-focused   | [Basic Usage](#BasicUsage) |
+|     showPassword      |    `boolean`     |          false          |  Optional, password input box   |[Password Input](#password-input)   |
+|       autoFocus       |    `boolean`     |          false          |  Optional, whether the input box is auto-focused   | [Basic Usage](#basic-usage) |
 
 <style>
   h4 {
