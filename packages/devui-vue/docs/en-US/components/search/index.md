@@ -12,7 +12,7 @@ When you need to search for required data in a dataset, you can enter the conten
 
 ```vue
 <template>
-  <div>
+  <div class="devui-search-demo">
     <h4>Small</h4>
     <d-search size="sm" autoFocus placeholder="please enter" style="width: 200px" :delay="1000"></d-search>
     <h4>Middle</h4>
@@ -51,7 +51,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-search iconPosition="left" placeholder="please enter" style="width: 200px" placeholder="请输入"></d-search>
+    <d-search iconPosition="left" placeholder="please enter" style="width: 200px"></d-search>
   </div>
 </template>
 ```
@@ -104,28 +104,28 @@ export default defineComponent({
 
 |  Parameter  |   Type   |   Default    | Description        | Jump to Demo             | Global Config |
 | :---------: | :------: | :-------: | :----------------------- | --------------------------------- | --------- |
-|    size     | `'sm'\|''\|'lg'` |    ''     | Optional. Specifies the size of the search box. The options are lg, '', and sm. | [Basic Usage](#BasicUsage)             ||
-|    placeholder     | `string` |  --   | Optional. This parameter specifies the placeholder in the input box. | [Left Search Icon](#LeftSearchIcon)             ||
-|    maxLength     | `number` |  --   | Optional. Max-length of the text box. |  [VModel](#VModel)  ||
-|    delay     | `number` |  300   | Optional. Delay of debounceTime.  |  [Basic Usage](#BasicUsage)  ||
-|    disabled    | `boolean` | false | Optional. Indicating whether the text box is available. | [Basic Usage](#BasicUsage)             ||
-|    autoFocus    | `boolean` | false | Optional. Whether to enable autofocus for the text box. | [Basic Usage](#BasicUsage)             ||
-| isKeyupSearch | `boolean` |  false   | Optional. Indicates whether to support immediate searchFn after input. | [Basic Usage](#BasicUsage) ||
-| iconPosition | `string` |  'right'   | Optional. The options are'left' and'right'. | [Left Search Icon](#LeftSearchIcon) ||
-| noBorder | `boolean` |  false  | Optional. Specifies whether to display the border. | [No Border](#NoBorder) ||
-| cssClass | `string` |  ''  | Optional. The class name can be transferred to the text box. | [VModel](#VModel) ||
+|    size     | `'sm'\|''\|'lg'` |    ''     | Optional. Specifies the size of the search box. The options are lg, '', and sm. | [Basic Usage](#basic-usage)             ||
+|    placeholder     | `string` |  --   | Optional. This parameter specifies the placeholder in the input box. | [Left Search Icon](#left-search-icon)             ||
+|    maxLength     | `number` |  --   | Optional. Max-length of the text box. |  [VModel](#vmodel)  ||
+|    delay     | `number` |  300   | Optional. Delay of debounceTime.  |  [Basic Usage](#basic-usage)  ||
+|    disabled    | `boolean` | false | Optional. Indicating whether the text box is available. | [Basic Usage](#basic-usage)             ||
+|    autoFocus    | `boolean` | false | Optional. Whether to enable autofocus for the text box. | [Basic Usage](#basic-usage)             ||
+| isKeyupSearch | `boolean` |  false   | Optional. Indicates whether to support immediate searchFn after input. | [Basic Usage](#basic-usage) ||
+| iconPosition | `string` |  'right'   | Optional. The options are'left' and'right'. | [Left Search Icon](#left-search-icon) ||
+| noBorder | `boolean` |  false  | Optional. Specifies whether to display the border. | [No Border](#no-border) ||
+| cssClass | `string` |  ''  | Optional. The class name can be transferred to the text box. | [VModel](#vmodel) ||
 
 ### d-search event
 
 |    Event    |   Type  | Description            | Jump to Demo |
 | :---------: | :------: | :--------------------: | :---------: |
-| onSearch |	`string` | Callback function triggered by pressing Enter or clicking the search button to return the value entered in the text box. |	[Basic Usage](#BasicUsage) |
+| onSearch |	`string` | Callback function triggered by pressing Enter or clicking the search button to return the value entered in the text box. |	[Basic Usage](#basic-usage) |
 
 <style>
-  h4 {
-    font-weight: 700;
-    color: #575d6c;
-    font-size: 12px;
-    margin: 15px 0;
-  }
+.devui-search-demo h4 {
+  font-weight: 700;
+  color: #575d6c;
+  font-size: 12px;
+  margin: 15px 0;
+}
 </style>
