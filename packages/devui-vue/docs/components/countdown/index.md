@@ -14,7 +14,7 @@
 ```vue
 <template>
   <div>
-  <d-countdown value="2021/12/01 23:23:23" @onChange="changeTime" @onFinish="finishTime"/>
+  <d-countdown :value="deadline" @onChange="changeTime" @onFinish="finishTime"/>
   </div>
 </template>
 
@@ -23,12 +23,14 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
+    const deadline = ref(Date.now() + 100 *1000);
     const changeTime = (n) => {
     }
     const finishTime = () => {
     }
     return {
       msg: 'Countdown 倒计时 组件文档示例',
+      deadline,
       changeTime,
       finishTime
     }
@@ -50,7 +52,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-  <d-countdown value="2021/12/01 23:23:23" format='HH:mm:ss:SSS' @onChange="changeTime" @onFinish="finishTime"/>
+  <d-countdown :value="deadline" format='HH:mm:ss:SSS' @onChange="changeTime" @onFinish="finishTime"/>
   </div>
 </template>
 
@@ -59,12 +61,14 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
+    const deadline = ref(Date.now() + 2 * 60 * 60 *1000);
     const changeTime = (n) => {
     }
     const finishTime = () => {
     }
     return {
       msg: 'Countdown 倒计时 组件文档示例',
+      deadline,
       changeTime,
       finishTime
     }
@@ -126,7 +130,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-  <d-countdown value="2023/10/01 23:23:23" format='YYYY年DD天 HH时mm分ss秒' @onChange="changeTime" @onFinish="finishTime"/>
+  <d-countdown :value="deadline" format='YYYY年DD天 HH时mm分ss秒' @onChange="changeTime" @onFinish="finishTime"/>
   </div>
 </template>
 
@@ -135,12 +139,14 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
+    const deadline = ref(new Date().getTime() + 700 * 24 * 60 * 60 *1000 + 5000);
     const changeTime = (n) => {
     }
     const finishTime = () => {
     }
     return {
       msg: 'Countdown 倒计时 组件文档示例',
+      deadline,
       changeTime,
       finishTime
     }
@@ -163,7 +169,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-  <d-countdown value="2021/12/01 23:23:23" format="HH时mm分ss秒" prefix="还有 " suffix=" 结束！" @onChange="changeTime" @onFinish="finishTime"/>
+  <d-countdown :value="Date.now() + 50000" format="HH时mm分ss秒" prefix="还有 " suffix=" 结束！" @onChange="changeTime" @onFinish="finishTime"/>
   </div>
 </template>
 
@@ -200,7 +206,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-  <d-countdown value="2021/12/01 23:23:23" :valueStyle="styles" @onChange="changeTime" @onFinish="finishTime"/>
+  <d-countdown :value="deadline" :valueStyle="styles" @onChange="changeTime" @onFinish="finishTime"/>
   </div>
 </template>
 
@@ -209,6 +215,7 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
+    const deadline = ref(new Date().getTime() + 10 * 24 * 60 * 60 *1000);
     const styles = {color: '#5e7ce0'}
     const changeTime = (n) => {
     }
@@ -216,6 +223,7 @@ export default defineComponent({
     }
     return {
       msg: 'Countdown 倒计时 组件文档示例',
+      deadline,
       styles,
       changeTime,
       finishTime
