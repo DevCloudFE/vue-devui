@@ -21,9 +21,7 @@ export function useStepsGuideCtrl(
     if(index !== -1 && props.stepChange()){
       if(index > -1 && index < stepsCount.value) {
         stepIndex.value = index
-        console.log(stepIndex.value, index, stepsCount.value)
         nextTick(() => {
-          console.log(stepIndex.value, index, stepsCount.value)
           updateGuidePosition()
         })
       } else {

@@ -48,7 +48,7 @@ export const searchProps = {
     type: String,
     default: '',
   },
-  searchFn: {
+  onSearch: {
     type: Function as PropType<(v: string) => void>,
     default: undefined
   },

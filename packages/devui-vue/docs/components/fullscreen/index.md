@@ -50,9 +50,9 @@ export default {
 
 ```vue
 <template>
-  <d-fullscreen :mode='"normal"' @fullscreenLaunch='fullscreenLaunch'>
+  <d-fullscreen :zIndex='100' mode="normal" @fullscreenLaunch='fullscreenLaunch'>
     <div fullscreen-target>
-      <d-button bsStyle="common" fullscreen-launch>{{btnContent}}</d-button>
+      <d-button fullscreen-launch>{{btnContent}}</d-button>
     </div>
   </d-fullscreen>
 </template>

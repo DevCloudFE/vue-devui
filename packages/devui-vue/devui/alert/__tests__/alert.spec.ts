@@ -26,7 +26,7 @@ describe('alert', () => {
       })
       expect(wrapper.find('.devui-icon-success').exists()).toBe(true)
     })
-    it('alert should has success type', () => {
+    it('alert should has warning type', () => {
       const wrapper = mount(Alert, {
         props: {
           type: 'warning',
@@ -34,7 +34,7 @@ describe('alert', () => {
       })
       expect(wrapper.find('.devui-icon-warning').exists()).toBe(true)
     })
-    it('alert should has success type', () => {
+    it('alert should has error type', () => {
       const wrapper = mount(Alert, {
         props: {
           type: 'danger',

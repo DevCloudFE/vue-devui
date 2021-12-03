@@ -1,12 +1,13 @@
-# Panel 面板
+# Panel
 
-内容面板，用于内容分组。
+Panels are usually used for grouping 
 
-### 何时使用
+### When to use
 
-当页面内容需要进行分组显示时使用，一般包含头部、内容区域、底部三个部分。
+it is used when the page content needs to be grouped for display, and generally contains three parts: the head, the content area, and the bottom.
 
-### 基本用法
+### Quick start
+
 :::demo
 
 ```vue
@@ -50,9 +51,9 @@ export default defineComponent({
 ```
 :::
 
-### 多种类型
+### Type
 
-面板类型分为default、primary、success，danger、warning、info。
+Panels have six types: default, primary, success, danger, warning, info.
 
 :::demo
 ```vue
@@ -61,6 +62,7 @@ export default defineComponent({
     <d-panel-header>Panel with info Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
+  <br /><br />
   <d-panel type="primary" :isCollapsed="true" :showAnimation="true">
     <d-panel-header>Panel with Primary Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
@@ -84,13 +86,14 @@ export default defineComponent({
 ```
 :::
 
-### 阻止折叠
+### Prevent Collapse
 
-某种情况下，我们需要阻止面板收起。Panel提供了这项API，我们可以使用beforeToggle来阻止面板的收起
+if you dont want panel to fold. You can use ``beforeToggle`` properties
 
-根据条件判断，当panel展开时，点击阻止折叠按钮，将无法折叠panel。当panel展开时不影响操作。
+If beforeToggle return False. The Panel will can not to fold. But Unaffected when unfolded
 
-:::demo
+
+::demo
 ```vue
 <template>
   <d-panel type="primary" :hasLeftPadding=padding :toggle=handleToggle  :beforeToggle=beforeToggle :showAnimation=showAnimation >
@@ -103,7 +106,7 @@ export default defineComponent({
   </d-panel>
   <br /><br />
   <d-button @click="panelToggle = !panelToggle" >
-    {{ panelToggle ? '阻止折叠' : '允许折叠' }}
+    {{ panelToggle ? 'prevent to fold' : 'allow to fold' }}
   </d-button>
 </template>
 <script>
@@ -135,16 +138,16 @@ export default defineComponent({
 ```
 :::
 
-### 动态切换
+### Properties Dynamic Change
 
-我们以hasLeftPadding为例
+We take hasLeftPadding properties as an example.
 
-理论上所有的属性都可以动态切换
+Theoretically all properties can dynamic change. We only take hasLeftPadding properties as an example.
 
 :::demo
 ```vue
 <template>
-  <d-panel :hasLeftPadding=padding :isCollapsed="true">
+  <d-panel :type="type" :hasLeftPadding=padding :isCollapsed>
     <d-panel-header>
       Panel with foldable
     </d-panel-header>
@@ -154,7 +157,7 @@ export default defineComponent({
   </d-panel>
   <br /><br />
   <d-button @click="padding = !padding" >
-    {{ padding ? '有左填充' : '没有左填充' }}
+    {{ padding ? 'hasLeftPadding' : 'notLeftPadding' }}
   </d-button>
 </template>
 <script>
@@ -173,20 +176,19 @@ export default defineComponent({
 :::
 
 
-
 ### API
 
-|参数|  	        类型|	                           默认|	     说明|
+|Property|Type|Descript|default Value|
 |:-:|:-:|:-:|:-:| 
-|type|	          PanelType|	                    'default'|	    可选，面板的类型|
-|cssClass|	      string|	                        --       |	    可选，自定义 class 名|
-|isCollapsed|	    boolean|	                      false    |      可选，是否展开|
-|hasLeftPadding|	boolean|	                      true     |	    可选，是否显示左侧填充|
-|showAnimation|	  boolean|	                      true     |	    可选，是否展示动画|
-|beforeToggle|	  Function\|Promise\|Observable|	--       |      可选，面板折叠状态改变前的回调函数，返回 boolean 类型，返回 false 可以阻止面板改变折叠状态	根据条件阻止折叠|
-|toggle|          Function|                       --       |      可选，面板当前状态的回调函数，返回boolean类型，返回 false 代表面板被收起，返回 true 代表面板展开
+|type|	          PanelType|	                    'default'|	    Optional. Can be set Panel Type|
+|cssClass|	      string|	                        --       |	    Optional. User-defined class name|
+|isCollapsed|	    boolean|	                      false    |    Optional. Optional. Whether to expand the panel|
+|hasLeftPadding|	boolean|	                      true     |	Optional. Whether to display the left padding|
+|showAnimation|	  boolean|	                      true     |	    Optional. Indicating whether to display animations.|
+|beforeToggle|	  Function\|Promise\|Observable|	--       |      可	Optional. Callback function before the panel folding status changes. The value of this parameter is of the boolean type. If false is returned, the panel folding status changes.|
+|toggle|          Function|                       --       |      Optional. Callback upon panel click to return the expanded status of the current panel.
 
-### 接口&类型定义
-```javascript 
+### declare Interface & type
+```javascript
 export type PanelType = 'default' | 'primary' | 'success' | 'danger' | 'warning' | 'info';
 ```
