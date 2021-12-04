@@ -2,8 +2,6 @@ import { defineComponent, reactive, renderSlot, ref, useSlots, onMounted, onUnmo
 import { EventManager, isIn, traceNode, invokeFunction } from '../../utils'
 import {
     handlePositionFactory,
-    formatValue,
-    formatPlaceholder,
     getAttachInputDom,
 } from '../../helper'
 
