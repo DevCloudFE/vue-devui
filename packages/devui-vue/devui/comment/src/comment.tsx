@@ -9,7 +9,15 @@ export default defineComponent({
   slots: ['actions', 'author', 'avatar', 'content', 'datetime'],
   setup(props, { slots }) {
     return () => {
+      const getAction = (actions:any) => {
+        if (!actions || !actions.length) {
+          return null;
+        }
+        const actionList = actions.map((action:any, index:number) => <li key={`devui-comment-action-${index}`}>{action}</li>);
+        return actionList;
+      };
       const actions = props.actions ?? slots.actions?.();
+      
       const author = props.author ?? slots.author?.();
       const avatar = props.avatar ?? slots.avatar?.();
       const content = props.content ?? slots.content?.();
@@ -19,6 +27,9 @@ export default defineComponent({
           {typeof avatar === 'string' ? <img src={avatar} alt="comment-avatar" /> : avatar}
         </div>
       );
+      const actionDom = actions ? (
+        <ul class={`devui-comment-actions`}>{getAction(Array.isArray(actions) ? actions : [actions])}</ul>
+      ) : null;
       return (
         <div class="devui-comment">
           {avatarDom}
@@ -34,9 +45,7 @@ export default defineComponent({
             <div class="devui-comment-content">
               {content}
             </div>
-            <div class="devui-comment-actions">
-              {actions}
-            </div>
+            {actionDom}
           </div>
         </div>
       )
