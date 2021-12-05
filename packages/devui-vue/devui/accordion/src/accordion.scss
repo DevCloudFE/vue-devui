@@ -5,6 +5,12 @@
 @import '../../style/theme/corner';
 @import '../../style/core/animation';
 
+.devui-accordion-menu ol, ul {
+  margin: 0 !important;
+  line-height: 0 !important;
+  font-size: 12px;
+}
+
 :host {
   display: block;
 }
@@ -129,7 +135,7 @@ d-accordion-item-routerlink {
       width: 16px;
       height: 16px;
 
-      polygon {
+      path {
         fill: $devui-text-weak;
       }
     }
@@ -137,21 +143,21 @@ d-accordion-item-routerlink {
 
   &:not(.open) {
     &.active {
-      svg polygon {
+      svg path {
         fill: $devui-icon-fill-active;
       }
     }
+  }
 
-    & > .devui-accordion-open-icon {
-      transform: rotate(-180deg);
-      transform-origin: center;
-    }
+  &.open > .devui-accordion-open-icon {
+    transform: rotate(180deg);
+    transform-origin: center;
   }
 
   &.disabled > .devui-accordion-open-icon {
     color: $devui-disabled-text;
 
-    svg polygon {
+    svg path {
       fill: $devui-disabled-text;
     }
   }
@@ -167,8 +173,11 @@ d-accordion-item-routerlink {
   }
 }
 
-.devui-accordion-list.devui-accordion-menu-hidden {
-  display: none;
+.devui-accordion-list .devui-accordion-menu-hidden {
+  // display: none;
+  opacity: 0; 
+  height: 0px;
+  overflow: hidden;
 }
 
 /* 视觉融合灰线 */

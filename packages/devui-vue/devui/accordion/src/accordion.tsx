@@ -29,7 +29,7 @@ export default defineComponent({
       openKey,
       accordionType,
       autoOpenActiveMenu,
-      restrictOneOpen
+      restrictOneOpen,
     } = toRefs(props)
 
     let clickActiveItem: AccordionMenuItem | undefined = undefined //记录用户点击的激活菜单项
@@ -101,7 +101,7 @@ export default defineComponent({
     const linkItemClickFn = (itemEvent: AccordionItemClickEvent) => {
       const prevActiveItem = clickActiveItem
       clickActiveItem = itemEvent.item
-      emit('itemClick', { ...itemEvent, prevActiveItem: prevActiveItem })
+      emit('linkItemClick', { ...itemEvent, prevActiveItem: prevActiveItem })
     }
 
     // 打开或关闭可折叠菜单
@@ -143,6 +143,7 @@ export default defineComponent({
           class={[
             'devui-accordion-menu',
             'devui-scrollbar',
+            'devui-accordion-show-animate',
             accordionType.value === 'normal' && 'devui-accordion-menu-normal'
           ]}
         >

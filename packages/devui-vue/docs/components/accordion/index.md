@@ -15,6 +15,8 @@
             :data="menu"
             :accordionType="accordionTypeEmbed ? 'embed' : 'normal'"
             :restrictOneOpen="restrictOneOpen"
+            @itemClick="itemClick"
+            @menuToggle="menuToggle"
         >
         </d-accordion>
     </div>
@@ -30,11 +32,6 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
     name: "accordion",
     setup() {
-        const slot = {
-            innerListTemplate: ()=> {
-                return "<p>输出值: </p>"
-            }
-        }
         const restrictOneOpen = ref(false)
         const accordionTypeEmbed = ref(false)
         const menu = ref([{
@@ -75,11 +72,19 @@ export default defineComponent({
             ]
         }])
 
+        const itemClick = (e) => {
+            console.log(12, e)
+        }
+        const menuToggle = (e) => {
+            console.log('menuToggle')
+        }
+
         return {
             menu,
             restrictOneOpen,
             accordionTypeEmbed,
-            slot
+            itemClick,
+            menuToggle
         }
     }
 })

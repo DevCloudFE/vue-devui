@@ -25,7 +25,7 @@ export default defineComponent({
     },
     ...accordionProps
   },
-  setup(props) {
+  setup(props, {slots}) {
     const {
       item,
       deepth,
@@ -51,6 +51,9 @@ export default defineComponent({
     const keyOpen = computed(() => {
       return item.value && item.value[openKey.value]
     })
+    const disabled = computed(() => {
+      return item.value && item.value[disabledKey.value]
+    })
     const childActived = computed(() => {
       return item.value.active // TODO:待处理
     })
@@ -61,6 +64,7 @@ export default defineComponent({
         : keyOpen.value
     })
 
+
     return () => {
       return (
         <>
@@ -70,12 +74,12 @@ export default defineComponent({
               'devui-over-flow-ellipsis',
               open.value && 'open',
               childActived.value && 'active',
-              item.value[disabledKey.value] && 'disabled'
+              disabled.value && 'disabled'
             ]}
             title={item.value.title}
             style={{ textIndent: deepth.value * 20 + 'px' }}
             onClick={(e) =>
-              toggle({
+                !disabled.value && toggle({
                 item: item.value,
                 open: !open.value,
                 parent: parent.value,
@@ -87,22 +91,23 @@ export default defineComponent({
               class={['devui-accordion-splitter', deepth.value === 0 && 'devui-parent-list']}
               style={{ left: deepth.value * 20 + 10 + 'px' }}
             ></div>
-            {!menuItemTemplate.value && <Fragment>{item.value.title}</Fragment>}
+            {!menuItemTemplate.value && <>{item.value.title}</>}
             <span class='devui-accordion-open-icon'>
               <OpenIcon></OpenIcon>
             </span>
           </div>
+          <div 
+            class={[
+              !open.value && 'devui-accordion-menu-hidden',
+              'devui-accordion-submenu',
+              'devui-accordion-show-animate'
+            ]}>
             <DAccordionList
-              class={[
-                'devui-accordion-submenu',
-                'devui-accordion-show-animate',
-                !open.value && 'devui-accordion-menu-hidden'
-              ]}
-              // style={ open.value ? {opacity: 1, overflow: 'hidden'} : {opacity: 0, height: 0, overflow: 'hidden'}}
               deepth={deepth.value + 1}
               data={item.value.children || []}
               parent={item.value}
             ></DAccordionList>
+          </div>
         </>
       )
     }

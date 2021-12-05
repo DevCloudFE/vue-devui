@@ -65,8 +65,8 @@ export default defineComponent({
               class={['devui-accordion-splitter', deepth.value === 0 && 'devui-parent-list']}
               style={{ left: deepth.value * 20 + 10 + 'px' }}
             ></div>
-            {!itemTemplate.value && <Fragment>{item.value.title}</Fragment>}
-            {itemTemplate.value && <Fragment>{slots.itemTemplate()}</Fragment>}
+            {!itemTemplate.value && <>{item.value.title}</>}
+            {itemTemplate.value && <>{slots.itemTemplate()}</>}
           </div>
         </>
         // <ng-template
