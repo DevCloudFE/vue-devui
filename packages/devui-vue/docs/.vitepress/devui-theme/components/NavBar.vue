@@ -9,9 +9,9 @@ import LightMode from './icons/LightMode.vue'
 import ZhLang from './icons/ZhLang.vue'
 import EnLang from './icons/EnLang.vue'
 
-const theme = new Theme('light')
-
-const darkMode = ref(false)
+const defaultDarkMode = !!localStorage.getItem('dark_mode')
+const darkMode = ref(defaultDarkMode)
+const theme = new Theme(getThemeByDarkMode(darkMode.value))
 
 const defaultLanguage = ref(localStorage.getItem('preferred_lang'))
 function useTranslation(target) {
@@ -24,10 +24,15 @@ function useTranslation(target) {
   }
 }
 
+function getThemeByDarkMode(target) {
+  return target ? 'dark' : 'light'
+}
+
 watch(
   () => darkMode.value,
   (darkMode, prevDarkMode) => {
-    theme.applyTheme(darkMode ? 'dark' : 'light')
+    localStorage.setItem('dark_mode', darkMode ? true : '')
+    theme.applyTheme(getThemeByDarkMode(darkMode))
   }
 )
 
