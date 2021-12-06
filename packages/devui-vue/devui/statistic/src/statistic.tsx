@@ -44,8 +44,7 @@ export default defineComponent({
         props.value,
         props.groupSeparator,
         props.precision,
-        props.showGroupSeparator,
-        props.animation
+        props.showGroupSeparator
       )
     })
     onMounted(() => {
