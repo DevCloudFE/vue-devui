@@ -44,7 +44,9 @@ export default defineComponent({
 
 ### radio 根据条件终止切换操作
 
-:::demo 根据条件判断，第二项禁止跳转。
+根据条件判断，第二项禁止跳转。
+
+:::demo
 
 ```vue
 <template>
@@ -87,6 +89,8 @@ export default defineComponent({
 :::
 
 ### radio-group 根据条件终止切换操作
+
+根据条件判断，第二个radio-group禁止跳转。
 
 :::demo
 
@@ -233,7 +237,9 @@ export default defineComponent({
 
 ### 自定义单选项
 
-:::demo 数组源可为普通数组、对象数组等。
+数组源可为普通数组、对象数组等。
+
+:::demo
 
 ```vue
 <template>

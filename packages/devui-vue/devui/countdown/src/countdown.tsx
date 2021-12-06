@@ -1,4 +1,4 @@
-import { defineComponent, ref, onUnmounted } from 'vue'
+import { defineComponent, ref, onUnmounted ,onMounted } from 'vue'
 import { countdownProps, CountdownProps } from './countdown-types'
 import './countdown.scss'
 import { getFormatTime, getLegalTime, getTimeSplit, getDeduplication, numFormat } from './utils'
@@ -8,6 +8,7 @@ export default defineComponent({
   props: countdownProps,
   emits: ['onChange', 'onFinish'],
   setup(props: CountdownProps, ctx) {
+    const countdown = ref<number>()
     const s = getDeduplication(props.format);
     const timeFormat = getTimeSplit(props.format);
     const timeStr = ref('')
@@ -20,11 +21,12 @@ export default defineComponent({
         }
         return pre + cur.k;
       }, '')
-      timeStr.value = t;
+      timeStr.value = t; 
     }
 
     const getTime = () => {
-      const leftTime = props.value > new Date().getTime() ? props.value - new Date().getTime() : 0
+      const value = new Date(props.value).getTime();
+      const leftTime = value > new Date().getTime() ? value - new Date().getTime() : 0
       const formatTime = getFormatTime(leftTime);
       const legalTime = getLegalTime(s, formatTime);
       !ctx.slots.default && getTimeStr(legalTime);
@@ -36,19 +38,25 @@ export default defineComponent({
       return leftTime;
     }
 
-    const countdown = setInterval(() => {
-      const t = getTime();
-      if (t === 0) {
-        ctx.emit('onFinish');
-        clearInterval(countdown)
-      }
-    }, s.has('S') ? 100 : 1000)
+    const startTime = () => {
+      getTime();
+      if (countdown.value) return;
+      countdown.value = setInterval(() => {
+        const t = getTime();
+        if (t === 0) {
+          ctx.emit('onFinish');
+          clearInterval(countdown.value)
+        }
+      }, s.has('S') ? 100 : 1000)
+  
+    }
 
-    getTime();
-    onUnmounted(() => {
-      clearInterval(countdown);
+    onMounted(()=>{
+      startTime()
     })
-
+    onUnmounted(() => {
+      clearInterval(countdown.value);
+    })
     return () => {
       return (<div class="devui-countdown">
         {

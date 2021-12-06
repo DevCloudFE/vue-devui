@@ -1,8 +1,8 @@
 import { onUnmounted, UnwrapRef , defineComponent, reactive, onMounted, ref } from 'vue'
 import { invokeFunction, isIn } from './utils'
 import { compareDateSort , parseDate } from './components/utils'
-import { Input } from '../input'
-import { Icon } from '../icon'
+import { Input } from '../../input'
+import { Icon } from '../../icon'
 
 import {
   TState,
@@ -47,7 +47,7 @@ export default defineComponent({
     dateMin: { type: String },
     dateMax: { type: String },
   },
-  setup(props, ctx) {
+  setup(props) {
 
     const panel = ref<Node>(null)
     const input = ref<Node>(null)
@@ -60,7 +60,7 @@ export default defineComponent({
       show: false,
       value: '',
       placeholder: formatPlaceholder(props),
-      current, 
+      current,
       next,
     })
 
@@ -115,7 +115,7 @@ export default defineComponent({
                 state.end = state.hover = undefined
                 state.start = date
               }}
-              onChange={(type, config) => {
+              onChange={() => {
                 state.value = formatValue(state, props)
                 state.placeholder = formatPlaceholder(props)
                 invokeFunction(props.selectedDateChange, state.value)

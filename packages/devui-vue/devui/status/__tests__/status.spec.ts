@@ -12,6 +12,14 @@ describe('d-status', () => {
     await wrapper.setProps({type: ''});
 
     expect(wrapper.classes()).toContain('devui-status-bg-invalid');
+
+    await wrapper.setProps({type: null});
+
+    expect(wrapper.classes()).toContain('devui-status-bg-invalid');
+
+    await wrapper.setProps({type: undefined});
+
+    expect(wrapper.classes()).toContain('devui-status-bg-invalid');
     
     await wrapper.setProps({ type: 'error' });
     
