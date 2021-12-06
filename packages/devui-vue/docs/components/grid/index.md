@@ -14,22 +14,22 @@
 
 ```vue
 <template>
-  <d-row>
+  <d-row class="docs-devui-row">
     <d-col :span="12">col-12</d-col>
     <d-col :span="12">col-12</d-col>
   </d-row>
-  <d-row>
+  <d-row class="docs-devui-row">
     <d-col :span="8">col-8</d-col>
     <d-col :span="8">col-8</d-col>
     <d-col :span="8">col-8</d-col>
   </d-row>
-  <d-row>
+  <d-row class="docs-devui-row">
     <d-col :span="6">col-6</d-col>
     <d-col :span="6">col-6</d-col>
     <d-col :span="6">col-6</d-col>
     <d-col :span="6">col-6</d-col>
   </d-row>
-  <d-row>
+  <d-row class="docs-devui-row">
     <d-col :span="4">col-4</d-col>
     <d-col :span="4">col-4</d-col>
     <d-col :span="4">col-4</d-col>
@@ -40,18 +40,18 @@
 </template>
 
 <style>
-.devui-row:not(:last-of-type) {
+.docs-devui-row:not(:last-of-type) {
   margin-bottom: 20px;
 }
-.devui-col {
+.docs-devui-row .devui-col {
   text-align: center;
   min-height: 44px;
   line-height: 44px;
 }
-.devui-col:nth-of-type(2n + 1) {
+.docs-devui-row .devui-col:nth-of-type(2n + 1) {
   background: #f8f8f8;
 }
-.devui-col:nth-of-type(2n) {
+.docs-devui-row .devui-col:nth-of-type(2n) {
   background: #99b0ff;
   color: #fff;
 }
@@ -69,56 +69,56 @@
 ```vue
 <template>
   <p>Align top</p>
-  <d-row align="top">
+  <d-row align="top" class="docs-devui-row">
     <d-col :span="6" class="col-child">col-6</d-col>
     <d-col :span="6" class="col-child">col-6</d-col>
     <d-col :span="6" class="col-child">col-6</d-col>
     <d-col :span="6" class="col-child">col-6</d-col>
   </d-row>
   <p>Align middle</p>
-  <d-row align="middle">
+  <d-row align="middle" class="docs-devui-row">
     <d-col :span="6" class="col-child">col-6</d-col>
     <d-col :span="6" class="col-child">col-6</d-col>
     <d-col :span="6" class="col-child">col-6</d-col>
     <d-col :span="6" class="col-child">col-6</d-col>
   </d-row>
   <p>Align bottom</p>
-  <d-row align="bottom">
+  <d-row align="bottom" class="docs-devui-row">
     <d-col :span="6" class="col-child">col-6</d-col>
     <d-col :span="6" class="col-child">col-6</d-col>
     <d-col :span="6" class="col-child">col-6</d-col>
     <d-col :span="6" class="col-child">col-6</d-col>
   </d-row>
   <p>Justify bottom</p>
-  <d-row justify="start">
+  <d-row justify="start" class="docs-devui-row">
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
   </d-row>
   <p>Justify center</p>
-  <d-row justify="center">
+  <d-row justify="center" class="docs-devui-row">
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
   </d-row>
   <p>Justify end</p>
-  <d-row justify="end">
+  <d-row justify="end" class="docs-devui-row">
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
   </d-row>
   <p>Justify between</p>
-  <d-row justify="between">
+  <d-row justify="between" class="docs-devui-row">
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
   </d-row>
   <p>Justify around</p>
-  <d-row justify="around">
+  <d-row justify="around" class="docs-devui-row">
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>
@@ -139,7 +139,7 @@
 
 ```vue
 <template>
-  <d-row :gutter="10">
+  <d-row :gutter="10" class="docs-devui-row">
     <d-col :span="6" class="col-gutter">
       <div class="col-child">col-6</div>
     </d-col>
@@ -153,7 +153,7 @@
       <div class="col-child">col-6</div>
     </d-col>
   </d-row>
-  <d-row :gutter="[10, 20]">
+  <d-row :gutter="[10, 20]" class="docs-devui-row">
     <d-col :span="6" class="col-gutter">
       <div class="col-child">col-6</div>
     </d-col>
@@ -167,7 +167,7 @@
       <div class="col-child">col-6</div>
     </d-col>
   </d-row>
-  <d-row :gutter="{ xs: 10, sm: 20, md: [20, 10], lg: [30, 20], xl: [40, 30], xxl: [50, 40]}">
+  <d-row :gutter="{ xs: 10, sm: 20, md: [20, 10], lg: [30, 20], xl: [40, 30], xxl: [50, 40]}" class="docs-devui-row">
     <d-col :span="6" class="col-gutter">
       <div class="col-child">col-6</div>
     </d-col>
@@ -207,15 +207,15 @@ Col的flex属性支持flex填充。
 
 ```vue
 <template>
-  <d-row type="flex">
+  <d-row type="flex" class="docs-devui-row">
     <d-col :flex="2">2 / 5</d-col>
     <d-col :flex="3">3 / 5</d-col>
   </d-row>
-  <d-row type="flex">
+  <d-row type="flex" class="docs-devui-row">
     <d-col flex="100px">100px</d-col>
     <d-col flex="auto">auto</d-col>
   </d-row>
-  <d-row type="flex">
+  <d-row type="flex" class="docs-devui-row">
     <d-col flex="1 1 200px">1 1 200px</d-col>
     <d-col flex="0 1 300px">0 1 300px</d-col>
   </d-row>
@@ -232,15 +232,15 @@ Col的flex属性支持flex填充。
 
 ```vue
 <template>
-  <d-row>
+  <d-row class="docs-devui-row">
     <d-col :span="8">col-8</d-col>
     <d-col :span="8" :offset="8">col-8</d-col>
   </d-row>
-  <d-row>
+  <d-row class="docs-devui-row">
     <d-col :span="6" :offset="6">col-6 col-offset-6</d-col>
     <d-col :span="6" :offset="6">col-6 col-offset-6</d-col>
   </d-row>
-  <d-row>
+  <d-row class="docs-devui-row">
     <d-col :span="12" :offset="6" :md="{ span: 22, offset: 1 }">col-12 col-offset-6</d-col>
   </d-row>
 </template>
@@ -256,10 +256,15 @@ Col的flex属性支持flex填充。
 
 ```vue
 <template>
-  <d-row>
+  <d-row class="docs-devui-row">
     <d-col :xs="2" :sm="4" :md="6" :lg="8" :xl="10">Col</d-col>
     <d-col :xs="20" :sm="16" :md="12" :lg="8" :xl="4">Col</d-col>
     <d-col :xs="2">Col</d-col>
+  </d-row>
+  <d-row wrap class="docs-devui-row">
+    <d-col :xs="0" :sm="4" :md="6" :lg="8" :xl="10">Col</d-col>
+    <d-col :xs="24" :sm="16" :md="12" :lg="8" :xl="4">Col</d-col>
+    <d-col :xs="0" :sm="4" :md="6" :lg="8">Col</d-col>
   </d-row>
 </template>
 ```
@@ -274,11 +279,11 @@ Col的flex属性支持flex填充。
 
 ```vue
 <template>
-  <d-row>
+  <d-row class="docs-devui-row">
     <d-col :span="18" :order="2">col-18 order-2</d-col>
     <d-col :span="6" :order="1">col-6 order-1</d-col>
   </d-row>
-  <d-row>
+  <d-row class="docs-devui-row">
     <d-col :span="18" :push="6">col-18 col-push-6</d-col>
     <d-col :span="6" :pull="18">col-6 col-pull-18</d-col>
   </d-row>
