@@ -16,7 +16,7 @@ export default defineComponent({
     const severityIconMap = {
       info: 'info-o',
       success: 'right-o',
-      warn: 'warning-o',
+      warning: 'warning-o',
       error: 'error-o'
     }
 
