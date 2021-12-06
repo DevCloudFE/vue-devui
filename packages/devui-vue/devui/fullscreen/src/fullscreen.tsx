@@ -5,6 +5,7 @@ import {
   useSlots,
   renderSlot,
   onMounted,
+  onBeforeUnmount,
   ref
 } from 'vue'
 import { fullscreenProps, FullscreenProps } from './fullscreen-types'
@@ -15,12 +16,12 @@ export default defineComponent({
   emits: ['fullscreenLaunch'],
   setup(props: FullscreenProps, ctx) {
 
-    let currentTarget = ref(null)
+    let currentTarget = null
     const isFullscreen = ref(false)
     const slotElement = ref(null)
 
     const onFullScreenChange = () => {
-      if (currentTarget.value) {
+      if (currentTarget) {
         const targetElement: HTMLElement = currentTarget
         if (document.fullscreenElement) { // 进入全屏
           addFullScreenStyle()
@@ -138,6 +139,15 @@ export default defineComponent({
       document.addEventListener('MSFullscreenChange', onFullScreenChange)
       document.addEventListener('webkitfullscreenchange', onFullScreenChange)
       document.addEventListener('keydown', handleKeyDown)
+    })
+    onBeforeUnmount(()=>{
+      const btnLaunch = slotElement.value.querySelector('[fullscreen-launch]')
+      if (btnLaunch) { btnLaunch.removeEventListener('click', handleFullscreen) }
+      document.removeEventListener('fullscreenchange', onFullScreenChange)
+      document.removeEventListener('MSFullscreenChange', onFullScreenChange)
+      document.removeEventListener('webkitfullscreenchange', onFullScreenChange)
+      document.removeEventListener('keydown', handleKeyDown)
+      // removeFullScreenStyle();
     })
     return () => {
       const defaultSlot = renderSlot(useSlots(), 'default')

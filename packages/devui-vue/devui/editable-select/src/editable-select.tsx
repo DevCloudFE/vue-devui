@@ -1,22 +1,78 @@
-import { defineComponent, ref, renderSlot, computed, Transition, watch } from 'vue'
-import { OptionItem, editableSelectProps, EditableSelectProps } from './editable-select-types'
+import {
+  defineComponent,
+  Transition,
+  ref,
+  computed,
+  reactive,
+  toRefs,
+  provide,
+  renderSlot
+} from 'vue'
+import {
+  OptionItem,
+  editableSelectProps,
+  EditableSelectProps,
+  ConnectionPosition
+} from './editable-select-types'
+import SelectDropdown from './components/dropdown'
 import './editable-select.scss'
-import { Icon } from '../../icon'
 import ClickOutside from '../../shared/devui-directive/clickoutside'
-import { className } from './utils'
 import { debounce } from 'lodash'
+import { className } from './utils'
 export default defineComponent({
   name: 'DEditableSelect',
   directives: { ClickOutside },
   props: editableSelectProps,
   emits: ['update:modelValue'],
   setup(props: EditableSelectProps, ctx) {
-    const dropdownRef = ref(null)
+    const renderDropdown = (condition: boolean, type: number) => {
+      if (!condition && type === 0) {
+        return (
+          <Transition name='fade'>
+            <SelectDropdown options={filteredOptions.value}></SelectDropdown>
+          </Transition>
+        )
+      } else if (condition && type === 1) {
+        return (
+          <d-flexible-overlay
+            hasBackdrop={false}
+            origin={origin}
+            position={position}
+            v-model:visible={visible.value}
+          >
+            <div
+              class='devui-dropdown'
+              style={{
+                width: props.width + 'px'
+              }}
+            >
+              <SelectDropdown options={filteredOptions.value}></SelectDropdown>
+            </div>
+          </d-flexible-overlay>
+        )
+      }
+    }
+
+    const renderDefaultSlots = (item) => {
+      return ctx.slots.default ? renderSlot(ctx.slots, 'default', { item }) : item.name
+    }
+
+    const renderEmptySlots = () => {
+      return ctx.slots.empty ? renderSlot(ctx.slots, 'empty') : emptyText.value
+    }
+
+    const origin = ref()
+    const dropdownRef = ref()
     const visible = ref(false)
     const inputValue = ref('')
-    const activeIndex = ref(0)
+    const selectedIndex = ref(0)
     const query = ref(props.modelValue)
-
+    const position = reactive<ConnectionPosition>({
+      originX: 'left',
+      originY: 'bottom',
+      overlayX: 'left',
+      overlayY: 'top'
+    })
     const wait = computed(() => (props.remote ? 300 : 0))
 
     const emptyText = computed(() => {
@@ -62,8 +118,7 @@ export default defineComponent({
         })
         .filter((item) => item !== null)
     })
-
-    const findIndex = (o) => {
+    const findIndex = (o: OptionItem) => {
       return normalizeOptions.value.findIndex((item) => {
         return item.name === o.name
       })
@@ -72,6 +127,7 @@ export default defineComponent({
     const handleClose = () => {
       visible.value = false
     }
+
     const toggleMenu = () => {
       if (!props.disabled) {
         visible.value = !visible.value
@@ -105,7 +161,7 @@ export default defineComponent({
         e.stopPropagation()
       } else {
         query.value = item.name
-        activeIndex.value = findIndex(item)
+        selectedIndex.value = findIndex(item)
         inputValue.value = ''
         ctx.emit('update:modelValue', item.name)
       }
@@ -115,12 +171,24 @@ export default defineComponent({
       if (!props.enableLazyLoad) return
       const dropdownVal = dropdownRef.value
       if (dropdownVal.clientHeight + dropdownVal.scrollTop >= dropdownVal.scrollHeight) {
-        props.remoteMethod(inputValue.value)
+        props.loadMore()
       }
     }
-
+    provide('InjectionKey', {
+      dropdownRef,
+      props: reactive({
+        ...toRefs(props)
+      }),
+      visible,
+      emptyText,
+      selectedIndex,
+      loadMore,
+      selectOptionClick,
+      renderDefaultSlots,
+      renderEmptySlots
+    })
     return () => {
-      const selectCls = className('devui-form-group devui-has-feedback', {
+      const selectCls = className('devui-editable-select devui-form-group devui-has-feedback', {
         'devui-select-open': visible.value
       })
       const inputCls = className(
@@ -130,52 +198,19 @@ export default defineComponent({
         }
       )
 
-      const getLiCls = (item, index) => {
-        const { disabledKey } = props
-        return className('devui-dropdown-item', {
-          disabled: disabledKey ? !!item[disabledKey] : false,
-          selected: activeIndex.value === index
-        })
-      }
-
       return (
-        <div class={selectCls} v-click-outside={handleClose} onClick={toggleMenu}>
-          <input class={inputCls} type='text' onInput={handleInput} value={query.value} />
-          <span class='devui-form-control-feedback'>
-            <span class='devui-select-chevron-icon'>
-              <Icon name='select-arrow' />
+        <>
+          <div class={selectCls} v-click-outside={handleClose} onClick={toggleMenu} ref={origin}>
+            <input class={inputCls} type='text' onInput={handleInput} value={query.value} />
+            <span class='devui-form-control-feedback'>
+              <span class='devui-select-chevron-icon'>
+                <d-icon name='select-arrow' />
+              </span>
             </span>
-          </span>
-          <div class='devui-editable-select'>
-            <Transition name='fade'>
-              <div class='devui-dropdown-menu' v-show={visible.value}>
-                <ul
-                  class='devui-list-unstyled scroll-height'
-                  ref={dropdownRef}
-                  style={{
-                    maxHeight: props.maxHeight + 'px'
-                  }}
-                  onScroll={loadMore}
-                >
-                  {filteredOptions.value.map((item, index) => {
-                    return (
-                      <li
-                        class={getLiCls(item, index)}
-                        onClick={($evnet) => selectOptionClick($evnet, item)}
-                        key={item.name}
-                      >
-                        {ctx.slots.default ? renderSlot(ctx.slots, 'default', { item }) : item.name}
-                      </li>
-                    )
-                  })}
-                  <li class='devui-no-result-template' v-show={filteredOptions.value.length === 0}>
-                    <div class='devui-no-data-tip'>{emptyText.value}</div>
-                  </li>
-                </ul>
-              </div>
-            </Transition>
+            {renderDropdown(props.appendToBody, 0)}
           </div>
-        </div>
+          {renderDropdown(props.appendToBody, 1)}
+        </>
       )
     }
   }

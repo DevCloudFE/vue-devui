@@ -1,8 +1,18 @@
-import { BindingTypes } from './image-preview-types'
+import { BindingTypes, ImagePreviewProps } from './image-preview-types'
 import ImagePreviewService from './image-preview-service'
 
-function mountedPreviewImages(url: string, urlList: Array<string>): void {
-  ImagePreviewService.open({ url, previewUrlList: urlList })
+interface PreviewHTMLElement extends HTMLElement {
+  zIndex?: number
+  backDropZIndex?: number
+}
+
+function mountedPreviewImages(props: ImagePreviewProps): void {
+  ImagePreviewService.open({
+    url: props.url,
+    previewUrlList: props.previewUrlList,
+    zIndex: props.zIndex,
+    backDropZIndex: props.backDropZIndex
+  })
 }
 function unmountedPreviewImages() {
   ImagePreviewService.close()
@@ -15,20 +25,25 @@ function getImgByEl(el: HTMLElement): Array<string> {
   return urlList
 }
 
-function handleImgByEl(el: HTMLElement) {
+function handleImgByEl(el: PreviewHTMLElement) {
   el.addEventListener('click', (e: MouseEvent) => {
     e.stopPropagation()
-    const target = e.target as HTMLElement
+    const target = e.target as PreviewHTMLElement
     if (target?.nodeName?.toLowerCase() === 'img') {
       const urlList = getImgByEl(el)
       const url = target.getAttribute('src')
-      mountedPreviewImages(url, urlList)
+      mountedPreviewImages({
+        url,
+        previewUrlList: urlList,
+        zIndex: el?.zIndex,
+        backDropZIndex: el?.backDropZIndex
+      })
     }
   })
 }
 
 export default {
-  mounted(el: HTMLElement, binding: BindingTypes | undefined) {
+  mounted(el: PreviewHTMLElement, binding: BindingTypes | undefined) {
     if (!binding.value) {
       return handleImgByEl(el)
     }
@@ -37,7 +52,12 @@ export default {
     if (custom instanceof Object) {
       custom.open = () => {
         const urlList = getImgByEl(el)
-        mountedPreviewImages(urlList?.[0], urlList)
+        mountedPreviewImages({
+          url: urlList?.[0],
+          previewUrlList: urlList,
+          zIndex: el?.zIndex,
+          backDropZIndex: el?.backDropZIndex
+        })
       }
       custom.close = () => unmountedPreviewImages()
     }
@@ -48,5 +68,9 @@ export default {
   },
   unmounted() {
     unmountedPreviewImages()
+  },
+  updated(el: PreviewHTMLElement, binding) {
+    el.zIndex = binding.value?.zIndex
+    el.backDropZIndex = binding.value?.backDropZIndex
   }
 }

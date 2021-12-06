@@ -70,9 +70,9 @@ export default defineComponent({
             }`}
           >
             {props.closeable ? (
-              <button type="button" class="devui-close" onClick={close}>
+              <div class="devui-close" onClick={close}>
                 <AlertCloseIcon></AlertCloseIcon>
-              </button>
+              </div>
             ) : null}
             {props.showIcon !== false && props.type !== 'simple' ? (
               <span class="devui-alert-icon">
