@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, ref, CSSProperties, reactive } from 'vue'
+import { defineComponent, toRefs, ref, CSSProperties, reactive, watch } from 'vue'
 import debounce from './debounce';
 import clickoutsideDirective from '../../shared/devui-directive/clickoutside'
 import './popover.scss'
@@ -103,6 +103,10 @@ export default defineComponent({
     const onMouseleave = isClick ? null : leave
     const hiddenContext = () => { visible.value = false }
     popMaxWidth.value && (style.maxWidth = `${popMaxWidth.value}px`)
+
+    watch(() => props.visible, (newVal) => {
+      visible.value = newVal;
+    })
 
     return () => {
       return (
