@@ -49,20 +49,16 @@ export default defineComponent({
         width
       } = props;
       return (
-        <div class="devui-btn-host" {...ctx.attrs}>
+        <div class="devui-btn-host" {...ctx.attrs} v-dLoading={showLoading}>
           <button
             class={btnClass.value}
             type={type}
             disabled={disabled}
             style={{ width }}
             onClick={onClick}
-          // dLoading
-          // [showLoading]="showLoading"
-          // [loadingTemplateRef]="loadingTemplateRef"
-          // [dAutoFocus]="autofocus"
           >
             {!!icon ? (
-              <Icon name={props.icon} class={iconClass.value} />
+              <Icon name={icon} class={iconClass.value} />
             ) : null}
             <span class="button-content" ref={buttonContent}>
               {ctx.slots.default?.()}
