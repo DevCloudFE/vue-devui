@@ -16,10 +16,10 @@ export type TState = {
 
 /**
  * Calendar 面板年月切换逻辑
- * @param state 
- * @param index 
- * @param pos 
- * @param date 
+ * @param state
+ * @param index
+ * @param pos
+ * @param date
  */
 export const handleCalendarSwitchState = (state: TState, index: number, pos: number, date: Date) => {
     switch (index) {
@@ -48,9 +48,9 @@ export const handleCalendarSwitchState = (state: TState, index: number, pos: num
 
 /**
  * 格式化输入日期字符串
- * @param state 
- * @param props 
- * @returns 
+ * @param state
+ * @param props
+ * @returns
  */
 export const formatValue = (state: TState, props: any) => {
     const { format = 'y/MM/dd', range, rangeSpliter = '-' } = props || {}
@@ -80,8 +80,8 @@ export const formatValue = (state: TState, props: any) => {
 
 /**
  * 格式化placeholder显示
- * @param props 
- * @returns 
+ * @param props
+ * @returns
  */
 export const formatPlaceholder = (props: any) => {
     if (!props) return ''
@@ -92,8 +92,8 @@ export const formatPlaceholder = (props: any) => {
 
 /**
  * 输出日期选择结果
- * @param id 
- * @param output 
+ * @param id
+ * @param output
  */
 export const handleValue = (id: string | undefined, output: string) => {
     if (id && typeof id === 'string') {
@@ -106,7 +106,7 @@ export const handleValue = (id: string | undefined, output: string) => {
 
 /**
  * 获取绑定节点
- * @returns 
+ * @returns
  */
 export const getAttachInputDom = (props: any) => {
     const { attach, attachInputDom = attach } = props || {}
@@ -122,10 +122,10 @@ export const getAttachInputDom = (props: any) => {
 
 /**
  * 绑定弹出层场景，计算弹出层位置。
- * @param state 
- * @param props 
- * @param container 
- * @returns 
+ * @param state
+ * @param props
+ * @param container
+ * @returns
  */
 export const handlePositionFactory = (state: {
     x?: string
@@ -144,8 +144,8 @@ export const handlePositionFactory = (state: {
         state.st = true
         return
     }
-    const { left, top, width, height } = el.getBoundingClientRect()
-    const { width: _width, height: _height } = container.value.getBoundingClientRect()
+    const { left, top, height } = el.getBoundingClientRect()
+    const { height: _height } = container.value.getBoundingClientRect()
     const bottom = window.innerHeight - top - height
     state.x = `${left}px`
     if (bottom > top) {

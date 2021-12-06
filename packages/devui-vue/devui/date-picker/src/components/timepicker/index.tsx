@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, ref, reactive } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import VerticalSliderFunction from '../vertical-slider'
 
 import './index.scss'

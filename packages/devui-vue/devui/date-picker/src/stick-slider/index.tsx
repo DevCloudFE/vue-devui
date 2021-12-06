@@ -5,7 +5,7 @@ import './index.scss'
 const StickSlider = defineComponent({
     name: 'DStickSlider',
     props: {},
-    setup(props) {
+    setup() {
 
         const state = reactive({
             showButtons: false,
