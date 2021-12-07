@@ -14,7 +14,7 @@ export const FixedOverlay = defineComponent({
       overlayClass,
       handleBackdropClick,
       handleOverlayBubbleCancel
-    } = useOverlayLogic(props);
+    } = useOverlayLogic(props, ctx);
 
     return () => (
       <CommonOverlay>
