@@ -8,9 +8,7 @@ interface BindingType {
 }
 
 const getTransfer = (event: any) => {
-  return event.dataTransfer
-    ? event.dataTransfer
-    : event.originalEvent?.dataTransfer
+  return event.dataTransfer ? event.dataTransfer : event.originalEvent?.dataTransfer
 }
 
 const haveFiles = (types: any) => {
@@ -66,7 +64,7 @@ const onDrop = (el: HTMLElement, binding: BindingType) => {
     if (isSingle) {
       onFileDrop && onFileDrop([transfer.files[0]])
     } else {
-      onFileDrop && onFileDrop(transfer.files)
+      onFileDrop && onFileDrop(Array.from(transfer.files))
     }
   })
 }
@@ -80,7 +78,7 @@ const fileDropDirective = {
     onDragOver(el, binding)
     onDragLeave(el, binding)
     onDrop(el, binding)
-  },
+  }
 }
 
 export default fileDropDirective
