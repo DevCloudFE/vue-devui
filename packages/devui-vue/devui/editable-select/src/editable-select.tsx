@@ -19,6 +19,7 @@ import './editable-select.scss'
 import ClickOutside from '../../shared/devui-directive/clickoutside'
 import { debounce } from 'lodash'
 import { className } from './utils'
+import keyBoardSelect from './composable/use-keyBoard-select'
 export default defineComponent({
   name: 'DEditableSelect',
   directives: { ClickOutside },
@@ -66,6 +67,7 @@ export default defineComponent({
     const visible = ref(false)
     const inputValue = ref('')
     const selectedIndex = ref(0)
+    const hoverIndex = ref(0)
     const query = ref(props.modelValue)
     const position = reactive<ConnectionPosition>({
       originX: 'left',
@@ -155,7 +157,7 @@ export default defineComponent({
       }
     }
 
-    const selectOptionClick = (e, item) => {
+    const selectOptionClick = (e, item: OptionItem) => {
       const { disabledKey } = props
       if (disabledKey && item[disabledKey]) {
         e.stopPropagation()
@@ -164,6 +166,7 @@ export default defineComponent({
         selectedIndex.value = findIndex(item)
         inputValue.value = ''
         ctx.emit('update:modelValue', item.name)
+        visible.value = false
       }
     }
 
@@ -174,6 +177,16 @@ export default defineComponent({
         props.loadMore()
       }
     }
+    const { handleKeydown } = keyBoardSelect(
+      dropdownRef,
+      visible,
+      hoverIndex,
+      selectedIndex,
+      filteredOptions,
+      toggleMenu,
+      selectOptionClick
+    )
+
     provide('InjectionKey', {
       dropdownRef,
       props: reactive({
@@ -182,6 +195,7 @@ export default defineComponent({
       visible,
       emptyText,
       selectedIndex,
+      hoverIndex,
       loadMore,
       selectOptionClick,
       renderDefaultSlots,
@@ -201,7 +215,14 @@ export default defineComponent({
       return (
         <>
           <div class={selectCls} v-click-outside={handleClose} onClick={toggleMenu} ref={origin}>
-            <input class={inputCls} type='text' onInput={handleInput} value={query.value} />
+            <input
+              class={inputCls}
+              disabled={props.disabled}
+              type='text'
+              onInput={handleInput}
+              value={query.value}
+              onKeydown={handleKeydown}
+            />
             <span class='devui-form-control-feedback'>
               <span class='devui-select-chevron-icon'>
                 <d-icon name='select-arrow' />
