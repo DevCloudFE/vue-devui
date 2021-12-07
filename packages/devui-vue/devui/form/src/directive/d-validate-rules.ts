@@ -394,7 +394,7 @@ export default {
     const htmlEventValidateHandler = (e) => {
       const modelValue = e.target.value;
       if(messageShowType === MessageShowTypeEnum.popover) {
-        EventBus.emit("showPopoverErrorMessage", {showPopover: false, message: "", uid: dfcUID} as ShowPopoverErrorMessageEventData);
+        EventBus.emit("showPopoverErrorMessage", {showPopover: false, message: "", uid: dfcUID, popPosition} as ShowPopoverErrorMessageEventData);
       }
       validateFn({validator, modelValue, el, tipEl, isFormTag: false, messageShowType, dfcUID, popPosition});
     }
