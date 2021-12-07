@@ -25,7 +25,7 @@ common 时不展示图标。
       >Success</d-button
     >
     <d-button bsStyle="warning" @click.native="showToast('warn')"
-      >Warn</d-button
+      >Warning</d-button
     >
     <d-button bsStyle="danger" @click.native="showToast('error')"
       >Error</d-button
@@ -87,7 +87,7 @@ export default defineComponent({
         case 'noTitle':
           msgs.value = [
             {
-              severity: 'warn',
+              severity: 'warning',
               content:
                 'This is a test text. This is a test text. This is a test text.',
             },
@@ -142,8 +142,8 @@ export default defineComponent({
     <d-button bsStyle="success" @click.native="showToast2('success')"
       >Success</d-button
     >
-    <d-button bsStyle="warning" @click.native="showToast2('warn')"
-      >Warn</d-button
+    <d-button bsStyle="warning" @click.native="showToast2('warning')"
+      >Warning</d-button
     >
     <d-button bsStyle="danger" @click.native="showToast2('error')"
       >Error</d-button
@@ -329,8 +329,8 @@ export default defineComponent({
             'This is a test text. This is a test text. This is a test text.',
         },
         {
-          severity: 'warn',
-          summary: 'Warn',
+          severity: 'warning',
+          summary: 'Warning',
           content:
             'This is a test text. This is a test text. This is a test text.',
         },
