@@ -30,6 +30,7 @@ export default defineComponent({
       accordionType,
       autoOpenActiveMenu,
       restrictOneOpen,
+      loadingTemplate
     } = toRefs(props)
 
     let clickActiveItem: AccordionMenuItem | undefined = undefined //记录用户点击的激活菜单项

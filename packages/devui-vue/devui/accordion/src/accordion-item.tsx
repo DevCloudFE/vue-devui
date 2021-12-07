@@ -1,6 +1,7 @@
 import { defineComponent, toRefs, Fragment, computed, inject } from 'vue'
 import { accordionProps } from './accordion-types'
 import { AccordionItemClickEvent, AccordionMenuItem } from './accordion.type'
+import { getRootSlots } from '../src/utils'
 
 export default defineComponent({
   name: 'DAccordionItem',
@@ -29,7 +30,11 @@ export default defineComponent({
       itemTemplate
     } = toRefs(props)
 
+    const rootSlots = getRootSlots()
     const accordionCtx = inject('accordionContext') as any
+
+    let parentValue = parent.value
+    let deepValue = deepth.value
 
     const itemClick = (itemEvent: AccordionItemClickEvent) => {
       if (item.value && !item.value.disabled) {
@@ -52,32 +57,28 @@ export default defineComponent({
               item.value[disabledKey.value] && 'disabled'
             ]}
             title={item.value.title}
-            style={{ textIndent: deepth.value * 20 + 'px' }}
+            style={{ textIndent: deepValue * 20 + 'px' }}
             onClick={(e) =>
               itemClick({
                 item: item.value,
-                parent: parent.value,
+                parent: parentValue,
                 event: e
               })
             }
           >
             <div
-              class={['devui-accordion-splitter', deepth.value === 0 && 'devui-parent-list']}
-              style={{ left: deepth.value * 20 + 10 + 'px' }}
+              class={['devui-accordion-splitter', deepValue === 0 && 'devui-parent-list']}
+              style={{ textIndent: deepValue * 20 + 10 + 'px' }}
             ></div>
-            {!itemTemplate.value && <>{item.value.title}</>}
-            {itemTemplate.value && <>{slots.itemTemplate()}</>}
+            {!rootSlots.itemTemplate && <>{item.value.title}</>}
+            {rootSlots.itemTemplate &&
+              rootSlots.itemTemplate?.({
+                parent: parentValue,
+                deepth: deepValue,
+                item: item.value
+              })}
           </div>
         </>
-        // <ng-template
-        //   *ngIf="itemTemplate"
-        //   [ngTemplateOutlet]="itemTemplate"
-        //   [ngTemplateOutletContext]="{
-        //     parent: parent,
-        //     item: item,
-        //     deepth: deepth
-        //   }"
-        // ></ng-template>
       )
     }
   }

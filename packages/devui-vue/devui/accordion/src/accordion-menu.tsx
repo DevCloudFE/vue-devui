@@ -7,6 +7,7 @@ import {
 import DAccordionList from './accordion-list'
 import { accordionProps } from './accordion-types'
 import OpenIcon from './accordion-open-icon'
+import { getRootSlots } from '../src/utils'
 
 export default defineComponent({
   name: 'DAccordionMenu',
@@ -25,7 +26,7 @@ export default defineComponent({
     },
     ...accordionProps
   },
-  setup(props, {slots}) {
+  setup(props, { slots }) {
     const {
       item,
       deepth,
@@ -37,7 +38,11 @@ export default defineComponent({
       disabledKey
     } = toRefs(props)
 
+    const rootSlots = getRootSlots()
     const accordionCtx = inject('accordionContext') as any
+
+    let parentValue = parent.value
+    let deepValue = deepth.value
 
     const toggle = (itemEvent: AccordionMenuToggleEvent) => {
       if (!itemEvent.open && item.value.children && item.value.children.some((i) => i.active)) {
@@ -64,7 +69,6 @@ export default defineComponent({
         : keyOpen.value
     })
 
-
     return () => {
       return (
         <>
@@ -77,33 +81,41 @@ export default defineComponent({
               disabled.value && 'disabled'
             ]}
             title={item.value.title}
-            style={{ textIndent: deepth.value * 20 + 'px' }}
+            style={{ textIndent: deepValue * 20 + 'px' }}
             onClick={(e) =>
-                !disabled.value && toggle({
+              !disabled.value &&
+              toggle({
                 item: item.value,
                 open: !open.value,
-                parent: parent.value,
+                parent: parentValue,
                 event: e
               })
             }
           >
             <div
-              class={['devui-accordion-splitter', deepth.value === 0 && 'devui-parent-list']}
-              style={{ left: deepth.value * 20 + 10 + 'px' }}
+              class={['devui-accordion-splitter', deepValue === 0 && 'devui-parent-list']}
+              style={{ left: deepValue * 20 + 10 + 'px' }}
             ></div>
-            {!menuItemTemplate.value && <>{item.value.title}</>}
+            {!rootSlots.menuItemTemplate && <>{item.value.title}</>}
+            {rootSlots.menuItemTemplate &&
+              rootSlots.menuItemTemplate?.({
+                parent: parentValue,
+                deepth: deepValue,
+                item: item.value
+              })}
             <span class='devui-accordion-open-icon'>
               <OpenIcon></OpenIcon>
             </span>
           </div>
-          <div 
+          <div
             class={[
               !open.value && 'devui-accordion-menu-hidden',
               'devui-accordion-submenu',
               'devui-accordion-show-animate'
-            ]}>
+            ]}
+          >
             <DAccordionList
-              deepth={deepth.value + 1}
+              deepth={deepValue + 1}
               data={item.value.children || []}
               parent={item.value}
             ></DAccordionList>
