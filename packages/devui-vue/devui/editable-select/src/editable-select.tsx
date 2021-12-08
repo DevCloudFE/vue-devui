@@ -19,7 +19,7 @@ import './editable-select.scss'
 import ClickOutside from '../../shared/devui-directive/clickoutside'
 import { debounce } from 'lodash'
 import { className } from './utils'
-import keyBoardSelect from './composable/use-keyBoard-select'
+import keyboardSelect from './composable/use-keyboard-select'
 export default defineComponent({
   name: 'DEditableSelect',
   directives: { ClickOutside },
@@ -177,7 +177,7 @@ export default defineComponent({
         props.loadMore()
       }
     }
-    const { handleKeydown } = keyBoardSelect(
+    const { handleKeydown } = keyboardSelect(
       dropdownRef,
       visible,
       hoverIndex,
