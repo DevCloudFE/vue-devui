@@ -95,23 +95,25 @@ Without Icon.
 
 ### API
 
-### d-alert Parameter
+### d-alert Attributes
 
-|  Parameter  |           Type            | Default |                    Description                     | Jump to Demo                    |
-| :---------: | :-----------------------: | :-----: | :------------------------------------------------: | :------------------------------ |
-|    type     | [`AlertType`](#AlertType) | 'info'  | Required. Specify the style of the warning prompt  | [Basic Usage](#basic-usage)     |
-|  cssClass   |         `string`          |   --    |           Optional. Customize className            |
-|  closeable  |         `boolean`         |  true   | Optional. The close button is displayed by default | [Basic Usage](#closable-prompt) |
-| dismissTime |         `number`          |   --    | Optional. Toggle off the delay time of Alert(`ms`) |
-|  showIcon   |         `boolean`         |  true   |   Optional. Whether to use the default type icon   | [Without Icon](#without-icon)   |
+| Attribute   | Type                      | Default | Description                                        | Jump to Demo                    |
+| ----------- | ------------------------- | ------- | -------------------------------------------------- | ------------------------------- |
+| type        | [`AlertType`](#AlertType) | 'info'  | Required. Specify the style of the warning prompt  | [Basic Usage](#basic-usage)     |
+| cssClass    | `string`                  | --      | Optional. Customize className                      |
+| closeable   | `boolean`                 | true    | Optional. The close button is displayed by default | [Basic Usage](#closable-prompt) |
+| dismissTime | `number`                  | --      | Optional. Toggle off the delay time of Alert(`ms`) |
+| showIcon    | `boolean`                 | true    | Optional. Whether to use the default type icon     | [Without Icon](#without-icon)   |
 
-### d-alert events
+### d-alert Events
 
-| Parameter |              Type              | Description                                | Jump to Demo                        |
-| :-------: | :----------------------------: | :----------------------------------------- | ----------------------------------- |
-|   close   | `(event?: MouseEvent) => void` | Optional, triggers when click close button | [Closable Prompt](#closable-prompt) |
+| Event Name | Type                           | Description                                | Jump to Demo                        |
+| ---------- | ------------------------------ | ------------------------------------------ | ----------------------------------- |
+| close      | `(event?: MouseEvent) => void` | Optional, triggers when click close button | [Closable Prompt](#closable-prompt) |
 
-### AlertType
+### Interface & Types
+
+**AlertType**
 
 The default value is 'info', which specifies the type of alert warning.
 
