@@ -4,7 +4,7 @@ interface keyBoardSelectReturnType {
   handleKeydown: (e: KeyboardEvent) => void
 }
 
-export default function keyBoardSelect(
+export default function keyboardSelect(
   dropdownRef: Ref<any>,
   visible: Ref<boolean>,
   hoverIndex: Ref<number>,
