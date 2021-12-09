@@ -56,6 +56,16 @@ $devui-btn-normal-config: (
     min-width: $devui-btn-min-width,
     background-color: $devui-contrast
   ),
+  success: (
+    color: $devui-dark-text,
+    min-width: $devui-btn-min-width,
+    background-color: $devui-success
+  ),
+  warning: (
+    color: $devui-dark-text,
+    min-width: $devui-btn-min-width,
+    background-color: $devui-warning
+  ),
   xs: (
     padding: $devui-btn-xs-padding,
     height: $devui-btn-xs-height,
@@ -160,6 +170,28 @@ $devui-btn-pseudo-config: (
     active: (
       background-color: $devui-contrast-active
     )
+  ),
+  success: (
+    hover: (
+      background-color: $devui-success-hover
+    ),
+    focus: (
+      background-color: $devui-success-hover
+    ),
+    active: (
+      background-color: $devui-success-active
+    )
+  ),
+  warning: (
+    hover: (
+      background-color: $devui-warning-hover
+    ),
+    focus: (
+      background-color: $devui-warning-hover
+    ),
+    active: (
+      background-color: $devui-warning-active
+    )
   )
 );
 
@@ -172,14 +204,14 @@ $devui-btn-pseudo-config: (
   border-width: 1px;
   border-color: transparent;
   background-color: transparent;
-  @each $type in text, text-dark, common, stress, primary, danger, left, right, xs, sm, lg {
+  @each $type in text, text-dark, common, stress, primary, danger, success, warning, left, right, xs, sm, lg {
     &.devui-btn-#{$type} {
       @each $key, $value in map-get($devui-btn-normal-config, $type) {
         #{$key}: $value;
       }
     }
   }
-  @each $type in text, text-dark, common, stress, primary, danger {
+  @each $type in text, text-dark, common, stress, primary, danger, success, warning, {
     &.devui-btn-#{$type} {
       @each $pseudo, $value in map-get($devui-btn-pseudo-config, $type) {
         &:#{$pseudo} {
