@@ -6,7 +6,7 @@ import {
 import AccordionList from './accordion-list'
 import { accordionProps } from './accordion-types'
 import OpenIcon from './accordion-open-icon'
-import { getRootSlots } from '../src/utils'
+import { flatten, getRootSlots } from '../src/utils'
 
 export default defineComponent({
   name: 'DAccordionMenu',
@@ -54,22 +54,24 @@ export default defineComponent({
     }
 
     const hasActiveChildren = (item) => {
-      // FIXME:待修复
-      // if(item.title=='Child Content 1 (has children)') debugger
-      // if(item.children) {
-      //   let children = item.children
-        for(let i=0;i<item.length;i++) {
-          if(item[i].active){
-            return true
-          }else if(item[i].children){
-            for(let j of item[i].children) {
-              hasActiveChildren(j)
-            }
-            return false
-          }
-        // }
+      if(item.active === true) return true
+      if(item.children) {
+        return getActive(item.children)
       }
-      return false
+    }
+    const getActive = (arr) => {
+      let flag = false
+      if(!arr.length) return false
+      for(let i=0;i<arr.length;i++){
+        if(arr[i].active === true) {
+          flag = true
+          break
+        }
+        if(arr[i].children) {
+          flag = getActive(arr[i].children)
+        }
+      }
+      return flag
     }
 
     const keyOpen = computed(() => {
@@ -89,7 +91,7 @@ export default defineComponent({
     })
     
     const childActived = computed(() => {
-      return active.value
+      return hasActiveChildren(item.value)
     })
 
     const open = computed(() => {
