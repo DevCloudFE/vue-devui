@@ -25,7 +25,7 @@ export default defineComponent({
       let result = (typeof beforeHidden === 'function' ? beforeHidden(): beforeHidden) ?? false;
       if (result instanceof Promise) {
         result = await result;
-      }    
+      }
       if (result) return;
 
       emit('update:visible', false)
