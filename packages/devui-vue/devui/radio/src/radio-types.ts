@@ -44,7 +44,7 @@ export const radioGroupProps = {
     default: null,
   },
   /** 展示方式，横向/竖向 */
-  cssStyle: {
+  direction: {
     type: String as PropType<'row' | 'column'>,
     default: 'column',
   },

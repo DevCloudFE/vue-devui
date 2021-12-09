@@ -96,12 +96,12 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-radio-group css-style="row" v-model="choose" :beforeChange="beforeChange">
+  <d-radio-group direction="row" v-model="choose" :beforeChange="beforeChange">
     <d-radio v-for="item in list" :key="item" :value="item">
       {{ item }}
     </d-radio>
   </d-radio-group>
-  <d-radio-group v-model="choose2" css-style="row" disabled>
+  <d-radio-group v-model="choose2" direction="row" disabled>
     <d-radio v-for="item in list2" :key="item" :value="item">
       {{ item }}
     </d-radio>
@@ -178,7 +178,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-radio-group css-style="row" v-model="choose">
+  <d-radio-group direction="row" v-model="choose">
     <d-radio v-for="item in list" :key="item" :value="item">
       The Radio value is: {{ item }}
     </d-radio>
@@ -243,12 +243,12 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-radio-group css-style="row" v-model="choose">
+  <d-radio-group direction="row" v-model="choose">
     <d-radio v-for="item in list" :key="item" :value="item">
       The Radio value is: {{ item }}
     </d-radio>
   </d-radio-group>
-  <d-radio-group css-style="row" v-model="choose2">
+  <d-radio-group direction="row" v-model="choose2">
     <d-radio v-for="item in list2" :key="item.name" :value="item.name">
       The Radio value is: {{ item.name }}
     </d-radio>
@@ -303,7 +303,7 @@ d-radio-group 参数
 |     name     |       `string`       |    --    | 可选，单选框的名称                                                                            | [竖向排列](#竖向排列)                                                 |
 |    values    |       `array`        |    --    | 可选，单选数据组                                                                              | [竖向排列](#竖向排列)                                                 |
 |   disabled   |      `boolean`       |  false   | 可选，是否禁用该选项组                                                                        | [radio-group 根据条件终止切换操作](#radio-group-根据条件终止切换操作) |
-|   cssStyle   |  `'row' / 'column'`  | 'column' | 可选，设置横向或纵向排列                                                                      | [横向排列](#横向排列)                                                 |
+|  direction   |  `'row' / 'column'`  | 'column' | 可选，设置横向或纵向排列                                                                      | [横向排列](#横向排列)                                                 |
 | beforeChange | `Function / Promise` |    --    | 可选，radio-group 切换前的回调函数，返回 boolean 类型，返回 false 可以阻止 radio-group 的切换 | [回调切换](#radio-group-根据条件终止切换操作)                         |
 
 d-radio-group 事件

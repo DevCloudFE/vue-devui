@@ -96,12 +96,12 @@ The second radio group is not allowed to jump.
 
 ```vue
 <template>
-  <d-radio-group css-style="row" v-model="choose" :beforeChange="beforeChange">
+  <d-radio-group direction="row" v-model="choose" :beforeChange="beforeChange">
     <d-radio v-for="item in list" :key="item" :value="item">
       {{ item }}
     </d-radio>
   </d-radio-group>
-  <d-radio-group v-model="choose2" css-style="row" disabled>
+  <d-radio-group v-model="choose2" direction="row" disabled>
     <d-radio v-for="item in list2" :key="item" :value="item">
       {{ item }}
     </d-radio>
@@ -178,7 +178,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-radio-group css-style="row" v-model="choose">
+  <d-radio-group direction="row" v-model="choose">
     <d-radio v-for="item in list" :key="item" :value="item">
       The Radio value is: {{ item }}
     </d-radio>
@@ -243,12 +243,12 @@ The array source can be a common array or an object array.
 
 ```vue
 <template>
-  <d-radio-group css-style="row" v-model="choose">
+  <d-radio-group direction="row" v-model="choose">
     <d-radio v-for="item in list" :key="item" :value="item">
       The Radio value is: {{ item }}
     </d-radio>
   </d-radio-group>
-  <d-radio-group css-style="row" v-model="choose2">
+  <d-radio-group direction="row" v-model="choose2">
     <d-radio v-for="item in list2" :key="item.name" :value="item.name">
       The Radio value is: {{ item.name }}
     </d-radio>
@@ -303,7 +303,7 @@ d-radio-group Parameters
 |     name     |       `string`       |    --    | Optional. Single-option name (unique identifier of the radio)                                                                                      | [Horizontal Arrangement](#horizontal-arrangement)                                 |
 |    values    |       `array`        |    --    | Optional. Single-choice data group                                                                                                                 | [Horizontal Arrangement](#horizontal-arrangement)                                 |
 |   disabled   |      `boolean`       |  false   | Optional. Whether to disable this radio-group                                                                                                      | [Switch With Condition in A Radio Group](#switch-with-condition-in-a-radio-group) |
-|   cssStyle   |  `'row' / 'column'`  | 'column' | Optional. Set the horizontal or vertical arrangement                                                                                               | [Horizontal Arrangement](#horizontal-arrangement)                                 |
+|  direction   |  `'row' / 'column'`  | 'column' | Optional. Set the horizontal or vertical arrangement                                                                                               | [Horizontal Arrangement](#horizontal-arrangement)                                 |
 | beforeChange | `Function / Promise` |    --    | Callback function before radio-group switching. The return value is of the boolean type. If false is returned, radio-group switching is prevented. | [Switch With Condition in A Radio Group](#switch-with-condition-in-a-radio-group) |
 
 d-radio-group Event
