@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, Fragment, computed, inject } from 'vue'
+import { defineComponent, toRefs, computed, inject } from 'vue'
 import { accordionProps } from './accordion-types'
 import { AccordionItemClickEvent, AccordionMenuItem } from './accordion.type'
 import { getRootSlots } from '../src/utils'
@@ -17,14 +17,12 @@ export default defineComponent({
     },
     ...accordionProps
   },
-  setup(props, { slots }) {
+  setup(props) {
     const {
       item,
       deepth,
       parent,
-      openKey,
       titleKey,
-      childrenKey,
       activeKey,
       disabledKey,
     } = toRefs(props)
@@ -35,17 +33,11 @@ export default defineComponent({
     let parentValue = parent.value
     let deepValue = deepth.value
 
-    const keyOpen = computed(() => {
-      return item.value && item.value[openKey.value]
-    })
     const disabled = computed(() => {
       return item.value && item.value[disabledKey.value]
     })
     const title = computed(() => {
       return item.value && item.value[titleKey.value]
-    })
-    const children = computed(() => {
-      return item.value && item.value[childrenKey.value]
     })
     const active = computed(() => {
       return item.value && item.value[activeKey.value]

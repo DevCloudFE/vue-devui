@@ -1,13 +1,12 @@
-import { computed, defineComponent, toRefs, Fragment, inject, ref } from 'vue'
+import { computed, defineComponent, toRefs, inject } from 'vue'
 import {
-  AccordionItemClickEvent,
   AccordionMenuItem,
   AccordionMenuToggleEvent
 } from './accordion.type'
 import AccordionList from './accordion-list'
 import { accordionProps } from './accordion-types'
 import OpenIcon from './accordion-open-icon'
-import { getRootSlots, flatten } from '../src/utils'
+import { getRootSlots } from '../src/utils'
 
 export default defineComponent({
   name: 'DAccordionMenu',
@@ -26,13 +25,12 @@ export default defineComponent({
     },
     ...accordionProps
   },
-  setup(props, { slots }) {
+  setup(props) {
     const {
       item,
       deepth,
       parent,
       openKey,
-      menuItemTemplate,
       activeKey,
       autoOpenActiveMenu,
       disabledKey,

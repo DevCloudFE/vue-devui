@@ -17,7 +17,6 @@
             :restrictOneOpen="restrictOneOpen"
             @itemClick="itemClick"
             @menuToggle="menuToggle"
-            childrenKey="sub"
         >
             <template #loadingTemplate={item,deepth}>
                 <li class='devui-accordion-item'>

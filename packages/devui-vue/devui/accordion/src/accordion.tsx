@@ -1,11 +1,7 @@
 import {
-  computed,
   defineComponent,
-  onBeforeUpdate,
   onMounted,
   provide,
-  ref,
-  SetupContext,
   toRefs,
   watch
 } from 'vue'
@@ -21,7 +17,7 @@ import './accordion.scss'
 export default defineComponent({
   name: 'DAccordion',
   props: accordionProps,
-  setup(props: AccordionProps, { emit, slots }) {
+  setup(props: AccordionProps, { emit }) {
     const {
       data,
       childrenKey,

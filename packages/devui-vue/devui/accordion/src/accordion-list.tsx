@@ -2,10 +2,7 @@ import {
   computed,
   defineComponent,
   inject,
-  toRefs,
-  Fragment,
-  ComponentInternalInstance,
-  getCurrentInstance
+  toRefs
 } from 'vue'
 import type { AccordionMenuItem } from './accordion.type'
 import DAccordionMenu from './accordion-menu'
