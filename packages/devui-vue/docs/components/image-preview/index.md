@@ -84,7 +84,7 @@ export default defineComponent({
 ```vue
 <template>
   <div class="devui-image-preview-flex">
-    <d-radio-group css-style="row" v-model="zIndex">
+    <d-radio-group direction="row" v-model="zIndex">
       <d-radio v-for="item in zIndexList" :key="item" :value="item">
         {{ item }}
       </d-radio>
@@ -92,7 +92,7 @@ export default defineComponent({
     <span class="text">zIndex: {{ zIndex }}</span>
   </div>
   <div class="devui-image-preview-flex">
-    <d-radio-group css-style="row" v-model="backDropZIndex">
+    <d-radio-group direction="row" v-model="backDropZIndex">
       <d-radio v-for="item in backDropZIndexList" :key="item" :value="item">
         {{ item }}
       </d-radio>

@@ -56,19 +56,19 @@ export default defineComponent({
     <div class="w-full mt-20">
       <div class="flex mt-20">
         <span style="width: 300px">依赖元素的 X 轴(position.originX)：</span>
-        <d-radio-group v-model="position.originX" :values="horizontalProps" css-style="row"/>
+        <d-radio-group v-model="position.originX" :values="horizontalProps" direction="row"/>
       </div>
       <div class="flex mt-20">
         <span style="width: 300px">依赖元素的 Y 轴(position.originY)：</span>
-        <d-radio-group v-model="position.originY" :values="verticalProps" css-style="row"/>
+        <d-radio-group v-model="position.originY" :values="verticalProps" direction="row"/>
       </div>
       <div class="flex mt-20">
         <span style="width: 300px">Overlay X 轴(position.overlayX)：</span>
-        <d-radio-group v-model="position.overlayX" :values="horizontalProps" css-style="row"/>
+        <d-radio-group v-model="position.overlayX" :values="horizontalProps" direction="row"/>
       </div>
       <div class="flex mt-20">
         <span style="width: 300px">Overlay Y 轴(position.overlayY)：</span>
-        <d-radio-group v-model="position.overlayY" :values="verticalProps" css-style="row"/>
+        <d-radio-group v-model="position.overlayY" :values="verticalProps" direction="row"/>
       </div>
       <div class="flex mt-20">
         <span style="width: 300px">背景交互(hasBackdrop)：</span>
