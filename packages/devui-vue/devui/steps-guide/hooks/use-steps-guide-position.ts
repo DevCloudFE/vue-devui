@@ -4,7 +4,7 @@ import { Step, positionConf, StepsGuideProps } from '../src/steps-guide-types'
 export function useStepsGuidePosition(
   props: StepsGuideProps, 
   currentStep: ComputedRef<Step>) {
-  const guideClassList = ['devui-steps-guide']
+  const guideClassList = reactive(['devui-steps-guide'])
   const stepsRef = ref(null)
   const guidePosition = reactive({
     left: '',
@@ -13,7 +13,7 @@ export function useStepsGuidePosition(
   })
  
   const updateGuidePosition = () => {
-    if(!currentStep.value) return;
+    if(!currentStep.value || !stepsRef.value) return;
     const baseTop = window.pageYOffset - document.documentElement.clientTop
     const baseLeft = window.pageXOffset - document.documentElement.clientLeft
     const currentStepPosition:positionConf = currentStep.value.position
@@ -29,6 +29,10 @@ export function useStepsGuidePosition(
       guideClassList.splice(1, 1, currentStepPosition)
       const triggerSelector = currentStep.value.target || currentStep.value.trigger
       const triggerElement = document.querySelector(triggerSelector)
+      if(!triggerElement) {
+        console.warn(`${triggerSelector} 不存在!`)
+        return false
+      }
       const targetRect = triggerElement.getBoundingClientRect()
       _left = targetRect.left + triggerElement.clientWidth / 2 - stepGuideElement.clientWidth / 2 + baseLeft
       _top = targetRect.top + triggerElement.clientHeight / 2 - stepGuideElement.clientHeight / 2 + baseTop
@@ -61,7 +65,7 @@ export function useStepsGuidePosition(
     }
     guidePosition.left = _left + 'px'
     guidePosition.top = _top + 'px'
-    if(props.scrollToTargetSwitch) {
+    if(props.scrollToTargetSwitch && typeof stepGuideElement.scrollIntoView === 'function') {
       nextTick(() => {
         // 位置更新后滚动视图
         stepGuideElement.scrollIntoView({behavior: "smooth", block: "nearest", inline: "nearest"})

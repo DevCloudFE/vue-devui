@@ -64,12 +64,35 @@
 :::
 
 ### 加载中状态
-（该功能正在开发中）
 :::demo
 ```vue
 <template>
-  <d-button> click me! </d-button>
+  <d-button :showLoading="showLoading" @click="handleClick"> click me! </d-button>
 </template>
+<script>
+  import { ref, onBeforeUnmount } from 'vue';
+  export default {
+    setup() {
+      const showLoading = ref(false);
+      const timerId = ref();      
+      const handleClick = () => {
+        showLoading.value = true;
+        timerId.value = setTimeout(() => {
+          showLoading.value = false;
+        }, 2000);
+      }
+
+      onBeforeUnmount(() => {
+        if (!timerId.value) {
+          return;
+        }
+        clearTimeout(timerId.value);
+      });
+
+      return { showLoading, handleClick };
+    }
+  }
+</script>
 ```
 :::
 
@@ -148,20 +171,35 @@
 
 ### API
 d-button 参数
-|   参数    |                             类型                             |   默认    | 说明                             |
-| :-------: | :----------------------------------------------------------: | :-------: | :------------------------------- |
-|   type    |              `'button' \| 'submit' \| 'reset'`               | 'button'  | 可选，按钮类型                   |
-| btnStyle  | `'common' \| 'primary' \| 'text' \| 'text-dark' \| 'danger'` | 'primary' | 可选，按钮风格                   |
-| position  |               `'left' \| 'right' \| 'default'`               | 'default' | 可选，按钮位置                   |
-|   size    |                `'lg' \| 'md' \| 'sm' \| 'xs'`                |   'md'    | 可选，按钮大小                   |
-| bordered  |                          `boolean`                           |   false   | 可选，是否有边框                 |
-|   icon    |                           `string`                           |    --     | 可选，点击背景触发的事件         |
-|   width   |                           `string`                           |    --     | 可选，弹出框宽度(e.g '300px')    |
-| disabled  |                          `boolean`                           |   false   | 可选，是否禁用button             |
-| autofocus |                          `boolean`                           |   false   | 可选，按钮加载时是否自动获得焦点 |
+|   参数    |               类型                |   默认    | 说明                             |
+| :-------: | :-------------------------------: | :-------: | :------------------------------- |
+|   type    | `'button' \| 'submit' \| 'reset'` | 'button'  | 可选，按钮类型                   |
+| btnStyle  |          `IButtonStyle`           | 'primary' | 可选，按钮风格                   |
+| position  |         `IButtonPosition`         | 'default' | 可选，按钮位置                   |
+|   size    |           `IButtonSize`           |   'md'    | 可选，按钮大小                   |
+| bordered  |             `boolean`             |   false   | 可选，是否有边框                 |
+|   icon    |             `string`              |    --     | 可选，点击背景触发的事件         |
+|   width   |             `string`              |    --     | 可选，弹出框宽度(e.g '300px')    |
+| disabled  |             `boolean`             |   false   | 可选，是否禁用button             |
+| autofocus |             `boolean`             |   false   | 可选，按钮加载时是否自动获得焦点 |
 
 d-button 事件
 |  参数   |             类型              | 默认  | 说明           |
 | :-----: | :---------------------------: | :---: | :------------- |
 | onClick | `(event: MouseEvent) => void` |  --   | 可选，点击事件 |
 
+
+IButtonStyle 
+```typescript
+type IButtonStyle = 'common' | 'primary' | 'text' | 'text-dark' | 'danger' | 'success' | 'warning';
+```
+
+IButtonSize
+```typescript
+type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
+```
+
+IButtonPosition
+```typescript
+type IButtonPosition = 'left' | 'right' | 'default';
+```

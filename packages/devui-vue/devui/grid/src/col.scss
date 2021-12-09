@@ -14,7 +14,11 @@
   display: none;
 }
 
-@for $i from 1 to 24 {
+.devui-col-xs-span-0 {
+  display: none;
+}
+
+@for $i from 1 through 24 {
   .devui-col-offset-#{$i} {
     margin-left: percentage($i);
   }
@@ -47,7 +51,10 @@
 
 @each $size, $value in (sm, 576), (md, 768), (lg, 992), (xl, 1200), (xxl, 1600) {
   @media screen and (min-width: #{$value}px) {
-    @for $i from 1 to 24 {
+    .devui-col-#{$size}-span-0 {
+      display: none;
+    }
+    @for $i from 1 through 24 {
       .devui-col-#{$size}-offset-#{$i} {
         margin-left: percentage($i);
       }

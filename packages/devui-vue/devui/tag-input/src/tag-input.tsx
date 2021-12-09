@@ -63,18 +63,6 @@ const tagInputProps = {
   caseSensitivity: {
     type: Boolean,
     default: false
-  },
-  onValueChange: {
-    type: Function as PropType<(oldTags: any[], newTags: any[]) => void>,
-    default: undefined
-  },
-  'onUpdate:tags': {
-    type: Function as PropType<(v: any[]) => void>,
-    default: undefined
-  },
-  'onUpdate:suggestionList': {
-    type: Function as PropType<(v: any[]) => void>,
-    default: undefined
   }
 } as const;
 
