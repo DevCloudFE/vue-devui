@@ -79,8 +79,9 @@
   height: 16px;
   border-radius: 50%;
   left: 16px;
-  top: 10px;
+  top: 14px;
   padding: 0;
+  line-height: 1;
 
   &.devui-toast-image-warn i.icon {
     color: $devui-warning !important;
