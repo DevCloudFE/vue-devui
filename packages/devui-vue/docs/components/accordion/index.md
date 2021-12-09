@@ -17,6 +17,7 @@
             :restrictOneOpen="restrictOneOpen"
             @itemClick="itemClick"
             @menuToggle="menuToggle"
+            childrenKey="sub"
         >
             <template #loadingTemplate={item,deepth}>
                 <li class='devui-accordion-item'>
@@ -414,6 +415,172 @@ export default defineComponent({
   min-height: 60px;
   line-height: 40px;
   padding: 12px;
+}
+
+@media (max-width: 500px) {
+  .menu {
+    width: 80%;
+  }
+}
+</style>
+```
+
+:::
+
+### 复合层级和自动展开
+支持多层级和不限制嵌套层级。可以独立使用autoOpenActiveMenu使得激活的菜单的父层级自动展开。
+:::demo
+
+```vue
+<template>
+    <div class="menu">
+        <d-accordion
+            :data="menu"
+            :autoOpenActiveMenu="autoOpenActiveMenu"
+        >
+        </d-accordion>
+    </div>
+
+    <div class="option">
+        <d-switch v-model:checked="autoOpenActiveMenu"></d-switch> auto expend active menu<!--自动展开激活的菜单-->
+    </div>
+</template>
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+    name: "accordion",
+    setup() {
+        const autoOpenActiveMenu = ref(false)
+        const menu = ref([{
+            title: 'Content 1 (as a leaf menu)',
+        }, {
+            title: 'Content 2 (as a parent menu, has children)',
+            children: [
+            {title: 'Child Content 1'},
+            {title: 'Child Content 2'},
+            {title: 'Child Content 3'},
+            ]
+        }, {
+            title: 'Content 3 (as a parent menu, has children)',
+
+            children: [{
+                title: 'Child Content 1 (has children)',
+                children: [
+                {title: 'Child Content 1'},
+                {title: 'Child Content 2', active: true},
+                {title: 'Child Content 3'},
+                ]
+            }, {
+                title: 'Child Content 2 (has children',
+                children: [
+                {title: 'Child Content 1'},
+                {
+                    title: 'Child Content 2 (has children',
+                    children: [
+                    {title: 'Child Content 1'},
+                    {title: 'Child Content 2'},
+                    {title: 'Child Content 3'},
+                    ]
+                },
+                {title: 'Child Content 3'},
+                ]
+            },
+            {title: 'Child Content 2'},
+            {title: 'Child Content 3'},
+            ]
+        }, {
+            title: 'Content 4 (as a parent menu, has no child)',
+            children: []
+        }]);
+
+
+        return {
+            menu,
+            autoOpenActiveMenu
+        }
+    }
+})
+</script>
+<style scoped>
+.menu {
+  width: 400px;
+}
+
+.option {
+  line-height: 20px;
+  vertical-align: middle;
+  margin-top: 20px;
+}
+
+.option > d-toggle {
+  display: inline-block;
+  transform: translateY(3px);
+}
+
+@media (max-width: 500px) {
+  .menu {
+    width: 80%;
+  }
+}
+</style>
+```
+
+:::
+
+### 改变键值
+通过titleKey,childrenKey,disabledKey,activeKey等等改变数组键值，适配不同的接口类型定义。
+:::demo
+
+```vue
+<template>
+    <div class="menu">
+        <d-accordion
+            :data="menu"
+            :titleKey="key?.titleKey"
+            :activeKey="key?.activeKey"
+            :disabledKey="key?.disabledKey"
+            :openKey="key?.openKey"
+            :childrenKey="key?.childrenKey"
+        >
+        </d-accordion>
+    </div>
+</template>
+<script lang="ts">
+import { defineComponent, reactive, ref } from 'vue'
+
+export default defineComponent({
+    name: "accordion",
+    setup() {
+        const key = reactive({
+            titleKey: 'value',
+            activeKey: '$selected',
+            disabledKey: 'forbidden',
+            openKey: '$show',
+            childrenKey: 'subs',
+        })
+        const menu = ref([{
+            value: 'Content 1',
+        }, {
+            value: 'Content 2 (expended)',
+            $show: true,
+            subs: [
+            { value: 'Child Content 1 (disabled)', forbidden: true },
+            { value: 'Child Content 2 (active)', $selected: true },
+            { value: 'Child Content 3' },
+            ]
+        }]);
+
+        return {
+            menu,
+            key
+        }
+    }
+})
+</script>
+<style scoped>
+.menu {
+  width: 400px;
 }
 
 @media (max-width: 500px) {

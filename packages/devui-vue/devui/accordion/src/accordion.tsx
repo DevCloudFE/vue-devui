@@ -30,7 +30,6 @@ export default defineComponent({
       accordionType,
       autoOpenActiveMenu,
       restrictOneOpen,
-      loadingTemplate
     } = toRefs(props)
 
     let clickActiveItem: AccordionMenuItem | undefined = undefined //记录用户点击的激活菜单项
@@ -132,9 +131,18 @@ export default defineComponent({
     watch(
       () => autoOpenActiveMenu.value,
       (current, preV) => {
+        console.log('current', current)
         if (current && preV === false) {
           cleanOpenData()
         }
+      }
+    )
+    watch(
+      data.value,
+      (current, preV) => {
+        initActiveItem()
+      }, {
+        deep: true
       }
     )
 
@@ -149,10 +157,10 @@ export default defineComponent({
           ]}
         >
           <AccordionList
+            {...(props as any)}
             data={data.value}
             deepth={0}
             parent={null}
-            {...(props as any)}
           ></AccordionList>
         </div>
       )

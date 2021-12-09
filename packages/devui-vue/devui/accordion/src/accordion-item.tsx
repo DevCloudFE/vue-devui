@@ -23,11 +23,10 @@ export default defineComponent({
       deepth,
       parent,
       openKey,
-      menuItemTemplate,
+      titleKey,
+      childrenKey,
       activeKey,
-      autoOpenActiveMenu,
       disabledKey,
-      itemTemplate
     } = toRefs(props)
 
     const rootSlots = getRootSlots()
@@ -36,15 +35,31 @@ export default defineComponent({
     let parentValue = parent.value
     let deepValue = deepth.value
 
+    const keyOpen = computed(() => {
+      return item.value && item.value[openKey.value]
+    })
+    const disabled = computed(() => {
+      return item.value && item.value[disabledKey.value]
+    })
+    const title = computed(() => {
+      return item.value && item.value[titleKey.value]
+    })
+    const children = computed(() => {
+      return item.value && item.value[childrenKey.value]
+    })
+    const active = computed(() => {
+      return item.value && item.value[activeKey.value]
+    })
+
+    const childActived = computed(() => {
+      return active.value
+    })
+
     const itemClick = (itemEvent: AccordionItemClickEvent) => {
-      if (item.value && !item.value.disabled) {
+      if (item.value && !disabled.value) {
         accordionCtx.itemClickFn(itemEvent)
       }
     }
-
-    const childActived = computed(() => {
-      return item.value.active
-    })
 
     return () => {
       return (
@@ -54,9 +69,9 @@ export default defineComponent({
               'devui-accordion-item-title',
               'devui-over-flow-ellipsis',
               childActived.value && 'active',
-              item.value[disabledKey.value] && 'disabled'
+              disabled.value && 'disabled'
             ]}
-            title={item.value.title}
+            title={title.value}
             style={{ textIndent: deepValue * 20 + 'px' }}
             onClick={(e) =>
               itemClick({
@@ -68,9 +83,9 @@ export default defineComponent({
           >
             <div
               class={['devui-accordion-splitter', deepValue === 0 && 'devui-parent-list']}
-              style={{ textIndent: deepValue * 20 + 10 + 'px' }}
+              style={{ left: deepValue * 20 + 10 + 'px' }}
             ></div>
-            {!rootSlots.itemTemplate && <>{item.value.title}</>}
+            {!rootSlots.itemTemplate && <>{title.value}</>}
             {rootSlots.itemTemplate &&
               rootSlots.itemTemplate?.({
                 parent: parentValue,

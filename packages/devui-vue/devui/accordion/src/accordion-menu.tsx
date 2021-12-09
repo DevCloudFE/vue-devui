@@ -4,10 +4,10 @@ import {
   AccordionMenuItem,
   AccordionMenuToggleEvent
 } from './accordion.type'
-import DAccordionList from './accordion-list'
+import AccordionList from './accordion-list'
 import { accordionProps } from './accordion-types'
 import OpenIcon from './accordion-open-icon'
-import { getRootSlots } from '../src/utils'
+import { getRootSlots, flatten } from '../src/utils'
 
 export default defineComponent({
   name: 'DAccordionMenu',
@@ -35,7 +35,9 @@ export default defineComponent({
       menuItemTemplate,
       activeKey,
       autoOpenActiveMenu,
-      disabledKey
+      disabledKey,
+      childrenKey,
+      titleKey
     } = toRefs(props)
 
     const rootSlots = getRootSlots()
@@ -45,12 +47,31 @@ export default defineComponent({
     let deepValue = deepth.value
 
     const toggle = (itemEvent: AccordionMenuToggleEvent) => {
-      if (!itemEvent.open && item.value.children && item.value.children.some((i) => i.active)) {
+      if (!itemEvent.open && children.value && children.value.some((i) => i.active)) {
         itemEvent.item.active = true
       } else {
         itemEvent.item.active = null
       }
       accordionCtx.menuToggleFn(itemEvent)
+    }
+
+    const hasActiveChildren = (item) => {
+      // FIXME:待修复
+      // if(item.title=='Child Content 1 (has children)') debugger
+      // if(item.children) {
+      //   let children = item.children
+        for(let i=0;i<item.length;i++) {
+          if(item[i].active){
+            return true
+          }else if(item[i].children){
+            for(let j of item[i].children) {
+              hasActiveChildren(j)
+            }
+            return false
+          }
+        // }
+      }
+      return false
     }
 
     const keyOpen = computed(() => {
@@ -59,12 +80,22 @@ export default defineComponent({
     const disabled = computed(() => {
       return item.value && item.value[disabledKey.value]
     })
+    const title = computed(() => {
+      return item.value && item.value[titleKey.value]
+    })
+    const children = computed(() => {
+      return item.value && item.value[childrenKey.value]
+    })
+    const active = computed(() => {
+      return item.value && item.value[activeKey.value]
+    })
+    
     const childActived = computed(() => {
-      return item.value.active // TODO:待处理
+      return active.value
     })
 
     const open = computed(() => {
-      return keyOpen.value === undefined && autoOpenActiveMenu.value
+      return (keyOpen.value === undefined && autoOpenActiveMenu.value)
         ? childActived.value
         : keyOpen.value
     })
@@ -80,7 +111,7 @@ export default defineComponent({
               childActived.value && 'active',
               disabled.value && 'disabled'
             ]}
-            title={item.value.title}
+            title={title.value}
             style={{ textIndent: deepValue * 20 + 'px' }}
             onClick={(e) =>
               !disabled.value &&
@@ -96,7 +127,7 @@ export default defineComponent({
               class={['devui-accordion-splitter', deepValue === 0 && 'devui-parent-list']}
               style={{ left: deepValue * 20 + 10 + 'px' }}
             ></div>
-            {!rootSlots.menuItemTemplate && <>{item.value.title}</>}
+            {!rootSlots.menuItemTemplate && <>{title.value}</>}
             {rootSlots.menuItemTemplate &&
               rootSlots.menuItemTemplate?.({
                 parent: parentValue,
@@ -114,11 +145,12 @@ export default defineComponent({
               'devui-accordion-show-animate'
             ]}
           >
-            <DAccordionList
+            <AccordionList
+              {...(props as any)}
               deepth={deepValue + 1}
-              data={item.value.children || []}
+              data={children.value || []}
               parent={item.value}
-            ></DAccordionList>
+            ></AccordionList>
           </div>
         </>
       )
