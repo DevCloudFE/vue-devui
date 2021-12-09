@@ -14,7 +14,7 @@
 <template>
   <div style="display:flex">
     触发方式：
-    <d-radio-group css-style="row" v-model="trigger">
+    <d-radio-group direction="row" v-model="trigger">
       <d-radio v-for="item in triggerList" :key="item" :value="item">
         {{ item }}
       </d-radio>
@@ -22,7 +22,7 @@
   </div>
   <div style="display:flex">
     关闭区域： 
-    <d-radio-group css-style="row" v-model="closeScope">
+    <d-radio-group direction="row" v-model="closeScope">
       <d-radio v-for="item in closeScopeAreas" :key="item" :value="item">
         {{ item }}
       </d-radio>
