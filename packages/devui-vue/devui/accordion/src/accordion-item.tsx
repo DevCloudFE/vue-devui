@@ -25,6 +25,7 @@ export default defineComponent({
       titleKey,
       activeKey,
       disabledKey,
+      itemTemplate
     } = toRefs(props)
 
     const rootSlots = getRootSlots()
@@ -77,8 +78,8 @@ export default defineComponent({
               class={['devui-accordion-splitter', deepValue === 0 && 'devui-parent-list']}
               style={{ left: deepValue * 20 + 10 + 'px' }}
             ></div>
-            {!rootSlots.itemTemplate && <>{title.value}</>}
-            {rootSlots.itemTemplate &&
+            {(!rootSlots.itemTemplate || itemTemplate.value === false) && <>{title.value}</>}
+            {rootSlots.itemTemplate && itemTemplate.value !== false &&
               rootSlots.itemTemplate?.({
                 parent: parentValue,
                 deepth: deepValue,

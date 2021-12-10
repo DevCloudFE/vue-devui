@@ -1,12 +1,9 @@
 import { computed, defineComponent, toRefs, inject } from 'vue'
-import {
-  AccordionMenuItem,
-  AccordionMenuToggleEvent
-} from './accordion.type'
+import { AccordionMenuItem, AccordionMenuToggleEvent } from './accordion.type'
 import AccordionList from './accordion-list'
 import { accordionProps } from './accordion-types'
 import OpenIcon from './accordion-open-icon'
-import { flatten, getRootSlots } from '../src/utils'
+import { getRootSlots } from '../src/utils'
 
 export default defineComponent({
   name: 'DAccordionMenu',
@@ -35,7 +32,8 @@ export default defineComponent({
       autoOpenActiveMenu,
       disabledKey,
       childrenKey,
-      titleKey
+      titleKey,
+      menuItemTemplate
     } = toRefs(props)
 
     const rootSlots = getRootSlots()
@@ -49,20 +47,20 @@ export default defineComponent({
     }
 
     const hasActiveChildren = (item) => {
-      if(item[activeKey.value] === true) return true
-      if(item[childrenKey.value]) {
+      if (item[activeKey.value] === true) return true
+      if (item[childrenKey.value]) {
         return hasChildActive(item[childrenKey.value])
       }
     }
     const hasChildActive = (arr) => {
       let flag = false
-      if(!arr.length) return false
-      for(let i=0;i<arr.length;i++){
-        if(arr[i][activeKey.value] === true) {
+      if (!arr.length) return false
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i][activeKey.value] === true) {
           flag = true
           break
         }
-        if(arr[i][childrenKey.value]) {
+        if (arr[i][childrenKey.value]) {
           flag = hasChildActive(arr[i][childrenKey.value])
           if (flag) break
         }
@@ -82,16 +80,13 @@ export default defineComponent({
     const children = computed(() => {
       return item.value && item.value[childrenKey.value]
     })
-    const active = computed(() => {
-      return item.value && item.value[activeKey.value]
-    })
-    
+
     const childActived = computed(() => {
       return hasActiveChildren(item.value)
     })
 
     const open = computed(() => {
-      return (keyOpen.value === undefined && autoOpenActiveMenu.value)
+      return keyOpen.value === undefined && autoOpenActiveMenu.value
         ? childActived.value
         : keyOpen.value
     })
@@ -123,15 +118,16 @@ export default defineComponent({
               class={['devui-accordion-splitter', deepValue === 0 && 'devui-parent-list']}
               style={{ left: deepValue * 20 + 10 + 'px' }}
             ></div>
-            {!rootSlots.menuItemTemplate && <>{title.value}</>}
+            {(!rootSlots.menuItemTemplate || menuItemTemplate.value === false) && <>{title.value}</>}
             {rootSlots.menuItemTemplate &&
+              menuItemTemplate.value !== false &&
               rootSlots.menuItemTemplate?.({
                 parent: parentValue,
                 deepth: deepValue,
                 item: item.value
               })}
             <span class='devui-accordion-open-icon'>
-              <OpenIcon></OpenIcon>
+              <OpenIcon />
             </span>
           </div>
           <div

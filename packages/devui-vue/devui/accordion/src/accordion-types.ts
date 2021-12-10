@@ -15,8 +15,8 @@ export const accordionProps = {
 	openKey: { type: String, default: "open" }, // 菜单是否打开
 
 	/* 菜单模板 */
-	menuItemTemplate: { type: String, default: "" }, // 可展开菜单内容条模板
-	itemTemplate: { type: String, default: "" }, // 可点击菜单内容条模板
+	menuItemTemplate: { type: Boolean, default: true }, // 可展开菜单内容条模板
+	itemTemplate: { type: Boolean, default: true }, // 可点击菜单内容条模板
 
 	menuToggle: {
 		type: Function as unknown as () => (event: MouseEvent) => void,
@@ -35,9 +35,9 @@ export const accordionProps = {
 	restrictOneOpen: { type: Boolean, default: false }, // 限制一级菜单同时只能打开一个
 	autoOpenActiveMenu: { type: Boolean, default: false }, // 自动展开活跃菜单
 	showNoContent: { type: Boolean, default: true }, // 没有内容的时候是否显示没有数据
-	noContentTemplate: { type: String, default: "" }, // 没有内容的时候使用自定义模板
-	loadingTemplate: { type: String, default: "" }, // 加载中使用自定义模板
-	innerListTemplate: { type: String, default: "" }, // 可折叠菜单内容完全自定义，用做折叠面板
+	noContentTemplate: { type: Boolean, default: true }, // 没有内容的时候使用自定义模板
+	loadingTemplate: { type: Boolean, default: true }, // 加载中使用自定义模板
+	innerListTemplate: { type: Boolean, default: true }, // 可折叠菜单内容完全自定义，用做折叠面板
 
 	/* 内置路由/链接/动态判断路由或链接类型 */
 	linkType: {

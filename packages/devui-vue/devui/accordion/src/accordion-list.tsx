@@ -43,7 +43,10 @@ export default defineComponent({
       linkType,
       showNoContent,
       loadingKey,
-      titleKey
+      titleKey,
+      loadingTemplate,
+      noContentTemplate,
+      innerListTemplate
     } = toRefs(props)
 
     let parentValue = parent.value
@@ -64,7 +67,7 @@ export default defineComponent({
     return () => {
       return (
         <>
-          {(!rootSlots.innerListTemplate || deepth.value === 0) && (
+          {(!rootSlots.innerListTemplate || deepth.value === 0 || innerListTemplate.value === false) && (
             <ul class={['devui-accordion-list']} {...attrs}>
               {data.value.map((item) => {
                 return (
@@ -100,6 +103,7 @@ export default defineComponent({
             </ul>
           )}
           {rootSlots.innerListTemplate &&
+            innerListTemplate.value !== false &&
             deepValue !== 0 &&
             rootSlots.innerListTemplate?.({
               item: parentValue,
@@ -107,12 +111,12 @@ export default defineComponent({
               itemClickFn: accordionCtx.itemClickFn,
               menuToggleFn: accordionCtx.menuToggleFn
             })}
-          {!rootSlots.innerListTemplate &&
+          {(!rootSlots.innerListTemplate || innerListTemplate.value === false) &&
             (loading.value || (noContent.value && showNoContent.value)) && (
               <ul class={['devui-accordion-list']} {...attrs}>
                 {
                   // 加载中
-                  loading.value && !rootSlots.loadingTemplate && (
+                  loading.value && (!rootSlots.loadingTemplate || loadingTemplate.value === false) && (
                     <li class='devui-accordion-item'>
                       <div
                         class={['devui-accordion-item-title', 'devui-over-flow-ellipsis']}
@@ -126,7 +130,8 @@ export default defineComponent({
                 {
                   // 自定义加载
                   loading.value &&
-                    rootSlots.loadingTemplate &&
+                    rootSlots.loadingTemplate && 
+                    loadingTemplate.value !== false &&
                     rootSlots.loadingTemplate?.({
                       item: parentValue,
                       deepth: deepValue
@@ -137,7 +142,7 @@ export default defineComponent({
                   showNoContent.value &&
                     !loading.value &&
                     noContent.value &&
-                    !rootSlots.noContentTemplate && (
+                    (!rootSlots.noContentTemplate || noContentTemplate.value === false) && (
                       <li class='devui-accordion-item'>
                         <div
                           class={[
@@ -157,6 +162,7 @@ export default defineComponent({
                     !loading.value &&
                     noContent.value &&
                     rootSlots.noContentTemplate &&
+                    noContentTemplate.value !== false &&
                     rootSlots.noContentTemplate?.({
                       item: parentValue,
                       deepth: deepValue
