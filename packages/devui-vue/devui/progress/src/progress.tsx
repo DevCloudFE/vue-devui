@@ -117,14 +117,14 @@ export default defineComponent({
 
     const progressLine = (
       <div
-        className="devui-progress--line"
+        class="devui-progress--line"
         style={{
           height: height,
           borderRadius: height,
         }}
       >
         <div
-          className="devui-progress-bar"
+          class="devui-progress-bar"
           style={{
             height: height,
             borderRadius: height,
@@ -143,21 +143,21 @@ export default defineComponent({
     );
 
     const textElement = (
-      <span className="devui-progress-circle-text">{percentage}%</span>
+      <span class="devui-progress-circle-text">{percentage}%</span>
     );
 
     const progressCircle = (
-      <div className="devui-progress-circle">
-        <svg className="devui-progress-circle" viewBox="0 0 100 100">
+      <div class="devui-progress-circle">
+        <svg class="devui-progress-circle" viewBox="0 0 100 100">
           <path
-            className="devui-progress-circle-trail"
+            class="devui-progress-circle-trail"
             fill-opacity="0"
             stroke-width={strokeWidth}
             style={data.trailPath}
             d={data.pathString}
           />
           <path
-            className="devui-progress-circle-path"
+            class="devui-progress-circle-path"
             d={data.pathString}
             stroke-linecap="round"
             fill-opacity="0"
@@ -172,7 +172,7 @@ export default defineComponent({
     );
 
     return (
-      <div className="devui-progress">
+      <div class="devui-progress">
         {!isCircle ? progressLine : progressCircle}
       </div>
     );
