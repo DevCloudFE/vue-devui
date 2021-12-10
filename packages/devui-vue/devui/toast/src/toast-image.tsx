@@ -22,6 +22,6 @@ export default defineComponent({
 
     const showIcon = () => severity !== 'common'
 
-    return <span class={wrapperCls}>{showIcon() ? <Icon name={severityIconMap[severity]} size="14px" /> : null}</span>
+    return <span class={wrapperCls}>{showIcon() ? <Icon name={severityIconMap[severity]} size="16px" /> : null}</span>
   }
 })
