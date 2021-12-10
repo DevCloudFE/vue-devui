@@ -183,7 +183,7 @@ export default defineComponent({
 | :----------------: | :---------------------: | :-----------------------------------------: | ------------------------------------------------- |
 | activeIndexChange | `EventEmitter<number>` | Returns the index of the current card when the card is switched. The index starts from 0. | [Basic usage](#basic-usage) |
 
-#### 方法
+#### method
 
 | Method | Description | Jump to Demo |
 | :---------: | :---------------------------------- | :----------------------------- |
