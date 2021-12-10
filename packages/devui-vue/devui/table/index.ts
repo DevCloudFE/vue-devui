@@ -1,8 +1,10 @@
 import type { App } from 'vue'
 import Table from './src/table'
 import Column from './src/column/column'
+import { Loading } from '../loading/index'
 
-Table.install = function(app: App): void {
+Table.install = function (app: App): void {
+  app.directive('dLoading', Loading)
   app.component(Table.name, Table)
   app.component(Column.name, Column)
 }
