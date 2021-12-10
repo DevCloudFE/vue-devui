@@ -88,7 +88,6 @@ export default defineComponent({
 
     // 点击了可点击菜单
     const itemClickFn = (itemEvent: AccordionItemClickEvent) => {
-      data.value.forEach((item) => (item[activeKey.value] = null))
       const prevActiveItem = clickActiveItem
       activeItemFn(itemEvent.item)
       emit('itemClick', { ...itemEvent, prevActiveItem: prevActiveItem })
@@ -127,7 +126,6 @@ export default defineComponent({
     watch(
       () => autoOpenActiveMenu.value,
       (current, preV) => {
-        console.log('current', current)
         if (current && preV === false) {
           cleanOpenData()
         }

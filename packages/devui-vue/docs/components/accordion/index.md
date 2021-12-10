@@ -17,6 +17,7 @@
             :restrictOneOpen="restrictOneOpen"
             @itemClick="itemClick"
             @menuToggle="menuToggle"
+            childrenKey="sub"
         >
             <template #loadingTemplate={item,deepth}>
                 <li class='devui-accordion-item'>
@@ -56,14 +57,14 @@ export default defineComponent({
         const accordionTypeEmbed = ref(false)
         const menu = ref([{
             title: 'Content 1',
-            children: [
+            sub: [
             {title: 'Child Content 1'},
             {title: 'Child Content 2'},
             {title: 'Child Content '},
             ]
         }, {
             title: 'Content 2（This is a long sentence for option display.）',
-            children: [
+            sub: [
             {title: 'Child Content 1 (This is a long sentence for option display.)'},
             {title: 'Child Content 2'},
             {title: 'Child Content 3'},
@@ -71,24 +72,24 @@ export default defineComponent({
         }, {
             title: 'Content 3 (Default Open)',
             open: true,
-            children: [
+            sub: [
             {title: 'Child Content 1 (Disabled)', disabled: true},
             {title: 'Child Content 2 (Default Active)', active: true},
             {title: 'Child Content 3'},
             ]
         }, {
             title: 'Content 4 (No Child)',
-            children: []
+            sub: []
         }, {
             title: 'Content 5 (Disabled)',
             disabled: true,
-            children: [
+            sub: [
             ]
         }, {
             title: 'Content 6 (Dynamic Content)',
             needLoadChildren: true,
             loading: false,
-            children: [
+            sub: [
             ]
         }])
 

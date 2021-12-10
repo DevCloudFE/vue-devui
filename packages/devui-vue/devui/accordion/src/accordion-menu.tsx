@@ -45,30 +45,26 @@ export default defineComponent({
     let deepValue = deepth.value
 
     const toggle = (itemEvent: AccordionMenuToggleEvent) => {
-      if (!itemEvent.open && children.value && children.value.some((i) => i.active)) {
-        itemEvent.item.active = true
-      } else {
-        itemEvent.item.active = null
-      }
       accordionCtx.menuToggleFn(itemEvent)
     }
 
     const hasActiveChildren = (item) => {
-      if(item.active === true) return true
-      if(item.children) {
-        return getActive(item.children)
+      if(item[activeKey.value] === true) return true
+      if(item[childrenKey.value]) {
+        return hasChildActive(item[childrenKey.value])
       }
     }
-    const getActive = (arr) => {
+    const hasChildActive = (arr) => {
       let flag = false
       if(!arr.length) return false
       for(let i=0;i<arr.length;i++){
-        if(arr[i].active === true) {
+        if(arr[i][activeKey.value] === true) {
           flag = true
           break
         }
-        if(arr[i].children) {
-          flag = getActive(arr[i].children)
+        if(arr[i][childrenKey.value]) {
+          flag = hasChildActive(arr[i][childrenKey.value])
+          if (flag) break
         }
       }
       return flag
