@@ -10,7 +10,7 @@
 
 ```vue
 <template>
-    <div class="menu">
+    <div class="basic-menu">
         <d-accordion
             :data="menu"
             :accordionType="accordionTypeEmbed ? 'embed' : 'normal'"
@@ -32,10 +32,10 @@
         </d-accordion>
     </div>
     
-    <div class="option">
+    <div class="basic-option">
         <d-switch v-model:checked="restrictOneOpen"></d-switch> Only one level-1 menu can be expanded.<!--限制只能展开一个一级菜单-->
     </div>
-    <div class="option"><d-switch v-model:checked="accordionTypeEmbed"></d-switch> Embedded menu (no shadow)<!--内嵌菜单形式（无阴影）--></div>
+    <div class="basic-option"><d-switch v-model:checked="accordionTypeEmbed"></d-switch> Embedded menu (no shadow)<!--内嵌菜单形式（无阴影）--></div>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
@@ -112,23 +112,23 @@ export default defineComponent({
 })
 </script>
 <style scoped>
-.menu {
+.basic-menu {
   width: 200px;
 }
 
-.option {
+.basic-option {
   line-height: 20px;
   vertical-align: middle;
   margin-top: 20px;
 }
 
-.option > d-toggle {
+.basic-option > d-toggle {
   display: inline-block;
   transform: translateY(3px);
 }
 
 @media (max-width: 250px) {
-  .menu {
+  .basic-menu {
     width: 80%;
   }
 }
@@ -150,7 +150,7 @@ ul {
 
 ```vue
 <template>
-    <div class="menu">
+    <div class="use-template-menu">
         <d-accordion
             :data="menu"
             :accordionType="accordionTypeEmbed ? 'embed' : 'normal'"
@@ -160,7 +160,7 @@ ul {
         >
             <template #menuItemTemplate={item,deepth,parent}>
                 {{ item.title }}
-                <span class="badge" v-if="item.children?.length">{{ item.children.length }}</span>
+                <span class="use-template-badge" v-if="item.children?.length">{{ item.children.length }}</span>
                 <span class="operation-clear" v-if="item.needLoadChildren === false" @click="clearChildrenData($event, item)">
                     reset
                     <!--重置-->
@@ -168,7 +168,7 @@ ul {
             </template>
             <template #itemTemplate={item,deepth,parent}>
                 {{ item.title }}
-                <span class="info">(Click Count: {{ item.clicktimes || '0' }})</span>
+                <span class="use-template-info">(Click Count: {{ item.clicktimes || '0' }})</span>
             </template>
             <template #noContentTemplate={deepth}>
                 <li class="devui-accordion-item disabled">
@@ -180,7 +180,7 @@ ul {
             </template>
             <template #loadingTemplate={item}>
                 <li class="devui-accordion-item">
-                    <div class="loading"><span class="circle-spinner"></span> loading...<!--正在用力地加载中...--></div>
+                    <div class="use-template-loading"><span class="use-template-circle-spinner"></span> loading...<!--正在用力地加载中...--></div>
                 </li>
             </template>
         </d-accordion>
@@ -269,11 +269,11 @@ export default defineComponent({
 })
 </script>
 <style scoped>
-.menu {
+.use-template-menu {
   width: 400px;
 }
 
-.badge {
+.use-template-badge {
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -286,13 +286,13 @@ export default defineComponent({
   font-weight: normal;
 }
 
-.loading {
+.use-template-loading {
   position: relative;
   line-height: 40px;
   padding-left: 64px;
 }
 
-.circle-spinner {
+.use-template-circle-spinner {
   top: 10px;
   left: 36px;
   position: absolute;
@@ -317,7 +317,7 @@ export default defineComponent({
 }
 
 @media (max-width: 500px) {
-  .menu {
+  .use-template-menu {
     width: 80%;
   }
 }
@@ -333,17 +333,15 @@ export default defineComponent({
 
 ```vue
 <template>
-    <div class="menu">
+    <div class="inner-template-menu">
         <d-accordion
             :data="menu"
             :accordionType="accordionTypeEmbed ? 'embed' : 'normal'"
             :restrictOneOpen="restrictOneOpen"
-            @itemClick="itemClick"
-            @menuToggle="menuToggle"
         >
             <template #innerListTemplate={item,deepth}>
                 <div 
-                    class="devui-accordion-submenu devui-accordion-show-animate my-menu"
+                    class="devui-accordion-submenu devui-accordion-show-animate inner-template-my-menu"
                 >
                     {{item.content}}
                 </div>
@@ -369,46 +367,27 @@ export default defineComponent({
             content: 'Child Content of Content 2'
         }]);
 
-        const itemClick = (event) => {
-            console.log('item click' + JSON.stringify(event));
-        }
-        const menuToggle = (event) => {
-            console.log('menu toggle' + JSON.stringify(event));
-            if (event.open && event.item.needLoadChildren) {
-                event.item.loading = true;
-                setTimeout(() => {
-                    event.item.children = [
-                        {title: 'Child Content 1'},
-                        {title: 'Child Content 2'}
-                    ];
-                    event.item.needLoadChildren = false;
-                    event.item.loading = false;
-                }, 2000);
-            }
-        }
 
         return {
             menu,
             restrictOneOpen,
             accordionTypeEmbed,
-            itemClick,
-            menuToggle
         }
     }
 })
 </script>
 <style scoped>
-.menu {
+.inner-template-menu {
   width: 400px;
 }
-.my-menu {
+.inner-template-my-menu {
   min-height: 60px;
   line-height: 40px;
   padding: 12px;
 }
 
 @media (max-width: 500px) {
-  .menu {
+  .inner-template-menu {
     width: 80%;
   }
 }
@@ -423,7 +402,7 @@ export default defineComponent({
 
 ```vue
 <template>
-    <div class="menu">
+    <div class="multi-child-menu">
         <d-accordion
             :data="menu"
             :autoOpenActiveMenu="autoOpenActiveMenu"
@@ -431,7 +410,7 @@ export default defineComponent({
         </d-accordion>
     </div>
 
-    <div class="option">
+    <div class="multi-child-option">
         <d-switch v-model:checked="autoOpenActiveMenu"></d-switch> auto expend active menu<!--自动展开激活的菜单-->
     </div>
 </template>
@@ -493,23 +472,23 @@ export default defineComponent({
 })
 </script>
 <style scoped>
-.menu {
+.multi-child-menu {
   width: 400px;
 }
 
-.option {
+.multi-child-option {
   line-height: 20px;
   vertical-align: middle;
   margin-top: 20px;
 }
 
-.option > d-toggle {
+.multi-child-option > d-toggle {
   display: inline-block;
   transform: translateY(3px);
 }
 
 @media (max-width: 500px) {
-  .menu {
+  .multi-child-menu {
     width: 80%;
   }
 }
@@ -524,7 +503,7 @@ export default defineComponent({
 
 ```vue
 <template>
-    <div class="menu">
+    <div class="change-key-menu">
         <d-accordion
             :data="menu"
             :titleKey="key?.titleKey"
@@ -569,12 +548,12 @@ export default defineComponent({
 })
 </script>
 <style scoped>
-.menu {
+.change-key-menu {
   width: 400px;
 }
 
 @media (max-width: 500px) {
-  .menu {
+  .change-key-menu {
     width: 80%;
   }
 }
