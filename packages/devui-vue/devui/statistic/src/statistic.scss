@@ -16,15 +16,16 @@
     font-size: 24px;
     display: flex;
     align-items: center;
-    vertical-align: center;
   }
 
   &-prefix {
     margin-right: 6px;
+    display: flex;
   }
 
   &-suffix {
     margin-left: 6px;
+    display: flex;
   }
 
   &--value {
