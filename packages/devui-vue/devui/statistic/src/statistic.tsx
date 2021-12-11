@@ -6,8 +6,8 @@ import './statistic.scss'
 
 export default defineComponent({
   name: 'DStatistic',
-  props: statisticProps,
   inheritAttrs: false,
+  props: statisticProps,
   setup(props: StatisticProps, ctx) {
     const innerValue = ref(props.valueFrom ?? props.value)
     const tween = ref(null)
