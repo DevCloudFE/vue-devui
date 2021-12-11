@@ -21,26 +21,26 @@ common 时不展示图标。
         >
       </template>
     </d-toast>
-    <d-button bsStyle="success" @click.native="showToast('success')"
+    <d-button btnStyle="success" @click.native="showToast('success')"
       >Success</d-button
     >
-    <d-button bsStyle="warning" @click.native="showToast('warn')"
-      >Warn</d-button
+    <d-button btnStyle="warning" @click.native="showToast('warning')"
+      >Warning</d-button
     >
-    <d-button bsStyle="danger" @click.native="showToast('error')"
+    <d-button btnStyle="danger" @click.native="showToast('error')"
       >Error</d-button
     >
-    <d-button bsStyle="primary" @click.native="showToast('multiple')"
+    <d-button btnStyle="primary" @click.native="showToast('multiple')"
       >Multiple</d-button
     >
-    <d-button bsStyle="common" @click.native="showToast('link')">link</d-button>
-    <d-button bsStyle="common" @click.native="showToast('plainText')"
+    <d-button btnStyle="common" @click.native="showToast('link')">link</d-button>
+    <d-button btnStyle="common" @click.native="showToast('plainText')"
       >pure text</d-button
     >
-    <d-button bsStyle="common" @click.native="showToast('common')"
+    <d-button btnStyle="common" @click.native="showToast('common')"
       >common</d-button
     >
-    <d-button bsStyle="warning" @click.native="showToast('noTitle')"
+    <d-button btnStyle="warning" @click.native="showToast('noTitle')"
       >no title</d-button
     >
   </section>
@@ -87,7 +87,7 @@ export default defineComponent({
         case 'noTitle':
           msgs.value = [
             {
-              severity: 'warn',
+              severity: 'warning',
               content:
                 'This is a test text. This is a test text. This is a test text.',
             },
@@ -139,16 +139,16 @@ export default defineComponent({
 <template>
   <section class="toast-timeout-demo">
     <d-toast :life="5000" :value="msgs2"></d-toast>
-    <d-button bsStyle="success" @click.native="showToast2('success')"
+    <d-button btnStyle="success" @click.native="showToast2('success')"
       >Success</d-button
     >
-    <d-button bsStyle="warning" @click.native="showToast2('warn')"
-      >Warn</d-button
+    <d-button btnStyle="warning" @click.native="showToast2('warning')"
+      >Warning</d-button
     >
-    <d-button bsStyle="danger" @click.native="showToast2('error')"
+    <d-button btnStyle="danger" @click.native="showToast2('error')"
       >Error</d-button
     >
-    <d-button bsStyle="common" @click.native="showToast2('common')"
+    <d-button btnStyle="common" @click.native="showToast2('common')"
       >common</d-button
     >
   </section>
@@ -220,7 +220,7 @@ export default defineComponent({
       :style="{ top: '20px' }"
       :styleClass="'custom-class'"
     ></d-toast>
-    <d-button bsStyle="common" @click.stop="showToast3()"
+    <d-button btnStyle="common" @click.stop="showToast3()"
       >Custom Style</d-button
     >
   </section>
@@ -297,7 +297,7 @@ export default defineComponent({
 <template>
   <section>
     <d-toast lifeMode="single" :value="msgs4"></d-toast>
-    <d-button bsStyle="common" @click.native="showToast4()">Single</d-button>
+    <d-button btnStyle="common" @click.native="showToast4()">Single</d-button>
   </section>
 </template>
 <script>
@@ -329,8 +329,8 @@ export default defineComponent({
             'This is a test text. This is a test text. This is a test text.',
         },
         {
-          severity: 'warn',
-          summary: 'Warn',
+          severity: 'warning',
+          summary: 'Warning',
           content:
             'This is a test text. This is a test text. This is a test text.',
         },
@@ -360,13 +360,13 @@ export default defineComponent({
     <d-button @click.native="openToast()"
       >click me show simplest toast!</d-button
     >
-    <d-button v-if="!isShow" @click.native="openToast2()" bsStyle="common"
+    <d-button v-if="!isShow" @click.native="openToast2()" btnStyle="common"
       >click me show customer toast!</d-button
     >
     <d-button v-if="isShow" @click.native="closeToast2()"
       >click me close customer toast!</d-button
     >
-    <d-button v-if="isShow" @click.native="closeToast3()" bsStyle="common"
+    <d-button v-if="isShow" @click.native="closeToast3()" btnStyle="common"
       >only close first customer toast!</d-button
     >
   </div>

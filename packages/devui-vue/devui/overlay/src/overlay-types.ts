@@ -4,9 +4,6 @@ export const overlayProps = {
   visible: {
     type: Boolean,
   },
-  'onUpdate:visible': {
-    type: Function as PropType<(v: boolean) => void>
-  },
   backgroundBlock: {
     type: Boolean,
     default: false
@@ -31,7 +28,7 @@ export const overlayProps = {
   },
 } as const;
 
-export const overlayEmits = ['onUpdate:visible', 'backdropClick'] as ['onUpdate:visible', 'backdropClick'];
+export const overlayEmits = ['update:visible', 'backdropClick'] as ['update:visible', 'backdropClick'];
 export type OverlayProps = ExtractPropTypes<typeof overlayProps>;
 
 

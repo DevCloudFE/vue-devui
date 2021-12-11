@@ -1,11 +1,13 @@
 import type { App } from 'vue'
 import Button from './src/button'
+import { Loading } from '../loading/index'
 
 Button.install = function (app: App) {
+  app.directive('dLoading', Loading)
   app.component(Button.name, Button)
 }
 
-export * from './src/button-types';
+export * from './src/button-types'
 
 export { Button }
 
