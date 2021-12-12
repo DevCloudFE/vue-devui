@@ -4,7 +4,6 @@ export default function (props: BackTopProps): Position {
   const { bottom, right } = props
 
   return {
-    position: 'fixed',
     bottom,
     right
   }

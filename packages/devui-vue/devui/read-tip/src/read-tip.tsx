@@ -19,7 +19,6 @@ export default defineComponent({
       appendToBody: true,
       rules: { selector: null },
     };
-    const tempTop = ref(0)
     // 合并基础配置
     const options = { ...defaultOptions, ...props.readTipOptions }
     const defaultSlot = ref(null)
@@ -148,7 +147,7 @@ export default defineComponent({
 
           {(refRules).map(rule => (
             <div
-
+              data-test="todo"
             >
               {rule.status && (<TipsTemplate defaultTemplateProps={{ ...rule }} >
                 {

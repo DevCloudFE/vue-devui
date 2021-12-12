@@ -8,18 +8,17 @@ const marker = ref()
 const container = ref()
 // 滚动监听
 useActiveSidebarLinks(container, marker)
+const forwardText = computed(() => {
+  return localStorage.getItem('preferred_lang') === 'zh-CN' ? '快速前往' : 'Forward'
+})
 </script>
 
 <template>
   <aside ref="container">
     <nav class="devui-content-nav">
-      <h3 class="devui-fast-forward">快速前往</h3>
+      <h3 class="devui-fast-forward">{{ forwardText }}</h3>
       <ul class="devui-step-nav">
-        <li
-          v-for="{ link, text } in headers"
-          :key="link"
-          class="devui-item"
-        >
+        <li v-for="{ link, text } in headers" :key="link" class="devui-item">
           <a class="devui-link" :href="link">{{ text }}</a>
         </li>
       </ul>
@@ -36,7 +35,7 @@ useActiveSidebarLinks(container, marker)
   width: 200px;
   position: fixed;
   top: 50px;
-  right: 0;
+  right: calc((100vw - 1440px) / 2 - 10px);
   z-index: 1;
 
   .devui-fast-forward {
@@ -46,8 +45,7 @@ useActiveSidebarLinks(container, marker)
     line-height: 24px;
     font-weight: bold;
     padding-bottom: 10px;
-    margin-left: 20px;
-    border-bottom: 1px solid $devui-dividing-line;
+    margin-left: 17px;
   }
 
   .devui-step-nav {
@@ -73,9 +71,8 @@ useActiveSidebarLinks(container, marker)
         color: $devui-text;
         white-space: nowrap;
         text-overflow: ellipsis;
-        -webkit-transition: all .3s ease;
-        transition: all .3s ease;
-
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
       }
       a.current {
         color: $devui-link;
@@ -83,7 +80,8 @@ useActiveSidebarLinks(container, marker)
     }
   }
 
-  .devui-link:hover, .devui-link.active {
+  .devui-link:hover,
+  .devui-link.active {
     color: $devui-brand;
     text-decoration: none;
   }
@@ -98,7 +96,6 @@ useActiveSidebarLinks(container, marker)
     padding: 0 15% 0 8%;
   }
 }
-
 
 @media (max-width: 1250px) {
   .devui-content-nav {

@@ -177,3 +177,27 @@ export default defineComponent({
 
 ```
 :::
+
+### API
+
+d-select 参数
+
+|     参数     |         类型         | 默认  | 说明                                                                       | 跳转 Demo                               |
+| :----------: | :------------------: | :--------------------: | :------------------------------------------------------------------------ | --------------------------------------- |
+|    options     | `array` |    []     | 可选, 和 searchFn 互斥，两者必须有且只有一个。下拉选项资源string object  | [基本用法](#基本用法)   ||
+|    multiple    | `boolean` | false | 可选,是否支持多选 | [多选](#多选) |
+| readonly | `boolean` |  false   | 可选,是否可以输入 ||
+| size | `string` |  'md'  | 可选,下拉选框尺寸,有三种选择'lg','md','sm' | [基本用法](#基本用法) |
+| disabled | `boolean` |  false  | 可选,是否禁用下拉框 | [禁用](#禁用) |
+| placeholder | `string` |  '请选择'  | 可选,输入框的 placeholder ||
+| overview | `string` |  'border'  | 可选,决定选择框样式显示,默认有边框'border','underlined' | [基本用法](#基本用法) |
+| optionDisabledKey | `string` |  ''  | 可选,禁用单个选项;当传入资源 options 类型为Object,比如设置为'disabled',则当对象的 disabled 属性为 true 时,该选项将禁用;当设置为''时不禁用单个选项 | [禁用](#禁用) |
+| allowClear | `boolean` |  false  | 可选, 配置是否允许清空选值，仅单选场景适用 | [可清空](#可清空) |
+
+
+d-select 事件
+
+|    事件     |   类型  | 说明                     | 跳转 Demo |
+| :---------: | :------: | :--------------------: | :---------: |
+| valueChange |	`string` |	可选,输出函数,当选中某个选项后,将会调用此函数,参数为当前选择项的值 ||
+| toggleChange |	`string` |	可选,输出函数,下拉打开关闭 toggle 事件 ||

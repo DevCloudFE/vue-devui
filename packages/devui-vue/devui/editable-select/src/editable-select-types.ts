@@ -1,13 +1,23 @@
 import type { PropType, ExtractPropTypes } from 'vue'
+type HorizontalConnectionPos = 'left' | 'center' | 'right';
+type VerticalConnectionPos = 'top' | 'center' | 'bottom';
+
+export interface ConnectionPosition {
+  originX: HorizontalConnectionPos
+  originY: VerticalConnectionPos
+  overlayX: HorizontalConnectionPos
+  overlayY: VerticalConnectionPos
+}
 export interface OptionItem {
   name: string
   [key: string]: any
 }
 export type Options = Array<string | OptionItem>
 export const editableSelectProps = {
-  /* test: {
-    type: Object as PropType<{ xxx: xxx }>
-  } */
+  appendToBody: {
+    type: Boolean,
+    default: false
+  },
   modelValue: {
     type: [String, Number] as PropType<string | number>
   },
@@ -16,7 +26,8 @@ export const editableSelectProps = {
     default: () => []
   },
   width: {
-    type: Number
+    type: Number,
+    default: 450
   },
   maxHeight: {
     type: Number
@@ -47,7 +58,17 @@ export const editableSelectProps = {
   },
   searchFn: {
     type: Function as PropType<(term: string) => Array<Options>>,
+  },
+  loadMore: {
+    type: Function as PropType<() => Array<Options>>
   }
 } as const
 
+export const selectDropdownProps = {
+  options: {
+    type: Array as PropType<OptionItem[]>,
+    default: () => []
+  }
+} as const
 export type EditableSelectProps = ExtractPropTypes<typeof editableSelectProps>
+export type SelectDropdownProps = ExtractPropTypes<typeof selectDropdownProps>

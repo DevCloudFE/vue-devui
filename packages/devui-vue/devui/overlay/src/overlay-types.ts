@@ -4,9 +4,6 @@ export const overlayProps = {
   visible: {
     type: Boolean,
   },
-  'onUpdate:visible': {
-    type: Function as PropType<(v: boolean) => void>
-  },
   backgroundBlock: {
     type: Boolean,
     default: false
@@ -18,7 +15,7 @@ export const overlayProps = {
   backgroundStyle: {
     type: [String, Object] as PropType<StyleValue>
   },
-  backdropClick: {
+  onBackdropClick: {
     type: Function,
   },
   backdropClose: {
@@ -31,6 +28,7 @@ export const overlayProps = {
   },
 } as const;
 
+export const overlayEmits = ['update:visible', 'backdropClick'] as ['update:visible', 'backdropClick'];
 export type OverlayProps = ExtractPropTypes<typeof overlayProps>;
 
 
@@ -41,8 +39,8 @@ export const fixedOverlayProps = {
     default: undefined,
   },
 };
-
 export type FixedOverlayProps = ExtractPropTypes<typeof fixedOverlayProps>;
+
 
 export const flexibleOverlayProps = {
   origin: {
@@ -51,7 +49,7 @@ export const flexibleOverlayProps = {
   },
   position: {
     type: Object as PropType<ConnectionPosition>,
-    default: () => ({
+    default: (): ConnectionPosition => ({
       originX: 'left',
       originY: 'top',
       overlayX: 'left',
@@ -60,6 +58,8 @@ export const flexibleOverlayProps = {
   },
   ...overlayProps,
 }
+
+
 
 
 export interface ClientRect {

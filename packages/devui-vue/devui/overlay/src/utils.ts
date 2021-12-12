@@ -1,5 +1,5 @@
-import { onUnmounted, watch, computed, ComputedRef, onMounted } from 'vue';
-import { OverlayProps } from './overlay-types';
+import { onUnmounted, watch, computed, ComputedRef, onMounted, SetupContext } from 'vue';
+import { overlayEmits, OverlayProps } from './overlay-types';
 
 interface CommonInfo {
   backgroundClass: ComputedRef<string[]>
@@ -8,7 +8,7 @@ interface CommonInfo {
   handleOverlayBubbleCancel: (e: Event) => void
 }
 
-export function useOverlayLogic(props: OverlayProps): CommonInfo {
+export function useOverlayLogic(props: OverlayProps, ctx: SetupContext<typeof overlayEmits>): CommonInfo {
   const backgroundClass = computed(() => {
     return [
       'devui-overlay-background',
@@ -22,10 +22,9 @@ export function useOverlayLogic(props: OverlayProps): CommonInfo {
 
   const handleBackdropClick = (event: Event) => {
     event.preventDefault();
-
-    props.backdropClick?.();
+    props.onBackdropClick?.();
     if (props.backdropClose) {
-      props['onUpdate:visible']?.(false);
+      ctx.emit('update:visible', false);
     }
   };
 

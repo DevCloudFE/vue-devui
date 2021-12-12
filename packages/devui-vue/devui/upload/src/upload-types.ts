@@ -1,4 +1,5 @@
 import type { PropType, ExtractPropTypes } from 'vue'
+import { FileUploader } from './file-uploader'
 export class IUploadOptions {
   // 上传接口地址
   uri: string
@@ -30,7 +31,7 @@ export class IUploadOptions {
 
 export class IFileOptions {
   accept?: string
-  multiple: boolean
+  multiple?: boolean
   webkitdirectory: boolean
 }
 
@@ -38,165 +39,95 @@ export enum UploadStatus {
   preLoad = 0,
   uploading,
   uploaded,
-  failed,
+  failed
 }
 
 type DynamicUploadOptionsFn = (files, uploadOptions) => IUploadOptions
 type ChangeFn = (_: any) => void
-type BeforeUploadFn = (file: File) => boolean | Promise<boolean>
+type BeforeUploadFn = (file: FileUploader) => boolean | Promise<boolean>
 export const uploadProps = {
+  // 规定能够通过文件上传进行提交的文件类型,例如 accept: '.xls,.xlsx,.pages,.mp3,.png'
+  accept: {
+    type: String
+  },
+  // 是否允许用户选择文件目录，而不是文件
+  webkitdirectory: {
+    type: Boolean,
+    default: false
+  },
   uploadOptions: {
     type: Object as PropType<IUploadOptions>,
-    required: true,
+    required: true
   },
-  fileOptions: {
-    type: Object as PropType<IFileOptions>,
-    required: true,
+  multiple: {
+    type: Boolean,
+    default: false
   },
   autoUpload: {
     type: Boolean,
-    default: false,
+    default: false
   },
   placeholderText: {
     type: String,
-    default: '选择文件',
+    default: '选择文件'
   },
   uploadText: {
     type: String,
-    default: '上传',
+    default: '上传'
   },
   uploadedFiles: {
     type: Array as PropType<File[]>,
-    default: () => [],
+    default: () => []
   },
   withoutBtn: {
     type: Boolean,
-    default: false,
+    default: false
   },
   enableDrop: {
     type: Boolean,
-    default: false,
+    default: false
   },
   beforeUpload: {
-    type: Function as PropType<BeforeUploadFn>,
+    type: Function as PropType<BeforeUploadFn>
   },
+  /** @deprecated */
   dynamicUploadOptionsFn: {
-    type: Function as PropType<DynamicUploadOptionsFn>,
+    type: Function as PropType<DynamicUploadOptionsFn>
   },
   disabled: {
     type: Boolean,
-    default: false,
-  },
-  showTip: {
-    type: Boolean,
-    default: false,
+    default: false
   },
   onChange: {
-    type: Function as PropType<ChangeFn>,
+    type: Function as PropType<ChangeFn>
   },
   fileDrop: {
     type: Function as PropType<(v: any) => void>,
-    default: undefined,
+    default: undefined
   },
   fileOver: {
     type: Function as PropType<(v: boolean) => void>,
-    default: undefined,
+    default: undefined
   },
   fileSelect: {
     type: Function as PropType<(v: File) => void>,
-    default: undefined,
+    default: undefined
   },
-  errorEvent: {
-    type: Function as PropType<(v: { file: File; response: any; }) => void>,
-    default: undefined,
-  },
-  successEvent: {
-    type: Function as PropType<(v: { file: File; response: any; }[]) => void>,
-    default: undefined,
-  },
-  deleteUploadedFileEvent: {
+  deleteUploadedFile: {
     type: Function as PropType<(v: string) => void>,
-    default: undefined,
+    default: undefined
   },
-} as const
-export type UploadProps = ExtractPropTypes<typeof uploadProps>
-
-export const multiUploadProps = {
-  uploadOptions: {
-    type: Object as PropType<IUploadOptions>,
-    required: true,
+  'on-error': {
+    type: Function as PropType<(v: { file: File; response: any; }) => void>,
+    default: undefined
   },
-  fileOptions: {
-    type: Object as PropType<IFileOptions>,
-    required: true,
-  },
-  autoUpload: {
-    type: Boolean,
-    default: false,
-  },
-  withoutBtn: {
-    type: Boolean,
-    default: false,
-  },
-  showTip: {
-    type: Boolean,
-    default: false,
-  },
-  uploadedFiles: {
-    type: Array as PropType<File[]>,
-    default: () => [],
-  },
-  enableDrop: {
-    type: Boolean,
-    default: false,
-  },
-  placeholderText: {
-    type: String,
-    default: '选择文件',
-  },
-  uploadText: {
-    type: String,
-    default: '上传',
+  'on-success': {
+    type: Function as PropType<(v: { file: File; response: any; }[]) => void>,
+    default: undefined
   },
   oneTimeUpload: {
     type: Boolean,
-    default: false,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  beforeUpload: {
-    type: Function as PropType<(files: any) => boolean | Promise<boolean>>,
-  },
-  fileDrop: {
-    type: Function as PropType<(v: any) => void>,
-    default: undefined,
-  },
-  fileOver: {
-    type: Function as PropType<(v: boolean) => void>,
-    default: undefined,
-  },
-  fileSelect: {
-    type: Function as PropType<(v: File) => void>,
-    default: undefined,
-  },
-  errorEvent: {
-    type: Function as PropType<(v: { file: File; response: any; }) => void>,
-    default: undefined,
-  },
-  successEvent: {
-    type: Function as PropType<(v: { file: File; response: any; }[]) => void>,
-    default: undefined,
-  },
-  deleteUploadedFileEvent: {
-    type: Function as PropType<(v: string) => void>,
-    default: undefined,
-  },
-  setCustomUploadOptions: {
-    type: Function as PropType<
-      (files: File[], uploadOptions: IUploadOptions) => IUploadOptions
-    >,
-    default: undefined,
-  },
-}
+    default: false
+  }
+} as const
+export type UploadProps = ExtractPropTypes<typeof uploadProps>

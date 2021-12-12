@@ -10,14 +10,24 @@ export default defineComponent({
   props: drawerProps,
   emits: ['close', 'update:visible', 'afterOpened'],
   setup(props: DrawerProps, { emit, slots }) {
-    const { width, visible, zIndex, isCover, escKeyCloseable, position } = toRefs(props) // 宽度
-    let isFullScreen = ref(false)
+    const {
+      width, visible, zIndex, isCover, escKeyCloseable, position,
+      backdropCloseable,
+    } = toRefs(props)
+    const isFullScreen = ref(false)
 
     const fullScreenEvent = () => {
       isFullScreen.value = !isFullScreen.value
     }
 
-    const closeDrawer = () => {
+    const closeDrawer = async () => {
+      const beforeHidden = props.beforeHidden;
+      let result = (typeof beforeHidden === 'function' ? beforeHidden(): beforeHidden) ?? false;
+      if (result instanceof Promise) {
+        result = await result;
+      }
+      if (result) return;
+
       emit('update:visible', false)
       emit('close')
     }
@@ -47,6 +57,7 @@ export default defineComponent({
     provide('width', width)
     provide('visible', visible)
     provide('isFullScreen', isFullScreen)
+    provide('backdropCloseable', backdropCloseable)
 
     onUnmounted(() => {
       document.removeEventListener('keyup', escCloseDrawer)
@@ -69,7 +80,9 @@ export default defineComponent({
     return (
       <Teleport to="body">
         <DrawerBody>
-          <DrawerHeader onToggleFullScreen={fullScreenEvent} onClose={closeDrawer} />
+          {this.slots.header ? this.slots.header() : 
+            <DrawerHeader onToggleFullScreen={fullScreenEvent} onClose={closeDrawer} />
+          }
           {this.slots.default ? this.slots.default() : <DrawerContainer />}
         </DrawerBody>
       </Teleport>

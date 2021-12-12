@@ -1,4 +1,4 @@
-import { defineComponent, reactive, ref, provide, nextTick, watch } from 'vue'
+import { defineComponent, reactive, ref, provide, onMounted, onUnmounted, watch } from 'vue'
 import { splitterProps, SplitterProps } from './splitter-types'
 import DSplitterBar from './splitter-bar'
 import { SplitterStore } from './splitter-store'
@@ -7,14 +7,14 @@ import './splitter.scss'
 export default defineComponent({
   name: 'DSplitter',
   components: {
-    DSplitterBar,
+    DSplitterBar
   },
   props: splitterProps,
   emits: [],
   setup(props: SplitterProps, ctx) {
     const store: SplitterStore = new SplitterStore()
     const state = reactive({
-      panes: [], // 内嵌面板
+      panes: [] // 内嵌面板
     })
 
     state.panes = ctx.slots.DSplitterPane?.() || []
@@ -24,17 +24,28 @@ export default defineComponent({
     provide('splitterStore', store)
 
     const domRef = ref<HTMLElement>()
-    watch(domRef, (ele) => {
-      if (!ele) {
-        return;
-      }
+    const refreshSplitterContainerSize = () => {
+      if (!domRef) return
       let containerSize = 0
       if (props.orientation === 'vertical') {
-        containerSize = ele.clientHeight
+        containerSize = domRef.value.clientHeight
       } else {
-        containerSize = ele.clientWidth
+        containerSize = domRef.value.clientWidth
       }
       store.setSplitter({ containerSize })
+    }
+
+    const observer = new ResizeObserver(refreshSplitterContainerSize)
+    watch(domRef, (ele) => {
+      if (!ele) {
+        return
+      }
+      refreshSplitterContainerSize()
+      observer.observe(domRef.value)
+    })
+
+    onUnmounted(() => {
+      observer.disconnect()
     })
 
     return () => {
@@ -61,5 +72,5 @@ export default defineComponent({
         </div>
       )
     }
-  },
+  }
 })

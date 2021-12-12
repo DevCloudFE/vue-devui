@@ -15,7 +15,7 @@ export { Checkbox }
 export default {
   title: 'Checkbox 复选框',
   category: '数据录入',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(Checkbox as any);
     app.use(CheckboxGroup as any);

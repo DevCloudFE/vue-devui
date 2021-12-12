@@ -14,7 +14,7 @@
 ```vue
 <template>
   <div>
-    <d-radio-group css-style="row" v-model="choose">
+    <d-radio-group direction="row" v-model="choose">
       <d-radio v-for="item in list" :key="item" :value="item">
         {{ item }}
       </d-radio>

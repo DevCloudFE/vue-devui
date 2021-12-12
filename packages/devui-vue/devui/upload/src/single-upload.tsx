@@ -16,7 +16,7 @@ export default defineComponent({
     'successEvent',
     'errorEvent',
     'deleteUploadedFileEvent',
-    'update:uploadedFiles',
+    'update:uploadedFiles'
   ],
   setup(props: UploadProps, ctx) {
     const {
@@ -30,25 +30,17 @@ export default defineComponent({
       beforeUpload,
       enableDrop,
       showTip,
-      uploadedFiles,
+      uploadedFiles
     } = toRefs<UploadProps>(props)
     const isDropOVer = ref(false)
-    const {
-      getFiles,
-      fileUploaders,
-      addFile,
-      getFullFiles,
-      deleteFile,
-      upload,
-      removeFiles,
-    } = useUpload()
-    const { triggerSelectFiles, _validateFiles, triggerDropFiles } =
-      useSelectFiles()
+    const { getFiles, fileUploaders, addFile, getFullFiles, deleteFile, upload, removeFiles } =
+      useUpload()
+    const { triggerSelectFiles, _validateFiles, triggerDropFiles } = useSelectFiles()
     const filename = computed(() => (getFiles()[0] || {}).name || '')
 
     const alertMsg = (errorMsg: string) => {
       ToastService.open({
-        value: [{ severity: 'warn', content: errorMsg }],
+        value: [{ severity: 'warn', content: errorMsg }]
       })
     }
 
@@ -133,8 +125,7 @@ export default defineComponent({
     const handleClick = () => {
       if (
         disabled.value ||
-        (fileUploaders.value[0] &&
-          fileUploaders.value[0]?.status === UploadStatus.uploading)
+        (fileUploaders.value[0] && fileUploaders.value[0]?.status === UploadStatus.uploading)
       ) {
         return
       }
@@ -179,7 +170,7 @@ export default defineComponent({
       isDropOVer,
       showTip,
       uploadedFiles,
-      deleteUploadedFile,
+      deleteUploadedFile
     }
   },
   render() {
@@ -200,12 +191,12 @@ export default defineComponent({
       disabled,
       showTip,
       uploadedFiles,
-      deleteUploadedFile,
+      deleteUploadedFile
     } = this
     return (
       <div>
         <div
-          class="devui-upload"
+          class='devui-upload'
           v-file-drop={{ enableDrop, isSingle: true, onFileDrop, onFileOver }}
           style={`border: ${isDropOVer ? '1px solid #15bf15' : '0'}`}
         >
@@ -214,35 +205,29 @@ export default defineComponent({
           ) : (
             <div
               class={`devui-input-group ${
-                disabled || fileUploaders[0]?.status === UploadStatus.uploading
-                  ? 'disabled'
-                  : ''
+                disabled || fileUploaders[0]?.status === UploadStatus.uploading ? 'disabled' : ''
               }`}
               onClick={handleClick}
             >
-              <div class="devui-form-control devui-files-list">
+              <div class='devui-form-control devui-files-list'>
                 {!filename && (
-                  <div class="devui-file-item devui-upload-placeholder">
-                    {placeholderText}
-                  </div>
+                  <div class='devui-file-item devui-upload-placeholder'>{placeholderText}</div>
                 )}
                 {!!filename && (
                   <div
-                    class="devui-file-tag devui-file-item"
+                    class='devui-file-tag devui-file-item'
                     title={filename}
-                    style="display: inline-block; margin: 0 2px 2px 0"
+                    style='display: inline-block; margin: 0 2px 2px 0'
                   >
                     <span
                       class={`devui-filename ${
-                        fileUploaders[0]?.status === UploadStatus.failed
-                          ? 'devui-failed-color'
-                          : ''
+                        fileUploaders[0]?.status === UploadStatus.failed ? 'devui-failed-color' : ''
                       }`}
                     >
                       {filename}
                     </span>
                     <d-icon
-                      name="close"
+                      name='close'
                       class={`${
                         fileUploaders[0]?.status === UploadStatus.failed
                           ? 'devui-upload-delete-file-button'
@@ -256,72 +241,60 @@ export default defineComponent({
                       onClick={(event) => onDeleteFile(event)}
                     />
                     {fileUploaders[0]?.status === UploadStatus.uploading && (
-                      <div class="icon devui-upload-progress">
+                      <div class='icon devui-upload-progress'>
                         <d-progress
                           isCircle={true}
                           percentage={fileUploaders[0].percentage}
-                          barbgcolor="#50D4AB"
+                          barbgcolor='#50D4AB'
                           strokeWidth={8}
                           showContent={false}
                         ></d-progress>
                       </div>
                     )}
                     {fileUploaders[0].status === UploadStatus.failed && (
-                      <d-icon name="running" onClick={fileUpload} />
+                      <d-icon name='running' onClick={fileUpload} />
                     )}
                     {fileUploaders[0].status === UploadStatus.uploaded && (
-                      <d-icon name="right" color="#50d4ab" />
+                      <d-icon name='right' color='#50d4ab' />
                     )}
                   </div>
                 )}
               </div>
-              <span class="devui-input-group-addon">
-                <d-icon name="more-operate" color="#252b3a" />
+              <span class='devui-input-group-addon'>
+                <d-icon name='more-operate' color='#252b3a' />
               </span>
             </div>
           )}
           {!autoUpload && !withoutBtn && (
             <d-button
-              style="marginLeft: 8px"
-              bsStyle="common"
+              style='marginLeft: 8px'
+              btnStyle='common'
               onClick={fileUpload}
-              disabled={
-                disabled || fileUploaders[0]?.status === UploadStatus.uploading
-              }
+              disabled={disabled || fileUploaders[0]?.status === UploadStatus.uploading}
             >
-              {(!fileUploaders[0] || !fileUploaders[0]?.status) && (
-                <span>{uploadText}</span>
-              )}
-              {fileUploaders[0]?.status === UploadStatus.uploading && (
-                <span>上传中...</span>
-              )}
-              {fileUploaders[0]?.status === UploadStatus.uploaded && (
-                <span>已上传</span>
-              )}
-              {fileUploaders[0]?.status === UploadStatus.failed && (
-                <span>上传失败</span>
-              )}
+              {(!fileUploaders[0] || !fileUploaders[0]?.status) && <span>{uploadText}</span>}
+              {fileUploaders[0]?.status === UploadStatus.uploading && <span>上传中...</span>}
+              {fileUploaders[0]?.status === UploadStatus.uploaded && <span>已上传</span>}
+              {fileUploaders[0]?.status === UploadStatus.failed && <span>上传失败</span>}
             </d-button>
           )}
         </div>
         {showTip && (
-          <div class="devui-upload-tip">
+          <div class='devui-upload-tip'>
             {fileUploaders[0]?.status === UploadStatus.uploading && (
-              <span class="devui-loading">{i18nText.uploading}</span>
+              <span class='devui-loading'>{i18nText.uploading}</span>
             )}
             {fileUploaders[0]?.status === UploadStatus.uploaded && (
-              <div class="devui-loaded">
-                <d-icon name="right-o" color="#50d4ab" />
-                <span style="vertical-align: middle">
-                  {i18nText.uploadSuccess}
-                </span>
+              <div class='devui-loaded'>
+                <d-icon name='right-o' color='#50d4ab' />
+                <span style='vertical-align: middle'>{i18nText.uploadSuccess}</span>
               </div>
             )}
             {fileUploaders[0]?.status === UploadStatus.failed && (
-              <div class="devui-upload-failed">
-                <d-icon name="info-o" color="#f66f6a" />
-                <span style="vertical-align: middle">
-                  <span style="margin-right: 8px">{i18nText.uploadFailed}</span>
+              <div class='devui-upload-failed'>
+                <d-icon name='info-o' color='#f66f6a' />
+                <span style='vertical-align: middle'>
+                  <span style='margin-right: 8px'>{i18nText.uploadFailed}</span>
                   <a onClick={fileUpload}>{i18nText.reUpload}</a>
                 </span>
               </div>
@@ -331,16 +304,16 @@ export default defineComponent({
         <div>
           {this.$slots.preloadFiles?.({
             fileUploaders,
-            deleteFile: onDeleteFile,
+            deleteFile: onDeleteFile
           })}
         </div>
         <div>
           {this.$slots.uploadedFiles?.({
             uploadedFiles,
-            deleteFile: deleteUploadedFile,
+            deleteFile: deleteUploadedFile
           })}
         </div>
       </div>
     )
-  },
+  }
 })

@@ -57,7 +57,11 @@ export default defineComponent({
 :::demo
 ```vue
 <template>
-<d-panel type="primary" :isCollapsed="true" :showAnimation="true">
+  <d-panel type="info" :isCollapsed="true" :showAnimation="true">
+    <d-panel-header>Panel with info Type</d-panel-header>
+    <d-panel-body>This is body</d-panel-body>
+  </d-panel>
+  <d-panel type="primary" :isCollapsed="true" :showAnimation="true">
     <d-panel-header>Panel with Primary Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
@@ -84,7 +88,7 @@ export default defineComponent({
 
 某种情况下，我们需要阻止面板收起。Panel提供了这项API，我们可以使用beforeToggle来阻止面板的收起
 
-根据条件判断，当panel展开时，点击阻止折叠按钮，将无法折叠panel。当panel折叠时不影响操作。
+根据条件判断，当panel展开时，点击阻止折叠按钮，将无法折叠panel。当panel展开时不影响操作。
 
 :::demo
 ```vue
@@ -133,12 +137,14 @@ export default defineComponent({
 
 ### 动态切换
 
-我们已hasLeftPadding为例
+我们以hasLeftPadding为例
+
+理论上所有的属性都可以动态切换
 
 :::demo
 ```vue
 <template>
-  <d-panel :type="type" :hasLeftPadding=padding :isCollapsed>
+  <d-panel :hasLeftPadding=padding :isCollapsed="true">
     <d-panel-header>
       Panel with foldable
     </d-panel-header>
@@ -179,3 +185,8 @@ export default defineComponent({
 |showAnimation|	  boolean|	                      true     |	    可选，是否展示动画|
 |beforeToggle|	  Function\|Promise\|Observable|	--       |      可选，面板折叠状态改变前的回调函数，返回 boolean 类型，返回 false 可以阻止面板改变折叠状态	根据条件阻止折叠|
 |toggle|          Function|                       --       |      可选，面板当前状态的回调函数，返回boolean类型，返回 false 代表面板被收起，返回 true 代表面板展开
+
+### 接口&类型定义
+```javascript 
+export type PanelType = 'default' | 'primary' | 'success' | 'danger' | 'warning' | 'info';
+```

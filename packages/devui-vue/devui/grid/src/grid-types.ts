@@ -6,11 +6,13 @@ export type Justify = 'start' | 'end' | 'center' | 'around' | 'between'
 
 export interface GutterScreenSizes {
   xs?: number | number[]
-  sm: number | number[]
-  md: number | number[]
-  lg: number | number[]
-  xl: number | number[]
-  xxl: number | number[]
+  sm?: number | number[]
+  md?: number | number[]
+  lg?: number | number[]
+  xl?: number | number[]
+  xxl?: number | number[]
+  // 如果没有必选项，gutter将是unknown类型
+  [key: string]: number | number[]
 } 
 
 export const rowProps = {

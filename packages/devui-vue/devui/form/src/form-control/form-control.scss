@@ -12,7 +12,7 @@
       position: absolute;
       top: 50%;
       right: 0;
-      z-index: 10;
+      z-index: 1;
       width: 32px;
       height: 16px;
       margin-top: -7px;
@@ -62,10 +62,6 @@
 
 
   .devui-control-content-wrapper {
-    position: relative; 
-    & > div {
-      z-index: 10;
-    }
     .devui-popover-wrapper {
       position: absolute;
       width: 100%;
@@ -78,6 +74,13 @@
         width: inherit;
         height: 100%;
       }
+    }
+  }
+
+  .with-popover {
+    position: relative; 
+    & > div {
+      z-index: 10;
     }
   }
 

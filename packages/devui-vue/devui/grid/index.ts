@@ -14,7 +14,7 @@ export { Row, Col }
 export default {
   title: 'Grid 栅格',
   category: '布局',
-  status: '已完成',
+  status: '100%',
   install(app: App): void {
     app.use(Col as any)
     app.use(Row as any)

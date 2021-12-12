@@ -8,16 +8,17 @@
   color: $devui-text;
   font-size: $devui-font-size;
   border: 1px solid transparent;
-  padding: 10px;
-  line-height: 20px;
+  padding: 8px 16px;
+  line-height: 24px;
   border-radius: $devui-border-radius;
-  padding-left: 16px;
   word-break: normal;
   word-wrap: break-word;
 
-  button.devui-close {
+  .devui-close {
     color: $devui-text;
     opacity: 1;
+    line-height: 26px;
+    height: 24px;
 
     & > svg path {
       fill: $devui-light-text;
@@ -35,7 +36,7 @@
     border-color: $devui-success-line;
     color: $devui-text;
 
-    button.devui-close {
+    .devui-close {
       & > svg path {
         fill: $devui-success-line;
       }
@@ -47,7 +48,7 @@
     border-color: $devui-info-line;
     color: $devui-text;
 
-    button.devui-close {
+    .devui-close {
       & > svg path {
         fill: $devui-info-line;
       }
@@ -59,7 +60,7 @@
     border-color: $devui-warning-line;
     color: $devui-text;
 
-    button.devui-close {
+    .devui-close {
       & > svg path {
         fill: $devui-warning-line;
       }
@@ -71,7 +72,7 @@
     border-color: $devui-danger-line;
     color: $devui-text;
 
-    button.devui-close {
+    .devui-close {
       & > svg path {
         fill: $devui-danger-line;
       }
