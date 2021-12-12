@@ -17,7 +17,7 @@ export default {
    *      1.2、进入drop区域后，确保drop区域能够获取正在进行drag的元素
    */
   mounted(el: HTMLElement, binding: unknown): void {
-    el.setAttribute('draggable', 'true')
+    el.setAttribute('draggable', 'true');
     el.style.cursor = 'grab'
 
     // dragstart/drag/dragend

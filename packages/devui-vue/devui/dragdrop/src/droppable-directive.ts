@@ -13,9 +13,9 @@ export default {
    *           1.1、清除相应的阴影
    */
   mounted(el: HTMLElement, binding:unknown): void {
-    // dragenter/dragover/dragend/drop
+    // dragenter/dragover/dragend/drop 
     el.addEventListener('dragover', (event: DragEvent) => {
-      event.preventDefault()
+      event.preventDefault();
       const dragId = binding.instance.$root.identity
       changeDragState(document.getElementById(dragId), dragId, 'true', 'false', 'true', 'false', 'false')
     }, false)

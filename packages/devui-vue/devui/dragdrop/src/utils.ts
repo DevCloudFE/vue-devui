@@ -21,7 +21,7 @@ function getElementStyle (id: string, styleName: string):string {
  *    情况二： anything   ->    drop without anything
  */
 function createShadow (originId:string):HTMLElement {
-    const shadow = document.createElement('div')
+    const shadow = document.createElement('div');
     shadow.id = 'shadow0611'
     shadow.style.background = 'rgb(206, 215, 255)'
     shadow.style.width = getElementStyle(originId, 'width')
