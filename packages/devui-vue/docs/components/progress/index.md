@@ -18,7 +18,7 @@
         <d-progress :percentage="80" percentageText="80%"></d-progress>
     </div>
     <div class="progress-container">
-        <d-progress :percentage="30" percentageText="30%" barbgcolor="#50D4AB" height="30px"></d-progress>
+        <d-progress :percentage="30" percentageText="30%" barBgColor="#50D4AB" height="30px"></d-progress>
     </div>
 </section>
 </template>
@@ -46,11 +46,11 @@
             <d-progress :isCircle="true" :percentage="80" :showContent="false"> </d-progress>
         </div>
         <div class="progress-container-circle">
-            <d-progress :isCircle="true" :percentage="80" barbgcolor="#50D4AB" :strokeWidth="8">
+            <d-progress :isCircle="true" :percentage="80" barBgColor="#50D4AB" :strokeWidth="8">
             </d-progress>
         </div>
         <div class="progress-container-circle">
-            <d-progress :isCircle="true" :percentage="80" barbgcolor="#50D4AB">
+            <d-progress :isCircle="true" :percentage="80" barBgColor="#50D4AB">
                 <span class="icon-position">
                     <d-icon
                         name="right"
