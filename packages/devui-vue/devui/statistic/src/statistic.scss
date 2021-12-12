@@ -3,7 +3,6 @@
   margin: 0;
   padding: 0;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.5715;
   list-style: none;
 
@@ -17,15 +16,16 @@
     font-size: 24px;
     display: flex;
     align-items: center;
-    vertical-align: center;
   }
 
   &-prefix {
     margin-right: 6px;
+    display: flex;
   }
 
   &-suffix {
     margin-left: 6px;
+    display: flex;
   }
 
   &--value {

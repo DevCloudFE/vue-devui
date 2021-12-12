@@ -14,6 +14,7 @@ export default defineComponent({
       renderDefaultSlots,
       renderEmptySlots,
       selectedIndex,
+      hoverIndex,
       loadMore
     } = select
     const { maxHeight } = selectProps
@@ -22,7 +23,8 @@ export default defineComponent({
         const { disabledKey } = selectProps
         return className('devui-dropdown-item', {
           disabled: disabledKey ? !!item[disabledKey] : false,
-          selected: selectedIndex.value === index
+          selected: selectedIndex.value === index,
+          'devui-dropdown-bg': hoverIndex.value === index
         })
       }
       return (

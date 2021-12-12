@@ -41,7 +41,7 @@ describe('RadioGroup', () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it('radioGroup cssStyle work', async () => {
+  it('radioGroup direction work', async () => {
     const wrapper = mount(DRadioGroup, {
       props: {
         value: 'Item1'
@@ -51,7 +51,7 @@ describe('RadioGroup', () => {
 
     await wrapper.setProps({
       value: 'Item1',
-      cssStyle: 'row'
+      direction: 'row'
     });
     expect(wrapper.html()).toMatch('is-row');
   });

@@ -1,20 +1,12 @@
 <p align="center">
   <a href="https://devui.design/home" target="_blank" rel="noopener noreferrer">
-    <img alt="DevUI Logo" src="https://gitee.com/devui/vue-devui/raw/dev/packages/devui-vue/public/logo.svg?sanitize=true" width="180" style="max-width:100%;">
+    <img alt="DevUI Logo" src="https://github.com/DevCloudFE/vue-devui/raw/dev/packages/devui-vue/public/logo.svg" width="180" style="max-width:100%;">
   </a>
 </p>
 
 Vue DevUI 是 Vue3 版本的 DevUI 组件库，基于 [https://github.com/devcloudfe/ng-devui](https://github.com/devcloudfe/ng-devui)，倡导`沉浸`、`灵活`、`至简`的设计价值观。
 
 DevUI 官方网站：[https://devui.design](https://devui.design)
-
-DevUI开源项目正在参加[2021年度OSC中国开源项目评选](https://www.oschina.net/project/top_cn_2021/?id=205&ticket=4b10864b99e57311d9897964acfc0c9c)，欢迎大家给我们`DevUI Design`投上宝贵的一票：
-
-[DevUI开源项目-2021年度OSC中国开源项目评选投票](https://www.oschina.net/project/top_cn_2021/?id=205&ticket=4b10864b99e57311d9897964acfc0c9c)
-
-想了解[DevUI](https://devui.design)开源的故事，可以阅读以下文章：
-
-[DevUI开源的故事](https://juejin.cn/post/7029092585452863525/)
 
 # 当前状态: Beta
 
@@ -26,7 +18,7 @@ DevUI开源项目正在参加[2021年度OSC中国开源项目评选](https://www
 - ⭐ 参与到开源社区中来
 - 🎊 结识一群热爱学习、热爱开源的朋友
 
-[贡献指南](https://gitee.com/devui/vue-devui/wikis/【必看】快速开始)
+[贡献指南](https://github.com/DevCloudFE/vue-devui/wiki/%E8%B4%A1%E7%8C%AE%E6%8C%87%E5%8D%97)
 
 # 快速开始
 
@@ -174,4 +166,4 @@ import '@devui-design/icons/icomoon/devui-icon.css'
 
 # License
 
-[MIT](https://gitee.com/devui/vue-devui/blob/dev/LICENSE)
+[MIT](https://github.com/DevCloudFE/vue-devui/blob/dev/LICENSE)

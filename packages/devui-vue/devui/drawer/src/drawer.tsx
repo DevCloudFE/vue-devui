@@ -22,10 +22,8 @@ export default defineComponent({
 
     const closeDrawer = async () => {
       const beforeHidden = props.beforeHidden;
-      let result = (typeof beforeHidden === 'function' ? beforeHidden(): beforeHidden) ?? true;
+      let result = (typeof beforeHidden === 'function' ? beforeHidden(): beforeHidden) ?? false;
       if (result instanceof Promise) {
-        console.log(result);
-        
         result = await result;
       }
       if (result) return;
@@ -82,7 +80,9 @@ export default defineComponent({
     return (
       <Teleport to="body">
         <DrawerBody>
-          <DrawerHeader onToggleFullScreen={fullScreenEvent} onClose={closeDrawer} />
+          {this.slots.header ? this.slots.header() : 
+            <DrawerHeader onToggleFullScreen={fullScreenEvent} onClose={closeDrawer} />
+          }
           {this.slots.default ? this.slots.default() : <DrawerContainer />}
         </DrawerBody>
       </Teleport>
