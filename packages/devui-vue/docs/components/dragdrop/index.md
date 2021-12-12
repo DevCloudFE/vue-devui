@@ -20,6 +20,10 @@
           dragScope: 'default-css',
           dragData: { item: 'item', parent: 'list1' },
         }">VSCode</div>
+        <div id="draggable-item2" class="draggable-item" v-d-draggable="{
+          dragScope: 'default-css',
+          dragData: { item: 'item', parent: 'list1' },
+        }">Sublime</div>
       </div>
     </div>
     <div class="dragdrop-card" v-d-droppable>
