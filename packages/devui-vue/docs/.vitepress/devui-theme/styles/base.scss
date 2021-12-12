@@ -31,6 +31,15 @@ $size: (
   }
 }
 
+@each $size-key, $size-value in $size {
+  .space-x-#{$size-key} > *:nth-child(n-1) {
+    margin-left: $size-value;
+  }
+  .space-y-#{$size-key} > *:nth-child(n-1) {
+    margin-top: $size-value;
+  }
+}
+
 .text-left {
   text-align: left;
 }
