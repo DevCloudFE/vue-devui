@@ -695,7 +695,7 @@ export interface AccordionSubMenuItemDynamicLink {
 }
 ```
 
-### AccordionProps
+### AccordionProps类型定义
 
 ``` typescript
 import { ExtractPropTypes } from "vue";
