@@ -38,6 +38,7 @@ export const accordionProps = {
 	noContentTemplate: { type: Boolean, default: true }, // 没有内容的时候使用自定义模板
 	loadingTemplate: { type: Boolean, default: true }, // 加载中使用自定义模板
 	innerListTemplate: { type: Boolean, default: true }, // 可折叠菜单内容完全自定义，用做折叠面板
+	showAnimation: { type: Boolean, default: true }, // 是否展示动画
 
 	/* 内置路由/链接/动态判断路由或链接类型 */
 	linkType: {

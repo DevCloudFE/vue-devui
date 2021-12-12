@@ -26,10 +26,10 @@ export default defineComponent({
       accordionType,
       autoOpenActiveMenu,
       restrictOneOpen,
+      showAnimation
     } = toRefs(props)
 
     let clickActiveItem: AccordionMenuItem | undefined = undefined //记录用户点击的激活菜单项
-
     const flatten = (
       arr: Array<any>,
       childrenKey = 'children',
@@ -146,7 +146,7 @@ export default defineComponent({
           class={[
             'devui-accordion-menu',
             'devui-scrollbar',
-            'devui-accordion-show-animate',
+            showAnimation.value && 'devui-accordion-show-animate',
             accordionType.value === 'normal' && 'devui-accordion-menu-normal'
           ]}
         >

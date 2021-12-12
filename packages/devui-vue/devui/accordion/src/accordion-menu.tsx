@@ -1,9 +1,15 @@
-import { computed, defineComponent, toRefs, inject, Transition, nextTick, ref, getCurrentInstance } from 'vue'
+import {
+  computed,
+  defineComponent,
+  toRefs,
+  inject,
+} from 'vue'
 import { AccordionMenuItem, AccordionMenuToggleEvent } from './accordion.type'
 import AccordionList from './accordion-list'
 import { accordionProps } from './accordion-types'
 import OpenIcon from './accordion-open-icon'
 import { getRootSlots } from '../src/utils'
+import CollapseTransition from './collapse-transition'
 
 export default defineComponent({
   name: 'DAccordionMenu',
@@ -34,9 +40,9 @@ export default defineComponent({
       childrenKey,
       titleKey,
       menuItemTemplate,
+      showAnimation
     } = toRefs(props)
 
-    const {proxy} = getCurrentInstance()
     const rootSlots = getRootSlots()
     const accordionCtx = inject('accordionContext') as any
 
@@ -92,22 +98,6 @@ export default defineComponent({
         : keyOpen.value
     })
 
-    const enter = async (element: Element ) => {
-      const el = (element as HTMLElement);
-      el.style.height = '';
-      // await nextTick()
-      // proxy.$forceUpdate()
-      const height = el.offsetHeight;
-      el.style.height = '0px';
-      // 需要执行一次才会生效
-      el.offsetHeight;
-      el.style.height = `${height}px`;
-    }
-    const leave = (element: Element) => {
-      const el = (element as HTMLElement);
-      el.style.height = '0px';
-    }
-
     return () => {
       return (
         <>
@@ -135,7 +125,9 @@ export default defineComponent({
               class={['devui-accordion-splitter', deepValue === 0 && 'devui-parent-list']}
               style={{ left: deepValue * 20 + 10 + 'px' }}
             ></div>
-            {(!rootSlots.menuItemTemplate || menuItemTemplate.value === false) && <>{title.value}</>}
+            {(!rootSlots.menuItemTemplate || menuItemTemplate.value === false) && (
+              <>{title.value}</>
+            )}
             {rootSlots.menuItemTemplate &&
               menuItemTemplate.value !== false &&
               rootSlots.menuItemTemplate?.({
@@ -147,13 +139,12 @@ export default defineComponent({
               <OpenIcon />
             </span>
           </div>
-          <Transition name='devui-accordion' onEnter={enter} onLeave={leave}>
+          <CollapseTransition showTransition={showAnimation.value}>
             <div
               v-show={open.value}
               class={[
-                // !open.value && 'devui-accordion-menu-hidden',
                 'devui-accordion-submenu',
-                'devui-accordion-show-animate'
+                showAnimation.value && 'devui-accordion-show-animate'
               ]}
             >
               <AccordionList
@@ -163,7 +154,7 @@ export default defineComponent({
                 parent={item.value}
               ></AccordionList>
             </div>
-          </Transition>
+          </CollapseTransition>
         </>
       )
     }

@@ -69,9 +69,10 @@ export default defineComponent({
         <>
           {(!rootSlots.innerListTemplate || deepth.value === 0 || innerListTemplate.value === false) && (
             <ul class={['devui-accordion-list']} {...attrs}>
-              {data.value.map((item) => {
+              {data.value.map((item, index) => {
+                item['index'] = index
                 return (
-                  <li class='devui-accordion-item' key={item[titleKey.value]}>
+                  <li class='devui-accordion-item' key={index}>
                     {/* // TODO 菜单类型 d-accordion-menu */}
                     {item[childrenKey.value] !== undefined && (
                       <div class='devui-accordion-menu-item'>
