@@ -18,6 +18,8 @@ DevUI 官方网站：[https://devui.design](https://devui.design)
 - ⭐ 参与到开源社区中来
 - 🎊 结识一群热爱学习、热爱开源的朋友
 
+[贡献指南](https://github.com/DevCloudFE/vue-devui/wiki/%E8%B4%A1%E7%8C%AE%E6%8C%87%E5%8D%97)
+
 # 快速开始
 
 ## 1 安装依赖
