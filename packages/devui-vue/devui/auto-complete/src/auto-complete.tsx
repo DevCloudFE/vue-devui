@@ -19,6 +19,7 @@ export default defineComponent({
       appendToBody,
       dAutoCompleteWidth,
       modelValue,
+      disabledKey
     } = toRefs(props)
     const {
       formatter,
@@ -29,7 +30,7 @@ export default defineComponent({
     } = props
     const {handleSearch,searchList} = useSearchFn(ctx,source,searchFn,formatter)
     const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,modelValue,disabled,handleSearch,transInputFocusEmit)
-    const {selectedIndex,selectOptionClick} = useSelectHandle(ctx,searchList,selectValue,handleSearch,formatter)
+    const {selectedIndex,selectOptionClick} = useSelectHandle(ctx,searchList,selectValue,handleSearch,formatter,toggleMenu)
     const {customRenderSolts} = useCustomTemplate(ctx,modelValue.value)
     provide(DropdownPropsKey, {
       props,
@@ -90,12 +91,12 @@ export default defineComponent({
           <div 
             class={['devui-auto-complete','devui-form-group','devui-has-feedback',visible.value&&'devui-select-open']}
             ref={origin}
-            onClick={toggleMenu}
             v-click-outside={handleClose}
           >
             <input
               disabled={disabled.value}
               type="text"
+              onClick={toggleMenu}
               class={['devui-form-control','devui-dropdown-origin','devui-dropdown-origin-open',disabled.value&&'disabled']}
               placeholder="Search"
               onInput={onInput}

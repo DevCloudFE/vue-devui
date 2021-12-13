@@ -21,12 +21,9 @@ export default defineComponent({
       isSearching
     } = propsData.props
     
-    const onSelect =(index:Number,item:any)=>{
-      let data = {
-        index,
-        item
-      }
-      selectOptionClick(data)
+    const onSelect =(item:any)=>{
+      if(item[disabledKey]){return}
+      selectOptionClick(item)
     }
     return () => {
       return (
@@ -55,7 +52,7 @@ export default defineComponent({
             !isSearching&&searchList!=null&&searchList.value.length>0&&searchList.value.map((item,index)=>{
               return (
                 <li 
-                  onClick={()=>onSelect(index,item)}
+                  onClick={()=>onSelect(item)}
                   class={[
                     "devui-dropdown-item",selectedIndex.value==index&&"selected",
                     {"disabled": disabledKey && item[disabledKey]}

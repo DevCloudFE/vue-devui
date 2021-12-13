@@ -26,7 +26,6 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup() {
     const value = ref('')
-    const auto = ref(null)
     const source = ref([
       'C#',
       'C',
@@ -45,7 +44,7 @@ export default defineComponent({
     ])
     return {
       value,
-      source,auto
+      source
     }
   }
 })
@@ -108,7 +107,6 @@ export default defineComponent({
     const isDisabled = ref(false)
     function toggle(){
       isDisabled.value= !isDisabled.value
-      console.log(isDisabled.value)
     }
     return {
       value,
@@ -188,7 +186,6 @@ export default defineComponent({
     ])
     //trem：input输入内容
     const searchFn = (trem)=>{
-      console.log("searchFn trem:",trem)
       let arr = []
       mySource.value.forEach((item) => {
           let cur = item.label

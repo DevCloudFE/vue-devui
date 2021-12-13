@@ -1,6 +1,6 @@
 import { ref, Ref, SetupContext } from "vue";
 
-export default function useInputHandle(ctx: SetupContext, modelValue:Ref<string>,disabled:Ref<boolean>,handleSearch: Function, transInputFocusEmit: Function): any {
+export default function useInputHandle(ctx: SetupContext, modelValue:Ref<string>,disabled:Ref<Boolean>,handleSearch: Function, transInputFocusEmit: Function): any {
     const visible = ref(false)
     const inputRef = ref()
     const searchStatus = ref(false)
