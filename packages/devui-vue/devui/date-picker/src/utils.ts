@@ -17,8 +17,8 @@ const fixStart = (n: number, m: string, max = 2, ch = '0') => {
 /**
  * - y: year yy 取后2位，其他情况取4位
  * - M: month 最多取2位补0
- * @param fmt 
- * @param d 
+ * @param fmt
+ * @param d
  */
 export const formatDate = (fmt: string, d: Date) => {
     const usage = getDateTime(d)
@@ -48,9 +48,9 @@ export const formatRange = (fmt: string, a: Date, b: Date, conn = '-') => {
 
 /**
  * 判断节点a是否在节点b中
- * @param a 
- * @param b 
- * @returns 
+ * @param a
+ * @param b
+ * @returns
  */
 export const isIn = (a: Node | null, b: any) => {
     if (!b) {
@@ -85,7 +85,7 @@ export class EventManager {
 }
 
 export const traceNode = (el: Node) => {
-    const els: Node[] = [], name = 'scroll'
+    const els: Node[] = []
     while (el.parentNode) {
         els.push(el.parentNode)
         el = el.parentNode

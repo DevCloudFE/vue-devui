@@ -1,9 +1,9 @@
 import { ref } from 'vue'
-import { IFileOptions, IUploadOptions } from './upload-types'
+import { IFileOptions } from './upload-types'
 import {
   getNotAllowedFileTypeMsg,
   getBeyondMaximalFileSizeMsg,
-  getAllFilesBeyondMaximalFileSizeMsg,
+  getAllFilesBeyondMaximalFileSizeMsg
 } from './i18n-upload'
 
 export const useSelectFiles = () => {
@@ -29,11 +29,7 @@ export const useSelectFiles = () => {
     )
     input.dispatchEvent(evt)
   }
-  const selectFiles = ({
-    multiple,
-    accept,
-    webkitdirectory,
-  }: IFileOptions): Promise<File[]> => {
+  const selectFiles = ({ multiple, accept, webkitdirectory }: IFileOptions): Promise<File[]> => {
     return new Promise((resolve) => {
       const tempNode = document.getElementById('d-upload-temp')
       if (tempNode) {
@@ -59,9 +55,7 @@ export const useSelectFiles = () => {
       }
 
       input.addEventListener('change', (event) => {
-        resolve(
-          Array.prototype.slice.call((event.target as HTMLInputElement).files)
-        )
+        resolve(Array.prototype.slice.call((event.target as HTMLInputElement).files))
       })
       document.body.appendChild(input) // Fix compatibility issue with Internet Explorer 11
       simulateClickEvent(input)
@@ -106,19 +100,13 @@ export const useSelectFiles = () => {
     if (!isAllowedFileType(accept, <File>file)) {
       return {
         checkError: true,
-        errorMsg: getNotAllowedFileTypeMsg((<File>file).name, accept),
+        errorMsg: getNotAllowedFileTypeMsg((<File>file).name, accept)
       }
     }
-    if (
-      uploadOptions &&
-      beyondMaximalSize((<File>file).size, uploadOptions.maximumSize)
-    ) {
+    if (uploadOptions && beyondMaximalSize((<File>file).size, uploadOptions.maximumSize)) {
       return {
         checkError: true,
-        errorMsg: getBeyondMaximalFileSizeMsg(
-          (<File>file).name,
-          uploadOptions.maximumSize
-        ),
+        errorMsg: getBeyondMaximalFileSizeMsg((<File>file).name, uploadOptions.maximumSize)
       }
     }
     return { checkError: false, errorMsg: undefined }
@@ -133,8 +121,7 @@ export const useSelectFiles = () => {
   }
   const checkAllFilesSize = (fileSize, maximumSize) => {
     if (beyondMaximalSize(fileSize, maximumSize)) {
-      BEYOND_MAXIMAL_FILE_SIZE_MSG.value =
-        getAllFilesBeyondMaximalFileSizeMsg(maximumSize)
+      BEYOND_MAXIMAL_FILE_SIZE_MSG.value = getAllFilesBeyondMaximalFileSizeMsg(maximumSize)
       return { checkError: true, errorMsg: BEYOND_MAXIMAL_FILE_SIZE_MSG.value }
     }
   }
@@ -142,6 +129,6 @@ export const useSelectFiles = () => {
     triggerSelectFiles,
     _validateFiles,
     triggerDropFiles,
-    checkAllFilesSize,
+    checkAllFilesSize
   }
 }

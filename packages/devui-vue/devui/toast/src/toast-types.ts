@@ -1,7 +1,7 @@
 import type { CSSProperties, ExtractPropTypes, PropType, h } from 'vue'
 
 export type IToastLifeMode = 'single' | 'global'
-export type IToastSeverity = 'common' | 'success' | 'error' | 'warn' | 'info' | string
+export type IToastSeverity = 'common' | 'success' | 'error' | 'warning' | 'info' | string
 export type IToastSeverityConfig = { color: string; icon: string; }
 
 export interface Message {

@@ -77,6 +77,56 @@ export default ({
 
 :::
 
+### 自定义模板
+
+<h4>自定义抽屉板模板。</h4>
+
+:::demo
+
+```vue
+<template>
+  <d-button  @click="drawerShow"> drawer </d-button>
+  <d-drawer
+    v-model:visible="isDrawerShow" 
+    :isCover="false" 
+  >
+    <template v-slot>
+      内容区插槽
+    </template>
+    <template v-slot:header>
+      <div @click="drawerClose">
+        <span class="icon icon-close" />
+      </div>
+    </template>
+  </d-drawer>
+</template>
+<script>
+import { ref } from 'vue'
+
+export default ({
+  setup() {
+    let isDrawerShow = ref(false)
+
+    const drawerShow = () => {
+      isDrawerShow.value = !isDrawerShow.value
+    }
+
+    const drawerClose = () => {
+      isDrawerShow.value = false;
+    }
+
+    return {
+      isDrawerShow,
+      drawerShow,
+      drawerClose,
+    }
+  }
+})
+</script>
+```
+
+:::
+
 ### 参数及API
 
 | 参数 | 类型 | 默认 | 说明 | 跳转 Demo |
@@ -91,3 +141,10 @@ export default ({
 | beforeHidden | `Function \| Promise` | -- | 可选，关闭窗口之前的回调 | [基本用法](#基本用法) |
 | onClose | `Function` | -- | 可选，关闭 drawer 时候调用 | [基本用法](#基本用法) |
 | onAfterOpened | `Function` | -- | 可选，打开 drawer 后时候调用 | [基本用法](#基本用法) |
+
+### 插槽
+
+| 名称 | 类型 | 说明 | 跳转 Demo |
+| :--: | :---------: | :------: | :-------: |
+| default | 默认 | 抽屉板内容 | [自定义模板](#自定义模板) |
+| header  | 头部 | 抽屉板头部 | [自定义模板](#自定义模板) |

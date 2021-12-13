@@ -81,12 +81,35 @@
 :::
 
 ### 加载中状态
-（该功能正在开发中）
 :::demo
 ```vue
 <template>
-  <d-button> click me! </d-button>
+  <d-button :showLoading="showLoading" @click="handleClick"> click me! </d-button>
 </template>
+<script>
+  import { ref, onBeforeUnmount } from 'vue';
+  export default {
+    setup() {
+      const showLoading = ref(false);
+      const timerId = ref();      
+      const handleClick = () => {
+        showLoading.value = true;
+        timerId.value = setTimeout(() => {
+          showLoading.value = false;
+        }, 2000);
+      }
+
+      onBeforeUnmount(() => {
+        if (!timerId.value) {
+          return;
+        }
+        clearTimeout(timerId.value);
+      });
+
+      return { showLoading, handleClick };
+    }
+  }
+</script>
 ```
 :::
 

@@ -24,7 +24,7 @@ export default defineComponent({
       totalPages,
       cursor
     } = toRefs(props)
-    
+
     // 输入跳转页码
     const inputNum = ref(pageIndex.value)
     watch(
@@ -71,7 +71,7 @@ export default defineComponent({
 
     return (
       <div class="devui-jump-container">
-        {goToText} 
+        {goToText}
 
         <d-input
           class={['devui-pagination-input', size ? 'devui-pagination-input-' + size : '']}
@@ -79,7 +79,7 @@ export default defineComponent({
           modelValue={String(inputNum)}
           onUpdate:modelValue={jumpPageChange}
           onKeydown={jump}
-        /> 
+        />
 
         {
           // TODO 加入国际化后，替换为当前语言为中文的时候加上 '页'

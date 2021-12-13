@@ -1,4 +1,4 @@
-import { compareDate, invokeCallback, subDateMonth } from '../utils'
+import { compareDate, invokeCallback } from '../utils'
 import { Year, Month } from './svg-icon'
 import { TCalendarToolbarItemProps, TDateToolbarProps } from '../types'
 import './index.scss'
@@ -10,7 +10,6 @@ const Item = (props: TCalendarToolbarItemProps) => {
         rotate = 0,
         date,
         pos,
-        cb,
     } = props
     const color = disabled ? '#cfd0d3' : '#585d6b'
     const className = `${disabled ? 'disabled' : ''}`

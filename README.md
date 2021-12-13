@@ -1,16 +1,12 @@
 <p align="center">
   <a href="https://devui.design/home" target="_blank" rel="noopener noreferrer">
-    <img alt="DevUI Logo" src="packages/devui-vue/public/logo.svg?sanitize=true" width="180" style="max-width:100%;">
+    <img alt="DevUI Logo" src="https://github.com/DevCloudFE/vue-devui/raw/dev/packages/devui-vue/public/logo.svg" width="180" style="max-width:100%;">
   </a>
 </p>
 
 Vue DevUI 是 Vue3 版本的 DevUI 组件库，基于 [https://github.com/devcloudfe/ng-devui](https://github.com/devcloudfe/ng-devui)，倡导`沉浸`、`灵活`、`至简`的设计价值观。
 
 DevUI 官方网站：[https://devui.design](https://devui.design)
-
-想了解[DevUI](https://devui.design)开源的故事，可以阅读以下文章：
-
-[DevUI开源的故事](https://juejin.cn/post/7029092585452863525/)
 
 # 当前状态: Beta
 
@@ -22,7 +18,7 @@ DevUI 官方网站：[https://devui.design](https://devui.design)
 - ⭐ 参与到开源社区中来
 - 🎊 结识一群热爱学习、热爱开源的朋友
 
-[贡献指南](https://gitee.com/devui/vue-devui/wikis/【必看】快速开始)
+[贡献指南](https://github.com/DevCloudFE/vue-devui/wiki/%E8%B4%A1%E7%8C%AE%E6%8C%87%E5%8D%97)
 
 # 快速开始
 
@@ -70,6 +66,7 @@ yarn add vue-devui
 
 ## 2. 全量引入
 
+在`main.ts`文件中编写以下代码：
 ```
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -88,6 +85,7 @@ createApp(App)
 
 除了全量引入，我们也支持单个组件按需引入。
 
+在`main.ts`文件中编写以下代码：
 ```
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -103,7 +101,32 @@ createApp(App)
 .mount('#app')
 ```
 
-## 4. 使用
+## 4. 配置自动按需引入`unplugin-vue-components`（推荐）
+
+配置`unplugin-vue-components`插件可以无需引入Vue DevUI就可以直接按需使用其中的组件，具体使用方式如下：
+
+在`vite.config.ts`文件中添加以下代码：
+```
+import Components from 'unplugin-vue-components/vite'
+import { DevUiResolver } from 'unplugin-vue-components/resolvers'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+
+    // 新增
+    Components({
+      resolvers: [
+        DevUiResolver()
+      ]
+    })
+  ]
+})
+```
+
+配置了以上插件，就可以直接在代码中使用`Vue DevUI`的组件，而无需在`main.ts`文件中引入`Vue DevUI`。
+
+## 5. 使用
 
 ```
 <template>
@@ -113,7 +136,7 @@ createApp(App)
 
 # 图标库
 
-图标库可以使用[DevUI图标库](https://devui.design/icon/ruleResource)，也可以使用第三方图标库，比如：iconfont。
+图标库推荐使用[DevUI图标库](https://devui.design/icon/ruleResource)，也可以使用第三方图标库，比如：iconfont。
 
 ## 使用DevUI图标库
 
@@ -141,36 +164,6 @@ import '@devui-design/icons/icomoon/devui-icon.css'
 <d-icon name="love" color="red"></d-icon>
 ```
 
-## 使用第三方图标库
-
-如果有第三方图标库，可以用类似的方式引入。
-
-### 引入
-
-在`main.ts`文件中，编写以下代码：
-
-```
-import 'your-folder/my-icon.css'
-```
-
-### 使用
-
-```
-<d-icon classPrefix="my-icon" name="love" color="red"></d-icon>
-```
-
-其中的`classPrefix`参数的值，应该和你的字体图标样式文件`my-icon.css`里定义的样式前缀保持一致。
-
-比如`my-icon.css`里的图标样式：
-
-```css
-.my-icon-branch-node:before {
-	content: "\E001";
-}
-```
-
-那么`classPrefix`就是`my-icon`。
-
 # License
 
-[MIT](https://gitee.com/devui/vue-devui/blob/dev/LICENSE)
+[MIT](https://github.com/DevCloudFE/vue-devui/blob/dev/LICENSE)
