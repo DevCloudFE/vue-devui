@@ -165,21 +165,21 @@ export default defineComponent({
     return () => {
       return withDirectives(
         <div class={state.wrapperClass} ref={domRef}>
-          {props.showCollapseButton ? (
+          {props.showCollapseButton && (
             <div
               class={['prev', prevClass.value]}
               onClick={() => {
                 handleCollapsePrePane()
               }}
             ></div>
-          ) : null}
+          )}
           <div class="devui-resize-handle"></div>
-          {props.showCollapseButton ? (
+          {props.showCollapseButton && (
             <div
               class={['next', nextClass.value]}
               onClick={() => handleCollapseNextPane()}
             ></div>
-          ) : null}
+          )}
         </div>,
         [[dresize, resizeProp]]
       )

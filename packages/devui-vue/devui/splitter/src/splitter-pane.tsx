@@ -77,10 +77,8 @@ export default defineComponent({
     };
 
 
-    watch(
-      () => props.collapsed,
-      (collapsed: boolean) => {
-        const ele = domRef.value;
+    watch([() => props.collapsed, domRef],
+      ([collapsed, ele]) => {
         if (!ele) {
           return;
         }
