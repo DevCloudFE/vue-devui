@@ -8,7 +8,7 @@
 
 
 ### 基本用法
-
+通过 source 设置自动完成的数据源。
 :::demo
 
 ```vue
@@ -18,6 +18,69 @@
     v-model="value"
   >
   </d-auto-complete>
+  <pre>{{ value || 'No language select!' }}</pre>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+export default defineComponent({
+  setup() {
+    const value = ref('')
+    const auto = ref(null)
+    const source = ref([
+      'C#',
+      'C',
+      'C++',
+      'CPython',
+      'Java',
+      'JavaScript',
+      'Go',
+      'Python',
+      'Ruby',
+      'F#',
+      'TypeScript',
+      'SQL',
+      'LiveScript',
+      'CoffeeScript',
+    ])
+    return {
+      value,
+      source,auto
+    }
+  }
+})
+</script>
+
+<style>
+
+</style>
+```
+
+:::
+
+
+### 设置禁用
+通过 disabled 设置是否禁用。
+:::demo
+
+```vue
+<template>
+ <d-row type="flex" class="docs-devui-row">
+    <d-col :flex="4">
+      <d-auto-complete
+        :source="source"
+        v-model="value"
+        :disabled="isDisabled"
+      >
+      </d-auto-complete>
+    </d-col>
+    <d-col :flex="2">
+      <d-button id="primaryBtn" @click="toggle" style="margin-left:10px">
+        {{ isDisabled ? 'Enable AutoComplete' : 'Disable AutoComplete' }}
+      </d-button>
+    </d-col>
+  </d-row>
+
   <pre>{{ value || 'No language select!' }}</pre>
 </template>
 
@@ -42,10 +105,16 @@ export default defineComponent({
       'LiveScript',
       'CoffeeScript',
     ])
-
+    const isDisabled = ref(false)
+    function toggle(){
+      isDisabled.value= !isDisabled.value
+      console.log(isDisabled.value)
+    }
     return {
       value,
-      source
+      source,
+      isDisabled,
+      toggle
     }
   }
 })
@@ -59,14 +128,15 @@ export default defineComponent({
 :::
 
 ### 自定义数据匹配方法
-
+通过 searchFn 自定义数据的匹配方法和返回的数据格式。
 :::demo
 
 ```vue
 <template>
   <d-auto-complete
-    :source="source"
     v-model="value"
+    :searchFn="searchFn"
+    disabledKey="disabled"
   >
   </d-auto-complete>
   <pre>{{ value || 'No language select!' }}</pre>
@@ -77,26 +147,61 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup() {
     const value = ref('')
-    const source = ref([
-      'C#',
-      'C',
-      'C++',
-      'CPython',
-      'Java',
-      'JavaScript',
-      'Go',
-      'Python',
-      'Ruby',
-      'F#',
-      'TypeScript',
-      'SQL',
-      'LiveScript',
-      'CoffeeScript',
+    const mySource = ref([
+      {
+        label:'C#',
+        disabled:false
+      },{
+        label:'C++',
+        disabled:false
+      },{
+        label:'CPython',
+        disabled:false
+      },{
+        label:'Java',
+        disabled:false
+      },{
+        label:'JavaScript',
+        disabled:false
+      },{
+        label:'Go',
+        disabled:false
+      },{
+        label:'Ruby',
+        disabled:false
+      },{
+        label:'F#',
+        disabled:false
+      },{
+        label:'TypeScript',
+        disabled:false
+      },{
+        label:'SQL',
+        disabled:true
+      },{
+        label:'LiveScript',
+        disabled:false
+      },{
+        label:'CoffeeScript',
+        disabled:false
+      }
     ])
-
+    //trem：input输入内容
+    const searchFn = (trem)=>{
+      console.log("searchFn trem:",trem)
+      let arr = []
+      mySource.value.forEach((item) => {
+          let cur = item.label
+          cur = cur.toLowerCase()
+          if (cur.startsWith(trem)) {
+              arr.push(item)
+          }
+      })
+      return arr
+    }
     return {
       value,
-      source
+      searchFn
     }
   }
 })
@@ -118,7 +223,23 @@ export default defineComponent({
   <d-auto-complete
     :source="source"
     v-model="value"
+    isSearching
   >
+    <template #itemTemplate="slotProps" >
+      <div>
+          第{{slotProps.index}}项: {{slotProps.item}}
+      </div>
+    </template>
+    <template #noResultItemTemplate="slotProps" >
+      <div>
+          {{`没有匹配项: ${slotProps}`}}
+      </div>
+    </template>
+    <template #searchingTemplate="slotProps" >
+      <div>
+          {{`searching: ${slotProps}`}}
+      </div>
+    </template>
   </d-auto-complete>
   <pre>{{ value || 'No language select!' }}</pre>
 </template>
@@ -179,7 +300,7 @@ d-auto-complete 参数
 |      isSearching       |                      `boolean`                      |                      false                       |                                                     可选，是否在搜索中，用于控制 searchingTemplate 是否显示                                                     | [自定义模板展示](#自定义模板展示)     |
 |   searchingTemplate    |                    `slot`                    |                        --                        |                                                                   可选，自定义搜索中显示模板                                                                    | [自定义模板展示](#自定义模板展示)     |
 |       sceneType        |                      `string`                       |                        --                        |                                                                 可选，值为 'select'、'suggest'                                                                  | [启用懒加载](demo#auto-lazy-load)      |
-|        searchFn        |        `(term: string) => Observable<any[]>`        |      [`defaultSearchFn`](#defaultsearchfn)       |                                                                      可选，自定义搜索过滤                                                                       | [自定义数据匹配方法](#自定义数据匹配方法) |
+|        searchFn        |        `(term: string) => Array<any>`        |      [`defaultSearchFn`](#defaultsearchfn)       |                                                                      可选，自定义搜索过滤                                                                       | [自定义数据匹配方法](#自定义数据匹配方法) |
 |        tipsText        |                      `string`                       |                    '最近输入'                    |                                                                         可选，提示文字                                                                          | [设置禁用](demo#auto-disable)          |
 |      latestSource      |                    `Array<any>`                     |                        --                        |                                                                         可选， 最近输入                                                                         | [最近输入](demo#auto-latest)           |
 |      valueParser       |                `(item: any) => any`                 |    [`defaultValueParse`](#defaultvalueparse)     |                                                                   可选， 对选中后数据进行处理                                                                   | [启用懒加载](demo#auto-lazy-load)      |

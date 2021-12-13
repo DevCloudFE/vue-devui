@@ -9,11 +9,11 @@ export default defineComponent({
       visible,
       selectedIndex,
       selectOptionClick,
-      searchList
+      searchList,
+      searchStatus
     } = propsData
     const {
       disabled,
-      noResultItemTemplate,
       maxHeight,
       appendToBody,
       formatter,
@@ -21,20 +21,10 @@ export default defineComponent({
       isSearching
     } = propsData.props
     
-    // 空状态 ！todo
-    const emptyText = computed(() => {
-      if (searchList.value.length === 0) {
-        return '没有数据'
-      }
-      // 如果有自定义传入！todo
-      return '没有数据'
-    })
-    const renderEmptySlots = () => {
-      return ctx.slots.empty ? renderSlot(ctx.slots, 'empty') : emptyText
-    }
-    const onSelect =(index:Number)=>{
+    const onSelect =(index:Number,item:any)=>{
       let data = {
         index,
+        item
       }
       selectOptionClick(data)
     }
@@ -42,7 +32,7 @@ export default defineComponent({
       return (
         <div 
           class={["devui-dropdown-menu",appendToBody&&'devui-dropdown-menu-cdk',disabled &&"disabled"]}
-          v-show={visible.value&&searchList.value.length>0}
+          v-show={(visible.value&&searchList.value.length>0)||ctx.slots.noResultItemTemplate||(isSearching&&ctx.slots.searchingTemplate&&searchStatus.value)}
         >
         <ul 
           class="devui-list-unstyled scroll-height"
@@ -50,30 +40,31 @@ export default defineComponent({
         >
           {/* 搜索中展示 */}
           {
-            isSearching&&
-            <li 
-                class="devui-is-searching-template"
-            >
-                {/* todu */}
-                {
-                  // searchingTemplate?searchingTemplate:"默认搜索显式内容"
-                }
-            </li>
+            isSearching&&ctx.slots.searchingTemplate&&searchStatus
+            &&<li class="devui-is-searching-template">
+                <div class='devui-no-data-tip'>
+                  {
+                    ctx.slots.searchingTemplate()
+                  }
+                </div>
+                  
+              </li>
           }
           {/*  展示 */}
           {
             !isSearching&&searchList!=null&&searchList.value.length>0&&searchList.value.map((item,index)=>{
               return (
                 <li 
-                  onClick={()=>onSelect(index)}
+                  onClick={()=>onSelect(index,item)}
                   class={[
                     "devui-dropdown-item",selectedIndex.value==index&&"selected",
                     {"disabled": disabledKey && item[disabledKey]}
                   ]}
                   title={formatter(item)}
+                  key={formatter(item)}
                 >
                   {
-                    item
+                    ctx.slots.itemTemplate?ctx.slots.itemTemplate(item,index):formatter(item)
                   }
                 </li>
               )
@@ -82,10 +73,10 @@ export default defineComponent({
 
           {/* 没有匹配结果传入了noResultItemTemplate*/}
           {
-            noResultItemTemplate&&
+            !searchStatus.value&&searchList.value.length==0&&ctx.slots.noResultItemTemplate&&
             <li class='devui-no-result-template'>
                 <div class='devui-no-data-tip'>
-                  {noResultItemTemplate}
+                  {ctx.slots.noResultItemTemplate()}
                 </div>
             </li>
           }

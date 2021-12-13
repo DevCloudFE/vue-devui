@@ -36,14 +36,6 @@ export const autoCompleteProps = {
   disabledKey:{
     type:String
   },
-  itemTemplate: {
-    // type :TemplateRef<any>,
-    default:null
-  },
-  noResultItemTemplate: {
-    // type:TemplateRef<any>,
-    default:null
-  },
   formatter: {
     type:Function as PropType<(item: any) => String>,
     default:defaultFormatter
@@ -51,9 +43,6 @@ export const autoCompleteProps = {
   isSearching: {
     type:Boolean,
     default:false
-  },
-  searchingTemplate: {
-    // type:别的组件传入的h函数
   },
   sceneType:{
     type:String
@@ -106,6 +95,7 @@ export interface AutoCompleteRootType {
 export type DropdownProps = {
   props:AutoCompleteProps,
   searchList:Ref<any[]>,
+  searchStatus?:Ref<boolean>,
   term?: String,
   visible: Ref<Boolean>,
   selectedIndex:Ref<Number>,

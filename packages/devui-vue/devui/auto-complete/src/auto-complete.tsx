@@ -1,5 +1,9 @@
-import { defineComponent, provide, reactive, Transition,toRefs, ref } from 'vue'
+import { defineComponent, provide, reactive, Transition,toRefs, ref, SetupContext, onMounted, getCurrentInstance  } from 'vue'
 import { autoCompleteProps, AutoCompleteProps, DropdownPropsKey,ConnectionPosition } from './auto-complete-types'
+import useCustomTemplate from "./composables/use-custom-template"
+import useSearchFn from "./composables/use-searchFn"
+import useInputHandle from "./composables/use-input-handle"
+import useSelectHandle from "./composables/use-select-handle"
 import { Observable} from 'rxjs';
 import './auto-complete.scss'
 import DAutoCompleteDropdown from './components/dropdown'
@@ -9,10 +13,9 @@ export default defineComponent({
   directives: { ClickOutside },
   props: autoCompleteProps,
   emits: ['update:modelValue'],
-  setup(props: AutoCompleteProps, ctx) {
-    // 匹配结果
-    let searchList = ref([])
+  setup(props: AutoCompleteProps, ctx:SetupContext) {
     const {
+      disabled,
       appendToBody,
       dAutoCompleteWidth,
       modelValue,
@@ -22,85 +25,27 @@ export default defineComponent({
       transInputFocusEmit,
       selectValue,
       source,
-      searchFn
+      searchFn,
     } = props
-    const disabled = ref(props.disabled)
-    const visible = ref(false)
-    const selectedIndex = ref(0)
-    const origin = ref()
-    const inputRef = ref()
-    const position = reactive<ConnectionPosition>({
-      originX: 'left',
-      originY: 'bottom',
-      overlayX: 'left',
-      overlayY: 'top'
-    })
-    const handleSearch = (term:string)=>{
-      console.log("term",term);
-      if(term==""){
-        console.log("term",term);
-        searchList.value=[]
-        return 
-      }
-      let arr = []
-      term = term.toLowerCase()
-      if(!searchFn){
-        source.forEach((item)=>{
-          let cur = formatter(item)
-          cur = cur.toLowerCase()
-          if(cur.startsWith(term)){
-            arr.push(item)
-          }
-        })
-      }else{
-        arr = searchFn(term)
-      }
-      searchList.value=arr
-    }
-    const handleClose = ()=>{
-      visible.value=false
-    }
-    const toggleMenu =()=>{
-      if(!disabled.value){
-        visible.value=!visible.value
-      }
-    }
-    // todo如何使用rx防抖
-    const onInput = (e:Event)=>{
-      const inp = e.target as HTMLInputElement  
-      ctx.emit('update:modelValue',inp.value)
-      visible.value=true
-
-      handleSearch(inp.value)
-    }
-    const onFocus = ()=>{
-      handleSearch(modelValue.value)
-      transInputFocusEmit&&transInputFocusEmit(true,inputRef)
-    }
-    //todo 参数还没确定 后期需要约束data类型
-    const getListIndex = (item:string)=>{
-      if(searchList.value.length==0){
-        return 0
-      }
-      let ind = searchList.value.indexOf(item)
-      return ind==-1?0:ind
-    }
-    // todo 键盘方向键选择回车键选择功能
-    const selectOptionClick = (data) => {
-      // const { disabledKey } = props
-      const cur = searchList.value[data.index]
-      ctx.emit('update:modelValue',cur)
-      handleSearch(cur)
-      selectedIndex.value=getListIndex(cur)
-      selectValue&&selectValue()
-    }
+    const {handleSearch,searchList} = useSearchFn(ctx,source,searchFn,formatter)
+    const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,modelValue,disabled,handleSearch,transInputFocusEmit)
+    const {selectedIndex,selectOptionClick} = useSelectHandle(ctx,searchList,selectValue,handleSearch,formatter)
+    const {customRenderSolts} = useCustomTemplate(ctx,modelValue.value)
     provide(DropdownPropsKey, {
       props,
       visible,
       term: '',
       searchList:searchList,
       selectedIndex,
+      searchStatus,
       selectOptionClick
+    })
+    const origin = ref()
+    const position = reactive<ConnectionPosition>({
+      originX: 'left',
+      originY: 'bottom',
+      overlayX: 'left',
+      overlayY: 'top'
     })
     const renderDropdown = () => {
       if(appendToBody.value){
@@ -130,14 +75,15 @@ export default defineComponent({
               }}
             >
               <Transition name='fade'>
-                <DAutoCompleteDropdown />
+                <DAutoCompleteDropdown>
+                  {customRenderSolts()}
+                </DAutoCompleteDropdown>
               </Transition>
             </div>
         )
       }
       
     }
-
     return () => {
       return (
         <>
