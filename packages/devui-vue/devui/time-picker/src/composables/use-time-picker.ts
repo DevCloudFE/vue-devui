@@ -39,14 +39,18 @@ export default function useTimePicker(
 
       const vModelValueArr = value.split(':')
       const minTimeValueArr = minTime.split(':')
+      const maxTimeValueArr = maxTime.split(':')
 
       vModeValue.value == ''
         ? vModeValue.value = '00:00:00' 
         : ''
-      
-      if( vModeValue.value > minTime ){
+
+      if( value > minTime && value < maxTime){
         firsthandActiveTime.value = value
         setInputValue(vModelValueArr[0],vModelValueArr[1],vModelValueArr[2])
+      }else if( value > maxTime ){
+        firsthandActiveTime.value = maxTime
+        setInputValue(maxTimeValueArr[0],maxTimeValueArr[1],maxTimeValueArr[2])
       }else{
         firsthandActiveTime.value = minTime
         setInputValue(minTimeValueArr[0],minTimeValueArr[1],minTimeValueArr[2])
