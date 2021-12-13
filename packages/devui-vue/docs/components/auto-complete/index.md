@@ -14,8 +14,10 @@
 ```vue
 <template>
   <d-auto-complete
+    delay="1000"
     :source="source"
     v-model="value"
+    :allowEmptyValueSearch="allowEmptyValueSearch"
   >
   </d-auto-complete>
   <pre>{{ value || 'No language select!' }}</pre>
@@ -26,6 +28,7 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   setup() {
     const value = ref('')
+    const allowEmptyValueSearch = ref(true)
     const source = ref([
       'C#',
       'C',
@@ -44,7 +47,8 @@ export default defineComponent({
     ])
     return {
       value,
-      source
+      source,
+      allowEmptyValueSearch
     }
   }
 })

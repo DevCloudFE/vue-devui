@@ -4,7 +4,6 @@ import useCustomTemplate from "./composables/use-custom-template"
 import useSearchFn from "./composables/use-searchFn"
 import useInputHandle from "./composables/use-input-handle"
 import useSelectHandle from "./composables/use-select-handle"
-import { Observable} from 'rxjs';
 import './auto-complete.scss'
 import DAutoCompleteDropdown from './components/dropdown'
 import ClickOutside from '../../shared/devui-directive/clickoutside'
@@ -16,20 +15,19 @@ export default defineComponent({
   setup(props: AutoCompleteProps, ctx:SetupContext) {
     const {
       disabled,
+      modelValue,
       appendToBody,
       dAutoCompleteWidth,
-      modelValue,
-      disabledKey
-    } = toRefs(props)
-    const {
+      delay,
+      allowEmptyValueSearch,
       formatter,
       transInputFocusEmit,
       selectValue,
       source,
       searchFn,
-    } = props
-    const {handleSearch,searchList} = useSearchFn(ctx,source,searchFn,formatter)
-    const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,modelValue,disabled,handleSearch,transInputFocusEmit)
+    } = toRefs(props)
+    const {handleSearch,searchList} = useSearchFn(ctx,allowEmptyValueSearch,source,searchFn,formatter)
+    const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,modelValue,disabled,delay,handleSearch,transInputFocusEmit)
     const {selectedIndex,selectOptionClick} = useSelectHandle(ctx,searchList,selectValue,handleSearch,formatter,toggleMenu)
     const {customRenderSolts} = useCustomTemplate(ctx,modelValue.value)
     provide(DropdownPropsKey, {

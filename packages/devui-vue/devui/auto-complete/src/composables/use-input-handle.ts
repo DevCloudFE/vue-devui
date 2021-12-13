@@ -1,20 +1,30 @@
+import { setTimeout } from "core-js";
 import { ref, Ref, SetupContext } from "vue";
-
-export default function useInputHandle(ctx: SetupContext, modelValue:Ref<string>,disabled:Ref<Boolean>,handleSearch: Function, transInputFocusEmit: Function): any {
+export default function useInputHandle(ctx: SetupContext, modelValue:Ref<string>,disabled:Ref<Boolean>,delay:Ref<Number>,handleSearch: Function, transInputFocusEmit: Ref<Function>): any {
     const visible = ref(false)
     const inputRef = ref()
     const searchStatus = ref(false)
-    // todo如何使用rx防抖
+    const debounce = (cb,time) =>{
+        let timer
+        console.log("debounce");
+        return (...args)=>{
+            if(timer){
+                clearTimeout(timer)
+            }
+            timer = setTimeout(()=>{
+                cb(...args)
+            },time)
+        }
+    }
     const onInput = (e: Event) => {
         const inp = e.target as HTMLInputElement
         ctx.emit('update:modelValue', inp.value)
         visible.value = true
-
-        handleSearch(inp.value)
+        debounce(handleSearch,delay.value)(inp.value)
     }
     const onFocus = () => {
-        handleSearch(modelValue.value)
-        transInputFocusEmit && transInputFocusEmit(true, inputRef)
+        debounce(handleSearch,delay.value)(modelValue.value)
+        transInputFocusEmit.value && transInputFocusEmit.value(true, inputRef)
     }
     const handleClose = ()=>{
         visible.value=false
