@@ -1,6 +1,15 @@
 import type { PropType, ExtractPropTypes, InjectionKey, SetupContext, Ref } from 'vue'
 const defaultFormatter = (item) => (item ? item.label || item.toString() : '');
 const defaultValueParse = (item) => item;
+// appendToBody使用
+export type HorizontalConnectionPos = 'left' | 'center' | 'right';
+export type VerticalConnectionPos = 'top' | 'center' | 'bottom';
+export interface ConnectionPosition {
+  originX: HorizontalConnectionPos
+  originY: VerticalConnectionPos
+  overlayX: HorizontalConnectionPos
+  overlayY: VerticalConnectionPos
+}
 export const autoCompleteProps = {
   modelValue: {
     type: String,
@@ -17,9 +26,14 @@ export const autoCompleteProps = {
     type:Boolean,
     default:false
   },
-  appendToBodyDirections:{
-    //todo
-    //可选，方向数组优先采用数组里靠前的位置，AppendToBodyDirection 和 ConnectedPosition 请参考 dropdown
+  appendToBodyDirections :{
+    type: Object as PropType<ConnectionPosition>,
+    default: (): ConnectionPosition => ({
+      originX: 'left',
+      originY: 'bottom',
+      overlayX: 'left',
+      overlayY: 'top',
+    }),
   },
   disabled:{
     type:Boolean,
@@ -99,12 +113,3 @@ export type DropdownProps = {
   selectOptionClick:Function
 }
 export const DropdownPropsKey:InjectionKey<DropdownProps>=Symbol("DropdownPropsKey")
-// appendToBody使用
-type HorizontalConnectionPos = 'left' | 'center' | 'right';
-type VerticalConnectionPos = 'top' | 'center' | 'bottom';
-export interface ConnectionPosition {
-  originX: HorizontalConnectionPos
-  originY: VerticalConnectionPos
-  overlayX: HorizontalConnectionPos
-  overlayY: VerticalConnectionPos
-}

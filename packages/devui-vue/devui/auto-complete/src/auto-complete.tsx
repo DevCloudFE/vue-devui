@@ -1,5 +1,5 @@
 import { defineComponent, provide, reactive, Transition,toRefs, ref, SetupContext } from 'vue'
-import { autoCompleteProps, AutoCompleteProps, DropdownPropsKey,ConnectionPosition } from './auto-complete-types'
+import { autoCompleteProps, AutoCompleteProps, DropdownPropsKey,ConnectionPosition,HorizontalConnectionPos,VerticalConnectionPos } from './auto-complete-types'
 import useCustomTemplate from "./composables/use-custom-template"
 import useSearchFn from "./composables/use-searchfn"
 import useInputHandle from "./composables/use-input-handle"
@@ -25,11 +25,11 @@ export default defineComponent({
       selectValue,
       source,
       searchFn,
+      appendToBodyDirections
     } = toRefs(props)
-    
     const {handleSearch,searchList,showNoResultItemTemplate} = useSearchFn(ctx,allowEmptyValueSearch,source,searchFn,formatter)
     const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,showNoResultItemTemplate,modelValue,disabled,delay,handleSearch,transInputFocusEmit)
-    const {selectedIndex,selectOptionClick} = useSelectHandle(ctx,searchList,selectValue,handleSearch,formatter,toggleMenu)
+    const {selectedIndex,selectOptionClick} = useSelectHandle(ctx,searchList,selectValue,handleSearch,formatter,handleClose)
     const {customRenderSolts} = useCustomTemplate(ctx,modelValue)
     provide(DropdownPropsKey, {
       props,
@@ -42,19 +42,15 @@ export default defineComponent({
       showNoResultItemTemplate:showNoResultItemTemplate
     })
     const origin = ref()
-    const position = reactive<ConnectionPosition>({
-      originX: 'left',
-      originY: 'bottom',
-      overlayX: 'left',
-      overlayY: 'top'
-    })
+    const position = reactive({appendToBodyDirections:{}})
+    position.appendToBodyDirections=appendToBodyDirections
     const renderDropdown = () => {
       if(appendToBody.value){
         return (
           <d-flexible-overlay
             hasBackdrop={false}
             origin={origin}
-            position={position}
+            position={position.appendToBodyDirections}
             v-model:visible={visible.value}
           >
             <div
@@ -78,7 +74,7 @@ export default defineComponent({
               }}
             >
               <Transition name='fade'>
-                <DAutoCompleteDropdown v-show="false">
+                <DAutoCompleteDropdown>
                   {customRenderSolts()}
                 </DAutoCompleteDropdown>
               </Transition>
@@ -95,7 +91,6 @@ export default defineComponent({
             ref={origin}
             v-click-outside={handleClose}
           >
-           
             <input
               disabled={disabled.value}
               type="text"

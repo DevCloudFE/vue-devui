@@ -1,6 +1,6 @@
 import { ref, Ref, SetupContext } from "vue";
 
-export default function useSelectHandle(ctx: SetupContext,searchList: Ref<Array<any>>, selectValue: Ref<Function>, handleSearch: Function,formatter: Ref<Function>,toggleMenu:Function): any {
+export default function useSelectHandle(ctx: SetupContext,searchList: Ref<Array<any>>, selectValue: Ref<Function>, handleSearch: Function,formatter: Ref<Function>,handleClose:Function): any {
   const selectedIndex = ref(0)
   const getListIndex = (item: string) => {
     if (searchList.value.length == 0) {
@@ -13,7 +13,7 @@ export default function useSelectHandle(ctx: SetupContext,searchList: Ref<Array<
   const selectOptionClick = async(item) => {
     const cur = formatter.value(item)
     ctx.emit('update:modelValue', cur)
-    toggleMenu()
+    handleClose()
     await handleSearch(cur)
     selectedIndex.value = getListIndex(cur)
     selectValue.value && selectValue.value()

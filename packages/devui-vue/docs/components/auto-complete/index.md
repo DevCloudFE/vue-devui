@@ -20,6 +20,8 @@
     :allowEmptyValueSearch="allowEmptyValueSearch"
     :selectValue="selectValue"
     :transInputFocusEmit="transInputFocusEmit"
+    :appendToBody="true"
+    :appendToBodyDirections="appendToBodyDirections"
   >
   </d-auto-complete>
   <pre>{{ value || 'No language select!' }}</pre>
@@ -53,12 +55,19 @@ export default defineComponent({
     const transInputFocusEmit = ()=>{
       console.log('transInputFocusEmit')
     }
+    const appendToBodyDirections = ref({
+      originX: 'left',
+      originY: 'bottom',
+      overlayX: 'left',
+      overlayY: 'top',
+    })
     return {
       value,
       source,
       allowEmptyValueSearch,
       transInputFocusEmit,
-      selectValue
+      selectValue,
+      appendToBodyDirections
     }
   }
 })
@@ -311,8 +320,8 @@ d-auto-complete 参数
 | :--------------------: | :-------------------------------------------------: | :----------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------- | ---------- |
 |         source         |                    `Array<any>`                     |                        --                        |                                                              必选，有 searchFn 的情况下可以不必选                                                               | [基本用法](#基本用法)           |
 | allowEmptyValueSearch  |                      `boolean`                      |                      false                       |                                                     可选，在绑定的输入框 value 为空时，是否进行搜索提示操作                                                     | [基本用法](#基本用法)     |
-|      appendToBody      |                      `boolean`                      |                      false                       |                                                                可选，下拉弹出是否 append to body                                                                | [自定义模板展示](#自定义模板展示)     |
-| appendToBodyDirections | `Array<AppendToBodyDirection \| ConnectedPosition>` | `['rightDown', 'leftDown', 'rightUp', 'leftUp']` |                               可选，方向数组优先采用数组里靠前的位置，AppendToBodyDirection 和 ConnectedPosition 请参考 dropdown                                | [自定义模板展示](#自定义模板展示)    |
+|      appendToBody      |                      `boolean`                      |                      false                       |                                                                可选，下拉弹出是否 append to body                                                                | [基本用法](#基本用法)     |
+| appendToBodyDirections | `Object as PropType<ConnectionPosition>` | `{originX: 'left',originY: 'bottom',overlayX: 'left',overlayY: 'top',}` |                               可选，指定下拉框与输入框的相对位置，ConnectionPosition 请参考 Overlay                                | [基本用法](#基本用法)    |
 |        disabled        |                      `boolean`                      |                      false                       |                                                                       可选，是否禁止指令                                                                        | [设置禁用](#设置禁用)          |
 |         delay          |                      `number`                       |                       300                        |                                                 可选，只有在 delay 时间经过后并且输入新值，才做搜索查询（`ms`）                                                 | [基本用法](#基本用法)     |
 |      disabledKey       |                      `string`                       |                        --                        | 可选，禁用单个选项，当传入资源 source 选项类型为对象，比如设置为'disabled'，则当对象的 disable 属性为 true 时，比如{ label: xxx, disabled: true }，该选项将禁用 | [自定义数据匹配方法](#自定义数据匹配方法)          |
