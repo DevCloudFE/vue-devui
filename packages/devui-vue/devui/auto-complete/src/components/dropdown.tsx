@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject, renderSlot } from 'vue'
+import { computed, defineComponent, inject, renderSlot, Transition } from 'vue'
 import { DropdownPropsKey } from '../auto-complete-types'
 // 后续会对接自带下拉组件，相关功能将全部抽离
 export default defineComponent({
@@ -10,7 +10,8 @@ export default defineComponent({
       selectedIndex,
       selectOptionClick,
       searchList,
-      searchStatus
+      searchStatus,
+      showNoResultItemTemplate
     } = propsData
     const {
       disabled,
@@ -29,7 +30,7 @@ export default defineComponent({
       return (
         <div 
           class={["devui-dropdown-menu",appendToBody&&'devui-dropdown-menu-cdk',disabled &&"disabled"]}
-          v-show={(visible.value&&searchList.value.length>0)||ctx.slots.noResultItemTemplate||(isSearching&&ctx.slots.searchingTemplate&&searchStatus.value)}
+          v-show={(visible.value&&searchList.value.length>0)||(ctx.slots.noResultItemTemplate&&showNoResultItemTemplate.value)||(isSearching&&ctx.slots.searchingTemplate&&searchStatus.value)}
         >
         <ul 
           class="devui-list-unstyled scroll-height"
@@ -37,7 +38,7 @@ export default defineComponent({
         >
           {/* 搜索中展示 */}
           {
-            isSearching&&ctx.slots.searchingTemplate&&searchStatus
+            isSearching&&ctx.slots.searchingTemplate&&searchStatus.value
             &&<li class="devui-is-searching-template">
                 <div class='devui-no-data-tip'>
                   {
@@ -49,7 +50,7 @@ export default defineComponent({
           }
           {/*  展示 */}
           {
-            !isSearching&&searchList!=null&&searchList.value.length>0&&searchList.value.map((item,index)=>{
+            !showNoResultItemTemplate.value&&!searchStatus.value&&searchList!=null&&searchList.value.length>0&&searchList.value.map((item,index)=>{
               return (
                 <li 
                   onClick={()=>onSelect(item)}
@@ -70,7 +71,7 @@ export default defineComponent({
 
           {/* 没有匹配结果传入了noResultItemTemplate*/}
           {
-            !searchStatus.value&&searchList.value.length==0&&ctx.slots.noResultItemTemplate&&
+            !searchStatus.value&&searchList.value.length==0&&ctx.slots.noResultItemTemplate&&showNoResultItemTemplate.value&&
             <li class='devui-no-result-template'>
                 <div class='devui-no-data-tip'>
                   {ctx.slots.noResultItemTemplate()}

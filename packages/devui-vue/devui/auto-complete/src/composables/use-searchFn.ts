@@ -1,11 +1,12 @@
 import { ref, Ref, SetupContext } from "vue";
 
 export default function useSearchFn(ctx: SetupContext,allowEmptyValueSearch:Ref<Boolean>,source:Ref<Array<any>>,searchFn:Ref<Function>,formatter:Ref<Function>): any {
-    // 匹配结果
     const searchList = ref([])
-    const handleSearch = (term: string) => {
+    const showNoResultItemTemplate = ref(false)
+    const handleSearch =async (term: string) => {
         if (term == ""&&!allowEmptyValueSearch.value) {
             searchList.value = []
+            showNoResultItemTemplate.value=false
             return
         }
         let arr = []
@@ -19,12 +20,19 @@ export default function useSearchFn(ctx: SetupContext,allowEmptyValueSearch:Ref<
                 }
             })
         } else {
-            arr = searchFn.value(term)
+            arr = await searchFn.value(term)
         }
         searchList.value = arr
+        if(searchList.value.length==0){
+            showNoResultItemTemplate.value=true
+        }else{
+            showNoResultItemTemplate.value=false
+        }
     }
+    
     return {
         handleSearch,
-        searchList
+        searchList,
+        showNoResultItemTemplate
     }
 }

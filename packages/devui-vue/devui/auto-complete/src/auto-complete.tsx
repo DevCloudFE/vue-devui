@@ -1,7 +1,7 @@
-import { defineComponent, provide, reactive, Transition,toRefs, ref, SetupContext, onMounted, getCurrentInstance  } from 'vue'
+import { defineComponent, provide, reactive, Transition,toRefs, ref, SetupContext } from 'vue'
 import { autoCompleteProps, AutoCompleteProps, DropdownPropsKey,ConnectionPosition } from './auto-complete-types'
 import useCustomTemplate from "./composables/use-custom-template"
-import useSearchFn from "./composables/use-searchFn"
+import useSearchFn from "./composables/use-searchfn"
 import useInputHandle from "./composables/use-input-handle"
 import useSelectHandle from "./composables/use-select-handle"
 import './auto-complete.scss'
@@ -26,10 +26,11 @@ export default defineComponent({
       source,
       searchFn,
     } = toRefs(props)
-    const {handleSearch,searchList} = useSearchFn(ctx,allowEmptyValueSearch,source,searchFn,formatter)
-    const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,modelValue,disabled,delay,handleSearch,transInputFocusEmit)
+    
+    const {handleSearch,searchList,showNoResultItemTemplate} = useSearchFn(ctx,allowEmptyValueSearch,source,searchFn,formatter)
+    const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,showNoResultItemTemplate,modelValue,disabled,delay,handleSearch,transInputFocusEmit)
     const {selectedIndex,selectOptionClick} = useSelectHandle(ctx,searchList,selectValue,handleSearch,formatter,toggleMenu)
-    const {customRenderSolts} = useCustomTemplate(ctx,modelValue.value)
+    const {customRenderSolts} = useCustomTemplate(ctx,modelValue)
     provide(DropdownPropsKey, {
       props,
       visible,
@@ -37,7 +38,8 @@ export default defineComponent({
       searchList:searchList,
       selectedIndex,
       searchStatus,
-      selectOptionClick
+      selectOptionClick,
+      showNoResultItemTemplate:showNoResultItemTemplate
     })
     const origin = ref()
     const position = reactive<ConnectionPosition>({
@@ -61,7 +63,9 @@ export default defineComponent({
                 width: dAutoCompleteWidth.value>0?dAutoCompleteWidth.value+'px':'450px' 
               }}
             >
-              <DAutoCompleteDropdown></DAutoCompleteDropdown>
+              <DAutoCompleteDropdown>
+                {customRenderSolts()}
+              </DAutoCompleteDropdown>
             </div>
            </d-flexible-overlay>
         )
@@ -74,7 +78,7 @@ export default defineComponent({
               }}
             >
               <Transition name='fade'>
-                <DAutoCompleteDropdown>
+                <DAutoCompleteDropdown v-show="false">
                   {customRenderSolts()}
                 </DAutoCompleteDropdown>
               </Transition>
@@ -91,6 +95,7 @@ export default defineComponent({
             ref={origin}
             v-click-outside={handleClose}
           >
+           
             <input
               disabled={disabled.value}
               type="text"

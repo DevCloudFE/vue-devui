@@ -14,10 +14,12 @@
 ```vue
 <template>
   <d-auto-complete
-    delay="1000"
+    :delay="1000"
     :source="source"
     v-model="value"
     :allowEmptyValueSearch="allowEmptyValueSearch"
+    :selectValue="selectValue"
+    :transInputFocusEmit="transInputFocusEmit"
   >
   </d-auto-complete>
   <pre>{{ value || 'No language select!' }}</pre>
@@ -45,10 +47,18 @@ export default defineComponent({
       'LiveScript',
       'CoffeeScript',
     ])
+    const selectValue = ()=>{
+      console.log('selectValue')
+    }
+    const transInputFocusEmit = ()=>{
+      console.log('transInputFocusEmit')
+    }
     return {
       value,
       source,
-      allowEmptyValueSearch
+      allowEmptyValueSearch,
+      transInputFocusEmit,
+      selectValue
     }
   }
 })
@@ -139,7 +149,15 @@ export default defineComponent({
     v-model="value"
     :searchFn="searchFn"
     disabledKey="disabled"
+    isSearching
+    :delay="1000"
+    :formatter="formatter"
   >
+    <template #searchingTemplate="slotProps" >
+      <div>
+          {{`searching: ${slotProps}`}}
+      </div>
+    </template>
   </d-auto-complete>
   <pre>{{ value || 'No language select!' }}</pre>
 </template>
@@ -188,21 +206,30 @@ export default defineComponent({
         disabled:false
       }
     ])
+    const formatter = (item) =>{
+      return item.label;
+    }
     //trem：input输入内容
-    const searchFn = (trem)=>{
+    const searchFn =async (trem)=>{
       let arr = []
+      await new Promise((resolve)=>{
+        setTimeout(() => {
+          resolve()
+        }, 1000);
+      })
       mySource.value.forEach((item) => {
-          let cur = item.label
-          cur = cur.toLowerCase()
-          if (cur.startsWith(trem)) {
-              arr.push(item)
-          }
+        let cur = item.label
+        cur = cur.toLowerCase()
+        if (cur.startsWith(trem)) {
+            arr.push(item)
+        }
       })
       return arr
     }
     return {
       value,
-      searchFn
+      searchFn,
+      formatter
     }
   }
 })
@@ -216,7 +243,7 @@ export default defineComponent({
 :::
 
 ### 自定义模板展示
-
+通过 itemTemplate、noResultItemTemplate 自定义下拉框和无匹配提示。
 :::demo
 
 ```vue
@@ -224,7 +251,6 @@ export default defineComponent({
   <d-auto-complete
     :source="source"
     v-model="value"
-    isSearching
   >
     <template #itemTemplate="slotProps" >
       <div>
@@ -234,11 +260,6 @@ export default defineComponent({
     <template #noResultItemTemplate="slotProps" >
       <div>
           {{`没有匹配项: ${slotProps}`}}
-      </div>
-    </template>
-    <template #searchingTemplate="slotProps" >
-      <div>
-          {{`searching: ${slotProps}`}}
       </div>
     </template>
   </d-auto-complete>
@@ -289,17 +310,17 @@ d-auto-complete 参数
 |          参数          |                        类型                         |                       默认                       |                                                                              说明                                                                               | 跳转 Demo                              | 全局配置项 |
 | :--------------------: | :-------------------------------------------------: | :----------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------- | ---------- |
 |         source         |                    `Array<any>`                     |                        --                        |                                                              必选，有 searchFn 的情况下可以不必选                                                               | [基本用法](#基本用法)           |
-| allowEmptyValueSearch  |                      `boolean`                      |                      false                       |                                                     可选，在绑定的输入框 value 为空时，是否进行搜索提示操作                                                     | [自定义模板展示](#自定义模板展示)     |
+| allowEmptyValueSearch  |                      `boolean`                      |                      false                       |                                                     可选，在绑定的输入框 value 为空时，是否进行搜索提示操作                                                     | [基本用法](#基本用法)     |
 |      appendToBody      |                      `boolean`                      |                      false                       |                                                                可选，下拉弹出是否 append to body                                                                | [自定义模板展示](#自定义模板展示)     |
 | appendToBodyDirections | `Array<AppendToBodyDirection \| ConnectedPosition>` | `['rightDown', 'leftDown', 'rightUp', 'leftUp']` |                               可选，方向数组优先采用数组里靠前的位置，AppendToBodyDirection 和 ConnectedPosition 请参考 dropdown                                | [自定义模板展示](#自定义模板展示)    |
-|        disabled        |                      `boolean`                      |                      false                       |                                                                       可选，是否禁止指令                                                                        | [设置禁用](demo#auto-disable)          |
-|         delay          |                      `number`                       |                       300                        |                                                 可选，只有在 delay 时间经过后并且输入新值，才做搜索查询（`ms`）                                                 | [自定义模板展示](#自定义模板展示)     |
-|      disabledKey       |                      `string`                       |                        --                        | 可选，禁用单个选项，当传入资源 source 选项类型为对象，比如设置为'disabled'，则当对象的 disable 属性为 true 时，比如{ label: xxx, disabled: true }，该选项将禁用 | [设置禁用](demo#auto-disable)          |
+|        disabled        |                      `boolean`                      |                      false                       |                                                                       可选，是否禁止指令                                                                        | [设置禁用](#设置禁用)          |
+|         delay          |                      `number`                       |                       300                        |                                                 可选，只有在 delay 时间经过后并且输入新值，才做搜索查询（`ms`）                                                 | [基本用法](#基本用法)     |
+|      disabledKey       |                      `string`                       |                        --                        | 可选，禁用单个选项，当传入资源 source 选项类型为对象，比如设置为'disabled'，则当对象的 disable 属性为 true 时，比如{ label: xxx, disabled: true }，该选项将禁用 | [自定义数据匹配方法](#自定义数据匹配方法)          |
 |      itemTemplate      |                    `slot`                    |                        --                        |                                                                      可选，自定义展示模板                                                                       | [自定义模板展示](#自定义模板展示)     |
 |  noResultItemTemplate  |                    `slot`                    |                        --                        |                                                                   可选，没有匹配项的展示结果                                                                    | [自定义模板展示](#自定义模板展示)     |
-|       formatter        |               `(item: any) => string`               |     [`defaultFormatter`](#defaultformatter)      |                                                                        可选，格式化函数                                                                         | [设置禁用](#自定义模板展示)          |
-|      isSearching       |                      `boolean`                      |                      false                       |                                                     可选，是否在搜索中，用于控制 searchingTemplate 是否显示                                                     | [自定义模板展示](#自定义模板展示)     |
-|   searchingTemplate    |                    `slot`                    |                        --                        |                                                                   可选，自定义搜索中显示模板                                                                    | [自定义模板展示](#自定义模板展示)     |
+|       formatter        |               `(item: any) => string`               |     [`defaultFormatter`](#defaultformatter)      |                                                                        可选，格式化函数                                                                         | [自定义数据匹配方法](#自定义数据匹配方法)          |
+|      isSearching       |                      `boolean`                      |                      false                       |                                                     可选，是否在搜索中，用于控制 searchingTemplate 是否显示                                                     | [自定义数据匹配方法](#自定义数据匹配方法)     |
+|   searchingTemplate    |                    `slot`                    |                        --                        |                                                                   可选，自定义搜索中显示模板                                                                    | [自定义数据匹配方法](#自定义数据匹配方法)     |
 |       sceneType        |                      `string`                       |                        --                        |                                                                 可选，值为 'select'、'suggest'                                                                  | [启用懒加载](demo#auto-lazy-load)      |
 |        searchFn        |        `(term: string) => Array<any>`        |      [`defaultSearchFn`](#defaultsearchfn)       |                                                                      可选，自定义搜索过滤                                                                       | [自定义数据匹配方法](#自定义数据匹配方法) |
 |        tipsText        |                      `string`                       |                    '最近输入'                    |                                                                         可选，提示文字                                                                          | [设置禁用](demo#auto-disable)          |
@@ -314,8 +335,8 @@ d-auto-complete 事件
 |        参数         |                                         类型                                         |                                                                  说明                                                                  | 跳转 Demo                         |
 | :-----------------: | :----------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------- |
 |      loadMore       |               `EventEmitter<ComponentRef<AutoCompletePopupComponent>>`               | 懒加载触发事件，配合`enableLazyLoad`使用，使用`$event.loadFinish()`关闭 loading 状态，其中\$event 为 AutoCompletePopupComponent 的实例 | [启用懒加载](demo#auto-lazy-load) |
-|     selectValue     |                                 `EventEmitter<any>`                                  |                                                      可选，选择选项之后的回调函数                                                      | [启用懒加载](demo#auto-lazy-load) |
-| transInputFocusEmit | `EventEmitter<{focus: boolean, popupRef: ComponentRef<AutoCompletePopupComponent>}>` |                                                      可选，Input focus 时回调函数    
+|     selectValue     |                                 `EventEmitter<any>`                                  |                                                      可选，选择选项之后的回调函数                                                      | [基本用法](#基本用法) |
+| transInputFocusEmit | `EventEmitter<any>`  |                                                      可选，Input focus 时回调函数             | [基本用法](#基本用法)  |
 
 
 # 接口 & 类型定义
@@ -323,6 +344,7 @@ d-auto-complete 事件
 ### defaultSearchFn
 
 ```ts
+//term 为输入的关键字。
 defaultSearchFn = (term) => {
   return source.forEach((item)=>{
           let cur = formatter(item)
@@ -334,20 +356,19 @@ defaultSearchFn = (term) => {
   };
 ```
 
-term 为输入的关键字。
-
 ### defaultFormatter
 
 ```ts
+// item 为数据项。
 defaultFormatter = (item) => (item ? item.label || item.toString() : '');
 ```
 
-item 为数据项。
+
 
 ### defaultValueParse
 
 ```ts
+//item 为数据项。
 defaultValueParse = (item) => item;
 ```
 
-item 为数据项。

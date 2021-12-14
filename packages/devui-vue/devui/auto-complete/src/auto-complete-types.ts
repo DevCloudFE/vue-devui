@@ -1,11 +1,7 @@
 import type { PropType, ExtractPropTypes, InjectionKey, SetupContext, Ref } from 'vue'
-import { Observable, of } from 'rxjs';
 const defaultFormatter = (item) => (item ? item.label || item.toString() : '');
 const defaultValueParse = (item) => item;
 export const autoCompleteProps = {
-  /* test: {
-    type: Object as PropType<{ xxx: xxx }>
-  } */
   modelValue: {
     type: String,
     default:""
@@ -78,7 +74,7 @@ export const autoCompleteProps = {
     default:300
   },
   transInputFocusEmit:{
-    type:Function as PropType<(focus:boolean,inputRef: Ref)=>any>,
+    type:Function
   },
   selectValue:{
     type:Function
@@ -96,6 +92,7 @@ export type DropdownProps = {
   props:AutoCompleteProps,
   searchList:Ref<any[]>,
   searchStatus?:Ref<boolean>,
+  showNoResultItemTemplate:Ref<boolean>,
   term?: String,
   visible: Ref<Boolean>,
   selectedIndex:Ref<Number>,
