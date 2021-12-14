@@ -1,5 +1,5 @@
 import { defineComponent, provide, reactive, Transition,toRefs, ref, SetupContext } from 'vue'
-import { autoCompleteProps, AutoCompleteProps, DropdownPropsKey,ConnectionPosition,HorizontalConnectionPos,VerticalConnectionPos } from './auto-complete-types'
+import { autoCompleteProps, AutoCompleteProps, DropdownPropsKey,ConnectionPosition } from './auto-complete-types'
 import useCustomTemplate from "./composables/use-custom-template"
 import useSearchFn from "./composables/use-searchfn"
 import useInputHandle from "./composables/use-input-handle"

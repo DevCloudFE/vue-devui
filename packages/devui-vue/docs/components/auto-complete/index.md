@@ -353,7 +353,6 @@ d-auto-complete 事件
 ### defaultSearchFn
 
 ```ts
-//term 为输入的关键字。
 defaultSearchFn = (term) => {
   return source.forEach((item)=>{
           let cur = formatter(item)
@@ -364,20 +363,20 @@ defaultSearchFn = (term) => {
         })
   };
 ```
+term 为输入的关键字。
+  
 
 ### defaultFormatter
 
 ```ts
-// item 为数据项。
 defaultFormatter = (item) => (item ? item.label || item.toString() : '');
 ```
-
-
+item 为数据项。
+  
 
 ### defaultValueParse
 
 ```ts
-//item 为数据项。
 defaultValueParse = (item) => item;
 ```
-
+item 为数据项。
