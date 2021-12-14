@@ -51,6 +51,23 @@
 ```
 :::
 
+### 警示按钮
+用于标识系统中的关键操作，例如购买场景。
+:::demo
+```vue
+<template>
+  <div class="flex flex-col space-y-xs">
+    <d-button btnStyle="primary" type="submit">主要按钮</d-button>
+    <d-button btnStyle="common" type="submit">通用按钮</d-button>
+    <d-button btnStyle="text" type="submit">文本按钮</d-button>
+    <d-button btnStyle="text-dark" type="submit">文本（暗色）按钮</d-button>
+    <d-button btnStyle="success" type="submit">成功按钮</d-button>
+    <d-button btnStyle="warning" type="submit">警告按钮</d-button>
+  </div>
+</template>
+```
+:::
+
 ### 文字按钮
 用于标识系统中的关键操作，例如购买场景。
 :::demo
@@ -112,51 +129,44 @@
 :::demo
 ```vue
 <template>
-  <div class="btn-group">
+  <div class="mb-l">
     <d-button icon="add" btnStyle="primary"> New </d-button>
     <d-button icon="filter" btnStyle="common"> Filter </d-button>
   </div>
-  <div class="btn-group">
+  <div class="mb-l">
     <d-button icon="add" btnStyle="primary" :disabled="true"> New(disabled) </d-button>
     <d-button icon="filter" btnStyle="common" :disabled="true"> Filter(disabled) </d-button>
   </div>
-  <div class="btn-group">
+  <div class="mb-l">
     <d-button icon="connect" btnStyle="text-dark" style="margin-right: 4px"> Link </d-button>
     <d-button icon="run" btnStyle="text-dark"> Run </d-button>
   </div>
-  <div class="btn-group">
-    <d-button icon="connect" btnStyle="text-dark" style="margin-right: 4px" :disabled="true"> Link(disabled) </d-button>
-    <d-button icon="run" btnStyle="text-dark" :disabled="true"> Run(disabled) </d-button>
+  <div class="mb-l">
+    <d-button class="mr-xs" icon="connect" btnStyle="text-dark" style="margin-right: 4px" :disabled="true"> Link(disabled) </d-button>
+    <d-button class="mr-xs" icon="run" btnStyle="text-dark" :disabled="true"> Run(disabled) </d-button>
   </div>
-  <div class="btn-group">
-    <d-button icon="add" btnStyle="text-dark" title="add"></d-button>
-    <d-button icon="delete" btnStyle="text-dark" title="delete"></d-button>
+  <div class="mb-l">
+    <d-button class="mr-xs" icon="add" btnStyle="text-dark" title="add"></d-button>
+    <d-button class="mr-xs" icon="delete" btnStyle="text-dark" title="delete"></d-button>
   </div>
-  <div class="btn-group">
+  <div class="mb-l">
     <d-button icon="add" btnStyle="text-dark" :disabled="true" title="add"></d-button>
     <d-button icon="delete" btnStyle="text-dark" :disabled="true" title="delete"></d-button>
   </div>
-  <div class="btn-group">
-    <d-button btnStyle="common" class="rightIcon" bsSize="xs">
+  <div class="mb-l">
+    <d-button class="mr-xs" btnStyle="common" class="mr-xs" bsSize="xs">
       Click me
       <span class="icon-chevron-down"></span>
     </d-button>
   </div>
-  <div class="btn-group">
-    <d-button btnStyle="text-dark" class="rightIcon">
+  <div class="mb-l">
+    <d-button class="mr-xs" btnStyle="text-dark">
       Click me
       <span class="icon-chevron-down"></span>
     </d-button>
   </div>
 </template>
 <style>
-.btn-group {
-  margin-bottom: 20px;
-}
-
-.btn-group .devui-btn-host {
-  margin-right: 8px;
-}
 
 .icon-chevron-down {
   display: inline-block;
@@ -171,17 +181,17 @@
 
 ### API
 d-button 参数
-|   参数    |               类型                |   默认    | 说明                             |
-| :-------: | :-------------------------------: | :-------: | :------------------------------- |
-|   type    | `'button' \| 'submit' \| 'reset'` | 'button'  | 可选，按钮类型                   |
-| btnStyle  |          `IButtonStyle`           | 'primary' | 可选，按钮风格                   |
-| position  |         `IButtonPosition`         | 'default' | 可选，按钮位置                   |
-|   size    |           `IButtonSize`           |   'md'    | 可选，按钮大小                   |
-| bordered  |             `boolean`             |   false   | 可选，是否有边框                 |
-|   icon    |             `string`              |    --     | 可选，点击背景触发的事件         |
-|   width   |             `string`              |    --     | 可选，弹出框宽度(e.g '300px')    |
-| disabled  |             `boolean`             |   false   | 可选，是否禁用button             |
-| autofocus |             `boolean`             |   false   | 可选，按钮加载时是否自动获得焦点 |
+|   参数    |       类型        |   默认    | 说明                             |
+| :-------: | :---------------: | :-------: | :------------------------------- |
+|   type    |   `IButtonType`   | 'button'  | 可选，按钮类型                   |
+| btnStyle  |  `IButtonStyle`   | 'primary' | 可选，按钮风格                   |
+| position  | `IButtonPosition` | 'default' | 可选，按钮位置                   |
+|   size    |   `IButtonSize`   |   'md'    | 可选，按钮大小                   |
+| bordered  |     `boolean`     |   false   | 可选，是否有边框                 |
+|   icon    |     `string`      |    --     | 可选，点击背景触发的事件         |
+|   width   |     `string`      |    --     | 可选，弹出框宽度(e.g '300px')    |
+| disabled  |     `boolean`     |   false   | 可选，是否禁用button             |
+| autofocus |     `boolean`     |   false   | 可选，按钮加载时是否自动获得焦点 |
 
 d-button 事件
 |  参数   |             类型              | 默认  | 说明           |
@@ -189,17 +199,22 @@ d-button 事件
 | onClick | `(event: MouseEvent) => void` |  --   | 可选，点击事件 |
 
 
+IButtonType 
+``` typescript
+type IButtonStyle = 'button' | 'submit' | 'reset';
+```
+
 IButtonStyle 
-```typescript
+``` typescript
 type IButtonStyle = 'common' | 'primary' | 'text' | 'text-dark' | 'danger' | 'success' | 'warning';
 ```
 
-IButtonSize
-```typescript
-type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
+IButtonPosition 
+``` typescript
+type IButtonStyle = 'left' | 'right' | 'default';
 ```
 
-IButtonPosition
-```typescript
-type IButtonPosition = 'left' | 'right' | 'default';
+IButtonSize
+``` typescript
+type IButtonStyle = 'lg' | 'md' | 'sm' | 'xs';
 ```
