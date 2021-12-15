@@ -22,13 +22,14 @@ export default function useTimeScroll():any{
 
   // 点击轨道 thumb滚动到相应位置
   const clickTrackFun = (e:MouseEvent)=>{
-    const offset = Math.abs(scrollTrackDom.value.getBoundingClientRect().top - e.clientY)
+    const offsetNum = scrollTrackDom.value.getBoundingClientRect().top - e.clientY
+    const offset = Math.abs(offsetNum > 0 ? 0 : offsetNum) 
     const thumbCenter = scrollThumbDom.value.offsetHeight / 2;
     const thumbPosition = (offset - thumbCenter) * 100 / scrollContentDom.value.offsetHeight;
     scrollContentDom.value.scrollTop = (thumbPosition * scrollContentDom.value.scrollHeight / 100);
     scrollContentDom.value.style.top = scrollContentDom.value.scrollTop + 'px'
   }
-
+  
   // 鼠标拖到
   const mouseDownThum = ()=>{
     isDown.value = true
@@ -41,18 +42,14 @@ export default function useTimeScroll():any{
   }
   
   const thumbMouseMove = (e:any)=>{
-    
     const path = (e.composedPath && e.composedPath()) || e.path
-
     if(path.includes(scrollBoxDom.value) || isDown.value){
       scrollTrackDom.value.style.opacity = 1
     }else{
       scrollTrackDom.value.style.opacity = 0
     }
-
     if( !isDown.value ) return
     clickTrackFun(e)
-    
   }
 
   const getScrollWidth=()=>{
