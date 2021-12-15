@@ -1,6 +1,6 @@
 import { ComputedRef, nextTick, Ref } from 'vue'
 import { OptionItem } from '../editable-select-types'
-interface keyBoardSelectReturnType {
+interface KeyboardSelectReturnType {
   handleKeydown: (e: KeyboardEvent) => void
 }
 
@@ -12,7 +12,7 @@ export default function keyboardSelect(
   filteredOptions: ComputedRef<OptionItem[]>,
   toggleMenu: () => void,
   selectOptionClick: (e: KeyboardEvent, item: OptionItem) => void
-): keyBoardSelectReturnType {
+): KeyboardSelectReturnType {
   const updateHoverIndex = (index: number) => {
     hoverIndex.value = index
   }
