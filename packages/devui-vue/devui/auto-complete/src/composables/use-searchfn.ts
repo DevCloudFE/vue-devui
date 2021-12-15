@@ -2,7 +2,7 @@ import { ref, Ref, SetupContext } from 'vue';
 export default function useSearchFn(ctx: SetupContext,allowEmptyValueSearch:Ref<boolean>,source:Ref<Array<any>>,searchFn,formatter): any {
     const searchList = ref([])
     const showNoResultItemTemplate = ref(false)
-    const handleSearch = async (term: string,enableLazyLoad:number) => {
+    const handleSearch = async (term: string,enableLazyLoad:boolean) => {
         if (term == ''&&!allowEmptyValueSearch.value) {
             searchList.value = []
             showNoResultItemTemplate.value=false
@@ -30,9 +30,14 @@ export default function useSearchFn(ctx: SetupContext,allowEmptyValueSearch:Ref<
             showNoResultItemTemplate.value=false
         }
     }
-
+    const recentlyFocus = (latestSource:Array<any>) => {
+        if(latestSource) {
+            searchList.value = latestSource
+        }
+    }
     return {
         handleSearch,
+        recentlyFocus,
         searchList,
         showNoResultItemTemplate
     }

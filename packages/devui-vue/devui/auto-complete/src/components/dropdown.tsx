@@ -14,7 +14,9 @@ export default defineComponent({
       dropDownRef,
       loadMore,
       showLoading,
-      showNoResultItemTemplate
+      showNoResultItemTemplate,
+      latestSource,
+      modelValue
     } = propsData
     const {
       disabled,
@@ -33,7 +35,7 @@ export default defineComponent({
       return (
         <div
           v-dLoading={showLoading.value}
-          class={['devui-dropdown-menu',appendToBody&&'devui-dropdown-menu-cdk',disabled &&'disabled']}
+          class={['devui-dropdown-menu',appendToBody&&'devui-dropdown-menu-cdk',disabled &&'disabled',latestSource.value&&'devui-dropdown-latestSource']}
           v-show={(visible.value&&searchList.value.length>0)||(ctx.slots.noResultItemTemplate&&showNoResultItemTemplate.value)||(isSearching&&ctx.slots.searchingTemplate&&searchStatus.value)}
         >
         <ul
@@ -53,6 +55,9 @@ export default defineComponent({
                 </div>
 
               </li>
+          }
+          {
+            latestSource.value&&!modelValue.value&&<li class="devui-popup-tips">最近输入</li>
           }
           {/*  展示 */}
           {

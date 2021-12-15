@@ -313,6 +313,64 @@ export default defineComponent({
 :::
 
 
+### 最近输入
+
+通过 latestSource 设置最近输入。
+
+:::demo
+
+```vue
+<template>
+  <d-auto-complete
+    :source="source"
+    v-model="value"
+    :latestSource="latestSource"
+  >
+  </d-auto-complete>
+</template>
+
+<script>
+import { defineComponent, ref,toRefs,getCurrentInstance } from 'vue'
+export default defineComponent({
+  setup() {
+    const value = ref('')
+    const latestSource = ref(['JavaScript','TypeScript'])
+    const source = ref([
+      'C#',
+      'C',
+      'C++',
+      'CPython',
+      'Java',
+      'JavaScript',
+      'Go',
+      'Python',
+      'Ruby',
+      'F#',
+      'TypeScript',
+      'SQL',
+      'LiveScript',
+      'CoffeeScript',
+    ])
+    
+    return {
+      value,
+      source,
+      latestSource
+    }
+  }
+})
+</script>
+
+<style>
+
+</style>
+```
+
+:::
+
+:::
+
+
 ### 懒加载
 enableLazyLoad 开启懒加载
 

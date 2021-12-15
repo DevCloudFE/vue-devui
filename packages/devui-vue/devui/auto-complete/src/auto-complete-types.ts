@@ -104,7 +104,10 @@ export interface AutoCompleteRootType {
   ctx:SetupContext<any>
   props:AutoCompleteProps
 }
-export type HandleSearch = (term?:string,enableLazyLoad?:boolean) => void 
+export type HandleSearch = (term?:string | string,enableLazyLoad?:boolean) => void 
+export type RecentlyFocus = (latestSource:Array<any>) => void
+export type InputDebounceCb = (...rest:any) => Promise<void>
+export type TransInputFocusEmit = () => any
 //弹出选择框参数
 export type DropdownProps = {
   props:AutoCompleteProps
@@ -118,5 +121,7 @@ export type DropdownProps = {
   dropDownRef
   showLoading:Ref<boolean>
   loadMore
+  latestSource
+  modelValue:Ref<string>
 }
 export const DropdownPropsKey:InjectionKey<DropdownProps>=Symbol('DropdownPropsKey')

@@ -1,15 +1,19 @@
 @import '../../style/mixins/index';
 @import '../../style/theme/color';
 // 写md时发现source样式影响组件
-.demo- .source,.demo-block .source{
+.demo- .source,
+.demo-block .source {
   overflow: initial !important;
 }
-.devui-auto-complete,.devui-auto-complete-menu {
-  .devui-dropdown-menu{
-    left:0 !important;
+
+.devui-auto-complete,
+.devui-auto-complete-menu {
+  .devui-dropdown-menu {
+    left: 0 !important;
     top: 0 !important;
   }
 }
+
 .active {
   background: $devui-list-item-hover-bg;
 }
@@ -17,7 +21,6 @@
 .devui-dropdown-menu {
   width: 100%;
   display: block;
-
 }
 
 .devui-dropdown-menu-cdk {
@@ -87,4 +90,8 @@ ul.devui-list-unstyled {
 .devui-popup-tips {
   color: $devui-text-weak; // TODO: Color-Question
   padding: 4px 12px;
+}
+
+.devui-dropdown-latestSource ul {
+  line-height: initial !important;
 }

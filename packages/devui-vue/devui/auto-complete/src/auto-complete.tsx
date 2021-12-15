@@ -27,10 +27,11 @@ export default defineComponent({
       source,
       searchFn,
       appendToBodyDirections,
+      latestSource
     } = toRefs(props)
 
-    const {handleSearch,searchList,showNoResultItemTemplate} = useSearchFn(ctx,allowEmptyValueSearch,source,searchFn,formatter)
-    const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,showNoResultItemTemplate,modelValue,disabled,delay,handleSearch,transInputFocusEmit)
+    const {handleSearch,searchList,showNoResultItemTemplate,recentlyFocus} = useSearchFn(ctx,allowEmptyValueSearch,source,searchFn,formatter)
+    const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,showNoResultItemTemplate,modelValue,disabled,delay,handleSearch,transInputFocusEmit,recentlyFocus,latestSource)
     const {selectedIndex,selectOptionClick} = useSelectHandle(ctx,searchList,selectValue,handleSearch,formatter,handleClose)
     const {showLoading,dropDownRef,loadMore} = useLazyHandle(props,ctx,handleSearch)
     const {customRenderSolts} = useCustomTemplate(ctx,modelValue)
@@ -45,6 +46,8 @@ export default defineComponent({
       dropDownRef,
       showLoading,
       loadMore,
+      latestSource,
+      modelValue,
       showNoResultItemTemplate:showNoResultItemTemplate
     })
     const origin = ref()
