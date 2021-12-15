@@ -312,6 +312,78 @@ export default defineComponent({
 
 :::
 
+
+### 懒加载
+enableLazyLoad 开启懒加载
+
+:::demo
+
+```vue
+<template>
+  <d-auto-complete
+    ref="autoCompleteRef"
+    :source="source"
+    v-model="value"
+    enableLazyLoad
+    :load-more="loadMore"
+  >
+  </d-auto-complete>
+</template>
+
+<script>
+import { defineComponent, ref,toRefs,getCurrentInstance } from 'vue'
+export default defineComponent({
+  setup() {
+    const value = ref('')
+    const source = ref([
+      'C#',
+      'C',
+      'C++',
+      'CPython',
+      'Java',
+      'JavaScript',
+      'Go',
+      'Python',
+      'Ruby',
+      'F#',
+      'TypeScript',
+      'SQL',
+      'LiveScript',
+      'CoffeeScript',
+      'C1',
+      'C2',
+      'C3',
+      'C4',
+      'C5',
+      'C6',
+      'C7',
+    ])
+    const autoCompleteRef =ref(null)
+    
+    const loadMore = () => {
+      setTimeout(() => {
+        source.value.push('lazyData'+source.value.length)
+        autoCompleteRef.value?.loadFinish()
+      },3000)
+    }
+    return {
+      value,
+      source,
+      loadMore,
+      autoCompleteRef
+    }
+  }
+})
+</script>
+
+<style>
+
+</style>
+```
+
+:::
+
+
 ### d-auto-complete
 
 d-auto-complete 参数

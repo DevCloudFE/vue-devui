@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject, renderSlot, Transition } from 'vue'
+import { defineComponent, inject } from 'vue'
 import { DropdownPropsKey } from '../auto-complete-types'
 // 后续会对接自带下拉组件，相关功能将全部抽离
 export default defineComponent({
@@ -11,6 +11,9 @@ export default defineComponent({
       selectOptionClick,
       searchList,
       searchStatus,
+      dropDownRef,
+      loadMore,
+      showLoading,
       showNoResultItemTemplate
     } = propsData
     const {
@@ -19,22 +22,25 @@ export default defineComponent({
       appendToBody,
       formatter,
       disabledKey,
-      isSearching
+      isSearching,
     } = propsData.props
-    
+
     const onSelect =(item:any)=>{
       if(item[disabledKey]){return}
       selectOptionClick(item)
     }
     return () => {
       return (
-        <div 
-          class={["devui-dropdown-menu",appendToBody&&'devui-dropdown-menu-cdk',disabled &&"disabled"]}
+        <div
+          v-dLoading={showLoading.value}
+          class={['devui-dropdown-menu',appendToBody&&'devui-dropdown-menu-cdk',disabled &&'disabled']}
           v-show={(visible.value&&searchList.value.length>0)||(ctx.slots.noResultItemTemplate&&showNoResultItemTemplate.value)||(isSearching&&ctx.slots.searchingTemplate&&searchStatus.value)}
         >
-        <ul 
+        <ul
+          ref={dropDownRef}
           class="devui-list-unstyled scroll-height"
           style={{maxHeight:`${maxHeight}px`}}
+          onScroll={loadMore}
         >
           {/* 搜索中展示 */}
           {
@@ -45,18 +51,18 @@ export default defineComponent({
                     ctx.slots.searchingTemplate()
                   }
                 </div>
-                  
+
               </li>
           }
           {/*  展示 */}
           {
             !showNoResultItemTemplate.value&&!searchStatus.value&&searchList!=null&&searchList.value.length>0&&searchList.value.map((item,index)=>{
               return (
-                <li 
+                <li
                   onClick={()=>onSelect(item)}
                   class={[
-                    "devui-dropdown-item",selectedIndex.value==index&&"selected",
-                    {"disabled": disabledKey && item[disabledKey]}
+                    'devui-dropdown-item',selectedIndex.value==index&&'selected',
+                    {'disabled': disabledKey && item[disabledKey]}
                   ]}
                   title={formatter(item)}
                   key={formatter(item)}

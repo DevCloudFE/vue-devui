@@ -13,7 +13,7 @@ export interface ConnectionPosition {
 export const autoCompleteProps = {
   modelValue: {
     type: String,
-    default:""
+    default:''
   },
   source:{
     type :Array
@@ -47,7 +47,7 @@ export const autoCompleteProps = {
     type:String
   },
   formatter: {
-    type:Function as PropType<(item: any) => String>,
+    type:Function as PropType<(item: any) => string>,
     default:defaultFormatter
   },
   isSearching: {
@@ -88,28 +88,35 @@ export const autoCompleteProps = {
     default:300
   },
   transInputFocusEmit:{
-    type:Function
+    type:Function as PropType<() => void>
   },
   selectValue:{
-    type:Function
+    type:Function as PropType<() => void>
   },
+  loadMore:{
+    type:Function as PropType<() => void>
+  }
 } as const
 
 export type AutoCompleteProps = ExtractPropTypes<typeof autoCompleteProps>
 
 export interface AutoCompleteRootType {
-  ctx:SetupContext<any>,
-  props:AutoCompleteProps,
+  ctx:SetupContext<any>
+  props:AutoCompleteProps
 }
+export type HandleSearch = (term?:string,enableLazyLoad?:boolean) => void 
 //弹出选择框参数
 export type DropdownProps = {
-  props:AutoCompleteProps,
-  searchList:Ref<any[]>,
-  searchStatus?:Ref<boolean>,
-  showNoResultItemTemplate:Ref<boolean>,
-  term?: String,
-  visible: Ref<Boolean>,
-  selectedIndex:Ref<Number>,
-  selectOptionClick:Function
+  props:AutoCompleteProps
+  searchList:Ref<any[]>
+  searchStatus?:Ref<boolean>
+  showNoResultItemTemplate:Ref<boolean>
+  term?: string
+  visible: Ref<boolean>
+  selectedIndex:Ref<number>
+  selectOptionClick:HandleSearch
+  dropDownRef
+  showLoading:Ref<boolean>
+  loadMore
 }
-export const DropdownPropsKey:InjectionKey<DropdownProps>=Symbol("DropdownPropsKey")
+export const DropdownPropsKey:InjectionKey<DropdownProps>=Symbol('DropdownPropsKey')

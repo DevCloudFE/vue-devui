@@ -1,17 +1,18 @@
-import { ref, Ref, SetupContext } from "vue";
-
-export default function useSearchFn(ctx: SetupContext,allowEmptyValueSearch:Ref<Boolean>,source:Ref<Array<any>>,searchFn:Ref<Function>,formatter:Ref<Function>): any {
+import { ref, Ref, SetupContext } from 'vue';
+export default function useSearchFn(ctx: SetupContext,allowEmptyValueSearch:Ref<boolean>,source:Ref<Array<any>>,searchFn,formatter): any {
     const searchList = ref([])
     const showNoResultItemTemplate = ref(false)
-    const handleSearch =async (term: string) => {
-        if (term == ""&&!allowEmptyValueSearch.value) {
+    const handleSearch = async (term: string,enableLazyLoad:number) => {
+        if (term == ''&&!allowEmptyValueSearch.value) {
             searchList.value = []
             showNoResultItemTemplate.value=false
             return
         }
         let arr = []
         term = term.toLowerCase()
-        if (!searchFn.value) {
+        if(enableLazyLoad) {
+            arr = source.value
+        }else if (!searchFn.value) {
             source.value.forEach((item) => {
                 let cur = formatter.value(item)
                 cur = cur.toLowerCase()
@@ -29,7 +30,7 @@ export default function useSearchFn(ctx: SetupContext,allowEmptyValueSearch:Ref<
             showNoResultItemTemplate.value=false
         }
     }
-    
+
     return {
         handleSearch,
         searchList,
