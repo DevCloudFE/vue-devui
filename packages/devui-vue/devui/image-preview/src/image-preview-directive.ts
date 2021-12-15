@@ -1,4 +1,4 @@
-import { BindingTypes, ImagePreviewProps } from './image-preview-types'
+import { BindingTypes, ImagePreviewProps, UpdateBindingTypes } from './image-preview-types'
 import ImagePreviewService from './image-preview-service'
 
 interface PreviewHTMLElement extends HTMLElement {
@@ -24,24 +24,27 @@ function getImgByEl(el: HTMLElement): Array<string> {
   )
   return urlList
 }
-
 function handleImgByEl(el: PreviewHTMLElement) {
-  el.addEventListener('click', (e: MouseEvent) => {
-    e.stopPropagation()
-    const target = e.target as PreviewHTMLElement
-    if (target?.nodeName?.toLowerCase() === 'img') {
-      const urlList = getImgByEl(el)
-      const url = target.getAttribute('src')
-      mountedPreviewImages({
-        url,
-        previewUrlList: urlList,
-        zIndex: el?.zIndex,
-        backDropZIndex: el?.backDropZIndex
-      })
-    }
-  })
+  el.addEventListener('click', handleImg)
 }
-
+function removeHandle(el: PreviewHTMLElement) {
+  el.removeEventListener('click', handleImg)
+}
+function handleImg(e: MouseEvent) {
+  e.stopPropagation()
+  const el = e.currentTarget as PreviewHTMLElement
+  const target = e.target as PreviewHTMLElement
+  if (target?.nodeName?.toLowerCase() === 'img') {
+    const urlList = getImgByEl(el)
+    const url = target.getAttribute('src')
+    mountedPreviewImages({
+      url,
+      previewUrlList: urlList,
+      zIndex: el?.zIndex,
+      backDropZIndex: el?.backDropZIndex
+    })
+  }
+}
 export default {
   mounted(el: PreviewHTMLElement, binding: BindingTypes | undefined) {
     if (!binding.value) {
@@ -69,8 +72,22 @@ export default {
   unmounted() {
     unmountedPreviewImages()
   },
-  updated(el: PreviewHTMLElement, binding) {
+  updated(el: PreviewHTMLElement, binding: UpdateBindingTypes | undefined) {
     el.zIndex = binding.value?.zIndex
     el.backDropZIndex = binding.value?.backDropZIndex
+
+    if (binding.value) {
+      const {
+        value: { disableDefault },
+        oldValue: { disableDefault: oldDisableDefault }
+      } = binding
+      if (disableDefault !== oldDisableDefault) {
+        if (disableDefault) {
+          removeHandle(el)
+        } else {
+          handleImgByEl(el)
+        }
+      }
+    }
   }
 }
