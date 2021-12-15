@@ -559,11 +559,14 @@ export default defineComponent({
 >
 > 待支持国际化词条配置
 
-当前DevUI支持的内置校验器有：`required`、`minlength`、`maxlength`、`min`、`max`、`requiredTrue`、`email`、`pattern`、`whitespace`。<br>
+当前DevUI支持的内置校验器有：`required`、`minlength`、`maxlength`、`min`、`max`、`requiredTrue`、`email`、`pattern`、`whitespace`。
 
-- 若需限制用户输入不能全为空格，可使用`whitespace`内置校验器<br>
-- 若需限制用户输入长度，将最大限制设置为实际校验值`+1`是一个好的办法。<br>
-- 除`pattern`外，其他内置校验器我们也提供了内置的错误提示信息，在你未自定义提示消息时，我们将使用默认的提示信息。<br>
+- 若需限制用户输入不能全为空格，可使用`whitespace`内置校验器
+
+- 若需限制用户输入长度，将最大限制设置为实际校验值`+1`是一个好的办法。
+
+- 除`pattern`外，其他内置校验器我们也提供了内置的错误提示信息，在你未自定义提示消息时，我们将使用默认的提示信息。
+
 - message配置支持string与object两种形式（支持国际化词条配置，如`'zh-cn'`，默认将取`'default'`）。
 
 :::demo
@@ -846,8 +849,11 @@ export default defineComponent({
 配置`messageShowType`可选择消息自动提示的方式，默认为`popover`。
 
 - 设置为`popover`错误信息将在元素聚焦时以`popover`形式呈现。
-- 设置为`text`错误信息将自动以文本方式显示在元素下方(需要与表单控件容器配合使用)。 
+
+- 设置为`text`错误信息将自动以文本方式显示在元素下方(需要与表单控件容器配合使用)。
+ 
 - 设置为`none`错误信息将不会自动呈现到视图， 可在模板中获取`message`或通过监听`messageChange`事件获取错误`message`， 或在模板中直接通过引用获取。
+
 - 在 `options`中配置  `popPosition`可在消息提示方式为`popover`时，自定义`popover`内容弹出方向， 默认为`['right', 'bottom']`。更多取值参考popover组件。
 
 :::demo
@@ -1639,7 +1645,9 @@ export default defineComponent({
 
 - options支持以下字段
   - errorStrategy，错误更新策略：`dirty`（默认）、`prestine`
+  
   - updateOn，校验时机，可选值有：`change`（默认）、 `blur`、 `input`
+  
   - popPosition，自定义`popover`内容弹出方向。 默认为`['right', 'bottom']`，更多取值参考popover组件。
 
 

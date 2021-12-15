@@ -16,7 +16,7 @@ export default defineComponent({
         console.log(eventValue.value = val)
         alert('AHHHH~!! InputIcon!!!!')
     }
-
+    
     return {
       eventValue,
       handleIconClick,
@@ -45,6 +45,7 @@ export default defineComponent({
 ### 属性 `icon-color` `icon-bg-color`
 
 - `icon-color` 定义`icon`颜色。
+
 - `icon-bg-color` 定义`icon`区域的背景色。
 
 由于字体图标本身有点布局偏移，加上背景可以有效抑制这种视觉偏移影响。
