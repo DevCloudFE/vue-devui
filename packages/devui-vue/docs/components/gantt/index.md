@@ -9,8 +9,11 @@
 ### 基本用法
 
 - d-gantt-scale（时间轴）容器作为时间轴标线的定位父级元素，须设置 position 或者是 table、td、th、body 元素。
+
 - d-gantt-scale（时间轴）容器和 d-gantt-bar（时间条）容器宽度须通过 GanttService 提供的方法根据起止时间计算后设置，初始化之后还须订阅 ganttScaleConfigChange 动态设置。
+
 - 时间条 move、resize 事件会改变该时间条起止时间和时间轴的起止时间，订阅时间条 resize、move 事件和 ganttScaleConfigChange 来记录变化。
+
 - 响应时间条 move、resize 事件调整最外层容器的滚动以获得更好的体验。
 
 :::demo
