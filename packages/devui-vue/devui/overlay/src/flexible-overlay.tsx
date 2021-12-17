@@ -74,7 +74,7 @@ export const FlexibleOverlay = defineComponent({
       overlayClass,
       handleBackdropClick,
       handleOverlayBubbleCancel
-    } = useOverlayLogic(props);
+    } = useOverlayLogic(props,ctx);
 
     return () => (
       <CommonOverlay>
