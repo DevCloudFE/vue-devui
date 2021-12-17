@@ -6,6 +6,9 @@ export interface provideColor {
   showAlpha?: boolean
   tab?: string
 }
+export interface CssColorObject {
+  color?: Hex
+}
 export interface ColorPickerColor {
   alpha: number
   hex: Hex

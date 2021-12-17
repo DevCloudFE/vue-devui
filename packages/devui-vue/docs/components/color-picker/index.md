@@ -19,7 +19,7 @@ import { defineComponent, watch, ref } from 'vue'
 
 export default defineComponent({
   setup() {
-    const msg = ref('#935DB280')
+    const msg = ref('')
     const show = ref(true)
     const isShowAlpha = () => {
       show.value = !show.value

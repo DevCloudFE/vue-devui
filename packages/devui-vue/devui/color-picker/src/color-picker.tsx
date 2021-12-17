@@ -12,7 +12,12 @@ import {
   readonly,
   Transition
 } from 'vue'
-import { useReactive, colorPickerResize, isExhibitionColorPicker } from './utils/composeable'
+import {
+  useReactive,
+  colorPickerResize,
+  isExhibitionColorPicker,
+  changeColorValue
+} from './utils/composeable'
 import { colorPickerProps, ColorPickerProps } from './color-picker-types'
 import colorPanel from './components/color-picker-panel/color-picker-panel'
 import './color-picker.scss'
@@ -74,11 +79,8 @@ export default defineComponent({
     })
     // 动态 根据当前 透明度修改文本颜色 tips：根据不同 面板颜色 目前 不够优雅
     const textColor = computed(() => {
-      if (initialColor.value.alpha > 0.5) {
-        return isChangeTextColor.value ? { color: '#fff' } : { color: '#000' }
-      } else {
-        return { color: '#000' }
-      }
+      // 数字代表 hsv 中的value 值 纵轴 动态切换 文本颜色
+      return changeColorValue(initialColor.value, 0.5)
     })
     // ** emits
     // 动态 交互面板 文本展示颜色  tips：根据不同 面板颜色 目前 不够优雅

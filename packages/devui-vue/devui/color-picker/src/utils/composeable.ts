@@ -1,5 +1,5 @@
 import { Ref, ref, watch } from 'vue'
-import { provideColor } from './color-utils-types'
+import { ColorPickerColor, CssColorObject, provideColor } from './color-utils-types'
 export function colorPickerResize(
   colorCubeRef: Ref<HTMLElement>,
   top: Ref<number>,
@@ -28,4 +28,13 @@ export function useReactive(source): Ref<provideColor> {
     model.value = newValue
   })
   return model
+}
+
+// 根据 value  饱和度 判断文本颜色
+export function changeColorValue(value: ColorPickerColor, maxValue: number): CssColorObject {
+  if (value.alpha > maxValue) {
+    return value.hsva.v < maxValue ? { color: '#fff' } : { color: '#000' }
+  } else {
+    return { color: '#000' }
+  }
 }
