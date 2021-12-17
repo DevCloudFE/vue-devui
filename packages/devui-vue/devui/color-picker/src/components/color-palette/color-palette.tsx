@@ -3,7 +3,7 @@ import { DOMUtils } from '../../utils/domDragger'
 import { fromHSVA } from '../../utils/color-utils'
 import { clamp } from '../../utils/helpers'
 import { colorPickerPaletteProps } from './color-picker-palette-types'
-import { provideColor } from '../../utils/color-utils-types'
+import { provideColorOptions } from '../../utils/color-utils-types'
 import './color-palette.scss'
 export default defineComponent({
   name: 'ColorPallete',
@@ -11,7 +11,8 @@ export default defineComponent({
   emits: ['update:modelValue', 'changeTextColor'],
   setup(props: colorPickerPaletteProps, ctx) {
     const DEFAULT_TRANSITION = { transition: 'all 0.3s ease' }
-    const dotSizeInject: provideColor = inject('provideData')
+    const dotSizeInject: provideColorOptions = inject('provideData')
+
     const clickTransfrom = ref(DEFAULT_TRANSITION)
     const paletteElement = ref<HTMLElement | null>()
     const canvasElement = ref<HTMLCanvasElement | null>()

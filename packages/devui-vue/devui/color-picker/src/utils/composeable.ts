@@ -1,5 +1,5 @@
 import { Ref, ref, watch } from 'vue'
-import { ColorPickerColor, CssColorObject, provideColor } from './color-utils-types'
+import { ColorPickerColor, CssColorObject, provideColorOptions } from './color-utils-types'
 export function colorPickerResize(
   colorCubeRef: Ref<HTMLElement>,
   top: Ref<number>,
@@ -22,7 +22,7 @@ export function isExhibitionColorPicker(
     showColorPicker.value = !showColorPicker.value
   }
 }
-export function useReactive(source): Ref<provideColor> {
+export function useReactive(source): Ref<provideColorOptions> {
   const model = ref(source())
   watch(source, (newValue) => {
     model.value = newValue

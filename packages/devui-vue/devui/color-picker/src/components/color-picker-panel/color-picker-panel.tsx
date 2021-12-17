@@ -1,6 +1,6 @@
 import { defineComponent, ref, watch, nextTick, inject } from 'vue'
 import { colorPickerProps, ColorPickerProps } from './color-picker-panel-types'
-import { provideColor } from '../../utils/color-utils-types'
+import { provideColorOptions } from '../../utils/color-utils-types'
 import { Tabs } from '../../../../tabs'
 import colorPalette from '../color-palette/color-palette'
 import colorHueSlider from '../color-hue-slider/color-hue-slider'
@@ -29,7 +29,7 @@ export default defineComponent({
     'changeTextModeType'
   ],
   setup(props: ColorPickerProps, { emit }) {
-    const injectData: provideColor = inject('provideData')
+    const injectData: provideColorOptions = inject('provideData')
     const paletteElement = ref(null)
     const showAlpha = injectData.showAlpha
     const tab = ref('basic')

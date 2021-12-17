@@ -1,5 +1,6 @@
 import { defineComponent, ref, inject } from 'vue'
 import { colorPickerBasicColorProps } from './color-basic-types'
+import { provideColorOptions } from '../../utils/color-utils-types'
 import { fromHex } from '../../utils/color-utils'
 import './color-basic.scss'
 import { color } from '../../utils/color'
@@ -7,7 +8,7 @@ export default defineComponent({
   name: 'ColorBasic',
   props: colorPickerBasicColorProps,
   setup(props) {
-    const swatchesInject = inject('provideData')
+    const swatchesInject: provideColorOptions = inject('provideData')
 
     const currentColor = ref(props.color)
     function changeBasicColor(hex: string) {

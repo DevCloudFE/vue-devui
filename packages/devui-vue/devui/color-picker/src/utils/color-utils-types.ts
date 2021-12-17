@@ -1,11 +1,12 @@
 import { Ref } from 'vue'
 
 export type ColorModeType = 'hsl' | 'rgb' | 'hsv' | 'hsv' | 'hex'
-export interface provideColor {
+export interface provideColorOptions {
   mode?: ColorModeType | boolean
   showAlpha?: boolean
   tab?: string
   dotSize?: number
+  swatches?: string[]
 }
 export interface CssColorObject {
   color?: Hex

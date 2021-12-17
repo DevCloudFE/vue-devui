@@ -31,13 +31,13 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props: ColorPickerProps, { emit }) {
     const DEFAUTL_MODE = 'rgb'
-    const provideData = reactive({
+    const provideData = {
       showAlpha: useReactive(() => props.showAlpha),
       swatches: useReactive(() => props.swatches),
       dotSize: useReactive(() => props.dotSize)
-    })
+    }
     provide('provideData', readonly(provideData))
-    const initialColor = ref(fromRGBA({ r: 255, g: 0, b: 0, a: 1 }))
+    const initialColor = ref(null)
     const colorCubeRef = ref<HTMLElement | null>()
     const pickerRef = ref<HTMLElement | null>()
     const containerRef = ref<HTMLElement | null>()
@@ -66,6 +66,8 @@ export default defineComponent({
     // 交互触发item 颜色 面板
     const tiggerColor = computed(() => {
       const trigger = initialColor.value.rgba
+      console.log(trigger)
+
       if (!props.showAlpha) {
         trigger.a = 1
       }

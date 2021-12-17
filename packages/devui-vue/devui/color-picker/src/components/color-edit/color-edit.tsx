@@ -1,6 +1,6 @@
 import { defineComponent, computed, ref, inject } from 'vue'
 import { ColorPickerEditProps, colorPickerEditProps } from './color-picker-edit-types'
-import { provideColor, ColorPickerColor } from '../../utils/color-utils-types'
+import { provideColorOptions, ColorPickerColor } from '../../utils/color-utils-types'
 import './color-edit.scss'
 import { fromHex, fromHexa, fromHSLA, fromHSVA, fromRGBA } from '../../utils/color-utils'
 import Schema, { Rules } from 'async-validator'
@@ -58,7 +58,7 @@ export default defineComponent({
   emits: ['changeTextModeColor', 'update:modelValue'],
   setup(props: ColorPickerEditProps, { emit }) {
     // 设置showalpha 为false 会报错 2021.12.14
-    const isShowAlpha: provideColor = inject('provideData')
+    const isShowAlpha: provideColorOptions = inject('provideData')
     // 模式值
     const modelValue = computed(() => `${props.mode}${isShowAlpha.showAlpha ? 'a' : ''}`)
     // 颜色值

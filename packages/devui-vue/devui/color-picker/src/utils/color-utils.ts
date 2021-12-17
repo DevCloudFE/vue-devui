@@ -269,7 +269,7 @@ export function fromHex(hex: Hex): ColorPickerColor {
 }
 
 export function parseColor(color: Color, oldColor?: ColorPickerColor | null): ColorPickerColor {
-  if (!color) return fromRGBA({ r: 255, g: 0, b: 0, a: 1 })
+  if (!color) return fromRGBA({ r: 0, g: 0, b: 0, a: 1 })
 
   if (typeof color === 'string') {
     if (color.indexOf('#') !== -1) {

@@ -3,7 +3,7 @@ import { ColorPickerHistoryProps, colorPickerHistoryProps } from './color-picker
 import { Icon } from '../../../../icon'
 import './color-history.scss'
 import { fromHexa } from '../../utils/color-utils'
-import { provideColor, ColorPickerColor } from '../../utils/color-utils-types'
+import { provideColorOptions, ColorPickerColor } from '../../utils/color-utils-types'
 import { debounce } from 'lodash-es'
 
 const STORAGE_KEY = 'STORAGE_COLOR_PICKER_HISTORY_KEY'
@@ -47,7 +47,7 @@ export default defineComponent({
   emits: ['update:color'],
   setup(props: ColorPickerHistoryProps) {
     // 获取 是否showalpha
-    const alphaInject: provideColor = inject('provideData')
+    const alphaInject: provideColorOptions = inject('provideData')
 
     // 创建历史存储
     const history = useStore<string[]>([], { storage: true })
