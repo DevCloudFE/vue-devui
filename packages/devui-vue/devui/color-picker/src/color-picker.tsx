@@ -12,6 +12,7 @@ import {
   readonly,
   Transition
 } from 'vue'
+import { useReactive, colorPickerResize, isExhibitionColorPicker } from './utils/composeable'
 import { colorPickerProps, ColorPickerProps } from './color-picker-types'
 import colorPanel from './components/color-picker-panel/color-picker-panel'
 import './color-picker.scss'
@@ -43,9 +44,9 @@ export default defineComponent({
     const mode = ref(unref(props.mode))
     onMounted(() => {
       // resize 响应式 colorpicker
-      window.addEventListener('resize', colorPickerResize)
+      window.addEventListener('resize', resize)
       // 点击展示 colorpicker
-      window.addEventListener('click', isExhibitionColorPicker)
+      window.addEventListener('click', isExhibition)
     })
     // ** computeds
     // colorpicker panel 组件位置
@@ -93,13 +94,7 @@ export default defineComponent({
       mode.value = type
       formItemText.value = type
     }
-    function useReactive(source) {
-      const model = ref(source())
-      watch(source, (newValue) => {
-        model.value = newValue
-      })
-      return model
-    }
+
     // 初始化的时候 确定 colopicker位置
     watch(
       () => showColorPicker.value,
@@ -133,18 +128,11 @@ export default defineComponent({
       const value = extractColor(initialColor.value, props.modelValue, mode.value, props.showAlpha)
       emit('update:modelValue', value)
     }
-    function colorPickerResize() {
-      const rect = colorCubeRef.value?.getBoundingClientRect()
-      left.value = rect.left
-      top.value = rect.top + rect.height
+    function resize() {
+      return colorPickerResize(colorCubeRef, top, left)
     }
-    function isExhibitionColorPicker(e) {
-      if (colorCubeRef.value?.contains(e.target)) {
-        showColorPicker.value = true
-      }
-      if (!!pickerRef.value && !pickerRef.value?.contains(e.target)) {
-        showColorPicker.value = !showColorPicker.value
-      }
+    function isExhibition(event: Event) {
+      return isExhibitionColorPicker(event, colorCubeRef, pickerRef, showColorPicker)
     }
     return () => {
       return (

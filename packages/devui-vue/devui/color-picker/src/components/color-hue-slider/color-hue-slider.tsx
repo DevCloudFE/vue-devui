@@ -21,7 +21,6 @@ export default defineComponent({
         }
         return ((props.modelValue.hue % 360) * (rect.width - offsetWidth)) / 360 + offsetWidth / 2
       }
-
       return 0
     }
 
@@ -44,15 +43,11 @@ export default defineComponent({
       event.stopPropagation()
       if (barElement.value && cursorElement.value) {
         const rect = barElement.value.getBoundingClientRect()
-
         const offsetWidth = cursorElement.value.offsetWidth
-
         let left = event.clientX - rect.left
         left = Math.min(left, rect.width - offsetWidth / 2)
         left = Math.max(offsetWidth / 2, left)
-
         const hue = Math.round(((left - offsetWidth / 2) / (rect.width - offsetWidth)) * 360)
-
         ctx.emit(
           'update:modelValue',
           fromHSVA({
