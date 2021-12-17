@@ -33,7 +33,8 @@ export default defineComponent({
     const DEFAUTL_MODE = 'rgb'
     const provideData = reactive({
       showAlpha: useReactive(() => props.showAlpha),
-      swatches: useReactive(() => props.swatches)
+      swatches: useReactive(() => props.swatches),
+      dotSize: useReactive(() => props.dotSize)
     })
     provide('provideData', readonly(provideData))
     const initialColor = ref(fromRGBA({ r: 255, g: 0, b: 0, a: 1 }))

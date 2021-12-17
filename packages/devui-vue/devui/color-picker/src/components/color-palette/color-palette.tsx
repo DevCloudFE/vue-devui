@@ -1,8 +1,9 @@
-import { defineComponent, ref, onMounted, computed, getCurrentInstance, watch } from 'vue'
+import { defineComponent, ref, onMounted, computed, getCurrentInstance, watch, inject } from 'vue'
 import { DOMUtils } from '../../utils/domDragger'
 import { fromHSVA } from '../../utils/color-utils'
 import { clamp } from '../../utils/helpers'
 import { colorPickerPaletteProps } from './color-picker-palette-types'
+import { provideColor } from '../../utils/color-utils-types'
 import './color-palette.scss'
 export default defineComponent({
   name: 'ColorPallete',
@@ -10,6 +11,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'changeTextColor'],
   setup(props: colorPickerPaletteProps, ctx) {
     const DEFAULT_TRANSITION = { transition: 'all 0.3s ease' }
+    const dotSizeInject: provideColor = inject('provideData')
     const clickTransfrom = ref(DEFAULT_TRANSITION)
     const paletteElement = ref<HTMLElement | null>()
     const canvasElement = ref<HTMLCanvasElement | null>()
@@ -20,9 +22,9 @@ export default defineComponent({
     const cursorLeft = ref(0)
     const getDotStyle = computed(() => {
       return {
-        width: `${props.dotSize}px`,
-        height: `${props.dotSize}px`,
-        transform: `translate(-${props.dotSize / 2}px,  -${props.dotSize / 2}px)`
+        width: `${dotSizeInject.dotSize}px`,
+        height: `${dotSizeInject.dotSize}px`,
+        transform: `translate(-${dotSizeInject.dotSize / 2}px,  -${dotSizeInject.dotSize / 2}px)`
       }
     })
     const getCursorStyle = computed(() => {

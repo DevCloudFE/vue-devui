@@ -10,10 +10,6 @@ export const colorPickerPaletteProps = {
   height: {
     type: Number,
     default: 200
-  },
-  dotSize: {
-    type: Number,
-    default: 15
   }
 } as const
 

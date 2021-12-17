@@ -12,7 +12,7 @@ export const colorPickerProps = {
   },
   dotSize: {
     type: Number,
-    default: 12
+    default: 15
   },
   swatches: {
     type: Array as PropType<string[]>

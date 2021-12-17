@@ -5,6 +5,7 @@ export interface provideColor {
   mode?: ColorModeType | boolean
   showAlpha?: boolean
   tab?: string
+  dotSize?: number
 }
 export interface CssColorObject {
   color?: Hex
