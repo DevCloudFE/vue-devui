@@ -16,10 +16,6 @@ export const colorPickerProps = {
   },
   swatches: {
     type: Array as PropType<string[]>
-  },
-  defaultTab: {
-    type: String,
-    default: 'palette'
   }
 } as const
 

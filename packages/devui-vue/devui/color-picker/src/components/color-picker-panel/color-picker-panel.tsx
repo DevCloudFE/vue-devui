@@ -32,7 +32,7 @@ export default defineComponent({
     const injectData: provideColor = inject('provideData')
     const paletteElement = ref(null)
     const showAlpha = injectData.showAlpha
-    const tab = ref(injectData.tab)
+    const tab = ref('basic')
     function changeTextColor(isChange: boolean) {
       emit('changeTextColor', isChange)
     }
@@ -57,15 +57,15 @@ export default defineComponent({
       return (
         <div class='devui-color-picker-panel'>
           <d-tabs type='tabs' v-model={tab.value}>
+            <d-tab id='basic' title='基础面板' tabId='basic'>
+              <color-basic color={paletteColorMap}></color-basic>
+            </d-tab>
             <d-tab id='palette' title='高级面板' tabId='palette'>
               <color-palette
                 ref={paletteElement}
                 v-model={paletteColorMap.value}
                 onChangeTextColor={changeTextColor}
               ></color-palette>
-            </d-tab>
-            <d-tab id='basic' title='其他颜色' tabId='basic'>
-              <color-basic color={paletteColorMap}></color-basic>
             </d-tab>
           </d-tabs>
           <color-hue-slider v-model={paletteColorMap.value}></color-hue-slider>
