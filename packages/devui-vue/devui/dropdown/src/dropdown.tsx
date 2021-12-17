@@ -43,24 +43,30 @@ export default defineComponent({
       return props.showAnimation ? visible.value : true;
     });
 
-    return () => {
-      // let vnodes = ctx.slots.default?.() ?? [];
-      return (
-        <>
-          <FlexibleOverlay
-            origin={props.origin}
-            v-model:visible={visible.value}
-            position={position}
-            hasBackdrop={false}
+    const wrapStyle = computed(() => typeof props.width === 'string' ? {
+      width: props.width,
+    }: {
+      width: `${props.width}px`,
+    });
+ 
+    return () => (
+      <FlexibleOverlay
+        origin={props.origin}
+        v-model:visible={visible.value}
+        position={position}
+        hasBackdrop={false}
+      >
+        <Transition name="devui-dropdown-fade">
+          <div 
+            ref={dropdownEl}
+            class="devui-dropdown-menu-wrap" 
+            style={wrapStyle.value}
+            v-show={animatedVisible.value} 
           >
-            <Transition name="devui-dropdown-fade">
-              <div v-show={animatedVisible.value} ref={dropdownEl} style="min-width:102px">
-                {ctx.slots.default?.()}
-              </div>
-            </Transition>
-          </FlexibleOverlay>
-        </>
-      )
-    };
+            {ctx.slots.default?.()}
+          </div>
+        </Transition>
+      </FlexibleOverlay>
+    );
   }
 })

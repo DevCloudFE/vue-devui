@@ -36,8 +36,11 @@ export const dropdownProps = {
   showAnimation: {
     type: Boolean,
     default: true
+  },
+  width: {
+    type: [Number, String],
+    default: '102px'
   }
-
 } as const
 
 export type DropdownProps = ExtractPropTypes<typeof dropdownProps>
