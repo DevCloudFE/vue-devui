@@ -23,7 +23,7 @@
 
 ```vue
 <template>
-  <d-button @click="isShowAlpha">test showAlpha {{ show }}</d-button>
+  <d-button btnStyle="common" @click="isShowAlpha">test showAlpha Be {{ show }}</d-button>
   <d-color-picker v-model="color" :show-alpha="show"></d-color-picker>
 </template>
 
@@ -82,7 +82,8 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-color-picker :show-history="false" v-model="color" mode="hsl"></d-color-picker>
+  <d-button btnStyle="common" @click="isShowAlpha">test showAlpha Be {{ show }}</d-button>
+  <d-color-picker :show-history="show" v-model="color" mode="hsl"></d-color-picker>
 </template>
 
 <script>
@@ -90,9 +91,15 @@ import { defineComponent, watch, ref } from 'vue'
 
 export default defineComponent({
   setup() {
+    let show = ref(true)
+    const isShowAlpha = () => {
+      show.value = !show.value
+    }
     const color = ref('hsla(353, 1, 0.58, 1)')
     return {
-      color
+      color,
+      isShowAlpha,
+      show
     }
   }
 })

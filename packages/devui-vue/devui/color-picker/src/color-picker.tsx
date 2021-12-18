@@ -64,12 +64,10 @@ export default defineComponent({
       }
       return null
     })
-    // 交互触发item 颜色 面板
+    // 交互触发item 颜色 面板  动态修改alpha后要还原 alpha 2021.12.18
     const tiggerColor = computed(() => {
-      const trigger = initialColor.value.rgba
-      if (!props.showAlpha) {
-        trigger.a = 1
-      }
+      const currentColor = initialColor.value.rgba
+      const trigger = { ...currentColor, a: props.showAlpha ? currentColor.a : 1 }
       return {
         backgroundColor: `${RGBAtoCSS(trigger)}`
       }

@@ -262,7 +262,7 @@ export class DOMUtils {
     return el.getBoundingClientRect().height
   }
 
-  static isHidden(el: HTMLElement) {
+  static isHidden(el: HTMLElement): boolean {
     if (!el) {
       return false
     }
@@ -284,7 +284,7 @@ export class DOMUtils {
    * @param el
    * @param type
    */
-  static triggerEvent(el: Element, type: string) {
+  static triggerEvent(el: Element, type: string): void {
     if ('createEvent' in document) {
       // modern browsers, IE9+
       const e = document.createEvent('HTMLEvents')
@@ -298,7 +298,7 @@ export class DOMUtils {
    * @param element
    * @param event
    */
-  static calcAngle(element: HTMLElement, event: MouseEvent) {
+  static calcAngle(element: HTMLElement, event: MouseEvent): number {
     const rect = element.getBoundingClientRect()
 
     const originX = rect.left + rect.width / 2
