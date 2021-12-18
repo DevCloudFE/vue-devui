@@ -21,7 +21,6 @@ export default class DrawerService {
   }
 
   static hide(): void {
-    console.log(this.drawer);
     this.drawer?.unmount();
     this.drawer = null;
     if (this.$div) {
