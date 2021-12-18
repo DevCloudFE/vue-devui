@@ -16,6 +16,10 @@ export const colorPickerProps = {
   },
   swatches: {
     type: Array as PropType<string[]>
+  },
+  showHistory: {
+    type: Boolean,
+    default: true
   }
 } as const
 

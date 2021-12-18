@@ -78,7 +78,7 @@ export default defineComponent({
             color={paletteColorMap}
             onChangeTextModeColor={changeTextModeColor}
           ></colorEdit>
-          <colorHistory color={paletteColorMap}></colorHistory>
+          {injectData.showHistory ? <colorHistory color={paletteColorMap}></colorHistory> : null}
         </div>
       )
     }

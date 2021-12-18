@@ -36,7 +36,8 @@ export default defineComponent({
     const provideData = {
       showAlpha: useReactive(() => props.showAlpha),
       swatches: useReactive(() => props.swatches),
-      dotSize: useReactive(() => props.dotSize)
+      dotSize: useReactive(() => props.dotSize),
+      showHistory: useReactive(() => props.showHistory)
     }
     provide('provideData', readonly(provideData))
     const initialColor = ref(null)

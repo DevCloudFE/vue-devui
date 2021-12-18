@@ -148,7 +148,7 @@ export function RGBtoCSS(rgba: RGBA): string {
 export function RGBAtoHex(rgba: RGBA): Hex {
   const toHex = (v: number) => {
     const h = Math.round(v).toString(16)
-    return ('00'.substr(0, 2 - h.length) + h).toUpperCase()
+    return ('00'.substring(0, 2 - h.length) + h).toUpperCase()
   }
 
   return `#${[toHex(rgba.r), toHex(rgba.g), toHex(rgba.b), toHex(Math.round(rgba.a * 255))].join(
@@ -196,7 +196,7 @@ export function parseHex(hex: string): Hex {
     hex = padEnd(padEnd(hex, 6), 8, 'F')
   }
 
-  return `#${hex}`.toUpperCase().substr(0, 9)
+  return `#${hex}`.toUpperCase().substring(0, 9)
 }
 
 export function RGBtoInt(rgba: RGBA): ColorInt {
@@ -210,7 +210,7 @@ export function fromHSVA(hsva: HSVA): ColorPickerColor {
   const rgba = HSVAtoRGBA(hsva)
   return {
     alpha: hsva.a,
-    hex: hexa.substr(0, 7),
+    hex: hexa.substring(0, 7),
     hexa,
     hsla,
     hsva,
@@ -226,7 +226,7 @@ export function fromRGBA(rgba: RGBA): ColorPickerColor {
   const hsl = { h: hsla.h, s: hsla.s, l: hsla.l }
   return {
     alpha: hsva.a,
-    hex: hexa.substr(0, 7),
+    hex: hexa.substring(0, 7),
     hexa,
     hsla,
     hsva,
@@ -242,7 +242,7 @@ export function fromHexa(hexa: Hexa): ColorPickerColor {
   const rgba = HSVAtoRGBA(hsva)
   return {
     alpha: hsva.a,
-    hex: hexa.substr(0, 7),
+    hex: hexa.substring(0, 7),
     hexa,
     hsla,
     hsva,
@@ -256,7 +256,7 @@ export function fromHSLA(hsla: HSLA): ColorPickerColor {
   const rgba = HSVAtoRGBA(hsva)
   return {
     alpha: hsva.a,
-    hex: hexa.substr(0, 7),
+    hex: hexa.substring(0, 7),
     hexa,
     hsla,
     hsva,

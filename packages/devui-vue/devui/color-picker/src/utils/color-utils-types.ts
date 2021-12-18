@@ -7,6 +7,7 @@ export interface provideColorOptions {
   tab?: string
   dotSize?: number
   swatches?: string[]
+  showHistory?: boolean
 }
 export interface CssColorObject {
   color?: Hex
