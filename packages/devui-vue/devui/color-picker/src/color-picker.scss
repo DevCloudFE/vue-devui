@@ -1,9 +1,11 @@
+@import '../../style/theme/color';
+
 .devui-color-picker {
   position: relative;
   &-position {
     position: absolute;
     z-index: 9;
-    background: #fff;
+    background-color: $devui-connected-overlay-bg;
     top: 0;
   }
 
