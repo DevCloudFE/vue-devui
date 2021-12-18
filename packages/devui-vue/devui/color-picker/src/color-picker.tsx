@@ -31,8 +31,6 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props: ColorPickerProps, { emit }) {
     const DEFAUTL_MODE = 'rgb'
-    console.log(props.mode)
-
     const provideData = {
       showAlpha: useReactive(() => props.showAlpha),
       swatches: useReactive(() => props.swatches),
@@ -100,7 +98,7 @@ export default defineComponent({
       formItemText.value = type
     }
 
-    // 初始化的时候 确定 colopicker位置
+    // 初始化的时候 确定 colopicker位置  由于 pickerref 默认 为 undefined 所以监听 showcolorpicker
     watch(
       () => showColorPicker.value,
       (newValue) => {
@@ -108,13 +106,9 @@ export default defineComponent({
         newValue &&
           nextTick(() => {
             pickerRef.value.style.transform = `translate(${textPalette.left + 'px'}, ${
-              textPalette.top + textPalette.height + 'px'
+              textPalette.top + window.scrollY + textPalette.height + 'px'
             })`
           })
-      },
-      {
-        deep: true,
-        immediate: true
       }
     )
     // 监听用户输入 2021.12.10
