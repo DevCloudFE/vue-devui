@@ -147,7 +147,6 @@ Card 组件
   .icon {
     cursor: pointer;
     font-size: 16px;
-    margin-right: 8px;
     vertical-align: middle;
   }
   .icon + span {
@@ -158,7 +157,6 @@ Card 组件
     i{
       cursor: pointer;
       font-size: 16px;
-      margin-right: 8px;
       vertical-align: middle;
     }
     i + span {
@@ -201,7 +199,7 @@ Card 组件
 }
 .ripple-changeTextColor {
     display: block;
-    padding: 10px 15px;
+    padding: 20px;
     user-select: none;
 }
 </style>
