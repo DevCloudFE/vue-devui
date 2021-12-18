@@ -4,12 +4,31 @@
   "scripts": {
     "dev": "lerna exec --scope vue-devui yarn dev",
     "build": "lerna exec --scope vue-devui yarn build",
-    "build:lib": "lerna exec --scope vue-devui yarn build:lib"
+    "build:lib": "lerna exec --scope vue-devui yarn build:lib",
+    "prepare": "husky install",
+    "precommit": "lint-staged",
+    "lint:fix": "eslint --fix \"{packages}/**/*.{vue,js,ts,jsx,tsx}\"",
+    "stylelint": "stylelint --fix \"{packages}/**/*.{scss,css}\""
   },
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "husky": "^7.0.4",
+    "@ls-lint/ls-lint": "^1.10.0",
+    "esbuild-register": "^2.6.0",
+    "eslint": "^7.28.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-vue": "^7.11.1",
+    "stylelint": "^13.13.1",
+    "stylelint-config-recommended-scss": "^4.3.0",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-scss": "^3.20.1",
+    "lint-staged": "^11.0.0"
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "lint-staged": {
+    ".{js,ts,jsx,tsx,vue}": "eslint --fix",
+    ".{scss,css}": "stylelint --fix"
+  }
 }
