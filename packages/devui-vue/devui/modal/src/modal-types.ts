@@ -42,7 +42,7 @@ export const modalProps = {
   },
   backdropCloseable: {
     type: Boolean,
-    default: false
+    default: true
   },
   bodyScrollable: {
     type: Boolean,
@@ -58,7 +58,7 @@ export const modalProps = {
     type: Function as PropType<() => void>,
   },
   beforeHidden: {
-    type: [Object, Function] as PropType<Promise<boolean> | (() => boolean| Promise<boolean>)>
+    type: [Object, Function] as PropType<Promise<boolean> | (() => boolean | Promise<boolean>)>
   },
 
   modelValue: {
