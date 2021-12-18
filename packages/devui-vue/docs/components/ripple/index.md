@@ -144,14 +144,6 @@ Card 组件
   </d-card>
 </template>
 <style lang="scss">
-  .icon {
-    cursor: pointer;
-    font-size: 16px;
-    vertical-align: middle;
-  }
-  .icon + span {
-    vertical-align: middle;
-  }
   .card-block {
     margin-right: 16px;
     i{
