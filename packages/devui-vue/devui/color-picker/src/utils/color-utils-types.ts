@@ -2,7 +2,7 @@ import { Ref } from 'vue'
 
 export type ColorModeType = 'hsl' | 'rgb' | 'hsv' | 'hsv' | 'hex'
 export interface provideColorOptions {
-  mode?: ColorModeType | boolean
+  mode?: ColorModeType
   showAlpha?: boolean
   tab?: string
   dotSize?: number

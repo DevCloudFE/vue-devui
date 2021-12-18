@@ -1,17 +1,27 @@
 # ColorPicker 颜色选择器
 
 ### 何时使用
-
+允许用户使用各种交互方法来选择颜色
 
 ### 基本用法
 :::demo 
 
 ```vue
 <template>
-  <d-input v-model="msg"></d-input>
-  <div class="aa" :style="{background: msg}"></div>
+  <d-color-picker></d-color-picker>
+</template>
+```
+
+:::
+
+### 颜色透明度
+允许用户动态调节展示alpha模式
+:::demo 
+
+```vue
+<template>
   <d-button @click="isShowAlpha">test showAlpha {{show}}</d-button>
-  <d-color-picker mode="hsl" v-model="msg" :show-alpha="show"></d-color-picker>
+  <d-color-picker v-model="color" :show-alpha="show"></d-color-picker>
 </template>
 
 <script>
@@ -19,32 +29,78 @@ import { defineComponent, watch, ref } from 'vue'
 
 export default defineComponent({
   setup() {
-    const msg = ref('')
     const show = ref(true)
+    const color = ref('rgba(83, 199, 212, 0.72)')
     const isShowAlpha = () => {
       show.value = !show.value
     }
-    watch(() => msg.value, (e) => {
-      console.log(e)
-    })
     return {
-      msg,
+      color,
       isShowAlpha,
       show
     }
   }
 })
 </script>
-
-<style>
-.aa {
-  width: 50px;
-  height: 50px;
-}
-</style>
 ```
 
 :::
+
+### 颜色模式
+设置mode展示响应颜色模式
+:::demo 
+
+```vue
+<template>
+  <d-color-picker v-model="color" mode="hex"></d-color-picker>
+</template>
+
+<script>
+import { defineComponent, watch, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const show = ref(true)
+    const color = ref('#FF6827FF')
+    return {
+      show,
+      color
+    }
+  }
+})
+</script>
+```
+
+:::
+
+### 历史颜色
+自定义是否展示历史颜色
+:::demo 
+
+```vue
+<template>
+  <d-color-picker v-model="color" mode="hex"></d-color-picker>
+</template>
+
+<script>
+import { defineComponent, watch, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const show = ref(true)
+    const color = ref('#FF6827FF')
+    return {
+      show,
+      color
+    }
+  }
+})
+</script>
+```
+
+:::
+
+
 
 ### d-color-picker
 

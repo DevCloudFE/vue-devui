@@ -8,7 +8,6 @@ import {
   provide,
   Teleport,
   unref,
-  reactive,
   readonly,
   Transition
 } from 'vue'
@@ -21,7 +20,8 @@ import {
 import { colorPickerProps, ColorPickerProps } from './color-picker-types'
 import colorPanel from './components/color-picker-panel/color-picker-panel'
 import './color-picker.scss'
-import { fromRGBA, parseColor, extractColor, RGBAtoCSS } from './utils/color-utils'
+import { parseColor, extractColor, RGBAtoCSS } from './utils/color-utils'
+import { ColorPickerColor } from './utils/color-utils-types'
 export default defineComponent({
   name: 'DColorPicker',
   components: {
@@ -31,6 +31,8 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props: ColorPickerProps, { emit }) {
     const DEFAUTL_MODE = 'rgb'
+    console.log(props.mode)
+
     const provideData = {
       showAlpha: useReactive(() => props.showAlpha),
       swatches: useReactive(() => props.swatches),
@@ -66,8 +68,6 @@ export default defineComponent({
     // 交互触发item 颜色 面板
     const tiggerColor = computed(() => {
       const trigger = initialColor.value.rgba
-      console.log(trigger)
-
       if (!props.showAlpha) {
         trigger.a = 1
       }
@@ -86,15 +86,15 @@ export default defineComponent({
     })
     // ** emits
     // 动态 交互面板 文本展示颜色  tips：根据不同 面板颜色 目前 不够优雅
-    function changeTextColor(value: boolean) {
+    function changeTextColor(value: boolean): void {
       isChangeTextColor.value = value
     }
     // 通过修改画板 颜色 修改 v-model 颜色
-    function changePaletteColor(colorMap) {
+    function changePaletteColor(colorMap: ColorPickerColor): void {
       updateUserColor(colorMap)
     }
     // 通过用户点击触发修改 交互面板 文本类型
-    function changeTextModeType(type: string) {
+    function changeTextModeType(type: string): void {
       mode.value = type
       formItemText.value = type
     }

@@ -4,6 +4,8 @@ import { provideColorOptions, ColorPickerColor } from '../../utils/color-utils-t
 import './color-edit.scss'
 import { fromHex, fromHexa, fromHSLA, fromHSVA, fromRGBA } from '../../utils/color-utils'
 import Schema, { Rules } from 'async-validator'
+// 默认 mode
+const DEFAUTL_MODE = 'rgb'
 
 // MODE支持模式
 const MODE_SUPPORT = ['rgb', 'hex', 'hsl', 'hsv'] as const
@@ -60,11 +62,15 @@ export default defineComponent({
     // 设置showalpha 为false 会报错 2021.12.14
     const isShowAlpha: provideColorOptions = inject('provideData')
     // 模式值
-    const modelValue = computed(() => `${props.mode}${isShowAlpha.showAlpha ? 'a' : ''}`)
+    const modelValue = computed(
+      () => `${props.mode ?? DEFAUTL_MODE}${isShowAlpha.showAlpha ? 'a' : ''}`
+    )
     // 颜色值
     const colorValue = ref(props.color)
     // 模式值类型
-    const modelValueType = computed(() => (props.mode === 'hex' ? 'string' : 'number'))
+    const modelValueType = computed(() =>
+      (props.mode ?? DEFAUTL_MODE) === 'hex' ? 'string' : 'number'
+    )
 
     /**
      * 获取有效颜色值
@@ -88,7 +94,7 @@ export default defineComponent({
      */
     function onChangeModel() {
       // 安装MODE_SUPPORT列表进行更换
-      const currentIndex = MODE_SUPPORT.findIndex((x) => x === props.mode)
+      const currentIndex = MODE_SUPPORT.findIndex((x) => x === props.mode ?? DEFAUTL_MODE)
       const mode = MODE_SUPPORT[(currentIndex + 1) % MODE_SUPPORT.length]
       emit('changeTextModeColor', mode)
     }
