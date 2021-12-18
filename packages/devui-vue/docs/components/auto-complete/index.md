@@ -24,7 +24,6 @@
     :appendToBodyDirections="appendToBodyDirections"
   >
   </d-auto-complete>
-  <pre>{{ value || 'No language select!' }}</pre>
 </template>
 
 <script>
@@ -103,7 +102,6 @@ export default defineComponent({
     </d-col>
   </d-row>
 
-  <pre>{{ value || 'No language select!' }}</pre>
 </template>
 
 <script>
@@ -168,7 +166,6 @@ export default defineComponent({
       </div>
     </template>
   </d-auto-complete>
-  <pre>{{ value || 'No language select!' }}</pre>
 </template>
 
 <script>
@@ -272,7 +269,6 @@ export default defineComponent({
       </div>
     </template>
   </d-auto-complete>
-  <pre>{{ value || 'No language select!' }}</pre>
 </template>
 
 <script>

@@ -122,6 +122,7 @@ export type DropdownProps = {
   showLoading:Ref<boolean>
   loadMore
   latestSource
-  modelValue:Ref<string>
+  modelValue:Ref<string>,
+  hoverIndex:Ref<number>
 }
 export const DropdownPropsKey:InjectionKey<DropdownProps>=Symbol('DropdownPropsKey')

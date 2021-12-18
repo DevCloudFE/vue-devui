@@ -16,7 +16,8 @@ export default defineComponent({
       showLoading,
       showNoResultItemTemplate,
       latestSource,
-      modelValue
+      modelValue,
+      hoverIndex
     } = propsData
     const {
       disabled,
@@ -67,7 +68,9 @@ export default defineComponent({
                   onClick={()=>onSelect(item)}
                   class={[
                     'devui-dropdown-item',selectedIndex.value==index&&'selected',
-                    {'disabled': disabledKey && item[disabledKey]}
+                    {'disabled': disabledKey && item[disabledKey]},
+                    {'devui-dropdown-bg': hoverIndex.value== index},
+                    
                   ]}
                   title={formatter(item)}
                   key={formatter(item)}

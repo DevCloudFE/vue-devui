@@ -1,7 +1,7 @@
 import { setTimeout } from 'core-js';
 import { ref, Ref, SetupContext } from 'vue';
 import {HandleSearch,RecentlyFocus,InputDebounceCb,TransInputFocusEmit} from '../auto-complete-types'
-export default function useInputHandle(ctx: SetupContext,showNoResultItemTemplate:Ref<boolean>, modelValue:Ref<string>,disabled:Ref<boolean>,delay:Ref<number>,handleSearch: HandleSearch, transInputFocusEmit:Ref<TransInputFocusEmit>,recentlyFocus:RecentlyFocus,latestSource:Ref<Array<any>>): any {
+export default function useInputHandle(ctx: SetupContext,searchList:Ref<any[]>,showNoResultItemTemplate:Ref<boolean>, modelValue:Ref<string>,disabled:Ref<boolean>,delay:Ref<number>,handleSearch: HandleSearch, transInputFocusEmit:Ref<TransInputFocusEmit>,recentlyFocus:RecentlyFocus,latestSource:Ref<Array<any>>): any {
     const visible = ref(false)
     const inputRef = ref()
     const searchStatus = ref(false)
@@ -18,7 +18,6 @@ export default function useInputHandle(ctx: SetupContext,showNoResultItemTemplat
             },time)
         }
     }
-    // todo 存在体验问题，自定搜索和没有结果的模板情况下，模板快速消失，但是下拉框有过度效果，会留下白框渐变
     const onInputCb = async(value:string)=>{
         await handleSearch(value)
         visible.value = true
@@ -47,6 +46,9 @@ export default function useInputHandle(ctx: SetupContext,showNoResultItemTemplat
             handleClose()
         }else{
             visible.value=true
+            if (ctx.slots.noResultItemTemplate&&searchList.value.length==0) {
+                showNoResultItemTemplate.value=!showNoResultItemTemplate.value
+            }
         }
     }
     }

@@ -5,6 +5,7 @@ import useSearchFn from './composables/use-searchfn'
 import useInputHandle from './composables/use-input-handle'
 import useSelectHandle from './composables/use-select-handle'
 import useLazyHandle from './composables/use-lazy-handle'
+import useKeyBoardHandle from './composables/use-keyboard-select'
 import './auto-complete.scss'
 import DAutoCompleteDropdown from './components/dropdown'
 import ClickOutside from '../../shared/devui-directive/clickoutside'
@@ -27,14 +28,16 @@ export default defineComponent({
       source,
       searchFn,
       appendToBodyDirections,
-      latestSource
+      latestSource,
+      showAnimation
     } = toRefs(props)
 
     const {handleSearch,searchList,showNoResultItemTemplate,recentlyFocus} = useSearchFn(ctx,allowEmptyValueSearch,source,searchFn,formatter)
-    const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,showNoResultItemTemplate,modelValue,disabled,delay,handleSearch,transInputFocusEmit,recentlyFocus,latestSource)
+    const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,searchList,showNoResultItemTemplate,modelValue,disabled,delay,handleSearch,transInputFocusEmit,recentlyFocus,latestSource)
     const {selectedIndex,selectOptionClick} = useSelectHandle(ctx,searchList,selectValue,handleSearch,formatter,handleClose)
     const {showLoading,dropDownRef,loadMore} = useLazyHandle(props,ctx,handleSearch)
     const {customRenderSolts} = useCustomTemplate(ctx,modelValue)
+    const {hoverIndex,handlekeyDown} = useKeyBoardHandle(dropDownRef,visible,searchList,selectedIndex,searchStatus,showNoResultItemTemplate,selectOptionClick,handleClose)
     provide(DropdownPropsKey, {
       props,
       visible,
@@ -48,7 +51,8 @@ export default defineComponent({
       loadMore,
       latestSource,
       modelValue,
-      showNoResultItemTemplate:showNoResultItemTemplate
+      showNoResultItemTemplate:showNoResultItemTemplate,
+      hoverIndex:hoverIndex
     })
     const origin = ref()
     const position = reactive({appendToBodyDirections:{}})
@@ -82,7 +86,7 @@ export default defineComponent({
                 width: dAutoCompleteWidth.value>0&&dAutoCompleteWidth.value+'px'
               }}
             >
-              <Transition name='fade'>
+              <Transition name={showAnimation?"fade":""}>
                 <DAutoCompleteDropdown>
                   {customRenderSolts()}
                 </DAutoCompleteDropdown>
@@ -110,6 +114,7 @@ export default defineComponent({
               onFocus={onFocus}
               value={modelValue.value}
               ref = {inputRef}
+              onKeydown={handlekeyDown}
             />
             {renderDropdown()}
           </div>

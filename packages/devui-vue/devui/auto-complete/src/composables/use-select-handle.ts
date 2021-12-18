@@ -9,7 +9,6 @@ export default function useSelectHandle(ctx: SetupContext,searchList: Ref<Array<
     let ind = searchList.value.indexOf(item)
     return ind == -1 ? 0 : ind
   }
-  // todo 键盘方向键选择回车键选择功能
   const selectOptionClick = async(item) => {
     const cur = formatter.value(item)
     ctx.emit('update:modelValue', cur)
