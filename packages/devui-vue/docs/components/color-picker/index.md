@@ -18,7 +18,7 @@
 
 ### 颜色透明度
 
-允许用户动态调节展示 alpha 模式
+允许用户动态调节展示 alpha 模式 默认情况下为true
 :::demo
 
 ```vue
@@ -51,7 +51,7 @@ export default defineComponent({
 
 ### 颜色模式
 
-设置 mode 展示响应颜色模式
+设置 mode 展示响应颜色模式 
 :::demo
 
 ```vue
@@ -77,7 +77,7 @@ export default defineComponent({
 
 ### 历史颜色
 
-自定义是否展示历史颜色
+自定义是否展示历史颜色 默认情况下为true
 :::demo
 
 ```vue
@@ -143,11 +143,16 @@ export default defineComponent({
 
 d-color-picker 参数
 
-| 参数 | 类型 | 默认 | 说明 | 跳转 Demo | 全局配置项 |
-| ---- | ---- | ---- | ---- | --------- | ---------- |
-|      |      |      |      |           |            |
-|      |      |      |      |           |            |
-|      |      |      |      |           |            |
+| 参数         | 类型      | 默认   | 说明                                        | 跳转 Demo                   |
+| ------------ | --------- | ------ | ------------------------------------------- | --------------------------- |
+| mode         | `String`  | `rgb`  | 切换颜色模式                                | [颜色模式](#颜色模式)       |  |
+| dotSize      | `Number`  | `15`   | 调色板圆点大小                              |                             |  |
+| swatches     | `Array`   |        | 预定义样本面板                              | [色块样本](#基础面板自定义) |  |
+| show-alpha   | `Boolean` | `true` | 是否展示透明度进度条                        | [透明度展示](#颜色透明度)   |  |
+| show-history | `Boolean` | `true` | 是否展示历史颜色                            | [历史颜色展示](#历史颜色)   |  |
+| v-model      | `String`  |        | 绑定颜色Value支持（hex , rgb , hsl , hsv ） |                             |  |
+
+
 
 d-color-picker 事件
 
