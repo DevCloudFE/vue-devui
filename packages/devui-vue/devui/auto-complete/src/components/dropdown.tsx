@@ -1,8 +1,10 @@
 import { defineComponent, inject } from 'vue'
 import { DropdownPropsKey } from '../auto-complete-types'
+import dLoading from '../../../loading/src/directive'
 // 后续会对接自带下拉组件，相关功能将全部抽离
 export default defineComponent({
   name: 'DAutoCompleteDropdown',
+  directives: {dLoading},
   setup(props,ctx) {
     const propsData = inject(DropdownPropsKey)
     const {
