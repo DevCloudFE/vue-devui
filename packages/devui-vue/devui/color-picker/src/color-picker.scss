@@ -4,7 +4,7 @@
   position: relative;
   &-position {
     position: absolute;
-    z-index: 9;
+    z-index: 9999;
     background-color: $devui-connected-overlay-bg;
     top: 0;
   }

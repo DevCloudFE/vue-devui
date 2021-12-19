@@ -6,8 +6,8 @@ export function colorPickerResize(
   left: Ref<number>
 ): void {
   const rect = colorCubeRef.value?.getBoundingClientRect()
-  left.value = rect.left
-  top.value = rect.top + rect.height
+  left.value = rect?.left
+  top.value = rect?.top + window.scrollY + rect.height
 }
 export function isExhibitionColorPicker(
   event: PointerEvent,
