@@ -24,7 +24,6 @@ Set source to the data source that is automatically completed.
     :appendToBodyDirections="appendToBodyDirections"
   >
   </d-auto-complete>
-  <pre>{{ value || 'No language select!' }}</pre>
 </template>
 
 <script>
@@ -103,7 +102,6 @@ You can set the disabled parameter to disable it in the text box and disable the
     </d-col>
   </d-row>
 
-  <pre>{{ value || 'No language select!' }}</pre>
 </template>
 
 <script>
@@ -168,7 +166,6 @@ You can use searchFn to customize the data matching method and the returned data
       </div>
     </template>
   </d-auto-complete>
-  <pre>{{ value || 'No language select!' }}</pre>
 </template>
 
 <script>
@@ -271,7 +268,6 @@ Use itemTemplate and noResultItemTemplate to customize the drop-down list box an
       </div>
     </template>
   </d-auto-complete>
-  <pre>{{ value || 'No language select!' }}</pre>
 </template>
 
 <script>

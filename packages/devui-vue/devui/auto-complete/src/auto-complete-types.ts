@@ -16,7 +16,8 @@ export const autoCompleteProps = {
     default:''
   },
   source:{
-    type :Array
+    type :Array,
+    default:null
   },
   allowEmptyValueSearch:{
     type:Boolean,
@@ -44,7 +45,8 @@ export const autoCompleteProps = {
     default:300
   },
   disabledKey:{
-    type:String
+    type:String,
+    default:null
   },
   formatter: {
     type:Function as PropType<(item: any) => string>,
@@ -55,18 +57,20 @@ export const autoCompleteProps = {
     default:false
   },
   sceneType:{
-    type:String
-    // sceneType使用场景：select(下拉框) suggest(联想)
+    type:String,
+    default:null
   },
   searchFn:{
-    type:Function as PropType<(term: string) => Array<any>>
+    type:Function as PropType<(term: string) => Array<any>>,
+    default:null
   },
   tipsText:{
     type:String,
     default:'最近输入'
   },
   latestSource:{
-    type:Array
+    type:Array,
+    default:null
   },
   valueParser:{
     type:Function as PropType<(item: any) => any>,
@@ -77,7 +81,8 @@ export const autoCompleteProps = {
     default:false
   },
   dAutoCompleteWidth:{
-    type: Number
+    type: Number,
+    default:null
   },
   showAnimation:{
     type:Boolean,
@@ -88,13 +93,16 @@ export const autoCompleteProps = {
     default:300
   },
   transInputFocusEmit:{
-    type:Function as PropType<() => void>
+    type:Function as PropType<() => void>,
+    default:null
   },
   selectValue:{
-    type:Function as PropType<() => void>
+    type:Function as PropType<() => void>,
+    default:null
   },
   loadMore:{
-    type:Function as PropType<() => void>
+    type:Function as PropType<() => void>,
+    default:null
   }
 } as const
 
