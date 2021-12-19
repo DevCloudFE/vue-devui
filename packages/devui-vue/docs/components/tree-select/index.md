@@ -307,6 +307,135 @@ export default defineComponent({
 
 :::
 
+### 自定义图标
+
+:::demo
+
+```vue
+<template>
+  <d-tree-select v-model="value" :treeData="data">
+    <template #default="{ item }">
+      <span class="my-icon" :class="[item?.data?.type]">{{item.label}}</span>
+    </template>
+  </d-tree-select>
+</template>
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const value = ref('')
+    const data = ref([{
+      label: '一级 1',
+      data: { type: "ppt" },
+      children: [{
+        label: '二级 1-1',
+        data: { type: "doc" },
+        children: [{
+          label: '三级 1-1-1',
+          data: { type: "ppt" },
+        }]
+      }]
+    }, {
+      label: '一级 2',
+      data: { type: "doc" },
+      children: [{
+        label: '二级 2-1',
+        data: { type: "ppt" },
+        children: [{
+          label: '三级 2-1-1',
+          data: { type: "xls" },
+        }]
+      }, {
+        label: '二级 2-2',
+        data: { type: "pdf" },
+        children: [{
+          label: '三级 2-2-1',
+          data: { type: "xls" },
+        }]
+      }]
+    }, {
+      label: '一级 3',
+      data: { type: "pdf" },
+      children: [{
+        label: '二级 3-1',
+        data: { type: "mix" },
+        children: [{
+          label: '三级 3-1-1',
+          data: { type: "doc" },
+        }]
+      }, {
+        label: '二级 3-2',
+        data: { type: "doc" },
+        children: [{
+          label: '三级 3-2-1',
+          data: { type: "xls" },
+        }]
+      }]
+    }])
+    
+    return {
+      data,
+      value
+    }
+  }
+})
+</script>
+<style>
+
+.my-icon::before {
+  width: 16px;
+  height: 16px;
+  font-style: italic;
+  font-size: 12px;
+  line-height: 14px;
+  display: inline-block;
+  text-align: center;
+  color: #fff;
+  border-radius: 2px;
+}
+
+.my-icon.doc::before {
+  content: 'W';
+  background-color: #295396;
+  border: 1px #224488 solid;
+}
+
+.my-icon.pdf::before {
+  content: 'A';
+  background-color: #da0a0a;
+  border: 1px #dd0000 solid;
+}
+
+.my-icon.xls::before {
+  content: 'X';
+  background-color: #207044;
+  border: 1px #18683c solid;
+}
+
+.my-icon.ppt::before {
+  content: 'P';
+  background-color: #d14424;
+  border: 1px #dd4422 solid;
+}
+
+.my-icon.mix::before {
+  content: '?';
+  font-style: normal;
+  background-color: #aaaaaa;
+  border: 1px #999999 solid;
+}
+.my-icon-next {
+  margin-left: 8px;
+}
+
+
+</style>
+```
+
+:::
+
+
 ### API
 
 d-select-tree 参数

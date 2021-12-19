@@ -10,9 +10,11 @@ import useClear from '../hooks/use-clear'
 import IconOpen from '../assets/open.svg'
 import IconClose from '../assets/close.svg'
 import Checkbox from '../../checkbox/src/checkbox'
+import ClickOutside from '../../shared/devui-directive/clickoutside'
 
 export default defineComponent({
   name: 'DTreeSelect',
+  directives: { ClickOutside },
   props: treeSelectProps,
   emits: ['toggleChange', 'valueChange', 'update:modelValue'],
   setup(props: TreeSelectProps, ctx: SetupContext) {
@@ -50,7 +52,9 @@ export default defineComponent({
           : <IconClose class="mr-xs" onClick={(e: MouseEvent) => treeToggle(e, item)} /> 
           :<span>{'\u00A0\u00A0\u00A0'}</span>
         }
-        { multiple
+        {ctx.slots.default 
+        ? ctx.slots.default({ item })
+        : multiple
         ? item.halfchecked 
           ? <Checkbox label={item.label} halfchecked={item.halfchecked} />
           : <Checkbox label={item.label} checked={item.checked} />
@@ -74,7 +78,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={treeSelectCls}>
+        <div class={treeSelectCls} v-click-outside={() => visible.value = false}>
           <div 
             class={isClearable.value ? 'devui-tree-select-clearable' : 'devui-tree-select-notclearable'}
             onClick={() => selectToggle()}>
