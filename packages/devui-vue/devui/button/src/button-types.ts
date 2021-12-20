@@ -1,9 +1,17 @@
-import { ExtractPropTypes, PropType } from 'vue';
+import { ExtractPropTypes, PropType } from 'vue'
+import type { IGlobalSize } from '../../config-provider/global-config'
 
-export type IButtonType = 'button' | 'submit' | 'reset';
-export type IButtonStyle = 'common' | 'primary' | 'text' | 'text-dark' | 'danger' | 'success' | 'warning';
-export type IButtonPosition = 'left' | 'right' | 'default';
-export type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
+export type IButtonType = 'button' | 'submit' | 'reset'
+export type IButtonStyle =
+  | 'common'
+  | 'primary'
+  | 'text'
+  | 'text-dark'
+  | 'danger'
+  | 'success'
+  | 'warning'
+export type IButtonPosition = 'left' | 'right' | 'default'
+export type IButtonSize = IGlobalSize
 
 export const buttonProps = {
   type: {
@@ -16,7 +24,7 @@ export const buttonProps = {
   },
   size: {
     type: String as PropType<IButtonSize>,
-    default: 'md'
+    default: undefined
   },
   position: {
     type: String as PropType<IButtonPosition>,
@@ -35,7 +43,7 @@ export const buttonProps = {
     default: false
   },
   width: {
-    type: String,
+    type: String
   },
   disabled: {
     type: Boolean,
@@ -48,7 +56,6 @@ export const buttonProps = {
   onClick: {
     type: Function as PropType<(event: MouseEvent) => void>
   }
-} as const;
+} as const
 
-
-export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
+export type ButtonProps = ExtractPropTypes<typeof buttonProps>
