@@ -7,7 +7,7 @@
 需要在多个可选项中进行多选时。穿梭选择框可用只管的方式在两栏中移动数据，完成选择行为。其中左边一栏为 source，右边一栏为 target。最终返回两栏的数据，提供给开发者使用。
 
 ### 基本用法
-
+穿梭框基本用法。
 :::demo
 
 ```vue
@@ -67,6 +67,24 @@ export default defineComponent({
           value: '福建',
           disabled: false,
         },
+        
+      ]
+    const originTarget = [
+        {
+          key: '南充',
+          value: '南充',
+          disabled: false,
+        },
+        {
+          key: '广元',
+          value: '广元',
+          disabled: false,
+        },
+        {
+          key: '绵阳',
+          value: '绵阳',
+          disabled: false,
+        },
         {
           key: '大连',
           value: '大连',
@@ -78,23 +96,6 @@ export default defineComponent({
           disabled: false,
         },
       ]
-    const originTarget = [
-        {
-          key: '南充',
-          value: '南充',
-          disabled: false,
-        },
-        {
-          key: '广元',
-          value: '广元',
-          disabled: true,
-        },
-        {
-          key: '绵阳',
-          value: '绵阳',
-          disabled: false,
-        },
-      ]
 
     const options = reactive({
       titles: ['sourceHeader', 'targetHeader'],
@@ -103,7 +104,7 @@ export default defineComponent({
       originSource,
       originTarget,
       isSearch: true,
-      modelValues: ['深圳', '成都', '绵阳'],
+      modelValues: ['深圳', '成都', '绵阳']
     })
 
     return {
@@ -116,8 +117,126 @@ export default defineComponent({
 
 :::
 
-### 自定义穿梭框
 
+### 拖拽排序
+
+可以对穿梭框源和目标框的数据进行排序。
+
+:::demo
+
+```vue
+<template>
+  <d-transfer
+    v-model="options.modelValues"
+    :titles="options.titles"
+    :sourceOption="options.source"
+    :targetOption="options.target"
+    :isSearch="options.isSearch"
+    :isSourceDroppable="options.isSourceDroppable"
+    :isTargetDroppable="options.isTargetDroppable"
+  >
+  </d-transfer>
+</template>
+<script>
+import { defineComponent, reactive } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const originSource = [
+        {
+          key: '北京',
+          value: '北京',
+          disabled: false,
+        },
+        {
+          key: '上海',
+          value: '上海',
+          disabled: true,
+        },
+        {
+          key: '广州',
+          value: '广州',
+          disabled: false,
+        },
+        {
+          key: '深圳',
+          value: '深圳',
+          disabled: false,
+        },
+        {
+          key: '成都',
+          value: '成都',
+          disabled: false,
+        },
+        {
+          key: '武汉',
+          value: '武汉',
+          disabled: false,
+        },
+        {
+          key: "西安",
+          value: "西安",
+          disabled: false,
+        },
+        {
+          key: '福建',
+          value: '福建',
+          disabled: false,
+        },
+        
+      ]
+    const originTarget = [
+        {
+          key: '南充',
+          value: '南充',
+          disabled: false,
+        },
+        {
+          key: '广元',
+          value: '广元',
+          disabled: false,
+        },
+        {
+          key: '绵阳',
+          value: '绵阳',
+          disabled: false,
+        },
+        {
+          key: '大连',
+          value: '大连',
+          disabled: false,
+        },
+        {
+          key: '重庆',
+          value: '重庆',
+          disabled: false,
+        },
+      ]
+
+    const options = reactive({
+      titles: ['sourceHeader', 'targetHeader'],
+      source: originSource,
+      target: originTarget,
+      originSource,
+      originTarget,
+      isSearch: false,
+      modelValues: ['深圳', '成都', '绵阳'],
+      isSourceDroppable: true,
+      isTargetDroppable: true
+    })
+
+    return {
+      options
+    }
+  }
+})
+</script>
+```
+
+::: 
+
+### 自定义穿梭框
+可以对穿梭框内容的显示进行自定义。
 :::demo
 
 ```vue
@@ -350,6 +469,7 @@ export default defineComponent({
   height: 36px;
   line-height: 36px;
   border-bottom: 1px solid #dfe1e6;
+  align-items: center;
 }
 .custom-transfer__body__list__part {
   width: 30%;
@@ -377,6 +497,8 @@ export default defineComponent({
 ::: 
 
 
+
+
 ### API
 d-transfer 参数
 
@@ -398,3 +520,12 @@ d-transfer 事件
 | searching   | `EventEmitter<{direction, keyword}>`   | 当搜索时触发，返回目标穿梭框和搜索文字，不设置此事件则会使用默认方法；     |  [基本用法](#基本用法)   |
 | transferring   | `EventEmitter<TransferDirection>`   | 当穿梭时触发，返回目标穿梭框，不设置此事件则会使用默认方法；     |  [基本用法](#基本用法)   |
 | afterTransfer   | `EventEmitter<TransferDirection>`   | 当穿梭完成后，返回目标穿梭框，不设置transferEvent才会触发；     |  [基本用法](#基本用法)   |
+| onDragEnd   | `(direction: string, dragItem: TransferItem, dropItem: TransferItem) => void`   | 节点结束拖拽的回调；     |  [基本用法](#基本用法)   |
+
+
+d-transfer.Item
+| **属性**           | **类型**                                                     | **默认**                  | **说明**                                                     | **跳转 Demo**                |
+| ------------------ | ------------------------------------------------------------ | ------------------------- | ------------------------------------------------------------ | ---------------------------- |
+|  key   | `string  (required)`   |       -     | 选项的键值（唯一标识符）     |  [基本用法](#基本用法)   |
+| value   | `string  (required)`   |       -     | 选项对应的值   |  [基本用法](#基本用法)   |
+| disabled         | `boolean`   |       -     | 是否禁用此选项      |  [基本用法](#基本用法)   |
