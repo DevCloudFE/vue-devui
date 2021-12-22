@@ -94,7 +94,7 @@
     <template #cardTitle>
       DEVUI Course
     </template>
-    <template #cardSubtitle class="icon">
+    <template #cardSubtitle class="card-demo-icon">
       <d-icon name="company-member"></d-icon><span>DevUI</span>
     </template>
     <template #cardContent>
@@ -241,13 +241,13 @@
 
 <style lang="scss">
 @import '@devui-design/icons/icomoon/devui-icon.css';
-.icon {
+.card-demo-icon {
   cursor: pointer;
   font-size: 16px;
   margin-right: 8px;
   vertical-align: middle;
 }
-.icon + span {
+.card-demo-icon + span {
   vertical-align: middle;
 }
 .card-block {
@@ -291,6 +291,7 @@ img {
   }
 }
 </style>
+
 
 ### 参数
 
