@@ -181,7 +181,7 @@ You can specify the content to be displayed by importing template. When importin
         <template #cardTitle>
           DEVUI Course
         </template>
-        <template #cardSubtitle class="icon">
+        <template #cardSubtitle class="read-tip-demo-icon">
           <d-icon name="company-member"></d-icon><span>DevUI</span>
         </template>
         <template #cardContent>
@@ -217,14 +217,13 @@ const readTipOptions =  {
 </script>
 
 <style>
-
-.icon {
+.read-tip-demo-icon {
   cursor: pointer;
   font-size: 16px;
   margin-right: 8px;
   vertical-align: middle;
 }
-.icon + span {
+.read-tip-demo-icon + span {
   vertical-align: middle;
 }
 .card-block {

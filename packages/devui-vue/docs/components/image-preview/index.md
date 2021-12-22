@@ -99,7 +99,10 @@ export default defineComponent({
     </d-radio-group>
     <span class="text">backDropZIndex: {{ backDropZIndex }}</span>
   </div>
-  <div v-d-image-preview="{ zIndex, backDropZIndex }" class="devui-image-preview-demo">
+  <div
+    v-d-image-preview="{ zIndex: Number(zIndex), backDropZIndex: Number(backDropZIndex) }"
+    class="devui-image-preview-demo"
+  >
     <img v-for="src in imageList" :src="src" :key="src" />
   </div>
 </template>
@@ -111,10 +114,10 @@ export default defineComponent({
       'https://devui.design/components/assets/image1.png',
       'https://devui.design/components/assets/image3.png'
     ])
-    const zIndexList = ref([1000, 1050, 1100])
-    const backDropZIndexList = ref([900, 1040, 1000])
-    const zIndex = ref(1050)
-    const backDropZIndex = ref(1040)
+    const zIndexList = ref(['1000', '1050', '1100'])
+    const backDropZIndexList = ref(['900', '1040', '1000'])
+    const zIndex = ref('1050')
+    const backDropZIndex = ref('1040')
 
     return {
       imageList,
@@ -136,7 +139,7 @@ export default defineComponent({
 | :------------: | :-------: | :---: | :------------------------------------------------------------ |
 |     custom     | `Object`  |  --   | 可选，指令会自动注入 open 方法，通过 custom.open 开启预览窗口 |
 | disableDefault | `Boolean` | false | 可选，关闭默认点击触发图片预览方式                            |
-|     zIndex     | `Number`  | 1050  | 可选，可选，设置预览时图片的 z-index 值                       |
+|     zIndex     | `Number`  | 1050  | 可选，设置预览时图片的 z-index 值                             |
 | backDropZIndex | `Number`  | 1040  | 可选，设置预览时图片背景的 z-index 值                         |
 
 <style lang="scss">

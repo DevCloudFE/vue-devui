@@ -54,7 +54,7 @@ export const dialogProps = {
   },
   backdropCloseable: {
     type: Boolean,
-    default: false
+    default: true
   },
   bodyScrollable: {
     type: Boolean,

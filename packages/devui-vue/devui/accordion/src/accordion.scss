@@ -5,10 +5,12 @@
 @import '../../style/theme/corner';
 @import '../../style/core/animation';
 
-.devui-accordion-menu ol, ul {
-  margin: 0 !important;
-  line-height: 0 !important;
-  font-size: 12px;
+.devui-accordion-menu  {
+  ol, ul{
+    margin: 0 !important;
+    line-height: 0 !important;
+    font-size: 12px;
+  }
 }
 
 :host {

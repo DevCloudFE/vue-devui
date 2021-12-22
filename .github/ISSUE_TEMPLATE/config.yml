@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions or need help
+    url: https://github.com/DevCloudFE/vue-devui/discussions
+    about: Add this WeChat(devui-official), we will invite you to the WeChat discussion group later.
