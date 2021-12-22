@@ -1,12 +1,16 @@
-import { computed, defineComponent, ref } from 'vue'
-import { useGlobalConfig } from '../../config-provider/global-config'
-import { Icon } from '../../icon'
-import { buttonProps } from './button-types'
+import { computed, defineComponent, ref } from 'vue';
+import { useGlobalConfig } from '../../config-provider/global-config';
+import { Icon } from '../../icon';
+import loadingDirective from '../../loading/src/directive';
+import { buttonProps } from './button-types';
 
 import './button.scss'
 
 export default defineComponent({
   name: 'DButton',
+  directives: {
+    devLoading: loadingDirective
+  },
   props: buttonProps,
   setup(props, ctx) {
     const buttonContent = ref<HTMLSpanElement | null>(null)
@@ -47,13 +51,18 @@ export default defineComponent({
     return () => {
       const { icon, type, disabled, showLoading, width } = props
       return (
-        <div class='devui-btn-host' {...ctx.attrs} v-dLoading={showLoading}>
+
+        <div 
+          class="devui-btn-host" 
+          {...ctx.attrs} 
+        >
           <button
             class={btnClass.value}
             type={type}
             disabled={disabled}
             style={{ width }}
             onClick={onClick}
+            v-devLoading={showLoading}
           >
             {!!icon ? <Icon name={icon} class={iconClass.value} /> : null}
             <span class='button-content' ref={buttonContent}>
