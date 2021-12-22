@@ -41,7 +41,6 @@ describe('DPanel',()=>{
                 DPanelBody,
                 DPanelHeader,
                 DPanelFooter,
-                DButton
             },
             template: `
             <d-panel :isCollapsed="isCollapsed">
