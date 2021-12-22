@@ -2,23 +2,27 @@ import {
   defineComponent,
   ref,
   watch,
-  nextTick,
   reactive,
   computed,
   withDirectives,
   onMounted,
   inject,
 } from 'vue'
-import type { SplitterStore } from './splitter-store'
+
+import DToolTip from '../../tooltip/src/tooltip'
 import { setStyle } from '../../shared/util/set-style'
+import type { SplitterStore } from './splitter-store'
 import { addClass, removeClass } from '../../shared/util/class'
 import dresize, { ResizeDirectiveProp } from './util/d-resize-directive'
-import './splitter-bar.scss'
 import { splitterBarProps, SplitterBarProps } from './splitter-bar-type'
+import './splitter-bar.scss'
 
 export default defineComponent({
   name: 'DSplitterBar',
   props: splitterBarProps,
+  components: {
+    DToolTip,
+  },
   setup(props: SplitterBarProps) {
     const store: SplitterStore = inject('splitterStore')
     const state = reactive({
@@ -109,8 +113,6 @@ export default defineComponent({
     // 计算前面板收起操作样式
     const prevClass = computed(() => {
       const { pane, nearPane } = queryPanes(props.index, props.index + 1)
-      // TODO 提示文字
-
       // 第一个面板或者其它面板折叠方向不是向后的， 显示操作按钮
       const showIcon =
         pane?.component?.props?.collapseDirection !== 'after' ||
@@ -121,8 +123,6 @@ export default defineComponent({
     // 计算相邻面板收起操作样式
     const nextClass = computed(() => {
       const { pane, nearPane } = queryPanes(props.index + 1, props.index)
-      // TODO 提示文字
-
       // 最后一个面板或者其它面板折叠方向不是向前的显示操作按钮
       const showIcon =
         pane?.component?.props?.collapseDirection !== 'before' ||
@@ -157,29 +157,41 @@ export default defineComponent({
       handleCollapsePrePane(true)
       handleCollapseNextPane(true)
     }
-
+    
     onMounted(() => {
       initialCollapseStatus()
     })
+    
+    const renderCollapsedTip = () => {
+      const { pane, nearPane } = queryPanes(props.index, props.index + 1)
+      const isCollapsed =
+        pane?.component?.props?.collapsed ||
+        nearPane?.component?.props?.collapsed
+      return isCollapsed ? '展开' : '收起'
+    }
 
     return () => {
       return withDirectives(
         <div class={state.wrapperClass} ref={domRef}>
-          {props.showCollapseButton ? (
-            <div
-              class={['prev', prevClass.value]}
-              onClick={() => {
-                handleCollapsePrePane()
-              }}
-            ></div>
-          ) : null}
+          {props.showCollapseButton && (
+            <DToolTip content={renderCollapsedTip()}>
+              <div
+                class={['prev', prevClass.value]}
+                onClick={() => {
+                  handleCollapsePrePane()
+                }}
+              ></div>
+            </DToolTip>
+          )}
           <div class="devui-resize-handle"></div>
-          {props.showCollapseButton ? (
-            <div
-              class={['next', nextClass.value]}
-              onClick={() => handleCollapseNextPane()}
-            ></div>
-          ) : null}
+          {props.showCollapseButton && (
+            <DToolTip content={renderCollapsedTip()}>
+              <div
+                class={['next', nextClass.value]}
+                onClick={() => handleCollapseNextPane()}
+              ></div>
+            </DToolTip>
+          )}
         </div>,
         [[dresize, resizeProp]]
       )
