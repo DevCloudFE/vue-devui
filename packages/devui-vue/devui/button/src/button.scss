@@ -57,12 +57,12 @@ $devui-btn-normal-config: (
     background-color: $devui-contrast
   ),
   success: (
-    color: $devui-dark-text,
+    color: $devui-light-text,
     min-width: $devui-btn-min-width,
     background-color: $devui-success
   ),
   warning: (
-    color: $devui-dark-text,
+    color: $devui-light-text,
     min-width: $devui-btn-min-width,
     background-color: $devui-warning
   ),
