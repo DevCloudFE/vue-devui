@@ -96,8 +96,9 @@ export default defineComponent({
     }
     onMounted(() => {
       renderCanvas()
+      const el = paletteInstance.vnode?.el
       if (paletteInstance && paletteInstance.vnode.el && handlerElement.value) {
-        DOMUtils.triggerDragEvent(handlerElement.value, {
+        DOMUtils.triggerDragEvent(el as HTMLElement, {
           drag: (event: Event) => {
             clickTransfrom.value = null
             handleDrag(event as MouseEvent)
