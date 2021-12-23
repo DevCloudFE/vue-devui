@@ -22,6 +22,7 @@ Set source to the data source that is automatically completed.
     :transInputFocusEmit="transInputFocusEmit"
     :appendToBody="true"
     :appendToBodyDirections="appendToBodyDirections"
+    :dAutoCompleteWidth="450"
   >
   </d-auto-complete>
 </template>
@@ -461,7 +462,7 @@ d-auto-complete Parameter
 |      latestSource      |                    `Array<any>`                     |                        --                        |                                                                         Optional. Latest input                                                                         | [Latest input](demo#auto-latest)           |
 |      valueParser       |                `(item: any) => any`                 |    [`defaultValueParse`](#defaultvalueparse)     |                                                                   (optional) Process selected data                                                                   | [Enable lazy load](demo#auto-lazy-load)      |
 |     enableLazyLoad     |                      `boolean`                      |                      false                       |                                                                      	Optional. Whether lazy loading is allowed                                                                      | [Enable lazy load](demo#auto-lazy-load)      |
-|   dAutoCompleteWidth   |                      `number`                       |                        --                        |                                                                     Optional. Adjust the width (px)                                                                      |
+|   dAutoCompleteWidth   |                      `number`                       |                        --                        |                                                                     Optional. Adjust the width (px)                                                                      |[Basic usage](#Basic usage)
 |     showAnimation      |                      `boolean`                      |                       true                       |                                                                      optional. Whether to enable animation.                                                                        |                                        | ✔          |      |           |
 
 dAutoComplete Event

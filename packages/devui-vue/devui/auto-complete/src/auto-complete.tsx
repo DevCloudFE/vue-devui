@@ -69,7 +69,7 @@ export default defineComponent({
             <div
               class='devui-dropdown devui-auto-complete-menu'
               style={{
-                width: dAutoCompleteWidth.value>0?dAutoCompleteWidth.value+'px':'450px'
+                width: dAutoCompleteWidth.value>0&&dAutoCompleteWidth.value+'px'
               }}
             >
               <DAutoCompleteDropdown>
@@ -98,27 +98,28 @@ export default defineComponent({
     }
     return () => {
       return (
-        <>
-          <div
-            class={['devui-auto-complete','devui-form-group','devui-has-feedback',visible.value&&'devui-select-open']}
-            ref={origin}
-            v-click-outside={handleClose}
-          >
-            <input
-              disabled={disabled.value}
-              type="text"
-              onClick={toggleMenu}
-              class={['devui-form-control','devui-dropdown-origin','devui-dropdown-origin-open',disabled.value&&'disabled']}
-              placeholder="Search"
-              onInput={onInput}
-              onFocus={onFocus}
-              value={modelValue.value}
-              ref = {inputRef}
-              onKeydown={handlekeyDown}
-            />
-            {renderDropdown()}
-          </div>
-        </>
+        <div
+          class={['devui-auto-complete','devui-form-group','devui-has-feedback',visible.value&&'devui-select-open']}
+          ref={origin}
+          v-click-outside={handleClose}
+          style={{
+            width: dAutoCompleteWidth.value>0&&dAutoCompleteWidth.value+'px'
+          }}
+        >
+          <input
+            disabled={disabled.value}
+            type="text"
+            onClick={toggleMenu}
+            class={['devui-form-control','devui-dropdown-origin','devui-dropdown-origin-open',disabled.value&&'disabled']}
+            placeholder="Search"
+            onInput={onInput}
+            onFocus={onFocus}
+            value={modelValue.value}
+            ref = {inputRef}
+            onKeydown={handlekeyDown}
+          />
+          {renderDropdown()}
+        </div>
       )
     }
   }

@@ -22,6 +22,7 @@
     :transInputFocusEmit="transInputFocusEmit"
     :appendToBody="true"
     :appendToBodyDirections="appendToBodyDirections"
+    :dAutoCompleteWidth="450"
   >
   </d-auto-complete>
 </template>
@@ -461,7 +462,7 @@ d-auto-complete 参数
 |      latestSource      |                    `Array<any>`                     |                        --                        |                                                                         可选， 最近输入                                                                         | [最近输入](demo#auto-latest)           |
 |      valueParser       |                `(item: any) => any`                 |    [`defaultValueParse`](#defaultvalueparse)     |                                                                   可选， 对选中后数据进行处理                                                                   | [启用懒加载](demo#auto-lazy-load)      |
 |     enableLazyLoad     |                      `boolean`                      |                      false                       |                                                                      可选，是否允许懒加载                                                                       | [启用懒加载](demo#auto-lazy-load)      |
-|   dAutoCompleteWidth   |                      `number`                       |                        --                        |                                                                     可选，调整宽度（`px`）                                                                      |
+|   dAutoCompleteWidth   |                      `number`                       |                        --                        |                                                                     可选，调整宽度（`px`）                                                                      |[基本用法](#基本用法)
 |     showAnimation      |                      `boolean`                      |                       true                       |                                                                       可选，是否开启动画                                                                        |                                        | ✔          |      |           |
 
 d-auto-complete 事件
