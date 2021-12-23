@@ -18,7 +18,11 @@ export default defineComponent({
     const rules = reactive(dForm.rules);
     
     const resetField = () => {
-      formData[props.prop] = initFormItemData;
+      if(Array.isArray(initFormItemData)) {
+        formData[props.prop] = [...initFormItemData];
+      }else {
+        formData[props.prop] = initFormItemData;
+      }
     }
 
     const formItem = reactive({
