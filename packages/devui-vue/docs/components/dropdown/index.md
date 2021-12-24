@@ -12,33 +12,38 @@
 
 ```vue
 <template>
-  <div style="display:flex">
-    触发方式：
-    <d-radio-group direction="row" v-model="trigger">
-      <d-radio v-for="item in triggerList" :key="item" :value="item">
-        {{ item }}
-      </d-radio>
-    </d-radio-group>
-  </div>
-  <div style="display:flex">
-    关闭区域： 
-    <d-radio-group direction="row" v-model="closeScope">
-      <d-radio v-for="item in closeScopeAreas" :key="item" :value="item">
-        {{ item }}
-      </d-radio>
-    </d-radio-group>
-  </div>
+  <div class="space-y-s">
+    <div class="flex items-center">
+      触发方式：
+      <d-radio-group direction="row" v-model="trigger">
+        <d-radio v-for="item in triggerList" :key="item" :value="item">
+          {{ item }}
+        </d-radio>
+      </d-radio-group>
+    </div>
+    <div class="flex items-center">
+      关闭区域： 
+      <d-radio-group direction="row" v-model="closeScope">
+        <d-radio v-for="item in closeScopeAreas" :key="item" :value="item">
+          {{ item }}
+        </d-radio>
+      </d-radio-group>
+    </div>
 
-  <div style="display:flex">
-    仅当鼠标从菜单移除时才关闭：
-    <d-switch v-model:checked="closeOnMouseLeaveMenu"></d-switch>
-  </div>
+    <div class="flex items-center">
+      仅当鼠标从菜单移除时才关闭：
+      <d-switch v-model:checked="closeOnMouseLeaveMenu"></d-switch>
+    </div>
 
-  <div style="display:flex">
-    动画开关：
-    <d-switch v-model:checked="showAnimation"></d-switch>
+    <div class="flex items-center">
+      动画开关：
+      <d-switch v-model:checked="showAnimation"></d-switch>
+    </div>
+    <div class="flex items-center">
+      自定义宽度：
+      <d-input-number v-model="width" :max="400" :min="100" :step="100" /> px
+    </div>
   </div>
-  
   <d-button ref="origin" style="margin-top: 20px; margin-right: 10px">More</d-button>
   <d-button 
     v-show="trigger === 'manually'" 
@@ -53,6 +58,7 @@
     :closeScope="closeScope"
     :closeOnMouseLeaveMenu="closeOnMouseLeaveMenu"
     :showAnimation="showAnimation"
+    :width="width"
   >
     <ul class="devui-dropdown-menu" role="menu">
       <li role="menuitem">
@@ -84,7 +90,8 @@ export default defineComponent({
       closeScope: ref('blank'),
       closeScopeAreas: ['all', 'blank', 'none'],
       closeOnMouseLeaveMenu: ref(false),
-      showAnimation: ref(true)
+      showAnimation: ref(true),
+      width: ref(100)
     }
   }
 })
@@ -122,6 +129,7 @@ d-dropdown 参数
 | closeScope            | `CloseScopeArea`                     | `all`   | 可选，点击关闭区域，blank 点击非菜单空白才关闭, all 点击菜单内外都关闭，none 菜单内外均不关闭仅下拉按键可以关闭 |
 | closeOnMouseLeaveMenu | `boolean`                            | `false` | 可选，是否进入菜单后离开菜单的时候关闭菜单                                                                      |
 | showAnimation         | `boolean`                            | `true`  | 可选，是否开启动画                                                                                              |
+| width         | `number \| string`                            | `102px`  | 可选，对 dropdown 内容的宽度进行自定义                                                                                              |
 
 TriggerType 类型
 ```typescript

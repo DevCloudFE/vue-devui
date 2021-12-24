@@ -2,7 +2,6 @@ import {
   computed,
   defineComponent,
   Transition,
-  watch
 } from 'vue'
 import { modalProps, ModalProps } from './modal-types'
 import { FixedOverlay } from '../../overlay'

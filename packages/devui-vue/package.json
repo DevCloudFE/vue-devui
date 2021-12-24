@@ -29,10 +29,6 @@
     "app:build": "vite build",
     "build:lib": "yarn predev && yarn build:components && yarn copy",
     "test": "jest --config jest.config.js",
-    "ls-lint": "ls-lint",
-    "lint": "eslint \"{src,devui}/**/*.{vue,js,ts,jsx,tsx}\"",
-    "lint:fix": "eslint --fix \"{src,devui}/**/*.{vue,js,ts,jsx,tsx}\"",
-    "stylelint": "stylelint --fix \"{devui,src}/**/*.{scss,css}\"",
     "build:components": "node ./devui-cli/index.js build",
     "generate:theme": "node ./devui-cli/index.js generate:theme",
     "generate:dts": "node ./devui-cli/index.js generate:dts",
@@ -40,8 +36,7 @@
     "clean:cli": "npm uninstall -g devui-cli & npm uninstall -g vue-devui",
     "cli:create": "node ./devui-cli/index.js create -t component",
     "predev": "node ./devui-cli/index.js create -t vue-devui --ignore-parse-error",
-    "prebuild": "node ./devui-cli/index.js create -t vue-devui --ignore-parse-error",
-    "prepare": "cd ../.. && husky install packages/devui-vue/.husky"
+    "prebuild": "node ./devui-cli/index.js create -t vue-devui --ignore-parse-error"
   },
   "dependencies": {
     "@devui-design/icons": "^1.3.0",
@@ -59,7 +54,6 @@
     "@babel/traverse": "^7.15.4",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
-    "@ls-lint/ls-lint": "^1.10.0",
     "@types/chalk": "^2.2.0",
     "@types/commander": "^2.12.2",
     "@types/jest": "^26.0.23",
@@ -76,22 +70,12 @@
     "babel-jest": "^27.0.2",
     "chalk": "^4.1.2",
     "commander": "^8.1.0",
-    "esbuild-register": "^2.6.0",
-    "eslint": "^7.28.0",
-    "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-vue": "^7.11.1",
-    "husky": "^7.0.4",
     "inquirer": "^8.1.2",
     "jest": "^27.0.4",
-    "lint-staged": "^11.0.0",
     "ora": "^5.4.1",
     "patch-vue-directive-ssr": "^0.0.1",
     "sass": "^1.32.2",
     "shelljs": "^0.8.4",
-    "stylelint": "^13.13.1",
-    "stylelint-config-recommended-scss": "^4.3.0",
-    "stylelint-config-standard": "^22.0.0",
-    "stylelint-scss": "^3.20.1",
     "typescript": "^4.3.2",
     "vite": "^2.4.4",
     "vite-plugin-md": "^0.6.0",
@@ -100,9 +84,5 @@
     "vitepress-theme-demoblock": "1.3.2",
     "vue-tsc": "^0.2.2",
     "yarn": "^1.22.11"
-  },
-  "lint-staged": {
-    "{src,devui}/**/*.{js,ts,jsx,tsx,vue}": "eslint --fix",
-    "{src,devui}/**/*.{scss,css}": "stylelint --fix"
   }
 }

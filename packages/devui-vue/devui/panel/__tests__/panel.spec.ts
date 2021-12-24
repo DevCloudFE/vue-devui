@@ -1,5 +1,5 @@
-import { shallowMount,mount } from "@vue/test-utils";
-import {ref,nextTick,Transition } from 'vue';
+import { mount } from '@vue/test-utils';
+import {ref } from 'vue';
 import DButton from '../../button/index';
 import DPanel from '../src/panel'
 import DPanelHeader from '../src/header/panel-header';
@@ -12,7 +12,7 @@ describe('DPanel',()=>{
     // 渲染测试
     it('Render',()=>{
         // except(wrapper.html())
-        let wrapper = mount({
+        const wrapper = mount({
             components:{
                 DPanel,
                 DPanelBody,
@@ -35,13 +35,12 @@ describe('DPanel',()=>{
     })
 
     it('isCollapsed', async ()=>{
-        let wrapper = mount({
+        const wrapper = mount({
             components:{
                 DPanel,
                 DPanelBody,
                 DPanelHeader,
                 DPanelFooter,
-                DButton
             },
             template: `
             <d-panel :isCollapsed="isCollapsed">
@@ -54,15 +53,14 @@ describe('DPanel',()=>{
             </d-panel>
             `,
             setup(){
-              let isCollapsed = ref(false);
+              const isCollapsed = ref(false);
               return {isCollapsed}
             }
         });
         expect(wrapper.find('.devui-panel .devui-panel-default').element.children[0].innerHTML).toBe('<!---->');
     })
-    // // 动态hasLeftPadding 测试
     it('padding-dynamic', async ()=>{
-        let wrapper = mount({
+        const wrapper = mount({
             components:{
                 DPanel,
                 DPanelBody,
@@ -80,14 +78,18 @@ describe('DPanel',()=>{
                 </d-panel-body>
             </d-panel>
             <br /><br />
-            <d-button @click="leftPadding = !leftPadding" >
+            <button @click="change" >
                 切换LeftPadding
-            </d-button>
+            </button>
             `,
             setup(){
-              let leftPadding = ref(false);
+              const leftPadding = ref(false);
+              const change = () => {
+                  leftPadding.value = !leftPadding.value;
+              }
               return {
                 leftPadding,
+                change
               }
             }
         });
@@ -98,13 +100,12 @@ describe('DPanel',()=>{
 
 
     it('beforeToggle-dynamic',async ()=>{
-        let wrapper = mount({
+        const wrapper = mount({
             components:{
                 DPanel,
                 DPanelBody,
                 DPanelHeader,
                 DPanelFooter,
-                DButton
             },
             template: `
             <d-panel :beforeToggle="beforeToggle" isCollapsed>
@@ -116,12 +117,12 @@ describe('DPanel',()=>{
                 </d-panel-body>
             </d-panel>
             <br /><br />
-            <d-button @click="panelToggle = !panelToggle" >
+            <button @click="panelToggle = !panelToggle" >
                 {{ panelToggle ? '阻止折叠' : '允许折叠' }}
-            </d-button>
+            </button>
             `,
             setup(){
-              let panelToggle = ref(false);
+              const panelToggle = ref(false);
               const beforeToggle = () => panelToggle.value;
               return {
                 panelToggle,

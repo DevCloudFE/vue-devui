@@ -30,5 +30,7 @@ export interface BindingTypes {
   }
   [key: string]: any
 }
-
+export interface UpdateBindingTypes extends BindingTypes {
+  oldValue: BindingTypes['value']
+}
 export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>

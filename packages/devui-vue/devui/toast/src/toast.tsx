@@ -106,7 +106,7 @@ export default defineComponent({
       if (props.lifeMode === 'single') {
         setTimeout(() => {
           messages.value.forEach((msg, i) => {
-            timeoutArr[i] = setTimeout(() => singleModeRemove(msg, i), msg.life || severityDelay(msg))
+            timeoutArr[i] = setTimeout(() => singleModeRemove(msg), msg.life || severityDelay(msg))
           })
         })
       } else {
@@ -114,13 +114,17 @@ export default defineComponent({
       }
     }
 
-    function singleModeRemove(msg: Message, i: number) {
+    function singleModeRemove(msg: Message) {
       removeMsgAnimation(msg)
       setTimeout(() => {
         onCloseEvent(msg)
 
         if (hasMsgAnimation()) {
-          messages.value.splice(i, 1)
+          // avoid index confusion in settimeout
+          const index = messages.value.indexOf(msg)
+          if (index !== -1) {
+            messages.value.splice(index, 1)
+          }
         } else {
           messages.value = []
         }
@@ -199,7 +203,7 @@ export default defineComponent({
       if (props.lifeMode === 'single') {
         const msgLife = msg!.life || severityDelay(msg!)
         const remainTime = msgLife - (Date.now() - timestamp)
-        timeoutArr[i!] = setTimeout(() => singleModeRemove(msg!, i!), remainTime)
+        timeoutArr[i!] = setTimeout(() => singleModeRemove(msg!), remainTime)
       } else {
         resetDelay(() => removeAll())
       }

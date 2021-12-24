@@ -144,15 +144,6 @@ Card 组件
   </d-card>
 </template>
 <style lang="scss">
-  .icon {
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 8px;
-    vertical-align: middle;
-  }
-  .icon + span {
-    vertical-align: middle;
-  }
   .card-block {
     margin-right: 16px;
     i{
@@ -201,7 +192,7 @@ Card 组件
 }
 .ripple-changeTextColor {
     display: block;
-    padding: 10px 15px;
+    padding: 20px;
     user-select: none;
 }
 </style>
