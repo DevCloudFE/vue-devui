@@ -1,9 +1,9 @@
 import './tree-select.scss'
 
-import { defineComponent, ref, Transition } from 'vue'
+import { defineComponent, toRefs, Transition } from 'vue'
 import type { SetupContext } from 'vue'
 import { treeSelectProps, TreeSelectProps, TreeItem } from './tree-select-types'
-import { attributeExtension, className } from './utils'
+import { nodeMap, attributeExtension, className } from './utils'
 import useToggle from '../hooks/use-toggle'
 import useSelect from '../hooks/use-select'
 import useClear from '../hooks/use-clear'
@@ -18,26 +18,35 @@ export default defineComponent({
   props: treeSelectProps,
   emits: ['toggleChange', 'valueChange', 'update:modelValue'],
   setup(props: TreeSelectProps, ctx: SetupContext) {
-    const { treeData, placeholder, disabled, multiple, leafOnly } = props
+    const { treeData, placeholder, disabled, multiple, leafOnly, enableLabelization } = toRefs(props)
     const { visible, selectToggle, treeToggle} = useToggle(props)
     const { inputValue, selectValue } = useSelect(props)
-    const { isClearable, handleClear} = useClear(props, ctx, inputValue)
+    const { isClearable, handleClearAll, handleClearItem} = useClear(props, ctx, inputValue)
 
-    const clickNode = (item: TreeItem)=> {
-      if(!leafOnly) {
+    const clickNode = (item: TreeItem) => {
+      if(!leafOnly.value) {
         selectValue(item)
-        !multiple && selectToggle(item)
+        !multiple.value && selectToggle(item)
       } else {
         if(!item.children) {
           selectValue(item)
-          !multiple && selectToggle(item)
+          !multiple.value && selectToggle(item)
         }
       }
     }
 
+    const deleteNode = (e: MouseEvent, item: string) => {
+      handleClearItem(e, item)
+      selectValue(nodeMap.get(item))
+    }
+
     const treeSelectCls = className('devui-tree-select', {
       'devui-tree-select-open': visible.value,
-      'devui-tree-select-disabled': disabled,
+      'devui-tree-select-disabled': disabled.value,
+    })
+
+    const treeSelectInputItem = className('devui-tree-select-value', {
+      'devui-tree-select-value-enableLabelization': enableLabelization.value
     })
 
     const renderNode = (item) => (
@@ -54,7 +63,7 @@ export default defineComponent({
         }
         {ctx.slots.default 
         ? ctx.slots.default({ item })
-        : multiple
+        : multiple.value
         ? item.halfchecked 
           ? <Checkbox label={item.label} halfchecked={item.halfchecked} />
           : <Checkbox label={item.label} checked={item.checked} />
@@ -82,15 +91,34 @@ export default defineComponent({
           <div 
             class={isClearable.value ? 'devui-tree-select-clearable' : 'devui-tree-select-notclearable'}
             onClick={() => selectToggle()}>
-            <input
+            {/* <input
               value={inputValue.value}
               type="text"
               class="devui-tree-select-input"
               placeholder={placeholder}
               readonly
               disabled={disabled}
-            />
-            <span onClick={(e: MouseEvent) => handleClear(e)} class="devui-tree-select-clear">
+            /> */}
+            <div
+            class="devui-tree-select-input"
+            placeholder={placeholder.value}>
+            { multiple.value 
+              ? inputValue.value.map((item) => (
+                <div class={treeSelectInputItem}>
+                  {item}
+                  {enableLabelization.value
+                  ? <d-icon name="close" onClick={(e: MouseEvent) => deleteNode(e, item)}/>
+                  : <span>,</span>}
+                </div>
+              ))
+              : !Array.isArray(inputValue.value) && <div class={treeSelectInputItem}>
+                  {inputValue.value}
+                  {enableLabelization.value
+                  && <d-icon name="close" onClick={(e: MouseEvent) => handleClearItem(e)}/>}
+                </div>
+            }
+            </div>
+            <span onClick={(e: MouseEvent) => handleClearAll(e)} class="devui-tree-select-clear">
               <d-icon name="close" />
             </span>
             <span class="devui-tree-select-arrow">
@@ -99,7 +127,7 @@ export default defineComponent({
           </div>
           <Transition name="fade" ref="dropdownRef">
             <div v-show={visible.value} class="devui-tree-select-dropdown">
-              <ul class="devui-tree-select-dropdown-list">{renderTree(attributeExtension(treeData))}</ul>
+              <ul class="devui-tree-select-dropdown-list">{renderTree(attributeExtension(treeData.value))}</ul>
             </div>
           </Transition>
         </div>

@@ -435,6 +435,128 @@ export default defineComponent({
 
 :::
 
+### 标签化
+
+:::demo
+
+```vue
+<template>
+  <d-tree-select v-model="value" :treeData="data" placeholder='树形选择框' enableLabelization='true'></d-tree-select>
+</template>
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const value = ref('')
+    const data = ref([{
+      label: '一级 1',
+      children: [{
+        label: '二级 1-1',
+        children: [{
+          label: '三级 1-1-1',
+        }]
+      }]
+    }, {
+      label: '一级 2',
+      children: [{
+        label: '二级 2-1',
+        children: [{
+          label: '三级 2-1-1',
+        }]
+      }, {
+        label: '二级 2-2',
+        children: [{
+          label: '三级 2-2-1',
+        }]
+      }]
+    }, {
+      label: '一级 3',
+      children: [{
+        label: '二级 3-1',
+        children: [{
+          label: '三级 3-1-1',
+        }]
+      }, {
+        label: '二级 3-2',
+        children: [{
+          label: '三级 3-2-1',
+        }]
+      }]
+    }])
+
+    return {
+      data,
+      value
+    }
+  }
+})
+</script>
+```
+
+:::
+
+:::demo
+
+```vue
+<template>
+  <d-tree-select v-model="value" :treeData="data" :multiple='true' enableLabelization='true'></d-tree-select>
+</template>
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const value = ref('')
+    const data = ref([{
+      label: '一级 1',
+      children: [{
+        label: '二级 1-1',
+        children: [{
+          label: '三级 1-1-1',
+        }]
+      }]
+    }, {
+      label: '一级 2',
+      children: [{
+        label: '二级 2-1',
+        children: [{
+          label: '三级 2-1-1',
+        }]
+      }, {
+        label: '二级 2-2',
+        children: [{
+          label: '三级 2-2-1',
+        }]
+      }]
+    }, {
+      label: '一级 3',
+      children: [{
+        label: '二级 3-1',
+        children: [{
+          label: '三级 3-1-1',
+        }]
+      }, {
+        label: '二级 3-2',
+        children: [{
+          label: '三级 3-2-1',
+        }]
+      }]
+    }])
+
+    return {
+      data,
+      value
+    }
+  }
+})
+</script>
+```
+
+:::
+
+
+
 
 ### API
 
@@ -448,6 +570,7 @@ d-select-tree 参数
 |  allowClear  |  boolean  |  false  | 可选，值为 true 时可以清空输入框内容                                | [可清空](#可清空)                   |
 |   multiple   |  boolean  |  false  | 可选，值为 true 时可选择多个项                                      | [多选](#多选)                       |
 |   leafOnly   |  boolean  |  false  | 可选，值为 true 时仅可选择叶子节点                                  | [仅叶子节点可选](#仅叶子节点可选)     |
+|enableLabelization| boolean | false | 可选，值为 true 时仅可选择叶子节点                                  | [标签化](#标签化)     |
 
 
 ### 接口 & 类型定义
