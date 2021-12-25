@@ -1,4 +1,4 @@
-import { Message } from '../src/toast.type'
+import { Message } from '../toast-types'
 
 export function useToastHelper() {
   function severityDelay(msg: Message) {
