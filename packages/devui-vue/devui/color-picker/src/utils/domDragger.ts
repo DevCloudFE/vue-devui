@@ -82,26 +82,28 @@ export class DOMUtils {
     const upFn = (event: Event) => {
       DOMUtils.removeEventListener(document, 'mousemove', moveFn)
       DOMUtils.removeEventListener(document, 'mouseup', upFn)
+      DOMUtils.removeEventListener(document, 'touchmove', moveFn)
+      DOMUtils.removeEventListener(document, 'touchend', upFn)
       document.onselectstart = null
       document.ondragstart = null
 
       isDragging = false
-
       options.end?.(event)
     }
-
-    DOMUtils.addEventListener(element, 'mousedown', (event) => {
+    const downFn = (event: Event) => {
       if (isDragging) return
       document.onselectstart = () => false
       document.ondragstart = () => false
       DOMUtils.addEventListener(document, 'mousemove', moveFn)
       DOMUtils.addEventListener(document, 'mouseup', upFn)
-
+      DOMUtils.addEventListener(document, 'touchmove', moveFn)
+      DOMUtils.addEventListener(document, 'touchend', upFn)
       isDragging = true
 
       options.start?.(event)
-    })
-
+    }
+    DOMUtils.addEventListener(element, 'mousedown', downFn)
+    DOMUtils.addEventListener(element, 'touchstart', downFn)
     return
   }
 
