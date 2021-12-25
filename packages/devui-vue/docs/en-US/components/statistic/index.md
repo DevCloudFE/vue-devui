@@ -165,7 +165,7 @@ Prefix and suffix slots
 ### d-statistic
 
 | parameter          | type               | default  | introduce                    |
-| ------------------ | ------------------ | -------- | ---------------------------- |
+| :---: | :---: | :---: | :---: |
 | title              | `string \| v-slot` | -        | Title of value               |
 | extra              | `string \| v-slot` | -        | Extra content                |
 | value              | `number \| string` | -        | Value content                |
