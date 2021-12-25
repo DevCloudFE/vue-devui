@@ -1,4 +1,3 @@
-import { setTimeout } from 'core-js';
 import { ref, Ref, SetupContext } from 'vue';
 import {HandleSearch,RecentlyFocus,InputDebounceCb,TransInputFocusEmit} from '../auto-complete-types'
 export default function useInputHandle(ctx: SetupContext,searchList:Ref<any[]>,showNoResultItemTemplate:Ref<boolean>, modelValue:Ref<string>,disabled:Ref<boolean>,delay:Ref<number>,handleSearch: HandleSearch, transInputFocusEmit:Ref<TransInputFocusEmit>,recentlyFocus:RecentlyFocus,latestSource:Ref<Array<any>>): any {
