@@ -1,4 +1,4 @@
-import { defineComponent, computed, ref, SetupContext } from 'vue'
+import { defineComponent, computed, ref, watch, SetupContext } from 'vue'
 import { transferBaseProps, TransferBaseClass, TransferBaseProps } from '../common/use-transfer-base'
 import DCheckbox from '../../checkbox/src/checkbox'
 import DCheckboxGroup from '../../checkbox/src/checkbox-group'
@@ -17,6 +17,7 @@ export default defineComponent({
     props: transferBaseProps,
     setup(props: TransferBaseProps, ctx: SetupContext) {
         /** data start **/
+        const allHalfchecked = ref(false)//ref(props.allChecked)
         const modelValues = computed(() => props.checkedValues as Array<string>)
         const dragWrapClass = computed(() => {
             const isDrag = props.isSourceDroppable || props.isTargetDroppable
@@ -29,6 +30,19 @@ export default defineComponent({
         /** data end **/
 
         /** watch start **/
+        watch(
+            () => props.checkedNum,
+            (nVal) => {
+                if (props.allChecked) {
+                    allHalfchecked.value = !props.allChecked
+                } else {
+                    allHalfchecked.value = nVal !== 0
+                }
+            },
+            {
+                immediate: true
+            }
+        )
         /** watch end **/
 
         /** methods start **/
@@ -85,6 +99,7 @@ export default defineComponent({
             dragWrapClass,
             modelValues,
             dropItem,
+            allHalfchecked,
             updateSearchQuery,
             renderCheckboxGroup,
             renderDragCheckboxGroup
@@ -96,6 +111,7 @@ export default defineComponent({
             baseClass,
             checkedNum,
             allChecked,
+            allHalfchecked,
             sourceOption,
             allCount,
             updateSearchQuery,
@@ -106,7 +122,7 @@ export default defineComponent({
             isSourceDroppable,
             isTargetDroppable,
             renderCheckboxGroup,
-            renderDragCheckboxGroup,
+            renderDragCheckboxGroup
         } = this
 
         return (
@@ -115,8 +131,11 @@ export default defineComponent({
                     this.$slots.header ? this.$slots.header() : (<div class="devui-transfer-panel-header">
                         <div class="devui-transfer-panel-header-allChecked">
                             <DCheckbox
+                                halfchecked={allHalfchecked}
                                 modelValue={allChecked}
-                                onChange={(value: boolean) => this.$emit('changeAllSource', value)}>
+                                onChange={(value: boolean) => {
+                                    this.$emit('changeAllSource', value)
+                                }}>
                                 {title}
                             </DCheckbox>
                         </div>
