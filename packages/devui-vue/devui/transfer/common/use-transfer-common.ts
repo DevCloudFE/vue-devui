@@ -1,4 +1,4 @@
-import { PropType } from '@vue/runtime-core'
+import { PropType } from 'vue'
 import { IItem } from '../types'
 
 export const transferCommon = {

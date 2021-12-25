@@ -1,4 +1,4 @@
-import { ExtractPropTypes } from '@vue/runtime-core'
+import { ExtractPropTypes } from 'vue'
 import { IItem } from '../types'
 import { transferCommon } from './use-transfer-common'
 
