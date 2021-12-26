@@ -345,7 +345,7 @@ export default defineComponent({
           {!autoUpload && !withoutBtn && (
             <d-button
               style='marginLeft: 8px'
-              btnStyle='common'
+              variant='common'
               disabled={disabled}
               onClick={fileUpload}
             >

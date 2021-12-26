@@ -11,7 +11,7 @@ const globalOption = {
     }
 }
 const defaultslot = {
-    default: '<d-button btnStyle="common">tooltip</d-button>'
+    default: '<d-button variant="common">tooltip</d-button>'
 }
 
 describe('tooltip', () => {
@@ -19,7 +19,7 @@ describe('tooltip', () => {
         jest.useFakeTimers();
     })
     describe('basic', () => {
-        it('should be create', async() => {
+        it('should be create', async () => {
             const wrapper = mount(Tooltip, {
                 props: {
                     content: 'content'
@@ -42,7 +42,7 @@ describe('tooltip', () => {
             tooltipElement = wrapper.element.querySelector('.tooltip') as HTMLElement;
             expect(tooltipElement.style.opacity).toBe('0');
         })
-        it('position should be left', async() => {
+        it('position should be left', async () => {
             const wrapper = mount(Tooltip, {
                 props: {
                     content: 'content',
@@ -59,7 +59,7 @@ describe('tooltip', () => {
             console.log(tooltipArrowElement.style);
             expect(tooltipArrowElement.style.borderLeft).toBe('5px solid rgb(70, 77, 110)');
         })
-        it('position should be top', async() => {
+        it('position should be top', async () => {
             const wrapper = mount(Tooltip, {
                 props: {
                     content: 'content',
@@ -76,7 +76,7 @@ describe('tooltip', () => {
             console.log(tooltipArrowElement.style);
             expect(tooltipArrowElement.style.borderTop).toBe('5px solid rgb(70, 77, 110)');
         })
-        it('position should be right', async() => {
+        it('position should be right', async () => {
             const wrapper = mount(Tooltip, {
                 props: {
                     content: 'content',
@@ -93,7 +93,7 @@ describe('tooltip', () => {
             console.log(tooltipArrowElement.style);
             expect(tooltipArrowElement.style.borderRight).toBe('5px solid rgb(70, 77, 110)');
         })
-        it('position should be bottom', async() => {
+        it('position should be bottom', async () => {
             const wrapper = mount(Tooltip, {
                 props: {
                     content: 'content',
@@ -112,7 +112,7 @@ describe('tooltip', () => {
         })
     })
     describe('delay time', () => {
-        it('test mouseEnterDelay', async() => {
+        it('test mouseEnterDelay', async () => {
             const wrapper = mount(Tooltip, {
                 props: {
                     content: 'content',
@@ -132,7 +132,7 @@ describe('tooltip', () => {
             tooltipElement = wrapper.element.querySelector('.tooltip') as HTMLElement;
             expect(tooltipElement.style.opacity).toBe('1');
         })
-        it('test mouseLeaveDelay', async() => {
+        it('test mouseLeaveDelay', async () => {
             const wrapper = mount(Tooltip, {
                 props: {
                     content: 'content',
@@ -157,7 +157,7 @@ describe('tooltip', () => {
             tooltipElement = wrapper.element.querySelector('.tooltip') as HTMLElement;
             expect(tooltipElement.style.opacity).toBe('0');
         })
-        
+
     })
 
 })

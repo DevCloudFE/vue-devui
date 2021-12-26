@@ -12,32 +12,32 @@ When Popover pops up, it is positioned based on the contents of the reference sl
 <div class="popover-demo-item" >
   <d-popover controlled>
     <template #reference>
-      <d-button btnStyle="common">default</d-button>
+      <d-button variant="common">default</d-button>
     </template>
   </d-popover>
   <d-popover  content="info!" popType="info" position="top" trigger="hover" controlled>
     <template #reference>
-      <d-button  btnStyle="primary">info</d-button>
+      <d-button  variant="primary">info</d-button>
     </template>
   </d-popover>
   <d-popover  content="error!" popType="error" controlled position="left" :zIndex="9999">
     <template #reference>
-      <d-button  btnStyle="danger">error</d-button>
+      <d-button  variant="danger">error</d-button>
     </template>
   </d-popover>
     <d-popover  content="success!" popType="success" controlled position="right">
     <template #reference>
-      <d-button  btnStyle="success">success</d-button>
+      <d-button  variant="success">success</d-button>
     </template>
   </d-popover>
   <d-popover  content="warning!" popType="warning" controlled>
     <template #reference>
-      <d-button  btnStyle="warning">warning</d-button>
+      <d-button  variant="warning">warning</d-button>
     </template>
   </d-popover>
   <d-popover  content="no-animation!" :showAnimation="false" :popMaxWidth="100" controlled>
     <template #reference>
-      <d-button  btnStyle="common">no-animation</d-button>
+      <d-button  variant="common">no-animation</d-button>
     </template>
   </d-popover>
 </div>
@@ -60,12 +60,12 @@ The HTMLElement or TemplateRef type can be transferred.
 <div class="popover-demo-item">
   <d-popover content="Custom Content" controlled>
     <template #reference>
-      <d-button btnStyle="primary"> click me!</d-button>
+      <d-button variant="primary"> click me!</d-button>
     </template>
   </d-popover>
   <d-popover  content="Custom Content" trigger="hover" controlled :popoverStyle="{ backgroundColor: '#7693f5',color: '#fff'}">
     <template #reference>
-      <d-button btnStyle="primary"> hover me!</d-button>
+      <d-button variant="primary"> hover me!</d-button>
     </template>
   </d-popover>
 </div>
@@ -93,7 +93,7 @@ A total of 12 pop-up positions are supported.
       <div>left</div>
     </template>
   <template #reference>
-    <d-button btnStyle="common">left</d-button>
+    <d-button variant="common">left</d-button>
   </template>
   </d-popover>
   <d-popover  position="left-top" controlled>
@@ -102,7 +102,7 @@ A total of 12 pop-up positions are supported.
         <div>left-top</div>
     </template>
     <template #reference>
-      <d-button btnStyle="common">left-top</d-button>
+      <d-button variant="common">left-top</d-button>
     </template>
   </d-popover>
   <d-popover  position="left-bottom" controlled >
@@ -111,7 +111,7 @@ A total of 12 pop-up positions are supported.
         <div>left-bottom</div>
       </template>
     <template #reference>
-      <d-button btnStyle="common">left-bottom</d-button>
+      <d-button variant="common">left-bottom</d-button>
     </template>
   </d-popover>
 </div>
@@ -122,7 +122,7 @@ A total of 12 pop-up positions are supported.
         <span >top</span>
       </template>
     <template #reference>
-      <d-button btnStyle="common">top</d-button>
+      <d-button variant="common">top</d-button>
     </template>
   </d-popover>
   <d-popover  position="top-left" controlled>
@@ -130,7 +130,7 @@ A total of 12 pop-up positions are supported.
         <span >top-left</span>
       </template>
     <template #reference>
-      <d-button btnStyle="common">top-left</d-button>
+      <d-button variant="common">top-left</d-button>
     </template>
   </d-popover>
   <d-popover  position="top-right" controlled>
@@ -138,7 +138,7 @@ A total of 12 pop-up positions are supported.
         <span >top-right</span>
       </template>
     <template #reference>
-      <d-button btnStyle="common">top-right</d-button>
+      <d-button variant="common">top-right</d-button>
     </template>
   </d-popover>
 </div>
@@ -149,7 +149,7 @@ A total of 12 pop-up positions are supported.
         <div >right</div>
       </template>
     <template #reference>
-      <d-button btnStyle="common">right</d-button>
+      <d-button variant="common">right</d-button>
     </template>
   </d-popover>
   <d-popover   position="right-top" controlled>
@@ -158,7 +158,7 @@ A total of 12 pop-up positions are supported.
         <div >right-top</div>
       </template>
     <template #reference>
-      <d-button btnStyle="common">right-top</d-button>
+      <d-button variant="common">right-top</d-button>
     </template>
   </d-popover>
     <d-popover  position="right-bottom" controlled>
@@ -167,7 +167,7 @@ A total of 12 pop-up positions are supported.
         <div >right-bottom</div>
       </template>
     <template #reference>
-      <d-button btnStyle="common">right-bottom</d-button>
+      <d-button variant="common">right-bottom</d-button>
     </template>
   </d-popover>
 </div>
@@ -178,7 +178,7 @@ A total of 12 pop-up positions are supported.
         <div >bottom</div>
       </template>
     <template #reference>
-      <d-button btnStyle="common">bottom</d-button>
+      <d-button variant="common">bottom</d-button>
     </template>
   </d-popover>
     <d-popover  position="bottom-left" controlled>
@@ -186,7 +186,7 @@ A total of 12 pop-up positions are supported.
         <div >bottom-left</div>
       </template>
     <template #reference>
-      <d-button btnStyle="common">bottom-left</d-button>
+      <d-button variant="common">bottom-left</d-button>
     </template>
   </d-popover>
   <d-popover  position="bottom-right" controlled>
@@ -194,7 +194,7 @@ A total of 12 pop-up positions are supported.
         <div >bottom-right</div>
       </template>
     <template #reference>
-      <d-button btnStyle="common">bottom-right</d-button>
+      <d-button variant="common">bottom-right</d-button>
     </template>
   </d-popover>
 </div>
@@ -219,7 +219,7 @@ Displaying the pop-up dialog box through the visible interface to verify the for
         <div > Manual Control Display </div>
       </template>
     <template #reference>
-      <d-button btnStyle="primary" @click="onClick">Manual Control Display</d-button>
+      <d-button variant="primary" @click="onClick">Manual Control Display</d-button>
     </template>
   </d-popover>
 </template>
@@ -256,7 +256,7 @@ Only when the trigger type is hover. This event is triggered only when the mouse
         show Me
       </template>
     <template #reference>
-      <d-button btnStyle="primary">MouseEnter delay 500ms</d-button>
+      <d-button variant="primary">MouseEnter delay 500ms</d-button>
     </template>
   </d-popover>
   <d-popover  position="bottom-right" trigger="hover" controlled :mouseLeaveDelay="2000">
@@ -264,7 +264,7 @@ Only when the trigger type is hover. This event is triggered only when the mouse
         <div> Mouse leave 2000ms later. </div>
       </template>
     <template #reference>
-      <d-button btnStyle="common"> MouseLeave delay 2000ms</d-button>
+      <d-button variant="common"> MouseLeave delay 2000ms</d-button>
     </template>
   </d-popover>
   </div>

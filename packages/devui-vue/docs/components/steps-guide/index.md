@@ -11,9 +11,9 @@
 :::demo  
 ```vue
 <template>
-  <d-button btnStyle="common" class="step-1 ml-s" @click="handleClick(0)">Step 1</d-button>
-  <d-button btnStyle="common" class="step-2 ml-s" @click="handleClick(1)">Step 2</d-button>
-  <d-button btnStyle="common" class="step-3 ml-s" @click="handleClick(2)">Step 3</d-button>
+  <d-button variant="common" class="step-1 ml-s" @click="handleClick(0)">Step 1</d-button>
+  <d-button variant="common" class="step-2 ml-s" @click="handleClick(1)">Step 2</d-button>
+  <d-button variant="common" class="step-3 ml-s" @click="handleClick(2)">Step 3</d-button>
   <d-steps-guide ref="stepRef" :steps="steps" v-model:step-index="stepIndex" :step-change="handleStepChange" @guide-close="handleGuideClose"></d-steps-guide>
 </template>
 <script>
@@ -112,18 +112,18 @@
 ```vue
 <template>
   <div class="flex mb-s justify-center">
-    <d-button btnStyle="common" class="top-left ml-s" width="120px" @click="handleClick(0)">Top-left</d-button>
-    <d-button btnStyle="common" class="top ml-s" width="120px" @click="handleClick(1)">Top</d-button>
-    <d-button btnStyle="common" class="top-right ml-s" width="120px" @click="handleClick(2)">Top-right</d-button>
+    <d-button variant="common" class="top-left ml-s" width="120px" @click="handleClick(0)">Top-left</d-button>
+    <d-button variant="common" class="top ml-s" width="120px" @click="handleClick(1)">Top</d-button>
+    <d-button variant="common" class="top-right ml-s" width="120px" @click="handleClick(2)">Top-right</d-button>
   </div>
   <div class="flex mb-s justify-around">
-    <d-button btnStyle="common" class="left ml-s" width="120px" @click="handleClick(7)">Left</d-button>
-    <d-button btnStyle="common" class="right ml-s" width="120px" @click="handleClick(3)">Right</d-button>
+    <d-button variant="common" class="left ml-s" width="120px" @click="handleClick(7)">Left</d-button>
+    <d-button variant="common" class="right ml-s" width="120px" @click="handleClick(3)">Right</d-button>
   </div>
   <div class="flex mb-s justify-center">
-    <d-button btnStyle="common" class="bottom-left ml-s" width="120px" @click="handleClick(6)">Bottom-left</d-button>
-    <d-button btnStyle="common" class="bottom ml-s" width="120px" @click="handleClick(5)">Bottom</d-button>
-    <d-button btnStyle="common" class="bottom-right ml-s" width="120px" @click="handleClick(4)">Bottom-right</d-button>
+    <d-button variant="common" class="bottom-left ml-s" width="120px" @click="handleClick(6)">Bottom-left</d-button>
+    <d-button variant="common" class="bottom ml-s" width="120px" @click="handleClick(5)">Bottom</d-button>
+    <d-button variant="common" class="bottom-right ml-s" width="120px" @click="handleClick(4)">Bottom-right</d-button>
   </div>
   <d-steps-guide :steps="steps" v-model:step-index="stepIndex" ref="stepsRef"></d-steps-guide>
 </template>
@@ -196,8 +196,8 @@
 :::demo  
 ```vue
 <template>
-  <d-button btnStyle="common" class="ml-s">Custom Position</d-button>
-  <d-button btnStyle="common" class="ml-s">Custom Target</d-button>
+  <d-button variant="common" class="ml-s">Custom Position</d-button>
+  <d-button variant="common" class="ml-s">Custom Target</d-button>
   <d-steps-guide ref="stepsRef" :steps="customSteps" :showDots="false" :showClose="false"></d-steps-guide>
 </template>
 <script>
