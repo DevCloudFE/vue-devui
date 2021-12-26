@@ -26,8 +26,14 @@ $devui-block: var(--devui-block, #ffffff);                           // 大面�
 $devui-area: var(--devui-area, #f8f8f8);                             // 可折叠区块的背景色（展开区域颜色）
 $devui-danger: var(--devui-danger, #f66f6a);                         // 失败、错误、告警
 $devui-warning: var(--devui-warning, #fac20a);                       // 警告、需注意类型提示
+$devui-warning-hover: var(--devui-warning, #fac20a);                 // 警告、需注意类型提示
+$devui-warning-active: var(--devui-warning, #fac20a);
+$devui-warning-active-focus: var(--devui-warning, #fac20a);
 $devui-waiting: var(--devui-waiting, #9faad7);                       // 等待中
 $devui-success: var(--devui-success, #50d4ab);                       // 成功、正确
+$devui-success-hover: var(--devui-success, #50d4ab);                 // 成功、
+$devui-success-active: var(--devui-success, #50d4ab);
+$devui-success-active-focus: var(--devui-success, #50d4ab);
 $devui-info: var(--devui-info, #5e7ce0);                             // 通知、一般提示、执行中
 $devui-initial: var(--devui-initial, #e9edfa);                       // 初始化、未执行
 $devui-unavailable: var(--devui-unavailable, #f5f5f6);               // 不可用、禁用状态
