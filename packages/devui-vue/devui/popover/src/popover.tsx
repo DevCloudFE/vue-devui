@@ -47,6 +47,11 @@ export default defineComponent({
       default: 1060
     },
 
+    controlled: {
+      type: Boolean,
+      default: false
+    },
+
     popType: {
       type: String as () => popType,
       default: 'default'
@@ -84,7 +89,7 @@ export default defineComponent({
     const {
       position, content, zIndex, trigger, popType,
       popoverStyle, mouseEnterDelay, mouseLeaveDelay,
-      showAnimation, popMaxWidth
+      showAnimation, popMaxWidth, controlled
     } = toRefs(props);
     const style: CSSProperties = { zIndex: zIndex.value, ...popoverStyle.value }
     const isClick = trigger.value === 'click'
@@ -96,15 +101,19 @@ export default defineComponent({
       }
       visible.value = true
     }
-    const onClick = isClick ? event : null;
+    const onClick = isClick && controlled.value ? event : null;
     const enter = debounce(() => { visible.value = true }, mouseEnterDelay.value)
     const leave = debounce(() => { visible.value = false }, mouseLeaveDelay.value)
-    const onMouseenter = isClick ? null : enter
-    const onMouseleave = isClick ? null : leave
-    const hiddenContext = () => { visible.value = false }
+    const onMouseenter = !isClick && controlled.value ? enter : null
+    const onMouseleave = !isClick && controlled.value ? leave : null
+    const hiddenContext = () => {
+      if (!controlled.value) return;
+      visible.value = false
+    }
     popMaxWidth.value && (style.maxWidth = `${popMaxWidth.value}px`)
 
     watch(() => props.visible, (newVal) => {
+      if (controlled.value) return;
       visible.value = newVal;
     })
 
