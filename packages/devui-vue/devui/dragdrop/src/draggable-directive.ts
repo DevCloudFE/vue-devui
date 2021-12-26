@@ -1,4 +1,5 @@
-import { changeDragState } from './utils'
+import { changeDragState, deleteInsertedSortableShadow } from './utils'
+import { shadowId } from './constant'
 
 export default {
   /**
@@ -22,13 +23,17 @@ export default {
 
     // dragstart/drag/dragend
     el.addEventListener('drag', () => {
-      changeDragState(el, el.id, 'true', 'true', 'false', 'false', 'false')
+      changeDragState(el, el.id, 'true', 'true', 'false', 'false', 'false', 'true')
+      if (binding.instance.$root.dropElement && document.getElementById(shadowId)){
+        deleteInsertedSortableShadow(binding.instance.$root.dropElement)     // 如何让它仅执行1次？
+        binding.instance.$root.dropElement = null
+      }
     }, false)
 
     // dragStart事件为每个绑定元素进行初始化
     el.addEventListener('dragstart', ()=>{
       // el  or  binding.instance  or  vnode.context
-      changeDragState(el, el.id, 'true', 'true', 'false', 'false', 'false')
+      changeDragState(el, el.id, 'true', 'true', 'false', 'false', 'false', 'false')
       binding.instance.$root.identity = el.id
     }, false)
   },

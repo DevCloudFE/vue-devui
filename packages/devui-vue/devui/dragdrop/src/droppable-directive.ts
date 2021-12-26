@@ -17,13 +17,12 @@ export default {
     el.addEventListener('dragover', (event: DragEvent) => {
       event.preventDefault();
       const dragId = binding.instance.$root.identity
-      changeDragState(document.getElementById(dragId), dragId, 'true', 'false', 'true', 'false', 'false')
+      changeDragState(document.getElementById(dragId), dragId, 'true', 'false', 'true', 'false', 'false', 'false')
     }, false)
 
     el.addEventListener('drop', (event: DragEvent) => {
       event.preventDefault()
       const dragId = binding.instance.$root.identity
-      // const originNodeCopy = document.getElementById(originId).cloneNode(true)
       // 如何定义可放置区域这个问题得商榷一下
       const childrenArr = [...Array.from(el.children)[1].children]
       if (childrenArr.length > 0){
@@ -37,7 +36,7 @@ export default {
             el.children[1].appendChild(document.getElementById(dragId))
           }
         }
-      }else {                         // 如果没有子节点，直接插入即可
+      }else {
         el.childNodes[1].appendChild(document.getElementById(dragId))
       }
     })
