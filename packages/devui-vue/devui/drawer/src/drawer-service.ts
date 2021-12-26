@@ -1,33 +1,29 @@
-import { createApp } from 'vue'
+import { h, render } from 'vue'
 import { DrawerProps } from './drawer-types'
 import Drawer from './drawer'
 
-
-function createDrawerApp(props: DrawerProps) {
-  return createApp(Drawer, { ...props })
+interface drawerInstance {
+  hide(): void
 }
 
 export default class DrawerService {
 
   static $body: HTMLElement | null = document.body
-  static $div: HTMLDivElement | null = null
-  static drawer = null;
 
-  static show(props: DrawerProps): void{
-    this.$div = document.createElement('div')
-    this.$body.appendChild(this.$div)
-    this.drawer = createDrawerApp(props)
-    this.drawer.mount(this.$div)
-  }
+  static show(props: DrawerProps): drawerInstance{
+    let div: HTMLDivElement | null = null
+    div = document.createElement('div')
+    this.$body.appendChild(div)
+    let drawer = h(Drawer, { ...props }, { default: props.defaultContent })
+    render(drawer, div)
 
-  static hide(): void {
-    this.drawer?.unmount();
-    this.drawer = null;
-    if (this.$div) {
-      this.$body.removeChild(this.$div)
+    const hide = (): void => {
+      render(null, div); 
+      drawer = null;
+      div && this.$body.removeChild(div)
+      div = null
     }
-    this.$div = null
+
+    return { hide };
   }
-
-
 }

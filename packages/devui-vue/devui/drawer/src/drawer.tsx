@@ -5,8 +5,6 @@ import DrawerHeader from './components/drawer-header'
 import DrawerContainer from './components/drawer-container'
 import DrawerBody from './components/drawer-body'
 
-import DrawerService from './drawer-service';
-
 export default defineComponent({
   name: 'DDrawer',
   props: drawerProps,
@@ -23,7 +21,6 @@ export default defineComponent({
     }
 
     const closeDrawer = async () => {
-      DrawerService.hide()
       const beforeHidden = props.beforeHidden;
       let result = (typeof beforeHidden === 'function' ? beforeHidden(): beforeHidden) ?? false;
       if (result instanceof Promise) {
@@ -83,6 +80,11 @@ export default defineComponent({
     return (
       <Teleport to="body">
         <DrawerBody>
+          {/* BUG: 
+            头部被替换后无法执行下面 fullScreenEvent 与 closeDrawer 
+            此处对应的 DEMO 使用了 **双向绑定** 导致可以关闭【一种关闭了的'假象'】。
+            因此没有执行关闭时需要执行的方法 beforeHidden
+          */}
           {this.slots.header ? this.slots.header() : 
             <DrawerHeader onToggleFullScreen={fullScreenEvent} onClose={closeDrawer} />
           }

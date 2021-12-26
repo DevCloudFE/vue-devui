@@ -139,12 +139,37 @@ export default ({
 import { defineComponent, ref, h } from 'vue'
 export default defineComponent({
   setup(props, ctx) {
-    const results =  ref(null);
     function open() {
-      this.$drawerService.show({
+      const drawerInstanceFirst = this.$drawerService.show({
         visible: true,
-        isCover: false,
+        defaultContent: () => h(
+          'div', 
+          {onClick() {handleHideFirst()}},
+          'hide'
+        )
       });
+      const drawerInstanceSecond = this.$drawerService.show({
+        visible: true,
+        width: '200px',
+        defaultContent: () => ([
+          h(
+            'div', 
+            {onClick() {handleHideFirst()}},
+            'handleHideFirst'
+          ),
+          h(
+            'div', 
+            {onClick() {handleHideSeconde()}},
+            'drawerInstanceSecond'
+          ),
+        ])
+      });
+      const handleHideFirst = () => {
+        drawerInstanceFirst.hide()
+      };
+      const handleHideSeconde = () => {
+        drawerInstanceSecond.hide();
+      }
     }
     return {
       open,
