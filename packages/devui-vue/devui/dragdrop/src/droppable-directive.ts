@@ -15,14 +15,19 @@ export default {
   mounted(el: HTMLElement, binding:unknown): void {
     // dragenter/dragover/dragend/drop 
     el.addEventListener('dragover', (event: DragEvent) => {
-      event.preventDefault();
-      const dragId = binding.instance.$root.identity;
+      event.preventDefault()
+      const dragId = binding.instance.$root.identity
       changeDragState(document.getElementById(dragId), dragId, 'true', 'false', 'true', 'false', 'false', 'false')
+      document.getElementById(dragId).dataset.dropArea = [...el.childNodes][1].className
     }, false)
 
+    // 新增两个标识解决战斗，即dragStart区域、drop区域、sortableDrop区域
     el.addEventListener('drop', (event: DragEvent) => {
       event.preventDefault()
       const dragId = binding.instance.$root.identity
+      if (document.getElementById(dragId).dataset.dropArea == document.getElementById(dragId).dataset.dragArea){
+          return 
+      }
       // 如何定义可放置区域这个问题得商榷一下
       const childrenArr = [...Array.from(el.children)[1].children]
       if (childrenArr.length > 0){
