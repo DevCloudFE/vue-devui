@@ -70,6 +70,7 @@ function computeCompareElementHeight (compareElement: HTMLCollection): unknown{
  * @param mouseObject 
  *    1、首先确认可放置区域
  *    2、确保每个元素只生成一次shadow
+ *    3、
  */
 function createInsertSortableShadow (sortDropArea: unknown, mouseObject: unknown, originId: string):void {
     const sortDropAreaArr: Array = [...sortDropArea.children]

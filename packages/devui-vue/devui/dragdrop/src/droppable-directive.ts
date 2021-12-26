@@ -16,7 +16,7 @@ export default {
     // dragenter/dragover/dragend/drop 
     el.addEventListener('dragover', (event: DragEvent) => {
       event.preventDefault();
-      const dragId = binding.instance.$root.identity
+      const dragId = binding.instance.$root.identity;
       changeDragState(document.getElementById(dragId), dragId, 'true', 'false', 'true', 'false', 'false', 'false')
     }, false)
 
