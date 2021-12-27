@@ -12,7 +12,7 @@ export default class DrawerService {
     let body: HTMLElement | null = document.body
     let div: HTMLDivElement | null = document.createElement('div')
     body.appendChild(div)
-    let drawer = h(Drawer, { ...props }, { default: props.defaultContent })
+    let drawer = h(Drawer, { ...props }, { content: props.content })
     render(drawer, div)
 
     const hide = (): void => {

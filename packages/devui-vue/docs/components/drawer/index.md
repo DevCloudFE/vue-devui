@@ -90,13 +90,14 @@ export default ({
     v-model:visible="isDrawerShow" 
     :isCover="false" 
   >
-    <template v-slot>
-      内容区插槽
-    </template>
-    <template v-slot:header>
-      <div @click="drawerClose">
+    
+    <template v-slot:header="header">
+      <div @click="header.closeDrawer">
         <span class="icon icon-close" />
       </div>
+    </template>
+    <template v-slot:content>
+      内容区插槽
     </template>
   </d-drawer>
 </template>
@@ -142,7 +143,7 @@ export default defineComponent({
     function open() {
       const drawerInstanceFirst = this.$drawerService.show({
         visible: true,
-        defaultContent: () => h(
+        content: () => h(
           'div', 
           {onClick() {handleHideFirst()}},
           'hide'
@@ -151,7 +152,7 @@ export default defineComponent({
       const drawerInstanceSecond = this.$drawerService.show({
         visible: true,
         width: '200px',
-        defaultContent: () => ([
+        content: () => ([
           h(
             'div', 
             {onClick() {handleHideFirst()}},
@@ -160,7 +161,7 @@ export default defineComponent({
           h(
             'div', 
             {onClick() {handleHideSeconde()}},
-            'drawerInstanceSecond'
+            'handleHideSecond'
           ),
         ])
       });
@@ -198,7 +199,14 @@ export default defineComponent({
 
 ### 插槽
 
-| 名称 | 类型 | 说明 | 跳转 Demo |
+| 参数 | 类型 | 说明 | 跳转 Demo |
 | :--: | :---------: | :------: | :-------: |
-| default | 默认 | 抽屉板内容 | [自定义模板](#自定义模板) |
-| header  | 头部 | 抽屉板头部 | [自定义模板](#自定义模板) |
+| content | 具名插槽 | 抽屉板内容 | [自定义模板](#自定义模板) |
+| header  | 作用域插槽 | 抽屉板头部 | [自定义模板](#自定义模板) |
+
+#### 作用域插槽参数
+
+| 参数 | 类型 | 说明 |  备注 |跳转 Demo |
+| :--: | :---------: | :------: | :-------: | :---:|
+| closeDrawer | `Function` | 关闭抽屉 | 使用头部插槽时，需要使用该方法关闭，否则 `beforeHidden` 以及 `onClose` 不生效 | [自定义模板](#自定义模板) |
+| fullScreen | `Function` | 全屏方法 | -- | [自定义模板](#自定义模板) |

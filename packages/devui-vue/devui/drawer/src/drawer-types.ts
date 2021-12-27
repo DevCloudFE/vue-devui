@@ -32,10 +32,10 @@ export const drawerProps = {
   beforeHidden: { // 关闭前的回调
     type: [Promise, Function] as PropType<Promise<boolean> | (() => boolean | Promise<boolean>)>,
   },
-  defaultContent: { // 默认内容插槽
+  content: { // 默认内容插槽
     type: [Node, Function] as PropType<() => Node>,
   },
-  headerContent: { // 头部内容插槽
+  header: { // 头部内容插槽
     type: [Node, Function] as PropType<() => Node>,
   },
 } as const
