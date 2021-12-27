@@ -24,10 +24,10 @@ export default defineComponent({
     const hasContent = computed(() => ctx.slots.default);
 
     const btnClass = computed(() => {
-      const { btnStyle, size, position, bordered, icon } = props;
-      const origin = `devui-btn devui-btn-${btnStyle} devui-btn-${size} devui-btn-${position}`;
+      const { variant, size, position, bordered, icon } = props;
+      const origin = `devui-btn devui-btn-${variant} devui-btn-${size} devui-btn-${position}`;
       const borderedClass = bordered ? 'bordered' : '';
-      const btnIcon = !!icon && !hasContent.value && btnStyle !== 'primary' ? 'd-btn-icon' : '';
+      const btnIcon = !!icon && !hasContent.value && variant !== 'primary' ? 'd-btn-icon' : '';
       const btnIconWrap = !!icon ? 'd-btn-icon-wrap' : '';
       return `${origin} ${borderedClass} ${btnIcon} ${btnIconWrap}`;
     });
