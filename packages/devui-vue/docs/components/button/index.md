@@ -41,18 +41,9 @@
 :::
 
 
-### 警示按钮
-用于标识系统中的关键操作，例如购买场景。
-:::demo
-```vue
-<template>
-  <d-button btnStyle="danger" type="submit">Buy</d-button>
-</template>
-```
-:::
 
-### 警示按钮
-用于标识系统中的关键操作，例如购买场景。
+### 按钮风格
+用于给按钮增加不同的使用场景。
 :::demo
 ```vue
 <template>
@@ -69,7 +60,6 @@
 :::
 
 ### 文字按钮
-用于标识系统中的关键操作，例如购买场景。
 :::demo
 ```vue
 <template>
@@ -192,6 +182,7 @@ d-button 参数
 |   width   |     `string`      |    --     | 可选，弹出框宽度(e.g '300px')    |
 | disabled  |     `boolean`     |   false   | 可选，是否禁用button             |
 | autofocus |     `boolean`     |   false   | 可选，按钮加载时是否自动获得焦点 |
+| showLoading| `boolean` | false | 可选，是否显示加载提示 |
 
 d-button 事件
 |  参数   |             类型              | 默认  | 说明           |
@@ -201,7 +192,7 @@ d-button 事件
 
 IButtonType 
 ``` typescript
-type IButtonStyle = 'button' | 'submit' | 'reset';
+type IButtonType = 'button' | 'submit' | 'reset';
 ```
 
 IButtonStyle 
@@ -211,10 +202,10 @@ type IButtonStyle = 'common' | 'primary' | 'text' | 'text-dark' | 'danger' | 'su
 
 IButtonPosition 
 ``` typescript
-type IButtonStyle = 'left' | 'right' | 'default';
+type IButtonPosition = 'left' | 'right' | 'default';
 ```
 
 IButtonSize
 ``` typescript
-type IButtonStyle = 'lg' | 'md' | 'sm' | 'xs';
+type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 ```

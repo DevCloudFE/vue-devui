@@ -9,7 +9,7 @@ interface drawerInstance {
 export default class DrawerService {
 
   static $body: HTMLElement | null = document.body
-
+  
   static show(props: DrawerProps): drawerInstance{
     let div: HTMLDivElement | null = null
     div = document.createElement('div')
