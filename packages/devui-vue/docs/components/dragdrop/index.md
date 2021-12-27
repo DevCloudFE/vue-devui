@@ -15,18 +15,26 @@
   <div class="dragdrop-card-container">
     <div class="dragdrop-card">
       <div class="dragdrop-card-header">Draggable Item</div>
-      <div class="dragdrop-card-block">
+      <div class="dragdrop-card-block drag">
         <div id="draggable-item" class="draggable-item" v-d-draggable="{
           dragScope: 'default-css',
           dragData: { item: 'item', parent: 'list1' },
         }">VSCode</div>
+        <div id="draggable-item2" class="draggable-item" v-d-draggable="{
+          dragScope: 'default-css',
+          dragData: { item: 'item', parent: 'list1' },
+        }">Sublime</div>
       </div>
     </div>
     <div class="dragdrop-card" v-d-droppable>
       <div class="dragdrop-card-header">Drop Area</div>
-      <div class="dragdrop-card-block">
+      <div class="dragdrop-card-block droppable">
 
       </div>
+    </div>
+    <div class="dragdrop-card" v-d-sortable>
+      <div class="dragdrop-card-header">Drop Area With Sortable</div>
+      <div class="dragdrop-card-block"></div>
     </div>
   </div>
 </template>

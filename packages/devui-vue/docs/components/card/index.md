@@ -39,7 +39,7 @@
   </d-card>
 </template>
 <style lang="scss">
-@import '@devui-design/icons/icomoon/devui-icon.css'
+@import '@devui-design/icons/icomoon/devui-icon.css';
 .card-demo-icon {
   cursor: pointer;
   font-size: 16px;
@@ -114,7 +114,7 @@
   </d-card>
 </template>
 <style lang="scss">
-  @import '@devui-design/icons/icomoon/devui-icon.css'
+  @import '@devui-design/icons/icomoon/devui-icon.css';
   .icon {
     cursor: pointer;
     font-size: 16px;
@@ -185,7 +185,7 @@
   </d-card>
 </template>
 <style lang="scss">
-  @import '@devui-design/icons/icomoon/devui-icon.css'
+  @import '@devui-design/icons/icomoon/devui-icon.css';
   .icon {
     cursor: pointer;
     font-size: 16px;

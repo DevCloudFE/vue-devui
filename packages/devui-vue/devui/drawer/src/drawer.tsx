@@ -5,6 +5,8 @@ import DrawerHeader from './components/drawer-header'
 import DrawerContainer from './components/drawer-container'
 import DrawerBody from './components/drawer-body'
 
+import DrawerService from './drawer-service';
+
 export default defineComponent({
   name: 'DDrawer',
   props: drawerProps,
@@ -21,6 +23,7 @@ export default defineComponent({
     }
 
     const closeDrawer = async () => {
+      DrawerService.hide()
       const beforeHidden = props.beforeHidden;
       let result = (typeof beforeHidden === 'function' ? beforeHidden(): beforeHidden) ?? false;
       if (result instanceof Promise) {
