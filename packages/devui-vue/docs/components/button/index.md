@@ -144,7 +144,7 @@
     <d-button icon="delete" variant="text-dark" :disabled="true" title="delete"></d-button>
   </div>
   <div class="mb-l">
-    <d-button class="mr-xs" variant="common" class="mr-xs" bsSize="xs">
+    <d-button class="mr-xs" variant="common">
       Click me
       <span class="icon-chevron-down"></span>
     </d-button>
