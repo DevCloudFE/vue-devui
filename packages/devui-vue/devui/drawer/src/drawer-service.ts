@@ -8,20 +8,19 @@ interface drawerInstance {
 
 export default class DrawerService {
 
-  static $body: HTMLElement | null = document.body
-
   static show(props: DrawerProps): drawerInstance{
-    let div: HTMLDivElement | null = null
-    div = document.createElement('div')
-    this.$body.appendChild(div)
+    let body: HTMLElement | null = document.body
+    let div: HTMLDivElement | null = document.createElement('div')
+    body.appendChild(div)
     let drawer = h(Drawer, { ...props }, { default: props.defaultContent })
     render(drawer, div)
 
     const hide = (): void => {
       render(null, div); 
       drawer = null;
-      div && this.$body.removeChild(div)
+      div && body.removeChild(div)
       div = null
+      body = null
     }
 
     return { hide };
