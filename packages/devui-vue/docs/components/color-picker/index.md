@@ -23,7 +23,7 @@
 
 ```vue
 <template>
-  <d-button btnStyle="common" @click="isShowAlpha">test showAlpha Be {{ show }}</d-button>
+  <d-button variant="common" @click="isShowAlpha">test showAlpha Be {{ show }}</d-button>
   <d-color-picker v-model="color" :show-alpha="show"></d-color-picker>
 </template>
 
@@ -82,7 +82,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-button btnStyle="common" @click="isShowAlpha">test showAlpha Be {{ show }}</d-button>
+  <d-button variant="common" @click="isShowAlpha">test showAlpha Be {{ show }}</d-button>
   <d-color-picker :show-history="show" v-model="color" mode="hsl"></d-color-picker>
 </template>
 

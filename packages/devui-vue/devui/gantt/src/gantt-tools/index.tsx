@@ -63,7 +63,7 @@ export default defineComponent({
         style={{ position: isFullScreen ? 'fixed' : 'absolute' }}
       >
         <d-button
-          btnStyle="common"
+          variant="common"
           onClick={() => actionHandle('today')}
           class="tool"
         >
@@ -77,7 +77,7 @@ export default defineComponent({
           ></d-select>
         </div>
         <d-button
-          btnStyle="common"
+          variant="common"
           class={[
             'tool',
             'minus',
@@ -89,7 +89,7 @@ export default defineComponent({
           <d-icon name="minus"></d-icon>
         </d-button>
         <d-button
-          btnStyle="common"
+          variant="common"
           class={[
             'tool',
             'add',

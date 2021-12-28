@@ -95,16 +95,16 @@ Button 组件
 <template>
   <d-row>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" btnStyle="text" style="padding: 3px 8px;margin-right: 20px">Text</d-button>
+      <d-button v-ripple="{duration: 0.5}" variant="text" style="padding: 3px 8px;margin-right: 20px">Text</d-button>
     </d-col>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" btnStyle="text-dark" style="padding: 3px 8px;margin-right: 20px">Text dark</d-button>
+      <d-button v-ripple="{duration: 0.5}" variant="text-dark" style="padding: 3px 8px;margin-right: 20px">Text dark</d-button>
     </d-col>
         <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" icon="add" btnStyle="text-dark" title="add"></d-button>
+      <d-button v-ripple="{duration: 0.5}" icon="add" variant="text-dark" title="add"></d-button>
     </d-col>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" icon="delete" btnStyle="text-dark" title="delete"></d-button>
+      <d-button v-ripple="{duration: 0.5}" icon="delete" variant="text-dark" title="delete"></d-button>
     </d-col>
   </d-row>
 </template>
