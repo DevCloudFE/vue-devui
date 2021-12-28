@@ -1,11 +1,5 @@
 @import '../../style/mixins/index';
 @import '../../style/theme/color';
-// 写md时发现source样式影响组件
-.demo- .source,
-.demo-block .source {
-  overflow: initial !important;
-}
-
 .devui-auto-complete,
 .devui-auto-complete-menu {
   .devui-dropdown-menu {

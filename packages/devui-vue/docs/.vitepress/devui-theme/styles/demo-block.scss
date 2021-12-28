@@ -11,7 +11,7 @@
 .demo-block-control {
   background-color: $devui-base-bg !important;
   border-top: solid 1px $devui-dividing-line !important;
-
+  clear: both;
   &:hover {
     color: $devui-brand !important;
   }
