@@ -24,7 +24,7 @@ export default defineComponent({
     const { data, checkable, checkableRelation: cbr } = toRefs(reactive({ ...props, data: preCheckTree(props.data) }))
     const { mergeData } = useMergeNode(data.value)
     const { openedData, toggle } = useToggle(mergeData)
-    const { nodeClassNameReflect, handleInitNodeClassNameReflect, handleClickOnNode } = useHighlightNode()
+    const { getHighLightClass, initHighLightNode, highLightClick } = useHighlightNode()
     const { lazyNodesReflect, handleInitLazyNodeReflect, getLazyData } = useLazy()
     const { selected, onNodeClick } = useChecked(cbr, ctx, data.value)
     const { editStatusReflect, operateIconReflect, handleReflectIdToIcon } = useOperate(data)
@@ -65,7 +65,7 @@ export default defineComponent({
           },
         }
       )
-      handleInitNodeClassNameReflect(disabled, id)
+      initHighLightNode(disabled, id)
       handleInitLazyNodeReflect(item, {
         id,
         onGetNodeData: async () => {
@@ -116,8 +116,8 @@ export default defineComponent({
           style={{ paddingLeft: `${24 * (level - 1)}px` }}
         >
           <div
-            class={`devui-tree-node__content ${nodeClassNameReflect.value[id]}`}
-            onClick={() => handleClickOnNode(id)}
+            class={`devui-tree-node__content ${getHighLightClass(id)}`}
+            onClick={() => highLightClick(id)}
           >
             <div class="devui-tree-node__content--value-wrapper">
               { renderFoldIcon(item) }

@@ -1,37 +1,44 @@
-import { ref, Ref } from 'vue'
+import { ref } from 'vue'
 
-interface TypeHighlightClass {
-  [key: string]: 'active' | '' | 'devui-tree_isDisabledNode'
-}
+type TypeHighlightClass = HIGHLIGHT_CLASS
+
 type TypeUseHighlightNode = () => {
-  nodeClassNameReflect: Ref<TypeHighlightClass>
-  handleClickOnNode: (index: string) => void
-  handleInitNodeClassNameReflect: (isDisabled: boolean, ...keys: Array<string>) => string
+  highLightClick: (index: string) => void
+  initHighLightNode: (isDisabled: boolean, nodeId: string) => void,
+  getHighLightClass: (nodeId: string) => TypeHighlightClass
 }
 
-const HIGHLIGHT_CLASS = 'active'
-const IS_DISABLED_FLAG = 'devui-tree_isDisabledNode'
+enum HIGHLIGHT_CLASS {
+  ACTIVE = 'active',
+  DISABLED = 'devui-tree_isDisabledNode',
+  EMPTY = ''
+}
+
+const disabledNodeIdSet = new Set<string>()
+
 const useHighlightNode: TypeUseHighlightNode = () => {
-  const nodeClassNameReflectRef = ref<TypeHighlightClass>({})
-  const prevActiveNodeKey = ref<string>('')
-  const handleInit = (isDisabled = false, ...keys) => {
-    const key = keys.join('-')
-    nodeClassNameReflectRef.value[key] = isDisabled
-      ? IS_DISABLED_FLAG
-      : nodeClassNameReflectRef.value[key] || ''
-    return key
+
+  const currentHighLightNodeId = ref<string>('')
+
+  const initHighLightNode = (isDisabled = false, nodeId: string): void => {
+    if (isDisabled) disabledNodeIdSet.add(nodeId)
   }
-  const handleClick = (key) => {
-    if (nodeClassNameReflectRef.value[key] === IS_DISABLED_FLAG) return
-    if (prevActiveNodeKey.value === key) return
-    if (prevActiveNodeKey.value) nodeClassNameReflectRef.value[prevActiveNodeKey.value] = ''
-    nodeClassNameReflectRef.value[key] = HIGHLIGHT_CLASS
-    prevActiveNodeKey.value = key
+
+  const highLightClick = (nodeId: string): void => {
+    if (disabledNodeIdSet.has(nodeId)) return
+    currentHighLightNodeId.value = nodeId
   }
+
+  const getHighLightClass = ((nodeId: string): TypeHighlightClass => {
+    if (disabledNodeIdSet.has(nodeId)) return HIGHLIGHT_CLASS.DISABLED
+    if (nodeId === currentHighLightNodeId.value) return HIGHLIGHT_CLASS.ACTIVE
+    return HIGHLIGHT_CLASS.EMPTY
+  })
+
   return {
-    nodeClassNameReflect: nodeClassNameReflectRef,
-    handleClickOnNode: handleClick,
-    handleInitNodeClassNameReflect: handleInit
+    highLightClick,
+    initHighLightNode,
+    getHighLightClass
   }
 }
 export default useHighlightNode
