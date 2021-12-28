@@ -1,8 +1,8 @@
 import type { PropType, ExtractPropTypes } from 'vue'
-import { IButtonStyle } from '../../button/src/button'
+import { IButtonVariant } from '../../button'
 
 export interface ButtonOptions {
-  btnStyle: IButtonStyle
+  variant: IButtonVariant
   text: string
   disabled: boolean
   handler: ($event: Event) => void
@@ -54,7 +54,7 @@ export const dialogProps = {
   },
   backdropCloseable: {
     type: Boolean,
-    default: false
+    default: true
   },
   bodyScrollable: {
     type: Boolean,

@@ -99,7 +99,7 @@ export default defineComponent({
                   }
                 </div>
                 <div onClick={subDataFun}>
-                  <Button btnStyle="common">确定</Button>
+                  <Button variant="common">确定</Button>
                 </div>
                 
               </div>

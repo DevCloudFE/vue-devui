@@ -97,16 +97,16 @@ Button Component
 <template>
   <d-row>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" btnStyle="text" style="margin-right: 20px">Text</d-button>
+      <d-button v-ripple="{duration: 0.5}" variant="text" style="margin-right: 20px">Text</d-button>
     </d-col>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" btnStyle="text-dark" style="margin-right: 20px">Text dark</d-button>
+      <d-button v-ripple="{duration: 0.5}" variant="text-dark" style="margin-right: 20px">Text dark</d-button>
     </d-col>
         <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" icon="add" btnStyle="text-dark" title="add"></d-button>
+      <d-button v-ripple="{duration: 0.5}" icon="add" variant="text-dark" title="add"></d-button>
     </d-col>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" icon="delete" btnStyle="text-dark" title="delete"></d-button>
+      <d-button v-ripple="{duration: 0.5}" icon="delete" variant="text-dark" title="delete"></d-button>
     </d-col>
   </d-row>
 </template>
@@ -146,21 +146,11 @@ Card Component
   </d-card>
 </template>
 <style lang="scss">
-  .icon {
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 8px;
-    vertical-align: middle;
-  }
-  .icon + span {
-    vertical-align: middle;
-  }
   .card-block {
     margin-right: 16px;
     i{
       cursor: pointer;
       font-size: 16px;
-      margin-right: 8px;
       vertical-align: middle;
     }
     i + span {
@@ -203,7 +193,7 @@ Card Component
 }
 .ripple-changeTextColor {
     display: block;
-    padding: 10px 15px;
+    padding: 20px;
     user-select: none;
 }
 </style>

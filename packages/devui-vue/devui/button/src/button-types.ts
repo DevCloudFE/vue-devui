@@ -1,7 +1,7 @@
 import { ExtractPropTypes, PropType } from 'vue';
 
 export type IButtonType = 'button' | 'submit' | 'reset';
-export type IButtonStyle = 'common' | 'primary' | 'text' | 'text-dark' | 'danger' | 'success' | 'warning';
+export type IButtonVariant = 'common' | 'primary' | 'text' | 'text-dark' | 'danger' | 'success' | 'warning';
 export type IButtonPosition = 'left' | 'right' | 'default';
 export type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 
@@ -10,8 +10,8 @@ export const buttonProps = {
     type: String as PropType<IButtonType>,
     default: 'button'
   },
-  btnStyle: {
-    type: String as PropType<IButtonStyle>,
+  variant: {
+    type: String as PropType<IButtonVariant>,
     default: 'primary'
   },
   size: {
