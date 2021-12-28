@@ -16,12 +16,12 @@
 
 ```vue
 <template>
-  <d-button  @click="drawerShow"> drawer {{ btnName }} </d-button>
+  <d-button @click="drawerShow">drawer {{ btnName }}</d-button>
   <d-drawer
     v-if="isDrawerShow"
-    v-model:visible="isDrawerShow" 
+    v-model:visible="isDrawerShow"
     :width="drawerWidth"
-    :isCover="isCover" 
+    :isCover="isCover"
     :backdropCloseable="backdropCloseable"
     :beforeHidden="beforeHidden"
     position="right"
@@ -32,13 +32,13 @@
 <script>
 import { ref } from 'vue'
 
-export default ({
+export default {
   setup() {
     let isDrawerShow = ref(false)
     let btnName = ref('close')
     let drawerWidth = ref('15vw')
     let isCover = ref(false)
-    let backdropCloseable = ref(true);
+    let backdropCloseable = ref(true)
 
     const drawerShow = () => {
       isDrawerShow.value = true
@@ -55,8 +55,8 @@ export default ({
 
     const beforeHidden = () => {
       return new Promise((resolve) => {
-        resolve(false);
-      });
+        resolve(false)
+      })
     }
 
     return {
@@ -68,10 +68,10 @@ export default ({
       drawerAfterOpened,
       isCover,
       backdropCloseable,
-      beforeHidden,
+      beforeHidden
     }
   }
-})
+}
 </script>
 ```
 
@@ -85,26 +85,20 @@ export default ({
 
 ```vue
 <template>
-  <d-button  @click="drawerShow"> drawer </d-button>
-  <d-drawer
-    v-model:visible="isDrawerShow" 
-    :isCover="false" 
-  >
-    
+  <d-button @click="drawerShow">drawer</d-button>
+  <d-drawer v-model:visible="isDrawerShow" :isCover="false">
     <template v-slot:header="header">
       <div @click="header.closeDrawer">
         <span class="icon icon-close" />
       </div>
     </template>
-    <template v-slot:content>
-      内容区插槽
-    </template>
+    <template v-slot:content>内容区插槽</template>
   </d-drawer>
 </template>
 <script>
 import { ref } from 'vue'
 
-export default ({
+export default {
   setup() {
     let isDrawerShow = ref(false)
 
@@ -113,16 +107,16 @@ export default ({
     }
 
     const drawerClose = () => {
-      isDrawerShow.value = false;
+      isDrawerShow.value = false
     }
 
     return {
       isDrawerShow,
       drawerShow,
-      drawerClose,
+      drawerClose
     }
   }
-})
+}
 </script>
 ```
 
@@ -134,7 +128,7 @@ export default ({
 
 ```vue
 <template>
-<d-button @click="open()">click me</d-button>
+  <d-button @click="open()">click me</d-button>
 </template>
 <script>
 import { defineComponent, ref, h } from 'vue'
@@ -143,37 +137,50 @@ export default defineComponent({
     function open() {
       const drawerInstanceFirst = this.$drawerService.show({
         visible: true,
-        content: () => h(
-          'div', 
-          {onClick() {handleHideFirst()}},
-          'hide'
-        )
-      });
+        content: () =>
+          h(
+            'div',
+            {
+              onClick() {
+                handleHideFirst()
+              }
+            },
+            'hide'
+          )
+      })
       const drawerInstanceSecond = this.$drawerService.show({
         visible: true,
         width: '200px',
-        content: () => ([
+        content: () => [
           h(
-            'div', 
-            {onClick() {handleHideFirst()}},
+            'div',
+            {
+              onClick() {
+                handleHideFirst()
+              }
+            },
             'handleHideFirst'
           ),
           h(
-            'div', 
-            {onClick() {handleHideSeconde()}},
+            'div',
+            {
+              onClick() {
+                handleHideSeconde()
+              }
+            },
             'handleHideSecond'
-          ),
-        ])
-      });
+          )
+        ]
+      })
       const handleHideFirst = () => {
         drawerInstanceFirst.hide()
-      };
+      }
       const handleHideSeconde = () => {
-        drawerInstanceSecond.hide();
+        drawerInstanceSecond.hide()
       }
     }
     return {
-      open,
+      open
     }
   }
 })
@@ -182,31 +189,31 @@ export default defineComponent({
 
 :::
 
-### 参数及API
+### 参数及 API
 
-| 参数 | 类型 | 默认 | 说明 | 跳转 Demo |
-| :---------: | :------: | :-------: | :----------------------- | --------------------------------- |
-| v-model:visible | `Boolean` | `false` | 必选，设置抽屉板是否可见 | [基本用法](#基本用法) |
-| width | `String` | `300px` | 可选，设置抽屉板宽度 | [基本用法](#基本用法) |
-| zIndex | `Number` | `1000` | 可选，设置 drawer 的 z-index 值 | [基本用法](#基本用法) |
-| isCover | `Boolean` | `true` | 可选，是否有遮罩层 | [基本用法](#基本用法) |
-| escKeyCloseable | `Boolean` | `true` | 可选，设置可否通过 esc 按键来关闭 drawer 层 | [基本用法](#基本用法) |
-| position | `String` | 'right' | 可选，抽屉板出现的位置，'left'或者'right' | [基本用法](#基本用法) |
-| backdropCloseable | `Boolean` | true | 可选，设置可否通过点击背景来关闭 drawer 层 | [基本用法](#基本用法) |
-| beforeHidden | `Function \| Promise` | -- | 可选，关闭窗口之前的回调 | [基本用法](#基本用法) |
-| onClose | `Function` | -- | 可选，关闭 drawer 时候调用 | [基本用法](#基本用法) |
-| onAfterOpened | `Function` | -- | 可选，打开 drawer 后时候调用 | [基本用法](#基本用法) |
+|       参数        |         类型          |  默认   | 说明                                        | 跳转 Demo             |
+| :---------------: | :-------------------: | :-----: | :------------------------------------------ | --------------------- |
+|  v-model:visible  |       `Boolean`       | `false` | 必选，设置抽屉板是否可见                    | [基本用法](#基本用法) |
+|       width       |       `String`        | `300px` | 可选，设置抽屉板宽度                        | [基本用法](#基本用法) |
+|      zIndex       |       `Number`        | `1000`  | 可选，设置 drawer 的 z-index 值             | [基本用法](#基本用法) |
+|      isCover      |       `Boolean`       | `true`  | 可选，是否有遮罩层                          | [基本用法](#基本用法) |
+|  escKeyCloseable  |       `Boolean`       | `true`  | 可选，设置可否通过 esc 按键来关闭 drawer 层 | [基本用法](#基本用法) |
+|     position      |       `String`        | 'right' | 可选，抽屉板出现的位置，'left'或者'right'   | [基本用法](#基本用法) |
+| backdropCloseable |       `Boolean`       |  true   | 可选，设置可否通过点击背景来关闭 drawer 层  | [基本用法](#基本用法) |
+|   beforeHidden    | `Function \| Promise` |   --    | 可选，关闭窗口之前的回调                    | [基本用法](#基本用法) |
+|      onClose      |      `Function`       |   --    | 可选，关闭 drawer 时候调用                  | [基本用法](#基本用法) |
+|   onAfterOpened   |      `Function`       |   --    | 可选，打开 drawer 后时候调用                | [基本用法](#基本用法) |
 
 ### 插槽
 
-| 参数 | 类型 | 说明 | 跳转 Demo |
-| :--: | :---------: | :------: | :-------: |
-| content | 具名插槽 | 抽屉板内容 | [自定义模板](#自定义模板) |
+|  参数   |    类型    |    说明    |         跳转 Demo         |
+| :-----: | :--------: | :--------: | :-----------------------: |
+| content |  具名插槽  | 抽屉板内容 | [自定义模板](#自定义模板) |
 | header  | 作用域插槽 | 抽屉板头部 | [自定义模板](#自定义模板) |
 
 #### 作用域插槽参数
 
-| 参数 | 类型 | 说明 |  备注 |跳转 Demo |
-| :--: | :---------: | :------: | :-------: | :---:|
+|    参数     |    类型    |   说明   |                                     备注                                      |         跳转 Demo         |
+| :---------: | :--------: | :------: | :---------------------------------------------------------------------------: | :-----------------------: |
 | closeDrawer | `Function` | 关闭抽屉 | 使用头部插槽时，需要使用该方法关闭，否则 `beforeHidden` 以及 `onClose` 不生效 | [自定义模板](#自定义模板) |
-| fullScreen | `Function` | 全屏方法 | -- | [自定义模板](#自定义模板) |
+| fullScreen  | `Function` | 切换全屏 |                                      --                                       | [自定义模板](#自定义模板) |
