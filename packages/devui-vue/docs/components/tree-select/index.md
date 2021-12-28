@@ -315,7 +315,7 @@ export default defineComponent({
 <template>
   <d-tree-select v-model="value" :treeData="data">
     <template #default="{ item }">
-      <span class="my-icon" :class="[item?.data?.type]">{{item.label}}</span>
+      <span class="tree-select-demo-icon" :class="[item?.data?.type]">{{item.label}}</span>
     </template>
   </d-tree-select>
 </template>
@@ -383,7 +383,7 @@ export default defineComponent({
 </script>
 <style>
 
-.my-icon::before {
+.tree-select-demo-icon::before {
   width: 16px;
   height: 16px;
   font-style: italic;
@@ -395,37 +395,37 @@ export default defineComponent({
   border-radius: 2px;
 }
 
-.my-icon.doc::before {
+.tree-select-demo-icon.doc::before {
   content: 'W';
   background-color: #295396;
   border: 1px #224488 solid;
 }
 
-.my-icon.pdf::before {
+.tree-select-demo-icon.pdf::before {
   content: 'A';
   background-color: #da0a0a;
   border: 1px #dd0000 solid;
 }
 
-.my-icon.xls::before {
+.tree-select-demo-icon.xls::before {
   content: 'X';
   background-color: #207044;
   border: 1px #18683c solid;
 }
 
-.my-icon.ppt::before {
+.tree-select-demo-icon.ppt::before {
   content: 'P';
   background-color: #d14424;
   border: 1px #dd4422 solid;
 }
 
-.my-icon.mix::before {
+.tree-select-demo-icon.mix::before {
   content: '?';
   font-style: normal;
   background-color: #aaaaaa;
   border: 1px #999999 solid;
 }
-.my-icon-next {
+.tree-select-demo-icon-next {
   margin-left: 8px;
 }
 
