@@ -10,7 +10,7 @@ export { AutoComplete }
 export default {
   title: 'AutoComplete 自动补全',
   category: '数据录入',
-  status: undefined, // TODO: 组件若开发完成则填入"100%"，并删除该注释
+  status: '100%',
   install(app: App): void {
         app.use(AutoComplete as any)
   }
