@@ -19,25 +19,25 @@
 <template>
   <d-form ref="dFormBasic" :formData="formModel" layout="vertical" @submit="onSubmitForm">
     <d-form-item prop="name">
-      <d-form-label required hasHelp helpTips="名字可以随意填">Name</d-form-label>
-      <d-form-control extraInfo="这行是说明文字，可以不用理，你尽管填你的姓名。">
+      <d-form-label required hasHelp helpTips="可以输入中文名字或者英文名字">姓名</d-form-label>
+      <d-form-control extraInfo="请输入您的名字">
         <d-input v-model="formModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
-      <d-form-label>Age</d-form-label>
+      <d-form-label>年龄</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.age" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="city">
-      <d-form-label>City</d-form-label>
+      <d-form-label>城市</d-form-label>
       <d-form-control>
         <d-select v-model="formModel.city" :options="selectOptions" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="loveFruits">
-      <d-form-label>Love Fruits</d-form-label>
+      <d-form-label>喜欢的水果</d-form-label>
       <d-form-control>
         <d-tag-input
           v-model:tags="formModel.loveFruits"
@@ -49,32 +49,32 @@
       </d-form-control>
     </d-form-item>
     <d-form-item prop="sex">
-      <d-form-label>Sex</d-form-label>
+      <d-form-label>性别</d-form-label>
       <d-form-control>
         <d-radio v-model="formModel.sex" value="0">男</d-radio>
         <d-radio v-model="formModel.sex" value="1">女</d-radio>
       </d-form-control>
     </d-form-item>
-    <d-form-item prop="goOffWork">
-      <d-form-label>Go off work, I nerver to be a Juan King!</d-form-label>
+    <d-form-item prop="workOn">
+      <d-form-label>下班了吗</d-form-label>
       <d-form-control>
-        <d-switch v-model:checked="formModel.goOffWork"></d-switch>
+        <d-switch v-model:checked="formModel.workOn"></d-switch>
       </d-form-control>
     </d-form-item>
-    <d-form-item prop="ladySupport">
-      <d-form-label>Which lady you would like to support?</d-form-label>
+    <d-form-item prop="interestedDomain">
+      <d-form-label>兴趣领域</d-form-label>
       <d-form-control>
-        <d-checkbox-group v-model="formModel.ladySupport" label="1818黄金眼">
-          <d-checkbox label="郑女士" value="ladyZheng" />
-          <d-checkbox label="小毛" value="ladyMao" />
-          <d-checkbox label="小刘" value="ladyLiu" />
-          <d-checkbox label="小蒋" value="ladyJiang" />
-          <d-checkbox label="小滕" value="ladyTeng" />
+        <d-checkbox-group v-model="formModel.interestedDomain" label="兴趣领域">
+          <d-checkbox label="前端" value="frontend" />
+          <d-checkbox label="后端" value="backend" />
+          <d-checkbox label="移动端" value="mobileend" />
+          <d-checkbox label="人工智能" value="ai" />
+          <d-checkbox label="算法" value="algorithm" />
         </d-checkbox-group>
       </d-form-control>
     </d-form-item>
-    <d-form-operation class="demo-form-operation">
-      <d-button type="submit" class="demo-btn">提交</d-button>
+    <d-form-operation class="form-demo-form-operation">
+      <d-button type="submit" class="form-demo-btn">提交</d-button>
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
@@ -91,11 +91,11 @@ export default defineComponent({
       name: 'AlanLee',
       age: '24',
       city: '深圳',
-      loveFruits: [{name: 'apple'}],
-      suggestionList: [{name: 'apple'}, {name: 'watermalon'}, {name: 'peach'}],
+      loveFruits: [{name: '苹果'}],
+      suggestionList: [{name: '苹果'}, {name: '西瓜'}, {name: '桃子'}],
       sex: '0',
-      goOffWork: true,
-      ladySupport: ['ladyZheng'],
+      workOn: true,
+      interestedDomain: ['frontend'],
     });
     const selectOptions = reactive([
       '北京', '上海', '广州', '深圳'
@@ -121,11 +121,11 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-btn {
   margin-right: 10px;
 }
 
@@ -147,25 +147,25 @@ Label左右布局方式。
 <template>
   <d-form ref="dFormHorizontal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
     <d-form-item prop="name">
-      <d-form-label required>Name</d-form-label>
+      <d-form-label required>姓名</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
-      <d-form-label>Age</d-form-label>
+      <d-form-label>年龄</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.age" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="city">
-      <d-form-label>City</d-form-label>
+      <d-form-label>城市</d-form-label>
       <d-form-control>
         <d-select v-model="formModel.city" :options="selectOptions" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="loveFruits">
-      <d-form-label>Love Fruits</d-form-label>
+      <d-form-label>喜欢的水果</d-form-label>
       <d-form-control>
         <d-tag-input
           v-model:tags="formModel.loveFruits"
@@ -177,32 +177,32 @@ Label左右布局方式。
       </d-form-control>
     </d-form-item>
     <d-form-item prop="sex">
-      <d-form-label>Sex</d-form-label>
+      <d-form-label>性别</d-form-label>
       <d-form-control>
         <d-radio v-model="formModel.sex" value="0">男</d-radio>
         <d-radio v-model="formModel.sex" value="1">女</d-radio>
       </d-form-control>
     </d-form-item>
-    <d-form-item prop="goOffWork">
-      <d-form-label>Go off work</d-form-label>
+    <d-form-item prop="workOn">
+      <d-form-label>下班了吗</d-form-label>
       <d-form-control>
-        <d-switch v-model:checked="formModel.goOffWork"></d-switch>
+        <d-switch v-model:checked="formModel.workOn"></d-switch>
       </d-form-control>
     </d-form-item>
-    <d-form-item prop="ladySupport">
-      <d-form-label>Support lady</d-form-label>
+    <d-form-item prop="interestedDomain">
+      <d-form-label>兴趣领域</d-form-label>
       <d-form-control>
-        <d-checkbox-group v-model="formModel.ladySupport" label="1818黄金眼">
-          <d-checkbox label="郑女士" value="ladyZheng" />
-          <d-checkbox label="小毛" value="ladyMao" />
-          <d-checkbox label="小刘" value="ladyLiu" />
-          <d-checkbox label="小蒋" value="ladyJiang" />
-          <d-checkbox label="小滕" value="ladyTeng" />
+        <d-checkbox-group v-model="formModel.interestedDomain" label="兴趣领域">
+          <d-checkbox label="前端" value="frontend" />
+          <d-checkbox label="后端" value="backend" />
+          <d-checkbox label="移动端" value="mobileend" />
+          <d-checkbox label="人工智能" value="ai" />
+          <d-checkbox label="算法" value="algorithm" />
         </d-checkbox-group>
       </d-form-control>
     </d-form-item>
-    <d-form-operation class="demo-form-operation">
-      <d-button type="submit" class="demo-btn">提交</d-button>
+    <d-form-operation class="form-demo-form-operation">
+      <d-button type="submit" class="form-demo-form-demo-demo-btn">提交</d-button>
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
@@ -218,12 +218,12 @@ export default defineComponent({
     let formModel = reactive({
       name: 'AlanLee',
       age: '24',
-      city: '',
-      loveFruits: [{name: 'apple'}],
-      suggestionList: [{name: 'apple'}, {name: 'watermalon'}, {name: 'peach'}],
+      city: '深圳',
+      loveFruits: [{name: '苹果'}],
+      suggestionList: [{name: '苹果'}, {name: '西瓜'}, {name: '桃子'}],
       sex: '0',
-      goOffWork: true,
-      ladySupport: ['ladyZheng'],
+      workOn: true,
+      interestedDomain: ['frontend'],
     });
     const selectOptions = reactive([
       '北京', '上海', '广州', '深圳'
@@ -248,11 +248,11 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -274,69 +274,71 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-button @click="openModal">Open Modal</d-button>
-  <div class="my-modal" v-show="showModal" @click="closeModal">
-    <d-form ref="dFormModal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm" class="my-form" @click.stop="() => {}">
-      <d-form-item prop="name">
-        <d-form-label required>Name</d-form-label>
-        <d-form-control>
-          <d-input v-model="formModel.name" />
-        </d-form-control>
-      </d-form-item>
-      <d-form-item prop="age">
-        <d-form-label>Age</d-form-label>
-        <d-form-control>
-          <d-input v-model="formModel.age" />
-        </d-form-control>
-      </d-form-item>
-      <d-form-item prop="city">
-        <d-form-label>City</d-form-label>
-        <d-form-control>
-          <d-select v-model="formModel.city" :options="selectOptions" />
-        </d-form-control>
-      </d-form-item>
-      <d-form-item prop="loveFruits">
-        <d-form-label>Love Fruits</d-form-label>
-        <d-form-control>
-          <d-tag-input
-            v-model:tags="formModel.loveFruits"
-            v-model:suggestionList="formModel.suggestionList"
-            display-property="name"
-            placeholder="请输入喜欢的水果"
-            no-data="暂无数据"
-          ></d-tag-input>
-        </d-form-control>
-      </d-form-item>
-      <d-form-item prop="sex">
-        <d-form-label>Sex</d-form-label>
-        <d-form-control>
-          <d-radio v-model="formModel.sex" value="0">男</d-radio>
-          <d-radio v-model="formModel.sex" value="1">女</d-radio>
-        </d-form-control>
-      </d-form-item>
-      <d-form-item prop="goOffWork">
-        <d-form-label>Go off work</d-form-label>
-        <d-form-control>
-          <d-switch v-model:checked="formModel.goOffWork"></d-switch>
-        </d-form-control>
-      </d-form-item>
-      <d-form-item prop="ladySupport">
-        <d-form-label>Support lady</d-form-label>
-        <d-form-control>
-          <d-checkbox-group v-model="formModel.ladySupport" label="1818黄金眼">
-            <d-checkbox label="郑女士" value="ladyZheng" />
-            <d-checkbox label="小毛" value="ladyMao" />
-            <d-checkbox label="小刘" value="ladyLiu" />
-            <d-checkbox label="小蒋" value="ladyJiang" />
-            <d-checkbox label="小滕" value="ladyTeng" />
-          </d-checkbox-group>
-        </d-form-control>
-      </d-form-item>
-      <d-form-operation class="demo-form-operation">
-        <d-button type="submit" class="demo-btn">提交</d-button>
-        <d-button bsStyle="common" @click="resetForm">重置</d-button>
-      </d-form-operation>
-    </d-form>
+  <d-button @click="openModal">打开弹窗</d-button>
+  <div class="form-demo-modal" v-show="showModal" @click="closeModal">
+    <div class="form-demo-modal-content">
+      <d-form ref="dFormModal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
+        <d-form-item prop="name">
+          <d-form-label required>姓名</d-form-label>
+          <d-form-control>
+            <d-input v-model="formModel.name" />
+          </d-form-control>
+        </d-form-item>
+        <d-form-item prop="age">
+          <d-form-label>年龄</d-form-label>
+          <d-form-control>
+            <d-input v-model="formModel.age" />
+          </d-form-control>
+        </d-form-item>
+        <d-form-item prop="city">
+          <d-form-label>城市</d-form-label>
+          <d-form-control>
+            <d-select v-model="formModel.city" :options="selectOptions" />
+          </d-form-control>
+        </d-form-item>
+        <d-form-item prop="loveFruits">
+          <d-form-label>喜欢的水果</d-form-label>
+          <d-form-control>
+            <d-tag-input
+              v-model:tags="formModel.loveFruits"
+              v-model:suggestionList="formModel.suggestionList"
+              display-property="name"
+              placeholder="请输入喜欢的水果"
+              no-data="暂无数据"
+            ></d-tag-input>
+          </d-form-control>
+        </d-form-item>
+        <d-form-item prop="sex">
+          <d-form-label>性别</d-form-label>
+          <d-form-control>
+            <d-radio v-model="formModel.sex" value="0">男</d-radio>
+            <d-radio v-model="formModel.sex" value="1">女</d-radio>
+          </d-form-control>
+        </d-form-item>
+        <d-form-item prop="workOn">
+          <d-form-label>下班了吗</d-form-label>
+          <d-form-control>
+            <d-switch v-model:checked="formModel.workOn"></d-switch>
+          </d-form-control>
+        </d-form-item>
+        <d-form-item prop="interestedDomain">
+          <d-form-label>兴趣领域</d-form-label>
+          <d-form-control>
+            <d-checkbox-group v-model="formModel.interestedDomain" label="兴趣领域">
+              <d-checkbox label="前端" value="frontend" />
+              <d-checkbox label="后端" value="backend" />
+              <d-checkbox label="移动端" value="mobileend" />
+              <d-checkbox label="人工智能" value="ai" />
+              <d-checkbox label="算法" value="algorithm" />
+            </d-checkbox-group>
+          </d-form-control>
+        </d-form-item>
+        <d-form-operation class="form-demo-form-operation">
+          <d-button type="submit" class="form-demo-form-demo-demo-btn">提交</d-button>
+          <d-button bsStyle="common" @click="resetForm">重置</d-button>
+        </d-form-operation>
+      </d-form>
+    </div>
   </div>
 
 </template>
@@ -350,12 +352,12 @@ export default defineComponent({
     let formModel = reactive({
       name: 'AlanLee',
       age: '24',
-      city: '',
-      loveFruits: [{name: 'apple'}],
-      suggestionList: [{name: 'apple'}, {name: 'watermalon'}, {name: 'peach'}],
+      city: '深圳',
+      loveFruits: [{name: '苹果'}],
+      suggestionList: [{name: '苹果'}, {name: '西瓜'}, {name: '桃子'}],
       sex: '0',
-      goOffWork: true,
-      ladySupport: ['ladyZheng'],
+      workOn: true,
+      interestedDomain: ['frontend'],
     });
     const selectOptions = reactive([
       '北京', '上海', '广州', '深圳'
@@ -390,15 +392,15 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-form-demo-demo-btn {
   margin-right: 10px;
 }
 
-.my-modal {
+.form-demo-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -414,9 +416,9 @@ export default defineComponent({
   align-items: center;
 }
 
-.my-form {
+.form-demo-modal-content {
   background-color: #fff;
-  width: 60vw;
+  width: 40vw;
   padding: 20px;
 }
 </style>
@@ -437,13 +439,13 @@ export default defineComponent({
 <template>
   <d-form ref="dFormColumn" layout="columns" columnsClass="u-1-3" :formData="formModel" @submit="onSubmitForm">
     <d-form-item prop="name" v-for="(item) in 6" :key="item" class="column-item">
-      <d-form-label required hasHelp>Name</d-form-label>
+      <d-form-label required hasHelp>姓名</d-form-label>
       <d-form-control>
         <d-input />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="loveFruits" class="column-item">
-      <d-form-label>Love Fruits</d-form-label>
+      <d-form-label>喜欢的水果</d-form-label>
       <d-form-control>
         <d-tag-input
           v-model:tags="formModel.loveFruits"
@@ -455,33 +457,33 @@ export default defineComponent({
       </d-form-control>
     </d-form-item>
     <d-form-item prop="sex" class="column-item">
-      <d-form-label>Sex</d-form-label>
+      <d-form-label>性别</d-form-label>
       <d-form-control>
         <d-radio v-model="formModel.sex" value="0">男</d-radio>
         <d-radio v-model="formModel.sex" value="1">女</d-radio>
       </d-form-control>
     </d-form-item>
     <d-form-item prop="goOffWork" class="column-item">
-      <d-form-label>Go off work</d-form-label>
+      <d-form-label>下班了吗</d-form-label>
       <d-form-control>
-        <d-switch v-model:checked="formModel.goOffWork"></d-switch>
+        <d-switch v-model:checked="formModel.workOn"></d-switch>
       </d-form-control>
     </d-form-item>
-    <d-form-item prop="ladySupport" class="column-item">
-      <d-form-label>Support lady</d-form-label>
+    <d-form-item prop="interestedDomain" class="column-item">
+      <d-form-label>兴趣领域</d-form-label>
       <d-form-control>
-        <d-checkbox-group v-model="formModel.ladySupport" label="1818黄金眼">
-          <d-checkbox label="郑女士" value="ladyZheng" />
-          <d-checkbox label="小毛" value="ladyMao" />
-          <d-checkbox label="小刘" value="ladyLiu" />
-          <d-checkbox label="小蒋" value="ladyJiang" />
-          <d-checkbox label="小滕" value="ladyTeng" />
+        <d-checkbox-group v-model="formModel.interestedDomain" label="兴趣领域">
+              <d-checkbox label="前端" value="frontend" />
+              <d-checkbox label="后端" value="backend" />
+              <d-checkbox label="移动端" value="mobileend" />
+              <d-checkbox label="人工智能" value="ai" />
+              <d-checkbox label="算法" value="algorithm" />
         </d-checkbox-group>
       </d-form-control>
     </d-form-item>
 
-    <d-form-operation class="demo-form-operation">
-      <d-button type="submit" class="demo-btn">提交</d-button>
+    <d-form-operation class="form-demo-form-operation">
+      <d-button type="submit" class="form-demo-form-demo-demo-btn">提交</d-button>
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
@@ -496,12 +498,12 @@ export default defineComponent({
     let formModel = reactive({
       name: 'AlanLee',
       age: '24',
-      city: '',
-      loveFruits: [{name: 'apple'}],
-      suggestionList: [{name: 'apple'}, {name: 'watermalon'}, {name: 'peach'}],
+      city: '深圳',
+      loveFruits: [{name: '苹果'}],
+      suggestionList: [{name: '苹果'}, {name: '西瓜'}, {name: '桃子'}],
       sex: '0',
-      goOffWork: true,
-      ladySupport: ['ladyZheng'],
+      workOn: true,
+      interestedDomain: ['frontend'],
     });
     const selectOptions = reactive([
       '北京', '上海', '广州', '深圳'
@@ -525,11 +527,11 @@ export default defineComponent({
 </script>
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -562,10 +564,10 @@ export default defineComponent({
 ```vue
 <template>
   <d-form ref="dFormTemplateValidate1" :formData="formModel" labelSize="lg" >
-    <d-form-item prop="name">
-      <d-form-label required>Name</d-form-label>
+    <d-form-item prop="username">
+      <d-form-label required>用户名</d-form-label>
       <d-form-control>
-        <d-input v-model="formModel.name" v-d-validate-rules="[
+        <d-input v-model="formModel.username" v-d-validate-rules="[
           {
             maxlength: 8,
           },
@@ -591,7 +593,7 @@ export default defineComponent({
   setup(props, ctx) {
     const dFormTemplateValidate1 = ref(null);
     let formModel = reactive({
-      name: 'AlanLee',
+      username: 'AlanLee',
     });
 
     return {
@@ -604,11 +606,11 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -690,11 +692,11 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -706,9 +708,14 @@ export default defineComponent({
 
 #### 验证单个元素，配置错误更新策略errorStrategy、校验时机updateOn
 
-设置`errorStrategy`属性初始化时是否进行校验， 默认配置为`dirty`，校验不通过进行错误提示；若需要在初始化时将错误抛出，可配置为`pristine`。
+- 设置`errorStrategy`属性初始化时是否进行校验
+  - 默认配置为`dirty`，校验不通过进行错误提示
+  - 若需要在初始化时将错误抛出，可配置为`pristine`
 
-设置`updateOn`，指定校验的时机。 校验器`updateOn`基于你绑定的模型的`updateOn`设置， 你可以通过`options`来指定， 默认为`change`，可选值还有`blur` 、`input`、`submit`、 设置为`submit`，则当元素所在表单进行提交时将触发校验。（待实现submit）
+- 设置`updateOn`，指定校验的时机
+  - 校验器`updateOn`基于你绑定的模型的`updateOn`设置， 你可以通过`options`来指定， 默认为`change`
+  - 可选值还有`blur` 、`input`、`submit`
+  - 设置为`submit`，则当元素所在表单进行提交时将触发校验
 
 :::demo
 
@@ -812,11 +819,11 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -911,11 +918,11 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -980,11 +987,11 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -1005,7 +1012,7 @@ export default defineComponent({
 <template>
   <d-form name="userInfoForm" ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" @submit="onSubmit">
     <d-form-item prop="name">
-      <d-form-label>Name</d-form-label>
+      <d-form-label>姓名</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.name" v-d-validate-rules="{
           rules: {minlength: 2, message: '不能小于2个字符'},
@@ -1016,7 +1023,7 @@ export default defineComponent({
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
-      <d-form-label>Age</d-form-label>
+      <d-form-label>年龄</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.age" v-d-validate-rules="{
           rules: {min: 1, message: '年龄需大于0'},
@@ -1026,8 +1033,8 @@ export default defineComponent({
         }" />
       </d-form-control>
     </d-form-item>
-    <d-form-operation class="demo-form-operation">
-      <d-button type="submit" class="demo-btn">提交</d-button>
+    <d-form-operation class="form-demo-form-operation">
+      <d-button type="submit" class="form-demo-form-demo-demo-btn">提交</d-button>
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
@@ -1064,11 +1071,11 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -1091,7 +1098,7 @@ export default defineComponent({
           rules: {message: '表单验证未通过'},
         }" messageShowType="text">
     <d-form-item prop="name">
-      <d-form-label>Name</d-form-label>
+      <d-form-label>姓名</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.name" v-d-validate-rules="{
           rules: {minlength: 2, message: '不能小于2个字符'},
@@ -1102,7 +1109,7 @@ export default defineComponent({
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
-      <d-form-label>Age</d-form-label>
+      <d-form-label>年龄</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.age" v-d-validate-rules="{
           rules: {min: 1, message: '年龄需大于0'},
@@ -1112,8 +1119,8 @@ export default defineComponent({
         }" />
       </d-form-control>
     </d-form-item>
-    <d-form-operation class="demo-form-operation">
-      <d-button type="submit" class="demo-btn">提交</d-button>
+    <d-form-operation class="form-demo-form-operation">
+      <d-button type="submit" class="form-demo-demo-btn">提交</d-button>
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
@@ -1150,11 +1157,11 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -1174,13 +1181,13 @@ export default defineComponent({
 <template>
   <d-form ref="dFormReactiveValidate" :form-data="validateFormModel" :rules="rules">
     <d-form-item prop="name">
-      <d-form-label :required="true" >Name</d-form-label>
+      <d-form-label :required="true" >姓名</d-form-label>
       <d-form-control>
         <d-input v-model="validateFormModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
-      <d-form-label :required="true" >Age</d-form-label>
+      <d-form-label :required="true" >年龄</d-form-label>
       <d-form-control>
         <d-input v-model="validateFormModel.age" />
       </d-form-control>
@@ -1228,11 +1235,11 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -1253,25 +1260,25 @@ export default defineComponent({
 <template>
   <d-form ref="dFormFeedback" :form-data="formModel">
     <d-form-item prop="name">
-      <d-form-label :required="true" >Name</d-form-label>
+      <d-form-label :required="true" >姓名</d-form-label>
       <d-form-control feedbackStatus="pending">
         <d-input v-model="formModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="nickname">
-      <d-form-label :required="true" >Nickname</d-form-label>
+      <d-form-label :required="true" >昵称</d-form-label>
       <d-form-control feedbackStatus="success">
         <d-input v-model="formModel.nickname" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
-      <d-form-label :required="true" >Age</d-form-label>
+      <d-form-label :required="true" >年龄</d-form-label>
       <d-form-control feedbackStatus="error">
         <d-input v-model="formModel.age" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="sex">
-      <d-form-label :required="true">Sex</d-form-label>
+      <d-form-label :required="true">性别</d-form-label>
       <d-form-control feedbackStatus="error">
         <d-select v-model="formModel.sex" :options="sexSelectOptions" placeholder="Select your sex"></d-select>
       </d-form-control>
@@ -1307,11 +1314,11 @@ export default defineComponent({
 
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -1330,7 +1337,7 @@ export default defineComponent({
 <template>
   <d-form ref="dFormFeedback2" :form-data="formModel">
     <d-form-item prop="address">
-      <d-form-label :required="true" >Address</d-form-label>
+      <d-form-label :required="true" >地址</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.address" />
         <template v-slot:suffixTemplate>
@@ -1375,25 +1382,25 @@ export default defineComponent({
 <template>
   <d-form name="togetherValidateForm" ref="dFormTogetherValidate" :form-data="formModel" labelSize="lg" @submit="onSubmit">
     <d-form-item prop="username">
-      <d-form-label :required="true" >Username</d-form-label>
+      <d-form-label :required="true" >用户名</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.username" v-d-validate-rules="formRules.userNameRule" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="password">
-      <d-form-label :required="true" >Password</d-form-label>
+      <d-form-label :required="true" >密码</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.password" v-d-validate-rules="formRules.passwordRule" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="confirmPassword">
-      <d-form-label :required="true" >Confirm Password</d-form-label>
+      <d-form-label :required="true" >确认密码</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.confirmPassword" v-d-validate-rules="formRules.confirmPasswordRule" />
       </d-form-control>
     </d-form-item>
-    <d-form-operation class="demo-form-operation">
-      <d-button type="submit" class="demo-btn">提交</d-button>
+    <d-form-operation class="form-demo-form-operation">
+      <d-button type="submit" class="form-demo-demo-btn">提交</d-button>
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
@@ -1463,11 +1470,11 @@ export default defineComponent({
 </script>
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -1489,13 +1496,13 @@ export default defineComponent({
 <template>
   <d-form ref="dFormWithComponent" :form-data="formModel">
     <d-form-item prop="name">
-      <d-form-label :required="true" >Name</d-form-label>
+      <d-form-label :required="true" >姓名</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
-      <d-form-label :required="true" >Age</d-form-label>
+      <d-form-label :required="true" >年龄</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.age" />
       </d-form-control>
@@ -1523,11 +1530,11 @@ export default defineComponent({
 </script>
 
 <style>
-.demo-form-operation {
+.form-demo-form-operation {
   display: flex;
   align-items: center;
 }
-.demo-btn {
+.form-demo-demo-btn {
   margin-right: 10px;
 }
 </style>
@@ -1609,7 +1616,7 @@ v-d-validate-rules
 {[validatorKey]: validatorValue, message: 'some tip messages.'}
 ```
 
-当前DevUI支持的内置校验器validatorKey有：`required`、`minlength`、`maxlength`、`min`、`max`、`requiredTrue`、`email`、`pattern`、`whitespace`。<br>
+当前DevUI支持的内置校验器validatorKey有：`required`、`minlength`、`maxlength`、`min`、`max`、`requiredTrue`、`email`、`pattern`、`whitespace`。更多规则参考[async-validator](https://www.npmjs.com/package/async-validator)。
 
 
 
