@@ -200,8 +200,8 @@ Card Component
 
 ### API
 
-|      参数       |   类型    |    默认     | 说明                                                                          |
-| :-------------: | :-------: | :---------: | :---------------------------------------------------------------------------- |
+|      parameter       |   type    |    default     | introduce                                                                          |
+| :---: | :---: | :---: | :---: |
 |      color      | `string`  | `#00000050` | Choose Default current text color                                             |
 | initial-opacity | `number`  |    `0.1`    | Choose Initial interaction Opacity size                                       |
 |  final-opacity  | `number`  |    `0.1`    | Choose, end the interactive effect and press the Opacity size for a long time |
