@@ -1,6 +1,6 @@
 # Form 表单
 
-表单用于收集数据
+具有数据收集、校验和提交功能的表单，包含复选框、单选框、输入框、下拉选择框等元素。
 
 ### 何时使用
 
@@ -9,8 +9,6 @@
 
 
 ### 基础用法
-
-> done
 
 基本用法当中，Label是在数据框的上面。
 
@@ -139,8 +137,6 @@ export default defineComponent({
 
 
 ### 横向排列
-
-> done
 
 Label左右布局方式。
 
@@ -432,8 +428,6 @@ export default defineComponent({
 
 ### 多列表单
 
-> done
-
 多列表单。layout的属性为`columns`，同时搭配columnsClass属性，值为"u-[row]-[col]"，例如`u-1-3`为1行3列。
 
 
@@ -548,16 +542,10 @@ export default defineComponent({
 
 ### 模板驱动表单验证
 
-> doing
-
 在`d-form`、`d-input`等表单类组件上使用`v-d-validate-rules`指令，配置校验规则。
 
 
 #### 验证单个元素，使用内置校验器，配置error message
-
-> done
->
-> 待支持国际化词条配置
 
 当前DevUI支持的内置校验器有：`required`、`minlength`、`maxlength`、`min`、`max`、`requiredTrue`、`email`、`pattern`、`whitespace`。
 
@@ -630,8 +618,6 @@ export default defineComponent({
 :::
 
 #### 验证单个元素，自定义校验器
-
-> done
 
 自定义校验器，可传入`validators`字段配置校验规则，你可以简单返回`true | false `来标识当前校验是否通过，来标识当前是否错误并返回错误消息，适用于动态错误提示。如果是异步校验器，可传入`asyncValidators`字段配置校验规则。
 
@@ -719,8 +705,6 @@ export default defineComponent({
 
 
 #### 验证单个元素，配置错误更新策略errorStrategy、校验时机updateOn
-
-> done
 
 设置`errorStrategy`属性初始化时是否进行校验， 默认配置为`dirty`，校验不通过进行错误提示；若需要在初始化时将错误抛出，可配置为`pristine`。
 
@@ -844,14 +828,12 @@ export default defineComponent({
 
 #### 验证单个元素，自定义管理消息提示
 
-> done
-
 配置`messageShowType`可选择消息自动提示的方式，默认为`popover`。
 
 - 设置为`popover`错误信息将在元素聚焦时以`popover`形式呈现。
 
 - 设置为`text`错误信息将自动以文本方式显示在元素下方(需要与表单控件容器配合使用)。
- 
+
 - 设置为`none`错误信息将不会自动呈现到视图， 可在模板中获取`message`或通过监听`messageChange`事件获取错误`message`， 或在模板中直接通过引用获取。
 
 - 在 `options`中配置  `popPosition`可在消息提示方式为`popover`时，自定义`popover`内容弹出方向， 默认为`['right', 'bottom']`。更多取值参考popover组件。
@@ -946,8 +928,6 @@ export default defineComponent({
 
 #### 验证单个元素，自定义asyncDebounceTime
 
-> done
-
 
 对于异步校验器，提供默认300ms debounce time。在options中设置`asyncDebounceTime`显示设置（单位ms）。
 
@@ -1016,8 +996,6 @@ export default defineComponent({
 
 
 #### Form验证与提交
-
-> done
 
 点击提交按钮时进行验证，需指定name属性，并同时绑定d-form标签的submit事件才能生效。
 
@@ -1101,8 +1079,6 @@ export default defineComponent({
 
 
 #### Form验证与提交，用户注册场景
-
-> doing
 
 对于自动错误提示的方式，在form中， 建议在dForm层统一设置`messageShowType`，需同时设置ref属性才能生效。
 
@@ -1189,8 +1165,6 @@ export default defineComponent({
 
 ### 响应式表单验证
 
-> done
-
 在`d-form`标签中指定校验规则rules，同时在`d-form-item`中指定`prop`的值为校验字段名。
 
 
@@ -1269,8 +1243,6 @@ export default defineComponent({
 
 
 ### 指定表单Feedback状态
-
-> done
 
 你可通过对d-form-control设置feedbackStatus手动指定反馈状态。当前已支持状态：`success`、`error`、`pending`。
 
@@ -1393,8 +1365,6 @@ export default defineComponent({
 
 
 ### 表单协同验证
-
-> done
 
 在一些场景下，你的多个表单组件互相依赖，需共同校验（如注册场景中的密码输入与确认密码），通过自定义校验器实现校验规则（将密码输入与确认密码的值进行比较）。
 
@@ -1567,65 +1537,67 @@ export default defineComponent({
 
 
 
-### Form Attributes
+### API
 
-| 参数         | 说明                                                         | 类型   | 可选值                              | 默认值       |
-| ------------ | ------------------------------------------------------------ | ------ | ----------------------------------- | ------------ |
-| name         | 可选，设置表单name属性，进行表单提交验证时必选。             | string |                                     |              |
-| formData     | 必选，表单数据                                               | object |                                     |              |
-| layout       | 可选，设置表单的排列方式                                     | string | `horizontal`、`vertical`、`columns` | `horizontal` |
-| labelSize    | 可选，设置 label 的占宽，未设置默认为 100px，'sm'对应 80px，'lg'对应 150px | string | `sm`、`lg`                          | --           |
-| labelAlign   | 可选，设置水平布局方式下，label 对齐方式                     | string | `start`、`center`、`end`            | `start`      |
-| columnsClass | 可选，设置多列表单样式                                       | string |                                     |              |
-| rules        | 可选，设置表单校验规则                                       | object |                                     |              |
+d-form参数
 
-
-
-### Form Methods
-
-| 方法名 | 说明               | 参数 |
-| ------ | ------------------ | ---- |
-| submit | 可选，提交表单事件 | --   |
+| 参数         | 类型                                  | 默认值       | 说明                                                         | 跳转demo                          |
+| ------------ | ------------------------------------- | ------------ | ------------------------------------------------------------ | --------------------------------- |
+| name         | string                                |              | 可选，设置表单name属性，进行表单提交验证时必选。             | [基础用法](#基础用法)             |
+| formData     | object                                |              | 必选，表单数据                                               | [基础用法](#基础用法)             |
+| layout       | 'horizontal' \|'vertical' \|'columns' | 'horizontal' | 可选，设置表单的排列方式                                     | [基础用法](#基础用法)             |
+| labelSize    | 'sm' \|'lg'                           |              | 可选，设置 label 的占宽，未设置默认为 100px，sm对应 80px，lg对应 150px | [基础用法](#基础用法)             |
+| labelAlign   | 'start' \|'center' \|'end'            | 'start'      | 可选，设置水平布局方式下，label 对齐方式                     | [基础用法](#基础用法)             |
+| columnsClass | string                                |              | 可选，设置多列表单样式                                       | [多列表单](#多列表单)             |
+| rules        | object                                |              | 可选，设置表单校验规则                                       | [响应式表单验证](#响应式表单验证) |
 
 
 
-### Form-Item Attributes
+d-form事件
 
-| 参数         | 说明                                                 | 类型    | 可选值          | 默认值  |
-| ------------ | ---------------------------------------------------- | ------- | --------------- | ------- |
-| prop         | 可选，指定验证表单需验证的字段，验证表单时必选该属性 |         |                 |         |
-| dHasFeedback | 可选，设置当前 formControl 是否显示反馈图标          | boolean | `true`、`false` | `false` |
-
-
-
-### Form-Lable Attributes
-
-| 参数     | 说明                                                         | 类型    | 可选值          | 默认值  |
-| -------- | ------------------------------------------------------------ | ------- | --------------- | ------- |
-| required | 可选，表单选项是否必填                                       | boolean | `true`、`false` | `false` |
-| hasHelp  | 可选，表单项是否需要帮助指引                                 | boolean | `true`、`false` | `false` |
-| helpTips | 可选，表单项帮助指引提示内容，需配合 `hasHelp`使用，且`helpTips`的值不能为空字符串才会生效。 | string  |                 | --      |
+| 事件名 | 类型       | 说明               | 跳转demo                          |
+| ------ | ---------- | ------------------ | --------------------------------- |
+| submit | () => void | 可选，提交表单事件 | [Form验证与提交](#Form验证与提交) |
 
 
 
-### Form-Control Attributes
+d-form-item参数
 
-| 参数           | 说明                                                       | 类型    | 可选值          | 默认值  |
-| -------------- | ---------------------------------------------------------- | ------- | --------------- | ------- |
-| extraInfo      | 可选，附件信息，一般用于补充表单选项的说明                 | string  |                 | --      |
-| feedbackStatus | 可选，手动指定当前 control 状态反馈                        | boolean | `true`、`false` | `false` |
-| suffixTemplate | 可选，可传入图标模板作为输入框后缀（通过插槽传入icon组件） |         |                 | --      |
+| 参数         | 类型    | 默认值  | 说明                                                 | 跳转demo                                      |
+| ------------ | ------- | ------- | ---------------------------------------------------- | --------------------------------------------- |
+| prop         | string  |         | 可选，指定验证表单需验证的字段，验证表单时必选该属性 | [基础用法](#基础用法)                         |
+| dHasFeedback | boolean | 'false' | 可选，设置当前 formControl 是否显示反馈图标          | [指定表单Feedback状态](#指定表单Feedback状态) |
+
+
+
+d-form-label参数
+
+| 参数     | 类型    | 默认值  | 说明                                                         | 跳转demo              |
+| -------- | ------- | ------- | ------------------------------------------------------------ | --------------------- |
+| required | boolean | 'false' | 可选，表单选项是否必填                                       | [基础用法](#基础用法) |
+| hasHelp  | boolean | 'false' | 可选，表单项是否需要帮助指引                                 | [基础用法](#基础用法) |
+| helpTips | string  |         | 可选，表单项帮助指引提示内容，需配合 `hasHelp`使用，且`helpTips`的值不能为空字符串才会生效。 | [基础用法](#基础用法) |
+
+
+
+d-form-control参数
+
+| 参数           | 类型    | 默认值  | 说明                                                       | 跳转demo                                      |
+| -------------- | ------- | ------- | ---------------------------------------------------------- | --------------------------------------------- |
+| extraInfo      | string  |         | 可选，附件信息，一般用于补充表单选项的说明                 | [基础用法](#基础用法)                         |
+| feedbackStatus | boolean | 'false' | 可选，手动指定当前 control 状态反馈                        | [基础用法](#基础用法)                         |
+| suffixTemplate | string  |         | 可选，可传入图标模板作为输入框后缀（通过插槽传入icon组件） | [指定表单Feedback状态](#指定表单Feedback状态) |
 
 
 
 ### Directives
 
-#### v-d-validate-rules
+v-d-validate-rules
 
-| 参数    | 说明               | 类型   | 可选值                                     | 默认值 |
-| ------- | ------------------ | ------ | ------------------------------------------ | ------ |
-| rules   | 必选，表单校验规则 | object |                                            | --     |
-| options | 可选，配置选项     | object | `errorStrategy`、`updateOn`、`popPosition` |        |
+| 参数    | 类型   | 默认值 | 说明                                                         | 跳转demo                              |
+| ------- | ------ | ------ | ------------------------------------------------------------ | ------------------------------------- |
+| rules   | object |        | 必选，表单校验规则，更多规则参考[async-validator](https://www.npmjs.com/package/async-validator) | [模板驱动表单验证](#模板驱动表单验证) |
+| options |        |        | 可选，配置选项                                               | [模板驱动表单验证](#模板驱动表单验证) |
 
 > 该指令仅在`d-form`标签或`d-input`等表单类组件上使用有效。
 
@@ -1651,4 +1623,57 @@ export default defineComponent({
   - popPosition，自定义`popover`内容弹出方向。 默认为`['right', 'bottom']`，更多取值参考popover组件。
 
 
+
+### 接口 & 类型定义
+
+IForm
+
+```typescript
+export interface IForm {
+  formData: any
+  labelData: IFormLabel
+  formMitt: Emitter<any>
+  rules: any
+  columnsClass: string
+  messageShowType: string
+} 
+```
+
+
+
+IFormLabel
+
+```typescript
+export interface IFormLabel {
+  layout: string
+  labelSize: string
+  labelAlign: string
+}
+```
+
+
+
+IFormItem
+
+```typescript
+export interface IFormItem {
+  dHasFeedback: boolean
+  prop: string
+  formItemMitt: Emitter<any>
+  resetField(): void
+}
+```
+
+
+
+IFormControl
+
+```ty
+export interface IFormControl {
+  feedbackStatus: string
+  extraInfo: string
+  formItemMitt: Emitter<any>
+  resetField(): void
+}
+```
 
