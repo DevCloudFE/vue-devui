@@ -14,6 +14,7 @@ interface ValidateFnParam {
   messageShowType: MessageShowType
   dfcUID: string
   popPosition: PopPosition | Array<BasePopPosition>
+  updateOn?: UpdateOn
 }
 
 interface CustomValidatorRuleObject {
@@ -46,6 +47,7 @@ export interface ShowPopoverErrorMessageEventData {
   message?: string
   uid?: string, 
   popPosition?: PopPosition
+  [prop : string]: any
 }
 
 type MessageShowType = 'popover' | 'text' | 'none' | 'toast';
@@ -210,7 +212,7 @@ function handleErrorStrategyPass(el: HTMLElement): void {
   el.setAttribute('class', classList.join(' '));
 }
 
-function handleValidateError({el, tipEl, message, isFormTag, messageShowType, dfcUID, popPosition = 'right-bottom'}: Partial<ValidateFnParam>): void {
+function handleValidateError({el, tipEl, message = "", isFormTag, messageShowType, dfcUID, popPosition = 'right-bottom', updateOn}: Partial<ValidateFnParam>): void {
   // 如果该指令用在form标签上，这里做特殊处理
   if(isFormTag && messageShowType === MessageShowTypeEnum.toast) {
     // todo：待替换为toast
@@ -220,7 +222,7 @@ function handleValidateError({el, tipEl, message, isFormTag, messageShowType, df
 
   // messageShowType为popover时，设置popover
   if(MessageShowTypeEnum.popover === messageShowType) {
-    EventBus.emit("showPopoverErrorMessage", {showPopover: true, message, uid: dfcUID, popPosition} as ShowPopoverErrorMessageEventData);
+    EventBus.emit("showPopoverErrorMessage", {showPopover: true, message, uid: dfcUID, popPosition, updateOn} as ShowPopoverErrorMessageEventData);
     return;
   }
 
@@ -250,7 +252,7 @@ function getFormName(binding: DirectiveBinding): string {
 }
 
 // 校验处理函数
-function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType, dfcUID, popPosition}: Partial<ValidateFnParam>) {
+function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType, dfcUID, popPosition, updateOn}: Partial<ValidateFnParam>) {
   validator.validate({modelName: modelValue}).then(() => {
     handleValidatePass(el, tipEl);
   }).catch((err) => {
@@ -265,7 +267,7 @@ function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowTyp
       msg = errors[0].message;
     }
 
-    handleValidateError({el, tipEl, message: msg, isFormTag, messageShowType, dfcUID, popPosition});
+    handleValidateError({el, tipEl, message: msg, isFormTag, messageShowType, dfcUID, popPosition, updateOn});
   })
 }
 
@@ -394,13 +396,20 @@ export default {
     const htmlEventValidateHandler = (e) => {
       const modelValue = e.target.value;
       if(messageShowType === MessageShowTypeEnum.popover) {
-        EventBus.emit("showPopoverErrorMessage", {showPopover: false, message: "", uid: dfcUID, popPosition} as ShowPopoverErrorMessageEventData);
+        EventBus.emit("showPopoverErrorMessage", {showPopover: false, message: "", uid: dfcUID, popPosition, updateOn} as ShowPopoverErrorMessageEventData);
       }
-      validateFn({validator, modelValue, el, tipEl, isFormTag: false, messageShowType, dfcUID, popPosition});
+      validateFn({validator, modelValue, el, tipEl, isFormTag: false, messageShowType, dfcUID, popPosition, updateOn});
     }
 
     // 监听事件验证
     vnode.children[0].el.addEventListener(updateOn, htmlEventValidateHandler); 
+
+    // 如果校验时机为change，则在focus时关闭popover
+    if(messageShowType === MessageShowTypeEnum.popover && updateOn === UpdateOnEnum.change) {
+      vnode.children[0].el.addEventListener('focus', () => {
+        EventBus.emit("showPopoverErrorMessage", {showPopover: false, uid: dfcUID, updateOn} as ShowPopoverErrorMessageEventData);
+      }); 
+    }
 
     // 设置errorStrategy
     if(errorStrategy === ErrorStrategyEnum.pristine) {

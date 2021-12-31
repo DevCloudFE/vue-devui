@@ -19,6 +19,7 @@ export default defineComponent({
     const isHorizontal = labelData.layout === 'horizontal';
     const uid = uniqueId("dfc-");
     const showPopover = ref(false);
+    const updateOn = ref('change');
     const tipMessage = ref("");
     const popPosition = ref<positionType>("bottom");
     let rectInfo: Partial<DOMRect> = {
@@ -43,6 +44,7 @@ export default defineComponent({
           showPopover.value = data.showPopover;
           tipMessage.value = data.message;
           popPosition.value = data.popPosition as any; // todo: 待popover组件positionType完善类型之后再替换类型
+          updateOn.value = data.updateOn ?? 'change'
         }
       });
     });
@@ -74,7 +76,7 @@ export default defineComponent({
               width: rectInfo.width + 'px',
               height: rectInfo.height + 'px',
             }}>
-              <Popover visible={showPopover.value} content={tipMessage.value} popType={"error"} position={popPosition.value} />
+              <Popover controlled={updateOn.value !== 'change'} visible={showPopover.value} content={tipMessage.value} popType={"error"} position={popPosition.value} />
             </div>
           </Teleport>
         <div class={`devui-form-control-container${isHorizontal ? ' devui-form-control-container-horizontal' : ''}${feedbackStatus ? ' has-feedback' : ''}${feedbackStatus === 'error' ? ' feedback-error' : ''}`}>
