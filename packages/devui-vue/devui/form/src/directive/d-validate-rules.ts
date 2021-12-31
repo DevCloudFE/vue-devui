@@ -212,6 +212,16 @@ function handleErrorStrategyPass(el: HTMLElement): void {
   el.setAttribute('class', classList.join(' '));
 }
 
+function getDfcUID(el: HTMLElement): string {
+  if(el.tagName.toLocaleLowerCase() === "body") return "";
+  let uid = ''
+  if(el.parentElement.id.startsWith('dfc-')) {
+    return el.parentElement.id;
+  }else {
+    uid = getDfcUID(el.parentElement);
+  }
+}
+
 function handleValidateError({el, tipEl, message = "", isFormTag, messageShowType, dfcUID, popPosition = 'right-bottom', updateOn}: Partial<ValidateFnParam>): void {
   // 如果该指令用在form标签上，这里做特殊处理
   if(isFormTag && messageShowType === MessageShowTypeEnum.toast) {
@@ -220,6 +230,10 @@ function handleValidateError({el, tipEl, message = "", isFormTag, messageShowTyp
     return;
   }
 
+  if(!dfcUID) {
+    dfcUID = getDfcUID(el);
+  }
+  
   // messageShowType为popover时，设置popover
   if(MessageShowTypeEnum.popover === messageShowType) {
     EventBus.emit("showPopoverErrorMessage", {showPopover: true, message, uid: dfcUID, popPosition, updateOn} as ShowPopoverErrorMessageEventData);
@@ -424,7 +438,7 @@ export default {
       const modelValue = isFormTag ? '' : vnode.children[0].el.value;
       
       // 进行提交验证
-      validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType});
+      validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType, updateOn: 'submit'});
     });
     
   }
