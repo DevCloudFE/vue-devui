@@ -102,11 +102,16 @@ export default defineComponent({
           return toggle(target, item)
         }
         return (
-          isParent || children && children.length
-          ? open
-            ? <IconOpen class="mr-xs" onClick={handleClick} />
-            : <IconClose class="mr-xs" onClick={handleClick} />
-          : <Indent />
+          <div class="devui-tree-node__folder" onClick={handleClick} >
+            {
+              isParent || children && children.length
+              ? open
+                ? <IconOpen class="mr-xs" />
+                : <IconClose class="mr-xs" />
+              : <Indent /> 
+            }
+          </div>
+          
         )
       }
       const checkState = CHECK_CONFIG[selected.value[id] ?? 'none']
@@ -134,24 +139,9 @@ export default defineComponent({
         </div>
       )
     }
-    const renderTree = (tree) => {
-      return tree.map(item => {
-        if (!item.children) {
-          return renderNode(item)
-        } else {
-          return (
-            <>
-              {renderNode(item)}
-              {renderTree(item.children)}
-            </>
-          )
-        }
-      })
-    }
     return () => {
       return (
         <div class="devui-tree">
-          {/* { renderTree(data.value) } */}
           { openedData.value.map(item => renderNode(item)) }
         </div>
       )
