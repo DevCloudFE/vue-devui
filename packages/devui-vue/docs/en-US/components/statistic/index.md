@@ -162,6 +162,40 @@ Prefix and suffix slots
 
 :::
 
+### Custom Style
+
+Provide custom attributes to facilitate adding styles
+:::demo
+
+```vue
+<template>
+  <d-row :gutter="16">
+    <d-col :span="12">
+      <d-statistic
+        title="Custom Style"
+        :value="88"
+        :content-style="{ color: '#fba' }"
+        :title-style="{ color: '#abf' }"
+      >
+        <template #suffix>%</template>
+      </d-statistic>
+    </d-col>
+    <d-col :span="12">
+      <d-statistic
+        title="Scale"
+        :value="5000"
+        group-separator="."
+        :precision="3"
+        prefix="$"
+        :content-style="{ fontSize: '30px', color: 'red'}"
+      >
+    </d-col>
+  </d-row>
+</template>
+```
+
+:::
+
 ### d-statistic
 
 | parameter          | type               | default  | introduce                    |
