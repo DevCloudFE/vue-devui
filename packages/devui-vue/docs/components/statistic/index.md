@@ -148,6 +148,7 @@ export default {
 
 ### 自定义样式
 
+<<<<<<< HEAD
 提供自定义属性方便添加样式
 :::demo
 
@@ -199,3 +200,4 @@ export default {
 |     animation      |     `boolean`      |  false   |   是否开启动画   |
 |       easing       |      `string`      | quartOut |   数字动画效果   |
 |       start        |     `boolean`      |  false   |   是否开始动画   |
+

@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { DrawerProps } from './drawer-types'
 import Drawer from './drawer'
-
+import { inBrowser } from '../../shared/util/common-var'
 
 function createDrawerApp(props: DrawerProps) {
   return createApp(Drawer, { ...props })
@@ -9,7 +9,7 @@ function createDrawerApp(props: DrawerProps) {
 
 export default class DrawerService {
 
-  static $body: HTMLElement | null = document.body
+  static $body: HTMLElement | null
   static $div: HTMLDivElement | null = null
   static drawer = null;
 
@@ -28,6 +28,8 @@ export default class DrawerService {
     }
     this.$div = null
   }
+}
 
-
+if (inBrowser) {
+  DrawerService.$body = document.body
 }
