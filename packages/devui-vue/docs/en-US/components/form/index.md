@@ -1667,7 +1667,7 @@ export interface IFormItem {
 
 IFormControl
 
-```ty
+```typescript
 export interface IFormControl {
   feedbackStatus: string
   extraInfo: string
