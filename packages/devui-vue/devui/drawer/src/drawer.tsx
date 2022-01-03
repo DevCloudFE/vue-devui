@@ -16,7 +16,7 @@ export default defineComponent({
     } = toRefs(props)
     const isFullScreen = ref(false)
 
-    const fullScreen = () => {
+    const fullscreen = () => {
       isFullScreen.value = !isFullScreen.value
     }
 
@@ -67,12 +67,12 @@ export default defineComponent({
       isFullScreen,
       visible,
       slots,
-      fullScreen,
+      fullscreen,
       closeDrawer,
     }
   },
   render() {
-    const fullScreen: any = this.fullScreen
+    const fullscreen: any = this.fullscreen
     const closeDrawer: any = this.closeDrawer
 
     if (!this.visible) return null
@@ -81,12 +81,12 @@ export default defineComponent({
       <Teleport to="body">
         <DrawerBody>
           {/* BUG: 已使用作用域插槽解决
-            头部被替换后无法执行下面 fullScreen 与 closeDrawer 
+            头部被替换后无法执行下面 fullscreen 与 closeDrawer 
             此处对应的 DEMO 使用了 **双向绑定** 导致可以关闭【一种关闭了的'假象'】。
             因此没有执行关闭时可能需要执行的方法 beforeHidden 和 onclose
           */}
-          {this.slots.header ? this.slots.header({fullScreen, closeDrawer}) : 
-            <DrawerHeader onToggleFullScreen={fullScreen} onClose={closeDrawer} />
+          {this.slots.header ? this.slots.header({fullscreen, closeDrawer}) : 
+            <DrawerHeader onToggleFullScreen={fullscreen} onClose={closeDrawer} />
           }
           {this.slots.content ? this.slots.content() : <DrawerContainer />}
         </DrawerBody>
