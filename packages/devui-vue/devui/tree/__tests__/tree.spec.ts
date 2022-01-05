@@ -169,19 +169,19 @@ describe('tree', () => {
   })
 
   it('should expand and collapse correctly', async () => {
-    const firstNode: Element = wrapper.element.firstElementChild
+    const firstNode = wrapper.get('.devui-tree-node:first-child')
 
     // 初始状态，节点是展开的
-    expect(firstNode.classList).toContain('devui-tree-node__open')
-
+    expect(firstNode.classes()).toContain('devui-tree-node__open')
+    
     // 点击之后，节点收起
-    await wrapper.find('.devui-tree-node').trigger('click')
+    await wrapper.get('.devui-tree-node__folder:first-child').trigger('click')
     await nextTick()
-    expect(firstNode.classList).not.toContain('devui-tree-node__open')
+    expect(firstNode.classes()).not.toContain('devui-tree-node__open')
 
     // 再次点击，节点展开
-    await wrapper.find('.devui-tree-node').trigger('click')
+    await wrapper.get('.devui-tree-node__folder:first-child').trigger('click')
     await nextTick()
-    expect(firstNode.classList).toContain('devui-tree-node__open')
+    expect(firstNode.classes()).toContain('devui-tree-node__open')
   })
 })

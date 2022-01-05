@@ -97,16 +97,16 @@ Button Component
 <template>
   <d-row>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" btnStyle="text" style="margin-right: 20px">Text</d-button>
+      <d-button v-ripple="{duration: 0.5}" variant="text" style="margin-right: 20px">Text</d-button>
     </d-col>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" btnStyle="text-dark" style="margin-right: 20px">Text dark</d-button>
+      <d-button v-ripple="{duration: 0.5}" variant="text-dark" style="margin-right: 20px">Text dark</d-button>
     </d-col>
         <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" icon="add" btnStyle="text-dark" title="add"></d-button>
+      <d-button v-ripple="{duration: 0.5}" icon="add" variant="text-dark" title="add"></d-button>
     </d-col>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" icon="delete" btnStyle="text-dark" title="delete"></d-button>
+      <d-button v-ripple="{duration: 0.5}" icon="delete" variant="text-dark" title="delete"></d-button>
     </d-col>
   </d-row>
 </template>
@@ -200,8 +200,8 @@ Card Component
 
 ### API
 
-|      参数       |   类型    |    默认     | 说明                                                                          |
-| :-------------: | :-------: | :---------: | :---------------------------------------------------------------------------- |
+|      parameter       |   type    |    default     | introduce                                                                          |
+| :---: | :---: | :---: | :---: |
 |      color      | `string`  | `#00000050` | Choose Default current text color                                             |
 | initial-opacity | `number`  |    `0.1`    | Choose Initial interaction Opacity size                                       |
 |  final-opacity  | `number`  |    `0.1`    | Choose, end the interactive effect and press the Opacity size for a long time |

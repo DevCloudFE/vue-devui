@@ -65,12 +65,12 @@ export default defineComponent({
     // 处理按钮
     const buttonsRef = computed(() => {
       return props.buttons.map((buttonProps, index) => {
-        const { btnStyle, disabled, handler, text } = buttonProps;
+        const { variant, disabled, handler, text } = buttonProps;
         return (
           <Button
             key={index}
             style={{ display: 'inline-block', margin: '0 5px' }}
-            btnStyle={btnStyle}
+            variant={variant}
             disabled={disabled}
             onClick={handler}
           >
@@ -118,7 +118,7 @@ export default defineComponent({
             <Button
               class="btn-close"
               icon="close"
-              btnStyle="text-dark"
+              variant="text-dark"
               onClick={closeModal}
             />
           </div>

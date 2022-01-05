@@ -89,7 +89,7 @@
     <d-col :span="6" class="col-child">col-6</d-col>
     <d-col :span="6" class="col-child">col-6</d-col>
   </d-row>
-  <p>Justify bottom</p>
+  <p>Justify start</p>
   <d-row justify="start" class="docs-devui-row">
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>

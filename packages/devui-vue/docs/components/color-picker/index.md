@@ -23,7 +23,7 @@
 
 ```vue
 <template>
-  <d-button btnStyle="common" @click="isShowAlpha">test showAlpha Be {{ show }}</d-button>
+  <d-button variant="common" @click="isShowAlpha">test showAlpha Be {{ show }}</d-button>
   <d-color-picker v-model="color" :show-alpha="show"></d-color-picker>
 </template>
 
@@ -82,7 +82,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-button btnStyle="common" @click="isShowAlpha">test showAlpha Be {{ show }}</d-button>
+  <d-button variant="common" @click="isShowAlpha">test showAlpha Be {{ show }}</d-button>
   <d-color-picker :show-history="show" v-model="color" mode="hsl"></d-color-picker>
 </template>
 
@@ -109,7 +109,7 @@ export default defineComponent({
 :::
 
 ### 基础面板自定义
-设置可供选择的基础面板颜色样本
+设置可自定义配置的基础面板颜色样本
 :::demo
 
 ```vue
@@ -151,20 +151,10 @@ export default defineComponent({
 d-color-picker 参数
 
 | 参数         | 类型      | 默认   | 说明                                        | 跳转 Demo                   |
-| ------------ | --------- | ------ | ------------------------------------------- | --------------------------- |
+| :---: | :---: | :---: | :---: | :---: |
 | mode         | `String`  | `rgb`  | 切换颜色模式                                | [颜色模式](#颜色模式)       |  |
 | dotSize      | `Number`  | `15`   | 调色板圆点大小                              |                             |  |
 | swatches     | `Array`   |        | 预定义样本面板                              | [色块样本](#基础面板自定义) |  |
 | show-alpha   | `Boolean` | `true` | 是否展示透明度进度条                        | [透明度展示](#颜色透明度)   |  |
 | show-history | `Boolean` | `true` | 是否展示历史颜色                            | [历史颜色展示](#历史颜色)   |  |
 | v-model      | `String`  |        | 绑定颜色Value支持（hex , rgb , hsl , hsv ） |                             |  |
-
-
-
-d-color-picker 事件
-
-| 事件 | 类型 | 说明 | 跳转 Demo |
-| ---- | ---- | ---- | --------- |
-|      |      |      |           |
-|      |      |      |           |
-|      |      |      |           |

@@ -164,14 +164,14 @@ export default {
 
 ### d-statistic
 
-| 参数               | 类型               | 默认     | 说明             |
-| ------------------ | ------------------ | -------- | ---------------- |
-| title              | `string \| v-slot` | -        | 数值的标题       |
-| extra              | `string \| v-slot` | -        | 额外内容         |
-| value              | `number \| string` | -        | 数值内容         |
-| group-separator    | `string`           | ,        | 设置千分位标识符 |
-| precision          | `number`           | -        | 设置数值精度     |
-| suffix             | `string \| v-slot` | -        | 设置数值的后缀   |
+| 参数 | 类型 | 默认 | 说明 |
+| :---: | :---: | :---: | :---: |
+| title              | `string \| v-slot` | - | 数值的标题 |
+| extra              | `string \| v-slot` | - | 额外内容 |
+| value              | `number \| string` | - | 数值内容 |
+| group-separator    | `string`           | - | 设置千分位标识符 |
+| precision          | `number`           | - | 设置数值精度     |
+| suffix             | `string \| v-slot` | - | 设置数值的后缀   |
 | prefix             | `string \| v-slot` | -        | 设置数值的前缀   |
 | title-style        | `style`            | -        | 标题样式         |
 | content-style      | `style`            | -        | 内容样式         |
@@ -181,5 +181,4 @@ export default {
 | animation          | `boolean`          | false    | 是否开启动画     |
 | easing             | `string`           | quartOut | 数字动画效果     |
 | start              | `boolean`          | false    | 是否开始动画     |
-
 

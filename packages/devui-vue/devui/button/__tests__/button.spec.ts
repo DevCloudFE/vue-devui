@@ -2,9 +2,9 @@ import { mount } from '@vue/test-utils';
 import Button from '../src/button';
 
 describe('d-button', () => {
-  it('btnStyle', () => {
+  it('variant', () => {
     const wrapper = mount(Button, {
-      props: { btnStyle: 'danger' },
+      props: { variant: 'danger' },
     });
     expect(wrapper.find('.devui-btn').classes()).toContain('devui-btn-danger');
   });
@@ -36,17 +36,17 @@ describe('d-button', () => {
   });
 
   // 目前还不支持 loading
-  // it('loading', async () => {
-  //   const handleClick = jest.fn();
-  //   const wrapper = mount(Button, {
-  //     props: {
-  //       showLoading: true,
-  //       btnClick: handleClick
-  //     },
-  //   });
-  //   await wrapper.trigger('click');
-  //   expect(handleClick).not.toBeCalled();
-  // });
+  it('loading', async () => {
+    const handleClick = jest.fn();
+    const wrapper = mount(Button, {
+      props: {
+        showLoading: true,
+        btnClick: handleClick
+      },
+    });
+    await wrapper.trigger('click');
+    expect(handleClick).not.toBeCalled();
+  });
 
   it('disabled', async () => {
     const handleClick = jest.fn();
@@ -64,7 +64,7 @@ describe('d-button', () => {
   it('slot', () => {
     const btnText = 'vue3 devui';
     const wrapper = mount(Button, {
-      slots:  {
+      slots: {
         default: btnText
       }
     });

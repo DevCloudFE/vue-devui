@@ -268,7 +268,7 @@ export default defineComponent({
           {!autoUpload && !withoutBtn && (
             <d-button
               style='marginLeft: 8px'
-              btnStyle='common'
+              variant='common'
               onClick={fileUpload}
               disabled={disabled || fileUploaders[0]?.status === UploadStatus.uploading}
             >
