@@ -7,7 +7,7 @@ export function colorPickerResize(
 ): void {
   const rect = colorCubeRef.value?.getBoundingClientRect()
   left.value = rect?.left
-  top.value = rect?.top + window.scrollY + rect.height
+  top.value = rect?.top + window.scrollY + rect?.height
 }
 export function isExhibitionColorPicker(
   event: PointerEvent,
@@ -39,5 +39,24 @@ export function changeColorValue(value: ColorPickerColor, maxValue: number): Css
       : { color: '#fff' }
   } else {
     return { color: '#000' }
+  }
+}
+// 判断当前可视区是否完整显示 picker 面板
+export function panelPostion(pickerRef: Ref<HTMLElement>, colorCubeRef: Ref<HTMLElement>): void {
+  if (pickerRef.value) {
+    const picker = pickerRef.value?.getBoundingClientRect()
+    const textPalette = colorCubeRef.value?.getBoundingClientRect()
+    if (
+      window.innerHeight - textPalette.y - textPalette.height <
+      pickerRef.value?.getBoundingClientRect().height
+    ) {
+      pickerRef.value.style.transform = `translate(${textPalette.left + 'px'}, ${
+        textPalette.top + window.scrollY - picker.height + 'px'
+      })`
+      return
+    }
+    pickerRef.value.style.transform = `translate(${textPalette.left + 'px'}, ${
+      textPalette.top + window.scrollY + textPalette.height + 'px'
+    })`
   }
 }

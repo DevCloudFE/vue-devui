@@ -15,7 +15,8 @@ import {
   useReactive,
   colorPickerResize,
   isExhibitionColorPicker,
-  changeColorValue
+  changeColorValue,
+  panelPostion
 } from './utils/composeable'
 import { colorPickerProps, ColorPickerProps } from './color-picker-types'
 import colorPanel from './components/color-picker-panel/color-picker-panel'
@@ -53,6 +54,8 @@ export default defineComponent({
       window.addEventListener('resize', resize)
       // 点击展示 colorpicker
       window.addEventListener('click', isExhibition)
+      // 判断当前可视区是否完整显示 picker 面板
+      window.addEventListener('scroll', setPanelPostion)
     })
     // ** computeds
     // colorpicker panel 组件位置
@@ -100,12 +103,9 @@ export default defineComponent({
     watch(
       () => showColorPicker.value,
       (newValue) => {
-        const textPalette = colorCubeRef.value?.getBoundingClientRect()
         newValue &&
           nextTick(() => {
-            pickerRef.value.style.transform = `translate(${textPalette.left + 'px'}, ${
-              textPalette.top + window.scrollY + textPalette.height + 'px'
-            })`
+            panelPostion(pickerRef, colorCubeRef)
           })
       }
     )
@@ -130,6 +130,9 @@ export default defineComponent({
     }
     function isExhibition(event: Event) {
       return isExhibitionColorPicker(event, colorCubeRef, pickerRef, showColorPicker)
+    }
+    function setPanelPostion() {
+      panelPostion(pickerRef, colorCubeRef)
     }
     return () => {
       return (
