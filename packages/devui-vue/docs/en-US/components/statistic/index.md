@@ -44,7 +44,6 @@ Display statistics in cards.
           :value="68.28"
           :precision="3"
           suffix="%"
-          :content-style="{ color: '#3f8600' }"
         >
           <template #prefix>
             <d-icon name="experice-new" />
@@ -59,7 +58,6 @@ Display statistics in cards.
           :value="38.3"
           suffix="%"
           class="demo-class"
-          :content-style="{ color: '#cf1322' }"
         >
           <template #prefix>
             <d-icon name="bold" />
@@ -87,30 +85,28 @@ We can start numerical animation by setting the animation attribute. You can sta
           title="Animation Growth Rate"
           :value="88.265"
           suffix="%"
-          :content-style="{ color: '#3f8600' }"
           :value-from="0"
           :start="start"
           :animation-duration="5000"
           animation
-        >
-        </d-statistic>
+        ></d-statistic>
       </d-card>
     </d-col>
     <d-col :span="12">
       <d-card>
         <d-statistic
           title="Animation Decline Rate"
-          value="53.333"
-          :precision="0"
-          suffix="%"
-          class="demo-class"
-          :content-style="{ color: '#cf1322' }"
+          value="53"
+          :precision="3"
           :value-from="0"
           :start="controlStart"
           animation
         >
+          <template #suffix>
+            <span>%</span>
+            <d-button @click="controlStart = true">Start</d-button>
+          </template>
         </d-statistic>
-        <d-button @click="controlStart = true">Start</d-button>
       </d-card>
     </d-col>
   </d-row>
@@ -120,10 +116,10 @@ export default {
   data() {
     return {
       start: true,
-      controlStart: false,
-    };
-  },
-};
+      controlStart: false
+    }
+  }
+}
 </script>
 ```
 
@@ -187,7 +183,7 @@ Provide custom attributes to facilitate adding styles
         group-separator="."
         :precision="3"
         prefix="$"
-        :content-style="{ fontSize: '30px', color: 'red'}"
+        :content-style="{ fontSize: '30px', color: '#5e7ce0'}"
       >
     </d-col>
   </d-row>

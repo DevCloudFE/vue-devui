@@ -148,7 +148,6 @@ export default {
 
 ### 自定义样式
 
-<<<<<<< HEAD
 提供自定义属性方便添加样式
 :::demo
 
@@ -172,7 +171,7 @@ export default {
         group-separator="."
         :precision="3"
         prefix="$"
-        :content-style="{ fontSize: '30px', color: 'red'}"
+        :content-style="{ fontSize: '30px', color: '#5e7ce0'}"
       >
     </d-col>
   </d-row>
