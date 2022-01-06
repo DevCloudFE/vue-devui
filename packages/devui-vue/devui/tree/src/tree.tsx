@@ -1,6 +1,6 @@
-import { defineComponent, reactive, toRefs, provide } from 'vue'
+import { defineComponent, reactive, ref, toRefs, provide } from 'vue'
 import type { SetupContext } from 'vue'
-import { treeProps, TreeProps, TreeItem, TreeRootType } from './tree-types'
+import { treeProps, TreeProps, TreeItem, TreeRootType, Nullable } from './tree-types'
 import { CHECK_CONFIG } from  './config'
 import { preCheckTree, deleteNode, getId } from './util'
 import Loading from '../../loading/src/service'
@@ -11,6 +11,7 @@ import useHighlightNode from './composables/use-highlight'
 import useChecked from './composables/use-checked'
 import useLazy from './composables/use-lazy'
 import useOperate from './composables/use-operate'
+import useDraggable from './composables/use-draggable'
 import IconOpen from './assets/open.svg'
 import IconClose from './assets/close.svg'
 import NodeContent from './tree-node-content'
@@ -21,20 +22,19 @@ export default defineComponent({
   props: treeProps,
   emits: ['nodeSelected'],
   setup(props: TreeProps, ctx: SetupContext) {
-    const { data, checkable, checkableRelation: cbr } = toRefs(reactive({ ...props, data: preCheckTree(props.data) }))
+    const { data, checkable, draggable, dropType, checkableRelation: cbr } = toRefs(reactive({ ...props, data: preCheckTree(props.data) }))
+    const node = ref<Nullable<HTMLElement>>(null)
     const { mergeData } = useMergeNode(data.value)
     const { openedData, toggle } = useToggle(mergeData)
     const { nodeClassNameReflect, handleInitNodeClassNameReflect, handleClickOnNode } = useHighlightNode()
     const { lazyNodesReflect, handleInitLazyNodeReflect, getLazyData } = useLazy()
     const { selected, onNodeClick } = useChecked(cbr, ctx, data.value)
     const { editStatusReflect, operateIconReflect, handleReflectIdToIcon } = useOperate(data)
-
+    const { onDragstart, onDragover, onDragleave, onDrop } = useDraggable(draggable.value, dropType.value, node);
     provide<TreeRootType>('treeRoot', { ctx, props })
-    const Indent = () => {
-      return <span style="display: inline-block; width: 16px; height: 16px; margin-left: 8px;"></span>
-    }
+
     const renderNode = (item: TreeItem) => {
-      const { id = '', label, disabled, open, isParent, level, children, addable, editable, deletable } = item
+      const { id = '', disabled, open, isParent, level, children, addable, editable, deletable } = item
       handleReflectIdToIcon(
         id,
         {
@@ -108,7 +108,7 @@ export default defineComponent({
               ? open
                 ? <IconOpen class="mr-xs" />
                 : <IconClose class="mr-xs" />
-              : <Indent /> 
+              : <span class="devui-tree-node__indent" /> 
             }
           </div>
           
@@ -119,12 +119,17 @@ export default defineComponent({
         <div
           class={['devui-tree-node', open && 'devui-tree-node__open']}
           style={{ paddingLeft: `${24 * (level - 1)}px` }}
+          draggable={draggable.value}
+          onDragstart={(event: DragEvent) => onDragstart(event)}
+          onDragover={(event: DragEvent) => onDragover(event, item)}
+          onDragleave={(event: DragEvent) => onDragleave(event)}
+          onDrop={(event: DragEvent) => onDrop(event, item)}
         >
           <div
             class={`devui-tree-node__content ${nodeClassNameReflect.value[id]}`}
             onClick={() => handleClickOnNode(id)}
           >
-            <div class="devui-tree-node__content--value-wrapper">
+            <div class={['devui-tree-node__content--value-wrapper', draggable && 'devui-drop-draggable']}>
               { renderFoldIcon(item) }
               { checkable.value && <Checkbox key={id} onClick={() => onNodeClick(item)} disabled={disabled} {...checkState} /> }
               <NodeContent node={item} editStatusReflect={editStatusReflect.value} />
