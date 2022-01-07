@@ -212,13 +212,13 @@ function handleErrorStrategyPass(el: HTMLElement): void {
   el.setAttribute('class', classList.join(' '));
 }
 
-function getDfcUID(el: HTMLElement): string {
+function getFormControlUID(el: HTMLElement): string {
   if(el.tagName.toLocaleLowerCase() === "body") return "";
   let uid = ''
   if(el.parentElement.id.startsWith('dfc-')) {
     return el.parentElement.id;
   }else {
-    uid = getDfcUID(el.parentElement);
+    uid = getFormControlUID(el.parentElement);
   }
 }
 
@@ -231,7 +231,7 @@ function handleValidateError({el, tipEl, message = "", isFormTag, messageShowTyp
   }
 
   if(!dfcUID) {
-    dfcUID = getDfcUID(el);
+    dfcUID = getFormControlUID(el);
   }
   
   // messageShowType为popover时，设置popover
