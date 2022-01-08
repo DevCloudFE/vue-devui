@@ -18,7 +18,7 @@ export default {
     mounted(el: HTMLElement, binding:unknown):void {
         el.addEventListener('dragover', function (event: DragEvent){
             event.preventDefault()
-            const targetNode: any = event.target
+            const targetNode: any = event.target;
             const dragId = binding.instance.$root.identity
             if (!binding.instance.$root.dropElement){
                 binding.instance.$root.dropElement = [...el.childNodes][1]
