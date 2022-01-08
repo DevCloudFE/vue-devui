@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { TreeSelectProps, TreeItem } from '../src/tree-select-types'
 
 export default function useSelect(props: TreeSelectProps): any {
-  const inputValue = ref<string>('')
+  const inputValue = ref<string | Array<string>>([])
   const selectedCache = new Set()
 
   const selectValue = (item: TreeItem) => {
@@ -14,7 +14,7 @@ export default function useSelect(props: TreeSelectProps): any {
       useCache(item)
       searchUp(item)
       searchDown(item)
-      inputValue.value = [...selectedCache].toString()
+      inputValue.value = [...selectedCache] as string[]
     }
   }
 
