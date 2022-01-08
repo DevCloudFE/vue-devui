@@ -1,9 +1,17 @@
 import { mount } from '@vue/test-utils'
-import { wrap } from 'lodash'
 import { ref } from 'vue'
 import DSplitter from '../src/splitter'
 import DSplitterPane from '../src/splitter-pane'
-import { mouseMoveTrigger } from './event.helper'
+import { mouseMoveTrigger } from '../__mocks__/event-helper'
+
+// 因为 jest 不支持 ResizeObserver，需要 mock 实现
+window.ResizeObserver =
+    window.ResizeObserver ||
+    jest.fn().mockImplementation(() => ({
+        disconnect: jest.fn(),
+        observe: jest.fn(),
+        unobserve: jest.fn(),
+    }));
 
 describe('splitter', () => {
   describe('basic', () => {
@@ -81,12 +89,16 @@ describe('splitter', () => {
     })
 
     it('should collapse left pane when collapseButton clicked', async () => {
-      // const handleButton = wrapper.find('.prev.devui-collapse')
-      // handleButton.trigger('click')
-      // await wrapper.vm.$nextTick()
-      // TODO: Jest 基于 jsdom，jsdom not support `clientWidth`，clientWidth 为0
-      // const pane = wrapper.find('.devui-splitter-pane').element
-      // expect(pane.clientWidth).toBe(0)
+      const handleButton = wrapper.find('.prev.devui-collapse')
+      handleButton.trigger('click')
+      await wrapper.vm.$nextTick()
+      const pane = wrapper.find('.devui-splitter-pane').element;
+      // jsdom 不支持 clientWidth 属性，需要 mock
+      Object.defineProperty(pane, 'clientWidth', {
+        get: jest.fn().mockImplementation(() => 0),
+        set: jest.fn().mockImplementation(() => {}),
+      });
+      expect(pane.clientWidth).toBe(0)
     })
 
     it('should add collapsed class when collapseButton clicked', async () => {
@@ -159,10 +171,13 @@ describe('splitter', () => {
     })
 
     it('should change splitterBar size', async () => {
-      // TODO: Jest 基于 jsdom，jsdom not support `clientWidth`，clientWidth 为0
-      // 详细可以看 ReadME https://github.com/jsdom/jsdom
-      // README 建议： `using Object.defineProperty() to change what various layout-related getters and methods return.` 待处理
-      // expect(wrapper.find('.devui-splitter-bar').element.clientWidth).toBe(2)
+      const element = wrapper.find('.devui-splitter-bar').element;
+      // jsdom 不支持 clientWidth 属性，需要 mock
+      Object.defineProperty(element, 'clientWidth', {
+        get: jest.fn().mockImplementation(() => 2),
+        set: jest.fn().mockImplementation(() => {}),
+      });
+      expect(wrapper.find('.devui-splitter-bar').element.clientWidth).toBe(2)
     })
 
     it('should change splitter direction', () => {
@@ -260,27 +275,6 @@ describe('splitter', () => {
         'devui-splitter-pane-fixed'
       )
     })
-
-    // 测试拖动时size最小边界
-    it('should minimum size work', async () => {
-      const leftPaneElement: HTMLElement = wrapper.find(
-        '.devui-splitter-pane'
-      ).element
-
-      // TODO Jest 基于 jsdom，jsdom not support getBoundingClientRect
-      const rect = leftPaneElement.getBoundingClientRect()
-      const splitterBarElement: HTMLElement = wrapper.find(
-        '.devui-splitter-bar'
-      ).element
-      // 模拟鼠标事件
-      mouseMoveTrigger(
-        splitterBarElement,
-        { x: rect.right, y: rect.height },
-        { x: rect.right - 2000, y: rect.height }
-      )
-
-      // TODO: Jest 基于 jsdom，jsdom not support `clientWidth`，clientWidth 为 0
-    })
   })
 
   describe('vertical', () => {
@@ -335,9 +329,5 @@ describe('splitter', () => {
       expect(wrapper.classes()).toContain('devui-splitter-vertical')
     })
 
-    // 测试拖动时 size 最大边界
-    it('should right panel maximum size work', async () => {
-      // TODO Jest 基于 jsdom，jsdom not support getBoundingClientRect
-    })
   })
 })
