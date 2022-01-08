@@ -127,6 +127,35 @@ export default ({
 
 :::
 
+### 以服务的方式调用
+
+:::demo
+
+```vue
+<template>
+<d-button @click="open()">click me</d-button>
+</template>
+<script>
+import { defineComponent, ref, h } from 'vue'
+export default defineComponent({
+  setup(props, ctx) {
+    const results =  ref(null);
+    function open() {
+      this.$drawerService.show({
+        visible: true,
+        isCover: false,
+      });
+    }
+    return {
+      open,
+    }
+  }
+})
+</script>
+```
+
+:::
+
 ### 参数及API
 
 | 参数 | 类型 | 默认 | 说明 | 跳转 Demo |

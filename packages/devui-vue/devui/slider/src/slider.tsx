@@ -132,11 +132,8 @@ export default defineComponent({
         inputValue.value = props.min;
         percentDispaly.value = '0%';
       } else {
-        if (inputValue.value < props.min) {
-          inputValue.value = props.min;
-        }
-        if (inputValue.value > props.max) {
-          inputValue.value = props.max;
+        if (inputValue.value < props.min || inputValue.value > props.max) {
+          return
         }
         const re = /^(?:[1-9]?\d|100)$/;
         if (re.test(`${inputValue.value}`)) {

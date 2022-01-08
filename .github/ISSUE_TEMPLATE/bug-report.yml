@@ -1,6 +1,7 @@
-name: '🐞 Bug report'
+name: '🐛 Bug report'
 description: Create a report to help us improve vue-devui
-labels: ['bug']
+title: '🐛 [Bug]: '
+labels: ['🐛  bug']
 body:
   - type: markdown
     attributes:

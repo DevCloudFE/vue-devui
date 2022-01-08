@@ -1,11 +1,15 @@
 import { computed, defineComponent, ref } from 'vue';
 import { Icon } from '../../icon';
+import loadingDirective from '../../loading/src/directive';
 import { buttonProps } from './button-types';
 
 import './button.scss';
 
 export default defineComponent({
   name: 'DButton',
+  directives: {
+    devLoading: loadingDirective
+  },
   props: buttonProps,
   setup(props, ctx) {
     const buttonContent = ref<HTMLSpanElement | null>(null);
@@ -20,10 +24,10 @@ export default defineComponent({
     const hasContent = computed(() => ctx.slots.default);
 
     const btnClass = computed(() => {
-      const { btnStyle, size, position, bordered, icon } = props;
-      const origin = `devui-btn devui-btn-${btnStyle} devui-btn-${size} devui-btn-${position}`;
+      const { variant, size, position, bordered, icon } = props;
+      const origin = `devui-btn devui-btn-${variant} devui-btn-${size} devui-btn-${position}`;
       const borderedClass = bordered ? 'bordered' : '';
-      const btnIcon = !!icon && !hasContent.value && btnStyle !== 'primary' ? 'd-btn-icon' : '';
+      const btnIcon = !!icon && !hasContent.value && variant !== 'primary' ? 'd-btn-icon' : '';
       const btnIconWrap = !!icon ? 'd-btn-icon-wrap' : '';
       return `${origin} ${borderedClass} ${btnIcon} ${btnIconWrap}`;
     });
@@ -49,13 +53,17 @@ export default defineComponent({
         width
       } = props;
       return (
-        <div class="devui-btn-host" {...ctx.attrs} v-dLoading={showLoading}>
+        <div 
+          class="devui-btn-host" 
+          {...ctx.attrs} 
+        >
           <button
             class={btnClass.value}
             type={type}
             disabled={disabled}
             style={{ width }}
             onClick={onClick}
+            v-devLoading={showLoading}
           >
             {!!icon ? (
               <Icon name={icon} class={iconClass.value} />

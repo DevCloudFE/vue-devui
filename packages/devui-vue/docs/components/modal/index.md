@@ -29,11 +29,11 @@ export default defineComponent({
           ])
         ),
         buttons: [{
-          btnStyle: 'primary',
+          variant: 'primary',
           text: 'Ok',
           handler: () => result.hide(),
         }, {
-          btnStyle: 'common',
+          variant: 'common',
           text: 'Cancel',
           handler: () => result.hide()
         }]
@@ -73,7 +73,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-button btnStyle="common" @click="open">click me!</d-button>
+  <d-button variant="common" @click="open">click me!</d-button>
 </template>
 <script>
 import {ref, defineComponent, inject, onMounted, h} from 'vue';
@@ -95,7 +95,7 @@ export default defineComponent({
         beforeHidden: beforeHidden,
         backdropCloseable: true,
         buttons: [{
-          btnStyle: 'primary',
+          variant: 'primary',
           text: 'Save',
           handler: () => result.hide(),
         }]
@@ -112,14 +112,14 @@ export default defineComponent({
           backdropCloseable: false,
           dialogtype: 'warning',
           buttons: [{
-            btnStyle: 'primary',
+            variant: 'primary',
             text: 'Save',
             handler() {
               results.hide();
               resolve(true);
             }
           }, {
-            btnStyle: 'common',
+            variant: 'common',
             text: 'Cancel',
             handler() {
               results.hide();
@@ -145,10 +145,10 @@ export default defineComponent({
 ```vue
 <template>
   <div class="btn-group">
-    <d-button btnStyle="common" @click="open('success', '成功', 'Delete [Git] repository successfully.')">success</d-button>
-    <d-button btnStyle="common" @click="open('failed', '错误', 'It is failed. if you want to resolve it,please contact the supportor.')">fail</d-button>
-    <d-button btnStyle="common" @click="open('warning', '警告', 'Leaving this page!')">warning</d-button>
-    <d-button btnStyle="common" @click="open('info', '提示', 'You signed in with another tab or window. Reload to refresh your session.')">info</d-button>
+    <d-button variant="common" @click="open('success', '成功', 'Delete [Git] repository successfully.')">success</d-button>
+    <d-button variant="common" @click="open('failed', '错误', 'It is failed. if you want to resolve it,please contact the supportor.')">fail</d-button>
+    <d-button variant="common" @click="open('warning', '警告', 'Leaving this page!')">warning</d-button>
+    <d-button variant="common" @click="open('info', '提示', 'You signed in with another tab or window. Reload to refresh your session.')">info</d-button>
   </div>
 </template>
 <script>
@@ -163,7 +163,7 @@ export default defineComponent({
         dialogType: type,
         backdropCloseable: true,
         buttons: [{
-          btnStyle: 'primary',
+          variant: 'primary',
           text: 'Save',
           handler: () => result.hide(),
         }]
@@ -210,11 +210,11 @@ export default defineComponent({
           ])
         ),
         buttons: [{
-          btnStyle: 'primary',
+          variant: 'primary',
           text: 'Ok',
           handler: () => result.hide(),
         }, {
-          btnStyle: 'common',
+          variant: 'common',
           text: 'Cancel',
           handler: () => result.hide()
         }]
@@ -257,12 +257,12 @@ export default defineComponent({
           ])
         ),
         buttons: [{
-          btnStyle: 'primary',
+          variant: 'primary',
           text: 'Ok',
           autofocus: true,
           handler: () => result.hide(),
         }, {
-          btnStyle: 'common',
+          variant: 'common',
           text: 'Cancel',
           handler: () => result.hide()
         }]
@@ -302,11 +302,11 @@ export default defineComponent({
           ])
         ),
         buttons: [{
-          btnStyle: 'primary',
+          variant: 'primary',
           text: 'Ok',
           handler: () => result.hide(),
         }, {
-          btnStyle: 'common',
+          variant: 'common',
           text: 'Cancel',
           handler: () => result.hide()
         }]

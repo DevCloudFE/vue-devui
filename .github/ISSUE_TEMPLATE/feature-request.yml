@@ -1,6 +1,7 @@
-name: '💡 Feature Request'
+name: ✨ Feature Request
 description: Propose new features to vue-devui to improve it.
-labels: ['feature']
+title: '✨ [Feature]: '
+labels: ['✨ feature']
 body:
   - type: textarea
     id: feature-solve
