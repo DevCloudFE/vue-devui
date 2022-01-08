@@ -28,10 +28,8 @@ export default defineComponent({
           return null;
         }
         const actionList = actions.map((action:any, index:number) => <li key={`devui-comment-action-${index}`}  class={`devui-comment-action-${index}`}>{action}</li>);
-        console.log(actionList)
         return actionList;
       };
-      
       const actions = props.actions ?? slots.actions?.();
       const author = props.author ?? slots.author?.();
       const avatar = props.avatar ?? slots.avatar?.();
