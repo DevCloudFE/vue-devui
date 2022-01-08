@@ -2,6 +2,7 @@ import { defineComponent, inject, ref, computed, reactive, onMounted, Teleport }
 import { uniqueId } from 'lodash-es';
 import { IForm, formControlProps, formInjectionKey } from '../form-types';
 import { ShowPopoverErrorMessageEventData } from '../directive/d-validate-rules'
+import clickoutsideDirective from '../../../shared/devui-directive/clickoutside'
 import { EventBus, getElOffset } from '../util';
 import Icon from '../../../icon/src/icon';
 import Popover from '../../../popover/src/popover';
@@ -11,6 +12,9 @@ type positionType = 'top' | 'right' | 'bottom' | 'left';
 
 export default defineComponent({
   name: 'DFormControl',
+  directives: {
+    clickoutside: clickoutsideDirective
+  },
   props: formControlProps,
   setup(props, ctx) {
     const formControl = ref();
@@ -19,6 +23,7 @@ export default defineComponent({
     const isHorizontal = labelData.layout === 'horizontal';
     const uid = uniqueId("dfc-");
     const showPopover = ref(false);
+    const updateOn = ref('change');
     const tipMessage = ref("");
     const popPosition = ref<positionType>("bottom");
     let rectInfo: Partial<DOMRect> = {
@@ -38,11 +43,12 @@ export default defineComponent({
       EventBus.on("showPopoverErrorMessage", (data: ShowPopoverErrorMessageEventData) => {
         if (uid === data.uid) {
           rectInfo = el.getBoundingClientRect();
-          popoverLeftPosition = popPosition.value === "top" || popPosition.value === "bottom" ? rectInfo.right - (rectInfo.width / 2) : rectInfo.right;
-          popoverTopPosition = popPosition.value === "top" ? elOffset.top + (rectInfo.height / 2) - rectInfo.height : elOffset.top + (rectInfo.height / 2);
           showPopover.value = data.showPopover;
           tipMessage.value = data.message;
           popPosition.value = data.popPosition as any; // todo: 待popover组件positionType完善类型之后再替换类型
+          popoverLeftPosition = popPosition.value === "top" || popPosition.value === "bottom" ? rectInfo.right - (rectInfo.width / 2) : rectInfo.right;
+          popoverTopPosition = popPosition.value === "top" ? elOffset.top + (rectInfo.height / 2) - rectInfo.height : elOffset.top + (rectInfo.height / 2);
+          updateOn.value = data.updateOn ?? 'change';
         }
       });
     });
@@ -60,13 +66,20 @@ export default defineComponent({
       }
     })
 
+    const handleClickOutside = () => {
+      if(updateOn.value !== 'change') {
+        showPopover.value = false;
+      }
+    }
+
     return () => {
       const {
         feedbackStatus,
         extraInfo,
       } = props;
-      return <div class="form-control" ref={formControl} data-uid={uid}>
-        <Teleport to="body">
+      return <div class="form-control" ref={formControl} data-uid={uid} v-clickoutside={handleClickOutside}>
+        { showPopover.value && 
+          <Teleport to="body">
             <div style={{
               position: 'absolute',
               left: popoverLeftPosition + 'px',
@@ -74,9 +87,10 @@ export default defineComponent({
               width: rectInfo.width + 'px',
               height: rectInfo.height + 'px',
             }}>
-              <Popover visible={showPopover.value} content={tipMessage.value} popType={"error"} position={popPosition.value} />
+              <Popover controlled={updateOn.value !== 'change'} visible={showPopover.value} content={tipMessage.value} popType={"error"} position={popPosition.value} />
             </div>
           </Teleport>
+        }
         <div class={`devui-form-control-container${isHorizontal ? ' devui-form-control-container-horizontal' : ''}${feedbackStatus ? ' has-feedback' : ''}${feedbackStatus === 'error' ? ' feedback-error' : ''}`}>
           <div class="devui-control-content-wrapper" id={uid}>
             {ctx.slots.default?.()}
