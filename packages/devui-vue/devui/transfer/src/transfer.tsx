@@ -1,5 +1,5 @@
 import { defineComponent, reactive, watch, ref, SetupContext } from 'vue'
-import { TState } from '../types'
+import { TState, IItem } from '../types'
 import DTransferBase from './transfer-base'
 import DTransferOperation from './transfer-operation'
 import { initState } from '../common/use-transfer-base'
@@ -39,7 +39,7 @@ export default defineComponent({
 
     watch(
       () => leftOptions.keyword,
-      (nVal: string): void => {
+      (): void => {
         searchFilterData(leftOptions)
       }
     )
@@ -57,7 +57,7 @@ export default defineComponent({
 
     watch(
       () => rightOptions.keyword,
-      (nVal: string): void => {
+      (): void => {
         searchFilterData(rightOptions)
       },
     )
@@ -155,6 +155,14 @@ export default defineComponent({
     const isFunction = (type: string): boolean => {
       return props[type] && typeof props[type] === 'function'
     }
+
+    const dataSort = (target: TState, dragItem: IItem, dropItem: IItem, direction: string) => {
+      const startIndex = target.filterData.findIndex(item => item.key === dragItem.key)
+      const endIndex = target.filterData.findIndex(item => item.key === dropItem.key)
+      target.filterData.splice(endIndex, 1, dragItem)
+      target.filterData.splice(startIndex, 1, dropItem)
+      props.onDragend && props.onDragend(direction, dragItem, dropItem)
+    }
     /** methods end **/
 
     return () => {
@@ -172,6 +180,7 @@ export default defineComponent({
           allCount={leftOptions.data.length}
           showTooltip={props.showTooltip}
           tooltipPosition={props.tooltipPosition}
+          isSourceDroppable={props.isSourceDroppable}
           v-slots={
             {
               header: headerSlot(ctx, 'left'),
@@ -181,6 +190,7 @@ export default defineComponent({
           onChangeAllSource={(value) => changeAllSource(leftOptions, value)}
           onUpdateCheckeds={updateLeftCheckeds}
           onChangeQuery={(value) => changeQueryHandle(leftOptions, 'left', value)}
+          onDragend={(dragItem, dropItem) => dataSort(leftOptions, dragItem, dropItem, 'left')}
         />
         <DTransferOperation
           v-slots={{
@@ -211,9 +221,11 @@ export default defineComponent({
           allCount={rightOptions.data.length}
           showTooltip={props.showTooltip}
           tooltipPosition={props.tooltipPosition}
+          isTargetDroppable={props.isTargetDroppable}
           onChangeAllSource={(value) => changeAllSource(rightOptions, value)}
           onUpdateCheckeds={updateRightCheckeds}
           onChangeQuery={(value) => changeQueryHandle(rightOptions, 'right', value)}
+          onDragend={(dragItem, dropItem) => dataSort(rightOptions, dragItem, dropItem, 'right')}
         />
       </div>
     }
