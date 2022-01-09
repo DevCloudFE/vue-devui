@@ -1,4 +1,4 @@
-import { defineComponent, reactive, ref, toRefs, provide } from 'vue'
+import { defineComponent, reactive, ref, toRefs, provide, unref } from 'vue'
 import type { SetupContext } from 'vue'
 import { treeProps, TreeProps, TreeItem, TreeRootType, Nullable } from './tree-types'
 import { CHECK_CONFIG } from  './config'
@@ -30,11 +30,11 @@ export default defineComponent({
     const { lazyNodesReflect, handleInitLazyNodeReflect, getLazyData } = useLazy()
     const { selected, onNodeClick } = useChecked(cbr, ctx, data.value)
     const { editStatusReflect, operateIconReflect, handleReflectIdToIcon } = useOperate(data)
-    const { onDragstart, onDragover, onDragleave, onDrop } = useDraggable(draggable.value, dropType.value, node);
+    const { onDragstart, onDragover, onDragleave, onDrop } = useDraggable(draggable.value, dropType.value, node, openedData, data);
     provide<TreeRootType>('treeRoot', { ctx, props })
 
     const renderNode = (item: TreeItem) => {
-      const { id = '', disabled, open, isParent, level, children, addable, editable, deletable } = item
+      const { id = '', disabled, open, isParent, level, children, addable, editable, deletable } = item  
       handleReflectIdToIcon(
         id,
         {
@@ -120,7 +120,7 @@ export default defineComponent({
           class={['devui-tree-node', open && 'devui-tree-node__open']}
           style={{ paddingLeft: `${24 * (level - 1)}px` }}
           draggable={draggable.value}
-          onDragstart={(event: DragEvent) => onDragstart(event)}
+          onDragstart={(event: DragEvent) => onDragstart(event, item)}
           onDragover={(event: DragEvent) => onDragover(event, item)}
           onDragleave={(event: DragEvent) => onDragleave(event)}
           onDrop={(event: DragEvent) => onDrop(event, item)}

@@ -33,6 +33,9 @@ export const getId = (id: string): string => {
 export const preCheckTree = (ds: TreeData, postfixId?: string): TreeData => {
   return ds.map(d => {
     const dd = preCheckNodeId(d, postfixId)
+    if (!dd.parentId && postfixId) {
+      dd.parentId = postfixId
+    }
     return d.children ? {
       ...dd,
       children: preCheckTree(d.children, dd.id)
