@@ -1,29 +1,29 @@
-.form-item {
+.devui-form-item {
   display: flex;
   // align-items: center;
   margin-bottom: 20px;
 }
 
-.form-item-vertical {
+.devui-form-item-vertical {
   flex-direction: column;
 }
 
-.form-item-columns {
+.devui-form-item-columns {
   flex-direction: column;
   display: inline-block !important;
 }
 // .u-1-3 {
 //   width: 33.3%;
 // }
-.column-item {
+.devui-column-item {
   margin-bottom: 20px;
 }
 
-.column-item .form-control {
+.devui-column-item .devui-form-control {
   width: 60% !important;
 }
 
-.d-validate-tip {
+.devui-validate-tip {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,6 +31,6 @@
   color: #f66f6a;
 }
 
-.d-validate-tip-horizontal {
+.devui-validate-tip-horizontal {
   margin-left: 10px;
 }

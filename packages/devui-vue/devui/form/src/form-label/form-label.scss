@@ -1,4 +1,4 @@
-.form-label {
+.devui-form-label {
   // flex: 1 1 auto;
   -moz-box-flex: 1;
   text-align: left;
@@ -21,30 +21,30 @@
   }
 }
 
-.form-label_sm {
+.devui-form-label_sm {
   width: 80px;
   min-width: 80px;
 }
 
-.form-label_sd {
+.devui-form-label_sd {
   width: 100px;
   min-width: 100px;
 }
 
-.form-label_lg {
+.devui-form-label_lg {
   width: 150px;
   min-width: 150px;
 }
 
-.form-label_center {
+.devui-form-label_center {
   text-align: center;
 }
 
-.form-label_end {
+.devui-form-label_end {
   text-align: end;
 }
 
-.form-label-help {
+.devui-form-label-help {
   border-radius: 50%;
   display: inline-flex;
   justify-content: center;
