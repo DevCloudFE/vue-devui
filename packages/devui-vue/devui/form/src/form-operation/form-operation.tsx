@@ -8,7 +8,7 @@ export default defineComponent({
   },
   setup(props, ctx) {
     return () => {
-      return <div class="form-operation">
+      return <div class="devui-form-operation">
         {ctx.slots.default?.()}
       </div>
     }

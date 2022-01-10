@@ -17,7 +17,7 @@ export default defineComponent({
     const isCenter = computed(() => labelData.labelAlign === 'center').value;
     const isEnd = computed(() => labelData.labelAlign === 'end').value;
     
-    const wrapperCls = `form-label${isHorizontal ? (isSm ? ' form-label_sm' : (isLg ? ' form-label_lg' : ' form-label_sd')) : ''}${isCenter ? ' form-label_center' : (isEnd ? ' form-label_end' : '')}`;
+    const wrapperCls = `devui-form-label${isHorizontal ? (isSm ? ' devui-form-label_sm' : (isLg ? ' devui-form-label_lg' : ' devui-form-label_sd')) : ''}${isCenter ? ' devui-form-label_center' : (isEnd ? ' devui-form-label_end' : '')}`;
     const className = `${props.required ? ' devui-required' : ''}`;
     const style = {display: isHorizontal ? 'inline' : 'inline-block'};
     
@@ -29,7 +29,7 @@ export default defineComponent({
             props.hasHelp && props.helpTips && (
               <Popover content={props.helpTips} showAnimation={false} position={'top'} trigger={'hover'} v-slots={{
                 reference: () => (
-                  <span class="form-label-help">
+                  <span class="devui-form-label-help">
                     <Icon name="helping" color="#252b3a"></Icon>
                   </span>
                 )
