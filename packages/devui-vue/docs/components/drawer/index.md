@@ -134,9 +134,14 @@ export default {
 import { defineComponent, ref, h } from 'vue'
 export default defineComponent({
   setup(props, ctx) {
+    const drawerInstanceFirst = ref(null);
+    const drawerInstanceSecond = ref(null);
     function open() {
-      const drawerInstanceFirst = this.$drawerService.show({
+      drawerInstanceFirst.value = this.$drawerService.create({
         visible: true,
+        onClose: () => {
+          drawerInstanceFirst.value.hide()
+        },
         content: () =>
           h(
             'div',
@@ -147,9 +152,9 @@ export default defineComponent({
             },
             'hide'
           )
-      })
-      const drawerInstanceSecond = this.$drawerService.show({
-        visible: true,
+      }, drawerInstanceFirst.value)
+      drawerInstanceFirst.value.show()
+      drawerInstanceSecond.value = this.$drawerService.create({
         width: '200px',
         content: () => [
           h(
@@ -171,12 +176,14 @@ export default defineComponent({
             'handleHideSecond'
           )
         ]
-      })
+      }, drawerInstanceSecond.value)
+      drawerInstanceSecond.value.show()
+      
       const handleHideFirst = () => {
-        drawerInstanceFirst.hide()
+        drawerInstanceFirst.value.hide()
       }
       const handleHideSeconde = () => {
-        drawerInstanceSecond.hide()
+        drawerInstanceSecond.value.destroy()
       }
     }
     return {
