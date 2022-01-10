@@ -1,9 +1,12 @@
-import { TreeData } from '../src/tree-select-types'
+import { TreeData, TreeItem } from '../src/tree-select-types'
+
+export const nodeMap = new Map<string, TreeItem>()
 
 export function attributeExtension(data: TreeData): any {
   data.forEach((el) => {
     let level = 1
     el.level = level
+    nodeMap.set(el.label, el)
     const nodeQueue = []
     nodeQueue.push(el)
     while(nodeQueue.length !== 0) {
@@ -12,6 +15,7 @@ export function attributeExtension(data: TreeData): any {
         node.children.forEach((el) => {
           el.level = level + 1
           el.parent = node
+          nodeMap.set(el.label, el)
           nodeQueue.push(el)
         })
       }

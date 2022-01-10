@@ -1,10 +1,13 @@
 import { computed, ExtractPropTypes, PropType, ComputedRef } from 'vue'
 import { IItem, TState, TResult } from '../types'
 import { TransferProps } from './use-transfer'
+import { transferCommon, transferDragFunctions } from './use-transfer-common'
 
 export type TransferOperationProps = ExtractPropTypes<typeof transferBaseProps>
 
 export const transferBaseProps = {
+    ...transferCommon,
+    ...transferDragFunctions,
     sourceOption: {
         type: Array as () => IItem[],
         default(): Array<IItem> {
@@ -57,13 +60,13 @@ export const transferBaseProps = {
         type: Number,
         default: (): number => 0
     },
-    showTooltip: {
+    isSourceDroppable: {
         type: Boolean,
         default: (): boolean => false
     },
-    tooltipPosition: {
-        type: String as PropType<'top' | 'right' | 'bottom' | 'left'>,
-        default: (): string => 'top'
+    isTargetDroppable: {
+        type: Boolean,
+        default: (): boolean => false
     },
     scopedSlots: {
         type: Object
@@ -76,6 +79,9 @@ export const transferBaseProps = {
     },
     onUpdateCheckeds: {
         type: Function as PropType<(val: string[]) => void>
+    },
+    onDragend: {
+        type: Function as unknown as () => ((dragItem: IItem, dropItem: IItem) => void)
     }
 }
 
