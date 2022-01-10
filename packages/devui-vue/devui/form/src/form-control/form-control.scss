@@ -1,14 +1,14 @@
-.form-control {
+.devui-form-control {
   position: relative;
 
-  .star {
+  .devui-star {
     color: red;
   }
 
   .devui-form-control-container {
     position: relative;
 
-    .feedback-status {
+    .devui-feedback-status {
       position: absolute;
       top: 50%;
       right: 0;
@@ -86,7 +86,7 @@
 
 
 
-  .has-feedback {
+  .devui-has-feedback {
     display: flex;
     align-items: center;
 
@@ -95,7 +95,7 @@
     }
   }
 
-  .feedback-error {
+  .devui-feedback-error {
     border: 1px solid #f66f6a;
     border-radius: 2px;
 

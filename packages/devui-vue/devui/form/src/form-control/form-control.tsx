@@ -77,7 +77,7 @@ export default defineComponent({
         feedbackStatus,
         extraInfo,
       } = props;
-      return <div class="form-control" ref={formControl} data-uid={uid} v-clickoutside={handleClickOutside}>
+      return <div class="devui-form-control" ref={formControl} data-uid={uid} v-clickoutside={handleClickOutside}>
         { showPopover.value && 
           <Teleport to="body">
             <div style={{
@@ -91,13 +91,13 @@ export default defineComponent({
             </div>
           </Teleport>
         }
-        <div class={`devui-form-control-container${isHorizontal ? ' devui-form-control-container-horizontal' : ''}${feedbackStatus ? ' has-feedback' : ''}${feedbackStatus === 'error' ? ' feedback-error' : ''}`}>
+        <div class={`devui-form-control-container${isHorizontal ? ' devui-form-control-container-horizontal' : ''}${feedbackStatus ? ' devui-has-feedback' : ''}${feedbackStatus === 'error' ? ' devui-feedback-error' : ''}`}>
           <div class="devui-control-content-wrapper" id={uid}>
             {ctx.slots.default?.()}
           </div>
           {
             (feedbackStatus || ctx.slots.suffixTemplate?.()) &&
-            <span class="feedback-status">
+            <span class="devui-feedback-status">
               {ctx.slots.suffixTemplate?.() ? ctx.slots.suffixTemplate?.() : <Icon name={iconData.value.name} color={iconData.value.color}></Icon>}
             </span>
           }
