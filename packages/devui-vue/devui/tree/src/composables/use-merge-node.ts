@@ -1,13 +1,8 @@
-import { ref } from 'vue'
+import { Ref, ref, watch } from 'vue'
+import { TreeItem } from '../tree-types'
 
-export default function useMergeNode(data: Array<any>): any {
-
-
-  const mergeObject = (
-    treeItem,
-    childName = 'children',
-    labelName = 'label'
-  ) => {
+export default function useMergeNode(data: Ref<TreeItem[]>): any {
+  const mergeObject = (treeItem, childName = 'children', labelName = 'label') => {
     const { [childName]: children, [labelName]: label } = treeItem
     if (
       Array.isArray(children) &&
@@ -17,7 +12,7 @@ export default function useMergeNode(data: Array<any>): any {
     ) {
       return mergeObject(
         Object.assign({}, children[0], {
-          [labelName]: `${label} \\ ${children[0][labelName]}`,
+          [labelName]: `${label} \\ ${children[0][labelName]}`
         })
       )
     }
@@ -41,14 +36,20 @@ export default function useMergeNode(data: Array<any>): any {
       }
       return Object.assign({}, currentObject, {
         [childName]: mergeNode(currentObject[childName], level + 1, childName, labelName),
-        level: level + 1,
+        level: level + 1
       })
     })
   }
-
-  const mergeData = ref(mergeNode(data))
+  const mergeData = ref(mergeNode(data.value))
+  watch(
+    () => data.value,
+    () => {
+      mergeData.value = mergeNode(data.value)
+    },
+    { deep: true }
+  )
 
   return {
-    mergeData,
+    mergeData
   }
 }

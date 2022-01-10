@@ -46,8 +46,6 @@ export default function useDraggable(
     }
   }
   const handlerDropData = (dragNodeId: string | number, dropNodeId: string | number, dropType?: string) => {
-    console.log(dragNodeId, dropNodeId);
-    
     const cloneData = cloneDeep(data.value)
     let nowDragNode
     let nowDropNode
@@ -58,9 +56,9 @@ export default function useDraggable(
           return false
         }
         if (item.id === dragNodeId) {
-          nowDragNode = { target: curr, index }
+          nowDragNode = { target: curr, index, item }
         } else if (item.id === dropNodeId) {
-          nowDropNode = { target: curr, index }
+          nowDropNode = { target: curr, index, item }
         }
         if (!nowDragNode || !nowDropNode) {
           ergodic(item.children)
@@ -70,14 +68,26 @@ export default function useDraggable(
     }
     ergodic(cloneData)
     if (nowDragNode && nowDropNode && dropType) {
-      if (dropType === '') {
-      
+      const cloneDrapNode = cloneDeep(nowDragNode.target[nowDragNode.index])
+      if (dropType === 'prev') {
+        nowDropNode.target.splice(nowDropNode.index, 0, cloneDrapNode)
+      } else if (dropType === 'next') {
+        nowDropNode.target.splice(nowDropNode.index + 1, 0, cloneDrapNode)
+      } else if (dropType === 'inner') {
+        const children = nowDropNode.target[nowDropNode.index].children
+        if (Array.isArray(children)) {
+          children.unshift(cloneDrapNode)
+        } else {
+          nowDropNode.target[nowDropNode.index].children = [cloneDrapNode]
+        }
       }
-      nowDropNode.target.unshift(
-        cloneDeep(nowDragNode.target[nowDragNode.index])
-      )
-      nowDragNode.target.splice(nowDragNode.index, 1)
+      const targetIndex = nowDragNode.target.indexOf(nowDragNode.item)
+      if (targetIndex !== -1) {
+        nowDragNode.target.splice(targetIndex, 1)
+      }
+      
     }
+    console.log(cloneData);
     
     return cloneData
   }
@@ -144,16 +154,13 @@ export default function useDraggable(
             return
           }
           let result
-          console.log(cloneDeep(data.value))
-          
           if (dragState.dropType) {
             result = handlerDropData(dragNodeId, dropNode.id, dragState.dropType)
           }
-          console.log(result)
           data.value = result
         }
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     }
   }

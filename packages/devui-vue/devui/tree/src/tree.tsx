@@ -24,7 +24,7 @@ export default defineComponent({
   setup(props: TreeProps, ctx: SetupContext) {
     const { data, checkable, draggable, dropType, checkableRelation: cbr } = toRefs(reactive({ ...props, data: preCheckTree(props.data) }))
     const node = ref<Nullable<HTMLElement>>(null)
-    const { mergeData } = useMergeNode(data.value)
+    const { mergeData } = useMergeNode(data)
     const { openedData, toggle } = useToggle(mergeData)
     const { nodeClassNameReflect, handleInitNodeClassNameReflect, handleClickOnNode } = useHighlightNode()
     const { lazyNodesReflect, handleInitLazyNodeReflect, getLazyData } = useLazy()
@@ -129,8 +129,8 @@ export default defineComponent({
             class={`devui-tree-node__content ${nodeClassNameReflect.value[id]}`}
             onClick={() => handleClickOnNode(id)}
           >
+            { renderFoldIcon(item) }
             <div class={['devui-tree-node__content--value-wrapper', draggable && 'devui-drop-draggable']}>
-              { renderFoldIcon(item) }
               { checkable.value && <Checkbox key={id} onClick={() => onNodeClick(item)} disabled={disabled} {...checkState} /> }
               <NodeContent node={item} editStatusReflect={editStatusReflect.value} />
               { operateIconReflect.value.find(({ id: d }) => id === d).renderIcon(item) }
