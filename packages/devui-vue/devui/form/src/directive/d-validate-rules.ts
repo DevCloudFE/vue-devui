@@ -201,13 +201,13 @@ function getKeyValueOfObjectList(obj): {key: string; value: any;}[] {
 
 function handleErrorStrategy(el: HTMLElement): void {
   const classList: Array<string> =  [...el.classList];
-  classList.push('d-validate-rules-error-pristine');
+  classList.push('devui-validate-rules-error-pristine');
   el.setAttribute('class', classList.join(' '));
 }
 
 function handleErrorStrategyPass(el: HTMLElement): void {
   const classList: Array<string> =  [...el.classList];
-  const index = classList.indexOf('d-validate-rules-error-pristine');
+  const index = classList.indexOf('devui-validate-rules-error-pristine');
   index !== -1 && classList.splice(index, 1);
   el.setAttribute('class', classList.join(' '));
 }
@@ -242,7 +242,7 @@ function handleValidateError({el, tipEl, message = '', isFormTag, messageShowTyp
 
   tipEl.innerText = '' + message;
   tipEl.style.display = 'inline-flex';
-  tipEl.setAttribute('class', 'd-validate-tip');
+  tipEl.setAttribute('class', 'devui-validate-tip');
   handleErrorStrategy(el);
 }
 
