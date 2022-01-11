@@ -145,7 +145,7 @@ Label左右布局方式。
 
 ```vue
 <template>
-  <d-form ref="dFormHorizontal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
+  <d-form class="form-demo-horizontal" ref="dFormHorizontal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
     <d-form-item prop="name">
       <d-form-label required>姓名</d-form-label>
       <d-form-control>
@@ -179,8 +179,10 @@ Label左右布局方式。
     <d-form-item prop="sex">
       <d-form-label>性别</d-form-label>
       <d-form-control>
-        <d-radio v-model="formModel.sex" value="0">男</d-radio>
-        <d-radio v-model="formModel.sex" value="1">女</d-radio>
+        <d-radio-group v-model="formModel.sex" direction="row">
+          <d-radio value="0">男</d-radio>
+          <d-radio value="1">女</d-radio>
+        </d-radio-group>
       </d-form-control>
     </d-form-item>
     <d-form-item prop="workOn">
@@ -248,6 +250,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-horizontal {
+  width: 600px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -311,8 +316,10 @@ export default defineComponent({
         <d-form-item prop="sex">
           <d-form-label>性别</d-form-label>
           <d-form-control>
-            <d-radio v-model="formModel.sex" value="0">男</d-radio>
-            <d-radio v-model="formModel.sex" value="1">女</d-radio>
+            <d-radio-group direction="row" v-model="formModel.sex">
+              <d-radio value="0">男</d-radio>
+              <d-radio value="1">女</d-radio>
+            </d-radio-group>
           </d-form-control>
         </d-form-item>
         <d-form-item prop="workOn">
@@ -437,7 +444,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormColumn" layout="columns" columnsClass="u-1-3" :formData="formModel" @submit="onSubmitForm">
+  <d-form class="form-demo-column" ref="dFormColumn" layout="columns" columnsClass="u-1-3" :formData="formModel" @submit="onSubmitForm">
     <d-form-item prop="name" v-for="(item) in 6" :key="item" class="column-item">
       <d-form-label required hasHelp>姓名</d-form-label>
       <d-form-control>
@@ -459,8 +466,10 @@ export default defineComponent({
     <d-form-item prop="sex" class="column-item">
       <d-form-label>性别</d-form-label>
       <d-form-control>
-        <d-radio v-model="formModel.sex" value="0">男</d-radio>
-        <d-radio v-model="formModel.sex" value="1">女</d-radio>
+        <d-radio-group v-model="formModel.sex">
+          <d-radio value="0">男</d-radio>
+          <d-radio value="1">女</d-radio>
+        </d-radio-group>
       </d-form-control>
     </d-form-item>
     <d-form-item prop="goOffWork" class="column-item">
@@ -527,6 +536,9 @@ export default defineComponent({
 </script>
 
 <style>
+.form-demo-column .devui-form-control {
+  width: 200px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -563,7 +575,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormTemplateValidate1" :formData="formModel" labelSize="lg" >
+  <d-form class="form-demo-template-validate-1" ref="dFormTemplateValidate1" :formData="formModel" labelSize="lg" >
     <d-form-item prop="username">
       <d-form-label required>用户名</d-form-label>
       <d-form-control>
@@ -606,6 +618,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-template-validate-1 {
+  width: 400px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -627,7 +642,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormTemplateValidate2" :formData="formModel" labelSize="lg" >
+  <d-form class="form-demo-template-validate-2" ref="dFormTemplateValidate2" :formData="formModel" labelSize="lg" >
     <d-form-item prop="sum">
       <d-form-label>计算：1 + 1 = ？</d-form-label>
       <d-form-control>
@@ -692,6 +707,10 @@ export default defineComponent({
 
 
 <style>
+.form-demo-template-validate-2 {
+  width: 400px;
+}
+
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -721,7 +740,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormTemplateValidate3" :formData="formModel" labelSize="lg" >
+  <d-form class="form-demo-template-validate-3" ref="dFormTemplateValidate3" :formData="formModel" labelSize="lg" >
     <d-form-item prop="sum">
       <d-form-label>计算：1 + 1 = ？</d-form-label>
       <d-form-control extraInfo="updateOn为change，当输入完成时，输入框的值发生改变。此时触发验证规则">
@@ -819,6 +838,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-template-validate-3 {
+  width: 400px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -849,7 +871,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormTemplateValidate4" :formData="formModel" labelSize="lg" >
+  <d-form class="form-demo-template-validate-4" ref="dFormTemplateValidate4" :formData="formModel" labelSize="lg" >
     <d-form-item prop="sum">
       <d-form-label>计算：1 + 1 = ？</d-form-label>
       <d-form-control extraInfo="messageShowType为none，不显示提示文字">
@@ -918,6 +940,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-template-validate-4 {
+  width: 400px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -943,7 +968,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormTemplateValidate5" :formData="formModel" labelSize="lg" >
+  <d-form class="form-demo-template-validate-5" ref="dFormTemplateValidate5" :formData="formModel" labelSize="lg" >
     <d-form-item prop="asyncSum">
       <d-form-label>计算：1 + 2 = ？（async）</d-form-label>
       <d-form-control extraInfo="asyncDebounceTime为500">
@@ -987,6 +1012,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-template-validate-5 {
+  width: 400px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -1010,7 +1038,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form name="userInfoForm" ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" @submit="onSubmit">
+  <d-form class="form-demo-template-validate-6" name="userInfoForm" ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" @submit="onSubmit">
     <d-form-item prop="name">
       <d-form-label>姓名</d-form-label>
       <d-form-control>
@@ -1071,6 +1099,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-template-validate-6 {
+  width: 400px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -1094,7 +1125,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form name="userInfoForm2" ref="dFormTemplateValidate7" :formData="formModel" labelSize="lg" @submit="onSubmit" v-d-validate-rules="{
+  <d-form class="form-demo-template-validate-7" name="userInfoForm2" ref="dFormTemplateValidate7" :formData="formModel" labelSize="lg" @submit="onSubmit" v-d-validate-rules="{
           rules: {message: '表单验证未通过'},
         }" messageShowType="text">
     <d-form-item prop="name">
@@ -1157,6 +1188,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-template-validate-7 {
+  width: 400px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -1179,7 +1213,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormReactiveValidate" :form-data="validateFormModel" :rules="rules">
+  <d-form class="form-demo-reactive-validate" ref="dFormReactiveValidate" :form-data="validateFormModel" :rules="rules">
     <d-form-item prop="name">
       <d-form-label :required="true" >姓名</d-form-label>
       <d-form-control>
@@ -1235,6 +1269,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-reactive-validate {
+  width: 400px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -1258,7 +1295,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormFeedback" :form-data="formModel">
+  <d-form class="form-demo-feedback" ref="dFormFeedback" :form-data="formModel">
     <d-form-item prop="name">
       <d-form-label :required="true" >姓名</d-form-label>
       <d-form-control feedbackStatus="pending">
@@ -1314,6 +1351,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-feedback {
+  width: 400px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -1335,7 +1375,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormFeedback2" :form-data="formModel">
+  <d-form class="form-demo-feedback-2" ref="dFormFeedback2" :form-data="formModel">
     <d-form-item prop="address">
       <d-form-label :required="true" >地址</d-form-label>
       <d-form-control>
@@ -1366,6 +1406,11 @@ export default defineComponent({
 })
 </script>
 
+<style>
+.form-demo-feedback-2 {
+  width: 400px;
+}
+</style>
 ```
 
 :::
@@ -1380,7 +1425,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form name="togetherValidateForm" ref="dFormTogetherValidate" :form-data="formModel" labelSize="lg" @submit="onSubmit">
+  <d-form class="form-demo-together-validate" name="togetherValidateForm" ref="dFormTogetherValidate" :form-data="formModel" labelSize="lg" @submit="onSubmit">
     <d-form-item prop="username">
       <d-form-label :required="true" >用户名</d-form-label>
       <d-form-control>
@@ -1470,6 +1515,9 @@ export default defineComponent({
 </script>
 
 <style>
+.form-demo-together-validate {
+  width: 400px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -1494,7 +1542,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="dFormWithComponent" :form-data="formModel">
+  <d-form class="form-demo-validate-with-component" ref="dFormWithComponent" :form-data="formModel">
     <d-form-item prop="name">
       <d-form-label :required="true" >姓名</d-form-label>
       <d-form-control>
@@ -1530,6 +1578,9 @@ export default defineComponent({
 </script>
 
 <style>
+.form-demo-validate-with-component {
+  width: 400px;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
