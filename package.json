@@ -5,6 +5,7 @@
     "dev": "lerna exec --scope vue-devui yarn dev",
     "build": "lerna exec --scope vue-devui yarn build",
     "build:lib": "lerna exec --scope vue-devui yarn build:lib",
+    "build:cli": "lerna exec --scope @devui/cli yarn build",
     "prepare": "husky install",
     "precommit": "lint-staged",
     "lint:fix": "eslint --fix \"{packages}/**/*.{vue,js,ts,jsx,tsx}\"",
