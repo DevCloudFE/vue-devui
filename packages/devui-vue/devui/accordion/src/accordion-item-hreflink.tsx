@@ -30,7 +30,7 @@ export default defineComponent({
       linkKey,
       linkTargetKey,
       linkDefaultTarget,
-      activeKey,
+      // activeKey,
       disabledKey,
       itemTemplate
     } = toRefs(props)
@@ -46,16 +46,16 @@ export default defineComponent({
       return item.value && item.value[linkKey.value]
     })
 
-    const active = computed(() => {
-      return item.value && item.value[activeKey.value]
-    })
+    // const active = computed(() => {
+    //   return item.value && item.value[activeKey.value]
+    // })
 
-    const childActived = computed(() => {
-      return active.value
-    })
+    // const childActived = computed(() => {
+    //   return active.value
+    // })
 
     const target = computed(() => {
-      return item.value && (item.value[linkTargetKey.value] || linkDefaultTarget)
+      return item.value && (item.value[linkTargetKey.value] || linkDefaultTarget.value)
     })
 
     const disabled = computed(() => {
@@ -93,42 +93,33 @@ export default defineComponent({
     return () => {
       return (
         <>
-          {!disabled.value && (
-            <a
-              href={link.value}
-              target={target.value}
-              class={[
-                'devui-accordion-item-title',
-                'devui-over-flow-ellipsis',
-                disabled.value && 'disabled'
-              ]}
-              style={{ textIndent: deepValue * 20 + 'px' }}
-              title={title.value}
-              onClick={(e) =>
-                linkItemClickFn({
-                  item: item.value,
-                  parent: parentValue,
-                  event: e
-                })
-              }
-            >
-              {renderContent()}
-            </a>
-          )}
-          {disabled.value && (
-            <a
-              class={[
-                'devui-accordion-item-title',
-                'devui-over-flow-ellipsis',
-                childActived.value && 'active',
-                disabled.value && 'disabled'
-              ]}
-              style={{ textIndent: deepValue * 20 + 'px' }}
-              title={title.value}
-            >
-              {renderContent()}
-            </a>
-          )}
+          <div
+            class={['devui-accordion-item-title', disabled.value && 'disabled']}
+            style={{ textIndent: deepValue * 20 + 'px' }}
+          >
+            {!disabled.value && (
+              <a
+                href={link.value}
+                target={target.value}
+                class='devui-over-flow-ellipsis'
+                title={title.value}
+                onClick={(e) =>
+                  linkItemClickFn({
+                    item: item.value,
+                    parent: parentValue,
+                    event: e
+                  })
+                }
+              >
+                {renderContent()}
+              </a>
+            )}
+            {disabled.value && (
+              <a class='devui-over-flow-ellipsis' title={title.value}>
+                {renderContent()}
+              </a>
+            )}
+          </div>
         </>
       )
     }

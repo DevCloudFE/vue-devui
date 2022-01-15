@@ -1,5 +1,5 @@
 import { defineComponent, toRefs, computed, inject } from 'vue'
-import {useRoute} from 'vue-router'
+import { useRoute } from 'vue-router'
 import { accordionProps } from './accordion-types'
 import { AccordionItemClickEvent, AccordionMenuItem, AccordionLinkableItem } from './accordion.type'
 import DAccordionItem from './accordion-item'
@@ -29,6 +29,7 @@ export default defineComponent({
       parent,
       titleKey,
       linkKey,
+      linkDefaultTarget,
       disabledKey,
       itemTemplate
     } = toRefs(props)
@@ -45,6 +46,8 @@ export default defineComponent({
     const link = computed(() => {
       return item.value && item.value[linkKey.value]
     })
+
+    const isUsedVueRouter = computed(() => route !== undefined)
 
     const routerLinkActive = computed(() => {
       return route === link.value
@@ -85,40 +88,58 @@ export default defineComponent({
     return () => {
       return (
         <>
-          {!disabled.value && (
-            <router-link
-              to={link.value}
-              class={[
-                'devui-accordion-item-title',
-                'devui-over-flow-ellipsis',
-              ]}
-              active-class='.devui-router-active'
-              style={{ textIndent: deepValue * 20 + 'px' }}
-              title={title.value}
-              onClick={(e) =>
-                linkItemClickFn({
-                  item: item.value,
-                  parent: parentValue,
-                  event: e
-                })
-              }
-            >
-              {renderContent()}
-            </router-link>
-          )}
-          {disabled.value && (
-            <active
-              class={[
-                'devui-accordion-item-title',
-                'devui-over-flow-ellipsis',
-                disabled.value && 'disabled'
-              ]}
-              style={{ textIndent: deepValue * 20 + 'px' }}
-              title={title.value}
-            >
-              {renderContent()}
-            </active>
-          )}
+          <div
+            class={['devui-accordion-item-title', disabled.value && 'disabled']}
+            style={{ textIndent: deepValue * 20 + 'px' }}
+          >
+            {!disabled.value && (
+              <>
+                {isUsedVueRouter.value && (
+                  // TODO: vue-router解决方案
+                  <router-link
+                    to={link.value}
+                    class={[
+                      'devui-over-flow-ellipsis',
+                      routerLinkActive.value && '.devui-router-active'
+                    ]}
+                    custom
+                    title={title.value}
+                    onClick={(e) =>
+                      linkItemClickFn({
+                        item: item.value,
+                        parent: parentValue,
+                        event: e
+                      })
+                    }
+                  >
+                    {renderContent()}
+                  </router-link>
+                )}
+                {!isUsedVueRouter.value && (
+                  <a
+                    href={link.value}
+                    target={linkDefaultTarget.value}
+                    class='devui-over-flow-ellipsis'
+                    title={title.value}
+                    onClick={(e) =>
+                      linkItemClickFn({
+                        item: item.value,
+                        parent: parentValue,
+                        event: e
+                      })
+                    }
+                  >
+                    {renderContent()}
+                  </a>
+                )}
+              </>
+            )}
+            {disabled.value && (
+              <a class='devui-over-flow-ellipsis' title={title.value}>
+                {renderContent()}
+              </a>
+            )}
+          </div>
         </>
       )
     }

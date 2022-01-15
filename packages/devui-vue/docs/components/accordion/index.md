@@ -203,7 +203,7 @@ export default defineComponent({
           { title: 'Data Table (disabled)', disabled: true, link: '/components/datatable/' },
           {
             title: 'Drag Drop (parameter example)',
-            link: '/components/dragdrop?query=foo#bar'
+            link: '/components/dragdrop/?query=foo#bar'
           }
         ]
       },
