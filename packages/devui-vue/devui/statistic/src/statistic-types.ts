@@ -19,11 +19,11 @@ export const statisticProps = {
   },
   groupSeparator: {
     type: String,
-    default: ','
+    default: ''
   },
   showGroupSeparator: {
     type: Boolean,
-    default: false
+    default: true
   },
   titleStyle: {
     type: Object as PropType<CSSProperties>

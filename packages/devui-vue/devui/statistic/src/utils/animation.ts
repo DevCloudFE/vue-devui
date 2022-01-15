@@ -72,7 +72,7 @@ export class Tween {
     this.keys = {}
   }
 
-  update() {
+  update(): void {
     this.time = Date.now()
     // delay some time
     if (this.time < this.startTime) {
@@ -107,7 +107,7 @@ export class Tween {
   }
 
   // 递归 重绘
-  start() {
+  start(): void {
     this.startTime = Date.now() + this.delay
     const tick = () => {
       this.update()
@@ -122,7 +122,7 @@ export class Tween {
     tick()
   }
 
-  stop() {
+  stop(): void {
     cancelAnimationFrame(this.timer)
     this.timer = null
   }

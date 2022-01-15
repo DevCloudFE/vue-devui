@@ -5,22 +5,36 @@ import { TreeSelectProps } from '../src/tree-select-types'
 export default function useClear(props: TreeSelectProps, ctx: SetupContext, data: Ref): any {
 
   const isClearable = computed<boolean>(() => {
-    return !props.disabled && props.allowClear && data.value.length > 0;
+    return !props.disabled && props.allowClear;
   })
 
-  const handleClear = (e: MouseEvent) => {
+  const handleClearAll = (e: MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
     if (props.multiple) {
       ctx.emit('update:modelValue', [])
+      data.value = []
     } else {
       ctx.emit('update:modelValue', '')
       data.value = ''
     }
   }
 
+  const handleClearItem = (e: MouseEvent, item?: string) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (props.multiple) {
+      data.value.splice(data.value.indexOf(item), 1)
+      ctx.emit('update:modelValue', data.value)
+    } else {
+      ctx.emit('update:modelValue', [])
+      data.value = []
+    }
+  }
+
   return {
     isClearable,
-    handleClear,
+    handleClearAll,
+    handleClearItem
   }
 }
