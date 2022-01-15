@@ -35,7 +35,10 @@ export default {
       // el  or  binding.instance  or  vnode.context
       changeDragState(el, el.id, 'true', 'true', 'false', 'false', 'false', 'false')
       binding.instance.$root.identity = el.id
+      binding.instance.$root.dragElement = el
       el.dataset.dragArea = el.parentNode.className
+      el.dragStartArea = el.parentNode.classList[1]
+      el.dropLeave = 'true'
     }, false)
   },
 }

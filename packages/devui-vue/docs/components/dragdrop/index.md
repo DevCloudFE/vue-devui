@@ -34,7 +34,7 @@
     </div>
     <div class="dragdrop-card" v-d-sortable>
       <div class="dragdrop-card-header">Drop Area With Sortable</div>
-      <div class="dragdrop-card-block"></div>
+      <div class="dragdrop-card-block sortable996"></div>
     </div>
   </div>
 </template>
