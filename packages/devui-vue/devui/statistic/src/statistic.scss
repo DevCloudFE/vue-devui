@@ -21,11 +21,13 @@
   &-prefix {
     margin-right: 6px;
     display: flex;
+    align-items: center;
   }
 
   &-suffix {
     margin-left: 6px;
     display: flex;
+    align-items: center;
   }
 
   &--value {

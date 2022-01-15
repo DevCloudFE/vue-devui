@@ -31,8 +31,6 @@ export function createMouseEvent(
     cancelable: false,
     clientX: x,
     clientY: y,
-    // TODO pageX
-    // TODO pageY 
   })
   return event
 }

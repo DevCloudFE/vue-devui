@@ -1,7 +1,9 @@
 import { ExtractPropTypes, PropType, SetupContext } from 'vue'
 import { IItem, ITitles, IModel, TState } from '../types'
+import { transferCommon } from './use-transfer-common'
 
 export const transferProps = {
+    ...transferCommon,
     sourceOption: {
         type: Array as () => IItem[],
         require: true,
@@ -44,14 +46,6 @@ export const transferProps = {
         type: Boolean,
         default: (): boolean => false
     },
-    showTooltip: {
-        type: Boolean,
-        default: (): boolean => false
-    },
-    tooltipPosition: {
-        type: String as PropType<'top' | 'right' | 'bottom' | 'left'>,
-        default: (): string => 'top'
-    },
     beforeTransfer: {
         type: Function as unknown as () => ((sourceOption: TState, targetOption: TState) => boolean | Promise<boolean>)
     },
@@ -72,6 +66,9 @@ export const transferProps = {
     },
     afterTransfer: {
         type: Function as unknown as () => ((targetOption: TState) => void)
+    },
+    onDragend: {
+        type: Function as unknown as () => ((direction: string, dragItem: IItem, dropItem: IItem) => void)
     }
 }
 
