@@ -9,7 +9,8 @@
     "prepare": "husky install",
     "precommit": "lint-staged",
     "lint:fix": "eslint --fix \"{packages}/**/*.{vue,js,ts,jsx,tsx}\"",
-    "stylelint": "stylelint --fix \"{packages}/**/*.{scss,css}\""
+    "stylelint": "stylelint --fix \"{packages}/**/*.{scss,css}\"",
+    "test": "lerna exec --scope vue-devui yarn test"
   },
   "devDependencies": {
     "@ls-lint/ls-lint": "^1.10.0",
