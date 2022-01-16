@@ -49,15 +49,18 @@ describe('tooltip', () => {
                     position: 'left'
                 },
                 slots: defaultslot,
-                global: globalOption
+                global: globalOption,
+                attachTo: document.body
             })
             await nextTick();
             await wrapper.findComponent(DButton).trigger('mouseenter');
-            jest.advanceTimersByTime(150);
+            jest.advanceTimersByTime(100);
             await nextTick();
+            console.log(wrapper.element.childNodes);
             const tooltipArrowElement = wrapper.element.querySelector('.arrow') as HTMLElement;
-            console.log(tooltipArrowElement.style);
+            console.log(tooltipArrowElement);
             expect(tooltipArrowElement.style.borderLeft).toBe('5px solid rgb(70, 77, 110)');
+            wrapper.unmount();
         })
         it('position should be top', async () => {
             const wrapper = mount(Tooltip, {
@@ -66,7 +69,8 @@ describe('tooltip', () => {
                     position: 'top'
                 },
                 slots: defaultslot,
-                global: globalOption
+                global: globalOption,
+                attachTo: document.body
             })
             await nextTick();
             await wrapper.findComponent(DButton).trigger('mouseenter');
@@ -75,6 +79,7 @@ describe('tooltip', () => {
             const tooltipArrowElement = wrapper.element.querySelector('.arrow') as HTMLElement;
             console.log(tooltipArrowElement.style);
             expect(tooltipArrowElement.style.borderTop).toBe('5px solid rgb(70, 77, 110)');
+            wrapper.unmount();
         })
         it('position should be right', async () => {
             const wrapper = mount(Tooltip, {
@@ -83,7 +88,8 @@ describe('tooltip', () => {
                     position: 'right'
                 },
                 slots: defaultslot,
-                global: globalOption
+                global: globalOption,
+                attachTo: document.body
             })
             await nextTick();
             await wrapper.findComponent(DButton).trigger('mouseenter');
@@ -92,6 +98,7 @@ describe('tooltip', () => {
             const tooltipArrowElement = wrapper.element.querySelector('.arrow') as HTMLElement;
             console.log(tooltipArrowElement.style);
             expect(tooltipArrowElement.style.borderRight).toBe('5px solid rgb(70, 77, 110)');
+            wrapper.unmount();
         })
         it('position should be bottom', async () => {
             const wrapper = mount(Tooltip, {
@@ -100,7 +107,8 @@ describe('tooltip', () => {
                     position: 'bottom'
                 },
                 slots: defaultslot,
-                global: globalOption
+                global: globalOption,
+                attachTo: document.body
             })
             await nextTick();
             await wrapper.findComponent(DButton).trigger('mouseenter');
@@ -109,6 +117,7 @@ describe('tooltip', () => {
             const tooltipArrowElement = wrapper.element.querySelector('.arrow') as HTMLElement;
             console.log(tooltipArrowElement.style);
             expect(tooltipArrowElement.style.borderBottom).toBe('5px solid rgb(70, 77, 110)');
+            wrapper.unmount()
         })
     })
     describe('delay time', () => {
@@ -116,34 +125,37 @@ describe('tooltip', () => {
             const wrapper = mount(Tooltip, {
                 props: {
                     content: 'content',
-                    mouseEnterDelay: 500
+                    mouseEnterDelay: '500'
                 },
                 slots: defaultslot,
-                global: globalOption
+                global: globalOption,
+                attachTo: document.body
             })
             await nextTick();
             await wrapper.findComponent(DButton).trigger('mouseenter');
             jest.advanceTimersByTime(200);
             await nextTick();
             tooltipElement = wrapper.element.querySelector('.tooltip') as HTMLElement;
-            expect(tooltipElement.style.opacity).toBe('0');
+            expect(tooltipElement).toBe(null);
             jest.advanceTimersByTime(300);
             await nextTick();
             tooltipElement = wrapper.element.querySelector('.tooltip') as HTMLElement;
             expect(tooltipElement.style.opacity).toBe('1');
+            wrapper.unmount();
         })
         it('test mouseLeaveDelay', async () => {
             const wrapper = mount(Tooltip, {
                 props: {
                     content: 'content',
-                    mouseLeaveDelay: 1000
+                    mouseLeaveDelay: '1000'
                 },
                 slots: defaultslot,
-                global: globalOption
+                global: globalOption,
+                attachTo: document.body
             })
             await nextTick();
             await wrapper.findComponent(DButton).trigger('mouseenter');
-            jest.advanceTimersByTime(150);
+            jest.advanceTimersByTime(100);
             await nextTick();
             tooltipElement = wrapper.element.querySelector('.tooltip') as HTMLElement;
             expect(tooltipElement.style.opacity).toBe('1');
@@ -155,7 +167,7 @@ describe('tooltip', () => {
             jest.advanceTimersByTime(500);
             await nextTick();
             tooltipElement = wrapper.element.querySelector('.tooltip') as HTMLElement;
-            expect(tooltipElement.style.opacity).toBe('0');
+            expect(tooltipElement).toBe(null);
         })
 
     })
