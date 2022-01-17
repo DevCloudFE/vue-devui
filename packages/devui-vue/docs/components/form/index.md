@@ -575,41 +575,126 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form class="form-demo-template-validate-1" ref="dFormTemplateValidate1" :formData="formModel" labelSize="lg" >
-    <d-form-item prop="username">
-      <d-form-label required>用户名</d-form-label>
-      <d-form-control>
-        <d-input v-model="formModel.username" v-d-validate-rules="[
-          {
-            maxlength: 8,
-          },
-          {
-            pattern: /^[a-zA-Z\d]+(\s+[a-zA-Z\d]+)*$/, 
-            message: {
-              'zh-cn': '只能包含数字与大小写字符', 
-              'en-us': 'The value cannot contain characters except uppercase and lowercase letters.', 
-              default: '只能包含数字与大小写字符'
-            }
-          }
-        ]" />
-      </d-form-control>
-    </d-form-item>
-  </d-form>
+<div class="form-demo-built-in-validators">
+<!---->
+  <div class="title">字符长度</div>
+  <d-input v-model="formModel.username" v-d-validate:formModel="{
+    prop: 'username',
+    rules: {
+      maxlength: 3,
+    }
+  }" />
 
+
+  <div class="title">最大值</div>
+  <d-input v-model="formModel.maxVal" v-d-validate:formModel="{
+    prop: 'maxVal',
+    rules: {
+      message: '不能大于120',
+      max: 120,
+    }
+  }" />
+
+  <div class="title">最小值</div>
+  <d-input v-model="formModel.minVal" v-d-validate:formModel="{
+    prop: 'minVal',
+    rules: {
+      min: 12,
+    }
+  }" />
+
+  <div class="title">必填项</div>
+  <d-input v-model="formModel.requiredVal" v-d-validate:formModel="{
+    prop: 'requiredVal',
+    rules: {
+      required: true,
+    }
+  }" />
+
+  <div class="title">必须为True</div>
+  <d-checkbox label="上班" v-model="formModel.requiredTrueVal" v-d-validate:formModel="{
+    prop: 'requiredTrueVal',
+    rules: {
+      requiredTrue: true,
+    }
+  }" />
+
+  <div class="title">邮箱校验</div>
+  <d-input v-model="formModel.emailVal" v-d-validate:formModel="{
+    prop: 'emailVal',
+    rules: {
+      email: true,
+    }
+  }" />
+
+  <div class="title">正则校验</div>
+  <d-input v-model="formModel.regExpVal" v-d-validate:formModel="{
+    prop: 'regExpVal',
+    rules: {
+      pattern: /^[a-z]+$/,
+      message: '只能包含字母',
+    }
+  }" />
+
+
+  <div class="title">空白符校验</div>
+  <d-input v-model="formModel.whitespaceVal" v-d-validate:formModel="{
+    prop: 'whitespaceVal',
+    rules: {
+      whitespace: true,
+      message: '输入不能全为空格',
+    }
+  }" />
+
+  <div class="title">多条件组合校验</div>
+  <d-input v-model="formModel.multiVal" v-d-validate:formModel="{
+    prop: 'multiVal',
+    rules: {
+      minlength: 6,
+      maxlength: 12,
+      message: '只能输入6-12个字符',
+    }
+  }" />
+
+  <div class="title">多条件校验</div>
+  <d-input v-model="formModel.multiArrVal" v-d-validate:formModel="{
+    prop: 'multiArrVal',
+    rules: [
+      {
+        min: 6,
+        message: '输入不能小于6个字符',
+      },
+      {
+        max: 12,
+        message: '输入不能大于12个字符',
+      }
+    ]
+  }" />
+  <!---->
+
+</div>
 </template>
 
 <script>
 import {defineComponent, reactive, ref} from 'vue';
 
+
 export default defineComponent({
   setup(props, ctx) {
-    const dFormTemplateValidate1 = ref(null);
     let formModel = reactive({
       username: 'AlanLee',
+      maxVal: 1201,
+      minVal: 123,
+      requiredVal: '',
+      requiredTrueVal: false,
+      emailVal: '1445654576@qq.com',
+      regExpVal: 'abc',
+      whitespaceVal: ' ab c ',
+      multiVal: 'abc',
+      multiArrVal: 'abc',
     });
 
     return {
-      dFormTemplateValidate1,
       formModel,
     }
   }
@@ -618,16 +703,11 @@ export default defineComponent({
 
 
 <style>
-.form-demo-template-validate-1 {
-  width: 400px;
+.form-demo-built-in-validators .title{
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
-.form-demo-form-operation {
-  display: flex;
-  align-items: center;
-}
-.form-demo-form-demo-demo-btn {
-  margin-right: 10px;
-}
+
 </style>
 
 ```
@@ -642,31 +722,26 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form class="form-demo-template-validate-2" ref="dFormTemplateValidate2" :formData="formModel" labelSize="lg" >
-    <d-form-item prop="sum">
-      <d-form-label>计算：1 + 1 = ？</d-form-label>
-      <d-form-control>
-        <d-input v-model="formModel.sum" v-d-validate-rules="{
-          validators: [
-            {message: '不对喔！', validator: customValidator},
-            {message: '答对啦！', validator: customValidator2}
-          ]
-        }" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="asyncSum">
-      <d-form-label>计算：1 + 2 = ？（async）</d-form-label>
-      <d-form-control>
-        <d-input v-model="formModel.asyncSum" v-d-validate-rules="{
-          asyncValidators: [
-            {message: '不对喔！（async）', asyncValidator: customAsyncValidator},
-            {message: '答对啦！（async）', asyncValidator: customAsyncValidator2}
-          ]
-        }" />
-      </d-form-control>
-    </d-form-item>
-  </d-form>
-
+<div class="form-demo-custom-validator">
+<!---->
+  <div class="title">计算：1 + 1 = ？</div>
+  <d-input v-model="formModel.sum" v-d-validate:formModel="{
+    prop: 'sum',
+    validators: [
+      {message: '不对喔！', validator: customValidator},
+      {message: '答对啦！', validator: customValidator2}
+    ]
+  }" />
+<!---->
+  <div class="title">计算：1 + 2 = ？（async）</div>
+  <d-input v-model="formModel.asyncSum" v-d-validate:formModel="{
+    prop: 'asyncSum',
+    asyncValidators: [
+      {message: '不对喔！（async）', asyncValidator: customAsyncValidator},
+      {message: '答对啦！（async）', asyncValidator: customAsyncValidator2}
+    ]
+  }" />
+</div>
 </template>
 
 <script>
@@ -674,7 +749,6 @@ import {defineComponent, reactive, ref} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    const dFormTemplateValidate2 = ref(null);
     let formModel = reactive({
       sum: '',
       asyncSum: '',
@@ -687,14 +761,13 @@ export default defineComponent({
       return value != "2"; // value值不等于2的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！”）
     }
 
-    const customAsyncValidator = (rule, value) => {
+    const customAsyncValidator =  (rule, value) => {
       return value == "3"; // value值等于3的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！（async）”）
     }
-    const customAsyncValidator2 = (rule, value) => {
+    const customAsyncValidator2 =  (rule, value) => {
       return value != "3"; // value值不等于3的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！（async）”）
     }
     return {
-      dFormTemplateValidate2,
       formModel,
       customValidator,
       customValidator2,
@@ -707,16 +780,9 @@ export default defineComponent({
 
 
 <style>
-.form-demo-template-validate-2 {
-  width: 400px;
-}
-
-.form-demo-form-operation {
-  display: flex;
-  align-items: center;
-}
-.form-demo-form-demo-demo-btn {
-  margin-right: 10px;
+.form-demo-custom-validator .title{
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 </style>
 
@@ -740,57 +806,41 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form class="form-demo-template-validate-3" ref="dFormTemplateValidate3" :formData="formModel" labelSize="lg" >
-    <d-form-item prop="sum">
-      <d-form-label>计算：1 + 1 = ？</d-form-label>
-      <d-form-control extraInfo="updateOn为change，当输入完成时，输入框的值发生改变。此时触发验证规则">
-        <d-input v-model="formModel.sum" v-d-validate-rules="{
-          rules: {
-            validators: [
-              {message: '不对喔！', validator: customValidator},
-              {message: '答对啦！', validator: customValidator2}
-            ]
-          },
-          options: {
-            updateOn: 'change'
-          }
-        }" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="asyncSum">
-      <d-form-label>计算：1 + 2 = ？（async）</d-form-label>
-      <d-form-control extraInfo="updateOn为input，当正在输入时，输入框的值发生改变。此时触发验证规则">
-        <d-input v-model="formModel.asyncSum" v-d-validate-rules="{
-          rules: {
-            asyncValidators: [
-              {message: '不对喔！（async）', asyncValidator: customAsyncValidator},
-              {message: '只能输入数字！', asyncValidator: customAsyncValidator2}
-            ]
-          },
-          options: {
-            updateOn: 'input'
-          }
-        }" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="errorSum">
-      <d-form-label>计算：1 + 1 = ？</d-form-label>
-      <d-form-control extraInfo="errorStrategy为pristine，初始化时触发验证规则">
-        <d-input v-model="formModel.errorSum" v-d-validate-rules="{
-          errorStrategy: 'pristine',
-          rules: {
-            validators: [
-              {message: '不对喔！', validator: customValidator3},
-            ]
-          },
-          options: {
-            updateOn: 'input'
-          }
-        }" />
-      </d-form-control>
-    </d-form-item>
-  </d-form>
+<div class="form-demo-error-strategy">
+  <div class="title">计算：1 + 1 = ？</div>
+  <div class="desc">updateOn为change，当输入完成时，输入框的值发生改变。此时触发验证规则</div>
+  <d-input v-model="formModel.sum" v-d-validate:formModel="{
+    prop: 'sum',
+    updateOn: 'change',
+    validators: [
+      {message: '不对喔！', validator: customValidator},
+      {message: '答对啦！', validator: customValidator2}
+    ]
+  }" />
 
+  <div class="title">计算：1 + 1 = ？</div>
+  <div class="desc">updateOn为input，当输入完成时，输入框的值发生改变。此时触发验证规则</div>
+  <d-input v-model="formModel.asyncSum" v-d-validate:formModel="{
+    prop: 'asyncSum',
+    updateOn: 'input',
+    validators: [
+      {message: '不对喔！', validator: customValidator},
+      {message: '答对啦！', validator: customValidator2}
+    ]
+  }" />
+
+  <div class="title">计算：1 + 1 = ？</div>
+  <div class="desc">errorStrategy为pristine，初始化时触发验证规则</div>
+  <d-input v-model="formModel.errorSum" v-d-validate:formModel="{
+    prop: 'errorSum',
+    errorStrategy: 'pristine',
+    updateOn: 'input',
+    validators: [
+      {message: '不对喔！', validator: customValidator3},
+    ]
+  }" />
+
+</div>
 </template>
 
 <script>
@@ -838,15 +888,14 @@ export default defineComponent({
 
 
 <style>
-.form-demo-template-validate-3 {
-  width: 400px;
+.form-demo-error-strategy .title{
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
-.form-demo-form-operation {
-  display: flex;
-  align-items: center;
-}
-.form-demo-form-demo-demo-btn {
-  margin-right: 10px;
+.form-demo-error-strategy .desc{
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 10px;
 }
 </style>
 
@@ -871,42 +920,45 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form class="form-demo-template-validate-4" ref="dFormTemplateValidate4" :formData="formModel" labelSize="lg" >
-    <d-form-item prop="sum">
-      <d-form-label>计算：1 + 1 = ？</d-form-label>
-      <d-form-control extraInfo="messageShowType为none，不显示提示文字">
-        <d-input v-model="formModel.sum" v-d-validate-rules="{
-          messageShowType: 'none',
-          rules: {
-            validators: [
-              {message: '不对喔！', validator: customValidator}
-            ]
-          },
-          options: {
-            updateOn: 'change'
-          }
-        }" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="asyncSum">
-      <d-form-label>计算：1 + 2 = ？</d-form-label>
-      <d-form-control extraInfo="messageShowType为popover，使用popover进行提示">
-        <d-input v-model="formModel.asyncSum" v-d-validate-rules="{
-          rules: {
-            asyncValidators: [
-              {message: '不对喔！（async）', asyncValidator: customAsyncValidator}
-            ]
-          },
-          options: {
-            updateOn: 'input',
-            messageShowType: 'popover',
-            popPosition: 'bottom'
-          }
-        }" />
-      </d-form-control>
-    </d-form-item>
-  </d-form>
+<div class="form-demo-custom-message">
+  <div class="title">计算：1 + 1 = ？</div>
+  <div class="desc">messageShowType为none，不显示提示文字</div>
+  <d-input v-model="formModel.sum" v-d-validate:formModel="{
+    prop: 'sum',
+    messageShowType: 'none',
+    messageChange: onMessageChange,
+    updateOn: 'input',
+    validators: [
+      {message: '不对喔！', validator: customValidator}
+    ]
+  }" />
 
+  <div class="title">计算：1 + 1 = ？</div>
+  <div class="desc">messageShowType为text，显示提示文字</div>
+  <div>
+    <d-input v-model="formModel.sum2" v-d-validate:formModel="{
+      prop: 'sum2',
+      messageShowType: 'text',
+      updateOn: 'input',
+      validators: [
+        {message: '不对喔！', validator: customValidator2}
+      ]
+    }" />
+  </div>
+
+  <div class="title">计算：1 + 2 = ？</div>
+  <div class="desc">messageShowType为popover，使用popover进行提示</div>
+  <d-input v-model="formModel.asyncSum" v-d-validate:formModel="{
+    prop: 'asyncSum',
+    messageShowType: 'popover',
+    updateOn: 'input',
+    popPosition: 'bottom',
+    asyncValidators: [
+      {message: '不对喔！（async）', asyncValidator: customAsyncValidator}
+    ]
+  }" />
+
+</div>
 </template>
 
 <script>
@@ -917,6 +969,7 @@ export default defineComponent({
     const dFormTemplateValidate4 = ref(null);
     let formModel = reactive({
       sum: '',
+      sum2: '',
       asyncSum: '',
     });
 
@@ -924,31 +977,42 @@ export default defineComponent({
       return value == "2"; // value值等于2的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！”）
     }
 
+    const customValidator2 = (rule, value) => {
+      return value == "2"; // value值等于2的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！”）
+    }
+
     const customAsyncValidator = (rule, value) => {
       return value == "3"; // value值等于3的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！（async）”）
+    }
+
+    const onMessageChange = (msg, {errors, fields}) => {
+      console.log('onMessageChange', msg, {errors, fields});
     }
 
     return {
       dFormTemplateValidate4,
       formModel,
       customValidator,
+      customValidator2,
       customAsyncValidator,
+      onMessageChange,
     }
   }
 })
 </script>
 
-
 <style>
-.form-demo-template-validate-4 {
-  width: 400px;
+.form-demo-custom-message {
+  padding-bottom: 40px;
 }
-.form-demo-form-operation {
-  display: flex;
-  align-items: center;
+.form-demo-custom-message .title{
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
-.form-demo-form-demo-demo-btn {
-  margin-right: 10px;
+.form-demo-custom-message .desc{
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 10px;
 }
 </style>
 
@@ -968,24 +1032,18 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form class="form-demo-template-validate-5" ref="dFormTemplateValidate5" :formData="formModel" labelSize="lg" >
-    <d-form-item prop="asyncSum">
-      <d-form-label>计算：1 + 2 = ？（async）</d-form-label>
-      <d-form-control extraInfo="asyncDebounceTime为500">
-        <d-input v-model="formModel.asyncSum" v-d-validate-rules="{
-          rules: {
-            asyncValidators: [
-              {message: '不对喔！（async）', asyncValidator: customAsyncValidator}
-            ]
-          },
-          options: {
-            updateOn: 'input',
-            asyncDebounceTime: 500
-          }
-        }" />
-      </d-form-control>
-    </d-form-item>
-  </d-form>
+<div class="form-demo-async-debounce-time">
+  <div class="title">计算：1 + 2 = ？（async）</div>
+  <div class="desc">asyncDebounceTime为500</div>
+  <d-input v-model="formModel.asyncSum" v-d-validate:formModel="{
+    prop: 'asyncSum',
+    updateOn: 'input',
+    asyncDebounceTime: 500,
+    asyncValidators: [
+      {message: '不对喔！（async）', asyncValidator: customAsyncValidator}
+    ]
+  }" />
+</div>
 </template>
 
 <script>
@@ -1012,15 +1070,14 @@ export default defineComponent({
 
 
 <style>
-.form-demo-template-validate-5 {
-  width: 400px;
+.form-demo-async-debounce-time .title{
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
-.form-demo-form-operation {
-  display: flex;
-  align-items: center;
-}
-.form-demo-form-demo-demo-btn {
-  margin-right: 10px;
+.form-demo-async-debounce-time .desc{
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 10px;
 }
 </style>
 
@@ -1038,7 +1095,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form class="form-demo-template-validate-6" name="userInfoForm" ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" @submit="onSubmit">
+  <d-form name="userInfoForm" ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" @submit="onSubmit">
     <d-form-item prop="name">
       <d-form-label>姓名</d-form-label>
       <d-form-control>
@@ -1099,9 +1156,6 @@ export default defineComponent({
 
 
 <style>
-.form-demo-template-validate-6 {
-  width: 400px;
-}
 .form-demo-form-operation {
   display: flex;
   align-items: center;

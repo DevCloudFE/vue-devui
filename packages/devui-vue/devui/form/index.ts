@@ -5,10 +5,12 @@ import FormItem from './src/form-item/form-item';
 import FormControl from './src/form-control/form-control';
 import FormOperation from './src/form-operation/form-operation';
 import dValidateRules from './src/directive/d-validate-rules';
+import dValidate from './src/directive/d-validate';
 
 Form.install = function(app: App) {
   app.component(Form.name, Form);
   app.directive('d-validate-rules', dValidateRules);
+  app.directive('d-validate', dValidate);
 }
 
 FormLabel.install = function(app: App) {
