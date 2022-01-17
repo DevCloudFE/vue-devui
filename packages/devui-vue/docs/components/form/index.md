@@ -1099,22 +1099,20 @@ export default defineComponent({
     <d-form-item prop="name">
       <d-form-label>姓名</d-form-label>
       <d-form-control>
-        <d-input v-model="formModel.name" v-d-validate-rules="{
+        <d-input v-model="formModel.name" v-d-validate:formModel="{
+          prop: 'name',
+          updateOn: 'input',
           rules: {minlength: 2, message: '不能小于2个字符'},
-          options: {
-            updateOn: 'input',
-          }
         }" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
       <d-form-label>年龄</d-form-label>
       <d-form-control>
-        <d-input v-model="formModel.age" v-d-validate-rules="{
+        <d-input v-model="formModel.age" v-d-validate:formModel="{
+          prop: 'age',
+          updateOn: 'input',
           rules: {min: 1, message: '年龄需大于0'},
-          options: {
-            updateOn: 'input',
-          }
         }" />
       </d-form-control>
     </d-form-item>

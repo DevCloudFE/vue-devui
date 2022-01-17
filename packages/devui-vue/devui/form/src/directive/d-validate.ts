@@ -136,5 +136,14 @@ export default {
       }
     }
 
+    const getTargetParent = (el: HTMLElement, targetTag: string) => {
+      if(el.tagName.toLocaleLowerCase() === targetTag) return "";
+      let uid = ''
+      if(el.parentElement.id.startsWith('dfc-')) {
+        return el.parentElement.id;
+      }else {
+        uid = getTargetParent(el.parentElement, targetTag);
+      }
+    }
   }
 }

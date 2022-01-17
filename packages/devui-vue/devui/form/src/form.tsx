@@ -58,9 +58,9 @@ export default defineComponent({
     }
   },
   render() {
-    const {onSubmit} = this;
+    const {onSubmit, name} = this;
     return (
-      <form onSubmit={onSubmit} class="devui-form">
+      <form onSubmit={onSubmit} class="devui-form" name={name} d-form="true">
         {this.$slots.default?.()}
       </form>
     );
