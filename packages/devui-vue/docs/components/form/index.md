@@ -1130,8 +1130,8 @@ export default defineComponent({
   setup(props, ctx) {
     const dFormTemplateValidate6 = ref(null);
     let formModel = reactive({
-      name: '',
-      age: '',
+      name: 'A',
+      age: '0',
     });
 
     const resetForm = () => {

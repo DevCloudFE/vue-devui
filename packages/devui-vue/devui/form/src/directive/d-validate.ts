@@ -103,9 +103,10 @@ export default {
     }
 
     const validateFn = () => {
-      validate(descriptor, {
+      const validateModel = {
         [prop]: hasModelName ? instance[modelName || arg][prop] : instance[prop]
-      }).then(res => {
+      };
+      validate(descriptor, validateModel).then(res => {
         console.log('校验成功', res);
         renderPopover('', false);
         messageShowType === 'text' && renderTipEl('', true);
@@ -136,14 +137,24 @@ export default {
       }
     }
 
-    const getTargetParent = (el: HTMLElement, targetTag: string) => {
-      if(el.tagName.toLocaleLowerCase() === targetTag) return "";
-      let uid = ''
-      if(el.parentElement.id.startsWith('dfc-')) {
-        return el.parentElement.id;
-      }else {
-        uid = getTargetParent(el.parentElement, targetTag);
+    const getTargetParentElement = (el: HTMLElement, targetTag: string) => {
+      let tempEl:HTMLElement = el;
+      while(tempEl.tagName.toLocaleLowerCase() !== 'body') {
+        if(tempEl.tagName.toLocaleLowerCase() === targetTag) {
+          return tempEl;
+        }
+        tempEl = tempEl.parentElement;
       }
     }
+
+    // 处理表单提交校验
+    const formTag = getTargetParentElement(el, 'form') as HTMLFormElement;
+    if(formTag) {
+      const formName = formTag.name;
+      EventBus.on(`formSubmit:${formName}`, (val) => {
+        validateFn();
+      })
+    }
+    
   }
 }
