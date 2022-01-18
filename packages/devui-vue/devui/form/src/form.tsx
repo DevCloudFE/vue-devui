@@ -1,7 +1,7 @@
 
 import { defineComponent, provide } from 'vue'
 import mitt from 'mitt'
-import { formProps, FormProps, IFormItem, dFormEvents, formInjectionKey, IForm } from './form-types'
+import { formProps, FormProps, IFormItem, dFormEvents, formInjectionKey, IForm, DFormValidateSubmitData } from './form-types'
 import { EventBus } from './util'
 import './form.scss'
 
@@ -41,13 +41,17 @@ export default defineComponent({
       },
       rules: props.rules,
       columnsClass: props.columnsClass,
-      messageShowType: "popover"
+      messageShowType: props.messageShowType
     });
 
     const onSubmit = (e) => {
       e.preventDefault();
-      ctx.emit('submit', e);
-      EventBus.emit(`formSubmit:${props.name}`);
+      const formSubmitData: DFormValidateSubmitData = {
+        callback: (valid, {errors, fields}) => {
+          ctx.emit('submit', e, valid, {errors, fields});
+        }
+      };
+      EventBus.emit(`formSubmit:${props.name}`, formSubmitData);
     }
     
     return {

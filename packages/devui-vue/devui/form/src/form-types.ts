@@ -164,3 +164,11 @@ export const dDefaultValidators = {
   'pattern': Validators.pattern, // 配置正则校验，rule中使用：{ pattern: RegExp }
   'whitespace': Validators.whiteSpace, // 配置输入不能全为空格限制，rule中使用：{ whitespace: true }
 };
+
+export interface DValidateResult {
+  errors: any
+  fields: any
+}
+export interface DFormValidateSubmitData {
+  callback(valid: boolean, result: DValidateResult): void
+}

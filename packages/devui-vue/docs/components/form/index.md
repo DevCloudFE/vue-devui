@@ -553,7 +553,6 @@ export default defineComponent({
 :::
 
 
-
 ### 模板驱动表单验证
 
 在`d-form`、`d-input`等表单类组件上使用`v-d-validate-rules`指令，配置校验规则。
@@ -1177,28 +1176,26 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form class="form-demo-template-validate-7" name="userInfoForm2" ref="dFormTemplateValidate7" :formData="formModel" labelSize="lg" @submit="onSubmit" v-d-validate-rules="{
-          rules: {message: '表单验证未通过'},
-        }" messageShowType="text">
+  <d-form class="form-demo-template-validate-7" name="userInfoForm2" ref="dFormTemplateValidate7" :formData="formModel" labelSize="lg" @submit="onSubmit" :rules="{
+    message: '表单验证未通过'
+  }" messageShowType="text">
     <d-form-item prop="name">
       <d-form-label>姓名</d-form-label>
       <d-form-control>
-        <d-input v-model="formModel.name" v-d-validate-rules="{
-          rules: {minlength: 2, message: '不能小于2个字符'},
-          options: {
-            updateOn: 'input',
-          }
+        <d-input v-model="formModel.name" v-d-validate:formModel="{
+          prop: 'name',
+          updateOn: 'input',
+          rules: {minlength: 2, message: '不能小于2个字符'}
         }" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
       <d-form-label>年龄</d-form-label>
       <d-form-control>
-        <d-input v-model="formModel.age" v-d-validate-rules="{
+        <d-input v-model="formModel.age" v-d-validate:formModel="{
+          prop: 'age',
+          updateOn: 'input',
           rules: {min: 1, message: '年龄需大于0'},
-          options: {
-            updateOn: 'input',
-          }
         }" />
       </d-form-control>
     </d-form-item>
@@ -1216,16 +1213,17 @@ export default defineComponent({
   setup(props, ctx) {
     const dFormTemplateValidate7 = ref(null);
     let formModel = reactive({
-      name: '',
-      age: '',
+      name: 'A',
+      age: '0',
     });
 
     const resetForm = () => {
       dFormTemplateValidate7.value.resetFormFields();
     }
 
-    const onSubmit = (e) => {
-      console.log('@submit')
+    const onSubmit = (e, valid, {errors, fields}) => {
+      // console.log('@submit');
+      console.log('@submit valid, {errors, fields}', valid, {errors, fields});
     }
 
     return {

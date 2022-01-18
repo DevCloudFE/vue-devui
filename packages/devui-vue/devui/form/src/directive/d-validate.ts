@@ -5,6 +5,7 @@ import { EventBus, isObject, hasKey } from '../util';
 import useValidate from '../use-validate';
 import './style.scss';
 import dPopover from '../../../popover/src/popover';
+import {DFormValidateSubmitData} from '../form-types';
 
 interface BindingValueRules {
   [prop:string]: unknown
@@ -25,9 +26,12 @@ interface BindingValue {
 
 export default {
   mounted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode): void {
-    
     let { prop, modelName, rules, validators, asyncValidators, errorStrategy, updateOn = 'input', asyncDebounceTime, messageShowType = 'popover', messageChange }: BindingValue = binding.value;
     const {instance, arg} = binding;
+    const instanceRef = instance[Object.keys(instance.$refs)[0]];
+    if(instanceRef && instanceRef?.messageShowType) {
+      messageShowType = instanceRef.messageShowType;
+    }
     const hasModelName = !!modelName || !!arg;
     
     const {validate, createDevUIBuiltinValidator} = useValidate();
@@ -102,14 +106,15 @@ export default {
       tipEl.setAttribute('class', 'devui-validate-tip');
     }
 
-    const validateFn = () => {
+    const validateFn = async () => {
       const validateModel = {
         [prop]: hasModelName ? instance[modelName || arg][prop] : instance[prop]
       };
-      validate(descriptor, validateModel).then(res => {
+      return validate(descriptor, validateModel).then(res => {
         console.log('校验成功', res);
         renderPopover('', false);
         messageShowType === 'text' && renderTipEl('', true);
+        return res;
       }).catch(({ errors, fields }) => {
         console.log('校验失败 errors', errors);
         console.log('校验失败 fields', fields);
@@ -119,6 +124,7 @@ export default {
         if(messageChange && typeof messageChange === 'function') {
           messageChange(msg, { errors, fields });
         }
+        return { errors, fields };
       })
     }
 
@@ -151,9 +157,14 @@ export default {
     const formTag = getTargetParentElement(el, 'form') as HTMLFormElement;
     if(formTag) {
       const formName = formTag.name;
-      EventBus.on(`formSubmit:${formName}`, (val) => {
-        validateFn();
-      })
+      const formSubmitDataCallback: any = (val: DFormValidateSubmitData) => {
+        validateFn().then((res: any) => {
+          val.callback(!!!res?.errors, { errors: res?.errors, fields: res?.fields });
+        }).catch(({errors, fields}) => {
+          console.log('validateFn {errors, fields}', {errors, fields});
+        });
+      };
+      EventBus.on(`formSubmit:${formName}`, formSubmitDataCallback);
     }
     
   }
