@@ -46,11 +46,20 @@ export default defineComponent({
 
     const onSubmit = (e) => {
       e.preventDefault();
+      let isValid = true, resultList = [];
       const formSubmitData: DFormValidateSubmitData = {
-        callback: (valid, {errors, fields}) => {
-          ctx.emit('submit', e, valid, {errors, fields});
+        callback: (valid, result) => {
+          // 收集校验回调结果（微任务，校验函数是Promise）
+          if(!valid) {
+            isValid = false;
+          }
+          resultList.push(result);
         }
       };
+      // 通过宏任务，将之前微任务执行后的结果，统一emit出去
+      setTimeout(() => {
+        ctx.emit('submit', e, isValid, resultList);
+      })
       EventBus.emit(`formSubmit:${props.name}`, formSubmitData);
     }
     

@@ -1204,14 +1204,17 @@ export default defineComponent({
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
+  <d-toast :value="validateFaliMsg" :life="2000"></d-toast>
 </template>
 
 <script>
-import {defineComponent, reactive, ref} from 'vue';
+import {defineComponent, reactive, ref, h} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
     const dFormTemplateValidate7 = ref(null);
+    const validateFaliMsg = ref([]);
+
     let formModel = reactive({
       name: 'A',
       age: '0',
@@ -1221,9 +1224,18 @@ export default defineComponent({
       dFormTemplateValidate7.value.resetFormFields();
     }
 
-    const onSubmit = (e, valid, {errors, fields}) => {
-      // console.log('@submit');
-      console.log('@submit valid, {errors, fields}', valid, {errors, fields});
+    const onSubmit = (e, valid, res) => {
+      console.log('@submit valid, res', valid, res);
+        if(!valid) {
+          validateFaliMsg.value = [
+            {
+              severity: 'error',
+              summary: 'Error',
+              content:
+                'Check whether all validation items pass.',
+            },
+          ]
+        }
     }
 
     return {
@@ -1231,6 +1243,7 @@ export default defineComponent({
       formModel,
       onSubmit,
       resetForm,
+      validateFaliMsg,
     }
   }
 })
