@@ -22,3 +22,13 @@
   font-size: 12px;
   color: #f66f6a;
 }
+
+.devui-error {
+  border-color: var(--devui-danger-line,#f66f6a) !important;
+  background-color: var(--devui-danger-bg,#ffeeed) !important;
+
+  > * {
+    border-color: var(--devui-danger-line,#f66f6a) !important;
+    background-color: var(--devui-danger-bg,#ffeeed) !important;
+  }
+}

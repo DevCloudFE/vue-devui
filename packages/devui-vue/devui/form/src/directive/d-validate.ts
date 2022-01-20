@@ -33,7 +33,46 @@ export default {
       messageShowType = instanceRef.messageShowType;
     }
     const hasModelName = !!modelName || !!arg;
-    
+
+    const renderPopover = (msg, visible = true) => {
+      if(messageShowType !== 'popover') return;
+      el.style.position = 'relative';
+      const popover = h(dPopover, {
+        visible: !!msg,
+        controlled: updateOn !== 'change',
+        content: msg
+      });
+      const vn = h('div', {
+        style: 'position: absolute; left: 50%; bottom: -10px;'
+      }, popover)
+      render(vn, el);
+    }
+
+    const tipEl = document.createElement('div');
+    if(messageShowType === 'text') {
+      el.parentNode.appendChild(tipEl);
+    }
+
+    const renderTipEl = (msg, visible = true) => {
+      tipEl.innerText = msg;
+      tipEl.style.display = visible ? 'block' : 'none';
+      tipEl.setAttribute('class', 'devui-validate-tip');
+    }
+
+    const addElClass = (el: HTMLElement, className: string) => {
+      let currentClasses = el.getAttribute('class');
+      if(!currentClasses.includes(className)) {
+        currentClasses = currentClasses.trim() + (currentClasses.trim() ? ' ' : '') + className;
+      }
+      el.setAttribute('class', currentClasses);
+    }
+
+    const removeElClass = (el: HTMLElement, className: string) => {
+      let currentClasses = el.getAttribute('class');
+      currentClasses = currentClasses.replace(className, '');
+      el.setAttribute('class', currentClasses);
+    }
+
     const {validate, createDevUIBuiltinValidator} = useValidate();
     let propRule = {} || [] as any; // 值为对象数组或单个对象
 
@@ -73,53 +112,23 @@ export default {
         rules = createDevUIBuiltinValidator(rules);
       }
     }
-    
+
     let descriptor: any = {
       [prop]: rules
     }
-
-    console.log('descriptor', descriptor)
-    console.log('rules', rules)
-
-    const renderPopover = (msg, visible = true) => {
-      if(messageShowType !== 'popover') return;
-      el.style.position = 'relative';
-      const popover = h(dPopover, {
-        visible: !!msg,
-        controlled: updateOn !== 'change',
-        content: msg
-      });
-      const vn = h('div', {
-        style: 'position: absolute; left: 50%; bottom: -10px;'
-      }, popover)
-      render(vn, el);
-    }
-
-    const tipEl = document.createElement('div');
-    if(messageShowType === 'text') {
-      el.parentNode.appendChild(tipEl);
-    }
-
-    const renderTipEl = (msg, visible = true) => {
-      tipEl.innerText = msg;
-      tipEl.style.display = visible ? 'block' : 'none';
-      tipEl.setAttribute('class', 'devui-validate-tip');
-    }
-
     const validateFn = async () => {
       const validateModel = {
         [prop]: hasModelName ? instance[modelName || arg][prop] : instance[prop]
       };
       return validate(descriptor, validateModel).then(res => {
-        console.log('校验成功', res);
         renderPopover('', false);
+        removeElClass(el, 'devui-error');
         messageShowType === 'text' && renderTipEl('', true);
         return res;
       }).catch(({ errors, fields }) => {
-        console.log('校验失败 errors', errors);
-        console.log('校验失败 fields', fields);
         let msg = propRule.message ?? fields[prop][0].message;
         renderPopover(msg);
+        addElClass(el, 'devui-error');
         messageShowType === 'text' && renderTipEl(msg, true);
         if(messageChange && typeof messageChange === 'function') {
           messageChange(msg, { errors, fields });
@@ -132,8 +141,6 @@ export default {
       validateFn();
     }else {
       el.childNodes[0].addEventListener(updateOn, () => {
-        console.log('onInput');
-        
         validateFn();
       })
       if(updateOn === 'change') {
