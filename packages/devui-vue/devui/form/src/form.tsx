@@ -16,6 +16,7 @@ export default defineComponent({
     const resetFormFields = () => {
       fields.forEach((field: IFormItem) => {
         field.resetField();
+        EventBus.emit(`formReset:${props.name}:${field.prop}`);
       })
     }
 

@@ -24,6 +24,16 @@ interface BindingValue {
   messageChange?: (msg, { errors, fields }) => {}
 }
 
+const getTargetElement = (el: HTMLElement, targetTag: string) => {
+  let tempEl:HTMLElement = el;
+  while(tempEl.tagName.toLocaleLowerCase() !== 'body') {
+    if(tempEl.tagName.toLocaleLowerCase() === targetTag) {
+      return tempEl;
+    }
+    tempEl = tempEl.parentElement;
+  }
+}
+
 export default {
   mounted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode): void {
     let { prop, modelName, rules, validators, asyncValidators, errorStrategy, updateOn = 'input', asyncDebounceTime, messageShowType = 'popover', messageChange }: BindingValue = binding.value;
@@ -150,18 +160,8 @@ export default {
       }
     }
 
-    const getTargetParentElement = (el: HTMLElement, targetTag: string) => {
-      let tempEl:HTMLElement = el;
-      while(tempEl.tagName.toLocaleLowerCase() !== 'body') {
-        if(tempEl.tagName.toLocaleLowerCase() === targetTag) {
-          return tempEl;
-        }
-        tempEl = tempEl.parentElement;
-      }
-    }
-
     // 处理表单提交校验
-    const formTag = getTargetParentElement(el, 'form') as HTMLFormElement;
+    const formTag = getTargetElement(el, 'form') as HTMLFormElement;
     if(formTag) {
       const formName = formTag.name;
       const formSubmitDataCallback: any = (val: DFormValidateSubmitData) => {
@@ -172,7 +172,20 @@ export default {
         });
       };
       EventBus.on(`formSubmit:${formName}`, formSubmitDataCallback);
+      EventBus.on(`formReset:${formName}:${prop}`, () => {
+        renderPopover('', false);
+        removeElClass(el, 'devui-error');
+        messageShowType === 'text' && renderTipEl('', false);
+      });
     }
-    
+  },
+
+  beforeUnmount(el: HTMLElement, binding: DirectiveBinding) {
+    const {prop} = binding.value;
+    const formTag = getTargetElement(el, 'form') as HTMLFormElement;
+    const formName = formTag.name;
+
+    EventBus.off(`formSubmit:${formName}`);
+    EventBus.off(`formReset:${formName}:${prop}`);
   }
 }
