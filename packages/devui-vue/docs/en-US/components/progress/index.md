@@ -1,14 +1,14 @@
-# Progress 进度条
+# Progress
 
-进度条。
+Progress bar.
 
-### 何时使用
-1. 当操作需要较长的时间时，向用户展示操作进度。
-2. 当操作需要打断现有界面或后台运行，需要较长时间时。
-3. 当需要显示一个操作完成的百分比或已完成的步骤/总步骤时。
+### When To Use
+1. When the operation takes a long time.
+2. When an operation takes a long time to interrupt the current interface or background operation.
+3. To display the percentage of completed operations or the number of completed steps/total steps.
 
-### 基本用法
-基本的进度和文字配置。
+### Basic Usage
+Basic progress and text configuration.
 
 ::: demo
 ```vue
@@ -37,8 +37,8 @@
 ```
 :::
 
-### 圆环用法
-基本的进度和文字配置。
+### Circle Usage
+Basic progress and text configuration.
 
 ::: demo
 ```vue
@@ -91,13 +91,13 @@
 :::
 
 ### API
-#### d-progress 参数
-| 参数 | 类型 | 默认值 | 描述 | 跳转Demo |
+#### d-progress parameter
+| Parameter | Type | Default | Description | Jump to Demo |
 | :---: | :---: | :---: | :---: | :---: |
-| percentage | `number` | 0 | 可选，进度条的值最大为 100 | [基本用法](#基本用法) |
-| percentageText |  `string` | -- | 可选，进度条当前值的文字说明比如：'30%' \| '4/5' | [基本用法](#基本用法) |
-| barBgColor |  `string` | #5170ff | 可选，进度条的颜色显示，默认为天蓝色 | [基本用法](#基本用法) |
-| height |  `string` | 20px | 可选，进度条的高度值，默认值为 20px | [基本用法](#基本用法) |
-| isCircle |  `boolean` | false | 可选， 显示进度条是否为圈形 | [圆环用法](#圆环用法) |
-| strokeWidth |  `number` | 6 | 可选，设置圈形进度条宽度，单位是进度条与画布宽度的百分比 | [圆环用法](#圆环用法) |
-| showContent |  `boolean` | true | 可选，设置圈形进度条内是否展示内容 | [圆环用法](#圆环用法) |
+| percentage | `number` | 0 | Optional. The maximum value of the progress bar is 100. | [Basic Usage](#basic-usage) |
+| percentageText |  `string` | -- | Optional. Text description of the current value of the progress bar, for example, '30%'\|'4/5' | [Basic Usage](#basic-usage) |
+| barBgColor |  `string` | #5170ff | Optional. Color of the progress bar. The default value is sky blue. | [Basic Usage](#basic-usage) |
+| height |  `string` | 20px | Optional. The default value is 20px. | [Basic Usage](#basic-usage) |
+| isCircle |  `boolean` | false | Optional. Whether the progress bar is displayed in a circle. | [Circle Usage](#circle-usage) |
+| strokeWidth |  `number` | 6 | Optional. Sets the width of the progress bar. The unit is the percentage of the progress bar to the width of the canvas. | [Circle Usage](#circle-usage) |
+| showContent |  `boolean` | true | Optional. Sets whether to display content in the circle progress bar. | [Circle Usage](#circle-usage) |
