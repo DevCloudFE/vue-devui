@@ -86,10 +86,12 @@ export default {
 <template>
   <d-button @click="drawerShow">drawer</d-button>
   <d-drawer v-model:visible="isDrawerShow" :isCover="false">
-    <template v-slot>内容区插槽</template>
-    <template v-slot:header>
-      <div @click="drawerClose">
-        <span class="icon icon-close" />
+    <template v-slot:content>内容区插槽</template>
+    <template v-slot:header="{ fullscreen, closeDrawer }">
+      <div style="display: flex;">
+        <div @click="closeDrawer">关闭</div>
+        &nbsp;&nbsp;
+        <div @click="fullscreen">全屏切换</div>
       </div>
     </template>
   </d-drawer>
@@ -105,14 +107,9 @@ export default {
       isDrawerShow.value = !isDrawerShow.value
     }
 
-    const drawerClose = () => {
-      isDrawerShow.value = false
-    }
-
     return {
       isDrawerShow,
-      drawerShow,
-      drawerClose
+      drawerShow
     }
   }
 }
@@ -214,7 +211,14 @@ export default defineComponent({
 
 ### 插槽
 
-|  名称   | 类型 |    说明    |         跳转 Demo         |
-| :-----: | :--: | :--------: | :-----------------------: |
-| default | 默认 | 抽屉板内容 | [自定义模板](#自定义模板) |
-| header  | 头部 | 抽屉板头部 | [自定义模板](#自定义模板) |
+|  名称   |    类型    |    说明    |         跳转 Demo         |
+| :-----: | :--------: | :--------: | :-----------------------: |
+| content |  具名插槽  | 抽屉板内容 | [自定义模板](#自定义模板) |
+| header  | 作用域插槽 | 抽屉板头部 | [自定义模板](#自定义模板) |
+
+#### 作用域插槽参数
+
+|    名称     |    作用    |                                  说明                                   |         跳转 Demo         |
+| :---------: | :--------: | :---------------------------------------------------------------------: | :-----------------------: |
+| fullscreen  |  切换全屏  |                                   --                                    | [自定义模板](#自定义模板) |
+| closeDrawer | 关闭抽屉板 | 在关闭抽屉板时必须调用该方法，否则 `beforeHidden` 和 `close` 属性不生效 | [自定义模板](#自定义模板) |
