@@ -1,7 +1,7 @@
 import AsyncValidator, { RuleItem } from 'async-validator';
-import { VNode, DirectiveBinding, h, render, nextTick } from 'vue';
+import { VNode, DirectiveBinding, h, render, nextTick, Teleport, computed } from 'vue';
 import { debounce } from 'lodash-es';
-import { EventBus, isObject, hasKey } from '../util';
+import { EventBus, isObject, hasKey, transformCamelToDash } from '../util';
 import useValidate from '../use-validate';
 import './style.scss';
 import dPopover from '../../../popover/src/popover';
@@ -21,8 +21,12 @@ interface BindingValue {
   updateOn: 'blur' | 'change' | 'input' | 'submit'
   asyncDebounceTime?: number | string
   messageShowType?: 'popover' | 'text' | 'none'
+  popPosition: string | string[]
   messageChange?: (msg, { errors, fields }) => {}
+  [prop: string]: any
 }
+
+export type positionType = 'top' | 'right' | 'bottom' | 'left' | 'left-top' | 'left-bottom' | 'top-left' | 'top-right' | 'right-top' | 'right-bottom' | 'bottom-left' | 'bottom-right'
 
 const getTargetElement = (el: HTMLElement, targetTag: string) => {
   let tempEl:HTMLElement = el;
@@ -36,7 +40,7 @@ const getTargetElement = (el: HTMLElement, targetTag: string) => {
 
 export default {
   mounted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode): void {
-    let { prop, modelName, rules, validators, asyncValidators, errorStrategy, updateOn = 'input', asyncDebounceTime, messageShowType = 'popover', messageChange }: BindingValue = binding.value;
+    let { prop, modelName, rules, validators, asyncValidators, errorStrategy, updateOn = 'input', asyncDebounceTime, messageShowType = 'popover', messageChange, popPosition = ['right', 'bottom'] }: BindingValue = binding.value;
     const {instance, arg} = binding;
     const instanceRef = instance[Object.keys(instance.$refs)[0]];
     if(instanceRef && instanceRef?.messageShowType) {
@@ -44,13 +48,26 @@ export default {
     }
     const hasModelName = !!modelName || !!arg;
 
+    const objToStyleString = (obj: any = {}) => {
+      let style = '';
+      for (const key in obj) {
+        style += `${transformCamelToDash(key)}: ${obj[key]};`
+      }
+      return style;
+    }
+
     const renderPopover = (msg, visible = true) => {
       if(messageShowType !== 'popover') return;
       el.style.position = 'relative';
+      const popoverPosition = () => {
+        return Array.isArray(popPosition) ? popPosition.join('-') : popPosition;
+      }
+      
       const popover = h(dPopover, {
         visible: visible,
         controlled: updateOn !== 'change',
-        content: msg
+        content: msg,
+        position: popoverPosition() as any,
       });
 
       // 这里使用比较hack的方法控制popover显隐，因为点击popover外部元素隐藏popover之后，再重新传入visible不起作用了，popover不会重新渲染了
@@ -61,9 +78,41 @@ export default {
           removeElClass(popover.el as HTMLElement, 'devui-popover-isVisible')
         }
       })
+
+      const popoverWrapperStyle = () => {
+        let rect = el.getBoundingClientRect();
+        let style: any = {
+          position: 'absolute',
+          height: 0,
+          top: (rect.height / 2) + 'px',
+          right: 0,
+        }
+
+        if(popPosition === 'bottom') {
+          style.left = '50%';
+        }
+        if(popPosition === 'top') {
+          style.left = '50%';
+          style.top = -(rect.height / 2) + 'px';
+        }
+        if(popoverPosition().startsWith('left')) {
+          style.left = 0;
+          style.top = 0;
+        }
+        if(popoverPosition().startsWith('top')) {
+          style.top = -(rect.height / 2) + 'px';
+          if(popoverPosition() === 'top-left') {
+            style.left = 0;
+          }else {
+            style.right = 0;
+          }
+        }
+        
+        return objToStyleString(style);
+      };
       
       const vn = h('div', {
-        style: 'position: absolute; left: 50%; bottom: -10px;'
+        style: popoverWrapperStyle()
       }, popover)
       render(vn, el);
     }

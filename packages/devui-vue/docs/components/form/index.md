@@ -951,7 +951,7 @@ export default defineComponent({
     prop: 'asyncSum',
     messageShowType: 'popover',
     updateOn: 'input',
-    popPosition: 'bottom',
+    popPosition: 'left-top',
     asyncValidators: [
       {message: '不对喔！（async）', asyncValidator: customAsyncValidator}
     ]
@@ -1003,6 +1003,7 @@ export default defineComponent({
 <style>
 .form-demo-custom-message {
   padding-bottom: 40px;
+  width: 60%;
 }
 .form-demo-custom-message .title{
   margin-top: 20px;
