@@ -1,5 +1,5 @@
 import AsyncValidator, { RuleItem } from 'async-validator';
-import { VNode, DirectiveBinding, h, render } from 'vue';
+import { VNode, DirectiveBinding, h, render, nextTick } from 'vue';
 import { debounce } from 'lodash-es';
 import { EventBus, isObject, hasKey } from '../util';
 import useValidate from '../use-validate';
@@ -48,10 +48,20 @@ export default {
       if(messageShowType !== 'popover') return;
       el.style.position = 'relative';
       const popover = h(dPopover, {
-        visible: !!msg,
+        visible: visible,
         controlled: updateOn !== 'change',
         content: msg
       });
+
+      // 这里使用比较hack的方法控制popover显隐，因为点击popover外部元素隐藏popover之后，再重新传入visible不起作用了，popover不会重新渲染了
+      nextTick(() => {
+        if(visible) {
+          addElClass(popover.el as HTMLElement, 'devui-popover-isVisible')
+        }else {
+          removeElClass(popover.el as HTMLElement, 'devui-popover-isVisible')
+        }
+      })
+      
       const vn = h('div', {
         style: 'position: absolute; left: 50%; bottom: -10px;'
       }, popover)
