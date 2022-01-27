@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "yarn generate:theme && vitepress dev docs",
-    "build": "yarn generate:theme && vitepress build docs && cp public/* docs/.vitepress/dist/assets",
+    "build": "yarn generate:theme && node --max_old_space_size=8192 ./node_modules/.bin/vitepress build docs && cp public/* docs/.vitepress/dist/assets",
     "serve": "vitepress serve docs",
     "app:dev": "vite",
     "app:build": "vite build",
