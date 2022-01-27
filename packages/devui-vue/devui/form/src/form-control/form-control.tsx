@@ -1,6 +1,6 @@
 import { defineComponent, inject, ref, computed, reactive, onMounted, Teleport } from 'vue';
 import { uniqueId } from 'lodash-es';
-import { IForm, formControlProps, formInjectionKey } from '../form-types';
+import { IForm, IFormItem, formControlProps, formInjectionKey, formItemInjectionKey } from '../form-types';
 import { ShowPopoverErrorMessageEventData } from '../directive/d-validate-rules'
 import clickoutsideDirective from '../../../shared/devui-directive/clickoutside'
 import { EventBus, getElOffset } from '../util';
@@ -19,6 +19,7 @@ export default defineComponent({
   setup(props, ctx) {
     const formControl = ref();
     const dForm = reactive(inject(formInjectionKey, {} as IForm));
+    const dFormItem = reactive(inject(formItemInjectionKey, {} as IFormItem));
     const labelData = reactive(dForm.labelData);
     const isHorizontal = labelData.layout === 'horizontal';
     const uid = uniqueId("dfc-");
@@ -92,7 +93,7 @@ export default defineComponent({
           </Teleport>
         }
         <div class={`devui-form-control-container${isHorizontal ? ' devui-form-control-container-horizontal' : ''}${feedbackStatus ? ' devui-has-feedback' : ''}${feedbackStatus === 'error' ? ' devui-feedback-error' : ''}`}>
-          <div class="devui-control-content-wrapper" id={uid}>
+          <div class={`devui-control-content-wrapper${dFormItem.showMessage ? ' devui-error-form-control' : ''}`} id={uid}>
             {ctx.slots.default?.()}
           </div>
           {
@@ -103,6 +104,7 @@ export default defineComponent({
           }
         </div>
         {extraInfo && <div class="devui-form-control-extra-info">{extraInfo}</div>}
+        {dFormItem.showMessage && <div class="devui-validate-tip">{dFormItem.tipMessage}</div>}
       </div>
     }
   }

@@ -112,6 +112,8 @@ export interface IFormLabel {
 export interface IFormItem {
   dHasFeedback: boolean
   prop: string
+  showMessage: boolean
+  tipMessage: string
   formItemMitt: Emitter<any>
   resetField(): void
 }

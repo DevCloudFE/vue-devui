@@ -4,7 +4,6 @@ import mitt from 'mitt';
 import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey, formItemInjectionKey } from '../form-types';
 import './form-item.scss';
 
-
 export default defineComponent({
   name: 'DFormItem',
   props: formItemProps,
@@ -24,10 +23,13 @@ export default defineComponent({
         formData[props.prop] = initFormItemData;
       }
     }
-
+    const showMessage = ref(false);
+    const tipMessage = ref('');
     const formItem = reactive({
       dHasFeedback: props.dHasFeedback,
       prop: props.prop,
+      showMessage: showMessage.value,
+      tipMessage: tipMessage.value,
       formItemMitt,
       resetField			
     })
@@ -37,8 +39,6 @@ export default defineComponent({
     const isVertical = labelData.layout === 'vertical';
     const isColumns = labelData.layout === 'columns';
 
-    const showMessage = ref(false);
-    const tipMessage = ref('');
 
     const validate = (trigger: string) => {
       // console.log('trigger', trigger);
@@ -57,6 +57,9 @@ export default defineComponent({
         // console.log('validator errors', errors);
         showMessage.value = true;
         tipMessage.value = errors[0].message;
+      }).finally(() => {
+        formItem.showMessage = showMessage.value;
+        formItem.tipMessage = tipMessage.value;
       });
     }
     const validateEvents = [];
@@ -102,7 +105,6 @@ export default defineComponent({
       return (
         <div class={`devui-form-item${isHorizontal ? '' : (isVertical ? ' devui-form-item-vertical' : ' devui-form-item-columns')}${isColumns ? ' devui-column-item ' + columnsClass.value : ''}`}>
           {ctx.slots.default?.()}
-          <div class={`devui-validate-tip${isHorizontal ? ' devui-validate-tip-horizontal' : ''}`}>{showMessage.value && tipMessage.value}</div>
         </div>
       )
     }
