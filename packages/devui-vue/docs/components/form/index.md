@@ -951,7 +951,7 @@ export default defineComponent({
     prop: 'asyncSum',
     messageShowType: 'popover',
     updateOn: 'input',
-    popPosition: 'left-top',
+    popPosition: 'bottom',
     asyncValidators: [
       {message: '不对喔！（async）', asyncValidator: customAsyncValidator}
     ]

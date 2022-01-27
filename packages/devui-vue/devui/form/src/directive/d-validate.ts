@@ -67,7 +67,7 @@ export default {
         visible: visible,
         controlled: updateOn !== 'change',
         content: msg,
-        position: popoverPosition() as any,
+        position: popoverPosition() as positionType,
       });
 
       // 这里使用比较hack的方法控制popover显隐，因为点击popover外部元素隐藏popover之后，再重新传入visible不起作用了，popover不会重新渲染了
@@ -88,24 +88,33 @@ export default {
           right: 0,
         }
 
-        if(popPosition === 'bottom') {
+        let p = popoverPosition();
+        if(popPosition === 'bottom' || popPosition === 'top') {
           style.left = '50%';
         }
-        if(popPosition === 'top') {
-          style.left = '50%';
-          style.top = -(rect.height / 2) + 'px';
-        }
-        if(popoverPosition().startsWith('left')) {
-          style.left = 0;
+        if(popPosition === 'left' || popPosition === 'right') {
           style.top = 0;
         }
-        if(popoverPosition().startsWith('top')) {
+        if(p.includes('top')) {
           style.top = -(rect.height / 2) + 'px';
-          if(popoverPosition() === 'top-left') {
-            style.left = 0;
-          }else {
-            style.right = 0;
-          }
+        }
+        if(p.endsWith('-bottom')) {
+          style.top = (rect.height / 2) + 'px';
+        }
+        if(p.includes('left')) {
+          style.left = 0;
+        }
+        if(p.includes('right')) {
+          delete style.left;
+          style.right = 0;
+        }
+
+        if(p.startsWith('bottom')) {
+          delete style.top;
+          style.bottom = 0;
+        }
+        if(p.startsWith('top')) {
+          delete style.bottom;
         }
         
         return objToStyleString(style);
