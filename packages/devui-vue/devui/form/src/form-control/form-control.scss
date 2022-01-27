@@ -104,7 +104,7 @@
   .devui-error-form-control {
     border-color: var(--devui-danger-line,#f66f6a) !important;
     background-color: var(--devui-danger-bg,#ffeeed) !important;
-    * {
+    > * {
       border-color: var(--devui-danger-line, transparent) !important;
       background-color: var(--devui-danger-bg, transparent) !important;
     }

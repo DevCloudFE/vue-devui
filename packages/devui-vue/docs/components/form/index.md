@@ -1290,6 +1290,12 @@ export default defineComponent({
         <d-input v-model="validateFormModel.age" />
       </d-form-control>
     </d-form-item>
+    <d-form-item prop="age2">
+      <d-form-label :required="true" >年龄</d-form-label>
+      <d-form-control messageShowType="text">
+        <d-input v-model="validateFormModel.age2" />
+      </d-form-control>
+    </d-form-item>
   </d-form>
 
 </template>
@@ -1303,6 +1309,7 @@ export default defineComponent({
     let validateFormModel = reactive({
       name: 'AlanLee',
       age: '24',
+      age2: '18',
     });
     const rules = reactive({
       name: [{ required: true, message: '不能为空', trigger: 'blur'}],
@@ -1319,6 +1326,14 @@ export default defineComponent({
           trigger: 'input',
           validator: (rule, value) => value < 120
         }
+      ],
+      age2: [
+        { 
+          required: true, 
+          message: '年龄不能小于0',
+          max: 120, 
+          trigger: 'input',
+        },
       ],
     });
 

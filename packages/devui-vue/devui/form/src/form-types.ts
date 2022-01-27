@@ -63,6 +63,14 @@ export const formLabelProps = {
 } as const
 
 export const formControlProps = {
+  messageShowType: {
+    type: String as PropType<'popover' | 'text' | 'none'>,
+    default: 'popover'
+  },
+  popPosition: {
+    type: String as PropType<'top' | 'right' | 'bottom' | 'left' | 'left-top' | 'left-bottom' | 'top-left' | 'top-right' | 'right-top' | 'right-bottom' | 'bottom-left' | 'bottom-right'>,
+    default: 'right-bottom'
+  },
   feedbackStatus: {
     type: String as PropType<'success' | 'error' | 'pending' | ''>,
     default: ''
