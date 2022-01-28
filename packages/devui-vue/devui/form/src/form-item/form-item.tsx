@@ -3,13 +3,14 @@ import AsyncValidator, { Rules } from 'async-validator';
 import mitt from 'mitt';
 import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey, formItemInjectionKey } from '../form-types';
 import './form-item.scss';
+import useValidate from '../use-validate';
 
 export default defineComponent({
   name: 'DFormItem',
   props: formItemProps,
   setup(props, ctx) {
     const formItemMitt = mitt();
-    const dForm = reactive(inject(formInjectionKey, {} as IForm));
+    let dForm = reactive(inject(formInjectionKey, {} as IForm));
     const formData = reactive(dForm.formData);
     const columnsClass = ref(dForm.columnsClass);
     const initFormItemData = formData[props.prop];
@@ -39,27 +40,40 @@ export default defineComponent({
     const isVertical = labelData.layout === 'vertical';
     const isColumns = labelData.layout === 'columns';
 
-
     const validate = (trigger: string) => {
       // console.log('trigger', trigger);
-      
+      const {validate: validateFn, createDevUIBuiltinValidator} = useValidate();
       const ruleKey = props.prop;
-      const ruleItem = rules[ruleKey];
+      let ruleItem = rules[ruleKey];
+      ruleItem = ruleItem.map(item => {
+        return createDevUIBuiltinValidator(item);
+      });
       const descriptor: Rules = {};
       descriptor[ruleKey] = ruleItem;
-      
-      const validator = new AsyncValidator(descriptor);
 
-      validator.validate({[ruleKey]: formData[ruleKey]}).then(() => {
+      validateFn(descriptor, {[ruleKey]: formData[ruleKey]}).then(() => {
         showMessage.value = false;
         tipMessage.value = '';
-      }).catch(({ errors }) => {
+        dForm.validateResult = {
+          prop: props.prop,
+          message: '', 
+          errors: null, 
+          fields: null,
+        }
+      }).catch(({ errors, fields }) => {
         // console.log('validator errors', errors);
         showMessage.value = true;
         tipMessage.value = errors[0].message;
+        dForm.validateResult = {
+          prop: props.prop,
+          message: errors[0].message, 
+          errors, 
+          fields,
+        }
       }).finally(() => {
         formItem.showMessage = showMessage.value;
         formItem.tipMessage = tipMessage.value;
+        dForm.formMitt.emit(`formItem:messageChange`, dForm.validateResult);
       });
     }
     const validateEvents = [];

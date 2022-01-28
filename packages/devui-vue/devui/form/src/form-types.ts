@@ -109,6 +109,12 @@ export interface IForm {
   rules: any
   columnsClass: string
   messageShowType: string
+  validateResult: {
+    prop: string,
+    message: string, 
+    errors: any, 
+    fields: any,
+  }
 } 
 
 export interface IFormLabel {

@@ -9,7 +9,7 @@ import './form.scss'
 export default defineComponent({
   name: 'DForm',
   props: formProps,
-  emits: ['submit'],
+  emits: ['submit', 'messageChange'],
   setup(props: FormProps, ctx) {
     const formMitt = mitt();
     const fields: IFormItem[] =  [];
@@ -31,6 +31,13 @@ export default defineComponent({
         fields.splice(fields.indexOf(field), 1);
       }
     })
+
+    let resultSet = {};
+    formMitt.on('formItem:messageChange', (data: any) => {
+      resultSet[data.prop] = data;
+      delete resultSet[data.prop].prop;
+      ctx.emit('messageChange', resultSet);
+    });
     
     provide(formInjectionKey, {
       formData: props.formData,
@@ -42,7 +49,8 @@ export default defineComponent({
       },
       rules: props.rules,
       columnsClass: props.columnsClass,
-      messageShowType: props.messageShowType
+      messageShowType: props.messageShowType,
+      validateResult: undefined
     });
 
     const onSubmit = (e) => {

@@ -1277,7 +1277,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form class="form-demo-reactive-validate" ref="dFormReactiveValidate" :form-data="validateFormModel" :rules="rules">
+  <d-form class="form-demo-reactive-validate" ref="dFormReactiveValidate" :form-data="validateFormModel" :rules="rules" @messageChange="onMessageChange">
     <d-form-item prop="name">
       <d-form-label :required="true" >姓名</d-form-label>
       <d-form-control>
@@ -1288,12 +1288,6 @@ export default defineComponent({
       <d-form-label :required="true" >年龄</d-form-label>
       <d-form-control>
         <d-input v-model="validateFormModel.age" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="age2">
-      <d-form-label :required="true" >年龄</d-form-label>
-      <d-form-control messageShowType="text">
-        <d-input v-model="validateFormModel.age2" />
       </d-form-control>
     </d-form-item>
   </d-form>
@@ -1326,21 +1320,18 @@ export default defineComponent({
           trigger: 'input',
           validator: (rule, value) => value < 120
         }
-      ],
-      age2: [
-        { 
-          required: true, 
-          message: '年龄不能小于0',
-          max: 120, 
-          trigger: 'input',
-        },
-      ],
+      ]
     });
+
+    const onMessageChange = (msgData) => {
+      console.log('onMessageChange', msgData);
+    }
 
     return {
       dFormReactiveValidate,
       rules,
       validateFormModel,
+      onMessageChange
     }
   }
 })
