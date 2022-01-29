@@ -1277,19 +1277,66 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form class="form-demo-reactive-validate" ref="dFormReactiveValidate" :form-data="validateFormModel" :rules="rules" @messageChange="onMessageChange">
+  <d-form class="form-demo-reactive-validate" ref="dFormReactiveValidate" :form-data="validateFormModel" :rules="rules" @messageChange="onMessageChange" @submit="onSubmitForm">
     <d-form-item prop="name">
-      <d-form-label :required="true" >姓名</d-form-label>
-      <d-form-control>
+      <d-form-label required hasHelp helpTips="可以输入中文名字或者英文名字">姓名</d-form-label>
+      <d-form-control extraInfo="请输入您的名字">
         <d-input v-model="validateFormModel.name" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="age">
-      <d-form-label :required="true" >年龄</d-form-label>
+      <d-form-label>年龄</d-form-label>
       <d-form-control>
         <d-input v-model="validateFormModel.age" />
       </d-form-control>
     </d-form-item>
+    <d-form-item prop="city">
+      <d-form-label>城市</d-form-label>
+      <d-form-control>
+        <d-select v-model="validateFormModel.city" :options="selectOptions" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="loveFruits">
+      <d-form-label>喜欢的水果</d-form-label>
+      <d-form-control>
+        <d-tag-input
+          v-model:tags="validateFormModel.loveFruits"
+          v-model:suggestionList="validateFormModel.suggestionList"
+          display-property="name"
+          placeholder="请输入喜欢的水果"
+          no-data="暂无数据"
+        ></d-tag-input>
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="sex">
+      <d-form-label>性别</d-form-label>
+      <d-form-control>
+        <d-radio v-model="validateFormModel.sex" value="0">男</d-radio>
+        <d-radio v-model="validateFormModel.sex" value="1">女</d-radio>
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="workOn">
+      <d-form-label>下班了吗</d-form-label>
+      <d-form-control>
+        <d-switch v-model:checked="validateFormModel.workOn"></d-switch>
+      </d-form-control>
+    </d-form-item>
+    <d-form-item prop="interestedDomain">
+      <d-form-label>兴趣领域</d-form-label>
+      <d-form-control>
+        <d-checkbox-group v-model="validateFormModel.interestedDomain" label="兴趣领域">
+          <d-checkbox label="前端" value="frontend" />
+          <d-checkbox label="后端" value="backend" />
+          <d-checkbox label="移动端" value="mobileend" />
+          <d-checkbox label="人工智能" value="ai" />
+          <d-checkbox label="算法" value="algorithm" />
+        </d-checkbox-group>
+      </d-form-control>
+    </d-form-item>
+    <d-form-operation class="form-demo-form-operation">
+      <d-button type="submit" class="form-demo-btn">提交</d-button>
+      <d-button bsStyle="common" @click="resetForm">重置</d-button>
+    </d-form-operation>
   </d-form>
 
 </template>
@@ -1303,8 +1350,16 @@ export default defineComponent({
     let validateFormModel = reactive({
       name: 'AlanLee',
       age: '24',
-      age2: '18',
+      city: '深圳',
+      loveFruits: [{name: '苹果'}],
+      suggestionList: [{name: '苹果'}, {name: '西瓜'}, {name: '桃子'}],
+      sex: '0',
+      workOn: true,
+      interestedDomain: ['frontend'],
     });
+    const selectOptions = reactive([
+      '北京', '上海', '广州', '深圳'
+    ]);
     const rules = reactive({
       name: [{ required: true, message: '不能为空', trigger: 'blur'}],
       age: [
@@ -1320,18 +1375,43 @@ export default defineComponent({
           trigger: 'input',
           validator: (rule, value) => value < 120
         }
-      ]
+      ],
+      loveFruits: [{
+        message: '至少选择一种水果',
+        trigger: 'change',
+        validator: (rule, value) => value.length > 0,
+      }],
+      workOn: [{
+        message: 'bug修完了吗？就下班了吗？你怎么敢的啊！',
+        validator: (rule, value) => value === true,
+        trigger: 'change',
+      }],
+      interestedDomain: [{
+        message: '至少选择一个兴趣领域',
+        trigger: 'change',
+        validator: (rule, value) => value.length > 0,
+      }],
     });
 
     const onMessageChange = (msgData) => {
       console.log('onMessageChange', msgData);
     }
 
+    const resetForm = () => {
+      dFormReactiveValidate.value.resetFormFields();
+    }
+    const onSubmitForm = () => {
+      console.log('onSubmitForm formModel', validateFormModel)
+    }
+
     return {
       dFormReactiveValidate,
       rules,
       validateFormModel,
-      onMessageChange
+      onMessageChange,
+      selectOptions,
+      resetForm,
+      onSubmitForm,
     }
   }
 })
@@ -1340,7 +1420,7 @@ export default defineComponent({
 
 <style>
 .form-demo-reactive-validate {
-  width: 400px;
+  width: 600px;
 }
 .form-demo-form-operation {
   display: flex;

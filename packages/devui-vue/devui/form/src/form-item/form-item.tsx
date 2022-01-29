@@ -86,6 +86,10 @@ export default defineComponent({
         if(Array.isArray(ruleItem)) {
           ruleItem.forEach((item) => {
             eventName = item['trigger'];
+            if(!eventName) {
+              eventName = 'change'
+            }
+            
             const cb = () => validate(eventName);
             validateEvents.push({eventName: cb});
             formItem.formItemMitt.on(dFormItemEvents[eventName], cb);
