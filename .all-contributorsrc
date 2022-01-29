@@ -29,6 +29,15 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "lnzhangsong",
+      "name": "nif",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15092594?v=4",
+      "profile": "https://github.com/lnzhangsong",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
