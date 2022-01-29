@@ -20,7 +20,17 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "TinsFox",
+      "name": "TinsFox",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33956589?v=4",
+      "profile": "https://github.com/TinsFox",
+      "contributions": [
+        "maintenance"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
