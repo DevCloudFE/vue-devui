@@ -4,11 +4,16 @@ export default defineComponent({
   name: 'DrawerContainer',
   setup() {
     const visible = inject('visible')
-    return { visible }
+    const destroyOnHide = inject('destroyOnHide')
+    return { visible, destroyOnHide }
   },
   render() {
-    const { visible } = this
-    if (!visible) return null
-    return <div>内容区域</div>
+    const { visible, destroyOnHide } = this
+
+    if (destroyOnHide.value && !visible) {
+      return null
+    }
+    const visibleVal = this.visible ? 'visible' : 'hidden'
+    return <div style={{ visibility : visibleVal }}>内容区域</div>
   }
 })

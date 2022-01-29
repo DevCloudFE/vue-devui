@@ -14,7 +14,7 @@ function createDrawerApp(props: DrawerProps, drawer: drawerInstance, el: HTMLEle
     return drawer
   }
   const res = createApp(
-    <DDrawer {...props}>{{ header: props.header, content: props.content }}</DDrawer>
+    <DDrawer v-model:visible={props.visible}>{{ header: props.header, content: props.content }}</DDrawer>
   )
   res.mount(el)
   return res
@@ -39,8 +39,11 @@ class Drawer {
   }
 
   public show(): void {
-    this.div = document.createElement('div')
-    this.drawer = createDrawerApp(this.props, this.drawer, this.div)
+    if (!this.drawer) {
+      this.div = document.createElement('div')
+      this.drawer = createDrawerApp(this.props, this.drawer, this.div)
+    }
+    // TODO: this is a hack, need to find a better way. (the row 62)
     this.drawer._instance.props.visible = true
   }
 
@@ -55,12 +58,15 @@ class Drawer {
 
   public hideDirectly = (): void => {
     this.drawer._instance.props.visible = false
-    this.div.remove()
+    // this.div.remove()
   }
 
   public destroy = (): void => {
-    this.drawer.unmount()
-    this.drawer = null
-    this.div.remove()
+    // when drawer is null, it has been destroyed already and no need to destroy again
+    if (this.drawer) {
+      this.drawer.unmount()
+      this.drawer = null
+      this.div.remove()
+    }
   }
 }

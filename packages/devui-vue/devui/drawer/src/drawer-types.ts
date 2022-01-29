@@ -29,6 +29,10 @@ export const drawerProps = {
     type: Boolean,
     default: true,
   },
+  destroyOnHide: { // 是否在隐藏时销毁
+    type: Boolean,
+    default: false,
+  },
   beforeHidden: { // 关闭前的回调
     type: [Promise, Function] as PropType<Promise<boolean> | (() => boolean | Promise<boolean>)>,
   },

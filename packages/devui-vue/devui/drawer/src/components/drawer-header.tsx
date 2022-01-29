@@ -3,12 +3,13 @@ import { defineComponent, ref, inject, computed } from 'vue'
 import './drawer-header.scss'
 
 export default defineComponent({
-  name: 'DrawerHeader', // 头部
+  name: 'DrawerHeader',
   emits: ['toggleFullScreen', 'close'],
   setup(props, ctx) {
     const isFullScreen = ref(false)
 
-    const visible: boolean = inject('visible')
+    const visible = inject('visible')
+    const destroyOnHide = inject('destroyOnHide')
 
     const fullScreenClassName = computed(() =>  isFullScreen.value ? 'icon icon-minimize' : 'icon icon-maxmize')
 
@@ -22,15 +23,22 @@ export default defineComponent({
       ctx.emit('close')
     }
 
-    return { fullScreenClassName, visible, handleFullScreen, handleDrawerClose, }
+    return { fullScreenClassName, visible, handleFullScreen, handleDrawerClose, destroyOnHide }
   },
   render() {
-    const { handleFullScreen, handleDrawerClose, visible, fullScreenClassName } = this
-    
-    if (!visible) return null
+    const { 
+      handleFullScreen, handleDrawerClose, visible, 
+      fullScreenClassName, destroyOnHide 
+    } = this
+
+    if (destroyOnHide.value && !visible) {
+      return null
+    }
+
+    const visibleVal = visible ? 'visible' : 'hidden'
 
     return (
-      <div class="devui-drawer-header">
+      <div class="devui-drawer-header" style= {{ visibility : visibleVal }}>
         <div class="devui-drawer-header-item">
           <span class="devui-drawer-header-item icon icon-more-operate" />
         </div>
