@@ -1,7 +1,9 @@
 import { mount } from '@vue/test-utils';
-import { ref, nextTick } from 'vue'
+import { ref, reactive, watch, nextTick } from 'vue'
 import DCheckbox from '../../checkbox/src/checkbox';
+import DCheckboxGroup from '../../checkbox/src/checkbox-group'
 import DTooltip from '../../tooltip/src/tooltip';
+import DButton from '../../button/src/button';
 import DTransfer from '../src/transfer'
 
 const SOURCE_DATA = [
@@ -244,6 +246,273 @@ describe('d-transfer', () => {
 
     })
 
+    it('d-transfer customTransfer drag work', async () => {
+        const leftData = [
+            {
+                key: '1',
+                value: 'Mark',
+                age: 11,
+                disabled: false,
+            },
+            {
+                key: '2',
+                value: 'Jacob',
+                age: 12,
+                disabled: false,
+            },
+            {
+                key: '3',
+                value: 'Danni',
+                age: 13,
+                disabled: false,
+            },
+            {
+                key: '4',
+                value: 'green',
+                age: 14,
+                disabled: false,
+            },
+            {
+                key: '5',
+                value: 'po',
+                age: 15,
+                disabled: false,
+            },
+            {
+                key: '6',
+                value: 'Book',
+                age: 16,
+                disabled: false,
+            }
+        ]
+        const rightData = [
+            {
+                key: '21',
+                value: 'john',
+                age: 17,
+                disabled: false,
+            },
+            {
+                key: '22',
+                value: 'Joke',
+                age: 28,
+                disabled: false,
+            },
+            {
+                key: '23',
+                value: 'Echo',
+                age: 18,
+                disabled: false,
+            }
+        ]
+        const leftOptions = reactive({
+            allChecked: false,
+            filterData: leftData,
+            checkedValues: [],
+            disabled: true,
+        });
+
+        const rightOptions = reactive({
+            allChecked: false,
+            filterData: rightData,
+            checkedValues: [],
+            disabled: true
+        })
+        const wrapper = mount({
+            components: {
+                DTransfer,
+                DCheckbox,
+                DCheckboxGroup,
+                DButton,
+            },
+            template: `
+                <d-transfer>
+                    <template #left-header>
+                    <div class="custom-transfer__header">Customize Source Header</div>
+                    </template>
+                    <template #left-body>
+                    <div class="custom-transfer__body">
+                        <div class="custom-transfer__body__list custom-transfer__body__header">
+                        <DCheckbox
+                            class="custom-transfer__body__list__checkout"
+                            v-model="leftOptions.allChecked"
+                            @change="changeAllSource(leftOptions)"
+                        ></DCheckbox>
+                        <div class="custom-transfer__body__list__part">Id</div>
+                        <div class="custom-transfer__body__list__part">Name</div>
+                        <div class="custom-transfer__body__list__part">Age</div>
+                        </div>
+                        <DCheckboxGroup v-model="leftOptions.checkedValues">
+                        <div class="custom-transfer__body__list" v-for="(item, idx) in leftOptions.filterData">
+                            <DCheckbox
+                                class="devui-transfer__panel__body__list__item"
+                                :value="item.value"
+                                :disabled="item.disabled"
+                                :key="idx">
+                            </DCheckbox>
+                            <div class="custom-transfer__body__list__part">{{item.key}}</div>
+                            <div class="custom-transfer__body__list__part">{{item.value}}</div>
+                            <div class="custom-transfer__body__list__part">{{item.age}}</div>
+                        </div>
+                        </DCheckboxGroup>
+                    </div>
+                    </template>
+                    <template #operation>
+                    <div class="custom-transfer__operation">
+                        <div class="custom-transfer__operation__group">
+                        <DButton :disabled="leftOptions.disabled" @Click="updateRightFilterData" >Left</DButton>
+                        <DButton style="margin-top: 12px;" :disabled="rightOptions.disabled" @click="updateLeftFilterData">Right</DButton>
+                        </div>
+                    </div>
+                    </template>
+                    <template #right-header>
+                    <div class="custom-transfer__header">Customize Target Header</div>
+                    </template>
+                    <template #right-body>
+                    <div class="custom-transfer__body">
+                        <div class="custom-transfer__body__list custom-transfer__body__header">
+                        <DCheckbox
+                            class="custom-transfer__body__list__checkout"
+                            v-model="rightOptions.allChecked"
+                            @change="changeAllSource(rightOptions)"
+                        ></DCheckbox>
+                        <div class="custom-transfer__body__list__part">Id</div>
+                        <div class="custom-transfer__body__list__part">Name</div>
+                        <div class="custom-transfer__body__list__part">Age</div>
+                        </div>
+                        <DCheckboxGroup v-model="rightOptions.checkedValues">
+                        <div class="custom-transfer__body__list" v-for="(item, idx) in rightOptions.filterData">
+                            <DCheckbox
+                                class="devui-transfer__panel__body__list__item"
+                                :value="item.value"
+                                :disabled="item.disabled"
+                                :key="idx">
+                            </DCheckbox>
+                            <div class="custom-transfer__body__list__part">{{item.key}}</div>
+                            <div class="custom-transfer__body__list__part">{{item.value}}</div>
+                            <div class="custom-transfer__body__list__part">{{item.age}}</div>
+                        </div>
+                        </DCheckboxGroup>
+                    </div>
+                    </template>
+                </d-transfer>
+            `,
+            setup() {
+                watch(
+                    () => leftOptions.checkedValues,
+                    (nVal) => {
+                        console.log('fetch', leftOptions.checkedValues)
+                        rightOptions.disabled = nVal.length !== 0 ? false : true
+                        leftOptions.allChecked = isEqual(nVal, leftOptions.filterData)
+                    },
+                    {
+                        deep: true
+                    }
+                )
+
+                watch(
+                    () => rightOptions.checkedValues,
+                    (nVal) => {
+                        console.log('right', rightOptions.checkedValues)
+                        leftOptions.disabled = nVal.length !== 0 ? false : true
+                        rightOptions.allChecked = isEqual(nVal, rightOptions.filterData)
+                    },
+                    {
+                        deep: true
+                    }
+                )
+
+                const isEqual = (source, target) => {
+                    return target.length !== 0 && source.length === target.length
+                }
+
+                const changeAllSource = (source) => {
+                    if (source.allChecked) {
+                        source.checkedValues = source.filterData.map(item => item.value)
+                    } else {
+                        source.checkedValues = []
+                    }
+                }
+
+                const updateRightFilterData = () => {
+                    rightOptions.filterData = rightOptions.filterData.filter(item => {
+                        const hasItem = rightOptions.checkedValues.includes(item.value)
+                        if (hasItem) {
+                            leftOptions.filterData.push(item)
+                        }
+                        return !hasItem
+                    })
+                    rightOptions.checkedValues = []
+                }
+
+                const updateLeftFilterData = () => {
+                    leftOptions.filterData = leftOptions.filterData.filter(item => {
+                        const hasItem = leftOptions.checkedValues.includes(item.value)
+                        if (hasItem) {
+                            rightOptions.filterData.push(item)
+                        }
+                        return !hasItem
+                    })
+                    leftOptions.checkedValues = []
+                }
+                return {
+                    leftOptions,
+                    rightOptions,
+                    changeAllSource,
+                    updateRightFilterData,
+                    updateLeftFilterData
+                }
+            }
+        })
+
+        /**
+         * 测试自定义穿梭框 start
+        */
+        const sourceWrapper = wrapper.find('.devui-transfer-source')
+        const tragetWrapper = wrapper.find('.devui-transfer-target')
+        const leftHeader = sourceWrapper.find('.custom-transfer__header')
+        const rightHeader = tragetWrapper.find('.custom-transfer__header')
+        expect(leftHeader.text()).toBe('Customize Source Header')
+        expect(rightHeader.text()).toBe('Customize Target Header')
+
+        const buttons = wrapper.findAllComponents({ name: 'DButton' })
+        expect(buttons[0].props().disabled).toBe(true)
+        expect(buttons[1].props().disabled).toBe(true)
+        const leftLabel = sourceWrapper.findAll('.devui-checkbox-group label')
+        expect(leftLabel.length).toBe(6)
+        expect(tragetWrapper.findAll('.devui-checkbox-group label').length).toBe(3)
+        leftLabel[0].trigger('click')
+        await nextTick()
+        leftLabel[1].trigger('click')
+        await nextTick()
+        expect(buttons[1].props().disabled).toBe(false)
+        wrapper.findAll('.devui-btn')[1].trigger('click')
+        await nextTick()
+        expect(sourceWrapper.findAll('.devui-checkbox-group label').length).toBe(4)
+        expect(tragetWrapper.findAll('.devui-checkbox-group label').length).toBe(5)
+
+        const rightLabel = tragetWrapper.findAll('.devui-checkbox-group label')
+        rightLabel[0].trigger('click')
+        await nextTick()
+        rightLabel[1].trigger('click')
+        await nextTick()
+        rightLabel[2].trigger('click')
+        await nextTick()
+        rightLabel[3].trigger('click')
+        await nextTick()
+        rightLabel[4].trigger('click')
+        await nextTick()
+        expect(tragetWrapper.findAll('.active').length).toBe(4)
+        expect(buttons[0].props().disabled).toBe(false)
+        wrapper.findAll('.devui-btn')[0].trigger('click')
+        await nextTick()
+        expect(sourceWrapper.findAll('.devui-checkbox-group label').length).toBe(9)
+        expect(tragetWrapper.findAll('.devui-checkbox-group label').length).toBe(0)
+        /**
+         * 测试自定义穿梭框 end
+        */
+    })
+
     // it('d-transfer tooltips work', async () => {
     //     const sourceOption = ref(SOURCE_DATA)
     //     const targetOption = ref(TARGET_DATA)
@@ -343,27 +612,6 @@ describe('d-transfer', () => {
         })
 
 
-        // /**
-        //  * 测试穿梭框拖拽排序 start
-        // */
-        // const startDragItemIndex = sourceOption.value.findIndex(item => item.value === '成都')
-        // const startDropItemIndex = sourceOption.value.findIndex(item => item.value === '上海')
-        // const dragItemValue = sourceOption.value[startDragItemIndex]
-        // const dropItemValue = sourceOption.value[startDropItemIndex]
-        // const dataSort = (target, dragItem, dropItem) => {
-        //     const startIndex = target.findIndex(item => item.key === dragItem.key)
-        //     const endIndex = target.findIndex(item => item.key === dropItem.key)
-        //     target.splice(endIndex, 1, dragItem)
-        //     target.splice(startIndex, 1, dropItem)
-        // }
-        // dataSort(sourceOption.value, dragItemValue, dropItemValue)
-        // await nextTick()
-        // const endDragItemIndex = sourceOption.value.findIndex(item => item.value === '成都')
-        // const endDropItemIndex = sourceOption.value.findIndex(item => item.value === '上海')
-        // // 4 1 // 1 4
-        // /**
-        //  * 测试穿梭框拖拽排序 end
-        // */
         /**
          * 测试穿梭框拖拽排序 start
         */

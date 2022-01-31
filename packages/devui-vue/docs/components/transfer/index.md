@@ -509,9 +509,11 @@ d-transfer 参数
 | sourceOption   | `Array`   | []     | 可选参数，穿梭框源数据     |  [基本用法](#基本用法)   |
 | targetOption   | `Array`   | []     | 可选参数，穿梭框目标数据   |  [基本用法](#基本用法)   |
 | titles         | `Array`   | []     | 可选参数，穿梭框标题      |  [基本用法](#基本用法)   |
-| height         | `Array`  | 320px  | 可选参数，穿梭框高度      |  [基本用法](#基本用法)   |
-| isSearch       | `Array` | true   | 可选参数，是否可以搜索    |  [基本用法](#基本用法)   |
-| disabled       | `Array` | false  | 可选参数 穿梭框禁止使用   |  [基本用法](#基本用法)   |  
+| height         | `String`  | 320px  | 可选参数，穿梭框高度      |  [基本用法](#基本用法)   |
+| isSearch       | `Boolean` | true   | 可选参数，是否可以搜索    |  [基本用法](#基本用法)   |
+| disabled       | `Boolean` | false  | 可选参数 穿梭框禁止使用   |  [基本用法](#基本用法)   |  
+| isSourceDroppable  | `Boolean` | false  | 可选参数，源是否可以拖拽   |  [基本用法](#拖拽排序)   |  
+| isTargetDroppable  | `Boolean` | false  | 可选参数，目标是否可以拖拽   |  [基本用法](#拖拽排序)   |  
 | beforeTransfer | `(sourceOption, targetOption) => boolean \| Promise<boolean>` |-  | 可选参数 穿梭框禁止使用   |  [基本用法](#基本用法)   |  
 
 d-transfer 事件
