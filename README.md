@@ -174,6 +174,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://juejin.cn/user/712139267650141"><img src="https://avatars.githubusercontent.com/u/9566362?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kagol</b></sub></a><br /><a href="#maintenance-kagol" title="Maintenance">🚧</a> <a href="https://github.com/DevCloudFE/vue-devui/commits?author=kagol" title="Code">💻</a> <a href="https://github.com/DevCloudFE/vue-devui/commits?author=kagol" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/TinsFox"><img src="https://avatars.githubusercontent.com/u/33956589?v=4?s=100" width="100px;" alt=""/><br /><sub><b>TinsFox</b></sub></a><br /><a href="#maintenance-TinsFox" title="Maintenance">🚧</a> <a href="#infra-TinsFox" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="https://github.com/lnzhangsong"><img src="https://avatars.githubusercontent.com/u/15092594?v=4?s=100" width="100px;" alt=""/><br /><sub><b>nif</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=lnzhangsong" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Zcating"><img src="https://avatars.githubusercontent.com/u/13329558?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Zcating</b></sub></a><br /><a href="#maintenance-Zcating" title="Maintenance">🚧</a> <a href="https://github.com/DevCloudFE/vue-devui/commits?author=Zcating" title="Code">💻</a></td>
   </tr>
 </table>
 

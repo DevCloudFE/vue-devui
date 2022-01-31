@@ -20,7 +20,37 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "TinsFox",
+      "name": "TinsFox",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33956589?v=4",
+      "profile": "https://github.com/TinsFox",
+      "contributions": [
+        "maintenance",
+        "infra"
+      ]
+    },
+    {
+      "login": "lnzhangsong",
+      "name": "nif",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15092594?v=4",
+      "profile": "https://github.com/lnzhangsong",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Zcating",
+      "name": "Zcating",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13329558?v=4",
+      "profile": "https://github.com/Zcating",
+      "contributions": [
+        "maintenance",
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
