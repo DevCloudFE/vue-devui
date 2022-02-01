@@ -34,6 +34,7 @@ export default defineComponent({
 
     let resultSet = {};
     formMitt.on('formItem:messageChange', (data: any) => {
+      if(!data?.prop) return;
       resultSet[data.prop] = data;
       delete resultSet[data.prop].prop;
       ctx.emit('messageChange', resultSet);

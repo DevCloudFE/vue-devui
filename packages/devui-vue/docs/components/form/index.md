@@ -1361,12 +1361,12 @@ export default defineComponent({
       '北京', '上海', '广州', '深圳'
     ]);
     const rules = reactive({
-      name: [{ required: true, message: '不能为空', trigger: 'blur'}],
+      name: [{ required: true, message: '不能为空', trigger: 'change'}],
       age: [
         { 
           required: true, 
           message: '年龄不能小于0', 
-          trigger: 'blur',
+          trigger: 'input',
           validator: (rule, value) => value > 0
         },
         { 
@@ -1384,11 +1384,9 @@ export default defineComponent({
       workOn: [{
         message: 'bug修完了吗？就下班了吗？你怎么敢的啊！',
         validator: (rule, value) => value === true,
-        trigger: 'change',
       }],
       interestedDomain: [{
         message: '至少选择一个兴趣领域',
-        trigger: 'change',
         validator: (rule, value) => value.length > 0,
       }],
     });

@@ -111,6 +111,7 @@ export interface IForm {
   messageShowType: string
   validateResult: {
     prop: string,
+    valid: boolean,
     message: string, 
     errors: any, 
     fields: any,
