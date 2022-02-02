@@ -49,7 +49,7 @@ export default function useDraggable(
     const cloneData = cloneDeep(data.value)
     let nowDragNode
     let nowDropNode
-    const ergodic = (curr: TreeItem[]) => {
+    const findDragAndDropNode = (curr: TreeItem[]) => {
       if (!Array.isArray(curr)) return
       curr.every((item, index) => {
         if (nowDragNode && nowDropNode) {
@@ -61,12 +61,12 @@ export default function useDraggable(
           nowDropNode = { target: curr, index, item }
         }
         if (!nowDragNode || !nowDropNode) {
-          ergodic(item.children)
+          findDragAndDropNode(item.children)
         }
         return true
       })
     }
-    ergodic(cloneData)
+    findDragAndDropNode(cloneData)
     if (nowDragNode && nowDropNode && dropType) {
       const cloneDrapNode = cloneDeep(nowDragNode.target[nowDragNode.index])
       if (dropType === 'prev') {
@@ -87,7 +87,6 @@ export default function useDraggable(
       }
       
     }
-    console.log(cloneData);
     
     return cloneData
   }
