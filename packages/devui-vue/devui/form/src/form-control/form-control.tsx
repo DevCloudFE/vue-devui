@@ -27,6 +27,10 @@ export default defineComponent({
     const updateOn = ref('change');
     const tipMessage = ref("");
     const popPosition = ref<any>(props.popPosition);
+    const messageShowTypeData = ref(props.messageShowType);
+    if(dForm.messageShowType) {
+      messageShowTypeData.value = dForm.messageShowType as any;
+    }
     let rectInfo: Partial<DOMRect> = {
       width: 0,
       height: 0
@@ -65,7 +69,7 @@ export default defineComponent({
         }
       });
 
-      if(props.messageShowType === "popover") {
+      if(messageShowTypeData.value === "popover") {
         popoverWrapperStyle = () => {
           let rect = el.getBoundingClientRect();
           let style: any = {
@@ -131,13 +135,12 @@ export default defineComponent({
     return () => {
       const {
         feedbackStatus,
-        extraInfo,
-        messageShowType
+        extraInfo
       } = props;
       return <div class="devui-form-control" ref={formControl} data-uid={uid} v-clickoutside={handleClickOutside}>
         <div class={`devui-form-control-container${isHorizontal ? ' devui-form-control-container-horizontal' : ''}${feedbackStatus ? ' devui-has-feedback' : ''}${feedbackStatus === 'error' ? ' devui-feedback-error' : ''}`}>
           <div class={`devui-control-content-wrapper${dFormItem.showMessage ? ' devui-error-form-control' : ''}`} id={uid}>
-            { messageShowType === "popover" &&
+            { messageShowTypeData.value === "popover" &&
               <div style="position: relative; height: 0; width: 100%;">
                 <div style={popoverWrapperStyle()}>
                   <Popover controlled={updateOn.value !== 'change'} visible={dFormItem.showMessage} content={dFormItem.tipMessage} popType={"error"} position={popPosition.value} />
@@ -154,7 +157,7 @@ export default defineComponent({
           }
         </div>
         {extraInfo && <div class="devui-form-control-extra-info">{extraInfo}</div>}
-        {dFormItem.showMessage && messageShowType === 'text' && <div class="devui-validate-tip">{dFormItem.tipMessage}</div>}
+        {dFormItem.showMessage && messageShowTypeData.value === 'text' && <div class="devui-validate-tip">{dFormItem.tipMessage}</div>}
       </div>
     }
   }

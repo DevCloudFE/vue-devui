@@ -1280,7 +1280,7 @@ export default defineComponent({
   <d-form class="form-demo-reactive-validate" ref="dFormReactiveValidate" :form-data="validateFormModel" :rules="rules" @messageChange="onMessageChange" @submit="onSubmitForm">
     <d-form-item prop="name">
       <d-form-label required hasHelp helpTips="可以输入中文名字或者英文名字">姓名</d-form-label>
-      <d-form-control extraInfo="请输入您的名字">
+      <d-form-control extraInfo="请输入您的名字" messageShowType="text">
         <d-input v-model="validateFormModel.name" />
       </d-form-control>
     </d-form-item>
