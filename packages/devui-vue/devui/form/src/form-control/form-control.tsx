@@ -1,7 +1,6 @@
 import { defineComponent, inject, ref, computed, reactive, onMounted, Teleport, watch } from 'vue';
 import { uniqueId } from 'lodash-es';
 import { IForm, IFormItem, formControlProps, formInjectionKey, formItemInjectionKey } from '../form-types';
-import { ShowPopoverErrorMessageEventData } from '../directive/d-validate-rules'
 import clickoutsideDirective from '../../../shared/devui-directive/clickoutside'
 import { EventBus, getElOffset, transformCamelToDash } from '../util';
 import Icon from '../../../icon/src/icon';
@@ -57,18 +56,7 @@ export default defineComponent({
     }
     onMounted(() => {
       const el = document.getElementById(uid);
-      elOffset = getElOffset(el);
-      EventBus.on("showPopoverErrorMessage", (data: ShowPopoverErrorMessageEventData) => {
-        if (uid === data.uid) {
-          rectInfo = el.getBoundingClientRect();
-          showPopover.value = data.showPopover;
-          tipMessage.value = data.message;
-          popPosition.value = data.popPosition as any; // todo: 待popover组件positionType完善类型之后再替换类型
-          popoverLeftPosition = popPosition.value === "top" || popPosition.value === "bottom" ? rectInfo.right - (rectInfo.width / 2) : rectInfo.right;
-          popoverTopPosition = popPosition.value === "top" ? elOffset.top + (rectInfo.height / 2) - rectInfo.height : elOffset.top + (rectInfo.height / 2);
-          updateOn.value = data.updateOn ?? 'change';
-        }
-      });
+      // elOffset = getElOffset(el);
 
       if(messageShowTypeData.value === "popover") {
         popoverWrapperStyle = () => {

@@ -1577,19 +1577,19 @@ export default defineComponent({
     <d-form-item prop="username">
       <d-form-label :required="true" >用户名</d-form-label>
       <d-form-control>
-        <d-input v-model="formModel.username" v-d-validate-rules="formRules.userNameRule" />
+        <d-input v-model="formModel.username" v-d-validate="formRules.userNameRule" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="password">
       <d-form-label :required="true" >密码</d-form-label>
       <d-form-control>
-        <d-input v-model="formModel.password" v-d-validate-rules="formRules.passwordRule" />
+        <d-input v-model="formModel.password" v-d-validate="formRules.passwordRule" />
       </d-form-control>
     </d-form-item>
     <d-form-item prop="confirmPassword">
       <d-form-label :required="true" >确认密码</d-form-label>
       <d-form-control>
-        <d-input v-model="formModel.confirmPassword" v-d-validate-rules="formRules.confirmPasswordRule" />
+        <d-input v-model="formModel.confirmPassword" v-d-validate="formRules.confirmPasswordRule" />
       </d-form-control>
     </d-form-item>
     <d-form-operation class="form-demo-form-operation">

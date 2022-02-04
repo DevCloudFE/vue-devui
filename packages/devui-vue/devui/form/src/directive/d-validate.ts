@@ -29,8 +29,9 @@ interface BindingValue {
 export type positionType = 'top' | 'right' | 'bottom' | 'left' | 'left-top' | 'left-bottom' | 'top-left' | 'top-right' | 'right-top' | 'right-bottom' | 'bottom-left' | 'bottom-right'
 
 const getTargetElement = (el: HTMLElement, targetTag: string) => {
+  if (!el) return;
   let tempEl:HTMLElement = el;
-  while(tempEl.tagName.toLocaleLowerCase() !== 'body') {
+  while(tempEl?.tagName && tempEl.tagName.toLocaleLowerCase() !== 'body') {
     if(tempEl.tagName.toLocaleLowerCase() === targetTag) {
       return tempEl;
     }
