@@ -17,7 +17,7 @@
 
 ```vue
 <template>
-  <d-form ref="dFormBasic" :formData="formModel" layout="vertical" @submit="onSubmitForm">
+  <d-form class="form-demo-basic" ref="dFormBasic" :formData="formModel" layout="vertical" @submit="onSubmitForm">
     <d-form-item prop="name">
       <d-form-label required hasHelp helpTips="可以输入中文名字或者英文名字">姓名</d-form-label>
       <d-form-control extraInfo="请输入您的名字">
@@ -121,6 +121,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-basic {
+  width: 60%;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
@@ -702,6 +705,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-built-in-validators {
+  width: 60%;
+}
 .form-demo-built-in-validators .title{
   margin-top: 20px;
   margin-bottom: 10px;
@@ -779,6 +785,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-custom-validator {
+  width: 60%;
+}
 .form-demo-custom-validator .title{
   margin-top: 20px;
   margin-bottom: 10px;
@@ -887,6 +896,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-error-strategy {
+  width: 60%;
+}
 .form-demo-error-strategy .title{
   margin-top: 20px;
   margin-bottom: 10px;
@@ -1070,6 +1082,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-async-debounce-time {
+  width: 60%;
+}
 .form-demo-async-debounce-time .title{
   margin-top: 20px;
   margin-bottom: 10px;
@@ -1095,7 +1110,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form name="userInfoForm" ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" @submit="onSubmit">
+  <d-form name="userInfoForm" class="form-demo-templdate-validate-6" ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" @submit="onSubmit">
     <d-form-item prop="name">
       <d-form-label>姓名</d-form-label>
       <d-form-control>
@@ -1154,6 +1169,9 @@ export default defineComponent({
 
 
 <style>
+.form-demo-templdate-validate-6 {
+  width: 60%;
+}
 .form-demo-form-operation {
   display: flex;
   align-items: center;
