@@ -5,6 +5,7 @@ import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey, f
 import './form-item.scss';
 import useValidate from '../use-validate';
 import clickoutsideDirective from '../../../shared/devui-directive/clickoutside'
+import {cloneDeep} from 'lodash-es';
 
 
 export default defineComponent({
@@ -18,7 +19,7 @@ export default defineComponent({
     let dForm = reactive(inject(formInjectionKey, {} as IForm));
     const formData = reactive(dForm.formData);
     const columnsClass = ref(dForm.columnsClass);
-    const initFormItemData = formData[props.prop];
+    const initedFormItemData = cloneDeep(formData[props.prop]);
     const labelData = reactive(dForm.labelData);
     const rules = reactive(dForm.rules);
     let validateTrigger = 'input';
@@ -35,12 +36,10 @@ export default defineComponent({
       }
     }
 
-    const resetField = () => {
-      if(Array.isArray(initFormItemData)) {
-        formData[props.prop] = [...initFormItemData];
-      }else {
-        formData[props.prop] = initFormItemData;
-      }
+    const resetField = () => {     
+      formData[props.prop] = cloneDeep(initedFormItemData);
+      formItem.showMessage = false;
+      formItem.tipMessage = '';
     }
     const showMessage = ref(false);
     const tipMessage = ref('');

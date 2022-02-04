@@ -5,7 +5,6 @@ import { formProps, FormProps, IFormItem, dFormEvents, formInjectionKey, IForm, 
 import { EventBus } from './util'
 import './form.scss'
 
-
 export default defineComponent({
   name: 'DForm',
   props: formProps,
@@ -41,6 +40,7 @@ export default defineComponent({
     });
     
     provide(formInjectionKey, {
+      name: props.name,
       formData: props.formData,
       formMitt,
       labelData: {

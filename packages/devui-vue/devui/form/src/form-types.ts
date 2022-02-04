@@ -103,6 +103,7 @@ export const dFormItemEvents = {
 
 
 export interface IForm {
+  name: string
   formData: any
   labelData: IFormLabel
   formMitt: Emitter<any>

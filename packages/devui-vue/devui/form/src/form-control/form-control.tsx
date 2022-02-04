@@ -1,4 +1,4 @@
-import { defineComponent, inject, ref, computed, reactive, onMounted, Teleport } from 'vue';
+import { defineComponent, inject, ref, computed, reactive, onMounted, Teleport, watch } from 'vue';
 import { uniqueId } from 'lodash-es';
 import { IForm, IFormItem, formControlProps, formInjectionKey, formItemInjectionKey } from '../form-types';
 import { ShowPopoverErrorMessageEventData } from '../directive/d-validate-rules'
@@ -28,6 +28,7 @@ export default defineComponent({
     const tipMessage = ref("");
     const popPosition = ref<any>(props.popPosition);
     const messageShowTypeData = ref(props.messageShowType);
+    const showMessage = ref(dFormItem.showMessage);
     if(dForm.messageShowType) {
       messageShowTypeData.value = dForm.messageShowType as any;
     }
@@ -132,6 +133,12 @@ export default defineComponent({
       }
     }
 
+    watch(() => dFormItem.showMessage, (newVal) => {
+      showMessage.value = newVal;
+    }, {
+      deep: true,
+    })
+
     return () => {
       const {
         feedbackStatus,
@@ -139,11 +146,11 @@ export default defineComponent({
       } = props;
       return <div class="devui-form-control" ref={formControl} data-uid={uid} v-clickoutside={handleClickOutside}>
         <div class={`devui-form-control-container${isHorizontal ? ' devui-form-control-container-horizontal' : ''}${feedbackStatus ? ' devui-has-feedback' : ''}${feedbackStatus === 'error' ? ' devui-feedback-error' : ''}`}>
-          <div class={`devui-control-content-wrapper${dFormItem.showMessage ? ' devui-error-form-control' : ''}`} id={uid}>
+          <div class={`devui-control-content-wrapper${showMessage.value ? ' devui-error-form-control' : ''}`} id={uid}>
             { messageShowTypeData.value === "popover" &&
               <div style="position: relative; height: 0; width: 100%;">
                 <div style={popoverWrapperStyle()}>
-                  <Popover controlled={updateOn.value !== 'change'} visible={dFormItem.showMessage} content={dFormItem.tipMessage} popType={"error"} position={popPosition.value} />
+                  <Popover controlled={updateOn.value !== 'change'} visible={showMessage.value} content={dFormItem.tipMessage} popType={"error"} position={popPosition.value} />
                 </div>
               </div>
             }
@@ -157,7 +164,7 @@ export default defineComponent({
           }
         </div>
         {extraInfo && <div class="devui-form-control-extra-info">{extraInfo}</div>}
-        {dFormItem.showMessage && messageShowTypeData.value === 'text' && <div class="devui-validate-tip">{dFormItem.tipMessage}</div>}
+        {showMessage.value && messageShowTypeData.value === 'text' && <div class="devui-validate-tip">{dFormItem.tipMessage}</div>}
       </div>
     }
   }
