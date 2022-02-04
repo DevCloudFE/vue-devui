@@ -22,10 +22,7 @@
 }
 
 .devui-error {
-  border-color: var(--devui-danger-line,#f66f6a) !important;
-  background-color: var(--devui-danger-bg,#ffeeed) !important;
-
-  > * {
+  input, .devui-tags {
     border-color: var(--devui-danger-line,#f66f6a) !important;
     background-color: var(--devui-danger-bg,#ffeeed) !important;
   }
