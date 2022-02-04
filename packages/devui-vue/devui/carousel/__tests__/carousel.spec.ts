@@ -1,8 +1,7 @@
 import { ref, nextTick } from 'vue'
 import { mount } from '@vue/test-utils';
-import Carousel from '../carousel';
-import CarouselItem from '../item';
-import Button from '../../button'
+import { CarouselItem, Carousel  } from '../index';
+import { Button } from '../../button'
 
 const wait = (ms = 100) =>
   new Promise(resolve => setTimeout(() => resolve(), ms))
@@ -140,13 +139,13 @@ describe('d-carousel', () => {
           <d-carousel-item v-for="item in items" :key="item">{{ item }} </d-carousel-item>
         </d-carousel>
         <div class="carousel-demo-operate">
-          <d-button bsStyle="common" :btnClick="onPrev">上一张</d-button>
-          <d-button bsStyle="primary" :btnClick="onNext">下一张</d-button>
-          <d-button bsStyle="common" :btnClick="onGoFirst">第一张</d-button>
+          <d-button bsStyle="common" :onClick="onPrev">上一张</d-button>
+          <d-button bsStyle="primary" :onClick="onNext">下一张</d-button>
+          <d-button bsStyle="common" :onClick="onGoFirst">第一张</d-button>
         </div>
       `,
       setup() {
-        const items = ref<string[]>(["page 1", 'page 2', 'page 3', 'page 4'])
+        const items = ref<string[]>(['page 1', 'page 2', 'page 3', 'page 4'])
         const activeIndex = ref(0)
     
         const carousel = ref()
