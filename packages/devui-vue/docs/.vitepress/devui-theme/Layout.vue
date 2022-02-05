@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, defineAsyncComponent } from 'vue'
+import { ref, computed, watch, defineAsyncComponent, onMounted, onUpdated } from 'vue'
 import { useRoute, useData } from 'vitepress'
 import { isSideBarEmpty, getSideBarConfig } from './support/sideBar'
 // components
@@ -84,6 +84,28 @@ if (result && langList.includes(result[0])) {
 } else {
   localStorage.setItem('preferred_lang', navigator.language)
 }
+
+// Remove `__VP_STATIC_START__`
+const removeVPStaticFlag = () => {
+  const contentChildNodes = document.querySelector('.content > div').childNodes
+
+  contentChildNodes.forEach((item, index) => {
+    if (
+      (index === 0 && item.textContent === '__VP_STATIC_START__')
+      || (index === contentChildNodes.length - 1 && item.textContent === '__VP_STATIC_END__')
+    ) {
+      item.remove()
+    }
+  })
+}
+
+onMounted(() => {
+  removeVPStaticFlag()
+})
+
+onUpdated(() => {
+  removeVPStaticFlag()
+})
 </script>
 
 <template>

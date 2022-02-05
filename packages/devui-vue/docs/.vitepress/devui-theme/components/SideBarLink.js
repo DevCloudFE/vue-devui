@@ -49,7 +49,11 @@ export const SideBarLink = (props) => {
                 class: 'sidebar-link-status',
                 style: `background-color: ${dotColor}`
             }),
-            text,
+            h('span', {
+                class: 'sidebar-link-text'
+            }, [
+                text
+            ])
         ]),
         childItems
     ]);
