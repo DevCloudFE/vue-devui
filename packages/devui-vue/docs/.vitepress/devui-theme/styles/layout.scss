@@ -173,7 +173,8 @@ li > ol {
 }
 
 table {
-  display: block;
+  display: table;
+  width: 100%;
   border-collapse: collapse;
   margin: 1rem 0;
   overflow-x: auto;
