@@ -113,7 +113,7 @@ export interface IForm {
   validateResult: {
     prop: string,
     valid: boolean,
-    message: string, 
+    message: string | MessageType, 
     errors: any, 
     fields: any,
   }
@@ -145,6 +145,12 @@ export type FormProps = ExtractPropTypes<typeof formProps>
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
 export type FormLabelProps = ExtractPropTypes<typeof formLabelProps>
 export type FormControlProps = ExtractPropTypes<typeof formControlProps>
+
+export type MessageType = {
+  'zh-cn': string
+  'en-us': string
+  'default': string
+}
 
 
 export interface IValidators {
