@@ -41,7 +41,7 @@ const getTargetElement = (el: HTMLElement, targetTag: string) => {
 
 export default {
   mounted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode): void {
-    let { prop, modelName, rules, validators, asyncValidators, errorStrategy, updateOn = 'input', asyncDebounceTime, messageShowType = 'popover', messageChange, popPosition = ['right', 'bottom'] }: BindingValue = binding.value;
+    let { prop, modelName, rules, validators, asyncValidators, errorStrategy, updateOn = 'input', asyncDebounceTime = 300, messageShowType = 'popover', messageChange, popPosition = ['right', 'bottom'] }: BindingValue = binding.value;
     const {instance, arg} = binding;
     const instanceRef = instance[Object.keys(instance.$refs)[0]];
     if(instanceRef && instanceRef?.messageShowType) {
