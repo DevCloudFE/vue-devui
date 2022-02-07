@@ -27,7 +27,7 @@ export default defineComponent({
           {ctx.slots.default?.()} 
           {
             props.hasHelp && props.helpTips && (
-              <Popover content={props.helpTips} controlled showAnimation={false} position={'top'} trigger={'hover'} v-slots={{
+              <Popover content={props.helpTips} controlled showAnimation={false} position={'top'} trigger={'hover'} popType="info" v-slots={{
                 reference: () => (
                   <span class="devui-form-label-help">
                     <Icon name="helping" color="#252b3a"></Icon>

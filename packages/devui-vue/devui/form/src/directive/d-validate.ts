@@ -69,6 +69,7 @@ export default {
         visible: visible,
         controlled: updateOn !== 'change',
         content: msg,
+        popType: 'error',
         position: popoverPosition() as positionType,
       });
 
