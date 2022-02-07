@@ -41,13 +41,14 @@ const getTargetElement = (el: HTMLElement, targetTag: string) => {
 
 export default {
   mounted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode): void {
-    let { prop, modelName, rules, validators, asyncValidators, errorStrategy, updateOn = 'input', asyncDebounceTime = 300, messageShowType = 'popover', messageChange, popPosition = ['right', 'bottom'] }: BindingValue = binding.value;
-    const {instance, arg} = binding;
+    let { prop, rules, validators, asyncValidators, errorStrategy, updateOn = 'input', asyncDebounceTime = 300, messageShowType = 'popover', messageChange, popPosition = ['right', 'bottom'] }: BindingValue = binding.value;
+    const {instance, arg: modelName} = binding;
+    
     const instanceRef = instance[Object.keys(instance.$refs)[0]];
     if(instanceRef && instanceRef?.messageShowType) {
       messageShowType = instanceRef.messageShowType;
     }
-    const hasModelName = !!modelName || !!arg;
+    const hasModelName = !!modelName;
 
     const objToStyleString = (obj: any = {}) => {
       let style = '';
@@ -197,7 +198,7 @@ export default {
     }
     const validateFn = async () => {
       const validateModel = {
-        [prop]: hasModelName ? instance[modelName || arg][prop] : instance[prop]
+        [prop]: hasModelName ? instance[modelName][prop] : instance[prop]
       };
       return validate(descriptor, validateModel).then(res => {
         renderPopover('', false);
