@@ -1,13 +1,11 @@
-import { defineComponent, inject, ref, computed, reactive, onMounted, Teleport, watch } from 'vue';
+import { defineComponent, inject, ref, computed, reactive, onMounted, watch } from 'vue';
 import { uniqueId } from 'lodash-es';
 import { IForm, IFormItem, formControlProps, formInjectionKey, formItemInjectionKey } from '../form-types';
 import clickoutsideDirective from '../../../shared/devui-directive/clickoutside'
-import { EventBus, getElOffset, transformCamelToDash } from '../util';
+import { transformCamelToDash } from '../util';
 import Icon from '../../../icon/src/icon';
 import Popover from '../../../popover/src/popover';
 import './form-control.scss';
-
-// type positionType = 'top' | 'right' | 'bottom' | 'left';
 
 export default defineComponent({
   name: 'DFormControl',
@@ -24,23 +22,12 @@ export default defineComponent({
     const uid = uniqueId("dfc-");
     const showPopover = ref(false);
     const updateOn = ref('change');
-    const tipMessage = ref("");
     const popPosition = ref<any>(props.popPosition);
     const messageShowTypeData = ref(props.messageShowType);
     const showMessage = ref(dFormItem.showMessage);
     if(!messageShowTypeData.value) {
       messageShowTypeData.value = dForm.messageShowType as any;
     }
-    let rectInfo: Partial<DOMRect> = {
-      width: 0,
-      height: 0
-    };
-    let elOffset = {
-      left: 0,
-      top: 0
-    }
-    let popoverLeftPosition = 0 ;
-    let popoverTopPosition = 0 ;
 
     const objToStyleString = (obj: any = {}) => {
       let style = '';
@@ -56,8 +43,6 @@ export default defineComponent({
     }
     onMounted(() => {
       const el = document.getElementById(uid);
-      // elOffset = getElOffset(el);
-
       if(messageShowTypeData.value === "popover") {
         popoverWrapperStyle = () => {
           let rect = el.getBoundingClientRect();
@@ -99,7 +84,6 @@ export default defineComponent({
           return objToStyleString(style);
         };
       }
-
     });
 
     const iconData = computed(() => {

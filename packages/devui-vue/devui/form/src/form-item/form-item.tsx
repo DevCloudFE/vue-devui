@@ -1,12 +1,11 @@
 import { defineComponent, reactive, inject, onMounted, onBeforeUnmount, provide, ref, watch} from 'vue';
-import AsyncValidator, { Rules } from 'async-validator';
+import { Rules } from 'async-validator';
 import mitt from 'mitt';
-import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey, formItemInjectionKey } from '../form-types';
-import './form-item.scss';
+import {cloneDeep} from 'lodash-es';
+import { dFormEvents, IForm, formItemProps, formInjectionKey, formItemInjectionKey } from '../form-types';
 import useValidate from '../use-validate';
 import clickoutsideDirective from '../../../shared/devui-directive/clickoutside'
-import {cloneDeep} from 'lodash-es';
-
+import './form-item.scss';
 
 export default defineComponent({
   name: 'DFormItem',
@@ -24,7 +23,7 @@ export default defineComponent({
     const rules = reactive(dForm.rules);
     let updateOn = 'input';
     const ruleItem = rules[props.prop];
-    const getValidateTrigger = () => {
+    const getValidateUpdateOn = () => {
       if(rules && ruleItem) {
         if(Array.isArray(ruleItem)) {
           ruleItem.map(item => {
@@ -98,7 +97,7 @@ export default defineComponent({
 
     onMounted(() => {
       dForm.formMitt.emit(dFormEvents.addField, formItem);
-      getValidateTrigger();
+      getValidateUpdateOn();
     });
 
     onBeforeUnmount(() => {

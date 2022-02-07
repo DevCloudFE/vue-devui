@@ -1,11 +1,10 @@
-import AsyncValidator, { RuleItem } from 'async-validator';
-import { VNode, DirectiveBinding, h, render, nextTick, Teleport, computed } from 'vue';
+import { VNode, DirectiveBinding, h, render, nextTick } from 'vue';
 import { debounce } from 'lodash-es';
-import { EventBus, isObject, hasKey, transformCamelToDash } from '../util';
+import { EventBus, transformCamelToDash } from '../util';
 import useValidate from '../use-validate';
-import './style.scss';
 import dPopover from '../../../popover/src/popover';
 import {DFormValidateSubmitData} from '../form-types';
+import './style.scss';
 
 interface BindingValueRules {
   [prop:string]: unknown
@@ -40,7 +39,7 @@ const getTargetElement = (el: HTMLElement, targetTag: string) => {
 }
 
 export default {
-  mounted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode): void {
+  mounted(el: HTMLElement, binding: DirectiveBinding): void {
     let { prop, rules, validators, asyncValidators, errorStrategy, updateOn = 'input', asyncDebounceTime = 300, messageShowType = 'popover', messageChange, popPosition = ['right', 'bottom'] }: BindingValue = binding.value;
     const {instance, arg: modelName} = binding;
     
