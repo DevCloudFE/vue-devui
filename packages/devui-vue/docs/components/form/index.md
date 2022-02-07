@@ -558,18 +558,16 @@ export default defineComponent({
 
 ### 模板驱动表单验证
 
-在`d-form`、`d-input`等表单类组件上使用`v-d-validate-rules`指令，配置校验规则。
+在`d-input`等表单类组件上使用`v-d-validate`指令，配置校验规则。
 
 
-#### 验证单个元素，使用内置校验器，配置error message
+#### 验证单个元素，使用内置校验器
 
 当前DevUI支持的内置校验器有：`required`、`minlength`、`maxlength`、`min`、`max`、`requiredTrue`、`email`、`pattern`、`whitespace`。
 
 - 若需限制用户输入不能全为空格，可使用`whitespace`内置校验器
 
-- 若需限制用户输入长度，将最大限制设置为实际校验值`+1`是一个好的办法。
-
-- 除`pattern`外，其他内置校验器我们也提供了内置的错误提示信息，在你未自定义提示消息时，我们将使用默认的提示信息。
+- 内置校验器我们提供了内置的错误提示信息，在你未自定义提示消息时，我们将使用默认的提示信息。
 
 - message配置支持string与object两种形式（支持国际化词条配置，如`'zh-cn'`，默认将取`'default'`）。
 
@@ -578,7 +576,6 @@ export default defineComponent({
 ```vue
 <template>
 <div class="form-demo-built-in-validators">
-<!---->
   <div class="title">字符长度</div>
   <d-input v-model="formModel.username" v-d-validate:formModel="{
     prop: 'username',
@@ -672,14 +669,11 @@ export default defineComponent({
       }
     ]
   }" />
-  <!---->
-
 </div>
 </template>
 
 <script>
 import {defineComponent, reactive, ref} from 'vue';
-
 
 export default defineComponent({
   setup(props, ctx) {
@@ -689,7 +683,7 @@ export default defineComponent({
       minVal: 123,
       requiredVal: '',
       requiredTrueVal: false,
-      emailVal: '1445654576@qq.com',
+      emailVal: '123456@qq.com',
       regExpVal: 'abc',
       whitespaceVal: ' ab c ',
       multiVal: 'abc',
@@ -702,7 +696,6 @@ export default defineComponent({
   }
 })
 </script>
-
 
 <style>
 .form-demo-built-in-validators {
@@ -721,23 +714,21 @@ export default defineComponent({
 
 #### 验证单个元素，自定义校验器
 
-自定义校验器，可传入`validators`字段配置校验规则，你可以简单返回`true | false `来标识当前校验是否通过，来标识当前是否错误并返回错误消息，适用于动态错误提示。如果是异步校验器，可传入`asyncValidators`字段配置校验规则。
+自定义校验器，可传入`validators`字段和配置校验规则，你可以简单返回`true | false `来标识当前校验是否通过，来标识当前是否错误并返回错误消息，适用于动态错误提示。如果是异步校验器，可传入`asyncValidators`字段配置校验规则。更多规则参考[async-validator](https://www.npmjs.com/package/async-validator)
 
 :::demo
 
 ```vue
 <template>
 <div class="form-demo-custom-validator">
-<!---->
   <div class="title">计算：1 + 1 = ？</div>
-  <d-input v-model="formModel.sum" v-d-validate:formModel="{
+  <d-input v-model="sum" v-d-validate="{
     prop: 'sum',
     validators: [
       {message: '不对喔！', validator: customValidator},
       {message: '答对啦！', validator: customValidator2}
     ]
   }" />
-<!---->
   <div class="title">计算：1 + 2 = ？（async）</div>
   <d-input v-model="formModel.asyncSum" v-d-validate:formModel="{
     prop: 'asyncSum',
@@ -754,25 +745,26 @@ import {defineComponent, reactive, ref} from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    let formModel = reactive({
-      sum: '',
+    const sum  = ref('');
+    const formModel  = reactive({
       asyncSum: '',
     });
 
     const customValidator = (rule, value) => {
-      return value == "2"; // value值等于2的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！”）
+      return value == "2"; 
     }
     const customValidator2 = (rule, value) => {
-      return value != "2"; // value值不等于2的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！”）
+      return value != "2"; 
     }
 
     const customAsyncValidator =  (rule, value) => {
-      return value == "3"; // value值等于3的时候，校验规则通过，不提示本规则中自定义的message（“不对喔！（async）”）
+      return value == "3"; 
     }
     const customAsyncValidator2 =  (rule, value) => {
-      return value != "3"; // value值不等于3的时候，校验规则通过，不提示本规则中自定义的message（“答对啦！（async）”）
+      return value != "3"; 
     }
     return {
+      sum,
       formModel,
       customValidator,
       customValidator2,
@@ -782,7 +774,6 @@ export default defineComponent({
   }
 })
 </script>
-
 
 <style>
 .form-demo-custom-validator {
@@ -806,8 +797,8 @@ export default defineComponent({
   - 若需要在初始化时将错误抛出，可配置为`pristine`
 
 - 设置`updateOn`，指定校验的时机
-  - 校验器`updateOn`基于你绑定的模型的`updateOn`设置， 你可以通过`options`来指定， 默认为`change`
-  - 可选值还有`blur` 、`input`、`submit`
+  - 校验器`updateOn`基于你绑定的模型的`updateOn`设置，默认为`change`
+  - 可选值还有`change` 、`input`、`submit`
   - 设置为`submit`，则当元素所在表单进行提交时将触发校验
 
 :::demo
@@ -925,7 +916,7 @@ export default defineComponent({
 
 - 设置为`none`错误信息将不会自动呈现到视图， 可在模板中获取`message`或通过监听`messageChange`事件获取错误`message`， 或在模板中直接通过引用获取。
 
-- 在 `options`中配置  `popPosition`可在消息提示方式为`popover`时，自定义`popover`内容弹出方向， 默认为`['right', 'bottom']`。更多取值参考popover组件。
+- 配置  `popPosition`可在消息提示方式为`popover`时，自定义`popover`内容弹出方向， 默认为`['right', 'bottom']`。更多取值参考popover组件。
 
 :::demo
 
@@ -1037,7 +1028,7 @@ export default defineComponent({
 #### 验证单个元素，自定义asyncDebounceTime
 
 
-对于异步校验器，提供默认300ms debounce time。在options中设置`asyncDebounceTime`显示设置（单位ms）。
+对于异步校验器，提供默认300ms debounce time。设置`asyncDebounceTime`显示设置（单位ms）。
 
 
 :::demo
@@ -1080,7 +1071,6 @@ export default defineComponent({
 })
 </script>
 
-
 <style>
 .form-demo-async-debounce-time {
   width: 60%;
@@ -1104,19 +1094,23 @@ export default defineComponent({
 
 #### Form验证与提交
 
-点击提交按钮时进行验证，需指定name属性，并同时绑定d-form标签的submit事件才能生效。
+点击提交按钮时进行验证，需结合d-form组件使用，并指定d-form的name属性，同时绑定submit事件才能生效。
+
+对于自动错误提示的方式，在form中， 建议在dForm层统一设置`messageShowType`，需同时设置ref属性才能生效。
 
 :::demo
 
 ```vue
 <template>
-  <d-form name="userInfoForm" class="form-demo-templdate-validate-6" ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" @submit="onSubmit">
+  <d-form name="userInfoForm" class="form-demo-templdate-validate-6" ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" @submit="onSubmit" :rules="{
+    message: '表单验证未通过'
+  }" messageShowType="text">
     <d-form-item prop="name">
       <d-form-label>姓名</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.name" v-d-validate:formModel="{
           prop: 'name',
-          updateOn: 'input',
+          updateOn: 'submit',
           rules: {minlength: 2, message: '不能小于2个字符'},
         }" />
       </d-form-control>
@@ -1126,7 +1120,7 @@ export default defineComponent({
       <d-form-control>
         <d-input v-model="formModel.age" v-d-validate:formModel="{
           prop: 'age',
-          updateOn: 'input',
+          updateOn: 'submit',
           rules: {min: 1, message: '年龄需大于0'},
         }" />
       </d-form-control>
@@ -1136,6 +1130,7 @@ export default defineComponent({
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
+  <d-toast :value="validateFaliMsg" :life="2000"></d-toast>
 </template>
 
 <script>
@@ -1144,6 +1139,7 @@ import {defineComponent, reactive, ref} from 'vue';
 export default defineComponent({
   setup(props, ctx) {
     const dFormTemplateValidate6 = ref(null);
+    const validateFaliMsg = ref([]);
     let formModel = reactive({
       name: 'A',
       age: '0',
@@ -1153,8 +1149,18 @@ export default defineComponent({
       dFormTemplateValidate6.value.resetFormFields();
     }
 
-    const onSubmit = (e) => {
-      console.log('@submit')
+    const onSubmit = (e, valid, res) => {
+      console.log('@submit', {e, valid, res})
+      if(!valid) {
+        validateFaliMsg.value = [
+          {
+            severity: 'error',
+            summary: 'Error',
+            content:
+              'Check whether all validation items pass.',
+          },
+        ]
+      }
     }
 
     return {
@@ -1162,11 +1168,11 @@ export default defineComponent({
       formModel,
       onSubmit,
       resetForm,
+      validateFaliMsg
     }
   }
 })
 </script>
-
 
 <style>
 .form-demo-templdate-validate-6 {
@@ -1186,105 +1192,6 @@ export default defineComponent({
 :::
 
 
-#### Form验证与提交，用户注册场景
-
-对于自动错误提示的方式，在form中， 建议在dForm层统一设置`messageShowType`，需同时设置ref属性才能生效。
-
-
-:::demo
-
-```vue
-<template>
-  <d-form class="form-demo-template-validate-7" name="userInfoForm2" ref="dFormTemplateValidate7" :formData="formModel" labelSize="lg" @submit="onSubmit" :rules="{
-    message: '表单验证未通过'
-  }" messageShowType="text">
-    <d-form-item prop="name">
-      <d-form-label>姓名</d-form-label>
-      <d-form-control>
-        <d-input v-model="formModel.name" v-d-validate:formModel="{
-          prop: 'name',
-          updateOn: 'input',
-          rules: {minlength: 2, message: '不能小于2个字符'}
-        }" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item prop="age">
-      <d-form-label>年龄</d-form-label>
-      <d-form-control>
-        <d-input v-model="formModel.age" v-d-validate:formModel="{
-          prop: 'age',
-          updateOn: 'input',
-          rules: {min: 1, message: '年龄需大于0'},
-        }" />
-      </d-form-control>
-    </d-form-item>
-    <d-form-operation class="form-demo-form-operation">
-      <d-button type="submit" class="form-demo-demo-btn">提交</d-button>
-      <d-button bsStyle="common" @click="resetForm">重置</d-button>
-    </d-form-operation>
-  </d-form>
-  <d-toast :value="validateFaliMsg" :life="2000"></d-toast>
-</template>
-
-<script>
-import {defineComponent, reactive, ref, h} from 'vue';
-
-export default defineComponent({
-  setup(props, ctx) {
-    const dFormTemplateValidate7 = ref(null);
-    const validateFaliMsg = ref([]);
-
-    let formModel = reactive({
-      name: 'A',
-      age: '0',
-    });
-
-    const resetForm = () => {
-      dFormTemplateValidate7.value.resetFormFields();
-    }
-
-    const onSubmit = (e, valid, res) => {
-      console.log('@submit valid, res', valid, res);
-        if(!valid) {
-          validateFaliMsg.value = [
-            {
-              severity: 'error',
-              summary: 'Error',
-              content:
-                'Check whether all validation items pass.',
-            },
-          ]
-        }
-    }
-
-    return {
-      dFormTemplateValidate7,
-      formModel,
-      onSubmit,
-      resetForm,
-      validateFaliMsg,
-    }
-  }
-})
-</script>
-
-
-<style>
-.form-demo-template-validate-7 {
-  width: 400px;
-}
-.form-demo-form-operation {
-  display: flex;
-  align-items: center;
-}
-.form-demo-demo-btn {
-  margin-right: 10px;
-}
-</style>
-
-```
-
-:::
 
 ### 响应式表单验证
 
@@ -1356,7 +1263,6 @@ export default defineComponent({
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
-
 </template>
 
 <script>
@@ -1384,19 +1290,19 @@ export default defineComponent({
         { 
           required: true, 
           message: '年龄不能小于0', 
-          trigger: 'input',
+          updateOn: 'input',
           validator: (rule, value) => value > 0
         },
         { 
           required: true, 
           message: '年龄不能大于120', 
-          trigger: 'input',
+          updateOn: 'input',
           validator: (rule, value) => value < 120
         }
       ],
       loveFruits: [{
         message: '至少选择一种水果',
-        trigger: 'change',
+        updateOn: 'change',
         validator: (rule, value) => value.length > 0,
       }],
       workOn: [{
@@ -1432,7 +1338,6 @@ export default defineComponent({
   }
 })
 </script>
-
 
 <style>
 .form-demo-reactive-validate {
@@ -1514,7 +1419,6 @@ export default defineComponent({
   }
 })
 </script>
-
 
 <style>
 .form-demo-feedback {
@@ -1702,8 +1606,6 @@ export default defineComponent({
 > todo
 
 
-
-
 :::demo
 
 ```vue
@@ -1765,23 +1667,25 @@ export default defineComponent({
 
 d-form参数
 
-| 参数         | 类型                                  | 默认值       | 说明                                                         | 跳转demo                          |
-| ------------ | ------------------------------------- | ------------ | ------------------------------------------------------------ | --------------------------------- |
-| name         | string                                |              | 可选，设置表单name属性，进行表单提交验证时必选。             | [基础用法](#基础用法)             |
-| formData     | object                                |              | 必选，表单数据                                               | [基础用法](#基础用法)             |
-| layout       | 'horizontal' \|'vertical' \|'columns' | 'horizontal' | 可选，设置表单的排列方式                                     | [基础用法](#基础用法)             |
-| labelSize    | 'sm' \|'lg'                           |              | 可选，设置 label 的占宽，未设置默认为 100px，sm对应 80px，lg对应 150px | [基础用法](#基础用法)             |
-| labelAlign   | 'start' \|'center' \|'end'            | 'start'      | 可选，设置水平布局方式下，label 对齐方式                     | [基础用法](#基础用法)             |
-| columnsClass | string                                |              | 可选，设置多列表单样式                                       | [多列表单](#多列表单)             |
-| rules        | object                                |              | 可选，设置表单校验规则                                       | [响应式表单验证](#响应式表单验证) |
+| 参数            | 类型                                  | 默认值       | 说明                                                         | 跳转demo                          |
+| --------------- | ------------------------------------- | ------------ | ------------------------------------------------------------ | --------------------------------- |
+| name            | string                                |              | 可选，设置表单name属性，进行表单提交验证时必选。             | [基础用法](#基础用法)             |
+| formData        | object                                |              | 必选，表单数据                                               | [基础用法](#基础用法)             |
+| layout          | 'horizontal' \|'vertical' \|'columns' | 'horizontal' | 可选，设置表单的排列方式                                     | [基础用法](#基础用法)             |
+| labelSize       | 'sm' \|'lg'                           |              | 可选，设置 label 的占宽，未设置默认为 100px，sm对应 80px，lg对应 150px | [基础用法](#基础用法)             |
+| labelAlign      | 'start' \|'center' \|'end'            | 'start'      | 可选，设置水平布局方式下，label 对齐方式                     | [基础用法](#基础用法)             |
+| columnsClass    | string                                |              | 可选，设置多列表单样式                                       | [多列表单](#多列表单)             |
+| rules           | object                                |              | 可选，设置表单校验规则                                       | [响应式表单验证](#响应式表单验证) |
+| messageShowType | 'popover' \| 'text' \| 'none'         | 'popover'    | 可选，设置表单校验规则时统一指定消息提示类型                 | [Form验证与提交](#Form验证与提交) |
 
 
 
 d-form事件
 
-| 事件名 | 类型       | 说明               | 跳转demo                          |
-| ------ | ---------- | ------------------ | --------------------------------- |
-| submit | () => void | 可选，提交表单事件 | [Form验证与提交](#Form验证与提交) |
+| 事件名        | 类型                  | 说明                       | 跳转demo                          |
+| ------------- | --------------------- | -------------------------- | --------------------------------- |
+| submit        | () => void            | 可选，提交表单事件         | [Form验证与提交](#Form验证与提交) |
+| messageChange | (messageList) => void | 可选，监听表单校验后的结果 | [响应式表单验证](#响应式表单验证) |
 
 
 
@@ -1806,47 +1710,55 @@ d-form-label参数
 
 d-form-control参数
 
-| 参数           | 类型    | 默认值  | 说明                                                       | 跳转demo                                      |
-| -------------- | ------- | ------- | ---------------------------------------------------------- | --------------------------------------------- |
-| extraInfo      | string  |         | 可选，附件信息，一般用于补充表单选项的说明                 | [基础用法](#基础用法)                         |
-| feedbackStatus | boolean | 'false' | 可选，手动指定当前 control 状态反馈                        | [基础用法](#基础用法)                         |
-| suffixTemplate | string  |         | 可选，可传入图标模板作为输入框后缀（通过插槽传入icon组件） | [指定表单Feedback状态](#指定表单Feedback状态) |
+| 参数            | 类型                          | 默认值         | 说明                                                         | 跳转demo                                      |
+| --------------- | ----------------------------- | -------------- | ------------------------------------------------------------ | --------------------------------------------- |
+| extraInfo       | string                        |                | 可选，附件信息，一般用于补充表单选项的说明                   | [基础用法](#基础用法)                         |
+| feedbackStatus  | boolean                       | 'false'        | 可选，手动指定当前 control 状态反馈                          | [基础用法](#基础用法)                         |
+| suffixTemplate  | string                        |                | 可选，可传入图标模板作为输入框后缀（通过插槽传入icon组件）   | [指定表单Feedback状态](#指定表单Feedback状态) |
+| messageShowType | 'popover' \| 'text' \| 'none' | 'popover'      | 可选，表单校验时使用，指定单个表单域消息提示类型             | [响应式表单验证](#响应式表单验证)             |
+| popPosition     | string \| string[]            | 'right-bottom' | 可选，表单校验时使用，指定单个表单域消息popover提示类型的位置，更多取值见popover组件 | [响应式表单验证](#响应式表单验证)             |
 
 
 
 ### Directives
 
-v-d-validate-rules
+v-d-validate
 
-| 参数    | 类型   | 默认值 | 说明                                                         | 跳转demo                              |
-| ------- | ------ | ------ | ------------------------------------------------------------ | ------------------------------------- |
-| rules   | object |        | 必选，表单校验规则，更多规则参考[async-validator](https://www.npmjs.com/package/async-validator) | [模板驱动表单验证](#模板驱动表单验证) |
-| options |        |        | 可选，配置选项                                               | [模板驱动表单验证](#模板驱动表单验证) |
+**指令参数**
 
-> 该指令仅在`d-form`标签或`d-input`等表单类组件上使用有效。
+| 参数        | 类型   | 默认值 | 说明                                                   | 跳转demo                                                  |
+| ----------- | ------ | ------ | ------------------------------------------------------ | --------------------------------------------------------- |
+| [modelName] | string |        | 可选，表单对象的变量名，收集表单数据的变量为对象时必选 | [验证单个元素，自定义校验器](#验证单个元素，自定义校验器) |
+
+**指令值**
+
+| 参数            | 类型                              | 默认值         | 说明                                                         | 跳转demo                                                     |
+| --------------- | --------------------------------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| prop            | string                            |                | 必选，需校验的属性                                           | [模板驱动表单验证](#模板驱动表单验证)                        |
+| rules           | object                            |                | 必选，表单校验规则，更多规则参考[async-validator](https://www.npmjs.com/package/async-validator) | [模板驱动表单验证](#模板驱动表单验证)                        |
+| validators      | (rule, value) => boolean          |                | 可选，自定义校验规则                                         | [模板驱动表单验证](#模板驱动表单验证)                        |
+| asyncValidators | (rule, value) => boolean          |                | 可选，自定义异步校验规则                                     | [模板驱动表单验证](#模板驱动表单验证)                        |
+| errorStrategy   | 'dirty' \| 'pristine'             | 'dirty'        | 可选，错误更新策略                                           | [验证单个元素，配置错误更新策略errorStrategy、校验时机updateOn](#验证单个元素，配置错误更新策略errorStrategy、校验时机updateOn) |
+| updateOn        | 'change' \| 'input' \| 'submit'   | 'input'        | 可选，校验时机                                               | [验证单个元素，配置错误更新策略errorStrategy、校验时机updateOn](#验证单个元素，配置错误更新策略errorStrategy、校验时机updateOn) |
+| messageShowType | 'popover' \| 'text' \| 'none'     | 'popover'      | 可选，指定单个表单域消息提示类型                             | [验证单个元素，自定义管理消息提示](#验证单个元素，自定义管理消息提示) |
+| popPosition     | string \| string[]                | 'right-bottom' | 可选，表单校验时使用，指定单个表单域消息popover提示类型的位置，更多取值见popover组件 | [验证单个元素，自定义管理消息提示](#验证单个元素，自定义管理消息提示) |
+| messageChange   | (msg, { errors, fields }) => void |                | 可选，监听表单校验后的结果                                   | [验证单个元素，自定义管理消息提示](#验证单个元素，自定义管理消息提示) |
+
+> 该指令仅在`d-input`等表单类组件上使用有效。
 
 
 
 - rules格式如下
 
 ```js
-{[validatorKey]: validatorValue, message: 'some tip messages.'}
+{
+  validateKey: validateValue, 
+  message: 'some tip messages.',
+  validator: (rule, value) => true
+}
 ```
 
 当前DevUI支持的内置校验器validatorKey有：`required`、`minlength`、`maxlength`、`min`、`max`、`requiredTrue`、`email`、`pattern`、`whitespace`。更多规则参考[async-validator](https://www.npmjs.com/package/async-validator)。
-
-
-
-<br>
-
-- options支持以下字段
-  - errorStrategy，错误更新策略：`dirty`（默认）、`prestine`
-  
-  - updateOn，校验时机，可选值有：`change`（默认）、 `blur`、 `input`
-  
-  - popPosition，自定义`popover`内容弹出方向。 默认为`['right', 'bottom']`，更多取值参考popover组件。
-
-
 
 ### 接口 & 类型定义
 
