@@ -231,7 +231,7 @@ export default {
 
     // 处理表单提交校验
     const formTag = getTargetElement(el, 'form') as HTMLFormElement;
-    if(formTag) {
+    if(formTag && updateOn === 'submit') {
       const formName = formTag.name;
       const formSubmitDataCallback: any = (val: DFormValidateSubmitData) => {
         validateFn().then((res: any) => {
