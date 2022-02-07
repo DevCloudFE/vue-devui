@@ -6,15 +6,11 @@
 
 需要进行数据收集、数据校验、数据提交功能时。
 
-
-
 ### 基础用法
 
 基本用法当中，Label是在数据框的上面。
 
-
 :::demo
-
 ```vue
 <template>
   <d-form class="form-demo-basic" ref="dFormBasic" :formData="formModel" layout="vertical" @submit="onSubmitForm">
@@ -78,7 +74,6 @@
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
-
 </template>
 
 <script>
@@ -119,7 +114,6 @@ export default defineComponent({
 })
 </script>
 
-
 <style>
 .form-demo-basic {
   width: 60%;
@@ -131,21 +125,15 @@ export default defineComponent({
 .form-demo-btn {
   margin-right: 10px;
 }
-
 </style>
-
 ```
-
 :::
-
 
 ### 横向排列
 
 Label左右布局方式。
 
-
 :::demo
-
 ```vue
 <template>
   <d-form class="form-demo-horizontal" ref="dFormHorizontal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
@@ -211,7 +199,6 @@ Label左右布局方式。
       <d-button bsStyle="common" @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
-
 </template>
 
 <script>
@@ -251,7 +238,6 @@ export default defineComponent({
 })
 </script>
 
-
 <style>
 .form-demo-horizontal {
   width: 600px;
@@ -264,11 +250,8 @@ export default defineComponent({
   margin-right: 10px;
 }
 </style>
-
 ```
-
 :::
-
 
 ### 弹框表单
 
@@ -277,9 +260,7 @@ export default defineComponent({
 
 弹框表单，弹框建议是400px，550px，700px，900px，建议宽高比是16: 9、3: 2。
 
-
 :::demo
-
 ```vue
 <template>
   <d-button @click="openModal">打开弹窗</d-button>
@@ -350,7 +331,6 @@ export default defineComponent({
       </d-form>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -432,9 +412,7 @@ export default defineComponent({
   padding: 20px;
 }
 </style>
-
 ```
-
 :::
 
 
@@ -442,9 +420,7 @@ export default defineComponent({
 
 多列表单。layout的属性为`columns`，同时搭配columnsClass属性，值为"u-[row]-[col]"，例如`u-1-3`为1行3列。
 
-
 :::demo
-
 ```vue
 <template>
   <d-form class="form-demo-column" ref="dFormColumn" layout="columns" columnsClass="u-1-3" :formData="formModel" @submit="onSubmitForm">
@@ -550,16 +526,12 @@ export default defineComponent({
   margin-right: 10px;
 }
 </style>
-
 ```
-
 :::
-
 
 ### 模板驱动表单验证
 
 在`d-input`等表单类组件上使用`v-d-validate`指令，配置校验规则。
-
 
 #### 验证单个元素，使用内置校验器
 
@@ -572,7 +544,6 @@ export default defineComponent({
 - message配置支持string与object两种形式（支持国际化词条配置，如`'zh-cn'`，默认将取`'default'`）。
 
 :::demo
-
 ```vue
 <template>
 <div class="form-demo-built-in-validators">
@@ -583,7 +554,6 @@ export default defineComponent({
       maxlength: 3,
     }
   }" />
-
 
   <div class="title">最大值</div>
   <d-input v-model="formModel.maxVal" v-d-validate:formModel="{
@@ -634,7 +604,6 @@ export default defineComponent({
       message: '只能包含字母',
     }
   }" />
-
 
   <div class="title">空白符校验</div>
   <d-input v-model="formModel.whitespaceVal" v-d-validate:formModel="{
@@ -705,11 +674,8 @@ export default defineComponent({
   margin-top: 20px;
   margin-bottom: 10px;
 }
-
 </style>
-
 ```
-
 :::
 
 #### 验证单个元素，自定义校验器
@@ -717,7 +683,6 @@ export default defineComponent({
 自定义校验器，可传入`validators`字段和配置校验规则，你可以简单返回`true | false `来标识当前校验是否通过，来标识当前是否错误并返回错误消息，适用于动态错误提示。如果是异步校验器，可传入`asyncValidators`字段配置校验规则。更多规则参考[async-validator](https://www.npmjs.com/package/async-validator)
 
 :::demo
-
 ```vue
 <template>
 <div class="form-demo-custom-validator">
@@ -784,11 +749,8 @@ export default defineComponent({
   margin-bottom: 10px;
 }
 </style>
-
 ```
-
 :::
-
 
 #### 验证单个元素，配置错误更新策略errorStrategy、校验时机updateOn
 
@@ -802,7 +764,6 @@ export default defineComponent({
   - 设置为`submit`，则当元素所在表单进行提交时将触发校验
 
 :::demo
-
 ```vue
 <template>
 <div class="form-demo-error-strategy">
@@ -838,7 +799,6 @@ export default defineComponent({
       {message: '不对喔！', validator: customValidator3},
     ]
   }" />
-
 </div>
 </template>
 
@@ -885,7 +845,6 @@ export default defineComponent({
 })
 </script>
 
-
 <style>
 .form-demo-error-strategy {
   width: 60%;
@@ -902,9 +861,7 @@ export default defineComponent({
 </style>
 
 ```
-
 :::
-
 
 #### 验证单个元素，自定义管理消息提示
 
@@ -919,7 +876,6 @@ export default defineComponent({
 - 配置  `popPosition`可在消息提示方式为`popover`时，自定义`popover`内容弹出方向， 默认为`['right', 'bottom']`。更多取值参考popover组件。
 
 :::demo
-
 ```vue
 <template>
 <div class="form-demo-custom-message">
@@ -1018,21 +974,14 @@ export default defineComponent({
   margin-bottom: 10px;
 }
 </style>
-
 ```
-
 :::
-
-
 
 #### 验证单个元素，自定义asyncDebounceTime
 
-
 对于异步校验器，提供默认300ms debounce time。设置`asyncDebounceTime`显示设置（单位ms）。
 
-
 :::demo
-
 ```vue
 <template>
 <div class="form-demo-async-debounce-time">
@@ -1085,12 +1034,8 @@ export default defineComponent({
   margin-bottom: 10px;
 }
 </style>
-
 ```
-
 :::
-
-
 
 #### Form验证与提交
 
@@ -1099,7 +1044,6 @@ export default defineComponent({
 对于自动错误提示的方式，在form中， 建议在dForm层统一设置`messageShowType`，需同时设置ref属性才能生效。
 
 :::demo
-
 ```vue
 <template>
   <d-form name="userInfoForm" class="form-demo-templdate-validate-6" ref="dFormTemplateValidate6" :formData="formModel" labelSize="lg" @submit="onSubmit" :rules="{
@@ -1186,20 +1130,14 @@ export default defineComponent({
   margin-right: 10px;
 }
 </style>
-
 ```
-
 :::
-
-
 
 ### 响应式表单验证
 
 在`d-form`标签中指定校验规则rules，同时在`d-form-item`中指定`prop`的值为校验字段名。
 
-
 :::demo
-
 ```vue
 <template>
   <d-form class="form-demo-reactive-validate" ref="dFormReactiveValidate" :form-data="validateFormModel" :rules="rules" @messageChange="onMessageChange" @submit="onSubmitForm">
@@ -1236,8 +1174,10 @@ export default defineComponent({
     <d-form-item prop="sex">
       <d-form-label>性别</d-form-label>
       <d-form-control>
-        <d-radio v-model="validateFormModel.sex" value="0">男</d-radio>
-        <d-radio v-model="validateFormModel.sex" value="1">女</d-radio>
+        <d-radio-group direction="row" v-model="validateFormModel.sex">
+          <d-radio value="0">男</d-radio>
+          <d-radio value="1">女</d-radio>
+        </d-radio-group>
       </d-form-control>
     </d-form-item>
     <d-form-item prop="workOn">
@@ -1351,19 +1291,14 @@ export default defineComponent({
   margin-right: 10px;
 }
 </style>
-
 ```
-
 :::
-
 
 ### 指定表单Feedback状态
 
 你可通过对d-form-control设置feedbackStatus手动指定反馈状态。当前已支持状态：`success`、`error`、`pending`。
 
-
 :::demo
-
 ```vue
 <template>
   <d-form class="form-demo-feedback" ref="dFormFeedback" :form-data="formModel">
@@ -1432,17 +1367,13 @@ export default defineComponent({
   margin-right: 10px;
 }
 </style>
-
 ```
-
 :::
 
 
 可通过对具名插槽suffixTemplate在d-form-control中自定义反馈状态icon。
 
-
 :::demo
-
 ```vue
 <template>
   <d-form class="form-demo-feedback-2" ref="dFormFeedback2" :form-data="formModel">
@@ -1482,17 +1413,13 @@ export default defineComponent({
 }
 </style>
 ```
-
 :::
-
 
 ### 表单协同验证
 
 在一些场景下，你的多个表单组件互相依赖，需共同校验（如注册场景中的密码输入与确认密码），通过自定义校验器实现校验规则（将密码输入与确认密码的值进行比较）。
 
-
 :::demo
-
 ```vue
 <template>
   <d-form class="form-demo-together-validate" name="togetherValidateForm" ref="dFormTogetherValidate" :form-data="formModel" labelSize="lg" @submit="onSubmit">
@@ -1596,9 +1523,7 @@ export default defineComponent({
   margin-right: 10px;
 }
 </style>
-
 ```
-
 :::
 
 ### 跨组件验证
@@ -1607,7 +1532,6 @@ export default defineComponent({
 
 
 :::demo
-
 ```vue
 <template>
   <d-form class="form-demo-validate-with-component" ref="dFormWithComponent" :form-data="formModel">
@@ -1660,8 +1584,6 @@ export default defineComponent({
 
 ```
 :::
-
-
 
 ### API
 
@@ -1747,7 +1669,6 @@ v-d-validate
 > 该指令仅在`d-input`等表单类组件上使用有效。
 
 
-
 - rules格式如下
 
 ```js
@@ -1775,8 +1696,6 @@ export interface IForm {
 } 
 ```
 
-
-
 IFormLabel
 
 ```typescript
@@ -1786,8 +1705,6 @@ export interface IFormLabel {
   labelAlign: string
 }
 ```
-
-
 
 IFormItem
 
@@ -1800,8 +1717,6 @@ export interface IFormItem {
 }
 ```
 
-
-
 IFormControl
 
 ```typescript
@@ -1812,4 +1727,3 @@ export interface IFormControl {
   resetField(): void
 }
 ```
-
