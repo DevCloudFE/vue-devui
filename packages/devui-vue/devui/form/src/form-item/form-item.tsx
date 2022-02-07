@@ -22,16 +22,16 @@ export default defineComponent({
     const initedFormItemData = cloneDeep(formData[props.prop]);
     const labelData = reactive(dForm.labelData);
     const rules = reactive(dForm.rules);
-    let validateTrigger = 'input';
+    let updateOn = 'input';
     const ruleItem = rules[props.prop];
     const getValidateTrigger = () => {
       if(rules && ruleItem) {
         if(Array.isArray(ruleItem)) {
           ruleItem.map(item => {
-            item['trigger'] && (validateTrigger = item['trigger']);
+            item['updateOn'] && (updateOn = item['updateOn']);
           })
         }else {
-          ruleItem['trigger'] && (validateTrigger = ruleItem['trigger']);
+          ruleItem['updateOn'] && (updateOn = ruleItem['updateOn']);
         }
       }
     }
@@ -112,7 +112,7 @@ export default defineComponent({
     // 1. 这样可以不用侵入其他组件去写一些表单相关的代码
     // 2. 可以不使用EventBus即可监听到表单域的数据变化，减少EventBus的使用
     watch(() => formData[props.prop], (newVal, oldVal) => {
-      validateTrigger === 'input' && validate();
+      updateOn === 'input' && validate();
       hasChange.value = newVal !== oldVal;
     }, {
       deep: true
@@ -120,7 +120,7 @@ export default defineComponent({
 
     // 通过ClickOutside模拟输入框change事件
     const handleClickOutside = () => {
-      if(validateTrigger === 'change' && hasChange.value) {
+      if(updateOn === 'change' && hasChange.value) {
         validate();
       }
       hasChange.value = false;
