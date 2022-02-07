@@ -18,7 +18,7 @@ interface BindingValue {
   validators?: any
   asyncValidators?: any
   errorStrategy?: 'pristine' | 'dirty'
-  updateOn: 'blur' | 'change' | 'input' | 'submit'
+  updateOn: 'change' | 'input' | 'submit'
   asyncDebounceTime?: number | string
   messageShowType?: 'popover' | 'text' | 'none'
   popPosition: string | string[]
