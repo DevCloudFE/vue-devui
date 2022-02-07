@@ -28,7 +28,7 @@ export default defineComponent({
     const popPosition = ref<any>(props.popPosition);
     const messageShowTypeData = ref(props.messageShowType);
     const showMessage = ref(dFormItem.showMessage);
-    if(dForm.messageShowType) {
+    if(!messageShowTypeData.value) {
       messageShowTypeData.value = dForm.messageShowType as any;
     }
     let rectInfo: Partial<DOMRect> = {

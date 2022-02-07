@@ -31,7 +31,7 @@ export const formProps = {
     default: '', 
   },
   messageShowType: {
-    type: String as PropType<'popover' | 'text' | 'toast' | 'none'>,
+    type: String as PropType<'popover' | 'text' | 'none'>,
     default: 'popover', 
   },
 } as const
@@ -64,8 +64,8 @@ export const formLabelProps = {
 
 export const formControlProps = {
   messageShowType: {
-    type: String as PropType<'popover' | 'text' | 'none'>,
-    default: 'popover'
+    type: String as PropType<'popover' | 'text' | 'none' | ''>,
+    default: '' // 这里不给默认值，在form-control组件中初始化时会判断是否有初始值，没有初始值则使用d-form中的messageShowType进行初始化
   },
   popPosition: {
     type: String as PropType<'top' | 'right' | 'bottom' | 'left' | 'left-top' | 'left-bottom' | 'top-left' | 'top-right' | 'right-top' | 'right-bottom' | 'bottom-left' | 'bottom-right'>,
