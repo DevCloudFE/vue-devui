@@ -1225,7 +1225,7 @@ export default defineComponent({
       '北京', '上海', '广州', '深圳'
     ]);
     const rules = reactive({
-      name: [{ required: true, message: '不能为空', trigger: 'change'}],
+      name: [{ required: true, message: '不能为空', updateOn: 'change'}],
       age: [
         { 
           required: true, 
