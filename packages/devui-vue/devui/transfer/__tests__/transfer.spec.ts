@@ -246,7 +246,7 @@ describe('d-transfer', () => {
 
     })
 
-    it('d-transfer customTransfer drag work', async () => {
+    it('d-transfer customTransfer work', async () => {
         const leftData = [
             {
                 key: '1',
@@ -401,7 +401,6 @@ describe('d-transfer', () => {
                 watch(
                     () => leftOptions.checkedValues,
                     (nVal) => {
-                        console.log('fetch', leftOptions.checkedValues)
                         rightOptions.disabled = nVal.length !== 0 ? false : true
                         leftOptions.allChecked = isEqual(nVal, leftOptions.filterData)
                     },
@@ -413,7 +412,6 @@ describe('d-transfer', () => {
                 watch(
                     () => rightOptions.checkedValues,
                     (nVal) => {
-                        console.log('right', rightOptions.checkedValues)
                         leftOptions.disabled = nVal.length !== 0 ? false : true
                         rightOptions.allChecked = isEqual(nVal, rightOptions.filterData)
                     },

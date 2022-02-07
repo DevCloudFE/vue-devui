@@ -107,10 +107,18 @@ a.sidebar-link-item.active {
   font-weight: 400;
 }
 
-.sidebar .sidebar-link-status {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin-right: 8px;
-  border-radius: 50px;
+.sidebar {
+  .sidebar-link-status {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-radius: 50px;
+  }
+
+  .sidebar-link-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }

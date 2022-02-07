@@ -112,7 +112,6 @@ export class Tween {
     const tick = () => {
       this.update()
       this.timer = requestAnimationFrame(tick)
-
       if (this.finished) {
         // 在判断 update中 结束后 停止 重绘
         cancelAnimationFrame(this.timer)

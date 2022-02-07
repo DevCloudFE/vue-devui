@@ -4,7 +4,7 @@
   "htmlWhitespaceSensitivity": "ignore",
   "jsxSingleQuote": true,
   "printWidth": 100,
-  "semi": false,
+  "semi": true,
   "useTabs": false,
   "trailingComma": "none",
   "singleQuote": true,
