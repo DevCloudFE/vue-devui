@@ -18,6 +18,7 @@
     :sourceOption="options.source"
     :targetOption="options.target"
     :isSearch="options.isSearch"
+    :showTooltip="options.showTooltip"
   >
   </d-transfer>
 </template>
@@ -104,7 +105,8 @@ export default defineComponent({
       originSource,
       originTarget,
       isSearch: true,
-      modelValues: ['深圳', '成都', '绵阳']
+      modelValues: ['深圳', '成都', '绵阳'],
+      showTooltip: true
     })
 
     return {
