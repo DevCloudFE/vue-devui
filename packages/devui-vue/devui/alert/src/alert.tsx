@@ -39,10 +39,6 @@ export default defineComponent({
     let dismissTimer: undefined | number = undefined;
     const close = (event?: MouseEvent) => {
       dismissTimer && clearTimeout(dismissTimer)
-      const dom = alertEl.value
-      dom.style.height = `${dom.offsetHeight}px`
-      // 重复一次后才能正确设置 height
-      dom.style.height = `${dom.offsetHeight}px`
       closing.value = true
       ctx.emit('close', event)
     }

@@ -24,9 +24,9 @@ export default defineComponent({
           to: {
             value: to
           },
-          delay: props.delay,
+          delay: 0,
           duration: props.animationDuration,
-          easing: props.easing,
+          easing: 'easeOutCubic',
           onUpdate: (keys: any) => {
             innerValue.value = keys.value
           },
@@ -37,14 +37,12 @@ export default defineComponent({
         tween.value.start()
       }
     }
-
     const statisticValue = computed(() => {
       return analysisValueType(
         innerValue.value,
         props.value,
         props.groupSeparator,
-        props.precision,
-        props.showGroupSeparator
+        props.precision
       )
     })
     onMounted(() => {
@@ -52,7 +50,7 @@ export default defineComponent({
         animation()
       }
     })
-
+    // 我们可以手动控制animation
     watch(
       () => props.start,
       (value) => {
@@ -67,7 +65,7 @@ export default defineComponent({
           <div class='devui-statistic-title' style={props.titleStyle}>
             {ctx.slots.title?.() || props.title}
           </div>
-          <div class='devui-statistic-content' style={props.contentStyle}>
+          <div class='devui-statistic-content' style={props.valueStyle}>
             {props.prefix || ctx.slots.prefix?.() ? (
               <span class='devui-statistic-prefix'>{ctx.slots.prefix?.() || props.prefix}</span>
             ) : null}
@@ -76,7 +74,9 @@ export default defineComponent({
               <span class='devui-statistic-suffix'>{ctx.slots.suffix?.() || props.suffix}</span>
             ) : null}
           </div>
-          {ctx.slots.extra?.() || props.extra}
+          {props.extra || ctx.slots.extra?.() ? (
+            <div class='devui-statistic-extra'> {ctx.slots.extra?.() || props.extra}</div>
+          ) : null}
         </div>
       )
     }
