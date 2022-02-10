@@ -41,7 +41,7 @@ export default defineComponent({
     watch(
       () => props.modelValue,
       (value) => {
-        value && value.length > 0 && showPreviewIcon.value
+        value && value.length > 0
           ? (showPwdIcon.value = true)
           : (showPwdIcon.value = false)
       }
