@@ -38,23 +38,16 @@ export default defineComponent({
       { immediate: true }
     )
 
-    watch(
-      () => props.modelValue,
-      (value) => {
-        value && value.length > 0 && showPreviewIcon.value
-          ? (showPwdIcon.value = true)
-          : (showPwdIcon.value = false)
-      }
-    )
-
     const onInput = ($event: Event) => {
         ctx.emit('update:modelValue', ($event.target as HTMLInputElement).value)
         hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.input)
       },
       onFocus = () => {
+        showPwdIcon.value = props.showPassword
         ctx.emit('focus')
       },
       onBlur = () => {
+        showPwdIcon.value = !!props.modelValue
         ctx.emit('blur')
         hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.blur)
       },
