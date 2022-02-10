@@ -14,7 +14,9 @@ function createDrawerApp(props: DrawerProps, drawer: drawerInstance, el: HTMLEle
     return drawer
   }
   const res = createApp(
-    <DDrawer v-model:visible={props.visible}>{{ header: props.header, content: props.content }}</DDrawer>
+    // BUG: this function generates a new app, v-model instructor of template is like not working
+    // TODO: could be fixed by using self-defined header slot
+    <DDrawer v-model={[props.visible, 'visible']} {...props}>{{ header: props.header, content: props.content }}</DDrawer>
   )
   res.mount(el)
   return res

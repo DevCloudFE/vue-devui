@@ -33,6 +33,10 @@ export const drawerProps = {
     type: Boolean,
     default: false,
   },
+  showAnimation: { // 是否启用动效
+    type: Boolean,
+    default: true,
+  },
   beforeHidden: { // 关闭前的回调
     type: [Promise, Function] as PropType<Promise<boolean> | (() => boolean | Promise<boolean>)>,
   },

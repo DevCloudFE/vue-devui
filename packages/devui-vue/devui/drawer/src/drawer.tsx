@@ -1,15 +1,17 @@
-import { defineComponent, ref, toRefs, watch, onUnmounted, Teleport, provide } from 'vue'
-import { drawerProps, DrawerProps } from './drawer-types'
+import { defineComponent, ref, toRefs, watch, onUnmounted, Teleport, provide, Transition } from 'vue'
+import { drawerProps } from './drawer-types'
 
 import DrawerHeader from './components/drawer-header'
 import DrawerContainer from './components/drawer-container'
 import DrawerBody from './components/drawer-body'
 
+import './drawer.scss'
+
 export default defineComponent({
   name: 'DDrawer',
-  props: drawerProps,
+  props: drawerProps as any,
   emits: ['close', 'update:visible', 'afterOpened'],
-  setup(props: DrawerProps, { emit, slots }) {
+  setup(props, { emit, slots }) {
     const {
       width, visible, zIndex, isCover, escKeyCloseable, position,
       backdropCloseable, destroyOnHide
@@ -80,21 +82,24 @@ export default defineComponent({
     }
   },
   render() {
-    const { fullscreen, closeDrawer, visible, destroyOnHide } = this;
+    const { fullscreen, closeDrawer, visible, destroyOnHide, showAnimation, position } = this;
+
+    const transitionName = showAnimation ? position : 'none'
+
     if (destroyOnHide.value && !visible) {
       return null
     }
 
-    const visibleVal = visible ? 'visible' : 'hidden'
     return (
       <Teleport to="body">
-        <DrawerBody style= {{ visibility : visibleVal }}>
-          {/* BUG: 已使用作用域插槽解决 此处对应的 DEMO 使用了 **双向绑定** 导致可以关闭【一种关闭了的'假象'】。*/}
-          {this.slots.header ? this.slots.header({fullscreen, closeDrawer}) : 
-            <DrawerHeader onToggleFullScreen={fullscreen} onClose={closeDrawer} />
-          }
-          {this.slots.content ? this.slots.content() : <DrawerContainer />}
-        </DrawerBody>
+        <Transition name={'devui-drawer-' + transitionName}>
+          <DrawerBody v-show={ visible }>
+            {this.slots.header ? this.slots.header({fullscreen, closeDrawer}) :
+              <DrawerHeader onToggleFullScreen={fullscreen} onClose={closeDrawer} />
+            }
+            {this.slots.content ? this.slots.content() : <DrawerContainer />}
+          </DrawerBody>
+        </Transition>
       </Teleport>
     )
   }

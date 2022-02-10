@@ -42,17 +42,15 @@ export default defineComponent({
 
   render() {
     const {
-      zindex, slots, isCover, navRight, navWidth, 
+      zindex, slots, isCover, navRight, navWidth,
       visible, handleDrawerClose, destroyOnHide } = this
 
     if (destroyOnHide.value && !visible) {
       return null
     }
 
-    const visibleVal = visible ? 'visible' : 'hidden'
-
     return (
-      <div class="devui-drawer" style={{ zIndex: zindex, visibility : visibleVal }} onClick={handleDrawerClose} >
+      <div class="devui-drawer" style={{ zIndex: zindex }} onClick={handleDrawerClose} >
         {isCover ? <div class="devui-overlay-backdrop" /> : null}
         <div class="devui-overlay-wrapper">
           <div class="devui-drawer-nav" style={{ 'width': navWidth, ...navRight }}>

@@ -26,19 +26,17 @@ export default defineComponent({
     return { fullScreenClassName, visible, handleFullScreen, handleDrawerClose, destroyOnHide }
   },
   render() {
-    const { 
-      handleFullScreen, handleDrawerClose, visible, 
-      fullScreenClassName, destroyOnHide 
+    const {
+      handleFullScreen, handleDrawerClose, visible,
+      fullScreenClassName, destroyOnHide
     } = this
 
     if (destroyOnHide.value && !visible) {
       return null
     }
 
-    const visibleVal = visible ? 'visible' : 'hidden'
-
     return (
-      <div class="devui-drawer-header" style= {{ visibility : visibleVal }}>
+      <div class="devui-drawer-header">
         <div class="devui-drawer-header-item">
           <span class="devui-drawer-header-item icon icon-more-operate" />
         </div>
