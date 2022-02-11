@@ -26,6 +26,7 @@ export default defineComponent({
       return {
         error: props.error,
         [props.cssClass]: true,
+        'devui-input-restore': showPwdIcon.value,
         [sizeCls.value]: props.size !== ''
       }
     })
@@ -34,17 +35,9 @@ export default defineComponent({
       () => props.showPassword,
       (flg) => {
         inputType.value = flg ? 'password' : 'text'
+        showPwdIcon.value = props.showPassword
       },
       { immediate: true }
-    )
-
-    watch(
-      () => props.modelValue,
-      (value) => {
-        value && value.length > 0 && showPreviewIcon.value
-          ? (showPwdIcon.value = true)
-          : (showPwdIcon.value = false)
-      }
     )
 
     const onInput = ($event: Event) => {
@@ -119,9 +112,9 @@ export default defineComponent({
         {showPwdIcon && (
           <div class='devui-input__preview' onClick={onChangeInputType}>
             {showPreviewIcon ? (
-              <d-icon name='preview' size='12px' key={1} />
+              <d-icon name='preview-forbidden' size='12px' key={1} />
             ) : (
-              <d-icon name='preview-forbidden' size='12px' key={2} />
+              <d-icon name='preview' size='12px' key={2} />
             )}
           </div>
         )}
