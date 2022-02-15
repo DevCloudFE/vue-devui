@@ -13,7 +13,7 @@ interface data {
   strokePath: any
 }
 
-export const Progress = defineComponent({
+export default defineComponent({
   name: 'DProgress',
   props: {
     height: {

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { Progress } from '../src/progress';
+import Progress from '../src/progress';
 
 describe('progress', () => {
     describe('progress basic', () => {
