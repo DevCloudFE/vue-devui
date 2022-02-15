@@ -1,8 +1,8 @@
-import { defineComponent, reactive, ref, toRefs, provide, unref } from 'vue'
+import { defineComponent, reactive, ref, toRefs, provide } from 'vue'
 import type { SetupContext } from 'vue'
 import { treeProps, TreeProps, TreeItem, TreeRootType, Nullable } from './tree-types'
 import { CHECK_CONFIG } from  './config'
-import { preCheckTree, deleteNode, getId } from './util'
+import { preCheckTree } from './util'
 import Loading from '../../loading/src/service'
 import Checkbox from '../../checkbox/src/checkbox'
 import useToggle from './composables/use-toggle'
@@ -34,37 +34,8 @@ export default defineComponent({
     provide<TreeRootType>('treeRoot', { ctx, props })
 
     const renderNode = (item: TreeItem) => {
-      const { id = '', disabled, open, isParent, level, children, addable, editable, deletable } = item  
-      handleReflectIdToIcon(
-        id,
-        {
-          addable,
-          editable,
-          deletable,
-          handleAdd: () => {
-            const newItem: TreeItem = {
-              id: getId(item.id),
-              label: 'new item',
-              level: item.level + 1,
-              addable,
-              editable,
-              deletable
-            }
-            item.open = true
-            if (item.children && Array.isArray(item.children)) {
-              item.children.push(newItem)
-            } else {
-              item.children = [newItem]
-            }
-          },
-          handleEdit: () => {
-            editStatusReflect.value[id] = !editStatusReflect.value[id]
-          },
-          handleDelete: () => {
-            mergeData.value = deleteNode(id, mergeData.value)
-          },
-        }
-      )
+      const { id = '', disabled, open, isParent, level, children } = item  
+      handleReflectIdToIcon(item, mergeData)
       handleInitNodeClassNameReflect(disabled, id)
       handleInitLazyNodeReflect(item, {
         id,
