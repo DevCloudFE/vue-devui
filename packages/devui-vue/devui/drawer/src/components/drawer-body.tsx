@@ -1,4 +1,4 @@
-import { defineComponent, inject, computed } from 'vue'
+import { defineComponent, inject, computed, Transition } from 'vue'
 
 import './drawer-body.scss'
 
@@ -14,6 +14,7 @@ export default defineComponent({
     const visible: boolean = inject('visible')
     const backdropCloseable: any = inject('backdropCloseable')
     const destroyOnHide: any = inject('destroyOnHide')
+    const showAnimation: any = inject('showAnimation')
 
     const navRight = computed(() => position.value === 'right' ? { 'right': 0 } : { 'left': 0 })
     const navWidth = computed(() => isFullScreen.value ? '100vw' : width.value)
@@ -34,6 +35,8 @@ export default defineComponent({
       navRight,
       navWidth,
       visible,
+      position,
+      showAnimation,
       clickContent,
       handleDrawerClose,
       destroyOnHide,
@@ -42,23 +45,27 @@ export default defineComponent({
 
   render() {
     const {
-      zindex, slots, isCover, navRight, navWidth,
-      visible, handleDrawerClose, destroyOnHide } = this
+      zindex, slots, isCover, navRight, navWidth, showAnimation,
+      visible, handleDrawerClose, destroyOnHide, position } = this
 
     if (destroyOnHide.value && !visible) {
       return null
     }
 
+    const transitionName = showAnimation ? position : 'none'
+
     return (
       <div class="devui-drawer" style={{ zIndex: zindex }} onClick={handleDrawerClose} >
         {isCover ? <div class="devui-overlay-backdrop" /> : null}
-        <div class="devui-overlay-wrapper">
-          <div class="devui-drawer-nav" style={{ 'width': navWidth, ...navRight }}>
-            <div class="devui-drawer-content" onClick={this.clickContent}>
-              {slots.default ? slots.default() : null}
+        <Transition name={'devui-drawer-' + transitionName}>
+          <div class="devui-overlay-wrapper" v-show={ visible }>
+            <div class="devui-drawer-nav" style={{ 'width': navWidth, ...navRight }}>
+              <div class="devui-drawer-content" onClick={this.clickContent}>
+                {slots.default ? slots.default() : null}
+              </div>
             </div>
           </div>
-        </div>
+        </Transition>
       </div>
     )
   }

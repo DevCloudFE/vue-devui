@@ -41,10 +41,10 @@ export const drawerProps = {
     type: [Promise, Function] as PropType<Promise<boolean> | (() => boolean | Promise<boolean>)>,
   },
   content: { // 默认内容插槽
-    type: [Object, Function],
+    type: Object,
   },
   header: { // 头部内容插槽
-    type: [Object, Function],
+    type: Object,
   },
 } as const
 

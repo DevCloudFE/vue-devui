@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { DrawerProps } from './drawer-types'
 
 import DDrawer from './drawer'
+import {  omit } from 'lodash-es'
 
 interface drawerInstance {
   hide(): void
@@ -13,10 +14,12 @@ function createDrawerApp(props: DrawerProps, drawer: drawerInstance, el: HTMLEle
   if (drawer) {
     return drawer
   }
+  const restProps = omit(props, ['header', 'content', 'visible'])
+  
   const res = createApp(
     // BUG: this function generates a new app, v-model instructor of template is like not working
     // TODO: could be fixed by using self-defined header slot
-    <DDrawer v-model={[props.visible, 'visible']} {...props}>{{ header: props.header, content: props.content }}</DDrawer>
+    <DDrawer v-model={[props.visible, 'visible']} {...restProps}>{{ header: props.header, content: props.content }}</DDrawer>
   )
   res.mount(el)
   return res

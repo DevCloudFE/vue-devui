@@ -1,5 +1,5 @@
-import { defineComponent, ref, toRefs, watch, onUnmounted, Teleport, provide, Transition } from 'vue'
-import { drawerProps } from './drawer-types'
+import { defineComponent, ref, toRefs, watch, onUnmounted, Teleport, provide } from 'vue'
+import { drawerProps, DrawerProps } from './drawer-types'
 
 import DrawerHeader from './components/drawer-header'
 import DrawerContainer from './components/drawer-container'
@@ -9,15 +9,15 @@ import './drawer.scss'
 
 export default defineComponent({
   name: 'DDrawer',
-  props: drawerProps as any,
+  props: drawerProps,
   emits: ['close', 'update:visible', 'afterOpened'],
-  setup(props, { emit, slots }) {
+  setup(props: DrawerProps, { emit, slots }) {
     const {
       width, visible, zIndex, isCover, escKeyCloseable, position,
-      backdropCloseable, destroyOnHide
+      backdropCloseable, destroyOnHide, showAnimation
     } = toRefs(props)
     const isFullScreen = ref(false)
-    
+
     const fullscreen = () => {
       isFullScreen.value = !isFullScreen.value
     }
@@ -68,6 +68,7 @@ export default defineComponent({
     provide('isFullScreen', isFullScreen)
     provide('backdropCloseable', backdropCloseable)
     provide('destroyOnHide', destroyOnHide)
+    provide('showAnimation', showAnimation)
 
     onUnmounted(() => {
       document.removeEventListener('keyup', escCloseDrawer)
@@ -82,9 +83,7 @@ export default defineComponent({
     }
   },
   render() {
-    const { fullscreen, closeDrawer, visible, destroyOnHide, showAnimation, position } = this;
-
-    const transitionName = showAnimation ? position : 'none'
+    const { fullscreen, closeDrawer, visible, destroyOnHide } = this;
 
     if (destroyOnHide.value && !visible) {
       return null
@@ -92,14 +91,12 @@ export default defineComponent({
 
     return (
       <Teleport to="body">
-        <Transition name={'devui-drawer-' + transitionName}>
-          <DrawerBody v-show={ visible }>
-            {this.slots.header ? this.slots.header({fullscreen, closeDrawer}) :
-              <DrawerHeader onToggleFullScreen={fullscreen} onClose={closeDrawer} />
-            }
-            {this.slots.content ? this.slots.content() : <DrawerContainer />}
-          </DrawerBody>
-        </Transition>
+        <DrawerBody v-show={ visible }>
+          {this.slots.header ? this.slots.header({fullscreen, closeDrawer}) :
+            <DrawerHeader onToggleFullScreen={fullscreen} onClose={closeDrawer} />
+          }
+          {this.slots.content ? this.slots.content() : <DrawerContainer />}
+        </DrawerBody>
       </Teleport>
     )
   }
