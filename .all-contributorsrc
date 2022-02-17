@@ -49,6 +49,15 @@
         "maintenance",
         "code"
       ]
+    },
+    {
+      "login": "sufuwang",
+      "name": "王凯",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46395105?v=4",
+      "profile": "https://github.com/sufuwang",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
