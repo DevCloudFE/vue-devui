@@ -1,7 +1,7 @@
 import { reactive, ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import { TreeItem, IDropType, Nullable } from '../tree-types'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep } from 'lodash'
 
 const ACTIVE_NODE = 'devui-tree-node__content--value-wrapper'
 interface DragState {

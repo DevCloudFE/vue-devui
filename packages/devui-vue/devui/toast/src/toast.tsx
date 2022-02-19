@@ -4,7 +4,7 @@ import { computed, defineComponent, nextTick, onUnmounted, ref, watch } from 'vu
 import { Message, ToastProps, toastProps } from './toast-types'
 import ToastIconClose from './toast-icon-close'
 import ToastImage from './toast-image'
-import { cloneDeep, isEqual, merge, omit, throttle } from 'lodash-es'
+import { cloneDeep, isEqual, merge, omit, throttle } from 'lodash'
 import { useToastEvent } from './hooks/use-toast-event'
 import { useToastHelper } from './hooks/use-toast-helper'
 import { useToastConstant } from './hooks/use-toast-constant'
