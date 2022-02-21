@@ -25,21 +25,13 @@ DevUI 官方网站：[https://devui.design](https://devui.design)
 ### 1 安装依赖
 
 ```
-yarn(推荐)
-
-or
-
-npm i
+pnpm i
 ```
 
 ### 2 启动
 
 ```
-yarn dev(推荐)
-
-or
-
-npm run dev
+pnpm dev
 ```
 
 ### 3 访问
@@ -49,11 +41,7 @@ npm run dev
 ### 4 生产打包
 
 ```
-yarn build(推荐)
-
-or
-
-npm run build
+pnpm build
 ```
 
 ## 使用 Vue DevUI
@@ -61,7 +49,7 @@ npm run build
 ### 1. 安装
 
 ```
-yarn add vue-devui
+pnpm i vue-devui
 ```
 
 ### 2. 全量引入
@@ -143,11 +131,7 @@ export default defineConfig({
 #### 安装
 
 ```
-yarn add @devui-design/icons(推荐)
-
-or
-
-npm i @devui-design/icons
+pnpm i @devui-design/icons
 ```
 
 #### 引入
