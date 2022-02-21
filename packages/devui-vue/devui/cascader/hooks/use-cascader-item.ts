@@ -1,7 +1,7 @@
 /**
  * 处理cascader-item中需要的参数
  */
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep } from 'lodash'
 import { ref, reactive, Ref } from 'vue'
 import { CascaderProps, UseCascaderItemCallback, CascaderItem } from '../src/cascader-types'
 
