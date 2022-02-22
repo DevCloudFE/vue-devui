@@ -1,6 +1,6 @@
 import AsyncValidator, { RuleItem } from 'async-validator';
 import { VNode, DirectiveBinding } from 'vue';
-import { debounce } from 'lodash-es';
+import { debounce } from 'lodash';
 import { EventBus, isObject, hasKey } from '../util';
 import './style.scss';
 

@@ -14,7 +14,12 @@ export default defineConfig({
     svgLoader(),
   ],
   optimizeDeps:{
-    exclude: ['vue','@vue/runtime-core','lodash','lodash-es','mitt','async-validator'],
+    exclude: ['lodash-es','mitt','async-validator'],
     include: ['lodash']
   },
+  server: {
+    fs: {
+      strict: false
+    }
+  }
 })
