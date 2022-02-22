@@ -7,6 +7,7 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: '@devui', replacement: path.resolve(__dirname, '../devui') },
+      { find: '@devui/theme', replacement: path.resolve(__dirname, '../../devui-theme') },
     ]
   },
   plugins: [
