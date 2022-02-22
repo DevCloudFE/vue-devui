@@ -1,74 +1,47 @@
-import type { PropType, ExtractPropTypes } from 'vue'
-type HorizontalConnectionPos = 'left' | 'center' | 'right';
-type VerticalConnectionPos = 'top' | 'center' | 'bottom';
-
-export interface ConnectionPosition {
-  originX: HorizontalConnectionPos
-  originY: VerticalConnectionPos
-  overlayX: HorizontalConnectionPos
-  overlayY: VerticalConnectionPos
-}
-export interface OptionItem {
-  name: string
-  [key: string]: any
-}
-export type Options = Array<string | OptionItem>
+import type { PropType, ExtractPropTypes } from 'vue';
+import { OptionObjectItem, OptionsType } from './editable-select-type';
 export const editableSelectProps = {
+  /* test: {
+    type: Object as PropType<{ xxx: xxx }>
+  } */
   appendToBody: {
-    type: Boolean,
-    default: false
-  },
-  modelValue: {
-    type: [String, Number] as PropType<string | number>
+    type: Boolean
   },
   options: {
-    type: Array as PropType<Options>,
+    type: Array as PropType<OptionsType>,
     default: () => []
   },
-  width: {
-    type: Number,
-    default: 450
-  },
-  maxHeight: {
-    type: Number
-  },
   disabled: {
-    type: Boolean,
-    default: false
-  },
-  disabledKey: {
-    type: String,
-  },
-  remote: {
-    type: Boolean,
-    default: false
+    type: Boolean
   },
   loading: {
     type: Boolean
   },
-  enableLazyLoad: {
-    type: Boolean,
-    default: false
+  optionDisabledKey: {
+    type: String,
+    default: ''
   },
-  remoteMethod: {
-    type: Function as PropType<(inputValue: string) => Array<Options>>
+  placeholder: {
+    type: String,
+    default: 'Search'
   },
-  filterMethod: {
-    type: Function as PropType<(inputValue: string) => Array<Options>>
+  modelValue: {
+    type: String
   },
-  searchFn: {
-    type: Function as PropType<(term: string) => Array<Options>>,
+  width: {
+    type: Number
+  },
+  maxHeight: {
+    type: Number
+  },
+  filterOption: {
+    type: [Function, Boolean] as PropType<
+      boolean | ((input: string, option: OptionObjectItem) => boolean)
+    >
   },
   loadMore: {
-    type: Function as PropType<() => Array<Options>>
+    type: Function as PropType<(val: string) => void>
   }
-} as const
+} as const;
 
-export const selectDropdownProps = {
-  options: {
-    type: Array as PropType<OptionItem[]>,
-    default: () => []
-  }
-} as const
-export type EditableSelectProps = ExtractPropTypes<typeof editableSelectProps>
-export type SelectDropdownProps = ExtractPropTypes<typeof selectDropdownProps>
+export type EditableSelectProps = ExtractPropTypes<typeof editableSelectProps>;
