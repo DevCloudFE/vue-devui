@@ -512,8 +512,8 @@ d-transfer 参数
 | height         | `String`  | 320px  | 可选参数，穿梭框高度      |  [基本用法](#基本用法)   |
 | isSearch       | `Boolean` | true   | 可选参数，是否可以搜索    |  [基本用法](#基本用法)   |
 | disabled       | `Boolean` | false  | 可选参数 穿梭框禁止使用   |  [基本用法](#基本用法)   |  
-| isSourceDroppable  | `Boolean` | false  | 可选参数，源是否可以拖拽   |  [基本用法](#拖拽排序)   |  
-| isTargetDroppable  | `Boolean` | false  | 可选参数，目标是否可以拖拽   |  [基本用法](#拖拽排序)   |  
+| isSourceDroppable  | `Boolean` | false  | 可选参数，源是否可以拖拽   |  [拖拽排序](#拖拽排序)   |  
+| isTargetDroppable  | `Boolean` | false  | 可选参数，目标是否可以拖拽   |  [拖拽排序](#拖拽排序)   |  
 | beforeTransfer | `(sourceOption, targetOption) => boolean \| Promise<boolean>` |-  | 可选参数 穿梭框禁止使用   |  [基本用法](#基本用法)   |  
 
 d-transfer 事件
@@ -524,7 +524,7 @@ d-transfer 事件
 | searching   | `EventEmitter<{direction, keyword}>`   | 当搜索时触发，返回目标穿梭框和搜索文字，不设置此事件则会使用默认方法；     |  [基本用法](#基本用法)   |
 | transferring   | `EventEmitter<TransferDirection>`   | 当穿梭时触发，返回目标穿梭框，不设置此事件则会使用默认方法；     |  [基本用法](#基本用法)   |
 | afterTransfer   | `EventEmitter<TransferDirection>`   | 当穿梭完成后，返回目标穿梭框，不设置transferEvent才会触发；     |  [基本用法](#基本用法)   |
-| onDragEnd   | `(direction: string, dragItem: TransferItem, dropItem: TransferItem) => void`   | 节点结束拖拽的回调；     |  [基本用法](#基本用法)   |
+| onDragEnd   | `(direction: string, dragItem: TransferItem, dropItem: TransferItem) => void`   | 节点结束拖拽的回调；     |  [拖拽排序](#拖拽排序)   |
 
 
 d-transfer.Item
