@@ -2,7 +2,7 @@ import { defineCliConfig } from 'devui-cli';
 
 export default defineCliConfig({
   componentRootDir: './devui',
-  libClassPrefix: 'd',
+  libClassPrefix: 'devui',
   libEntryFileName: 'vue-devui',
   libEntryRootDir: './devui',
   libPrefix: 'D',
