@@ -1,27 +1,31 @@
 $icon-size: 26px;
 $icon-offset: 1px;
 $icon-left: 2px;
+
 .d-input-icon-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+
+  label {
+    flex: 1;
+    background-color: #cccccc;
+
+    input {
+      padding-right: $icon-size + $icon-offset + $icon-left;
+    }
+  }
+
+  span {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    right: $icon-offset;
+    width: $icon-size;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    position: relative;
-    label {
-        flex: 1;
-        background-color: #ccc;
-        input {
-            padding-right: $icon-size + $icon-offset + $icon-left;
-        }
-    }
-    span {
-        position: absolute;
-        top: 1px;
-        bottom: 1px;
-        right: $icon-offset;
-        width: $icon-size;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-    }
+    box-sizing: border-box;
+  }
 }

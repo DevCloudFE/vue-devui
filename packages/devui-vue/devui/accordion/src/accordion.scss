@@ -5,8 +5,9 @@
 @import '../../style/theme/corner';
 @import '../../style/core/animation';
 
-.devui-accordion-menu  {
-  ol, ul{
+.devui-accordion-menu {
+  ol,
+  ul {
     margin: 0 !important;
     line-height: 0 !important;
     font-size: 12px;
@@ -120,7 +121,7 @@ d-accordion-item-routerlink {
 /* 展开图标相关 */
 .devui-accordion-menu-item > .devui-accordion-item-title {
   position: relative;
-  
+
   & > .devui-accordion-open-icon {
     display: inline-block;
     text-indent: 0;
@@ -177,8 +178,8 @@ d-accordion-item-routerlink {
 
 .devui-accordion-list .devui-accordion-menu-hidden {
   // display: none;
-  opacity: 0; 
-  height: 0px;
+  opacity: 0;
+  height: 0;
   overflow: hidden;
 }
 

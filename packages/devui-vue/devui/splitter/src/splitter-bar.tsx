@@ -19,10 +19,10 @@ import './splitter-bar.scss'
 
 export default defineComponent({
   name: 'DSplitterBar',
-  props: splitterBarProps,
   components: {
     DToolTip,
   },
+  props: splitterBarProps,
   setup(props: SplitterBarProps) {
     const store: SplitterStore = inject('splitterStore')
     const state = reactive({

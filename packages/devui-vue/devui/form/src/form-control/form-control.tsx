@@ -21,11 +21,11 @@ export default defineComponent({
     const dForm = reactive(inject(formInjectionKey, {} as IForm));
     const labelData = reactive(dForm.labelData);
     const isHorizontal = labelData.layout === 'horizontal';
-    const uid = uniqueId("dfc-");
+    const uid = uniqueId('dfc-');
     const showPopover = ref(false);
     const updateOn = ref('change');
-    const tipMessage = ref("");
-    const popPosition = ref<positionType>("bottom");
+    const tipMessage = ref('');
+    const popPosition = ref<positionType>('bottom');
     let rectInfo: Partial<DOMRect> = {
       width: 0,
       height: 0
@@ -40,14 +40,14 @@ export default defineComponent({
     onMounted(() => {
       const el = document.getElementById(uid);
       elOffset = getElOffset(el);
-      EventBus.on("showPopoverErrorMessage", (data: ShowPopoverErrorMessageEventData) => {
+      EventBus.on('showPopoverErrorMessage', (data: ShowPopoverErrorMessageEventData) => {
         if (uid === data.uid) {
           rectInfo = el.getBoundingClientRect();
           showPopover.value = data.showPopover;
           tipMessage.value = data.message;
           popPosition.value = data.popPosition as any; // todo: 待popover组件positionType完善类型之后再替换类型
-          popoverLeftPosition = popPosition.value === "top" || popPosition.value === "bottom" ? rectInfo.right - (rectInfo.width / 2) : rectInfo.right;
-          popoverTopPosition = popPosition.value === "top" ? elOffset.top + (rectInfo.height / 2) - rectInfo.height : elOffset.top + (rectInfo.height / 2);
+          popoverLeftPosition = popPosition.value === 'top' || popPosition.value === 'bottom' ? rectInfo.right - (rectInfo.width / 2) : rectInfo.right;
+          popoverTopPosition = popPosition.value === 'top' ? elOffset.top + (rectInfo.height / 2) - rectInfo.height : elOffset.top + (rectInfo.height / 2);
           updateOn.value = data.updateOn ?? 'change';
         }
       });
@@ -87,7 +87,7 @@ export default defineComponent({
               width: rectInfo.width + 'px',
               height: rectInfo.height + 'px',
             }}>
-              <Popover controlled={updateOn.value !== 'change'} visible={showPopover.value} content={tipMessage.value} popType={"error"} position={popPosition.value} />
+              <Popover controlled={updateOn.value !== 'change'} visible={showPopover.value} content={tipMessage.value} popType={'error'} position={popPosition.value} />
             </div>
           </Teleport>
         }

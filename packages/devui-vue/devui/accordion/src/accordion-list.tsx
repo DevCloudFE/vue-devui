@@ -12,11 +12,11 @@ import { getRootSlots } from '../src/utils'
 
 export default defineComponent({
   name: 'DAccordionList',
-  inheritAttrs: false,
   components: {
     DAccordionMenu,
     DAccordionItem
   },
+  inheritAttrs: false,
   props: {
     data: {
       type: Array as () => Array<AccordionMenuItem>,
@@ -49,8 +49,8 @@ export default defineComponent({
       innerListTemplate
     } = toRefs(props)
 
-    let parentValue = parent.value
-    let deepValue = deepth.value
+    const parentValue = parent.value
+    const deepValue = deepth.value
 
     const rootSlots = getRootSlots()
 
@@ -60,7 +60,7 @@ export default defineComponent({
       return parentValue && parentValue[loadingKey.value]
     })
     const noContent = computed(() => {
-      let dataValue = data.value
+      const dataValue = data.value
       return dataValue === undefined || dataValue === null || dataValue.length === 0
     })
 

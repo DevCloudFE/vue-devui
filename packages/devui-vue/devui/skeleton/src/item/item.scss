@@ -1,4 +1,4 @@
-@import "../../../styles-var/devui-var.scss";
+@import '../../../styles-var/devui-var.scss';
 
 .devui-skeleton__shape__avatar,
 .devui-skeleton__shape__image,
@@ -6,20 +6,24 @@
 .devui-skeleton__shape__button {
   background-color: #f2f2f2;
 }
+
 .devui-skeleton__shape__avatar {
   width: 40px;
   height: 40px;
   background-color: #f2f2f2;
 }
+
 .devui-skeleton__shape__image {
   width: 200px;
   height: 150px;
   border-radius: 4px;
 }
+
 .devui-skeleton__shape__title {
   width: 40%;
   height: 24px;
 }
+
 .devui-skeleton__shape__paragraph {
   &__item {
     background-color: #f2f2f2;
@@ -32,6 +36,7 @@
     width: 60%;
   }
 }
+
 .devui-skeleton__shape__button {
   width: 115px;
   height: 32px;
@@ -49,7 +54,8 @@
 .devui-skeleton__animated.devui-skeleton__shape__title,
 .devui-skeleton__animated.devui-skeleton__shape__paragraph > .devui-skeleton__shape__paragraph__item,
 .devui-skeleton__animated.devui-skeleton__shape__button {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       100deg,
       rgba(255, 255, 255, 0) 40%,
       rgba(255, 255, 255, 0.5) 50%,

@@ -3,8 +3,8 @@ const { INDEX_FILE_NAME, DEVUI_DIR } = require('./constant')
 const { resolve } = require('path')
 const logger = require('./logger')
 const fs = require('fs-extra')
-const traverse = require("@babel/traverse").default
-const babelParser = require("@babel/parser")
+const traverse = require('@babel/traverse').default
+const babelParser = require('@babel/parser')
 
 exports.bigCamelCase = (str) => {
   return upperFirst(camelCase(str))

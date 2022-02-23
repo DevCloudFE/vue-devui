@@ -10,18 +10,21 @@
   box-sizing: border-box;
   padding: 30px;
 
-  &__icon{
-    &-success::before{
-      color: $devui-success
+  &__icon {
+    &-success::before {
+      color: $devui-success;
     }
-    &-danger::before{
-      color: $devui-danger
+
+    &-danger::before {
+      color: $devui-danger;
     }
-    &-warning::before{
-      color: $devui-warning
+
+    &-warning::before {
+      color: $devui-warning;
     }
-    &-info::before{
-      color: $devui-info
+
+    &-info::before {
+      color: $devui-info;
     }
   }
 
@@ -37,7 +40,7 @@
     font-size: $devui-font-size-md;
   }
 
-  &__extra{
+  &__extra {
     margin-top: 30px;
   }
 }

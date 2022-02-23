@@ -68,7 +68,7 @@ export function useStepsGuidePosition(
     if(props.scrollToTargetSwitch && typeof stepGuideElement.scrollIntoView === 'function') {
       nextTick(() => {
         // 位置更新后滚动视图
-        stepGuideElement.scrollIntoView({behavior: "smooth", block: "nearest", inline: "nearest"})
+        stepGuideElement.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'nearest'})
       })
     }
   }

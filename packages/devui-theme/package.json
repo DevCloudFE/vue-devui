@@ -8,9 +8,7 @@
     "src"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build"
   },
   "dependencies": {
     "css-vars-ponyfill": "^2.4.7",

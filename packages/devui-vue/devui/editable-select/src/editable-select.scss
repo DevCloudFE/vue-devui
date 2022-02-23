@@ -1,5 +1,6 @@
 @import '../../style/theme/color';
 @import '../../style/core/animation';
+
 .devui-editable-select {
   .devui-form-group {
     input::-ms-clear {
@@ -129,6 +130,7 @@
     width: 100%;
     display: block;
   }
+
   .devui-dropdown-item {
     cursor: pointer;
     display: block;

@@ -3,7 +3,7 @@ import { getComponentsMeta } from '../templates/component/utils'
 import genLibEntryTemplate from '../templates/lib-entry/lib-entry'
 import logger from './logger'
 
-export default async function genLibEntry(filePath: string = '') {
+export default async function genLibEntry(filePath = '') {
   const componentsMeta = await getComponentsMeta()
 
   writeFileSync(filePath, genLibEntryTemplate(componentsMeta), {
