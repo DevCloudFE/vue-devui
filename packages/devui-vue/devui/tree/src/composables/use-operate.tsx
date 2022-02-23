@@ -11,16 +11,16 @@ interface TypeOperator {
   handleDelete: () => void
 }
 interface TypeOperateIconReflect {
-  id: TypeID,
+  id: TypeID
   renderIcon: (data: TreeItem) => JSX.Element
 }
 interface TypeeditStatusReflect {
   [id: TypeID]: boolean
 }
 interface TypeReturnUseOperate {
-  editStatusReflect: Ref<TypeeditStatusReflect>,
-  operateIconReflect: Ref<Array<TypeOperateIconReflect>>,
-  handleReflectIdToIcon: TypeHandleReflectIdToIcon,
+  editStatusReflect: Ref<TypeeditStatusReflect>
+  operateIconReflect: Ref<Array<TypeOperateIconReflect>>
+  handleReflectIdToIcon: TypeHandleReflectIdToIcon
 }
 type TypeUseOperate = (treeData: Ref<TreeData>) => TypeReturnUseOperate
 type TypeHandleReflectIdToIcon = (id: TypeID, operate: TypeOperator) => void

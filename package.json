@@ -5,11 +5,11 @@
     "dev": "pnpm dev --filter vue-devui",
     "build": "pnpm build --filter vue-devui",
     "build:lib": "pnpm build:lib --filter vue-devui",
-    "build:cli": "pnpm build --filter @devui/cli",
+    "build:cli": "pnpm build --filter devui-cli",
     "prepare": "husky install",
     "precommit": "lint-staged",
-    "lint:fix": "eslint --fix \"{packages}/**/*.{vue,js,ts,jsx,tsx}\"",
-    "stylelint": "stylelint --fix \"{packages}/**/*.{scss,css}\"",
+    "lint:fix": "eslint --fix \"packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}\"",
+    "stylelint": "stylelint --fix \"packages/**/{*.scss,*.css}\"",
     "test": "pnpm test --filter vue-devui"
   },
   "devDependencies": {

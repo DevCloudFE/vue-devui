@@ -15,7 +15,7 @@ const MAX_HISOTRY_COUNT = 8
  * @param params
  * @returns
  */
-function useStore<T>(v: T, { storage }: { storage?: boolean } = {}): Ref<T | UnwrapRef<T>> {
+function useStore<T>(v: T, { storage }: { storage?: boolean; } = {}): Ref<T | UnwrapRef<T>> {
   // 获取默认值
   const getDefaultValue = (): T => {
     if (storage) {

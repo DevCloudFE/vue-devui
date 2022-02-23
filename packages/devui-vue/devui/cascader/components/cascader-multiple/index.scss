@@ -1,6 +1,7 @@
 @import '../../../style/theme/color';
 @import '../../../style/theme/corner';
 @import '../../../style/core/font';
+
 .devui-tags {
   &-input {
     flex: 1;
@@ -11,6 +12,7 @@
     background-color: $devui-base-bg;
     transition: border-color 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
   }
+
   &-box {
     width: 100%;
     overflow: auto;
@@ -20,6 +22,7 @@
     align-items: center;
     flex-wrap: wrap;
   }
+
   &-placeholder {
     font-size: $devui-font-size;
     line-height: 22px;

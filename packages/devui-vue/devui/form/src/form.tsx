@@ -41,7 +41,7 @@ export default defineComponent({
       },
       rules: props.rules,
       columnsClass: props.columnsClass,
-      messageShowType: "popover"
+      messageShowType: 'popover'
     });
 
     const onSubmit = (e) => {

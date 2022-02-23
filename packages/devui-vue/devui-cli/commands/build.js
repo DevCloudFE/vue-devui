@@ -50,7 +50,7 @@ const buildAll = async () => {
         rollupOptions,
         lib: {
           entry: path.resolve(entryDir, 'vue-devui.ts'),
-          name: 'vue-devui',
+          name: 'VueDevui',
           fileName: 'vue-devui',
           formats: ['es', 'umd']
         },

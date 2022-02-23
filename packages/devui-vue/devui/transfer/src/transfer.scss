@@ -69,10 +69,11 @@ $devui-transfer-body-list-item-height: 32px;
           }
         }
 
-        &-drag{
+        &-drag {
           width: 100%;
           display: flex;
           align-items: center;
+
           &__icon {
             padding: 0 4px;
             visibility: hidden;
@@ -81,7 +82,8 @@ $devui-transfer-body-list-item-height: 32px;
             align-items: center;
           }
         }
-        &-drag:hover .devui-transfer-panel-body-list-drag__icon{
+
+        &-drag:hover .devui-transfer-panel-body-list-drag__icon {
           visibility: visible;
         }
 
@@ -99,7 +101,8 @@ $devui-transfer-body-list-item-height: 32px;
           color: $devui-disabled-text;
         }
       }
-      &-nodrag{
+
+      &-nodrag {
         padding: 0 20px;
       }
     }
@@ -113,6 +116,7 @@ $devui-transfer-body-list-item-height: 32px;
 
       &-group {
         width: 36px;
+
         &-left .devui-btn,
         &-right .devui-btn {
           width: 36px;
@@ -128,16 +132,20 @@ $devui-transfer-body-list-item-height: 32px;
       }
     }
   }
-  &-drag-dragging{
+
+  &-drag-dragging {
     background-color: $devui-brand-foil;
   }
-  &-drag-over{
+
+  &-drag-over {
     background-color: $devui-brand-hover;
   }
 }
-.devui-transfer–drag-over-top{
-  border-top-color: $devui-brand-active;  
+
+.devui-transfer–drag-over-top {
+  border-top-color: $devui-brand-active;
 }
+
 .devui-transfer–drag-over-bottom {
   border-bottom-color: $devui-brand-active;
 }

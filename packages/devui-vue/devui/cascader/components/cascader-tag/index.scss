@@ -1,6 +1,7 @@
 @import '../../../style/theme/color';
 @import '../../../style/theme/corner';
 @import '../../../style/core/font';
+
 .devui-tag {
   margin: 2px 4px 2px 0;
   display: inline-block;
@@ -12,6 +13,7 @@
   border-radius: $devui-border-radius;
   border-color: inherit;
   border: 0 solid;
+
   span {
     min-height: 20px;
     line-height: 20px;
@@ -20,11 +22,12 @@
     position: relative;
     cursor: default;
   }
+
   &__close {
     margin-left: 12px;
-    font-size:  $devui-font-size;
+    font-size: $devui-font-size;
     cursor: pointer;
-    color: #fff;
+    color: #ffffff;
     width: 14px;
     height: 14px;
     line-height: 14px;
@@ -32,6 +35,7 @@
     border-radius: 50%;
     display: inline-block;
     text-align: center;
+
     &:hover {
       background-color: $devui-brand;
     }

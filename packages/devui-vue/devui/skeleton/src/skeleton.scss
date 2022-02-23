@@ -1,4 +1,4 @@
-@import "../../styles-var/devui-var.scss";
+@import '../../styles-var/devui-var.scss';
 
 .devui-skeleton {
   display: flex;
@@ -46,7 +46,6 @@
   }
 }
 
-
 @keyframes skeletonLoading {
   to {
     background-position-x: -20%;
@@ -56,7 +55,8 @@
 .devui-skeleton__animated > .devui-skeleton__group > .devui-skeleton__title,
 .devui-skeleton__animated > .devui-skeleton__group > div > .devui-skeleton__item,
 .devui-skeleton__animated > .devui-skeleton__avatar > .avatar {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       100deg,
       rgba(255, 255, 255, 0) 40%,
       rgba(255, 255, 255, 0.5) 50%,
