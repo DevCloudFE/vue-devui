@@ -4,6 +4,7 @@ import { camelCase, upperFirst } from 'lodash-es'
 import { extname, relative, resolve } from 'path'
 import { coreFileName } from '../templates/component/utils'
 import { cliConfig } from './config'
+import { PKG_NAME } from './constant'
 
 export function bigCamelCase(str: string) {
   return upperFirst(camelCase(str))
@@ -35,7 +36,7 @@ export function dynamicImport(path: string) {
     outfile: tempPath,
     platform: 'node',
     format: 'cjs',
-    external: ['esbuild', 'dev-cli']
+    external: ['esbuild', PKG_NAME]
   })
 
   const config = require(relativePath).default ?? {}

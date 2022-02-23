@@ -58,7 +58,7 @@ export default function genLibEntryTemplate(componentsMeta: ComponentMeta[]) {
   return `\
 import type { App } from 'vue'
 
-${imports.join('\n')}
+${imports.join('\n') || '// Not find components.'}
 
 const installs = [
 \t${installs.join(',\n\t')}
