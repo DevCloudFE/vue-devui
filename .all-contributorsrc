@@ -58,6 +58,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "iel-h",
+      "name": "iel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/53589602?v=4",
+      "profile": "https://github.com/iel-h",
+      "contributions": [
+        "maintenance",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
