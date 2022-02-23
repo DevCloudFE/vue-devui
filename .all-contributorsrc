@@ -68,6 +68,15 @@
         "maintenance",
         "code"
       ]
+    },
+    {
+      "login": "chenxi24",
+      "name": "chenxi24",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40349890?v=4",
+      "profile": "https://github.com/chenxi24",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
