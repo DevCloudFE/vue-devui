@@ -34,8 +34,8 @@
 :::demo
 ```vue
 <template>
-  <d-button variant="primary" bsPosition="left">Left</d-button>
-  <d-button variant="common" bsPosition="right">Right</d-button>
+  <d-button variant="primary" position="left" style="margin-right: 8px">Left</d-button>
+  <d-button variant="common" position="right">Right</d-button>
 </template>
 ```
 :::
