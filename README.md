@@ -165,6 +165,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/iel-h"><img src="https://avatars.githubusercontent.com/u/53589602?v=4?s=100" width="100px;" alt=""/><br /><sub><b>iel</b></sub></a><br /><a href="#maintenance-iel-h" title="Maintenance">🚧</a> <a href="https://github.com/DevCloudFE/vue-devui/commits?author=iel-h" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/chenxi24"><img src="https://avatars.githubusercontent.com/u/40349890?v=4?s=100" width="100px;" alt=""/><br /><sub><b>chenxi24</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=chenxi24" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/asdlml6"><img src="https://avatars.githubusercontent.com/u/61737780?v=4?s=100" width="100px;" alt=""/><br /><sub><b>小九九</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=asdlml6" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
