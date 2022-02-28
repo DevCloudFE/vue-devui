@@ -95,6 +95,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ForeseeBear",
+      "name": "Echo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15258339?v=4",
+      "profile": "https://github.com/ForeseeBear",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
