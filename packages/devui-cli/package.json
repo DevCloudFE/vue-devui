@@ -11,7 +11,7 @@
   "homepage": "https://github.com/DevCloudFE/vue-devui",
   "license": "MIT",
   "main": "lib/bin.js",
-  "types": "types/bin.d.ts",
+  "types": "types/config.d.ts",
   "bin": {
     "devui": "lib/bin.js"
   },
@@ -25,9 +25,8 @@
   },
   "scripts": {
     "dev": "esbuild --bundle ./src/bin.ts --format=cjs --platform=node --outfile=./lib/bin.js --external:esbuild --minify-whitespace --watch",
-    "build": "npm run build:lib & npm run build:dts",
+    "build": "run-p build:lib",
     "build:lib": "rimraf ./lib && esbuild --bundle ./src/bin.ts --format=cjs --platform=node --outfile=./lib/bin.js --external:esbuild --minify-whitespace",
-    "build:dts": "rimraf ./types && tsc -p ./tsconfig.json",
     "cli": "node ./lib/bin.js"
   },
   "devDependencies": {
@@ -41,6 +40,7 @@
     "kolorist": "^1.5.0",
     "lodash-es": "^4.17.21",
     "prompts": "^2.4.2",
+    "rimraf": "^3.0.2",
     "typescript": "^4.4.4"
   },
   "dependencies": {

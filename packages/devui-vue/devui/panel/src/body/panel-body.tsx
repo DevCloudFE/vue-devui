@@ -6,8 +6,8 @@ export default defineComponent({
     name: 'DPanelBody',
     props:PanelProps,
     setup(props,ctx){
-        let animationName = inject('showAnimation') as Ref<any>;
-        let hasLeftPadding = inject('hasLeftPadding') as Ref<any>;
+        const animationName = inject('showAnimation') as Ref<any>;
+        const hasLeftPadding = inject('hasLeftPadding') as Ref<any>;
         const keys = Object.keys(Store.state());
         const key = keys.pop();
         const isCollapsed = Store.state();

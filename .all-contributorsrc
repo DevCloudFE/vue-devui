@@ -49,6 +49,61 @@
         "maintenance",
         "code"
       ]
+    },
+    {
+      "login": "sufuwang",
+      "name": "王凯",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46395105?v=4",
+      "profile": "https://github.com/sufuwang",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "iel-h",
+      "name": "iel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/53589602?v=4",
+      "profile": "https://github.com/iel-h",
+      "contributions": [
+        "maintenance",
+        "code"
+      ]
+    },
+    {
+      "login": "chenxi24",
+      "name": "chenxi24",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40349890?v=4",
+      "profile": "https://github.com/chenxi24",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "asdlml6",
+      "name": "小九九",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61737780?v=4",
+      "profile": "https://github.com/asdlml6",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "AlanLee97",
+      "name": "AlanLee",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42601044?v=4",
+      "profile": "http://blog.alanlee.top",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ForeseeBear",
+      "name": "Echo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15258339?v=4",
+      "profile": "https://github.com/ForeseeBear",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

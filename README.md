@@ -25,21 +25,13 @@ DevUI 官方网站：[https://devui.design](https://devui.design)
 ### 1 安装依赖
 
 ```
-yarn(推荐)
-
-or
-
-npm i
+pnpm i
 ```
 
 ### 2 启动
 
 ```
-yarn dev(推荐)
-
-or
-
-npm run dev
+pnpm dev
 ```
 
 ### 3 访问
@@ -49,11 +41,7 @@ npm run dev
 ### 4 生产打包
 
 ```
-yarn build(推荐)
-
-or
-
-npm run build
+pnpm build
 ```
 
 ## 使用 Vue DevUI
@@ -61,7 +49,7 @@ npm run build
 ### 1. 安装
 
 ```
-yarn add vue-devui
+pnpm i vue-devui
 ```
 
 ### 2. 全量引入
@@ -143,11 +131,7 @@ export default defineConfig({
 #### 安装
 
 ```
-yarn add @devui-design/icons(推荐)
-
-or
-
-npm i @devui-design/icons
+pnpm i @devui-design/icons
 ```
 
 #### 引入
@@ -177,6 +161,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/TinsFox"><img src="https://avatars.githubusercontent.com/u/33956589?v=4?s=100" width="100px;" alt=""/><br /><sub><b>TinsFox</b></sub></a><br /><a href="#maintenance-TinsFox" title="Maintenance">🚧</a> <a href="#infra-TinsFox" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     <td align="center"><a href="https://github.com/lnzhangsong"><img src="https://avatars.githubusercontent.com/u/15092594?v=4?s=100" width="100px;" alt=""/><br /><sub><b>nif</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=lnzhangsong" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Zcating"><img src="https://avatars.githubusercontent.com/u/13329558?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Zcating</b></sub></a><br /><a href="#maintenance-Zcating" title="Maintenance">🚧</a> <a href="https://github.com/DevCloudFE/vue-devui/commits?author=Zcating" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/sufuwang"><img src="https://avatars.githubusercontent.com/u/46395105?v=4?s=100" width="100px;" alt=""/><br /><sub><b>王凯</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=sufuwang" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/iel-h"><img src="https://avatars.githubusercontent.com/u/53589602?v=4?s=100" width="100px;" alt=""/><br /><sub><b>iel</b></sub></a><br /><a href="#maintenance-iel-h" title="Maintenance">🚧</a> <a href="https://github.com/DevCloudFE/vue-devui/commits?author=iel-h" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/chenxi24"><img src="https://avatars.githubusercontent.com/u/40349890?v=4?s=100" width="100px;" alt=""/><br /><sub><b>chenxi24</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=chenxi24" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/asdlml6"><img src="https://avatars.githubusercontent.com/u/61737780?v=4?s=100" width="100px;" alt=""/><br /><sub><b>小九九</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=asdlml6" title="Code">💻</a></td>
+    <td align="center"><a href="http://blog.alanlee.top"><img src="https://avatars.githubusercontent.com/u/42601044?v=4?s=100" width="100px;" alt=""/><br /><sub><b>AlanLee</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=AlanLee97" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/ForeseeBear"><img src="https://avatars.githubusercontent.com/u/15258339?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Echo</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=ForeseeBear" title="Code">💻</a></td>
   </tr>
 </table>
 

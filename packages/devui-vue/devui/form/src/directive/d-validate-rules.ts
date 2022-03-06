@@ -1,6 +1,6 @@
 import AsyncValidator, { RuleItem } from 'async-validator';
 import { VNode, DirectiveBinding } from 'vue';
-import { debounce } from 'lodash-es';
+import { debounce } from 'lodash';
 import { EventBus, isObject, hasKey } from '../util';
 import './style.scss';
 
@@ -213,7 +213,7 @@ function handleErrorStrategyPass(el: HTMLElement): void {
 }
 
 function getFormControlUID(el: HTMLElement): string {
-  if(el.tagName.toLocaleLowerCase() === "body") return "";
+  if(el.tagName.toLocaleLowerCase() === 'body') return '';
   let uid = ''
   if(el.parentElement.id.startsWith('dfc-')) {
     return el.parentElement.id;
@@ -222,7 +222,7 @@ function getFormControlUID(el: HTMLElement): string {
   }
 }
 
-function handleValidateError({el, tipEl, message = "", isFormTag, messageShowType, dfcUID, popPosition = 'right-bottom', updateOn}: Partial<ValidateFnParam>): void {
+function handleValidateError({el, tipEl, message = '', isFormTag, messageShowType, dfcUID, popPosition = 'right-bottom', updateOn}: Partial<ValidateFnParam>): void {
   // 如果该指令用在form标签上，这里做特殊处理
   if(isFormTag && messageShowType === MessageShowTypeEnum.toast) {
     // todo：待替换为toast
@@ -236,7 +236,7 @@ function handleValidateError({el, tipEl, message = "", isFormTag, messageShowTyp
   
   // messageShowType为popover时，设置popover
   if(MessageShowTypeEnum.popover === messageShowType) {
-    EventBus.emit("showPopoverErrorMessage", {showPopover: true, message, uid: dfcUID, popPosition, updateOn} as ShowPopoverErrorMessageEventData);
+    EventBus.emit('showPopoverErrorMessage', {showPopover: true, message, uid: dfcUID, popPosition, updateOn} as ShowPopoverErrorMessageEventData);
     return;
   }
 
@@ -311,7 +311,7 @@ export default {
 
     if(refName) {
       // 判断d-form是否传递了messageShowType属性
-      messageShowType = binding.instance[refName]["messageShowType"] ?? "popover";
+      messageShowType = binding.instance[refName]['messageShowType'] ?? 'popover';
     }
 
     // errorStrategy可配置在options对象中
@@ -410,7 +410,7 @@ export default {
     const htmlEventValidateHandler = (e) => {
       const modelValue = e.target.value;
       if(messageShowType === MessageShowTypeEnum.popover) {
-        EventBus.emit("showPopoverErrorMessage", {showPopover: false, message: "", uid: dfcUID, popPosition, updateOn} as ShowPopoverErrorMessageEventData);
+        EventBus.emit('showPopoverErrorMessage', {showPopover: false, message: '', uid: dfcUID, popPosition, updateOn} as ShowPopoverErrorMessageEventData);
       }
       validateFn({validator, modelValue, el, tipEl, isFormTag: false, messageShowType, dfcUID, popPosition, updateOn});
     }
@@ -421,7 +421,7 @@ export default {
     // 如果校验时机为change，则在focus时关闭popover
     if(messageShowType === MessageShowTypeEnum.popover && updateOn === UpdateOnEnum.change) {
       vnode.children[0].el.addEventListener('focus', () => {
-        EventBus.emit("showPopoverErrorMessage", {showPopover: false, uid: dfcUID, updateOn} as ShowPopoverErrorMessageEventData);
+        EventBus.emit('showPopoverErrorMessage', {showPopover: false, uid: dfcUID, updateOn} as ShowPopoverErrorMessageEventData);
       }); 
     }
 

@@ -15,13 +15,27 @@ jobs:
       matrix:
         node-version: [16.x]
 
+    name: "Build: node-${{ matrix.node-version }}"
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
-    - run: yarn
-    - run: yarn build
-    # - run: yarn test
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install deps
+        run: pnpm i
+    
+      - name: Build site
+        run: pnpm build
+
+      # - name: Test vue-devui
+      #   run: yarn test

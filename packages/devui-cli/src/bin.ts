@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import { Command } from 'commander'
+import type { CliConfig } from '../types/config'
 import baseAction from './commands/base'
 import createAction, { validateCreateType } from './commands/create'
-import { CliConfig, detectCliConfig } from './shared/config'
+import { detectCliConfig } from './shared/config'
 import { VERSION } from './shared/constant'
 import {
   DEFAULT_CLI_CONFIG_FILE_NAME

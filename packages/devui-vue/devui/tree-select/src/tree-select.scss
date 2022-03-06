@@ -48,15 +48,16 @@ $tree-select-item-font-size: 16px;
   outline: none;
   background-color: $devui-base-bg;
   overflow: auto;
+
   &:empty::before {
-    color:lightgrey;  
-    content:attr(placeholder);
+    color: lightgrey;
+    content: attr(placeholder);
     vertical-align: middle;
   }
 }
 
 .devui-tree-select-value {
-  display: inline-block; 
+  display: inline-block;
   height: 80%;
   vertical-align: middle;
 }
@@ -104,11 +105,12 @@ $tree-select-item-font-size: 16px;
 
 .devui-tree-select-clearable {
   position: relative;
+
   &:hover {
     .devui-tree-select-clear {
       display: inline-flex;
     }
-  
+
     .devui-tree-select-arrow {
       display: none;
     }
@@ -139,4 +141,3 @@ $tree-select-item-font-size: 16px;
     color: $devui-icon-fill-active;
   }
 }
-

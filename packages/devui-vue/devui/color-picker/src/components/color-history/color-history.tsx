@@ -4,7 +4,7 @@ import { Icon } from '../../../../icon'
 import './color-history.scss'
 import { fromHexa } from '../../utils/color-utils'
 import { provideColorOptions, ColorPickerColor } from '../../utils/color-utils-types'
-import { debounce } from 'lodash-es'
+import { debounce } from 'lodash'
 
 const STORAGE_KEY = 'STORAGE_COLOR_PICKER_HISTORY_KEY'
 const MAX_HISOTRY_COUNT = 8
@@ -15,7 +15,7 @@ const MAX_HISOTRY_COUNT = 8
  * @param params
  * @returns
  */
-function useStore<T>(v: T, { storage }: { storage?: boolean } = {}): Ref<T | UnwrapRef<T>> {
+function useStore<T>(v: T, { storage }: { storage?: boolean; } = {}): Ref<T | UnwrapRef<T>> {
   // 获取默认值
   const getDefaultValue = (): T => {
     if (storage) {
