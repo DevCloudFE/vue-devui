@@ -5,6 +5,8 @@ import DrawerHeader from './components/drawer-header'
 import DrawerContainer from './components/drawer-container'
 import DrawerBody from './components/drawer-body'
 
+import './drawer.scss'
+
 export default defineComponent({
   name: 'DDrawer',
   props: drawerProps,
@@ -12,10 +14,10 @@ export default defineComponent({
   setup(props: DrawerProps, { emit, slots }) {
     const {
       width, visible, zIndex, isCover, escKeyCloseable, position,
-      backdropCloseable, destroyOnHide
+      backdropCloseable, destroyOnHide, showAnimation
     } = toRefs(props)
     const isFullScreen = ref(false)
-    
+
     const fullscreen = () => {
       isFullScreen.value = !isFullScreen.value
     }
@@ -66,6 +68,7 @@ export default defineComponent({
     provide('isFullScreen', isFullScreen)
     provide('backdropCloseable', backdropCloseable)
     provide('destroyOnHide', destroyOnHide)
+    provide('showAnimation', showAnimation)
 
     onUnmounted(() => {
       document.removeEventListener('keyup', escCloseDrawer)
@@ -81,16 +84,15 @@ export default defineComponent({
   },
   render() {
     const { fullscreen, closeDrawer, visible, destroyOnHide } = this;
+
     if (destroyOnHide.value && !visible) {
       return null
     }
 
-    const visibleVal = visible ? 'visible' : 'hidden'
     return (
       <Teleport to="body">
-        <DrawerBody style= {{ visibility : visibleVal }}>
-          {/* BUG: 已使用作用域插槽解决 此处对应的 DEMO 使用了 **双向绑定** 导致可以关闭【一种关闭了的'假象'】。*/}
-          {this.slots.header ? this.slots.header({fullscreen, closeDrawer}) : 
+        <DrawerBody v-show={ visible }>
+          {this.slots.header ? this.slots.header({fullscreen, closeDrawer}) :
             <DrawerHeader onToggleFullScreen={fullscreen} onClose={closeDrawer} />
           }
           {this.slots.content ? this.slots.content() : <DrawerContainer />}

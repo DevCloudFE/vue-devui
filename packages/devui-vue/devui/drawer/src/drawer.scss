@@ -1,1 +1,41 @@
+.devui-drawer{
+  &-left-enter-active {
+    animation: left-inout 0.3s;
+  }
 
+  &-left-leave-active {
+    animation: left-inout 0.3s reverse;
+  }
+
+  &-right-enter-active {
+    animation: right-inout 0.3s;
+  }
+
+  &-right-leave-active {
+    animation: right-inout 0.3s reverse;
+  }
+}
+
+@keyframes right-inout {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes left-inout {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
