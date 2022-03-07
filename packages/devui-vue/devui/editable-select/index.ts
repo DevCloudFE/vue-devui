@@ -1,17 +1,17 @@
-import type { App } from 'vue'
-import EditableSelect from './src/editable-select'
+import type { App } from 'vue';
+import EditableSelect from './src/editable-select';
 
-EditableSelect.install = function(app: App): void {
-  app.component(EditableSelect.name, EditableSelect)
-}
+EditableSelect.install = function (app: App): void {
+  app.component(EditableSelect.name, EditableSelect);
+};
 
-export { EditableSelect }
+export { EditableSelect };
 
 export default {
   title: 'EditableSelect 可输入下拉选择框',
   category: '数据录入',
-  status: undefined, // TODO: 组件若开发完成则填入"100%"，并删除该注释
+  status: '100%',
   install(app: App): void {
-        app.use(EditableSelect as any)
+    app.use(EditableSelect as any);
   }
-}
+};
