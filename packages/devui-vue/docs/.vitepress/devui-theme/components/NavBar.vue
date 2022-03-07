@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import Theme from '@devui/theme/theme'
+import { ThemeServiceInit, devuiLightTheme, devuiDarkTheme } from 'devui-theme'
 import NavBarTitle from './NavBarTitle.vue'
 import NavLinks from './NavLinks.vue'
 import ToggleSideBarButton from './ToggleSideBarButton.vue'
@@ -11,7 +11,9 @@ import EnLang from './icons/EnLang.vue'
 
 const defaultDarkMode = !!localStorage.getItem('dark_mode')
 const darkMode = ref(defaultDarkMode)
-const theme = new Theme(getThemeByDarkMode(darkMode.value))
+const themeService = ThemeServiceInit({
+  defaultTheme: getThemeByDarkMode(darkMode.value)
+}, 'defaultTheme')
 
 const defaultLanguage = ref(localStorage.getItem('preferred_lang'))
 function useTranslation(target) {
@@ -25,14 +27,14 @@ function useTranslation(target) {
 }
 
 function getThemeByDarkMode(target) {
-  return target ? 'dark' : 'light'
+  return target ? devuiDarkTheme : devuiLightTheme
 }
 
 watch(
   () => darkMode.value,
   (darkMode, prevDarkMode) => {
     localStorage.setItem('dark_mode', darkMode ? true : '')
-    theme.applyTheme(getThemeByDarkMode(darkMode))
+    themeService.applyTheme(getThemeByDarkMode(darkMode))
   }
 )
 

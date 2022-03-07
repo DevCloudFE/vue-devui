@@ -25,7 +25,7 @@ Used when it is necessary to display statistical data with description
         :value="999999">
       </d-statistic>
     </d-col>
-  </d-cow>
+  </d-row>
 </template>
 ```
 

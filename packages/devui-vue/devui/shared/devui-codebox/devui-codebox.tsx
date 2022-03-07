@@ -10,7 +10,7 @@ import DevuiHighlight from '../devui-highlight/devui-highlight';
 import './devui-codebox.scss';
 
 export default defineComponent({
-  name: 'd-codebox',
+  name: 'DCodebox',
   props: {
     id: String,
     sourceData: {
@@ -22,7 +22,7 @@ export default defineComponent({
     const sourceData  = props.sourceData;
     const expanded = ref(false);
     const _copied = ref(false);
-    let codeTabID = ref('TSX');
+    const codeTabID = ref('TSX');
     let componentCode: Array<any>;
 
     const toggleCode = () => {

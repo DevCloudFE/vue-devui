@@ -1,5 +1,6 @@
 @import '../../style/mixins/index';
 @import '../../style/theme/color';
+
 .devui-auto-complete,
 .devui-auto-complete-menu {
   .devui-dropdown-menu {
@@ -7,7 +8,8 @@
     top: 0 !important;
   }
 }
-.devui-auto-complete{
+
+.devui-auto-complete {
   .active {
     background: $devui-list-item-hover-bg;
   }

@@ -1,7 +1,7 @@
-import { defineComponent, PropType, ref, computed } from "vue";
-import { CustomFilterSlot, FilterConfig, FilterResults } from "../../column/column.type";
+import { defineComponent, PropType, ref, computed } from 'vue';
+import { CustomFilterSlot, FilterConfig, FilterResults } from '../../column/column.type';
 import { Dropdown } from '../../../../dropdown';
-import { Checkbox } from "../../../../checkbox";
+import { Checkbox } from '../../../../checkbox';
 
 import './filter.scss';
 
@@ -76,7 +76,7 @@ export const Filter = defineComponent({
     return () => (
       <>
         <span ref={filterOrigin}>
-          <i class={["filter-icon", { 'filter-icon-active': true }]}>
+          <i class={['filter-icon', { 'filter-icon-active': true }]}>
             <svg
               width="16px"
               height="16px"
@@ -94,7 +94,7 @@ export const Filter = defineComponent({
           </i>
         </span>
         <Dropdown origin={filterOrigin.value} closeScope="blank">
-          {props.customTemplate?.({ value: props.modelValue, onChange: props["onUpdate:modelValue"] }) ?? dropdownContent.value()}
+          {props.customTemplate?.({ value: props.modelValue, onChange: props['onUpdate:modelValue'] }) ?? dropdownContent.value()}
         </Dropdown>
       </>
     )

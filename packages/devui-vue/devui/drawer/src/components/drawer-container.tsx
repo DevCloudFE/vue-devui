@@ -13,7 +13,6 @@ export default defineComponent({
     if (destroyOnHide.value && !visible) {
       return null
     }
-    const visibleVal = this.visible ? 'visible' : 'hidden'
-    return <div style={{ visibility : visibleVal }}>内容区域</div>
+    return <div>内容区域</div>
   }
 })

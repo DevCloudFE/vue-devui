@@ -25,7 +25,7 @@ export default defineComponent({
 
     const thAttrs = computed(() => isFixedLeft.value ? ({
       class: 'devui-sticky-cell left',
-      style: "left:0;"
+      style: 'left:0;'
     }) : null);
     const checkbox = computed(() => table.props.checkable ? (
       <th {...thAttrs.value}>

@@ -60,7 +60,6 @@
     }
   }
 
-
   .devui-control-content-wrapper {
     .devui-popover-wrapper {
       position: absolute;
@@ -69,7 +68,7 @@
       left: 0;
       top: 0;
       z-index: 9;
-  
+
       & > div {
         width: inherit;
         height: 100%;
@@ -78,13 +77,12 @@
   }
 
   .with-popover {
-    position: relative; 
+    position: relative;
+
     & > div {
       z-index: 10;
     }
   }
-
-
 
   .has-feedback {
     display: flex;

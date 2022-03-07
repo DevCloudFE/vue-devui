@@ -24,9 +24,8 @@ export const directiveName = (name: string) => bigCamelCase(name + 'Directive')
 
 export async function getComponentMetaFiles() {
   return glob('./**/meta.json', {
-    cwd: cliConfig.cwd,
-    absolute: true,
-    deep: 2
+    cwd: cliConfig.componentRootDir,
+    absolute: true
   })
 }
 

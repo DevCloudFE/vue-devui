@@ -29,34 +29,34 @@
   />
 </template>
 <script>
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 export default {
   setup() {
-    let isDrawerShow = ref(false)
-    let btnName = ref('close')
-    let drawerWidth = ref('15vw')
-    let isCover = ref(false)
-    let backdropCloseable = ref(true)
+    let isDrawerShow = ref(false);
+    let btnName = ref('close');
+    let drawerWidth = ref('15vw');
+    let isCover = ref(true);
+    let backdropCloseable = ref(true);
 
     const drawerShow = () => {
-      isDrawerShow.value = true
-      btnName.value = 'open'
-    }
+      isDrawerShow.value = true;
+      btnName.value = 'open';
+    };
 
     const drawerClose = () => {
-      btnName.value = 'close'
-    }
+      btnName.value = 'close';
+    };
 
     const drawerAfterOpened = () => {
-      console.log('open')
-    }
+      console.log('open');
+    };
 
     const beforeHidden = () => {
       return new Promise((resolve) => {
-        resolve(false)
-      })
-    }
+        resolve(false);
+      });
+    };
 
     return {
       isDrawerShow,
@@ -68,9 +68,9 @@ export default {
       isCover,
       backdropCloseable,
       beforeHidden
-    }
+    };
   }
-}
+};
 </script>
 ```
 
@@ -97,22 +97,22 @@ export default {
   </d-drawer>
 </template>
 <script>
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 export default {
   setup() {
-    let isDrawerShow = ref(false)
+    let isDrawerShow = ref(false);
 
     const drawerShow = () => {
-      isDrawerShow.value = !isDrawerShow.value
-    }
+      isDrawerShow.value = !isDrawerShow.value;
+    };
 
     return {
       isDrawerShow,
       drawerShow
-    }
+    };
   }
-}
+};
 </script>
 ```
 
@@ -127,42 +127,41 @@ export default {
   <d-button @click="open()">click me</d-button>
 </template>
 <script>
-import { defineComponent, ref, h } from 'vue'
+import { defineComponent, ref, h } from 'vue';
 export default defineComponent({
   setup(props, ctx) {
-    const drawerOne = ref(null)
-    const drawerTwo = ref(null)
+    const drawerOne = ref(null);
+    const drawerTwo = ref(null);
     function open() {
       drawerTwo.value = this.$drawerService.create(
         {
           width: '50%',
-          data: {
-            'update:visible': true
-          },
+          visible: true,
           content: () => {
             return h(
               'div',
               {
                 onClick: () => {
-                  drawerTwo.value.destroy()
+                  drawerTwo.value.destroy();
                 }
               },
               'destroy Two'
-            )
+            );
           }
         },
         drawerTwo.value
-      )
-      drawerTwo.value.show()
+      );
+      drawerTwo.value.show();
       drawerOne.value = this.$drawerService.create(
         {
+          visible: true,
           content: () => {
             return [
               h(
                 'div',
                 {
                   onClick: () => {
-                    drawerOne.value.hide()
+                    drawerOne.value.hide();
                   }
                 },
                 'hide One'
@@ -171,23 +170,23 @@ export default defineComponent({
                 'div',
                 {
                   onClick: () => {
-                    drawerTwo.value.destroy()
+                    drawerTwo.value.destroy();
                   }
                 },
                 'destroy Two'
               )
-            ]
+            ];
           }
         },
         drawerOne.value
-      )
-      drawerOne.value.show()
+      );
+      drawerOne.value.show();
     }
     return {
       open
-    }
+    };
   }
-})
+});
 </script>
 ```
 
@@ -208,6 +207,7 @@ export default defineComponent({
 |   beforeHidden    | `Function \| Promise` |   --    | 可选，关闭窗口之前的回调                    | [基本用法](#基本用法) |
 |      onClose      |      `Function`       |   --    | 可选，关闭 drawer 时候调用                  | [基本用法](#基本用法) |
 |   onAfterOpened   |      `Function`       |   --    | 可选，打开 drawer 后时候调用                | [基本用法](#基本用法) |
+|   showAnimation   |       `boolean`       |  true   | 可选，是否开启动效                          | [基本用法](#基本用法) |
 
 ### 插槽
 

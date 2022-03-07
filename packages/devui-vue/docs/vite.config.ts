@@ -6,7 +6,7 @@ import svgLoader from 'vite-svg-loader'
 export default defineConfig({
   resolve: {
     alias: [
-      { find: '@devui', replacement: path.resolve(__dirname, '../devui') },
+      { find: '@devui', replacement: path.resolve(__dirname, '../devui') }
     ]
   },
   plugins: [
@@ -14,7 +14,12 @@ export default defineConfig({
     svgLoader(),
   ],
   optimizeDeps:{
-    exclude: ['vue','@vue/runtime-core','lodash','lodash-es','mitt','async-validator'],
+    exclude: ['lodash-es','mitt','async-validator', 'css-vars-ponyfill', 'rxjs'],
     include: ['lodash']
   },
+  server: {
+    fs: {
+      strict: false
+    }
+  }
 })

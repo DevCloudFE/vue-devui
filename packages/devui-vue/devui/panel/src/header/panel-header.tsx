@@ -14,7 +14,7 @@ export default defineComponent({
         // 最好cursor是default 而不是 pointer；
         // pointer一般用于可点击的
         // 用changeFlag
-        let changeFlag = ref();
+        const changeFlag = ref();
         let header = null;
 
 

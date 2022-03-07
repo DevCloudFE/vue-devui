@@ -1,4 +1,4 @@
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent } from 'vue';
 import { navSpriteProps } from './nav-sprite-types';
 
 export default defineComponent({

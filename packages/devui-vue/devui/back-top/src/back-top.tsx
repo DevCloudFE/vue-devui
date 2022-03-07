@@ -13,7 +13,7 @@ export default defineComponent({
     const backTopRef = ref(null)
 
     const position = usePosition(props)
-    let isVisible = useVisibility(props, backTopRef)
+    const isVisible = useVisibility(props, backTopRef)
 
     const scrollToTop = () => {
       // toTop方法暂定
