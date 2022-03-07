@@ -86,9 +86,6 @@ importers:
       vite: 2.8.4
       vue-tsc: 0.29.8_typescript@4.5.5
 
-  packages/devui-theme/dist:
-    specifiers: {}
-
   packages/devui-vue:
     specifiers:
       '@babel/parser': ^7.15.5
