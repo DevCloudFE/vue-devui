@@ -1,12 +1,12 @@
 import { watch, reactive, onBeforeMount, ToRefs, Slots, h } from 'vue';
-import { Column, TableColumnPropsTypes } from './column.type'
+import { Column, TableColumnPropsTypes } from './column.type';
 import { formatWidth, formatMinWidth } from '../utils';
 
+function defaultRenderHeader(this: Column) {
+  return h('span', { class: 'title' }, this.header);
+}
 
-export function createColumn<T extends Record<string, unknown> = any>(
-  props: ToRefs<TableColumnPropsTypes>,
-  templates: Slots
-): Column<T> {
+export function createColumn<T extends Record<string, unknown> = any>(props: ToRefs<TableColumnPropsTypes>, templates: Slots): Column<T> {
   const {
     field,
     header,
@@ -20,43 +20,63 @@ export function createColumn<T extends Record<string, unknown> = any>(
     filterMultiple,
     order,
     fixedLeft,
-    fixedRight
+    fixedRight,
   } = props;
   const column: Column = reactive({});
 
-  watch([field, header, order], ([field, header, order]) => {
-    column.field = field;
-    column.header = header;
-    column.order = order;
-  }, { immediate: true });
+  function defaultRenderCell<K extends Record<string, unknown>>(rowData: K, index: number) {
+    const value = rowData[this.field];
+    if (templates.default) {
+      return templates.default(rowData);
+    }
+    if (this.formatter) {
+      return this.formatter(rowData, value, index);
+    }
+
+    return value?.toString?.() ?? '';
+  }
+
+  watch(
+    [field, header, order],
+    ([fieldVal, headerVal, orderVal]) => {
+      column.field = fieldVal;
+      column.header = headerVal;
+      column.order = orderVal;
+    },
+    { immediate: true }
+  );
 
   // 排序功能
-  watch([sortable, compareFn], ([sortable, compareFn]) => {
-    column.sortable = sortable;
-    column.compareFn = compareFn;
-  })
+  watch([sortable, compareFn], ([sortableVal, compareFnVal]) => {
+    column.sortable = sortableVal;
+    column.compareFn = compareFnVal;
+  });
 
   // 过滤功能
-  watch([
-    filterable,
-    filterList,
-    filterMultiple,
-  ], ([filterable, filterList, filterMultiple]) => {
-    column.filterable = filterable;
-    column.filterMultiple = filterMultiple;
-    column.filterList = filterList;
-  }, { immediate: true })
+  watch(
+    [filterable, filterList, filterMultiple],
+    ([filterableVal, filterListVal, filterMultipleVal]) => {
+      column.filterable = filterableVal;
+      column.filterMultiple = filterMultipleVal;
+      column.filterList = filterListVal;
+    },
+    { immediate: true }
+  );
 
   // 固定左右功能
-  watch([fixedLeft, fixedRight], ([left, right]) => {
-    column.fixedLeft = left;
-    column.fixedRight = right;
-  }, { immediate: true });
+  watch(
+    [fixedLeft, fixedRight],
+    ([left, right]) => {
+      column.fixedLeft = left;
+      column.fixedRight = right;
+    },
+    { immediate: true }
+  );
 
   // 宽度
-  watch([width, minWidth], ([width, minWidth]) => {
-    column.width = formatWidth(width);
-    column.minWidth = formatMinWidth(minWidth);
+  watch([width, minWidth], ([widthVal, minWidthVal]) => {
+    column.width = formatWidth(widthVal);
+    column.minWidth = formatMinWidth(minWidthVal);
     column.realWidth = column.width || column.minWidth;
   });
 
@@ -70,16 +90,4 @@ export function createColumn<T extends Record<string, unknown> = any>(
   });
 
   return column;
-}
-
-function defaultRenderHeader(this: Column) {
-  return h('span', { class: 'title' }, this.header);
-}
-
-function defaultRenderCell<T extends Record<string, unknown>>(this: Column, rowData: T, index: number) {
-  const value = rowData[this.field];
-  if (this.formatter) {
-    return this.formatter(rowData, value, index);
-  }
-  return value?.toString?.() ?? '';
 }

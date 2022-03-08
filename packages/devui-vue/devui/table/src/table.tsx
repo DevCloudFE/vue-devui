@@ -2,12 +2,9 @@ import { provide, defineComponent, getCurrentInstance, computed, toRef } from 'v
 import { Table, TableProps, TablePropsTypes, TABLE_TOKEN } from './table.type';
 import { useTable } from './use-table';
 import { createStore } from './store';
-import ColGroup from './colgroup/colgroup';
-import TableHeader from './header/header';
-import TableBody from './body/body';
-
+import FixHeader from './fix-header';
+import NormalHeader from './normal-header';
 import './table.scss';
-
 
 export default defineComponent({
   name: 'DTable',
@@ -17,52 +14,25 @@ export default defineComponent({
     const store = createStore(toRef(props, 'data'));
     table.store = store;
     provide(TABLE_TOKEN, table);
-
     const { classes, style } = useTable(props);
-
     const isEmpty = computed(() => props.data.length === 0);
-
-    const fixHeaderCompo = computed(() => {
-      return (
-        <div class="devui-table-view">
-          <div style="overflow: hidden scroll;">
-            <table class={classes.value} cellpadding="0" cellspacing="0">
-              <ColGroup />
-              <TableHeader />
-            </table>
-          </div>
-          <div class="scroll-view">
-            <table class={classes.value} cellpadding="0" cellspacing="0">
-              <ColGroup />
-              {!isEmpty.value && <TableBody style="flex: 1" />}
-            </table>
-          </div>
-        </div>
-      );
-    });
-
-    const normalHeaderCompo = computed(() => {
-      return (
-        <table class={classes.value} cellpadding="0" cellspacing="0">
-          <ColGroup />
-          <TableHeader style="position: relative" />
-          {!isEmpty.value && <TableBody />}
-        </table>
-      )
-    });
 
     ctx.expose({
       getCheckedRows() {
         return store.getCheckedRows();
-      }
+      },
     });
 
     return () => (
-      <div class="devui-table-wrapper" style={style.value} v-dLoading={props.showLoading}>
+      <div class='devui-table-wrapper' style={style.value} v-dLoading={props.showLoading}>
         {ctx.slots.default()}
-        {props.fixHeader ? fixHeaderCompo.value : normalHeaderCompo.value}
-        {isEmpty.value && <div class="devui-table-empty">No Data</div>}
+        {props.fixHeader ? (
+          <FixHeader classes={classes.value} is-empty={isEmpty.value} />
+        ) : (
+          <NormalHeader classes={classes.value} is-empty={isEmpty.value} />
+        )}
+        {isEmpty.value && <div class='devui-table-empty'>No Data</div>}
       </div>
     );
-  }
+  },
 });
