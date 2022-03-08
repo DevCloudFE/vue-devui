@@ -122,6 +122,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "devin974",
+      "name": "devin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67035714?v=4",
+      "profile": "https://devin974.github.io/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

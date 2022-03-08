@@ -171,6 +171,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/ForeseeBear"><img src="https://avatars.githubusercontent.com/u/15258339?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Echo</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=ForeseeBear" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/GaoNeng-wWw"><img src="https://avatars.githubusercontent.com/u/31283122?v=4?s=100" width="100px;" alt=""/><br /><sub><b>GaoNeng</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=GaoNeng-wWw" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/xingyan95"><img src="https://avatars.githubusercontent.com/u/11143986?v=4?s=100" width="100px;" alt=""/><br /><sub><b>行言</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xingyan95" title="Code">💻</a></td>
+    <td align="center"><a href="https://devin974.github.io/"><img src="https://avatars.githubusercontent.com/u/67035714?v=4?s=100" width="100px;" alt=""/><br /><sub><b>devin</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=devin974" title="Code">💻</a></td>
   </tr>
 </table>
 
