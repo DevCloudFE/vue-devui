@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { DrawerProps } from './drawer-types'
 
 import DDrawer from './drawer'
-import {  omit } from 'lodash-es'
+import { omit } from 'lodash'
 
 interface drawerInstance {
   hide(): void
