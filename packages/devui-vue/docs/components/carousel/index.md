@@ -117,9 +117,9 @@ export default defineComponent({
     <d-carousel-item v-for="item in items" :key="item">{{ item }}</d-carousel-item>
   </d-carousel>
   <div class="carousel-demo-operate">
-    <d-button bsStyle="common" @click="onPrev">上一张</d-button>
-    <d-button bsStyle="primary" @click="onNext">下一张</d-button>
-    <d-button bsStyle="common" @click="onGoFirst">第一张</d-button>
+    <d-button @click="onPrev">上一张</d-button>
+    <d-button @click="onNext">下一张</d-button>
+    <d-button @click="onGoFirst">第一张</d-button>
   </div>
 </template>
 <script lang="ts">

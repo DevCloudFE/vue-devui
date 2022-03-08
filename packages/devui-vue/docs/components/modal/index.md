@@ -73,7 +73,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-button variant="common" @click="open">click me!</d-button>
+  <d-button @click="open">click me!</d-button>
 </template>
 <script>
 import {ref, defineComponent, inject, onMounted, h} from 'vue';
@@ -145,10 +145,10 @@ export default defineComponent({
 ```vue
 <template>
   <div class="btn-group">
-    <d-button variant="common" @click="open('success', '成功', 'Delete [Git] repository successfully.')">success</d-button>
-    <d-button variant="common" @click="open('failed', '错误', 'It is failed. if you want to resolve it,please contact the supportor.')">fail</d-button>
-    <d-button variant="common" @click="open('warning', '警告', 'Leaving this page!')">warning</d-button>
-    <d-button variant="common" @click="open('info', '提示', 'You signed in with another tab or window. Reload to refresh your session.')">info</d-button>
+    <d-button @click="open('success', '成功', 'Delete [Git] repository successfully.')">success</d-button>
+    <d-button @click="open('failed', '错误', 'It is failed. if you want to resolve it,please contact the supportor.')">fail</d-button>
+    <d-button @click="open('warning', '警告', 'Leaving this page!')">warning</d-button>
+    <d-button @click="open('info', '提示', 'You signed in with another tab or window. Reload to refresh your session.')">info</d-button>
   </div>
 </template>
 <script>

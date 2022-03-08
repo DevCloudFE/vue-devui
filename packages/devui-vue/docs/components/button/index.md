@@ -6,206 +6,204 @@
 
 标记了一个（或封装一组）操作命令，响应用户点击行为，触发相应的业务逻辑。
 
-### 主要按钮
+### 按钮类型
 
-:::demo
-
-```vue
-<template>
-  <d-button id="primaryBtn" style="margin-right: 8px">Primary</d-button>
-  <d-button :disabled="true">Disabled</d-button>
-</template>
-```
-:::
-### 次要按钮
-
-:::demo
+:::demo 通过`variant`设置按钮类型，目前支持`solid`、`outline`、`text`三种类型，默认为`outline`类型。
 
 ```vue
 <template>
-  <d-button variant="common" style="margin-right: 8px">Common</d-button>
-  <d-button variant="common" :disabled="true">Disabled</d-button>
+  <div class="button-size-demo">
+    <d-button variant="solid">Solid Button</d-button>
+    <d-button>Outline Button</d-button>
+    <d-button variant="text">Text Button</d-button>
+  </div>
 </template>
-```
-:::
 
-### 左按钮与右按钮
-
-:::demo
-```vue
-<template>
-  <d-button variant="primary" bsPosition="left">Left</d-button>
-  <d-button variant="common" bsPosition="right">Right</d-button>
-</template>
+<style>
+.button-size-demo > button {
+  margin-right: 8px;
+}
+</style>
 ```
+
 :::
 
+### 主题色
 
+:::demo 通过`color`设置按钮主题，目前支持`secondary`、`primary`、`danger`三种类型，默认为`secondary`类型。
 
-### 按钮形态
-用于给按钮增加不同的使用场景。
-:::demo
 ```vue
 <template>
-  <div class="flex flex-col space-y-xs">
-    <d-button variant="primary" type="submit">主要按钮</d-button>
-    <d-button variant="common" type="submit">通用按钮</d-button>
-    <d-button variant="text" type="submit">文本按钮</d-button>
-    <d-button variant="text-dark" type="submit">文本（暗色）按钮</d-button>
-    <d-button variant="success" type="submit">成功按钮</d-button>
-    <d-button variant="warning" type="submit">警告按钮</d-button>
+  <div class="button-size-demo">
+    <d-button variant="solid" color="primary">Primary</d-button>
+    <d-button color="primary">Primary</d-button>
+    <d-button variant="text" color="primary">Primary</d-button>
+  </div>
+  <br />
+  <div class="button-size-demo">
+    <d-button variant="solid" color="danger">Danger</d-button>
+    <d-button color="danger">Danger</d-button>
+    <d-button variant="text" color="danger">Danger</d-button>
   </div>
 </template>
 ```
+
 :::
 
-### 文字按钮
-:::demo
+### 按钮大小
+
+:::demo 通过`size`设置按钮大小，支持`xs`、`sm`、`md`、`lg`四种类型，默认为`md`。
+
 ```vue
 <template>
-  <d-button variant="text" style="margin-right: 20px">Text</d-button>
-  <d-button variant="text-dark" style="margin-right: 20px">Text dark</d-button>
-  <d-button variant="text" :disabled="true">Disabled</d-button>
+  <div class="button-size-demo">
+    <d-button size="xs">Mini</d-button>
+    <d-button size="sm">Small</d-button>
+    <d-button>Middle</d-button>
+    <d-button size="lg">Large</d-button>
+  </div>
 </template>
 ```
+
+:::
+
+### 禁用按钮
+
+:::demo 通过`disabled`参数设置按钮禁用状态。
+
+```vue
+<template>
+  <div class="button-size-demo">
+    <d-button variant="solid">Solid Button</d-button>
+    <d-button>Outline Button</d-button>
+    <d-button variant="text">Text Button</d-button>
+  </div>
+  <br />
+  <div class="button-size-demo">
+    <d-button variant="solid" disabled>Solid Button</d-button>
+    <d-button disabled>Outline Button</d-button>
+    <d-button variant="text" disabled>Text Button</d-button>
+  </div>
+</template>
+```
+
 :::
 
 ### 加载中状态
-:::demo
+
+:::demo 通过`loading`参数设置按钮加载中状态。
+
 ```vue
 <template>
-  <d-button :showLoading="showLoading" @click="handleClick"> click me! </d-button>
+  <d-button variant="solid" color="primary" :loading="showLoading" @click="handleClick">Click Me</d-button>
 </template>
 <script>
-  import { ref, onBeforeUnmount } from 'vue';
-  export default {
-    setup() {
-      const showLoading = ref(false);
-      const timerId = ref();      
-      const handleClick = () => {
-        showLoading.value = true;
-        timerId.value = setTimeout(() => {
-          showLoading.value = false;
-        }, 2000);
-      }
+import { ref, onBeforeUnmount } from 'vue';
+export default {
+  setup() {
+    const showLoading = ref(false);
+    const handleClick = () => {
+      showLoading.value = true;
+      setTimeout(() => {
+        showLoading.value = false;
+      }, 2000);
+    };
 
-      onBeforeUnmount(() => {
-        if (!timerId.value) {
-          return;
-        }
-        clearTimeout(timerId.value);
-      });
-
-      return { showLoading, handleClick };
-    }
-  }
+    return { showLoading, handleClick };
+  },
+};
 </script>
 ```
-:::
 
-### 自动获得焦点
-通过autofocus设置按钮自动获得焦点。
-:::demo
-```vue
-<template>
-  <d-button variant="primary" :bordered="true" :autofocus="true" style="margin-right: 8px"> Confirm </d-button>
-  <d-button variant="common"> Cancel </d-button>
-</template>
-```
 :::
 
 ### 图标
 
 :::demo
+
 ```vue
 <template>
-  <div class="mb-l">
-    <d-button icon="add" variant="primary"> New </d-button>
-    <d-button icon="filter" variant="common"> Filter </d-button>
+  <div class="button-size-demo">
+    <d-button icon="add" variant="solid" color="primary">New</d-button>
+    <d-button icon="filter">Filter</d-button>
   </div>
-  <div class="mb-l">
-    <d-button icon="add" variant="primary" :disabled="true"> New(disabled) </d-button>
-    <d-button icon="filter" variant="common" :disabled="true"> Filter(disabled) </d-button>
+  <br />
+  <div class="button-size-demo">
+    <d-button icon="add" variant="solid" color="primary" disabled>New(disabled)</d-button>
+    <d-button icon="filter" disabled>Filter(disabled)</d-button>
   </div>
-  <div class="mb-l">
-    <d-button icon="connect" variant="text-dark" style="margin-right: 4px"> Link </d-button>
-    <d-button icon="run" variant="text-dark"> Run </d-button>
+  <br />
+  <div class="button-size-demo">
+    <d-button icon="connect" variant="text">Link</d-button>
+    <d-button icon="run" variant="text">Run</d-button>
   </div>
-  <div class="mb-l">
-    <d-button class="mr-xs" icon="connect" variant="text-dark" style="margin-right: 4px" :disabled="true"> Link(disabled) </d-button>
-    <d-button class="mr-xs" icon="run" variant="text-dark" :disabled="true"> Run(disabled) </d-button>
+  <br />
+  <div class="button-size-demo">
+    <d-button icon="connect" variant="text" disabled>Link(disabled)</d-button>
+    <d-button icon="run" variant="text" disabled>Run(disabled)</d-button>
   </div>
-  <div class="mb-l">
-    <d-button class="mr-xs" icon="add" variant="text-dark" title="add"></d-button>
-    <d-button class="mr-xs" icon="delete" variant="text-dark" title="delete"></d-button>
+  <br />
+  <div class="button-size-demo">
+    <d-button icon="add" variant="text" title="add"></d-button>
+    <d-button icon="delete" variant="text" title="delete"></d-button>
   </div>
-  <div class="mb-l">
-    <d-button icon="add" variant="text-dark" :disabled="true" title="add"></d-button>
-    <d-button icon="delete" variant="text-dark" :disabled="true" title="delete"></d-button>
+  <br />
+  <div class="button-size-demo">
+    <d-button icon="add" variant="text" disabled title="add"></d-button>
+    <d-button icon="delete" variant="text" disabled title="delete"></d-button>
   </div>
-  <div class="mb-l">
-    <d-button class="mr-xs" variant="common">
+  <br />
+  <div class="button-size-demo">
+    <d-button size="xs">
       Click me
       <span class="icon-chevron-down"></span>
     </d-button>
   </div>
-  <div class="mb-l">
-    <d-button class="mr-xs" variant="text-dark">
+  <br />
+  <div class="button-size-demo">
+    <d-button variant="text">
       Click me
       <span class="icon-chevron-down"></span>
     </d-button>
   </div>
 </template>
 <style>
-
 .icon-chevron-down {
   display: inline-block;
   vertical-align: middle;
   position: relative;
   top: -0.1em;
 }
-
 </style>
 ```
+
 :::
 
-### API
-d-button 参数
-|   参数    |       类型        |   默认    | 说明                             |
-| :-------: | :---------------: | :-------: | :------------------------------- |
-|   type    |   `IButtonType`   | 'button'  | 可选，按钮类型                   |
-| variant  |  `IButtonVariant`   | 'primary' | 可选，按钮的形态                   |
-| position  | `IButtonPosition` | 'default' | 可选，按钮位置                   |
-|   size    |   `IButtonSize`   |   'md'    | 可选，按钮大小                   |
-| bordered  |     `boolean`     |   false   | 可选，是否有边框                 |
-|   icon    |     `string`      |    --     | 可选，点击背景触发的事件         |
-|   width   |     `string`      |    --     | 可选，弹出框宽度(e.g '300px')    |
-| disabled  |     `boolean`     |   false   | 可选，是否禁用button             |
-| autofocus |     `boolean`     |   false   | 可选，按钮加载时是否自动获得焦点 |
-| showLoading| `boolean` | false | 可选，是否显示加载提示 |
+### d-button 参数
 
-d-button 事件
-|  参数   |             类型              | 默认  | 说明           |
-| :-----: | :---------------------------: | :---: | :------------- |
-| onClick | `(event: MouseEvent) => void` |  --   | 可选，点击事件 |
+| 参数     | 类型             | 默认        | 说明                  | 跳转 Demo                 |
+| -------- | ---------------- | ----------- | --------------------- | ------------------------- |
+| variant  | `IButtonVariant` | 'outline'   | 可选，按钮的形态      | [按钮类型](#按钮类型)     |
+| color    | `IButtonColor`   | 'secondary' | 可选，按钮主题        | [主题色](#主题色)         |
+| size     | `IButtonSize`    | 'md'        | 可选，按钮大小        | [按钮大小](#按钮大小)     |
+| icon     | `string`         | --          | 可选，自定义按钮图标  | [图标](#图标)             |
+| disabled | `boolean`        | false       | 可选，是否禁用 button | [禁用按钮](#禁用按钮)     |
+| loading  | `boolean`        | false       | 可选，设置加载中状态  | [加载中状态](#加载中状态) |
 
+### IButtonVariant 类型
 
-IButtonType 
-``` typescript
-type IButtonType = 'button' | 'submit' | 'reset';
+```typescript
+type IButtonVariant = 'solid' | 'outline' | 'text';
 ```
 
-IButtonVariant 
-``` typescript
-type IButtonVariant = 'common' | 'primary' | 'text' | 'text-dark' | 'danger' | 'success' | 'warning';
-```
+### IButtonSize 类型
 
-IButtonPosition 
-``` typescript
-type IButtonPosition = 'left' | 'right' | 'default';
-```
-
-IButtonSize
-``` typescript
+```typescript
 type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
+```
+
+### IButtonColor 类型
+
+```typescript
+type IButtonColor = 'secondary' | 'primary' | 'danger';
 ```

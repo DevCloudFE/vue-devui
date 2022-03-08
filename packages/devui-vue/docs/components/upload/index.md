@@ -363,7 +363,7 @@ export default {
     :beforeUpload="beforeUpload"
     :showTip="true"
   >
-    <d-button type="primary">选取文件</d-button>
+    <d-button>选取文件</d-button>
     <template v-slot:preloadFiles="slotProps">
       <table class="table preload-files" v-if="slotProps.fileUploaders.length > 0">
         <tr v-for="(fileUploader, index) in slotProps.fileUploaders" :key="index" class="row">
