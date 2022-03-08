@@ -2,61 +2,36 @@
 @import '../../style/core/animation';
 
 .devui-editable-select {
-  .devui-form-group {
-    input::-ms-clear {
-      display: none;
-    }
-
-    ul.devui-list-unstyled {
-      margin: 0;
-      overflow-y: auto;
-      padding: 0;
-    }
-
-    .devui-dropdown-bg {
-      background: $devui-list-item-hover-bg;
-    }
-
-    .devui-popup-tips {
-      color: $devui-text-weak;
-      padding: 4px 12px;
-    }
-
-    .devui-form-control {
-      outline: none;
-      padding-right: 24px;
-    }
+  .devui-select-chevron-icon {
+    display: inline-flex;
+    vertical-align: middle;
+    transition: transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   }
 
-  .devui-select-open {
-    .devui-select-chevron-icon {
-      transform: rotate(180deg);
-
-      svg path {
-        fill: $devui-text-weak;
-      }
-    }
+  input::-ms-clear {
+    display: none;
   }
 
-  .devui-form-control-feedback {
-    .devui-select-chevron-icon {
-      display: inline-flex;
-      vertical-align: middle;
-      transition: transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
-    }
+  .devui-no-data-tip {
+    user-select: none;
+    cursor: not-allowed;
   }
 
-  .devui-has-feedback > .devui-form-control-feedback {
-    line-height: 26px;
+  .devui-form-control {
+    outline: none;
+    padding-right: 24px;
   }
 
-  .devui-dropdown-bg.devui-dropdown-bg {
-    background-color: inherit;
-  }
-  // 下拉部分
   .devui-dropdown-menu {
     width: 100%;
     display: block;
+    // TODO: 全局样式被污染，暂时只能这么写
+    top: auto !important;
+    left: auto !important;
+  }
+
+  .devui-dropdown-menu-cdk {
+    position: static;
   }
 
   .devui-dropdown-item {
@@ -102,7 +77,8 @@
       background-color: $devui-unavailable;
     }
   }
-  // 选项disabled
+
+  /* 选项disabled */
   .devui-dropdown-item.disabled,
   .devui-dropdown-item.disabled:hover {
     cursor: not-allowed;
@@ -125,10 +101,30 @@
   }
 }
 
-.devui-dropdown {
+.devui-editable-select.devui-select-open {
+  .devui-select-chevron-icon {
+    transform: rotate(180deg);
+  }
+  .devui-select-chevron-icon svg path {
+    fill: $devui-text-weak;
+  }
+}
+.devui-editable-select.devui-form-group.devui-has-feedback > .devui-form-control-feedback {
+  line-height: 26px;
+}
+.devui-editable-select-dropdown {
   .devui-dropdown-menu {
     width: 100%;
     display: block;
+    width: 100%;
+    display: block;
+    // TODO: 全局样式被污染，暂时只能这么写
+    top: auto !important;
+    left: auto !important;
+  }
+
+  .devui-dropdown-menu-cdk {
+    position: static;
   }
 
   .devui-dropdown-item {
@@ -174,7 +170,8 @@
       background-color: $devui-unavailable;
     }
   }
-  // 选项disabled
+
+  /* 选项disabled */
   .devui-dropdown-item.disabled,
   .devui-dropdown-item.disabled:hover {
     cursor: not-allowed;
@@ -192,7 +189,7 @@
   }
 
   .devui-popup-tips {
-    color: $devui-text-weak;
+    color: $devui-text-weak; // TODO: Color-Question
     padding: 4px 12px;
   }
 }

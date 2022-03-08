@@ -5,30 +5,30 @@
  * <div v-clickoutside="handleClose">
  */
 
-import { inBrowser } from '../util/common-var'
-import { on } from './utils'
+import { inBrowser } from '../util/common-var';
+import { on } from './utils';
 
-const ctx = Symbol('@@clickoutside')
-const nodeList = new Map()
+const ctx = Symbol('@@clickoutside');
+const nodeList = new Map();
 
-let startClick
-let nid = 0
+let startClick;
+let nid = 0;
 let isFirst = true;
 
 function createDocumentHandler(el: HTMLElement, binding: Record<string, any>, vnode: any) {
   if (inBrowser && isFirst) {
     isFirst = false;
     on(document, 'mousedown', (e: Event) => {
-      startClick = e
-    })
+      startClick = e;
+    });
     on(document, 'mouseup', (e: Event) => {
       for (const [id, node] of nodeList) {
-        node[ctx].documentHandler(e, startClick)
+        node[ctx].documentHandler(e, startClick);
       }
-    })
+    });
   }
 
-  return function(mouseup: Event, mousedown: Event) {
+  return function (mouseup: Event, mousedown: Event) {
     if (
       !vnode ||
       !binding.instance ||
@@ -40,30 +40,30 @@ function createDocumentHandler(el: HTMLElement, binding: Record<string, any>, vn
     ) {
       return;
     }
-    el[ctx].bindingFn && el[ctx].bindingFn()
-  }
+    el[ctx].bindingFn && el[ctx].bindingFn();
+  };
 }
 
 const clickoutsideDirective = {
   beforeMount: function (el: HTMLElement, binding: Record<string, any>, vnode: any) {
-    nid++
-    nodeList.set(nid, el)
+    nid++;
+    nodeList.set(nid, el);
     el[ctx] = {
       nid,
       documentHandler: createDocumentHandler(el, binding, vnode),
       bindingFn: binding.value
-    }
+    };
   },
 
   updated: function (el: HTMLElement, binding: Record<string, any>, vnode: any) {
-    el[ctx].documentHandler = createDocumentHandler(el, binding, vnode)
-    el[ctx].bindingFn = binding.value
+    el[ctx].documentHandler = createDocumentHandler(el, binding, vnode);
+    el[ctx].bindingFn = binding.value;
   },
 
   unmounted: function (el: HTMLElement) {
-    nodeList.delete(el[ctx].nid)
-    delete el[ctx]
+    nodeList.delete(el[ctx].nid);
+    delete el[ctx];
   }
-}
+};
 
-export default clickoutsideDirective
+export default clickoutsideDirective;
