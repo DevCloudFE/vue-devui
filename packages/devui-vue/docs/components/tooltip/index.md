@@ -14,19 +14,19 @@
 <template>
   <div class="tooltip-buttons">
     <d-tooltip position="left" content="I am a HTML Element!">
-      <d-button variant="common">left</d-button>
+      <d-button>left</d-button>
     </d-tooltip>
     <d-tooltip position="top" content="I am a HTML Element!">
-      <d-button variant="common">top</d-button>
+      <d-button>top</d-button>
     </d-tooltip>
     <d-tooltip position="bottom" content="I am a HTML Element!">
-      <d-button variant="common">bottom</d-button>
+      <d-button>bottom</d-button>
     </d-tooltip>
     <d-tooltip position="right" content="I am a HTML Element!">
-      <d-button variant="common">right</d-button>
+      <d-button>right</d-button>
     </d-tooltip>
     <d-tooltip content="No Animation" :showAnimation="false">
-      <d-button variant="common">No Animation</d-button>
+      <d-button>No Animation</d-button>
     </d-tooltip>
   </div>
 </template>
@@ -63,7 +63,7 @@
     content="Mouse leave 1000ms later."
     mouseLeaveDelay="1000"
   >
-    <d-button variant="common">MouseEnter delay 1000ms</d-button>
+    <d-button>MouseEnter delay 1000ms</d-button>
   </d-tooltip>
 </template>
 ```

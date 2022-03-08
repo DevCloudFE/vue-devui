@@ -21,26 +21,26 @@ common 时不展示图标。
         >
       </template>
     </d-toast>
-    <d-button variant="success" @click.native="showToast('success')"
+    <d-button @click.native="showToast('success')"
       >Success</d-button
     >
-    <d-button variant="warning" @click.native="showToast('warning')"
+    <d-button @click.native="showToast('warning')"
       >Warning</d-button
     >
-    <d-button variant="danger" @click.native="showToast('error')"
+    <d-button @click.native="showToast('error')"
       >Error</d-button
     >
-    <d-button variant="primary" @click.native="showToast('multiple')"
+    <d-button @click.native="showToast('multiple')"
       >Multiple</d-button
     >
-    <d-button variant="common" @click.native="showToast('link')">link</d-button>
-    <d-button variant="common" @click.native="showToast('plainText')"
+    <d-button @click.native="showToast('link')">link</d-button>
+    <d-button @click.native="showToast('plainText')"
       >pure text</d-button
     >
-    <d-button variant="common" @click.native="showToast('common')"
+    <d-button @click.native="showToast('common')"
       >common</d-button
     >
-    <d-button variant="warning" @click.native="showToast('noTitle')"
+    <d-button @click.native="showToast('noTitle')"
       >no title</d-button
     >
   </section>
@@ -139,16 +139,16 @@ export default defineComponent({
 <template>
   <section class="toast-timeout-demo">
     <d-toast :life="5000" :value="msgs2"></d-toast>
-    <d-button variant="success" @click.native="showToast2('success')"
+    <d-button @click.native="showToast2('success')"
       >Success</d-button
     >
-    <d-button variant="warning" @click.native="showToast2('warning')"
+    <d-button @click.native="showToast2('warning')"
       >Warning</d-button
     >
-    <d-button variant="danger" @click.native="showToast2('error')"
+    <d-button @click.native="showToast2('error')"
       >Error</d-button
     >
-    <d-button variant="common" @click.native="showToast2('common')"
+    <d-button @click.native="showToast2('common')"
       >common</d-button
     >
   </section>
@@ -220,7 +220,7 @@ export default defineComponent({
       :style="{ top: '20px' }"
       :styleClass="'custom-class'"
     ></d-toast>
-    <d-button variant="common" @click.stop="showToast3()"
+    <d-button @click.stop="showToast3()"
       >Custom Style</d-button
     >
   </section>
@@ -297,7 +297,7 @@ export default defineComponent({
 <template>
   <section>
     <d-toast lifeMode="single" :value="msgs4"></d-toast>
-    <d-button variant="common" @click.native="showToast4()">Single</d-button>
+    <d-button @click.native="showToast4()">Single</d-button>
   </section>
 </template>
 <script>
@@ -360,13 +360,13 @@ export default defineComponent({
     <d-button @click.native="openToast()"
       >click me show simplest toast!</d-button
     >
-    <d-button v-if="!isShow" @click.native="openToast2()" variant="common"
+    <d-button v-if="!isShow" @click.native="openToast2()"
       >click me show customer toast!</d-button
     >
     <d-button v-if="isShow" @click.native="closeToast2()"
       >click me close customer toast!</d-button
     >
-    <d-button v-if="isShow" @click.native="closeToast3()" variant="common"
+    <d-button v-if="isShow" @click.native="closeToast3()"
       >only close first customer toast!</d-button
     >
   </div>

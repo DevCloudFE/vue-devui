@@ -158,7 +158,7 @@
 ```vue
 <template>
   <div>
-    <d-button type="primary" @click="handleClick">更新数据</d-button>
+    <d-button @click="handleClick">更新数据</d-button>
     <d-table :data="emptyData">
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
@@ -218,7 +218,7 @@
 ```vue
 <template>
   <div>
-    <d-button type="primary" @click="handleClick">更新数据</d-button>
+    <d-button @click="handleClick">更新数据</d-button>
     <d-table :data="emptyData" :scrollable="true">
       <d-column 
         field="firstName" 

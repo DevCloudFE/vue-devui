@@ -75,7 +75,7 @@
     </d-form-item>
     <d-form-operation class="form-demo-form-operation">
       <d-button type="submit" class="form-demo-btn">提交</d-button>
-      <d-button bsStyle="common" @click="resetForm">重置</d-button>
+      <d-button @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
 
@@ -203,7 +203,7 @@ Label左右布局方式。
     </d-form-item>
     <d-form-operation class="form-demo-form-operation">
       <d-button type="submit" class="form-demo-form-demo-demo-btn">提交</d-button>
-      <d-button bsStyle="common" @click="resetForm">重置</d-button>
+      <d-button @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
 
@@ -335,7 +335,7 @@ export default defineComponent({
         </d-form-item>
         <d-form-operation class="form-demo-form-operation">
           <d-button type="submit" class="form-demo-form-demo-demo-btn">提交</d-button>
-          <d-button bsStyle="common" @click="resetForm">重置</d-button>
+          <d-button @click="resetForm">重置</d-button>
         </d-form-operation>
       </d-form>
     </div>
@@ -484,7 +484,7 @@ export default defineComponent({
 
     <d-form-operation class="form-demo-form-operation">
       <d-button type="submit" class="form-demo-form-demo-demo-btn">提交</d-button>
-      <d-button bsStyle="common" @click="resetForm">重置</d-button>
+      <d-button @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
 </template>
@@ -1035,7 +1035,7 @@ export default defineComponent({
     </d-form-item>
     <d-form-operation class="form-demo-form-operation">
       <d-button type="submit" class="form-demo-form-demo-demo-btn">提交</d-button>
-      <d-button bsStyle="common" @click="resetForm">重置</d-button>
+      <d-button @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
 </template>
@@ -1121,7 +1121,7 @@ export default defineComponent({
     </d-form-item>
     <d-form-operation class="form-demo-form-operation">
       <d-button type="submit" class="form-demo-demo-btn">提交</d-button>
-      <d-button bsStyle="common" @click="resetForm">重置</d-button>
+      <d-button @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
 </template>
@@ -1401,7 +1401,7 @@ export default defineComponent({
     </d-form-item>
     <d-form-operation class="form-demo-form-operation">
       <d-button type="submit" class="form-demo-demo-btn">提交</d-button>
-      <d-button bsStyle="common" @click="resetForm">重置</d-button>
+      <d-button @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
 </template>
