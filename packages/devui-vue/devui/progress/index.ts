@@ -1,5 +1,5 @@
 import type { App } from 'vue'
-import Progress from './src/progress'
+import { Progress } from './src/progress'
 
 Progress.install = function(app: App) {
   app.component(Progress.name, Progress)
