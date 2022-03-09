@@ -1,51 +1,58 @@
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType, Slot, Ref } from 'vue';
 
 export const drawerProps = {
-  width: { // 宽度
-    type: String,
-    default: '300px',
-  },
-  visible: { // 是否可见
+  modelValue: {
     type: Boolean,
     default: false,
   },
-  zIndex: { // 层级
+  zIndex: {
     type: Number,
     default: 1000,
   },
-  isCover: { // 是否有遮罩层
+  showOverlay: {
     type: Boolean,
     default: true,
   },
-  escKeyCloseable: { // 是否可通过esc关闭
+  escKeyCloseable: {
     type: Boolean,
     default: true,
   },
-  position: { // 位置 只有左和右
+  position: {
     type: String as PropType<'left' | 'right'>,
-    default: 'left',
+    default: 'right',
   },
-  backdropCloseable: { // 点击遮罩层是否可关闭
+  lockScroll: {
     type: Boolean,
     default: true,
   },
-  destroyOnHide: { // 是否在隐藏时销毁
+  closeOnClickOverlay: {
+    type: Boolean,
+    default: true,
+  },
+  beforeClose: {
+    type: Function as PropType<(done: () => void) => void>,
+  },
+};
+
+export const drawerOverlayProps = {
+  visible: {
     type: Boolean,
     default: false,
   },
-  showAnimation: { // 是否启用动效
-    type: Boolean,
-    default: true,
-  },
-  beforeHidden: { // 关闭前的回调
-    type: [Promise, Function] as PropType<Promise<boolean> | (() => boolean | Promise<boolean>)>,
-  },
-  content: { // 默认内容插槽
-    type: Object,
-  },
-  header: { // 头部内容插槽
-    type: Object,
-  },
-} as const
+};
 
-export type DrawerProps = ExtractPropTypes<typeof drawerProps>
+type DrawerEmitEvent = 'update:modelValue' | 'close' | 'open';
+
+export type DrawerEmit = (event: DrawerEmitEvent, result?: unknown) => void;
+
+export type DrawerProps = ExtractPropTypes<typeof drawerProps>;
+
+export type DrawerOverlayProps = ExtractPropTypes<typeof drawerOverlayProps>;
+
+export type DrawerOptions = Partial<DrawerProps> & { content?: string | Slot };
+
+export type UseDrawerFn = {
+  drawerRef: Ref<HTMLElement>;
+  drawerClasses: Ref<Record<string, boolean>>;
+  handleOverlayClick: () => void;
+};
