@@ -1,0 +1,25 @@
+@import '../../styles-var/devui-var.scss';
+
+.devui-list-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 36px;
+  padding: 0 8px;
+  color: $devui-text;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition:
+    color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
+    background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
+
+  &:hover {
+    color: $devui-list-item-hover-text;
+    background-color: $devui-list-item-hover-bg;
+  }
+
+  &:active {
+    color: $devui-list-item-active-text;
+    background-color: $devui-list-item-hover-bg;
+  }
+}
