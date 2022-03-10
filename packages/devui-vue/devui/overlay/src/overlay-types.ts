@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType, StyleValue, ComponentPublicInstance, Ref } from 'vue';
+import type { ExtractPropTypes, PropType, StyleValue, Ref } from 'vue';
 
 export const overlayProps = {
   visible: {
@@ -6,31 +6,30 @@ export const overlayProps = {
   },
   backgroundBlock: {
     type: Boolean,
-    default: false
+    default: false,
   },
   backgroundClass: {
     type: String,
-    default: ''
+    default: '',
   },
   backgroundStyle: {
-    type: [String, Object] as PropType<StyleValue>
+    type: [String, Object] as PropType<StyleValue>,
   },
   onBackdropClick: {
     type: Function,
   },
   backdropClose: {
     type: Boolean,
-    default: true
+    default: true,
   },
   hasBackdrop: {
     type: Boolean,
-    default: true
+    default: true,
   },
 } as const;
 
 export const overlayEmits = ['update:visible', 'backdropClick'] as ['update:visible', 'backdropClick'];
 export type OverlayProps = ExtractPropTypes<typeof overlayProps>;
-
 
 export const fixedOverlayProps = {
   ...overlayProps,
@@ -41,67 +40,58 @@ export const fixedOverlayProps = {
 };
 export type FixedOverlayProps = ExtractPropTypes<typeof fixedOverlayProps>;
 
+export type Placement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
+
+export type Alignment = 'start' | 'end';
+export type OffsetOptions = { mainAxis?: number; crossAxis?: number };
 
 export const flexibleOverlayProps = {
+  modelValue: {
+    type: Boolean,
+    default: false,
+  },
   origin: {
-    type: Object as PropType<OriginOrDomRef>,
+    type: Object as PropType<HTMLElement>,
     require: true,
   },
   position: {
-    type: Object as PropType<ConnectionPosition>,
-    default: (): ConnectionPosition => ({
-      originX: 'left',
-      originY: 'top',
-      overlayX: 'left',
-      overlayY: 'top',
-    }),
+    type: Array as PropType<Array<Placement>>,
+    default: ['bottom'],
   },
-  ...overlayProps,
-}
+  offset: {
+    type: [Number, Object] as PropType<number | OffsetOptions>,
+    default: 8,
+  },
+  align: {
+    type: String as PropType<Alignment> | null,
+    default: null,
+  },
+  showArrow: {
+    type: Boolean,
+    default: false,
+  },
+  isArrowCenter: {
+    type: Boolean,
+    default: true,
+  },
+};
 
+export type Point = { x?: number; y?: number };
 
+export type UseOverlayFn = { arrowRef: Ref<HTMLElement | undefined>; overlayRef: Ref<HTMLElement | undefined> };
 
-
-export interface ClientRect {
-  bottom: number
-  readonly height: number
-  left: number
-  right: number
-  top: number
-  readonly width: number
-}
-
-export interface Point {
-  x: number
-  y: number
-}
-
-export interface Rect {
-  x: number
-  y: number
-  width?: number
-  height?: number
-}
-
-export type Origin = Element | Rect;
-
-type HorizontalConnectionPos = 'left' | 'center' | 'right';
-type VerticalConnectionPos = 'top' | 'center' | 'bottom';
-
-export interface ConnectionPosition {
-  originX: HorizontalConnectionPos
-  originY: VerticalConnectionPos
-  overlayX: HorizontalConnectionPos
-  overlayY: VerticalConnectionPos
-}
-
-export type OriginOrDomRef =
-  | Element
-  | ComponentPublicInstance
-  | Ref<ComponentPublicInstance | Element | undefined | null>
-  | Rect
-  | null;
+export type EmitEventFn = (event: 'positionChange' | 'update:modelValue', result?: unknown) => void;
 
 export type FlexibleOverlayProps = ExtractPropTypes<typeof flexibleOverlayProps>;
-
-
