@@ -1,28 +1,80 @@
-@import '../../style/theme/color';
+@import '../../styles-var/devui-var.scss';
+
+.devui-tooltip-reference {
+  display: inline-block;
+}
 
 .devui-tooltip {
-  box-sizing: border-box;
+  max-width: 200px;
+  min-height: 26px;
+  padding: 4px 16px;
+  font-size: $devui-font-size;
+  color: $devui-feedback-overlay-text;
+  letter-spacing: 0;
+  line-height: 1.5;
+  background: $devui-feedback-overlay-bg;
+  box-shadow: none;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  word-wrap: break-word;
+  text-align: start;
+  border-radius: $devui-border-radius-feedback;
+  font-style: normal;
+  font-weight: normal;
+  line-break: auto;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  word-spacing: normal;
+  white-space: normal;
+  opacity: 1;
+  z-index: $devui-z-index-pop-up;
+}
 
-  .tooltip {
-    box-sizing: border-box;
-    position: absolute;
-    width: fit-content;
-    transition: all 0.5s;
-
-    .arrow {
-      width: 0;
-      height: 0;
-      position: absolute;
+.devui-tooltip-fade {
+  &-bottom,
+  &-top {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleY(0.8);
     }
 
-    .tooltipcontent {
-      box-sizing: border-box;
-      padding: 10px;
-      margin-left: 10px;
-      border-radius: 4px;
-      width: fit-content;
-      background-color: $devui-feedback-overlay-bg;
-      color: $devui-feedback-overlay-text;
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+
+    &-enter-active {
+      transition: transform 0.1s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.1s cubic-bezier(0.16, 0.75, 0.5, 1);
+    }
+
+    &-leave-active {
+      transition: transform 0.1s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.1s cubic-bezier(0.5, 0, 0.84, 0.25);
+    }
+  }
+
+  &-left,
+  &-right {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleX(0.8);
+    }
+
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    &-enter-active {
+      transition: transform 0.1s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.1s cubic-bezier(0.16, 0.75, 0.5, 1);
+    }
+
+    &-leave-active {
+      transition: transform 0.1s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.1s cubic-bezier(0.5, 0, 0.84, 0.25);
     }
   }
 }
