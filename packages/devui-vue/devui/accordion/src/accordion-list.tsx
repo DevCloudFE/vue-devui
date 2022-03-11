@@ -1,12 +1,9 @@
-import {
-  computed,
-  defineComponent,
-  inject,
-  toRefs
-} from 'vue'
+import { computed, defineComponent, inject, toRefs } from 'vue'
 import type { AccordionMenuItem } from './accordion.type'
 import DAccordionMenu from './accordion-menu'
 import DAccordionItem from './accordion-item'
+import DAccordionItemHreflink from './accordion-item-hreflink'
+import DAccordionItemRouterlink from './accordion-item-routerlink'
 import { accordionProps } from './accordion-types'
 import { getRootSlots } from '../src/utils'
 
@@ -14,7 +11,9 @@ export default defineComponent({
   name: 'DAccordionList',
   components: {
     DAccordionMenu,
-    DAccordionItem
+    DAccordionItem,
+    DAccordionItemHreflink,
+    DAccordionItemRouterlink
   },
   inheritAttrs: false,
   props: {
@@ -44,6 +43,7 @@ export default defineComponent({
       showNoContent,
       loadingKey,
       titleKey,
+      linkTypeKey,
       loadingTemplate,
       noContentTemplate,
       innerListTemplate
@@ -59,6 +59,7 @@ export default defineComponent({
     const loading = computed(() => {
       return parentValue && parentValue[loadingKey.value]
     })
+
     const noContent = computed(() => {
       const dataValue = data.value
       return dataValue === undefined || dataValue === null || dataValue.length === 0
@@ -67,7 +68,9 @@ export default defineComponent({
     return () => {
       return (
         <>
-          {(!rootSlots.innerListTemplate || deepth.value === 0 || innerListTemplate.value === false) && (
+          {(!rootSlots.innerListTemplate ||
+            deepth.value === 0 ||
+            innerListTemplate.value === false) && (
             <ul class={['devui-accordion-list']} {...attrs}>
               {data.value.map((item) => {
                 return (
@@ -89,11 +92,59 @@ export default defineComponent({
                         {/* 普通类型 */}
                         {(!linkType.value || linkType.value === '') && (
                           <d-accordion-item
-                          {...(props as any)}
+                            {...(props as any)}
                             item={item}
                             deepth={deepValue}
                             parent={parentValue}
                           ></d-accordion-item>
+                        )}
+                        {/* 路由链接类型 */}
+                        {linkType.value === 'routerLink' && (
+                          <d-accordion-item-routerlink
+                            {...(props as any)}
+                            item={item}
+                            deepth={deepValue}
+                            parent={parentValue}
+                          ></d-accordion-item-routerlink>
+                        )}
+                        {/* 普通链接类型 */}
+                        {linkType.value === 'hrefLink' && (
+                          <d-accordion-item-hreflink
+                            {...(props as any)}
+                            item={item}
+                            deepth={deepValue}
+                            parent={parentValue}
+                          ></d-accordion-item-hreflink>
+                        )}
+                        {/* 动态链接类型 */}
+                        {linkType.value === 'dependOnLinkTypeKey' && (
+                          <>
+                            {item[linkTypeKey.value] === 'routerLink' && (
+                              <d-accordion-item-routerlink
+                                {...(props as any)}
+                                item={item}
+                                deepth={deepValue}
+                                parent={parentValue}
+                              ></d-accordion-item-routerlink>
+                            )}
+                            {item[linkTypeKey.value] === 'hrefLink' && (
+                              <d-accordion-item-hreflink
+                                {...(props as any)}
+                                item={item}
+                                deepth={deepValue}
+                                parent={parentValue}
+                              ></d-accordion-item-hreflink>
+                            )}
+                            {item[linkTypeKey.value] !== 'routerLink' &&
+                              item[linkTypeKey.value] !== 'hrefLink' && (
+                                <d-accordion-item
+                                  {...(props as any)}
+                                  item={item}
+                                  deepth={deepValue}
+                                  parent={parentValue}
+                                ></d-accordion-item>
+                              )}
+                          </>
                         )}
                       </>
                     )}
@@ -130,7 +181,7 @@ export default defineComponent({
                 {
                   // 自定义加载
                   loading.value &&
-                    rootSlots.loadingTemplate && 
+                    rootSlots.loadingTemplate &&
                     loadingTemplate.value !== false &&
                     rootSlots.loadingTemplate?.({
                       item: parentValue,
