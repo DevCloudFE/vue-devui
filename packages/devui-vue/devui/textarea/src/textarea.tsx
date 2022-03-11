@@ -1,11 +1,11 @@
-import { defineComponent, ref } from "vue";
-import { textareaProps, TextareaProps } from "./textarea-types";
-import "./textarea.scss";
+import { defineComponent, ref } from 'vue';
+import { textareaProps, TextareaProps } from './textarea-types';
+import './textarea.scss';
 
 export default defineComponent({
-  name: "DTextarea",
+  name: 'DTextarea',
   props: textareaProps,
-  emits: ["update:value", "focus", "blur", "change", "keydown"],
+  emits: ['update:value', 'focus', 'blur', 'change', 'keydown'],
   setup(props: TextareaProps, ctx) {
     const textareaCls = {
       error: props.error,
@@ -16,19 +16,19 @@ export default defineComponent({
     const onInput = ($event: Event) => {
         const inputValue = ($event.target as HTMLInputElement).value;
         curValueRef.value = inputValue;
-        ctx.emit("update:value", inputValue);
+        ctx.emit('update:value', inputValue);
       },
       onFocus = ($event: Event) => {
-        ctx.emit("focus", $event);
+        ctx.emit('focus', $event);
       },
       onBlur = ($event: Event) => {
-        ctx.emit("blur", $event);
+        ctx.emit('blur', $event);
       },
       onChange = ($event: Event) => {
-        ctx.emit("change", ($event.target as HTMLInputElement).value);
+        ctx.emit('change', ($event.target as HTMLInputElement).value);
       },
       onKeydown = ($event: KeyboardEvent) => {
-        ctx.emit("keydown", $event);
+        ctx.emit('keydown', $event);
       };
 
     return {
@@ -80,7 +80,7 @@ export default defineComponent({
         {showCount && (
           <div class="devui-textarea-show-count">
             {curValueRef.length}
-            {!(maxLength ?? false) ? "" : " / " + maxLength}
+            {!(maxLength ?? false) ? '' : ' / ' + maxLength}
           </div>
         )}
       </div>

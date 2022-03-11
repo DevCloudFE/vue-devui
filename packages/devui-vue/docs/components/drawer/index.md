@@ -2,7 +2,7 @@
 
 屏幕边缘滑出的浮层面板组件。
 
-### 何时使用
+#### 何时使用
 
 1. 抽屉从父窗体边缘滑入，覆盖住部分父窗体内容。用户在抽屉内操作时不必离开当前任务，操作完成后，可以平滑地回到到原任务。
 2. 当需要一个附加的面板来控制父窗体内容，这个面板在需要时呼出。比如，控制界面展示样式，往界面中添加内容。
@@ -10,170 +10,161 @@
 
 ### 基本用法
 
-<h4>基本用法，可以控制全屏、关闭和设置宽度。</h4>
-
-:::demo
+:::demo 默认从右侧滑出，宽度为`300px`。
 
 ```vue
 <template>
-  <d-button  @click="drawerShow"> drawer {{ btnName }} </d-button>
-  <d-drawer
-    v-if="isDrawerShow"
-    v-model:visible="isDrawerShow" 
-    :width="drawerWidth"
-    :isCover="isCover" 
-    :backdropCloseable="backdropCloseable"
-    :beforeHidden="beforeHidden"
-    position="right"
-    @close="drawerClose"
-    @afterOpened="drawerAfterOpened"
-  />
+  <d-button variant="solid" color="primary" @click="showDrawer">Click Me</d-button>
+  <d-drawer v-model="visible" style="padding: 20px;">Hello Drawer</d-drawer>
 </template>
 <script>
-import { ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
-export default ({
+export default defineComponent({
   setup() {
-    let isDrawerShow = ref(false)
-    let btnName = ref('close')
-    let drawerWidth = ref('15vw')
-    let isCover = ref(false)
-    let backdropCloseable = ref(true);
+    const visible = ref(false);
+    const showDrawer = () => (visible.value = true);
 
-    const drawerShow = () => {
-      isDrawerShow.value = true
-      btnName.value = 'open'
-    }
-
-    const drawerClose = () => {
-      btnName.value = 'close'
-    }
-
-    const drawerAfterOpened = () => {
-      console.log('open')
-    }
-
-    const beforeHidden = () => {
-      return new Promise((resolve) => {
-        resolve(false);
-      });
-    }
-
-    return {
-      isDrawerShow,
-      btnName,
-      drawerWidth,
-      drawerShow,
-      drawerClose,
-      drawerAfterOpened,
-      isCover,
-      backdropCloseable,
-      beforeHidden,
-    }
-  }
-})
+    return { visible, showDrawer };
+  },
+});
 </script>
 ```
 
 :::
 
-### 自定义模板
+### 左侧弹出
 
-<h4>自定义抽屉板模板。</h4>
-
-:::demo
+:::demo 通过`position`设置左侧滑出。
 
 ```vue
 <template>
-  <d-button  @click="drawerShow"> drawer </d-button>
-  <d-drawer
-    v-model:visible="isDrawerShow" 
-    :isCover="false" 
-  >
-    <template v-slot>
-      内容区插槽
-    </template>
-    <template v-slot:header>
-      <div @click="drawerClose">
-        <span class="icon icon-close" />
-      </div>
-    </template>
-  </d-drawer>
+  <d-button variant="solid" color="primary" @click="showDrawer">Click Me</d-button>
+  <d-drawer v-model="visible" position="left" style="padding: 20px;">Left Drawer</d-drawer>
 </template>
 <script>
-import { ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
-export default ({
+export default defineComponent({
   setup() {
-    let isDrawerShow = ref(false)
+    const visible = ref(false);
+    const showDrawer = () => (visible.value = true);
 
-    const drawerShow = () => {
-      isDrawerShow.value = !isDrawerShow.value
-    }
-
-    const drawerClose = () => {
-      isDrawerShow.value = false;
-    }
-
-    return {
-      isDrawerShow,
-      drawerShow,
-      drawerClose,
-    }
-  }
-})
+    return { visible, showDrawer };
+  },
+});
 </script>
 ```
 
 :::
 
-### 以服务的方式调用
+### 背景滚动
 
-:::demo
+:::demo drawer 滑出之后，默认背景滚动会被锁定，可通过`lock-scroll`设置为`false`来解锁。
 
 ```vue
 <template>
-<d-button @click="open()">click me</d-button>
+  <d-button variant="solid" color="primary" @click="showDrawer">Click Me</d-button>
+  <d-drawer v-model="visible" :lock-scroll="false" style="padding: 20px;">Background can be scrolled</d-drawer>
 </template>
+
 <script>
-import { defineComponent, ref, h } from 'vue'
+import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   setup(props, ctx) {
-    const results =  ref(null);
-    function open() {
-      this.$drawerService.show({
-        visible: true,
-        isCover: false,
-      });
-    }
-    return {
-      open,
-    }
-  }
-})
+    const visible = ref(false);
+    const showDrawer = () => (visible.value = true);
+
+    return { visible, showDrawer };
+  },
+});
 </script>
 ```
 
 :::
 
-### 参数及API
+### 关闭前回调
 
-| 参数 | 类型 | 默认 | 说明 | 跳转 Demo |
-| :---------: | :------: | :-------: | :----------------------- | --------------------------------- |
-| v-model:visible | `Boolean` | `false` | 必选，设置抽屉板是否可见 | [基本用法](#基本用法) |
-| width | `String` | `300px` | 可选，设置抽屉板宽度 | [基本用法](#基本用法) |
-| zIndex | `Number` | `1000` | 可选，设置 drawer 的 z-index 值 | [基本用法](#基本用法) |
-| isCover | `Boolean` | `true` | 可选，是否有遮罩层 | [基本用法](#基本用法) |
-| escKeyCloseable | `Boolean` | `true` | 可选，设置可否通过 esc 按键来关闭 drawer 层 | [基本用法](#基本用法) |
-| position | `String` | 'right' | 可选，抽屉板出现的位置，'left'或者'right' | [基本用法](#基本用法) |
-| backdropCloseable | `Boolean` | true | 可选，设置可否通过点击背景来关闭 drawer 层 | [基本用法](#基本用法) |
-| beforeHidden | `Function \| Promise` | -- | 可选，关闭窗口之前的回调 | [基本用法](#基本用法) |
-| onClose | `Function` | -- | 可选，关闭 drawer 时候调用 | [基本用法](#基本用法) |
-| onAfterOpened | `Function` | -- | 可选，打开 drawer 后时候调用 | [基本用法](#基本用法) |
+:::demo `before-close`在用户关闭 drawer 时会被调用，可在完成某些异步操作后，通过执行`done`函数关闭。
 
-### 插槽
+```vue
+<template>
+  <d-button variant="solid" color="primary" @click="showDrawer">Click Me</d-button>
+  <d-drawer v-model="visible" :before-close="onBeforeClose" style="padding: 20px;">Delay Close</d-drawer>
+</template>
 
-| 名称 | 类型 | 说明 | 跳转 Demo |
-| :--: | :---------: | :------: | :-------: |
-| default | 默认 | 抽屉板内容 | [自定义模板](#自定义模板) |
-| header  | 头部 | 抽屉板头部 | [自定义模板](#自定义模板) |
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const visible = ref(false);
+    const showDrawer = () => (visible.value = true);
+    const onBeforeClose = (done) => {
+      new Promise((resolve) => {
+        setTimeout(resolve, 1000);
+      }).then(done);
+    };
+
+    return { visible, showDrawer, onBeforeClose };
+  },
+});
+</script>
+```
+
+:::
+
+### 服务方式
+
+:::demo 组件在全局注册了`$drawerService`，可通过服务的方式使用，drawer 的内容通过`content`参数传入。服务返回了用于关闭 drawer 的`close`方法。
+
+```vue
+<template>
+  <d-button variant="solid" color="primary" @click.native="showDrawer()">服务方式</d-button>
+</template>
+
+<script>
+import { defineComponent, h } from 'vue';
+
+export default defineComponent({
+  setup() {
+    function showDrawer() {
+      this.$drawerService.open({
+        content: () => h('div', { style: { padding: '20px' } }, [h('span', {}, ['Open drawer board in service mode'])]),
+      });
+    }
+
+    return { showDrawer };
+  },
+});
+</script>
+```
+
+:::
+
+### d-drawer 参数
+
+| 参数                   | 类型             | 默认    | 说明                                              | 跳转 Demo                 |
+| ---------------------- | ---------------- | ------- | ------------------------------------------------- | ------------------------- |
+| v-model                | `Boolean`        | `false` | 可选，设置抽屉板是否可见                          | [基本用法](#基本用法)     |
+| position               | `String`         | `right` | 可选，抽屉板出现的位置，'left'或者'right'         | [左侧弹出](#左侧弹出)     |
+| show-overlay           | `Boolean`        | `true`  | 可选，是否有遮罩层                                | [基本用法](#基本用法)     |
+| lock-scroll            | `Boolean`        | `true`  | 可选，是否锁定滚动                                | [背景滚动](#背景滚动)     |
+| z-index                | `Number`         | `1000`  | 可选，设置 drawer 的 z-index 值                   | [基本用法](#基本用法)     |
+| esc-key-closeable      | `Boolean`        | `true`  | 可选，设置可否通过 esc 按键来关闭 drawer 层       | [基本用法](#基本用法)     |
+| close-on-click-overlay | `Boolean`        | `true`  | 可选，设置可否通过点击背景来关闭 drawer 层        | [基本用法](#基本用法)     |
+| before-close           | `(done) => void` | `-`     | 可选，关闭窗口前的回调，调用 `done` 可关闭 drawer | [关闭前回调](#关闭前回调) |
+
+### d-drawer 事件
+
+| 事件名 | 类型 | 说明              |
+| ------ | ---- | ----------------- |
+| open   | `-`  | drawer 打开时触发 |
+| close  | `-`  | drawer 关闭时触发 |
+
+### d-drawer 插槽
+
+| 名称    | 类型 | 说明       | 跳转 Demo             |
+| ------- | ---- | ---------- | --------------------- |
+| default | 默认 | 抽屉板内容 | [基本用法](#基本用法) |

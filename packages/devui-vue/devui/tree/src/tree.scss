@@ -13,11 +13,36 @@ $keyframe-blue: #5e7ce0;
   white-space: nowrap;
 }
 
+.devui-tree-indicator {
+  height: 1px;
+  background-color: $devui-brand;
+  position: absolute;
+}
+
 .devui-tree-node {
   color: $devui-text-weak;
   line-height: 1.5;
   white-space: nowrap;
   position: relative;
+
+  .devui-drop {
+    &-draggable {
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid transparent;
+    }
+
+    &-inner {
+      color: $devui-brand;
+    }
+
+    &-prev {
+      border-top: 1px solid $devui-brand;
+    }
+
+    &-next {
+      border-bottom: 1px solid $devui-brand;
+    }
+  }
 
   .devui-tree-node__content {
     display: inline-flex;
@@ -148,6 +173,13 @@ $keyframe-blue: #5e7ce0;
     .devui-tree-node__folder--default {
       color: #f2b806;
     }
+  }
+
+  &__indent {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
   }
 
   .devui-loading-children {
@@ -307,8 +339,4 @@ $keyframe-blue: #5e7ce0;
   color: $devui-disabled-text !important;
   cursor: not-allowed !important;
   background-color: transparent !important;
-}
-
-.devui-tree-node__content {
-  transition: color $devui-animation-duration-fast $devui-animation-ease-in-smooth, background-color $devui-animation-duration-fast $devui-animation-ease-in-smooth;
 }

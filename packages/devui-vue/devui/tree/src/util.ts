@@ -20,7 +20,6 @@ export const flatten = (tree: Array<any>, key = 'children'): Array<any> => {
 const getRandomId = (): string => (Math.random() * 10 ** 9).toString().slice(0,8)
 const preCheckNodeId = (d: TreeItem, postfixId?: string): TreeItem => {
   const randomStr = getRandomId()
-  console.info('randomStr: ', randomStr)
   return { ...d, id: postfixId ? `${postfixId}_${randomStr}` : randomStr }
 }
 export const getId = (id: string): string => {
@@ -34,6 +33,9 @@ export const getId = (id: string): string => {
 export const preCheckTree = (ds: TreeData, postfixId?: string): TreeData => {
   return ds.map(d => {
     const dd = preCheckNodeId(d, postfixId)
+    if (!dd.parentId && postfixId) {
+      dd.parentId = postfixId
+    }
     return d.children ? {
       ...dd,
       children: preCheckTree(d.children, dd.id)

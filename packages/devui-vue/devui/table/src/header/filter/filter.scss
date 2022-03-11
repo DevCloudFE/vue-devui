@@ -4,6 +4,7 @@
   background: $devui-connected-overlay-bg;
   border-radius: $devui-border-radius;
   box-sizing: content-box;
+
   .drop-down-item {
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -53,7 +54,6 @@
 .button-style:hover {
   color: $devui-brand;
 }
-
 
 .normal-filter-list-container {
   overflow-y: auto;

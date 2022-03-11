@@ -930,3 +930,101 @@ export default defineComponent({
 </script>
 ```
 :::
+
+
+### 可拖拽树
+
+:::demo 通过OperableTree的 draggable 属性配置节点的拖拽功能，并支持外部元素拖拽入树。
+
+```vue
+<template>
+  <h6><p>Default</p></h6>
+  <d-tree :data="data" :draggable="true" :dropType="{ dropInner: true }"></d-tree>
+  <h6><p>Sortable</p></h6>
+  <d-tree :data="data" :draggable="true" :dropType="{ dropPrev: true, dropNext: true, dropInner: true }"></d-tree>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const data = ref([
+      {
+        label: 'parent node 1'
+      },
+      {
+        label: 'parent node 2',
+        open: true,
+        children: [
+          {
+            label: 'leaf node 2-1',
+            open: true,
+            children: [
+              {
+                label: 'leaf node 2-1-1'
+              },
+              {
+                label: 'leaf node 2-1-2'
+              }
+            ]
+          },
+          {
+            label: 'leaf node 2-2',
+            children: [
+              {
+                label: 'leaf node 2-2-1'
+              },
+              {
+                label: 'leaf node 2-2-2'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        label: 'parent node 3',
+        open: true,
+        children: [
+          {
+            label: 'leaf node 3-1'
+          },
+          {
+            label: 'leaf node 3-2'
+          }
+        ]
+      },
+      {
+        label: 'parent node 4',
+        open: true,
+        children: [
+          {
+            label: 'leaf node 4-1'
+          },
+          {
+            label: 'leaf node 4-2'
+          }
+        ]
+      },
+      {
+        label: 'parent node 5',
+        open: true,
+        children: [
+          {
+            label: 'leaf node 5-1'
+          },
+          {
+            label: 'leaf node 5-2'
+          }
+        ]
+      }
+    ]);
+    
+    return {
+      data,
+    }
+  }
+})
+</script>
+```
+:::

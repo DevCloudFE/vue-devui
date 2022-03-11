@@ -1,5 +1,5 @@
 import { AccordionMenuItem, AccordionMenuType } from './accordion.type'
-import { ComponentInternalInstance, getCurrentInstance } from "vue"
+import { ComponentInternalInstance, getCurrentInstance } from 'vue'
 
 const flatten = (
     arr: Array<any>,

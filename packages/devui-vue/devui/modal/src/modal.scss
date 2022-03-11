@@ -3,10 +3,36 @@
 @import '../../style/theme/font';
 @import '../../style/theme/animation';
 
-.devui-modal-wrapper {
+.devui-modal-mask {
   justify-content: center;
   align-items: center;
   background-color: $devui-shadow;
+}
+
+.devui-modal {
+  position: relative;
+  width: 300px;
+  background-color: $devui-global-bg-normal;
+
+  .btn-close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #000000;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+
+    &:hover {
+      color: $devui-icon-fill-active-hover;
+      background-color: $devui-list-item-hover-bg;
+    }
+  }
 }
 
 .devui-modal-content {
@@ -14,31 +40,15 @@
   border-radius: $devui-border-radius;
 }
 
-.devui-modal-body {
-  padding: 20px 32px;
-  color: $devui-text-weak;
-}
-
 .devui-modal-header {
-  padding: 32px 32px 0;
+  width: 100%;
   height: 56px;
-  position: relative;
+  padding: 32px 32px 0;
+  font-size: $devui-font-size-card-title;
+  font-weight: bold;
+  box-sizing: border-box;
   border: none;
   user-select: none;
-
-  .btn-close {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    font-size: $devui-font-size-icon;
-    font-weight: 700;
-    line-height: 1;
-    color: #000000;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-    -webkit-appearance: none;
-  }
 
   .header-alert-icon {
     display: inline-block;
@@ -49,10 +59,23 @@
   }
 }
 
+.devui-modal-body {
+  padding: 20px 32px;
+  font-size: $devui-font-size;
+  color: $devui-text-weak;
+  box-sizing: border-box;
+}
+
 .devui-modal-footer {
+  width: 100%;
   border-top: none;
   text-align: center;
   padding: 0 32px 24px;
+  box-sizing: border-box;
+
+  & > * {
+    margin: 0 4px;
+  }
 }
 
 .devui-modal-wipe {

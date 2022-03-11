@@ -127,26 +127,24 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-button :width="220" @click="showLoading1" style="margin-right: 8px; display: inline-block;">
+  <d-button @click="showLoading1" style="margin-right: 8px; display: inline-block; width: 220px;">
     Loading Style 1
   </d-button>
 
   <d-button
-    :width="220"
     v-dLoading="isShowLoading2"
     @click="showLoading2"
     :loadingTemplateRef="temp2"
-    style="margin-right: 8px; display: inline-block;"
+    style="margin-right: 8px; display: inline-block; width: 220px;"
   >
     Loading Style 2
   </d-button>
 
   <d-button
     v-dLoading="true"
-    bsStyle="text"
-    :width="220"
+    variant="text"
     :loadingTemplateRef="temp3"
-    style="margin-right: 8px; display: inline-block;"
+    style="margin-right: 8px; display: inline-block; width: 220px;"
   >
     Loading Style 3
   </d-button>
@@ -259,25 +257,22 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-button :width="220" @click="serviceToBody" style="margin-right: 8px; display: inline-block;">
+  <d-button @click="serviceToBody" style="margin-right: 8px; display: inline-block; width: 220px;">
     click me show full screen loading!
   </d-button>
 
   <d-button
-    :width="200"
     v-if="isShow"
     @click="openTargetLoading"
-    style="margin-right: 8px; display: inline-block;"
+    style="margin-right: 8px; display: inline-block; width: 200px;"
   >
     click me show loading in target!
   </d-button>
 
   <d-button
-    :width="200"
     v-else
-    bsStyle="common"
     @click="closeTargetLoading"
-    style="margin-right: 8px; display: inline-block;"
+    style="margin-right: 8px; display: inline-block; width: 200px;"
   >
     click me close loading in target!
   </d-button>

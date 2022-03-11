@@ -8,19 +8,19 @@
 3. 当需要显示一个操作完成的百分比或已完成的步骤/总步骤时。
 
 ### 基本用法
+基本的进度和文字配置。
 
-
-::: demo 基本的进度和文字配置。
+::: demo
 ```vue
 <template>
-<section class="devui-code-box-demo">
-    <div class="progress-container">
-        <d-progress :percentage="80" percentageText="80%"></d-progress>
-    </div>
-    <div class="progress-container">
-        <d-progress :percentage="30" percentageText="30%" barBgColor="#50D4AB" height="30px"></d-progress>
-    </div>
-</section>
+    <section class="devui-code-box-demo">
+        <div class="progress-container">
+            <d-progress :percentage="80" percentageText="80%"></d-progress>
+        </div>
+        <div class="progress-container">
+            <d-progress :percentage="30" percentageText="30%" barBgColor="#50D4AB" height="30px"></d-progress>
+        </div>
+    </section>
 </template>
 <style>
 .progress-container {
@@ -38,6 +38,8 @@
 :::
 
 ### 圆环用法
+基本的进度和文字配置。
+
 ::: demo
 ```vue
 <template>

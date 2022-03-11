@@ -39,8 +39,8 @@ export default defineComponent({
     const rootSlots = getRootSlots()
     const accordionCtx = inject('accordionContext') as any
 
-    let parentValue = parent.value
-    let deepValue = deepth.value
+    const parentValue = parent.value
+    const deepValue = deepth.value
 
     const toggle = (itemEvent: AccordionMenuToggleEvent) => {
       accordionCtx.menuToggleFn(itemEvent)

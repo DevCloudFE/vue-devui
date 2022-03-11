@@ -1,0 +1,10 @@
+@import '../../styles-var/devui-var.scss';
+
+.devui-list {
+  padding-bottom: 4px;
+  border-radius: $devui-border-radius;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  background-color: $devui-connected-overlay-bg;
+  outline: none;
+}

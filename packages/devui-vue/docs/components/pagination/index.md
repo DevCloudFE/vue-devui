@@ -351,12 +351,12 @@ export default defineComponent({
     :lite="true"
   />
   <div style="display: flex; margin-top: 10px;">
-    <d-button bsStyle="primary" circled="true" size="sm" @click="setLiteTotal(0)" width="200">total = 0</d-button>
-    <d-button bsStyle="common" circled="true" size="sm" @click="setLiteTotal(20)" width="200">total = 20</d-button>
-    <d-button bsStyle="common" circled="true" size="sm" @click="setLiteTotal(30000)" width="200">total = 30000</d-button>
-    <d-button bsStyle="common" circled="true" size="sm" @click="setLiteTotal(100000)" width="200">total = 100000</d-button>
-    <d-button bsStyle="common" circled="true" size="sm" @click="setIndex(2)" width="200">index = 2</d-button>
-    <d-button bsStyle="common" circled="true" size="sm" @click="setIndex(3)" width="200">index = 3</d-button>
+    <d-button size="sm" @click="setLiteTotal(0)" width="200">total = 0</d-button>
+    <d-button size="sm" @click="setLiteTotal(20)" width="200">total = 20</d-button>
+    <d-button size="sm" @click="setLiteTotal(30000)" width="200">total = 30000</d-button>
+    <d-button size="sm" @click="setLiteTotal(100000)" width="200">total = 100000</d-button>
+    <d-button size="sm" @click="setIndex(2)" width="200">index = 2</d-button>
+    <d-button size="sm" @click="setIndex(3)" width="200">index = 3</d-button>
   </div>
 </template>
 <script>

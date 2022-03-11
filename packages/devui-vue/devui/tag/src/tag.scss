@@ -27,7 +27,10 @@ $devui-tag-normal-config: (
     border-color: $devui-danger-line
   ),
   colorful: (
-    background-color: #fff
+    background-color: #ffffff
+  ),
+  deletable: (
+    padding-right: 32px
   )
 );
 
@@ -47,8 +50,7 @@ $devui-tag-normal-config: (
     align-items: center;
     position: relative;
     cursor: default;
-
-    @each $type in default, primary, success, warning, danger, colorful {
+    @each $type in default, primary, success, warning, danger, colorful, deletable {
       &.devui-tag-#{$type} {
         @each $key, $value in map-get($devui-tag-normal-config, $type) {
           #{$key}: $value;
@@ -56,6 +58,7 @@ $devui-tag-normal-config: (
       }
     }
   }
+
   .remove-button {
     display: inline-block;
     margin-left: 12px;
@@ -66,8 +69,13 @@ $devui-tag-normal-config: (
     line-height: 12px;
     border-radius: 50%;
     text-align: center;
-    position: relative;
-    top: -0.22em;
-    vertical-align: middle;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    i {
+      /* 取消icon自带的偏移 */
+      vertical-align: 0;
+    }
   }
 }

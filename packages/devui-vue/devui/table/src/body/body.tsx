@@ -23,7 +23,7 @@ export default defineComponent({
     // 行前的 checkbox
     const tdAttrs = computed(() => isFixedLeft.value ? ({
       class: 'devui-sticky-cell left',
-      style: "left:0;"
+      style: 'left:0;'
     }) : null);
     const renderCheckbox = (index: number) => table.props.checkable ? (
       <td {...tdAttrs.value}>
@@ -61,7 +61,7 @@ const TD = defineComponent({
       type: Number,
     }
   },
-  setup(props: { column: Column, row: any, index: number }) {
+  setup(props: { column: Column; row: any; index: number; }) {
     const column = toRef(props, 'column');
 
     // 固定列

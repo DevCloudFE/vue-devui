@@ -39,8 +39,8 @@ export default defineComponent({
         const percentage = ref(0)
         let left = ref(0)
         let width = ref(0)
-        let max = 100
-        let min = 0
+        const max = 100
+        const min = 0
         let duration = ref('')
 
         const setValue = (value: number | null): void => {

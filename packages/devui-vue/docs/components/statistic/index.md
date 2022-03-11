@@ -15,45 +15,15 @@
       <d-statistic
         title="Users Sales"
         group-separator=","
-        :value="5201314" />
+        :value="5201314">
+      </d-statistic>
     </d-col>
     <d-col :span="12">
       <d-statistic
         title="Account Weekly Sales (CNY)"
         group-separator="."
-        :value="999999" />
-    </d-col>
-  </d-cow>
-</template>
-```
-
-:::
-
-### 在卡片中使用
-
-在卡片中展示统计数值。
-:::demo
-
-```vue
-<template>
-  <d-row :gutter="16">
-    <d-col :span="12">
-      <d-card>
-        <d-statistic title="Growth Rate" :value="68.28" :precision="3" suffix="%">
-          <template #prefix>
-            <d-icon name="experice-new" />
-          </template>
-        </d-statistic>
-      </d-card>
-    </d-col>
-    <d-col :span="12">
-      <d-card>
-        <d-statistic title="Decline Rate" :value="38.3" suffix="%">
-          <template #prefix>
-            <d-icon name="bold" />
-          </template>
-        </d-statistic>
-      </d-card>
+        :value="999999">
+      </d-statistic>
     </d-col>
   </d-row>
 </template>
@@ -117,7 +87,7 @@ export default {
 
 ### 插槽的使用
 
-前缀和后缀插槽
+前缀插槽， 后缀插槽， 额外插槽
 :::demo
 
 ```vue
@@ -125,18 +95,53 @@ export default {
   <d-row :gutter="16">
     <d-col :span="12">
       <d-statistic
-        title="Active User Number"
-        :value="1128"
-        :showGroupSeparator="true"
+        :value="336969"
         style="margin-right: 50px"
+        group-separator=","
+        :value-style="{ fontWeight: 'bold', fontSize: '30px' }"
+        animation
       >
-        <template #suffix>%</template>
+        <template #title>
+          <span :style="{marginRight: '10px' }">文章阅读数</span>
+          <d-icon name="help" />
+        </template>
+        <template #extra>
+          <span :style="{ fontSize: '13px', marginRight: '10px' }">较前日</span>
+          <d-icon color="#F56C6C" name="arrow-down" />
+          <d-statistic
+            style="display: inline-block;"
+            group-separator=","
+            :value-style="{ fontSize: '15px', color: '#F56C6C', letterSpacing: '2px' }"
+            value="1399"
+            animation
+          />
+        </template>
       </d-statistic>
     </d-col>
     <d-col :span="12">
-      <d-statistic title="Scale" value="93">
-        <template #suffix>
-          <span>/ 100</span>
+      <d-statistic
+        :value="5565566"
+        style="margin-right: 50px"
+        group-separator=","
+        :value-style="{ fontWeight: 'bold', fontSize: '30px' }"
+        animation
+        :animation-duration="5000"
+      >
+        <template #title>
+          <span :style="{marginRight: '10px' }">文章点赞数</span>
+          <d-icon name="help" />
+        </template>
+        <template #extra>
+          <span :style="{ fontSize: '13px', marginRight: '10px' }">较前日</span>
+          <d-icon color="#67C23A" name="arrow-up" />
+          <d-statistic
+            style="display: inline-block;"
+            :value-style="{ fontSize: '15px', color: '#67C23A', letterSpacing: '2px' }"
+            value="6669"
+            animation
+            group-separator=","
+            :animation-duration="5000"
+          />
         </template>
       </d-statistic>
     </d-col>
@@ -146,33 +151,37 @@ export default {
 
 :::
 
-### 自定义样式
+### 在卡片中使用
 
-提供自定义属性方便添加样式
+在卡片中展示统计数值。
 :::demo
 
 ```vue
 <template>
   <d-row :gutter="16">
     <d-col :span="12">
-      <d-statistic
-        title="Custom Style"
-        :value="88"
-        :content-style="{ color: '#fba' }"
-        :title-style="{ color: '#abf' }"
-      >
-        <template #suffix>%</template>
-      </d-statistic>
+      <d-card>
+        <d-statistic
+          :value-style="{ color: '#fba' }"
+          title="Growth Rate"
+          :value="68.28"
+          :precision="3"
+          suffix="%"
+        >
+          <template #prefix>
+            <d-icon name="experice-new" />
+          </template>
+        </d-statistic>
+      </d-card>
     </d-col>
     <d-col :span="12">
-      <d-statistic
-        title="Scale"
-        :value="5000"
-        group-separator="."
-        :precision="3"
-        prefix="$"
-        :content-style="{ fontSize: '30px', color: '#5e7ce0'}"
-      >
+      <d-card>
+        <d-statistic :value-style="{ color: '#abf' }" title="Decline Rate" :value="38.3" suffix="%">
+          <template #prefix>
+            <d-icon name="bold" />
+          </template>
+        </d-statistic>
+      </d-card>
     </d-col>
   </d-row>
 </template>
@@ -185,18 +194,14 @@ export default {
 |        参数        |        类型        |   默认   |       说明       |
 | :----------------: | :----------------: | :------: | :--------------: |
 |       title        | `string \| v-slot` |    -     |    数值的标题    |
-|       extra        | `string \| v-slot` |    -     |     额外内容     |
 |       value        | `number \| string` |    -     |     数值内容     |
 |  group-separator   |      `string`      |    -     | 设置千分位标识符 |
 |     precision      |      `number`      |    -     |   设置数值精度   |
 |       suffix       | `string \| v-slot` |    -     |  设置数值的后缀  |
 |       prefix       | `string \| v-slot` |    -     |  设置数值的前缀  |
-|    title-style     |      `style`       |    -     |     标题样式     |
-|   content-style    |      `style`       |    -     |     内容样式     |
+|       extra        | `string \| v-slot` |    -     |     额外内容     |
+|    value-style     |      `style`       |    -     |     内容样式     |
 | animation-duration |      `number`      |   2000   |   动画持续时间   |
-|       delay        |      `number`      |    0     | 延迟进行动画时间 |
 |     value-from     |      `number`      |    0     |    动画初始值    |
 |     animation      |     `boolean`      |  false   |   是否开启动画   |
-|       easing       |      `string`      | quartOut |   数字动画效果   |
-|       start        |     `boolean`      |  false   |   是否开始动画   |
-
+|       start        |     `boolean`      |  true   |   是否开始动画   |

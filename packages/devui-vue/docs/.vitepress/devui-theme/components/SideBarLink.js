@@ -45,11 +45,15 @@ export const SideBarLink = (props) => {
             class: { 'sidebar-link-item': true, active },
             href: link
         }, [
-            status && h('span', {
+            (status && import.meta.env.DEV) && h('span', {
                 class: 'sidebar-link-status',
                 style: `background-color: ${dotColor}`
             }),
-            text,
+            h('span', {
+                class: 'sidebar-link-text'
+            }, [
+                text
+            ])
         ]),
         childItems
     ]);
@@ -67,7 +71,8 @@ function resolveLink(base, path) {
 function createChildren(active, children, headers, depth = 1) {
     if (children && children.length > 0) {
         return h('ul', { class: 'sidebar-links' }, children.map((c) => {
-            return h(SideBarLink, { item: c, depth });
+            const showSidebarItem = import.meta.env.DEV || (import.meta.env.PROD && c.status === '100%');
+            return showSidebarItem && h(SideBarLink, { item: c, depth });
         }));
     }
     return active && headers

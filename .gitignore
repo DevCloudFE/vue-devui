@@ -6,8 +6,8 @@ build
 lib
 types
 *.local
-pnpm-lock.yaml
 package-lock.json
+yarn.lock
 yarn-error.log
 .history
 .vscode
@@ -16,4 +16,3 @@ packages/devui-vue/devui/vue-devui.ts
 packages/devui-vue/devui/theme/theme.scss
 packages/devui-vue/docs/.vitepress/config/sidebar.ts
 packages/devui-vue/docs/.vitepress/config/enSidebar.ts
-yarn.lock

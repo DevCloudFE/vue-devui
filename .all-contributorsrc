@@ -20,7 +20,119 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "TinsFox",
+      "name": "TinsFox",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33956589?v=4",
+      "profile": "https://github.com/TinsFox",
+      "contributions": [
+        "maintenance",
+        "infra"
+      ]
+    },
+    {
+      "login": "lnzhangsong",
+      "name": "nif",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15092594?v=4",
+      "profile": "https://github.com/lnzhangsong",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Zcating",
+      "name": "Zcating",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13329558?v=4",
+      "profile": "https://github.com/Zcating",
+      "contributions": [
+        "maintenance",
+        "code"
+      ]
+    },
+    {
+      "login": "sufuwang",
+      "name": "王凯",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46395105?v=4",
+      "profile": "https://github.com/sufuwang",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "iel-h",
+      "name": "iel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/53589602?v=4",
+      "profile": "https://github.com/iel-h",
+      "contributions": [
+        "maintenance",
+        "code"
+      ]
+    },
+    {
+      "login": "chenxi24",
+      "name": "chenxi24",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40349890?v=4",
+      "profile": "https://github.com/chenxi24",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "asdlml6",
+      "name": "小九九",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61737780?v=4",
+      "profile": "https://github.com/asdlml6",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "AlanLee97",
+      "name": "AlanLee",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42601044?v=4",
+      "profile": "http://blog.alanlee.top",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ForeseeBear",
+      "name": "Echo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15258339?v=4",
+      "profile": "https://github.com/ForeseeBear",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "GaoNeng-wWw",
+      "name": "GaoNeng",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31283122?v=4",
+      "profile": "https://github.com/GaoNeng-wWw",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "xingyan95",
+      "name": "行言",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11143986?v=4",
+      "profile": "https://github.com/xingyan95",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "devin974",
+      "name": "devin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67035714?v=4",
+      "profile": "https://devin974.github.io/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }

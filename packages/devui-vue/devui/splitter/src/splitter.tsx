@@ -25,7 +25,7 @@ export default defineComponent({
 
     const domRef = ref<HTMLElement>()
     const refreshSplitterContainerSize = () => {
-      if (!domRef) return
+      if (!domRef.value) return
       let containerSize = 0
       if (props.orientation === 'vertical') {
         containerSize = domRef.value.clientHeight

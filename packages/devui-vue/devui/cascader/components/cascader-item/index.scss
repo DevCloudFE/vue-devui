@@ -9,15 +9,18 @@
     color: $devui-text;
     cursor: pointer;
     @include flex(flex-start);
+
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
   }
+
   .cascader-li__wraper {
     flex: 1;
     @include flex(flex-start);
   }
+
   .dropdown-item-label {
     display: inline-block;
     flex: 1;
@@ -49,6 +52,7 @@
       margin-right: 4px;
       font-size: $devui-font-size-icon;
       color: $devui-text;
+
       &.disabled {
         color: $devui-disabled-text !important;
       }
