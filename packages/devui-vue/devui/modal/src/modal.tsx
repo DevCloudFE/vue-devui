@@ -1,62 +1,38 @@
-import {
-  computed,
-  defineComponent,
-  Transition,
-} from 'vue'
-import { modalProps, ModalProps } from './modal-types'
-import { FixedOverlay } from '../../overlay'
+import { defineComponent, toRefs, Transition } from 'vue';
+import { modalProps, ModalProps } from './modal-types';
+import { Icon } from '../../icon';
+import { FixedOverlay } from '../../overlay';
+import { useModal } from './use-modal';
+import DModalHeader from './header';
+import DModalBody from './body';
 import './modal.scss';
 
 export default defineComponent({
   name: 'DModal',
+  inheritAttrs: false,
   props: modalProps,
-  emits: ['onUpdate:modelValue'],
-  setup(props: ModalProps, ctx) {
-    const animatedVisible = computed(() => {
-      return props.showAnimation ? props.modelValue : true;
-    });
-
-    // 处理取消事件
-    const onVisibleChange = (value: boolean) => {
-      const update = props['onUpdate:modelValue'];
-      if (value) {
-        update?.(value);
-      } else {
-        const beforeHidden = props.beforeHidden;
-        const close = (enabledClose: boolean) => {
-          if (enabledClose) {
-            update?.(false);
-            props.onClose?.();
-          }
-        }
-        // true: 确认关闭
-        // false: 仍然开启
-        const result = (typeof beforeHidden === 'function' ? beforeHidden() : beforeHidden) ?? true;
-        if (result instanceof Promise) {
-          result.then(close);
-        } else {
-          close(result);
-        }
-      }
-    }
-
-    ctx.expose({ onVisibleChange });
+  emits: ['update:modelValue'],
+  setup(props: ModalProps, { slots, attrs, emit, expose }) {
+    const { modelValue, lockScroll, closeOnClickOverlay, title } = toRefs(props);
+    const { handleVisibleChange } = useModal(props, emit);
+    expose({ handleVisibleChange });
 
     return () => (
       <FixedOverlay
-        visible={props.modelValue}
-        onUpdate:visible={onVisibleChange}
-        backgroundClass="devui-modal-wrapper"
-        // overlay feature
-        // backgroundStyle={{ zIndex: props.backdropZIndex }}
-        backgroundBlock={!props.bodyScrollable}
-        backdropClose={props.backdropCloseable}
-      >
-        <Transition name="devui-modal-wipe">
-          {animatedVisible.value ? ctx.slots.default?.() : null}
+        visible={modelValue.value}
+        onUpdate:visible={handleVisibleChange}
+        background-class='devui-modal-mask'
+        background-block={lockScroll.value}
+        backdrop-close={closeOnClickOverlay.value}>
+        <Transition name='devui-modal-wipe'>
+          <div class='devui-modal' {...attrs}>
+            <Icon name='close' class='btn-close' size='var(--devui-font-size-md,12px)' onClick={() => handleVisibleChange(false)}></Icon>
+            {slots.header ? slots.header() : title.value && <DModalHeader>{title.value}</DModalHeader>}
+            <DModalBody>{slots.default?.()}</DModalBody>
+            {slots.footer?.()}
+          </div>
         </Transition>
       </FixedOverlay>
-    )
-  }
-})
-
+    );
+  },
+});
