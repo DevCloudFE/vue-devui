@@ -1,33 +1,25 @@
-import { InjectionKey, Slot } from 'vue';
+import type { InjectionKey, Slot } from 'vue';
 import { ModalProps } from '../modal-types';
 import { CommonModalService, ModalOpenResult } from './common-modal-service';
-import Modal from '../modal';
+import DModal from '../modal';
+
+let vm;
 
 export interface ModalOptions {
-  width: string
-  maxHeight: string
-  zIndex: number
-  backdropZIndex: number
-  placement: 'center' | 'top' | 'bottom'
-  offsetX: string
-  offsetY: string
-  showAnimation: boolean
-  backdropCloseable: boolean
-  escapeable: boolean
-  bodyScrollable: boolean
-  content: Slot
-
-  onClose(): void
-  beforeHidden: (() => boolean | Promise<boolean>) | Promise<boolean>
+  title?: string;
+  lockScroll?: boolean;
+  closeOnClickOverlay?: boolean;
+  header: Slot;
+  content: Slot;
+  footer: Slot;
+  beforeClose: (done: () => void) => void;
 }
 
-
 export class ModalService extends CommonModalService<ModalOptions, ModalProps> {
-
   static token = 'MODAL_SERVICE_TOKEN' as unknown as InjectionKey<ModalService>;
 
-  component(): any {
-    return Modal;
+  component(): unknown {
+    return DModal;
   }
 
   open(props: Partial<ModalOptions> = {}): ModalOpenResult {
@@ -35,25 +27,28 @@ export class ModalService extends CommonModalService<ModalOptions, ModalProps> {
     const anchor = document.createElement('div');
     this.anchorContainer.appendChild(anchor);
 
-    const { content, ...resProps } = props;
+    const { header, content, footer, ...resProps } = props;
 
     const needHideOrNot = (value: boolean) => {
       if (!value) {
         hide();
       }
-    }
+    };
     const renderOrigin = (props: typeof resProps, onUpdateModelValue = needHideOrNot) => {
-      return this.renderModal(anchor, {
-        ...props,
-        modelValue: true,
-        'onUpdate:modelValue': onUpdateModelValue
-      }, { default: content });
-    }
-
+      return this.renderModal(
+        anchor,
+        {
+          ...props,
+          modelValue: true,
+          'onUpdate:modelValue': onUpdateModelValue,
+        },
+        { header, default: content, footer }
+      );
+    };
 
     // 隐藏按钮
     const hide = () => {
-      const vnode = renderOrigin(resProps, (value: boolean) => {
+      renderOrigin(resProps, (value: boolean) => {
         if (!value) {
           this.renderModal(anchor, { ...resProps, modelValue: false });
           this.renderNull(anchor);
@@ -61,16 +56,15 @@ export class ModalService extends CommonModalService<ModalOptions, ModalProps> {
           renderOrigin(resProps);
         }
       });
-      vnode.component.exposed.onVisibleChange?.(false);
-    }
-
+      vm.component.exposed.handleVisibleChange?.(false);
+    };
 
     // 先渲染一次，触发动画用
     this.renderModal(anchor, { modelValue: false });
 
     // 再渲染详细内容
-    renderOrigin(resProps);
+    vm = renderOrigin(resProps);
 
-    return { hide }
+    return { hide };
   }
 }
