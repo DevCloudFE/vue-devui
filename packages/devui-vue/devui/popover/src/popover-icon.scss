@@ -1,0 +1,48 @@
+@import '../../styles-var/devui-var.scss';
+
+.devui-popover-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+
+  .devui-icon.devui-icon-success > g {
+    & > path {
+      fill: $devui-success;
+    }
+
+    & > circle,
+    & > polygon {
+      fill: $devui-light-text;
+    }
+  }
+
+  .devui-icon.devui-icon-warning > g {
+    & > path {
+      fill: $devui-warning;
+    }
+
+    & > polygon {
+      fill: $devui-light-text;
+    }
+  }
+
+  .devui-icon.devui-icon-info > g {
+    & > g {
+      fill: $devui-info;
+    }
+
+    & > circle {
+      fill: $devui-light-text;
+    }
+  }
+
+  .devui-icon.devui-icon-error > g {
+    & > path {
+      fill: $devui-danger;
+    }
+
+    & > circle {
+      fill: $devui-light-text;
+    }
+  }
+}
