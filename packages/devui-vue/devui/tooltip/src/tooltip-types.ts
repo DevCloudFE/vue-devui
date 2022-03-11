@@ -1,27 +1,36 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
 
-export type TTooltip = 'top' | 'right' | 'bottom' | 'left';
+export type BasePlacement = 'top' | 'right' | 'bottom' | 'left';
 
 export const tooltipProps = {
-  position: {
+  content: {
     type: String,
-    default: 'top'
+    default: '',
+  },
+  position: {
+    type: [String, Array] as PropType<BasePlacement | Array<BasePlacement>>,
+    default: 'top',
   },
   showAnimation: {
     type: Boolean,
-    default: true
-  },
-  content: {
-    type: String
-  },
-  mouseLeaveDelay: {
-    type: String,
-    default: '150'
+    default: true,
   },
   mouseEnterDelay: {
-    type: String,
-    default: '100'
-  }
-} as const
+    type: Number,
+    default: 150,
+  },
+  mouseLeaveDelay: {
+    type: Number,
+    default: 100,
+  },
+};
 
-export type TooltipProps = ExtractPropTypes<typeof tooltipProps>
+export type TooltipProps = ExtractPropTypes<typeof tooltipProps>;
+
+export type UseTooltipFn = {
+  visible: Ref<boolean>;
+  placement: Ref<BasePlacement>;
+  positionArr: ComputedRef<BasePlacement[]>;
+  overlayStyles: ComputedRef<Record<string, string>>;
+  onPositionChange: (pos: BasePlacement) => void;
+};
