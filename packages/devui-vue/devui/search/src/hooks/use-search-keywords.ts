@@ -3,7 +3,7 @@
  */
 import { ref, watch, computed, SetupContext } from 'vue';
 import { SearchProps, KeywordsReturnTypes } from '../search-types';
-type EmitProps = 'update:modelValue' | 'search-fn';
+type EmitProps = 'update:modelValue' | 'search';
 
 export const keywordsHandles = (ctx: SetupContext<EmitProps[]>, props: SearchProps): KeywordsReturnTypes => {
   const keywords = ref('');

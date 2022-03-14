@@ -14,13 +14,13 @@
 <template>
   <div>
     Small
-    <d-search size="sm" auto-focus style="width: 200px" @search-fn="onSearch"></d-search>
+    <d-search size="sm" auto-focus style="width: 200px" @search="onSearch"></d-search>
     Middle
-    <d-search style="width: 200px" is-keyup-search :delay="1000" @search-fn="onSearch"></d-search>
+    <d-search style="width: 200px" is-keyup-search :delay="1000" @search="onSearch"></d-search>
     Large
-    <d-search size="lg" style="width: 200px" @search-fn="onSearch"></d-search>
+    <d-search size="lg" style="width: 200px" @search="onSearch"></d-search>
     Disabled
-    <d-search disabled style="width: 200px" @search-fn="onSearch"></d-search>
+    <d-search disabled style="width: 200px" @search="onSearch"></d-search>
   </div>
 </template>
 <script>
@@ -103,13 +103,13 @@ export default defineComponent({
 | delay           | `number`         | 300     | 可选，debounceTime 的延迟                      | [基本用法](#基本用法)         |            |
 | disabled        | `boolean`        | false   | 可选，输入框是否被禁用                         | [基本用法](#基本用法)         |            |
 | auto-focus      | `boolean`        | false   | 可选，输入框是否自动对焦                       | [基本用法](#基本用法)         |            |
-| is-keyup-search | `boolean`        | false   | 可选，是否支持输入值立即触发 `search-fn`       | [基本用法](#基本用法)         |            |
+| is-keyup-search | `boolean`        | false   | 可选，是否支持输入值立即触发 `search`          | [基本用法](#基本用法)         |            |
 | icon-position   | `string`         | 'right' | 可选，搜索图标位置，有两种选择'left' / 'right' | [搜索图标左置](#搜索图标左置) |            |
 | no-border       | `boolean`        | false   | 可选，是否显示边框                             | [无边框](#无边框)             |            |
 | css-class       | `string`         | ''      | 可选，支持传入类名到输入框上                   | [双向绑定](#双向绑定)         |            |
 
 ### d-search 事件
 
-| 事件      | 类型     | 说明                                                 | 跳转 Demo             |
-| --------- | -------- | ---------------------------------------------------- | --------------------- |
-| search-fn | `string` | 回车或点击搜索按钮触发的回调函数，返回文本框输入的值 | [基本用法](#基本用法) |
+| 事件   | 类型     | 说明                                                 | 跳转 Demo             |
+| ------ | -------- | ---------------------------------------------------- | --------------------- |
+| search | `string` | 回车或点击搜索按钮触发的回调函数，返回文本框输入的值 | [基本用法](#基本用法) |

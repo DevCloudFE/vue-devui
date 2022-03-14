@@ -5,11 +5,11 @@ import { SetupContext, Ref } from 'vue';
 import { KeydownReturnTypes, SearchProps } from '../search-types';
 import { debounce } from 'lodash';
 
-type EmitProps = 'update:modelValue' | 'search-fn';
+type EmitProps = 'update:modelValue' | 'search';
 
 export const keydownHandles = (ctx: SetupContext<EmitProps[]>, keywords: Ref<string>, props: SearchProps): KeydownReturnTypes => {
   const useEmitKeyword = debounce((value: string) => {
-    ctx.emit('search-fn', value);
+    ctx.emit('search', value);
   }, props.delay);
   const handleEnter = ($event: KeyboardEvent) => {
     if ($event.target instanceof HTMLInputElement) {
@@ -19,7 +19,7 @@ export const keydownHandles = (ctx: SetupContext<EmitProps[]>, keywords: Ref<str
   };
   const onClickHandle = () => {
     if (!props.disabled) {
-      ctx.emit('search-fn', keywords.value);
+      ctx.emit('search', keywords.value);
     }
   };
   const KEYS_MAP: { [key: string]: ($event: KeyboardEvent) => void } = {

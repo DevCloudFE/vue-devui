@@ -9,7 +9,7 @@ import './search.scss';
 export default defineComponent({
   name: 'DSearch',
   props: searchProps,
-  emits: ['update:modelValue', 'search-fn'],
+  emits: ['update:modelValue', 'search'],
   setup(props: SearchProps, ctx) {
     const rootClasses = getRootClass(props);
     const { keywords, clearIconShow, onClearHandle } = keywordsHandles(ctx, props);
