@@ -1,6 +1,6 @@
 interface BindingType {
   value: {
-    enableDrop?: boolean
+    droppable?: boolean
     isSingle?: boolean
     onFileDrop?: (files: File[]) => void
     onFileOver?: (event: any) => void
@@ -71,8 +71,8 @@ const onDrop = (el: HTMLElement, binding: BindingType) => {
 
 const fileDropDirective = {
   mounted: (el: HTMLElement, binding: BindingType): void => {
-    const { enableDrop } = binding.value
-    if (!enableDrop) {
+    const { droppable } = binding.value
+    if (!droppable) {
       return
     }
     onDragOver(el, binding)

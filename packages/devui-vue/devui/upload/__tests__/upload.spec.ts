@@ -60,7 +60,7 @@ describe('upload', () => {
     const wrapper = mount(TestComponent)
     expect(wrapper.find('.devui-input-group.disabled').exists()).toBe(true)
   })
-  it('should work with `before-upload auto-upload withoutBtn` prop', async () => {
+  it('should work with `before-upload auto-upload` prop', async () => {
     const beforeUpload = jest.fn(async () => true)
 
     const TestComponent = {
@@ -73,7 +73,6 @@ describe('upload', () => {
           v-model:uploaded-files="uploadedFiles"
           :before-upload="beforeUpload"
           :auto-upload="true"
-          :withoutBtn="true"
         />
         `,
       setup() {
@@ -105,7 +104,7 @@ describe('upload', () => {
     expect(beforeUpload).toHaveBeenCalled()
     expect(wrapper.find('.devui-upload button').exists()).toBe(false)
   })
-  it('should work with `placeholderText uploadText` prop', async () => {
+  it('should work with `placeholderText` prop', async () => {
     const TestComponent = {
       components: {
         'd-upload': DUpload
@@ -115,7 +114,6 @@ describe('upload', () => {
           :upload-options="uploadOptions"
           v-model:uploaded-files="uploadedFiles"
           placeholderText="select file"
-          uploadText="upload"
         />
         `,
       setup() {
