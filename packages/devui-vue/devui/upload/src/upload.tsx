@@ -1,4 +1,5 @@
 import { defineComponent, toRefs, ref } from 'vue';
+import { NotificationService } from '../../notification';
 import { UploadStatus, UploadProps, uploadProps } from './upload-types';
 import { useSelectFiles } from './composables/use-select-files';
 import { useUpload } from './composables/use-upload';
@@ -30,7 +31,10 @@ export default defineComponent({
     const isDropOVer = ref(false);
     const uploadTips = ref('');
     const alertMsg = (errorMsg: string) => {
-      alert(errorMsg);
+      NotificationService.open({
+        type: 'warning',
+        content: errorMsg,
+      });
     };
     const checkValid = () => {
       let totalFileSize = 0;
