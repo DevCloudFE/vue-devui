@@ -2,7 +2,7 @@
 
 选项卡切换组件。
 
-### 何时使用
+#### 何时使用
 
 用户需要通过平级的区域将大块内容进行收纳和展现，保持界面整洁。
 
@@ -31,9 +31,9 @@ export default defineComponent({
   setup() {
     const id = ref('tab1');
     return {
-      id
+      id,
     };
-  }
+  },
 });
 </script>
 ```
@@ -65,9 +65,9 @@ export default defineComponent({
   setup() {
     const id = ref('tab1');
     return {
-      id
+      id,
     };
-  }
+  },
 });
 </script>
 ```
@@ -99,9 +99,9 @@ export default defineComponent({
   setup() {
     const id = ref('tab1');
     return {
-      id
+      id,
     };
-  }
+  },
 });
 </script>
 ```
@@ -133,9 +133,9 @@ export default defineComponent({
   setup() {
     const id = ref('tab1');
     return {
-      id
+      id,
     };
-  }
+  },
 });
 </script>
 ```
@@ -167,9 +167,9 @@ export default defineComponent({
   setup() {
     const id = ref('tab1');
     return {
-      id
+      id,
     };
-  }
+  },
 });
 </script>
 ```
@@ -201,9 +201,9 @@ export default defineComponent({
   setup() {
     const id = ref('tab2');
     return {
-      id
+      id,
     };
-  }
+  },
 });
 </script>
 ```
@@ -216,12 +216,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tabs
-    type="tabs"
-    v-model="id"
-    :beforeChange="beforeChange"
-    @activeTabChange="activeTabChange"
-  >
+  <d-tabs type="tabs" v-model="id" :before-change="beforeChange" @active-tab-change="activeTabChange">
     <d-tab id="tab1" title="Tab1" tabId="tab1">
       <p>Tab1 Content</p>
     </d-tab>
@@ -253,9 +248,9 @@ export default defineComponent({
     return {
       id,
       beforeChange,
-      activeTabChange
+      activeTabChange,
     };
-  }
+  },
 });
 </script>
 ```
@@ -270,15 +265,15 @@ export default defineComponent({
 <template>
   <d-tabs type="tabs" v-model="id">
     <d-tab id="tab1" title="Tab1" tabId="tab1">
-      <template v-slot:dTabTitle> 就是这样 </template>
+      <template v-slot:title> 就是这样 </template>
       <p>Tab1 Content</p>
     </d-tab>
     <d-tab id="tab2" title="Tab2" tabId="tab2">
-      <template v-slot:dTabTitle> 就是这样1 </template>
+      <template v-slot:title> 就是这样1 </template>
       <p>Tab2 Content</p>
     </d-tab>
     <d-tab id="tab3" title="Tab3" tabId="tab3">
-      <template v-slot:dTabTitle> 就是这样2 </template>
+      <template v-slot:title> 就是这样2 </template>
       <p>Tab3 Content</p>
     </d-tab>
   </d-tabs>
@@ -290,37 +285,43 @@ export default defineComponent({
   setup() {
     const id = ref('tab3');
     return {
-      id
+      id,
     };
-  }
+  },
 });
 </script>
 ```
 
 :::
 
-### API
+### d-tabs 参数
 
-|     参数     |                      类型                       |  默认  |                                                 说明                                                  |     |
-| :----------: | :---------------------------------------------: | :----: | :---------------------------------------------------------------------------------------------------: | --- |
-|     type     | `tabs \| pills \| options \| wrapped \| slider` | 'tabs' |                                         可选，选项卡组的类型                                          |
-| showContent  |                    `boolean`                    |  true  |                                    可选，是否显示选项卡对应的内容                                     |
-|   v-model    |                    `string`                     |   --   |                                可选，当前激活的选项卡，值为选项卡的 id                                |
-| customWidth  |                    `string`                     |   --   |                                        可选，自定义选项卡的宽                                         |
-|   vertical   |                    `boolean`                    | false  |                                           可选，是否垂直显                                            |
-| beforeChange |               `function\|Promise`               |   --   |                tab 切换前的回调函数,返回 boolean 类型，返回 false 可以阻止 tab 的切换                 |
-| reactivable  |                    `boolean`                    | false  | 可选，点击当前处于激活态的 tab 时是否触发`activeTabChange`事件，`true`为允许触发，`false`为不允许触发 |
+| 参数          | 类型                                            | 默认   | 说明                                                                                                    |     |
+| ------------- | ----------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------- | --- |
+| type          | `tabs \| pills \| options \| wrapped \| slider` | 'tabs' | 可选，选项卡组的类型                                                                                    |
+| show-content  | `boolean`                                       | true   | 可选，是否显示选项卡对应的内容                                                                          |
+| v-model       | `string`                                        | --     | 可选，当前激活的选项卡，值为选项卡的 id                                                                 |
+| custom-width  | `string`                                        | --     | 可选，自定义选项卡的宽                                                                                  |
+| vertical      | `boolean`                                       | false  | 可选，是否垂直显                                                                                        |
+| before-change | `function\|Promise`                             | --     | tab 切换前的回调函数,返回 boolean 类型，返回 false 可以阻止 tab 的切换                                  |
+| reactivable   | `boolean`                                       | false  | 可选，点击当前处于激活态的 tab 时是否触发`active-tab-change`事件，`true`为允许触发，`false`为不允许触发 |
 
 ### d-tabs 事件
 
-|      参数       |            类型            | 说明                                                |
-| :-------------: | :------------------------: | :-------------------------------------------------- |
-| activeTabChange | `function(string\|number)` | 可选，选项卡切换的回调函数，返回当前激活选项卡的 id |
+| 参数              | 类型                       | 说明                                                |
+| ----------------- | -------------------------- | --------------------------------------------------- |
+| active-tab-change | `function(string\|number)` | 可选，选项卡切换的回调函数，返回当前激活选项卡的 id |
 
 ### d-tab 参数
 
-|   参数   |       类型       | 默认  | 说明                                   |
-| :------: | :--------------: | :---: | :------------------------------------- |
-|    id    | `number\|string` |  --   | 可选，选项卡的 id 值, 需要设置为唯一值 |
-|  title   |     `string`     |  --   | 可选，选项卡的标题                     |
-| disabled |    `boolean`     | false | 可选，选项卡是否不可用                 |
+| 参数     | 类型             | 默认  | 说明                                   |
+| -------- | ---------------- | ----- | -------------------------------------- |
+| id       | `number\|string` | --    | 可选，选项卡的 id 值, 需要设置为唯一值 |
+| title    | `string`         | --    | 可选，选项卡的标题                     |
+| disabled | `boolean`        | false | 可选，选项卡是否不可用                 |
+
+### d-tab 插槽
+
+| 名称  | 说明             |
+| ----- | ---------------- |
+| title | 自定义选项卡标题 |
