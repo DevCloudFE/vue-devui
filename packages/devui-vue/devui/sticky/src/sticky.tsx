@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, reactive, ref, watch, PropType } from 'vue'
+import { defineComponent, onMounted, reactive, ref, watch, PropType } from 'vue';
 
 
 export default defineComponent({
@@ -12,7 +12,7 @@ export default defineComponent({
     },
     view: {
       type: Object,
-      default: () => { return { top: 0, bottom: 0 } },
+      default: () => { return { top: 0, bottom: 0 }; },
     },
     scrollTarget: {
       type: Object as PropType<Element>
@@ -20,64 +20,64 @@ export default defineComponent({
   },
   emits: ['statusChange'],
   setup(props, ctx) {
-    const { slots } = ctx
-    let container: Element
-    let scrollTarget: Element | Window
+    const { slots } = ctx;
+    let container: Element;
+    let scrollTarget: Element | Window;
 
-    let scrollTimer: any
-    let scrollPreStart: number | null
+    let scrollTimer: any;
+    let scrollPreStart: number | null;
 
     const THROTTLE_DELAY = 16;
     const THROTTLE_TRIGGER = 100;
 
-    let parentNode: Element
-    let containerLeft = 0
+    let parentNode: Element;
+    let containerLeft = 0;
 
     const state = reactive({
       status: 'normal'
-    })
+    });
 
     watch(
       () => props.zIndex,
       () => {
-        init()
+        init();
       }
     );
     watch(
       () => props.container,
       () => {
-        init()
+        init();
       }
     );
     watch(
       () => props.scrollTarget,
       () => {
-        init()
+        init();
       }
     );
     watch(
       () => state.status,
       () => {
-        ctx.emit('statusChange', state.status)
+        ctx.emit('statusChange', state.status);
       },
       { immediate: true }
     );
 
     const init = () => {
-      parentNode = stickyRef.value.parentElement
+      parentNode = stickyRef.value.parentElement;
       if (!props.container) {
         container = parentNode;
       } else {
-        container = props.container
+        container = props.container;
       }
 
-      stickyRef.value.style.zIndex = props.zIndex
+      stickyRef.value.style.zIndex = props.zIndex;
 
       scrollTarget = props.scrollTarget || window;
       scrollTarget.addEventListener('scroll', throttle);
 
       initScrollStatus(scrollTarget);
-    }
+    };
 
     // 初始化，判断位置，如果有滚用动则用handler处理
     const initScrollStatus = (target: any) => {
@@ -92,45 +92,45 @@ export default defineComponent({
       if (flag) {
         setTimeout(scrollHandler);
       }
-    }
+    };
 
 
     const statusProcess = (status: any) => {
-      const wrapper = stickyRef.value || document.createElement('div')
+      const wrapper = stickyRef.value || document.createElement('div');
       switch (status) {
-        case 'normal':
-          wrapper.style.top = 'auto';
-          wrapper.style.left = 'auto';
-          wrapper.style.position = 'static';
-          break;
-        case 'follow':
-          const scrollTargetElement: any = scrollTarget
-          const viewOffset = scrollTarget && scrollTarget !== window ?
-            scrollTargetElement.getBoundingClientRect().top : 0;
-          wrapper.style.top = +viewOffset + ((props.view && props.view.top) || 0) + 'px';
-          wrapper.style.left = wrapper.getBoundingClientRect().left + 'px';
-          wrapper.style.position = 'fixed';
-          break;
-        case 'stay':
+      case 'normal':
+        wrapper.style.top = 'auto';
+        wrapper.style.left = 'auto';
+        wrapper.style.position = 'static';
+        break;
+      case 'follow':
+        const scrollTargetElement: any = scrollTarget;
+        const viewOffset = scrollTarget && scrollTarget !== window ?
+          scrollTargetElement.getBoundingClientRect().top : 0;
+        wrapper.style.top = +viewOffset + ((props.view && props.view.top) || 0) + 'px';
+        wrapper.style.left = wrapper.getBoundingClientRect().left + 'px';
+        wrapper.style.position = 'fixed';
+        break;
+      case 'stay':
+        wrapper.style.top = calculateRelativePosition(wrapper, parentNode, 'top') + 'px';
+        wrapper.style.left = 'auto';
+        wrapper.style.position = 'relative';
+        break;
+      case 'remain':
+        if (wrapper.style.position !== 'fixed' && wrapper.style.position !== 'absolute') {
           wrapper.style.top = calculateRelativePosition(wrapper, parentNode, 'top') + 'px';
           wrapper.style.left = 'auto';
-          wrapper.style.position = 'relative';
-          break;
-        case 'remain':
-          if (wrapper.style.position !== 'fixed' && wrapper.style.position !== 'absolute') {
-            wrapper.style.top = calculateRelativePosition(wrapper, parentNode, 'top') + 'px';
-            wrapper.style.left = 'auto';
-            wrapper.style.position = 'absolute';
-          }
-          wrapper.style.top =
+          wrapper.style.position = 'absolute';
+        }
+        wrapper.style.top =
             calculateRemainPosition(wrapper, parentNode, container) + 'px';
-          wrapper.style.left = calculateRelativePosition(wrapper, parentNode, 'left') + 'px';
-          wrapper.style.position = 'relative';
-          break;
-        default:
-          break;
+        wrapper.style.left = calculateRelativePosition(wrapper, parentNode, 'left') + 'px';
+        wrapper.style.position = 'relative';
+        break;
+      default:
+        break;
       }
-    }
+    };
 
     const throttle = () => {
       const fn = scrollAndResizeHock;
@@ -152,7 +152,7 @@ export default defineComponent({
           scrollTimer = null;
         }, THROTTLE_DELAY);
       }
-    }
+    };
 
     const scrollAndResizeHock = () => {
       if (container.getBoundingClientRect().left - (containerLeft || 0) !== 0) {
@@ -161,11 +161,11 @@ export default defineComponent({
       } else {
         scrollHandler();
       }
-    }
+    };
 
     const scrollHandler = () => {
-      const scrollTargetElement: any = scrollTarget
-      const wrapper = stickyRef.value || document.createElement('div')
+      const scrollTargetElement: any = scrollTarget;
+      const wrapper = stickyRef.value || document.createElement('div');
       const viewOffsetTop = scrollTarget && scrollTarget !== window ?
         scrollTargetElement.getBoundingClientRect().top : 0;
       const computedStyle = window.getComputedStyle(container);
@@ -199,7 +199,7 @@ export default defineComponent({
         state.status = 'follow';
         statusProcess(state.status);
       }
-    }
+    };
 
 
     const calculateRelativePosition = (element: any, relativeElement: any, direction: 'left' | 'top') => {
@@ -216,7 +216,7 @@ export default defineComponent({
           parseInt(computedStyle[direction === 'left' ? 'borderLeftWidth' : 'borderTopWidth'], 10)
         );
       }
-    }
+    };
 
     const calculateRemainPosition = (element: any, relativeElement: any, container: any) => {
       if (window && window.getComputedStyle) {
@@ -232,13 +232,13 @@ export default defineComponent({
           parseInt(computedStyle['borderBottomWidth'], 10);
         return result < 0 ? 0 : result;
       }
-    }
+    };
 
     onMounted(() => {
-      init()
-    })
+      init();
+    });
 
-    const stickyRef = ref()
+    const stickyRef = ref();
 
 
     return () => {
@@ -246,7 +246,7 @@ export default defineComponent({
         <div ref={stickyRef}>
           {slots.default ? slots.default() : ''}
         </div>
-      )
-    }
+      );
+    };
   }
-})
+});

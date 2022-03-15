@@ -47,8 +47,8 @@ export default defineComponent({
             ))}
           </tr>
         </thead>
-      )
-    }
+      );
+    };
   }
 });
 
@@ -59,7 +59,7 @@ const Th = defineComponent({
       required: true
     }
   },
-  setup(props: { column: Column; }) {
+  setup(props: { column: Column }) {
     const table = inject(TABLE_TOKEN);
     const { column } = toRefs(props);
 
@@ -84,6 +84,6 @@ const Th = defineComponent({
         </div>
         {props.column.sortable && <Sort v-model={directionRef.value} />}
       </th>
-    )
+    );
   }
 });

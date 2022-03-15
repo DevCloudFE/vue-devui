@@ -1,7 +1,7 @@
-import { defineComponent, toRefs, ref, watch, onUnmounted } from 'vue'
-import { tagProps, TagProps } from './tag-types'
-import { useClass, useColor } from './hooks'
-import './tag.scss'
+import { defineComponent, toRefs, ref, watch, onUnmounted } from 'vue';
+import { tagProps, TagProps } from './tag-types';
+import { useClass, useColor } from './hooks';
+import './tag.scss';
 // 类型声明
 
 export default defineComponent({
@@ -9,20 +9,20 @@ export default defineComponent({
   props: tagProps,
   emits: ['click', 'tagDelete', 'checkedChange'],
   setup(props: TagProps, { slots, emit }) {
-    const { type, color, checked, titleContent, deletable } = toRefs(props)
-    const tagClass = useClass(props)
-    const themeColor = useColor(props)
-    const tagTitle = titleContent.value || ''
-    const isDefaultTag = () => !type.value && !color.value
-    const isShow = ref(true)
+    const { type, color, checked, titleContent, deletable } = toRefs(props);
+    const tagClass = useClass(props);
+    const themeColor = useColor(props);
+    const tagTitle = titleContent.value || '';
+    const isDefaultTag = () => !type.value && !color.value;
+    const isShow = ref(true);
     // 子组件的点击事件
     const handleClick = () => {
-      emit('click')
-    }
+      emit('click');
+    };
     const handleDelete = () => {
-      isShow.value = false
-      emit('tagDelete')
-    }
+      isShow.value = false;
+      emit('tagDelete');
+    };
     const closeIconEl = () => {
       return deletable.value ? (
         <a class='remove-button' onClick={handleDelete}>
@@ -32,15 +32,15 @@ export default defineComponent({
             <d-icon size='12px' name='close' color={themeColor.value} />
           )}
         </a>
-      ) : null
-    }
-    //tag 的 check 状态改变时触发的事件checkedChange
+      ) : null;
+    };
+    // tag 的 check 状态改变时触发的事件checkedChange
     const unWatch = watch(checked, (newVal) => {
-      console.log('checkedChange')
+      console.log('checkedChange');
 
-      emit('checkedChange', newVal)
-    })
-    onUnmounted(() => unWatch())
+      emit('checkedChange', newVal);
+    });
+    onUnmounted(() => unWatch());
     return () =>
       isShow.value && (
         <div class='devui-tag' onClick={handleClick} v-show={isShow.value}>
@@ -57,6 +57,6 @@ export default defineComponent({
             {closeIconEl()}
           </span>
         </div>
-      )
+      );
   }
-})
+});

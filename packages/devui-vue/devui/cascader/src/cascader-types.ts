@@ -1,25 +1,25 @@
-import type { PropType, ExtractPropTypes, Ref } from 'vue'
-import { UnwrapNestedRefs } from '@vue/reactivity'
+import type { PropType, ExtractPropTypes, Ref } from 'vue';
+import { UnwrapNestedRefs } from '@vue/reactivity';
 
-type TriggerTypes = 'hover'|'click'
+type TriggerTypes = 'hover'|'click';
 
 export interface CascaderItem {
-  label: string
-  value: number | string
-  isLeaf?: boolean
-  children?: CascaderItem[]
-  checked?: boolean
-  halfChecked?: boolean
-  disabled?: boolean
-  active?: boolean
-  _loading?: boolean
-  icon?: string
+  label: string;
+  value: number | string;
+  isLeaf?: boolean;
+  children?: CascaderItem[];
+  checked?: boolean;
+  halfChecked?: boolean;
+  disabled?: boolean;
+  active?: boolean;
+  _loading?: boolean;
+  icon?: string;
   // 用户可以传入自定义属性，并在dropDownItemTemplate中使用
-  [prop: string]: any
+  [prop: string]: any;
 }
 
-type CascaderModelValue = number[]
-export type CascaderValueType = CascaderModelValue | [CascaderModelValue]
+type CascaderModelValue = number[];
+export type CascaderValueType = CascaderModelValue | [CascaderModelValue];
 export const cascaderProps = {
   /**
    * 可选，指定展开次级菜单方式
@@ -45,7 +45,7 @@ export const cascaderProps = {
    * @type { Number | String }
    * @default 200
    */
-   dropdownWidth: {
+  dropdownWidth: {
     type: Number || String,
     default: 200
   },
@@ -106,47 +106,47 @@ export const cascaderProps = {
     type: Function as PropType<(v: CascaderValueType, k: CascaderItem[]) => void>,
     default: undefined
   },
-} as const
+} as const;
 
-export type CascaderProps = ExtractPropTypes<typeof cascaderProps>
+export type CascaderProps = ExtractPropTypes<typeof cascaderProps>;
 
 export interface PopupTypes {
-  menuShow: Ref<boolean>
-  menuOpenClass: Ref<string>
-  stopDefault: Ref<boolean>
-  openPopup:  (e?: MouseEvent) => void
-  updateStopDefaultType: () => void
+  menuShow: Ref<boolean>;
+  menuOpenClass: Ref<string>;
+  stopDefault: Ref<boolean>;
+  openPopup:  (e?: MouseEvent) => void;
+  updateStopDefaultType: () => void;
 }
 
-export type CaascaderOptionsType = UnwrapNestedRefs<[CascaderItem[]]>
+export type CaascaderOptionsType = UnwrapNestedRefs<[CascaderItem[]]>;
 export interface OptionsCallback {
-  cascaderOptions: never | CaascaderOptionsType
-  changeCascaderIndexs: (optionItem: CascaderItem, ulIndex: number) => void
+  cascaderOptions: never | CaascaderOptionsType;
+  changeCascaderIndexs: (optionItem: CascaderItem, ulIndex: number) => void;
 }
 
 // type cascaderItemExtendsProps = 'trigger'
 // export type PickCascader = Pick<CascaderProps, cascaderItemExtendsProps>
 // export interface CascaderItemNeedType extends PickCascader {
-  export interface CascaderItemNeedType {
-  valueCache?: CascaderValueType
-  trigger?: TriggerTypes
-  value?: CascaderValueType
-  inputValueCache?: Ref<string>
-  confirmInputValueFlg?: Ref<boolean>
-  multiple?: boolean
-  stopDefault?: Ref<boolean>
-  activeIndexs?: number[]
-  tagList?: UnwrapNestedRefs<CascaderItem[]>
+export interface CascaderItemNeedType {
+  valueCache?: CascaderValueType;
+  trigger?: TriggerTypes;
+  value?: CascaderValueType;
+  inputValueCache?: Ref<string>;
+  confirmInputValueFlg?: Ref<boolean>;
+  multiple?: boolean;
+  stopDefault?: Ref<boolean>;
+  activeIndexs?: number[];
+  tagList?: UnwrapNestedRefs<CascaderItem[]>;
 }
 export interface UseCascaderItemCallback {
-  cascaderItemNeedProps: CascaderItemNeedType
+  cascaderItemNeedProps: CascaderItemNeedType;
   // getInputValue: (a: string, b?: CascaderItem[], c?: Ref<boolean>) => void
 }
 
-export type CheckedType = 'checked' | 'halfChecked'
+export type CheckedType = 'checked' | 'halfChecked';
 
 export interface RootStyleFeedback {
-  inputWidth: string
+  inputWidth: string;
 }
 
 export const cascaderulProps = {
@@ -157,7 +157,7 @@ export const cascaderulProps = {
    */
   cascaderItems: {
     type: Array as PropType<CascaderItem[]>,
-    default: ():CascaderItem[] => ([{
+    default: (): CascaderItem[] => ([{
       label: '',
       value: null
     }]),
@@ -167,7 +167,7 @@ export const cascaderulProps = {
    * @type { Number | String }
    * @default 200
    */
-   dropdownWidth: {
+  dropdownWidth: {
     type: Number || String,
     default: 200
   },
@@ -182,7 +182,7 @@ export const cascaderulProps = {
   },
   cascaderItemNeedProps: {
     type: Object as PropType<CascaderItemNeedType>,
-    default: ():CascaderItemNeedType => ({})
+    default: (): CascaderItemNeedType => ({})
   },
   stopDefault: {
     type: Boolean,
@@ -190,29 +190,29 @@ export const cascaderulProps = {
   },
   cascaderOptions: {
     type: Array as unknown as PropType<[CascaderItem[]]>,
-    default: ():[CascaderItem[]] => ([[{
+    default: (): [CascaderItem[]] => ([[{
       label: '',
       value: null
     }]])
   }
-}
-export type CascaderulProps = ExtractPropTypes<typeof cascaderulProps>
+};
+export type CascaderulProps = ExtractPropTypes<typeof cascaderulProps>;
 
 export interface CascaderItemPropsType extends CascaderulProps {
-  cascaderItem: CascaderItem
-  liIndex: number
-  cascaderItemNeedProps: CascaderItemNeedType
+  cascaderItem: CascaderItem;
+  liIndex: number;
+  cascaderItemNeedProps: CascaderItemNeedType;
 }
 
 export interface DropdownStyleFeedback {
-  dropdownWidth: string
+  dropdownWidth: string;
 }
 
 export interface MultiplePropsType {
-  activeOptions: CascaderItem[]
-  placeholder: string
+  activeOptions: CascaderItem[];
+  placeholder: string;
 }
 
 export interface UpdateStatusCallback {
-  updateStatus: (node: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => void
+  updateStatus: (node: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => void;
 }

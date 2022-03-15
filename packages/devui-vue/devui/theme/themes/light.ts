@@ -132,4 +132,4 @@ export default {
   'devui-z-index-modal': '1050',
   'devui-z-index-drawer': '1040',
   'devui-z-index-framework': '1000'
-}
+};

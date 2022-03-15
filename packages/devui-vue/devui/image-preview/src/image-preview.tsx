@@ -1,81 +1,81 @@
-import './image-preview.scss'
-import { defineComponent, Fragment, ref, computed, onMounted, onUnmounted } from 'vue'
-import { imagePreviewProps, ImagePreviewProps } from './image-preview-types'
-import ImagePreviewService from './image-preview-service'
-import Transform from './transform'
+import './image-preview.scss';
+import { defineComponent, Fragment, ref, computed, onMounted, onUnmounted } from 'vue';
+import { imagePreviewProps, ImagePreviewProps } from './image-preview-types';
+import ImagePreviewService from './image-preview-service';
+import Transform from './transform';
 
 export default defineComponent({
   name: 'DImagePreview',
   props: imagePreviewProps,
   emits: [],
   setup(props: ImagePreviewProps) {
-    let transform: Transform = null
-    const index = ref(0)
-    const url = computed(() => props.previewUrlList[index.value])
+    let transform: Transform = null;
+    const index = ref(0);
+    const url = computed(() => props.previewUrlList[index.value]);
 
-    const imageStyle = props.zIndex ? { zIndex: props.zIndex } : {}
-    const bgStyle = props.backDropZIndex ? { zIndex: props.backDropZIndex } : {}
+    const imageStyle = props.zIndex ? { zIndex: props.zIndex } : {};
+    const bgStyle = props.backDropZIndex ? { zIndex: props.backDropZIndex } : {};
 
     function initTransform() {
       const imageElement: HTMLImageElement = document.querySelector(
         '.devui-image-preview-main-image'
-      )
-      transform = new Transform(imageElement)
+      );
+      transform = new Transform(imageElement);
     }
     function initIndex() {
-      index.value = props.previewUrlList.findIndex((curUrl) => curUrl === props.url)
+      index.value = props.previewUrlList.findIndex((curUrl) => curUrl === props.url);
     }
     function onPrev() {
-      index.value = index.value <= 0 ? props.previewUrlList.length - 1 : index.value - 1
+      index.value = index.value <= 0 ? props.previewUrlList.length - 1 : index.value - 1;
     }
     function onNext() {
-      index.value = index.value >= props.previewUrlList.length - 1 ? 0 : index.value + 1
+      index.value = index.value >= props.previewUrlList.length - 1 ? 0 : index.value + 1;
     }
     function onClose() {
-      ImagePreviewService.close()
+      ImagePreviewService.close();
     }
     function onZoomIn() {
-      transform.setZoomIn()
+      transform.setZoomIn();
     }
     function onZoomOut() {
-      transform.setZoomOut()
+      transform.setZoomOut();
     }
     function onRotate() {
-      transform.setRotate()
+      transform.setRotate();
     }
     function onZoomBest() {
-      transform.setZoomBest()
+      transform.setZoomBest();
     }
     function onZoomOriginal() {
-      transform.setZoomOriginal()
+      transform.setZoomOriginal();
     }
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.defaultPrevented) return
+      if (event.defaultPrevented) {return;}
 
       if (event.code == 'Escape') {
-        onClose()
+        onClose();
       } else if (event.code == 'ArrowLeft') {
-        onPrev()
+        onPrev();
       } else if (event.code == 'ArrowRight') {
-        onNext()
+        onNext();
       }
     }
     function initKeyboard() {
-      document.addEventListener('keydown', onKeyDown, false)
+      document.addEventListener('keydown', onKeyDown, false);
     }
     function unKeyBoard() {
-      document.removeEventListener('keydown', onKeyDown, false)
+      document.removeEventListener('keydown', onKeyDown, false);
     }
 
     onMounted(() => {
-      initIndex()
-      initTransform()
-      initKeyboard()
-    })
+      initIndex();
+      initTransform();
+      initKeyboard();
+    });
     onUnmounted(() => {
-      unKeyBoard()
-    })
+      unKeyBoard();
+    });
 
     return () => {
       return (
@@ -192,7 +192,7 @@ export default defineComponent({
           </div>
           <div class='devui-image-preview-bg' style={bgStyle}></div>
         </Fragment>
-      )
-    }
+      );
+    };
   }
-})
+});

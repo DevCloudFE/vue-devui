@@ -14,7 +14,7 @@ export default defineComponent({
     const type = computed(()=>props.type);
     const cssClass = computed(()=>props.cssClass);
     const onToggle = ()=> {
-      props.toggle?.(Store.getByKey(`isCollapsed[${timeStamp}]`))
+      props.toggle?.(Store.getByKey(`isCollapsed[${timeStamp}]`));
     };
     const timeStamp = new Date().getTime().toString();
     Store.setData(`isCollapsed[${timeStamp}]`, isCollapsed.value);
@@ -23,7 +23,7 @@ export default defineComponent({
         <div onClick = {onToggle} class={`devui-panel devui-panel-${type.value} ${cssClass.value}`}>
           {ctx.slots.default?.()}
         </div>
-      )
-    }
+      );
+    };
   }
-})
+});

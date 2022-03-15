@@ -1,6 +1,6 @@
-const { DEVUI_NAMESPACE, CSS_CLASS_PREFIX } = require('../shared/constant')
-const { camelCase } = require('lodash')
-const { bigCamelCase } = require('../shared/utils')
+const { DEVUI_NAMESPACE, CSS_CLASS_PREFIX } = require('../shared/constant');
+const { camelCase } = require('lodash');
+const { bigCamelCase } = require('../shared/utils');
 
 // 创建组件模板
 exports.createComponentTemplate = ({ styleName, componentName, typesName }) => `\
@@ -20,7 +20,7 @@ export default defineComponent({
     }
   }
 })
-`
+`;
 
 // 创建类型声明模板
 exports.createTypesTemplate = ({ componentName }) => `\
@@ -35,7 +35,7 @@ export const ${camelCase(componentName)}Props = {
 export type ${bigCamelCase(componentName)}Props = ExtractPropTypes<typeof ${camelCase(
   componentName
 )}Props>
-`
+`;
 
 // 创建指令模板
 exports.createDirectiveTemplate = () => `\
@@ -49,7 +49,7 @@ export default {
   beforeUnmount() { },
   unmounted() { }
 }
-`
+`;
 // 创建server模板
 exports.createServiceTemplate = ({ componentName, typesName, serviceName }) => `\
 import { ${bigCamelCase(componentName)}Props } from './${typesName}'
@@ -59,14 +59,14 @@ const ${bigCamelCase(serviceName)} = {
 }
 
 export default ${bigCamelCase(serviceName)}
-`
+`;
 
 // 创建scss模板
 exports.createStyleTemplate = ({ componentName }) => `\
 .${CSS_CLASS_PREFIX}-${componentName} {
   //
 }
-`
+`;
 
 // 创建index模板
 exports.createIndexTemplate = ({
@@ -79,29 +79,29 @@ exports.createIndexTemplate = ({
   directiveName,
   serviceName
 }) => {
-  const importComponentStr = `\nimport ${bigCamelCase(componentName)} from './src/${componentName}'`
-  const importDirectiveStr = `\nimport ${bigCamelCase(directiveName)} from './src/${directiveName}'`
-  const importServiceStr = `\nimport ${bigCamelCase(serviceName)} from './src/${serviceName}'`
+  const importComponentStr = `\nimport ${bigCamelCase(componentName)} from './src/${componentName}'`;
+  const importDirectiveStr = `\nimport ${bigCamelCase(directiveName)} from './src/${directiveName}'`;
+  const importServiceStr = `\nimport ${bigCamelCase(serviceName)} from './src/${serviceName}'`;
 
-  const installComponentStr = `    app.use(${bigCamelCase(componentName)} as any)`
+  const installComponentStr = `    app.use(${bigCamelCase(componentName)} as any)`;
   const installDirectiveStr = `\n    app.directive('${bigCamelCase(componentName)}', ${bigCamelCase(
     directiveName
-  )})`
+  )})`;
   const installServiceStr = `\n    app.config.globalProperties.$${camelCase(
     serviceName
-  )} = ${bigCamelCase(serviceName)}`
+  )} = ${bigCamelCase(serviceName)}`;
 
-  const getPartStr = (state, str) => (state ? str : '')
+  const getPartStr = (state, str) => (state ? str : '');
 
   const importStr =
     getPartStr(hasComponent, importComponentStr) +
     getPartStr(hasDirective, importDirectiveStr) +
-    getPartStr(hasService, importServiceStr)
+    getPartStr(hasService, importServiceStr);
 
   const installStr =
     getPartStr(hasComponent, installComponentStr) +
     getPartStr(hasDirective, installDirectiveStr) +
-    getPartStr(hasService, installServiceStr)
+    getPartStr(hasService, installServiceStr);
 
   return `\
 import type { App } from 'vue'\
@@ -129,8 +129,8 @@ export default {
     ${installStr}
   }
 }
-`
-}
+`;
+};
 
 // 创建测试模板
 exports.createTestsTemplate = ({
@@ -143,19 +143,19 @@ exports.createTestsTemplate = ({
 }) => `\
 import { mount } from '@vue/test-utils';
 import { ${[
-  hasComponent ? bigCamelCase(componentName) : null,
-  hasDirective ? bigCamelCase(directiveName) : null,
-  hasService ? bigCamelCase(serviceName) : null
-]
-  .filter((p) => p !== null)
-  .join(', ')} } from '../index';
+    hasComponent ? bigCamelCase(componentName) : null,
+    hasDirective ? bigCamelCase(directiveName) : null,
+    hasService ? bigCamelCase(serviceName) : null
+  ]
+    .filter((p) => p !== null)
+    .join(', ')} } from '../index';
 
 describe('${componentName} test', () => {
   it('${componentName} init render', async () => {
     // todo
   })
 })
-`
+`;
 
 // 创建文档模板
 exports.createDocumentTemplate = ({ componentName, title }) => `\
@@ -214,4 +214,4 @@ d-${componentName} 事件
 |      |      |      |           |
 |      |      |      |           |
 
-`
+`;

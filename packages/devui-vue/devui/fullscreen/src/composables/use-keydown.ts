@@ -9,7 +9,7 @@ export default function useKeydown(props, ctx) {
     if (event.keyCode === ESC_KEY_CODE && modelValue) {
       ctx.emit('update:modelValue', false);
     }
-  }
+  };
 
   onMounted(() => {
     document.addEventListener('keydown', handleKeydown);

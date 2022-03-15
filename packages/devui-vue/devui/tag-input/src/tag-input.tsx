@@ -3,8 +3,8 @@ import removeBtnSvg from './remove-btn';
 import './tag-input.scss';
 
 interface Suggestion {
-  __index: number
-  [x: string]: any
+  __index: number;
+  [x: string]: any;
 }
 
 const tagInputProps = {
@@ -107,7 +107,7 @@ export default defineComponent({
       }
       return suggestions = props.caseSensitivity
         ? suggestions.filter(item => item[props.displayProperty].indexOf(tagInputVal.value) !== -1)
-        : suggestions.filter(item => item[props.displayProperty].toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1)
+        : suggestions.filter(item => item[props.displayProperty].toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1);
     });
 
     const selectIndex = ref(0);
@@ -132,15 +132,15 @@ export default defineComponent({
     };
     const handleEnter = () => {
       let res = { [props.displayProperty]: tagInputVal.value };
-      if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) return false
+      if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) {return false;}
       if (props.tags.findIndex((item) => item[props.displayProperty] === tagInputVal.value) > -1) {
-        tagInputVal.value = ''
-        return false
+        tagInputVal.value = '';
+        return false;
       }
       if (mergedSuggestions.value.length === 0 &&
         (tagInputVal.value.length < props.minLength || tagInputVal.value.length > props.maxLength)) {
-        tagInputVal.value = ''
-        return false
+        tagInputVal.value = '';
+        return false;
       }
       if (mergedSuggestions.value.length) {
         const target = mergedSuggestions.value[selectIndex.value];
@@ -155,20 +155,20 @@ export default defineComponent({
     };
     const onInputKeydown = ($event: KeyboardEvent) => {
       switch ($event.key) {
-        case KEYS_MAP.tab:
-        case KEYS_MAP.enter:
-        case KEYS_MAP.space:
-          if (!props.isAddBySpace && KEYS_MAP.space) return
-          handleEnter();
-          break;
-        case KEYS_MAP.down:
-          onSelectIndexChange(true);
-          break;
-        case KEYS_MAP.up:
-          onSelectIndexChange();
-          break;
-        default:
-          break;
+      case KEYS_MAP.tab:
+      case KEYS_MAP.enter:
+      case KEYS_MAP.space:
+        if (!props.isAddBySpace && KEYS_MAP.space) {return;}
+        handleEnter();
+        break;
+      case KEYS_MAP.down:
+        onSelectIndexChange(true);
+        break;
+      case KEYS_MAP.up:
+        onSelectIndexChange();
+        break;
+      default:
+        break;
       }
     };
 

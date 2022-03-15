@@ -16,21 +16,21 @@ export default defineComponent({
     const initFormItemData = formData[props.prop];
     const labelData = reactive(dForm.labelData);
     const rules = reactive(dForm.rules);
-    
+
     const resetField = () => {
       if(Array.isArray(initFormItemData)) {
         formData[props.prop] = [...initFormItemData];
       }else {
         formData[props.prop] = initFormItemData;
       }
-    }
+    };
 
     const formItem = reactive({
       dHasFeedback: props.dHasFeedback,
       prop: props.prop,
       formItemMitt,
-      resetField			
-    })
+      resetField
+    });
     provide(formItemInjectionKey, formItem);
 
     const isHorizontal = labelData.layout === 'horizontal';
@@ -42,12 +42,12 @@ export default defineComponent({
 
     const validate = (trigger: string) => {
       // console.log('trigger', trigger);
-      
+
       const ruleKey = props.prop;
       const ruleItem = rules[ruleKey];
       const descriptor: Rules = {};
       descriptor[ruleKey] = ruleItem;
-      
+
       const validator = new AsyncValidator(descriptor);
 
       validator.validate({[ruleKey]: formData[ruleKey]}).then(() => {
@@ -58,7 +58,7 @@ export default defineComponent({
         showMessage.value = true;
         tipMessage.value = errors[0].message;
       });
-    }
+    };
     const validateEvents = [];
 
     const addValidateEvents = () => {
@@ -79,7 +79,7 @@ export default defineComponent({
           ruleItem && formItem.formItemMitt.on(dFormItemEvents[eventName], cb);
         }
       }
-    }
+    };
 
     const removeValidateEvents = () => {
       if(rules && rules[props.prop] && validateEvents.length > 0) {
@@ -87,7 +87,7 @@ export default defineComponent({
           formItem.formItemMitt.off(item.eventName, item.cb);
         });
       }
-    }
+    };
 
     onMounted(() => {
       dForm.formMitt.emit(dFormEvents.addField, formItem);
@@ -104,7 +104,7 @@ export default defineComponent({
           {ctx.slots.default?.()}
           <div class={`devui-validate-tip${isHorizontal ? ' devui-validate-tip-horizontal' : ''}`}>{showMessage.value && tipMessage.value}</div>
         </div>
-      )
-    }
+      );
+    };
   },
-})
+});

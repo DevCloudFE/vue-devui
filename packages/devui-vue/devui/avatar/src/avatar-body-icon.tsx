@@ -1,5 +1,5 @@
-import { defineComponent } from 'vue'
-import { IconBody } from './icon-body'
+import { defineComponent } from 'vue';
+import { IconBody } from './icon-body';
 export default defineComponent({
   name: 'AvatarBodyIcon',
   props: {
@@ -13,7 +13,7 @@ export default defineComponent({
     },
   },
   render() {
-    const { width, height } = this
-    return <IconBody width={width} height={height} />
+    const { width, height } = this;
+    return <IconBody width={width} height={height} />;
   },
-})
+});

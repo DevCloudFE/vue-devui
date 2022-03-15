@@ -4,16 +4,16 @@ import {
   readonly,
   Ref,
   isRef,
-} from 'vue'
+} from 'vue';
 
 export interface MoveableResult {
-  movingX: Ref<number>
-  movingY: Ref<number>
+  movingX: Ref<number>;
+  movingY: Ref<number>;
   // 可拖拽的元素
-  handleRef: Ref<HTMLElement | null>
+  handleRef: Ref<HTMLElement | null>;
   // 可移动的元素
-  moveElRef: Ref<HTMLElement | null>
-  reset(): void
+  moveElRef: Ref<HTMLElement | null>;
+  reset(): void;
 }
 
 // 当前某个元素被拖拽时鼠标的偏移量
@@ -24,7 +24,7 @@ export const useMoveable = (moveable: Ref<boolean> | boolean = true): MoveableRe
   const reset = () => {
     movingX.value = 0;
     movingY.value = 0;
-  }
+  };
 
   // 可拖拽的元素
   const handleRef = ref<HTMLElement | null>();
@@ -73,7 +73,7 @@ export const useMoveable = (moveable: Ref<boolean> | boolean = true): MoveableRe
         bodyRect = document.body.getBoundingClientRect();
         containerRect = container.getBoundingClientRect();
       }
-    }
+    };
 
     const handleMouseMove = (event: MouseEvent) => {
       event.preventDefault();
@@ -86,7 +86,7 @@ export const useMoveable = (moveable: Ref<boolean> | boolean = true): MoveableRe
       const containerOriginY = containerRect.y - prevMovingY;
       movingX.value = getRangeValueOf(currentX, -containerOriginX, bodyRect.width - containerRect.width - containerOriginX);
       movingY.value = getRangeValueOf(currentY, -containerOriginY, bodyRect.height - containerRect.height - containerOriginY);
-    }
+    };
 
     const handleMouseUp = (event: MouseEvent) => {
       event.preventDefault();
@@ -94,7 +94,7 @@ export const useMoveable = (moveable: Ref<boolean> | boolean = true): MoveableRe
         return;
       }
       isDown = false;
-    }
+    };
 
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
@@ -112,8 +112,8 @@ export const useMoveable = (moveable: Ref<boolean> | boolean = true): MoveableRe
     handleRef,
     moveElRef,
     reset
-  }
-}
+  };
+};
 
 
 const getRangeValueOf = (value: number, min: number, max: number) => {
@@ -124,4 +124,4 @@ const getRangeValueOf = (value: number, min: number, max: number) => {
     return max;
   }
   return value;
-}
+};

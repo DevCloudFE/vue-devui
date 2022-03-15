@@ -1,4 +1,4 @@
-import { propsName, propsTypesName } from './utils'
+import { propsName, propsTypesName } from './utils';
 
 export default function genTypesTemplate(name: string) {
   return `\
@@ -11,5 +11,5 @@ export const ${propsName(name)}Props = {
 } as const
 
 export type ${propsTypesName(name)}Props = ExtractPropTypes<typeof ${propsName(name)}Props>
-`
+`;
 }

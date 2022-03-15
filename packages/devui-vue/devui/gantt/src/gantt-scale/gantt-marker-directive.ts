@@ -1,16 +1,16 @@
-import { GanttScaleUnit } from '../gantt-model'
+import { GanttScaleUnit } from '../gantt-model';
 interface BindingType {
   value: {
-    ganttBarContainerElement: HTMLElement
-    ganttScaleContainerOffsetLeft: number
-    monthMark: boolean
-    weekend: boolean
-    today: boolean
-    milestone: string
-    unit: GanttScaleUnit
-    date: Date
-    last: boolean
-  }
+    ganttBarContainerElement: HTMLElement;
+    ganttScaleContainerOffsetLeft: number;
+    monthMark: boolean;
+    weekend: boolean;
+    today: boolean;
+    milestone: string;
+    unit: GanttScaleUnit;
+    date: Date;
+    last: boolean;
+  };
 }
 const ganttMarkerDirective = {
   ganttBarContainerElement: null,
@@ -20,19 +20,19 @@ const ganttMarkerDirective = {
   milestoneElement: null,
   monthMark: '',
   mounted(el: HTMLElement, binding: BindingType): void {
-    const { ganttBarContainerElement, monthMark } = binding.value
+    const { ganttBarContainerElement, monthMark } = binding.value;
     if (ganttBarContainerElement) {
-      this.ganttBarContainerElement = ganttBarContainerElement
+      this.ganttBarContainerElement = ganttBarContainerElement;
     }
     if (monthMark) {
-      this.monthMark = this.monthMark
+      this.monthMark = this.monthMark;
     }
   },
   updated(el: HTMLElement, binding: BindingType): void {
     // todo
-    const { monthMark, weekend, today, milestone, unit } = binding.value
+    const { monthMark, weekend, today, milestone, unit } = binding.value;
     if (monthMark) {
-      this.initMarkElement()
+      this.initMarkElement();
     }
   },
   initMarkElement(): void {
@@ -42,6 +42,6 @@ const ganttMarkerDirective = {
       }
     }
   },
-}
+};
 
-export default ganttMarkerDirective
+export default ganttMarkerDirective;

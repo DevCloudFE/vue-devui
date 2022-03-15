@@ -89,4 +89,4 @@ export default {
   'devui-primary-bg': '#383D4F',
   'devui-default-line': '#5e7ce0',
   'devui-default-bg': '#383838',
-}
+};

@@ -7,40 +7,40 @@ import {DFormValidateSubmitData, positionType} from '../form-types';
 import './style.scss';
 
 interface BindingValueRules {
-  [prop:string]: unknown
+  [prop: string]: unknown;
 }
 
 interface BindingValue {
-  prop: string
-  modelName?: string
-  rules: BindingValueRules
-  validators?: any
-  asyncValidators?: any
-  errorStrategy?: 'pristine' | 'dirty'
-  updateOn: 'change' | 'input' | 'submit'
-  asyncDebounceTime?: number | string
-  messageShowType?: 'popover' | 'text' | 'none'
-  popPosition: string | string[]
-  messageChange?: (msg, { errors, fields }) => {}
-  [prop: string]: any
+  prop: string;
+  modelName?: string;
+  rules: BindingValueRules;
+  validators?: any;
+  asyncValidators?: any;
+  errorStrategy?: 'pristine' | 'dirty';
+  updateOn: 'change' | 'input' | 'submit';
+  asyncDebounceTime?: number | string;
+  messageShowType?: 'popover' | 'text' | 'none';
+  popPosition: string | string[];
+  messageChange?: (msg, { errors, fields }) => {};
+  [prop: string]: any;
 }
 
 const getTargetElement = (el: HTMLElement, targetTag: string) => {
-  if (!el) return;
-  let tempEl:HTMLElement = el;
+  if (!el) {return;}
+  let tempEl: HTMLElement = el;
   while(tempEl?.tagName && tempEl.tagName.toLocaleLowerCase() !== 'body') {
     if(tempEl.tagName.toLocaleLowerCase() === targetTag) {
       return tempEl;
     }
     tempEl = tempEl.parentElement;
   }
-}
+};
 
 export default {
   mounted(el: HTMLElement, binding: DirectiveBinding): void {
     let { prop, rules, validators, asyncValidators, errorStrategy, updateOn = 'input', asyncDebounceTime = 300, messageShowType = 'popover', messageChange, popPosition = ['right', 'bottom'] }: BindingValue = binding.value;
     const {instance, arg: modelName} = binding;
-    
+
     const instanceRef = instance[Object.keys(instance.$refs)[0]];
     if(instanceRef && instanceRef?.messageShowType) {
       messageShowType = instanceRef.messageShowType;
@@ -50,18 +50,18 @@ export default {
     const objToStyleString = (obj: any = {}) => {
       let style = '';
       for (const key in obj) {
-        style += `${transformCamelToDash(key)}: ${obj[key]};`
+        style += `${transformCamelToDash(key)}: ${obj[key]};`;
       }
       return style;
-    }
+    };
 
     const renderPopover = (msg, visible = true) => {
-      if(messageShowType !== 'popover') return;
+      if(messageShowType !== 'popover') {return;}
       el.style.position = 'relative';
       const popoverPosition = () => {
         return Array.isArray(popPosition) ? popPosition.join('-') : popPosition;
-      }
-      
+      };
+
       const popover = h(dPopover, {
         visible: visible,
         controlled: updateOn !== 'change',
@@ -73,22 +73,22 @@ export default {
       // 这里使用比较hack的方法控制popover显隐，因为点击popover外部元素隐藏popover之后，再重新传入visible不起作用了，popover不会重新渲染了
       nextTick(() => {
         if(visible) {
-          addElClass(popover.el as HTMLElement, 'devui-popover-isVisible')
+          addElClass(popover.el as HTMLElement, 'devui-popover-isVisible');
         }else {
-          removeElClass(popover.el as HTMLElement, 'devui-popover-isVisible')
+          removeElClass(popover.el as HTMLElement, 'devui-popover-isVisible');
         }
-      })
+      });
 
       const popoverWrapperStyle = () => {
-        let rect = el.getBoundingClientRect();
-        let style: any = {
+        const rect = el.getBoundingClientRect();
+        const style: any = {
           position: 'absolute',
           height: 0,
           top: (rect.height / 2) + 'px',
           right: 0,
-        }
+        };
 
-        let p = popoverPosition();
+        const p = popoverPosition();
         if(popPosition === 'bottom' || popPosition === 'top') {
           style.left = '50%';
         }
@@ -116,15 +116,15 @@ export default {
         if(p.startsWith('top')) {
           delete style.bottom;
         }
-        
+
         return objToStyleString(style);
       };
-      
+
       const vn = h('div', {
         style: popoverWrapperStyle()
-      }, popover)
+      }, popover);
       render(vn, el);
-    }
+    };
 
     const tipEl = document.createElement('div');
     if(messageShowType === 'text') {
@@ -135,7 +135,7 @@ export default {
       tipEl.innerText = msg;
       tipEl.style.display = visible ? 'block' : 'none';
       tipEl.setAttribute('class', 'devui-validate-tip');
-    }
+    };
 
     const addElClass = (el: HTMLElement, className: string) => {
       let currentClasses = el.getAttribute('class');
@@ -143,16 +143,16 @@ export default {
         currentClasses = currentClasses.trim() + (currentClasses.trim() ? ' ' : '') + className;
       }
       el.setAttribute('class', currentClasses);
-    }
+    };
 
     const removeElClass = (el: HTMLElement, className: string) => {
       let currentClasses = el.getAttribute('class');
       currentClasses = currentClasses.replace(className, '');
       el.setAttribute('class', currentClasses);
-    }
+    };
 
     const {validate, createDevUIBuiltinValidator} = useValidate();
-    let propRule = {} || [] as any; // 值为对象数组或单个对象
+    const propRule = {} || [] as any; // 值为对象数组或单个对象
 
     const isCustomValidator = validators !== undefined || asyncValidators !== undefined;
     if(isCustomValidator) {
@@ -165,7 +165,7 @@ export default {
           time = 300;
         }
         rules = asyncValidators.map(item => {
-          let res = {
+          const res = {
             message: item.message,
             asyncValidator: (rule, value) => {
               return new Promise(debounce((resolve, reject) => {
@@ -175,11 +175,11 @@ export default {
                 }else {
                   reject(rule.message);
                 }
-              }, time))
-            }, 
+              }, time));
+            },
           } as any;
           return res;
-        })
+        });
       }
     }else {
       if(Array.isArray(rules)) {
@@ -191,9 +191,9 @@ export default {
       }
     }
 
-    let descriptor: any = {
+    const descriptor: any = {
       [prop]: rules
-    }
+    };
     const validateFn = async () => {
       const validateModel = {
         [prop]: hasModelName ? instance[modelName][prop] : instance[prop]
@@ -204,7 +204,7 @@ export default {
         messageShowType === 'text' && renderTipEl('', true);
         return res;
       }).catch(({ errors, fields }) => {
-        let msg = propRule.message ?? fields[prop][0].message;
+        const msg = propRule.message ?? fields[prop][0].message;
         renderPopover(msg);
         addElClass(el, 'devui-error');
         messageShowType === 'text' && renderTipEl(msg, true);
@@ -212,19 +212,19 @@ export default {
           messageChange(msg, { errors, fields });
         }
         return { errors, fields };
-      })
-    }
+      });
+    };
 
     if(errorStrategy === 'pristine') {
       validateFn();
     }else {
       el.childNodes[0].addEventListener(updateOn, () => {
         validateFn();
-      })
+      });
       if(updateOn === 'change') {
         el.childNodes[0].addEventListener('focus', () => {
           renderPopover('', false);
-        })
+        });
       }
     }
 
@@ -256,4 +256,4 @@ export default {
     EventBus.off(`formSubmit:${formName}`);
     EventBus.off(`formReset:${formName}:${prop}`);
   }
-}
+};

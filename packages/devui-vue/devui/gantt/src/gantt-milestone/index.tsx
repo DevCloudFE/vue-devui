@@ -1,6 +1,6 @@
-import { defineComponent, ref } from 'vue'
-import { MilestoneIcon } from './milestone-icon'
-import './gantt-milestone.scss'
+import { defineComponent, ref } from 'vue';
+import { MilestoneIcon } from './milestone-icon';
+import './gantt-milestone.scss';
 
 export default defineComponent({
   name: 'DGanttMilestone',
@@ -19,7 +19,7 @@ export default defineComponent({
     // todo
   },
   render() {
-    const { title } = this
+    const { title } = this;
     return (
       <div class="devui-gantt-milestone">
         <span class="icon">
@@ -27,6 +27,6 @@ export default defineComponent({
         </span>
         <span>{title}</span>
       </div>
-    )
+    );
   },
-})
+});

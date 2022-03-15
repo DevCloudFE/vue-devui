@@ -1,16 +1,16 @@
 import { PropType, ExtractPropTypes } from 'vue';
 
 export interface OptionObjectItem {
-  name: string
-  value: string | number
-  _checked: boolean
-  [key: string]: any
+  name: string;
+  value: string | number;
+  _checked: boolean;
+  [key: string]: any;
 }
 
 export type OptionItem =
   | number
   | string
-  | ({ value: string | number; } & Partial<OptionObjectItem>);
+  | ({ value: string | number } & Partial<OptionObjectItem>);
 export type Options = Array<OptionItem>;
 
 export type ModelValue = number | string | Array<number | string>;

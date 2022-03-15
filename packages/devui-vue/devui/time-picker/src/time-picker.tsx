@@ -1,10 +1,10 @@
-import { defineComponent, ref, onMounted, onUnmounted, watch } from 'vue'
-import { TimePickerProps, timePickerProps } from './time-picker-types'
-import { Icon } from '../../icon'
-import useTimePicker from './composables/use-time-picker'
-import TimePopup from './components/time-popup/index'
+import { defineComponent, ref, onMounted, onUnmounted, watch } from 'vue';
+import { TimePickerProps, timePickerProps } from './time-picker-types';
+import { Icon } from '../../icon';
+import useTimePicker from './composables/use-time-picker';
+import TimePopup from './components/time-popup/index';
 
-import './time-picker.scss'
+import './time-picker.scss';
 
 export default defineComponent({
   name: 'DTimePicker',
@@ -13,12 +13,12 @@ export default defineComponent({
   emits: ['selectedTimeChage','update:modelValue'],
   setup(props: TimePickerProps, ctx) {
 
-    const activeHour = ref('00')
-    const activeMinute = ref('00')
-    const activeSecond = ref('00')
-    const format = props.format.toLowerCase()
+    const activeHour = ref('00');
+    const activeMinute = ref('00');
+    const activeSecond = ref('00');
+    const format = props.format.toLowerCase();
 
-    const { 
+    const {
       isActive,
       showPopup,
       devuiTimePicker,
@@ -35,55 +35,55 @@ export default defineComponent({
       timePopupDom,
       vModeValue,
       getPopupPosition
-    } = useTimePicker(activeHour,activeMinute,activeSecond,props.minTime,props.maxTime,format,props.autoOpen,props.disabled,props.modelValue)
+    } = useTimePicker(activeHour,activeMinute,activeSecond,props.minTime,props.maxTime,format,props.autoOpen,props.disabled,props.modelValue);
 
 
-    const selectedTimeChage = (e:MouseEvent) => {
-      isActive.value = false
-      showPopup.value = false
-      ctx.emit('selectedTimeChage', vModeValue.value)
-    }
+    const selectedTimeChage = (e: MouseEvent) => {
+      isActive.value = false;
+      showPopup.value = false;
+      ctx.emit('selectedTimeChage', vModeValue.value);
+    };
 
     onMounted(() => {
-      getPopupPosition()
-      isOutOpen()
-      vModelIsBeyond()
-      document.addEventListener('click', clickVerifyFun)
-      document.addEventListener('click',getTimeValue)
-      document.addEventListener('scroll',getPopupPosition)
-      window.addEventListener('resize',getPopupPosition)
-    })
+      getPopupPosition();
+      isOutOpen();
+      vModelIsBeyond();
+      document.addEventListener('click', clickVerifyFun);
+      document.addEventListener('click',getTimeValue);
+      document.addEventListener('scroll',getPopupPosition);
+      window.addEventListener('resize',getPopupPosition);
+    });
     onUnmounted(() => {
-      document.removeEventListener('click', clickVerifyFun)
-      document.removeEventListener('click',getTimeValue)
-      document.removeEventListener('scroll',getPopupPosition)
-      window.removeEventListener('resize',getPopupPosition)
-    })
+      document.removeEventListener('click', clickVerifyFun);
+      document.removeEventListener('click',getTimeValue);
+      document.removeEventListener('scroll',getPopupPosition);
+      window.removeEventListener('resize',getPopupPosition);
+    });
 
-    watch(vModeValue,(newValue:string)=>{
-      ctx.emit('update:modelValue',vModeValue.value)
+    watch(vModeValue,(newValue: string)=>{
+      ctx.emit('update:modelValue',vModeValue.value);
       if(newValue != props.minTime && newValue != '00:00'){
-        showClearIcon.value = true
+        showClearIcon.value = true;
       }else{
-        showClearIcon.value = false
+        showClearIcon.value = false;
       }
-    })
+    });
 
     ctx.expose({
       clearAll,chooseTime
-    })
+    });
 
     return () => {
       return (
         <>
           <div class={`devui-time-picker ${isActive.value ? 'time-picker-active' : ''} ${props.disabled ? 'picker-disabled' : ''}`}
-               ref={devuiTimePicker}
-           >
-            <TimePopup 
+            ref={devuiTimePicker}
+          >
+            <TimePopup
               ref={timePopupDom}
-              showPopup={showPopup.value} 
-              popupTop={top.value} 
-              popupLeft={left.value} 
+              showPopup={showPopup.value}
+              popupTop={top.value}
+              popupLeft={left.value}
               popupWidth={props.timePickerWidth}
               popupFormat={ props.format.toLowerCase() }
               minTime={props.minTime}
@@ -105,7 +105,7 @@ export default defineComponent({
               <div onClick={clearAll}>
                 {
                   showClearIcon.value
-                    ? <Icon size="small" name="close" /> 
+                    ? <Icon size="small" name="close" />
                     :''
                 }
               </div>
@@ -115,7 +115,7 @@ export default defineComponent({
             </div>
           </div>
         </>
-      )
-    }
+      );
+    };
   }
-})
+});

@@ -1,9 +1,9 @@
-import { BindingTypes, ImagePreviewProps, UpdateBindingTypes } from './image-preview-types'
-import ImagePreviewService from './image-preview-service'
+import { BindingTypes, ImagePreviewProps, UpdateBindingTypes } from './image-preview-types';
+import ImagePreviewService from './image-preview-service';
 
 interface PreviewHTMLElement extends HTMLElement {
-  zIndex?: number
-  backDropZIndex?: number
+  zIndex?: number;
+  backDropZIndex?: number;
 }
 
 function mountedPreviewImages(props: ImagePreviewProps): void {
@@ -12,82 +12,82 @@ function mountedPreviewImages(props: ImagePreviewProps): void {
     previewUrlList: props.previewUrlList,
     zIndex: props.zIndex,
     backDropZIndex: props.backDropZIndex
-  })
+  });
 }
 function unmountedPreviewImages() {
-  ImagePreviewService.close()
+  ImagePreviewService.close();
 }
 
 function getImgByEl(el: HTMLElement): Array<string> {
   const urlList = [...el.querySelectorAll('img')].map((item: HTMLImageElement) =>
     item.getAttribute('src')
-  )
-  return urlList
+  );
+  return urlList;
 }
 function handleImgByEl(el: PreviewHTMLElement) {
-  el.addEventListener('click', handleImg)
+  el.addEventListener('click', handleImg);
 }
 function removeHandle(el: PreviewHTMLElement) {
-  el.removeEventListener('click', handleImg)
+  el.removeEventListener('click', handleImg);
 }
 function handleImg(e: MouseEvent) {
-  e.stopPropagation()
-  const el = e.currentTarget as PreviewHTMLElement
-  const target = e.target as PreviewHTMLElement
+  e.stopPropagation();
+  const el = e.currentTarget as PreviewHTMLElement;
+  const target = e.target as PreviewHTMLElement;
   if (target?.nodeName?.toLowerCase() === 'img') {
-    const urlList = getImgByEl(el)
-    const url = target.getAttribute('src')
+    const urlList = getImgByEl(el);
+    const url = target.getAttribute('src');
     mountedPreviewImages({
       url,
       previewUrlList: urlList,
       zIndex: el?.zIndex,
       backDropZIndex: el?.backDropZIndex
-    })
+    });
   }
 }
 export default {
   mounted(el: PreviewHTMLElement, binding: BindingTypes | undefined) {
     if (!binding.value) {
-      return handleImgByEl(el)
+      return handleImgByEl(el);
     }
-    const { custom, disableDefault } = binding.value
+    const { custom, disableDefault } = binding.value;
     // console.log('指令参数：', custom, disableDefault, zIndex, backDropZIndex)
     if (custom instanceof Object) {
       custom.open = () => {
-        const urlList = getImgByEl(el)
+        const urlList = getImgByEl(el);
         mountedPreviewImages({
           url: urlList?.[0],
           previewUrlList: urlList,
           zIndex: el?.zIndex,
           backDropZIndex: el?.backDropZIndex
-        })
-      }
-      custom.close = () => unmountedPreviewImages()
+        });
+      };
+      custom.close = () => unmountedPreviewImages();
     }
     if (disableDefault) {
-      return
+      return;
     }
-    handleImgByEl(el)
+    handleImgByEl(el);
   },
   unmounted() {
-    unmountedPreviewImages()
+    unmountedPreviewImages();
   },
   updated(el: PreviewHTMLElement, binding: UpdateBindingTypes | undefined) {
-    el.zIndex = binding.value?.zIndex
-    el.backDropZIndex = binding.value?.backDropZIndex
+    el.zIndex = binding.value?.zIndex;
+    el.backDropZIndex = binding.value?.backDropZIndex;
 
     if (binding.value) {
       const {
         value: { disableDefault },
         oldValue: { disableDefault: oldDisableDefault }
-      } = binding
+      } = binding;
       if (disableDefault !== oldDisableDefault) {
         if (disableDefault) {
-          removeHandle(el)
+          removeHandle(el);
         } else {
-          handleImgByEl(el)
+          handleImgByEl(el);
         }
       }
     }
   }
-}
+};

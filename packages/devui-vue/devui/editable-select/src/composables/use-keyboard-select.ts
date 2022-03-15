@@ -2,7 +2,7 @@ import { ComputedRef, nextTick, Ref } from 'vue';
 import { OptionObjectItem } from '../editable-select-type';
 
 interface useKeyboardSelectReturnType {
-  handleKeydown: (event: KeyboardEvent) => void
+  handleKeydown: (event: KeyboardEvent) => void;
 }
 export const useKeyboardSelect: (
   dropdownRef: Ref<any>,
@@ -48,7 +48,7 @@ export const useKeyboardSelect: (
     if (!newIndex) {
       newIndex = hoverIndex.value;
     }
-    if (!['ArrowDown', 'ArrowUp'].includes(direction)) return;
+    if (!['ArrowDown', 'ArrowUp'].includes(direction)) {return;}
     if (direction === 'ArrowUp') {
       if (newIndex === 0) {
         newIndex = options.value.length - 1;
@@ -78,7 +78,7 @@ export const useKeyboardSelect: (
   const handleKeydown = (event: KeyboardEvent) => {
     const keyCode = event.key || event.code;
 
-    if (options.value.length === 0) return;
+    if (options.value.length === 0) {return;}
 
     if (!visible.value) {
       return toggleMenu();
@@ -94,14 +94,14 @@ export const useKeyboardSelect: (
     };
 
     switch (keyCode) {
-      case 'Enter':
-        onKeydownEnter();
-        break;
-      case 'Escape':
-        onKeydownEsc();
-        break;
-      default:
-        onKeyboardNavigation(keyCode);
+    case 'Enter':
+      onKeydownEnter();
+      break;
+    case 'Escape':
+      onKeydownEsc();
+      break;
+    default:
+      onKeyboardNavigation(keyCode);
     }
   };
   return {

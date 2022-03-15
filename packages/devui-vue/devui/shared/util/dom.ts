@@ -1,9 +1,9 @@
 import { ComponentPublicInstance } from '@vue/runtime-core';
 
 /**
- * 
- * @param {any} origin 
- * @returns 
+ *
+ * @param {any} origin
+ * @returns
  */
 export function isComponent(target: any): target is ComponentPublicInstance {
   return !!(target?.$el);

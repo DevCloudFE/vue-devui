@@ -1,6 +1,6 @@
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue';
 
-export type ModelValue = number | string
+export type ModelValue = number | string;
 
 export const itemProps = {
   row: {
@@ -34,6 +34,6 @@ export const itemProps = {
   shape: {
     type: String as PropType<'avatar' | 'image' | 'title' | 'paragraph' | 'button'>,
   }
-} as const
+} as const;
 
-export type ItemProps = ExtractPropTypes<typeof itemProps>
+export type ItemProps = ExtractPropTypes<typeof itemProps>;

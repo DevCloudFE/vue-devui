@@ -1,35 +1,35 @@
-import prompts from 'prompts'
-import { cliConfig } from '../shared/config'
-import genComponent from '../shared/generate-component'
-import logger from '../shared/logger'
-import { canSafelyOverwrite, onPromptsCancel, resolveComponentDir } from '../shared/utils'
-import { CreateCMD } from './create'
+import prompts from 'prompts';
+import { cliConfig } from '../shared/config';
+import genComponent from '../shared/generate-component';
+import logger from '../shared/logger';
+import { canSafelyOverwrite, onPromptsCancel, resolveComponentDir } from '../shared/utils';
+import { CreateCMD } from './create';
 
 export function isValidComponentName(name: string) {
-  if (!name) return false
+  if (!name) {return false;}
 
-  const flag = /^[a-zA-Z]([\w-\d]*)$/.test(name)
+  const flag = /^[a-zA-Z]([\w-\d]*)$/.test(name);
 
   if (!flag) {
-    logger.warn(`The component name "${name}" is invalid.`)
-    logger.info(`The component name rule: letters, numbers, "-", and must start with a letter.`)
+    logger.warn(`The component name "${name}" is invalid.`);
+    logger.info(`The component name rule: letters, numbers, "-", and must start with a letter.`);
   }
 
-  return flag
+  return flag;
 }
 
 export default async function createComponentAction(names: string[] = [], cmd: CreateCMD = {}) {
-  let [name = '', title = '', category = ''] = names
-  const parts = []
-  let targetDir = resolveComponentDir(name)
+  let [name = '', title = '', category = ''] = names;
+  const parts = [];
+  let targetDir = resolveComponentDir(name);
 
-  cmd.core && parts.push('core')
-  cmd.service && parts.push('service')
-  cmd.directive && parts.push('directive')
+  cmd.core && parts.push('core');
+  cmd.service && parts.push('service');
+  cmd.directive && parts.push('directive');
 
   if (!isValidComponentName(name)) {
-    name = ''
-    targetDir = ''
+    name = '';
+    targetDir = '';
   }
 
   try {
@@ -40,31 +40,31 @@ export default async function createComponentAction(names: string[] = [], cmd: C
           type: () => (name ? null : 'text'),
           message: 'Component name:',
           validate: () => {
-            console.log('') // 防止错误输出于同一行
+            console.log(''); // 防止错误输出于同一行
 
-            const isValid = isValidComponentName(name)
+            const isValid = isValidComponentName(name);
 
-            return isValid
+            return isValid;
           },
           onState: (state) => {
-            name = String(state.value).trim()
-            targetDir = resolveComponentDir(name)
+            name = String(state.value).trim();
+            targetDir = resolveComponentDir(name);
           }
         },
         {
           name: 'shouldOverwrite',
           type: () => (canSafelyOverwrite(targetDir) || cmd.force ? null : 'confirm'),
           message: () => {
-            return `Target directory "${targetDir}" is not empty. Remove existing files and continue?`
+            return `Target directory "${targetDir}" is not empty. Remove existing files and continue?`;
           }
         },
         {
           name: 'overwriteChecker',
           type: (prev, values: any = {}) => {
             if (values.shouldOverwrite === false) {
-              throw new Error('Operation cancelled')
+              throw new Error('Operation cancelled');
             }
-            return null
+            return null;
           }
         },
         {
@@ -112,7 +112,7 @@ export default async function createComponentAction(names: string[] = [], cmd: C
         }
       ],
       { onCancel: onPromptsCancel }
-    )
+    );
 
     genComponent({
       name,
@@ -120,9 +120,9 @@ export default async function createComponentAction(names: string[] = [], cmd: C
       category: meta.category ?? category,
       parts: meta.parts ?? parts,
       dir: targetDir
-    })
+    });
   } catch (e: any) {
-    logger.error(e.message)
-    process.exit(1)
+    logger.error(e.message);
+    process.exit(1);
   }
 }

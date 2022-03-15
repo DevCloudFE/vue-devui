@@ -1,10 +1,10 @@
-import './content.scss'
+import './content.scss';
 
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'DContent',
-    setup (props, { slots }) {
-        return () => <div class="devui-content">{slots.default?.()}</div>
-    }
-})
+  name: 'DContent',
+  setup (props, { slots }) {
+    return () => <div class="devui-content">{slots.default?.()}</div>;
+  }
+});

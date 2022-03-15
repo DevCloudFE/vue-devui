@@ -54,4 +54,4 @@ describe('tree-select', () => {
 
     expect(wrapper.classes()).toContain('devui-tree-select');
   });
-})
+});

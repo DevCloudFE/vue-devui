@@ -1,6 +1,6 @@
-import { defineComponent, ref } from 'vue'
-import './gantt-tools.scss'
-import { GanttScaleUnit } from '../gantt-model'
+import { defineComponent, ref } from 'vue';
+import './gantt-tools.scss';
+import { GanttScaleUnit } from '../gantt-model';
 
 export default defineComponent({
   name: 'DGanttTools',
@@ -16,7 +16,7 @@ export default defineComponent({
   },
   emits: ['goToday', 'reduceUnit', 'increaseUnit', 'switchView'],
   setup(props, ctx) {
-    const currentUnitLabel = ref(props.unit)
+    const currentUnitLabel = ref(props.unit);
     const views = ref([
       {
         name: 'Day',
@@ -30,32 +30,32 @@ export default defineComponent({
         name: 'Month',
         value: 'month',
       },
-    ])
+    ]);
     const actionHandle = (type: string) => {
       switch (type) {
-        case 'today':
-          ctx.emit('goToday')
-          break
-        case 'reduce':
-          ctx.emit('reduceUnit')
-          break
-        case 'increase':
-          ctx.emit('increaseUnit')
-          break
+      case 'today':
+        ctx.emit('goToday');
+        break;
+      case 'reduce':
+        ctx.emit('reduceUnit');
+        break;
+      case 'increase':
+        ctx.emit('increaseUnit');
+        break;
       }
-    }
-    const selectView = (selectItem: { name: string; value: string; }) => {
-      ctx.emit('switchView', selectItem.value)
-    }
+    };
+    const selectView = (selectItem: { name: string; value: string }) => {
+      ctx.emit('switchView', selectItem.value);
+    };
     return {
       actionHandle,
       currentUnitLabel,
       views,
       selectView,
-    }
+    };
   },
   render() {
-    const { isFullScreen, actionHandle, views, selectView, $slots } = this
+    const { isFullScreen, actionHandle, views, selectView, $slots } = this;
 
     return (
       <div
@@ -102,6 +102,6 @@ export default defineComponent({
         </d-button>
         {$slots.default && $slots.default()}
       </div>
-    )
+    );
   },
-})
+});
