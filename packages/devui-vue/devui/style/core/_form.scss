@@ -203,11 +203,7 @@ $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 .devui-form-control {
   color: $devui-text;
   background-color: $devui-base-bg;
-  padding: 5px 10px;
-  border: 1px solid $devui-form-control-line;
   display: block;
-  width: 100%;
-  height: 28px;
   border-radius: $devui-border-radius;
   outline: 0;
   @include border-transition;

@@ -1,42 +1,37 @@
 /**
  * 清空按钮显示、隐藏
  */
-import { SetupContext, Ref, } from 'vue'
-import { KeydownReturnTypes } from '../search-types'
-import { debounce } from 'lodash-es'
-const KEYS_MAP = {
-  enter: 'Enter'
-} as const
+import { SetupContext, Ref } from 'vue';
+import { KeydownReturnTypes, SearchProps } from '../search-types';
+import { debounce } from 'lodash';
 
-type EmitProps = 'update:modelValue' | 'onSearch'
+type EmitProps = 'update:modelValue' | 'search';
 
-export const keydownHandles = (ctx: SetupContext<(EmitProps)[]>, keywords: Ref<string>, delay: number): KeydownReturnTypes => {
-  // 删除按钮显示
-  const onInputKeydown = ($event: KeyboardEvent) => {
-    switch ($event.key) {
-      case KEYS_MAP.enter:
-        handleEnter($event)
-        break
-      default:
-        break
-    }
-  }
+export const keydownHandles = (ctx: SetupContext<EmitProps[]>, keywords: Ref<string>, props: SearchProps): KeydownReturnTypes => {
+  const useEmitKeyword = debounce((value: string) => {
+    ctx.emit('search', value);
+  }, props.delay);
   const handleEnter = ($event: KeyboardEvent) => {
     if ($event.target instanceof HTMLInputElement) {
-      const value = $event.target.value
-      useEmitKeyword(value)
+      const value = $event.target.value;
+      useEmitKeyword(value);
     }
-  }
+  };
   const onClickHandle = () => {
-    useEmitKeyword(keywords.value)
-  }
-  const useEmitKeyword = debounce((value: string) => {
-    ctx.emit('onSearch', value)
-  }, delay)
+    if (!props.disabled) {
+      ctx.emit('search', keywords.value);
+    }
+  };
+  const KEYS_MAP: { [key: string]: ($event: KeyboardEvent) => void } = {
+    Enter: handleEnter,
+  };
+  const onInputKeydown = ($event: KeyboardEvent) => {
+    KEYS_MAP[$event.key]?.($event);
+  };
+
   return {
     onInputKeydown,
     useEmitKeyword,
-    onClickHandle
-  }
-}
- 
+    onClickHandle,
+  };
+};

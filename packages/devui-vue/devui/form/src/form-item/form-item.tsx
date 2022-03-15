@@ -18,7 +18,11 @@ export default defineComponent({
     const rules = reactive(dForm.rules);
     
     const resetField = () => {
-      formData[props.prop] = initFormItemData;
+      if(Array.isArray(initFormItemData)) {
+        formData[props.prop] = [...initFormItemData];
+      }else {
+        formData[props.prop] = initFormItemData;
+      }
     }
 
     const formItem = reactive({
@@ -96,9 +100,9 @@ export default defineComponent({
     });
     return () => {
       return (
-        <div class={`form-item${isHorizontal ? '' : (isVertical ? ' form-item-vertical' : ' form-item-columns')}${isColumns ? ' column-item ' + columnsClass.value : ''}`}>
+        <div class={`devui-form-item${isHorizontal ? '' : (isVertical ? ' devui-form-item-vertical' : ' devui-form-item-columns')}${isColumns ? ' devui-column-item ' + columnsClass.value : ''}`}>
           {ctx.slots.default?.()}
-          <div class={`d-validate-tip${isHorizontal ? ' d-validate-tip-horizontal' : ''}`}>{showMessage.value && tipMessage.value}</div>
+          <div class={`devui-validate-tip${isHorizontal ? ' devui-validate-tip-horizontal' : ''}`}>{showMessage.value && tipMessage.value}</div>
         </div>
       )
     }

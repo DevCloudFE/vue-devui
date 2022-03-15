@@ -1,5 +1,5 @@
 import type { PropType, ExtractPropTypes, CSSProperties } from 'vue'
-import type { easingType } from './utils/animation'
+// import type { easingType } from './utils/animation'
 export const statisticProps = {
   title: {
     type: String,
@@ -19,16 +19,9 @@ export const statisticProps = {
   },
   groupSeparator: {
     type: String,
-    default: ','
+    default: ''
   },
-  showGroupSeparator: {
-    type: Boolean,
-    default: false
-  },
-  titleStyle: {
-    type: Object as PropType<CSSProperties>
-  },
-  contentStyle: {
+  valueStyle: {
     type: Object as PropType<CSSProperties>
   },
   animationDuration: {
@@ -44,19 +37,11 @@ export const statisticProps = {
   },
   start: {
     type: Boolean,
-    default: false
+    default: true
   },
   extra: {
     type: String,
     default: ''
-  },
-  easing: {
-    type: String as PropType<easingType>,
-    default: 'easeOutCubic'
-  },
-  delay: {
-    type: Number,
-    default: 0
   }
 } as const
 

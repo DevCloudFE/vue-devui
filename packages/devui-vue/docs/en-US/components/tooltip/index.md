@@ -13,19 +13,19 @@ When users move the cursor to a text, they can see what should do next.
 <template>
   <div class="tooltip-buttons">
     <d-tooltip position="left" content="I am a HTML Element!">
-      <d-button btnStyle="common">left</d-button>
+      <d-button variant="common">left</d-button>
     </d-tooltip>
     <d-tooltip position="top" content="I am a HTML Element!">
-      <d-button btnStyle="common">top</d-button>
+      <d-button variant="common">top</d-button>
     </d-tooltip>
     <d-tooltip position="bottom" content="I am a HTML Element!">
-      <d-button btnStyle="common">bottom</d-button>
+      <d-button variant="common">bottom</d-button>
     </d-tooltip>
     <d-tooltip position="right" content="I am a HTML Element!">
-      <d-button btnStyle="common">right</d-button>
+      <d-button variant="common">right</d-button>
     </d-tooltip>
     <d-tooltip content="No Animation" :showAnimation="false">
-      <d-button btnStyle="common">No Animation</d-button>
+      <d-button variant="common">No Animation</d-button>
     </d-tooltip>
   </div>
 </template>
@@ -62,7 +62,7 @@ This event is triggered only when the mouse pointer is moved in for more than [m
     content="Mouse leave 1000ms later."
     mouseLeaveDelay="1000"
   >
-    <d-button btnStyle="common">MouseEnter delay 1000ms</d-button>
+    <d-button variant="common">MouseEnter delay 1000ms</d-button>
   </d-tooltip>
 </template>
 ```

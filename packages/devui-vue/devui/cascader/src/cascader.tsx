@@ -1,5 +1,5 @@
 // 公共库
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep } from 'lodash'
 import { defineComponent, ref, Ref, reactive, watch, toRef } from 'vue'
 
 // 组件

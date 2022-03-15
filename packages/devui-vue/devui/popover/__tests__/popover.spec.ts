@@ -1,4 +1,4 @@
-import {shallowMount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import DPopover from '../src/popover'
 describe('DPopover', () => {
     it('visible', () => {
@@ -34,7 +34,11 @@ describe('DPopover', () => {
     })
 
     it('trigger click', async () => {
-        const wrapper = shallowMount(DPopover)
+        const wrapper = shallowMount(DPopover, {
+            props: {
+                controlled: true
+            }
+        })
         const isVisible = () => expect(wrapper.classes().includes('devui-popover-isVisible'))
         isVisible().toBeFalsy()
         await wrapper.find('.devui-popover-reference').trigger('click')

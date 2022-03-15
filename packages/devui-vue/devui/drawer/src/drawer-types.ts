@@ -1,11 +1,7 @@
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType, Slot, Ref } from 'vue';
 
 export const drawerProps = {
-  width: {
-    type: String,
-    default: '300px',
-  },
-  visible: {
+  modelValue: {
     type: Boolean,
     default: false,
   },
@@ -13,7 +9,7 @@ export const drawerProps = {
     type: Number,
     default: 1000,
   },
-  isCover: {
+  showOverlay: {
     type: Boolean,
     default: true,
   },
@@ -23,15 +19,40 @@ export const drawerProps = {
   },
   position: {
     type: String as PropType<'left' | 'right'>,
-    default: 'left',
+    default: 'right',
   },
-  backdropCloseable: {
+  lockScroll: {
     type: Boolean,
     default: true,
   },
-  beforeHidden: {
-    type: [Promise, Function] as PropType<Promise<boolean> | (() => boolean | Promise<boolean>)>,
+  closeOnClickOverlay: {
+    type: Boolean,
+    default: true,
   },
-} as const
+  beforeClose: {
+    type: Function as PropType<(done: () => void) => void>,
+  },
+};
 
-export type DrawerProps = ExtractPropTypes<typeof drawerProps>
+export const drawerOverlayProps = {
+  visible: {
+    type: Boolean,
+    default: false,
+  },
+};
+
+type DrawerEmitEvent = 'update:modelValue' | 'close' | 'open';
+
+export type DrawerEmit = (event: DrawerEmitEvent, result?: unknown) => void;
+
+export type DrawerProps = ExtractPropTypes<typeof drawerProps>;
+
+export type DrawerOverlayProps = ExtractPropTypes<typeof drawerOverlayProps>;
+
+export type DrawerOptions = Partial<DrawerProps> & { content?: string | Slot };
+
+export type UseDrawerFn = {
+  drawerRef: Ref<HTMLElement>;
+  drawerClasses: Ref<Record<string, boolean>>;
+  handleOverlayClick: () => void;
+};

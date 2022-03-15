@@ -1,4 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-cd ./packages/devui-vue && npx  @ls-lint/ls-lint  && npx lint-staged

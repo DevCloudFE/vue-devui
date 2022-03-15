@@ -2,7 +2,7 @@ import { defineComponent, toRefs, onMounted, ExtractPropTypes, reactive, ref, wa
 import { IViewConfigs, IAxisConfigs } from '../../../type'
 import { AXIS_TITLE_SPACE } from '../../../config'
 import { quadrantDiagramAxisProps, QuadrantDiagramAxisProps } from './types'
-import { debounce } from 'lodash-es'
+import { debounce } from 'lodash'
 
 import './index.scss'
 

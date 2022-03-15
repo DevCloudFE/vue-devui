@@ -19,15 +19,16 @@
   }
 }
 
-
 .devui-sticky-cell {
   position: sticky;
   z-index: 5;
   background-color: inherit;
+
   &.left {
-    box-shadow: rgba(0,0,0,.05) $devui-shadow-length-slide-right;
+    box-shadow: rgba(0, 0, 0, 0.05) $devui-shadow-length-slide-right;
   }
+
   &.right {
-    box-shadow: rgba(0,0,0,.05) $devui-shadow-length-slide-left;
+    box-shadow: rgba(0, 0, 0, 0.05) $devui-shadow-length-slide-left;
   }
 }

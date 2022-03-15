@@ -3,307 +3,71 @@
 @import '../../style//theme/font';
 @import '../../style//theme//animation';
 
-$devui-popover-margin: -8px;
-$devui-popover-width: -6px;
-$devui-popover-offset: 8px;
-
-@mixin some-display {
-  display: inline-flex;
+.devui-popover-reference {
+  display: inline-block;
 }
 
-.devui-popover {
-  position: relative;
-  @include some-display;
+.devui-popover-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  white-space: nowrap;
+  padding: 4px 12px;
+  line-height: 1.5;
+  border-radius: $devui-border-radius-feedback;
+  color: $devui-feedback-overlay-text;
+  background-color: $devui-feedback-overlay-bg;
+  font-size: $devui-font-size-sm;
 
-  &.devui-popover-isVisible {
-    .devui-popover-content {
-      @include some-display;
-    }
-  }
-
-  .devui-popover-content {
-    position: absolute;
-    display: none;
-    padding: 5px 14px;
-    align-items: center;
-    flex-wrap: wrap;
-    white-space: nowrap;
-    border-radius: $devui-border-radius-feedback;
-    color: $devui-feedback-overlay-text;
-    background-color: $devui-feedback-overlay-bg;
-    font-size: $devui-font-size-sm;
-
-    .after {
-      content: '';
-      width: 12px;
-      height: 12px;
-      transform: rotate(45deg);
-      position: absolute;
-      background-color: $devui-feedback-overlay-bg;
-    }
-
-    &.is-icon {
-      flex-wrap: nowrap;
-    }
-
-    .devui-popover-icon {
-      margin-right: 5px;
-    }
+  &.is-icon {
+    flex-wrap: nowrap;
   }
 }
 
-@keyframes some-animation {
-  0% {
-    opacity: 0;
-    @include some-display;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-//动画效果
-.devui-popover {
-  &.devui-popover-animation {
-    @mixin some-animation {
-      animation: some-animation 0.5s $devui-animation-linear  1 forwards;
+.devui-popover-fade {
+  &-bottom,
+  &-top {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleY(0.8);
     }
 
-    .devui-popover-content {
-      @include some-animation;
-    }
-  }
-}
-
-//left等方向
-.devui-popover {
-  @mixin left-postion--content {
-    left: $devui-popover-margin;
-    top: 0;
-    transform: translate(-100%, 0);
-  }
-  @mixin left-postion--after {
-    right: $devui-popover-width;
-    top: 50%;
-    margin-top: $devui-popover-width;
-    margin-left: $devui-popover-margin;
-  }
-
-  &.left {
-    .devui-popover-content {
-      @include left-postion--content;
-
-      top: 50%;
-      transform: translate(-100%, -50%);
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+      transform: scaleY(1);
     }
 
-    .after {
-      @include left-postion--after;
+    &-enter-active {
+      transition: transform 0.1s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.1s cubic-bezier(0.16, 0.75, 0.5, 1);
+    }
+
+    &-leave-active {
+      transition: transform 0.1s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.1s cubic-bezier(0.5, 0, 0.84, 0.25);
     }
   }
 
-  &.left-top {
-    .devui-popover-content {
-      @include left-postion--content;
+  &-left,
+  &-right {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleX(0.8);
     }
 
-    .after {
-      @include left-postion--after;
-
-      top: $devui-popover-offset;
-      margin-top: auto;
-    }
-  }
-
-  &.left-bottom {
-    .devui-popover-content {
-      @include left-postion--content;
-
-      top: auto;
-      bottom: 0;
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+      transform: scaleX(1);
     }
 
-    .after {
-      @include left-postion--after;
-
-      bottom: $devui-popover-offset;
-      margin-top: auto;
-    }
-  }
-}
-
-// //top等方向
-.devui-popover {
-  @mixin top-postion--content {
-    top: $devui-popover-margin;
-    left: 0;
-    transform: translate(0, -100%);
-  }
-  @mixin top-postion--after {
-    bottom: $devui-popover-width;
-    margin-left: $devui-popover-width;
-  }
-
-  &.top {
-    .devui-popover-content {
-      @include top-postion--content;
-
-      left: 50%;
-      transform: translate(-50%, -100%);
+    &-enter-active {
+      transition: transform 0.1s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.1s cubic-bezier(0.16, 0.75, 0.5, 1);
     }
 
-    .after {
-      left: 50%;
-      @include top-postion--after;
-    }
-  }
-
-  &.top-left {
-    .devui-popover-content {
-      @include top-postion--content;
-    }
-
-    .after {
-      @include top-postion--after;
-
-      left: $devui-popover-offset;
-      margin-left: auto;
-      margin-right: $devui-popover-width;
-    }
-  }
-
-  &.top-right {
-    .devui-popover-content {
-      @include top-postion--content;
-
-      left: auto;
-      right: 0;
-    }
-
-    .after {
-      @include top-postion--after;
-
-      right: $devui-popover-offset;
-    }
-  }
-}
-
-//right等方向
-.devui-popover {
-  @mixin right-postion--content {
-    right: $devui-popover-margin;
-    top: 50%;
-    transform: translate(100%, 0);
-  }
-  @mixin right-postion--after {
-    left: $devui-popover-width;
-    margin-right: $devui-popover-width;
-    top: $devui-popover-offset;
-  }
-
-  &.right {
-    .devui-popover-content {
-      @include right-postion--content;
-
-      transform: translate(100%, -50%);
-    }
-
-    .after {
-      @include right-postion--after;
-
-      top: 50%;
-      margin-top: $devui-popover-width;
-    }
-  }
-
-  &.right-top {
-    .devui-popover-content {
-      @include right-postion--content;
-
-      top: 0;
-    }
-
-    .after {
-      @include right-postion--after;
-    }
-  }
-
-  &.right-bottom {
-    .devui-popover-content {
-      @include right-postion--content;
-
-      bottom: 0;
-      top: auto;
-    }
-
-    .after {
-      @include right-postion--after;
-
-      top: auto;
-      bottom: $devui-popover-offset;
-    }
-  }
-}
-
-//bottom等方向
-.devui-popover {
-  @mixin bottom-postion--content {
-    left: 0;
-    bottom: 0;
-    margin-bottom: $devui-popover-width;
-    transform: translate(0, 100%);
-  }
-  @mixin bottom-postion--after {
-    left: $devui-popover-offset;
-    top: $devui-popover-width;
-    margin-bottom: $devui-popover-width;
-    margin-right: $devui-popover-width;
-  }
-
-  &.bottom {
-    .devui-popover-content {
-      @include bottom-postion--content;
-
-      left: 50%;
-      bottom: 0;
-      transform: translate(-50%, 100%);
-    }
-
-    .after {
-      @include bottom-postion--after;
-
-      left: 50%;
-      margin-right: auto;
-      margin-left: $devui-popover-width;
-    }
-  }
-
-  &.bottom-left {
-    .devui-popover-content {
-      @include bottom-postion--content;
-    }
-
-    .after {
-      @include bottom-postion--after;
-    }
-  }
-
-  &.bottom-right {
-    .devui-popover-content {
-      @include bottom-postion--content;
-
-      left: auto;
-      right: 0;
-    }
-
-    .after {
-      @include bottom-postion--after;
-
-      left: auto;
-      margin-right: auto;
-      right: $devui-popover-offset;
-      margin-left: $devui-popover-width;
+    &-leave-active {
+      transition: transform 0.1s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.1s cubic-bezier(0.5, 0, 0.84, 0.25);
     }
   }
 }

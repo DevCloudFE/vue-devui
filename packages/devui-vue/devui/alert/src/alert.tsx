@@ -36,24 +36,22 @@ export default defineComponent({
     const hide = ref(false)
     const closing = ref(false)
     const alertEl = ref()
-
+    let dismissTimer: undefined | number = undefined;
     const close = (event?: MouseEvent) => {
-      const dom = alertEl.value
-      dom.style.height = `${dom.offsetHeight}px`
-      // 重复一次后才能正确设置 height
-      dom.style.height = `${dom.offsetHeight}px`
+      dismissTimer && clearTimeout(dismissTimer)
       closing.value = true
       ctx.emit('close', event)
     }
 
     const afterLeave = () => {
+      dismissTimer = undefined;
       hide.value = true
       closing.value = false
     }
 
     onMounted(() => {
       if (props.dismissTime) {
-        setTimeout(() => {
+        dismissTimer = window.setTimeout(() => {
           close()
         }, props.dismissTime)
       }
@@ -65,9 +63,8 @@ export default defineComponent({
           <div
             ref={alertEl}
             v-show={!closing.value}
-            class={`devui-alert devui-alert-${props.type} ${props.cssClass} ${
-              closing.value ? 'devui-alter-close' : null
-            }`}
+            class={`devui-alert devui-alert-${props.type} ${props.cssClass} ${closing.value ? 'devui-alter-close' : ''
+              }`}
           >
             {props.closeable ? (
               <div class="devui-close" onClick={close}>

@@ -91,6 +91,7 @@ $select-item-min-height: 36px;
   border-radius: $devui-border-radius;
   outline: none;
   background-color: $devui-base-bg;
+  box-sizing: border-box;
   @include border-transition();
 
   &:not([disabled]):not(.disabled) {
@@ -190,6 +191,7 @@ $select-item-min-height: 36px;
   text-overflow: ellipsis;
   border: 0;
   color: $devui-text;
+  box-sizing: border-box;
   cursor: pointer;
 
   &:hover:not(.active):not(.disabled) {

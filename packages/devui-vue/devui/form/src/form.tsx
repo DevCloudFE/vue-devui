@@ -41,7 +41,7 @@ export default defineComponent({
       },
       rules: props.rules,
       columnsClass: props.columnsClass,
-      messageShowType: "popover"
+      messageShowType: 'popover'
     });
 
     const onSubmit = (e) => {
@@ -60,7 +60,7 @@ export default defineComponent({
   render() {
     const {onSubmit} = this;
     return (
-      <form onSubmit={onSubmit} class="d-form">
+      <form onSubmit={onSubmit} class="devui-form">
         {this.$slots.default?.()}
       </form>
     );

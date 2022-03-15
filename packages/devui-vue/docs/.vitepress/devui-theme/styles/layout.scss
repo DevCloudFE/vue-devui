@@ -173,7 +173,8 @@ li > ol {
 }
 
 table {
-  display: block;
+  display: table;
+  width: 100%;
   border-collapse: collapse;
   margin: 1rem 0;
   overflow-x: auto;
@@ -268,3 +269,22 @@ $max-width: 1440px;
   }
 }
 
+[ui-theme=infinity-theme], [ui-theme=galaxy-theme] {
+  .nav-bar {
+    background-color: $devui-base-bg !important;
+  }
+}
+
+[ui-theme=sweet-theme], [ui-theme=provence-theme], [ui-theme=deep-theme] {
+  .nav-bar {
+    background-color: $devui-brand !important;
+
+    a {
+      color: #fff !important;
+    }
+
+    svg, path, polygon {
+      fill: #fff !important;
+    }
+  }
+}

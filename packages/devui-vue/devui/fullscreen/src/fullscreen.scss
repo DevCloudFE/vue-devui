@@ -1,6 +1,6 @@
 @import '../../style/theme/color';
 
-.fullscreen {
+.devui-fullscreen {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,10 +11,10 @@
   background-color: $devui-base-bg;
 }
 
-.devui-fullscreen {
+.devui-fullscreen-html {
   overflow: hidden;
 }
 
 :not(:root):fullscreen::backdrop {
-  background: #ffffff;
+  background: $devui-base-bg;
 }

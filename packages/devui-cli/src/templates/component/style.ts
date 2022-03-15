@@ -1,4 +1,4 @@
-import { coreClassName } from "./utils"
+import { coreClassName } from './utils'
 
 export default function genStyleTemplate(name: string) {
   return `\

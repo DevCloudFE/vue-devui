@@ -1,1 +1,52 @@
+@import '../../styles-var/devui-var.scss';
 
+.devui-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  border-radius: $devui-border-radius;
+  background-color: $devui-base-bg;
+  transform: translateX(0);
+  opacity: 1;
+  overflow: auto;
+  box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
+
+  &-left {
+    left: 0;
+  }
+
+  &-right {
+    right: 0;
+  }
+}
+
+.drawer-fly {
+  &-right-enter-active {
+    transition: all 0.3s cubic-bezier(0.16, 0.75, 0.5, 1);
+  }
+
+  &-right-leave-active {
+    transition: all 0.3s cubic-bezier(0.5, 0, 0.84, 0.25);
+  }
+
+  &-right-enter-from,
+  &-right-leave-to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  &-left-enter-active {
+    transition: all 0.3s cubic-bezier(0.16, 0.75, 0.5, 1);
+  }
+
+  &-left-leave-active {
+    transition: all 0.3s cubic-bezier(0.5, 0, 0.84, 0.25);
+  }
+
+  &-left-enter-from,
+  &-left-leave-to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}

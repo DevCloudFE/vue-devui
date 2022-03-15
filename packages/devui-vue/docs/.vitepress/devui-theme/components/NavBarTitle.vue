@@ -32,6 +32,7 @@ function gopage() {
 
 .nav-bar-title:hover {
   text-decoration: none;
+  cursor: pointer;
 }
 
 .logo {

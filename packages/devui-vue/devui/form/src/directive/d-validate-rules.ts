@@ -1,6 +1,6 @@
 import AsyncValidator, { RuleItem } from 'async-validator';
 import { VNode, DirectiveBinding } from 'vue';
-import { debounce } from 'lodash-es';
+import { debounce } from 'lodash';
 import { EventBus, isObject, hasKey } from '../util';
 import './style.scss';
 
@@ -14,6 +14,7 @@ interface ValidateFnParam {
   messageShowType: MessageShowType
   dfcUID: string
   popPosition: PopPosition | Array<BasePopPosition>
+  updateOn?: UpdateOn
 }
 
 interface CustomValidatorRuleObject {
@@ -46,6 +47,7 @@ export interface ShowPopoverErrorMessageEventData {
   message?: string
   uid?: string, 
   popPosition?: PopPosition
+  [prop : string]: any
 }
 
 type MessageShowType = 'popover' | 'text' | 'none' | 'toast';
@@ -199,18 +201,28 @@ function getKeyValueOfObjectList(obj): {key: string; value: any;}[] {
 
 function handleErrorStrategy(el: HTMLElement): void {
   const classList: Array<string> =  [...el.classList];
-  classList.push('d-validate-rules-error-pristine');
+  classList.push('devui-validate-rules-error-pristine');
   el.setAttribute('class', classList.join(' '));
 }
 
 function handleErrorStrategyPass(el: HTMLElement): void {
   const classList: Array<string> =  [...el.classList];
-  const index = classList.indexOf('d-validate-rules-error-pristine');
+  const index = classList.indexOf('devui-validate-rules-error-pristine');
   index !== -1 && classList.splice(index, 1);
   el.setAttribute('class', classList.join(' '));
 }
 
-function handleValidateError({el, tipEl, message, isFormTag, messageShowType, dfcUID, popPosition = 'right-bottom'}: Partial<ValidateFnParam>): void {
+function getFormControlUID(el: HTMLElement): string {
+  if(el.tagName.toLocaleLowerCase() === 'body') return '';
+  let uid = ''
+  if(el.parentElement.id.startsWith('dfc-')) {
+    return el.parentElement.id;
+  }else {
+    uid = getFormControlUID(el.parentElement);
+  }
+}
+
+function handleValidateError({el, tipEl, message = '', isFormTag, messageShowType, dfcUID, popPosition = 'right-bottom', updateOn}: Partial<ValidateFnParam>): void {
   // 如果该指令用在form标签上，这里做特殊处理
   if(isFormTag && messageShowType === MessageShowTypeEnum.toast) {
     // todo：待替换为toast
@@ -218,15 +230,19 @@ function handleValidateError({el, tipEl, message, isFormTag, messageShowType, df
     return;
   }
 
+  if(!dfcUID) {
+    dfcUID = getFormControlUID(el);
+  }
+  
   // messageShowType为popover时，设置popover
   if(MessageShowTypeEnum.popover === messageShowType) {
-    EventBus.emit("showPopoverErrorMessage", {showPopover: true, message, uid: dfcUID, popPosition} as ShowPopoverErrorMessageEventData);
+    EventBus.emit('showPopoverErrorMessage', {showPopover: true, message, uid: dfcUID, popPosition, updateOn} as ShowPopoverErrorMessageEventData);
     return;
   }
 
   tipEl.innerText = '' + message;
   tipEl.style.display = 'inline-flex';
-  tipEl.setAttribute('class', 'd-validate-tip');
+  tipEl.setAttribute('class', 'devui-validate-tip');
   handleErrorStrategy(el);
 }
 
@@ -250,7 +266,7 @@ function getFormName(binding: DirectiveBinding): string {
 }
 
 // 校验处理函数
-function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType, dfcUID, popPosition}: Partial<ValidateFnParam>) {
+function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType, dfcUID, popPosition, updateOn}: Partial<ValidateFnParam>) {
   validator.validate({modelName: modelValue}).then(() => {
     handleValidatePass(el, tipEl);
   }).catch((err) => {
@@ -265,7 +281,7 @@ function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowTyp
       msg = errors[0].message;
     }
 
-    handleValidateError({el, tipEl, message: msg, isFormTag, messageShowType, dfcUID, popPosition});
+    handleValidateError({el, tipEl, message: msg, isFormTag, messageShowType, dfcUID, popPosition, updateOn});
   })
 }
 
@@ -295,7 +311,7 @@ export default {
 
     if(refName) {
       // 判断d-form是否传递了messageShowType属性
-      messageShowType = binding.instance[refName]["messageShowType"] ?? "popover";
+      messageShowType = binding.instance[refName]['messageShowType'] ?? 'popover';
     }
 
     // errorStrategy可配置在options对象中
@@ -394,13 +410,20 @@ export default {
     const htmlEventValidateHandler = (e) => {
       const modelValue = e.target.value;
       if(messageShowType === MessageShowTypeEnum.popover) {
-        EventBus.emit("showPopoverErrorMessage", {showPopover: false, message: "", uid: dfcUID, popPosition} as ShowPopoverErrorMessageEventData);
+        EventBus.emit('showPopoverErrorMessage', {showPopover: false, message: '', uid: dfcUID, popPosition, updateOn} as ShowPopoverErrorMessageEventData);
       }
-      validateFn({validator, modelValue, el, tipEl, isFormTag: false, messageShowType, dfcUID, popPosition});
+      validateFn({validator, modelValue, el, tipEl, isFormTag: false, messageShowType, dfcUID, popPosition, updateOn});
     }
 
     // 监听事件验证
     vnode.children[0].el.addEventListener(updateOn, htmlEventValidateHandler); 
+
+    // 如果校验时机为change，则在focus时关闭popover
+    if(messageShowType === MessageShowTypeEnum.popover && updateOn === UpdateOnEnum.change) {
+      vnode.children[0].el.addEventListener('focus', () => {
+        EventBus.emit('showPopoverErrorMessage', {showPopover: false, uid: dfcUID, updateOn} as ShowPopoverErrorMessageEventData);
+      }); 
+    }
 
     // 设置errorStrategy
     if(errorStrategy === ErrorStrategyEnum.pristine) {
@@ -415,7 +438,7 @@ export default {
       const modelValue = isFormTag ? '' : vnode.children[0].el.value;
       
       // 进行提交验证
-      validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType});
+      validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType, updateOn: 'submit'});
     });
     
   }

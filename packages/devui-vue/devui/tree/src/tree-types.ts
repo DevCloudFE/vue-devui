@@ -12,6 +12,11 @@ export interface TreeItem {
   children?: TreeData
   [key: string]: any
 }
+export interface IDropType {
+  dropPrev?: boolean
+  dropNext?: boolean
+  dropInner?: boolean
+}
 export interface SelectType {
   [key: string]: 'none' | 'half' | 'select'
 }
@@ -36,13 +41,23 @@ export const treeProps = {
     type: Boolean,
     default: false
   },
+  draggable: {
+    type: Boolean,
+    default: false
+  },
   checkableRelation: {
     type: String as () => CheckableRelationType,
     default: 'none',
-  }
+  },
+  dropType: {
+    type: Object as PropType<IDropType>,
+    default: () => ({}),
+  },
 } as const
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>
+
+export type Nullable<T> = null | T 
 
 export interface TreeRootType {
   ctx: SetupContext<any>

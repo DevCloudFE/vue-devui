@@ -5,6 +5,10 @@
   &__wrap {
     position: relative;
     @include flex('space-between');
+
+    .devui-input-restore {
+      padding-right: 32px;
+    }
   }
 
   &__preview {

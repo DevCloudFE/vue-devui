@@ -1,71 +1,36 @@
-import { computed, defineComponent, ref } from 'vue';
+import { defineComponent, toRefs } from 'vue';
+import type { SetupContext } from 'vue';
 import { Icon } from '../../icon';
-import { buttonProps } from './button-types';
-
+import loadingDirective from '../../loading/src/directive';
+import { buttonProps, ButtonProps } from './button-types';
+import useButton from './use-button';
 import './button.scss';
 
 export default defineComponent({
   name: 'DButton',
+  directives: {
+    devLoading: loadingDirective,
+  },
   props: buttonProps,
-  setup(props, ctx) {
-    const buttonContent = ref<HTMLSpanElement | null>(null);
+  emits: ['click'],
+  setup(props: ButtonProps, ctx: SetupContext) {
+    const { icon, disabled, loading } = toRefs(props);
+    const { classes, iconClass } = useButton(props, ctx);
 
     const onClick = (e: MouseEvent) => {
-      if (props.showLoading) {
+      if (loading.value) {
         return;
       }
-      props.onClick?.(e);
-    }
-
-    const hasContent = computed(() => ctx.slots.default);
-
-    const btnClass = computed(() => {
-      const { btnStyle, size, position, bordered, icon } = props;
-      const origin = `devui-btn devui-btn-${btnStyle} devui-btn-${size} devui-btn-${position}`;
-      const borderedClass = bordered ? 'bordered' : '';
-      const btnIcon = !!icon && !hasContent.value && btnStyle !== 'primary' ? 'd-btn-icon' : '';
-      const btnIconWrap = !!icon ? 'd-btn-icon-wrap' : '';
-      return `${origin} ${borderedClass} ${btnIcon} ${btnIconWrap}`;
-    });
-
-    const iconClass = computed(() => {
-      if (!props.icon) {
-        return;
-      }
-      const origin = 'devui-icon-fix icon';
-      if (hasContent.value) {
-        return `${origin} clear-right-5`;
-      } else {
-        return origin;
-      }
-    });
+      ctx.emit('click', e);
+    };
 
     return () => {
-      const {
-        icon,
-        type,
-        disabled,
-        showLoading,
-        width
-      } = props;
       return (
-        <div class="devui-btn-host" {...ctx.attrs} v-dLoading={showLoading}>
-          <button
-            class={btnClass.value}
-            type={type}
-            disabled={disabled}
-            style={{ width }}
-            onClick={onClick}
-          >
-            {!!icon ? (
-              <Icon name={icon} class={iconClass.value} />
-            ) : null}
-            <span class="button-content" ref={buttonContent}>
-              {ctx.slots.default?.()}
-            </span>
-          </button>
-        </div>
+        <button class={classes.value} disabled={disabled.value} v-dLoading={loading.value} onClick={onClick}>
+          {icon.value && <Icon name={icon.value} size='12px' class={iconClass.value} />}
+          <span class='button-content'>{ctx.slots.default?.()}</span>
+        </button>
       );
-    }
-  }
+    };
+  },
 });
