@@ -87,4 +87,4 @@ import "my-icon.css";
 |    name     | `String` |    --     | 必选，Icon 名称          | [基本用法](#基本用法)             |
 |    size     | `String` |  '16px'   | 可选，图标大小           | [基本用法](#基本用法)             |
 |    color    | `String` | '#252b3a' | 可选，图标颜色           | [基本用法](#基本用法)             |
-| classPrefix | `String` |  'icon'   | 可选，自定义字体图标前缀 | [自定义字体图标](#自定义字体图标) |
+| class-prefix | `String` |  'icon'   | 可选，自定义字体图标前缀 | [自定义字体图标](#自定义字体图标) |
