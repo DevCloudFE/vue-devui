@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx  @ls-lint/ls-lint  && npx lint-staged
+pnpx @ls-lint/ls-lint && pnpx lint-staged
