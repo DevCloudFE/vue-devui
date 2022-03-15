@@ -39,6 +39,11 @@
       background: $devui-info;
     }
 
+    &-common {
+      background: $devui-unavailable;
+      color: $devui-aide-text;
+    }
+
     &-top-left {
       left: 0;
       top: 0;

@@ -70,28 +70,27 @@
   <ul class="badge-list">
     <li class="badge-list-item">
       <span>系统消息</span>
-      <d-badge status="danger" :count="50"></d-badge>
+      <d-badge status="common" :count="50"></d-badge>
     </li>
     <li class="badge-list-item">
       <span>个人消息</span>
-      <d-badge status="info" :count="500"></d-badge>
+      <d-badge status="common" :count="500"></d-badge>
     </li>
   </ul>
 </template>
 
 <style>
 .badge-list {
-  width: 180px;
+  width: 200px;
   font-size: 14px;
+  background-color: var(--devui-base-bg, #fff);
+  box-shadow: var(--devui-shadow-length-base, 0 1px 4px 0) var(--devui-light-shadow, rgba(37, 43, 58, 0.2));
 }
 .badge-list-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 20px;
-  margin-bottom: 8px;
-  border-radius: 10px;
-  background-color: var(--devui-global-bg, #f3f6f8);
+  padding: 8px 16px;
 }
 </style>
 ```
@@ -179,7 +178,7 @@
 ### BadgeStatusType 类型
 
 ```typescript
-type BadgeStatusType = 'danger' | 'warning' | 'waiting' | 'success' | 'info';
+type BadgeStatusType = 'danger' | 'warning' | 'waiting' | 'success' | 'info' | 'common';
 ```
 
 ### BadgePositionType 类型
