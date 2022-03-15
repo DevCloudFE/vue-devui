@@ -27,9 +27,9 @@ export const timeAxisProps = {
   }
 } as const
 
-export type TimeAxisProps = ExtractPropTypes<typeof timeAxisProps>
+export type TimelineProps = ExtractPropTypes<typeof timeAxisProps>
 
-export interface TimeAxisRootType {
+export interface TimelineRootType {
   ctx: SetupContext<any>
-  props: TimeAxisProps
+  props: TimelineProps
 }
