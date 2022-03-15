@@ -1,18 +1,18 @@
 #!/usr/bin/env node
-import { Command } from 'commander'
-import type { CliConfig } from '../types/config'
-import baseAction from './commands/base'
-import createAction, { validateCreateType } from './commands/create'
-import { detectCliConfig } from './shared/config'
-import { VERSION } from './shared/constant'
+import { Command } from 'commander';
+import type { CliConfig } from '../types/config';
+import baseAction from './commands/base';
+import createAction, { validateCreateType } from './commands/create';
+import { detectCliConfig } from './shared/config';
+import { VERSION } from './shared/constant';
 import {
   DEFAULT_CLI_CONFIG_FILE_NAME
-} from './shared/generate-config'
+} from './shared/generate-config';
 
 // detect cli config
-detectCliConfig()
+detectCliConfig();
 
-const program = new Command()
+const program = new Command();
 
 program
   .command('create [name...]')
@@ -26,7 +26,7 @@ program
   .option('--directive', 'Include service when creating a component.')
   .option('-f --force', 'For force overwriting.')
   .description('Create a component structure, library entry file or other...')
-  .action(createAction)
+  .action(createAction);
 
 program
   .option('--init', 'Initialize the cli configuration file in the current working directory.')
@@ -37,10 +37,10 @@ program
   .usage('[command] [options]')
   .version(VERSION, '-v --version')
   .description('Cli of devui.')
-  .action(baseAction)
+  .action(baseAction);
 
-program.parse(process.argv)
+program.parse(process.argv);
 
 export function defineCliConfig(config: Partial<CliConfig> = {}) {
-  return config
+  return config;
 }

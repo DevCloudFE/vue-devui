@@ -1,8 +1,8 @@
-import { defineComponent, onBeforeUnmount, onMounted, onUnmounted } from 'vue'
-import { TimePickerProps, timePickerProps } from '../../time-picker-types'
-import useTimeScroll from './composables/use-time-scroll'
+import { defineComponent, onBeforeUnmount, onMounted, onUnmounted } from 'vue';
+import { TimePickerProps, timePickerProps } from '../../time-picker-types';
+import useTimeScroll from './composables/use-time-scroll';
 
-import './index.scss'
+import './index.scss';
 
 export default defineComponent({
   name:'DTimeScroll',
@@ -20,37 +20,37 @@ export default defineComponent({
       mouseOutThum,
       thumbMouseMove,
       getScrollWidth
-    }=useTimeScroll()
-    const marginRight = getScrollWidth()
+    }=useTimeScroll();
+    const marginRight = getScrollWidth();
 
     onMounted(()=>{
-      getScrollWidth()
-      getScrollHeight()
-      scrollBoxDom.value.addEventListener('click',setVirtualScroll)
-      scrollContentDom.value.addEventListener('scroll',setVirtualScroll)
-      scrollThumbDom.value.addEventListener('mousedown',mouseDownThum)
-      document.addEventListener('mouseup',mouseOutThum)
-      document.addEventListener('mousemove',thumbMouseMove)
-    })
+      getScrollWidth();
+      getScrollHeight();
+      scrollBoxDom.value.addEventListener('click',setVirtualScroll);
+      scrollContentDom.value.addEventListener('scroll',setVirtualScroll);
+      scrollThumbDom.value.addEventListener('mousedown',mouseDownThum);
+      document.addEventListener('mouseup',mouseOutThum);
+      document.addEventListener('mousemove',thumbMouseMove);
+    });
     onBeforeUnmount(()=>{
-      scrollBoxDom.value.removeEventListener('click',setVirtualScroll)
-      scrollContentDom.value.removeEventListener('scroll',setVirtualScroll)
-      scrollThumbDom.value.removeEventListener('mousedown',mouseDownThum)
-    })
+      scrollBoxDom.value.removeEventListener('click',setVirtualScroll);
+      scrollContentDom.value.removeEventListener('scroll',setVirtualScroll);
+      scrollThumbDom.value.removeEventListener('mousedown',mouseDownThum);
+    });
     onUnmounted(()=>{
-      document.removeEventListener('mouseup',mouseOutThum)
-      document.removeEventListener('mousemove',thumbMouseMove)
-    })
+      document.removeEventListener('mouseup',mouseOutThum);
+      document.removeEventListener('mousemove',thumbMouseMove);
+    });
 
     return()=>{
       return (
         <>
           <div ref={scrollBoxDom} class="devui-scroll-box">
-            <div ref={scrollContentDom} class={`box-content ${ isDown.value || !props.showAnimation ? 'box-content-behavior-auto':''}`} 
+            <div ref={scrollContentDom} class={`box-content ${ isDown.value || !props.showAnimation ? 'box-content-behavior-auto':''}`}
               style={{'margin-right': marginRight + 'px'}}>
-                {
-                  ctx.slots.default?.()
-                }
+              {
+                ctx.slots.default?.()
+              }
             </div>
 
             <div ref={scrollTrackDom} class="box-sroll" onClick={clickTrackFun}>
@@ -58,7 +58,7 @@ export default defineComponent({
             </div>
           </div>
         </>
-      )
-    }
+      );
+    };
   }
-})
+});

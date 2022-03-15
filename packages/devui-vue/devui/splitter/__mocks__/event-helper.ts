@@ -1,14 +1,14 @@
 export function mouseMoveTrigger(
   el: HTMLElement,
-  from: { x: number; y: number; },
-  to: { x: number; y: number; }
+  from: { x: number; y: number },
+  to: { x: number; y: number }
 ): void {
   if (typeof window === 'undefined') {
-    return
+    return;
   }
-  dispatchMouseEvent(el, 'mousedown', from.x, from.y)
-  dispatchMouseEvent(window.document, 'mousemove', to.x, to.y)
-  dispatchMouseEvent(window.document, 'mouseup')
+  dispatchMouseEvent(el, 'mousedown', from.x, from.y);
+  dispatchMouseEvent(window.document, 'mousemove', to.x, to.y);
+  dispatchMouseEvent(window.document, 'mouseup');
 }
 
 export function dispatchMouseEvent(
@@ -18,7 +18,7 @@ export function dispatchMouseEvent(
   y = 0,
   event: MouseEvent = createMouseEvent(type, x, y)
 ): void {
-  node.dispatchEvent(event)
+  node.dispatchEvent(event);
 }
 
 export function createMouseEvent(
@@ -31,6 +31,6 @@ export function createMouseEvent(
     cancelable: false,
     clientX: x,
     clientY: y,
-  })
-  return event
+  });
+  return event;
 }

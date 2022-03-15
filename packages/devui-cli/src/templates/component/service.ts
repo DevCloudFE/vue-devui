@@ -1,4 +1,4 @@
-import { propsTypesName, serviceName, typesFileName } from './utils'
+import { propsTypesName, serviceName, typesFileName } from './utils';
 
 export default function genServiceTemplate(name: string) {
   return `\
@@ -9,5 +9,5 @@ const ${serviceName(name)} = {
 }
 
 export default ${serviceName(name)}
-`
+`;
 }

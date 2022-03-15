@@ -1,32 +1,31 @@
 
 export interface IItem {
-    key: string
-    value: string
-    disabled: boolean
+  key: string;
+  value: string;
+  disabled: boolean;
 }
 
 export interface ITitles {
-    [index: number]: string
+  [index: number]: string;
 }
 
 export interface IModel {
-    [index: number]: string | number
+  [index: number]: string | number;
 }
 
 export interface TState {
-    data: IItem[]
-    allChecked: boolean
-    checkedNum: number
-    keyword: string
-    checkedValues: string[]
-    filterData: IItem[]
-    disabled: boolean
+  data: IItem[];
+  allChecked: boolean;
+  checkedNum: number;
+  keyword: string;
+  checkedValues: string[];
+  filterData: IItem[];
+  disabled: boolean;
 }
 
 export interface TResult {
-    model: string[]
-    data: IItem[]
+  model: string[];
+  data: IItem[];
 }
-
 
 

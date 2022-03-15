@@ -3,46 +3,46 @@ import {
   reactive,
   toRefs,
   watch,
-} from 'vue'
+} from 'vue';
 
-import './progress.scss'
+import './progress.scss';
 
 interface data {
-  pathString: string
-  trailPath: any
-  strokePath: any
+  pathString: string;
+  trailPath: any;
+  strokePath: any;
 }
 
 export default defineComponent({
   name: 'DProgress',
   props: {
     height: {
-        type: String,
-        default: '20px',
+      type: String,
+      default: '20px',
     },
     percentage: {
-        type: Number,
-        default: 0,
+      type: Number,
+      default: 0,
     },
     percentageText: {
-        type: String,
-        default: '',
+      type: String,
+      default: '',
     },
     barBgColor: {
-        type: String,
-        default: '#5170ff',
+      type: String,
+      default: '#5170ff',
     },
     isCircle: {
-        type: Boolean,
-        default: false,
+      type: Boolean,
+      default: false,
     },
     strokeWidth: {
-        type: Number,
-        default: 6,
+      type: Number,
+      default: 6,
     },
     showContent: {
-        type: Boolean,
-        default: true,
+      type: Boolean,
+      default: true,
     }
   },
   setup(props) {
@@ -64,7 +64,7 @@ export default defineComponent({
 
     const setCircleProgress = () => {
       if (!isCircle) {
-          return;
+        return;
       }
 
       const radius = 50 - strokeWidth.value / 2;
@@ -78,10 +78,10 @@ export default defineComponent({
       const len = Math.PI * 2 * radius;
 
       data.trailPath = {
-          stroke: '#dfe1e6',
-          strokeDasharray: `${len}px ${len}px`,
-          strokeDashoffset: `0`,
-          transition: 'stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s'
+        stroke: '#dfe1e6',
+        strokeDasharray: `${len}px ${len}px`,
+        strokeDashoffset: `0`,
+        transition: 'stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s'
       };
 
       data.strokePath = {
@@ -90,13 +90,13 @@ export default defineComponent({
         strokeDashoffset: `0`,
         transition: 'stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s'
       };
-    }
+    };
 
     setCircleProgress();
 
     watch([height, percentage, percentageText, barBgColor, isCircle, strokeWidth, showContent], () => {
       setCircleProgress();
-    })
+    });
 
     return {
       data,
@@ -177,4 +177,4 @@ export default defineComponent({
       </div>
     );
   }
-})
+});

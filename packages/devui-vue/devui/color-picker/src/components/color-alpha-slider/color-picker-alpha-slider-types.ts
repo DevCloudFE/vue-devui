@@ -1,5 +1,5 @@
-import type { PropType, ExtractPropTypes } from 'vue'
-import type { ColorPickerColor } from '../../utils/color-utils-types'
+import type { PropType, ExtractPropTypes } from 'vue';
+import type { ColorPickerColor } from '../../utils/color-utils-types';
 
 export const colorPickerAlphaSliderProps = {
   color: {
@@ -20,6 +20,6 @@ export const colorPickerAlphaSliderProps = {
     type: Number,
     default: 300
   }
-} as const
+} as const;
 
-export type colorPickerAlphaSliderProps = ExtractPropTypes<typeof colorPickerAlphaSliderProps>
+export type colorPickerAlphaSliderProps = ExtractPropTypes<typeof colorPickerAlphaSliderProps>;

@@ -1,13 +1,13 @@
-import { defineComponent, Ref, ref, UnwrapRef, watch, inject } from 'vue'
-import { ColorPickerHistoryProps, colorPickerHistoryProps } from './color-picker-history-types'
-import { Icon } from '../../../../icon'
-import './color-history.scss'
-import { fromHexa } from '../../utils/color-utils'
-import { provideColorOptions, ColorPickerColor } from '../../utils/color-utils-types'
-import { debounce } from 'lodash'
+import { defineComponent, Ref, ref, UnwrapRef, watch, inject } from 'vue';
+import { ColorPickerHistoryProps, colorPickerHistoryProps } from './color-picker-history-types';
+import { Icon } from '../../../../icon';
+import './color-history.scss';
+import { fromHexa } from '../../utils/color-utils';
+import { provideColorOptions, ColorPickerColor } from '../../utils/color-utils-types';
+import { debounce } from 'lodash';
 
-const STORAGE_KEY = 'STORAGE_COLOR_PICKER_HISTORY_KEY'
-const MAX_HISOTRY_COUNT = 8
+const STORAGE_KEY = 'STORAGE_COLOR_PICKER_HISTORY_KEY';
+const MAX_HISOTRY_COUNT = 8;
 
 /**
  * 创建支持存储Store
@@ -15,27 +15,27 @@ const MAX_HISOTRY_COUNT = 8
  * @param params
  * @returns
  */
-function useStore<T>(v: T, { storage }: { storage?: boolean; } = {}): Ref<T | UnwrapRef<T>> {
+function useStore<T>(v: T, { storage }: { storage?: boolean } = {}): Ref<T | UnwrapRef<T>> {
   // 获取默认值
   const getDefaultValue = (): T => {
     if (storage) {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || v
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || v;
     } else {
-      return v
+      return v;
     }
-  }
+  };
 
   // 创建Store
-  const store = ref(getDefaultValue())
+  const store = ref(getDefaultValue());
 
   // 监听Store修改
   watch(store, (value) => {
     if (storage) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(value))
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
     }
-  })
+  });
 
-  return store
+  return store;
 }
 
 export default defineComponent({
@@ -47,39 +47,39 @@ export default defineComponent({
   emits: ['update:color'],
   setup(props: ColorPickerHistoryProps) {
     // 获取 是否showalpha
-    const alphaInject: provideColorOptions = inject('provideData')
+    const alphaInject: provideColorOptions = inject('provideData');
 
     // 创建历史存储
-    const history = useStore<string[]>([], { storage: true })
-    const color = ref(props.color)
+    const history = useStore<string[]>([], { storage: true });
+    const color = ref(props.color);
 
     // 更新历史值函数
     // 进行缓冲处理
     const updateHistory = debounce((value: ColorPickerColor) => {
       const index = history.value.findIndex(
         (x) => x === value.hexa || (x.endsWith('00') && value.alpha === 0)
-      )
+      );
       if (index >= 0) {
-        history.value.splice(index, 1)
+        history.value.splice(index, 1);
       }
 
       history.value = [alphaInject.showAlpha ? value.hexa : value.hex, ...history.value].slice(
         0,
         MAX_HISOTRY_COUNT
-      )
-    }, 100)
+      );
+    }, 100);
 
     // 更新历史值
     watch(props.color, (value) => {
-      updateHistory(value)
-    })
+      updateHistory(value);
+    });
 
     /**
      * 选择历史色
      * @param value
      */
     function onChangeColor(value: string) {
-      color.value = fromHexa(value)
+      color.value = fromHexa(value);
     }
 
     return () => (
@@ -95,6 +95,6 @@ export default defineComponent({
           ></div>
         ))}
       </div>
-    )
+    );
   }
-})
+});

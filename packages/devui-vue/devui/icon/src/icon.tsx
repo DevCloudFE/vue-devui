@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'DIcon',
@@ -23,10 +23,10 @@ export default defineComponent({
   setup(props) {
     return {
       ...props
-    }
+    };
   },
   render() {
-    const { name, size, color, classPrefix } = this
+    const { name, size, color, classPrefix } = this;
     return /^((https?):)?\/\//.test(name) ? (
       <img
         src={name}
@@ -44,6 +44,6 @@ export default defineComponent({
           color
         }}
       ></i>
-    )
+    );
   }
-})
+});

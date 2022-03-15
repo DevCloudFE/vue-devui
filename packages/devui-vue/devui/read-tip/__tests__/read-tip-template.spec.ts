@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { ReadTip, } from '../index';
-import { nextTick } from 'vue'
+import { nextTick } from 'vue';
 import TipsTemplate from '../src/read-tip-template';
 
 
@@ -8,15 +8,15 @@ describe('read-tip test', () => {
 
   beforeEach(() => {
     // create teleport target
-    const el = document.createElement('div')
-    el.id = 'readtip-target'
-    document.body.appendChild(el)
-  })
+    const el = document.createElement('div');
+    el.id = 'readtip-target';
+    document.body.appendChild(el);
+  });
 
   afterEach(() => {
     // clean up
-    document.body.outerHTML = ''
-  })
+    document.body.outerHTML = '';
+  });
   it('read-tip init render', async () => {
     // 基础用法
 
@@ -26,21 +26,21 @@ describe('read-tip test', () => {
       selector: '#readtip-target',
       title: 'Name: Jack',
       content: 'This is Jack\'s profile',
-    }
+    };
     const wrapper = mount(TipsTemplate, {
       props: {
         defaultTemplateProps
       }
-    })
+    });
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain(defaultTemplateProps.title)
+    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain(defaultTemplateProps.title);
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain(defaultTemplateProps.content)
+    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain(defaultTemplateProps.content);
 
 
-  })
+  });
 
-  const position = ['top', 'left', 'right', 'bottom']
+  const position = ['top', 'left', 'right', 'bottom'];
 
   position.forEach(pos => {
     it(`read-tip position ${pos}`, async () => {
@@ -52,17 +52,17 @@ describe('read-tip test', () => {
         selector: '#readtip-target',
         title: 'Name: Jack',
         content: 'This is Jack\'s profile',
-      }
+      };
       const wrapper = mount(TipsTemplate, {
         props: {
           defaultTemplateProps
         }
-      })
+      });
 
-      expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain('read-tip-container ' + defaultTemplateProps.position)
+      expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain('read-tip-container ' + defaultTemplateProps.position);
 
-    })
-  })
+    });
+  });
 
   it('read-tip appendToBody = true', async () => {
     // 基础用法
@@ -73,21 +73,21 @@ describe('read-tip test', () => {
       selector: '#readtip-target',
       title: 'Name: Jack',
       content: 'This is Jack\'s profile',
-    }
+    };
     const wrapper = mount(TipsTemplate, {
       props: {
         defaultTemplateProps
       }
-    })
+    });
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toBe('')
+    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toBe('');
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).not.toContain(defaultTemplateProps.title)
+    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).not.toContain(defaultTemplateProps.title);
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).not.toContain(defaultTemplateProps.content)
+    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).not.toContain(defaultTemplateProps.content);
 
 
-  })
+  });
 
   it('read-tip contentTemplate', async () => {
     // 基础用法
@@ -97,7 +97,7 @@ describe('read-tip test', () => {
       appendToBody: false,
       selector: '#readtip-target',
       contentTemplate: true
-    }
+    };
     const wrapper = mount(TipsTemplate, {
       props: {
         defaultTemplateProps
@@ -105,12 +105,12 @@ describe('read-tip test', () => {
       slots: {
         default: `<div> I am test </div>`
       }
-    })
+    });
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain('<div> I am test </div>')
+    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain('<div> I am test </div>');
 
 
-  })
+  });
 
   it('read-tip dataFn', async () => {
     // 基础用法
@@ -120,19 +120,19 @@ describe('read-tip test', () => {
       selector: '#readtip-target',
       dataFn: getDataFromDB,
       key: 'GetData'
-    }
+    };
     function getDataFromDB({ element, rule }) {
-      return { content: element.innerHTML, title: rule.key }
+      return { content: element.innerHTML, title: rule.key };
     }
     const wrapper = mount(TipsTemplate, {
       props: {
         defaultTemplateProps
       },
 
-    })
+    });
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain('GetData')
-  })
+    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain('GetData');
+  });
 
   it('read-tip overlayClassName', async () => {
     // 基础用法
@@ -142,19 +142,19 @@ describe('read-tip test', () => {
       dataFn: getDataFromDB,
       key: 'GetData',
       overlayClassName: 'red'
-    }
+    };
     function getDataFromDB({ element, rule }) {
-      return { content: element.innerHTML, title: rule.key }
+      return { content: element.innerHTML, title: rule.key };
     }
     const wrapper = mount(TipsTemplate, {
       props: {
         defaultTemplateProps
       },
 
-    })
+    });
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain(defaultTemplateProps.overlayClassName)
-  })
-})
+    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain(defaultTemplateProps.overlayClassName);
+  });
+});
 
 

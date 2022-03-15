@@ -1,6 +1,6 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes } from 'vue';
 
-export type ResultIcon = 'success' | 'danger' | 'warning' | 'info'
+export type ResultIcon = 'success' | 'danger' | 'warning' | 'info';
 
 export const resultProps = {
   icon: {
@@ -15,6 +15,6 @@ export const resultProps = {
     type: String,
     default: ''
   }
-} as const
+} as const;
 
-export type ResultProps = ExtractPropTypes<typeof resultProps>
+export type ResultProps = ExtractPropTypes<typeof resultProps>;

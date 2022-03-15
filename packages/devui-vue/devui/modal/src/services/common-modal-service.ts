@@ -1,7 +1,7 @@
 import { h, render, Slots, VNode } from 'vue';
 
 export interface ModalOpenResult {
-  hide(): void
+  hide(): void;
 }
 
 export abstract class CommonModalService<Options, Props> {
@@ -21,7 +21,7 @@ export abstract class CommonModalService<Options, Props> {
   protected renderNull(anchor: HTMLElement): void {
     // 动画运行完毕后
     setTimeout(() => {
-      render(null, anchor);      
+      render(null, anchor);
     }, 500);
   }
 }

@@ -6,7 +6,7 @@
  */
 export function className(
   classStr: string,
-  classOpt?: { [key: string]: boolean; }
+  classOpt?: { [key: string]: boolean }
 ): string {
   let classname = classStr;
   if (typeof classOpt === 'object') {
@@ -18,4 +18,4 @@ export function className(
   return classname;
 }
 
-export type KeyType<T, K extends keyof T> = T[K]
+export type KeyType<T, K extends keyof T> = T[K];

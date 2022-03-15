@@ -11,7 +11,7 @@ export default defineComponent({
 
     /** 是否禁用 */
     const isDisabled = computed(() => {
-      return props.disabled || radioGroupConf?.disabled.value
+      return props.disabled || radioGroupConf?.disabled.value;
     });
     /** 判断是否勾选 */
     const isChecked = computed(() => {

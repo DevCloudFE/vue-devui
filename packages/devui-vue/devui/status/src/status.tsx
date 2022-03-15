@@ -23,8 +23,8 @@ export default defineComponent({
     });
     return () => {
       return  <span class={typeClass.value}>
-                  {ctx.slots.default?.()}
-              </span>
-    }
+        {ctx.slots.default?.()}
+      </span>;
+    };
   }
-})
+});

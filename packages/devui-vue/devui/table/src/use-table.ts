@@ -3,8 +3,8 @@ import { Column } from './column/column.type';
 import { TablePropsTypes } from './table.type';
 
 interface TableConfig {
-  classes: ComputedRef<Record<string, boolean>>
-  style: ComputedRef<CSSProperties>
+  classes: ComputedRef<Record<string, boolean>>;
+  style: ComputedRef<CSSProperties>;
 }
 
 export function useTable(props: TablePropsTypes): TableConfig {
@@ -24,7 +24,7 @@ export function useTable(props: TablePropsTypes): TableConfig {
 }
 
 
-export const useFixedColumn = (column: Ref<Column>): ToRefs<{ stickyCell: string; offsetStyle: string; }> => {
+export const useFixedColumn = (column: Ref<Column>): ToRefs<{ stickyCell: string; offsetStyle: string }> => {
   const stickyCell = computed(() => {
     const col = column.value;
     if (col.fixedLeft) {
@@ -54,4 +54,4 @@ export const useFixedColumn = (column: Ref<Column>): ToRefs<{ stickyCell: string
     stickyCell,
     offsetStyle
   };
-}
+};

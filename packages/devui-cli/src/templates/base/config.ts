@@ -6,5 +6,5 @@ export default function genConfigTemplate(config: Partial<CliConfig> = {}) {
 import { defineCliConfig } from '${PKG_NAME}'
 
 export default defineCliConfig(${JSON.stringify(config, null, 2)})
-`
+`;
 }

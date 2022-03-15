@@ -82,8 +82,8 @@ export default defineComponent({
       `border-color: ${checked && !disabled ? color : ''}`
     ];
 
-    const checkedContent = renderSlot(useSlots(), 'checkedContent')
-    const uncheckedContent = renderSlot(useSlots(), 'uncheckedContent')
+    const checkedContent = renderSlot(useSlots(), 'checkedContent');
+    const uncheckedContent = renderSlot(useSlots(), 'uncheckedContent');
     return (
       <span class={outerCls} style={outerStyle} onClick={toggle}>
         <span class="devui-switch-inner-wrapper">

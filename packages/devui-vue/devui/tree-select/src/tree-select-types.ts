@@ -1,21 +1,21 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue';
 
 export interface TreeItem {
-  id: number | string
-  label: string
-  parent?: TreeItem
-  children?: Array<TreeItem>
-  level?: number
-  loading?: boolean
-  opened?: boolean
-  checked?: boolean
-  halfchecked?: boolean
-  disabled?: boolean
-  
-  [prop: string]: any
+  id: number | string;
+  label: string;
+  parent?: TreeItem;
+  children?: Array<TreeItem>;
+  level?: number;
+  loading?: boolean;
+  opened?: boolean;
+  checked?: boolean;
+  halfchecked?: boolean;
+  disabled?: boolean;
+
+  [prop: string]: any;
 }
 
-export type TreeData = Array<TreeItem>
+export type TreeData = Array<TreeItem>;
 
 export type ModelValue = number | string | Array<number | string>;
 
@@ -64,6 +64,6 @@ export const treeSelectProps = {
     type: Function as PropType<(item: TreeItem, index: number) => void>,
     default: undefined,
   },
-} as const
+} as const;
 
-export type TreeSelectProps = ExtractPropTypes<typeof treeSelectProps>
+export type TreeSelectProps = ExtractPropTypes<typeof treeSelectProps>;

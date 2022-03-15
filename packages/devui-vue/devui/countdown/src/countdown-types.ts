@@ -1,4 +1,4 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes } from 'vue';
 
 export const countdownProps = {
   value: {
@@ -20,18 +20,18 @@ export const countdownProps = {
   valueStyle: {
     type: Object,
     default: ()=>{
-      return {}
+      return {};
     }
   }
-} as const
+} as const;
 
 export interface DateFormat{
-  Y?: string | number
-  M?: string | number
-  D?: string | number
-  H?: string | number
-  m?: string | number
-  s?: string | number
-  S?: string | number
+  Y?: string | number;
+  M?: string | number;
+  D?: string | number;
+  H?: string | number;
+  m?: string | number;
+  s?: string | number;
+  S?: string | number;
 }
-export type CountdownProps = ExtractPropTypes<typeof countdownProps>
+export type CountdownProps = ExtractPropTypes<typeof countdownProps>;

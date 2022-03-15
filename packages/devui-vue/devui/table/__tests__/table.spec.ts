@@ -4,5 +4,5 @@ import { Table } from '../index';
 describe('table test', () => {
   it('table init render', async () => {
     // todo
-  })
-})
+  });
+});

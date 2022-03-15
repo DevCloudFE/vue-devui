@@ -66,8 +66,8 @@ export const TableProps = {
 export type TablePropsTypes = ExtractPropTypes<typeof TableProps>;
 
 export interface Table<T = Record<string, any>> extends ComponentInternalInstance {
-  store: TableStore<T>
-  props: TablePropsTypes
+  store: TableStore<T>;
+  props: TablePropsTypes;
 }
 
 // export interface TableCheckStatusArg {
@@ -81,7 +81,7 @@ export interface Table<T = Record<string, any>> extends ComponentInternalInstanc
 // }
 
 export interface TableMethods<T = Record<string, any>> {
-  getCheckedRows(): T[]
+  getCheckedRows(): T[];
   // setRowCheckStatus(arg: TableCheckStatusArg): void
   // setTableCheckStatus(arg: RowToggleStatusEventArg): void
   // setRowChildToggleStatus(): void

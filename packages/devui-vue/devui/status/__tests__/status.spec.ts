@@ -6,7 +6,7 @@ describe('d-status', () => {
     const wrapper = mount(Status, {
       props: { type: 'success' }
     });
-    
+
     expect(wrapper.classes()).toContain('devui-status-bg-success');
 
     await wrapper.setProps({type: ''});
@@ -20,9 +20,9 @@ describe('d-status', () => {
     await wrapper.setProps({type: undefined});
 
     expect(wrapper.classes()).toContain('devui-status-bg-invalid');
-    
+
     await wrapper.setProps({ type: 'error' });
-    
+
     expect(wrapper.classes()).toContain('devui-status-bg-error');
 
     await wrapper.setProps({ type: 'warning' });
@@ -30,7 +30,7 @@ describe('d-status', () => {
     expect(wrapper.classes()).toContain('devui-status-bg-warning');
 
     await wrapper.setProps({type: 'initial'});
-    
+
     expect(wrapper.classes()).toContain('devui-status-bg-initial');
 
     await wrapper.setProps({type: 'waiting'});
@@ -42,10 +42,10 @@ describe('d-status', () => {
     expect(wrapper.classes()).toContain('devui-status-bg-running');
 
     await wrapper.setProps({type: 'invalid'});
-    
+
     expect(wrapper.classes()).toContain('devui-status-bg-invalid');
 
-  
+
   });
 
   it('slot', () => {

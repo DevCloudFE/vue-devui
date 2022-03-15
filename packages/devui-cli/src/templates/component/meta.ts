@@ -1,19 +1,19 @@
-import { isPlainObject } from 'lodash-es'
-import { coreName, coreRealName } from './utils'
+import { isPlainObject } from 'lodash-es';
+import { coreName, coreRealName } from './utils';
 
 export type ComponentMeta = {
-  name: string
-  realName?: string
-  title: string
-  fullTitle?: string
-  category: string
-  parts: string[]
-  status?: string
-  dir?: string
-}
+  name: string;
+  realName?: string;
+  title: string;
+  fullTitle?: string;
+  category: string;
+  parts: string[];
+  status?: string;
+  dir?: string;
+};
 
 export function isValidComponentMeta(obj: any) {
-  return isPlainObject(obj) && !!obj.name && Array.isArray(obj.parts)
+  return isPlainObject(obj) && !!obj.name && Array.isArray(obj.parts);
 }
 
 export function genMetaObj(meta: Partial<ComponentMeta> = {}) {
@@ -41,9 +41,9 @@ export function genMetaObj(meta: Partial<ComponentMeta> = {}) {
 
     $dir: '组件目录',
     dir: meta.dir ?? ''
-  }
+  };
 }
 
 export default function genMetaTemplate(meta: Partial<ComponentMeta> = {}) {
-  return JSON.stringify(genMetaObj(meta), null, 2)
+  return JSON.stringify(genMetaObj(meta), null, 2);
 }

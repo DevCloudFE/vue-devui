@@ -61,35 +61,35 @@ export type CompareFn<T = any> = (field: string, a: T, b: T) => boolean;
 export type FilterResults = (string | number)[];
 
 export interface CustomFilterProps {
-  value: FilterResults
-  onChange: (value: FilterResults) => void
+  value: FilterResults;
+  onChange: (value: FilterResults) => void;
 }
 
 export type CustomFilterSlot = (props: CustomFilterProps) => VNode[];
 
 export interface FilterConfig {
-  id: number | string
-  name: string
-  value: any
-  checked?: boolean
+  id: number | string;
+  name: string;
+  value: any;
+  checked?: boolean;
 }
 export interface Column<T extends Record<string, unknown> = any> {
-  field?: string
-  width?: number
-  minWidth?: number
-  realWidth?: number
-  header?: string
-  order?: number
-  sortable?: boolean
-  filterable?: boolean
-  filterMultiple?: boolean
-  filterList?: FilterConfig[]
-  fixedLeft?: string
-  fixedRight?: string
-  renderHeader?: () => void
-  renderCell?: (row: T, index: number) => void
-  formatter?: Formatter<T>
-  compareFn?: CompareFn<T>
-  customFilterTemplate?: CustomFilterSlot
-  subColumns?: Slot
+  field?: string;
+  width?: number;
+  minWidth?: number;
+  realWidth?: number;
+  header?: string;
+  order?: number;
+  sortable?: boolean;
+  filterable?: boolean;
+  filterMultiple?: boolean;
+  filterList?: FilterConfig[];
+  fixedLeft?: string;
+  fixedRight?: string;
+  renderHeader?: () => void;
+  renderCell?: (row: T, index: number) => void;
+  formatter?: Formatter<T>;
+  compareFn?: CompareFn<T>;
+  customFilterTemplate?: CustomFilterSlot;
+  subColumns?: Slot;
 }

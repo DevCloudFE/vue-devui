@@ -1,7 +1,7 @@
-import { name, version } from '../../package.json'
+import { name, version } from '../../package.json';
 
-export const CWD = process.cwd()
+export const CWD = process.cwd();
 
-export const VERSION = version
+export const VERSION = version;
 
-export const PKG_NAME = name
+export const PKG_NAME = name;

@@ -1,4 +1,4 @@
-import type { InjectionKey, PropType, Ref } from 'vue'
+import type { InjectionKey, PropType, Ref } from 'vue';
 
 /** radio、radio-group 共用 props */
 const radioCommonProps = {
@@ -22,7 +22,7 @@ const radioCommonProps = {
     type: Boolean,
     default: false,
   },
-}
+};
 
 /** radio 的 props */
 export const radioProps = {
@@ -33,7 +33,7 @@ export const radioProps = {
     required: true,
     default: null,
   },
-} as const
+} as const;
 
 /** radio-group 的 props */
 export const radioGroupProps = {
@@ -48,16 +48,16 @@ export const radioGroupProps = {
     type: String as PropType<'row' | 'column'>,
     default: 'column',
   },
-} as const
+} as const;
 
 /** radio-group 注入字段的接口 */
 interface RadioGroupInjection {
-  modelValue: Ref<string>
-  name: Ref<string>
-  disabled: Ref<boolean>
-  beforeChange: (value: string) => boolean | Promise<boolean>
-  emitChange: (value: string) => void
+  modelValue: Ref<string>;
+  name: Ref<string>;
+  disabled: Ref<boolean>;
+  beforeChange: (value: string) => boolean | Promise<boolean>;
+  emitChange: (value: string) => void;
 }
 
 /** radio-group 注入 radio 的 key 值 */
-export const radioGroupInjectionKey: InjectionKey<RadioGroupInjection> = Symbol('DRadioGroup')
+export const radioGroupInjectionKey: InjectionKey<RadioGroupInjection> = Symbol('DRadioGroup');
