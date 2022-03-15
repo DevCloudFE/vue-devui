@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 import { DevuiSourceData } from './devui-source-data';
 import CollapseIcon from './codebox-collapse-icon';
 import CopyIcon from './codebox-copy-icon';
@@ -27,44 +27,44 @@ export default defineComponent({
 
     const toggleCode = () => {
       expanded.value = !expanded.value;
-    }
+    };
 
     const copyCode = (code: string) => {
       copy(code).then(() => {
-          _copied.value = true;
-          setTimeout(() => {
-              _copied.value = false;
-          }, 1000)
-      })
-    }
+        _copied.value = true;
+        setTimeout(() => {
+          _copied.value = false;
+        }, 1000);
+      });
+    };
     const copy = (value: string): Promise<string> => {
       const promise = new Promise<string>((resolve, reject): void => {
-          let copyTextArea = null as unknown as HTMLTextAreaElement;
-          try {
-              copyTextArea = document.createElement('textarea');
-              copyTextArea.style.height = '0px';
-              copyTextArea.style.opacity = '0';
-              copyTextArea.style.width = '0px';
-              document.body.appendChild(copyTextArea);
-              copyTextArea.value = value;
-              copyTextArea.select();
-              document.execCommand('copy');
-              resolve(value);
-          } finally {
-              if (copyTextArea && copyTextArea.parentNode) {
-                  copyTextArea.parentNode.removeChild(copyTextArea);
-              }
+        let copyTextArea = null as unknown as HTMLTextAreaElement;
+        try {
+          copyTextArea = document.createElement('textarea');
+          copyTextArea.style.height = '0px';
+          copyTextArea.style.opacity = '0';
+          copyTextArea.style.width = '0px';
+          document.body.appendChild(copyTextArea);
+          copyTextArea.value = value;
+          copyTextArea.select();
+          document.execCommand('copy');
+          resolve(value);
+        } finally {
+          if (copyTextArea && copyTextArea.parentNode) {
+            copyTextArea.parentNode.removeChild(copyTextArea);
           }
-      })
+        }
+      });
       return (promise);
-    }
+    };
 
     return () => {
       return (
         <section class={{'code-box': true, 'expand': expanded.value}}>
           <section class='code-box-demo'>
             <div>
-                {ctx.slots.default && ctx.slots.default()}
+              {ctx.slots.default && ctx.slots.default()}
             </div>
           </section>
           <section class="code-box-meta markdown">
@@ -88,13 +88,13 @@ export default defineComponent({
                         <DevuiHighlight code={item.code.default || item.code} language={item.language}></DevuiHighlight>
                       </div>
                     </DevuiTab>
-                  )
+                  );
                 })}
               </DevuiTabs>
             </div>
           </section>
         </section>
-      )
-    }
+      );
+    };
   }
-})
+});

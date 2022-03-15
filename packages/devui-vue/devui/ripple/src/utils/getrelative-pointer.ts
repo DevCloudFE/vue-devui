@@ -4,4 +4,4 @@ export const getRelativePointer = (
 ) => ({
   x: x - left,
   y: y - top
-})
+});

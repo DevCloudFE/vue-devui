@@ -1,5 +1,5 @@
-import { defineComponent } from 'vue'
-import { IconNobody } from './icon-nobody'
+import { defineComponent } from 'vue';
+import { IconNobody } from './icon-nobody';
 
 export default defineComponent({
   name: 'AvatarNobodyIcon',
@@ -14,7 +14,7 @@ export default defineComponent({
     },
   },
   render() {
-    const { width, height } = this
-    return <IconNobody width={width} height={height} />
+    const { width, height } = this;
+    return <IconNobody width={width} height={height} />;
   },
-})
+});

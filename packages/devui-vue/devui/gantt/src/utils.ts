@@ -4,5 +4,5 @@ export const isSameDate = (date: Date, compareDate: Date): boolean => {
     date.getFullYear() === compareDate.getFullYear() &&
     date.getMonth() === compareDate.getMonth() &&
     date.getDate() === compareDate.getDate()
-  )
-}
+  );
+};

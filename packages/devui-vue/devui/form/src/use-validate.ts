@@ -1,12 +1,12 @@
 import AsyncValidator from 'async-validator';
 
 export default function useValidate() {
-  
+
   // 校验函数
   const validate = (descriptor, validateObject) => {
     const validator = new AsyncValidator(descriptor);
     return validator.validate(validateObject);
-  }
+  };
 
   // 创建内置校验器
   const createDevUIBuiltinValidator = (rule) => {
@@ -22,11 +22,11 @@ export default function useValidate() {
             }else {
               resolve('校验通过');
             }
-          })
+          });
         }
-      }
+      };
     }
-  
+
     if(res.max !== undefined) {
       res = {
         ...res,
@@ -38,9 +38,9 @@ export default function useValidate() {
             }else {
               resolve('校验通过');
             }
-          })
+          });
         }
-      }
+      };
     }
 
     if(res.maxlength !== undefined) {
@@ -48,7 +48,7 @@ export default function useValidate() {
         ...res,
         max: res.maxlength,
         message: res.message ?? `最大长度为${res.maxlength}`
-      }
+      };
       delete res.maxlength;
       delete res.asyncValidator;
     }
@@ -58,7 +58,7 @@ export default function useValidate() {
         ...res,
         min: res.minlength,
         message: res.message ?? `最小长度为${res.minlength}`
-      }
+      };
       delete res.minlength;
       delete res.asyncValidator;
     }
@@ -75,16 +75,16 @@ export default function useValidate() {
             }else {
               resolve('校验通过');
             }
-          })
+          });
         }
-      }
+      };
     }
     if(res.email !== undefined){
       res = {
         ...res,
         type: 'email',
         message: res.message ?? '邮箱格式不正确'
-      }
+      };
       delete res.asyncValidator;
     }
     if(res.pattern !== undefined){
@@ -92,7 +92,7 @@ export default function useValidate() {
         ...res,
         type: 'pattern',
         message: res.message ?? '正则不匹配'
-      }
+      };
       delete res.asyncValidator;
     }
     if(res.whitespace === true){
@@ -107,13 +107,13 @@ export default function useValidate() {
             }else {
               resolve('校验通过');
             }
-          })
+          });
         }
-      }
+      };
     }
 
     return res;
-  }
+  };
 
   return {validate, createDevUIBuiltinValidator};
 }

@@ -1,11 +1,11 @@
 import CodeBox from '../devui-codebox/devui-codebox';
 
 interface ExampleItem {
-  id: `${string}-${string}`
-  title: string
-  text?: string
-  code: string
-  content: JSX.Element
+  id: `${string}-${string}`;
+  title: string;
+  text?: string;
+  code: string;
+  content: JSX.Element;
 }
 
 export function useDemo (exampleList: ExampleItem[]): JSX.Element {

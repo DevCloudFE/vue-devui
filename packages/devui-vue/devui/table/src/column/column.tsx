@@ -3,7 +3,7 @@ import {
   Column,
   TableColumnProps,
   TableColumnPropsTypes,
-} from './column.type'
+} from './column.type';
 import { TABLE_TOKEN } from '../table.type';
 import { createColumn } from './use-column';
 
@@ -12,8 +12,8 @@ export default defineComponent({
   props: TableColumnProps,
   setup(props: TableColumnPropsTypes, ctx) {
     /*
-      ctx.slots : { 
-       customFilterTemplate: Slot 
+      ctx.slots : {
+       customFilterTemplate: Slot
       }
      */
     const column = createColumn(toRefs(props), ctx.slots);

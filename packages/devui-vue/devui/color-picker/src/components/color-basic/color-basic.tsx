@@ -1,20 +1,20 @@
-import { defineComponent, ref, inject } from 'vue'
-import { colorPickerBasicColorProps } from './color-basic-types'
-import { provideColorOptions } from '../../utils/color-utils-types'
-import { fromHex } from '../../utils/color-utils'
-import './color-basic.scss'
-import { color } from '../../utils/color'
+import { defineComponent, ref, inject } from 'vue';
+import { colorPickerBasicColorProps } from './color-basic-types';
+import { provideColorOptions } from '../../utils/color-utils-types';
+import { fromHex } from '../../utils/color-utils';
+import './color-basic.scss';
+import { color } from '../../utils/color';
 export default defineComponent({
   name: 'ColorBasic',
   props: colorPickerBasicColorProps,
   setup(props) {
-    const swatchesInject: provideColorOptions = inject('provideData')
+    const swatchesInject: provideColorOptions = inject('provideData');
 
-    const currentColor = ref(props.color)
+    const currentColor = ref(props.color);
     function changeBasicColor(hex: string) {
-      currentColor.value = fromHex(hex)
+      currentColor.value = fromHex(hex);
     }
-    const swatches = ref(Object.values(swatchesInject.swatches ?? []))
+    const swatches = ref(Object.values(swatchesInject.swatches ?? []));
     return () => {
       return (
         <div class='devui-color-picker-basic flex'>
@@ -26,7 +26,7 @@ export default defineComponent({
             ></div>
           ))}
         </div>
-      )
-    }
+      );
+    };
   }
-})
+});

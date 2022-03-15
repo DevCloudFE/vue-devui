@@ -1,9 +1,9 @@
 /**
  * 处理cascader-item中需要的参数
  */
-import { cloneDeep } from 'lodash'
-import { ref, reactive, Ref } from 'vue'
-import { CascaderProps, UseCascaderItemCallback, CascaderItem } from '../src/cascader-types'
+import { cloneDeep } from 'lodash';
+import { ref, reactive, Ref } from 'vue';
+import { CascaderProps, UseCascaderItemCallback, CascaderItem } from '../src/cascader-types';
 
 export const useCascaderItem = (props?: CascaderProps, stopDefault?: Ref<boolean>, tagList?: CascaderItem[]): UseCascaderItemCallback => {
   /**
@@ -19,10 +19,10 @@ export const useCascaderItem = (props?: CascaderProps, stopDefault?: Ref<boolean
     activeIndexs: reactive<number[]>([]), // 维护用于视图更新的选中下标
     tagList, // 多选模式下选中的值数组，用于生成tag
     stopDefault,
-  }
+  };
 
   return {
     cascaderItemNeedProps,
     // getInputValue
-  }
-}
+  };
+};

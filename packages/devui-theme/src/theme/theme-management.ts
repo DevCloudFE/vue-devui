@@ -16,15 +16,15 @@ import { EventBus } from './utils';
  *
 */
 export function ThemeServiceInit(
-  themes?: { [themeName: string]: Theme; },
+  themes?: { [themeName: string]: Theme },
   defaultThemeName?: string,
   extraData?: {
     [themeName: string]: {
-      appendClasses?: Array<string>
+      appendClasses?: Array<string>;
       cssVariables?: {
-        [cssVarName: string]: string
-      }
-    }
+        [cssVarName: string]: string;
+      };
+    };
   },
   ieSupport = false, // TODO：css-var-ponyflll 仍有一些问题待定位
   allowDynamicTheme = false
@@ -54,7 +54,7 @@ export function ThemeServiceInit(
   return themeService;
 }
 
-export function ThemeServiceFollowSystemOn(themeConfig?: { lightThemeName: string; darkThemeName: string; }): Subscription {
+export function ThemeServiceFollowSystemOn(themeConfig?: { lightThemeName: string; darkThemeName: string }): Subscription {
   if (typeof window === 'undefined') {
     return null;
   }

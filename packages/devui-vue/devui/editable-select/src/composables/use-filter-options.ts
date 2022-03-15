@@ -23,6 +23,6 @@ export const userFilterOptions: (
         filteredOptions.push(option);
       }
     });
-    
+
     return filteredOptions;
   });

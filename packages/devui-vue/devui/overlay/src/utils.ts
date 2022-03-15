@@ -2,10 +2,10 @@ import { onUnmounted, watch, computed, ComputedRef, onMounted, SetupContext } fr
 import { overlayEmits, OverlayProps } from './overlay-types';
 
 interface CommonInfo {
-  backgroundClass: ComputedRef<string[]>
-  overlayClass: ComputedRef<string>
-  handleBackdropClick: (e: Event) => void
-  handleOverlayBubbleCancel: (e: Event) => void
+  backgroundClass: ComputedRef<string[]>;
+  overlayClass: ComputedRef<string>;
+  handleBackdropClick: (e: Event) => void;
+  handleOverlayBubbleCancel: (e: Event) => void;
 }
 
 export function useOverlayLogic(props: OverlayProps, ctx: SetupContext<typeof overlayEmits>): CommonInfo {
@@ -59,5 +59,5 @@ export function useOverlayLogic(props: OverlayProps, ctx: SetupContext<typeof ov
     overlayClass,
     handleBackdropClick,
     handleOverlayBubbleCancel
-  }
+  };
 }

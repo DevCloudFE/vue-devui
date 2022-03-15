@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, CSSProperties } from 'vue'
+import type { PropType, ExtractPropTypes, CSSProperties } from 'vue';
 // import type { easingType } from './utils/animation'
 export const statisticProps = {
   title: {
@@ -43,6 +43,6 @@ export const statisticProps = {
     type: String,
     default: ''
   }
-} as const
+} as const;
 
-export type StatisticProps = ExtractPropTypes<typeof statisticProps>
+export type StatisticProps = ExtractPropTypes<typeof statisticProps>;

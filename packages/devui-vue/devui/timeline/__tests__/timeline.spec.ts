@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import DTimeline from '../src/timeline';
-import DTimelineItem from '../src/components/timeline-item'
+import DTimelineItem from '../src/components/timeline-item';
 describe('timeline test', () => {
   const wrapper = mount({
     components: { DTimeline, DTimelineItem },
@@ -19,40 +19,40 @@ describe('timeline test', () => {
     </d-timeline>
       `,
     setup() {
-      return
+      return;
     }
   });
-  const timeAxisItems = wrapper.findAll('.devui-timeline-item')
+  const timeAxisItems = wrapper.findAll('.devui-timeline-item');
 
   it('should render correctly', async () => {
-    //渲染的dom元素是有这个class
-    expect(wrapper.classes()).toContain('devui-timeline')
-    //渲染正确子节点数
-    expect(timeAxisItems.length).toBe(5)
-    //看时间是否正确
-    expect(timeAxisItems[0].find('.devui-timeline-item-time').text()).toBe('2021-11-9')
-    //看内容是否正确
-    expect(timeAxisItems[0].find('.devui-timeline-item-content').text()).toBe('测试1')
-  })
+    // 渲染的dom元素是有这个class
+    expect(wrapper.classes()).toContain('devui-timeline');
+    // 渲染正确子节点数
+    expect(timeAxisItems.length).toBe(5);
+    // 看时间是否正确
+    expect(timeAxisItems[0].find('.devui-timeline-item-time').text()).toBe('2021-11-9');
+    // 看内容是否正确
+    expect(timeAxisItems[0].find('.devui-timeline-item-content').text()).toBe('测试1');
+  });
 
   it('Custom content should be displayed', async () => {
-    //有自定义的时间节点
-    expect(timeAxisItems[1].find('.devui-timeline-item-time div').html()).toBe('<div>2021-11-10</div>')
-    //有自定义的内容
-    expect(timeAxisItems[1].find('.devui-timeline-item-content div').html()).toBe('<div>测试2</div>')
-    //显示自定义时间点
-    expect(timeAxisItems[1].find('.devui-timeline-item-dot i').exists()).toBe(true)
-    //显示时间点间的附加元素
-    expect(timeAxisItems[1].find('.devui-timeline-item-line-extra span').html()).toBe('<span>附加元素</span>')
-  })
+    // 有自定义的时间节点
+    expect(timeAxisItems[1].find('.devui-timeline-item-time div').html()).toBe('<div>2021-11-10</div>');
+    // 有自定义的内容
+    expect(timeAxisItems[1].find('.devui-timeline-item-content div').html()).toBe('<div>测试2</div>');
+    // 显示自定义时间点
+    expect(timeAxisItems[1].find('.devui-timeline-item-dot i').exists()).toBe(true);
+    // 显示时间点间的附加元素
+    expect(timeAxisItems[1].find('.devui-timeline-item-line-extra span').html()).toBe('<span>附加元素</span>');
+  });
 
   it('type should be rendered correctly', async () => {
-    expect(timeAxisItems[0].find('.devui-timeline-item-dot').classes()).toContain('devui-timeline-item-type-primary')
-    expect(timeAxisItems[2].find('.devui-timeline-item-dot').classes()).toContain('devui-timeline-item-type-success')
-    expect(timeAxisItems[3].find('.devui-timeline-item-dot').classes()).toContain('devui-timeline-item-type-warning')
-    expect(timeAxisItems[4].find('.devui-timeline-item-dot').classes()).toContain('devui-timeline-item-type-error')
+    expect(timeAxisItems[0].find('.devui-timeline-item-dot').classes()).toContain('devui-timeline-item-type-primary');
+    expect(timeAxisItems[2].find('.devui-timeline-item-dot').classes()).toContain('devui-timeline-item-type-success');
+    expect(timeAxisItems[3].find('.devui-timeline-item-dot').classes()).toContain('devui-timeline-item-type-warning');
+    expect(timeAxisItems[4].find('.devui-timeline-item-dot').classes()).toContain('devui-timeline-item-type-error');
 
-  })
+  });
 
   it('position should be rendered correctly', async () => {
 
@@ -67,22 +67,22 @@ describe('timeline test', () => {
     </d-timeline>
       `,
       setup() {
-        return
+        return;
       }
     });
-    let timeAxisItems = wrapper.findAll('.devui-timeline-item')
-    //内容是否在正确的位置
-    expect(timeAxisItems[0].find('.devui-timeline-item-data-left .devui-timeline-item-content').exists()).toBe(true)
-    expect(timeAxisItems[1].find('.devui-timeline-item-data-right .devui-timeline-item-content').exists()).toBe(true)
-    expect(timeAxisItems[2].find('.devui-timeline-item-data-right .devui-timeline-item-content').exists()).toBe(true)
-    //设置横向时间轴
-    await wrapper.setProps({ direction: 'horizontal' })
-    timeAxisItems = wrapper.findAll('.devui-timeline-item')
-    expect(timeAxisItems[0].find('.devui-timeline-item-data-bottom .devui-timeline-item-content').exists()).toBe(true)
-    expect(timeAxisItems[1].find('.devui-timeline-item-data-top .devui-timeline-item-content').exists()).toBe(true)
-    expect(timeAxisItems[3].find('.devui-timeline-item-data-top .devui-timeline-item-content').exists()).toBe(true)
+    let timeAxisItems = wrapper.findAll('.devui-timeline-item');
+    // 内容是否在正确的位置
+    expect(timeAxisItems[0].find('.devui-timeline-item-data-left .devui-timeline-item-content').exists()).toBe(true);
+    expect(timeAxisItems[1].find('.devui-timeline-item-data-right .devui-timeline-item-content').exists()).toBe(true);
+    expect(timeAxisItems[2].find('.devui-timeline-item-data-right .devui-timeline-item-content').exists()).toBe(true);
+    // 设置横向时间轴
+    await wrapper.setProps({ direction: 'horizontal' });
+    timeAxisItems = wrapper.findAll('.devui-timeline-item');
+    expect(timeAxisItems[0].find('.devui-timeline-item-data-bottom .devui-timeline-item-content').exists()).toBe(true);
+    expect(timeAxisItems[1].find('.devui-timeline-item-data-top .devui-timeline-item-content').exists()).toBe(true);
+    expect(timeAxisItems[3].find('.devui-timeline-item-data-top .devui-timeline-item-content').exists()).toBe(true);
 
-  })
+  });
 
   it('time-position should be rendered correctly', async () => {
     const wrapper = mount({
@@ -94,16 +94,16 @@ describe('timeline test', () => {
     </d-timeline>
       `,
       setup() {
-        return
+        return;
       }
     });
-    const timeAxisItems = wrapper.findAll('.devui-timeline-item')
-    //时间是否在正确的位置
-    expect(timeAxisItems[0].find('.devui-timeline-item-data-left .devui-timeline-item-time').exists()).toBe(false)
-    expect(timeAxisItems[0].find('.devui-timeline-item-axis .devui-timeline-item-time').exists()).toBe(true)
-    expect(timeAxisItems[1].find('.devui-timeline-item-data-left .devui-timeline-item-time').exists()).toBe(true)
-    expect(timeAxisItems[1].find('.devui-timeline-item-axis .devui-timeline-item-time').exists()).toBe(false)
-  })
+    const timeAxisItems = wrapper.findAll('.devui-timeline-item');
+    // 时间是否在正确的位置
+    expect(timeAxisItems[0].find('.devui-timeline-item-data-left .devui-timeline-item-time').exists()).toBe(false);
+    expect(timeAxisItems[0].find('.devui-timeline-item-axis .devui-timeline-item-time').exists()).toBe(true);
+    expect(timeAxisItems[1].find('.devui-timeline-item-data-left .devui-timeline-item-time').exists()).toBe(true);
+    expect(timeAxisItems[1].find('.devui-timeline-item-axis .devui-timeline-item-time').exists()).toBe(false);
+  });
 
   it('line-style should be rendered correctly', async () => {
     const wrapper = mount({
@@ -118,14 +118,14 @@ describe('timeline test', () => {
     </d-timeline>
       `,
       setup() {
-        return
+        return;
       }
     });
-    const timeAxisItemAxis = wrapper.findAll('.devui-timeline-item .devui-timeline-item-axis')
-    expect(timeAxisItemAxis[0].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-solid')
-    expect(timeAxisItemAxis[1].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-dashed')
-    expect(timeAxisItemAxis[2].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-dotted')
-    expect(timeAxisItemAxis[3].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-none')
-    expect(timeAxisItemAxis[4].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-none')
-  })
-})
+    const timeAxisItemAxis = wrapper.findAll('.devui-timeline-item .devui-timeline-item-axis');
+    expect(timeAxisItemAxis[0].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-solid');
+    expect(timeAxisItemAxis[1].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-dashed');
+    expect(timeAxisItemAxis[2].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-dotted');
+    expect(timeAxisItemAxis[3].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-none');
+    expect(timeAxisItemAxis[4].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-none');
+  });
+});

@@ -1,4 +1,4 @@
-import { coreClassName, coreRealName, propsName, propsTypesName, typesFileName } from './utils'
+import { coreClassName, coreRealName, propsName, propsTypesName, typesFileName } from './utils';
 
 export default function genCoreTemplate(name: string) {
   return `\
@@ -15,5 +15,5 @@ export default defineComponent({
     }
   }
 })
-`
+`;
 }

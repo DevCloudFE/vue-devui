@@ -1,12 +1,12 @@
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue';
 
 export type ITableColumn = {
-  key: string
-  title: string
-  type?: 'turn'
-}
+  key: string;
+  title: string;
+  type?: 'turn';
+};
 
-export type ITableDataRow = Record<string, any>
+export type ITableDataRow = Record<string, any>;
 
 export const apiTableProps = {
   columns: {
@@ -18,6 +18,6 @@ export const apiTableProps = {
     type: Array as PropType<ITableDataRow[]>,
     default: () => []
   }
-} as const
+} as const;
 
-export type ApiTableProps = ExtractPropTypes<typeof apiTableProps>
+export type ApiTableProps = ExtractPropTypes<typeof apiTableProps>;

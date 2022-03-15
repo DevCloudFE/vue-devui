@@ -1,7 +1,7 @@
-import path from 'path'
-import { defineConfig } from 'vite'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import svgLoader from 'vite-svg-loader'
+import path from 'path';
+import { defineConfig } from 'vite';
+import vueJsx from '@vitejs/plugin-vue-jsx';
+import svgLoader from 'vite-svg-loader';
 
 export default defineConfig({
   resolve: {
@@ -22,4 +22,4 @@ export default defineConfig({
       strict: false
     }
   }
-})
+});

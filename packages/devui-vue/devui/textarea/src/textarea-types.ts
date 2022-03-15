@@ -39,7 +39,7 @@ export const textareaProps = {
   },
   resize: {
     type: String as PropType<
-      'none' | 'vertical' | 'horizontal' | 'both' | 'inherit'
+    'none' | 'vertical' | 'horizontal' | 'both' | 'inherit'
     >,
     default: 'none',
   },

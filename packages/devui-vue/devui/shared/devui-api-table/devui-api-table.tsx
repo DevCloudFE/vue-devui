@@ -1,23 +1,23 @@
-import { defineComponent } from 'vue'
-import { apiTableProps, ITableColumn, ITableDataRow } from './devui-api-table.type'
+import { defineComponent } from 'vue';
+import { apiTableProps, ITableColumn, ITableDataRow } from './devui-api-table.type';
 
 export default defineComponent({
   name: 'DevuiApiTable',
   props: apiTableProps,
   render() {
-    const { columns, data } = this
+    const { columns, data } = this;
 
-    const renderTd = (params: { col: ITableColumn; row: ITableDataRow; }) => {
-      const { col, row } = params
+    const renderTd = (params: { col: ITableColumn; row: ITableDataRow }) => {
+      const { col, row } = params;
 
-      const value = row[col.key]
+      const value = row[col.key];
 
       if ('type' in col) {
-        return <a href={`#${value}`}>{value}</a>
+        return <a href={`#${value}`}>{value}</a>;
       }
 
-      return value
-    }
+      return value;
+    };
 
     return (
       <table>
@@ -34,6 +34,6 @@ export default defineComponent({
           </tr>
         ))}
       </table>
-    )
+    );
   }
-})
+});

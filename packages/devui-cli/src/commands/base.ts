@@ -10,7 +10,7 @@ import buildAction from './build';
 import createAction from './create';
 
 function getActions() {
-  const actionMap = new Map<string, prompts.Choice & { action: Function; }>();
+  const actionMap = new Map<string, prompts.Choice & { action: Function }>();
   actionMap.set('create', {
     title: 'create',
     value: 'create',
@@ -23,8 +23,8 @@ function getActions() {
 }
 
 export type BaseCmd = {
-  init?: boolean
-  config?: string
+  init?: boolean;
+  config?: string;
 };
 
 export default async function baseAction(cmd: BaseCmd) {
@@ -38,7 +38,7 @@ export default async function baseAction(cmd: BaseCmd) {
 }
 
 export function loadCliConfig(cmd: Pick<BaseCmd, 'config'>) {
-  if (!cmd.config) return;
+  if (!cmd.config) {return;}
 
   const configPath = resolve(CWD, cmd.config);
 

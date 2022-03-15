@@ -1,6 +1,6 @@
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue';
 
-export type ModelValue = number | string
+export type ModelValue = number | string;
 
 export const skeletonProps = {
   row: {
@@ -47,6 +47,6 @@ export const skeletonProps = {
     type: [Number, String, Array] as PropType<number | string | Array<number | string>>,
     default: ['100%']
   }
-} as const
+} as const;
 
-export type SkeletonProps = ExtractPropTypes<typeof skeletonProps>
+export type SkeletonProps = ExtractPropTypes<typeof skeletonProps>;

@@ -34,4 +34,4 @@ module.exports = {
   // The test environment that will be used for testing
   testEnvironment: 'jest-environment-jsdom',
   setupFiles: ['<rootDir>/jest.setup.js'],
-}
+};

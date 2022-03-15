@@ -1,5 +1,5 @@
-import type { PropType, ExtractPropTypes } from 'vue'
-import { GanttScaleUnit } from './gantt-model'
+import type { PropType, ExtractPropTypes } from 'vue';
+import { GanttScaleUnit } from './gantt-model';
 export const ganttProps = {
   startDate: {
     type: Date,
@@ -14,7 +14,7 @@ export const ganttProps = {
   progressRate:{
     type:Number
   },
-} as const
+} as const;
 
 
-export type GanttProps = ExtractPropTypes<typeof ganttProps>
+export type GanttProps = ExtractPropTypes<typeof ganttProps>;
