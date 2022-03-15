@@ -42,7 +42,8 @@
   border-bottom: 1px solid $devui-form-control-line;
   border-right: 1px solid $devui-form-control-line;
   border-radius: 0 $devui-border-radius $devui-border-radius 0;
-  transition: border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+  transition:
+    border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   cursor: pointer;
   height: 100%;
@@ -65,7 +66,8 @@
   background-image: none;
   border: 1px solid $devui-form-control-line;
   border-radius: $devui-border-radius 0 0 $devui-border-radius;
-  transition: border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+  transition:
+    border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     box-shadow $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
 
   &.devui-files-list {
