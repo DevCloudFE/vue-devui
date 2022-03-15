@@ -1,5 +1,5 @@
-import { ref, defineComponent, reactive } from 'vue'
-import DStepsGuide from '../src/steps-guide'
+import { ref, defineComponent, reactive } from 'vue';
+import DStepsGuide from '../src/steps-guide';
 export default defineComponent({
   name: 'StepsGuideDemo',
   components: {
@@ -7,53 +7,53 @@ export default defineComponent({
   },
   setup() {
     const steps = reactive([{ title: '弹出位置 top-left',
-      content: 'Steps Guide', 
-      trigger: '.top-left', 
-      position: 'top-left' 
-    },{ title: '弹出位置 top', 
-      content: 'Steps Guide', 
-      trigger: '.top', 
-      position: 'top' 
-    },{ title: '弹出位置 top-right', 
       content: 'Steps Guide',
-      trigger: '.top-right', 
+      trigger: '.top-left',
+      position: 'top-left'
+    },{ title: '弹出位置 top',
+      content: 'Steps Guide',
+      trigger: '.top',
+      position: 'top'
+    },{ title: '弹出位置 top-right',
+      content: 'Steps Guide',
+      trigger: '.top-right',
       position: 'top-right'
     },
     { title: '弹出位置 right',
-      content: 'Steps Guide', 
-      trigger: '.right', 
-      position: 'right' 
-    },{ title: '弹出位置 bottom-right', 
-      content: 'Steps Guide', 
-      trigger: '.bottom-right', 
-      position: 'bottom-right' 
-    },{ title: '弹出位置 bottom', 
-      content: 'Steps Guide', 
-      trigger: '.bottom', 
-      position: 'bottom' 
-    },{ title: '弹出位置 bottom-left', 
-      content: 'Steps Guide', 
-      trigger: '.bottom-left', 
-      position: 'bottom-left' 
-    },{ title: '弹出位置 left', 
-      content: 'Steps Guide', 
-      trigger: '.left', 
-      position: 'left' 
-    }])
-    const stepRef = ref(null), stepIndex = ref(0)
+      content: 'Steps Guide',
+      trigger: '.right',
+      position: 'right'
+    },{ title: '弹出位置 bottom-right',
+      content: 'Steps Guide',
+      trigger: '.bottom-right',
+      position: 'bottom-right'
+    },{ title: '弹出位置 bottom',
+      content: 'Steps Guide',
+      trigger: '.bottom',
+      position: 'bottom'
+    },{ title: '弹出位置 bottom-left',
+      content: 'Steps Guide',
+      trigger: '.bottom-left',
+      position: 'bottom-left'
+    },{ title: '弹出位置 left',
+      content: 'Steps Guide',
+      trigger: '.left',
+      position: 'left'
+    }]);
+    const stepRef = ref(null), stepIndex = ref(0);
     const handleClick = (index) => {
-      stepRef.value.setCurrentIndex(index)
-    }
+      stepRef.value.setCurrentIndex(index);
+    };
     const handleClose = () => {
-      stepRef.value.closeGuide()
-    }
+      stepRef.value.closeGuide();
+    };
     return {
       steps,
       stepRef,
       stepIndex,
       handleClick,
       handleClose
-    }
+    };
   },
   render(props){
     return (<>
@@ -66,6 +66,6 @@ export default defineComponent({
       <button class="bottom-left" onClick={ () => props.handleClick(6) }>Bottom-left</button>
       <button class="left" onClick={ () => props.handleClick(7) }>Left</button>
       <button class="close" onClick={ props.handleClose }>Close</button>
-      <d-steps-guide ref="stepRef" steps={ props.steps } v-model:step-index={ props.stepIndex }></d-steps-guide></>)
+      <d-steps-guide ref="stepRef" steps={ props.steps } v-model:step-index={ props.stepIndex }></d-steps-guide></>);
   }
-})
+});

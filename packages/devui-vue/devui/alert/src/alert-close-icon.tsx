@@ -12,5 +12,5 @@ const AlertCloseIcon = () => (
       </g>
     </g>
   </svg>
-)
-export default AlertCloseIcon
+);
+export default AlertCloseIcon;

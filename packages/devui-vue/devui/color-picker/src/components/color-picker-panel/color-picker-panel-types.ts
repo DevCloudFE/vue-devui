@@ -1,5 +1,5 @@
-import type { PropType, ExtractPropTypes } from 'vue'
-import { ColorPickerColor } from '../../utils/color-utils-types'
+import type { PropType, ExtractPropTypes } from 'vue';
+import { ColorPickerColor } from '../../utils/color-utils-types';
 
 export const colorPickerProps = {
   colorMap: {
@@ -15,6 +15,6 @@ export const colorPickerProps = {
   mode: {
     type: String
   }
-} as const
+} as const;
 
-export type ColorPickerProps = ExtractPropTypes<typeof colorPickerProps>
+export type ColorPickerProps = ExtractPropTypes<typeof colorPickerProps>;

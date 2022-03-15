@@ -1,4 +1,4 @@
-import { PropType } from 'vue'
+import { PropType } from 'vue';
 
 export const inputProps = {
   placeholder: {
@@ -57,7 +57,7 @@ export const inputProps = {
     type: Function as PropType<() => void>,
     default: undefined
   }
-} as const
+} as const;
 
-export type PreviewIconType = 'preview' | 'icon-preview-forbidden'
-export type InputType = 'password' | 'text'
+export type PreviewIconType = 'preview' | 'icon-preview-forbidden';
+export type InputType = 'password' | 'text';

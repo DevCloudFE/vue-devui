@@ -1,9 +1,9 @@
-import { mount, VueWrapper } from '@vue/test-utils'
-import { ref, nextTick } from 'vue'
-import DTree from '../src/tree'
+import { mount, VueWrapper } from '@vue/test-utils';
+import { ref, nextTick } from 'vue';
+import DTree from '../src/tree';
 
 describe('tree', () => {
-  let wrapper: VueWrapper<any>
+  let wrapper: VueWrapper<any>;
 
   beforeEach(() => {
     const data = ref([
@@ -148,7 +148,7 @@ describe('tree', () => {
           name: 'new child node'
         }
       }
-    ])
+    ]);
 
     wrapper = mount({
       components: { DTree },
@@ -158,30 +158,30 @@ describe('tree', () => {
       setup () {
         return {
           data,
-        }
+        };
       }
-    })
-  })
+    });
+  });
 
   it('should render correctly', () => {
-    expect(wrapper.classes()).toContain('devui-tree')
-    expect(wrapper.element.childElementCount).toBe(6)
-  })
+    expect(wrapper.classes()).toContain('devui-tree');
+    expect(wrapper.element.childElementCount).toBe(6);
+  });
 
   it('should expand and collapse correctly', async () => {
-    const firstNode = wrapper.get('.devui-tree-node:first-child')
+    const firstNode = wrapper.get('.devui-tree-node:first-child');
 
     // 初始状态，节点是展开的
-    expect(firstNode.classes()).toContain('devui-tree-node__open')
-    
+    expect(firstNode.classes()).toContain('devui-tree-node__open');
+
     // 点击之后，节点收起
-    await wrapper.get('.devui-tree-node__folder:first-child').trigger('click')
-    await nextTick()
-    expect(firstNode.classes()).not.toContain('devui-tree-node__open')
+    await wrapper.get('.devui-tree-node__folder:first-child').trigger('click');
+    await nextTick();
+    expect(firstNode.classes()).not.toContain('devui-tree-node__open');
 
     // 再次点击，节点展开
-    await wrapper.get('.devui-tree-node__folder:first-child').trigger('click')
-    await nextTick()
-    expect(firstNode.classes()).toContain('devui-tree-node__open')
-  })
-})
+    await wrapper.get('.devui-tree-node__folder:first-child').trigger('click');
+    await nextTick();
+    expect(firstNode.classes()).toContain('devui-tree-node__open');
+  });
+});

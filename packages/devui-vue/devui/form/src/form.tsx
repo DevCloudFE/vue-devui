@@ -1,9 +1,9 @@
 
-import { defineComponent, provide } from 'vue'
-import mitt from 'mitt'
-import { formProps, FormProps, IFormItem, dFormEvents, formInjectionKey, IForm } from './form-types'
-import { EventBus } from './util'
-import './form.scss'
+import { defineComponent, provide } from 'vue';
+import mitt from 'mitt';
+import { formProps, FormProps, IFormItem, dFormEvents, formInjectionKey, IForm } from './form-types';
+import { EventBus } from './util';
+import './form.scss';
 
 
 export default defineComponent({
@@ -16,21 +16,21 @@ export default defineComponent({
     const resetFormFields = () => {
       fields.forEach((field: IFormItem) => {
         field.resetField();
-      })
-    }
+      });
+    };
 
     formMitt.on(dFormEvents.addField, (field: any) => {
       if(field) {
         fields.push(field);
       }
-    })
+    });
 
     formMitt.on(dFormEvents.removeField, (field: any) => {
       if(field.prop) {
         fields.splice(fields.indexOf(field), 1);
       }
-    })
-    
+    });
+
     provide(formInjectionKey, {
       formData: props.formData,
       formMitt,
@@ -48,14 +48,14 @@ export default defineComponent({
       e.preventDefault();
       ctx.emit('submit', e);
       EventBus.emit(`formSubmit:${props.name}`);
-    }
-    
+    };
+
     return {
       fields,
       formMitt,
       onSubmit,
       resetFormFields
-    }
+    };
   },
   render() {
     const {onSubmit} = this;
@@ -65,4 +65,4 @@ export default defineComponent({
       </form>
     );
   }
-})
+});

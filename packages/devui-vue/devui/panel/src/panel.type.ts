@@ -19,8 +19,8 @@ export const PanelProps = {
     type: Function as unknown as () => (value: boolean) => boolean | Promise<boolean>,
     default: null
   },
-  toggle: { 
-    type: Function as unknown as ()=> ((value: boolean) => void),
+  toggle: {
+    type: Function as unknown as () => ((value: boolean) => void),
     default: null
   },
   showAnimation: {
@@ -31,6 +31,6 @@ export const PanelProps = {
     type: Boolean,
     default: true,
   }
-}
+};
 
 export type PanelPropsType = ExtractPropTypes<typeof PanelProps>;

@@ -22,10 +22,10 @@ export default defineComponent({
       return props.disabled;
     });
 
-    //新增
+    // 新增
     const add = () => {
-      if (props.disabled) return;
-      if (inputVal.value >= props.max) return;
+      if (props.disabled) {return;}
+      if (inputVal.value >= props.max) {return;}
       inputVal.value += props.step != 0 ? props.step : 1;
       focusVal.value = 'active';
       ctx.emit('change', inputVal.value);
@@ -33,8 +33,8 @@ export default defineComponent({
     };
     // 减少
     const subtract = () => {
-      if (props.disabled) return;
-      if (inputVal.value <= props.min) return;
+      if (props.disabled) {return;}
+      if (inputVal.value <= props.min) {return;}
       inputVal.value -= props.step != 0 ? props.step : 1;
       focusVal.value = 'active';
       ctx.emit('change', inputVal.value);

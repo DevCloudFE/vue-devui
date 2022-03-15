@@ -1,1 +1,1 @@
-export const shadowId = 'shadow0611'
+export const shadowId = 'shadow0611';

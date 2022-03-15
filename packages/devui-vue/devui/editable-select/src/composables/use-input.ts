@@ -1,6 +1,6 @@
 import { SetupContext, Ref } from 'vue';
 interface userInputReturnType {
-  handleInput: (event: Event) => void
+  handleInput: (event: Event) => void;
 }
 export const useInput: (inputValue: Ref<string>, ctx: SetupContext) => userInputReturnType = (
   inputValue,

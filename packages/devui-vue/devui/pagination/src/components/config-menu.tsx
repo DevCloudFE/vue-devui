@@ -1,7 +1,7 @@
 import { defineComponent, onMounted, onUnmounted, PropType, ref } from 'vue';
-import { on, off } from '../../../shared/devui-directive/utils'
+import { on, off } from '../../../shared/devui-directive/utils';
 
-import clickoutsideDirective from '../../../shared/devui-directive/clickoutside'
+import clickoutsideDirective from '../../../shared/devui-directive/clickoutside';
 
 export default defineComponent({
   directives: {
@@ -13,24 +13,24 @@ export default defineComponent({
     pageSizeOptions: Array as PropType<Array<number>>
   } as const,
   setup() {
-    const paginationConfig = ref(null)
-    const isShowConfig = ref(false)
-    
+    const paginationConfig = ref(null);
+    const isShowConfig = ref(false);
+
     onMounted(() => {
-      on(paginationConfig.value, 'click', closeConfigMenu)
-    })
+      on(paginationConfig.value, 'click', closeConfigMenu);
+    });
     onUnmounted(() => {
-      off(paginationConfig.value, 'click', closeConfigMenu)
-    })
+      off(paginationConfig.value, 'click', closeConfigMenu);
+    });
     const closeConfigMenu = (e: Event) => {
-      isShowConfig.value = isShowConfig.value ? false : !!e
-    }
+      isShowConfig.value = isShowConfig.value ? false : !!e;
+    };
 
     return {
       paginationConfig,
       isShowConfig,
       closeConfigMenu
-    }
+    };
   },
   render() {
     const {
@@ -40,7 +40,7 @@ export default defineComponent({
       pageSizeOptions,
       isShowConfig,
       $slots
-    } = this
+    } = this;
 
     return (
       <div class="devui-pagination-config" v-clickoutside={closeConfigMenu} ref="paginationConfig">
@@ -51,7 +51,7 @@ export default defineComponent({
           isShowConfig &&
           <div class="devui-config-container">
             {$slots.default?.()}
-            
+
             <div class="pagination-config-item">
               <div class="config-item-title">每页条数</div>
               <div class="devui-page-number">
@@ -63,7 +63,7 @@ export default defineComponent({
                         key={v}
                         onClick={pageSizeChange.bind(null, {value: v})}
                       >{v}</div>
-                    )
+                    );
                   })
                 }
               </div>
@@ -71,6 +71,6 @@ export default defineComponent({
           </div>
         }
       </div>
-    )
+    );
   }
-})
+});

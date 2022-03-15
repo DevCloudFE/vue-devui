@@ -36,7 +36,7 @@ export const editableSelectProps = {
   },
   filterOption: {
     type: [Function, Boolean] as PropType<
-      boolean | ((input: string, option: OptionObjectItem) => boolean)
+    boolean | ((input: string, option: OptionObjectItem) => boolean)
     >
   },
   loadMore: {

@@ -13,7 +13,7 @@ export const useSort = (store: TableStore, column: Ref<Column>): Ref<SortDirecti
   }, { immediate: true });
 
   return directionRef;
-}
+};
 
 export const useFliter = (store: TableStore, column: Ref<Column>): Ref<FilterResults> => {
   const filteredRef = shallowRef<FilterResults>();
@@ -21,4 +21,4 @@ export const useFliter = (store: TableStore, column: Ref<Column>): Ref<FilterRes
     store.filterData(column.value.field, results);
   });
   return filteredRef;
-}
+};

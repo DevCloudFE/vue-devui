@@ -1,94 +1,94 @@
-import { defineComponent, onMounted, reactive, ref } from 'vue'
-import { rateProps } from './use-rate'
-import './rate.scss'
+import { defineComponent, onMounted, reactive, ref } from 'vue';
+import { rateProps } from './use-rate';
+import './rate.scss';
 
 export default defineComponent({
   name: 'DRate',
   props: rateProps,
   emits: ['change', 'update:modelValue'],
   setup(props, ctx) {
-    const totalLevelArray = reactive<Record<string, any>[]>([])
-    const chooseValue = ref(0)
+    const totalLevelArray = reactive<Record<string, any>[]>([]);
+    const chooseValue = ref(0);
 
     // 根据mouseMove，mouseLeave,select等操作，改变颜色与是否选中
     const setChange = (start: number, end: number, width: string) => {
       for (let i = start; i < end; i++) {
-        totalLevelArray[i]['width'] = width
+        totalLevelArray[i]['width'] = width;
       }
-    }
+    };
 
     // 初始化设置
     const initRating = () => {
       if (!props.modelValue) {
-        return
+        return;
       }
-      chooseValue.value = props.modelValue - 1
-      const halfStar = chooseValue.value % 1
-      const intCurrentLevel = Math.floor(chooseValue.value)
-      setChange(0, intCurrentLevel + 1, '100%')
+      chooseValue.value = props.modelValue - 1;
+      const halfStar = chooseValue.value % 1;
+      const intCurrentLevel = Math.floor(chooseValue.value);
+      setChange(0, intCurrentLevel + 1, '100%');
       if (halfStar > 0) {
-        totalLevelArray[intCurrentLevel + 1]['width'] = halfStar * 100 + '%'
-        setChange(intCurrentLevel + 2, props.count, '0')
+        totalLevelArray[intCurrentLevel + 1]['width'] = halfStar * 100 + '%';
+        setChange(intCurrentLevel + 2, props.count, '0');
       } else {
-        setChange(intCurrentLevel + 1, props.count, '0')
+        setChange(intCurrentLevel + 1, props.count, '0');
       }
-    }
+    };
 
     onMounted(() => {
       for (let i = 0; i < props.count; i++) {
-        totalLevelArray.push({ width: '0' })
+        totalLevelArray.push({ width: '0' });
       }
-      initRating()
-    })
+      initRating();
+    });
 
     const hoverToggle = (e, index: number, reset = false) => {
       if (props.read) {
-        return
+        return;
       }
       if (reset) {
         if (chooseValue.value >= 0) {
-          setChange(0, chooseValue.value + 1, '100%')
-          setChange(chooseValue.value + 1, props.count, '0')
+          setChange(0, chooseValue.value + 1, '100%');
+          setChange(chooseValue.value + 1, props.count, '0');
         } else {
-          setChange(0, props.count, '0')
+          setChange(0, props.count, '0');
         }
       } else {
-        setChange(0, index + 1, '100%')
+        setChange(0, index + 1, '100%');
         // 判断是否是半选模式并且判断鼠标所在图标区域
         if (props.allowHalf && (e.offsetX * 2 <= e.target.clientWidth)) {
-          setChange(index, index + 1, '50%')
+          setChange(index, index + 1, '50%');
         } else {
-          setChange(index, index + 1, '100%')
+          setChange(index, index + 1, '100%');
         }
-        setChange(index + 1, props.count, '0')
+        setChange(index + 1, props.count, '0');
       }
-    }
+    };
 
     const selectValue = (e, index: number) => {
       if (props.read) {
-        return
+        return;
       }
-      setChange(0, index, '100%')
+      setChange(0, index, '100%');
       // 判断是否是半选模式
       if (props.allowHalf && (e.offsetX * 2 <= e.target.clientWidth)) {
-        setChange(index, index + 1, '50%')
-        chooseValue.value = index - 0.5
+        setChange(index, index + 1, '50%');
+        chooseValue.value = index - 0.5;
       } else {
-        setChange(index, index + 1, '100%')
-        chooseValue.value = index
+        setChange(index, index + 1, '100%');
+        chooseValue.value = index;
       }
-      setChange(index + 1, props.count, '0')
-      index = chooseValue.value
-      props.onChange && props.onChange(index + 1)
-      props.onTouched && props.onTouched()
-      ctx.emit('update:modelValue', index + 1)
-    }
+      setChange(index + 1, props.count, '0');
+      index = chooseValue.value;
+      props.onChange && props.onChange(index + 1);
+      props.onTouched && props.onTouched();
+      ctx.emit('update:modelValue', index + 1);
+    };
     return {
       totalLevelArray,
       chooseValue,
       hoverToggle,
       selectValue,
-    }
+    };
   },
   render() {
     const {
@@ -101,7 +101,7 @@ export default defineComponent({
       color,
       hoverToggle,
       selectValue
-    } = this
+    } = this;
     return (
       <div
         class="devui-star-container"
@@ -110,7 +110,7 @@ export default defineComponent({
         {totalLevelArray.map((item, index) => (
           <div
             class={`devui-star-align devui-pointer ${read ? 'devui-only-read' : ''
-              }`}
+            }`}
             key={index}
             onMouseover={(e) => hoverToggle(e, index)}
             onClick={(e) => selectValue(e, index)}
@@ -191,6 +191,6 @@ export default defineComponent({
           </div>
         ))}
       </div>
-    )
+    );
   },
-})
+});

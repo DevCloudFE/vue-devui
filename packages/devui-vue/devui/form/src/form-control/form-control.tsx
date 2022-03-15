@@ -1,8 +1,8 @@
 import { defineComponent, inject, ref, computed, reactive, onMounted, Teleport } from 'vue';
 import { uniqueId } from 'lodash';
 import { IForm, formControlProps, formInjectionKey } from '../form-types';
-import { ShowPopoverErrorMessageEventData } from '../directive/d-validate-rules'
-import clickoutsideDirective from '../../../shared/devui-directive/clickoutside'
+import { ShowPopoverErrorMessageEventData } from '../directive/d-validate-rules';
+import clickoutsideDirective from '../../../shared/devui-directive/clickoutside';
 import { EventBus, getElOffset } from '../util';
 import Icon from '../../../icon/src/icon';
 import Popover from '../../../popover/src/popover';
@@ -33,7 +33,7 @@ export default defineComponent({
     let elOffset = {
       left: 0,
       top: 0
-    }
+    };
     let popoverLeftPosition = 0 ;
     let popoverTopPosition = 0 ;
 
@@ -55,22 +55,22 @@ export default defineComponent({
 
     const iconData = computed(() => {
       switch (props.feedbackStatus) {
-        case 'pending':
-          return { name: 'priority', color: '#e9edfa' };
-        case 'success':
-          return { name: 'right-o', color: 'rgb(61, 204, 166)' };
-        case 'error':
-          return { name: 'error-o', color: 'rgb(249, 95, 91)' };
-        default:
-          return { name: '', color: '' };
+      case 'pending':
+        return { name: 'priority', color: '#e9edfa' };
+      case 'success':
+        return { name: 'right-o', color: 'rgb(61, 204, 166)' };
+      case 'error':
+        return { name: 'error-o', color: 'rgb(249, 95, 91)' };
+      default:
+        return { name: '', color: '' };
       }
-    })
+    });
 
     const handleClickOutside = () => {
       if(updateOn.value !== 'change') {
         showPopover.value = false;
       }
-    }
+    };
 
     return () => {
       const {
@@ -78,7 +78,7 @@ export default defineComponent({
         extraInfo,
       } = props;
       return <div class="devui-form-control" ref={formControl} data-uid={uid} v-clickoutside={handleClickOutside}>
-        { showPopover.value && 
+        { showPopover.value &&
           <Teleport to="body">
             <div style={{
               position: 'absolute',
@@ -103,7 +103,7 @@ export default defineComponent({
           }
         </div>
         {extraInfo && <div class="devui-form-control-extra-info">{extraInfo}</div>}
-      </div>
-    }
+      </div>;
+    };
   }
-})
+});

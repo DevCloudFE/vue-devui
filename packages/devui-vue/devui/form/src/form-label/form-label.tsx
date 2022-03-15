@@ -16,15 +16,15 @@ export default defineComponent({
     const isSm = computed(() => labelData.labelSize === 'sm').value;
     const isCenter = computed(() => labelData.labelAlign === 'center').value;
     const isEnd = computed(() => labelData.labelAlign === 'end').value;
-    
+
     const wrapperCls = `devui-form-label${isHorizontal ? (isSm ? ' devui-form-label_sm' : (isLg ? ' devui-form-label_lg' : ' devui-form-label_sd')) : ''}${isCenter ? ' devui-form-label_center' : (isEnd ? ' devui-form-label_end' : '')}`;
     const className = `${props.required ? ' devui-required' : ''}`;
     const style = {display: isHorizontal ? 'inline' : 'inline-block'};
-    
+
     return () => {
       return <span class={wrapperCls} style={style}>
         <span class={className} >
-          {ctx.slots.default?.()} 
+          {ctx.slots.default?.()}
           {
             props.hasHelp && props.helpTips && (
               <Popover content={props.helpTips} showAnimation={false} position={'top'} trigger={'hover'} v-slots={{
@@ -38,7 +38,7 @@ export default defineComponent({
             )
           }
         </span>
-      </span>
-    }
+      </span>;
+    };
   }
-})
+});

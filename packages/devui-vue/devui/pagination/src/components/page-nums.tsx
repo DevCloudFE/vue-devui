@@ -1,5 +1,5 @@
 import { defineComponent, PropType, computed, ExtractPropTypes } from 'vue';
-import { handlePages } from '../utils'
+import { handlePages } from '../utils';
 
 const pageNumBtnProps = {
   size: {
@@ -14,9 +14,9 @@ const pageNumBtnProps = {
   totalPages: Number,
   onChangeCursorEmit: Function as PropType<(v: number) => void>,
   showTruePageIndex: Boolean
-} as const
+} as const;
 
-type PageNumBtnProps = ExtractPropTypes<typeof pageNumBtnProps>
+type PageNumBtnProps = ExtractPropTypes<typeof pageNumBtnProps>;
 
 export default defineComponent({
   props: pageNumBtnProps,
@@ -24,38 +24,38 @@ export default defineComponent({
   setup(props: PageNumBtnProps, { emit }) {
 
     // 页码较多时，计算中间的显示页码的起始页码数
-    const showPageNum = computed(() => handlePages(props.cursor, props.maxItems, props.totalPages))
-    
+    const showPageNum = computed(() => handlePages(props.cursor, props.maxItems, props.totalPages));
+
     // 点击页码
     const changeCursor = (pageSize: number) => {
-      if (isNaN(pageSize)) return
-      const page = pageSize < 1 ? 1 : pageSize > props.totalPages ? props.totalPages : pageSize | 0
+      if (isNaN(pageSize)) {return;}
+      const page = pageSize < 1 ? 1 : pageSize > props.totalPages ? props.totalPages : pageSize | 0;
 
-      emit('changeCursorEmit', page)
-    }
+      emit('changeCursorEmit', page);
+    };
     // 上一页
     const prevChange = (page: number) => {
       if (props.cursor > 1) {
-        const toPage = page === -1 ? props.cursor - 1 : page
-        
-        emit('changeCursorEmit', toPage)
+        const toPage = page === -1 ? props.cursor - 1 : page;
+
+        emit('changeCursorEmit', toPage);
       }
-    }
+    };
     // 下一页
     const nextChange = (page: number) => {
       if (props.cursor < props.totalPages) {
-        const toPage = page === -1 ? props.cursor + 1 : page
+        const toPage = page === -1 ? props.cursor + 1 : page;
 
-        emit('changeCursorEmit', toPage)
+        emit('changeCursorEmit', toPage);
       }
-    }
+    };
 
     return {
       showPageNum,
       changeCursor,
       prevChange,
       nextChange
-    }
+    };
   },
   render() {
     const {
@@ -70,7 +70,7 @@ export default defineComponent({
       totalPages,
       nextChange,
       showTruePageIndex
-    } = this
+    } = this;
 
     return (
       <ul class={['devui-pagination-list', size ? 'devui-pagination-' + size : '']}>
@@ -97,15 +97,15 @@ export default defineComponent({
             {
               // 中间显示页码
               (() => {
-                const list = []
+                const list = [];
                 for(let i = showPageNum[0]; i <= showPageNum[1]; i++) {
                   list.push(
                     <li onClick={changeCursor.bind(null, i)} key={i} class={{'devui-pagination-item': true, active: cursor === i}}>
                       <a class="devui-pagination-link">{i}</a>
                     </li>
-                  )
+                  );
                 }
-                return list
+                return list;
               })()
             }
             {
@@ -122,7 +122,7 @@ export default defineComponent({
                 <li onClick={changeCursor.bind(null, totalPages)} class={{'devui-pagination-item': true, active: cursor === totalPages}}>
                   <a class="devui-pagination-link">{totalPages}</a>
                 </li>
-              ) 
+              )
             }
             {
               // 在默认页码超出总页码的时候
@@ -146,6 +146,6 @@ export default defineComponent({
           <a v-html={nextLink} class="devui-pagination-link"></a>
         </li>
       </ul>
-    )
+    );
   }
-})
+});

@@ -4,5 +4,5 @@ import { Comment } from '../index';
 describe('comment test', () => {
   it('comment init render', async () => {
     // todo
-  })
-})
+  });
+});

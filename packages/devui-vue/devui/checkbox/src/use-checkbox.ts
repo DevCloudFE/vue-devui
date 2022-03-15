@@ -1,6 +1,6 @@
-import { PropType, InjectionKey, Ref, ExtractPropTypes } from 'vue'
+import { PropType, InjectionKey, Ref, ExtractPropTypes } from 'vue';
 
-type Direction = 'row' | 'column'
+type Direction = 'row' | 'column';
 
 const commonProps = {
   name: {
@@ -32,11 +32,11 @@ const commonProps = {
   },
   beforeChange: {
     type: Function as PropType<
-      (isChecked: boolean, v: string) => boolean | Promise<boolean>
+    (isChecked: boolean, v: string) => boolean | Promise<boolean>
     >,
     default: undefined,
   },
-} as const
+} as const;
 
 export const checkboxProps = {
   ...commonProps,
@@ -73,9 +73,9 @@ export const checkboxProps = {
   'onUpdate:modelValue': {
     type: Function as PropType<(v: boolean) => void>,
   },
-} as const
+} as const;
 
-export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>
+export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>;
 
 export const checkboxGroupProps = {
   ...commonProps,
@@ -92,7 +92,7 @@ export const checkboxGroupProps = {
     default: undefined,
   },
   options: {
-    type: Array as PropType<({ value: string; } & Partial<CheckboxProps>)[]>,
+    type: Array as PropType<({ value: string } & Partial<CheckboxProps>)[]>,
     default: () => [],
   },
   onChange: {
@@ -103,21 +103,21 @@ export const checkboxGroupProps = {
     type: Function as PropType<(v: string[]) => void>,
     default: undefined,
   },
-} as const
+} as const;
 
 interface checkboxGroupInjection {
-  disabled: Ref<boolean>
-  isShowTitle: Ref<boolean>
-  color: Ref<string | undefined>
-  showAnimation: Ref<boolean>
+  disabled: Ref<boolean>;
+  isShowTitle: Ref<boolean>;
+  color: Ref<string | undefined>;
+  showAnimation: Ref<boolean>;
   beforeChange:
-    | undefined
-    | ((isChecked: boolean, v: string) => boolean | Promise<boolean>)
-  toggleGroupVal: (v: string) => void
-  isItemChecked: (v: string) => boolean
-  itemWidth: Ref<number | undefined>
-  direction: Ref<Direction>
+  | undefined
+  | ((isChecked: boolean, v: string) => boolean | Promise<boolean>);
+  toggleGroupVal: (v: string) => void;
+  isItemChecked: (v: string) => boolean;
+  itemWidth: Ref<number | undefined>;
+  direction: Ref<Direction>;
 }
 
 export const checkboxGroupInjectionKey: InjectionKey<checkboxGroupInjection> =
-  Symbol('d-checkbox-group')
+  Symbol('d-checkbox-group');

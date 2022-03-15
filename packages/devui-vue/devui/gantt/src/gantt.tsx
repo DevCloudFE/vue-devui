@@ -1,25 +1,25 @@
-import { defineComponent, onMounted, ref, toRefs } from 'vue'
-import DGanttScale from './gantt-scale/index'
-import DGanttTools from './gantt-tools/index'
-import { ganttProps, GanttProps } from './gantt-types'
-import './gantt.scss'
-import { useGantt } from './use-gantt'
+import { defineComponent, onMounted, ref, toRefs } from 'vue';
+import DGanttScale from './gantt-scale/index';
+import DGanttTools from './gantt-tools/index';
+import { ganttProps, GanttProps } from './gantt-types';
+import './gantt.scss';
+import { useGantt } from './use-gantt';
 export default defineComponent({
   name: 'DGantt',
   components: { DGanttScale, DGanttTools },
   props: ganttProps,
   setup(props: GanttProps, ctx) {
-    const { startDate, endDate } = toRefs(props)
-    const ganttContainer = ref()
-    const ganttScaleWidth = ref<number>()
-    const { getDurationWidth } = useGantt()
+    const { startDate, endDate } = toRefs(props);
+    const ganttContainer = ref();
+    const ganttScaleWidth = ref<number>();
+    const { getDurationWidth } = useGantt();
     onMounted(() => {
-      ganttScaleWidth.value = getDurationWidth(startDate.value, endDate.value)
-    })
+      ganttScaleWidth.value = getDurationWidth(startDate.value, endDate.value);
+    });
     return {
       ganttContainer,
       ganttScaleWidth,
-    }
+    };
   },
   render() {
     const {
@@ -29,7 +29,7 @@ export default defineComponent({
       unit,
       ganttContainer,
       ganttScaleWidth,
-    } = this
+    } = this;
     return (
       <div style={{ position: 'relative' }}>
         <div class="devui-gantt gantt-container" ref="ganttContainer">
@@ -45,6 +45,6 @@ export default defineComponent({
           <div class="body" style={{ width: `${ganttScaleWidth}px` }}></div>
         </div>
       </div>
-    )
+    );
   },
-})
+});

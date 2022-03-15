@@ -30,9 +30,9 @@ export default defineComponent({
       <div class="card-container devui-card">
         {this.$slots.default?.()}
         <div class="devui-card-header">
-        { this.$slots.cardAvatar?.()?<div class="devui-card-avatar">
-           {this.$slots.cardAvatar?.()}
-        </div>:'' }
+          { this.$slots.cardAvatar?.()?<div class="devui-card-avatar">
+            {this.$slots.cardAvatar?.()}
+          </div>:'' }
           <div class="devui-card-header-title-area">
             <div class="devui-card-title">
               {this.$slots.cardTitle?.()}

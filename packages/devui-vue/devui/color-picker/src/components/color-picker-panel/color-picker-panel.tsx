@@ -1,14 +1,14 @@
-import { defineComponent, ref, watch, nextTick, inject } from 'vue'
-import { colorPickerProps, ColorPickerProps } from './color-picker-panel-types'
-import { provideColorOptions } from '../../utils/color-utils-types'
-import { Tabs } from '../../../../tabs'
-import colorPalette from '../color-palette/color-palette'
-import colorHueSlider from '../color-hue-slider/color-hue-slider'
-import colorAlphaSlider from '../color-alpha-slider/color-alpha-slider'
-import colorEdit from '../color-edit/color-edit'
-import colorBasic from '../color-basic/color-basic'
-import './color-picker-panel.scss'
-import colorHistory from '../color-history/color-history'
+import { defineComponent, ref, watch, nextTick, inject } from 'vue';
+import { colorPickerProps, ColorPickerProps } from './color-picker-panel-types';
+import { provideColorOptions } from '../../utils/color-utils-types';
+import { Tabs } from '../../../../tabs';
+import colorPalette from '../color-palette/color-palette';
+import colorHueSlider from '../color-hue-slider/color-hue-slider';
+import colorAlphaSlider from '../color-alpha-slider/color-alpha-slider';
+import colorEdit from '../color-edit/color-edit';
+import colorBasic from '../color-basic/color-basic';
+import './color-picker-panel.scss';
+import colorHistory from '../color-history/color-history';
 export default defineComponent({
   name: 'ColorPanel',
   components: {
@@ -29,30 +29,30 @@ export default defineComponent({
     'changeTextModeType'
   ],
   setup(props: ColorPickerProps, { emit }) {
-    const injectData: provideColorOptions = inject('provideData')
-    const paletteElement = ref(null)
-    const showAlpha = injectData.showAlpha
-    const tab = ref('basic')
+    const injectData: provideColorOptions = inject('provideData');
+    const paletteElement = ref(null);
+    const showAlpha = injectData.showAlpha;
+    const tab = ref('basic');
     function changeTextColor(isChange: boolean) {
-      emit('changeTextColor', isChange)
+      emit('changeTextColor', isChange);
     }
     function changeTextModeColor(currentType: string) {
-      emit('changeTextModeType', currentType)
+      emit('changeTextModeType', currentType);
     }
 
     // 画板值
-    const paletteColorMap = ref(props.modelValue)
+    const paletteColorMap = ref(props.modelValue);
     // hue slider 值
     watch(
       () => paletteColorMap.value,
       (newValue) => {
-        emit('update:modelValue', newValue)
-        emit('changePaletteColor', newValue)
+        emit('update:modelValue', newValue);
+        emit('changePaletteColor', newValue);
         nextTick(() => {
-          paletteElement.value && paletteElement.value.renderCanvas()
-        })
+          paletteElement.value && paletteElement.value.renderCanvas();
+        });
       }
-    )
+    );
     return () => {
       return (
         <div class='devui-color-picker-panel'>
@@ -80,7 +80,7 @@ export default defineComponent({
           ></colorEdit>
           {injectData.showHistory ? <colorHistory color={paletteColorMap}></colorHistory> : null}
         </div>
-      )
-    }
+      );
+    };
   }
-})
+});
