@@ -2,9 +2,9 @@ name: Pull Request
 
 on:
   push:
-    branches: [ dev, main ]
+    branches: [ dev, main, 1.0.0 ]
   pull_request:
-    branches: [ dev, main ]
+    branches: [ dev, main, 1.0.0 ]
 
 jobs:
   build:
@@ -38,4 +38,4 @@ jobs:
         run: pnpm build
 
       # - name: Test vue-devui
-      #   run: yarn test
+      #   run: pnpm test
