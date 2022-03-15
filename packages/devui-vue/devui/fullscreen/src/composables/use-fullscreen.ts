@@ -20,7 +20,7 @@ export default function useFullscreen(props, slotElement, ctx) {
     if (mode.value === 'immersive') {
       handleImmersiveFullscreen(newVal);
     }
-  })
+  });
 
   const handleNormalFullscreen = (isOpen) => {
     if (isOpen) {
@@ -30,7 +30,7 @@ export default function useFullscreen(props, slotElement, ctx) {
       exitNormalFullscreen(slotElement.value);
       removeFullScreenStyle();
     }
-  }
+  };
 
   const handleImmersiveFullscreen = (isOpen) => {
     if (isOpen) {
@@ -40,7 +40,7 @@ export default function useFullscreen(props, slotElement, ctx) {
         exitImmersiveFullScreen(document);
       }
     }
-  }
+  };
 
   const handleFullscreenChange = () => {
     if (!document.fullscreenElement) {
@@ -50,7 +50,7 @@ export default function useFullscreen(props, slotElement, ctx) {
     } else {
       exitByKeydown = false;
     }
-  }
+  };
 
   onMounted(() => {
     document.addEventListener('fullscreenchange', handleFullscreenChange);

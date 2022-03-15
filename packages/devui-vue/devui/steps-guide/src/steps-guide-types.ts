@@ -1,17 +1,17 @@
-import type { ExtractPropTypes, PropType } from 'vue'
-type positionType = 'top-left' | 'top' | 'top-right' | 'left' | 'right' | 'bottom-left' | 'bottom' | 'bottom-right'
+import type { ExtractPropTypes, PropType } from 'vue';
+type positionType = 'top-left' | 'top' | 'top-right' | 'left' | 'right' | 'bottom-left' | 'bottom' | 'bottom-right';
 export type positionConf = {
-  left: number
-  top: number
-  type: string
-} | positionType
+  left: number;
+  top: number;
+  type: string;
+} | positionType;
 export type Step = {
-  title: string
-  content: string
-  trigger: string
-  target?: string
-  position?: positionConf
-}
+  title: string;
+  content: string;
+  trigger: string;
+  target?: string;
+  position?: positionConf;
+};
 export const stepsGuideProps = {
   steps: Array as PropType<Step[]>,
   stepIndex: {
@@ -37,9 +37,9 @@ export const stepsGuideProps = {
   stepChange: {
     type: Function,
     default(){
-      return true
+      return true;
     }
   }
-} as const
+} as const;
 
-export type StepsGuideProps = ExtractPropTypes<typeof stepsGuideProps>
+export type StepsGuideProps = ExtractPropTypes<typeof stepsGuideProps>;

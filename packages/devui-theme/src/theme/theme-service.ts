@@ -16,10 +16,10 @@ export class ThemeService {
   extraData: {
     [themeId: string]: {
       cssVariables?: {
-        [varname: string]: string
-      }
-      appendClasses?: Array<string>
-    }
+        [varname: string]: string;
+      };
+      appendClasses?: Array<string>;
+    };
   };
   private _appendedClasses: Array<string>;
   set appendClasses(classes: Array<string>) {

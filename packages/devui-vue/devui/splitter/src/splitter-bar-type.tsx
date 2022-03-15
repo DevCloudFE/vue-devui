@@ -1,5 +1,5 @@
-import { PropType, ExtractPropTypes } from 'vue'
-import { SplitterOrientation } from './splitter-types'
+import { PropType, ExtractPropTypes } from 'vue';
+import { SplitterOrientation } from './splitter-types';
 
 export const splitterBarProps = {
   /**
@@ -35,6 +35,6 @@ export const splitterBarProps = {
   showCollapseButton: {
     type: Boolean,
   },
-} as const
+} as const;
 
-export type SplitterBarProps = ExtractPropTypes<typeof splitterBarProps>
+export type SplitterBarProps = ExtractPropTypes<typeof splitterBarProps>;

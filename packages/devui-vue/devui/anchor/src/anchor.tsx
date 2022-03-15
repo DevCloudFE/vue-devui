@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'DAnchor',
@@ -8,7 +8,7 @@ export default defineComponent({
     return () => {
       return (
         <div> </div>
-      )
-    }
+      );
+    };
   }
-})
+});

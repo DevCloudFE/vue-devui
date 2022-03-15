@@ -4,5 +4,5 @@ import { Textarea } from '../index';
 describe('textarea test', () => {
   it('textarea init render', async () => {
     // todo
-  })
-})
+  });
+});

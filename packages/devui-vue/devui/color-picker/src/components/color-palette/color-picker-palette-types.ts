@@ -1,6 +1,6 @@
-import type { PropType, ExtractPropTypes } from 'vue'
-import { fromRGBA } from '../../utils/color-utils'
-import type { ColorPickerColor } from '../../utils/color-utils-types'
+import type { PropType, ExtractPropTypes } from 'vue';
+import { fromRGBA } from '../../utils/color-utils';
+import type { ColorPickerColor } from '../../utils/color-utils-types';
 
 export const colorPickerPaletteProps = {
   modelValue: {
@@ -11,6 +11,6 @@ export const colorPickerPaletteProps = {
     type: Number,
     default: 200
   }
-} as const
+} as const;
 
-export type colorPickerPaletteProps = ExtractPropTypes<typeof colorPickerPaletteProps>
+export type colorPickerPaletteProps = ExtractPropTypes<typeof colorPickerPaletteProps>;

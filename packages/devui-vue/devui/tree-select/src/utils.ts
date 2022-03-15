@@ -1,28 +1,28 @@
-import { TreeData, TreeItem } from '../src/tree-select-types'
+import { TreeData, TreeItem } from '../src/tree-select-types';
 
-export const nodeMap = new Map<string, TreeItem>()
+export const nodeMap = new Map<string, TreeItem>();
 
 export function attributeExtension(data: TreeData): any {
   data.forEach((el) => {
-    let level = 1
-    el.level = level
-    nodeMap.set(el.label, el)
-    const nodeQueue = []
-    nodeQueue.push(el)
+    let level = 1;
+    el.level = level;
+    nodeMap.set(el.label, el);
+    const nodeQueue = [];
+    nodeQueue.push(el);
     while(nodeQueue.length !== 0) {
-      const node = nodeQueue.shift()
+      const node = nodeQueue.shift();
       if(node.children) {
         node.children.forEach((el) => {
-          el.level = level + 1
-          el.parent = node
-          nodeMap.set(el.label, el)
-          nodeQueue.push(el)
-        })
+          el.level = level + 1;
+          el.parent = node;
+          nodeMap.set(el.label, el);
+          nodeQueue.push(el);
+        });
       }
-      level += 1
+      level += 1;
     }
-  })
-  return data
+  });
+  return data;
 }
 
 /**
@@ -33,7 +33,7 @@ export function attributeExtension(data: TreeData): any {
  */
 export function className(
   classStr: string,
-  classOpt?: { [key: string]: boolean; }
+  classOpt?: { [key: string]: boolean }
 ): string {
   let classname = classStr;
   if (typeof classOpt === 'object') {

@@ -7,4 +7,4 @@ export default defineCliConfig({
   libEntryRootDir: './devui',
   libPrefix: 'D',
   libStyleFileSuffix: '.scss'
-})
+});

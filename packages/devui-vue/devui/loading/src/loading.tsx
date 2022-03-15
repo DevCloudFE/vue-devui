@@ -1,5 +1,5 @@
-import { CSSProperties, defineComponent, ref } from 'vue'
-import { componentProps, ComponentProps } from './types'
+import { CSSProperties, defineComponent, ref } from 'vue';
+import { componentProps, ComponentProps } from './types';
 
 import './loading.scss';
 
@@ -13,26 +13,26 @@ export default defineComponent({
       top: props.view.top,
       left: props.view.left,
       zIndex: props.zIndex
-    }
+    };
     if (!props.message) {
-      style.background = 'none'
+      style.background = 'none';
     }
-    const isShow = ref(false)
+    const isShow = ref(false);
 
     const open = () => {
-      isShow.value = true
-    }
+      isShow.value = true;
+    };
 
     const close = () => {
-      isShow.value = false
-    }
+      isShow.value = false;
+    };
 
     return {
       style,
       isShow,
       open,
       close
-    }
+    };
   },
   render() {
     const {
@@ -42,7 +42,7 @@ export default defineComponent({
       style,
       message,
       $slots
-    } = this
+    } = this;
 
     return (
       isShow &&
@@ -71,6 +71,6 @@ export default defineComponent({
           </div>
         }
       </div>
-    )
+    );
   }
-})
+});

@@ -1,7 +1,7 @@
-import { defineComponent, reactive } from 'vue'
-import VerticalSliderFunction from '../vertical-slider'
+import { defineComponent, reactive } from 'vue';
+import VerticalSliderFunction from '../vertical-slider';
 
-import './index.scss'
+import './index.scss';
 
 const TimePicker = defineComponent({
   props: {
@@ -9,15 +9,15 @@ const TimePicker = defineComponent({
   },
   setup(props) {
 
-    const { time = new Date() } = props || {}
+    const { time = new Date() } = props || {};
     const state = reactive({
       hour: time.getHours(),
       minute: time.getMinutes(),
       second: time.getSeconds()
-    })
+    });
 
-    const hours = Array(24).fill(0).map((_, i) => `${i}`.padStart(2, '0'))
-    const minutes = Array(60).fill(0).map((_, i) => `${i}`.padStart(2, '0'))
+    const hours = Array(24).fill(0).map((_, i) => `${i}`.padStart(2, '0'));
+    const minutes = Array(60).fill(0).map((_, i) => `${i}`.padStart(2, '0'));
 
     return () => {
       return (
@@ -51,9 +51,9 @@ const TimePicker = defineComponent({
             />
           </div>
         </div>
-      )
-    }
+      );
+    };
   }
-})
+});
 
-export default TimePicker
+export default TimePicker;

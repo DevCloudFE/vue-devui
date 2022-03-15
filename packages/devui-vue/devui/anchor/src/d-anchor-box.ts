@@ -23,12 +23,12 @@ export default {
       cssChange(mysidebar, 'absolute', 0, 0);
     });
     window.onscroll = function () {
-      //为了保证兼容性，这里取两个值，哪个有值取哪一个
-      //scrollTop就是触发滚轮事件时滚轮的高度
+      // 为了保证兼容性，这里取两个值，哪个有值取哪一个
+      // scrollTop就是触发滚轮事件时滚轮的高度
       windoScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       // 16为padding 8px *2 (上下边距)
       if (!document.getElementsByClassName('scrollTarget').length) {
-        if ( windoScrollTop + mysidebarHeight - 16 >= div.offsetTop + div.clientHeight ) {
+        if (windoScrollTop + mysidebarHeight - 16 >= div.offsetTop + div.clientHeight) {
           // 看不见 d-anchor-box区域
           cssChange(
             mysidebar,

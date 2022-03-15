@@ -65,11 +65,11 @@ export const useUpload = () => {
   const upload = async (
     oneFile?
   ): Promise<
-    | never
-    | {
-        file: File;
-        response: any;
-      }[]
+  | never
+  | {
+    file: File;
+    response: any;
+  }[]
   > => {
     let uploads: any[] = [];
     if (oneFile) {

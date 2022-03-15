@@ -44,7 +44,7 @@ export default defineComponent({
           );
         })}
       </tbody>
-    )
+    );
   }
 });
 
@@ -61,7 +61,7 @@ const TD = defineComponent({
       type: Number,
     }
   },
-  setup(props: { column: Column; row: any; index: number; }) {
+  setup(props: { column: Column; row: any; index: number }) {
     const column = toRef(props, 'column');
 
     // 固定列

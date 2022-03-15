@@ -6,4 +6,4 @@ export const CHECK_CONFIG = {
   select: {
     checked: true,
   },
-}
+};

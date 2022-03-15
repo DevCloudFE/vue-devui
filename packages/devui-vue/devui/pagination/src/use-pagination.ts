@@ -3,19 +3,19 @@ import { PropType, ExtractPropTypes } from 'vue';
 type AppendToBodyDirection = 'rightDown' | 'rightUp' | 'leftUp' | 'leftDown' | 'centerDown' | 'centerUp';
 
 interface ConnectedPosition {
-  originX     : 'start' | 'center' | 'end'
-  originY     : 'top' | 'center' | 'bottom'
+  originX: 'start' | 'center' | 'end';
+  originY: 'top' | 'center' | 'bottom';
 
-  overlayX    : 'start' | 'center' | 'end'
-  overlayY    : 'top' | 'center' | 'bottom'
+  overlayX: 'start' | 'center' | 'end';
+  overlayY: 'top' | 'center' | 'bottom';
 
-  weight      ?: number
-  offsetX     ?: number
-  offsetY     ?: number
-  panelClass  ?: string | string[]
+  weight?: number;
+  offsetX?: number;
+  offsetY?: number;
+  panelClass?: string | string[];
 }
 
-type Size = 'lg' | '' | 'sm'
+type Size = 'lg' | '' | 'sm';
 
 export const componentProps = {
   pageSize: {
@@ -114,7 +114,7 @@ export const componentProps = {
   'onPageSizeChange': {
     type: Function as PropType<(v: number) => void>
   }
-} as const
+} as const;
 
 // 组件props
-export type ComponentProps = ExtractPropTypes<typeof componentProps>
+export type ComponentProps = ExtractPropTypes<typeof componentProps>;

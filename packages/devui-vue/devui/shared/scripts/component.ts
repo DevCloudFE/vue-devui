@@ -1,6 +1,6 @@
-import { h, render } from 'vue'
+import { h, render } from 'vue';
 
-const COMPONENT_CONTAINER_SYMBOL = Symbol('dev_component_container')
+const COMPONENT_CONTAINER_SYMBOL = Symbol('dev_component_container');
 
 /**
  * 创建组件实例对象
@@ -8,11 +8,11 @@ const COMPONENT_CONTAINER_SYMBOL = Symbol('dev_component_container')
  * @param {*} Component
  */
 export function createComponent(Component: any, props: any, children: any = null) {
-  const vnode: any = h(Component, { ...props }, children)
-  const container = document.createElement('div')
-  vnode[COMPONENT_CONTAINER_SYMBOL] = container
-  render(vnode, container)
-  return vnode.component
+  const vnode: any = h(Component, { ...props }, children);
+  const container = document.createElement('div');
+  vnode[COMPONENT_CONTAINER_SYMBOL] = container;
+  render(vnode, container);
+  return vnode.component;
 }
 
 /**
@@ -20,5 +20,5 @@ export function createComponent(Component: any, props: any, children: any = null
  * @param {*} ComponnetInstance 通过createComponent方法得到的组件实例对象
  */
 export function unmountComponent(ComponnetInstance: any) {
-  render(null, ComponnetInstance?.vnode[COMPONENT_CONTAINER_SYMBOL])
+  render(null, ComponnetInstance?.vnode[COMPONENT_CONTAINER_SYMBOL]);
 }

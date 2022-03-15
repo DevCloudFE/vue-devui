@@ -16,13 +16,13 @@ export const i18nText = {
       'December',
     ],
     yearDisplay(year: string): string {
-      return `${year}`
+      return `${year}`;
     },
     monthDisplay(strMonthIndex: string): string {
-      return this.monthsOfYear[Number(strMonthIndex) - 1]
+      return this.monthsOfYear[Number(strMonthIndex) - 1];
     },
     yearAndMonthDisplay(year: string, strMonthIndex: string): string {
-      return this.yearDisplay(year) + this.monthDisplay(strMonthIndex)
+      return this.yearDisplay(year) + this.monthDisplay(strMonthIndex);
     },
   },
   zh: {
@@ -42,13 +42,13 @@ export const i18nText = {
       '12月',
     ],
     yearDisplay(year: string): string {
-      return `${year}年`
+      return `${year}年`;
     },
     monthDisplay(strMonthIndex: string): string {
-      return this.monthsOfYear[Number(strMonthIndex) - 1]
+      return this.monthsOfYear[Number(strMonthIndex) - 1];
     },
     yearAndMonthDisplay(year: string, strMonthIndex: string): string {
-      return this.yearDisplay(year) + this.monthDisplay(strMonthIndex)
+      return this.yearDisplay(year) + this.monthDisplay(strMonthIndex);
     },
   },
-}
+};

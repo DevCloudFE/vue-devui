@@ -1,9 +1,9 @@
-import { defineComponent, toRefs, computed, inject } from 'vue'
-import { useRoute } from 'vue-router'
-import { accordionProps } from './accordion-types'
-import { AccordionItemClickEvent, AccordionMenuItem, AccordionLinkableItem } from './accordion.type'
-import DAccordionItem from './accordion-item'
-import { getRootSlots } from './utils'
+import { defineComponent, toRefs, computed, inject } from 'vue';
+import { useRoute } from 'vue-router';
+import { accordionProps } from './accordion-types';
+import { AccordionItemClickEvent, AccordionMenuItem, AccordionLinkableItem } from './accordion.type';
+import DAccordionItem from './accordion-item';
+import { getRootSlots } from './utils';
 
 export default defineComponent({
   name: 'DAccordionItemRouterlink',
@@ -32,39 +32,39 @@ export default defineComponent({
       linkDefaultTarget,
       disabledKey,
       itemTemplate
-    } = toRefs(props)
+    } = toRefs(props);
 
-    const route = useRoute()
-    const rootSlots = getRootSlots()
-    const accordionCtx = inject('accordionContext') as any
-    console.log(useRoute())
+    const route = useRoute();
+    const rootSlots = getRootSlots();
+    const accordionCtx = inject('accordionContext') as any;
+    console.log(useRoute());
 
     const title = computed(() => {
-      return item.value && item.value[titleKey.value]
-    })
+      return item.value && item.value[titleKey.value];
+    });
 
     const link = computed(() => {
-      return item.value && item.value[linkKey.value]
-    })
+      return item.value && item.value[linkKey.value];
+    });
 
-    const isUsedVueRouter = computed(() => route !== undefined)
+    const isUsedVueRouter = computed(() => route !== undefined);
 
     const routerLinkActive = computed(() => {
-      return route === link.value
-    })
+      return route === link.value;
+    });
 
     const disabled = computed(() => {
-      return item.value && item.value[disabledKey.value]
-    })
+      return item.value && item.value[disabledKey.value];
+    });
 
-    const parentValue = parent.value
-    const deepValue = deepth.value
+    const parentValue = parent.value;
+    const deepValue = deepth.value;
 
     const linkItemClickFn = (itemEvent: AccordionItemClickEvent) => {
       if (item.value && !disabled.value) {
-        accordionCtx.itemClickFn(itemEvent)
+        accordionCtx.itemClickFn(itemEvent);
       }
-    }
+    };
 
     const renderContent = () => {
       return (
@@ -82,8 +82,8 @@ export default defineComponent({
               item: item.value
             })}
         </>
-      )
-    }
+      );
+    };
 
     return () => {
       return (
@@ -141,7 +141,7 @@ export default defineComponent({
             )}
           </div>
         </>
-      )
-    }
+      );
+    };
   }
-})
+});

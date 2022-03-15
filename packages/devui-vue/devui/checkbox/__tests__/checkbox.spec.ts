@@ -105,7 +105,7 @@ describe('checkbox', () => {
       halfchecked: true
     });
     expect(container.classes()).toContain('halfchecked');
-    expect(container.find('.devui-checkbox-default-background').exists()).toBe(false)
+    expect(container.find('.devui-checkbox-default-background').exists()).toBe(false);
   });
 
   it('checkbox beforeChange work', async () => {

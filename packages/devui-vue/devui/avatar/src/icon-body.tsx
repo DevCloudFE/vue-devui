@@ -1,5 +1,5 @@
-export const IconBody = (props: { width: number; height: number; }) => {
-  const { width, height } = props
+export const IconBody = (props: { width: number; height: number }) => {
+  const { width, height } = props;
   return (
     <svg
       style={{
@@ -26,5 +26,5 @@ export const IconBody = (props: { width: number; height: number; }) => {
         ></path>
       </g>
     </svg>
-  )
-}
+  );
+};

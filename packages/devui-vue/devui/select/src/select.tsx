@@ -17,7 +17,7 @@ export default defineComponent({
     // 控制弹窗开合
     const isOpen = ref<boolean>(false);
     function toggleChange(bool: boolean) {
-      if (props.disabled) return;
+      if (props.disabled) {return;}
       isOpen.value = bool;
       ctx.emit('toggleChange', bool);
     }
@@ -78,7 +78,7 @@ export default defineComponent({
     function valueChange(item: OptionObjectItem, index: number) {
       const { multiple, optionDisabledKey: disabledKey } = props;
       let { modelValue } = props;
-      if (disabledKey && !!item[disabledKey]) return;
+      if (disabledKey && !!item[disabledKey]) {return;}
       if (multiple) {
         item._checked = !item._checked;
         modelValue = mergeOptions.value

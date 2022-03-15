@@ -10,6 +10,7 @@ import './auto-complete.scss'
 import DAutoCompleteDropdown from './components/dropdown'
 import ClickOutside from '../../shared/devui-directive/clickoutside'
 import {FlexibleOverlay} from '../../overlay/src/flexible-overlay'
+
 export default defineComponent({
   name: 'DAutoComplete',
   directives: { ClickOutside },

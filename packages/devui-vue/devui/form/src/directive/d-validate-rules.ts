@@ -5,49 +5,49 @@ import { EventBus, isObject, hasKey } from '../util';
 import './style.scss';
 
 interface ValidateFnParam {
-  validator: AsyncValidator
-  modelValue: Record<string, unknown>
-  el: HTMLElement
-  tipEl: HTMLElement
-  isFormTag: boolean
-  message: string
-  messageShowType: MessageShowType
-  dfcUID: string
-  popPosition: PopPosition | Array<BasePopPosition>
-  updateOn?: UpdateOn
+  validator: AsyncValidator;
+  modelValue: Record<string, unknown>;
+  el: HTMLElement;
+  tipEl: HTMLElement;
+  isFormTag: boolean;
+  message: string;
+  messageShowType: MessageShowType;
+  dfcUID: string;
+  popPosition: PopPosition | Array<BasePopPosition>;
+  updateOn?: UpdateOn;
 }
 
 interface CustomValidatorRuleObject {
-  message: string
-  validator: (rule, value) => boolean
-  asyncValidator: (rule, value) => Promise<boolean>
+  message: string;
+  validator: (rule, value) => boolean;
+  asyncValidator: (rule, value) => Promise<boolean>;
 }
 
 interface DirectiveValidateRuleOptions {
-  updateOn?: UpdateOn
-  errorStrategy?: ErrorStrategy
-  asyncDebounceTime?: number
-  popPosition?: PopPosition | Array<BasePopPosition>
+  updateOn?: UpdateOn;
+  errorStrategy?: ErrorStrategy;
+  asyncDebounceTime?: number;
+  popPosition?: PopPosition | Array<BasePopPosition>;
 }
 
 interface DirectiveBindingValue {
-  rules: Partial<DirectiveCustomRuleItem>[]
-  options: DirectiveValidateRuleOptions
-  messageShowType: MessageShowType
-  errorStrategy: ErrorStrategy
+  rules: Partial<DirectiveCustomRuleItem>[];
+  options: DirectiveValidateRuleOptions;
+  messageShowType: MessageShowType;
+  errorStrategy: ErrorStrategy;
 }
 
 interface DirectiveCustomRuleItem extends RuleItem {
-  validators: CustomValidatorRuleObject[]
-  asyncValidators: CustomValidatorRuleObject[]
+  validators: CustomValidatorRuleObject[];
+  asyncValidators: CustomValidatorRuleObject[];
 }
 
 export interface ShowPopoverErrorMessageEventData {
-  showPopover?: boolean 
-  message?: string
-  uid?: string, 
-  popPosition?: PopPosition
-  [prop : string]: any
+  showPopover?: boolean;
+  message?: string;
+  uid?: string;
+  popPosition?: PopPosition;
+  [prop: string]: any;
 }
 
 type MessageShowType = 'popover' | 'text' | 'none' | 'toast';
@@ -83,117 +83,117 @@ function getAvaliableRuleObj(ruleName: string, value: any) {
     return null;
   }
   switch(ruleName) {
-    case 'maxlength':
-      return {
-        type: 'string',
-        max: value,
-        asyncValidator: (rule, val) => {
-          return new Promise((resolve, reject) => {
-            if(val.length > value) {
-              reject('最大长度为' + value);
-            }else {
-              resolve('校验通过');
-            }
-          })
-        }
-      };
-    case 'minlength':
-      return {
-        type: 'string',
-        min: value,
-        asyncValidator: (rule, val) => {
-          return new Promise((resolve, reject) => {
-            if(val.length < value) {
-              reject('最小长度为' + value);
-            }else {
-              resolve('校验通过');
-            }
-          })
-        }
-      };
-    case 'min':
-      return {
-        type: 'number',
-        asyncValidator: (rule, val) => {
-          return new Promise((resolve, reject) => {
-            if(val < value) {
-              reject('最小值为' + value);
-            }else {
-              resolve('校验通过');
-            }
-          })
-        }
-      };
-    case 'max':
-      return {
-        type: 'number',
-        asyncValidator: (rule, val) => {
-          return new Promise((resolve, reject) => {
-            if(val > value) {
-              reject('最大值为' + value);
-            }else {
-              resolve('校验通过');
-            }
-          })
-        }
-      };
-    case 'required':
-      return {
-        reqiured: true,
-        asyncValidator: (rule, val) => {
-          return new Promise((resolve, reject) => {
-            if(!val) {
-              reject('必填项');
-            }else {
-              resolve('校验通过');
-            }
-          })
-        }
-      };
-    case 'requiredTrue':
-      return {
-        asyncValidator: (rule, val) => {
-          return new Promise((resolve, reject) => {
-            if(!val) {
-              reject('必须为true值');
-            }else {
-              resolve('校验通过');
-            }
-          })
-        }
-      };
-    case 'email':
-      return {
-        type: 'email',
-        message: '邮箱格式不正确'
-      };
-    case 'pattern':
-      return {
-        type: 'regexp',
-        pattern: value,
-        message: '只能包含数字与大小写字符',
-        validator: (rule, val) => value.test(val),
-      };
-    case 'whitespace':
-      return {
-        message: '输入不能全部为空格或空字符',
-        validator: (rule, val) => !!val.trim()
-      };
-    default: 
-      return {
-        [ruleName]: value,
-      };
+  case 'maxlength':
+    return {
+      type: 'string',
+      max: value,
+      asyncValidator: (rule, val) => {
+        return new Promise((resolve, reject) => {
+          if(val.length > value) {
+            reject('最大长度为' + value);
+          }else {
+            resolve('校验通过');
+          }
+        });
+      }
+    };
+  case 'minlength':
+    return {
+      type: 'string',
+      min: value,
+      asyncValidator: (rule, val) => {
+        return new Promise((resolve, reject) => {
+          if(val.length < value) {
+            reject('最小长度为' + value);
+          }else {
+            resolve('校验通过');
+          }
+        });
+      }
+    };
+  case 'min':
+    return {
+      type: 'number',
+      asyncValidator: (rule, val) => {
+        return new Promise((resolve, reject) => {
+          if(val < value) {
+            reject('最小值为' + value);
+          }else {
+            resolve('校验通过');
+          }
+        });
+      }
+    };
+  case 'max':
+    return {
+      type: 'number',
+      asyncValidator: (rule, val) => {
+        return new Promise((resolve, reject) => {
+          if(val > value) {
+            reject('最大值为' + value);
+          }else {
+            resolve('校验通过');
+          }
+        });
+      }
+    };
+  case 'required':
+    return {
+      reqiured: true,
+      asyncValidator: (rule, val) => {
+        return new Promise((resolve, reject) => {
+          if(!val) {
+            reject('必填项');
+          }else {
+            resolve('校验通过');
+          }
+        });
+      }
+    };
+  case 'requiredTrue':
+    return {
+      asyncValidator: (rule, val) => {
+        return new Promise((resolve, reject) => {
+          if(!val) {
+            reject('必须为true值');
+          }else {
+            resolve('校验通过');
+          }
+        });
+      }
+    };
+  case 'email':
+    return {
+      type: 'email',
+      message: '邮箱格式不正确'
+    };
+  case 'pattern':
+    return {
+      type: 'regexp',
+      pattern: value,
+      message: '只能包含数字与大小写字符',
+      validator: (rule, val) => value.test(val),
+    };
+  case 'whitespace':
+    return {
+      message: '输入不能全部为空格或空字符',
+      validator: (rule, val) => !!val.trim()
+    };
+  default:
+    return {
+      [ruleName]: value,
+    };
   }
 }
 
-function getKeyValueOfObjectList(obj): {key: string; value: any;}[] {
+function getKeyValueOfObjectList(obj): {key: string; value: any}[] {
   const kvArr = [];
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       kvArr.push({
         key,
         value: obj[key]
-      })
+      });
     }
   }
   return kvArr;
@@ -213,8 +213,8 @@ function handleErrorStrategyPass(el: HTMLElement): void {
 }
 
 function getFormControlUID(el: HTMLElement): string {
-  if(el.tagName.toLocaleLowerCase() === 'body') return '';
-  let uid = ''
+  if(el.tagName.toLocaleLowerCase() === 'body') {return '';}
+  let uid = '';
   if(el.parentElement.id.startsWith('dfc-')) {
     return el.parentElement.id;
   }else {
@@ -233,7 +233,7 @@ function handleValidateError({el, tipEl, message = '', isFormTag, messageShowTyp
   if(!dfcUID) {
     dfcUID = getFormControlUID(el);
   }
-  
+
   // messageShowType为popover时，设置popover
   if(MessageShowTypeEnum.popover === messageShowType) {
     EventBus.emit('showPopoverErrorMessage', {showPopover: true, message, uid: dfcUID, popPosition, updateOn} as ShowPopoverErrorMessageEventData);
@@ -271,7 +271,7 @@ function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowTyp
     handleValidatePass(el, tipEl);
   }).catch((err) => {
     const { errors } = err;
-    if(!errors || errors.length === 0) return;
+    if(!errors || errors.length === 0) {return;}
     let msg = '';
 
     // todo: 待支持国际化
@@ -282,7 +282,7 @@ function validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowTyp
     }
 
     handleValidateError({el, tipEl, message: msg, isFormTag, messageShowType, dfcUID, popPosition, updateOn});
-  })
+  });
 }
 
 // 检测popover的position是否是正确值
@@ -290,7 +290,7 @@ function checkValidPopsition(positionStr: string): boolean {
   const validPosition = ['left', 'right', 'top', 'bottom', 'left-top', 'left-bottom', 'top-left', 'top-right', 'right-top', 'right-bottom', 'bottom-left', 'bottom-right'];
   const isValid = validPosition.includes(positionStr);
   !isValid && console.warn(`invalid popPosition value '${positionStr}'.`);
-  return isValid
+  return isValid;
 }
 
 export default {
@@ -302,9 +302,9 @@ export default {
     const hasOptions = isObject(binding.value) && hasKey(binding.value, 'options');
 
     // 获取指令绑定的值
-    let { 
-      rules: bindingRules, 
-      options = {}, 
+    let {
+      rules: bindingRules,
+      options = {},
       messageShowType = MessageShowTypeEnum.popover
     }: DirectiveBindingValue = binding.value;
     let { errorStrategy }: DirectiveBindingValue = binding.value;
@@ -315,9 +315,9 @@ export default {
     }
 
     // errorStrategy可配置在options对象中
-    let { 
-      updateOn = UpdateOnEnum.change, 
-      errorStrategy: ErrorStrategy = ErrorStrategyEnum.dirty, 
+    let {
+      updateOn = UpdateOnEnum.change,
+      errorStrategy: ErrorStrategy = ErrorStrategyEnum.dirty,
       asyncDebounceTime = 300,
       popPosition = ['right', 'bottom']
     }: DirectiveValidateRuleOptions = options;
@@ -341,13 +341,13 @@ export default {
     // 判断是否有options，有就取binding.value对象中的rules对象，再判断有没有rules对象，没有就取binding.value
     let customRule: Partial<DirectiveCustomRuleItem> | DirectiveBindingValue = {};
     if(hasOptions) {
-      customRule = bindingRules ?? binding.value
+      customRule = bindingRules ?? binding.value;
     }else {
-      customRule = binding.value as DirectiveBindingValue
+      customRule = binding.value as DirectiveBindingValue;
     }
 
     const isCustomValidator = customRule && isObject(customRule) && (hasKey(customRule, 'validators') || hasKey(customRule, 'asyncValidators'));
-    
+
     const rules = Array.isArray(customRule) ? customRule : [customRule];
     const tipEl = document.createElement('span');
 
@@ -381,7 +381,7 @@ export default {
         const ruleObj: Partial<CustomValidatorRuleObject> = {
           message: item?.message || '',
           validator: (rule, value) => item.validator(rule, value),
-        }
+        };
         descriptor.modelName.push(ruleObj);
       });
 
@@ -397,9 +397,9 @@ export default {
               }else {
                 reject(rule.message);
               }
-            }, asyncDebounceTime))
-          }, 
-        }
+            }, asyncDebounceTime));
+          },
+        };
         descriptor.modelName.push(ruleObj);
       });
     }
@@ -413,16 +413,16 @@ export default {
         EventBus.emit('showPopoverErrorMessage', {showPopover: false, message: '', uid: dfcUID, popPosition, updateOn} as ShowPopoverErrorMessageEventData);
       }
       validateFn({validator, modelValue, el, tipEl, isFormTag: false, messageShowType, dfcUID, popPosition, updateOn});
-    }
+    };
 
     // 监听事件验证
-    vnode.children[0].el.addEventListener(updateOn, htmlEventValidateHandler); 
+    vnode.children[0].el.addEventListener(updateOn, htmlEventValidateHandler);
 
     // 如果校验时机为change，则在focus时关闭popover
     if(messageShowType === MessageShowTypeEnum.popover && updateOn === UpdateOnEnum.change) {
       vnode.children[0].el.addEventListener('focus', () => {
         EventBus.emit('showPopoverErrorMessage', {showPopover: false, uid: dfcUID, updateOn} as ShowPopoverErrorMessageEventData);
-      }); 
+      });
     }
 
     // 设置errorStrategy
@@ -436,10 +436,10 @@ export default {
     // 处理表单提交验证
     formName && EventBus.on(`formSubmit:${formName}`, () => {
       const modelValue = isFormTag ? '' : vnode.children[0].el.value;
-      
+
       // 进行提交验证
       validateFn({validator, modelValue, el, tipEl, isFormTag, messageShowType, updateOn: 'submit'});
     });
-    
+
   }
-}
+};

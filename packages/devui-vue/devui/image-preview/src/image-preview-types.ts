@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue';
 
 export const imagePreviewProps = {
   url: {
@@ -19,18 +19,18 @@ export const imagePreviewProps = {
     type: Number,
     required: false
   }
-} as const
+} as const;
 
 export interface BindingTypes {
   value: {
-    custom?: any
-    disableDefault?: boolean
-    zIndex?: number
-    backDropZIndex?: number
-  }
-  [key: string]: any
+    custom?: any;
+    disableDefault?: boolean;
+    zIndex?: number;
+    backDropZIndex?: number;
+  };
+  [key: string]: any;
 }
 export interface UpdateBindingTypes extends BindingTypes {
-  oldValue: BindingTypes['value']
+  oldValue: BindingTypes['value'];
 }
-export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>
+export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>;

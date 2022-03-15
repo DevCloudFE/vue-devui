@@ -31,7 +31,7 @@
     "stylelint-scss": "^3.20.1"
   },
   "lint-staged": {
-    "packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}": "eslint --fix",
+    "package/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}": "eslint --fix",
     "packages/**/{*.scss,*.css}": "stylelint --fix"
   }
 }

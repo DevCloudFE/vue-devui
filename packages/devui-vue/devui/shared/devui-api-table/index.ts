@@ -1,1 +1,1 @@
-export { default } from './devui-api-table'
+export { default } from './devui-api-table';

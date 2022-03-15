@@ -1,7 +1,7 @@
-import { defineComponent, provide, toRef, ExtractPropTypes } from 'vue'
-import DRadio from './radio'
-import { radioGroupProps, radioGroupInjectionKey } from './radio-types'
-import './radio-group.scss'
+import { defineComponent, provide, toRef, ExtractPropTypes } from 'vue';
+import DRadio from './radio';
+import { radioGroupProps, radioGroupInjectionKey } from './radio-types';
+import './radio-group.scss';
 
 export default defineComponent({
   name: 'DRadioGroup',
@@ -10,9 +10,9 @@ export default defineComponent({
   setup(props: ExtractPropTypes<typeof radioGroupProps>, { emit }) {
     /** change 事件 */
     const emitChange = (radioValue: string) => {
-      emit('update:modelValue', radioValue)
-      emit('change', radioValue)
-    }
+      emit('update:modelValue', radioValue);
+      emit('change', radioValue);
+    };
 
     // 注入给子组件
     provide(radioGroupInjectionKey, {
@@ -21,16 +21,16 @@ export default defineComponent({
       disabled: toRef(props, 'disabled'),
       beforeChange: props.beforeChange,
       emitChange
-    })
+    });
   },
   render() {
-    const { values, direction } = this
+    const { values, direction } = this;
     /** 获取展示内容 */
     const getContent = () => {
-      const defaultSlot = this.$slots.default
+      const defaultSlot = this.$slots.default;
       // 有默认插槽则使用默认插槽
       if (defaultSlot) {
-        return defaultSlot()
+        return defaultSlot();
       }
       // 有数据列表则使用数据列表
       else if (Array.isArray(values)) {
@@ -39,14 +39,14 @@ export default defineComponent({
             <DRadio key={item} value={item}>
               {item}
             </DRadio>
-          )
-        })
+          );
+        });
       }
       // 什么都没有则返回空
       else {
-        return ''
+        return '';
       }
-    }
+    };
 
     return (
       <div
@@ -60,6 +60,6 @@ export default defineComponent({
       >
         {getContent()}
       </div>
-    )
+    );
   }
-})
+});

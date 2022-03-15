@@ -1,6 +1,6 @@
-import type { PropType, ExtractPropTypes, VNode } from 'vue'
+import type { PropType, ExtractPropTypes, VNode } from 'vue';
 export interface IcommentProps {
-  [prop: string]: any
+  [prop: string]: any;
 }
 
 export const commentProps = {
@@ -25,6 +25,6 @@ export const commentProps = {
     default:null
   },
 
-} as const
+} as const;
 
-export type CommentProps = ExtractPropTypes<typeof commentProps>
+export type CommentProps = ExtractPropTypes<typeof commentProps>;
