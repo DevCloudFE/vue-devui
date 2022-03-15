@@ -105,17 +105,18 @@
   .devui-select-chevron-icon {
     transform: rotate(180deg);
   }
+
   .devui-select-chevron-icon svg path {
     fill: $devui-text-weak;
   }
 }
+
 .devui-editable-select.devui-form-group.devui-has-feedback > .devui-form-control-feedback {
   line-height: 26px;
 }
+
 .devui-editable-select-dropdown {
   .devui-dropdown-menu {
-    width: 100%;
-    display: block;
     width: 100%;
     display: block;
     // TODO: 全局样式被污染，暂时只能这么写
