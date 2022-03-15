@@ -1,4 +1,4 @@
-# TimeAxis 时间轴
+# Timeline 时间轴
 
 时间轴展示组件。
 
@@ -19,8 +19,8 @@
         {{ item }}
       </d-radio>
     </d-radio-group>
-    <d-time-axis :direction="choose" center>
-      <d-time-axis-item
+    <d-timeline :direction="choose" center>
+      <d-timeline-item
           center
           v-for="(item,index) in timeAxisList"
           :key="index"
@@ -28,8 +28,8 @@
           :dot-color="item.dotColor"
       >
         {{item.text}}
-      </d-time-axis-item>
-    </d-time-axis>
+      </d-timeline-item>
+    </d-timeline>
   </div>
 </template>
 
@@ -80,8 +80,8 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-time-axis direction="horizontal" center>
-    <d-time-axis-item
+  <d-timeline direction="horizontal" center>
+    <d-timeline-item
         v-for="(item,index) in timeAxisList"
         :key="index"
         :dot-color="item.dotColor"
@@ -95,8 +95,8 @@ export default defineComponent({
         <d-icon :name="item.dot"></d-icon>
       </template>
       {{item.text}}
-    </d-time-axis-item>
-  </d-time-axis>
+    </d-timeline-item>
+  </d-timeline>
 </template>
 
 <script>
@@ -156,8 +156,8 @@ export default defineComponent({
 :::demo
 ```vue
 <template>
-  <d-time-axis direction="horizontal" mode="alternative">
-    <d-time-axis-item
+  <d-timeline direction="horizontal" mode="alternative">
+    <d-timeline-item
         v-for="(item,index) in timeAxisList"
         :key="index"
         :dot-color="item.dotColor"
@@ -192,8 +192,8 @@ export default defineComponent({
           <span style="line-height: 32px">2020</span>
         </div>
       </template>
-    </d-time-axis-item>
-  </d-time-axis>
+    </d-timeline-item>
+  </d-timeline>
 </template>
 
 <script>
@@ -250,21 +250,21 @@ export default defineComponent({
 ```vue
 <template>
   <h5><p>当 direction 为 horizontal 时 position 默认 bottom</p></h5>
-  <d-time-axis direction="horizontal" center>
-    <d-time-axis-item position="top" dot-color="chocolate">Download</d-time-axis-item>
-    <d-time-axis-item dot-color="var(--devui-success)">Check</d-time-axis-item>
-    <d-time-axis-item position="top" dot-color="var(--devui-danger)">Build</d-time-axis-item>
-    <d-time-axis-item dot-color="var(--devui-warning)">Depoy</d-time-axis-item>
-    <d-time-axis-item position="top" dot-color="var(--devui-waiting)">End</d-time-axis-item>
-  </d-time-axis>
+  <d-timeline direction="horizontal" center>
+    <d-timeline-item position="top" dot-color="chocolate">Download</d-timeline-item>
+    <d-timeline-item dot-color="var(--devui-success)">Check</d-timeline-item>
+    <d-timeline-item position="top" dot-color="var(--devui-danger)">Build</d-timeline-item>
+    <d-timeline-item dot-color="var(--devui-warning)">Depoy</d-timeline-item>
+    <d-timeline-item position="top" dot-color="var(--devui-waiting)">End</d-timeline-item>
+  </d-timeline>
   <h5><p>当 direction 为 vertical 时 position 默认 right</p></h5>
-  <d-time-axis direction="vertical">
-    <d-time-axis-item position="left" dot-color="chocolate">Download</d-time-axis-item>
-    <d-time-axis-item position="right" dot-color="var(--devui-success)">Check</d-time-axis-item>
-    <d-time-axis-item position="left" dot-color="var(--devui-danger)">Build</d-time-axis-item>
-    <d-time-axis-item position="right" dot-color="var(--devui-warning)">Depoy</d-time-axis-item>
-    <d-time-axis-item position="left" dot-color="var(--devui-waiting)">End</d-time-axis-item>
-  </d-time-axis>
+  <d-timeline direction="vertical">
+    <d-timeline-item position="left" dot-color="chocolate">Download</d-timeline-item>
+    <d-timeline-item position="right" dot-color="var(--devui-success)">Check</d-timeline-item>
+    <d-timeline-item position="left" dot-color="var(--devui-danger)">Build</d-timeline-item>
+    <d-timeline-item position="right" dot-color="var(--devui-warning)">Depoy</d-timeline-item>
+    <d-timeline-item position="left" dot-color="var(--devui-waiting)">End</d-timeline-item>
+  </d-timeline>
 </template>
 ```
 
@@ -276,19 +276,19 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-time-axis time-position="bottom">
-    <d-time-axis-item time="2019" time-position="left">Download</d-time-axis-item>
-    <d-time-axis-item time="11-2" type="success">Check</d-time-axis-item>
-    <d-time-axis-item time="2020" type="warning" time-position="left">Build</d-time-axis-item>
-    <d-time-axis-item time="11-4" type="error">Depoy</d-time-axis-item>
-    <d-time-axis-item time="2021" type="primary" time-position="left">End</d-time-axis-item>
-  </d-time-axis>
+  <d-timeline time-position="bottom">
+    <d-timeline-item time="2019" time-position="left">Download</d-timeline-item>
+    <d-timeline-item time="11-2" type="success">Check</d-timeline-item>
+    <d-timeline-item time="2020" type="warning" time-position="left">Build</d-timeline-item>
+    <d-timeline-item time="11-4" type="error">Depoy</d-timeline-item>
+    <d-timeline-item time="2021" type="primary" time-position="left">End</d-timeline-item>
+  </d-timeline>
 </template>
 ```
 
 :::
 
-### d-time-axis
+### d-timeline
 
 | 参数           | 类型                            | 默认        | 说明         | 跳转 Demo                   |
 | ------------  | ----                            | ----       | ----        | ---------                   | 
@@ -297,7 +297,7 @@ export default defineComponent({
 |   mode   |   `'normal'\|'alternative'`   | `normal`  | 可选，`normal`模式下内容按默认方向排布， `alternative`模式下内容交替排布 |      [自定义内容](#自定义内容)     |  
 |   time-position   |   `'left'\|'bottom'`   | `left`  | 可选，仅当`direction` 为 `vertical` 时定义时间参数位置(全局设置，当与`mode`属性冲突时以`mode`为准) |      [自定义内容](#自定义内容)     |  
 
-### d-time-axis-item
+### d-timeline-item
 
 | 参数 | 类型 | 默认 | 说明 | 跳转 Demo                   |
 | ---- | ----   | ---- | ---- | ----  |
@@ -310,7 +310,7 @@ export default defineComponent({
 |   time-position   |   `'left'\|'bottom'`   | `left`  | 可选，仅当`direction` 为 `vertical` 时定义时间参数位置(全局设置，当与`position`属性冲突时以`position`为准) |      [设置时间位置](#设置时间位置)     |  
 |   type   |   `'primary' \| 'success' \| 'warning' \| 'error'`   | `primary`  | 可选，时间点类型 |      [自定义内容](#自定义内容)     |  
 
-### d-time-axis-item插槽
+### d-timeline-item插槽
 
 | 参数           | 描述        | 跳转 Demo                   |
 | ------------  | ----           | ---------                   | 

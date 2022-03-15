@@ -1,5 +1,5 @@
 import type { PropType, ExtractPropTypes } from 'vue'
-import type { LineStyle,TimePosition } from '../../time-axis-types'
+import type { LineStyle,TimePosition } from '../../timeline-types'
 export type Position = 'top' | 'bottom' | 'left' | 'right'
 export type Type = 'primary' | 'success' | 'warning' | 'error'
 export const timeAxisItemProps = {
@@ -35,4 +35,4 @@ export const timeAxisItemProps = {
   }
 } as const
 
-export type TimeAxisItemProps = ExtractPropTypes<typeof timeAxisItemProps>
+export type TimelineItemProps = ExtractPropTypes<typeof timeAxisItemProps>
