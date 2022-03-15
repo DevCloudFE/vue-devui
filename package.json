@@ -8,8 +8,10 @@
     "build:cli": "pnpm build --filter devui-cli",
     "prepare": "husky install",
     "precommit": "lint-staged",
-    "lint:fix": "eslint --fix \"packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}\"",
-    "stylelint": "stylelint --fix \"packages/**/{*.scss,*.css}\"",
+    "eslint": "eslint \"packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}\"",
+    "eslint:fix": "eslint --fix \"packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}\"",
+    "stylelint": "stylelint \"packages/**/{*.scss,*.css}\"",
+    "stylelint:fix": "stylelint --fix \"packages/**/{*.scss,*.css}\"",
     "test": "pnpm test --filter vue-devui"
   },
   "devDependencies": {
@@ -29,7 +31,7 @@
     "stylelint-scss": "^3.20.1"
   },
   "lint-staged": {
-    ".{js,ts,jsx,tsx,vue}": "eslint --fix",
-    ".{scss,css}": "stylelint --fix"
+    "packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}": "eslint --fix",
+    "packages/**/{*.scss,*.css}": "stylelint --fix"
   }
 }
