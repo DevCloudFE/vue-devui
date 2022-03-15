@@ -1,8 +1,8 @@
 import { defineComponent, toRefs, ref } from 'vue';
 import { NotificationService } from '../../notification';
 import { UploadStatus, UploadProps, uploadProps } from './upload-types';
-import { useSelectFiles } from './use-select-files';
-import { useUpload } from './use-upload';
+import { useSelectFiles } from './composables/use-select-files';
+import { useUpload } from './composables/use-upload';
 import { getFailedFilesCount, getSelectedFilesCount, getUploadingFilesCount, getExistSameNameFilesMsg } from './i18n-upload';
 import { FileUploader } from './file-uploader';
 import './upload.scss';
@@ -10,19 +10,17 @@ import './upload.scss';
 export default defineComponent({
   name: 'DUpload',
   props: uploadProps,
-  emits: ['fileDrop', 'fileOver', 'fileSelect', 'deleteUploadedFile', 'update:uploadedFiles'],
+  emits: ['fileDrop', 'fileOver', 'fileSelect', 'deleteUploadedFile', 'update:modelValue'],
   setup(props: UploadProps, ctx) {
     const {
       uploadOptions,
-      placeholderText,
+      placeholder,
       autoUpload,
-      withoutBtn,
-      uploadText,
       disabled,
       beforeUpload,
-      enableDrop,
+      droppable,
       oneTimeUpload,
-      uploadedFiles,
+      modelValue,
       multiple,
       accept,
       webkitdirectory,
@@ -36,7 +34,6 @@ export default defineComponent({
       NotificationService.open({
         type: 'warning',
         content: errorMsg,
-        //value: [{ severity: 'warn', content: errorMsg }]
       });
     };
     const checkValid = () => {
@@ -72,11 +69,10 @@ export default defineComponent({
               removeFiles();
             }
             addFile(file, uploadOptions.value);
-            // debounceTime(100)
           });
           checkValid();
           const sameNameFiles = getSameNameFiles();
-          if (uploadOptions.value.checkSameName && sameNameFiles.length) {
+          if (uploadOptions.value && uploadOptions.value.checkSameName && sameNameFiles.length) {
             alertMsg(getExistSameNameFilesMsg(sameNameFiles));
           }
           const selectedFiles = fileUploaders.value
@@ -116,11 +112,11 @@ export default defineComponent({
     };
     // 删除已上传文件
     const deleteUploadedFile = (file: File) => {
-      const newUploadedFiles = uploadedFiles.value.filter((uploadedFile) => {
+      const newUploadedFiles = modelValue.value.filter((uploadedFile) => {
         return uploadedFile.name !== file.name;
       });
       ctx.emit('deleteUploadedFile', file);
-      ctx.emit('update:uploadedFiles', newUploadedFiles);
+      ctx.emit('update:modelValue', newUploadedFiles);
     };
     const onDeleteFile = (event: Event, file: File, status: UploadStatus) => {
       event.stopPropagation();
@@ -143,7 +139,7 @@ export default defineComponent({
       }
       return uploadResult;
     };
-    const fileUpload = (event: Event, fileUploader?: FileUploader) => {
+    const fileUpload = (event?: Event, fileUploader?: FileUploader) => {
       if (event) {
         event.stopPropagation();
       }
@@ -158,8 +154,8 @@ export default defineComponent({
           .then((results: Array<{ file: File; response: any }>) => {
             props['on-success'] && props['on-success'](results);
             const newFiles = results.map((result) => result.file);
-            const newUploadedFiles = [...newFiles, ...uploadedFiles.value];
-            ctx.emit('update:uploadedFiles', newUploadedFiles);
+            const newUploadedFiles = [...newFiles, ...modelValue.value];
+            ctx.emit('update:modelValue', newUploadedFiles);
           })
           .catch((error) => {
             props['on-error'] && props['on-error'](error);
@@ -210,69 +206,26 @@ export default defineComponent({
       });
     };
 
-    return {
-      uploadOptions,
-      placeholderText,
-      autoUpload,
-      withoutBtn,
-      uploadText,
-      disabled,
-      beforeUpload,
-      enableDrop,
-      isDropOVer,
-      onFileDrop,
-      onFileOver,
-      handleClick,
-      fileUploaders,
-      onDeleteFile,
-      fileUpload,
-      getStatus,
-      uploadTips,
-      cancelUpload,
-      deleteUploadedFile,
-      multiple,
-    };
-  },
-  render() {
-    const {
-      placeholderText,
-      autoUpload,
-      withoutBtn,
-      uploadText,
-      disabled,
-      enableDrop,
-      isDropOVer,
-      onFileDrop,
-      onFileOver,
-      handleClick,
-      fileUploaders,
-      onDeleteFile,
-      fileUpload,
-      uploadedFiles,
-      deleteUploadedFile,
-      multiple,
-    } = this;
-
-    return (
+    return () => (
       <div>
         <div
           class='devui-upload'
-          v-file-drop={{ enableDrop, isSingle: !multiple, onFileDrop, onFileOver }}
-          style={`border: ${isDropOVer ? '1px solid #15bf15' : '0'}`}>
-          {this.$slots.default?.() ? (
-            <div onClick={handleClick}>{this.$slots.default()}</div>
+          v-file-drop={{ droppable, isSingle: !multiple, onFileDrop, onFileOver }}
+          style={`border: ${isDropOVer.value ? '1px solid #15bf15' : '0'}`}>
+          {ctx.slots.default?.() ? (
+            <div onClick={handleClick}>{ctx.slots.default()}</div>
           ) : (
-            <div class={`devui-input-group ${disabled ? 'disabled' : ''}`} onClick={handleClick}>
-              {fileUploaders.length === 0 && <div class='devui-form-control devui-upload-placeholder'>{placeholderText}</div>}
-              {fileUploaders.length > 0 && (
+            <div class={`devui-input-group ${disabled.value ? 'disabled' : ''}`} onClick={handleClick}>
+              {fileUploaders.value.length === 0 && <div class='devui-form-control devui-upload-placeholder'>{placeholder.value}</div>}
+              {fileUploaders.value.length > 0 && (
                 <ul class='devui-form-control devui-files-list'>
-                  {fileUploaders.map((fileUploader, index) => (
+                  {fileUploaders.value.map((fileUploader, index) => (
                     <li
                       key={index}
                       class='devui-file-item devui-file-tag'
                       style='display: inline-block; margin: 0 2px 2px 0'
                       title={fileUploader.file.name}>
-                      <span class={`evui-filename ${fileUploader.status === UploadStatus.failed ? 'devui-failed-color' : ''}`}>
+                      <span class={`devui-filename ${fileUploader.status === UploadStatus.failed ? 'devui-failed-color' : ''}`}>
                         {fileUploader.file.name}
                       </span>
                       <d-icon
@@ -305,22 +258,10 @@ export default defineComponent({
               </span>
             </div>
           )}
-          {!autoUpload && !withoutBtn && (
-            <d-button style='marginLeft: 8px' variant='common' disabled={disabled} onClick={fileUpload}>
-              {uploadText}
-            </d-button>
-          )}
-        </div>
-        {}
-        <div>
-          {this.$slots.preloadFiles?.({
-            fileUploaders,
-            deleteFile: onDeleteFile,
-          })}
         </div>
         <div>
-          {this.$slots.uploadedFiles?.({
-            uploadedFiles,
+          {ctx.slots['uploaded-files']?.({
+            uploadedFiles: modelValue.value,
             deleteFile: deleteUploadedFile,
           })}
         </div>
