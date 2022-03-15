@@ -1,16 +1,16 @@
 import {defineComponent, inject} from 'vue'
-import type {TimeAxisRootType} from '../../time-axis-types'
+import type {TimelineRootType} from '../../timeline-types'
 import DIcon from '../../../../icon/src/icon'
-import {timeAxisItemProps, TimeAxisItemProps, Type} from './types'
+import {timeAxisItemProps, TimelineItemProps, Type} from './types'
 
 export default defineComponent({
-  name: 'DTimeAxisItem',
+  name: 'DTimelineItem',
   components: {DIcon},
   props: timeAxisItemProps,
   emits: [],
-  setup(props: TimeAxisItemProps, ctx) {
-    const timeAxis: TimeAxisRootType = inject('timeAxis')
-    const itemClass = 'devui-time-axis-item'
+  setup(props: TimelineItemProps, ctx) {
+    const timeAxis: TimelineRootType = inject('timeAxis')
+    const itemClass = 'devui-timeline-item'
     const renderTime = () => {
       return (
         <div class={`${itemClass}-time`}>

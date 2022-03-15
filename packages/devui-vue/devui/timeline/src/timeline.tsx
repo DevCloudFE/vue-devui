@@ -1,15 +1,15 @@
 import {defineComponent, Fragment, nextTick, onMounted, provide, reactive, ref, toRef, watch} from 'vue'
-import {timeAxisProps, TimeAxisProps, TimeAxisRootType} from './time-axis-types'
-import TimeAxisItem from './components/time-axis-item'
-import './time-axis.scss'
+import {timeAxisProps, TimelineProps, TimelineRootType} from './timeline-types'
+import TimelineItem from './components/timeline-item'
+import './timeline.scss'
 
 export default defineComponent({
-  name: 'DTimeAxis',
-  components: {TimeAxisItem},
+  name: 'DTimeline',
+  components: {TimelineItem},
   props: timeAxisProps,
   emits: [],
-  setup(props: TimeAxisProps, ctx) {
-    provide<TimeAxisRootType>('timeAxis', {ctx, props})
+  setup(props: TimelineProps, ctx) {
+    provide<TimelineRootType>('timeAxis', {ctx, props})
     const timeAxis = ref<null | HTMLElement>();
     const style = reactive({
       marginLeft: '0px',
@@ -27,10 +27,10 @@ export default defineComponent({
           }
           //算出最大高度
           style.height = Math.max(
-              ...Array.from(el?.querySelectorAll('.devui-time-axis-item-data-top')).map(el => el.clientHeight),
-              ...Array.from(el?.querySelectorAll('.devui-time-axis-item-data-bottom')).map(el => el.clientHeight)
+              ...Array.from(el?.querySelectorAll('.devui-timeline-item-data-top')).map(el => el.clientHeight),
+              ...Array.from(el?.querySelectorAll('.devui-timeline-item-data-bottom')).map(el => el.clientHeight)
             ) * 2
-            + Math.max(...Array.from(el?.querySelectorAll('.devui-time-axis-item-axis')).map(el => el.clientHeight))
+            + Math.max(...Array.from(el?.querySelectorAll('.devui-timeline-item-axis')).map(el => el.clientHeight))
             + 'px'
         });
       }
@@ -96,7 +96,7 @@ export default defineComponent({
 
       return (
         <div
-          class={`devui-time-axis devui-time-axis-${getDirection()}  ${props.center ? 'devui-time-axis-' + getDirection() + '-center' : ''} `}
+          class={`devui-timeline devui-timeline-${getDirection()}  ${props.center ? 'devui-timeline-' + getDirection() + '-center' : ''} `}
           ref={timeAxis}
           style={style}
         >
