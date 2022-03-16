@@ -68,9 +68,11 @@ importers:
   packages/devui-theme:
     specifiers:
       '@vitejs/plugin-vue': ^2.2.0
+      commander: ^9.0.0
       css-vars-ponyfill: ^2.4.7
       enquirejs-ssr: ^2.1.7
       rxjs: ^7.5.4
+      shelljs: ^0.8.4
       typescript: ^4.5.4
       vite: ^2.8.0
       vue: ^3.2.25
@@ -82,12 +84,11 @@ importers:
       vue: 3.2.31
     devDependencies:
       '@vitejs/plugin-vue': 2.2.2_vite@2.8.4+vue@3.2.31
+      commander: 9.0.0
+      shelljs: 0.8.5
       typescript: 4.5.5
       vite: 2.8.4
       vue-tsc: 0.29.8_typescript@4.5.5
-
-  packages/devui-theme/dist:
-    specifiers: {}
 
   packages/devui-vue:
     specifiers:
@@ -3724,6 +3725,11 @@ packages:
   /commander/8.3.0:
     resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
     engines: {node: '>= 12'}
+    dev: true
+
+  /commander/9.0.0:
+    resolution: {integrity: sha512-JJfP2saEKbQqvW+FI93OYUB4ByV5cizMpFMiiJI8xDbBvQvSkIk0VvQdn1CZ8mqAO8Loq2h0gYTYtDFUZUeERw==}
+    engines: {node: ^12.20.0 || >=14}
     dev: true
 
   /compare-func/2.0.0:
