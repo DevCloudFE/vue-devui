@@ -77,11 +77,11 @@ export default {
 ```vue
 <template>
   <div class="alert-demo-3">
-    <d-alert type="success" :showIcon="false">success</d-alert>
-    <d-alert type="danger" :showIcon="false">danger</d-alert>
-    <d-alert type="warning" :showIcon="false">warning</d-alert>
-    <d-alert type="info" :showIcon="false">info</d-alert>
-    <d-alert type="simple" :showIcon="false">simple</d-alert>
+    <d-alert type="success" :show-icon="false">success</d-alert>
+    <d-alert type="danger" :show-icon="false">danger</d-alert>
+    <d-alert type="warning" :show-icon="false">warning</d-alert>
+    <d-alert type="info" :show-icon="false">info</d-alert>
+    <d-alert type="simple" :show-icon="false">simple</d-alert>
   </div>
 </template>
 <style>
@@ -100,10 +100,10 @@ export default {
 | 属性        | 类型                      | 默认   | 说明                                    | 跳转 Demo                         |
 | ----------- | ------------------------- | ------ | --------------------------------------- | --------------------------------- |
 | type        | [`AlertType`](#AlertType) | 'info' | 必选，指定警告提示的样式                | [基本用法](#基本用法)             |
-| cssClass    | `string`                  | --     | 可选，自定义 class 名                   |
+| css-class    | `string`                  | --     | 可选，自定义 class 名                   |
 | closeable   | `boolean`                 | true   | 可选，默认显示关闭按钮                  | [基本用法](#可关闭的提示)         |
-| dismissTime | `number`                  | --     | 可选，自动关闭 alert 的延迟时间（`ms`） |
-| showIcon    | `boolean`                 | true   | 可选，是否使用默认的类型图标            | [不使用默认图标](#不使用默认图标) |
+| dismiss-time | `number`                  | --     | 可选，自动关闭 alert 的延迟时间（`ms`） |
+| show-icon    | `boolean`                 | true   | 可选，是否使用默认的类型图标            | [不使用默认图标](#不使用默认图标) |
 
 ### d-alert 事件
 
