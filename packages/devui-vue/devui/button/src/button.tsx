@@ -27,7 +27,7 @@ export default defineComponent({
     return () => {
       return (
         <button class={classes.value} disabled={disabled.value} v-dLoading={loading.value} onClick={onClick}>
-          {icon.value && <Icon name={icon.value} size='12px' class={iconClass.value} />}
+          {icon.value && <Icon name={icon.value} size='12px' color='' class={iconClass.value} />}
           <span class='button-content'>{ctx.slots.default?.()}</span>
         </button>
       );
