@@ -9,7 +9,7 @@ export default defineComponent({
   props: dropdownMenuProps,
   emits: ['update:modelValue'],
   setup(props: DropdownMenuProps, { slots, attrs, emit }) {
-    const { modelValue, origin, position, align, offset, clickOutside } = toRefs(props);
+    const { modelValue, origin, position, align, offset, clickOutside, showAnimation } = toRefs(props);
     const dropdownMenuRef = ref(null);
 
     onClickOutside(dropdownMenuRef, (value) => {
@@ -28,7 +28,7 @@ export default defineComponent({
 
     return () => (
       <Teleport to='body'>
-        <Transition name={`devui-dropdown-fade-${currentPosition.value}`}>
+        <Transition name={showAnimation.value ? `devui-dropdown-fade-${currentPosition.value}` : ''}>
           <FlexibleOverlay
             v-model={modelValue.value}
             origin={origin?.value}

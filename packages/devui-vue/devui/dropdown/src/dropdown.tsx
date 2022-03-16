@@ -12,7 +12,7 @@ export default defineComponent({
   props: dropdownProps,
   emits: ['toggle'],
   setup(props: DropdownProps, { slots, attrs, emit }) {
-    const { visible, position, align, offset } = toRefs(props);
+    const { visible, position, align, offset, showAnimation } = toRefs(props);
     const origin = ref<HTMLElement>();
     const dropdownRef = ref<HTMLElement>();
     const id = `dropdown_${dropdownId++}`;
@@ -25,8 +25,8 @@ export default defineComponent({
       transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
     }));
     const classes = computed(() => ({
-      'fade-in-bottom': isOpen.value && currentPosition.value === 'bottom',
-      'fade-in-top': isOpen.value && currentPosition.value === 'top',
+      'fade-in-bottom': showAnimation.value && isOpen.value && currentPosition.value === 'bottom',
+      'fade-in-top': showAnimation.value && isOpen.value && currentPosition.value === 'top',
     }));
     useDropdownEvent({
       id,
@@ -43,7 +43,7 @@ export default defineComponent({
           {slots.default?.()}
         </div>
         <Teleport to='body'>
-          <Transition name={`devui-dropdown-fade-${currentPosition.value}`}>
+          <Transition name={showAnimation.value ? `devui-dropdown-fade-${currentPosition.value}` : ''}>
             <FlexibleOverlay
               v-model={isOpen.value}
               origin={origin.value}

@@ -51,6 +51,10 @@ export const dropdownProps = {
     type: Boolean,
     default: false,
   },
+  showAnimation: {
+    type: Boolean,
+    default: true,
+  },
 };
 
 export type DropdownProps = ExtractPropTypes<typeof dropdownProps>;
