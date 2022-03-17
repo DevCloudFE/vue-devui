@@ -1,6 +1,6 @@
-import { defineComponent, ref, toRefs, Transition, Teleport, computed } from 'vue';
+import { defineComponent, ref, toRefs, Transition, Teleport } from 'vue';
 import { dropdownProps, DropdownProps } from './dropdown-types';
-import { useDropdown, useDropdownEvent } from './use-dropdown';
+import { useDropdown, useDropdownEvent, useOverlayProps } from './use-dropdown';
 import { FlexibleOverlay } from '../../overlay';
 import './dropdown.scss';
 
@@ -12,23 +12,13 @@ export default defineComponent({
   props: dropdownProps,
   emits: ['toggle'],
   setup(props: DropdownProps, { slots, attrs, emit }) {
-    const { visible, position, align, offset, showAnimation, overlayClass } = toRefs(props);
+    const { visible, position, align, offset, showAnimation } = toRefs(props);
     const origin = ref<HTMLElement>();
     const dropdownRef = ref<HTMLElement>();
     const id = `dropdown_${dropdownId++}`;
     const isOpen = ref<boolean>(false);
     const currentPosition = ref('bottom');
-    const handlePositionChange = (pos) => {
-      currentPosition.value = pos.includes('top') || pos.includes('end') ? 'top' : 'bottom';
-    };
-    const styles = computed(() => ({
-      transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
-    }));
-    const classes = computed(() => ({
-      'fade-in-bottom': showAnimation.value && isOpen.value && currentPosition.value === 'bottom',
-      'fade-in-top': showAnimation.value && isOpen.value && currentPosition.value === 'top',
-      [`${overlayClass.value}`]: true,
-    }));
+
     useDropdownEvent({
       id,
       isOpen,
@@ -38,6 +28,7 @@ export default defineComponent({
       emit,
     });
     useDropdown(id, visible, isOpen, origin, dropdownRef, currentPosition, emit);
+    const { overlayModelValue, overlayShowValue, styles, classes, handlePositionChange } = useOverlayProps(props, currentPosition, isOpen);
     return () => (
       <>
         <div ref={origin} class='devui-dropdown-toggle'>
@@ -46,7 +37,8 @@ export default defineComponent({
         <Teleport to='body'>
           <Transition name={showAnimation.value ? `devui-dropdown-fade-${currentPosition.value}` : ''}>
             <FlexibleOverlay
-              v-model={isOpen.value}
+              v-model={overlayModelValue.value}
+              v-show={overlayShowValue.value}
               origin={origin.value}
               position={position.value}
               align={align.value}

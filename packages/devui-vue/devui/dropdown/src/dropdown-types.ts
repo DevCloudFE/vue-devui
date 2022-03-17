@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, Ref } from 'vue';
+import type { PropType, ExtractPropTypes, Ref, ComputedRef } from 'vue';
 
 export type TriggerType = 'click' | 'hover' | 'manually';
 export type CloseScopeArea = 'all' | 'blank' | 'none';
@@ -59,6 +59,10 @@ export const dropdownProps = {
     type: String,
     default: '',
   },
+  destroyOnHide: {
+    type: Boolean,
+    default: true,
+  },
 };
 
 export type DropdownProps = ExtractPropTypes<typeof dropdownProps>;
@@ -70,4 +74,12 @@ export interface UseDropdownProps {
   dropdownRef: ReadonlyRef<any>;
   props: DropdownProps;
   emit: EmitEvent;
+}
+
+export interface UseOverlayFn {
+  overlayModelValue: Ref<boolean>;
+  overlayShowValue: Ref<boolean>;
+  styles: ComputedRef<Record<string, string>>;
+  classes: ComputedRef<Record<string, boolean>>;
+  handlePositionChange: (pos: string) => void;
 }

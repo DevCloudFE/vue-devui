@@ -267,6 +267,7 @@ export default defineComponent({
 | close-on-mouse-leave-menu | `boolean`                 | `false`      | 可选，是否进入菜单后离开菜单的时候关闭菜单                                                    |
 | show-animation            | `boolean`                 | `true`       | 可选，控制是否显示动画                                                                        |
 | overlay-class             | `string`                  | `''`         | 可选，自定义 overlay 的样式                                                                   |
+| destroy-on-hide           | `boolean`                 | `true`       | 可选，是否在关闭 dropdown 时将其销毁                                                          |
 
 ### d-dropdown 事件
 
