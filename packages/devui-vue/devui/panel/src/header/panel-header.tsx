@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineComponent,ref,inject,Ref } from 'vue';
 import {PanelProps} from '../panel.type';
 import Store from '../store/store';
@@ -13,7 +14,7 @@ export default defineComponent({
     const isCollapsed = ref(Store.state()[key as string]) as Ref<boolean>;
     const changeFlag = ref();
     let header: JSX.Element | null = null;
-    const res = ref() as Ref<boolean>;
+    const res = ref(isCollapsed.value) as Ref<boolean>;
     let changeResult = true;
     const done = () => {
       res.value = !res.value;

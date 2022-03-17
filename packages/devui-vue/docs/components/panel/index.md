@@ -178,6 +178,11 @@ export default defineComponent({
     </d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
+  <br />
+  <br />
+  <d-button @click="handleClick">
+    试一试
+  </d-button>
 </template>
 
 <script>
@@ -186,17 +191,20 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {    
     let opened = false;
-    const beforeToggle = (e, done) => {
+    let beforeToggle = (e, done) => {
       if (!opened){
-        setTimeout(()=>{
-          done();
-        },1000);
-        
-        opened = true;
-      }
-    };
+          setTimeout(()=>{
+            done();
+          },1000);
+          opened = true;
+        }
+    }
+    const handleClick = () => {
+      window.location.reload();
+    }
     return {
-      beforeToggle
+      beforeToggle,
+      handleClick
     };
   }
 });
