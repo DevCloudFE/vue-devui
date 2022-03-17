@@ -64,6 +64,8 @@ export default defineComponent({
     <d-panel-header>Panel with info Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
+  <br />
+  <br />
   <d-panel type="primary" :is-collapsed="true" :show-animation="true">
     <d-panel-header>Panel with Primary Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
@@ -104,7 +106,7 @@ export default defineComponent({
   <d-panel
     type="primary"
     :has-left-padding="padding"
-    :toggle="handleToggle"
+    @toggle="handleToggle"
     :before-toggle="beforeToggle"
     :show-animation="showAnimation"
   >
@@ -116,6 +118,7 @@ export default defineComponent({
   </d-panel>
   <br />
   <br />
+  <span>当前状态: {{nowState}}</span><br />
   <d-button @click="panelToggle = !panelToggle">
     {{ panelToggle ? '阻止折叠' : '允许折叠' }}
   </d-button>
@@ -131,11 +134,12 @@ export default defineComponent({
     let showAnimation = ref(true);
     let state;
     let padding = ref(false);
+    let nowState = ref('收起');
     const handleToggle = (e) => {
       toggle.value = e;
+      nowState.value = toggle.value === true ? '展开' : '收起';
     };
     const beforeToggle = (e) => {
-      console.log(e);
       return panelToggle.value;
     };
     return {
@@ -146,11 +150,61 @@ export default defineComponent({
       isCollapsed,
       handleToggle,
       showAnimation,
-      padding
+      padding,
+      nowState
     };
   }
 });
 </script>
+```
+
+:::
+
+在某些场景下，我们或许需要使用js来对Panel进行开合控制，尤其是异步时。我们可以使用beforeToggle中的```done```函数来对Panel进行开合处理。
+
+案例中我们使用setTimeout来模拟异步任务控制Panel开合
+
+:::demo
+
+```vue
+<template>
+  <d-panel
+    type="primary"
+    :before-toggle="beforeToggle"
+    :is-collapsed="false"
+  >
+    <d-panel-header>
+      1s之后自动打开
+    </d-panel-header>
+    <d-panel-body>This is body</d-panel-body>
+  </d-panel>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {    
+    let opened = false;
+    const beforeToggle = (e, done) => {
+      if (!opened){
+        setTimeout(()=>{
+          done();
+        },500);
+        setTimeout(()=>{
+          done();
+        },1000)
+        opened = true;
+      }
+    };
+    return {
+      beforeToggle
+    };
+  }
+});
+</script>
+
+
 ```
 
 :::
@@ -200,8 +254,8 @@ export default defineComponent({
 |  is-collapsed   |            boolean            |   false   |                                               可选，是否展开                                                |
 | has-left-padding |            boolean            |   true    |                                           可选，是否显示左侧填充                                            |
 | show-animation  |            boolean            |   true    |                                             可选，是否展示动画                                              |
-|  before-toggle  | Function\|Promise\|Observable |    --     | 可选，面板折叠状态改变前的回调函数，返回 boolean 类型，返回 false 可以阻止面板改变折叠状态 根据条件阻止折叠 |
-|     toggle     |           Function            |    --     |     可选，面板当前状态的回调函数，返回 boolean 类型，返回 false 代表面板被收起，返回 true 代表面板展开      |
+|  before-toggle  | () => (value: boolean, done?: () => void) => any |    --     | 可选，面板折叠状态改变前的回调函数, 参数```value```代表当前状态,参数```done()```可以控制Panel开合 |
+|     @toggle     |           Function            |    --     |     可选，面板当前状态的回调函数，返回 boolean 类型，返回 false 代表面板被收起，返回 true 代表面板展开      |
 
 ### 接口&类型定义
 

@@ -6,6 +6,7 @@ import Store from './store/store';
 export default defineComponent({
   name: 'DPanel',
   props: PanelProps,
+  emits: ['toggle'],
   setup(props, ctx) {
     provide('beforeToggle', props.beforeToggle);
     provide('showAnimation', computed(()=>props.showAnimation));
@@ -13,10 +14,10 @@ export default defineComponent({
     const isCollapsed = ref(props.isCollapsed);
     const type = computed(()=>props.type);
     const cssClass = computed(()=>props.cssClass);
+    const timeStamp = new Date().getTime().toString() + Math.random();
     const onToggle = ()=> {
-      props.toggle?.(Store.getByKey(`isCollapsed[${timeStamp}]`));
+      ctx.emit('toggle', Store.getByKey(`isCollapsed[${timeStamp}]`));
     };
-    const timeStamp = new Date().getTime().toString();
     Store.setData(`isCollapsed[${timeStamp}]`, isCollapsed.value);
     return () => {
       return (
