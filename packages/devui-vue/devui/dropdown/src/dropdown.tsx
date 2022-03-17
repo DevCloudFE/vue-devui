@@ -12,7 +12,7 @@ export default defineComponent({
   props: dropdownProps,
   emits: ['toggle'],
   setup(props: DropdownProps, { slots, attrs, emit }) {
-    const { visible, position, align, offset, showAnimation } = toRefs(props);
+    const { visible, position, align, offset, showAnimation, overlayClass } = toRefs(props);
     const origin = ref<HTMLElement>();
     const dropdownRef = ref<HTMLElement>();
     const id = `dropdown_${dropdownId++}`;
@@ -27,6 +27,7 @@ export default defineComponent({
     const classes = computed(() => ({
       'fade-in-bottom': showAnimation.value && isOpen.value && currentPosition.value === 'bottom',
       'fade-in-top': showAnimation.value && isOpen.value && currentPosition.value === 'top',
+      [`${overlayClass.value}`]: true,
     }));
     useDropdownEvent({
       id,
