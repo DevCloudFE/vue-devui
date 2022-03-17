@@ -190,10 +190,7 @@ export default defineComponent({
       if (!opened){
         setTimeout(()=>{
           done();
-        },500);
-        setTimeout(()=>{
-          done();
-        },1000)
+        },1000);
         opened = true;
       }
     };
