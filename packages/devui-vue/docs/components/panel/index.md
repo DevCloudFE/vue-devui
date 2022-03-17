@@ -191,6 +191,7 @@ export default defineComponent({
         setTimeout(()=>{
           done();
         },1000);
+        
         opened = true;
       }
     };
