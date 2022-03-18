@@ -177,6 +177,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "CatsAndMice",
+      "name": "lihai",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58327088?v=4",
+      "profile": "https://github.com/CatsAndMice",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
