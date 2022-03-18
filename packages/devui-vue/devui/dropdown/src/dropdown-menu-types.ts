@@ -46,6 +46,10 @@ export const dropdownMenuProps = {
     type: Boolean,
     default: true,
   },
+  overlayClass: {
+    type: String,
+    default: '',
+  },
 };
 
 export type DropdownMenuProps = ExtractPropTypes<typeof dropdownMenuProps>;

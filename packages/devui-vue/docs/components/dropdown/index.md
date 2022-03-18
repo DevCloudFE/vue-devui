@@ -293,6 +293,7 @@ export default defineComponent({
 | offset         | `number \| OffsetOptions` | `4`          | 可选，指定与触发元素的间距                                                                    |
 | close-outside  | `() => boolean`           | `() => true` | 可选，点击外部区域的回调函数，默认返回 true，点击外部区域会关闭 DropdownMenu                  |
 | show-animation | `boolean`                 | `true`       | 可选，控制是否显示动画                                                                        |
+| overlay-class  | `string`                  | `''`         | 可选，自定义 overlay 的样式                                                                   |
 
 ### TriggerType 类型
 

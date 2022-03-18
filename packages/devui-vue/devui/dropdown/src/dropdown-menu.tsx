@@ -9,17 +9,17 @@ export default defineComponent({
   props: dropdownMenuProps,
   emits: ['update:modelValue'],
   setup(props: DropdownMenuProps, { slots, attrs, emit }) {
-    const { modelValue, origin, position, align, offset, clickOutside, showAnimation } = toRefs(props);
+    const { modelValue, origin, position, align, offset, clickOutside, showAnimation, overlayClass } = toRefs(props);
     const dropdownMenuRef = ref(null);
 
     onClickOutside(dropdownMenuRef, (value) => {
-      if (clickOutside.value?.() && !origin.value.contains(value.target)) {
+      if (clickOutside.value?.() && !origin?.value?.contains(value.target)) {
         emit('update:modelValue', false);
       }
     });
 
     const currentPosition = ref('bottom');
-    const handlePositionChange = (pos) => {
+    const handlePositionChange = (pos: string) => {
       currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
     };
     const styles = computed(() => ({
@@ -36,6 +36,7 @@ export default defineComponent({
             align={align.value}
             offset={offset.value}
             onPositionChange={handlePositionChange}
+            class={overlayClass.value}
             style={styles.value}>
             <div ref={dropdownMenuRef} class='devui-dropdown-menu-wrap' {...attrs}>
               {slots.default?.()}
