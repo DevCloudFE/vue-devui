@@ -176,6 +176,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/zxlfly"><img src="https://avatars.githubusercontent.com/u/26324442?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sleep_fish</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=zxlfly" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/whylost"><img src="https://avatars.githubusercontent.com/u/62528887?v=4?s=100" width="100px;" alt=""/><br /><sub><b>迷心whylost</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=whylost" title="Code">💻</a></td>
   </tr>
 </table>
 
