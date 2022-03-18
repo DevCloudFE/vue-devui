@@ -1,49 +1,31 @@
-import { defineComponent } from 'vue';
+import { defineComponent, toRefs } from 'vue';
+import { iconProps, IconProps } from './icon-types';
 
 export default defineComponent({
   name: 'DIcon',
-  props: {
-    name: {
-      type: String,
-      required: true
-    },
-    size: {
-      type: String,
-      default: 'inherit'
-    },
-    color: {
-      type: String,
-      default: 'inherit'
-    },
-    classPrefix: {
-      type: String,
-      default: 'icon'
-    }
-  },
-  setup(props) {
-    return {
-      ...props
+  props: iconProps,
+  setup(props: IconProps) {
+    const { name, size, color, classPrefix } = toRefs(props);
+
+    return () => {
+      return /^((https?):)?\/\//.test(name.value) ? (
+        <img
+          src={name.value}
+          alt={name.value.split('/')[name.value.split('/').length - 1]}
+          style={{
+            width: size.value,
+            verticalAlign: 'text-bottom'
+          }}
+        />
+      ) : (
+        <i
+          class={`${classPrefix.value} ${classPrefix.value}-${name.value}`}
+          style={{
+            fontSize: size.value,
+            color: color.value
+          }}
+        ></i>
+      );
     };
-  },
-  render() {
-    const { name, size, color, classPrefix } = this;
-    return /^((https?):)?\/\//.test(name) ? (
-      <img
-        src={name}
-        alt={name.split('/')[name.split('/').length - 1]}
-        style={{
-          width: size,
-          verticalAlign: 'text-bottom'
-        }}
-      />
-    ) : (
-      <i
-        class={`${classPrefix} ${classPrefix}-${name}`}
-        style={{
-          fontSize: size,
-          color
-        }}
-      ></i>
-    );
   }
 });
