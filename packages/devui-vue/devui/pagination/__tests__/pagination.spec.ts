@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { DOMWrapper, mount } from '@vue/test-utils';
 import { reactive } from 'vue';
 import { Pagination } from '../index';
 import { Select } from '../../select';
@@ -46,7 +46,7 @@ describe('pagination: ', () => {
     expect((wrapper.find('.devui-select-input').element as HTMLInputElement).value).toEqual('20');
 
     const btns = wrapper.findAll('a.devui-pagination-link');
-    expect(btns.map((ele: any) => ele.text()).join()).toEqual('<,1,...,4,5,6,...,16,>');
+    expect(btns.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual('<,1,...,4,5,6,...,16,>');
     expect(wrapper.find('.devui-pagination-list').classes()).toContain('devui-pagination-sm');
 
     // 跳转按钮
@@ -57,7 +57,7 @@ describe('pagination: ', () => {
     await btns[0].trigger('click');
     expect(wrapper.find('.devui-pagination-item.active').text()).toEqual('4');
     const btns1 = wrapper.findAll('a.devui-pagination-link');
-    expect(btns1.map((ele: any) => ele.text()).join()).toEqual('<,1,...,3,4,5,...,16,>');
+    expect(btns1.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual('<,1,...,3,4,5,...,16,>');
 
     // 改变每页条数
     await wrapper.find('.devui-select-input').trigger('click');
@@ -65,7 +65,7 @@ describe('pagination: ', () => {
 
     expect((wrapper.find('.devui-select-input').element as HTMLInputElement).value).toEqual('10');
     const btns2 = wrapper.findAll('a.devui-pagination-link');
-    expect(btns2.map((ele: any) => ele.text()).join()).toEqual('<,1,...,3,4,5,...,31,>');
+    expect(btns2.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual('<,1,...,3,4,5,...,31,>');
   });
 
   it('test callback', async () => {
@@ -101,7 +101,7 @@ describe('pagination: ', () => {
 
     expect(wrapper.find('.devui-pagination-list').classes()).toContain('devui-pagination-lg');
     const btns = wrapper.findAll('a.devui-pagination-link');
-    const pageIndexs = btns.map((ele: any) => ele.text());
+    const pageIndexs = btns.map((ele: DOMWrapper<Element>) => ele.text());
     expect(pageIndexs.join()).toEqual('<,1,...,6,7,8,9,10,11,12,13,...,31,>');
 
     // 当前页改变回调

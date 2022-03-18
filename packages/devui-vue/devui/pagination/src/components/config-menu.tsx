@@ -15,6 +15,9 @@ export default defineComponent({
   setup() {
     const paginationConfig = ref(null);
     const isShowConfig = ref(false);
+    const closeConfigMenu = (e: Event) => {
+      isShowConfig.value = isShowConfig.value ? false : !!e;
+    };
 
     onMounted(() => {
       on(paginationConfig.value, 'click', closeConfigMenu);
@@ -22,9 +25,6 @@ export default defineComponent({
     onUnmounted(() => {
       off(paginationConfig.value, 'click', closeConfigMenu);
     });
-    const closeConfigMenu = (e: Event) => {
-      isShowConfig.value = isShowConfig.value ? false : !!e;
-    };
 
     return {
       paginationConfig,
