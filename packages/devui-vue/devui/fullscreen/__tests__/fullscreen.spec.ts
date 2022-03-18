@@ -1,8 +1,8 @@
 import { mount, VueWrapper } from '@vue/test-utils';
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, ComponentPublicInstance } from 'vue';
 
 describe('fullscreen', () => {
-  let wrapper: VueWrapper<any>;
+  let wrapper: VueWrapper<ComponentPublicInstance>;
 
   beforeEach(() => {
     wrapper = mount({

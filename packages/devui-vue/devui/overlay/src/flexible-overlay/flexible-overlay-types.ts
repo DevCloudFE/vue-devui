@@ -27,6 +27,13 @@ export type UseOverlayFn = {
 
 export type EmitEventFn = (event: 'positionChange' | 'update:modelValue', result?: unknown) => void;
 
+export interface Rect {
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
+}
+
 export const flexibleOverlayProps = {
   modelValue: {
     type: Boolean,
