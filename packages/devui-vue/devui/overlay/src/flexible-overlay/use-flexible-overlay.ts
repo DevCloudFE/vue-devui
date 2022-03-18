@@ -1,5 +1,5 @@
 import { ref, unref, watch, nextTick, onUnmounted } from 'vue';
-import { arrow, autoPlacement, computePosition, offset } from '@floating-ui/dom';
+import { arrow, autoPlacement, computePosition, offset, shift } from '@floating-ui/dom';
 import { FlexibleOverlayProps, Placement, Point, UseOverlayFn, EmitEventFn } from './flexible-overlay-types';
 import { getScrollParent } from './utils';
 
@@ -48,6 +48,7 @@ export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn): UseO
     const overlayEl = <HTMLElement>unref(overlayRef.value);
     const arrowEl = <HTMLElement>unref(arrowRef.value);
     const middleware = [
+      shift(),
       offset(props.offset),
       autoPlacement({
         alignment: props.align,
@@ -86,5 +87,5 @@ export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn): UseO
     window.removeEventListener('resize', updatePosition);
   });
 
-  return { arrowRef, overlayRef };
+  return { arrowRef, overlayRef, updatePosition };
 }
