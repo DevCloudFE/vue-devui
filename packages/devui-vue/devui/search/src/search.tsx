@@ -1,8 +1,8 @@
 import { defineComponent } from 'vue';
 import { SearchProps, searchProps } from './search-types';
-import { getRootClass } from './hooks/use-search-class';
-import { keywordsHandles } from './hooks/use-search-keywords';
-import { keydownHandles } from './hooks/use-search-keydown';
+import { getRootClass } from './composables/use-search-class';
+import { keywordsHandles } from './composables/use-search-keywords';
+import { keydownHandles } from './composables/use-search-keydown';
 import DInput from '../../input/src/input';
 import './search.scss';
 
