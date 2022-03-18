@@ -158,6 +158,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "brenner8023",
+      "name": "X.Q. Chen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31237954?v=4",
+      "profile": "https://juejin.im/user/5c15d35fe51d4545ae495e43",
+      "contributions": [
+        "infra",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
