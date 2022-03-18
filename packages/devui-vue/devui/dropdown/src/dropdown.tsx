@@ -11,10 +11,11 @@ export default defineComponent({
   inheritAttrs: false,
   props: dropdownProps,
   emits: ['toggle'],
-  setup(props: DropdownProps, { slots, attrs, emit }) {
+  setup(props: DropdownProps, { slots, attrs, emit, expose }) {
     const { visible, position, align, offset, showAnimation } = toRefs(props);
     const origin = ref<HTMLElement>();
     const dropdownRef = ref<HTMLElement>();
+    const overlayRef = ref();
     const id = `dropdown_${dropdownId++}`;
     const isOpen = ref<boolean>(false);
     const currentPosition = ref('bottom');
@@ -29,6 +30,9 @@ export default defineComponent({
     });
     useDropdown(id, visible, isOpen, origin, dropdownRef, currentPosition, emit);
     const { overlayModelValue, overlayShowValue, styles, classes, handlePositionChange } = useOverlayProps(props, currentPosition, isOpen);
+    expose({
+      updatePosition: () => overlayRef.value.updatePosition(),
+    });
     return () => (
       <>
         <div ref={origin} class='devui-dropdown-toggle'>
@@ -39,6 +43,7 @@ export default defineComponent({
             <FlexibleOverlay
               v-model={overlayModelValue.value}
               v-show={overlayShowValue.value}
+              ref={overlayRef}
               origin={origin.value}
               position={position.value}
               align={align.value}

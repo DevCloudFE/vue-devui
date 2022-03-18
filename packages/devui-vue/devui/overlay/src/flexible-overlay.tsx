@@ -8,8 +8,9 @@ export const FlexibleOverlay = defineComponent({
   inheritAttrs: false,
   props: flexibleOverlayProps,
   emits: ['update:modelValue', 'positionChange'],
-  setup(props: FlexibleOverlayProps, { slots, attrs, emit }) {
-    const { arrowRef, overlayRef } = useOverlay(props, emit);
+  setup(props: FlexibleOverlayProps, { slots, attrs, emit, expose }) {
+    const { arrowRef, overlayRef, updatePosition } = useOverlay(props, emit);
+    expose({ updatePosition });
 
     return () =>
       props.modelValue && (

@@ -90,7 +90,7 @@ export const flexibleOverlayProps = {
 
 export type Point = { x?: number; y?: number };
 
-export type UseOverlayFn = { arrowRef: Ref<HTMLElement | undefined>; overlayRef: Ref<HTMLElement | undefined> };
+export type UseOverlayFn = { arrowRef: Ref<HTMLElement | undefined>; overlayRef: Ref<HTMLElement | undefined>; updatePosition: () => void };
 
 export type EmitEventFn = (event: 'positionChange' | 'update:modelValue', result?: unknown) => void;
 

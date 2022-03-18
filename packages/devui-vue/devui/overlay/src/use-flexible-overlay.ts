@@ -87,5 +87,5 @@ export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn): UseO
     window.removeEventListener('resize', updatePosition);
   });
 
-  return { arrowRef, overlayRef };
+  return { arrowRef, overlayRef, updatePosition };
 }
