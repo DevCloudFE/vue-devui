@@ -42,6 +42,14 @@ export const dropdownMenuProps = {
     type: Function as PropType<() => boolean>,
     default: (): boolean => true,
   },
+  showAnimation: {
+    type: Boolean,
+    default: true,
+  },
+  overlayClass: {
+    type: String,
+    default: '',
+  },
 };
 
 export type DropdownMenuProps = ExtractPropTypes<typeof dropdownMenuProps>;

@@ -265,12 +265,21 @@ export default defineComponent({
 | align                     | `start \| end \| null`    | `null`       | 可选，对齐方式，默认居中对齐。若指定`start`对齐，当`start`位置放不下时，会自动调整为`end`对齐 |
 | offset                    | `number \| OffsetOptions` | `4`          | 可选，指定与触发元素的间距                                                                    |
 | close-on-mouse-leave-menu | `boolean`                 | `false`      | 可选，是否进入菜单后离开菜单的时候关闭菜单                                                    |
+| show-animation            | `boolean`                 | `true`       | 可选，控制是否显示动画                                                                        |
+| overlay-class             | `string`                  | `''`         | 可选，自定义 overlay 的样式                                                                   |
+| destroy-on-hide           | `boolean`                 | `true`       | 可选，是否在关闭 dropdown 时将其销毁                                                          |
 
 ### d-dropdown 事件
 
 | 事件名 | 说明                                                          | 参数                    |
 | ------ | ------------------------------------------------------------- | ----------------------- |
 | toggle | 组件收起和展开的布尔值，true 表示将要展开，false 表示将要关闭 | `EventEmitter<boolean>` |
+
+### d-dropdown 方法
+
+| 方法名         | 说明                                         | 类型         |
+| -------------- | -------------------------------------------- | ------------ |
+| updatePosition | 更新 dropdown 的位置，使其跟随在触发元素旁边 | `() => void` |
 
 ### d-dropdown 插槽
 
@@ -281,14 +290,16 @@ export default defineComponent({
 
 ### d-dropdown-menu 参数
 
-| 参数          | 类型                      | 默认         | 说明                                                                                          |
-| ------------- | ------------------------- | ------------ | --------------------------------------------------------------------------------------------- |
-| origin        | `HTMLElement`             | `-`          | 必选，必须指定 DropdownMenu 的关联元素                                                        |
-| v-model       | `boolean`                 | `false`      | 必选，指定 DropdownMenu 是否打开                                                              |
-| position      | `Placement[]`             | `['bottom']` | 可选，展开位置，若位置包含`start`或`end`，需通过`align`参数设置对齐方式                       |
-| align         | `start \| end \| null`    | `null`       | 可选，对齐方式，默认居中对齐。若指定`start`对齐，当`start`位置放不下时，会自动调整为`end`对齐 |
-| offset        | `number \| OffsetOptions` | `4`          | 可选，指定与触发元素的间距                                                                    |
-| close-outside | `() => boolean`           | `() => true` | 可选，点击外部区域的回调函数，默认返回 true，点击外部区域会关闭 DropdownMenu                  |
+| 参数           | 类型                      | 默认         | 说明                                                                                          |
+| -------------- | ------------------------- | ------------ | --------------------------------------------------------------------------------------------- |
+| origin         | `HTMLElement`             | `-`          | 必选，必须指定 DropdownMenu 的关联元素                                                        |
+| v-model        | `boolean`                 | `false`      | 必选，指定 DropdownMenu 是否打开                                                              |
+| position       | `Placement[]`             | `['bottom']` | 可选，展开位置，若位置包含`start`或`end`，需通过`align`参数设置对齐方式                       |
+| align          | `start \| end \| null`    | `null`       | 可选，对齐方式，默认居中对齐。若指定`start`对齐，当`start`位置放不下时，会自动调整为`end`对齐 |
+| offset         | `number \| OffsetOptions` | `4`          | 可选，指定与触发元素的间距                                                                    |
+| close-outside  | `() => boolean`           | `() => true` | 可选，点击外部区域的回调函数，默认返回 true，点击外部区域会关闭 DropdownMenu                  |
+| show-animation | `boolean`                 | `true`       | 可选，控制是否显示动画                                                                        |
+| overlay-class  | `string`                  | `''`         | 可选，自定义 overlay 的样式                                                                   |
 
 ### TriggerType 类型
 
