@@ -1,5 +1,5 @@
 import { onUnmounted, watch, computed, ComputedRef, onMounted, SetupContext } from 'vue';
-import { overlayEmits, OverlayProps } from './overlay-types';
+import { OverlayProps, overlayEmits } from './fixed-overlay-types';
 
 interface CommonInfo {
   backgroundClass: ComputedRef<string[]>;

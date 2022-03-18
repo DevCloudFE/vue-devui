@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue';
-import { flexibleOverlayProps, FlexibleOverlayProps } from './overlay-types';
+import { flexibleOverlayProps, FlexibleOverlayProps } from './flexible-overlay-types';
 import { useOverlay } from './use-flexible-overlay';
 import './flexible-overlay.scss';
 
