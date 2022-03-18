@@ -8,7 +8,8 @@ describe('skeleton-item module', () => {
       template: `<d-skeleton-item :shape="'avatar'" style="margin-left:55px;width:80px;height:80px;" />`,
     });
 
-    expect(wrapper.find('.devui-skeleton__shape__avatar').element.getAttribute('style')).toBe('border-radius: 50%; margin-left: 55px; width: 80px; height: 80px;');
+    expect(wrapper.find('.devui-skeleton__shape__avatar').element.getAttribute('style'))
+      .toBe('border-radius: 50%; margin-left: 55px; width: 80px; height: 80px;');
   });
 
   it('render skeleton-item-avatar without animation', () => {

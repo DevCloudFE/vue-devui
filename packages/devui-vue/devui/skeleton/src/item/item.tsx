@@ -56,7 +56,7 @@ export default defineComponent({
     }
 
     function renderAvatarStyle(avatarShape) {
-      function renderAvatarShape(avatarShape) {
+      function renderAvatarShape() {
         return avatarShape === 'square' ? '' : 'border-radius:50%;';
       }
 
@@ -68,7 +68,8 @@ export default defineComponent({
         switch (props.shape) {
         case 'avatar':
           return <>
-            <div class={`devui-skeleton__shape__avatar ${renderAnimate(props.animate)}`} style={renderAvatarStyle(props.avatarShape)} {...ctx.attrs} />
+            <div class={`devui-skeleton__shape__avatar ${renderAnimate(props.animate)}`}
+              style={renderAvatarStyle(props.avatarShape)} {...ctx.attrs} />
           </>;
         case 'paragraph':
           return <>
@@ -76,7 +77,7 @@ export default defineComponent({
           </>;
         default:
           return <>
-            <div class={`devui-skeleton__shape__${props.shape} ${renderAnimate(props.animate)}`} {...ctx.attrs}/>
+            <div class={`devui-skeleton__shape__${props.shape} ${renderAnimate(props.animate)}`} {...ctx.attrs} />
           </>;
         }
       }
