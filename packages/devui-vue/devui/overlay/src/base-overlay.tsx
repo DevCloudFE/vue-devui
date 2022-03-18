@@ -1,5 +1,5 @@
 import { defineComponent, renderSlot, Teleport, Transition } from 'vue';
-import './overlay.scss';
+import './base-overlay.scss';
 
 export const CommonOverlay = defineComponent({
   setup(props, ctx) {

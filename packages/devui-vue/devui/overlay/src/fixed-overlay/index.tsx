@@ -1,8 +1,8 @@
 import { defineComponent, renderSlot } from 'vue';
-import { CommonOverlay } from './common-overlay';
-import { fixedOverlayProps, FixedOverlayProps, overlayEmits } from './overlay-types';
-import { useOverlayLogic } from './utils';
-import './overlay.scss';
+import { CommonOverlay } from '../base-overlay';
+import { fixedOverlayProps, FixedOverlayProps, overlayEmits } from './fixed-overlay-types';
+import { useOverlayLogic } from './use-fixed-overlay';
+import './fixed-overlay.scss';
 
 export const FixedOverlay = defineComponent({
   name: 'DFixedOverlay',
