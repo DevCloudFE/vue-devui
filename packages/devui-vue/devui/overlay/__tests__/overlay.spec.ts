@@ -2,13 +2,7 @@ import { mount } from '@vue/test-utils';
 import { ComponentPublicInstance, nextTick, Ref } from 'vue';
 import { FixedOverlay } from '../src/fixed-overlay';
 import { FlexibleOverlay } from '../src/flexible-overlay';
-
-interface Rect {
-  x: number;
-  y: number;
-  width?: number;
-  height?: number;
-}
+import { Rect } from '../src/flexible-overlay/flexible-overlay-types';
 
 type HorizontalConnectionPos = 'left' | 'center' | 'right';
 type VerticalConnectionPos = 'top' | 'center' | 'bottom';
