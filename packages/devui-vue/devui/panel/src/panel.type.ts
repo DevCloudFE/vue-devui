@@ -16,11 +16,7 @@ export const PanelProps = {
     default: false
   },
   beforeToggle: {
-    type: Function as unknown as () => (value: boolean) => boolean | Promise<boolean>,
-    default: null
-  },
-  toggle: {
-    type: Function as unknown as () => ((value: boolean) => void),
+    type: Function as unknown as () => (value: boolean, done?: () => void) => any,
     default: null
   },
   showAnimation: {
