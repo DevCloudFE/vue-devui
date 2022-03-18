@@ -1,5 +1,5 @@
 import { defineComponent, computed, nextTick } from 'vue';
-import { ComponentProps, componentProps } from './use-pagination';
+import { ComponentProps, componentProps } from './pagination-types';
 import { liteSelectOptions } from './utils';
 
 import ConfigMenu from './components/config-menu';
