@@ -1,10 +1,6 @@
 import { App } from 'vue';
 import Pagination from './src/pagination';
 
-Pagination.install = (app: App): void => {
-  app.component(Pagination.name, Pagination);
-};
-
 export { Pagination };
 
 export default {
@@ -12,6 +8,6 @@ export default {
   category: '导航',
   status: '100%',
   install(app: App): void {
-    app.use(Pagination as any);
+    app.component(Pagination.name, Pagination);
   }
 };
