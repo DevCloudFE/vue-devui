@@ -58,10 +58,10 @@ export default defineComponent({
     }
 
     function renderAvatarStyle(avatarSize, avatarShape) {
-      function renderAvatarShape(avatarShape) {
+      function renderAvatarShape() {
         return avatarShape === 'square' ? '' : 'border-radius:50%;';
       }
-      function renderAvatarSize(avatarSize) {
+      function renderAvatarSize() {
         switch (typeof avatarSize) {
         case 'string':
           return `width:${avatarSize};height:${avatarSize};`;
@@ -73,7 +73,7 @@ export default defineComponent({
       return (renderAvatarSize(avatarSize) + renderAvatarShape(avatarShape));
     }
     function renderTitle(isVisible, titleWidth, isRound) {
-      function renderTitleWidth(titleWidth) {
+      function renderTitleWidth() {
         switch (typeof titleWidth) {
         case 'string':
           return `width: ${titleWidth};`;
@@ -81,7 +81,7 @@ export default defineComponent({
           return `width: ${titleWidth}px;`;
         }
       }
-      function renderTitleVisibility(isVisible) {
+      function renderTitleVisibility() {
         return isVisible ? null : 'visibility: hidden;';
       }
 
