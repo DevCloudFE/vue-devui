@@ -1,7 +1,7 @@
-import { watch, onMounted, onUnmounted, toRefs } from 'vue';
+import { watch, onMounted, onUnmounted, toRefs, computed, ref } from 'vue';
 import type { Ref } from 'vue';
 import { getElement } from '../../shared/util/dom';
-import { UseDropdownProps, EmitEvent } from './dropdown-types';
+import { UseDropdownProps, EmitEvent, DropdownProps, UseOverlayFn } from './dropdown-types';
 
 const dropdownMap = new Map();
 
@@ -20,12 +20,12 @@ export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit 
     isOpen.value = status;
     emit('toggle', isOpen.value);
   };
-  const handleLeave = async (elementType: 'origin' | 'dropdown', e?) => {
+  const handleLeave = async (elementType: 'origin' | 'dropdown', closeAll?: boolean) => {
     await new Promise((resolve) => setTimeout(resolve, 50));
     if ((elementType === 'origin' && overlayEnter) || (elementType === 'dropdown' && originEnter)) {
       return;
     }
-    if (e) {
+    if (closeAll) {
       [...dropdownMap.values()].reverse().forEach((item) => {
         setTimeout(() => {
           item.toggle?.();
@@ -66,7 +66,7 @@ export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit 
         subscribeEvent(originEl, 'click', () => toggle(!isOpen.value)),
         subscribeEvent(dropdownEl, 'mouseleave', (e: MouseEvent) => {
           if (closeOnMouseLeaveMenu.value && !dropdownMap.get(id).child?.contains(e.relatedTarget)) {
-            handleLeave('dropdown', e);
+            handleLeave('dropdown', true);
           }
         })
       );
@@ -89,7 +89,7 @@ export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit 
           if (e.relatedTarget && (originEl?.contains(e.relatedTarget) || dropdownMap.get(id).child?.contains(e.relatedTarget))) {
             return;
           }
-          handleLeave('dropdown', e);
+          handleLeave('dropdown', true);
         })
       );
     }
@@ -154,4 +154,28 @@ export function useDropdown(
   onUnmounted(() => {
     dropdownMap.delete(id);
   });
+}
+
+export function useOverlayProps(props: DropdownProps, currentPosition: Ref<string>, isOpen: Ref<boolean>): UseOverlayFn {
+  const { showAnimation, overlayClass, destroyOnHide } = toRefs(props);
+  const overlayModelValue = ref<boolean>(false);
+  const overlayShowValue = ref<boolean>(false);
+  const styles = computed(() => ({
+    transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+  }));
+  const classes = computed(() => ({
+    'fade-in-bottom': showAnimation.value && isOpen.value && currentPosition.value === 'bottom',
+    'fade-in-top': showAnimation.value && isOpen.value && currentPosition.value === 'top',
+    [`${overlayClass.value}`]: true,
+  }));
+  const handlePositionChange = (pos: string) => {
+    currentPosition.value = pos.includes('top') || pos.includes('end') ? 'top' : 'bottom';
+  };
+
+  watch(isOpen, (isOpenVal) => {
+    overlayModelValue.value = destroyOnHide.value ? isOpenVal : true;
+    overlayShowValue.value = isOpenVal;
+  });
+
+  return { overlayModelValue, overlayShowValue, styles, classes, handlePositionChange };
 }
