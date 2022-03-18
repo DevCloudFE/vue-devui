@@ -18,6 +18,8 @@ export default defineComponent({
   props: componentProps,
   emits: ['pageIndexChange', 'pageSizeChange', 'update:pageSize', 'update:pageIndex'],
   setup(props: ComponentProps, { emit }) {
+    // 总页数
+    const totalPages = computed(() => Math.ceil(props.total / props.pageSize));
 
     // 极简模式下，可选的下拉选择页码
     const litePageOptions = computed(() =>  liteSelectOptions(totalPages.value));
@@ -45,8 +47,6 @@ export default defineComponent({
         emit('update:pageSize', val);
       }
     });
-    // 总页数
-    const totalPages = computed(() => Math.ceil(props.total / props.pageSize));
 
     const changeCursorEmit = (val: number) => {
       cursor.value = val;
