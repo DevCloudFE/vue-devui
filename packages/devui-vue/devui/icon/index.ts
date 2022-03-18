@@ -1,10 +1,6 @@
 import type { App } from 'vue';
 import Icon from './src/icon';
 
-Icon.install = function(app: App) {
-  app.component(Icon.name, Icon);
-};
-
 export { Icon };
 
 export default {
@@ -12,6 +8,6 @@ export default {
   category: '通用',
   status: '100%',
   install(app: App): void {
-    app.use(Icon as any);
+    app.component(Icon.name, Icon);
   }
 };
