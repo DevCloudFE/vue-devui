@@ -5,8 +5,16 @@ import PageFooter from "./PageFooter.vue"
 import NextAndPrevLinks from "./NextAndPrevLinks.vue"
 import PageToc from "./PageToc.vue"
 import BackToTop from './BackToTop.vue'
+import PageContributor from './PageContributor.vue'
+import { CONTRIBUTORS_MAP } from './PageContributorConfig'
+
 const isComponents = computed(() => useRoute().path.indexOf('components') > -1)
 
+const contributors = computed(() => {
+  const pathArr = useRoute().path.split('/')
+  const componentName = pathArr[pathArr.length - 2]
+  return CONTRIBUTORS_MAP[componentName]
+})
 </script>
 
 <template>
@@ -15,6 +23,7 @@ const isComponents = computed(() => useRoute().path.indexOf('components') > -1)
       <slot name="top" />
 
       <Content class="content" />
+      <PageContributor v-if="contributors && contributors.length > 0" :contributors="contributors" />
       <PageFooter />
       <NextAndPrevLinks />
 
