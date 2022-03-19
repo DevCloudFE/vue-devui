@@ -1,9 +1,7 @@
 import type { App } from 'vue';
 import Status from './src/status';
 
-Status.install = function(app: App) {
-  app.component(Status.name, Status);
-};
+export * from './src/status-types';
 
 export { Status };
 
@@ -12,6 +10,6 @@ export default {
   category: '通用',
   status: '100%',
   install(app: App): void {
-    app.use(Status as any);
+    app.component(Status.name, Status);
   }
 };
