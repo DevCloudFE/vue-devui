@@ -17,7 +17,7 @@ export interface DragState {
   next: PaneState;
 }
 
-type SplitterPane = typeof SplitterPane & Pane;
+export type SplitterPane = typeof SplitterPane & Pane;
 export interface splitterState {
   panes: Array<SplitterPane>; // 所有 pane 对象的一些关键信息
   paneCount: number;
@@ -34,7 +34,7 @@ export class SplitterStore {
     });
   }
   // 配置 pane 信息，panes 列表，方便后续计算使用
-  setPanes({ panes }): void {
+  setPanes({ panes }: { panes: SplitterPane[]}): void {
     this.state.panes = panes.map((pane: SplitterPane, index: number) => {
       if (pane.component) {
         pane.component.exposed.order.value = index * 2;
@@ -140,7 +140,7 @@ export class SplitterStore {
   }
 
   // 判断是不是百分比设置宽度
-  isPercent(size: string) {
+  isPercent(size: string): boolean {
     return /%$/.test(size);
   }
 
