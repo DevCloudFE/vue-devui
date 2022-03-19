@@ -180,6 +180,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://juejin.im/user/5c15d35fe51d4545ae495e43"><img src="https://avatars.githubusercontent.com/u/31237954?v=4?s=100" width="100px;" alt=""/><br /><sub><b>X.Q. Chen</b></sub></a><br /><a href="#infra-brenner8023" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/DevCloudFE/vue-devui/commits?author=brenner8023" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/git-Where"><img src="https://avatars.githubusercontent.com/u/16344566?v=4?s=100" width="100px;" alt=""/><br /><sub><b>葉家男孩</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=git-Where" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/CatsAndMice"><img src="https://avatars.githubusercontent.com/u/58327088?v=4?s=100" width="100px;" alt=""/><br /><sub><b>lihai</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=CatsAndMice" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/ElsaOOo"><img src="https://avatars.githubusercontent.com/u/48074435?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ElsaOOo</b></sub></a><br /><a href="#infra-ElsaOOo" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/DevCloudFE/vue-devui/commits?author=ElsaOOo" title="Code">💻</a></td>
   </tr>
 </table>
 
