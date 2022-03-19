@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { defineComponent,ref,inject,Ref } from 'vue';
-import {PanelProps} from '../panel.type';
-import Store from '../store/store';
+import { defineComponent, ref, inject, Ref } from 'vue';
+import { panelProps } from '../panel-types';
+import Store from '../store';
 
 export default defineComponent({
   name: 'DPanelHeader',
-  props: PanelProps,
+  props: panelProps,
   emits: ['toggle'],
-  setup(props,ctx){
+  setup(props, ctx) {
     const beforeToggle = inject('beforeToggle');
     const keys = Object.keys(Store.state());
     const key = keys.pop();
@@ -18,9 +17,9 @@ export default defineComponent({
     let changeResult = true;
     const done = () => {
       res.value = !res.value;
-      if (!changeFlag.value){
+      if (!changeFlag.value) {
         // 禁止折叠不影响展开
-        if (res.value){
+        if (res.value) {
           Store.setData(`${key}`, res.value);
           isCollapsed.value = res.value;
           ctx.emit('toggle', res.value);
@@ -34,12 +33,11 @@ export default defineComponent({
       }
     };
     const canToggle = async (): Promise<boolean> => {
-      if (beforeToggle){
-        const tmpRes = (beforeToggle as (value: Ref<boolean>,
-          done?: () => void) => any)(isCollapsed, done);
-        if (typeof tmpRes !== 'undefined'){
-          if (tmpRes instanceof Promise){
-            changeResult = (await tmpRes);
+      if (beforeToggle) {
+        const tmpRes = (beforeToggle as (value: Ref<boolean>, done?: () => void) => unknown)(isCollapsed, done);
+        if (typeof tmpRes !== 'undefined') {
+          if (tmpRes instanceof Promise) {
+            changeResult = await tmpRes;
           } else {
             changeResult = tmpRes;
           }
@@ -49,13 +47,13 @@ export default defineComponent({
       }
       return changeResult;
     };
-    canToggle().then(val => changeFlag.value = val);
+    canToggle().then((val) => (changeFlag.value = val));
     const toggleBody = (): void => {
-      canToggle().then((val)=>{
+      canToggle().then((val) => {
         changeFlag.value = val;
-        if (!val){
+        if (!val) {
           // 禁止折叠不影响展开
-          if (!isCollapsed.value){
+          if (!isCollapsed.value) {
             Store.setData(`${key}`, !isCollapsed.value);
             isCollapsed.value = !isCollapsed.value;
             ctx.emit('toggle', isCollapsed.value);
@@ -70,9 +68,9 @@ export default defineComponent({
       });
     };
     return () => {
-      if (ctx.slots.default){
+      if (ctx.slots.default) {
         header = (
-          <div class="devui-panel-heading" onClick={toggleBody} style={{ 'cursor': changeFlag.value ? 'pointer' : 'auto' }}>
+          <div class='devui-panel-heading' onClick={toggleBody} style={{ cursor: changeFlag.value ? 'pointer' : 'auto' }}>
             {ctx.slots.default?.()}
           </div>
         );

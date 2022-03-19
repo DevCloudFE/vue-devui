@@ -1,5 +1,5 @@
 import { defineComponent, computed, nextTick } from 'vue';
-import { ComponentProps, componentProps } from './pagination-types';
+import { paginationProps, PaginationProps } from './pagination-types';
 import { liteSelectOptions } from './utils';
 
 import ConfigMenu from './components/config-menu';
@@ -15,9 +15,9 @@ export default defineComponent({
     JumpPage,
     PageNumBtn
   },
-  props: componentProps,
+  props: paginationProps,
   emits: ['pageIndexChange', 'pageSizeChange', 'update:pageSize', 'update:pageIndex'],
-  setup(props: ComponentProps, { emit }) {
+  setup(props: PaginationProps, { emit }) {
     // 总页数
     const totalPages = computed(() => Math.ceil(props.total / props.pageSize));
 

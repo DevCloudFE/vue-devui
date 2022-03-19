@@ -1,32 +1,32 @@
-import {ExtractPropTypes} from 'vue';
+import { ExtractPropTypes } from 'vue';
 
 export type PanelType = 'default' | 'primary' | 'success' | 'danger' | 'warning' | 'info';
 
-export const PanelProps = {
+export const panelProps = {
   type: {
     type: String as () => PanelType,
-    default: 'default'
+    default: 'default',
   },
   cssClass: {
     type: String,
-    default: ''
+    default: '',
   },
   isCollapsed: {
     type: Boolean,
-    default: false
+    default: false,
   },
   beforeToggle: {
-    type: Function as unknown as () => (value: boolean, done?: () => void) => any,
-    default: null
+    type: Function as unknown as () => (value: boolean, done?: () => void) => unknown,
+    default: null,
   },
   showAnimation: {
     type: Boolean,
     default: true,
   },
-  hasLeftPadding:{
+  hasLeftPadding: {
     type: Boolean,
     default: true,
-  }
+  },
 };
 
-export type PanelPropsType = ExtractPropTypes<typeof PanelProps>;
+export type PanelProps = ExtractPropTypes<typeof panelProps>;
