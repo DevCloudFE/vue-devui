@@ -1,36 +1,14 @@
 import { defineComponent, ref, Transition, onMounted } from 'vue';
 
-import AlertCloseIcon from './alert-close-icon';
-import AlertTypeIcon from './alert-type-icon';
+import AlertCloseIcon from './components/alert-close-icon';
+import AlertTypeIcon from './components/alert-type-icon';
 
+import { alertProps } from './alert-types';
 import './alert.scss';
-
-export type AlertType = 'success' | 'danger' | 'warning' | 'info' | 'simple';
 
 export default defineComponent({
   name: 'DAlert',
-  props: {
-    type: {
-      type: String as () => AlertType,
-      default: 'info',
-    },
-    cssClass: {
-      type: String,
-      default: '',
-    },
-    closeable: {
-      type: Boolean,
-      default: true,
-    },
-    showIcon: {
-      type: Boolean,
-      default: true,
-    },
-    dismissTime: {
-      type: Number,
-      default: 0,
-    },
-  },
+  props: alertProps,
   emits: ['close'],
   setup(props, ctx) {
     const hide = ref(false);
