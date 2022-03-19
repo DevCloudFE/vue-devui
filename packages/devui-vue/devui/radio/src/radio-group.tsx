@@ -20,7 +20,7 @@ export default defineComponent({
       name: toRef(props, 'name'),
       disabled: toRef(props, 'disabled'),
       beforeChange: props.beforeChange,
-      emitChange
+      emitChange,
     });
   },
   render() {
@@ -54,12 +54,11 @@ export default defineComponent({
           'devui-radio-group',
           {
             'is-row': direction === 'row',
-            'is-column': direction === 'column'
-          }
-        ]}
-      >
+            'is-column': direction === 'column',
+          },
+        ]}>
         {getContent()}
       </div>
     );
-  }
+  },
 });
