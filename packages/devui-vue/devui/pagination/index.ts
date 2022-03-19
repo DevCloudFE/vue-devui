@@ -1,6 +1,8 @@
 import { App } from 'vue';
 import Pagination from './src/pagination';
 
+export * from './src/pagination-types';
+
 export { Pagination };
 
 export default {

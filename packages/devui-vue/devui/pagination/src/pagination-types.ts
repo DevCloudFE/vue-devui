@@ -17,7 +17,7 @@ interface ConnectedPosition {
 
 type Size = 'lg' | '' | 'sm';
 
-export const componentProps = {
+export const paginationProps = {
   pageSize: {
     type: Number,
     default: 10
@@ -117,4 +117,4 @@ export const componentProps = {
 } as const;
 
 // 组件props
-export type ComponentProps = ExtractPropTypes<typeof componentProps>;
+export type PaginationProps = ExtractPropTypes<typeof paginationProps>;
