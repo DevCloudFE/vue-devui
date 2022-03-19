@@ -1,13 +1,13 @@
 import { defineComponent, ref, onMounted, Transition, inject, Ref } from 'vue';
-import { PanelProps } from '../panel.type';
-import Store from '../store/store';
+import { panelProps } from '../panel-types';
+import Store from '../store';
 
 export default defineComponent({
   name: 'DPanelBody',
-  props: PanelProps,
+  props: panelProps,
   setup(props, ctx) {
-    const animationName = inject('showAnimation') as Ref<any>;
-    const hasLeftPadding = inject('hasLeftPadding') as Ref<any>;
+    const animationName = inject('showAnimation') as Ref<boolean>;
+    const hasLeftPadding = inject('hasLeftPadding') as Ref<boolean>;
     const keys = Object.keys(Store.state());
     const key = keys.pop();
     const isCollapsed = Store.state();
