@@ -197,13 +197,21 @@
       ]
     },
     {
-
       "login": "ElsaOOo",
       "name": "ElsaOOo",
       "avatar_url": "https://avatars.githubusercontent.com/u/48074435?v=4",
       "profile": "https://github.com/ElsaOOo",
       "contributions": [
         "infra",
+        "code"
+      ]
+    },
+    {
+      "login": "liuxdi",
+      "name": "刘小迪",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10958003?v=4",
+      "profile": "https://github.com/liuxdi",
+      "contributions": [
         "code"
       ]
     }
