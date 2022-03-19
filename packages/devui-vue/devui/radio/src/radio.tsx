@@ -21,7 +21,7 @@ export default defineComponent({
     });
     /** radio 的 name 属性 */
     const radioName = computed(() => {
-      return radioGroupConf ? radioGroupConf.name.value : props.name;
+      return radioGroupConf ? radioGroupConf.name.value : props.name || void 0;
     });
 
     /** 判断是否允许切换 */
