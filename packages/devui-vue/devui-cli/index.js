@@ -4,6 +4,7 @@ const { create, validateCreateType } = require('./commands/create');
 const { build } = require('./commands/build');
 const { generateTheme } = require('./commands/generate-theme');
 const { generateDts } = require('./commands/generate-dts');
+const { release } = require('./commands/release');
 const { VERSION, CREATE_SUPPORT_TYPES } = require('./shared/constant');
 
 const program = new Command();
@@ -32,5 +33,11 @@ program
   .command('generate:dts')
   .description('生成ts类型文件')
   .action(generateDts);
+
+program
+  .command('release')
+  .option('-v --version <version>', '版本号')
+  .description('发布npm包')
+  .action(release);
 
 program.parse().version(VERSION);
