@@ -1,24 +1,22 @@
 import { mount } from '@vue/test-utils';
-import {ref } from 'vue';
+import { ref } from 'vue';
 import DButton from '../../button/index';
 import DPanel from '../src/panel';
-import DPanelHeader from '../src/header/panel-header';
-import DPanelBody from '../src/body/panel-body';
-import DPanelFooter from '../src/foot/panel-footer';
+import DPanelHeader from '../src/components/panel-header';
+import DPanelBody from '../src/components/panel-body';
+import DPanelFooter from '../src/components/panel-footer';
 
-
-describe('DPanel',()=>{
-
+describe('DPanel', () => {
   // 渲染测试
-  it('Render',()=>{
+  it('Render', () => {
     // except(wrapper.html())
     const wrapper = mount({
-      components:{
+      components: {
         DPanel,
         DPanelBody,
         DPanelHeader,
         DPanelFooter,
-        DButton
+        DButton,
       },
       template: `
             <d-panel>
@@ -34,9 +32,9 @@ describe('DPanel',()=>{
     expect(wrapper.find('transition-stub').html()).toContain('<transition-stub><!----></transition-stub>');
   });
 
-  it('isCollapsed', async ()=>{
+  it('isCollapsed', async () => {
     const wrapper = mount({
-      components:{
+      components: {
         DPanel,
         DPanelBody,
         DPanelHeader,
@@ -52,21 +50,21 @@ describe('DPanel',()=>{
                 </d-panel-body>
             </d-panel>
             `,
-      setup(){
+      setup() {
         const isCollapsed = ref(false);
-        return {isCollapsed};
-      }
+        return { isCollapsed };
+      },
     });
     expect(wrapper.find('.devui-panel .devui-panel-default').element.children[0].innerHTML).toBe('<!---->');
   });
-  it('padding-dynamic', async ()=>{
+  it('padding-dynamic', async () => {
     const wrapper = mount({
-      components:{
+      components: {
         DPanel,
         DPanelBody,
         DPanelHeader,
         DPanelFooter,
-        DButton
+        DButton,
       },
       template: `
             <d-panel :hasLeftPadding = "leftPadding" isCollapsed>
@@ -82,26 +80,25 @@ describe('DPanel',()=>{
                 切换LeftPadding
             </button>
             `,
-      setup(){
+      setup() {
         const leftPadding = ref(false);
         const change = () => {
           leftPadding.value = !leftPadding.value;
         };
         return {
           leftPadding,
-          change
+          change,
         };
-      }
+      },
     });
     expect(wrapper.find('.devui-panel-body-collapse').classes().length).toBe(3);
     await wrapper.find('button').trigger('click');
     expect(wrapper.find('.devui-panel-body-collapse').classes().length).toBe(2);
   });
 
-
-  it('beforeToggle-dynamic',async ()=>{
+  it('beforeToggle-dynamic', async () => {
     const wrapper = mount({
-      components:{
+      components: {
         DPanel,
         DPanelBody,
         DPanelHeader,
@@ -121,14 +118,14 @@ describe('DPanel',()=>{
                 {{ panelToggle ? '阻止折叠' : '允许折叠' }}
             </button>
             `,
-      setup(){
+      setup() {
         const panelToggle = ref(false);
         const beforeToggle = () => panelToggle.value;
         return {
           panelToggle,
           beforeToggle,
         };
-      }
+      },
     });
     await wrapper.find('button').trigger('click');
     expect(wrapper.vm.panelToggle).toBe(true);
