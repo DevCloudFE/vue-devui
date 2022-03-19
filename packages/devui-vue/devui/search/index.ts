@@ -1,9 +1,7 @@
 import type { App } from 'vue';
 import Search from './src/search';
 
-Search.install = function(app: App) {
-  app.component(Search.name, Search);
-};
+export * from './src/search-types';
 
 export { Search };
 
@@ -12,6 +10,6 @@ export default {
   category: '通用',
   status: '100%',
   install(app: App): void {
-    app.use(Search as any);
+    app.component(Search.name, Search);
   }
 };
