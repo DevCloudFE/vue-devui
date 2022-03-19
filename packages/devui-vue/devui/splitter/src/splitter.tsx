@@ -1,7 +1,14 @@
-import { defineComponent, reactive, ref, provide, onMounted, onUnmounted, watch } from 'vue';
-import { splitterProps, SplitterProps } from './splitter-types';
+import {
+  defineComponent,
+  reactive,
+  ref,
+  provide,
+  onUnmounted,
+  watch
+} from 'vue';
 import DSplitterBar from './splitter-bar';
-import { SplitterStore } from './splitter-store';
+import { SplitterStore, type SplitterPane} from './splitter-store';
+import { splitterProps, SplitterProps, SplitterState } from './splitter-types';
 import './splitter.scss';
 
 export default defineComponent({
@@ -13,13 +20,13 @@ export default defineComponent({
   emits: [],
   setup(props: SplitterProps, ctx) {
     const store: SplitterStore = new SplitterStore();
-    const state = reactive({
+    const state = reactive<SplitterState>({
       panes: [] // 内嵌面板
     });
 
     state.panes = ctx.slots.DSplitterPane?.() || [];
 
-    store.setPanes({ panes: state.panes });
+    store.setPanes({ panes: state.panes as unknown as SplitterPane[]});
     provide('orientation', props.orientation);
     provide('splitterStore', store);
 
@@ -41,7 +48,9 @@ export default defineComponent({
         return;
       }
       refreshSplitterContainerSize();
-      observer.observe(domRef.value);
+      if (domRef.value) {
+        observer.observe(domRef.value);
+      }
     });
 
     onUnmounted(() => {

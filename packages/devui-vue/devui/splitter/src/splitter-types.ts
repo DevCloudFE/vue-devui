@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from 'vue';
+import type { PropType, ExtractPropTypes, VNode } from 'vue';
 export type SplitterOrientation = 'vertical' | 'horizontal';
 export type CollapseDirection = 'before' | 'after' | 'both';
 
@@ -34,3 +34,6 @@ export const splitterProps = {
 } as const;
 
 export type SplitterProps = ExtractPropTypes<typeof splitterProps>;
+export interface SplitterState {
+  panes: VNode[];
+}

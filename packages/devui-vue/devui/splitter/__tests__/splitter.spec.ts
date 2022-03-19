@@ -1,8 +1,7 @@
-import { mount } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import { ref } from 'vue';
 import DSplitter from '../src/splitter';
 import DSplitterPane from '../src/splitter-pane';
-import { mouseMoveTrigger } from '../__mocks__/event-helper';
 
 // 因为 jest 不支持 ResizeObserver，需要 mock 实现
 window.ResizeObserver =
@@ -23,7 +22,14 @@ describe('splitter', () => {
       template: `
         <d-splitter :orientation="orientation" :splitBarSize="splitBarSize" style="height: 500px; border: 1px solid #E3E5E9;">
             <template v-slot:DSplitterPane>
-              <d-splitter-pane :size="size" :minSize="minSize" :maxSize="maxSize" :collapsible="collapsible" :collapsed="collapsed" @sizeChange="sizeChange">
+              <d-splitter-pane 
+                :size="size" 
+                :minSize="minSize" 
+                :maxSize="maxSize" 
+                :collapsible="collapsible" 
+                :collapsed="collapsed" 
+                @sizeChange="sizeChange"
+              >
                 <div class="pane-content">
                   <h2>左侧面板</h2>
                   <div>左侧内容区域，宽度 30%，最小宽度 20%</div>
@@ -52,8 +58,8 @@ describe('splitter', () => {
         const size = ref('30%');
         const minSize = ref('20%');
         const maxSize = ref('60%');
-        const sizeChange = (size) => {
-          console.log(size);
+        const sizeChange = (paneSize: number) => {
+          console.log(paneSize);
         };
         return {
           orientation,
@@ -68,7 +74,7 @@ describe('splitter', () => {
       },
     };
 
-    let wrapper = null;
+    let wrapper: VueWrapper<any>;
     let splitterElement: HTMLElement;
     beforeEach(() => {
       wrapper = mount(testComponent);
@@ -96,7 +102,7 @@ describe('splitter', () => {
       // jsdom 不支持 clientWidth 属性，需要 mock
       Object.defineProperty(pane, 'clientWidth', {
         get: jest.fn().mockImplementation(() => 0),
-        set: jest.fn().mockImplementation(() => {}),
+        set: jest.fn().mockImplementation(() => ({})),
       });
       expect(pane.clientWidth).toBe(0);
     });
@@ -119,8 +125,8 @@ describe('splitter', () => {
             const size = ref('30%');
             const minSize = ref('20%');
             const maxSize = ref('60%');
-            const sizeChange = (size) => {
-              console.log(size);
+            const sizeChange = (paneSize: number) => {
+              console.log(paneSize);
             };
             return {
               orientation,
@@ -149,8 +155,8 @@ describe('splitter', () => {
             const size = ref('30%');
             const minSize = ref('20%');
             const maxSize = ref('60%');
-            const sizeChange = (size) => {
-              console.log(size);
+            const sizeChange = (paneSize: number) => {
+              console.log(paneSize);
             };
             return {
               orientation,
@@ -175,7 +181,7 @@ describe('splitter', () => {
       // jsdom 不支持 clientWidth 属性，需要 mock
       Object.defineProperty(element, 'clientWidth', {
         get: jest.fn().mockImplementation(() => 2),
-        set: jest.fn().mockImplementation(() => {}),
+        set: jest.fn().mockImplementation(() => ({})),
       });
       expect(wrapper.find('.devui-splitter-bar').element.clientWidth).toBe(2);
     });
@@ -191,8 +197,8 @@ describe('splitter', () => {
             const size = ref('30%');
             const minSize = ref('20%');
             const maxSize = ref('60%');
-            const sizeChange = (size) => {
-              console.log(size);
+            const sizeChange = (paneSize: number) => {
+              console.log(paneSize);
             };
             return {
               orientation,
@@ -221,8 +227,8 @@ describe('splitter', () => {
             const size = ref('40%');
             const minSize = ref('20%');
             const maxSize = ref('60%');
-            const sizeChange = (size) => {
-              console.log(size);
+            const sizeChange = (paneSize: number) => {
+              console.log(paneSize);
             };
             return {
               orientation,
@@ -255,8 +261,8 @@ describe('splitter', () => {
             const size = ref(undefined);
             const minSize = ref('20%');
             const maxSize = ref('60%');
-            const sizeChange = (size) => {
-              console.log(size);
+            const sizeChange = (paneSize: number) => {
+              console.log(paneSize);
             };
             return {
               orientation,
@@ -319,7 +325,7 @@ describe('splitter', () => {
       },
     };
 
-    let wrapper = null;
+    let wrapper: VueWrapper<any>;
     beforeEach(() => {
       wrapper = mount(testComponent);
     });

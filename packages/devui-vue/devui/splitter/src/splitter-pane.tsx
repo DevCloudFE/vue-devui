@@ -17,7 +17,7 @@ export default defineComponent({
   props: splitterPaneProps,
   emits: ['sizeChange', 'collapsedChange'],
   setup(props: SplitterPaneProps, { slots, expose }) {
-    const store: SplitterStore = inject('splitterStore');
+    const store = inject<SplitterStore>('splitterStore');
     const domRef = ref<null | HTMLElement>();
     const orderRef = ref();
     watch([orderRef, domRef],
@@ -47,7 +47,9 @@ export default defineComponent({
     watch(
       [() => props.size, domRef],
       ([size, ele]) => {
-        setSizeStyle(size, ele);
+        if (size && ele) {
+          setSizeStyle(size, ele);
+        }
       },
       { immediate: true }
     );
@@ -55,19 +57,25 @@ export default defineComponent({
     const orientation = inject('orientation');
     let initialSize = ''; // 记录初始化挂载传入的大小
     onMounted(() => {
-      initialSize = props.size;
-      store.setPanes({ panes: store.state.panes });
+      if (props.size) {
+        initialSize = props.size;
+      }
+      if (store) {
+        store.setPanes({ panes: store.state.panes });
+      }
     });
 
     onUpdated(() => {
-      store.setPanes({ panes: store.state.panes });
+      if (store) {
+        store.setPanes({ panes: store.state.panes });
+      }
     });
 
     // 获取当前 pane大小
     const getPaneSize = (): number => {
       const ele = domRef.value;
       if (!ele) {
-        return;
+        return 0;
       }
       if (orientation === 'vertical') {
         return ele.offsetHeight;
