@@ -11,9 +11,9 @@ import {
 
 import DToolTip from '../../tooltip/src/tooltip';
 import { setStyle } from '../../shared/util/set-style';
-import type { SplitterStore } from './splitter-store';
 import { addClass, removeClass } from '../../shared/util/class';
 import dresize, { ResizeDirectiveProp } from './util/d-resize-directive';
+import type { SplitterStore, DragState, SplitterPane } from './splitter-store';
 import { splitterBarProps, SplitterBarProps } from './splitter-bar-type';
 import './splitter-bar.scss';
 
@@ -24,7 +24,7 @@ export default defineComponent({
   },
   props: splitterBarProps,
   setup(props: SplitterBarProps) {
-    const store: SplitterStore = inject('splitterStore');
+    const store = inject<SplitterStore>('splitterStore');
     const state = reactive({
       wrapperClass: `devui-splitter-bar devui-splitter-bar-${props.orientation}`,
     });
@@ -37,22 +37,131 @@ export default defineComponent({
       setStyle(ele, { flexBasis: curSplitBarSize });
     }, { immediate: true });
 
-    watch([() => store.state.panes, domRef], ([panes, ele]) => {
+    watch([() => store?.state.panes, domRef], ([, ele]) => {
+      if (!store || !props || props.index === undefined) {
+        return;
+      }
       if (!store.isStaticBar(props.index)) {
         state.wrapperClass += ' resizable';
-      } else {
+      } else if (ele) {
         setStyle(ele, { flexBasis: props.disabledBarSize });
       }
     }, { deep: true });
 
+    const queryPanes = (index: number, nearIndex: number) => {
+      if (!store) {
+        return {};
+      }
+      const pane = store.getPane(index);
+      const nearPane = store.getPane(nearIndex);
+      return {
+        pane,
+        nearPane,
+      };
+    };
+
+    // 根据当前状态生成收起按钮样式
+    const generateCollapseClass = (
+      pane: SplitterPane | undefined,
+      nearPane: SplitterPane | undefined,
+      showIcon: boolean
+    ): {
+      'devui-collapse': boolean;
+      collapsed: boolean;
+      hidden: boolean;
+    } => {
+      // 是否允许收起
+      const isCollapsible = pane?.component?.props?.collapsible && showIcon;
+      // 当前收起状态
+      const isCollapsed = pane?.component?.props?.collapsed;
+      // 一个 pane 收起的时候，隐藏相邻 pane 的收起按钮
+      const isNearPaneCollapsed = nearPane?.collapsed;
+      return {
+        'devui-collapse': isCollapsible,
+        collapsed: isCollapsed,
+        hidden: isNearPaneCollapsed,
+      };
+    };
+
+    // 计算前面板收起操作样式
+    const prevClass = computed(() => {
+      if (!props || props.index === undefined) {
+        return {};
+      }
+      const { pane, nearPane } = queryPanes(props.index, props.index + 1);
+      // 第一个面板或者其它面板折叠方向不是向后的， 显示操作按钮
+      const showIcon =
+        pane?.component?.props?.collapseDirection !== 'after' ||
+        props.index === 0;
+      return generateCollapseClass(pane, nearPane, showIcon);
+    });
+
+    // 计算相邻面板收起操作样式
+    const nextClass = computed(() => {
+      if (!store || !props || props.index === undefined) {
+        return {};
+      }
+      const { pane, nearPane } = queryPanes(props.index + 1, props.index);
+      // 最后一个面板或者其它面板折叠方向不是向前的显示操作按钮
+      const showIcon =
+        pane?.component?.props?.collapseDirection !== 'before' ||
+        props.index + 1 === store.state.paneCount - 1;
+      return generateCollapseClass(pane, nearPane, showIcon);
+    });
+
+    // 切换是否允许拖拽，收起时不能拖拽
+    const toggleResize = () => {
+      if (!domRef.value || !props || props.index === undefined) {
+        return;
+      }
+      const { pane, nearPane } = queryPanes(props.index, props.index + 1);
+      const isCollapsed =
+        pane?.component?.props?.collapsed ||
+        nearPane?.component?.props?.collapsed;
+      if (isCollapsed) {
+        addClass(domRef.value, 'none-resizable');
+      } else {
+        removeClass(domRef.value, 'none-resizable');
+      }
+    };
+
+    const handleCollapsePrePane = (lockStatus?: boolean) => {
+      if (!store || !props || props.index === undefined) {
+        return;
+      }
+      store.tooglePane(props.index, props.index + 1, lockStatus);
+      toggleResize();
+    };
+
+    const handleCollapseNextPane = (lockStatus?: boolean) => {
+      if (!store || !props || props.index === undefined) {
+        return;
+      }
+      store.tooglePane(props.index + 1, props.index, lockStatus);
+      toggleResize();
+    };
+
+    const initialCollapseStatus = () => {
+      handleCollapsePrePane(true);
+      handleCollapseNextPane(true);
+    };
+
     // 指令输入值
-    const coordinate = { pageX: 0, pageY: 0, originalX: 0, originalY: 0 };
-    let initState;
+    const coordinate = {
+      pageX: 0,
+      pageY: 0,
+      originalX: 0,
+      originalY: 0
+    };
+    let initState: DragState;
     // TODO 待优化，如何像 angular rxjs 操作一样优雅
     const resizeProp: ResizeDirectiveProp = {
       enableResize: true,
       onPressEvent: function ({ originalEvent }): void {
         originalEvent.stopPropagation(); // 按下的时候，阻止事件冒泡
+        if (!store || !props || props.index === undefined) {
+          return;
+        }
         if (!store.isResizable(props.index)) {return;}
         initState = store.dragState(props.index);
         coordinate.originalX = originalEvent.pageX;
@@ -60,6 +169,9 @@ export default defineComponent({
       },
       onDragEvent: function ({ originalEvent }): void {
         originalEvent.stopPropagation(); // 移动的时候，阻止事件冒泡
+        if (!store || !props || props.index === undefined) {
+          return;
+        }
         if (!store.isResizable(props.index)) {return;}
         coordinate.pageX = originalEvent.pageX;
         coordinate.pageY = originalEvent.pageY;
@@ -73,7 +185,12 @@ export default defineComponent({
       },
       onReleaseEvent: function ({ originalEvent }): void {
         originalEvent.stopPropagation(); // 释放的时候，阻止事件冒泡
-        if (!store.isResizable(props.index)) {return;}
+        if (!store || !props || props.index === undefined) {
+          return;
+        }
+        if (!store.isResizable(props.index)) {
+          return;
+        }
         coordinate.pageX = originalEvent.pageX;
         coordinate.pageY = originalEvent.pageY;
         let distance;
@@ -86,83 +203,14 @@ export default defineComponent({
       },
     };
 
-    const queryPanes = (index, nearIndex) => {
-      const pane = store.getPane(index);
-      const nearPane = store.getPane(nearIndex);
-      return {
-        pane,
-        nearPane,
-      };
-    };
-
-    // 根据当前状态生成收起按钮样式
-    const generateCollapseClass = (pane, nearPane, showIcon) => {
-      // 是否允许收起
-      const isCollapsible = pane?.component?.props?.collapsible && showIcon;
-      // 当前收起状态
-      const isCollapsed = pane?.component?.props?.collapsed;
-      // 一个 pane 收起的时候，隐藏相邻 pane 的收起按钮
-      const isNearPaneCollapsed = nearPane.collapsed;
-      return {
-        'devui-collapse': isCollapsible,
-        collapsed: isCollapsed,
-        hidden: isNearPaneCollapsed,
-      };
-    };
-
-    // 计算前面板收起操作样式
-    const prevClass = computed(() => {
-      const { pane, nearPane } = queryPanes(props.index, props.index + 1);
-      // 第一个面板或者其它面板折叠方向不是向后的， 显示操作按钮
-      const showIcon =
-        pane?.component?.props?.collapseDirection !== 'after' ||
-        props.index === 0;
-      return generateCollapseClass(pane, nearPane, showIcon);
-    });
-
-    // 计算相邻面板收起操作样式
-    const nextClass = computed(() => {
-      const { pane, nearPane } = queryPanes(props.index + 1, props.index);
-      // 最后一个面板或者其它面板折叠方向不是向前的显示操作按钮
-      const showIcon =
-        pane?.component?.props?.collapseDirection !== 'before' ||
-        props.index + 1 === store.state.paneCount - 1;
-      return generateCollapseClass(pane, nearPane, showIcon);
-    });
-
-    // 切换是否允许拖拽，收起时不能拖拽
-    const toggleResize = () => {
-      const { pane, nearPane } = queryPanes(props.index, props.index + 1);
-      const isCollapsed =
-        pane?.component?.props?.collapsed ||
-        nearPane?.component?.props?.collapsed;
-      if (isCollapsed) {
-        addClass(domRef.value, 'none-resizable');
-      } else {
-        removeClass(domRef.value, 'none-resizable');
-      }
-    };
-
-    const handleCollapsePrePane = (lockStatus?: boolean) => {
-      store.tooglePane(props.index, props.index + 1, lockStatus);
-      toggleResize();
-    };
-
-    const handleCollapseNextPane = (lockStatus?: boolean) => {
-      store.tooglePane(props.index + 1, props.index, lockStatus);
-      toggleResize();
-    };
-
-    const initialCollapseStatus = () => {
-      handleCollapsePrePane(true);
-      handleCollapseNextPane(true);
-    };
-
     onMounted(() => {
       initialCollapseStatus();
     });
 
     const renderCollapsedTip = () => {
+      if (!props || props.index === undefined) {
+        return '收起';
+      }
       const { pane, nearPane } = queryPanes(props.index, props.index + 1);
       const isCollapsed =
         pane?.component?.props?.collapsed ||
