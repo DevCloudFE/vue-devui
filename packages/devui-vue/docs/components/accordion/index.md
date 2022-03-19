@@ -123,7 +123,7 @@ export default defineComponent({
   }
 })
 </script>
-<style scoped>
+<style scoped lang="scss">
 .basic-menu {
   width: 200px;
 }
@@ -144,7 +144,7 @@ export default defineComponent({
     width: 80%;
   }
 }
-ul {
+.basic-menu ul {
   list-style: none;
 }
 </style>
