@@ -183,6 +183,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://www.naluduo.vip"><img src="https://avatars.githubusercontent.com/u/28448589?v=4?s=100" width="100px;" alt=""/><br /><sub><b>纳撸多</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=naluduo233" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/ElsaOOo"><img src="https://avatars.githubusercontent.com/u/48074435?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ElsaOOo</b></sub></a><br /><a href="#infra-ElsaOOo" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/DevCloudFE/vue-devui/commits?author=ElsaOOo" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/liuxdi"><img src="https://avatars.githubusercontent.com/u/10958003?v=4?s=100" width="100px;" alt=""/><br /><sub><b>刘小迪</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=liuxdi" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
