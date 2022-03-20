@@ -42,56 +42,6 @@ const { createVueDevuiTemplate } = require('../templates/vue-devui');
 const ora = require('ora');
 const { createVitepressSidebarTemplates } = require('../templates/vitepress-sidebar');
 
-exports.validateCreateType = (type) => {
-  const re = new RegExp('^(' + CREATE_SUPPORT_TYPES.map((t) => `(${t})`).join('|') + ')$');
-  const flag = re.test(type);
-
-  !flag && logger.error(`类型错误，可选类型为：${CREATE_SUPPORT_TYPES.join(', ')}`);
-
-  return flag ? type : null;
-};
-
-// TODO: 待优化代码结构
-exports.create = async (cwd) => {
-  let { type } = cwd;
-
-  if (isEmpty(type)) {
-    const result = await inquirer.prompt([selectCreateType()]);
-    type = result.type;
-  }
-
-  if (CREATE_UNFINISHED_TYPES.includes(type)) {
-    logger.info('抱歉，该功能暂未完成！');
-    process.exit(0);
-  }
-
-  let params = {};
-
-  try {
-    switch (type) {
-    case CREATE_SUPPORT_TYPE_MAP.component:
-      params = await inquirer.prompt([typeName(), typeTitle(), selectCategory(), selectParts()]);
-      params.hasComponent = params.parts.includes('component');
-      params.hasDirective = params.parts.includes('directive');
-      params.hasService = params.parts.includes('service');
-
-      await createComponent(params, cwd);
-      break;
-    case CREATE_SUPPORT_TYPE_MAP['vue-devui']:
-      // 创建 devui/vue-devui.ts
-      await createVueDevui(params, cwd);
-      // 创建 docs/.vitepress/config/sidebar.ts enSidebar.ts
-      await createVitepressSidebar();
-      break;
-    default:
-      break;
-    }
-  } catch (e) {
-    logger.error(e.toString());
-    process.exit(1);
-  }
-};
-
 async function createComponent(params = {}) {
   const { name, hasComponent, hasDirective, hasService } = params;
 
@@ -224,7 +174,7 @@ async function createVitepressSidebar() {
   fileInfo.forEach((f) => {
     const info = parseComponentInfo(f.dirname);
 
-    if (isEmpty(info)) {return;}
+    if (isEmpty(info) || (process.env.NODE_ENV === 'production'&& info.status !== '100%')) {return;}
 
     componentsInfo.push(info);
   });
@@ -245,3 +195,53 @@ async function createVitepressSidebar() {
     }
   });
 }
+
+exports.validateCreateType = (type) => {
+  const re = new RegExp('^(' + CREATE_SUPPORT_TYPES.map((t) => `(${t})`).join('|') + ')$');
+  const flag = re.test(type);
+
+  !flag && logger.error(`类型错误，可选类型为：${CREATE_SUPPORT_TYPES.join(', ')}`);
+
+  return flag ? type : null;
+};
+
+// TODO: 待优化代码结构
+exports.create = async (cwd) => {
+  let { type } = cwd;
+
+  if (isEmpty(type)) {
+    const result = await inquirer.prompt([selectCreateType()]);
+    type = result.type;
+  }
+
+  if (CREATE_UNFINISHED_TYPES.includes(type)) {
+    logger.info('抱歉，该功能暂未完成！');
+    process.exit(0);
+  }
+
+  let params = {};
+
+  try {
+    switch (type) {
+    case CREATE_SUPPORT_TYPE_MAP.component:
+      params = await inquirer.prompt([typeName(), typeTitle(), selectCategory(), selectParts()]);
+      params.hasComponent = params.parts.includes('component');
+      params.hasDirective = params.parts.includes('directive');
+      params.hasService = params.parts.includes('service');
+
+      await createComponent(params, cwd);
+      break;
+    case CREATE_SUPPORT_TYPE_MAP['vue-devui']:
+      // 创建 devui/vue-devui.ts
+      await createVueDevui(params, cwd);
+      // 创建 docs/.vitepress/config/sidebar.ts enSidebar.ts
+      await createVitepressSidebar();
+      break;
+    default:
+      break;
+    }
+  } catch (e) {
+    logger.error(e.toString());
+    process.exit(1);
+  }
+};
