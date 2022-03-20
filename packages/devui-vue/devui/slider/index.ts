@@ -12,6 +12,6 @@ export default {
   category: '数据录入',
   status: '100%',
   install(app: App): void {
-    app.use(Slider as any);
+    app.component(Slider.name, Slider);
   }
 };
