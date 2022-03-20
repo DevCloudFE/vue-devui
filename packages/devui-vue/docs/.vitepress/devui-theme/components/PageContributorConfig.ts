@@ -17,4 +17,10 @@ export const CONTRIBUTORS_MAP = {
       homepage: 'https://github.com/naluduo233'
     }
   ],
+  radio: [
+    {
+      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2722/8168765_xuehongjie_1647269846.png!avatar100',
+      homepage: 'https://github.com/xuehongjie'
+    }
+  ],
 }
