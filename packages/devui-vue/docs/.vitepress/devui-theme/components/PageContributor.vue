@@ -15,9 +15,11 @@ const { contributors } = toRefs(props)
 <template>
   <div class="page-contributor">
     <div class="contributor-label">Contributors</div>
-    <a v-for="contributor of contributors" :href="contributor.homepage" target="_blank">
-      <Avatar class="contributor-avatar" :imgSrc="contributor.avatar" />
-    </a>
+    <div class="contributor-info">
+      <a v-for="contributor of contributors" :href="contributor.homepage" target="_blank">
+        <Avatar class="contributor-avatar" :imgSrc="contributor.avatar" />
+      </a>
+    </div>
   </div>
 </template>
 
@@ -27,6 +29,10 @@ const { contributors } = toRefs(props)
     color: #24292f;
     font-weight: 600;
     line-height:32px;
+  }
+
+  .contributor-info {
+    display: flex;
   }
 
   .contributor-avatar {
