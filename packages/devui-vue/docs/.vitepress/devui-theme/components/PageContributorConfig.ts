@@ -8,7 +8,7 @@ export const CONTRIBUTORS_MAP = {
   ],
   dragdrop: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/61737780?v=4',
       homepage: 'https://github.com/asdlml6'
     },
     {
@@ -30,27 +30,27 @@ export const CONTRIBUTORS_MAP = {
   ],
   overlay: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/13329558?v=4',
       homepage: 'https://github.com/Zcating'
     },
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/10958003?v=4',
       homepage: 'https://github.com/liuxdi'
     },
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/23261843?v=4',
       homepage: 'https://github.com/to0simple'
     },
   ],
   panel: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/31283122?v=4',
       homepage: 'https://github.com/GaoNeng-wWw'
     },
   ],
   ripple: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/66500121?v=4',
       homepage: 'https://github.com/ErKeLost'
     },
   ],
@@ -62,8 +62,8 @@ export const CONTRIBUTORS_MAP = {
   ],
   status: [
     {
-      avatar: '',
-      homepage: 'https://gitee.com/LiuSuY'
+      avatar: 'https://avatars.githubusercontent.com/u/25116549?v=4',
+      homepage: 'https://github.com/LiuSuY'
     },
   ],
   sticky: [
@@ -76,11 +76,11 @@ export const CONTRIBUTORS_MAP = {
   // 导航
   accordion: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/74694190?v=4',
       homepage: 'https://github.com/Pineapple0919'
     },
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/10958003?v=4',
       homepage: 'https://github.com/liuxdi'
     },
   ],
@@ -92,19 +92,19 @@ export const CONTRIBUTORS_MAP = {
   ],
   'back-top': [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/38075730?v=4',
       homepage: 'https://github.com/c0dedance'
     },
   ],
   breadcrumb: [
     {
-      avatar: '',
+      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2528/7584294_Jecyu_1630023376.png!avatar100',
       homepage: 'https://github.com/naluduo233'
     },
   ],
   dropdown: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/13329558?v=4',
       homepage: 'https://github.com/Zcating'
     },
   ],
@@ -140,7 +140,7 @@ export const CONTRIBUTORS_MAP = {
       homepage: 'https://github.com/chressYu'
     },
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/10958003?v=4',
       homepage: 'https://github.com/liuxdi'
     },
   ],
@@ -152,35 +152,35 @@ export const CONTRIBUTORS_MAP = {
   ],
   loading: [
     {
-      avatar: '',
+      avatar: 'https://portrait.gitee.com/uploads/avatars/user/481/1444460_kd554246839_1647266753.png!avatar200',
       homepage: 'https://gitee.com/kd554246839'
     },
   ],
   modal: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/13329558?v=4',
       homepage: 'https://github.com/Zcating'
     },
   ],
   notification: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/10958003?v=4',
       homepage: 'https://github.com/liuxdi'
     },
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/23261843?v=4',
       homepage: 'https://github.com/to0simple'
     },
   ],
   popover: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/58327088?v=4',
       homepage: 'https://github.com/CatsAndMice'
     },
   ],
   'read-tip': [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/62528887?v=4',
       homepage: 'https://github.com/whylost'
     },
   ],
@@ -192,7 +192,7 @@ export const CONTRIBUTORS_MAP = {
   ],
   tooltip: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/26324442?v=4',
       homepage: 'https://github.com/zxlfly'
     },
   ],
@@ -200,17 +200,17 @@ export const CONTRIBUTORS_MAP = {
   // 数据录入
   'auto-complete': [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/23261843?v=4',
       homepage: 'https://github.com/to0simple'
     },
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/61737780?v=4',
       homepage: 'https://github.com/asdlml6'
     },
   ],
   cascader: [
     {
-      avatar: '',
+      avatar: 'https://portrait.gitee.com/uploads/avatars/user/615/1847969_laiweilun_1628090818.png!avatar100',
       homepage: 'https://github.com/SituC'
     },
   ],
@@ -226,7 +226,7 @@ export const CONTRIBUTORS_MAP = {
   ],
   'color-picker': [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/66500121?v=4',
       homepage: 'https://github.com/ErKeLost'
     },
   ],
@@ -238,11 +238,11 @@ export const CONTRIBUTORS_MAP = {
   ],
   'date-picker-pro': [
     {
-      avatar: '',
+      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2528/7584294_Jecyu_1630023376.png!avatar100',
       homepage: 'https://github.com/naluduo233'
     },
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/50767049?v=4',
       homepage: 'https://github.com/jCodeLife'
     },
   ],
@@ -254,13 +254,13 @@ export const CONTRIBUTORS_MAP = {
   ],
   form: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/42601044?v=4',
       homepage: 'https://github.com/AlanLee97'
     },
   ],
   input: [
     {
-      avatar: '',
+      avatar: 'https://portrait.gitee.com/uploads/avatars/user/615/1847969_laiweilun_1628090818.png!avatar100',
       homepage: 'https://github.com/SituC'
     },
   ],
@@ -272,7 +272,7 @@ export const CONTRIBUTORS_MAP = {
   ],
   'input-number': [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/16344566?v=4',
       homepage: 'https://github.com/git-Where'
     },
   ],
@@ -290,7 +290,7 @@ export const CONTRIBUTORS_MAP = {
   ],
   slider: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/27467603?v=4',
       homepage: 'https://github.com/xiaoboRao'
     },
   ],
@@ -322,19 +322,19 @@ export const CONTRIBUTORS_MAP = {
   ],
   'time-picker': [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/58691226?v=4',
       homepage: 'https://github.com/qq154239735'
     },
   ],
   transfer: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/15258339?v=4',
       homepage: 'https://github.com/ForeseeBear'
     },
   ],
   'tree-select': [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/38213540?v=4',
       homepage: 'https://github.com/254311563'
     },
   ],
@@ -376,7 +376,7 @@ export const CONTRIBUTORS_MAP = {
   ],
   comment: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/40553790?v=4',
       homepage: 'https://github.com/nextniko'
     },
   ],
@@ -394,19 +394,19 @@ export const CONTRIBUTORS_MAP = {
   ],
   'image-preview': [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/10958003?v=4',
       homepage: 'https://github.com/liuxdi'
     },
   ],
   list: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
       homepage: 'https://github.com/xingyan95'
     },
   ],
   progress: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/67035714?v=4',
       homepage: 'https://github.com/devin974'
     },
   ],
@@ -424,19 +424,19 @@ export const CONTRIBUTORS_MAP = {
   ],
   skeleton: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/70649502?v=4',
       homepage: 'https://github.com/ivestszheng'
     },
   ],
   statistic: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/66500121?v=4',
       homepage: 'https://github.com/ErKeLost'
     },
   ],
   table: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/13329558?v=4',
       homepage: 'https://github.com/Zcating'
     },
     {
@@ -444,7 +444,7 @@ export const CONTRIBUTORS_MAP = {
       homepage: 'https://github.com/kagol'
     },
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/70649502?v=4',
       homepage: 'https://github.com/ivestszheng'
     },
     {
@@ -458,7 +458,7 @@ export const CONTRIBUTORS_MAP = {
   ],
   tag: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/38075730?v=4',
       homepage: 'https://github.com/c0dedance'
     },
   ],
@@ -478,7 +478,7 @@ export const CONTRIBUTORS_MAP = {
       homepage: 'https://github.com/faq0192'
     },
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/40119767?v=4',
       homepage: 'https://github.com/linxiang07'
     },
   ],
