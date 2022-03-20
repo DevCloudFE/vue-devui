@@ -440,7 +440,7 @@ export const CONTRIBUTORS_MAP = {
       homepage: 'https://github.com/Zcating'
     },
     {
-      avatar: '',
+      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2582/7746958_kagol_1606652460.png!avatar100',
       homepage: 'https://github.com/kagol'
     },
     {
