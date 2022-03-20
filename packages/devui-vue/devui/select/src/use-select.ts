@@ -4,7 +4,7 @@ export interface OptionObjectItem {
   name: string;
   value: string | number;
   _checked: boolean;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export type OptionItem =
