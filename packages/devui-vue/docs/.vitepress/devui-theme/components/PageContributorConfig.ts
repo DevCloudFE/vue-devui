@@ -380,7 +380,7 @@ export const CONTRIBUTORS_MAP = {
       homepage: 'https://github.com/nextniko'
     },
   ],
-  counddown: [
+  countdown: [
     {
       avatar: '',
       homepage: 'https://gitee.com/HeQinQins'
