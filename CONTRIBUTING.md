@@ -1,1 +1,1 @@
-packages/devui-vue/docs/CONTRIBUTING.md
+packages/devui-vue/docs/contributing/index.md
