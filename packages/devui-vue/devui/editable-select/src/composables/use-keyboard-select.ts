@@ -1,30 +1,21 @@
-import { ComputedRef, nextTick, Ref } from 'vue';
+import { ComputedRef, nextTick, ref, Ref } from 'vue';
 import { OptionObjectItem } from '../editable-select-type';
 
 interface useKeyboardSelectReturnType {
-  handleKeydown: (event: KeyboardEvent) => void
+  handleKeydown: (event: KeyboardEvent) => void;
+  hoverIndex: Ref<number>;
 }
 export const useKeyboardSelect: (
-  dropdownRef: Ref<any>,
+  dropdownRef: Ref<HTMLElement>,
   disabled: string,
   visible: Ref<boolean>,
-  hoverIndex: Ref<number>,
-  selectedIndex: Ref<number>,
   options: ComputedRef<OptionObjectItem[]>,
   toggleMenu: () => void,
   closeMenu: () => void,
   handleClick: (options: OptionObjectItem) => void
-) => useKeyboardSelectReturnType = (
-  dropdownRef,
-  disabled,
-  visible,
-  hoverIndex,
-  selectedIndex,
-  options,
-  toggleMenu,
-  closeMenu,
-  handleClick
-) => {
+) => useKeyboardSelectReturnType = (dropdownRef, disabled, visible, options, toggleMenu, closeMenu, handleClick) => {
+  const hoverIndex = ref(0);
+  const selectedIndex = ref(0);
   const updateHoveringIndex = (index: number) => {
     hoverIndex.value = index;
   };
@@ -32,37 +23,35 @@ export const useKeyboardSelect: (
     const ul = dropdownRef.value;
     const li = ul.children[index];
     nextTick(() => {
-      if (li.scrollIntoViewIfNeeded) {
-        li.scrollIntoViewIfNeeded(false);
-      } else {
-        const containerInfo = ul.getBoundingClientRect();
-        const elementInfo = li.getBoundingClientRect();
-        if (elementInfo.bottom > containerInfo.bottom || elementInfo.top < containerInfo.top) {
-          li.scrollIntoView(false);
-        }
+      const containerInfo = ul.getBoundingClientRect();
+      const elementInfo = li.getBoundingClientRect();
+      if (elementInfo.bottom > containerInfo.bottom || elementInfo.top < containerInfo.top) {
+        li.scrollIntoView(false);
       }
     });
   };
 
-  const onKeyboardNavigation = (direction: string, newIndex?: number) => {
-    if (!newIndex) {
-      newIndex = hoverIndex.value;
+  const onKeyboardNavigation = (direction: string, newIndex = 0): void => {
+    if (options.value.length === 1) {
+      return;
     }
-    if (!['ArrowDown', 'ArrowUp'].includes(direction)) return;
+    if (!['ArrowDown', 'ArrowUp'].includes(direction)) {
+      return;
+    }
+    newIndex = hoverIndex.value;
+
     if (direction === 'ArrowUp') {
       if (newIndex === 0) {
         newIndex = options.value.length - 1;
         scrollToItem(newIndex);
-        updateHoveringIndex(newIndex);
-        return;
+        return updateHoveringIndex(newIndex);
       }
       newIndex = newIndex - 1;
     } else if (direction === 'ArrowDown') {
       if (newIndex === options.value.length - 1) {
         newIndex = 0;
         scrollToItem(newIndex);
-        updateHoveringIndex(newIndex);
-        return;
+        return updateHoveringIndex(newIndex);
       }
       newIndex = newIndex + 1;
     }
@@ -75,36 +64,44 @@ export const useKeyboardSelect: (
     updateHoveringIndex(newIndex);
   };
 
+  const onKeydownEnter = () => {
+    let index = hoverIndex.value;
+    if (options.value.length === 1) {
+      index = 0;
+    }
+    handleClick(options.value[index]);
+    closeMenu();
+  };
+
+  const onKeydownEsc = () => {
+    closeMenu();
+  };
+
   const handleKeydown = (event: KeyboardEvent) => {
     const keyCode = event.key || event.code;
 
-    if (options.value.length === 0) return;
+    if (options.value.length === 0) {
+      return;
+    }
 
     if (!visible.value) {
       return toggleMenu();
     }
 
-    const onKeydownEnter = () => {
-      handleClick(options.value[hoverIndex.value]);
-      closeMenu();
-    };
-
-    const onKeydownEsc = () => {
-      closeMenu();
-    };
-
     switch (keyCode) {
-      case 'Enter':
-        onKeydownEnter();
-        break;
-      case 'Escape':
-        onKeydownEsc();
-        break;
-      default:
-        onKeyboardNavigation(keyCode);
+    case 'Enter':
+      onKeydownEnter();
+      break;
+    case 'Escape':
+      onKeydownEsc();
+      break;
+    default:
+      onKeyboardNavigation(keyCode);
     }
   };
   return {
-    handleKeydown
+    handleKeydown,
+    hoverIndex,
+    selectedIndex,
   };
 };

@@ -1,25 +1,25 @@
-import { Ref } from 'vue';
+import { Ref, SetupContext } from 'vue';
 import { OptionObjectItem } from '../editable-select-type';
 
 interface useLazyLoadReturenType {
-  loadMore: () => void
+  loadMore: () => void;
 }
 export const useLazyLoad: (
-  dropdownRef: Ref,
+  dropdownRef: Ref<HTMLElement>,
   inputValue: Ref<string>,
-  filterOtion: boolean | ((val: string, option: OptionObjectItem) => boolean),
-  load: (val: string) => void
-) => useLazyLoadReturenType = (dropdownRef, inputValue, filterOtion, load) => {
+  filterOtion: boolean | ((val: string, option: OptionObjectItem) => boolean) | undefined,
+  ctx: SetupContext
+) => useLazyLoadReturenType = (dropdownRef, inputValue, filterOtion, ctx) => {
   const loadMore = () => {
-    if (filterOtion !== false) return;
+    const dropdownVal = dropdownRef.value;
+    if (filterOtion !== false) {
+      return;
+    }
 
-    if (
-      dropdownRef.value.clientHeight + dropdownRef.value.scrollTop >=
-      dropdownRef.value.scrollHeight
-    ) {
-      load(inputValue.value);
+    if (dropdownVal.clientHeight + dropdownVal.scrollTop >= dropdownVal.scrollHeight) {
+      ctx.emit('loadMore', inputValue.value);
     }
   };
-  
+
   return { loadMore };
 };

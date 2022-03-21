@@ -7,7 +7,7 @@ const getFilterFunc = () => (val: string, option: OptionObjectItem) =>
 export const userFilterOptions: (
   normalizeOptions: ComputedRef<OptionObjectItem[]>,
   inputValue: Ref<string>,
-  filteredOptions: boolean | ((val: string, option: OptionObjectItem) => boolean)
+  filteredOptions: boolean | ((val: string, option: OptionObjectItem) => boolean) | undefined
 ) => ComputedRef<OptionObjectItem[]> = (normalizeOptions, inputValue, filterOption) =>
   computed(() => {
     const filteredOptions: OptionObjectItem[] = [];
@@ -23,6 +23,6 @@ export const userFilterOptions: (
         filteredOptions.push(option);
       }
     });
-    
+
     return filteredOptions;
   });
