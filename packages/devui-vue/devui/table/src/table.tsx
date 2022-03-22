@@ -4,10 +4,14 @@ import { useTable } from './use-table';
 import { createStore } from './store';
 import FixHeader from './fix-header';
 import NormalHeader from './normal-header';
+import { Loading } from '../../loading';
 import './table.scss';
 
 export default defineComponent({
   name: 'DTable',
+  directives: {
+    dLoading: Loading
+  },
   props: TableProps,
   setup(props: TablePropsTypes, ctx) {
     const table = getCurrentInstance() as Table;
