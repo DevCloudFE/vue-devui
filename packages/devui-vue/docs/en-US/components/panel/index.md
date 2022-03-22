@@ -12,13 +12,13 @@ it is used when the page content needs to be grouped for display, and generally 
 
 ```vue
 <template>
-  <d-panel type="primary" :isCollapsed="true" :showAnimation="true">
+  <d-panel type="primary" :is-collapsed="true" :show-animation="true">
     <d-panel-header>Panel with foldable</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
   <br />
   <br />
-  <d-panel :toggle="toggle" :isCollapsed="true" :showAnimation="true" :hasLeftPadding="false">
+  <d-panel :toggle="toggle" :is-collapsed="true" :show-animation="true" :hasLeftPadding="false">
     <d-panel-header>
       Panel has no left padding
       <em :class="`icon icon-chevron-${toggleState ? 'down' : 'up'}`"></em>
@@ -27,7 +27,7 @@ it is used when the page content needs to be grouped for display, and generally 
   </d-panel>
   <br />
   <br />
-  <d-panel :isCollapsed="true" :beforeToggle="beforeToggle">
+  <d-panel :is-collapsed="true" :beforeToggle="beforeToggle">
     <d-panel-header>Panel with header and footer</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
     <d-panel-footer>This is footer</d-panel-footer>
@@ -60,31 +60,31 @@ Panels have six types: default, primary, success, danger, warning, info.
 
 ```vue
 <template>
-  <d-panel type="info" :isCollapsed="true" :showAnimation="true">
+  <d-panel type="info" :is-collapsed="true" :show-animation="true">
     <d-panel-header>Panel with info Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
   <br />
   <br />
-  <d-panel type="primary" :isCollapsed="true" :showAnimation="true">
+  <d-panel type="primary" :is-collapsed="true" :show-animation="true">
     <d-panel-header>Panel with Primary Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
   <br />
   <br />
-  <d-panel type="success" :isCollapsed="true" :showAnimation="true">
+  <d-panel type="success" :is-collapsed="true" :show-animation="true">
     <d-panel-header>Panel with Success Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
   <br />
   <br />
-  <d-panel type="warning" :isCollapsed="true" :showAnimation="true">
+  <d-panel type="warning" :is-collapsed="true" :show-animation="true">
     <d-panel-header>Panel with Warning Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
   <br />
   <br />
-  <d-panel type="danger" :isCollapsed="true" :showAnimation="true">
+  <d-panel type="danger" :is-collapsed="true" :show-animation="true">
     <d-panel-header>Panel with danger Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
@@ -99,16 +99,16 @@ if you dont want panel to fold. You can use `beforeToggle` properties
 
 If beforeToggle return False. The Panel will can not to fold. But Unaffected when unfolded
 
-::demo
+:::demo
 
 ```vue
 <template>
   <d-panel
     type="primary"
-    :hasLeftPadding="padding"
-    :toggle="handleToggle"
-    :beforeToggle="beforeToggle"
-    :showAnimation="showAnimation"
+    :has-left-padding="padding"
+    @toggle="handleToggle"
+    :before-toggle="beforeToggle"
+    :show-animation="true"
   >
     <d-panel-header>
       Panel with foldable
@@ -118,8 +118,9 @@ If beforeToggle return False. The Panel will can not to fold. But Unaffected whe
   </d-panel>
   <br />
   <br />
+  <span>当前状态: {{nowState}}</span><br />
   <d-button @click="panelToggle = !panelToggle">
-    {{ panelToggle ? 'prevent to fold' : 'allow to fold' }}
+    {{ panelToggle ? 'prevent collapse' : 'allow collapse' }}
   </d-button>
 </template>
 <script>
@@ -127,17 +128,16 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    let isCollapsed = ref(true);
     let panelToggle = ref(true);
     let toggle = ref(true);
-    let showAnimation = ref(true);
     let state;
     let padding = ref(false);
+    let nowState = ref('show');
     const handleToggle = (e) => {
       toggle.value = e;
+      nowState.value = toggle.value === true ? 'show' : 'hidden';
     };
     const beforeToggle = (e) => {
-      console.log(e);
       return panelToggle.value;
     };
     return {
@@ -145,14 +145,65 @@ export default defineComponent({
       toggle,
       panelToggle,
       beforeToggle,
-      isCollapsed,
       handleToggle,
-      showAnimation,
-      padding
+      padding,
+      nowState
     };
   }
 });
 </script>
+```
+
+:::
+
+Maybe in sometimes, we will use script to control panel collapse status. We can use ```done``` argument in beforeToggle to control panel collapse status
+
+:::demo
+
+```vue
+<template>
+  <d-panel
+    type="primary"
+    :before-toggle="beforeToggle"
+    :is-collapsed="false"
+  >
+    <d-panel-header>
+      after one second will open
+    </d-panel-header>
+    <d-panel-body>This is body</d-panel-body>
+  </d-panel>
+  <br />
+  <br />
+  <d-button @click="handleClick">
+    Try
+  </d-button>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {    
+    let opened = false;
+    let beforeToggle = (e, done) => {
+      if (!opened){
+          setTimeout(()=>{
+            done();
+          },1000);
+          opened = true;
+        }
+    }
+    const handleClick = () => {
+      window.location.reload();
+    }
+    return {
+      beforeToggle,
+      handleClick
+    };
+  }
+});
+</script>
+
 ```
 
 :::
@@ -167,7 +218,7 @@ Theoretically all properties can dynamic change. We only take hasLeftPadding pro
 
 ```vue
 <template>
-  <d-panel :type="type" :hasLeftPadding="padding" isCollapsed>
+  <d-panel :type="type" :hasLeftPadding="padding" is-collapsed>
     <d-panel-header>Panel with foldable</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
@@ -198,12 +249,12 @@ export default defineComponent({
 |    Property    |             Type              | Descript  |                                                                                  default Value                                                                                   |
 | :------------: | :---------------------------: | :-------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |      type      |           PanelType           | 'default' |                                                                         Optional. Can be set Panel Type                                                                          |
-|    cssClass    |            string             |    --     |                                                                        Optional. User-defined class name                                                                         |
-|  isCollapsed   |            boolean            |   false   |                                                                 Optional. Optional. Whether to expand the panel                                                                  |
-| hasLeftPadding |            boolean            |   true    |                                                                  Optional. Whether to display the left padding                                                                   |
-| showAnimation  |            boolean            |   true    |                                                               Optional. Indicating whether to display animations.                                                                |
-|  beforeToggle  | Function\|Promise\|Observable |    --     | Optional. Callback function before the panel folding status changes. The value of this parameter is of the boolean type. If false is returned, the panel folding status changes. |
-|     toggle     |           Function            |    --     |                                             Optional. Callback upon panel click to return the expanded status of the current panel.                                              |
+|    css-class    |            string             |    --     |                                                                        Optional. User-defined class name                                                                         |
+|  is-collapsed   |            boolean            |   false   |                                                                 Optional. Optional. Whether to expand the panel                                                                  |
+| has-left-padding |            boolean            |   true    |                                                                  Optional. Whether to display the left padding                                                                   |
+| show-animation  |            boolean            |   true    |                                                               Optional. Indicating whether to display animations.                                                                |
+|  before-Toggle  | () => (value: boolean, done?: () => void ) => any |    --     | Optional, Panel before collapse status. ```value``` mean now status. ```done()``` can control panel collapse status |
+|     @toggle     |           Function            |    --     |                                             Optional. Callback upon panel click to return the expanded status of the current panel.                                              |
 
 ### declare Interface & type
 
