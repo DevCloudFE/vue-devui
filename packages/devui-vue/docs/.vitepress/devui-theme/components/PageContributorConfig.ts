@@ -108,6 +108,12 @@ export const CONTRIBUTORS_MAP = {
       homepage: 'https://github.com/Zcating'
     },
   ],
+  menu: [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/31283122?v=4',
+      homepage: 'https://github.com/GaoNeng-wWw'
+    },
+  ],
   'nav-sprite': [
     {
       avatar: '',
@@ -199,6 +205,18 @@ export const CONTRIBUTORS_MAP = {
 
   // 数据录入
   'auto-complete': [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/26324442?v=4',
+      homepage: 'https://github.com/zxlfly'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/66343210?v=4',
+      homepage: 'https://github.com/Denver-Ning'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/47918504?v=4',
+      homepage: 'https://github.com/banlify'
+    },
     {
       avatar: 'https://avatars.githubusercontent.com/u/23261843?v=4',
       homepage: 'https://github.com/to0simple'
@@ -370,7 +388,7 @@ export const CONTRIBUTORS_MAP = {
   ],
   carousel: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/7751774?v=4',
       homepage: 'https://github.com/Roading'
     },
   ],
@@ -384,6 +402,12 @@ export const CONTRIBUTORS_MAP = {
     {
       avatar: '',
       homepage: 'https://gitee.com/HeQinQins'
+    },
+  ],
+  dashboard: [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/7751774?v=4',
+      homepage: 'https://github.com/Roading'
     },
   ],
   gantt: [
@@ -502,8 +526,4 @@ export const CONTRIBUTORS_MAP = {
       homepage: 'https://github.com/naluduo233'
     },
   ],
-
-  // 暂无田主
-  menu: [],
-  dashboard: [],
 }
