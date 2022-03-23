@@ -27,9 +27,9 @@ pnpm dev
 
 Vue DevUI 是一个多人合作的开源项目，为了避免多人同时开发同一个组件/功能，请先在 [issues 列表](https://github.com/DevCloudFE/vue-devui/issues) 中选择自己感兴趣的任务，在评论区认领
 
-1. 请确保你已经完成快速上手中的步骤，并且正常访问[http://localhost:3000/](http://localhost:3000/)
+1. 请确保你已经完成快速上手中的步骤，并且正常访问 [http://localhost:3000/](http://localhost:3000/)
 2. 创建新分支 `git checkout -b username/feature1`，分支名字建议为`username/feat-xxx`/`username/fix-xxx`
-3. 本地编码，需遵循[开发规范](/contributing/development-specification/)
+3. 本地编码，需遵循 [开发规范](/contributing/development-specification/)
 4. 遵循 [Angular Commit Message Format](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit) 进行提交（**不符合规范的提交将不会被合并**）
 5. 提交到远程仓库，也就是 Fork 后的仓库，`git push origin branchName`
 6. (可选) 同步上游仓库dev分支最新代码，`git pull upstream dev`
