@@ -1,14 +1,14 @@
 import { TreeData, TreeItem } from './tree-types';
 
 
-export const omit = (obj: unknown, key: string): unknown => {
+export const omit = (obj: Record<string, unknown>, key: string): Record<string, unknown> => {
   return Object.entries(obj)
     .filter(item => item[0] !== key)
     .reduce((acc, item) => Object.assign({}, acc, { [item[0]]: item[1] }), {});
 };
 
-export const flatten = (tree: Array<any>, key = 'children'): Array<any> => {
-  return tree.reduce((acc, item) => (
+export const flatten = (tree: TreeItem[], key = 'children'): TreeItem[] => {
+  return tree.reduce((acc: TreeItem[], item) => (
     !item[key] ? acc.concat(item) : acc.concat(item, flatten(item[key], key))
   ), []);
 };
