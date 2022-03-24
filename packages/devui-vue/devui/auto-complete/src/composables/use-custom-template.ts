@@ -1,7 +1,11 @@
 import { Ref, SetupContext } from 'vue';
-
+type CustomRenderSoltsType = {
+  itemTemplate?: (item: any, index: number) => any;
+  noResultItemTemplate?: () => any;
+  searchingTemplate?: () => any;
+};
 export default function useCustomTemplate(ctx: SetupContext,modelValue: Ref<string>): any {
-  const itemTemplate = (item, index) => {
+  const itemTemplate = (item: any, index: number) => {
     const arr = { item, index };
     if (ctx.slots.itemTemplate) {
       return ctx.slots.itemTemplate(arr);
@@ -21,7 +25,7 @@ export default function useCustomTemplate(ctx: SetupContext,modelValue: Ref<stri
     return null;
   };
   const customRenderSolts = () => {
-    const slots = {};
+    const slots: CustomRenderSoltsType = {};
     if (ctx.slots.itemTemplate) {
       slots['itemTemplate'] = itemTemplate;
     }
