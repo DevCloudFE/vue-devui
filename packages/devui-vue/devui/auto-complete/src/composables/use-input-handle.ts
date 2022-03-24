@@ -1,12 +1,23 @@
 import { ref, Ref, SetupContext } from 'vue';
 import {HandleSearch,RecentlyFocus,InputDebounceCb,TransInputFocusEmit} from '../auto-complete-types';
-export default function useInputHandle(ctx: SetupContext,searchList: Ref<any[]>,showNoResultItemTemplate: Ref<boolean>, modelValue: Ref<string>,disabled: Ref<boolean>,delay: Ref<number>,handleSearch: HandleSearch, transInputFocusEmit: Ref<TransInputFocusEmit>,recentlyFocus: RecentlyFocus,latestSource: Ref<Array<any>>): any {
+export default function useInputHandle(
+  ctx: SetupContext,
+  searchList: Ref<any[]>,
+  showNoResultItemTemplate: Ref<boolean>,
+  modelValue: Ref<string>,
+  disabled: Ref<boolean>,
+  delay: Ref<number>,
+  handleSearch: HandleSearch,
+  transInputFocusEmit: Ref<TransInputFocusEmit>,
+  recentlyFocus: RecentlyFocus,
+  latestSource: Ref<Array<any>>
+): any {
   const visible = ref(false);
   const inputRef = ref();
   const searchStatus = ref(false);
   const debounce =(cb: InputDebounceCb,time: number) =>{
-    let timer;
-    return (...args)=>{
+    let timer: NodeJS.Timeout | null;
+    return (...args: any)=>{
       if(timer){
         clearTimeout(timer);
       }
@@ -45,7 +56,7 @@ export default function useInputHandle(ctx: SetupContext,searchList: Ref<any[]>,
         handleClose();
       }else{
         visible.value=true;
-        if (ctx.slots.noResultItemTemplate&&searchList.value.length==0&&modelValue.value.trim()!='') {
+        if (ctx.slots.noResultItemTemplate&&searchList.value.length===0&&modelValue.value.trim()!=='') {
           showNoResultItemTemplate.value=true;
         }
       }

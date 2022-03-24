@@ -1,15 +1,19 @@
 import type { PropType, ExtractPropTypes, InjectionKey, SetupContext, Ref } from 'vue';
-const defaultFormatter = (item) => (item ? item.label || item.toString() : '');
-const defaultValueParse = (item) => item;
-// appendToBody使用
-export type HorizontalConnectionPos = 'left' | 'center' | 'right';
-export type VerticalConnectionPos = 'top' | 'center' | 'bottom';
-export interface ConnectionPosition {
-  originX: HorizontalConnectionPos;
-  originY: VerticalConnectionPos;
-  overlayX: HorizontalConnectionPos;
-  overlayY: VerticalConnectionPos;
-}
+const defaultFormatter = (item: any) => (item ? item.label || item.toString() : '');
+const defaultValueParse = (item: any) => item;
+export type Placement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
 export const autoCompleteProps = {
   modelValue: {
     type: String,
@@ -23,18 +27,9 @@ export const autoCompleteProps = {
     type:Boolean,
     default:false
   },
-  appendToBody :{
-    type:Boolean,
-    default:false
-  },
-  appendToBodyDirections :{
-    type: Object as PropType<ConnectionPosition>,
-    default: (): ConnectionPosition => ({
-      originX: 'left',
-      originY: 'bottom',
-      overlayX: 'left',
-      overlayY: 'top',
-    }),
+  position :{
+    type: Array as PropType<Array<Placement>>,
+    default: ['bottom-end'],
   },
   disabled:{
     type:Boolean,
@@ -80,9 +75,9 @@ export const autoCompleteProps = {
     type:Boolean,
     default:false
   },
-  dAutoCompleteWidth:{
+  width:{
     type: Number,
-    default:null
+    default:400
   },
   showAnimation:{
     type:Boolean,
@@ -93,11 +88,11 @@ export const autoCompleteProps = {
     default:300
   },
   transInputFocusEmit:{
-    type:Function as PropType<(any) => void>,
+    type:Function as PropType<() => void>,
     default:null
   },
   selectValue:{
-    type:Function as PropType<(any) => void>,
+    type:Function as PropType<(val: any) => any>,
     default:null
   },
   loadMore:{
@@ -114,7 +109,7 @@ export interface AutoCompleteRootType {
 }
 export type SearchFnType = (term: string) => Array<any>;
 export type FormatterType = (item: any) => string;
-export type DefaultFuncType = (any?) => any;
+export type DefaultFuncType = (arg?: any) => any;
 export type HandleSearch = (term?: string | string,enableLazyLoad?: boolean) => void;
 export type RecentlyFocus = (latestSource: Array<any>) => void;
 export type InputDebounceCb = (...rest: any) => Promise<void>;
@@ -130,10 +125,10 @@ export type DropdownProps = {
   visible: Ref<boolean>;
   selectedIndex: Ref<number>;
   selectOptionClick: HandleSearch;
-  dropDownRef;
+  dropDownRef: Ref<HTMLUListElement>;
   showLoading: Ref<boolean>;
-  loadMore;
-  latestSource;
+  loadMore: (arg?: any) => void;
+  latestSource: Ref<any[]>;
   modelValue: Ref<string>;
   hoverIndex: Ref<number>;
 };
