@@ -4,12 +4,20 @@
 .devui-auto-complete,
 .devui-auto-complete-menu {
   .devui-dropdown-menu {
+    width: 100%;
     left: 0 !important;
     top: 0 !important;
+    margin: 0 !important;
+
+    ul {
+      width: 100%;
+      padding: 0;
+    }
   }
 }
 
-.devui-auto-complete {
+.devui-auto-complete,
+.devui-auto-complete-menu {
   .active {
     background: $devui-list-item-hover-bg;
   }
