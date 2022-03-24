@@ -1,6 +1,6 @@
 import { watch, reactive, onBeforeMount, ToRefs, Slots, h } from 'vue';
-import { Column, TableColumnPropsTypes } from './column.type';
-import { formatWidth, formatMinWidth } from '../utils';
+import { Column, TableColumnPropsTypes } from './column-types';
+import { formatWidth, formatMinWidth } from '../../utils';
 
 function defaultRenderHeader(this: Column) {
   return h('span', { class: 'title' }, this.header);

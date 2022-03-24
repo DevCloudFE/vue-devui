@@ -1,5 +1,16 @@
 import { PropType, ExtractPropTypes, VNode, Slot } from 'vue';
 
+export type Formatter<T = any, R = any> = (row: T, cellValue: R, index: number) => VNode[];
+
+export type CompareFn<T = any> = (field: string, a: T, b: T) => boolean;
+
+export interface FilterConfig {
+  id: number | string;
+  name: string;
+  value: any;
+  checked?: boolean;
+}
+
 export const TableColumnProps = {
   header: {
     type: String,
@@ -22,27 +33,27 @@ export const TableColumnProps = {
   },
   order: {
     type: Number,
-    default: 0
+    default: 0,
   },
   sortable: {
     type: Boolean,
-    default: false
+    default: false,
   },
   compareFn: {
     type: Function as PropType<CompareFn>,
-    default: (field: string, a: any, b: any): boolean => a[field] < b[field]
+    default: (field: string, a: any, b: any): boolean => a[field] < b[field],
   },
   filterable: {
     type: Boolean,
-    default: false
+    default: false,
   },
   filterMultiple: {
     type: Boolean,
-    default: false
+    default: false,
   },
   filterList: {
     type: Array as PropType<FilterConfig[]>,
-    default: []
+    default: [],
   },
   fixedLeft: {
     type: String,
@@ -54,10 +65,6 @@ export const TableColumnProps = {
 
 export type TableColumnPropsTypes = ExtractPropTypes<typeof TableColumnProps>;
 
-export type Formatter<T = any, R = any> = (row: T, cellValue: R, index: number) => VNode[];
-
-export type CompareFn<T = any> = (field: string, a: T, b: T) => boolean;
-
 export type FilterResults = (string | number)[];
 
 export interface CustomFilterProps {
@@ -67,12 +74,6 @@ export interface CustomFilterProps {
 
 export type CustomFilterSlot = (props: CustomFilterProps) => VNode[];
 
-export interface FilterConfig {
-  id: number | string;
-  name: string;
-  value: any;
-  checked?: boolean;
-}
 export interface Column<T extends Record<string, unknown> = any> {
   field?: string;
   width?: number;

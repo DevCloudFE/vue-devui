@@ -1,6 +1,6 @@
 import { watch, Ref, ref, computed } from 'vue';
-import { Column, CompareFn, FilterResults } from '../column/column.type';
-import { SortDirection } from '../table.type';
+import { Column, CompareFn, FilterResults } from '../components/column/column-types';
+import { SortDirection } from '../table-types';
 export interface TableStore<T = Record<string, any>> {
   states: {
     _data: Ref<T[]>;
