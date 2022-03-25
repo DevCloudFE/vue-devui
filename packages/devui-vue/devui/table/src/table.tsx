@@ -1,13 +1,17 @@
 import { provide, defineComponent, getCurrentInstance, computed, toRef } from 'vue';
-import { Table, TableProps, TablePropsTypes, TABLE_TOKEN } from './table.type';
-import { useTable } from './use-table';
+import { Table, TableProps, TablePropsTypes, TABLE_TOKEN } from './table-types';
+import { useTable } from './composable/use-table';
 import { createStore } from './store';
-import FixHeader from './fix-header';
-import NormalHeader from './normal-header';
+import FixHeader from './components/fix-header';
+import NormalHeader from './components/normal-header';
+import { Loading } from '../../loading';
 import './table.scss';
 
 export default defineComponent({
   name: 'DTable',
+  directives: {
+    dLoading: Loading,
+  },
   props: TableProps,
   setup(props: TablePropsTypes, ctx) {
     const table = getCurrentInstance() as Table;
@@ -25,7 +29,7 @@ export default defineComponent({
 
     return () => (
       <div class='devui-table-wrapper' style={style.value} v-dLoading={props.showLoading}>
-        {ctx.slots.default()}
+        {ctx.slots.default?.()}
         {props.fixHeader ? (
           <FixHeader classes={classes.value} is-empty={isEmpty.value} />
         ) : (

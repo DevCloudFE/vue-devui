@@ -1,10 +1,6 @@
 import { inject, defineComponent, onBeforeUnmount, onMounted, toRefs, watch } from 'vue';
-import {
-  Column,
-  TableColumnProps,
-  TableColumnPropsTypes,
-} from './column.type';
-import { TABLE_TOKEN } from '../table.type';
+import { TableColumnProps, TableColumnPropsTypes } from './column-types';
+import { TABLE_TOKEN } from '../../table-types';
 import { createColumn } from './use-column';
 
 export default defineComponent({
@@ -21,14 +17,17 @@ export default defineComponent({
     const parent = inject(TABLE_TOKEN);
 
     onMounted(() => {
-      parent.store.insertColumn(column);
-      watch(() => column.order, () => {
-        parent.store.sortColumn();
-      });
+      parent?.store.insertColumn(column);
+      watch(
+        () => column.order,
+        () => {
+          parent?.store.sortColumn();
+        }
+      );
     });
 
     onBeforeUnmount(() => {
-      parent.store.removeColumn(column);
+      parent?.store.removeColumn(column);
     });
   },
   render() {

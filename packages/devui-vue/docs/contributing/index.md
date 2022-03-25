@@ -2,7 +2,7 @@
 
 你好！我们很高兴你有兴趣为 Vue DevUI 做出贡献。在提交你的贡献之前，请花点时间阅读以下指南：
 
-## 快速上手
+### 快速上手
 
 Vue DevUI 使用 `pnpm` 构建 `monorepo` 仓库，你应该使用 [pnpm](https://www.pnpm.cn/) 包管理器，以确保不会因为包管理器的不同而引发异常。
 
@@ -23,13 +23,13 @@ pnpm i
 pnpm dev
 ```
 
-## 参与贡献
+### 参与贡献
 
 Vue DevUI 是一个多人合作的开源项目，为了避免多人同时开发同一个组件/功能，请先在 [issues 列表](https://github.com/DevCloudFE/vue-devui/issues) 中选择自己感兴趣的任务，在评论区认领
 
-1. 请确保你已经完成快速上手中的步骤，并且正常访问[http://localhost:3000/](http://localhost:3000/)
+1. 请确保你已经完成快速上手中的步骤，并且正常访问 [http://localhost:3000/](http://localhost:3000/)
 2. 创建新分支 `git checkout -b username/feature1`，分支名字建议为`username/feat-xxx`/`username/fix-xxx`
-3. 本地编码，需遵循`ls-lint`/`eslint`/`stylelint`编码规范
+3. 本地编码，需遵循 [开发规范](/contributing/development-specification/)
 4. 遵循 [Angular Commit Message Format](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit) 进行提交（**不符合规范的提交将不会被合并**）
 5. 提交到远程仓库，也就是 Fork 后的仓库，`git push origin branchName`
 6. (可选) 同步上游仓库dev分支最新代码，`git pull upstream dev`

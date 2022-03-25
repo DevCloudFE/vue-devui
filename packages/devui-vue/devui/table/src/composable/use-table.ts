@@ -1,6 +1,6 @@
 import { computed, ComputedRef, CSSProperties, Ref, ToRefs } from 'vue';
-import { Column } from './column/column.type';
-import { TablePropsTypes } from './table.type';
+import { Column } from '../components/column/column-types';
+import { TablePropsTypes } from '../table-types';
 
 interface TableConfig {
   classes: ComputedRef<Record<string, boolean>>;
@@ -12,17 +12,16 @@ export function useTable(props: TablePropsTypes): TableConfig {
     'devui-table': true,
     'devui-table-striped': props.striped,
     'header-bg': props.headerBg,
-    'table-layout-auto': props.tableLayout === 'auto'
+    'table-layout-auto': props.tableLayout === 'auto',
   }));
   const style: ComputedRef<CSSProperties> = computed(() => ({
     maxHeight: props.maxHeight,
     maxWidth: props.maxWidth,
     height: props.tableHeight,
-    width: props.tableWidth
+    width: props.tableWidth,
   }));
   return { classes, style };
 }
-
 
 export const useFixedColumn = (column: Ref<Column>): ToRefs<{ stickyCell: string; offsetStyle: string }> => {
   const stickyCell = computed(() => {
@@ -52,6 +51,6 @@ export const useFixedColumn = (column: Ref<Column>): ToRefs<{ stickyCell: string
 
   return {
     stickyCell,
-    offsetStyle
+    offsetStyle,
   };
 };

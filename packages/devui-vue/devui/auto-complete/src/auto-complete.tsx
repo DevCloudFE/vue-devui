@@ -1,4 +1,4 @@
-import { defineComponent, provide, reactive, Transition,toRefs, ref, SetupContext } from 'vue'
+import { defineComponent, provide, Transition,toRefs, ref, SetupContext, Teleport } from 'vue'
 import { autoCompleteProps, AutoCompleteProps, DropdownPropsKey } from './auto-complete-types'
 import useCustomTemplate from './composables/use-custom-template'
 import useSearchFn from './composables/use-searchfn'
@@ -20,8 +20,7 @@ export default defineComponent({
     const {
       disabled,
       modelValue,
-      appendToBody,
-      dAutoCompleteWidth,
+      width,
       delay,
       allowEmptyValueSearch,
       formatter,
@@ -29,17 +28,82 @@ export default defineComponent({
       selectValue,
       source,
       searchFn,
-      appendToBodyDirections,
+      position,
       latestSource,
       showAnimation
     } = toRefs(props)
 
-    const {handleSearch,searchList,showNoResultItemTemplate,recentlyFocus} = useSearchFn(ctx,allowEmptyValueSearch,source,searchFn,formatter)
-    const {onInput,onFocus,inputRef,visible,searchStatus,handleClose,toggleMenu} = useInputHandle(ctx,searchList,showNoResultItemTemplate,modelValue,disabled,delay,handleSearch,transInputFocusEmit,recentlyFocus,latestSource)
-    const {selectedIndex,selectOptionClick} = useSelectHandle(ctx,searchList,selectValue,handleSearch,formatter,handleClose)
-    const {showLoading,dropDownRef,loadMore} = useLazyHandle(props,ctx,handleSearch)
-    const {customRenderSolts} = useCustomTemplate(ctx,modelValue)
-    const {hoverIndex,handlekeyDown} = useKeyBoardHandle(dropDownRef,visible,searchList,selectedIndex,searchStatus,showNoResultItemTemplate,selectOptionClick,handleClose)
+    const {
+      handleSearch,
+      searchList,
+      showNoResultItemTemplate,
+      recentlyFocus
+    } = useSearchFn(
+      ctx,
+      allowEmptyValueSearch,
+      source,
+      searchFn,
+      formatter
+    )
+    const {
+      onInput,
+      onFocus,
+      inputRef,
+      visible,
+      searchStatus,
+      handleClose,
+      toggleMenu
+    } = useInputHandle(
+      ctx,
+      searchList,
+      showNoResultItemTemplate,
+      modelValue,
+      disabled,
+      delay,
+      handleSearch,
+      transInputFocusEmit,
+      recentlyFocus,
+      latestSource
+    )
+    const {
+      selectedIndex,
+      selectOptionClick
+    } = useSelectHandle(
+      ctx,
+      searchList,
+      selectValue,
+      handleSearch,
+      formatter,
+      handleClose
+    )
+    const {
+      showLoading,
+      dropDownRef,
+      loadMore
+    } = useLazyHandle(
+      props,
+      ctx,
+      handleSearch
+    )
+    const {
+      customRenderSolts
+    } = useCustomTemplate(
+      ctx,
+      modelValue
+    )
+    const {
+      hoverIndex,
+      handlekeyDown
+    } = useKeyBoardHandle(
+      dropDownRef,
+      visible,
+      searchList,
+      selectedIndex,
+      searchStatus,
+      showNoResultItemTemplate,
+      selectOptionClick,
+      handleClose
+    )
     provide(DropdownPropsKey, {
       props,
       visible,
@@ -56,46 +120,33 @@ export default defineComponent({
       showNoResultItemTemplate:showNoResultItemTemplate,
       hoverIndex:hoverIndex
     })
-    const origin = ref()
-    const position = reactive({appendToBodyDirections:{}})
-    position.appendToBodyDirections=appendToBodyDirections
+    const origin = ref<HTMLElement>()
+    
     const renderDropdown = () => {
-      if(appendToBody.value){
-        return (
-          <FlexibleOverlay
-            hasBackdrop={false}
-            origin={origin}
-            position={position.appendToBodyDirections}
-            v-model:visible={visible.value}
-          >
-            <div
-              class='devui-dropdown devui-auto-complete-menu'
-              style={{
-                width: dAutoCompleteWidth.value>0&&dAutoCompleteWidth.value+'px'
-              }}
+      return (
+        <Teleport to='body'>
+          <Transition name={showAnimation?'fade':''}>
+            <FlexibleOverlay
+              origin={origin.value}
+              position={position.value}
+              v-model={visible.value}
             >
-              <DAutoCompleteDropdown>
-                {customRenderSolts()}
-              </DAutoCompleteDropdown>
-            </div>
-           </FlexibleOverlay>
-        )
-      }else{
-        return (
-            <div
-              class="devui-dropdown"
-              style={{
-                width: dAutoCompleteWidth.value>0&&dAutoCompleteWidth.value+'px'
-              }}
-            >
-              <Transition name={showAnimation?'fade':''}>
+              <div
+                class='devui-auto-complete-menu'
+                style={{
+                  width: `
+                    ${width.value+'px'}
+                  `
+                }}
+              >
                 <DAutoCompleteDropdown>
                   {customRenderSolts()}
                 </DAutoCompleteDropdown>
-              </Transition>
-            </div>
-        )
-      }
+              </div>
+            </FlexibleOverlay>
+          </Transition>
+         </Teleport>
+      )
 
     }
     return () => {
@@ -105,7 +156,7 @@ export default defineComponent({
           ref={origin}
           v-click-outside={handleClose}
           style={{
-            width: dAutoCompleteWidth.value>0&&dAutoCompleteWidth.value+'px'
+            width: `${width.value+'px'}`
           }}
         >
           <input

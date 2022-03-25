@@ -185,6 +185,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/liuxdi"><img src="https://avatars.githubusercontent.com/u/10958003?v=4?s=100" width="100px;" alt=""/><br /><sub><b>刘小迪</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=liuxdi" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/unfound"><img src="https://avatars.githubusercontent.com/u/32935349?v=4?s=100" width="100px;" alt=""/><br /><sub><b>unfound</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=unfound" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Roading"><img src="https://avatars.githubusercontent.com/u/7751774?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Roading</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Roading" title="Code">💻</a></td>
   </tr>
 </table>
 
