@@ -20,9 +20,8 @@ Set source to the data source that is automatically completed.
     :allowEmptyValueSearch="allowEmptyValueSearch"
     :selectValue="selectValue"
     :transInputFocusEmit="transInputFocusEmit"
-    :appendToBody="true"
-    :appendToBodyDirections="appendToBodyDirections"
-    :dAutoCompleteWidth="450"
+    :position="position"
+    :width="420"
   >
   </d-auto-complete>
 </template>
@@ -55,19 +54,14 @@ export default defineComponent({
     const transInputFocusEmit = ()=>{
       console.log('transInputFocusEmit')
     }
-    const appendToBodyDirections = ref({
-      originX: 'left',
-      originY: 'bottom',
-      overlayX: 'left',
-      overlayY: 'top',
-    })
+    const position = ref(['bottom'])
     return {
       value,
       source,
       allowEmptyValueSearch,
       transInputFocusEmit,
       selectValue,
-      appendToBodyDirections
+      position
     }
   }
 })
@@ -442,39 +436,55 @@ export default defineComponent({
 
 d-auto-complete Parameter
 
-|          Parameter          |                        Type                         |                       Default                       |                                                                              Description                                                                               | Jump to Demo                             | Global Config |
-| :--------------------: | :-------------------------------------------------: | :----------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------- | ---------- |
-|         source         |                    `Array<any>`                     |                        --                        |                                                              Required. This parameter is optional if searchFn is specified.                                                               | [Basic usage](#Basic-usage)           |
-| allowEmptyValueSearch  |                      `boolean`                      |                      false                       |                                                     Optional. indicates whether to display a search message when the bound text box value is empty.                                                     | [Basic usage](#Basic-usage)     |
-|      appendToBody      |                      `boolean`                      |                      false                       |                                                                Optional. Whether to append to body is displayed in the drop-down list box.                                                                | [Basic usage](#Basic-usage)     |
-| appendToBodyDirections | `Object as PropType<ConnectionPosition>` | `{originX: 'left',originY: 'bottom',overlayX: 'left',overlayY: 'top',}` |                               Optional. Specify the relative position of the drop-down box and the input box. for details about ConnectionPosition, see Overlay                              | [Basic usage](#Basic-usage)    |
-|        disabled        |                      `boolean`                      |                      false                       |                                                                       Optional. Indicating whether to disable commands.                                                                        | [Disabled](#Disabled)          |
-|         delay          |                      `number`                       |                       300                        |                                                 Optional. The search is performed only after the delay time elapses and a new value is entered. (ms)                                                 | [Basic usage](#Basic-usage)     |
-|      disabledKey       |                      `string`                       |                        --                        | Optional. Disable a single option. If the input resource source option type is an object, for example, disabled, and the disable attribute of the object is true, for example, {label: xxx, disabled: true}, this option will be disabled | [Customized data matching method](#Customized-data-matching-method)          |
-|      itemTemplate      |                    `slot`                    |                        --                        |                                                                      Optional. Customized display template                                                                       | [Customized template display](#Customized-template-display)     |
-|  noResultItemTemplate  |                    `slot`                    |                        --                        |                                                                   Optional. No matching item is displayed.                                                                    | [Customized template display](#Customized-template-display)     |
-|       formatter        |               `(item: any) => string`               |     [defaultFormatter](#defaultFormatter)      |                                                                        Optional. Formatting function                                                                         | [Customized data matching method](#Customized-data-matching-method)          |
-|      isSearching       |                      `boolean`                      |                      false                       |                                                     Optional. indicating whether the search template is displayed.                                                     | [Customized data matching method](#Customized-data-matching-method)     |
-|   searchingTemplate    |                    `slot`                    |                        --                        |                                                                   Optional. The template is displayed in customized search.                                                                    | [Customized data matching method](#Customized-data-matching-method)     |
-|       sceneType        |                      `string`                       |                        --                        |                                                                 Optional. The value can be select or suggestion.                                                                  | [Enable lazy load](#Enable-lazy-load)      |
-|        searchFn        |        `(term: string) => Array<any>`        |      [defaultSearchFn](#defaultSearchFn)       |                                                                      Optional. Customized search filtering                                                                       | [Customized data matching method](#Customized-data-matching-method) |
-|        tipsText        |                      `string`                       |                    'Latest input'                    |                                                                         Optional. prompt text                                                                          | [Disabled](#Disabled)          |
-|      latestSource      |                    `Array<any>`                     |                        --                        |                                                                         Optional. Latest input                                                                         | [Latest input](#Latest-input)           |
-|      valueParser       |                `(item: any) => any`                 |    [defaultValueParse](#defaultValueParse)     |                                                                   (optional) Process selected data                                                                   | [Enable lazy load](#Enable-lazy-load)      |
-|     enableLazyLoad     |                      `boolean`                      |                      false                       |                                                                      	Optional. Whether lazy loading is allowed                                                                      | [Enable lazy load](#Enable-lazy-load)      |
-|   dAutoCompleteWidth   |                      `number`                       |                        --                        |                                                                     Optional. Adjust the width (px)                                                                      |[Basic usage](#Basic-usage)
-|     showAnimation      |                      `boolean`                      |                       true                       |                                                                      optional. Whether to enable animation.                                                                        |                                        | ✔          |      |           |
+|       Parameter       |              Type              |                 Default                 |                                                                                                                Description                                                                                                                | Jump to Demo                                                        | Global Config |
+| :-------------------: | :----------------------------: | :-------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------ | ------------- |
+|        source         |          `Array<any>`          |                   --                    |                                                                                      Required. This parameter is optional if searchFn is specified.                                                                                       | [Basic usage](#Basic-usage)                                         |
+| allowEmptyValueSearch |           `boolean`            |                  false                  |                                                                      Optional. indicates whether to display a search message when the bound text box value is empty.                                                                      | [Basic usage](#Basic-usage)                                         |
+|       position        |         `Placement[]`          |               ['bottom']                |                                                                             Optional. Specify the relative position of the drop-down box and the input box .                                                                              | [Basic usage](#Basic-usage)                                         |
+|       disabled        |           `boolean`            |                  false                  |                                                                                             Optional. Indicating whether to disable commands.                                                                                             | [Disabled](#Disabled)                                               |
+|         delay         |            `number`            |                   300                   |                                                                   Optional. The search is performed only after the delay time elapses and a new value is entered. (ms)                                                                    | [Basic usage](#Basic-usage)                                         |
+|      disabledKey      |            `string`            |                   --                    | Optional. Disable a single option. If the input resource source option type is an object, for example, disabled, and the disable attribute of the object is true, for example, {label: xxx, disabled: true}, this option will be disabled | [Customized data matching method](#Customized-data-matching-method) |
+|     itemTemplate      |             `slot`             |                   --                    |                                                                                                   Optional. Customized display template                                                                                                   | [Customized template display](#Customized-template-display)         |
+| noResultItemTemplate  |             `slot`             |                   --                    |                                                                                                 Optional. No matching item is displayed.                                                                                                  | [Customized template display](#Customized-template-display)         |
+|       formatter       |    `(item: any) => string`     |  [defaultFormatter](#defaultFormatter)  |                                                                                                       Optional. Formatting function                                                                                                       | [Customized data matching method](#Customized-data-matching-method) |
+|      isSearching      |           `boolean`            |                  false                  |                                                                                      Optional. indicating whether the search template is displayed.                                                                                       | [Customized data matching method](#Customized-data-matching-method) |
+|   searchingTemplate   |             `slot`             |                   --                    |                                                                                         Optional. The template is displayed in customized search.                                                                                         | [Customized data matching method](#Customized-data-matching-method) |
+|       sceneType       |            `string`            |                   --                    |                                                                                             Optional. The value can be select or suggestion.                                                                                              | [Enable lazy load](#Enable-lazy-load)                               |
+|       searchFn        | `(term: string) => Array<any>` |   [defaultSearchFn](#defaultSearchFn)   |                                                                                                   Optional. Customized search filtering                                                                                                   | [Customized data matching method](#Customized-data-matching-method) |
+|       tipsText        |            `string`            |             'Latest input'              |                                                                                                           Optional. prompt text                                                                                                           | [Disabled](#Disabled)                                               |
+|     latestSource      |          `Array<any>`          |                   --                    |                                                                                                          Optional. Latest input                                                                                                           | [Latest input](#Latest-input)                                       |
+|      valueParser      |      `(item: any) => any`      | [defaultValueParse](#defaultValueParse) |                                                                                                     (optional) Process selected data                                                                                                      | [Enable lazy load](#Enable-lazy-load)                               |
+|    enableLazyLoad     |           `boolean`            |                  false                  |                                                                                                 Optional. Whether lazy loading is allowed                                                                                                 | [Enable lazy load](#Enable-lazy-load)                               |
+|         width         |            `number`            |                   --                    |                                                                                                      Optional. Adjust the width (px)                                                                                                      | [Basic usage](#Basic-usage)                                         |
+|     showAnimation     |           `boolean`            |                  true                   |                                                                                                  optional. Whether to enable animation.                                                                                                   |                                                                     | ✔             |  |  |
 
 dAutoComplete Event
 
-|        Parameter         |                                         Type                                         |                                                                  Description                                                                  | Jump to Demo                         |
-| :-----------------: | :----------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------- |
-|      loadMore       |               `EventEmitter<ComponentRef<AutoCompletePopupComponent>>`               | : optional. It is a lazy loading trigger event. It is used together with enableLazyLoad. `$event.loadFinish()` is used to disable the loading status. $event is the instance of the pop-up component AutoCompletePopupComponent | [Enable lazy load](#Enable-lazy-load) |
-|     selectValue     |                                 `EventEmitter<any>`                                  |                                                      (optional), callback function after selecting an option数                                                      | [Basic usage](#Basic-usage) |
-| transInputFocusEmit | `EventEmitter<any>`  |                                                      (optional). Callback function for input focus             | [Basic usage](#Basic-usage)  |
+|      Parameter      |       Type        |                                                                                                          Description                                                                                                          | Jump to Demo                          |
+| :-----------------: | :---------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------ |
+|      loadMore       |    `function`     | optional. It is a lazy loading trigger event. It is used together with enableLazyLoad. `$event.loadFinish()` is used to disable the loading status. $event is the instance of the pop-up component AutoCompletePopupComponent | [Enable lazy load](#Enable-lazy-load) |
+|     selectValue     | `function(value)` |                                                                                    (optional), callback function after selecting an option                                                                                    | [Basic usage](#Basic-usage)           |
+| transInputFocusEmit |    `function`     |                                                                                         (optional). Callback function for input focus                                                                                         | [Basic usage](#Basic-usage)           |
 
 
 # Interface & Type Definition
+
+### Placement
+```ts
+type Placement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
+```
 
 ### defaultSearchFn
 

@@ -220,18 +220,6 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/66343210?v=4',
       homepage: 'https://github.com/Denver-Ning'
     },
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/47918504?v=4',
-      homepage: 'https://github.com/banlify'
-    },
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/23261843?v=4',
-      homepage: 'https://github.com/to0simple'
-    },
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/61737780?v=4',
-      homepage: 'https://github.com/asdlml6'
-    },
   ],
   cascader: [
     {
