@@ -17,18 +17,18 @@ interface TypeOperateIconReflect {
 interface TypeeditStatusReflect {
   [id: TypeID]: boolean;
 }
+type TypeHandleReflectIdToIcon = (id: TypeID, operate: TypeOperator) => void;
 interface TypeReturnUseOperate {
   editStatusReflect: Ref<TypeeditStatusReflect>;
   operateIconReflect: Ref<Array<TypeOperateIconReflect>>;
   handleReflectIdToIcon: TypeHandleReflectIdToIcon;
 }
 type TypeUseOperate = (treeData: Ref<TreeData>) => TypeReturnUseOperate;
-type TypeHandleReflectIdToIcon = (id: TypeID, operate: TypeOperator) => void;
 
 const reflectIconWithHandle = (data: TreeItem, operator: TypeOperator): JSX.Element => {
-  const handleAdd = (payload: MouseEvent) => operator.handleAdd();
-  const handleEdit = (payload: MouseEvent) => operator.handleEdit();
-  const handleDelete = (payload: MouseEvent) => operator.handleDelete();
+  const handleAdd = () => operator.handleAdd();
+  const handleEdit = () => operator.handleEdit();
+  const handleDelete = () => operator.handleDelete();
   return (
     <>
       { operator.addable && <span class="op-icons icon icon-add" onClick={handleAdd}></span> }
@@ -38,12 +38,12 @@ const reflectIconWithHandle = (data: TreeItem, operator: TypeOperator): JSX.Elem
   );
 };
 
-const useOperate: TypeUseOperate = (treeData) => {
+const useOperate: TypeUseOperate = () => {
   const operateIconReflect = ref<Array<TypeOperateIconReflect>>([]);
   const editStatusReflect = ref<TypeeditStatusReflect>({});
 
   const handleReflectIdToIcon: TypeHandleReflectIdToIcon = (id, operator) => {
-    const isNotExistedReflectItem = operateIconReflect.value.every(({ id: d }) => d != id);
+    const isNotExistedReflectItem = operateIconReflect.value.every(({ id: d }) => d !== id);
     if (isNotExistedReflectItem) {
       editStatusReflect.value[id] = false;
       operateIconReflect.value.push({ id, renderIcon: data => reflectIconWithHandle(data, operator) });

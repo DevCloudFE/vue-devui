@@ -1,4 +1,4 @@
-import { defineComponent, reactive, ref, toRefs, provide, unref } from 'vue';
+import { defineComponent, reactive, ref, toRefs, provide } from 'vue';
 import type { SetupContext } from 'vue';
 import { treeProps, TreeProps, TreeItem, TreeRootType, Nullable } from './tree-types';
 import { CHECK_CONFIG } from  './config';
@@ -85,21 +85,21 @@ export default defineComponent({
             }, 4000);
           });
         },
-        renderLoading: (id) => {
+        renderLoading: (elementId) => {
           return Loading.open({
-            target: document.getElementById(id),
+            target: document.getElementById(elementId),
             message: '加载中...',
             positionType: 'relative',
             zIndex: 1,
           });
         }
       });
-      const renderFoldIcon = (item: TreeItem) => {
+      const renderFoldIcon = (treeItem: TreeItem) => {
         const handleClick = async (target: MouseEvent) => {
-          if (item.isParent) {
-            item.children = await getLazyData(id);  // item 按引用传递
+          if (treeItem.isParent) {
+            treeItem.children = await getLazyData(id);  // treeItem 按引用传递
           }
-          return toggle(target, item);
+          return toggle(target, treeItem);
         };
         return (
           <div class="devui-tree-node__folder" onClick={handleClick} >
