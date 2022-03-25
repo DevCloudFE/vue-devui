@@ -1,7 +1,7 @@
 {
   "bracketSpacing": true,
   "jsxBracketSameLine": true,
-  "jsxSingleQuote": true,
+  "jsxSingleQuote": false,
   "printWidth": 140,
   "semi": true,
   "useTabs": false,

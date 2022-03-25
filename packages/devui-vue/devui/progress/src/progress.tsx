@@ -1,5 +1,4 @@
 import { defineComponent, reactive, toRefs, watch } from 'vue';
-
 import './progress.scss';
 
 interface data {
@@ -94,13 +93,13 @@ export default defineComponent({
 
     const progressLine = (
       <div
-        class='devui-progress--line'
+        class="devui-progress--line"
         style={{
           height: height,
           borderRadius: height,
         }}>
         <div
-          class='devui-progress-bar'
+          class="devui-progress-bar"
           style={{
             height: height,
             borderRadius: height,
@@ -117,23 +116,23 @@ export default defineComponent({
       </div>
     );
 
-    const textElement = <span class='devui-progress-circle-text'>{percentage}%</span>;
+    const textElement = <span class="devui-progress-circle-text">{percentage}%</span>;
 
     const progressCircle = (
-      <div class='devui-progress-circle'>
-        <svg class='devui-progress-circle' viewBox='0 0 100 100'>
+      <div class="devui-progress-circle">
+        <svg class="devui-progress-circle" viewBox="0 0 100 100">
           <path
-            class='devui-progress-circle-trail'
-            fill-opacity='0'
+            class="devui-progress-circle-trail"
+            fill-opacity="0"
             stroke-width={strokeWidth}
             style={data.trailPath}
             d={data.pathString}
           />
           <path
-            class='devui-progress-circle-path'
+            class="devui-progress-circle-path"
             d={data.pathString}
-            stroke-linecap='round'
-            fill-opacity='0'
+            stroke-linecap="round"
+            fill-opacity="0"
             stroke={barBgColor}
             stroke-width={percentage ? strokeWidth : 0}
             style={data.strokePath}
@@ -144,6 +143,6 @@ export default defineComponent({
       </div>
     );
 
-    return <div class='devui-progress'>{!isCircle ? progressLine : progressCircle}</div>;
+    return <div class="devui-progress">{!isCircle ? progressLine : progressCircle}</div>;
   },
 });
