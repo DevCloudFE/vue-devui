@@ -90,7 +90,7 @@ $select-item-min-height: 36px;
   border: 1px solid $devui-form-control-line;
   border-radius: $devui-border-radius;
   outline: none;
-  background-color: $devui-base-bg;
+  background-color: $devui-form-control-bg;
   box-sizing: border-box;
   @include border-transition();
 

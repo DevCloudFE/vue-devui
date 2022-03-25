@@ -49,6 +49,7 @@ $devui-icon-fill-active: var(--devui-icon-fill-active, #5e7ce0);             // 
 $devui-icon-fill-active-hover: var(--devui-icon-fill-active-hover, #526ecc); // svg图标 高亮填充色悬停反馈色
 // 表单
 $devui-form-control-line: var(--devui-form-control-line, #adb0b8);                           // 表单控件边框色，同 边框分割线
+$devui-form-control-bg: var(--devui-form-control-bg, #ffffff);                               // 表单控件背景色
 $devui-form-control-line-hover: var(--devui-form-control-line-hover, #575d6c);               // 表单控件边框悬停反馈色
 $devui-form-control-line-active: var(--devui-form-control-line-active, #5e7ce0);             // 表单控件边框激活色，用于获得焦点
 $devui-form-control-line-active-hover: var(--devui-form-control-line-active-hover, #344899); // 表单控件边框激活色，用于获得焦点且悬停
