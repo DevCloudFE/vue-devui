@@ -10,7 +10,7 @@ export interface TreeItem {
   editable?: boolean;
   deletable?: boolean;
   children?: TreeData;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 export interface IDropType {
   dropPrev?: boolean;
@@ -60,6 +60,6 @@ export type TreeProps = ExtractPropTypes<typeof treeProps>;
 export type Nullable<T> = null | T;
 
 export interface TreeRootType {
-  ctx: SetupContext<any>;
+  ctx: SetupContext;
   props: TreeProps;
 }

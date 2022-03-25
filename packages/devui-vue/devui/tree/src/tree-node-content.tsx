@@ -1,4 +1,4 @@
-import { defineComponent, inject, toRefs, watch, onUpdated, ref } from 'vue';
+import { defineComponent, inject, toRefs, onUpdated, ref } from 'vue';
 import { TreeRootType } from './tree-types';
 
 export default defineComponent({
