@@ -1,6 +1,8 @@
+@import '../../style/theme/color';
+
 .devui-progress--line {
   position: relative;
-  background: #dfe1e6;
+  background: $devui-dividing-line;
 
   .devui-progress-bar {
     width: 0;
@@ -12,7 +14,7 @@
   > span {
     display: block;
     white-space: nowrap;
-    color: #ffffff;
+    color: $devui-light-text;
     text-align: center;
     position: absolute;
     left: 0;
@@ -34,7 +36,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    color: #252b3a;
+    color: $devui-text;
     line-height: 1;
     white-space: normal;
     text-align: center;

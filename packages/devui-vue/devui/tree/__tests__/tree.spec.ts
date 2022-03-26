@@ -1,9 +1,10 @@
 import { mount, VueWrapper } from '@vue/test-utils';
+import type { ComponentPublicInstance } from 'vue';
 import { ref, nextTick } from 'vue';
 import DTree from '../src/tree';
 
 describe('tree', () => {
-  let wrapper: VueWrapper<any>;
+  let wrapper: VueWrapper<ComponentPublicInstance>;
 
   beforeEach(() => {
     const data = ref([

@@ -1,4 +1,11 @@
-export const CONTRIBUTORS_MAP = {
+interface IContributingMap {
+  [key: string]: Array<{
+    avatar: string;
+    homepage: string;
+  }>
+}
+
+export const CONTRIBUTORS_MAP: IContributingMap = {
   // 通用
   button: [
     {
@@ -493,6 +500,14 @@ export const CONTRIBUTORS_MAP = {
     },
   ],
   tree: [
+    {
+      avatar: 'https://portrait.gitee.com/uploads/avatars/user/3271/9815056_sufuwang_1633233452.png!avatar200',
+      homepage: 'https://github.com/sufuwang'
+    },
+    {
+      avatar: '',
+      homepage: 'https://gitee.com/gxuud'
+    },
     {
       avatar: 'https://portrait.gitee.com/uploads/avatars/user/2582/7746958_kagol_1606652460.png!avatar100',
       homepage: 'https://github.com/kagol'
