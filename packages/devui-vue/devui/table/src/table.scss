@@ -1,49 +1,45 @@
 @import '../../styles-var/devui-var.scss';
 
 .devui-table {
-  display: table;
-  table-layout: fixed;
   width: 100%;
-  border-spacing: 0;
-  border: none;
-  margin: 0;
-  padding: 0;
+  overflow-x: auto;
+  padding-top: 8px;
 
-  &-wrapper {
+  &__view {
+    display: table;
+    table-layout: fixed;
     width: 100%;
-    overflow-x: auto;
-    padding-top: 8px;
+    border-spacing: 0;
+    border: none;
+    margin: 0;
+    padding: 0;
   }
 
-  &-striped {
+  &--striped {
     tbody tr:nth-child(even) {
       background-color: $devui-list-item-strip-bg;
     }
   }
 
-  &-empty {
+  &__empty {
     width: 100%;
     font-size: $devui-font-size;
     text-align: center;
   }
 
-  &-view {
+  &__fix-header {
     display: flex;
     flex-direction: column;
     position: relative;
     height: 100%;
-
-    & .scroll-view {
-      flex: 1;
-      overflow: scroll;
-    }
   }
-}
 
-.table-layout-auto {
-  table-layout: auto;
-}
+  &__scroll-view {
+    flex: 1;
+    overflow: scroll;
+  }
 
-.table-layout-auto {
-  table-layout: auto;
+  &--layout-auto {
+    table-layout: auto;
+  }
 }

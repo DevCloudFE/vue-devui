@@ -1,16 +1,17 @@
 import { defineComponent, inject, computed, PropType, toRef } from 'vue';
 import { TABLE_TOKEN } from '../../table-types';
-import { Checkbox } from '../../../../checkbox';
-
-import './body.scss';
 import { Column } from '../column/column-types';
+import { Checkbox } from '../../../../checkbox';
 import { useFixedColumn } from '../../composable/use-table';
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import './body.scss';
 
 export default defineComponent({
   name: 'DTableBody',
   setup() {
     const table = inject(TABLE_TOKEN);
     const { _data: data, _columns: columns, _checkList: checkList, isFixedLeft } = table.store.states;
+    const ns = useNamespace('table');
 
     // 移动到行上是否高亮
     const hoverEnabled = computed(() => table.props.rowHoveredHighlight);
@@ -19,7 +20,7 @@ export default defineComponent({
     const tdAttrs = computed(() =>
       isFixedLeft.value
         ? {
-            class: 'devui-sticky-cell left',
+            class: `${ns.m('sticky-cell')} left`,
             style: 'left:0;',
           }
         : null
@@ -32,7 +33,7 @@ export default defineComponent({
       ) : null;
 
     return () => (
-      <tbody class='devui-tbody'>
+      <tbody class={ns.e('tbody')}>
         {data.value.map((row, rowIndex) => {
           return (
             <tr key={rowIndex} class={{ 'hover-enabled': hoverEnabled.value }}>
