@@ -20,6 +20,5 @@ export const useLazyLoad: (
       load(inputValue.value);
     }
   };
-
   return { loadMore };
 };
