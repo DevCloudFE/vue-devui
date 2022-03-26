@@ -15,7 +15,7 @@ English | [简体中文](README.zh-CN.md)
 - 📦 40 high-quality components that are simple, easy to use, and flexible.
 - 🔑 Support for TypeScript.
 - ⛰️ Support for Nuxt3.
-- ⚡ Support for on-demand introduction.
+- ⚡ Support for on-demand import.
 - 🌍 Support internationalization.
 - 🎨 Support theme customization, and built-in seven beautiful themes such as `Galaxy`, `Sweet` and `Provence`.
 
