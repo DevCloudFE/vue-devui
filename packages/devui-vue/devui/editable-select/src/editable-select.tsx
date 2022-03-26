@@ -168,14 +168,12 @@ export default defineComponent({
                           e.stopPropagation();
                           handleClick(option);
                         }}>
-                        {ctx.slots.itemTemplate ? ctx.slots.itemTemplate(option) : option.label}
+                        {ctx.slots.item ? ctx.slots.item(option) : option.label}
                       </li>
                     );
                   })}
                   <li class="devui-no-result-template" v-show={!filteredOptions.value.length}>
-                    <div class="devui-no-data-tip">
-                      {ctx.slots.noResultItemTemplate ? ctx.slots.noResultItemTemplate() : emptyText.value}
-                    </div>
+                    <div class="devui-no-data-tip">{ctx.slots.noResultItem ? ctx.slots.noResultItem() : emptyText.value}</div>
                   </li>
                 </ul>
               </div>

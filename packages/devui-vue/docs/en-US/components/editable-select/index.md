@@ -145,10 +145,10 @@ export default defineComponent({
 ```vue
 <template>
   <d-editable-select v-model="value" :width="450" filter-option :options="options">
-    <template #itemTemplate="slotProps">
+    <template #item="slotProps">
       <div>第{{ slotProps.value }}项: {{ slotProps.label }}</div>
     </template>
-    <template #noResultItemTemplate>
+    <template #noResultItem>
       <div>
         {{ `没有匹配项` }}
       </div>
@@ -286,5 +286,5 @@ d-editable-select Events
 d-editable-select Slots
 | Name|Description |Jump to Demo|
 | ---- | -- | ------- |
-| itemTemplate | Optional, Dropdown list item template | [Custom template display](#custom-template-display) |
-| noResultItemTemplate | Optional. Template for which no result is found after the drop-down list item is searched. | [Custom template display](#custom-template-display) |
+| item | Optional, Dropdown list item template | [Custom template display](#custom-template-display) |
+| noResultItem| Optional. Template for which no result is found after the drop-down list item is searched. | [Custom template display](#custom-template-display) |

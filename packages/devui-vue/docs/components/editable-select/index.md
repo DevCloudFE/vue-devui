@@ -142,10 +142,10 @@ export default defineComponent({
 ```vue
 <template>
   <d-editable-select v-model="value" :width="450" filter-option :options="options">
-    <template #itemTemplate="slotProps">
+    <template #item="slotProps">
       <div>第{{ slotProps.value }}项: {{ slotProps.label }}</div>
     </template>
-    <template #noResultItemTemplate>
+    <template #noResultItem>
       <div>
         {{ `没有匹配项` }}
       </div>
