@@ -117,9 +117,9 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-tag deletable @tagDelete="handleClose">tag1</d-tag>
-    <d-tag type="primary" deletable @tagDelete="handleClose">tag2</d-tag>
-    <d-tag color="#39afcc" deletable @tagDelete="handleClose">tag3</d-tag>
+    <d-tag deletable @tag-delete="handleClose">tag1</d-tag>
+    <d-tag type="primary" deletable @tag-delete="handleClose">tag2</d-tag>
+    <d-tag color="#39afcc" deletable @tag-delete="handleClose">tag3</d-tag>
   </div>
 </template>
 <script>
@@ -130,8 +130,8 @@ export default defineComponent({
     const handleClose = () => {
       console.log('handleClose');
     };
-    return { 
-      handleClose 
+    return {
+      handleClose,
     };
   },
 });
@@ -146,18 +146,18 @@ export default defineComponent({
 
 #### Props
 
-|     参数     |   类型    |  默认值   |                             说明                             |              可选值              |             跳转至 Demo              |
-| :----------: | :-------: | :-------: | :----------------------------------------------------------: | :------------------------------: | :----------------------------------: |
-|     type     | `string`  | 'defalut' | Optional. Type of the a tag, color does not take effect after the type is specified. | `success\|info\|warning\|danger` |           [Basic](#Basic)            |
-|    color     | `string`  |    ''     |             Optional. Theme color of the a tag.              |                -                 |           [Basic](#Basic)            |
-| titleContent | `string`  |    ''     | Optional. Sets the title displayed when the cursor is hovered. |                -                 |           [Basic](#Basic)            |
-|   checked    | `boolean` |   false   |         Optional. Initial status of a tag. selected.         |          `true\|false`           | [Can be  selected](#can-be-selected) |
-|  deletable   | `boolean` |   false   |      Optional. Specifies whether a tag can be deleted.       |          `true\|false`           |       [Deletable](#Deletable)        |
+|     参数     |   类型    |  默认值   |                                         说明                                         |              可选值              |             跳转至 Demo             |
+| :----------: | :-------: | :-------: | :----------------------------------------------------------------------------------: | :------------------------------: | :---------------------------------: |
+|     type     | `string`  | 'defalut' | Optional. Type of the a tag, color does not take effect after the type is specified. | `success\|info\|warning\|danger` |           [Basic](#Basic)           |
+|    color     | `string`  |    ''     |                         Optional. Theme color of the a tag.                          |                -                 |           [Basic](#Basic)           |
+| titleContent | `string`  |    ''     |            Optional. Sets the title displayed when the cursor is hovered.            |                -                 |           [Basic](#Basic)           |
+|   checked    | `boolean` |   false   |                     Optional. Initial status of a tag. selected.                     |          `true\|false`           | [Can be selected](#can-be-selected) |
+|  deletable   | `boolean` |   false   |                  Optional. Specifies whether a tag can be deleted.                   |          `true\|false`           |       [Deletable](#Deletable)       |
 
 #### Event
 
-| 名称          | 说明                                                      |
-| :------------ | --------------------------------------------------------- |
-| click         | Event triggered when a tag is clicked.                    |
-| tagDelete     | Event triggered when a tag is deleted.                    |
-| checkedChange | Event triggered when the check status of the tag changes. |
+| 名称           | 说明                                                      |
+| :------------- | --------------------------------------------------------- |
+| click          | Event triggered when a tag is clicked.                    |
+| tag-delete     | Event triggered when a tag is deleted.                    |
+| checked-change | Event triggered when the check status of the tag changes. |

@@ -117,9 +117,9 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-tag deletable @tagDelete="handleClose">tag1</d-tag>
-    <d-tag type="primary" deletable @tagDelete="handleClose">tag2</d-tag>
-    <d-tag color="#39afcc" deletable @tagDelete="handleClose">tag3</d-tag>
+    <d-tag deletable @tag-delete="handleClose">tag1</d-tag>
+    <d-tag type="primary" deletable @tag-delete="handleClose">tag2</d-tag>
+    <d-tag color="#39afcc" deletable @tag-delete="handleClose">tag3</d-tag>
   </div>
 </template>
 <script>
@@ -130,8 +130,8 @@ export default defineComponent({
     const handleClose = () => {
       console.log('handleClose');
     };
-    return { 
-      handleClose 
+    return {
+      handleClose,
     };
   },
 });
@@ -156,8 +156,8 @@ export default defineComponent({
 
 #### Event
 
-| 名称          | 说明                                                        |
-| :------------ | ----------------------------------------------------------- |
-| click         | 点击 tag 的时候触发的事件                                   |
-| tagDelete     | 删除 tag 的时候触发的事件                                   |
-| checkedChange | tag 的 check 状态改变时触发的事件，通过参数获取标签最新状态 |
+| 名称           | 说明                                                        |
+| :------------- | ----------------------------------------------------------- |
+| click          | 点击 tag 的时候触发的事件                                   |
+| tag-delete     | 删除 tag 的时候触发的事件                                   |
+| checked-change | tag 的 check 状态改变时触发的事件，通过参数获取标签最新状态 |
