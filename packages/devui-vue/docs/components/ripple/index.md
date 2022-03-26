@@ -12,12 +12,12 @@
   <d-row :gutter="50">
     <d-col :span="12">
       <div class="ripple-button">
-        <div class="ripple-htmlElement" v-ripple="{ color: '#5e7ce0',duration: 0.3, delay: 0.3 }">HTML元素 中使用 v-ripple</div>
+        <div class="ripple-htmlElement" v-ripple="{ color: '#5e7ce0',duration: 300, delay: 300 }">HTML元素 中使用 v-ripple</div>
       </div>
     </d-col>
     <d-col :span="12">
       <div class="ripple-button">
-        <div class="ripple-htmlElement" v-ripple="{ duration: 0.8 }">HTML元素 中使用 v-ripple</div>
+        <div class="ripple-htmlElement" v-ripple="{ duration: 800 }">HTML元素 中使用 v-ripple</div>
       </div>
     </d-col>
   </d-row>
@@ -52,7 +52,7 @@
           ]"
           :style="{ color: item.color }"
         >
-          <div class="ripple-changeTextColor" v-ripple="{ duration: 0.39 }">
+          <div class="ripple-changeTextColor" v-ripple="{ duration: 300 }">
             {{ item.text }}
           </div>
         </li>
@@ -72,7 +72,7 @@
         >
           <div
             class="ripple-changeTextColor"
-            v-ripple="{ duration: 0.39, color: `${item.color.slice(0, 4)}` }"
+            v-ripple="{ duration: 300, color: `${item.color.slice(0, 4)}` }"
           >
             {{ item.text }}
           </div>
@@ -96,16 +96,16 @@ Button 组件
 <template>
   <d-row>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" variant="text" style="padding: 3px 8px;margin-right: 20px">Text</d-button>
+      <d-button v-ripple="{ duration: 300 }" variant="text" style="padding: 3px 8px;margin-right: 20px">Text</d-button>
     </d-col>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" variant="text-dark" style="padding: 3px 8px;margin-right: 20px">Text dark</d-button>
+      <d-button v-ripple="{ duration: 300 }" variant="text-dark" style="padding: 3px 8px;margin-right: 20px">Text dark</d-button>
     </d-col>
         <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" icon="add" variant="text-dark" title="add"></d-button>
+      <d-button v-ripple="{ duration: 300 }" icon="add" variant="text-dark" title="add"></d-button>
     </d-col>
     <d-col :span="6">
-      <d-button v-ripple="{duration: 0.5}" icon="delete" variant="text-dark" title="delete"></d-button>
+      <d-button v-ripple="{ duration: 300 }" icon="delete" variant="text-dark" title="delete"></d-button>
     </d-col>
   </d-row>
 </template>
@@ -118,7 +118,7 @@ Card 组件
 :::demo
 ```vue
 <template>
-  <d-card v-ripple="{ duration: 0.3 }" class="d-card" :src="'https://devui.design/components/assets/image1.png'">
+  <d-card v-ripple="{ duration: 300 }" class="d-card" :src="'https://devui.design/components/assets/image1.png'">
     <template #cardAvatar>
       <d-avatar name="DevUI"></d-avatar>
     </template>
@@ -205,7 +205,7 @@ Card 组件
 |      color      | `string`  | `#00000050` | 可选，默认当前文本颜色            |
 | initial-opacity | `number`  |    `0.1`    | 可选，初始交互效果透明度大小      |
 |  final-opacity  | `number`  |    `0.1`    | 可选，结束交互效果长按透明度大小  |
-|    duration     | `number`  |   `0.4s`    | 可选，持续时间                    |
+|    duration     | `number`  |    `400`    | 可选，持续时间                    |
 |     easing      | `string`  | `ease-out`  | 可选，缓动动画                    |
-|     delay       | `number`  |   `0.0075s`    | 可选，延迟 debouceTime 时间后调用 |
+|     delay       | `number`  |    `75`     | 可选，延迟 debouceTime 时间后调用 |
 |    disabled     | `boolean` |   `false`   | 可选，禁止水波效果                |

@@ -26,7 +26,7 @@ interface IRippleDirectiveOptions {
    * 动画持续事件
    *
    * @default
-   * 0.4
+   * 400ms
    */
   duration: number;
   /**
@@ -42,7 +42,7 @@ interface IRippleDirectiveOptions {
    * @note
    * 类似于 debounceTime
    * @default
-   * 75
+   * 75ms
    */
   delay: number;
   /**
@@ -81,9 +81,9 @@ const DEFAULT_PLUGIN_OPTIONS: IRipplePluginOptions = {
   color: 'currentColor',
   initialOpacity: 0.2,
   finalOpacity: 0.1,
-  duration: 0.4,
+  duration: 400,
   easing: 'ease-out',
-  delay: 0.0075,
+  delay: 75,
   disabled: false
 };
 

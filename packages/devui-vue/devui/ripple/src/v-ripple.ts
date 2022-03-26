@@ -80,9 +80,9 @@ const ripple = (
       rippleEl.style.transform = `translate(-50%,-50%) scale(1)`;
       rippleEl.style.opacity = `${options.finalOpacity}`;
 
-      setTimeout(() => releaseripple(), options.duration * 1000);
+      setTimeout(() => releaseripple(), options.duration);
     });
-  }, options.delay * 1000);
+  }, options.delay);
   document.addEventListener('pointercancel', cancelripple);
 };
 
