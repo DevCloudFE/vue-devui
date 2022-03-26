@@ -164,11 +164,30 @@ describe('tree', () => {
     });
   });
 
+  /**
+   * 测试树节点的基本渲染是否正常：
+   * 1. 节点数量和内容
+   * 2. 节点的嵌套层级
+   * 3. 节点的展开/收起状态
+   * 4. 节点的禁用状态
+   * 5. 展开/收起按钮禁用状态
+   * 6. 连接线样式
+   */
   it('should render correctly', () => {
     expect(wrapper.classes()).toContain('devui-tree');
     expect(wrapper.element.childElementCount).toBe(6);
   });
 
+  /**
+   * 测试节点的 hover 和 click 事件是否能正常响应
+   */
+  it('should response to hover and click event', () => {
+
+  });
+
+  /**
+   * 测试节点是否能正常展开/收起
+   */
   it('should expand and collapse correctly', async () => {
     const firstNode = wrapper.get('.devui-tree-node:first-child');
 
@@ -185,4 +204,32 @@ describe('tree', () => {
     await nextTick();
     expect(firstNode.classes()).toContain('devui-tree-node__open');
   });
+
+  /**
+   * 测试节点懒加载功能是否正常
+   */
+  it('should loading child nodes dynamicly when click open button', () => {
+
+  });
+
+  /**
+   * 当节点下只有一个子节点时，应该合并这些节点
+   */
+  it('should merge nodes when there is only one child node', () => {
+
+  });
+
+  /**
+   * 节点的勾选功能正常
+   * 勾选复选框的禁用状态正常
+   * 父子check控制功能正常
+   * 自定义图标功能正常
+   * 节点的增删改（操作按钮）功能正常
+   * loading模板功能正常
+   * 搜索过滤功能正常
+   * 自定义树中显示和搜索的关键字功能正常
+   * 拖拽排序功能正常
+   * 虚拟滚动功能正常
+   * 无动画功能正常
+   */
 });
