@@ -19,7 +19,7 @@ export const useSort = (store: TableStore, column: Ref<Column>): Ref<SortDirecti
   return directionRef;
 };
 
-export const useFliter = (store: TableStore, column: Ref<Column>): Ref<FilterResults> => {
+export const useFilter = (store: TableStore, column: Ref<Column>): Ref<FilterResults> => {
   const filteredRef = shallowRef<FilterResults>();
   watch(filteredRef, (results) => {
     store.filterData(column.value.field, results);
