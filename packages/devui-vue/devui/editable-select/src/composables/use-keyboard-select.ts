@@ -1,18 +1,22 @@
-import { ComputedRef, nextTick, ref, Ref } from 'vue';
+import { ref, nextTick, ComputedRef, Ref } from 'vue';
 import { OptionObjectItem } from '../editable-select-type';
-
 interface useKeyboardSelectReturnType {
   handleKeydown: (event: KeyboardEvent) => void;
+  hoverIndex: Ref<number>;
+  selectedIndex: Ref<number>;
 }
-export const useKeyboardSelect: (
-  dropdownRef: Ref<HTMLElement>,
-  disabled: string,
+export const useKeyboardSelect = (
+  dropdownRef: Ref,
   visible: Ref<boolean>,
-  options: ComputedRef<OptionObjectItem[]>,
-  toggleMenu: () => void,
+  inputValue: Ref<string>,
+  filteredOptions: ComputedRef<OptionObjectItem[]>,
+  optionDisabledKey: string,
+  filterOption: boolean | ((val: string, option: OptionObjectItem) => boolean) | undefined,
+  loading: Ref<boolean>,
+  handleClick: (options: OptionObjectItem) => void,
   closeMenu: () => void,
-  handleClick: (options: OptionObjectItem) => void
-) => useKeyboardSelectReturnType = (dropdownRef, disabled, visible, options, toggleMenu, closeMenu, handleClick) => {
+  toggleMenu: () => void
+): useKeyboardSelectReturnType => {
   const hoverIndex = ref(0);
   const selectedIndex = ref(0);
   const updateHoveringIndex = (index: number) => {
@@ -22,79 +26,85 @@ export const useKeyboardSelect: (
     const ul = dropdownRef.value;
     const li = ul.children[index];
     nextTick(() => {
-      const containerInfo = ul.getBoundingClientRect();
-      const elementInfo = li.getBoundingClientRect();
-      if (elementInfo.bottom > containerInfo.bottom || elementInfo.top < containerInfo.top) {
-        li.scrollIntoView(false);
+      if (li.scrollIntoViewIfNeeded) {
+        li.scrollIntoViewIfNeeded(false);
+      } else {
+        const containerInfo = ul.getBoundingClientRect();
+        const elementInfo = li.getBoundingClientRect();
+        if (elementInfo.bottom > containerInfo.bottom || elementInfo.top < containerInfo.top) {
+          li.scrollIntoView(false);
+        }
       }
     });
   };
+  const handleEscape = () => {
+    if (inputValue.value) {
+      inputValue.value = '';
+    } else {
+      closeMenu();
+    }
+  };
 
-  const onKeyboardNavigation = (direction: string, newIndex = 0): void => {
-    if (options.value.length === 1) {
+  const handleEnter = () => {
+    const len = filteredOptions.value.length;
+    if (!visible.value) {
+      toggleMenu();
+    } else if (!len || len === 1) {
+      closeMenu();
+    } else if (len && len !== 1) {
+      handleClick(filteredOptions.value[hoverIndex.value]);
+      closeMenu();
+    }
+  };
+
+  const handleKeyboardNavigation = (direction: string): void => {
+    const len = filteredOptions.value.length;
+    if (!len || len === 1) {
       return;
     }
-    if (!['ArrowDown', 'ArrowUp'].includes(direction)) {return;}
+    if (!['ArrowDown', 'ArrowUp'].includes(direction)) {
+      return;
+    }
+
+    if (filterOption === false && loading.value) {
+      return;
+    }
+    let newIndex = 0;
+    newIndex = hoverIndex.value;
+
     if (direction === 'ArrowUp') {
-      if (newIndex === 0) {
-        newIndex = options.value.length - 1;
-        scrollToItem(newIndex);
-        return updateHoveringIndex(newIndex);
+      newIndex -= 1;
+      if (newIndex === -1) {
+        newIndex = len - 1;
       }
-      newIndex = newIndex - 1;
     } else if (direction === 'ArrowDown') {
-      if (newIndex === options.value.length - 1) {
+      newIndex += 1;
+      if (newIndex === len) {
         newIndex = 0;
-        scrollToItem(newIndex);
-        return updateHoveringIndex(newIndex);
       }
-      newIndex = newIndex + 1;
     }
-
-    const option = options.value[newIndex];
-    if (option[disabled]) {
-      return onKeyboardNavigation(direction, newIndex);
+    hoverIndex.value = newIndex;
+    const option = filteredOptions.value[newIndex];
+    if (option[optionDisabledKey]) {
+      return handleKeyboardNavigation(direction);
     }
-    scrollToItem(newIndex);
     updateHoveringIndex(newIndex);
-  };
-
-  const onKeydownEnter = () => {
-    let index = hoverIndex.value;
-    if (options.value.length === 1) {
-      index = 0;
-    }
-    handleClick(options.value[index]);
-    closeMenu();
-  };
-
-  const onKeydownEsc = () => {
-    closeMenu();
+    scrollToItem(newIndex);
   };
 
   const handleKeydown = (event: KeyboardEvent) => {
     const keyCode = event.key || event.code;
-
-    if (options.value.length === 0) {return;}
-
-    if (!visible.value) {
-      return toggleMenu();
-    }
-
     switch (keyCode) {
-    case 'Enter':
-      onKeydownEnter();
-      break;
     case 'Escape':
-      onKeydownEsc();
+      event.preventDefault();
+      handleEscape();
+      break;
+    case 'Enter':
+      handleEnter();
       break;
     default:
-      onKeyboardNavigation(keyCode);
+      handleKeyboardNavigation(keyCode);
     }
   };
-  return {
-    handleKeydown,
-    hoverIndex,
-    selectedIndex,
-  };
+  return { handleKeydown, hoverIndex, selectedIndex };
 };

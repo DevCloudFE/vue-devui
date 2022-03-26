@@ -20,16 +20,10 @@ export default defineComponent({
     const dropdownRef = ref();
     const origin = ref();
 
-    const position = reactive({
-      originX: 'left',
-      originY: 'bottom',
-      overlayX: 'left',
-      overlayY: 'top',
-    });
+    const position = ref(['bottom', 'left']);
     const visible = ref(false);
     const inputValue = ref(props.modelValue || '');
-    const selectIndex = ref(0);
-    const hoverIndex = ref(0)
+    const loading = ref(props.loading);
     // 标准化options，统一处理成[{}]的形式
     const normalizeOptions = computed(() => {
       return props.options.map((option) => {
@@ -64,6 +58,12 @@ export default defineComponent({
       return text;
     });
 
+    watch(
+      () => props.loading,
+      (newVal) => {
+        loading.value = newVal;
+      }
+    );
     // 下拉列表显影切换
     const toggleMenu = () => {
       visible.value = !visible.value;
@@ -87,14 +87,17 @@ export default defineComponent({
       closeMenu();
     };
     // 键盘选择
-    const { handleKeydown } = useKeyboardSelect(
+    const { handleKeydown, hoverIndex, selectedIndex } = useKeyboardSelect(
       dropdownRef,
-      props.optionDisabledKey,
       visible,
+      inputValue,
       filteredOptions,
-      toggleMenu,
+      props.optionDisabledKey,
+      props.filterOption,
+      loading,
+      handleClick,
       closeMenu,
-      handleClick
+      toggleMenu
     );
 
     watch(
@@ -109,7 +112,7 @@ export default defineComponent({
       const { optionDisabledKey: disabledKey } = props;
       return className('devui-dropdown-item', {
         disabled: disabledKey ? !!option[disabledKey] : false,
-        selected: index === selectIndex.value,
+        selected: index === selectedIndex.value,
         'devui-dropdown-bg': index === hoverIndex.value,
       });
     };
@@ -143,7 +146,7 @@ export default defineComponent({
             </span>
           </span>
 
-          <d-flexible-overlay origin={origin} v-model:visible={visible.value} position={position} hasBackdrop={false}>
+          <d-flexible-overlay origin={origin.value} v-model={visible.value} position={position.value} hasBackdrop={false}>
             <div
               class="devui-editable-select-dropdown"
               style={{

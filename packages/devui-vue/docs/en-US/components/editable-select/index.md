@@ -1,14 +1,14 @@
-# EditableSelect 可输入下拉选择框
+# EditableSelect
 
-同时支持输入和下拉选择的输入框。
+You can enter or select a value from the drop-down list box.
 
-#### 何时使用
+#### When To Use
 
-当需要同时支持用户输入数据和选择已有数据的时候使用，加入输入联想功能，方便用户搜索已有数据。
+You can use it easily when you want to search existed data.
 
-### 基本用法
+### Basic usage
 
-通过 source 设置数据源。
+Set source to a data source.
 :::demo
 
 ```vue
@@ -47,8 +47,9 @@ export default defineComponent({
 
 :::
 
-### 设置禁用
+### Set disable options
 
+Disable specified data or disable it as a whole
 :::demo
 
 ```vue
@@ -93,7 +94,9 @@ export default defineComponent({
 
 :::
 
-### 自定义数据匹配方法
+### Customized data matching method
+
+Use filter-optio to customize the data matching method.
 
 :::demo
 
@@ -135,7 +138,7 @@ export default defineComponent({
 
 :::
 
-### 自定义模板展示
+### Custom template display
 
 :::demo
 
@@ -184,7 +187,7 @@ export default defineComponent({
 
 :::
 
-### 懒加载
+### Enable lazy load
 
 :::demo
 
@@ -260,28 +263,28 @@ export default defineComponent({
 
 ### d-editable-select
 
-d-editable-select 参数
+d-editable-select Attributes
 
-| 参数                | 类型                                      | 默认     | 说明                                                                                                                 | 跳转 Demo              |
-| ------------------- | ----------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------- |
-| options             | `Array`                                   | []       | 可选，数据列表                                                                                                       | [基本用法](#基本用法)  |
-| placeholder         | `string`                                  | `Search` | 可选，下拉框的默认提示文字                                                                                           | [基本用法](#基本用法)  |
-| max-height          | `number`                                  | --       | 可选，下拉框最大高度                                                                                                 | [基本用法](#基本用法)  |
-| width               | `number`                                  | --       | 可选，输入框宽度                                                                                                     | [基本用法](#基本用法)` |
-| disabled            | `boolean`                                 | false    | 可选，值为 true 禁用                                                                                                 | [设置禁用](#设置禁用)  |
-| option-disabled-key | `string`                                  | `''`     | 可选，设置禁用选项的 Key 值                                                                                          | [设置禁用](#设置禁用)  |
-| loading             | `boolean`                                 | false    | 可选，控制 loading 状态                                                                                              | [懒加载](#懒加载)      |
-| filter-option       | `boolean\| (inputvalue,options)=>boolean` | true     | 可选，当其为一个函数时，会接收 inputvalue option 两个参数，当 option 符合筛选条件时，应返回 true，反之则返回 false。 |
+| Attribute           | Type                                      | Default  | Description                                                                                                                                                                   | Jump to Demo                                |
+| ------------------- | ----------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| options             | `Array`                                   | []       | Optional. Data list                                                                                                                                                           | [Basic usage](#basic-usage)                 |
+| placeholder         | `string`                                  | `Search` | Optional. This field is displayed when no item is selected.                                                                                                                   | [Basic usage](#basic-usage)                 |
+| max-height          | `number`                                  | --       | Optional. Maximum height of the drop-down list box                                                                                                                            | [Basic usage](#basic-usage)                 |
+| width               | `number`                                  | --       | Optional. Controls the width of the drop-down list box.                                                                                                                       | [Basic usage](#basic-usage)                 |
+| disabled            | `boolean`                                 | false    | Optional. The value true indicates that the drop-down list box is disabled.                                                                                                   | [Basic usage](#basic-usage)                 |
+| option-disabled-key | `string`                                  | --       | Optional. Sets the key value of the disabled option.                                                                                                                          | [Set disable options](#set-disable-options) |
+| loading             | `boolean`                                 | false    | Optional, controls the loading state                                                                                                                                          | [Enable-lazy-load](#enable-lazy-load)       |
+| filter-option       | `boolean\| (inputvalue,options)=>boolean` | true     | Optional, when it is a function, it will receive two parameters of inputvalue option, when option meets the filter conditions, it should return true, otherwise return false. |
 
-d-editable-select 事件
+d-editable-select Events
 
-| 事件      | 类型                        | 说明                                          | 跳转 Demo                                 |
-| --------- | --------------------------- | --------------------------------------------- | ----------------------------------------- |
-| load-more | `(inputvalue:string)=>void` | 可选, 懒加载触发事件，配合 filter-option 使用 | [懒加载](#懒加载)                         |
-| search    | `(inputvalue:string)=>void` | 可选,文本框值变化时回调                       | [自定义数据匹配方法](#自定义数据匹配方法) |
+| Event Name | Type                        | Description                                                                            | Jump to Demo                                                        |
+| ---------- | --------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| load-more  | `(inputvalue:string)=>void` | Optional. lazy loading trigger event. This event is used together with `filter-option' | [Enable-lazy-load](#enable-lazy-load)                               |
+| search     | `(inputvalue:string)=>void` | Optional. callback when the textbox value changes                                      | [Customized-data-matching-method](#customized-data-matching-method) |
 
-d-editable-select 插槽
-| 插槽名|说明 |跳转 Demo|
+d-editable-select Slots
+| Name|Description |Jump to Demo|
 | ---- | -- | ------- |
-| itemTemplate | 可选，下拉菜单条目的模板 | [自定义模板展示](#自定义模板展示) |
-| noResultItemTemplate | 可选，下拉菜单条目搜索后,没有结果的模板 | [自定义模板展示](#自定义模板展示) |
+| itemTemplate | Optional, Dropdown list item template | [Custom template display](#custom-template-display) |
+| noResultItemTemplate | Optional. Template for which no result is found after the drop-down list item is searched. | [Custom template display](#custom-template-display) |

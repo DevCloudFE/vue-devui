@@ -4,14 +4,15 @@ import { OptionObjectItem } from '../editable-select-type';
 interface useLazyLoadReturenType {
   loadMore: () => void;
 }
-export const useLazyLoad: (
+export const useLazyLoad = (
   dropdownRef: Ref<HTMLElement>,
   inputValue: Ref<string>,
   filterOtion: boolean | ((val: string, option: OptionObjectItem) => boolean) | undefined,
   ctx: SetupContext
-) => useLazyLoadReturenType = (dropdownRef, inputValue, filterOtion, ctx) => {
-  const dropdownVal = dropdownRef.value;
+): useLazyLoadReturenType => {
   const loadMore = () => {
+    const dropdownVal = dropdownRef.value;
+
     if (filterOtion !== false) {
       return;
     }
