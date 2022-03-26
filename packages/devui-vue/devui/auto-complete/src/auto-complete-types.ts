@@ -131,5 +131,6 @@ export type DropdownProps = {
   latestSource: Ref<any[]>;
   modelValue: Ref<string>;
   hoverIndex: Ref<number>;
+  sceneType: Ref<string>;
 };
 export const DropdownPropsKey: InjectionKey<DropdownProps>=Symbol('DropdownPropsKey');

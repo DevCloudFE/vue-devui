@@ -361,7 +361,7 @@ export default defineComponent({
 
 
 
-### 懒加载
+### 启用懒加载
 enableLazyLoad 开启懒加载
 
 :::demo
@@ -374,6 +374,7 @@ enableLazyLoad 开启懒加载
     v-model="value"
     enableLazyLoad
     :load-more="loadMore"
+    sceneType="select"
   >
   </d-auto-complete>
 </template>
@@ -453,8 +454,8 @@ d-auto-complete 参数
 |       searchFn        | `(term: string) => Array<any>` |   [`defaultSearchFn`](#defaultSearchFn)   |                                                                      可选，自定义搜索过滤                                                                       | [自定义数据匹配方法](#自定义数据匹配方法) |
 |       tipsText        |            `string`            |                '最近输入'                 |                                                                         可选，提示文字                                                                          | [设置禁用](#设置禁用)                     |
 |     latestSource      |          `Array<any>`          |                    --                     |                                                                         可选， 最近输入                                                                         | [最近输入](#最近输入)                     |
-|      valueParser      |      `(item: any) => any`      | [`defaultValueParse`](#defaultValueParse) |                                                                   可选， 对选中后数据进行处理                                                                   | [懒加载](#懒加载)                         |
-|    enableLazyLoad     |           `boolean`            |                   false                   |                                                                      可选，是否允许懒加载                                                                       | [懒加载](#懒加载)                         |
+|      valueParser      |      `(item: any) => any`      | [`defaultValueParse`](#defaultValueParse) |                                                                   可选， 对选中后数据进行处理                                                                   | [启用懒加载](#启用懒加载)                         |
+|    enableLazyLoad     |           `boolean`            |                   false                   |                                                                      可选，是否允许懒加载                                                                       | [启用懒加载](#启用懒加载)                         |
 |         width         |            `number`            |                    --                     |                                                                     可选，调整宽度（`px`）                                                                      | [基本用法](#基本用法)                     |
 |     showAnimation     |           `boolean`            |                   true                    |                                                                       可选，是否开启动画                                                                        |                                           | ✔          |  |  |
 

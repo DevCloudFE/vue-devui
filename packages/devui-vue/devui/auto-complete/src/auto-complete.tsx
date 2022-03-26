@@ -30,7 +30,8 @@ export default defineComponent({
       searchFn,
       position,
       latestSource,
-      showAnimation
+      showAnimation,
+      sceneType
     } = toRefs(props)
 
     const {
@@ -116,6 +117,7 @@ export default defineComponent({
       showLoading,
       loadMore,
       latestSource,
+      sceneType,
       modelValue,
       showNoResultItemTemplate:showNoResultItemTemplate,
       hoverIndex:hoverIndex

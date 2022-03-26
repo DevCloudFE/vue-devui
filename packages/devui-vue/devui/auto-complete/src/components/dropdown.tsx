@@ -18,7 +18,8 @@ export default defineComponent({
       showNoResultItemTemplate,
       latestSource,
       modelValue,
-      hoverIndex
+      hoverIndex,
+      sceneType
     } = propsData;
     const {
       disabled,
@@ -46,6 +47,7 @@ export default defineComponent({
             (visible.value&&searchList.value.length>0)
             ||(ctx.slots.noResultItemTemplate&&showNoResultItemTemplate.value)
             ||(isSearching&&ctx.slots.searchingTemplate&&searchStatus?.value)
+            ||(sceneType.value === 'suggest')
           }
         >
           <ul
@@ -69,9 +71,8 @@ export default defineComponent({
               </li>
             }
             {
-              latestSource.value
-              &&!modelValue.value
-              &&<li class="devui-popup-tips">最近输入</li>
+              (sceneType.value === 'suggest' || (latestSource.value && !modelValue.value))
+              && <li class="devui-popup-tips">最近输入</li>
             }
             {/*  展示 */}
             {

@@ -45,6 +45,8 @@
   }
 
   .devui-dropdown-menu {
+    padding-bottom: 0;
+
     .devui-dropdown-item:not(.disabled) {
       &.selected {
         color: $devui-list-item-active-text;

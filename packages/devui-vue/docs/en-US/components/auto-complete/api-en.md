@@ -373,6 +373,7 @@ enableLazyLoad: enables lazy loading.
     v-model="value"
     enableLazyLoad
     :load-more="loadMore"
+    sceneType="select"
   >
   </d-auto-complete>
 </template>
