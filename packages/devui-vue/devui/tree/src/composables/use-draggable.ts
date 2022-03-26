@@ -34,7 +34,7 @@ export default function useDraggable(
     dropType: undefined,
     draggingNode: null,
   });
-  const treeIdMapValue = ref<any>({});
+  const treeIdMapValue = ref<{ [key: string]: string }>({});
   watch(
     () => renderData.value,
     () => {
@@ -59,7 +59,7 @@ export default function useDraggable(
       return false;
     }
   };
-  const handlerDropData = (dragNodeId: string | number, dropNodeId: string | number, dropType?: string) => {
+  const handlerDropData = (dragNodeId: string | number, dropNodeId: string | number, currentDropType?: string) => {
     const cloneData = cloneDeep(data.value);
     let nowDragNode: IDropNode;
     let nowDropNode: IDropNode;
@@ -81,13 +81,13 @@ export default function useDraggable(
       });
     };
     findDragAndDropNode(cloneData);
-    if (nowDragNode && nowDropNode && dropType) {
+    if (nowDragNode && nowDropNode && currentDropType) {
       const cloneDrapNode = cloneDeep(nowDragNode.target[nowDragNode.index]);
-      if (dropType === 'prev') {
+      if (currentDropType === 'prev') {
         nowDropNode.target.splice(nowDropNode.index, 0, cloneDrapNode);
-      } else if (dropType === 'next') {
+      } else if (currentDropType === 'next') {
         nowDropNode.target.splice(nowDropNode.index + 1, 0, cloneDrapNode);
-      } else if (dropType === 'inner') {
+      } else if (currentDropType === 'inner') {
         const children = nowDropNode.target[nowDropNode.index].children;
         if (Array.isArray(children)) {
           children.unshift(cloneDrapNode);
@@ -106,11 +106,11 @@ export default function useDraggable(
   };
   const onDragstart = (event: DragEvent, treeNode: TreeItem): void => {
     dragState.draggingNode = <Nullable<HTMLElement>>event.target;
-    const data = {
+    const treeInfo = {
       type: 'tree-node',
       nodeId: treeNode.id
     };
-    event.dataTransfer?.setData('Text', JSON.stringify(data));
+    event.dataTransfer?.setData('Text', JSON.stringify(treeInfo));
   };
   const onDragover = (event: DragEvent): void => {
     if (draggable) {

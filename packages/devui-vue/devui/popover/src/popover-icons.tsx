@@ -1,3 +1,5 @@
+// SVG paths are too long to be displayed in the code.
+/* eslint-disable max-len */
 export function SuccessIcon(): JSX.Element {
   return (
     <svg class='devui-icon devui-icon-success' viewBox='0 0 16 16' version='1.1' xmlns='http://www.w3.org/2000/svg'>

@@ -1,29 +1,19 @@
-import { defineComponent, inject, computed, PropType, toRef } from 'vue';
+import { defineComponent, inject, computed } from 'vue';
 import { TABLE_TOKEN } from '../../table-types';
+import TD from '../body-td/body-td';
 import { Checkbox } from '../../../../checkbox';
-
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import './body.scss';
-import { Column } from '../column/column-types';
-import { useFixedColumn } from '../../composable/use-table';
 
 export default defineComponent({
   name: 'DTableBody',
   setup() {
     const table = inject(TABLE_TOKEN);
     const { _data: data, _columns: columns, _checkList: checkList, isFixedLeft } = table.store.states;
-
-    // 移动到行上是否高亮
+    const ns = useNamespace('table');
     const hoverEnabled = computed(() => table.props.rowHoveredHighlight);
 
-    // 行前的 checkbox
-    const tdAttrs = computed(() =>
-      isFixedLeft.value
-        ? {
-            class: 'devui-sticky-cell left',
-            style: 'left:0;',
-          }
-        : null
-    );
+    const tdAttrs = computed(() => (isFixedLeft.value ? { class: `${ns.m('sticky-cell')} left`, style: 'left:0;' } : null));
     const renderCheckbox = (index: number) =>
       table.props.checkable ? (
         <td {...tdAttrs.value}>
@@ -32,7 +22,7 @@ export default defineComponent({
       ) : null;
 
     return () => (
-      <tbody class='devui-tbody'>
+      <tbody class={ns.e('tbody')}>
         {data.value.map((row, rowIndex) => {
           return (
             <tr key={rowIndex} class={{ 'hover-enabled': hoverEnabled.value }}>
@@ -44,32 +34,6 @@ export default defineComponent({
           );
         })}
       </tbody>
-    );
-  },
-});
-
-const TD = defineComponent({
-  props: {
-    column: {
-      type: Object as PropType<Column>,
-    },
-    row: {
-      type: Object,
-    },
-    index: {
-      type: Number,
-    },
-  },
-  setup(props: { column: Column; row: any; index: number }) {
-    const column = toRef(props, 'column');
-
-    // 固定列
-    const { stickyCell, offsetStyle } = useFixedColumn(column);
-
-    return () => (
-      <td class={stickyCell.value} style={offsetStyle.value}>
-        {column.value.renderCell(props.row, props.index)}
-      </td>
     );
   },
 });
