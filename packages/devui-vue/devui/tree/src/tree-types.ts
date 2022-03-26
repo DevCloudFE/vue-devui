@@ -9,7 +9,7 @@ export interface TreeItem {
   addable?: boolean;
   editable?: boolean;
   deletable?: boolean;
-  children?: TreeData;
+  children?: Array<TreeItem>;
   [key: string]: unknown;
 }
 export interface IDropType {
