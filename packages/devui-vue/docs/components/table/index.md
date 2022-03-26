@@ -226,7 +226,7 @@ export default defineComponent({
   <div>
     <d-button @click="handleClick">更新数据</d-button>
     <d-table :data="emptyData" :scrollable="true">
-      <d-column field="firstName" header="First Name" filterable :filterList="filterList" :order="2" :minWidth="100"></d-column>
+      <d-column field="firstName" header="First Name" :order="2" :minWidth="100"></d-column>
       <d-column field="lastName" header="Last Name" :order="3"></d-column>
       <d-column field="gender" header="Gender" :order="5"></d-column>
       <d-column field="date" header="Date of birth" :order="4"></d-column>
