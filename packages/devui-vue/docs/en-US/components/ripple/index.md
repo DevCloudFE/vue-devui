@@ -11,7 +11,7 @@
   <d-row :gutter="50">
     <d-col :span="12">
       <div class="ripple-button">
-        <div class="ripple-htmlElement" v-ripple="{ color: '#5e7ce0',duration: 0.3 }">HTML element with v-ripple</div>
+        <div class="ripple-htmlElement" v-ripple="{ color: '#5e7ce0',duration: 0.3, delay: 0.3 }">HTML element with v-ripple</div>
       </div>
     </d-col>
     <d-col :span="12">
@@ -119,7 +119,7 @@ Card Component
 :::demo
 ```vue
 <template>
-  <d-card v-ripple class="d-card" :src="'https://devui.design/components/assets/image1.png'">
+  <d-card v-ripple="{ duration: 0.3 }" class="d-card" :src="'https://devui.design/components/assets/image1.png'">
     <template #cardAvatar>
       <d-avatar name="DevUI"></d-avatar>
     </template>
@@ -207,5 +207,5 @@ Card Component
 |  final-opacity  | `number`  |    `0.1`    | Choose, end the interactive effect and press the Opacity size for a long time |
 |    duration     | `number`  |   `0.4s`    | Choose, duration                                                              |
 |     easing      | `string`  | `ease-out`  | Choose, animation easing                                                      |
-|   delay-time    | `number`  |   `75ms`    | Choose, slow animation is delayed after debouceTime time.                     |
+|     delay         | `number`  |   `0.0075ms`    | Choose, slow animation is delayed after debouceTime time.                     |
 |    disabled     | `boolean` |   `false`   | Choose, disabled ripple effect                                                |

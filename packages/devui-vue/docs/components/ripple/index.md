@@ -1,3 +1,4 @@
+
 # Ripple 水波纹指令
 
 <span color="#409EFF">`v-ripple`</span> 指令 用于用户动作交互场景, 可以应用于任何块级元素 <span color="#409EFF">`注：只能作用于块级元素`</span>
@@ -11,7 +12,7 @@
   <d-row :gutter="50">
     <d-col :span="12">
       <div class="ripple-button">
-        <div class="ripple-htmlElement" v-ripple="{ color: '#5e7ce0',duration: 0.3 }">HTML元素 中使用 v-ripple</div>
+        <div class="ripple-htmlElement" v-ripple="{ color: '#5e7ce0',duration: 0.3, delay: 0.3 }">HTML元素 中使用 v-ripple</div>
       </div>
     </d-col>
     <d-col :span="12">
@@ -117,7 +118,7 @@ Card 组件
 :::demo
 ```vue
 <template>
-  <d-card v-ripple class="d-card" :src="'https://devui.design/components/assets/image1.png'">
+  <d-card v-ripple="{ duration: 0.3 }" class="d-card" :src="'https://devui.design/components/assets/image1.png'">
     <template #cardAvatar>
       <d-avatar name="DevUI"></d-avatar>
     </template>
@@ -206,5 +207,5 @@ Card 组件
 |  final-opacity  | `number`  |    `0.1`    | 可选，结束交互效果长按透明度大小  |
 |    duration     | `number`  |   `0.4s`    | 可选，持续时间                    |
 |     easing      | `string`  | `ease-out`  | 可选，缓动动画                    |
-|   delay-time    | `number`  |   `75ms`    | 可选，延迟 debouceTime 时间后调用 |
+|     delay       | `number`  |   `0.0075s`    | 可选，延迟 debouceTime 时间后调用 |
 |    disabled     | `boolean` |   `false`   | 可选，禁止水波效果                |
