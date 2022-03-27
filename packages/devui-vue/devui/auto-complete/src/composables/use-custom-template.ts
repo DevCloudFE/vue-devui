@@ -7,32 +7,32 @@ type CustomRenderSoltsType = {
 export default function useCustomTemplate(ctx: SetupContext,modelValue: Ref<string>): any {
   const itemTemplate = (item: any, index: number) => {
     const arr = { item, index };
-    if (ctx.slots.itemTemplate) {
-      return ctx.slots.itemTemplate(arr);
+    if (ctx.slots.item) {
+      return ctx.slots.item(arr);
     }
     return null;
   };
   const noResultItemTemplate = () => {
-    if (ctx.slots.noResultItemTemplate) {
-      return ctx.slots.noResultItemTemplate(modelValue.value);
+    if (ctx.slots.nothing) {
+      return ctx.slots.nothing(modelValue.value);
     }
     return null;
   };
   const searchingTemplate = () => {
-    if (ctx.slots.searchingTemplate) {
-      return ctx.slots.searchingTemplate(modelValue.value);
+    if (ctx.slots.searching) {
+      return ctx.slots.searching(modelValue.value);
     }
     return null;
   };
   const customRenderSolts = () => {
     const slots: CustomRenderSoltsType = {};
-    if (ctx.slots.itemTemplate) {
+    if (ctx.slots.item) {
       slots['itemTemplate'] = itemTemplate;
     }
-    if (ctx.slots.noResultItemTemplate) {
+    if (ctx.slots.nothing) {
       slots['noResultItemTemplate'] = noResultItemTemplate;
     }
-    if (ctx.slots.searchingTemplate) {
+    if (ctx.slots.searching) {
       slots['searchingTemplate'] = searchingTemplate;
     }
     return slots;
