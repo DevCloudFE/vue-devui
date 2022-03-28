@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-const { Command } = require('commander');
+const { Command, Option } = require('commander');
 const { create, validateCreateType } = require('./commands/create');
 const { build } = require('./commands/build');
 const { generateTheme } = require('./commands/generate-theme');
 const { generateDts } = require('./commands/generate-dts');
 const { release } = require('./commands/release');
+const { codeCheck } = require('./commands/code-check');
 const { VERSION, CREATE_SUPPORT_TYPES } = require('./shared/constant');
 
 const program = new Command();
@@ -39,5 +40,12 @@ program
   .option('-v --version <version>', '版本号')
   .description('发布npm包')
   .action(release);
+
+program
+  .command('code-check')
+  .option('-c --components <components>', '组件名称（支持英文逗号分隔）')
+  .addOption(new Option('-t --type <type>', '代码检查类型').choices(['eslint', 'unit-test']))
+  .description('代码检查')
+  .action(codeCheck);
 
 program.parse().version(VERSION);
