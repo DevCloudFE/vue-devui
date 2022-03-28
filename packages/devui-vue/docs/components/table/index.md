@@ -88,8 +88,16 @@ export default defineComponent({
       表头背景色：
       <d-switch v-model:checked="headerBg" />
     </div>
+    <div class="table-btn">
+      表格大小：
+      <d-radio-group direction="row" v-model="size">
+        <d-radio v-for="item in sizeList" :key="item.label" :value="item.value">
+          {{ item.label }}
+        </d-radio>
+      </d-radio-group>
+    </div>
   </div>
-  <d-table :table-layout="tableLayout ? 'auto' : 'fixed'" :striped="striped" :header-bg="headerBg" :data="stripedTableData">
+  <d-table :table-layout="tableLayout ? 'auto' : 'fixed'" :striped="striped" :header-bg="headerBg" :data="stripedTableData" :size="size">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -105,6 +113,21 @@ export default defineComponent({
     const tableLayout = ref(false);
     const striped = ref(false);
     const headerBg = ref(false);
+    const size = ref('sm');
+    const sizeList = [
+      {
+        label: 'Normal',
+        value: 'sm',
+      },
+      {
+        label: 'Middle',
+        value: 'md',
+      },
+      {
+        label: 'large',
+        value: 'lg',
+      },
+    ];
     const stripedTableData = ref([
       {
         firstName: 'Mark',
@@ -136,6 +159,8 @@ export default defineComponent({
       stripedTableData,
       striped,
       headerBg,
+      size,
+      sizeList,
       tableLayout,
     };
   },
@@ -145,12 +170,12 @@ export default defineComponent({
 <style lang="scss">
 .table-btn-groups {
   display: flex;
-  margin-bottom: 1rem;
 }
 .table-btn {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 1rem;
 }
 </style>
 ```
@@ -302,22 +327,89 @@ export default defineComponent({
 
 :::
 
+### 合并单元格
+
+:::demo 通过`span-method`方法可以自定义合并单元格，方法参数是一个对象，对象包含属性如下：当前行`row`、当前列`column`、当前行索引`rowIndex`、当前列索引`columnIndex`。该方法可以返回包含两个元素的数组，第一个元素是`rowspan`，第二个元素是`colspan`；也可以返回一个对象，属性为`rowspan`和`colspan`。
+
+```vue
+<template>
+  <d-table :data="baseTableData" :span-method="spanMethod">
+    <d-column field="firstName" header="First Name"></d-column>
+    <d-column field="lastName" header="Last Name"></d-column>
+    <d-column field="gender" header="Gender"></d-column>
+    <d-column field="date" header="Date of birth"></d-column>
+  </d-table>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const baseTableData = ref([
+      {
+        firstName: 'Mark',
+        lastName: 'Otto',
+        date: '1990/01/11',
+        gender: 'Male',
+      },
+      {
+        firstName: 'Jacob',
+        lastName: 'Thornton',
+        gender: 'Female',
+        date: '1990/01/12',
+      },
+      {
+        firstName: 'Danni',
+        lastName: 'Chen',
+        gender: 'Male',
+        date: '1990/01/13',
+      },
+      {
+        firstName: 'green',
+        lastName: 'gerong',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+    ]);
+    const spanMethod = ({ row, column, rowIndex, columnIndex }) => {
+      if (rowIndex === 0 && columnIndex === 0) {
+        return { rowspan: 1, colspan: 2 };
+      }
+      if (rowIndex === 2 && columnIndex === 0) {
+        return [2, 2];
+      }
+      if (rowIndex === 2 && columnIndex === 3) {
+        return [2, 1];
+      }
+    };
+
+    return { baseTableData, spanMethod };
+  },
+});
+</script>
+```
+
+:::
+
 ### d-table 参数
 
-| 参数                  | 类型                | 默认值  | 说明                            |
-| :-------------------- | :------------------ | :------ | :------------------------------ |
-| data                  | `Array`             | []      | 显示的数据                      |
-| striped               | `Boolean`           | false   | 是否显示斑马纹间隔              |
-| max-width             | `String`            | --      | 表格最大宽度                    |
-| max-height            | `Boolean`           | --      | 表格最大高度                    |
-| table-width           | `String`            | --      | 表格宽度                        |
-| table-height          | `String`            | --      | 表格高度                        |
-| row-hovered-highlight | `Boolean`           | true    | 鼠标在该行上时，高亮该行        |
-| fix-header            | `Boolean`           | false   | 固定头部                        |
-| checkable             | `Boolean`           | false   | 在每行的第一列展示一个 checkbox |
-| show-loading          | `Boolean`           | false   | 显示加载动画                    |
-| header-bg             | `Boolean`           | false   | 头部背景                        |
-| table-layout          | `'fixed' \| 'auto'` | 'fixed' | 表格布局，可选值为'auto'        |
+| 参数                  | 类型                   | 默认值  | 说明                                        |
+| :-------------------- | :--------------------- | :------ | :------------------------------------------ |
+| data                  | `array`                | []      | 显示的数据                                  |
+| striped               | `boolean`              | false   | 是否显示斑马纹间隔                          |
+| size                  | `'sm' \| 'md' \| 'lg'` | 'sm'    | 可选，表格大小，分别对应行高 40px,48px,56px |
+| max-width             | `string`               | --      | 表格最大宽度                                |
+| max-height            | `boolean`              | --      | 表格最大高度                                |
+| table-width           | `string`               | --      | 表格宽度                                    |
+| table-height          | `string`               | --      | 表格高度                                    |
+| row-hovered-highlight | `boolean`              | true    | 鼠标在该行上时，高亮该行                    |
+| fix-header            | `boolean`              | false   | 固定头部                                    |
+| checkable             | `boolean`              | false   | 在每行的第一列展示一个 checkbox             |
+| show-loading          | `boolean`              | false   | 显示加载动画                                |
+| header-bg             | `boolean`              | false   | 头部背景                                    |
+| table-layout          | `'fixed' \| 'auto'`    | 'fixed' | 表格布局，可选值为'auto'                    |
+| span-method           | `SpanMethod`           | --      | 合并单元格的计算方法                        |
 
 ### d-column 参数
 
@@ -336,3 +428,16 @@ export default defineComponent({
 | 名称    | 说明                   |
 | :------ | :--------------------- |
 | default | 默认插槽，自定义列内容 |
+
+### 类型定义
+
+#### SpanMethod
+
+```typescript
+type SpanMethod = (data: {
+  row: any;
+  column: any;
+  rowIndex: number;
+  columnIndex: number;
+}) => number[] | { rowspan: number; colspan: number };
+```

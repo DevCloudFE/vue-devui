@@ -6,14 +6,12 @@
       font-size: $devui-font-size-card-title;
       color: $devui-text;
       font-weight: 700;
-      border: none;
-      border-bottom: 1px solid $devui-line;
       background-color: $devui-base-bg;
 
       th {
         text-align: left;
-        padding: 0;
         border: none;
+        border-bottom: 1px solid $devui-line;
       }
     }
 
