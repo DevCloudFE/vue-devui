@@ -18,7 +18,7 @@ export default defineComponent({
 
     const renderCheckbox = (index: number) =>
       table.props.checkable ? (
-        <td {...tdAttrs.value}>
+        <td class={ns.e('checkable-cell')} {...tdAttrs.value}>
           <Checkbox v-model={checkList.value[index]} />
         </td>
       ) : null;
