@@ -50,7 +50,7 @@ const eslintCheck = async (components) => {
 
 const unitTestSingle = async (name) => {
   log(chalkUnitTest(`Start unit test ${name}...`));
-  await shell.exec(`pnpm test --filter vue-devui -- --colors --noStackTrace --testMatch **/${name}.spec.ts`);
+  await shell.exec(`pnpm test --filter vue-devui -- --colors --noStackTrace --testMatch **/${name}/**/{*.spec.ts,*.spec.tsx}`);
   log(chalkUnitTest(`Unit test ${name} finished!`));
 };
 
