@@ -1,7 +1,7 @@
 import { inject, computed } from 'vue';
 import { TABLE_TOKEN } from '../../table-types';
 
-export function useBody() {
+export function useMergeCell() {
   const table = inject(TABLE_TOKEN);
   const { _data: data, _columns: columns } = table.store.states;
 
