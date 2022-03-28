@@ -12,8 +12,8 @@ import useChecked from './composables/use-checked';
 import useLazy from './composables/use-lazy';
 import useOperate from './composables/use-operate';
 import useDraggable from './composables/use-draggable';
-import IconOpen from './assets/open.svg';
-import IconClose from './assets/close.svg';
+import { IconOpen } from './components/icon-open';
+import { IconClose } from './components/icon-close';
 import NodeContent from './tree-node-content';
 import './tree.scss';
 
