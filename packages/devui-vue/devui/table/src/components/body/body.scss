@@ -6,6 +6,7 @@
       font-size: $devui-font-size;
       color: $devui-text;
       background-color: $devui-base-bg;
+      border: none;
 
       &.hover-enabled:hover {
         background-color: $devui-list-item-hover-bg;
