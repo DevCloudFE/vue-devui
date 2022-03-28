@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { Command } = require('commander');
+const { Command, Option } = require('commander');
 const { create, validateCreateType } = require('./commands/create');
 const { build } = require('./commands/build');
 const { generateTheme } = require('./commands/generate-theme');
@@ -44,6 +44,7 @@ program
 program
   .command('code-check')
   .option('-c --components <components>', '组件名称（支持英文逗号分隔）')
+  .addOption(new Option('-t --type <type>', '代码检查类型').choices(['eslint', 'unit-test']))
   .description('代码检查')
   .action(codeCheck);
 
