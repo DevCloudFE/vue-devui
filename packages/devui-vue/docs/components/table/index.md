@@ -88,8 +88,16 @@ export default defineComponent({
       表头背景色：
       <d-switch v-model:checked="headerBg" />
     </div>
+    <div class="table-btn">
+      表格大小：
+      <d-radio-group direction="row" v-model="size">
+        <d-radio v-for="item in sizeList" :key="item.label" :value="item.value">
+          {{ item.label }}
+        </d-radio>
+      </d-radio-group>
+    </div>
   </div>
-  <d-table :table-layout="tableLayout ? 'auto' : 'fixed'" :striped="striped" :header-bg="headerBg" :data="stripedTableData">
+  <d-table :table-layout="tableLayout ? 'auto' : 'fixed'" :striped="striped" :header-bg="headerBg" :data="stripedTableData" :size="size">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -105,6 +113,21 @@ export default defineComponent({
     const tableLayout = ref(false);
     const striped = ref(false);
     const headerBg = ref(false);
+    const size = ref('sm');
+    const sizeList = [
+      {
+        label: 'Normal',
+        value: 'sm',
+      },
+      {
+        label: 'Middle',
+        value: 'md',
+      },
+      {
+        label: 'large',
+        value: 'lg',
+      },
+    ];
     const stripedTableData = ref([
       {
         firstName: 'Mark',
@@ -136,6 +159,8 @@ export default defineComponent({
       stripedTableData,
       striped,
       headerBg,
+      size,
+      sizeList,
       tableLayout,
     };
   },
@@ -145,12 +170,12 @@ export default defineComponent({
 <style lang="scss">
 .table-btn-groups {
   display: flex;
-  margin-bottom: 1rem;
 }
 .table-btn {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 1rem;
 }
 </style>
 ```
@@ -369,21 +394,22 @@ export default defineComponent({
 
 ### d-table 参数
 
-| 参数                  | 类型                | 默认值  | 说明                            |
-| :-------------------- | :------------------ | :------ | :------------------------------ |
-| data                  | `Array`             | []      | 显示的数据                      |
-| striped               | `Boolean`           | false   | 是否显示斑马纹间隔              |
-| max-width             | `String`            | --      | 表格最大宽度                    |
-| max-height            | `Boolean`           | --      | 表格最大高度                    |
-| table-width           | `String`            | --      | 表格宽度                        |
-| table-height          | `String`            | --      | 表格高度                        |
-| row-hovered-highlight | `Boolean`           | true    | 鼠标在该行上时，高亮该行        |
-| fix-header            | `Boolean`           | false   | 固定头部                        |
-| checkable             | `Boolean`           | false   | 在每行的第一列展示一个 checkbox |
-| show-loading          | `Boolean`           | false   | 显示加载动画                    |
-| header-bg             | `Boolean`           | false   | 头部背景                        |
-| table-layout          | `'fixed' \| 'auto'` | 'fixed' | 表格布局，可选值为'auto'        |
-| span-method           | `SpanMethod`        | --      | 合并单元格的计算方法            |
+| 参数                  | 类型                   | 默认值  | 说明                                        |
+| :-------------------- | :--------------------- | :------ | :------------------------------------------ |
+| data                  | `array`                | []      | 显示的数据                                  |
+| striped               | `boolean`              | false   | 是否显示斑马纹间隔                          |
+| size                  | `'sm' \| 'md' \| 'lg'` | 'sm'    | 可选，表格大小，分别对应行高 40px,48px,56px |
+| max-width             | `string`               | --      | 表格最大宽度                                |
+| max-height            | `boolean`              | --      | 表格最大高度                                |
+| table-width           | `string`               | --      | 表格宽度                                    |
+| table-height          | `string`               | --      | 表格高度                                    |
+| row-hovered-highlight | `boolean`              | true    | 鼠标在该行上时，高亮该行                    |
+| fix-header            | `boolean`              | false   | 固定头部                                    |
+| checkable             | `boolean`              | false   | 在每行的第一列展示一个 checkbox             |
+| show-loading          | `boolean`              | false   | 显示加载动画                                |
+| header-bg             | `boolean`              | false   | 头部背景                                    |
+| table-layout          | `'fixed' \| 'auto'`    | 'fixed' | 表格布局，可选值为'auto'                    |
+| span-method           | `SpanMethod`           | --      | 合并单元格的计算方法                        |
 
 ### d-column 参数
 
