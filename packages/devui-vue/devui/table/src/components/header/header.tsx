@@ -16,8 +16,8 @@ export default defineComponent({
     const thAttrs = computed(() => (isFixedLeft.value ? { class: `${ns.m('sticky-cell')} left`, style: 'left:0;' } : null));
     const checkbox = computed(() =>
       table.props.checkable ? (
-        <th {...thAttrs.value}>
-          <Checkbox style="padding:10px;" v-model={checkAll.value} halfchecked={halfChecked.value} />
+        <th class={ns.e('checkable-cell')} {...thAttrs.value}>
+          <Checkbox v-model={checkAll.value} halfchecked={halfChecked.value} />
         </th>
       ) : null
     );

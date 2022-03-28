@@ -15,6 +15,7 @@ export function useTable(props: TablePropsTypes): TableConfig {
     [ns.m('striped')]: props.striped,
     [ns.m('header-bg')]: props.headerBg,
     [ns.m('layout-auto')]: props.tableLayout === 'auto',
+    [ns.m(`${props.size}`)]: true,
   }));
   const style: ComputedRef<CSSProperties> = computed(() => ({
     maxHeight: props.maxHeight,
