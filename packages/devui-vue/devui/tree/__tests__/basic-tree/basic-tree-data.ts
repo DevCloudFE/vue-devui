@@ -1,6 +1,6 @@
-import { ref } from 'vue';
+import type { TreeData } from '../..';
 
-export const basicData = ref([
+export const basicTreeData: TreeData = [
   {
     label: 'Parent node 1',
     open: true,
@@ -26,4 +26,4 @@ export const basicData = ref([
   {
     label: 'Leaf node 2',
   }
-]);
+];
