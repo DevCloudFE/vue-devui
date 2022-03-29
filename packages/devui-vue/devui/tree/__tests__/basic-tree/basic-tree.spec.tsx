@@ -3,7 +3,7 @@ import { DOMWrapper, mount, VueWrapper } from '@vue/test-utils';
 import { Tree } from '../../';
 import { basicTreeData } from './basic-tree-data';
 
-describe('Basic tree should include rendering of nested nodes and responses to hover, click and expand/collapse events.', () => {
+describe('Basic tree', () => {
   let wrapper: VueWrapper<ComponentPublicInstance>;
   let childNodes: DOMWrapper<Element>[];
 
