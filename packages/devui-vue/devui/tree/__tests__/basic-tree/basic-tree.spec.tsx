@@ -1,7 +1,7 @@
-import { ComponentPublicInstance, nextTick } from 'vue';
+import { ComponentPublicInstance } from 'vue';
 import { DOMWrapper, mount, VueWrapper } from '@vue/test-utils';
 import { Tree } from '../../';
-import { basicData } from './basic-data';
+import { basicTreeData } from './basic-tree-data';
 
 describe('Basic tree should include rendering of nested nodes and responses to hover, click and expand/collapse events.', () => {
   let wrapper: VueWrapper<ComponentPublicInstance>;
@@ -11,7 +11,7 @@ describe('Basic tree should include rendering of nested nodes and responses to h
     wrapper = mount({
       setup() {
         return () => {
-          return <Tree data={basicData.value} />;
+          return <Tree data={basicTreeData} />;
         };
       },
     });
@@ -68,12 +68,10 @@ describe('Basic tree should include rendering of nested nodes and responses to h
 
     // 点击之后，节点收起
     await childNodes[0].get('.devui-tree-node__folder').trigger('click');
-    await nextTick();
     expect(childNodes[0].classes()).not.toContain('devui-tree-node__open');
 
     // 再次点击，节点展开
     await childNodes[0].get('.devui-tree-node__folder').trigger('click');
-    await nextTick();
     expect(childNodes[0].classes()).toContain('devui-tree-node__open');
   });
 
