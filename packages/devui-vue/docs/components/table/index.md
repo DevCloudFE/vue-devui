@@ -96,8 +96,23 @@ export default defineComponent({
         </d-radio>
       </d-radio-group>
     </div>
+    <div class="table-btn">
+      表格边框：
+      <d-radio-group direction="row" v-model="borderType">
+        <d-radio v-for="item in borderTypeList" :key="item.label" :value="item.value">
+          {{ item.label }}
+        </d-radio>
+      </d-radio-group>
+    </div>
   </div>
-  <d-table :table-layout="tableLayout ? 'auto' : 'fixed'" :striped="striped" :header-bg="headerBg" :data="stripedTableData" :size="size">
+  <d-table
+    :table-layout="tableLayout ? 'auto' : 'fixed'"
+    :striped="striped"
+    :header-bg="headerBg"
+    :data="stripedTableData"
+    :size="size"
+    :border-type="borderType"
+  >
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -114,6 +129,7 @@ export default defineComponent({
     const striped = ref(false);
     const headerBg = ref(false);
     const size = ref('sm');
+    const borderType = ref('');
     const sizeList = [
       {
         label: 'Normal',
@@ -126,6 +142,20 @@ export default defineComponent({
       {
         label: 'large',
         value: 'lg',
+      },
+    ];
+    const borderTypeList = [
+      {
+        label: 'Normal',
+        value: '',
+      },
+      {
+        label: 'Bordered',
+        value: 'bordered',
+      },
+      {
+        label: 'Borderless',
+        value: 'borderless',
       },
     ];
     const stripedTableData = ref([
@@ -161,6 +191,8 @@ export default defineComponent({
       headerBg,
       size,
       sizeList,
+      borderType,
+      borderTypeList,
       tableLayout,
     };
   },
@@ -170,6 +202,7 @@ export default defineComponent({
 <style lang="scss">
 .table-btn-groups {
   display: flex;
+  flex-wrap: wrap;
 }
 .table-btn {
   display: flex;
@@ -333,7 +366,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="baseTableData" :span-method="spanMethod">
+  <d-table :data="baseTableData" :span-method="spanMethod" border-type="bordered">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -394,22 +427,23 @@ export default defineComponent({
 
 ### d-table 参数
 
-| 参数                  | 类型                   | 默认值  | 说明                                        |
-| :-------------------- | :--------------------- | :------ | :------------------------------------------ |
-| data                  | `array`                | []      | 显示的数据                                  |
-| striped               | `boolean`              | false   | 是否显示斑马纹间隔                          |
-| size                  | `'sm' \| 'md' \| 'lg'` | 'sm'    | 可选，表格大小，分别对应行高 40px,48px,56px |
-| max-width             | `string`               | --      | 表格最大宽度                                |
-| max-height            | `boolean`              | --      | 表格最大高度                                |
-| table-width           | `string`               | --      | 表格宽度                                    |
-| table-height          | `string`               | --      | 表格高度                                    |
-| row-hovered-highlight | `boolean`              | true    | 鼠标在该行上时，高亮该行                    |
-| fix-header            | `boolean`              | false   | 固定头部                                    |
-| checkable             | `boolean`              | false   | 在每行的第一列展示一个 checkbox             |
-| show-loading          | `boolean`              | false   | 显示加载动画                                |
-| header-bg             | `boolean`              | false   | 头部背景                                    |
-| table-layout          | `'fixed' \| 'auto'`    | 'fixed' | 表格布局，可选值为'auto'                    |
-| span-method           | `SpanMethod`           | --      | 合并单元格的计算方法                        |
+| 参数                  | 类型                | 默认值  | 说明                                                                   |
+| :-------------------- | :------------------ | :------ | :--------------------------------------------------------------------- |
+| data                  | `array`             | []      | 显示的数据                                                             |
+| striped               | `boolean`           | false   | 是否显示斑马纹间隔                                                     |
+| size                  | `TableSize`         | 'sm'    | 可选，表格大小，分别对应行高 40px,48px,56px                            |
+| max-width             | `string`            | --      | 表格最大宽度                                                           |
+| max-height            | `boolean`           | --      | 表格最大高度                                                           |
+| table-width           | `string`            | --      | 表格宽度                                                               |
+| table-height          | `string`            | --      | 表格高度                                                               |
+| row-hovered-highlight | `boolean`           | true    | 鼠标在该行上时，高亮该行                                               |
+| fix-header            | `boolean`           | false   | 固定头部                                                               |
+| checkable             | `boolean`           | false   | 在每行的第一列展示一个 checkbox                                        |
+| show-loading          | `boolean`           | false   | 显示加载动画                                                           |
+| header-bg             | `boolean`           | false   | 头部背景                                                               |
+| table-layout          | `'fixed' \| 'auto'` | 'fixed' | 表格布局，可选值为'auto'                                               |
+| span-method           | `SpanMethod`        | --      | 合并单元格的计算方法                                                   |
+| border-type           | `BorderType`        | ''      | 可选，表格边框类型，默认有行边框；bordered: 全边框；borderless: 无边框 |
 
 ### d-column 参数
 
@@ -431,6 +465,12 @@ export default defineComponent({
 
 ### 类型定义
 
+#### TableSize
+
+```typescript
+type TableSize = 'sm' | 'md' | 'lg';
+```
+
 #### SpanMethod
 
 ```typescript
@@ -440,4 +480,10 @@ type SpanMethod = (data: {
   rowIndex: number;
   columnIndex: number;
 }) => number[] | { rowspan: number; colspan: number };
+```
+
+#### BorderType
+
+```typescript
+type BorderType = '' | 'bordered' | 'borderless';
 ```
