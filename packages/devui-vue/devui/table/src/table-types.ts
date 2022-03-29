@@ -2,6 +2,7 @@ import { PropType, ExtractPropTypes, ComponentInternalInstance, InjectionKey } f
 import { TableStore } from './store';
 
 export type TableSize = 'sm' | 'md' | 'lg';
+export type BorderType = '' | 'bordered' | 'borderless';
 
 export type SpanMethod = (data: {
   row: any;
@@ -71,6 +72,10 @@ export const TableProps = {
   },
   spanMethod: {
     type: Function as PropType<SpanMethod>,
+  },
+  borderType: {
+    type: String as PropType<BorderType>,
+    default: '',
   },
 };
 
