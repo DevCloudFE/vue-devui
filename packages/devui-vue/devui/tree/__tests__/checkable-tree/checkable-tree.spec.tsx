@@ -23,9 +23,16 @@ describe('Checkable tree', () => {
     wrapper.unmount();
   });
 
-  it.todo('Should render checkbox correctly.');
+  it('Should render checkbox correctly.', () => {
+    expect(childNodes[0].find('.devui-checkbox').exists()).toBe(true);
+    expect(childNodes[0].find('.devui-checkbox').classes()).toContain('unchecked');
+  });
 
-  it.todo('Should toggle the checked state of the node correctly.');
+  it('Should toggle the checked state of the node correctly.', async () => {
+    await childNodes[0].find('.devui-checkbox').trigger('click');
+    expect(childNodes[0].find('.devui-checkbox').classes()).toContain('active');
+    expect(childNodes[0].find('.devui-tree-node__content').classes()).not.toContain('active');
+  });
 
   it.todo('The checkbox should be checked when setting checked to true.');
 

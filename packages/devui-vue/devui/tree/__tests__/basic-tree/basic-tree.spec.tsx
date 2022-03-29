@@ -36,10 +36,28 @@ describe('Basic tree', () => {
     expect(childNodes[childNodes.length - 1].text()).toBe('Leaf node 2');
   });
 
+  it('Should render expand-collapse button correctly.', () => {
+    expect(childNodes[0].find('.devui-tree-node__folder > svg').exists()).toBe(true);
+    expect(childNodes[0].find('.devui-tree-node__folder > svg').classes()).toContain('svg-icon');
+    expect(childNodes[0].find('.devui-tree-node__folder > svg').classes()).toContain('svg-icon-close');
+
+    expect(childNodes[1].find('.devui-tree-node__folder > svg').exists()).toBe(true);
+    expect(childNodes[1].find('.devui-tree-node__folder > svg').classes()).toContain('svg-icon');
+    expect(childNodes[1].find('.devui-tree-node__folder > svg').classes()).not.toContain('svg-icon-close');
+  });
+
   it('Should render the style of child node correctly.', () => {
     expect(childNodes[0].attributes('style')).toContain('padding-left: 0px');
+    expect(childNodes[0].find('.devui-tree-node__folder > .devui-tree-node__indent').exists()).toBe(false);
+
     expect(childNodes[1].attributes('style')).toContain('padding-left: 24px');
+    expect(childNodes[1].find('.devui-tree-node__folder > .devui-tree-node__indent').exists()).toBe(false);
+
     expect(childNodes[2].attributes('style')).toContain('padding-left: 24px');
+    expect(childNodes[2].find('.devui-tree-node__folder > .devui-tree-node__indent').exists()).toBe(true);
+
+    expect(childNodes[childNodes.length - 1].attributes('style')).toContain('padding-left: 0px');
+    expect(childNodes[childNodes.length - 1].find('.devui-tree-node__folder > .devui-tree-node__indent').exists()).toBe(true);
   });
 
   it('The node should be highlighted when clicked.', async () => {
@@ -57,6 +75,7 @@ describe('Basic tree', () => {
 
   it('The node should be disabled and unclickable when disabled is set to true.', async () => {
     // 设置了 disabled: true 的节点为禁用态，不可点击
+    expect(childNodes[0].find('.devui-tree-node__title').classes()).toContain('select-disabled');
     expect(childNodes[0].find('.devui-tree-node__content').classes()).not.toContain('active');
     await childNodes[0].trigger('click');
     expect(childNodes[0].find('.devui-tree-node__content').classes()).not.toContain('active');
