@@ -1,7 +1,8 @@
 import { computed } from 'vue';
+import type { ComputedRef } from 'vue';
 import { TagProps } from '../tag-types';
 
-export default function (props: TagProps) {
+export default function (props: TagProps): ComputedRef<string> {
   return computed(() => {
     const { color, type } = props;
     const typeMap = {
