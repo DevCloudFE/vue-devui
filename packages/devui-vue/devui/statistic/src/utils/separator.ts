@@ -25,8 +25,8 @@ export const analysisValueType = (
   splitPrecisionNumber: number // 分割精度, 小数点
 ): string => {
   const fixedNumber =
-    propsValue.toString().indexOf('.') !== -1
-      ? propsValue.toString().length - propsValue.toString().indexOf('.') - 1
+    propsValue?.toString().indexOf('.') !== -1
+      ? propsValue?.toString().length - propsValue?.toString().indexOf('.') - 1
       : 0;
   if (typeof value === 'number') {
     if (isHasDot(value)) {
