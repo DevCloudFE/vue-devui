@@ -81,7 +81,7 @@ export default defineComponent({
 
 ```vue
 <template>
- <d-row type="flex" class="docs-devui-row">
+ <d-row type="flex">
     <d-col :flex="4">
       <d-auto-complete
         :source="source"
