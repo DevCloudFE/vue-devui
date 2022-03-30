@@ -81,7 +81,7 @@ You can set the disabled parameter to disable it in the text box and disable the
 
 ```vue
 <template>
- <d-row type="flex" class="docs-devui-row">
+ <d-row type="flex">
     <d-col :flex="4">
       <d-auto-complete
         :source="source"
