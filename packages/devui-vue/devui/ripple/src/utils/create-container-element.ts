@@ -10,7 +10,8 @@ export const createContainer = ({
   rippleContainer.style.width = '100%';
   rippleContainer.style.height = '100%';
   rippleContainer.style.position = 'absolute';
-  rippleContainer.style.borderRadius = `${borderTopLeftRadius} ${borderTopRightRadius} ${borderBottomRightRadius} ${borderBottomLeftRadius}`;
+  rippleContainer.style.borderRadius =
+  `${borderTopLeftRadius} ${borderTopRightRadius} ${borderBottomRightRadius} ${borderBottomLeftRadius}`;
   rippleContainer.style.overflow = 'hidden';
   rippleContainer.style.pointerEvents = 'none';
 

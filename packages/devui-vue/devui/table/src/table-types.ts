@@ -2,6 +2,14 @@ import { PropType, ExtractPropTypes, ComponentInternalInstance, InjectionKey } f
 import { TableStore } from './store';
 
 export type TableSize = 'sm' | 'md' | 'lg';
+export type BorderType = '' | 'bordered' | 'borderless';
+
+export type SpanMethod = (data: {
+  row: any;
+  column: any;
+  rowIndex: number;
+  columnIndex: number;
+}) => number[] | { rowspan: number; colspan: number };
 
 export const TableProps = {
   data: {
@@ -33,6 +41,7 @@ export const TableProps = {
     validator(value: string): boolean {
       return value === 'sm' || value === 'md' || value === 'lg';
     },
+    default: 'sm',
   },
   rowHoveredHighlight: {
     type: Boolean,
@@ -44,7 +53,7 @@ export const TableProps = {
   },
   checkable: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   tableLayout: {
     type: String as PropType<'fixed' | 'auto'>,
@@ -60,6 +69,13 @@ export const TableProps = {
   headerBg: {
     type: Boolean,
     default: false,
+  },
+  spanMethod: {
+    type: Function as PropType<SpanMethod>,
+  },
+  borderType: {
+    type: String as PropType<BorderType>,
+    default: '',
   },
 };
 

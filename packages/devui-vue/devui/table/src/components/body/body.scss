@@ -3,19 +3,23 @@
 .devui-table {
   &__tbody {
     tr {
-      font-size: $devui-font-size-card-title;
+      font-size: $devui-font-size;
       color: $devui-text;
-      border: none;
-      border-bottom: 1px solid $devui-dividing-line;
       background-color: $devui-base-bg;
+      border: none;
 
       &.hover-enabled:hover {
         background-color: $devui-list-item-hover-bg;
       }
 
       td {
-        padding: 10px;
+        background-clip: padding-box;
+        vertical-align: middle;
+        word-wrap: break-word;
+        word-break: normal;
+        line-height: 24px;
         border: none;
+        border-bottom: 1px solid $devui-dividing-line;
       }
     }
   }

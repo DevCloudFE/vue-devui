@@ -10,6 +10,7 @@
     table-layout: fixed;
     width: 100%;
     border-spacing: 0;
+    border-collapse: collapse;
     border: none;
     margin: 0;
     padding: 0;
@@ -41,5 +42,68 @@
 
   &--layout-auto {
     table-layout: auto;
+  }
+
+  &--sm {
+    tbody > tr > td {
+      padding: 7px 20px 8px;
+
+      &.devui-table__checkable-cell {
+        padding: 8px;
+      }
+    }
+
+    thead > tr > th.devui-table__checkable-cell {
+      padding: 8px;
+    }
+  }
+
+  &--md {
+    tbody > tr > td {
+      padding: 11px 20px 12px;
+    }
+
+    thead > tr > th.devui-table__checkable-cell {
+      padding: 8px 20px;
+    }
+  }
+
+  &--lg {
+    tbody > tr > td {
+      padding: 15px 20px 16px;
+    }
+
+    thead > tr > th.devui-table__checkable-cell {
+      padding: 8px 20px;
+    }
+  }
+
+  &--borderless {
+    tbody > tr > td {
+      border-bottom: none;
+    }
+  }
+
+  &--bordered {
+    tr {
+      border-left: 1px solid $devui-dividing-line;
+
+      td {
+        border-right: 1px solid $devui-dividing-line;
+      }
+    }
+
+    thead {
+      tr {
+        th:first-child {
+          border-left: 1px solid $devui-dividing-line;
+        }
+
+        th {
+          border-top: 1px solid $devui-dividing-line;
+          border-right: 1px solid $devui-dividing-line;
+        }
+      }
+    }
   }
 }
