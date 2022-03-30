@@ -1,14 +1,15 @@
 import { computed } from 'vue';
+import type { ComputedRef } from 'vue';
 import { TagProps } from '../tag-types';
 
-export default function (props: TagProps) {
+export default function (props: TagProps): ComputedRef<string> {
   return computed(() => {
     const { color, type } = props;
     const typeMap = {
-      primary: '#5e7ce0',
-      success: '#50d4ab',
-      warning: '#fac20a',
-      danger: '#f66f6a'
+      primary: 'var(--devui-primary, #5e7ce0)',
+      success: 'var(--devui-success, #50d4ab)',
+      warning: 'var(--devui-warning, #fac20a)',
+      danger: 'var(--devui-danger, #f66f6a)',
     };
     const colorMap = {
       'blue-w98': '#3383ff',
@@ -22,7 +23,9 @@ export default function (props: TagProps) {
       'purple-w98': '#a97af8'
     };
 
-    if (!color && type) {return typeMap[type];}
+    if (!color && type) {
+      return typeMap[type];
+    }
     // 判断传入的color是colorMap成员or颜色码
     const themeColor = colorMap[color] || color;
     return themeColor;

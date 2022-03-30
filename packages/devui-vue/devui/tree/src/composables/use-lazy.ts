@@ -1,11 +1,12 @@
 import { ref, Ref } from 'vue';
+import type { ComponentInternalInstance } from 'vue';
 import { TreeData, TreeItem } from '../tree-types';
 
 interface TypeReflectValue {
   // 外部传入
-  id: keyof TypeReflect; // 懒加载节点 id
+  id: keyof ({ [key: string]: TypeReflectValue });
   onGetNodeData: () => Promise<TreeData>;  // 懒加载获取数据函数, 当前是节点 children
-  renderLoading?: (id: string) => any; // loadingTemplate 挂载
+  renderLoading?: (id: string) => ComponentInternalInstance | null; // loadingTemplate 挂载
   // useLazy 内部使用
   loadingTargetId?: string;  // loadingTemplate 挂载节点 id
   dataSource?: TreeData; // 懒加载数据
@@ -14,7 +15,7 @@ interface TypeReflect {
   [key: string]: TypeReflectValue;
 }
 type TypeHandleInit = (item: TreeItem, value: TypeReflectValue) => void;
-type TypeGetLazyData = (key: keyof TypeReflect) => Promise<TreeItem> | any;
+type TypeGetLazyData = (key: keyof TypeReflect) => Promise<TreeItem | undefined | unknown>;
 type TypeUseLazy = () => {
   lazyNodesReflect: Ref<TypeReflect>;
   handleInitLazyNodeReflect: TypeHandleInit;
