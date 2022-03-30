@@ -27,6 +27,7 @@ function adjustArrowPosition(isArrowCenter: boolean, point: Point, placement: Pl
 export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn): UseOverlayFn {
   const overlayRef = ref<HTMLElement | undefined>();
   const arrowRef = ref<HTMLElement | undefined>();
+  let originParent = null;
   const updateArrowPosition = (arrowEl: HTMLElement, placement: Placement, point: Point, overlayEl: HTMLElement) => {
     const { x, y } = adjustArrowPosition(props.isArrowCenter, point, placement, overlayEl.getBoundingClientRect());
     const staticSide = {
@@ -67,22 +68,21 @@ export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn): UseO
   watch(
     () => props.modelValue,
     () => {
-      const originParent = getScrollParent(props.origin);
       if (props.modelValue && props.origin) {
+        originParent = getScrollParent(props.origin);
         nextTick(updatePosition);
-        originParent.addEventListener('scroll', updatePosition);
+        originParent?.addEventListener('scroll', updatePosition);
         originParent !== window && window.addEventListener('scroll', updatePosition);
         window.addEventListener('resize', updatePosition);
       } else {
-        originParent.removeEventListener('scroll', updatePosition);
+        originParent?.removeEventListener('scroll', updatePosition);
         originParent !== window && window.removeEventListener('scroll', updatePosition);
         window.removeEventListener('resize', updatePosition);
       }
     }
   );
   onUnmounted(() => {
-    const originParent = getScrollParent(props.origin);
-    originParent.removeEventListener('scroll', updatePosition);
+    originParent?.removeEventListener('scroll', updatePosition);
     originParent !== window && window.removeEventListener('scroll', updatePosition);
     window.removeEventListener('resize', updatePosition);
   });
