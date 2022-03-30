@@ -17,6 +17,7 @@ export const isHasDot = (value: number): boolean => {
   if (!isNaN(value)) {
     return (value + '').indexOf('.') !== -1;
   }
+  return false;
 };
 export const analysisValueType = (
   value: valueType, // 动态value 值
