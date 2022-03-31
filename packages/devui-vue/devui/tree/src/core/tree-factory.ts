@@ -1,101 +1,99 @@
-import { randomId } from '../../../anchor/src/util';
-import { omit } from '../util';
-import { ITreeFactory } from './tree-factory-interface';
-import type { ITree, ITreeNode, IInnerTree, IInnerTreeNode, valueof } from './tree-factory-types';
+import type { IInnerTreeNode, ITreeNode } from './tree-factory-types';
+import { flatToNested, generateInnerTree } from './utils';
 
 export default class TreeFactory {
-  private _innerTree: IInnerTree = [];
+  private _innerTree: IInnerTreeNode[] = [];
 
-  constructor(tree: ITree) {
-    console.log('tree:', tree);
-    this._innerTree = traverseTree(tree);
+  private _getIndex(node: ITreeNode): number {
+    return this._innerTree.findIndex((item) => item.id === node.id);
   }
 
-  getTree() {
-    return convertInnerTree(this._innerTree);
+  private _setNodeValue(node, key, value): void {
+    this._innerTree[this._getIndex(node)][key] = value;
   }
 
-  setTree(tree: ITree) {
-    this._innerTree = traverseTree(tree);
+  constructor(tree: ITreeNode[]) {
+    this.setTree(tree);
   }
 
-  getNodes(value: valueof<ITreeNode>, key: keyof ITreeNode = 'id', inclusive: boolean = false): ITree {
-    return convertInnerTree(this._innerTree.filter(item => item[key].indexOf(value) > -1));
-  }
-
-  getChildren(treeNode: ITreeNode): ITree {
-    return [];
-  }
-
-  selectNode() {}
-
-  checkNode() {}
-
-  expandNode() {}
-
-  collapseNode() {}
-
-  toggleNode() {}
-
-  disableSelectNode() {}
-
-  disableCheckNode() {}
-
-  disableToggleNode() {}
-
-  insertBefore(parentNode: ITreeNode, node: ITreeNode, referenceNode: ITreeNode, cut: boolean = false) {
-
-  }
-
-  removeNode(node: ITreeNode) {}
-
-  editNode(node: ITreeNode) {}
-}
-
-function traverseTree(tree: ITree, key = 'children', level: number = 0, path: ITree = []): IInnerTree {
-  level++;
-
-  return tree.reduce((acc: ITree, item: ITreeNode) => {
-    if (item.id === undefined) {
-      item.id = randomId();
-      item.idType = 'random';
-    }
-
-    item.level = level;
-
-    if (path.length > 0 && path[path.length - 1]?.level >= level) {
-      while (path[path.length - 1]?.level >= level) {
-        path.pop();
-      }
-    }
-
-    path.push(item);
-    
-    const parentNode = path[path.length - 2];
-    if (parentNode) {
-      item.parentId = parentNode.id;
-    }
-    
-    if (!item[key]) {
-      return acc.concat(item);
+  getTree(flat?: boolean = false): IInnerTreeNode[] {
+    if (flat) {
+      return this._innerTree;
     } else {
-      return acc.concat(omit<ITreeNode>(item, 'children'), traverseTree(item[key], key, level, path));
+      // TODO: 移除内部属性(level / parentId / idType) / 内部生成的id / 空children
+      return flatToNested(this._innerTree);
     }
-  }, []);
-}
+  }
 
-function omit<T>(obj: T, ...keys: Array<keyof T>) {
-  return Object.entries(obj)
-    .filter(item => !keys.includes(item[0]))
-    .reduce((acc, item) => Object.assign({}, acc, { [item[0]]: item[1] }), {});
-};
+  setTree(tree: ITreeNode[]) {
+    this._innerTree = generateInnerTree(tree);
+  }
 
-function convertInnerTree(innerTree: IInnerTree) {
-  return innerTree.map(item => {
-    const omitKeys = ['level', 'parentId', 'idType'];
-    if (item.idType === 'random') {
-      omitKeys.push('id')
+  getLevel(node: ITreeNode): number {
+    return this._innerTree.find((item) => item.id === node.id).level;
+  }
+
+  getChildren(node: ITreeNode): IInnerTreeNode[] {
+    let result = [];
+    const startIndex = this._innerTree.findIndex((item) => item.id === node.id);
+
+    for (let i = startIndex + 1; i < this._innerTree.length && this.getLevel(node) < this._innerTree[i].level; i++) {
+      result.push(this._innerTree[i]);
     }
-    return omit<IInnerTreeNode>(item, ...omitKeys)
-  });
+    return result;
+  }
+
+  selectNode(node: ITreeNode): void {
+    this._setNodeValue(node, 'selected', true);
+  }
+
+  checkNode(node: ITreeNode): void {
+    this._setNodeValue(node, 'checked', true);
+  }
+
+  uncheckNode(node: ITreeNode): void {
+    this._setNodeValue(node, 'checked', false);
+  }
+
+  expandNode(node: ITreeNode): void {
+    this._setNodeValue(node, 'expanded', true);
+  }
+
+  collapseNode(node: ITreeNode): void {
+    this._setNodeValue(node, 'expanded', false);
+  }
+
+  toggleNode(node: ITreeNode): void {
+    if (node.expanded) {
+      this._setNodeValue(node, 'expanded', false);
+    } else {
+      this._setNodeValue(node, 'expanded', true);
+    }
+  }
+
+  disableSelectNode(node: ITreeNode): void {
+    this._setNodeValue(node, 'disableSelect', true);
+  }
+
+  disableCheckNode(node: ITreeNode): void {
+    this._setNodeValue(node, 'disableCheck', true);
+  }
+
+  disableToggleNode(node: ITreeNode): void {
+    this._setNodeValue(node, 'disableToggle', true);
+  }
+
+  insertBefore(parentNode: ITreeNode, node: ITreeNode, referenceNode: ITreeNode, cut: boolean = false): void {
+    // TODO
+  }
+
+  removeNode(node: ITreeNode): void {
+    this._innerTree = this._innerTree.filter(item => {
+      return item.id !== node.id && !this.getChildren(node).map(nodeItem => nodeItem.id).includes(item.id);
+    })
+  }
+
+  editNode(node: ITreeNode, label: string): void {
+    this._setNodeValue(node, 'label', label);
+  }
 }
