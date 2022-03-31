@@ -1,6 +1,8 @@
-interface IBaseTreeNode {
+// 外部数据结构先只考虑嵌套结构
+export interface ITreeNode {
   label: string;
   id?: string;
+  children?: ITreeNode[];
 
   selected?: boolean;
   checked?: boolean;
@@ -11,29 +13,11 @@ interface IBaseTreeNode {
   disableToggle?: boolean;
 }
 
-interface IFlatTreeNode extends IBaseTreeNode {
+// 内部数据结构使用扁平结构
+export interface IInnerTreeNode extends ITreeNode {
+  level: number;
+  idType?: 'random';
   parentId?: string;
 }
-
-interface INestedTreeNode extends IBaseTreeNode {
-  children?: INestedTreeNode[];
-}
-
-// 外部数据结构先只考虑嵌套结构
-export type ITreeNode = INestedTreeNode;
-
-type IFlatTree = IFlatTreeNode[];
-
-type INestedTree = INestedTreeNode[];
-
-export type ITree = INestedTree;
-
-// 内部树节点使用扁平结构
-export interface IInnerTreeNode extends IFlatTreeNode {
-  level: number;
-  idType: 'random';
-}
-
-export type IInnerTree = IInnerTreeNode[];
 
 export type valueof<T> = T[keyof T];
