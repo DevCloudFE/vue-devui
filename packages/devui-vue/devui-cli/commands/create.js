@@ -132,7 +132,9 @@ async function createComponent(params = {}) {
 }
 
 async function createVueDevui(params, { ignoreParseError }) {
-  const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS);
+  const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS)
+  .filter(({ name }) => parseComponentInfo(kebabCase(name)).status === '100%');
+
   const exportModules = [];
 
   fileInfo.forEach((f) => {
