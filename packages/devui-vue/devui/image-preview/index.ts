@@ -2,6 +2,8 @@ import type { App } from 'vue';
 import ImagePreviewDirective from './src/image-preview-directive';
 import ImagePreviewService from './src/image-preview-service';
 
+export * from './src/image-preview-types';
+
 export { ImagePreviewDirective, ImagePreviewService };
 
 export default {
