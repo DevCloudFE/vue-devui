@@ -36,17 +36,6 @@ export const rowProps = {
 
 export type RowProps = ExtractPropTypes<typeof rowProps>;
 
-const screenSizesProp = [Number, Object] as PropType<number | ColPropsBaseClass>;
-
-export const screenSizes = {
-  xs: screenSizesProp,
-  sm: screenSizesProp,
-  md: screenSizesProp,
-  lg: screenSizesProp,
-  xl: screenSizesProp,
-  xxl: screenSizesProp,
-} as const;
-
 const numberProp = Number as PropType<number>;
 
 export const colPropsBaseStyle = {
@@ -61,9 +50,20 @@ export const colPropsBaseClass = {
   span: numberProp
 } as const;
 
+export type ColPropsBaseClass = ExtractPropTypes<typeof colPropsBaseClass>;
+
 export type ColPropsBaseStyle = ExtractPropTypes<typeof colPropsBaseStyle>;
 
-export type ColPropsBaseClass = ExtractPropTypes<typeof colPropsBaseClass>;
+const screenSizesProp = [Number, Object] as PropType<number | ColPropsBaseClass>;
+
+export const screenSizes = {
+  xs: screenSizesProp,
+  sm: screenSizesProp,
+  md: screenSizesProp,
+  lg: screenSizesProp,
+  xl: screenSizesProp,
+  xxl: screenSizesProp,
+} as const;
 
 export type ScreenSizes = ExtractPropTypes<typeof screenSizes>;
 
