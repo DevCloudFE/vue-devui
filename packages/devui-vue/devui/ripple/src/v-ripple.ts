@@ -14,7 +14,7 @@ const ripple = (
   event: PointerEvent,
   el: HTMLElement,
   options: IRippleDirectiveOptions
-) => {
+): void => {
   const rect = el.getBoundingClientRect();
   const computedStyles = window.getComputedStyle(el);
   const { x, y } = getRelativePointer(event, rect);
@@ -24,7 +24,7 @@ const ripple = (
   const rippleEl = createrippleElement(x, y, size, options);
   let originalPositionValue = '';
   let shouldDissolveripple = false;
-  let token: any = null;
+  let token: number | null = null;
   function dissolveripple () {
     rippleEl.style.transition = 'opacity 150ms linear';
     rippleEl.style.opacity = '0';
@@ -40,7 +40,7 @@ const ripple = (
       }
     }, 150);
   }
-  function releaseripple (e?: any)  {
+  function releaseripple (e?: PointerEvent)  {
     if (typeof e !== 'undefined') {
       document.removeEventListener('pointerup', releaseripple);
       document.removeEventListener('pointercancel', releaseripple);

@@ -1,9 +1,7 @@
 import type { App } from 'vue';
 import Card from './src/card';
 
-Card.install = function(app: App) {
-  app.component(Card.name, Card);
-};
+export * from './src/card-types';
 
 export { Card };
 
@@ -12,6 +10,6 @@ export default {
   category: '数据展示',
   status: '100%',
   install(app: App): void {
-    app.use(Card as any);
+    app.component(Card.name, Card);
   }
 };

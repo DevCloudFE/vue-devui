@@ -2,42 +2,14 @@ import { defineComponent, watch, toRefs, ref } from 'vue';
 
 import AvatarBodyIcon from './avatar-body-icon';
 import AvatarNoBodyIcon from './avatar-nobody-icon';
+import { AvatarProps, avatarProps } from './avatar-types';
 
 import './avatar.scss';
 
 export default defineComponent({
   name: 'DAvatar',
-  props: {
-    name: {
-      type: String,
-      default: null,
-    },
-    gender: {
-      type: String as () => 'male' | 'female' | string,
-      default: null,
-    },
-    width: {
-      type: Number,
-      default: 36,
-    },
-    height: {
-      type: Number,
-      default: 36,
-    },
-    isRound: {
-      type: Boolean,
-      default: true,
-    },
-    imgSrc: {
-      type: String,
-      default: '',
-    },
-    customText: {
-      type: String,
-      default: null,
-    },
-  },
-  setup(props) {
+  props: avatarProps,
+  setup(props: AvatarProps) {
     const { name, width, height, customText, gender, imgSrc, isRound } =
       toRefs(props);
     const isNobody = ref<boolean>(true);
