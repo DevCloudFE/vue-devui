@@ -1,5 +1,14 @@
 import type { PropType, ExtractPropTypes } from 'vue';
-import { OptionObjectItem, OptionsType } from './editable-select-type';
+
+export interface OptionObjectItem {
+  label: string;
+  value: string | number;
+  [key: string]: unknown;
+}
+export type OptionType = string | number | OptionObjectItem;
+
+export type OptionsType = Array<OptionType>;
+
 export const editableSelectProps = {
   options: {
     type: Array as PropType<OptionsType>,

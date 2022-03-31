@@ -3,15 +3,10 @@ import { ExtractPropTypes, PropType, VNode } from 'vue';
 type PositionType = 'static' | 'relative' | 'absolute' | 'fixed' |'sticky';
 
 export interface LoadingType {
-  value: Promise<any> | Array<Promise<any>> | undefined;
+  value: Promise<unknown> | Array<Promise<unknown>> | undefined;
 }
 export interface BindingType extends LoadingType {
-  [key: string]: any;
-}
-export interface TargetHTMLElement extends HTMLElement {
-  mask?: HTMLElement;
-  instance?: VNode | any;
-  options?: LoadingProps;
+  [key: string]: unknown;
 }
 
 class View {
@@ -35,7 +30,7 @@ export const componentProps = {
 export class LoadingProps {
   target?: Element | null;
   message?: string;
-  loadingTemplateRef?: any;
+  loadingTemplateRef?: unknown;
   backdrop?: boolean = true;
   positionType?: PositionType = 'relative';
   view?: View = new View();
@@ -43,3 +38,9 @@ export class LoadingProps {
 }
 
 export type ComponentProps = ExtractPropTypes<typeof componentProps>;
+
+export interface TargetHTMLElement extends HTMLElement {
+  mask?: HTMLElement;
+  instance?: VNode | unknown;
+  options?: LoadingProps;
+}

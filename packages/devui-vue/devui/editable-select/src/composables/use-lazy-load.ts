@@ -1,5 +1,5 @@
 import { Ref, SetupContext } from 'vue';
-import { OptionObjectItem } from '../editable-select-type';
+import { OptionObjectItem } from '../editable-select-types';
 
 interface useLazyLoadReturenType {
   loadMore: () => void;

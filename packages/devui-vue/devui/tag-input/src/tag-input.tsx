@@ -1,70 +1,7 @@
-import { defineComponent, ref, computed, nextTick, watch, PropType } from 'vue';
+import { defineComponent, ref, computed, nextTick, watch, SetupContext } from 'vue';
 import removeBtnSvg from './remove-btn';
+import { Suggestion, TagInputProps, tagInputProps } from './tag-input-types';
 import './tag-input.scss';
-
-interface Suggestion {
-  __index: number;
-  [x: string]: any;
-}
-
-const tagInputProps = {
-  tags: {
-    type: Array as PropType<any[]>,
-    default: (): [] => []
-  },
-  displayProperty: {
-    type: String,
-    default: 'name'
-  },
-  placeholder: {
-    type: String,
-    default: ''
-  },
-  minLength: {
-    type: Number,
-    default: 3
-  },
-  maxLength: {
-    type: Number,
-    default: Number.MAX_SAFE_INTEGER
-  },
-  maxTags: {
-    type: Number,
-    default: Number.MAX_SAFE_INTEGER
-  },
-  maxTagsText: {
-    type: String,
-    default: '已达到最大个数：'
-  },
-  spellcheck: {
-    type: Boolean,
-    default: true
-  },
-  suggestionList: {
-    type: Array as PropType<any[]>,
-    default: (): [] => []
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  isAddBySpace: {
-    type: Boolean,
-    default: true
-  },
-  disabledText: {
-    type: String,
-    default: ''
-  },
-  noData: {
-    type: String,
-    default: ''
-  },
-  caseSensitivity: {
-    type: Boolean,
-    default: false
-  }
-} as const;
 
 const KEYS_MAP = {
   tab: 'Tab',
@@ -78,7 +15,7 @@ export default defineComponent({
   name: 'DTagInput',
   props: tagInputProps,
   emits: ['update:tags', 'update:suggestionList', 'valueChange'],
-  setup(props, ctx) {
+  setup(props: TagInputProps, ctx: SetupContext) {
     const add = (arr: any[], target: any) => {
       const res = Object.assign({}, target);
       delete res.__index;

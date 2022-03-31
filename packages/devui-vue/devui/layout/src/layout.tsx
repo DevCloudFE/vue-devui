@@ -1,6 +1,5 @@
-import './layout.scss';
-
 import { defineComponent } from 'vue';
+import './layout.scss';
 
 export default defineComponent({
   name: 'DLayout',
