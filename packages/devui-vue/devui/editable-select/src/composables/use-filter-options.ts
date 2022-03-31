@@ -1,5 +1,5 @@
 import { computed, Ref, ComputedRef } from 'vue';
-import { OptionObjectItem } from '../editable-select-type';
+import { OptionObjectItem } from '../editable-select-types';
 
 const getFilterFunc = () => (val: string, option: OptionObjectItem) =>
   option.label.toLocaleLowerCase().indexOf(val.toLocaleLowerCase()) > -1;
