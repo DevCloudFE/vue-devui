@@ -1,5 +1,5 @@
 import { defineComponent, computed, ref, watch, inject } from 'vue';
-import { inputProps, InputType } from './use-input';
+import { inputProps, InputType } from './input-types';
 import './input.scss';
 import { dFormItemEvents, IFormItem, formItemInjectionKey } from '../../form/src/form-types';
 
