@@ -111,6 +111,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/unfound"><img src="https://avatars.githubusercontent.com/u/32935349?v=4?s=100" width="100px;" alt=""/><br /><sub><b>unfound</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=unfound" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Roading"><img src="https://avatars.githubusercontent.com/u/7751774?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Roading</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Roading" title="Code">💻</a></td>
     <td align="center"><a href="http://inreasons.cn"><img src="https://avatars.githubusercontent.com/u/47918504?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Chestnut</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=banlify" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/c0dedance"><img src="https://avatars.githubusercontent.com/u/38075730?v=4?s=100" width="100px;" alt=""/><br /><sub><b>c0dedance</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=c0dedance" title="Code">💻</a></td>
   </tr>
 </table>
 
