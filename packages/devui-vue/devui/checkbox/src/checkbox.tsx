@@ -4,7 +4,7 @@ import {
   checkboxGroupInjectionKey,
   checkboxProps,
   CheckboxProps,
-} from './use-checkbox';
+} from './checkbox-types';
 
 export default defineComponent({
   name: 'DCheckbox',
@@ -32,14 +32,14 @@ export default defineComponent({
     const itemWidth = checkboxGroupConf?.itemWidth.value;
     const direction = checkboxGroupConf?.direction.value;
 
-    const canChange = (isChecked: boolean, val: string) => {
+    const canChange = (checked: boolean, val: string) => {
       if (mergedDisabled.value) {
         return Promise.resolve(false);
       }
 
       const beforeChange = props.beforeChange ?? checkboxGroupConf?.beforeChange;
       if (beforeChange) {
-        const res = beforeChange(isChecked, val);
+        const res = beforeChange(checked, val);
         if (typeof res === 'boolean') {
           return Promise.resolve(res);
         }
