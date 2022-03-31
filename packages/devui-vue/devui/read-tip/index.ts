@@ -1,9 +1,7 @@
 import type { App } from 'vue';
 import ReadTip from './src/read-tip';
 
-ReadTip.install = function (app: App): void {
-  app.component(ReadTip.name, ReadTip);
-};
+export * from './src/read-tip-types';
 
 export { ReadTip, };
 
@@ -12,6 +10,6 @@ export default {
   category: '反馈',
   status: '100%',
   install(app: App): void {
-    app.use(ReadTip as any);
+    app.component(ReadTip.name, ReadTip);
   }
 };
