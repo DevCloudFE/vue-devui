@@ -1,5 +1,5 @@
-import { PropType, ExtractPropTypes, ComponentInternalInstance, InjectionKey } from 'vue';
-import { TableStore } from './store';
+import { PropType, ExtractPropTypes, ComponentInternalInstance, InjectionKey, Ref } from 'vue';
+import { TableStore } from './store/store-types';
 
 export type TableSize = 'sm' | 'md' | 'lg';
 export type BorderType = '' | 'bordered' | 'borderless';
@@ -58,7 +58,7 @@ export const TableProps = {
   tableLayout: {
     type: String as PropType<'fixed' | 'auto'>,
     default: 'auto',
-    validator(v: string) {
+    validator(v: string): boolean {
       return v === 'fixed' || v === 'auto';
     },
   },
@@ -81,9 +81,13 @@ export const TableProps = {
 
 export type TablePropsTypes = ExtractPropTypes<typeof TableProps>;
 
-export interface Table<T = Record<string, any>> extends ComponentInternalInstance {
+export type DefaultRow = TablePropsTypes['data'][number];
+
+export interface Table<T> extends ComponentInternalInstance {
   store: TableStore<T>;
   props: TablePropsTypes;
+  tableId: string;
+  hiddenColumns: Ref<HTMLElement | null>;
 }
 
 // export interface TableCheckStatusArg {

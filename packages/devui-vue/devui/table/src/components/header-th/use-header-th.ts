@@ -1,6 +1,6 @@
 import { ref, watch, Ref, shallowRef } from 'vue';
 import { Column, FilterResults } from '../column/column-types';
-import { TableStore } from '../../store';
+import { TableStore } from '../../store/store-types';
 import { SortDirection } from '../../table-types';
 
 export const useSort = (store: TableStore, column: Ref<Column>): Ref<SortDirection> => {
