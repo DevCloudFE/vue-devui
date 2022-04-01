@@ -1,4 +1,4 @@
-import { PropType, ExtractPropTypes, VNode, Slot } from 'vue';
+import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance } from 'vue';
 
 export type Formatter<T = any, R = any> = (row: T, cellValue: R, index: number) => VNode[];
 
@@ -74,7 +74,8 @@ export interface CustomFilterProps {
 
 export type CustomFilterSlot = (props: CustomFilterProps) => VNode[];
 
-export interface Column<T extends Record<string, unknown> = any> {
+export interface Column<T> {
+  id?: string;
   field?: string;
   width?: number;
   minWidth?: number;
@@ -93,4 +94,9 @@ export interface Column<T extends Record<string, unknown> = any> {
   compareFn?: CompareFn<T>;
   customFilterTemplate?: CustomFilterSlot;
   subColumns?: Slot;
+}
+
+export interface TableColumn<T> extends ComponentInternalInstance {
+  columnId: string;
+  columnConfig: Partial<Column<T>>;
 }

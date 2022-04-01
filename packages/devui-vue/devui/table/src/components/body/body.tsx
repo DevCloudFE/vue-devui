@@ -10,7 +10,7 @@ export default defineComponent({
   name: 'DTableBody',
   setup() {
     const table = inject(TABLE_TOKEN);
-    const { _data: data, _columns: columns, _checkList: checkList, isFixedLeft } = table.store.states;
+    const { _data: data, columns, _checkList: checkList, isFixedLeft } = table.store.states;
     const ns = useNamespace('table');
     const hoverEnabled = computed(() => table.props.rowHoveredHighlight);
     const { tableSpans, removeCells } = useMergeCell();
