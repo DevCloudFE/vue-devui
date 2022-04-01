@@ -1,5 +1,5 @@
 import { defineComponent, reactive, toRefs, watch } from 'vue';
-import { ProgressProps, progressProps, SvgData } from './progress-types';
+import { ProgressProps, progressProps, ISvgData } from './progress-types';
 import './progress.scss';
 
 export default defineComponent({
@@ -8,7 +8,7 @@ export default defineComponent({
   setup(props: ProgressProps) {
     const { height, percentage, percentageText, barBgColor, isCircle, strokeWidth, showContent } = toRefs(props);
 
-    const data: SvgData = reactive({
+    const data: ISvgData = reactive({
       pathString: '',
       trailPath: null,
       strokePath: null,
