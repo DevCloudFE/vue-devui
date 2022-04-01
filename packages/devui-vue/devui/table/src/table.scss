@@ -1,9 +1,16 @@
 @import '../../styles-var/devui-var.scss';
 
 .devui-table {
+  position: relative;
   width: 100%;
   overflow-x: auto;
   padding-top: 8px;
+
+  .hidden-columns {
+    position: absolute;
+    visibility: hidden;
+    z-index: -1;
+  }
 
   &__view {
     display: table;
