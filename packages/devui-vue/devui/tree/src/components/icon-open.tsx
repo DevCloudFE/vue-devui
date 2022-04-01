@@ -1,6 +1,4 @@
-import { VNodeTypes } from 'vue';
-
-export const IconOpen = (): VNodeTypes => (
+export const IconOpen = () => (
   <svg
     width="16px"
     height="16px"
