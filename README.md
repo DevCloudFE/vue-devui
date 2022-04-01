@@ -4,151 +4,74 @@
   </a>
 </p>
 
-Vue DevUI 是 Vue3 版本的 DevUI 组件库，基于 [https://github.com/devcloudfe/ng-devui](https://github.com/devcloudfe/ng-devui)，倡导`沉浸`、`灵活`、`至简`的设计价值观。
+<h1 align="center">Vue DevUI</h1>
 
-DevUI 官方网站：[https://devui.design](https://devui.design)
+<p align="center">Vue3 component library based on <a href="https://devui.design/" target="_blank" rel="noopener noreferrer">DevUI Design</a></p>
 
-## 当前状态: Beta
+English | [简体中文](README.zh-CN.md)
 
-该项目还处于孵化和演进阶段，欢迎大家参与到 Vue DevUI 项目的建设中来！🎉🎉
+🌈 Features：
 
-通过参与 Vue DevUI 项目，你可以：
-- 🔥 学习最新的 `Vite`+`Vue3`+`TypeScript`+`JSX` 技术
-- 🎁 学习如何设计和开发组件
-- ⭐ 参与到开源社区中来
-- 🎊 结识一群热爱学习、热爱开源的朋友
+- 📦 40 high-quality components that are simple, easy to use, and flexible.
+- 🔑 Support for TypeScript.
+- ⛰️ Support for Nuxt3.
+- ⚡ Support for on-demand import.
+- 🌍 Support internationalization.
+- 🎨 Support theme customization, and built-in seven beautiful themes such as `Galaxy`, `Sweet` and `Provence`.
 
-[贡献指南](https://github.com/DevCloudFE/vue-devui/wiki/%E8%B4%A1%E7%8C%AE%E6%8C%87%E5%8D%97)
+## 🔧 Usage
 
-## 快速开始
-
-### 1 安装依赖
-
-```
-pnpm i
-```
-
-### 2 启动
+The first step is to install vue devui:
 
 ```
-pnpm dev
+npm i vue-devui
 ```
 
-### 3 访问
+Then import `DevUI` in the `main.ts` file:
 
-[http://localhost:3000/](http://localhost:3000/)
-
-### 4 生产打包
-
-```
-pnpm build
-```
-
-## 使用 Vue DevUI
-
-### 1. 安装
-
-```
-pnpm i vue-devui
-```
-
-### 2. 全量引入
-
-在`main.ts`文件中编写以下代码：
-```
+```ts
 import { createApp } from 'vue'
 import App from './App.vue'
 
-// Step 1: 引入 Vue DevUI 组件库
+// Import Vue DevUI component and style
 import DevUI from 'vue-devui'
-// Step 2: 引入组件库样式
 import 'vue-devui/style.css'
 
-createApp(App)
-.use(DevUI) // Step 3: 使用 Vue DevUI
-.mount('#app')
+createApp(App).use(DevUI).mount('#app')
 ```
 
-### 3. 按需引入
+Then you can use the vue devui component(such as `<d-button>`) in the `App.vue` file:
 
-除了全量引入，我们也支持单个组件按需引入。
-
-在`main.ts`文件中编写以下代码：
-```
-import { createApp } from 'vue'
-import App from './App.vue'
-
-// Step 1: 引入单个组件
-import { Button } from 'vue-devui'
-// or import Button from 'vue-devui/button'
-// Step 2: 引入组件样式
-import 'vue-devui/button/style.css'
-
-createApp(App)
-.use(Button) // Step 3: 使用组件
-.mount('#app')
-```
-
-### 4. 配置自动按需引入`unplugin-vue-components`（推荐）
-
-配置`unplugin-vue-components`插件可以无需引入Vue DevUI就可以直接按需使用其中的组件，具体使用方式如下：
-
-在`vite.config.ts`文件中添加以下代码：
-```
-import Components from 'unplugin-vue-components/vite'
-import { DevUiResolver } from 'unplugin-vue-components/resolvers'
-
-export default defineConfig({
-  plugins: [
-    vue(),
-
-    // 新增
-    Components({
-      resolvers: [
-        DevUiResolver()
-      ]
-    })
-  ]
-})
-```
-
-配置了以上插件，就可以直接在代码中使用`Vue DevUI`的组件，而无需在`main.ts`文件中引入`Vue DevUI`。
-
-### 5. 使用
-
-```
+```vue
 <template>
-  <d-button>确定</d-button>
+  <d-button>Button</d-button>
 </template>
 ```
 
-## 图标库
+## 🖥️ Development
 
-图标库推荐使用[DevUI图标库](https://devui.design/icon/ruleResource)，也可以使用第三方图标库，比如：iconfont。
-
-### 使用DevUI图标库
-
-#### 安装
-
-```
-pnpm i @devui-design/icons
+```shell
+git clone git@github.com:DevCloudFE/vue-devui.git
+cd vue-devui
+pnpm i
+pnpm dev
 ```
 
-#### 引入
+Open your browser and visit: [http://localhost:3000/](http://localhost:3000/).
 
-在`main.ts`文件中，编写以下代码：
+## 🤝 Contributing
 
-```
-import '@devui-design/icons/icomoon/devui-icon.css'
-```
+Welcome to join our Vue DevUI open source project!🎉
 
-#### 使用
+By participating in the Vue DevUI project, we can together:
+- 🔥 Learn the latest cool `Vite` + `Vue3` + `TypeScript` + `JSX` technology.
+- 🎁 Learn how to design and develop UI components.
+- ⭐ Hone programming skills and learn excellent programming practice.
+- 🎊 Meet a group of friends who love learning and open source.
 
-```
-<d-icon name="love" color="red"></d-icon>
-```
+If you don't know how to start, please read our [contributing guide](https://vue-devui.github.io/contributing/)
 
-## Contributors ✨
+## ✨ Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
@@ -187,6 +110,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/liuxdi"><img src="https://avatars.githubusercontent.com/u/10958003?v=4?s=100" width="100px;" alt=""/><br /><sub><b>刘小迪</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=liuxdi" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/unfound"><img src="https://avatars.githubusercontent.com/u/32935349?v=4?s=100" width="100px;" alt=""/><br /><sub><b>unfound</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=unfound" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Roading"><img src="https://avatars.githubusercontent.com/u/7751774?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Roading</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Roading" title="Code">💻</a></td>
+    <td align="center"><a href="http://inreasons.cn"><img src="https://avatars.githubusercontent.com/u/47918504?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Chestnut</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=banlify" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/c0dedance"><img src="https://avatars.githubusercontent.com/u/38075730?v=4?s=100" width="100px;" alt=""/><br /><sub><b>c0dedance</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=c0dedance" title="Code">💻</a></td>
   </tr>
 </table>
 

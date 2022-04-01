@@ -32,21 +32,10 @@ const results: {
   };
 } = {};
 
-export function responesScreen (func: SubscribeCb) {
-  if (!subscribers.size) {
-    register();
-  }
-  subUid += 1;
-  subscribers.set(subUid, func);
-  func({ ...screen });
-  return subUid;
-}
-
-export function removeSubscribeCb (id: number) {
-  subscribers.delete(id);
-  if (subscribers.size === 0) {
-    unRegister();
-  }
+function dispatch () {
+  subscribers.forEach(value => {
+    value({ ...screen });
+  });
 }
 
 function register () {
@@ -56,7 +45,7 @@ function register () {
       screen[key as ScreenMediasKey] = true;
       dispatch();
     }
-    const listener = e => {
+    const listener: (e: MediaQueryListEvent) => void = e => {
       screen[key as ScreenMediasKey] = e.matches;
       dispatch();
     };
@@ -69,6 +58,16 @@ function register () {
   });
 }
 
+export function responesScreen (func: SubscribeCb): number {
+  if (!subscribers.size) {
+    register();
+  }
+  subUid += 1;
+  subscribers.set(subUid, func);
+  func({ ...screen });
+  return subUid;
+}
+
 function unRegister () {
   Object.keys(screenMedias).forEach(key => {
     const handler = results[key];
@@ -77,8 +76,9 @@ function unRegister () {
   subscribers.clear();
 }
 
-function dispatch () {
-  subscribers.forEach(value => {
-    value({ ...screen });
-  });
+export function removeSubscribeCb (id: number): void {
+  subscribers.delete(id);
+  if (subscribers.size === 0) {
+    unRegister();
+  }
 }

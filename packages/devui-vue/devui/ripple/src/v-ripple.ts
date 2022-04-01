@@ -14,7 +14,7 @@ const ripple = (
   event: PointerEvent,
   el: HTMLElement,
   options: IRippleDirectiveOptions
-) => {
+): void => {
   const rect = el.getBoundingClientRect();
   const computedStyles = window.getComputedStyle(el);
   const { x, y } = getRelativePointer(event, rect);
@@ -22,30 +22,10 @@ const ripple = (
 
   const rippleContainer = createContainer(computedStyles);
   const rippleEl = createrippleElement(x, y, size, options);
-
-  incrementRippleCount(el);
-
   let originalPositionValue = '';
-  if (computedStyles.position === 'static') {
-    if (el.style.position) {originalPositionValue = el.style.position;}
-    el.style.position = 'relative';
-  }
-
-  rippleContainer.appendChild(rippleEl);
-  el.appendChild(rippleContainer);
-
   let shouldDissolveripple = false;
-  const releaseripple = (e?: any) => {
-    if (typeof e !== 'undefined') {
-      document.removeEventListener('pointerup', releaseripple);
-      document.removeEventListener('pointercancel', releaseripple);
-    }
-
-    if (shouldDissolveripple) {dissolveripple();}
-    else {shouldDissolveripple = true;}
-  };
-
-  const dissolveripple = () => {
+  let token: number | null = null;
+  function dissolveripple () {
     rippleEl.style.transition = 'opacity 150ms linear';
     rippleEl.style.opacity = '0';
 
@@ -59,31 +39,50 @@ const ripple = (
         el.style.position = originalPositionValue;
       }
     }, 150);
-  };
+  }
+  function releaseripple (e?: PointerEvent)  {
+    if (typeof e !== 'undefined') {
+      document.removeEventListener('pointerup', releaseripple);
+      document.removeEventListener('pointercancel', releaseripple);
+    }
 
-  document.addEventListener('pointerup', releaseripple);
-  document.addEventListener('pointercancel', releaseripple);
+    if (shouldDissolveripple) {dissolveripple();}
+    else {shouldDissolveripple = true;}
+  }
 
-  const token = setTimeout(() => {
-    document.removeEventListener('pointercancel', cancelripple);
-
-    requestAnimationFrame(() => {
-      rippleEl.style.transform = `translate(-50%,-50%) scale(1)`;
-      rippleEl.style.opacity = `${options.finalOpacity}`;
-
-      setTimeout(() => releaseripple(), options.duration * 1000);
-    });
-  }, options.delayTime);
-
-  const cancelripple = () => {
+  function cancelripple() {
     clearTimeout(token);
 
     rippleContainer.remove();
     document.removeEventListener('pointerup', releaseripple);
     document.removeEventListener('pointercancel', releaseripple);
     document.removeEventListener('pointercancel', cancelripple);
-  };
+  }
 
+  incrementRippleCount(el);
+
+  if (computedStyles.position === 'static') {
+    if (el.style.position) {originalPositionValue = el.style.position;}
+    el.style.position = 'relative';
+  }
+
+  rippleContainer.appendChild(rippleEl);
+  el.appendChild(rippleContainer);
+
+
+  document.addEventListener('pointerup', releaseripple);
+  document.addEventListener('pointercancel', releaseripple);
+
+  token = setTimeout(() => {
+    document.removeEventListener('pointercancel', cancelripple);
+
+    requestAnimationFrame(() => {
+      rippleEl.style.transform = `translate(-50%,-50%) scale(1)`;
+      rippleEl.style.opacity = `${options.finalOpacity}`;
+
+      setTimeout(() => releaseripple(), options.duration);
+    });
+  }, options.delay);
   document.addEventListener('pointercancel', cancelripple);
 };
 

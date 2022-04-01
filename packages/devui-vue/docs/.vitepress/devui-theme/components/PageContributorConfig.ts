@@ -486,6 +486,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://portrait.gitee.com/uploads/avatars/user/757/2273663_weban_1611113629.png!avatar200',
       homepage: 'https://gitee.com/weban'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
+      homepage: 'https://github.com/xingyan95'
+    },
   ],
   tag: [
     {

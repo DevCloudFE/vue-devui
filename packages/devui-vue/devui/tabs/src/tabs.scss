@@ -71,6 +71,10 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   border: none;
   border-radius: $devui-border-radius;
 
+  > li:last-of-type {
+    border-radius: 0 $devui-border-radius $devui-border-radius 0;
+  }
+
   > li {
     cursor: pointer;
     border: 1px solid $devui-line;

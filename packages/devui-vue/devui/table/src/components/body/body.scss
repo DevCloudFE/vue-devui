@@ -1,34 +1,42 @@
 @import '../../../../styles-var/devui-var.scss';
 
-.devui-tbody {
-  tr {
-    font-size: $devui-font-size-card-title;
-    color: $devui-text;
-    border: none;
-    border-bottom: 1px solid $devui-dividing-line;
-    background-color: $devui-global-bg-normal;
-
-    &.hover-enabled:hover {
-      background-color: $devui-list-item-hover-bg;
-    }
-
-    td {
-      padding: 10px;
+.devui-table {
+  &__tbody {
+    tr {
+      font-size: $devui-font-size;
+      color: $devui-text;
+      background-color: $devui-base-bg;
       border: none;
+
+      &.hover-enabled:hover {
+        background-color: $devui-list-item-hover-bg;
+      }
+
+      td {
+        background-clip: padding-box;
+        vertical-align: middle;
+        word-wrap: break-word;
+        word-break: normal;
+        line-height: 24px;
+        border: none;
+        border-bottom: 1px solid $devui-dividing-line;
+      }
     }
   }
 }
 
-.devui-sticky-cell {
-  position: sticky;
-  z-index: 5;
-  background-color: inherit;
+.devui-table {
+  &--sticky-cell {
+    position: sticky;
+    z-index: 5;
+    background-color: inherit;
 
-  &.left {
-    box-shadow: rgba(0, 0, 0, 0.05) $devui-shadow-length-slide-right;
-  }
+    &.left {
+      box-shadow: rgba(0, 0, 0, 0.05) $devui-shadow-length-slide-right;
+    }
 
-  &.right {
-    box-shadow: rgba(0, 0, 0, 0.05) $devui-shadow-length-slide-left;
+    &.right {
+      box-shadow: rgba(0, 0, 0, 0.05) $devui-shadow-length-slide-left;
+    }
   }
 }

@@ -1,7 +1,7 @@
 import type { PropType, ExtractPropTypes, SetupContext } from 'vue';
 
 export interface TreeItem {
-  id: string;
+  id?: string;
   label: string;
   isParent?: boolean;
   level?: number;
@@ -9,7 +9,7 @@ export interface TreeItem {
   addable?: boolean;
   editable?: boolean;
   deletable?: boolean;
-  children?: TreeData;
+  children?: Array<TreeItem>;
   [key: string]: unknown;
 }
 export interface IDropType {

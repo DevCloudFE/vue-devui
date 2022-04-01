@@ -1,13 +1,13 @@
-import { computed } from 'vue';
+import { computed, ComputedRef } from 'vue';
 import { ScreenSizes, ColPropsBaseClass, screenSizes, colPropsBaseClass } from './grid-types';
 
 export const CLASS_PREFIX = 'devui-col';
 
-export function formatClass (prefix: string, val: number | string | undefined) {
+export function formatClass (prefix: string, val?: number | string): string {
   return val !== undefined ? ` ${prefix}-${val}` : '';
 }
 
-export function useColClassNames (props: ColPropsBaseClass) {
+export function useColClassNames (props: ColPropsBaseClass): ComputedRef<string> {
   return computed<string>(() => {
     const spanClass = formatClass(`${CLASS_PREFIX}-span`, props.span);
     const offsetClass = formatClass(`${CLASS_PREFIX}-offset`, props.offset);
@@ -21,7 +21,7 @@ function setSpace (val: string) {
   return ` ${val.trim()}${val && ' '}`;
 }
 
-export function useSize (colSizes: ScreenSizes) {
+export function useSize (colSizes: ScreenSizes): ComputedRef<string> {
   const keys = Object.keys(colSizes).filter(key => key in screenSizes) as (keyof ScreenSizes)[];
   return computed<string>(() => {
     return keys.reduce((total, key) => {

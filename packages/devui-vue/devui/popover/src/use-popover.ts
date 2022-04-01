@@ -14,7 +14,7 @@ export function usePopover(
   props: PopoverProps,
   visible: Ref<boolean>,
   placement: Ref<string>,
-  origin: Ref<HTMLElement>,
+  origin: Ref<HTMLElement | undefined>,
   popoverRef: Ref
 ): { overlayStyles: ComputedRef<Record<string, number | string>> } {
   const { trigger, isOpen } = toRefs(props);
@@ -24,7 +24,10 @@ export function usePopover(
   }));
 
   const onDocumentClick: (e: Event) => void = (e: Event) => {
-    if (!origin.value.contains(<HTMLElement>e.target) && !popoverRef.value.$el?.contains(e.target)) {
+    if (
+      !origin.value?.contains(<HTMLElement>e.target) &&
+      !popoverRef.value.$el?.contains(e.target)
+    ) {
       visible.value = false;
     }
   };

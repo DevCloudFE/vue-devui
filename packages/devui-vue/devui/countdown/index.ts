@@ -1,9 +1,7 @@
 import type { App } from 'vue';
 import Countdown from './src/countdown';
 
-Countdown.install = function(app: App): void {
-  app.component(Countdown.name, Countdown);
-};
+export * from './src/countdown-types';
 
 export { Countdown };
 
@@ -12,6 +10,6 @@ export default {
   category: '数据展示',
   status: '100%',
   install(app: App): void {
-    app.use(Countdown as any);
+    app.component(Countdown.name, Countdown);
   }
 };
