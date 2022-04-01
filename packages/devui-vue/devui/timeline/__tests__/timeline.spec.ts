@@ -56,7 +56,7 @@ describe('timeline test', () => {
 
   it('position should be rendered correctly', async () => {
 
-    const wrapper = mount({
+    const wrapperPosition = mount({
       components: { DTimeline, DTimelineItem },
       template: `
     <d-timeline mode="alternative">
@@ -70,22 +70,22 @@ describe('timeline test', () => {
         return;
       }
     });
-    let timeAxisItems = wrapper.findAll('.devui-timeline-item');
+    let timeAxisItemsPosition = wrapperPosition.findAll('.devui-timeline-item');
     // 内容是否在正确的位置
-    expect(timeAxisItems[0].find('.devui-timeline-item-data-left .devui-timeline-item-content').exists()).toBe(true);
-    expect(timeAxisItems[1].find('.devui-timeline-item-data-right .devui-timeline-item-content').exists()).toBe(true);
-    expect(timeAxisItems[2].find('.devui-timeline-item-data-right .devui-timeline-item-content').exists()).toBe(true);
+    expect(timeAxisItemsPosition[0].find('.devui-timeline-item-data-left .devui-timeline-item-content').exists()).toBe(true);
+    expect(timeAxisItemsPosition[1].find('.devui-timeline-item-data-right .devui-timeline-item-content').exists()).toBe(true);
+    expect(timeAxisItemsPosition[2].find('.devui-timeline-item-data-right .devui-timeline-item-content').exists()).toBe(true);
     // 设置横向时间轴
-    await wrapper.setProps({ direction: 'horizontal' });
-    timeAxisItems = wrapper.findAll('.devui-timeline-item');
-    expect(timeAxisItems[0].find('.devui-timeline-item-data-bottom .devui-timeline-item-content').exists()).toBe(true);
-    expect(timeAxisItems[1].find('.devui-timeline-item-data-top .devui-timeline-item-content').exists()).toBe(true);
-    expect(timeAxisItems[3].find('.devui-timeline-item-data-top .devui-timeline-item-content').exists()).toBe(true);
+    await wrapperPosition.setProps({ direction: 'horizontal' });
+    timeAxisItemsPosition = wrapperPosition.findAll('.devui-timeline-item');
+    expect(timeAxisItemsPosition[0].find('.devui-timeline-item-data-bottom .devui-timeline-item-content').exists()).toBe(true);
+    expect(timeAxisItemsPosition[1].find('.devui-timeline-item-data-top .devui-timeline-item-content').exists()).toBe(true);
+    expect(timeAxisItemsPosition[3].find('.devui-timeline-item-data-top .devui-timeline-item-content').exists()).toBe(true);
 
   });
 
   it('time-position should be rendered correctly', async () => {
-    const wrapper = mount({
+    const wrapperTimePosition = mount({
       components: { DTimeline, DTimelineItem },
       template: `
     <d-timeline time-position="bottom">
@@ -97,16 +97,16 @@ describe('timeline test', () => {
         return;
       }
     });
-    const timeAxisItems = wrapper.findAll('.devui-timeline-item');
+    const timeAxisItemsTimePosition = wrapperTimePosition.findAll('.devui-timeline-item');
     // 时间是否在正确的位置
-    expect(timeAxisItems[0].find('.devui-timeline-item-data-left .devui-timeline-item-time').exists()).toBe(false);
-    expect(timeAxisItems[0].find('.devui-timeline-item-axis .devui-timeline-item-time').exists()).toBe(true);
-    expect(timeAxisItems[1].find('.devui-timeline-item-data-left .devui-timeline-item-time').exists()).toBe(true);
-    expect(timeAxisItems[1].find('.devui-timeline-item-axis .devui-timeline-item-time').exists()).toBe(false);
+    expect(timeAxisItemsTimePosition[0].find('.devui-timeline-item-data-left .devui-timeline-item-time').exists()).toBe(false);
+    expect(timeAxisItemsTimePosition[0].find('.devui-timeline-item-axis .devui-timeline-item-time').exists()).toBe(true);
+    expect(timeAxisItemsTimePosition[1].find('.devui-timeline-item-data-left .devui-timeline-item-time').exists()).toBe(true);
+    expect(timeAxisItemsTimePosition[1].find('.devui-timeline-item-axis .devui-timeline-item-time').exists()).toBe(false);
   });
 
   it('line-style should be rendered correctly', async () => {
-    const wrapper = mount({
+    const wrapperLineStyle = mount({
       components: { DTimeline, DTimelineItem },
       template: `
     <d-timeline>
@@ -121,7 +121,7 @@ describe('timeline test', () => {
         return;
       }
     });
-    const timeAxisItemAxis = wrapper.findAll('.devui-timeline-item .devui-timeline-item-axis');
+    const timeAxisItemAxis = wrapperLineStyle.findAll('.devui-timeline-item .devui-timeline-item-axis');
     expect(timeAxisItemAxis[0].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-solid');
     expect(timeAxisItemAxis[1].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-dashed');
     expect(timeAxisItemAxis[2].find('.devui-timeline-item-line').classes()).toContain('devui-timeline-item-line-style-dotted');
