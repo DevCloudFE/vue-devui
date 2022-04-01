@@ -54,7 +54,7 @@ export function generateInnerTree(
     }
 
     if (!newItem[key]) {
-      return acc.concat(newItem);
+      return acc.concat({ ...newItem, isLeaf: true });
     } else {
       return acc.concat(omit<ITreeNode>(newItem, 'children'), generateInnerTree(newItem[key], key, level, path));
     }

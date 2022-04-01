@@ -16,7 +16,7 @@ export default class TreeFactory {
     this.setTree(tree);
   }
 
-  getTree(flat?: boolean = false): IInnerTreeNode[] {
+  getTree(flat?: boolean = true): IInnerTreeNode[] {
     if (flat) {
       return this._innerTree;
     } else {
