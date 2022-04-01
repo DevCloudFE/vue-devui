@@ -1,7 +1,7 @@
 import { reactive, ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import { TreeItem, IDropType, Nullable } from '../tree-types';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 const ACTIVE_NODE = 'devui-tree-node__content--value-wrapper';
 interface DragState {
@@ -44,9 +44,7 @@ export default function useDraggable(
   );
 
   const removeDraggingStyle = (target: Nullable<HTMLElement>) => {
-    target
-      ?.querySelector(`.${ACTIVE_NODE}`)
-      ?.classList.remove(...['prev', 'next', 'inner'].map((item) => `devui-drop-${item}`));
+    target?.querySelector(`.${ACTIVE_NODE}`)?.classList.remove(...['prev', 'next', 'inner'].map((item) => `devui-drop-${item}`));
   };
 
   const checkIsParent = (childNodeId: number | string, parentNodeId: number | string): boolean => {
@@ -64,7 +62,9 @@ export default function useDraggable(
     let nowDragNode: IDropNode;
     let nowDropNode: IDropNode;
     const findDragAndDropNode = (curr: TreeItem[]) => {
-      if (!Array.isArray(curr)) {return;}
+      if (!Array.isArray(curr)) {
+        return;
+      }
       curr.every((item, index) => {
         if (nowDragNode && nowDropNode) {
           return false;
@@ -99,7 +99,6 @@ export default function useDraggable(
       if (targetIndex !== -1) {
         nowDragNode.target.splice(targetIndex, 1);
       }
-
     }
 
     return cloneData;
@@ -108,7 +107,7 @@ export default function useDraggable(
     dragState.draggingNode = <Nullable<HTMLElement>>event.target;
     const treeInfo = {
       type: 'tree-node',
-      nodeId: treeNode.id
+      nodeId: treeNode.id,
     };
     event.dataTransfer?.setData('Text', JSON.stringify(treeInfo));
   };
@@ -187,6 +186,6 @@ export default function useDraggable(
     onDragover,
     onDragleave,
     onDrop,
-    dragState
+    dragState,
   };
 }
