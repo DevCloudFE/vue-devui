@@ -1,6 +1,7 @@
-import { defineComponent, toRef } from 'vue';
+import { defineComponent, toRef, inject } from 'vue';
 import type { PropType } from 'vue';
 import { Column } from '../column/column-types';
+import { TABLE_TOKEN } from '../../table-types';
 import { useFixedColumn } from '../../composable/use-table';
 
 export default defineComponent({
@@ -20,14 +21,13 @@ export default defineComponent({
     },
   },
   setup(props: { column: Column; row: any; index: number }) {
+    const table = inject(TABLE_TOKEN);
     const column = toRef(props, 'column');
-
-    // 固定列
-    const { stickyCell, offsetStyle } = useFixedColumn(column);
+    const { stickyClass, stickyStyle } = useFixedColumn(column);
 
     return () => (
-      <td class={stickyCell.value} style={offsetStyle.value}>
-        {column.value.renderCell?.(props.row, props.index)}
+      <td class={stickyClass.value} style={stickyStyle.value}>
+        {column.value.renderCell?.(props.row, column.value, table.store, props.index)}
       </td>
     );
   },

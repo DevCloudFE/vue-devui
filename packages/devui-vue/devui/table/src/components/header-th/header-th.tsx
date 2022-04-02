@@ -1,5 +1,5 @@
 import { defineComponent, inject, toRefs } from 'vue';
-import { PropType } from 'vue';
+import type { PropType } from 'vue';
 import { Column } from '../column/column-types';
 import { TABLE_TOKEN } from '../../table-types';
 import { Sort } from '../sort';
@@ -20,12 +20,12 @@ export default defineComponent({
     const { column } = toRefs(props);
     const directionRef = useSort(table.store, column);
     const filteredRef = useFilter(table.store, column);
-    const { stickyCell, offsetStyle } = useFixedColumn(column);
+    const { stickyClass, stickyStyle } = useFixedColumn(column);
 
     return () => (
-      <th class={stickyCell.value} style={offsetStyle.value}>
+      <th class={stickyClass.value} style={stickyStyle.value}>
         <div class="header-container">
-          {props.column.renderHeader?.()}
+          {props.column.renderHeader?.(column.value, table.store)}
           {props.column.filterable && (
             <Filter v-model={filteredRef.value} filterList={props.column.filterList} customTemplate={props.column.customFilterTemplate} />
           )}
