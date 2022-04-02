@@ -6,6 +6,8 @@
 
 文件夹、组织架构、生物分类、国家地区等等，世间万物的大多数结构都是树形结构。使用树控件可以完整展现其中的层级关系，并具有展开收起选择等交互功能。
 
+### 基本用法
+
 :::demo
 
 ```vue
@@ -1027,4 +1029,70 @@ export default defineComponent({
 })
 </script>
 ```
+:::
+
+### useTree
+
+:::demo
+
+```vue
+<template>
+  <d-button @click="changeData">changeData</d-button>
+  <d-new-tree :data="data"></d-new-tree>
+</template>
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const data = ref([
+      {
+        label: 'Parent node 1',
+        id: 'node-1',
+        children: [
+          {
+            label: 'Parent node 1-1',
+            id: 'node-1-1',
+            disableCheck: true,
+            disableSelect: true,
+            disableToggle: true,
+            children: [
+              {
+                label: 'Leaf node 1-1-1',
+                id: 'node-1-1-1',
+              }
+            ]
+          },
+          {
+            label: 'Leaf node 1-2',
+            id: 'node-1-2',
+          }
+        ]
+      },
+      {
+        label: 'Leaf node 2',
+        id: 'node-2',
+      },
+      {
+        label: 'Leaf node 3',
+        id: 'node-3',
+      }
+    ]);
+
+    const changeData = () => {
+      data.value = data.value.concat({
+        label: 'Leaf node 1-4',
+        id: 'node-1-4'
+      });
+    }
+
+    return {
+      data,
+      changeData,
+    }
+  }
+})
+</script>
+```
+
 :::
