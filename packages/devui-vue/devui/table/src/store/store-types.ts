@@ -6,7 +6,7 @@ export interface TableStore<T = Record<string, any>> {
   states: {
     _data: Ref<T[]>;
     _columns: Ref<Column<T>[]>;
-    columns: Ref<Column<T>[]>;
+    flatColumns: Ref<Column<T>[]>;
     _checkList: Ref<boolean[]>;
     _checkAll: Ref<boolean>;
     _halfChecked: Ref<boolean>;
