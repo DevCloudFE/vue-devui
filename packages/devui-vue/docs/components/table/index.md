@@ -14,6 +14,7 @@
 ```vue
 <template>
   <d-table :data="baseTableData">
+    <d-column type="index"></d-column>
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
