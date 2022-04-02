@@ -45,6 +45,9 @@ export interface IUseDisable {
   disableSelectNode: (node: IInnerTreeNode) => void;
   disableCheckNode: (node: IInnerTreeNode) => void;
   disableToggleNode: (node: IInnerTreeNode) => void;
+  enableSelectNode: (node: IInnerTreeNode) => void;
+  enableCheckNode: (node: IInnerTreeNode) => void;
+  enableToggleNode: (node: IInnerTreeNode) => void;
 }
 
 export interface IUseOperate {

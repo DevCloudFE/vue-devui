@@ -1,6 +1,6 @@
-import { defineComponent, inject, PropType, ref, toRefs } from 'vue';
+import { defineComponent, inject, PropType, toRefs } from 'vue';
 import { USE_TREE_TOKEN } from '../const';
-import { ITreeNode } from '../core/tree-factory-types';
+import { IInnerTreeNode } from '../core/tree-factory-types';
 import DTreeNodeToggle from './tree-node-toggle';
 import { Checkbox } from '../../../checkbox';
 
@@ -8,7 +8,7 @@ export default defineComponent({
   name: 'DTreeNode',
   props: {
     data: {
-      type: Object as PropType<ITreeNode>,
+      type: Object as PropType<IInnerTreeNode>,
     },
   },
   setup(props) {
@@ -18,19 +18,19 @@ export default defineComponent({
     return () => {
       return (
         <div
-          class={['devui-tree-node', data.value.expanded && 'devui-tree-node__open']}
-          style={{ paddingLeft: `${24 * (data.value.level - 1)}px` }}>
+          class={['devui-tree-node', data.value?.expanded && 'devui-tree-node__open']}
+          style={{ paddingLeft: `${24 * (data.value?.level - 1)}px` }}>
           <div class={['devui-tree-node__content', data.value?.selected && 'active']} onClick={() => {
             selectNode(data.value);
           }}>
             <DTreeNodeToggle data={data.value} />
             <div class="devui-tree-node__content--value-wrapper">
-              { <Checkbox key={data.value.id} modelValue={data.value.checked} onUpdate:modelValue={() => {
+              { <Checkbox disabled={data.value?.disableCheck} key={data.value?.id} modelValue={data.value?.checked} onUpdate:modelValue={() => {
                 toggleCheckNode(data.value);
               }} onClick={(event: MouseEvent) => {
                 event.stopPropagation();
               }} /> }
-              <span class="devui-tree-node__title">{data.value.label}</span>
+              <span class={['devui-tree-node__title', data.value?.disableSelect && 'select-disabled']}>{data.value?.label}</span>
             </div>
           </div>
         </div>

@@ -17,10 +17,25 @@ export default function useDisable(data: Ref<IInnerTreeNode[]>, core: IUseCore) 
   const disableToggleNode = (node: IInnerTreeNode): void => {
     setNodeValue(node, 'disableToggle', true);
   }
+  
+  const enableSelectNode = (node: IInnerTreeNode): void => {
+    setNodeValue(node, 'disableSelect', false);
+  }
+
+  const enableCheckNode = (node: IInnerTreeNode): void => {
+    setNodeValue(node, 'disableCheck', false);
+  }
+
+  const enableToggleNode = (node: IInnerTreeNode): void => {
+    setNodeValue(node, 'disableToggle', false);
+  }
 
   return {
     disableSelectNode,
     disableCheckNode,
     disableToggleNode,
+    enableSelectNode,
+    enableCheckNode,
+    enableToggleNode,
   }
 }

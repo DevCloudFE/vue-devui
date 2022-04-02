@@ -1031,7 +1031,7 @@ export default defineComponent({
 ```
 :::
 
-### NewTree
+### useTree
 
 :::demo
 
@@ -1053,6 +1053,9 @@ export default defineComponent({
           {
             label: 'Parent node 1-1',
             id: 'node-1-1',
+            disableCheck: true,
+            disableSelect: true,
+            disableToggle: true,
             children: [
               {
                 label: 'Leaf node 1-1-1',

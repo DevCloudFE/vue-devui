@@ -16,7 +16,7 @@ export default function useOperate(data: Ref<IInnerTreeNode[]>, core: IUseCore) 
     })
   }
 
-  const editNode = (node: ITreeNode, label: string): void => {
+  const editNode = (node: IInnerTreeNode, label: string): void => {
     setNodeValue(node, 'label', label);
   }
 

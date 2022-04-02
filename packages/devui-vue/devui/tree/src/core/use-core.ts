@@ -16,14 +16,13 @@ export default function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
     for (let i = startIndex + 1; i < data.value.length && getLevel(node) < data.value[i].level; i++) {
       result.push(data.value[i]);
     }
-    console.log('result:', result);
     
     return result;
   }
 
   const getExpendedTree = (): ComputedRef<IInnerTreeNode[]> => {
     return computed(() => {
-      let excludeNodes = [];
+      let excludeNodes: IInnerTreeNode[] = [];
       let result = [];
 
       for (let i = 0, len = data?.value.length; i < len; i++) {

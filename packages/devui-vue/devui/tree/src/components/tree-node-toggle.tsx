@@ -18,7 +18,7 @@ export default defineComponent({
     return () => {
       return (
         <span
-          class="devui-tree-node__folder"
+          class={['devui-tree-node__folder', data.value?.disableToggle && 'toggle-disabled']}
           onClick={(event: MouseEvent) => {
             event.stopPropagation();
             toggleNode(data.value);

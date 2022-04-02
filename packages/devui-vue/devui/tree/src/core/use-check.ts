@@ -2,8 +2,6 @@ import { Ref } from 'vue';
 import { IInnerTreeNode, IUseCore } from './tree-factory-types';
 
 export default function useCheck(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
-  console.log('useCheck:', data, data.value);
-  
   const { setNodeValue, getNode } = core;
 
   const checkNode = (node: IInnerTreeNode): void => {
