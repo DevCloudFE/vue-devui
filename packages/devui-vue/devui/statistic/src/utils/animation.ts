@@ -1,15 +1,17 @@
-import * as easing from './easing';
-
-export type easingType = 'easeOutCubic' | 'linear' | 'easeOutExpo' | 'easeInOutExpo';
-export type startFunc = (key: number) => number;
-export type updateFunc = (key: any) => any;
-export type finishFunc = (key: any) => any;
+import easing from './easing';
 export interface fromType {
   value: number;
 }
 export interface toType {
   value: number;
 }
+
+export type easingType = 'easeOutCubic' | 'linear' | 'easeOutExpo' | 'easeInOutExpo';
+export type formAndToAttributesType = 'value' | unknown;
+export type startFunc = (key: number) => number;
+export type updateFunc = (key: toType) => void;
+export type finishFunc = (key: toType) => void;
+
 export interface AnimationOptions {
   from: fromType;
   to: toType;
@@ -36,9 +38,9 @@ export class Tween {
   timer?: null | number;
   time?: number;
   elapsed?: number;
-  keys?: any;
+  keys?: toType;
   constructor(options: AnimationOptions) {
-    const { from, to, duration, delay, easing, onStart, onUpdate, onFinish } = options;
+    const { from, to, duration, delay, easing: easingValue, onStart, onUpdate, onFinish } = options;
     for (const key in from) {
       if (to[key] === undefined) {
         to[key] = from[key];
@@ -55,7 +57,7 @@ export class Tween {
     this.to = to;
     this.duration = duration;
     this.delay = delay;
-    this.easing = easing;
+    this.easing = easingValue;
     this.onStart = onStart;
     this.onUpdate = onUpdate;
     this.onFinish = onFinish;

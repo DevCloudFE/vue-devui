@@ -10,7 +10,7 @@ export default defineComponent({
   name: 'DTableBody',
   setup() {
     const table = inject(TABLE_TOKEN);
-    const { _data: data, columns } = table.store.states;
+    const { _data: data, flatColumns } = table.store.states;
     const ns = useNamespace('table');
     const hoverEnabled = computed(() => table.props.rowHoveredHighlight);
     const { tableSpans, removeCells } = useMergeCell();
@@ -20,7 +20,7 @@ export default defineComponent({
         {data.value.map((row: DefaultRow, rowIndex: number) => {
           return (
             <tr key={rowIndex} class={{ 'hover-enabled': hoverEnabled.value }}>
-              {columns.value.map((column: Column, columnIndex: number) => {
+              {flatColumns.value.map((column: Column, columnIndex: number) => {
                 const cellId = `${rowIndex}-${columnIndex}`;
                 const [rowspan, colspan] = tableSpans.value[cellId] ?? [1, 1];
 

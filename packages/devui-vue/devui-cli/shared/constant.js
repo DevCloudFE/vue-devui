@@ -2,6 +2,7 @@ const { resolve } = require('path');
 const { version } = require('../../package.json');
 
 exports.VERSION = version;
+exports.isProd = process.env.NODE_ENV === 'production';
 exports.CWD = process.cwd();
 exports.DEVUI_DIR = resolve(this.CWD, 'devui');
 exports.DEVUI_NAMESPACE = 'd';

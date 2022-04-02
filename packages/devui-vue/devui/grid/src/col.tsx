@@ -30,6 +30,11 @@ export default defineComponent({
 
     const gutterStyle = inject<Ref<CSSProperties>>('gutterStyle');
 
-    return () => <div class={`${CLASS_PREFIX}${colClassNames.value}${sizeClassNames.value}`} style={{ ...colStyle.value, ...gutterStyle.value }}>{slots.default?.()}</div>;
+    return () => <div
+      class={`${CLASS_PREFIX}${colClassNames.value}${sizeClassNames.value}`}
+      style={{ ...colStyle.value, ...gutterStyle.value }}
+    >
+      {slots.default?.()}
+    </div>;
   }
 });

@@ -5,26 +5,6 @@ import Header from './src/header';
 import Footer from './src/footer';
 import Aside from './src/aside';
 
-Layout.install = function(app: App): void {
-  app.component(Layout.name, Layout);
-};
-
-Content.install = function(app: App): void {
-  app.component(Content.name, Content);
-};
-
-Header.install = function(app: App): void {
-  app.component(Header.name, Header);
-};
-
-Footer.install = function(app: App): void {
-  app.component(Footer.name, Footer);
-};
-
-Aside.install = function(app: App): void {
-  app.component(Aside.name, Aside);
-};
-
 export { Layout, Content, Header, Footer, Aside };
 
 export default {
@@ -32,10 +12,10 @@ export default {
   category: '布局',
   status: '100%',
   install(app: App): void {
-    app.use(Layout as any);
-    app.use(Content as any);
-    app.use(Header as any);
-    app.use(Footer as any);
-    app.use(Aside as any);
+    app.component(Layout.name, Layout);
+    app.component(Content.name, Content);
+    app.component(Header.name, Header);
+    app.component(Footer.name, Footer);
+    app.component(Aside.name, Aside);
   }
 };

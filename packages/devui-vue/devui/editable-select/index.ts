@@ -1,9 +1,7 @@
 import type { App } from 'vue';
 import EditableSelect from './src/editable-select';
 
-EditableSelect.install = function (app: App): void {
-  app.component(EditableSelect.name, EditableSelect);
-};
+export * from './src/editable-select-types';
 
 export { EditableSelect };
 
@@ -12,6 +10,6 @@ export default {
   category: '数据录入',
   status: '100%',
   install(app: App): void {
-    app.use(EditableSelect as any);
+    app.component(EditableSelect.name, EditableSelect);
   }
 };

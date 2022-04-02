@@ -1,16 +1,6 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
+import { cardProps } from './card-types';
 import './card.scss';
-
-const cardProps = {
-  align: {
-    type: String as PropType<'start' | 'end' | 'spaceBetween'>,
-    default: 'start'
-  },
-  src: {
-    type: String,
-    default: ''
-  }
-} as const;
 
 export default defineComponent({
   name: 'DCard',

@@ -1,5 +1,5 @@
 import { mount, VueWrapper } from '@vue/test-utils';
-import { ref } from 'vue';
+import { ComponentPublicInstance, ref } from 'vue';
 import DSplitter from '../src/splitter';
 import DSplitterPane from '../src/splitter-pane';
 
@@ -74,7 +74,7 @@ describe('splitter', () => {
       },
     };
 
-    let wrapper: VueWrapper<any>;
+    let wrapper: VueWrapper<ComponentPublicInstance>;
     let splitterElement: HTMLElement;
     beforeEach(() => {
       wrapper = mount(testComponent);
@@ -325,7 +325,7 @@ describe('splitter', () => {
       },
     };
 
-    let wrapper: VueWrapper<any>;
+    let wrapper: VueWrapper<ComponentPublicInstance>;
     beforeEach(() => {
       wrapper = mount(testComponent);
     });

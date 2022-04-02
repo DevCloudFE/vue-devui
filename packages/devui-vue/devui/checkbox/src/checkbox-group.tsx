@@ -1,5 +1,5 @@
 import { defineComponent, ExtractPropTypes, provide, toRef } from 'vue';
-import { checkboxGroupProps, checkboxGroupInjectionKey } from './use-checkbox';
+import { checkboxGroupProps, checkboxGroupInjectionKey } from './checkbox-types';
 import DCheckbox from './checkbox';
 import './checkbox-group.scss';
 

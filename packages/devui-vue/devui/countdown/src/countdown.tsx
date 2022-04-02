@@ -1,7 +1,7 @@
-import { defineComponent, ref, onUnmounted ,onMounted } from 'vue';
+import { defineComponent, ref, onUnmounted, onMounted } from 'vue';
 import { countdownProps, CountdownProps } from './countdown-types';
-import './countdown.scss';
 import { getFormatTime, getLegalTime, getTimeSplit, getDeduplication, numFormat } from './utils';
+import './countdown.scss';
 
 export default defineComponent({
   name: 'DCountdown',
@@ -33,49 +33,48 @@ export default defineComponent({
       ctx.emit('onChange', {
         leftTime,
         formatTime,
-        legalTime
+        legalTime,
       });
       return leftTime;
     };
 
     const startTime = () => {
       getTime();
-      if (countdown.value) {return;}
-      countdown.value = setInterval(() => {
-        const t = getTime();
-        if (t === 0) {
-          ctx.emit('onFinish');
-          clearInterval(countdown.value);
-        }
-      }, s.has('S') ? 100 : 1000);
-
+      if (countdown.value) {
+        return;
+      }
+      countdown.value = setInterval(
+        () => {
+          const t = getTime();
+          if (t === 0) {
+            ctx.emit('onFinish');
+            clearInterval(countdown.value);
+          }
+        },
+        s.has('S') ? 100 : 1000
+      );
     };
 
-    onMounted(()=>{
+    onMounted(() => {
       startTime();
     });
     onUnmounted(() => {
       clearInterval(countdown.value);
     });
     return () => {
-      return (<div class="devui-countdown">
-        {
-          ctx.slots.default ? ctx.slots.default() : (
+      return (
+        <div class="devui-countdown">
+          {ctx.slots.default ? (
+            ctx.slots.default()
+          ) : (
             <div class="countdown-content" style={props.valueStyle}>
-              <span class="countdown-prefix">
-                {props.prefix}
-              </span>
-              <span class="countdown-value">
-                {timeStr.value}
-              </span>
-              <span class="countdown-suffix">
-                {props.suffix}
-              </span>
+              <span class="countdown-prefix">{props.prefix}</span>
+              <span class="countdown-value">{timeStr.value}</span>
+              <span class="countdown-suffix">{props.suffix}</span>
             </div>
-          )
-        }
-      </div>
+          )}
+        </div>
       );
     };
-  }
+  },
 });

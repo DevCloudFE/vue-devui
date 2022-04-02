@@ -1,6 +1,6 @@
 import { defineComponent, reactive, PropType } from 'vue';
 import Input from '../../input/src/input';
-import { inputProps } from '../../input/src/use-input';
+import { inputProps } from '../../input/src/input-types';
 import Icon from '../../icon/src/icon';
 
 import './input-icon.scss';

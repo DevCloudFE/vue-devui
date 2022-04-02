@@ -21,7 +21,7 @@ describe('ripple', () => {
       }
     );
     await nextTick();
-    const rippleElement = wrapper.find('.ripple-container') as any;
+    const rippleElement = wrapper.find('.ripple-container');
     await rippleElement.trigger('click');
     console.log(rippleElement.element.childElementCount);
 

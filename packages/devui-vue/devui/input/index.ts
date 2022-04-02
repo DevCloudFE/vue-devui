@@ -1,9 +1,7 @@
 import type { App } from 'vue';
 import Input from './src/input';
 
-Input.install = function(app: App) {
-  app.component(Input.name, Input);
-};
+export * from './src/input-types';
 
 export { Input };
 
@@ -12,6 +10,6 @@ export default {
   category: '数据录入',
   status: '100%',
   install(app: App): void {
-    app.use(Input as any);
+    app.component(Input.name, Input);
   }
 };

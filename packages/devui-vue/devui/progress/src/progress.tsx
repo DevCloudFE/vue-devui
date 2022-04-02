@@ -1,48 +1,14 @@
 import { defineComponent, reactive, toRefs, watch } from 'vue';
+import { ProgressProps, progressProps, ISvgData } from './progress-types';
 import './progress.scss';
-
-interface data {
-  pathString: string;
-  trailPath: any;
-  strokePath: any;
-}
 
 export default defineComponent({
   name: 'DProgress',
-  props: {
-    height: {
-      type: String,
-      default: '20px',
-    },
-    percentage: {
-      type: Number,
-      default: 0,
-    },
-    percentageText: {
-      type: String,
-      default: '',
-    },
-    barBgColor: {
-      type: String,
-      default: '#5170ff',
-    },
-    isCircle: {
-      type: Boolean,
-      default: false,
-    },
-    strokeWidth: {
-      type: Number,
-      default: 6,
-    },
-    showContent: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  setup(props) {
+  props: progressProps,
+  setup(props: ProgressProps) {
     const { height, percentage, percentageText, barBgColor, isCircle, strokeWidth, showContent } = toRefs(props);
 
-    const data: data = reactive({
+    const data: ISvgData = reactive({
       pathString: '',
       trailPath: null,
       strokePath: null,

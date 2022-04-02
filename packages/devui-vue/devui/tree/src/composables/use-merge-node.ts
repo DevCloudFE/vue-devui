@@ -16,7 +16,7 @@ export default function useMergeNode(data: Ref<TreeItem[]>): IUseMergeNode {
     ) {
       return mergeObject(
         Object.assign({}, children[0], {
-          [labelName]: `${label} \\ ${children[0][labelName]}`
+          [labelName]: `${label} / ${children[0][labelName]}`
         })
       );
     }
