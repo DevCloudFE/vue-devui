@@ -25,4 +25,12 @@ export const cellMap = {
       });
     },
   },
+  index: {
+    renderHeader(column: Column): VNode {
+      return h('span', { class: 'title' }, column.header ?? '#');
+    },
+    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): number {
+      return rowIndex + 1;
+    },
+  },
 };

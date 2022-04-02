@@ -27,7 +27,7 @@ export function createColumn(props: ToRefs<TableColumnProps>, templates: Slots):
   column.type = type.value;
 
   function defaultRenderHeader(columnItem: Column) {
-    return h('span', { class: 'title' }, columnItem.header);
+    return h('span', { class: 'title' }, columnItem.header ?? '');
   }
 
   function defaultRenderCell(rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) {
