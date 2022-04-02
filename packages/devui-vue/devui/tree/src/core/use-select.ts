@@ -1,5 +1,5 @@
 import { ref, Ref } from 'vue';
-import { IInnerTreeNode, IUseCore } from './tree-factory-types';
+import { IInnerTreeNode, IUseCore } from './use-tree-types';
 
 export default function useSelect(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
   const { setNodeValue } = core;

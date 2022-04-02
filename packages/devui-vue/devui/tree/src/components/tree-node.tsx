@@ -1,6 +1,6 @@
 import { defineComponent, inject, PropType, toRefs } from 'vue';
 import { USE_TREE_TOKEN } from '../const';
-import { IInnerTreeNode } from '../core/tree-factory-types';
+import { IInnerTreeNode } from '../core/use-tree-types';
 import DTreeNodeToggle from './tree-node-toggle';
 import { Checkbox } from '../../../checkbox';
 

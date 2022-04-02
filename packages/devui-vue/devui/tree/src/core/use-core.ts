@@ -1,5 +1,5 @@
 import { computed, ComputedRef, Ref } from 'vue';
-import { IInnerTreeNode, ITreeNode, IUseCore, valueof } from './tree-factory-types';
+import { IInnerTreeNode, ITreeNode, IUseCore, valueof } from './use-tree-types';
 import { generateInnerTree } from './utils';
 
 export default function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {

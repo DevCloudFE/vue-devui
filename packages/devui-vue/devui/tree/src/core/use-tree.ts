@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { IInnerTreeNode, ITreeNode, IUseCore, IUseTree } from './tree-factory-types';
+import { IInnerTreeNode, ITreeNode, IUseCore, IUseTree } from './use-tree-types';
 import useToggle from './use-toggle';
 import useCore from './use-core';
 import { generateInnerTree } from './utils';

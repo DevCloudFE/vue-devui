@@ -1,6 +1,6 @@
 import { defineComponent, inject, PropType, toRefs } from 'vue';
 import { USE_TREE_TOKEN } from '../const';
-import { ITreeNode } from '../core/tree-factory-types';
+import { ITreeNode } from '../core/use-tree-types';
 import { IconClose } from './icon-close';
 import { IconOpen } from './icon-open';
 

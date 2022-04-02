@@ -1,5 +1,5 @@
 import { Ref } from 'vue';
-import { IInnerTreeNode, IUseCore } from './tree-factory-types';
+import { IInnerTreeNode, IUseCore } from './use-tree-types';
 
 export default function useToggle(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
   const { getNode, setNodeValue } = core;

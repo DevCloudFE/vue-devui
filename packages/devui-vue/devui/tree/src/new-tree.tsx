@@ -1,5 +1,5 @@
 import { defineComponent, PropType, provide, toRefs, watch } from 'vue';
-import type { ITreeNode } from './core/tree-factory-types';
+import type { ITreeNode } from './core/use-tree-types';
 import DTreeNode from './components/tree-node';
 import useTree from './core/use-tree';
 import useCheck from './core/use-check';

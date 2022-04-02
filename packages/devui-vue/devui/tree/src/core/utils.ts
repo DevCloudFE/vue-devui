@@ -1,5 +1,5 @@
 import { randomId } from '../../../anchor/src/util';
-import { IInnerTreeNode, ITreeNode } from './tree-factory-types';
+import { IInnerTreeNode, ITreeNode } from './use-tree-types';
 
 export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
   let treeMap = {};
