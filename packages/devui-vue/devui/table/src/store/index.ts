@@ -37,7 +37,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
     { deep: true, immediate: true }
   );
 
-  const { _columns, columns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
+  const { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
   const { _checkAll, _checkList, _halfChecked, getCheckedRows } = createSelection(dataSource, _data);
   const { sortData } = createSorter(dataSource, _data);
   const { filterData, resetFilterData } = createFilter(dataSource, _data);
@@ -48,7 +48,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
     states: {
       _data,
       _columns,
-      columns,
+      flatColumns,
       _checkList,
       _checkAll,
       _halfChecked,
@@ -67,7 +67,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
 
 const createColumnGenerator = <T>() => {
   const _columns: Ref<Column<T>[]> = ref([]);
-  const columns: Ref<Column<T>[]> = ref([]);
+  const flatColumns: Ref<Column<T>[]> = ref([]);
 
   const sortColumn = () => {
     _columns.value.sort((a, b) => a.order - b.order);
@@ -99,10 +99,10 @@ const createColumnGenerator = <T>() => {
   };
 
   const updateColumns = () => {
-    columns.value = [].concat(doFlattenColumns(_columns.value));
+    flatColumns.value = [].concat(doFlattenColumns(_columns.value));
   };
 
-  return { _columns, columns, insertColumn, removeColumn, sortColumn, updateColumns };
+  return { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns };
 };
 
 const createSelection = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
