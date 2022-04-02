@@ -1,5 +1,10 @@
 import { ExtractPropTypes } from "vue";
 
+export interface IconPropsType {
+  width: number;
+  height: number;
+}
+
 export const avatarProps = {
   name: {
     type: String,
