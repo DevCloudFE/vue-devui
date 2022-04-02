@@ -4,31 +4,31 @@ export const imagePreviewProps = {
   url: {
     type: String,
     default: '',
-    required: true
+    required: true,
   },
   previewUrlList: {
     type: Array as PropType<string[]>,
     default: () => [],
-    required: true
+    required: true,
   },
   zIndex: {
     type: Number,
-    required: false
+    required: false,
   },
   backDropZIndex: {
     type: Number,
-    required: false
-  }
+    required: false,
+  },
 } as const;
 
 export interface BindingTypes {
   value: {
-    custom?: any;
+    custom?: Record<string, unknown>;
     disableDefault?: boolean;
     zIndex?: number;
     backDropZIndex?: number;
   };
-  [key: string]: any;
+  [key: string]: unknown;
 }
 export interface UpdateBindingTypes extends BindingTypes {
   oldValue: BindingTypes['value'];
