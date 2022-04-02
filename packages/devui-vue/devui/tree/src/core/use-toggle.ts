@@ -6,15 +6,15 @@ export default function useToggle(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
 
   const { getNode, setNodeValue } = core;
 
-  const expandNode = (node: ITreeNode): void => {
+  const expandNode = (node: IInnerTreeNode): void => {
     setNodeValue(node, 'expanded', true);
   }
 
-  const collapseNode = (node: ITreeNode): void => {
+  const collapseNode = (node: IInnerTreeNode): void => {
     setNodeValue(node, 'expanded', false);
   }
 
-  const toggleNode = (node: ITreeNode): void => {
+  const toggleNode = (node: IInnerTreeNode): void => {
     console.log('toggleNode node:', node);
 
     if (getNode(node).expanded) {

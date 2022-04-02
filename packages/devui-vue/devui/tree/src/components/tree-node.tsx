@@ -2,6 +2,7 @@ import { defineComponent, inject, PropType, ref, toRefs } from 'vue';
 import { USE_TREE_TOKEN } from '../const';
 import { ITreeNode } from '../core/tree-factory-types';
 import DTreeNodeToggle from './tree-node-toggle';
+import { Checkbox } from '../../../checkbox';
 
 export default defineComponent({
   name: 'DTreeNode',
@@ -12,7 +13,7 @@ export default defineComponent({
   },
   setup(props) {
     const { data } = toRefs(props);
-    const { selectNode } = inject(USE_TREE_TOKEN);
+    const { selectNode, toggleCheckNode } = inject(USE_TREE_TOKEN);
 
     return () => {
       return (
@@ -22,8 +23,11 @@ export default defineComponent({
           <div class={['devui-tree-node__content', data.value?.selected && 'active']} onClick={() => {
             selectNode(data.value);
           }}>
+            <DTreeNodeToggle data={data.value} />
             <div class="devui-tree-node__content--value-wrapper">
-              <DTreeNodeToggle data={data.value} />
+              { <Checkbox key={data.value.id} modelValue={data.value.checked} onUpdate:modelValue={() => {
+                toggleCheckNode(data.value);
+              }} /> }
               <span class="devui-tree-node__title">{data.value.label}</span>
             </div>
           </div>
