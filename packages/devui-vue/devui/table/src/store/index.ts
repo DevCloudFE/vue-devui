@@ -27,44 +27,6 @@ function doFlattenColumns(columns: any) {
   return result;
 }
 
-export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
-  const _data: Ref<T[]> = ref([]);
-  watch(
-    dataSource,
-    (value: T[]) => {
-      _data.value = [...value];
-    },
-    { deep: true, immediate: true }
-  );
-
-  const { _columns, columns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
-  const { _checkAll, _checkList, _halfChecked, getCheckedRows } = createSelection(dataSource, _data);
-  const { sortData } = createSorter(dataSource, _data);
-  const { filterData, resetFilterData } = createFilter(dataSource, _data);
-
-  const { isFixedLeft } = createFixedLogic(_columns);
-
-  return {
-    states: {
-      _data,
-      _columns,
-      columns,
-      _checkList,
-      _checkAll,
-      _halfChecked,
-      isFixedLeft,
-    },
-    insertColumn,
-    sortColumn,
-    removeColumn,
-    updateColumns,
-    getCheckedRows,
-    sortData,
-    filterData,
-    resetFilterData,
-  };
-}
-
 const createColumnGenerator = <T>() => {
   const _columns: Ref<Column<T>[]> = ref([]);
   const columns: Ref<Column<T>[]> = ref([]);
@@ -112,7 +74,6 @@ const createSelection = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
     get: () => _checkAllRecord.value,
     set: (val: boolean) => {
       _checkAllRecord.value = val;
-      // 只有在 set 的时候变更 _checkList 的数据
       for (let i = 0; i < _checkList.value.length; i++) {
         _checkList.value[i] = val;
       }
@@ -128,7 +89,6 @@ const createSelection = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
     { deep: true, immediate: true }
   );
 
-  // checkList 只有全为true的时候
   watch(
     _checkList,
     (list) => {
@@ -203,3 +163,41 @@ const createFixedLogic = (columns: Ref<Column[]>) => {
 
   return { isFixedLeft };
 };
+
+export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
+  const _data: Ref<T[]> = ref([]);
+  watch(
+    dataSource,
+    (value: T[]) => {
+      _data.value = [...value];
+    },
+    { deep: true, immediate: true }
+  );
+
+  const { _columns, columns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
+  const { _checkAll, _checkList, _halfChecked, getCheckedRows } = createSelection(dataSource, _data);
+  const { sortData } = createSorter(dataSource, _data);
+  const { filterData, resetFilterData } = createFilter(dataSource, _data);
+
+  const { isFixedLeft } = createFixedLogic(_columns);
+
+  return {
+    states: {
+      _data,
+      _columns,
+      columns,
+      _checkList,
+      _checkAll,
+      _halfChecked,
+      isFixedLeft,
+    },
+    insertColumn,
+    sortColumn,
+    removeColumn,
+    updateColumns,
+    getCheckedRows,
+    sortData,
+    filterData,
+    resetFilterData,
+  };
+}

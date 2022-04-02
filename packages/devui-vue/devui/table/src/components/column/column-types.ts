@@ -1,8 +1,13 @@
 import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance } from 'vue';
+import { DefaultRow } from '../../table-types';
+import { TableStore } from '../../store/store-types';
 
-export type Formatter<T = any, R = any> = (row: T, cellValue: R, index: number) => VNode[];
+// eslint-disable-next-line no-use-before-define
+export type Formatter = (row: DefaultRow, column: Column, cellValue: any, rowIndex: number) => VNode[];
 
 export type CompareFn<T = any> = (field: string, a: T, b: T) => boolean;
+
+export type ColumnType = 'checkable' | '';
 
 export interface FilterConfig {
   id: number | string;
@@ -11,7 +16,11 @@ export interface FilterConfig {
   checked?: boolean;
 }
 
-export const TableColumnProps = {
+export const tableColumnProps = {
+  type: {
+    type: String as PropType<ColumnType>,
+    default: '',
+  },
   header: {
     type: String,
     default: '',
@@ -63,7 +72,7 @@ export const TableColumnProps = {
   },
 };
 
-export type TableColumnPropsTypes = ExtractPropTypes<typeof TableColumnProps>;
+export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>;
 
 export type FilterResults = (string | number)[];
 
@@ -74,8 +83,9 @@ export interface CustomFilterProps {
 
 export type CustomFilterSlot = (props: CustomFilterProps) => VNode[];
 
-export interface Column<T> {
+export interface Column {
   id?: string;
+  type?: ColumnType;
   field?: string;
   width?: number;
   minWidth?: number;
@@ -88,15 +98,15 @@ export interface Column<T> {
   filterList?: FilterConfig[];
   fixedLeft?: string;
   fixedRight?: string;
-  renderHeader?: () => void;
-  renderCell?: (row: T, index: number) => void;
-  formatter?: Formatter<T>;
-  compareFn?: CompareFn<T>;
+  renderHeader?: (column: Column, store: TableStore) => VNode;
+  renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) => VNode;
+  formatter?: Formatter;
+  compareFn?: CompareFn;
   customFilterTemplate?: CustomFilterSlot;
   subColumns?: Slot;
 }
 
-export interface TableColumn<T> extends ComponentInternalInstance {
+export interface TableColumn extends ComponentInternalInstance {
   columnId: string;
-  columnConfig: Partial<Column<T>>;
+  columnConfig: Partial<Column>;
 }
