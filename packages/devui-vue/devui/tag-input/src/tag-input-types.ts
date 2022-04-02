@@ -1,13 +1,13 @@
 import type { ExtractPropTypes, PropType } from "vue";
 
 export interface Suggestion {
-  __index: number;
-  [x: string]: any;
+  __index?: number;
+  [x: string]: unknown;
 }
 
 export const tagInputProps = {
   tags: {
-    type: Array as PropType<any[]>,
+    type: Array as PropType<Suggestion[]>,
     default: (): [] => []
   },
   displayProperty: {
@@ -39,7 +39,7 @@ export const tagInputProps = {
     default: true
   },
   suggestionList: {
-    type: Array as PropType<any[]>,
+    type: Array as PropType<Suggestion[]>,
     default: (): [] => []
   },
   disabled: {
