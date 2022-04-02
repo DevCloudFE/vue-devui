@@ -73,8 +73,8 @@ export function createColumn(props: ToRefs<TableColumnProps>, templates: Slots):
   watch(
     [fixedLeft, fixedRight],
     ([left, right]) => {
-      column.fixedLeft = left?.value;
-      column.fixedRight = right?.value;
+      column.fixedLeft = left;
+      column.fixedRight = right;
     },
     { immediate: true }
   );
