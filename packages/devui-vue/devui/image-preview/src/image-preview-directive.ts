@@ -11,7 +11,7 @@ function mountedPreviewImages(props: ImagePreviewProps): void {
     url: props.url,
     previewUrlList: props.previewUrlList,
     zIndex: props.zIndex,
-    backDropZIndex: props.backDropZIndex
+    backDropZIndex: props.backDropZIndex,
   });
 }
 function unmountedPreviewImages() {
@@ -19,16 +19,8 @@ function unmountedPreviewImages() {
 }
 
 function getImgByEl(el: HTMLElement): Array<string> {
-  const urlList = [...el.querySelectorAll('img')].map((item: HTMLImageElement) =>
-    item.getAttribute('src')
-  );
+  const urlList = [...el.querySelectorAll('img')].map((item: HTMLImageElement) => item.getAttribute('src'));
   return urlList;
-}
-function handleImgByEl(el: PreviewHTMLElement) {
-  el.addEventListener('click', handleImg);
-}
-function removeHandle(el: PreviewHTMLElement) {
-  el.removeEventListener('click', handleImg);
 }
 function handleImg(e: MouseEvent) {
   e.stopPropagation();
@@ -41,12 +33,18 @@ function handleImg(e: MouseEvent) {
       url,
       previewUrlList: urlList,
       zIndex: el?.zIndex,
-      backDropZIndex: el?.backDropZIndex
+      backDropZIndex: el?.backDropZIndex,
     });
   }
 }
+function handleImgByEl(el: PreviewHTMLElement) {
+  el.addEventListener('click', handleImg);
+}
+function removeHandle(el: PreviewHTMLElement) {
+  el.removeEventListener('click', handleImg);
+}
 export default {
-  mounted(el: PreviewHTMLElement, binding: BindingTypes | undefined) {
+  mounted(el: PreviewHTMLElement, binding: BindingTypes | undefined): void {
     if (!binding.value) {
       return handleImgByEl(el);
     }
@@ -59,7 +57,7 @@ export default {
           url: urlList?.[0],
           previewUrlList: urlList,
           zIndex: el?.zIndex,
-          backDropZIndex: el?.backDropZIndex
+          backDropZIndex: el?.backDropZIndex,
         });
       };
       custom.close = () => unmountedPreviewImages();
@@ -69,17 +67,17 @@ export default {
     }
     handleImgByEl(el);
   },
-  unmounted() {
+  unmounted(): void {
     unmountedPreviewImages();
   },
-  updated(el: PreviewHTMLElement, binding: UpdateBindingTypes | undefined) {
+  updated(el: PreviewHTMLElement, binding: UpdateBindingTypes | undefined): void {
     el.zIndex = binding.value?.zIndex;
     el.backDropZIndex = binding.value?.backDropZIndex;
 
     if (binding.value) {
       const {
         value: { disableDefault },
-        oldValue: { disableDefault: oldDisableDefault }
+        oldValue: { disableDefault: oldDisableDefault },
       } = binding;
       if (disableDefault !== oldDisableDefault) {
         if (disableDefault) {
@@ -89,5 +87,5 @@ export default {
         }
       }
     }
-  }
+  },
 };
