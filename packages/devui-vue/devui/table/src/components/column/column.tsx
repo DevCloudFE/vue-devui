@@ -1,5 +1,5 @@
 import { inject, defineComponent, onBeforeUnmount, onMounted, toRefs, watch, ref, getCurrentInstance, onBeforeMount, h } from 'vue';
-import { TableColumnProps, TableColumnPropsTypes, TableColumn } from './column-types';
+import { tableColumnProps, TableColumnProps, TableColumn } from './column-types';
 import { TABLE_TOKEN, Table, DefaultRow } from '../../table-types';
 import { createColumn, useRender } from './use-column';
 
@@ -7,9 +7,9 @@ let columnIdInit = 1;
 
 export default defineComponent({
   name: 'DColumn',
-  props: TableColumnProps,
-  setup(props: TableColumnPropsTypes, ctx) {
-    const instance = getCurrentInstance() as TableColumn<unknown>;
+  props: tableColumnProps,
+  setup(props: TableColumnProps, ctx) {
+    const instance = getCurrentInstance() as TableColumn;
     const column = createColumn(toRefs(props), ctx.slots);
     const owner = inject(TABLE_TOKEN) as Table<DefaultRow>;
     const isSubColumn = ref(false);

@@ -14,7 +14,7 @@
 ```vue
 <template>
   <d-table :data="baseTableData">
-    <d-column field="firstName" header="First Name" :sortable="true"></d-column>
+    <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
     <d-column field="date" header="Date of birth"></d-column>
@@ -211,6 +211,68 @@ export default defineComponent({
   margin-right: 1rem;
 }
 </style>
+```
+
+:::
+
+### 表格多选
+
+:::demo 通过添加一个`d-column`并且设置`type`属性为`checkable`即可实现表格的多选功能。`getCheckedRows`方法可以获取已选择的列表。
+
+```vue
+<template>
+  <div>
+    <d-button @click="handleClick">Get CheckedRows</d-button>
+    <d-table ref="tableRef" :data="data">
+      <d-column type="checkable"></d-column>
+      <d-column field="firstName" header="First Name"></d-column>
+      <d-column field="lastName" header="Last Name"></d-column>
+      <d-column field="gender" header="Gender"></d-column>
+      <d-column field="date" header="Date of birth"></d-column>
+    </d-table>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const tableRef = ref();
+    const data = ref([
+      {
+        firstName: 'po',
+        lastName: 'Lang',
+        gender: 'Male',
+        date: '1990/01/15',
+      },
+      {
+        firstName: 'john',
+        lastName: 'Li',
+        gender: 'Female',
+        date: '1990/01/16',
+      },
+      {
+        firstName: 'peng',
+        lastName: 'Li',
+        gender: 'Male',
+        date: '1990/01/17',
+      },
+      {
+        firstName: 'Dale',
+        lastName: 'Yu',
+        gender: 'Female',
+        date: '1990/01/18',
+      },
+    ]);
+    const handleClick = () => {
+      console.log(tableRef.value.getCheckedRows());
+    };
+
+    return { tableRef, data, handleClick };
+  },
+});
+</script>
 ```
 
 :::
@@ -483,39 +545,47 @@ export default defineComponent({
 
 ### d-table 参数
 
-| 参数                  | 类型                | 默认值  | 说明                                                                   |
-| :-------------------- | :------------------ | :------ | :--------------------------------------------------------------------- |
-| data                  | `array`             | []      | 显示的数据                                                             |
-| striped               | `boolean`           | false   | 是否显示斑马纹间隔                                                     |
-| size                  | `TableSize`         | 'sm'    | 可选，表格大小，分别对应行高 40px,48px,56px                            |
-| max-width             | `string`            | --      | 表格最大宽度                                                           |
-| max-height            | `boolean`           | --      | 表格最大高度                                                           |
-| table-width           | `string`            | --      | 表格宽度                                                               |
-| table-height          | `string`            | --      | 表格高度                                                               |
-| row-hovered-highlight | `boolean`           | true    | 鼠标在该行上时，高亮该行                                               |
-| fix-header            | `boolean`           | false   | 固定头部                                                               |
-| checkable             | `boolean`           | false   | 在每行的第一列展示一个 checkbox                                        |
-| show-loading          | `boolean`           | false   | 显示加载动画                                                           |
-| header-bg             | `boolean`           | false   | 头部背景                                                               |
-| table-layout          | `'fixed' \| 'auto'` | 'fixed' | 表格布局，可选值为'auto'                                               |
-| span-method           | `SpanMethod`        | --      | 合并单元格的计算方法                                                   |
-| border-type           | `BorderType`        | ''      | 可选，表格边框类型，默认有行边框；bordered: 全边框；borderless: 无边框 |
+| 参数名                | 类型                | 默认值  | 说明                                                                       | 跳转 Demo                 |
+| :-------------------- | :------------------ | :------ | :------------------------------------------------------------------------- | :------------------------ |
+| data                  | `array`             | []      | 可选，显示的数据                                                           | [基本用法](#基本用法)     |
+| striped               | `boolean`           | false   | 可选，是否显示斑马纹间隔                                                   | [表格样式](#表格样式)     |
+| size                  | `TableSize`         | 'sm'    | 可选，表格大小，分别对应行高 40px,48px,56px                                | [表格样式](#表格样式)     |
+| max-width             | `string`            | --      | 可选，表格最大宽度                                                         |
+| max-height            | `boolean`           | --      | 可选，表格最大高度                                                         |
+| table-width           | `string`            | --      | 可选，表格宽度                                                             |
+| table-height          | `string`            | --      | 可选，表格高度                                                             |
+| row-hovered-highlight | `boolean`           | true    | 可选，鼠标在该行上时，高亮该行                                             | [表格样式](#表格样式)     |
+| fix-header            | `boolean`           | false   | 可选，固定头部                                                             |
+| show-loading          | `boolean`           | false   | 可选，显示加载动画                                                         |
+| header-bg             | `boolean`           | false   | 可选，头部背景                                                             | [表格样式](#表格样式)     |
+| table-layout          | `'fixed' \| 'auto'` | 'fixed' | 可选，表格布局，可选值为'auto'                                             | [表格样式](#表格样式)     |
+| span-method           | `SpanMethod`        | --      | 可选，合并单元格的计算方法                                                 | [合并单元格](#合并单元格) |
+| border-type           | `BorderType`        | ''      | 可选，表格边框类型，默认有行边框；`bordered`: 全边框；`borderless`: 无边框 | [表格样式](#表格样式)     |
+
+### d-table 方法
+
+| 方法名         | 类型       | 说明                 |
+| :------------- | :--------- | :------------------- |
+| getCheckedRows | `() => []` | 获取当前选中的行数据 |
 
 ### d-column 参数
 
-| 参数      | 类型                                     | 默认值                               | 说明                           |
-| :-------- | :--------------------------------------- | :----------------------------------- | :----------------------------- |
-| header    | `String`                                 | --                                   | 对应列的标题                   |
-| field     | `String`                                 | --                                   | 对应列内容的字段名             |
-| width     | `String \| Number`                       | --                                   | 对应列的宽度，单位`px`         |
-| min-width | `String \| Number`                       | --                                   | 对应列的最小宽度，单位`px`     |
-| sortable  | `Boolean`                                | false                                | 对行数据按照该列的顺序进行排序 |
-| formatter | `Function`                               | --                                   | 对应列的所有单元格的格式       |
-| compareFn | `(field: string, a: T, b: T) => boolean` | (field, a, b) => a[field] > b[field] | 用于排序的比较函数             |
+| 参数名     | 类型                                     | 默认值                               | 说明                                        | 跳转 Demo             |
+| :--------- | :--------------------------------------- | :----------------------------------- | :------------------------------------------ | :-------------------- |
+| header     | `string`                                 | --                                   | 对应列的标题                                | [基本用法](#基本用法) |
+| field      | `string`                                 | --                                   | 对应列内容的字段名                          | [基本用法](#基本用法) |
+| type       | `ColumnType`                             | ''                                   | 可选，列的类型，设置`checkable`会显示多选框 | [表格多选](#表格多选) |
+| width      | `string \| number`                       | --                                   | 可选，对应列的宽度，单位`px`                |
+| min-width  | `string \| number`                       | --                                   | 可选，对应列的最小宽度，单位`px`            |
+| sortable   | `boolean`                                | false                                | 可选，对行数据按照该列的顺序进行排序        |
+| fixedLeft  | `string`                                 | --                                   | 可选，该列固定到左侧的距离，如：'100px'     | [固定列](#固定列)     |
+| fixedRight | `string`                                 | --                                   | 可选，该列固定到右侧的距离，如：'100px'     | [固定列](#固定列)     |
+| formatter  | `Function`                               | --                                   | 可选，对应列的所有单元格的格式              |
+| compareFn  | `(field: string, a: T, b: T) => boolean` | (field, a, b) => a[field] > b[field] | 可选，用于排序的比较函数                    |
 
 ### d-column 插槽
 
-| 名称    | 说明                   |
+| 插槽名  | 说明                   |
 | :------ | :--------------------- |
 | default | 默认插槽，自定义列内容 |
 
@@ -542,4 +612,10 @@ type SpanMethod = (data: {
 
 ```typescript
 type BorderType = '' | 'bordered' | 'borderless';
+```
+
+#### ColumnType
+
+```ts
+type ColumnType = 'checkable' | '';
 ```

@@ -16,7 +16,7 @@ export function useTable(props: TablePropsTypes): TableConfig {
     [ns.m('header-bg')]: props.headerBg,
     [ns.m('layout-auto')]: props.tableLayout === 'auto',
     [ns.m(`${props.size}`)]: true,
-    [ns.m(`${props.borderType}`)]: props.borderType,
+    [ns.m(`${props.borderType}`)]: Boolean(props.borderType),
   }));
   const style: ComputedRef<CSSProperties> = computed(() => ({
     maxHeight: props.maxHeight,
@@ -27,35 +27,19 @@ export function useTable(props: TablePropsTypes): TableConfig {
   return { classes, style };
 }
 
-export const useFixedColumn = (column: Ref<Column>): ToRefs<{ stickyCell: string; offsetStyle: string }> => {
+export const useFixedColumn = (
+  column: Ref<Column>
+): ToRefs<{ stickyClass: ComputedRef<Record<string, boolean>>; stickyStyle: ComputedRef<CSSProperties> }> => {
   const ns = useNamespace('table');
-  const stickyCell = computed(() => {
-    const col = column.value;
-    if (col.fixedLeft) {
-      return `${ns.m('sticky-cell')} left`;
-    }
+  const stickyClass = computed(() => ({
+    [ns.e('checkable-cell')]: column.value.type === 'checkable',
+    [ns.m('sticky-cell')]: Boolean(column.value.fixedLeft) || Boolean(column.value.fixedRight),
+  }));
 
-    if (col.fixedRight) {
-      return `${ns.m('sticky-cell')} right`;
-    }
-    return undefined;
-  });
+  const stickyStyle = computed(() => ({
+    left: column.value.fixedLeft,
+    right: column.value.fixedRight,
+  }));
 
-  const offsetStyle = computed(() => {
-    const col = column.value;
-    if (col.fixedLeft) {
-      return `left:${col.fixedLeft}`;
-    }
-
-    if (col.fixedRight) {
-      return `right:${col.fixedRight}`;
-    }
-
-    return undefined;
-  });
-
-  return {
-    stickyCell,
-    offsetStyle,
-  };
+  return { stickyClass, stickyStyle };
 };
