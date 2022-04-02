@@ -42,7 +42,7 @@ describe('badge', () => {
 
   it('badge offsetXY', () => {
     const wrapper = mount(DBadge, {
-      props: { offsetXY: [-10, 10], badgePos: 'top-right' },
+      props: { offset: [-10, 10], badgePos: 'top-right' },
       slots: { default: SLOT }
     });
     expect(wrapper.find('.devui-badge-content').attributes().style).toBe('top: 10px; right: -10px;');
