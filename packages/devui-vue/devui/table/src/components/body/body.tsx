@@ -10,7 +10,7 @@ export default defineComponent({
   name: 'DTableBody',
   setup() {
     const table = inject(TABLE_TOKEN);
-    const { _data: data, columns, _checkList: checkList, isFixedLeft } = table.store.states;
+    const { _data: data, flatColumns, _checkList: checkList, isFixedLeft } = table.store.states;
     const ns = useNamespace('table');
     const hoverEnabled = computed(() => table.props.rowHoveredHighlight);
     const { tableSpans, removeCells } = useMergeCell();
@@ -29,7 +29,7 @@ export default defineComponent({
           return (
             <tr key={rowIndex} class={{ 'hover-enabled': hoverEnabled.value }}>
               {renderCheckbox(rowIndex)}
-              {columns.value.map((column, columnIndex) => {
+              {flatColumns.value.map((column, columnIndex) => {
                 const cellId = `${rowIndex}-${columnIndex}`;
                 const [rowspan, colspan] = tableSpans.value[cellId] ?? [1, 1];
 
