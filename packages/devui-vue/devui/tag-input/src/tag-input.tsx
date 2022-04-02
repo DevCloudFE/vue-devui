@@ -16,12 +16,12 @@ export default defineComponent({
   props: tagInputProps,
   emits: ['update:tags', 'update:suggestionList', 'valueChange'],
   setup(props: TagInputProps, ctx: SetupContext) {
-    const add = (arr: any[], target: any) => {
+    const add = (arr: Suggestion[], target: Suggestion) => {
       const res = Object.assign({}, target);
       delete res.__index;
       return arr.concat(res);
     };
-    const remove = (arr: any[], targetIdx: number) => {
+    const remove = (arr: Suggestion[], targetIdx: number) => {
       const newArr = arr.slice();
       newArr.splice(targetIdx, 1);
       return newArr;
@@ -224,7 +224,7 @@ export default defineComponent({
             onKeydown={onInputKeydown}
             onFocus={onInputFocus}
             onBlur={onInputBlur}
-            onInput={($event: any) => onInput($event)}
+            onInput={($event: InputEvent) => onInput($event)}
             placeholder={isTagsLimit ? `${maxTagsText} ${maxTags}` : placeholder}
             spellcheck={spellcheck}
             disabled={isTagsLimit}
@@ -237,7 +237,7 @@ export default defineComponent({
                 {
                   mergedSuggestions.length === 0 ?
                     noDataTpl :
-                    mergedSuggestions.map((item: any, index: number) => {
+                    mergedSuggestions.map((item: Suggestion, index: number) => {
                       return (
                         <li
                           class={{ 'devui-suggestion-item': true, selected: index === selectIndex }}
