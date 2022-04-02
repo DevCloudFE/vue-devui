@@ -1,4 +1,4 @@
-import { Ref } from 'vue';
+import { ComputedRef, Ref } from 'vue';
 
 // 外部数据结构先只考虑嵌套结构
 export interface ITreeNode {
@@ -28,6 +28,7 @@ export type valueof<T> = T[keyof T];
 export interface IUseCore {
   getLevel: (node: ITreeNode) => number;
   getChildren: (node: ITreeNode) => IInnerTreeNode[];
+  getExpendedTree: () => ComputedRef<IInnerTreeNode[]>;
   getIndex: (node: ITreeNode) => number;
   getNode: (node: ITreeNode) => IInnerTreeNode;
   setNodeValue: (node: IInnerTreeNode, key: keyof IInnerTreeNode, value: valueof<IInnerTreeNode>) => void;
