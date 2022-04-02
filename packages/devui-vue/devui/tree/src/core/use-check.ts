@@ -1,10 +1,8 @@
 import { Ref } from 'vue';
-import { IInnerTreeNode, IUseCore } from './tree-factory-types';
+import { IInnerTreeNode, IUseCore } from './use-tree-types';
 
 export default function useCheck(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
-  console.log('useCheck:', data, data.value);
-  
-  const { setNodeValue } = core;
+  const { setNodeValue, getNode } = core;
 
   const checkNode = (node: IInnerTreeNode): void => {
     setNodeValue(node, 'checked', true);
@@ -14,8 +12,17 @@ export default function useCheck(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
     setNodeValue(node, 'checked', false);
   }
 
+  const toggleCheckNode = (node: IInnerTreeNode): void => {
+    if (getNode(node).checked) {
+      setNodeValue(node, 'checked', false);
+    } else {
+      setNodeValue(node, 'checked', true);
+    }
+  }
+
   return {
     checkNode,
     uncheckNode,
+    toggleCheckNode,
   }
 }
