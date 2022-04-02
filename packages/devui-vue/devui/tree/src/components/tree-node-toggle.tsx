@@ -13,8 +13,7 @@ export default defineComponent({
   },
   setup(props) {
     const { data } = toRefs(props);
-    const treeFactory = inject(USE_TREE_TOKEN);
-    const { toggleNode } = treeFactory;
+    const { toggleNode } = inject(USE_TREE_TOKEN);
 
     return () => {
       return (
