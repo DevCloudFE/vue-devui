@@ -27,6 +27,8 @@ export default defineComponent({
             <div class="devui-tree-node__content--value-wrapper">
               { <Checkbox key={data.value.id} modelValue={data.value.checked} onUpdate:modelValue={() => {
                 toggleCheckNode(data.value);
+              }} onClick={(event: MouseEvent) => {
+                event.stopPropagation();
               }} /> }
               <span class="devui-tree-node__title">{data.value.label}</span>
             </div>
