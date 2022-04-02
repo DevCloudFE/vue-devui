@@ -22,7 +22,8 @@ const {
   VITEPRESS_SIDEBAR_FILE,
   VITEPRESS_SIDEBAR_FILE_NAME,
   VITEPRESS_SIDEBAR_FILE_EN,
-  VITEPRESS_SIDEBAR_FILE_NAME_EN
+  VITEPRESS_SIDEBAR_FILE_NAME_EN,
+  isProd
 } = require('../shared/constant');
 const { isEmpty, kebabCase } = require('lodash');
 const inquirer = require('inquirer');
@@ -131,9 +132,9 @@ async function createComponent(params = {}) {
   }
 }
 
-async function createVueDevui(params, { ignoreParseError }) {
+async function createVueDevui(params, { ignoreParseError, env }) {
   const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS)
-  .filter(({ name }) => parseComponentInfo(kebabCase(name)).status === '100%');
+  .filter(({ name }) => (env === 'prod' && parseComponentInfo(kebabCase(name)).status === '100%') || !env || env === 'dev');
 
   const exportModules = [];
 
@@ -176,7 +177,7 @@ async function createVitepressSidebar() {
   fileInfo.forEach((f) => {
     const info = parseComponentInfo(f.dirname);
 
-    if (isEmpty(info) || (process.env.NODE_ENV === 'production'&& info.status !== '100%')) {return;}
+    if (isEmpty(info) || (isProd && info.status !== '100%')) {return;}
 
     componentsInfo.push(info);
   });

@@ -1,8 +1,10 @@
-import { watch, reactive, onBeforeMount, ToRefs, Slots, h } from 'vue';
-import { Column, TableColumnPropsTypes } from './column-types';
+import { watch, reactive, onBeforeMount, computed, h, getCurrentInstance } from 'vue';
+import type { ToRefs, Slots, ComputedRef } from 'vue';
+import { Table } from '../../table-types';
+import { Column, TableColumnPropsTypes, TableColumn } from './column-types';
 import { formatWidth, formatMinWidth } from '../../utils';
 
-function defaultRenderHeader(this: Column) {
+function defaultRenderHeader<T>(this: Column<T>) {
   return h('span', { class: 'title' }, this.header);
 }
 
@@ -22,7 +24,7 @@ export function createColumn<T extends Record<string, unknown> = any>(props: ToR
     fixedLeft,
     fixedRight,
   } = props;
-  const column: Column = reactive({});
+  const column: Column<T> = reactive({});
 
   function defaultRenderCell<K extends Record<string, unknown>>(rowData: K, index: number) {
     const value = rowData[this.field];
@@ -67,8 +69,8 @@ export function createColumn<T extends Record<string, unknown> = any>(props: ToR
   watch(
     [fixedLeft, fixedRight],
     ([left, right]) => {
-      column.fixedLeft = left;
-      column.fixedRight = right;
+      column.fixedLeft = left?.value;
+      column.fixedRight = right?.value;
     },
     { immediate: true }
   );
@@ -84,10 +86,29 @@ export function createColumn<T extends Record<string, unknown> = any>(props: ToR
   onBeforeMount(() => {
     column.renderHeader = defaultRenderHeader;
     column.renderCell = defaultRenderCell;
-    column.formatter = formatter.value;
+    column.formatter = formatter?.value;
     column.customFilterTemplate = templates.customFilterTemplate;
     column.subColumns = templates.subColumns;
   });
 
   return column;
+}
+
+export function useRender<T>(): {
+  columnOrTableParent: ComputedRef<Table<T> | TableColumn<T>>;
+  getColumnIndex: (children: Array<unknown>, child: unknown) => number;
+} {
+  const instance = getCurrentInstance() as TableColumn<T>;
+  const columnOrTableParent = computed(() => {
+    let parent: any = instance?.parent;
+    while (parent && !parent.tableId && !parent.columnId) {
+      parent = parent.parent;
+    }
+    return parent;
+  });
+  const getColumnIndex = (children: Array<unknown>, child: unknown) => {
+    return Array.prototype.indexOf.call(children, child);
+  };
+
+  return { columnOrTableParent, getColumnIndex };
 }

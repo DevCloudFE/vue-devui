@@ -1,36 +1,67 @@
-import { inject, defineComponent, onBeforeUnmount, onMounted, toRefs, watch } from 'vue';
-import { TableColumnProps, TableColumnPropsTypes } from './column-types';
-import { TABLE_TOKEN } from '../../table-types';
-import { createColumn } from './use-column';
+import { inject, defineComponent, onBeforeUnmount, onMounted, toRefs, watch, ref, getCurrentInstance, onBeforeMount, h } from 'vue';
+import { TableColumnProps, TableColumnPropsTypes, TableColumn } from './column-types';
+import { TABLE_TOKEN, Table, DefaultRow } from '../../table-types';
+import { createColumn, useRender } from './use-column';
+
+let columnIdInit = 1;
 
 export default defineComponent({
   name: 'DColumn',
   props: TableColumnProps,
   setup(props: TableColumnPropsTypes, ctx) {
-    /*
-      ctx.slots : {
-       customFilterTemplate: Slot
-      }
-     */
+    const instance = getCurrentInstance() as TableColumn<unknown>;
     const column = createColumn(toRefs(props), ctx.slots);
+    const owner = inject(TABLE_TOKEN) as Table<DefaultRow>;
+    const isSubColumn = ref(false);
+    let columnId = '';
+    const { columnOrTableParent, getColumnIndex } = useRender();
+    const parent: any = columnOrTableParent.value;
+    columnId = `${parent.tableId || parent.columnId}_column_${columnIdInit++}`;
 
-    const parent = inject(TABLE_TOKEN);
+    onBeforeMount(() => {
+      isSubColumn.value = owner !== parent;
+      column.id = columnId;
+    });
 
     onMounted(() => {
-      parent?.store.insertColumn(column);
-      watch(
-        () => column.order,
-        () => {
-          parent?.store.sortColumn();
-        }
-      );
+      const children = isSubColumn.value ? parent.vnode.el.children : owner?.hiddenColumns.value?.children;
+      const columnIndex = getColumnIndex(children || [], instance.vnode.el);
+      columnIndex > -1 && owner?.store.insertColumn(column, isSubColumn.value ? parent.columnConfig : null);
     });
 
+    watch(
+      () => column.order,
+      () => {
+        owner?.store.sortColumn();
+      }
+    );
+
     onBeforeUnmount(() => {
-      parent?.store.removeColumn(column);
+      owner?.store.removeColumn(column);
     });
+
+    instance.columnId = columnId;
+    instance.columnConfig = column;
   },
   render() {
-    return null;
+    try {
+      const renderDefault = this.$slots.default?.({
+        row: {},
+        column: {},
+        $index: -1,
+      });
+      const children = [];
+      if (Array.isArray(renderDefault)) {
+        for (const childNode of renderDefault) {
+          if (childNode.type.name === 'DColumn') {
+            children.push(childNode);
+          }
+        }
+      }
+      const vnode = h('div', children);
+      return vnode;
+    } catch {
+      return h('div', []);
+    }
   },
 });

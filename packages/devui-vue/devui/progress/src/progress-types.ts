@@ -1,9 +1,16 @@
 import { ExtractPropTypes } from 'vue';
 
-export interface SvgData {
+interface ISvgPath {
+  stroke: string;
+  strokeDasharray: string;
+  strokeDashoffset: string;
+  transition: string;
+}
+
+export interface ISvgData {
   pathString: string;
-  trailPath: any;
-  strokePath: any;
+  trailPath: ISvgPath;
+  strokePath: ISvgPath;
 }
 
 export const progressProps = {
