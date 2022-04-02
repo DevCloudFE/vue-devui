@@ -7,7 +7,7 @@ export type Formatter = (row: DefaultRow, column: Column, cellValue: any, rowInd
 
 export type CompareFn<T = any> = (field: string, a: T, b: T) => boolean;
 
-export type ColumnType = 'checkable' | '';
+export type ColumnType = 'checkable' | 'index' | '';
 
 export interface FilterConfig {
   id: number | string;
@@ -23,7 +23,6 @@ export const tableColumnProps = {
   },
   header: {
     type: String,
-    default: '',
   },
   field: {
     type: String,
