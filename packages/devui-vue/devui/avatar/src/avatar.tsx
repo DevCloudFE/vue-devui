@@ -10,64 +10,13 @@ export default defineComponent({
   name: 'DAvatar',
   props: avatarProps,
   setup(props: AvatarProps) {
-    const { name, width, height, customText, gender, imgSrc, isRound } =
+    const { name, width, height, customText, gender } =
       toRefs(props);
     const isNobody = ref<boolean>(true);
     const isErrorImg = ref<boolean>(false);
     const fontSize = ref<number>(12);
     const code = ref<number>();
     const nameDisplay = ref<string>();
-
-    const calcValues = (nameInput: string): void => {
-      const userName = nameInput;
-      const minNum = Math.min(width.value, height.value);
-      if (userName) {
-        isNobody.value = false;
-        setDisplayName(userName, minNum);
-      } else if (userName === '') {
-        isNobody.value = false;
-        nameDisplay.value = '';
-      } else {
-        isNobody.value = true;
-      }
-      fontSize.value = minNum / 4 + 3;
-    };
-
-    const setDisplayName = (name: string, width: number): void => {
-      if (customText.value) {
-        nameDisplay.value = customText.value;
-        getBackgroundColor(customText.value.substr(0, 1));
-        return;
-      }
-      if (name.length < 2) {
-        nameDisplay.value = name;
-      } else {
-        // 以中文开头显示最后两个字符
-        if (/^[\u4e00-\u9fa5]/.test(name)) {
-          nameDisplay.value = name.substr(name.length - 2, 2);
-          // 英文开头
-        } else if (/^[A-Za-z]/.test(name)) {
-          // 含有两个及以上，包含空格，下划线，中划线分隔符的英文名取前两个字母的首字母
-          if (/[_ -]/.test(name)) {
-            const str_before = name.split(/_|-|\s+/)[0];
-            const str_after = name.split(/_|-|\s+/)[1];
-            nameDisplay.value =
-              str_before.substr(0, 1).toUpperCase() +
-              str_after.substr(0, 1).toUpperCase();
-          } else {
-            // 一个英文名的情况显示前两个字母
-            nameDisplay.value = name.substr(0, 2).toUpperCase();
-          }
-        } else {
-          // 非中英文开头默认取前两个字符
-          nameDisplay.value = name.substr(0, 2);
-        }
-      }
-      if (width < 30) {
-        nameDisplay.value = name.substr(0, 1).toUpperCase();
-      }
-      getBackgroundColor(name.substr(0, 1));
-    };
 
     const getBackgroundColor = (char: string): void => {
       if (gender.value) {
@@ -83,8 +32,60 @@ export default defineComponent({
       const unicode = char.charCodeAt(0);
       code.value = unicode % 2;
     };
+
+    const setDisplayName = (nameValue: string, widthValue: number): void => {
+      if (customText.value) {
+        nameDisplay.value = customText.value;
+        getBackgroundColor(customText.value.substr(0, 1));
+        return;
+      }
+      if (nameValue.length < 2) {
+        nameDisplay.value = nameValue;
+      } else {
+        // 以中文开头显示最后两个字符
+        if (/^[\u4e00-\u9fa5]/.test(nameValue)) {
+          nameDisplay.value = nameValue.substr(nameValue.length - 2, 2);
+          // 英文开头
+        } else if (/^[A-Za-z]/.test(nameValue)) {
+          // 含有两个及以上，包含空格，下划线，中划线分隔符的英文名取前两个字母的首字母
+          if (/[_ -]/.test(nameValue)) {
+            const str_before = nameValue.split(/_|-|\s+/)[0];
+            const str_after = nameValue.split(/_|-|\s+/)[1];
+            nameDisplay.value =
+              str_before.substr(0, 1).toUpperCase() +
+              str_after.substr(0, 1).toUpperCase();
+          } else {
+            // 一个英文名的情况显示前两个字母
+            nameDisplay.value = nameValue.substr(0, 2).toUpperCase();
+          }
+        } else {
+          // 非中英文开头默认取前两个字符
+          nameDisplay.value = nameValue.substr(0, 2);
+        }
+      }
+      if (widthValue < 30) {
+        nameDisplay.value = nameValue.substr(0, 1).toUpperCase();
+      }
+      getBackgroundColor(nameValue.substr(0, 1));
+    };
+
     const showErrorAvatar = (): void => {
       isErrorImg.value = true;
+    };
+
+    const calcValues = (nameInput: string): void => {
+      const userName = nameInput;
+      const minNum = Math.min(width.value, height.value);
+      if (userName) {
+        isNobody.value = false;
+        setDisplayName(userName, minNum);
+      } else if (userName === '') {
+        isNobody.value = false;
+        nameDisplay.value = '';
+      } else {
+        isNobody.value = true;
+      }
+      fontSize.value = minNum / 4 + 3;
     };
 
     calcValues(customText.value ? customText.value : name.value);
