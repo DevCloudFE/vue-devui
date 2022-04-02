@@ -2,6 +2,7 @@ import { defineComponent, computed, ref, onMounted, watch } from 'vue';
 import { statisticProps, StatisticProps } from './statistic-types';
 import { analysisValueType } from './utils/separator';
 import { Tween } from './utils/animation';
+import type { toType } from './utils/animation';
 import './statistic.scss';
 
 export default defineComponent({
@@ -10,7 +11,7 @@ export default defineComponent({
   props: statisticProps,
   setup(props: StatisticProps, ctx) {
     const innerValue = ref(props.valueFrom ?? props.value);
-    const tween = ref(null);
+    const tween = ref<Tween | null>(null);
 
     const animation = (
       from: number = props.valueFrom ?? 0,
@@ -27,7 +28,7 @@ export default defineComponent({
           delay: 0,
           duration: props.animationDuration,
           easing: 'easeOutCubic',
-          onUpdate: (keys: any) => {
+          onUpdate: (keys: toType) => {
             innerValue.value = keys.value;
           },
           onFinish: () => {
