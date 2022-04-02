@@ -383,8 +383,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://gitee.com/micd'
     },
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/413/1241369_sise209_1628127437.png!avatar200',
-      homepage: 'https://gitee.com/sise209'
+      avatar: 'https://avatars.githubusercontent.com/u/30541930?v=4',
+      homepage: 'https://github.com/duqingyu'
     },
   ],
   card: [
@@ -424,6 +424,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     },
   ],
   'image-preview': [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/30541930?v=4',
+      homepage: 'https://github.com/duqingyu'
+    },
     {
       avatar: 'https://avatars.githubusercontent.com/u/10958003?v=4',
       homepage: 'https://github.com/liuxdi'

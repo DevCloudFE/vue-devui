@@ -1,5 +1,5 @@
-import { Ref } from 'vue';
-import { IInnerTreeNode, ITreeNode, IUseCore, valueof } from './tree-factory-types';
+import { computed, ComputedRef, Ref } from 'vue';
+import { IInnerTreeNode, ITreeNode, IUseCore, valueof } from './use-tree-types';
 import { generateInnerTree } from './utils';
 
 export default function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
@@ -16,9 +16,31 @@ export default function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
     for (let i = startIndex + 1; i < data.value.length && getLevel(node) < data.value[i].level; i++) {
       result.push(data.value[i]);
     }
-    console.log('result:', result);
     
     return result;
+  }
+
+  const getExpendedTree = (): ComputedRef<IInnerTreeNode[]> => {
+    return computed(() => {
+      let excludeNodes: IInnerTreeNode[] = [];
+      let result = [];
+
+      for (let i = 0, len = data?.value.length; i < len; i++) {
+        const item = data?.value[i];
+
+        if (excludeNodes.map(node => node.id).includes(item.id)) {
+          continue;
+        }
+        
+        if (item.expanded !== true) {
+          excludeNodes = getChildren(item);
+        }
+
+        result.push(item);
+      }
+
+      return result;
+    });
   }
 
   const getIndex = (node: ITreeNode): number => {
@@ -40,6 +62,7 @@ export default function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
   return {
     getLevel,
     getChildren,
+    getExpendedTree,
     getIndex,
     getNode,
     setNodeValue,

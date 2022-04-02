@@ -1,15 +1,14 @@
 import { watch, reactive, onBeforeMount, computed, h, getCurrentInstance } from 'vue';
 import type { ToRefs, Slots, ComputedRef } from 'vue';
-import { Table } from '../../table-types';
-import { Column, TableColumnPropsTypes, TableColumn } from './column-types';
+import { Table, DefaultRow } from '../../table-types';
+import { Column, TableColumnProps, TableColumn } from './column-types';
+import { TableStore } from '../../store/store-types';
 import { formatWidth, formatMinWidth } from '../../utils';
+import { cellMap } from './config';
 
-function defaultRenderHeader<T>(this: Column<T>) {
-  return h('span', { class: 'title' }, this.header);
-}
-
-export function createColumn<T extends Record<string, unknown> = any>(props: ToRefs<TableColumnPropsTypes>, templates: Slots): Column<T> {
+export function createColumn(props: ToRefs<TableColumnProps>, templates: Slots): Column {
   const {
+    type,
     field,
     header,
     sortable,
@@ -24,15 +23,20 @@ export function createColumn<T extends Record<string, unknown> = any>(props: ToR
     fixedLeft,
     fixedRight,
   } = props;
-  const column: Column<T> = reactive({});
+  const column: Column = reactive({});
+  column.type = type.value;
 
-  function defaultRenderCell<K extends Record<string, unknown>>(rowData: K, index: number) {
-    const value = rowData[this.field];
+  function defaultRenderHeader(columnItem: Column) {
+    return h('span', { class: 'title' }, columnItem.header ?? '');
+  }
+
+  function defaultRenderCell(rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) {
+    const value = columnItem.field ? rowData[columnItem.field] : '';
     if (templates.default) {
       return templates.default(rowData);
     }
-    if (this.formatter) {
-      return this.formatter(rowData, value, index);
+    if (columnItem.formatter) {
+      return columnItem.formatter(rowData, columnItem, value, rowIndex);
     }
 
     return value?.toString?.() ?? '';
@@ -69,8 +73,8 @@ export function createColumn<T extends Record<string, unknown> = any>(props: ToR
   watch(
     [fixedLeft, fixedRight],
     ([left, right]) => {
-      column.fixedLeft = left?.value;
-      column.fixedRight = right?.value;
+      column.fixedLeft = left;
+      column.fixedRight = right;
     },
     { immediate: true }
   );
@@ -84,8 +88,8 @@ export function createColumn<T extends Record<string, unknown> = any>(props: ToR
 
   // 基础渲染功能
   onBeforeMount(() => {
-    column.renderHeader = defaultRenderHeader;
-    column.renderCell = defaultRenderCell;
+    column.renderHeader = type.value ? cellMap[type.value].renderHeader : defaultRenderHeader;
+    column.renderCell = type.value ? cellMap[type.value].renderCell : defaultRenderCell;
     column.formatter = formatter?.value;
     column.customFilterTemplate = templates.customFilterTemplate;
     column.subColumns = templates.subColumns;
@@ -95,10 +99,10 @@ export function createColumn<T extends Record<string, unknown> = any>(props: ToR
 }
 
 export function useRender<T>(): {
-  columnOrTableParent: ComputedRef<Table<T> | TableColumn<T>>;
+  columnOrTableParent: ComputedRef<Table<T> | TableColumn>;
   getColumnIndex: (children: Array<unknown>, child: unknown) => number;
 } {
-  const instance = getCurrentInstance() as TableColumn<T>;
+  const instance = getCurrentInstance() as TableColumn;
   const columnOrTableParent = computed(() => {
     let parent: any = instance?.parent;
     while (parent && !parent.tableId && !parent.columnId) {

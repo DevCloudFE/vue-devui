@@ -10,11 +10,21 @@ export interface MoveableResult {
   movingX: Ref<number>;
   movingY: Ref<number>;
   // 可拖拽的元素
-  handleRef: Ref<HTMLElement | null>;
+  handleRef: Ref<HTMLElement | null | undefined>;
   // 可移动的元素
-  moveElRef: Ref<HTMLElement | null>;
+  moveElRef: Ref<HTMLElement | null | undefined>;
   reset(): void;
 }
+
+const getRangeValueOf = (value: number, min: number, max: number) => {
+  if (value < min) {
+    return min;
+  }
+  if (value > max) {
+    return max;
+  }
+  return value;
+};
 
 // 当前某个元素被拖拽时鼠标的偏移量
 export const useMoveable = (moveable: Ref<boolean> | boolean = true): MoveableResult => {
@@ -113,15 +123,4 @@ export const useMoveable = (moveable: Ref<boolean> | boolean = true): MoveableRe
     moveElRef,
     reset
   };
-};
-
-
-const getRangeValueOf = (value: number, min: number, max: number) => {
-  if (value < min) {
-    return min;
-  }
-  if (value > max) {
-    return max;
-  }
-  return value;
 };
