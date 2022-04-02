@@ -8,7 +8,7 @@ export abstract class CommonModalService<Options, Props> {
 
   constructor(public anchorContainer: HTMLElement) {}
 
-  abstract component(): any;
+  abstract component(): string;
 
   abstract open(options: Partial<Options>): ModalOpenResult;
 
