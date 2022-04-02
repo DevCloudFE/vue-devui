@@ -1,10 +1,9 @@
-import type { InjectionKey, Slot } from 'vue';
+import type { InjectionKey, Slot, VNode } from 'vue';
 import { ModalProps } from '../modal-types';
 import { CommonModalService, ModalOpenResult } from './common-modal-service';
 import DModal from '../modal';
 
-let vm;
-
+let vm: VNode | null;
 export interface ModalOptions {
   title?: string;
   lockScroll?: boolean;
@@ -23,22 +22,18 @@ export class ModalService extends CommonModalService<ModalOptions, ModalProps> {
   }
 
   open(props: Partial<ModalOptions> = {}): ModalOpenResult {
+
     // TODO：手动的方式可能抛弃了 content 内部的响应式，这里需要再优化。
     const anchor = document.createElement('div');
     this.anchorContainer.appendChild(anchor);
 
     const { header, content, footer, ...resProps } = props;
 
-    const needHideOrNot = (value: boolean) => {
-      if (!value) {
-        hide();
-      }
-    };
-    const renderOrigin = (props: typeof resProps, onUpdateModelValue = needHideOrNot) => {
+    const renderOrigin = (propsValue: typeof resProps, onUpdateModelValue: (value: boolean) => void): VNode => {
       return this.renderModal(
         anchor,
         {
-          ...props,
+          ...propsValue,
           modelValue: true,
           'onUpdate:modelValue': onUpdateModelValue,
         },
@@ -48,22 +43,33 @@ export class ModalService extends CommonModalService<ModalOptions, ModalProps> {
 
     // 隐藏按钮
     const hide = () => {
+      const innerNeedHideOrNot = (value: boolean) => {
+        if (!value) {
+          hide();
+        }
+      };
       renderOrigin(resProps, (value: boolean) => {
         if (!value) {
           this.renderModal(anchor, { ...resProps, modelValue: false });
           this.renderNull(anchor);
         } else {
-          renderOrigin(resProps);
+          renderOrigin(resProps, innerNeedHideOrNot);
         }
       });
-      vm.component.exposed.handleVisibleChange?.(false);
+      vm?.component?.exposed?.handleVisibleChange?.(false);
+    };
+
+    const needHideOrNot = (value: boolean) => {
+      if (!value) {
+        hide();
+      }
     };
 
     // 先渲染一次，触发动画用
     this.renderModal(anchor, { modelValue: false });
 
     // 再渲染详细内容
-    vm = renderOrigin(resProps);
+    vm = renderOrigin(resProps, needHideOrNot);
 
     return { hide };
   }
