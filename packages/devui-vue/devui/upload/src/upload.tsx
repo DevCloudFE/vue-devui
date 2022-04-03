@@ -1,9 +1,10 @@
 import { defineComponent, toRefs, ref } from 'vue';
 import { NotificationService } from '../../notification';
+import type { IFileResponse } from './upload-types';
 import { UploadStatus, UploadProps, uploadProps } from './upload-types';
 import { useSelectFiles } from './composables/use-select-files';
 import { useUpload } from './composables/use-upload';
-import { getFailedFilesCount, getSelectedFilesCount, getUploadingFilesCount, getExistSameNameFilesMsg } from './i18n-upload';
+import { getExistSameNameFilesMsg } from './i18n-upload';
 import { FileUploader } from './file-uploader';
 import './upload.scss';
 
@@ -29,8 +30,7 @@ export default defineComponent({
     const { fileUploaders, addFile, getFullFiles, deleteFile, upload, resetSameNameFiles, removeFiles, _oneTimeUpload, getSameNameFiles } =
       useUpload();
     const isDropOVer = ref(false);
-    const uploadTips = ref('');
-    const alertMsg = (errorMsg: string) => {
+    const alertMsg = (errorMsg?: string) => {
       NotificationService.open({
         type: 'warning',
         content: errorMsg,
@@ -38,73 +38,23 @@ export default defineComponent({
     };
     const checkValid = () => {
       let totalFileSize = 0;
-
       fileUploaders.value.forEach((fileUploader) => {
         totalFileSize += fileUploader.file.size;
 
-        const checkResult = _validateFiles(fileUploader.file, accept.value, fileUploader.uploadOptions);
+        const checkResult = _validateFiles(fileUploader.file, accept?.value || '', fileUploader.uploadOptions);
         if (checkResult && checkResult.checkError) {
           deleteFile(fileUploader.file);
           alertMsg(checkResult.errorMsg);
           return;
         }
       });
-
       if (oneTimeUpload.value) {
-        const checkResult = checkAllFilesSize(totalFileSize, uploadOptions.value.maximumSize);
+        const checkResult = checkAllFilesSize(totalFileSize, uploadOptions?.value?.maximumSize || 0);
         if (checkResult && checkResult.checkError) {
           removeFiles();
           alertMsg(checkResult.errorMsg);
         }
       }
-    };
-
-    const _dealFiles = (promise: Promise<File[]>) => {
-      resetSameNameFiles();
-      promise
-        .then((files) => {
-          files.forEach((file) => {
-            // 单文件上传前先清空数组
-            if (!multiple.value) {
-              removeFiles();
-            }
-            addFile(file, uploadOptions.value);
-          });
-          checkValid();
-          const sameNameFiles = getSameNameFiles();
-          if (uploadOptions.value && uploadOptions.value.checkSameName && sameNameFiles.length) {
-            alertMsg(getExistSameNameFilesMsg(sameNameFiles));
-          }
-          const selectedFiles = fileUploaders.value
-            .filter((fileUploader) => fileUploader.status === UploadStatus.preLoad)
-            .map((fileUploader) => fileUploader.file);
-          ctx.emit('fileSelect', selectedFiles);
-          if (autoUpload.value) {
-            fileUpload();
-          }
-        })
-        .catch((error: Error) => {
-          alertMsg(error.message);
-        });
-    };
-
-    const handleClick = () => {
-      if (disabled.value) {
-        return;
-      }
-      _dealFiles(
-        triggerSelectFiles({
-          accept: accept.value,
-          multiple: multiple.value,
-          webkitdirectory: webkitdirectory.value,
-        })
-      );
-    };
-
-    const onFileDrop = (files: File[]) => {
-      isDropOVer.value = false;
-      _dealFiles(triggerDropFiles(files));
-      ctx.emit('fileDrop', files);
     };
     const onFileOver = (event: boolean) => {
       isDropOVer.value = event;
@@ -127,13 +77,13 @@ export default defineComponent({
     };
     const canUpload = () => {
       let uploadResult = Promise.resolve(true);
-      if (beforeUpload.value) {
-        const result: any = beforeUpload.value(getFullFiles());
+      if (beforeUpload?.value) {
+        const result: boolean | Promise<boolean> = beforeUpload?.value(getFullFiles());
         if (typeof result !== 'undefined') {
-          if (result.then) {
-            uploadResult = result;
-          } else {
+          if (typeof result === 'boolean') {
             uploadResult = Promise.resolve(result);
+          } else {
+            uploadResult = result;
           }
         }
       }
@@ -148,62 +98,66 @@ export default defineComponent({
           removeFiles();
           return;
         }
-        const uploadObservable = oneTimeUpload.value ? _oneTimeUpload() : upload(fileUploader);
-
+        const uploadObservable: Promise<IFileResponse[]> = oneTimeUpload.value ? _oneTimeUpload() : upload(fileUploader);
         uploadObservable
-          .then((results: Array<{ file: File; response: any }>) => {
+          ?.then((results: IFileResponse[]) => {
             props['on-success'] && props['on-success'](results);
             const newFiles = results.map((result) => result.file);
             const newUploadedFiles = [...newFiles, ...modelValue.value];
             ctx.emit('update:modelValue', newUploadedFiles);
           })
-          .catch((error) => {
+          .catch((error: IFileResponse) => {
             props['on-error'] && props['on-error'](error);
           });
       });
     };
 
-    const getStatus = () => {
-      let uploadingCount = 0;
-      let uploadedCount = 0;
-      let failedCount = 0;
-      const filesCount = fileUploaders.value.length;
-      fileUploaders.value.forEach((fileUploader) => {
-        if (fileUploader.status === UploadStatus.uploading) {
-          uploadingCount++;
-        } else if (fileUploader.status === UploadStatus.uploaded) {
-          uploadedCount++;
-        } else if (fileUploader.status === UploadStatus.failed) {
-          failedCount++;
-        }
-      });
-      if (failedCount > 0) {
-        uploadTips.value = getFailedFilesCount(failedCount);
-        return 'failed';
-      }
-      if (uploadingCount > 0) {
-        uploadTips.value = getUploadingFilesCount(uploadingCount, filesCount);
-        return 'uploading';
-      }
-      if (uploadedCount === filesCount && uploadedCount !== 0) {
-        return 'uploaded';
-      }
-      if (filesCount !== 0) {
-        uploadTips.value = getSelectedFilesCount(filesCount);
-        return 'selected';
-      }
+    const _dealFiles = (promise: Promise<File[]>) => {
+      resetSameNameFiles();
+      promise
+        .then((files) => {
+          files.forEach((file) => {
+            // 单文件上传前先清空数组
+            if (!multiple.value) {
+              removeFiles();
+            }
+            addFile(file, uploadOptions?.value);
+          });
+          checkValid();
+          const sameNameFiles = getSameNameFiles();
+          if (uploadOptions?.value && uploadOptions.value.checkSameName && sameNameFiles.length) {
+            alertMsg(getExistSameNameFilesMsg(sameNameFiles));
+          }
+          const selectedFiles = fileUploaders.value
+            .filter((fileUploader) => fileUploader.status === UploadStatus.preLoad)
+            .map((fileUploader) => fileUploader.file);
+          ctx.emit('fileSelect', selectedFiles);
+          if (autoUpload.value) {
+            fileUpload();
+          }
+        })
+        .catch((error: Error) => {
+          alertMsg(error.message);
+        });
     };
 
-    // 取消上传
-    const cancelUpload = () => {
-      fileUploaders.value = fileUploaders.value.map((fileUploader) => {
-        if (fileUploader.status === UploadStatus.uploading) {
-          // 取消上传请求
-          fileUploader.cancel();
-          fileUploader.status = UploadStatus.failed;
-        }
-        return fileUploader;
-      });
+    const handleClick = () => {
+      if (disabled.value) {
+        return;
+      }
+      _dealFiles(
+        triggerSelectFiles({
+          accept: accept?.value,
+          multiple: multiple.value,
+          webkitdirectory: webkitdirectory.value,
+        })
+      );
+    };
+
+    const onFileDrop = (files: File[]) => {
+      isDropOVer.value = false;
+      _dealFiles(triggerDropFiles(files));
+      ctx.emit('fileDrop', files);
     };
 
     return () => (
@@ -230,12 +184,13 @@ export default defineComponent({
                       </span>
                       <d-icon
                         name='close'
-                        class={`${fileUploader?.status === UploadStatus.failed ? 'devui-upload-delete-file-button' : ''} ${
-                          fileUploader?.status === UploadStatus.uploading || fileUploader?.status === UploadStatus.uploaded
-                            ? 'devui-uploading-delete'
-                            : ''
+                        class={`${fileUploader?.status === UploadStatus.failed
+                          ? 'devui-upload-delete-file-button' :
+                          ''} ${fileUploader?.status === UploadStatus.uploading || fileUploader?.status === UploadStatus.uploaded
+                          ? 'devui-uploading-delete'
+                          : ''
                         }`}
-                        onClick={(event) => onDeleteFile(event, fileUploader.file, fileUploader.status)}
+                        onClick={(event: Event) => onDeleteFile(event, fileUploader.file, fileUploader.status)}
                       />
                       {fileUploader.status === UploadStatus.uploading && (
                         <div class='icon devui-upload-progress'>

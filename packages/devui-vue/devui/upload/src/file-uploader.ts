@@ -1,26 +1,28 @@
+import type { UnwrapRef } from 'vue';
+import type { IFileResponse } from './upload-types';
 import { IUploadOptions, UploadStatus } from './upload-types';
 
 export class FileUploader {
-  private xhr: XMLHttpRequest;
+  private xhr: XMLHttpRequest | undefined | null;
   public status: UploadStatus;
-  public response: any;
+  public response: unknown;
   public percentage = 0;
 
-  constructor(public file: File, public uploadOptions: IUploadOptions) {
+  constructor(public file: File, public uploadOptions?: IUploadOptions) {
     this.file = file;
     this.uploadOptions = uploadOptions;
     this.status = UploadStatus.preLoad;
   }
 
-  send(uploadFiles?: FileUploader[]): Promise<{ file: File; response: any }> {
+  send(uploadFiles?: UnwrapRef<FileUploader[]>): Promise<IFileResponse> {
     return new Promise((resolve, reject) => {
       const { uri, method, headers, authToken, authTokenHeader, additionalParameter, fileFieldName, withCredentials, responseType } =
-        this.uploadOptions;
+        this.uploadOptions || {};
       const authTokenHeader_ = authTokenHeader || 'Authorization';
       const fileFieldName_ = fileFieldName || 'file';
 
       this.xhr = new XMLHttpRequest();
-      this.xhr.open(method || 'POST', uri);
+      this.xhr.open(method || 'POST', uri || '');
 
       if (withCredentials) {
         this.xhr.withCredentials = withCredentials;
@@ -36,7 +38,7 @@ export class FileUploader {
 
       if (headers) {
         Object.keys(headers).forEach((key) => {
-          this.xhr.setRequestHeader(key, headers[key]);
+          this.xhr?.setRequestHeader(key, headers[key]);
         });
       }
 
@@ -58,26 +60,26 @@ export class FileUploader {
       };
 
       this.xhr.onerror = () => {
-        this.response = this.xhr.response;
+        this.response = this.xhr?.response;
         this.status = UploadStatus.failed;
-        reject({ file: this.file, response: this.xhr.response });
+        reject({ file: this.file, response: this.xhr?.response });
       };
 
       this.xhr.onload = () => {
-        if (this.xhr.readyState === 4 && this.xhr.status >= 200 && this.xhr.status < 300) {
+        if (this.xhr?.readyState === 4 && this.xhr.status >= 200 && this.xhr.status < 300) {
           this.response = this.xhr.response;
           this.status = UploadStatus.uploaded;
           resolve({ file: this.file, response: this.xhr.response });
         } else {
-          this.response = this.xhr.response;
+          this.response = this.xhr?.response;
           this.status = UploadStatus.failed;
-          reject({ file: this.file, response: this.xhr.response });
+          reject({ file: this.file, response: this.xhr?.response });
         }
       };
     });
   }
 
-  parallelUploadFiles(fileFieldName_: string, additionalParameter: Record<string, any>): FormData {
+  parallelUploadFiles(fileFieldName_: string, additionalParameter: Record<string, string | Blob> | undefined): FormData {
     const formData = new FormData();
     formData.append(fileFieldName_, this.file, this.file.name);
     if (additionalParameter) {
@@ -88,7 +90,11 @@ export class FileUploader {
     return formData;
   }
 
-  oneTimeUploadFiles(fileFieldName_: string, additionalParameter: Record<string, any>, uploadFiles: FileUploader[]): FormData {
+  oneTimeUploadFiles(
+    fileFieldName_: string,
+    additionalParameter: Record<string, string | Blob> | undefined,
+    uploadFiles: UnwrapRef<FileUploader[]>
+  ): FormData {
     const formData = new FormData();
     uploadFiles.forEach((element) => {
       formData.append(fileFieldName_, element.file, element.file.name);
