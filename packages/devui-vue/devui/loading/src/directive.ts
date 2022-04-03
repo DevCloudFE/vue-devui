@@ -107,7 +107,7 @@ const handleProps = (el: TargetHTMLElement, vprops: LoadingProps) => {
   el.style.position = props.positionType!
   el.options = props
   el.instance = loadingInstance
-  el.mask = loadingInstance.proxy.$el
+  el.mask = loadingInstance?.proxy?.$el
 }
 
 const loadingDirective = {

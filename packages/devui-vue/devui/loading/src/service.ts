@@ -1,55 +1,63 @@
-/* eslint-disable */
-import { defineComponent } from 'vue'
-import { createComponent } from '../../shared/scripts/component'
-import Loading from './loading'
+import type { CSSProperties, VNode, ComponentInternalInstance } from 'vue';
+import { defineComponent } from 'vue';
+import { createComponent } from '../../shared/scripts/component';
+import Loading from './loading';
 
-import { LoadingProps } from './types'
+import { LoadingProps } from './types';
 
-const loadingConstructor = defineComponent(Loading)
+const loadingConstructor = defineComponent(Loading);
 
 interface TargetElement extends Element {
-  style ?: any
+  style?: CSSProperties;
 }
 
-const cacheTarget = new WeakMap()
+type IMargeVNodeComponent = VNode['component'] & {
+  loadingInstance?: ComponentInternalInstance['proxy'];
+} | null;
+
+const cacheTarget = new WeakMap();
 
 const loading = {
-  open(options: LoadingProps = {}) {
+  open(options: LoadingProps = {}): IMargeVNodeComponent {
 
-    const parent: TargetElement = options.target || document.body
+    const parent: TargetElement = options.target || document.body;
 
     if (cacheTarget.has(parent)) {
-      return cacheTarget.get(parent)
+      return cacheTarget.get(parent);
+    }
+    if (parent.style) {
+      parent.style.position = options.positionType;
     }
 
-    parent.style.position = options.positionType
+    const isFull = document.body === parent;
 
-    const isFull = document.body === parent
+    options = { ...new LoadingProps(), ...options };
 
-    options = {...new LoadingProps(), ...options}
-
-    const instance = createComponent(loadingConstructor, {
+    const instance: IMargeVNodeComponent = createComponent(loadingConstructor, {
       ...options,
       isFull
-    }, options.loadingTemplateRef ? () => options.loadingTemplateRef : null)
+    }, options.loadingTemplateRef ? () => options.loadingTemplateRef : null);
 
-    cacheTarget.set(parent, instance)
+    cacheTarget.set(parent, instance);
 
-    instance.proxy.open()
-    parent.appendChild(instance.proxy.$el)
+    instance?.proxy?.open();
+    parent.appendChild(instance?.proxy?.$el);
 
-    const close = instance.proxy.close
-    instance.loadingInstance = instance.proxy
-    instance.loadingInstance.close = (...args: any[]) => {
-      cacheTarget.delete(parent)
-      // 1. 箭头函数内部并没有内置arguments对象 @mrundef-210810
-      // 2. 如果没有上下文要求`apply(null)`，不必使用apply/call
-      // close.apply(null, arguments)
-      close(...args)
+    const close = instance?.proxy?.close;
+    if (instance) {
+      instance.loadingInstance = instance?.proxy;
+      if (instance.loadingInstance) {
+        instance.loadingInstance.close = (...args: unknown[]) => {
+          cacheTarget.delete(parent);
+          // 1. 箭头函数内部并没有内置arguments对象 @mrundef-210810
+          // 2. 如果没有上下文要求`apply(null)`，不必使用apply/call
+          // close.apply(null, arguments)
+          close?.(...args);
+        };
+      }
     }
-
-    return instance
+    return instance;
   }
-}
+};
 
-export default loading
+export default loading;
