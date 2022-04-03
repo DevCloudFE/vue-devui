@@ -16,24 +16,26 @@ export default defineComponent({
   props: tagInputProps,
   emits: ['update:tags', 'update:suggestionList', 'valueChange'],
   setup(props: TagInputProps, ctx: SetupContext) {
-    const add = (arr: any[], target: any) => {
-      const res = Object.assign({}, target);
+    const add = (arr: Suggestion[], target: Suggestion) => {
+      const res: Suggestion = Object.assign({}, target);
       delete res.__index;
       return arr.concat(res);
     };
-    const remove = (arr: any[], targetIdx: number) => {
+    const remove = (arr: Suggestion[], targetIdx: number | undefined) => {
       const newArr = arr.slice();
-      newArr.splice(targetIdx, 1);
+      if (targetIdx !== undefined) {
+        newArr.splice(targetIdx, 1);
+      }
       return newArr;
     };
 
     const tagInputVal = ref('');
-    const onInput = ($event: InputEvent) => {
+    const onInput = ($event: Event) => {
       const v = ($event.target as HTMLInputElement).value || '';
       tagInputVal.value = v.trim();
     };
     const mergedSuggestions = computed<Suggestion[]>(() => {
-      let suggestions = props.suggestionList.map((item, index: number) => {
+      let suggestions = props.suggestionList.map((item, index: number): Suggestion => {
         return {
           __index: index,
           ...item
@@ -43,8 +45,8 @@ export default defineComponent({
         return suggestions;
       }
       return suggestions = props.caseSensitivity
-        ? suggestions.filter(item => item[props.displayProperty].indexOf(tagInputVal.value) !== -1)
-        : suggestions.filter(item => item[props.displayProperty].toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1);
+        ? suggestions.filter(item => (item[props.displayProperty] as string).indexOf(tagInputVal.value) !== -1)
+        : suggestions.filter(item => (item[props.displayProperty] as string).toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1);
     });
 
     const selectIndex = ref(0);
@@ -68,7 +70,7 @@ export default defineComponent({
       isInputBoxFocus.value = false;
     };
     const handleEnter = () => {
-      let res = { [props.displayProperty]: tagInputVal.value };
+      let res: Suggestion = { [props.displayProperty]: tagInputVal.value };
       if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) {return false;}
       if (props.tags.findIndex((item) => item[props.displayProperty] === tagInputVal.value) > -1) {
         tagInputVal.value = '';
@@ -224,7 +226,7 @@ export default defineComponent({
             onKeydown={onInputKeydown}
             onFocus={onInputFocus}
             onBlur={onInputBlur}
-            onInput={($event: any) => onInput($event)}
+            onInput={($event: Event) => onInput($event)}
             placeholder={isTagsLimit ? `${maxTagsText} ${maxTags}` : placeholder}
             spellcheck={spellcheck}
             disabled={isTagsLimit}
@@ -237,7 +239,7 @@ export default defineComponent({
                 {
                   mergedSuggestions.length === 0 ?
                     noDataTpl :
-                    mergedSuggestions.map((item: any, index: number) => {
+                    mergedSuggestions.map((item: Suggestion, index: number) => {
                       return (
                         <li
                           class={{ 'devui-suggestion-item': true, selected: index === selectIndex }}
