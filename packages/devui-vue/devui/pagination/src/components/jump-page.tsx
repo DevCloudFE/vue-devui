@@ -10,10 +10,10 @@ const jumpPageProps = {
   showJumpButton: Boolean,
   totalPages: Number,
   cursor: Number,
-  onChangeCursorEmit: Function as PropType<(v: number) => void>
-}
+  onChangeCursorEmit: Function as PropType<(v: number) => void>,
+};
 
-type JumpPageProps = ExtractPropTypes<typeof jumpPageProps>
+type JumpPageProps = ExtractPropTypes<typeof jumpPageProps>;
 
 export default defineComponent({
   props: jumpPageProps,
@@ -23,41 +23,41 @@ export default defineComponent({
       pageIndex,
       totalPages,
       cursor
-    } = toRefs(props)
+    } = toRefs(props);
 
     // 输入跳转页码
-    const inputNum = ref(pageIndex.value)
+    const inputNum = ref(pageIndex?.value);
     watch(
-      () => pageIndex.value,
-      (val: number) => {
-        inputNum.value = val
+      () => pageIndex?.value,
+      (val) => {
+        inputNum.value = val;
       }
-    )
-    let curPage = pageIndex.value
+    );
+    let curPage = pageIndex?.value;
     const jumpPageChange = (currentPage: number) => {
-      curPage = +currentPage
-      inputNum.value = currentPage
+      curPage = +currentPage;
+      inputNum.value = currentPage;
       if (isNaN(currentPage)) {
         setTimeout(() => {
-          inputNum.value = pageIndex.value
-        }, 300)
+          inputNum.value = pageIndex?.value;
+        }, 300);
       }
-    }
+    };
     // 跳转指定页码
     const jump = (e: KeyboardEvent | 'btn') => {
-      if (curPage > totalPages.value) {
-        return
+      if (curPage > totalPages?.value) {
+        return;
       }
-      if ((e === 'btn' || e.key === 'Enter') && cursor.value !== curPage) {
-        emit('changeCursorEmit', curPage)
+      if ((e === 'btn' || e.key === 'Enter') && cursor?.value !== curPage) {
+        emit('changeCursorEmit', curPage);
       }
-    }
+    };
 
     return {
       inputNum,
       jumpPageChange,
       jump
-    }
+    };
   },
   render() {
     const {
@@ -67,20 +67,18 @@ export default defineComponent({
       jumpPageChange,
       jump,
       showJumpButton
-    } = this
-
+    } = this;
+    const inputProps = {
+      class: ['devui-pagination-input', size ? 'devui-pagination-input-' + size : ''],
+      size: size,
+      modelValue: String(inputNum),
+      "onUpdate:modelValue": jumpPageChange,
+      onKeydown: jump,
+    };
     return (
       <div class="devui-jump-container">
         {goToText}
-
-        <d-input
-          class={['devui-pagination-input', size ? 'devui-pagination-input-' + size : '']}
-          size={size}
-          modelValue={String(inputNum)}
-          onUpdate:modelValue={jumpPageChange}
-          onKeydown={jump}
-        />
-
+        <d-input {...inputProps} />
         {
           // TODO 加入国际化后，替换为当前语言为中文的时候加上 '页'
           goToText === '跳至' && '页'
@@ -96,6 +94,6 @@ export default defineComponent({
           </div>
         }
       </div>
-    )
+    );
   }
-})
+});
