@@ -1,7 +1,19 @@
 import { nextTick, ref, Ref } from 'vue';
-import { DefaultFuncType, SelectOptionClick } from '../auto-complete-types';
+import { DefaultFuncType, SelectOptionClick,SourceType } from '../auto-complete-types';
 
-export default function useKeyBoardHandle(dropDownRef: Ref<any>, visible: Ref<boolean>, searchList: Ref<Array<any>>, selectedIndex: Ref<number>, searchStatus: Ref<boolean>, showNoResultItemTemplate: Ref<boolean>, selectOptionClick: SelectOptionClick, handleClose: DefaultFuncType): any {
+export default function useKeyBoardHandle(
+  dropDownRef: Ref,
+  visible: Ref<boolean>,
+  searchList: Ref<SourceType>,
+  selectedIndex: Ref<number>,
+  searchStatus: Ref<boolean>,
+  showNoResultItemTemplate: Ref<boolean>,
+  selectOptionClick: SelectOptionClick,
+  handleClose: DefaultFuncType
+): {
+    hoverIndex: Ref<number>;
+    handlekeyDown: (e: KeyboardEvent) => void;
+  } {
   const hoverIndex = ref(selectedIndex.value??0);
   const scrollToActive = (index: number) => {
     const ul = dropDownRef.value;

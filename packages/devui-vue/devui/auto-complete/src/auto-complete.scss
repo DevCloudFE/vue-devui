@@ -52,9 +52,10 @@
 
   .devui-dropdown-menu {
     .devui-dropdown-item:not(.disabled) {
-      &.selected {
-        color: $devui-list-item-active-text;
-        background-color: $devui-list-item-active-bg;
+      &.selected,
+      &.selected &:hover {
+        color: $devui-list-item-active-text !important;
+        background-color: $devui-list-item-active-bg !important;
       }
     }
   }
