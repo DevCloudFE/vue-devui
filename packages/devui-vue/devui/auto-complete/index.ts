@@ -1,9 +1,7 @@
 import type { App } from 'vue';
 import AutoComplete from './src/auto-complete';
 
-AutoComplete.install = function(app: App): void {
-  app.component(AutoComplete.name, AutoComplete);
-};
+export * from './src/auto-complete-types';
 
 export { AutoComplete };
 
@@ -12,6 +10,6 @@ export default {
   category: '数据录入',
   status: '100%',
   install(app: App): void {
-    app.use(AutoComplete as any);
+    app.component(AutoComplete.name, AutoComplete);
   }
 };

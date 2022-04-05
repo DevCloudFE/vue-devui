@@ -22,6 +22,7 @@ Set source to the data source that is automatically completed.
     :trans-input-focus-emit="transInputFocusEmit"
     :position="position"
     :width="420"
+    :append-to-body="true"
   >
   </d-auto-complete>
 </template>
@@ -374,6 +375,7 @@ enable-lazy-load: enables lazy loading.
     enable-lazy-load
     :load-more="loadMore"
     scene-type="select"
+    :value-parser="valueParser"
   >
   </d-auto-complete>
 </template>
@@ -414,10 +416,14 @@ export default defineComponent({
         autoCompleteRef.value?.loadFinish()
       },3000)
     }
+    const valueParser = (e) => {
+      return e + '123'
+    }
     return {
       value,
       source,
       loadMore,
+      valueParser,
       autoCompleteRef
     }
   }
@@ -437,9 +443,10 @@ export default defineComponent({
 
 |        Parameter         |              Type              |                 Default                 |                                                                                                                Description                                                                                                                | Jump to Demo                                                        | Global Config |
 | :----------------------: | :----------------------------: | :-------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------ | ------------- |
-|          source          |          `Array<any>`          |                   --                    |                                                                                      Required. This parameter is optional if searchFn is specified.                                                                                       | [Basic usage](#Basic-usage)                                         |
+|          source          |  [`SourceType`](#sourcetype)   |                   --                    |                                                                                      Required. This parameter is optional if searchFn is specified.                                                                                       | [Basic usage](#Basic-usage)                                         |
 | allow-empty-value-search |           `boolean`            |                  false                  |                                                                      Optional. indicates whether to display a search message when the bound text box value is empty.                                                                      | [Basic usage](#Basic-usage)                                         |
-|         position         |         `Placement[]`          |         ['bottom'](#placement)          |                                                                             Optional. Specify the relative position of the drop-down box and the input box .                                                                              | [Basic usage](#Basic-usage)                                         |
+|      append-to-body      |           `boolean`            |                  false                  |                                                                                Optional. Whether to append to body is displayed in the drop-down list box.                                                                                | [Basic usage](#Basic-usage)                                         |
+|         position         |   [`Placement`](#placement)    |              `['bottom']`               |                                                                             Optional. Specify the relative position of the drop-down box and the input box .                                                                              | [Basic usage](#Basic-usage)                                         |
 |         disabled         |           `boolean`            |                  false                  |                                                                                             Optional. Indicating whether to disable commands.                                                                                             | [Disabled](#Disabled)                                               |
 |          delay           |            `number`            |                   300                   |                                                                   Optional. The search is performed only after the delay time elapses and a new value is entered. (ms)                                                                    | [Basic usage](#Basic-usage)                                         |
 |       disabled-key       |            `string`            |                   --                    | Optional. Disable a single option. If the input resource source option type is an object, for example, disabled, and the disable attribute of the object is true, for example, {label: xxx, disabled: true}, this option will be disabled | [Customized data matching method](#Customized-data-matching-method) |
@@ -472,6 +479,15 @@ export default defineComponent({
 
 # Interface & Type Definition
 
+### SourceType
+```ts
+interface SourceItemObj {
+  label: string;
+  disabled: boolean;
+  [propName: string]: unknown;
+}
+type SourceType = Array<string>| Array<SourceItemObj>
+```
 ### Placement
 ```ts
 type Placement =
@@ -492,15 +508,18 @@ type Placement =
 ### defaultSearchFn
 
 ```ts
-defaultSearchFn = (term) => {
-  return source.forEach((item)=>{
-          let cur = formatter(item)
-          cur = cur.toLowerCase()
-          if(cur.startsWith(term)){
-            arr.push(item)
-          }
-        })
-  };
+defaultSearchFn = (term: string) => {
+  type ItemType = typeof source.value[0];
+  const arr: ItemType[] = [];
+  source.value.forEach((item) => {
+    let cur = formatter.value((item as ItemType));
+    cur = cur.toLowerCase();
+    if (cur.startsWith(term)) {
+      arr.push(item);
+    }
+  });
+  return arr as SourceType;
+};
 ```
 term indicates the entered keyword.
   
@@ -508,7 +527,12 @@ term indicates the entered keyword.
 ### defaultFormatter
 
 ```ts
-defaultFormatter = (item) => (item ? item.label || item.toString() : '');
+defaultFormatter = (item: string | SourceItemObj) => {
+  if(typeof item === 'string'){
+    return item;
+  }
+  return item!==null ? item.label || item.toString() : '';
+};
 ```
 item indicates a data item.
   

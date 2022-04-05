@@ -1,11 +1,14 @@
 import { Ref, SetupContext } from 'vue';
+import { SourceItemObj } from '../auto-complete-types';
 type CustomRenderSoltsType = {
-  itemTemplate?: (item: any, index: number) => any;
-  noResultItemTemplate?: () => any;
-  searchingTemplate?: () => any;
+  itemTemplate?: (item: string | SourceItemObj, index: number) => unknown;
+  noResultItemTemplate?: () => unknown;
+  searchingTemplate?: () => unknown;
 };
-export default function useCustomTemplate(ctx: SetupContext,modelValue: Ref<string>): any {
-  const itemTemplate = (item: any, index: number) => {
+export default function useCustomTemplate(ctx: SetupContext,modelValue: Ref<string>): {
+  customRenderSolts: () => CustomRenderSoltsType;
+} {
+  const itemTemplate = (item: string | SourceItemObj, index: number) =>{
     const arr = { item, index };
     if (ctx.slots.item) {
       return ctx.slots.item(arr);
