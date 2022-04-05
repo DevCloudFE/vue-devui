@@ -1,5 +1,5 @@
 import { defineComponent, inject } from 'vue';
-import { DropdownProps, DropdownPropsKey } from '../auto-complete-types';
+import { DropdownProps, DropdownPropsKey, SourceItemObj } from '../auto-complete-types';
 import dLoading from '../../../loading/src/directive';
 export default defineComponent({
   name: 'DAutoCompleteDropdown',
@@ -18,7 +18,8 @@ export default defineComponent({
       showNoResultItemTemplate,
       latestSource,
       modelValue,
-      hoverIndex
+      hoverIndex,
+      valueParser
     } = propsData;
     const {
       disabled,
@@ -28,8 +29,11 @@ export default defineComponent({
       isSearching,
     } = propsData.props;
 
-    const onSelect =(item: any)=>{
-      if(item[disabledKey]){return;}
+    const onSelect =(item: string|SourceItemObj)=>{
+      item = valueParser.value(item);
+      if(typeof item === 'object'&&item[disabledKey]){
+        return;
+      }
       selectOptionClick(item);
     };
     return () => {
@@ -79,7 +83,7 @@ export default defineComponent({
               &&!searchStatus?.value
               &&searchList!=null
               &&searchList.value.length>0
-              &&searchList.value.map((item: { [x: string]: any },index: number)=>{
+              &&searchList.value.map((item,index)=>{
                 return (
                   <li
                     onClick={()=>onSelect(item)}
@@ -87,7 +91,7 @@ export default defineComponent({
                       'devui-dropdown-item',
                       selectedIndex.value===index
                       &&'selected',
-                      {'disabled': disabledKey && item[disabledKey]},
+                      {'disabled': disabledKey &&typeof item=== 'object' && item[disabledKey]},
                       {'devui-dropdown-bg': hoverIndex.value=== index},
                     ]}
                     title={formatter(item)}

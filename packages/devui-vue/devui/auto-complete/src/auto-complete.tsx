@@ -10,7 +10,6 @@ import './auto-complete.scss';
 import DAutoCompleteDropdown from './components/dropdown';
 import ClickOutside from '../../shared/devui-directive/clickoutside';
 import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
-
 export default defineComponent({
   name: 'DAutoComplete',
   directives: { ClickOutside },
@@ -23,6 +22,7 @@ export default defineComponent({
       width,
       delay,
       allowEmptyValueSearch,
+      appendToBody,
       formatter,
       transInputFocusEmit,
       selectValue,
@@ -31,6 +31,7 @@ export default defineComponent({
       position,
       latestSource,
       showAnimation,
+      valueParser
     } = toRefs(props);
 
     const { handleSearch, searchList, showNoResultItemTemplate, recentlyFocus } = useSearchFn(
@@ -80,14 +81,33 @@ export default defineComponent({
       modelValue,
       showNoResultItemTemplate: showNoResultItemTemplate,
       hoverIndex: hoverIndex,
+      valueParser
     });
     const origin = ref<HTMLElement>();
 
     const renderDropdown = () => {
-      return (
-        <Teleport to="body">
+      if(appendToBody.value){
+        return (
+          <Teleport to="body">
+            <Transition name={showAnimation ? 'fade' : ''}>
+              <FlexibleOverlay show-arrow origin={origin.value} position={position.value} v-model={visible.value}>
+                <div
+                  class="devui-auto-complete-menu"
+                  style={{
+                    width: `
+                      ${width.value + 'px'}
+                    `,
+                  }}>
+                  <DAutoCompleteDropdown>{customRenderSolts()}</DAutoCompleteDropdown>
+                </div>
+              </FlexibleOverlay>
+            </Transition>
+          </Teleport>
+        );
+      }else{
+        return (
           <Transition name={showAnimation ? 'fade' : ''}>
-            <FlexibleOverlay origin={origin.value} position={position.value} v-model={visible.value}>
+            <FlexibleOverlay show-arrow origin={origin.value} position={position.value} v-model={visible.value}>
               <div
                 class="devui-auto-complete-menu"
                 style={{
@@ -99,8 +119,9 @@ export default defineComponent({
               </div>
             </FlexibleOverlay>
           </Transition>
-        </Teleport>
-      );
+        );
+      }
+
     };
     return () => {
       return (
