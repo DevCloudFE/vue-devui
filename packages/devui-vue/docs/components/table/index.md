@@ -63,7 +63,7 @@ export default defineComponent({
 
 ### 表格样式
 
-:::demo
+:::demo `table-layout`参数设置表格的布局方式，目前支持`fixed`和`auto`两种类型；`striped`参数设置是否显示斑马纹；`header-bg`参数设置是否显示表头背景色；`size`参数设置表格大小；`border-type`设置表格边框样式。
 
 ```vue
 <template>
@@ -466,7 +466,7 @@ export default defineComponent({
 <template>
   <div>
     <d-button @click="handleClick">更新数据</d-button>
-    <d-table :data="emptyData">
+    <d-table :data="emptyData" :show-loading="showLoading">
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
       <d-column field="gender" header="Gender"></d-column>
@@ -481,36 +481,119 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const emptyData = ref([]);
+    const showLoading = ref(false);
     const handleClick = () => {
-      emptyData.value = [
-        {
-          firstName: 'po',
-          lastName: 'Lang',
-          gender: 'Male',
-          date: '1990/01/15',
-        },
-        {
-          firstName: 'john',
-          lastName: 'Li',
-          gender: 'Female',
-          date: '1990/01/16',
-        },
-        {
-          firstName: 'peng',
-          lastName: 'Li',
-          gender: 'Male',
-          date: '1990/01/17',
-        },
-        {
-          firstName: 'Dale',
-          lastName: 'Yu',
-          gender: 'Female',
-          date: '1990/01/18',
-        },
-      ];
+      showLoading.value = true;
+      setTimeout(() => {
+        showLoading.value = false;
+        emptyData.value = [
+          {
+            firstName: 'po',
+            lastName: 'Lang',
+            gender: 'Male',
+            date: '1990/01/15',
+          },
+          {
+            firstName: 'john',
+            lastName: 'Li',
+            gender: 'Female',
+            date: '1990/01/16',
+          },
+          {
+            firstName: 'peng',
+            lastName: 'Li',
+            gender: 'Male',
+            date: '1990/01/17',
+          },
+          {
+            firstName: 'Dale',
+            lastName: 'Yu',
+            gender: 'Female',
+            date: '1990/01/18',
+          },
+        ];
+      }, 1000);
     };
 
-    return { emptyData, handleClick };
+    return { emptyData, showLoading, handleClick };
+  },
+});
+</script>
+```
+
+:::
+
+### 固定表头
+
+:::demo `fix-header`参数可以设置是否固定表头，使之不随内容滚动。
+
+```vue
+<template>
+  <d-table :data="dataSource" table-height="200px" fix-header>
+    <d-column field="firstName" header="First Name"></d-column>
+    <d-column field="lastName" header="Last Name"></d-column>
+    <d-column field="gender" header="Gender"></d-column>
+    <d-column field="date" header="Date of birth"></d-column>
+  </d-table>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const dataSource = ref([
+      {
+        firstName: 'Mark',
+        lastName: 'Otto',
+        date: '1990/01/11',
+        gender: 'Male',
+      },
+      {
+        firstName: 'Jacob',
+        lastName: 'Thornton',
+        gender: 'Female',
+        date: '1990/01/12',
+      },
+      {
+        firstName: 'Danni',
+        lastName: 'Chen',
+        gender: 'Male',
+        date: '1990/01/13',
+      },
+      {
+        firstName: 'green',
+        lastName: 'gerong',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+      {
+        firstName: 'po',
+        lastName: 'lang',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+      {
+        firstName: 'john',
+        lastName: 'li',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+      {
+        firstName: 'peng',
+        lastName: 'li',
+        gender: 'Female',
+        date: '1990/01/14',
+      },
+      {
+        firstName: 'Danni',
+        lastName: 'Yu',
+        gender: 'Female',
+        date: '1990/01/14',
+      },
+    ]);
+
+    return { dataSource };
   },
 });
 </script>
@@ -520,23 +603,23 @@ export default defineComponent({
 
 ### 固定列
 
-:::demo
+:::demo 当表格列过多时，固定列有利于用户在左右滑动时，能够便捷的进行数据定位与对比，通过`fixed-left`和`fixed-right`来配置。
 
 ```vue
 <template>
   <div>
     <d-button @click="handleClick">更新数据</d-button>
-    <d-table :data="emptyData" :scrollable="true">
-      <d-column field="firstName" header="First Name" :order="2" :minWidth="100"></d-column>
-      <d-column field="lastName" header="Last Name" :order="3"></d-column>
-      <d-column field="gender" header="Gender" :order="5"></d-column>
-      <d-column field="date" header="Date of birth" :order="4"></d-column>
-      <d-column field="address" header="Address" :order="6"></d-column>
-      <d-column field="occupation" header="Occupation" :order="7"></d-column>
-      <d-column field="occupation" header="Occupation" :order="7"></d-column>
-      <d-column field="occupation" header="Occupation" :order="7"></d-column>
-      <d-column field="occupation" header="Occupation" :order="7" fixedRight="0px"></d-column>
-      <d-column field="idNo" header="ID Card Number" :order="1"></d-column>
+    <d-table :data="emptyData" table-layout="auto">
+      <d-column field="idNo" header="ID Card Number" fixed-left="0px"></d-column>
+      <d-column field="firstName" header="First Name"></d-column>
+      <d-column field="lastName" header="Last Name"></d-column>
+      <d-column field="gender" header="Gender"></d-column>
+      <d-column field="date" header="Date of birth"></d-column>
+      <d-column field="address" header="Address"></d-column>
+      <d-column field="occupation" header="Occupation"></d-column>
+      <d-column field="occupation" header="Occupation"></d-column>
+      <d-column field="occupation" header="Occupation"></d-column>
+      <d-column field="occupation" header="Occupation" fixed-right="0px"></d-column>
     </d-table>
   </div>
 </template>
@@ -609,7 +692,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="baseTableData" :span-method="spanMethod" border-type="bordered">
+  <d-table :data="dataSource" :span-method="spanMethod" border-type="bordered">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -622,7 +705,7 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const baseTableData = ref([
+    const dataSource = ref([
       {
         firstName: 'Mark',
         lastName: 'Otto',
@@ -660,7 +743,7 @@ export default defineComponent({
       }
     };
 
-    return { baseTableData, spanMethod };
+    return { dataSource, spanMethod };
   },
 });
 </script>
@@ -670,11 +753,11 @@ export default defineComponent({
 
 ### 表头分组
 
-:::demo
+:::demo `d-column`嵌套`d-column`即可实现表头分组。
 
 ```vue
 <template>
-  <d-table :data="baseTableData" border-type="bordered">
+  <d-table :data="dataSource" border-type="bordered" header-bg>
     <d-column field="name" header="Name">
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
@@ -689,7 +772,7 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const baseTableData = ref([
+    const dataSource = ref([
       {
         firstName: 'Mark',
         lastName: 'Otto',
@@ -716,7 +799,7 @@ export default defineComponent({
       },
     ]);
 
-    return { baseTableData };
+    return { dataSource };
   },
 });
 </script>
@@ -736,8 +819,8 @@ export default defineComponent({
 | table-width           | `string`            | --      | 可选，表格宽度                                                             |
 | table-height          | `string`            | --      | 可选，表格高度                                                             |
 | row-hovered-highlight | `boolean`           | true    | 可选，鼠标在该行上时，高亮该行                                             | [表格样式](#表格样式)     |
-| fix-header            | `boolean`           | false   | 可选，固定头部                                                             |
-| show-loading          | `boolean`           | false   | 可选，显示加载动画                                                         |
+| fix-header            | `boolean`           | false   | 可选，固定头部                                                             | [固定表头](#固定表头)     |
+| show-loading          | `boolean`           | false   | 可选，显示加载动画                                                         | [空数据模板](#空数据模板) |
 | header-bg             | `boolean`           | false   | 可选，头部背景                                                             | [表格样式](#表格样式)     |
 | table-layout          | `'fixed' \| 'auto'` | 'fixed' | 可选，表格布局，可选值为'auto'                                             | [表格样式](#表格样式)     |
 | span-method           | `SpanMethod`        | --      | 可选，合并单元格的计算方法                                                 | [合并单元格](#合并单元格) |
@@ -751,18 +834,18 @@ export default defineComponent({
 
 ### d-column 参数
 
-| 参数名     | 类型                                     | 默认值                               | 说明                                        | 跳转 Demo             |
-| :--------- | :--------------------------------------- | :----------------------------------- | :------------------------------------------ | :-------------------- |
-| header     | `string`                                 | --                                   | 对应列的标题                                | [基本用法](#基本用法) |
-| field      | `string`                                 | --                                   | 对应列内容的字段名                          | [基本用法](#基本用法) |
-| type       | `ColumnType`                             | ''                                   | 可选，列的类型，设置`checkable`会显示多选框 | [表格多选](#表格多选) |
-| width      | `string \| number`                       | --                                   | 可选，对应列的宽度，单位`px`                |
-| min-width  | `string \| number`                       | --                                   | 可选，对应列的最小宽度，单位`px`            |
-| sortable   | `boolean`                                | false                                | 可选，对行数据按照该列的顺序进行排序        |
-| fixedLeft  | `string`                                 | --                                   | 可选，该列固定到左侧的距离，如：'100px'     | [固定列](#固定列)     |
-| fixedRight | `string`                                 | --                                   | 可选，该列固定到右侧的距离，如：'100px'     | [固定列](#固定列)     |
-| formatter  | `Function`                               | --                                   | 可选，对应列的所有单元格的格式              |
-| compareFn  | `(field: string, a: T, b: T) => boolean` | (field, a, b) => a[field] > b[field] | 可选，用于排序的比较函数                    |
+| 参数名     | 类型               | 默认值                               | 说明                                        | 跳转 Demo             |
+| :--------- | :----------------- | :----------------------------------- | :------------------------------------------ | :-------------------- |
+| header     | `string`           | --                                   | 可选，对应列的标题                          | [基本用法](#基本用法) |
+| field      | `string`           | --                                   | 可选，对应列内容的字段名                    | [基本用法](#基本用法) |
+| type       | `ColumnType`       | ''                                   | 可选，列的类型，设置`checkable`会显示多选框 | [表格多选](#表格多选) |
+| width      | `string \| number` | --                                   | 可选，对应列的宽度，单位`px`                |
+| min-width  | `string \| number` | --                                   | 可选，对应列的最小宽度，单位`px`            |
+| sortable   | `boolean`          | false                                | 可选，对行数据按照该列的顺序进行排序        |
+| fixedLeft  | `string`           | --                                   | 可选，该列固定到左侧的距离，如：'100px'     | [固定列](#固定列)     |
+| fixedRight | `string`           | --                                   | 可选，该列固定到右侧的距离，如：'100px'     | [固定列](#固定列)     |
+| formatter  | `Formatter`        | --                                   | 可选，格式化列内容                          |
+| compareFn  | `CompareFn`        | (field, a, b) => a[field] > b[field] | 可选，用于排序的比较函数                    |
 
 ### d-column 插槽
 
@@ -800,4 +883,16 @@ type BorderType = '' | 'bordered' | 'borderless';
 
 ```ts
 type ColumnType = 'checkable' | '';
+```
+
+#### Formatter
+
+```ts
+type Formatter = (row: any, column: any, cellValue: any, rowIndex: number) => VNode;
+```
+
+#### CompareFn
+
+```ts
+type CompareFn<T = any> = (field: string, a: T, b: T) => boolean;
 ```

@@ -7,10 +7,8 @@ export default defineComponent({
     const parent = inject(TABLE_TOKEN);
     const columns = parent?.store.states._columns;
     return () =>
-      parent?.props.tableLayout === 'fixed' ? (
+      parent?.props.fixHeader ? (
         <colgroup>
-          {/* 如果是 checkable，那么需要指定 col */}
-          {parent.props.checkable ? <col width={36} /> : null}
           {columns?.value.map((column, index) => {
             return <col key={index} width={column.realWidth}></col>;
           })}
