@@ -1,5 +1,5 @@
 import { defineComponent, PropType, provide, renderSlot, toRefs, useSlots, watch } from 'vue';
-import type { ITreeNode } from './core/use-tree-types';
+import type { ITreeNode, IUseTree } from './core/use-tree-types';
 import DTreeNode from './components/tree-node';
 import DTreeNodeContent from './components/tree-node-content';
 import DTreeNodeToggle from './components/tree-node-toggle';
@@ -16,21 +16,30 @@ export default defineComponent({
     data: {
       type: Object as PropType<ITreeNode[]>,
       default: []
-    }
+    },
+    plugins: {
+      type: Object as PropType<IUseTree[]>,
+      default: []
+    },
   },
   setup(props, { slots }) {
     const { data } = toRefs(props);
 
     const treeFactory = useTree(
       data.value,
-      [useSelect, useCheck, useOperate]
+      [
+        useSelect(),
+        useCheck({
+          checkStrategy: 'none',
+        }),
+        useOperate(),
+      ]
     );
 
     const {
       setTree,
       getExpendedTree,
       toggleNode,
-      insertBefore,
     } = treeFactory;
 
     // 外部同步内部
