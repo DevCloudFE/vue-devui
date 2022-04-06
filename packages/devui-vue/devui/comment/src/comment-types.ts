@@ -1,6 +1,11 @@
 import type { PropType, ExtractPropTypes } from 'vue';
+
 export interface IcommentProps {
-  [prop: string]: any;
+  actions?: [];
+  author?: [];
+  avatar?: [];
+  content?: [];
+  datetime?: [];
 }
 
 // TODO: props 参数的类型需要明确定义
