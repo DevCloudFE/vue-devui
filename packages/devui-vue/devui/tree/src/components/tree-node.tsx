@@ -15,7 +15,7 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const { data } = toRefs(props);
-    const { selectNode, toggleCheckNode } = inject(USE_TREE_TOKEN);
+    const { selectNode, toggleCheckNode, toggleNode } = inject(USE_TREE_TOKEN);
 
     const {
       nodeClass,
@@ -32,7 +32,11 @@ export default defineComponent({
           <span class={nodeVLineClass.value} style={nodeVLineStyle.value}></span>
           <div class={nodeContentClass.value} onClick={() => { selectNode(data.value); }}>
             <span class={nodeHLineClass.value}></span>
-            <DTreeNodeToggle data={data.value} />
+            {
+              slots.icon
+              ? renderSlot(useSlots(), 'icon', { nodeData: data, toggleNode })
+              : <DTreeNodeToggle data={data.value} />
+            }
             <div class="devui-tree-node__content--value-wrapper" style={{ height: `${NODE_HEIGHT}px`}}>
               <Checkbox
                 key={data.value?.id}

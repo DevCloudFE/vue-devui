@@ -2,6 +2,7 @@ import { defineComponent, PropType, provide, renderSlot, toRefs, useSlots, watch
 import type { ITreeNode } from './core/use-tree-types';
 import DTreeNode from './components/tree-node';
 import DTreeNodeContent from './components/tree-node-content';
+import DTreeNodeToggle from './components/tree-node-toggle';
 import useTree from './core/use-tree';
 import useCheck from './core/use-check';
 import useSelect from './core/use-select';
@@ -27,6 +28,7 @@ export default defineComponent({
     const {
       setTree,
       getExpendedTree,
+      toggleNode,
     } = treeFactory;
 
     // 外部同步内部
@@ -44,11 +46,14 @@ export default defineComponent({
                   treeFactory: treeFactory, nodeData: treeNode
                 })
               : <DTreeNode data={treeNode}>
-                  {
-                    slots.content
-                    ? renderSlot(useSlots(), 'content', { nodeData: treeNode })
-                    : <DTreeNodeContent data={treeNode} />
-                  }
+                  {{
+                    default: () => slots.content
+                      ? renderSlot(useSlots(), 'content', { nodeData: treeNode })
+                      : <DTreeNodeContent data={treeNode} />,
+                    icon: () => slots.icon
+                      ? renderSlot(useSlots(), 'icon', { nodeData: treeNode, toggleNode })
+                      : <DTreeNodeToggle data={treeNode} />,
+                  }}
                 </DTreeNode>
             ))
           }
