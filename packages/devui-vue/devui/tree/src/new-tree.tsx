@@ -8,6 +8,7 @@ import useCheck from './core/use-check';
 import useSelect from './core/use-select';
 import { USE_TREE_TOKEN } from './const';
 import './tree.scss';
+import useOperate from './core/use-operate';
 
 export default defineComponent({
   name: 'DNewTree',
@@ -22,13 +23,14 @@ export default defineComponent({
 
     const treeFactory = useTree(
       data.value,
-      [useSelect, useCheck]
+      [useSelect, useCheck, useOperate]
     );
 
     const {
       setTree,
       getExpendedTree,
       toggleNode,
+      insertBefore,
     } = treeFactory;
 
     // 外部同步内部
