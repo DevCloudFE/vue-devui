@@ -69,3 +69,5 @@ export interface IUseToggle {
 export type IUseTree = {
   treeData: Ref<IInnerTreeNode[]>
 } & IUseCore & IUseToggle & IUseSelect & IUseCheck & IUseDisable & IUseOperate;
+
+export type CheckStrategy = 'upward' | 'downward' | 'both' | 'none';
