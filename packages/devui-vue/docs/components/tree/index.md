@@ -1066,8 +1066,32 @@ export default defineComponent({
           {
             label: 'Leaf node 1-2',
             id: 'node-1-2',
-          }
-        ]
+            children: [
+              {
+                label: 'Leaf node  1-2-1',
+                id: 'node-1-2-1',
+              },
+              {
+                label: 'Parent node 1-2-2',
+                id: 'node-1-2-2',
+                children: [
+                  {
+                    label: 'Leaf node 1-2-2-1',
+                    id: 'node-1-2-2-1'
+                  }
+                ]
+              },
+              {
+                label: 'Parent node 1-2-3',
+                id: 'node-1-2-3',
+              }
+            ]
+          },
+          {
+            label: 'Lead node 1-3',
+            id: 'node-1-3',
+          },
+        ],
       },
       {
         label: 'Leaf node 2',

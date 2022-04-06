@@ -9,12 +9,13 @@ export default function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
     return data.value.find((item) => item.id === node.id).level;
   }
   
-  const getChildren = (node: ITreeNode): IInnerTreeNode[] => {
+  const getChildren = (node: ITreeNode, expanded = false): IInnerTreeNode[] => {
     let result = [];
-    const startIndex = data.value.findIndex((item) => item.id === node.id);
+    const treeData = expanded ? getExpendedTree() : data;
+    const startIndex = treeData.value.findIndex((item) => item.id === node.id);
 
-    for (let i = startIndex + 1; i < data.value.length && getLevel(node) < data.value[i].level; i++) {
-      result.push(data.value[i]);
+    for (let i = startIndex + 1; i < treeData.value.length && getLevel(node) < treeData.value[i].level; i++) {
+      result.push(treeData.value[i]);
     }
     
     return result;
