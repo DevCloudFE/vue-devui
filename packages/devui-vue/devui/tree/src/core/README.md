@@ -22,7 +22,7 @@ const data = [
   { label: 'Leaf node 2' }
 ];
 
-const { getExpendedTree } = useTree(data, [useSelect, useCheck]);
+const { getExpendedTree } = useTree(data, [useSelect(), useCheck()]);
 ```
 
 ## API
