@@ -24,6 +24,16 @@ export default defineComponent({
     };
 
     return () => {
+      const inputProps = {
+        size: props.size,
+        disabled: props.disabled,
+        autoFocus: props.autoFocus,
+        modelValue: keywords.value,
+        placeholder: props.placeholder,
+        cssClass: props.cssClass,
+        onKeydown: onInputKeydown,
+        "onUpdate:modelValue": onInputUpdate,
+      };
       return (
         <div class={rootClasses.value}>
           {props.iconPosition === 'left' && (
@@ -31,16 +41,7 @@ export default defineComponent({
               <d-icon name='search' size='inherit' key='search'></d-icon>
             </div>
           )}
-          <DInput
-            size={props.size}
-            disabled={props.disabled}
-            autoFocus={props.autoFocus}
-            modelValue={keywords.value}
-            maxLength={props.maxLength}
-            placeholder={props.placeholder}
-            cssClass={props.cssClass}
-            onKeydown={onInputKeydown}
-            onUpdate:modelValue={onInputUpdate}></DInput>
+          <DInput {...inputProps}></DInput>
           {clearIconShow.value && (
             <div class='devui-search__clear' onClick={onClearHandle}>
               <d-icon name='close' size='inherit' key='close'></d-icon>

@@ -220,18 +220,6 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/66343210?v=4',
       homepage: 'https://github.com/Denver-Ning'
     },
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/47918504?v=4',
-      homepage: 'https://github.com/banlify'
-    },
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/23261843?v=4',
-      homepage: 'https://github.com/to0simple'
-    },
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/61737780?v=4',
-      homepage: 'https://github.com/asdlml6'
-    },
   ],
   cascader: [
     {
@@ -383,8 +371,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://gitee.com/micd'
     },
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/413/1241369_sise209_1628127437.png!avatar200',
-      homepage: 'https://gitee.com/sise209'
+      avatar: 'https://avatars.githubusercontent.com/u/30541930?v=4',
+      homepage: 'https://github.com/duqingyu'
     },
   ],
   card: [
@@ -424,6 +412,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     },
   ],
   'image-preview': [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/30541930?v=4',
+      homepage: 'https://github.com/duqingyu'
+    },
     {
       avatar: 'https://avatars.githubusercontent.com/u/10958003?v=4',
       homepage: 'https://github.com/liuxdi'

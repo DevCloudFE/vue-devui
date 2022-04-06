@@ -1,9 +1,8 @@
-import { defineComponent, withModifiers, computed, ref, SetupContext, reactive, watch } from 'vue';
-import { editableSelectProps, EditableSelectProps } from './editable-select-types';
+import { defineComponent, withModifiers, computed, ref, SetupContext, watch } from 'vue';
+import { editableSelectProps, EditableSelectProps, OptionObjectItem } from './editable-select-types';
 import clickOutside from '../../shared/devui-directive/clickoutside';
 import { className } from '../src/utils/index';
 import './editable-select.scss';
-import { OptionObjectItem } from './editable-select-type';
 import { userFilterOptions } from './composables/use-filter-options';
 import { useInput } from './composables/use-input';
 import { useLazyLoad } from './composables/use-lazy-load';
@@ -48,7 +47,7 @@ export default defineComponent({
        * filterOption等于true、function、undefined代表本地搜索
        * */
 
-      let text: string = '';
+      let text = '';
       // 不传filterOption时默认为true
       if (props.filterOption !== false && !filteredOptions.value.length) {
         text = '找不到相关记录';

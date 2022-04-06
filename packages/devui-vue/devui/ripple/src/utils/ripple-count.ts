@@ -7,16 +7,16 @@ export function getRippleCount(el: HTMLElement): number {
   return parseInt(el.dataset[RIPPLE_COUNT] ?? '0', 10);
 }
 
-export function incrementRippleCount(el: HTMLElement) {
+export function incrementRippleCount(el: HTMLElement): void {
   const count = getRippleCount(el);
   setRippleCount(el, count + 1);
 }
 
-export function decrementRippleCount(el: HTMLElement) {
+export function decrementRippleCount(el: HTMLElement): void {
   const count = getRippleCount(el);
   setRippleCount(el, count - 1);
 }
 
-export function deleteRippleCount(el: HTMLElement) {
+export function deleteRippleCount(el: HTMLElement): void {
   delete el.dataset[RIPPLE_COUNT];
 }

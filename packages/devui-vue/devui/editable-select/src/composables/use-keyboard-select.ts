@@ -1,5 +1,5 @@
 import { ref, nextTick, ComputedRef, Ref } from 'vue';
-import { OptionObjectItem } from '../editable-select-type';
+import { OptionObjectItem } from '../editable-select-types';
 interface useKeyboardSelectReturnType {
   handleKeydown: (event: KeyboardEvent) => void;
   hoverIndex: Ref<number>;

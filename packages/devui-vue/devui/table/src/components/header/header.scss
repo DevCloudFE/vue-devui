@@ -6,6 +6,7 @@
       font-size: $devui-font-size-card-title;
       color: $devui-text;
       font-weight: 700;
+      border: none;
       background-color: $devui-base-bg;
 
       th {
@@ -19,7 +20,6 @@
       position: relative;
       display: flex;
       align-items: center;
-      padding-left: 2px;
       padding-right: 8px;
 
       .title {

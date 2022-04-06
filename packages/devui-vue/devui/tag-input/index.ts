@@ -1,9 +1,7 @@
 import type { App } from 'vue';
 import TagInput from './src/tag-input';
 
-TagInput.install = function (app: App) {
-  app.component(TagInput.name, TagInput);
-};
+export * from './src/tag-input-types';
 
 export { TagInput };
 
@@ -12,6 +10,6 @@ export default {
   category: '数据录入',
   status: '100%',
   install(app: App): void {
-    app.use(TagInput as any);
+    app.component(TagInput.name, TagInput);
   }
 };

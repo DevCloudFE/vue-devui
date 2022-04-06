@@ -1,9 +1,7 @@
 import type { App } from 'vue';
 import Result from './src/result';
 
-Result.install = function(app: App): void {
-  app.component(Result.name, Result);
-};
+export * from './src/result-types';
 
 export { Result };
 
@@ -12,6 +10,6 @@ export default {
   category: '反馈',
   status: '100%',
   install(app: App): void {
-    app.use(Result as any);
+    app.component(Result.name, Result);
   }
 };
