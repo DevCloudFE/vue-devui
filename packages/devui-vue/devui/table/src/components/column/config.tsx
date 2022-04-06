@@ -33,4 +33,16 @@ export const cellMap = {
       return rowIndex + 1;
     },
   },
+  default: {
+    renderHeader(column: Column): VNode {
+      return h('span', { class: 'title' }, column.header ?? '');
+    },
+    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): VNode {
+      const value = column.field ? rowData[column.field] : '';
+      if (column.formatter) {
+        return column.formatter(rowData, column, value, rowIndex);
+      }
+      return value?.toString?.() ?? '';
+    },
+  },
 };

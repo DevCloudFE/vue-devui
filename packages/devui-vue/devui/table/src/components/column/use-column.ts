@@ -6,7 +6,7 @@ import { TableStore } from '../../store/store-types';
 import { formatWidth, formatMinWidth } from '../../utils';
 import { cellMap } from './config';
 
-export function createColumn(props: ToRefs<TableColumnProps>, templates: Slots): Column {
+export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Column {
   const {
     type,
     field,
@@ -26,20 +26,18 @@ export function createColumn(props: ToRefs<TableColumnProps>, templates: Slots):
   const column: Column = reactive({});
   column.type = type.value;
 
-  function defaultRenderHeader(columnItem: Column) {
-    return h('span', { class: 'title' }, columnItem.header ?? '');
+  function renderHeader(columnItem: Column, store: TableStore) {
+    if (slots.header) {
+      return slots.header(columnItem);
+    }
+    return cellMap[type.value || 'default'].renderHeader(columnItem, store);
   }
 
-  function defaultRenderCell(rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) {
-    const value = columnItem.field ? rowData[columnItem.field] : '';
-    if (templates.default) {
-      return templates.default(rowData);
+  function renderCell(rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) {
+    if (slots.default) {
+      return slots.default({ row: rowData, rowIndex });
     }
-    if (columnItem.formatter) {
-      return columnItem.formatter(rowData, columnItem, value, rowIndex);
-    }
-
-    return value?.toString?.() ?? '';
+    return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex);
   }
 
   watch(
@@ -88,11 +86,11 @@ export function createColumn(props: ToRefs<TableColumnProps>, templates: Slots):
 
   // 基础渲染功能
   onBeforeMount(() => {
-    column.renderHeader = type.value ? cellMap[type.value].renderHeader : defaultRenderHeader;
-    column.renderCell = type.value ? cellMap[type.value].renderCell : defaultRenderCell;
+    column.renderHeader = renderHeader;
+    column.renderCell = renderCell;
     column.formatter = formatter?.value;
-    column.customFilterTemplate = templates.customFilterTemplate;
-    column.subColumns = templates.subColumns;
+    column.customFilterTemplate = slots.customFilterTemplate;
+    column.subColumns = slots.subColumns;
   });
 
   return column;
