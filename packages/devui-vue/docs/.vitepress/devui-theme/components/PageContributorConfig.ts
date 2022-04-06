@@ -159,7 +159,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   drawer: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/15092594?v=4',
       homepage: 'https://github.com/lnzhangsong'
     },
   ],
