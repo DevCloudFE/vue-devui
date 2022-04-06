@@ -1,6 +1,4 @@
 import { mount } from '@vue/test-utils';
-import { ReadTip, } from '../index';
-import { nextTick } from 'vue';
 import TipsTemplate from '../src/read-tip-template';
 
 
@@ -27,15 +25,15 @@ describe('read-tip test', () => {
       title: 'Name: Jack',
       content: 'This is Jack\'s profile',
     };
-    const wrapper = mount(TipsTemplate, {
+    mount(TipsTemplate, {
       props: {
         defaultTemplateProps
       }
     });
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain(defaultTemplateProps.title);
+    expect(document.querySelector(defaultTemplateProps.selector)?.innerHTML).toContain(defaultTemplateProps.title);
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain(defaultTemplateProps.content);
+    expect(document.querySelector(defaultTemplateProps.selector)?.innerHTML).toContain(defaultTemplateProps.content);
 
 
   });
@@ -53,13 +51,14 @@ describe('read-tip test', () => {
         title: 'Name: Jack',
         content: 'This is Jack\'s profile',
       };
-      const wrapper = mount(TipsTemplate, {
+      mount(TipsTemplate, {
         props: {
           defaultTemplateProps
         }
       });
 
-      expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain('read-tip-container ' + defaultTemplateProps.position);
+      expect(document.querySelector(defaultTemplateProps.selector)?.innerHTML)
+        .toContain('read-tip-container ' + defaultTemplateProps.position);
 
     });
   });
@@ -74,17 +73,17 @@ describe('read-tip test', () => {
       title: 'Name: Jack',
       content: 'This is Jack\'s profile',
     };
-    const wrapper = mount(TipsTemplate, {
+    mount(TipsTemplate, {
       props: {
         defaultTemplateProps
       }
     });
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toBe('');
+    expect(document.querySelector(defaultTemplateProps.selector)?.innerHTML).toBe('');
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).not.toContain(defaultTemplateProps.title);
+    expect(document.querySelector(defaultTemplateProps.selector)?.innerHTML).not.toContain(defaultTemplateProps.title);
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).not.toContain(defaultTemplateProps.content);
+    expect(document.querySelector(defaultTemplateProps.selector)?.innerHTML).not.toContain(defaultTemplateProps.content);
 
 
   });
@@ -98,7 +97,7 @@ describe('read-tip test', () => {
       selector: '#readtip-target',
       contentTemplate: true
     };
-    const wrapper = mount(TipsTemplate, {
+    mount(TipsTemplate, {
       props: {
         defaultTemplateProps
       },
@@ -107,24 +106,23 @@ describe('read-tip test', () => {
       }
     });
 
-    expect(document.querySelector(defaultTemplateProps.selector).innerHTML).toContain('<div> I am test </div>');
+    expect(document.querySelector(defaultTemplateProps.selector)?.innerHTML).toContain('<div> I am test </div>');
 
 
   });
 
   it('read-tip dataFn', async () => {
     // 基础用法
-
+    function getDataFromDB({ element, rule }) {
+      return { content: element.innerHTML, title: rule.key };
+    }
     const defaultTemplateProps = {
       appendToBody: false,
       selector: '#readtip-target',
       dataFn: getDataFromDB,
       key: 'GetData'
     };
-    function getDataFromDB({ element, rule }) {
-      return { content: element.innerHTML, title: rule.key };
-    }
-    const wrapper = mount(TipsTemplate, {
+    mount(TipsTemplate, {
       props: {
         defaultTemplateProps
       },
@@ -135,6 +133,9 @@ describe('read-tip test', () => {
   });
 
   it('read-tip overlayClassName', async () => {
+    function getDataFromDB({ element, rule }) {
+      return { content: element.innerHTML, title: rule.key };
+    }
     // 基础用法
     const defaultTemplateProps = {
       appendToBody: false,
@@ -143,10 +144,7 @@ describe('read-tip test', () => {
       key: 'GetData',
       overlayClassName: 'red'
     };
-    function getDataFromDB({ element, rule }) {
-      return { content: element.innerHTML, title: rule.key };
-    }
-    const wrapper = mount(TipsTemplate, {
+    mount(TipsTemplate, {
       props: {
         defaultTemplateProps
       },
