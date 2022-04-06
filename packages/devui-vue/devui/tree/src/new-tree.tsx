@@ -1,4 +1,4 @@
-import { defineComponent, PropType, provide, toRefs, watch } from 'vue';
+import { defineComponent, PropType, provide, renderSlot, toRefs, useSlots, watch } from 'vue';
 import type { ITreeNode } from './core/use-tree-types';
 import DTreeNode from './components/tree-node';
 import useTree from './core/use-tree';
@@ -15,7 +15,7 @@ export default defineComponent({
       default: []
     }
   },
-  setup(props) {
+  setup(props, { slots }) {
     const { data } = toRefs(props);
 
     const treeFactory = useTree(
@@ -37,7 +37,13 @@ export default defineComponent({
       return (
         <div class="devui-tree">
           {
-            getExpendedTree().value.map(treeNode => <DTreeNode data={treeNode} />)
+            getExpendedTree().value.map(treeNode => (
+              slots.default
+              ? renderSlot(useSlots(), 'default', {
+                  treeFactory: treeFactory, nodeData: treeNode
+                })
+              : <DTreeNode data={treeNode} />
+            ))
           }
         </div>
       );
