@@ -23,6 +23,21 @@ export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
   }, []);
 }
 
+/**
+ * 用于生成内部使用的扁平结构，对树的所有操作都是在操作这个内部的扁平结构，
+ * 该数据一旦发生变化，树组件的 UI 即相应变化。
+ * 
+ * @param tree 原始嵌套结构的树数据
+ * @param key 子节点key，默认为'children'
+ * @returns 扁平结构的树数据
+ * 
+ * 将嵌套结构拍平之后，增加了
+ * - 'id'：唯一标识一个树节点
+ * - 'parentId'：父节点
+ * - 'level'：所属的节点层级
+ * - 'isLeaf'：是否是叶子节点，用于决定是否渲染展开/收起按钮
+ * - 'idType'(没有传入 id 的节点会生成一个随机的 id，idType 用来标识 id 是否是随机生成的)
+ */
 export function generateInnerTree(
   tree: ITreeNode[],
   key = 'children',

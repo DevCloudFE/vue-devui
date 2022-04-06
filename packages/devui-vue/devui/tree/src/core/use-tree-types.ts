@@ -51,7 +51,7 @@ export interface IUseDisable {
 }
 
 export interface IUseOperate {
-  insertBefore: (parentNode: ITreeNode, node: ITreeNode, referenceNode: ITreeNode, cut: boolean) => void;
+  insertBefore: (parentNode: ITreeNode, node: ITreeNode, referenceNode: ITreeNode) => void;
   removeNode: (node: ITreeNode) => void;
   editNode: (node: ITreeNode, label: string) => void;
 }
