@@ -1,6 +1,7 @@
 import { defineComponent, PropType, provide, renderSlot, toRefs, useSlots, watch } from 'vue';
 import type { ITreeNode } from './core/use-tree-types';
 import DTreeNode from './components/tree-node';
+import DTreeNodeContent from './components/tree-node-content';
 import useTree from './core/use-tree';
 import useCheck from './core/use-check';
 import useSelect from './core/use-select';
@@ -42,7 +43,13 @@ export default defineComponent({
               ? renderSlot(useSlots(), 'default', {
                   treeFactory: treeFactory, nodeData: treeNode
                 })
-              : <DTreeNode data={treeNode} />
+              : <DTreeNode data={treeNode}>
+                  {
+                    slots.content
+                    ? renderSlot(useSlots(), 'content', { nodeData: treeNode })
+                    : <DTreeNodeContent data={treeNode} />
+                  }
+                </DTreeNode>
             ))
           }
         </div>

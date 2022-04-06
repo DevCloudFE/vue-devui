@@ -1,8 +1,9 @@
-import { defineComponent, inject, PropType, toRefs } from 'vue';
+import { defineComponent, inject, PropType, renderSlot, toRefs, useSlots } from 'vue';
 import { NODE_HEIGHT, USE_TREE_TOKEN } from '../const';
 import { IInnerTreeNode } from '../core/use-tree-types';
 import DTreeNodeToggle from './tree-node-toggle';
 import { Checkbox } from '../../../checkbox';
+import DTreeNodeContent from './tree-node-content';
 import useTreeNode from './use-tree-node';
 
 export default defineComponent({
@@ -12,7 +13,7 @@ export default defineComponent({
       type: Object as PropType<IInnerTreeNode>,
     },
   },
-  setup(props) {
+  setup(props, { slots }) {
     const { data } = toRefs(props);
     const { selectNode, toggleCheckNode } = inject(USE_TREE_TOKEN);
 
@@ -20,7 +21,6 @@ export default defineComponent({
       nodeClass,
       nodeStyle,
       nodeContentClass,
-      nodeTitleClass,
       nodeVLineClass,
       nodeVLineStyle,
       nodeHLineClass,
@@ -41,7 +41,11 @@ export default defineComponent({
                 onUpdate:modelValue={() => { toggleCheckNode(data.value); }}
                 onClick={(event: MouseEvent) => { event.stopPropagation(); }}
               />
-              <span class={nodeTitleClass.value}>{data.value?.label}</span>
+              {
+                slots.default
+                ? renderSlot(useSlots(), 'default', { nodeData: data })
+                : <DTreeNodeContent data={data} />
+              }
             </div>
           </div>
         </div>
