@@ -67,7 +67,6 @@ $keyframe-blue: #5e7ce0;
   .devui-tree-node__content--value-wrapper {
     display: inline-flex;
     align-items: center;
-    height: 30px;
     width: 100%;
 
     .devui-tree-node_loading {
@@ -339,4 +338,27 @@ $keyframe-blue: #5e7ce0;
   color: $devui-disabled-text !important;
   cursor: not-allowed !important;
   background-color: transparent !important;
+}
+
+.devui-tree-node {
+  font-size: 0;
+}
+
+.devui-tree-node, .devui-tree-node__content {
+  position: relative;
+}
+
+.devui-tree-node__vline {
+  width: 1px;
+  background-color: $devui-dividing-line;
+  position: absolute;
+}
+
+.devui-tree-node__hline {
+  width: 8px;
+  height: 1px;
+  background-color: $devui-dividing-line;
+  position: absolute;
+  left: -14px;
+  top: 50%;
 }
