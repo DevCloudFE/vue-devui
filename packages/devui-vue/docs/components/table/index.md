@@ -2,28 +2,22 @@
 
 展示行列数据。
 
-### 何时使用
+#### 何时使用
 
 1. 当有大量结构化的数据需要展现时；
 2. 当需要对数据进行排序、过滤、自定义操作等复杂行为时。
 
 ### 基本用法
 
-:::demo 简单表格，`d-table`组件上的`data`属性传入要展示的数据，`d-table-column`组件上通过`field`传入对应列内容的字段名，`header`传入对应列的标题。
+:::demo 简单表格，`d-table`组件上的`data`属性传入要展示的数据，`d-column`组件上通过`field`传入对应列内容的字段名，`header`传入对应列的标题。
 
 ```vue
 <template>
   <d-table :data="baseTableData">
-    <d-column type="index"></d-column>
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
     <d-column field="date" header="Date of birth"></d-column>
-    <d-column header="Operation">
-      <template #default="scope">
-        <d-button @click="handleClick(scope)">编辑</d-button>
-      </template>
-    </d-column>
   </d-table>
 </template>
 
@@ -58,11 +52,8 @@ export default defineComponent({
         date: '1990/01/14',
       },
     ]);
-    const handleClick = (scope) => {
-      console.log(scope);
-    };
 
-    return { baseTableData, handleClick };
+    return { baseTableData };
   },
 });
 </script>
@@ -271,6 +262,195 @@ export default defineComponent({
     };
 
     return { tableRef, data, handleClick };
+  },
+});
+</script>
+```
+
+:::
+
+### 索引列
+
+:::demo 通过添加一个`d-column`并且设置`type`参数为`index`即可给表格添加索引。索引列的表头默认展示`#`，可通过`header`参数传入指定内容。
+
+```vue
+<template>
+  <div>
+    <d-table :data="data">
+      <d-column type="index"></d-column>
+      <d-column field="firstName" header="First Name"></d-column>
+      <d-column field="lastName" header="Last Name"></d-column>
+      <d-column field="gender" header="Gender"></d-column>
+      <d-column field="date" header="Date of birth"></d-column>
+    </d-table>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const data = ref([
+      {
+        firstName: 'po',
+        lastName: 'Lang',
+        gender: 'Male',
+        date: '1990/01/15',
+      },
+      {
+        firstName: 'john',
+        lastName: 'Li',
+        gender: 'Female',
+        date: '1990/01/16',
+      },
+      {
+        firstName: 'peng',
+        lastName: 'Li',
+        gender: 'Male',
+        date: '1990/01/17',
+      },
+      {
+        firstName: 'Dale',
+        lastName: 'Yu',
+        gender: 'Female',
+        date: '1990/01/18',
+      },
+    ]);
+
+    return { data };
+  },
+});
+</script>
+```
+
+:::
+
+### 自定义列
+
+:::demo 通过`d-column`子组件提供的`default`插槽可以实现自定义列，插槽提供`row`和`rowIndex`两个参数，分别代表行数据和行索引值。
+
+```vue
+<template>
+  <d-table :data="dataSource">
+    <d-column type="index">
+      <template #default="scope">
+        {{ `No.${scope.rowIndex + 1}` }}
+      </template>
+    </d-column>
+    <d-column field="firstName" header="First Name"></d-column>
+    <d-column field="lastName" header="Last Name"></d-column>
+    <d-column field="gender" header="Gender"></d-column>
+    <d-column field="date" header="Date of birth"></d-column>
+    <d-column header="Operation">
+      <template #default="scope">
+        <d-button @click="handleClick(scope.row)">编辑</d-button>
+      </template>
+    </d-column>
+  </d-table>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const dataSource = ref([
+      {
+        firstName: 'Mark',
+        lastName: 'Otto',
+        date: '1990/01/11',
+        gender: 'Male',
+      },
+      {
+        firstName: 'Jacob',
+        lastName: 'Thornton',
+        gender: 'Female',
+        date: '1990/01/12',
+      },
+      {
+        firstName: 'Danni',
+        lastName: 'Chen',
+        gender: 'Male',
+        date: '1990/01/13',
+      },
+      {
+        firstName: 'green',
+        lastName: 'gerong',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+    ]);
+    const handleClick = (row) => {
+      console.log(row);
+    };
+
+    return { dataSource, handleClick };
+  },
+});
+</script>
+```
+
+:::
+
+### 自定义表头
+
+:::demo 通过`d-column`子组件提供的`header`插槽可以实现自定义表头。
+
+```vue
+<template>
+  <d-table :data="dataSource">
+    <d-column field="firstName">
+      <template #header>
+        <div>
+          <span style="margin-right:4px;">First Name</span>
+          <d-popover content="some tips text" trigger="hover" :position="['top']">
+            <template #reference>
+              <d-icon name="info-o"></d-icon>
+            </template>
+          </d-popover>
+        </div>
+      </template>
+    </d-column>
+    <d-column field="lastName" header="Last Name"></d-column>
+    <d-column field="gender" header="Gender"></d-column>
+    <d-column field="date" header="Date of birth"></d-column>
+  </d-table>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const dataSource = ref([
+      {
+        firstName: 'Mark',
+        lastName: 'Otto',
+        date: '1990/01/11',
+        gender: 'Male',
+      },
+      {
+        firstName: 'Jacob',
+        lastName: 'Thornton',
+        gender: 'Female',
+        date: '1990/01/12',
+      },
+      {
+        firstName: 'Danni',
+        lastName: 'Chen',
+        gender: 'Male',
+        date: '1990/01/13',
+      },
+      {
+        firstName: 'green',
+        lastName: 'gerong',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+    ]);
+
+    return { dataSource };
   },
 });
 </script>
@@ -586,9 +766,10 @@ export default defineComponent({
 
 ### d-column 插槽
 
-| 插槽名  | 说明                   |
-| :------ | :--------------------- |
-| default | 默认插槽，自定义列内容 |
+| 插槽名  | 说明                     |
+| :------ | :----------------------- |
+| default | 默认插槽，自定义列内容   |
+| header  | 表头插槽，自定义表头内容 |
 
 ### 类型定义
 
