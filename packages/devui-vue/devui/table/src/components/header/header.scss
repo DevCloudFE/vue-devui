@@ -3,9 +3,6 @@
 .devui-table {
   &__thead {
     tr {
-      font-size: $devui-font-size-card-title;
-      color: $devui-text;
-      font-weight: 700;
       border: none;
       background-color: $devui-base-bg;
 
@@ -27,6 +24,9 @@
 
       .title {
         display: inline-block;
+        font-size: $devui-font-size;
+        color: $devui-text;
+        font-weight: 700;
         line-height: 36px;
         vertical-align: middle;
         white-space: nowrap;
