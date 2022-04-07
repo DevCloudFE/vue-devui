@@ -403,7 +403,7 @@ export default defineComponent({
     <d-column field="firstName">
       <template #header>
         <div>
-          <span style="margin-right:4px;">First Name</span>
+          <span style="margin-right:4px;font-size:var(--devui-font-size,12px)">First Name</span>
           <d-popover content="some tips text" trigger="hover" :position="['top']">
             <template #reference>
               <d-icon name="info-o"></d-icon>
@@ -757,7 +757,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource" border-type="bordered" header-bg>
+  <d-table :data="dataSource">
     <d-column field="name" header="Name">
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
@@ -834,18 +834,16 @@ export default defineComponent({
 
 ### d-column 参数
 
-| 参数名     | 类型               | 默认值                               | 说明                                        | 跳转 Demo             |
-| :--------- | :----------------- | :----------------------------------- | :------------------------------------------ | :-------------------- |
-| header     | `string`           | --                                   | 可选，对应列的标题                          | [基本用法](#基本用法) |
-| field      | `string`           | --                                   | 可选，对应列内容的字段名                    | [基本用法](#基本用法) |
-| type       | `ColumnType`       | ''                                   | 可选，列的类型，设置`checkable`会显示多选框 | [表格多选](#表格多选) |
-| width      | `string \| number` | --                                   | 可选，对应列的宽度，单位`px`                |
-| min-width  | `string \| number` | --                                   | 可选，对应列的最小宽度，单位`px`            |
-| sortable   | `boolean`          | false                                | 可选，对行数据按照该列的顺序进行排序        |
-| fixedLeft  | `string`           | --                                   | 可选，该列固定到左侧的距离，如：'100px'     | [固定列](#固定列)     |
-| fixedRight | `string`           | --                                   | 可选，该列固定到右侧的距离，如：'100px'     | [固定列](#固定列)     |
-| formatter  | `Formatter`        | --                                   | 可选，格式化列内容                          |
-| compareFn  | `CompareFn`        | (field, a, b) => a[field] > b[field] | 可选，用于排序的比较函数                    |
+| 参数名      | 类型               | 默认值 | 说明                                        | 跳转 Demo             |
+| :---------- | :----------------- | :----- | :------------------------------------------ | :-------------------- |
+| header      | `string`           | --     | 可选，对应列的标题                          | [基本用法](#基本用法) |
+| field       | `string`           | --     | 可选，对应列内容的字段名                    | [基本用法](#基本用法) |
+| type        | `ColumnType`       | ''     | 可选，列的类型，设置`checkable`会显示多选框 | [表格多选](#表格多选) |
+| width       | `string \| number` | --     | 可选，对应列的宽度，单位`px`                |
+| min-width   | `string \| number` | --     | 可选，对应列的最小宽度，单位`px`            |
+| fixed-left  | `string`           | --     | 可选，该列固定到左侧的距离，如：'100px'     | [固定列](#固定列)     |
+| fixed-right | `string`           | --     | 可选，该列固定到右侧的距离，如：'100px'     | [固定列](#固定列)     |
+| formatter   | `Formatter`        | --     | 可选，格式化列内容                          |
 
 ### d-column 插槽
 
@@ -882,17 +880,11 @@ type BorderType = '' | 'bordered' | 'borderless';
 #### ColumnType
 
 ```ts
-type ColumnType = 'checkable' | '';
+type ColumnType = 'checkable' | 'index' | '';
 ```
 
 #### Formatter
 
 ```ts
 type Formatter = (row: any, column: any, cellValue: any, rowIndex: number) => VNode;
-```
-
-#### CompareFn
-
-```ts
-type CompareFn<T = any> = (field: string, a: T, b: T) => boolean;
 ```
