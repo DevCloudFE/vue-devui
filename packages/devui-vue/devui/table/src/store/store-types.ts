@@ -1,6 +1,6 @@
 import type { Ref } from 'vue';
-import { SortDirection } from '../table-types';
-import { Column, CompareFn, FilterResults } from '../components/column/column-types';
+import { SortDirection } from '../components/sort/sort-types';
+import { Column, SortMethod, FilterResults } from '../components/column/column-types';
 
 export interface TableStore<T = Record<string, any>> {
   states: {
@@ -17,7 +17,7 @@ export interface TableStore<T = Record<string, any>> {
   removeColumn(column: Column): void;
   updateColumns(): void;
   getCheckedRows(): T[];
-  sortData(field: string, direction: SortDirection, compareFn: CompareFn<T>): void;
+  sortData(field: string, direction: SortDirection, sortMethod: SortMethod<T>): void;
   filterData(field: string, results: FilterResults): void;
   resetFilterData(): void;
 }

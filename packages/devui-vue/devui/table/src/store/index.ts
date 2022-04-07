@@ -1,5 +1,5 @@
 import { watch, Ref, ref, computed, unref } from 'vue';
-import { Column, CompareFn, FilterResults } from '../components/column/column-types';
+import { Column, SortMethod, FilterResults } from '../components/column/column-types';
 import { SortDirection } from '../table-types';
 import { TableStore } from './store-types';
 
@@ -121,15 +121,11 @@ const createSelection = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
 };
 
 const createSorter = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
-  const sortData = (
-    field: string,
-    direction: SortDirection,
-    compareFn: CompareFn<T> = (fieldKey: string, a: T, b: T) => a[fieldKey] > b[fieldKey]
-  ) => {
+  const sortData = (field: string, direction: SortDirection, sortMethod: SortMethod<T>) => {
     if (direction === 'ASC') {
-      _data.value = _data.value.sort((a, b) => (compareFn(field, a, b) ? 1 : -1));
+      _data.value = _data.value.sort((a, b) => (sortMethod(field, a, b) ? 1 : -1));
     } else if (direction === 'DESC') {
-      _data.value = _data.value.sort((a, b) => (!compareFn(field, a, b) ? 1 : -1));
+      _data.value = _data.value.sort((a, b) => (sortMethod(field, a, b) ? -1 : 1));
     } else {
       _data.value = [...dataSource.value];
     }

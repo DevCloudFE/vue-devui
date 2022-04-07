@@ -1,6 +1,6 @@
 import { provide, defineComponent, getCurrentInstance, computed, toRef, ref, onMounted, nextTick } from 'vue';
 import { Table, TableProps, TablePropsTypes, TABLE_TOKEN, DefaultRow } from './table-types';
-import { useTable } from './composable/use-table';
+import { useTable } from './composables/use-table';
 import { createStore } from './store';
 import FixHeader from './components/fix-header';
 import NormalHeader from './components/normal-header';

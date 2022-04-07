@@ -1,22 +1,28 @@
-import { ref, watch, Ref, shallowRef } from 'vue';
-import { Column, FilterResults } from '../column/column-types';
+import { ref, watch, Ref, shallowRef, computed } from 'vue';
+import type { ComputedRef } from 'vue';
+import { Column, FilterResults, SortDirection } from '../column/column-types';
 import { TableStore } from '../../store/store-types';
-import { SortDirection } from '../../table-types';
 
-export const useSort = (store: TableStore, column: Ref<Column>): Ref<SortDirection> => {
-  // 排序功能
-  const directionRef = ref<SortDirection>('DESC');
+export const useSort = (
+  store: TableStore,
+  column: Ref<Column>
+): { direction: Ref<SortDirection>; sortClass: ComputedRef<Record<string, boolean>> } => {
+  const direction = ref<SortDirection>(column.value.sortDirection);
+  const sortClass = computed(() => ({
+    'sort-active': Boolean(direction.value),
+  }));
+
   watch(
-    [directionRef, column],
-    ([direction, column]) => {
-      if (column.sortable) {
-        store.sortData(column.field, direction, column.compareFn);
+    [direction, column],
+    ([directionVal, columnVal]) => {
+      if (columnVal.sortable && columnVal.field) {
+        store.sortData(columnVal.field, directionVal, columnVal.sortMethod);
       }
     },
     { immediate: true }
   );
 
-  return directionRef;
+  return { direction, sortClass };
 };
 
 export const useFilter = (store: TableStore, column: Ref<Column>): Ref<FilterResults> => {

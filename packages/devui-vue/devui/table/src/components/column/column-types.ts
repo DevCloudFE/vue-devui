@@ -5,9 +5,11 @@ import { TableStore } from '../../store/store-types';
 // eslint-disable-next-line no-use-before-define
 export type Formatter = (row: DefaultRow, column: Column, cellValue: any, rowIndex: number) => VNode;
 
-export type CompareFn<T = any> = (field: string, a: T, b: T) => boolean;
+export type SortMethod<T = any> = (field: string, a: T, b: T) => boolean;
 
 export type ColumnType = 'checkable' | 'index' | '';
+
+export type SortDirection = 'ASC' | 'DESC' | '';
 
 export interface FilterConfig {
   id: number | string;
@@ -47,9 +49,13 @@ export const tableColumnProps = {
     type: Boolean,
     default: false,
   },
-  compareFn: {
-    type: Function as PropType<CompareFn>,
-    default: (field: string, a: any, b: any): boolean => a[field] < b[field],
+  sortDirection: {
+    type: String as PropType<SortDirection>,
+    default: '',
+  },
+  sortMethod: {
+    type: Function as PropType<SortMethod>,
+    default: (field: string, a: any, b: any): boolean => a[field] > b[field],
   },
   filterable: {
     type: Boolean,
@@ -92,6 +98,7 @@ export interface Column {
   header?: string;
   order?: number;
   sortable?: boolean;
+  sortDirection: SortDirection;
   filterable?: boolean;
   filterMultiple?: boolean;
   filterList?: FilterConfig[];
@@ -100,7 +107,7 @@ export interface Column {
   renderHeader?: (column: Column, store: TableStore) => VNode;
   renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) => VNode;
   formatter?: Formatter;
-  compareFn?: CompareFn;
+  sortMethod: SortMethod;
   customFilterTemplate?: CustomFilterSlot;
   subColumns?: Slot;
 }
