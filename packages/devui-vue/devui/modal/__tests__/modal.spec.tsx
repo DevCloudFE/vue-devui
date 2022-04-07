@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import DModal from '../src/modal';
 import DModalHeader from '../src/header';
+import DModalFooter from '../src/footer';
 import DIcon from '../../icon/src/icon';
 
 describe('d-modal', () => {
@@ -56,7 +57,7 @@ describe('d-modal', () => {
     const wrapper = mount({
       setup() {
         return () => (
-          <DModal v-model={visible.value} title="Start Snapshot Version">
+          <DModal v-model={visible.value}>
             {{
               header: () => (
                 <DModalHeader>
@@ -83,6 +84,83 @@ describe('d-modal', () => {
     expect(modalHeader?.children[0].className).toContain('icon-like');
     expect(modalHeader?.children[1].innerHTML).toContain('Good Title');
     expect(modalHeader?.childElementCount).toBe(2);
+    wrapper.unmount();
+  });
+
+  it('custom footer', async () => {
+    const overlayAnchor = document.createElement('div');
+    overlayAnchor.setAttribute('id', 'd-overlay-anchor');
+    overlayAnchor.style.position = 'fixed';
+    overlayAnchor.style.left = '0';
+    overlayAnchor.style.top = '0';
+    overlayAnchor.style.zIndex = '1000';
+    document.body.appendChild(overlayAnchor);
+    const visible = ref(false);
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DModal v-model={visible.value} title="Start Snapshot Version">
+            {{
+              default: () => (
+                <>
+                  <div>name: Tom</div>
+                  <div>age: 20</div>
+                  <div>address: Chengdu</div>
+                </>
+              ),
+              footer: () => (
+                <DModalFooter>
+                  <d-button>取消</d-button>
+                  <d-button>确认</d-button>
+                </DModalFooter>
+              ),
+            }}
+          </DModal>
+        );
+      },
+    });
+
+    visible.value = true;
+    await nextTick();
+    const modalHeader = document.querySelector('.devui-modal-footer');
+    expect(modalHeader?.children[0].className).toContain('devui-btn');
+    expect(modalHeader?.children[1].className).toContain('devui-btn');
+    expect(modalHeader?.childElementCount).toBe(2);
+    wrapper.unmount();
+  });
+
+  it('before-close', async () => {
+    const overlayAnchor = document.createElement('div');
+    overlayAnchor.setAttribute('id', 'd-overlay-anchor');
+    overlayAnchor.style.position = 'fixed';
+    overlayAnchor.style.left = '0';
+    overlayAnchor.style.top = '0';
+    overlayAnchor.style.zIndex = '1000';
+    document.body.appendChild(overlayAnchor);
+    const visible = ref(true);
+    const beforeClose = jest.fn();
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DModal v-model={visible.value} title="Start Snapshot Version" before-close={beforeClose}>
+            {{
+              default: () => (
+                <>
+                  <div>name: Tom</div>
+                  <div>age: 20</div>
+                  <div>address: Chengdu</div>
+                </>
+              ),
+            }}
+          </DModal>
+        );
+      },
+    });
+
+    await nextTick();
+    const btnClose = document.querySelector('.btn-close');
+    await btnClose?.dispatchEvent(new Event('click'));
+    expect(beforeClose).toBeCalled();
     wrapper.unmount();
   });
 });
