@@ -2,8 +2,8 @@ import type { ExtractPropTypes, PropType } from 'vue';
 
 export const switchProps = {
   size: {
-    type: String as PropType<'small' | 'middle' | 'large'>,
-    default: 'middle'
+    type: String as PropType<'sm' | 'md' | 'lg'>,
+    default: 'md'
   },
   color: {
     type: String,
