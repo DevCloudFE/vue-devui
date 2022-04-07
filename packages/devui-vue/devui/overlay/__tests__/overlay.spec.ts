@@ -29,7 +29,7 @@ describe('overlay', () => {
   });
 
   describe('fixed overlay', () => {
-    it('should be create', async () => {
+    it('should be created', async () => {
       const wrapper = mount(FixedOverlay, {
         props: {
           visible: true,
@@ -106,7 +106,7 @@ describe('overlay', () => {
         }));
     });
 
-    it('should be creat', async () => {
+    it('should be created', async () => {
       const wrapper = mount(FlexibleOverlay, {
         props: {
           origin: origin,
