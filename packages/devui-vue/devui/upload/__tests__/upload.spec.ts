@@ -105,7 +105,7 @@ describe('upload', () => {
     expect(beforeUpload).toHaveBeenCalled();
     expect(wrapper.find('.devui-upload button').exists()).toBe(false);
   });
-  it('should work with `placeholderText uploadText` prop', async () => {
+  it('should work with `placeholder` prop', async () => {
     const TestComponent = {
       components: {
         'd-upload': DUpload
@@ -114,8 +114,7 @@ describe('upload', () => {
           <d-upload
           :upload-options="uploadOptions"
           v-model:uploaded-files="uploadedFiles"
-          placeholderText="select file"
-          uploadText="upload"
+          placeholder="select file"
         />
         `,
       setup() {
@@ -131,6 +130,5 @@ describe('upload', () => {
     };
     const wrapper = mount(TestComponent);
     expect(wrapper.find('.devui-upload-placeholder').text()).toBe('select file');
-    expect(wrapper.find('.devui-upload button').text()).toBe('upload');
   });
 });
