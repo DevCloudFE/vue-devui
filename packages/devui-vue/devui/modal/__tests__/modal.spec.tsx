@@ -6,7 +6,7 @@ import DModalFooter from '../src/footer';
 import DIcon from '../../icon/src/icon';
 
 describe('d-modal', () => {
-  it('render correctly', async () => {
+  beforeEach(() => {
     const overlayAnchor = document.createElement('div');
     overlayAnchor.setAttribute('id', 'd-overlay-anchor');
     overlayAnchor.style.position = 'fixed';
@@ -14,6 +14,12 @@ describe('d-modal', () => {
     overlayAnchor.style.top = '0';
     overlayAnchor.style.zIndex = '1000';
     document.body.appendChild(overlayAnchor);
+  });
+  afterEach(() => {
+    const overlayAnchor = document.querySelector('#d-overlay-anchor');
+    overlayAnchor && document.body.removeChild(overlayAnchor);
+  });
+  it('render correctly', async () => {
     const visible = ref(false);
     const wrapper = mount({
       setup() {
@@ -42,17 +48,9 @@ describe('d-modal', () => {
     expect(modal?.childNodes[1].className).toContain('devui-modal-header');
     expect(modal?.childNodes[2].className).toContain('devui-modal-body');
     wrapper.unmount();
-    document.body.removeChild(overlayAnchor);
   });
 
   it('custom header', async () => {
-    const overlayAnchor = document.createElement('div');
-    overlayAnchor.setAttribute('id', 'd-overlay-anchor');
-    overlayAnchor.style.position = 'fixed';
-    overlayAnchor.style.left = '0';
-    overlayAnchor.style.top = '0';
-    overlayAnchor.style.zIndex = '1000';
-    document.body.appendChild(overlayAnchor);
     const visible = ref(false);
     const wrapper = mount({
       setup() {
@@ -88,13 +86,6 @@ describe('d-modal', () => {
   });
 
   it('custom footer', async () => {
-    const overlayAnchor = document.createElement('div');
-    overlayAnchor.setAttribute('id', 'd-overlay-anchor');
-    overlayAnchor.style.position = 'fixed';
-    overlayAnchor.style.left = '0';
-    overlayAnchor.style.top = '0';
-    overlayAnchor.style.zIndex = '1000';
-    document.body.appendChild(overlayAnchor);
     const visible = ref(false);
     const wrapper = mount({
       setup() {
@@ -130,13 +121,6 @@ describe('d-modal', () => {
   });
 
   it('before-close', async () => {
-    const overlayAnchor = document.createElement('div');
-    overlayAnchor.setAttribute('id', 'd-overlay-anchor');
-    overlayAnchor.style.position = 'fixed';
-    overlayAnchor.style.left = '0';
-    overlayAnchor.style.top = '0';
-    overlayAnchor.style.zIndex = '1000';
-    document.body.appendChild(overlayAnchor);
     const visible = ref(true);
     const beforeClose = jest.fn();
     const wrapper = mount({
