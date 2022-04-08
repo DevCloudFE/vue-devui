@@ -58,6 +58,8 @@ export interface IUseOperate {
 
 export interface IUseSelect {
   selectNode: (node: IInnerTreeNode) => void;
+  deselectNode: (node: IInnerTreeNode) => void;
+  toggleSelectNode: (node: IInnerTreeNode) => void;
 }
 
 export interface IUseToggle {

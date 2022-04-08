@@ -51,7 +51,7 @@ export default defineComponent({
               ? renderSlot(useSlots(), 'default', {
                   treeFactory: treeFactory, nodeData: treeNode
                 })
-              : <DTreeNode data={treeNode}>
+              : <DTreeNode data={treeNode} check={check.value}>
                   {{
                     default: () => slots.content
                       ? renderSlot(useSlots(), 'content', { nodeData: treeNode })
