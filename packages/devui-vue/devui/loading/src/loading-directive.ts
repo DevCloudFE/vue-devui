@@ -1,7 +1,7 @@
 import type { VNode } from 'vue';
 import { defineComponent } from 'vue';
 import Loading from './loading';
-import { LoadingProps, BindingType, TargetHTMLElement } from './types';
+import { LoadingOptions, BindingType, TargetHTMLElement } from './loading-types';
 
 import { createComponent, unmountComponent } from '../../shared/scripts/component';
 
@@ -90,9 +90,9 @@ const removeAttribute = (el: TargetHTMLElement) => {
   el.removeAttribute('loadingtemplateref');
 };
 
-const handleProps = (el: TargetHTMLElement, vprops: LoadingProps | null) => {
+const handleProps = (el: TargetHTMLElement, vprops: LoadingOptions | null) => {
   const props = {
-    ...new LoadingProps(),
+    ...new LoadingOptions(),
     ...vprops
   };
 

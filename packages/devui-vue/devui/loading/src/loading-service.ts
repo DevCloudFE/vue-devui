@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 import { createComponent } from '../../shared/scripts/component';
 import Loading from './loading';
 
-import { LoadingProps } from './types';
+import { LoadingOptions } from './loading-types';
 
 const loadingConstructor = defineComponent(Loading);
 
@@ -18,7 +18,7 @@ type IMargeVNodeComponent = VNode['component'] & {
 const cacheTarget = new WeakMap();
 
 const loading = {
-  open(options: LoadingProps = {}): IMargeVNodeComponent {
+  open(options: LoadingOptions = {}): IMargeVNodeComponent {
 
     const parent: TargetElement = options.target || document.body;
 
@@ -31,7 +31,7 @@ const loading = {
 
     const isFull = document.body === parent;
 
-    options = { ...new LoadingProps(), ...options };
+    options = { ...new LoadingOptions(), ...options };
 
     const instance: IMargeVNodeComponent = createComponent(loadingConstructor, {
       ...options,

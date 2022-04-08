@@ -1,6 +1,6 @@
 import { defineComponent, inject } from 'vue';
 import { DropdownProps, DropdownPropsKey, SourceItemObj } from '../auto-complete-types';
-import dLoading from '../../../loading/src/directive';
+import dLoading from '../../../loading/src/loading-directive';
 export default defineComponent({
   name: 'DAutoCompleteDropdown',
   directives: {dLoading},
