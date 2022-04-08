@@ -1,4 +1,4 @@
-import { ModalProps, EmitEventFn, UseModalFn } from './modal-types';
+import { ModalProps, EmitEventFn, UseModalFn } from '../modal-types';
 
 export function useModal(props: ModalProps, emit: EmitEventFn): UseModalFn {
   function close(): void {

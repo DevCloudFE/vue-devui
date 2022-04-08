@@ -2,9 +2,9 @@ import { defineComponent, toRefs, Transition } from 'vue';
 import { modalProps, ModalProps } from './modal-types';
 import { Icon } from '../../icon';
 import { FixedOverlay } from '../../overlay';
-import { useModal } from './use-modal';
-import DModalHeader from './header';
-import DModalBody from './body';
+import { useModal } from './composables/use-modal';
+import DModalHeader from './components/header';
+import DModalBody from './components/body';
 import './modal.scss';
 
 export default defineComponent({
