@@ -10,8 +10,6 @@ export default function(options?) {
     const selectNode = (node: IInnerTreeNode): void => {
       if (node.disableSelect) { return; }
 
-      if (node.id === prevActiveNode?.id) { return; }
-
       if (prevActiveNode) {
         const prevActiveNodeIndex = data.value.findIndex(item => item.id === prevActiveNode.id)
         setNodeValue(data.value[prevActiveNodeIndex], 'selected', false);
@@ -21,8 +19,22 @@ export default function(options?) {
       prevActiveNode = node;
     }
 
+    const deselectNode = (node: IInnerTreeNode): void => {
+      setNodeValue(node, 'selected', false);
+    }
+
+    const toggleSelectNode = (node: IInnerTreeNode): void => {
+      if (node.selected) {
+        deselectNode(node);
+      } else {
+        selectNode(node);
+      }
+    }
+
     return {
       selectNode,
+      deselectNode,
+      toggleSelectNode,
     }
   };
 }
