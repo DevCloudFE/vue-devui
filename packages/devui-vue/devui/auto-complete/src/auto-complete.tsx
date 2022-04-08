@@ -6,10 +6,11 @@ import useInputHandle from './composables/use-input-handle';
 import useSelectHandle from './composables/use-select-handle';
 import useLazyHandle from './composables/use-lazy-handle';
 import useKeyBoardHandle from './composables/use-keyboard-select';
-import './auto-complete.scss';
 import DAutoCompleteDropdown from './components/dropdown';
 import ClickOutside from '../../shared/devui-directive/clickoutside';
 import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
+import './auto-complete.scss';
+
 export default defineComponent({
   name: 'DAutoComplete',
   directives: { ClickOutside },
