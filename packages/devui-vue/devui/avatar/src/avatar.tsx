@@ -1,7 +1,7 @@
 import { defineComponent, watch, toRefs, ref } from 'vue';
 
-import AvatarBodyIcon from './avatar-body-icon';
-import AvatarNoBodyIcon from './avatar-nobody-icon';
+import AvatarBodyIcon from './components/avatar-body-icon';
+import AvatarNoBodyIcon from './components/avatar-nobody-icon';
 import { AvatarProps, avatarProps } from './avatar-types';
 
 import './avatar.scss';
