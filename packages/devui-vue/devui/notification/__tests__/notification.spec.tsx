@@ -63,7 +63,7 @@ describe('d-notification', () => {
       await nextTick();
       notification = document.querySelector('.devui-notification');
       const notificationImage = document.querySelector('.devui-notification-image');
-      expect(notificationImage?.firstChild?.className).toContain('icon-right-o');
+      expect(notificationImage?.className).toContain('devui-notification-image-success');
     });
 
     it('duration', async () => {
