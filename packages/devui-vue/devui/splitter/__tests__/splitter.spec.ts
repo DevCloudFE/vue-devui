@@ -1,7 +1,7 @@
 import { mount, VueWrapper } from '@vue/test-utils';
 import { ComponentPublicInstance, ref } from 'vue';
 import DSplitter from '../src/splitter';
-import DSplitterPane from '../src/splitter-pane';
+import DSplitterPane from '../src/components/splitter-pane';
 
 // 因为 jest 不支持 ResizeObserver，需要 mock 实现
 window.ResizeObserver =
