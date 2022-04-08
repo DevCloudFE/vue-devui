@@ -11,7 +11,7 @@ export const treeProps = {
     default: []
   },
   check: {
-    type: Object as PropType<ICheck>,
+    type: [Boolean, String] as PropType<ICheck>,
     default: false
   },
 };
