@@ -1,8 +1,4 @@
-@import '../../style/mixins/index';
-@import '../../style/theme/color';
-@import '../../style/theme/variables';
-@import '../../style/theme/font';
-@import '../../style/theme/corner';
+@import '../../styles-var/devui-var.scss';
 
 .devui-btn {
   padding: 0 20px;

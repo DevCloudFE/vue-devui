@@ -1,6 +1,6 @@
 @import '../../style/mixins/size';
 @import '../../style/mixins/flex';
-@import '../../style/theme/color';
+@import '../../styles-var/devui-var.scss';
 
 .devui-cascader {
   @include flex(flex-start);
