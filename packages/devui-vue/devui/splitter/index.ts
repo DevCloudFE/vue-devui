@@ -1,6 +1,6 @@
 import type { App } from 'vue';
 import Splitter from './src/splitter';
-import SplitterPane from './src/splitter-pane';
+import SplitterPane from './src/components/splitter-pane';
 
 export * from './src/splitter-types';
 
