@@ -19,7 +19,7 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const { data, check } = toRefs(props);
-    const { selectNode, toggleCheckNode, toggleNode } = inject(USE_TREE_TOKEN);
+    const { toggleSelectNode, toggleCheckNode, toggleNode } = inject(USE_TREE_TOKEN);
 
     const {
       nodeClass,
@@ -34,7 +34,7 @@ export default defineComponent({
       return (
         <div class={nodeClass.value} style={nodeStyle.value}>
           <span class={nodeVLineClass.value} style={nodeVLineStyle.value}></span>
-          <div class={nodeContentClass.value} onClick={() => { selectNode(data.value); }}>
+          <div class={nodeContentClass.value} onClick={() => { toggleSelectNode(data.value); }}>
             <span class={nodeHLineClass.value}></span>
             {
               slots.icon

@@ -8,7 +8,7 @@
 
 ### 基本用法
 
-:::demo
+:::demo 本例主要展示嵌套树形结构的呈现、连接线、节点展开收起、点击选择等功能。
 
 ```vue
 <template>
@@ -39,7 +39,7 @@ export default defineComponent({
       {
         label: 'Leaf node 2',
       }
-    ])
+    ]);
 
     return {
       data
@@ -51,13 +51,13 @@ export default defineComponent({
 
 :::
 
-### 合并节点
+### 可勾选
 
 :::demo 当节点下只有一个子节点时，合并该节点。
 
 ```vue
 <template>
-  <d-tree :data="data"></d-tree>
+  <d-new-tree :data="data" check></d-new-tree>
 </template>
 
 <script>
@@ -68,96 +68,23 @@ export default defineComponent({
 
     const data = ref([
       {
-        label: 'parent node 1',
-        level: 1,
+        label: 'Parent node 1',
         children: [
           {
-            label: 'parent node 11',
-            open: true,
-            level: 2,
+            label: 'Parent node 1-1',
             children: [
               {
-                label: 'parent node 111',
-                level: 3,
-                children: [
-                  {
-                    label: 'parent node 1111',
-                    level: 4,
-                    children: [
-                      {
-                        label: 'leaf node 11111',
-                        level: 5,
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-        ]
-      },
-      {
-        label: 'parent node 2',
-        level: 1,
-        children: [
-          {
-            label: 'parent node 21',
-            level: 2,
-            open: true,
-            children: [
-              {
-                label: 'leaf node 211',
-                level: 3,
-              },
-              {
-                label: 'leaf node 212',
-                level: 3,
-              },
-              {
-                label: 'leaf node 213',
-                level: 3,
-              },
-              {
-                label: 'leaf node 214',
-                level: 3,
-              },
-              {
-                label: 'leaf node 215',
-                level: 3,
-              },
-            ]
-          },
-        ]
-      },
-      {
-        label: 'parent node 3',
-        level: 1,
-        children: [
-          {
-            label: 'leaf node 31',
-            level: 2,
-            children: [
-              {
-                label: 'leaf node 311',
-                level: 3,
-                children: [
-                  {
-                    label: 'leaf node 3111',
-                    level: 4,
-                  }
-                ]
+                label: 'Leaf node 1-1-1',
               }
             ]
           },
           {
-            label: 'leaf node 32',
-            level: 2,
-          },
-          {
-            label: 'leaf node 33',
-            level: 2,
+            label: 'Leaf node 1-2',
           }
         ]
+      },
+      {
+        label: 'Leaf node 2',
       }
     ]);
     
