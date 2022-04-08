@@ -4,8 +4,6 @@ import { generateInnerTree } from './utils';
 
 export default function(options?){
   return function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
-    console.log('useCore:', data, data.value);
-
     const getLevel = (node: ITreeNode): number => {
       return data.value.find((item) => item.id === node.id).level;
     }
