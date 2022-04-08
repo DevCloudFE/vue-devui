@@ -1,5 +1,5 @@
 import { PropType, ExtractPropTypes } from 'vue';
-import { SplitterOrientation } from './splitter-types';
+import { SplitterOrientation } from '../splitter-types';
 
 export const splitterBarProps = {
   /**
