@@ -403,7 +403,7 @@ export default defineComponent({
     <d-column field="firstName">
       <template #header>
         <div>
-          <span style="margin-right:4px;">First Name</span>
+          <span style="margin-right:4px;font-size:var(--devui-font-size,12px)">First Name</span>
           <d-popover content="some tips text" trigger="hover" :position="['top']">
             <template #reference>
               <d-icon name="info-o"></d-icon>
@@ -757,7 +757,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource" border-type="bordered" header-bg>
+  <d-table :data="dataSource">
     <d-column field="name" header="Name">
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>

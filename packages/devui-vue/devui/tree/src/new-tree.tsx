@@ -1,5 +1,5 @@
 import { defineComponent, PropType, provide, renderSlot, toRefs, useSlots, watch } from 'vue';
-import type { ITreeNode } from './core/use-tree-types';
+import type { ITreeNode, IUseTree } from './core/use-tree-types';
 import DTreeNode from './components/tree-node';
 import DTreeNodeContent from './components/tree-node-content';
 import DTreeNodeToggle from './components/tree-node-toggle';
@@ -8,6 +8,7 @@ import useCheck from './core/use-check';
 import useSelect from './core/use-select';
 import { USE_TREE_TOKEN } from './const';
 import './tree.scss';
+import useOperate from './core/use-operate';
 
 export default defineComponent({
   name: 'DNewTree',
@@ -15,14 +16,24 @@ export default defineComponent({
     data: {
       type: Object as PropType<ITreeNode[]>,
       default: []
-    }
+    },
+    plugins: {
+      type: Object as PropType<IUseTree[]>,
+      default: []
+    },
   },
   setup(props, { slots }) {
     const { data } = toRefs(props);
 
     const treeFactory = useTree(
       data.value,
-      [useSelect, useCheck]
+      [
+        useSelect(),
+        useCheck({
+          checkStrategy: 'none',
+        }),
+        useOperate(),
+      ]
     );
 
     const {
