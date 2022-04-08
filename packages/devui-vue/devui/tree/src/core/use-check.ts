@@ -5,7 +5,6 @@ export default function(options?: {
   checkStrategy: CheckStrategy
 }) {
   return function useCheck(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
-    console.log('useCheck options:', options);
     const { setNodeValue, getNode } = core;
 
     const checkNode = (node: IInnerTreeNode): void => {

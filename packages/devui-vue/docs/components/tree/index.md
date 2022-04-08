@@ -1,10 +1,10 @@
 # Tree 树
 
-一种表现嵌套结构的组件。
+一种呈现嵌套结构的组件。
 
 ### 何时使用
 
-文件夹、组织架构、生物分类、国家地区等等，世间万物的大多数结构都是树形结构。使用树控件可以完整展现其中的层级关系，并具有展开/收起选择等交互功能。
+文件夹、组织架构、生物分类、国家地区等等，世间万物的大多数结构都是树形结构。使用树组件可以完整展现其中的层级关系，并具有展开/收起、选择等交互功能。
 
 ### 基本用法
 
@@ -238,3 +238,53 @@ export default defineComponent({
 ```
 
 :::
+
+### d-tree 参数
+
+| 参数名 | 类型                        | 默认值 | 说明                   | 跳转 Demo             |
+| :----- | :-------------------------- | :----- | :--------------------- | :-------------------- |
+| data   | [ITreeNode\[\]](#itreenode) | []     | 可选，树形结构数据     | [基本用法](#基本用法) |
+| check  | [ICheck](#icheck)           | false  | 可选，是否启用勾选功能 | [可勾选](#可勾选)     |
+
+### d-tree 插槽
+
+| 插槽名  | 说明                |
+| :------ | :------------------ |
+| default | 自定义节点          |
+| content | 自定义节点内容      |
+| icon    | 自定义展开/收起按钮 |
+
+### d-tree-node 参数
+
+| 参数名 | 类型                    | 默认值 | 说明                   |
+| :----- | :---------------------- | :----- | :--------------------- |
+| data   | [ITreeNode](#itreenode) | []     | 可选，节点数据         |
+| check  | [ICheck](#icheck)       | false  | 可选，是否启用勾选功能 |
+
+### 类型
+
+<br>
+
+#### ITreeNode
+
+```ts
+interface ITreeNode {
+  label: string;
+  id?: string;
+  children?: ITreeNode[];
+
+  selected?: boolean;
+  checked?: boolean;
+  expanded?: boolean;
+
+  disableSelect?: boolean;
+  disableCheck?: boolean;
+  disableToggle?: boolean;
+}
+```
+
+#### ICheck
+
+```ts
+type ICheck = boolean | 'upward' | 'downward' | 'both' | 'none';
+```
