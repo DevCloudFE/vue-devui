@@ -1,5 +1,5 @@
 import { computed, ComputedRef } from 'vue';
-import { ScreenSizes, ColPropsBaseClass, screenSizes, colPropsBaseClass } from './grid-types';
+import { ScreenSizes, ColPropsBaseClass, screenSizes, colPropsBaseClass } from '../grid-types';
 
 export const CLASS_PREFIX = 'devui-col';
 
