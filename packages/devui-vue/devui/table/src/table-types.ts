@@ -57,7 +57,7 @@ export const TableProps = {
   },
   tableLayout: {
     type: String as PropType<'fixed' | 'auto'>,
-    default: 'auto',
+    default: 'fixed',
     validator(v: string): boolean {
       return v === 'fixed' || v === 'auto';
     },

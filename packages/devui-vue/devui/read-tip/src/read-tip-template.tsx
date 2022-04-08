@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'vue';
 import { defineComponent, reactive, ref, onMounted, Teleport, toRefs } from 'vue';
 import { readTipProps, ReadTipProps, DefaultTemplateProps } from './read-tip-types';
 import './read-tip.scss';
@@ -11,7 +12,7 @@ export default defineComponent({
     let rule: DefaultTemplateProps = defaultTemplateProps.value;
     const query = rule?.id ? `#${rule.id}` : rule.selector;
 
-    const styles: any = reactive({});
+    const styles: CSSProperties = reactive({});
     if (typeof rule.dataFn === 'function') {
       const dataFn = rule.dataFn({ element: document.querySelector(query), rule });
       rule = { ...rule, ...dataFn };
@@ -27,7 +28,7 @@ export default defineComponent({
       return deviationConstant;
     };
     onMounted(() => {
-      const domBounding = document.querySelector(query).getBoundingClientRect();
+      const domBounding = document.querySelector(query)?.getBoundingClientRect();
       const { width, height } = domBounding;
       const distance = 10;
       let positionTop = 0;
@@ -38,7 +39,7 @@ export default defineComponent({
 
 
       let positionLeft = 0;
-      const targetDom = document.querySelector('.read-tip-container').getBoundingClientRect();
+      const targetDom = document.querySelector('.read-tip-container')?.getBoundingClientRect();
       if (rule.appendToBody) {
         positionTop = domBounding.y + document.documentElement.scrollTop;
         positionLeft = domBounding.x;
@@ -72,7 +73,7 @@ export default defineComponent({
           >
             <span class='after' ></span>
             {
-              rule.contentTemplate ? ctx.slots?.default() :
+              rule.contentTemplate ? ctx.slots?.default?.() :
                 (
                   <>
                     <div class="title">

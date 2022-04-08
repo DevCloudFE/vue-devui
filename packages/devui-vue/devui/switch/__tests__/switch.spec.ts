@@ -52,14 +52,14 @@ describe('d-switch', () => {
   it('switch size work', async () => {
     const wrapper = mount(DSwitch, {
       props: {
-        size: 'small'
+        size: 'sm'
       }
     });
 
     expect(wrapper.classes()).toContain('devui-switch-sm');
 
     await wrapper.setProps({
-      size: 'large'
+      size: 'lg'
     });
     expect(wrapper.classes()).not.toContain('devui-switch-sm');
     expect(wrapper.classes()).toContain('devui-switch-lg');

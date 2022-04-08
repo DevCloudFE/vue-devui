@@ -9,7 +9,7 @@ import './button.scss';
 export default defineComponent({
   name: 'DButton',
   directives: {
-    devLoading: loadingDirective,
+    dLoading: loadingDirective,
   },
   props: buttonProps,
   emits: ['click'],

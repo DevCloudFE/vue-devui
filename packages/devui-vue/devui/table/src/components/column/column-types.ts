@@ -3,7 +3,7 @@ import { DefaultRow } from '../../table-types';
 import { TableStore } from '../../store/store-types';
 
 // eslint-disable-next-line no-use-before-define
-export type Formatter = (row: DefaultRow, column: Column, cellValue: any, rowIndex: number) => VNode[];
+export type Formatter = (row: DefaultRow, column: Column, cellValue: any, rowIndex: number) => VNode;
 
 export type CompareFn<T = any> = (field: string, a: T, b: T) => boolean;
 

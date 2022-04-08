@@ -1,4 +1,4 @@
-import { createApp, nextTick, onUnmounted, reactive } from 'vue';
+import { createApp, onUnmounted, reactive } from 'vue';
 import type { App } from 'vue';
 import Drawer from './drawer';
 import { DrawerOptions } from './drawer-types';
@@ -25,7 +25,6 @@ function initInstance(state: DrawerOptions): App {
         state.modelValue = false;
       };
       onUnmounted(() => {
-        console.log(111);
         document.body.removeChild(container);
       });
       return () => (

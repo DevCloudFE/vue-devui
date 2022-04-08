@@ -27,7 +27,7 @@ export type valueof<T> = T[keyof T];
 
 export interface IUseCore {
   getLevel: (node: ITreeNode) => number;
-  getChildren: (node: ITreeNode) => IInnerTreeNode[];
+  getChildren: (node: ITreeNode, expanded: boolean) => IInnerTreeNode[];
   getExpendedTree: () => ComputedRef<IInnerTreeNode[]>;
   getIndex: (node: ITreeNode) => number;
   getNode: (node: ITreeNode) => IInnerTreeNode;
@@ -51,13 +51,15 @@ export interface IUseDisable {
 }
 
 export interface IUseOperate {
-  insertBefore: (parentNode: ITreeNode, node: ITreeNode, referenceNode: ITreeNode, cut: boolean) => void;
+  insertBefore: (parentNode: ITreeNode, node: ITreeNode, referenceNode: ITreeNode) => void;
   removeNode: (node: ITreeNode) => void;
   editNode: (node: ITreeNode, label: string) => void;
 }
 
 export interface IUseSelect {
   selectNode: (node: IInnerTreeNode) => void;
+  deselectNode: (node: IInnerTreeNode) => void;
+  toggleSelectNode: (node: IInnerTreeNode) => void;
 }
 
 export interface IUseToggle {
@@ -68,4 +70,6 @@ export interface IUseToggle {
 
 export type IUseTree = {
   treeData: Ref<IInnerTreeNode[]>
-} & IUseCore & IUseCheck & IUseDisable & IUseOperate & IUseSelect & IUseToggle;
+} & IUseCore & IUseToggle & IUseSelect & IUseCheck & IUseDisable & IUseOperate;
+
+export type CheckStrategy = 'upward' | 'downward' | 'both' | 'none';
