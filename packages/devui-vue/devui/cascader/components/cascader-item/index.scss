@@ -1,6 +1,5 @@
 @import '../../../style/mixins/flex';
-@import '../../../style/theme/color';
-@import '../../../style/core/font';
+@import '../../../styles-var/devui-var.scss';
 
 .devui-cascader-li {
   &.devui-dropdown-item {
