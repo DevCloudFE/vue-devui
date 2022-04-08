@@ -1,20 +1,20 @@
-# VirtualList virtual-list
+# VirtualList 虚拟列表
 
-// todo 组件描述
+虚拟列表无限滚动
 
 ### 何时使用
 
-// todo 使用时机描述
+大量列表数据显示
 
 ### 基本用法
-
-// todo 用法描述
 
 :::demo // todo 展开代码的内部描述
 
 ```vue
 <template>
-  <d-virtual-list />
+  <d-virtual-list :style="style" :tv="val" />
+  <br />
+  <button @click="click">click</button>
 </template>
 
 <script>
@@ -22,15 +22,13 @@ import { ref } from 'vue';
 
 export default {
   setup() {
-    const uploadedFiles = ref([]);
-    const uploadOptions = ref({
-      uri: 'https://run.mocky.io/v3/132b3ea3-23ea-436b-aed4-c43ef9d116f0',
-    });
-
-    return {
-      uploadedFiles,
-      uploadOptions,
-    };
+    const style = ref({ color: 'red' });
+    const val = ref('998');
+    const click = () => {
+      const a = `${Math.random()}`;
+      val.value = a;
+    }
+    return { style, click, val };
   },
 };
 </script>
