@@ -68,20 +68,27 @@
   padding: 0;
   line-height: 1;
 
-  &.devui-notification-image-warn i.icon {
-    color: $devui-warning !important;
+  &.devui-notification-image-warning {
+    path.devui-icon-warning-outer {
+      fill: $devui-warning-line;
+    }
+
+    path.devui-icon-warning-inner {
+      fill: $devui-light-text;
+      stroke: $devui-light-text;
+    }
   }
 
-  &.devui-notification-image-info i.icon {
-    color: $devui-info !important;
+  &.devui-notification-image-info {
+    background-color: $devui-info;
   }
 
-  &.devui-notification-image-error i.icon {
-    color: $devui-danger !important;
+  &.devui-notification-image-error {
+    background-color: $devui-danger;
   }
 
-  &.devui-notification-image-success i.icon {
-    color: $devui-success !important;
+  &.devui-notification-image-success {
+    background-color: $devui-success;
   }
 
   .devui-notification-image-info-path,
