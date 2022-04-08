@@ -9,31 +9,26 @@ import useSelect from './core/use-select';
 import { USE_TREE_TOKEN } from './const';
 import './tree.scss';
 import useOperate from './core/use-operate';
+import { TreeProps, treeProps } from './new-tree-types';
 
 export default defineComponent({
   name: 'DNewTree',
-  props: {
-    data: {
-      type: Object as PropType<ITreeNode[]>,
-      default: []
-    },
-    plugins: {
-      type: Object as PropType<IUseTree[]>,
-      default: []
-    },
-  },
-  setup(props, { slots }) {
-    const { data } = toRefs(props);
+  props: treeProps,
+  setup(props: TreeProps, { slots }) {
+    const { data, check } = toRefs(props);
+
+    const userPlugins = [
+      useSelect(),
+      useOperate(),
+    ];
+
+    if (check) {
+      userPlugins.push(useCheck());
+    }
 
     const treeFactory = useTree(
       data.value,
-      [
-        useSelect(),
-        useCheck({
-          checkStrategy: 'none',
-        }),
-        useOperate(),
-      ]
+      userPlugins
     );
 
     const {
