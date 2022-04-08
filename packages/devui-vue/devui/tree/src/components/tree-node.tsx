@@ -12,9 +12,13 @@ export default defineComponent({
     data: {
       type: Object as PropType<IInnerTreeNode>,
     },
+    check: {
+      type: Boolean,
+      default: false
+    }
   },
   setup(props, { slots }) {
-    const { data } = toRefs(props);
+    const { data, check } = toRefs(props);
     const { selectNode, toggleCheckNode, toggleNode } = inject(USE_TREE_TOKEN);
 
     const {
@@ -38,13 +42,13 @@ export default defineComponent({
               : <DTreeNodeToggle data={data.value} />
             }
             <div class="devui-tree-node__content--value-wrapper" style={{ height: `${NODE_HEIGHT}px`}}>
-              <Checkbox
+              { check.value && <Checkbox
                 key={data.value?.id}
                 disabled={data.value?.disableCheck}
                 modelValue={data.value?.checked}
                 onUpdate:modelValue={() => { toggleCheckNode(data.value); }}
                 onClick={(event: MouseEvent) => { event.stopPropagation(); }}
-              />
+              /> }
               {
                 slots.default
                 ? renderSlot(useSlots(), 'default', { nodeData: data })
