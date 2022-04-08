@@ -1,6 +1,6 @@
 import { defineComponent, computed, CSSProperties, Ref, inject } from 'vue';
 import { colProps, ColProps } from './grid-types';
-import { useSize, CLASS_PREFIX, useColClassNames } from './use-grid';
+import { useSize, CLASS_PREFIX, useColClassNames } from './composables/use-grid';
 import './col.scss';
 
 
