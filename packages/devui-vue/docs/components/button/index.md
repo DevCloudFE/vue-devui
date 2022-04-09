@@ -2,11 +2,11 @@
 
 按钮用于开始一个即时操作。
 
-### 何时使用
+#### 何时使用
 
 标记了一个（或封装一组）操作命令，响应用户点击行为，触发相应的业务逻辑。
 
-### 按钮形态
+### 形态
 
 :::demo 通过`variant`设置按钮形态，目前支持`solid`、`outline`、`text`三种形态，默认为`outline`。
 
@@ -50,7 +50,7 @@
 
 :::
 
-### 按钮尺寸
+### 尺寸
 
 :::demo 通过`size`设置按钮尺寸，支持`xs`、`sm`、`md`、`lg`四种类型的尺寸，默认为`md`。
 
@@ -141,10 +141,10 @@ export default {
 
 | 参数     | 类型                              | 默认        | 说明                  | 跳转 Demo                 |
 | -------- | --------------------------------- | ----------- | --------------------- | ------------------------- |
-| variant  | [IButtonVariant](#ibuttonvariant) | 'outline'   | 可选，按钮形态        | [按钮形态](#按钮形态)     |
+| variant  | [IButtonVariant](#ibuttonvariant) | 'outline'   | 可选，按钮形态        | [形态](#形态)     |
 | color    | [IButtonColor](#ibuttoncolor)     | 'secondary' | 可选，按钮主题        | [主题色](#主题色)         |
-| size     | [IButtonSize](#ibuttonsize)       | 'md'        | 可选，按钮尺寸        | [按钮尺寸](#按钮尺寸)     |
-| icon     | `string`                          | --          | 可选，自定义按钮图标  | [图标](#图标)             |
+| size     | [IButtonSize](#ibuttonsize)       | 'md'        | 可选，按钮尺寸        | [尺寸](#尺寸)     |
+| icon     | `string`                          | --          | 可选，自定义按钮图标  | [图标按钮](#图标按钮)             |
 | disabled | `boolean`                         | false       | 可选，是否禁用 button | [禁用状态](#禁用状态)     |
 | loading  | `boolean`                         | false       | 可选，设置加载中状态  | [加载中状态](#加载中状态) |
 
