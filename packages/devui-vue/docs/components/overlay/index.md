@@ -107,28 +107,28 @@ export default defineComponent({
 
 ### FixedOverlay 参数
 
-| 参数              | 类型                       | 默认  | 说明                                                                         |
-| ----------------- | -------------------------- | ----- | ---------------------------------------------------------------------------- |
-| visible           | `boolean`                  | false | 可选，遮罩层是否可见                                                         |
-| onUpdate:visible  | `(value: boolean) => void` | --    | 可选，遮罩层取消可见事件                                                     |
-| background-block  | `boolean`                  | false | 可选，如果为 true，背景不能滚动                                              |
-| background-class  | `string`                   | --    | 可选，背景的样式类                                                           |
-| background-style  | `CSSProperties`               | --    | 可选，背景的样式                                                             |
-| on-backdrop-click | `() => void`               | --    | 可选，点击背景触发的事件                                                     |
-| backdrop-close    | `boolean`                  | false | 可选，如果为 true，点击背景将触发 `onUpdate:visible`，默认参数是 false       |
-| has-backdrop      | `boolean`                  | true  | 可选，如果为 false，背景元素的 `point-event` 会设为 `none`，且不显示默认背景 |
-| overlay-style     | `CSSProperties`            | --    | 可选，遮罩层的样式                                                           |
+| 参数名            | 类型                       | 默认  | 说明                                                                             |
+| :---------------- | :------------------------- | :---- | :------------------------------------------------------------------------------- |
+| visible           | `boolean`                  | false | 可选，遮罩层是否可见                                                             |
+| onUpdate:visible  | `(value: boolean) => void` | --    | 可选，遮罩层取消可见事件                                                         |
+| background-block  | `boolean`                  | false | 可选，如果为 true，背景不能滚动                                                  |
+| background-class  | `string`                   | --    | 可选，背景的样式类                                                               |
+| background-style  | `CSSProperties`            | --    | 可选，背景的样式                                                                 |
+| on-backdrop-click | `() => void`               | --    | 可选，点击背景触发的事件                                                         |
+| backdrop-close    | `boolean`                  | false | 可选，如果为 true，点击背景将触发 `onUpdate:visible`，<br>默认参数是 false       |
+| has-backdrop      | `boolean`                  | true  | 可选，如果为 false，背景元素的 `point-event` 会设为 `none`，<br>且不显示默认背景 |
+| overlay-style     | `CSSProperties`            | --    | 可选，遮罩层的样式                                                               |
 
 ### FlexibleOverlay 参数
 
-| 参数       | 类型                   | 默认       | 说明                                                   |
-| ---------- | ---------------------- | ---------- | ------------------------------------------------------ |
-| v-model    | `boolean`              | false      | 可选，控制是否显示                                     |
-| origin     | `HTMLElement`          | --         | 必选，你必须指定起点元素才能让遮罩层与该元素连接在一起 |
-| position   | [Placement[]](#placement)          | ['bottom'] | 可选，指定显示位置                                     |
-| align      | `start \| end \| center` | center       | 可选，指定对对齐方式，默认居中对齐                     |
-| offset     | `number`               | 8          | 可选，指定与起点元素的间距                             |
-| show-arrow | `boolean`              | false      | 可选，是否显示箭头                                     |
+| 参数名     | 类型                      | 默认       | 说明                                                   |
+| :--------- | :------------------------ | :--------- | :----------------------------------------------------- |
+| v-model    | `boolean`                 | false      | 可选，控制是否显示                                     |
+| origin     | `HTMLElement`             | --         | 必选，你必须指定起点元素才能让遮罩层与该元素连接在一起 |
+| position   | [Placement[]](#placement) | ['bottom'] | 可选，指定显示位置                                     |
+| align      | `start \| end \| center`  | center     | 可选，指定对对齐方式，默认居中对齐                     |
+| offset     | `number`                  | 8          | 可选，指定与起点元素的间距                             |
+| show-arrow | `boolean`                 | false      | 可选，是否显示箭头                                     |
 
 ### 类型
 
