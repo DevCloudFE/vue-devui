@@ -139,12 +139,12 @@ export default {
 
 ### Button 参数
 
-| 参数名     | 类型                              | 默认        | 说明                  | 跳转 Demo                 |
-| -------- | --------------------------------- | ----------- | --------------------- | ------------------------- |
-| variant  | [IButtonVariant](#ibuttonvariant) | 'outline'   | 可选，按钮形态        | [形态](#形态)     |
+| 参数名   | 类型                              | 默认        | 说明                  | 跳转 Demo                 |
+| :------- | :-------------------------------- | :---------- | :-------------------- | :------------------------ |
+| variant  | [IButtonVariant](#ibuttonvariant) | 'outline'   | 可选，按钮形态        | [形态](#形态)             |
 | color    | [IButtonColor](#ibuttoncolor)     | 'secondary' | 可选，按钮主题        | [主题色](#主题色)         |
-| size     | [IButtonSize](#ibuttonsize)       | 'md'        | 可选，按钮尺寸        | [尺寸](#尺寸)     |
-| icon     | `string`                          | --          | 可选，自定义按钮图标  | [图标按钮](#图标按钮)             |
+| size     | [IButtonSize](#ibuttonsize)       | 'md'        | 可选，按钮尺寸        | [尺寸](#尺寸)             |
+| icon     | `string`                          | --          | 可选，自定义按钮图标  | [图标按钮](#图标按钮)     |
 | disabled | `boolean`                         | false       | 可选，是否禁用 button | [禁用状态](#禁用状态)     |
 | loading  | `boolean`                         | false       | 可选，设置加载中状态  | [加载中状态](#加载中状态) |
 
