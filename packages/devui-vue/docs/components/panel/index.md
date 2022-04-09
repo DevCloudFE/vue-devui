@@ -168,19 +168,19 @@ export default defineComponent({
 
 ### Panel 参数
 
-|      参数名      |                    类型                     |  默认  |                                              说明                                              |
-| :--------------: | :-----------------------------------------: | :----: | :--------------------------------------------------------------------------------------------: |
-|       type       |                  PanelType                  | 'info' |                                        可选，面板的类型                                        |
-|   is-collapsed   |                   boolean                   | false  |                                       可选，是否默认展开                                       |
-| has-left-padding |                   boolean                   |  true  |                                     可选，是否显示左侧填充                                     |
-|  show-animation  |                   boolean                   |  true  |                                       可选，是否显示动画                                       |
-|  before-toggle   | (value: boolean, done?: () => void) => void |   --   | 可选，面板折叠状态改变前的回调函数。<br>参数`value`代表当前状态，参数`done()`可以控制Panel开合 |
+| 参数名           | 类型                                          | 默认   | 说明                                                                                               |
+| :--------------- | :-------------------------------------------- | :----- | :------------------------------------------------------------------------------------------------- |
+| type             | [PanelType](#paneltype)                       | 'info' | 可选，面板的类型                                                                                   |
+| is-collapsed     | `boolean`                                     | false  | 可选，是否默认展开                                                                                 |
+| has-left-padding | `boolean`                                     | true   | 可选，是否显示左侧填充                                                                             |
+| show-animation   | `boolean`                                     | true   | 可选，是否显示动画                                                                                 |
+| before-toggle    | `(value: boolean, done?: () => void) => void` | --     | 可选，面板折叠状态改变前的回调函数。<br>参数`value`代表当前状态，<br>参数`done()`可以控制Panel开合 |
 
 ### Panel 事件
 
-| 事件名 | 类型                     | 说明                 |
-| :----- | :----------------------- | :------------------- |
-| toggle | (value: boolean) => void | 可选，切换面板的事件 |
+| 事件名 | 类型                       | 说明                 |
+| :----- | :------------------------- | :------------------- |
+| toggle | `(value: boolean) => void` | 可选，切换面板的事件 |
 
 ### 类型
 
