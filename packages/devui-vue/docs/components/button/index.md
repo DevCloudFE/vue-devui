@@ -150,8 +150,6 @@ export default {
 
 ### 类型
 
-<br>
-
 #### IButtonVariant
 
 ```typescript
