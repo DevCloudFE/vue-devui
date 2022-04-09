@@ -152,18 +152,18 @@ export default {
 
 #### IButtonVariant
 
-```typescript
+```ts
 type IButtonVariant = 'solid' | 'outline' | 'text';
 ```
 
 #### IButtonSize
 
-```typescript
+```ts
 type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 ```
 
 #### IButtonColor
 
-```typescript
-type IButtonColor = 'secondary' | 'primary' | 'danger';
+```ts
+type IButtonColor = 'primary' | 'secondary' | 'danger';
 ```
