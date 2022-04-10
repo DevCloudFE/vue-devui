@@ -1,6 +1,8 @@
 import { App } from 'vue';
-import Loading from './src/directive';
-import LoadingService from './src/service';
+import Loading from './src/loading-directive';
+import LoadingService from './src/loading-service';
+
+export * from './src/loading-types';
 
 export {
   LoadingService,

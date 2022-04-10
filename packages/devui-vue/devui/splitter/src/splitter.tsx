@@ -6,7 +6,7 @@ import {
   onUnmounted,
   watch
 } from 'vue';
-import DSplitterBar from './splitter-bar';
+import DSplitterBar from './components/splitter-bar';
 import { SplitterStore, type SplitterPane} from './splitter-store';
 import { splitterProps, SplitterProps, SplitterState } from './splitter-types';
 import './splitter.scss';

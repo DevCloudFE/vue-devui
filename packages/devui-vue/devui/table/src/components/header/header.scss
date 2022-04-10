@@ -3,14 +3,13 @@
 .devui-table {
   &__thead {
     tr {
-      font-size: $devui-font-size-card-title;
-      color: $devui-text;
-      font-weight: 700;
       border: none;
       background-color: $devui-base-bg;
 
       th {
+        display: table-cell;
         text-align: left;
+        padding: 0 0 0 18px;
         border: none;
         border-bottom: 1px solid $devui-line;
       }
@@ -20,10 +19,14 @@
       position: relative;
       display: flex;
       align-items: center;
+      padding-left: 2px;
       padding-right: 8px;
 
       .title {
         display: inline-block;
+        font-size: $devui-font-size;
+        color: $devui-text;
+        font-weight: 700;
         line-height: 36px;
         vertical-align: middle;
         white-space: nowrap;
@@ -37,7 +40,7 @@
 
 .devui-table {
   &--header-bg {
-    thead.devui-thead {
+    thead.devui-table__thead {
       tr {
         background: var(--devui-list-item-hover-bg, #f2f5fc);
       }

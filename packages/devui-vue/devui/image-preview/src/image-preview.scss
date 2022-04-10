@@ -1,7 +1,4 @@
-@import '../../style/theme/_z-index';
-@import '../../style/theme/_shadow';
-@import '../../style/theme/_color';
-@import '../../style/theme/_corner';
+@import '../../styles-var/devui-var.scss';
 
 .devui-image-preview {
   position: fixed;

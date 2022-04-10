@@ -1,10 +1,22 @@
 import { ref } from 'vue';
-import { IFileOptions } from '../upload-types';
+import type { IFileOptions, IUploadOptions } from '../upload-types';
 import { getNotAllowedFileTypeMsg, getBeyondMaximalFileSizeMsg, getAllFilesBeyondMaximalFileSizeMsg } from '../i18n-upload';
 
-export const useSelectFiles = () => {
+export interface IReturnMessage {
+  checkError: boolean;
+  errorMsg?: string;
+}
+
+export interface IUseSelectFiles {
+  triggerSelectFiles: (options: IFileOptions) => Promise<File[]>;
+  _validateFiles: (file: File, accept: string, uploadOptions?: IUploadOptions) => IReturnMessage;
+  triggerDropFiles: (files: File[]) => Promise<File[]>;
+  checkAllFilesSize: (fileSize: number, maximumSize: number) => IReturnMessage | void;
+}
+
+export const useSelectFiles = (): IUseSelectFiles => {
   const BEYOND_MAXIMAL_FILE_SIZE_MSG = ref('');
-  const simulateClickEvent = (input) => {
+  const simulateClickEvent = (input: HTMLInputElement) => {
     const evt = document.createEvent('MouseEvents');
     evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
     input.dispatchEvent(evt);
@@ -64,24 +76,24 @@ export const useSelectFiles = () => {
     return true;
   };
 
-  const beyondMaximalSize = (fileSize, maximumSize) => {
+  const beyondMaximalSize = (fileSize: number, maximumSize?: number) => {
     if (maximumSize) {
       return fileSize > 1024 * 1024 * maximumSize;
     }
     return false;
   };
 
-  const _validateFiles = (file, accept, uploadOptions) => {
-    if (!isAllowedFileType(accept, <File>file)) {
+  const _validateFiles = (file: File, accept: string, uploadOptions?: IUploadOptions): IReturnMessage => {
+    if (!isAllowedFileType(accept, file)) {
       return {
         checkError: true,
-        errorMsg: getNotAllowedFileTypeMsg((<File>file).name, accept),
+        errorMsg: getNotAllowedFileTypeMsg(file.name, accept),
       };
     }
-    if (uploadOptions && beyondMaximalSize((<File>file).size, uploadOptions.maximumSize)) {
+    if (uploadOptions && beyondMaximalSize(file.size, uploadOptions.maximumSize)) {
       return {
         checkError: true,
-        errorMsg: getBeyondMaximalFileSizeMsg((<File>file).name, uploadOptions.maximumSize),
+        errorMsg: getBeyondMaximalFileSizeMsg(file.name, uploadOptions.maximumSize || 0),
       };
     }
     return { checkError: false, errorMsg: undefined };
@@ -91,10 +103,10 @@ export const useSelectFiles = () => {
     const { multiple, accept, webkitdirectory } = fileOptions;
     return selectFiles({ multiple, accept, webkitdirectory });
   };
-  const triggerDropFiles = (files: File[]) => {
+  const triggerDropFiles = (files: File[]): Promise<File[]> => {
     return Promise.resolve(files);
   };
-  const checkAllFilesSize = (fileSize, maximumSize) => {
+  const checkAllFilesSize = (fileSize: number, maximumSize: number) => {
     if (beyondMaximalSize(fileSize, maximumSize)) {
       BEYOND_MAXIMAL_FILE_SIZE_MSG.value = getAllFilesBeyondMaximalFileSizeMsg(maximumSize);
       return { checkError: true, errorMsg: BEYOND_MAXIMAL_FILE_SIZE_MSG.value };

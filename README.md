@@ -113,6 +113,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://inreasons.cn"><img src="https://avatars.githubusercontent.com/u/47918504?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Chestnut</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=banlify" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/c0dedance"><img src="https://avatars.githubusercontent.com/u/38075730?v=4?s=100" width="100px;" alt=""/><br /><sub><b>c0dedance</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=c0dedance" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/duqingyu"><img src="https://avatars.githubusercontent.com/u/30541930?v=4?s=100" width="100px;" alt=""/><br /><sub><b>杜庆愉</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=duqingyu" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/linxiang07"><img src="https://avatars.githubusercontent.com/u/40119767?v=4?s=100" width="100px;" alt=""/><br /><sub><b>linxiang</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=linxiang07" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/nextniko"><img src="https://avatars.githubusercontent.com/u/40553790?v=4?s=100" width="100px;" alt=""/><br /><sub><b>掘墓忍者</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=nextniko" title="Code">💻</a></td>
   </tr>
 </table>
 

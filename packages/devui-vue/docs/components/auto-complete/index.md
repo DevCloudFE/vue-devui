@@ -2,7 +2,7 @@
 
 联想用户可能需要的输入结果。
 
-### 何时使用
+#### 何时使用
 
 当需要根据用户输入的部分字符推断出他可能想要输入的内容时。
 
@@ -22,6 +22,7 @@
     :trans-input-focus-emit="transInputFocusEmit"
     :position="position"
     :width="420"
+    :append-to-body="false"
   >
   </d-auto-complete>
 </template>
@@ -375,6 +376,7 @@ enable-lazy-load 开启懒加载
     enable-lazy-load
     :load-more="loadMore"
     scene-type="select"
+    :value-parser="valueParser"
   >
   </d-auto-complete>
 </template>
@@ -415,10 +417,14 @@ export default defineComponent({
         autoCompleteRef.value?.loadFinish()
       },3000)
     }
+    const valueParser = (e) => {
+      return e + '123'
+    }
     return {
       value,
       source,
       loadMore,
+      valueParser,
       autoCompleteRef
     }
   }
@@ -437,9 +443,10 @@ export default defineComponent({
 
 |           参数           |              类型              |                   默认                    |                                                                              说明                                                                               | 跳转 Demo                                 | 全局配置项 |
 | :----------------------: | :----------------------------: | :---------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------- | ---------- |
-|          source          |          `Array<any>`          |                    --                     |                                                              必选，有 searchFn 的情况下可以不必选                                                               | [基本用法](#基本用法)                     |
+|          source          |  [`SourceType`](#sourcetype)   |                    --                     |                                                              必选，有 searchFn 的情况下可以不必选                                                               | [基本用法](#基本用法)                     |
 | allow-empty-value-search |           `boolean`            |                   false                   |                                                     可选，在绑定的输入框 value 为空时，是否进行搜索提示操作                                                     | [基本用法](#基本用法)                     |
-|         position         |         `Placement[]`          |          ['bottom'](#placement)           |                                                               可选，指定下拉框与输入框的相对位置                                                                | [基本用法](#基本用法)                     |
+|      append-to-body      |           `boolean`            |                   false                   |                                                                可选，下拉弹出是否 append to body                                                                | [基本用法](#基本用法)                     |
+|         position         |   [`Placement`](#placement)    |               `['bottom']`                |                                                               可选，指定下拉框与输入框的相对位置                                                                | [基本用法](#基本用法)                     |
 |         disabled         |           `boolean`            |                   false                   |                                                                       可选，是否禁用指令                                                                        | [设置禁用](#设置禁用)                     |
 |          delay           |            `number`            |                    300                    |                                                可选，只有在 delay 时间经过后并且未输入新值，才做搜索查询（`ms`）                                                | [基本用法](#基本用法)                     |
 |       disabled-key       |            `string`            |                    --                     | 可选，禁用单个选项，当传入资源 source 选项类型为对象，比如设置为'disabled'，则当对象的 disable 属性为 true 时，比如{ label: xxx, disabled: true }，该选项将禁用 | [自定义数据匹配方法](#自定义数据匹配方法) |
@@ -456,11 +463,11 @@ export default defineComponent({
 
 ### AutoComplete 事件
 
-|          参数          |       类型        |                                                                说明                                                                 | 跳转 Demo             |
-| :--------------------: | :---------------: | :---------------------------------------------------------------------------------------------------------------------------------: | :-------------------- |
-|        loadMore        |    `function`     | 懒加载触发事件，配合`enable-lazy-load`使用，使用`$event.loadFinish()`关闭 loading 状态，其中\$event 为 AutoCompleteComponent 的实例 | [懒加载](#懒加载)     |
-|      select-value      | `function(value)` |                                                    可选，选择选项之后的回调函数                                                     | [基本用法](#基本用法) |
-| trans-input-focus-emit |    `function`     |                                                    可选，Input focus 时回调函数                                                     | [基本用法](#基本用法) |
+|          参数          |       类型        |                                                                说明                                                                 | 跳转 Demo                 |
+| :--------------------: | :---------------: | :---------------------------------------------------------------------------------------------------------------------------------: | :------------------------ |
+|       load-more        |    `function`     | 懒加载触发事件，配合`enable-lazy-load`使用，使用`$event.loadFinish()`关闭 loading 状态，其中\$event 为 AutoCompleteComponent 的实例 | [启用懒加载](#启用懒加载) |
+|      select-value      | `function(value)` |                                                    可选，选择选项之后的回调函数                                                     | [基本用法](#基本用法)     |
+| trans-input-focus-emit |    `function`     |                                                    可选，Input focus 时回调函数                                                     | [基本用法](#基本用法)     |
 
 ### AutoComplete 插槽
 
@@ -472,6 +479,15 @@ export default defineComponent({
 
 # 接口 & 类型定义
 
+### SourceType
+```ts
+interface SourceItemObj {
+  label: string;
+  disabled: boolean;
+  [propName: string]: unknown;
+}
+type SourceType = Array<string>| Array<SourceItemObj>
+```
 ### Placement
 ```ts
 type Placement =
@@ -492,15 +508,18 @@ type Placement =
 ### defaultSearchFn
 
 ```ts
-defaultSearchFn = (term) => {
-  return source.forEach((item)=>{
-          let cur = formatter(item)
-          cur = cur.toLowerCase()
-          if(cur.startsWith(term)){
-            arr.push(item)
-          }
-        })
-  };
+defaultSearchFn = (term: string) => {
+  type ItemType = typeof source.value[0];
+  const arr: ItemType[] = [];
+  source.value.forEach((item) => {
+    let cur = formatter.value((item as ItemType));
+    cur = cur.toLowerCase();
+    if (cur.startsWith(term)) {
+      arr.push(item);
+    }
+  });
+  return arr as SourceType;
+};
 ```
 term 为输入的关键字。
   
@@ -508,7 +527,12 @@ term 为输入的关键字。
 ### defaultFormatter
 
 ```ts
-defaultFormatter = (item) => (item ? item.label || item.toString() : '');
+defaultFormatter = (item: string | SourceItemObj) => {
+  if(typeof item === 'string'){
+    return item;
+  }
+  return item!==null ? item.label || item.toString() : '';
+};
 ```
 item 为数据项。
   

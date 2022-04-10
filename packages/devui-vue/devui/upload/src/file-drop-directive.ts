@@ -3,19 +3,18 @@ interface BindingType {
     droppable?: boolean;
     isSingle?: boolean;
     onFileDrop?: (files: File[]) => void;
-    onFileOver?: (event: any) => void;
+    onFileOver?: (event: unknown) => void;
   };
 }
 
-const getTransfer = (event: any) => {
+const getTransfer = (event: DragEvent): DataTransfer => {
   return event.dataTransfer ? event.dataTransfer : event.originalEvent?.dataTransfer;
 };
 
-const haveFiles = (types: any) => {
+const haveFiles = (types?: readonly string[]) => {
   if (!types) {
     return false;
   }
-
   if (types.indexOf) {
     return types.indexOf('Files') !== -1;
   } else if (types.contains) {
@@ -25,7 +24,7 @@ const haveFiles = (types: any) => {
   }
 };
 
-const preventAndStop = (event: any) => {
+const preventAndStop = (event: Event) => {
   event.preventDefault();
   event.stopPropagation();
 };

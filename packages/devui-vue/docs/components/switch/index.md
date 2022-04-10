@@ -2,18 +2,18 @@
 
 开/关切换组件。
 
-### 何时使用
+#### 何时使用
 
 当两种状态需要来回切换控制时，比如启用/禁用。
 
 ### size
 
-:::demo size可选：`small | middle | large`，默认为middle
+:::demo size可选：`sm | md | lg`，默认为`md`
 ```vue
 <template>
-  <d-switch v-model:checked="checkedSmall" size="small"></d-switch>
-  <d-switch v-model:checked="uncheckedMiddle" ></d-switch>
-  <d-switch v-model:checked="checkedLarge" size="large"></d-switch>
+  <d-switch v-model:checked="checkedSmall" size="sm"></d-switch>
+  <d-switch v-model:checked="uncheckedMiddle"></d-switch>
+  <d-switch v-model:checked="checkedLarge" size="lg"></d-switch>
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
@@ -101,7 +101,7 @@ export default defineComponent({
 
 |       参数       |            类型            |   默认   |             说明             | 跳转 Demo                 |
 | :--------------: | :------------------------: | :------: | :--------------------------: | :------------------------ |
-|       size       | `small \| middle \| large` | `middle` |      可选，开关尺寸大小      | [size](#size)     |
+|       size       | `sm \| md \| lg` | `md` |      可选，开关尺寸大小      | [size](#size)     |
 |      color       |          `string`          |    --    | 可选，开关打开时的自定义颜色 | [自定义样式](#自定义样式) |
 |     checked      |         `boolean`          |  false   | 可选，开关是否打开，默认关闭 | [基本用法](#size)     |
 |     disabled     |         `boolean`          |  false   |      可选，是否禁用开关      | [基本用法](#size)     |

@@ -1,4 +1,4 @@
-import type { IconPropsType } from "./avatar-types";
+import type { IconPropsType } from "../avatar-types";
 
 export const IconBody = (props: IconPropsType): JSX.Element => {
   const { width, height } = props;

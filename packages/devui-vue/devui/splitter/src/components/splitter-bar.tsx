@@ -9,12 +9,12 @@ import {
   inject,
 } from 'vue';
 
-import DToolTip from '../../tooltip/src/tooltip';
-import { setStyle } from '../../shared/util/set-style';
-import { addClass, removeClass } from '../../shared/util/class';
-import dresize, { ResizeDirectiveProp } from './util/d-resize-directive';
-import type { SplitterStore, DragState, SplitterPane } from './splitter-store';
-import { splitterBarProps, SplitterBarProps } from './splitter-bar-type';
+import DToolTip from '../../../tooltip/src/tooltip';
+import { setStyle } from '../../../shared/util/set-style';
+import { addClass, removeClass } from '../../../shared/util/class';
+import dresize, { ResizeDirectiveProp } from '../d-resize-directive';
+import type { SplitterStore, DragState, SplitterPane } from '../splitter-store';
+import { splitterBarProps, SplitterBarProps } from './splitter-bar-types';
 import './splitter-bar.scss';
 
 export default defineComponent({

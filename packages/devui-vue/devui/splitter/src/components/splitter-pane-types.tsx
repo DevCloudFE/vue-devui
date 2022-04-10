@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType } from 'vue';
-import { CollapseDirection } from './splitter-types';
+import { CollapseDirection } from '../splitter-types';
 
 export const splitterPaneProps = {
   /**

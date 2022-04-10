@@ -7,7 +7,7 @@ export { Table, Column };
 export default {
   title: 'Table 表格',
   category: '数据展示',
-  status: '10%',
+  status: '20%',
   install(app: App): void {
     app.component(Table.name, Table);
     app.component(Column.name, Column);
