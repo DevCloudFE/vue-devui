@@ -1,9 +1,5 @@
 import { ExtractPropTypes, PropType } from 'vue';
-import { ITreeNode } from './core/use-tree-types';
-
-export type ICheckStrategy = 'upward' | 'downward' | 'both' | 'none';
-
-export type ICheck = boolean | ICheckStrategy;
+import { ICheck, ITreeNode } from './core/use-tree-types';
 
 export const treeProps = {
   data: {

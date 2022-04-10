@@ -239,14 +239,14 @@ export default defineComponent({
 
 :::
 
-### d-tree 参数
+### Tree 参数
 
 | 参数名 | 类型                        | 默认值 | 说明                   | 跳转 Demo             |
 | :----- | :-------------------------- | :----- | :--------------------- | :-------------------- |
 | data   | [ITreeNode\[\]](#itreenode) | []     | 可选，树形结构数据     | [基本用法](#基本用法) |
 | check  | [ICheck](#icheck)           | false  | 可选，是否启用勾选功能 | [可勾选](#可勾选)     |
 
-### d-tree 插槽
+### Tree 插槽
 
 | 插槽名  | 说明                |
 | :------ | :------------------ |
@@ -254,7 +254,7 @@ export default defineComponent({
 | content | 自定义节点内容      |
 | icon    | 自定义展开/收起按钮 |
 
-### d-tree-node 参数
+### TreeNode 参数
 
 | 参数名 | 类型                    | 默认值 | 说明                   |
 | :----- | :---------------------- | :----- | :--------------------- |
@@ -262,8 +262,6 @@ export default defineComponent({
 | check  | [ICheck](#icheck)       | false  | 可选，是否启用勾选功能 |
 
 ### 类型
-
-<br>
 
 #### ITreeNode
 
