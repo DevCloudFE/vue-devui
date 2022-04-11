@@ -16,6 +16,7 @@ export default defineComponent({
     dLoading: Loading,
   },
   props: TableProps,
+  emits: ['sort-change'],
   setup(props: TablePropsTypes, ctx) {
     const table = getCurrentInstance() as Table<DefaultRow>;
     const store = createStore(toRef(props, 'data'));

@@ -4,7 +4,7 @@ import './sort.scss';
 
 export default defineComponent({
   props: sortProps,
-  emits: ['update:modelValue'],
+  emits: ['sort'],
   setup(props: SortProps, ctx) {
     const directionMap = {
       ASC: 'DESC',
@@ -12,7 +12,7 @@ export default defineComponent({
       default: 'ASC',
     };
     const changeDirection = () => {
-      ctx.emit('update:modelValue', directionMap[props.modelValue || 'default']);
+      ctx.emit('sort', directionMap[props.sortDirection || 'default']);
     };
 
     return () => (
@@ -21,9 +21,9 @@ export default defineComponent({
           class={[
             'datatable-svg',
             {
-              'sort-icon-default': !props.modelValue,
-              'sort-icon-asc': props.modelValue === 'ASC',
-              'sort-icon-desc': props.modelValue === 'DESC',
+              'sort-icon-default': !props.sortDirection,
+              'sort-icon-asc': props.sortDirection === 'ASC',
+              'sort-icon-desc': props.sortDirection === 'DESC',
             },
           ]}>
           <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">

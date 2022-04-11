@@ -1,28 +1,48 @@
-import { ref, watch, Ref, shallowRef, computed } from 'vue';
+import { ref, watch, Ref, shallowRef, computed, getCurrentInstance, inject, onMounted } from 'vue';
 import type { ComputedRef } from 'vue';
 import { Column, FilterResults, SortDirection } from '../column/column-types';
 import { TableStore } from '../../store/store-types';
+import { TABLE_TOKEN } from '../../table-types';
 
-export const useSort = (
-  store: TableStore,
-  column: Ref<Column>
-): { direction: Ref<SortDirection>; sortClass: ComputedRef<Record<string, boolean>> } => {
+interface UseSort {
+  direction: Ref<SortDirection>;
+  sortClass: ComputedRef<Record<string, boolean>>;
+  handleSort: (val: SortDirection) => void;
+  clearSortOrder: () => void;
+}
+
+export const useSort = (column: Ref<Column>): UseSort => {
+  const table = inject(TABLE_TOKEN);
+  const store = table.store;
   const direction = ref<SortDirection>(column.value.sortDirection);
   const sortClass = computed(() => ({
     'sort-active': Boolean(direction.value),
   }));
-
-  watch(
-    [direction, column],
-    ([directionVal, columnVal]) => {
-      if (columnVal.sortable && columnVal.field) {
-        store.sortData(columnVal.field, directionVal, columnVal.sortMethod);
+  const thInstance = getCurrentInstance();
+  thInstance && store.states.thList.push(thInstance);
+  onMounted(() => {
+    column.value.sortable && column.value.sortDirection && store.sortData?.(direction.value, column.value.sortMethod);
+  });
+  const execClearSortOrder = () => {
+    store.states.thList.forEach((th) => {
+      if (th !== thInstance) {
+        th.exposed?.clearSortOrder?.();
       }
-    },
-    { immediate: true }
-  );
+    });
+  };
 
-  return { direction, sortClass };
+  const handleSort = (val: SortDirection) => {
+    direction.value = val;
+    execClearSortOrder();
+    store.sortData?.(direction.value, column.value.sortMethod);
+    table.emit('sort-change', { field: column.value.field, direction: direction.value });
+  };
+
+  const clearSortOrder = () => {
+    direction.value = '';
+  };
+
+  return { direction, sortClass, handleSort, clearSortOrder };
 };
 
 export const useFilter = (store: TableStore, column: Ref<Column>): Ref<FilterResults> => {

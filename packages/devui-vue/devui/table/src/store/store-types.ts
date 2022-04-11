@@ -1,6 +1,5 @@
-import type { Ref } from 'vue';
-import { SortDirection } from '../components/sort/sort-types';
-import { Column, SortMethod, FilterResults } from '../components/column/column-types';
+import type { ComponentInternalInstance, Ref } from 'vue';
+import { Column, SortMethod, FilterResults, SortDirection } from '../components/column/column-types';
 
 export interface TableStore<T = Record<string, any>> {
   states: {
@@ -11,6 +10,7 @@ export interface TableStore<T = Record<string, any>> {
     _checkAll: Ref<boolean>;
     _halfChecked: Ref<boolean>;
     isFixedLeft: Ref<boolean>;
+    thList: ComponentInternalInstance[];
   };
   insertColumn(column: Column, parent: any): void;
   sortColumn(): void;

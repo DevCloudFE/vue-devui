@@ -9,26 +9,26 @@ describe('d-table', () => {
   beforeEach(() => {
     data = [
       {
-        firstName: 'Mark',
-        lastName: 'Otto',
-        date: '1990/01/11',
-        gender: 'Male',
-      },
-      {
         firstName: 'Jacob',
         lastName: 'Thornton',
         gender: 'Female',
         date: '1990/01/12',
       },
       {
+        firstName: 'Mark',
+        lastName: 'Otto',
+        date: '1990/01/11',
+        gender: 'Male',
+      },
+      {
         firstName: 'Danni',
         lastName: 'Chen',
-        gender: 'Male',
+        gender: 'Female',
         date: '1990/01/13',
       },
       {
-        firstName: 'green',
-        lastName: 'gerong',
+        firstName: 'Green',
+        lastName: 'Gerong',
         gender: 'Male',
         date: '1990/01/14',
       },
@@ -231,5 +231,45 @@ describe('d-table', () => {
     expect(tableHeader.findAll('tr')[0].findAll('th')[0].attributes('colspan')).toBe('2');
     expect(tableHeader.findAll('tr')[0].findAll('th')[1].attributes('rowspan')).toBe('2');
     wrapper.unmount();
+  });
+
+  it('sort', async () => {
+    const handleSortChange = jest.fn();
+    const wrapper = mount({
+      setup() {
+        const sortDateMethod = (a, b) => {
+          return a.date > b.date;
+        };
+        return () => (
+          <DTable data={data} onSortChange={handleSortChange}>
+            <DColumn field="firstName" header="First Name"></DColumn>
+            <DColumn field="lastName" header="Last Name"></DColumn>
+            <DColumn field="gender" header="Gender"></DColumn>
+            <DColumn field="date" header="Date of birth" sortable sort-direction="ASC" sort-method={sortDateMethod}></DColumn>
+          </DTable>
+        );
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const table = wrapper.find('.devui-table');
+    const tableHeader = table.find('.devui-table__thead');
+    const lastTh = tableHeader.find('tr').findAll('th')[3];
+    expect(lastTh.classes()).toContain('sort-active');
+
+    const tableBody = table.find('.devui-table__tbody');
+    const lastTd = tableBody.find('tr').findAll('td')[3];
+    expect(lastTd.text()).toBe('1990/01/11');
+
+    const sortIcon = lastTh.find('.sort-clickable');
+    await sortIcon.trigger('click');
+    expect(lastTd.text()).toBe('1990/01/14');
+    expect(handleSortChange).toBeCalled();
+
+    await sortIcon.trigger('click');
+    expect(lastTd.text()).toBe('1990/01/12');
+    expect(handleSortChange).toBeCalled();
   });
 });

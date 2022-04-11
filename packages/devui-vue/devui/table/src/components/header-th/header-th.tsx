@@ -15,21 +15,24 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props: { column: Column }) {
+  setup(props: { column: Column }, { expose }) {
     const table = inject(TABLE_TOKEN);
+    const store = table.store;
     const { column } = toRefs(props);
-    const { direction, sortClass } = useSort(table.store, column);
-    const filteredRef = useFilter(table.store, column);
+    const { direction, sortClass, handleSort, clearSortOrder } = useSort(column);
+    const filteredRef = useFilter(store, column);
     const { stickyClass, stickyStyle } = useFixedColumn(column);
+
+    expose({ clearSortOrder });
 
     return () => (
       <th class={[stickyClass.value, sortClass.value]} style={stickyStyle.value}>
         <div class="header-container">
-          {column.value.renderHeader?.(column.value, table.store)}
+          {column.value.renderHeader?.(column.value, store)}
           {column.value.filterable && (
             <Filter v-model={filteredRef.value} filterList={props.column.filterList} customTemplate={props.column.customFilterTemplate} />
           )}
-          {column.value.sortable && <Sort v-model={direction.value} />}
+          {column.value.sortable && <Sort sort-direction={direction.value} onSort={handleSort} />}
         </div>
       </th>
     );

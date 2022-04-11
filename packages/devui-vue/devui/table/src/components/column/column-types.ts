@@ -5,7 +5,7 @@ import { TableStore } from '../../store/store-types';
 // eslint-disable-next-line no-use-before-define
 export type Formatter = (row: DefaultRow, column: Column, cellValue: any, rowIndex: number) => VNode;
 
-export type SortMethod<T = any> = (field: string, a: T, b: T) => boolean;
+export type SortMethod<T = any> = (a: T, b: T) => boolean;
 
 export type ColumnType = 'checkable' | 'index' | '';
 
@@ -55,7 +55,6 @@ export const tableColumnProps = {
   },
   sortMethod: {
     type: Function as PropType<SortMethod>,
-    default: (field: string, a: any, b: any): boolean => a[field] > b[field],
   },
   filterable: {
     type: Boolean,
