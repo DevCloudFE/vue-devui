@@ -4,7 +4,7 @@ import Tab from './src/tab';
 
 export * from './src/tabs-types';
 
-export { Tabs };
+export { Tabs, Tab };
 
 export default {
   title: 'Tabs 选项卡',
