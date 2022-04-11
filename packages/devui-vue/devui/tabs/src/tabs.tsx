@@ -1,54 +1,10 @@
-import { defineComponent, onBeforeMount, onMounted, onUpdated, PropType, provide, reactive, ref, Slot } from 'vue';
+import { defineComponent, onBeforeMount, onMounted, onUpdated, provide, reactive, ref } from 'vue';
+import { Active, Tabs, tabsProps, TabsState } from './tabs-types';
 import './tabs.scss';
 
-export type Active = string | number | null;
-export type TabsType = 'tabs' | 'pills' | 'options' | 'wrapped' | 'slider';
-export interface Tabs {
-  state: TabsState;
-}
-interface TabsState {
-  data?: any[];
-  showContent: boolean;
-  active: string;
-  slots: Slot[];
-}
 export default defineComponent({
   name: 'DTabs',
-  props: {
-    modelValue: {
-      type: [String, Number],
-      default: null,
-    },
-
-    type: {
-      type: String as () => TabsType,
-      default: 'tabs',
-    },
-    showContent: {
-      type: Boolean,
-      default: true,
-    },
-    vertical: {
-      type: Boolean,
-      default: false,
-    },
-    reactivable: {
-      type: Boolean,
-      default: true,
-    },
-    customWidth: {
-      type: String,
-      default: '',
-    },
-    cssClass: {
-      type: String,
-      default: '',
-    },
-    beforeChange: {
-      type: Function as PropType<(id: Active) => boolean>,
-      default: null,
-    },
-  },
+  props: tabsProps,
 
   emits: ['update:modelValue', 'active-tab-change'],
   setup(props, { emit, slots }) {
@@ -127,17 +83,17 @@ export default defineComponent({
     return () => {
       return (
         <div>
-          <ul ref={tabsEle} role='tablist' class={`devui-nav devui-nav-${ulClass.join(' ')}`} id='devuiTabs11'>
+          <ul ref={tabsEle} role="tablist" class={`devui-nav devui-nav-${ulClass.join(' ')}`} id="devuiTabs11">
             {state.data.map((item, i) => {
               return (
                 <li
-                  role='presentation'
+                  role="presentation"
                   onClick={() => {
                     activeClick(item);
                   }}
                   class={(props.modelValue === (item.id || item.tabId) ? 'active' : '') + ' ' + (item.disabled ? 'disabled' : '')}
                   id={item.id || item.tabId}>
-                  <a role='tab' data-toggle={item.id} aria-expanded={props.modelValue === (item.id || item.tabId)}>
+                  <a role="tab" data-toggle={item.id} aria-expanded={props.modelValue === (item.id || item.tabId)}>
                     {state.slots[i] ? state.slots[i]() : <span>{item.title}</span>}
                   </a>
                 </li>
