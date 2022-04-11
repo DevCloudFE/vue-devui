@@ -6,6 +6,24 @@
   &.hover {
     box-shadow: none !important;
   }
+
+  .source {
+    .demo-spacing {
+      & > * {
+        margin: 0 8px 8px 0;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      &:last-child {
+        & > * {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 }
 
 .demo-block-control {

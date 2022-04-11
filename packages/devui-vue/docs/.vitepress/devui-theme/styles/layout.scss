@@ -42,6 +42,10 @@ h5,
 h6 {
   margin: 0;
   line-height: 1.25;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 h1,
@@ -88,7 +92,6 @@ h2 {
   padding-bottom: 0.3rem;
   line-height: 1.25;
   font-size: 1.65rem;
-  /* overflow-x: auto; */
 }
 
 h2 + h3 {
@@ -101,6 +104,7 @@ h3 {
 }
 
 h4 {
+  margin-top: 2rem;
   font-size: 1.15rem;
 }
 
@@ -195,7 +199,7 @@ blockquote {
   border-left: 0.2rem solid $devui-dividing-line;
   padding: 0.25rem 0 0.25rem 1rem;
   font-size: 1rem;
-  color: #999;
+  color: #999999;
 }
 
 blockquote > p {
@@ -269,22 +273,27 @@ $max-width: 1440px;
   }
 }
 
-[ui-theme=infinity-theme], [ui-theme=galaxy-theme] {
+[ui-theme=infinity-theme],
+[ui-theme=galaxy-theme] {
   .nav-bar {
     background-color: $devui-base-bg !important;
   }
 }
 
-[ui-theme=sweet-theme], [ui-theme=provence-theme], [ui-theme=deep-theme] {
+[ui-theme=sweet-theme],
+[ui-theme=provence-theme],
+[ui-theme=deep-theme] {
   .nav-bar {
     background-color: $devui-brand !important;
 
     a {
-      color: #fff !important;
+      color: #ffffff !important;
     }
 
-    svg, path, polygon {
-      fill: #fff !important;
+    svg,
+    path,
+    polygon {
+      fill: #ffffff !important;
     }
   }
 }

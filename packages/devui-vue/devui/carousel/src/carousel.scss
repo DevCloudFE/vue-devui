@@ -1,6 +1,4 @@
-@import '../../style/theme/color';
-@import '../../style/theme/shadow';
-@import '../../style/core/animation';
+@import '../../styles-var/devui-var.scss';
 
 @mixin fixed-arrow-button() {
   position: absolute;

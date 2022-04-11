@@ -1,7 +1,7 @@
 import { defineComponent, computed, ref, Ref, CSSProperties, onMounted, onUnmounted, provide } from 'vue';
 import { rowProps, RowProps } from './grid-types';
-import { formatClass } from './use-grid';
-import { responesScreen, Screen, RESULT_SCREEN, removeSubscribeCb } from './use-screen';
+import { formatClass } from './composables/use-grid';
+import { responesScreen, Screen, RESULT_SCREEN, removeSubscribeCb } from './composables/use-screen';
 import './row.scss';
 
 const CLASS_PREFIX = 'devui-row';

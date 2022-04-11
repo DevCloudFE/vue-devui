@@ -1,13 +1,13 @@
 import { CSSProperties, defineComponent, ref } from 'vue';
-import { componentProps, ComponentProps } from './types';
+import { loadingProps, LoadingProps } from './loading-types';
 
 import './loading.scss';
 
 export default defineComponent({
   name: 'DLoading',
   inheritAttrs: false,
-  props: componentProps,
-  setup(props: ComponentProps) {
+  props: loadingProps,
+  setup(props: LoadingProps) {
 
     const style: CSSProperties = {
       top: props.view.top,
