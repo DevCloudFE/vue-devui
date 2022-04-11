@@ -12,10 +12,14 @@ export default defineComponent({
     data: {
       type: Object as PropType<IInnerTreeNode>,
     },
+    check: {
+      type: Boolean,
+      default: false
+    }
   },
   setup(props, { slots }) {
-    const { data } = toRefs(props);
-    const { selectNode, toggleCheckNode, toggleNode } = inject(USE_TREE_TOKEN);
+    const { data, check } = toRefs(props);
+    const { toggleSelectNode, toggleCheckNode, toggleNode } = inject(USE_TREE_TOKEN);
 
     const {
       nodeClass,
@@ -30,7 +34,7 @@ export default defineComponent({
       return (
         <div class={nodeClass.value} style={nodeStyle.value}>
           <span class={nodeVLineClass.value} style={nodeVLineStyle.value}></span>
-          <div class={nodeContentClass.value} onClick={() => { selectNode(data.value); }}>
+          <div class={nodeContentClass.value} onClick={() => { toggleSelectNode(data.value); }}>
             <span class={nodeHLineClass.value}></span>
             {
               slots.icon
@@ -38,13 +42,13 @@ export default defineComponent({
               : <DTreeNodeToggle data={data.value} />
             }
             <div class="devui-tree-node__content--value-wrapper" style={{ height: `${NODE_HEIGHT}px`}}>
-              <Checkbox
+              { check.value && <Checkbox
                 key={data.value?.id}
                 disabled={data.value?.disableCheck}
                 modelValue={data.value?.checked}
                 onUpdate:modelValue={() => { toggleCheckNode(data.value); }}
                 onClick={(event: MouseEvent) => { event.stopPropagation(); }}
-              />
+              /> }
               {
                 slots.default
                 ? renderSlot(useSlots(), 'default', { nodeData: data })

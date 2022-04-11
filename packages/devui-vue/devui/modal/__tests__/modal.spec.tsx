@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import DModal from '../src/modal';
-import DModalHeader from '../src/header';
-import DModalFooter from '../src/footer';
+import DModalHeader from '../src/components/header';
+import DModalFooter from '../src/components/footer';
 import DIcon from '../../icon/src/icon';
 
 describe('d-modal', () => {

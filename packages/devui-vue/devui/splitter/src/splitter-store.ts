@@ -1,4 +1,4 @@
-import SplitterPane from './splitter-pane';
+import SplitterPane from './components/splitter-pane';
 import { reactive } from 'vue';
 
 export interface Pane {

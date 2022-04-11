@@ -3,7 +3,8 @@ const {
   bigCamelCase,
   resolveDirFilesInfo,
   parseExportByFileInfo,
-  parseComponentInfo
+  parseComponentInfo,
+  isReadyToRelease
 } = require('../shared/utils');
 const fs = require('fs-extra');
 const { resolve } = require('path');
@@ -134,7 +135,7 @@ async function createComponent(params = {}) {
 
 async function createVueDevui(params, { ignoreParseError, env }) {
   const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS)
-  .filter(({ name }) => (env === 'prod' && parseComponentInfo(kebabCase(name)).status === '100%') || !env || env === 'dev');
+    .filter(({ name }) => (env === 'prod' && isReadyToRelease(kebabCase(name))) || !env || env === 'dev');
 
   const exportModules = [];
 
@@ -177,7 +178,7 @@ async function createVitepressSidebar() {
   fileInfo.forEach((f) => {
     const info = parseComponentInfo(f.dirname);
 
-    if (isEmpty(info) || (isProd && info.status !== '100%')) {return;}
+    if (isEmpty(info) || (isProd && !isReadyToRelease(f.dirname))) {return;}
 
     componentsInfo.push(info);
   });

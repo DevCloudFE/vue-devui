@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import DSkeletonItem from '../src/item/item';
+import DSkeletonItem from '../src/components/skeleton-item';
 
 describe('skeleton-item module', () => {
   it('render skeleton-item-avatar', () => {

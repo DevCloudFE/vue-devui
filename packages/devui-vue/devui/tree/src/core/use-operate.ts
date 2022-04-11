@@ -3,7 +3,6 @@ import { IInnerTreeNode, ITreeNode, IUseCore } from './use-tree-types';
 
 export default function(options?) {
   return function useOperate(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
-    console.log('useOperate:', data, data.value, options);
 
     const { setNodeValue, getChildren, getIndex, getLevel } = core;
     

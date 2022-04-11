@@ -861,32 +861,32 @@ export default defineComponent({
 
 :::
 
-### d-table 参数
+### Table 参数
 
-| 参数名                | 类型                | 默认值  | 说明                                                                       | 跳转 Demo                 |
-| :-------------------- | :------------------ | :------ | :------------------------------------------------------------------------- | :------------------------ |
-| data                  | `array`             | []      | 可选，显示的数据                                                           | [基本用法](#基本用法)     |
-| striped               | `boolean`           | false   | 可选，是否显示斑马纹间隔                                                   | [表格样式](#表格样式)     |
-| size                  | `TableSize`         | 'sm'    | 可选，表格大小，分别对应行高 40px,48px,56px                                | [表格样式](#表格样式)     |
-| max-width             | `string`            | --      | 可选，表格最大宽度                                                         |
-| max-height            | `boolean`           | --      | 可选，表格最大高度                                                         |
-| table-width           | `string`            | --      | 可选，表格宽度                                                             |
-| table-height          | `string`            | --      | 可选，表格高度                                                             |
-| row-hovered-highlight | `boolean`           | true    | 可选，鼠标在该行上时，高亮该行                                             | [表格样式](#表格样式)     |
-| fix-header            | `boolean`           | false   | 可选，固定头部                                                             | [固定表头](#固定表头)     |
-| show-loading          | `boolean`           | false   | 可选，显示加载动画                                                         | [空数据模板](#空数据模板) |
-| header-bg             | `boolean`           | false   | 可选，头部背景                                                             | [表格样式](#表格样式)     |
-| table-layout          | `'fixed' \| 'auto'` | 'fixed' | 可选，表格布局，可选值为'auto'                                             | [表格样式](#表格样式)     |
-| span-method           | `SpanMethod`        | --      | 可选，合并单元格的计算方法                                                 | [合并单元格](#合并单元格) |
-| border-type           | `BorderType`        | ''      | 可选，表格边框类型，默认有行边框；`bordered`: 全边框；`borderless`: 无边框 | [表格样式](#表格样式)     |
+| 参数名                | 类型                      | 默认值  | 说明                                                                       | 跳转 Demo                 |
+| :-------------------- | :------------------------ | :------ | :------------------------------------------------------------------------- | :------------------------ |
+| data                  | `array`                   | []      | 可选，显示的数据                                                           | [基本用法](#基本用法)     |
+| striped               | `boolean`                 | false   | 可选，是否显示斑马纹间隔                                                   | [表格样式](#表格样式)     |
+| size                  | [TableSize](#tablesize)   | 'sm'    | 可选，表格大小，分别对应行高 40px,48px,56px                                | [表格样式](#表格样式)     |
+| max-width             | `string`                  | --      | 可选，表格最大宽度                                                         |
+| max-height            | `boolean`                 | --      | 可选，表格最大高度                                                         |
+| table-width           | `string`                  | --      | 可选，表格宽度                                                             |
+| table-height          | `string`                  | --      | 可选，表格高度                                                             |
+| row-hovered-highlight | `boolean`                 | true    | 可选，鼠标在该行上时，高亮该行                                             | [表格样式](#表格样式)     |
+| fix-header            | `boolean`                 | false   | 可选，固定头部                                                             | [固定表头](#固定表头)     |
+| show-loading          | `boolean`                 | false   | 可选，显示加载动画                                                         | [空数据模板](#空数据模板) |
+| header-bg             | `boolean`                 | false   | 可选，头部背景                                                             | [表格样式](#表格样式)     |
+| table-layout          | `'fixed' \| 'auto'`       | 'fixed' | 可选，表格布局，可选值为'auto'                                             | [表格样式](#表格样式)     |
+| span-method           | [SpanMethod](#spanmethod) | --      | 可选，合并单元格的计算方法                                                 | [合并单元格](#合并单元格) |
+| border-type           | [BorderType](#bordertype) | ''      | 可选，表格边框类型，默认有行边框；`bordered`: 全边框；`borderless`: 无边框 | [表格样式](#表格样式)     |
 
-### d-table 方法
+### Table 方法
 
 | 方法名         | 类型       | 说明                 |
 | :------------- | :--------- | :------------------- |
 | getCheckedRows | `() => []` | 获取当前选中的行数据 |
 
-### d-column 参数
+### Column 参数
 
 | 参数名         | 类型               | 默认值                               | 说明                                        | 跳转 Demo             |
 | :------------- | :----------------- | :----------------------------------- | :------------------------------------------ | :-------------------- |
@@ -902,14 +902,16 @@ export default defineComponent({
 | sort-direction | `SortDirection`    | ''                                   | 可选，设置该列的排序状态                    | [列排序](#列排序)     |
 | sort-method    | `SortMethod`       | (field, a, b) => a[field] > b[field] | 可选，用于排序的比较函数                    |
 
-### d-column 插槽
+### Column 插槽
 
-| 插槽名  | 说明                     |
-| :------ | :----------------------- |
-| default | 默认插槽，自定义列内容   |
-| header  | 表头插槽，自定义表头内容 |
+| 插槽名  | 说明                     | 参数                |
+| :------ | :----------------------- | :------------------ |
+| default | 默认插槽，自定义列内容   | `{ row, rowIndex }` |
+| header  | 表头插槽，自定义表头内容 |                     |
 
-### 类型定义
+### Table 类型定义
+
+<br>
 
 #### TableSize
 
@@ -934,18 +936,6 @@ type SpanMethod = (data: {
 type BorderType = '' | 'bordered' | 'borderless';
 ```
 
-#### ColumnType
-
-```ts
-type ColumnType = 'checkable' | 'index' | '';
-```
-
-#### Formatter
-
-```ts
-type Formatter = (row: any, column: any, cellValue: any, rowIndex: number) => VNode;
-```
-
 #### SortDirection
 
 ```ts
@@ -956,4 +946,20 @@ type SortDirection = 'ASC' | 'DESC' | '';
 
 ```ts
 type SortMethod<T = any> = (field: string, a: T, b: T) => boolean;
+```
+
+### Column 类型定义
+
+<br>
+
+#### ColumnType
+
+```ts
+type ColumnType = 'checkable' | 'index' | '';
+```
+
+#### Formatter
+
+```ts
+type Formatter = (row: any, column: any, cellValue: any, rowIndex: number) => VNode;
 ```

@@ -1,5 +1,5 @@
 import { defineComponent, ref, computed, nextTick, watch, SetupContext } from 'vue';
-import removeBtnSvg from './remove-btn';
+import removeBtnSvg from './icon-remove';
 import { Suggestion, TagInputProps, tagInputProps } from './tag-input-types';
 import './tag-input.scss';
 
