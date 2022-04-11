@@ -12,14 +12,14 @@
 
 ```vue
 <template>
-  <d-tabs type="tabs" v-model="id">
-    <d-tab id="tab1" title="Tab1" tabId="tab1">
+  <d-tabs v-model="id">
+    <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>
-    <d-tab id="tab2" title="Tab2" tabId="tab2">
+    <d-tab id="tab2" title="Tab2">
       <p>Tab2 Content</p>
     </d-tab>
-    <d-tab id="tab3" title="Tab3" tabId="tab3">
+    <d-tab id="tab3" title="Tab3">
       <p>Tab3 Content</p>
     </d-tab>
   </d-tabs>
@@ -47,13 +47,13 @@ export default defineComponent({
 ```vue
 <template>
   <d-tabs type="pills" v-model="id">
-    <d-tab id="tab1" title="Tab1" tabId="tab1">
+    <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>
-    <d-tab id="tab2" title="Tab2" tabId="tab2">
+    <d-tab id="tab2" title="Tab2">
       <p>Tab2 Content</p>
     </d-tab>
-    <d-tab id="tab3" title="Tab3" tabId="tab3">
+    <d-tab id="tab3" title="Tab3">
       <p>Tab3 Content</p>
     </d-tab>
   </d-tabs>
@@ -81,13 +81,13 @@ export default defineComponent({
 ```vue
 <template>
   <d-tabs type="options" v-model="id">
-    <d-tab id="tab1" title="Tab1" tabId="tab1">
+    <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>
-    <d-tab id="tab2" title="Tab2" tabId="tab2">
+    <d-tab id="tab2" title="Tab2">
       <p>Tab2 Content</p>
     </d-tab>
-    <d-tab id="tab3" title="Tab3" tabId="tab3">
+    <d-tab id="tab3" title="Tab3">
       <p>Tab3 Content</p>
     </d-tab>
   </d-tabs>
@@ -115,13 +115,13 @@ export default defineComponent({
 ```vue
 <template>
   <d-tabs type="wrapped" v-model="id">
-    <d-tab id="tab1" title="Tab1" tabId="tab1">
+    <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>
-    <d-tab id="tab2" title="Tab2" tabId="tab2">
+    <d-tab id="tab2" title="Tab2">
       <p>Tab2 Content</p>
     </d-tab>
-    <d-tab id="tab3" title="Tab3" tabId="tab3">
+    <d-tab id="tab3" title="Tab3">
       <p>Tab3 Content</p>
     </d-tab>
   </d-tabs>
@@ -149,13 +149,13 @@ export default defineComponent({
 ```vue
 <template>
   <d-tabs type="slider" v-model="id">
-    <d-tab id="tab1" title="Tab1" tabId="tab1">
+    <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>
-    <d-tab id="tab2" title="Tab2" tabId="tab2">
+    <d-tab id="tab2" title="Tab2">
       <p>Tab2 Content</p>
     </d-tab>
-    <d-tab id="tab3" title="Tab3" tabId="tab3">
+    <d-tab id="tab3" title="Tab3">
       <p>Tab3 Content</p>
     </d-tab>
   </d-tabs>
@@ -182,14 +182,14 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tabs type="tabs" v-model="id">
-    <d-tab id="tab1" title="Tab1" tabId="tab1" :disabled="true">
+  <d-tabs v-model="id">
+    <d-tab id="tab1" title="Tab1" disabled>
       <p>Tab1 Content</p>
     </d-tab>
-    <d-tab id="tab2" title="Tab2" tabId="tab2">
+    <d-tab id="tab2" title="Tab2">
       <p>Tab2 Content</p>
     </d-tab>
-    <d-tab id="tab3" title="Tab3" tabId="tab3">
+    <d-tab id="tab3" title="Tab3">
       <p>Tab3 Content</p>
     </d-tab>
   </d-tabs>
@@ -216,14 +216,14 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tabs type="tabs" v-model="id" :before-change="beforeChange" @active-tab-change="activeTabChange">
-    <d-tab id="tab1" title="Tab1" tabId="tab1">
+  <d-tabs v-model="id" :before-change="beforeChange" @active-tab-change="activeTabChange">
+    <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>
-    <d-tab id="tab2" title="Tab2" tabId="tab2">
+    <d-tab id="tab2" title="Tab2">
       <p>Tab2 Content</p>
     </d-tab>
-    <d-tab id="tab3" title="Tab3" tabId="tab3">
+    <d-tab id="tab3" title="Tab3">
       <p>Tab3 Content</p>
     </d-tab>
   </d-tabs>
@@ -263,17 +263,17 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tabs type="tabs" v-model="id">
-    <d-tab id="tab1" title="Tab1" tabId="tab1">
-      <template v-slot:title> 就是这样 </template>
+  <d-tabs v-model="id">
+    <d-tab id="tab1" title="Tab1">
+      <template v-slot:title><d-icon name="code" class="mr-xxs" />代码</template>
       <p>Tab1 Content</p>
     </d-tab>
-    <d-tab id="tab2" title="Tab2" tabId="tab2">
-      <template v-slot:title> 就是这样1 </template>
+    <d-tab id="tab2" title="Tab2">
+      <template v-slot:title><d-icon name="merge-request" class="mr-xxs" />合并请求</template>
       <p>Tab2 Content</p>
     </d-tab>
-    <d-tab id="tab3" title="Tab3" tabId="tab3">
-      <template v-slot:title> 就是这样2 </template>
+    <d-tab id="tab3" title="Tab3">
+      <template v-slot:title><d-icon name="help" class="mr-xxs" />Issues</template>
       <p>Tab3 Content</p>
     </d-tab>
   </d-tabs>

@@ -82,8 +82,8 @@ export default defineComponent({
     });
     return () => {
       return (
-        <div>
-          <ul ref={tabsEle} role="tablist" class={`devui-nav devui-nav-${ulClass.join(' ')}`} id="devuiTabs11">
+        <div class="devui-tabs">
+          <ul ref={tabsEle} role="tablist" class={`devui-nav devui-nav-${ulClass.join(' ')}`}>
             {state.data.map((item, i) => {
               return (
                 <li
