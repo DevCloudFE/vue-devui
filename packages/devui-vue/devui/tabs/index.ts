@@ -1,12 +1,8 @@
-import { App } from 'vue';
-// import type { App } from 'vue';
+import type { App } from 'vue';
 import Tabs from './src/tabs';
 import Tab from './src/tab';
 
-Tabs.install = function (app: App) {
-  app.component(Tabs.name, Tabs);
-  app.component(Tab.name, Tab);
-};
+export * from './src/tabs-types';
 
 export { Tabs };
 
@@ -15,6 +11,7 @@ export default {
   category: '导航',
   status: '60%',
   install(app: App): void {
-    app.use(Tabs as any);
+    app.component(Tabs.name, Tabs);
+    app.component(Tab.name, Tab);
   }
 };
