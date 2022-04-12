@@ -117,6 +117,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/nextniko"><img src="https://avatars.githubusercontent.com/u/40553790?v=4?s=100" width="100px;" alt=""/><br /><sub><b>掘墓忍者</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=nextniko" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/zcj996"><img src="https://avatars.githubusercontent.com/u/52314078?v=4?s=100" width="100px;" alt=""/><br /><sub><b>一个大胖子</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=zcj996" title="Code">💻</a></td>
   </tr>
 </table>
 
