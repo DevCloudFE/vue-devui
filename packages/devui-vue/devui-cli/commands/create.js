@@ -85,7 +85,7 @@ async function createComponent(params = {}) {
     process.exit(1);
   }
 
-  const spinner = ora(`创建组件 ${bigCamelCase(componentName)} 开始...`).start();
+  const spinner = ora(`开始创建 ${bigCamelCase(componentName)} 组件...`).start();
 
   try {
     await Promise.all([fs.mkdirs(componentDir), fs.mkdirs(srcDir), fs.mkdirs(testsDir)]);
@@ -125,7 +125,7 @@ async function createComponent(params = {}) {
 
     await Promise.all(writeFiles);
 
-    spinner.succeed(`创建组件 ${bigCamelCase(componentName)} 成功！`);
+    spinner.succeed(`${bigCamelCase(componentName)} 组件创建成功！`);
     logger.info(`组件目录：${componentDir}`);
   } catch (e) {
     spinner.fail(e.toString());
@@ -149,12 +149,12 @@ async function createVueDevui(params, { ignoreParseError, env }) {
 
   const template = createVueDevuiTemplate(exportModules);
 
-  const spinner = ora(`创建 ${VUE_DEVUI_FILE_NAME} 文件开始...`).start();
+  const spinner = ora(`开始创建 ${VUE_DEVUI_FILE_NAME} 文件...`).start();
 
   try {
     await fs.writeFile(VUE_DEVUI_FILE, template, { encoding: 'utf-8' });
 
-    spinner.succeed(`创建 ${VUE_DEVUI_FILE_NAME} 文件成功！`);
+    spinner.succeed(`${VUE_DEVUI_FILE_NAME} 文件创建成功！`);
     logger.info(`文件地址：${VUE_DEVUI_FILE}`);
   } catch (e) {
     spinner.fail(e.toString());
@@ -186,12 +186,12 @@ async function createVitepressSidebar() {
   const templates = createVitepressSidebarTemplates(componentsInfo);
   templates.forEach((template) => {
     const { fileName, location } = generateFileConfig[template.lang];
-    const spinner = ora(`创建 ${fileName} 文件开始...`).start();
+    const spinner = ora(`开始创建 ${fileName} 文件...`).start();
 
     try {
       fs.writeFile(location, template.content, { encoding: 'utf-8' });
 
-      spinner.succeed(`创建 ${fileName} 文件成功！`);
+      spinner.succeed(`${fileName} 文件创建成功！`);
       logger.info(`文件地址：${location}`);
     } catch (e) {
       spinner.fail(e.toString());

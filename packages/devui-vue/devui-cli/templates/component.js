@@ -118,7 +118,7 @@ exports.createIndexTemplate = ({
 import type { App } from 'vue';\
 ${importStr}
 
-export * from './src/${componentName}-types.ts';
+export * from './src/${componentName}-types';
 
 export { ${[
     hasComponent ? bigCamelCase(componentName) : null,
@@ -131,7 +131,7 @@ export { ${[
 export default {
   title: '${bigCamelCase(componentName)} ${title}',
   category: '${category}',
-  status: '0%', // TODO 组件完成状态，开发完组件新特性请及时更新该状态值；若组件开发完成则填入'100%'，并删除该注释
+  status: '1%', // TODO 组件完成状态，开发完组件新特性请及时更新该状态值；若组件开发完成则填入'100%'，并删除该注释
   install(app: App): void {
     ${installStr}
   }
@@ -199,7 +199,7 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const data = ref(${title});
+    const data = ref('${title}');
 
     return {
       data
