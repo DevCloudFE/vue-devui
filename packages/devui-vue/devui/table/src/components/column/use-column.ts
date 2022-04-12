@@ -12,10 +12,11 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
     field,
     header,
     sortable,
+    sortDirection,
     width,
     minWidth,
     formatter,
-    compareFn,
+    sortMethod,
     filterable,
     filterList,
     filterMultiple,
@@ -51,10 +52,15 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
   );
 
   // 排序功能
-  watch([sortable, compareFn], ([sortableVal, compareFnVal]) => {
-    column.sortable = sortableVal;
-    column.compareFn = compareFnVal;
-  });
+  watch(
+    [sortable, sortDirection, sortMethod],
+    ([sortableVal, sortDirectionVal, sortMethodVal]) => {
+      column.sortable = sortableVal;
+      column.sortDirection = sortDirectionVal;
+      column.sortMethod = sortMethodVal;
+    },
+    { immediate: true }
+  );
 
   // 过滤功能
   watch(
