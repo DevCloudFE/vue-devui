@@ -21,18 +21,16 @@ export default defineComponent({
 
     // 初始化设置
     const initRating = () => {
-      if (!props.modelValue) {
-        return;
-      }
-      chooseValue.value = props.modelValue - 1;
+      chooseValue.value = props.modelValue;
       const halfStar = chooseValue.value % 1;
       const intCurrentLevel = Math.floor(chooseValue.value);
-      setChange(0, intCurrentLevel + 1, '100%');
+      setChange(0, intCurrentLevel, '100%');
+
       if (halfStar > 0) {
-        totalLevelArray[intCurrentLevel + 1]['width'] = halfStar * 100 + '%';
-        setChange(intCurrentLevel + 2, props.count, '0');
-      } else {
+        totalLevelArray[intCurrentLevel]['width'] = halfStar * 100 + '%';
         setChange(intCurrentLevel + 1, props.count, '0');
+      } else {
+        setChange(intCurrentLevel, props.count, '0');
       }
     };
 
@@ -43,36 +41,35 @@ export default defineComponent({
       initRating();
     });
 
-    const hoverToggle = (e, index: number, reset = false) => {
-      if (props.read) {
-        return;
-      }
-      if (reset) {
-        if (chooseValue.value >= 0) {
-          setChange(0, chooseValue.value + 1, '100%');
-          setChange(chooseValue.value + 1, props.count, '0');
-        } else {
-          setChange(0, props.count, '0');
-        }
-      } else {
-        setChange(0, index + 1, '100%');
-        // 判断是否是半选模式并且判断鼠标所在图标区域
-        if (props.allowHalf && e.offsetX * 2 <= e.target.clientWidth) {
-          setChange(index, index + 1, '50%');
-        } else {
-          setChange(index, index + 1, '100%');
-        }
-        setChange(index + 1, props.count, '0');
-      }
+    // 当前元素是否是半选
+    const isSemiSelected = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      return props.allowHalf && e.offsetX * 2 <= target.clientWidth;
     };
 
-    const selectValue = (e, index: number) => {
+    const hoverToggle = (e: MouseEvent, index: number) => {
       if (props.read) {
         return;
       }
+      setChange(0, index + 1, '100%');
+      const width = isSemiSelected(e) ? '50%' : '100%';
+      setChange(index, index + 1, width);
+      setChange(index + 1, props.count, '0');
+    };
+
+    // 鼠标离开组件重置选择状态
+    const onMouseleave = () => {
+      initRating();
+    };
+
+    const selectValue = (e: MouseEvent, index: number) => {
+      if (props.read) {
+        return;
+      }
+
       setChange(0, index, '100%');
       // 判断是否是半选模式
-      if (props.allowHalf && e.offsetX * 2 <= e.target.clientWidth) {
+      if (isSemiSelected(e)) {
         setChange(index, index + 1, '50%');
         chooseValue.value = index - 0.5;
       } else {
@@ -80,22 +77,24 @@ export default defineComponent({
         chooseValue.value = index;
       }
       setChange(index + 1, props.count, '0');
-      index = chooseValue.value;
-      props.onChange && props.onChange(index + 1);
+
+      props.onChange && props.onChange(chooseValue.value + 1);
       props.onTouched && props.onTouched();
-      ctx.emit('update:modelValue', index + 1);
+      ctx.emit('update:modelValue', chooseValue.value + 1);
     };
     return {
       totalLevelArray,
       chooseValue,
       hoverToggle,
       selectValue,
+      onMouseleave,
     };
   },
   render() {
-    const { totalLevelArray, chooseValue, icon, character, read, type, color, hoverToggle, selectValue } = this;
+    const { totalLevelArray, icon, character, read, type, color, hoverToggle, selectValue, onMouseleave } = this;
+
     return (
-      <div class="devui-star-container" onMouseleave={(e) => hoverToggle(e, chooseValue, true)}>
+      <div class="devui-star-container" onMouseleave={onMouseleave}>
         {totalLevelArray.map((item, index) => (
           <div
             class={`devui-star-align devui-pointer ${read ? 'devui-only-read' : ''}`}
@@ -119,7 +118,8 @@ export default defineComponent({
                   xmlns-xlink="http://www.w3.org/1999/xlink">
                   <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                     <g fill="#E3E5E9" id="Mask">
-                      <polygon points="8 12.7603585 3.67376208 14.3147912 3.81523437 9.71994835 \
+                      <polygon
+                        points="8 12.7603585 3.67376208 14.3147912 3.81523437 9.71994835 \
                       1 6.0857977 5.41367261 4.80046131 8 1 10.5863274 4.80046131 15 6.0857977 \
                       12.1847656 9.71994835 12.3262379 14.3147912"></polygon>
                     </g>
@@ -152,7 +152,8 @@ export default defineComponent({
                   xmlns-xlink="http://www.w3.org/1999/xlink">
                   <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                     <g id="Mask">
-                      <polygon points="8 12.7603585 3.67376208 14.3147912 3.81523437 9.71994835 1 \
+                      <polygon
+                        points="8 12.7603585 3.67376208 14.3147912 3.81523437 9.71994835 1 \
                       6.0857977 5.41367261 4.80046131 8 1 10.5863274 4.80046131 15 6.0857977 \
                       12.1847656 9.71994835 12.3262379 14.3147912"></polygon>
                     </g>
