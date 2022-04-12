@@ -92,7 +92,7 @@ async function createComponent(params = {}) {
 
     const writeFiles = [
       fs.writeFile(resolve(componentDir, INDEX_FILE_NAME), indexTemplate),
-      fs.writeFile(resolve(testsDir, `${testName}.ts`), testsTemplate)
+      fs.writeFile(resolve(testsDir, `${testName}.tsx`), testsTemplate)
     ];
 
     if (!fs.existsSync(docsDir)) {
