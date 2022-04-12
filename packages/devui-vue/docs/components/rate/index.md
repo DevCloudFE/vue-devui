@@ -90,7 +90,7 @@ export default {
 import { ref } from 'vue'
 export default {
   setup() {
-    const value = ref(2)
+    const value = ref(2.5)
     const change = (val) => {
       console.log(val)
     }
