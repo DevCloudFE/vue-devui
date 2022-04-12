@@ -2,7 +2,7 @@ import { defineComponent, toRef, inject } from 'vue';
 import type { PropType } from 'vue';
 import { Column } from '../column/column-types';
 import { TABLE_TOKEN } from '../../table-types';
-import { useFixedColumn } from '../../composable/use-table';
+import { useFixedColumn } from '../../composables/use-table';
 
 export default defineComponent({
   name: 'DTableBodyTd',
