@@ -1,5 +1,7 @@
 import type { PropType, ExtractPropTypes } from 'vue';
 
+export type Resize = 'none' | 'vertical' | 'horizontal' | 'both' | 'inherit';
+
 export const textareaProps = {
   id: {
     type: String,
@@ -38,9 +40,7 @@ export const textareaProps = {
     default: '',
   },
   resize: {
-    type: String as PropType<
-    'none' | 'vertical' | 'horizontal' | 'both' | 'inherit'
-    >,
+    type: String as PropType<Resize>,
     default: 'none',
   },
 } as const;
