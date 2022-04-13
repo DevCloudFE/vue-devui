@@ -142,8 +142,6 @@ export default {
 
 ### Textarea 类型定义
 
-<br />
-
 #### Resize
 
 ```ts
