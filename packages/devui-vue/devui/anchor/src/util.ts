@@ -184,15 +184,3 @@ function getAnchors(sidebarLinks: Array<HTMLAnchorElement>): Array<HTMLAnchorEle
     .call(document.querySelectorAll('.box-anchor'))
     .filter((anchor: HTMLAnchorElement) => sidebarLinks.some((sidebarLink: HTMLAnchorElement) =>  sidebarLink.hash === anchor.hash));
 }
-
-
-export const randomId = function(n=8): string { // 生成n位长度的字符串
-  const str = 'abcdefghijklmnopqrstuvwxyz0123456789'; // 可以作为常量放到random外面
-  let result = '';
-  for(let i = 0; i < n; i++) {
-    result += str[parseInt((Math.random() * str.length).toString())];
-  }
-  return result;
-};
-
-
