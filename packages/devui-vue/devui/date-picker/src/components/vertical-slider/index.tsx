@@ -86,7 +86,6 @@ const VerticalSlider = defineComponent({
       state.y = pos_cache[1];
       state.barOpacity = 1;
       state.transition = 'transform 0.1s';
-      // console.log(ch, mh)
     });
 
     return () => {

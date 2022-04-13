@@ -83,7 +83,6 @@ export const useScaleData = (
       handleDate = getNextDay(new Date(handleDate));
       index++;
     }
-    console.log({ scaleData });
     return scaleData;
   };
 
