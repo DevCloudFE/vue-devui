@@ -1,4 +1,4 @@
-import { defineComponent, ref, toRefs, Transition, Teleport } from 'vue';
+import { defineComponent, ref, toRefs, Transition, Teleport, watch, nextTick } from 'vue';
 import { dropdownProps, DropdownProps } from './dropdown-types';
 import { useDropdown, useDropdownEvent, useOverlayProps } from './use-dropdown';
 import { FlexibleOverlay } from '../../overlay';
@@ -12,7 +12,7 @@ export default defineComponent({
   props: dropdownProps,
   emits: ['toggle'],
   setup(props: DropdownProps, { slots, attrs, emit, expose }) {
-    const { visible, position, align, offset, showAnimation } = toRefs(props);
+    const { visible, position, align, offset, destroyOnHide, showAnimation } = toRefs(props);
     const origin = ref<HTMLElement>();
     const dropdownRef = ref<HTMLElement>();
     const overlayRef = ref();
@@ -30,15 +30,25 @@ export default defineComponent({
     });
     useDropdown(id, visible, isOpen, origin, dropdownRef, currentPosition, emit);
     const { overlayModelValue, overlayShowValue, styles, classes, handlePositionChange } = useOverlayProps(props, currentPosition, isOpen);
+
+    watch(overlayShowValue, (overlayShowValueVal) => {
+      nextTick(() => {
+        if (!destroyOnHide.value && overlayShowValueVal) {
+          overlayRef.value.updatePosition();
+        }
+      });
+    });
+
     expose({
       updatePosition: () => overlayRef.value.updatePosition(),
     });
+
     return () => (
       <>
-        <div ref={origin} class='devui-dropdown-toggle'>
+        <div ref={origin} class="devui-dropdown-toggle">
           {slots.default?.()}
         </div>
-        <Teleport to='body'>
+        <Teleport to="body">
           <Transition name={showAnimation.value ? `devui-dropdown-fade-${currentPosition.value}` : ''}>
             <FlexibleOverlay
               v-model={overlayModelValue.value}
@@ -51,7 +61,7 @@ export default defineComponent({
               onPositionChange={handlePositionChange}
               class={classes.value}
               style={styles.value}>
-              <div ref={dropdownRef} class='devui-dropdown-menu-wrap' {...attrs}>
+              <div ref={dropdownRef} class="devui-dropdown-menu-wrap" {...attrs}>
                 {slots.menu?.()}
               </div>
             </FlexibleOverlay>
