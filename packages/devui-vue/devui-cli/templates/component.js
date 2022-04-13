@@ -242,7 +242,7 @@ export default defineComponent({
 |      |      |           |
 |      |      |           |
 
-### 类型
+### ${bigCamelCase(componentName)} 类型定义
 
 #### IXxx
 
