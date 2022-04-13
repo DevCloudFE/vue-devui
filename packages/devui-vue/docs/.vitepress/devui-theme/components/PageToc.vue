@@ -49,11 +49,17 @@ const forwardText = computed(() => {
   }
 
   .devui-step-nav {
+    overflow-y: hidden;
+    height: calc(100vh - 182px);
     margin-top: 10px;
+    padding-bottom: 20px;
+
+    &:hover {
+      overflow-y: auto;
+    }
 
     & > li {
       list-style: none;
-      // padding-left: 20px;
       cursor: pointer;
       height: 30px;
       line-height: 30px;
