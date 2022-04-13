@@ -29,9 +29,13 @@ defineProps({
   z-index: var(--z-index-sidebar);
   width: 16.4rem;
   background-color: $devui-base-bg;
-  overflow-y: auto;
   transform: translateX(-100%);
   transition: transform 0.25s ease;
+  overflow-y: hidden;
+
+  &:hover {
+    overflow-y: auto;
+  }
 }
 
 @media (min-width: 720px) {

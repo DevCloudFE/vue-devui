@@ -60,7 +60,12 @@ export const SideBarLink = (props) => {
           {
             class: 'sidebar-link-text',
           },
-          [text]
+          [
+            text,
+            import.meta.env.DEV && childItems && h('span', {
+              class: 'sidebar-link-text-count',
+            }, childItems?.children.length)
+          ]
         ),
       ]
     ),
