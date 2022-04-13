@@ -7,7 +7,7 @@ import type {
   CheckableRelationType,
   TreeData,
 } from '../tree-types';
-import { flatten } from '../util';
+import { flatten } from '../utils';
 
 interface IUseChecked {
   selected: Ref<SelectType>;
