@@ -331,8 +331,6 @@ export default defineComponent({
 
 ### Popover 类型定义
 
-<br />
-
 #### TriggerType
 
 ```ts
