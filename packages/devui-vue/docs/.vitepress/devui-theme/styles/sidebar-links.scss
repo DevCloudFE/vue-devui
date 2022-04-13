@@ -120,5 +120,23 @@ a.sidebar-link-item.active {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+
+    .sidebar-link-text-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 8px;
+      padding: 0 2px;
+      min-width: 16px;
+      height: 16px;
+      line-height: 16px;
+      text-align: center;
+      font-size: $devui-font-size;
+      font-weight: normal;
+      border: 1px solid $devui-disabled-line;
+      border-radius: $devui-border-radius;
+      background-color: $devui-disabled-bg;
+      color: $devui-disabled-text;
+    }
   }
 }
