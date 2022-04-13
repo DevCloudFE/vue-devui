@@ -41,8 +41,6 @@ export default defineComponent({
     const tipMessage = ref('');
 
     const validate = (trigger: string) => {
-      // console.log('trigger', trigger);
-
       const ruleKey = props.prop;
       const ruleItem = rules[ruleKey];
       const descriptor: Rules = {};
@@ -54,7 +52,6 @@ export default defineComponent({
         showMessage.value = false;
         tipMessage.value = '';
       }).catch(({ errors }) => {
-        // console.log('validator errors', errors);
         showMessage.value = true;
         tipMessage.value = errors[0].message;
       });

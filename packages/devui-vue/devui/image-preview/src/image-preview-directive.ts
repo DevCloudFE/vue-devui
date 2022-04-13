@@ -49,7 +49,6 @@ export default {
       return handleImgByEl(el);
     }
     const { custom, disableDefault } = binding.value;
-    // console.log('指令参数：', custom, disableDefault, zIndex, backDropZIndex)
     if (custom instanceof Object) {
       custom.open = () => {
         const urlList = getImgByEl(el);
