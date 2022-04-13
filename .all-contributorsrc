@@ -305,6 +305,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "xiaoboRao",
+      "name": "Bob",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27467603?v=4",
+      "profile": "https://xiaoborao.github.io/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
