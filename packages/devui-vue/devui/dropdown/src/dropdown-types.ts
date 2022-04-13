@@ -47,6 +47,9 @@ export const dropdownProps = {
     type: [Number, Object] as PropType<number | OffsetOptions>,
     default: 4,
   },
+  shiftOffset: {
+    type: Number,
+  },
   closeOnMouseLeaveMenu: {
     type: Boolean,
     default: false,
