@@ -5,7 +5,7 @@ import {
   SourceConfig
 } from './breadcrumb-types';
 import DBreadcrumbItem from './breadcrumb-item';
-import { getPropsSlot } from '../../shared/util/props-util';
+import { getPropsSlot } from '../../shared/utils/props-util';
 import './breadcrumb.scss';
 
 export default defineComponent({
