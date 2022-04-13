@@ -51,6 +51,9 @@ export const flexibleOverlayProps = {
     type: [Number, Object] as PropType<number | OffsetOptions>,
     default: 8,
   },
+  shiftOffset: {
+    type: Number,
+  },
   align: {
     type: String as PropType<Alignment> | null,
     default: null,
