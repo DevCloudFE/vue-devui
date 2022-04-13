@@ -6,7 +6,7 @@ export * from './src/rate-types';
 export { Rate };
 
 export default {
-  title: 'Rate 评分',
+  title: 'Rate 等级评估',
   category: '数据展示',
   status: '100%',
   install(app: App): void {
