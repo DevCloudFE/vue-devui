@@ -19,7 +19,6 @@ export const useGantt = (scaleUnit = GanttScaleUnit.day) => {
     if (startDate && endDate) {
       const timeOffset = endDate.getTime() - startDate.getTime();
       const duration = timeOffset / DAY_DURATION + 1;
-      console.log('duration => ', duration);
 
       return Math.round(duration);
     }
