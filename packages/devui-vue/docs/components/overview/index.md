@@ -585,7 +585,7 @@ Vue DevUI 组件库包含`77`个灵活、易用、功能强大的组件。
   <d-col :span="8">✅ <a href="/components/tag-input/#异步数据源">异步数据源</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8">✅ <a href="/components/tag-input/#虚拟滚动">虚拟滚动</a></d-col>
+  <d-col :span="8">⌛ <a href="/components/tag-input/#虚拟滚动">虚拟滚动</a></d-col>
   <d-col :span="8"></d-col>
   <d-col :span="8"></d-col>
 </d-row>
