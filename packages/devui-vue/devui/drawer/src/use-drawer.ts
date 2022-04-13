@@ -1,7 +1,7 @@
 import { computed, onUnmounted, ref, watch } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 import { DrawerEmit, DrawerProps, UseDrawerFn } from './drawer-types';
-import { lockScroll } from '../../shared/util/lock-scroll';
+import { lockScroll } from '../../shared/utils/lock-scroll';
 
 export function useDrawer(props: DrawerProps, emit: DrawerEmit): UseDrawerFn {
   const drawerRef = ref<HTMLElement>();

@@ -1,5 +1,5 @@
-import { setActiveLink, onScroll,  } from './util';
-import { inBrowser, randomId } from '../../shared/util';
+import { setActiveLink, onScroll,  } from './utils';
+import { inBrowser, randomId } from '../../shared/utils';
 
 export default {
   name: 'd-anchor-box',
