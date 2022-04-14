@@ -272,4 +272,60 @@ describe('d-table', () => {
     expect(lastTd.text()).toBe('1990/01/12');
     expect(handleSortChange).toBeCalled();
   });
+
+  it('filter', async () => {
+    const handleSingleChange = jest.fn();
+    const wrapper = mount({
+      setup() {
+        const singleFilterList = [
+          {
+            name: 'Clear',
+            value: 'Clear',
+          },
+          {
+            name: 'Female',
+            value: 'Female',
+          },
+          {
+            name: 'Male',
+            value: 'Male',
+          },
+        ];
+        return () => (
+          <DTable data={data}>
+            <DColumn field="firstName" header="First Name"></DColumn>
+            <DColumn field="lastName" header="Last Name"></DColumn>
+            <DColumn
+              field="gender"
+              header="Gender"
+              filterable
+              filter-multiple={false}
+              filter-list={singleFilterList}
+              onFilterChange={handleSingleChange}></DColumn>
+            <DColumn field="date" header="Date of birth"></DColumn>
+          </DTable>
+        );
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const table = wrapper.find('.devui-table');
+    const tableHeader = table.find('.devui-table__thead');
+    const filterTh = tableHeader.find('tr').findAll('th')[2];
+    expect(filterTh.find('.devui-dropdown-toggle').exists()).toBeTruthy();
+
+    const filterIcon = filterTh.find('.filter-icon');
+    await filterIcon.trigger('click');
+    const dropdownMenu = document.querySelector('.devui-flexible-overlay');
+    expect(dropdownMenu).toBeTruthy();
+
+    const listItems = dropdownMenu?.querySelectorAll('.filter-item');
+    expect(listItems?.length).toBe(3);
+
+    await listItems[0].dispatchEvent(new Event('click'));
+    expect(handleSingleChange).toBeCalled();
+    expect(document.querySelector('.devui-flexible-overlay')?.getAttribute('style')).toContain('display: none');
+  });
 });
