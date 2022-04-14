@@ -288,6 +288,33 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "eltociear",
+      "name": "Ikko Ashimine",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22633385?v=4",
+      "profile": "https://bandism.net/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "xiaoboRao",
+      "name": "Bob",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27467603?v=4",
+      "profile": "https://xiaoborao.github.io/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "NidusP",
+      "name": "populus",
+      "avatar_url": "https://avatars.githubusercontent.com/u/30283065?v=4",
+      "profile": "https://github.com/NidusP",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

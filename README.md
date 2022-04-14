@@ -118,6 +118,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/nextniko"><img src="https://avatars.githubusercontent.com/u/40553790?v=4?s=100" width="100px;" alt=""/><br /><sub><b>掘墓忍者</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=nextniko" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/zcj996"><img src="https://avatars.githubusercontent.com/u/52314078?v=4?s=100" width="100px;" alt=""/><br /><sub><b>一个大胖子</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=zcj996" title="Code">💻</a> <a href="https://github.com/DevCloudFE/vue-devui/commits?author=zcj996" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://bandism.net/"><img src="https://avatars.githubusercontent.com/u/22633385?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ikko Ashimine</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=eltociear" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://xiaoborao.github.io/"><img src="https://avatars.githubusercontent.com/u/27467603?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bob</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xiaoboRao" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/NidusP"><img src="https://avatars.githubusercontent.com/u/30283065?v=4?s=100" width="100px;" alt=""/><br /><sub><b>populus</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=NidusP" title="Code">💻</a></td>
   </tr>
 </table>
 

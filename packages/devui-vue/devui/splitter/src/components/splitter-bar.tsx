@@ -10,8 +10,8 @@ import {
 } from 'vue';
 
 import DToolTip from '../../../tooltip/src/tooltip';
-import { setStyle } from '../../../shared/util/set-style';
-import { addClass, removeClass } from '../../../shared/util/class';
+import { setStyle } from '../../../shared/utils/set-style';
+import { addClass, removeClass } from '../../../shared/utils/class';
 import dresize, { ResizeDirectiveProp } from '../d-resize-directive';
 import type { SplitterStore, DragState, SplitterPane } from '../splitter-store';
 import { splitterBarProps, SplitterBarProps } from './splitter-bar-types';

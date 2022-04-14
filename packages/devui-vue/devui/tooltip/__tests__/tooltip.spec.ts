@@ -56,9 +56,7 @@ describe('tooltip', () => {
       await wrapper.findComponent(DButton).trigger('mouseenter');
       jest.advanceTimersByTime(100);
       await nextTick();
-      console.log(wrapper.element.childNodes);
       const tooltipArrowElement = wrapper.element.querySelector('.arrow') as HTMLElement;
-      console.log(tooltipArrowElement);
       expect(tooltipArrowElement.style.borderLeft).toBe('5px solid rgb(70, 77, 110)');
       wrapper.unmount();
     });
@@ -77,7 +75,6 @@ describe('tooltip', () => {
       jest.advanceTimersByTime(150);
       await nextTick();
       const tooltipArrowElement = wrapper.element.querySelector('.arrow') as HTMLElement;
-      console.log(tooltipArrowElement.style);
       expect(tooltipArrowElement.style.borderTop).toBe('5px solid rgb(70, 77, 110)');
       wrapper.unmount();
     });
@@ -96,7 +93,6 @@ describe('tooltip', () => {
       jest.advanceTimersByTime(150);
       await nextTick();
       const tooltipArrowElement = wrapper.element.querySelector('.arrow') as HTMLElement;
-      console.log(tooltipArrowElement.style);
       expect(tooltipArrowElement.style.borderRight).toBe('5px solid rgb(70, 77, 110)');
       wrapper.unmount();
     });
@@ -115,7 +111,6 @@ describe('tooltip', () => {
       jest.advanceTimersByTime(150);
       await nextTick();
       const tooltipArrowElement = wrapper.element.querySelector('.arrow') as HTMLElement;
-      console.log(tooltipArrowElement.style);
       expect(tooltipArrowElement.style.borderBottom).toBe('5px solid rgb(70, 77, 110)');
       wrapper.unmount();
     });

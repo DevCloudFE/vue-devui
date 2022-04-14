@@ -1,4 +1,4 @@
-import { scrollToControl } from './util';
+import { scrollToControl } from './utils';
 interface Bind {
   value: string;
 }

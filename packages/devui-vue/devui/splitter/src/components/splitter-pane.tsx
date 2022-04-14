@@ -6,8 +6,8 @@ import {
   onMounted,
   onUpdated,
 } from 'vue';
-import { addClass, hasClass, removeClass } from '../../../shared/util/class';
-import { setStyle } from '../../../shared/util/set-style';
+import { addClass, hasClass, removeClass } from '../../../shared/utils/class';
+import { setStyle } from '../../../shared/utils/set-style';
 import type { SplitterStore } from '../splitter-store';
 import { splitterPaneProps, SplitterPaneProps } from './splitter-pane-types';
 import './splitter-pane.scss';

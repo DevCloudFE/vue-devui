@@ -74,7 +74,7 @@ export default defineComponent({
       </d-radio-group>
     </div>
   </div>
-  <d-dropdown :visible="isOpen" :trigger="trigger" :position="position" align="start" style="width: 100px;" @toggle="handleToggle">
+  <d-dropdown :visible="isOpen" :trigger="trigger" :position="position" align="start" @toggle="handleToggle">
     <d-button>More</d-button>
     <template #menu>
       <ul class="list-menu">
@@ -254,68 +254,71 @@ export default defineComponent({
 
 :::
 
-### d-dropdown 参数
+### Dropdown 参数
 
-| 参数                      | 类型                      | 默认         | 说明                                                                                          |
-| ------------------------- | ------------------------- | ------------ | --------------------------------------------------------------------------------------------- |
-| visible                   | `boolean`                 | `false`      | 可选，可以显示指定 dropdown 是否打开                                                          |
-| trigger                   | `TriggerType`             | `click`      | 可选，dropdown 触发方式, click 为点、hover 为悬停、manually 为完全手动控制                    |
-| close-scope               | `CloseScopeArea`          | `all`        | 可选，点击关闭区域，blank 点击非菜单空白关闭, all 点击菜单内外关闭，none 仅触发元素关闭       |
-| position                  | `Placement[]`             | `['bottom']` | 可选，展开位置，若位置包含`start`或`end`，需通过`align`参数设置对齐方式                       |
-| align                     | `start \| end \| null`    | `null`       | 可选，对齐方式，默认居中对齐。若指定`start`对齐，当`start`位置放不下时，会自动调整为`end`对齐 |
-| offset                    | `number \| OffsetOptions` | `4`          | 可选，指定与触发元素的间距                                                                    |
-| close-on-mouse-leave-menu | `boolean`                 | `false`      | 可选，是否进入菜单后离开菜单的时候关闭菜单                                                    |
-| show-animation            | `boolean`                 | `true`       | 可选，控制是否显示动画                                                                        |
-| overlay-class             | `string`                  | `''`         | 可选，自定义 overlay 的样式                                                                   |
-| destroy-on-hide           | `boolean`                 | `true`       | 可选，是否在关闭 dropdown 时将其销毁                                                          |
+| 参数名                    | 类型                                        | 默认值     | 说明                                                                                                                         | 跳转 Demo                 |
+| :------------------------ | :------------------------------------------ | :--------- | :--------------------------------------------------------------------------------------------------------------------------- | :------------------------ |
+| visible                   | `boolean`                                   | false      | 可选，可以显式指定 dropdown 是否打开                                                                                         | [触发方式](#触发方式)     |
+| trigger                   | [TriggerType](#triggertype)                 | click      | 可选，dropdown 触发方式, click 为点、hover 为悬停、manually 为完全手动控制                                                   | [触发方式](#触发方式)     |
+| close-scope               | [CloseScopeArea](#closescopearea)           | all        | 可选，点击关闭区域，blank 点击非菜单空白关闭, all 点击菜单内外关闭，none 仅触发元素关闭                                      | [可关闭区域](#可关闭区域) |
+| position                  | [Placement[]](#placement)                   | ['bottom'] | 可选，展开位置，若位置包含`start`或`end`，需通过`align`参数设置对齐方式                                                      | [基本用法](#基本用法)     |
+| align                     | `start \| end \| null`                      | null       | 可选，对齐方式，默认居中对齐。若指定`start`对齐，当`start`位置放不下时，会自动调整为`end`对齐                                | [基本用法](#基本用法)     |
+| offset                    | `number` \| [OffsetOptions](#offsetoptions) | 4          | 可选，指定与触发元素的间距                                                                                                   | [多级菜单](#多级菜单)     |
+| shift-offset              | `number`                                    | --         | 可选，当设置该参数时，表示启用贴边功能，当指定的 position 放不下时，选择最近的视图边界对齐，此参数可设置相对视图边界的偏移量 |
+| close-on-mouse-leave-menu | `boolean`                                   | false      | 可选，是否进入菜单后离开菜单的时候关闭菜单                                                                                   |
+| show-animation            | `boolean`                                   | true       | 可选，控制是否显示动画                                                                                                       |
+| overlay-class             | `string`                                    | --         | 可选，自定义 overlay 的样式                                                                                                  |
+| destroy-on-hide           | `boolean`                                   | true       | 可选，是否在关闭 dropdown 时将其销毁                                                                                         |
 
-### d-dropdown 事件
+### Dropdown 事件
 
-| 事件名 | 说明                                                          | 参数                    |
-| ------ | ------------------------------------------------------------- | ----------------------- |
-| toggle | 组件收起和展开的布尔值，true 表示将要展开，false 表示将要关闭 | `EventEmitter<boolean>` |
+| 事件名 | 回调参数                    | 说明                                                          | 跳转 Demo             |
+| :----- | :-------------------------- | :------------------------------------------------------------ | :-------------------- |
+| toggle | `Function(status: boolean)` | 组件收起和展开的布尔值，true 表示将要展开，false 表示将要关闭 | [触发方式](#触发方式) |
 
-### d-dropdown 方法
+### Dropdown 方法
 
-| 方法名         | 说明                                         | 类型         |
-| -------------- | -------------------------------------------- | ------------ |
-| updatePosition | 更新 dropdown 的位置，使其跟随在触发元素旁边 | `() => void` |
+| 方法名         | 类型         | 说明                                         |
+| :------------- | :----------- | :------------------------------------------- |
+| updatePosition | `() => void` | 更新 dropdown 的位置，使其跟随在触发元素旁边 |
 
-### d-dropdown 插槽
+### Dropdown 插槽
 
-| 名称    | 说明                 |
-| ------- | -------------------- |
+| 插槽名  | 说明                 |
+| :------ | :------------------- |
 | default | 菜单打开时的触发元素 |
 | menu    | 下拉菜单的内容       |
 
-### d-dropdown-menu 参数
+### DropdownMenu 参数
 
-| 参数           | 类型                      | 默认         | 说明                                                                                          |
-| -------------- | ------------------------- | ------------ | --------------------------------------------------------------------------------------------- |
-| origin         | `HTMLElement`             | `-`          | 必选，必须指定 DropdownMenu 的关联元素                                                        |
-| v-model        | `boolean`                 | `false`      | 必选，指定 DropdownMenu 是否打开                                                              |
-| position       | `Placement[]`             | `['bottom']` | 可选，展开位置，若位置包含`start`或`end`，需通过`align`参数设置对齐方式                       |
-| align          | `start \| end \| null`    | `null`       | 可选，对齐方式，默认居中对齐。若指定`start`对齐，当`start`位置放不下时，会自动调整为`end`对齐 |
-| offset         | `number \| OffsetOptions` | `4`          | 可选，指定与触发元素的间距                                                                    |
-| close-outside  | `() => boolean`           | `() => true` | 可选，点击外部区域的回调函数，默认返回 true，点击外部区域会关闭 DropdownMenu                  |
-| show-animation | `boolean`                 | `true`       | 可选，控制是否显示动画                                                                        |
-| overlay-class  | `string`                  | `''`         | 可选，自定义 overlay 的样式                                                                   |
+| 参数名         | 类型                                        | 默认值     | 说明                                                                                          |
+| :------------- | :------------------------------------------ | :--------- | :-------------------------------------------------------------------------------------------- |
+| origin         | `HTMLElement`                               | --         | 必选，必须指定 DropdownMenu 的关联元素                                                        |
+| v-model        | `boolean`                                   | false      | 必选，指定 DropdownMenu 是否打开                                                              |
+| position       | [Placement[]](#placement)                   | ['bottom'] | 可选，展开位置，若位置包含`start`或`end`，需通过`align`参数设置对齐方式                       |
+| align          | `start \| end \| null`                      | null       | 可选，对齐方式，默认居中对齐。若指定`start`对齐，当`start`位置放不下时，会自动调整为`end`对齐 |
+| offset         | `number` \| [OffsetOptions](#offsetoptions) | 4          | 可选，指定与触发元素的间距                                                                    |
+| close-outside  | `() => boolean`                             | () => true | 可选，点击外部区域的回调函数，默认返回 true，点击外部区域会关闭 DropdownMenu                  |
+| show-animation | `boolean`                                   | true       | 可选，控制是否显示动画                                                                        |
+| overlay-class  | `string`                                    | --         | 可选，自定义 overlay 的样式                                                                   |
 
-### TriggerType 类型
+### Dropdown 类型定义
 
-```typescript
+#### TriggerType
+
+```ts
 type TriggerType = 'click' | 'hover' | 'manually';
 ```
 
-### CloseScopeArea 类型
+#### CloseScopeArea
 
-```typescript
+```ts
 type CloseScopeArea = 'all' | 'blank' | 'none';
 ```
 
-### Placement 类型
+#### Placement
 
-```typescript
+```ts
 type Placement =
   | 'top'
   | 'right'
@@ -331,8 +334,8 @@ type Placement =
   | 'left-end';
 ```
 
-### OffsetOptions 类型
+#### OffsetOptions
 
-```typescript
+```ts
 type OffsetOptions = { mainAxis?: number; crossAxis?: number };
 ```

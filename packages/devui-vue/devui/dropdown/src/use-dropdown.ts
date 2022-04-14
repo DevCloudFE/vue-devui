@@ -1,6 +1,6 @@
 import { watch, onMounted, onUnmounted, toRefs, computed, ref } from 'vue';
 import type { Ref } from 'vue';
-import { getElement } from '../../shared/util/dom';
+import { getElement } from '../../shared/utils/dom';
 import { UseDropdownProps, EmitEvent, DropdownProps, UseOverlayFn } from './dropdown-types';
 
 const dropdownMap = new Map();

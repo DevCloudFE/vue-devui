@@ -1,4 +1,4 @@
-import { inBrowser } from '../../shared/util/common-var';
+import { inBrowser } from '../../shared/utils/common-var';
 
 class Theme {
   static imports: any = {};

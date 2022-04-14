@@ -5,7 +5,6 @@ import { updateCheckOptionStatus } from '../../hooks/use-cascader-multiple';
 import { singleChoose } from '../../hooks/use-cascader-single';
 import './index.scss';
 export const DCascaderItem = (props: CascaderItemPropsType) => {
-  // console.log('item index',props)
   const { cascaderItem, ulIndex, liIndex, cascaderItemNeedProps, cascaderOptions } = props;
   const { multiple, stopDefault, valueCache, activeIndexs, trigger, confirmInputValueFlg, tagList} = cascaderItemNeedProps;
   const isTriggerHover = trigger === 'hover';
