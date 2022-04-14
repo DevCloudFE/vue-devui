@@ -1,5 +1,5 @@
 import { watch, Ref, ref, computed, unref, ComponentInternalInstance } from 'vue';
-import { Column, SortMethod, FilterResults, SortDirection } from '../components/column/column-types';
+import { Column, SortMethod, SortDirection } from '../components/column/column-types';
 import { TableStore } from './store-types';
 
 function replaceColumn(array: any, column: any) {
@@ -134,25 +134,6 @@ const createSorter = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
   return { sortData, thList };
 };
 
-const createFilter = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
-  const fieldSet = new Set<string>();
-  const filterData = (field: string, results: FilterResults) => {
-    fieldSet.add(field);
-    const fields = [...fieldSet];
-    _data.value = dataSource.value.filter((item) => {
-      return fields.reduce<boolean>((prev, fieldKey) => {
-        return prev && results.indexOf(item[fieldKey]) !== -1;
-      }, true);
-    });
-  };
-
-  const resetFilterData = () => {
-    fieldSet.clear();
-    _data.value = [...dataSource.value];
-  };
-  return { filterData, resetFilterData };
-};
-
 const createFixedLogic = (columns: Ref<Column[]>) => {
   const isFixedLeft = computed(() => {
     return columns.value.reduce((prev, current) => prev || !!current.fixedLeft, false);
@@ -174,7 +155,6 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
   const { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
   const { _checkAll, _checkList, _halfChecked, getCheckedRows } = createSelection(dataSource, _data);
   const { sortData, thList } = createSorter(dataSource, _data);
-  const { filterData, resetFilterData } = createFilter(dataSource, _data);
 
   const { isFixedLeft } = createFixedLogic(_columns);
 
@@ -195,7 +175,5 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
     updateColumns,
     getCheckedRows,
     sortData,
-    filterData,
-    resetFilterData,
   };
 }

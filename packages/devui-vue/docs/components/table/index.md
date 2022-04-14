@@ -871,6 +871,96 @@ export default defineComponent({
 
 :::
 
+### 列筛选
+
+:::demo `filterable`参数设置为`true`可以支持列筛选；`filter-multiple`设置筛选列表是否可多选，默认为`true`；`filter-list`用来定义筛选列表；`filter-change`是筛选的回调事件，返回该列选中的数据：单选时返回选中项，多选时返回选中项数组。
+
+```vue
+<template>
+  <d-table :data="dataSource">
+    <d-column field="firstName" header="First Name"></d-column>
+    <d-column field="lastName" header="Last Name" filterable :filter-list="filterList" @filter-change="handleFilterChange"></d-column>
+    <d-column
+      field="gender"
+      header="Gender"
+      filterable
+      :filter-multiple="false"
+      :filter-list="singleFilterList"
+      @filter-change="handleSingleChange"
+    ></d-column>
+    <d-column field="date" header="Date of birth"></d-column>
+  </d-table>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const originSource = ref([
+      {
+        firstName: 'Jacob',
+        lastName: 'Thornton',
+        gender: 'Female',
+        date: '1990/01/12',
+      },
+      {
+        firstName: 'Mark',
+        lastName: 'Otto',
+        date: '1990/01/11',
+        gender: 'Male',
+      },
+      {
+        firstName: 'Danni',
+        lastName: 'Chen',
+        gender: 'Female',
+        date: '1990/01/13',
+      },
+      {
+        firstName: 'Green',
+        lastName: 'Gerong',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+    ]);
+    const dataSource = ref([...originSource.value]);
+    const filterList = dataSource.value.map((item) => {
+      return { name: item.lastName, value: item.lastName };
+    });
+    const singleFilterList = [
+      {
+        name: 'Clear',
+        value: 'Clear',
+      },
+      {
+        name: 'Female',
+        value: 'Female',
+      },
+      {
+        name: 'Male',
+        value: 'Male',
+      },
+    ];
+    const handleFilterChange = (val) => {
+      const filterList = val.map((item) => item.value);
+      dataSource.value = originSource.value.filter((item) => filterList.includes(item.lastName));
+    };
+    const handleSingleChange = (val) => {
+      if (val.value === 'Clear') {
+        dataSource.value = originSource.value;
+        return;
+      }
+      dataSource.value = originSource.value.filter((item) => item.gender === val.value);
+    };
+
+    return { dataSource, filterList, singleFilterList, handleFilterChange, handleSingleChange };
+  },
+});
+</script>
+```
+
+:::
+
 ### Table 参数
 
 | 参数名                | 类型                      | 默认值  | 说明                                                                       | 跳转 Demo                 |
@@ -904,19 +994,28 @@ export default defineComponent({
 
 ### Column 参数
 
-| 参数名         | 类型                            | 默认值 | 说明                                        | 跳转 Demo             |
-| :------------- | :------------------------------ | :----- | :------------------------------------------ | :-------------------- |
-| header         | `string`                        | --     | 可选，对应列的标题                          | [基本用法](#基本用法) |
-| field          | `string`                        | --     | 可选，对应列内容的字段名                    | [基本用法](#基本用法) |
-| type           | [ColumnType](#columntype)       | ''     | 可选，列的类型，设置`checkable`会显示多选框 | [表格多选](#表格多选) |
-| width          | `string \| number`              | --     | 可选，对应列的宽度，单位`px`                |
-| min-width      | `string \| number`              | --     | 可选，对应列的最小宽度，单位`px`            |
-| fixedLeft      | `string`                        | --     | 可选，该列固定到左侧的距离，如：'100px'     | [固定列](#固定列)     |
-| fixedRight     | `string`                        | --     | 可选，该列固定到右侧的距离，如：'100px'     | [固定列](#固定列)     |
-| formatter      | [Formatter](#formatter)         | --     | 可选，格式化列内容                          |
-| sortable       | `boolean`                       | false  | 可选，对行数据按照该列的顺序进行排序        | [列排序](#列排序)     |
-| sort-direction | [SortDirection](#sortdirection) | ''     | 可选，设置该列的排序状态                    | [列排序](#列排序)     |
-| sort-method    | [SortMethod](#sortmethod)       | --     | 可选，用于排序的比较函数                    | [列排序](#列排序)     |
+| 参数名          | 类型                            | 默认值 | 说明                                        | 跳转 Demo             |
+| :-------------- | :------------------------------ | :----- | :------------------------------------------ | :-------------------- |
+| header          | `string`                        | --     | 可选，对应列的标题                          | [基本用法](#基本用法) |
+| field           | `string`                        | --     | 可选，对应列内容的字段名                    | [基本用法](#基本用法) |
+| type            | [ColumnType](#columntype)       | ''     | 可选，列的类型，设置`checkable`会显示多选框 | [表格多选](#表格多选) |
+| width           | `string \| number`              | --     | 可选，对应列的宽度，单位`px`                |
+| min-width       | `string \| number`              | --     | 可选，对应列的最小宽度，单位`px`            |
+| fixedLeft       | `string`                        | --     | 可选，该列固定到左侧的距离，如：'100px'     | [固定列](#固定列)     |
+| fixedRight      | `string`                        | --     | 可选，该列固定到右侧的距离，如：'100px'     | [固定列](#固定列)     |
+| formatter       | [Formatter](#formatter)         | --     | 可选，格式化列内容                          |
+| sortable        | `boolean`                       | false  | 可选，对行数据按照该列的顺序进行排序        | [列排序](#列排序)     |
+| sort-direction  | [SortDirection](#sortdirection) | ''     | 可选，设置该列的排序状态                    | [列排序](#列排序)     |
+| sort-method     | [SortMethod](#sortmethod)       | --     | 可选，用于排序的比较函数                    | [列排序](#列排序)     |
+| filterable      | `boolean`                       | false  | 可选，是否对该列启用筛选功能                | [列筛选](#列筛选)     |
+| filter-multiple | `boolean`                       | true   | 可选，是否启用多选的方式来筛选              | [列筛选](#列筛选)     |
+| filter-list     | [FilterConfig[]](#filterconfig) | []     | 可选，筛选列表                              | [列筛选](#列筛选)     |
+
+### Column 事件
+
+| 事件名        | 回调参数                                        | 说明                                       | 跳转 Demo         |
+| :------------ | :---------------------------------------------- | :----------------------------------------- | :---------------- |
+| filter-change | `Function(val: FilterConfig \| FilterConfig[])` | 筛选回调事件，返回选中的筛选项或筛选项数组 | [列筛选](#列筛选) |
 
 ### Column 插槽
 
@@ -978,4 +1077,14 @@ type SortDirection = 'ASC' | 'DESC' | '';
 
 ```ts
 type SortMethod<T = any> = (a: T, b: T) => boolean;
+```
+
+#### FilterConfig
+
+```ts
+interface FilterConfig {
+  name: string;
+  value: any;
+  checked?: boolean;
+}
 ```

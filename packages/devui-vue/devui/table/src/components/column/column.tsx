@@ -1,4 +1,16 @@
-import { inject, defineComponent, onBeforeUnmount, onMounted, toRefs, watch, ref, getCurrentInstance, onBeforeMount, h } from 'vue';
+import {
+  inject,
+  defineComponent,
+  onBeforeUnmount,
+  onMounted,
+  toRefs,
+  watch,
+  ref,
+  getCurrentInstance,
+  onBeforeMount,
+  h,
+  SetupContext,
+} from 'vue';
 import { tableColumnProps, TableColumnProps, TableColumn } from './column-types';
 import { TABLE_TOKEN, Table, DefaultRow } from '../../table-types';
 import { createColumn, useRender } from './use-column';
@@ -8,7 +20,8 @@ let columnIdInit = 1;
 export default defineComponent({
   name: 'DColumn',
   props: tableColumnProps,
-  setup(props: TableColumnProps, ctx) {
+  emits: ['filter-change'],
+  setup(props: TableColumnProps, ctx: SetupContext) {
     const instance = getCurrentInstance() as TableColumn;
     const column = createColumn(toRefs(props), ctx.slots);
     const owner = inject(TABLE_TOKEN) as Table<DefaultRow>;
@@ -17,6 +30,7 @@ export default defineComponent({
     const { columnOrTableParent, getColumnIndex } = useRender();
     const parent: any = columnOrTableParent.value;
     columnId = `${parent.tableId || parent.columnId}_column_${columnIdInit++}`;
+    column.ctx = ctx;
 
     onBeforeMount(() => {
       isSubColumn.value = owner !== parent;

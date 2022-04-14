@@ -1,7 +1,6 @@
-import { ref, watch, Ref, shallowRef, computed, getCurrentInstance, inject, onMounted } from 'vue';
+import { ref, Ref, computed, getCurrentInstance, inject, onMounted } from 'vue';
 import type { ComputedRef } from 'vue';
-import { Column, FilterResults, SortDirection } from '../column/column-types';
-import { TableStore } from '../../store/store-types';
+import { Column, FilterConfig, SortDirection } from '../column/column-types';
 import { TABLE_TOKEN } from '../../table-types';
 
 interface UseSort {
@@ -11,7 +10,12 @@ interface UseSort {
   clearSortOrder: () => void;
 }
 
-export const useSort = (column: Ref<Column>): UseSort => {
+interface UseFilter {
+  filterClass: ComputedRef<Record<string, boolean>>;
+  handleFilter: (val: FilterConfig | FilterConfig[]) => void;
+}
+
+export function useSort(column: Ref<Column>): UseSort {
   const table = inject(TABLE_TOKEN);
   const store = table.store;
   const direction = ref<SortDirection>(column.value.sortDirection);
@@ -43,12 +47,17 @@ export const useSort = (column: Ref<Column>): UseSort => {
   };
 
   return { direction, sortClass, handleSort, clearSortOrder };
-};
+}
 
-export const useFilter = (store: TableStore, column: Ref<Column>): Ref<FilterResults> => {
-  const filteredRef = shallowRef<FilterResults>();
-  watch(filteredRef, (results) => {
-    store.filterData(column.value.field, results);
-  });
-  return filteredRef;
-};
+export function useFilter(column: Ref<Column>): UseFilter {
+  const filter: Ref<FilterConfig | FilterConfig[] | null> = ref(null);
+  const filterClass = computed(() => ({
+    'filter-active': Boolean(filter.value || (Array.isArray(filter.value) && filter.value.length)),
+  }));
+  const handleFilter = (val: FilterConfig | FilterConfig[]) => {
+    filter.value = val;
+    column.value.ctx.emit('filter-change', val);
+  };
+
+  return { filterClass, handleFilter };
+}
