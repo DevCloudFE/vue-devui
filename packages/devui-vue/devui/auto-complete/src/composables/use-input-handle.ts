@@ -16,13 +16,16 @@ export default function useInputHandle(
     toggleMenu: () => void;
     onInput: (e: Event) => void;
     onFocus: () => void;
+    onBlur: () => void;
     inputRef: Ref;
+    isFocus: Ref<boolean>;
     visible: Ref<boolean>;
     searchStatus: Ref<boolean>;
   } {
   const visible = ref(false);
   const inputRef = ref();
   const searchStatus = ref(false);
+  const isFocus = ref(false);
   const debounce =(cb: InputDebounceCb,time: number) =>{
     let timer: NodeJS.Timeout | null;
     return (arg: string)=>{
@@ -49,9 +52,13 @@ export default function useInputHandle(
     onInputDebounce(inp.value);
   };
   const onFocus =() => {
+    isFocus.value = true;
     handleSearch(modelValue.value);
     recentlyFocus(latestSource?.value);
     transInputFocusEmit.value && transInputFocusEmit.value();
+  };
+  const onBlur = ()=> {
+    isFocus.value = false;
   };
   const handleClose = ()=>{
     visible.value=false;
@@ -75,6 +82,8 @@ export default function useInputHandle(
     toggleMenu,
     onInput,
     onFocus,
+    onBlur,
+    isFocus,
     inputRef,
     visible,
     searchStatus
