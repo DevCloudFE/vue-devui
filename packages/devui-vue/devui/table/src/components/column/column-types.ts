@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance } from 'vue';
+import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance, SetupContext } from 'vue';
 import { DefaultRow } from '../../table-types';
 import { TableStore } from '../../store/store-types';
 
@@ -12,7 +12,6 @@ export type ColumnType = 'checkable' | 'index' | '';
 export type SortDirection = 'ASC' | 'DESC' | '';
 
 export interface FilterConfig {
-  id: number | string;
   name: string;
   value: any;
   checked?: boolean;
@@ -62,7 +61,7 @@ export const tableColumnProps = {
   },
   filterMultiple: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   filterList: {
     type: Array as PropType<FilterConfig[]>,
@@ -77,15 +76,6 @@ export const tableColumnProps = {
 };
 
 export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>;
-
-export type FilterResults = (string | number)[];
-
-export interface CustomFilterProps {
-  value: FilterResults;
-  onChange: (value: FilterResults) => void;
-}
-
-export type CustomFilterSlot = (props: CustomFilterProps) => VNode[];
 
 export interface Column {
   id?: string;
@@ -103,11 +93,11 @@ export interface Column {
   filterList?: FilterConfig[];
   fixedLeft?: string;
   fixedRight?: string;
+  ctx: SetupContext;
   renderHeader?: (column: Column, store: TableStore) => VNode;
   renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) => VNode;
   formatter?: Formatter;
   sortMethod: SortMethod;
-  customFilterTemplate?: CustomFilterSlot;
   subColumns?: Slot;
 }
 
