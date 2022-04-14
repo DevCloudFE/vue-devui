@@ -1,6 +1,7 @@
 import type { CSSProperties, SetupContext } from 'vue';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import { virtualListFllterProps } from '../virtual-list-types';
+import ResizeObserver from './resize-observer';
 
 const INIT_INNER_STYLE: CSSProperties = { display: 'flex', flexDirection: 'column' };
 
@@ -10,19 +11,33 @@ export default defineComponent({
   setup(props, ctx: SetupContext) {
     const outerStyle = ref<CSSProperties>({});
     const innerStyle = ref<CSSProperties>(INIT_INNER_STYLE);
-    ctx.slots.default?.();
+    watch([() => props.height, () => props.offset], () => {
+      if (props.offset !== undefined) {
+        outerStyle.value = { height: `${props.height}px`, position: 'relative', overflow: 'hidden' };
+        innerStyle.value = {
+          ...innerStyle.value,
+          transform: `translateY(${props.offset}px)`,
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+        };
+      }
+    });
+
     return () => (
       <div style={outerStyle.value}>
-        <div style={innerStyle.value}>
-          <button
-            onClick={() => {
-              const vnode = ctx.slots.default?.();
-              console.log(vnode);
-              console.log(vnode?.[0]);
-              console.log(vnode?.[0]?.children);
-            }}
-          >DVirtualListFllter</button>
-        </div>
+        <ResizeObserver
+          onResize={({ offsetHeight }) => {
+            if (offsetHeight && props.onInnerResize) {
+              props.onInnerResize();
+            }
+          }}
+        >
+          <div style={innerStyle.value}>
+            {ctx.slots.default?.()}
+          </div>
+        </ResizeObserver>
       </div>
     );
   }
