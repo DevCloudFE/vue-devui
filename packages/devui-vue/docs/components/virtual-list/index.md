@@ -12,9 +12,11 @@
 
 ```vue
 <template>
-  <d-virtual-list :style="style" :tv="val" />
-  <br />
-  <button @click="click">click</button>
+  <d-virtual-list :data="data" :height="100" :itemHeight="20">
+    <template #default="{ value }">
+      <div>children{{ value }}</div>
+    </template>
+  </d-virtual-list>
 </template>
 
 <script>
@@ -22,13 +24,8 @@ import { ref } from 'vue';
 
 export default {
   setup() {
-    const style = ref({ color: 'red' });
-    const val = ref('998');
-    const click = () => {
-      const a = `${Math.random()}`;
-      val.value = a;
-    }
-    return { style, click, val };
+    const data = ref(Array.from({ length: 5000 }).map((_, index) => ({ value: index })));
+    return { data };
   },
 };
 </script>
