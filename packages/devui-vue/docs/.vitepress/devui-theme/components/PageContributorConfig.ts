@@ -129,8 +129,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   pagination: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/481/1444460_kd554246839_1647266753.png!avatar200',
-      homepage: 'https://gitee.com/kd554246839'
+      avatar: 'https://avatars.githubusercontent.com/u/24663941?v=4',
+      homepage: 'https://github.com/554246839'
     },
   ],
   'steps-guide': [
@@ -159,14 +159,14 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   drawer: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/15092594?v=4',
       homepage: 'https://github.com/lnzhangsong'
     },
   ],
   loading: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/481/1444460_kd554246839_1647266753.png!avatar200',
-      homepage: 'https://gitee.com/kd554246839'
+      avatar: 'https://avatars.githubusercontent.com/u/24663941?v=4',
+      homepage: 'https://github.com/554246839'
     },
   ],
   modal: [
@@ -205,6 +205,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   tooltip: [
     {
+      avatar: 'https://avatars.githubusercontent.com/u/61737780?v=4',
+      homepage: 'https://github.com/asdlml6'
+    },
+    {
       avatar: 'https://avatars.githubusercontent.com/u/26324442?v=4',
       homepage: 'https://github.com/zxlfly'
     },
@@ -229,7 +233,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   checkbox: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/1769/5309699_brenner8023_1633954462.png!avatar200',
+      avatar: 'https://avatars.githubusercontent.com/u/31237954?v=4',
       homepage: 'https://gitee.com/brenner8023'
     },
     {
@@ -245,8 +249,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   'date-picker': [
     {
-      avatar: '',
-      homepage: 'https://gitee.com/mrundef'
+      avatar: 'https://avatars.githubusercontent.com/u/1510444?v=4',
+      homepage: 'https://github.com/imnull'
     },
   ],
   'date-picker-pro': [
@@ -261,8 +265,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   'editable-select': [
     {
-      avatar: '',
-      homepage: 'https://github.com/chenzi24'
+      avatar: 'https://avatars.githubusercontent.com/u/40349890?v=4',
+      homepage: 'https://github.com/chenxi24'
     },
   ],
   form: [
@@ -279,8 +283,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   'input-icon': [
     {
-      avatar: '',
-      homepage: 'https://gitee.com/mrundef'
+      avatar: 'https://avatars.githubusercontent.com/u/1510444?v=4',
+      homepage: 'https://github.com/imnull'
     },
   ],
   'input-number': [
@@ -290,6 +294,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     },
   ],
   radio: [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/31237954?v=4',
+      homepage: 'https://github.com/brenner8023'
+    },
     {
       avatar: 'https://portrait.gitee.com/uploads/avatars/user/2722/8168765_xuehongjie_1647269846.png!avatar100',
       homepage: 'https://github.com/xuehongjie'
@@ -309,8 +317,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   switch: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/1769/5309699_brenner8023_1633954462.png!avatar200',
-      homepage: 'https://gitee.com/brenner8023'
+      avatar: 'https://avatars.githubusercontent.com/u/31237954?v=4',
+      homepage: 'https://github.com/brenner8023'
     },
     {
       avatar: 'https://portrait.gitee.com/uploads/avatars/user/1826/5479448_vergil_lu_1626167392.png!avatar200',
@@ -319,8 +327,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   'tag-input': [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/1769/5309699_brenner8023_1633954462.png!avatar200',
-      homepage: 'https://gitee.com/brenner8023'
+      avatar: 'https://avatars.githubusercontent.com/u/31237954?v=4',
+      homepage: 'https://github.com/brenner8023'
     },
     {
       avatar: '',
@@ -353,26 +361,30 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   upload: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/610/1832717_zzzautumn_1628044491.png!avatar200',
-      homepage: 'https://gitee.com/zzzautumn'
+      avatar: 'https://avatars.githubusercontent.com/u/48074435?v=4',
+      homepage: 'https://github.com/elsaooo'
     },
   ],
 
   // 数据展示
   avatar: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/610/1832717_zzzautumn_1628044491.png!avatar200',
-      homepage: 'https://gitee.com/zzzautumn'
+      avatar: 'https://avatars.githubusercontent.com/u/48074435?v=4',
+      homepage: 'https://github.com/elsaooo'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/40119767?v=4',
+      homepage: 'https://github.com/linxiang07'
     },
   ],
   badge: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/640/1920569_micd_1633943788.png!avatar200',
-      homepage: 'https://gitee.com/micd'
-    },
-    {
       avatar: 'https://avatars.githubusercontent.com/u/30541930?v=4',
       homepage: 'https://github.com/duqingyu'
+    },
+    {
+      avatar: 'https://portrait.gitee.com/uploads/avatars/user/640/1920569_micd_1633943788.png!avatar200',
+      homepage: 'https://gitee.com/micd'
     },
   ],
   card: [
@@ -441,8 +453,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   rate: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/610/1832717_zzzautumn_1628044491.png!avatar200',
-      homepage: 'https://gitee.com/zzzautumn'
+      avatar: 'https://avatars.githubusercontent.com/u/48074435?v=4',
+      homepage: 'https://github.com/elsaooo'
     },
   ],
   skeleton: [
@@ -461,10 +473,6 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/13329558?v=4',
       homepage: 'https://github.com/Zcating'
-    },
-    {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2582/7746958_kagol_1606652460.png!avatar100',
-      homepage: 'https://github.com/kagol'
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/70649502?v=4',
