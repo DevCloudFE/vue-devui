@@ -52,14 +52,13 @@ export default defineComponent({
 ```
 :::
 
-### 可下拉的面包屑【TODO】
 ### 自定义分隔符的面包屑
 
 :::demo
 ```vue
 <template>
   <div>
-    <d-breadcrumb separatorIcon=">">
+    <d-breadcrumb separator-icon=">">
       <d-breadcrumb-item>
         <a routerLink="/components/zh-cn/get-start">DevUI</a>
       </d-breadcrumb-item>
@@ -84,25 +83,24 @@ export default defineComponent({
 </template>
 ```
 :::
-### API
 
-### d-breadcrumb 参数
+### Breadcrumb 参数
 
 |     参数      |                  类型                  | 默认 | 说明                                               | 跳转 Demo                                     |
 | :-----------: | :------------------------------------: | :--: | :------------------------------------------------- | --------------------------------------------- |
-| separatorIcon |   [`string`](#自定义分隔符的面包屑)    | '/'  | 可选，自定义分隔符样式                             | [自定义分隔符的面包屑](#自定义分隔符的面包屑) |
-|    source     | [`Array<SourceConfig>`](#SourceConfig) |  []  | 可选，面包屑根据配置的 source 按照默认渲染方式显示 | [传入source](#传入source)                     |
+| separator-icon |   `string`    | '/'  | 可选，自定义分隔符样式                             | [自定义分隔符的面包屑](#自定义分隔符的面包屑) |
+|    source     | [SourceConfig\[\]](#sourceconfig) |  []  | 可选，面包屑根据配置的 source 按照默认渲染方式显示 | [传入source](#传入source)                     |
 
-### d-breadcrumb-item 参数
+### BreadcrumbItem 参数
 
 |   参数   |                类型                | 默认  |                          说明                           | 跳转 Demo                         | 
 | :------: | :--------------------------------: | :---: | :-----------------------------------------------------: | :-------------------------------- |
 |to	| `string/object` | —	| 路由跳转对象，同 vue-router 的 to	| [基础面包屑](#基础面包屑) | 
 |replace|	`boolean`	|	false | 在使用 to 进行路由跳转时，启用 replace 将不会向 history 添加新记录 | [基础面包屑](#基础面包屑) |
 
-### 接口 & 类型定义
+### 类型定义
 
-### SourceConfig
+#### SourceConfig
 
 ```ts
 export interface SourceConfig {
