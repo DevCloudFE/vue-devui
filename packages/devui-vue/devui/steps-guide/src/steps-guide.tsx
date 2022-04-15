@@ -1,7 +1,7 @@
-import './steps-guide.scss';
 import { computed, ref, defineComponent, Teleport, onMounted } from 'vue';
 import { stepsGuideProps, StepsGuideProps, Step } from './steps-guide-types';
-import { useStepsGuidePosition, useStepsGuideCtrl } from '../hooks';
+import { useStepsGuidePosition, useStepsGuideCtrl } from '../composables';
+import './steps-guide.scss';
 
 export default defineComponent({
   name: 'DStepsGuide',
