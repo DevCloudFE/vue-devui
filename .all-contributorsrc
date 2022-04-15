@@ -333,6 +333,16 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "MICD0704",
+      "name": "MICD",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20532893?v=4",
+      "profile": "https://github.com/MICD0704",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 10,
