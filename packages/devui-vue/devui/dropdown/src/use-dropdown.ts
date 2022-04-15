@@ -44,7 +44,7 @@ export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit 
           if (
             !isOpen.value ||
             closeScope.value === 'none' ||
-            (dropdownEl.contains(e.target) && closeScope.value === 'blank') ||
+            (dropdownEl?.contains(e.target) && closeScope.value === 'blank') ||
             (dropdownValues.some((item) => item.toggleEl?.contains(e.target)) &&
               dropdownValues.some((item) => item.menuEl?.contains(e.target)))
           ) {
