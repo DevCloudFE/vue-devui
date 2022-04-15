@@ -6,7 +6,7 @@
 - 🚧 开发中
 - ⌛ 待认领
 
-### Button 按钮
+### Button 按钮 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/button/#形态">形态 variant</a></d-col>
@@ -24,7 +24,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### DragDrop 拖拽
+### DragDrop 拖拽 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @asdlml6">✅</d-tooltip> <a href="/components/dragdrop/#基本功能">基本功能</a></d-col>
@@ -47,7 +47,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Fullscreen 全屏
+### Fullscreen 全屏 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @micd">✅</d-tooltip> <a href="/components/fullscreen/#全屏模式">全屏模式 mode</a></d-col>
@@ -55,7 +55,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Icon 图标
+### Icon 图标 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @kagol">✅</d-tooltip> <a href="/components/icon/#图标名称">图标名称 name</a></d-col>
@@ -68,7 +68,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Overlay 遮罩层
+### Overlay 遮罩层 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/overlay/#固定遮罩层">固定遮罩层 fixed-overlay</a></d-col>
@@ -76,7 +76,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Panel 面板
+### Panel 面板 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/panel/#基本功能">基本功能</a></d-col>
@@ -89,7 +89,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/panel/#自定义内容">自定义内容</a></d-col>
 </d-row>
 
-### Ripple 水波纹
+### Ripple 水波纹 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @ErKeLost">✅</d-tooltip> <a href="/components/ripple/#基本功能">基本功能</a></d-col>
@@ -97,7 +97,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Search 搜索
+### Search 搜索 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @SituC">✅</d-tooltip> <a href="/components/search/#基本功能">基本功能</a></d-col>
@@ -110,7 +110,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Status 状态
+### Status 状态 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @LiuSuY">✅</d-tooltip> <a href="/components/status/#类型">类型 type</a></d-col>
@@ -118,15 +118,15 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Sticky 便贴
+### Sticky 便贴 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @maizhiyuan">✅</d-tooltip> <a href="/components/sticky/#基本功能">基本功能</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @maizhiyuan">✅</d-tooltip> <a href="/components/sticky/#滚动容器">滚动容器</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by maizhiyuan">🚧</d-tooltip> <a href="/components/sticky/#滚动容器">滚动容器</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
-### Accordion 手风琴
+### Accordion 手风琴 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @liuxdi">✅</d-tooltip> <a href="/components/accordion/#基本功能">基本功能</a></d-col>
@@ -135,11 +135,11 @@
 </d-row>
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @liuxdi">✅</d-tooltip> <a href="/components/accordion/#复合层级">复合层级</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @liuxdi">✅</d-tooltip> <a href="/components/accordion/#改变键值">改变键值</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by liuxdi">🚧</d-tooltip> <a href="/components/accordion/#改变键值">改变键值</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
-### Anchor 锚点
+### Anchor 锚点 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @asian-Tmac">✅</d-tooltip> <a href="/components/anchor/#基本功能">基本功能</a></d-col>
@@ -152,15 +152,15 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### BackTop 回到顶部
+### BackTop 回到顶部 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @c0dedance">✅</d-tooltip> <a href="/components/back-top/#基本功能">基本功能</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @c0dedance">✅</d-tooltip> <a href="/components/back-top/#自定义">自定义</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @c0dedance">✅</d-tooltip> <a href="/components/back-top/#滚动容器">滚动容器</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @c0dedance">🚧</d-tooltip> <a href="/components/back-top/#滚动容器">滚动容器</a></d-col>
 </d-row>
 
-### Breadcrumb 面包屑
+### Breadcrumb 面包屑 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @naluduo233">✅</d-tooltip> <a href="/components/breadcrumb/#基本功能">基本功能</a></d-col>
@@ -173,7 +173,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Dropdown 下拉菜单
+### Dropdown 下拉菜单 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/dropdown/#基本功能">基本功能</a></d-col>
@@ -196,7 +196,7 @@
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dropdown/#支持添加图标">支持添加图标</a></d-col>
 </d-row>
 
-### Menu 菜单
+### Menu 菜单 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/menu/#基本功能">基本功能</a></d-col>
@@ -204,7 +204,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### NavSprite 精灵导航
+### NavSprite 精灵导航 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/nav-sprite/#基本功能">基本功能</a></d-col>
@@ -212,7 +212,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Pagination 分页
+### Pagination 分页 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @tohalf">✅</d-tooltip> <a href="/components/pagination/#基本功能">基本功能</a></d-col>
@@ -225,15 +225,15 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### StepsGuide 操作指引
+### StepsGuide 操作指引 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @populus">✅</d-tooltip> <a href="/components/steps-guide/#基本功能">基本功能</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @populus">✅</d-tooltip> <a href="/components/steps-guide/#弹出位置">弹出位置</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @populus">✅</d-tooltip> <a href="/components/steps-guide/#自定义">自定义</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @populus">🚧</d-tooltip> <a href="/components/steps-guide/#自定义">自定义</a></d-col>
 </d-row>
 
-### Tabs 选项卡
+### Tabs 选项卡 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @flxy1028">✅</d-tooltip> <a href="/components/tabs/#基本功能">基本功能</a></d-col>
@@ -243,10 +243,10 @@
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @flxy1028">✅</d-tooltip> <a href="/components/tabs/#自定义模板">自定义模板</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @flxy1028">✅</d-tooltip> <a href="/components/tabs/#拦截tab切换">拦截tab切换</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @flxy1028">✅</d-tooltip> <a href="/components/tabs/#自定义tabs显示和排列">自定义tabs显示和排列</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @flxy1028">🚧</d-tooltip> <a href="/components/tabs/#自定义tabs显示和排列">自定义tabs显示和排列</a></d-col>
 </d-row>
 
-### Alert 警告
+### Alert 警告 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @chressYu">✅</d-tooltip> <a href="/components/alert/#基本功能">基本功能</a></d-col>
@@ -254,15 +254,15 @@
   <d-col :span="8"><d-tooltip content="Contributed by @liuxdi">✅</d-tooltip> <a href="/components/alert/#不显示图标">不显示图标</a></d-col>
 </d-row>
 
-### Drawer 抽屉板
+### Drawer 抽屉板 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @lnzhangsong">✅</d-tooltip> <a href="/components/drawer/#基本功能">基本功能</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @lnzhangsong">✅</d-tooltip> <a href="/components/drawer/#关闭后不销毁">关闭后不销毁</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @lnzhangsong">✅</d-tooltip> <a href="/components/drawer/#自定义模板">自定义模板</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @lnzhangsong">🚧</d-tooltip> <a href="/components/drawer/#自定义模板">自定义模板</a></d-col>
 </d-row>
 
-### Loading 加载中
+### Loading 加载中 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @tohalf">✅</d-tooltip> <a href="/components/loading/#基本功能">基本功能</a></d-col>
@@ -275,7 +275,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @tohalf">✅</d-tooltip> <a href="/components/loading/#服务方式调用">服务方式调用</a></d-col>
 </d-row>
 
-### Mention 提及
+### Mention 提及 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/mention/#基本功能">基本功能</a></d-col>
@@ -288,7 +288,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Modal 弹窗
+### Modal 弹窗 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/modal/#标准对话框">标准对话框</a></d-col>
@@ -306,7 +306,7 @@
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/modal/#避免滚动和抖动">避免滚动和抖动</a></d-col>
 </d-row>
 
-### Notification 全局通知
+### Notification 全局通知 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @to0simple">✅</d-tooltip> <a href="/components/notification/#基本功能">基本功能</a></d-col>
@@ -319,7 +319,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Popover 悬浮提示
+### Popover 悬浮提示 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @CatsAndMice">✅</d-tooltip> <a href="/components/popover/#基本功能">基本功能</a></d-col>
@@ -332,7 +332,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @CatsAndMice">✅</d-tooltip> <a href="/components/popover/#延时触发">延时触发</a></d-col>
 </d-row>
 
-### ReadTip 阅读提示
+### ReadTip 阅读提示 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @whylost">✅</d-tooltip> <a href="/components/read-tip/#基本功能">基本功能</a></d-col>
@@ -345,7 +345,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Result 结果
+### Result 结果 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @icjs-cc">✅</d-tooltip> <a href="/components/result/#基本功能">基本功能</a></d-col>
@@ -353,7 +353,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Toast 全局提示
+### Toast 全局提示 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/toast/#基本功能">基本功能</a></d-col>
@@ -361,15 +361,15 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Tooltip 提示
+### Tooltip 提示 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @asdlml6">✅</d-tooltip> <a href="/components/tooltip/#基本功能">基本功能</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @zxlfly">✅</d-tooltip> <a href="/components/tooltip/#延时触发">延时触发</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @zxlfly">🚧</d-tooltip> <a href="/components/tooltip/#延时触发">延时触发</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
-### AutoComplete 自动补全
+### AutoComplete 自动补全 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @zxlfly">✅</d-tooltip> <a href="/components/auto-complete/#基本功能">基本功能</a></d-col>
@@ -382,7 +382,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @Denver-Ning">✅</d-tooltip> <a href="/components/auto-complete/#懒加载">懒加载</a></d-col>
 </d-row>
 
-### Cascader 级联菜单
+### Cascader 级联菜单 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @SituC">✅</d-tooltip> <a href="/components/cascader/#基本功能">基本功能</a></d-col>
@@ -400,7 +400,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### CategorySearch 分类搜索
+### CategorySearch 分类搜索 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/category-search/#基本功能">基本功能</a></d-col>
@@ -408,7 +408,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Checkbox 复选框
+### Checkbox 复选框 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @brenner8023">✅</d-tooltip> <a href="/components/checkbox/#基本功能">基本功能</a></d-col>
@@ -421,7 +421,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### ColorPicker 颜色选择器
+### ColorPicker 颜色选择器 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @ErKeLost">✅</d-tooltip> <a href="/components/color-picker/#基本功能">基本功能</a></d-col>
@@ -430,11 +430,11 @@
 </d-row>
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @ErKeLost">✅</d-tooltip> <a href="/components/color-picker/#历史颜色">历史颜色</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @ErKeLost">✅</d-tooltip> <a href="/components/color-picker/#自定义基础面板">自定义基础面板</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @ErKeLost">🚧</d-tooltip> <a href="/components/color-picker/#自定义基础面板">自定义基础面板</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
-### DatePicker 日期选择器
+### DatePicker 日期选择器 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @imnull">✅</d-tooltip> <a href="/components/date-picker/#自动关闭">自动关闭</a></d-col>
@@ -443,11 +443,11 @@
 </d-row>
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @imnull">✅</d-tooltip> <a href="/components/date-picker/#日期范围分隔符">日期范围分隔符</a></d-col>
-  <d-col :span="8"></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @imnull">🚧</d-tooltip> <a href="/components/date-picker/#自定义">自定义</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
-### DatePickerPro 日期选择器
+### DatePickerPro 日期选择器 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/date-picker-pro/#基本功能">基本功能</a></d-col>
@@ -465,7 +465,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### EditableSelect 可输入下拉选择框
+### EditableSelect 可输入下拉选择框 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @chenxi24">✅</d-tooltip> <a href="/components/editable-select/#基本功能">基本功能</a></d-col>
@@ -478,7 +478,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Form 表单
+### Form 表单 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @AlanLee97">✅</d-tooltip> <a href="/components/form/#基本功能">基本功能</a></d-col>
@@ -496,12 +496,12 @@
   <d-col :span="8"><d-tooltip content="Contributed by @AlanLee97">✅</d-tooltip> <a href="/components/form/#跨组件表单验证">跨组件表单验证</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Contributed by @AlanLee97">✅</d-tooltip> <a href="/components/form/#更新验证规则">更新验证规则</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @AlanLee97">🚧</d-tooltip> <a href="/components/form/#更新验证规则">更新验证规则</a></d-col>
   <d-col :span="8"></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
-### Input 输入框
+### Input 输入框 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @SituC">✅</d-tooltip> <a href="/components/input/#基本功能">基本功能</a></d-col>
@@ -509,15 +509,15 @@
   <d-col :span="8"><d-tooltip content="Contributed by @SituC">✅</d-tooltip> <a href="/components/input/#密码框">密码框</a></d-col>
 </d-row>
 
-### InputIcon 图标输入框
+### InputIcon 图标输入框 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @imnull">✅</d-tooltip> <a href="/components/input-icon/#图标名称">图标名称</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @imnull">✅</d-tooltip> <a href="/components/input-icon/#颜色">颜色</a></d-col>
-  <d-col :span="8"></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @imnull">🚧</d-tooltip> <a href="/components/input-icon/#自定义">自定义</a></d-col>
 </d-row>
 
-### InputNumber 数字输入框
+### InputNumber 数字输入框 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @git-Where">✅</d-tooltip> <a href="/components/input-number/#基本功能">基本功能</a></d-col>
@@ -530,7 +530,7 @@
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/input-number/#限制小数">限制小数</a></d-col>
 </d-row>
 
-### MultiAutoComplete 多项自动补全
+### MultiAutoComplete 多项自动补全 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/multi-auto-complete/#基本功能">基本功能</a></d-col>
@@ -538,7 +538,7 @@
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/multi-auto-complete/#禁用状态">允许空值</a></d-col>
 </d-row>
 
-### Radio 单选框
+### Radio 单选框 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @brenner8023">✅</d-tooltip> <a href="/components/radio/#相互独立的单选项">相互独立的单选项</a></d-col>
@@ -551,7 +551,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @xuehongjie">✅</d-tooltip> <a href="/components/radio/#自定义单选项">自定义单选项</a></d-col>
 </d-row>
 
-### Select 下拉选择框
+### Select 下拉选择框 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @lookforwhat">✅</d-tooltip> <a href="/components/select/#基本功能">基本功能</a></d-col>
@@ -579,7 +579,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Slider 滑块
+### Slider 滑块 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @xiaoboRao">✅</d-tooltip> <a href="/components/slider/#基本功能">基本功能</a></d-col>
@@ -587,7 +587,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Switch 开关
+### Switch 开关 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @brenner8023">✅</d-tooltip> <a href="/components/switch/#基本功能">基本功能</a></d-col>
@@ -600,7 +600,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### TagInput 标签输入框
+### TagInput 标签输入框 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @brenner8023">✅</d-tooltip> <a href="/components/tag-input/#基本功能">基本功能</a></d-col>
@@ -613,7 +613,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Textarea 多行文本框
+### Textarea 多行文本框 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @afterain">✅</d-tooltip> <a href="/components/textarea/#基本功能">基本功能</a></d-col>
@@ -621,15 +621,15 @@
   <d-col :span="8"><d-tooltip content="Contributed by @afterain">✅</d-tooltip> <a href="/components/textarea/#字符数限制">字符数限制</a></d-col>
 </d-row>
 
-### TimePicker 时间选择器
+### TimePicker 时间选择器 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Dreamer">✅</d-tooltip> <a href="/components/time-picker/#基本功能">基本功能</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @Dreamer">✅</d-tooltip> <a href="/components/time-picker/#格式化">格式化</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @Dreamer">✅</d-tooltip> <a href="/components/time-picker/#自定义模板">自定义模板</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @Dreamer">🚧</d-tooltip> <a href="/components/time-picker/#自定义模板">自定义模板</a></d-col>
 </d-row>
 
-### Transfer 穿梭框
+### Transfer 穿梭框 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @ForeseeBear">✅</d-tooltip> <a href="/components/transfer/#基本功能">基本功能</a></d-col>
@@ -642,7 +642,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### TreeSelect 树形选择框
+### TreeSelect 树形选择框 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Minglye">✅</d-tooltip> <a href="/components/tree-select/#基本功能">基本功能</a></d-col>
@@ -665,7 +665,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Upload 上传
+### Upload 上传 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @elsaooo">✅</d-tooltip> <a href="/components/upload/#基本功能">基本功能</a></d-col>
@@ -678,7 +678,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @elsaooo">✅</d-tooltip> <a href="/components/upload/#任意区域上传">任意区域上传</a></d-col>
 </d-row>
 
-### Avatar 头像
+### Avatar 头像 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @elsaooo">✅</d-tooltip> <a href="/components/avatar/#头像显示规则">头像显示规则</a></d-col>
@@ -686,7 +686,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @linxiang07">✅</d-tooltip> <a href="/components/avatar/#特殊显示">特殊显示</a></d-col>
 </d-row>
 
-### Badge 徽标
+### Badge 徽标 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @duqingyu">✅</d-tooltip> <a href="/components/badge/#基本功能">基本功能</a></d-col>
@@ -699,7 +699,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @micd">✅</d-tooltip> <a href="/components/badge/#自定义">自定义</a></d-col>
 </d-row>
 
-### Card 卡片
+### Card 卡片 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @vergil_lu">✅</d-tooltip> <a href="/components/card/#基本功能">基本功能</a></d-col>
@@ -707,7 +707,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @vergil_lu">✅</d-tooltip> <a href="/components/card/#自定义区域">自定义区域</a></d-col>
 </d-row>
 
-### Carousel 轮播
+### Carousel 轮播 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Roading">✅</d-tooltip> <a href="/components/carousel/#基本功能">基本功能</a></d-col>
@@ -715,12 +715,12 @@
   <d-col :span="8"><d-tooltip content="Contributed by @Roading">✅</d-tooltip> <a href="/components/carousel/#自动轮播">自动轮播</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Contributed by @Roading">✅</d-tooltip> <a href="/components/carousel/#自定义操作">自定义操作</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @Roading">🚧</d-tooltip> <a href="/components/carousel/#自定义操作">自定义操作</a></d-col>
   <d-col :span="8"></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
-### Collapse 折叠面板
+### Collapse 折叠面板 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/collapse/#基本功能">基本功能</a></d-col>
@@ -728,15 +728,15 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Comment 评论
+### Comment 评论 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @nextniko">✅</d-tooltip> <a href="/components/comment/#基本功能">基本功能</a></d-col>
-  <d-col :span="8"></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @nextniko">🚧</d-tooltip> <a href="/components/comment/#自定义">自定义</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
-### Countdown 倒计时
+### Countdown 倒计时 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @HeQinQins">✅</d-tooltip> <a href="/components/countdown/#基本功能">基本功能</a></d-col>
@@ -749,7 +749,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Dashboard 仪表盘
+### Dashboard 仪表盘 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dashboard/#基本功能">基本功能</a></d-col>
@@ -757,7 +757,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Gantt 甘特图
+### Gantt 甘特图 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/gantt/#基本功能">基本功能</a></d-col>
@@ -765,7 +765,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### ImagePreview 图片预览
+### ImagePreview 图片预览 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @duqingyu">✅</d-tooltip> <a href="/components/image-preview/#基本功能">基本功能</a></d-col>
@@ -773,15 +773,15 @@
   <d-col :span="8"><d-tooltip content="Contributed by @liuxdi">✅</d-tooltip> <a href="/components/image-preview/#设置层级">设置层级 z-index</a></d-col>
 </d-row>
 
-### List 列表
+### List 列表 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @xingyan95">✅</d-tooltip> <a href="/components/list/#基本功能">基本功能</a></d-col>
-  <d-col :span="8"></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @xingyan95">🚧</d-tooltip> <a href="/components/list/#自定义">自定义</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
-### Progress 进度条
+### Progress 进度条 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @devin974">✅</d-tooltip> <a href="/components/progress/#基本功能">基本功能</a></d-col>
@@ -789,7 +789,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### QuadrantDiagram 象限图
+### QuadrantDiagram 象限图 `v2.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/quadrant-diagram/#基本功能">基本功能</a></d-col>
@@ -797,7 +797,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Rate 评分
+### Rate 评分 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @elsaooo">✅</d-tooltip> <a href="/components/rate/#基本功能">基本功能</a></d-col>
@@ -810,7 +810,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @elsaooo">✅</d-tooltip> <a href="/components/rate/#类型">类型 type</a></d-col>
 </d-row>
 
-### Skeleton 骨架屏
+### Skeleton 骨架屏 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @ivestszheng">✅</d-tooltip> <a href="/components/skelton/#基本功能">基本功能</a></d-col>
@@ -818,7 +818,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @ivestszheng">✅</d-tooltip> <a href="/components/skelton/#细粒度模式">细粒度模式</a></d-col>
 </d-row>
 
-### Statistic 统计数值
+### Statistic 统计数值 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @ErKeLost">✅</d-tooltip> <a href="/components/statistic/#基本功能">基本功能</a></d-col>
@@ -826,7 +826,7 @@
   <d-col :span="8"><d-tooltip content="Contributed by @ErKeLost">✅</d-tooltip> <a href="/components/statistic/#自定义">自定义</a></d-col>
 </d-row>
 
-### Table 表格
+### Table 表格 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/table/#基本功能">基本功能</a></d-col>
@@ -859,7 +859,7 @@
   <d-col :span="8"><d-tooltip content="Developing by xingyan95">🚧</d-tooltip> <a href="/components/table/#批量行拖拽">批量行拖拽</a></d-col>
 </d-row>
 
-### Tag 标签
+### Tag 标签 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @c0dedance">✅</d-tooltip> <a href="/components/tag/#基本功能">基本功能</a></d-col>
@@ -867,7 +867,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Timeline 时间轴
+### Timeline 时间轴 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @jenson-miao">✅</d-tooltip> <a href="/components/timeline/#基本功能">基本功能</a></d-col>
@@ -885,7 +885,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Tree 树
+### Tree 树 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @kagol">✅</d-tooltip> <a href="/components/tree/#基本功能">基本功能</a></d-col>
@@ -908,7 +908,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Grid 栅格
+### Grid 栅格 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @ming-bin">✅</d-tooltip> <a href="/components/grid/#基本功能">基本功能</a></d-col>
@@ -926,7 +926,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Layout 布局
+### Layout 布局 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @tanwenxue">✅</d-tooltip> <a href="/components/layout/#基本功能">基本功能</a></d-col>
@@ -934,7 +934,7 @@
   <d-col :span="8"></d-col>
 </d-row>
 
-### Splitter 分割器
+### Splitter 分割器 `v1.0`
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @naluduo233">✅</d-tooltip> <a href="/components/splitter/#基本功能">基本功能</a></d-col>
