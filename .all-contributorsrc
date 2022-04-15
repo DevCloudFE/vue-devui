@@ -324,6 +324,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Lonely-shang",
+      "name": "Miliky",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34124930?v=4",
+      "profile": "https://github.com/Lonely-shang",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 10,
