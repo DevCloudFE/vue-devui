@@ -1,4 +1,4 @@
-# steps-guide 操作指引
+# StepsGuide 操作指引
 
 引导用户了解业务使用逻辑组件。
 
@@ -11,9 +11,9 @@
 :::demo  
 ```vue
 <template>
-  <d-button variant="common" class="step-1 ml-s" @click="handleClick(0)">Step 1</d-button>
-  <d-button variant="common" class="step-2 ml-s" @click="handleClick(1)">Step 2</d-button>
-  <d-button variant="common" class="step-3 ml-s" @click="handleClick(2)">Step 3</d-button>
+  <d-button class="step-1 ml-s" @click="handleClick(0)">Step 1</d-button>
+  <d-button class="step-2 ml-s" @click="handleClick(1)">Step 2</d-button>
+  <d-button class="step-3 ml-s" @click="handleClick(2)">Step 3</d-button>
   <d-steps-guide ref="stepRef" :steps="steps" v-model:step-index="stepIndex" :step-change="handleStepChange" @guide-close="handleGuideClose"></d-steps-guide>
 </template>
 <script>
@@ -112,18 +112,18 @@
 ```vue
 <template>
   <div class="flex mb-s justify-center">
-    <d-button variant="common" class="top-left ml-s" width="120px" @click="handleClick(0)">Top-left</d-button>
-    <d-button variant="common" class="top ml-s" width="120px" @click="handleClick(1)">Top</d-button>
-    <d-button variant="common" class="top-right ml-s" width="120px" @click="handleClick(2)">Top-right</d-button>
+    <d-button class="top-left ml-s" width="120px" @click="handleClick(0)">Top-left</d-button>
+    <d-button class="top ml-s" width="120px" @click="handleClick(1)">Top</d-button>
+    <d-button class="top-right ml-s" width="120px" @click="handleClick(2)">Top-right</d-button>
   </div>
   <div class="flex mb-s justify-around">
-    <d-button variant="common" class="left ml-s" width="120px" @click="handleClick(7)">Left</d-button>
-    <d-button variant="common" class="right ml-s" width="120px" @click="handleClick(3)">Right</d-button>
+    <d-button class="left ml-s" width="120px" @click="handleClick(7)">Left</d-button>
+    <d-button class="right ml-s" width="120px" @click="handleClick(3)">Right</d-button>
   </div>
   <div class="flex mb-s justify-center">
-    <d-button variant="common" class="bottom-left ml-s" width="120px" @click="handleClick(6)">Bottom-left</d-button>
-    <d-button variant="common" class="bottom ml-s" width="120px" @click="handleClick(5)">Bottom</d-button>
-    <d-button variant="common" class="bottom-right ml-s" width="120px" @click="handleClick(4)">Bottom-right</d-button>
+    <d-button class="bottom-left ml-s" width="120px" @click="handleClick(6)">Bottom-left</d-button>
+    <d-button class="bottom ml-s" width="120px" @click="handleClick(5)">Bottom</d-button>
+    <d-button class="bottom-right ml-s" width="120px" @click="handleClick(4)">Bottom-right</d-button>
   </div>
   <d-steps-guide :steps="steps" v-model:step-index="stepIndex" ref="stepsRef"></d-steps-guide>
 </template>
@@ -196,9 +196,9 @@
 :::demo  
 ```vue
 <template>
-  <d-button variant="common" class="ml-s">Custom Position</d-button>
-  <d-button variant="common" class="ml-s">Custom Target</d-button>
-  <d-steps-guide ref="stepsRef" :steps="customSteps" :showDots="false" :showClose="false"></d-steps-guide>
+  <d-button class="ml-s">Custom Position</d-button>
+  <d-button class="ml-s">Custom Target</d-button>
+  <d-steps-guide ref="stepsRef" :steps="customSteps" :show-dots="false" :show-close="false"></d-steps-guide>
 </template>
 <script>
 import { defineComponent, reactive, ref, onMounted } from 'vue'
@@ -235,16 +235,14 @@ export default defineComponent({
 ```
 :::
 
-### API
-
-d-steps-guide 参数
+### StepsGuide 参数
 
 | 参数  | 类型  | 默认 | 说明                   | 跳转                  |
 | ----- | ----- | ---- | ---------------------- | --------------------- |
 | steps | array | Step[] | 必选，操作指引步骤数组 | [基本用法](#基本用法) |
-| stepIndex | number | undefined |可选，表示当前指引的索引，为 -1 时表示指引为关闭状态 | [基本用法](#基本用法) |
-| zIndex | number | 1100 | 可选，用于调整指引信息的显示层级 | 
-| showClose | boolean | true   | 可选，是否显示关闭按钮 | [自定义](#基本用法) |
-| showDots | boolean | true   | 可选，是否显示表示导航指引顺序的圆点 | [自定义](#基本用法) |
-| scrollToTargetSwitch | boolean | true | 可选，是否自动滚动页面至指引信息显示的位置 dom | |
-| stepChange | Function | | 可选，在切换步骤时前置执行，返回 boolean 值决定是否显示当前步骤
+| step-index | number | undefined |可选，表示当前指引的索引，为 -1 时表示指引为关闭状态 | [基本用法](#基本用法) |
+| z-index | number | 1100 | 可选，用于调整指引信息的显示层级 | 
+| show-close | boolean | true   | 可选，是否显示关闭按钮 | [自定义](#基本用法) |
+| show-dots | boolean | true   | 可选，是否显示表示导航指引顺序的圆点 | [自定义](#基本用法) |
+| scroll-to-target-switch | boolean | true | 可选，是否自动滚动页面至指引信息显示的位置 dom | |
+| step-change | Function | | 可选，在切换步骤时前置执行，返回 boolean 值决定是否显示当前步骤
