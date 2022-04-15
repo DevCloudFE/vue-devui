@@ -183,7 +183,17 @@
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/dropdown/#多级菜单">多级菜单</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/dropdown/#单独使用 DropdownMenu">单独使用 DropdownMenu</a></d-col>
-  <d-col :span="8"></d-col>
+  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dropdown/#关闭触发点设置">关闭触发点设置</a></d-col>
+</d-row>
+<d-row :gutter="[0, 8]">
+  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dropdown/#悬浮下拉">悬浮下拉</a></d-col>
+  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dropdown/#手动控制下拉">手动控制下拉</a></d-col>
+  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dropdown/#通过isOpen控制下拉">通过isOpen控制下拉</a></d-col>
+</d-row>
+<d-row :gutter="[0, 8]">
+  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dropdown/#自动展开和自动聚焦">自动展开和自动聚焦</a></d-col>
+  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dropdown/#设置展开位置处理">设置展开位置处理</a></d-col>
+  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dropdown/#支持添加图标">支持添加图标</a></d-col>
 </d-row>
 
 ### Menu 菜单
@@ -549,13 +559,13 @@
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/select/#自定义搜索功能">自定义搜索功能</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Contributed by @">✅</d-tooltip> <a href="/components/select/#全选下拉选项">全选下拉选项</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @lookforwhat">✅</d-tooltip> <a href="/components/select/#全选下拉选项">全选下拉选项</a></d-col>
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/select/#自定义模板">自定义模板</a></d-col>
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/select/#标签化">标签化</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Contributed by @">✅</d-tooltip> <a href="/components/select/#禁用状态">禁用状态</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @">✅</d-tooltip> <a href="/components/select/#允许清空">允许清空</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @lookforwhat">✅</d-tooltip> <a href="/components/select/#禁用状态">禁用状态</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @lookforwhat">✅</d-tooltip> <a href="/components/select/#允许清空">允许清空</a></d-col>
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/select/#虚拟滚动">虚拟滚动</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
@@ -820,7 +830,7 @@
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/table/#基本功能">基本功能</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/table/#表格样式">表格样式</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @ivestszheng">✅</d-tooltip> <a href="/components/table/#表格样式">表格样式</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/table/#异步加载数据">异步加载数据</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
@@ -878,22 +888,22 @@
 ### Tree 树
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Contributed by @gxuud">✅</d-tooltip> <a href="/components/tree/#基本功能">基本功能</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @kagol">✅</d-tooltip> <a href="/components/tree/#基本功能">基本功能</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @gxuud">✅</d-tooltip> <a href="/components/tree/#可勾选">可勾选</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @gxuud">✅</d-tooltip> <a href="/components/tree/#默认状态">默认状态</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @sufuwang">✅</d-tooltip> <a href="/components/tree/#默认状态">默认状态</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Contributed by @sufuwang">✅</d-tooltip> <a href="/components/tree/#禁用状态">禁用状态</a></d-col>
-  <d-col :span="8"><d-tooltip content="Contributed by @sufuwang">✅</d-tooltip> <a href="/components/tree/#自定义图标">自定义图标</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @gxuud">✅</d-tooltip> <a href="/components/tree/#禁用状态">禁用状态</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @gxuud">✅</d-tooltip> <a href="/components/tree/#自定义图标">自定义图标</a></d-col>
   <d-col :span="8">🚧 <a href="/components/tree/#懒加载">懒加载</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8">🚧 <a href="/components/tree/#增删改查操作">增删改查操作</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @sufuwang">✅</d-tooltip> <a href="/components/tree/#增删改查操作">增删改查操作</a></d-col>
   <d-col :span="8">🚧 <a href="/components/tree/#搜索过滤">搜索过滤</a></d-col>
   <d-col :span="8">🚧 <a href="/components/tree/#拖拽排序">拖拽排序</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8">🚧 <a href="/components/tree/#treeFactory">treeFactory</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @kagol">🚧</d-tooltip> <a href="/components/tree/#treeFactory">treeFactory</a></d-col>
   <d-col :span="8">🚧 <a href="/components/tree/#虚拟滚动">虚拟滚动</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
