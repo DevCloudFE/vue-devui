@@ -49,3 +49,19 @@
   color: $devui-text !important;
   background-color: $devui-base-bg !important;
 }
+
+[class^=version-tag] {
+  display: inline-block;
+  padding: 0 4px;
+  line-height: 20px;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.version-tag-1 {
+  background-color: #3DCCA6;
+}
+
+.version-tag-2 {
+  background-color: #F66F6A;
+}
