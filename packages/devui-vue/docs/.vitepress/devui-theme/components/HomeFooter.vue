@@ -31,7 +31,7 @@ const { frontmatter } = useData()
 .home-hero + .footer .container,
 .home-features + .footer .container,
 .home-content + .footer .container {
-  border-top: 1px solid var(--c-divider);
+  /* border-top: 1px solid var(--c-divider); */
 }
 
 @media (min-width: 420px) {
