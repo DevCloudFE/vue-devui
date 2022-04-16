@@ -93,6 +93,31 @@ export default defineComponent({
 
 :::
 
+### 自定义颜色color
+
+:::demo
+
+```vue
+<template>
+  <div class="slider-wrapper" style="padding:20px">
+    <d-slider v-model="inputValue" color="#e67e22"></d-slider>
+  </div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const inputValue = ref(20);
+    return {
+      inputValue,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### 禁止输入态
 
 :::demo
