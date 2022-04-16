@@ -1,16 +1,18 @@
-import { defineComponent, provide } from 'vue';
+import { defineComponent, provide, SetupContext } from 'vue';
 import mitt from 'mitt';
-import { formProps, FormProps, IFormItem, dFormEvents, formInjectionKey, IForm } from './form-types';
+import { formProps, FormProps, IFormItem, dFormEvents, FORM_TOKEN } from './form-types';
 import { EventBus } from './utils';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './form.scss';
 
 export default defineComponent({
   name: 'DForm',
   props: formProps,
   emits: ['submit'],
-  setup(props: FormProps, ctx) {
+  setup(props: FormProps, ctx: SetupContext) {
     const formMitt = mitt();
     const fields: IFormItem[] = [];
+    const ns = useNamespace('form');
     const resetFormFields = () => {
       fields.forEach((field: IFormItem) => {
         field.resetField();
@@ -29,8 +31,8 @@ export default defineComponent({
       }
     });
 
-    provide(formInjectionKey, {
-      formData: props.formData,
+    provide(FORM_TOKEN, {
+      formData: props.data,
       formMitt,
       labelData: {
         layout: props.layout,
@@ -38,7 +40,6 @@ export default defineComponent({
         labelAlign: props.labelAlign,
       },
       rules: props.rules,
-      columnsClass: props.columnsClass,
       messageShowType: 'popover',
     });
 
@@ -48,18 +49,9 @@ export default defineComponent({
       EventBus.emit(`formSubmit:${props.name}`);
     };
 
-    return {
-      fields,
-      formMitt,
-      onSubmit,
-      resetFormFields,
-    };
-  },
-  render() {
-    const { onSubmit } = this;
-    return (
-      <form onSubmit={onSubmit} class="devui-form">
-        {this.$slots.default?.()}
+    return () => (
+      <form onSubmit={onSubmit} class={ns.b()}>
+        {ctx.slots.default?.()}
       </form>
     );
   },
