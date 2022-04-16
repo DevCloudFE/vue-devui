@@ -91,7 +91,6 @@ describe('d-col', () => {
     </Row>;
     it(`d-col ${item} span`, () => {
       const wrapper = mount(component);
-      console.log(wrapper.html());
       expect(wrapper.findAll(`.devui-col-${item}-span-${value}`).length).toBe(1);
     });
   });

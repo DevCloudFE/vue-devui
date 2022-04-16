@@ -8,7 +8,7 @@ Vue DevUI 使用 `pnpm` 构建 `monorepo` 仓库，你应该使用 [pnpm](https:
 
 如果你想参与 `devui-vue` 的开发或者测试：
 
-1. 点击 Github 右上角的 Fork 按钮，将仓库 Fork 仓库到个人空间
+1. 点击 GitHub 右上角的 Fork 按钮，将仓库 Fork 仓库到个人空间
 2. Clone 个人空间项目到本地：`git clone git@github.com:username/vue-devui.git`
 3. 在 Vue DevUI 的根目录下运行`pnpm i`, 安装 node 依赖
 4. 运行 `pnpm dev`，启动组件库网站

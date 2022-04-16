@@ -2,7 +2,7 @@ import { defineComponent, reactive, ref, toRefs, provide } from 'vue';
 import type { SetupContext } from 'vue';
 import { treeProps, TreeProps, TreeItem, TreeRootType, Nullable } from './tree-types';
 import { CHECK_CONFIG } from  './config';
-import { preCheckTree, deleteNode, getId } from './util';
+import { preCheckTree, deleteNode, getId } from './utils';
 import Loading from '../../loading/src/loading-service';
 import Checkbox from '../../checkbox/src/checkbox';
 import useToggle from './composables/use-toggle';

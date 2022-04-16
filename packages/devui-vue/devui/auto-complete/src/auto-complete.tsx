@@ -42,7 +42,7 @@ export default defineComponent({
       searchFn,
       formatter
     );
-    const { onInput, onFocus, inputRef, visible, searchStatus, handleClose, toggleMenu } = useInputHandle(
+    const { onInput, onFocus, onBlur, inputRef, isFocus, visible, searchStatus, handleClose, toggleMenu } = useInputHandle(
       ctx,
       searchList,
       showNoResultItemTemplate,
@@ -137,10 +137,11 @@ export default defineComponent({
             disabled={disabled.value}
             type="text"
             onClick={toggleMenu}
-            class={['devui-form-control', 'devui-dropdown-origin', 'devui-dropdown-origin-open', disabled.value && 'disabled']}
+            class={['devui-form-control', 'devui-dropdown-origin', isFocus.value && 'devui-dropdown-origin-open', disabled.value && 'disabled']}
             placeholder="Search"
             onInput={onInput}
             onFocus={onFocus}
+            onBlur={onBlur}
             value={modelValue.value}
             ref={inputRef}
             onKeydown={handlekeyDown}

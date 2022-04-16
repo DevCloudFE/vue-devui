@@ -110,5 +110,3 @@ export interface TableMethods<T = Record<string, any>> {
 }
 
 export const TABLE_TOKEN: InjectionKey<Table> = Symbol();
-
-export type SortDirection = 'ASC' | 'DESC' | '';

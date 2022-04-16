@@ -1,6 +1,5 @@
-import { watch, Ref, ref, computed, unref } from 'vue';
-import { Column, CompareFn, FilterResults } from '../components/column/column-types';
-import { SortDirection } from '../table-types';
+import { watch, Ref, ref, computed, unref, ComponentInternalInstance } from 'vue';
+import { Column, SortMethod, SortDirection } from '../components/column/column-types';
 import { TableStore } from './store-types';
 
 function replaceColumn(array: any, column: any) {
@@ -121,39 +120,18 @@ const createSelection = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
 };
 
 const createSorter = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
-  const sortData = (
-    field: string,
-    direction: SortDirection,
-    compareFn: CompareFn<T> = (fieldKey: string, a: T, b: T) => a[fieldKey] > b[fieldKey]
-  ) => {
+  const sortData = (direction: SortDirection, sortMethod: SortMethod<T>) => {
     if (direction === 'ASC') {
-      _data.value = _data.value.sort((a, b) => (compareFn(field, a, b) ? 1 : -1));
+      _data.value = _data.value.sort((a, b) => (sortMethod ? (sortMethod(a, b) ? 1 : -1) : 0));
     } else if (direction === 'DESC') {
-      _data.value = _data.value.sort((a, b) => (!compareFn(field, a, b) ? 1 : -1));
+      _data.value = _data.value.sort((a, b) => (sortMethod ? (sortMethod(a, b) ? -1 : 1) : 0));
     } else {
       _data.value = [...dataSource.value];
     }
   };
-  return { sortData };
-};
 
-const createFilter = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
-  const fieldSet = new Set<string>();
-  const filterData = (field: string, results: FilterResults) => {
-    fieldSet.add(field);
-    const fields = [...fieldSet];
-    _data.value = dataSource.value.filter((item) => {
-      return fields.reduce<boolean>((prev, fieldKey) => {
-        return prev && results.indexOf(item[fieldKey]) !== -1;
-      }, true);
-    });
-  };
-
-  const resetFilterData = () => {
-    fieldSet.clear();
-    _data.value = [...dataSource.value];
-  };
-  return { filterData, resetFilterData };
+  const thList: ComponentInternalInstance[] = [];
+  return { sortData, thList };
 };
 
 const createFixedLogic = (columns: Ref<Column[]>) => {
@@ -176,8 +154,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
 
   const { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
   const { _checkAll, _checkList, _halfChecked, getCheckedRows } = createSelection(dataSource, _data);
-  const { sortData } = createSorter(dataSource, _data);
-  const { filterData, resetFilterData } = createFilter(dataSource, _data);
+  const { sortData, thList } = createSorter(dataSource, _data);
 
   const { isFixedLeft } = createFixedLogic(_columns);
 
@@ -190,6 +167,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
       _checkAll,
       _halfChecked,
       isFixedLeft,
+      thList,
     },
     insertColumn,
     sortColumn,
@@ -197,7 +175,5 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
     updateColumns,
     getCheckedRows,
     sortData,
-    filterData,
-    resetFilterData,
   };
 }

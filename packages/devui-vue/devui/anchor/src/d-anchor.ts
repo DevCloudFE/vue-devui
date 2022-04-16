@@ -1,4 +1,4 @@
-import {hightLightFn} from './util';
+import {hightLightFn} from './utils';
 interface Bind {
   value: string;
 }
