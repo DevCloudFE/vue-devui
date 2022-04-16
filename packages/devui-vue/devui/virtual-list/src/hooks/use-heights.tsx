@@ -5,8 +5,6 @@ import { watch, ref } from 'vue';
 export default function useHeights<T>(
   mergedData: ShallowRef<unknown[]>,
   getKey: GetKey<T>,
-  onItemAdd?: ((item: T) => void) | null,
-  onItemRemove?: ((item: T) => void) | null,
 ): [(item: T, instance: HTMLElement & { $el: never }) => void, () => void, CacheMap, Ref<symbol>] {
   const instance = new Map<VNodeProps['key'], HTMLElement>();
   let heights = new Map();
@@ -35,19 +33,11 @@ export default function useHeights<T>(
 
   function setInstance(item: T, ins: HTMLElement & { $el: never }) {
     const key = getKey(item);
-    const origin = instance.get(key);
     if (ins) {
       instance.set(key, ins.$el || ins);
       collectHeight();
     } else {
       instance.delete(key);
-    }
-    if (!origin !== !ins) {
-      if (ins) {
-        onItemAdd?.(item);
-      } else {
-        onItemRemove?.(item);
-      }
     }
   }
 

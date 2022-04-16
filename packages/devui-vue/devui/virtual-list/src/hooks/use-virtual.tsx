@@ -9,12 +9,12 @@ interface IUseVirtual {
 
 export default function useVirtual(props: VirtualListProps): IUseVirtual {
   const isVirtual = computed(() => {
-    const { height, itemHeight, virtual } = props;
-    return !!(virtual !== false && height && itemHeight);
+    const { height, virtual } = props;
+    return !!(virtual !== false && height);
   });
   const inVirtual = computed(() => {
-    const { height, itemHeight, data } = props;
-    return isVirtual.value && data && itemHeight * data.length > height;
+    const { height, data } = props;
+    return isVirtual.value && data && 20 * data.length > height;
   });
   return { isVirtual, inVirtual };
 }
