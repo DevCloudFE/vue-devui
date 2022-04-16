@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, CSSProperties, VNodeTypes, Ref } from 'vue';
+import type { PropType, ExtractPropTypes, CSSProperties, VNodeTypes } from 'vue';
 
 interface ResizeObserverSize {
   width: number;
@@ -12,20 +12,13 @@ export const virtualListProps = {
     type: Array as PropType<Record<string, never>[]>,
     default: () => [],
   },
-  style: {
-    type: Object as PropType<CSSProperties>,
-  },
-  class: {
-    type: String,
-    default: '',
-  },
   component: {
     type: String,
     default: 'div',
   },
   height: {
     type: Number,
-    default: 0,
+    default: 100,
   },
   itemHeight: {
     type: Number,
@@ -41,12 +34,6 @@ export const virtualListProps = {
   itemKey: {
     type: [String, Number, Function] as PropType<string | number | ((item: Record<string, never>) => string | number)>,
     required: true,
-  },
-  onScroll: {
-    type: Function as PropType<(event: UIEvent) => void>,
-  },
-  onVisibleChange: {
-    type: Function as PropType<(list: unknown[], data: unknown[]) => void>,
   },
 } as const;
 

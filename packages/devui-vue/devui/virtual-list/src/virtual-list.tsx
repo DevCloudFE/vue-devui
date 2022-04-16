@@ -1,7 +1,6 @@
 import type { SetupContext, CSSProperties, HTMLAttributes } from 'vue';
 import {
   defineComponent,
-  toRefs,
   ref,
   shallowRef,
   reactive,
@@ -12,9 +11,10 @@ import {
   onUpdated,
   nextTick,
   watchEffect,
-  onBeforeUnmount
+  onBeforeUnmount,
+  unref
 } from 'vue';
-import type { VirtualListProps, RenderFunc, SharedConfig, IScrollBarExposeFunction } from './virtual-list-types';
+import type { VirtualListProps, RenderFunc, IScrollBarExposeFunction } from './virtual-list-types';
 import { virtualListProps } from './virtual-list-types';
 import useVirtual from './hooks/use-virtual';
 import useHeights from './hooks/use-heights';
@@ -41,7 +41,6 @@ export default defineComponent({
   name: 'DVirtualList',
   props: virtualListProps,
   setup(props: VirtualListProps, ctx: SetupContext) {
-    const { style, class: className, component, ...restProps } = toRefs(props);
     const { isVirtual, inVirtual } = useVirtual(props);
     const state = reactive<ListState>({
       scrollTop: 0,
@@ -77,15 +76,10 @@ export default defineComponent({
       if (!itemKey.value) { return; }
       return itemKey.value(item);
     };
-    const sharedConfig: SharedConfig<Record<string, never>> = {
-      getKey,
-    };
 
     const [setInstance, collectHeight, heights, updatedMark] = useHeights<Record<string, never>>(
       mergedData,
       getKey,
-      null,
-      null,
     );
 
     const calRes = reactive<{
@@ -155,24 +149,21 @@ export default defineComponent({
         offsetHeight,
       ],
       () => {
-        if (!isVirtual.value || !inVirtual.value) {
-          return;
-        }
+        if (!isVirtual.value || !inVirtual.value) { return; }
         let itemTop = 0;
         let startIndex: number | undefined;
         let startOffset: number | undefined;
         let endIndex: number | undefined;
-        const dataLen = mergedData.value.length;
-        const currentData = mergedData.value;
+        const mergedDataValue = unref(mergedData);
         const scrollTop = state.scrollTop;
-        const { itemHeight, height } = props;
+        const { height } = props;
         const scrollTopHeight = scrollTop + height;
-        for (let i = 0; i < dataLen; i += 1) {
-          const currentItem = currentData[i];
-          const key = getKey(currentItem);
+        for (let i = 0; i < mergedDataValue.length; i += 1) {
+          const mergedDataItem = mergedDataValue[i];
+          const key = getKey(mergedDataItem);
           let cacheHeight = heights.get(key);
           if (cacheHeight === undefined) {
-            cacheHeight = itemHeight;
+            cacheHeight = 20;
           }
           const currentItemBottom = itemTop + cacheHeight;
           if (startIndex === undefined && currentItemBottom >= scrollTop) {
@@ -189,9 +180,9 @@ export default defineComponent({
           startOffset = 0;
         }
         if (endIndex === undefined) {
-          endIndex = dataLen - 1;
+          endIndex = mergedDataValue.length - 1;
         }
-        endIndex = Math.min(endIndex + 1, dataLen);
+        endIndex = Math.min(endIndex + 1, mergedDataValue.length);
         Object.assign(calRes, {
           scrollHeight: itemTop,
           start: startIndex,
@@ -244,7 +235,7 @@ export default defineComponent({
         syncScrollTop(newScrollTop);
       }
       barRef?.value?.onShowBar?.();
-      props.onScroll?.(e);
+      ctx.emit('scroll', e);
     };
 
     const [onRawWheel, onFireFoxScroll] = useFrameWheel(
@@ -307,7 +298,7 @@ export default defineComponent({
     const componentStyle = computed(() => {
       let cs: CSSProperties | null = null;
       if (props.height) {
-        cs = { [props.fullHeight ? 'height' : 'maxHeight']: props.height + 'px', ...ScrollStyle };
+        cs = { maxHeight: isVirtual.value ? props.height + 'px' : undefined, ...ScrollStyle };
         if (isVirtual.value) {
           cs.overflowY = 'hidden';
           if (state.scrollMoving) {
@@ -318,28 +309,19 @@ export default defineComponent({
       return cs;
     });
 
-    // Returns the data in the view
     watch(
       [() => calRes.start, () => calRes.end, mergedData],
       () => {
-        if (props.onVisibleChange) {
-          const renderList = mergedData.value.slice(calRes.start, calRes.end + 1);
-          props.onVisibleChange(renderList, mergedData.value);
-        }
+        const renderList = mergedData.value.slice(calRes.start, calRes.end + 1);
+        ctx.emit('show-change', renderList, mergedData.value);
       },
       { flush: 'post' },
     );
 
     return () => {
-      const Component = component.value as keyof HTMLAttributes;
+      const Component = props.component as keyof HTMLAttributes;
       return (
-        <div
-          style={{ ...style, position: 'relative' }}
-          class={className.value}
-          ref={ref}
-          {...restProps}
-          onScroll={(e) => e}
-        >
+        <div style={{ position: 'relative' }}>
           <Component
             style={componentStyle.value as HTMLAttributes['style']}
             ref={componentRef}
@@ -357,8 +339,8 @@ export default defineComponent({
                     calRes.start,
                     calRes.end,
                     setInstance,
-                    sharedConfig,
-                    ctx.slots.default as RenderFunc<unknown>,
+                    { getKey },
+                    ctx.slots.item as RenderFunc<unknown>,
                   ),
               }}
             />
