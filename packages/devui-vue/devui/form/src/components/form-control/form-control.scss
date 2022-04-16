@@ -1,4 +1,4 @@
-.devui-form-control {
+.devui-form__control {
   position: relative;
   width: 100%;
 
@@ -6,10 +6,10 @@
     color: red;
   }
 
-  .devui-form-control-container {
+  .devui-form__control-container {
     position: relative;
 
-    .devui-feedback-status {
+    .devui-form__control-feedback {
       position: absolute;
       top: 50%;
       right: 0;
@@ -30,7 +30,7 @@
     }
   }
 
-  .devui-form-control-container-horizontal {
+  .devui-form__control-container--horizontal {
     display: flex;
     width: 100%;
 
@@ -57,11 +57,11 @@
     }
   }
 
-  .devui-control-content-wrapper {
+  .devui-form__control-content {
     width: 100%;
   }
 
-  .devui-has-feedback {
+  .devui-form__control-container--has-feedback {
     display: flex;
     align-items: center;
 
@@ -70,7 +70,7 @@
     }
   }
 
-  .devui-feedback-error {
+  .devui-form__control-container--feedback-error {
     border: 1px solid #f66f6a;
     border-radius: 2px;
 
@@ -92,7 +92,7 @@
     }
   }
 
-  .devui-form-control-extra-info {
+  .devui-form__control-extra {
     font-size: 12px;
     color: #8a8e99;
     min-height: 20px;
