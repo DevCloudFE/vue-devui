@@ -1,7 +1,7 @@
 import AsyncValidator, { RuleItem } from 'async-validator';
 import { VNode, DirectiveBinding } from 'vue';
 import { debounce } from 'lodash';
-import { EventBus, isObject, hasKey } from '../../util';
+import { EventBus, isObject, hasKey } from '../../utils';
 import './style.scss';
 
 interface ValidateFnParam {
