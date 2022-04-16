@@ -11,7 +11,7 @@ export const isEmptyElement = (c?: VNode): boolean => {
     !!c &&
     (c.type === Comment ||
       (c.type === Fragment && c?.children?.length === 0) ||
-      (c.type === Text && c?.children?.trim() === ''))
+      (c.type === Text && (c?.children as string)?.trim() === ''))
   );
 };
 
@@ -22,7 +22,7 @@ export const flattenChildren = (children?: VNode[], filterEmpty = true): VNode[]
     if (Array.isArray(child)) {
       res.push(...flattenChildren(child, filterEmpty));
     } else if (child && child.type === Fragment) {
-      res.push(...flattenChildren(child.children, filterEmpty));
+      res.push(...flattenChildren(child.children as VNode[], filterEmpty));
     } else if (child && isVNode(child)) {
       if (filterEmpty && !isEmptyElement(child)) {
         res.push(child);
@@ -30,13 +30,13 @@ export const flattenChildren = (children?: VNode[], filterEmpty = true): VNode[]
         res.push(child);
       }
     } else if (isValid(child)) {
-      res.push(child);
+      res.push(child as unknown as VNode);
     }
   });
   return res;
 };
 
-export const findDOMNode = (instance: ComponentInternalInstance | null): Element => {
+export const findDOMNode = (instance: (ComponentInternalInstance & { $el: VNode['el'] }) | null): VNode['el'] => {
   let node = instance?.vnode?.el || (instance && (instance?.$el || instance));
   while (node && !node.tagName) {
     node = node.nextSibling;
@@ -45,53 +45,3 @@ export const findDOMNode = (instance: ComponentInternalInstance | null): Element
 };
 
 export const isFF = typeof navigator === 'object' && /Firefox/i.test(navigator.userAgent);
-
-let raf = (callback: FrameRequestCallback) => +setTimeout(callback, 16);
-let caf = (num: number) => clearTimeout(num);
-
-if (typeof window !== 'undefined' && 'requestAnimationFrame' in window) {
-  raf = (callback: FrameRequestCallback) => window.requestAnimationFrame(callback);
-  caf = (handle: number) => window.cancelAnimationFrame(handle);
-}
-
-let rafUUID = 0;
-const rafIds = new Map<number, number>();
-
-function cleanup(id: number) {
-  rafIds.delete(id);
-}
-
-export default function wrapperRaf(callback: () => void, times = 1): number {
-  rafUUID += 1;
-  const id = rafUUID;
-
-  function callRef(leftTimes: number) {
-    if (leftTimes === 0) {
-      // Clean up
-      cleanup(id);
-
-      // Trigger
-      callback();
-    } else {
-      // Next raf
-      const realId = raf(() => {
-        callRef(leftTimes - 1);
-      });
-
-      // Bind real raf id
-      rafIds.set(id, realId);
-    }
-  }
-
-  callRef(times);
-
-  return id;
-}
-
-wrapperRaf.cancel = (id: number) => {
-  const realId = rafIds.get(id);
-  if (realId) {
-    cleanup(realId);
-    return caf(realId);
-  }
-};
