@@ -3,7 +3,7 @@ import { uniqueId } from 'lodash';
 import { IForm, formControlProps, formInjectionKey } from '../../form-types';
 import { ShowPopoverErrorMessageEventData } from '../directive/d-validate-rules';
 import clickoutsideDirective from '../../../../shared/devui-directive/clickoutside';
-import { EventBus, getElOffset } from '../../util';
+import { EventBus, getElOffset } from '../../utils';
 import Icon from '../../../../icon/src/icon';
 import Popover from '../../../../popover/src/popover';
 import './form-control.scss';

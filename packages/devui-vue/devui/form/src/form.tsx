@@ -1,7 +1,7 @@
 import { defineComponent, provide } from 'vue';
 import mitt from 'mitt';
 import { formProps, FormProps, IFormItem, dFormEvents, formInjectionKey, IForm } from './form-types';
-import { EventBus } from './util';
+import { EventBus } from './utils';
 import './form.scss';
 
 export default defineComponent({
