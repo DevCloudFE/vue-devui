@@ -23,7 +23,10 @@ const contributors = computed(() => {
       <slot name="top" />
 
       <Content class="content" />
+
+      <div class="page-contributor-label">Contributors</div>
       <PageContributor v-if="contributors && contributors.length > 0" :contributors="contributors" />
+
       <PageFooter />
       <NextAndPrevLinks />
 
@@ -67,5 +70,11 @@ const contributors = computed(() => {
     /* fix carbon ads display */
     clear: both;
   }
+}
+
+.page-contributor-label {
+  color: #24292f;
+  font-weight: 600;
+  line-height:32px;
 }
 </style>
