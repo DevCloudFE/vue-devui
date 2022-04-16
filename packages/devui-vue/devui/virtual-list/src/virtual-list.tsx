@@ -1,4 +1,4 @@
-import type { SetupContext, CSSProperties, Ref } from 'vue';
+import type { SetupContext, CSSProperties, HTMLAttributes } from 'vue';
 import {
   defineComponent,
   toRefs,
@@ -12,40 +12,18 @@ import {
   onUpdated,
   nextTick,
   watchEffect,
-  onBeforeUnmount,
-  provide,
+  onBeforeUnmount
 } from 'vue';
-import { virtualListProps, VirtualListProps, RenderFunc, SharedConfig, GetScrollBarRefType } from './virtual-list-types';
+import type { VirtualListProps, RenderFunc, SharedConfig, IScrollBarExposeFunction } from './virtual-list-types';
+import { virtualListProps } from './virtual-list-types';
 import useVirtual from './hooks/use-virtual';
 import useHeights from './hooks/use-heights';
 import useOriginScroll from './hooks/use-origin-scroll';
 import useFrameWheel from './hooks/use-frame-wheel';
-import useScrollTo from './hooks/use-scroll-to';
 import useMobileTouchMove from './hooks/use-mobile-touch-move';
 import Filler from './components/filler';
 import ScrollBar from './components/scroll-bar';
-import Item from './components/item';
-
-function renderChildren<T>(
-  list: T[],
-  startIndex: number,
-  endIndex: number,
-  setNodeRef: (item: T, element: HTMLElement & { $el: never }) => void,
-  { getKey }: SharedConfig<T>,
-  renderFunc: RenderFunc<T>,
-) {
-  if (renderFunc === undefined) { return ''; }
-  return list.slice(startIndex, endIndex + 1).map((item, index) => {
-    const eleIndex = startIndex + index;
-    const node = renderFunc(item, eleIndex, {});
-    const key = getKey(item);
-    return (
-      <Item key={key} setRef={(ele: HTMLElement & { $el: never }) => setNodeRef(item, ele)}>
-        {node}
-      </Item>
-    );
-  });
-}
+import { renderChildren } from './components/item';
 
 export interface ListState {
   scrollTop: number;
@@ -94,8 +72,7 @@ export default defineComponent({
     );
     const componentRef = ref<HTMLDivElement>();
     const fillerInnerRef = ref<HTMLDivElement>();
-    const getScrollBarRef = ref<Ref<GetScrollBarRefType>>();
-    provide('getScrollBarRef', getScrollBarRef);
+    const barRef = ref<IScrollBarExposeFunction>();
     const getKey = (item: Record<string, never>) => {
       if (!itemKey.value) { return; }
       return itemKey.value(item);
@@ -261,11 +238,12 @@ export default defineComponent({
       syncScrollTop(newTop);
     };
 
-    const onFallbackScroll = (e: UIEvent) => {
+    const onComponentScroll = (e: UIEvent) => {
       const { scrollTop: newScrollTop } = e.currentTarget as Element;
       if (Math.abs(newScrollTop - state.scrollTop) >= 1) {
         syncScrollTop(newScrollTop);
       }
+      barRef?.value?.onShowBar?.();
       props.onScroll?.(e);
     };
 
@@ -326,24 +304,6 @@ export default defineComponent({
       removeEventListener();
     });
 
-    const scrollTo = useScrollTo(
-      componentRef,
-      mergedData,
-      heights,
-      props,
-      getKey,
-      collectHeight,
-      syncScrollTop,
-      () => {
-        const sbf = getScrollBarRef.value?.().value;
-        sbf?.delayHidden();
-      },
-    );
-
-    ctx.expose({
-      scrollTo,
-    });
-
     const componentStyle = computed(() => {
       let cs: CSSProperties | null = null;
       if (props.height) {
@@ -371,7 +331,7 @@ export default defineComponent({
     );
 
     return () => {
-      const Component = component.value;
+      const Component = component.value as keyof HTMLAttributes;
       return (
         <div
           style={{ ...style, position: 'relative' }}
@@ -381,9 +341,9 @@ export default defineComponent({
           onScroll={(e) => e}
         >
           <Component
-            style={componentStyle.value}
+            style={componentStyle.value as HTMLAttributes['style']}
             ref={componentRef}
-            onScroll={onFallbackScroll}
+            onScroll={onComponentScroll}
           >
             <Filler
               height={calRes.scrollHeight}
@@ -405,7 +365,7 @@ export default defineComponent({
           </Component>
           {isVirtual.value && (
             <ScrollBar
-              // ref={scrollBarRef}
+              ref={barRef}
               scrollTop={state.scrollTop}
               height={props.height}
               scrollHeight={calRes.scrollHeight}

@@ -107,7 +107,10 @@ export type RenderFunc<T> = (
 export interface SharedConfig<T> {
   getKey: (item: T) => string | number | undefined;
 }
-export type GetScrollBarRefType = ((() => Ref<HTMLElement | null>) | null);
+
+export interface IScrollBarExposeFunction {
+  onShowBar?: () => void;
+}
 
 export type GetKey<T = Record<string, never>> = (item: T) => string | number | undefined;
 

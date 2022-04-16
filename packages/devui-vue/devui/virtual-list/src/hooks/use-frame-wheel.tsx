@@ -1,5 +1,4 @@
 import type { Ref } from 'vue';
-import raf from '../raf';
 import { isFF } from '../utils';
 import useOriginScroll from './use-origin-scroll';
 
@@ -26,7 +25,7 @@ export default function useFrameWheel(
     if (!inVirtual.value) {return;}
 
     if (nextFrame) {
-      raf.cancel(nextFrame);
+      window.cancelAnimationFrame(nextFrame);
     }
 
     const { deltaY } = event;
@@ -39,7 +38,7 @@ export default function useFrameWheel(
       event?.preventDefault?.();
     }
 
-    nextFrame = raf(() => {
+    nextFrame = window.requestAnimationFrame(() => {
       const patchMultiple = isMouseScroll ? 10 : 1;
       onWheelDelta(offsetRef * patchMultiple);
       offsetRef = 0;
