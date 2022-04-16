@@ -4,7 +4,7 @@ import FormLabel from './src/components/form-label/form-label';
 import FormItem from './src/components/form-item/form-item';
 import FormControl from './src/components/form-control/form-control';
 import FormOperation from './src/components/form-operation/form-operation';
-import dValidateRules from './src/components/directive/d-validate-rules';
+import dValidateRules from './src/directives/d-validate-rules';
 
 export { Form, FormLabel, FormItem, FormControl, FormOperation };
 

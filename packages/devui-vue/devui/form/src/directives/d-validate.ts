@@ -1,9 +1,9 @@
 import { VNode, DirectiveBinding, h, render, nextTick } from 'vue';
 import { debounce } from 'lodash-es';
-import { EventBus, transformCamelToDash } from '../../utils';
-import useValidate from '../../composables/use-validate';
-import dPopover from '../../../../popover/src/popover';
-import { DFormValidateSubmitData, positionType } from '../../form-types';
+import { EventBus, transformCamelToDash } from '../utils';
+import useValidate from '../composables/use-validate';
+import dPopover from '../../../popover/src/popover';
+import { DFormValidateSubmitData, positionType } from '../form-types';
 import './style.scss';
 
 interface BindingValueRules {
