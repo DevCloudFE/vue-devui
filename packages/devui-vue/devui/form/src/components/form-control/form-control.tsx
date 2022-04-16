@@ -1,12 +1,15 @@
-import { defineComponent, inject, ref, computed, reactive, onMounted, Teleport } from 'vue';
+import { defineComponent, ref, computed, onMounted, Teleport } from 'vue';
+import type { SetupContext } from 'vue';
 import { uniqueId } from 'lodash';
-import { IForm, formControlProps, formInjectionKey } from '../../form-types';
+import { formControlProps, FormControlProps } from './form-control-types';
 import { ShowPopoverErrorMessageEventData } from '../../directives/d-validate-rules';
 import clickoutsideDirective from '../../../../shared/devui-directive/clickoutside';
 import { EventBus, getElOffset } from '../../utils';
 import Icon from '../../../../icon/src/icon';
 import Popover from '../../../../popover/src/popover';
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import './form-control.scss';
+import { useFormControl } from './use-form-control';
 
 type positionType = 'top' | 'right' | 'bottom' | 'left';
 
@@ -16,16 +19,15 @@ export default defineComponent({
     clickoutside: clickoutsideDirective,
   },
   props: formControlProps,
-  setup(props, ctx) {
+  setup(props: FormControlProps, ctx: SetupContext) {
     const formControl = ref();
-    const dForm = reactive(inject(formInjectionKey, {} as IForm));
-    const labelData = reactive(dForm.labelData);
-    const isHorizontal = labelData.layout === 'horizontal';
     const uid = uniqueId('dfc-');
     const showPopover = ref(false);
     const updateOn = ref('change');
     const tipMessage = ref('');
     const popPosition = ref<positionType>('bottom');
+    const ns = useNamespace('form');
+    const { controlContainerClasses } = useFormControl(props);
     let rectInfo: Partial<DOMRect> = {
       width: 0,
       height: 0,
@@ -74,50 +76,44 @@ export default defineComponent({
       }
     };
 
-    return () => {
-      const { feedbackStatus, extraInfo } = props;
-      return (
-        <div class="devui-form-control" ref={formControl} data-uid={uid} v-clickoutside={handleClickOutside}>
-          {showPopover.value && (
-            <Teleport to="body">
-              <div
-                style={{
-                  position: 'absolute',
-                  left: popoverLeftPosition + 'px',
-                  top: popoverTopPosition + 'px',
-                  width: rectInfo.width + 'px',
-                  height: rectInfo.height + 'px',
-                }}>
-                <Popover
-                  controlled={updateOn.value !== 'change'}
-                  visible={showPopover.value}
-                  content={tipMessage.value}
-                  popType={'error'}
-                  position={popPosition.value}
-                />
-              </div>
-            </Teleport>
-          )}
-          <div
-            class={`devui-form-control-container${isHorizontal ? ' devui-form-control-container-horizontal' : ''}${
-              feedbackStatus ? ' devui-has-feedback' : ''
-            }${feedbackStatus === 'error' ? ' devui-feedback-error' : ''}`}>
-            <div class="devui-control-content-wrapper" id={uid}>
-              {ctx.slots.default?.()}
+    return () => (
+      <div class={ns.e('control')} ref={formControl} data-uid={uid} v-clickoutside={handleClickOutside}>
+        {showPopover.value && (
+          <Teleport to="body">
+            <div
+              style={{
+                position: 'absolute',
+                left: popoverLeftPosition + 'px',
+                top: popoverTopPosition + 'px',
+                width: rectInfo.width + 'px',
+                height: rectInfo.height + 'px',
+              }}>
+              <Popover
+                controlled={updateOn.value !== 'change'}
+                visible={showPopover.value}
+                content={tipMessage.value}
+                popType={'error'}
+                position={popPosition.value}
+              />
             </div>
-            {(feedbackStatus || ctx.slots.suffixTemplate?.()) && (
-              <span class="devui-feedback-status">
-                {ctx.slots.suffixTemplate?.() ? (
-                  ctx.slots.suffixTemplate?.()
-                ) : (
-                  <Icon name={iconData.value.name} color={iconData.value.color}></Icon>
-                )}
-              </span>
-            )}
+          </Teleport>
+        )}
+        <div class={controlContainerClasses.value}>
+          <div class={ns.e('control-content')} id={uid}>
+            {ctx.slots.default?.()}
           </div>
-          {extraInfo && <div class="devui-form-control-extra-info">{extraInfo}</div>}
+          {(props.feedbackStatus || ctx.slots.suffixTemplate?.()) && (
+            <span class={ns.e('control-feedback')}>
+              {ctx.slots.suffixTemplate?.() ? (
+                ctx.slots.suffixTemplate?.()
+              ) : (
+                <Icon name={iconData.value.name} color={iconData.value.color}></Icon>
+              )}
+            </span>
+          )}
         </div>
-      );
-    };
+        {props.extraInfo && <div class={ns.e('control-extra')}>{props.extraInfo}</div>}
+      </div>
+    );
   },
 });
