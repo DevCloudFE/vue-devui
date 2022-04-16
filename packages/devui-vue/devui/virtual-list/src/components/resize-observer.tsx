@@ -1,3 +1,4 @@
+import type { ComponentInternalInstance, VNode } from 'vue';
 import { defineComponent, reactive, ref, getCurrentInstance, onMounted, onUpdated, onUnmounted } from 'vue';
 import { findDOMNode } from '../utils';
 import { resizeObserverProps } from '../virtual-list-types';
@@ -72,16 +73,18 @@ export default defineComponent({
         destroyObserver();
         return;
       }
-      const element = findDOMNode(instance) as Element;
-      const elementChanged = element !== currentElement.value;
-      if (elementChanged) {
-        destroyObserver();
-        currentElement.value = element;
-      }
+      if (instance) {
+        const element = findDOMNode(instance as ComponentInternalInstance & { $el: VNode['el'] }) as Element;
+        const elementChanged = element !== currentElement.value;
+        if (elementChanged) {
+          destroyObserver();
+          currentElement.value = element;
+        }
 
-      if (!resizeObserver.value && element) {
-        resizeObserver.value = new ResizeObserver(onTriggerResize);
-        resizeObserver.value.observe(element);
+        if (!resizeObserver.value && element) {
+          resizeObserver.value = new ResizeObserver(onTriggerResize);
+          resizeObserver.value.observe(element);
+        }
       }
     };
     onMounted(() => {

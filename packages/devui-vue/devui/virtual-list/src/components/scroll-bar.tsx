@@ -1,7 +1,5 @@
-import type { Ref } from 'vue';
-import { defineComponent, ref, reactive, computed, onBeforeUnmount, onMounted, inject, watch } from 'vue';
-import { virtualListScrollBarProps, GetScrollBarRefType } from '../virtual-list-types';
-import raf from '../raf';
+import { defineComponent, ref, reactive, computed, onBeforeUnmount, onMounted } from 'vue';
+import { virtualListScrollBarProps } from '../virtual-list-types';
 
 interface ScrollBarState {
   dragging: boolean;
@@ -10,8 +8,6 @@ interface ScrollBarState {
   visible: boolean;
 }
 
-const MIN_SIZE = 20;
-
 function getPageY(e: MouseEvent | TouchEvent) {
   return 'touches' in e ? e.touches[0].pageY : e.pageY;
 }
@@ -19,17 +15,8 @@ function getPageY(e: MouseEvent | TouchEvent) {
 export default defineComponent({
   name: 'DVirtualListScrollBar',
   props: virtualListScrollBarProps,
-  setup(props) {
+  setup(props, ctx) {
     const scrollbarRef = ref<HTMLElement | null>(null);
-    const getScrollBarRef = inject<Ref<GetScrollBarRefType>>('getScrollBarRef');
-    watch(
-      scrollbarRef,
-      () => {
-        if (getScrollBarRef) {
-          getScrollBarRef.value = () => scrollbarRef;
-        }
-      }
-    );
     const thumbRef = ref<HTMLElement | null>(null);
     const moveRaf = ref<number>(0);
     const state = reactive<ScrollBarState>({
@@ -39,25 +26,30 @@ export default defineComponent({
       visible: false,
     });
     const visibleTimeout = ref<NodeJS.Timeout | null>(null);
+
     const canScroll = computed(() => {
       return (props.scrollHeight || 0) > (props.height || 0);
     });
+
     const getSpinHeight = () => {
       const { height = 0, count = 0 } = props;
       let baseHeight = (height / count) * 10;
-      baseHeight = Math.max(baseHeight, MIN_SIZE);
+      baseHeight = Math.max(baseHeight, 20);
       baseHeight = Math.min(baseHeight, height / 2);
       return Math.floor(baseHeight);
     };
+
     const getEnableScrollRange = () => {
       const { scrollHeight = 0, height = 0 } = props;
       return scrollHeight - height || 0;
     };
+
     const getEnableHeightRange = () => {
       const { height = 0 } = props;
       const spinHeight = getSpinHeight();
       return height - spinHeight || 0;
     };
+
     const getTop = () => {
       const { scrollTop = 0 } = props;
       const enableScrollRange = getEnableScrollRange();
@@ -68,10 +60,11 @@ export default defineComponent({
       const ptg = scrollTop / enableScrollRange;
       return ptg * enableHeightRange;
     };
+
     const onMouseMove = (e: MouseEvent | TouchEvent) => {
       const { dragging, pageY, startTop } = state;
       const { onScroll } = props;
-      raf.cancel(moveRaf.value);
+      window.cancelAnimationFrame(moveRaf.value);
       if (dragging) {
         const offsetY = getPageY(e) - (pageY || 0);
         const newTop = (startTop || 0) + offsetY;
@@ -79,13 +72,14 @@ export default defineComponent({
         const enableHeightRange = getEnableHeightRange();
         const ptg = enableHeightRange ? newTop / enableHeightRange : 0;
         const newScrollTop = Math.ceil(ptg * enableScrollRange);
-        moveRaf.value = raf(() => {
+        moveRaf.value = window.requestAnimationFrame(() => {
           if (onScroll) {
             onScroll(newScrollTop);
           }
         });
       }
     };
+
     const onMouseUp = (callback: () => void) => {
       const { onStopMove } = props;
       state.dragging = false;
@@ -96,7 +90,6 @@ export default defineComponent({
         callback();
       }
     };
-
     const onMouseDown = (e: MouseEvent | TouchEvent, callback: () => void) => {
       const { onStartMove } = props;
       Object.assign(state, {
@@ -140,8 +133,9 @@ export default defineComponent({
       );
       thumbRef?.value?.removeEventListener('touchend', () => onMouseUp(removeEvents));
 
-      raf.cancel(moveRaf.value);
+      window.cancelAnimationFrame(moveRaf.value);
     };
+
     const onContainerMouseDown = (e: MouseEvent) => {
       e.stopPropagation();
       e.preventDefault();
@@ -169,19 +163,22 @@ export default defineComponent({
       );
     });
 
-    const delayHidden = () => {
+    const onShowBar = () => {
       if (visibleTimeout.value) {
         clearTimeout(visibleTimeout.value);
       }
       state.visible = true;
-
       visibleTimeout.value = setTimeout(() => {
         state.visible = false;
-      }, 2000);
+      }, 1000);
     };
 
+    ctx.expose({
+      onShowBar,
+    });
+
     return () => {
-      const mergedVisible = canScroll.value;
+      const display = canScroll.value && state.visible ? undefined : 'none';
       return (
         <div
           ref={scrollbarRef}
@@ -191,10 +188,10 @@ export default defineComponent({
             bottom: 0,
             right: 0,
             position: 'absolute',
-            display: mergedVisible ? undefined : 'none',
+            display,
           }}
           onMousedown={onContainerMouseDown}
-          onMousemove={delayHidden}
+          onMousemove={onShowBar}
         >
           <div
             ref={thumbRef}

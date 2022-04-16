@@ -36,14 +36,12 @@ export default function useHeights<T>(
   function setInstance(item: T, ins: HTMLElement & { $el: never }) {
     const key = getKey(item);
     const origin = instance.get(key);
-
     if (ins) {
       instance.set(key, ins.$el || ins);
       collectHeight();
     } else {
       instance.delete(key);
     }
-
     if (!origin !== !ins) {
       if (ins) {
         onItemAdd?.(item);
