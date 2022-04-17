@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toRefs } from 'vue'
+import { toRefs, computed } from 'vue'
 import { Avatar } from '@devui/avatar'
 
 const props = defineProps<{
@@ -18,11 +18,15 @@ const props = defineProps<{
 }>()
 
 const { contributors, spacing, avatarSize } = toRefs(props)
+
+const validContributors = computed(() => {
+  return contributors.value.filter(item => item.avatar)
+})
 </script>
 
 <template>
   <div class="page-contributor">
-    <a v-for="contributor of contributors" :href="contributor.homepage" target="_blank">
+    <a v-for="contributor of validContributors" :href="contributor.homepage" target="_blank">
       <Avatar v-if="contributor.avatar" class="contributor-avatar" :style="{
         marginRight: `${spacing}px`,
         marginBottom: `${spacing - 4}px`
