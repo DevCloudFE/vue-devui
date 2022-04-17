@@ -126,6 +126,8 @@ export default defineComponent({
 <template>
   <div class="slider-wrapper" style="padding:20px">
     <d-slider :min="minValue" :max="maxValue" disabled v-model="disabledValue"></d-slider>
+    <br style="margin-bottom: 20px" />
+    <d-slider :min="minValue" :max="maxValue" showInput disabled v-model="disabledValue"></d-slider>
   </div>
 </template>
 <script>
