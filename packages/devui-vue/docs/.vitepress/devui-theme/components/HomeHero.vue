@@ -88,6 +88,12 @@ const heroText = computed(() => frontmatter.value.heroText || site.value.title)
   height: 260px;
 }
 
+@media (max-width: 420px) {
+  .home-hero .image {
+    height: 180px;
+  }
+}
+
 .title {
   margin-top: 2.5rem;
   font-size: 2rem;
