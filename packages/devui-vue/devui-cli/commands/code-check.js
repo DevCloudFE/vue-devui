@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const shell = require('shelljs');
 const chalk = require('chalk');
-const { parseComponentInfo } = require('../shared/utils');
+const { isReadyToRelease } = require('../shared/utils');
 
 const log = console.log;
 
@@ -15,7 +15,7 @@ const entryDir = path.resolve(__dirname, '../../devui');
 const completeComponents = fs.readdirSync(entryDir).filter((name) => {
   const componentDir = path.resolve(entryDir, name);
   const isDir = fs.lstatSync(componentDir).isDirectory();
-  return isDir && fs.readdirSync(componentDir).includes('index.ts') && parseComponentInfo(name).status === '100%';
+  return isDir && fs.readdirSync(componentDir).includes('index.ts') && isReadyToRelease(name);
 });
 
 const eslintCheckSingle = async (name) => {
@@ -46,7 +46,7 @@ const eslintCheck = async (components) => {
     await eslintCheckAll();
   }
   log(chalkEslint('ESLint check finished!'));
-}
+};
 
 const unitTestSingle = async (name) => {
   log(chalkUnitTest(`Start unit test ${name}...`));

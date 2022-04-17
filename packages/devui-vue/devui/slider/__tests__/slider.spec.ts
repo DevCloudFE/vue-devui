@@ -74,4 +74,14 @@ describe('d-slider', () => {
     const slider = wrapper.find('.devui-slider_popover-content');
     expect(slider.text()).toBe('10 bananas');
   });
+
+  it('slider color work', () => {
+    const wrapper = mount(DSlider, {
+      props: {
+        color: 'red'
+      }
+    });
+    expect(wrapper.find('.devui-slider__bar').attributes('style').includes('background-color: red')).toBeTruthy();
+    expect(wrapper.find('.devui-slider__button').attributes('style').includes('border-color: red')).toBeTruthy();
+  });
 });

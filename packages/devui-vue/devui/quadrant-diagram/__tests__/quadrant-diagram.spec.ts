@@ -22,7 +22,6 @@ describe('d-quadrant-diagram', () => {
         };
       }
     });
-    console.log(wrapper.html());
 
     expect(wrapper.find('#devui-quadrant-axis-1').element['height']).toEqual(200);
     view.height = 400;

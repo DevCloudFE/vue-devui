@@ -368,15 +368,6 @@ export default defineComponent({
 
 :::
 
-<style>
-  h4 {
-    font-weight: 700;
-    color: #575d6c;
-    font-size: 12px;
-    margin: 15px 0;
-  }
-</style>
-
 ### API
 
 |    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         |  全局配置项 |

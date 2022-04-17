@@ -5,7 +5,7 @@ export * from './src/tooltip-types';
 export { Tooltip };
 
 export default {
-  title: 'Tooltip提示',
+  title: 'Tooltip 提示',
   category: '反馈',
   status: '70%',
   install(app: App): void {

@@ -1,5 +1,6 @@
-import { setActiveLink, onScroll, randomId } from './util';
-import { inBrowser } from '../../shared/util/common-var';
+import { setActiveLink, onScroll,  } from './utils';
+import { inBrowser, randomId } from '../../shared/utils';
+
 export default {
   name: 'd-anchor-box',
   // 滚动区域

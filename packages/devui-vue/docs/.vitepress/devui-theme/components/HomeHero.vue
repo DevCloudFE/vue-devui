@@ -34,24 +34,29 @@ const heroText = computed(() => frontmatter.value.heroText || site.value.title)
       {{ frontmatter.tagline }}
     </p>
 
-    <NavLink
-      v-if="frontmatter.actionLink && frontmatter.actionText"
-      :item="{ link: frontmatter.actionLink, text: frontmatter.actionText }"
-      class="action"
-    />
+    <div class="home-action-container">
+        <div class="nav-link action" v-if="frontmatter.actionLink && frontmatter.actionText">
+          <a class="item" :href="frontmatter.actionLink">
+            {{ frontmatter.actionText }}
+            <svg t="1650120099035" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3214" width="24" height="24"><path d="M214.677333 542.122667l0.042667-64.405334 477.653333-0.298666-225.301333-225.322667 45.568-45.568 303.424 303.424L512.213333 813.781333l-45.504-45.504 226.453334-226.453333-478.485334 0.298667z" p-id="3215" fill="#ffffff"></path></svg>
+          </a>
+        </div>
 
-    <NavLink
-      v-if="frontmatter.altActionLink && frontmatter.altActionText"
-      :item="{
-        link: frontmatter.altActionLink,
-        text: frontmatter.altActionText
-      }"
-      class="action alt"
-    />
+        <div class="nav-link action alt" v-if="frontmatter.altActionLink && frontmatter.altActionText">
+          <a class="item" :href="frontmatter.altActionLink">
+            <svg height="20" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true" class="octicon octicon-mark-github v-align-middle">
+              <path fill="var(--devui-text, #252b3a)" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+            {{ frontmatter.altActionText }}
+          </a>
+        </div>
+    </div>
   </header>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@devui/styles-var/devui-var';
+
 .home-hero {
   margin: 2.5rem 0 2.75rem;
   padding: 0 1.5rem;
@@ -80,11 +85,19 @@ const heroText = computed(() => frontmatter.value.heroText || site.value.title)
   width: auto;
   max-width: 100%;
   max-height: 280px;
+  height: 260px;
+}
+
+@media (max-width: 420px) {
+  .home-hero .image {
+    height: 180px;
+  }
 }
 
 .title {
-  margin-top: 1.5rem;
+  margin-top: 2.5rem;
   font-size: 2rem;
+  font-weight: 700;
 }
 
 @media (min-width: 420px) {
@@ -95,16 +108,16 @@ const heroText = computed(() => frontmatter.value.heroText || site.value.title)
 
 @media (min-width: 720px) {
   .title {
-    margin-top: 2rem;
+    margin-top: 3rem;
   }
 }
 
 .description {
   margin: 0;
-  margin-top: 0.25rem;
+  margin-top: 1rem;
   line-height: 1.3;
   font-size: 1.2rem;
-  color: var(--c-text-light);
+  color: $devui-text-weak;
 }
 
 @media (min-width: 420px) {
@@ -115,7 +128,7 @@ const heroText = computed(() => frontmatter.value.heroText || site.value.title)
 }
 
 .action {
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   display: inline-block;
 }
 
@@ -125,33 +138,43 @@ const heroText = computed(() => frontmatter.value.heroText || site.value.title)
 
 @media (min-width: 420px) {
   .action {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     display: inline-block;
   }
 }
 
 .action :deep(.item) {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   border-radius: 6px;
   padding: 0 20px;
   line-height: 44px;
   font-size: 1rem;
   font-weight: 500;
-  color: var(--c-bg);
-  background-color: var(--c-brand);
-  border: 2px solid var(--c-brand);
-  transition: background-color 0.1s ease;
+  color: $devui-light-text;
+  background-color: $devui-primary;
+  border: 2px solid $devui-primary;
+  transition: background-color 0.2s;
 }
 
 .action.alt :deep(.item) {
-  background-color: var(--c-bg);
-  color: var(--c-brand);
+  color: $devui-text;
+  border-color: $devui-list-item-hover-bg;
+  background-color: $devui-list-item-hover-bg;
+  border-style: solid;
+}
+
+.action.alt :deep(.item:hover) {
+  color: $devui-text;
+  border-color: $devui-list-item-selected-bg;
+  background-color: $devui-list-item-selected-bg;
 }
 
 .action :deep(.item:hover) {
   text-decoration: none;
-  color: var(--c-bg);
-  background-color: var(--c-brand-light);
+  color: $devui-light-text;
+  background-color: $devui-primary-hover;
+  border-color: $devui-primary-hover;
 }
 
 @media (min-width: 420px) {
@@ -161,5 +184,11 @@ const heroText = computed(() => frontmatter.value.heroText || site.value.title)
     font-size: 1.2rem;
     font-weight: 500;
   }
+}
+
+.home-action-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

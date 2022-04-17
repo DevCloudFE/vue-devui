@@ -8,7 +8,7 @@ export { TagInput };
 export default {
   title: 'TagInput 标签输入框',
   category: '数据录入',
-  status: '100%',
+  status: '90%',
   install(app: App): void {
     app.component(TagInput.name, TagInput);
   }

@@ -1,4 +1,4 @@
-import { randomId } from '../../../anchor/src/util';
+import { randomId } from '../../../shared/utils';
 import { IInnerTreeNode, ITreeNode } from './use-tree-types';
 
 export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {

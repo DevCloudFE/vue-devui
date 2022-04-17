@@ -1,5 +1,5 @@
 const { camelCase, upperFirst } = require('lodash');
-const { INDEX_FILE_NAME, DEVUI_DIR } = require('./constant');
+const { INDEX_FILE_NAME, DEVUI_DIR, WHITE_LIST_READY_COMPONENTS } = require('./constant');
 const { resolve } = require('path');
 const logger = require('./logger');
 const fs = require('fs-extra');
@@ -89,7 +89,7 @@ exports.parseExportByFileInfo = (fileInfo, ignoreParseError) => {
   return exportModule;
 };
 
-exports.parseComponentInfo = (name) => {
+const parseComponentInfo = (name) => {
   const componentInfo = {
     name: this.bigCamelCase(name)
   };
@@ -121,4 +121,11 @@ exports.parseComponentInfo = (name) => {
   }
 
   return componentInfo;
+};
+
+exports.parseComponentInfo = parseComponentInfo;
+
+exports.isReadyToRelease = (componentName) => {
+  return parseComponentInfo(componentName).status === '100%'
+    || WHITE_LIST_READY_COMPONENTS.includes(componentName);
 };

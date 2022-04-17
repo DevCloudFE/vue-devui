@@ -1,9 +1,8 @@
-import { defineComponent, reactive, inject, onMounted, onBeforeUnmount, provide, ref} from 'vue';
+import { defineComponent, reactive, inject, onMounted, onBeforeUnmount, provide, ref } from 'vue';
 import AsyncValidator, { Rules } from 'async-validator';
 import mitt from 'mitt';
-import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey, formItemInjectionKey } from '../form-types';
+import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey, formItemInjectionKey } from '../../form-types';
 import './form-item.scss';
-
 
 export default defineComponent({
   name: 'DFormItem',
@@ -18,9 +17,9 @@ export default defineComponent({
     const rules = reactive(dForm.rules);
 
     const resetField = () => {
-      if(Array.isArray(initFormItemData)) {
+      if (Array.isArray(initFormItemData)) {
         formData[props.prop] = [...initFormItemData];
-      }else {
+      } else {
         formData[props.prop] = initFormItemData;
       }
     };
@@ -29,7 +28,7 @@ export default defineComponent({
       dHasFeedback: props.dHasFeedback,
       prop: props.prop,
       formItemMitt,
-      resetField
+      resetField,
     });
     provide(formItemInjectionKey, formItem);
 
@@ -41,8 +40,6 @@ export default defineComponent({
     const tipMessage = ref('');
 
     const validate = (trigger: string) => {
-      // console.log('trigger', trigger);
-
       const ruleKey = props.prop;
       const ruleItem = rules[ruleKey];
       const descriptor: Rules = {};
@@ -50,40 +47,42 @@ export default defineComponent({
 
       const validator = new AsyncValidator(descriptor);
 
-      validator.validate({[ruleKey]: formData[ruleKey]}).then(() => {
-        showMessage.value = false;
-        tipMessage.value = '';
-      }).catch(({ errors }) => {
-        // console.log('validator errors', errors);
-        showMessage.value = true;
-        tipMessage.value = errors[0].message;
-      });
+      validator
+        .validate({ [ruleKey]: formData[ruleKey] })
+        .then(() => {
+          showMessage.value = false;
+          tipMessage.value = '';
+        })
+        .catch(({ errors }) => {
+          showMessage.value = true;
+          tipMessage.value = errors[0].message;
+        });
     };
     const validateEvents = [];
 
     const addValidateEvents = () => {
-      if(rules && rules[props.prop]) {
+      if (rules && rules[props.prop]) {
         const ruleItem = rules[props.prop];
         let eventName = ruleItem['trigger'];
 
-        if(Array.isArray(ruleItem)) {
+        if (Array.isArray(ruleItem)) {
           ruleItem.forEach((item) => {
             eventName = item['trigger'];
             const cb = () => validate(eventName);
-            validateEvents.push({eventName: cb});
+            validateEvents.push({ eventName: cb });
             formItem.formItemMitt.on(dFormItemEvents[eventName], cb);
           });
-        }else {
+        } else {
           const cb = () => validate(eventName);
-          validateEvents.push({eventName: cb});
+          validateEvents.push({ eventName: cb });
           ruleItem && formItem.formItemMitt.on(dFormItemEvents[eventName], cb);
         }
       }
     };
 
     const removeValidateEvents = () => {
-      if(rules && rules[props.prop] && validateEvents.length > 0) {
-        validateEvents.forEach(item => {
+      if (rules && rules[props.prop] && validateEvents.length > 0) {
+        validateEvents.forEach((item) => {
           formItem.formItemMitt.off(item.eventName, item.cb);
         });
       }
@@ -100,9 +99,14 @@ export default defineComponent({
     });
     return () => {
       return (
-        <div class={`devui-form-item${isHorizontal ? '' : (isVertical ? ' devui-form-item-vertical' : ' devui-form-item-columns')}${isColumns ? ' devui-column-item ' + columnsClass.value : ''}`}>
+        <div
+          class={`devui-form-item${isHorizontal ? '' : isVertical ? ' devui-form-item-vertical' : ' devui-form-item-columns'}${
+            isColumns ? ' devui-column-item ' + columnsClass.value : ''
+          }`}>
           {ctx.slots.default?.()}
-          <div class={`devui-validate-tip${isHorizontal ? ' devui-validate-tip-horizontal' : ''}`}>{showMessage.value && tipMessage.value}</div>
+          <div class={`devui-validate-tip${isHorizontal ? ' devui-validate-tip-horizontal' : ''}`}>
+            {showMessage.value && tipMessage.value}
+          </div>
         </div>
       );
     };

@@ -5,6 +5,7 @@ type RateStatusType = PropType<'success' | 'warning' | 'error'>;
 export const rateProps = {
   modelValue: {
     type: Number,
+    default: 0,
   },
   read: {
     type: Boolean,
