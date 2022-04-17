@@ -1,40 +1,40 @@
-import { defineComponent, reactive, toRefs, provide } from 'vue'
-import type { SetupContext } from 'vue'
-import { treeProps, TreeProps, TreeItem, TreeRootType } from './tree-types'
-import { CHECK_CONFIG } from  './config'
-import { preCheckTree, deleteNode, getId } from './util'
-import Loading from '../../loading/src/service'
-import Checkbox from '../../checkbox/src/checkbox'
-import useToggle from './composables/use-toggle'
-import useMergeNode from './composables/use-merge-node'
-import useHighlightNode from './composables/use-highlight'
-import useChecked from './composables/use-checked'
-import useLazy from './composables/use-lazy'
-import useOperate from './composables/use-operate'
-import IconOpen from './assets/open.svg'
-import IconClose from './assets/close.svg'
-import NodeContent from './tree-node-content'
-import './tree.scss'
+import { defineComponent, reactive, ref, toRefs, provide } from 'vue';
+import type { SetupContext } from 'vue';
+import { treeProps, TreeProps, TreeItem, TreeRootType, Nullable } from './tree-types';
+import { CHECK_CONFIG } from  './config';
+import { preCheckTree, deleteNode, getId } from './utils';
+import Loading from '../../loading/src/loading-service';
+import Checkbox from '../../checkbox/src/checkbox';
+import useToggle from './composables/use-toggle';
+import useMergeNode from './composables/use-merge-node';
+import useHighlightNode from './composables/use-highlight';
+import useChecked from './composables/use-checked';
+import useLazy from './composables/use-lazy';
+import useOperate from './composables/use-operate';
+import useDraggable from './composables/use-draggable';
+import { IconOpen } from './components/icon-open';
+import { IconClose } from './components/icon-close';
+import NodeContent from './tree-node-content';
+import './tree.scss';
 
 export default defineComponent({
   name: 'DTree',
   props: treeProps,
   emits: ['nodeSelected'],
   setup(props: TreeProps, ctx: SetupContext) {
-    const { data, checkable, checkableRelation: cbr } = toRefs(reactive({ ...props, data: preCheckTree(props.data) }))
-    const { mergeData } = useMergeNode(data.value)
-    const { openedData, toggle } = useToggle(mergeData)
-    const { nodeClassNameReflect, handleInitNodeClassNameReflect, handleClickOnNode } = useHighlightNode()
-    const { lazyNodesReflect, handleInitLazyNodeReflect, getLazyData } = useLazy()
-    const { selected, onNodeClick } = useChecked(cbr, ctx, data.value)
-    const { editStatusReflect, operateIconReflect, handleReflectIdToIcon } = useOperate(data)
+    const { data, checkable, draggable, dropType, checkableRelation: cbr } = toRefs(reactive({ ...props, data: preCheckTree(props.data) }));
+    const node = ref<Nullable<HTMLElement>>(null);
+    const { mergeData } = useMergeNode(data);
+    const { openedData, toggle } = useToggle(mergeData);
+    const { nodeClassNameReflect, handleInitNodeClassNameReflect, handleClickOnNode } = useHighlightNode();
+    const { lazyNodesReflect, handleInitLazyNodeReflect, getLazyData } = useLazy();
+    const { selected, onNodeClick } = useChecked(cbr, ctx, data.value);
+    const { editStatusReflect, operateIconReflect, handleReflectIdToIcon } = useOperate(data);
+    const { onDragstart, onDragover, onDragleave, onDrop } = useDraggable(draggable.value, dropType.value, node, openedData, data);
+    provide<TreeRootType>('treeRoot', { ctx, props });
 
-    provide<TreeRootType>('treeRoot', { ctx, props })
-    const Indent = () => {
-      return <span style="display: inline-block; width: 16px; height: 16px; margin-left: 8px;"></span>
-    }
     const renderNode = (item: TreeItem) => {
-      const { id = '', label, disabled, open, isParent, level, children, addable, editable, deletable } = item
+      const { id = '', disabled, open, isParent, level, children, addable, editable, deletable } = item;
       handleReflectIdToIcon(
         id,
         {
@@ -49,23 +49,23 @@ export default defineComponent({
               addable,
               editable,
               deletable
-            }
-            item.open = true
+            };
+            item.open = true;
             if (item.children && Array.isArray(item.children)) {
-              item.children.push(newItem)
+              item.children.push(newItem);
             } else {
-              item.children = [newItem]
+              item.children = [newItem];
             }
           },
           handleEdit: () => {
-            editStatusReflect.value[id] = !editStatusReflect.value[id]
+            editStatusReflect.value[id] = !editStatusReflect.value[id];
           },
           handleDelete: () => {
-            mergeData.value = deleteNode(id, mergeData.value)
+            mergeData.value = deleteNode(id, mergeData.value);
           },
         }
-      )
-      handleInitNodeClassNameReflect(disabled, id)
+      );
+      handleInitNodeClassNameReflect(disabled, id);
       handleInitLazyNodeReflect(item, {
         id,
         onGetNodeData: async () => {
@@ -81,46 +81,56 @@ export default defineComponent({
                   label: `It is a test Node-2 ID = ${id}`,
                   level: item.level + 1
                 }
-              ])
-            }, 4000)
-          })
+              ]);
+            }, 4000);
+          });
         },
-        renderLoading: (id) => {
+        renderLoading: (elementId) => {
           return Loading.open({
-            target: document.getElementById(id),
+            target: document.getElementById(elementId),
             message: '加载中...',
             positionType: 'relative',
             zIndex: 1,
-          })
+          });
         }
-      })
-      const renderFoldIcon = (item: TreeItem) => {
+      });
+      const renderFoldIcon = (treeItem: TreeItem) => {
         const handleClick = async (target: MouseEvent) => {
-          if (item.isParent) {
-            item.children = await getLazyData(id)  // item 按引用传递
+          if (treeItem.isParent) {
+            treeItem.children = await getLazyData(id);  // treeItem 按引用传递
           }
-          return toggle(target, item)
-        }
+          return toggle(target, treeItem);
+        };
         return (
-          isParent || children && children.length
-          ? open
-            ? <IconOpen class="mr-xs" onClick={handleClick} />
-            : <IconClose class="mr-xs" onClick={handleClick} />
-          : <Indent />
-        )
-      }
-      const checkState = CHECK_CONFIG[selected.value[id] ?? 'none']
+          <div class="devui-tree-node__folder" onClick={handleClick} >
+            {
+              isParent || children && children.length
+                ? open
+                  ? <IconOpen class="mr-xs" />
+                  : <IconClose class="mr-xs" />
+                : <span class="devui-tree-node__indent" />
+            }
+          </div>
+
+        );
+      };
+      const checkState = CHECK_CONFIG[selected.value[id] ?? 'none'];
       return (
         <div
           class={['devui-tree-node', open && 'devui-tree-node__open']}
           style={{ paddingLeft: `${24 * (level - 1)}px` }}
+          draggable={draggable.value}
+          onDragstart={(event: DragEvent) => onDragstart(event, item)}
+          onDragover={(event: DragEvent) => onDragover(event, item)}
+          onDragleave={(event: DragEvent) => onDragleave(event)}
+          onDrop={(event: DragEvent) => onDrop(event, item)}
         >
           <div
             class={`devui-tree-node__content ${nodeClassNameReflect.value[id]}`}
             onClick={() => handleClickOnNode(id)}
           >
-            <div class="devui-tree-node__content--value-wrapper">
-              { renderFoldIcon(item) }
+            { renderFoldIcon(item) }
+            <div class={['devui-tree-node__content--value-wrapper', draggable && 'devui-drop-draggable']}>
               { checkable.value && <Checkbox key={id} onClick={() => onNodeClick(item)} disabled={disabled} {...checkState} /> }
               <NodeContent node={item} editStatusReflect={editStatusReflect.value} />
               { operateIconReflect.value.find(({ id: d }) => id === d).renderIcon(item) }
@@ -132,29 +142,14 @@ export default defineComponent({
             </div>
           </div>
         </div>
-      )
-    }
-    const renderTree = (tree) => {
-      return tree.map(item => {
-        if (!item.children) {
-          return renderNode(item)
-        } else {
-          return (
-            <>
-              {renderNode(item)}
-              {renderTree(item.children)}
-            </>
-          )
-        }
-      })
-    }
+      );
+    };
     return () => {
       return (
         <div class="devui-tree">
-          {/* { renderTree(data.value) } */}
           { openedData.value.map(item => renderNode(item)) }
         </div>
-      )
-    }
+      );
+    };
   }
-})
+});

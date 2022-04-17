@@ -11,7 +11,7 @@ export default defineComponent({
 
     /** 是否禁用 */
     const isDisabled = computed(() => {
-      return props.disabled || radioGroupConf?.disabled.value
+      return props.disabled || radioGroupConf?.disabled.value;
     });
     /** 判断是否勾选 */
     const isChecked = computed(() => {
@@ -21,7 +21,7 @@ export default defineComponent({
     });
     /** radio 的 name 属性 */
     const radioName = computed(() => {
-      return radioGroupConf ? radioGroupConf.name.value : props.name;
+      return radioGroupConf ? radioGroupConf.name.value : props.name || void 0;
     });
 
     /** 判断是否允许切换 */
@@ -59,45 +59,38 @@ export default defineComponent({
         radioGroupConf?.emitChange(_value); // 触发父组件的change
         emit('update:modelValue', _value);
         emit('change', _value);
-      }
+      },
     };
   },
   render() {
-    const {
-      disabled,
-      radioName,
-      value,
-      isChecked,
-      $slots,
-      handleChange
-    } = this;
+    const { disabled, radioName, value, isChecked, $slots, handleChange } = this;
     const labelCls = [
       'devui-radio',
       {
         active: isChecked,
-        disabled
-      }
+        disabled,
+      },
     ];
 
     return (
       <label class={labelCls}>
         <input
-          type="radio"
+          type='radio'
           name={radioName}
-          class="devui-radio-input"
+          class='devui-radio-input'
           disabled={disabled}
           onChange={handleChange}
           value={value}
           checked={isChecked}
         />
-        <span class="devui-radio-material">
-          <svg height="100%" width="100%" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-            <circle class="devui-radio-material-outer" cx="512" cy="512" r="486.5" stroke-width="51" />
-            <circle class="devui-radio-material-inner" cx="512" fill-rule="nonzero" cy="512" r="320" />
+        <span class='devui-radio-material'>
+          <svg height='100%' width='100%' viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'>
+            <circle class={{ 'devui-radio-material-outer': true, disabled: disabled }} cx='512' cy='512' r='486.5' stroke-width='51' />
+            <circle class={{ 'devui-radio-material-inner': true, disabled: disabled }} cx='512' fill-rule='nonzero' cy='512' r='320' />
           </svg>
         </span>
-        <span class="devui-radio-label">{$slots.default?.()}</span>
+        <span class='devui-radio-label'>{$slots.default?.()}</span>
       </label>
     );
-  }
+  },
 });

@@ -7,4 +7,4 @@ export default {
   // updated() { },
   // beforeUnmount() { },
   // unmounted() { }
-}
+};

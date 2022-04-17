@@ -1,19 +1,19 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue';
 
-type ModeType = PropType<'immersive' | 'normal'>
+type ModeType = PropType<'normal' | 'immersive'>;
 export const fullscreenProps = {
-  fullscreenLaunch: {
-    type: Function,
-    default: undefined
+  modelValue: {
+    type: Boolean,
+    default: false,
   },
   mode: {
     type: String as ModeType,
-    default: 'immersive'
+    default: 'normal'
   },
   zIndex: {
     type: Number,
     default: 10
   }
-} as const
+} as const;
 
-export type FullscreenProps = ExtractPropTypes<typeof fullscreenProps>
+export type FullscreenProps = ExtractPropTypes<typeof fullscreenProps>;

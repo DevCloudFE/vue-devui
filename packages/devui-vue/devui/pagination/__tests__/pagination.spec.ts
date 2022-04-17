@@ -1,8 +1,8 @@
-import { mount } from '@vue/test-utils';
+import { DOMWrapper, mount } from '@vue/test-utils';
 import { reactive } from 'vue';
-import { Pagination } from '../index'
-import { Select } from '../../select'
-import { Input } from '../../input'
+import { Pagination } from '../index';
+import { Select } from '../../select';
+import { Input } from '../../input';
 
 const globalOption = {
   global: {
@@ -11,7 +11,7 @@ const globalOption = {
       DInput: Input
     }
   }
-}
+};
 
 describe('pagination: ', () => {
   it('test pageSize', async () => {
@@ -37,40 +37,40 @@ describe('pagination: ', () => {
           total: 306,
           pageSize: 20,
           pageIndex: 5
-        })
-        return { pager }
+        });
+        return { pager };
       }
-    }, globalOption)
+    }, globalOption);
 
-    expect(wrapper.find('.devui-pagination-item.active').text()).toEqual('5')
-    expect((wrapper.find('.devui-select-input').element as HTMLInputElement).value).toEqual('20')
+    expect(wrapper.find('.devui-pagination-item.active').text()).toEqual('5');
+    expect((wrapper.find('.devui-select-input').element as HTMLInputElement).value).toEqual('20');
 
-    const btns = wrapper.findAll('a.devui-pagination-link')
-    expect(btns.map((ele: any) => ele.text()).join()).toEqual('<,1,...,4,5,6,...,16,>');
-    expect(wrapper.find('.devui-pagination-list').classes()).toContain('devui-pagination-sm')
+    const btns = wrapper.findAll('a.devui-pagination-link');
+    expect(btns.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual('<,1,...,4,5,6,...,16,>');
+    expect(wrapper.find('.devui-pagination-list').classes()).toContain('devui-pagination-sm');
 
     // 跳转按钮
-    expect(wrapper.find('.devui-jump-container').exists()).toBeTruthy()
-    expect(wrapper.find('.devui-jump-button').exists()).toBeTruthy()
+    expect(wrapper.find('.devui-jump-container').exists()).toBeTruthy();
+    expect(wrapper.find('.devui-jump-button').exists()).toBeTruthy();
 
     // 翻页
-    await btns[0].trigger('click')
-    expect(wrapper.find('.devui-pagination-item.active').text()).toEqual('4')
-    const btns1 = wrapper.findAll('a.devui-pagination-link')
-    expect(btns1.map((ele: any) => ele.text()).join()).toEqual('<,1,...,3,4,5,...,16,>');
+    await btns[0].trigger('click');
+    expect(wrapper.find('.devui-pagination-item.active').text()).toEqual('4');
+    const btns1 = wrapper.findAll('a.devui-pagination-link');
+    expect(btns1.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual('<,1,...,3,4,5,...,16,>');
 
     // 改变每页条数
-    await wrapper.find('.devui-select-input').trigger('click')
-    await wrapper.findAll('.devui-select-item')[1].trigger('click')
+    await wrapper.find('.devui-select-input').trigger('click');
+    await wrapper.findAll('.devui-select-item')[1].trigger('click');
 
-    expect((wrapper.find('.devui-select-input').element as HTMLInputElement).value).toEqual('10')
-    const btns2 = wrapper.findAll('a.devui-pagination-link')
-    expect(btns2.map((ele: any) => ele.text()).join()).toEqual('<,1,...,3,4,5,...,31,>');
-  })
+    expect((wrapper.find('.devui-select-input').element as HTMLInputElement).value).toEqual('10');
+    const btns2 = wrapper.findAll('a.devui-pagination-link');
+    expect(btns2.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual('<,1,...,3,4,5,...,31,>');
+  });
 
   it('test callback', async () => {
-    const pageIndexChange = jest.fn()
-    const pageSizeChange = jest.fn()
+    const pageIndexChange = jest.fn();
+    const pageSizeChange = jest.fn();
     const wrapper = mount({
       components: {
         DPagination: Pagination
@@ -94,25 +94,25 @@ describe('pagination: ', () => {
           total: 306,
           pageSize: 10,
           pageIndex: 10
-        })
-        return { pager, pageIndexChange, pageSizeChange }
+        });
+        return { pager, pageIndexChange, pageSizeChange };
       }
-    }, globalOption)
+    }, globalOption);
 
-    expect(wrapper.find('.devui-pagination-list').classes()).toContain('devui-pagination-lg')
-    const btns = wrapper.findAll('a.devui-pagination-link')
-    const pageIndexs = btns.map((ele: any) => ele.text())
+    expect(wrapper.find('.devui-pagination-list').classes()).toContain('devui-pagination-lg');
+    const btns = wrapper.findAll('a.devui-pagination-link');
+    const pageIndexs = btns.map((ele: DOMWrapper<Element>) => ele.text());
     expect(pageIndexs.join()).toEqual('<,1,...,6,7,8,9,10,11,12,13,...,31,>');
 
     // 当前页改变回调
-    await btns[0].trigger('click')
-    expect(pageIndexChange).toHaveBeenCalled()
-    
+    await btns[0].trigger('click');
+    expect(pageIndexChange).toHaveBeenCalled();
+
     // 每页条数改变回调
-    await wrapper.find('.devui-select-input').trigger('click')
-    await wrapper.findAll('.devui-select-item')[1].trigger('click')
-    expect(pageSizeChange).toHaveBeenCalled()
-  })
+    await wrapper.find('.devui-select-input').trigger('click');
+    await wrapper.findAll('.devui-select-item')[1].trigger('click');
+    expect(pageSizeChange).toHaveBeenCalled();
+  });
 
   it('test first or lastest pageIndex disabled', async () => {
     const wrapper = mount({
@@ -136,19 +136,19 @@ describe('pagination: ', () => {
           total: 306,
           pageSize: 20,
           pageIndex: 1
-        })
-        return { pager }
+        });
+        return { pager };
       }
-    }, globalOption)
+    }, globalOption);
 
-    const btns = wrapper.findAll('.devui-pagination-item')
-    expect(btns[0].classes()).toContain('disabled')
+    const btns = wrapper.findAll('.devui-pagination-item');
+    expect(btns[0].classes()).toContain('disabled');
 
-    await btns[btns.length - 2].trigger('click')
-    const btns1 = wrapper.findAll('.devui-pagination-item')
-    expect(btns1[btns1.length - 1].classes()).toContain('disabled')
+    await btns[btns.length - 2].trigger('click');
+    const btns1 = wrapper.findAll('.devui-pagination-item');
+    expect(btns1[btns1.length - 1].classes()).toContain('disabled');
 
-  })
+  });
 
   it('test lite', () => {
     const wrapper = mount({
@@ -171,16 +171,16 @@ describe('pagination: ', () => {
           total: 306,
           pageSize: 10,
           pageIndex: 10
-        })
-        return { pager }
+        });
+        return { pager };
       }
-    }, globalOption)
+    }, globalOption);
 
-    expect(wrapper.find('.devui-total-size').text()).toContain('Total')
-    expect(wrapper.findAll('a.devui-pagination-link').length).toBe(2)
-    expect(wrapper.find('.devui-jump-container').exists()).toBeFalsy()
-  })
-  
+    expect(wrapper.find('.devui-total-size').text()).toContain('Total');
+    expect(wrapper.findAll('a.devui-pagination-link').length).toBe(2);
+    expect(wrapper.find('.devui-jump-container').exists()).toBeFalsy();
+  });
+
   it('test super lite', () => {
     const wrapper = mount({
       components: {
@@ -201,17 +201,17 @@ describe('pagination: ', () => {
           total: 306,
           pageSize: 10,
           pageIndex: 10
-        })
-        return { pager }
+        });
+        return { pager };
       }
-    }, globalOption)
+    }, globalOption);
 
-    expect(wrapper.find('.devui-total-size').exists()).toBeFalsy()
-    expect(wrapper.find('.devui-page-size').exists()).toBeFalsy()
-    expect(wrapper.findAll('a.devui-pagination-link').length).toBe(2)
-    expect(wrapper.find('.devui-jump-container').exists()).toBeFalsy()
-  })
-  
+    expect(wrapper.find('.devui-total-size').exists()).toBeFalsy();
+    expect(wrapper.find('.devui-page-size').exists()).toBeFalsy();
+    expect(wrapper.findAll('a.devui-pagination-link').length).toBe(2);
+    expect(wrapper.find('.devui-jump-container').exists()).toBeFalsy();
+  });
+
   it('test haveConfigMenu', async () => {
     const wrapper = mount({
       components: {
@@ -245,20 +245,20 @@ describe('pagination: ', () => {
           total: 306,
           pageSize: 10,
           pageIndex: 10
-        })
-        return { pager }
+        });
+        return { pager };
       }
-    }, globalOption)
+    }, globalOption);
 
-    expect(wrapper.findAll('a.devui-pagination-link').length).toBe(2)
-    expect(wrapper.find('.devui-pagination-config').exists()).toBeTruthy()
-    expect(wrapper.find('.devui-config-container').exists()).toBeFalsy()
-    
-    await wrapper.find('.devui-pagination-config').trigger('click')
-    expect(wrapper.find('.devui-config-container').exists()).toBeTruthy()
-    expect(wrapper.find('.config-item-words').exists()).toBeTruthy()
-    expect(wrapper.find('.choosed').text()).toBe('10')
-  })
+    expect(wrapper.findAll('a.devui-pagination-link').length).toBe(2);
+    expect(wrapper.find('.devui-pagination-config').exists()).toBeTruthy();
+    expect(wrapper.find('.devui-config-container').exists()).toBeFalsy();
+
+    await wrapper.find('.devui-pagination-config').trigger('click');
+    expect(wrapper.find('.devui-config-container').exists()).toBeTruthy();
+    expect(wrapper.find('.config-item-words').exists()).toBeTruthy();
+    expect(wrapper.find('.choosed').text()).toBe('10');
+  });
 
   it('test special', async () => {
     const wrapper = mount({
@@ -282,26 +282,26 @@ describe('pagination: ', () => {
           total: 10,
           pageIndex: 3,
           pageSize: 10
-        })
-        return { pager }
+        });
+        return { pager };
       }
-    }, globalOption)
+    }, globalOption);
 
-    const btns = wrapper.findAll('.devui-pagination-item')
-    expect(btns.length).toBe(5)
-    expect(wrapper.findAll('.devui-pagination-item.disabled').length).toBe(3)
-    expect(wrapper.find('.devui-pagination-item.active.disabled').text()).toBe('3')
+    const btns = wrapper.findAll('.devui-pagination-item');
+    expect(btns.length).toBe(5);
+    expect(wrapper.findAll('.devui-pagination-item.disabled').length).toBe(3);
+    expect(wrapper.find('.devui-pagination-item.active.disabled').text()).toBe('3');
 
-    await btns[0].trigger('click')
-    expect(wrapper.findAll('.devui-pagination-item').length).toBe(4)
-    expect(wrapper.findAll('.devui-pagination-item.disabled').length).toBe(2)
+    await btns[0].trigger('click');
+    expect(wrapper.findAll('.devui-pagination-item').length).toBe(4);
+    expect(wrapper.findAll('.devui-pagination-item.disabled').length).toBe(2);
 
     await wrapper.setProps({
       showTruePageIndex: false
-    })
-  
-    expect(wrapper.findAll('.devui-pagination-item').length).toBe(3)
-    expect(wrapper.findAll('.devui-pagination-item.disabled').length).toBe(2)
-    expect(wrapper.find('.devui-pagination-item.active').text()).toBe('1')
-  })
-})
+    });
+
+    expect(wrapper.findAll('.devui-pagination-item').length).toBe(3);
+    expect(wrapper.findAll('.devui-pagination-item.disabled').length).toBe(2);
+    expect(wrapper.find('.devui-pagination-item.active').text()).toBe('1');
+  });
+});

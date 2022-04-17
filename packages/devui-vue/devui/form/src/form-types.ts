@@ -1,5 +1,5 @@
-import { Emitter } from 'mitt'
-import type { PropType, ExtractPropTypes, InjectionKey, Ref } from 'vue'
+import { Emitter } from 'mitt';
+import type { PropType, ExtractPropTypes, InjectionKey, Ref } from 'vue';
 
 export const formProps = {
   formData: {
@@ -8,33 +8,33 @@ export const formProps = {
   },
   layout: {
     type: String as PropType<'horizontal' | 'vertical' | 'columns'>,
-    default: 'horizontal', 
+    default: 'horizontal',
   },
   labelSize: {
     type: String as PropType<'sm' | '' | 'lg'>,
-    default: '', 
+    default: '',
   },
   labelAlign: {
     type: String as PropType<'start' | 'center' | 'end'>,
-    default: 'start', 
+    default: 'start',
   },
   rules: {
     type: Object,
-    default: {}, 
+    default: {},
   },
   columnsClass: {
     type: String as PropType<'u-1-3'>,
-    default: '', 
+    default: '',
   },
   name: {
     type: String,
-    default: '', 
+    default: '',
   },
   messageShowType: {
     type: String as PropType<'popover' | 'text' | 'toast' | 'none'>,
-    default: 'popover', 
+    default: 'popover',
   },
-} as const
+} as const;
 
 export const formItemProps = {
   dHasFeedback: {
@@ -45,7 +45,7 @@ export const formItemProps = {
     type: String,
     default: ''
   }
-} as const
+} as const;
 
 export const formLabelProps = {
   required: {
@@ -60,7 +60,7 @@ export const formLabelProps = {
     type: String,
     default: ''
   }
-} as const
+} as const;
 
 export const formControlProps = {
   feedbackStatus: {
@@ -71,18 +71,18 @@ export const formControlProps = {
     type: String,
     default: ''
   }
-} as const
+} as const;
 
 export const dFormEvents = {
   addField: 'd.form.addField',
   removeField: 'd.form.removeField',
-} as const
+} as const;
 
 type LabelData = {
-  layout: string
-  labelSize: string
-  labelAlign: string
-}
+  layout: string;
+  labelSize: string;
+  labelAlign: string;
+};
 
 export const formInjectionKey: InjectionKey<IForm> = Symbol('dForm');
 export const formItemInjectionKey: InjectionKey<IFormItem> = Symbol('dFormItem');
@@ -91,54 +91,54 @@ export const dFormItemEvents = {
   blur: 'd.form.blur',
   change: 'd.form.change',
   input: 'd.form.input',
-} as const
+} as const;
 
 
 export interface IForm {
-  formData: any
-  labelData: IFormLabel
-  formMitt: Emitter<any>
-  rules: any
-  columnsClass: string
-  messageShowType: string
-} 
+  formData: any;
+  labelData: IFormLabel;
+  formMitt: Emitter<any>;
+  rules: any;
+  columnsClass: string;
+  messageShowType: string;
+}
 
 export interface IFormLabel {
-  layout: string
-  labelSize: string
-  labelAlign: string
+  layout: string;
+  labelSize: string;
+  labelAlign: string;
 }
 
 export interface IFormItem {
-  dHasFeedback: boolean
-  prop: string
-  formItemMitt: Emitter<any>
-  resetField(): void
+  dHasFeedback: boolean;
+  prop: string;
+  formItemMitt: Emitter<any>;
+  resetField(): void;
 }
 
 export interface IFormControl {
-  feedbackStatus: string
-  extraInfo: string
-  formItemMitt: Emitter<any>
-  resetField(): void
+  feedbackStatus: string;
+  extraInfo: string;
+  formItemMitt: Emitter<any>;
+  resetField(): void;
 }
 
-export type FormProps = ExtractPropTypes<typeof formProps>
-export type FormItemProps = ExtractPropTypes<typeof formItemProps>
-export type FormLabelProps = ExtractPropTypes<typeof formLabelProps>
-export type FormControlProps = ExtractPropTypes<typeof formControlProps>
+export type FormProps = ExtractPropTypes<typeof formProps>;
+export type FormItemProps = ExtractPropTypes<typeof formItemProps>;
+export type FormLabelProps = ExtractPropTypes<typeof formLabelProps>;
+export type FormControlProps = ExtractPropTypes<typeof formControlProps>;
 
 
 export interface IValidators {
-  required: boolean
-  minlength: number
-  maxlength: number
-  min: number
-  max: number
-  requiredTrue: boolean
-  email: boolean
-  pattern: RegExp
-  whiteSpace: boolean
+  required: boolean;
+  minlength: number;
+  maxlength: number;
+  min: number;
+  max: number;
+  requiredTrue: boolean;
+  email: boolean;
+  pattern: RegExp;
+  whiteSpace: boolean;
 }
 
 const Validators: IValidators = {
@@ -151,7 +151,7 @@ const Validators: IValidators = {
   email: false,
   pattern: undefined,
   whiteSpace: false
-}
+};
 
 export const dDefaultValidators = {
   'required': Validators.required, // 配置不能为空限制，rule中使用：{ required: true }
@@ -164,3 +164,15 @@ export const dDefaultValidators = {
   'pattern': Validators.pattern, // 配置正则校验，rule中使用：{ pattern: RegExp }
   'whitespace': Validators.whiteSpace, // 配置输入不能全为空格限制，rule中使用：{ whitespace: true }
 };
+
+
+export type positionType = 'top' | 'right' | 'bottom' | 'left' | 'left-top' | 'left-bottom' | 'top-left' | 'top-right' | 'right-top' | 'right-bottom' | 'bottom-left' | 'bottom-right';
+
+export interface DValidateResult {
+  errors: any;
+  fields: any;
+}
+
+export interface DFormValidateSubmitData {
+  callback(valid: boolean, result: DValidateResult): void;
+}

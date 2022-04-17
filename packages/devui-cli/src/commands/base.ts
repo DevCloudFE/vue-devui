@@ -1,68 +1,68 @@
-import { existsSync, statSync } from 'fs-extra'
-import { dirname, extname, isAbsolute, resolve } from 'path'
-import prompts from 'prompts'
-import { mergeCliConfig } from '../shared/config'
-import { CWD } from '../shared/constant'
-import generateConfig from '../shared/generate-config'
-import logger from '../shared/logger'
-import { dynamicImport, onPromptsCancel } from '../shared/utils'
-import buildAction from './build'
-import createAction from './create'
+import { existsSync, statSync } from 'fs-extra';
+import { dirname, extname, isAbsolute, resolve } from 'path';
+import prompts from 'prompts';
+import { mergeCliConfig } from '../shared/config';
+import { CWD } from '../shared/constant';
+import generateConfig from '../shared/generate-config';
+import logger from '../shared/logger';
+import { dynamicImport, onPromptsCancel } from '../shared/utils';
+import buildAction from './build';
+import createAction from './create';
 
 function getActions() {
-  const actionMap = new Map<string, prompts.Choice & { action: Function }>()
+  const actionMap = new Map<string, prompts.Choice & { action: Function }>();
   actionMap.set('create', {
     title: 'create',
     value: 'create',
     selected: true,
     action: createAction
-  })
-  actionMap.set('build', { title: 'build', value: 'build', action: buildAction })
+  });
+  actionMap.set('build', { title: 'build', value: 'build', action: buildAction });
 
-  return actionMap
+  return actionMap;
 }
 
 export type BaseCmd = {
-  init?: boolean
-  config?: string
-}
+  init?: boolean;
+  config?: string;
+};
 
 export default async function baseAction(cmd: BaseCmd) {
   if (cmd.init) {
-    return generateConfig()
+    return generateConfig();
   }
 
-  loadCliConfig(cmd)
+  loadCliConfig(cmd);
 
-  selectCommand()
+  selectCommand();
 }
 
 export function loadCliConfig(cmd: Pick<BaseCmd, 'config'>) {
-  if (!cmd.config) return
+  if (!cmd.config) {return;}
 
-  let configPath = resolve(CWD, cmd.config)
+  const configPath = resolve(CWD, cmd.config);
 
   if (!existsSync(configPath)) {
-    logger.error(`The path "${configPath}" not exist.`)
-    process.exit(1)
+    logger.error(`The path "${configPath}" not exist.`);
+    process.exit(1);
   }
 
   if (statSync(configPath).isDirectory() || !['.js', '.ts'].includes(extname(configPath))) {
-    logger.error(`The path "${configPath}" is not a ".js" or ".ts" file.`)
-    process.exit(1)
+    logger.error(`The path "${configPath}" is not a ".js" or ".ts" file.`);
+    process.exit(1);
   }
 
-  const config = dynamicImport(configPath)
-  if (!isAbsolute(config.cwd)) {
-    config.cwd = resolve(dirname(configPath), config.cwd)
+  const config = dynamicImport(configPath);
+  if (config.cwd && !isAbsolute(config.cwd)) {
+    config.cwd = resolve(dirname(configPath), config.cwd);
   }
 
-  mergeCliConfig(config)
+  mergeCliConfig(config);
 }
 
 async function selectCommand() {
-  const actions = getActions()
-  let result: any = {}
+  const actions = getActions();
+  let result: any = {};
 
   try {
     result = await prompts(
@@ -77,11 +77,11 @@ async function selectCommand() {
       {
         onCancel: onPromptsCancel
       }
-    )
+    );
   } catch (e: any) {
-    logger.error(e.message)
-    process.exit(1)
+    logger.error(e.message);
+    process.exit(1);
   }
 
-  actions.get(result.command)!.action()
+  actions.get(result.command)!.action();
 }

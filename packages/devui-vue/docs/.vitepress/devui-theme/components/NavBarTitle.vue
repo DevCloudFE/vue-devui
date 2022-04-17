@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { withBase, useData } from 'vitepress'
+import { withBase, useData, useRouter } from 'vitepress'
 const { site, theme, localePath } = useData()
+const router = useRouter()
+
 function gopage() {
-  document.querySelector('.nav-bar-title').setAttribute('href', window.location.pathname)
+  router.go('/');
   return false
 }
 </script>
@@ -32,6 +34,7 @@ function gopage() {
 
 .nav-bar-title:hover {
   text-decoration: none;
+  cursor: pointer;
 }
 
 .logo {

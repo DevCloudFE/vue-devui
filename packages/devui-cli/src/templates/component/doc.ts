@@ -1,5 +1,5 @@
-import { getPartName } from "../lib-entry/lib-entry";
-import { ComponentMeta } from "./meta";
+import { getPartName } from '../lib-entry/lib-entry';
+import { ComponentMeta } from './meta';
 
 export default function genDocTemplate(meta: ComponentMeta) {
   return `\
@@ -51,5 +51,5 @@ ${meta.realName} 事件
 |      |      |      |           |
 |      |      |      |           |
 |      |      |      |           |
-`
+`;
 }

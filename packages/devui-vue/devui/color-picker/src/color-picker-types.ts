@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue';
 export const colorPickerProps = {
   modelValue: {
     type: [Object, String] as PropType<string | number>
@@ -21,6 +21,6 @@ export const colorPickerProps = {
     type: Boolean,
     default: true
   }
-} as const
+} as const;
 
-export type ColorPickerProps = ExtractPropTypes<typeof colorPickerProps>
+export type ColorPickerProps = ExtractPropTypes<typeof colorPickerProps>;

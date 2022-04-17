@@ -1,14 +1,13 @@
-import { ref } from 'vue'
+import { Ref, ref, watch } from 'vue';
+import { TreeData, TreeItem } from '../tree-types';
 
-export default function useMergeNode(data: Array<any>): any {
+interface IUseMergeNode {
+  mergeData: Ref<TreeData>;
+}
 
-
-  const mergeObject = (
-    treeItem,
-    childName = 'children',
-    labelName = 'label'
-  ) => {
-    const { [childName]: children, [labelName]: label } = treeItem
+export default function useMergeNode(data: Ref<TreeItem[]>): IUseMergeNode {
+  const mergeObject = (treeItem: TreeItem, childName = 'children', labelName = 'label'): TreeItem => {
+    const { [childName]: children, [labelName]: label } = treeItem;
     if (
       Array.isArray(children) &&
       children.length === 1 &&
@@ -17,38 +16,44 @@ export default function useMergeNode(data: Array<any>): any {
     ) {
       return mergeObject(
         Object.assign({}, children[0], {
-          [labelName]: `${label} \\ ${children[0][labelName]}`,
+          [labelName]: `${label} / ${children[0][labelName]}`
         })
-      )
+      );
     }
-    return treeItem
-  }
+    return treeItem;
+  };
 
   const mergeNode = (
-    tree: Array<any>,
+    tree: TreeData,
     level = 0,
     childName = 'children',
     labelName = 'label'
-  ): Array<any> => {
+  ): TreeData => {
     return tree.map((item) => {
-      const { [childName]: children } = item
+      const { [childName]: children } = item;
       if (!Array.isArray(children) || !children.length) {
-        return Object.assign({}, item, { level: level + 1 })
+        return Object.assign({}, item, { level: level + 1 });
       }
-      let currentObject = item
+      let currentObject: TreeItem = item;
       if (children.length === 1) {
-        currentObject = mergeObject(item)
+        currentObject = mergeObject(item);
       }
       return Object.assign({}, currentObject, {
         [childName]: mergeNode(currentObject[childName], level + 1, childName, labelName),
-        level: level + 1,
-      })
-    })
-  }
-
-  const mergeData = ref(mergeNode(data))
+        level: level + 1
+      });
+    });
+  };
+  const mergeData = ref(mergeNode(data.value));
+  watch(
+    () => data.value,
+    () => {
+      mergeData.value = mergeNode(data.value);
+    },
+    { deep: true }
+  );
 
   return {
-    mergeData,
-  }
+    mergeData
+  };
 }

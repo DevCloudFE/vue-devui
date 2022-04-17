@@ -1,16 +1,6 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
+import { cardProps } from './card-types';
 import './card.scss';
-
-const cardProps = {
-  align: {
-    type: String as PropType<'start' | 'end' | 'spaceBetween'>,
-    default: 'start'
-  },
-  src: {
-    type: String,
-    default: ''
-  }
-} as const;
 
 export default defineComponent({
   name: 'DCard',
@@ -30,9 +20,9 @@ export default defineComponent({
       <div class="card-container devui-card">
         {this.$slots.default?.()}
         <div class="devui-card-header">
-        { this.$slots.cardAvatar?.()?<div class="devui-card-avatar">
-           {this.$slots.cardAvatar?.()}
-        </div>:'' }
+          { this.$slots.cardAvatar?.()?<div class="devui-card-avatar">
+            {this.$slots.cardAvatar?.()}
+          </div>:'' }
           <div class="devui-card-header-title-area">
             <div class="devui-card-title">
               {this.$slots.cardTitle?.()}

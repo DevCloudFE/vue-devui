@@ -1,6 +1,4 @@
-@import '../../style/mixins/index';
-@import '../../style/theme/color';
-@import '../../style/theme/corner';
+@import '../../styles-var/devui-var.scss';
 
 $tree-select-input-height: 28px;
 $tree-select-dropdown-max-height: 300px;
@@ -41,13 +39,31 @@ $tree-select-item-font-size: 16px;
   cursor: pointer;
   width: 100%;
   height: $tree-select-input-height;
-  padding: 4px $tree-select-input-height 4px 10px;
+  padding: 0 10px;
   color: $devui-text;
-  vertical-align: middle;
   border: 1px solid $devui-form-control-line;
   border-radius: $devui-border-radius;
   outline: none;
   background-color: $devui-base-bg;
+  overflow: auto;
+
+  &:empty::before {
+    color: lightgrey;
+    content: attr(placeholder);
+    vertical-align: middle;
+  }
+}
+
+.devui-tree-select-value {
+  display: inline-block;
+  height: 80%;
+  vertical-align: middle;
+}
+
+.devui-tree-select-value-enableLabelization {
+  padding: 0 10px;
+  margin: 2px 10px 2px 0;
+  background-color: $devui-icon-fill;
 }
 
 .devui-tree-select-dropdown {
@@ -87,11 +103,12 @@ $tree-select-item-font-size: 16px;
 
 .devui-tree-select-clearable {
   position: relative;
+
   &:hover {
     .devui-tree-select-clear {
       display: inline-flex;
     }
-  
+
     .devui-tree-select-arrow {
       display: none;
     }
@@ -105,6 +122,7 @@ $tree-select-item-font-size: 16px;
 .devui-tree-select-clear,
 .devui-tree-select-arrow {
   position: absolute;
+  top: 0;
   right: 0;
   height: 100%;
   width: $tree-select-input-height;
@@ -121,4 +139,3 @@ $tree-select-item-font-size: 16px;
     color: $devui-icon-fill-active;
   }
 }
-

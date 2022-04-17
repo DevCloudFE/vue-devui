@@ -1,238 +1,185 @@
-import {
-  defineComponent,
-  Transition,
-  ref,
-  computed,
-  reactive,
-  toRefs,
-  provide,
-  renderSlot
-} from 'vue'
-import {
-  OptionItem,
-  editableSelectProps,
-  EditableSelectProps,
-  ConnectionPosition
-} from './editable-select-types'
-import SelectDropdown from './components/dropdown'
-import './editable-select.scss'
-import ClickOutside from '../../shared/devui-directive/clickoutside'
-import { debounce } from 'lodash'
-import { className } from './utils'
-import keyboardSelect from './composable/use-keyboard-select'
+import { defineComponent, withModifiers, computed, ref, SetupContext, watch } from 'vue';
+import { editableSelectProps, EditableSelectProps, OptionObjectItem } from './editable-select-types';
+import clickOutside from '../../shared/devui-directive/clickoutside';
+import { className } from '../src/utils/index';
+import './editable-select.scss';
+import { userFilterOptions } from './composables/use-filter-options';
+import { useInput } from './composables/use-input';
+import { useLazyLoad } from './composables/use-lazy-load';
+import { useKeyboardSelect } from './composables/use-keyboard-select';
 export default defineComponent({
   name: 'DEditableSelect',
-  directives: { ClickOutside },
+  directives: {
+    clickOutside,
+  },
   props: editableSelectProps,
-  emits: ['update:modelValue'],
-  setup(props: EditableSelectProps, ctx) {
-    const renderDropdown = (condition: boolean, type: number) => {
-      if (!condition && type === 0) {
-        return (
-          <Transition name='fade'>
-            <SelectDropdown options={filteredOptions.value}></SelectDropdown>
-          </Transition>
-        )
-      } else if (condition && type === 1) {
-        return (
-          <d-flexible-overlay
-            hasBackdrop={false}
-            origin={origin}
-            position={position}
-            v-model:visible={visible.value}
-          >
-            <div
-              class='devui-dropdown'
-              style={{
-                width: props.width + 'px'
-              }}
-            >
-              <SelectDropdown options={filteredOptions.value}></SelectDropdown>
-            </div>
-          </d-flexible-overlay>
-        )
-      }
-    }
+  emits: ['update:modelValue', 'search', 'loadMore'],
+  setup(props: EditableSelectProps, ctx: SetupContext) {
+    // Ref
+    const dropdownRef = ref();
+    const origin = ref();
 
-    const renderDefaultSlots = (item) => {
-      return ctx.slots.default ? renderSlot(ctx.slots, 'default', { item }) : item.name
-    }
-
-    const renderEmptySlots = () => {
-      return ctx.slots.empty ? renderSlot(ctx.slots, 'empty') : emptyText.value
-    }
-
-    const origin = ref()
-    const dropdownRef = ref()
-    const visible = ref(false)
-    const inputValue = ref('')
-    const selectedIndex = ref(0)
-    const hoverIndex = ref(0)
-    const query = ref(props.modelValue)
-    const position = reactive<ConnectionPosition>({
-      originX: 'left',
-      originY: 'bottom',
-      overlayX: 'left',
-      overlayY: 'top'
-    })
-    const wait = computed(() => (props.remote ? 300 : 0))
+    const position = ref(['bottom', 'left']);
+    const visible = ref(false);
+    const inputValue = ref(props.modelValue || '');
+    const loading = ref(props.loading);
+    // 标准化options，统一处理成[{}]的形式
+    const normalizeOptions = computed(() => {
+      return props.options.map((option) => {
+        if (typeof option === 'object') {
+          return Object.assign({}, option, {
+            label: option.label ? option.label : option.value,
+            value: option.value,
+          });
+        }
+        return {
+          label: option + '',
+          value: option,
+        };
+      });
+    });
+    // 非远程搜索的情况下对数组进行过滤
+    const filteredOptions = userFilterOptions(normalizeOptions, inputValue, props.filterOption);
 
     const emptyText = computed(() => {
-      const options = filteredOptions.value
-      if (!props.remote && options.length === 0) {
-        return '没有相关记录'
+      /**
+       * filterOption === false 代表远程搜索
+       * filterOption等于true、function、undefined代表本地搜索
+       * */
+
+      let text = '';
+      // 不传filterOption时默认为true
+      if (props.filterOption !== false && !filteredOptions.value.length) {
+        text = '找不到相关记录';
+      } else if (props.filterOption === false && !filteredOptions.value.length) {
+        text = '没有数据';
       }
-      if (options.length === 0) {
-        return '没有数据'
+      return text;
+    });
+
+    watch(
+      () => props.loading,
+      (newVal) => {
+        loading.value = newVal;
       }
-      return null
-    })
-
-    const normalizeOptions = computed(() => {
-      let options: OptionItem
-      const { disabledKey } = props
-      disabledKey ? disabledKey : 'disabled'
-      return props.options.map((item) => {
-        if (typeof item !== 'object') {
-          options = {
-            name: item
-          }
-          return options
-        }
-        return item
-      })
-    })
-
-    const filteredOptions = computed(() => {
-      const isValidOption = (o: OptionItem) => {
-        const query = inputValue.value
-        const containsQueryString = query
-          ? o.name.toLocaleLowerCase().indexOf(query.toLocaleLowerCase()) >= 0
-          : true
-        return containsQueryString
-      }
-      return normalizeOptions.value
-        .map((item) => {
-          if (props.remote || isValidOption(item)) {
-            return item
-          }
-          return null
-        })
-        .filter((item) => item !== null)
-    })
-    const findIndex = (o: OptionItem) => {
-      return normalizeOptions.value.findIndex((item) => {
-        return item.name === o.name
-      })
-    }
-
-    const handleClose = () => {
-      visible.value = false
-    }
-
+    );
+    // 下拉列表显影切换
     const toggleMenu = () => {
-      if (!props.disabled) {
-        visible.value = !visible.value
-      }
-    }
+      visible.value = !visible.value;
+    };
 
-    const onInputChange = (val: string) => {
-      if (props.filterMethod) {
-        props.filterMethod(val)
-      } else if (props.remote) {
-        props.remoteMethod(val)
-      }
-    }
+    const closeMenu = () => {
+      visible.value = false;
+    };
+    // 懒加载
+    const { loadMore } = useLazyLoad(dropdownRef, inputValue, props.filterOption, ctx);
 
-    const debouncedOnInputChange = debounce(onInputChange, wait.value)
+    // 输入框变化后的逻辑
+    const { handleInput } = useInput(inputValue, ctx);
 
-    const handleInput = (event) => {
-      const value = event.target.value
-      inputValue.value = value
-      query.value = value
-      if (props.remote) {
-        debouncedOnInputChange(value)
-      } else {
-        onInputChange(value)
+    const handleClick = (option: OptionObjectItem) => {
+      const { optionDisabledKey: disabledKey } = props;
+      if (disabledKey && !!option[disabledKey]) {
+        return;
       }
-    }
-
-    const selectOptionClick = (e, item: OptionItem) => {
-      const { disabledKey } = props
-      if (disabledKey && item[disabledKey]) {
-        e.stopPropagation()
-      } else {
-        query.value = item.name
-        selectedIndex.value = findIndex(item)
-        inputValue.value = ''
-        ctx.emit('update:modelValue', item.name)
-        visible.value = false
-      }
-    }
-
-    const loadMore = () => {
-      if (!props.enableLazyLoad) return
-      const dropdownVal = dropdownRef.value
-      if (dropdownVal.clientHeight + dropdownVal.scrollTop >= dropdownVal.scrollHeight) {
-        props.loadMore()
-      }
-    }
-    const { handleKeydown } = keyboardSelect(
+      ctx.emit('update:modelValue', option.label);
+      closeMenu();
+    };
+    // 键盘选择
+    const { handleKeydown, hoverIndex, selectedIndex } = useKeyboardSelect(
       dropdownRef,
       visible,
-      hoverIndex,
-      selectedIndex,
+      inputValue,
       filteredOptions,
-      toggleMenu,
-      selectOptionClick
-    )
+      props.optionDisabledKey,
+      props.filterOption,
+      loading,
+      handleClick,
+      closeMenu,
+      toggleMenu
+    );
 
-    provide('InjectionKey', {
-      dropdownRef,
-      props: reactive({
-        ...toRefs(props)
-      }),
-      visible,
-      emptyText,
-      selectedIndex,
-      hoverIndex,
-      loadMore,
-      selectOptionClick,
-      renderDefaultSlots,
-      renderEmptySlots
-    })
+    watch(
+      () => props.modelValue,
+      (newVal) => {
+        if (newVal) {
+          inputValue.value = newVal;
+        }
+      }
+    );
+    const getItemCls = (option: OptionObjectItem, index: number) => {
+      const { optionDisabledKey: disabledKey } = props;
+      return className('devui-dropdown-item', {
+        disabled: disabledKey ? !!option[disabledKey] : false,
+        selected: index === selectedIndex.value,
+        'devui-dropdown-bg': index === hoverIndex.value,
+      });
+    };
+    // 渲染下拉列表,根据appendToBody属性判断是否渲染在body下
+
     return () => {
       const selectCls = className('devui-editable-select devui-form-group devui-has-feedback', {
-        'devui-select-open': visible.value
-      })
-      const inputCls = className(
-        'devui-form-control devui-dropdown-origin devui-dropdown-origin-open',
-        {
-          disabled: props.disabled
-        }
-      )
-
+        'devui-select-open': visible.value === true,
+      });
       return (
-        <>
-          <div class={selectCls} v-click-outside={handleClose} onClick={toggleMenu} ref={origin}>
-            <input
-              class={inputCls}
-              disabled={props.disabled}
-              type='text'
-              onInput={handleInput}
-              value={query.value}
-              onKeydown={handleKeydown}
-            />
-            <span class='devui-form-control-feedback'>
-              <span class='devui-select-chevron-icon'>
-                <d-icon name='select-arrow' />
-              </span>
+        <div
+          class={selectCls}
+          ref={origin}
+          v-click-outside={closeMenu}
+          style={{
+            width: props.width + 'px',
+          }}>
+          <input
+            class="devui-form-control devui-dropdown-origin devui-dropdown-origin-open"
+            onClick={withModifiers(toggleMenu, ['self'])}
+            onInput={handleInput}
+            onKeydown={handleKeydown}
+            value={inputValue.value}
+            disabled={props.disabled}
+            placeholder={props.placeholder}
+            type="text"
+          />
+          <span class="devui-form-control-feedback">
+            <span class="devui-select-chevron-icon">
+              <d-icon name="select-arrow" />
             </span>
-            {renderDropdown(props.appendToBody, 0)}
-          </div>
-          {renderDropdown(props.appendToBody, 1)}
-        </>
-      )
-    }
-  }
-})
+          </span>
+
+          <d-flexible-overlay origin={origin.value} v-model={visible.value} position={position.value} hasBackdrop={false}>
+            <div
+              class="devui-editable-select-dropdown"
+              style={{
+                width: props.width + 'px',
+              }}>
+              <div class="devui-dropdown-menu" v-dLoading={props.loading} v-show={visible.value}>
+                <ul
+                  ref={dropdownRef}
+                  class="devui-list-unstyled scroll-height"
+                  style={{
+                    maxHeight: props.maxHeight + 'px',
+                  }}
+                  onScroll={loadMore}>
+                  {filteredOptions.value.map((option, index) => {
+                    return (
+                      <li
+                        class={getItemCls(option, index)}
+                        onClick={(e: MouseEvent) => {
+                          e.stopPropagation();
+                          handleClick(option);
+                        }}>
+                        {ctx.slots.item ? ctx.slots.item(option) : option.label}
+                      </li>
+                    );
+                  })}
+                  <li class="devui-no-result-template" v-show={!filteredOptions.value.length}>
+                    <div class="devui-no-data-tip">{ctx.slots.noResultItem ? ctx.slots.noResultItem() : emptyText.value}</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </d-flexible-overlay>
+        </div>
+      );
+    };
+  },
+});

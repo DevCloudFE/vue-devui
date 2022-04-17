@@ -1,54 +1,40 @@
-import { ExtractPropTypes, PropType } from 'vue';
+import type { ComputedRef, ExtractPropTypes, PropType } from 'vue';
 
-export type IButtonType = 'button' | 'submit' | 'reset';
-export type IButtonVariant = 'common' | 'primary' | 'text' | 'text-dark' | 'danger' | 'success' | 'warning';
-export type IButtonPosition = 'left' | 'right' | 'default';
+export type IButtonVariant = 'solid' | 'outline' | 'text';
+export type IButtonColor = 'secondary' | 'primary' | 'danger';
 export type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 
 export const buttonProps = {
-  type: {
-    type: String as PropType<IButtonType>,
-    default: 'button'
-  },
   variant: {
     type: String as PropType<IButtonVariant>,
-    default: 'primary'
+    default: 'outline',
   },
   size: {
     type: String as PropType<IButtonSize>,
-    default: 'md'
+    default: 'md',
   },
-  position: {
-    type: String as PropType<IButtonPosition>,
-    default: 'default'
-  },
-  bordered: {
-    type: Boolean,
-    default: false
+  color: {
+    type: String as PropType<IButtonColor>,
   },
   icon: {
     type: String,
-    default: ''
+    default: '',
   },
-  showLoading: {
+  loading: {
     type: Boolean,
-    default: false
-  },
-  width: {
-    type: String,
+    default: false,
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
-  autofocus: {
-    type: Boolean,
-    default: false
-  },
-  onClick: {
-    type: Function as PropType<(event: MouseEvent) => void>
-  }
 } as const;
 
-
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
+
+export interface UseButtonReturnType {
+  classes: ComputedRef<{
+    [key: string]: string | boolean;
+  }>;
+  iconClass: ComputedRef<string>;
+}

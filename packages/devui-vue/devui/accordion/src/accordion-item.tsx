@@ -1,7 +1,7 @@
-import { defineComponent, toRefs, computed, inject } from 'vue'
-import { accordionProps } from './accordion-types'
-import { AccordionItemClickEvent, AccordionMenuItem } from './accordion.type'
-import { getRootSlots } from '../src/utils'
+import { defineComponent, toRefs, computed, inject } from 'vue';
+import { accordionProps } from './accordion-types';
+import { AccordionItemClickEvent, AccordionMenuItem } from './accordion.type';
+import { getRootSlots } from '../src/utils';
 
 export default defineComponent({
   name: 'DAccordionItem',
@@ -26,33 +26,33 @@ export default defineComponent({
       activeKey,
       disabledKey,
       itemTemplate
-    } = toRefs(props)
+    } = toRefs(props);
 
-    const rootSlots = getRootSlots()
-    const accordionCtx = inject('accordionContext') as any
+    const rootSlots = getRootSlots();
+    const accordionCtx = inject('accordionContext') as any;
 
-    let parentValue = parent.value
-    let deepValue = deepth.value
+    const parentValue = parent.value;
+    const deepValue = deepth.value;
 
     const disabled = computed(() => {
-      return item.value && item.value[disabledKey.value]
-    })
+      return item.value && item.value[disabledKey.value];
+    });
     const title = computed(() => {
-      return item.value && item.value[titleKey.value]
-    })
+      return item.value && item.value[titleKey.value];
+    });
     const active = computed(() => {
-      return item.value && item.value[activeKey.value]
-    })
+      return item.value && item.value[activeKey.value];
+    });
 
     const childActived = computed(() => {
-      return active.value
-    })
+      return active.value;
+    });
 
     const itemClick = (itemEvent: AccordionItemClickEvent) => {
       if (item.value && !disabled.value) {
-        accordionCtx.itemClickFn(itemEvent)
+        accordionCtx.itemClickFn(itemEvent);
       }
-    }
+    };
 
     return () => {
       return (
@@ -87,7 +87,7 @@ export default defineComponent({
               })}
           </div>
         </>
-      )
-    }
+      );
+    };
   }
-})
+});

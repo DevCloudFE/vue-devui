@@ -8,10 +8,8 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
     "downlevelIteration": true,
-    "declarationDir": "./types",
+    "typeRoots": ["./node_modules/@types", "./types"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,6 +18,7 @@
   },
   "include": [
     "./src/**/*.ts",
-    "./src/**/*.d.ts"
+    "./src/**/*.d.ts",
+    "./types/**/*.d.ts"
   ]
 }

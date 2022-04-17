@@ -1,6 +1,6 @@
 # Slider 滑动输入条
 
-### 何时使用
+#### 何时使用
 
 当用户需要在数值区间内进行选择时使用。
 
@@ -85,6 +85,31 @@ export default defineComponent({
       inputValue,
       maxValue,
       minValue,
+    };
+  },
+});
+</script>
+```
+
+:::
+
+### 自定义颜色color
+
+:::demo
+
+```vue
+<template>
+  <div class="slider-wrapper" style="padding:20px">
+    <d-slider v-model="inputValue" color="#e67e22"></d-slider>
+  </div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const inputValue = ref(20);
+    return {
+      inputValue,
     };
   },
 });

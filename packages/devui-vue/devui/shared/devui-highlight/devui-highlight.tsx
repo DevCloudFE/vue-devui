@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'DHighlight',
@@ -13,7 +13,7 @@ export default defineComponent({
           {/* 暂做处理避免tsx语法被解析为html标签 */}
           <code innerHTML={props.code?.replace(/(<)/g, '&lt;')}></code>
         </pre>
-      )
-    }
+      );
+    };
   }
-})
+});

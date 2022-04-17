@@ -1,16 +1,15 @@
-import { ref, nextTick } from 'vue'
+import { ref, nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
-import Carousel from '../carousel';
-import CarouselItem from '../item';
-import Button from '../../button'
+import { CarouselItem, Carousel  } from '../index';
+import { Button } from '../../button';
 
 const wait = (ms = 100) =>
-  new Promise(resolve => setTimeout(() => resolve(), ms))
+  new Promise(resolve => setTimeout(() => resolve(), ms));
 
 describe('d-carousel', () => {
   it('arrowTrigger-never', () => {
     const wrapper = mount(Carousel, {
-      props: { 
+      props: {
         arrowTrigger: 'never',
         height: '200px',
       },
@@ -20,7 +19,7 @@ describe('d-carousel', () => {
 
   it('arrowTrigger-hover-out', () => {
     const wrapper = mount(Carousel, {
-      props: { 
+      props: {
         arrowTrigger: 'hover',
         height: '200px',
       },
@@ -29,19 +28,19 @@ describe('d-carousel', () => {
   });
   it('arrowTrigger-hover-in', async () => {
     const wrapper = mount(Carousel, {
-      props: { 
+      props: {
         arrowTrigger: 'hover',
         height: '200px',
       },
     });
-    wrapper.find('.devui-carousel-container').trigger('mouseenter')
-    await nextTick()
+    wrapper.find('.devui-carousel-container').trigger('mouseenter');
+    await nextTick();
     expect(wrapper.find('.devui-carousel-arrow').exists()).toBe(true);
   });
 
   it('arrowTrigger-always', () => {
     const wrapper = mount(Carousel, {
-      props: { 
+      props: {
         arrowTrigger: 'always',
         height: '200px',
       },
@@ -51,7 +50,7 @@ describe('d-carousel', () => {
 
   it('showDots-false', () => {
     const wrapper = mount(Carousel, {
-      props: { 
+      props: {
         showDots: false,
         height: '200px',
       },
@@ -63,7 +62,7 @@ describe('d-carousel', () => {
     const wrapper = mount({
       components: {
         'd-carousel': Carousel,
-        'd-carousel-item': CarouselItem, 
+        'd-carousel-item': CarouselItem,
       },
       template: `
         <d-carousel ref="carousel" height="200px" :activeIndexChange="onChange">
@@ -74,23 +73,23 @@ describe('d-carousel', () => {
         </d-carousel>
       `,
       setup() {
-        const activeIndex = ref(0)
+        const activeIndex = ref(0);
 
         const onChange = (index: number) => {
-          activeIndex.value = index
-        }
-    
+          activeIndex.value = index;
+        };
+
         return {
           activeIndex,
 
           onChange,
-        }
+        };
       }
     });
 
-    await nextTick()
-    wrapper.findAll('.dot-item')[1].trigger('click')
-    await nextTick()
+    await nextTick();
+    wrapper.findAll('.dot-item')[1].trigger('click');
+    await nextTick();
     expect(wrapper.vm.activeIndex).toBe(1);
   });
 
@@ -98,7 +97,7 @@ describe('d-carousel', () => {
     const wrapper = mount({
       components: {
         'd-carousel': Carousel,
-        'd-carousel-item': CarouselItem, 
+        'd-carousel-item': CarouselItem,
       },
       template: `
         <d-carousel ref="carousel" height="200px" :activeIndexChange="onChange" dotTrigger="hover">
@@ -109,22 +108,22 @@ describe('d-carousel', () => {
         </d-carousel>
       `,
       setup() {
-        const activeIndex = ref(0)
+        const activeIndex = ref(0);
 
         const onChange = (index: number) => {
-          activeIndex.value = index
-        }
-    
+          activeIndex.value = index;
+        };
+
         return {
           activeIndex,
 
           onChange,
-        }
+        };
       }
     });
-    await nextTick()
-    wrapper.findAll('.dot-item')[1].trigger('mouseenter')
-    await nextTick()
+    await nextTick();
+    wrapper.findAll('.dot-item')[1].trigger('mouseenter');
+    await nextTick();
     expect(wrapper.vm.activeIndex).toBe(1);
   });
 
@@ -132,7 +131,7 @@ describe('d-carousel', () => {
     const wrapper = mount({
       components: {
         'd-carousel': Carousel,
-        'd-carousel-item': CarouselItem, 
+        'd-carousel-item': CarouselItem,
         'd-button': Button,
       },
       template: `
@@ -140,71 +139,71 @@ describe('d-carousel', () => {
           <d-carousel-item v-for="item in items" :key="item">{{ item }} </d-carousel-item>
         </d-carousel>
         <div class="carousel-demo-operate">
-          <d-button bsStyle="common" :btnClick="onPrev">上一张</d-button>
-          <d-button bsStyle="primary" :btnClick="onNext">下一张</d-button>
-          <d-button bsStyle="common" :btnClick="onGoFirst">第一张</d-button>
+          <d-button bsStyle="common" :onClick="onPrev">上一张</d-button>
+          <d-button bsStyle="primary" :onClick="onNext">下一张</d-button>
+          <d-button bsStyle="common" :onClick="onGoFirst">第一张</d-button>
         </div>
       `,
       setup() {
-        const items = ref<string[]>(["page 1", 'page 2', 'page 3', 'page 4'])
-        const activeIndex = ref(0)
-    
-        const carousel = ref()
-    
+        const items = ref<string[]>(['page 1', 'page 2', 'page 3', 'page 4']);
+        const activeIndex = ref(0);
+
+        const carousel = ref();
+
         const onPrev = () => {
-          carousel.value?.prev?.()
-        }
+          carousel.value?.prev?.();
+        };
         const onNext = () => {
-          carousel.value?.next?.()
-        }
+          carousel.value?.next?.();
+        };
         const onGoFirst = () => {
-          carousel.value?.goto?.(0)
-        }
+          carousel.value?.goto?.(0);
+        };
         const onChange = (index: number) => {
-          activeIndex.value = index
-        }
-    
+          activeIndex.value = index;
+        };
+
         return {
           activeIndex,
           items,
-    
+
           carousel,
           onPrev,
           onNext,
           onGoFirst,
           onChange,
-        }
+        };
       }
     });
 
-    await nextTick()
-    wrapper.find('.arrow-left').trigger('click')
-    await nextTick()
-    expect(wrapper.vm.activeIndex).toBe(3)
-    wrapper.find('.arrow-right').trigger('click')
-    await nextTick()
-    expect(wrapper.vm.activeIndex).toBe(0)
+    await nextTick();
+    wrapper.find('.arrow-left').trigger('click');
+    await nextTick();
+    expect(wrapper.vm.activeIndex).toBe(3);
+    wrapper.find('.arrow-right').trigger('click');
+    await nextTick();
+    expect(wrapper.vm.activeIndex).toBe(0);
 
-    wrapper.findAll('.devui-btn')[0].trigger('click')
-    await nextTick()
-    wrapper.findAll('.devui-btn')[0].trigger('click')
-    await nextTick()
-    expect(wrapper.vm.activeIndex).toBe(2)
+    wrapper.findAll('.devui-btn')[0].trigger('click');
+    await nextTick();
+    wrapper.findAll('.devui-btn')[0].trigger('click');
+    await nextTick();
+    expect(wrapper.vm.activeIndex).toBe(2);
 
-    wrapper.findAll('.devui-btn')[1].trigger('click')
-    await nextTick()
-    expect(wrapper.vm.activeIndex).toBe(3)
+    wrapper.findAll('.devui-btn')[1].trigger('click');
+    await nextTick();
+    expect(wrapper.vm.activeIndex).toBe(3);
 
-    wrapper.findAll('.devui-btn')[2].trigger('click')
-    await nextTick()
-    expect(wrapper.vm.activeIndex).toBe(0)
+    wrapper.findAll('.devui-btn')[2].trigger('click');
+    await nextTick();
+    expect(wrapper.vm.activeIndex).toBe(0);
   });
 
   it('autoplay', async () => {
     const wrapper = mount({
       components: {
         'd-carousel': Carousel,
-        'd-carousel-item': CarouselItem, 
+        'd-carousel-item': CarouselItem,
       },
       template: `
         <d-carousel ref="carousel" height="200px" :activeIndexChange="onChange" autoplay :autoplaySpeed="3000">
@@ -215,23 +214,23 @@ describe('d-carousel', () => {
         </d-carousel>
       `,
       setup() {
-        const activeIndex = ref(2)
+        const activeIndex = ref(2);
 
         const onChange = (index: number) => {
-          activeIndex.value = index
-        }
-    
+          activeIndex.value = index;
+        };
+
         return {
           activeIndex,
 
           onChange,
-        }
+        };
       }
     });
 
-    await wait(4500)
-    expect(wrapper.vm.activeIndex).toBe(1)
-    await wait(4600)
-    expect(wrapper.vm.activeIndex).toBe(3)
+    await wait(4500);
+    expect(wrapper.vm.activeIndex).toBe(1);
+    await wait(4600);
+    expect(wrapper.vm.activeIndex).toBe(3);
   }, 10000);
 });

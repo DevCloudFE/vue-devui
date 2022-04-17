@@ -1,19 +1,19 @@
-import { defineComponent, onMounted, ref } from 'vue'
-import { backTopProps, BackTopProps } from './back-top-types'
-import { usePosition, useVisibility } from './hooks'
-import './back-top.scss'
-import IconTop from './assets/top.svg'
+import { defineComponent, onMounted, ref } from 'vue';
+import { backTopProps, BackTopProps } from './back-top-types';
+import { usePosition, useVisibility } from './hooks';
+import './back-top.scss';
+import IconTop from './assets/top.svg';
 
 export default defineComponent({
   name: 'DBackTop',
   props: backTopProps,
   emits: [],
   setup(props: BackTopProps, ctx) {
-    const slots = ctx.slots
-    const backTopRef = ref(null)
+    const slots = ctx.slots;
+    const backTopRef = ref(null);
 
-    const position = usePosition(props)
-    let isVisible = useVisibility(props, backTopRef)
+    const position = usePosition(props);
+    const isVisible = useVisibility(props, backTopRef);
 
     const scrollToTop = () => {
       // toTop方法暂定
@@ -21,9 +21,9 @@ export default defineComponent({
         window.scrollTo({
           top: 0,
           left: 0,
-          behavior: 'smooth' //平滑滚动
-        })
-    }
+          behavior: 'smooth' // 平滑滚动
+        });
+    };
 
     return () => (
       <div
@@ -44,6 +44,6 @@ export default defineComponent({
           {slots.default ? slots.default() : <IconTop />}
         </div>
       </div>
-    )
+    );
   }
-})
+});

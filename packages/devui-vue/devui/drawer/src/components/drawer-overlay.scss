@@ -1,0 +1,20 @@
+@import '../../../styles-var/devui-var.scss';
+
+.devui-drawer-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: $devui-shadow;
+}
+
+.drawer-overlay-fade-enter-active,
+.drawer-overlay-fade-leave-active {
+  transition: opacity 0.1s linear;
+}
+
+.drawer-overlay-fade-enter-from,
+.drawer-overlay-fade-leave-to {
+  opacity: 0;
+}

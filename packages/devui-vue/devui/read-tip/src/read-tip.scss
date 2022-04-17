@@ -1,10 +1,5 @@
-@import '../../style/theme/color';
-@import '../../style/theme/variables';
-@import '../../style/mixins/index';
-@import '../../style/theme/shadow';
-@import '../../style/theme/corner';
-@import '../../style/core/_font';
-// @import '../../style/core/z-index';
+@import '../../styles-var/devui-var.scss';
+
 .devui-read-tip {
   position: relative;
 

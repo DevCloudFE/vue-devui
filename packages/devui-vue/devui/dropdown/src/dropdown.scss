@@ -1,4 +1,8 @@
-@import '../../styles-var/devui-var';
+@import '../../styles-var/devui-var.scss';
+
+.devui-dropdown-toggle {
+  display: inline-block;
+}
 
 .devui-dropdown span {
   &.icon-chevron-down,
@@ -26,40 +30,80 @@
   }
 }
 
+.fade-in-top {
+  animation: fadeInTop 0.2s cubic-bezier(0.16, 0.75, 0.5, 1);
+}
 
+.fade-in-bottom {
+  animation: fadeInBottom 0.2s cubic-bezier(0.16, 0.75, 0.5, 1);
+}
+
+@keyframes fadeInTop {
+  from {
+    opacity: 0.8;
+    transform: scaleY(0.8) translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(0.9999) translateY(0);
+  }
+}
+
+@keyframes fadeInBottom {
+  from {
+    opacity: 0.8;
+    transform: scaleY(0.8) translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(0.9999) translateY(0);
+  }
+}
 
 .devui-dropdown-fade {
-  @mixin d-dropdown-fade-animation {
-    animation-name: d-dropdown-fade;
-    animation-duration: 0.3s;
-  }
-  @keyframes d-dropdown-fade {
-    0% {
-      opacity: 0;
-      transform: scaleY(0.9999) scaleY(0);
+  &-bottom {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleY(0.8) translateY(-4px);
     }
 
-    100% {
+    &-enter-to,
+    &-leave-from {
       opacity: 1;
-      transform: scaleY(0.8) scaleY(4px);
+      transform: scaleY(0.9999) translateY(0);
+    }
+
+    &-enter-active {
+      transition: transform 0.2s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.2s cubic-bezier(0.16, 0.75, 0.5, 1);
+    }
+
+    &-leave-active {
+      transition: transform 0.2s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.2s cubic-bezier(0.5, 0, 0.84, 0.25);
     }
   }
 
-  &-enter {
-    opacity: 0;
-  }
+  &-top {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleY(0.8) translateY(4px);
+    }
 
-  &-enter-active {
-    @include d-dropdown-fade-animation;
-  }
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+      transform: scaleY(0.9999) translateY(0);
+    }
 
-  &-leave {
-    opacity: 1;
-  }
+    &-enter-active {
+      transition: transform 0.2s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.2s cubic-bezier(0.16, 0.75, 0.5, 1);
+    }
 
-  &-leave-active {
-    @include d-dropdown-fade-animation;
-
-    animation-direction: reverse;
+    &-leave-active {
+      transition: transform 0.2s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.2s cubic-bezier(0.5, 0, 0.84, 0.25);
+    }
   }
 }

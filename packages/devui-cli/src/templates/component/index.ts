@@ -1,4 +1,4 @@
-import { camelCase } from 'lodash-es'
+import { camelCase } from 'lodash-es';
 import {
   coreFileName,
   coreName,
@@ -8,42 +8,42 @@ import {
   serviceFileName,
   serviceName,
   typesFileName
-} from './utils'
+} from './utils';
 
 export default function genIndexTemplate(name: string, parts: string[]) {
-  const importParts = []
-  const exportParts = []
-  const installParts = []
+  const importParts = [];
+  const exportParts = [];
+  const installParts = [];
 
-  let needsTypes = false
+  let needsTypes = false;
 
   if (parts.includes('core')) {
-    needsTypes = true
+    needsTypes = true;
 
-    importParts.push(`import ${coreName(name)} from './src/${coreFileName(name)}'`)
-    exportParts.push(coreName(name))
-    installParts.push(`\tapp.component(${coreName(name)}.name, ${coreName(name)})`)
+    importParts.push(`import ${coreName(name)} from './src/${coreFileName(name)}'`);
+    exportParts.push(coreName(name));
+    installParts.push(`\tapp.component(${coreName(name)}.name, ${coreName(name)})`);
   }
 
   if (parts.includes('service')) {
-    needsTypes = true
+    needsTypes = true;
 
-    importParts.push(`import ${serviceName(name)} from './src/${serviceFileName(name)}'`)
-    exportParts.push(serviceName(name))
+    importParts.push(`import ${serviceName(name)} from './src/${serviceFileName(name)}'`);
+    exportParts.push(serviceName(name));
     installParts.push(
       `\tapp.config.globalProperties.$${camelCase(serviceName(name))} = ${serviceName(name)}`
-    )
+    );
   }
 
   if (parts.includes('directive')) {
-    importParts.push(`import ${directiveName(name)} from './src/${directiveFileName(name)}'`)
-    exportParts.push(directiveName(name))
-    installParts.push(`\tapp.directive('${coreName(name)}', ${directiveName(name)})`)
+    importParts.push(`import ${directiveName(name)} from './src/${directiveFileName(name)}'`);
+    exportParts.push(directiveName(name));
+    installParts.push(`\tapp.directive('${coreName(name)}', ${directiveName(name)})`);
   }
 
   if (needsTypes) {
-    importParts.push(`import { ${propsTypesName(name)} } from './src/${typesFileName(name)}'`)
-    exportParts.push(propsTypesName(name))
+    importParts.push(`import { ${propsTypesName(name)} } from './src/${typesFileName(name)}'`);
+    exportParts.push(propsTypesName(name));
   }
 
   return `\
@@ -61,5 +61,5 @@ export default {
     app.use(${coreName(name)} as any)
   }
 }
-`
+`;
 }

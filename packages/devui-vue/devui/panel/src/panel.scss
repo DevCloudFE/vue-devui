@@ -1,4 +1,4 @@
-@import '../../style/theme/color';
+@import '../../styles-var/devui-var.scss';
 
 .no-left-padding {
   &.devui-panel-body-collapse {
@@ -24,7 +24,6 @@
       line-height: 1.5;
     }
   }
-
 
   .devui-panel-body {
     display: flex;

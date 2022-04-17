@@ -2,92 +2,123 @@
 
 全屏组件。
 
-### 何时使用
+#### 何时使用
 
 当用户需要将某一区域进行全屏展示时。
 
-### 沉浸式全屏
+### 基本用法
 
-充满整个显示器屏幕的沉浸式全屏。
-
-:::demo
+:::demo 将需要全屏的容器包裹在`<d-fullscreen>`标签里面，通过`v-model`控制全屏状态，传入`true`则启动全屏，设置成`false`则退出全屏，也可以通过按下`ESC`快捷键推出全屏。本例还展示了自定义层级`z-index`的用法。
 
 ```vue
 <template>
-  <d-fullscreen :zIndex='100' @fullscreenLaunch='fullscreenLaunch'>
-    <div fullscreen-target>
-      <d-button fullscreen-launch>{{btnContent}}</d-button>
+  <d-fullscreen v-model="isOpen" :z-index="20">
+    <div class="demo-fullscreen-container">
+      <d-button @click="isOpen = !isOpen">{{ btnContent }}</d-button>
     </div>
   </d-fullscreen>
 </template>
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue';
+
 export default {
   setup() {
-    const btnContent = ref('FullScreen')
-    const fullscreenLaunch = (val) => {
-      if (val) {
-        btnContent.value = 'Exit'
+    const isOpen = ref(false);
+    const btnContent = ref('全屏');
+
+    watch(isOpen, (newVal) => {
+      if (newVal) {
+        btnContent.value = '退出全屏';
       } else {
-        btnContent.value = 'FullScreen'
+        btnContent.value = '全屏';
       }
-    }
+    });
+
     return {
+      isOpen,
       btnContent,
-      fullscreenLaunch
-    }
-  }
-}
+    };
+  },
+};
 </script>
+<style>
+.demo-fullscreen-container {
+  margin: 8px;
+}
+</style>
 ```
+
 :::
 
-### 普通全屏
+### 全屏模式
 
-充满当前浏览器窗口的普通全屏。
-
-:::demo
+:::demo 通过`mode`设置全屏模式，默认为`normal`普通全屏，全屏之后容器将充满整个浏览器窗口，`mode`设置成`immersive`可以启用沉浸式全屏，让容器充满整个电脑屏幕。<br>不管是普通全屏还是沉浸式全屏，都支持按下快捷键`ESC`退出全屏。
 
 ```vue
 <template>
-  <d-fullscreen :zIndex='100' mode="normal" @fullscreenLaunch='fullscreenLaunch'>
-    <div fullscreen-target>
-      <d-button fullscreen-launch>{{btnContent}}</d-button>
+  <d-fullscreen v-model="isOpenNormal" :z-index="20">
+  <div class="demo-fullscreen-container">
+      <d-button @click="isOpenNormal = !isOpenNormal">{{ btnContentNormal }}</d-button>
+    </div>
+  </d-fullscreen>
+  
+  <d-fullscreen v-model="isOpenImmersive" mode="immersive" :z-index="20">
+  <div class="demo-fullscreen-container">
+      <d-button @click="isOpenImmersive = !isOpenImmersive">{{ btnContentImmersive }}</d-button>
     </div>
   </d-fullscreen>
 </template>
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue';
+
 export default {
   setup() {
-    const btnContent = ref('普通')
-    const fullscreenLaunch = (val) => {
-      if (val) {
-        btnContent.value = '退出'
+    const isOpenNormal = ref(false);
+    const btnContentNormal = ref('普通全屏');
+
+    watch(isOpenNormal, (newVal) => {
+      if (newVal) {
+        btnContentNormal.value = '退出全屏';
       } else {
-        btnContent.value = '普通'
+        btnContentNormal.value = '普通全屏';
       }
-    }
+    });
+
+    const isOpenImmersive = ref(false);
+    const btnContentImmersive = ref('沉浸式全屏');
+
+    watch(isOpenImmersive, (newVal) => {
+      if (newVal) {
+        btnContentImmersive.value = '退出全屏';
+      } else {
+        btnContentImmersive.value = '沉浸式全屏';
+      }
+    });
+
     return {
-      btnContent,
-      fullscreenLaunch
-    }
-  }
-}
+      isOpenNormal,
+      btnContentNormal,
+      isOpenImmersive,
+      btnContentImmersive,
+    };
+  },
+};
 </script>
 ```
+
 :::
 
-### 参数及API
+### Fullscreen 参数
 
-|    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         |
-| :---------: | :------: | :-------: | :----------------------- | --------------------------------- |
-|    mode     | `immersive` 或 `normal` |    `immersive`    | 可选，设置全屏模式          | [沉浸式全屏](#沉浸式全屏)             |
-|    zIndex     | `Number` |  10  | 可选，设置全屏层级           | [普通全屏](#普通全屏)             |
-|    fullscreenLaunch    | `EventEmitter<boolean>` |  | 可选，全屏之后的回调           | [普通全屏](#普通全屏)             |
+| 参数名  | 类型                      | 默认     | 说明               | 跳转 Demo             |
+| :------ | :------------------------ | :------- | :----------------- | :-------------------- |
+| v-model | `boolean`                 | false    | 可选，是否启动全屏 | [基本用法](#基本用法) |
+| mode    | `'normal' \| 'immersive'` | 'normal' | 可选，设置全屏模式 | [全屏模式](#全屏模式) |
+| z-index | `number`                  | 10       | 可选，设置全屏层级 | [基本用法](#基本用法) |
 
-**fullscreen-target** 选择器
-必含指令，内容投影，设置**需要全屏的元素**沉浸式全屏。
+### Fullscreen 插槽
 
-**fullscreen-launch** 选择器
-必含指令，内容投影，设置**触发**进入全屏的按钮沉浸式全屏。
+| 插槽名  | 说明               | 参数 |
+| :------ | :----------------- | :--- |
+| default | 默认插槽，全屏容器 | --   |
+

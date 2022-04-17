@@ -13,7 +13,7 @@ import HomeFooter from './HomeFooter.vue'
       <Content />
     </div>
     <slot name="features" />
-    <HomeFooter />
+    <HomeFooter v-if="false" />
     <slot name="footer" />
   </main>
 </template>
@@ -34,5 +34,10 @@ import HomeFooter from './HomeFooter.vue'
     max-width: 392px;
     padding: 0;
   }
+}
+
+.home-slogon {
+  display: flex;
+  align-items: center;
 }
 </style>

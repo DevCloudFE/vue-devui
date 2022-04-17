@@ -1,5 +1,5 @@
-import type { PropType, ExtractPropTypes } from 'vue'
-import { ColorPickerColor } from '../../utils/color-utils-types'
+import type { PropType, ExtractPropTypes } from 'vue';
+import { ColorPickerColor } from '../../utils/color-utils-types';
 export const colorPickerEditProps = {
   /* test: {
     type: Object as PropType<{ xxx: xxx }>
@@ -17,6 +17,6 @@ export const colorPickerEditProps = {
   color: {
     type: Object as PropType<ColorPickerColor>
   }
-} as const
+} as const;
 
-export type ColorPickerEditProps = ExtractPropTypes<typeof colorPickerEditProps>
+export type ColorPickerEditProps = ExtractPropTypes<typeof colorPickerEditProps>;

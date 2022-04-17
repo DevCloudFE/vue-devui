@@ -8,7 +8,7 @@ $devui-brand-foil: var(--devui-brand-foil, #859bff);                 // 品牌�
 $devui-brand-hover: var(--devui-brand-hover, #7693f5);               // 品牌色高亮色（加亮）
 $devui-brand-active: var(--devui-brand-active, #526ecc);             // 品牌色激活色（加深）
 $devui-brand-active-focus: var(--devui-brand-active-focus, #344899); // 品牌色焦点色（重度加深）
-$devui-contrast: var(--devui-contrast, #f66f6a);                     // 品牌色撞色、对比色、反衬色、第二品牌色
+$devui-contrast: var(--devui-contrast, #c7000b);                     // 品牌色撞色、对比色、反衬色、第二品牌色
 $devui-text: var(--devui-text, #252b3a);                             // 正文文本
 $devui-text-weak: var(--devui-text-weak, #575d6c);                   // 弱化的正文信息（手风琴子项，表头）
 $devui-aide-text: var(--devui-aide-text, #8a8e99);                   // 辅助文本、帮助信息（面包屑）
@@ -49,6 +49,7 @@ $devui-icon-fill-active: var(--devui-icon-fill-active, #5e7ce0);             // 
 $devui-icon-fill-active-hover: var(--devui-icon-fill-active-hover, #526ecc); // svg图标 高亮填充色悬停反馈色
 // 表单
 $devui-form-control-line: var(--devui-form-control-line, #adb0b8);                           // 表单控件边框色，同 边框分割线
+$devui-form-control-bg: var(--devui-form-control-bg, #ffffff);                               // 表单控件背景色
 $devui-form-control-line-hover: var(--devui-form-control-line-hover, #575d6c);               // 表单控件边框悬停反馈色
 $devui-form-control-line-active: var(--devui-form-control-line-active, #5e7ce0);             // 表单控件边框激活色，用于获得焦点
 $devui-form-control-line-active-hover: var(--devui-form-control-line-active-hover, #344899); // 表单控件边框激活色，用于获得焦点且悬停
@@ -65,7 +66,6 @@ $devui-disabled-bg: var(--devui-disabled-bg, #f5f5f6);     // disabled背景颜�
 $devui-disabled-line: var(--devui-disabled-line, #dfe1e6); // disabled边框颜色
 $devui-disabled-text: var(--devui-disabled-text, #adb0b8); // disabled文字颜色
 $devui-primary-disabled: var(--devui-primary-disabled, #beccfa); //主要按钮disabled状态文字颜色
-$devui-icon-fill-active-disabled: var(--devui-icon-fill-active-disabled, #beccfa);  // svg图标激活状态禁用色
 $devui-icon-fill-active-disabled: var(--devui-icon-fill-active-disabled, #beccfa);  // svg图标激活状态禁用色
 // 特殊背景色
 $devui-label-bg: var(--devui-label-bg, #eef0f5);                             // 默认标签化选项背景色
@@ -84,8 +84,9 @@ $devui-primary: var(--devui-primary, #5e7ce0);                // 主要按钮，
 $devui-primary-hover: var(--devui-primary-hover, #7693f5);    // 主要按钮悬停
 $devui-primary-active: var(--devui-primary-active, #344899);  // 主要按钮激活
 
-$devui-contrast-hover: var(--devui-contrast-hover, #ff8b87);  // 突出按钮悬停
-$devui-contrast-active: var(--devui-contrast-active, #de504e);// 突出按钮激活
+$devui-contrast-hover: var(--devui-contrast-hover, #d64a52);  // 突出按钮悬停
+$devui-contrast-active: var(--devui-contrast-active, #b12220);// 突出按钮激活
+$devui-contrast-disabled: var(--devui-contrast-disabled, #ffbcba); // 突出按钮禁用
 
 // 状态
 $devui-danger-line: var(--devui-danger-line, #f66f6a);  // 失败边框

@@ -1,7 +1,7 @@
-import { defineComponent, computed, ref, watch, inject } from 'vue'
-import { inputProps, InputType } from './use-input'
-import './input.scss'
-import { dFormItemEvents, IFormItem, formItemInjectionKey } from '../../form/src/form-types'
+import { defineComponent, computed, ref, watch, inject } from 'vue';
+import { inputProps, InputType } from './input-types';
+import './input.scss';
+import { dFormItemEvents, IFormItem, formItemInjectionKey } from '../../form/src/form-types';
 
 export default defineComponent({
   name: 'DInput',
@@ -9,7 +9,7 @@ export default defineComponent({
     focus: {
       mounted: function (el, binding) {
         if (binding.value) {
-          el.focus()
+          el.focus();
         }
       }
     }
@@ -17,57 +17,50 @@ export default defineComponent({
   props: inputProps,
   emits: ['update:modelValue', 'focus', 'blur', 'change', 'keydown'],
   setup(props, ctx) {
-    const formItem = inject(formItemInjectionKey, {} as IFormItem)
-    const hasFormItem = Object.keys(formItem).length > 0
-    const sizeCls = computed(() => `devui-input-${props.size}`)
-    const showPwdIcon = ref(false)
-    const inputType = ref<InputType>('text')
+    const formItem = inject(formItemInjectionKey, {} as IFormItem);
+    const hasFormItem = Object.keys(formItem).length > 0;
+    const sizeCls = computed(() => `devui-input-${props.size}`);
+    const showPwdIcon = ref(false);
+    const inputType = ref<InputType>('text');
     const inputCls = computed(() => {
       return {
         error: props.error,
         [props.cssClass]: true,
+        'devui-input-restore': showPwdIcon.value,
         [sizeCls.value]: props.size !== ''
-      }
-    })
-    const showPreviewIcon = computed(() => inputType.value === 'password')
+      };
+    });
+    const showPreviewIcon = computed(() => inputType.value === 'password');
     watch(
       () => props.showPassword,
       (flg) => {
-        inputType.value = flg ? 'password' : 'text'
+        inputType.value = flg ? 'password' : 'text';
+        showPwdIcon.value = props.showPassword;
       },
       { immediate: true }
-    )
-
-    watch(
-      () => props.modelValue,
-      (value) => {
-        value && value.length > 0 && showPreviewIcon.value
-          ? (showPwdIcon.value = true)
-          : (showPwdIcon.value = false)
-      }
-    )
+    );
 
     const onInput = ($event: Event) => {
-        ctx.emit('update:modelValue', ($event.target as HTMLInputElement).value)
-        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.input)
+        ctx.emit('update:modelValue', ($event.target as HTMLInputElement).value);
+        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.input);
       },
       onFocus = () => {
-        ctx.emit('focus')
+        ctx.emit('focus');
       },
       onBlur = () => {
-        ctx.emit('blur')
-        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.blur)
+        ctx.emit('blur');
+        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.blur);
       },
       onChange = ($event: Event) => {
-        ctx.emit('change', ($event.target as HTMLInputElement).value)
-        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.change)
+        ctx.emit('change', ($event.target as HTMLInputElement).value);
+        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.change);
       },
       onKeydown = ($event: KeyboardEvent) => {
-        ctx.emit('keydown', $event)
+        ctx.emit('keydown', $event);
       },
       onChangeInputType = () => {
-        inputType.value = inputType.value === 'password' ? 'text' : 'password'
-      }
+        inputType.value = inputType.value === 'password' ? 'text' : 'password';
+      };
     return {
       inputCls,
       inputType,
@@ -79,7 +72,7 @@ export default defineComponent({
       onChange,
       onKeydown,
       onChangeInputType
-    }
+    };
   },
   render() {
     const {
@@ -98,7 +91,7 @@ export default defineComponent({
       onChange,
       onKeydown,
       onChangeInputType
-    } = this
+    } = this;
     return (
       <div class='devui-input__wrap'>
         <input
@@ -119,13 +112,13 @@ export default defineComponent({
         {showPwdIcon && (
           <div class='devui-input__preview' onClick={onChangeInputType}>
             {showPreviewIcon ? (
-              <d-icon name='preview' size='12px' key={1} />
+              <d-icon name='preview-forbidden' size='12px' key={1} />
             ) : (
-              <d-icon name='preview-forbidden' size='12px' key={2} />
+              <d-icon name='preview' size='12px' key={2} />
             )}
           </div>
         )}
       </div>
-    )
+    );
   }
-})
+});

@@ -1,41 +1,41 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue';
 
-type BadgeStatusType = PropType<'danger' | 'warning' | 'waiting' | 'success' | 'info'>
-type BadgePositionType = PropType<'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'>
+export type BadgeStatusType = 'danger' | 'warning' | 'waiting' | 'success' | 'info' | 'common';
+export type BadgePositionType = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 
-const badgeStatusType = ['danger', 'warning', 'waiting', 'success', 'info']
-const badgePositionType = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
+const badgeStatusType = ['danger', 'warning', 'waiting', 'success', 'info', 'common'];
+const badgePositionType = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
 
 export const badgeProps = {
   count: {
-    type: [Number, String]
+    type: [Number, String],
   },
   maxCount: {
     type: Number,
-    default: 99
+    default: 99,
   },
   showDot: {
     type: Boolean,
-    default: false
+    default: false,
   },
   status: {
-    type: String as BadgeStatusType,
-    validator: (val: string) => badgeStatusType.includes(val)
+    type: String as PropType<BadgeStatusType>,
+    validator: (val: string): boolean => badgeStatusType.includes(val),
   },
-  badgePos: {
-    type: String as BadgePositionType,
+  position: {
+    type: String as PropType<BadgePositionType>,
     default: 'top-right',
-    validator: (val: string) => badgePositionType.includes(val)
+    validator: (val: string): boolean => badgePositionType.includes(val),
   },
-  offsetXY: {
-    type: Array
+  offset: {
+    type: Array as PropType<Array<number>>,
   },
   bgColor: {
-    type: String
+    type: String,
   },
   textColor: {
-    type: String
-  }
-}
+    type: String,
+  },
+};
 
-export type BadgeProps = ExtractPropTypes<typeof badgeProps>
+export type BadgeProps = ExtractPropTypes<typeof badgeProps>;

@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue';
 
 export const inputNumberProps = {
   placeholder: {
@@ -49,6 +49,6 @@ export const inputNumberProps = {
     type: Function as PropType<() => void>,
     default: undefined
   }
-} as const
+} as const;
 
-export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>
+export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>;

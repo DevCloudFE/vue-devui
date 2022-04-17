@@ -1,17 +1,15 @@
-import { App } from 'vue'
-import Pagination from './src/pagination'
+import { App } from 'vue';
+import Pagination from './src/pagination';
 
-Pagination.install = (app: App): void => {
-  app.component(Pagination.name, Pagination)
-}
+export * from './src/pagination-types';
 
-export { Pagination }
+export { Pagination };
 
 export default {
   title: 'Pagination 分页',
   category: '导航',
   status: '100%',
   install(app: App): void {
-    app.use(Pagination as any)
+    app.component(Pagination.name, Pagination);
   }
-}
+};

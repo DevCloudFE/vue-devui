@@ -1,5 +1,5 @@
-import { getPartName } from '../lib-entry/lib-entry'
-import { ComponentMeta } from './meta'
+import { getPartName } from '../lib-entry/lib-entry';
+import { ComponentMeta } from './meta';
 
 export default function genTestTemplate(meta: ComponentMeta) {
   return `\
@@ -11,5 +11,5 @@ describe('${meta.name} test', () => {
     \/\/ todo
   })
 })
-`
+`;
 }

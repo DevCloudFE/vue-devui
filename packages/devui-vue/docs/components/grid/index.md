@@ -1,7 +1,7 @@
 # Grid 栅格
 
 24栅格系统。
-### 何时使用
+#### 何时使用
 
 需要使用弹性布局时，并且需要适配不同的屏幕时，使用grid组件。
 
@@ -89,7 +89,7 @@
     <d-col :span="6" class="col-child">col-6</d-col>
     <d-col :span="6" class="col-child">col-6</d-col>
   </d-row>
-  <p>Justify bottom</p>
+  <p>Justify start</p>
   <d-row justify="start" class="docs-devui-row">
     <d-col :span="4" class="col-child">col-4</d-col>
     <d-col :span="4" class="col-child">col-4</d-col>

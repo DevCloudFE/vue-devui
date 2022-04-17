@@ -1,68 +1,58 @@
-import { provide, defineComponent, getCurrentInstance, computed, toRef } from 'vue';
-import { Table, TableProps, TablePropsTypes, TABLE_TOKEN } from './table.type';
-import { useTable } from './use-table';
+import { provide, defineComponent, getCurrentInstance, computed, toRef, ref, onMounted, nextTick } from 'vue';
+import { Table, TableProps, TablePropsTypes, TABLE_TOKEN, DefaultRow } from './table-types';
+import { useTable } from './composables/use-table';
 import { createStore } from './store';
-import ColGroup from './colgroup/colgroup';
-import TableHeader from './header/header';
-import TableBody from './body/body';
-
+import FixHeader from './components/fix-header';
+import NormalHeader from './components/normal-header';
+import { Loading } from '../../loading';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './table.scss';
 
+let tableIdInit = 1;
 
 export default defineComponent({
   name: 'DTable',
+  directives: {
+    dLoading: Loading,
+  },
   props: TableProps,
+  emits: ['sort-change'],
   setup(props: TablePropsTypes, ctx) {
-    const table = getCurrentInstance() as Table;
+    const table = getCurrentInstance() as Table<DefaultRow>;
     const store = createStore(toRef(props, 'data'));
+    const tableId = `devui-table_${tableIdInit++}`;
+    table.tableId = tableId;
     table.store = store;
     provide(TABLE_TOKEN, table);
-
     const { classes, style } = useTable(props);
-
     const isEmpty = computed(() => props.data.length === 0);
-
-    const fixHeaderCompo = computed(() => {
-      return (
-        <div class="devui-table-view">
-          <div style="overflow: hidden scroll;">
-            <table class={classes.value} cellpadding="0" cellspacing="0">
-              <ColGroup />
-              <TableHeader />
-            </table>
-          </div>
-          <div class="scroll-view">
-            <table class={classes.value} cellpadding="0" cellspacing="0">
-              <ColGroup />
-              {!isEmpty.value && <TableBody style="flex: 1" />}
-            </table>
-          </div>
-        </div>
-      );
-    });
-
-    const normalHeaderCompo = computed(() => {
-      return (
-        <table class={classes.value} cellpadding="0" cellspacing="0">
-          <ColGroup />
-          <TableHeader style="position: relative" />
-          {!isEmpty.value && <TableBody />}
-        </table>
-      )
-    });
+    const ns = useNamespace('table');
+    const hiddenColumns = ref(null);
+    table.hiddenColumns = hiddenColumns;
 
     ctx.expose({
       getCheckedRows() {
         return store.getCheckedRows();
-      }
+      },
+    });
+
+    onMounted(async () => {
+      await nextTick();
+      store.updateColumns();
     });
 
     return () => (
-      <div class="devui-table-wrapper" style={style.value} v-dLoading={props.showLoading}>
-        {ctx.slots.default()}
-        {props.fixHeader ? fixHeaderCompo.value : normalHeaderCompo.value}
-        {isEmpty.value && <div class="devui-table-empty">No Data</div>}
+      <div class={ns.b()} style={style.value} v-dLoading={props.showLoading}>
+        <div ref={hiddenColumns} class="hidden-columns">
+          {ctx.slots.default?.()}
+        </div>
+        {props.fixHeader ? (
+          <FixHeader classes={classes.value} is-empty={isEmpty.value} />
+        ) : (
+          <NormalHeader classes={classes.value} is-empty={isEmpty.value} />
+        )}
+        {isEmpty.value && <div class={ns.e('empty')}>No Data</div>}
       </div>
     );
-  }
+  },
 });

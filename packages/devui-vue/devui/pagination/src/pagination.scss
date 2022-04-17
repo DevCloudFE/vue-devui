@@ -1,6 +1,4 @@
-@import '../../style/theme/color';
-@import '../../style/theme/_corner';
-@import '../../style/core/_font';
+@import '../../styles-var/devui-var.scss';
 
 .devui-pagination {
   font-size: var(--devui-font-size, 12px);

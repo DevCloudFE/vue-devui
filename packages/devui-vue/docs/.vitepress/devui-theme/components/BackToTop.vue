@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { debounce } from 'lodash-es'
+import { debounce } from 'lodash'
 import { defineComponent, onMounted, computed, ref } from 'vue'
 export default defineComponent({
   name: 'BackToTop',
@@ -86,10 +86,17 @@ export default defineComponent({
   width: 22px;
   color: var(--devui-brand);
   z-index: 1;
+
+  &:hover {
+    color: var(--devui-brand-hover);
+  }
+
+  & svg {
+    width: 22px;
+    height: 22px;
+  }
 }
-.go-to-top:hover {
-  color: var(--devui-brand-hover);
-}
+
 @media (max-width: 959px) {
   .go-to-top {
     display: none;

@@ -6,6 +6,24 @@
   &.hover {
     box-shadow: none !important;
   }
+
+  .source {
+    .demo-spacing {
+      & > * {
+        margin: 0 8px 8px 0;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      &:last-child {
+        & > * {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 }
 
 .demo-block-control {
@@ -24,10 +42,26 @@
 .meta {
   border-top: solid 1px $devui-dividing-line !important;
   background-color: $devui-area !important;
+
+  .description {
+    border: solid 1px $devui-dividing-line !important;
+    color: $devui-text !important;
+    background-color: $devui-base-bg !important;
+  }
 }
 
-.description {
-  border: solid 1px $devui-dividing-line !important;
-  color: $devui-text !important;
-  background-color: $devui-base-bg !important;
+[class^=version-tag] {
+  display: inline-block;
+  padding: 0 4px;
+  line-height: 20px;
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+.version-tag-1 {
+  background-color: #3dcca6;
+}
+
+.version-tag-2 {
+  background-color: #f66f6a;
 }

@@ -1,9 +1,9 @@
-import { computed, defineComponent, toRefs, inject } from 'vue'
-import { AccordionMenuItem, AccordionMenuToggleEvent } from './accordion.type'
-import AccordionList from './accordion-list'
-import { accordionProps } from './accordion-types'
-import OpenIcon from './accordion-open-icon'
-import { getRootSlots } from '../src/utils'
+import { computed, defineComponent, toRefs, inject } from 'vue';
+import { AccordionMenuItem, AccordionMenuToggleEvent } from './accordion.type';
+import AccordionList from './accordion-list';
+import { accordionProps } from './accordion-types';
+import OpenIcon from './accordion-open-icon';
+import { getRootSlots } from '../src/utils';
 
 export default defineComponent({
   name: 'DAccordionMenu',
@@ -34,62 +34,62 @@ export default defineComponent({
       childrenKey,
       titleKey,
       menuItemTemplate
-    } = toRefs(props)
+    } = toRefs(props);
 
-    const rootSlots = getRootSlots()
-    const accordionCtx = inject('accordionContext') as any
+    const rootSlots = getRootSlots();
+    const accordionCtx = inject('accordionContext') as any;
 
-    let parentValue = parent.value
-    let deepValue = deepth.value
+    const parentValue = parent.value;
+    const deepValue = deepth.value;
 
     const toggle = (itemEvent: AccordionMenuToggleEvent) => {
-      accordionCtx.menuToggleFn(itemEvent)
-    }
+      accordionCtx.menuToggleFn(itemEvent);
+    };
 
     const hasActiveChildren = (item) => {
-      if (item[activeKey.value] === true) return true
+      if (item[activeKey.value] === true) {return true;}
       if (item[childrenKey.value]) {
-        return hasChildActive(item[childrenKey.value])
+        return hasChildActive(item[childrenKey.value]);
       }
-    }
+    };
     const hasChildActive = (arr) => {
-      let flag = false
-      if (!arr.length) return false
+      let flag = false;
+      if (!arr.length) {return false;}
       for (let i = 0; i < arr.length; i++) {
         if (arr[i][activeKey.value] === true) {
-          flag = true
-          break
+          flag = true;
+          break;
         }
         if (arr[i][childrenKey.value]) {
-          flag = hasChildActive(arr[i][childrenKey.value])
-          if (flag) break
+          flag = hasChildActive(arr[i][childrenKey.value]);
+          if (flag) {break;}
         }
       }
-      return flag
-    }
+      return flag;
+    };
 
     const keyOpen = computed(() => {
-      return item.value && item.value[openKey.value]
-    })
+      return item.value && item.value[openKey.value];
+    });
     const disabled = computed(() => {
-      return item.value && item.value[disabledKey.value]
-    })
+      return item.value && item.value[disabledKey.value];
+    });
     const title = computed(() => {
-      return item.value && item.value[titleKey.value]
-    })
+      return item.value && item.value[titleKey.value];
+    });
     const children = computed(() => {
-      return item.value && item.value[childrenKey.value]
-    })
+      return item.value && item.value[childrenKey.value];
+    });
 
     const childActived = computed(() => {
-      return hasActiveChildren(item.value)
-    })
+      return hasActiveChildren(item.value);
+    });
 
     const open = computed(() => {
       return keyOpen.value === undefined && autoOpenActiveMenu.value
         ? childActived.value
-        : keyOpen.value
-    })
+        : keyOpen.value;
+    });
 
     return () => {
       return (
@@ -145,7 +145,7 @@ export default defineComponent({
             ></AccordionList>
           </div>
         </>
-      )
-    }
+      );
+    };
   }
-})
+});
