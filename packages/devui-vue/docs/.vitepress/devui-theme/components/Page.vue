@@ -24,8 +24,10 @@ const contributors = computed(() => {
 
       <Content class="content" />
 
-      <div class="page-contributor-label">Contributors</div>
-      <PageContributor v-if="contributors && contributors.length > 0" :contributors="contributors" />
+      <div v-if="contributors && contributors.length > 0">
+        <div class="page-contributor-label">Contributors</div>
+        <PageContributor :contributors="contributors" />
+      </div>
 
       <PageFooter />
       <NextAndPrevLinks />

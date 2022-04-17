@@ -278,7 +278,6 @@ const becomeContributor = () => {
 
     .btn-become-contributor {
       margin-top: 1rem;
-      width: 80px;
     }
 
     .page-contributor {
