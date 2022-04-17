@@ -204,7 +204,7 @@ const becomeContributor = () => {
 
   <div class="container-contributors" v-if="enableHome">
     <div class="contributors-inner">
-      <h2>贡献者✨</h2>
+      <h2>✨贡献者✨</h2>
       <PageContributor
         v-if="contributors && contributors.length > 0"
         :contributors="contributors"
@@ -251,13 +251,13 @@ const becomeContributor = () => {
   }
 }
 
+// iPad/PC
 .container-contributors {
-  margin-top: 120px;
-  padding: 120px 0;
+  padding: 2rem 0;
   background: var(--devui-global-bg, #f3f6f8);
 
   .contributors-inner {
-    max-width: 544px;
+    max-width: 564px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -265,7 +265,8 @@ const becomeContributor = () => {
     flex-direction: column;
 
     h2 {
-      margin-bottom: 4rem;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
       text-align: center;
       font-size: 2rem;
       border: 0;
@@ -276,8 +277,74 @@ const becomeContributor = () => {
     }
 
     .btn-become-contributor {
-      margin-top: 2rem;
+      margin-top: 1rem;
       width: 80px;
+    }
+
+    .page-contributor {
+      padding: 0 20px;
+
+      & > a:nth-child(8n) > span {
+        margin: 0 !important;
+      }
+    }
+  }
+}
+
+// iPhone 6/7/8 Plus(414) Nexus 5X/6/6P(412)
+@media (max-width: 420px) {
+  .container-contributors .contributors-inner {
+    h2 {
+      font-size: 1.6rem;
+    }
+
+    .page-contributor {
+      & > a > span {
+        margin: 0 12px 8px 0 !important;
+
+        & > img, & svg {
+          width: 40px !important;
+          height: 40px !important;
+        }
+      }
+
+      & > a:nth-child(8n) > span {
+        margin: 0 12px 8px 0 !important;
+      }
+
+      & > a:nth-child(7n) > span {
+        margin: 0 !important;
+      }
+    }
+  }
+}
+
+// iPhone 6/7/8/X(375) Nexus 4/5(384/360)
+@media (max-width: 385px) {
+  .container-contributors .contributors-inner {
+    .page-contributor {
+      & > a:nth-child(7n) > span {
+        margin: 0 12px 8px 0 !important;
+      }
+
+      & > a:nth-child(6n) > span {
+        margin: 0 !important;
+      }
+    }
+  }
+}
+
+// iPhone 4/5/SE(320)
+@media (max-width: 330px) {
+  .container-contributors .contributors-inner {
+    .page-contributor {
+      & > a:nth-child(6n) > span {
+        margin: 0 12px 8px 0 !important;
+      }
+
+      & > a:nth-child(5n) > span {
+        margin: 0 !important;
+      }
     }
   }
 }
