@@ -42,26 +42,26 @@
 .meta {
   border-top: solid 1px $devui-dividing-line !important;
   background-color: $devui-area !important;
-}
 
-.description {
-  border: solid 1px $devui-dividing-line !important;
-  color: $devui-text !important;
-  background-color: $devui-base-bg !important;
+  .description {
+    border: solid 1px $devui-dividing-line !important;
+    color: $devui-text !important;
+    background-color: $devui-base-bg !important;
+  }
 }
 
 [class^=version-tag] {
   display: inline-block;
   padding: 0 4px;
   line-height: 20px;
-  color: #fff;
+  color: #ffffff;
   border-radius: 4px;
 }
 
 .version-tag-1 {
-  background-color: #3DCCA6;
+  background-color: #3dcca6;
 }
 
 .version-tag-2 {
-  background-color: #F66F6A;
+  background-color: #f66f6a;
 }
