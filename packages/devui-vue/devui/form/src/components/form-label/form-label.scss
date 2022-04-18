@@ -1,53 +1,54 @@
 .devui-form__label {
   align-self: flex-start;
 
-  & > span {
-    line-height: 28px;
+  &--vertical {
+    padding-bottom: 8px;
   }
 
-  .devui-form__label--required {
-    display: inline-flex;
-    align-items: center;
+  &--sm {
+    flex: 0 0 80px;
+  }
 
-    &::before {
-      content: '*';
-      color: red;
-      display: inline-block;
-      margin-right: 8px;
-      margin-left: -12px;
-    }
+  &--md {
+    flex: 0 0 100px;
+  }
+
+  &--lg {
+    flex: 0 0 150px;
+  }
+
+  &--start {
+    text-align: left;
+  }
+
+  &--center {
+    text-align: center;
+  }
+
+  &--end {
+    text-align: end;
   }
 }
 
-.devui-form__label--sm {
-  flex: 0 0 80px;
-}
+.devui-form__label--required {
+  display: inline-flex;
+  align-items: center;
+  line-height: 28px;
 
-.devui-form__label--md {
-  flex: 0 0 100px;
-}
-
-.devui-form__label--lg {
-  flex: 0 0 150px;
-}
-
-.devui-form__label--start {
-  text-align: left;
-}
-
-.devui-form__label--center {
-  text-align: center;
-}
-
-.devui-form__label--end {
-  text-align: end;
+  &::before {
+    content: '*';
+    color: red;
+    display: inline-block;
+    margin-right: 8px;
+    margin-left: -12px;
+  }
 }
 
 .devui-form__label-help {
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
-  margin-left: 10px;
+  top: -0.1em;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+  cursor: pointer;
 }

@@ -1,4 +1,4 @@
-import { defineComponent, provide, SetupContext } from 'vue';
+import { defineComponent, provide, reactive, SetupContext, toRefs } from 'vue';
 import mitt from 'mitt';
 import { formProps, FormProps, IFormItem, dFormEvents, FORM_TOKEN } from './form-types';
 import { EventBus } from './utils';
@@ -17,6 +17,7 @@ export default defineComponent({
         field.resetField();
       });
     };
+    const { data, layout, labelSize, labelAlign } = toRefs(props);
 
     formMitt.on(dFormEvents.addField, (field: any) => {
       if (field) {
@@ -30,17 +31,20 @@ export default defineComponent({
       }
     });
 
-    provide(FORM_TOKEN, {
-      formData: props.data,
-      formMitt,
-      labelData: {
-        layout: props.layout,
-        labelSize: props.labelSize,
-        labelAlign: props.labelAlign,
-      },
-      rules: props.rules,
-      messageShowType: 'popover',
-    });
+    provide(
+      FORM_TOKEN,
+      reactive({
+        formData: data,
+        formMitt,
+        labelData: {
+          layout: layout,
+          labelSize: labelSize,
+          labelAlign: labelAlign,
+        },
+        rules: props.rules,
+        messageShowType: 'popover',
+      })
+    );
 
     const onSubmit = (e) => {
       e.preventDefault();
