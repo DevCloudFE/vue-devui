@@ -1,22 +1,23 @@
 import type { CSSProperties, SetupContext } from 'vue';
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, ref, watch, toRefs } from 'vue';
 import { virtualListFllterProps } from '../virtual-list-types';
 import ResizeObserver from './resize-observer';
 
 const INIT_INNER_STYLE: CSSProperties = { display: 'flex', flexDirection: 'column' };
 
 export default defineComponent({
-  name: 'DVirtualListFllter',
+  name: 'DVirtualListFiller',
   props: virtualListFllterProps,
   setup(props, ctx: SetupContext) {
+    const { height, offset } = toRefs(props);
     const outerStyle = ref<CSSProperties>({});
     const innerStyle = ref<CSSProperties>(INIT_INNER_STYLE);
-    watch([() => props.height, () => props.offset], () => {
+    watch([() => height.value, () => offset.value], () => {
       if (props.offset !== undefined) {
-        outerStyle.value = { height: `${props.height}px`, position: 'relative', overflow: 'hidden' };
+        outerStyle.value = { height: `${height.value}px`, position: 'relative', overflow: 'hidden' };
         innerStyle.value = {
           ...innerStyle.value,
-          transform: `translateY(${props.offset}px)`,
+          transform: `translateY(${offset.value}px)`,
           position: 'absolute',
           left: 0,
           right: 0,
