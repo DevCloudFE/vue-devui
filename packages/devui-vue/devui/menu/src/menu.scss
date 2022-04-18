@@ -1,0 +1,423 @@
+@import '../../styles-var/devui-var.scss';
+@import './styles/clear.scss';
+
+$devui-menu-item-margin: 10px;
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 300ms ease;
+}
+
+.fade-leave-to {
+  display: none;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.devui-menu-icon + span {
+  margin-left: $devui-menu-item-margin;
+}
+
+.devui-menu-item-disabled,
+.devui-submenu-disabled {
+  color: $devui-menu-item-disabled !important;
+  cursor: not-allowed !important;
+}
+
+.devui-menu-item-disabled:hover,
+.devui-submenu-disabled:hover {
+  color: $devui-menu-item-disabled !important;
+  cursor: not-allowed !important;
+}
+
+.devui-sub-menu-disabled:hover {
+  span {
+    color: $devui-menu-item-disabled !important;
+  }
+}
+
+.horizontal {
+  display: flex;
+  box-sizing: border-box;
+  line-height: $devui-line-height-base;
+  background: $devui-menu-bg;
+  padding: 14px 20px;
+
+  .devui-menu-item {
+    display: flex;
+    position: relative;
+    box-sizing: content-box;
+    padding: 0 20px !important;
+    line-height: 24px;
+    cursor: pointer;
+  }
+
+  &.devui-menu-item {
+    position: relative;
+    box-sizing: content-box;
+    padding: 0 20px;
+    cursor: pointer;
+  }
+
+  .devui-menu-item::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 0;
+    width: auto;
+    height: 2px;
+  }
+
+  ::after {
+    transition: all 200ms $devui-animation-ease-in-out-smooth;
+    background: transparent;
+  }
+
+  .devui-menu-item-select,
+  .devui-menu-active-parent {
+    span,
+    a {
+      color: $devui-menu-item-select;
+    }
+
+    &::after {
+      display: block;
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 0;
+      width: auto;
+      height: 2px;
+      content: '';
+      opacity: 1;
+      background: $devui-brand;
+    }
+  }
+
+  .devui-menu-item:hover {
+    & span,
+    a {
+      color: $devui-menu-item-select;
+    }
+
+    &::after {
+      background: $devui-brand;
+    }
+  }
+
+  .devui-submenu {
+    margin: 0;
+    padding: 0;
+    position: relative;
+
+    div.devui-submenu-title {
+      padding: 0 20px;
+
+      span {
+        margin: 0;
+      }
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 0;
+      width: auto;
+      height: 2px;
+    }
+
+    .devui-menu-item-horizontal-wrapper {
+      transition: all 0.8s ease-in-out;
+      position: absolute;
+      margin-top: 10px;
+      padding: 0 !important;
+      max-height: 0;
+      overflow: hidden;
+      background: $devui-menu-bg;
+      opacity: 0;
+
+      .devui-menu-item {
+        margin-top: 5px;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      & span,
+      a {
+        color: $devui-menu-item-select;
+      }
+
+      &::after {
+        background: $devui-brand;
+      }
+
+      div.devui-menu-item-horizontal-wrapper {
+        opacity: 1;
+        visibility: visible;
+        max-height: calc(100vh - 100px);
+        padding: 10px 0 !important;
+        border-radius: 8px;
+
+        .devui-menu-item {
+          margin-top: 5px;
+        }
+      }
+    }
+  }
+}
+
+.vertical {
+  padding: 0;
+  transition: width 0.5s ease, padding 0.5s ease;
+  border-right: $devui-line 1px solid;
+  background: $devui-area !important;
+
+  li,
+  ul {
+    transition: height 800ms ease, max-height 400ms ease;
+  }
+
+  ::after {
+    transition: all 300ms ease-in-out;
+    background: transparent;
+  }
+
+  .layer_1 {
+    margin: 0 !important;
+  }
+
+  .layer_2 {
+    // 第一级子菜单
+    & > div.devui-submenu-title {
+      margin: 0 !important;
+      background: $devui-block;
+    }
+  }
+
+  li.devui-isCollapsed-item {
+    padding: 0;
+    margin: auto;
+  }
+
+  &.devui-menu-collapsed {
+    .devui-menu-icon {
+      margin: auto;
+    }
+
+    & ul li {
+      display: none !important;
+    }
+
+    .devui-submenu {
+      div.devui-submenu-title {
+        .devui-menu-icon {
+          margin: auto;
+        }
+      }
+    }
+  }
+
+  .devui-menu-item-vertical-wrapper {
+    padding-left: 0 !important;
+  }
+
+  .devui-menu-item {
+    width: 100%;
+    height: 40px;
+    flex-grow: 1;
+    line-height: 40px;
+    cursor: pointer;
+    color: $devui-menu-item;
+    background: $devui-block;
+    display: flex;
+
+    span:nth-child(2) {
+      // flex: auto;
+      text-align: left;
+    }
+  }
+
+  div {
+    display: flex;
+    flex: auto;
+  }
+
+  .devui-menu-item::after {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: scaleX(0);
+    content: '';
+    opacity: 1;
+    background: $devui-menu-item-selectBar;
+  }
+
+  .devui-menu-item-select {
+    background: $devui-primary-bg !important;
+    position: relative;
+
+    span,
+    a {
+      color: $devui-menu-item-select;
+    }
+
+    &::after {
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 4px;
+      content: '';
+      opacity: 1;
+      background: var(--devui-brand, #5e7ce0);
+      transform: scaleX(1);
+    }
+  }
+
+  .devui-submenu > div:hover {
+    span.devui-submenu-title-content {
+      color: $devui-menu-item-select;
+    }
+  }
+
+  .devui-menu-item:hover {
+    color: $devui-menu-item-select;
+  }
+
+  li.devui-menu-item,
+  div.devui-submenu-title {
+    white-space: nowrap;
+    overflow: hidden;
+
+    span:nth-child(2) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .devui-submenu-open {
+    & > div {
+      color: $devui-menu-item-select !important;
+    }
+
+    height: auto;
+
+    li,
+    ul {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    ul {
+      max-height: 100px;
+      overflow: hidden;
+    }
+  }
+
+  .devui-submenu-close {
+    & > div {
+      color: $devui-menu-item;
+    }
+
+    li {
+      height: 0;
+      opacity: 0;
+      visibility: hidden;
+      overflow-y: hidden;
+    }
+
+    ul {
+      max-height: 0;
+      overflow: hidden;
+    }
+  }
+
+  .devui-menu-item-isCollapsed {
+    width: fit-content;
+
+    .devui-menu-icon {
+      margin: auto;
+    }
+  }
+
+  // sub menu
+  ul.devui-submenu {
+    margin: 0;
+    padding: 0;
+
+    div.devui-submenu-title {
+      display: flex;
+      cursor: pointer;
+      width: 100%;
+      height: 40px;
+      margin: 4px 0;
+      line-height: 40px;
+      padding-left: 18px;
+      align-items: center;
+      color: $devui-menu-item;
+
+      &:nth-child(1) {
+        font-size: $devui-font-size-lg;
+      }
+
+      span.devui-submenu-title-content {
+        font-size: $devui-font-size-lg;
+        flex: auto;
+      }
+
+      span.devui-menu-icon {
+        text-align: center;
+      }
+    }
+
+    .devui-menu-item {
+      display: flex;
+
+      & > span {
+        flex: auto;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        transition: all 0.5s ease;
+        color: $devui-menu-item-sub;
+      }
+    }
+
+    .devui-menu-item:hover {
+      & > span {
+        color: $devui-menu-item-select;
+      }
+    }
+
+    .devui-menu-item-select {
+      * {
+        color: $devui-menu-item-select !important;
+      }
+    }
+  }
+
+  ul li ~ ul > div {
+    margin-top: 0 !important;
+  }
+
+  ul li {
+    background: $devui-area !important;
+  }
+}
