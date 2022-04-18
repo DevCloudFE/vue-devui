@@ -19,19 +19,19 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://github.com/asdlml6'
     },
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2582/7746958_kagol_1606652460.png!avatar100',
+      avatar: 'https://avatars.githubusercontent.com/u/9566362?v=4',
       homepage: 'https://github.com/kagol'
     },
   ],
   fullscreen: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/640/1920569_micd_1633943788.png!avatar100',
-      homepage: 'https://gitee.com/micd'
+      avatar: 'https://avatars.githubusercontent.com/u/20532893?v=4',
+      homepage: 'https://github.com/MICD0704'
     },
   ],
   icon: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2582/7746958_kagol_1606652460.png!avatar100',
+      avatar: 'https://avatars.githubusercontent.com/u/9566362?v=4',
       homepage: 'https://github.com/kagol',
     }
   ],
@@ -63,7 +63,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   search: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/615/1847969_laiweilun_1628090818.png!avatar100',
+      avatar: 'https://avatars.githubusercontent.com/u/29355875?v=4',
       homepage: 'https://github.com/SituC'
     },
   ],
@@ -75,7 +75,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   sticky: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2451/7354663_maizhiyuan_1647402812.png!avatar200',
+      avatar: '',
       homepage: 'https://gitee.com/maizhiyuan'
     },
   ],
@@ -105,7 +105,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   breadcrumb: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2528/7584294_Jecyu_1630023376.png!avatar100',
+      avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4?s=100',
       homepage: 'https://github.com/naluduo233'
     },
   ],
@@ -135,8 +135,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   'steps-guide': [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/765/2295523_pupulus_1647268902.png!avatar200',
-      homepage: 'https://gitee.com/pupulus'
+      avatar: 'https://avatars.githubusercontent.com/u/30283065?v=4?s=100',
+      homepage: 'https://github.com/NidusP'
     },
   ],
   tabs: [
@@ -149,7 +149,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   // 反馈
   alert: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/91681351?v=4',
       homepage: 'https://github.com/chressYu'
     },
     {
@@ -199,8 +199,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   result: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/727/2183498_icjs-cc_1647402518.png!avatar200',
-      homepage: 'https://gitee.com/icjs-cc'
+      avatar: 'https://avatars.githubusercontent.com/u/27618209?v=4',
+      homepage: 'https://github.com/icjs-cc'
     },
   ],
   tooltip: [
@@ -227,7 +227,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   cascader: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/615/1847969_laiweilun_1628090818.png!avatar100',
+      avatar: 'https://avatars.githubusercontent.com/u/29355875?v=4',
       homepage: 'https://github.com/SituC'
     },
   ],
@@ -255,7 +255,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   'date-picker-pro': [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2528/7584294_Jecyu_1630023376.png!avatar100',
+      avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4?s=100',
       homepage: 'https://github.com/naluduo233'
     },
     {
@@ -277,7 +277,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   input: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/615/1847969_laiweilun_1628090818.png!avatar100',
+      avatar: 'https://avatars.githubusercontent.com/u/29355875?v=4',
       homepage: 'https://github.com/SituC'
     },
   ],
@@ -299,13 +299,13 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://github.com/brenner8023'
     },
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2722/8168765_xuehongjie_1647269846.png!avatar100',
+      avatar: 'https://avatars.githubusercontent.com/u/22795131?v=4',
       homepage: 'https://github.com/xuehongjie'
     }
   ],
   select: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/3181/9545863_lookforwhat_1628521673.png!avatar200',
+      avatar: '',
       homepage: 'https://gitee.com/lookforwhat'
     },
   ],
@@ -321,7 +321,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://github.com/brenner8023'
     },
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/1826/5479448_vergil_lu_1626167392.png!avatar200',
+      avatar: '',
       homepage: 'https://gitee.com/vergil_lu'
     },
   ],
@@ -337,7 +337,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   textarea: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/1747/5243550_afterain_1635492436.png!avatar200',
+      avatar: '',
       homepage: 'https://gitee.com/afterain'
     },
   ],
@@ -383,13 +383,13 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://github.com/duqingyu'
     },
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/640/1920569_micd_1633943788.png!avatar200',
-      homepage: 'https://gitee.com/micd'
+      avatar: 'https://avatars.githubusercontent.com/u/20532893?v=4',
+      homepage: 'https://github.com/MICD0704'
     },
   ],
   card: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/1826/5479448_vergil_lu_1626167392.png!avatar200',
+      avatar: '',
       homepage: 'https://gitee.com/vergil_lu'
     },
   ],
@@ -419,7 +419,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   gantt: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/552/1658836_liuyingbin_1636725444.png!avatar200',
+      avatar: '',
       homepage: 'https://gitee.com/liuyingbin'
     },
   ],
@@ -447,7 +447,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   'quadrant-diagram': [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/3181/9544625_nowisfuture_1647414135.png!avatar200',
+      avatar: '',
       homepage: 'https://gitee.com/nowisfuture'
     },
   ],
@@ -483,7 +483,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://gitee.com/georgeleeo_jxd'
     },
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/757/2273663_weban_1611113629.png!avatar200',
+      avatar: '',
       homepage: 'https://gitee.com/weban'
     },
     {
@@ -505,7 +505,7 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   tree: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/3271/9815056_sufuwang_1633233452.png!avatar200',
+      avatar: 'https://avatars.githubusercontent.com/u/46395105?v=4',
       homepage: 'https://github.com/sufuwang'
     },
     {
@@ -513,11 +513,11 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://gitee.com/gxuud'
     },
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2582/7746958_kagol_1606652460.png!avatar100',
+      avatar: 'https://avatars.githubusercontent.com/u/9566362?v=4',
       homepage: 'https://github.com/kagol'
     },
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/87163017?v=4',
       homepage: 'https://github.com/faq0192'
     },
     {
@@ -529,19 +529,19 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   // 布局
   grid: [
     {
-      avatar: '',
+      avatar: 'https://avatars.githubusercontent.com/u/54826175?v=4',
       homepage: 'https://github.com/ming-bin'
     },
   ],
   layout: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/601/1804112_tanwenxue_1647402605.png!avatar200',
+      avatar: '',
       homepage: 'https://gitee.com/tanwenxue'
     },
   ],
   splitter: [
     {
-      avatar: 'https://portrait.gitee.com/uploads/avatars/user/2528/7584294_Jecyu_1630023376.png!avatar100',
+      avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4?s=100',
       homepage: 'https://github.com/naluduo233'
     },
   ],

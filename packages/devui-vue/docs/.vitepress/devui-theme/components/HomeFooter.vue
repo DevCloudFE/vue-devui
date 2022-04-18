@@ -12,7 +12,9 @@ const { frontmatter } = useData()
   </footer>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@devui/styles-var/devui-var';
+
 .footer {
   margin: 0 auto;
   max-width: 960px;
@@ -31,7 +33,7 @@ const { frontmatter } = useData()
 .home-hero + .footer .container,
 .home-features + .footer .container,
 .home-content + .footer .container {
-  border-top: 1px solid var(--c-divider);
+  /* border-top: 1px solid var(--c-divider); */
 }
 
 @media (min-width: 420px) {
@@ -45,6 +47,6 @@ const { frontmatter } = useData()
   text-align: center;
   line-height: 1.4;
   font-size: 0.9rem;
-  color: var(--c-text-light);
+  color: $devui-text-weak;
 }
 </style>

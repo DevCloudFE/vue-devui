@@ -47,11 +47,14 @@ describe('d-slider', () => {
   it('slider disabled work', () => {
     const wrapper = mount(DSlider, {
       props: {
-        disabled: true
+        disabled: true,
+        showInput: true
       }
     });
     const slider = wrapper.find('.devui-slider__runway');
+    const input = wrapper.find('input');
     expect(slider.classes()).toContain('disabled');
+    expect(input.attributes('disabled')).toBe('');
   });
 
   it('slider tipsRenderer work', () => {
@@ -73,5 +76,15 @@ describe('d-slider', () => {
     });
     const slider = wrapper.find('.devui-slider_popover-content');
     expect(slider.text()).toBe('10 bananas');
+  });
+
+  it('slider color work', () => {
+    const wrapper = mount(DSlider, {
+      props: {
+        color: 'red'
+      }
+    });
+    expect(wrapper.find('.devui-slider__bar').attributes('style').includes('background-color: red')).toBeTruthy();
+    expect(wrapper.find('.devui-slider__button').attributes('style').includes('border-color: red')).toBeTruthy();
   });
 });
