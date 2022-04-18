@@ -39,7 +39,7 @@ $devui-menu-item-margin: 10px;
   }
 }
 
-.horizontal {
+.devui-menu-horizontal {
   display: flex;
   box-sizing: border-box;
   line-height: $devui-line-height-base;
@@ -176,7 +176,7 @@ $devui-menu-item-margin: 10px;
   }
 }
 
-.vertical {
+.devui-menu-vertical {
   padding: 0;
   transition: width 0.5s ease, padding 0.5s ease;
   border-right: $devui-line 1px solid;

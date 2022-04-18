@@ -230,7 +230,7 @@ const changeDisabled = () => {
 | width               | String     | ''         | 用于控制菜单宽度           | [响应式参数](#响应式参数) |            |
 | collapsed           | Boolean    | false      | 用于决定菜单是否收起       | [收缩面板](#收缩面板)     |            |
 | collapsed-indent    | Number     | 24         | 收起时图表距离菜单的距离   | /                         |            |
-| indent-size         | indentSize | 24         | 未收起时二级菜单的缩进大小 | /                         |            |
+| indent-size         | Number | 24         | 未收起时二级菜单的缩进大小 | /                         |            |
 | multiple            | Boolean    | false      | 是否可以多选               | /                         |            |
 | mode                | menuMode   | 'vertical' | 菜单类型                   | [基本用法](#基本用法)     |            |
 | open-keys           | Array      | []         | 默认展开的子菜单 key 值    | [默认展](#默认展开)       |            |

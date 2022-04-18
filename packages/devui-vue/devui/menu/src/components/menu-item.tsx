@@ -1,4 +1,4 @@
-import { changeKey } from '../hooks/Layers';
+import { changeKey } from '../composables/Layers';
 import { defineComponent,
   getCurrentInstance,
   onMounted,
@@ -10,9 +10,9 @@ import { defineComponent,
   reactive,
   toRefs,
 } from "vue";
-import { MenuItemProps, menuItemProps } from "../types/menu-item-type";
-import { useInitSelect } from '../hooks/initSelect';
-import { addActiveParent } from '../hooks/addActiveParent';
+import { MenuItemProps, menuItemProps } from "../types/menu-item-types";
+import { useInitSelect } from '../composables/initSelect';
+import { addActiveParent } from '../composables/addActiveParent';
 
 
 export default defineComponent({
