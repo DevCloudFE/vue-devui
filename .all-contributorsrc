@@ -363,6 +363,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Merlin218",
+      "name": "Merlin218",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61051874?v=4",
+      "profile": "https://www.merlin218.top/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 10,
