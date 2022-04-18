@@ -51,14 +51,24 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-new-tree :data="data" check></d-new-tree>
+  <div class="flex flex-row" style="height: 28px;">
+    <label class="flex items-center mr-xl"><span class="inline-block mr-xs">开启勾选</span><d-switch v-model:checked="openCheck"></d-switch></label>
+    <d-radio-group v-if="openCheck" v-model="currentStrategy" direction="row">
+      <d-radio v-for="strategy of checkStrategy" :key="strategy" :value="strategy">{{ strategy }}</d-radio>
+    </d-radio-group>
+  </div>
+  <d-new-tree :data="data" :check="currentStrategy"></d-new-tree>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   setup() {
+    const openCheck = ref(true);
+    const checkStrategy = ref(['both', 'downward', 'upward', 'none']);
+    const currentStrategy = ref('both');
+
     const data = ref([
       {
         label: 'Parent node 1',
@@ -75,9 +85,37 @@ export default defineComponent({
       },
       { label: 'Leaf node 2' }
     ]);
+
+    watch(openCheck, (newVal) => {
+      if (newVal === false) {
+        currentStrategy.value = false;
+      } else {
+        currentStrategy.value = 'both';
+
+        data.value = [
+          {
+            label: 'Parent node 1',
+            children: [
+              {
+                label: 'Parent node 1-1',
+                children: [
+                  { label: 'Leaf node 1-1-1' },
+                  { label: 'Leaf node 1-1-2' }
+                ]
+              },
+              { label: 'Leaf node 1-2' }
+            ]
+          },
+          { label: 'Leaf node 2' }
+        ];
+      }
+    });
     
     return {
-      data
+      data,
+      openCheck,
+      checkStrategy,
+      currentStrategy,
     }
   }
 })
