@@ -100,7 +100,7 @@ export default defineComponent({
     const renderShowInput = () => {
       return props.showInput ? (
         <div class='devui-input__out-wrap'>
-          <input onInput={handleOnInput} value={inputValue.value + ''}></input>
+          <input onInput={handleOnInput} value={inputValue.value + ''} disabled={props.disabled}></input>
         </div>
       ) : (
         ''
