@@ -47,11 +47,14 @@ describe('d-slider', () => {
   it('slider disabled work', () => {
     const wrapper = mount(DSlider, {
       props: {
-        disabled: true
+        disabled: true,
+        showInput: true
       }
     });
     const slider = wrapper.find('.devui-slider__runway');
+    const input = wrapper.find('input');
     expect(slider.classes()).toContain('disabled');
+    expect(input.attributes('disabled')).toBe('');
   });
 
   it('slider tipsRenderer work', () => {
