@@ -15,7 +15,7 @@ export default function useTreeNode(data: ComputedRef<IInnerTreeNode>) {
     !data.value?.isLeaf && data.value?.expanded && 'devui-tree-node__vline',
   ]);
   const nodeVLineStyle = computed(() => {return {
-    height: `${NODE_HEIGHT * (getChildren(data.value, true).length - 1) + NODE_HEIGHT / 2 + 1}px`,
+    height: `${NODE_HEIGHT * (getChildren(data.value, { expanded: true }).length - 1) + NODE_HEIGHT / 2 + 1}px`,
     left: `${NODE_INDENT * (data.value?.level - 1) + 9}px`,
     top: `${NODE_HEIGHT}px`,
   }});
