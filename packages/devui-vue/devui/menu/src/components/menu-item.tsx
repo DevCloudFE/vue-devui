@@ -1,4 +1,4 @@
-import { changeKey } from '../composables/Layers';
+import { changeKey } from '../composables/layer-composables';
 import { defineComponent,
   getCurrentInstance,
   onMounted,
@@ -11,8 +11,8 @@ import { defineComponent,
   toRefs,
 } from "vue";
 import { MenuItemProps, menuItemProps } from "../types/menu-item-types";
-import { useInitSelect } from '../composables/initSelect';
-import { addActiveParent } from '../composables/addActiveParent';
+import { useInitSelect } from '../composables/init-select';
+import { addActiveParent } from '../composables/add-active-parent';
 
 
 export default defineComponent({
