@@ -26,13 +26,17 @@ export interface IInnerTreeNode extends ITreeNode {
 export type valueof<T> = T[keyof T];
 
 export interface IUseCore {
-  getLevel: (node: ITreeNode) => number;
-  getChildren: (node: ITreeNode, expanded: boolean) => IInnerTreeNode[];
+  getLevel: (node: IInnerTreeNode) => number;
+  getChildren: (node: IInnerTreeNode, config: {
+    expanded: boolean;
+    recursive: boolean;
+  }) => IInnerTreeNode[];
+  getParent: (node: IInnerTreeNode) => IInnerTreeNode;
   getExpendedTree: () => ComputedRef<IInnerTreeNode[]>;
-  getIndex: (node: ITreeNode) => number;
-  getNode: (node: ITreeNode) => IInnerTreeNode;
+  getIndex: (node: IInnerTreeNode) => number;
+  getNode: (node: IInnerTreeNode) => IInnerTreeNode;
   setNodeValue: (node: IInnerTreeNode, key: keyof IInnerTreeNode, value: valueof<IInnerTreeNode>) => void;
-  setTree: (newTree: ITreeNode[]) => void;
+  setTree: (newTree: IInnerTreeNode[]) => void;
 }
 
 export interface IUseCheck {

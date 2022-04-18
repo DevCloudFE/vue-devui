@@ -1,4 +1,4 @@
-import { defineComponent, inject, PropType, renderSlot, toRefs, useSlots } from 'vue';
+import { computed, defineComponent, inject, PropType, renderSlot, toRefs, useSlots } from 'vue';
 import { NODE_HEIGHT, USE_TREE_TOKEN } from '../const';
 import { IInnerTreeNode } from '../core/use-tree-types';
 import DTreeNodeToggle from './tree-node-toggle';
@@ -19,7 +19,7 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const { data, check } = toRefs(props);
-    const { toggleSelectNode, toggleCheckNode, toggleNode } = inject(USE_TREE_TOKEN);
+    const { toggleSelectNode, toggleCheckNode, toggleNode, getChildren } = inject(USE_TREE_TOKEN);
 
     const {
       nodeClass,
@@ -29,6 +29,12 @@ export default defineComponent({
       nodeVLineStyle,
       nodeHLineClass,
     } = useTreeNode(data);
+
+    const halfChecked = computed(() => {
+      const children = getChildren(data.value);
+      const checkedChildren = children.filter((item: IInnerTreeNode) => item.checked);
+      return checkedChildren.length > 0 && checkedChildren.length < children.length;
+    });
 
     return () => {
       return (
@@ -42,13 +48,17 @@ export default defineComponent({
               : <DTreeNodeToggle data={data.value} />
             }
             <div class="devui-tree-node__content--value-wrapper" style={{ height: `${NODE_HEIGHT}px`}}>
-              { check.value && <Checkbox
-                key={data.value?.id}
-                disabled={data.value?.disableCheck}
-                modelValue={data.value?.checked}
-                onUpdate:modelValue={() => { toggleCheckNode(data.value); }}
-                onClick={(event: MouseEvent) => { event.stopPropagation(); }}
-              /> }
+              {
+                check.value &&
+                <Checkbox
+                  key={data.value?.id}
+                  disabled={data.value?.disableCheck}
+                  halfchecked={halfChecked.value}
+                  modelValue={data.value.checked}
+                  onUpdate:modelValue={() => { toggleCheckNode(data.value); }}
+                  onClick={(event: MouseEvent) => { event.stopPropagation(); }}
+                />
+              }
               {
                 slots.default
                 ? renderSlot(useSlots(), 'default', { nodeData: data })
