@@ -1,9 +1,11 @@
-import { Ref } from 'vue';
+import { ref, Ref } from 'vue';
 import { CheckStrategy, IInnerTreeNode, IUseCore } from './use-tree-types';
 
-export default function(options?: {
+export default function(options?: Ref<{
   checkStrategy: CheckStrategy
-}) {
+}> = ref({
+  checkStrategy: 'both'
+})) {
   return function useCheck(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
     const { setNodeValue, getNode, getChildren, getParent } = core;
 
@@ -45,13 +47,21 @@ export default function(options?: {
     const toggleCheckNode = (node: IInnerTreeNode): void => {
       if (getNode(node).checked) {
         setNodeValue(node, 'checked', false);
-        getChildren(node).forEach(item => setNodeValue(item, 'checked', false));
+
+        if (['downward', 'both'].includes(options.value.checkStrategy)) {
+          getChildren(node).forEach(item => setNodeValue(item, 'checked', false));
+        }
       } else {
         setNodeValue(node, 'checked', true);
-        getChildren(node).forEach(item => setNodeValue(item, 'checked', true));
+
+        if (['downward', 'both'].includes(options.value.checkStrategy)) {
+          getChildren(node).forEach(item => setNodeValue(item, 'checked', true));
+        }
       }
 
-      controlParentNodeChecked(node);
+      if (['upward', 'both'].includes(options.value.checkStrategy)) {
+        controlParentNodeChecked(node);
+      }
     }
 
     return {
