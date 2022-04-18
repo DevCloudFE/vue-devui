@@ -14,62 +14,67 @@
 <template>
   <d-form ref="dFormBasic" :data="formModel" @submit="onSubmitForm">
     <d-form-item field="name">
-      <d-form-label>姓名</d-form-label>
+      <d-form-label>Name</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.name" />
       </d-form-control>
     </d-form-item>
-    <d-form-item field="age">
-      <d-form-label>年龄</d-form-label>
+    <d-form-item field="description">
+      <d-form-label>Description</d-form-label>
       <d-form-control>
-        <d-input v-model="formModel.age" />
+        <d-textarea v-model:value="formModel.description" />
       </d-form-control>
     </d-form-item>
-    <d-form-item field="city">
-      <d-form-label>城市</d-form-label>
+    <d-form-item field="select">
+      <d-form-label>Select</d-form-label>
       <d-form-control>
-        <d-select v-model="formModel.city" :options="selectOptions" />
+        <d-select v-model="formModel.select" :options="selectOptions" />
       </d-form-control>
     </d-form-item>
-    <d-form-item field="loveFruits">
-      <d-form-label>喜欢的水果</d-form-label>
+    <d-form-item field="tags">
+      <d-form-label>Tags</d-form-label>
       <d-form-control>
         <d-tag-input
-          v-model:tags="formModel.loveFruits"
-          v-model:suggestionList="formModel.suggestionList"
+          v-model:tags="formModel.tags"
+          v-model:suggestionList="tagLists"
           display-property="name"
-          placeholder="请输入喜欢的水果"
+          placeholder="Tags"
           no-data="暂无数据"
         ></d-tag-input>
       </d-form-control>
     </d-form-item>
-    <d-form-item field="sex">
-      <d-form-label>性别</d-form-label>
+    <d-form-item field="radio">
+      <d-form-label>Radio</d-form-label>
       <d-form-control>
-        <d-radio v-model="formModel.sex" value="0">男</d-radio>
-        <d-radio v-model="formModel.sex" value="1">女</d-radio>
+        <d-radio-group direction="row" v-model="formModel.radio">
+          <d-radio value="0">Manual execution</d-radio>
+          <d-radio value="1">Daily execution</d-radio>
+          <d-radio value="2">Weekly execution</d-radio>
+        </d-radio-group>
       </d-form-control>
     </d-form-item>
-    <d-form-item field="workOn">
-      <d-form-label>下班了吗</d-form-label>
+    <d-form-item field="switch">
+      <d-form-label>Switch</d-form-label>
       <d-form-control>
-        <d-switch v-model:checked="formModel.workOn"></d-switch>
+        <d-switch v-model:checked="formModel.switch"></d-switch>
       </d-form-control>
     </d-form-item>
-    <d-form-item field="interestedDomain">
-      <d-form-label>兴趣领域</d-form-label>
+    <d-form-item field="executionDay">
+      <d-form-label>Execution day</d-form-label>
       <d-form-control>
-        <d-checkbox-group v-model="formModel.interestedDomain" label="兴趣领域">
-          <d-checkbox label="前端" value="frontend" />
-          <d-checkbox label="后端" value="backend" />
-          <d-checkbox label="移动端" value="mobileend" />
-          <d-checkbox label="人工智能" value="ai" />
-          <d-checkbox label="算法" value="algorithm" />
+        <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
+          <d-checkbox label="Mon" value="Mon" />
+          <d-checkbox label="Tue" value="Tue" />
+          <d-checkbox label="Wed" value="Wed" />
+          <d-checkbox label="Thur" value="Thur" />
+          <d-checkbox label="Fri" value="Fri" />
+          <d-checkbox label="Sat" value="Sat" />
+          <d-checkbox label="Sun" value="Sun" />
         </d-checkbox-group>
       </d-form-control>
     </d-form-item>
     <d-form-operation class="form-demo-form-operation">
-      <d-button type="submit" class="form-demo-btn">提交</d-button>
+      <d-button variant="solid" type="submit">提交</d-button>
       <d-button @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
@@ -82,16 +87,16 @@ export default defineComponent({
   setup(props, ctx) {
     const dFormBasic = ref(null);
     let formModel = reactive({
-      name: 'AlanLee',
-      age: '24',
-      city: '深圳',
-      loveFruits: [{ name: '苹果' }],
-      suggestionList: [{ name: '苹果' }, { name: '西瓜' }, { name: '桃子' }],
-      sex: '0',
-      workOn: true,
-      interestedDomain: ['frontend'],
+      name: '',
+      description: '',
+      select: 'Options2',
+      tags: [{ name: 'Options1' }],
+      radio: '0',
+      switch: true,
+      executionDay: [],
     });
-    const selectOptions = reactive(['北京', '上海', '广州', '深圳']);
+    const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
+    const tagLists = [{ name: 'Options1' }, { name: 'Options2' }, { name: 'Options3' }];
     const resetForm = () => {
       console.log('formData reset before', dFormBasic.value.formData);
       dFormBasic.value.resetFormFields();
@@ -104,6 +109,7 @@ export default defineComponent({
       dFormBasic,
       formModel,
       selectOptions,
+      tagLists,
       resetForm,
       onSubmitForm,
     };
@@ -112,400 +118,124 @@ export default defineComponent({
 </script>
 
 <style>
-.form-demo-form-operation {
-  display: flex;
-  align-items: center;
-}
-.form-demo-btn {
-  margin-right: 10px;
+.form-demo-form-operation > * {
+  margin-right: 8px;
 }
 </style>
 ```
 
 :::
 
-### 横向排列
+### 垂直排列
 
-Label 左右布局方式。
-
-:::demo
+:::demo 设置`layout`参数为`vertical`可启用垂直布局，即`label`在输入控件的上方。
 
 ```vue
 <template>
-  <d-form ref="dFormHorizontal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
+  <d-form ref="dFormVertical" layout="vertical" :data="formModel" @submit="onSubmitForm">
     <d-form-item field="name">
-      <d-form-label required>姓名</d-form-label>
+      <d-form-label>Name</d-form-label>
       <d-form-control>
         <d-input v-model="formModel.name" />
       </d-form-control>
     </d-form-item>
-    <d-form-item field="age">
-      <d-form-label>年龄</d-form-label>
+    <d-form-item field="description">
+      <d-form-label>Description</d-form-label>
       <d-form-control>
-        <d-input v-model="formModel.age" />
+        <d-textarea v-model:value="formModel.description" />
       </d-form-control>
     </d-form-item>
-    <d-form-item field="city">
-      <d-form-label>城市</d-form-label>
+    <d-form-item field="select">
+      <d-form-label>Select</d-form-label>
       <d-form-control>
-        <d-select v-model="formModel.city" :options="selectOptions" />
+        <d-select v-model="formModel.select" :options="selectOptions" />
       </d-form-control>
     </d-form-item>
-    <d-form-item field="loveFruits">
-      <d-form-label>喜欢的水果</d-form-label>
+    <d-form-item field="tags">
+      <d-form-label>Tags</d-form-label>
       <d-form-control>
         <d-tag-input
-          v-model:tags="formModel.loveFruits"
-          v-model:suggestionList="formModel.suggestionList"
+          v-model:tags="formModel.tags"
+          v-model:suggestionList="tagLists"
           display-property="name"
-          placeholder="请输入喜欢的水果"
+          placeholder="Tags"
           no-data="暂无数据"
         ></d-tag-input>
       </d-form-control>
     </d-form-item>
-    <d-form-item field="sex">
-      <d-form-label>性别</d-form-label>
+    <d-form-item field="radio">
+      <d-form-label>Radio</d-form-label>
       <d-form-control>
-        <d-radio v-model="formModel.sex" value="0">男</d-radio>
-        <d-radio v-model="formModel.sex" value="1">女</d-radio>
+        <d-radio-group direction="row" v-model="formModel.radio">
+          <d-radio value="0">Manual execution</d-radio>
+          <d-radio value="1">Daily execution</d-radio>
+          <d-radio value="2">Weekly execution</d-radio>
+        </d-radio-group>
       </d-form-control>
     </d-form-item>
-    <d-form-item field="workOn">
-      <d-form-label>下班了吗</d-form-label>
+    <d-form-item field="switch">
+      <d-form-label>Switch</d-form-label>
       <d-form-control>
-        <d-switch v-model:checked="formModel.workOn"></d-switch>
+        <d-switch v-model:checked="formModel.switch"></d-switch>
       </d-form-control>
     </d-form-item>
-    <d-form-item field="interestedDomain">
-      <d-form-label>兴趣领域</d-form-label>
+    <d-form-item field="executionDay">
+      <d-form-label>Execution day</d-form-label>
       <d-form-control>
-        <d-checkbox-group v-model="formModel.interestedDomain" label="兴趣领域">
-          <d-checkbox label="前端" value="frontend" />
-          <d-checkbox label="后端" value="backend" />
-          <d-checkbox label="移动端" value="mobileend" />
-          <d-checkbox label="人工智能" value="ai" />
-          <d-checkbox label="算法" value="algorithm" />
+        <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
+          <d-checkbox label="Mon" value="Mon" />
+          <d-checkbox label="Tue" value="Tue" />
+          <d-checkbox label="Wed" value="Wed" />
+          <d-checkbox label="Thur" value="Thur" />
+          <d-checkbox label="Fri" value="Fri" />
+          <d-checkbox label="Sat" value="Sat" />
+          <d-checkbox label="Sun" value="Sun" />
         </d-checkbox-group>
       </d-form-control>
     </d-form-item>
     <d-form-operation class="form-demo-form-operation">
-      <d-button type="submit" class="form-demo-form-demo-demo-btn">提交</d-button>
+      <d-button variant="solid" type="submit">提交</d-button>
       <d-button @click="resetForm">重置</d-button>
     </d-form-operation>
   </d-form>
 </template>
 
 <script>
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, reactive, ref, nextTick } from 'vue';
 
 export default defineComponent({
   setup(props, ctx) {
-    const dFormHorizontal = ref(null);
+    const dFormVertical = ref(null);
     let formModel = reactive({
-      name: 'AlanLee',
-      age: '24',
-      city: '深圳',
-      loveFruits: [{ name: '苹果' }],
-      suggestionList: [{ name: '苹果' }, { name: '西瓜' }, { name: '桃子' }],
-      sex: '0',
-      workOn: true,
-      interestedDomain: ['frontend'],
+      name: '',
+      description: '',
+      select: 'Options2',
+      tags: [{ name: 'Options1' }],
+      radio: '0',
+      switch: true,
+      executionDay: [],
     });
-    const selectOptions = reactive(['北京', '上海', '广州', '深圳']);
+    const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
+    const tagLists = [{ name: 'Options1' }, { name: 'Options2' }, { name: 'Options3' }];
     const resetForm = () => {
-      console.log('dFormHorizontal', dFormHorizontal.value);
-      dFormHorizontal.value.resetFormFields();
+      console.log('formData reset before', dFormVertical.value.formData);
+      dFormVertical.value.resetFormFields();
+      console.log('formData reset after', dFormVertical.value.formData);
     };
     const onSubmitForm = () => {
       console.log('onSubmitForm formModel', formModel);
     };
     return {
-      dFormHorizontal,
+      dFormVertical,
       formModel,
       selectOptions,
+      tagLists,
       resetForm,
       onSubmitForm,
     };
   },
 });
 </script>
-
-<style>
-.form-demo-form-operation {
-  display: flex;
-  align-items: center;
-}
-.form-demo-form-demo-demo-btn {
-  margin-right: 10px;
-}
-</style>
-```
-
-:::
-
-### 弹框表单
-
-> todo <br>
-> 待替换为 Modal 组件
-
-弹框表单，弹框建议是 400px，550px，700px，900px，建议宽高比是 16: 9、3: 2。
-
-:::demo
-
-```vue
-<template>
-  <d-button @click="openModal">打开弹窗</d-button>
-  <div class="form-demo-modal" v-show="showModal" @click="closeModal">
-    <div class="form-demo-modal-content">
-      <d-form ref="dFormModal" :formData="formModel" layout="horizontal" labelSize="lg" @submit="onSubmitForm">
-        <d-form-item field="name">
-          <d-form-label required>姓名</d-form-label>
-          <d-form-control>
-            <d-input v-model="formModel.name" />
-          </d-form-control>
-        </d-form-item>
-        <d-form-item field="age">
-          <d-form-label>年龄</d-form-label>
-          <d-form-control>
-            <d-input v-model="formModel.age" />
-          </d-form-control>
-        </d-form-item>
-        <d-form-item field="city">
-          <d-form-label>城市</d-form-label>
-          <d-form-control>
-            <d-select v-model="formModel.city" :options="selectOptions" />
-          </d-form-control>
-        </d-form-item>
-        <d-form-item field="loveFruits">
-          <d-form-label>喜欢的水果</d-form-label>
-          <d-form-control>
-            <d-tag-input
-              v-model:tags="formModel.loveFruits"
-              v-model:suggestionList="formModel.suggestionList"
-              display-property="name"
-              placeholder="请输入喜欢的水果"
-              no-data="暂无数据"
-            ></d-tag-input>
-          </d-form-control>
-        </d-form-item>
-        <d-form-item field="sex">
-          <d-form-label>性别</d-form-label>
-          <d-form-control>
-            <d-radio v-model="formModel.sex" value="0">男</d-radio>
-            <d-radio v-model="formModel.sex" value="1">女</d-radio>
-          </d-form-control>
-        </d-form-item>
-        <d-form-item field="workOn">
-          <d-form-label>下班了吗</d-form-label>
-          <d-form-control>
-            <d-switch v-model:checked="formModel.workOn"></d-switch>
-          </d-form-control>
-        </d-form-item>
-        <d-form-item field="interestedDomain">
-          <d-form-label>兴趣领域</d-form-label>
-          <d-form-control>
-            <d-checkbox-group v-model="formModel.interestedDomain" label="兴趣领域">
-              <d-checkbox label="前端" value="frontend" />
-              <d-checkbox label="后端" value="backend" />
-              <d-checkbox label="移动端" value="mobileend" />
-              <d-checkbox label="人工智能" value="ai" />
-              <d-checkbox label="算法" value="algorithm" />
-            </d-checkbox-group>
-          </d-form-control>
-        </d-form-item>
-        <d-form-operation class="form-demo-form-operation">
-          <d-button type="submit" class="form-demo-form-demo-demo-btn">提交</d-button>
-          <d-button @click="resetForm">重置</d-button>
-        </d-form-operation>
-      </d-form>
-    </div>
-  </div>
-</template>
-
-<script>
-import { defineComponent, reactive, ref } from 'vue';
-
-export default defineComponent({
-  setup(props, ctx) {
-    const dFormModal = ref(null);
-    let formModel = reactive({
-      name: 'AlanLee',
-      age: '24',
-      city: '深圳',
-      loveFruits: [{ name: '苹果' }],
-      suggestionList: [{ name: '苹果' }, { name: '西瓜' }, { name: '桃子' }],
-      sex: '0',
-      workOn: true,
-      interestedDomain: ['frontend'],
-    });
-    const selectOptions = reactive(['北京', '上海', '广州', '深圳']);
-    const resetForm = () => {
-      console.log('dFormModal', dFormModal.value);
-      dFormModal.value.resetFormFields();
-    };
-    const onSubmitForm = () => {
-      console.log('onSubmitForm formModel', formModel);
-    };
-    const showModal = ref(false);
-    const openModal = () => {
-      showModal.value = true;
-    };
-    const closeModal = () => {
-      showModal.value = false;
-    };
-    return {
-      dFormModal,
-      formModel,
-      selectOptions,
-      resetForm,
-      onSubmitForm,
-      showModal,
-      openModal,
-      closeModal,
-    };
-  },
-});
-</script>
-
-<style>
-.form-demo-form-operation {
-  display: flex;
-  align-items: center;
-}
-.form-demo-form-demo-demo-btn {
-  margin-right: 10px;
-}
-
-.form-demo-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 10000;
-  margin: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.form-demo-modal-content {
-  background-color: #fff;
-  width: 40vw;
-  padding: 20px;
-}
-</style>
-```
-
-:::
-
-### 多列表单
-
-多列表单。layout 的属性为`columns`。
-
-:::demo
-
-```vue
-<template>
-  <d-form ref="dFormColumn" layout="columns" :formData="formModel" @submit="onSubmitForm">
-    <d-form-item field="name" v-for="item in 6" :key="item" class="column-item">
-      <d-form-label required hasHelp>姓名</d-form-label>
-      <d-form-control>
-        <d-input />
-      </d-form-control>
-    </d-form-item>
-    <d-form-item field="loveFruits" class="column-item">
-      <d-form-label>喜欢的水果</d-form-label>
-      <d-form-control>
-        <d-tag-input
-          v-model:tags="formModel.loveFruits"
-          v-model:suggestionList="formModel.suggestionList"
-          display-property="name"
-          placeholder="请输入喜欢的水果"
-          no-data="暂无数据"
-        ></d-tag-input>
-      </d-form-control>
-    </d-form-item>
-    <d-form-item field="sex" class="column-item">
-      <d-form-label>性别</d-form-label>
-      <d-form-control>
-        <d-radio v-model="formModel.sex" value="0">男</d-radio>
-        <d-radio v-model="formModel.sex" value="1">女</d-radio>
-      </d-form-control>
-    </d-form-item>
-    <d-form-item field="goOffWork" class="column-item">
-      <d-form-label>下班了吗</d-form-label>
-      <d-form-control>
-        <d-switch v-model:checked="formModel.workOn"></d-switch>
-      </d-form-control>
-    </d-form-item>
-    <d-form-item field="interestedDomain" class="column-item">
-      <d-form-label>兴趣领域</d-form-label>
-      <d-form-control>
-        <d-checkbox-group v-model="formModel.interestedDomain" label="兴趣领域">
-          <d-checkbox label="前端" value="frontend" />
-          <d-checkbox label="后端" value="backend" />
-          <d-checkbox label="移动端" value="mobileend" />
-          <d-checkbox label="人工智能" value="ai" />
-          <d-checkbox label="算法" value="algorithm" />
-        </d-checkbox-group>
-      </d-form-control>
-    </d-form-item>
-
-    <d-form-operation class="form-demo-form-operation">
-      <d-button type="submit" class="form-demo-form-demo-demo-btn">提交</d-button>
-      <d-button @click="resetForm">重置</d-button>
-    </d-form-operation>
-  </d-form>
-</template>
-
-<script>
-import { defineComponent, reactive, ref } from 'vue';
-
-export default defineComponent({
-  setup(props, ctx) {
-    const dFormColumn = ref(null);
-    let formModel = reactive({
-      name: 'AlanLee',
-      age: '24',
-      city: '深圳',
-      loveFruits: [{ name: '苹果' }],
-      suggestionList: [{ name: '苹果' }, { name: '西瓜' }, { name: '桃子' }],
-      sex: '0',
-      workOn: true,
-      interestedDomain: ['frontend'],
-    });
-    const selectOptions = reactive(['北京', '上海', '广州', '深圳']);
-    const resetForm = () => {
-      console.log('dFormColumn', dFormColumn.value);
-      dFormColumn.value.resetFormFields();
-    };
-    const onSubmitForm = () => {
-      console.log('onSubmitForm formModel', formModel);
-    };
-    return {
-      dFormColumn,
-      formModel,
-      selectOptions,
-      resetForm,
-      onSubmitForm,
-    };
-  },
-});
-</script>
-
-<style>
-.form-demo-form-operation {
-  display: flex;
-  align-items: center;
-}
-.form-demo-form-demo-demo-btn {
-  margin-right: 10px;
-}
-</style>
 ```
 
 :::
@@ -1583,7 +1313,7 @@ v-d-validate-rules
 #### Layout
 
 ```ts
-type Layout = 'horizontal' | 'vertical' | 'columns';
+type Layout = 'horizontal' | 'vertical';
 ```
 
 #### LabelSize

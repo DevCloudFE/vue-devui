@@ -1,8 +1,9 @@
 import { Emitter } from 'mitt';
-import type { PropType, ExtractPropTypes, InjectionKey, Ref } from 'vue';
+import type { PropType, ExtractPropTypes, InjectionKey } from 'vue';
 
-export type Layout = 'horizontal' | 'vertical' | 'columns';
+export type Layout = 'horizontal' | 'vertical';
 export type LabelSize = 'sm' | 'md' | 'lg';
+export type LabelAlign = 'start' | 'center' | 'end';
 export type FormData = Record<string, any>;
 
 export const formProps = {
@@ -19,7 +20,7 @@ export const formProps = {
     default: 'md',
   },
   labelAlign: {
-    type: String as PropType<'start' | 'center' | 'end'>,
+    type: String as PropType<LabelAlign>,
     default: 'start',
   },
   rules: {
@@ -41,12 +42,6 @@ export const dFormEvents = {
   removeField: 'd.form.removeField',
 } as const;
 
-type LabelData = {
-  layout: string;
-  labelSize: string;
-  labelAlign: string;
-};
-
 export const FORM_ITEM_TOKEN: InjectionKey<IFormItem> = Symbol('dFormItem');
 
 export const dFormItemEvents = {
@@ -54,6 +49,12 @@ export const dFormItemEvents = {
   change: 'd.form.change',
   input: 'd.form.input',
 } as const;
+
+export interface IFormLabel {
+  layout: Layout;
+  labelSize: LabelSize;
+  labelAlign: LabelAlign;
+}
 
 export interface IForm {
   formData: any;
@@ -64,12 +65,6 @@ export interface IForm {
 }
 
 export const FORM_TOKEN: InjectionKey<IForm> = Symbol('dForm');
-
-export interface IFormLabel {
-  layout: string;
-  labelSize: string;
-  labelAlign: string;
-}
 
 export interface IFormItem {
   dHasFeedback: boolean;
