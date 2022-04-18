@@ -122,6 +122,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/554246839"><img src="https://avatars.githubusercontent.com/u/24663941?v=4?s=100" width="100px;" alt=""/><br /><sub><b>tohalf</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=554246839" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Lonely-shang"><img src="https://avatars.githubusercontent.com/u/34124930?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Miliky</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Lonely-shang" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/MICD0704"><img src="https://avatars.githubusercontent.com/u/20532893?v=4?s=100" width="100px;" alt=""/><br /><sub><b>MICD</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=MICD0704" title="Code">💻</a> <a href="https://github.com/DevCloudFE/vue-devui/issues?q=author%3AMICD0704" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/ming-bin"><img src="https://avatars.githubusercontent.com/u/54826175?v=4?s=100" width="100px;" alt=""/><br /><sub><b>mingBin</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=ming-bin" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/icjs-cc"><img src="https://avatars.githubusercontent.com/u/27618209?v=4?s=100" width="100px;" alt=""/><br /><sub><b>陈剑术</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=icjs-cc" title="Code">💻</a></td>
   </tr>
 </table>
 

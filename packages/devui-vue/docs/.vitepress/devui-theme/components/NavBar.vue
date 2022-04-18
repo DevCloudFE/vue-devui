@@ -14,13 +14,13 @@ import Theme from './icons/Theme.vue'
 
 // 主题切换
 const THEME_MAP = {
+  'infinity-theme': infinityTheme,
+  'galaxy-theme': galaxyTheme,
+  'sweet-theme': sweetTheme,
+  'provence-theme': provenceTheme,
+  'deep-theme': deepTheme,
   'devui-light-theme': devuiLightTheme,
   'devui-dark-theme': devuiDarkTheme,
-  'infinity-theme': infinityTheme,
-  'provence-theme': provenceTheme,
-  'sweet-theme': sweetTheme,
-  'deep-theme': deepTheme,
-  'galaxy-theme': galaxyTheme,
 }
 const themes = Object.keys(THEME_MAP)
 const userCustomTheme = localStorage.getItem('user-custom-theme') || themes[0]
@@ -67,6 +67,7 @@ defineEmits(['toggle'])
             class="custom-nav-item ml-m"
             style="font-size: 0"
             @click="() => useTranslation(defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN')"
+            v-if="false"
           >
             <ZhLang v-if="defaultLanguage === 'zh-CN'"></ZhLang>
             <EnLang v-else></EnLang>
