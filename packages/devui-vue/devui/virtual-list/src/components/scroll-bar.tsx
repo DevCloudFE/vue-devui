@@ -1,5 +1,5 @@
 import { defineComponent, ref, reactive, computed, onBeforeUnmount, onMounted } from 'vue';
-import { virtualListScrollBarProps } from '../virtual-list-types';
+import { scrollBarProps } from '../virtual-list-types';
 
 interface ScrollBarState {
   dragging: boolean;
@@ -13,8 +13,8 @@ function getPageY(e: MouseEvent | TouchEvent) {
 }
 
 export default defineComponent({
-  name: 'DVirtualListScrollBar',
-  props: virtualListScrollBarProps,
+  name: 'ScrollBar',
+  props: scrollBarProps,
   setup(props, ctx) {
     const scrollbarRef = ref<HTMLElement | null>(null);
     const thumbRef = ref<HTMLElement | null>(null);

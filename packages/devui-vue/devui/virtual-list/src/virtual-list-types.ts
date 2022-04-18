@@ -37,7 +37,7 @@ export const virtualListProps = {
   },
 } as const;
 
-export const virtualListFllterProps = {
+export const resizeObserverContainerProps = {
   height: {
     type: Number,
   },
@@ -52,7 +52,7 @@ export const virtualListFllterProps = {
   }
 } as const;
 
-export const virtualListScrollBarProps = {
+export const scrollBarProps = {
   scrollTop: {
     type: Number
   },
