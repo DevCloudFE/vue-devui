@@ -1,5 +1,5 @@
 import { computed, ComputedRef, Ref } from 'vue';
-import { IInnerTreeNode, IUseCore, valueof } from './use-tree-types';
+import { IInnerTreeNode, ITreeNode, IUseCore, valueof } from './use-tree-types';
 import { generateInnerTree } from './utils';
 
 export default function(options?){
@@ -66,7 +66,7 @@ export default function(options?){
       data.value[getIndex(node)][key] = value;
     }
 
-    const setTree = (newTree: IInnerTreeNode[]): void => {
+    const setTree = (newTree: ITreeNode[]): void => {
       data.value = generateInnerTree(newTree);
     }
 

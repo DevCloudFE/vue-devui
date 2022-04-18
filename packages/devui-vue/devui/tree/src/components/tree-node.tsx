@@ -33,7 +33,12 @@ export default defineComponent({
     const halfChecked = computed(() => {
       const children = getChildren(data.value);
       const checkedChildren = children.filter((item: IInnerTreeNode) => item.checked);
-      return checkedChildren.length > 0 && checkedChildren.length < children.length;
+
+      if (['upward', 'both'].includes(check.value)) {
+        return checkedChildren.length > 0 && checkedChildren.length < children.length;
+      } else {
+        return false;
+      }
     });
 
     return () => {

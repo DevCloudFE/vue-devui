@@ -1,4 +1,4 @@
-import { defineComponent, provide, renderSlot, toRefs, useSlots, watch } from 'vue';
+import { defineComponent, provide, ref, renderSlot, toRefs, useSlots, watch } from 'vue';
 import DTreeNode from './components/tree-node';
 import DTreeNodeContent from './components/tree-node-content';
 import DTreeNodeToggle from './components/tree-node-toggle';
@@ -21,8 +21,16 @@ export default defineComponent({
       useOperate(),
     ];
 
-    if (check) {
-      userPlugins.push(useCheck());
+    const checkOptions = ref({
+      checkStrategy: check.value || 'both'
+    });
+
+    watch(check, (newVal) => {
+      checkOptions.value.checkStrategy = newVal;
+    })
+
+    if (check.value) {
+      userPlugins.push(useCheck(checkOptions));
     }
 
     const treeFactory = useTree(
