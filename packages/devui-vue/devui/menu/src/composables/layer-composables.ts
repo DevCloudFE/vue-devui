@@ -85,6 +85,7 @@ export function changeKey(ele: HTMLElement,event: clickEvent): void{
       break;
     }
   }
+  debugger;
   while (stack.length){
     const shiftItem = stack.shift();
     if (shiftItem?.tagName === 'UL' ||
@@ -92,6 +93,9 @@ export function changeKey(ele: HTMLElement,event: clickEvent): void{
       stack.push(...Array.from(shiftItem?.children as unknown as Element[]));
     }
     if (shiftItem!==ele){
+      if (shiftItem?.tagName === 'DIV'){
+        stack.unshift(...Array.from(shiftItem?.children));
+      }
       shiftItem?.classList.remove('devui-menu-item-select');
       shiftItem?.classList.remove('devui-menu-active-parent');
     }
