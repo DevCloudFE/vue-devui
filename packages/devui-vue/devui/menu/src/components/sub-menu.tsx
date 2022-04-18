@@ -9,8 +9,8 @@ import {
   watchEffect,
   watch,
 } from 'vue';
-import { addLayer, pushElement, changeKey,getLayer } from '../hooks/Layers';
-import { SubMenuProps, subMenuProps } from '../types/sub-menu';
+import { addLayer, pushElement, changeKey,getLayer } from '../composables/Layers';
+import { SubMenuProps, subMenuProps } from '../types/sub-menu-types';
 export default defineComponent({
   name: 'DSubMenu',
   props: subMenuProps,

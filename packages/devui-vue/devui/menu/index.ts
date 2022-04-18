@@ -3,12 +3,6 @@ import MenuItem from './src/components/menu-item';
 import SubMenu from './src/components/sub-menu';
 import Menu from './src/menu';
 
-Menu.install = function(app: App): void {
-  app.component(Menu.name, Menu);
-  app.component(MenuItem.name, MenuItem);
-  app.component(SubMenu.name, SubMenu);
-};
-
 export { Menu,SubMenu,MenuItem };
 
 export default {
@@ -16,6 +10,8 @@ export default {
   category: '布局',
   status: "90%", // TODO: 组件若开发完成则填入"100%"，并删除该注释
   install(app: App): void {
-    app.use(Menu as any);
+    app.component(Menu.name, Menu);
+    app.component(MenuItem.name, MenuItem);
+    app.component(SubMenu.name, SubMenu);
   }
 };
