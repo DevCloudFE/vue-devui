@@ -3,29 +3,29 @@ import type { ExtractPropTypes } from 'vue';
 export const countdownProps = {
   value: {
     type: Number,
-    required: true
+    required: true,
   },
-  format:  {
+  format: {
     type: String,
-    default: 'HH:mm:ss'
+    default: 'HH:mm:ss',
   },
   prefix: {
     type: String,
-    default: ''
+    default: '',
   },
   suffix: {
     type: String,
-    default: ''
+    default: '',
   },
   valueStyle: {
     type: Object,
-    default: ()=>{
+    default: () => {
       return {};
-    }
-  }
+    },
+  },
 } as const;
 
-export interface DateFormat{
+export interface DateFormat {
   Y?: string | number;
   M?: string | number;
   D?: string | number;

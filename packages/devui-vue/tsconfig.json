@@ -7,7 +7,7 @@
     "jsx": "preserve",
     "sourceMap": true,
     "lib": ["esnext", "dom"],
-    "types": ["vite/client", "jest"],
+    "types": ["vite/client", "jest","node"],
     "esModuleInterop": true,
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
     "paths": {

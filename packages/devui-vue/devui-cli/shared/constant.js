@@ -2,6 +2,7 @@ const { resolve } = require('path');
 const { version } = require('../../package.json');
 
 exports.VERSION = version;
+exports.isProd = process.env.NODE_ENV === 'production';
 exports.CWD = process.cwd();
 exports.DEVUI_DIR = resolve(this.CWD, 'devui');
 exports.DEVUI_NAMESPACE = 'd';
@@ -67,3 +68,7 @@ exports.CREATE_SUPPORT_TYPE_MAP = Object.freeze({
 });
 exports.CREATE_SUPPORT_TYPES = Object.keys(this.CREATE_SUPPORT_TYPE_MAP);
 exports.CREATE_UNFINISHED_TYPES = [];
+exports.WHITE_LIST_READY_COMPONENTS = [
+  'select', 'tooltip', 'table', 'tabs', 'form',
+  'dropdown', 'drawer', 'date-picker', 'input-number'
+];

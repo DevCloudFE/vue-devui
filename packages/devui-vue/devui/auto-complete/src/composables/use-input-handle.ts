@@ -1,23 +1,45 @@
 import { ref, Ref, SetupContext } from 'vue';
-import {HandleSearch,RecentlyFocus,InputDebounceCb,TransInputFocusEmit} from '../auto-complete-types';
-export default function useInputHandle(ctx: SetupContext,searchList: Ref<any[]>,showNoResultItemTemplate: Ref<boolean>, modelValue: Ref<string>,disabled: Ref<boolean>,delay: Ref<number>,handleSearch: HandleSearch, transInputFocusEmit: Ref<TransInputFocusEmit>,recentlyFocus: RecentlyFocus,latestSource: Ref<Array<any>>): any {
+import {HandleSearch,RecentlyFocus,InputDebounceCb,TransInputFocusEmit, SourceType,SourceItemObj} from '../auto-complete-types';
+export default function useInputHandle(
+  ctx: SetupContext,
+  searchList: Ref<SourceType>,
+  showNoResultItemTemplate: Ref<boolean>,
+  modelValue: Ref<string>,
+  disabled: Ref<boolean>,
+  delay: Ref<number>,
+  handleSearch: HandleSearch,
+  transInputFocusEmit: Ref<TransInputFocusEmit>,
+  recentlyFocus: RecentlyFocus,
+  latestSource: Ref<Array<SourceItemObj>>
+): {
+    handleClose: () => void;
+    toggleMenu: () => void;
+    onInput: (e: Event) => void;
+    onFocus: () => void;
+    onBlur: () => void;
+    inputRef: Ref;
+    isFocus: Ref<boolean>;
+    visible: Ref<boolean>;
+    searchStatus: Ref<boolean>;
+  } {
   const visible = ref(false);
   const inputRef = ref();
   const searchStatus = ref(false);
+  const isFocus = ref(false);
   const debounce =(cb: InputDebounceCb,time: number) =>{
-    let timer;
-    return (...args)=>{
+    let timer: NodeJS.Timeout | null;
+    return (arg: string)=>{
       if(timer){
         clearTimeout(timer);
       }
       timer = setTimeout(async ()=>{
         searchStatus.value=true;
-        await cb(...args);
+        await cb(arg);
         searchStatus.value=false;
       },time);
     };
   };
-  const onInputCb = async(value: string)=>{
+  const onInputCb =async (value: string)=>{
     await handleSearch(value);
     visible.value = true;
   };
@@ -30,9 +52,13 @@ export default function useInputHandle(ctx: SetupContext,searchList: Ref<any[]>,
     onInputDebounce(inp.value);
   };
   const onFocus =() => {
+    isFocus.value = true;
     handleSearch(modelValue.value);
-    recentlyFocus(latestSource.value);
+    recentlyFocus(latestSource?.value);
     transInputFocusEmit.value && transInputFocusEmit.value();
+  };
+  const onBlur = ()=> {
+    isFocus.value = false;
   };
   const handleClose = ()=>{
     visible.value=false;
@@ -45,7 +71,7 @@ export default function useInputHandle(ctx: SetupContext,searchList: Ref<any[]>,
         handleClose();
       }else{
         visible.value=true;
-        if (ctx.slots.noResultItemTemplate&&searchList.value.length==0&&modelValue.value.trim()!='') {
+        if (ctx.slots.noResultItemTemplate&&searchList.value.length===0&&modelValue.value.trim()!=='') {
           showNoResultItemTemplate.value=true;
         }
       }
@@ -56,6 +82,8 @@ export default function useInputHandle(ctx: SetupContext,searchList: Ref<any[]>,
     toggleMenu,
     onInput,
     onFocus,
+    onBlur,
+    isFocus,
     inputRef,
     visible,
     searchStatus

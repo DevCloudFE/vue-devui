@@ -1,8 +1,12 @@
 import { Ref, ref, watch } from 'vue';
-import { TreeItem } from '../tree-types';
+import { TreeData, TreeItem } from '../tree-types';
 
-export default function useMergeNode(data: Ref<TreeItem[]>): any {
-  const mergeObject = (treeItem, childName = 'children', labelName = 'label') => {
+interface IUseMergeNode {
+  mergeData: Ref<TreeData>;
+}
+
+export default function useMergeNode(data: Ref<TreeItem[]>): IUseMergeNode {
+  const mergeObject = (treeItem: TreeItem, childName = 'children', labelName = 'label'): TreeItem => {
     const { [childName]: children, [labelName]: label } = treeItem;
     if (
       Array.isArray(children) &&
@@ -12,7 +16,7 @@ export default function useMergeNode(data: Ref<TreeItem[]>): any {
     ) {
       return mergeObject(
         Object.assign({}, children[0], {
-          [labelName]: `${label} \\ ${children[0][labelName]}`
+          [labelName]: `${label} / ${children[0][labelName]}`
         })
       );
     }
@@ -20,17 +24,17 @@ export default function useMergeNode(data: Ref<TreeItem[]>): any {
   };
 
   const mergeNode = (
-    tree: Array<any>,
+    tree: TreeData,
     level = 0,
     childName = 'children',
     labelName = 'label'
-  ): Array<any> => {
+  ): TreeData => {
     return tree.map((item) => {
       const { [childName]: children } = item;
       if (!Array.isArray(children) || !children.length) {
         return Object.assign({}, item, { level: level + 1 });
       }
-      let currentObject = item;
+      let currentObject: TreeItem = item;
       if (children.length === 1) {
         currentObject = mergeObject(item);
       }

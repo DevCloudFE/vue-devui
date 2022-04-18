@@ -37,7 +37,6 @@ export default defineComponent({
     const route = useRoute();
     const rootSlots = getRootSlots();
     const accordionCtx = inject('accordionContext') as any;
-    console.log(useRoute());
 
     const title = computed(() => {
       return item.value && item.value[titleKey.value];

@@ -1,6 +1,6 @@
 import { watch, onMounted, onUnmounted, toRefs, computed, ref } from 'vue';
 import type { Ref } from 'vue';
-import { getElement } from '../../shared/util/dom';
+import { getElement } from '../../shared/utils/dom';
 import { UseDropdownProps, EmitEvent, DropdownProps, UseOverlayFn } from './dropdown-types';
 
 const dropdownMap = new Map();
@@ -44,7 +44,7 @@ export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit 
           if (
             !isOpen.value ||
             closeScope.value === 'none' ||
-            (dropdownEl.contains(e.target) && closeScope.value === 'blank') ||
+            (dropdownEl?.contains(e.target) && closeScope.value === 'blank') ||
             (dropdownValues.some((item) => item.toggleEl?.contains(e.target)) &&
               dropdownValues.some((item) => item.menuEl?.contains(e.target)))
           ) {

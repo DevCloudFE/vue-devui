@@ -17,6 +17,7 @@ export const isHasDot = (value: number): boolean => {
   if (!isNaN(value)) {
     return (value + '').indexOf('.') !== -1;
   }
+  return false;
 };
 export const analysisValueType = (
   value: valueType, // 动态value 值
@@ -25,8 +26,8 @@ export const analysisValueType = (
   splitPrecisionNumber: number // 分割精度, 小数点
 ): string => {
   const fixedNumber =
-    propsValue.toString().indexOf('.') !== -1
-      ? propsValue.toString().length - propsValue.toString().indexOf('.') - 1
+    propsValue?.toString().indexOf('.') !== -1
+      ? propsValue?.toString().length - propsValue?.toString().indexOf('.') - 1
       : 0;
   if (typeof value === 'number') {
     if (isHasDot(value)) {

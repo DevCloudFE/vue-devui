@@ -1,31 +1,30 @@
-# Popover 
+# Popover
 Simple text prompt box.
 
 ### When To Use
 Used to notify users of non-critical problems or to indicate that a control is in a special situation.
 
 ### Basic Usage
-When Popover pops up, it is positioned based on the contents of the reference slot.
 :::demo
 ```vue
 <template>
 <div class="popover-demo-item" >
-  <d-popover controlled>
+  <d-popover content="default!" controlled>
     <template #reference>
       <d-button variant="common">default</d-button>
     </template>
   </d-popover>
-  <d-popover  content="info!" popType="info" position="top" trigger="hover" controlled>
+  <d-popover content="info!" popType="info" :position="['top']" controlled>
     <template #reference>
       <d-button  variant="primary">info</d-button>
     </template>
   </d-popover>
-  <d-popover  content="error!" popType="error" controlled position="left" :zIndex="9999">
+  <d-popover  content="error!" popType="error" controlled :position="['left']" :zIndex="9999">
     <template #reference>
       <d-button  variant="danger">error</d-button>
     </template>
   </d-popover>
-    <d-popover  content="success!" popType="success" controlled position="right">
+    <d-popover  content="success!" popType="success" controlled :position="['right']">
     <template #reference>
       <d-button  variant="success">success</d-button>
     </template>
@@ -50,7 +49,7 @@ When Popover pops up, it is positioned based on the contents of the reference sl
 ```
 :::
 
-### Custom Tips 
+### Custom Tips
 The HTMLElement or TemplateRef type can be transferred.
 
 :::demo
@@ -88,7 +87,7 @@ A total of 12 pop-up positions are supported.
 ```vue
 <template>
 <div class="item">
-  <d-popover  position="left" controlled>
+  <d-popover  :position="['left']" controlled>
   <template #content>
       <div>left</div>
     </template>
@@ -96,7 +95,7 @@ A total of 12 pop-up positions are supported.
     <d-button variant="common">left</d-button>
   </template>
   </d-popover>
-  <d-popover  position="left-top" controlled>
+  <d-popover  :position="['left-top']" controlled>
     <template #content>
         <div >left-top</div>
         <div>left-top</div>
@@ -105,7 +104,7 @@ A total of 12 pop-up positions are supported.
       <d-button variant="common">left-top</d-button>
     </template>
   </d-popover>
-  <d-popover  position="left-bottom" controlled >
+  <d-popover  :position="['left-bottom']" controlled >
     <template #content>
         <div>left-bottom</div>
         <div>left-bottom</div>
@@ -117,7 +116,7 @@ A total of 12 pop-up positions are supported.
 </div>
 
 <div style="margin-top:10px;" class="item">
-  <d-popover   position="top" controlled>
+  <d-popover :position="['top']" controlled>
     <template #content>
         <span >top</span>
       </template>
@@ -125,7 +124,7 @@ A total of 12 pop-up positions are supported.
       <d-button variant="common">top</d-button>
     </template>
   </d-popover>
-  <d-popover  position="top-left" controlled>
+  <d-popover :position="['top-left']" controlled>
     <template #content>
         <span >top-left</span>
       </template>
@@ -133,7 +132,7 @@ A total of 12 pop-up positions are supported.
       <d-button variant="common">top-left</d-button>
     </template>
   </d-popover>
-  <d-popover  position="top-right" controlled>
+  <d-popover :position="['top-right']" controlled>
     <template #content>
         <span >top-right</span>
       </template>
@@ -144,7 +143,7 @@ A total of 12 pop-up positions are supported.
 </div>
 
 <div style="margin-top:10px;" class="item">
-  <d-popover   position="right" controlled>
+  <d-popover :position="['right']" controlled>
     <template #content>
         <div >right</div>
       </template>
@@ -152,7 +151,7 @@ A total of 12 pop-up positions are supported.
       <d-button variant="common">right</d-button>
     </template>
   </d-popover>
-  <d-popover   position="right-top" controlled>
+  <d-popover :position="['right-top']" controlled>
     <template #content>
         <div >right-top</div>
         <div >right-top</div>
@@ -161,7 +160,7 @@ A total of 12 pop-up positions are supported.
       <d-button variant="common">right-top</d-button>
     </template>
   </d-popover>
-    <d-popover  position="right-bottom" controlled>
+    <d-popover :position="['right-bottom']" controlled>
     <template #content>
         <div >right-bottom</div>
         <div >right-bottom</div>
@@ -173,7 +172,7 @@ A total of 12 pop-up positions are supported.
 </div>
 
 <div style="margin-top:10px;" class="item">
-  <d-popover   position="bottom" controlled>
+  <d-popover :position="['bottom']" controlled>
     <template #content>
         <div >bottom</div>
       </template>
@@ -181,7 +180,7 @@ A total of 12 pop-up positions are supported.
       <d-button variant="common">bottom</d-button>
     </template>
   </d-popover>
-    <d-popover  position="bottom-left" controlled>
+    <d-popover :position="['bottom-left']" controlled>
     <template #content>
         <div >bottom-left</div>
       </template>
@@ -189,7 +188,7 @@ A total of 12 pop-up positions are supported.
       <d-button variant="common">bottom-left</d-button>
     </template>
   </d-popover>
-  <d-popover  position="bottom-right" controlled>
+  <d-popover  :position="['bottom-right']" controlled>
     <template #content>
         <div >bottom-right</div>
       </template>
@@ -214,7 +213,7 @@ Displaying the pop-up dialog box through the visible interface to verify the for
 :::demo
 ```vue
 <template>
-  <d-popover  position="top" :visible="visible">
+  <d-popover :position="['top']" :visible="visible">
     <template #content>
         <div > Manual Control Display </div>
       </template>
@@ -250,7 +249,7 @@ Only when the trigger type is hover. This event is triggered only when the mouse
 ```vue
 <template>
 <div class="item">
-  <d-popover  position="bottom-right" trigger="hover" controlled :mouseEnterDelay ="500">
+  <d-popover  :position="['bottom-right']" trigger="hover" controlled :mouseEnterDelay ="500">
     <template #content>
         <div > Mouse enter 500ms later. </div>
         show Me
@@ -259,7 +258,7 @@ Only when the trigger type is hover. This event is triggered only when the mouse
       <d-button variant="primary">MouseEnter delay 500ms</d-button>
     </template>
   </d-popover>
-  <d-popover  position="bottom-right" trigger="hover" controlled :mouseLeaveDelay="2000">
+  <d-popover :position="['bottom-right']" trigger="hover" controlled :mouseLeaveDelay="2000">
     <template #content>
         <div> Mouse leave 2000ms later. </div>
       </template>
@@ -304,4 +303,3 @@ Only when the trigger type is hover. This event is triggered only when the mouse
 | --------- | --------------------------------------------------------- |
 | content   | Custom content                                            |
 | reference | Triggers the contents of the element displayed by Popover |
-

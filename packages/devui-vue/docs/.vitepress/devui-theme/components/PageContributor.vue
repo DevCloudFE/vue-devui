@@ -1,39 +1,44 @@
 <script setup lang="ts">
-import { toRefs } from 'vue'
+import { toRefs, computed } from 'vue'
 import { Avatar } from '@devui/avatar'
 
 const props = defineProps<{
   contributors: Array<{
     avatar: String,
     homepage: String
-  }>
+  }>,
+  spacing: {
+    type: number,
+    default: 8
+  },
+  avatarSize: {
+    type: number,
+    default: 36
+  }
 }>()
 
-const { contributors } = toRefs(props)
+const { contributors, spacing, avatarSize } = toRefs(props)
+
+const validContributors = computed(() => {
+  return contributors.value.filter(item => item.avatar)
+})
 </script>
 
 <template>
   <div class="page-contributor">
-    <div class="contributor-label">Contributors</div>
-    <div class="contributor-info">
-      <a v-for="contributor of contributors" :href="contributor.homepage" target="_blank">
-        <Avatar class="contributor-avatar" :imgSrc="contributor.avatar" />
-      </a>
-    </div>
+    <a v-for="contributor of validContributors" :href="contributor.homepage" target="_blank">
+      <Avatar v-if="contributor.avatar" class="contributor-avatar" :style="{
+        marginRight: `${spacing}px`,
+        marginBottom: `${spacing - 4}px`
+      }" :imgSrc="contributor.avatar" :width="avatarSize" :height="avatarSize" />
+    </a>
   </div>
 </template>
 
 <style scoped lang="scss">
 .page-contributor {
-  .contributor-label {
-    color: #24292f;
-    font-weight: 600;
-    line-height:32px;
-  }
-
-  .contributor-info {
-    display: flex;
-  }
+  display: flex;
+  flex-wrap: wrap;
 
   .contributor-avatar {
     margin: 0 8px 4px 0;

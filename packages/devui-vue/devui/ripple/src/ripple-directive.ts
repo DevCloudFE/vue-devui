@@ -8,7 +8,7 @@ import { ripple } from './v-ripple';
 const optionMap = new WeakMap<HTMLElement, Partial<IRippleDirectiveOptions> | false>();
 const globalOptions = { ...DEFAULT_PLUGIN_OPTIONS };
 export default {
-  mounted(el: HTMLElement, binding: IRippleDirectiveOptionWithBinding) {
+  mounted(el: HTMLElement, binding: IRippleDirectiveOptionWithBinding): void {
     optionMap.set(el, binding.value ?? {});
 
     el.addEventListener('pointerdown', (event) => {
@@ -24,7 +24,7 @@ export default {
       });
     });
   },
-  updated(el: HTMLElement, binding: IRippleDirectiveOptionWithBinding) {
+  updated(el: HTMLElement, binding: IRippleDirectiveOptionWithBinding): void {
     optionMap.set(el, binding.value ?? {});
   }
 };

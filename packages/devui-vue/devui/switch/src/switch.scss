@@ -1,8 +1,6 @@
 @use 'sass:math';
 
-@import '../../style/theme/color';
-@import '../../style/theme/font';
-@import '../../style/core/animation';
+@import '../../styles-var/devui-var.scss';
 
 :host {
   display: inline-block;
@@ -78,7 +76,7 @@
     left: 19px;
   }
 
-  &.devui-switch-large {
+  &.devui-switch-lg {
     width: 58px;
     height: 30px;
     border-radius: math.div(32px, 2);
@@ -106,7 +104,7 @@
     }
   }
 
-  &.devui-switch-small {
+  &.devui-switch-sm {
     width: 30px;
     height: 14px;
     border-radius: math.div(16px, 2);

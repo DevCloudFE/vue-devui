@@ -1,0 +1,76 @@
+@import '../../../../styles-var/devui-var.scss';
+
+.filter-wrapper {
+  width: 200px;
+  background-color: $devui-connected-overlay-bg;
+  border-radius: $devui-border-radius;
+
+  .filter-all-check {
+    padding: 0 8px 4px;
+    border-bottom: 1px solid $devui-dividing-line;
+  }
+
+  .filter-multiple-menu {
+    width: 100%;
+    padding: 4px 8px;
+    border-bottom: 1px solid $devui-dividing-line;
+  }
+
+  .filter-operation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 8px;
+    height: 26px;
+  }
+
+  .filter-single-menu {
+    width: 100%;
+  }
+
+  .filter-item {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+.filter-icon {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  height: 16px;
+  margin-top: -1px; // 解决漏斗形状视觉效果不局中
+
+  > svg g {
+    fill: $devui-dividing-line;
+  }
+
+  &:hover {
+    > svg g {
+      fill: $devui-icon-fill-active-hover;
+    }
+  }
+}
+
+.filter-item-active {
+  background: $devui-list-item-active-bg;
+  color: $devui-list-item-active-text;
+}
+
+.filter-icon-active {
+  visibility: visible !important;
+
+  > svg g {
+    fill: $devui-icon-fill-active;
+  }
+
+  &:hover {
+    > svg g {
+      fill: $devui-icon-fill-active-hover;
+    }
+  }
+}

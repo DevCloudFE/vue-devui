@@ -2,7 +2,9 @@ import { ComputedRef, computed } from 'vue';
 import { OptionObjectItem } from '../src/use-select';
 import { KeyType } from '../src/utils';
 
-export default function (mergeOptions: ComputedRef<OptionObjectItem[]>): any {
+type GetValueOptionFunc = (values: KeyType<OptionObjectItem, 'value'>[]) => (OptionObjectItem | undefined)[];
+
+export default function (mergeOptions: ComputedRef<OptionObjectItem[]>): GetValueOptionFunc{
   const cacheOptions = computed(() => {
     const map = new Map<KeyType<OptionObjectItem, 'value'>, OptionObjectItem>();
     mergeOptions.value.forEach((item) => {

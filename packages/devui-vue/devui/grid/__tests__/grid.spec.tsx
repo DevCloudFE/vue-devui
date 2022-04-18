@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { Row, Col } from '../index';
 import { Justify, Align, ColProps } from '../src/grid-types';
-import { screenMedias } from '../src/use-screen';
+import { screenMedias } from '../src/composables/use-screen';
 
 describe('d-row', () => {
   window.matchMedia = jest.fn().mockImplementation(query => {
@@ -91,7 +91,6 @@ describe('d-col', () => {
     </Row>;
     it(`d-col ${item} span`, () => {
       const wrapper = mount(component);
-      console.log(wrapper.html());
       expect(wrapper.findAll(`.devui-col-${item}-span-${value}`).length).toBe(1);
     });
   });

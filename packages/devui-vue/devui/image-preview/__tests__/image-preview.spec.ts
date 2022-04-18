@@ -32,7 +32,7 @@ describe('image-preview', () => {
     await img.trigger('click');
     const ele = document.querySelector('.devui-image-preview-main-image');
     expect(ele).toBeTruthy();
-    const closeBtn = document.querySelector('.devui-image-preview-close-btn') as any;
+    const closeBtn = document.querySelector('.devui-image-preview-close-btn') as HTMLElement;
     closeBtn.click();
   });
 
@@ -56,7 +56,7 @@ describe('image-preview', () => {
   });
 
   it('image-preview custom', async () => {
-    const custom: any = ref({});
+    const custom = ref({open: () => true});
     const open = () => custom.value.open();
     const wrapper = mount(
       {
@@ -81,7 +81,7 @@ describe('image-preview', () => {
     await customBtn.trigger('click');
     const ele = document.querySelector('.devui-image-preview-main-image');
     expect(ele).toBeTruthy();
-    const closeBtn = document.querySelector('.devui-image-preview-close-btn') as any;
+    const closeBtn = document.querySelector('.devui-image-preview-close-btn') as HTMLElement;
     closeBtn.click();
   });
 });

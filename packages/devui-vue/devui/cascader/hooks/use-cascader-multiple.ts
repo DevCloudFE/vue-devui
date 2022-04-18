@@ -27,7 +27,6 @@ export const multipleAddTag = (tagList: CascaderItem[], singleItem: CascaderItem
  *
  */
 export const multipleDeleteTag = (tagList: CascaderItem[], singleItem: CascaderItem): void => {
-  // console.log(arr)
   const i = tagList.findIndex(item => item.value === singleItem.value);
   tagList.splice(i, 1);
 };

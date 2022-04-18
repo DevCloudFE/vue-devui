@@ -1,6 +1,6 @@
 import { defineComponent, computed, CSSProperties, Ref, inject } from 'vue';
 import { colProps, ColProps } from './grid-types';
-import { useSize, CLASS_PREFIX, useColClassNames } from './use-grid';
+import { useSize, CLASS_PREFIX, useColClassNames } from './composables/use-grid';
 import './col.scss';
 
 
@@ -30,6 +30,11 @@ export default defineComponent({
 
     const gutterStyle = inject<Ref<CSSProperties>>('gutterStyle');
 
-    return () => <div class={`${CLASS_PREFIX}${colClassNames.value}${sizeClassNames.value}`} style={{ ...colStyle.value, ...gutterStyle.value }}>{slots.default?.()}</div>;
+    return () => <div
+      class={`${CLASS_PREFIX}${colClassNames.value}${sizeClassNames.value}`}
+      style={{ ...colStyle.value, ...gutterStyle.value }}
+    >
+      {slots.default?.()}
+    </div>;
   }
 });

@@ -8,7 +8,7 @@
 
 ### 基本用法
 
-:::demo
+:::demo 默认在触发元素的上方展示提示信息，可通过`position`更改展示位置；`content`可设置提示信息；`show-animation`控制是否开启动画。
 
 ```vue
 <template>
@@ -54,9 +54,7 @@ export default defineComponent({
 
 ### 延时触发
 
-鼠标移入的时长超过 `mouse-enter-delay` 毫秒之后才会触发，以防止用户无意划过导致的闪现，默认值是 150 毫秒；鼠标移出之后，再经过`mouse-leave-delay`毫秒后，toolTip 组件才会隐藏，默认值是 100 毫秒。
-
-:::demo
+:::demo 鼠标移入的时长超过 `mouse-enter-delay` 毫秒之后才会触发，以防止用户无意划过导致的闪现，默认值是 150 毫秒；鼠标移出之后，再经过`mouse-leave-delay`毫秒后，Tooltip 组件才会隐藏，默认值是 100 毫秒。
 
 ```vue
 <template>
@@ -73,24 +71,26 @@ export default defineComponent({
 
 :::
 
-### d-tooltip 参数
+### Tooltip 参数
 
-| 参数              | 类型                               | 默认 | 说明                                              | 跳转 Demo             |
-| ----------------- | ---------------------------------- | ---- | ------------------------------------------------- | --------------------- |
-| content           | `string`                           | --   | 可选，Tooltip 显示内容                            | [基本用法](#基本用法) |
-| position          | `BasePlacement \| BasePlacement[]` | top  | 可选，Tooltip 显示位置                            | [基本用法](#基本用法) |
-| show-animation    | `boolean`                          | true | 可选，是否显示动画                                | [基本用法](#基本用法) |
-| mouse-enter-delay | `number`                           | 150  | 可选，鼠标移入后延时多久才显示 Tooltip，单位是 ms | [延时触发](#延时触发) |
-| mouse-leave-delay | `number`                           | 100  | 可选，鼠标移出后延时多久才隐藏 Tooltip，单位是 ms | [延时触发](#延时触发) |
+| 参数名            | 类型                                               | 默认值 | 说明                                              | 跳转 Demo             |
+| :---------------- | :------------------------------------------------- | :----- | :------------------------------------------------ | :-------------------- |
+| content           | `string`                                           | --     | 可选，Tooltip 显示内容                            | [基本用法](#基本用法) |
+| position          | [BasePlacement \| BasePlacement[]](#baseplacement) | top    | 可选，Tooltip 显示位置                            | [基本用法](#基本用法) |
+| show-animation    | `boolean`                                          | true   | 可选，是否显示动画                                | [基本用法](#基本用法) |
+| mouse-enter-delay | `number`                                           | 150    | 可选，鼠标移入后延时多久才显示 Tooltip，单位是 ms | [延时触发](#延时触发) |
+| mouse-leave-delay | `number`                                           | 100    | 可选，鼠标移出后延时多久才隐藏 Tooltip，单位是 ms | [延时触发](#延时触发) |
 
-### d-tooltip 插槽
+### Tooltip 插槽
 
-| 名称    | 说明                   |
-| ------- | ---------------------- |
+| 插槽名  | 说明                   |
+| :------ | :--------------------- |
 | default | 默认插槽，设置触发元素 |
 
-### BasePlacement 类型
+### 类型定义
 
-```typescript
+#### BasePlacement
+
+```ts
 type BasePlacement = 'top' | 'right' | 'bottom' | 'left';
 ```

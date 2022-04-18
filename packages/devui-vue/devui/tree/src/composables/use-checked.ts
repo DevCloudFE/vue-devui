@@ -1,18 +1,24 @@
 import type { SetupContext, Ref } from 'vue';
 import { unref, ref } from 'vue';
-import {
+import type {
   TreeItem,
   SelectType,
   ReverseTree,
   CheckableRelationType,
+  TreeData,
 } from '../tree-types';
-import { flatten } from '../util';
+import { flatten } from '../utils';
+
+interface IUseChecked {
+  selected: Ref<SelectType>;
+  onNodeClick: (item: TreeItem) => void;
+}
 
 export default function useChecked(
   cbr: Ref<CheckableRelationType>,
   ctx: SetupContext,
-  data: any[]
-) {
+  data: TreeData
+): IUseChecked {
   const selected = ref<SelectType>({});
   const flatData = flatten(data);
 
@@ -21,7 +27,7 @@ export default function useChecked(
     let parentLevel: ReverseTree = {};
     let childLevel: string[] = [];
     let target = undefined;
-    const ergodic = (curr: any[], parentNode: ReverseTree) => {
+    const ergodic = (curr: TreeData, parentNode: ReverseTree) => {
       curr.every(({ children, id: itemId }) => {
         if (target) {
           return false;
@@ -95,7 +101,7 @@ export default function useChecked(
     return state;
   };
 
-  const onNodeClick = (item: TreeItem) => {
+  const onNodeClick = (item: TreeItem): void => {
     const { id } = item;
     let currentSelected = Object.assign({}, unref(selected));
     const isSelected = currentSelected[id] === 'none' || !currentSelected[id];
@@ -132,7 +138,7 @@ export default function useChecked(
     }
     selected.value = currentSelected;
     const currentSelectedItem = flatData.filter(
-      ({ id }) => currentSelected[id] && currentSelected[id] !== 'none'
+      ({ id: itemId }) => currentSelected[itemId] && currentSelected[itemId] !== 'none'
     );
     ctx.emit('nodeSelected', currentSelectedItem);
   };

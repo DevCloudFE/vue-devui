@@ -25,3 +25,5 @@ export const easeInExpo = function (x: number): number {
 export const easeInOutCirc = function (x: number): number {
   return x < 0.5 ? (1 - sqrt(1 - pow(2 * x, 2))) / 2 : (sqrt(1 - pow(-2 * x + 2, 2)) + 1) / 2;
 };
+
+export default { easeOutCubic, linear, easeOutExpo, easeInOutExpo, easeInExpo, easeInOutCirc };

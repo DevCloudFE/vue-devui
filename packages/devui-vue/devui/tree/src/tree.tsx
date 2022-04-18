@@ -1,9 +1,9 @@
-import { defineComponent, reactive, ref, toRefs, provide, unref } from 'vue';
+import { defineComponent, reactive, ref, toRefs, provide } from 'vue';
 import type { SetupContext } from 'vue';
 import { treeProps, TreeProps, TreeItem, TreeRootType, Nullable } from './tree-types';
 import { CHECK_CONFIG } from  './config';
-import { preCheckTree, deleteNode, getId } from './util';
-import Loading from '../../loading/src/service';
+import { preCheckTree, deleteNode, getId } from './utils';
+import Loading from '../../loading/src/loading-service';
 import Checkbox from '../../checkbox/src/checkbox';
 import useToggle from './composables/use-toggle';
 import useMergeNode from './composables/use-merge-node';
@@ -12,8 +12,8 @@ import useChecked from './composables/use-checked';
 import useLazy from './composables/use-lazy';
 import useOperate from './composables/use-operate';
 import useDraggable from './composables/use-draggable';
-import IconOpen from './assets/open.svg';
-import IconClose from './assets/close.svg';
+import { IconOpen } from './components/icon-open';
+import { IconClose } from './components/icon-close';
 import NodeContent from './tree-node-content';
 import './tree.scss';
 
@@ -85,21 +85,21 @@ export default defineComponent({
             }, 4000);
           });
         },
-        renderLoading: (id) => {
+        renderLoading: (elementId) => {
           return Loading.open({
-            target: document.getElementById(id),
+            target: document.getElementById(elementId),
             message: '加载中...',
             positionType: 'relative',
             zIndex: 1,
           });
         }
       });
-      const renderFoldIcon = (item: TreeItem) => {
+      const renderFoldIcon = (treeItem: TreeItem) => {
         const handleClick = async (target: MouseEvent) => {
-          if (item.isParent) {
-            item.children = await getLazyData(id);  // item 按引用传递
+          if (treeItem.isParent) {
+            treeItem.children = await getLazyData(id);  // treeItem 按引用传递
           }
-          return toggle(target, item);
+          return toggle(target, treeItem);
         };
         return (
           <div class="devui-tree-node__folder" onClick={handleClick} >

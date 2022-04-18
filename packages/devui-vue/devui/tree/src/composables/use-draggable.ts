@@ -1,12 +1,26 @@
 import { reactive, ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import { TreeItem, IDropType, Nullable } from '../tree-types';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 const ACTIVE_NODE = 'devui-tree-node__content--value-wrapper';
 interface DragState {
   dropType?: 'prev' | 'next' | 'inner';
   draggingNode?: Nullable<HTMLElement>;
+}
+
+interface IUseDraggable {
+  onDragstart: (event: DragEvent, treeNode: TreeItem) => void;
+  onDragover: (event: DragEvent) => void;
+  onDragleave: (event: DragEvent) => void;
+  onDrop: (event: DragEvent, dropNode: TreeItem) => void;
+  dragState: DragState;
+}
+
+interface IDropNode {
+  target: TreeItem[];
+  index: number;
+  item: TreeItem;
 }
 
 export default function useDraggable(
@@ -15,12 +29,12 @@ export default function useDraggable(
   node: Ref<Nullable<HTMLElement>>,
   renderData: Ref<TreeItem[]>,
   data: Ref<TreeItem[]>
-): any {
+): IUseDraggable {
   const dragState = reactive<DragState>({
-    dropType: null,
+    dropType: undefined,
     draggingNode: null,
   });
-  const treeIdMapValue = ref({});
+  const treeIdMapValue = ref<{ [key: string]: string }>({});
   watch(
     () => renderData.value,
     () => {
@@ -30,12 +44,10 @@ export default function useDraggable(
   );
 
   const removeDraggingStyle = (target: Nullable<HTMLElement>) => {
-    target
-      .querySelector(`.${ACTIVE_NODE}`)
-      ?.classList.remove(...['prev', 'next', 'inner'].map((item) => `devui-drop-${item}`));
+    target?.querySelector(`.${ACTIVE_NODE}`)?.classList.remove(...['prev', 'next', 'inner'].map((item) => `devui-drop-${item}`));
   };
 
-  const checkIsParent = (childNodeId: number | string, parentNodeId: number | string) => {
+  const checkIsParent = (childNodeId: number | string, parentNodeId: number | string): boolean => {
     const realParentId = treeIdMapValue.value[childNodeId].parentId;
     if (realParentId === parentNodeId) {
       return true;
@@ -45,12 +57,14 @@ export default function useDraggable(
       return false;
     }
   };
-  const handlerDropData = (dragNodeId: string | number, dropNodeId: string | number, dropType?: string) => {
+  const handlerDropData = (dragNodeId: string | number, dropNodeId: string | number, currentDropType?: string) => {
     const cloneData = cloneDeep(data.value);
-    let nowDragNode;
-    let nowDropNode;
+    let nowDragNode: IDropNode;
+    let nowDropNode: IDropNode;
     const findDragAndDropNode = (curr: TreeItem[]) => {
-      if (!Array.isArray(curr)) {return;}
+      if (!Array.isArray(curr)) {
+        return;
+      }
       curr.every((item, index) => {
         if (nowDragNode && nowDropNode) {
           return false;
@@ -67,13 +81,13 @@ export default function useDraggable(
       });
     };
     findDragAndDropNode(cloneData);
-    if (nowDragNode && nowDropNode && dropType) {
+    if (nowDragNode && nowDropNode && currentDropType) {
       const cloneDrapNode = cloneDeep(nowDragNode.target[nowDragNode.index]);
-      if (dropType === 'prev') {
+      if (currentDropType === 'prev') {
         nowDropNode.target.splice(nowDropNode.index, 0, cloneDrapNode);
-      } else if (dropType === 'next') {
+      } else if (currentDropType === 'next') {
         nowDropNode.target.splice(nowDropNode.index + 1, 0, cloneDrapNode);
-      } else if (dropType === 'inner') {
+      } else if (currentDropType === 'inner') {
         const children = nowDropNode.target[nowDropNode.index].children;
         if (Array.isArray(children)) {
           children.unshift(cloneDrapNode);
@@ -85,23 +99,26 @@ export default function useDraggable(
       if (targetIndex !== -1) {
         nowDragNode.target.splice(targetIndex, 1);
       }
-
     }
 
     return cloneData;
   };
-  const onDragstart = (event: DragEvent, treeNode: TreeItem) => {
+  const onDragstart = (event: DragEvent, treeNode: TreeItem): void => {
     dragState.draggingNode = <Nullable<HTMLElement>>event.target;
-    const data = {
+    const treeInfo = {
       type: 'tree-node',
-      nodeId: treeNode.id
+      nodeId: treeNode.id,
     };
-    event.dataTransfer.setData('Text', JSON.stringify(data));
+    event.dataTransfer?.setData('Text', JSON.stringify(treeInfo));
   };
-  const onDragover = (event: DragEvent) => {
+  const onDragover = (event: DragEvent): void => {
     if (draggable) {
       event.preventDefault();
-      event.dataTransfer.dropEffect = 'move';
+
+      if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = 'move';
+      }
+
       if (!node) {
         return;
       }
@@ -133,16 +150,16 @@ export default function useDraggable(
       dragState.dropType = innerDropType;
     }
   };
-  const onDragleave = (event: DragEvent) => {
+  const onDragleave = (event: DragEvent): void => {
     removeDraggingStyle(<Nullable<HTMLElement>>event.currentTarget);
   };
-  const onDrop = (event: DragEvent, dropNode: TreeItem) => {
+  const onDrop = (event: DragEvent, dropNode: TreeItem): void => {
     removeDraggingStyle(<Nullable<HTMLElement>>event.currentTarget);
     if (!draggable) {
       return;
     }
     event.preventDefault();
-    const transferDataStr = event.dataTransfer.getData('Text');
+    const transferDataStr = event.dataTransfer?.getData('Text');
     if (transferDataStr) {
       try {
         const transferData = JSON.parse(transferDataStr);
@@ -169,6 +186,6 @@ export default function useDraggable(
     onDragover,
     onDragleave,
     onDrop,
-    dragState
+    dragState,
   };
 }

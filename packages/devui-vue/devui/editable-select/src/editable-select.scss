@@ -1,5 +1,4 @@
-@import '../../style/theme/color';
-@import '../../style/core/animation';
+@import '../../styles-var/devui-var.scss';
 
 .devui-editable-select {
   .devui-select-chevron-icon {
@@ -190,7 +189,7 @@
   }
 
   .devui-popup-tips {
-    color: $devui-text-weak; // TODO: Color-Question
+    color: $devui-text-weak;
     padding: 4px 12px;
   }
 }

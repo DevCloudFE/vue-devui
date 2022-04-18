@@ -1,15 +1,28 @@
-@import '../../style/mixins/index';
-@import '../../style/theme/color';
+@import '../../styles-var/devui-var.scss';
 
 .devui-auto-complete,
 .devui-auto-complete-menu {
   .devui-dropdown-menu {
+    width: 100%;
     left: 0 !important;
     top: 0 !important;
+    margin: 0 !important;
+
+    ul {
+      width: 100%;
+      padding: 0;
+    }
   }
 }
 
 .devui-auto-complete {
+  .devui-form-control {
+    padding: 4px 8px;
+  }
+}
+
+.devui-auto-complete,
+.devui-auto-complete-menu {
   .active {
     background: $devui-list-item-hover-bg;
   }
@@ -38,9 +51,10 @@
 
   .devui-dropdown-menu {
     .devui-dropdown-item:not(.disabled) {
-      &.selected {
-        color: $devui-list-item-active-text;
-        background-color: $devui-list-item-active-bg;
+      &.selected,
+      &.selected &:hover {
+        color: $devui-list-item-active-text !important;
+        background-color: $devui-list-item-active-bg !important;
       }
     }
   }

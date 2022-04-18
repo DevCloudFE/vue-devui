@@ -5,7 +5,7 @@
  * <div v-clickoutside="handleClose">
  */
 
-import { inBrowser } from '../util/common-var';
+import { inBrowser } from '../utils/common-var';
 import { on } from './utils';
 
 const ctx = Symbol('@@clickoutside');

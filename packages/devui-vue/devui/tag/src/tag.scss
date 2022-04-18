@@ -4,51 +4,45 @@ $devui-tag-normal-config: (
   default: (
     border: 0,
     color: $devui-text,
-    background-color: $devui-default-bg
+    background-color: $devui-default-bg,
   ),
   primary: (
     color: $devui-primary,
     background-color: $devui-primary-bg,
-    border-color: $devui-primary-line
   ),
   success: (
     color: $devui-success,
     background-color: $devui-success-bg,
-    border-color: $devui-success-line
   ),
   warning: (
     color: $devui-warning,
     background-color: $devui-warning-bg,
-    border-color: $devui-warning-line
   ),
   danger: (
     color: $devui-danger,
     background-color: $devui-danger-bg,
-    border-color: $devui-danger-line
   ),
   colorful: (
-    background-color: #ffffff
+    background-color: #ffffff,
   ),
   deletable: (
-    padding-right: 32px
-  )
+    padding-right: 32px,
+  ),
 );
 
 .devui-tag {
   display: inline-block;
   margin: 4px;
 
-  .devui-tag {
+  .devui-tag-item {
+    display: block;
+    position: relative;
     padding: 0 8px;
     min-height: 20px;
-    font-size: 12px;
-    font-size: var(--devui-font-size, 12px);
-    line-height: 20px;
     border: 1px solid;
     border-radius: $devui-border-radius;
-    display: block;
-    align-items: center;
-    position: relative;
+    font-size: $devui-font-size;
+    line-height: 20px;
     cursor: default;
     @each $type in default, primary, success, warning, danger, colorful, deletable {
       &.devui-tag-#{$type} {

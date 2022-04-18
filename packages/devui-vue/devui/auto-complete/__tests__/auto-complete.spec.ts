@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import DAutoComplete from '../src/auto-complete';
-
 // delay api
 const wait = (delay = 300) =>
   new Promise(resolve => setTimeout(() => resolve(true), delay));
@@ -13,7 +12,7 @@ describe('auto-complete', () => {
         <d-auto-complete
           :source="source"
           v-model="value"
-          :dAutoCompleteWidth="450"
+          :width="450"
         />
       `,
       setup() {
@@ -71,7 +70,7 @@ describe('auto-complete', () => {
             :source="source"
             v-model="value"
             :disabled="isDisabled"
-          /> 
+          />
           <button @click="toggle">{{ isDisabled ? 'Enable AutoComplete' : 'Disable AutoComplete' }}</button>
         </div>
       `,
@@ -128,8 +127,8 @@ describe('auto-complete', () => {
           disabledKey="disabled"
           isSearching
           :formatter="formatter"
-        > 
-          <template #searchingTemplate="slotProps" >
+        >
+          <template #searching="slotProps" >
             <div id="devui-is-searching-template">
                 {{slotProps}}
             </div>
@@ -234,13 +233,13 @@ describe('auto-complete', () => {
         <d-auto-complete
           :source="source"
           v-model="value"
-        > 
-          <template #itemTemplate="slotProps" >
+        >
+          <template #item="slotProps" >
             <div>
               第{{slotProps.index}}项: {{slotProps.item}}
             </div>
           </template>
-          <template #noResultItemTemplate="slotProps" >
+          <template #nothing="slotProps" >
             <div id="noResultItemTemplate">
                 {{slotProps}}
             </div>
@@ -345,13 +344,16 @@ describe('auto-complete', () => {
     expect(selectValueCB).toHaveBeenCalledTimes(1);
   });
   it('allowEmptyValueSearch ', async () => {
+    const div = document.createElement('div');
+    div.id="app";
+    document.body.appendChild(div);
     const wrapper = mount({
       components: {'d-auto-complete': DAutoComplete },
       template: `
         <d-auto-complete
           :source="source"
           v-model="value"
-          :allowEmptyValueSearch="allowEmptyValueSearch"
+          :allow-empty-value-search="allowEmptyValueSearch"
         />
       `,
       setup() {
@@ -377,23 +379,25 @@ describe('auto-complete', () => {
     expect(input.element.value).toBe('');
     await input.trigger('focus');
     await nextTick();
+    await input.setValue('');
+    await wait(300);
+    await nextTick();
     expect(wrapper.find('ul').element.childElementCount).toBe(5);
   });
-
-  it('appendToBody & appendToBodyDirections', async () => {
+  it('appendToBody & position', async () => {
     const wrapper = mount({
       components: {'d-auto-complete': DAutoComplete },
       template: `
         <d-auto-complete
           :source="source"
           v-model="value"
-          :appendToBodyDirections="appendToBodyDirections"
-          :allowEmptyValueSearch="allowEmptyValueSearch"
+          :append-to-body="appendToBody"
+          :position="position"
         />
       `,
       setup() {
         const value = ref('');
-        const allowEmptyValueSearch = ref(true);
+        const appendToBody = ref(true);
         const source = [
           'CC#',
           'C',
@@ -401,17 +405,12 @@ describe('auto-complete', () => {
           'CPython',
           'CoffeeScript',
         ];
-        const appendToBodyDirections =  ref({
-          originX: 'left',
-          originY: 'bottom',
-          overlayX: 'left',
-          overlayY: 'top',
-        });
+        const position =  ref(['bottom']);
         return {
           value,
           source,
-          allowEmptyValueSearch,
-          appendToBodyDirections
+          appendToBody,
+          position
         };
       }
     });
@@ -424,10 +423,20 @@ describe('auto-complete', () => {
     await nextTick();
     await wait(300);
     await nextTick();
-    expect(wrapper.find('ul').element.childElementCount).toBe(5);
-    expect(wrapper.find('.selected').element.innerHTML).toBe('CC#');
+    expect(wrapper.find('.devui-select-open').exists()).toBe(true);
+    const ul = document.querySelector('.devui-list-unstyled');
+    let lis = 0;
+    if(ul&&ul.getElementsByTagName('li')){
+      lis=ul.getElementsByTagName('li').length;
+    }
+    expect(lis).toBe(5);
+    const li_ed = document.querySelector('.selected');
+    let li_text = '';
+    if(li_ed&&li_ed.getElementsByTagName('li')){
+      li_text=li_ed.innerHTML;
+    }
+    expect(li_text).toBe('CC#');
   });
-
   it('latestSource',async () => {
     const wrapper = mount({
       components: {'d-auto-complete': DAutoComplete },
@@ -530,6 +539,7 @@ describe('auto-complete', () => {
     expect(wrapper.find('.devui-auto-complete').exists()).toBe(true);
     const input = wrapper.find('input');
     expect(input.element.value).toBe('');
+    await input.trigger('click');
     await input.setValue('c');
     await nextTick();
     expect(wrapper.find('.devui-dropdown-menu').exists()).toBe(true);

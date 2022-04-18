@@ -1,89 +1,56 @@
-import { watch, Ref, ref, computed } from 'vue';
-import { Column, CompareFn, FilterResults } from '../column/column.type';
-import { SortDirection } from '../table.type';
-export interface TableStore<T = Record<string, any>> {
-  states: {
-    _data: Ref<T[]>;
-    _columns: Ref<Column[]>;
-    _checkList: Ref<boolean[]>;
-    _checkAll: Ref<boolean>;
-    _halfChecked: Ref<boolean>;
-    isFixedLeft: Ref<boolean>;
-  };
-  insertColumn(column: Column): void;
-  sortColumn(): void;
-  removeColumn(column: Column): void;
-  getCheckedRows(): T[];
-  sortData(field: string, direction: SortDirection, compareFn: CompareFn<T>): void;
-  filterData(field: string, results: FilterResults): void;
-  resetFilterData(): void;
+import { watch, Ref, ref, computed, unref, ComponentInternalInstance } from 'vue';
+import { Column, SortMethod, SortDirection } from '../components/column/column-types';
+import { TableStore } from './store-types';
+
+function replaceColumn(array: any, column: any) {
+  return array.map((item) => {
+    if (item.id === column.id) {
+      return column;
+    } else if (item.children?.length) {
+      item.children = replaceColumn(item.children, column);
+    }
+    return item;
+  });
 }
 
-export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
-  const _data: Ref<T[]> = ref([]);
-  watch(
-    dataSource,
-    (value: T[]) => {
-      _data.value = [...value];
-    },
-    { deep: true, immediate: true }
-  );
-
-  const { _columns, insertColumn, removeColumn, sortColumn } = createColumnGenerator();
-  const { _checkAll, _checkList, _halfChecked, getCheckedRows } = createSelection(dataSource, _data);
-  const { sortData } = createSorter(dataSource, _data);
-  const { filterData, resetFilterData } = createFilter(dataSource, _data);
-
-  const { isFixedLeft } = createFixedLogic(_columns);
-
-  return {
-    states: {
-      _data,
-      _columns,
-      _checkList,
-      _checkAll,
-      _halfChecked,
-      isFixedLeft,
-    },
-    insertColumn,
-    sortColumn,
-    removeColumn,
-    getCheckedRows,
-    sortData,
-    filterData,
-    resetFilterData,
-  };
+function doFlattenColumns(columns: any) {
+  const result: any = [];
+  columns.forEach((column: any) => {
+    if (column.children) {
+      // eslint-disable-next-line prefer-spread
+      result.push.apply(result, doFlattenColumns(column.children));
+    } else {
+      result.push(column);
+    }
+  });
+  return result;
 }
 
-/**
- * 列生成器
- * @returns
- */
-const createColumnGenerator = () => {
+const createColumnGenerator = <T>() => {
   const _columns: Ref<Column[]> = ref([]);
+  const flatColumns: Ref<Column[]> = ref([]);
 
-  /**
-   * 插入当前列
-   * @param {Column} column
-   */
-  const insertColumn = (column: Column) => {
-    _columns.value.push(column);
-    // 实际上就是插入排序
+  const sortColumn = () => {
     _columns.value.sort((a, b) => a.order - b.order);
   };
 
-  /**
-   * 对 column 进行排序
-   */
-  const sortColumn = () => {
-    _columns.value.sort((a, b) => (a.order > b.order ? 1 : -1));
+  const insertColumn = (column: Column, parent: any) => {
+    const array = unref(_columns);
+    let newColumns = [];
+    if (!parent) {
+      array.push(column);
+      newColumns = array;
+    } else {
+      if (parent && !parent.children) {
+        parent.children = [];
+      }
+      parent.children.push(column);
+      newColumns = replaceColumn(array, parent);
+    }
+    sortColumn();
+    _columns.value = newColumns;
   };
 
-  /**
-   * 移除当前列
-   * @param {Column} column
-   * @returns
-   */
   const removeColumn = (column: Column) => {
     const i = _columns.value.findIndex((v) => v === column);
     if (i === -1) {
@@ -91,15 +58,14 @@ const createColumnGenerator = () => {
     }
     _columns.value.splice(i, 1);
   };
-  return { _columns, insertColumn, removeColumn, sortColumn };
+
+  const updateColumns = () => {
+    flatColumns.value = [].concat(doFlattenColumns(_columns.value));
+  };
+
+  return { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns };
 };
 
-/**
- * 选择功能
- * @param dataSource
- * @param _data
- * @returns
- */
 const createSelection = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
   const _checkList: Ref<boolean[]> = ref([]);
   const _checkAllRecord: Ref<boolean> = ref(false);
@@ -107,7 +73,6 @@ const createSelection = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
     get: () => _checkAllRecord.value,
     set: (val: boolean) => {
       _checkAllRecord.value = val;
-      // 只有在 set 的时候变更 _checkList 的数据
       for (let i = 0; i < _checkList.value.length; i++) {
         _checkList.value[i] = val;
       }
@@ -123,7 +88,6 @@ const createSelection = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
     { deep: true, immediate: true }
   );
 
-  // checkList 只有全为true的时候
   watch(
     _checkList,
     (list) => {
@@ -143,10 +107,6 @@ const createSelection = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
     { immediate: true, deep: true }
   );
 
-  /**
-   * 获取当前已选数据
-   * @returns {T[]}
-   */
   const getCheckedRows = (): T[] => {
     return _data.value.filter((_, index) => _checkList.value[index]);
   };
@@ -159,65 +119,19 @@ const createSelection = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
   };
 };
 
-/**
- * 排序功能
- * @template T
- * @param dataSource
- * @param _data
- */
 const createSorter = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
-  /**
-   * 对数据进行排序
-   * @param {string} field
-   * @param {SortDirection} direction
-   * @param {CompareFn<T>} compareFn
-   */
-  const sortData = (
-    field: string,
-    direction: SortDirection,
-    compareFn: CompareFn<T> = (fieldKey: string, a: T, b: T) => a[fieldKey] > b[fieldKey]
-  ) => {
+  const sortData = (direction: SortDirection, sortMethod: SortMethod<T>) => {
     if (direction === 'ASC') {
-      _data.value = _data.value.sort((a, b) => (compareFn(field, a, b) ? 1 : -1));
+      _data.value = _data.value.sort((a, b) => (sortMethod ? (sortMethod(a, b) ? 1 : -1) : 0));
     } else if (direction === 'DESC') {
-      _data.value = _data.value.sort((a, b) => (!compareFn(field, a, b) ? 1 : -1));
+      _data.value = _data.value.sort((a, b) => (sortMethod ? (sortMethod(a, b) ? -1 : 1) : 0));
     } else {
       _data.value = [...dataSource.value];
     }
   };
-  return { sortData };
-};
 
-/**
- * 过滤功能
- * @template T
- * @param dataSource
- * @param _data
- * @returns
- */
-const createFilter = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
-  // 过滤数据所需要的
-  const fieldSet = new Set<string>();
-  /**
-   * 过滤数据
-   */
-  const filterData = (field: string, results: FilterResults) => {
-    fieldSet.add(field);
-    const fields = [...fieldSet];
-    _data.value = dataSource.value.filter((item) => {
-      return fields.reduce<boolean>((prev, fieldKey) => {
-        return prev && results.indexOf(item[fieldKey]) !== -1;
-      }, true);
-    });
-  };
-  /**
-   * 重置数据为最开始的状态
-   */
-  const resetFilterData = () => {
-    fieldSet.clear();
-    _data.value = [...dataSource.value];
-  };
-  return { filterData, resetFilterData };
+  const thList: ComponentInternalInstance[] = [];
+  return { sortData, thList };
 };
 
 const createFixedLogic = (columns: Ref<Column[]>) => {
@@ -227,3 +141,39 @@ const createFixedLogic = (columns: Ref<Column[]>) => {
 
   return { isFixedLeft };
 };
+
+export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
+  const _data: Ref<T[]> = ref([]);
+  watch(
+    dataSource,
+    (value: T[]) => {
+      _data.value = [...value];
+    },
+    { deep: true, immediate: true }
+  );
+
+  const { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
+  const { _checkAll, _checkList, _halfChecked, getCheckedRows } = createSelection(dataSource, _data);
+  const { sortData, thList } = createSorter(dataSource, _data);
+
+  const { isFixedLeft } = createFixedLogic(_columns);
+
+  return {
+    states: {
+      _data,
+      _columns,
+      flatColumns,
+      _checkList,
+      _checkAll,
+      _halfChecked,
+      isFixedLeft,
+      thList,
+    },
+    insertColumn,
+    sortColumn,
+    removeColumn,
+    updateColumns,
+    getCheckedRows,
+    sortData,
+  };
+}

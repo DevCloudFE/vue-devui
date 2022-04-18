@@ -1,12 +1,27 @@
+import type { Ref, UnwrapRef } from 'vue';
 import { ref } from 'vue';
 import { FileUploader } from '../file-uploader';
+import type { IUploadOptions, IFileResponse } from '../upload-types';
 import { UploadStatus } from '../upload-types';
 
-export const useUpload = () => {
-  const fileUploaders = ref<Array<FileUploader>>([]);
-  const filesWithSameName = ref([]);
+export interface IUseUpload {
+  fileUploaders: Ref<UnwrapRef<FileUploader[]>>;
+  getFiles: () => File[];
+  addFile: (file: File, options?: IUploadOptions) => void;
+  getFullFiles: () => UnwrapRef<FileUploader[]>;
+  deleteFile: (file: FileUploader['file']) => void;
+  upload: (oneFile?: FileUploader) => Promise<IFileResponse[]>;
+  removeFiles: () => void;
+  getSameNameFiles: () => string;
+  resetSameNameFiles: () => void;
+  _oneTimeUpload: () => Promise<IFileResponse[]>;
+}
 
-  const checkFileSame = (fileName) => {
+export const useUpload = (): IUseUpload => {
+  const fileUploaders = ref<FileUploader[]>([]);
+  const filesWithSameName = ref<string[]>([]);
+
+  const checkFileSame = (fileName: string): boolean => {
     let checkRel = true;
 
     for (let i = 0; i < fileUploaders.value.length; i++) {
@@ -21,7 +36,7 @@ export const useUpload = () => {
     return checkRel;
   };
 
-  const addFile = (file, options) => {
+  const addFile = (file: File, options?: IUploadOptions): void => {
     if (options && options.checkSameName) {
       if (checkFileSame(file.name)) {
         fileUploaders.value.push(new FileUploader(file, options));
@@ -31,24 +46,24 @@ export const useUpload = () => {
     }
   };
 
-  const getFiles = () => {
+  const getFiles = (): File[] => {
     return fileUploaders.value.map((fileUploader) => {
       return fileUploader.file;
     });
   };
 
-  const getFullFiles = () => {
+  const getFullFiles = (): UnwrapRef<FileUploader[]> => {
     return fileUploaders.value.map((fileUploader) => {
       return fileUploader;
     });
   };
 
-  const dealOneTimeUploadFiles = async (uploads) => {
+  const dealOneTimeUploadFiles = async (uploads?: UnwrapRef<FileUploader[]>): Promise<IFileResponse[]> => {
     if (!uploads || !uploads.length) {
       return Promise.reject('no files');
     }
     // 触发文件上传
-    let finalUploads = [];
+    let finalUploads: IFileResponse[] = [];
     await uploads[0].send(uploads).finally(
       () =>
         // 根据uploads[0]的上传状态为其他file设置状态
@@ -62,19 +77,11 @@ export const useUpload = () => {
     return finalUploads;
   };
 
-  const upload = async (
-    oneFile?
-  ): Promise<
-  | never
-  | {
-    file: File;
-    response: any;
-  }[]
-  > => {
-    let uploads: any[] = [];
+  const upload = async (oneFile?: FileUploader): Promise<IFileResponse[]> => {
+    let uploads: IFileResponse[] = [];
     if (oneFile) {
       oneFile.percentage = 0;
-      const uploadedFile = await oneFile.send();
+      const uploadedFile: IFileResponse = await oneFile.send();
       uploads.push(uploadedFile);
     } else {
       const preFiles = fileUploaders.value.filter((fileUploader) => fileUploader.status === UploadStatus.preLoad);
@@ -91,31 +98,30 @@ export const useUpload = () => {
     if (uploads.length > 0) {
       return Promise.resolve(uploads);
     }
-
     return Promise.reject('no files');
   };
 
-  const _oneTimeUpload = () => {
-    const uploads = fileUploaders.value.filter((fileUploader) => fileUploader.status !== UploadStatus.uploaded);
+  const _oneTimeUpload = (): Promise<IFileResponse[]> => {
+    const uploads: UnwrapRef<FileUploader[]> = fileUploaders.value.filter((fileUploader) => fileUploader.status !== UploadStatus.uploaded);
     return dealOneTimeUploadFiles(uploads);
   };
 
-  const deleteFile = (file) => {
+  const deleteFile = (file: FileUploader['file']) => {
     const deleteUploadFile = fileUploaders.value.find((fileUploader) => fileUploader.file === file);
-    deleteUploadFile.cancel();
+    deleteUploadFile?.cancel();
     fileUploaders.value = fileUploaders.value.filter((fileUploader) => {
       return file !== fileUploader.file;
     });
   };
 
-  const removeFiles = () => {
+  const removeFiles = (): void => {
     fileUploaders.value = [];
     filesWithSameName.value = [];
   };
-  const getSameNameFiles = () => {
+  const getSameNameFiles = (): string => {
     return filesWithSameName.value.join();
   };
-  const resetSameNameFiles = () => {
+  const resetSameNameFiles = (): void => {
     filesWithSameName.value = [];
   };
 
