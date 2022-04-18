@@ -6,7 +6,7 @@ import {
 } from 'vue';
 import { menuProps, MenuProps } from './types/menu-types';
 import './menu.scss';
-import {setDefaultIndent} from './hooks/Layers';
+import {setDefaultIndent} from './composables/Layers';
 
 export default defineComponent({
   name: 'DMenu',
@@ -30,7 +30,7 @@ export default defineComponent({
           class={
             [
               `devui-menu`,
-              `${props['mode']}`,
+              `devui-menu-${props['mode']}`,
               props['collapsed'] ? 'devui-menu-collapsed' : ''
             ]
           }
