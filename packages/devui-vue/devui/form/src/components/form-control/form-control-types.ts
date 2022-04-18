@@ -1,9 +1,10 @@
 import type { PropType, ExtractPropTypes, ComputedRef } from 'vue';
 
+export type FeedbackStatus = 'success' | 'error' | 'pending';
+
 export const formControlProps = {
   feedbackStatus: {
-    type: String as PropType<'success' | 'error' | 'pending' | ''>,
-    default: '',
+    type: String as PropType<FeedbackStatus>,
   },
   extraInfo: {
     type: String,

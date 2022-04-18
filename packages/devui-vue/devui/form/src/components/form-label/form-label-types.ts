@@ -5,10 +5,6 @@ export const formLabelProps = {
     type: Boolean,
     default: false,
   },
-  hasHelp: {
-    type: Boolean,
-    default: false,
-  },
   helpTips: {
     type: String,
     default: '',
