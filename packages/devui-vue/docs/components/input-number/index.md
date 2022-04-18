@@ -67,7 +67,7 @@ import { defineComponent, ref } from 'vue'
 ```vue
 <template>
   <div>
-    <d-input-number v-model="num" :step="2"></d-input-number>
+    <d-input-number v-model="num" :step="3"></d-input-number>
   </div>
 </template>
 <script>
@@ -87,13 +87,16 @@ import { defineComponent, ref } from 'vue'
 
 ### 尺寸
 
-:::demo 额外提供了 lg、normal、sm 三种尺寸的数字输入框。
+:::demo 额外提供了 lg、md、sm 三种尺寸的数字输入框。
 
 ```vue
 <template>
   <div>
+    <div class="space">Large</div>
     <d-input-number v-model="num1" :size="'lg'"></d-input-number>
-    <d-input-number v-model="num2" :size="'normal'"></d-input-number>
+    <div class="space">Middle</div>
+    <d-input-number v-model="num2" :size="'md'"></d-input-number>
+    <div class="space">Small</div>
     <d-input-number v-model="num3" :size="'sm'"></d-input-number>
   </div>
 </template>
@@ -113,6 +116,12 @@ import { defineComponent, ref } from 'vue'
     }
   })
 </script>
+<style>
+.space{
+  padding: 5px 0;
+  font-size: 16px;
+}
+</style>
 ```
 :::
 ### API
