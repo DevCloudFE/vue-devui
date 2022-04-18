@@ -125,6 +125,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/ming-bin"><img src="https://avatars.githubusercontent.com/u/54826175?v=4?s=100" width="100px;" alt=""/><br /><sub><b>mingBin</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=ming-bin" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/icjs-cc"><img src="https://avatars.githubusercontent.com/u/27618209?v=4?s=100" width="100px;" alt=""/><br /><sub><b>陈剑术</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=icjs-cc" title="Code">💻</a></td>
     <td align="center"><a href="https://www.merlin218.top/"><img src="https://avatars.githubusercontent.com/u/61051874?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Merlin218</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/issues?q=author%3AMerlin218" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/jingyiliu"><img src="https://avatars.githubusercontent.com/u/6957175?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Johnny.Liu</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/issues?q=author%3Ajingyiliu" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
