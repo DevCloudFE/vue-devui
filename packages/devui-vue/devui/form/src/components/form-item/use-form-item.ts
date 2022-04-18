@@ -9,15 +9,9 @@ export function useFormItem(): UseFormItem {
   const ns = useNamespace('form');
 
   const itemClasses = computed(() => ({
-    [`${ns.e('item')}`]: true,
+    [`${ns.em('item', 'horizontal')}`]: labelData.layout === 'horizontal',
     [`${ns.em('item', 'vertical')}`]: labelData.layout === 'vertical',
-    [`${ns.em('item', 'columns')}`]: labelData.layout === 'columns',
   }));
 
-  const tipClasses = computed(() => ({
-    [`${ns.e('validate-tip')}`]: true,
-    [`${ns.em('validate-tip', 'horizontal')}`]: labelData.layout === 'horizontal',
-  }));
-
-  return { itemClasses, tipClasses };
+  return { itemClasses };
 }

@@ -14,5 +14,6 @@ export const formControlProps = {
 export type FormControlProps = ExtractPropTypes<typeof formControlProps>;
 
 export interface UseFormControl {
+  controlClasses: ComputedRef<Record<string, boolean>>;
   controlContainerClasses: ComputedRef<Record<string, boolean>>;
 }

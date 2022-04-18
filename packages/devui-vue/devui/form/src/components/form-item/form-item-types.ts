@@ -15,5 +15,4 @@ export type FormItemProps = ExtractPropTypes<typeof formItemProps>;
 
 export interface UseFormItem {
   itemClasses: ComputedRef<Record<string, boolean>>;
-  tipClasses: ComputedRef<Record<string, boolean>>;
 }

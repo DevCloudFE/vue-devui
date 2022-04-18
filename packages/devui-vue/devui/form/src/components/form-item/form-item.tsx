@@ -4,10 +4,8 @@ import AsyncValidator, { Rules } from 'async-validator';
 import mitt from 'mitt';
 import { dFormEvents, dFormItemEvents, IForm, FORM_TOKEN, FORM_ITEM_TOKEN } from '../../form-types';
 import { formItemProps, FormItemProps } from './form-item-types';
-import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { useFormItem } from './use-form-item';
 import './form-item.scss';
-import item from '../../../../carousel/src/item';
 
 export default defineComponent({
   name: 'DFormItem',
@@ -18,7 +16,7 @@ export default defineComponent({
     const formData = reactive(dForm.formData);
     const initFormItemData = formData[props.field];
     const rules = reactive(dForm.rules);
-    const { itemClasses, tipClasses } = useFormItem();
+    const { itemClasses } = useFormItem();
 
     const resetField = () => {
       if (Array.isArray(initFormItemData)) {
@@ -97,13 +95,6 @@ export default defineComponent({
       dForm.formMitt.emit(dFormEvents.removeField, formItem);
       removeValidateEvents();
     });
-    return () => {
-      return (
-        <div class={itemClasses.value}>
-          {ctx.slots.default?.()}
-          <div class={tipClasses.value}>{showMessage.value && tipMessage.value}</div>
-        </div>
-      );
-    };
+    return () => <div class={itemClasses.value}>{ctx.slots.default?.()}</div>;
   },
 });

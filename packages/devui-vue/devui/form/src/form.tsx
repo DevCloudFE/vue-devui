@@ -3,7 +3,6 @@ import mitt from 'mitt';
 import { formProps, FormProps, IFormItem, dFormEvents, FORM_TOKEN } from './form-types';
 import { EventBus } from './utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import './form.scss';
 
 export default defineComponent({
   name: 'DForm',

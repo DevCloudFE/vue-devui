@@ -27,7 +27,7 @@ export default defineComponent({
     const tipMessage = ref('');
     const popPosition = ref<positionType>('bottom');
     const ns = useNamespace('form');
-    const { controlContainerClasses } = useFormControl(props);
+    const { controlClasses, controlContainerClasses } = useFormControl(props);
     let rectInfo: Partial<DOMRect> = {
       width: 0,
       height: 0,
@@ -77,7 +77,7 @@ export default defineComponent({
     };
 
     return () => (
-      <div class={ns.e('control')} ref={formControl} data-uid={uid} v-clickoutside={handleClickOutside}>
+      <div class={controlClasses.value} ref={formControl} data-uid={uid} v-clickoutside={handleClickOutside}>
         {showPopover.value && (
           <Teleport to="body">
             <div
