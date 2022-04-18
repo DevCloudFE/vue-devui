@@ -127,6 +127,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://www.merlin218.top/"><img src="https://avatars.githubusercontent.com/u/61051874?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Merlin218</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/issues?q=author%3AMerlin218" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/jingyiliu"><img src="https://avatars.githubusercontent.com/u/6957175?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Johnny.Liu</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/issues?q=author%3Ajingyiliu" title="Bug reports">🐛</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Yangxfeng"><img src="https://avatars.githubusercontent.com/u/35209766?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yangxfeng</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/issues?q=author%3AYangxfeng" title="Bug reports">🐛</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
