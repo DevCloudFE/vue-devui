@@ -1,6 +1,10 @@
 .devui-form__label {
   align-self: flex-start;
 
+  & > span {
+    line-height: 28px;
+  }
+
   .devui-form__label--required {
     display: inline-flex;
     align-items: center;

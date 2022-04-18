@@ -9,6 +9,11 @@ export function useFormControl(props: FormControlProps): UseFormControl {
   const ns = useNamespace('form');
   const { feedbackStatus } = toRefs(props);
 
+  const controlClasses = computed(() => ({
+    [`${ns.e('control')}`]: true,
+    [`${ns.em('control', 'horizontal')}`]: labelData.layout === 'horizontal',
+  }));
+
   const controlContainerClasses = computed(() => ({
     [`${ns.e('control-container')}`]: true,
     [`${ns.em('control-container', 'horizontal')}`]: labelData.layout === 'horizontal',
@@ -16,5 +21,5 @@ export function useFormControl(props: FormControlProps): UseFormControl {
     [`${ns.em('control-container', 'feedback-error')}`]: Boolean(feedbackStatus.value === 'error'),
   }));
 
-  return { controlContainerClasses };
+  return { controlClasses, controlContainerClasses };
 }
