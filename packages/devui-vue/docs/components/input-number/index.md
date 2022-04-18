@@ -134,7 +134,7 @@ import { defineComponent, ref } from 'vue'
 |    min     | `number` |  --   | 可选，输入框的最小值min    |  [基本用法](#基本用法) |
 |    disabled    | `boolean` | false | 可选，文本框是否被禁用           | [禁用状态](#禁用状态)  |
 | value | `number` |  0   | 可选，文本框默认值 | [基本用法](#基本用法) |
-| size | `'lg'\|'normal'\|'sm'` |  ''   | 可选，文本框尺寸，有三种选择`'lg'`,`'narmal'`,`'sm'` | [尺寸](#尺寸) |
+| size | `'lg'\|'md'\|'sm'` |  ''   | 可选，文本框尺寸，有三种选择`'lg'`,`'md'`,`'sm'` | [尺寸](#尺寸) |
 
 ### Events
 
