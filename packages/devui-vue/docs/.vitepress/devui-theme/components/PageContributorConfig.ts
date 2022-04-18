@@ -309,8 +309,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   select: [
     {
-      avatar: '',
-      homepage: 'https://gitee.com/lookforwhat'
+      avatar: 'https://avatars.githubusercontent.com/u/32935349?v=4',
+      homepage: 'https://github.com/unfound'
     },
   ],
   slider: [
