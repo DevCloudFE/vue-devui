@@ -21,7 +21,7 @@ import useHeights from './hooks/use-heights';
 import useOriginScroll from './hooks/use-origin-scroll';
 import useFrameWheel from './hooks/use-frame-wheel';
 import useMobileTouchMove from './hooks/use-mobile-touch-move';
-import Filler from './components/filler';
+import ResizeObserverContainer from './components/container';
 import ScrollBar from './components/scroll-bar';
 import { renderChildren } from './components/item';
 
@@ -327,7 +327,7 @@ export default defineComponent({
             ref={componentRef}
             onScroll={onComponentScroll}
           >
-            <Filler
+            <ResizeObserverContainer
               height={calRes.scrollHeight}
               offset={calRes.offset}
               onInnerResize={collectHeight}

@@ -1,13 +1,13 @@
 import type { CSSProperties, SetupContext } from 'vue';
 import { defineComponent, ref, watch, toRefs } from 'vue';
-import { virtualListFllterProps } from '../virtual-list-types';
+import { resizeObserverContainerProps } from '../virtual-list-types';
 import ResizeObserver from './resize-observer';
 
 const INIT_INNER_STYLE: CSSProperties = { display: 'flex', flexDirection: 'column' };
 
 export default defineComponent({
-  name: 'DVirtualListFiller',
-  props: virtualListFllterProps,
+  name: 'ResizeObserverContainer',
+  props: resizeObserverContainerProps,
   setup(props, ctx: SetupContext) {
     const { height, offset } = toRefs(props);
     const outerStyle = ref<CSSProperties>({});
