@@ -93,6 +93,31 @@ export default defineComponent({
 
 :::
 
+### Custom Color
+
+:::demo
+
+```vue
+<template>
+  <div class="slider-wrapper" style="padding:20px">
+    <d-slider v-model="inputValue" color="#e67e22"></d-slider>
+  </div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const inputValue = ref(20);
+    return {
+      inputValue,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Input forbidden state
 
 When disabled is set to true, user input is not allowed.
@@ -167,6 +192,7 @@ d-slider parameter
 | min          | number  | 0       | Optional. Minimum value of the sliding input bar                                                                                          | [Basic Usage](#basic-usage)                                                   |
 | max          | number  | 100     | Optional. Maximum value of the sliding input bar                                                                                          | [Basic Usage](#basic-usage)                                                   |
 | step         | number  | 1       | Optional. Step of the sliding input bar. The value must be greater than or equal to 0 and must be divisible by (max-min)                  | [Limit Step ](#limit-step)                                                    |
+| color     | string | ''   | Optional. Custom slider color display                                                                        | [Custom Color](#custom-color) 
 | disabled     | boolean | false   | Optional. When the value is true, users are not allowed to enter                                                                          | [Input forbidden state](#input-forbidden-state)                               |
 | showInput    | boolean | false   | Optional,When the value is false,the input is not displayed                                                                               | [Bidirectional Binding](#bidirectional-binding)                               |
 | tipsRenderer | string  |         | Optional. This parameter indicates the function for rendering popover content. If "null" is transferred, popover content is not displayed | [Customized popover content displayed](#customized-popover-content-displayed) |

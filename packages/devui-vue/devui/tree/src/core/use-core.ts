@@ -2,22 +2,36 @@ import { computed, ComputedRef, Ref } from 'vue';
 import { IInnerTreeNode, ITreeNode, IUseCore, valueof } from './use-tree-types';
 import { generateInnerTree } from './utils';
 
+const DEFAULT_CONFIG = {
+  expanded: false, // 是否只从展开了的节点中获取数据
+  recursive: true, // 是否需要获取非直接子节点
+}
+
 export default function(options?){
   return function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
-    const getLevel = (node: ITreeNode): number => {
+    const getLevel = (node: IInnerTreeNode): number => {
       return data.value.find((item) => item.id === node.id).level;
     }
-    
-    const getChildren = (node: ITreeNode, expanded = false): IInnerTreeNode[] => {
+
+    const getChildren = (node: IInnerTreeNode, userConfig = DEFAULT_CONFIG): IInnerTreeNode[] => {
       let result = [];
-      const treeData = expanded ? getExpendedTree() : data;
+      const config = { ...DEFAULT_CONFIG, ...userConfig };
+      const treeData = config.expanded ? getExpendedTree() : data;
       const startIndex = treeData.value.findIndex((item) => item.id === node.id);
 
       for (let i = startIndex + 1; i < treeData.value.length && getLevel(node) < treeData.value[i].level; i++) {
-        result.push(treeData.value[i]);
+        if (config.recursive) {
+          result.push(treeData.value[i]);
+        } else if (getLevel(node) === treeData.value[i].level - 1) {
+          result.push(treeData.value[i]);
+        }
       }
       
       return result;
+    }
+
+    const getParent = (node: IInnerTreeNode): IInnerTreeNode => {
+      return data.value.find((item) => item.id === node.parentId);
     }
 
     const getExpendedTree = (): ComputedRef<IInnerTreeNode[]> => {
@@ -43,11 +57,11 @@ export default function(options?){
       });
     }
 
-    const getIndex = (node: ITreeNode): number => {
+    const getIndex = (node: IInnerTreeNode): number => {
       return data.value.findIndex((item) => item.id === node.id);
     }
 
-    const getNode = (node: ITreeNode): IInnerTreeNode => {
+    const getNode = (node: IInnerTreeNode): IInnerTreeNode => {
       return data.value.find((item) => item.id === node.id);
     }
 
@@ -62,6 +76,7 @@ export default function(options?){
     return {
       getLevel,
       getChildren,
+      getParent,
       getExpendedTree,
       getIndex,
       getNode,

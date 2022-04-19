@@ -1,46 +1,44 @@
 import { defineComponent, reactive, inject, onMounted, onBeforeUnmount, provide, ref } from 'vue';
+import type { SetupContext } from 'vue';
 import AsyncValidator, { Rules } from 'async-validator';
 import mitt from 'mitt';
-import { dFormEvents, dFormItemEvents, IForm, formItemProps, formInjectionKey, formItemInjectionKey } from '../../form-types';
+import { dFormEvents, dFormItemEvents, IForm, FORM_TOKEN, FORM_ITEM_TOKEN } from '../../form-types';
+import { formItemProps, FormItemProps } from './form-item-types';
+import { useFormItem } from './use-form-item';
 import './form-item.scss';
 
 export default defineComponent({
   name: 'DFormItem',
   props: formItemProps,
-  setup(props, ctx) {
+  setup(props: FormItemProps, ctx: SetupContext) {
     const formItemMitt = mitt();
-    const dForm = reactive(inject(formInjectionKey, {} as IForm));
+    const dForm = reactive(inject(FORM_TOKEN, {} as IForm));
     const formData = reactive(dForm.formData);
-    const columnsClass = ref(dForm.columnsClass);
-    const initFormItemData = formData[props.prop];
-    const labelData = reactive(dForm.labelData);
+    const initFormItemData = formData[props.field];
     const rules = reactive(dForm.rules);
+    const { itemClasses } = useFormItem();
 
     const resetField = () => {
       if (Array.isArray(initFormItemData)) {
-        formData[props.prop] = [...initFormItemData];
+        formData[props.field] = [...initFormItemData];
       } else {
-        formData[props.prop] = initFormItemData;
+        formData[props.field] = initFormItemData;
       }
     };
 
     const formItem = reactive({
       dHasFeedback: props.dHasFeedback,
-      prop: props.prop,
+      field: props.field,
       formItemMitt,
       resetField,
     });
-    provide(formItemInjectionKey, formItem);
-
-    const isHorizontal = labelData.layout === 'horizontal';
-    const isVertical = labelData.layout === 'vertical';
-    const isColumns = labelData.layout === 'columns';
+    provide(FORM_ITEM_TOKEN, formItem);
 
     const showMessage = ref(false);
     const tipMessage = ref('');
 
     const validate = (trigger: string) => {
-      const ruleKey = props.prop;
+      const ruleKey = props.field;
       const ruleItem = rules[ruleKey];
       const descriptor: Rules = {};
       descriptor[ruleKey] = ruleItem;
@@ -61,8 +59,8 @@ export default defineComponent({
     const validateEvents = [];
 
     const addValidateEvents = () => {
-      if (rules && rules[props.prop]) {
-        const ruleItem = rules[props.prop];
+      if (rules && rules[props.field]) {
+        const ruleItem = rules[props.field];
         let eventName = ruleItem['trigger'];
 
         if (Array.isArray(ruleItem)) {
@@ -81,7 +79,7 @@ export default defineComponent({
     };
 
     const removeValidateEvents = () => {
-      if (rules && rules[props.prop] && validateEvents.length > 0) {
+      if (rules && rules[props.field] && validateEvents.length > 0) {
         validateEvents.forEach((item) => {
           formItem.formItemMitt.off(item.eventName, item.cb);
         });
@@ -97,18 +95,6 @@ export default defineComponent({
       dForm.formMitt.emit(dFormEvents.removeField, formItem);
       removeValidateEvents();
     });
-    return () => {
-      return (
-        <div
-          class={`devui-form-item${isHorizontal ? '' : isVertical ? ' devui-form-item-vertical' : ' devui-form-item-columns'}${
-            isColumns ? ' devui-column-item ' + columnsClass.value : ''
-          }`}>
-          {ctx.slots.default?.()}
-          <div class={`devui-validate-tip${isHorizontal ? ' devui-validate-tip-horizontal' : ''}`}>
-            {showMessage.value && tipMessage.value}
-          </div>
-        </div>
-      );
-    };
+    return () => <div class={itemClasses.value}>{ctx.slots.default?.()}</div>;
   },
 });

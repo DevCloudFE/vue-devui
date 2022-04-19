@@ -46,26 +46,29 @@
   }
 
   &.devui-input-number-sm {
-    .devui-input-box{
-      width: 80px;
+    width: 60px;
+
+    .devui-input-box {
       height: 26px;
       line-height: 26px;
     }
   }
 
-  &.devui-input-number-normal {
-    .devui-input-box{
-      width: 80px;
-      height: 28px;
-      line-height: 28px;
+  &.devui-input-number-md {
+    width: 80px;
+
+    .devui-input-box {
+      height: 32px;
+      line-height: 32px;
     }
   }
 
   &.devui-input-number-lg {
-    .devui-input-box{
-      width: 80px;
-      height: 46px;
-      line-height: 46px;
+    width: 100px;
+
+    .devui-input-box {
+      height: 38px;
+      line-height: 38px;
     }
   }
 

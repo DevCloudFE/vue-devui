@@ -1,7 +1,7 @@
 import { defineComponent, computed, ref, watch, inject } from 'vue';
 import { inputProps, InputType } from './input-types';
 import './input.scss';
-import { dFormItemEvents, IFormItem, formItemInjectionKey } from '../../form/src/form-types';
+import { dFormItemEvents, IFormItem, FORM_ITEM_TOKEN } from '../../form/src/form-types';
 
 export default defineComponent({
   name: 'DInput',
@@ -11,13 +11,13 @@ export default defineComponent({
         if (binding.value) {
           el.focus();
         }
-      }
-    }
+      },
+    },
   },
   props: inputProps,
   emits: ['update:modelValue', 'focus', 'blur', 'change', 'keydown'],
   setup(props, ctx) {
-    const formItem = inject(formItemInjectionKey, {} as IFormItem);
+    const formItem = inject(FORM_ITEM_TOKEN, {} as IFormItem);
     const hasFormItem = Object.keys(formItem).length > 0;
     const sizeCls = computed(() => `devui-input-${props.size}`);
     const showPwdIcon = ref(false);
@@ -27,7 +27,7 @@ export default defineComponent({
         error: props.error,
         [props.cssClass]: true,
         'devui-input-restore': showPwdIcon.value,
-        [sizeCls.value]: props.size !== ''
+        [sizeCls.value]: props.size !== '',
       };
     });
     const showPreviewIcon = computed(() => inputType.value === 'password');
@@ -71,7 +71,7 @@ export default defineComponent({
       onBlur,
       onChange,
       onKeydown,
-      onChangeInputType
+      onChangeInputType,
     };
   },
   render() {
@@ -90,10 +90,10 @@ export default defineComponent({
       onBlur,
       onChange,
       onKeydown,
-      onChangeInputType
+      onChangeInputType,
     } = this;
     return (
-      <div class='devui-input__wrap'>
+      <div class="devui-input__wrap">
         <input
           v-focus={autoFocus}
           {...{ dinput: true }}
@@ -110,15 +110,11 @@ export default defineComponent({
           onKeydown={onKeydown}
         />
         {showPwdIcon && (
-          <div class='devui-input__preview' onClick={onChangeInputType}>
-            {showPreviewIcon ? (
-              <d-icon name='preview-forbidden' size='12px' key={1} />
-            ) : (
-              <d-icon name='preview' size='12px' key={2} />
-            )}
+          <div class="devui-input__preview" onClick={onChangeInputType}>
+            {showPreviewIcon ? <d-icon name="preview-forbidden" size="12px" key={1} /> : <d-icon name="preview" size="12px" key={2} />}
           </div>
         )}
       </div>
     );
-  }
+  },
 });
