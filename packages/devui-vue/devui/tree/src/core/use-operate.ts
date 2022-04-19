@@ -38,9 +38,19 @@ export default function(options?) {
       );
     }
 
-    const removeNode = (node: ITreeNode): void => {
+    const removeNode = (node: IInnerTreeNode, config = { recursive: true }): void => {
+      if (!config.recursive) {
+        getChildren(node).forEach(child => {
+          setNodeValue(child, 'level', getLevel(child) - 1);
+        });
+      }
+
       data.value = data.value.filter(item => {
-        return item.id !== node.id && !getChildren(node).map(nodeItem => nodeItem.id).includes(item.id);
+        if (config.recursive) {
+          return item.id !== node.id && !getChildren(node).map(nodeItem => nodeItem.id).includes(item.id);
+        } else {
+          return item.id !== node.id;
+        }
       });
     }
 
