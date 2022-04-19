@@ -278,6 +278,93 @@ export default defineComponent({
 
 :::
 
+### 节点合并
+
+:::demo
+
+```vue
+<template>
+  <d-new-tree :data="data" ref="treeRef"></d-new-tree>
+</template>
+<script lang="ts">
+import { defineComponent, ref, onMounted } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const treeRef = ref(null);
+    const data = ref([
+      {
+        label: 'Parent node 1',
+        children: [
+          {
+            label: 'Parent node 1-1',
+            children: [
+              {
+                label: 'Parent node 1-1-1',
+                children: [
+                  {
+                    label: 'Parent node 1-1-1-1'
+                  }
+                ]
+              }
+            ]
+          },
+        ]
+      },
+      {
+        label: 'Parent node 2',
+        children: [
+          {
+            label: 'Parent node 2-1',
+            children: [
+              {
+                label: 'Leaf node 2-1-1'
+              },
+              {
+                label: 'Leaf node 2-1-2'
+              },
+            ]
+          },
+        ]
+      },
+      {
+        label: 'Parent node 3',
+        children: [
+          {
+            label: 'Leaf node 3-1',
+            children: [
+              {
+                label: 'Leaf node 3-1-1',
+                children: [
+                  {
+                    label: 'Leaf node 3-1-1-1'
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            label: 'Leaf node 3-2'
+          }
+        ]
+      }
+    ]);
+
+    onMounted(() => {
+      treeRef.value.treeFactory.mergeTreeNodes();
+    });
+
+    return {
+      data,
+      treeRef,
+    }
+  }
+})
+</script>
+```
+
+:::
+
 ### Tree 参数
 
 | 参数名 | 类型                        | 默认值 | 说明                   | 跳转 Demo             |
