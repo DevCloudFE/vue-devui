@@ -1,5 +1,6 @@
+import type { ComputedRef } from 'vue';
 import { defineComponent, PropType, toRefs } from 'vue';
-import { ITreeNode } from '../core/use-tree-types';
+import { ITreeNode, IInnerTreeNode } from '../core/use-tree-types';
 import useTreeNode from './use-tree-node';
 
 export default defineComponent({
@@ -7,13 +8,14 @@ export default defineComponent({
   props: {
     data: {
       type: Object as PropType<ITreeNode>,
+      default: () => ({}),
     },
   },
   setup(props) {
     const { data } = toRefs(props);
     const {
       nodeTitleClass,
-    } = useTreeNode(data);
+    } = useTreeNode(data as ComputedRef<IInnerTreeNode>);
 
     return () => {
       return (

@@ -1,11 +1,17 @@
 import { Ref } from 'vue';
 import { IInnerTreeNode, ITreeNode, IUseCore } from './use-tree-types';
 
-export default function(options?) {
-  return function useOperate(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
+export interface IUseOperate {
+  insertBefore: (parentNode: ITreeNode, node: ITreeNode, referenceNode: ITreeNode,) => void;
+  removeNode: (node: ITreeNode) => void;
+  editNode: (node: IInnerTreeNode, label: string) => void;
+}
+
+export default function () {
+  return function useOperate(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseOperate {
 
     const { setNodeValue, getChildren, getIndex, getLevel } = core;
-    
+
     const insertBefore = (
       parentNode: ITreeNode,
       node: ITreeNode,
@@ -32,11 +38,11 @@ export default function(options?) {
       };
 
       data.value = data.value.slice(0, insertedIndex)
-      .concat(
-        currentNode,
-        data.value.slice(insertedIndex, data.value.length)
-      );
-    }
+        .concat(
+          currentNode,
+          data.value.slice(insertedIndex, data.value.length)
+        );
+    };
 
     const removeNode = (node: IInnerTreeNode, config = { recursive: true }): void => {
       if (!config.recursive) {
@@ -52,16 +58,16 @@ export default function(options?) {
           return item.id !== node.id;
         }
       });
-    }
+    };
 
     const editNode = (node: IInnerTreeNode, label: string): void => {
       setNodeValue(node, 'label', label);
-    }
+    };
 
     return {
       insertBefore,
       removeNode,
       editNode,
-    }
+    };
   };
 }

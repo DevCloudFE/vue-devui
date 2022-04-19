@@ -13,6 +13,7 @@ export interface ITreeNode {
   disableSelect?: boolean;
   disableCheck?: boolean;
   disableToggle?: boolean;
+  isLeaf?: boolean;
 }
 
 // 内部数据结构使用扁平结构
@@ -27,9 +28,9 @@ export type valueof<T> = T[keyof T];
 
 export interface IUseCore {
   getLevel: (node: IInnerTreeNode) => number;
-  getChildren: (node: IInnerTreeNode, config: {
-    expanded: boolean;
-    recursive: boolean;
+  getChildren: (node: IInnerTreeNode, config?: {
+    expanded?: boolean;
+    recursive?: boolean;
   }) => IInnerTreeNode[];
   getParent: (node: IInnerTreeNode) => IInnerTreeNode;
   getExpendedTree: () => ComputedRef<IInnerTreeNode[]>;
