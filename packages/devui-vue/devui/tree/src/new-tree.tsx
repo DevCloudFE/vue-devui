@@ -29,7 +29,7 @@ export default defineComponent({
 
     watch(check, (newVal) => {
       checkOptions.value.checkStrategy = newVal;
-    })
+    });
 
     if (check.value) {
       userPlugins.push(useCheck(checkOptions));

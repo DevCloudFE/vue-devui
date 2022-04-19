@@ -2,7 +2,7 @@ import { randomId } from '../../../shared/utils';
 import { IInnerTreeNode, ITreeNode } from './use-tree-types';
 
 export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
-  let treeMap = {};
+  const treeMap = {};
   return flatTree.reduce((acc: ITreeNode[], cur: IInnerTreeNode) => {
     const { id, parentId } = cur;
 
@@ -23,14 +23,20 @@ export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
   }, []);
 }
 
+export function omit<T>(obj: T, ...keys: Array<keyof T>): { [key: string]: unknown } {
+  return Object.entries(obj)
+    .filter((item) => !keys.includes(item[0]))
+    .reduce((acc, item) => Object.assign({}, acc, { [item[0]]: item[1] }), {});
+}
+
 /**
  * 用于生成内部使用的扁平结构，对树的所有操作都是在操作这个内部的扁平结构，
  * 该数据一旦发生变化，树组件的 UI 即相应变化。
- * 
+ *
  * @param tree 原始嵌套结构的树数据
  * @param key 子节点key，默认为'children'
  * @returns 扁平结构的树数据
- * 
+ *
  * 将嵌套结构拍平之后，增加了
  * - 'id'：唯一标识一个树节点
  * - 'parentId'：父节点
@@ -41,7 +47,7 @@ export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
 export function generateInnerTree(
   tree: ITreeNode[],
   key = 'children',
-  level: number = 0,
+  level = 0,
   path: ITreeNode[] = []
 ): IInnerTreeNode[] {
   level++;
@@ -74,10 +80,4 @@ export function generateInnerTree(
       return acc.concat(omit<ITreeNode>(newItem, 'children'), generateInnerTree(newItem[key], key, level, path));
     }
   }, []);
-}
-
-export function omit<T>(obj: T, ...keys: Array<keyof T>) {
-  return Object.entries(obj)
-    .filter((item) => !keys.includes(item[0]))
-    .reduce((acc, item) => Object.assign({}, acc, { [item[0]]: item[1] }), {});
 }
