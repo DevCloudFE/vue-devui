@@ -5,20 +5,22 @@ import DTreeNodeToggle from './components/tree-node-toggle';
 import useTree from './core/use-tree';
 import useCheck from './core/use-check';
 import useSelect from './core/use-select';
-import { USE_TREE_TOKEN } from './const';
 import useOperate from './core/use-operate';
+import useMergeNodes from './core/use-merge-nodes';
+import { USE_TREE_TOKEN } from './const';
 import { TreeProps, treeProps } from './new-tree-types';
 import './tree.scss';
 
 export default defineComponent({
   name: 'DNewTree',
   props: treeProps,
-  setup(props: TreeProps, { slots }) {
+  setup(props: TreeProps, { slots, expose }) {
     const { data, check } = toRefs(props);
 
     const userPlugins = [
       useSelect(),
       useOperate(),
+      useMergeNodes(),
     ];
 
     const checkOptions = ref({
@@ -48,6 +50,10 @@ export default defineComponent({
     watch(data, setTree);
 
     provide(USE_TREE_TOKEN, treeFactory);
+
+    expose({
+      treeFactory
+    });
 
     return () => {
       return (
