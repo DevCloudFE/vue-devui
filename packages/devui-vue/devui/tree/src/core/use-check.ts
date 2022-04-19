@@ -51,13 +51,13 @@ export default function (
         setNodeValue(node, 'checked', false);
 
         if (['downward', 'both'].includes(options.value.checkStrategy)) {
-          getChildren(node, {}).forEach(item => setNodeValue(item, 'checked', false));
+          getChildren(node).forEach(item => setNodeValue(item, 'checked', false));
         }
       } else {
         setNodeValue(node, 'checked', true);
 
         if (['downward', 'both'].includes(options.value.checkStrategy)) {
-          getChildren(node, {}).forEach(item => setNodeValue(item, 'checked', true));
+          getChildren(node).forEach(item => setNodeValue(item, 'checked', true));
         }
       }
 
