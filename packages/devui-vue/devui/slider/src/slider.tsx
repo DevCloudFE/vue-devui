@@ -12,15 +12,15 @@ export default defineComponent({
     let startX = 0;
 
     const popoverShow = ref(false);
-    const sliderRunway = ref<HTMLDivElement>(null);
+    const sliderRunway = ref<HTMLDivElement | null>(null);
     const inputValue = ref<number>(props.modelValue);
     const currentPosition = ref<number>(0);
     const newPostion = ref<number>(0);
     // 当前的位置以百分比显示
     const percentDispaly = ref<string>('');
     // 输入框内的值
-    function handleOnInput(event) {
-      inputValue.value = parseInt(event.target.value);
+    function handleOnInput(event: Event) {
+      inputValue.value = parseInt((event.target as HTMLInputElement).value);
       if (!inputValue.value) {
         inputValue.value = props.min;
         percentDispaly.value = '0%';
@@ -37,7 +37,8 @@ export default defineComponent({
     }
     function setPostion(newPosition: number) {
       // 获取slider的实际长度的像素
-      const sliderWidth: number = Math.round(sliderRunway.value.clientWidth);
+      const clientWidth = !!sliderRunway.value ? sliderRunway.value.clientWidth : 0;
+      const sliderWidth: number = Math.round(clientWidth);
       if (newPosition < 0) {
         newPosition = 0;
       }
@@ -116,7 +117,7 @@ export default defineComponent({
     }
     // 一挂载就进行当前位置的计算，以后的移动基于当前的位置移动
     onMounted(() => {
-      const sliderWidth = sliderRunway.value.clientWidth;
+      const sliderWidth = !!sliderRunway.value ? sliderRunway.value.clientWidth : 0;
       currentPosition.value = (sliderWidth * (inputValue.value - props.min)) / (props.max - props.min);
     });
     function handleButtonMousedown(event: MouseEvent) {
@@ -134,9 +135,10 @@ export default defineComponent({
       window.addEventListener('mouseup', onDragEnd);
     }
     // 当在滑动条触发鼠标事件时处理,
-    function handleRunwayMousedown(event) {
+    function handleRunwayMousedown(event: MouseEvent) {
       if (!props.disabled && isClick) {
-        startX = event.target.getBoundingClientRect().left;
+        const _e = event.target as Element;
+        startX = _e.getBoundingClientRect().left;
         const currentX = event.clientX;
         setPostion(currentX - startX);
         handleButtonMousedown(event);
