@@ -1,5 +1,5 @@
 import type { PropType, ExtractPropTypes, SetupContext } from 'vue';
-export type DataDirection = 'vertical' | 'horizontal';
+export type TimelineDirection = 'vertical' | 'horizontal';
 export type Mode = 'normal' | 'alternative';
 export type TimePosition = 'left' | 'bottom';
 export type LineStyle = 'solid' | 'dashed' | 'dotted' | 'none';
@@ -7,7 +7,7 @@ export type LineStyle = 'solid' | 'dashed' | 'dotted' | 'none';
 export const timeAxisProps = {
   // 设置时间轴方向
   direction: {
-    type: String as PropType<DataDirection>,
+    type: String as PropType<TimelineDirection>,
     default: 'vertical',
   },
   // 设置居中
