@@ -16,6 +16,11 @@
   .devui-form__control-container {
     position: relative;
 
+    // 临时解决popover影响输入控件宽度的问题
+    .devui-popover-reference {
+      width: 100%;
+    }
+
     .devui-form__control-feedback {
       position: absolute;
       top: 50%;

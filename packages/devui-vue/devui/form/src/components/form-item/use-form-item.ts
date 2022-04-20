@@ -1,4 +1,4 @@
-import { computed, reactive, inject, ref } from 'vue';
+import { computed, inject, ref } from 'vue';
 import { castArray, get, isFunction } from 'lodash';
 import Schema from 'async-validator';
 import type { ComputedRef, Ref } from 'vue';
@@ -15,13 +15,12 @@ import {
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
 export function useFormItem(_rules: ComputedRef<FormRuleItem[]>, validateState: Ref<FormItemValidateState>): UseFormItem {
-  const formContext = reactive(inject(FORM_TOKEN) as FormContext);
-  const labelData = reactive(formContext.labelData);
+  const formContext = inject(FORM_TOKEN) as FormContext;
   const ns = useNamespace('form');
 
   const itemClasses = computed(() => ({
-    [`${ns.em('item', 'horizontal')}`]: labelData.layout === 'horizontal',
-    [`${ns.em('item', 'vertical')}`]: labelData.layout === 'vertical',
+    [`${ns.em('item', 'horizontal')}`]: formContext.layout === 'horizontal',
+    [`${ns.em('item', 'vertical')}`]: formContext.layout === 'vertical',
     [`${ns.em('item', 'error')}`]: validateState.value === 'error',
   }));
 
@@ -61,7 +60,7 @@ export function useFormItemValidate(props: FormItemProps, _rules: ComputedRef<Fo
     return typeof props.field === 'string' ? props.field : '';
   });
   const fieldValue = computed(() => {
-    const formData = formContext.formData;
+    const formData = formContext.data;
     if (!formData || !props.field) {
       return;
     }

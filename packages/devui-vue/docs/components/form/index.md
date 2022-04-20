@@ -513,13 +513,15 @@ export default defineComponent({
 
 ### Form 参数
 
-| 参数名      | 类型                      | 默认值       | 说明                                                               | 跳转 demo             |
-| :---------- | :------------------------ | :----------- | :----------------------------------------------------------------- | :-------------------- |
-| data        | `object`                  | {}           | 必选，表单数据                                                     | [基础用法](#基础用法) |
-| layout      | [Layout](#layout)         | 'horizontal' | 可选，设置表单的排列方式                                           | [垂直排列](#垂直排列) |
-| label-size  | [LabelSize](#labelsize)   | 'md'         | 可选，设置 label 的宽度，默认为 100px，sm 对应 80px，lg 对应 150px | [表单样式](#表单样式) |
-| label-align | [LabelAlign](#labelalign) | 'start'      | 可选，设置水平布局方式下，label 对齐方式                           | [表单样式](#表单样式) |
-| rules       | [FormRules](#formrules)   | --           | 可选，设置表单的校验规则                                           | [表单校验](#表单校验) |
+| 参数名       | 类型                        | 默认值             | 说明                                                               | 跳转 demo             |
+| :----------- | :-------------------------- | :----------------- | :----------------------------------------------------------------- | :-------------------- |
+| data         | `object`                    | {}                 | 必选，表单数据                                                     | [基础用法](#基础用法) |
+| layout       | [Layout](#layout)           | 'horizontal'       | 可选，设置表单的排列方式                                           | [垂直排列](#垂直排列) |
+| label-size   | [LabelSize](#labelsize)     | 'md'               | 可选，设置 label 的宽度，默认为 100px，sm 对应 80px，lg 对应 150px | [表单样式](#表单样式) |
+| label-align  | [LabelAlign](#labelalign)   | 'start'            | 可选，设置水平布局方式下，label 对齐方式                           | [表单样式](#表单样式) |
+| rules        | [FormRules](#formrules)     | --                 | 可选，设置表单的校验规则                                           | [表单校验](#表单校验) |
+| message-type | [MessageType](#messagetype) | 'popover'          | 可选，设置校验信息的提示方式                                       |                       |
+| pop-position | [PopPosition](#popposition) | ['right','bottom'] | 可选，消息显示为 popover 时，popover 弹出方向                      |                       |
 
 ### Form 方法
 
@@ -596,6 +598,30 @@ type LabelAlign = 'start' | 'center' | 'end';
 
 ```ts
 type FormRules = Partial<Record<string, Array<FormRuleItem>>>;
+```
+
+#### MessageType
+
+```ts
+type MessageType = 'popover' | 'text' | 'none';
+```
+
+#### PopPosition
+
+```ts
+type PopPosition =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
 ```
 
 #### FormValidateCallback
