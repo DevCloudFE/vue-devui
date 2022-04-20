@@ -73,9 +73,13 @@ export interface IUseToggle {
   toggleNode: (node: ITreeNode) => void;
 }
 
+export interface IUseMergeNodes {
+  mergeTreeNodes: () => void;
+}
+
 export type IUseTree = {
   treeData: Ref<IInnerTreeNode[]>;
-} & IUseCore & IUseToggle & IUseSelect & IUseCheck & IUseDisable & IUseOperate;
+} & IUseCore & IUseToggle & IUseSelect & IUseCheck & IUseDisable & IUseOperate & IUseMergeNodes;
 
 export type ICheckStrategy = 'upward' | 'downward' | 'both' | 'none';
 
