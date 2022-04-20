@@ -165,6 +165,7 @@ export default defineComponent({
 });
 </script>
 ```
+:::
 
 ### Panel 参数
 

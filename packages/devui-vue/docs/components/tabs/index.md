@@ -326,7 +326,7 @@ export default defineComponent({
 | ----- | ---------------- |
 | title | 自定义选项卡标题 |
 
-### 类型
+### 类型定义
 
 #### ITabsType
 
