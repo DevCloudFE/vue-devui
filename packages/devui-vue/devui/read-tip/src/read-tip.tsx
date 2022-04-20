@@ -1,19 +1,22 @@
 import { defineComponent, ref, onMounted, reactive, onUnmounted } from 'vue';
 import { readTipProps } from './read-tip-types';
 import type { ReadTipProps, ReadTipOptions, ReadTipRules, ReadTipRule } from './read-tip-types';
-import './read-tip.scss';
 import TipsTemplate from './read-tip-template';
+import './read-tip.scss';
 
 // 把传入的props.rules统一转为数组对象格式
 const rules = (ruleList: ReadTipRules) => {
-  if (ruleList === null) { return []; }
+  if (ruleList === null) {
+    return [];
+  }
   if (typeof ruleList === 'object' && !Array.isArray(ruleList)) {
     ruleList = [ruleList];
   }
   ruleList = [...ruleList];
-  Array.isArray(ruleList) && ruleList.map(rule => {
-    rule.status = false;
-  });
+  Array.isArray(ruleList) &&
+    ruleList.map((rule) => {
+      rule.status = false;
+    });
   return ruleList;
 };
 
@@ -40,7 +43,7 @@ export default defineComponent({
     const onMouseenter = (rule: ReadTipRule) => () => {
       setTimeout(() => {
         if (rule.id) {
-          const a = refRules.find(u => u.id === rule.id);
+          const a = refRules.find((u) => u.id === rule.id);
           a.status = true;
         }
         rule.status = true;
@@ -49,27 +52,30 @@ export default defineComponent({
     const onMouseleave = (rule: ReadTipRule) => () => {
       setTimeout(() => {
         if (rule.id) {
-          const a = refRules.find(u => u.id === rule.id);
+          const a = refRules.find((u) => u.id === rule.id);
           a.status = false;
         }
         rule.status = false;
-
       }, rule.mouseleaveTime || options.mouseleaveTime);
     };
 
     const init = (ruleList, trigger = 'hover') => {
-      ruleList.map(rule => {
+      ruleList.map((rule) => {
         rule.status = false;
         trigger = rule.trigger || trigger;
         rule.overlayClassName = rule.overlayClassName || options.overlayClassName;
         rule.position = rule.position || options.position;
-        rule.contentTemplate = !!(ctx.slots.contentTemplate);
-        if (!('appendToBody' in rule)) { rule.appendToBody = options.appendToBody; }
+        rule.contentTemplate = !!ctx.slots.content;
+        if (!('appendToBody' in rule)) {
+          rule.appendToBody = options.appendToBody;
+        }
         const doms = defaultSlot.value?.querySelectorAll(rule.selector);
         [...doms].map((dom, index) => {
-          if (rule.appendToBody === false) { dom.style.position = 'relative'; }
+          if (rule.appendToBody === false) {
+            dom.style.position = 'relative';
+          }
           let newRule = reactive({
-            id: null
+            id: null,
           });
           const id = rule.selector.slice(rule.selector[0] === '.' ? 1 : 0) + index;
           if (index > 0) {
@@ -79,7 +85,7 @@ export default defineComponent({
             ruleList.push(newRule);
           }
           if (trigger === 'hover') {
-            dom.addEventListener('mouseenter', onMouseenter(newRule.id ? newRule : rule,));
+            dom.addEventListener('mouseenter', onMouseenter(newRule.id ? newRule : rule));
             dom.addEventListener('mouseleave', onMouseleave(newRule.id ? newRule : rule));
           }
         });
@@ -91,7 +97,7 @@ export default defineComponent({
     }
 
     const clickFn = () => {
-      refRules.forEach(element => {
+      refRules.forEach((element) => {
         element.status = false;
       });
     };
@@ -99,7 +105,6 @@ export default defineComponent({
       init(refRules, options.trigger);
       // 点击其他位置 关闭弹框
       document.addEventListener('click', clickFn, true);
-
     });
 
     onUnmounted(() => {
@@ -131,23 +136,19 @@ export default defineComponent({
     };
     return () => {
       return (
-        <div class="devui-read-tip" >
+        <div class="devui-read-tip">
           <div ref={defaultSlot} onClick={onClick}>
             {ctx.slots?.default?.()}
           </div>
-          {(refRules).map(rule => (
+          {refRules.map((rule) => (
             <div data-test="todo">
               {rule.status && (
-                <TipsTemplate defaultTemplateProps={{ ...rule }} >
-                  {
-                    rule.contentTemplate && ctx.slots?.contentTemplate?.()
-                  }
-                </TipsTemplate>
+                <TipsTemplate defaultTemplateProps={{ ...rule }}>{rule.contentTemplate && ctx.slots?.content?.()}</TipsTemplate>
               )}
             </div>
           ))}
         </div>
       );
     };
-  }
+  },
 });

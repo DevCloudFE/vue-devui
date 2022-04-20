@@ -1,34 +1,38 @@
-import { Emitter } from 'mitt';
-import type { PropType, ExtractPropTypes, InjectionKey, Ref } from 'vue';
+import type { ValidateError, ValidateFieldsError } from 'async-validator';
+import type { Emitter } from 'mitt';
+import type { PropType, ExtractPropTypes, InjectionKey } from 'vue';
+import { FormItemContext, FormRuleItem, FormValidateCallback, FormValidateResult } from './components/form-item/form-item-types';
+
+export type Layout = 'horizontal' | 'vertical';
+export type LabelSize = 'sm' | 'md' | 'lg';
+export type LabelAlign = 'start' | 'center' | 'end';
+export type FormData = Record<string, any>;
+
+export type FormRules = Partial<Record<string, Array<FormRuleItem>>>;
+export interface ValidateFailure {
+  errors: ValidateError[] | null;
+  fields: ValidateFieldsError;
+}
 
 export const formProps = {
-  formData: {
-    type: Object,
-    default: {}
+  data: {
+    type: Object as PropType<FormData>,
+    default: () => ({}),
   },
   layout: {
-    type: String as PropType<'horizontal' | 'vertical' | 'columns'>,
+    type: String as PropType<Layout>,
     default: 'horizontal',
   },
   labelSize: {
-    type: String as PropType<'sm' | '' | 'lg'>,
-    default: '',
+    type: String as PropType<LabelSize>,
+    default: 'md',
   },
   labelAlign: {
-    type: String as PropType<'start' | 'center' | 'end'>,
+    type: String as PropType<LabelAlign>,
     default: 'start',
   },
   rules: {
-    type: Object,
-    default: {},
-  },
-  columnsClass: {
-    type: String as PropType<'u-1-3'>,
-    default: '',
-  },
-  name: {
-    type: String,
-    default: '',
+    type: Object as PropType<FormRules>,
   },
   messageShowType: {
     type: String as PropType<'popover' | 'text' | 'toast' | 'none'>,
@@ -36,56 +40,10 @@ export const formProps = {
   },
 } as const;
 
-export const formItemProps = {
-  dHasFeedback: {
-    type: Boolean,
-    default: false
-  },
-  prop: {
-    type: String,
-    default: ''
-  }
-} as const;
-
-export const formLabelProps = {
-  required: {
-    type: Boolean,
-    default: false
-  },
-  hasHelp: {
-    type: Boolean,
-    default: false
-  },
-  helpTips: {
-    type: String,
-    default: ''
-  }
-} as const;
-
-export const formControlProps = {
-  feedbackStatus: {
-    type: String as PropType<'success' | 'error' | 'pending' | ''>,
-    default: ''
-  },
-  extraInfo: {
-    type: String,
-    default: ''
-  }
-} as const;
-
 export const dFormEvents = {
   addField: 'd.form.addField',
   removeField: 'd.form.removeField',
 } as const;
-
-type LabelData = {
-  layout: string;
-  labelSize: string;
-  labelAlign: string;
-};
-
-export const formInjectionKey: InjectionKey<IForm> = Symbol('dForm');
-export const formItemInjectionKey: InjectionKey<IFormItem> = Symbol('dFormItem');
 
 export const dFormItemEvents = {
   blur: 'd.form.blur',
@@ -93,21 +51,34 @@ export const dFormItemEvents = {
   input: 'd.form.input',
 } as const;
 
+export interface IFormLabel {
+  layout: Layout;
+  labelSize: LabelSize;
+  labelAlign: LabelAlign;
+}
 
-export interface IForm {
+export interface FormContext {
   formData: any;
   labelData: IFormLabel;
   formMitt: Emitter<any>;
   rules: any;
-  columnsClass: string;
   messageShowType: string;
+  addItemContext: (field: FormItemContext) => void;
+  removeItemContext: (field: FormItemContext) => void;
 }
 
-export interface IFormLabel {
-  layout: string;
-  labelSize: string;
-  labelAlign: string;
+export interface UseFieldCollection {
+  itemContexts: FormItemContext[];
+  addItemContext: (field: FormItemContext) => void;
+  removeItemContext: (field: FormItemContext) => void;
 }
+
+export interface UseFormValidation {
+  validate: (callback?: FormValidateCallback) => FormValidateResult;
+  validateFields: (fields: string[], callback: any) => FormValidateResult;
+}
+
+export const FORM_TOKEN: InjectionKey<FormContext> = Symbol('dForm');
 
 export interface IFormItem {
   dHasFeedback: boolean;
@@ -124,10 +95,6 @@ export interface IFormControl {
 }
 
 export type FormProps = ExtractPropTypes<typeof formProps>;
-export type FormItemProps = ExtractPropTypes<typeof formItemProps>;
-export type FormLabelProps = ExtractPropTypes<typeof formLabelProps>;
-export type FormControlProps = ExtractPropTypes<typeof formControlProps>;
-
 
 export interface IValidators {
   required: boolean;
@@ -150,23 +117,34 @@ const Validators: IValidators = {
   requiredTrue: false,
   email: false,
   pattern: undefined,
-  whiteSpace: false
+  whiteSpace: false,
 };
 
 export const dDefaultValidators = {
-  'required': Validators.required, // 配置不能为空限制，rule中使用：{ required: true }
-  'minlength': Validators.minlength, // 配置最小长度限制，rule中使用：{ minlength: 5 }
-  'maxlength': Validators.maxlength, // 配置最大长度限制，rule中使用：{ maxlength: 128 }
-  'min': Validators.min, // 配置最小值限制，rule中使用：{ min: 0 }
-  'max': Validators.max, // 配置最大值限制，rule中使用：{ max: 100 }
-  'requiredTrue': Validators.requiredTrue, // 配置需要为true，rule中使用：{ requiredTrue: true }
-  'email': Validators.email, // 配置邮箱校验，rule中使用：{ email: true }
-  'pattern': Validators.pattern, // 配置正则校验，rule中使用：{ pattern: RegExp }
-  'whitespace': Validators.whiteSpace, // 配置输入不能全为空格限制，rule中使用：{ whitespace: true }
+  required: Validators.required, // 配置不能为空限制，rule中使用：{ required: true }
+  minlength: Validators.minlength, // 配置最小长度限制，rule中使用：{ minlength: 5 }
+  maxlength: Validators.maxlength, // 配置最大长度限制，rule中使用：{ maxlength: 128 }
+  min: Validators.min, // 配置最小值限制，rule中使用：{ min: 0 }
+  max: Validators.max, // 配置最大值限制，rule中使用：{ max: 100 }
+  requiredTrue: Validators.requiredTrue, // 配置需要为true，rule中使用：{ requiredTrue: true }
+  email: Validators.email, // 配置邮箱校验，rule中使用：{ email: true }
+  pattern: Validators.pattern, // 配置正则校验，rule中使用：{ pattern: RegExp }
+  whitespace: Validators.whiteSpace, // 配置输入不能全为空格限制，rule中使用：{ whitespace: true }
 };
 
-
-export type positionType = 'top' | 'right' | 'bottom' | 'left' | 'left-top' | 'left-bottom' | 'top-left' | 'top-right' | 'right-top' | 'right-bottom' | 'bottom-left' | 'bottom-right';
+export type positionType =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'left-top'
+  | 'left-bottom'
+  | 'top-left'
+  | 'top-right'
+  | 'right-top'
+  | 'right-bottom'
+  | 'bottom-left'
+  | 'bottom-right';
 
 export interface DValidateResult {
   errors: any;

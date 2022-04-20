@@ -1,21 +1,27 @@
-import { defineComponent, provide } from 'vue';
+import { defineComponent, provide, reactive, SetupContext, toRefs } from 'vue';
 import mitt from 'mitt';
-import { formProps, FormProps, IFormItem, dFormEvents, formInjectionKey, IForm } from './form-types';
+import { formProps, FormProps, IFormItem, dFormEvents, FORM_TOKEN } from './form-types';
 import { EventBus } from './utils';
-import './form.scss';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+import useFieldCollection from './composables/use-field-collection';
+import useFormValidation from './composables/use-form-validation';
 
 export default defineComponent({
   name: 'DForm',
   props: formProps,
   emits: ['submit'],
-  setup(props: FormProps, ctx) {
+  setup(props: FormProps, ctx: SetupContext) {
     const formMitt = mitt();
     const fields: IFormItem[] = [];
+    const ns = useNamespace('form');
     const resetFormFields = () => {
       fields.forEach((field: IFormItem) => {
         field.resetField();
       });
     };
+    const { data, layout, labelSize, labelAlign } = toRefs(props);
+    const { itemContexts, addItemContext, removeItemContext } = useFieldCollection();
+    const { validate, validateFields } = useFormValidation(itemContexts);
 
     formMitt.on(dFormEvents.addField, (field: any) => {
       if (field) {
@@ -29,17 +35,26 @@ export default defineComponent({
       }
     });
 
-    provide(formInjectionKey, {
-      formData: props.formData,
-      formMitt,
-      labelData: {
-        layout: props.layout,
-        labelSize: props.labelSize,
-        labelAlign: props.labelAlign,
-      },
-      rules: props.rules,
-      columnsClass: props.columnsClass,
-      messageShowType: 'popover',
+    provide(
+      FORM_TOKEN,
+      reactive({
+        formData: data,
+        formMitt,
+        labelData: {
+          layout: layout,
+          labelSize: labelSize,
+          labelAlign: labelAlign,
+        },
+        rules: props.rules,
+        messageShowType: 'popover',
+        addItemContext,
+        removeItemContext,
+      })
+    );
+
+    ctx.expose({
+      validate,
+      validateFields,
     });
 
     const onSubmit = (e) => {
@@ -48,18 +63,9 @@ export default defineComponent({
       EventBus.emit(`formSubmit:${props.name}`);
     };
 
-    return {
-      fields,
-      formMitt,
-      onSubmit,
-      resetFormFields,
-    };
-  },
-  render() {
-    const { onSubmit } = this;
-    return (
-      <form onSubmit={onSubmit} class="devui-form">
-        {this.$slots.default?.()}
+    return () => (
+      <form onSubmit={onSubmit} class={ns.b()}>
+        {ctx.slots.default?.()}
       </form>
     );
   },

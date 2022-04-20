@@ -1,4 +1,4 @@
-import { TreeData, TreeItem } from './tree-types';
+import { TreeData, TreeItem } from './deprecated-tree-types';
 
 
 export const omit = (obj: Record<string, unknown>, key: string): Record<string, unknown> => {

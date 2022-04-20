@@ -1,7 +1,8 @@
 import { defineComponent, computed, ref, watch, inject } from 'vue';
 import { inputProps, InputType } from './input-types';
+import { dFormItemEvents } from '../../form/src/form-types';
+import { FORM_ITEM_TOKEN, FormItemContext } from '../../form/src/components/form-item/form-item-types';
 import './input.scss';
-import { dFormItemEvents, IFormItem, formItemInjectionKey } from '../../form/src/form-types';
 
 export default defineComponent({
   name: 'DInput',
@@ -11,25 +12,24 @@ export default defineComponent({
         if (binding.value) {
           el.focus();
         }
-      }
-    }
+      },
+    },
   },
   props: inputProps,
   emits: ['update:modelValue', 'focus', 'blur', 'change', 'keydown'],
   setup(props, ctx) {
-    const formItem = inject(formItemInjectionKey, {} as IFormItem);
-    const hasFormItem = Object.keys(formItem).length > 0;
+    const formItemContext = inject(FORM_ITEM_TOKEN) as FormItemContext;
+    // const hasFormItem = Object.keys(formItemContext).length > 0;
     const sizeCls = computed(() => `devui-input-${props.size}`);
     const showPwdIcon = ref(false);
     const inputType = ref<InputType>('text');
-    const inputCls = computed(() => {
-      return {
-        error: props.error,
-        [props.cssClass]: true,
-        'devui-input-restore': showPwdIcon.value,
-        [sizeCls.value]: props.size !== ''
-      };
-    });
+    const isValidateError = computed(() => formItemContext?.validateState === 'error');
+    const inputCls = computed(() => ({
+      'devui-error': props.error || isValidateError.value,
+      [props.cssClass]: true,
+      'devui-input-restore': showPwdIcon.value,
+      [sizeCls.value]: props.size !== '',
+    }));
     const showPreviewIcon = computed(() => inputType.value === 'password');
     watch(
       () => props.showPassword,
@@ -40,20 +40,28 @@ export default defineComponent({
       { immediate: true }
     );
 
+    watch(
+      () => props.modelValue,
+      () => {
+        formItemContext?.validate('change').catch((err) => console.warn(err));
+      }
+    );
+
     const onInput = ($event: Event) => {
         ctx.emit('update:modelValue', ($event.target as HTMLInputElement).value);
-        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.input);
+        // hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.input);
       },
       onFocus = () => {
         ctx.emit('focus');
       },
       onBlur = () => {
         ctx.emit('blur');
-        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.blur);
+        formItemContext?.validate('blur').catch((err) => console.warn(err));
+        // hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.blur);
       },
       onChange = ($event: Event) => {
         ctx.emit('change', ($event.target as HTMLInputElement).value);
-        hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.change);
+        // hasFormItem && formItem.formItemMitt.emit(dFormItemEvents.change);
       },
       onKeydown = ($event: KeyboardEvent) => {
         ctx.emit('keydown', $event);
@@ -71,7 +79,7 @@ export default defineComponent({
       onBlur,
       onChange,
       onKeydown,
-      onChangeInputType
+      onChangeInputType,
     };
   },
   render() {
@@ -90,10 +98,10 @@ export default defineComponent({
       onBlur,
       onChange,
       onKeydown,
-      onChangeInputType
+      onChangeInputType,
     } = this;
     return (
-      <div class='devui-input__wrap'>
+      <div class="devui-input__wrap">
         <input
           v-focus={autoFocus}
           {...{ dinput: true }}
@@ -110,15 +118,11 @@ export default defineComponent({
           onKeydown={onKeydown}
         />
         {showPwdIcon && (
-          <div class='devui-input__preview' onClick={onChangeInputType}>
-            {showPreviewIcon ? (
-              <d-icon name='preview-forbidden' size='12px' key={1} />
-            ) : (
-              <d-icon name='preview' size='12px' key={2} />
-            )}
+          <div class="devui-input__preview" onClick={onChangeInputType}>
+            {showPreviewIcon ? <d-icon name="preview-forbidden" size="12px" key={1} /> : <d-icon name="preview" size="12px" key={2} />}
           </div>
         )}
       </div>
     );
-  }
+  },
 });

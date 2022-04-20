@@ -126,6 +126,8 @@ export default defineComponent({
 <template>
   <div class="slider-wrapper" style="padding:20px">
     <d-slider :min="minValue" :max="maxValue" disabled v-model="disabledValue"></d-slider>
+    <br style="margin-bottom: 20px" />
+    <d-slider :min="minValue" :max="maxValue" showInput disabled v-model="disabledValue"></d-slider>
   </div>
 </template>
 <script>
@@ -190,6 +192,7 @@ d-slider 参数
 | max          | number  | 100   | 可选，滑动输入条的最大值                                            | [基本用法](#基本用法)                |
 | min          | number  | 0     | 可选，滑动输入条的最小值                                            | [基本用法](#基本用法)                |
 | step         | number  | 1     | 可选，滑动输入条的步长，取值必须大于等于 1，且必须可被(max-min)整除 | [可设置Step的滑动组件](#可设置step的滑动组件)    |
+| color     | string | '' | 可选，自定义滑块的颜色显示                                      | [自定义颜色color](#自定义颜色color)              |
 | disabled     | boolean | false | 可选，值为 true 时禁止用户输入                                      | [禁止输入态](#禁止输入态)              |
 | showInput    | boolean | false | 可选，值为 true 显示输入框                                          | [带有输入框的滑动组件](#带有输入框的滑动组件)    |
 | tipsRenderer | string  |       | 可选，渲染 Popover 内容的函数，传入'null'时不显示 Popover           | [定制popover的显示内容](#定制popover的显示内容) |

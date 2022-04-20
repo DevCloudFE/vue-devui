@@ -1,32 +1,17 @@
-.devui-form-item {
-  display: flex;
-  // align-items: center;
-  margin-bottom: 20px;
-}
+.devui-form__item {
+  &--horizontal {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 
-.devui-form-item-vertical {
-  flex-direction: column;
-}
+  &--vertical {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
 
-.devui-form-item-columns {
-  flex-direction: column;
-  display: inline-block !important;
-}
-// .u-1-3 {
-//   width: 33.3%;
-// }
-.devui-column-item {
-  margin-bottom: 20px;
-}
-
-.devui-validate-tip {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  color: #f66f6a;
-}
-
-.devui-validate-tip-horizontal {
-  margin-left: 10px;
+  &--error {
+    margin-bottom: 0;
+  }
 }

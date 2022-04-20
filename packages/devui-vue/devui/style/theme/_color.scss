@@ -37,8 +37,8 @@ $devui-success-active-focus: var(--devui-success, #50d4ab);
 $devui-info: var(--devui-info, #5e7ce0);                             // 通知、一般提示、执行中
 $devui-initial: var(--devui-initial, #e9edfa);                       // 初始化、未执行
 $devui-unavailable: var(--devui-unavailable, #f5f5f6);               // 不可用、禁用状态
-$devui-shadow: var(--devui-shadow, rgba(0, 0, 0, 0.2));              // 阴影色
-$devui-light-shadow: var(--devui-light-shadow, rgba(0, 0, 0, 0.1));  // 弱化阴影色
+$devui-shadow: var(--devui-shadow, rgba(#252b3a, 0.2));              // 阴影色
+$devui-light-shadow: var(--devui-light-shadow, rgba(#252b3a, 0.1));  // 弱化阴影色
 
 // 图标
 $devui-icon-text: var(--devui-icon-text, #252b3a);                           // 文字图标颜色，同 正文颜色
@@ -105,3 +105,17 @@ $devui-primary-bg: var(--devui-primary-bg, #f2f5fc);    // 主要底色
 
 $devui-default-line: var(--devui-default-line, #5e7ce0);// 默认边框
 $devui-default-bg: var(--devui-default-bg, #f3f6f8);    // 默认底色
+
+// Menu
+
+// color
+
+$devui-menu-item: var(--devui-menu-item);
+$devui-menu-item-sub: var(--devui-menu-item-sub);
+$devui-menu-item-disabled: var(--devui-menu-disabled);
+$devui-menu-item-select: var(--devui-menu-item-hover);
+
+$devui-menu-item-selectBar: var(--devui-primary-hover, #5e7ce0);
+$devui-menu-active-parent: var(--devui-icon-fill-active);
+$devui-menu-bg: var(--devui-global-bg-normal);
+$devui-menu-bg-level: var(--devui-global-bg);

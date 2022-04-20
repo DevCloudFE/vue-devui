@@ -12,7 +12,7 @@
 
 ```vue
 <template>
-  <d-new-tree :data="data"></d-new-tree>
+  <d-tree :data="data"></d-tree>
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
@@ -51,14 +51,24 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-new-tree :data="data" check></d-new-tree>
+  <div class="flex flex-row" style="height: 28px;">
+    <label class="flex items-center mr-xl"><span class="inline-block mr-xs">开启勾选</span><d-switch v-model:checked="openCheck"></d-switch></label>
+    <d-radio-group v-if="openCheck" v-model="currentStrategy" direction="row">
+      <d-radio v-for="strategy of checkStrategy" :key="strategy" :value="strategy">{{ strategy }}</d-radio>
+    </d-radio-group>
+  </div>
+  <d-tree :data="data" :check="currentStrategy"></d-tree>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   setup() {
+    const openCheck = ref(true);
+    const checkStrategy = ref(['both', 'downward', 'upward', 'none']);
+    const currentStrategy = ref('both');
+
     const data = ref([
       {
         label: 'Parent node 1',
@@ -66,7 +76,8 @@ export default defineComponent({
           {
             label: 'Parent node 1-1',
             children: [
-              { label: 'Leaf node 1-1-1' }
+              { label: 'Leaf node 1-1-1' },
+              { label: 'Leaf node 1-1-2' }
             ]
           },
           { label: 'Leaf node 1-2' }
@@ -74,9 +85,37 @@ export default defineComponent({
       },
       { label: 'Leaf node 2' }
     ]);
+
+    watch(openCheck, (newVal) => {
+      if (newVal === false) {
+        currentStrategy.value = false;
+      } else {
+        currentStrategy.value = 'both';
+
+        data.value = [
+          {
+            label: 'Parent node 1',
+            children: [
+              {
+                label: 'Parent node 1-1',
+                children: [
+                  { label: 'Leaf node 1-1-1' },
+                  { label: 'Leaf node 1-1-2' }
+                ]
+              },
+              { label: 'Leaf node 1-2' }
+            ]
+          },
+          { label: 'Leaf node 2' }
+        ];
+      }
+    });
     
     return {
-      data
+      data,
+      openCheck,
+      checkStrategy,
+      currentStrategy,
     }
   }
 })
@@ -90,7 +129,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-new-tree :data="data" check></d-new-tree>
+  <d-tree :data="data" check></d-tree>
 </template>
 
 <script>
@@ -136,7 +175,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-new-tree :data="data" check></d-new-tree>
+  <d-tree :data="data" check></d-tree>
 </template>
 
 <script>
@@ -185,7 +224,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-new-tree :data="data">
+  <d-tree :data="data">
     <template #content="{nodeData}">
       <svg style="margin-right: 8px" viewBox="0 0 16 16" width="16" height="16"><path :d="`${
         nodeData.isLeaf
@@ -206,7 +245,7 @@ export default defineComponent({
         <svg :style="{ transform: nodeData.expanded ? 'rotate(90deg)': '', marginLeft: '-2.5px', marginRight: '14.5px', cursor: 'pointer' }" viewBox="0 0 1024 1024" width="12" height="12"><path d="M204.58705 951.162088 204.58705 72.836889 819.41295 511.998977Z" fill="#8a8e99"></path></svg>
       </span>
     </template>
-  </d-new-tree>
+  </d-tree>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
@@ -231,6 +270,93 @@ export default defineComponent({
 
     return {
       data,
+    }
+  }
+})
+</script>
+```
+
+:::
+
+### 节点合并
+
+:::demo
+
+```vue
+<template>
+  <d-tree :data="data" ref="treeRef"></d-tree>
+</template>
+<script lang="ts">
+import { defineComponent, ref, onMounted } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const treeRef = ref(null);
+    const data = ref([
+      {
+        label: 'Parent node 1',
+        children: [
+          {
+            label: 'Parent node 1-1',
+            children: [
+              {
+                label: 'Parent node 1-1-1',
+                children: [
+                  {
+                    label: 'Parent node 1-1-1-1'
+                  }
+                ]
+              }
+            ]
+          },
+        ]
+      },
+      {
+        label: 'Parent node 2',
+        children: [
+          {
+            label: 'Parent node 2-1',
+            children: [
+              {
+                label: 'Leaf node 2-1-1'
+              },
+              {
+                label: 'Leaf node 2-1-2'
+              },
+            ]
+          },
+        ]
+      },
+      {
+        label: 'Parent node 3',
+        children: [
+          {
+            label: 'Leaf node 3-1',
+            children: [
+              {
+                label: 'Leaf node 3-1-1',
+                children: [
+                  {
+                    label: 'Leaf node 3-1-1-1'
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            label: 'Leaf node 3-2'
+          }
+        ]
+      }
+    ]);
+
+    onMounted(() => {
+      treeRef.value.treeFactory.mergeTreeNodes();
+    });
+
+    return {
+      data,
+      treeRef,
     }
   }
 })

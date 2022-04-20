@@ -8,6 +8,10 @@ import dValidateRules from './src/directives/d-validate-rules';
 
 export { Form, FormLabel, FormItem, FormControl, FormOperation };
 
+export * from './src/form-types';
+export * from './src/components/form-item/form-item-types';
+export * from './src/components/form-control/form-control-types';
+
 export default {
   title: 'Form 表单',
   category: '数据录入',
