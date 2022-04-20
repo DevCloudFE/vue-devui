@@ -12,7 +12,7 @@ export default defineComponent({
   props: formLabelProps,
   setup(props: FormLabelProps, ctx: SetupContext) {
     const ns = useNamespace('form');
-    const { labelClasses, labelInnerClasses } = useFormLabel(props);
+    const { labelClasses, labelInnerClasses } = useFormLabel();
 
     return () => (
       <span class={labelClasses.value}>

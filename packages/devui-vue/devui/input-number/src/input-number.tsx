@@ -8,7 +8,7 @@ export default defineComponent({
   props: inputNumberProps,
   emits: ['update:modelValue', 'change', 'input', 'focus', 'blur', 'keydown'],
   setup(props: InputNumberProps, ctx) {
-    const inputVal = ref(props.modelValue);
+    const inputVal = ref(props.modelValue < props.min ? props.min : props.modelValue);
 
     const focusVal = ref('');
 
@@ -26,7 +26,18 @@ export default defineComponent({
     const add = () => {
       if (props.disabled) {return;}
       if (inputVal.value >= props.max) {return;}
-      inputVal.value += props.step != 0 ? props.step : 1;
+      if(props.step !== 0){
+        const maxSpaceVal = props.max - inputVal.value;
+        if(inputVal.value < props.max && maxSpaceVal < props.step){
+          inputVal.value += maxSpaceVal;
+        }else if(inputVal.value < props.max && maxSpaceVal > props.step){
+          inputVal.value += props.step;
+        }else{
+          inputVal.value += props.step;
+        }
+      }else{
+        inputVal.value += 1;
+      }
       focusVal.value = 'active';
       ctx.emit('change', inputVal.value);
       ctx.emit('update:modelValue', inputVal.value);
@@ -35,15 +46,26 @@ export default defineComponent({
     const subtract = () => {
       if (props.disabled) {return;}
       if (inputVal.value <= props.min) {return;}
-      inputVal.value -= props.step != 0 ? props.step : 1;
+      if(props.step !== 0){
+        const minSpaceVal = inputVal.value - props.min;
+        if(inputVal.value > props.min && minSpaceVal > props.step){
+          inputVal.value -= props.step;
+        }else if (inputVal.value > props.min && minSpaceVal < props.step){
+          inputVal.value -= minSpaceVal;
+        }else{
+          inputVal.value -= props.step;
+        }
+      }else{
+        inputVal.value -= 1;
+      }
       focusVal.value = 'active';
       ctx.emit('change', inputVal.value);
       ctx.emit('update:modelValue', inputVal.value);
     };
     const onInput = (val) => {
       inputVal.value = parseInt(val.data);
-      ctx.emit('input', val.data);
-      ctx.emit('update:modelValue', val.data);
+      ctx.emit('input', inputVal.value);
+      ctx.emit('update:modelValue', inputVal.value);
     };
     const onFocus = ($event: Event) => {
       focusVal.value = 'active';
@@ -91,9 +113,9 @@ export default defineComponent({
     const dInputNum = ['devui-input-number', isDisabled ? 'devui-input-disabled' : '', isSize];
     return (
       <div class={dInputNum}>
-        <div  onBlur={onBlur} tabindex="1" class={['devui-control-buttons', focusVal.value]}>
-          <span  onClick={add}><Icon size="12px" name="chevron-up"  ></Icon></span>
-          <span  onClick={subtract}><Icon size="12px" name="chevron-down" ></Icon></span>
+        <div onBlur={onBlur} tabindex="1" class={['devui-control-buttons', focusVal.value]}>
+          <span onClick={add}><Icon size="12px" name="chevron-up"  ></Icon></span>
+          <span onClick={subtract}><Icon size="12px" name="chevron-down" ></Icon></span>
         </div>
         <div class="devui-input-item">
           <input

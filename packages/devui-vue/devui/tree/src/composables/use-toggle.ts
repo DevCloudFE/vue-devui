@@ -1,36 +1,41 @@
-import { ref, Ref, watch } from 'vue';
-import { TreeData, TreeItem } from '../tree-types';
+import { Ref } from 'vue';
+import { IInnerTreeNode, IUseCore } from '../tree-types';
 
-interface IUseToggle {
-  openedData: Ref<TreeData>;
-  toggle: (target: Event, item: TreeItem) => void;
+export interface IUseToggle {
+  expandNode: (node: IInnerTreeNode) => void;
+  collapseNode: (node: IInnerTreeNode) => void;
+  toggleNode: (node: IInnerTreeNode) => void;
 }
 
-export default function useToggle(data: Ref<TreeData>): IUseToggle {
-  const openedTree = (tree: TreeData): TreeData => {
-    return tree.reduce((acc: TreeData, item: TreeItem) => (
-      item.open
-        ? acc.concat(item, item.children ? openedTree(item.children) : [])
-        : acc.concat(item)
-    ), []);
-  };
+export default function () {
+  return function useToggle(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseToggle {
+    const { getNode, setNodeValue } = core;
 
-  const openedData = ref(openedTree(data.value));
+    const expandNode = (node: IInnerTreeNode): void => {
+      if (node.disableToggle) { return; }
 
-  watch(
-    () => data.value,
-    (d) => openedData.value = openedTree(d),
-    { deep: true }
-  );
-  const toggle = (target: Event, item: TreeItem) => {
-    target.stopPropagation();
-    if (!item.children) {return;}
-    item.open = !item.open;
-    openedData.value = openedTree(data.value);
-  };
+      setNodeValue(node, 'expanded', true);
+    };
 
-  return {
-    openedData,
-    toggle,
+    const collapseNode = (node: IInnerTreeNode): void => {
+      if (node.disableToggle) { return; }
+      setNodeValue(node, 'expanded', false);
+    };
+
+    const toggleNode = (node: IInnerTreeNode): void => {
+      if (node.disableToggle) { return; }
+
+      if (getNode(node).expanded) {
+        setNodeValue(node, 'expanded', false);
+      } else {
+        setNodeValue(node, 'expanded', true);
+      }
+    };
+
+    return {
+      expandNode,
+      collapseNode,
+      toggleNode,
+    };
   };
 }

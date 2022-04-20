@@ -1,8 +1,14 @@
-import { ref, Ref } from 'vue';
+import { Ref } from 'vue';
 import { IInnerTreeNode, IUseCore } from './use-tree-types';
 
-export default function(options?) {
-  return function useSelect(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
+export interface IUseSelect {
+  selectNode: (node: IInnerTreeNode) => void;
+  deselectNode: (node: IInnerTreeNode) => void;
+  toggleSelectNode: (node: IInnerTreeNode) => void;
+}
+
+export default function () {
+  return function useSelect(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseSelect {
     const { setNodeValue } = core;
 
     let prevActiveNode: IInnerTreeNode;
@@ -11,17 +17,17 @@ export default function(options?) {
       if (node.disableSelect) { return; }
 
       if (prevActiveNode) {
-        const prevActiveNodeIndex = data.value.findIndex(item => item.id === prevActiveNode.id)
+        const prevActiveNodeIndex = data.value.findIndex(item => item.id === prevActiveNode.id);
         setNodeValue(data.value[prevActiveNodeIndex], 'selected', false);
       }
-      
+
       setNodeValue(node, 'selected', true);
       prevActiveNode = node;
-    }
+    };
 
     const deselectNode = (node: IInnerTreeNode): void => {
       setNodeValue(node, 'selected', false);
-    }
+    };
 
     const toggleSelectNode = (node: IInnerTreeNode): void => {
       if (node.selected) {
@@ -29,12 +35,12 @@ export default function(options?) {
       } else {
         selectNode(node);
       }
-    }
+    };
 
     return {
       selectNode,
       deselectNode,
       toggleSelectNode,
-    }
+    };
   };
 }

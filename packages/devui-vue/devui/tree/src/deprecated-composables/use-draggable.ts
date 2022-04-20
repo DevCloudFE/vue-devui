@@ -1,6 +1,6 @@
 import { reactive, ref, watch } from 'vue';
 import type { Ref } from 'vue';
-import { TreeItem, IDropType, Nullable } from '../tree-types';
+import { TreeItem, IDropType, Nullable } from '../deprecated-tree-types';
 import cloneDeep from 'lodash/cloneDeep';
 
 const ACTIVE_NODE = 'devui-tree-node__content--value-wrapper';

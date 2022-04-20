@@ -1,5 +1,6 @@
 @import '../../style/core/form';
 @import '../../style/mixins/flex';
+@import '../../styles-var/devui-var.scss';
 
 .devui-input {
   &__wrap {
@@ -21,5 +22,10 @@
     cursor: pointer;
     @include flex;
     @include flex-direction;
+  }
+
+  .devui-error {
+    border-color: $devui-danger-line;
+    background-color: $devui-danger-bg;
   }
 }

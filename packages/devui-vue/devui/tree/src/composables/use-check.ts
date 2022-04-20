@@ -1,21 +1,23 @@
 import { ref, Ref } from 'vue';
-import { CheckStrategy, IInnerTreeNode, IUseCore } from './use-tree-types';
-
-export default function(options?: Ref<{
-  checkStrategy: CheckStrategy
-}> = ref({
-  checkStrategy: 'both'
-})) {
-  return function useCheck(data: Ref<IInnerTreeNode[]>, core: IUseCore) {
+import { ICheckStrategy, IInnerTreeNode, IUseCore } from './use-tree-types';
+export interface IUseCheck {
+  checkNode: (node: IInnerTreeNode) => void;
+  uncheckNode: (node: IInnerTreeNode) => void;
+  toggleCheckNode: (node: IInnerTreeNode) => void;
+}
+export default function (
+  options: Ref<{ checkStrategy: ICheckStrategy }> = ref({ checkStrategy: 'both' as ICheckStrategy })
+) {
+  return function useCheck(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseCheck {
     const { setNodeValue, getNode, getChildren, getParent } = core;
 
     const checkNode = (node: IInnerTreeNode): void => {
       setNodeValue(node, 'checked', true);
-    }
+    };
 
     const uncheckNode = (node: IInnerTreeNode): void => {
       setNodeValue(node, 'checked', false);
-    }
+    };
 
     const controlParentNodeChecked = (node: IInnerTreeNode): void => {
       const parentNode = getParent(node);
@@ -32,7 +34,7 @@ export default function(options?: Ref<{
         } else if (checkedSiblingNodes.length === siblingNodes.length) {
           setNodeValue(parentNode, 'checked', true);
         }
-      }
+      };
 
       if (parentNode.parentId) {
         toggleParentChecked();
@@ -42,7 +44,7 @@ export default function(options?: Ref<{
       } else {
         toggleParentChecked();
       }
-    }
+    };
 
     const toggleCheckNode = (node: IInnerTreeNode): void => {
       if (getNode(node).checked) {
@@ -62,12 +64,12 @@ export default function(options?: Ref<{
       if (['upward', 'both'].includes(options.value.checkStrategy)) {
         controlParentNodeChecked(node);
       }
-    }
+    };
 
     return {
       checkNode,
       uncheckNode,
       toggleCheckNode,
-    }
+    };
   };
 }
