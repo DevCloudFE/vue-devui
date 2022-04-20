@@ -148,7 +148,7 @@ export default {
 | disabled | `boolean`                         | false       | 可选，是否禁用 button | [禁用状态](#禁用状态)     |
 | loading  | `boolean`                         | false       | 可选，设置加载中状态  | [加载中状态](#加载中状态) |
 
-### 类型
+### Button 类型定义
 
 #### IButtonVariant
 

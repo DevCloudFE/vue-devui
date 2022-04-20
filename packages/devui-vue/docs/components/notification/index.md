@@ -194,7 +194,7 @@ NotificationService.open({ xxx });
 this.$notificationService.open({ xxx });
 ```
 
-### d-notification 参数
+### Notification 参数
 
 | 参数名   | 类型               | 默认     | 说明                       | 跳转                          |
 | :------- | :----------------- | :------- | :------------------------- | :---------------------------- |
@@ -205,7 +205,7 @@ this.$notificationService.open({ xxx });
 | duration | `number`           | '3000'   | 可选，设置超时时间         | [超时时间](#超时时间)         |
 | on-close | `() => void`       | ''       | 可选，设置消息关闭时的回调 | [关闭回调](#关闭回调)         |
 
-### d-notification 插槽
+### Notification 插槽
 
 | 插槽名  | 说明                         |
 | :------ | :--------------------------- |
