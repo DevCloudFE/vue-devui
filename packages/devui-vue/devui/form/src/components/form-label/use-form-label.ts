@@ -1,12 +1,13 @@
-import { computed, inject, toRefs } from 'vue';
-import { FORM_TOKEN, IForm } from '../../form-types';
-import { FormLabelProps, UseFormLabel } from './form-label-types';
+import { computed, inject } from 'vue';
+import { FORM_TOKEN, FormContext } from '../../form-types';
+import { FormItemContext, FORM_ITEM_TOKEN } from '../form-item/form-item-types';
+import { UseFormLabel } from './form-label-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
-export function useFormLabel(props: FormLabelProps): UseFormLabel {
-  const { labelData } = inject(FORM_TOKEN) as IForm;
+export function useFormLabel(): UseFormLabel {
+  const { labelData } = inject(FORM_TOKEN) as FormContext;
+  const formItemContext = inject(FORM_ITEM_TOKEN) as FormItemContext;
   const ns = useNamespace('form');
-  const { required } = toRefs(props);
 
   const labelClasses = computed(() => ({
     [`${ns.e('label')}`]: true,
@@ -16,7 +17,7 @@ export function useFormLabel(props: FormLabelProps): UseFormLabel {
   }));
 
   const labelInnerClasses = computed(() => ({
-    [`${ns.em('label', 'required')}`]: required.value,
+    [`${ns.em('label', 'required')}`]: formItemContext.required,
   }));
 
   return { labelClasses, labelInnerClasses };

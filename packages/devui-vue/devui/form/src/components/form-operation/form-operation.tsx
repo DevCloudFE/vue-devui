@@ -1,12 +1,12 @@
 import { defineComponent, computed, reactive, inject } from 'vue';
-import { FORM_TOKEN, IForm, LabelSize } from '../../form-types';
+import { FORM_TOKEN, FormContext, LabelSize } from '../../form-types';
 import './form-operation.scss';
 
 export default defineComponent({
   name: 'DFormOperation',
   setup(props, ctx) {
-    const Form = reactive(inject(FORM_TOKEN) as IForm);
-    const labelData = reactive(Form.labelData);
+    const formContext = reactive(inject(FORM_TOKEN) as FormContext);
+    const labelData = reactive(formContext.labelData);
     const LabelSizeMap: Record<LabelSize, number> = {
       sm: 80,
       md: 100,

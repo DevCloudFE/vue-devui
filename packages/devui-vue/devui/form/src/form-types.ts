@@ -1,10 +1,18 @@
-import { Emitter } from 'mitt';
+import type { ValidateError, ValidateFieldsError } from 'async-validator';
+import type { Emitter } from 'mitt';
 import type { PropType, ExtractPropTypes, InjectionKey } from 'vue';
+import { FormItemContext, FormRuleItem, FormValidateCallback, FormValidateResult } from './components/form-item/form-item-types';
 
 export type Layout = 'horizontal' | 'vertical';
 export type LabelSize = 'sm' | 'md' | 'lg';
 export type LabelAlign = 'start' | 'center' | 'end';
 export type FormData = Record<string, any>;
+
+export type FormRules = Partial<Record<string, Array<FormRuleItem>>>;
+export interface ValidateFailure {
+  errors: ValidateError[] | null;
+  fields: ValidateFieldsError;
+}
 
 export const formProps = {
   data: {
@@ -24,12 +32,7 @@ export const formProps = {
     default: 'start',
   },
   rules: {
-    type: Object,
-    default: {},
-  },
-  name: {
-    type: String,
-    default: '',
+    type: Object as PropType<FormRules>,
   },
   messageShowType: {
     type: String as PropType<'popover' | 'text' | 'toast' | 'none'>,
@@ -41,8 +44,6 @@ export const dFormEvents = {
   addField: 'd.form.addField',
   removeField: 'd.form.removeField',
 } as const;
-
-export const FORM_ITEM_TOKEN: InjectionKey<IFormItem> = Symbol('dFormItem');
 
 export const dFormItemEvents = {
   blur: 'd.form.blur',
@@ -56,15 +57,28 @@ export interface IFormLabel {
   labelAlign: LabelAlign;
 }
 
-export interface IForm {
+export interface FormContext {
   formData: any;
   labelData: IFormLabel;
   formMitt: Emitter<any>;
   rules: any;
   messageShowType: string;
+  addItemContext: (field: FormItemContext) => void;
+  removeItemContext: (field: FormItemContext) => void;
 }
 
-export const FORM_TOKEN: InjectionKey<IForm> = Symbol('dForm');
+export interface UseFieldCollection {
+  itemContexts: FormItemContext[];
+  addItemContext: (field: FormItemContext) => void;
+  removeItemContext: (field: FormItemContext) => void;
+}
+
+export interface UseFormValidation {
+  validate: (callback?: FormValidateCallback) => FormValidateResult;
+  validateFields: (fields: string[], callback: any) => FormValidateResult;
+}
+
+export const FORM_TOKEN: InjectionKey<FormContext> = Symbol('dForm');
 
 export interface IFormItem {
   dHasFeedback: boolean;
