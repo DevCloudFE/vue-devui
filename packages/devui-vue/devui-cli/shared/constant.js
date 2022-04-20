@@ -70,5 +70,5 @@ exports.CREATE_SUPPORT_TYPES = Object.keys(this.CREATE_SUPPORT_TYPE_MAP);
 exports.CREATE_UNFINISHED_TYPES = [];
 exports.WHITE_LIST_READY_COMPONENTS = [
   'select', 'tooltip', 'table', 'tabs', 'form',
-  'dropdown', 'drawer', 'date-picker', 'input-number'
+  'dropdown', 'drawer', 'date-picker', 'input-number', 'tree'
 ];
