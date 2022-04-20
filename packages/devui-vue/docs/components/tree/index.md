@@ -12,7 +12,7 @@
 
 ```vue
 <template>
-  <d-new-tree :data="data"></d-new-tree>
+  <d-tree :data="data"></d-tree>
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
@@ -57,7 +57,7 @@ export default defineComponent({
       <d-radio v-for="strategy of checkStrategy" :key="strategy" :value="strategy">{{ strategy }}</d-radio>
     </d-radio-group>
   </div>
-  <d-new-tree :data="data" :check="currentStrategy"></d-new-tree>
+  <d-tree :data="data" :check="currentStrategy"></d-tree>
 </template>
 
 <script>
@@ -129,7 +129,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-new-tree :data="data" check></d-new-tree>
+  <d-tree :data="data" check></d-tree>
 </template>
 
 <script>
@@ -175,7 +175,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-new-tree :data="data" check></d-new-tree>
+  <d-tree :data="data" check></d-tree>
 </template>
 
 <script>
@@ -224,7 +224,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-new-tree :data="data">
+  <d-tree :data="data">
     <template #content="{nodeData}">
       <svg style="margin-right: 8px" viewBox="0 0 16 16" width="16" height="16"><path :d="`${
         nodeData.isLeaf
@@ -245,7 +245,7 @@ export default defineComponent({
         <svg :style="{ transform: nodeData.expanded ? 'rotate(90deg)': '', marginLeft: '-2.5px', marginRight: '14.5px', cursor: 'pointer' }" viewBox="0 0 1024 1024" width="12" height="12"><path d="M204.58705 951.162088 204.58705 72.836889 819.41295 511.998977Z" fill="#8a8e99"></path></svg>
       </span>
     </template>
-  </d-new-tree>
+  </d-tree>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
@@ -284,7 +284,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-new-tree :data="data" ref="treeRef"></d-new-tree>
+  <d-tree :data="data" ref="treeRef"></d-tree>
 </template>
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue';

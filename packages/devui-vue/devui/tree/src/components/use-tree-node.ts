@@ -1,7 +1,7 @@
 import type { ComputedRef } from 'vue';
 import { computed, inject } from 'vue';
 import { NODE_HEIGHT, NODE_INDENT, USE_TREE_TOKEN } from '../const';
-import { IInnerTreeNode, IUseTree } from '../core/use-tree-types';
+import { IInnerTreeNode, IUseTree } from '../composables/use-tree-types';
 
 export interface IUseTreeNode {
   nodeClass: ComputedRef<(string | false | undefined)[]>;

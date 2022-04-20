@@ -1,7 +1,7 @@
 import type { ComputedRef } from 'vue';
 import { computed, defineComponent, inject, PropType, renderSlot, toRefs, useSlots } from 'vue';
 import { NODE_HEIGHT, USE_TREE_TOKEN } from '../const';
-import { IInnerTreeNode, IUseTree } from '../core/use-tree-types';
+import { IInnerTreeNode, IUseTree } from '../composables/use-tree-types';
 import DTreeNodeToggle from './tree-node-toggle';
 import { Checkbox } from '../../../checkbox';
 import DTreeNodeContent from './tree-node-content';
