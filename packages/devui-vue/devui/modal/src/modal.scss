@@ -9,12 +9,17 @@
 .devui-modal {
   position: relative;
   width: 300px;
-  background-color: $devui-global-bg-normal;
+  border-radius: $devui-border-radius;
+  border: none;
+  background-color: $devui-fullscreen-overlay-bg;
+  background-clip: padding-box;
+  outline: 0;
+  box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
 
   .btn-close {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 16px;
+    top: 16px;
     width: 20px;
     height: 20px;
     line-height: 20px;
