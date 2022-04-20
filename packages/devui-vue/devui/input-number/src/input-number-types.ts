@@ -1,5 +1,7 @@
 import type { PropType, ExtractPropTypes } from 'vue';
 
+export type ISize = 'lg' |'md' | 'sm';
+
 export const inputNumberProps = {
   placeholder: {
     type: String,
@@ -22,7 +24,7 @@ export const inputNumberProps = {
     default: -Infinity
   },
   size: {
-    type: String,
+    type: String as PropType<ISize>,
     default: ''
   },
   modelValue: {
