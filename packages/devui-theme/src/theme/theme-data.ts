@@ -37,8 +37,8 @@ export const devuiLightTheme: Theme = new Theme({
     'devui-info': '#5e7ce0',
     'devui-initial': '#e9edfa',
     'devui-unavailable': '#f5f5f6',
-    'devui-shadow': 'rgba(0, 0, 0, 0.2)',
-    'devui-light-shadow': 'rgba(0, 0, 0, 0.1)',
+    'devui-shadow': 'rgba(37, 43, 58, 0.2)',
+    'devui-light-shadow': 'rgba(37, 43, 58, 0.1)',
     // 图标
     'devui-icon-text': '#252b3a',
     'devui-icon-bg': '#ffffff',
@@ -140,9 +140,9 @@ export const devuiLightTheme: Theme = new Theme({
 
     // Menu
     'devui-menu-item': '#252b3a',
-    'devui-menu-item-sub':'#6C6C6C',
+    'devui-menu-item-sub': '#6C6C6C',
     'devui-menu-item-hover': '#0f0f0f',
-    'devui-menu-disabled': '#919191'
+    'devui-menu-disabled': '#919191',
   },
   isDark: false,
 });
@@ -150,7 +150,9 @@ export const devuiGreenTheme: Theme = new Theme({
   id: 'devui-green-theme',
   name: 'Green - Light Mode',
   cnName: '绿色主题',
-  data: { ...devuiLightTheme.data, 'devui-global-bg': '#f3f8f7',
+  data: {
+    ...devuiLightTheme.data,
+    'devui-global-bg': '#f3f8f7',
     'devui-brand': '#3DCCA6',
     'devui-brand-foil': '#7fdac1',
     'devui-brand-hover': '#6DDEBB',
@@ -188,7 +190,8 @@ export const devuiGreenTheme: Theme = new Theme({
     'devui-default-bg': '#f3f8f7',
     'devui-primary-disabled': '#c5f0e5',
     'devui-icon-fill-active-disabled': '#c5f0e5',
-    'devui-range-item-hover-bg': '#d8f9ea',},
+    'devui-range-item-hover-bg': '#d8f9ea',
+  },
   extends: 'devui-light-theme',
   isDark: false,
 });
@@ -290,9 +293,9 @@ export const devuiDarkTheme: Theme = new Theme({
 
     // Menu
     'devui-menu-item': '#dcdcdc',
-    'devui-menu-item-sub':'#c6c6c6',
+    'devui-menu-item-sub': '#c6c6c6',
     'devui-menu-item-hover': '#fff',
-    'devui-menu-disabled': '#919191'
+    'devui-menu-disabled': '#919191',
   },
   extends: 'devui-light-theme',
   isDark: true,
@@ -301,7 +304,9 @@ export const devuiGreenDarkTheme: Theme = new Theme({
   id: 'devui-green-dark-theme',
   name: 'Green - Dark Mode',
   cnName: '绿色深色主题',
-  data: { ...devuiDarkTheme.data, 'devui-brand': '#3DCCA6',
+  data: {
+    ...devuiDarkTheme.data,
+    'devui-brand': '#3DCCA6',
     'devui-brand-foil': '#395e54',
     'devui-brand-hover': '#4c9780',
     'devui-brand-active': '#07c693',
@@ -330,7 +335,8 @@ export const devuiGreenDarkTheme: Theme = new Theme({
     'devui-default-line': '#3DCCA6',
     'devui-default-bg': '#383838',
     'devui-primary-disabled': '#28544B',
-    'devui-icon-fill-active-disabled': '#28544B',},
+    'devui-icon-fill-active-disabled': '#28544B',
+  },
   extends: 'devui-dark-theme',
   isDark: true,
 });
