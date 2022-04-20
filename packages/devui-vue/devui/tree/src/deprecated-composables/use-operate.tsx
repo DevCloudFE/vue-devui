@@ -1,5 +1,5 @@
 import { ref, Ref } from 'vue';
-import { TreeItem, TreeData } from '../tree-types';
+import { TreeItem, TreeData } from '../deprecated-tree-types';
 
 type TypeID = TreeItem['id'];
 interface TypeOperator {

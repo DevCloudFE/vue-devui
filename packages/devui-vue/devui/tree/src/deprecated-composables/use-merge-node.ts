@@ -1,5 +1,5 @@
 import { Ref, ref, watch } from 'vue';
-import { TreeData, TreeItem } from '../tree-types';
+import { TreeData, TreeItem } from '../deprecated-tree-types';
 
 interface IUseMergeNode {
   mergeData: Ref<TreeData>;

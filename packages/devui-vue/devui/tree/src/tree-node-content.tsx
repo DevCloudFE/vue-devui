@@ -1,5 +1,5 @@
 import { defineComponent, inject, toRefs, onUpdated, ref } from 'vue';
-import { TreeRootType } from './tree-types';
+import { TreeRootType } from './deprecated-tree-types';
 
 export default defineComponent({
   name: 'DTreeNodeContent',
