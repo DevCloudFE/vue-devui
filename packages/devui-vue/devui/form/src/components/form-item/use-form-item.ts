@@ -14,7 +14,7 @@ import {
 } from './form-item-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
-export function useFormItem(): UseFormItem {
+export function useFormItem(_rules: ComputedRef<FormRuleItem[]>): UseFormItem {
   const formContext = reactive(inject(FORM_TOKEN) as FormContext);
   const labelData = reactive(formContext.labelData);
   const ns = useNamespace('form');
@@ -24,7 +24,9 @@ export function useFormItem(): UseFormItem {
     [`${ns.em('item', 'vertical')}`]: labelData.layout === 'vertical',
   }));
 
-  return { itemClasses };
+  const isRequired = computed(() => _rules.value.some((rule) => Boolean(rule.required)));
+
+  return { itemClasses, isRequired };
 }
 
 export function useFormItemRule(props: FormItemProps) {
