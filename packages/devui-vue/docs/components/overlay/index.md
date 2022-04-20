@@ -130,7 +130,7 @@ export default defineComponent({
 | offset     | `number`                  | 8          | 可选，指定与起点元素的间距                             |
 | show-arrow | `boolean`                 | false      | 可选，是否显示箭头                                     |
 
-### 类型
+### 类型定义
 
 #### Placement
 

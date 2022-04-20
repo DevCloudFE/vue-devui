@@ -175,20 +175,20 @@ export default defineComponent({
 
 :::
 
-### d-modal 参数
+### Modal 参数
 
-| 属性                   | 类型             | 默认  | 说明                                       |
-| ---------------------- | ---------------- | ----- | ------------------------------------------ |
+| 参数名                   | 类型             | 默认  | 说明                                       |
+| :---------------------- | :---------------- | :----- | :------------------------------------------ |
 | v-model                | `boolean`        | false | 是否显示 Modal                             |
 | title                  | `string`         | -     | 可选，Modal 的标题                         |
 | lock-scroll            | `boolean`        | true  | 可选，是否将 body 滚动锁定                 |
 | close-on-click-overlay | `boolean`        | true  | 可选，点击遮罩层是否能关闭 Modal           |
 | before-close           | `(done) => void` | -     | 可选，关闭前的回调，调用 done 可关闭 Modal |
 
-### d-modal 插槽
+### Modal 插槽
 
-| 名称    | 说明              |
-| ------- | ----------------- |
+| 插槽名    | 说明              |
+| :------- | :----------------- |
 | default | Modal 内容        |
 | header  | 自定义 Modal 顶部 |
 | footer  | 自定义 Modal 底部 |
