@@ -1,6 +1,6 @@
 import type { ComputedRef } from 'vue';
 import { defineComponent, PropType, toRefs } from 'vue';
-import { ITreeNode, IInnerTreeNode } from '../core/use-tree-types';
+import { ITreeNode, IInnerTreeNode } from '../composables/use-tree-types';
 import useTreeNode from './use-tree-node';
 
 export default defineComponent({

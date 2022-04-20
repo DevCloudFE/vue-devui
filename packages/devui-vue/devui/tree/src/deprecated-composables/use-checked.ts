@@ -6,7 +6,7 @@ import type {
   ReverseTree,
   CheckableRelationType,
   TreeData,
-} from '../tree-types';
+} from '../deprecated-tree-types';
 import { flatten } from '../utils';
 
 interface IUseChecked {

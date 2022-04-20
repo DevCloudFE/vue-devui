@@ -1,6 +1,6 @@
 import { ref, Ref } from 'vue';
 import type { ComponentInternalInstance } from 'vue';
-import { TreeData, TreeItem } from '../tree-types';
+import { TreeData, TreeItem } from '../deprecated-tree-types';
 
 interface TypeReflectValue {
   // 外部传入
