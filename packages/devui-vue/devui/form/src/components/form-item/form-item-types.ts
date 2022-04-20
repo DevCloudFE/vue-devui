@@ -31,6 +31,7 @@ export type FormValidateCallback = (isValid: boolean, invalidFields?: ValidateFi
 export type FormValidateResult = Promise<boolean>;
 
 export interface FormItemContext extends FormItemProps {
+  isRequired: boolean;
   validateState: FormItemValidateState;
   validateMessage: string;
   validate: (trigger: string, callback?: FormValidateCallback) => FormValidateResult;
@@ -38,6 +39,7 @@ export interface FormItemContext extends FormItemProps {
 
 export interface UseFormItem {
   itemClasses: ComputedRef<Record<string, boolean>>;
+  isRequired: ComputedRef<boolean>;
 }
 
 export interface UseFormItemValidate {
