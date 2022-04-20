@@ -94,19 +94,19 @@ Card 组件
 ```vue
 <template>
   <d-card v-ripple="{ duration: 300 }" class="demo-card" :src="'https://devui.design/components/assets/image1.png'">
-    <template #cardAvatar>
+    <template #avatar>
       <d-avatar name="DevUI"></d-avatar>
     </template>
-    <template #cardTitle>
+    <template #title>
       DEVUI Course
     </template>
-    <template #cardSubtitle class="icon">
+    <template #subtitle class="icon">
       <d-icon name="company-member"></d-icon><span>DevUI</span>
     </template>
-    <template #cardContent>
+    <template #content>
       DEVUI is a free open-source and common solution for the front end of enterprise mid- and back-end products. Its design values are basedon...
     </template>
-    <template #cardActions>
+    <template #actions>
       <div class="card-block">
         <d-icon name="like"></d-icon ><span>12</span>
       </div>
