@@ -3,6 +3,8 @@ import mitt from 'mitt';
 import { formProps, FormProps, IFormItem, dFormEvents, FORM_TOKEN } from './form-types';
 import { EventBus } from './utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import useFieldCollection from './composables/use-field-collection';
+import useFormValidation from './composables/use-form-validation';
 
 export default defineComponent({
   name: 'DForm',
@@ -18,6 +20,8 @@ export default defineComponent({
       });
     };
     const { data, layout, labelSize, labelAlign } = toRefs(props);
+    const { itemContexts, addItemContext, removeItemContext } = useFieldCollection();
+    const { validate, validateFields } = useFormValidation(itemContexts);
 
     formMitt.on(dFormEvents.addField, (field: any) => {
       if (field) {
@@ -43,8 +47,15 @@ export default defineComponent({
         },
         rules: props.rules,
         messageShowType: 'popover',
+        addItemContext,
+        removeItemContext,
       })
     );
+
+    ctx.expose({
+      validate,
+      validateFields,
+    });
 
     const onSubmit = (e) => {
       e.preventDefault();
