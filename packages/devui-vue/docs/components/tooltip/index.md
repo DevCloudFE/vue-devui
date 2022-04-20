@@ -87,7 +87,7 @@ export default defineComponent({
 | :------ | :--------------------- |
 | default | 默认插槽，设置触发元素 |
 
-### 类型定义
+### Tooltip 类型定义
 
 #### BasePlacement
 
