@@ -387,7 +387,7 @@ export default defineComponent({
 | data   | [ITreeNode](#itreenode) | []     | 可选，节点数据         |
 | check  | [ICheck](#icheck)       | false  | 可选，是否启用勾选功能 |
 
-### 类型
+### Tree 类型定义
 
 #### ITreeNode
 

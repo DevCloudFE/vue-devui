@@ -13,9 +13,16 @@
 ```vue
 <template>
   <section>
-    <d-splitter class="splitter-border"  :orientation="orientation" :splitBarSize="splitBarSize" style="height: 300px">
+    <d-splitter class="splitter-border" :orientation="orientation" :splitBarSize="splitBarSize" style="height: 300px">
       <template v-slot:DSplitterPane>
-        <d-splitter-pane collapseDirection="before" :size="size" :minSize="minSize" :collapsible="true" @sizeChange="sizeChange" @collapsedChange="collapsedChange">
+        <d-splitter-pane
+          collapseDirection="before"
+          :size="size"
+          :minSize="minSize"
+          :collapsible="true"
+          @sizeChange="sizeChange"
+          @collapsedChange="collapsedChange"
+        >
           <div class="pane-content">
             <h2>Left</h2>
             <div>width: 30%, min-width: 20%</div>
@@ -33,23 +40,23 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-  name: "DSplitterDemoBasic",
+  name: 'DSplitterDemoBasic',
   setup() {
-    const orientation = ref("horizontal");
+    const orientation = ref('horizontal');
     const splitBarSize = '2px';
     // splitter pane input
-    const size = ref("30%");
-    const minSize = ref("20%");
-    const maxSize = ref("60%");
+    const size = ref('30%');
+    const minSize = ref('20%');
+    const maxSize = ref('60%');
     const sizeChange = (size) => {
       console.log(size);
-    }
+    };
     const collapsedChange = (event) => {
       console.log(event);
-    }
+    };
 
     return {
       orientation,
@@ -58,13 +65,13 @@ export default defineComponent({
       minSize,
       maxSize,
       sizeChange,
-      collapsedChange
-    }
+      collapsedChange,
+    };
   },
-})
+});
 </script>
 
-<style> 
+<style>
 .pane-content {
   padding: 0 12px;
 }
@@ -72,9 +79,9 @@ export default defineComponent({
 .splitter-border {
   border: 1px solid #dfe1e6;
 }
-
 </style>
 ```
+
 :::
 
 ### 垂直布局用法
@@ -84,7 +91,7 @@ export default defineComponent({
 ```vue
 <template>
   <section>
-    <d-splitter style="height: 500px" class="splitter-border"  orientation="vertical" :disableBarSize="disableBarSize" >
+    <d-splitter style="height: 500px" class="splitter-border" orientation="vertical" :disableBarSize="disableBarSize">
       <template v-slot:DSplitterPane>
         <d-splitter-pane size="200px" minSize="150px" :collapsed="collapsed" :collapsible="true" @sizeChange="sizeChange">
           <div class="pane-content">
@@ -110,28 +117,28 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-  name: "DSplitterDemoVertical",
+  name: 'DSplitterDemoVertical',
   setup() {
     const collapsed = ref(true);
     const disableBarSize = '2px';
 
     const sizeChange = (size) => {
       console.log(size);
-    }
+    };
 
     return {
       disableBarSize,
       collapsed,
       sizeChange,
-    }
+    };
   },
-})
+});
 </script>
 
-<style> 
+<style>
 .pane-content {
   padding: 0 12px;
 }
@@ -139,7 +146,6 @@ export default defineComponent({
 .splitter-border {
   border: 1px solid #dfe1e6;
 }
-
 </style>
 ```
 
@@ -165,20 +171,20 @@ export default defineComponent({
               </d-splitter-pane>
               <d-splitter-pane minSize="15%">
                 <d-splitter style="height: 100%" orientation="vertical">
-                    <template v-slot:DSplitterPane>
-                      <d-splitter-pane size="50%" style="overflow: hidden">
-                        <div class="pane-content">
-                          <h2>Top</h2>
-                          <div>height: 50%</div>
-                        </div>
-                      </d-splitter-pane>
-                      <d-splitter-pane style="overflow: hidden">
-                        <div class="pane-content">
-                          <h2>Bottom</h2>
-                          <div>height: auto</div>
-                        </div>
-                      </d-splitter-pane>
-                   </template>
+                  <template v-slot:DSplitterPane>
+                    <d-splitter-pane size="50%" style="overflow: hidden">
+                      <div class="pane-content">
+                        <h2>Top</h2>
+                        <div>height: 50%</div>
+                      </div>
+                    </d-splitter-pane>
+                    <d-splitter-pane style="overflow: hidden">
+                      <div class="pane-content">
+                        <h2>Bottom</h2>
+                        <div>height: auto</div>
+                      </div>
+                    </d-splitter-pane>
+                  </template>
                 </d-splitter>
               </d-splitter-pane>
             </template>
@@ -196,24 +202,23 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-  name: "DSplitterDemoMulti",
+  name: 'DSplitterDemoMulti',
   setup() {
-
     const sizeChange = (size) => {
       console.log(size);
-    }
+    };
 
     return {
       sizeChange,
-    }
+    };
   },
-})
+});
 </script>
 
-<style> 
+<style>
 .pane-content {
   padding: 0 12px;
 }
@@ -221,7 +226,6 @@ export default defineComponent({
 .splitter-border {
   border: 1px solid #dfe1e6;
 }
-
 </style>
 ```
 
@@ -260,24 +264,23 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-  name: "DSplitterDemoDirection",
+  name: 'DSplitterDemoDirection',
   setup() {
-
     const sizeChange = (size) => {
       console.log(size);
-    }
+    };
 
     return {
       sizeChange,
-    }
+    };
   },
-})
+});
 </script>
 
-<style> 
+<style>
 .pane-content {
   padding: 0 12px;
 }
@@ -285,40 +288,49 @@ export default defineComponent({
 .splitter-border {
   border: 1px solid #dfe1e6;
 }
-
 </style>
 ```
 
 :::
 
-### 折叠收缩显示菜单 【TODO】
+### Splitter 参数
 
-### API
+| 参数                 | 类型                                        | 默认值       | 描述                              | 跳转 Demo                             |
+| :------------------- | :------------------------------------------ | :----------- | :-------------------------------- | :------------------------------------ |
+| orientation          | [SplitterOrientation](#splitterorientation) | 'horizontal' | 可选，指定 Splitter 分割方向      | [基本用法](#基本用法)                 |
+| split-bar-size       | `string`                                    | '2px'        | 可选，分隔条大小，默认 2px        | [基本用法](#基本用法)                 |
+| disabled-bar-size    | `string`                                    | '1px'        | 可选，pane 设置不可调整宽度时生效 | [垂直布局用法](#垂直布局用法)         |
+| show-collapse-button | `boolean`                                   | true         | 可选，是否显示收起/展开按钮       | [折叠收缩显示菜单](#折叠收缩显示菜单) |
 
-### d-splitter 参数
+### SplitterPane 参数
 
-|        参数        |     类型     |    默认值     |               描述                | 跳转 Demo                                      |
-| :----------------: | :----------: | :-----------: | :-------------------------------: | :--------------------------------------------- |
-|    orientation     | `'vertical' \| 'horizontal'` |           'horizontal'            | 可选，指定 Splitter 分割方向,可选值 'vertical' \| 'horizontal' | [基本用法](#基本用法)  
-|    splitBarSize    |   `string`   |     '2px'     |    可选，分隔条大小，默认 2px     | [基本用法](#基本用法)                          |
-|  disabledBarSize   |   `string`   |     '1px'     | 可选，pane 设置不可调整宽度时生效 | [垂直布局用法](#垂直布局用法)                  |
-| showCollapseButton |  `boolean`   |     true      |    可选，是否显示收起/展开按钮    | [折叠收缩显示菜单](#折叠收缩显示菜单)          |
+| 参数               | 类型                                    | 默认值 | 描述                                                  | 跳转 Demo                             |
+| :----------------- | :-------------------------------------- | :----- | :---------------------------------------------------- | :------------------------------------ |
+| size               | `string`                                | --     | 可选，指定 pane 宽度，设置像素值或者百分比            | [基本用法](#基本用法)                 |
+| min-size           | `string`                                | --     | 可选，指定 pane 最小宽度，设置像素值或者百分比        | [基本用法](#基本用法)                 |
+| max-size           | `string`                                | --     | 可选，指定 pane 最大宽度，设置像素值或者百分比        | [基本用法](#基本用法)                 |
+| resizable          | `boolean`                               | true   | 可选，指定 pane 是否可调整大小，会影响相邻 pane       | [垂直布局用法](#垂直布局用法)         |
+| collapsible        | `boolean`                               | false  | 可选，指定 pane 是否可折叠收起                        | [基本用法](#基本用法)                 |
+| collapsed          | `boolean`                               | false  | 可选，指定 pane 初始化是否收起，配合`collapsible`使用 | [垂直布局用法](#垂直布局用法)         |
+| collapse-direction | [CollapseDirection](#collapsedirection) | 'both' | 可选，指定非边缘 pane 收起方向，配合`collapsible`使用 | [指定折叠收起方向](#指定折叠收起方向) |
 
-### d-splitter-pane 参数
+### SplitterPane 事件
 
-|       参数        |    类型    |  默认值  |                         描述                          | 跳转 Demo                             |
-| :---------------: | :--------: | :------: | :---------------------------------------------------: | :------------------------------------ |
-|       size        |  `string`  |    --    |      可选，指定 pane 宽度，设置像素值或者百分比       | [基本用法](#基本用法)                 |
-|      minSize      |  `string`  |    --    |    可选，指定 pane 最小宽度，设置像素值或者百分比     | [基本用法](#基本用法)                 |
-|      maxSize      |  `string`  |    --    |    可选，指定 pane 最大宽度，设置像素值或者百分比     | [基本用法](#基本用法)                 |
-|     resizable     | `boolean`  |   true   |    可选，指定 pane 是否可调整大小，会影响相邻 pane    | [垂直布局用法](#垂直布局用法)         |
-|    collapsible    | `boolean`  |  false   |            可选，指定 pane 是否可折叠收起             | [基本用法](#基本用法)                 |
-|     collapsed     | `boolean`  |  false   | 可选，指定 pane 初始化是否收起，配合`collapsible`使用 | [垂直布局用法](#垂直布局用法)         |
-| collapseDirection | `'before' \| 'after' \|                        'both'`                        | 'both'                                | 可选，指定非边缘 pane 收起方向，配合`collapsible`使用 | [指定折叠收起方向](#指定折叠收起方向)
+| 事件             | 类型                            | 描述                                        | 跳转 Demo             |
+| :--------------- | :------------------------------ | :------------------------------------------ | --------------------- |
+| size-change      | `(size: string) => void`        | 大小变动时，返回改变后的值,像素值或者百分比 | [基本用法](#基本用法) |
+| collapsed-change | `(collapsed: boolean>) => void` | 折叠和展开时，返回当前 pane 是否折叠        | [基本用法](#基本用法) |
 
-### d-splitter-pane 事件
+### Splitter 类型定义
 
-|        事件        |          类型           |                    描述                     | 跳转 Demo                             |
-| :----------------: | :---------------------: | :-----------------------------------------: | ------------------------------------- |
-|     sizeChange     | `EventEmitter<string>`  | 大小变动时，返回改变后的值,像素值或者百分比 | [基本用法](#基本用法)                 |
-|  collapsedChange   | `EventEmitter<boolean>` |    折叠和展开时，返回当前 pane 是否折叠     | [基本用法](#基本用法)                 |
+#### SplitterOrientation
+
+```ts
+export type SplitterOrientation = 'vertical' | 'horizontal';
+```
+
+#### CollapseDirection
+
+```ts
+export type CollapseDirection = 'before' | 'after' | 'both';
+```
