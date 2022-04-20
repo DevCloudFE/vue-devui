@@ -228,7 +228,7 @@ export default defineComponent({
 .form-btn-groups {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 .form-btn {
   display: flex;
@@ -445,11 +445,77 @@ export default defineComponent({
 
 :::
 
+### 表单校验
+
+:::demo
+
+```vue
+<template>
+  <d-form ref="formRef" :data="formData" :rules="rules">
+    <d-form-item field="username">
+      <d-form-label>用户名</d-form-label>
+      <d-form-control>
+        <d-input v-model="formData.username" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-item field="age">
+      <d-form-label>年龄</d-form-label>
+      <d-form-control>
+        <d-input v-model="formData.age" />
+      </d-form-control>
+    </d-form-item>
+    <d-form-operation>
+      <d-button @click="onClick">提交</d-button>
+    </d-form-operation>
+  </d-form>
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const formRef = ref(null);
+    const formData = reactive({
+      username: '',
+      age: '',
+    });
+    const checkAge = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('年龄不能为空'));
+      }
+      setTimeout(() => {
+        if (value < 18>) {
+          return callback(new Error('年龄不能小于18'));
+        }
+      }, 1000);
+    };
+    const rules = {
+      username: [
+        { required: true, message: '用户名不能为空', trigger: 'change' },
+        { min: 3, max: 6, message: '用户名需不小于3个字符，不大于6个字符', trigger: 'change' },
+      ],
+      age: [{ validator: checkAge }],
+    };
+
+    const onClick = () => {
+      formRef.value.validate((isValid) => {
+        console.log(isValid);
+      });
+    };
+
+    return { formRef, formData, rules, onClick };
+  },
+});
+</script>
+```
+
+:::
+
 ### Form 参数
 
 | 参数名      | 类型                      | 默认值       | 说明                                                               | 跳转 demo             |
 | :---------- | :------------------------ | :----------- | :----------------------------------------------------------------- | :-------------------- |
-| name        | `string`                  | ''           | 可选，设置表单 name 属性，进行表单提交验证时必选                   | [基础用法](#基础用法) |
 | data        | `object`                  | {}           | 必选，表单数据                                                     | [基础用法](#基础用法) |
 | layout      | [Layout](#layout)         | 'horizontal' | 可选，设置表单的排列方式                                           | [垂直排列](#垂直排列) |
 | label-size  | [LabelSize](#labelsize)   | 'md'         | 可选，设置 label 的宽度，默认为 100px，sm 对应 80px，lg 对应 150px | [表单样式](#表单样式) |
@@ -469,9 +535,10 @@ export default defineComponent({
 
 ### FormItem 参数
 
-| 参数名 | 类型     | 默认值 | 说明                                                 | 跳转 demo             |
-| :----- | :------- | :----- | :--------------------------------------------------- | :-------------------- |
-| field  | `string` | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性 | [基础用法](#基础用法) |
+| 参数名   | 类型      | 默认值 | 说明                                                 | 跳转 demo             |
+| :------- | :-------- | :----- | :--------------------------------------------------- | :-------------------- |
+| field    | `string`  | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性 | [基础用法](#基础用法) |
+| required | `boolean` | false  | 可选，表单选项是否必填                               |                       |
 
 ### FormItem 插槽
 
@@ -481,10 +548,9 @@ export default defineComponent({
 
 ### FormLabel 参数
 
-| 参数名    | 类型      | 默认值 | 说明                                                       | 跳转 demo             |
-| :-------- | :-------- | :----- | :--------------------------------------------------------- | :-------------------- |
-| required  | `boolean` | false  | 可选，表单选项是否必填                                     |                       |
-| help-tips | `string`  | ''     | 可选，表单项帮助指引提示内容，空字符串表示不设置提示内容。 | [基础用法](#基础用法) |
+| 参数名    | 类型     | 默认值 | 说明                                                       | 跳转 demo             |
+| :-------- | :------- | :----- | :--------------------------------------------------------- | :-------------------- |
+| help-tips | `string` | ''     | 可选，表单项帮助指引提示内容，空字符串表示不设置提示内容。 | [基础用法](#基础用法) |
 
 ### FormLabel 插槽
 

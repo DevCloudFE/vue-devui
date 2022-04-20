@@ -1,11 +1,12 @@
 import { computed, reactive, inject, toRefs } from 'vue';
-import { FORM_TOKEN, IForm } from '../../form-types';
+import { FORM_TOKEN, FormContext } from '../../form-types';
 import { FormControlProps, UseFormControl } from './form-control-types';
+import { FormItemContext, FORM_ITEM_TOKEN } from '../form-item/form-item-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
 export function useFormControl(props: FormControlProps): UseFormControl {
-  const Form = reactive(inject(FORM_TOKEN) as IForm);
-  const labelData = reactive(Form.labelData);
+  const formContext = inject(FORM_TOKEN) as FormContext;
+  const labelData = reactive(formContext.labelData);
   const ns = useNamespace('form');
   const { feedbackStatus } = toRefs(props);
 
@@ -22,4 +23,11 @@ export function useFormControl(props: FormControlProps): UseFormControl {
   }));
 
   return { controlClasses, controlContainerClasses };
+}
+
+export function useFormControlValidate() {
+  const formItemContext = inject(FORM_ITEM_TOKEN) as FormItemContext;
+  const errorMessage = computed(() => formItemContext.validateMessage);
+
+  return { errorMessage };
 }

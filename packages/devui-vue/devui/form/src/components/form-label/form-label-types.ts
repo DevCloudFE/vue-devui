@@ -1,10 +1,6 @@
 import type { ComputedRef, ExtractPropTypes } from 'vue';
 
 export const formLabelProps = {
-  required: {
-    type: Boolean,
-    default: false,
-  },
   helpTips: {
     type: String,
     default: '',
