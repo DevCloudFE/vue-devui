@@ -67,9 +67,6 @@ export default defineComponent({
     };
     const icons = <span class="devui-menu-icon">{ctx.slots.icon?.()}</span>;
     const menuItems = ref(null);
-    // watchEffect(()=>{
-    //   pushItem({el: menuItems.value as HTMLElement | null});
-    // },{flush:'post'});
     watch(disabled, ()=> {classObject['devui-menu-item-select'] = false;});
     watch(defaultSelectKey, (n)=>{
       isSelect.value = useInitSelect(n,key,multiple,disabled);
