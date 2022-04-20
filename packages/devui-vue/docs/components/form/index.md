@@ -451,10 +451,10 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="formRef" :data="formData" :rules="rules">
-    <d-form-item field="username">
+  <d-form ref="formRef" layout="vertical" :data="formData" :rules="rules">
+    <d-form-item field="username" :rules="[{ required: true, message: '用户名不能为空', trigger: 'change' }]">
       <d-form-label>用户名</d-form-label>
-      <d-form-control>
+      <d-form-control extra-info="some extra info">
         <d-input v-model="formData.username" />
       </d-form-control>
     </d-form-item>
@@ -492,7 +492,6 @@ export default defineComponent({
     };
     const rules = {
       username: [
-        { required: true, message: '用户名不能为空', trigger: 'change' },
         { min: 3, max: 6, message: '用户名需不小于3个字符，不大于6个字符', trigger: 'change' },
       ],
       age: [{ validator: checkAge }],
@@ -520,12 +519,13 @@ export default defineComponent({
 | layout      | [Layout](#layout)         | 'horizontal' | 可选，设置表单的排列方式                                           | [垂直排列](#垂直排列) |
 | label-size  | [LabelSize](#labelsize)   | 'md'         | 可选，设置 label 的宽度，默认为 100px，sm 对应 80px，lg 对应 150px | [表单样式](#表单样式) |
 | label-align | [LabelAlign](#labelalign) | 'start'      | 可选，设置水平布局方式下，label 对齐方式                           | [表单样式](#表单样式) |
+| rules       | [FormRules](#formrules)   | --           | 可选，设置表单的校验规则                                           | [表单校验](#表单校验) |
 
-### Form 事件
+### Form 方法
 
-| 事件名 | 回调参数     | 说明               | 跳转 demo                          |
-| :----- | :----------- | :----------------- | :--------------------------------- |
-| submit | `() => void` | 可选，提交表单事件 | [Form 验证与提交](#Form验证与提交) |
+| 方法名   | 类型                                           | 说明         | 跳转 Demo             |
+| :------- | :--------------------------------------------- | :----------- | :-------------------- |
+| validate | `(callback?: FormValidateCallback) => Promise` | 表单校验函数 | [表单校验](#表单校验) |
 
 ### Form 插槽
 
@@ -535,10 +535,11 @@ export default defineComponent({
 
 ### FormItem 参数
 
-| 参数名   | 类型      | 默认值 | 说明                                                 | 跳转 demo             |
-| :------- | :-------- | :----- | :--------------------------------------------------- | :-------------------- |
-| field    | `string`  | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性 | [基础用法](#基础用法) |
-| required | `boolean` | false  | 可选，表单选项是否必填                               |                       |
+| 参数名   | 类型                                            | 默认值 | 说明                                                 | 跳转 demo             |
+| :------- | :---------------------------------------------- | :----- | :--------------------------------------------------- | :-------------------- |
+| field    | `string`                                        | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性 | [基础用法](#基础用法) |
+| required | `boolean`                                       | false  | 可选，表单选项是否必填                               |                       |
+| rules    | [FormRuleItem \| FormRuleItem[]](#formruleitem) | --     | 可选，表单项的校验规则                               | [表单校验](#表单校验) |
 
 ### FormItem 插槽
 
@@ -589,6 +590,32 @@ type LabelSize = 'sm' | 'md' | 'lg';
 
 ```ts
 type LabelAlign = 'start' | 'center' | 'end';
+```
+
+#### FormRules
+
+```ts
+type FormRules = Partial<Record<string, Array<FormRuleItem>>>;
+```
+
+#### FormValidateCallback
+
+`ValidateFieldsError`类型参考[async-validator](https://github.com/yiminghe/async-validator)。
+
+```ts
+type FormValidateCallback = (isValid: boolean, invalidFields?: ValidateFieldsError) => void;
+```
+
+### FormItem 类型定义
+
+#### FormRuleItem
+
+`RuleItem`类型参考[async-validator](https://github.com/yiminghe/async-validator)。
+
+```ts
+interface FormRuleItem extends RuleItem {
+  trigger?: Array<string>;
+}
 ```
 
 ### FormControl 类型定义
