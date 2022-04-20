@@ -1,3 +1,5 @@
+@import '../../../../styles-var/devui-var.scss';
+
 .devui-form__label {
   align-self: flex-start;
 
@@ -30,11 +32,13 @@
   }
 }
 
-.devui-form__label--required {
-  display: inline-flex;
-  align-items: center;
-  line-height: 28px;
+.devui-form__label-span {
+  display: inline-block;
+  vertical-align: middle;
+  color: $devui-text;
+}
 
+.devui-form__label--required {
   &::before {
     content: '*';
     color: red;
