@@ -17,7 +17,7 @@ export function useFormLabel(): UseFormLabel {
   }));
 
   const labelInnerClasses = computed(() => ({
-    [`${ns.em('label', 'required')}`]: formItemContext.required,
+    [`${ns.em('label', 'required')}`]: formItemContext.isRequired,
   }));
 
   return { labelClasses, labelInnerClasses };
