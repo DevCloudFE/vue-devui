@@ -1,11 +1,17 @@
-.devui-form__item--horizontal {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
+.devui-form__item {
+  &--horizontal {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 
-.devui-form__item--vertical {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
+  &--vertical {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  &--error {
+    margin-bottom: 0;
+  }
 }

@@ -76,16 +76,19 @@
   }
 
   .devui-form__control-info {
+    line-height: 1;
+
     .error-message {
       display: inline-block;
       min-height: 20px;
+      line-height: 1.5;
       font-size: $devui-font-size;
       color: $devui-danger;
     }
 
     .devui-form__control-extra {
-      font-size: 12px;
-      color: #8a8e99;
+      font-size: $devui-font-size;
+      color: $devui-aide-text;
       min-height: 20px;
       line-height: 1.5;
       text-align: justify;

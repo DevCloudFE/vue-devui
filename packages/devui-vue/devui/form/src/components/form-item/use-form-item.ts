@@ -1,7 +1,7 @@
 import { computed, reactive, inject, ref } from 'vue';
 import { castArray, get, isFunction } from 'lodash';
 import Schema from 'async-validator';
-import type { ComputedRef } from 'vue';
+import type { ComputedRef, Ref } from 'vue';
 import type { RuleItem } from 'async-validator';
 import { FORM_TOKEN, FormContext, ValidateFailure } from '../../form-types';
 import {
@@ -14,7 +14,7 @@ import {
 } from './form-item-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
-export function useFormItem(_rules: ComputedRef<FormRuleItem[]>): UseFormItem {
+export function useFormItem(_rules: ComputedRef<FormRuleItem[]>, validateState: Ref<FormItemValidateState>): UseFormItem {
   const formContext = reactive(inject(FORM_TOKEN) as FormContext);
   const labelData = reactive(formContext.labelData);
   const ns = useNamespace('form');
@@ -22,6 +22,7 @@ export function useFormItem(_rules: ComputedRef<FormRuleItem[]>): UseFormItem {
   const itemClasses = computed(() => ({
     [`${ns.em('item', 'horizontal')}`]: labelData.layout === 'horizontal',
     [`${ns.em('item', 'vertical')}`]: labelData.layout === 'vertical',
+    [`${ns.em('item', 'error')}`]: validateState.value === 'error',
   }));
 
   const isRequired = computed(() => _rules.value.some((rule) => Boolean(rule.required)));

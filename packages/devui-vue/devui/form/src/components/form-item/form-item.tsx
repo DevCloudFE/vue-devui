@@ -11,8 +11,8 @@ export default defineComponent({
   setup(props: FormItemProps, ctx: SetupContext) {
     const formContext = inject(FORM_TOKEN);
     const { _rules } = useFormItemRule(props);
-    const { itemClasses, isRequired } = useFormItem(_rules);
     const { validateState, validateMessage, validate } = useFormItemValidate(props, _rules);
+    const { itemClasses, isRequired } = useFormItem(_rules, validateState);
     const context: FormItemContext = reactive({
       ...toRefs(props),
       isRequired,
