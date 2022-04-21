@@ -32,6 +32,28 @@ When it comes to packing, arranging, and displaying a range of options.
 
 :::
 
+### custom icons.
+
+Sometimes we need declare icon for submenu or menu item. That we can use ```icon``` slot to declare icon of sub menu or menu item. At the same time, we can use ```css`` to make to make customized modifications for slot
+
+:::demo
+```vue
+<template>
+  <d-menu mode="horizontal">
+    <d-menu-item key="home">
+      <template #icon>
+        <i class="icon-homepage"></i>
+      </template>
+      主页
+    </d-menu-item>
+    <d-menu-item key="classes">
+      课程
+    </d-menu-item>
+  </d-menu>
+</template>
+```
+:::
+
 ### vertical Menu
 
 vertical menu usually used in back-end. sub-menu can Embed in a menu
@@ -219,9 +241,7 @@ const changeDisabled = () => {
 
 :::
 
-## d-menu
-
-### d-menu 参数
+### d-menu arguments
 
 | argument            | type       | default value | introduce| Demo| global config |
 | --- | --- | --- | --- | --- | --- |
@@ -234,7 +254,7 @@ const changeDisabled = () => {
 | open-keys           | Array      | []            | default open sub menu's key                     | [default open](#default open)         |               |
 | default-select-keys | Array      | []            | default select menu item's key                  | /                                     |               |
 
-### d-menu 事件
+### d-menu event
 
 | event| type|introduce| Demo |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -242,7 +262,7 @@ const changeDisabled = () => {
 | dselect        | `(e: {type: 'dselect', el: HTMLElement})=>void`                        | The event is triggered when unchecked, if the menu is not multi-select the menu is not triggered |      |
 | submenu-change | `(e: {type: 'submenu-change': el: HTMLElement: state: boolean})=>void` | Triggered when the submenu state is changed                                                      |
 
-## d-menu-item
+### d-menu-item arguments
 
 | argument            | type       | default value | introduce| Demo| global config |
 | :---: | :---: | :---: | --- | --- | :---: |
@@ -250,14 +270,26 @@ const changeDisabled = () => {
 |   key   | string  |  ''   |    menu item's key. Must is unique     |                       |            |
 |  href   | string  |  ''   | click menu item will link to page url. | [基本用法](#基本用法) |
 
-## d-sub-menu
+### d-sub-menu event
 
 | event| type|introduce| Demo |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 |  title  | String  |  ''   | sub menu's title  |           |            |
 | disable | boolean | false | disabled sub menu |           |            |
 
-## Interface & declare
+### d-menu-item slot
+
+| slot name | description |
+| :---: | :--: |
+|icon|declare menu item icon|
+
+### d-sub-menu slot
+
+| slot name | description |
+| :---: |:---:|
+|icon|declare sub menu icon|
+
+### Interface & declare
 
 ```typescript
 export type menuMode = 'vertical' | 'horizontal';
