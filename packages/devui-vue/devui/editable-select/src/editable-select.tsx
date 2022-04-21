@@ -121,6 +121,9 @@ export default defineComponent({
       const selectCls = className('devui-editable-select devui-form-group devui-has-feedback', {
         'devui-select-open': visible.value === true,
       });
+      const inputCls = className('devui-form-control devui-dropdown-origin', {
+        'devui-dropdown-origin-open': visible.value === true,
+      });
       return (
         <div
           class={selectCls}
@@ -130,7 +133,7 @@ export default defineComponent({
             width: props.width + 'px',
           }}>
           <input
-            class="devui-form-control devui-dropdown-origin devui-dropdown-origin-open"
+            class={inputCls}
             onClick={withModifiers(toggleMenu, ['self'])}
             onInput={handleInput}
             onKeydown={handleKeydown}
