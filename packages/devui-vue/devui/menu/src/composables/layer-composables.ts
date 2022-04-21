@@ -85,7 +85,6 @@ export function changeKey(ele: HTMLElement,event: clickEvent): void{
       break;
     }
   }
-  debugger;
   while (stack.length){
     const shiftItem = stack.shift();
     if (shiftItem?.tagName === 'UL' ||
