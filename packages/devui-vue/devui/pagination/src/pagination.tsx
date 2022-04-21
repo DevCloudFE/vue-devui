@@ -1,4 +1,4 @@
-import { defineComponent, computed, nextTick } from 'vue';
+import { defineComponent, computed, nextTick, toRefs } from 'vue';
 import { paginationProps, PaginationProps } from './pagination-types';
 import { liteSelectOptions } from './utils';
 
@@ -13,16 +13,38 @@ export default defineComponent({
   components: {
     ConfigMenu,
     JumpPage,
-    PageNumBtn
+    PageNumBtn,
   },
   props: paginationProps,
   emits: ['pageIndexChange', 'pageSizeChange', 'update:pageSize', 'update:pageIndex'],
-  setup(props: PaginationProps, { emit }) {
+  setup(props: PaginationProps, { emit, slots }) {
+    const {
+      autoHide,
+      pageSizeOptions,
+      total,
+      canChangePageSize,
+      lite,
+      size,
+      pageSizeDirection,
+      showPageSelector,
+      canViewTotal,
+      totalItemText,
+      maxItems,
+      preLink,
+      nextLink,
+      showTruePageIndex,
+      canJumpPage,
+      goToText,
+      pageIndex,
+      showJumpButton,
+      haveConfigMenu,
+    } = toRefs(props);
+
     // 总页数
     const totalPages = computed(() => Math.ceil(props.total / props.pageSize));
 
     // 极简模式下，可选的下拉选择页码
-    const litePageOptions = computed(() =>  liteSelectOptions(totalPages.value));
+    const litePageOptions = computed(() => liteSelectOptions(totalPages.value));
 
     // 当前页码
     const cursor = computed({
@@ -36,8 +58,9 @@ export default defineComponent({
       },
       set(val: number) {
         emit('update:pageIndex', val);
-      }
+      },
     });
+
     // 每页显示最大条目数量
     const currentPageSize = computed({
       get() {
@@ -45,7 +68,7 @@ export default defineComponent({
       },
       set(val: number) {
         emit('update:pageSize', val);
-      }
+      },
     });
 
     const changeCursorEmit = (val: number) => {
@@ -66,133 +89,100 @@ export default defineComponent({
       }
       emit('pageSizeChange', val.value as number);
     };
+
     // 极简模式下的跳转页码
-    const litePageIndexChange = (page: {name: string; value: number}) => {
+    const litePageIndexChange = (page: { name: string; value: number }) => {
       changeCursorEmit(page.value);
     };
 
-    return {
-      cursor,
-      totalPages,
-      changeCursorEmit,
-      currentPageSize,
-      pageSizeChange,
-      litePageOptions,
-      litePageIndexChange
+    return () => {
+      return (
+        // autoHide 为 true，并且 pageSizeOptions 最小值大于 total，则不展示分页
+        autoHide.value && Math.min(...pageSizeOptions.value) > total.value ? null : (
+          <div class="devui-pagination">
+            {
+              // 切换每页数据大小的下拉框
+              canChangePageSize.value && !lite.value && (
+                <div class={['devui-page-size', size.value ? 'devui-page-size-' + size.value : '']}>
+                  <d-select
+                    options={pageSizeOptions.value}
+                    modelValue={currentPageSize.value}
+                    onValueChange={pageSizeChange}
+                    pageSizeDirection={pageSizeDirection.value}
+                  />
+                </div>
+              )
+            }
+            {
+              // 总页数显示
+              (!lite.value || (lite.value && showPageSelector.value)) && canViewTotal.value && (
+                <div class="devui-total-size">
+                  {totalItemText.value}: {total.value}
+                </div>
+              )
+            }
+            {
+              // 极简模式下的选择页码下拉框
+              lite.value && showPageSelector.value && (
+                <div class="devui-page-size">
+                  <d-select
+                    options={litePageOptions.value}
+                    disabled={total.value === 0}
+                    modelValue={cursor.value}
+                    onValueChange={litePageIndexChange}
+                    pageSizeDirection={pageSizeDirection.value}
+                  />
+                </div>
+              )
+            }
+
+            {/* 页码展示 */}
+            <page-num-btn
+              {...{
+                cursor: cursor.value,
+                totalPages: totalPages.value,
+                size: size.value,
+                lite: lite.value,
+                maxItems: maxItems.value,
+                preLink: preLink.value,
+                nextLink: nextLink.value,
+                showTruePageIndex: showTruePageIndex.value,
+              }}
+              onChangeCursorEmit={changeCursorEmit}
+            />
+
+            {
+              // 跳转页码
+              canJumpPage.value && !lite.value && (
+                <jump-page
+                  {...{
+                    goToText: goToText.value,
+                    size: size.value,
+                    pageIndex: pageIndex.value,
+                    totalPages: totalPages.value,
+                    cursor: cursor.value,
+                    showJumpButton: showJumpButton.value,
+                  }}
+                  onChangeCursorEmit={changeCursorEmit}
+                />
+              )
+            }
+            {
+              // 极简模式下是否显示配置
+              lite.value && haveConfigMenu.value && (
+                <config-menu
+                  {...{
+                    currentPageSize: currentPageSize.value,
+                    pageSizeChange,
+                    pageSizeOptions: pageSizeOptions.value,
+                  }}>
+                  {slots.default?.()}
+                </config-menu>
+              )
+            }
+          </div>
+        )
+      );
     };
   },
-  render() {
-
-    const {
-      total,
-      pageIndex,
-      pageSizeOptions,
-      pageSizeDirection,
-      preLink,
-      nextLink,
-      size,
-      canJumpPage,
-      canChangePageSize,
-      canViewTotal,
-      totalItemText,
-      goToText,
-      maxItems,
-      showJumpButton,
-      showTruePageIndex,
-      lite,
-      showPageSelector,
-      haveConfigMenu,
-      autoHide,
-      $slots,
-
-      cursor,
-      totalPages,
-      currentPageSize,
-      pageSizeChange,
-      changeCursorEmit,
-      litePageOptions,
-      litePageIndexChange
-    } = this;
-
-    return (
-      // autoHide为 true 并且 pageSizeOptions最小值 > total 不展示分页
-      autoHide && Math.min(...pageSizeOptions) > total
-        ? null
-        : <div class="devui-pagination">
-          {
-            canChangePageSize && !lite &&
-          <div class={['devui-page-size', size ? 'devui-page-size-' + size : '']}>
-            <d-select
-              options={pageSizeOptions}
-              modelValue={currentPageSize}
-              onValueChange={pageSizeChange}
-              pageSizeDirection={pageSizeDirection}
-            />
-          </div>
-          }
-          {
-          // 总页数显示
-            ((!lite || (lite && showPageSelector)) && canViewTotal) &&
-          <div class="devui-total-size">{totalItemText}: {total}</div>
-          }
-          {
-          // 极简模式下的选择页码下拉框
-            lite && showPageSelector &&
-          <div class="devui-page-size">
-            <d-select
-              options={litePageOptions}
-              disabled={total === 0}
-              modelValue={cursor}
-              onValueChange={litePageIndexChange}
-              pageSizeDirection={pageSizeDirection}
-            />
-          </div>
-          }
-
-          {/* 页码展示 */}
-          <page-num-btn
-            {...{
-              cursor,
-              totalPages,
-              size,
-              lite,
-              maxItems,
-              preLink,
-              nextLink,
-              showTruePageIndex
-            }}
-            onChangeCursorEmit={changeCursorEmit}
-          />
-
-          {
-          // 跳转页码
-            canJumpPage && !lite &&
-          <jump-page
-            {...{
-              goToText,
-              size,
-              pageIndex,
-              totalPages,
-              cursor,
-              showJumpButton
-            }}
-            onChangeCursorEmit={changeCursorEmit}
-          />
-          }
-          {
-          // 极简模式下是否显示配置
-            lite && haveConfigMenu &&
-          <config-menu
-            {...{
-              currentPageSize,
-              pageSizeChange,
-              pageSizeOptions
-            }}
-          >
-            {$slots.default?.()}
-          </config-menu>
-          }
-        </div>
-    );
-  }
 });
