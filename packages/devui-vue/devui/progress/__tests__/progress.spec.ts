@@ -27,6 +27,19 @@ describe('progress', () => {
       expect(wrapper.props().percentage).toBe(20);
     });
 
+    it('percentage out of bounds shoule be rendered correctly', async () => {
+      const wrapper = mount(Progress, {
+        props: { percentage: 0 },
+      });
+      expect(wrapper.find('.devui-progress-bar').attributes('style').includes('width: 0%')).toBeTruthy();
+
+      await wrapper.setProps({ percentage: 130 });
+      expect(wrapper.find('.devui-progress-bar').attributes('style').includes('width: 100%')).toBeTruthy();
+
+      await wrapper.setProps({ percentage: -30 });
+      expect(wrapper.find('.devui-progress-bar').attributes('style').includes('width: 0%')).toBeTruthy();
+    });
+
     it('percentageText should be rendered correctly', () => {
       const wrapper = mount(Progress, {
         props: { percentageText: '30%' },

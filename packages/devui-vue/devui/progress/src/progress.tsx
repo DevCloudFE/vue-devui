@@ -1,4 +1,5 @@
-import { defineComponent, reactive, toRefs, watch } from 'vue';
+import { defineComponent, effect, reactive, ref, toRefs, watch } from 'vue';
+import { middleNum } from '../../shared/utils';
 import { ProgressProps, progressProps, ISvgData } from './progress-types';
 import './progress.scss';
 
@@ -7,6 +8,12 @@ export default defineComponent({
   props: progressProps,
   setup(props: ProgressProps) {
     const { height, percentage, percentageText, barBgColor, isCircle, strokeWidth, showContent } = toRefs(props);
+
+    const normalPercentage = ref(0);
+
+    effect(() =>  {
+      normalPercentage.value = middleNum(percentage.value);
+    });
 
     const data: ISvgData = reactive({
       pathString: '',
@@ -38,7 +45,7 @@ export default defineComponent({
 
       data.strokePath = {
         stroke: barBgColor || null,
-        strokeDasharray: `${(percentage.value / 100) * len}px ${len}px`,
+        strokeDasharray: `${(normalPercentage.value / 100) * len}px ${len}px`,
         strokeDashoffset: `0`,
         transition: 'stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s',
       };
@@ -46,16 +53,17 @@ export default defineComponent({
 
     setCircleProgress();
 
-    watch([height, percentage, percentageText, barBgColor, isCircle, strokeWidth, showContent], () => {
+    watch([height, normalPercentage, percentageText, barBgColor, isCircle, strokeWidth, showContent], () => {
       setCircleProgress();
     });
 
     return {
       data,
+      normalPercentage
     };
   },
   render() {
-    const { height, percentage, percentageText, barBgColor, isCircle, strokeWidth, showContent, data, $slots } = this;
+    const { height, normalPercentage, percentageText, barBgColor, isCircle, strokeWidth, showContent, data, $slots } = this;
 
     const progressLine = (
       <div
@@ -69,7 +77,7 @@ export default defineComponent({
           style={{
             height: height,
             borderRadius: height,
-            width: `${percentage}%`,
+            width: `${normalPercentage}%`,
             backgroundColor: barBgColor,
           }}
         />
@@ -82,7 +90,7 @@ export default defineComponent({
       </div>
     );
 
-    const textElement = <span class="devui-progress-circle-text">{percentage}%</span>;
+    const textElement = <span class="devui-progress-circle-text">{normalPercentage}%</span>;
 
     const progressCircle = (
       <div class="devui-progress-circle">
@@ -100,7 +108,7 @@ export default defineComponent({
             stroke-linecap="round"
             fill-opacity="0"
             stroke={barBgColor}
-            stroke-width={percentage ? strokeWidth : 0}
+            stroke-width={normalPercentage ? strokeWidth : 0}
             style={data.strokePath}
           />
         </svg>
