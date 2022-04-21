@@ -19,9 +19,9 @@ export default defineComponent({
     const dropdownRef = ref();
     const origin = ref();
 
-    const position = ref(['bottom', 'left']);
+    const position = ref(['bottom']);
     const visible = ref(false);
-    const inputValue = ref(props.modelValue || '');
+    const inputValue = ref(props.modelValue);
     const loading = ref(props.loading);
     // 标准化options，统一处理成[{}]的形式
     const normalizeOptions = computed(() => {
@@ -147,11 +147,10 @@ export default defineComponent({
 
           <d-flexible-overlay origin={origin.value} v-model={visible.value} position={position.value} hasBackdrop={false}>
             <div
-              class="devui-editable-select-dropdown"
               style={{
                 width: props.width + 'px',
               }}>
-              <div class="devui-dropdown-menu" v-dLoading={props.loading} v-show={visible.value}>
+              <div class="devui-dropdown-menu " v-dLoading={props.loading} v-show={visible.value}>
                 <ul
                   ref={dropdownRef}
                   class="devui-list-unstyled scroll-height"

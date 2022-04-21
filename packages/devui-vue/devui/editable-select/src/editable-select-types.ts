@@ -30,6 +30,7 @@ export const editableSelectProps = {
   },
   modelValue: {
     type: String,
+    default: '',
   },
   width: {
     type: Number,
