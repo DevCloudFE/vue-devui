@@ -36,6 +36,28 @@ Menu 组件通常用于导航.
 
 :::
 
+### 自定义图标
+
+有时我们需要为子菜单或菜单项定义一些图标，此时我们可以使用```icon```插槽来为菜单定义icon。同时我们也可以使用css来对插槽进行定制化的修改.
+
+:::demo
+```vue
+<template>
+  <d-menu mode="horizontal">
+    <d-menu-item key="home">
+      <template #icon>
+        <i class="icon-homepage"></i>
+      </template>
+      主页
+    </d-menu-item>
+    <d-menu-item key="classes">
+      课程
+    </d-menu-item>
+  </d-menu>
+</template>
+```
+:::
+
 ### 垂直菜单
 
 垂直菜单一般在后台中较为广泛使用，子菜单可以嵌入菜单中
@@ -149,6 +171,8 @@ const changeCollapsed = () => {
 
 ### 取消多选
 
+取消多选功能仅能使用在允许多选的菜单中，菜单项将会在取消多选时触发`deselect`事件。
+
 :::demo
 
 ```vue
@@ -221,8 +245,6 @@ const changeDisabled = () => {
 
 :::
 
-## d-menu
-
 ### d-menu 参数
 
 | 参数                | 类型       | 默认       | 说明                       | 跳转 Demo                 | 全局配置项 |
@@ -244,7 +266,7 @@ const changeDisabled = () => {
 | dselect        | ```(e: {type: 'dselect', el: HTMLElement})=>void```                        | 取消选中时触发该事件，如果菜单不是多选菜单不会被触发 |           |
 | submenu-change | ```(e: {type: 'submenu-change': el: HTMLElement: state: boolean})=>void``` | 子菜单状态被更改时会触发                             |
 
-## d-menu-item 
+### d-menu-item 
 
 
 | 参数 | 类型 | 默认 | 说明 | 跳转 Demo | 全局配置项 |
@@ -253,14 +275,28 @@ const changeDisabled = () => {
 |key|string|''|菜单项的key值，需唯一|||
 |href|string|''|单击菜单项后跳转的页面|[基本用法](#基本用法)|
 
-## d-sub-menu
+### d-sub-menu
+
 | 参数 | 类型 | 默认 | 说明 | 跳转 Demo | 全局配置项 |
 | :----: | :----: | :----: | :----: | :---------: | ---------- |
 |title|String|''|子菜单标题|||
 |disable|boolean|false|是否禁用子菜单|||
 
-## 接口及其定义
+### d-menu-item 插槽
+
+| 插槽名 | 说明 |
+| :---: | :--: |
+|icon|用于定义菜单项的icon|
+
+### d-sub-menu 插槽
+
+| 插槽名 | 说明 |
+| :---: |:---:|
+|icon|用于定义子菜单标题的icon|
+
+### 接口及其定义
 
 ``` typescript
 export type menuMode = 'vertical' | 'horizontal';
 ```
+
