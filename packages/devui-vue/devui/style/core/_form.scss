@@ -201,6 +201,7 @@ $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .devui-form-control {
+  width: 100%;
   color: $devui-text;
   background-color: $devui-base-bg;
   display: block;
