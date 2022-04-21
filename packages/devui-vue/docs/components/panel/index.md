@@ -165,6 +165,7 @@ export default defineComponent({
 });
 </script>
 ```
+:::
 
 ### Panel 参数
 
@@ -182,7 +183,7 @@ export default defineComponent({
 | :----- | :------------------------- | :------------------- |
 | toggle | `(value: boolean) => void` | 可选，切换面板的事件 |
 
-### 类型
+### Panel 类型定义
 
 #### PanelType
 

@@ -19,7 +19,7 @@ const forwardText = computed(() => {
       <h3 class="devui-fast-forward">{{ forwardText }}</h3>
       <ul class="devui-step-nav">
         <li v-for="{ link, text } in headers" :key="link" class="devui-item">
-          <a class="devui-link" :href="link">{{ text }}</a>
+          <a class="devui-link" :href="link" :title="text">{{ text }}</a>
         </li>
       </ul>
       <div ref="marker" class="devui-marker"></div>

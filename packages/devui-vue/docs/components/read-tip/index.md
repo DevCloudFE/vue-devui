@@ -292,8 +292,8 @@ function getDataFromDB({ element, rule }) {
 
 | 参数名               | 类型                              | 默认 | 说明                            | 跳转 Demo                                        |
 | :------------------- | :-------------------------------- | :--- | :------------------------------ | :----------------------------------------------- |
-| readTipOptions       | [ReadTipOptions](#readtipoptions) | --   | 必选，配置提示选项              | [基本用法](#基本用法)                            |
-| readTipOptions.rules | [ReadTipRules](#readtiprules)     | --   | 必选，配置 readtip 内容         | [包括多个提示的 readtip](#包括多个提示的readtip) |
+| read-tip-options       | [ReadTipOptions](#readtipoptions) | --   | 必选，配置提示选项              | [基本用法](#基本用法)                            |
+| read-tip-options.rules | [ReadTipRules](#readtiprules)     | --   | 必选，配置 readtip 内容         | [包括多个提示的 readtip](#包括多个提示的readtip) |
 
 ### ReadTip 插槽
 
