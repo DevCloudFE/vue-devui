@@ -5,6 +5,7 @@ import { computed, ComputedRef } from 'vue';
 import { SearchProps } from '../search-types';
 const SIZE_CLASS = {
   lg: 'lg',
+  md: 'md',
   sm: 'sm',
 } as const;
 const ICON_POSITION = {
