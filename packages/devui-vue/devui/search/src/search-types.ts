@@ -1,6 +1,6 @@
 import type { PropType, ExtractPropTypes, Ref, ComputedRef } from 'vue';
 
-export type Size = 'lg' | 'sm' | '';
+export type Size = 'lg' | 'sm';
 export type IconPosition = 'right' | 'left';
 
 export const searchProps = {
