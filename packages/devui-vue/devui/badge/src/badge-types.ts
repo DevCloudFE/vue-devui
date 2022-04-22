@@ -21,7 +21,7 @@ export const badgeProps = {
   status: {
     type: String as PropType<BadgeStatusType>,
     validator: (val: string): boolean => badgeStatusType.includes(val),
-    default: 'danger'
+    default: 'info'
   },
   position: {
     type: String as PropType<BadgePositionType>,
