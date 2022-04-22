@@ -30,6 +30,7 @@ export default defineComponent({
         autoFocus: props.autoFocus,
         modelValue: keywords.value,
         placeholder: props.placeholder,
+        maxLength: props.maxLength,
         cssClass: props.cssClass,
         onKeydown: onInputKeydown,
         "onUpdate:modelValue": onInputUpdate,
