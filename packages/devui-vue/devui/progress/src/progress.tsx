@@ -1,4 +1,4 @@
-import { defineComponent, effect, reactive, ref, toRefs, watch } from 'vue';
+import { CSSProperties, defineComponent, effect, reactive, ref, toRefs, watch } from 'vue';
 import { middleNum } from '../../shared/utils';
 import { ProgressProps, progressProps, ISvgData } from './progress-types';
 import './progress.scss';
@@ -99,7 +99,7 @@ export default defineComponent({
             class="devui-progress-circle-trail"
             fill-opacity="0"
             stroke-width={strokeWidth}
-            style={data.trailPath}
+            style={data.trailPath as CSSProperties}
             d={data.pathString}
           />
           <path
@@ -109,7 +109,7 @@ export default defineComponent({
             fill-opacity="0"
             stroke={barBgColor}
             stroke-width={normalPercentage ? strokeWidth : 0}
-            style={data.strokePath}
+            style={data.strokePath as CSSProperties}
           />
         </svg>
         {showContent && $slots.default?.()}

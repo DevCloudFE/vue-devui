@@ -1,7 +1,7 @@
-import { ExtractPropTypes } from 'vue';
+import { ExtractPropTypes, Ref } from 'vue';
 
 interface ISvgPath {
-  stroke: string;
+  stroke: Ref<string> | string;
   strokeDasharray: string;
   strokeDashoffset: string;
   transition: string;
@@ -9,8 +9,8 @@ interface ISvgPath {
 
 export interface ISvgData {
   pathString: string;
-  trailPath: ISvgPath;
-  strokePath: ISvgPath;
+  trailPath: ISvgPath | null;
+  strokePath: ISvgPath | null;
 }
 
 export const progressProps = {
