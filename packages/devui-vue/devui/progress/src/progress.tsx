@@ -7,7 +7,11 @@ export default defineComponent({
   name: 'DProgress',
   props: progressProps,
   setup(props: ProgressProps) {
-    const { height, percentage, percentageText, barBgColor, isCircle, strokeWidth, showContent } = toRefs(props);
+    const {
+      height, percentage, percentageText,
+      percentageTextPlacement, percentageTextColor,
+      barBgColor, isCircle, strokeWidth, showContent
+    } = toRefs(props);
 
     const normalPercentage = ref(0);
 
@@ -53,7 +57,11 @@ export default defineComponent({
 
     setCircleProgress();
 
-    watch([height, normalPercentage, percentageText, barBgColor, isCircle, strokeWidth, showContent], () => {
+    watch([
+      height, normalPercentage, percentageText,
+      percentageTextPlacement, percentageTextColor,
+      barBgColor, isCircle, strokeWidth, showContent
+    ], () => {
       setCircleProgress();
     });
 
@@ -63,34 +71,59 @@ export default defineComponent({
     };
   },
   render() {
-    const { height, normalPercentage, percentageText, barBgColor, isCircle, strokeWidth, showContent, data, $slots } = this;
+    const {
+      height, normalPercentage, percentageText,
+      percentageTextPlacement, percentageTextColor,
+      barBgColor, isCircle, strokeWidth, showContent,
+      data, $slots } = this;
 
-    const progressLine = (
-      <div
-        class="devui-progress--line"
-        style={{
-          height: height,
-          borderRadius: height,
-        }}>
-        <div
-          class="devui-progress-bar"
-          style={{
-            height: height,
-            borderRadius: height,
-            width: `${normalPercentage}%`,
-            backgroundColor: barBgColor,
-          }}
-        />
+    const isOutside = percentageTextPlacement === 'outside';
+    const isInsideBg = percentageTextPlacement === 'insideBg';
+
+    const createPercentageText = () => {
+      return (
         <span
           style={{
             lineHeight: height,
+            color: percentageTextColor
           }}>
           {percentageText}
         </span>
+      );
+    };
+
+    const progressLine = (
+      <div class="devui-progress-content">
+        <div
+          class="devui-progress--line"
+          style={{
+            height: height,
+            borderRadius: height,
+          }}>
+          <div
+            class={["devui-progress-bar", percentageTextPlacement]}
+            style={{
+              height: height,
+              borderRadius: height,
+              width: `${normalPercentage}%`,
+              backgroundColor: barBgColor,
+            }}
+          >
+            {
+              !isOutside && !isInsideBg ? createPercentageText() : null
+            }
+          </div>
+          {
+            isInsideBg ? createPercentageText() : null
+          }
+        </div>
+        {
+          isOutside && !!percentageText ? createPercentageText() : null
+        }
       </div>
     );
 
-    const textElement = <span class="devui-progress-circle-text">{normalPercentage}%</span>;
+    const textElement = <span class="devui-progress-circle-text" style={{ color: percentageTextColor }}>{normalPercentage}%</span>;
 
     const progressCircle = (
       <div class="devui-progress-circle">
