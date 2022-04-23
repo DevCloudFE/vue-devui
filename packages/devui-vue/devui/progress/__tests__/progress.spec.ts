@@ -47,6 +47,35 @@ describe('progress', () => {
       expect(wrapper.props().percentageText).toBe('30%');
     });
 
+    it('percentageTextPlacement should be rendered correctly', async () => {
+      const wrapper = mount(Progress, {
+        props: {  },
+      });
+      expect(wrapper.props().percentageTextPlacement).toBe('inside');
+      expect(wrapper.find('.devui-progress--line').element.children.length).toBe(1);
+      expect(wrapper.find('.devui-progress-bar').element.children.length).toBe(1);
+      expect(wrapper.find('.devui-progress-content').element.children.length).toBe(1);
+
+      await wrapper.setProps({ percentageTextPlacement: 'insideBg' });
+      expect(wrapper.find('.devui-progress--line').element.children.length).toBe(2);
+
+      await wrapper.setProps({ percentageTextPlacement: 'outside' });
+      expect(wrapper.find('.devui-progress-content').element.children.length).toBe(1);
+
+      await wrapper.setProps({  percentageText: '30%' });
+      expect(wrapper.find('.devui-progress-content').element.children.length).toBe(2);
+    });
+
+    it('percentageTextColor should be rendered correctly', async () => {
+      const wrapper = mount(Progress, {
+        props: {
+          percentageText: '30%',
+          percentageTextColor: 'green'
+        },
+      });
+      expect(wrapper.find('span').attributes('style').includes('color: green')).toBeTruthy();
+    });
+
     it('barbgcolor should be rendered correctly', () => {
       const wrapper = mount(Progress, {
         props: { barBgColor: '#5170ff' },

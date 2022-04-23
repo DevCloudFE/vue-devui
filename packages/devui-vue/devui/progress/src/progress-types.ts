@@ -42,6 +42,14 @@ export const progressProps = {
     type: Boolean,
     default: true,
   },
+  percentageTextPlacement: {
+    type: String,
+    default: 'inside',
+  },
+  percentageTextColor: {
+    type: String,
+    default: '',
+  },
 };
 
 export type ProgressProps = ExtractPropTypes<typeof progressProps>;
