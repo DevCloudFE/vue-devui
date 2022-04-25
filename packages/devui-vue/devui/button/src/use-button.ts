@@ -18,10 +18,12 @@ export default function useButton(props: ButtonProps, ctx: SetupContext): UseBut
     [`devui-btn-${props.size}`]: true,
     'devui-btn-icon-wrap': props.icon,
     'devui-btn-icon': props.icon && !hasContent.value && props.variant !== 'solid',
+    'devui-btn-is-loading': props.loading,
   }));
+
   const iconClass = computed(() => {
     if (!props.icon) {
-      return;
+      return '';
     }
     const origin = 'devui-icon-fix icon';
     if (hasContent.value) {
