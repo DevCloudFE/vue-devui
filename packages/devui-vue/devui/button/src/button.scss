@@ -18,6 +18,11 @@
     cursor: not-allowed;
   }
 
+  &-is-loading {
+    position: relative;
+    pointer-events: none;
+  }
+
   &-solid {
     color: $devui-light-text;
     min-width: 64px;
