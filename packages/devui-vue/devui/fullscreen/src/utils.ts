@@ -4,10 +4,13 @@ interface CompatibleHTMLElement extends HTMLElement {
   mozRequestFullScreen?: () => void;
   webkitRequestFullScreen?: () => void;
   msRequestFullscreen?: () => void;
-  exitFullscreen?: () => void;
-  mozCancelFullScreen?: () => void;
-  webkitCancelFullScreen?: () => void;
-  msExitFullscreen?: () => void;
+}
+
+interface CompatibleDocument extends Document {
+  exitFullscreen: () => Promise<void>;
+  mozCancelFullScreen?: () => Promise<void>;
+  webkitCancelFullScreen?: () => Promise<void>;
+  msExitFullscreen?: () => Promise<void>;
 }
 
 // 页面全屏
@@ -38,7 +41,7 @@ export const launchImmersiveFullScreen = async (docElement: CompatibleHTMLElemen
   return await fullscreenLaunch?.then(() => !!document.fullscreenElement);
 };
 
-export const exitImmersiveFullScreen = async (doc: CompatibleHTMLElement): Promise<boolean | undefined> => {
+export const exitImmersiveFullScreen = async (doc: CompatibleDocument): Promise<boolean | undefined> => {
   let fullscreenExit = null;
   if (doc.exitFullscreen) {
     fullscreenExit = doc.exitFullscreen();
