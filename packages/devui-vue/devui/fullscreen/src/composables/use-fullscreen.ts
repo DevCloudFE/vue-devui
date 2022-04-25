@@ -25,10 +25,14 @@ export default function useFullscreen(props: FullscreenProps, slotElement: Ref<H
 
   const handleImmersiveFullscreen = (isOpen: boolean) => {
     if (isOpen) {
-      launchImmersiveFullScreen(slotElement.value);
+      launchImmersiveFullScreen(slotElement.value).then(res => {
+        handleNormalFullscreen(!!res);
+      });
     } else {
       if (!exitByKeydown) {
-        exitImmersiveFullScreen(document);
+        exitImmersiveFullScreen(document).then(res => {
+          handleNormalFullscreen(!!res);
+        });
       }
     }
   };
