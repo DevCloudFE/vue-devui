@@ -4,7 +4,7 @@ import CheckboxGroup from './src/checkbox-group';
 
 export * from './src/checkbox-types';
 
-export { Checkbox };
+export { Checkbox, CheckboxGroup };
 
 export default {
   title: 'Checkbox 复选框',
@@ -13,5 +13,5 @@ export default {
   install(app: App): void {
     app.component(Checkbox.name, Checkbox);
     app.component(CheckboxGroup.name, CheckboxGroup);
-  }
+  },
 };
