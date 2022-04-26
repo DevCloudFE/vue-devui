@@ -94,7 +94,7 @@ export default defineComponent({
     const { totalLevelArray, icon, character, read, type, color, hoverToggle, selectValue, onMouseleave } = this;
 
     return (
-      <div class="devui-star-container" onMouseleave={onMouseleave}>
+      <div class="devui-star-container" onMouseleave={onMouseleave} style={`--star-color: ${color}`}>
         {totalLevelArray.map((item, index) => (
           <div
             class={`devui-star-align devui-pointer ${read ? 'devui-only-read' : ''}`}
@@ -141,8 +141,12 @@ export default defineComponent({
             )}
             {!character && !icon && (
               <span
-                class={`devui-star-color-active devui-active-star devui-star-color-${type}`}
-                style={{ color: color, width: item.width }}>
+                class={[
+                  'devui-star-color-active',
+                  'devui-active-star',
+                  !color ? `devui-star-color-${type}` : 'devui-star-color-customize'
+                ]}
+                style={{ width: item.width }}>
                 <svg
                   width="16px"
                   height="16px"
