@@ -47,14 +47,12 @@ export const useKeyboardSelect = (
 
   const handleEnter = () => {
     const len = filteredOptions.value.length;
-    if (!visible.value) {
-      toggleMenu();
-    } else if (!len || len === 1) {
-      closeMenu();
-    } else if (len && len !== 1) {
-      handleClick(filteredOptions.value[hoverIndex.value]);
-      closeMenu();
+    if (!visible.value || !len) {
+      return toggleMenu();
     }
+
+    len && len === 1 ? handleClick(filteredOptions.value[0]) : handleClick(filteredOptions.value[hoverIndex.value]);
+    return closeMenu();
   };
 
   const handleKeyboardNavigation = (direction: string): void => {
@@ -96,7 +94,6 @@ export const useKeyboardSelect = (
     const keyCode = event.key || event.code;
     switch (keyCode) {
     case 'Escape':
-      event.preventDefault();
       handleEscape();
       break;
     case 'Enter':
