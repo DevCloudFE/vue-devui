@@ -48,6 +48,14 @@
   }
 }
 
+.devui-star-color-customize {
+  color: var(--star-color);
+
+  svg g {
+    fill: var(--star-color);
+  }
+}
+
 .devui-active-star {
   position: absolute;
   top: 0;

@@ -30,6 +30,18 @@ describe('rate', () => {
       const container = wrapper.find('.devui-star-container');
       expect(container.exists()).toBeTruthy();
     });
+
+    it('Rate is color attributes should have content', async () => {
+      const _wrapper = mount(DRate, {
+        props: { modelValue: 2 },
+      });
+
+      await nextTick();
+      expect(_wrapper.find('.devui-star-color-').exists()).toBeTruthy();
+
+      await _wrapper.setProps({ color: 'red' });
+      expect(_wrapper.find('.devui-star-color-customize').exists()).toBeTruthy();
+    });
   });
 
   describe('rate change', () => {
