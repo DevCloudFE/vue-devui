@@ -2,6 +2,20 @@ import type { RuleItem, ValidateFieldsError } from 'async-validator';
 import type { ComputedRef, ExtractPropTypes, PropType, InjectionKey, Ref } from 'vue';
 
 export type FormItemValidateState = '' | 'error' | 'pending' | 'success';
+export type MessageType = 'popover' | 'text' | 'none';
+export type PopPosition =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
 
 export interface FormRuleItem extends RuleItem {
   trigger?: Array<string>;
@@ -19,6 +33,12 @@ export const formItemProps = {
   required: {
     type: Boolean,
     default: false,
+  },
+  messageType: {
+    type: String as PropType<MessageType>,
+  },
+  popPosition: {
+    type: Array as PropType<Array<PopPosition>>,
   },
   rules: {
     type: [Object, Array] as PropType<[FormRuleItem, Array<FormRuleItem>]>,
