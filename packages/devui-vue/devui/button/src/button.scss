@@ -141,6 +141,8 @@
 
       &:disabled {
         opacity: 0.8;
+        color: $devui-brand-active;
+        border-color: $devui-form-control-line-active;
       }
     }
 
