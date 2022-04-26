@@ -62,7 +62,7 @@ export default {
     </div>
   </d-fullscreen>
   
-  <d-fullscreen v-model="isOpenImmersive" mode="immersive" :z-index="20">
+  <d-fullscreen v-model="isOpenImmersive" mode="immersive">
   <div class="demo-fullscreen-container">
       <d-button @click="isOpenImmersive = !isOpenImmersive">{{ btnContentImmersive }}</d-button>
     </div>
