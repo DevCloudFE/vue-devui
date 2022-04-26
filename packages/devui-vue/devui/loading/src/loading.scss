@@ -9,13 +9,13 @@
 
   50% {
     transform:
-      rotate(135deg)
+      rotate(180deg)
       scale(1.5);
   }
 
   to {
     transform:
-      rotate(270deg)
+      rotate(360deg)
       scale(1);
   }
 }
