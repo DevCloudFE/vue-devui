@@ -1,25 +1,18 @@
 import type { ValidateError, ValidateFieldsError } from 'async-validator';
 import type { PropType, ExtractPropTypes, InjectionKey } from 'vue';
-import { FormItemContext, FormRuleItem, FormValidateCallback, FormValidateResult } from './components/form-item/form-item-types';
+import {
+  FormItemContext,
+  FormRuleItem,
+  FormValidateCallback,
+  FormValidateResult,
+  MessageType,
+  PopPosition,
+} from './components/form-item/form-item-types';
 
 export type Layout = 'horizontal' | 'vertical';
 export type LabelSize = 'sm' | 'md' | 'lg';
 export type LabelAlign = 'start' | 'center' | 'end';
 export type FormData = Record<string, any>;
-export type MessageType = 'popover' | 'text' | 'none';
-export type PopPosition =
-  | 'top'
-  | 'right'
-  | 'bottom'
-  | 'left'
-  | 'top-start'
-  | 'top-end'
-  | 'right-start'
-  | 'right-end'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'left-start'
-  | 'left-end';
 
 export type FormRules = Partial<Record<string, Array<FormRuleItem>>>;
 export interface ValidateFailure {

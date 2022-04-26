@@ -13,12 +13,17 @@ export default defineComponent({
     const formControl = ref();
     const ns = useNamespace('form');
     const { controlClasses, controlContainerClasses } = useFormControl(props);
-    const { showPopover, showMessage, errorMessage } = useFormControlValidate();
+    const { showPopover, showMessage, errorMessage, popPosition } = useFormControlValidate();
 
     return () => (
       <div class={controlClasses.value} ref={formControl}>
         <div class={controlContainerClasses.value}>
-          <Popover is-open={showPopover.value} trigger="manually" content={errorMessage.value}>
+          <Popover
+            is-open={showPopover.value}
+            trigger="manually"
+            content={errorMessage.value}
+            pop-type="error"
+            position={popPosition.value}>
             {{
               reference: () => <div class={ns.e('control-content')}>{ctx.slots.default?.()}</div>,
             }}

@@ -1,6 +1,6 @@
-import { defineComponent, onMounted, inject, reactive, toRefs, onBeforeUnmount, provide, toRef } from 'vue';
+import { defineComponent, onMounted, inject, reactive, toRefs, onBeforeUnmount, provide, computed } from 'vue';
 import type { SetupContext } from 'vue';
-import { FORM_TOKEN } from '../../form-types';
+import { FormContext, FORM_TOKEN } from '../../form-types';
 import { FormItemContext, formItemProps, FormItemProps, FORM_ITEM_TOKEN } from './form-item-types';
 import { useFormItem, useFormItemRule, useFormItemValidate } from './use-form-item';
 import './form-item.scss';
@@ -9,12 +9,17 @@ export default defineComponent({
   name: 'DFormItem',
   props: formItemProps,
   setup(props: FormItemProps, ctx: SetupContext) {
-    const formContext = inject(FORM_TOKEN);
+    const formContext = inject(FORM_TOKEN) as FormContext;
+    const { messageType: itemMessageType, popPosition: itemPopPosition, ...otherProps } = toRefs(props);
+    const messageType = computed(() => itemMessageType?.value || formContext.messageType);
+    const popPosition = computed(() => itemPopPosition?.value || formContext.popPosition);
     const { _rules } = useFormItemRule(props);
     const { validateState, validateMessage, validate } = useFormItemValidate(props, _rules);
-    const { itemClasses, isRequired } = useFormItem(_rules, validateState);
+    const { itemClasses, isRequired } = useFormItem(messageType, _rules, validateState);
     const context: FormItemContext = reactive({
-      ...toRefs(props),
+      ...otherProps,
+      messageType,
+      popPosition,
       isRequired,
       validateState,
       validateMessage,

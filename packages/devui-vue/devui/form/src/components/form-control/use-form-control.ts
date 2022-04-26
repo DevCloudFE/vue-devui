@@ -1,4 +1,4 @@
-import { computed, inject, toRefs, ref } from 'vue';
+import { computed, inject, toRefs } from 'vue';
 import { FORM_TOKEN, FormContext } from '../../form-types';
 import { FormControlProps, UseFormControl } from './form-control-types';
 import { FormItemContext, FORM_ITEM_TOKEN } from '../form-item/form-item-types';
@@ -25,11 +25,11 @@ export function useFormControl(props: FormControlProps): UseFormControl {
 }
 
 export function useFormControlValidate() {
-  const formContext = inject(FORM_TOKEN) as FormContext;
   const formItemContext = inject(FORM_ITEM_TOKEN) as FormItemContext;
-  const showPopover = computed(() => formContext.messageType === 'popover' && formItemContext.validateState === 'error');
-  const showMessage = computed(() => formContext.messageType === 'text' && formItemContext.validateState === 'error');
+  const showPopover = computed(() => formItemContext.messageType === 'popover' && formItemContext.validateState === 'error');
+  const showMessage = computed(() => formItemContext.messageType === 'text' && formItemContext.validateState === 'error');
   const errorMessage = computed(() => formItemContext.validateMessage);
+  const popPosition = computed(() => formItemContext.popPosition);
 
-  return { showPopover, showMessage, errorMessage };
+  return { showPopover, showMessage, errorMessage, popPosition };
 }

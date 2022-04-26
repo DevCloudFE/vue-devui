@@ -1,6 +1,5 @@
 import { defineComponent, computed, ref, watch, inject } from 'vue';
 import { inputProps, InputType } from './input-types';
-import { dFormItemEvents } from '../../form/src/form-types';
 import { FORM_ITEM_TOKEN, FormItemContext } from '../../form/src/components/form-item/form-item-types';
 import './input.scss';
 
@@ -23,7 +22,7 @@ export default defineComponent({
     const sizeCls = computed(() => `devui-input-${props.size}`);
     const showPwdIcon = ref(false);
     const inputType = ref<InputType>('text');
-    const isValidateError = computed(() => formItemContext?.validateState === 'error');
+    const isValidateError = computed(() => formItemContext.messageType !== 'none' && formItemContext?.validateState === 'error');
     const inputCls = computed(() => ({
       'devui-error': props.error || isValidateError.value,
       [props.cssClass]: true,

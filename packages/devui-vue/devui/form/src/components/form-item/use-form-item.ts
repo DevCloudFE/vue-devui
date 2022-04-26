@@ -11,17 +11,22 @@ import {
   FormValidateCallback,
   FormRuleItem,
   UseFormItemValidate,
+  MessageType,
 } from './form-item-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
-export function useFormItem(_rules: ComputedRef<FormRuleItem[]>, validateState: Ref<FormItemValidateState>): UseFormItem {
+export function useFormItem(
+  messageType: ComputedRef<MessageType>,
+  _rules: ComputedRef<FormRuleItem[]>,
+  validateState: Ref<FormItemValidateState>
+): UseFormItem {
   const formContext = inject(FORM_TOKEN) as FormContext;
   const ns = useNamespace('form');
 
   const itemClasses = computed(() => ({
     [`${ns.em('item', 'horizontal')}`]: formContext.layout === 'horizontal',
     [`${ns.em('item', 'vertical')}`]: formContext.layout === 'vertical',
-    [`${ns.em('item', 'error')}`]: validateState.value === 'error',
+    [`${ns.em('item', 'error')}`]: messageType.value === 'text' && validateState.value === 'error',
   }));
 
   const isRequired = computed(() => _rules.value.some((rule) => Boolean(rule.required)));
