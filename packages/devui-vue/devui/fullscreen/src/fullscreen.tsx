@@ -1,4 +1,4 @@
-import { defineComponent, useSlots, renderSlot, ref } from 'vue';
+import { defineComponent, useSlots, renderSlot, ref, SetupContext } from 'vue';
 import { fullscreenProps, FullscreenProps } from './fullscreen-types';
 import useKeydown from './composables/use-keydown';
 import useFullscreen from './composables/use-fullscreen';
@@ -8,8 +8,8 @@ export default defineComponent({
   name: 'DFullscreen',
   props: fullscreenProps,
   emits: ['update:modelValue'],
-  setup(props: FullscreenProps, ctx) {
-    const slotElement = ref(null);
+  setup(props: FullscreenProps, ctx: SetupContext) {
+    const slotElement = ref();
 
     useFullscreen(props, slotElement, ctx);
     useKeydown(props, ctx);
