@@ -22,7 +22,7 @@ export default defineComponent({
     const sizeCls = computed(() => `devui-input-${props.size}`);
     const showPwdIcon = ref(false);
     const inputType = ref<InputType>('text');
-    const isValidateError = computed(() => formItemContext.messageType !== 'none' && formItemContext?.validateState === 'error');
+    const isValidateError = computed(() => formItemContext?.validateState === 'error');
     const inputCls = computed(() => ({
       'devui-error': props.error || isValidateError.value,
       [props.cssClass]: true,
