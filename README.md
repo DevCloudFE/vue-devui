@@ -130,6 +130,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/Yangxfeng"><img src="https://avatars.githubusercontent.com/u/35209766?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yangxfeng</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/issues?q=author%3AYangxfeng" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/jCodeLife"><img src="https://avatars.githubusercontent.com/u/50767049?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jCodeLife</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/issues?q=author%3AjCodeLife" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/XiaoRIGE"><img src="https://avatars.githubusercontent.com/u/33147011?v=4?s=100" width="100px;" alt=""/><br /><sub><b>宋小日</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/issues?q=author%3AXiaoRIGE" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
