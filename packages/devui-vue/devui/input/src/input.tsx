@@ -1,6 +1,5 @@
 import { defineComponent, computed, ref, watch, inject } from 'vue';
 import { inputProps, InputType } from './input-types';
-import { dFormItemEvents } from '../../form/src/form-types';
 import { FORM_ITEM_TOKEN, FormItemContext } from '../../form/src/components/form-item/form-item-types';
 import './input.scss';
 

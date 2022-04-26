@@ -452,7 +452,7 @@ export default defineComponent({
 ```vue
 <template>
   <d-form ref="formRef" layout="vertical" :data="formData" :rules="rules">
-    <d-form-item field="username" :rules="[{ required: true, message: '用户名不能为空', trigger: 'change' }]">
+    <d-form-item field="username" :rules="[{ required: true, message: '用户名不能为空', trigger: 'blur' }]">
       <d-form-label>用户名</d-form-label>
       <d-form-control extra-info="some extra info">
         <d-input v-model="formData.username" />
@@ -485,21 +485,20 @@ export default defineComponent({
         return callback(new Error('年龄不能为空'));
       }
       setTimeout(() => {
-        if (value < 18>) {
+        if (value < 18) {
           return callback(new Error('年龄不能小于18'));
         }
       }, 1000);
     };
     const rules = {
-      username: [
-        { min: 3, max: 6, message: '用户名需不小于3个字符，不大于6个字符', trigger: 'change' },
-      ],
+      username: [{ min: 3, max: 6, message: '用户名需不小于3个字符，不大于6个字符', trigger: 'change' }],
       age: [{ validator: checkAge }],
     };
 
     const onClick = () => {
-      formRef.value.validate((isValid) => {
+      formRef.value.validate((isValid, invalidFields) => {
         console.log(isValid);
+        console.log(invalidFields);
       });
     };
 
@@ -513,13 +512,15 @@ export default defineComponent({
 
 ### Form 参数
 
-| 参数名      | 类型                      | 默认值       | 说明                                                               | 跳转 demo             |
-| :---------- | :------------------------ | :----------- | :----------------------------------------------------------------- | :-------------------- |
-| data        | `object`                  | {}           | 必选，表单数据                                                     | [基础用法](#基础用法) |
-| layout      | [Layout](#layout)         | 'horizontal' | 可选，设置表单的排列方式                                           | [垂直排列](#垂直排列) |
-| label-size  | [LabelSize](#labelsize)   | 'md'         | 可选，设置 label 的宽度，默认为 100px，sm 对应 80px，lg 对应 150px | [表单样式](#表单样式) |
-| label-align | [LabelAlign](#labelalign) | 'start'      | 可选，设置水平布局方式下，label 对齐方式                           | [表单样式](#表单样式) |
-| rules       | [FormRules](#formrules)   | --           | 可选，设置表单的校验规则                                           | [表单校验](#表单校验) |
+| 参数名       | 类型                        | 默认值             | 说明                                                               | 跳转 demo             |
+| :----------- | :-------------------------- | :----------------- | :----------------------------------------------------------------- | :-------------------- |
+| data         | `object`                    | {}                 | 必选，表单数据                                                     | [基础用法](#基础用法) |
+| layout       | [Layout](#layout)           | 'horizontal'       | 可选，设置表单的排列方式                                           | [垂直排列](#垂直排列) |
+| label-size   | [LabelSize](#labelsize)     | 'md'               | 可选，设置 label 的宽度，默认为 100px，sm 对应 80px，lg 对应 150px | [表单样式](#表单样式) |
+| label-align  | [LabelAlign](#labelalign)   | 'start'            | 可选，设置水平布局方式下，label 对齐方式                           | [表单样式](#表单样式) |
+| rules        | [FormRules](#formrules)     | --                 | 可选，设置表单的校验规则                                           | [表单校验](#表单校验) |
+| message-type | [MessageType](#messagetype) | 'popover'          | 可选，设置校验信息的提示方式                                       |                       |
+| pop-position | [PopPosition](#popposition) | ['right','bottom'] | 可选，消息显示为 popover 时，popover 弹出方向                      |                       |
 
 ### Form 方法
 
@@ -535,11 +536,13 @@ export default defineComponent({
 
 ### FormItem 参数
 
-| 参数名   | 类型                                            | 默认值 | 说明                                                 | 跳转 demo             |
-| :------- | :---------------------------------------------- | :----- | :--------------------------------------------------- | :-------------------- |
-| field    | `string`                                        | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性 | [基础用法](#基础用法) |
-| required | `boolean`                                       | false  | 可选，表单选项是否必填                               |                       |
-| rules    | [FormRuleItem \| FormRuleItem[]](#formruleitem) | --     | 可选，表单项的校验规则                               | [表单校验](#表单校验) |
+| 参数名       | 类型                                            | 默认值 | 说明                                                                       | 跳转 demo             |
+| :----------- | :---------------------------------------------- | :----- | :------------------------------------------------------------------------- | :-------------------- |
+| field        | `string`                                        | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性                       | [基础用法](#基础用法) |
+| required     | `boolean`                                       | false  | 可选，表单选项是否必填                                                     |                       |
+| rules        | [FormRuleItem \| FormRuleItem[]](#formruleitem) | --     | 可选，表单项的校验规则                                                     | [表单校验](#表单校验) |
+| message-type | [MessageType](#messagetype)                     | --     | 可选，用法同父组件`message-type`参数，优先级高于父组件，默认继承父组件的值 |                       |
+| pop-position | [PopPosition](#popposition)                     | --     | 可选，用法同父组件`pop-position`参数，优先级高于父组件，默认继承父组件的值 |                       |
 
 ### FormItem 插槽
 
@@ -596,6 +599,30 @@ type LabelAlign = 'start' | 'center' | 'end';
 
 ```ts
 type FormRules = Partial<Record<string, Array<FormRuleItem>>>;
+```
+
+#### MessageType
+
+```ts
+type MessageType = 'popover' | 'text' | 'none';
+```
+
+#### PopPosition
+
+```ts
+type PopPosition =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
 ```
 
 #### FormValidateCallback
