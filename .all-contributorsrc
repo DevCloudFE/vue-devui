@@ -400,6 +400,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "XiaoRIGE",
+      "name": "宋小日",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33147011?v=4",
+      "profile": "https://github.com/XiaoRIGE",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 10,
