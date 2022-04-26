@@ -277,7 +277,7 @@
 }
 
 .devui-btn {
-  transition: background-color 0.2s;
+  transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth, border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth, color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
