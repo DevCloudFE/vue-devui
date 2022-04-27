@@ -1,5 +1,5 @@
-import { computed, inject, ref } from 'vue';
-import { castArray, get, isFunction } from 'lodash';
+import { computed, inject, nextTick, onMounted, ref } from 'vue';
+import { castArray, get, isFunction, cloneDeep } from 'lodash';
 import Schema from 'async-validator';
 import type { ComputedRef, Ref } from 'vue';
 import type { RuleItem } from 'async-validator';
@@ -61,15 +61,22 @@ export function useFormItemValidate(props: FormItemProps, _rules: ComputedRef<Fo
   const formContext = inject(FORM_TOKEN) as FormContext;
   const validateState = ref<FormItemValidateState>('');
   const validateMessage = ref('');
+  let initFieldValue: any = undefined;
+  let isResetting = false;
   const computedField = computed(() => {
     return typeof props.field === 'string' ? props.field : '';
   });
-  const fieldValue = computed(() => {
-    const formData = formContext.data;
-    if (!formData || !props.field) {
-      return;
-    }
-    return formData[props.field];
+  const fieldValue = computed({
+    get: () => {
+      const formData = formContext.data;
+      if (!formData || !props.field) {
+        return;
+      }
+      return formData[props.field];
+    },
+    set: (val) => {
+      formContext.data[props.field] = val;
+    },
   });
 
   const getRuleByTrigger = (triggerVal: string) => {
@@ -115,6 +122,10 @@ export function useFormItemValidate(props: FormItemProps, _rules: ComputedRef<Fo
   };
 
   const validate = async (trigger: string, callback?: FormValidateCallback) => {
+    if (isResetting) {
+      isResetting = false;
+      return false;
+    }
     const rules = getRuleByTrigger(trigger);
     if (!rules.length) {
       callback?.(true);
@@ -135,5 +146,25 @@ export function useFormItemValidate(props: FormItemProps, _rules: ComputedRef<Fo
       });
   };
 
-  return { validateState, validateMessage, validate };
+  const clearValidate = () => {
+    validateState.value = '';
+    validateMessage.value = '';
+  };
+
+  const resetField = async () => {
+    if (!formContext.data || !props.field) {
+      return;
+    }
+    isResetting = true;
+    fieldValue.value = initFieldValue;
+
+    await nextTick();
+    clearValidate();
+  };
+
+  onMounted(() => {
+    initFieldValue = cloneDeep(formContext.data[props.field]);
+  });
+
+  return { validateState, validateMessage, validate, resetField, clearValidate };
 }

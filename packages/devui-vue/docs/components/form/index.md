@@ -464,8 +464,10 @@ export default defineComponent({
         <d-input v-model="formData.age" />
       </d-form-control>
     </d-form-item>
-    <d-form-operation>
-      <d-button @click="onClick">提交</d-button>
+    <d-form-operation class="form-operation-wrap">
+      <d-button variant="solid" @click="onClick">提交</d-button>
+      <d-button @click="onClear">清除校验结果</d-button>
+      <d-button @click="onReset">重置</d-button>
     </d-form-operation>
   </d-form>
 </template>
@@ -502,10 +504,24 @@ export default defineComponent({
       });
     };
 
-    return { formRef, formData, rules, onClick };
+    const onClear = () => {
+      formRef.value.clearValidate();
+    };
+
+    const onReset = () => {
+      formRef.value.resetFields();
+    };
+
+    return { formRef, formData, rules, onClick, onClear, onReset };
   },
 });
 </script>
+
+<style>
+.form-operation-wrap > * {
+  margin-right: 8px;
+}
+</style>
 ```
 
 :::
@@ -524,9 +540,12 @@ export default defineComponent({
 
 ### Form 方法
 
-| 方法名   | 类型                                           | 说明         | 跳转 Demo             |
-| :------- | :--------------------------------------------- | :----------- | :-------------------- |
-| validate | `(callback?: FormValidateCallback) => Promise` | 表单校验函数 | [表单校验](#表单校验) |
+| 方法名         | 类型                                                             | 说明                                                      | 跳转 Demo             |
+| :------------- | :--------------------------------------------------------------- | :-------------------------------------------------------- | :-------------------- |
+| validate       | `(callback?: FormValidateCallback) => Promise`                   | 表单校验函数                                              | [表单校验](#表单校验) |
+| validateFields | `(fields: string[], callback?: FormValidateCallback) => Promise` | 校验指定字段                                              |                       |
+| resetFields    | `(fields: string[]) => void`                                     | 重置表单项的值，并移除校验结果                            |                       |
+| clearValidate  | `(fields: string[]) => void`                                     | 清除校验结果，参数为需要清除的表单项`field`，默认清除全部 |                       |
 
 ### Form 插槽
 
@@ -543,6 +562,13 @@ export default defineComponent({
 | rules        | [FormRuleItem \| FormRuleItem[]](#formruleitem) | --     | 可选，表单项的校验规则                                                     | [表单校验](#表单校验) |
 | message-type | [MessageType](#messagetype)                     | --     | 可选，用法同父组件`message-type`参数，优先级高于父组件，默认继承父组件的值 |                       |
 | pop-position | [PopPosition](#popposition)                     | --     | 可选，用法同父组件`pop-position`参数，优先级高于父组件，默认继承父组件的值 |                       |
+
+### FormItem 方法
+
+| 方法名        | 类型         | 说明                           |
+| :------------ | :----------- | :----------------------------- |
+| resetField    | `() => void` | 重置表单项的值，并移除校验结果 |
+| clearValidate | `() => void` | 清除校验结果                   |
 
 ### FormItem 插槽
 
