@@ -28,6 +28,10 @@ export const buttonProps = {
     type: Boolean,
     default: false,
   },
+  showContour: {
+    type: Boolean,
+    default: false
+  }
 } as const;
 
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>;

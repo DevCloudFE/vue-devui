@@ -235,7 +235,7 @@
     min-width: 72px;
   }
 
-  &.devui-btn-icon {
+  &.devui-btn-contour {
     &:hover,
     &:focus {
       border: 1px solid $devui-list-item-hover-bg;
@@ -283,7 +283,7 @@
   align-items: center;
   justify-content: center;
 
-  &.devui-btn-icon {
+  &.devui-btn-contour {
     padding: 8px;
     line-height: 1em;
     border: 1px solid transparent;
@@ -310,7 +310,7 @@
     }
   }
 
-  &:not(.devui-btn-icon) {
+  &:not(.devui-btn-contour) {
     .icon-fix {
       font-size: $devui-font-size-icon;
     }

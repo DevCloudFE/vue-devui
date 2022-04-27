@@ -7,7 +7,7 @@ describe('d-button', () => {
       setup() {
         return () => {
           return <Button variant="solid">确定</Button>;
-        }
+        };
       }
     });
     expect(wrapper.find('.devui-btn').classes()).toContain('devui-btn-solid');
@@ -18,7 +18,7 @@ describe('d-button', () => {
       setup() {
         return () => {
           return <Button size="sm">确定</Button>;
-        }
+        };
       }
     });
     expect(wrapper.find('.devui-btn-sm').exists()).toBeTruthy();
@@ -29,7 +29,7 @@ describe('d-button', () => {
       setup() {
         return () => {
           return <Button type="submit">确定</Button>;
-        }
+        };
       }
     });
     expect(wrapper.find('button').attributes('type')).toBe('submit');
@@ -41,7 +41,7 @@ describe('d-button', () => {
       setup() {
         return () => {
           return <Button onClick={handleClick}>确定</Button>;
-        }
+        };
       }
     });
     await wrapper.find('.devui-btn').trigger('click');
@@ -55,7 +55,7 @@ describe('d-button', () => {
       setup() {
         return () => {
           return <Button loading={true} onClick={handleClick}>确定</Button>;
-        }
+        };
       }
     });
     await wrapper.trigger('click');
@@ -68,7 +68,7 @@ describe('d-button', () => {
       setup() {
         return () => {
           return <Button disabled onClick={handleClick}>确定</Button>;
-        }
+        };
       }
     });
     await wrapper.trigger('click');
@@ -81,9 +81,25 @@ describe('d-button', () => {
       setup() {
         return () => {
           return <Button>{btnText}</Button>;
-        }
+        };
       }
     });
     expect(wrapper.text()).toEqual(btnText);
+  });
+
+  it('showContour shoule be rendered correctly', async () => {
+    const btnText = 'vue3 devui';
+    const wrapper = mount({
+      setup() {
+        return () => {
+          return <Button variant="solid">{btnText}</Button>;
+        };
+      }
+    });
+    await wrapper.setProps({ showContour: true });
+    expect(wrapper.find('.devui-btn').attributes('class').includes('devui-btn-contour')).toBeFalsy();
+
+    await wrapper.setProps({ variant: 'text' });
+    expect(wrapper.find('.devui-btn').attributes('class').includes('devui-btn-contour')).toBeTruthy();
   });
 });

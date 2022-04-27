@@ -17,7 +17,7 @@ export default function useButton(props: ButtonProps, ctx: SetupContext): UseBut
     [`devui-btn-${props.variant}-${props.color || defaultColor}`]: true,
     [`devui-btn-${props.size}`]: true,
     'devui-btn-icon-wrap': props.icon,
-    'devui-btn-icon': props.icon && !hasContent.value && props.variant !== 'solid',
+    'devui-btn-contour': props.variant === 'text' && props.showContour,
     'devui-btn-is-loading': props.loading,
   }));
 

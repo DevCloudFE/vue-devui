@@ -137,6 +137,23 @@ export default {
 
 :::
 
+### 文字按钮轮廓
+
+你可以给`variant="text"`的按钮添加背景轮廓
+
+:::demo
+
+```vue
+<template>
+  <div class="demo-spacing">
+    <d-button icon="add" variant="text" showContour></d-button>
+    <d-button variant="text" showContour>show text hover background</d-button>
+  </div>
+</template>
+```
+
+:::
+
 ### Button 参数
 
 | 参数名   | 类型                              | 默认        | 说明                  | 跳转 Demo                 |
@@ -147,6 +164,7 @@ export default {
 | icon     | `string`                          | --          | 可选，自定义按钮图标  | [图标按钮](#图标按钮)     |
 | disabled | `boolean`                         | false       | 可选，是否禁用 button | [禁用状态](#禁用状态)     |
 | loading  | `boolean`                         | false       | 可选，设置加载中状态  | [加载中状态](#加载中状态) |
+| showContour  | `boolean`                         | false       | 可选，设置文字按钮的背景轮廓，只在`variant="text"`属性下生效  | [文字按钮轮廓](#文字按钮轮廓) |
 
 ### Button 类型定义
 
