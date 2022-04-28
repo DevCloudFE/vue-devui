@@ -55,6 +55,8 @@ export interface FormItemContext extends FormItemProps {
   validateState: FormItemValidateState;
   validateMessage: string;
   validate: (trigger: string, callback?: FormValidateCallback) => FormValidateResult;
+  resetField: () => void;
+  clearValidate: () => void;
 }
 
 export interface UseFormItem {
@@ -66,6 +68,8 @@ export interface UseFormItemValidate {
   validateState: Ref<FormItemValidateState>;
   validateMessage: Ref<string>;
   validate: (trigger: string, callback?: FormValidateCallback) => FormValidateResult;
+  resetField: () => void;
+  clearValidate: () => void;
 }
 
 export const FORM_ITEM_TOKEN: InjectionKey<FormItemContext> = Symbol('dFormItem');

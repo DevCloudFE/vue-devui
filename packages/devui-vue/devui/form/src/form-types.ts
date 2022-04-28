@@ -59,6 +59,8 @@ export interface UseFieldCollection {
 export interface UseFormValidation {
   validate: (callback?: FormValidateCallback) => FormValidateResult;
   validateFields: (fields: string[], callback: any) => FormValidateResult;
+  resetFields: (fields: string[]) => void;
+  clearValidate: (fields: string[]) => void;
 }
 
 export type FormProps = ExtractPropTypes<typeof formProps>;

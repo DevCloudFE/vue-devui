@@ -14,7 +14,7 @@ export default defineComponent({
     const messageType = computed(() => itemMessageType?.value || formContext.messageType);
     const popPosition = computed(() => itemPopPosition?.value || formContext.popPosition);
     const { _rules } = useFormItemRule(props);
-    const { validateState, validateMessage, validate } = useFormItemValidate(props, _rules);
+    const { validateState, validateMessage, validate, resetField, clearValidate } = useFormItemValidate(props, _rules);
     const { itemClasses, isRequired } = useFormItem(messageType, _rules, validateState);
     const context: FormItemContext = reactive({
       ...otherProps,
@@ -24,9 +24,16 @@ export default defineComponent({
       validateState,
       validateMessage,
       validate,
+      resetField,
+      clearValidate,
     });
 
     provide(FORM_ITEM_TOKEN, context);
+
+    ctx.expose({
+      resetField,
+      clearValidate,
+    });
 
     onMounted(() => {
       if (props.field) {

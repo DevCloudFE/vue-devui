@@ -10,7 +10,7 @@ export default defineComponent({
   setup(props: FormProps, ctx: SetupContext) {
     const ns = useNamespace('form');
     const { itemContexts, addItemContext, removeItemContext } = useFieldCollection();
-    const { validate, validateFields } = useFormValidation(itemContexts);
+    const { validate, validateFields, resetFields, clearValidate } = useFormValidation(itemContexts);
 
     const onSubmit = (e: Event) => {
       e.preventDefault();
@@ -28,6 +28,8 @@ export default defineComponent({
     ctx.expose({
       validate,
       validateFields,
+      resetFields,
+      clearValidate,
     });
 
     return () => (

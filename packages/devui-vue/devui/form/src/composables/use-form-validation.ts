@@ -60,5 +60,13 @@ export default function useFormValidation(itemContexts: FormItemContext[]): UseF
 
   const validate = async (callback?: FormValidateCallback): FormValidateResult => validateFields(undefined, callback);
 
-  return { validate, validateFields };
+  const clearValidate = (fields: string[] = []) => {
+    getValidateFields(fields).forEach((field) => field.clearValidate());
+  };
+
+  const resetFields = (fields: string[] = []) => {
+    getValidateFields(fields).forEach((field) => field.resetField());
+  };
+
+  return { validate, validateFields, resetFields, clearValidate };
 }
