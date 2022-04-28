@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from 'vue';
+import type { PropType, ExtractPropTypes, Ref } from 'vue';
 
 export type TriggerType = 'click' | 'hover' | 'manually';
 export type PopType = 'success' | 'error' | 'warning' | 'info' | 'default';
@@ -62,3 +62,10 @@ export const popoverProps = {
 };
 
 export type PopoverProps = ExtractPropTypes<typeof popoverProps>;
+
+export interface UsePopoverEvent {
+  placement: Ref<string>;
+  handlePositionChange: (pos: string) => void;
+  onMouseenter: () => void;
+  onMouseleave: () => void;
+}
