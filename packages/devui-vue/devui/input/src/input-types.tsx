@@ -1,63 +1,37 @@
-import { PropType } from 'vue';
+import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
+
+export type InputSize = 'sm' | 'md' | 'lg';
 
 export const inputProps = {
-  placeholder: {
+  modelValue: {
     type: String,
-    default: undefined
+    default: '',
   },
   disabled: {
     type: Boolean,
-    default: false
-  },
-  autoFocus: {
-    type: Boolean,
-    default: false
-  },
-  maxLength: {
-    type: Number,
-    default: Number.MAX_SAFE_INTEGER
-  },
-  cssClass: {
-    type: String,
-    default: ''
+    default: false,
   },
   error: {
     type: Boolean,
-    default: false
+    default: false,
   },
   size: {
-    type: String as PropType<'sm' | '' | 'lg'>,
-    default: ''
+    type: String as PropType<InputSize>,
+    default: 'md',
   },
-  showPassword: {
-    type: Boolean,
-    default: false
-  },
-  modelValue: {
-    type: String,
-    default: ''
-  },
-  'update:modelValue': {
-    type: Function as PropType<(v: string) => void>,
-    default: undefined
-  },
-  onChange: {
-    type: Function as PropType<(v: string) => void>,
-    default: undefined
-  },
-  onKeydown: {
-    type: Function as PropType<(v: KeyboardEvent) => void>,
-    default: undefined
-  },
-  onFocus: {
-    type: Function as PropType<() => void>,
-    default: undefined
-  },
-  onBlur: {
-    type: Function as PropType<() => void>,
-    default: undefined
-  }
 } as const;
 
-export type PreviewIconType = 'preview' | 'icon-preview-forbidden';
-export type InputType = 'password' | 'text';
+export type InputProps = ExtractPropTypes<typeof inputProps>;
+
+export interface UseInputRender {
+  isFocus: Ref<boolean>;
+  wrapClasses: ComputedRef<Record<string, boolean>>;
+}
+
+export interface UseInputEvent {
+  onFocus: (e: FocusEvent) => void;
+  onBlur: (e: FocusEvent) => void;
+  onInput: (e: Event) => void;
+  onChange: (e: Event) => void;
+  onKeydown: (e: KeyboardEvent) => void;
+}
