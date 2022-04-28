@@ -14,15 +14,15 @@ export default defineComponent({
     const origin = ref<HTMLElement>();
     const popoverRef = ref<HTMLElement>();
     const visible = ref(false);
-    const { placement, handlePositionChange } = usePopoverEvent(props, visible, origin);
+    const { placement, handlePositionChange, onMouseenter, onMouseleave } = usePopoverEvent(props, visible, origin);
     const { overlayStyles } = usePopover(props, visible, placement, origin, popoverRef);
 
     return () => (
       <>
-        <div ref={origin} class='devui-popover-reference'>
+        <div ref={origin} class="devui-popover-reference">
           {slots.reference?.()}
         </div>
-        <Teleport to='body'>
+        <Teleport to="body">
           <Transition name={showAnimation.value ? `devui-popover-fade-${placement.value}` : ''}>
             <FlexibleOverlay
               v-model={visible.value}
@@ -36,7 +36,9 @@ export default defineComponent({
               is-arrow-center={false}
               style={overlayStyles.value}
               {...attrs}
-              onPositionChange={handlePositionChange}>
+              onPositionChange={handlePositionChange}
+              onMouseenter={onMouseenter}
+              onMouseleave={onMouseleave}>
               <PopoverIcon type={popType.value} />
               {slots.content?.() || <span>{content.value}</span>}
             </FlexibleOverlay>
