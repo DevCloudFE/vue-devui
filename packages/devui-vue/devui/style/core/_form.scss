@@ -104,77 +104,19 @@ $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
   }
 }
 
-.devui-input {
-  outline: none;
-  background-color: $devui-base-bg;
-  border: 1px solid $devui-form-control-line;
-  border-radius: $devui-border-radius;
-  padding: 5px 10px;
-  line-height: 16px; // 解决ie中文字不居中，由于height28px，有10px的padding和2px的border，剩余16px，使用其他的会使文字不居中
-  font-size: $devui-font-size;
+.devui-search-in-dropdown {
+  margin: 0;
+  border: none;
+  padding: 5px 26px 5px 10px;
+  background-color: $devui-embed-search-bg;
   color: $devui-text;
-  width: 100%;
-  display: block;
-  cursor: text;
-  height: 28px;
-  @include border-transition;
 
-  &:hover {
-    border-color: $devui-form-control-line-hover;
-  }
-
-  &:focus {
-    border-color: $devui-form-control-line-active;
-  }
-
-  &[disabled],
-  &.disabled,
-  &.devui-disabled {
-    &,
-    &:hover,
-    &:focus,
-    &:hover:focus {
-      border-color: $devui-disabled-line;
-      color: $devui-disabled-text;
-      background-color: $devui-disabled-bg;
-      cursor: not-allowed;
-    }
-  }
-
-  &::placeholder {
+  &:-ms-input-placeholder {
     color: $devui-placeholder;
   }
 
-  &.devui-search-in-dropdown {
-    margin: 0;
-    border: none;
-    padding: 5px 26px 5px 10px;
-    background-color: $devui-embed-search-bg;
-    color: $devui-text;
-
-    &:-ms-input-placeholder {
-      color: $devui-placeholder;
-    }
-
-    &:hover {
-      background-color: $devui-embed-search-bg-hover;
-    }
-  }
-
-  .devui-input-group > & {
-    display: table-cell;
-  }
-
-  .devui-input-group > &:first-child {
-    @include border-position-radius(right);
-  }
-
-  .devui-input-group > &:last-child {
-    @include border-position-radius(left);
-  }
-
-  .devui-input-group > &:not(:first-child):not(:last-child) {
-    border-radius: 0;
+  &:hover {
+    background-color: $devui-embed-search-bg-hover;
   }
 }
 
