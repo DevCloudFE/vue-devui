@@ -63,7 +63,7 @@ export default defineComponent({
       <d-button variant="solid">MouseEnter delay 500ms</d-button>
     </d-tooltip>
     <d-tooltip content="Mouse leave 1000ms later. <br> Hide me" :mouse-leave-delay="1000">
-      <d-button>MouseEnter delay 1000ms</d-button>
+      <d-button>MouseLeave delay 1000ms</d-button>
     </d-tooltip>
   </div>
 </template>

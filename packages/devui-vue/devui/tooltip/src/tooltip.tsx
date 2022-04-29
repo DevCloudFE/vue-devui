@@ -11,25 +11,27 @@ export default defineComponent({
     const { showAnimation, content } = toRefs(props);
     const origin = ref<HTMLElement>();
     const tooltipRef = ref<HTMLElement>();
-    const { visible, placement, positionArr, overlayStyles, onPositionChange } = useTooltip(origin, props);
+    const { visible, placement, positionArr, overlayStyles, onPositionChange, onMouseenter, onMouseleave } = useTooltip(origin, props);
 
     return () => (
       <>
-        <div ref={origin} class='devui-tooltip-reference'>
+        <div ref={origin} class="devui-tooltip-reference">
           {slots.default?.()}
         </div>
-        <Teleport to='body'>
+        <Teleport to="body">
           <Transition name={showAnimation.value ? `devui-tooltip-fade-${placement.value}` : ''}>
             <FlexibleOverlay
               v-model={visible.value}
               ref={tooltipRef}
-              class='devui-tooltip'
+              class="devui-tooltip"
               origin={origin.value}
               position={positionArr.value}
               offset={6}
               show-arrow
               style={overlayStyles.value}
-              onPositionChange={onPositionChange}>
+              onPositionChange={onPositionChange}
+              onMouseenter={onMouseenter}
+              onMouseleave={onMouseleave}>
               <span innerHTML={content.value}></span>
             </FlexibleOverlay>
           </Transition>
