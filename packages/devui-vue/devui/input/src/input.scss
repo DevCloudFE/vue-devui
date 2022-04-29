@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-input {
+.#{$devui-prefix}-input {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -12,11 +12,11 @@
   background-color: $devui-form-control-bg;
   transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
 
-  &:not(.devui-input--error):hover {
+  &:not(.#{$devui-prefix}-input--error):hover {
     border-color: $devui-form-control-line-hover;
   }
 
-  &--focus:not(.devui-input--error) {
+  &--focus:not(.#{$devui-prefix}-input--error) {
     border-color: $devui-form-control-line-active;
 
     &:hover {
@@ -33,7 +33,7 @@
       border-color: $devui-disabled-line;
     }
 
-    .devui-input__inner {
+    .#{$devui-prefix}-input__inner {
       color: $devui-disabled-text;
       cursor: not-allowed;
     }

@@ -1,18 +1,18 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-breadcrumb-font-style {
+.#{$devui-prefix}-breadcrumb-font-style {
   font-size: $devui-font-size;
   color: $devui-aide-text;
   line-height: 18px;
 }
 
-.devui-breadcrumb-item {
-  @extend.devui-breadcrumb-font-style;
+.#{$devui-prefix}-breadcrumb-item {
+  @extend .#{$devui-prefix}-breadcrumb-font-style;
 
   cursor: auto;
 
   a {
-    @extend.devui-breadcrumb-font-style;
+    @extend .#{$devui-prefix}-breadcrumb-font-style;
 
     cursor: pointer;
 
@@ -39,8 +39,8 @@
   }
 }
 
-.devui-breadcrumb-separator {
-  @extend.devui-breadcrumb-font-style;
+.#{$devui-prefix}-breadcrumb-separator {
+  @extend .#{$devui-prefix}-breadcrumb-font-style;
 
   margin: 0 4px;
 }

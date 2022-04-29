@@ -7,7 +7,7 @@ $card-title-font-size: $devui-font-size-card-title;
 $card-subtitle-font-size: $devui-font-size;
 $card-content-font-size: $devui-font-size;
 
-.devui-card {
+.#{$devui-prefix}-card {
   position: relative;
   display: block;
   padding: 16px 20px;
@@ -15,60 +15,60 @@ $card-content-font-size: $devui-font-size;
   box-shadow: $devui-shadow-length-base $devui-light-shadow;
 }
 
-.devui-card-title {
+.#{$devui-prefix}-card-title {
   display: block;
   font-size: $card-title-font-size;
   font-weight: 600;
   color: $devui-text;
 }
 
-.devui-card-subtitle {
+.#{$devui-prefix}-card-subtitle {
   display: block;
   font-size: $card-subtitle-font-size;
   color: $devui-aide-text-stress;
 }
 
-.devui-card-header {
+.#{$devui-prefix}-card-header {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-bottom: $card-block-space;
 }
 
-.devui-card-avatar {
+.#{$devui-prefix}-card-avatar {
   margin-right: $card-block-space;
 }
 
-.devui-card-content {
+.#{$devui-prefix}-card-content {
   font-size: $card-content-font-size;
   color: $devui-aide-text;
 }
 
-.devui-card-actions {
+.#{$devui-prefix}-card-actions {
   margin-top: $card-block-space;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
-.devui-card-title + .devui-card-subtitle {
+.#{$devui-prefix}-card-title + .#{$devui-prefix}-card-subtitle {
   margin-top: $card-ele-space;
 }
 
-.devui-card-actions-align-end {
+.#{$devui-prefix}-card-actions-align-end {
   justify-content: flex-end;
 }
 
-.devui-card-actions-align-spaceBetween {
+.#{$devui-prefix}-card-actions-align-spaceBetween {
   justify-content: space-between;
 }
 
-.devui-card-meta {
+.#{$devui-prefix}-card-meta {
   width: calc(100% + 40px);
   margin: 0 -20px $card-block-space -20px;
   height: auto;
 }
 
-.devui-card-meta:first-child {
+.#{$devui-prefix}-card-meta:first-child {
   margin-top: -$card-block-space;
 }

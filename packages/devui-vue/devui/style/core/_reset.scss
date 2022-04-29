@@ -65,21 +65,21 @@ a:visited {
 }
 
 //******************滚动条*************************/
-.devui-scrollbar::-webkit-scrollbar {
+.#{$devui-prefix}-scrollbar::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-.devui-scrollbar::-webkit-scrollbar-track {
+.#{$devui-prefix}-scrollbar::-webkit-scrollbar-track {
   background-color: transparent;
 }
 
-.devui-scrollbar::-webkit-scrollbar-thumb {
+.#{$devui-prefix}-scrollbar::-webkit-scrollbar-thumb {
   border-radius: 8px;
   background-color: $devui-line;
 }
 
-.devui-scrollbar::-webkit-scrollbar-thumb:hover {
+.#{$devui-prefix}-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: $devui-placeholder; // TODO: Color-Question
 }
 

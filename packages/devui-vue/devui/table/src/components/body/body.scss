@@ -1,6 +1,6 @@
 @import '../../../../styles-var/devui-var.scss';
 
-.devui-table {
+.#{$devui-prefix}-table {
   &__tbody {
     tr {
       font-size: $devui-font-size;
@@ -25,7 +25,7 @@
   }
 }
 
-.devui-table {
+.#{$devui-prefix}-table {
   &--sticky-cell {
     position: sticky;
     z-index: 5;

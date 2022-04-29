@@ -1,4 +1,6 @@
-.devui-form-operation {
+@import '../../../../styles-var/devui-var';
+
+.#{$devui-prefix}-form-operation {
   .star {
     color: red;
   }

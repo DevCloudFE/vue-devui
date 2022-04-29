@@ -1,6 +1,6 @@
 @import '../../../../styles-var/devui-var.scss';
 
-.devui-table {
+.#{$devui-prefix}-table {
   &__thead {
     tr {
       border: none;
@@ -44,9 +44,9 @@
   }
 }
 
-.devui-table {
+.#{$devui-prefix}-table {
   &--header-bg {
-    thead.devui-table__thead {
+    thead.#{$devui-prefix}-table__thead {
       tr {
         background: var(--devui-list-item-hover-bg, #f2f5fc);
       }

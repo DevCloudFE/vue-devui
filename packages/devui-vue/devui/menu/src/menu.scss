@@ -17,36 +17,36 @@ $devui-menu-item-margin: 10px;
   opacity: 0;
 }
 
-.devui-menu-icon + span {
+.#{$devui-prefix}-menu-icon + span {
   margin-left: $devui-menu-item-margin;
 }
 
-.devui-menu-item-disabled,
-.devui-submenu-disabled {
+.#{$devui-prefix}-menu-item-disabled,
+.#{$devui-prefix}-submenu-disabled {
   color: $devui-menu-item-disabled !important;
   cursor: not-allowed !important;
 }
 
-.devui-menu-item-disabled:hover,
-.devui-submenu-disabled:hover {
+.#{$devui-prefix}-menu-item-disabled:hover,
+.#{$devui-prefix}-submenu-disabled:hover {
   color: $devui-menu-item-disabled !important;
   cursor: not-allowed !important;
 }
 
-.devui-sub-menu-disabled:hover {
+.#{$devui-prefix}-sub-menu-disabled:hover {
   span {
     color: $devui-menu-item-disabled !important;
   }
 }
 
-.devui-menu-horizontal {
+.#{$devui-prefix}-menu-horizontal {
   display: flex;
   box-sizing: border-box;
   line-height: $devui-line-height-base;
   background: $devui-menu-bg;
   padding: 14px 20px;
 
-  .devui-menu-item {
+  .#{$devui-prefix}-menu-item {
     display: flex;
     position: relative;
     box-sizing: content-box;
@@ -55,14 +55,14 @@ $devui-menu-item-margin: 10px;
     cursor: pointer;
   }
 
-  &.devui-menu-item {
+  &.#{$devui-prefix}-menu-item {
     position: relative;
     box-sizing: content-box;
     padding: 0 20px;
     cursor: pointer;
   }
 
-  .devui-menu-item::after {
+  .#{$devui-prefix}-menu-item::after {
     content: '';
     display: block;
     position: absolute;
@@ -78,8 +78,8 @@ $devui-menu-item-margin: 10px;
     background: transparent;
   }
 
-  .devui-menu-item-select,
-  .devui-menu-active-parent {
+  .#{$devui-prefix}-menu-item-select,
+  .#{$devui-prefix}-menu-active-parent {
     span,
     a {
       color: $devui-menu-item-select;
@@ -99,7 +99,7 @@ $devui-menu-item-margin: 10px;
     }
   }
 
-  .devui-menu-item:hover {
+  .#{$devui-prefix}-menu-item:hover {
     & span,
     a {
       color: $devui-menu-item-select;
@@ -110,12 +110,12 @@ $devui-menu-item-margin: 10px;
     }
   }
 
-  .devui-submenu {
+  .#{$devui-prefix}-submenu {
     margin: 0;
     padding: 0;
     position: relative;
 
-    div.devui-submenu-title {
+    div.#{$devui-prefix}-submenu-title {
       padding: 0 20px;
 
       span {
@@ -134,7 +134,7 @@ $devui-menu-item-margin: 10px;
       height: 2px;
     }
 
-    .devui-menu-item-horizontal-wrapper {
+    .#{$devui-prefix}-menu-item-horizontal-wrapper {
       transition: all 0.8s $devui-animation-ease-in-smooth;
       position: absolute;
       margin-top: 10px;
@@ -144,7 +144,7 @@ $devui-menu-item-margin: 10px;
       background: $devui-menu-bg;
       opacity: 0;
 
-      .devui-menu-item {
+      .#{$devui-prefix}-menu-item {
         margin-top: 5px;
       }
     }
@@ -161,14 +161,14 @@ $devui-menu-item-margin: 10px;
         background: $devui-brand;
       }
 
-      div.devui-menu-item-horizontal-wrapper {
+      div.#{$devui-prefix}-menu-item-horizontal-wrapper {
         opacity: 1;
         visibility: visible;
         max-height: calc(100vh - 100px);
         padding: 10px 0 !important;
         border-radius: 8px;
 
-        .devui-menu-item {
+        .#{$devui-prefix}-menu-item {
           margin-top: 5px;
         }
       }
@@ -176,7 +176,7 @@ $devui-menu-item-margin: 10px;
   }
 }
 
-.devui-menu-vertical {
+.#{$devui-prefix}-menu-vertical {
   padding: 0;
   transition: width 0.5s $devui-animation-ease-in-smooth, padding 0.5s $devui-animation-ease-in-smooth;
   border-right: $devui-line 1px solid;
@@ -198,19 +198,19 @@ $devui-menu-item-margin: 10px;
 
   .layer_2 {
     // 第一级子菜单
-    & > div.devui-submenu-title {
+    & > div.#{$devui-prefix}-submenu-title {
       margin: 0 !important;
       background: $devui-block;
     }
   }
 
-  li.devui-isCollapsed-item {
+  li.#{$devui-prefix}-isCollapsed-item {
     padding: 0;
     margin: auto;
   }
 
-  &.devui-menu-collapsed {
-    .devui-menu-icon {
+  &.#{$devui-prefix}-menu-collapsed {
+    .#{$devui-prefix}-menu-icon {
       margin: auto;
     }
 
@@ -218,20 +218,20 @@ $devui-menu-item-margin: 10px;
       display: none !important;
     }
 
-    .devui-submenu {
-      div.devui-submenu-title {
-        .devui-menu-icon {
+    .#{$devui-prefix}-submenu {
+      div.#{$devui-prefix}-submenu-title {
+        .#{$devui-prefix}-menu-icon {
           margin: auto;
         }
       }
     }
   }
 
-  .devui-menu-item-vertical-wrapper {
+  .#{$devui-prefix}-menu-item-vertical-wrapper {
     padding-left: 0 !important;
   }
 
-  .devui-menu-item {
+  .#{$devui-prefix}-menu-item {
     width: 100%;
     height: 40px;
     flex-grow: 1;
@@ -252,7 +252,7 @@ $devui-menu-item-margin: 10px;
     flex: auto;
   }
 
-  .devui-menu-item::after {
+  .#{$devui-prefix}-menu-item::after {
     display: block;
     position: absolute;
     right: 0;
@@ -263,7 +263,7 @@ $devui-menu-item-margin: 10px;
     background: $devui-menu-item-selectBar;
   }
 
-  .devui-menu-item-select {
+  .#{$devui-prefix}-menu-item-select {
     background: $devui-primary-bg !important;
     position: relative;
 
@@ -286,18 +286,18 @@ $devui-menu-item-margin: 10px;
     }
   }
 
-  .devui-submenu > div:hover {
-    span.devui-submenu-title-content {
+  .#{$devui-prefix}-submenu > div:hover {
+    span.#{$devui-prefix}-submenu-title-content {
       color: $devui-menu-item-select;
     }
   }
 
-  .devui-menu-item:hover {
+  .#{$devui-prefix}-menu-item:hover {
     color: $devui-menu-item-select;
   }
 
-  li.devui-menu-item,
-  div.devui-submenu-title {
+  li.#{$devui-prefix}-menu-item,
+  div.#{$devui-prefix}-submenu-title {
     white-space: nowrap;
     overflow: hidden;
 
@@ -312,7 +312,7 @@ $devui-menu-item-margin: 10px;
     }
   }
 
-  .devui-submenu-open {
+  .#{$devui-prefix}-submenu-open {
     & > div {
       color: $devui-menu-item-select !important;
     }
@@ -331,7 +331,7 @@ $devui-menu-item-margin: 10px;
     }
   }
 
-  .devui-submenu-close {
+  .#{$devui-prefix}-submenu-close {
     & > div {
       color: $devui-menu-item;
     }
@@ -346,20 +346,20 @@ $devui-menu-item-margin: 10px;
     }
   }
 
-  .devui-menu-item-isCollapsed {
+  .#{$devui-prefix}-menu-item-isCollapsed {
     width: fit-content;
 
-    .devui-menu-icon {
+    .#{$devui-prefix}-menu-icon {
       margin: auto;
     }
   }
 
   // sub menu
-  ul.devui-submenu {
+  ul.#{$devui-prefix}-submenu {
     margin: 0;
     padding: 0;
 
-    div.devui-submenu-title {
+    div.#{$devui-prefix}-submenu-title {
       display: flex;
       cursor: pointer;
       width: 100%;
@@ -374,17 +374,17 @@ $devui-menu-item-margin: 10px;
         font-size: $devui-font-size-lg;
       }
 
-      span.devui-submenu-title-content {
+      span.#{$devui-prefix}-submenu-title-content {
         font-size: $devui-font-size-lg;
         flex: auto;
       }
 
-      span.devui-menu-icon {
+      span.#{$devui-prefix}-menu-icon {
         text-align: center;
       }
     }
 
-    .devui-menu-item {
+    .#{$devui-prefix}-menu-item {
       display: flex;
 
       & > span {
@@ -397,13 +397,13 @@ $devui-menu-item-margin: 10px;
       }
     }
 
-    .devui-menu-item:hover {
+    .#{$devui-prefix}-menu-item:hover {
       & > span {
         color: $devui-menu-item-select;
       }
     }
 
-    .devui-menu-item-select {
+    .#{$devui-prefix}-menu-item-select {
       * {
         color: $devui-menu-item-select !important;
       }

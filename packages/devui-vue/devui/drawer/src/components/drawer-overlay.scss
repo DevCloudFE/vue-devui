@@ -1,6 +1,6 @@
 @import '../../../styles-var/devui-var.scss';
 
-.devui-drawer-overlay {
+.#{$devui-prefix}-drawer-overlay {
   position: fixed;
   top: 0;
   right: 0;

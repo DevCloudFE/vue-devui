@@ -1,4 +1,4 @@
-@import '../../style/devui';
+@import '../../styles-var/devui-var';
 
 $cell-font-size: 13px;
 $border-width: 1px;
@@ -6,7 +6,7 @@ $border-style: solid;
 $border-color: #dddddd;
 $input-border-color: #0066cc;
 
-.devui-datepicker-container {
+.#{$devui-prefix}-datepicker-container {
   .input-container {
     border: 1px solid $input-border-color;
     border-radius: $devui-border-radius;
@@ -36,7 +36,7 @@ $input-border-color: #0066cc;
     right: 6px;
   }
 
-  .devui-datepicker-panel {
+  .#{$devui-prefix}-datepicker-panel {
     border: 1px solid #000000;
     margin: 0;
     padding: 0;

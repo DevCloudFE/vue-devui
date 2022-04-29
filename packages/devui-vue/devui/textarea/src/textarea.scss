@@ -1,7 +1,7 @@
-@import '../../style/core/form';
+@import '../../styles-var/devui-var';
 
-.devui-textarea-wrap {
-  .devui-textarea-show-count {
+.#{$devui-prefix}-textarea-wrap {
+  .#{$devui-prefix}-textarea-show-count {
     text-align: right;
     color: inherit;
     white-space: nowrap;

@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-countdown {
+.#{$devui-prefix}-countdown {
   .countdown-content {
     font-size: 24px;
     color: $devui-text;

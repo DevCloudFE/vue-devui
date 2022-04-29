@@ -2,7 +2,7 @@
 @import '../../style/mixins/flex';
 @import '../../styles-var/devui-var.scss';
 
-.devui-search {
+.#{$devui-prefix}-search {
   position: relative;
   @include flex;
 
@@ -51,17 +51,17 @@
 
   &__sm {
     input {
-      &.devui-input-sm {
+      &.#{$devui-prefix}-input-sm {
         padding-right: 56px;
       }
     }
 
-    .devui-search__icon {
+    .#{$devui-prefix}-search__icon {
       font-size: 14px;
       @include size(34px, 26px);
     }
 
-    .devui-search__clear {
+    .#{$devui-prefix}-search__clear {
       @include size(26px, 100%);
 
       right: 34px;
@@ -72,17 +72,17 @@
     input {
       padding: 5px 36px 5px 10px;
 
-      &.devui-input-lg {
+      &.#{$devui-prefix}-input-lg {
         padding-right: 71px;
       }
     }
 
-    .devui-search__icon {
+    .#{$devui-prefix}-search__icon {
       font-size: 18px;
       @include size(46px, 46px);
     }
 
-    .devui-search__clear {
+    .#{$devui-prefix}-search__clear {
       @include size(30px, 100%);
 
       right: 46px;
@@ -90,7 +90,7 @@
   }
 
   &__disbaled {
-    .devui-search__icon {
+    .#{$devui-prefix}-search__icon {
       cursor: not-allowed;
     }
 
@@ -103,17 +103,17 @@
     input {
       padding: 5px 26px 5px 30px;
 
-      &.devui-input-lg {
+      &.#{$devui-prefix}-input-lg {
         padding-right: 30px;
         padding-left: 46px;
       }
 
-      &.devui-input-sm {
+      &.#{$devui-prefix}-input-sm {
         padding-right: 26px;
       }
     }
 
-    .devui-search__clear {
+    .#{$devui-prefix}-search__clear {
       right: 0;
 
       &::after {
@@ -121,7 +121,7 @@
       }
     }
 
-    .devui-search__icon {
+    .#{$devui-prefix}-search__icon {
       left: 0;
     }
   }

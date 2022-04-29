@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-alert {
+.#{$devui-prefix}-alert {
   color: $devui-text;
   font-size: $devui-font-size;
   border: 1px solid transparent;
@@ -10,7 +10,7 @@
   word-break: normal;
   word-wrap: break-word;
 
-  .devui-close {
+  .#{$devui-prefix}-close {
     color: $devui-text;
     opacity: 1;
     line-height: 26px;
@@ -27,73 +27,73 @@
     }
   }
 
-  &.devui-alert-success {
+  &.#{$devui-prefix}-alert-success {
     background-color: $devui-success-bg;
     border-color: $devui-success-line;
     color: $devui-text;
 
-    .devui-close {
+    .#{$devui-prefix}-close {
       & > svg path {
         fill: $devui-success-line;
       }
     }
   }
 
-  &.devui-alert-info {
+  &.#{$devui-prefix}-alert-info {
     background-color: $devui-info-bg;
     border-color: $devui-info-line;
     color: $devui-text;
 
-    .devui-close {
+    .#{$devui-prefix}-close {
       & > svg path {
         fill: $devui-info-line;
       }
     }
   }
 
-  &.devui-alert-warning {
+  &.#{$devui-prefix}-alert-warning {
     background-color: $devui-warning-bg;
     border-color: $devui-warning-line;
     color: $devui-text;
 
-    .devui-close {
+    .#{$devui-prefix}-close {
       & > svg path {
         fill: $devui-warning-line;
       }
     }
   }
 
-  &.devui-alert-danger {
+  &.#{$devui-prefix}-alert-danger {
     background-color: $devui-danger-bg;
     border-color: $devui-danger-line;
     color: $devui-text;
 
-    .devui-close {
+    .#{$devui-prefix}-close {
       & > svg path {
         fill: $devui-danger-line;
       }
     }
   }
 
-  &.devui-alert-simple {
+  &.#{$devui-prefix}-alert-simple {
     border-color: $devui-line;
     color: $devui-text;
 
-    .devui-close {
+    .#{$devui-prefix}-close {
       & > svg path {
         fill: $devui-text-weak;
       }
     }
   }
 
-  svg.devui-icon {
+  svg.#{$devui-prefix}-icon {
     width: 16px;
     height: 16px;
     vertical-align: middle;
     transform: translateY(-1px); //字体14px图标16px对齐问题，微调
   }
 
-  .devui-icon.devui-icon-success {
+  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-success {
     & > g {
       path {
         fill: $devui-success-line;
@@ -106,39 +106,39 @@
     }
   }
 
-  .devui-icon.devui-icon-warning {
+  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-warning {
     & > g {
-      path.devui-icon-warning-outer {
+      path.#{$devui-prefix}-icon-warning-outer {
         fill: $devui-warning-line;
       }
 
-      path.devui-icon-warning-inner {
+      path.#{$devui-prefix}-icon-warning-inner {
         fill: $devui-light-text;
         stroke: $devui-light-text;
       }
     }
   }
 
-  .devui-icon.devui-icon-info {
+  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-info {
     & > g {
-      path.devui-icon-info-outer {
+      path.#{$devui-prefix}-icon-info-outer {
         fill: $devui-info-line;
       }
 
-      path.devui-icon-info-inner {
+      path.#{$devui-prefix}-icon-info-inner {
         fill: $devui-light-text;
         stroke: $devui-light-text;
       }
     }
   }
 
-  .devui-icon.devui-icon-error {
+  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-error {
     & > g {
-      path.devui-icon-error-outer {
+      path.#{$devui-prefix}-icon-error-outer {
         fill: $devui-danger-line;
       }
 
-      path.devui-icon-error-inner {
+      path.#{$devui-prefix}-icon-error-inner {
         fill: $devui-light-text;
         stroke: $devui-light-text;
       }
@@ -146,11 +146,11 @@
   }
 }
 
-.devui-alert-icon {
+.#{$devui-prefix}-alert-icon {
   margin-right: 4px;
 }
 
-.devui-alter-close {
+.#{$devui-prefix}-alter-close {
   margin: 0;
   padding-top: 0;
   padding-bottom: 0;
@@ -158,7 +158,7 @@
   transition: all 0.3s ease-in-out;
 }
 
-.devui-alert-leave-active {
+.#{$devui-prefix}-alert-leave-active {
   animation: alertUpOut 0.3s ease-in-out;
   animation-fill-mode: both;
 }

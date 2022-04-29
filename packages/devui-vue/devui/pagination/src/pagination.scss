@@ -1,9 +1,9 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-pagination {
+.#{$devui-prefix}-pagination {
   font-size: $devui-font-size;
 
-  .devui-page-size {
+  .#{$devui-prefix}-page-size {
     display: inline-block;
     max-width: 100px;
     line-height: 24px;
@@ -11,32 +11,32 @@
     position: relative;
     vertical-align: middle;
 
-    &.devui-page-size-sm {
+    &.#{$devui-prefix}-page-size-sm {
       max-width: 80px;
 
-      .devui-select-input {
+      .#{$devui-prefix}-select-input {
         height: 24px;
       }
     }
 
-    &.devui-page-size-lg {
+    &.#{$devui-prefix}-page-size-lg {
       max-width: 100px;
 
-      .devui-select-input {
+      .#{$devui-prefix}-select-input {
         height: 46px;
       }
 
-      .devui-select-item {
+      .#{$devui-prefix}-select-item {
         height: 46px;
       }
     }
   }
 
-  .devui-select-input {
+  .#{$devui-prefix}-select-input {
     height: 26px;
   }
 
-  .devui-total-size {
+  .#{$devui-prefix}-total-size {
     display: inline-block;
     position: relative;
     vertical-align: middle;
@@ -44,8 +44,8 @@
     color: $devui-text-weak;
   }
 
-  .devui-pagination-list,
-  .devui-pagination-item {
+  .#{$devui-prefix}-pagination-list,
+  .#{$devui-prefix}-pagination-item {
     padding: 0;
     margin: 0;
     list-style: none;
@@ -56,16 +56,16 @@
     color: #3eaf7c;
   }
 
-  .devui-pagination-list {
+  .#{$devui-prefix}-pagination-list {
     vertical-align: middle;
     display: inline-flex;
     align-items: center;
 
-    li.devui-pagination-item {
+    li.#{$devui-prefix}-pagination-item {
       cursor: pointer;
 
       &.active {
-        a.devui-pagination-link {
+        a.#{$devui-prefix}-pagination-link {
           text-decoration: none;
           background-color: $devui-list-item-active-bg;
           color: $devui-list-item-active-text;
@@ -73,7 +73,7 @@
       }
 
       &.disabled {
-        a.devui-pagination-link {
+        a.#{$devui-prefix}-pagination-link {
           cursor: not-allowed;
           opacity: 0.5;
           background-color: #ffffff;
@@ -81,7 +81,7 @@
         }
       }
 
-      .devui-pagination-link {
+      .#{$devui-prefix}-pagination-link {
         margin-left: 5px;
         padding: 3px 7px;
         line-height: 1.5;
@@ -100,7 +100,7 @@
     }
   }
 
-  .devui-pagination-sm > li.devui-pagination-item > a.devui-pagination-link {
+  .#{$devui-prefix}-pagination-sm > li.#{$devui-prefix}-pagination-item > a.#{$devui-prefix}-pagination-link {
     padding: 0 5px;
     min-width: 18px;
     height: 22px;
@@ -108,33 +108,33 @@
     font-size: $devui-font-size-sm;
   }
 
-  .devui-pagination-lg > li.devui-pagination-item > a.devui-pagination-link {
+  .#{$devui-prefix}-pagination-lg > li.#{$devui-prefix}-pagination-item > a.#{$devui-prefix}-pagination-link {
     padding: 0 12px;
     height: 38px;
     font-size: $devui-font-size-lg;
     line-height: 1.5;
   }
 
-  .devui-jump-container {
+  .#{$devui-prefix}-jump-container {
     display: inline-flex;
     position: relative;
     margin: 0 12px;
     vertical-align: middle;
     align-items: center;
 
-    .devui-pagination-input {
+    .#{$devui-prefix}-pagination-input {
       display: inline-block;
       width: 42px;
       vertical-align: middle;
       margin: 0 3px;
     }
 
-    .devui-pagination-input-lg {
+    .#{$devui-prefix}-pagination-input-lg {
       width: 56px;
     }
   }
 
-  .devui-jump-button {
+  .#{$devui-prefix}-jump-button {
     display: inline-flex;
     vertical-align: middle;
     width: 24px;
@@ -146,7 +146,7 @@
     align-items: center;
     justify-content: center;
 
-    .devui-pagination-go {
+    .#{$devui-prefix}-pagination-go {
       width: 0;
       height: 0;
       border-top: 6px solid transparent;
@@ -157,17 +157,17 @@
     &:hover {
       border-color: $devui-brand-active;
 
-      .devui-pagination-go {
+      .#{$devui-prefix}-pagination-go {
         border-left-color: $devui-brand-active;
       }
     }
   }
 
-  .devui-jump-size-default {
+  .#{$devui-prefix}-jump-size-default {
     width: 28px;
     height: 28px;
 
-    .devui-pagination-go {
+    .#{$devui-prefix}-pagination-go {
       width: 0;
       height: 0;
       border-top: 8px solid transparent;
@@ -176,11 +176,11 @@
     }
   }
 
-  .devui-jump-size-sm {
+  .#{$devui-prefix}-jump-size-sm {
     width: 24px;
     height: 24px;
 
-    .devui-pagination-go {
+    .#{$devui-prefix}-pagination-go {
       width: 0;
       height: 0;
       border-top: 6px solid transparent;
@@ -188,17 +188,17 @@
       border-bottom: 6px solid transparent;
     }
 
-    .devui-pagination-link {
+    .#{$devui-prefix}-pagination-link {
       height: 30px;
       line-height: 32px;
     }
   }
 
-  .devui-jump-size-lg {
+  .#{$devui-prefix}-jump-size-lg {
     width: 46px;
     height: 46px;
 
-    .devui-pagination-go {
+    .#{$devui-prefix}-pagination-go {
       width: 0;
       height: 0;
       border-top: 14px solid transparent;
@@ -207,7 +207,7 @@
     }
   }
 
-  .devui-pagination-config {
+  .#{$devui-prefix}-pagination-config {
     color: $devui-text;
     position: relative;
     display: inline-block;
@@ -215,13 +215,13 @@
     margin: 0 4px;
   }
 
-  .devui-setup-icon {
+  .#{$devui-prefix}-setup-icon {
     line-height: 30px;
     cursor: pointer;
     display: flex;
   }
 
-  .devui-config-container {
+  .#{$devui-prefix}-config-container {
     padding: 4px 0;
     box-shadow: $devui-shadow-length-connected-overlay $devui-shadow;
     border-radius: $devui-border-radius;
@@ -255,7 +255,7 @@
     line-height: 1.5;
   }
 
-  .devui-page-number {
+  .#{$devui-prefix}-page-number {
     padding-left: 8px;
     margin-top: 4px;
     display: flex;

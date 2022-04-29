@@ -1,17 +1,17 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-splitter {
+.#{$devui-prefix}-splitter {
   display: flex;
   width: 100%;
   height: auto;
   position: relative;
   border-radius: $devui-border-radius;
 
-  &.devui-splitter-horizontal {
+  &.#{$devui-prefix}-splitter-horizontal {
     flex-direction: row;
   }
 
-  &.devui-splitter-vertical {
+  &.#{$devui-prefix}-splitter-vertical {
     flex-direction: column;
   }
 }

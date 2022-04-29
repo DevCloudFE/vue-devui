@@ -1,5 +1,5 @@
-.devui-menu-vertical,
-.devui-menu-horizontal {
+.#{$devui-prefix}-menu-vertical,
+.#{$devui-prefix}-menu-horizontal {
   a {
     text-decoration: none;
   }

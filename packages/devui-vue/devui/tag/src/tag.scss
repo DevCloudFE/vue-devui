@@ -30,11 +30,11 @@ $devui-tag-normal-config: (
   ),
 );
 
-.devui-tag {
+.#{$devui-prefix}-tag {
   display: inline-block;
   margin: 4px;
 
-  .devui-tag-item {
+  .#{$devui-prefix}-tag-item {
     display: block;
     position: relative;
     padding: 0 8px;
@@ -45,7 +45,7 @@ $devui-tag-normal-config: (
     line-height: 20px;
     cursor: default;
     @each $type in default, primary, success, warning, danger, colorful, deletable {
-      &.devui-tag-#{$type} {
+      &.#{$devui-prefix}-tag-#{$type} {
         @each $key, $value in map-get($devui-tag-normal-config, $type) {
           #{$key}: $value;
         }
