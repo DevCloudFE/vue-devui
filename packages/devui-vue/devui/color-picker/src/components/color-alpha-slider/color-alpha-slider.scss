@@ -1,4 +1,6 @@
-.devui-color-picker-alpha-slider {
+@import '../../../../styles-var/devui-var';
+
+.#{$devui-prefix}-color-picker-alpha-slider {
   position: relative;
   margin-bottom: 15px;
   width: 100%;

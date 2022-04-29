@@ -1,4 +1,6 @@
-.devui-header {
+@import '../../styles-var/devui-var';
+
+.#{$devui-prefix}-header {
   min-height: 40px;
   flex: auto;
 }

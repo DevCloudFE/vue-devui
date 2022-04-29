@@ -1,4 +1,6 @@
-.devui-layout {
+@import '../../styles-var/devui-var';
+
+.#{$devui-prefix}-layout {
   display: flex;
   flex-direction: column;
   flex: auto;

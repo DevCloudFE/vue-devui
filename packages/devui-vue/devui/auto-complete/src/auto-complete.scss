@@ -1,8 +1,8 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-auto-complete,
-.devui-auto-complete-menu {
-  .devui-dropdown-menu {
+.#{$devui-prefix}-auto-complete,
+.#{$devui-prefix}-auto-complete-menu {
+  .#{$devui-prefix}-dropdown-menu {
     width: 100%;
     left: 0 !important;
     top: 0 !important;
@@ -15,29 +15,29 @@
   }
 }
 
-.devui-auto-complete {
-  .devui-form-control {
+.#{$devui-prefix}-auto-complete {
+  .#{$devui-prefix}-form-control {
     padding: 4px 8px;
     width: 100%;
   }
 }
 
-.devui-auto-complete,
-.devui-auto-complete-menu {
+.#{$devui-prefix}-auto-complete,
+.#{$devui-prefix}-auto-complete-menu {
   .active {
     background: $devui-list-item-hover-bg;
   }
 
-  .devui-dropdown-menu {
+  .#{$devui-prefix}-dropdown-menu {
     width: 100%;
     display: block;
   }
 
-  .devui-dropdown-menu-cdk {
+  .#{$devui-prefix}-dropdown-menu-cdk {
     position: static;
   }
 
-  .devui-dropdown-item {
+  .#{$devui-prefix}-dropdown-item {
     cursor: pointer;
     display: block;
     width: 100%;
@@ -50,8 +50,8 @@
     line-height: 14px;
   }
 
-  .devui-dropdown-menu {
-    .devui-dropdown-item:not(.disabled) {
+  .#{$devui-prefix}-dropdown-menu {
+    .#{$devui-prefix}-dropdown-item:not(.disabled) {
       &.selected,
       &.selected &:hover {
         color: $devui-list-item-active-text !important;
@@ -60,8 +60,8 @@
     }
   }
 
-  .devui-no-result-template,
-  .devui-is-searching-template {
+  .#{$devui-prefix}-no-result-template,
+  .#{$devui-prefix}-is-searching-template {
     display: block;
     width: 100%;
     padding: 8px 12px;
@@ -83,28 +83,28 @@
   }
 
   /* 选项disabled */
-  .devui-dropdown-item.disabled,
-  .devui-dropdown-item.disabled:hover {
+  .#{$devui-prefix}-dropdown-item.disabled,
+  .#{$devui-prefix}-dropdown-item.disabled:hover {
     cursor: not-allowed;
     color: $devui-disabled-text;
   }
 
-  ul.devui-list-unstyled {
+  ul.#{$devui-prefix}-list-unstyled {
     margin: 0;
     overflow-y: auto;
   }
 
-  .devui-dropdown-bg {
+  .#{$devui-prefix}-dropdown-bg {
     background: $devui-list-item-hover-bg;
     color: $devui-list-item-hover-text;
   }
 
-  .devui-popup-tips {
+  .#{$devui-prefix}-popup-tips {
     color: $devui-text-weak; // TODO: Color-Question
     padding: 4px 12px;
   }
 
-  .devui-dropdown-latestSource ul {
+  .#{$devui-prefix}-dropdown-latestSource ul {
     line-height: initial !important;
   }
 }

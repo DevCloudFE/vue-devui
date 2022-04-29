@@ -1,4 +1,6 @@
-.devui-footer {
+@import '../../styles-var/devui-var';
+
+.#{$devui-prefix}-footer {
   text-align: center;
   line-height: 1.5;
 }

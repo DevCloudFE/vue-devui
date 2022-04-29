@@ -1,5 +1,5 @@
 import type { ValidateError, ValidateFieldsError } from 'async-validator';
-import type { PropType, ExtractPropTypes, InjectionKey } from 'vue';
+import type { PropType, ExtractPropTypes, InjectionKey, SetupContext } from 'vue';
 import {
   FormItemContext,
   FormRuleItem,
@@ -48,6 +48,10 @@ export const formProps = {
     type: Array as PropType<Array<PopPosition>>,
     default: ['right', 'bottom'],
   },
+  validateOnRuleChange: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export interface UseFieldCollection {
@@ -66,6 +70,7 @@ export interface UseFormValidation {
 export type FormProps = ExtractPropTypes<typeof formProps>;
 
 export interface FormContext extends FormProps {
+  emit: SetupContext['emit'];
   addItemContext: (field: FormItemContext) => void;
   removeItemContext: (field: FormItemContext) => void;
 }

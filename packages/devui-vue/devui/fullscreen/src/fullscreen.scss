@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-fullscreen {
+.#{$devui-prefix}-fullscreen {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   background-color: $devui-base-bg;
 }
 
-.devui-fullscreen-html {
+.#{$devui-prefix}-fullscreen-html {
   overflow: hidden;
 }
 

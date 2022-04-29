@@ -10,7 +10,7 @@
   transition: all 0.2s;
 }
 
-.devui-code-copy {
+.#{$devui-prefix}-code-copy {
   fill: $devui-text;
 }
 

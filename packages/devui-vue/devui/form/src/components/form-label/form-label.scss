@@ -1,6 +1,6 @@
-@import '../../../../styles-var/devui-var.scss';
+@import '../../../../styles-var/devui-var';
 
-.devui-form__label {
+.#{$devui-prefix}-form__label {
   align-self: flex-start;
 
   &--vertical {
@@ -32,13 +32,13 @@
   }
 }
 
-.devui-form__label-span {
+.#{$devui-prefix}-form__label-span {
   display: inline-block;
   vertical-align: middle;
   color: $devui-text;
 }
 
-.devui-form__label--required {
+.#{$devui-prefix}-form__label--required {
   &::before {
     content: '*';
     color: red;
@@ -48,7 +48,7 @@
   }
 }
 
-.devui-form__label-help {
+.#{$devui-prefix}-form__label-help {
   position: relative;
   top: -0.1em;
   display: inline-block;
