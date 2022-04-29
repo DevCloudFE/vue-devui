@@ -97,10 +97,12 @@ export function useFormItemValidate(props: FormItemProps, _rules: ComputedRef<Fo
   const onValidateSuccess = () => {
     validateState.value = 'success';
     validateMessage.value = '';
+    formContext.emit('validate', props.field, true, '');
   };
   const onValidateError = ({ errors }: ValidateFailure) => {
     validateState.value = 'error';
     validateMessage.value = errors?.[0]?.message || '';
+    formContext.emit('validate', props.field, false, validateMessage.value);
   };
 
   const execValidate = async (rules: RuleItem[]) => {
