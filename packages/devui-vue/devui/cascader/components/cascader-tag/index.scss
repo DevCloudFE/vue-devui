@@ -1,6 +1,6 @@
 @import '../../../styles-var/devui-var.scss';
 
-.devui-cascader-tag {
+.#{$devui-prefix}-cascader-tag {
   margin: 2px 4px 2px 0;
   display: inline-block;
   position: relative;

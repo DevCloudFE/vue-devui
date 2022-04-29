@@ -1,4 +1,6 @@
-.devui-statistic {
+@import '../../styles-var/devui-var';
+
+.#{$devui-prefix}-statistic {
   box-sizing: border-box;
   margin: 0;
   padding: 0;

@@ -1,6 +1,6 @@
 @import '../../../styles-var/devui-var.scss';
 
-.devui-splitter-bar {
+.#{$devui-prefix}-splitter-bar {
   background-color: $devui-dividing-line;
   display: flex;
   position: relative;
@@ -9,7 +9,7 @@
   flex-grow: 0;
   flex-shrink: 0;
 
-  .devui-collapse {
+  .#{$devui-prefix}-collapse {
     background-color: $devui-dividing-line;
     position: absolute;
     z-index: 15;
@@ -31,7 +31,7 @@
   }
 
   &-horizontal {
-    .devui-collapse {
+    .#{$devui-prefix}-collapse {
       width: 12px;
       height: 30px;
 
@@ -115,7 +115,7 @@
   }
 
   &-vertical {
-    .devui-collapse {
+    .#{$devui-prefix}-collapse {
       height: 12px;
       width: 30px;
 

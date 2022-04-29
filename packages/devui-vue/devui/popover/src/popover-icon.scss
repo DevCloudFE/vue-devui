@@ -1,11 +1,11 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-popover-icon {
+.#{$devui-prefix}-popover-icon {
   width: 16px;
   height: 16px;
   margin-right: 8px;
 
-  .devui-icon.devui-icon-success > g {
+  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-success > g {
     & > path {
       fill: $devui-success;
     }
@@ -16,7 +16,7 @@
     }
   }
 
-  .devui-icon.devui-icon-warning > g {
+  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-warning > g {
     & > path {
       fill: $devui-warning;
     }
@@ -26,7 +26,7 @@
     }
   }
 
-  .devui-icon.devui-icon-info > g {
+  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-info > g {
     & > g {
       fill: $devui-info;
     }
@@ -36,7 +36,7 @@
     }
   }
 
-  .devui-icon.devui-icon-error > g {
+  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-error > g {
     & > path {
       fill: $devui-danger;
     }

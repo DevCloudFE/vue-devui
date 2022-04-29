@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-list {
+.#{$devui-prefix}-list {
   padding-bottom: 4px;
   border-radius: $devui-border-radius;
   box-sizing: border-box;

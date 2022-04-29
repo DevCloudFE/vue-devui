@@ -6,7 +6,7 @@ $devui-transfer-header-height: 40px;
 $devui-transfer-header-border-line-color:#dfe1e6;
 $devui-transfer-body-list-item-height: 32px;
 
-.devui-transfer {
+.#{$devui-prefix}-transfer {
   display: flex;
 
   &-panel {
@@ -43,8 +43,8 @@ $devui-transfer-body-list-item-height: 32px;
         width: 100%;
         padding: 7px 20px;
 
-        .devui-search,
-        .devui-input__wrap {
+        .#{$devui-prefix}-search,
+        .#{$devui-prefix}-input__wrap {
           width: 100%;
         }
       }
@@ -83,7 +83,7 @@ $devui-transfer-body-list-item-height: 32px;
           }
         }
 
-        &-drag:hover .devui-transfer-panel-body-list-drag__icon {
+        &-drag:hover .#{$devui-prefix}-transfer-panel-body-list-drag__icon {
           visibility: visible;
         }
 
@@ -117,8 +117,8 @@ $devui-transfer-body-list-item-height: 32px;
       &-group {
         width: 36px;
 
-        &-left .devui-btn,
-        &-right .devui-btn {
+        &-left .#{$devui-prefix}-btn,
+        &-right .#{$devui-prefix}-btn {
           width: 36px;
           height: 36px;
           border-radius: 50%;
@@ -142,10 +142,10 @@ $devui-transfer-body-list-item-height: 32px;
   }
 }
 
-.devui-transfer–drag-over-top {
+.#{$devui-prefix}-transfer–drag-over-top {
   border-top-color: $devui-brand-active;
 }
 
-.devui-transfer–drag-over-bottom {
+.#{$devui-prefix}-transfer–drag-over-bottom {
   border-bottom-color: $devui-brand-active;
 }

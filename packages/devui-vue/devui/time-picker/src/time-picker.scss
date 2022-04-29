@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-time-picker {
+.#{$devui-prefix}-time-picker {
   width: 200px;
   box-sizing: border-box;
   display: flex;

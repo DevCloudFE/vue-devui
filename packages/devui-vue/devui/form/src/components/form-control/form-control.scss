@@ -1,6 +1,6 @@
 @import '../../../../styles-var/devui-var.scss';
 
-.devui-form__control {
+.#{$devui-prefix}-form__control {
   flex: 1 1 auto;
   position: relative;
   width: 100%;
@@ -9,19 +9,19 @@
     margin-left: 16px;
   }
 
-  .devui-star {
+  .#{$devui-prefix}-star {
     color: red;
   }
 
-  .devui-form__control-container {
+  .#{$devui-prefix}-form__control-container {
     position: relative;
 
     // 临时解决popover影响输入控件宽度的问题
-    .devui-popover-reference {
+    .#{$devui-prefix}-popover-reference {
       width: 100%;
     }
 
-    .devui-form__control-feedback {
+    .#{$devui-prefix}-form__control-feedback {
       position: absolute;
       top: 50%;
       right: 0;
@@ -36,20 +36,20 @@
     }
   }
 
-  .devui-form__control-container--horizontal {
+  .#{$devui-prefix}-form__control-container--horizontal {
     display: flex;
     width: 100%;
 
-    .devui-validate-tip {
+    .#{$devui-prefix}-validate-tip {
       margin: 0;
     }
   }
 
-  .devui-form__control-content {
+  .#{$devui-prefix}-form__control-content {
     width: 100%;
   }
 
-  .devui-form__control-container--has-feedback {
+  .#{$devui-prefix}-form__control-container--has-feedback {
     display: flex;
     align-items: center;
 
@@ -58,7 +58,7 @@
     }
   }
 
-  .devui-form__control-container--feedback-error {
+  .#{$devui-prefix}-form__control-container--feedback-error {
     border: 1px solid #f66f6a;
     border-radius: 2px;
 
@@ -75,12 +75,12 @@
       }
     }
 
-    .devui-select-arrow {
+    .#{$devui-prefix}-select-arrow {
       right: 24px !important;
     }
   }
 
-  .devui-form__control-info {
+  .#{$devui-prefix}-form__control-info {
     line-height: 1;
 
     .error-message {
@@ -91,7 +91,7 @@
       color: $devui-danger;
     }
 
-    .devui-form__control-extra {
+    .#{$devui-prefix}-form__control-extra {
       font-size: $devui-font-size;
       color: $devui-aide-text;
       min-height: 20px;

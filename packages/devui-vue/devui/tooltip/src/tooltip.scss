@@ -1,10 +1,10 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-tooltip-reference {
+.#{$devui-prefix}-tooltip-reference {
   display: inline-block;
 }
 
-.devui-tooltip {
+.#{$devui-prefix}-tooltip {
   max-width: 200px;
   min-height: 26px;
   padding: 4px 16px;
@@ -31,7 +31,7 @@
   z-index: $devui-z-index-pop-up;
 }
 
-.devui-tooltip-fade {
+.#{$devui-prefix}-tooltip-fade {
   &-bottom,
   &-top {
     &-enter-from,

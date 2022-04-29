@@ -1,4 +1,4 @@
-@import '../../../../style/devui';
+@import '../../../../styles-var/devui-var';
 
 $panel-width: 230px;
 $panel-height: 210px;
@@ -11,7 +11,7 @@ $panel-cell-active-color: #f1f1f1;
 $panel-cell-active-hover-bg: #0088dd;
 $panel-cell-active-hover-color: #ffffff;
 
-.devui-calendar-panel {
+.#{$devui-prefix}-calendar-panel {
   width: $panel-width;
   padding: $panel-padding;
   box-sizing: border-box;

@@ -1,4 +1,6 @@
-.devui-splitter-pane {
+@import '../../../styles-var/devui-var';
+
+.#{$devui-prefix}-splitter-pane {
   position: relative;
   flex: 1 1 auto;
   display: block;
