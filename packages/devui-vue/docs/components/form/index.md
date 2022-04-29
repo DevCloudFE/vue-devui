@@ -451,8 +451,8 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="formRef" layout="vertical" :data="formData" :rules="rules">
-    <d-form-item field="username" :rules="[{ required: true, message: '用户名不能为空', trigger: 'blur' }]">
+  <d-form ref="formRef" layout="vertical" :data="formData" :rules="rules" show-feedback>
+    <d-form-item field="username" :rules="[{ required: true, message: '用户名不能为空', trigger: 'blur' }]" :show-feedback="false">
       <d-form-label>用户名</d-form-label>
       <d-form-control extra-info="some extra info">
         <d-input v-model="formData.username" />
@@ -538,6 +538,7 @@ export default defineComponent({
 | message-type            | [MessageType](#messagetype) | 'popover'          | 可选，设置校验信息的提示方式                                       |                       |
 | pop-position            | [PopPosition](#popposition) | ['right','bottom'] | 可选，消息显示为 popover 时，popover 弹出方向                      |                       |
 | validate-on-rule-change | `boolean`                   | false              | 可选，是否在 rules 改变后立即触发一次验证                          |                       |
+| show-feedback           | `boolean`                   | false              | 可选，是否展示校验结果反馈图标                                     |                       |
 
 ### Form 事件
 
@@ -562,13 +563,14 @@ export default defineComponent({
 
 ### FormItem 参数
 
-| 参数名       | 类型                                            | 默认值 | 说明                                                                       | 跳转 demo             |
-| :----------- | :---------------------------------------------- | :----- | :------------------------------------------------------------------------- | :-------------------- |
-| field        | `string`                                        | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性                       | [基础用法](#基础用法) |
-| required     | `boolean`                                       | false  | 可选，表单选项是否必填                                                     |                       |
-| rules        | [FormRuleItem \| FormRuleItem[]](#formruleitem) | --     | 可选，表单项的校验规则                                                     | [表单校验](#表单校验) |
-| message-type | [MessageType](#messagetype)                     | --     | 可选，用法同父组件`message-type`参数，优先级高于父组件，默认继承父组件的值 |                       |
-| pop-position | [PopPosition](#popposition)                     | --     | 可选，用法同父组件`pop-position`参数，优先级高于父组件，默认继承父组件的值 |                       |
+| 参数名        | 类型                                            | 默认值 | 说明                                                                       | 跳转 demo             |
+| :------------ | :---------------------------------------------- | :----- | :------------------------------------------------------------------------- | :-------------------- |
+| field         | `string`                                        | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性                       | [基础用法](#基础用法) |
+| required      | `boolean`                                       | false  | 可选，表单选项是否必填                                                     |                       |
+| rules         | [FormRuleItem \| FormRuleItem[]](#formruleitem) | --     | 可选，表单项的校验规则                                                     | [表单校验](#表单校验) |
+| message-type  | [MessageType](#messagetype)                     | --     | 可选，用法同父组件`message-type`参数，优先级高于父组件，默认继承父组件的值 |                       |
+| pop-position  | [PopPosition](#popposition)                     | --     | 可选，用法同父组件`pop-position`参数，优先级高于父组件，默认继承父组件的值 |                       |
+| show-feedback | `boolean`                                       | --     | 可选，是否展示校验结果反馈图标，优先级高于父组件，默认继承父组件的值       |                       |
 
 ### FormItem 方法
 

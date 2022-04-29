@@ -21,27 +21,59 @@
       width: 100%;
     }
 
-    .devui-form__control-feedback {
+    &--horizontal {
+      display: flex;
+      width: 100%;
+
+      .devui-validate-tip {
+        margin: 0;
+      }
+    }
+
+    .devui-form__feedback-icon {
       position: absolute;
       top: 50%;
       right: 0;
       z-index: 1;
       width: 32px;
       height: 16px;
-      margin-top: -7px;
-      line-height: 16px;
       text-align: center;
       visibility: visible;
       pointer-events: none;
-    }
-  }
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  .devui-form__control-container--horizontal {
-    display: flex;
-    width: 100%;
+      &--error {
+        svg circle {
+          fill: $devui-danger;
+        }
 
-    .devui-validate-tip {
-      margin: 0;
+        svg polygon {
+          fill: $devui-base-bg;
+        }
+      }
+
+      &--success {
+        svg circle {
+          fill: $devui-success;
+        }
+
+        svg polygon {
+          fill: $devui-base-bg;
+        }
+      }
+
+      &--pending {
+        svg {
+          animation: loading-keyframes 1s infinite linear;
+        }
+
+        svg path {
+          fill: $devui-brand;
+        }
+      }
     }
   }
 
@@ -98,5 +130,15 @@
       line-height: 1.5;
       text-align: justify;
     }
+  }
+}
+
+@keyframes loading-keyframes {
+  from {
+    transform: rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateZ(360deg);
   }
 }

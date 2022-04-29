@@ -10,15 +10,15 @@ export function useFormControl(props: FormControlProps): UseFormControl {
   const { feedbackStatus } = toRefs(props);
 
   const controlClasses = computed(() => ({
-    [`${ns.e('control')}`]: true,
-    [`${ns.em('control', 'horizontal')}`]: formContext.layout === 'horizontal',
+    [ns.e('control')]: true,
+    [ns.em('control', 'horizontal')]: formContext.layout === 'horizontal',
   }));
 
   const controlContainerClasses = computed(() => ({
-    [`${ns.e('control-container')}`]: true,
-    [`${ns.em('control-container', 'horizontal')}`]: formContext.layout === 'horizontal',
-    [`${ns.em('control-container', 'has-feedback')}`]: Boolean(feedbackStatus.value),
-    [`${ns.em('control-container', 'feedback-error')}`]: Boolean(feedbackStatus.value === 'error'),
+    [ns.e('control-container')]: true,
+    [ns.em('control-container', 'horizontal')]: formContext.layout === 'horizontal',
+    [ns.em('control-container', 'has-feedback')]: Boolean(feedbackStatus?.value),
+    [ns.em('control-container', 'feedback-error')]: Boolean(feedbackStatus?.value === 'error'),
   }));
 
   return { controlClasses, controlContainerClasses };
@@ -26,10 +26,12 @@ export function useFormControl(props: FormControlProps): UseFormControl {
 
 export function useFormControlValidate() {
   const formItemContext = inject(FORM_ITEM_TOKEN) as FormItemContext;
+  const feedbackStatus = computed(() => formItemContext.validateState);
+  const showFeedback = computed(() => formItemContext.showFeedback && Boolean(formItemContext.validateState));
   const showPopover = computed(() => formItemContext.messageType === 'popover' && formItemContext.validateState === 'error');
   const showMessage = computed(() => formItemContext.messageType === 'text' && formItemContext.validateState === 'error');
   const errorMessage = computed(() => formItemContext.validateMessage);
   const popPosition = computed(() => formItemContext.popPosition);
 
-  return { showPopover, showMessage, errorMessage, popPosition };
+  return { feedbackStatus, showFeedback, showPopover, showMessage, errorMessage, popPosition };
 }
