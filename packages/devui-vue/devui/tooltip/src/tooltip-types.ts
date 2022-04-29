@@ -33,4 +33,6 @@ export type UseTooltipFn = {
   positionArr: ComputedRef<BasePlacement[]>;
   overlayStyles: ComputedRef<Record<string, string>>;
   onPositionChange: (pos: BasePlacement) => void;
+  onMouseenter: () => void;
+  onMouseleave: () => void;
 };

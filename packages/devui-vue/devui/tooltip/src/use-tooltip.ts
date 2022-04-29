@@ -43,5 +43,5 @@ export function useTooltip(origin: Ref, props: TooltipProps): UseTooltipFn {
     origin.value.addEventListener('mouseleave', onMouseleave);
   });
 
-  return { visible, placement, positionArr, overlayStyles, onPositionChange };
+  return { visible, placement, positionArr, overlayStyles, onPositionChange, onMouseenter, onMouseleave };
 }
