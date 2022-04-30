@@ -26,10 +26,6 @@ export const formItemProps = {
     type: String,
     default: '',
   },
-  dHasFeedback: {
-    type: Boolean,
-    default: false,
-  },
   required: {
     type: Boolean,
     default: false,
@@ -42,6 +38,10 @@ export const formItemProps = {
   },
   rules: {
     type: [Object, Array] as PropType<[FormRuleItem, Array<FormRuleItem>]>,
+  },
+  showFeedback: {
+    type: Boolean,
+    default: undefined,
   },
 };
 
