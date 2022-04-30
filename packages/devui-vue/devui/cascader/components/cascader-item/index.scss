@@ -1,9 +1,8 @@
 @import '../../../style/mixins/flex';
-@import '../../../style/theme/color';
-@import '../../../style/core/font';
+@import '../../../styles-var/devui-var.scss';
 
-.devui-cascader-li {
-  &.devui-dropdown-item {
+.#{$devui-prefix}-cascader-li {
+  &.#{$devui-prefix}-dropdown-item {
     height: 32px;
     padding: 8px 12px;
     color: $devui-text;
@@ -30,7 +29,7 @@
     font-size: $devui-font-size;
   }
 
-  &.devui-leaf-active {
+  &.#{$devui-prefix}-leaf-active {
     background: $devui-list-item-hover-bg;
 
     span {

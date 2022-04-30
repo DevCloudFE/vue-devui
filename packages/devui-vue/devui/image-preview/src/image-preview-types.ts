@@ -1,36 +1,36 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue';
 
 export const imagePreviewProps = {
   url: {
     type: String,
     default: '',
-    required: true
+    required: true,
   },
   previewUrlList: {
     type: Array as PropType<string[]>,
     default: () => [],
-    required: true
+    required: true,
   },
   zIndex: {
     type: Number,
-    required: false
+    required: false,
   },
   backDropZIndex: {
     type: Number,
-    required: false
-  }
-} as const
+    required: false,
+  },
+} as const;
 
 export interface BindingTypes {
   value: {
-    custom?: any
-    disableDefault?: boolean
-    zIndex?: number
-    backDropZIndex?: number
-  }
-  [key: string]: any
+    custom?: Record<string, unknown>;
+    disableDefault?: boolean;
+    zIndex?: number;
+    backDropZIndex?: number;
+  };
+  [key: string]: unknown;
 }
 export interface UpdateBindingTypes extends BindingTypes {
-  oldValue: BindingTypes['value']
+  oldValue: BindingTypes['value'];
 }
-export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>
+export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>;

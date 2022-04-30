@@ -16,5 +16,5 @@ const OpenIcon = () => {
       </g>
     </svg>
   )
-}
-export default OpenIcon
+};
+export default OpenIcon;

@@ -1,120 +1,181 @@
-import { Ref, ref, watch } from 'vue';
-import { getElement } from '../../shared/util/dom';
-import { CloseScopeArea, TriggerType } from './dropdown-types';
+import { watch, onMounted, onUnmounted, toRefs, computed, ref } from 'vue';
+import type { Ref } from 'vue';
+import { getElement } from '../../shared/utils/dom';
+import { UseDropdownProps, EmitEvent, DropdownProps, UseOverlayFn } from './dropdown-types';
 
-function subscribeEvent<E = Event>(dom: Element | Document, type: string, callback: (event: E) => void) {
-  dom?.addEventListener(type, callback as any);
+const dropdownMap = new Map();
+
+function subscribeEvent(dom: Element | Document, type: string, callback: (event: any) => void) {
+  dom?.addEventListener(type, callback);
   return () => {
-    dom?.removeEventListener(type, callback as any);
-  }
+    dom?.removeEventListener(type, callback);
+  };
 }
 
-type ReadonlyRef<T> = Readonly<Ref<T>>;
-
-interface UseDropdownProps {
-  visible: Ref<boolean>
-  trigger: ReadonlyRef<TriggerType>
-  origin: ReadonlyRef<any>
-  closeScope: ReadonlyRef<CloseScopeArea>
-  closeOnMouseLeaveMenu: ReadonlyRef<boolean>
-}
-
-interface UseDropdownResult {
-  dropdownEl: Ref<HTMLElement>
-}
-
-export const useDropdown = ({
-  visible,
-  trigger,
-  origin,
-  closeScope,
-  closeOnMouseLeaveMenu
-}: UseDropdownProps): UseDropdownResult => {
-  const dropdownElRef = ref<HTMLElement>();
-
-  const closeByScope = () => {
-    if (closeScope.value === 'none') {
+export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit }: UseDropdownProps): void => {
+  let overlayEnter = false;
+  let originEnter = false;
+  const { trigger, closeScope, closeOnMouseLeaveMenu } = toRefs(props);
+  const toggle = (status: boolean) => {
+    isOpen.value = status;
+    emit('toggle', isOpen.value);
+  };
+  const handleLeave = async (elementType: 'origin' | 'dropdown', closeAll?: boolean) => {
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    if ((elementType === 'origin' && overlayEnter) || (elementType === 'dropdown' && originEnter)) {
       return;
     }
-    visible.value = false;
-  }
-  watch(
-    [trigger, origin, dropdownElRef],
-    ([trigger, origin, dropdownEl], ov, onInvalidate) => {
-      const originEl = getElement(origin);
-      if (!originEl || !dropdownEl) {
-        return;
-      }
-      const subscriptions = [
-        subscribeEvent(dropdownEl, 'click', () => {
-          if (closeScope.value === 'all') {
-            visible.value = false;
-          }
-        }),
-      ];
-
-      if (trigger === 'click') {
-        // 点击触发
-        subscriptions.push(
-          subscribeEvent(originEl, 'click', () => visible.value = !visible.value),
-          subscribeEvent(document, 'click', (e) => {
-            if (!visible.value) {
-              return;
-            }
-            const target = e.target as HTMLElement;
-            const isContain = originEl.contains(target) || dropdownEl.contains(target);
-            if (isContain) {
-              return;
-            }
-            closeByScope();
-          }),
-          subscribeEvent(dropdownEl, 'mouseleave', () => {
-            // 判断鼠标是否已经进入 origin
-            if (closeOnMouseLeaveMenu.value) {
-              visible.value = false;
-            }
-          })
-        );
-      } else if (trigger === 'hover') {
-        // 鼠标悬浮触发
-        let overlayEnter = false;
-        let originEnter = false;
-        const handleLeave = async (elementType: 'origin' | 'dropdown') => {
-          // 由于关联元素和 dropdown 元素间有间距，
-          // 悬浮时在两者之间移动可能会导致多次关闭打开，
-          // 所以需要给关闭触发节流。
-          await new Promise((resolve) => setTimeout(resolve, 50));
-          if ((elementType === 'origin' && overlayEnter) || (elementType === 'dropdown' && originEnter)) {
+    if (closeAll) {
+      [...dropdownMap.values()].reverse().forEach((item) => {
+        setTimeout(() => {
+          item.toggle?.();
+        }, 0);
+      });
+    }
+    toggle(false);
+  };
+  watch([trigger, origin, dropdownRef], ([triggerVal, originVal, dropdownEl], ov, onInvalidate) => {
+    const originEl = getElement(originVal);
+    const subscriptions = [];
+    setTimeout(() => {
+      subscriptions.push(
+        subscribeEvent(document, 'click', (e: Event) => {
+          const dropdownValues = [...dropdownMap.values()];
+          if (
+            !isOpen.value ||
+            closeScope.value === 'none' ||
+            (dropdownEl?.contains(e.target) && closeScope.value === 'blank') ||
+            (dropdownValues.some((item) => item.toggleEl?.contains(e.target)) &&
+              dropdownValues.some((item) => item.menuEl?.contains(e.target)))
+          ) {
             return;
           }
-          closeByScope();
-        };
-        subscriptions.push(
-          subscribeEvent(originEl, 'mouseenter', () => {
-            originEnter = true;
-            visible.value = true;
-          }),
-          subscribeEvent(originEl, 'mouseleave', () => {
-            originEnter = false;
-            // 判断鼠标是否已经进入 overlay
-            if (!closeOnMouseLeaveMenu.value) {
-              handleLeave('origin');
-            }
-          }),
-          subscribeEvent(dropdownEl, 'mouseenter', () => {
-            overlayEnter = true;
-            visible.value = true;
-          }),
-          subscribeEvent(dropdownEl, 'mouseleave', () => {
-            overlayEnter = false;
-            // 判断鼠标是否已经进入 origin
-            handleLeave('dropdown');
-          })
-        );
-      }
-      onInvalidate(() => subscriptions.forEach(v => v()));
+          [...dropdownMap.values()].reverse().forEach((item) => {
+            setTimeout(() => {
+              if (!item.toggleEl?.contains(e.target)) {
+                item.toggle?.();
+              }
+            }, 0);
+          });
+          overlayEnter = false;
+        })
+      );
+    }, 0);
+    if (triggerVal === 'click') {
+      subscriptions.push(
+        subscribeEvent(originEl, 'click', () => toggle(!isOpen.value)),
+        subscribeEvent(dropdownEl, 'mouseleave', (e: MouseEvent) => {
+          if (closeOnMouseLeaveMenu.value && !dropdownMap.get(id).child?.contains(e.relatedTarget)) {
+            handleLeave('dropdown', true);
+          }
+        })
+      );
+    } else if (triggerVal === 'hover') {
+      subscriptions.push(
+        subscribeEvent(originEl, 'mouseenter', () => {
+          originEnter = true;
+          toggle(true);
+        }),
+        subscribeEvent(originEl, 'mouseleave', () => {
+          originEnter = false;
+          handleLeave('origin');
+        }),
+        subscribeEvent(dropdownEl, 'mouseenter', () => {
+          overlayEnter = true;
+          isOpen.value = true;
+        }),
+        subscribeEvent(dropdownEl, 'mouseleave', (e: MouseEvent) => {
+          overlayEnter = false;
+          if (e.relatedTarget && (originEl?.contains(e.relatedTarget) || dropdownMap.get(id).child?.contains(e.relatedTarget))) {
+            return;
+          }
+          handleLeave('dropdown', true);
+        })
+      );
     }
-  );
+    onInvalidate(() => subscriptions.forEach((v) => v()));
+  });
+};
 
-  return { dropdownEl: dropdownElRef };
+export function useDropdown(
+  id: string,
+  visible: Ref<boolean>,
+  isOpen: Ref<boolean>,
+  origin: Ref<HTMLElement>,
+  dropdownRef: Ref<HTMLElement>,
+  popDirection: Ref<string>,
+  emit: EmitEvent
+): void {
+  const calcPopDirection = (dropdownEl: HTMLElement) => {
+    const elementHeight = dropdownEl.offsetHeight;
+    const bottomDistance = window.innerHeight - origin.value.getBoundingClientRect().bottom;
+    const isBottomEnough = bottomDistance >= elementHeight;
+    if (!isBottomEnough) {
+      popDirection.value = 'top';
+    } else {
+      popDirection.value = 'bottom';
+    }
+  };
+
+  watch(
+    visible,
+    (newVal, oldVal) => {
+      if (oldVal === undefined) {
+        return;
+      }
+      isOpen.value = newVal;
+      emit('toggle', isOpen.value);
+    },
+    { immediate: true }
+  );
+  watch([isOpen, dropdownRef], ([isOpenVal, dropdownEl]) => {
+    if (isOpenVal) {
+      dropdownMap.set(id, {
+        ...dropdownMap.get(id),
+        menuEl: dropdownEl,
+        toggle: () => {
+          isOpen.value = false;
+          emit('toggle', isOpen.value);
+        },
+      });
+      for (const value of dropdownMap.values()) {
+        if (value.menuEl?.contains(origin.value)) {
+          value.child = dropdownEl;
+        }
+      }
+    }
+    if (dropdownEl) {
+      calcPopDirection(dropdownEl);
+    }
+  });
+  onMounted(() => {
+    dropdownMap.set(id, { toggleEl: origin.value });
+  });
+  onUnmounted(() => {
+    dropdownMap.delete(id);
+  });
+}
+
+export function useOverlayProps(props: DropdownProps, currentPosition: Ref<string>, isOpen: Ref<boolean>): UseOverlayFn {
+  const { showAnimation, overlayClass, destroyOnHide } = toRefs(props);
+  const overlayModelValue = ref<boolean>(false);
+  const overlayShowValue = ref<boolean>(false);
+  const styles = computed(() => ({
+    transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+  }));
+  const classes = computed(() => ({
+    'fade-in-bottom': showAnimation.value && isOpen.value && currentPosition.value === 'bottom',
+    'fade-in-top': showAnimation.value && isOpen.value && currentPosition.value === 'top',
+    [`${overlayClass.value}`]: true,
+  }));
+  const handlePositionChange = (pos: string) => {
+    currentPosition.value = pos.includes('top') || pos.includes('end') ? 'top' : 'bottom';
+  };
+
+  watch(isOpen, (isOpenVal) => {
+    overlayModelValue.value = destroyOnHide.value ? isOpenVal : true;
+    overlayShowValue.value = isOpenVal;
+  });
+
+  return { overlayModelValue, overlayShowValue, styles, classes, handlePositionChange };
 }

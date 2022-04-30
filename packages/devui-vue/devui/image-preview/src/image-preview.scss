@@ -1,9 +1,6 @@
-@import '../../style/theme/_z-index';
-@import '../../style/theme/_shadow';
-@import '../../style/theme/_color';
-@import '../../style/theme/_corner';
+@import '../../styles-var/devui-var.scss';
 
-.devui-image-preview {
+.#{$devui-prefix}-image-preview {
   position: fixed;
   left: 0;
   top: 0;
@@ -97,7 +94,7 @@
       color: $devui-text;
     }
 
-    .devui-image-preview-index {
+    .#{$devui-prefix}-image-preview-index {
       display: inline-flex;
       width: 100px;
       justify-content: center;
@@ -111,7 +108,7 @@
   }
 }
 
-.devui-image-preview-bg {
+.#{$devui-prefix}-image-preview-bg {
   position: fixed;
   left: 0;
   top: 0;

@@ -1,30 +1,41 @@
-import { ref, Ref, watch } from 'vue'
+import { Ref } from 'vue';
+import { IInnerTreeNode, IUseCore } from '../tree-types';
 
-export default function useToggle(data: Ref<unknown>): any {
-  const openedTree = (tree) => {
-    return tree.reduce((acc, item) => (
-      item.open
-        ? acc.concat(item, openedTree(item.children))
-        : acc.concat(item)
-    ), [])
-  }
+export interface IUseToggle {
+  expandNode: (node: IInnerTreeNode) => void;
+  collapseNode: (node: IInnerTreeNode) => void;
+  toggleNode: (node: IInnerTreeNode) => void;
+}
 
-  const openedData = ref(openedTree(data.value))
+export default function () {
+  return function useToggle(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseToggle {
+    const { getNode, setNodeValue } = core;
 
-  watch(
-    () => data.value,
-    (d) => openedData.value = openedTree(d),
-    { deep: true }
-  )
-  const toggle = (target, item) => {
-    target.stopPropagation()
-    if (!item.children) return
-    item.open = !item.open
-    openedData.value = openedTree(data.value)
-  }
+    const expandNode = (node: IInnerTreeNode): void => {
+      if (node.disableToggle) { return; }
 
-  return {
-    openedData,
-    toggle,
-  }
+      setNodeValue(node, 'expanded', true);
+    };
+
+    const collapseNode = (node: IInnerTreeNode): void => {
+      if (node.disableToggle) { return; }
+      setNodeValue(node, 'expanded', false);
+    };
+
+    const toggleNode = (node: IInnerTreeNode): void => {
+      if (node.disableToggle) { return; }
+
+      if (getNode(node).expanded) {
+        setNodeValue(node, 'expanded', false);
+      } else {
+        setNodeValue(node, 'expanded', true);
+      }
+    };
+
+    return {
+      expandNode,
+      collapseNode,
+      toggleNode,
+    };
+  };
 }

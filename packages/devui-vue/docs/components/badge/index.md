@@ -70,28 +70,27 @@
   <ul class="badge-list">
     <li class="badge-list-item">
       <span>系统消息</span>
-      <d-badge status="danger" :count="50"></d-badge>
+      <d-badge status="common" :count="50"></d-badge>
     </li>
     <li class="badge-list-item">
       <span>个人消息</span>
-      <d-badge status="info" :count="500"></d-badge>
+      <d-badge status="common" :count="500"></d-badge>
     </li>
   </ul>
 </template>
 
 <style>
 .badge-list {
-  width: 180px;
+  width: 200px;
   font-size: 14px;
+  background-color: var(--devui-base-bg, #fff);
+  box-shadow: var(--devui-shadow-length-base, 0 1px 4px 0) var(--devui-light-shadow, rgba(37, 43, 58, 0.2));
 }
 .badge-list-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 20px;
-  margin-bottom: 8px;
-  border-radius: 10px;
-  background-color: var(--devui-global-bg, #f3f6f8);
+  padding: 8px 16px;
 }
 </style>
 ```
@@ -163,27 +162,29 @@
 
 :::
 
-### d-badge 参数
+### Badge 参数
 
-| 参数       | 类型                | 默认        | 说明                                                                                                                   |
-| ---------- | ------------------- | ----------- | :--------------------------------------------------------------------------------------------------------------------- |
-| count      | `Number`            | --          | 可选，设置基本徽章和计数徽章中显示的数目                                                                               |
-| max-count  | `Number`            | 99          | 可选，设置基本徽章和计数徽章最大可显示数目，当 count > `max-count` 时显示 `max-count+`                                 |
-| show-dot   | `Boolean`           | false       | 可选，true 时为点状徽章(有包裹)或状态徽章(无包裹)，false 时为基本徽章(有包裹)或计数徽章(无包裹)                        |
-| status     | `BadgeStatusType`   | --          | 可选，状态色 danger\| warning \| waiting \| success \| info                                                            |
-| position   | `BadgePositionType` | 'top-right' | 可选，徽标位置 top-left\| top-right \| bottom-left \| bottom-right                                                     |
-| bg-color   | `String`            | --          | 可选，自定义徽标色，此时 status 参数设置的徽章状态色失效                                                               |
-| text-color | `String`            | --          | 可选, 可自定义徽标文字颜色                                                                                             |
-| offset     | `[number, number]`  | --          | 可选，有包裹时徽标位置偏移量，格式为[x,y]，单位为 px。x 为相对 right 或 left 的偏移量，y 为相对 top 或 bottom 的偏移量 |
+| 参数名     | 类型                                    | 默认        | 说明                                                                                                                   |
+| :--------- | :-------------------------------------- | :---------- | :--------------------------------------------------------------------------------------------------------------------- |
+| count      | `number`                                | --          | 可选，设置基本徽章和计数徽章中显示的数目                                                                               |
+| max-count  | `number`                                | 99          | 可选，设置基本徽章和计数徽章最大可显示数目，<br>当 count > `max-count` 时显示 `max-count+`                             |
+| show-dot   | `boolean`                               | false       | 可选，true 时为点状徽章(有包裹)或状态徽章(无包裹)，<br>false 时为基本徽章(有包裹)或计数徽章(无包裹)                    |
+| status     | [BadgeStatusType](#badgestatustype)     | 'info'   | 可选，状态色                                                                                                           |
+| position   | [BadgePositionType](#badgepositiontype) | 'top-right' | 可选，徽标位置                                                                                                         |
+| bg-color   | `string`                                | --          | 可选，自定义徽标色，此时 status 参数设置的徽章状态色失效                                                               |
+| text-color | `string`                                | --          | 可选, 可自定义徽标文字颜色                                                                                             |
+| offset     | `[number, number]`                      | --          | 可选，有包裹时徽标位置偏移量，格式为[x,y]，单位为 px。<br>x 为相对 right 或 left 的偏移量，y 为相对 top 或 bottom 的偏移量 |
 
-### BadgeStatusType 类型
+### Badge 类型定义
 
-```typescript
-type BadgeStatusType = 'danger' | 'warning' | 'waiting' | 'success' | 'info';
+#### BadgeStatusType
+
+```ts
+type BadgeStatusType = 'danger' | 'warning' | 'waiting' | 'success' | 'info' | 'common';
 ```
 
-### BadgePositionType 类型
+#### BadgePositionType
 
-```typescript
+```ts
 type BadgePositionType = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 ```

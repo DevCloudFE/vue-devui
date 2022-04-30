@@ -1,8 +1,8 @@
 @import '../../style/mixins/size';
 @import '../../style/mixins/flex';
-@import '../../style/theme/color';
+@import '../../styles-var/devui-var.scss';
 
-.devui-cascader {
+.#{$devui-prefix}-cascader {
   @include flex(flex-start);
 
   position: relative;
@@ -35,7 +35,7 @@
     padding-right: 16px;
   }
 
-  .devui-drop-menu-wrapper {
+  .#{$devui-prefix}-drop-menu-wrapper {
     display: block;
     margin: 4px 0;
     font-size: 0;
@@ -44,11 +44,11 @@
   }
 }
 
-.devui-drop-icon-animation {
+.#{$devui-prefix}-drop-icon-animation {
   transition: transform 0.2s linear;
 }
 
-.devui-drop-menu-animation {
+.#{$devui-prefix}-drop-menu-animation {
   transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   // opacity: 0;
   // position: absolute;
@@ -57,19 +57,19 @@
   // transform: scaleY(0.7) translateY(-5px);
   margin-top: 1px;
 
-  .devui-dropdown-menu {
+  .#{$devui-prefix}-dropdown-menu {
     width: auto;
     padding-bottom: 0;
     @include flex('flex-start');
   }
 }
 
-.devui-dropdown__open {
-  .devui-cascader__icon {
+.#{$devui-prefix}-dropdown__open {
+  .#{$devui-prefix}-cascader__icon {
     transform: rotate(180deg);
   }
 
-  .devui-drop-menu-animation {
+  .#{$devui-prefix}-drop-menu-animation {
     transform-origin: 0 0%;
     transform: scaleY(0.9999) translateY(0);
     opacity: 1;

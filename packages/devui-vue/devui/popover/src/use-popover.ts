@@ -1,7 +1,7 @@
 import { toRefs, ref, computed, watch, onUnmounted, onMounted } from 'vue';
 import type { Ref, ComputedRef } from 'vue';
 import { debounce } from 'lodash';
-import { PopoverProps } from './popover-types';
+import { PopoverProps, UsePopoverEvent } from './popover-types';
 
 const TransformOriginMap: Record<string, string> = {
   top: '50% calc(100% + 8px)',
@@ -14,7 +14,7 @@ export function usePopover(
   props: PopoverProps,
   visible: Ref<boolean>,
   placement: Ref<string>,
-  origin: Ref<HTMLElement>,
+  origin: Ref<HTMLElement | undefined>,
   popoverRef: Ref
 ): { overlayStyles: ComputedRef<Record<string, number | string>> } {
   const { trigger, isOpen } = toRefs(props);
@@ -24,7 +24,7 @@ export function usePopover(
   }));
 
   const onDocumentClick: (e: Event) => void = (e: Event) => {
-    if (!origin.value.contains(<HTMLElement>e.target) && !popoverRef.value.$el?.contains(e.target)) {
+    if (!origin.value?.contains(<HTMLElement>e.target) && !popoverRef.value.$el?.contains(e.target)) {
       visible.value = false;
     }
   };
@@ -47,11 +47,7 @@ export function usePopover(
   return { overlayStyles };
 }
 
-export function usePopoverEvent(
-  props: PopoverProps,
-  visible: Ref<boolean>,
-  origin: Ref
-): { placement: Ref<string>; handlePositionChange: (pos: string) => void } {
+export function usePopoverEvent(props: PopoverProps, visible: Ref<boolean>, origin: Ref): UsePopoverEvent {
   const { trigger, position, mouseEnterDelay, mouseLeaveDelay } = toRefs(props);
   const isClick: ComputedRef<boolean> = computed(() => trigger.value === 'click');
   const placement: Ref<string> = ref(position.value[0].split('-')[0]);
@@ -88,5 +84,5 @@ export function usePopoverEvent(
     }
   });
 
-  return { placement, handlePositionChange };
+  return { placement, handlePositionChange, onMouseenter, onMouseleave };
 }

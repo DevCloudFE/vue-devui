@@ -1,18 +1,14 @@
-@import '../../../style/theme/color';
-@import '../../../style/theme/corner';
-@import '../../../style/core/font';
+@import '../../../styles-var/devui-var.scss';
 
-.devui-tag {
+.#{$devui-prefix}-cascader-tag {
   margin: 2px 4px 2px 0;
   display: inline-block;
   position: relative;
-  display: flex;
   align-items: center;
   padding: 0 8px 0 8px;
   background-color: $devui-label-bg;
   border-radius: $devui-border-radius;
-  border-color: inherit;
-  border: 0 solid;
+  border: 0 solid inherit;
 
   span {
     min-height: 20px;

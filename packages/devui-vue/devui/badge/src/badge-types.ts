@@ -1,9 +1,9 @@
 import type { PropType, ExtractPropTypes } from 'vue';
 
-export type BadgeStatusType = 'danger' | 'warning' | 'waiting' | 'success' | 'info';
+export type BadgeStatusType = 'danger' | 'warning' | 'waiting' | 'success' | 'info' | 'common';
 export type BadgePositionType = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 
-const badgeStatusType = ['danger', 'warning', 'waiting', 'success', 'info'];
+const badgeStatusType = ['danger', 'warning', 'waiting', 'success', 'info', 'common'];
 const badgePositionType = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
 
 export const badgeProps = {
@@ -21,6 +21,7 @@ export const badgeProps = {
   status: {
     type: String as PropType<BadgeStatusType>,
     validator: (val: string): boolean => badgeStatusType.includes(val),
+    default: 'info'
   },
   position: {
     type: String as PropType<BadgePositionType>,

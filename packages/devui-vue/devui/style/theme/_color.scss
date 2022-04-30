@@ -37,8 +37,8 @@ $devui-success-active-focus: var(--devui-success, #50d4ab);
 $devui-info: var(--devui-info, #5e7ce0);                             // 通知、一般提示、执行中
 $devui-initial: var(--devui-initial, #e9edfa);                       // 初始化、未执行
 $devui-unavailable: var(--devui-unavailable, #f5f5f6);               // 不可用、禁用状态
-$devui-shadow: var(--devui-shadow, rgba(0, 0, 0, 0.2));              // 阴影色
-$devui-light-shadow: var(--devui-light-shadow, rgba(0, 0, 0, 0.1));  // 弱化阴影色
+$devui-shadow: var(--devui-shadow, rgba(#252b3a, 0.2));              // 阴影色
+$devui-light-shadow: var(--devui-light-shadow, rgba(#252b3a, 0.1));  // 弱化阴影色
 
 // 图标
 $devui-icon-text: var(--devui-icon-text, #252b3a);                           // 文字图标颜色，同 正文颜色
@@ -49,6 +49,7 @@ $devui-icon-fill-active: var(--devui-icon-fill-active, #5e7ce0);             // 
 $devui-icon-fill-active-hover: var(--devui-icon-fill-active-hover, #526ecc); // svg图标 高亮填充色悬停反馈色
 // 表单
 $devui-form-control-line: var(--devui-form-control-line, #adb0b8);                           // 表单控件边框色，同 边框分割线
+$devui-form-control-bg: var(--devui-form-control-bg, #ffffff);                               // 表单控件背景色
 $devui-form-control-line-hover: var(--devui-form-control-line-hover, #575d6c);               // 表单控件边框悬停反馈色
 $devui-form-control-line-active: var(--devui-form-control-line-active, #5e7ce0);             // 表单控件边框激活色，用于获得焦点
 $devui-form-control-line-active-hover: var(--devui-form-control-line-active-hover, #344899); // 表单控件边框激活色，用于获得焦点且悬停
@@ -65,7 +66,6 @@ $devui-disabled-bg: var(--devui-disabled-bg, #f5f5f6);     // disabled背景颜�
 $devui-disabled-line: var(--devui-disabled-line, #dfe1e6); // disabled边框颜色
 $devui-disabled-text: var(--devui-disabled-text, #adb0b8); // disabled文字颜色
 $devui-primary-disabled: var(--devui-primary-disabled, #beccfa); //主要按钮disabled状态文字颜色
-$devui-icon-fill-active-disabled: var(--devui-icon-fill-active-disabled, #beccfa);  // svg图标激活状态禁用色
 $devui-icon-fill-active-disabled: var(--devui-icon-fill-active-disabled, #beccfa);  // svg图标激活状态禁用色
 // 特殊背景色
 $devui-label-bg: var(--devui-label-bg, #eef0f5);                             // 默认标签化选项背景色
@@ -105,3 +105,17 @@ $devui-primary-bg: var(--devui-primary-bg, #f2f5fc);    // 主要底色
 
 $devui-default-line: var(--devui-default-line, #5e7ce0);// 默认边框
 $devui-default-bg: var(--devui-default-bg, #f3f6f8);    // 默认底色
+
+// Menu
+
+// color
+
+$devui-menu-item: var(--devui-menu-item);
+$devui-menu-item-sub: var(--devui-menu-item-sub);
+$devui-menu-item-disabled: var(--devui-menu-disabled);
+$devui-menu-item-select: var(--devui-menu-item-hover);
+
+$devui-menu-item-selectBar: var(--devui-primary-hover, #5e7ce0);
+$devui-menu-active-parent: var(--devui-icon-fill-active);
+$devui-menu-bg: var(--devui-global-bg-normal);
+$devui-menu-bg-level: var(--devui-global-bg);

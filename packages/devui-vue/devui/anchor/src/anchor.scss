@@ -1,3 +1,5 @@
+@import '../../styles-var/devui-var';
+
 .mysidebar {
   width: 240px;
   position: absolute;
@@ -17,22 +19,22 @@
   // overflow-y: auto;
 }
 
-.devui-scrollbar::-webkit-scrollbar {
+.#{$devui-prefix}-scrollbar::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-.devui-scrollbar::-webkit-scrollbar-track {
+.#{$devui-prefix}-scrollbar::-webkit-scrollbar-track {
   background-color: transparent;
 }
 
-.devui-scrollbar::-webkit-scrollbar-thumb {
+.#{$devui-prefix}-scrollbar::-webkit-scrollbar-thumb {
   border-radius: 8px;
   background-color: #adb0b8;
   background-color: var(--devui-line, #adb0b8);
 }
 
-.devui-scrollbar::-webkit-scrollbar-thumb:hover {
+.#{$devui-prefix}-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #8a8e99;
   background-color: var(--devui-placeholder, #8a8e99);
 }

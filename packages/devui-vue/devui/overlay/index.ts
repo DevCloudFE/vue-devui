@@ -1,8 +1,10 @@
 import type { App } from 'vue';
 import { FixedOverlay } from './src/fixed-overlay';
 import { FlexibleOverlay } from './src/flexible-overlay';
-import { inBrowser } from '../shared/util/common-var';
-export * from './src/overlay-types';
+import { inBrowser } from '../shared/utils/common-var';
+
+export * from './src/fixed-overlay/fixed-overlay-types';
+export * from './src/flexible-overlay/flexible-overlay-types';
 
 export { FlexibleOverlay, FixedOverlay };
 

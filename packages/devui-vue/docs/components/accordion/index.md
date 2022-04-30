@@ -2,7 +2,7 @@
 
 为页面提供导航的组件。
 
-### 何时使用
+#### 何时使用
 
 需要通过分组组织菜单的时候使用。
 
@@ -123,7 +123,7 @@ export default defineComponent({
   }
 })
 </script>
-<style scoped>
+<style scoped lang="scss">
 .basic-menu {
   width: 200px;
 }
@@ -144,7 +144,7 @@ export default defineComponent({
     width: 80%;
   }
 }
-ul {
+.basic-menu ul {
   list-style: none;
 }
 </style>

@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { Countdown } from '../index';
-import { nextTick } from 'vue'
+import { nextTick } from 'vue';
 
 describe('countdown test', () => {
   it('countdown default render', async () => {
@@ -9,10 +9,10 @@ describe('countdown test', () => {
       props: {
         value: +new Date()
       }
-    })
+    });
     expect(wrapper.get('.countdown-content'));
-    
-  })
+
+  });
 
   it('countdown text', () => {
     // todo
@@ -23,15 +23,15 @@ describe('countdown test', () => {
       ['YY-MM-DD mm:ss', '00-00-11 520:40'],
     ].forEach(async ([format, value]) => {
       const wrapper = await mount(Countdown, {
-          props: {
-            format,
-            value: time,
-          }
-        })
-      expect(wrapper.find('.countdown-value').text()).toEqual(value)
-    })
-    
-  })
+        props: {
+          format,
+          value: time,
+        }
+      });
+      expect(wrapper.find('.countdown-value').text()).toEqual(value);
+    });
+
+  });
 
   it('countdown millisecond', async () => {
     const time = Date.now() + 11 * 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000 + 40 * 60 * 1000 + 40 * 1000 + 5;
@@ -40,10 +40,10 @@ describe('countdown test', () => {
         format: 'HHH:mm:ss SSS',
         value: time,
       }
-    })
+    });
     await nextTick();
     expect(Math.abs(time -Date.now() - wrapper.emitted('onChange')[0][0].leftTime) < 16).toEqual(true);
-  })
+  });
 
   it('countdown prefix and suffix', async () => {
     const time = Date.now() + 5000;
@@ -56,10 +56,10 @@ describe('countdown test', () => {
         prefix,
         suffix
       }
-    })
+    });
     expect(wrapper.find('.countdown-prefix').text()).toEqual(prefix);
     expect(wrapper.find('.countdown-suffix').text()).toEqual(suffix);
-  })
+  });
 
   it('countdown valueStyle', async () => {
     const time = Date.now() + 5000;
@@ -70,14 +70,14 @@ describe('countdown test', () => {
         value: time,
         valueStyle
       }
-    })
+    });
     const { style } = wrapper.find('.countdown-content').attributes();
     let styleStr = '';
     for (const k in valueStyle) {
-      styleStr += `${k}: ${valueStyle[k]}; `
+      styleStr += `${k}: ${valueStyle[k]}; `;
     }
     expect(style).toEqual(styleStr.slice(0,-1));
-  })
+  });
 
   it('countdown slot', async () => {
     const time = Date.now() + 5000;
@@ -88,7 +88,7 @@ describe('countdown test', () => {
       slots: {
         default: 'test slot'
       }
-    })
+    });
     expect(wrapper.find('.devui-countdown').text()).toEqual('test slot');
-  })
-})
+  });
+});

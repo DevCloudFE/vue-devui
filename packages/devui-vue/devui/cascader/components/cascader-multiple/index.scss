@@ -1,8 +1,6 @@
-@import '../../../style/theme/color';
-@import '../../../style/theme/corner';
-@import '../../../style/core/font';
+@import '../../../styles-var/devui-var.scss';
 
-.devui-tags {
+.#{$devui-prefix}-tags {
   &-input {
     flex: 1;
     padding: 1px 20px 1px 4px;

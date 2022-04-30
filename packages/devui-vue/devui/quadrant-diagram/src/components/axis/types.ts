@@ -1,5 +1,5 @@
-import type { ExtractPropTypes, PropType } from 'vue'
-import { IViewConfigs, IAxisConfigs } from '../../../type'
+import type { ExtractPropTypes, PropType } from 'vue';
+import { IViewConfigs, IAxisConfigs } from '../../../type';
 
 export const quadrantDiagramAxisProps = {
   diagramId: {
@@ -11,6 +11,6 @@ export const quadrantDiagramAxisProps = {
   view: {
     type: Object as PropType<IViewConfigs>,
   },
-} as const
+} as const;
 
-export type QuadrantDiagramAxisProps = ExtractPropTypes<typeof quadrantDiagramAxisProps>
+export type QuadrantDiagramAxisProps = ExtractPropTypes<typeof quadrantDiagramAxisProps>;

@@ -1,14 +1,14 @@
 import { computed, Ref, ComputedRef } from 'vue';
-import { OptionObjectItem } from '../editable-select-type';
+import { OptionObjectItem } from '../editable-select-types';
 
 const getFilterFunc = () => (val: string, option: OptionObjectItem) =>
   option.label.toLocaleLowerCase().indexOf(val.toLocaleLowerCase()) > -1;
 
-export const userFilterOptions: (
+export const userFilterOptions = (
   normalizeOptions: ComputedRef<OptionObjectItem[]>,
   inputValue: Ref<string>,
-  filteredOptions: boolean | ((val: string, option: OptionObjectItem) => boolean)
-) => ComputedRef<OptionObjectItem[]> = (normalizeOptions, inputValue, filterOption) =>
+  filterOption: boolean | ((val: string, option: OptionObjectItem) => boolean) | undefined
+): ComputedRef<OptionObjectItem[]> =>
   computed(() => {
     const filteredOptions: OptionObjectItem[] = [];
 
@@ -23,6 +23,5 @@ export const userFilterOptions: (
         filteredOptions.push(option);
       }
     });
-    
     return filteredOptions;
   });

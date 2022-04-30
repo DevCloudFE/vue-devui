@@ -1,4 +1,6 @@
-.devui-color-picker-panel {
+@import '../../../../styles-var/devui-var';
+
+.#{$devui-prefix}-color-picker-panel {
   width: 270px;
   padding: 12px;
   border-radius: 4px;

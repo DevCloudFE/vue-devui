@@ -1,6 +1,6 @@
 # Statistic 统计数值
 
-### 何时使用
+#### 何时使用
 
 当需要展示带描述的统计类数据时使用
 
@@ -12,18 +12,10 @@
 <template>
   <d-row>
     <d-col :span="12">
-      <d-statistic
-        title="Users Sales"
-        group-separator=","
-        :value="5201314">
-      </d-statistic>
+      <d-statistic title="Users Sales" group-separator="," :value="5201314"> </d-statistic>
     </d-col>
     <d-col :span="12">
-      <d-statistic
-        title="Account Weekly Sales (CNY)"
-        group-separator="."
-        :value="999999">
-      </d-statistic>
+      <d-statistic title="Account Weekly Sales (CNY)" group-separator="." :value="999999"> </d-statistic>
     </d-col>
   </d-row>
 </template>
@@ -54,14 +46,7 @@
     </d-col>
     <d-col :span="12">
       <d-card>
-        <d-statistic
-          title="Animation Decline Rate"
-          value="53"
-          :precision="3"
-          :value-from="0"
-          :start="controlStart"
-          animation
-        >
+        <d-statistic title="Animation Decline Rate" value="53" :precision="3" :value-from="0" :start="controlStart" animation>
           <template #suffix>
             <span>%</span>
             <d-button @click="controlStart = true">Start</d-button>
@@ -76,10 +61,10 @@ export default {
   data() {
     return {
       start: true,
-      controlStart: false
-    }
-  }
-}
+      controlStart: false,
+    };
+  },
+};
 </script>
 ```
 
@@ -102,7 +87,7 @@ export default {
         animation
       >
         <template #title>
-          <span :style="{marginRight: '10px' }">文章阅读数</span>
+          <span :style="{ marginRight: '10px' }">文章阅读数</span>
           <d-icon name="help" />
         </template>
         <template #extra>
@@ -128,7 +113,7 @@ export default {
         :animation-duration="5000"
       >
         <template #title>
-          <span :style="{marginRight: '10px' }">文章点赞数</span>
+          <span :style="{ marginRight: '10px' }">文章点赞数</span>
           <d-icon name="help" />
         </template>
         <template #extra>
@@ -161,13 +146,7 @@ export default {
   <d-row :gutter="16">
     <d-col :span="12">
       <d-card>
-        <d-statistic
-          :value-style="{ color: '#fba' }"
-          title="Growth Rate"
-          :value="68.28"
-          :precision="3"
-          suffix="%"
-        >
+        <d-statistic :value-style="{ color: '#fba' }" title="Growth Rate" :value="68.28" :precision="3" suffix="%">
           <template #prefix>
             <d-icon name="experice-new" />
           </template>
@@ -189,19 +168,19 @@ export default {
 
 :::
 
-### d-statistic
+### Statistic 参数
 
-|        参数        |        类型        |   默认   |       说明       |
-| :----------------: | :----------------: | :------: | :--------------: |
-|       title        | `string \| v-slot` |    -     |    数值的标题    |
-|       value        | `number \| string` |    -     |     数值内容     |
-|  group-separator   |      `string`      |    -     | 设置千分位标识符 |
-|     precision      |      `number`      |    -     |   设置数值精度   |
-|       suffix       | `string \| v-slot` |    -     |  设置数值的后缀  |
-|       prefix       | `string \| v-slot` |    -     |  设置数值的前缀  |
-|       extra        | `string \| v-slot` |    -     |     额外内容     |
-|    value-style     |      `style`       |    -     |     内容样式     |
-| animation-duration |      `number`      |   2000   |   动画持续时间   |
-|     value-from     |      `number`      |    0     |    动画初始值    |
-|     animation      |     `boolean`      |  false   |   是否开启动画   |
-|       start        |     `boolean`      |  true   |   是否开始动画   |
+| 参数名             | 类型               | 默认  | 说明             |
+| :----------------- | :----------------- | :---- | :--------------- |
+| title              | `string \| v-slot` | -     | 数值的标题       |
+| value              | `number \| string` | -     | 数值内容         |
+| group-separator    | `string`           | -     | 设置千分位标识符 |
+| precision          | `number`           | -     | 设置数值精度     |
+| suffix             | `string \| v-slot` | -     | 设置数值的后缀   |
+| prefix             | `string \| v-slot` | -     | 设置数值的前缀   |
+| extra              | `string \| v-slot` | -     | 额外内容         |
+| value-style        | `style`            | -     | 内容样式         |
+| animation-duration | `number`           | 2000  | 动画持续时间     |
+| value-from         | `number`           | 0     | 动画初始值       |
+| animation          | `boolean`          | false | 是否开启动画     |
+| start              | `boolean`          | true  | 是否开始动画     |

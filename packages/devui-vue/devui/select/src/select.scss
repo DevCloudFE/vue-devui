@@ -1,6 +1,4 @@
-@import '../../style/mixins/index';
-@import '../../style/theme/color';
-@import '../../style/theme/corner';
+@import '../../styles-var/devui-var.scss';
 
 $border-change-time: 300ms;
 $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -17,12 +15,12 @@ $select-item-min-height: 36px;
   transition: border-color $border-change-time $border-change-function;
 }
 
-.devui-select {
+.#{$devui-prefix}-select {
   position: relative;
   width: 100%;
 }
 
-.devui-select-underlined {
+.#{$devui-prefix}-select-underlined {
   border-bottom: 1px solid $devui-form-control-line;
   @include border-transition();
 
@@ -31,43 +29,43 @@ $select-item-min-height: 36px;
       border-color: $devui-form-control-line-hover;
     }
 
-    &.devui-select-open {
+    &.#{$devui-prefix}-select-open {
       border-color: $devui-form-control-line-active;
     }
   }
 
-  .devui-select-input {
+  .#{$devui-prefix}-select-input {
     border: none;
   }
 }
 
-.devui-select-disabled {
+.#{$devui-prefix}-select-disabled {
   cursor: not-allowed;
   background-color: $devui-disabled-bg;
   border-color: $devui-disabled-line;
   color: $devui-disabled-text;
 
-  .devui-select-input {
+  .#{$devui-prefix}-select-input {
     cursor: not-allowed;
     background-color: $devui-disabled-bg;
     border-color: $devui-disabled-line;
     color: $devui-disabled-text;
   }
 
-  .devui-select-arrow {
+  .#{$devui-prefix}-select-arrow {
     cursor: not-allowed;
     color: $devui-disabled-text;
   }
 }
 
-.devui-select-open {
-  .devui-select-arrow {
+.#{$devui-prefix}-select-open {
+  .#{$devui-prefix}-select-arrow {
     transform: rotate3d(0, 0, 1, 180deg);
   }
 }
 
-.devui-dropdown-menu-multiple {
-  .devui-select-item {
+.#{$devui-prefix}-dropdown-menu-multiple {
+  .#{$devui-prefix}-select-item {
     &.active {
       color: $devui-list-item-active-text;
       background-color: transparent;
@@ -75,12 +73,12 @@ $select-item-min-height: 36px;
   }
 }
 
-.devui-select-selection {
+.#{$devui-prefix}-select-selection {
   position: relative;
   cursor: pointer;
 }
 
-.devui-select-input {
+.#{$devui-prefix}-select-input {
   cursor: pointer;
   width: 100%;
   height: $select-input-height-md;
@@ -90,7 +88,7 @@ $select-item-min-height: 36px;
   border: 1px solid $devui-form-control-line;
   border-radius: $devui-border-radius;
   outline: none;
-  background-color: $devui-base-bg;
+  background-color: $devui-form-control-bg;
   box-sizing: border-box;
   @include border-transition();
 
@@ -114,27 +112,27 @@ $select-item-min-height: 36px;
     }
   }
 
-  &.devui-select-input-lg {
+  &.#{$devui-prefix}-select-input-lg {
     height: $select-input-height-lg;
   }
 
-  &.devui-select-input-sm {
+  &.#{$devui-prefix}-select-input-sm {
     height: $select-input-height-sm;
   }
 }
 
-.devui-select-clearable:hover {
-  .devui-select-clear {
+.#{$devui-prefix}-select-clearable:hover {
+  .#{$devui-prefix}-select-clear {
     display: inline-flex;
   }
 
-  .devui-select-arrow {
+  .#{$devui-prefix}-select-arrow {
     display: none;
   }
 }
 
-.devui-select-clear,
-.devui-select-arrow {
+.#{$devui-prefix}-select-clear,
+.#{$devui-prefix}-select-arrow {
   position: absolute;
   right: 0;
   height: 100%;
@@ -144,7 +142,7 @@ $select-item-min-height: 36px;
   align-items: center;
 }
 
-.devui-select-clear {
+.#{$devui-prefix}-select-clear {
   display: none;
 
   &:hover {
@@ -152,12 +150,12 @@ $select-item-min-height: 36px;
   }
 }
 
-.devui-select-arrow {
+.#{$devui-prefix}-select-arrow {
   transform: rotate3d(0, 0, 1, 0deg);
   transition: transform $transition-base-time ease-out;
 }
 
-.devui-select-dropdown {
+.#{$devui-prefix}-select-dropdown {
   position: absolute;
   width: calc(100% - 2px);
   overflow: auto;
@@ -170,7 +168,7 @@ $select-item-min-height: 36px;
   z-index: 999;
 }
 
-.devui-select-dropdown-list {
+.#{$devui-prefix}-select-dropdown-list {
   max-height: $select-dropdown-max-height;
   width: 100%;
   overflow-y: auto;
@@ -178,7 +176,7 @@ $select-item-min-height: 36px;
   margin: 0;
 }
 
-.devui-select-item {
+.#{$devui-prefix}-select-item {
   font-size: $select-item-font-size;
   display: block;
   min-height: $select-item-min-height;
@@ -211,7 +209,7 @@ $select-item-min-height: 36px;
   }
 }
 
-.devui-scrollbar {
+.#{$devui-prefix}-scrollbar {
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;

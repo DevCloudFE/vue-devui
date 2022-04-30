@@ -2,7 +2,7 @@
 
 操作结果反馈。
 
-### 何时使用
+#### 何时使用
 
 用于对用户的操作结果或者异常状态做反馈。
 
@@ -51,29 +51,27 @@
 
 :::
 
-### d-result
-d-result 参数
+### Result 参数
 
-| 参数  | 类型                        | 默认 | 说明           | 跳转 Demo             |
-| ----- | --------------------------- | ---- | -------------- | --------------------- |
-| icon  | [`ResultIcon`](#ResultIcon) | info | 指定 icon 类型 | [基本用法](#基本用法) |
-| title | string                      | -    | 结果标题       | [基本用法](#基本用法) |
-| desc  | string                      | -    | 结果描述       | [基本用法](#基本用法) |
+| 参数名  | 类型                      | 默认   | 说明           | 跳转 Demo             |
+| :----- | :------------------------- | :------ | :-------------- | :--------------------- |
+| icon  | [ResultIcon](#resulticon) | 'info' | 指定 icon 类型 | [基本用法](#基本用法) |
+| title | string                    | -      | 结果标题       | [基本用法](#基本用法) |
+| desc  | string                    | -      | 结果描述       | [基本用法](#基本用法) |
 
-### ResultIcon
+### Result 插槽
 
-默认值为'info'
+| 参数名 | 说明           |
+| :----- | :------------- |
+| icon   | 自定义图标     |
+| title  | 自定义标题     |
+| desc   | 自定义描述内容 |
+| extra  | 底部额外区域   |
+
+### Result 类型定义
+
+#### ResultIcon
 
 ```ts
-export type ResultIcon = 'success' | 'danger' | 'warning' | 'info'
+type ResultIcon = 'success' | 'danger' | 'warning' | 'info';
 ```
-
-### 插槽
-两种方式使用：`v-slot:icon` 或者具名插槽`#icon`
-
-| 参数  | 说明           |
-| ----- | -------------- |
-| icon  | 自定义图标     |
-| title | 自定义标题     |
-| desc  | 自定义描述内容 |
-| extra | 底部额外区域   |

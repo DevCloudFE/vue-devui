@@ -1,13 +1,10 @@
-@import '../../style/theme/color';
-@import '../../style//theme//corner';
-@import '../../style//theme/font';
-@import '../../style//theme//animation';
+@import '../../styles-var/devui-var.scss';
 
-.devui-popover-reference {
+.#{$devui-prefix}-popover-reference {
   display: inline-block;
 }
 
-.devui-popover-content {
+.#{$devui-prefix}-popover-content.#{$devui-prefix}-flexible-overlay {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -24,7 +21,7 @@
   }
 }
 
-.devui-popover-fade {
+.#{$devui-prefix}-popover-fade {
   &-bottom,
   &-top {
     &-enter-from,

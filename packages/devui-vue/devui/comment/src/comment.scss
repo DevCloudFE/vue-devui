@@ -1,15 +1,11 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-comment {
+.#{$devui-prefix}-comment {
   display: flex;
   align-items: flex-start;
 
   &-avatar {
     margin: 0 16px 0 0;
-  }
-
-  &-right{
-
   }
 
   &-head {

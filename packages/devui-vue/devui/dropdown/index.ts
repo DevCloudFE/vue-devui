@@ -1,18 +1,16 @@
-import type { App } from 'vue'
+import type { App } from 'vue';
+import Dropdown from './src/dropdown';
+import DropdownMenu from './src/dropdown-menu';
+export * from './src/dropdown-menu-types';
 
-import Dropdown from './src/dropdown'
-
-Dropdown.install = function (app: App): void {
-  app.component(Dropdown.name, Dropdown)
-}
-
-export { Dropdown }
+export { Dropdown, DropdownMenu };
 
 export default {
   title: 'Dropdown 下拉菜单',
   category: '导航',
-  status: '10%', // TODO: 组件若开发完成则填入"已完成"，并删除该注释
+  status: '10%',
   install(app: App): void {
-    app.use(Dropdown as any)
-  }
-}
+    app.component(Dropdown.name, Dropdown);
+    app.component(DropdownMenu.name, DropdownMenu);
+  },
+};

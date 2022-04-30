@@ -1,13 +1,13 @@
-@import '../../style/theme/color';
+@import '../../styles-var/devui-var.scss';
 
-.devui-gantt-bar-parent {
+.#{$devui-prefix}-gantt-bar-parent {
   width: 100%;
   box-sizing: border-box;
   height: 24px;
   z-index: 3;
   position: relative;
 
-  .devui-gantt-bar-rail {
+  .#{$devui-prefix}-gantt-bar-rail {
     position: absolute;
     background: #eaecf0;
     height: 12px;
@@ -15,7 +15,7 @@
     margin-top: 4px;
   }
 
-  .devui-gantt-bar-rail::before {
+  .#{$devui-prefix}-gantt-bar-rail::before {
     width: 0;
     height: 0;
     border: 3px transparent solid;
@@ -27,7 +27,7 @@
     content: '';
   }
 
-  .devui-gantt-bar-rail::after {
+  .#{$devui-prefix}-gantt-bar-rail::after {
     width: 0;
     height: 0;
     border: 3px transparent solid;
@@ -39,7 +39,7 @@
     content: '';
   }
 
-  .devui-gantt-bar-track {
+  .#{$devui-prefix}-gantt-bar-track {
     position: absolute;
     background-color: #cacfd8;
     height: 12px;
@@ -47,7 +47,7 @@
     width: 0;
   }
 
-  .devui-gantt-bar-track.head::before {
+  .#{$devui-prefix}-gantt-bar-track.head::before {
     width: 0;
     height: 0;
     border: 3px transparent solid;
@@ -59,7 +59,7 @@
     content: '';
   }
 
-  .devui-gantt-bar-track.tail::after {
+  .#{$devui-prefix}-gantt-bar-track.tail::after {
     width: 0;
     height: 0;
     border: 3px transparent solid;

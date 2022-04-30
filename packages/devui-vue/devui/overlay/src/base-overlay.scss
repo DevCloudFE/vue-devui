@@ -1,0 +1,35 @@
+@import '../../styles-var/devui-var';
+
+.#{$devui-prefix}-overlay-fade {
+  @mixin d-overlay-fade-animation {
+    animation-name: d-overlay-fade;
+    animation-duration: 0.3s;
+  }
+  @keyframes d-overlay-fade {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  &-enter {
+    opacity: 0;
+  }
+
+  &-enter-active {
+    @include d-overlay-fade-animation;
+  }
+
+  &-leave {
+    opacity: 1;
+  }
+
+  &-leave-active {
+    @include d-overlay-fade-animation;
+
+    animation-direction: reverse;
+  }
+}

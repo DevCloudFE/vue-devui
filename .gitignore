@@ -3,7 +3,6 @@ node_modules
 dist
 dist-ssr
 build
-lib
 types
 *.local
 package-lock.json
@@ -16,3 +15,4 @@ packages/devui-vue/devui/vue-devui.ts
 packages/devui-vue/devui/theme/theme.scss
 packages/devui-vue/docs/.vitepress/config/sidebar.ts
 packages/devui-vue/docs/.vitepress/config/enSidebar.ts
+.pnpm-debug.log

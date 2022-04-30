@@ -1,14 +1,14 @@
 import { h, render, Slots, VNode } from 'vue';
 
 export interface ModalOpenResult {
-  hide(): void
+  hide(): void;
 }
 
 export abstract class CommonModalService<Options, Props> {
 
   constructor(public anchorContainer: HTMLElement) {}
 
-  abstract component(): any;
+  abstract component(): string;
 
   abstract open(options: Partial<Options>): ModalOpenResult;
 
@@ -21,7 +21,7 @@ export abstract class CommonModalService<Options, Props> {
   protected renderNull(anchor: HTMLElement): void {
     // 动画运行完毕后
     setTimeout(() => {
-      render(null, anchor);      
+      render(null, anchor);
     }, 500);
   }
 }

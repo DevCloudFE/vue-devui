@@ -3,12 +3,10 @@
   "version": "0.0.1",
   "main": "src/index.ts",
   "module": "src/index.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
   "scripts": {
-    "build": "vite build"
+    "build": "pnpm build:theme && pnpm build:theme-collection && node scripts/release.js",
+    "build:theme": "vite build --config vite.config.theme.ts",
+    "build:theme-collection": "vite build --config vite.config.theme-collection.ts"
   },
   "dependencies": {
     "css-vars-ponyfill": "^2.4.7",
@@ -18,6 +16,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",
+    "commander": "^9.0.0",
+    "shelljs": "^0.8.4",
     "typescript": "^4.5.4",
     "vite": "^2.8.0",
     "vue-tsc": "^0.29.8"

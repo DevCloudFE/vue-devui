@@ -1,6 +1,6 @@
 # Slider 滑动输入条
 
-### 何时使用
+#### 何时使用
 
 当用户需要在数值区间内进行选择时使用。
 
@@ -33,7 +33,7 @@ export default defineComponent({
 
 :::
 
-### 可设置Step的滑动组件
+### 可设置 Step 的滑动组件
 
 :::demo
 
@@ -93,6 +93,31 @@ export default defineComponent({
 
 :::
 
+### 自定义颜色 color
+
+:::demo
+
+```vue
+<template>
+  <div class="slider-wrapper" style="padding:20px">
+    <d-slider v-model="inputValue" color="#e67e22"></d-slider>
+  </div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const inputValue = ref(20);
+    return {
+      inputValue,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### 禁止输入态
 
 :::demo
@@ -101,6 +126,8 @@ export default defineComponent({
 <template>
   <div class="slider-wrapper" style="padding:20px">
     <d-slider :min="minValue" :max="maxValue" disabled v-model="disabledValue"></d-slider>
+    <br style="margin-bottom: 20px" />
+    <d-slider :min="minValue" :max="maxValue" showInput disabled v-model="disabledValue"></d-slider>
   </div>
 </template>
 <script>
@@ -122,7 +149,7 @@ export default defineComponent({
 
 :::
 
-### 定制Popover的显示内容
+### 定制 Popover 的显示内容
 
 通过 tipsRenderer 参数传入定制 Popover 内的显示内容。
 :::demo
@@ -131,9 +158,9 @@ export default defineComponent({
 <template>
   <div>
     <div class="slider-wrapper" style="padding:20px">
-      <d-slider  :min="minValue" :max="maxValue" v-model="inputValue" tipsRenderer="apples"></d-slider>
+      <d-slider :min="minValue" :max="maxValue" v-model="inputValue" tipsRenderer="apples"></d-slider>
       <br style="margin-bottom: 20px" />
-      <d-slider :min="minValue" :max="maxValue"  v-model="inputValue" tipsRenderer="null" ></d-slider>
+      <d-slider :min="minValue" :max="maxValue" v-model="inputValue" tipsRenderer="null"></d-slider>
     </div>
   </div>
 </template>
@@ -156,15 +183,14 @@ export default defineComponent({
 
 :::
 
-### API
+### Slider 参数
 
-d-slider 参数
-
-| 参数         | 类型    | 默认  | 说明                                                                | 跳转                                 |
-| ------------ | ------- | ----- | ------------------------------------------------------------------- | ------------------------------------ |
-| max          | number  | 100   | 可选，滑动输入条的最大值                                            | [基本用法](#基本用法)                |
-| min          | number  | 0     | 可选，滑动输入条的最小值                                            | [基本用法](#基本用法)                |
-| step         | number  | 1     | 可选，滑动输入条的步长，取值必须大于等于 1，且必须可被(max-min)整除 | [可设置Step的滑动组件](#可设置step的滑动组件)    |
-| disabled     | boolean | false | 可选，值为 true 时禁止用户输入                                      | [禁止输入态](#禁止输入态)              |
-| showInput    | boolean | false | 可选，值为 true 显示输入框                                          | [带有输入框的滑动组件](#带有输入框的滑动组件)    |
-| tipsRenderer | string  |       | 可选，渲染 Popover 内容的函数，传入'null'时不显示 Popover           | [定制popover的显示内容](#定制popover的显示内容) |
+| 参数         | 类型    | 默认  | 说明                                                                | 跳转                                              |
+| :----------- | :------ | :---- | :------------------------------------------------------------------ | :------------------------------------------------ |
+| max          | number  | 100   | 可选，滑动输入条的最大值                                            | [基本用法](#基本用法)                             |
+| min          | number  | 0     | 可选，滑动输入条的最小值                                            | [基本用法](#基本用法)                             |
+| step         | number  | 1     | 可选，滑动输入条的步长，取值必须大于等于 1，且必须可被(max-min)整除 | [可设置 Step 的滑动组件](#可设置step的滑动组件)   |
+| color        | string  | ''    | 可选，自定义滑块的颜色显示                                          | [自定义颜色 color](#自定义颜色color)              |
+| disabled     | boolean | false | 可选，值为 true 时禁止用户输入                                      | [禁止输入态](#禁止输入态)                         |
+| showInput    | boolean | false | 可选，值为 true 显示输入框                                          | [带有输入框的滑动组件](#带有输入框的滑动组件)     |
+| tipsRenderer | string  |       | 可选，渲染 Popover 内容的函数，传入'null'时不显示 Popover           | [定制 popover 的显示内容](#定制popover的显示内容) |

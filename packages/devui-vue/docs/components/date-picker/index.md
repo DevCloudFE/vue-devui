@@ -2,92 +2,199 @@
 
 输入或选择日期的组件。
 
-### 何时使用
+#### 何时使用
 
 当用户需要输入一个日期时；需要点击标准输入框，弹出日期面板进行选择时。
 
+### 基本用法
+
+:::demo
+
+```vue
+
+<template>
+  <p>选中的日期： {{eventValue}}</p>
+  <d-datepicker :selected-date-change="handleEventValue" />
+</template>
+
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+
 export default defineComponent({
   setup() {
-
     const eventValue = ref<string>('')
     const handleEventValue = (val: string) => {
-        eventValue.value = val
+      eventValue.value = val;
     }
 
     return {
       eventValue,
       handleEventValue,
-    }
+    };
   }
-})
+});
 </script>
 
-### 属性 auto-close
+<style>
+.mb20 {
+  margin-bottom: 20px;
+}
 
-|项目|说明|
-|----|----|
-|名称|auto-close / autoClose|
-|类型|boolean|
-|必填|否|
-|默认|false|
-|说明|选择日期后，是否自动关闭日期面板|
-
-```vue
-<!-- 开启 -->
-<d-datepicker auto-close />
-<d-datepicker :auto-close="true" />
-
-<!-- 关闭 -->
-<d-datepicker />
-<d-datepicker :auto-close="false" />
+.wh200 {
+  width: 200px;
+}
+</style>
 ```
 
-<d-datepicker auto-close />
-<d-datepicker />
+:::
 
-### 属性 range
+### 自动关闭日期面板
 
-|项目|说明|
-|----|----|
-|名称|range|
-|类型|boolean|
-|必填|否|
-|默认|false|
-|说明|是否开启区间选择|
+:::demo
 
 ```vue
-<!-- 开启 -->
-<d-datepicker range />
-<d-datepicker :range="true" />
 
-<!-- 关闭 -->
-<d-datepicker />
-<d-datepicker :range="false" />
+<template>
+  <p>开启 auto-close</p>
+  <d-datepicker auto-close class="mb20" />
+  <d-datepicker :auto-close="true" />
+
+  <p>关闭 auto-close</p>
+  <d-datepicker class="mb20" />
+  <d-datepicker :auto-close="false" />
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  setup() {
+  }
+});
+</script>
+
+<style>
+.mb20 {
+  margin-bottom: 20px;
+}
+</style>
 ```
 
-<d-datepicker range />
+:::
 
-### 属性 format
+### 日期范围选择器
 
-|项目|类型|
-|----|----|
-|名称|format|
-|类型|string|
-|必填|否|
-|默认|y/MM/dd|
-|说明|日期值格式|
-
-<d-datepicker format="yyyy-MM-dd hh:mm:ss" />
-<d-datepicker format="yy-MM-dd" range />
+:::demo
 
 ```vue
-<d-datepicker format="yyyy-MM-dd hh:mm:ss" />
-<d-datepicker format="yy-MM-dd" range />
+
+<template>
+  <p>开启 range</p>
+  <d-datepicker range class="mb20" />
+  <d-datepicker :range="true" />
+
+  <p>关闭 range</p>
+  <d-datepicker class="mb20" />
+  <d-datepicker :range="false" />
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  setup() {
+  }
+});
+</script>
+
+<style>
+.mb20 {
+  margin-bottom: 20px;
+}
+</style>
 ```
 
-**日期格式化字符**
+:::
+
+### 日期格式化
+
+::: demo
+
+```vue
+
+<template>
+  <d-datepicker format="yyyy-MM-dd hh:mm:ss" class="mb20" />
+  <d-datepicker format="yy-MM-dd" range />
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  setup() {
+  }
+});
+</script>
+
+<style>
+.mb20 {
+  margin-bottom: 20px;
+}
+</style>
+```
+
+:::
+
+### 日期起止时间分隔符
+
+::: demo
+
+```vue
+
+<template>
+  <d-input v-model="splitterText" :max-length="1" class="mb20 wh200"></d-input>
+  <p></p>
+  <d-datepicker range :range-spliter="splitterText" />
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const splitterText = ref('至')
+
+    return {
+      splitterText
+    }
+  }
+});
+</script>
+
+<style>
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.wh200 {
+  width: 200px;
+}
+</style>
+```
+
+:::
+
+### DatePicker 参数
+
+|     参数     |         类型         |   默认   | 说明                                            | 跳转 Demo                     |
+| :---------- | :------------------ | :------ | :---------------------------------------------- | ----------------------------- |
+| auto-close | `boolean` | false | 可选，选择日期后，是否自动关闭日期面板 | [自动关闭日期面板](#自动关闭日期面板)        |
+| range | `boolean` | false | 可选，是否开启日期区间选择 | [日期范围选择器](#日期范围选择器)        |
+| format | `string` | y/MM/dd | 可选，[日期值格式](#日期格式化字符) | [日期格式化](#日期格式化)        |
+| range-spliter | `string` | - | 可选，在区间选择模式下，分隔起止时间的字符。 | [日期起止时间分隔符](#日期起止时间分隔符) |
+| selected-date-change | `Function` | - | 可选，子项切换的时候会发出新激活的子项的数据 | [基本用法](#基本用法) |
+
+### 日期格式化字符
 
 |字符|说明|规则|
 |----|----|----|
@@ -97,29 +204,3 @@ export default defineComponent({
 |h,hh|hour|规则同`M`；使用24小时表示。|
 |m,mm|minute|规则同`M`|
 |s,ss|second|规则同`M`|
-
-### 属性 range-spliter
-
-|项目|类型|
-|----|----|
-|名称|range-spliter / rangeSpliter|
-|类型|string|
-|必填|否|
-|默认|-|
-|说明|在区间选择模式下，分隔起止时间的字符。|
-
-```vue
-<d-datepicker range range-spliter="至" />
-```
-
-<d-datepicker range range-spliter="至" />
-
-### 事件 selectedDateChange
-
-```vue
-<input :value="eventValue" readonly>
-<d-datepicker :selected-date-change="handleEventValue" />
-```
-
-<input :value="eventValue" readonly>
-<d-datepicker :selected-date-change="handleEventValue" />

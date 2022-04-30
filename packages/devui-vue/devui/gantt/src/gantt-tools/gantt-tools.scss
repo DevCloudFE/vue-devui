@@ -1,7 +1,4 @@
-@import '../../../style/theme/color';
-@import '../../../style/theme/corner';
-@import '../../../style/core/_font';
-@import '../../../style/theme/shadow';
+@import '../../../styles-var/devui-var.scss';
 
 .tools-container {
   position: absolute;
@@ -9,7 +6,7 @@
   right: 20px;
   z-index: 10;
 
-  .devui-dropdown-origin {
+  .#{$devui-prefix}-dropdown-origin {
     border: 0;
 
     &:hover {
@@ -17,7 +14,7 @@
     }
   }
 
-  .devui-btn {
+  .#{$devui-prefix}-btn {
     height: 32px !important;
     color: $devui-text !important;
     padding: 0 8px !important;
@@ -31,16 +28,16 @@
   .tool {
     &.minus,
     &.add {
-      .devui-btn {
+      .#{$devui-prefix}-btn {
         min-width: 30px;
       }
     }
   }
 
-  .devui-select-selection {
+  .#{$devui-prefix}-select-selection {
     width: 90px;
 
-    .devui-select-input {
+    .#{$devui-prefix}-select-input {
       height: 32px;
     }
   }
@@ -73,7 +70,7 @@
   }
 }
 
-.devui-dropdown-menu {
+.#{$devui-prefix}-dropdown-menu {
   top: 10px !important;
   left: -6px !important;
 }

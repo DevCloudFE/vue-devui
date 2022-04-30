@@ -1,11 +1,6 @@
-@import '../../style/mixins/index';
-@import '../../style/theme/color';
-@import '../../style/theme/font';
-@import '../../style/theme/shadow';
-@import '../../style/theme/corner';
-@import '../../style/core/animation';
+@import '../../styles-var/devui-var';
 
-.devui-accordion-menu {
+.#{$devui-prefix}-accordion-menu {
   ol,
   ul {
     margin: 0 !important;
@@ -18,16 +13,16 @@
   display: block;
 }
 
-.devui-accordion-menu-item,
+.#{$devui-prefix}-accordion-menu-item,
 d-accordion-item,
 d-accordion-item-hreflink,
 d-accordion-item-routerlink,
-.devui-accordion-list {
+.#{$devui-prefix}-accordion-list {
   display: block;
 }
 
 /* 菜单底色 */
-.devui-accordion-menu {
+.#{$devui-prefix}-accordion-menu {
   display: block;
   background: $devui-base-bg;
   width: 100%;
@@ -35,28 +30,28 @@ d-accordion-item-routerlink,
   border-radius: $devui-border-radius;
   height: 100%;
 
-  &.devui-accordion-menu-normal {
+  &.#{$devui-prefix}-accordion-menu-normal {
     box-shadow: $devui-shadow-length-base $devui-shadow;
   }
 
-  & > .devui-accordion-list {
+  & > .#{$devui-prefix}-accordion-list {
     padding: 10px 0;
   }
 
-  .devui-over-flow-ellipsis {
+  .#{$devui-prefix}-over-flow-ellipsis {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
 }
 
-.devui-accordion-submenu {
+.#{$devui-prefix}-accordion-submenu {
   background: $devui-base-bg;
   width: 100%;
 }
 
 /* 单行菜单 */
-.devui-accordion-item-title {
+.#{$devui-prefix}-accordion-item-title {
   display: block;
   height: 40px;
   width: 100%;
@@ -82,7 +77,7 @@ d-accordion-item-routerlink,
       color: $devui-list-item-hover-text;
     }
 
-    &.devui-router-active,
+    &.#{$devui-prefix}-router-active,
     &.active:not(.open) {
       color: $devui-brand-active;
       font-weight: bold;
@@ -109,7 +104,7 @@ d-accordion-item-routerlink,
 /* 解决链接可点击区域大小不是100%宽度问题 */
 d-accordion-item-hreflink,
 d-accordion-item-routerlink {
-  &.devui-accordion-item-title {
+  &.#{$devui-prefix}-accordion-item-title {
     padding: 0;
 
     & > a {
@@ -119,10 +114,10 @@ d-accordion-item-routerlink {
 }
 
 /* 展开图标相关 */
-.devui-accordion-menu-item > .devui-accordion-item-title {
+.#{$devui-prefix}-accordion-menu-item > .#{$devui-prefix}-accordion-item-title {
   position: relative;
 
-  & > .devui-accordion-open-icon {
+  & > .#{$devui-prefix}-accordion-open-icon {
     display: inline-block;
     text-indent: 0;
     pointer-events: none; /* 让鼠标穿透 */
@@ -152,12 +147,12 @@ d-accordion-item-routerlink {
     }
   }
 
-  &.open > .devui-accordion-open-icon {
+  &.open > .#{$devui-prefix}-accordion-open-icon {
     transform: rotate(180deg);
     transform-origin: center;
   }
 
-  &.disabled > .devui-accordion-open-icon {
+  &.disabled > .#{$devui-prefix}-accordion-open-icon {
     color: $devui-disabled-text;
 
     svg path {
@@ -167,7 +162,7 @@ d-accordion-item-routerlink {
 }
 
 /* 可展开的菜单 */
-.devui-accordion-menu-item > .devui-accordion-item-title {
+.#{$devui-prefix}-accordion-menu-item > .#{$devui-prefix}-accordion-item-title {
   padding-right: 30px;
 
   &.active:not(.open) {
@@ -176,7 +171,7 @@ d-accordion-item-routerlink {
   }
 }
 
-.devui-accordion-list .devui-accordion-menu-hidden {
+.#{$devui-prefix}-accordion-list .#{$devui-prefix}-accordion-menu-hidden {
   // display: none;
   opacity: 0;
   height: 0;
@@ -184,10 +179,10 @@ d-accordion-item-routerlink {
 }
 
 /* 视觉融合灰线 */
-.devui-accordion-item-title {
+.#{$devui-prefix}-accordion-item-title {
   position: relative;
 
-  .devui-accordion-splitter {
+  .#{$devui-prefix}-accordion-splitter {
     position: absolute;
     display: inline-block;
     left: 10px;
@@ -196,12 +191,12 @@ d-accordion-item-routerlink {
     background: $devui-dividing-line;
     vertical-align: middle;
 
-    &.devui-parent-list {
+    &.#{$devui-prefix}-parent-list {
       background-color: transparent;
     }
   }
 
-  .devui-accordion-splitter::before {
+  .#{$devui-prefix}-accordion-splitter::before {
     content: '';
     display: block;
     width: 2px;
@@ -213,37 +208,37 @@ d-accordion-item-routerlink {
     opacity: 0;
   }
 
-  &.devui-router-active,
+  &.#{$devui-prefix}-router-active,
   &.active {
-    &:not(.open) .devui-accordion-splitter::before {
+    &:not(.open) .#{$devui-prefix}-accordion-splitter::before {
       opacity: 1;
     }
   }
 }
 
-.devui-accordion-show-animate .devui-accordion-item-title {
+.#{$devui-prefix}-accordion-show-animate .#{$devui-prefix}-accordion-item-title {
   transition:
     font-weight $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
     background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
 
-  .devui-accordion-splitter::before {
+  .#{$devui-prefix}-accordion-splitter::before {
     transform: scaleY(0);
     transition: transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   }
 
-  &.devui-router-active,
+  &.#{$devui-prefix}-router-active,
   &.active {
-    &:not(.open) .devui-accordion-splitter::before {
+    &:not(.open) .#{$devui-prefix}-accordion-splitter::before {
       transform: scaleY(1);
     }
   }
 }
 
-.devui-accordion-list > .devui-accordion-item:first-child {
-  & > .devui-accordion-item-title,
-  & > .devui-accordion-menu-item > .devui-accordion-item-title {
-    & > a > .devui-accordion-splitter,
-    & > .devui-accordion-splitter {
+.#{$devui-prefix}-accordion-list > .#{$devui-prefix}-accordion-item:first-child {
+  & > .#{$devui-prefix}-accordion-item-title,
+  & > .#{$devui-prefix}-accordion-menu-item > .#{$devui-prefix}-accordion-item-title {
+    & > a > .#{$devui-prefix}-accordion-splitter,
+    & > .#{$devui-prefix}-accordion-splitter {
       height: 28px;
       top: 12px;
 
@@ -254,11 +249,11 @@ d-accordion-item-routerlink {
   }
 }
 
-.devui-accordion-list > .devui-accordion-item:last-child {
-  & > .devui-accordion-item-title,
-  & > .devui-accordion-menu-item > .devui-accordion-item-title {
-    & > a > .devui-accordion-splitter,
-    & > .devui-accordion-splitter {
+.#{$devui-prefix}-accordion-list > .#{$devui-prefix}-accordion-item:last-child {
+  & > .#{$devui-prefix}-accordion-item-title,
+  & > .#{$devui-prefix}-accordion-menu-item > .#{$devui-prefix}-accordion-item-title {
+    & > a > .#{$devui-prefix}-accordion-splitter,
+    & > .#{$devui-prefix}-accordion-splitter {
       height: 28px;
       top: 0;
 
@@ -270,18 +265,18 @@ d-accordion-item-routerlink {
   }
 }
 
-.devui-accordion-list > .devui-accordion-item:last-child:first-child {
-  & > .devui-accordion-item-title,
-  & > .devui-accordion-menu-item > .devui-accordion-item-title {
-    & > a > .devui-accordion-splitter,
-    & > .devui-accordion-splitter {
+.#{$devui-prefix}-accordion-list > .#{$devui-prefix}-accordion-item:last-child:first-child {
+  & > .#{$devui-prefix}-accordion-item-title,
+  & > .#{$devui-prefix}-accordion-menu-item > .#{$devui-prefix}-accordion-item-title {
+    & > a > .#{$devui-prefix}-accordion-splitter,
+    & > .#{$devui-prefix}-accordion-splitter {
       height: 18px;
       top: 11px;
     }
   }
 }
 
-.devui-accordion-item > a {
+.#{$devui-prefix}-accordion-item > a {
   padding: 0 10px 0 20px;
   color: var(--devui-text-weak, #575d6c);
   display: block;
@@ -289,7 +284,7 @@ d-accordion-item-routerlink {
   width: 100%;
 }
 
-.devui-accordion-item-title .tag-done {
+.#{$devui-prefix}-accordion-item-title .tag-done {
   display: inline-block;
   height: 18px;
   min-height: 20px;

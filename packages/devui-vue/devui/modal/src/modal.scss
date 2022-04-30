@@ -1,23 +1,25 @@
-@import '../../style/theme/color';
-@import '../../style/theme/corner';
-@import '../../style/theme/font';
-@import '../../style/theme/animation';
+@import '../../styles-var/devui-var.scss';
 
-.devui-modal-mask {
+.#{$devui-prefix}-modal-mask {
   justify-content: center;
   align-items: center;
   background-color: $devui-shadow;
 }
 
-.devui-modal {
+.#{$devui-prefix}-modal {
   position: relative;
   width: 300px;
-  background-color: $devui-global-bg-normal;
+  border-radius: $devui-border-radius;
+  border: none;
+  background-color: $devui-fullscreen-overlay-bg;
+  background-clip: padding-box;
+  outline: 0;
+  box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
 
   .btn-close {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 16px;
+    top: 16px;
     width: 20px;
     height: 20px;
     line-height: 20px;
@@ -35,12 +37,12 @@
   }
 }
 
-.devui-modal-content {
+.#{$devui-prefix}-modal-content {
   background: $devui-fullscreen-overlay-bg;
   border-radius: $devui-border-radius;
 }
 
-.devui-modal-header {
+.#{$devui-prefix}-modal-header {
   width: 100%;
   height: 56px;
   padding: 32px 32px 0;
@@ -59,14 +61,14 @@
   }
 }
 
-.devui-modal-body {
+.#{$devui-prefix}-modal-body {
   padding: 20px 32px;
   font-size: $devui-font-size;
   color: $devui-text-weak;
   box-sizing: border-box;
 }
 
-.devui-modal-footer {
+.#{$devui-prefix}-modal-footer {
   width: 100%;
   border-top: none;
   text-align: center;
@@ -78,7 +80,7 @@
   }
 }
 
-.devui-modal-wipe {
+.#{$devui-prefix}-modal-wipe {
   @mixin wipe-in-out-animation {
     animation-name: wipe-in-out;
     animation-duration: 0.3s;

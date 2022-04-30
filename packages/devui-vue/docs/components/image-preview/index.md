@@ -2,7 +2,7 @@
 
 预览一张或多张图片的组件。
 
-### 何时使用
+#### 何时使用
 
 需要根据用户传入进行图片预览展示或对容器内图片进行预览时。
 
@@ -133,14 +133,14 @@ export default defineComponent({
 
 :::
 
-### API
+### 参数
 
-|      参数      |   类型    | 默认  | 说明                                                          |
-| :------------: | :-------: | :---: | :------------------------------------------------------------ |
+|      参数名      |   类型    | 默认  | 说明                                                          |
+| :------------ | :------- | :--- | :------------------------------------------------------------ |
 |     custom     | `Object`  |  --   | 可选，指令会自动注入 open 方法，通过 custom.open 开启预览窗口 |
-| disableDefault | `Boolean` | false | 可选，关闭默认点击触发图片预览方式                            |
-|     zIndex     | `Number`  | 1050  | 可选，设置预览时图片的 z-index 值                             |
-| backDropZIndex | `Number`  | 1040  | 可选，设置预览时图片背景的 z-index 值                         |
+| disable-default | `Boolean` | false | 可选，关闭默认点击触发图片预览方式                            |
+|     z-index     | `Number`  | 1050  | 可选，设置预览时图片的 z-index 值                             |
+| back-drop-z-index | `Number`  | 1040  | 可选，设置预览时图片背景的 z-index 值                         |
 
 <style lang="scss">
 .devui-image-preview-demo {

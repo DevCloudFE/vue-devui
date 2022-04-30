@@ -2,7 +2,7 @@
 
 下拉级联菜单。
 
-### 何时使用
+#### 何时使用
 
 1. 需要从一组相关联的数据集合进行选择，例如省市区，公司层级，事物分类等。
 2. 从一个较大的数据集合中进行选择时，用多级分类进行分隔，方便选择。
@@ -367,15 +367,6 @@ export default defineComponent({
 ```
 
 :::
-
-<style>
-  h4 {
-    font-weight: 700;
-    color: #575d6c;
-    font-size: 12px;
-    margin: 15px 0;
-  }
-</style>
 
 ### API
 

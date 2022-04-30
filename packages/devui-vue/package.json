@@ -1,6 +1,6 @@
 {
   "name": "vue-devui",
-  "version": "0.0.1",
+  "version": "1.0.0-rc.0",
   "license": "MIT",
   "description": "DevUI components based on Vite and Vue3",
   "keywords": [
@@ -15,26 +15,33 @@
     "jsx",
     "devui"
   ],
+  "homepage": "https://vue-devui.github.io/",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:DevCloudFE/vue-devui.git"
+  },
   "main": "vue-devui.umd.js",
   "module": "vue-devui.es.js",
   "style": "style.css",
   "scripts": {
     "dev": "pnpm generate:theme && vitepress dev docs",
-    "build": "pnpm generate:theme && node --max-old-space-size=4096 node_modules/vitepress/bin/vitepress.js build docs && cp public/* docs/.vitepress/dist/assets",
-    "build:lib": "pnpm predev && pnpm build:components && pnpm copy",
+    "build": "pnpm generate:theme && node --max-old-space-size=4096 node_modules/vitepress/bin/vitepress.js build docs && cp public/* docs/.vitepress/dist/assets && cp docs/assets/* docs/.vitepress/dist/assets",
+    "build:lib": "pnpm predev -- -e prod && pnpm build:components && pnpm changelog && pnpm release",
     "test": "jest --config jest.config.js",
     "build:components": "node ./devui-cli/index.js build",
     "generate:theme": "node ./devui-cli/index.js generate:theme",
     "generate:dts": "node ./devui-cli/index.js generate:dts",
-    "copy": "cp package.json build && cp ../../README.md build && cd build && mkdir theme && cd ../ && cp devui/theme/theme.scss build/theme",
+    "release": "node ./devui-cli/index.js release",
+    "cli": "node ./devui-cli/index.js",
     "cli:create": "node ./devui-cli/index.js create -t component",
     "predev": "node ./devui-cli/index.js create -t vue-devui --ignore-parse-error",
     "prebuild": "node ./devui-cli/index.js create -t vue-devui --ignore-parse-error",
-    "cli": "devui"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "devui-cli": "devui"
   },
   "dependencies": {
     "@devui-design/icons": "^1.3.0",
-    "@floating-ui/dom": "^0.4.0",
+    "@floating-ui/dom": "^0.4.4",
     "@types/lodash-es": "^4.17.4",
     "@vueuse/core": "^7.7.1",
     "async-validator": "^4.0.2",
@@ -57,7 +64,7 @@
     "@docsearch/js": "^3.0.0-alpha.50",
     "@types/chalk": "^2.2.0",
     "@types/commander": "^2.12.2",
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^26.0.24",
     "@types/ora": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
@@ -71,6 +78,7 @@
     "babel-jest": "^27.0.2",
     "chalk": "^4.1.2",
     "commander": "^8.1.0",
+    "conventional-changelog-cli": "^2.2.2",
     "devui-cli": "workspace:^0.0.2",
     "inquirer": "^8.1.2",
     "jest": "^27.0.4",

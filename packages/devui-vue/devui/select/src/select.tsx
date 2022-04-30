@@ -17,7 +17,7 @@ export default defineComponent({
     // 控制弹窗开合
     const isOpen = ref<boolean>(false);
     function toggleChange(bool: boolean) {
-      if (props.disabled) return;
+      if (props.disabled) {return;}
       isOpen.value = bool;
       ctx.emit('toggleChange', bool);
     }
@@ -31,7 +31,6 @@ export default defineComponent({
         if (typeof item === 'object') {
           option = {
             name: item.name ? item.name : item.value + '',
-            value: item.value,
             _checked: false,
             ...item,
           };
@@ -64,7 +63,7 @@ export default defineComponent({
     const inputValue = computed<string>(() => {
       if (props.multiple && Array.isArray(props.modelValue)) {
         const selectedOptions = getValuesOption(props.modelValue);
-        return selectedOptions.map((item) => item.name).join(',');
+        return selectedOptions.map((item) => item?.name || '').join(',');
       } else if (!Array.isArray(props.modelValue)) {
         return getValuesOption([props.modelValue])[0]?.name || '';
       }
@@ -78,12 +77,12 @@ export default defineComponent({
     function valueChange(item: OptionObjectItem, index: number) {
       const { multiple, optionDisabledKey: disabledKey } = props;
       let { modelValue } = props;
-      if (disabledKey && !!item[disabledKey]) return;
+      if (disabledKey && !!item[disabledKey]) {return;}
       if (multiple) {
         item._checked = !item._checked;
         modelValue = mergeOptions.value
-          .filter((item) => item._checked)
-          .map((item) => item.value);
+          .filter((item1) => item1._checked)
+          .map((item2) => item2.value);
         ctx.emit('update:modelValue', modelValue);
       } else {
         ctx.emit('update:modelValue', item.value);

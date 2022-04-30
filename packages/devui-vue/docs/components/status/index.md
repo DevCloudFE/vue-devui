@@ -2,13 +2,14 @@
 
 传达交互结果的组件。
 
-### 何时使用
+#### 何时使用
 
 表示一个任务的执行结果时使用。
 
 ### 基本用法
 
 :::demo
+
 ```vue
 <template>
   <d-status>Default</d-status>
@@ -21,10 +22,19 @@
   <d-status type="invalid">Invalid</d-status>
 </template>
 ```
+
 :::
 
-### d-status 参数
+### Status 参数
 
-| 参数 |                              类型                              |   默认    |                                     说明                                     |
-| :--: | :------------------------------------------------------------: | :-------: | :--------------------------------------------------------------------------: |
-| type | `success\|error\|warning\|initial\|waiting\|running\| invalid` | 'invalid' | 必选，类型，值有 success、error、warning、initial、waiting、running、invalid |
+| 参数 |            类型             |   默认    |    说明    |
+| :--: | :-------------------------: | :-------: | :--------: |
+| type | [IStatusType](#istatustype) | 'invalid' | 可选，类型 |
+
+### Status 类型定义
+
+#### IStatusType
+
+```ts
+type IStatusType = 'success' | 'error' | 'initial' | 'warning' | 'waiting' | 'running' | 'invalid';
+```

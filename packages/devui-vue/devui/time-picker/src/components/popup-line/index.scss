@@ -1,9 +1,6 @@
-@import '../../../../style/theme/color';
-@import '../../../../style/theme/shadow';
-@import '../../../../style/theme/corner';
-@import '../../../../style/core/_font';
+@import '../../../../styles-var/devui-var.scss';
 
-.devui-time-list {
+.#{$devui-prefix}-time-list {
   width: 100%;
   height: 256px;
   border-bottom: 1px solid $devui-dividing-line;

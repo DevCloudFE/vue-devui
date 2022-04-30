@@ -1,0 +1,102 @@
+@import '../../../../styles-var/devui-var.scss';
+
+.#{$devui-prefix}-form__control {
+  flex: 1 1 auto;
+  position: relative;
+  width: 100%;
+
+  &--horizontal {
+    margin-left: 16px;
+  }
+
+  .#{$devui-prefix}-star {
+    color: red;
+  }
+
+  .#{$devui-prefix}-form__control-container {
+    position: relative;
+
+    // 临时解决popover影响输入控件宽度的问题
+    .#{$devui-prefix}-popover-reference {
+      width: 100%;
+    }
+
+    .#{$devui-prefix}-form__control-feedback {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      z-index: 1;
+      width: 32px;
+      height: 16px;
+      margin-top: -7px;
+      line-height: 16px;
+      text-align: center;
+      visibility: visible;
+      pointer-events: none;
+    }
+  }
+
+  .#{$devui-prefix}-form__control-container--horizontal {
+    display: flex;
+    width: 100%;
+
+    .#{$devui-prefix}-validate-tip {
+      margin: 0;
+    }
+  }
+
+  .#{$devui-prefix}-form__control-content {
+    width: 100%;
+  }
+
+  .#{$devui-prefix}-form__control-container--has-feedback {
+    display: flex;
+    align-items: center;
+
+    input {
+      padding-right: 28px;
+    }
+  }
+
+  .#{$devui-prefix}-form__control-container--feedback-error {
+    border: 1px solid #f66f6a;
+    border-radius: 2px;
+
+    input {
+      background-color: #ffeeed;
+      border-color: transparent;
+
+      &:hover {
+        border-color: transparent !important;
+      }
+
+      &:focus {
+        border-color: transparent !important;
+      }
+    }
+
+    .#{$devui-prefix}-select-arrow {
+      right: 24px !important;
+    }
+  }
+
+  .#{$devui-prefix}-form__control-info {
+    line-height: 1;
+
+    .error-message {
+      display: inline-block;
+      min-height: 20px;
+      line-height: 1.5;
+      font-size: $devui-font-size;
+      color: $devui-danger;
+    }
+
+    .#{$devui-prefix}-form__control-extra {
+      font-size: $devui-font-size;
+      color: $devui-aide-text;
+      min-height: 20px;
+      line-height: 1.5;
+      text-align: justify;
+    }
+  }
+}

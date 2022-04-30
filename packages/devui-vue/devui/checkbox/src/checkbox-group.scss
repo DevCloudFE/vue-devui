@@ -1,8 +1,10 @@
+@import '../../styles-var/devui-var';
+
 :host {
   display: block;
 }
 
-.devui-checkbox-list-inline {
+.#{$devui-prefix}-checkbox-list-inline {
   min-height: 28px;
   line-height: 28px;
   display: flex;

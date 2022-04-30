@@ -44,4 +44,4 @@ export const color: string[] = [
   '#021eaa',
   '#797baa',
   '#ab1942'
-]
+];

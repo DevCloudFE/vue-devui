@@ -2,7 +2,7 @@
 
 内容面板，用于内容分组。
 
-### 何时使用
+#### 何时使用
 
 当页面内容需要进行分组显示时使用，一般包含头部、内容区域、底部三个部分。
 
@@ -12,77 +12,57 @@
 
 ```vue
 <template>
-  <d-panel type="primary" :isCollapsed="true" :showAnimation="true">
-    <d-panel-header>Panel with foldable</d-panel-header>
+  <d-panel>
+    <d-panel-header>Click me to expand</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
-  </d-panel>
-  <br />
-  <br />
-  <d-panel :toggle="toggle" :isCollapsed="true" :showAnimation="true" :hasLeftPadding="false">
-    <d-panel-header>
-      Panel has no left padding
-      <em :class="`icon icon-chevron-${toggleState ? 'down' : 'up'}`"></em>
-    </d-panel-header>
-    <d-panel-body>This is body</d-panel-body>
-  </d-panel>
-  <br />
-  <br />
-  <d-panel :isCollapsed="true" :beforeToggle="beforeToggle">
-    <d-panel-header>Panel with header and footer</d-panel-header>
-    <d-panel-body>This is body</d-panel-body>
-    <d-panel-footer>This is footer</d-panel-footer>
   </d-panel>
 </template>
-<script>
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    const toggleState = ref(true);
-    const toggle = (e) => (toggleState.value = e);
-    const beforeToggle = () => false;
-    return {
-      toggle,
-      toggleState,
-      beforeToggle
-    };
-  }
-});
-</script>
 ```
 
 :::
 
-### 多种类型
+### 默认状态
 
-面板类型分为 default、primary、success，danger、warning、info。
-
-:::demo
+:::demo 通过设置`is-collapsed`为`true`可以默认展开面板。
 
 ```vue
 <template>
-  <d-panel type="info" :isCollapsed="true" :showAnimation="true">
+  <d-panel :is-collapsed="true">
+    <d-panel-header>Panel header</d-panel-header>
+    <d-panel-body>This is body</d-panel-body>
+  </d-panel>
+</template>
+```
+
+:::
+
+### 面板类型
+
+:::demo 面板类型有5种：`primary` / `success` / `danger` / `warning` / `info`，默认为`info`。
+
+```vue
+<template>
+  <d-panel :is-collapsed="true">
     <d-panel-header>Panel with info Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
-  <d-panel type="primary" :isCollapsed="true" :showAnimation="true">
-    <d-panel-header>Panel with Primary Type</d-panel-header>
+  <br>
+  <d-panel type="primary" :is-collapsed="true">
+    <d-panel-header>Panel with primary Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
-  <br />
-  <br />
-  <d-panel type="success" :isCollapsed="true" :showAnimation="true">
-    <d-panel-header>Panel with Success Type</d-panel-header>
+  <br>
+  <d-panel type="success" :is-collapsed="true">
+    <d-panel-header>Panel with success Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
-  <br />
-  <br />
-  <d-panel type="warning" :isCollapsed="true" :showAnimation="true">
-    <d-panel-header>Panel with Warning Type</d-panel-header>
+  <br>
+  <d-panel type="warning" :is-collapsed="true">
+    <d-panel-header>Panel with warning Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
-  <br />
-  <br />
-  <d-panel type="danger" :isCollapsed="true" :showAnimation="true">
+  <br>
+  <d-panel type="danger" :is-collapsed="true">
     <d-panel-header>Panel with danger Type</d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
@@ -91,31 +71,67 @@ export default defineComponent({
 
 :::
 
-### 阻止折叠
-
-某种情况下，我们需要阻止面板收起。Panel 提供了这项 API，我们可以使用 beforeToggle 来阻止面板的收起
-
-根据条件判断，当 panel 展开时，点击阻止折叠按钮，将无法折叠 panel。当 panel 展开时不影响操作。
+### 面板样式
 
 :::demo
 
 ```vue
 <template>
-  <d-panel
-    type="primary"
-    :hasLeftPadding="padding"
-    :toggle="handleToggle"
-    :beforeToggle="beforeToggle"
-    :showAnimation="showAnimation"
-  >
+  <d-panel @toggle="toggle" :is-collapsed="true" :has-left-padding="false">
     <d-panel-header>
-      Panel with foldable
-      <i :class="`icon-arrow-${toggle ? 'down' : 'up'}`"></i>
+      Panel has no left padding
+      <em :class="`icon icon-chevron-${toggleState ? 'down' : 'up'}`"></em>
     </d-panel-header>
     <d-panel-body>This is body</d-panel-body>
   </d-panel>
-  <br />
-  <br />
+  <br>
+  <d-panel :is-collapsed="true">
+    <d-panel-header>Panel with header and footer</d-panel-header>
+    <d-panel-body>This is body</d-panel-body>
+    <d-panel-footer>This is footer</d-panel-footer>
+  </d-panel>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const toggleState = ref(true);
+
+    const toggle = (value) => {
+      toggleState.value = value;
+    };
+
+    return {
+      toggle,
+      toggleState
+    };
+  }
+});
+</script>
+```
+
+:::
+
+### 阻止折叠
+
+:::demo 我们可以使用`before-toggle`来阻止面板的收起。根据条件判断，当`Panel`展开时，点击阻止折叠按钮，将无法折叠`Panel`，当`Panel`展开时不影响操作。
+
+```vue
+<template>
+  <d-panel
+    type="primary"
+    :is-collapsed="isCollapsed"
+    @toggle="handleToggle"
+    :before-toggle="beforeToggle"
+  >
+    <d-panel-header>
+      Panel header
+      <i :class="`icon-chevron-${toggle ? 'down' : 'up'}`"></i>
+    </d-panel-header>
+    <d-panel-body>This is body</d-panel-body>
+  </d-panel>
+  <br>
   <d-button @click="panelToggle = !panelToggle">
     {{ panelToggle ? '阻止折叠' : '允许折叠' }}
   </d-button>
@@ -129,82 +145,48 @@ export default defineComponent({
     let panelToggle = ref(true);
     let toggle = ref(true);
     let showAnimation = ref(true);
-    let state;
-    let padding = ref(false);
-    const handleToggle = (e) => {
-      toggle.value = e;
+
+    const handleToggle = (value) => {
+      toggle.value = value;
     };
-    const beforeToggle = (e) => {
-      console.log(e);
+    
+    const beforeToggle = () => {
       return panelToggle.value;
     };
+
     return {
-      state,
       toggle,
       panelToggle,
       beforeToggle,
       isCollapsed,
       handleToggle,
-      showAnimation,
-      padding
     };
   }
 });
 </script>
 ```
-
 :::
 
-### 动态切换
+### Panel 参数
 
-我们以 hasLeftPadding 为例
+| 参数名           | 类型                                          | 默认   | 说明                                                                                               |
+| :--------------- | :-------------------------------------------- | :----- | :------------------------------------------------------------------------------------------------- |
+| type             | [PanelType](#paneltype)                       | 'info' | 可选，面板的类型                                                                                   |
+| is-collapsed     | `boolean`                                     | false  | 可选，是否默认展开                                                                                 |
+| has-left-padding | `boolean`                                     | true   | 可选，是否显示左侧填充                                                                             |
+| show-animation   | `boolean`                                     | true   | 可选，是否显示动画                                                                                 |
+| before-toggle    | `(value: boolean, done?: () => void) => void` | --     | 可选，面板折叠状态改变前的回调函数。<br>参数`value`代表当前状态，<br>参数`done()`可以控制Panel开合 |
 
-理论上所有的属性都可以动态切换
+### Panel 事件
 
-:::demo
+| 事件名 | 类型                       | 说明                 |
+| :----- | :------------------------- | :------------------- |
+| toggle | `(value: boolean) => void` | 可选，切换面板的事件 |
 
-```vue
-<template>
-  <d-panel :hasLeftPadding="padding" :isCollapsed="true">
-    <d-panel-header>Panel with foldable</d-panel-header>
-    <d-panel-body>This is body</d-panel-body>
-  </d-panel>
-  <br />
-  <br />
-  <d-button @click="padding = !padding">
-    {{ padding ? '有左填充' : '没有左填充' }}
-  </d-button>
-</template>
-<script>
-import { defineComponent, ref } from 'vue';
+### Panel 类型定义
 
-export default defineComponent({
-  setup() {
-    let padding = ref(false);
-    return {
-      padding
-    };
-  }
-});
-</script>
-```
+#### PanelType
 
-:::
-
-### API
-
-|      参数      |             类型              |   默认    |                                                    说明                                                     |
-| :------------: | :---------------------------: | :-------: | :---------------------------------------------------------------------------------------------------------: |
-|      type      |           PanelType           | 'default' |                                              可选，面板的类型                                               |
-|    cssClass    |            string             |    --     |                                            可选，自定义 class 名                                            |
-|  isCollapsed   |            boolean            |   false   |                                               可选，是否展开                                                |
-| hasLeftPadding |            boolean            |   true    |                                           可选，是否显示左侧填充                                            |
-| showAnimation  |            boolean            |   true    |                                             可选，是否展示动画                                              |
-|  beforeToggle  | Function\|Promise\|Observable |    --     | 可选，面板折叠状态改变前的回调函数，返回 boolean 类型，返回 false 可以阻止面板改变折叠状态 根据条件阻止折叠 |
-|     toggle     |           Function            |    --     |     可选，面板当前状态的回调函数，返回 boolean 类型，返回 false 代表面板被收起，返回 true 代表面板展开      |
-
-### 接口&类型定义
-
-```javascript
-export type PanelType = 'default' | 'primary' | 'success' | 'danger' | 'warning' | 'info';
+```ts
+export type PanelType = 'primary' | 'success' | 'danger' | 'warning' | 'info';
 ```

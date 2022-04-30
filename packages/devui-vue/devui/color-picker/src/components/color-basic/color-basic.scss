@@ -1,4 +1,6 @@
-.devui-color-picker-basic {
+@import '../../../../styles-var/devui-var';
+
+.#{$devui-prefix}-color-picker-basic {
   flex-wrap: wrap;
   // justify-content: space-between;
   align-items: center;

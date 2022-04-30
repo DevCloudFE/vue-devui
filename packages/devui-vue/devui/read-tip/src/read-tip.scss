@@ -1,11 +1,6 @@
-@import '../../style/theme/color';
-@import '../../style/theme/variables';
-@import '../../style/mixins/index';
-@import '../../style/theme/shadow';
-@import '../../style/theme/corner';
-@import '../../style/core/_font';
-// @import '../../style/core/z-index';
-.devui-read-tip {
+@import '../../styles-var/devui-var.scss';
+
+.#{$devui-prefix}-read-tip {
   position: relative;
 
   .title {

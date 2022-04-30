@@ -1,10 +1,6 @@
-@import '../../style/mixins/index';
-@import '../../style/theme/color';
-@import '../../style/theme/variables';
-@import '../../style/theme/font';
-@import '../../style/theme/corner';
+@import '../../styles-var/devui-var.scss';
 
-.devui-status {
+.#{$devui-prefix}-status {
   line-height: 20px;
   height: 20px;
   display: flex;
@@ -20,7 +16,7 @@
   }
 }
 
-.devui-status.devui-status-bg {
+.#{$devui-prefix}-status.#{$devui-prefix}-status-bg {
   &-success {
     &::before {
       background-color: $devui-success;

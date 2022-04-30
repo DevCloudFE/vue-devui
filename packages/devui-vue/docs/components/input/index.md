@@ -2,108 +2,109 @@
 
 文本输入框。
 
-### 何时使用
+#### 何时使用
 
 需要手动输入文字使用。
 
 ### 基本用法
 
-:::demo
+:::demo `v-model`对输入值做双向绑定，`placeholder`、`autofocus`等原生 input 支持的属性会被自动继承。
 
 ```vue
 <template>
   <div class="devui-input-demo">
     <h4>Default</h4>
-  
-    <d-input placeholder="请输入" autoFocus id="textInput" class="dinput"></d-input>
-  
+
+    <d-input v-model="value1" placeholder="请输入" autofocus></d-input>
+
     <h4>Disabled</h4>
-  
-    <d-input placeholder="请输入" :disabled="true" class="dinput"></d-input>
-  
+
+    <d-input v-model="value2" placeholder="请输入" disabled></d-input>
+
     <h4>Error</h4>
-  
-    <d-input placeholder="请输入" :error="true" class="dinput"></d-input>
+
+    <d-input v-model="value3" placeholder="请输入" error></d-input>
   </div>
 </template>
-<style>
-.dinput {
-  width: 200px;
-}
-</style>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    return {
+      value1: ref(''),
+      value2: ref(''),
+      value3: ref(''),
+    };
+  },
+});
+</script>
 ```
 
 :::
 
 ### 尺寸
 
-:::demo
+:::demo 支持`sm`、`md`、`lg`三种尺寸，默认为`md`。
 
 ```vue
 <template>
-  <div class="devui-input-demo">
-
+  <div>
     <h4>Small</h4>
-  
-    <d-input size="sm" class="dinput" placeholder="请输入"></d-input>
-  
+
+    <d-input v-model="value1" size="sm" placeholder="请输入"></d-input>
+
     <h4>Middle</h4>
-  
-    <d-input class="dinput" placeholder="请输入"></d-input>
-  
+
+    <d-input v-model="value2" placeholder="请输入"></d-input>
+
     <h4>Large</h4>
-  
-    <d-input size="lg" placeholder="请输入" class="dinput"></d-input>
+
+    <d-input v-model="value3" size="lg" placeholder="请输入"></d-input>
   </div>
 </template>
-```
 
-:::
-
-### 密码框
-
-:::demo
-
-```vue
-<template>
-  <d-input v-model="searchText" class="dinput" placeholder="请输入" showPassword></d-input>
-</template>
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const searchText = ref('')
     return {
-      searchText
-    }
-  }
-})
+      value1: ref(''),
+      value2: ref(''),
+      value3: ref(''),
+    };
+  },
+});
 </script>
 ```
 
 :::
 
-### API
+### Input 参数
 
-|         参数          |       类型       |          默认           |                      说明                      |       跳转 Demo       |
-| :-------------------: | :--------------: | :---------------------: | :--------------------------------------------: | :-------------------: |
-|          id           |     `string`     |           --            |                可选，文本框 id                 | [基本用法](#基本用法) |
-| v-model |     `string`     |           ''            |                     绑定值                     |   [密码框](#密码框)   |
-|      placeholder      |     `string`     |           --            |            可选，文本框 placeholder            | [基本用法](#基本用法) |
-|       maxLength       |     `number`     | Number.MAX_SAFE_INTEGER |           可选，输入框的 max-length            |                       |
-|       disabled        |    `boolean`     |          false          |             可选，文本框是否被禁用             | [基本用法](#基本用法) |
-|         error         |    `boolean`     |          false          |          可选，文本框是否出现输入错误          | [基本用法](#基本用法) |
-|         size          | `'sm'\|''\|'lg'` |           ''            | 可选，文本框尺寸，有三种选择`'lg'`,`''`,`'sm'` |     [尺寸](#尺寸)     |
-|       cssClass        |     `string`     |           ''            |          可选，支持传入类名到输入框上          |                       |
-|     showPassword      |    `boolean`     |          false          |                可选，密码输入框                |   [密码框](#密码框)   |
-|       autoFocus       |    `boolean`     |          false          |            可选，输入框是否自动对焦            | [基本用法](#基本用法) |
+| 参数名   | 类型                    | 默认值 | 说明                                             | 跳转 Demo             |
+| :------- | :---------------------- | :----- | :----------------------------------------------- | :-------------------- |
+| v-model  | `string`                | ''     | 绑定值                                           | [基本用法](#基本用法) |
+| disabled | `boolean`               | false  | 可选，文本框是否被禁用                           | [基本用法](#基本用法) |
+| error    | `boolean`               | false  | 可选，文本框是否出现输入错误                     | [基本用法](#基本用法) |
+| size     | [InputSize](#inputsize) | 'md'   | 可选，文本框尺寸，有三种选择`'lg'`,`'md'`,`'sm'` | [尺寸](#尺寸)         |
 
-<style>
-.devui-input-demo h4 {
-  font-weight: 700;
-  color: #575d6c;
-  font-size: 12px;
-  margin: 15px 0;
-}
-</style>
+### Input 事件
+
+| 事件名  | 回调参数                     | 说明                           |
+| :------ | :--------------------------- | :----------------------------- |
+| focus   | `Function(e: FocusEvent)`    | 获取焦点时触发                 |
+| blur    | `Function(e: FocusEvent)`    | 失去焦点时触发                 |
+| input   | `Function(e: Event)`         | 输入值改变时触发               |
+| change  | `Function(e: Event)`         | 输入框失去焦点或按下回车时触发 |
+| keydown | `Function(e: KeyboardEvent)` | 按下按键时触发                 |
+
+### Input 类型定义
+
+#### InputSize
+
+```ts
+type InputSize = 'sm' | 'md' | 'lg';
+```

@@ -1,37 +1,44 @@
 import { Ref, SetupContext } from 'vue';
-
-export default function useCustomTemplate(ctx:SetupContext,modelValue:Ref<string>): any {
-    const itemTemplate = (item, index) => {
-        const arr = { item, index }
-        if (ctx.slots.itemTemplate) {
-            return ctx.slots.itemTemplate(arr)
-        }
-        return null
+import { SourceItemObj } from '../auto-complete-types';
+type CustomRenderSoltsType = {
+  itemTemplate?: (item: string | SourceItemObj, index: number) => unknown;
+  noResultItemTemplate?: () => unknown;
+  searchingTemplate?: () => unknown;
+};
+export default function useCustomTemplate(ctx: SetupContext,modelValue: Ref<string>): {
+  customRenderSolts: () => CustomRenderSoltsType;
+} {
+  const itemTemplate = (item: string | SourceItemObj, index: number) =>{
+    const arr = { item, index };
+    if (ctx.slots.item) {
+      return ctx.slots.item(arr);
     }
-    const noResultItemTemplate = () => {
-        if (ctx.slots.noResultItemTemplate) {
-            return ctx.slots.noResultItemTemplate(modelValue.value)
-        }
-        return null
+    return null;
+  };
+  const noResultItemTemplate = () => {
+    if (ctx.slots.nothing) {
+      return ctx.slots.nothing(modelValue.value);
     }
-    const searchingTemplate = () => {
-        if (ctx.slots.searchingTemplate) {
-            return ctx.slots.searchingTemplate(modelValue.value)
-        }
-        return null
+    return null;
+  };
+  const searchingTemplate = () => {
+    if (ctx.slots.searching) {
+      return ctx.slots.searching(modelValue.value);
     }
-    const customRenderSolts = () => {
-        const slots = {}
-        if (ctx.slots.itemTemplate) {
-            slots['itemTemplate'] = itemTemplate
-        }
-        if (ctx.slots.noResultItemTemplate) {
-            slots['noResultItemTemplate'] = noResultItemTemplate
-        }
-        if (ctx.slots.searchingTemplate) {
-            slots['searchingTemplate'] = searchingTemplate
-        }
-        return slots
+    return null;
+  };
+  const customRenderSolts = () => {
+    const slots: CustomRenderSoltsType = {};
+    if (ctx.slots.item) {
+      slots['itemTemplate'] = itemTemplate;
     }
-    return {customRenderSolts}
+    if (ctx.slots.nothing) {
+      slots['noResultItemTemplate'] = noResultItemTemplate;
+    }
+    if (ctx.slots.searching) {
+      slots['searchingTemplate'] = searchingTemplate;
+    }
+    return slots;
+  };
+  return {customRenderSolts};
 }

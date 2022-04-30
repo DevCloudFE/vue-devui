@@ -1,10 +1,6 @@
-@import '../../style/mixins/index';
-@import '../../style/theme/color';
-@import '../../style/theme/shadow';
-@import '../../style/theme/corner';
-@import '../../style/theme/font';
+@import '../../styles-var/devui-var.scss';
 
-.devui-slider {
+.#{$devui-prefix}-slider {
   position: relative;
   width: 90%;
   display: block;
@@ -31,7 +27,7 @@
       cursor: not-allowed;
     }
 
-    .devui-slider__bar {
+    .#{$devui-prefix}-slider__bar {
       height: 6px;
       background-color: $devui-default-line;
       border-top-left-radius: $devui-border-radius;
@@ -48,7 +44,7 @@
       }
     }
 
-    .devui-slider__button {
+    .#{$devui-prefix}-slider__button {
       position: absolute;
       width: 14px;
       height: 14px;
@@ -73,7 +69,7 @@
       }
     }
 
-    .devui-slider_popover {
+    .#{$devui-prefix}-slider_popover {
       position: relative;
       bottom: 26px;
       transform: translate(-50%);
@@ -81,7 +77,7 @@
       font-size: $devui-font-size-sm;
       color: $devui-feedback-overlay-text;
 
-      .devui-slider_popover-arrow {
+      .#{$devui-prefix}-slider_popover-arrow {
         position: absolute;
         left: 50%;
         margin-left: -4px;
@@ -94,7 +90,7 @@
         background-color: $devui-feedback-overlay-bg;
       }
 
-      .devui-slider_popover-content {
+      .#{$devui-prefix}-slider_popover-content {
         padding: 5px 14px;
         text-align: center;
         border-radius: $devui-border-radius-feedback;
@@ -103,7 +99,7 @@
     }
   }
 
-  .devui-min_count {
+  .#{$devui-prefix}-min_count {
     position: absolute;
     top: 15px;
     left: 0;
@@ -111,7 +107,7 @@
     color: $devui-text;
   }
 
-  .devui-max_count {
+  .#{$devui-prefix}-max_count {
     position: absolute;
     top: 15px;
     right: 0;
@@ -119,7 +115,7 @@
     color: $devui-text;
   }
 
-  .devui-input__out-wrap {
+  .#{$devui-prefix}-input__out-wrap {
     font-size: $devui-font-size;
     position: absolute;
     right: -60px;

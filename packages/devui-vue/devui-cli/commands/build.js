@@ -5,6 +5,7 @@ const { defineConfig, build } = require('vite');
 const vue = require('@vitejs/plugin-vue');
 const vueJsx = require('@vitejs/plugin-vue-jsx');
 const nuxtBuild = require('./build-nuxt-auto-import');
+const { isReadyToRelease } = require('../shared/utils');
 
 const entryDir = path.resolve(__dirname, '../../devui');
 const outputDir = path.resolve(__dirname, '../../build');
@@ -82,6 +83,9 @@ exports.build = async () => {
   });
 
   for (const name of components) {
+    if (!isReadyToRelease(name)) {
+      continue;
+    }
     await buildSingle(name);
     createPackageJson(name);
     nuxtBuild.createAutoImportedComponent(name);

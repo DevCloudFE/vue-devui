@@ -1,7 +1,6 @@
-@import '../../style/theme/color';
-@import '../../style/theme/font';
+@import '../../styles-var/devui-var.scss';
 
-.devui-result {
+.#{$devui-prefix}-result {
   display: flex;
   justify-content: center;
   align-items: center;

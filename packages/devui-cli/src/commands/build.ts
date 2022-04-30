@@ -2,4 +2,4 @@ function buildAction() {
 
 }
 
-export default buildAction
+export default buildAction;

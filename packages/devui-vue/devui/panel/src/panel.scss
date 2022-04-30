@@ -1,22 +1,22 @@
-@import '../../style/theme/color';
+@import '../../styles-var/devui-var.scss';
 
 .no-left-padding {
-  &.devui-panel-body-collapse {
+  &.#{$devui-prefix}-panel-body-collapse {
     &::before {
       content: none !important;
     }
 
-    .devui-panel-content {
+    .#{$devui-prefix}-panel-content {
       border-left: none !important;
     }
   }
 }
 
-.devui-panel {
+.#{$devui-prefix}-panel {
   line-height: 1.5;
   background-color: $devui-base-bg;
 
-  .devui-panel-heading {
+  .#{$devui-prefix}-panel-heading {
     padding: 12px 20px;
     color: $devui-text;
 
@@ -25,32 +25,32 @@
     }
   }
 
-  .devui-panel-body {
+  .#{$devui-prefix}-panel-body {
     display: flex;
     position: relative;
     border-top: 1px solid $devui-dividing-line;
 
-    .devui-panel-content {
+    .#{$devui-prefix}-panel-content {
       line-height: 1.5;
       padding: 15px;
       background: $devui-base-bg;
       flex: 1;
     }
 
-    &.devui-panel-body-collapse {
+    &.#{$devui-prefix}-panel-body-collapse {
       &::before {
         content: '';
         width: 30px;
         height: 100%;
       }
 
-      .devui-panel-content {
+      .#{$devui-prefix}-panel-content {
         border-left: 2px solid $devui-dividing-line;
       }
     }
   }
 
-  .devui-panel-footer {
+  .#{$devui-prefix}-panel-footer {
     padding: 10px 15px;
     color: $devui-text;
     background-color: $devui-area;
@@ -60,85 +60,85 @@
     }
   }
 
-  &.devui-panel-default {
-    .devui-panel-heading,
-    .devui-panel-body {
+  &.#{$devui-prefix}-panel-default {
+    .#{$devui-prefix}-panel-heading,
+    .#{$devui-prefix}-panel-body {
       background-color: $devui-default-bg;
     }
   }
 
-  &.devui-panel-primary {
-    .devui-panel-heading,
-    .devui-panel-body {
+  &.#{$devui-prefix}-panel-primary {
+    .#{$devui-prefix}-panel-heading,
+    .#{$devui-prefix}-panel-body {
       background-color: $devui-primary-bg;
     }
 
-    .devui-panel-body-collapse {
-      .devui-panel-content {
+    .#{$devui-prefix}-panel-body-collapse {
+      .#{$devui-prefix}-panel-content {
         border-color: $devui-primary-line;
       }
     }
   }
 
-  &.devui-panel-info {
-    .devui-panel-heading,
-    .devui-panel-body {
+  &.#{$devui-prefix}-panel-info {
+    .#{$devui-prefix}-panel-heading,
+    .#{$devui-prefix}-panel-body {
       background-color: $devui-info-bg;
     }
 
-    .devui-panel-body-collapse {
-      .devui-panel-content {
+    .#{$devui-prefix}-panel-body-collapse {
+      .#{$devui-prefix}-panel-content {
         border-color: $devui-info-line;
       }
     }
   }
 
-  &.devui-panel-success {
-    .devui-panel-heading,
-    .devui-panel-body {
+  &.#{$devui-prefix}-panel-success {
+    .#{$devui-prefix}-panel-heading,
+    .#{$devui-prefix}-panel-body {
       background-color: $devui-success-bg;
     }
 
-    .devui-panel-body-collapse {
-      .devui-panel-content {
+    .#{$devui-prefix}-panel-body-collapse {
+      .#{$devui-prefix}-panel-content {
         border-color: $devui-success-line;
       }
     }
   }
 
-  &.devui-panel-warning {
-    .devui-panel-heading,
-    .devui-panel-body {
+  &.#{$devui-prefix}-panel-warning {
+    .#{$devui-prefix}-panel-heading,
+    .#{$devui-prefix}-panel-body {
       background-color: $devui-warning-bg;
     }
 
-    .devui-panel-body-collapse {
-      .devui-panel-content {
+    .#{$devui-prefix}-panel-body-collapse {
+      .#{$devui-prefix}-panel-content {
         border-color: $devui-warning-line;
       }
     }
   }
 
-  &.devui-panel-danger {
-    .devui-panel-heading,
-    .devui-panel-body {
+  &.#{$devui-prefix}-panel-danger {
+    .#{$devui-prefix}-panel-heading,
+    .#{$devui-prefix}-panel-body {
       background-color: $devui-danger-bg;
     }
 
-    .devui-panel-body-collapse {
-      .devui-panel-content {
+    .#{$devui-prefix}-panel-body-collapse {
+      .#{$devui-prefix}-panel-content {
         border-color: $devui-danger-line;
       }
     }
   }
 
-  .devui-panel-leave-active {
+  .#{$devui-prefix}-panel-leave-active {
     transition: all 0.3s ease-in-out;
     animation: panelUpOut 0.3s ease-in-out;
     animation-fill-mode: both;
   }
 
-  .devui-panel-enter-active {
+  .#{$devui-prefix}-panel-enter-active {
     transition: all 0.3s ease-in-out;
     animation: panelUpIn 0.3s ease-in-out;
     animation-fill-mode: both;

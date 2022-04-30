@@ -1,4 +1,6 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue';
+
+export type ISize = 'lg' |'md' | 'sm';
 
 export const inputNumberProps = {
   placeholder: {
@@ -22,7 +24,7 @@ export const inputNumberProps = {
     default: -Infinity
   },
   size: {
-    type: String,
+    type: String as PropType<ISize>,
     default: ''
   },
   modelValue: {
@@ -49,6 +51,6 @@ export const inputNumberProps = {
     type: Function as PropType<() => void>,
     default: undefined
   }
-} as const
+} as const;
 
-export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>
+export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>;

@@ -1,4 +1,6 @@
-.devui-content {
+@import '../../styles-var/devui-var';
+
+.#{$devui-prefix}-content {
   flex: auto;
   min-height: 0;
 }

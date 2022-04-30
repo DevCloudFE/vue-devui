@@ -2,7 +2,7 @@
 
 搜索框。
 
-### 何时使用
+#### 何时使用
 
 当用户需要在数据集中搜索所需数据时，输入所需数据的内容（或部分内容），返回所有匹配内容的搜索结果。
 
@@ -12,36 +12,32 @@
 
 ```vue
 <template>
-  <div class="dev-search-demo">
-    <h4>Small</h4>
-    <d-search size="sm" autoFocus style="width: 200px" :delay="1000"></d-search>
-    <h4>Middle</h4>
-    <d-search style="width: 200px" isKeyupSearch @onSearch="onSearch1"></d-search>
-    <h4>Large</h4>
-    <d-search iconPosition="left" size="lg" style="width: 200px" @onSearch="onSearch2"></d-search>
-    <h4>Disabled</h4>
-    <d-search disabled style="width: 200px"></d-search>
+  <div>
+    Small
+    <d-search size="sm" auto-focus style="width: 200px" @search="onSearch"></d-search>
+    Middle
+    <d-search style="width: 200px" is-keyup-search :delay="1000" @search="onSearch"></d-search>
+    Large
+    <d-search size="lg" style="width: 200px" @search="onSearch"></d-search>
+    Disabled
+    <d-search disabled style="width: 200px" @search="onSearch"></d-search>
   </div>
 </template>
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
-    const onSearch1 = (e) => {
-      console.log(e)
-    }
-    const onSearch2 = (e) => {
-      console.log(e)
-    }
     return {
-      onSearch1,
-      onSearch2
-    }
-  }
-})
+      onSearch: (val) => {
+        console.log(val);
+      },
+    };
+  },
+});
 </script>
 ```
+
 :::
 
 ### 搜索图标左置
@@ -51,23 +47,25 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-search iconPosition="left" style="width: 200px" placeholder="请输入"></d-search>
+    <d-search icon-position="left" style="width: 200px" placeholder="请输入"></d-search>
   </div>
 </template>
 ```
+
 :::
 
 ### 无边框
 
-:::demo 使用`noBorder`来定义`Search`无边框
+:::demo 使用`no-border`来定义`Search`无边框
 
 ```vue
 <template>
   <div>
-    <d-search iconPosition="left" noBorder style="width: 200px"></d-search>
+    <d-search icon-position="left" no-border style="width: 200px"></d-search>
   </div>
 </template>
 ```
+
 :::
 
 ### 双向绑定
@@ -75,57 +73,51 @@ export default defineComponent({
 :::demo 使用`v-model`双向绑定
 
 ```vue
-
 <template>
-  <d-search cssClass="ipt" v-model="searchText" :maxLength="5" style="width: 200px" @onSearch="search"></d-search>
+  <d-search css-class="ipt" v-model="searchText" :max-length="5" style="width: 200px"></d-search>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const searchText = ref('Devui')
-    const search = (e) => {
-      console.log(`search callback: ${e}，value：${searchText.value}`)
-    }
+    const searchText = ref('Devui');
     return {
       searchText,
-      search
-    }
+    };
   },
-})
+});
 </script>
 ```
 
 :::
 
-### API
+### Search 参数
 
-|    参数     |   类型   |   默认    | 说明                     | 跳转 Demo                         | 全局配置项 |
-| :---------: | :------: | :-------: | :----------------------- | --------------------------------- | --------- |
-|    size     | `'sm'\|''\|'lg'` |    ''     | 可选，搜索框尺寸，有三种选择 lg、''、sm  | [基本用法](#基本用法)             ||
-|    placeholder     | `string` |  --   | 可选，输入框 placeholder     | [搜索图标左置](#搜索图标左置)             ||
-|    maxLength     | `number` |  --   | 可选，输入框的 max-length    |  [双向绑定](#双向绑定)  ||
-|    delay     | `number` |  300   | 可选，debounceTime 的延迟    |  [基本用法](#基本用法)  ||
-|    disabled    | `boolean` | false | 可选，输入框是否被禁用    | [基本用法](#基本用法)             ||
-|    autoFocus    | `boolean` | false | 可选，输入框是否自动对焦 | [基本用法](#基本用法)             ||
-| isKeyupSearch | `boolean` |  false   | 可选，是否支持输入值立即触发 onSearch | [基本用法](#基本用法) ||
-| iconPosition | `string` |  'right'   | 可选，搜索图标位置，有两种选择'left' / 'right' | [搜索图标左置](#搜索图标左置) ||
-| noBorder | `boolean` |  false  | 可选，是否显示边框 | [无边框](#无边框) ||
-| cssClass | `string` |  ''  | 可选，支持传入类名到输入框上 | [双向绑定](#双向绑定) ||
+| 参数名          | 类型               | 默认    | 说明                                           | 跳转 Demo                     |
+| :-------------- | :----------------- | :------ | :--------------------------------------------- | :---------------------------- |
+| size            |  [SearchSizeType](#searchsizetype) | 'md'| 可选，搜索框尺寸，有三种选择 lg、'md'、sm | [基本用法](#基本用法) |
+| placeholder     | `string`           | --      | 可选，输入框 placeholder                       | [搜索图标左置](#搜索图标左置) |
+| max-length      | `number`           | --      | 可选，输入框的 max-length                      | [双向绑定](#双向绑定)         |
+| delay           | `number`           | 300     | 可选，debounceTime 的延迟                      | [基本用法](#基本用法)         |
+| disabled        | `boolean`          | false   | 可选，输入框是否被禁用                         | [基本用法](#基本用法)         |
+| auto-focus      | `boolean`          | false   | 可选，输入框是否自动对焦                       | [基本用法](#基本用法)         |
+| is-keyup-search | `boolean`          | false   | 可选，是否支持输入值立即触发 `search`          | [基本用法](#基本用法)         |
+| icon-position   | `string`           | 'right' | 可选，搜索图标位置，有两种选择'left' / 'right' | [搜索图标左置](#搜索图标左置) |
+| no-border       | `boolean`          | false   | 可选，是否显示边框                             | [无边框](#无边框)             |
+| css-class       | `string`           | ''      | 可选，支持传入类名到输入框上                   | [双向绑定](#双向绑定)         |
 
-### d-search 事件
+### Search 事件
 
-|    事件     |   类型  | 说明                     | 跳转 Demo |
-| :---------: | :------: | :--------------------: | :---------: |
-| onSearch |	`string` |	回车或点击搜索按钮触发的回调函数，返回文本框输入的值 |	[基本用法](#基本用法) |
+| 事件名 | 类型     | 说明                                                 | 跳转 Demo             |
+| ------ | -------- | ---------------------------------------------------- | --------------------- |
+| search | `string` | 回车或点击搜索按钮触发的回调函数，返回文本框输入的值 | [基本用法](#基本用法) |
 
-<style>
-.dev-search-demo  h4 {
-  font-weight: 700;
-  color: #575d6c;
-  font-size: 12px;
-  margin: 15px 0;
-}
-</style>
+### Search 类型定义
+
+#### SearchSizeType
+
+```ts
+type SearchSizeType = 'sm' | 'md' | 'lg';
+```

@@ -1,10 +1,12 @@
 import type { App } from 'vue';
 import Modal from './src/modal';
-import Header from './src/header';
-import Body from './src/body';
-import Footer from './src/footer';
+import Header from './src/components/header';
+import Body from './src/components/body';
+import Footer from './src/components/footer';
 import { ModalService } from './src/services/modal-service';
-import { inBrowser } from '../shared/util/common-var';
+import { inBrowser } from '../shared/utils/common-var';
+
+export * from './src/modal-types';
 
 export { Modal };
 

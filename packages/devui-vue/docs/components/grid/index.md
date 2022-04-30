@@ -1,16 +1,16 @@
 # Grid 栅格
 
-24栅格系统。
-### 何时使用
+24 栅格系统。
 
-需要使用弹性布局时，并且需要适配不同的屏幕时，使用grid组件。
+#### 何时使用
 
+需要使用弹性布局时，并且需要适配不同的屏幕时，使用 grid 组件。
 
 ### 基本用法
 
 基础栅格
 
-:::demo 使用 Row 和 Col组件，可以创建一个基本的栅格系统，Col必须放在Row里面。
+:::demo 使用 Row 和 Col 组件，可以创建一个基本的栅格系统，Col 必须放在 Row 里面。
 
 ```vue
 <template>
@@ -64,7 +64,7 @@
 
 垂直对齐和水平对齐
 
-:::demo 使用Row的align属性和justify属性子元素垂直对齐和水平对齐。
+:::demo 使用 Row 的 align 属性和 justify 属性子元素垂直对齐和水平对齐。
 
 ```vue
 <template>
@@ -125,17 +125,15 @@
     <d-col :span="4" class="col-child">col-4</d-col>
   </d-row>
 </template>
-
 ```
 
 :::
 
-
 ### 子元素的间隔
 
-栅格之间的间隔可以用Row的gutter属性
+栅格之间的间隔可以用 Row 的 gutter 属性
 
-:::demo :gutter="10" 子元素左右间隔为 5px；:gutter="[10, 20]" 子元素左右间隔为5px，上下间隔为10px；需要适配屏幕宽度的情况，:gutter="{ xs: 10, sm: 20, md: [20, 10], lg: [30, 20], xl: [40, 30], xxl: [50, 40] }"
+:::demo :gutter="10" 子元素左右间隔为 5px；:gutter="[10, 20]" 子元素左右间隔为 5px，上下间隔为 10px；需要适配屏幕宽度的情况，:gutter="{ xs: 10, sm: 20, md: [20, 10], lg: [30, 20], xl: [40, 30], xxl: [50, 40] }"
 
 ```vue
 <template>
@@ -167,7 +165,7 @@
       <div class="col-child">col-6</div>
     </d-col>
   </d-row>
-  <d-row :gutter="{ xs: 10, sm: 20, md: [20, 10], lg: [30, 20], xl: [40, 30], xxl: [50, 40]}" class="docs-devui-row">
+  <d-row :gutter="{ xs: 10, sm: 20, md: [20, 10], lg: [30, 20], xl: [40, 30], xxl: [50, 40] }" class="docs-devui-row">
     <d-col :span="6" class="col-gutter">
       <div class="col-child">col-6</div>
     </d-col>
@@ -189,7 +187,7 @@
   background: transparent !important;
 }
 .col-gutter:nth-of-type(2n + 1) > .col-child {
-  background: #f8f8f8
+  background: #f8f8f8;
 }
 .col-gutter:nth-of-type(2n) > .col-child {
   background: #99b0ff;
@@ -199,9 +197,9 @@
 
 :::
 
-### flex填充
+### flex 填充
 
-Col的flex属性支持flex填充。
+Col 的 flex 属性支持 flex 填充。
 
 :::demo
 
@@ -226,9 +224,9 @@ Col的flex属性支持flex填充。
 
 ### 左右偏移
 
-使用Col的offset、pull和push来使子元素左右偏移。
+使用 Col 的 offset、pull 和 push 来使子元素左右偏移。
 
-:::demo 列偏移。使用 offset 可以将列向右侧偏。例如，offset={4} 将元素向右侧偏移了 4 个列（column）的宽度；offset、pull、push也可以内嵌到。
+:::demo 列偏移。使用 offset 可以将列向右侧偏。例如，offset={4} 将元素向右侧偏移了 4 个列（column）的宽度；offset、pull、push 也可以内嵌到。
 
 ```vue
 <template>
@@ -273,7 +271,7 @@ Col的flex属性支持flex填充。
 
 ### 栅格排序
 
-列排序。通过使用order、 push 和 pull 类就可以改变列（column）的顺。
+列排序。通过使用 order、 push 和 pull 类就可以改变列（column）的顺。
 
 :::demo 参照 Bootstrap 的 [响应式设计](https://getbootstrap.com/docs/3.4/css/)。
 
@@ -292,30 +290,42 @@ Col的flex属性支持flex填充。
 
 :::
 
-### API
+### Row 参数
 
-d-row 参数
+| 参数名  | 类型                        | 默认    | 说明                                                                                                                  | 跳转 Demo                     |
+| :------ | :-------------------------- | :------ | :-------------------------------------------------------------------------------------------------------------------- | :---------------------------- |
+| align   | [Align](#align)             | 'top'   | flex 布局下的垂直对齐方式                                                                                             | [垂直对齐](#垂直对齐)         |
+| justify | [Justify](#justify)         | 'start' | flex 布局下的垂直对齐方式                                                                                             | [垂直对齐](#垂直对齐)         |
+| gutter  | `number`\|`array`\|`object` | 0       | 栅格间隔，数值形式：水平间距。<br>对象形式支持响应式： { xs: 8, sm: 16, md: 24}。<br>数组形式：[水平间距, 垂直间距]。 | [子元素的间隔](#子元素的间隔) |
+| wrap    | `boolean`                   | false   | 是否自动换行                                                                                                          |                               |
 
-| 参数 | 类型 | 默认 | 说明 | 跳转 Demo | 全局配置项 |
-| ---- | ---- | ---- | ---- | --------- | --------- |
-| align | `string` | `'top'` | flex 布局下的垂直对齐方式：`'top'`，`'middle'`，`'bottom'` | [垂直对齐](#垂直对齐) |  |
-| justify | `string` | `'start'` | flex 布局下的垂直对齐方式：`'start'`，`'end'`，`'center'`，`'space-around'`，`'space-between'` | [垂直对齐](#垂直对齐) |  |
-| gutter |  `number\|array\|object`    |  0   | 栅格间隔，数值形式：水平间距。对象形式支持响应式： { xs: 8, sm: 16, md: 24}。数组形式：[水平间距, 垂直间距]。 |     [子元素的间隔](#子元素的间隔)      |           |
-| wrap | `boolean` | false | 是否自动换行 |           |           |
+### Col 参数
 
-d-col 参数
+| 参数名 | 类型             | 默认 | 说明                                                    | 跳转 Demo                                    |
+| :----- | :--------------- | :--- | :------------------------------------------------------ | :------------------------------------------- |
+| span   | `number`         | -    | 栅格占位格数，为 0 时相当于 display: none               | [基本用法](#基本用法)                        |
+| flex   | `string\|number` | -    | flex 布局填充                                           | [flex 填充](#flex填充)                       |
+| offset | `number`         | -    | 栅格左侧的间隔格数，间隔内不可以有栅格                  | [左右偏移](#左右偏移)                        |
+| pull   | `number`         | -    | 栅格向左移动格数                                        | [左右偏移](#左右偏移)、[栅格排序](#栅格排序) |
+| push   | `number`         | -    | 栅格向右移动格数                                        | [左右偏移](#左右偏移)、[栅格排序](#栅格排序) |
+| order  | `number`         | -    | 栅格顺序，flex 布局模式下有效                           | [栅格排序](#栅格排序)                        |
+| xs     | `number\|object` | -    | <576px 响应式栅格，可为栅格数或一个包含其他属性的对象   | [栅格排序](#栅格排序)                        |
+| sm     | `number\|object` | -    | >=576px 响应式栅格，可为栅格数或一个包含其他属性的对象  | [响应式布局](#响应式布局)                    |
+| md     | `number\|object` | -    | >=768px 响应式栅格，可为栅格数或一个包含其他属性的对象  | [响应式布局](#响应式布局)                    |
+| lg     | `number\|object` | -    | >=992px 响应式栅格，可为栅格数或一个包含其他属性的对象  | [响应式布局](#响应式布局)                    |
+| xl     | `number\|object` | -    | >=1200px 响应式栅格，可为栅格数或一个包含其他属性的对象 | [响应式布局](#响应式布局)                    |
+| xxl    | `number\|object` | -    | >=1600px 响应式栅格，可为栅格数或一个包含其他属性的对象 | [响应式布局](#响应式布局)                    |
 
-| 参数 | 类型 | 默认 | 说明 | 跳转 Demo | 全局配置项 |
-| ---- | ---- | ---- | ---- | --------- | --------- |
-| span | `number` | - | 栅格占位格数，为 0 时相当于 display: none | [基本用法](#基本用法) |          |
-| flex | `string\|number` | - | flex 布局填充 | [flex填充](#flex填充) |           |
-| offset | `number` | - | 栅格左侧的间隔格数，间隔内不可以有栅格 | [左右偏移](#左右偏移) |       
-| pull | `number` | - | 栅格向左移动格数 | [左右偏移](#左右偏移)、[栅格排序](#栅格排序) |  
-| push | `number` | - | 栅格向右移动格数 | [左右偏移](#左右偏移)、[栅格排序](#栅格排序) |  
-| order | `number` | - | 栅格顺序，flex 布局模式下有效 | [栅格排序](#栅格排序) |  
-| xs | `number\|object` | - | <576px 响应式栅格，可为栅格数或一个包含其他属性的对象 | [栅格排序](#栅格排序) |  
-| sm | `number\|object` | - | >=576px 响应式栅格，可为栅格数或一个包含其他属性的对象 | [响应式布局](#响应式布局) |
-| md | `number\|object` | - | >=768px 响应式栅格，可为栅格数或一个包含其他属性的对象 | [响应式布局](#响应式布局) |
-| lg | `number\|object` | - | >=992px 响应式栅格，可为栅格数或一个包含其他属性的对象 | [响应式布局](#响应式布局) |
-| xl | `number\|object` | - | >=1200px 响应式栅格，可为栅格数或一个包含其他属性的对象 | [响应式布局](#响应式布局) |
-| xxl | `number\|object` | - | >=1600px 响应式栅格，可为栅格数或一个包含其他属性的对象 | [响应式布局](#响应式布局) |
+### Grid 类型定义
+
+#### Align
+
+```ts
+type Align = 'top' | 'middle' | 'bottom';
+```
+
+#### Justify
+
+```ts
+type Justify = 'start' | 'end' | 'center' | 'around' | 'between';
+```

@@ -1,12 +1,12 @@
-import { defineComponent, ref, PropType, onMounted, toRefs, watch } from 'vue'
-import './gantt-scale.scss'
+import { defineComponent, ref, PropType, onMounted, toRefs, watch } from 'vue';
+import './gantt-scale.scss';
 import {
   GanttScaleUnit,
   GanttMilestone,
   GanttScaleDateInfo,
-} from '../gantt-model'
-import { useScaleData } from './use-scale-data'
-import { i18nText } from '../i18n-gantt'
+} from '../gantt-model';
+import { useScaleData } from './use-scale-data';
+import { i18nText } from '../i18n-gantt';
 export default defineComponent({
   name: 'DGanttScale',
   props: {
@@ -44,43 +44,43 @@ export default defineComponent({
   emits: ['addMilestone'],
   setup(props, ctx) {
     const { startDate, endDate, milestoneList, scrollElement, unit } =
-      toRefs(props)
-    const scaleData = ref<GanttScaleDateInfo[]>([])
-    const viewSCaleData = ref<GanttScaleDateInfo[]>([])
+      toRefs(props);
+    const scaleData = ref<GanttScaleDateInfo[]>([]);
+    const viewSCaleData = ref<GanttScaleDateInfo[]>([]);
     const scaleWidth = ref({
       day: 40,
       week: 30,
       month: 20,
-    })
-    const highlight = ref(false)
-    const highlightStartText = ref('')
-    const highlightEndText = ref('')
-    const { generateScaleData } = useScaleData(milestoneList)
-    let viewScaleRange = [0, 0]
+    });
+    const highlight = ref(false);
+    const highlightStartText = ref('');
+    const highlightEndText = ref('');
+    const { generateScaleData } = useScaleData(milestoneList);
+    let viewScaleRange = [0, 0];
     const addMilestone = (info: GanttScaleDateInfo) => {
-      ctx.emit('addMilestone', info)
-    }
+      ctx.emit('addMilestone', info);
+    };
     const getViewScaleData = () => {
       if (scrollElement.value) {
-        const containerWidth = scrollElement.value.clientWidth
-        const scrollLeft = scrollElement.value.scrollLeft
+        const containerWidth = scrollElement.value.clientWidth;
+        const scrollLeft = scrollElement.value.scrollLeft;
 
-        const start = Math.floor(scrollLeft / scaleWidth.value[unit.value])
-        const offset = Math.ceil(containerWidth / scaleWidth.value[unit.value])
-        viewScaleRange = [start - 2, start + offset + 2]
+        const start = Math.floor(scrollLeft / scaleWidth.value[unit.value]);
+        const offset = Math.ceil(containerWidth / scaleWidth.value[unit.value]);
+        viewScaleRange = [start - 2, start + offset + 2];
         viewSCaleData.value = scaleData.value.filter(
           (i: GanttScaleDateInfo) => {
-            return i.index >= viewScaleRange[0] && i.index <= viewScaleRange[1]
+            return i.index >= viewScaleRange[0] && i.index <= viewScaleRange[1];
           }
-        )
+        );
       }
-    }
+    };
     onMounted(() => {
       if (startDate.value && endDate.value) {
-        scaleData.value = generateScaleData(startDate.value, endDate.value)
-        getViewScaleData()
+        scaleData.value = generateScaleData(startDate.value, endDate.value);
+        getViewScaleData();
       }
-    })
+    });
 
     watch(
       () => props.scrollElement,
@@ -89,11 +89,11 @@ export default defineComponent({
         ;(props.scrollElement as HTMLDivElement).addEventListener(
           'scroll',
           () => {
-            getViewScaleData()
+            getViewScaleData();
           }
-        )
+        );
       }
-    )
+    );
 
     return {
       viewSCaleData,
@@ -102,7 +102,7 @@ export default defineComponent({
       highlight,
       highlightStartText,
       highlightEndText,
-    }
+    };
   },
   render() {
     const {
@@ -114,7 +114,7 @@ export default defineComponent({
       highlightStartText,
       highlightEndText,
       ganttBarContainerElement,
-    } = this
+    } = this;
     return (
       <div class="devui-gantt-scale-wrapper">
         {viewSCaleData.map((data, index) => (
@@ -143,9 +143,9 @@ export default defineComponent({
                 ? unit === 'month'
                   ? i18nText.zh.yearDisplay(data.yearLabel)
                   : i18nText.zh.yearAndMonthDisplay(
-                      data.yearLabel,
-                      data.monthLabel
-                    )
+                    data.yearLabel,
+                    data.monthLabel
+                  )
                 : ''}
             </div>
             <div class="devui-scale-unit">
@@ -190,6 +190,6 @@ export default defineComponent({
           </div>
         ))}
       </div>
-    )
+    );
   },
-})
+});

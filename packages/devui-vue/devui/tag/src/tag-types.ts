@@ -1,10 +1,10 @@
-import type { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue';
 
-export type tagType = 'primary' | 'success' | 'warning' | 'danger'
+export type TagType = 'primary' | 'success' | 'warning' | 'danger';
 
 export const tagProps = {
   type: {
-    type: String as PropType<tagType>,
+    type: String as PropType<TagType>,
     default: ''
   },
   color: {
@@ -23,6 +23,6 @@ export const tagProps = {
     type: Boolean as PropType<boolean>,
     default: false
   }
-} as const
+} as const;
 
-export type TagProps = ExtractPropTypes<typeof tagProps>
+export type TagProps = ExtractPropTypes<typeof tagProps>;

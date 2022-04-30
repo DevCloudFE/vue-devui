@@ -1,11 +1,10 @@
-@import '../../style/theme/color';
-@import '../../style/theme/font';
+@import '../../styles-var/devui-var.scss';
 
-.devui-badge {
+.#{$devui-prefix}-badge {
   position: relative;
   display: inline-block;
 
-  .devui-badge-content {
+  .#{$devui-prefix}-badge-content {
     font-size: $devui-font-size;
     color: $devui-light-text;
 
@@ -37,6 +36,11 @@
 
     &-info {
       background: $devui-info;
+    }
+
+    &-common {
+      background: $devui-unavailable;
+      color: $devui-aide-text;
     }
 
     &-top-left {

@@ -2,7 +2,7 @@
 
 页面的布局方式。
 
-### 何时使用
+#### 何时使用
 
 当用户需要直接使用一些既有布局时。
 
@@ -349,34 +349,22 @@ export default defineComponent({
 
 :::
 
-### API
+### Layout
 
-在页面中使用：
+布局容器，可以与`d-header`, `d-content`, `d-footer`, `d-aside`组合实现布局； `d-layout`下可嵌套元素：`d-header`, `d-content`, `d-aside`, `d-layout`。
 
-```html
-<d-layout>
-  <d-header></d-header>
-  <d-content></d-content>
-  <d-footer></d-footer>
-</d-layout>
-```
+### Header
 
-### d-layout
+顶部布局，只能放在`d-layout`容器中，作为`d-layout`容器的顶部实现。 默认高度：40px。
 
-布局容器，可以与<code>d-header</code>, <code>d-content</code>, <code>d-footer</code>, <code>d-aside</code>组合实现布局； <code>d-layout</code>下可嵌套元素：<code>d-header</code>, <code>d-content</code>, <code>d-aside</code>, <code>d-layout</code>。
+### Footer
 
-### d-header
+底部布局，只能放在`d-layout`容器中，作为`d-layout`容器的底部实现。
 
-顶部布局，只能放在<code>d-layout</code>容器中，作为<code>d-layout</code>容器的顶部实现。 默认高度：40px。
+### Content
 
-### d-footer
+内容容器，只能放在`d-layout`容器中，作为`d-layout`容器`d-header`与`d-footer`之间的内容。
 
-底部布局，只能放在<code>d-layout</code>容器中，作为<code>d-layout</code>容器的底部实现。
+### Aside
 
-### d-content
-
-内容容器，只能放在<code>d-layout</code>容器中，作为<code>d-layout</code>容器<code>d-header</code>与<code>d-footer</code>之间的内容。
-
-### d-aside
-
-侧边栏，只能放在<code>d-layout</code>容器中，作为<code>d-layout</code>容器的侧边栏部分。
+侧边栏，只能放在`d-layout`容器中，作为`d-layout`容器的侧边栏部分。

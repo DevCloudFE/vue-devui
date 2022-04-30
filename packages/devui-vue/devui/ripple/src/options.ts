@@ -7,53 +7,53 @@ interface IRippleDirectiveOptions {
    * @default
    * 'currentColor'
    */
-  color: string
+  color: string;
   /**
    * 第一次出现的透明度
    *
    * @default
    * 0.2 默认opacity 0.2
    */
-  initialOpacity: number
+  initialOpacity: number;
   /**
    * 在透明度 结束的时候 stopped 的时候 我们设置透明度的大小
    *
    * @default
    * 0.1
    */
-  finalOpacity: number
+  finalOpacity: number;
   /**
    * 动画持续事件
    *
    * @default
-   * 0.4
+   * 400ms
    */
-  duration: number
+  duration: number;
   /**
    * css 动画 从开始到结束 以相同的时间来执行动画
    *
    * @default
    * 'ease-out'
    */
-  easing: string
+  easing: string;
   /**
    * 取消延迟时间
    *
    * @note
    * 类似于 debounceTime
    * @default
-   * 75
+   * 75ms
    */
-  delayTime: number
+  delay: number;
   /**
    * 禁止 水波
    *
    * @note
-   * 类似于 debounceTime
+   * 类似于 点击禁止ripple效果
    * @default
-   * 75
+   * false
    */
-  disabled: boolean
+  disabled: boolean;
 }
 
 interface IRipplePluginOptions extends IRippleDirectiveOptions {
@@ -67,13 +67,13 @@ interface IRipplePluginOptions extends IRippleDirectiveOptions {
    * @default
    * 默认指令 ripple
    */
-  directive: string
+  directive: string;
 }
 
 // 给可预见值 value 添加类型
 
 interface IRippleDirectiveOptionWithBinding {
-  value: IRippleDirectiveOptions
+  value: IRippleDirectiveOptions;
 }
 
 const DEFAULT_PLUGIN_OPTIONS: IRipplePluginOptions = {
@@ -81,15 +81,15 @@ const DEFAULT_PLUGIN_OPTIONS: IRipplePluginOptions = {
   color: 'currentColor',
   initialOpacity: 0.2,
   finalOpacity: 0.1,
-  duration: 0.8,
+  duration: 400,
   easing: 'ease-out',
-  delayTime: 75,
+  delay: 75,
   disabled: false
-}
+};
 
 export {
   DEFAULT_PLUGIN_OPTIONS,
   IRipplePluginOptions,
   IRippleDirectiveOptions,
   IRippleDirectiveOptionWithBinding
-}
+};

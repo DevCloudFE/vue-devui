@@ -1,8 +1,7 @@
 @import '../../../style/mixins/flex';
-@import '../../../style/theme/color';
-@import '../../../style/theme/font';
+@import '../../../styles-var/devui-var.scss';
 
-.devui-cascader-ul {
+.#{$devui-prefix}-cascader-ul {
   height: 180px;
   background: $devui-connected-overlay-bg;
   display: block;
@@ -12,7 +11,7 @@
   overflow-y: auto;
   border-left: 1px solid $devui-dividing-line;
 
-  &.devui-drop-no-data {
+  &.#{$devui-prefix}-drop-no-data {
     color: $devui-disabled-text;
     padding: 8px;
     display: block;
