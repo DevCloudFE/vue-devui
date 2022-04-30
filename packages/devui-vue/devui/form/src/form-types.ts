@@ -52,6 +52,10 @@ export const formProps = {
     type: Boolean,
     default: false,
   },
+  showFeedback: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export interface UseFieldCollection {

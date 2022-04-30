@@ -10,7 +10,8 @@ export default defineComponent({
   props: formItemProps,
   setup(props: FormItemProps, ctx: SetupContext) {
     const formContext = inject(FORM_TOKEN) as FormContext;
-    const { messageType: itemMessageType, popPosition: itemPopPosition, ...otherProps } = toRefs(props);
+    const { messageType: itemMessageType, popPosition: itemPopPosition, showFeedback: itemShowFeedback, ...otherProps } = toRefs(props);
+    const showFeedback = computed(() => (itemShowFeedback?.value !== undefined ? itemShowFeedback.value : formContext.showFeedback));
     const messageType = computed(() => itemMessageType?.value || formContext.messageType);
     const popPosition = computed(() => itemPopPosition?.value || formContext.popPosition);
     const { _rules } = useFormItemRule(props);
@@ -18,6 +19,7 @@ export default defineComponent({
     const { itemClasses, isRequired } = useFormItem(messageType, _rules, validateState);
     const context: FormItemContext = reactive({
       ...otherProps,
+      showFeedback,
       messageType,
       popPosition,
       isRequired,
