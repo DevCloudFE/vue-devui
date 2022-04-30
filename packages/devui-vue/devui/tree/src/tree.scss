@@ -2,25 +2,25 @@
 
 $keyframe-blue: #5e7ce0;
 
-.devui-text-ellipsis {
+.#{$devui-prefix}-text-ellipsis {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
-.devui-tree-indicator {
+.#{$devui-prefix}-tree-indicator {
   height: 1px;
   background-color: $devui-brand;
   position: absolute;
 }
 
-.devui-tree-node {
+.#{$devui-prefix}-tree-node {
   color: $devui-text-weak;
   line-height: 1.5;
   white-space: nowrap;
   position: relative;
 
-  .devui-drop {
+  .#{$devui-prefix}-drop {
     &-draggable {
       border-top: 1px solid transparent;
       border-bottom: 1px solid transparent;
@@ -39,7 +39,7 @@ $keyframe-blue: #5e7ce0;
     }
   }
 
-  .devui-tree-node__content {
+  .#{$devui-prefix}-tree-node__content {
     display: inline-flex;
     align-items: center;
     font-size: $devui-font-size;
@@ -59,29 +59,29 @@ $keyframe-blue: #5e7ce0;
     }
   }
 
-  .devui-tree-node__content--value-wrapper {
+  .#{$devui-prefix}-tree-node__content--value-wrapper {
     display: inline-flex;
     align-items: center;
     width: 100%;
     height: 30px;
 
-    .devui-tree-node_loading {
+    .#{$devui-prefix}-tree-node_loading {
       margin-left: 50px;
 
-      .devui-loading-area {
+      .#{$devui-prefix}-loading-area {
         background: none;
       }
     }
   }
 
-  .devui-tree-node__children {
+  .#{$devui-prefix}-tree-node__children {
     padding-left: 10px;
 
     &:first-child {
       border-left-color: transparent;
     }
 
-    .devui-tree-node {
+    .#{$devui-prefix}-tree-node {
       margin-left: 8px;
       content: '';
       position: relative;
@@ -92,8 +92,8 @@ $keyframe-blue: #5e7ce0;
     }
   }
 
-  .devui-tree-node__title {
-    @extend .devui-text-ellipsis;
+  .#{$devui-prefix}-tree-node__title {
+    @extend .#{$devui-prefix}-text-ellipsis;
 
     margin-left: 5px;
     display: inline-block;
@@ -106,11 +106,11 @@ $keyframe-blue: #5e7ce0;
     }
   }
 
-  .devui-tree-node__edit {
+  .#{$devui-prefix}-tree-node__edit {
     margin-left: 0.4em;
     padding: 0.1em;
 
-    > .devui-input-sm {
+    > .#{$devui-prefix}-input-sm {
       height: 26px;
 
       &.error,
@@ -121,23 +121,23 @@ $keyframe-blue: #5e7ce0;
     }
   }
 
-  .devui-tree-node__leaf {
+  .#{$devui-prefix}-tree-node__leaf {
     &:not(.disabled) {
       cursor: default;
     }
 
-    .devui-tree-node__leaf--default {
+    .#{$devui-prefix}-tree-node__leaf--default {
       color: #f2a71f;
     }
 
-    .devui-leaf-icon-none {
+    .#{$devui-prefix}-leaf-icon-none {
       display: inline-block;
       width: 16px;
       height: 16px;
     }
   }
 
-  .devui-tree-node__folder {
+  .#{$devui-prefix}-tree-node__folder {
     display: inline-block;
     vertical-align: middle;
     user-select: none;
@@ -145,7 +145,7 @@ $keyframe-blue: #5e7ce0;
     height: 16px;
     line-height: 16px;
 
-    .devui-tree-node__folder--icon {
+    .#{$devui-prefix}-tree-node__folder--icon {
       display: inline-block;
       height: 16px;
       line-height: 16px;
@@ -165,7 +165,7 @@ $keyframe-blue: #5e7ce0;
       cursor: pointer;
     }
 
-    .devui-tree-node__folder--default {
+    .#{$devui-prefix}-tree-node__folder--default {
       color: #f2b806;
     }
   }
@@ -177,7 +177,7 @@ $keyframe-blue: #5e7ce0;
     margin-left: 8px;
   }
 
-  .devui-loading-children {
+  .#{$devui-prefix}-loading-children {
     display: inline-block;
     vertical-align: middle;
     margin-left: 0.5em;
@@ -236,16 +236,16 @@ $keyframe-blue: #5e7ce0;
     stroke: $devui-icon-text;
   }
 
-  &.devui-tree-node__open:not(.devui-tree-node__customIcon) {
-    & > .devui-tree-node__content svg.svg-icon path {
+  &.#{$devui-prefix}-tree-node__open:not(.#{$devui-prefix}-tree-node__customIcon) {
+    & > .#{$devui-prefix}-tree-node__content svg.svg-icon path {
       fill: $devui-icon-fill-active;
     }
 
-    & > .devui-tree-node__content svg.svg-icon rect {
+    & > .#{$devui-prefix}-tree-node__content svg.svg-icon rect {
       stroke: $devui-icon-fill-active;
     }
 
-    & > .devui-tree-node__content svg.svg-icon.svg-icon-close rect:last-child {
+    & > .#{$devui-prefix}-tree-node__content svg.svg-icon.svg-icon-close rect:last-child {
       stroke: none;
       fill: $devui-icon-fill-active;
     }
@@ -257,19 +257,19 @@ $keyframe-blue: #5e7ce0;
   }
 }
 
-::ng-deep .devui-tree-mask {
+::ng-deep .#{$devui-prefix}-tree-mask {
   background: $devui-list-item-hover-bg;
 }
 
 /* 视觉融合灰线 */
-.devui-tree-node.devui-tree-without-virtual-scroll {
-  &.devui-tree-node__open {
-    & > .devui-tree-node__content {
+.#{$devui-prefix}-tree-node.#{$devui-prefix}-tree-without-virtual-scroll {
+  &.#{$devui-prefix}-tree-node__open {
+    & > .#{$devui-prefix}-tree-node__content {
       position: relative;
     }
   }
 
-  & > .devui-tree-node__children {
+  & > .#{$devui-prefix}-tree-node__children {
     position: relative;
 
     &::before {
@@ -282,7 +282,7 @@ $keyframe-blue: #5e7ce0;
       top: 0;
     }
 
-    .devui-tree-node__content {
+    .#{$devui-prefix}-tree-node__content {
       // 只要是子级就都存在左边横线
       position: relative;
 
@@ -299,13 +299,13 @@ $keyframe-blue: #5e7ce0;
   }
 }
 
-.devui-tree-vertical-line {
+.#{$devui-prefix}-tree-vertical-line {
   width: 1px;
   background-color: $devui-dividing-line;
   position: absolute;
 }
 
-.devui-tree-horizontal-line {
+.#{$devui-prefix}-tree-horizontal-line {
   height: 1px;
   background-color: $devui-dividing-line;
   position: absolute;
@@ -336,21 +336,21 @@ $keyframe-blue: #5e7ce0;
   background-color: transparent !important;
 }
 
-.devui-tree-node {
+.#{$devui-prefix}-tree-node {
   font-size: 0;
 }
 
-.devui-tree-node, .devui-tree-node__content {
+.#{$devui-prefix}-tree-node, .#{$devui-prefix}-tree-node__content {
   position: relative;
 }
 
-.devui-tree-node__vline {
+.#{$devui-prefix}-tree-node__vline {
   width: 1px;
   background-color: $devui-dividing-line;
   position: absolute;
 }
 
-.devui-tree-node__hline {
+.#{$devui-prefix}-tree-node__hline {
   width: 8px;
   height: 1px;
   background-color: $devui-dividing-line;

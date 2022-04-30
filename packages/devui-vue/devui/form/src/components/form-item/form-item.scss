@@ -1,4 +1,6 @@
-.devui-form__item {
+@import '../../../../styles-var/devui-var';
+
+.#{$devui-prefix}-form__item {
   &--horizontal {
     display: flex;
     align-items: center;

@@ -7,8 +7,8 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   display: block;
 }
 
-.devui-nav-tabs,
-.devui-nav-pills {
+.#{$devui-prefix}-nav-tabs,
+.#{$devui-prefix}-nav-pills {
   font-size: $devui-font-size;
   background: transparent;
   font-weight: bold;
@@ -65,7 +65,7 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   }
 }
 
-.devui-nav-options {
+.#{$devui-prefix}-nav-options {
   font-size: $devui-font-size;
   background: transparent;
   border: none;
@@ -150,7 +150,7 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   }
 }
 
-.devui-nav-slider {
+.#{$devui-prefix}-nav-slider {
   font-size: $devui-font-size;
   border: none;
   border-radius: $devui-border-radius;
@@ -243,7 +243,7 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   }
 }
 
-.devui-nav-wrapped {
+.#{$devui-prefix}-nav-wrapped {
   font-size: $devui-font-size;
   background: transparent;
   border-bottom: 1px solid $devui-dividing-line;
@@ -299,7 +299,7 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   }
 }
 
-.devui-nav {
+.#{$devui-prefix}-nav {
   list-style: none;
   padding-left: 0;
 
@@ -316,7 +316,7 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   }
 }
 
-.devui-nav-tabs:not(.devui-nav-stacked) {
+.#{$devui-prefix}-nav-tabs:not(.#{$devui-prefix}-nav-stacked) {
   border-bottom: 1px $devui-line solid;
 
   li {
@@ -330,7 +330,7 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   }
 }
 
-.devui-nav-pills:not(.devui-nav-stacked) {
+.#{$devui-prefix}-nav-pills:not(.#{$devui-prefix}-nav-stacked) {
   > li {
     float: left;
     margin-left: 32px;
@@ -341,21 +341,21 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   }
 }
 
-.devui-nav::before,
-.devui-nav::after {
+.#{$devui-prefix}-nav::before,
+.#{$devui-prefix}-nav::after {
   content: ' ';
   display: table;
 }
 
-.devui-nav::after {
+.#{$devui-prefix}-nav::after {
   clear: both;
 }
 
-.devui-tab-content {
+.#{$devui-prefix}-tab-content {
   margin-top: 20px;
 }
 
-.devui-nav-slider-animation {
+.#{$devui-prefix}-nav-slider-animation {
   position: absolute;
   z-index: 0;
   background-color: $devui-base-bg;

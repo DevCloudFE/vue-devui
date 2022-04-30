@@ -1,4 +1,6 @@
-.devui-vertical-slider {
+@import '../../../../styles-var/devui-var';
+
+.#{$devui-prefix}-vertical-slider {
   display: flex;
   flex-direction: column;
   min-width: 24px;

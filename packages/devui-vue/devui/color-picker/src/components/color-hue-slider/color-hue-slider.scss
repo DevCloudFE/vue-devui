@@ -1,4 +1,6 @@
-.devui-color-picker-hue-slider {
+@import '../../../../styles-var/devui-var';
+
+.#{$devui-prefix}-color-picker-hue-slider {
   position: relative;
   margin: 13px 0;
   width: 100%;

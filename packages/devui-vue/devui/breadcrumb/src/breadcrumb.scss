@@ -1,9 +1,11 @@
-.devui-breadcrumb {
+@import '../../styles-var/devui-var';
+
+.#{$devui-prefix}-breadcrumb {
   display: flex;
   align-items: center;
 
-  .devui-breadcrumb-item:last-child {
-    .devui-breadcrumb-separator {
+  .#{$devui-prefix}-breadcrumb-item:last-child {
+    .#{$devui-prefix}-breadcrumb-separator {
       display: none;
     }
   }

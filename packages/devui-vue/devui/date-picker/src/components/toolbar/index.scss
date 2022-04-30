@@ -1,9 +1,10 @@
+@import '../../../../styles-var/devui-var';
 @import '../../../../style/devui';
 
 $toolbar-height: 32px;
 $cell-size: 28px;
 
-.devui-calendar-toolbar {
+.#{$devui-prefix}-calendar-toolbar {
   height: $toolbar-height;
   font-weight: $font-title-weight;
   display: flex;

@@ -1,4 +1,6 @@
-.devui-datepicker-popup {
+@import '../../../../styles-var/devui-var';
+
+.#{$devui-prefix}-datepicker-popup {
   position: fixed;
   left: 0;
   top: 0;

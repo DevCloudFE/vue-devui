@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-table {
+.#{$devui-prefix}-table {
   position: relative;
   width: 100%;
   overflow-x: auto;
@@ -55,12 +55,12 @@
     tbody > tr > td {
       padding: 7px 20px 8px;
 
-      &.devui-table__checkable-cell {
+      &.#{$devui-prefix}-table__checkable-cell {
         padding: 8px;
       }
     }
 
-    thead > tr > th.devui-table__checkable-cell {
+    thead > tr > th.#{$devui-prefix}-table__checkable-cell {
       padding: 8px;
     }
   }
@@ -70,7 +70,7 @@
       padding: 11px 20px 12px;
     }
 
-    thead > tr > th.devui-table__checkable-cell {
+    thead > tr > th.#{$devui-prefix}-table__checkable-cell {
       padding: 8px 20px;
     }
   }
@@ -80,7 +80,7 @@
       padding: 15px 20px 16px;
     }
 
-    thead > tr > th.devui-table__checkable-cell {
+    thead > tr > th.#{$devui-prefix}-table__checkable-cell {
       padding: 8px 20px;
     }
   }

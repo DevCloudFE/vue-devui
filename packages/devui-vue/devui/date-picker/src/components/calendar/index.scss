@@ -1,4 +1,6 @@
-.devui-calendar-container {
+@import '../../../../styles-var/devui-var';
+
+.#{$devui-prefix}-calendar-container {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

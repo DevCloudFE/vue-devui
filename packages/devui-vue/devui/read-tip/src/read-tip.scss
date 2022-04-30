@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-read-tip {
+.#{$devui-prefix}-read-tip {
   position: relative;
 
   .title {

@@ -15,7 +15,7 @@
   clear: both;
 }
 
-.devui-close {
+.#{$devui-prefix}-close {
   float: right;
   font-weight: bold;
   line-height: 20px;
@@ -35,7 +35,7 @@
   }
 }
 
-button.devui-close {
+button.#{$devui-prefix}-close {
   -webkit-appearance: none;
   padding: 0;
   cursor: pointer;
@@ -53,7 +53,7 @@ a:hover {
   outline: 0;
 }
 
-.devui-link {
+.#{$devui-prefix}-link {
   color: $devui-link;
 
   &:hover {
@@ -63,7 +63,7 @@ a:hover {
   }
 }
 
-.devui-link-light {
+.#{$devui-prefix}-link-light {
   color: $devui-link-light;
 
   &:hover {
@@ -73,21 +73,21 @@ a:hover {
   }
 }
 
-.devui-disabled {
+.#{$devui-prefix}-disabled {
   &,
-  &.devui-input-group-addon {
+  &.#{$devui-prefix}-input-group-addon {
     border-color: $devui-disabled-line;
   }
 
   &,
   & > input,
-  & > .devui-input-group-addon {
+  & > .#{$devui-prefix}-input-group-addon {
     color: $devui-disabled-text;
     background-color: $devui-disabled-bg;
     cursor: not-allowed;
   }
 }
 
-.devui-body-scrollblock {
+.#{$devui-prefix}-body-scrollblock {
   width: 100%;
 }

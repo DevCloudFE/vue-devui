@@ -1,4 +1,6 @@
-.devui-overlay-background {
+@import '../../../styles-var/devui-var';
+
+.#{$devui-prefix}-overlay-background {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,7 +12,7 @@
     background: rgba(0, 0, 0, 0.4);
   }
 
-  .devui-overlay {
+  .#{$devui-prefix}-overlay {
     position: relative;
     z-index: 1000;
     pointer-events: auto;

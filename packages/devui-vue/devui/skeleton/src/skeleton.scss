@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-skeleton {
+.#{$devui-prefix}-skeleton {
   display: flex;
   justify-content: space-between;
 
@@ -52,9 +52,9 @@
   }
 }
 
-.devui-skeleton__animated > .devui-skeleton__group > .devui-skeleton__title,
-.devui-skeleton__animated > .devui-skeleton__group > div > .devui-skeleton__item,
-.devui-skeleton__animated > .devui-skeleton__avatar > .avatar {
+.#{$devui-prefix}-skeleton__animated > .#{$devui-prefix}-skeleton__group > .#{$devui-prefix}-skeleton__title,
+.#{$devui-prefix}-skeleton__animated > .#{$devui-prefix}-skeleton__group > div > .#{$devui-prefix}-skeleton__item,
+.#{$devui-prefix}-skeleton__animated > .#{$devui-prefix}-skeleton__avatar > .avatar {
   background:
     linear-gradient(
       100deg,

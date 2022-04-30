@@ -1,4 +1,6 @@
-.devui-radio-group {
+@import '../../styles-var/devui-var';
+
+.#{$devui-prefix}-radio-group {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -12,7 +14,7 @@
     flex-direction: column;
   }
 
-  .devui-radio {
+  .#{$devui-prefix}-radio {
     line-height: 28px;
 
     &:not(:last-child) {

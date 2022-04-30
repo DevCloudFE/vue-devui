@@ -1,13 +1,13 @@
 @import '../../styles-var/devui-var';
 
-.devui-back-top {
+.#{$devui-prefix}-back-top {
   position: fixed;
   width: 40px;
   height: 40px;
   cursor: pointer;
   z-index: 9;
 
-  .devui-back-top-base {
+  .#{$devui-prefix}-back-top-base {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -20,13 +20,13 @@
     }
   }
 
-  .devui-back-top-content {
+  .#{$devui-prefix}-back-top-content {
     opacity: 0.4;
     background-color: $devui-text-weak;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   }
 
-  .devui-backtop-custom {
+  .#{$devui-prefix}-backtop-custom {
     background-color: #ffffff;
   }
 }

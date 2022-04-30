@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-radio {
+.#{$devui-prefix}-radio {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -11,7 +11,7 @@
   color: $devui-text;
 
   &:hover {
-    .devui-radio-label {
+    .#{$devui-prefix}-radio-label {
       color: $devui-primary-hover;
     }
   }
@@ -19,17 +19,17 @@
   &:active,
   &:focus,
   &:hover {
-    .devui-radio-material-outer {
+    .#{$devui-prefix}-radio-material-outer {
       stroke: $devui-form-control-line-active-hover;
     }
 
-    .devui-radio-material-inner {
+    .#{$devui-prefix}-radio-material-inner {
       fill: $devui-icon-fill-active-hover;
     }
   }
 
   &.active {
-    .devui-radio-material-outer {
+    .#{$devui-prefix}-radio-material-outer {
       opacity: 1;
       stroke: $devui-form-control-line-active-hover;
       transition: stroke 50ms $devui-animation-ease-in-out;
@@ -40,7 +40,7 @@
       }
     }
 
-    .devui-radio-material-inner {
+    .#{$devui-prefix}-radio-material-inner {
       opacity: 1;
       transform: scale(1);
       transition: transform $devui-animation-duration-base $devui-animation-ease-in-out, opacity $devui-animation-duration-base $devui-animation-ease-in-out;
@@ -55,17 +55,17 @@
     cursor: not-allowed;
 
     /* 选择图标-外圈 */
-    .devui-radio-material-outer {
+    .#{$devui-prefix}-radio-material-outer {
       stroke: $devui-disabled-line;
       fill: $devui-disabled-bg;
     }
 
     /* 选择图标-内圈 */
-    .devui-radio-material-inner {
+    .#{$devui-prefix}-radio-material-inner {
       fill: $devui-icon-fill-active-disabled;
     }
 
-    .devui-radio-label {
+    .#{$devui-prefix}-radio-label {
       color: $devui-disabled-text;
     }
   }

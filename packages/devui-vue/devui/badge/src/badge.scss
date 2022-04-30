@@ -1,10 +1,10 @@
 @import '../../styles-var/devui-var.scss';
 
-.devui-badge {
+.#{$devui-prefix}-badge {
   position: relative;
   display: inline-block;
 
-  .devui-badge-content {
+  .#{$devui-prefix}-badge-content {
     font-size: $devui-font-size;
     color: $devui-light-text;
 
