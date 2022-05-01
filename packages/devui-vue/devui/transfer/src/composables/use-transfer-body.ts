@@ -35,7 +35,7 @@ export const transferBodyProps = {
     type: Function as PropType<(v: string[]) => void>,
     default: undefined
   },
-  'update:modelValue': {
+  'onUpdate:modelValue': {
     type: Function as PropType<(value: TKey) => void>,
     default: undefined
   }
@@ -48,9 +48,9 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
   const bodyHeight = computed(() => `${props.height}px`);
   const query = computed(() => props.modelValue);
   /**
-     * updateFilterQueryHandle: 更新搜索框modelValue
-     * @param value 搜索框值
-    */
+       * updateFilterQueryHandle: 更新搜索框modelValue
+       * @param value 搜索框值
+      */
   const updateFilterQueryHandle = (value: TKey) => {
     ctx.emit('update:modelValue', value);
   };
