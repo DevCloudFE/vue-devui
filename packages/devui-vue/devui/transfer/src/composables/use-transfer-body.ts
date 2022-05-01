@@ -1,4 +1,4 @@
-import { PropType, ExtractPropTypes, computed } from 'vue';
+import { PropType, ExtractPropTypes, computed, ref, watchEffect } from 'vue';
 import type { SetupContext } from 'vue';
 import { IItem, TKey } from '../transfer-types';
 
@@ -19,7 +19,7 @@ export const transferBodyProps = {
     type: Boolean,
     default: false
   },
-  modelValue: {
+  queryString: {
     type: String,
     default: ''
   },
@@ -35,7 +35,7 @@ export const transferBodyProps = {
     type: Function as PropType<(v: string[]) => void>,
     default: undefined
   },
-  'onUpdate:modelValue': {
+  updateQueryString: {
     type: Function as PropType<(value: TKey) => void>,
     default: undefined
   }
@@ -46,14 +46,18 @@ export type TTransferBodyProps = ExtractPropTypes<typeof transferBodyProps>;
 
 export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) => {
   const bodyHeight = computed(() => `${props.height}px`);
-  const query = computed(() => props.modelValue);
+  const query = ref('');
   /**
-       * updateFilterQueryHandle: 更新搜索框modelValue
-       * @param value 搜索框值
-      */
+         * updateFilterQueryHandle: 更新搜索框modelValue
+         * @param value 搜索框值
+        */
   const updateFilterQueryHandle = (value: TKey) => {
-    ctx.emit('update:modelValue', value);
+    ctx.emit('updateQueryString', value);
   };
+
+  watchEffect(() => {
+    query.value = props.queryString;
+  });
 
   return {
     bodyHeight,

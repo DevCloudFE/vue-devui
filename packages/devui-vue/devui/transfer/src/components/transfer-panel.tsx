@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
 import type { SetupContext } from 'vue';
-import { transferPanelProps, TTransferPanelProps , transferPanelState } from '../composables/use-transfer-panel';
+import { transferPanelProps, TTransferPanelProps, transferPanelState } from '../composables/use-transfer-panel';
 import transferHeader from './transfer-header';
 import transferBody from './transfer-body';
 import { TKey } from '../transfer-types';
@@ -43,11 +43,14 @@ export default defineComponent({
           isSearch={props.isSearch}
           isKeyupSearch={props.isKeyupSearch}
           placeholder={props.placeholder}
-          data={fliterData.value}
           defaultChecked={props.defaultChecked}
-          modelValue={query.value}
+          data={fliterData.value}
+          queryString={query.value}
           onChange={(value: string[]) => {
             updateCheckedDataHandle(value);
+          }}
+          onUpdateQueryString={(value: TKey) => {
+            updateModelValueHandle(value);
           }}
         ></transferBody>
       </div>;
