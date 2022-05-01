@@ -73,9 +73,9 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
   });
 
   /**
-       * changeAllCheckedHandle: 穿梭框是否全选
-       * @param value 是否全选
-      */
+         * changeAllCheckedHandle: 穿梭框是否全选
+         * @param value 是否全选
+        */
   const changeAllCheckedHandle = (value: boolean): void => {
     const checkeds = value ? checkableData.value.map(item => item.value) : [];
     ctx.emit('updteAllChecked', checkeds);
