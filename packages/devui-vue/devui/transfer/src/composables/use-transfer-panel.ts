@@ -73,17 +73,17 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
   });
 
   /**
-     * changeAllCheckedHandle: 穿梭框是否全选
-     * @param value 是否全选
-    */
+       * changeAllCheckedHandle: 穿梭框是否全选
+       * @param value 是否全选
+      */
   const changeAllCheckedHandle = (value: boolean): void => {
     const checkeds = value ? checkableData.value.map(item => item.value) : [];
     ctx.emit('updteAllChecked', checkeds);
   };
-  /**
-     * updateAllCheckedHandle: 更新全选
-     * @param value 是否全选
-    */
+    /**
+       * updateAllCheckedHandle: 更新全选
+       * @param value 是否全选
+      */
   const updateAllCheckedHandle = (): void => {
     const checkableDataValues = checkableData.value.map(item => {
       return item.value;
@@ -92,17 +92,17 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
       return props.defaultChecked.includes(item);
     });
   };
-  /**
-     * updateCheckedDataHandle: 更新穿梭框选中值
-     * @param value 选中的值
-    */
+    /**
+       * updateCheckedDataHandle: 更新穿梭框选中值
+       * @param value 选中的值
+      */
   const updateCheckedDataHandle = (value: TKey[]) => {
     ctx.emit('changeChecked', value);
   };
-  /**
-     * updateModelValueHandle: 更新搜索值
-     * @param value 输入框值
-    */
+    /**
+       * updateModelValueHandle: 更新搜索值
+       * @param value 输入框值
+      */
   const updateModelValueHandle = (value: TKey) => {
     query.value = value;
   };
@@ -132,5 +132,3 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
     updateCheckedDataHandle
   };
 };
-
-
