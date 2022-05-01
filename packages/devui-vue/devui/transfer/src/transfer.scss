@@ -20,14 +20,16 @@ $devui-transfer-body-list-item-height: 32px;
       height: $devui-transfer-header-height;
       line-height: $devui-transfer-header-height;
       border-bottom: 1px solid$devui-transfer-header-border-line-color;
+      padding: 0 20px;
 
       &-allChecked {
         display: flex;
-        margin-left: 20px;
       }
 
       &-num {
-        margin-right: 12px;
+        &-unit {
+          margin-left: 4px;
+        }
       }
     }
 
@@ -43,15 +45,19 @@ $devui-transfer-body-list-item-height: 32px;
         width: 100%;
         padding: 7px 20px;
 
-        .#{$devui-prefix}-search,
-        .#{$devui-prefix}-input__wrap {
+        .#{$devui-prefix}-search {
           width: 100%;
+        }
+
+        .#{$devui-prefix}-input__inner {
+          padding: 5px 0;
         }
       }
 
       &-list {
         overflow: auto;
         width: 100%;
+        padding: 0 20px;
 
         &-item {
           height: $devui-transfer-body-list-item-height;
@@ -106,29 +112,30 @@ $devui-transfer-body-list-item-height: 32px;
         padding: 0 20px;
       }
     }
+  }
 
-    &-operation {
-      width: 10%;
+  &-operate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 20px;
+
+    &-group {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
+      flex-direction: column;
 
-      &-group {
+      &-left .#{$devui-prefix}-btn,
+      &-right .#{$devui-prefix}-btn {
         width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        padding: 0;
+        min-width: 36px !important;
+      }
 
-        &-left .#{$devui-prefix}-btn,
-        &-right .#{$devui-prefix}-btn {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          padding: 0;
-          min-width: 36px !important;
-        }
-
-        &-right {
-          margin-top: 12px;
-        }
+      &-right {
+        margin-top: 12px;
       }
     }
   }
