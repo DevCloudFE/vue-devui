@@ -23,9 +23,14 @@ Menu 组件通常用于导航.
       <d-menu-item>
         C
       </d-menu-item>
-      <d-menu-item>
-        Python
-      </d-menu-item>
+      <d-sub-menu title="Python">
+        <d-menu-item>
+          基础
+        </d-menu-item>
+        <d-menu-item>
+          进阶
+        </d-menu-item>
+      </d-sub-menu>
     </d-sub-menu>
     <d-menu-item>个人</d-menu-item>
     <d-menu-item href="https://www.baidu.com"> Link To Baidu </d-menu-item>
