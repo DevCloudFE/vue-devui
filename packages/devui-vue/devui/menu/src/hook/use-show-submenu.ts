@@ -11,7 +11,6 @@ export function useShowSubMenu(eventName: mouseEventName,e: MouseEvent, wrapper:
     if (targetParent?.tagName === 'DIV'){
       wrapper.classList.add('devui-menu-item-horizontal-wrapper-level');
       const {top,left} = target.getClientRects()[0];
-      console.log(target.getClientRects()[0], target.clientWidth);
       const x = left + targetParent.clientWidth;
       const y = top;
       wrapper.style.top = `${y}px`;
