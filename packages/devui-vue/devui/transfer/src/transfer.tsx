@@ -19,6 +19,8 @@ export default defineComponent({
       targetData,
       sourceDefaultChecked,
       targetDefaultChecked,
+      sourceDirection,
+      targetDirection,
       updteSourceAllCheckedHandle,
       updteTargetAllCheckedHandle,
       updateSourceCheckedHandle,
@@ -28,15 +30,23 @@ export default defineComponent({
     } = transferState(props, ctx);
     return () => {
       return <div class="devui-transfer">
+        {ctx.slots.header && ctx.slots.header()}
         <transferPanel
           isSearch={props.isSearch}
           isKeyupSearch={props.isKeyupSearch}
           height={props.height}
           unit={props.unit}
           placeholder={props.placeholder}
+          sortMethods={props.sourceSortMethods}
+          searching={props.searching}
           title={sourceTitle.value}
           data={sourceData.value}
           defaultChecked={sourceDefaultChecked.value}
+          direction={sourceDirection.value}
+          v-slots={{
+            header: ctx.slots.sourceHeader,
+            body: ctx.slots.sourceBody
+          }}
           onUpdteAllChecked={(value: TKey[]) => {
             updteSourceAllCheckedHandle(value);
           }}
@@ -48,6 +58,7 @@ export default defineComponent({
         <transferOperate
           sourceDisabled={sourceDisabled.value}
           targetDisabled={targetDisabled.value}
+          v-slots={{ ...ctx.slots }}
           onToTarget={() => {
             toMoveTargetHandle();
           }}
@@ -61,9 +72,16 @@ export default defineComponent({
           height={props.height}
           unit={props.unit}
           placeholder={props.placeholder}
+          sortMethods={props.targetSortMethods}
+          searching={props.searching}
           title={targetTitle.value}
           data={targetData.value}
           defaultChecked={targetDefaultChecked.value}
+          direction={targetDirection.value}
+          v-slots={{
+            header: ctx.slots.targetHeader,
+            body: ctx.slots.targetBody
+          }}
           onUpdteAllChecked={(value: TKey[]) => {
             updteTargetAllCheckedHandle(value);
           }}

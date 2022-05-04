@@ -44,7 +44,7 @@ export default defineComponent({
       />;
     };
     return () => {
-      return <div class="devui-transfer-panel-body">
+      return ctx.slots.body && typeof ctx.slots.body === 'function' ? ctx.slots.body() : <div class="devui-transfer-panel-body">
         {props.isSearch && renderSearch()}
         <div class="devui-transfer-panel-body-list" style={{ height: bodyHeight.value }}>
           {

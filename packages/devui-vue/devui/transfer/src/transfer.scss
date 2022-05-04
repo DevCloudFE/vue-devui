@@ -20,7 +20,7 @@ $devui-transfer-body-list-item-height: 32px;
       height: $devui-transfer-header-height;
       line-height: $devui-transfer-header-height;
       border-bottom: 1px solid$devui-transfer-header-border-line-color;
-      padding: 0 20px;
+      padding: 0 12px;
 
       &-allChecked {
         display: flex;
@@ -43,7 +43,7 @@ $devui-transfer-body-list-item-height: 32px;
         justify-content: center;
         align-items: center;
         width: 100%;
-        padding: 7px 20px;
+        padding: 7px 12px;
 
         .#{$devui-prefix}-search {
           width: 100%;
@@ -57,7 +57,13 @@ $devui-transfer-body-list-item-height: 32px;
       &-list {
         overflow: auto;
         width: 100%;
-        padding: 0 20px;
+        .#{$devui-prefix}-checkbox-column-margin {
+          padding: 0 12px;
+          cursor: pointer;
+        }
+        .#{$devui-prefix}-checkbox-column-margin:hover {
+          background-color: $devui-transfer-header-border-line-color;
+        }
 
         &-item {
           height: $devui-transfer-body-list-item-height;
