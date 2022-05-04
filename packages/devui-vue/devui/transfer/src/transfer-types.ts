@@ -49,6 +49,15 @@ export const transferProps = {
   isKeyupSearch: {
     type: Boolean,
     default: true
+  },
+  searching: {
+    type: Function as PropType<(data: IItem[], keyword: TKey) => void>
+  },
+  sourceSortMethods: {
+    type: Function as PropType<(data: IItem[]) => IItem[]>
+  },
+  targetSortMethods: {
+    type: Function as PropType<(data: IItem[]) => IItem[]>
   }
 } as const;
 

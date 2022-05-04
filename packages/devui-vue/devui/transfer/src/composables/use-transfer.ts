@@ -9,6 +9,8 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
   const targetChecked = ref<TKey[]>([]);
   const sourceData = ref<IItem[]>([]);
   const targetData = ref<IItem[]>([]);
+  const sourceDirection = ref('source');
+  const targetDirection = ref('target');
   const sourceDefaultChecked = ref<TKey[]>([]);
   const targetDefaultChecked = ref<TKey[]>([]);
   const sourceDisabled = computed(() => {
@@ -18,25 +20,26 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
     return sourceChecked.value.length === 0;
   });
 
-  watchEffect(() => {
-    const { sourceOption, targetOption } = props;
-    const sourceValues: TKey[] = [];
-    const targetValues: TKey[] = [];
-    sourceOption.map(item => {
-      if (props.sourceDefaultChecked.includes(item.value) && item.disabled === false) {
-        sourceValues.push(item.value);
-      }
-    });
-    targetOption.map(item => {
-      if (props.targetDefaultChecked.includes(item.value) && item.disabled === false) {
-        targetValues.push(item.value);
-      }
-    });
-    sourceData.value = sourceOption;
-    targetData.value = targetOption;
-    sourceDefaultChecked.value = sourceChecked.value = sourceValues;
-    targetDefaultChecked.value = targetChecked.value = targetValues;
-  });
+
+  /**
+     * getTransferData: 处理穿梭框数据
+    */
+  const getTransferData = () => {
+    return {
+      sourceOption: (() => {
+        if (props.sourceSortMethods && typeof props.sourceSortMethods === 'function') {
+          return props.sourceSortMethods(props.sourceOption) ?? [];
+        }
+        return props.sourceOption;
+      })(),
+      targetOption: (() => {
+        if (props.targetSortMethods && typeof props.targetSortMethods === 'function') {
+          return props.targetSortMethods(props.targetOption) ?? [];
+        }
+        return props.targetOption;
+      })()
+    };
+  };
   /**
      * updteSourceAllCheckedHandle: 更新源穿梭框全选
      * @param value 是否全选
@@ -100,6 +103,27 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
     sourceData.value = sourceData.value.concat(notIncluded);
   };
 
+
+  watchEffect(() => {
+    const { sourceOption, targetOption } = getTransferData();
+    const sourceValues: TKey[] = [];
+    const targetValues: TKey[] = [];
+    sourceOption.map(item => {
+      if (props.sourceDefaultChecked.includes(item.value) && item.disabled === false) {
+        sourceValues.push(item.value);
+      }
+    });
+    targetOption.map(item => {
+      if (props.targetDefaultChecked.includes(item.value) && item.disabled === false) {
+        targetValues.push(item.value);
+      }
+    });
+    sourceData.value = sourceOption;
+    targetData.value = targetOption;
+    sourceDefaultChecked.value = sourceChecked.value = sourceValues;
+    targetDefaultChecked.value = targetChecked.value = targetValues;
+  });
+
   return {
     sourceTitle,
     targetTitle,
@@ -111,6 +135,8 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
     targetChecked,
     sourceDefaultChecked,
     targetDefaultChecked,
+    sourceDirection,
+    targetDirection,
     updteSourceAllCheckedHandle,
     updteTargetAllCheckedHandle,
     updateSourceCheckedHandle,

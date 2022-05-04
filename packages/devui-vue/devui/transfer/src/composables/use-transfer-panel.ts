@@ -35,6 +35,16 @@ export const transferPanelProps = {
     type: Boolean,
     default: true
   },
+  searching: {
+    type: Function as PropType<(direction: TKey, data: IItem[], keyword: TKey) => void>
+  },
+  direction: {
+    type: String,
+    default: 'source'
+  },
+  sortMethods: {
+    type: Function as PropType<(data: IItem[]) => IItem[]>
+  },
   onUpdteAllChecked: {
     type: Function as PropType<(value: boolean) => void>
   },
@@ -63,12 +73,14 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
   const allNum = computed(() => {
     return fliterData.value.length;
   });
+  const checkedNum = computed(() => {
+    return fliterData.value.length ? props.defaultChecked.length : fliterData.value.length;
+  });
   const allHalfchecked = computed(() => {
-    debugger;
     if (allChecked.value) {
       return false;
     } else {
-      return props.defaultChecked.length > 0;
+      return fliterData.value.length && props.defaultChecked.length > 0;
     }
   });
 
@@ -80,10 +92,10 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
     const checkeds = value ? checkableData.value.map(item => item.value) : [];
     ctx.emit('updteAllChecked', checkeds);
   };
-    /**
-       * updateAllCheckedHandle: 更新全选
-       * @param value 是否全选
-      */
+  /**
+     * updateAllCheckedHandle: 更新全选
+     * @param value 是否全选
+    */
   const updateAllCheckedHandle = (): void => {
     const checkableDataValues = checkableData.value.map(item => {
       return item.value;
@@ -92,19 +104,24 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
       return props.defaultChecked.includes(item);
     });
   };
-    /**
-       * updateCheckedDataHandle: 更新穿梭框选中值
-       * @param value 选中的值
-      */
+  /**
+     * updateCheckedDataHandle: 更新穿梭框选中值
+     * @param value 选中的值
+    */
   const updateCheckedDataHandle = (value: TKey[]) => {
     ctx.emit('changeChecked', value);
   };
-    /**
-       * updateModelValueHandle: 更新搜索值
-       * @param value 输入框值
-      */
+  /**
+     * updateModelValueHandle: 更新搜索值
+     * @param value 输入框值
+    */
   const updateModelValueHandle = (value: TKey) => {
     query.value = value;
+    props.searching && typeof props.searching === 'function' && props.searching(
+      props.direction,
+      fliterData.value,
+      value
+    );
   };
 
   watchEffect(() => {
@@ -126,6 +143,7 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
     allChecked,
     allHalfchecked,
     allNum,
+    checkedNum,
     query,
     changeAllCheckedHandle,
     updateModelValueHandle,

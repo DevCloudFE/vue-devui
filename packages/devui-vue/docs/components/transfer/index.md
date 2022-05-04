@@ -13,12 +13,11 @@
 ```vue
 <template>
   <d-transfer
-    v-model:source-default-checked="options.sourceDefaultChecked"
-    v-model:target-default-checked="options.targetDefaultChecked"
-    :titles="options.titles"
-    :sourceOption="options.source"
-    :targetOption="options.target"
-    :isSearch="options.isSearch"
+    v-model:source-default-checked="sourceDefaultChecked"
+    v-model:target-default-checked="targetDefaultChecked"
+    :titles="titles"
+    :sourceOption="source"
+    :targetOption="target"
   >
   </d-transfer>
 </template>
@@ -28,89 +27,618 @@ import { defineComponent, reactive, ref } from 'vue'
 export default defineComponent({
   setup() {
     const originSource = [
-        {
-          value: '1',
-          name: '北京',
-          disabled: false,
-        },
-        {
-          value: '2',
-          name: '上海',
-          disabled: true,
-        },
-        {
-          value: '3',
-          name: '广州',
-          disabled: false,
-        },
-        {
-          value: '4',
-          name: '深圳',
-          disabled: false,
-        },
-        {
-          value: '5',
-          name: '成都',
-          disabled: false,
-        },
-        {
-          value: '6',
-          name: '武汉',
-          disabled: false,
-        },
-        {
-          value: "7",
-          name: "西安",
-          disabled: false,
-        },
-        {
-          value: '8',
-          name: '福建',
-          disabled: false,
-        },
-        
-      ]
+      {
+        value: '1',
+        name: '北京',
+        disabled: false,
+      },
+      {
+        value: '2',
+        name: '上海',
+        disabled: true,
+      },
+      {
+        value: '3',
+        name: '广州',
+        disabled: false,
+      },
+      {
+        value: '4',
+        name: '深圳',
+        disabled: false,
+      },
+      {
+        value: '5',
+        name: '成都',
+        disabled: false,
+      },
+      {
+        value: '6',
+        name: '杭州',
+        disabled: true,
+      },
+      {
+        value: "7",
+        name: "重庆",
+        disabled: false,
+      },
+      {
+        value: '8',
+        name: '西安',
+        disabled: false,
+      },
+      {
+        value: '9',
+        name: '苏州',
+        disabled: false,
+      },
+      {
+        value: '10',
+        name: '武汉',
+        disabled: false,
+      }
+    ]
     const originTarget = [
-        {
-          value: '9',
-          name: '南充',
-          disabled: false,
-        },
-        {
-          value: '10',
-          name: '广元',
-          disabled: false,
-        },
-        {
-          value: '11',
-          name: '绵阳',
-          disabled: false,
-        },
-        {
-          value: '12',
-          name: '大连',
-          disabled: false,
-        },
-        {
-          value: '13',
-          name: '重庆',
-          disabled: false,
-        },
-      ]
+      {
+        value: '11',
+        name: '南京',
+        disabled: false,
+      },
+      {
+        value: '12',
+        name: '长沙',
+        disabled: false,
+      },
+      {
+        value: '13',
+        name: '东莞',
+        disabled: false,
+      },
+      {
+        value: '14',
+        name: '佛山',
+        disabled: false,
+      },
+      {
+        value: '15',
+        name: '宁波',
+        disabled: true,
+      },
+      {
+        value: '16',
+        name: '青岛',
+        disabled: false,
+      },
+      {
+        value: '17',
+        name: '沈阳',
+        disabled: false,
+      }
+    ]
 
-    const options = {
+    return {
+      titles: ['sourceHeader', 'targetHeader'],
+      source: originSource,
+      target: originTarget,
+      sourceDefaultChecked: ['2', '5', '28'],
+      targetDefaultChecked: ['12', '23']
+    }
+  }
+})
+</script>
+```
+
+:::
+
+### 搜索穿梭框
+在数据很多的情况下，可以对数据进行搜索和过滤。
+:::demo
+
+```vue
+<template>
+  <d-transfer
+    v-model:source-default-checked="sourceDefaultChecked"
+    v-model:target-default-checked="targetDefaultChecked"
+    :titles="titles"
+    :sourceOption="source"
+    :targetOption="target"
+    :isSearch="isSearch"
+    :searching="searchingHandle"
+  >
+  </d-transfer>
+</template>
+<script>
+import { defineComponent, reactive, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const originSource = [
+      {
+        value: '1',
+        name: '北京',
+        disabled: false,
+      },
+      {
+        value: '2',
+        name: '上海',
+        disabled: true,
+      },
+      {
+        value: '3',
+        name: '广州',
+        disabled: false,
+      },
+      {
+        value: '4',
+        name: '深圳',
+        disabled: false,
+      },
+      {
+        value: '5',
+        name: '成都',
+        disabled: false,
+      },
+      {
+        value: '6',
+        name: '杭州',
+        disabled: true,
+      },
+      {
+        value: "7",
+        name: "重庆",
+        disabled: false,
+      },
+      {
+        value: '8',
+        name: '西安',
+        disabled: false,
+      },
+      {
+        value: '9',
+        name: '苏州',
+        disabled: false,
+      },
+      {
+        value: '10',
+        name: '武汉',
+        disabled: false,
+      }
+    ]
+    const originTarget = [
+      {
+        value: '11',
+        name: '南京',
+        disabled: false,
+      },
+      {
+        value: '12',
+        name: '长沙',
+        disabled: false,
+      },
+      {
+        value: '13',
+        name: '东莞',
+        disabled: false,
+      },
+      {
+        value: '14',
+        name: '佛山',
+        disabled: false,
+      },
+      {
+        value: '15',
+        name: '宁波',
+        disabled: true,
+      },
+      {
+        value: '16',
+        name: '青岛',
+        disabled: false,
+      },
+      {
+        value: '17',
+        name: '沈阳',
+        disabled: false,
+      }
+    ]
+
+    return {
       titles: ['sourceHeader', 'targetHeader'],
       source: originSource,
       target: originTarget,
       sourceDefaultChecked: ['2', '5', '28'],
       targetDefaultChecked: ['12', '23'],
-    }
-    return {
-      options
+      isSearch: true,
+      searchingHandle: (direction, data, keyword) => {
+        console.log(direction, data, keyword)
+      }
     }
   }
 })
 </script>
+```
+
+:::
+
+### 排序穿梭框
+可以对穿梭框源和目标框的数据进行排序。
+:::demo
+
+```vue
+<template>
+  <d-transfer
+    v-model:source-default-checked="sourceDefaultChecked"
+    v-model:target-default-checked="targetDefaultChecked"
+    :titles="titles"
+    :sourceOption="source"
+    :targetOption="target"
+    :sourceSortMethods="sortMethodsHandle"
+    :targetSortMethods="sortMethodsHandle2"
+  >
+  </d-transfer>
+</template>
+<script>
+import { defineComponent, reactive, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const originSource = [
+      {
+        value: '1',
+        name: '北京',
+        disabled: false,
+      },
+      {
+        value: '2',
+        name: '上海',
+        disabled: true,
+      },
+      {
+        value: '3',
+        name: '广州',
+        disabled: false,
+      },
+      {
+        value: '4',
+        name: '深圳',
+        disabled: false,
+      },
+      {
+        value: '5',
+        name: '成都',
+        disabled: false,
+      },
+      {
+        value: '6',
+        name: '杭州',
+        disabled: true,
+      },
+      {
+        value: "7",
+        name: "重庆",
+        disabled: false,
+      },
+      {
+        value: '8',
+        name: '西安',
+        disabled: false,
+      },
+      {
+        value: '9',
+        name: '苏州',
+        disabled: false,
+      },
+      {
+        value: '10',
+        name: '武汉',
+        disabled: false,
+      }
+    ]
+    const originTarget = [
+      {
+        value: '11',
+        name: '南京',
+        disabled: false,
+      },
+      {
+        value: '12',
+        name: '长沙',
+        disabled: false,
+      },
+      {
+        value: '13',
+        name: '东莞',
+        disabled: false,
+      },
+      {
+        value: '14',
+        name: '佛山',
+        disabled: false,
+      },
+      {
+        value: '15',
+        name: '宁波',
+        disabled: true,
+      },
+      {
+        value: '16',
+        name: '青岛',
+        disabled: false,
+      },
+      {
+        value: '17',
+        name: '沈阳',
+        disabled: false,
+      }
+    ]
+
+    return {
+      titles: ['sourceHeader', 'targetHeader'],
+      source: originSource,
+      target: originTarget,
+      sourceDefaultChecked: ['2', '5', '28'],
+      targetDefaultChecked: ['12', '23'],
+      sortMethodsHandle: function(data) {
+        return data.sort(() => 0.5 - Math.random())
+      },
+      sortMethodsHandle2: function(data) {
+        return data.reverse()
+      }
+    }
+  }
+})
+</script>
+```
+
+:::
+
+### 自定义穿梭框
+可以对穿梭框内容的显示进行自定义。
+:::demo
+
+```vue
+<template>
+  <d-transfer class="custom-transfer">
+    <template #sourceHeader>
+      <div class="custom-transfer__header">
+        <d-checkbox 
+          class="custom-transfer__body__list__checkout" 
+          v-model="options.sourceAllChecked"
+          :label="options.sourceAllLabel"
+          @change="sourceAllCheckedHandle"
+        />
+      </div>
+    </template>
+    <template #sourceBody>
+      <div class="custom-transfer__body">
+        <d-checkbox-group 
+          class="custom-transfer__body__list" 
+          :options="options.sourceData" 
+          v-model="options.sourceDefaultChecked"
+          v-if="options.sourceData.length"
+        />
+        <div class="custom-transfer__body__empty" v-if="!options.sourceData.length" >没有数据</div>
+      </div>
+    </template>
+    <template #operate>
+      <div class="custom-operate__wrap">
+        <d-button :disabled="!options.sourceDefaultChecked.length" @click="moveTargetHandle">Right</d-button>
+        <d-button :disabled="!options.targetDefaultChecked.length" @click="moveSourceHandle">Left</d-button>
+      </div>
+    </template>
+    <template #targetHeader>
+      <div class="custom-transfer__header">
+        <d-checkbox 
+          class="custom-transfer__body__list__checkout" 
+          v-model="options.targetAllChecked"
+          :label="options.targetAllLabel"
+          @change="targetAllCheckedHandle"
+        />
+      </div>
+    </template>
+    <template #targetBody>
+      <div class="custom-transfer__body">
+        <d-checkbox-group 
+          class="custom-transfer__body__list"
+          :options="options.targetData" 
+          v-model="options.targetDefaultChecked"
+          v-if="options.targetData.length"
+        />
+        <div class="custom-transfer__body__empty" v-if="!options.targetData.length" >没有数据</div>
+      </div>
+    </template>
+  </d-transfer>
+</template>
+<script>
+import { defineComponent, reactive, watch, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const options = reactive({
+      sourceData: [
+        {
+          value: '1',
+          name: 'content1',
+          disabled: false,
+        },
+        {
+          value: '2',
+          name: 'content2',
+          disabled: false,
+        },
+        {
+          value: '3',
+          name: 'content3',
+          disabled: false,
+        },
+        {
+          value: '4',
+          name: 'content4',
+          disabled: false,
+        },
+        {
+          value: '5',
+          name: 'content5',
+          disabled: false,
+        },
+        {
+          value: '6',
+          name: 'content6',
+          disabled: false,
+        },
+        {
+          value: "7",
+          name: "content7",
+          disabled: false,
+        },
+        {
+          value: '8',
+          name: 'content8',
+          disabled: false,
+        }
+      ],
+      targetData: [
+        {
+          value: '9',
+          name: 'content9',
+          disabled: false,
+        },
+        {
+          value: '10',
+          name: 'content10',
+          disabled: false,
+        },
+        {
+          value: '11',
+          name: 'content11',
+          disabled: false,
+        },
+        {
+          value: '12',
+          name: 'content12',
+          disabled: false,
+        },
+        {
+          value: '13',
+          name: 'content13',
+          disabled: false,
+        },
+        {
+          value: '14',
+          name: 'content14',
+          disabled: false,
+        },
+        {
+          value: '15',
+          name: 'content15',
+          disabled: false,
+        },
+        {
+          value: '16',
+          name: 'content16',
+          disabled: false,
+        }
+      ],
+      sourceDefaultChecked: ['2', '5', '8'],
+      targetDefaultChecked: ['12'],
+      sourceAllChecked: false,
+      targetAllChecked: false,
+      sourceAllLabel: 'customSourceHeader',
+      targetAllLabel: 'customTargetHeader'
+    })
+
+
+    const sourceAllCheckedHandle = (value) => {
+      options.sourceDefaultChecked = value ? options.sourceData.map(item => item.value) : []
+    }
+    const targetAllCheckedHandle = (value) => {
+      options.targetDefaultChecked = value ? options.targetData.map(item => item.value) : []
+    }
+    const moveTargetHandle = () => {
+      const moveTargetData = []
+      options.sourceData = options.sourceData.filter(item => {
+        if(options.sourceDefaultChecked.includes(item.value)) {
+          moveTargetData.push(item)
+          return false
+        }
+        return true
+      })
+      options.targetData = options.targetData.concat(moveTargetData)
+      options.sourceDefaultChecked = []
+    }
+    const moveSourceHandle = () => {
+      const moveSourceData = []
+      options.targetData = options.targetData.filter(item => {
+        if(options.targetDefaultChecked.includes(item.value)) {
+          moveSourceData.push(item)
+          return false
+        }
+        return true
+      })
+      options.sourceData = options.sourceData.concat(moveSourceData)
+      options.targetDefaultChecked = []
+    }
+
+
+    watch(
+      () => options.sourceDefaultChecked,
+      (nVal, oVal) => {
+        options.sourceAllChecked = options.sourceData.length && nVal.length === options.sourceData.length
+      },
+      {
+        deep: true
+      }
+    )
+
+    watch(
+      () => options.targetDefaultChecked,
+      (nVal, oVal) => {
+        options.targetAllChecked = options.targetData.length && nVal.length === options.targetData.length
+      },
+      {
+        deep: true
+      }
+    )
+
+    return {
+      options,
+      sourceAllCheckedHandle,
+      targetAllCheckedHandle,
+      moveTargetHandle,
+      moveSourceHandle
+    }
+  }
+})
+</script>
+<style>
+.custom-transfer__header {
+  border-bottom: 1px solid #dfe1e6;
+}
+.custom-transfer__body__list__checkout {
+  height: 40px;
+  line-height: 40px;
+}
+.custom-transfer__body {
+  height: 320px;
+  overflow-y: auto;
+}
+.custom-transfer__header, .custom-transfer__body {
+  padding: 0 10px;
+}
+.custom-operate__wrap {
+  display: flex;
+  flex-direction: column;
+}
+.custom-operate__wrap button:last-child{
+  margin-top: 8px;
+}
+.custom-transfer__body__empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+</style>
 ```
 
 :::
