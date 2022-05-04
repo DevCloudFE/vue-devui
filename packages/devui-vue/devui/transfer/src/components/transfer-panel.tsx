@@ -18,6 +18,7 @@ export default defineComponent({
       allChecked,
       allHalfchecked,
       allNum,
+      checkedNum,
       fliterData,
       query,
       changeAllCheckedHandle,
@@ -28,11 +29,15 @@ export default defineComponent({
       return <div class="devui-transfer-panel">
         <transferHeader
           title={props.title}
-          checkedNum={props.defaultChecked.length}
+          checkedNum={checkedNum.value}
           unit={props.unit}
           checked={allChecked.value}
           halfchecked={allHalfchecked.value}
           total={allNum.value}
+          v-slots={{
+            header: ctx.slots.header
+          }}
+          searching={props.searching}
           onChange={(value: boolean): void => {
             changeAllCheckedHandle(value);
           }}
@@ -44,8 +49,12 @@ export default defineComponent({
           isKeyupSearch={props.isKeyupSearch}
           placeholder={props.placeholder}
           defaultChecked={props.defaultChecked}
+          searching={props.searching}
           data={fliterData.value}
           queryString={query.value}
+          v-slots={{
+            body: ctx.slots.body
+          }}
           onChange={(value: string[]) => {
             updateCheckedDataHandle(value);
           }}

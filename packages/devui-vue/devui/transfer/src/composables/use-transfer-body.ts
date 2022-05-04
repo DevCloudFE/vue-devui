@@ -31,6 +31,9 @@ export const transferBodyProps = {
     type: Boolean,
     default: true
   },
+  searching: {
+    type: Function as PropType<(data: IItem[], keyword: TKey) => void>
+  },
   onChange: {
     type: Function as PropType<(v: string[]) => void>,
     default: undefined
@@ -43,14 +46,13 @@ export const transferBodyProps = {
 
 export type TTransferBodyProps = ExtractPropTypes<typeof transferBodyProps>;
 
-
 export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) => {
   const bodyHeight = computed(() => `${props.height}px`);
   const query = ref('');
   /**
-         * updateFilterQueryHandle: 更新搜索框modelValue
-         * @param value 搜索框值
-        */
+   * updateFilterQueryHandle: 更新搜索框modelValue
+   * @param value 搜索框值
+  */
   const updateFilterQueryHandle = (value: TKey) => {
     ctx.emit('updateQueryString', value);
   };

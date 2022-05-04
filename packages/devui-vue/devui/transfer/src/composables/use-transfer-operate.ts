@@ -2,7 +2,7 @@
 import { ExtractPropTypes, PropType } from 'vue';
 import type { SetupContext } from 'vue';
 
-export const transferOpearateProps = {
+export const transferOperateProps = {
   sourceDisabled: {
     type: Boolean,
     default: true
@@ -19,9 +19,9 @@ export const transferOpearateProps = {
   }
 } as const;
 
-export type TTransferOpearateProps = ExtractPropTypes<typeof transferOpearateProps>;
+export type TTransferOperateProps = ExtractPropTypes<typeof transferOperateProps>;
 
-export const transferHeaderState = (props: TTransferOpearateProps, ctx: SetupContext) => {
+export const transferHeaderState = (props: TTransferOperateProps, ctx: SetupContext) => {
   /**
      * toTargetHandle: 源向目标穿梭
     */
