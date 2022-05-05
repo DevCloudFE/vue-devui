@@ -1,16 +1,6 @@
-import {
-  defineComponent,
-  inject,
-  onMounted,
-  onBeforeUnmount,
-  ref,
-  getCurrentInstance
-} from 'vue';
-
-import {
-  breadcrumbItemProps,
-  BreadcrumbItemProps
-} from './breadcrumb-item-types';
+import { defineComponent, inject, onMounted, onBeforeUnmount, ref, getCurrentInstance } from 'vue';
+import { breadcrumbItemProps, BreadcrumbItemProps } from './breadcrumb-item-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './breadcrumb-item.scss';
 
 export default defineComponent({
@@ -18,12 +8,15 @@ export default defineComponent({
   props: breadcrumbItemProps,
   setup(props: BreadcrumbItemProps, { slots }) {
     const separatorIcon = inject('separatorIcon');
+    const ns = useNamespace('breadcrumb');
     const linkClass = props.to ? 'is-link' : '';
     const link = ref(null);
     const instance = getCurrentInstance();
     const router = instance.appContext.config.globalProperties.$router;
     const handleClickLink = () => {
-      if (!props.to || !router) {return;}
+      if (!props.to || !router) {
+        return;
+      }
       props.replace ? router.replace(props.to) : router.push(props.to);
     };
     onMounted(() => {
@@ -36,10 +29,10 @@ export default defineComponent({
 
     return () => {
       const renderBreadcrumbSperator = () => {
-        return <span class="devui-breadcrumb-separator">{separatorIcon}</span>;
+        return <span class={ns.e('separator')}>{separatorIcon}</span>;
       };
       return (
-        <div class="devui-breadcrumb-item">
+        <div class={ns.e('item')}>
           <span ref={link} class={linkClass}>
             {slots?.default()}
           </span>
@@ -47,5 +40,5 @@ export default defineComponent({
         </div>
       );
     };
-  }
+  },
 });
