@@ -1,22 +1,21 @@
 import { defineComponent, watch, toRefs, ref } from 'vue';
-
 import AvatarBodyIcon from './components/avatar-body-icon';
 import AvatarNoBodyIcon from './components/avatar-nobody-icon';
 import { AvatarProps, avatarProps } from './avatar-types';
-
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './avatar.scss';
 
 export default defineComponent({
   name: 'DAvatar',
   props: avatarProps,
   setup(props: AvatarProps) {
-    const { name, width, height, customText, gender } =
-      toRefs(props);
+    const { name, width, height, customText, gender } = toRefs(props);
     const isNobody = ref<boolean>(true);
     const isErrorImg = ref<boolean>(false);
     const fontSize = ref<number>(12);
     const code = ref<number>();
     const nameDisplay = ref<string>();
+    const ns = useNamespace('avatar');
 
     const getBackgroundColor = (char: string): void => {
       if (gender.value) {
@@ -51,9 +50,7 @@ export default defineComponent({
           if (/[_ -]/.test(nameValue)) {
             const str_before = nameValue.split(/_|-|\s+/)[0];
             const str_after = nameValue.split(/_|-|\s+/)[1];
-            nameDisplay.value =
-              str_before.substr(0, 1).toUpperCase() +
-              str_after.substr(0, 1).toUpperCase();
+            nameDisplay.value = str_before.substr(0, 1).toUpperCase() + str_after.substr(0, 1).toUpperCase();
           } else {
             // 一个英文名的情况显示前两个字母
             nameDisplay.value = nameValue.substr(0, 2).toUpperCase();
@@ -100,21 +97,11 @@ export default defineComponent({
       fontSize,
       nameDisplay,
       isNobody,
+      ns,
     };
   },
   render() {
-    const {
-      imgSrc,
-      showErrorAvatar,
-      height,
-      width,
-      isRound,
-      isErrorImg,
-      code,
-      fontSize,
-      nameDisplay,
-      isNobody,
-    } = this;
+    const { imgSrc, showErrorAvatar, height, width, isRound, isErrorImg, code, fontSize, nameDisplay, isNobody, ns } = this;
     const imgElement = (
       <img
         src={imgSrc}
@@ -131,45 +118,38 @@ export default defineComponent({
 
     const nameElement = (
       <span
-        class={`devui-avatar-style devui-avatar-background-${code}`}
+        class={[ns.e('style'), ns.m(`background-${code}`)]}
         style={{
           height: `${height}px`,
           width: `${width}px`,
           lineHeight: `${height}px`,
           fontSize: `${fontSize}px`,
           borderRadius: isRound ? '100%' : '0',
-        }}
-      >
+        }}>
         {nameDisplay}
       </span>
     );
-    const hasNameDisplay =
-      !imgSrc && !isNobody && nameDisplay?.length !== 0 ? nameElement : null;
+    const hasNameDisplay = !imgSrc && !isNobody && nameDisplay?.length !== 0 ? nameElement : null;
 
     const noNameElement = (
-      <span
-        class={`devui-avatar-style`}
-        style={{ borderRadius: isRound ? '100%' : '0' }}
-      >
+      <span class={ns.e('style')} style={{ borderRadius: isRound ? '100%' : '0' }}>
         <AvatarBodyIcon width={width} height={height} />
       </span>
     );
-    const hasNoDisplayName =
-      !imgSrc && !isNobody && nameDisplay?.length === 0 ? noNameElement : null;
+    const hasNoDisplayName = !imgSrc && !isNobody && nameDisplay?.length === 0 ? noNameElement : null;
 
     const noBodyElement = (
       <span
-        class={`devui-avatar-style`}
+        class={ns.e('style')}
         style={{
           borderRadius: isRound ? '100%' : '0',
-        }}
-      >
+        }}>
         <AvatarNoBodyIcon width={width} height={height} />
       </span>
     );
     const noBody = (!imgSrc && isNobody) || isErrorImg ? noBodyElement : null;
     return (
-      <span class="devui-avatar">
+      <span class={ns.b()}>
         {hasImgSrc}
         {hasNameDisplay}
         {hasNoDisplayName}
