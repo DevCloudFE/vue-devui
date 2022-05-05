@@ -1,19 +1,21 @@
 import { defineComponent, computed } from 'vue';
 import { badgeProps, BadgeProps } from './badge-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './badge.scss';
 
 export default defineComponent({
   name: 'DBadge',
   props: badgeProps,
   setup(props: BadgeProps, ctx) {
+    const ns = useNamespace('badge');
     const className = computed(() => {
-      const base = 'devui-badge-content';
+      const base = ns.e('content');
       return [
         base,
-        props.showDot ? `${base}-dot` : `${base}-count`,
-        props.status && `${base}-${props.status}`,
-        ctx.slots.default && props.position && `${base}-${props.position}`,
-        ctx.slots.default && `${base}-fixed`,
+        props.showDot ? ns.m('dot') : ns.m('count'),
+        props.status && ns.m(props.status),
+        ctx.slots.default && props.position && ns.m(props.position),
+        ctx.slots.default && ns.m('fixed'),
       ].join(' ');
     });
 
@@ -48,7 +50,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class='devui-badge'>
+        <div class={ns.b()}>
           {ctx.slots.default?.()}
           <div class={className.value} style={style.value}>
             {text.value}
