@@ -1,41 +1,20 @@
-import {
-  defineComponent,
-  onMounted,
-  provide,
-  toRefs,
-  watch
-} from 'vue';
+import { defineComponent, onMounted, provide, toRefs, watch } from 'vue';
 import AccordionList from './accordion-list';
 import { accordionProps, AccordionProps } from './accordion-types';
-import {
-  AccordionItemClickEvent,
-  AccordionMenuItem,
-  AccordionMenuToggleEvent
-} from './accordion.type';
+import { AccordionItemClickEvent, AccordionMenuItem, AccordionMenuToggleEvent } from './accordion.type';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './accordion.scss';
 
 export default defineComponent({
   name: 'DAccordion',
   props: accordionProps,
   setup(props: AccordionProps, { emit }) {
-    const {
-      data,
-      childrenKey,
-      activeKey,
-      openKey,
-      accordionType,
-      autoOpenActiveMenu,
-      restrictOneOpen,
-    } = toRefs(props);
+    const { data, childrenKey, activeKey, openKey, accordionType, autoOpenActiveMenu, restrictOneOpen } = toRefs(props);
+    const ns = useNamespace('accordion');
 
     let clickActiveItem: AccordionMenuItem | undefined = undefined; // 记录用户点击的激活菜单项
 
-    const flatten = (
-      arr: Array<any>,
-      childrenKey = 'children',
-      includeParent = false,
-      includeLeaf = true
-    ) => {
+    const flatten = (arr: Array<any>, childrenKey = 'children', includeParent = false, includeLeaf = true) => {
       return arr.reduce((acc, cur) => {
         const children = cur[childrenKey];
         if (children === undefined) {
@@ -106,15 +85,13 @@ export default defineComponent({
     };
 
     const cleanOpenData = () => {
-      flatten(data.value, childrenKey.value, true, false).forEach(
-        (item) => (item[openKey.value] = undefined)
-      );
+      flatten(data.value, childrenKey.value, true, false).forEach((item) => (item[openKey.value] = undefined));
     };
 
     provide('accordionContext', {
       itemClickFn,
       linkItemClickFn,
-      menuToggleFn
+      menuToggleFn,
     });
 
     onMounted(() => {
@@ -135,29 +112,18 @@ export default defineComponent({
       data.value,
       (current, preV) => {
         initActiveItem();
-      }, {
-        deep: true
+      },
+      {
+        deep: true,
       }
     );
 
     return () => {
       return (
-        <div
-          class={[
-            'devui-accordion-menu',
-            'devui-scrollbar',
-            'devui-accordion-show-animate',
-            accordionType.value === 'normal' && 'devui-accordion-menu-normal'
-          ]}
-        >
-          <AccordionList
-            {...(props as any)}
-            data={data.value}
-            deepth={0}
-            parent={null}
-          ></AccordionList>
+        <div class={[ns.e('menu'), ns.m('show-animate'), 'devui-scrollbar', accordionType.value === 'normal' && ns.m('menu-normal')]}>
+          <AccordionList {...(props as any)} data={data.value} deepth={0} parent={null}></AccordionList>
         </div>
       );
     };
-  }
+  },
 });
