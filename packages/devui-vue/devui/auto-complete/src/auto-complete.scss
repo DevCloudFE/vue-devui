@@ -1,7 +1,7 @@
 @import '../../styles-var/devui-var.scss';
 
 .#{$devui-prefix}-auto-complete,
-.#{$devui-prefix}-auto-complete-menu {
+.#{$devui-prefix}-auto-complete__menu {
   .#{$devui-prefix}-dropdown-menu {
     width: 100%;
     left: 0 !important;
@@ -23,7 +23,7 @@
 }
 
 .#{$devui-prefix}-auto-complete,
-.#{$devui-prefix}-auto-complete-menu {
+.#{$devui-prefix}-auto-complete__menu {
   .active {
     background: $devui-list-item-hover-bg;
   }
@@ -33,7 +33,7 @@
     display: block;
   }
 
-  .#{$devui-prefix}-dropdown-menu-cdk {
+  .#{$devui-prefix}-auto-complete__dropdown-menu-cdk {
     position: static;
   }
 
@@ -60,8 +60,8 @@
     }
   }
 
-  .#{$devui-prefix}-no-result-template,
-  .#{$devui-prefix}-is-searching-template {
+  .#{$devui-prefix}-auto-complete__no-result-template,
+  .#{$devui-prefix}-auto-complete__searching-template {
     display: block;
     width: 100%;
     padding: 8px 12px;
@@ -89,22 +89,22 @@
     color: $devui-disabled-text;
   }
 
-  ul.#{$devui-prefix}-list-unstyled {
+  ul.#{$devui-prefix}-auto-complete__list-unstyled {
     margin: 0;
     overflow-y: auto;
   }
 
-  .#{$devui-prefix}-dropdown-bg {
+  .#{$devui-prefix}-auto-complete__dropdown-bg {
     background: $devui-list-item-hover-bg;
     color: $devui-list-item-hover-text;
   }
 
-  .#{$devui-prefix}-popup-tips {
+  .#{$devui-prefix}-auto-complete__popup-tips {
     color: $devui-text-weak; // TODO: Color-Question
     padding: 4px 12px;
   }
 
-  .#{$devui-prefix}-dropdown-latestSource ul {
+  .#{$devui-prefix}-auto-complete__dropdown-latestSource ul {
     line-height: initial !important;
   }
 }
