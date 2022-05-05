@@ -23,11 +23,11 @@
   }
 }
 
-.#{$devui-prefix}-carousel-container {
+.#{$devui-prefix}-carousel {
   display: block;
   position: relative;
 
-  .#{$devui-prefix}-carousel-arrow {
+  .#{$devui-prefix}-carousel__arrow {
     position: absolute;
     width: 100%;
     top: 50%;
@@ -45,17 +45,17 @@
     }
   }
 
-  .#{$devui-prefix}-carousel-item-wrapper {
+  .#{$devui-prefix}-carousel__item-wrapper {
     position: relative;
     overflow: hidden;
     height: 100%;
 
-    .#{$devui-prefix}-carousel-item-container {
+    .#{$devui-prefix}-carousel__item-container {
       display: flex;
       height: 100%;
       position: relative;
 
-      .d-carousel-item {
+      .#{$devui-prefix}-carousel__item {
         flex: 1;
         position: relative;
         height: 100%;
@@ -63,7 +63,7 @@
     }
   }
 
-  .#{$devui-prefix}-carousel-dots {
+  .#{$devui-prefix}-carousel__dots {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -99,8 +99,8 @@
   }
 }
 
-.#{$devui-prefix}-carousel-container {
-  .#{$devui-prefix}-carousel-arrow {
+.#{$devui-prefix}-carousel {
+  .#{$devui-prefix}-carousel__arrow {
     .arrow-left,
     .arrow-right {
       transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-smooth;
