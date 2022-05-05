@@ -1,4 +1,4 @@
-const AlertCloseIcon = (): unknown => (
+const AlertCloseIcon = (): JSX.Element => (
   <svg width='10px' height='10px' viewBox='0 0 10 10' version='1.1' xmlns='http://www.w3.org/2000/svg'>
     <g stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'>
       <g transform='translate(-3.000000, -3.000000)' fill-rule='nonzero'>
