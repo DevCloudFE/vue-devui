@@ -6,6 +6,7 @@ import DAccordionItemHreflink from './accordion-item-hreflink';
 import DAccordionItemRouterlink from './accordion-item-routerlink';
 import { accordionProps } from './accordion-types';
 import { getRootSlots } from '../src/utils';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DAccordionList',
@@ -48,6 +49,7 @@ export default defineComponent({
       noContentTemplate,
       innerListTemplate,
     } = toRefs(props);
+    const ns = useNamespace('accordion');
 
     const parentValue = parent.value;
     const deepValue = deepth.value;
@@ -69,13 +71,13 @@ export default defineComponent({
       return (
         <>
           {(!rootSlots.innerListTemplate || deepth.value === 0 || innerListTemplate.value === false) && (
-            <ul class={['devui-accordion-list']} {...attrs}>
+            <ul class={[ns.e('list')]} {...attrs}>
               {data.value.map((item) => {
                 return (
-                  <li class='devui-accordion-item' key={item[titleKey.value]}>
+                  <li class={ns.e('item')} key={item[titleKey.value]}>
                     {/* // TODO 菜单类型 d-accordion-menu */}
                     {item[childrenKey.value] !== undefined && (
-                      <div class='devui-accordion-menu-item'>
+                      <div class={ns.e('menu-item')}>
                         <d-accordion-menu {...(props as any)} item={item} deepth={deepValue} parent={parentValue}></d-accordion-menu>
                       </div>
                     )}
@@ -142,45 +144,45 @@ export default defineComponent({
             })}
           {(!rootSlots.innerListTemplate || innerListTemplate.value === false) &&
             (loading.value || (noContent.value && showNoContent.value)) && (
-            <ul class={['devui-accordion-list']} {...attrs}>
-              {
-                // 加载中
-                loading.value && (!rootSlots.loadingTemplate || loadingTemplate.value === false) && (
-                  <li class='devui-accordion-item'>
-                    <div class={['devui-accordion-item-title', 'devui-over-flow-ellipsis']} style={{ textIndent: deepValue * 20 + 'px' }}>
+              <ul class={[ns.e('list')]} {...attrs}>
+                {
+                  // 加载中
+                  loading.value && (!rootSlots.loadingTemplate || loadingTemplate.value === false) && (
+                    <li class={ns.e('item')}>
+                      <div class={[ns.e('item-title'), ns.m('overflow-ellipsis')]} style={{ textIndent: deepValue * 20 + 'px' }}>
                         加载中...
-                    </div>
-                  </li>
-                )
-              }
-              {
-                // 自定义加载
-                loading.value &&
+                      </div>
+                    </li>
+                  )
+                }
+                {
+                  // 自定义加载
+                  loading.value &&
                     rootSlots.loadingTemplate &&
                     loadingTemplate.value !== false &&
                     rootSlots.loadingTemplate?.({
                       item: parentValue,
                       deepth: deepValue,
                     })
-              }
-              {
-                // 无数据
-                showNoContent.value &&
+                }
+                {
+                  // 无数据
+                  showNoContent.value &&
                     !loading.value &&
                     noContent.value &&
                     (!rootSlots.noContentTemplate || noContentTemplate.value === false) && (
-                  <li class='devui-accordion-item'>
-                    <div
-                      class={['devui-accordion-item-title', 'devui-over-flow-ellipsis disabled']}
-                      style={{ textIndent: deepValue * 20 + 'px' }}>
+                      <li class={ns.e('item')}>
+                        <div
+                          class={[ns.e('item-title'), ns.m('overflow-ellipsis'), ns.m('disabled')]}
+                          style={{ textIndent: deepValue * 20 + 'px' }}>
                           没有数据
-                    </div>
-                  </li>
-                )
-              }
-              {
-                // 自定义加载
-                showNoContent.value &&
+                        </div>
+                      </li>
+                    )
+                }
+                {
+                  // 自定义加载
+                  showNoContent.value &&
                     !loading.value &&
                     noContent.value &&
                     rootSlots.noContentTemplate &&
@@ -189,9 +191,9 @@ export default defineComponent({
                       item: parentValue,
                       deepth: deepValue,
                     })
-              }
-            </ul>
-          )}
+                }
+              </ul>
+            )}
         </>
       );
     };

@@ -4,37 +4,29 @@ import AccordionList from './accordion-list';
 import { accordionProps } from './accordion-types';
 import OpenIcon from './accordion-open-icon';
 import { getRootSlots } from '../src/utils';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DAccordionMenu',
   components: {
-    OpenIcon
+    OpenIcon,
   },
   props: {
     item: Object as () => AccordionMenuItem,
     deepth: {
       type: Number,
-      default: 0
+      default: 0,
     },
     parent: {
       type: Object as () => AccordionMenuItem,
-      default: null
+      default: null,
     },
-    ...accordionProps
+    ...accordionProps,
   },
   setup(props) {
-    const {
-      item,
-      deepth,
-      parent,
-      openKey,
-      activeKey,
-      autoOpenActiveMenu,
-      disabledKey,
-      childrenKey,
-      titleKey,
-      menuItemTemplate
-    } = toRefs(props);
+    const { item, deepth, parent, openKey, activeKey, autoOpenActiveMenu, disabledKey, childrenKey, titleKey, menuItemTemplate } =
+      toRefs(props);
+    const ns = useNamespace('accordion');
 
     const rootSlots = getRootSlots();
     const accordionCtx = inject('accordionContext') as any;
@@ -47,14 +39,18 @@ export default defineComponent({
     };
 
     const hasActiveChildren = (item) => {
-      if (item[activeKey.value] === true) {return true;}
+      if (item[activeKey.value] === true) {
+        return true;
+      }
       if (item[childrenKey.value]) {
         return hasChildActive(item[childrenKey.value]);
       }
     };
     const hasChildActive = (arr) => {
       let flag = false;
-      if (!arr.length) {return false;}
+      if (!arr.length) {
+        return false;
+      }
       for (let i = 0; i < arr.length; i++) {
         if (arr[i][activeKey.value] === true) {
           flag = true;
@@ -62,7 +58,9 @@ export default defineComponent({
         }
         if (arr[i][childrenKey.value]) {
           flag = hasChildActive(arr[i][childrenKey.value]);
-          if (flag) {break;}
+          if (flag) {
+            break;
+          }
         }
       }
       return flag;
@@ -86,9 +84,7 @@ export default defineComponent({
     });
 
     const open = computed(() => {
-      return keyOpen.value === undefined && autoOpenActiveMenu.value
-        ? childActived.value
-        : keyOpen.value;
+      return keyOpen.value === undefined && autoOpenActiveMenu.value ? childActived.value : keyOpen.value;
     });
 
     return () => {
@@ -96,11 +92,11 @@ export default defineComponent({
         <>
           <div
             class={[
-              'devui-accordion-item-title',
-              'devui-over-flow-ellipsis',
-              open.value && 'open',
-              childActived.value && 'active',
-              disabled.value && 'disabled'
+              ns.e('item-title'),
+              ns.m('overflow-ellipsis'),
+              open.value && ns.m('open'),
+              childActived.value && ns.m('active'),
+              disabled.value && ns.m('disabled'),
             ]}
             title={title.value}
             style={{ textIndent: deepValue * 20 + 'px' }}
@@ -110,42 +106,27 @@ export default defineComponent({
                 item: item.value,
                 open: !open.value,
                 parent: parentValue,
-                event: e
+                event: e,
               })
-            }
-          >
-            <div
-              class={['devui-accordion-splitter', deepValue === 0 && 'devui-parent-list']}
-              style={{ left: deepValue * 20 + 10 + 'px' }}
-            ></div>
+            }>
+            <div class={[ns.e('splitter'), deepValue === 0 && ns.e('parent-list')]} style={{ left: deepValue * 20 + 10 + 'px' }}></div>
             {(!rootSlots.menuItemTemplate || menuItemTemplate.value === false) && <>{title.value}</>}
             {rootSlots.menuItemTemplate &&
               menuItemTemplate.value !== false &&
               rootSlots.menuItemTemplate?.({
                 parent: parentValue,
                 deepth: deepValue,
-                item: item.value
+                item: item.value,
               })}
-            <span class='devui-accordion-open-icon'>
+            <span class={ns.e('open-icon')}>
               <OpenIcon />
             </span>
           </div>
-          <div
-            class={[
-              !open.value && 'devui-accordion-menu-hidden',
-              'devui-accordion-submenu',
-              'devui-accordion-show-animate'
-            ]}
-          >
-            <AccordionList
-              {...(props as any)}
-              deepth={deepValue + 1}
-              data={children.value || []}
-              parent={item.value}
-            ></AccordionList>
+          <div class={[!open.value && ns.m('menu-hidden'), ns.e('submenu'), ns.m('show-animate')]}>
+            <AccordionList {...(props as any)} deepth={deepValue + 1} data={children.value || []} parent={item.value}></AccordionList>
           </div>
         </>
       );
     };
-  }
+  },
 });
