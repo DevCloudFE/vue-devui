@@ -15,7 +15,7 @@ export function useInputRender(props: InputProps): UseInputRender {
     [ns.m('focus')]: isFocus.value,
     [ns.m('disabled')]: disabled.value,
     [ns.m('error')]: error.value || isValidateError.value,
-    [ns.m('feedback')]: formItemContext.showFeedback,
+    [ns.m('feedback')]: formItemContext?.showFeedback,
     [ns.m(size.value)]: true,
   }));
 
