@@ -27,7 +27,7 @@
     }
   }
 
-  &.#{$devui-prefix}-alert-success {
+  &.#{$devui-prefix}-alert--success {
     background-color: $devui-success-bg;
     border-color: $devui-success-line;
     color: $devui-text;
@@ -39,7 +39,7 @@
     }
   }
 
-  &.#{$devui-prefix}-alert-info {
+  &.#{$devui-prefix}-alert--info {
     background-color: $devui-info-bg;
     border-color: $devui-info-line;
     color: $devui-text;
@@ -51,7 +51,7 @@
     }
   }
 
-  &.#{$devui-prefix}-alert-warning {
+  &.#{$devui-prefix}-alert--warning {
     background-color: $devui-warning-bg;
     border-color: $devui-warning-line;
     color: $devui-text;
@@ -63,7 +63,7 @@
     }
   }
 
-  &.#{$devui-prefix}-alert-danger {
+  &.#{$devui-prefix}-alert--danger {
     background-color: $devui-danger-bg;
     border-color: $devui-danger-line;
     color: $devui-text;
@@ -75,7 +75,7 @@
     }
   }
 
-  &.#{$devui-prefix}-alert-simple {
+  &.#{$devui-prefix}-alert--simple {
     border-color: $devui-line;
     color: $devui-text;
 
@@ -86,14 +86,14 @@
     }
   }
 
-  svg.#{$devui-prefix}-icon {
+  svg.#{$devui-prefix}-alert__icon {
     width: 16px;
     height: 16px;
     vertical-align: middle;
     transform: translateY(-1px); //字体14px图标16px对齐问题，微调
   }
 
-  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-success {
+  .#{$devui-prefix}-alert__icon.#{$devui-prefix}-alert__icon--success {
     & > g {
       path {
         fill: $devui-success-line;
@@ -106,39 +106,39 @@
     }
   }
 
-  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-warning {
+  .#{$devui-prefix}-alert__icon.#{$devui-prefix}-alert__icon--warning {
     & > g {
-      path.#{$devui-prefix}-icon-warning-outer {
+      path.warning-outer {
         fill: $devui-warning-line;
       }
 
-      path.#{$devui-prefix}-icon-warning-inner {
+      path.warning-inner {
         fill: $devui-light-text;
         stroke: $devui-light-text;
       }
     }
   }
 
-  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-info {
+  .#{$devui-prefix}-alert__icon.#{$devui-prefix}-alert__icon--info {
     & > g {
-      path.#{$devui-prefix}-icon-info-outer {
+      path.info-outer {
         fill: $devui-info-line;
       }
 
-      path.#{$devui-prefix}-icon-info-inner {
+      path.info-inner {
         fill: $devui-light-text;
         stroke: $devui-light-text;
       }
     }
   }
 
-  .#{$devui-prefix}-icon.#{$devui-prefix}-icon-error {
+  .#{$devui-prefix}-alert__icon.#{$devui-prefix}-alert__icon--error {
     & > g {
-      path.#{$devui-prefix}-icon-error-outer {
+      path.error-outer {
         fill: $devui-danger-line;
       }
 
-      path.#{$devui-prefix}-icon-error-inner {
+      path.error-inner {
         fill: $devui-light-text;
         stroke: $devui-light-text;
       }
@@ -146,11 +146,11 @@
   }
 }
 
-.#{$devui-prefix}-alert-icon {
+.#{$devui-prefix}-alert__icon-wrap {
   margin-right: 4px;
 }
 
-.#{$devui-prefix}-alter-close {
+.#{$devui-prefix}-alter--close {
   margin: 0;
   padding-top: 0;
   padding-bottom: 0;
