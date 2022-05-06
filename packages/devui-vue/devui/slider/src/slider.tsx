@@ -1,5 +1,6 @@
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import { sliderProps } from './slider-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './slider.scss';
 
 export default defineComponent({
@@ -11,6 +12,7 @@ export default defineComponent({
     let startPosition = 0;
     let startX = 0;
 
+    const ns = useNamespace('slider');
     const popoverShow = ref(false);
     const sliderRunway = ref<HTMLDivElement | null>(null);
     const inputValue = ref<number>(props.modelValue);
@@ -100,7 +102,7 @@ export default defineComponent({
     }
     const renderShowInput = () => {
       return props.showInput ? (
-        <div class='devui-input__out-wrap'>
+        <div class={ns.e('input-wrap')}>
           <input onInput={handleOnInput} value={inputValue.value + ''} disabled={props.disabled}></input>
         </div>
       ) : (
@@ -152,9 +154,9 @@ export default defineComponent({
     });
     const popover = () => {
       return (
-        <div class='devui-slider_popover' style={{ left: percentDispaly.value, opacity: popoverShow.value ? 1 : 0 }}>
-          <div class='devui-slider_popover-arrow'></div>
-          <div class='devui-slider_popover-content'>{inputValue.value + ' ' + props.tipsRenderer}</div>
+        <div class={ns.e('popover')} style={{ left: percentDispaly.value, opacity: popoverShow.value ? 1 : 0 }}>
+          <div class={ns.e('popover-arrow')}></div>
+          <div class={ns.e('popover-content')}>{inputValue.value + ' ' + props.tipsRenderer}</div>
         </div>
       );
     };
@@ -163,25 +165,25 @@ export default defineComponent({
       return props.disabled ? '' : props.color;
     });
     return () => (
-      <div class='devui-slider'>
+      <div class={ns.b()}>
         {/* 整个的长度 */}
         <div
           ref={sliderRunway}
-          class={'devui-slider__runway' + disableClass.value}
+          class={[ns.e('runway'), disableClass.value]}
           onMousedown={handleRunwayMousedown}
           onMouseout={() => (popoverShow.value = false)}>
           {/* 滑动后左边的进度条 */}
-          <div class={'devui-slider__bar' + disableClass.value} style={{ width: percentDispaly.value, backgroundColor: color.value }}></div>
+          <div class={[ns.e('bar'), disableClass.value]} style={{ width: percentDispaly.value, backgroundColor: color.value }}></div>
           <div
-            class={'devui-slider__button' + disableClass.value}
+            class={[ns.e('button'), disableClass.value]}
             style={{ left: percentDispaly.value, borderColor: color.value }}
             onMousedown={handleButtonMousedown}
             onMouseenter={() => (popoverShow.value = true)}
             onMouseout={() => (popoverShow.value = false)}></div>
           {props.tipsRenderer === 'null' ? '' : popover()}
         </div>
-        <span class='devui-min_count'>{props.min}</span>
-        <span class='devui-max_count'>{props.max}</span>
+        <span class={ns.e('min-count')}>{props.min}</span>
+        <span class={ns.e('max-count')}>{props.max}</span>
         {renderShowInput()}
       </div>
     );
