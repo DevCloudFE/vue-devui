@@ -41,7 +41,7 @@
     }
   }
 
-  &-main-image {
+  &__main-image {
     width: auto;
     height: auto;
     max-width: 90%;
@@ -50,14 +50,14 @@
     cursor: grab;
   }
 
-  &-close-btn {
+  &__close-btn {
     @include fixed-button();
 
     top: 15px;
     right: 20px;
   }
 
-  &-arrow-left {
+  &__arrow-left {
     @include fixed-button();
 
     top: 50%;
@@ -65,7 +65,7 @@
     transform: translateY(-50%);
   }
 
-  &-arrow-right {
+  &__arrow-right {
     @include fixed-button();
 
     top: 50%;
@@ -73,7 +73,7 @@
     transform: translateY(-50%);
   }
 
-  &-toolbar {
+  &__toolbar {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -94,7 +94,7 @@
       color: $devui-text;
     }
 
-    .#{$devui-prefix}-image-preview-index {
+    .#{$devui-prefix}-image-preview__index {
       display: inline-flex;
       width: 100px;
       justify-content: center;
@@ -108,7 +108,7 @@
   }
 }
 
-.#{$devui-prefix}-image-preview-bg {
+.#{$devui-prefix}-image-preview__bg {
   position: fixed;
   left: 0;
   top: 0;
