@@ -1,5 +1,6 @@
 import { defineComponent, ExtractPropTypes, inject, computed } from 'vue';
 import { radioProps, radioGroupInjectionKey } from './radio-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './radio.scss';
 
 export default defineComponent({
@@ -64,8 +65,9 @@ export default defineComponent({
   },
   render() {
     const { disabled, radioName, value, isChecked, $slots, handleChange } = this;
+    const ns = useNamespace('radio');
     const labelCls = [
-      'devui-radio',
+      ns.b(),
       {
         active: isChecked,
         disabled,
@@ -75,21 +77,21 @@ export default defineComponent({
     return (
       <label class={labelCls}>
         <input
-          type='radio'
+          type="radio"
           name={radioName}
-          class='devui-radio-input'
+          class={ns.e('input')}
           disabled={disabled}
           onChange={handleChange}
           value={value}
           checked={isChecked}
         />
-        <span class='devui-radio-material'>
-          <svg height='100%' width='100%' viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'>
-            <circle class={{ 'devui-radio-material-outer': true, disabled: disabled }} cx='512' cy='512' r='486.5' stroke-width='51' />
-            <circle class={{ 'devui-radio-material-inner': true, disabled: disabled }} cx='512' fill-rule='nonzero' cy='512' r='320' />
+        <span class={ns.e('material')}>
+          <svg height="100%" width="100%" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <circle class={{ [ns.e('material-outer')]: true, disabled: disabled }} cx="512" cy="512" r="486.5" stroke-width="51" />
+            <circle class={{ [ns.e('material-inner')]: true, disabled: disabled }} cx="512" fill-rule="nonzero" cy="512" r="320" />
           </svg>
         </span>
-        <span class='devui-radio-label'>{$slots.default?.()}</span>
+        <span class={ns.e('label')}>{$slots.default?.()}</span>
       </label>
     );
   },
