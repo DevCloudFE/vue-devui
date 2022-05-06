@@ -1,6 +1,6 @@
 @import '../../../styles-var/devui-var';
 
-.#{$devui-prefix}-overlay-background {
+.#{$devui-prefix}-overlay__background {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,7 +8,7 @@
   width: 100vw;
   display: flex;
 
-  &__color {
+  &--color {
     background: rgba(0, 0, 0, 0.4);
   }
 
@@ -18,7 +18,7 @@
     pointer-events: auto;
   }
 
-  &__disabled {
+  &--disabled {
     pointer-events: none;
   }
 }

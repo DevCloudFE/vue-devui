@@ -1,5 +1,6 @@
 import { onUnmounted, watch, computed, ComputedRef, onMounted, SetupContext } from 'vue';
 import { OverlayProps, overlayEmits } from './fixed-overlay-types';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 interface CommonInfo {
   backgroundClass: ComputedRef<string[]>;
@@ -9,15 +10,12 @@ interface CommonInfo {
 }
 
 export function useOverlayLogic(props: OverlayProps, ctx: SetupContext<typeof overlayEmits>): CommonInfo {
+  const ns = useNamespace('overlay');
   const backgroundClass = computed(() => {
-    return [
-      'devui-overlay-background',
-      props.backgroundClass,
-      !props.hasBackdrop ? 'devui-overlay-background__disabled' : 'devui-overlay-background__color',
-    ];
+    return [ns.e('background'), props.backgroundClass, !props.hasBackdrop ? ns.em('background', 'disabled') : ns.em('background', 'color')];
   });
   const overlayClass = computed(() => {
-    return 'devui-overlay';
+    return ns.b();
   });
 
   const handleBackdropClick = (event: Event) => {
@@ -58,6 +56,6 @@ export function useOverlayLogic(props: OverlayProps, ctx: SetupContext<typeof ov
     backgroundClass,
     overlayClass,
     handleBackdropClick,
-    handleOverlayBubbleCancel
+    handleOverlayBubbleCancel,
   };
 }
