@@ -11,6 +11,7 @@ export default defineComponent({
   setup(props: AccordionProps, { emit }) {
     const { data, childrenKey, activeKey, openKey, accordionType, autoOpenActiveMenu, restrictOneOpen } = toRefs(props);
     const ns = useNamespace('accordion');
+    const scrollbarNs = useNamespace('scrollbar');
 
     let clickActiveItem: AccordionMenuItem | undefined = undefined; // 记录用户点击的激活菜单项
 
@@ -120,7 +121,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={[ns.e('menu'), ns.m('show-animate'), 'devui-scrollbar', accordionType.value === 'normal' && ns.m('menu-normal')]}>
+        <div class={[ns.e('menu'), ns.m('show-animate'), scrollbarNs.b(), accordionType.value === 'normal' && ns.m('menu-normal')]}>
           <AccordionList {...(props as any)} data={data.value} deepth={0} parent={null}></AccordionList>
         </div>
       );
