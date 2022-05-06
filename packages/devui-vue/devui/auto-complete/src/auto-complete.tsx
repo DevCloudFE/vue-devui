@@ -9,6 +9,7 @@ import useKeyBoardHandle from './composables/use-keyboard-select';
 import DAutoCompleteDropdown from './components/dropdown';
 import ClickOutside from '../../shared/devui-directive/clickoutside';
 import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './auto-complete.scss';
 
 export default defineComponent({
@@ -32,8 +33,15 @@ export default defineComponent({
       position,
       latestSource,
       showAnimation,
-      valueParser
+      valueParser,
     } = toRefs(props);
+    const ns = useNamespace('auto-complete');
+    const formNs = useNamespace('form-group');
+    const feedbackNs = useNamespace('has-feedback');
+    const selectNs = useNamespace('select-open');
+    const formControlNs = useNamespace('form-control');
+    const dropdownNs = useNamespace('dropdown-origin');
+    const dropdownOpenNs = useNamespace('dropdown-origin-open');
 
     const { handleSearch, searchList, showNoResultItemTemplate, recentlyFocus } = useSearchFn(
       ctx,
@@ -82,18 +90,18 @@ export default defineComponent({
       modelValue,
       showNoResultItemTemplate: showNoResultItemTemplate,
       hoverIndex: hoverIndex,
-      valueParser
+      valueParser,
     });
     const origin = ref<HTMLElement>();
 
     const renderDropdown = () => {
-      if(appendToBody.value){
+      if (appendToBody.value) {
         return (
           <Teleport to="body">
             <Transition name={showAnimation ? 'fade' : ''}>
               <FlexibleOverlay show-arrow origin={origin.value} position={position.value} v-model={visible.value}>
                 <div
-                  class="devui-auto-complete-menu"
+                  class={ns.e('menu')}
                   style={{
                     width: `
                       ${width.value + 'px'}
@@ -105,12 +113,12 @@ export default defineComponent({
             </Transition>
           </Teleport>
         );
-      }else{
+      } else {
         return (
           <Transition name={showAnimation ? 'fade' : ''}>
             <FlexibleOverlay show-arrow origin={origin.value} position={position.value} v-model={visible.value}>
               <div
-                class="devui-auto-complete-menu"
+                class={ns.e('menu')}
                 style={{
                   width: `
                     ${width.value + 'px'}
@@ -122,12 +130,11 @@ export default defineComponent({
           </Transition>
         );
       }
-
     };
     return () => {
       return (
         <div
-          class={['devui-auto-complete', 'devui-form-group', 'devui-has-feedback', visible.value && 'devui-select-open']}
+          class={[ns.b(), formNs.b(), feedbackNs.b(), visible.value && selectNs.b()]}
           ref={origin}
           v-click-outside={handleClose}
           style={{
@@ -137,7 +144,7 @@ export default defineComponent({
             disabled={disabled.value}
             type="text"
             onClick={toggleMenu}
-            class={['devui-form-control', 'devui-dropdown-origin', isFocus.value && 'devui-dropdown-origin-open', disabled.value && 'disabled']}
+            class={[formControlNs.b(), dropdownNs.b(), isFocus.value && dropdownOpenNs.b(), disabled.value && 'disabled']}
             placeholder="Search"
             onInput={onInput}
             onFocus={onFocus}

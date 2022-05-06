@@ -25,12 +25,7 @@
     >
       <template #loadingTemplate="{ item, deepth }">
         <li class="devui-accordion-item">
-          <div
-            class="devui-accordion-item-title devui-over-flow-ellipsis"
-            style="{{ textIndent: deepth * 20 + 'px' }}"
-          >
-            自定义加载...
-          </div>
+          <div class="devui-accordion-item-title devui-over-flow-ellipsis" style="{{ textIndent: deepth * 20 + 'px' }}">自定义加载...</div>
         </li>
       </template>
     </d-accordion>
@@ -48,29 +43,25 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'accordion',
   setup() {
-    const restrictOneOpen = ref(false)
-    const accordionTypeEmbed = ref(false)
+    const restrictOneOpen = ref(false);
+    const accordionTypeEmbed = ref(false);
     const menu = ref([
       {
         title: 'Content 1',
-        children: [
-          { title: 'Child Content 1' },
-          { title: 'Child Content 2' },
-          { title: 'Child Content ' }
-        ]
+        children: [{ title: 'Child Content 1' }, { title: 'Child Content 2' }, { title: 'Child Content ' }],
       },
       {
         title: 'Content 2（This is a long sentence for option display.）',
         children: [
           { title: 'Child Content 1 (This is a long sentence for option display.)' },
           { title: 'Child Content 2' },
-          { title: 'Child Content 3' }
-        ]
+          { title: 'Child Content 3' },
+        ],
       },
       {
         title: 'Content 3 (Default Open)',
@@ -78,50 +69,50 @@ export default defineComponent({
         children: [
           { title: 'Child Content 1 (Disabled)', disabled: true },
           { title: 'Child Content 2 (Default Active)', active: true },
-          { title: 'Child Content 3' }
-        ]
+          { title: 'Child Content 3' },
+        ],
       },
       {
         title: 'Content 4 (No Child)',
-        children: []
+        children: [],
       },
       {
         title: 'Content 5 (Disabled)',
         disabled: true,
-        children: []
+        children: [],
       },
       {
         title: 'Content 6 (Dynamic Content)',
         needLoadChildren: true,
         loading: false,
-        children: []
-      }
-    ])
+        children: [],
+      },
+    ]);
 
     const itemClick = (event) => {
-      console.log('item click' + JSON.stringify(event))
-    }
+      console.log('item click' + JSON.stringify(event));
+    };
     const menuToggle = (event) => {
-      console.log('menu toggle' + JSON.stringify(event))
+      console.log('menu toggle' + JSON.stringify(event));
       if (event.open && event.item.needLoadChildren) {
-        event.item.loading = true
+        event.item.loading = true;
         setTimeout(() => {
-          event.item.children = [{ title: 'Child Content 1' }, { title: 'Child Content 2' }]
-          event.item.needLoadChildren = false
-          event.item.loading = false
-        }, 2000)
+          event.item.children = [{ title: 'Child Content 1' }, { title: 'Child Content 2' }];
+          event.item.needLoadChildren = false;
+          event.item.loading = false;
+        }, 2000);
       }
-    }
+    };
 
     return {
       menu,
       restrictOneOpen,
       accordionTypeEmbed,
       itemClick,
-      menuToggle
-    }
-  }
-})
+      menuToggle,
+    };
+  },
+});
 </script>
 <style scoped lang="scss">
 .basic-menu {
@@ -143,9 +134,6 @@ export default defineComponent({
   .basic-menu {
     width: 80%;
   }
-}
-.basic-menu ul {
-  list-style: none;
 }
 </style>
 ```
@@ -183,7 +171,7 @@ export default defineComponent({
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'accordion',
@@ -194,8 +182,8 @@ export default defineComponent({
         children: [
           { title: 'Accordion', link: '/components/accordion/' },
           { title: 'Anchor', link: '/components/anchor/' },
-          { title: 'Button', link: '/components/button/' }
-        ]
+          { title: 'Button', link: '/components/button/' },
+        ],
       },
       {
         title: 'Advanced',
@@ -203,18 +191,18 @@ export default defineComponent({
           { title: 'Data Table (disabled)', disabled: true, link: '/components/datatable/' },
           {
             title: 'Drag Drop (parameter example)',
-            link: '/components/dragdrop/?query=foo#bar'
-          }
-        ]
+            link: '/components/dragdrop/?query=foo#bar',
+          },
+        ],
       },
       {
         title: 'Others',
         children: [
           { title: 'Icon Library', link: '/components/icon/' },
-          { title: 'Home Page', disabled: true, link: '/' }
-        ]
-      }
-    ])
+          { title: 'Home Page', disabled: true, link: '/' },
+        ],
+      },
+    ]);
 
     const menu2 = ref([
       {
@@ -222,8 +210,8 @@ export default defineComponent({
         children: [
           { title: 'Alert', link: '/components/alert/', target: '_self' },
           { title: 'Anchor', link: '/components/anchor/', target: '_self' },
-          { title: 'Accordion', link: '/components/accordion/', target: '_self' }
-        ]
+          { title: 'Accordion', link: '/components/accordion/', target: '_self' },
+        ],
       },
       {
         title: 'Advanced',
@@ -232,19 +220,19 @@ export default defineComponent({
             title: 'Data Table (disabled)',
             disabled: true,
             link: '/components/datatable/',
-            target: '_self'
+            target: '_self',
           },
-          { title: 'Drag Drop', link: '/components/dragdrop/', target: '_self' }
-        ]
+          { title: 'Drag Drop', link: '/components/dragdrop/', target: '_self' },
+        ],
       },
       {
         title: 'Others',
         children: [
           { title: 'Icon Library', link: '/components/icon/', target: '_self' },
-          { title: 'Home Page(open blank page)', link: '/', target: '_blank' }
-        ]
-      }
-    ])
+          { title: 'Home Page(open blank page)', link: '/', target: '_blank' },
+        ],
+      },
+    ]);
 
     const menu3 = ref([
       {
@@ -252,8 +240,8 @@ export default defineComponent({
         children: [
           { title: 'Alert', link: '/components/alert/', linkType: 'routerLink' },
           { title: 'Anchor', link: '/components/anchor/', linkType: 'routerLink' },
-          { title: 'Button', link: '/components/button/', linkType: 'routerLink' }
-        ]
+          { title: 'Button', link: '/components/button/', linkType: 'routerLink' },
+        ],
       },
       {
         title: 'Advanced',
@@ -262,27 +250,27 @@ export default defineComponent({
             title: 'Data Table (disabled)',
             disabled: true,
             link: '/components/datatable/',
-            linkType: 'routerLink'
+            linkType: 'routerLink',
           },
-          { title: 'Drag Drop', link: '/components/dragdrop/', linkType: 'routerLink' }
-        ]
+          { title: 'Drag Drop', link: '/components/dragdrop/', linkType: 'routerLink' },
+        ],
       },
       {
         title: 'Others',
         children: [
           { title: 'Icon Library', link: '/components/icon/', linkType: 'routerLink' },
-          { title: 'Home Page(External link open in this window)', link: '/', linkType: 'hrefLink' }
-        ]
-      }
-    ])
+          { title: 'Home Page(External link open in this window)', link: '/', linkType: 'hrefLink' },
+        ],
+      },
+    ]);
 
     return {
       menu1,
       menu2,
-      menu3
-    }
-  }
-})
+      menu3,
+    };
+  },
+});
 </script>
 <style scoped>
 .menu {
@@ -303,9 +291,7 @@ export default defineComponent({
   clear: both;
 }
 
-@media (max-width: 800px),
-  (min-width: 1024px) and (max-width: 1100px),
-  (min-width: 1280px) and (max-width: 1480px) {
+@media (max-width: 800px), (min-width: 1024px) and (max-width: 1100px), (min-width: 1280px) and (max-width: 1480px) {
   .menu-wrapper {
     float: none;
   }
@@ -351,11 +337,7 @@ export default defineComponent({
         <span class="use-template-badge" v-if="item.children?.length">
           {{ item.children.length }}
         </span>
-        <span
-          class="operation-clear"
-          v-if="item.needLoadChildren === false"
-          @click="clearChildrenData($event, item)"
-        >
+        <span class="operation-clear" v-if="item.needLoadChildren === false" @click="clearChildrenData($event, item)">
           reset
           <!--重置-->
         </span>
@@ -366,10 +348,7 @@ export default defineComponent({
       </template>
       <template #noContentTemplate="{ deepth }">
         <li class="devui-accordion-item disabled">
-          <div
-            class="devui-accordion-item-title devui-over-flow-ellipsis disabled"
-            style="{{ textIndent: deepth * 20 + 'px' }}"
-          >
+          <div class="devui-accordion-item-title devui-over-flow-ellipsis disabled" style="{{ textIndent: deepth * 20 + 'px' }}">
             Not available yet. Please wait.
             <!--尚未开放，敬请期待...-->
           </div>
@@ -388,47 +367,38 @@ export default defineComponent({
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'accordion',
   setup() {
-    const restrictOneOpen = ref(false)
-    const accordionTypeEmbed = ref(false)
+    const restrictOneOpen = ref(false);
+    const accordionTypeEmbed = ref(false);
     const menu = ref([
       {
         title: 'Content 1',
         open: true,
-        children: [{ title: 'Child Content 1' }, { title: 'Child Content 2' }]
+        children: [{ title: 'Child Content 1' }, { title: 'Child Content 2' }],
       },
       {
         title: 'Content 2',
-        children: [
-          { title: 'Child Content 1' },
-          { title: 'Child Content 2' },
-          { title: 'Child Content 3' },
-          { title: 'Child Content 4' }
-        ]
+        children: [{ title: 'Child Content 1' }, { title: 'Child Content 2' }, { title: 'Child Content 3' }, { title: 'Child Content 4' }],
       },
       {
         title: 'Content 3',
-        children: [
-          { title: 'Child Content 1 (disabled)', disabled: true },
-          { title: 'Child Content 2' },
-          { title: 'Child Content 3' }
-        ]
+        children: [{ title: 'Child Content 1 (disabled)', disabled: true }, { title: 'Child Content 2' }, { title: 'Child Content 3' }],
       },
       {
         title: 'Content 4 (Custom No Data Template)',
-        children: [] // 可展开菜单节点必须有children非undefined
+        children: [], // 可展开菜单节点必须有children非undefined
       },
       {
         title: 'Content 5 (Custom loading Template)',
         needLoadChildren: true,
         loading: false,
-        children: []
-      }
-    ])
+        children: [],
+      },
+    ]);
     const childrenData = ref([
       { title: 'Child Content 1' },
       { title: 'Child Content 2' },
@@ -436,30 +406,30 @@ export default defineComponent({
       { title: 'Child Content 4' },
       { title: 'Child Content 5' },
       { title: 'Child Content 6' },
-      { title: 'Child Content 7' }
-    ])
+      { title: 'Child Content 7' },
+    ]);
 
     const itemClick = (event) => {
-      event.item.clicktimes = (event.item.clicktimes || 0) + 1
-    }
+      event.item.clicktimes = (event.item.clicktimes || 0) + 1;
+    };
 
     const menuToggle = (event) => {
       if (event.open && event.item.needLoadChildren) {
-        event.item.loading = true
+        event.item.loading = true;
         setTimeout(() => {
-          event.item.children = childrenData.value
-          event.item.needLoadChildren = false
-          event.item.loading = false
-        }, 1000)
+          event.item.children = childrenData.value;
+          event.item.needLoadChildren = false;
+          event.item.loading = false;
+        }, 1000);
       }
-    }
+    };
 
     const clearChildrenData = (event, item) => {
-      event.stopPropagation()
-      item.children = []
-      item.needLoadChildren = true
-      item.open = false
-    }
+      event.stopPropagation();
+      item.children = [];
+      item.needLoadChildren = true;
+      item.open = false;
+    };
 
     return {
       menu,
@@ -467,10 +437,10 @@ export default defineComponent({
       accordionTypeEmbed,
       itemClick,
       menuToggle,
-      clearChildrenData
-    }
-  }
-})
+      clearChildrenData,
+    };
+  },
+});
 </script>
 <style scoped>
 .use-template-menu {
@@ -537,11 +507,7 @@ export default defineComponent({
 ```vue
 <template>
   <div class="inner-template-menu">
-    <d-accordion
-      :data="menu"
-      :accordionType="accordionTypeEmbed ? 'embed' : 'normal'"
-      :restrictOneOpen="restrictOneOpen"
-    >
+    <d-accordion :data="menu" :accordionType="accordionTypeEmbed ? 'embed' : 'normal'" :restrictOneOpen="restrictOneOpen">
       <template #innerListTemplate="{ item, deepth }">
         <div class="devui-accordion-submenu devui-accordion-show-animate inner-template-my-menu">
           {{ item.content }}
@@ -551,33 +517,33 @@ export default defineComponent({
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'accordion',
   setup() {
-    const restrictOneOpen = ref(false)
-    const accordionTypeEmbed = ref(false)
+    const restrictOneOpen = ref(false);
+    const accordionTypeEmbed = ref(false);
     const menu = ref([
       {
         title: 'Content 1',
         children: [],
-        content: 'Child Content of Content 1'
+        content: 'Child Content of Content 1',
       },
       {
         title: 'Content 2',
         children: [],
-        content: 'Child Content of Content 2'
-      }
-    ])
+        content: 'Child Content of Content 2',
+      },
+    ]);
 
     return {
       menu,
       restrictOneOpen,
-      accordionTypeEmbed
-    }
-  }
-})
+      accordionTypeEmbed,
+    };
+  },
+});
 </script>
 <style scoped>
 .inner-template-menu {
@@ -617,23 +583,19 @@ export default defineComponent({
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'accordion',
   setup() {
-    const autoOpenActiveMenu = ref(false)
+    const autoOpenActiveMenu = ref(false);
     const menu = ref([
       {
-        title: 'Content 1 (as a leaf menu)'
+        title: 'Content 1 (as a leaf menu)',
       },
       {
         title: 'Content 2 (as a parent menu, has children)',
-        children: [
-          { title: 'Child Content 1' },
-          { title: 'Child Content 2' },
-          { title: 'Child Content 3' }
-        ]
+        children: [{ title: 'Child Content 1' }, { title: 'Child Content 2' }, { title: 'Child Content 3' }],
       },
       {
         title: 'Content 3 (as a parent menu, has children)',
@@ -641,11 +603,7 @@ export default defineComponent({
         children: [
           {
             title: 'Child Content 1 (has children)',
-            children: [
-              { title: 'Child Content 1' },
-              { title: 'Child Content 2', active: true },
-              { title: 'Child Content 3' }
-            ]
+            children: [{ title: 'Child Content 1' }, { title: 'Child Content 2', active: true }, { title: 'Child Content 3' }],
           },
           {
             title: 'Child Content 2 (has children',
@@ -653,31 +611,27 @@ export default defineComponent({
               { title: 'Child Content 1' },
               {
                 title: 'Child Content 2 (has children',
-                children: [
-                  { title: 'Child Content 1' },
-                  { title: 'Child Content 2' },
-                  { title: 'Child Content 3' }
-                ]
+                children: [{ title: 'Child Content 1' }, { title: 'Child Content 2' }, { title: 'Child Content 3' }],
               },
-              { title: 'Child Content 3' }
-            ]
+              { title: 'Child Content 3' },
+            ],
           },
           { title: 'Child Content 2' },
-          { title: 'Child Content 3' }
-        ]
+          { title: 'Child Content 3' },
+        ],
       },
       {
         title: 'Content 4 (as a parent menu, has no child)',
-        children: []
-      }
-    ])
+        children: [],
+      },
+    ]);
 
     return {
       menu,
-      autoOpenActiveMenu
-    }
-  }
-})
+      autoOpenActiveMenu,
+    };
+  },
+});
 </script>
 <style scoped>
 .multi-child-menu {
@@ -724,7 +678,7 @@ export default defineComponent({
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   name: 'accordion',
@@ -734,11 +688,11 @@ export default defineComponent({
       activeKey: '$selected',
       disabledKey: 'forbidden',
       openKey: '$show',
-      childrenKey: 'subs'
-    })
+      childrenKey: 'subs',
+    });
     const menu = ref([
       {
-        value: 'Content 1'
+        value: 'Content 1',
       },
       {
         value: 'Content 2 (expended)',
@@ -746,17 +700,17 @@ export default defineComponent({
         subs: [
           { value: 'Child Content 1 (disabled)', forbidden: true },
           { value: 'Child Content 2 (active)', $selected: true },
-          { value: 'Child Content 3' }
-        ]
-      }
-    ])
+          { value: 'Child Content 3' },
+        ],
+      },
+    ]);
 
     return {
       menu,
-      key
-    }
-  }
-})
+      key,
+    };
+  },
+});
 </script>
 <style scoped>
 .change-key-menu {
@@ -773,10 +727,10 @@ export default defineComponent({
 
 :::
 
-### API
+### Accordion 参数
 
-| 参数               | 类型                                                  | 默认       | 说明                                                                                                                                                                                                                                   | 跳转 Demo                                 |
-| ------------------ | ----------------------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| 参数名             | 类型                                                  | 默认值     | 说明                                                                                                                                                                                                                                   | 跳转 Demo                                 |
+| :----------------- | :---------------------------------------------------- | :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------- |
 | data               | `Array<any> \| AccordionMenuType`                     | --         | 必选，数据源，可以自定义数组或者使用预设的`AccordionMenuType`                                                                                                                                                                          | [基本用法](#基本用法)                     |
 | titleKey           | `string`                                              | 'title'    | 可选，标题的属性名，item[titleKey]类型为`string`，为标题显示内容                                                                                                                                                                       | [改变键值](#改变键值)                     |
 | loadingKey         | `string`                                              | 'loading'  | 可选，子菜单是否加载中的判断属性名，item[loadingKey]类型为`boolean`                                                                                                                                                                    | [改变键值](#改变键值)                     |
@@ -797,117 +751,110 @@ export default defineComponent({
 | linkDefaultTarget  | `string`                                              | '\_self'   | 可选，不设置 target 的时候 target 默认值为`'_self'`，用于链接类型, 取值等同于 a 链接的 target 属性                                                                                                                                     | [内置路由和链接类型](#内置路由和链接类型) |
 | autoOpenActiveMenu | `boolean`                                             | false      | 可选，是否自动展开带有活跃子项的菜单                                                                                                                                                                                                   | [复合层级和自动展开](#复合层级和自动展开) |
 | accordionType      | `'normal'\|'embed'`                                   | 'normal'   | 可选，菜单形式是普通（带阴影）还是内嵌（不带阴影）                                                                                                                                                                                     | [基本用法](#基本用法)                     |
-| showAnimation      | `boolean`                                             | true       | 可选，是否展示动画                                                                                                                                                                                                                     | [内置路由和链接类型](#内置路由和链接类型) | ✔   |
+| showAnimation      | `boolean`                                             | true       | 可选，是否展示动画                                                                                                                                                                                                                     | [内置路由和链接类型](#内置路由和链接类型) |
 
-### d-accordion 事件
+### Accordion 事件
 
-|       事件       |                                   类型                                    |                                                                            说明                                                                            | 跳转 Demo             |
-| :--------------: | :-----------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------: | --------------------- |
-|    menuToggle    | `EventEmitter<`[`AccordionMenuToggleEvent`](#accordionmenutoggleevent)`>` | 可选，可展开菜单展开事件，返回对象里属性 item 为点击的对象数据，open 为 true 则将要展开 false 则将要关闭， parent 为父对象数据，event 为点击事件的原生事件 | [基本用法](#基本用法) |
-|    itemClick     |  `EventEmitter<`[`AccordionItemClickEvent`](#accordionitemclickevent)`>`  |     可选，可点击菜单点击事件，返回对象里属性 item 为点击的对象数据，preActive 对象为上一次展开的对象， parent 为父对象数据，event 为点击事件的原生事件     | [基本用法](#基本用法) |
-| activeItemChange |                            `EventEmitter<any>`                            |                                                        可选，子项切换的时候会发出新激活的子项的数据                                                        | [基本用法](#基本用法) |
+| 事件名 | 类型 | 说明 | 跳转 Demo |
+| :-------------- | :----------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- | ：--------------------- |
+| menuToggle | `EventEmitter<`[`AccordionMenuToggleEvent`](#accordionmenutoggleevent)`>` | 可选，可展开菜单展开事件，返回对象里属性 item 为点击的对象数据，open 为 true 则将要展开 false 则将要关闭， parent 为父对象数据，event 为点击事件的原生事件 | [基本用法](#基本用法) |
+| itemClick | `EventEmitter<`[`AccordionItemClickEvent`](#accordionitemclickevent)`>` | 可选，可点击菜单点击事件，返回对象里属性 item 为点击的对象数据，preActive 对象为上一次展开的对象， parent 为父对象数据，event 为点击事件的原生事件 | [基本用法](#基本用法) |
+| activeItemChange | `EventEmitter<any>` | 可选，子项切换的时候会发出新激活的子项的数据 | [基本用法](#基本用法) |
 
 ### Accordion 类型定义
 
 ```typescript
 /* 基础数据类型 */
-type AccordionMenuItemLinkType = 'routerLink' | 'hrefLink' | string
+type AccordionMenuItemLinkType = 'routerLink' | 'hrefLink' | string;
 export interface AccordionBase {
-  title: string
-  disabled?: boolean
-  [prop: string]: any
+  title: string;
+  disabled?: boolean;
+  [prop: string]: any;
 }
 interface IAccordionActiveable {
-  active?: boolean
+  active?: boolean;
 }
 interface IAccordionFoldable<T> {
-  open?: boolean
-  loading?: boolean
-  children?: Array<T>
+  open?: boolean;
+  loading?: boolean;
+  children?: Array<T>;
 }
 
 interface IAccordionLinkable {
-  link?: string
-  target?: boolean
-  linkType?: AccordionMenuItemLinkType
+  link?: string;
+  target?: boolean;
+  linkType?: AccordionMenuItemLinkType;
 }
 export interface AccordionBaseItem extends AccordionBase, IAccordionActiveable {}
 export interface AccordionBaseMenu<T> extends AccordionBase, IAccordionFoldable<T> {}
 
-export interface AccordionLinkableItem
-  extends AccordionBase,
-    IAccordionActiveable,
-    IAccordionLinkable {}
-export interface AccordionMenuItem
-  extends AccordionBase,
-    IAccordionActiveable,
-    IAccordionFoldable<AccordionMenuItem>,
-    IAccordionLinkable {}
+export interface AccordionLinkableItem extends AccordionBase, IAccordionActiveable, IAccordionLinkable {}
+export interface AccordionMenuItem extends AccordionBase, IAccordionActiveable, IAccordionFoldable<AccordionMenuItem>, IAccordionLinkable {}
 
-export type AccordionMenuType = Array<AccordionMenuItem>
+export type AccordionMenuType = Array<AccordionMenuItem>;
 
 /* 基础事件类型 */
 export interface AccordionMenuToggleEvent {
-  item: any
-  open: boolean
-  parent: any
-  event: MouseEvent
+  item: any;
+  open: boolean;
+  parent: any;
+  event: MouseEvent;
 }
 export interface AccordionItemClickEvent {
-  item: any
-  prevActiveItem?: any
-  parent: any
-  event: MouseEvent
+  item: any;
+  prevActiveItem?: any;
+  parent: any;
+  event: MouseEvent;
 }
 
 /* 废弃接口 */
 /** @deprecated  merge into `AccordionMenuItem`*/
 export interface AccordionSubMenuItem {
-  title: string
-  active?: boolean
-  disabled?: boolean
-  [prop: string]: any
+  title: string;
+  active?: boolean;
+  disabled?: boolean;
+  [prop: string]: any;
 }
 /** @deprecated  use `AccordionLinkableItem` instead*/
 export interface AccordionSubMenuItemHrefLink {
-  title: string
-  link: string
-  target?: string
-  active?: boolean
-  disabled?: boolean
-  [prop: string]: any
+  title: string;
+  link: string;
+  target?: string;
+  active?: boolean;
+  disabled?: boolean;
+  [prop: string]: any;
 }
 /** @deprecated  use `AccordionLinkableItem` instead*/
 export interface AccordionSubMenuItemRouterLink {
-  title: string
-  link: string
-  target?: string
-  active?: boolean
-  disabled?: boolean
-  [prop: string]: any
+  title: string;
+  link: string;
+  target?: string;
+  active?: boolean;
+  disabled?: boolean;
+  [prop: string]: any;
 }
 /** @deprecated  use `AccordionLinkableItem` instead*/
 export interface AccordionSubMenuItemDynamicLink {
-  title: string
-  link: string
-  linkType: 'routerLink' | 'hrefLink' | string
-  target?: string
-  active?: boolean
-  disabled?: boolean
-  [prop: string]: any
+  title: string;
+  link: string;
+  linkType: 'routerLink' | 'hrefLink' | string;
+  target?: string;
+  active?: boolean;
+  disabled?: boolean;
+  [prop: string]: any;
 }
 ```
 
 ### AccordionProps
 
 ```typescript
-import { ExtractPropTypes } from 'vue'
-import { AccordionMenuType } from './accordion.type'
+import { ExtractPropTypes } from 'vue';
+import { AccordionMenuType } from './accordion.type';
 
 export const accordionProps = {
   data: {
     type: Array as () => Array<any> | AccordionMenuType,
-    default: null
+    default: null,
   },
   /* Key值定义, 用于自定义数据结构 */
   titleKey: { type: String, default: 'title' }, // 标题的key，item[titleKey]类型为string，为标题显示内容
@@ -923,15 +870,15 @@ export const accordionProps = {
 
   menuToggle: {
     type: Function as unknown as () => (event: MouseEvent) => void,
-    default: null
+    default: null,
   }, // 可展开菜单展开事件
   itemClick: {
     type: Function as unknown as () => (event: MouseEvent) => void,
-    default: null
+    default: null,
   }, // 可点击菜单点击事件
   activeItemChange: {
     type: Function as unknown as () => (event: MouseEvent) => void,
-    default: null
+    default: null,
   },
 
   /** 高级选项和模板 */
@@ -945,7 +892,7 @@ export const accordionProps = {
   /* 内置路由/链接/动态判断路由或链接类型 */
   linkType: {
     type: String as () => 'routerLink' | 'hrefLink' | 'dependOnLinkTypeKey' | '' | string,
-    default: ''
+    default: '',
   },
   linkTypeKey: { type: String, default: 'linkType' }, // linkType为'dependOnLinkTypeKey'时指定对象linkType定义区
   linkKey: { type: String, default: 'link' }, // 链接内容的key
@@ -954,11 +901,11 @@ export const accordionProps = {
 
   accordionType: {
     type: String as () => 'normal' | 'embed',
-    default: 'normal'
-  }
-} as const
+    default: 'normal',
+  },
+} as const;
 
-export type AccordionProps = ExtractPropTypes<typeof accordionProps>
+export type AccordionProps = ExtractPropTypes<typeof accordionProps>;
 ```
 
 ### 模板可以用变量值(使用方法如下)

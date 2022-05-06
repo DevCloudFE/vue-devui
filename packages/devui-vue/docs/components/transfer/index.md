@@ -13,104 +13,115 @@
 ```vue
 <template>
   <d-transfer
-    v-model="options.modelValues"
-    :titles="options.titles"
-    :sourceOption="options.source"
-    :targetOption="options.target"
-    :isSearch="options.isSearch"
-    :showTooltip="options.showTooltip"
+    v-model:source-default-checked="sourceDefaultChecked"
+    v-model:target-default-checked="targetDefaultChecked"
+    :titles="titles"
+    :sourceOption="source"
+    :targetOption="target"
   >
   </d-transfer>
 </template>
 <script>
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
   setup() {
     const originSource = [
-        {
-          key: '北京',
-          value: '北京',
-          disabled: false,
-        },
-        {
-          key: '上海',
-          value: '上海',
-          disabled: true,
-        },
-        {
-          key: '广州',
-          value: '广州',
-          disabled: false,
-        },
-        {
-          key: '深圳',
-          value: '深圳',
-          disabled: false,
-        },
-        {
-          key: '成都',
-          value: '成都',
-          disabled: false,
-        },
-        {
-          key: '武汉',
-          value: '武汉',
-          disabled: false,
-        },
-        {
-          key: "西安",
-          value: "西安",
-          disabled: false,
-        },
-        {
-          key: '福建',
-          value: '福建',
-          disabled: false,
-        },
-        
-      ]
+      {
+        value: '1',
+        name: '北京',
+        disabled: false,
+      },
+      {
+        value: '2',
+        name: '上海',
+        disabled: true,
+      },
+      {
+        value: '3',
+        name: '广州',
+        disabled: false,
+      },
+      {
+        value: '4',
+        name: '深圳',
+        disabled: false,
+      },
+      {
+        value: '5',
+        name: '成都',
+        disabled: false,
+      },
+      {
+        value: '6',
+        name: '杭州',
+        disabled: true,
+      },
+      {
+        value: "7",
+        name: "重庆",
+        disabled: false,
+      },
+      {
+        value: '8',
+        name: '西安',
+        disabled: false,
+      },
+      {
+        value: '9',
+        name: '苏州',
+        disabled: false,
+      },
+      {
+        value: '10',
+        name: '武汉',
+        disabled: false,
+      }
+    ]
     const originTarget = [
-        {
-          key: '南充',
-          value: '南充',
-          disabled: false,
-        },
-        {
-          key: '广元',
-          value: '广元',
-          disabled: false,
-        },
-        {
-          key: '绵阳',
-          value: '绵阳',
-          disabled: false,
-        },
-        {
-          key: '大连',
-          value: '大连',
-          disabled: false,
-        },
-        {
-          key: '重庆',
-          value: '重庆',
-          disabled: false,
-        },
-      ]
+      {
+        value: '11',
+        name: '南京',
+        disabled: false,
+      },
+      {
+        value: '12',
+        name: '长沙',
+        disabled: false,
+      },
+      {
+        value: '13',
+        name: '东莞',
+        disabled: false,
+      },
+      {
+        value: '14',
+        name: '佛山',
+        disabled: false,
+      },
+      {
+        value: '15',
+        name: '宁波',
+        disabled: true,
+      },
+      {
+        value: '16',
+        name: '青岛',
+        disabled: false,
+      },
+      {
+        value: '17',
+        name: '沈阳',
+        disabled: false,
+      }
+    ]
 
-    const options = reactive({
+    return {
       titles: ['sourceHeader', 'targetHeader'],
       source: originSource,
       target: originTarget,
-      originSource,
-      originTarget,
-      isSearch: true,
-      modelValues: ['深圳', '成都', '绵阳'],
-      showTooltip: true
-    })
-
-    return {
-      options
+      sourceDefaultChecked: ['2', '5', '28'],
+      targetDefaultChecked: ['12', '23']
     }
   }
 })
@@ -119,123 +130,267 @@ export default defineComponent({
 
 :::
 
-
-### 拖拽排序
-
-可以对穿梭框源和目标框的数据进行排序。
-
+### 搜索穿梭框
+在数据很多的情况下，可以对数据进行搜索和过滤。
 :::demo
 
 ```vue
 <template>
   <d-transfer
-    v-model="options.modelValues"
-    :titles="options.titles"
-    :sourceOption="options.source"
-    :targetOption="options.target"
-    :isSearch="options.isSearch"
-    :isSourceDroppable="options.isSourceDroppable"
-    :isTargetDroppable="options.isTargetDroppable"
+    v-model:source-default-checked="sourceDefaultChecked"
+    v-model:target-default-checked="targetDefaultChecked"
+    :titles="titles"
+    :sourceOption="source"
+    :targetOption="target"
+    :isSearch="isSearch"
+    :searching="searchingHandle"
   >
   </d-transfer>
 </template>
 <script>
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
   setup() {
     const originSource = [
-        {
-          key: '北京',
-          value: '北京',
-          disabled: false,
-        },
-        {
-          key: '上海',
-          value: '上海',
-          disabled: true,
-        },
-        {
-          key: '广州',
-          value: '广州',
-          disabled: false,
-        },
-        {
-          key: '深圳',
-          value: '深圳',
-          disabled: false,
-        },
-        {
-          key: '成都',
-          value: '成都',
-          disabled: false,
-        },
-        {
-          key: '武汉',
-          value: '武汉',
-          disabled: false,
-        },
-        {
-          key: "西安",
-          value: "西安",
-          disabled: false,
-        },
-        {
-          key: '福建',
-          value: '福建',
-          disabled: false,
-        },
-        
-      ]
+      {
+        value: '1',
+        name: '北京',
+        disabled: false,
+      },
+      {
+        value: '2',
+        name: '上海',
+        disabled: true,
+      },
+      {
+        value: '3',
+        name: '广州',
+        disabled: false,
+      },
+      {
+        value: '4',
+        name: '深圳',
+        disabled: false,
+      },
+      {
+        value: '5',
+        name: '成都',
+        disabled: false,
+      },
+      {
+        value: '6',
+        name: '杭州',
+        disabled: true,
+      },
+      {
+        value: "7",
+        name: "重庆",
+        disabled: false,
+      },
+      {
+        value: '8',
+        name: '西安',
+        disabled: false,
+      },
+      {
+        value: '9',
+        name: '苏州',
+        disabled: false,
+      },
+      {
+        value: '10',
+        name: '武汉',
+        disabled: false,
+      }
+    ]
     const originTarget = [
-        {
-          key: '南充',
-          value: '南充',
-          disabled: false,
-        },
-        {
-          key: '广元',
-          value: '广元',
-          disabled: false,
-        },
-        {
-          key: '绵阳',
-          value: '绵阳',
-          disabled: false,
-        },
-        {
-          key: '大连',
-          value: '大连',
-          disabled: false,
-        },
-        {
-          key: '重庆',
-          value: '重庆',
-          disabled: false,
-        },
-      ]
+      {
+        value: '11',
+        name: '南京',
+        disabled: false,
+      },
+      {
+        value: '12',
+        name: '长沙',
+        disabled: false,
+      },
+      {
+        value: '13',
+        name: '东莞',
+        disabled: false,
+      },
+      {
+        value: '14',
+        name: '佛山',
+        disabled: false,
+      },
+      {
+        value: '15',
+        name: '宁波',
+        disabled: true,
+      },
+      {
+        value: '16',
+        name: '青岛',
+        disabled: false,
+      },
+      {
+        value: '17',
+        name: '沈阳',
+        disabled: false,
+      }
+    ]
 
-    const options = reactive({
+    return {
       titles: ['sourceHeader', 'targetHeader'],
       source: originSource,
       target: originTarget,
-      originSource,
-      originTarget,
-      isSearch: false,
-      modelValues: ['深圳', '成都', '绵阳'],
-      isSourceDroppable: true,
-      isTargetDroppable: true
-    })
-
-    return {
-      options
+      sourceDefaultChecked: ['2', '5', '28'],
+      targetDefaultChecked: ['12', '23'],
+      isSearch: true,
+      searchingHandle: (direction, data, keyword) => {
+        console.log(direction, data, keyword)
+      }
     }
   }
 })
 </script>
 ```
 
-::: 
+:::
+
+### 排序穿梭框
+可以对穿梭框源和目标框的数据进行排序。
+:::demo
+
+```vue
+<template>
+  <d-transfer
+    v-model:source-default-checked="sourceDefaultChecked"
+    v-model:target-default-checked="targetDefaultChecked"
+    :titles="titles"
+    :sourceOption="source"
+    :targetOption="target"
+    :sourceSortMethods="sortMethodsHandle"
+    :targetSortMethods="sortMethodsHandle2"
+  >
+  </d-transfer>
+</template>
+<script>
+import { defineComponent, reactive, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const originSource = [
+      {
+        value: '1',
+        name: '北京',
+        disabled: false,
+      },
+      {
+        value: '2',
+        name: '上海',
+        disabled: true,
+      },
+      {
+        value: '3',
+        name: '广州',
+        disabled: false,
+      },
+      {
+        value: '4',
+        name: '深圳',
+        disabled: false,
+      },
+      {
+        value: '5',
+        name: '成都',
+        disabled: false,
+      },
+      {
+        value: '6',
+        name: '杭州',
+        disabled: true,
+      },
+      {
+        value: "7",
+        name: "重庆",
+        disabled: false,
+      },
+      {
+        value: '8',
+        name: '西安',
+        disabled: false,
+      },
+      {
+        value: '9',
+        name: '苏州',
+        disabled: false,
+      },
+      {
+        value: '10',
+        name: '武汉',
+        disabled: false,
+      }
+    ]
+    const originTarget = [
+      {
+        value: '11',
+        name: '南京',
+        disabled: false,
+      },
+      {
+        value: '12',
+        name: '长沙',
+        disabled: false,
+      },
+      {
+        value: '13',
+        name: '东莞',
+        disabled: false,
+      },
+      {
+        value: '14',
+        name: '佛山',
+        disabled: false,
+      },
+      {
+        value: '15',
+        name: '宁波',
+        disabled: true,
+      },
+      {
+        value: '16',
+        name: '青岛',
+        disabled: false,
+      },
+      {
+        value: '17',
+        name: '沈阳',
+        disabled: false,
+      }
+    ]
+
+    return {
+      titles: ['sourceHeader', 'targetHeader'],
+      source: originSource,
+      target: originTarget,
+      sourceDefaultChecked: ['2', '5', '28'],
+      targetDefaultChecked: ['12', '23'],
+      sortMethodsHandle: function(data) {
+        return data.sort(() => 0.5 - Math.random())
+      },
+      sortMethodsHandle2: function(data) {
+        return data.reverse()
+      }
+    }
+  }
+})
+</script>
+```
+
+:::
 
 ### 自定义穿梭框
 可以对穿梭框内容的显示进行自定义。
@@ -243,157 +398,192 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-transfer>
-    <template #left-header>
-      <div class="custom-transfer__header">Customize Header</div>
-    </template>
-    <template #left-body>
-      <div class="custom-transfer__body">
-        <div class="custom-transfer__body__list custom-transfer__body__header">
-          <DCheckbox
-            class="custom-transfer__body__list__checkout"
-            v-model="leftOptions.allChecked"
-            @change="changeAllSource(leftOptions)"
-          ></DCheckbox>
-          <div class="custom-transfer__body__list__part">Id</div>
-          <div class="custom-transfer__body__list__part">Name</div>
-          <div class="custom-transfer__body__list__part">Age</div>
-        </div>
-        <DCheckboxGroup v-model="leftOptions.checkedValues">
-          <div class="custom-transfer__body__list" v-for="(item, idx) in leftOptions.filterData">
-            <DCheckbox
-                class="devui-transfer__panel__body__list__item"
-                :value="item.value"
-                :disabled="item.disabled"
-                :key="idx">
-            </DCheckbox>
-            <div class="custom-transfer__body__list__part">{{item.key}}</div>
-            <div class="custom-transfer__body__list__part">{{item.value}}</div>
-            <div class="custom-transfer__body__list__part">{{item.age}}</div>
-          </div>
-        </DCheckboxGroup>
+  <d-transfer class="custom-transfer">
+    <template #sourceHeader>
+      <div class="custom-transfer__header">
+        <d-checkbox 
+          class="custom-transfer__body__list__checkout" 
+          v-model="options.sourceAllChecked"
+          :label="options.sourceAllLabel"
+          @change="sourceAllCheckedHandle"
+        />
       </div>
     </template>
-    <template #operation>
-      <div class="custom-transfer__operation">
-        <div class="custom-transfer__operation__group">
-          <DButton :disabled="leftOptions.disabled" @Click="updateRightFilterData" >Left</DButton>
-          <DButton style="margin-top: 12px;" :disabled="rightOptions.disabled" @click="updateLeftFilterData">Right</DButton>
-        </div>
+    <template #sourceBody>
+      <div class="custom-transfer__body">
+        <d-checkbox-group 
+          class="custom-transfer__body__list" 
+          :options="options.sourceData" 
+          v-model="options.sourceDefaultChecked"
+          v-if="options.sourceData.length"
+        />
+        <div class="custom-transfer__body__empty" v-if="!options.sourceData.length" >没有数据</div>
       </div>
     </template>
-    <template #right-header>
-      <div class="custom-transfer__header">Customize Header</div>
+    <template #operate>
+      <div class="custom-operate__wrap">
+        <d-button :disabled="!options.sourceDefaultChecked.length" @click="moveTargetHandle">Right</d-button>
+        <d-button :disabled="!options.targetDefaultChecked.length" @click="moveSourceHandle">Left</d-button>
+      </div>
     </template>
-    <template #right-body>
+    <template #targetHeader>
+      <div class="custom-transfer__header">
+        <d-checkbox 
+          class="custom-transfer__body__list__checkout" 
+          v-model="options.targetAllChecked"
+          :label="options.targetAllLabel"
+          @change="targetAllCheckedHandle"
+        />
+      </div>
+    </template>
+    <template #targetBody>
       <div class="custom-transfer__body">
-        <div class="custom-transfer__body__list custom-transfer__body__header">
-          <DCheckbox
-            class="custom-transfer__body__list__checkout"
-            v-model="rightOptions.allChecked"
-            @change="changeAllSource(rightOptions)"
-          ></DCheckbox>
-          <div class="custom-transfer__body__list__part">Id</div>
-          <div class="custom-transfer__body__list__part">Name</div>
-          <div class="custom-transfer__body__list__part">Age</div>
-        </div>
-        <DCheckboxGroup v-model="rightOptions.checkedValues">
-          <div class="custom-transfer__body__list" v-for="(item, idx) in rightOptions.filterData">
-            <DCheckbox
-                class="devui-transfer__panel__body__list__item"
-                :value="item.value"
-                :disabled="item.disabled"
-                :key="idx">
-            </DCheckbox>
-            <div class="custom-transfer__body__list__part">{{item.key}}</div>
-            <div class="custom-transfer__body__list__part">{{item.value}}</div>
-            <div class="custom-transfer__body__list__part">{{item.age}}</div>
-          </div>
-        </DCheckboxGroup>
+        <d-checkbox-group 
+          class="custom-transfer__body__list"
+          :options="options.targetData" 
+          v-model="options.targetDefaultChecked"
+          v-if="options.targetData.length"
+        />
+        <div class="custom-transfer__body__empty" v-if="!options.targetData.length" >没有数据</div>
       </div>
     </template>
   </d-transfer>
 </template>
 <script>
-import { defineComponent, reactive, watch } from 'vue'
+import { defineComponent, reactive, watch, ref } from 'vue'
 
 export default defineComponent({
   setup() {
-    const leftOptions = reactive({
-      allChecked: false,
-      filterData: [
+    const options = reactive({
+      sourceData: [
         {
-          key: '1',
-          value: 'Mark',
-          age: 11,
+          value: '1',
+          name: 'content1',
           disabled: false,
         },
         {
-          key: '2',
-          value: 'Jacob',
-          age: 12,
+          value: '2',
+          name: 'content2',
           disabled: false,
         },
         {
-          key: '3',
-          value: 'Danni',
-          age: 13,
+          value: '3',
+          name: 'content3',
           disabled: false,
         },
         {
-          key: '4',
-          value: 'green',
-          age: 14,
+          value: '4',
+          name: 'content4',
           disabled: false,
         },
         {
-          key: '5',
-          value: 'po',
-          age: 15,
+          value: '5',
+          name: 'content5',
           disabled: false,
         },
         {
-          key: '6',
-          value: 'Book',
-          age: 16,
+          value: '6',
+          name: 'content6',
+          disabled: false,
+        },
+        {
+          value: "7",
+          name: "content7",
+          disabled: false,
+        },
+        {
+          value: '8',
+          name: 'content8',
           disabled: false,
         }
       ],
-      checkedValues: [],
-      disabled: true,
-    });
-
-    const rightOptions = reactive({
-      allChecked: false,
-      filterData: [
+      targetData: [
         {
-          key: '21',
-          value: 'john',
-          age: 17,
+          value: '9',
+          name: 'content9',
           disabled: false,
         },
         {
-          key: '22',
-          value: 'Joke',
-          age: 28,
+          value: '10',
+          name: 'content10',
           disabled: false,
         },
         {
-          key: '23',
-          value: 'Echo',
-          age: 18,
+          value: '11',
+          name: 'content11',
           disabled: false,
         },
+        {
+          value: '12',
+          name: 'content12',
+          disabled: false,
+        },
+        {
+          value: '13',
+          name: 'content13',
+          disabled: false,
+        },
+        {
+          value: '14',
+          name: 'content14',
+          disabled: false,
+        },
+        {
+          value: '15',
+          name: 'content15',
+          disabled: false,
+        },
+        {
+          value: '16',
+          name: 'content16',
+          disabled: false,
+        }
       ],
-      checkedValues: [],
-      disabled: true,
+      sourceDefaultChecked: ['2', '5', '8'],
+      targetDefaultChecked: ['12'],
+      sourceAllChecked: false,
+      targetAllChecked: false,
+      sourceAllLabel: 'customSourceHeader',
+      targetAllLabel: 'customTargetHeader'
     })
 
+
+    const sourceAllCheckedHandle = (value) => {
+      options.sourceDefaultChecked = value ? options.sourceData.map(item => item.value) : []
+    }
+    const targetAllCheckedHandle = (value) => {
+      options.targetDefaultChecked = value ? options.targetData.map(item => item.value) : []
+    }
+    const moveTargetHandle = () => {
+      const moveTargetData = []
+      options.sourceData = options.sourceData.filter(item => {
+        if(options.sourceDefaultChecked.includes(item.value)) {
+          moveTargetData.push(item)
+          return false
+        }
+        return true
+      })
+      options.targetData = options.targetData.concat(moveTargetData)
+      options.sourceDefaultChecked = []
+    }
+    const moveSourceHandle = () => {
+      const moveSourceData = []
+      options.targetData = options.targetData.filter(item => {
+        if(options.targetDefaultChecked.includes(item.value)) {
+          moveSourceData.push(item)
+          return false
+        }
+        return true
+      })
+      options.sourceData = options.sourceData.concat(moveSourceData)
+      options.targetDefaultChecked = []
+    }
+
+
     watch(
-      () => leftOptions.checkedValues, 
-      (nVal) => {
-        rightOptions.disabled = nVal.length !== 0 ? false : true
-        leftOptions.allChecked = isEqual(nVal, leftOptions.filterData)
+      () => options.sourceDefaultChecked,
+      (nVal, oVal) => {
+        options.sourceAllChecked = options.sourceData.length && nVal.length === options.sourceData.length
       },
       {
         deep: true
@@ -401,104 +591,57 @@ export default defineComponent({
     )
 
     watch(
-      () => rightOptions.checkedValues,
-      (nVal) => {
-        leftOptions.disabled = nVal.length !== 0 ? false : true
-        rightOptions.allChecked = isEqual(nVal, rightOptions.filterData)
+      () => options.targetDefaultChecked,
+      (nVal, oVal) => {
+        options.targetAllChecked = options.targetData.length && nVal.length === options.targetData.length
       },
       {
         deep: true
       }
     )
-
-    const isEqual = (source, target) => {
-      return target.length !== 0 && source.length === target.length
-    }
-
-    const changeAllSource = (source) => {
-      if(source.allChecked) {
-        source.checkedValues = source.filterData.map(item => item.value)
-      } else {
-        source.checkedValues = []
-      }
-    }
-
-    const updateRightFilterData = () => {
-      rightOptions.filterData = rightOptions.filterData.filter(item => {
-        let hasItem = rightOptions.checkedValues.includes(item.value)
-        if(hasItem) {
-          leftOptions.filterData.push(item)
-        }
-        return !hasItem
-      })
-      rightOptions.checkedValues = []
-    }
-
-    const updateLeftFilterData = () => {
-      leftOptions.filterData = leftOptions.filterData.filter(item => {
-        let hasItem = leftOptions.checkedValues.includes(item.value)
-        if(hasItem) {
-          rightOptions.filterData.push(item)
-        }
-        return !hasItem
-      })
-      leftOptions.checkedValues = []
-    }
 
     return {
-      leftOptions,
-      rightOptions,
-      changeAllSource,
-      updateRightFilterData,
-      updateLeftFilterData
+      options,
+      sourceAllCheckedHandle,
+      targetAllCheckedHandle,
+      moveTargetHandle,
+      moveSourceHandle
     }
   }
 })
 </script>
 <style>
 .custom-transfer__header {
+  border-bottom: 1px solid #dfe1e6;
+}
+.custom-transfer__body__list__checkout {
   height: 40px;
   line-height: 40px;
-  border-bottom: 1px solid #dfe1e6;
 }
 .custom-transfer__body {
-  height: calc(100% - 40px);
+  height: 320px;
   overflow-y: auto;
 }
-.custom-transfer__body__list {
-  display: flex;
-  justify-content: space-between;
-  height: 36px;
-  line-height: 36px;
-  border-bottom: 1px solid #dfe1e6;
-  align-items: center;
-}
-.custom-transfer__body__list__part {
-  width: 30%;
-  text-align: center;
-}
-.custom-transfer__body__list__checkout, .custom-transfer__body__list__item {
-  width: 10%;
-}
-.custom-transfer__header, .custom-transfer__body__list {
+.custom-transfer__header, .custom-transfer__body {
   padding: 0 10px;
 }
-.custom-transfer__operation {
+.custom-operate__wrap {
   display: flex;
-  width: 10%;
-  flex-wrap: wrap;
+  flex-direction: column;
+}
+.custom-operate__wrap button:last-child{
+  margin-top: 8px;
+}
+.custom-transfer__body__empty {
+  display: flex;
   justify-content: center;
   align-items: center;
-}
-.custom-transfer__operation__group , .custom-transfer__operation__group .devui-btn{
-  width: 64px;
+  height: 100%;
 }
 </style>
 ```
 
-::: 
-
-
+:::
 
 
 ### API

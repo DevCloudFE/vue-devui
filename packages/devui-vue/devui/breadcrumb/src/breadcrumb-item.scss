@@ -6,7 +6,7 @@
   line-height: 18px;
 }
 
-.#{$devui-prefix}-breadcrumb-item {
+.#{$devui-prefix}-breadcrumb__item {
   @extend .#{$devui-prefix}-breadcrumb-font-style;
 
   cursor: auto;
@@ -24,9 +24,7 @@
 
   a,
   span {
-    transition:
-      color $devui-animation-duration-slow
-      $devui-animation-ease-in-out-smooth;
+    transition: color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   }
 
   .is-link {
@@ -39,7 +37,7 @@
   }
 }
 
-.#{$devui-prefix}-breadcrumb-separator {
+.#{$devui-prefix}-breadcrumb__separator {
   @extend .#{$devui-prefix}-breadcrumb-font-style;
 
   margin: 0 4px;

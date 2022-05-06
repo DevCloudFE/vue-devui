@@ -1,6 +1,7 @@
 import { defineComponent, provide, toRef, ExtractPropTypes } from 'vue';
 import DRadio from './radio';
 import { radioGroupProps, radioGroupInjectionKey } from './radio-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './radio-group.scss';
 
 export default defineComponent({
@@ -25,6 +26,7 @@ export default defineComponent({
   },
   render() {
     const { values, direction } = this;
+    const ns = useNamespace('radio-group');
     /** 获取展示内容 */
     const getContent = () => {
       const defaultSlot = this.$slots.default;
@@ -51,7 +53,7 @@ export default defineComponent({
     return (
       <div
         class={[
-          'devui-radio-group',
+          ns.b(),
           {
             'is-row': direction === 'row',
             'is-column': direction === 'column',

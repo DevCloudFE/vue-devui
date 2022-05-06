@@ -1,14 +1,16 @@
-import './image-preview.scss';
 import { defineComponent, Fragment, ref, computed, onMounted, onUnmounted } from 'vue';
 import { imagePreviewProps, ImagePreviewProps } from './image-preview-types';
 import ImagePreviewService from './image-preview-service';
 import Transform from './transform';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+import './image-preview.scss';
 
 export default defineComponent({
   name: 'DImagePreview',
   props: imagePreviewProps,
   emits: [],
   setup(props: ImagePreviewProps) {
+    const ns = useNamespace('image-preview');
     let transform: Transform = null;
     const index = ref(0);
     const url = computed(() => props.previewUrlList[index.value]);
@@ -17,7 +19,7 @@ export default defineComponent({
     const bgStyle = props.backDropZIndex ? { zIndex: props.backDropZIndex } : {};
 
     function initTransform() {
-      const imageElement: HTMLImageElement = document.querySelector('.devui-image-preview-main-image');
+      const imageElement: HTMLImageElement = document.querySelector(`.${ns.e('main-image')}`);
       transform = new Transform(imageElement);
     }
     function initIndex() {
@@ -80,11 +82,11 @@ export default defineComponent({
     return () => {
       return (
         <Fragment>
-          <div class="devui-image-preview" style={imageStyle}>
+          <div class={ns.b()} style={imageStyle}>
             {/* 预览图 */}
-            <img class="devui-image-preview-main-image" src={url.value} />
+            <img class={ns.e('main-image')} src={url.value} />
             {/* 按钮区 */}
-            <button class="devui-image-preview-close-btn" onClick={onClose}>
+            <button class={ns.e('close-btn')} onClick={onClose}>
               <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <polygon
@@ -96,7 +98,7 @@ export default defineComponent({
                 </g>
               </svg>
             </button>
-            <button class="devui-image-preview-arrow-left" onClick={onPrev}>
+            <button class={ns.e('arrow-left')} onClick={onPrev}>
               <svg width="18px" height="18px" viewBox="0 0 16 16" version="1.1">
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <polygon
@@ -107,7 +109,7 @@ export default defineComponent({
                 </g>
               </svg>
             </button>
-            <button class="devui-image-preview-arrow-right" onClick={onNext}>
+            <button class={ns.e('arrow-right')} onClick={onNext}>
               <svg width="18px" height="18px" viewBox="0 0 16 16" version="1.1">
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <polygon
@@ -120,7 +122,7 @@ export default defineComponent({
               </svg>
             </button>
             {/* 底部固定区 */}
-            <div class="devui-image-preview-toolbar">
+            <div class={ns.e('toolbar')}>
               <button onClick={onZoomIn}>
                 <svg width="18px" height="18px" viewBox="0 0 16 16">
                   <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -181,10 +183,10 @@ export default defineComponent({
                   </g>
                 </svg>
               </button>
-              <span class="devui-image-preview-index">
+              <span class={ns.e('index')}>
                 {index.value + 1}:{props.previewUrlList.length}
               </span>
-              <button class="devui-next" onClick={onNext}>
+              <button onClick={onNext}>
                 <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
                   <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                     <polygon
@@ -216,7 +218,7 @@ export default defineComponent({
               </button>
             </div>
           </div>
-          <div class="devui-image-preview-bg" style={bgStyle}></div>
+          <div class={ns.e('bg')} style={bgStyle}></div>
         </Fragment>
       );
     };

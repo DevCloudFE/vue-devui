@@ -2,6 +2,7 @@ import { defineComponent, toRefs, computed, inject } from 'vue';
 import { accordionProps } from './accordion-types';
 import { AccordionItemClickEvent, AccordionMenuItem } from './accordion.type';
 import { getRootSlots } from '../src/utils';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DAccordionItem',
@@ -9,24 +10,17 @@ export default defineComponent({
     item: Object as () => AccordionMenuItem,
     deepth: {
       type: Number,
-      default: 0
+      default: 0,
     },
     parent: {
       type: Object as () => AccordionMenuItem,
-      default: null
+      default: null,
     },
-    ...accordionProps
+    ...accordionProps,
   },
   setup(props) {
-    const {
-      item,
-      deepth,
-      parent,
-      titleKey,
-      activeKey,
-      disabledKey,
-      itemTemplate
-    } = toRefs(props);
+    const { item, deepth, parent, titleKey, activeKey, disabledKey, itemTemplate } = toRefs(props);
+    const ns = useNamespace('accordion');
 
     const rootSlots = getRootSlots();
     const accordionCtx = inject('accordionContext') as any;
@@ -59,10 +53,10 @@ export default defineComponent({
         <>
           <div
             class={[
-              'devui-accordion-item-title',
-              'devui-over-flow-ellipsis',
-              childActived.value && 'active',
-              disabled.value && 'disabled'
+              ns.e('item-title'),
+              ns.m('overflow-ellipsis'),
+              childActived.value && ns.m('active'),
+              disabled.value && ns.m('disabled'),
             ]}
             title={title.value}
             style={{ textIndent: deepValue * 20 + 'px' }}
@@ -70,24 +64,21 @@ export default defineComponent({
               itemClick({
                 item: item.value,
                 parent: parentValue,
-                event: e
+                event: e,
               })
-            }
-          >
-            <div
-              class={['devui-accordion-splitter', deepValue === 0 && 'devui-parent-list']}
-              style={{ left: deepValue * 20 + 10 + 'px' }}
-            ></div>
+            }>
+            <div class={[ns.e('splitter'), deepValue === 0 && ns.e('parent-list')]} style={{ left: deepValue * 20 + 10 + 'px' }}></div>
             {(!rootSlots.itemTemplate || itemTemplate.value === false) && <>{title.value}</>}
-            {rootSlots.itemTemplate && itemTemplate.value !== false &&
+            {rootSlots.itemTemplate &&
+              itemTemplate.value !== false &&
               rootSlots.itemTemplate?.({
                 parent: parentValue,
                 deepth: deepValue,
-                item: item.value
+                item: item.value,
               })}
           </div>
         </>
       );
     };
-  }
+  },
 });

@@ -7,7 +7,7 @@
   cursor: pointer;
   z-index: 9;
 
-  .#{$devui-prefix}-back-top-base {
+  .#{$devui-prefix}-back-top__base {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -20,13 +20,13 @@
     }
   }
 
-  .#{$devui-prefix}-back-top-content {
+  .#{$devui-prefix}-back-top__content {
     opacity: 0.4;
     background-color: $devui-text-weak;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   }
 
-  .#{$devui-prefix}-backtop-custom {
+  .#{$devui-prefix}-back-top__custom {
     background-color: #ffffff;
   }
 }

@@ -1,5 +1,6 @@
 import { defineComponent, ref } from 'vue';
 import { textareaProps, TextareaProps } from './textarea-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './textarea.scss';
 
 export default defineComponent({
@@ -59,8 +60,10 @@ export default defineComponent({
       autofocus,
       curValueRef,
     } = this;
+    const ns = useNamespace('textarea');
+
     return (
-      <div class="devui-textarea-wrap">
+      <div class={ns.e('wrap')}>
         <textarea
           {...{ DTextarea: true }}
           id={id}
@@ -75,10 +78,9 @@ export default defineComponent({
           onFocus={onFocus}
           onBlur={onBlur}
           onChange={onChange}
-          onKeydown={onKeydown}
-        ></textarea>
+          onKeydown={onKeydown}></textarea>
         {showCount && (
-          <div class="devui-textarea-show-count">
+          <div class={ns.e('show-count')}>
             {curValueRef.length}
             {!(maxLength ?? false) ? '' : ' / ' + maxLength}
           </div>
