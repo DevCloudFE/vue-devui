@@ -1,5 +1,6 @@
 import { defineComponent, renderSlot, useSlots } from 'vue';
 import { SwitchProps, switchProps } from './switch-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './switch.scss';
 
 export default defineComponent({
@@ -19,7 +20,7 @@ export default defineComponent({
       return Promise.resolve(true);
     };
     const toggle = () => {
-      canChange().then(res => {
+      canChange().then((res) => {
         if (!res) {
           return;
         }
@@ -29,40 +30,30 @@ export default defineComponent({
     };
 
     return {
-      toggle
+      toggle,
     };
   },
 
   render() {
-    const {
-      size,
-      checked,
-      disabled,
-      color,
-      toggle
-    } = this;
+    const { size, checked, disabled, color, toggle } = this;
+    const ns = useNamespace('switch');
     const outerCls = {
-      'devui-switch': true,
-      [`devui-switch-${size}`]: size !== '',
-      'devui-checked': checked,
-      'devui-disabled': disabled
+      [ns.b()]: true,
+      [ns.m(size)]: size !== '',
+      [ns.m('checked')]: checked,
+      [ns.m('disabled')]: disabled,
     };
-    const outerStyle = [
-      `background: ${checked && !disabled ? color : ''}`,
-      `border-color: ${checked && !disabled ? color : ''}`
-    ];
+    const outerStyle = [`background: ${checked && !disabled ? color : ''}`, `border-color: ${checked && !disabled ? color : ''}`];
 
     const checkedContent = renderSlot(useSlots(), 'checkedContent');
     const uncheckedContent = renderSlot(useSlots(), 'uncheckedContent');
     return (
       <span class={outerCls} style={outerStyle} onClick={toggle}>
-        <span class="devui-switch-inner-wrapper">
-          <div class="devui-switch-inner">
-            {checked ? checkedContent : uncheckedContent}
-          </div>
+        <span class={ns.e('inner-wrapper')}>
+          <div class={ns.e('inner')}>{checked ? checkedContent : uncheckedContent}</div>
         </span>
         <small></small>
       </span>
     );
-  }
+  },
 });
