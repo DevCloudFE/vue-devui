@@ -26,6 +26,19 @@ describe('d-button', () => {
     expect(wrapper.find('.devui-button--sm').exists()).toBeTruthy();
   });
 
+  it('icon', () => {
+    const wrapper = mount(Button, {
+      props: {
+        icon: 'like'
+      },
+      slots: {
+        default: 'I am sure'
+      }
+    });
+
+    expect(wrapper.find('.icon').exists()).toBeTruthy();
+  });
+
   it('type', () => {
     const wrapper = mount(Button, {
       props: {
