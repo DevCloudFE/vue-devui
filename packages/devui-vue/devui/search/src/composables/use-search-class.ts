@@ -3,6 +3,8 @@
  */
 import { computed, ComputedRef } from 'vue';
 import { SearchProps } from '../search-types';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
+
 const SIZE_CLASS = {
   lg: 'lg',
   md: 'md',
@@ -12,12 +14,14 @@ const ICON_POSITION = {
   right: 'right',
   left: 'left',
 };
+const ns = useNamespace('search');
+
 export const getRootClass = (props: SearchProps): ComputedRef => {
   return computed(() => ({
-    'devui-search': true,
-    'devui-search__disbaled': props.disabled,
-    'devui-search__no-border': props.noBorder,
-    [`devui-search__${props.size}`]: SIZE_CLASS[props.size],
-    [`devui-search__${props.iconPosition}`]: ICON_POSITION[props.iconPosition],
+    [ns.b()]: true,
+    [ns.m('disabled')]: props.disabled,
+    [ns.m('no-border')]: props.noBorder,
+    [ns.m(props.size)]: SIZE_CLASS[props.size],
+    [ns.m(props.iconPosition)]: ICON_POSITION[props.iconPosition],
   }));
 };

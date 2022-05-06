@@ -6,8 +6,12 @@
   position: relative;
   @include flex;
 
-  input {
-    padding: 5px 60px 5px 10px;
+  .#{$devui-prefix}-input {
+    padding: 4px 60px 4px 8px;
+
+    &__inner {
+      padding: 0;
+    }
   }
 
   svg.svg-icon-clear path,
@@ -39,7 +43,7 @@
   &__icon {
     pointer-events: all;
     cursor: pointer;
-    padding: 0 10px;
+    padding: 0 8px;
     position: absolute;
     z-index: 1;
     right: 0;
@@ -49,9 +53,9 @@
     @include flex;
   }
 
-  &__sm {
-    input {
-      &.#{$devui-prefix}-input-sm {
+  &--sm {
+    .#{$devui-prefix}-input {
+      &.#{$devui-prefix}-input--sm {
         padding-right: 56px;
       }
     }
@@ -68,12 +72,12 @@
     }
   }
 
-  &__lg {
-    input {
-      padding: 5px 36px 5px 10px;
+  &--lg {
+    .#{$devui-prefix}-input {
+      padding: 4px 36px 4px 10px;
 
-      &.#{$devui-prefix}-input-lg {
-        padding-right: 71px;
+      &.#{$devui-prefix}-input--lg {
+        padding-right: 70px;
       }
     }
 
@@ -89,7 +93,7 @@
     }
   }
 
-  &__disbaled {
+  &--disabled {
     .#{$devui-prefix}-search__icon {
       cursor: not-allowed;
     }
@@ -99,17 +103,17 @@
     }
   }
 
-  &__left {
-    input {
-      padding: 5px 26px 5px 30px;
+  &--left {
+    .#{$devui-prefix}-input {
+      padding: 4px 26px 4px 30px;
 
-      &.#{$devui-prefix}-input-lg {
-        padding-right: 30px;
-        padding-left: 46px;
+      &.#{$devui-prefix}-input--lg {
+        padding-right: 28px;
+        padding-left: 48px;
       }
 
-      &.#{$devui-prefix}-input-sm {
-        padding-right: 26px;
+      &.#{$devui-prefix}-input--sm {
+        padding-right: 24px;
       }
     }
 
@@ -126,7 +130,7 @@
     }
   }
 
-  &__no-border {
+  &--no-border {
     input {
       border: none;
     }
