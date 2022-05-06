@@ -1,5 +1,6 @@
 import { defineComponent } from 'vue';
 import { skeletonProps, SkeletonProps } from './skeleton-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './skeleton.scss';
 
 export default defineComponent({
@@ -7,9 +8,10 @@ export default defineComponent({
   props: skeletonProps,
   setup(props: SkeletonProps, ctx) {
     const { slots } = ctx;
+    const ns = useNamespace('skeleton');
 
     function renderAnimate(isAnimated) {
-      return isAnimated ? 'devui-skeleton__animated' : '';
+      return isAnimated ? ns.e('animated') : '';
     }
     function renderBorderRadius(isRound) {
       return isRound ? 'border-radius: 1em;' : '';
@@ -50,9 +52,9 @@ export default defineComponent({
       })();
 
       return (
-        <div class="devui-skeleton__paragraph" v-show={isShown}>
+        <div class={ns.e('paragraph')} v-show={isShown}>
           {arr.map((item) => {
-            return <div class="devui-skeleton__item" style={round ? 'border-radius: 1em;' : '' + `width: ${item.width}`} />;
+            return <div class={ns.e('item')} style={round ? 'border-radius: 1em;' : '' + `width: ${item.width}`} />;
           })}
         </div>
       );
@@ -91,11 +93,11 @@ export default defineComponent({
     function renderDefaultSkeleton() {
       return (
         <>
-          <div class="devui-skeleton__avatar" v-show={props.avatar}>
+          <div class={ns.e('avatar')} v-show={props.avatar}>
             <div class="avatar" style={renderAvatarStyle(props.avatarSize, props.avatarShape)} />
           </div>
-          <div class="devui-skeleton__group">
-            <div class="devui-skeleton__title" style={renderTitle(props.title, props.titleWidth, props.round)} />
+          <div class={ns.e('group')}>
+            <div class={ns.e('title')} style={renderTitle(props.title, props.titleWidth, props.round)} />
             {renderParagraph(props.paragraph, props.row, props.rowWidth, props.round)}
           </div>
         </>
@@ -104,7 +106,7 @@ export default defineComponent({
 
     return () => {
       if (props.loading) {
-        return <div class={`devui-skeleton ${renderAnimate(props.animate)}`}>{renderDefaultSkeleton()}</div>;
+        return <div class={[ns.b(), renderAnimate(props.animate)]}>{renderDefaultSkeleton()}</div>;
       }
       return <>{slots.default?.()}</>;
     };
