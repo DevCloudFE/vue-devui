@@ -1,4 +1,4 @@
-import { changeKey } from '../composables/layer-composables';
+import { clearSelect } from '../composables/layer-composables';
 import { defineComponent,
   getCurrentInstance,
   onMounted,
@@ -13,6 +13,7 @@ import { defineComponent,
 import { MenuItemProps, menuItemProps } from "../types/menu-item-types";
 import { useInitSelect } from '../composables/init-select';
 import { addActiveParent } from '../composables/add-active-parent';
+import { useClick } from '../hook/use-click';
 
 
 export default defineComponent({
@@ -43,8 +44,12 @@ export default defineComponent({
       const ele = e.currentTarget as HTMLElement;
       if (!props.disabled){
         if (!multiple){
-          changeKey(ele,e);
-          ele.classList.add('devui-menu-item-select');
+          clearSelect(ele,e,mode.value === 'horizontal');
+          if (mode.value === 'horizontal'){
+            useClick(e);
+          } else {
+            ele.classList.add('devui-menu-item-select');
+          }
         } else {
           if (ele.classList.contains('devui-menu-item-select')){
             ele.classList.remove('devui-menu-item-select');

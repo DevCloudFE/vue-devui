@@ -1,0 +1,36 @@
+// 用于存放一些vertical 和 horizontal公用的样式
+.devui-menu-icon + span {
+  margin-left: $devui-menu-item-margin;
+}
+
+.devui-menu-item-disabled,
+.devui-submenu-disabled {
+  color: $devui-menu-item-disabled !important;
+  cursor: not-allowed !important;
+}
+
+.devui-menu-item-disabled:hover,
+.devui-submenu-disabled:hover {
+  color: $devui-menu-item-disabled !important;
+  cursor: not-allowed !important;
+}
+
+.devui-sub-menu-disabled:hover {
+  span {
+    color: $devui-menu-item-disabled !important;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity $devui-animation-duration-slow $devui-animation-ease-in-smooth;
+}
+
+.fade-leave-to {
+  display: none;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
