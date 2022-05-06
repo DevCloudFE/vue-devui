@@ -1,6 +1,7 @@
 import { defineComponent, toRefs, ref, watch, onUnmounted } from 'vue';
 import { tagProps, TagProps } from './tag-types';
 import { useClass, useColor } from './composables';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './tag.scss';
 
 export default defineComponent({
@@ -8,6 +9,7 @@ export default defineComponent({
   props: tagProps,
   emits: ['click', 'tagDelete', 'checkedChange'],
   setup(props: TagProps, { slots, emit }) {
+    const ns = useNamespace('tag');
     const { type, color, checked, titleContent, deletable } = toRefs(props);
     const tagClass = useClass(props);
     const themeColor = useColor(props);
@@ -40,7 +42,7 @@ export default defineComponent({
 
     return () =>
       isShow.value && (
-        <div class="devui-tag" onClick={handleClick} v-show={isShow.value}>
+        <div class={ns.b()} onClick={handleClick} v-show={isShow.value}>
           <span
             class={tagClass.value}
             style={{
