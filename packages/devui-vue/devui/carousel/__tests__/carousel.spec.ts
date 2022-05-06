@@ -4,7 +4,7 @@ import { CarouselItem, Carousel  } from '../index';
 import { Button } from '../../button';
 
 const wait = (ms = 100) =>
-  new Promise(resolve => setTimeout(() => resolve(), ms));
+  new Promise(resolve => setTimeout(() => resolve(true), ms));
 
 describe('d-carousel', () => {
   it('arrowTrigger-never', () => {
@@ -14,7 +14,7 @@ describe('d-carousel', () => {
         height: '200px',
       },
     });
-    expect(wrapper.find('.devui-carousel-arrow').exists()).toBe(false);
+    expect(wrapper.find('.devui-carousel__arrow').exists()).toBe(false);
   });
 
   it('arrowTrigger-hover-out', () => {
@@ -24,8 +24,9 @@ describe('d-carousel', () => {
         height: '200px',
       },
     });
-    expect(wrapper.find('.devui-carousel-arrow').exists()).toBe(false);
+    expect(wrapper.find('.devui-carousel__arrow').exists()).toBe(false);
   });
+
   it('arrowTrigger-hover-in', async () => {
     const wrapper = mount(Carousel, {
       props: {
@@ -33,9 +34,9 @@ describe('d-carousel', () => {
         height: '200px',
       },
     });
-    wrapper.find('.devui-carousel-container').trigger('mouseenter');
+    wrapper.find('.devui-carousel').trigger('mouseenter');
     await nextTick();
-    expect(wrapper.find('.devui-carousel-arrow').exists()).toBe(true);
+    expect(wrapper.find('.devui-carousel__arrow').exists()).toBe(true);
   });
 
   it('arrowTrigger-always', () => {
@@ -45,7 +46,7 @@ describe('d-carousel', () => {
         height: '200px',
       },
     });
-    expect(wrapper.find('.devui-carousel-arrow').exists()).toBe(true);
+    expect(wrapper.find('.devui-carousel__arrow').exists()).toBe(true);
   });
 
   it('showDots-false', () => {
@@ -55,7 +56,7 @@ describe('d-carousel', () => {
         height: '200px',
       },
     });
-    expect(wrapper.find('.devui-carousel-dots').exists()).toBe(false);
+    expect(wrapper.find('.devui-carousel__dots').exists()).toBe(false);
   });
 
   it('showDots-click', async () => {
@@ -81,8 +82,7 @@ describe('d-carousel', () => {
 
         return {
           activeIndex,
-
-          onChange,
+          onChange
         };
       }
     });
@@ -116,8 +116,7 @@ describe('d-carousel', () => {
 
         return {
           activeIndex,
-
-          onChange,
+          onChange
         };
       }
     });
@@ -184,17 +183,17 @@ describe('d-carousel', () => {
     await nextTick();
     expect(wrapper.vm.activeIndex).toBe(0);
 
-    wrapper.findAll('.devui-btn')[0].trigger('click');
+    wrapper.findAll('.devui-button')[0].trigger('click');
     await nextTick();
-    wrapper.findAll('.devui-btn')[0].trigger('click');
+    wrapper.findAll('.devui-button')[0].trigger('click');
     await nextTick();
     expect(wrapper.vm.activeIndex).toBe(2);
 
-    wrapper.findAll('.devui-btn')[1].trigger('click');
+    wrapper.findAll('.devui-button')[1].trigger('click');
     await nextTick();
     expect(wrapper.vm.activeIndex).toBe(3);
 
-    wrapper.findAll('.devui-btn')[2].trigger('click');
+    wrapper.findAll('.devui-button')[2].trigger('click');
     await nextTick();
     expect(wrapper.vm.activeIndex).toBe(0);
   });
@@ -222,8 +221,7 @@ describe('d-carousel', () => {
 
         return {
           activeIndex,
-
-          onChange,
+          onChange
         };
       }
     });
