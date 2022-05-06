@@ -24,7 +24,7 @@ describe('alert', () => {
           type: 'success',
         },
       });
-      expect(wrapper.find('.devui-icon-success').exists()).toBe(true);
+      expect(wrapper.find('.devui-alert__icon--success').exists()).toBe(true);
     });
     it('alert should has warning type', () => {
       const wrapper = mount(Alert, {
@@ -32,7 +32,7 @@ describe('alert', () => {
           type: 'warning',
         },
       });
-      expect(wrapper.find('.devui-icon-warning').exists()).toBe(true);
+      expect(wrapper.find('.devui-alert__icon--warning').exists()).toBe(true);
     });
     it('alert should has error type', () => {
       const wrapper = mount(Alert, {
@@ -40,11 +40,11 @@ describe('alert', () => {
           type: 'danger',
         },
       });
-      expect(wrapper.find('.devui-icon-error').exists()).toBe(true);
+      expect(wrapper.find('.devui-alert__icon--error').exists()).toBe(true);
     });
     it('alert should has info type', () => {
       const wrapper = mount(Alert);
-      expect(wrapper.find('.devui-icon-info').exists()).toBe(true);
+      expect(wrapper.find('.devui-alert__icon--info').exists()).toBe(true);
     });
     it('alert should has simple type', () => {
       const wrapper = mount(Alert, {
@@ -52,7 +52,7 @@ describe('alert', () => {
           type: 'simple',
         },
       });
-      expect(wrapper.find('.devui-alert-icon').exists()).toBe(false);
+      expect(wrapper.find('.devui-alert__icon').exists()).toBe(false);
     });
   });
 
@@ -70,7 +70,7 @@ describe('alert', () => {
   describe('alert icon', () => {
     it('alert should show icon', () => {
       const wrapper = mount(Alert);
-      expect(wrapper.find('.devui-alert-icon').exists()).toBe(true);
+      expect(wrapper.find('.devui-alert__icon').exists()).toBe(true);
     });
     it('alert should not show icon', () => {
       const wrapper = mount(Alert, {
@@ -78,7 +78,7 @@ describe('alert', () => {
           showIcon: false,
         },
       });
-      expect(wrapper.find('.devui-alert-icon').exists()).toBe(false);
+      expect(wrapper.find('.devui-alert__icon').exists()).toBe(false);
     });
   });
 
