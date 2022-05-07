@@ -1,5 +1,5 @@
-import { defineComponent, ExtractPropTypes, provide, toRef } from 'vue';
-import { checkboxGroupProps, checkboxGroupInjectionKey } from './checkbox-types';
+import { defineComponent, ExtractPropTypes, provide, Ref, toRef } from 'vue';
+import { checkboxGroupProps, checkboxGroupInjectionKey, ValListOption } from './checkbox-types';
 import DCheckbox from './checkbox';
 import './checkbox-group.scss';
 
@@ -8,7 +8,7 @@ export default defineComponent({
   props: checkboxGroupProps,
   emits: ['change', 'update:modelValue'],
   setup(props: ExtractPropTypes<typeof checkboxGroupProps>, ctx) {
-    const valList = toRef(props, 'modelValue');
+    const valList: Ref<string[] | ValListOption[]> = toRef(props, 'modelValue');
 
     const defaultOpt = {
       checked: false,
@@ -22,7 +22,7 @@ export default defineComponent({
       if (typeof valList.value[0] === 'string') {
         index = valList.value.findIndex((item) => item === val);
       } else if (typeof valList.value[0] === 'object') {
-        index = valList.value.findIndex((item) => item.value === val);
+        index = valList.value.findIndex((item) => (item as ValListOption).value === val);
       }
 
       if (index === -1) {
@@ -43,10 +43,11 @@ export default defineComponent({
       ctx.emit('change', valList.value);
     };
     const isItemChecked = (itemVal: string) => {
+      if (!valList.value)  return false;
       if (typeof valList.value[0] === 'string') {
-        return valList.value.includes(itemVal);
+        return (valList.value as string[]).includes(itemVal);
       } else if (typeof valList.value[0] === 'object') {
-        return valList.value.some((item) => item.value === itemVal);
+        return valList.value.some((item) => (item as ValListOption).value === itemVal);
       }
     };
 

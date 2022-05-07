@@ -2,6 +2,11 @@ import { PropType, InjectionKey, Ref, ExtractPropTypes } from 'vue';
 
 type Direction = 'row' | 'column';
 
+export type ValListOption = {
+  value: string;
+  [name: string]: any
+}
+
 const commonProps = {
   name: {
     type: String,

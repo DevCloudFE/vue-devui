@@ -58,12 +58,12 @@ describe('checkbox', () => {
       }
     });
 
-    expect(wrapper.findAll('.devui-no-animation').length).toBe(0);
+    expect(wrapper.findAll('.devui-checkbox--no-animation').length).toBe(0);
 
     await wrapper.setProps({
       showAnimation: false
     });
-    expect(wrapper.findAll('.devui-no-animation').length).toBe(2);
+    expect(wrapper.findAll('.devui-checkbox--no-animation').length).toBe(2);
   });
 
   it('checkbox disabled work', async () => {
@@ -99,13 +99,13 @@ describe('checkbox', () => {
 
     const container = wrapper.find('.devui-checkbox');
     expect(container.classes()).not.toContain('halfchecked');
-    expect(container.find('.devui-checkbox-default-background').exists()).toBe(true);
+    expect(container.find('.devui-checkbox__default-background').exists()).toBe(true);
 
     await wrapper.setProps({
       halfchecked: true
     });
     expect(container.classes()).toContain('halfchecked');
-    expect(container.find('.devui-checkbox-default-background').exists()).toBe(false);
+    expect(container.find('.devui-checkbox__default-background').exists()).toBe(false);
   });
 
   it('checkbox beforeChange work', async () => {

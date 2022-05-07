@@ -1,158 +1,114 @@
 import { mount } from '@vue/test-utils';
-import { reactive, ref, nextTick } from 'vue';
+import { reactive, ref, nextTick, h } from 'vue';
 import DCheckboxGroup from '../src/checkbox-group';
 import DCheckbox from '../src/checkbox';
 
 describe('d-checkbox-group', () => {
   it('checkbox-group render work', async () => {
-    const list = reactive(['b']);
-    const wrapper = mount({
-      components: {
-        DCheckboxGroup,
-        DCheckbox
+    const wrapper = mount(DCheckboxGroup, {
+      props: {
+        modelValue: ['b']
       },
-      template: `
-        <d-checkbox-group v-model:value="list">
-          <d-checkbox value="a"></d-checkbox>
-          <d-checkbox value="b"></d-checkbox>
-        </d-checkbox-group>
-      `,
-      setup () {
-        return {
-          list
-        };
+      slots: {
+        default: [
+          h(DCheckbox, { value: 'a' }),
+          h(DCheckbox, { value: 'b' })
+        ]
       }
     });
+
+    expect(wrapper.findAll('.devui-checkbox').length).toBe(2);
+
     const [box1, box2] = wrapper.findAll('.devui-checkbox');
 
     expect(wrapper.classes()).toContain('devui-checkbox-group');
     expect(box1.classes()).toContain('unchecked');
     expect(box2.classes()).toContain('active');
 
-    Object.assign(list, ['a']);
+    await wrapper.setProps({ modelValue: ['a'] });
     await nextTick();
     expect(box1.classes()).toContain('active');
     expect(box2.classes()).toContain('unchecked');
   });
 
   it('checkbox-group disabled work', async () => {
-    const list = ref(['b']);
-    const disabled = ref(true);
     const onChange = jest.fn();
-    const wrapper = mount({
-      components: {
-        DCheckboxGroup,
-        DCheckbox
+    const wrapper = mount(DCheckboxGroup, {
+      props: {
+        modelValue: ['b'],
+        disabled: true,
+        onChange 
       },
-      template: `
-        <d-checkbox-group v-model:value="list" :disabled="disabled" @change="onChange">
-          <d-checkbox value="a">1</d-checkbox>
-          <d-checkbox value="b">2</d-checkbox>
-        </d-checkbox-group>
-      `,
-      setup () {
-        return {
-          list,
-          disabled,
-          onChange
-        };
+      slots: {
+        default: [
+          h(DCheckbox, { value: 'a' }, { defaule: () => "I am devui." }),
+          h(DCheckbox, { value: 'b' }, { defaule: () => "yes, it is." })
+        ]
       }
     });
+    
     const label1 = wrapper.find('label');
-
     await label1.trigger('click');
-    expect(list.value).toStrictEqual(['b']);
     expect(onChange).toBeCalledTimes(0);
     expect(wrapper.findAll('.devui-checkbox').every(el => el.classes().includes('disabled'))).toBe(true);
 
-    disabled.value = false;
-    await nextTick();
+    await wrapper.setProps({ disabled: false });
     await label1.trigger('click');
-    expect(list.value).toStrictEqual(['b', 'a']);
     expect(onChange).toBeCalledTimes(1);
     expect(wrapper.findAll('.devui-checkbox').some(el => el.classes().includes('disabled'))).toBe(false);
   });
 
   it('checkbox-group direction work', async () => {
-    const direction = ref('column');
-    const list = ref(['b']);
-    const wrapper = mount({
-      components: {
-        DCheckboxGroup,
-        DCheckbox
+    const wrapper = mount(DCheckboxGroup, {
+      props: {
+        modelValue: ['b'],
+        direction: 'column',
       },
-      template: `
-        <d-checkbox-group v-model:value="list" :direction="direction">
-          <d-checkbox value="a">1</d-checkbox>
-          <d-checkbox value="b">2</d-checkbox>
-        </d-checkbox-group>
-      `,
-      setup () {
-        return {
-          list,
-          direction
-        };
+      slots: {
+        default: [
+          h(DCheckbox, { value: 'a' }, { defaule: () => "I am devui." }),
+          h(DCheckbox, { value: 'b' }, { defaule: () => "yes, it is." })
+        ]
       }
     });
 
-    expect(wrapper.findAll('.devui-checkbox-column-margin').length).toBe(2);
+    expect(wrapper.findAll('.devui-checkbox__column-margin').length).toBe(2);
     expect(wrapper.find('.devui-checkbox-list-inline').exists()).toBe(false);
 
-    direction.value = 'row';
-    await nextTick();
+    await wrapper.setProps({ direction: 'row' });
     expect(wrapper.find('.devui-checkbox-list-inline').exists()).toBe(true);
   });
 
   it('checkbox-group itemWidth work', () => {
-    const itemWidth = ref(100);
-    const list = ref(['b']);
-    const wrapper = mount({
-      components: {
-        DCheckboxGroup,
-        DCheckbox
+    const wrapper = mount(DCheckboxGroup, {
+      props: {
+        modelValue: ['b'],
+        itemWidth: 100,
       },
-      template: `
-        <d-checkbox-group v-model:value="list" :item-width="itemWidth">
-          <d-checkbox value="a">1</d-checkbox>
-          <d-checkbox value="b">2</d-checkbox>
-        </d-checkbox-group>
-      `,
-      setup () {
-        return {
-          list,
-          itemWidth
-        };
+      slots: {
+        default: [
+          h(DCheckbox, { value: 'a' }, { defaule: () => "I am devui." }),
+          h(DCheckbox, { value: 'b' }, { defaule: () => "yes, it is." })
+        ]
       }
     });
 
-    expect(wrapper.findAll('.devui-checkbox-wrap').length).toBe(2);
+    expect(wrapper.findAll('.devui-checkbox__tick-wrap').length).toBe(2);
   });
 
   it('checkbox-group options work', () => {
-    const list = ref(['b']);
-    const wrapper = mount({
-      components: {
-        DCheckboxGroup
-      },
-      template: `
-        <d-checkbox-group v-model:value="list" :options="options">
-        </d-checkbox-group>
-      `,
-      setup () {
-        const options = [
+    const wrapper = mount(DCheckboxGroup, {
+      props: {
+        options: [
           {
             value: 'a'
           }, {
             value: 'b'
           }
-        ];
-        return {
-          list,
-          options
-        };
+        ],
+        modelValue: ['b']
       }
-    });
-
+    })
     const boxList = wrapper.findAll('.devui-checkbox');
 
     expect(boxList.length).toBe(2);
@@ -161,41 +117,31 @@ describe('d-checkbox-group', () => {
   });
 
   it('checkbox-group beforeChange work', async () => {
-    const list = ref(['b']);
     const beforeChange = jest.fn(() => false);
     const onChange = jest.fn();
-    const wrapper = mount({
-      components: {
-        DCheckboxGroup,
-        DCheckbox
+    const wrapper = mount(DCheckboxGroup, {
+      props: {
+        modelValue: ['b'],
+        onChange,
+        beforeChange
       },
-      template: `
-        <d-checkbox-group v-model:value="list" :before-change="beforeChange" @change="onChange">
-          <d-checkbox value="a">1</d-checkbox>
-          <d-checkbox value="b">2</d-checkbox>
-        </d-checkbox-group>
-      `,
-      setup () {
-        return {
-          list,
-          beforeChange,
-          onChange
-        };
+      slots: {
+        default: [
+          h(DCheckbox, { value: 'a' }, { default: () => 'I am devui' }),
+          h(DCheckbox, { value: 'b' }, { default: () => 'Yes, it is.' })
+        ]
       }
     });
 
     const box1 = wrapper.find('label');
     await box1.trigger('click');
-
     expect(beforeChange).toHaveBeenCalledTimes(1);
     expect(onChange).toBeCalledTimes(0);
-    expect(list.value).toStrictEqual(['b']);
 
     beforeChange.mockReturnValue(true);
-    await box1.trigger('click');
 
+    await box1.trigger('click');
     expect(beforeChange).toHaveBeenCalledTimes(2);
     expect(onChange).toBeCalledTimes(1);
-    expect(list.value).toStrictEqual(['b', 'a']);
   });
 });
