@@ -27,7 +27,7 @@ describe('d-dropdown', () => {
     const toggleElement = wrapper.find('.devui-dropdown-toggle');
     expect(toggleElement.exists()).toBeTruthy();
 
-    const btn = wrapper.find('.devui-btn');
+    const btn = wrapper.find('.devui-button');
     expect(btn.exists()).toBeTruthy();
 
     await nextTick();
