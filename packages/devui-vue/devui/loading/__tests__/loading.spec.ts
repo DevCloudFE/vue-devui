@@ -5,23 +5,23 @@ import { LoadingService, Loading } from '../index';
 // 全局属性
 const globalOption = {
   directives: {
-    dLoading: Loading
-  }
+    dLoading: Loading,
+  },
 };
 
 describe('Loading as directive', () => {
   it('loading init render', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading="true"></div>`
+        template: `<div v-dLoading="true"></div>`,
       },
       {
-        global: globalOption
+        global: globalOption,
       }
     );
 
     await nextTick();
-    const loadingEl = wrapper.find('.devui-loading-contanier');
+    const loadingEl = wrapper.find('.devui-loading');
     expect(loadingEl.exists()).toBeTruthy();
     const loadingMask = wrapper.find('.devui-loading-mask');
     expect(loadingMask.exists()).toBeTruthy();
@@ -30,10 +30,10 @@ describe('Loading as directive', () => {
   it('loading test mask', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading="true" :backdrop="false"></div>`
+        template: `<div v-dLoading="true" :backdrop="false"></div>`,
       },
       {
-        global: globalOption
+        global: globalOption,
       }
     );
 
@@ -44,10 +44,10 @@ describe('Loading as directive', () => {
   it('loading test positionType', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading="true" id="testLoading" positionType="absolute"></div>`
+        template: `<div v-dLoading="true" id="testLoading" positionType="absolute"></div>`,
       },
       {
-        global: globalOption
+        global: globalOption,
       }
     );
 
@@ -65,14 +65,18 @@ describe('Loading as directive', () => {
         template: `<div v-dLoading="true" id="testLoading" :loadingTemplateRef="ele"></div>`,
         data() {
           return {
-            ele: h('div', {
-              className: 'test-component'
-            }, '正在加载中...')
+            ele: h(
+              'div',
+              {
+                className: 'test-component',
+              },
+              '正在加载中...'
+            ),
           };
-        }
+        },
       },
       {
-        global: globalOption
+        global: globalOption,
       }
     );
 
@@ -103,25 +107,24 @@ describe('Loading as directive', () => {
             isShow,
             click,
           };
-        }
+        },
       },
       {
-        global: globalOption
+        global: globalOption,
       }
     );
 
     await nextTick();
-    const loadingContainer = wrapper.find('.devui-loading-contanier');
+    const loadingContainer = wrapper.find('.devui-loading');
     expect(loadingContainer.exists()).toBeFalsy();
     const btn = wrapper.find('#testbtn');
     expect(btn.exists()).toBeTruthy();
 
     await btn.trigger('click');
-    expect(wrapper.find('.devui-loading-contanier').exists()).toBeTruthy();
+    expect(wrapper.find('.devui-loading').exists()).toBeTruthy();
 
     await btn.trigger('click');
-    expect(wrapper.find('.devui-loading-contanier').exists()).toBeFalsy();
-
+    expect(wrapper.find('.devui-loading').exists()).toBeFalsy();
   });
 
   it('loading test Promise', async () => {
@@ -144,12 +147,12 @@ describe('Loading as directive', () => {
 
           return {
             loading,
-            click
+            click,
           };
-        }
+        },
       },
       {
-        global: globalOption
+        global: globalOption,
       }
     );
 
@@ -175,14 +178,16 @@ describe('Loading as directive', () => {
         `,
         setup() {
           const promises = shallowReactive({
-            value: []
+            value: [],
           });
           const fetchMutiplePromise = () => {
             const list = [];
             for (let i = 0; i < 3; i++) {
-              list.push(new Promise((res) => {
-                res(true);
-              }));
+              list.push(
+                new Promise((res) => {
+                  res(true);
+                })
+              );
             }
             promises.value = list;
           };
@@ -191,7 +196,7 @@ describe('Loading as directive', () => {
             fetchMutiplePromise,
             promises,
           };
-        }
+        },
       },
       {
         global: globalOption,
@@ -216,13 +221,13 @@ describe('Loading as Service', () => {
     const loading = LoadingService.open();
 
     await nextTick();
-    const ele = document.querySelector('.devui-loading-contanier');
+    const ele = document.querySelector('.devui-loading');
     expect(ele).toBeTruthy();
     expect(ele.parentNode === document.body).toBe(true);
 
     loading.loadingInstance.close();
     await nextTick();
-    const ele2 = document.querySelector('.devui-loading-contanier');
+    const ele2 = document.querySelector('.devui-loading');
     expect(ele2).toBe(null);
   });
 
@@ -231,11 +236,11 @@ describe('Loading as Service', () => {
     document.body.appendChild(div);
 
     const loading = LoadingService.open({
-      target: div
+      target: div,
     });
 
     await nextTick();
-    const ele = document.querySelector('.devui-loading-contanier');
+    const ele = document.querySelector('.devui-loading');
     expect(ele).toBeTruthy();
     expect(ele.parentNode === div).toBe(true);
 
@@ -244,11 +249,11 @@ describe('Loading as Service', () => {
 
   it('service message', async () => {
     const loading = LoadingService.open({
-      message: '正在加载中...'
+      message: '正在加载中...',
     });
 
     await nextTick();
-    const ele = document.querySelector('.devui-loading-contanier');
+    const ele = document.querySelector('.devui-loading');
     expect(ele).toBeTruthy();
     expect(ele.textContent).toBe('正在加载中...');
 
@@ -260,13 +265,13 @@ describe('Loading as Service', () => {
       positionType: 'absolute',
       view: {
         top: '40%',
-        left: '60%'
+        left: '60%',
       },
-      zIndex: 1000
+      zIndex: 1000,
     });
 
     await nextTick();
-    const ele = document.querySelector('.devui-loading-contanier');
+    const ele = document.querySelector('.devui-loading');
     expect(ele).toBeTruthy();
     // @_ts-ignore
     // 不支持`ts-ignore`，强行修改确保eslint通过。@mrundef-210810
@@ -285,9 +290,13 @@ describe('Loading as Service', () => {
 
   it('service template', async () => {
     const loading = LoadingService.open({
-      loadingTemplateRef: h('div', {
-        className: 'test-class'
-      }, '正在加载中')
+      loadingTemplateRef: h(
+        'div',
+        {
+          className: 'test-class',
+        },
+        '正在加载中'
+      ),
     });
 
     await nextTick();
@@ -303,7 +312,7 @@ describe('Loading as Service', () => {
 
   it('service mask', async () => {
     const loading = LoadingService.open({
-      backdrop: false
+      backdrop: false,
     });
 
     await nextTick();
