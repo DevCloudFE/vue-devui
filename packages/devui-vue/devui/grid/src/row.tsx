@@ -1,10 +1,8 @@
 import { defineComponent, computed, ref, Ref, CSSProperties, onMounted, onUnmounted, provide } from 'vue';
 import { rowProps, RowProps } from './grid-types';
-import { formatClass } from './composables/use-grid';
 import { responesScreen, Screen, RESULT_SCREEN, removeSubscribeCb } from './composables/use-screen';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './row.scss';
-
-const CLASS_PREFIX = 'devui-row';
 
 export default defineComponent({
   name: 'DRow',
@@ -12,18 +10,18 @@ export default defineComponent({
   emits: [],
   setup(props: RowProps, { slots }) {
     const gutterScreenSize = ref<Screen>({});
+    const ns = useNamespace('row');
 
-    const rowClass = computed<string>(() => {
-      const alignClass = formatClass(`${CLASS_PREFIX}-align`, props.align);
-      const justifyClass = formatClass(`${CLASS_PREFIX}-justify`, props.justify);
-      const wrapClass = props.wrap ? ` ${CLASS_PREFIX}-wrap` : '';
-      return `${alignClass}${justifyClass}${wrapClass}`;
-    });
+    const rowClass = computed<Record<string, boolean>>(() => ({
+      [ns.em('align', props.align)]: true,
+      [ns.em('justify', props.justify)]: true,
+      [ns.e('wrap')]: true,
+    }));
 
     let token;
 
     onMounted(() => {
-      token = responesScreen(screen => {
+      token = responesScreen((screen) => {
         gutterScreenSize.value = screen;
       });
     });
@@ -42,7 +40,7 @@ export default defineComponent({
       } else if (typeof props.gutter === 'number') {
         currentGutter = [props.gutter as number, 0];
       } else {
-        RESULT_SCREEN.some(size => {
+        RESULT_SCREEN.some((size) => {
           const gzs = props.gutter[size];
           if (gutterScreenSize.value[size] && gzs) {
             if (typeof gzs === 'number') {
@@ -64,6 +62,6 @@ export default defineComponent({
 
     provide<Ref<CSSProperties>>('gutterStyle', gutterStyle);
 
-    return () => <div class={`${CLASS_PREFIX}${rowClass.value}`}>{slots.default?.()}</div>;
-  }
+    return () => <div class={[ns.b(), rowClass.value]}>{slots.default?.()}</div>;
+  },
 });

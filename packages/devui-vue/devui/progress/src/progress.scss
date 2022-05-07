@@ -1,15 +1,15 @@
 @import '../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-progress-content {
+.#{$devui-prefix}-progress__content {
   display: flex;
   flex-wrap: nowrap;
 
-  .#{$devui-prefix}-progress--line {
+  .#{$devui-prefix}-progress__line {
     width: 100%;
     position: relative;
     background: $devui-dividing-line;
 
-    .#{$devui-prefix}-progress-bar {
+    .#{$devui-prefix}-progress__bar {
       width: 0;
       height: 100%;
       transition: width 0.6s ease;
@@ -59,10 +59,10 @@
   }
 }
 
-.#{$devui-prefix}-progress-circle {
+.#{$devui-prefix}-progress__circle {
   position: relative;
 
-  .#{$devui-prefix}-progress-circle-text {
+  .#{$devui-prefix}-progress__circle-text {
     position: absolute;
     top: 50%;
     left: 50%;
