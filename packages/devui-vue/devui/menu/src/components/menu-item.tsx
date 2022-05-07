@@ -1,4 +1,4 @@
-import { clearSelect } from '../composables/layer-composables';
+import { clearSelect } from '../helper/layer-composables';
 import { defineComponent,
   getCurrentInstance,
   onMounted,
@@ -11,8 +11,8 @@ import { defineComponent,
   toRefs,
 } from "vue";
 import { MenuItemProps, menuItemProps } from "../types/menu-item-types";
-import { useInitSelect } from '../composables/init-select';
-import { addActiveParent } from '../composables/add-active-parent';
+import { useInitSelect } from '../helper/init-select';
+import { addActiveParent } from '../helper/add-active-parent';
 import { useClick } from '../hook/use-click';
 
 

@@ -9,7 +9,7 @@ import {
 } from 'vue';
 import { menuProps, MenuProps } from './types/menu-types';
 import './menu.scss';
-import {setDefaultIndent} from './composables/layer-composables';
+import {setDefaultIndent} from './helper/layer-composables';
 import SubMenu from './components/sub-menu';
 
 export default defineComponent({
