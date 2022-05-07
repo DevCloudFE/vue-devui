@@ -3,6 +3,7 @@ import { FlexibleOverlay } from '../../overlay';
 import { popoverProps, PopoverProps } from './popover-types';
 import { usePopover, usePopoverEvent } from './use-popover';
 import PopoverIcon from './popover-icon';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './popover.scss';
 
 export default defineComponent({
@@ -16,10 +17,11 @@ export default defineComponent({
     const visible = ref(false);
     const { placement, handlePositionChange, onMouseenter, onMouseleave } = usePopoverEvent(props, visible, origin);
     const { overlayStyles } = usePopover(props, visible, placement, origin, popoverRef);
+    const ns = useNamespace('popover');
 
     return () => (
       <>
-        <div ref={origin} class="devui-popover-reference">
+        <div ref={origin} class={ns.e('reference')}>
           {slots.reference?.()}
         </div>
         <Teleport to="body">
@@ -31,7 +33,7 @@ export default defineComponent({
               position={position.value}
               align={align.value}
               offset={offset.value}
-              class={['devui-popover-content', popType.value !== 'default' ? 'is-icon' : '']}
+              class={[ns.e('content'), popType.value !== 'default' ? 'is-icon' : '']}
               show-arrow
               is-arrow-center={false}
               style={overlayStyles.value}
