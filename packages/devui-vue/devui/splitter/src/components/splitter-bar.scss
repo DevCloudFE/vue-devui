@@ -1,6 +1,6 @@
 @import '../../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-splitter-bar {
+.#{$devui-prefix}-splitter__bar {
   background-color: $devui-dividing-line;
   display: flex;
   position: relative;
@@ -9,7 +9,7 @@
   flex-grow: 0;
   flex-shrink: 0;
 
-  .#{$devui-prefix}-collapse {
+  .#{$devui-prefix}-splitter__collapse {
     background-color: $devui-dividing-line;
     position: absolute;
     z-index: 15;
@@ -30,8 +30,8 @@
     }
   }
 
-  &-horizontal {
-    .#{$devui-prefix}-collapse {
+  &--horizontal {
+    .#{$devui-prefix}-splitter__collapse {
       width: 12px;
       height: 30px;
 
@@ -43,9 +43,7 @@
       }
 
       &.prev {
-        border-radius:
-          0 $devui-border-radius-feedback
-          $devui-border-radius-feedback 0;
+        border-radius: 0 $devui-border-radius-feedback $devui-border-radius-feedback 0;
         left: 100%;
 
         &::before,
@@ -78,9 +76,7 @@
       }
 
       &.next {
-        border-radius:
-          $devui-border-radius-feedback 0 0
-          $devui-border-radius-feedback;
+        border-radius: $devui-border-radius-feedback 0 0 $devui-border-radius-feedback;
         right: 100%;
 
         &::before,
@@ -114,8 +110,8 @@
     }
   }
 
-  &-vertical {
-    .#{$devui-prefix}-collapse {
+  &--vertical {
+    .#{$devui-prefix}-splitter__collapse {
       height: 12px;
       width: 30px;
 
@@ -127,9 +123,7 @@
       }
 
       &.prev {
-        border-radius:
-          0 0 $devui-border-radius-feedback
-          $devui-border-radius-feedback;
+        border-radius: 0 0 $devui-border-radius-feedback $devui-border-radius-feedback;
         top: 100%;
 
         &::before,
@@ -162,9 +156,7 @@
       }
 
       &.next {
-        border-radius:
-          $devui-border-radius-feedback
-          $devui-border-radius-feedback 0 0;
+        border-radius: $devui-border-radius-feedback $devui-border-radius-feedback 0 0;
         bottom: 100%;
 
         &::before,
@@ -200,8 +192,8 @@
     }
   }
 
-  &-horizontal.resizable:not(.none-resizable),
-  &-vertical.resizable:not(.none-resizable) {
+  &--horizontal.resizable:not(.none-resizable),
+  &--vertical.resizable:not(.none-resizable) {
     &:hover,
     &:focus,
     &:active {
@@ -216,7 +208,7 @@
     }
   }
 
-  &-horizontal.resizable {
+  &--horizontal.resizable {
     // 修正IE浏览器，css伪元素中鼠标手型无效
     cursor: col-resize;
 
@@ -228,7 +220,7 @@
     }
   }
 
-  &-vertical.resizable {
+  &--vertical.resizable {
     cursor: row-resize;
 
     &::after {
