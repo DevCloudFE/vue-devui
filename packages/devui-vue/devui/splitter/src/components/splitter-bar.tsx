@@ -1,13 +1,4 @@
-import {
-  defineComponent,
-  ref,
-  watch,
-  reactive,
-  computed,
-  withDirectives,
-  onMounted,
-  inject,
-} from 'vue';
+import { defineComponent, ref, watch, reactive, computed, withDirectives, onMounted, inject } from 'vue';
 
 import DToolTip from '../../../tooltip/src/tooltip';
 import { setStyle } from '../../../shared/utils/set-style';
@@ -15,6 +6,7 @@ import { addClass, removeClass } from '../../../shared/utils/class';
 import dresize, { ResizeDirectiveProp } from '../d-resize-directive';
 import type { SplitterStore, DragState, SplitterPane } from '../splitter-store';
 import { splitterBarProps, SplitterBarProps } from './splitter-bar-types';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 import './splitter-bar.scss';
 
 export default defineComponent({
@@ -24,29 +16,38 @@ export default defineComponent({
   },
   props: splitterBarProps,
   setup(props: SplitterBarProps) {
+    const ns = useNamespace('splitter');
     const store = inject<SplitterStore>('splitterStore');
     const state = reactive({
-      wrapperClass: `devui-splitter-bar devui-splitter-bar-${props.orientation}`,
+      wrapperClass: `${ns.e('bar')} ${ns.em('bar', props.orientation)} `,
     });
     const domRef = ref<null | HTMLElement>();
 
-    watch([() => props.splitBarSize, domRef], ([curSplitBarSize, ele]) => {
-      if (!(ele instanceof HTMLElement)) {
-        return;
-      }
-      setStyle(ele, { flexBasis: curSplitBarSize });
-    }, { immediate: true });
+    watch(
+      [() => props.splitBarSize, domRef],
+      ([curSplitBarSize, ele]) => {
+        if (!(ele instanceof HTMLElement)) {
+          return;
+        }
+        setStyle(ele, { flexBasis: curSplitBarSize });
+      },
+      { immediate: true }
+    );
 
-    watch([() => store?.state.panes, domRef], ([, ele]) => {
-      if (!store || !props || props.index === undefined) {
-        return;
-      }
-      if (!store.isStaticBar(props.index)) {
-        state.wrapperClass += ' resizable';
-      } else if (ele) {
-        setStyle(ele, { flexBasis: props.disabledBarSize });
-      }
-    }, { deep: true });
+    watch(
+      [() => store?.state.panes, domRef],
+      ([, ele]) => {
+        if (!store || !props || props.index === undefined) {
+          return;
+        }
+        if (!store.isStaticBar(props.index)) {
+          state.wrapperClass += ' resizable';
+        } else if (ele) {
+          setStyle(ele, { flexBasis: props.disabledBarSize });
+        }
+      },
+      { deep: true }
+    );
 
     const queryPanes = (index: number, nearIndex: number) => {
       if (!store) {
@@ -61,15 +62,7 @@ export default defineComponent({
     };
 
     // 根据当前状态生成收起按钮样式
-    const generateCollapseClass = (
-      pane: SplitterPane | undefined,
-      nearPane: SplitterPane | undefined,
-      showIcon: boolean
-    ): {
-      'devui-collapse': boolean;
-      collapsed: boolean;
-      hidden: boolean;
-    } => {
+    const generateCollapseClass = (pane: SplitterPane | undefined, nearPane: SplitterPane | undefined, showIcon: boolean) => {
       // 是否允许收起
       const isCollapsible = pane?.component?.props?.collapsible && showIcon;
       // 当前收起状态
@@ -77,7 +70,7 @@ export default defineComponent({
       // 一个 pane 收起的时候，隐藏相邻 pane 的收起按钮
       const isNearPaneCollapsed = nearPane?.collapsed;
       return {
-        'devui-collapse': isCollapsible,
+        [ns.e('collapse')]: isCollapsible,
         collapsed: isCollapsed,
         hidden: isNearPaneCollapsed,
       };
@@ -90,9 +83,7 @@ export default defineComponent({
       }
       const { pane, nearPane } = queryPanes(props.index, props.index + 1);
       // 第一个面板或者其它面板折叠方向不是向后的， 显示操作按钮
-      const showIcon =
-        pane?.component?.props?.collapseDirection !== 'after' ||
-        props.index === 0;
+      const showIcon = pane?.component?.props?.collapseDirection !== 'after' || props.index === 0;
       return generateCollapseClass(pane, nearPane, showIcon);
     });
 
@@ -103,9 +94,7 @@ export default defineComponent({
       }
       const { pane, nearPane } = queryPanes(props.index + 1, props.index);
       // 最后一个面板或者其它面板折叠方向不是向前的显示操作按钮
-      const showIcon =
-        pane?.component?.props?.collapseDirection !== 'before' ||
-        props.index + 1 === store.state.paneCount - 1;
+      const showIcon = pane?.component?.props?.collapseDirection !== 'before' || props.index + 1 === store.state.paneCount - 1;
       return generateCollapseClass(pane, nearPane, showIcon);
     });
 
@@ -115,9 +104,7 @@ export default defineComponent({
         return;
       }
       const { pane, nearPane } = queryPanes(props.index, props.index + 1);
-      const isCollapsed =
-        pane?.component?.props?.collapsed ||
-        nearPane?.component?.props?.collapsed;
+      const isCollapsed = pane?.component?.props?.collapsed || nearPane?.component?.props?.collapsed;
       if (isCollapsed) {
         addClass(domRef.value, 'none-resizable');
       } else {
@@ -151,7 +138,7 @@ export default defineComponent({
       pageX: 0,
       pageY: 0,
       originalX: 0,
-      originalY: 0
+      originalY: 0,
     };
     let initState: DragState;
     // TODO 待优化，如何像 angular rxjs 操作一样优雅
@@ -162,7 +149,9 @@ export default defineComponent({
         if (!store || !props || props.index === undefined) {
           return;
         }
-        if (!store.isResizable(props.index)) {return;}
+        if (!store.isResizable(props.index)) {
+          return;
+        }
         initState = store.dragState(props.index);
         coordinate.originalX = originalEvent.pageX;
         coordinate.originalY = originalEvent.pageY;
@@ -172,7 +161,9 @@ export default defineComponent({
         if (!store || !props || props.index === undefined) {
           return;
         }
-        if (!store.isResizable(props.index)) {return;}
+        if (!store.isResizable(props.index)) {
+          return;
+        }
         coordinate.pageX = originalEvent.pageX;
         coordinate.pageY = originalEvent.pageY;
         let distance;
@@ -212,9 +203,7 @@ export default defineComponent({
         return '收起';
       }
       const { pane, nearPane } = queryPanes(props.index, props.index + 1);
-      const isCollapsed =
-        pane?.component?.props?.collapsed ||
-        nearPane?.component?.props?.collapsed;
+      const isCollapsed = pane?.component?.props?.collapsed || nearPane?.component?.props?.collapsed;
       return isCollapsed ? '展开' : '收起';
     };
 
@@ -227,17 +216,12 @@ export default defineComponent({
                 class={['prev', prevClass.value]}
                 onClick={() => {
                   handleCollapsePrePane();
-                }}
-              ></div>
+                }}></div>
             </DToolTip>
           )}
-          <div class="devui-resize-handle"></div>
           {props.showCollapseButton && (
             <DToolTip content={renderCollapsedTip()}>
-              <div
-                class={['next', nextClass.value]}
-                onClick={() => handleCollapseNextPane()}
-              ></div>
+              <div class={['next', nextClass.value]} onClick={() => handleCollapseNextPane()}></div>
             </DToolTip>
           )}
         </div>,
