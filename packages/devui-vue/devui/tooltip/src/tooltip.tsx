@@ -2,6 +2,7 @@ import { defineComponent, ref, Teleport, toRefs, Transition } from 'vue';
 import { FlexibleOverlay } from '../../overlay';
 import { TooltipProps, tooltipProps } from './tooltip-types';
 import { useTooltip } from './use-tooltip';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './tooltip.scss';
 
 export default defineComponent({
@@ -12,10 +13,11 @@ export default defineComponent({
     const origin = ref<HTMLElement>();
     const tooltipRef = ref<HTMLElement>();
     const { visible, placement, positionArr, overlayStyles, onPositionChange, onMouseenter, onMouseleave } = useTooltip(origin, props);
+    const ns = useNamespace('tooltip');
 
     return () => (
       <>
-        <div ref={origin} class="devui-tooltip-reference">
+        <div ref={origin} class={ns.e('reference')}>
           {slots.default?.()}
         </div>
         <Teleport to="body">
@@ -23,7 +25,7 @@ export default defineComponent({
             <FlexibleOverlay
               v-model={visible.value}
               ref={tooltipRef}
-              class="devui-tooltip"
+              class={ns.b()}
               origin={origin.value}
               position={positionArr.value}
               offset={6}
