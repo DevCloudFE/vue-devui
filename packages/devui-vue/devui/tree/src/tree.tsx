@@ -9,6 +9,7 @@ import useOperate from './composables/use-operate';
 import useMergeNodes from './composables/use-merge-nodes';
 import { USE_TREE_TOKEN } from './const';
 import { TreeProps, treeProps } from './tree-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './tree.scss';
 
 export default defineComponent({
@@ -16,15 +17,12 @@ export default defineComponent({
   props: treeProps,
   setup(props: TreeProps, { slots, expose }) {
     const { data, check } = toRefs(props);
+    const ns = useNamespace('tree');
 
-    const userPlugins = [
-      useSelect(),
-      useOperate(),
-      useMergeNodes(),
-    ];
+    const userPlugins = [useSelect(), useOperate(), useMergeNodes()];
 
     const checkOptions = ref({
-      checkStrategy: check.value || 'both'
+      checkStrategy: check.value || 'both',
     });
 
     watch(check, (newVal) => {
@@ -35,16 +33,9 @@ export default defineComponent({
       userPlugins.push(useCheck(checkOptions));
     }
 
-    const treeFactory = useTree(
-      data.value,
-      userPlugins
-    );
+    const treeFactory = useTree(data.value, userPlugins);
 
-    const {
-      setTree,
-      getExpendedTree,
-      toggleNode,
-    } = treeFactory;
+    const { setTree, getExpendedTree, toggleNode } = treeFactory;
 
     // 外部同步内部
     watch(data, setTree);
@@ -52,32 +43,31 @@ export default defineComponent({
     provide(USE_TREE_TOKEN, treeFactory);
 
     expose({
-      treeFactory
+      treeFactory,
     });
 
     return () => {
       return (
-        <div class="devui-tree">
-          {
-            getExpendedTree?.().value.map(treeNode => (
-              slots.default
-                ? renderSlot(useSlots(), 'default', {
-                  treeFactory: treeFactory, nodeData: treeNode
-                })
-                : <DTreeNode data={treeNode} check={check.value}>
-                  {{
-                    default: () => slots.content
-                      ? renderSlot(useSlots(), 'content', { nodeData: treeNode })
-                      : <DTreeNodeContent data={treeNode} />,
-                    icon: () => slots.icon
-                      ? renderSlot(useSlots(), 'icon', { nodeData: treeNode, toggleNode })
-                      : <DTreeNodeToggle data={treeNode} />,
-                  }}
-                </DTreeNode>
-            ))
-          }
+        <div class={ns.b()}>
+          {getExpendedTree?.().value.map((treeNode) =>
+            slots.default ? (
+              renderSlot(useSlots(), 'default', {
+                treeFactory: treeFactory,
+                nodeData: treeNode,
+              })
+            ) : (
+              <DTreeNode data={treeNode} check={check.value}>
+                {{
+                  default: () =>
+                    slots.content ? renderSlot(useSlots(), 'content', { nodeData: treeNode }) : <DTreeNodeContent data={treeNode} />,
+                  icon: () =>
+                    slots.icon ? renderSlot(useSlots(), 'icon', { nodeData: treeNode, toggleNode }) : <DTreeNodeToggle data={treeNode} />,
+                }}
+              </DTreeNode>
+            )
+          )}
         </div>
       );
     };
-  }
+  },
 });

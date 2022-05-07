@@ -2,8 +2,10 @@ import { reactive, ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import { TreeItem, IDropType, Nullable } from '../deprecated-tree-types';
 import cloneDeep from 'lodash/cloneDeep';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 
-const ACTIVE_NODE = 'devui-tree-node__content--value-wrapper';
+const ns = useNamespace('tree');
+const ACTIVE_NODE = ns.em('node-content', 'value-wrapper');
 interface DragState {
   dropType?: 'prev' | 'next' | 'inner';
   draggingNode?: Nullable<HTMLElement>;
@@ -44,7 +46,7 @@ export default function useDraggable(
   );
 
   const removeDraggingStyle = (target: Nullable<HTMLElement>) => {
-    target?.querySelector(`.${ACTIVE_NODE}`)?.classList.remove(...['prev', 'next', 'inner'].map((item) => `devui-drop-${item}`));
+    target?.querySelector(`.${ACTIVE_NODE}`)?.classList.remove(...['prev', 'next', 'inner'].map((item) => ns.e(`drop-${item}`)));
   };
 
   const checkIsParent = (childNodeId: number | string, parentNodeId: number | string): boolean => {
@@ -145,7 +147,7 @@ export default function useDraggable(
       }
       removeDraggingStyle(currentTarget);
       if (innerDropType && innerDropType !== 'none') {
-        currentTarget.querySelector(`.${ACTIVE_NODE}`)?.classList.add(`devui-drop-${innerDropType}`);
+        currentTarget.querySelector(`.${ACTIVE_NODE}`)?.classList.add(ns.e(`drop-${innerDropType}`));
       }
       dragState.dropType = innerDropType;
     }
