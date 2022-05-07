@@ -12,11 +12,11 @@
   overflow: auto;
   box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
 
-  &-left {
+  &--left {
     left: 0;
   }
 
-  &-right {
+  &--right {
     right: 0;
   }
 }
