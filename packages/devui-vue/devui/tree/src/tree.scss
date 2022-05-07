@@ -14,13 +14,13 @@ $keyframe-blue: #5e7ce0;
   position: absolute;
 }
 
-.#{$devui-prefix}-tree-node {
+.#{$devui-prefix}-tree__node {
   color: $devui-text-weak;
   line-height: 1.5;
   white-space: nowrap;
   position: relative;
 
-  .#{$devui-prefix}-drop {
+  .#{$devui-prefix}-tree__drop {
     &-draggable {
       border-top: 1px solid transparent;
       border-bottom: 1px solid transparent;
@@ -39,7 +39,7 @@ $keyframe-blue: #5e7ce0;
     }
   }
 
-  .#{$devui-prefix}-tree-node__content {
+  .#{$devui-prefix}-tree__node-content {
     display: inline-flex;
     align-items: center;
     font-size: $devui-font-size;
@@ -59,13 +59,13 @@ $keyframe-blue: #5e7ce0;
     }
   }
 
-  .#{$devui-prefix}-tree-node__content--value-wrapper {
+  .#{$devui-prefix}-tree__node-content--value-wrapper {
     display: inline-flex;
     align-items: center;
     width: 100%;
     height: 30px;
 
-    .#{$devui-prefix}-tree-node_loading {
+    .#{$devui-prefix}-tree__node-loading {
       margin-left: 50px;
 
       .#{$devui-prefix}-loading-area {
@@ -81,7 +81,7 @@ $keyframe-blue: #5e7ce0;
       border-left-color: transparent;
     }
 
-    .#{$devui-prefix}-tree-node {
+    .#{$devui-prefix}-tree__node {
       margin-left: 8px;
       content: '';
       position: relative;
@@ -92,7 +92,7 @@ $keyframe-blue: #5e7ce0;
     }
   }
 
-  .#{$devui-prefix}-tree-node__title {
+  .#{$devui-prefix}-tree__node-title {
     @extend .#{$devui-prefix}-text-ellipsis;
 
     margin-left: 5px;
@@ -137,7 +137,7 @@ $keyframe-blue: #5e7ce0;
     }
   }
 
-  .#{$devui-prefix}-tree-node__folder {
+  .#{$devui-prefix}-tree__node-folder {
     display: inline-block;
     vertical-align: middle;
     user-select: none;
@@ -170,7 +170,7 @@ $keyframe-blue: #5e7ce0;
     }
   }
 
-  &__indent {
+  &-indent {
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -236,16 +236,16 @@ $keyframe-blue: #5e7ce0;
     stroke: $devui-icon-text;
   }
 
-  &.#{$devui-prefix}-tree-node__open:not(.#{$devui-prefix}-tree-node__customIcon) {
-    & > .#{$devui-prefix}-tree-node__content svg.svg-icon path {
+  &.#{$devui-prefix}-tree__node--open:not(.#{$devui-prefix}-tree-node__customIcon) {
+    & > .#{$devui-prefix}-tree__node-content svg.svg-icon path {
       fill: $devui-icon-fill-active;
     }
 
-    & > .#{$devui-prefix}-tree-node__content svg.svg-icon rect {
+    & > .#{$devui-prefix}-tree__node-content svg.svg-icon rect {
       stroke: $devui-icon-fill-active;
     }
 
-    & > .#{$devui-prefix}-tree-node__content svg.svg-icon.svg-icon-close rect:last-child {
+    & > .#{$devui-prefix}-tree__node-content svg.svg-icon.svg-icon-close rect:last-child {
       stroke: none;
       fill: $devui-icon-fill-active;
     }
@@ -262,9 +262,9 @@ $keyframe-blue: #5e7ce0;
 }
 
 /* 视觉融合灰线 */
-.#{$devui-prefix}-tree-node.#{$devui-prefix}-tree-without-virtual-scroll {
-  &.#{$devui-prefix}-tree-node__open {
-    & > .#{$devui-prefix}-tree-node__content {
+.#{$devui-prefix}-tree__node.#{$devui-prefix}-tree-without-virtual-scroll {
+  &.#{$devui-prefix}-tree__node--open {
+    & > .#{$devui-prefix}-tree__node-content {
       position: relative;
     }
   }
@@ -282,7 +282,7 @@ $keyframe-blue: #5e7ce0;
       top: 0;
     }
 
-    .#{$devui-prefix}-tree-node__content {
+    .#{$devui-prefix}-tree__node-content {
       // 只要是子级就都存在左边横线
       position: relative;
 
@@ -336,21 +336,21 @@ $keyframe-blue: #5e7ce0;
   background-color: transparent !important;
 }
 
-.#{$devui-prefix}-tree-node {
+.#{$devui-prefix}-tree__node {
   font-size: 0;
 }
 
-.#{$devui-prefix}-tree-node, .#{$devui-prefix}-tree-node__content {
+.#{$devui-prefix}-tree__node, .#{$devui-prefix}-tree__node-content {
   position: relative;
 }
 
-.#{$devui-prefix}-tree-node__vline {
+.#{$devui-prefix}-tree__node-vline {
   width: 1px;
   background-color: $devui-dividing-line;
   position: absolute;
 }
 
-.#{$devui-prefix}-tree-node__hline {
+.#{$devui-prefix}-tree__node-hline {
   width: 8px;
   height: 1px;
   background-color: $devui-dividing-line;
