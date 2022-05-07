@@ -1,16 +1,16 @@
 import { defineComponent, onMounted, onUnmounted, PropType, ref } from 'vue';
 import { on, off } from '../../../shared/devui-directive/utils';
-
 import clickoutsideDirective from '../../../shared/devui-directive/clickoutside';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 export default defineComponent({
   directives: {
-    clickoutside: clickoutsideDirective
+    clickoutside: clickoutsideDirective,
   },
   props: {
     currentPageSize: Number,
     pageSizeChange: Function,
-    pageSizeOptions: Array as PropType<Array<number>>
+    pageSizeOptions: Array as PropType<Array<number>>,
   } as const,
   setup() {
     const paginationConfig = ref(null);
@@ -29,48 +29,37 @@ export default defineComponent({
     return {
       paginationConfig,
       isShowConfig,
-      closeConfigMenu
+      closeConfigMenu,
     };
   },
   render() {
-    const {
-      closeConfigMenu,
-      currentPageSize,
-      pageSizeChange,
-      pageSizeOptions,
-      isShowConfig,
-      $slots
-    } = this;
+    const { closeConfigMenu, currentPageSize, pageSizeChange, pageSizeOptions, isShowConfig, $slots } = this;
+    const ns = useNamespace('pagination');
 
     return (
-      <div class="devui-pagination-config" v-clickoutside={closeConfigMenu} ref="paginationConfig">
-        <div class="devui-setup-icon">
+      <div class={ns.e('config')} v-clickoutside={closeConfigMenu} ref="paginationConfig">
+        <div class={ns.e('setup-icon')}>
           <i class="icon-setting" style="font-weight: bold;"></i>
         </div>
-        {
-          isShowConfig &&
-          <div class="devui-config-container">
+        {isShowConfig && (
+          <div class={ns.e('config-container')}>
             {$slots.default?.()}
 
-            <div class="pagination-config-item">
+            <div class={ns.e('config-item')}>
               <div class="config-item-title">每页条数</div>
-              <div class="devui-page-number">
-                {
-                  pageSizeOptions.map((v: number) => {
-                    return (
-                      <div
-                        class={{choosed: v === currentPageSize}}
-                        key={v}
-                        onClick={pageSizeChange.bind(null, {value: v})}
-                      >{v}</div>
-                    );
-                  })
-                }
+              <div class={ns.e('number')}>
+                {pageSizeOptions.map((v: number) => {
+                  return (
+                    <div class={{ choosed: v === currentPageSize }} key={v} onClick={pageSizeChange.bind(null, { value: v })}>
+                      {v}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
-        }
+        )}
       </div>
     );
-  }
+  },
 });
