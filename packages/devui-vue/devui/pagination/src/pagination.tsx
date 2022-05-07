@@ -1,11 +1,10 @@
 import { defineComponent, computed, nextTick, toRefs } from 'vue';
 import { paginationProps, PaginationProps } from './pagination-types';
 import { liteSelectOptions } from './utils';
-
 import ConfigMenu from './components/config-menu';
 import JumpPage from './components/jump-page';
 import PageNumBtn from './components/page-nums';
-
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './pagination.scss';
 
 export default defineComponent({
@@ -39,6 +38,7 @@ export default defineComponent({
       showJumpButton,
       haveConfigMenu,
     } = toRefs(props);
+    const ns = useNamespace('pagination');
 
     // 总页数
     const totalPages = computed(() => Math.ceil(props.total / props.pageSize));
@@ -99,11 +99,11 @@ export default defineComponent({
       return (
         // autoHide 为 true，并且 pageSizeOptions 最小值大于 total，则不展示分页
         autoHide.value && Math.min(...pageSizeOptions.value) > total.value ? null : (
-          <div class="devui-pagination">
+          <div class={ns.b()}>
             {
               // 切换每页数据大小的下拉框
               canChangePageSize.value && !lite.value && (
-                <div class={['devui-page-size', size.value ? 'devui-page-size-' + size.value : '']}>
+                <div class={[ns.e('size'), size.value ? ns.em('size', size.value) : '']}>
                   <d-select
                     options={pageSizeOptions.value}
                     modelValue={currentPageSize.value}
@@ -116,7 +116,7 @@ export default defineComponent({
             {
               // 总页数显示
               (!lite.value || (lite.value && showPageSelector.value)) && canViewTotal.value && (
-                <div class="devui-total-size">
+                <div class={ns.e('total-size')}>
                   {totalItemText.value}: {total.value}
                 </div>
               )
@@ -124,7 +124,7 @@ export default defineComponent({
             {
               // 极简模式下的选择页码下拉框
               lite.value && showPageSelector.value && (
-                <div class="devui-page-size">
+                <div class={ns.e('size')}>
                   <d-select
                     options={litePageOptions.value}
                     disabled={total.value === 0}
