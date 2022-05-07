@@ -2,6 +2,7 @@ import { computed, defineComponent, toRefs } from 'vue';
 import type { PropType } from 'vue';
 import { NotificationType } from './notification-types';
 import { SuccessIcon, WarningIcon, InfoIcon, ErrorIcon } from './notification-icons';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default defineComponent({
   props: {
@@ -12,9 +13,10 @@ export default defineComponent({
   },
   setup(props) {
     const { type } = toRefs(props);
+    const ns = useNamespace('notification');
     const classes = computed(() => ({
-      'devui-notification-image': true,
-      [`devui-notification-image-${type.value}`]: true,
+      [ns.e('image')]: true,
+      [ns.em('image', type.value)]: true,
     }));
 
     return () => (
