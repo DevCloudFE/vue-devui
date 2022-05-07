@@ -3,7 +3,7 @@
 .#{$devui-prefix}-pagination {
   font-size: $devui-font-size;
 
-  .#{$devui-prefix}-page-size {
+  .#{$devui-prefix}-pagination__size {
     display: inline-block;
     max-width: 100px;
     line-height: 24px;
@@ -11,7 +11,7 @@
     position: relative;
     vertical-align: middle;
 
-    &.#{$devui-prefix}-page-size-sm {
+    &.#{$devui-prefix}-pagination__size--sm {
       max-width: 80px;
 
       .#{$devui-prefix}-select-input {
@@ -19,7 +19,7 @@
       }
     }
 
-    &.#{$devui-prefix}-page-size-lg {
+    &.#{$devui-prefix}-pagination__size--lg {
       max-width: 100px;
 
       .#{$devui-prefix}-select-input {
@@ -36,7 +36,7 @@
     height: 26px;
   }
 
-  .#{$devui-prefix}-total-size {
+  .#{$devui-prefix}-pagination__total-size {
     display: inline-block;
     position: relative;
     vertical-align: middle;
@@ -44,8 +44,8 @@
     color: $devui-text-weak;
   }
 
-  .#{$devui-prefix}-pagination-list,
-  .#{$devui-prefix}-pagination-item {
+  .#{$devui-prefix}-pagination__list,
+  .#{$devui-prefix}-pagination__item {
     padding: 0;
     margin: 0;
     list-style: none;
@@ -56,16 +56,16 @@
     color: #3eaf7c;
   }
 
-  .#{$devui-prefix}-pagination-list {
+  .#{$devui-prefix}-pagination__list {
     vertical-align: middle;
     display: inline-flex;
     align-items: center;
 
-    li.#{$devui-prefix}-pagination-item {
+    li.#{$devui-prefix}-pagination__item {
       cursor: pointer;
 
       &.active {
-        a.#{$devui-prefix}-pagination-link {
+        a.#{$devui-prefix}-pagination__link {
           text-decoration: none;
           background-color: $devui-list-item-active-bg;
           color: $devui-list-item-active-text;
@@ -73,7 +73,7 @@
       }
 
       &.disabled {
-        a.#{$devui-prefix}-pagination-link {
+        a.#{$devui-prefix}-pagination__link {
           cursor: not-allowed;
           opacity: 0.5;
           background-color: #ffffff;
@@ -81,7 +81,7 @@
         }
       }
 
-      .#{$devui-prefix}-pagination-link {
+      .#{$devui-prefix}-pagination__link {
         margin-left: 5px;
         padding: 3px 7px;
         line-height: 1.5;
@@ -100,7 +100,7 @@
     }
   }
 
-  .#{$devui-prefix}-pagination-sm > li.#{$devui-prefix}-pagination-item > a.#{$devui-prefix}-pagination-link {
+  .#{$devui-prefix}-pagination__sm > li.#{$devui-prefix}-pagination__item > a.#{$devui-prefix}-pagination__link {
     padding: 0 5px;
     min-width: 18px;
     height: 22px;
@@ -108,33 +108,33 @@
     font-size: $devui-font-size-sm;
   }
 
-  .#{$devui-prefix}-pagination-lg > li.#{$devui-prefix}-pagination-item > a.#{$devui-prefix}-pagination-link {
+  .#{$devui-prefix}-pagination__lg > li.#{$devui-prefix}-pagination__item > a.#{$devui-prefix}-pagination__link {
     padding: 0 12px;
     height: 38px;
     font-size: $devui-font-size-lg;
     line-height: 1.5;
   }
 
-  .#{$devui-prefix}-jump-container {
+  .#{$devui-prefix}-pagination__jump-container {
     display: inline-flex;
     position: relative;
     margin: 0 12px;
     vertical-align: middle;
     align-items: center;
 
-    .#{$devui-prefix}-pagination-input {
+    .#{$devui-prefix}-input {
       display: inline-block;
       width: 42px;
       vertical-align: middle;
-      margin: 0 3px;
+      margin: 0 4px;
     }
 
-    .#{$devui-prefix}-pagination-input-lg {
+    .#{$devui-prefix}-input--lg {
       width: 56px;
     }
   }
 
-  .#{$devui-prefix}-jump-button {
+  .#{$devui-prefix}-pagination__jump-button {
     display: inline-flex;
     vertical-align: middle;
     width: 24px;
@@ -146,7 +146,7 @@
     align-items: center;
     justify-content: center;
 
-    .#{$devui-prefix}-pagination-go {
+    .#{$devui-prefix}-pagination__go {
       width: 0;
       height: 0;
       border-top: 6px solid transparent;
@@ -157,17 +157,17 @@
     &:hover {
       border-color: $devui-brand-active;
 
-      .#{$devui-prefix}-pagination-go {
+      .#{$devui-prefix}-pagination__go {
         border-left-color: $devui-brand-active;
       }
     }
   }
 
-  .#{$devui-prefix}-jump-size-default {
+  .#{$devui-prefix}-pagination__jump-size--default {
     width: 28px;
     height: 28px;
 
-    .#{$devui-prefix}-pagination-go {
+    .#{$devui-prefix}-pagination__go {
       width: 0;
       height: 0;
       border-top: 8px solid transparent;
@@ -176,11 +176,11 @@
     }
   }
 
-  .#{$devui-prefix}-jump-size-sm {
+  .#{$devui-prefix}-pagination__jump-size--sm {
     width: 24px;
     height: 24px;
 
-    .#{$devui-prefix}-pagination-go {
+    .#{$devui-prefix}-pagination__go {
       width: 0;
       height: 0;
       border-top: 6px solid transparent;
@@ -188,17 +188,17 @@
       border-bottom: 6px solid transparent;
     }
 
-    .#{$devui-prefix}-pagination-link {
+    .#{$devui-prefix}-pagination__link {
       height: 30px;
       line-height: 32px;
     }
   }
 
-  .#{$devui-prefix}-jump-size-lg {
+  .#{$devui-prefix}-pagination__jump-size--lg {
     width: 46px;
     height: 46px;
 
-    .#{$devui-prefix}-pagination-go {
+    .#{$devui-prefix}-pagination__go {
       width: 0;
       height: 0;
       border-top: 14px solid transparent;
@@ -207,7 +207,7 @@
     }
   }
 
-  .#{$devui-prefix}-pagination-config {
+  .#{$devui-prefix}-pagination__config {
     color: $devui-text;
     position: relative;
     display: inline-block;
@@ -215,13 +215,13 @@
     margin: 0 4px;
   }
 
-  .#{$devui-prefix}-setup-icon {
+  .#{$devui-prefix}-pagination__setup-icon {
     line-height: 30px;
     cursor: pointer;
     display: flex;
   }
 
-  .#{$devui-prefix}-config-container {
+  .#{$devui-prefix}-pagination__config-container {
     padding: 4px 0;
     box-shadow: $devui-shadow-length-connected-overlay $devui-shadow;
     border-radius: $devui-border-radius;
@@ -237,7 +237,7 @@
   }
 
   /* 配置中的每一项，自定义项建议应用此样式或在此基础上修改 */
-  .pagination-config-item {
+  .#{$devui-prefix}-pagination__config-item {
     padding-bottom: 8px;
     padding-top: 4px;
     border-bottom: 1px solid $devui-line;
@@ -255,7 +255,7 @@
     line-height: 1.5;
   }
 
-  .#{$devui-prefix}-page-number {
+  .#{$devui-prefix}-pagination__number {
     padding-left: 8px;
     margin-top: 4px;
     display: flex;
