@@ -41,14 +41,14 @@ describe('editable-select test', () => {
 
     const input = wrapper.find('input');
 
-    expect(wrapper.get('.devui-dropdown-item').isVisible()).toBe(false);
+    expect(wrapper.find('.devui-dropdown-item').exists()).toBeFalsy();
 
     await input.trigger('click');
 
-    expect(wrapper.get('.devui-dropdown-item').isVisible()).toBe(true);
+    expect(wrapper.find('.devui-dropdown-item').exists()).toBeTruthy();
     expect(wrapper.classes()).toContain('devui-select-open');
 
-    const options = wrapper.element.querySelectorAll('.devui-dropdown-item');
+    const options = wrapper.findAll('.devui-dropdown-item');
 
     expect(options.length).toBe(5);
   });
@@ -68,9 +68,12 @@ describe('editable-select test', () => {
         };
       }
     });
-    const options = wrapper.findAll('.devui-dropdown-item');
 
-    await options[0].trigger('click');
+    const input = wrapper.find('input');
+    await input.trigger('click');
+
+    const options = wrapper.find('.devui-dropdown-item');
+    await options.trigger('click');
 
     expect(wrapper.find('input').element.value).toBe('label0');
   });
@@ -115,6 +118,10 @@ describe('editable-select test', () => {
         };
       }
     });
+
+    const input = wrapper.find('input');
+    await input.trigger('click');
+
     const options = wrapper.findAll('.devui-dropdown-item');
 
     expect(options[1].classes()).toContain('disabled');
@@ -168,7 +175,7 @@ describe('editable-select test', () => {
     });
     const input = wrapper.find('input');
     await input.setValue('label0');
-    await input.trigger('input');
+    await input.trigger('click');
     expect(wrapper.findAll('.devui-dropdown-item').length).toBe(1);
   });
 
@@ -191,7 +198,7 @@ describe('editable-select test', () => {
     });
     const input = wrapper.find('input');
     await input.setValue('label0');
-    await input.trigger('input');
+    await input.trigger('click');
     expect(filterOption).toBeCalled();
   });
 
@@ -201,15 +208,13 @@ describe('editable-select test', () => {
         'editable-select': EditableSelect
       },
       template: `<editable-select v-model="value" :options="options">
-                    <template #itemTemplate="slotProps" >
+                    <template #item="slotProps">
                       <div>
                         第{{slotProps.index}}项: {{slotProps.item}}
                       </div>
                     </template>
-                    <template #noResultItemTemplate="slotProps" >
-                      <div id="noResultItemTemplate">
-                        {{slotProps}}
-                      </div>
+                    <template #noResultItem>
+                      <div id="noResultItemTemplate">暂无数据</div>
                     </template>
                   </editable-select>`,
       setup() {
@@ -222,11 +227,11 @@ describe('editable-select test', () => {
       }
     });
     const input = wrapper.find('input');
+    await input.trigger('click');
     const options = wrapper.findAll('.devui-dropdown-item');
     expect(options.length).toBe(5);
     await input.setValue('aaa');
-    await input.trigger('input');
-    expect(wrapper.find('#noResultItemTemplate').exists()).toBe(true);
+    expect(wrapper.find('#noResultItemTemplate').element.textContent).toBe('暂无数据');
   });
 
   test('load more ', async () => {
@@ -247,7 +252,7 @@ describe('editable-select test', () => {
       components: {
         'editable-select': EditableSelect
       },
-      template: `<editable-select v-model="value" :options="options" :loadMore="handleLoad" :maxHeight="300" ></editable-select>`,
+      template: `<editable-select v-model="value" :options="options" @loadMore="handleLoad" :maxHeight="300" ></editable-select>`,
       setup() {
         const value = ref('');
         const options = createData(20);
@@ -258,10 +263,17 @@ describe('editable-select test', () => {
         };
       }
     });
+
+    const input = wrapper.find('input');
+    await input.trigger('click');
+
     const ul = wrapper.find('.devui-list-unstyled');
+
     await makeScroll(ul.element, 'scrollTop', 300);
+
     expect(loadmore).toBeCalled();
   });
+
   test('keyboard operations', async () => {
     const wrapper = mount({
       components: {
