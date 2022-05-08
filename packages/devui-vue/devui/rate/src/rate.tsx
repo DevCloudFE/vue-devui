@@ -1,5 +1,6 @@
 import { defineComponent, onMounted, reactive, ref } from 'vue';
 import { RateProps, rateProps } from './rate-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './rate.scss';
 
 export default defineComponent({
@@ -7,9 +8,7 @@ export default defineComponent({
   props: rateProps,
   emits: ['change', 'update:modelValue'],
   setup(props: RateProps, ctx) {
-    const totalLevelArray = reactive<{
-      width: string;
-    }[]>([]);
+    const totalLevelArray = reactive<{ width: string }[]>([]);
     const chooseValue = ref(0);
 
     // 根据mouseMove，mouseLeave,select等操作，改变颜色与是否选中
@@ -92,23 +91,24 @@ export default defineComponent({
   },
   render() {
     const { totalLevelArray, icon, character, read, type, color, hoverToggle, selectValue, onMouseleave } = this;
+    const ns = useNamespace('rate');
 
     return (
-      <div class="devui-star-container" onMouseleave={onMouseleave} style={`--star-color: ${color}`}>
+      <div class={ns.b()} onMouseleave={onMouseleave} style={`--star-color: ${color}`}>
         {totalLevelArray.map((item, index) => (
           <div
-            class={`devui-star-align devui-pointer ${read ? 'devui-only-read' : ''}`}
+            class={[ns.m('align'), ns.m('pointer'), read ? ns.m('only-read') : '']}
             key={index}
             onMouseover={(e) => hoverToggle(e, index)}
             onClick={(e) => selectValue(e, index)}>
             {icon && !character && (
-              <span class="devui-star-color">
+              <span class={ns.e('color')}>
                 <d-icon name={icon} />
               </span>
             )}
-            {character && !icon && <span class="devui-star-color">{character}</span>}
+            {character && !icon && <span class={ns.e('color')}>{character}</span>}
             {!icon && !character && (
-              <span class="devui-star-color">
+              <span class={ns.e('color')}>
                 <svg
                   width="16px"
                   height="16px"
@@ -128,24 +128,18 @@ export default defineComponent({
               </span>
             )}
             {icon && !character && (
-              <span class={`devui-star-color-active devui-active-star devui-star-color-${type}`} style={{ width: item.width }}>
+              <span class={[ns.e('color-active'), ns.e('active-star'), ns.em('color', type)]} style={{ width: item.width }}>
                 <d-icon name={icon} color={color} />
               </span>
             )}
             {character && !icon && (
-              <span
-                class={`devui-star-color-active devui-active-star devui-star-color-${type}`}
-                style={{ color: color, width: item.width }}>
+              <span class={[ns.e('color-active'), ns.e('active-star'), ns.em('color', type)]} style={{ color: color, width: item.width }}>
                 {character}
               </span>
             )}
             {!character && !icon && (
               <span
-                class={[
-                  'devui-star-color-active',
-                  'devui-active-star',
-                  !color ? `devui-star-color-${type}` : 'devui-star-color-customize'
-                ]}
+                class={[ns.e('color-active'), ns.e('active-star'), !color ? ns.em('color', type) : ns.em('color', 'customize')]}
                 style={{ width: item.width }}>
                 <svg
                   width="16px"

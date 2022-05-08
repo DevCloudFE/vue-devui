@@ -5,6 +5,7 @@ import { Checkbox } from '../../checkbox';
 import { className } from './utils';
 import useCacheOptions from '../hooks/use-cache-options';
 import useSelectOutsideClick from '../hooks/use-select-outside-click';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './select.scss';
 
 export default defineComponent({
@@ -12,12 +13,15 @@ export default defineComponent({
   props: selectProps,
   emits: ['toggleChange', 'valueChange', 'update:modelValue'],
   setup(props: SelectProps, ctx) {
+    const ns = useNamespace('select');
     const containerRef = ref(null);
     const dropdownRef = ref(null);
     // 控制弹窗开合
     const isOpen = ref<boolean>(false);
     function toggleChange(bool: boolean) {
-      if (props.disabled) {return;}
+      if (props.disabled) {
+        return;
+      }
       isOpen.value = bool;
       ctx.emit('toggleChange', bool);
     }
@@ -77,12 +81,12 @@ export default defineComponent({
     function valueChange(item: OptionObjectItem, index: number) {
       const { multiple, optionDisabledKey: disabledKey } = props;
       let { modelValue } = props;
-      if (disabledKey && !!item[disabledKey]) {return;}
+      if (disabledKey && !!item[disabledKey]) {
+        return;
+      }
       if (multiple) {
         item._checked = !item._checked;
-        modelValue = mergeOptions.value
-          .filter((item1) => item1._checked)
-          .map((item2) => item2.value);
+        modelValue = mergeOptions.value.filter((item1) => item1._checked).map((item2) => item2.value);
         ctx.emit('update:modelValue', modelValue);
       } else {
         ctx.emit('update:modelValue', item.value);
@@ -93,7 +97,7 @@ export default defineComponent({
 
     function getItemClassName(item: OptionObjectItem) {
       const { optionDisabledKey: disabledKey } = props;
-      return className('devui-select-item', {
+      return className(ns.e('item'), {
         active: item.value === props.modelValue,
         disabled: disabledKey ? !!item[disabledKey] : false,
       });
@@ -120,6 +124,7 @@ export default defineComponent({
       toggleChange,
       getItemClassName,
       handleClear,
+      ns,
     };
   },
   render() {
@@ -138,47 +143,43 @@ export default defineComponent({
       getItemClassName,
       mergeClearable,
       handleClear,
+      ns,
     } = this;
+    const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
+    const scrollbarNs = useNamespace('scrollbar');
 
-    const selectCls = className('devui-select', {
-      'devui-select-open': isOpen,
-      'devui-dropdown-menu-multiple': multiple,
-      'devui-select-lg': size === 'lg',
-      'devui-select-sm': size === 'sm',
-      'devui-select-underlined': overview === 'underlined',
-      'devui-select-disabled': disabled,
+    const selectCls = className(ns.b(), {
+      [ns.m('open')]: isOpen,
+      [dropdownMenuMultipleNs.b()]: multiple,
+      [ns.m('lg')]: size === 'lg',
+      [ns.m('sm')]: size === 'sm',
+      [ns.m('underlined')]: overview === 'underlined',
+      [ns.m('disabled')]: disabled,
     });
 
-    const inputCls = className('devui-select-input', {
-      'devui-select-input-lg': size === 'lg',
-      'devui-select-input-sm': size === 'sm',
+    const inputCls = className(ns.e('input'), {
+      [ns.em('input', 'lg')]: size === 'lg',
+      [ns.em('input', 'sm')]: size === 'sm',
     });
 
-    const selectionCls = className('devui-select-selection', {
-      'devui-select-clearable': mergeClearable,
+    const selectionCls = className(ns.e('selection'), {
+      [ns.e('clearable')]: mergeClearable,
     });
 
     return (
       <div class={selectCls} ref="containerRef">
         <div class={selectionCls} onClick={() => toggleChange(!isOpen)}>
-          <input
-            value={inputValue}
-            type="text"
-            class={inputCls}
-            placeholder={placeholder}
-            readonly
-            disabled={disabled}
-          />
-          <span onClick={handleClear} class="devui-select-clear">
+          <input value={inputValue} type="text" class={inputCls} placeholder={placeholder} readonly disabled={disabled} />
+          <span onClick={handleClear} class={ns.e('clear')}>
             <Icon name="close" />
           </span>
-          <span class="devui-select-arrow">
+          <span class={ns.e('arrow')}>
             <Icon name="select-arrow" />
           </span>
         </div>
         <Transition name="fade" ref="dropdownRef">
-          <div v-show={isOpen} class="devui-select-dropdown">
-            <ul class="devui-select-dropdown-list devui-scrollbar">
+          <div v-show={isOpen} class={ns.e('dropdown')}>
+            <ul class={[ns.e('dropdown-list'), scrollbarNs.b()]}>
               {mergeOptions.map((item, i) => (
                 <li
                   onClick={(e: MouseEvent) => {
@@ -187,14 +188,9 @@ export default defineComponent({
                     valueChange(item, i);
                   }}
                   class={getItemClassName(item)}
-                  key={i}
-                >
+                  key={i}>
                   {multiple ? (
-                    <Checkbox
-                      modelValue={item._checked}
-                      label={item.name}
-                      disabled={disabledKey ? !!item[disabledKey] : false}
-                    />
+                    <Checkbox modelValue={item._checked} label={item.name} disabled={disabledKey ? !!item[disabledKey] : false} />
                   ) : (
                     item.name
                   )}

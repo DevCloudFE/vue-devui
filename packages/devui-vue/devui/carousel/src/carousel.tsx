@@ -1,9 +1,7 @@
-/* eslint-disable */
 import { defineComponent, ref, watch, onMounted, onBeforeUnmount, Fragment, Comment } from 'vue';
 import { carouselProps, DotTrigger } from './types';
-
-import Icon from '../../icon/src/icon'
-
+import Icon from '../../icon/src/icon';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './carousel.scss';
 
 export default defineComponent({
@@ -11,14 +9,8 @@ export default defineComponent({
   props: carouselProps,
   emits: ['update:activeIndex'],
   setup(props, { emit }) {
-    const {
-      arrowTrigger,
-      autoplay,
-      autoplaySpeed,
-      dotTrigger,
-      activeIndex,
-      activeIndexChange
-    } = props;
+    const ns = useNamespace('carousel');
+    const { arrowTrigger, autoplay, autoplaySpeed, dotTrigger, activeIndex, activeIndexChange } = props;
     const transitionSpeed = 500;
 
     const itemCount = ref(0);
@@ -62,19 +54,13 @@ export default defineComponent({
       if (wrapperRef.value) {
         const wrapperRect = wrapperRef.value.getBoundingClientRect();
 
-        targetEl.style.transform = `translateX(${
-          (firstToLast ? -itemCount.value : itemCount.value) * wrapperRect.width
-        }px)`;
+        targetEl.style.transform = `translateX(${(firstToLast ? -itemCount.value : itemCount.value) * wrapperRect.width}px)`;
       }
     };
 
     // 指定跳转位置
     const goto = (index: number) => {
-      if (
-        index === currentIndex.value ||
-        !wrapperRef.value ||
-        !containerRef.value
-      ) {
+      if (index === currentIndex.value || !wrapperRef.value || !containerRef.value) {
         return;
       }
 
@@ -84,41 +70,27 @@ export default defineComponent({
       if (index < 0 && currentIndex.value === 0) {
         // 第一个卡片向前切换
         latestIndex = itemCount.value - 1;
-        const targetEl = containerRef.value.children[
-          latestIndex
-        ] as HTMLElement;
+        const targetEl = containerRef.value.children[latestIndex] as HTMLElement;
         adjustPosition(targetEl, true);
         translatePosition(-1);
         adjustTransition(targetEl);
-      } else if (
-        index >= itemCount.value &&
-        currentIndex.value === itemCount.value - 1
-      ) {
+      } else if (index >= itemCount.value && currentIndex.value === itemCount.value - 1) {
         // 最后一个卡片向后切换
         latestIndex = 0;
 
-        const targetEl = containerRef.value.children[
-          latestIndex
-        ] as HTMLElement;
+        const targetEl = containerRef.value.children[latestIndex] as HTMLElement;
         adjustPosition(targetEl, false);
         translatePosition(itemCount.value);
         adjustTransition(targetEl);
       } else {
-        latestIndex =
-          index < 0
-            ? 0
-            : (
-              index > itemCount.value - 1
-                ? itemCount.value - 1
-                : index
-            )
+        latestIndex = index < 0 ? 0 : index > itemCount.value - 1 ? itemCount.value - 1 : index;
 
         translatePosition(latestIndex);
       }
 
       currentIndex.value = latestIndex;
       emit('update:activeIndex', latestIndex);
-      activeIndexChange?.(latestIndex)
+      activeIndexChange?.(latestIndex);
       autoScheduleTransition();
     };
     // 向前切换
@@ -171,8 +143,8 @@ export default defineComponent({
       autoScheduleTransition();
     });
     onBeforeUnmount(() => {
-      clearScheduledTransition()
-    })
+      clearScheduledTransition();
+    });
 
     return {
       wrapperRef,
@@ -188,6 +160,7 @@ export default defineComponent({
       next,
       arrowMouseEvent,
       switchStep,
+      ns,
     };
   },
 
@@ -207,6 +180,7 @@ export default defineComponent({
       arrowMouseEvent,
       switchStep,
       changeItemCount,
+      ns,
 
       $slots,
     } = this;
@@ -215,27 +189,19 @@ export default defineComponent({
     // 在jsx中，使用map生成slot项会在外层包裹一个Fragment
     let children = slot;
     if (children.length === 1 && children[0].type === Fragment) {
-      children = (children[0].children || []).filter(
-        (item) => item?.type !== Comment
-      );
+      children = (children[0].children || []).filter((item) => item?.type !== Comment);
     }
     if (children.length !== itemCount) {
       changeItemCount(children.length);
     }
 
     return (
-      <div
-        class="devui-carousel-container"
-        style={{ height }}
-        onMouseenter={() => arrowMouseEvent('enter')}
-        onMouseleave={() => arrowMouseEvent('leave')}
-      >
+      <div class={ns.b()} style={{ height }} onMouseenter={() => arrowMouseEvent('enter')} onMouseleave={() => arrowMouseEvent('leave')}>
         {/* carousel arrow */}
         {arrowTrigger !== 'never' && showArrow ? (
-          <div class="devui-carousel-arrow">
-            
+          <div class={ns.e('arrow')}>
             <button class="arrow-left" onClick={() => prev()}>
-              <Icon name="arrow-left"   />
+              <Icon name="arrow-left" />
             </button>
             <button class="arrow-right" onClick={() => next()}>
               <Icon name="arrow-right" />
@@ -243,21 +209,20 @@ export default defineComponent({
           </div>
         ) : null}
         {/* carousel items */}
-        <div class="devui-carousel-item-wrapper" ref="wrapperRef">
+        <div class={ns.e('item-wrapper')} ref="wrapperRef">
           <div
-            class="devui-carousel-item-container"
+            class={ns.e('item-container')}
             style={{
               width: `${itemCount * 100}%`,
             }}
-            ref="containerRef"
-          >
+            ref="containerRef">
             {slot}
           </div>
         </div>
 
         {/* carousel dots */}
         {itemCount > 0 && showDots ? (
-          <ul class={['devui-carousel-dots', dotPosition]}>
+          <ul class={[ns.e('dots'), dotPosition]}>
             {children.map((_, index) => (
               <li
                 class={{ 'dot-item': true, active: currentIndex === index }}

@@ -6,6 +6,7 @@ import { useSelectFiles } from './composables/use-select-files';
 import { useUpload } from './composables/use-upload';
 import { getExistSameNameFilesMsg } from './i18n-upload';
 import { FileUploader } from './file-uploader';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './upload.scss';
 
 export default defineComponent({
@@ -26,6 +27,10 @@ export default defineComponent({
       accept,
       webkitdirectory,
     } = toRefs(props);
+    const ns = useNamespace('upload');
+    const inputGroupNs = useNamespace('input-group');
+    const formControlNs = useNamespace('form-control');
+    const inputGroupAddOnNs = useNamespace('input-group-addon');
     const { triggerSelectFiles, _validateFiles, triggerDropFiles, checkAllFilesSize } = useSelectFiles();
     const { fileUploaders, addFile, getFullFiles, deleteFile, upload, resetSameNameFiles, removeFiles, _oneTimeUpload, getSameNameFiles } =
       useUpload();
@@ -163,53 +168,53 @@ export default defineComponent({
     return () => (
       <div>
         <div
-          class='devui-upload'
+          class={ns.b()}
           v-file-drop={{ droppable, isSingle: !multiple, onFileDrop, onFileOver }}
           style={`border: ${isDropOVer.value ? '1px solid #15bf15' : '0'}`}>
           {ctx.slots.default?.() ? (
             <div onClick={handleClick}>{ctx.slots.default()}</div>
           ) : (
-            <div class={`devui-input-group ${disabled.value ? 'disabled' : ''}`} onClick={handleClick}>
-              {fileUploaders.value.length === 0 && <div class='devui-form-control devui-upload-placeholder'>{placeholder.value}</div>}
+            <div class={[inputGroupNs.b(), disabled.value ? 'disabled' : '']} onClick={handleClick}>
+              {fileUploaders.value.length === 0 && <div class={[formControlNs.b(), ns.e('placeholder')]}>{placeholder.value}</div>}
               {fileUploaders.value.length > 0 && (
-                <ul class='devui-form-control devui-files-list'>
+                <ul class={[formControlNs.b(), ns.e('files-list')]}>
                   {fileUploaders.value.map((fileUploader, index) => (
                     <li
                       key={index}
-                      class='devui-file-item devui-file-tag'
-                      style='display: inline-block; margin: 0 2px 2px 0'
+                      class={[ns.e('file-item'), ns.e('file-tag')]}
+                      style="display: inline-block; margin: 0 2px 2px 0"
                       title={fileUploader.file.name}>
-                      <span class={`devui-filename ${fileUploader.status === UploadStatus.failed ? 'devui-failed-color' : ''}`}>
+                      <span class={[ns.e('filename'), fileUploader.status === UploadStatus.failed ? ns.m('failed-color') : '']}>
                         {fileUploader.file.name}
                       </span>
                       <d-icon
-                        name='close'
-                        class={`${fileUploader?.status === UploadStatus.failed
-                          ? 'devui-upload-delete-file-button' :
-                          ''} ${fileUploader?.status === UploadStatus.uploading || fileUploader?.status === UploadStatus.uploaded
-                          ? 'devui-uploading-delete'
-                          : ''
-                        }`}
+                        name="close"
+                        class={[
+                          fileUploader?.status === UploadStatus.failed ? ns.e('delete-file-button') : '',
+                          fileUploader?.status === UploadStatus.uploading || fileUploader?.status === UploadStatus.uploaded
+                            ? ns.e('delete')
+                            : '',
+                        ]}
                         onClick={(event: Event) => onDeleteFile(event, fileUploader.file, fileUploader.status)}
                       />
                       {fileUploader.status === UploadStatus.uploading && (
-                        <div class='icon devui-upload-progress'>
+                        <div class={['icon', ns.e('progress')]}>
                           <d-progress
                             isCircle={true}
                             percentage={fileUploader.percentage}
-                            barbgcolor='#50D4AB'
+                            barbgcolor="#50D4AB"
                             strokeWidth={8}
                             showContent={false}></d-progress>
                         </div>
                       )}
-                      {fileUploader.status === UploadStatus.failed && <d-icon name='running' onClick={fileUpload} />}
-                      {fileUploader.status === UploadStatus.uploaded && <d-icon name='right' color='#50d4ab' />}
+                      {fileUploader.status === UploadStatus.failed && <d-icon name="running" onClick={fileUpload} />}
+                      {fileUploader.status === UploadStatus.uploaded && <d-icon name="right" color="#50d4ab" />}
                     </li>
                   ))}
                 </ul>
               )}
-              <span class='devui-input-group-addon'>
-                <d-icon name='more-operate' color='#252b3a' />
+              <span class={inputGroupAddOnNs.b()}>
+                <d-icon name="more-operate" color="#252b3a" />
               </span>
             </div>
           )}

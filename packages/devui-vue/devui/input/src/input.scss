@@ -12,7 +12,7 @@
   background-color: $devui-form-control-bg;
   transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
 
-  &:not(.#{$devui-prefix}-input--error):hover {
+  &:not(.#{$devui-prefix}-input--error):not(.#{$devui-prefix}-input--disabled):hover {
     border-color: $devui-form-control-line-hover;
   }
 

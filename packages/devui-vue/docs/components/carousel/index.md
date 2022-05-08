@@ -13,20 +13,20 @@
 ```vue
 <template>
   <d-carousel height="200px">
-    <d-carousel-item v-for="item in items" :key="item">{{ item }}</d-carousel-item>
+    <d-carousel-item class="d-carousel-item" v-for="item in items" :key="item">{{ item }}</d-carousel-item>
   </d-carousel>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const items = ref<string[]>(['page 1', 'page 2', 'page 3', 'page 4'])
+    const items = ref<string[]>(['page 1', 'page 2', 'page 3', 'page 4']);
     return {
-      items
-    }
-  }
-})
+      items,
+    };
+  },
+});
 </script>
 <style>
 .d-carousel-item {
@@ -48,20 +48,20 @@ arrowTrigger 设为 always 可以使箭头永久显示，dotTrigger 设为 hover
 ```vue
 <template>
   <d-carousel height="200px" arrowTrigger="always" dotTrigger="hover">
-    <d-carousel-item v-for="item in items" :key="item">{{ item }}</d-carousel-item>
+    <d-carousel-item class="d-carousel-item" v-for="item in items" :key="item">{{ item }}</d-carousel-item>
   </d-carousel>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const items = ref<string[]>(['page 1', 'page 2', 'page 3', 'page 4'])
+    const items = ref<string[]>(['page 1', 'page 2', 'page 3', 'page 4']);
     return {
-      items
-    }
-  }
-})
+      items,
+    };
+  },
+});
 </script>
 <style>
 .d-carousel-item {
@@ -81,20 +81,20 @@ export default defineComponent({
 ```vue
 <template>
   <d-carousel height="200px" autoplay :autoplaySpeed="3000">
-    <d-carousel-item v-for="item in items" :key="item">{{ item }}</d-carousel-item>
+    <d-carousel-item class="d-carousel-item" v-for="item in items" :key="item">{{ item }}</d-carousel-item>
   </d-carousel>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const items = ref<string[]>(['page 1', 'page 2', 'page 3', 'page 4'])
+    const items = ref<string[]>(['page 1', 'page 2', 'page 3', 'page 4']);
     return {
-      items
-    }
-  }
-})
+      items,
+    };
+  },
+});
 </script>
 <style>
 .d-carousel-item {
@@ -114,7 +114,7 @@ export default defineComponent({
 ```vue
 <template>
   <d-carousel ref="carousel" height="200px" arrowTrigger="never">
-    <d-carousel-item v-for="item in items" :key="item">{{ item }}</d-carousel-item>
+    <d-carousel-item class="d-carousel-item" v-for="item in items" :key="item">{{ item }}</d-carousel-item>
   </d-carousel>
   <div class="carousel-demo-operate">
     <d-button @click="onPrev">上一张</d-button>
@@ -123,30 +123,30 @@ export default defineComponent({
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const items = ref<string[]>(['page 1', 'page 2', 'page 3', 'page 4'])
-    const carousel = ref()
+    const items = ref<string[]>(['page 1', 'page 2', 'page 3', 'page 4']);
+    const carousel = ref();
     const onPrev = () => {
-      carousel.value?.prev?.()
-    }
+      carousel.value?.prev?.();
+    };
     const onNext = () => {
-      carousel.value?.next?.()
-    }
+      carousel.value?.next?.();
+    };
     const onGoFirst = () => {
-      carousel.value?.goto?.(0)
-    }
+      carousel.value?.goto?.(0);
+    };
     return {
       items,
       carousel,
       onPrev,
       onNext,
-      onGoFirst
-    }
-  }
-})
+      onGoFirst,
+    };
+  },
+});
 </script>
 <style>
 .carousel-demo-operate {

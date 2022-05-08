@@ -1,22 +1,20 @@
 import { defineComponent, provide } from 'vue';
-import {
-  breadcrumbProps,
-  BreadcrumbProps,
-  SourceConfig
-} from './breadcrumb-types';
+import { breadcrumbProps, BreadcrumbProps, SourceConfig } from './breadcrumb-types';
 import DBreadcrumbItem from './breadcrumb-item';
 import { getPropsSlot } from '../../shared/utils/props-util';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './breadcrumb.scss';
 
 export default defineComponent({
   name: 'DBreadcrumb',
   components: {
-    DBreadcrumbItem
+    DBreadcrumbItem,
   },
   props: breadcrumbProps,
   setup(props: BreadcrumbProps, { slots }) {
     const separatorIcon = getPropsSlot(slots, props, 'separatorIcon') ?? '/';
     provide('separatorIcon', separatorIcon);
+    const ns = useNamespace('breadcrumb');
 
     const renderBreadcrumbItemRouted = (item) => {
       return (
@@ -33,12 +31,11 @@ export default defineComponent({
         return (
           <d-breadcrumb-item>
             {/* hrefLink */}
-            {!item.noNavigation &&
-            (!item.linkType || item.linkType === 'hrefLink') ? (
-                <a href={item.link} target={item.target ? item.target : '_self'}>
-                  {item.title}
-                </a>
-              ) : null}
+            {!item.noNavigation && (!item.linkType || item.linkType === 'hrefLink') ? (
+              <a href={item.link} target={item.target ? item.target : '_self'}>
+                {item.title}
+              </a>
+            ) : null}
             {/* normal */}
             {item.noNavigation ? <span>{item.title}</span> : null}
           </d-breadcrumb-item>
@@ -46,13 +43,7 @@ export default defineComponent({
       });
     };
     return () => {
-      return (
-        <div class="devui-breadcrumb">
-          {props.source && props.source.length
-            ? renderBreadItemList(props.source)
-            : slots?.default()}
-        </div>
-      );
+      return <div class={ns.b()}>{props.source && props.source.length ? renderBreadItemList(props.source) : slots?.default()}</div>;
     };
-  }
+  },
 });

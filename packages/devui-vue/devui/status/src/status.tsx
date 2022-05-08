@@ -1,5 +1,6 @@
 import { defineComponent, computed } from 'vue';
 import type { IStatusType } from './status-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './status.scss';
 
 export default defineComponent({
@@ -11,12 +12,13 @@ export default defineComponent({
     },
   },
   setup(props, ctx) {
+    const ns = useNamespace('status');
     const typeClass = computed(() => {
       const { type } = props;
       const typeStatus = ['success', 'error', 'initial', 'warning', 'waiting', 'running', 'invalid'];
-      let typeClassStr = `devui-status devui-status-bg-invalid`;
+      let typeClassStr = `${ns.b()} ${ns.em('bg', 'invalid')}`;
       if (typeStatus.includes(type)) {
-        typeClassStr = `devui-status devui-status-bg-${type}`;
+        typeClassStr = `${ns.b()} ${ns.em('bg', type)}`;
       }
       return typeClassStr;
     });

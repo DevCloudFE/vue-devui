@@ -1,15 +1,9 @@
-import {
-  defineComponent,
-  ref,
-  watch,
-  inject,
-  onMounted,
-  onUpdated,
-} from 'vue';
+import { defineComponent, ref, watch, inject, onMounted, onUpdated } from 'vue';
 import { addClass, hasClass, removeClass } from '../../../shared/utils/class';
 import { setStyle } from '../../../shared/utils/set-style';
 import type { SplitterStore } from '../splitter-store';
 import { splitterPaneProps, SplitterPaneProps } from './splitter-pane-types';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 import './splitter-pane.scss';
 
 export default defineComponent({
@@ -20,14 +14,13 @@ export default defineComponent({
     const store = inject<SplitterStore>('splitterStore');
     const domRef = ref<null | HTMLElement>();
     const orderRef = ref();
-    watch([orderRef, domRef],
-      ([order, ele]) => {
-        if (!ele) {
-          return;
-        }
-        setStyle(ele, { order });
+    const ns = useNamespace('splitter');
+    watch([orderRef, domRef], ([order, ele]) => {
+      if (!ele) {
+        return;
       }
-    );
+      setStyle(ele, { order });
+    });
 
     // pane 初始化大小
     const setSizeStyle = (curSize: string, ele: HTMLElement) => {
@@ -35,7 +28,7 @@ export default defineComponent({
         return;
       }
       ele.style.flexBasis = curSize;
-      const paneFixedClass = 'devui-splitter-pane-fixed';
+      const paneFixedClass = ns.em('pane', 'fixed');
       if (curSize) {
         // 设置 flex-grow 和 flex-shrink
         addClass(ele, paneFixedClass);
@@ -84,13 +77,13 @@ export default defineComponent({
       }
     };
 
-
-    watch([() => props.collapsed, domRef],
+    watch(
+      [() => props.collapsed, domRef],
       ([collapsed, ele]) => {
         if (!ele) {
           return;
         }
-        const paneHiddenClass = 'devui-splitter-pane-hidden';
+        const paneHiddenClass = ns.em('pane', 'hidden');
         if (!collapsed) {
           removeClass(ele, paneHiddenClass);
         } else {
@@ -113,7 +106,7 @@ export default defineComponent({
       if (!(ele instanceof HTMLElement)) {
         return;
       }
-      const flexGrowClass = 'devui-splitter-pane-grow';
+      const flexGrowClass = ns.em('pane', 'grow');
       if (hasClass(ele, flexGrowClass)) {
         removeClass(ele, flexGrowClass);
       } else if (collapsed) {
@@ -130,7 +123,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class="devui-splitter-pane" ref={domRef}>
+        <div class={ns.e('pane')} ref={domRef}>
           {slots.default?.()}
         </div>
       );

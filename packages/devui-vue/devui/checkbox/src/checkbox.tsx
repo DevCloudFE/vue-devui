@@ -1,10 +1,7 @@
 import { defineComponent, inject, computed } from 'vue';
+import { checkboxGroupInjectionKey, checkboxProps, CheckboxProps } from './checkbox-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './checkbox.scss';
-import {
-  checkboxGroupInjectionKey,
-  checkboxProps,
-  CheckboxProps,
-} from './checkbox-types';
 
 export default defineComponent({
   name: 'DCheckbox',
@@ -12,6 +9,7 @@ export default defineComponent({
   emits: ['change', 'update:checked', 'update:modelValue'],
   setup(props: CheckboxProps, ctx) {
     const checkboxGroupConf = inject(checkboxGroupInjectionKey, null);
+    const ns = useNamespace('checkbox');
 
     const isChecked = computed(() => props.checked || props.modelValue);
     const mergedDisabled = computed(() => {
@@ -67,6 +65,7 @@ export default defineComponent({
       mergedChecked,
       mergedShowAnimation,
       handleClick,
+      ns,
     };
   },
   render() {
@@ -84,43 +83,39 @@ export default defineComponent({
       name,
       value,
       mergedColor,
+      ns,
       $slots,
     } = this;
 
     const wrapperCls = {
-      'devui-checkbox-column-margin': direction === 'column',
-      'devui-checkbox-wrap': typeof itemWidth !== 'undefined',
+      [ns.e('column-margin')]: direction === 'column',
+      [ns.e('wrap')]: typeof itemWidth !== 'undefined',
     };
     const wrapperStyle = itemWidth ? [`width: ${itemWidth}px`] : [];
     const checkboxCls = {
-      'devui-checkbox': true,
+      [ns.b()]: true,
       active: mergedChecked,
       halfchecked,
       disabled: mergedDisabled,
       unchecked: !mergedChecked,
     };
     const labelTitle = mergedIsShowTitle ? title || label : '';
-    const bgImgStyle =
-      (mergedColor && halfchecked) || mergedColor
-        ? `linear-gradient(${mergedColor}, ${mergedColor})`
-        : '';
+    const bgImgStyle = (mergedColor && halfchecked) || mergedColor ? `linear-gradient(${mergedColor}, ${mergedColor})` : '';
     const spanStyle = [
-      `border-color:${
-        (mergedChecked || halfchecked) && mergedColor ? mergedColor : ''
-      }`,
+      `border-color:${(mergedChecked || halfchecked) && mergedColor ? mergedColor : ''}`,
       `background-image:${bgImgStyle}`,
       `background-color:${mergedColor && halfchecked ? mergedColor : ''}`,
     ];
     const spanCls = {
-      'devui-checkbox-material': true,
+      [ns.e('material')]: true,
       'custom-color': mergedColor,
-      'devui-checkbox-no-label': !label && !$slots.default,
-      'devui-no-animation': !mergedShowAnimation,
-      'devui-checkbox-default-background': !halfchecked,
+      [ns.m('no-label')]: !label && !$slots.default,
+      [ns.m('no-animation')]: !mergedShowAnimation,
+      [ns.e('default-background')]: !halfchecked,
     };
     const polygonCls = {
-      'devui-tick': true,
-      'devui-no-animation': !mergedShowAnimation,
+      [ns.e('tick')]: true,
+      [ns.m('no-animation')]: !mergedShowAnimation,
     };
     const stopPropagation = ($event: Event) => $event.stopPropagation();
 
@@ -134,7 +129,7 @@ export default defineComponent({
           <label title={labelTitle} onClick={handleClick}>
             <input
               name={name || value}
-              class="devui-checkbox-input"
+              class={ns.e('input')}
               type="checkbox"
               {...inputProps}
               checked={mergedChecked}
@@ -143,24 +138,13 @@ export default defineComponent({
               onChange={stopPropagation}
             />
             <span style={spanStyle} class={spanCls}>
-              <span class="devui-checkbox-halfchecked-bg"></span>
-              <svg
-                viewBox="0 0 16 16"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                class="devui-checkbox-tick"
-              >
-                <g
-                  stroke="none"
-                  stroke-width="1"
-                  fill="none"
-                  fill-rule="evenodd"
-                >
+              <span class={ns.e('halfchecked-bg')}></span>
+              <svg viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" class={ns.e('tick-wrap')}>
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <polygon
                     fill-rule="nonzero"
                     points="5.17391304 6.56521739 7.7173913 9.10869565 11.826087 5 13 6.17391304 7.7173913 11.4565217 4 7.73913043"
-                    class={polygonCls}
-                  ></polygon>
+                    class={polygonCls}></polygon>
                 </g>
               </svg>
             </span>

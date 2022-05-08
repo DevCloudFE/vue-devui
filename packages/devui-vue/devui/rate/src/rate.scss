@@ -1,21 +1,21 @@
 @import '../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-star-align {
+.#{$devui-prefix}-rate--align {
   font-size: $devui-font-size-icon;
   margin-right: 5px;
   position: relative;
   line-height: 1;
 }
 
-.#{$devui-prefix}-pointer {
+.#{$devui-prefix}-rate--pointer {
   cursor: pointer;
 }
 
-.#{$devui-prefix}-star-container {
+.#{$devui-prefix}-rate {
   display: inline-flex;
 }
 
-.#{$devui-prefix}-star-color-active {
+.#{$devui-prefix}-rate__color-active {
   color: #6a81ed;
   line-height: 1.5;
 
@@ -24,7 +24,7 @@
   }
 }
 
-.#{$devui-prefix}-star-color-success {
+.#{$devui-prefix}-rate__color--success {
   color: #3dcca6;
 
   svg g {
@@ -32,7 +32,7 @@
   }
 }
 
-.#{$devui-prefix}-star-color-warning {
+.#{$devui-prefix}-rate__color--warning {
   color: #fac20a;
 
   svg g {
@@ -40,7 +40,7 @@
   }
 }
 
-.#{$devui-prefix}-star-color-error {
+.#{$devui-prefix}-rate__color--error {
   color: #f66f6a;
 
   svg g {
@@ -48,7 +48,7 @@
   }
 }
 
-.#{$devui-prefix}-star-color-customize {
+.#{$devui-prefix}-rate__color--customize {
   color: var(--star-color);
 
   svg g {
@@ -56,14 +56,14 @@
   }
 }
 
-.#{$devui-prefix}-active-star {
+.#{$devui-prefix}-rate__active-star {
   position: absolute;
   top: 0;
   left: 0;
   overflow: hidden;
 }
 
-.#{$devui-prefix}-star-color {
+.#{$devui-prefix}-rate__color {
   color: $devui-dividing-line;
   line-height: 1.5;
 
@@ -76,6 +76,6 @@
   }
 }
 
-.#{$devui-prefix}-only-read {
+.#{$devui-prefix}-rate--only-read {
   cursor: not-allowed;
 }

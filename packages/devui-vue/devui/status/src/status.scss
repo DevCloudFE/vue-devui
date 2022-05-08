@@ -16,44 +16,44 @@
   }
 }
 
-.#{$devui-prefix}-status.#{$devui-prefix}-status-bg {
-  &-success {
+.#{$devui-prefix}-status.#{$devui-prefix}-status__bg {
+  &--success {
     &::before {
       background-color: $devui-success;
     }
   }
 
-  &-error {
+  &--error {
     &::before {
       background-color: $devui-danger;
     }
   }
 
-  &-warning {
+  &--warning {
     &::before {
       background-color: $devui-warning;
     }
   }
 
-  &-initial {
+  &--initial {
     &::before {
       background-color: $devui-initial;
     }
   }
 
-  &-waiting {
+  &--waiting {
     &::before {
       background-color: $devui-waiting;
     }
   }
 
-  &-running {
+  &--running {
     &::before {
       background-color: $devui-info;
     }
   }
 
-  &-invalid {
+  &--invalid {
     &::before {
       background-color: $devui-dividing-line;
     }

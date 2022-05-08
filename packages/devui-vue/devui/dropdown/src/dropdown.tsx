@@ -2,6 +2,7 @@ import { defineComponent, ref, toRefs, Transition, Teleport, watch, nextTick } f
 import { dropdownProps, DropdownProps } from './dropdown-types';
 import { useDropdown, useDropdownEvent, useOverlayProps } from './use-dropdown';
 import { FlexibleOverlay } from '../../overlay';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './dropdown.scss';
 
 let dropdownId = 1;
@@ -19,6 +20,7 @@ export default defineComponent({
     const id = `dropdown_${dropdownId++}`;
     const isOpen = ref<boolean>(false);
     const currentPosition = ref('bottom');
+    const ns = useNamespace('dropdown');
 
     useDropdownEvent({
       id,
@@ -45,7 +47,7 @@ export default defineComponent({
 
     return () => (
       <>
-        <div ref={origin} class="devui-dropdown-toggle">
+        <div ref={origin} class={ns.e('toggle')}>
           {slots.default?.()}
         </div>
         <Teleport to="body">
@@ -62,7 +64,7 @@ export default defineComponent({
               onPositionChange={handlePositionChange}
               class={classes.value}
               style={styles.value}>
-              <div ref={dropdownRef} class="devui-dropdown-menu-wrap" {...attrs}>
+              <div ref={dropdownRef} class={ns.e('menu-wrap')} {...attrs}>
                 {slots.menu?.()}
               </div>
             </FlexibleOverlay>

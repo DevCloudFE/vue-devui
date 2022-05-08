@@ -37,8 +37,7 @@
   border-bottom: 1px solid $devui-form-control-line;
   border-right: 1px solid $devui-form-control-line;
   border-radius: 0 $devui-border-radius $devui-border-radius 0;
-  transition:
-    border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+  transition: border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   cursor: pointer;
   height: 100%;
@@ -61,11 +60,10 @@
   background-image: none;
   border: 1px solid $devui-form-control-line;
   border-radius: $devui-border-radius 0 0 $devui-border-radius;
-  transition:
-    border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+  transition: border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     box-shadow $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
 
-  &.#{$devui-prefix}-files-list {
+  &.#{$devui-prefix}-upload__files-list {
     max-height: 52px;
     padding: 2px 2px 0 2px;
     overflow-x: hidden;
@@ -73,19 +71,19 @@
     max-width: 100%;
     margin: 0;
 
-    .#{$devui-prefix}-file-item {
+    .#{$devui-prefix}-upload__file-item {
       height: 22px;
       line-height: 22px;
       padding: 0 48px 0 12px;
     }
 
-    .#{$devui-prefix}-file-tag {
+    .#{$devui-prefix}-upload__file-tag {
       position: relative;
       background-color: $devui-label-bg;
       border-radius: $devui-border-radius;
       max-width: 100%;
 
-      .#{$devui-prefix}-filename {
+      .#{$devui-prefix}-upload__filename {
         height: 100%;
         display: inline-block;
         vertical-align: middle;
@@ -110,17 +108,17 @@
           font-size: 16px;
         }
 
-        &.#{$devui-prefix}-upload-delete-file-button {
+        &.#{$devui-prefix}-upload__delete-file-button {
           margin-right: 20px;
         }
 
-        &.#{$devui-prefix}-uploading-delete {
+        &.#{$devui-prefix}-upload__delete {
           display: none;
         }
       }
 
       &:hover {
-        .#{$devui-prefix}-upload-progress,
+        .#{$devui-prefix}-upload__progress,
         .icon-right {
           display: none;
         }
@@ -135,12 +133,12 @@
 
 .#{$devui-prefix}-input-group {
   &.disabled {
-    .#{$devui-prefix}-upload-placeholder {
+    .#{$devui-prefix}-upload__placeholder {
       color: $devui-disabled-text;
     }
   }
 
-  .#{$devui-prefix}-upload-placeholder {
+  .#{$devui-prefix}-upload__placeholder {
     max-height: 28px;
     max-width: 100%;
     overflow: hidden;
@@ -150,7 +148,7 @@
   }
 }
 
-.#{$devui-prefix}-input-group .#{$devui-prefix}-upload-progress {
+.#{$devui-prefix}-input-group .#{$devui-prefix}-upload__progress {
   width: 16px;
   height: 16px;
 }
@@ -167,7 +165,7 @@
   outline: none;
 }
 
-.#{$devui-prefix}-input-group.disabled .#{$devui-prefix}-upload-delete-file-button {
+.#{$devui-prefix}-input-group.disabled .#{$devui-prefix}-upload__delete-file-button {
   cursor: not-allowed;
   pointer-events: none;
 }
@@ -176,7 +174,7 @@
   color: $devui-aide-text;
 }
 
-.#{$devui-prefix}-failed-color {
+.#{$devui-prefix}-upload--failed-color {
   color: $devui-danger;
 }
 
