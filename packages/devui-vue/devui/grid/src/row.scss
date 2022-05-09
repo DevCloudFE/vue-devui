@@ -4,18 +4,18 @@
   display: flex;
 }
 
-.#{$devui-prefix}-row-wrap {
+.#{$devui-prefix}-row__wrap {
   flex-wrap: wrap;
 }
 
 @each $prefix, $value in (top, flex-start), (middle, center), (bottom, flex-end) {
-  .#{$devui-prefix}-row-align-#{$prefix} {
+  .#{$devui-prefix}-row__align--#{$prefix} {
     align-items: $value;
   }
 }
 
 @each $prefix, $value in (start, flex-start), (center, center), (end, flex-end), (around, space-around), (between, space-between) {
-  .#{$devui-prefix}-row-justify-#{$prefix} {
+  .#{$devui-prefix}-row__justify--#{$prefix} {
     justify-content: $value;
   }
 }

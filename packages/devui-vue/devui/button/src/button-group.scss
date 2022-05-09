@@ -1,0 +1,29 @@
+@import '../../styles-var/devui-var.scss';
+
+.#{$devui-prefix}-button-group {
+  display: flex;
+
+  & > * {
+    position: relative;
+
+    &:not(:first-child), &:not(:first-child) .#{$devui-prefix}-button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      margin-left: -1px;
+    }
+
+    &:not(:last-child), &:not(:last-child) .#{$devui-prefix}-button {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:hover,
+    &:active {
+      z-index: 1;
+    }
+
+    &:focus-within {
+      z-index: 1;
+    }
+  }
+}

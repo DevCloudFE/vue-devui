@@ -11,15 +11,15 @@
   padding: 20px;
   position: absolute;
 
-  .#{$devui-prefix}-title {
+  .#{$devui-prefix}-steps-guide__title {
     font-size: $devui-font-size-page-title;
     opacity: 1;
     margin: 0 0 20px 0;
     padding: 0;
   }
 
-  > .#{$devui-prefix}-arrow,
-  > .#{$devui-prefix}-arrow::after {
+  > .#{$devui-prefix}-steps-guide__arrow,
+  > .#{$devui-prefix}-steps-guide__arrow::after {
     position: absolute;
     display: block;
     width: 0;
@@ -28,11 +28,11 @@
     border-style: solid;
   }
 
-  > .#{$devui-prefix}-arrow {
+  > .#{$devui-prefix}-steps-guide__arrow {
     border-width: 8px;
   }
 
-  &.left > .#{$devui-prefix}-arrow {
+  &.left > .#{$devui-prefix}-steps-guide__arrow {
     top: 23px;
     right: -6px;
     margin-top: -3px;
@@ -41,29 +41,29 @@
     border-left-color: $devui-brand;
   }
 
-  &.top > .#{$devui-prefix}-arrow,
-  &.top-left > .#{$devui-prefix}-arrow,
-  &.top-right > .#{$devui-prefix}-arrow {
+  &.top > .#{$devui-prefix}-steps-guide__arrow,
+  &.top-left > .#{$devui-prefix}-steps-guide__arrow,
+  &.top-right > .#{$devui-prefix}-steps-guide__arrow {
     bottom: -6px;
     border-bottom-width: 0;
     border-top-color: $devui-brand;
     transform: rotate(135deg);
   }
 
-  &.top > .#{$devui-prefix}-arrow {
+  &.top > .#{$devui-prefix}-steps-guide__arrow {
     left: calc(50% - 4px);
   }
 
-  &.top-left > .#{$devui-prefix}-arrow {
+  &.top-left > .#{$devui-prefix}-steps-guide__arrow {
     left: 23px;
   }
 
-  &.top-right > .#{$devui-prefix}-arrow {
+  &.top-right > .#{$devui-prefix}-steps-guide__arrow {
     right: 23px;
     transform: rotate(-135deg);
   }
 
-  &.right > .#{$devui-prefix}-arrow {
+  &.right > .#{$devui-prefix}-steps-guide__arrow {
     top: 23px;
     left: -6px;
     margin-top: -3px;
@@ -72,32 +72,32 @@
     border-right-color: $devui-brand;
   }
 
-  &.bottom > .#{$devui-prefix}-arrow,
-  &.bottom-left > .#{$devui-prefix}-arrow,
-  &.bottom-right > .#{$devui-prefix}-arrow {
+  &.bottom > .#{$devui-prefix}-steps-guide__arrow,
+  &.bottom-left > .#{$devui-prefix}-steps-guide__arrow,
+  &.bottom-right > .#{$devui-prefix}-steps-guide__arrow {
     top: -6px;
     margin-left: 3px;
     border-top-width: 0;
     border-bottom-color: $devui-brand;
   }
 
-  &.bottom > .#{$devui-prefix}-arrow {
+  &.bottom > .#{$devui-prefix}-steps-guide__arrow {
     left: calc(50% - 4px);
     transform: rotate(-135deg);
   }
 
-  &.bottom-right > .#{$devui-prefix}-arrow {
+  &.bottom-right > .#{$devui-prefix}-steps-guide__arrow {
     right: 23px;
     transform: rotate(135deg);
   }
 
-  &.bottom-left > .#{$devui-prefix}-arrow {
+  &.bottom-left > .#{$devui-prefix}-steps-guide__arrow {
     left: 23px;
     transform: rotate(-135deg);
   }
 
-  > .#{$devui-prefix}-shining-dot,
-  .#{$devui-prefix}-shining-plus {
+  > .#{$devui-prefix}-steps-guide__shining-dot,
+  .#{$devui-prefix}-steps-guide__shining-plus {
     position: absolute;
     background: $devui-brand;
     width: 6px;
@@ -105,59 +105,59 @@
     border-radius: $devui-border-radius-feedback;
   }
 
-  &.left > .#{$devui-prefix}-shining-dot,
-  &.left > .#{$devui-prefix}-shining-plus {
+  &.left > .#{$devui-prefix}-steps-guide__shining-dot,
+  &.left > .#{$devui-prefix}-steps-guide__shining-plus {
     top: 21px;
     right: -30px;
   }
 
-  &.right > .#{$devui-prefix}-shining-dot,
-  &.right > .#{$devui-prefix}-shining-plus {
+  &.right > .#{$devui-prefix}-steps-guide__shining-dot,
+  &.right > .#{$devui-prefix}-steps-guide__shining-plus {
     top: 21px;
     left: -30px;
   }
 
-  &.top > .#{$devui-prefix}-shining-dot,
-  &.top > .#{$devui-prefix}-shining-plus {
+  &.top > .#{$devui-prefix}-steps-guide__shining-dot,
+  &.top > .#{$devui-prefix}-steps-guide__shining-plus {
     left: calc(50% - 3px);
     bottom: -30px;
   }
 
-  &.top-left > .#{$devui-prefix}-shining-dot,
-  &.top-left > .#{$devui-prefix}-shining-plus {
+  &.top-left > .#{$devui-prefix}-steps-guide__shining-dot,
+  &.top-left > .#{$devui-prefix}-steps-guide__shining-plus {
     left: 21px;
     bottom: -30px;
   }
 
-  &.top-right > .#{$devui-prefix}-shining-dot,
-  &.top-right > .#{$devui-prefix}-shining-plus {
+  &.top-right > .#{$devui-prefix}-steps-guide__shining-dot,
+  &.top-right > .#{$devui-prefix}-steps-guide__shining-plus {
     right: 21px;
     bottom: -30px;
   }
 
-  &.bottom > .#{$devui-prefix}-shining-dot,
-  &.bottom > .#{$devui-prefix}-shining-plus {
+  &.bottom > .#{$devui-prefix}-steps-guide__shining-dot,
+  &.bottom > .#{$devui-prefix}-steps-guide__shining-plus {
     left: calc(50% - 3px);
     top: -30px;
   }
 
-  &.bottom-right > .#{$devui-prefix}-shining-dot,
-  &.bottom-right > .#{$devui-prefix}-shining-plus {
+  &.bottom-right > .#{$devui-prefix}-steps-guide__shining-dot,
+  &.bottom-right > .#{$devui-prefix}-steps-guide__shining-plus {
     top: -30px;
     right: 21px;
   }
 
-  &.bottom-left > .#{$devui-prefix}-shining-dot,
-  &.bottom-left > .#{$devui-prefix}-shining-plus {
+  &.bottom-left > .#{$devui-prefix}-steps-guide__shining-dot,
+  &.bottom-left > .#{$devui-prefix}-steps-guide__shining-plus {
     top: -30px;
     left: 21px;
   }
 
-  .#{$devui-prefix}-shining-plus {
+  .#{$devui-prefix}-steps-guide__shining-plus {
     animation: devui-glow 2s 0s infinite;
   }
 
-  .#{$devui-prefix}-guide-container {
+  .#{$devui-prefix}-steps-guide__container {
     position: relative;
 
     > .icon-close {
@@ -167,11 +167,11 @@
       cursor: pointer;
     }
 
-    .#{$devui-prefix}-ctrl {
+    .#{$devui-prefix}-steps-guide__ctrl {
       display: flex;
       flex-wrap: wrap;
 
-      .#{$devui-prefix}-dots {
+      .#{$devui-prefix}-steps-guide__dots {
         color: $devui-light-text;
         position: relative;
         top: 25px;
@@ -182,13 +182,13 @@
           opacity: 0.2;
           margin: 0 5px 0 2px;
 
-          &.#{$devui-prefix}-active {
+          &.#{$devui-prefix}-steps-guide__active {
             opacity: 1;
           }
         }
       }
 
-      .#{$devui-prefix}-guide-btn {
+      .#{$devui-prefix}-steps-guide__btn {
         display: flex;
         flex-flow: row nowrap;
         flex-grow: 1;
@@ -204,7 +204,7 @@
           cursor: pointer;
           margin-left: 10px;
 
-          &.#{$devui-prefix}-prev-step {
+          &.#{$devui-prefix}-steps-guide__prev-step {
             background: none;
             border: solid 1px rgba(255, 255, 255, 0.1);
           }

@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-modal-mask {
+.#{$devui-prefix}-modal__mask {
   justify-content: center;
   align-items: center;
   background-color: $devui-shadow;
@@ -42,7 +42,7 @@
   border-radius: $devui-border-radius;
 }
 
-.#{$devui-prefix}-modal-header {
+.#{$devui-prefix}-modal__header {
   width: 100%;
   height: 56px;
   padding: 32px 32px 0;
@@ -61,14 +61,14 @@
   }
 }
 
-.#{$devui-prefix}-modal-body {
+.#{$devui-prefix}-modal__body {
   padding: 20px 32px;
   font-size: $devui-font-size;
   color: $devui-text-weak;
   box-sizing: border-box;
 }
 
-.#{$devui-prefix}-modal-footer {
+.#{$devui-prefix}-modal__footer {
   width: 100%;
   border-top: none;
   text-align: center;

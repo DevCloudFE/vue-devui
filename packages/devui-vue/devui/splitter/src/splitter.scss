@@ -7,11 +7,11 @@
   position: relative;
   border-radius: $devui-border-radius;
 
-  &.#{$devui-prefix}-splitter-horizontal {
+  &.#{$devui-prefix}-splitter--horizontal {
     flex-direction: row;
   }
 
-  &.#{$devui-prefix}-splitter-vertical {
+  &.#{$devui-prefix}-splitter--vertical {
     flex-direction: column;
   }
 }
