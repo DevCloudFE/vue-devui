@@ -26,14 +26,16 @@ export function useSize(colSizes: ScreenSizes): ComputedRef<string> {
       if (valueType === 'number') {
         total = `${setSpace(total)}${colNs.em(key, `span-${colSizes[key]}`)}`;
       } else if (valueType === 'object') {
-        const colSizesKeys = Object.keys(colSizes[key]) as (keyof ColPropsBaseClass)[];
+        const colSizesKeys = Object.keys(colSizes[key] as ColPropsBaseClass);
         const sum = colSizesKeys
           .filter((item) => item in colPropsBaseClass)
           .reduce((tot, k) => {
-            if (typeof colSizes[key][k] !== 'number') {
+            const baseClass =  colSizes[key] as ColPropsBaseClass;
+            const _class = baseClass[k as keyof ColPropsBaseClass];
+            if (typeof _class !== 'number') {
               return '';
             } else {
-              tot = `${setSpace(tot)}${colNs.em(key, `${k}-${colSizes[key][k]}`)}`;
+              tot = `${setSpace(tot)}${colNs.em(key, `${k}-${_class}`)}`;
             }
             return tot;
           }, '');
