@@ -40,7 +40,7 @@ function dispatch () {
 
 function register () {
   Object.keys(screenMedias).forEach(key => {
-    const result = window.matchMedia(screenMedias[key]);
+    const result = window.matchMedia(screenMedias[key as ScreenMediasKey]);
     if (result.matches) {
       screen[key as ScreenMediasKey] = true;
       dispatch();
