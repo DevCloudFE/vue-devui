@@ -38,6 +38,7 @@ export default defineComponent({
       return <DCheckboxGroup
         modelValue={props.defaultChecked}
         options={props.data}
+        class={'devui-transfer-panel-body-list-group'}
         onChange={(value) => {
           ctx.emit('change', value);
         }}

@@ -57,11 +57,13 @@ $devui-transfer-body-list-item-height: 32px;
       &-list {
         overflow: auto;
         width: 100%;
-        .#{$devui-prefix}-checkbox-column-margin {
+
+        &-group > div > div {
           padding: 0 12px;
           cursor: pointer;
         }
-        .#{$devui-prefix}-checkbox-column-margin:hover {
+
+        &-group > div > div:hover {
           background-color: $devui-transfer-header-border-line-color;
         }
 
