@@ -29,7 +29,7 @@ export default defineComponent({
       };
       return (
         <FixedOverlay {...fixedOverlayProps}>
-          <Transition name="devui-modal-wipe">
+          <Transition name={ns.m('wipe')}>
             <div class={ns.b()} {...attrs}>
               <Icon name="close" class="btn-close" size="var(--devui-font-size-md,12px)" onClick={() => handleVisibleChange(false)}></Icon>
               {slots.header ? slots.header() : title.value && <DModalHeader>{title.value}</DModalHeader>}
