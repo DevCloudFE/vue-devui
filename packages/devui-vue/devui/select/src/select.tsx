@@ -11,7 +11,7 @@ import './select.scss';
 export default defineComponent({
   name: 'DSelect',
   props: selectProps,
-  emits: ['toggleChange', 'valueChange', 'update:modelValue'],
+  emits: ['toggle-change', 'value-change', 'update:modelValue'],
   setup(props: SelectProps, ctx) {
     const ns = useNamespace('select');
     const containerRef = ref(null);
@@ -23,7 +23,7 @@ export default defineComponent({
         return;
       }
       isOpen.value = bool;
-      ctx.emit('toggleChange', bool);
+      ctx.emit('toggle-change', bool);
     }
     useSelectOutsideClick([containerRef, dropdownRef], isOpen, toggleChange);
 
@@ -92,7 +92,7 @@ export default defineComponent({
         ctx.emit('update:modelValue', item.value);
         toggleChange(false);
       }
-      ctx.emit('valueChange', item, index);
+      ctx.emit('value-change', item, index);
     }
 
     function getItemClassName(item: OptionObjectItem) {
