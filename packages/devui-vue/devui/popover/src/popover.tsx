@@ -25,7 +25,7 @@ export default defineComponent({
           {slots.reference?.()}
         </div>
         <Teleport to="body">
-          <Transition name={showAnimation.value ? `devui-popover-fade-${placement.value}` : ''}>
+          <Transition name={showAnimation.value ? ns.m(`fade-${placement.value}`) : ''}>
             <FlexibleOverlay
               v-model={visible.value}
               ref={popoverRef}
