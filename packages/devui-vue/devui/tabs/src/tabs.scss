@@ -56,7 +56,9 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
     height: 2px;
     width: 0;
     background: transparent;
-    transition: width 0.3s ease-out, background-color 0.3s ease-out;
+    transition:
+      width $devui-animation-duration-slow $devui-animation-ease-in-out,
+      background-color $devui-animation-duration-slow $devui-animation-ease-in-out;
   }
 
   li.active::after {
@@ -96,7 +98,8 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
       border: none;
       color: $devui-text;
       line-height: 26px;
-      padding: 0 15px;
+      padding: 0 16px;
+      transition: color $devui-animation-duration-slow $devui-animation-ease-in-out;
 
       &:hover,
       &:focus,
@@ -181,7 +184,7 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
       border: none;
       color: $devui-text;
       line-height: 28px;
-      padding: 0 15px;
+      padding: 0 16px;
 
       &:hover,
       &:focus,
@@ -363,5 +366,7 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   box-shadow: 0 2px 4px 0 $devui-light-shadow;
   top: 1px;
   height: 30px;
-  transition: left 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition:
+    left $devui-animation-duration-slow $devui-animation-ease-in-out,
+    width $devui-animation-duration-slow $devui-animation-ease-in-out;
 }

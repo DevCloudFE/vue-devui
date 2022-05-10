@@ -80,7 +80,7 @@
   }
 }
 
-.#{$devui-prefix}-modal-wipe {
+.#{$devui-prefix}-modal--wipe {
   @mixin wipe-in-out-animation {
     animation-name: wipe-in-out;
     animation-duration: 0.3s;
