@@ -22,7 +22,7 @@
     }
   }
 
-  &.active:not(.halfchecked) .#{$devui-prefix}-checkbox__tick {
+  &.active:not(.halfChecked) .#{$devui-prefix}-checkbox__tick {
     opacity: 1;
     stroke-dashoffset: 0;
     transform: scale(1);
@@ -30,7 +30,7 @@
   }
 
   &.active,
-  &.halfchecked {
+  &.halfChecked {
     &:not(.disabled) .#{$devui-prefix}-checkbox__material:not(.custom-color) {
       border-color: $devui-brand;
     }
@@ -61,7 +61,7 @@
     }
   }
 
-  &.halfchecked {
+  &.halfChecked {
     .#{$devui-prefix}-checkbox__material:not(.custom-color) {
       background-color: $devui-brand;
 
@@ -74,7 +74,7 @@
     }
   }
 
-  &.halfchecked {
+  &.halfChecked {
     .#{$devui-prefix}-checkbox__material.custom-color {
       & > .#{$devui-prefix}-checkbox__halfchecked-bg {
         opacity: 1;
@@ -124,7 +124,7 @@
     }
   }
 
-  &:not(.disabled).halfchecked {
+  &:not(.disabled).halfChecked {
     .#{$devui-prefix}-checkbox__material:not(.custom-color) {
       &:focus,
       &:active,
@@ -190,7 +190,7 @@
       }
     }
 
-    &.halfchecked {
+    &.halfChecked {
       .#{$devui-prefix}-checkbox__material {
         background-color: $devui-disabled-bg;
 
