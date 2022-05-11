@@ -1,0 +1,157 @@
+.devui-menu-horizontal {
+  display: flex;
+  box-sizing: border-box;
+  line-height: $devui-line-height-base;
+  background: $devui-menu-bg;
+  padding: 14px 20px;
+
+  .devui-menu-item {
+    display: flex;
+    position: relative;
+    box-sizing: content-box;
+    padding: 0 20px !important;
+    line-height: 24px;
+    cursor: pointer;
+  }
+
+  .devui-menu-item::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 0;
+    width: auto;
+    height: 2px;
+  }
+
+  ::after {
+    transition: all 200ms $devui-animation-ease-in-smooth;
+    background: transparent;
+  }
+
+  .devui-menu-item-select,
+  .devui-menu-active-parent {
+    .devui-submenu-title-content {
+      color: $devui-menu-item-select;
+    }
+
+    &::after {
+      display: block;
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 0;
+      width: auto;
+      height: 2px;
+      content: '';
+      opacity: 1;
+      background: $devui-brand;
+    }
+  }
+
+  .devui-menu-item {
+    span,
+    a {
+      color: $devui-text;
+    }
+  }
+
+  .devui-menu-item:hover {
+    span,
+    a {
+      color: $devui-brand;
+    }
+
+    &::after {
+      background: $devui-brand;
+    }
+  }
+
+  .devui-submenu {
+    margin: 0;
+    padding: 0;
+    position: relative;
+
+    div.devui-submenu-title {
+      padding: 0 20px;
+
+      span {
+        margin: 0;
+      }
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 0;
+      width: auto;
+      height: 2px;
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      &::after {
+        background: $devui-brand;
+      }
+    }
+
+    div.devui-menu-item-horizontal-wrapper {
+      transition: all 0.8s $devui-animation-ease-in-smooth;
+      background: $devui-menu-bg;
+    }
+
+    div.devui-menu-item-horizontal-wrapper-show {
+      opacity: 1;
+      visibility: visible;
+      max-height: calc(100vh - 100px);
+      padding: 10px 0 !important;
+      border-radius: 8px;
+      position: fixed;
+
+      .devui-menu-item {
+        margin-top: 5px;
+      }
+
+      .devui-submenu {
+        margin: 5px 0;
+        padding: 0 20px !important;
+
+        div.devui-submenu-title {
+          padding: 0 !important;
+        }
+      }
+
+      .devui-menu-item-horizontal-wrapper-level .devui-submenu {
+        padding: 0 20px !important;
+      }
+    }
+
+    div.devui-menu-item-horizontal-wrapper-hidden {
+      transition: all 0.8s $devui-animation-ease-in-smooth;
+      position: fixed;
+      // margin-top: -5px;
+      padding: 0 !important;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+
+      .devui-menu-item {
+        margin-top: 5px;
+      }
+
+      .devui-submenu {
+        margin: 5px 0;
+        padding: 0 20px !important;
+
+        div.devui-submenu-title {
+          padding: 0 !important;
+        }
+      }
+    }
+  }
+}
