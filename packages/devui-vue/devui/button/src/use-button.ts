@@ -24,8 +24,9 @@ export default function useButton(props: ButtonProps, ctx: SetupContext): UseBut
     [`${ns.m(props.variant)}--${props.color || defaultColor}`]: true,
     [ns.m(buttonSize.value)]: true,
     [ns.e('icon-wrap')]: props.icon,
-    [ns.e('icon')]: props.icon && !hasContent.value && props.variant !== 'solid',
+    [ns.e('icon')]: props.icon && !hasContent.value,
     [ns.m('is-loading')]: props.loading,
+    [ns.m(props.shape || '')]: props.shape ? true : false,
   }));
 
   const iconClass = computed(() => {
