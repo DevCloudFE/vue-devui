@@ -228,7 +228,7 @@ export default {
 | color    | [IButtonColor](#ibuttoncolor)     | 'secondary' | 可选，按钮主题        | [主题色](#主题色)         |
 | size     | [IButtonSize](#ibuttonsize)       | 'md'        | 可选，按钮尺寸        | [尺寸](#尺寸)             |
 | icon     | `string`                          | --          | 可选，自定义按钮图标  | [图标按钮](#图标按钮)     |
-| shape    | `string`                          | --          | 可选，取值circle/round  | [图标按钮](#图标按钮)     |
+| shape    | [IButtonShape](#ibuttonshape)     | --          | 可选，按钮形状(圆形/圆角) | [图标按钮](#图标按钮)     |
 | disabled | `boolean`                         | false       | 可选，是否禁用 button | [禁用状态](#禁用状态)     |
 | loading  | `boolean`                         | false       | 可选，设置加载中状态  | [加载中状态](#加载中状态) |
 
@@ -251,6 +251,11 @@ type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 
 ```ts
 type IButtonColor = 'primary' | 'secondary' | 'danger';
+```
+#### IButtonShape
+
+```ts
+type IButtonShape = 'circle' | 'round';
 ```
 
 ### ButtonGroup 参数
