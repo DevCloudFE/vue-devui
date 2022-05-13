@@ -304,6 +304,8 @@ export default defineComponent({
 });
 </script>
 ```
+:::
+
 ### 事件
 
 :::demo 当 Popover 弹出、隐藏时，可以触发自定义事件。
