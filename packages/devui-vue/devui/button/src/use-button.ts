@@ -2,6 +2,7 @@ import { computed, inject } from 'vue';
 import type { SetupContext } from 'vue';
 import { ButtonProps, UseButtonReturnType, buttonGroupInjectionKey } from './button-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { isString } from 'lodash';
 
 export default function useButton(props: ButtonProps, ctx: SetupContext): UseButtonReturnType {
   const ns = useNamespace('button');
@@ -26,7 +27,7 @@ export default function useButton(props: ButtonProps, ctx: SetupContext): UseBut
     [ns.e('icon-wrap')]: props.icon,
     [ns.e('icon')]: props.icon && !hasContent.value,
     [ns.m('is-loading')]: props.loading,
-    [ns.m(props.shape || '')]: props.shape ? true : false,
+    [ns.m(props.shape || '')]: props.shape && isString(props.shape) ? true : false,
   }));
 
   const iconClass = computed(() => {
