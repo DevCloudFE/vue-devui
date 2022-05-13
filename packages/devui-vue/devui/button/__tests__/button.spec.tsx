@@ -87,7 +87,7 @@ describe('d-button', () => {
     expect(wrapper.text()).toEqual(btnText);
   });
 
-  it('shape', () => {
+  it('测试圆角按钮(shape=round)', () => {
     const wrapper = mount({
       setup() {
         return () => {
@@ -98,7 +98,7 @@ describe('d-button', () => {
     expect(wrapper.find('.devui-button--round').exists()).toBeTruthy();
   });
 
-  it('shape', () => {
+  it('测试圆形图标按钮(shape=circle)', () => {
     const wrapper = mount({
       setup() {
         return () => {
