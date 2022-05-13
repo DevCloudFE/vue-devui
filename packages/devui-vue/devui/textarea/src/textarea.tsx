@@ -59,6 +59,7 @@ export default defineComponent({
       showCount,
       autofocus,
       curValueRef,
+      $attrs
     } = this;
     const ns = useNamespace('textarea');
 
@@ -67,6 +68,7 @@ export default defineComponent({
         <textarea
           {...{ DTextarea: true }}
           id={id}
+          {...$attrs}
           value={curValueRef}
           autofocus={autofocus}
           placeholder={placeholder}
