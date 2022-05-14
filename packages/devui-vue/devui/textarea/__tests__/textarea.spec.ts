@@ -3,18 +3,19 @@ import { ref, nextTick } from 'vue';
 import DTextarea from '../src/textarea';
 
 describe('textarea test', () => {
-  it('d-input render work', async () => {
+  it('d-textarea render work', async () => {
     const wrapper = mount({
       components: { DTextarea },
       template: `
-        <d-textarea value="value" :rows="5"/>
+        <d-textarea value="value"/>
       `
     });
+    expect(wrapper.classes()).toContain('devui-textarea__wrap');
     const textarea = wrapper.find('textarea');
     expect(textarea.attributes('dtextarea')).toBe('true');
   });
 
-  it('d-input rows work', async () => {
+  it('d-textarea rows work', async () => {
     const wrapper = mount(DTextarea, {
       props: {
         rows: 5
