@@ -133,6 +133,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/XiaoRIGE"><img src="https://avatars.githubusercontent.com/u/33147011?v=4?s=100" width="100px;" alt=""/><br /><sub><b>宋小日</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/issues?q=author%3AXiaoRIGE" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/daviForevel"><img src="https://avatars.githubusercontent.com/u/39021499?v=4?s=100" width="100px;" alt=""/><br /><sub><b>daviForevel</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=daviForevel" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/lj1990111"><img src="https://avatars.githubusercontent.com/u/8649913?v=4?s=100" width="100px;" alt=""/><br /><sub><b>lj1990111</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=lj1990111" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/newer2333"><img src="https://avatars.githubusercontent.com/u/32949033?v=4?s=100" width="100px;" alt=""/><br /><sub><b>newer2333</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=newer2333" title="Code">💻</a></td>
   </tr>
 </table>
 
