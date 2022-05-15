@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from 'vue';
+import type { PropType, ExtractPropTypes, Ref, ComputedRef } from 'vue';
 
 export type Resize = 'none' | 'vertical' | 'horizontal' | 'both' | 'inherit';
 
@@ -19,13 +19,9 @@ export const textareaProps = {
     type: String,
     default: undefined,
   },
-  value: {
+  modelValue: {
     type: String,
     default: '',
-  },
-  maxLength: {
-    type: [String, Number] as PropType<number | string>,
-    default: undefined,
   },
   disabled: {
     type: Boolean,
@@ -35,10 +31,6 @@ export const textareaProps = {
     type: Boolean,
     default: false,
   },
-  cssClass: {
-    type: String,
-    default: '',
-  },
   resize: {
     type: String as PropType<Resize>,
     default: 'none',
@@ -46,3 +38,16 @@ export const textareaProps = {
 } as const;
 
 export type TextareaProps = ExtractPropTypes<typeof textareaProps>;
+
+export interface UseTextareaEvent {
+  onFocus: (e: FocusEvent) => void;
+  onBlur: (e: FocusEvent) => void;
+  onInput: (e: Event) => void;
+  onChange: (e: Event) => void;
+  onKeydown: (e: KeyboardEvent) => void;
+}
+
+export interface UseTextareaRender {
+  isFocus: Ref<boolean>;
+  wrapClasses: ComputedRef<Record<string, boolean>>;
+}
