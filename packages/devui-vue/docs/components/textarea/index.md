@@ -14,7 +14,7 @@
 <template>
   <h4 style="margin: 10px 0">Default</h4>
 
-  <d-textarea value="我是默认值" autofocus id="textArea" css-class="my-text-area"></d-textarea>
+  <d-textarea v-model="value1" autofocus id="textArea" css-class="my-text-area"></d-textarea>
 
   <h4 style="margin: 10px 0">Disabled</h4>
 
@@ -22,8 +22,21 @@
 
   <h4 style="margin: 10px 0">Error</h4>
 
-  <d-textarea placeholder="我是出错状态" error></d-textarea>
+  <d-textarea v-model="value2" placeholder="我是出错状态" error></d-textarea>
 </template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    return {
+      value1: ref('我是默认值'),
+      value2: ref('')
+    };
+  },
+});
+</script>
 ```
 
 :::
@@ -64,10 +77,23 @@
 ```vue
 <template>
   <h4 style="margin: 10px 0">默认</h4>
-  <d-textarea show-count placeholder="请输入"></d-textarea>
+  <d-textarea v-model="value1" show-count placeholder="请输入"></d-textarea>
   <h4 style="margin: 10px 0">显示最大字数</h4>
-  <d-textarea show-count :max-length="20" placeholder="请输入"></d-textarea>
+  <d-textarea v-model="value2" show-count maxlength="20" placeholder="请输入"></d-textarea>
 </template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    return {
+      value1: ref(''),
+      value2: ref('')
+    };
+  },
+});
+</script>
 ```
 
 :::
@@ -79,10 +105,11 @@
 ```vue
 <template>
   <d-textarea
+    v-model="value1"
     show-count
     :max-length="20"
     placeholder="打开控制台输入文字看看"
-    @update:value="onUpdate"
+    @update:modelValue="onUpdate"
     @change="onChange"
     @focus="onFocus"
     @keydown="onKeydown"
@@ -90,10 +117,11 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 export default {
   setup() {
     const onUpdate = (value) => {
-      console.log('【d-textarea update value】： ', value);
+      console.log('【d-textarea update value】：', value);
     };
     const onChange = (value) => {
       console.log('【d-textarea change value】：', value);
@@ -104,11 +132,13 @@ export default {
     const onKeydown = (e) => {
       console.log('【d-textarea onKeydown:', e);
     };
+    const value1 = ref('')
     return {
       onUpdate,
       onChange,
       onFocus,
       onKeydown,
+      value1
     };
   },
 };
