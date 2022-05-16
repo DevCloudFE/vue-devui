@@ -93,11 +93,15 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
   );
 
   // 宽度
-  watch([width, minWidth], ([widthVal, minWidthVal]) => {
-    column.width = formatWidth(widthVal);
-    column.minWidth = formatMinWidth(minWidthVal);
-    column.realWidth = column.width || column.minWidth;
-  });
+  watch(
+    [width, minWidth],
+    ([widthVal, minWidthVal]) => {
+      column.width = formatWidth(widthVal);
+      column.minWidth = formatMinWidth(minWidthVal);
+      column.realWidth = column.width || column.minWidth;
+    },
+    { immediate: true }
+  );
 
   // 基础渲染功能
   onBeforeMount(() => {
