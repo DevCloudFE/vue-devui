@@ -155,15 +155,22 @@ describe('d-table', () => {
     wrapper.unmount();
   });
 
-  it('no data', async () => {
+  it('empty template', async () => {
     const wrapper = mount({
       setup() {
         return () => (
           <DTable data={[]}>
-            <DColumn field="firstName" header="First Name"></DColumn>
-            <DColumn field="lastName" header="Last Name"></DColumn>
-            <DColumn field="gender" header="Gender"></DColumn>
-            <DColumn field="date" header="Date of birth"></DColumn>
+            {{
+              default: () => (
+                <>
+                  <DColumn field="firstName" header="First Name"></DColumn>
+                  <DColumn field="lastName" header="Last Name"></DColumn>
+                  <DColumn field="gender" header="Gender"></DColumn>
+                  <DColumn field="date" header="Date of birth"></DColumn>
+                </>
+              ),
+              empty: () => <span id="empty-slot">No Data</span>,
+            }}
           </DTable>
         );
       },
@@ -173,6 +180,9 @@ describe('d-table', () => {
     const table = wrapper.find('.devui-table');
     const tableEmpty = table.find('.devui-table__empty');
     expect(tableEmpty.exists()).toBeTruthy();
+    const emptySlot = tableEmpty.find('#empty-slot');
+    expect(emptySlot.exists()).toBeTruthy();
+    expect(emptySlot.text()).toBe('No Data');
     wrapper.unmount();
   });
 
@@ -314,7 +324,7 @@ describe('d-table', () => {
     const table = wrapper.find('.devui-table');
     const tableHeader = table.find('.devui-table__thead');
     const filterTh = tableHeader.find('tr').findAll('th')[2];
-    expect(filterTh.find('.devui-dropdown-toggle').exists()).toBeTruthy();
+    expect(filterTh.find('.devui-dropdown__toggle').exists()).toBeTruthy();
 
     const filterIcon = filterTh.find('.filter-icon');
     await filterIcon.trigger('click');
