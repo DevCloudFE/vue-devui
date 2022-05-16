@@ -8,7 +8,6 @@ import {
   ref,
   getCurrentInstance,
   onBeforeMount,
-  h,
   SetupContext,
 } from 'vue';
 import { tableColumnProps, TableColumnProps, TableColumn } from './column-types';
@@ -56,26 +55,21 @@ export default defineComponent({
 
     instance.columnId = columnId;
     instance.columnConfig = column;
-  },
-  render() {
-    try {
-      const renderDefault = this.$slots.default?.({
+
+    return () => {
+      const defaultSlot = ctx.slots.default?.({
         row: {},
         column: {},
         $index: -1,
       });
-      const children = [];
-      if (Array.isArray(renderDefault)) {
-        for (const childNode of renderDefault) {
-          if (childNode.type.name === 'DColumn') {
-            children.push(childNode);
-          }
+
+      return <div>
+        {
+          Array.isArray(defaultSlot)
+            ? defaultSlot.filter(child => child.type.name === 'DColumn').map(child => <>{child}</>)
+            : <div></div>
         }
-      }
-      const vnode = h('div', children);
-      return vnode;
-    } catch {
-      return h('div', []);
-    }
-  },
+      </div>;
+    };
+  }
 });
