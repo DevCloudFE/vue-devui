@@ -1,6 +1,7 @@
 import { defineComponent, inject, computed } from 'vue';
 import { TABLE_TOKEN, DefaultRow } from '../../table-types';
 import { Column } from '../column/column-types';
+import { CellClickArg } from './body-types';
 import TD from '../body-td/body-td';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { useMergeCell } from './use-body';
@@ -14,6 +15,9 @@ export default defineComponent({
     const ns = useNamespace('table');
     const hoverEnabled = computed(() => table.props.rowHoveredHighlight);
     const { tableSpans, removeCells } = useMergeCell();
+    const onCellClick = (cellClickArg: CellClickArg) => {
+      table.emit('cell-click', cellClickArg);
+    };
 
     return () => (
       <tbody class={ns.e('tbody')}>
@@ -27,7 +31,16 @@ export default defineComponent({
                 if (removeCells.value.includes(cellId)) {
                   return null;
                 }
-                return <TD column={column} index={rowIndex} row={row} rowspan={rowspan} colspan={colspan} />;
+                return (
+                  <TD
+                    column={column}
+                    index={rowIndex}
+                    row={row}
+                    rowspan={rowspan}
+                    colspan={colspan}
+                    onClick={() => onCellClick({ rowIndex, columnIndex, column, row })}
+                  />
+                );
               })}
             </tr>
           );

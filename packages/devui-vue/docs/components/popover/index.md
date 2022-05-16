@@ -304,6 +304,43 @@ export default defineComponent({
 });
 </script>
 ```
+:::
+
+### 事件
+
+:::demo 当 Popover 弹出、隐藏时，可以触发自定义事件。
+
+```vue
+<template>
+  <div class="popover-demo-item">
+    <d-popover content="content" @show="showFun()" @hide="hideFun()">
+      <template #reference>
+        <d-button>content</d-button>
+      </template>
+    </d-popover>
+  </div>
+</template>
+<style>
+.popover-demo-item > * {
+  display: inline-block;
+  margin-right: 8px;
+}
+</style>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
+function showFun(){
+  this.$notificationService.open({
+    content: '显示后触发',
+  });
+}
+function hideFun() {
+  this.$notificationService.open({
+    content: '隐藏后触发',
+  });
+}
+</script>
+```
 
 :::
 
@@ -328,6 +365,13 @@ export default defineComponent({
 | :-------- | :-------------------------- |
 | content   | 自定义菜单内容              |
 | reference | 触发 Popover 显示的元素内容 |
+
+### Popover 事件
+
+| 名称名    | 类型     |  说明                        |
+| :-------- | :-------- | :------------------------- |
+| show   | -        | Popover显示后触发事件           |
+| hide   | -        | Popover隐藏后触发事件           |
 
 ### Popover 类型定义
 
