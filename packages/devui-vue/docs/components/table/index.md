@@ -471,6 +471,9 @@ export default defineComponent({
       <d-column field="lastName" header="Last Name"></d-column>
       <d-column field="gender" header="Gender"></d-column>
       <d-column field="date" header="Date of birth"></d-column>
+      <template #empty>
+        <div style="text-align: center;">No Data</div>
+      </template>
     </d-table>
   </div>
 </template>
@@ -963,22 +966,23 @@ export default defineComponent({
 
 ### Table 参数
 
-| 参数名                | 类型                      | 默认值  | 说明                                                                       | 跳转 Demo                 |
-| :-------------------- | :------------------------ | :------ | :------------------------------------------------------------------------- | :------------------------ |
-| data                  | `array`                   | []      | 可选，显示的数据                                                           | [基本用法](#基本用法)     |
-| striped               | `boolean`                 | false   | 可选，是否显示斑马纹间隔                                                   | [表格样式](#表格样式)     |
-| size                  | [TableSize](#tablesize)   | 'sm'    | 可选，表格大小，分别对应行高 40px,48px,56px                                | [表格样式](#表格样式)     |
-| max-width             | `string`                  | --      | 可选，表格最大宽度                                                         |
-| max-height            | `boolean`                 | --      | 可选，表格最大高度                                                         |
-| table-width           | `string`                  | --      | 可选，表格宽度                                                             |
-| table-height          | `string`                  | --      | 可选，表格高度                                                             |
-| row-hovered-highlight | `boolean`                 | true    | 可选，鼠标在该行上时，高亮该行                                             | [表格样式](#表格样式)     |
-| fix-header            | `boolean`                 | false   | 可选，固定头部                                                             | [固定表头](#固定表头)     |
-| show-loading          | `boolean`                 | false   | 可选，显示加载动画                                                         | [空数据模板](#空数据模板) |
-| header-bg             | `boolean`                 | false   | 可选，头部背景                                                             | [表格样式](#表格样式)     |
-| table-layout          | `'fixed' \| 'auto'`       | 'fixed' | 可选，表格布局，可选值为'auto'                                             | [表格样式](#表格样式)     |
-| span-method           | [SpanMethod](#spanmethod) | --      | 可选，合并单元格的计算方法                                                 | [合并单元格](#合并单元格) |
-| border-type           | [BorderType](#bordertype) | ''      | 可选，表格边框类型，默认有行边框；`bordered`: 全边框；`borderless`: 无边框 | [表格样式](#表格样式)     |
+| 参数名                | 类型                      | 默认值    | 说明                                                                       | 跳转 Demo                 |
+| :-------------------- | :------------------------ | :-------- | :------------------------------------------------------------------------- | :------------------------ |
+| data                  | `array`                   | []        | 可选，显示的数据                                                           | [基本用法](#基本用法)     |
+| striped               | `boolean`                 | false     | 可选，是否显示斑马纹间隔                                                   | [表格样式](#表格样式)     |
+| size                  | [TableSize](#tablesize)   | 'sm'      | 可选，表格大小，分别对应行高 40px,48px,56px                                | [表格样式](#表格样式)     |
+| max-width             | `string`                  | --        | 可选，表格最大宽度                                                         |
+| max-height            | `boolean`                 | --        | 可选，表格最大高度                                                         |
+| table-width           | `string`                  | --        | 可选，表格宽度                                                             |
+| table-height          | `string`                  | --        | 可选，表格高度                                                             |
+| row-hovered-highlight | `boolean`                 | true      | 可选，鼠标在该行上时，高亮该行                                             | [表格样式](#表格样式)     |
+| fix-header            | `boolean`                 | false     | 可选，固定头部                                                             | [固定表头](#固定表头)     |
+| show-loading          | `boolean`                 | false     | 可选，显示加载动画                                                         | [空数据模板](#空数据模板) |
+| header-bg             | `boolean`                 | false     | 可选，头部背景                                                             | [表格样式](#表格样式)     |
+| table-layout          | `'fixed' \| 'auto'`       | 'fixed'   | 可选，表格布局，可选值为'auto'                                             | [表格样式](#表格样式)     |
+| span-method           | [SpanMethod](#spanmethod) | --        | 可选，合并单元格的计算方法                                                 | [合并单元格](#合并单元格) |
+| border-type           | [BorderType](#bordertype) | ''        | 可选，表格边框类型，默认有行边框；`bordered`: 全边框；`borderless`: 无边框 | [表格样式](#表格样式)     |
+| empty                 | `string`                  | 'No Data' | 可选，配置未传递表格数据时需要显示的空数据文本                             | [空数据模板](#空数据模板) |
 
 ### Table 事件
 
@@ -991,6 +995,12 @@ export default defineComponent({
 | 方法名         | 类型       | 说明                 |
 | :------------- | :--------- | :------------------- |
 | getCheckedRows | `() => []` | 获取当前选中的行数据 |
+
+### Table 插槽
+
+| 插槽名 | 说明                                     | 参数 |
+| :----- | :--------------------------------------- | :--- |
+| empty  | 配置未传递表格数据时需要显示的空数据模板 |      |
 
 ### Column 参数
 
