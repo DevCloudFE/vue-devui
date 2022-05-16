@@ -8,7 +8,7 @@
 
 ### 基本用法
 
-:::demo 默认在触发元素的上方展示提示信息，可通过`position`更改展示位置；`content`可设置提示信息；`show-animation`控制是否开启动画。
+:::demo 默认在触发元素的上方展示提示信息，可通过`position`更改展示位置；`content`可设置提示信息；`show-animation`控制是否开启动画;`disabled`提示组件是否可用。
 
 ```vue
 <template>
@@ -27,6 +27,9 @@
     </d-tooltip>
     <d-tooltip content="No Animation" :show-animation="false">
       <d-button>No Animation</d-button>
+    </d-tooltip>
+    <d-tooltip content="disabled" disabled>
+      <d-button>disabled</d-button>
     </d-tooltip>
   </div>
 </template>
@@ -80,6 +83,7 @@ export default defineComponent({
 | show-animation    | `boolean`                                          | true   | 可选，是否显示动画                                | [基本用法](#基本用法) |
 | mouse-enter-delay | `number`                                           | 150    | 可选，鼠标移入后延时多久才显示 Tooltip，单位是 ms | [延时触发](#延时触发) |
 | mouse-leave-delay | `number`                                           | 100    | 可选，鼠标移出后延时多久才隐藏 Tooltip，单位是 ms | [延时触发](#延时触发) |
+| disabled          | `boolean`                                          | false  | 可选，Tooltip 是否可用                          | [基本用法](#基本用法)|
 
 ### Tooltip 插槽
 
