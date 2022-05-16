@@ -216,7 +216,7 @@ export default defineComponent({
   <div>
     <d-button @click="handleClick">Get CheckedRows</d-button>
     <d-table ref="tableRef" :data="data">
-      <d-column type="checkable"></d-column>
+      <d-column type="checkable" width="30"></d-column>
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
       <d-column field="gender" header="Gender"></d-column>
@@ -277,7 +277,7 @@ export default defineComponent({
 <template>
   <div>
     <d-table :data="data">
-      <d-column type="index"></d-column>
+      <d-column type="index" width="30"></d-column>
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
       <d-column field="gender" header="Gender"></d-column>
@@ -333,7 +333,7 @@ export default defineComponent({
 ```vue
 <template>
   <d-table :data="dataSource">
-    <d-column type="index">
+    <d-column type="index" width="40">
       <template #default="scope">
         {{ `No.${scope.rowIndex + 1}` }}
       </template>

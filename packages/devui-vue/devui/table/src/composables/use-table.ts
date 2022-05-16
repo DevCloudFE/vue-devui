@@ -34,6 +34,8 @@ export const useFixedColumn = (
   const stickyClass = computed(() => ({
     [ns.e('checkable-cell')]: column.value.type === 'checkable',
     [ns.m('sticky-cell')]: Boolean(column.value.fixedLeft) || Boolean(column.value.fixedRight),
+    left: Boolean(column.value.fixedLeft),
+    right: Boolean(column.value.fixedRight),
     [`is-${column.value.align}`]: true,
   }));
 
