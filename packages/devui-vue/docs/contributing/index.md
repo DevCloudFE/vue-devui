@@ -4,7 +4,8 @@
 
 ### 快速上手
 
-Vue DevUI 使用 `pnpm` 构建 `monorepo` 仓库，你应该使用 [pnpm](https://www.pnpm.cn/) 包管理器，以确保不会因为包管理器的不同而引发异常。
+Vue DevUI 使用 `pnpm` 构建 `monorepo` 仓库，你应该使用 [pnpm 6.x](https://www.pnpm.cn/) 包管理器，以确保不会因为包管理器的不同而引发异常。
+> pnpm 7.x 发生了[break change](https://github.com/pnpm/pnpm/releases/tag/v7.0.0)，如要使用pnpm 7.x 请自行更新`package.json`的script
 
 如果你想参与 `devui-vue` 的开发或者测试：
 
