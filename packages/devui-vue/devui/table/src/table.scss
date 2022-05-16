@@ -30,9 +30,8 @@
   }
 
   &__empty {
-    width: 100%;
-    font-size: $devui-font-size;
-    text-align: center;
+    padding: 40px 0;
+    background-color: $devui-base-bg;
   }
 
   &__fix-header {

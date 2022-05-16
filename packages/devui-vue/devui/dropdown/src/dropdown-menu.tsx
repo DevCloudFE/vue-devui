@@ -2,6 +2,7 @@ import { defineComponent, ref, toRefs, Transition, Teleport, computed } from 'vu
 import { onClickOutside } from '@vueuse/core';
 import { FlexibleOverlay } from '../../overlay';
 import { dropdownMenuProps, DropdownMenuProps } from './dropdown-menu-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DDropdownMenu',
@@ -11,6 +12,7 @@ export default defineComponent({
   setup(props: DropdownMenuProps, { slots, attrs, emit }) {
     const { modelValue, origin, position, align, offset, clickOutside, showAnimation, overlayClass } = toRefs(props);
     const dropdownMenuRef = ref(null);
+    const ns = useNamespace('dropdown');
 
     onClickOutside(dropdownMenuRef, (value) => {
       if (clickOutside.value?.() && !origin?.value?.contains(value.target)) {
@@ -27,7 +29,7 @@ export default defineComponent({
     }));
 
     return () => (
-      <Teleport to='body'>
+      <Teleport to="body">
         <Transition name={showAnimation.value ? `devui-dropdown-fade-${currentPosition.value}` : ''}>
           <FlexibleOverlay
             v-model={modelValue.value}
@@ -38,7 +40,7 @@ export default defineComponent({
             onPositionChange={handlePositionChange}
             class={overlayClass.value}
             style={styles.value}>
-            <div ref={dropdownMenuRef} class='devui-dropdown-menu-wrap' {...attrs}>
+            <div ref={dropdownMenuRef} class={ns.e('menu-wrap')} {...attrs}>
               {slots.default?.()}
             </div>
           </FlexibleOverlay>

@@ -18,11 +18,12 @@ describe('breadcrumb', () => {
             </d-breadcrumb-item>
           </d-breadcrumb>`
     });
-    const items = wrapper.findAll('.devui-breadcrumb-item');
-    const separators = wrapper.findAll('.devui-breadcrumb-separator');
+    const items = wrapper.findAll('.devui-breadcrumb__item');
+    const separators = wrapper.findAll('.devui-breadcrumb__separator');
     expect(items.length).toBe(2);
     expect(separators.length).toBe(2);
   });
+
   it('should separator support custom', () => {
     const wrapper = mount({
       components: {
@@ -35,7 +36,7 @@ describe('breadcrumb', () => {
       </d-breadcrumb>
     `
     });
-    expect(wrapper.find('.devui-breadcrumb-separator').text()).toBe('?');
+    expect(wrapper.find('.devui-breadcrumb__separator').text()).toBe('?');
   });
 
   it('should `to` work correctly', () => {

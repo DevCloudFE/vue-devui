@@ -9,7 +9,9 @@ import {
   watchEffect,
   watch,
 } from 'vue';
-import { addLayer, pushElement, changeKey,getLayer } from '../composables/layer-composables';
+import { addLayer, pushElement, clearSelect,getLayer } from '../helper/layer-composables';
+import { useClick } from '../hook/use-click';
+import { useShowSubMenu } from '../hook/use-show-submenu';
 import { SubMenuProps, subMenuProps } from '../types/sub-menu-types';
 export default defineComponent({
   name: 'DSubMenu',
@@ -36,10 +38,10 @@ export default defineComponent({
     const clickHandle = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
+      const ele = e.currentTarget as HTMLElement;
       if (mode.value === 'horizontal'){
-        const ele = e.currentTarget as HTMLElement;
-        changeKey(ele, e);
-        ele.classList.add('devui-menu-item-select');
+        clearSelect(ele, e, true);
+        useClick(e);
       }
       if (!props.disable && mode.value !== 'horizontal'){
         const target = e.target as HTMLElement;
@@ -68,12 +70,15 @@ export default defineComponent({
         parentEmit('submenu-change', {type: 'submenu-change', state: isOpen.value, el: cur});
       }
     };
+    const wrapper = ref(null);
+    let wrapperDom: HTMLElement;
     const subMenu = ref(null);
     let title = ref(null);
     let oldPadding = '';
     const class_layer = ref('');
     watchEffect(()=>{
       title = title.value as any;
+      wrapperDom = wrapper.value as unknown as HTMLElement;
       pushElement({el: subMenu.value} as any);
     },{'flush':'post'});
     watch(defaultOpenKeys, (n,v)=>{
@@ -91,18 +96,10 @@ export default defineComponent({
       watch(isCollapsed, (newValue)=>{
         const layer = Number(getLayer(e));
         if (!Number.isNaN(layer)){
-          if (layer > 2){
-            if (isCollapsed.value){
-              isShow.value = false;
-            } else {
-              isShow.value = true;
-            }
-          }
+          layer > 2 && (isShow.value = !isCollapsed.value);
         }
         if (newValue){
-          if (el.style.padding !== '0'){
-            oldPadding = el.style.padding;
-          }
+          el.style.padding !== '0' && (oldPadding = el.style.padding);
           setTimeout(() => {
             el.style.padding = '0';
             el.style.width = '';
@@ -114,6 +111,14 @@ export default defineComponent({
           el.style.textAlign = ``;
           el.style.display=`flex`;
         }
+      });
+      (subMenu.value as unknown as Element as HTMLElement).addEventListener('mouseenter', (ev: MouseEvent)=>{
+        ev.stopPropagation();
+        useShowSubMenu('mouseenter',ev,wrapperDom);
+      });
+      (subMenu.value as unknown as Element as HTMLElement).addEventListener('mouseleave', (ev: MouseEvent)=>{
+        ev.stopPropagation();
+        useShowSubMenu('mouseleave',ev,wrapperDom);
       });
     });
     return () => {
@@ -157,7 +162,7 @@ export default defineComponent({
               </div>
           }
           {mode.value === 'horizontal' ?
-            <div class="devui-menu-item-horizontal-wrapper">
+            <div class="devui-menu-item-horizontal-wrapper devui-menu-item-horizontal-wrapper-hidden" ref={wrapper}>
               {ctx.slots.default?.()}
             </div>:
             ctx.slots.default?.()

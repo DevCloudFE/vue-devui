@@ -1,5 +1,6 @@
 import { defineComponent } from 'vue';
 import { itemProps, ItemProps } from './skeleton-item-types';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 import './skeleton-item.scss';
 
 export default defineComponent({
@@ -7,9 +8,10 @@ export default defineComponent({
   props: itemProps,
   setup(props: ItemProps, ctx) {
     const { slots } = ctx;
+    const ns = useNamespace('skeleton');
 
     function renderAnimate(isAnimated) {
-      return isAnimated ? 'devui-skeleton__animated' : '';
+      return isAnimated ? ns.e('animated') : '';
     }
 
     function renderShapeParagraph(rowNum, rowWidth, round) {
@@ -48,11 +50,9 @@ export default defineComponent({
       })();
 
       return (
-        <div class={`devui-skeleton__shape__paragraph ${renderAnimate(props.animate)}`} {...ctx.attrs}>
+        <div class={[ns.em('shape', 'paragraph'), renderAnimate(props.animate)]} {...ctx.attrs}>
           {arr.map((item) => {
-            return (
-              <div class="devui-skeleton__shape__paragraph__item" style={round ? 'border-radius: 1em;' : '' + `width: ${item.width}`} />
-            );
+            return <div class={ns.em('shape', 'paragraph-item')} style={round ? 'border-radius: 1em;' : '' + `width: ${item.width}`} />;
           })}
         </div>
       );
@@ -73,7 +73,7 @@ export default defineComponent({
             return (
               <>
                 <div
-                  class={`devui-skeleton__shape__avatar ${renderAnimate(props.animate)}`}
+                  class={[ns.em('shape', 'avatar'), renderAnimate(props.animate)]}
                   style={renderAvatarStyle(props.avatarShape)}
                   {...ctx.attrs}
                 />
@@ -84,7 +84,7 @@ export default defineComponent({
           default:
             return (
               <>
-                <div class={`devui-skeleton__shape__${props.shape} ${renderAnimate(props.animate)}`} {...ctx.attrs} />
+                <div class={[ns.em('shape', props.shape), renderAnimate(props.animate)]} {...ctx.attrs} />
               </>
             );
         }

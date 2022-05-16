@@ -1,91 +1,45 @@
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, SetupContext, toRefs, watch } from 'vue';
 import { textareaProps, TextareaProps } from './textarea-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useTextareaRender } from './composables/use-textarea-render';
+import { useTextareaEvent } from './composables/use-textarea-event';
 import './textarea.scss';
 
 export default defineComponent({
   name: 'DTextarea',
+  inheritAttrs: false,
   props: textareaProps,
-  emits: ['update:value', 'focus', 'blur', 'change', 'keydown'],
-  setup(props: TextareaProps, ctx) {
-    const textareaCls = {
-      error: props.error,
-      [props.cssClass]: true,
-    };
-
-    const curValueRef = ref<string>(props.value);
-    const onInput = ($event: Event) => {
-        const inputValue = ($event.target as HTMLInputElement).value;
-        curValueRef.value = inputValue;
-        ctx.emit('update:value', inputValue);
-      },
-      onFocus = ($event: Event) => {
-        ctx.emit('focus', $event);
-      },
-      onBlur = ($event: Event) => {
-        ctx.emit('blur', $event);
-      },
-      onChange = ($event: Event) => {
-        ctx.emit('change', ($event.target as HTMLInputElement).value);
-      },
-      onKeydown = ($event: KeyboardEvent) => {
-        ctx.emit('keydown', $event);
-      };
-
-    return {
-      textareaCls,
-      onInput,
-      onFocus,
-      onBlur,
-      onChange,
-      onKeydown,
-      curValueRef,
-      autofocus: props.autofocus,
-    };
-  },
-  render() {
-    const {
-      id,
-      placeholder,
-      disabled,
-      maxLength,
-      resize,
-      textareaCls,
-      onInput,
-      onFocus,
-      onBlur,
-      onChange,
-      onKeydown,
-      showCount,
-      autofocus,
-      curValueRef,
-    } = this;
+  emits: ['update:modelValue', 'focus', 'blur', 'change', 'keydown'],
+  setup(props: TextareaProps, ctx: SetupContext) {
+    const { modelValue, disabled } = toRefs(props);
     const ns = useNamespace('textarea');
+    const { isFocus, wrapClasses } = useTextareaRender(props);
+    const { onFocus, onBlur, onInput, onChange, onKeydown } = useTextareaEvent(isFocus, ctx);
 
-    return (
-      <div class={ns.e('wrap')}>
+    return () => (
+      <div>
         <textarea
-          {...{ DTextarea: true }}
-          id={id}
-          value={curValueRef}
-          autofocus={autofocus}
-          placeholder={placeholder}
-          disabled={disabled}
-          maxlength={maxLength}
-          style={{ resize: resize }}
-          class={textareaCls}
+          id={props.id}
+          {...ctx.attrs}
+          value={modelValue.value}
+          autofocus={props.autofocus}
+          placeholder={props.placeholder}
+          disabled={disabled.value}
+          style={{ resize: props.resize }}
+          class={wrapClasses.value}
           onInput={onInput}
           onFocus={onFocus}
           onBlur={onBlur}
           onChange={onChange}
-          onKeydown={onKeydown}></textarea>
-        {showCount && (
+          onKeydown={onKeydown}>
+        </textarea>
+        {props.showCount && (
           <div class={ns.e('show-count')}>
-            {curValueRef.length}
-            {!(maxLength ?? false) ? '' : ' / ' + maxLength}
+            {modelValue.value.length}
+            {!(ctx.attrs.maxlength ?? false) ? '' : ' / ' + ctx.attrs.maxlength}
           </div>
         )}
       </div>
     );
-  },
+  }
 });

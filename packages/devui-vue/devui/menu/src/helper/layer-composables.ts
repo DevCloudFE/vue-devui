@@ -73,7 +73,41 @@ export function addLayer(): void{
     }
   }
 }
-export function changeKey(ele: HTMLElement,event: clickEvent): void{
+function getRoot(path: HTMLElement[]): HTMLElement{
+  const paths = path;
+  let rootElement: HTMLElement | null = null;
+  for (let i=0;i<paths.length;i++){
+    const p = paths[i];
+    if (p?.classList?.contains('devui-menu-horizontal')){
+      rootElement = p;
+    }
+  }
+  return rootElement as HTMLElement;
+}
+function clearSelect_isHorizontal(ele: HTMLElement, event: clickEvent){
+  let element = event.target as HTMLElement;
+  let stack: Element[] = [];
+  const {path} = event;
+  const root = getRoot(path as HTMLElement[]);
+  stack = [...Array.from(root.children)] as HTMLElement[];
+  if (element.tagName === 'SPAN'){
+    element = element.parentElement as HTMLElement;
+  }
+  while (stack.length){
+    const shiftItem = stack.shift();
+    if (shiftItem?.tagName === 'UL' ||
+      shiftItem?.classList.contains('devui-menu-item-horizontal-wrapper')){
+      const children = shiftItem?.children;
+      stack.unshift(...Array.from(children as unknown as Element[]));
+    }
+    if (shiftItem !== element){
+      shiftItem?.classList.remove('devui-menu-item-select');
+      shiftItem?.classList.remove('devui-menu-active-parent');
+    }
+  }
+}
+
+function clearSelect_notHorizontal(ele: HTMLElement, event: clickEvent){
   const stack: Element[] = [];
   const path = event.path || (event.composedPath && event.composedPath());
   for (let i=0;i<path.length;i++){
@@ -98,6 +132,14 @@ export function changeKey(ele: HTMLElement,event: clickEvent): void{
       shiftItem?.classList.remove('devui-menu-item-select');
       shiftItem?.classList.remove('devui-menu-active-parent');
     }
+  }
+}
+
+export function clearSelect(ele: HTMLElement,event: clickEvent, isHorizontal=false): void{
+  if (isHorizontal){
+    clearSelect_isHorizontal(ele, event);
+  } else {
+    clearSelect_notHorizontal(ele, event);
   }
 }
 export function getLayer(el: HTMLElement): string | undefined{

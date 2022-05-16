@@ -2,25 +2,19 @@
 
 @keyframes devui-busy-spinner-anim {
   0% {
-    transform:
-      rotate(0deg)
-      scale(1);
+    transform: rotate(0deg) scale(1);
   }
 
   50% {
-    transform:
-      rotate(180deg)
-      scale(1.5);
+    transform: rotate(180deg) scale(1.5);
   }
 
   to {
-    transform:
-      rotate(360deg)
-      scale(1);
+    transform: rotate(360deg) scale(1);
   }
 }
 
-.#{$devui-prefix}-loading-mask {
+.#{$devui-prefix}-loading__mask {
   position: absolute;
   left: 0;
   right: 0;
@@ -30,7 +24,7 @@
   opacity: 0.3;
 }
 
-.#{$devui-prefix}-loading-wrapper {
+.#{$devui-prefix}-loading__wrapper {
   text-align: center;
 }
 
@@ -47,12 +41,12 @@
   overflow: hidden;
 }
 
-.#{$devui-prefix}-loading-text {
+.#{$devui-prefix}-loading__text {
   margin-left: 10px;
 }
 
 // 默认加载样式
-.#{$devui-prefix}-loading-area {
+.#{$devui-prefix}-loading__area {
   position: absolute;
   transform: translate(-50%, -50%);
   padding: 12px 14px;
@@ -60,7 +54,7 @@
   border-radius: var(--devui-border-radius-card, 6px);
 }
 
-.#{$devui-prefix}-busy-default-spinner {
+.#{$devui-prefix}-loading__busy-default-spinner {
   position: relative;
   display: inline-block;
   width: 15px;
@@ -76,28 +70,28 @@
     border-radius: 50%;
   }
 
-  .#{$devui-prefix}-loading-bar1 {
+  .#{$devui-prefix}-loading__bar1 {
     top: 0;
     left: 0;
     background: #5e7ce0;
     background: var(--devui-brand, #5e7ce0);
   }
 
-  .#{$devui-prefix}-loading-bar2 {
+  .#{$devui-prefix}-loading__bar2 {
     top: 0;
     left: 9px;
     background: #859bff;
     background: var(--devui-brand-foil, #859bff);
   }
 
-  .#{$devui-prefix}-loading-bar3 {
+  .#{$devui-prefix}-loading__bar3 {
     top: 9px;
     left: 0;
     background: #859bff;
     background: var(--devui-brand-foil, #859bff);
   }
 
-  .#{$devui-prefix}-loading-bar4 {
+  .#{$devui-prefix}-loading__bar4 {
     top: 9px;
     left: 9px;
     background: #5e7ce0;

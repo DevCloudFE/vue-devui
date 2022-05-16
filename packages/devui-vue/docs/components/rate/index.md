@@ -12,18 +12,20 @@
 
 ```vue
 <template>
-  <d-rate :read="true" v-model="value1" />
+  <d-rate :read="true" v-model="valueReadonly" />
 </template>
 <script>
-import { ref } from 'vue';
-export default {
+import { ref, defineComponent } from 'vue';
+
+export default defineComponent({
   setup() {
-    const value1 = ref(3.5);
+    const valueReadonly = ref(3.5);
+
     return {
-      value1,
+      valueReadonly,
     };
   },
-};
+});
 </script>
 ```
 
@@ -35,18 +37,20 @@ export default {
 
 ```vue
 <template>
-  <d-rate v-model="value" icon="star-o" />
+  <d-rate v-model="valueDynamic" icon="star-o" />
 </template>
 <script>
-import { ref } from 'vue';
-export default {
+import { ref, defineComponent } from 'vue';
+
+export default defineComponent({
   setup() {
-    const value = ref(2);
+    const valueDynamic = ref(2);
+
     return {
-      value,
+      valueDynamic,
     };
   },
-};
+});
 </script>
 ```
 
@@ -58,18 +62,20 @@ export default {
 
 ```vue
 <template>
-  <d-rate character="A" color="#ffa500" v-model="value" :count="6" />
+  <d-rate character="A" color="#ffa500" v-model="valueCustom" :count="6" />
 </template>
 <script>
-import { ref } from 'vue';
-export default {
+import { ref, defineComponent } from 'vue';
+
+export default defineComponent({
   setup() {
-    const value = ref(3);
+    const valueCustom = ref(3);
+
     return {
-      value,
+      valueCustom,
     };
   },
-};
+});
 </script>
 ```
 
@@ -81,23 +87,26 @@ export default {
 
 ```vue
 <template>
-  <d-rate v-model="value" :allow-half="true" @change="change" />
-  {{ value }}
+  <d-rate v-model="valueHalf" :allow-half="true" @change="change" />
+  {{ valueHalf }}
 </template>
 <script>
-import { ref } from 'vue';
-export default {
+import { ref, defineComponent } from 'vue';
+
+export default defineComponent({
   setup() {
-    const value = ref(2.5);
+    const valueHalf = ref(2.5);
+
     const change = (val) => {
       console.log(val);
     };
+
     return {
-      value,
+      valueHalf,
       change,
     };
   },
-};
+});
 </script>
 ```
 
@@ -120,19 +129,21 @@ export default {
   </div>
 </template>
 <script>
-import { ref } from 'vue';
-export default {
+import { ref, defineComponent } from 'vue';
+
+export default defineComponent({
   setup() {
     const value1 = ref(3.5);
     const value2 = ref(2);
     const value3 = ref(3);
+
     return {
       value1,
       value2,
       value3,
     };
   },
-};
+});
 </script>
 ```
 
@@ -141,7 +152,7 @@ export default {
 ### Rate 参数
 
 |   参数名   |               类型                | 默认值 | 描述                                                     | 跳转 Demo                           |
-| :--------: | :-------------------------------: | :----: | :------------------------------------------------------- | ----------------------------------- |
+| :-------- | :------------------------------- | :---- | :------------------------------------------------------- | ----------------------------------- |
 |    read    |             `boolean`             | false  | 可选，设置是否为只读模式，只读模式无法交互               | [只读模式](#只读模式)               |
 |   count    |             `number`              |   5    | 可选，设置总等级数                                       | [只读模式](#只读模式)               |
 |    type    | [RateStatusType](#ratestatustype) |   --   | 可选，设置当前评分的类型，不同类型对应不同颜色           | [使用 type 参数](#使用-type-参数)   |
@@ -153,7 +164,7 @@ export default {
 ### Rate 事件
 
 | 事件名 | 类型                   | 说明           | 回调参数     | 跳转 Demo             |
-| ------ | ---------------------- | -------------- | ------------ | --------------------- |
+| :------ | :---------------------- | :-------------- | :------------ | :--------------------- |
 | change | `EventEmitter<number>` | 分值改变时触发 | 改变后的分值 | [半选模式](#半选模式) |
 
 ### Rate 类型定义

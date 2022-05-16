@@ -1,7 +1,8 @@
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 import type { SetupContext } from 'vue';
-import { ButtonProps, UseButtonReturnType } from './button-types';
+import { ButtonProps, UseButtonReturnType, buttonGroupInjectionKey } from './button-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { isString } from 'lodash';
 
 export default function useButton(props: ButtonProps, ctx: SetupContext): UseButtonReturnType {
   const ns = useNamespace('button');
@@ -13,14 +14,20 @@ export default function useButton(props: ButtonProps, ctx: SetupContext): UseBut
   };
   const defaultColor = colorMap[props.variant];
 
+  const buttonGroupConf = inject(buttonGroupInjectionKey, null);
+  const buttonSize = computed(() => {
+    return buttonGroupConf?.size.value || props.size;
+  });
+
   const classes = computed(() => ({
     [ns.b()]: true,
     [ns.m(props.variant)]: true,
     [`${ns.m(props.variant)}--${props.color || defaultColor}`]: true,
-    [ns.m(props.size)]: true,
+    [ns.m(buttonSize.value)]: true,
     [ns.e('icon-wrap')]: props.icon,
-    [ns.e('icon')]: props.icon && !hasContent.value && props.variant !== 'solid',
+    [ns.e('icon')]: props.icon && !hasContent.value,
     [ns.m('is-loading')]: props.loading,
+    [ns.m(props.shape || '')]: props.shape && isString(props.shape) ? true : false,
   }));
 
   const iconClass = computed(() => {

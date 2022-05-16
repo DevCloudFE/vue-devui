@@ -1,8 +1,11 @@
 import { defineComponent } from 'vue';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DModalFooter',
   setup(props, { slots }) {
-    return () => <div class='devui-modal-footer'>{slots.default?.()}</div>;
+    const ns = useNamespace('modal');
+
+    return () => <div class={ns.e('footer')}>{slots.default?.()}</div>;
   },
 });

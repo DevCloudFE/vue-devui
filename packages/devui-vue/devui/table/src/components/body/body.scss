@@ -20,6 +20,18 @@
         line-height: 24px;
         border: none;
         border-bottom: 1px solid $devui-dividing-line;
+
+        &.is-left {
+          text-align: left;
+        }
+
+        &.is-center {
+          text-align: center;
+        }
+
+        &.is-right {
+          text-align: right;
+        }
       }
     }
   }

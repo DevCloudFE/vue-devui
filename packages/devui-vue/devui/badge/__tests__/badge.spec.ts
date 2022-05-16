@@ -17,19 +17,19 @@ describe('badge', () => {
       props: { showDot: true },
       slots: { default: SLOT }
     });
-    expect(wrapper.find('.devui-badge-content.devui-badge-content-dot').exists()).toBe(true);
+    expect(wrapper.find('.devui-badge__content.devui-badge--dot').exists()).toBe(true);
   });
 
   it('badge max', () => {
     const wrapper = mount(DBadge, {
       props: { count: 100 }
     });
-    expect(wrapper.find('.devui-badge-content').text()).toBe('99+');
+    expect(wrapper.find('.devui-badge__content').text()).toBe('99+');
 
     const wrapper2 = mount(DBadge, {
       props: { count: 100, maxCount: 1000 }
     });
-    expect(wrapper2.find('.devui-badge-content').text()).toBe('100');
+    expect(wrapper2.find('.devui-badge__content').text()).toBe('100');
   });
 
   it('badge bgColor', () => {
@@ -37,7 +37,7 @@ describe('badge', () => {
       props: { bgColor: 'red' },
       slots: { default: SLOT }
     });
-    expect(wrapper.find('.devui-badge-content').attributes().style).toBe('background: red;');
+    expect(wrapper.find('.devui-badge__content').attributes().style).toBe('background: red;');
   });
 
   it('badge offsetXY', () => {
@@ -45,6 +45,6 @@ describe('badge', () => {
       props: { offset: [-10, 10], badgePos: 'top-right' },
       slots: { default: SLOT }
     });
-    expect(wrapper.find('.devui-badge-content').attributes().style).toBe('top: 10px; right: -10px;');
+    expect(wrapper.find('.devui-badge__content').attributes().style).toBe('top: 10px; right: -10px;');
   });
 });

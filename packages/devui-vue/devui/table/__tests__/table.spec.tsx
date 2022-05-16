@@ -1,9 +1,11 @@
 import { mount } from '@vue/test-utils';
 import DTable from '../src/table';
 import DColumn from '../src/components/column/column';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import { nextTick } from 'vue';
 
 let data: Array<Record<string, any>> = [];
+const ns = useNamespace('table');
 
 describe('d-table', () => {
   beforeEach(() => {
@@ -155,15 +157,22 @@ describe('d-table', () => {
     wrapper.unmount();
   });
 
-  it('no data', async () => {
+  it('empty template', async () => {
     const wrapper = mount({
       setup() {
         return () => (
           <DTable data={[]}>
-            <DColumn field="firstName" header="First Name"></DColumn>
-            <DColumn field="lastName" header="Last Name"></DColumn>
-            <DColumn field="gender" header="Gender"></DColumn>
-            <DColumn field="date" header="Date of birth"></DColumn>
+            {{
+              default: () => (
+                <>
+                  <DColumn field="firstName" header="First Name"></DColumn>
+                  <DColumn field="lastName" header="Last Name"></DColumn>
+                  <DColumn field="gender" header="Gender"></DColumn>
+                  <DColumn field="date" header="Date of birth"></DColumn>
+                </>
+              ),
+              empty: () => <span id="empty-slot">No Data</span>,
+            }}
           </DTable>
         );
       },
@@ -173,6 +182,9 @@ describe('d-table', () => {
     const table = wrapper.find('.devui-table');
     const tableEmpty = table.find('.devui-table__empty');
     expect(tableEmpty.exists()).toBeTruthy();
+    const emptySlot = tableEmpty.find('#empty-slot');
+    expect(emptySlot.exists()).toBeTruthy();
+    expect(emptySlot.text()).toBe('No Data');
     wrapper.unmount();
   });
 
@@ -314,7 +326,7 @@ describe('d-table', () => {
     const table = wrapper.find('.devui-table');
     const tableHeader = table.find('.devui-table__thead');
     const filterTh = tableHeader.find('tr').findAll('th')[2];
-    expect(filterTh.find('.devui-dropdown-toggle').exists()).toBeTruthy();
+    expect(filterTh.find('.devui-dropdown__toggle').exists()).toBeTruthy();
 
     const filterIcon = filterTh.find('.filter-icon');
     await filterIcon.trigger('click');
@@ -327,5 +339,54 @@ describe('d-table', () => {
     await listItems[0].dispatchEvent(new Event('click'));
     expect(handleSingleChange).toBeCalled();
     expect(document.querySelector('.devui-flexible-overlay')?.getAttribute('style')).toContain('display: none');
+  });
+
+  it('align', async () => {
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DTable data={data}>
+            <DColumn field="firstName" header="First Name"></DColumn>
+            <DColumn field="lastName" header="Last Name"></DColumn>
+            <DColumn field="gender" header="Gender"></DColumn>
+            <DColumn field="date" header="Date of birth" align="right"></DColumn>
+          </DTable>
+        );
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+    const table = wrapper.find(`.${ns.b()}`);
+    const lastTh = table.findAll('th')[3];
+    expect(lastTh.classes()).toContain('is-right');
+    const tableBody = wrapper.find(`.${ns.e('tbody')}`);
+    const lastTd = tableBody.find('tr').findAll('td')[3];
+    expect(lastTd.classes()).toContain('is-right');
+    wrapper.unmount();
+  });
+
+  it('cell click event', async () => {
+    const onCellClick = jest.fn();
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DTable data={data} onCellClick={onCellClick}>
+            <DColumn field="firstName" header="First Name"></DColumn>
+            <DColumn field="lastName" header="Last Name"></DColumn>
+            <DColumn field="gender" header="Gender"></DColumn>
+            <DColumn field="date" header="Date of birth"></DColumn>
+          </DTable>
+        );
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+    const tableBody = wrapper.find(`.${ns.e('tbody')}`);
+    const lastTd = tableBody.find('tr').findAll('td')[3];
+    await lastTd.trigger('click');
+    expect(onCellClick).toBeCalled();
+    wrapper.unmount();
   });
 });

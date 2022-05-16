@@ -1,30 +1,30 @@
 @import '../../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-skeleton__shape__avatar,
-.#{$devui-prefix}-skeleton__shape__image,
-.#{$devui-prefix}-skeleton__shape__title,
-.#{$devui-prefix}-skeleton__shape__button {
+.#{$devui-prefix}-skeleton__shape--avatar,
+.#{$devui-prefix}-skeleton__shape--image,
+.#{$devui-prefix}-skeleton__shape--title,
+.#{$devui-prefix}-skeleton__shape--button {
   background-color: #f2f2f2;
 }
 
-.#{$devui-prefix}-skeleton__shape__avatar {
+.#{$devui-prefix}-skeleton__shape--avatar {
   width: 40px;
   height: 40px;
   background-color: #f2f2f2;
 }
 
-.#{$devui-prefix}-skeleton__shape__image {
+.#{$devui-prefix}-skeleton__shape--image {
   width: 200px;
   height: 150px;
   border-radius: 4px;
 }
 
-.#{$devui-prefix}-skeleton__shape__title {
+.#{$devui-prefix}-skeleton__shape--title {
   width: 40%;
   height: 24px;
 }
 
-.#{$devui-prefix}-skeleton__shape__paragraph {
+.#{$devui-prefix}-skeleton__shape--paragraph {
   &__item {
     background-color: #f2f2f2;
     width: 100%;
@@ -37,7 +37,7 @@
   }
 }
 
-.#{$devui-prefix}-skeleton__shape__button {
+.#{$devui-prefix}-skeleton__shape--button {
   width: 115px;
   height: 32px;
 }
@@ -48,20 +48,13 @@
   }
 }
 
-.#{$devui-prefix}-skeleton__animated .#{$devui-prefix}-skeleton__shape__avatar,
-.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape__avatar,
-.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape__image,
-.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape__title,
-.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape__paragraph > .#{$devui-prefix}-skeleton__shape__paragraph__item,
-.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape__button {
-  background:
-    linear-gradient(
-      100deg,
-      rgba(255, 255, 255, 0) 40%,
-      rgba(255, 255, 255, 0.5) 50%,
-      rgba(255, 255, 255, 0) 60%
-    )
-    #f2f2f2;
+.#{$devui-prefix}-skeleton__animated .#{$devui-prefix}-skeleton__shape--avatar,
+.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape--avatar,
+.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape--image,
+.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape--title,
+.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape--paragraph > .#{$devui-prefix}-skeleton__shape--paragraph-item,
+.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape--button {
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #f2f2f2;
   background-size: 200% 100%;
   background-position-x: 180%;
   animation: 2s skeletonLoading ease-in-out infinite;

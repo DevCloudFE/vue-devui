@@ -409,6 +409,33 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "daviForevel",
+      "name": "daviForevel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39021499?v=4",
+      "profile": "https://github.com/daviForevel",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "lj1990111",
+      "name": "lj1990111",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8649913?v=4",
+      "profile": "https://github.com/lj1990111",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "newer2333",
+      "name": "newer2333",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32949033?v=4",
+      "profile": "https://github.com/newer2333",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,

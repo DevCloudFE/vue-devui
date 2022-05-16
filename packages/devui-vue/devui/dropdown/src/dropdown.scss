@@ -1,6 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-dropdown-toggle {
+.#{$devui-prefix}-dropdown__toggle {
   display: inline-block;
 }
 
@@ -12,7 +12,7 @@
   }
 }
 
-.#{$devui-prefix}-dropdown-menu-wrap .#{$devui-prefix}-dropdown-menu {
+.#{$devui-prefix}-dropdown__menu-wrap .#{$devui-prefix}-dropdown-menu {
   width: 100%;
 }
 

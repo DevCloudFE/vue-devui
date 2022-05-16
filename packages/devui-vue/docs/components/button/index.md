@@ -98,7 +98,7 @@
   <d-button variant="solid" :loading="showLoading" @click="handleClick">Click Me</d-button>
 </template>
 <script>
-import { ref, onBeforeUnmount } from 'vue';
+import { ref } from 'vue';
 
 export default {
   setup() {
@@ -131,7 +131,90 @@ export default {
     <d-button icon="filter">Filter</d-button>
     <d-button icon="connect" variant="text">Link</d-button>
     <d-button icon="delete" variant="text" title="Delete"></d-button>
+    <d-button shape="round" title="Add">Add</d-button>
+    <d-button variant="solid" icon="filter" shape="circle" title="Add"></d-button>
+    <d-button icon="delete" shape="circle" title="Delete"></d-button>
   </div>
+</template>
+```
+
+:::
+
+### 按钮组
+
+将多个按钮作为一组放入按钮组容器中。按钮组可通过size设置尺寸，并与下拉菜单混合使用。
+
+:::demo
+
+```vue
+
+<template>
+  <p>尺寸：xs</p>
+  <d-button-group size="xs">
+    <d-button disabled>上海</d-button>
+    <d-button color="primary" variant="solid">北京</d-button>
+    <d-button disabled>深圳</d-button>
+  </d-button-group>
+
+  <p>尺寸：sm</p>
+  <d-button-group size="sm">
+    <d-button color="primary" variant="solid">上海</d-button>
+    <d-button>北京</d-button>
+    <d-button>深圳</d-button>
+  </d-button-group>
+
+  <p>尺寸：默认</p>
+  <d-button-group>
+    <d-button color="primary">上海</d-button>
+    <d-button>北京</d-button>
+    <d-button>深圳</d-button>
+  </d-button-group>
+
+  <p>尺寸：lg</p>
+  <d-button-group size="lg">
+    <d-button color="primary">上海</d-button>
+    <d-button>北京</d-button>
+    <d-button>深圳</d-button>
+  </d-button-group>
+
+  <p>与dropdown下拉菜单一起使用</p>
+  <d-button-group>
+    <d-dropdown style="width: 100px;" :position="position" align="start">
+      <d-button>Click Me 1</d-button>
+      <template #menu>
+        <ul class="list-menu">
+          <li class="menu-item">Item 1</li>
+          <li class="menu-item">Item 2</li>
+          <li class="menu-item">Item 3</li>
+          <li class="menu-item">Item 4</li>
+        </ul>
+      </template>
+    </d-dropdown>
+    <d-button icon="add" variant="solid">上海</d-button>
+    <d-dropdown style="width: 100px;" :position="position" align="start">
+      <d-button>Click Me 2</d-button>
+      <template #menu>
+        <ul class="list-menu">
+          <li class="menu-item">Item 1</li>
+          <li class="menu-item">Item 2</li>
+          <li class="menu-item">Item 3</li>
+          <li class="menu-item">Item 4</li>
+        </ul>
+      </template>
+    </d-dropdown>
+    <d-button icon="filter">北京</d-button>
+    <d-dropdown style="width: 100px;" :position="position" align="start">
+      <d-button>Click Me 3</d-button>
+      <template #menu>
+        <ul class="list-menu">
+          <li class="menu-item">Item 1</li>
+          <li class="menu-item">Item 2</li>
+          <li class="menu-item">Item 3</li>
+          <li class="menu-item">Item 4</li>
+        </ul>
+      </template>
+    </d-dropdown>
+  </d-button-group>
 </template>
 ```
 
@@ -145,8 +228,10 @@ export default {
 | color    | [IButtonColor](#ibuttoncolor)     | 'secondary' | 可选，按钮主题        | [主题色](#主题色)         |
 | size     | [IButtonSize](#ibuttonsize)       | 'md'        | 可选，按钮尺寸        | [尺寸](#尺寸)             |
 | icon     | `string`                          | --          | 可选，自定义按钮图标  | [图标按钮](#图标按钮)     |
+| shape    | [IButtonShape](#ibuttonshape)     | --          | 可选，按钮形状(圆形/圆角) | [图标按钮](#图标按钮)     |
 | disabled | `boolean`                         | false       | 可选，是否禁用 button | [禁用状态](#禁用状态)     |
 | loading  | `boolean`                         | false       | 可选，设置加载中状态  | [加载中状态](#加载中状态) |
+
 
 ### Button 类型定义
 
@@ -166,4 +251,23 @@ type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 
 ```ts
 type IButtonColor = 'primary' | 'secondary' | 'danger';
+```
+#### IButtonShape
+
+```ts
+type IButtonShape = 'circle' | 'round';
+```
+
+### ButtonGroup 参数
+
+| 参数名   | 类型                              | 默认        | 说明                  | 跳转 Demo                 |
+| :------- | :-------------------------------- | :---------- | :-------------------- | :------------------------ |
+| size     | [IButtonSize](#iButtonGroupSize)       | 'md'        | 可选，按钮组尺寸        | [按钮组](#按钮组)             |
+
+### ButtonGroup 类型定义
+
+#### IButtonGroupSize
+
+```ts
+type IButtonGroupSize = 'lg' | 'md' | 'sm' | 'xs';
 ```
