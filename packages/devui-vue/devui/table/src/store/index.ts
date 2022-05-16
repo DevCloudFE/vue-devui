@@ -1,5 +1,6 @@
 import { watch, Ref, ref, computed, unref, ComponentInternalInstance } from 'vue';
 import { Column, SortMethod, SortDirection } from '../components/column/column-types';
+import { DefaultRow, Table } from '../table-types';
 import { TableStore } from './store-types';
 
 function replaceColumn(array: any, column: any) {
@@ -142,7 +143,7 @@ const createFixedLogic = (columns: Ref<Column[]>) => {
   return { isFixedLeft };
 };
 
-export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
+export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): TableStore<T> {
   const _data: Ref<T[]> = ref([]);
   watch(
     dataSource,
@@ -159,6 +160,7 @@ export function createStore<T>(dataSource: Ref<T[]>): TableStore<T> {
   const { isFixedLeft } = createFixedLogic(_columns);
 
   return {
+    _table: table,
     states: {
       _data,
       _columns,
