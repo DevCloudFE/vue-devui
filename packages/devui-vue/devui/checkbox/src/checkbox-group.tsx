@@ -13,7 +13,7 @@ export default defineComponent({
     const defaultOpt = {
       checked: false,
       isShowTitle: true,
-      halfchecked: false,
+      halfChecked: false,
       showAnimation: true,
       disabled: false,
     };

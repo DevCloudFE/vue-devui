@@ -3,6 +3,7 @@ import type { ComputedRef, ExtractPropTypes, PropType ,InjectionKey, Ref } from 
 export type IButtonVariant = 'solid' | 'outline' | 'text';
 export type IButtonColor = 'secondary' | 'primary' | 'danger';
 export type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
+export type IButtonShape = 'round' | 'circle';
 
 export const buttonProps = {
   variant: {
@@ -28,6 +29,9 @@ export const buttonProps = {
     type: Boolean,
     default: false,
   },
+  shape: {
+    type: String as PropType<IButtonShape>,
+  }
 } as const;
 
 export const buttonGroupProps = {

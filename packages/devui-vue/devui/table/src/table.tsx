@@ -51,7 +51,7 @@ export default defineComponent({
         ) : (
           <NormalHeader classes={classes.value} is-empty={isEmpty.value} />
         )}
-        {isEmpty.value && <div class={ns.e('empty')}>No Data</div>}
+        {isEmpty.value && <div class={ns.e('empty')}>{ctx.slots.empty ? ctx.slots.empty() : props.empty}</div>}
       </div>
     );
   },

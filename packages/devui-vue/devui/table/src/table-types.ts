@@ -77,6 +77,10 @@ export const TableProps = {
     type: String as PropType<BorderType>,
     default: '',
   },
+  empty: {
+    type: String,
+    default: 'No Data',
+  },
 };
 
 export type TablePropsTypes = ExtractPropTypes<typeof TableProps>;

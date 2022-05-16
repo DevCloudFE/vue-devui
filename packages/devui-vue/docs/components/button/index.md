@@ -131,6 +131,9 @@ export default {
     <d-button icon="filter">Filter</d-button>
     <d-button icon="connect" variant="text">Link</d-button>
     <d-button icon="delete" variant="text" title="Delete"></d-button>
+    <d-button shape="round" title="Add">Add</d-button>
+    <d-button variant="solid" icon="filter" shape="circle" title="Add"></d-button>
+    <d-button icon="delete" shape="circle" title="Delete"></d-button>
   </div>
 </template>
 ```
@@ -225,8 +228,10 @@ export default {
 | color    | [IButtonColor](#ibuttoncolor)     | 'secondary' | 可选，按钮主题        | [主题色](#主题色)         |
 | size     | [IButtonSize](#ibuttonsize)       | 'md'        | 可选，按钮尺寸        | [尺寸](#尺寸)             |
 | icon     | `string`                          | --          | 可选，自定义按钮图标  | [图标按钮](#图标按钮)     |
+| shape    | [IButtonShape](#ibuttonshape)     | --          | 可选，按钮形状(圆形/圆角) | [图标按钮](#图标按钮)     |
 | disabled | `boolean`                         | false       | 可选，是否禁用 button | [禁用状态](#禁用状态)     |
 | loading  | `boolean`                         | false       | 可选，设置加载中状态  | [加载中状态](#加载中状态) |
+
 
 ### Button 类型定义
 
@@ -246,6 +251,11 @@ type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 
 ```ts
 type IButtonColor = 'primary' | 'secondary' | 'danger';
+```
+#### IButtonShape
+
+```ts
+type IButtonShape = 'circle' | 'round';
 ```
 
 ### ButtonGroup 参数
