@@ -366,6 +366,13 @@ function hideFun() {
 | content   | 自定义菜单内容              |
 | reference | 触发 Popover 显示的元素内容 |
 
+### Popover 事件
+
+| 名称名    | 类型     |  说明                        |
+| :-------- | :-------- | :------------------------- |
+| show   | -        | Popover显示后触发事件           |
+| hide   | -        | Popover隐藏后触发事件           |
+
 ### Popover 类型定义
 
 #### TriggerType
