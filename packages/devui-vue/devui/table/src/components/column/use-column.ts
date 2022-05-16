@@ -23,6 +23,7 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
     order,
     fixedLeft,
     fixedRight,
+    align,
   } = props;
   const column: Column = reactive({});
   column.type = type.value;
@@ -79,6 +80,14 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
     ([left, right]) => {
       column.fixedLeft = left;
       column.fixedRight = right;
+    },
+    { immediate: true }
+  );
+
+  watch(
+    align,
+    (alignVal) => {
+      column.align = alignVal;
     },
     { immediate: true }
   );

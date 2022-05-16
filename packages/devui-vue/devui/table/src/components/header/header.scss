@@ -12,6 +12,18 @@
         padding: 0 0 0 20px;
         border: none;
         border-bottom: 1px solid $devui-line;
+
+        &.is-left {
+          text-align: left;
+        }
+
+        &.is-center {
+          text-align: center;
+        }
+
+        &.is-right {
+          text-align: right;
+        }
       }
 
       .sort-active,
