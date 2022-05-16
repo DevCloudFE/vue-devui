@@ -365,4 +365,28 @@ describe('d-table', () => {
     expect(lastTd.classes()).toContain('is-right');
     wrapper.unmount();
   });
+
+  it('cell click event', async () => {
+    const onCellClick = jest.fn();
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DTable data={data} onCellClick={onCellClick}>
+            <DColumn field="firstName" header="First Name"></DColumn>
+            <DColumn field="lastName" header="Last Name"></DColumn>
+            <DColumn field="gender" header="Gender"></DColumn>
+            <DColumn field="date" header="Date of birth"></DColumn>
+          </DTable>
+        );
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+    const tableBody = wrapper.find(`.${ns.e('tbody')}`);
+    const lastTd = tableBody.find('tr').findAll('td')[3];
+    await lastTd.trigger('click');
+    expect(onCellClick).toBeCalled();
+    wrapper.unmount();
+  });
 });
