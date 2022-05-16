@@ -9,11 +9,11 @@ describe('d-popover', () => {
         return () => <DPopover content="default">{{ reference: () => <d-button>default</d-button> }}</DPopover>;
       },
     });
-    const btn = wrapper.find('.devui-btn');
-    expect(wrapper.find('.devui-popover-reference').exists()).toBeTruthy();
+    const btn = wrapper.find('.devui-button');
+    expect(wrapper.find('.devui-popover__reference').exists()).toBeTruthy();
     expect(btn.exists()).toBeTruthy();
     await btn.trigger('click');
-    const popoverContent = document.body.querySelector('.devui-popover-content');
+    const popoverContent = document.body.querySelector('.devui-popover__content');
     expect(popoverContent).toBeTruthy();
     expect(popoverContent?.firstElementChild?.innerHTML).toBe('default');
     wrapper.unmount();
@@ -29,9 +29,9 @@ describe('d-popover', () => {
         );
       },
     });
-    await wrapper.find('.devui-btn').trigger('click');
-    const popoverContent = document.body.querySelector('.devui-popover-content');
-    expect(popoverContent?.firstElementChild?.className).toContain('devui-popover-icon');
+    await wrapper.find('.devui-button').trigger('click');
+    const popoverContent = document.body.querySelector('.devui-popover__content');
+    expect(popoverContent?.firstElementChild?.className).toContain('devui-popover__icon');
     wrapper.unmount();
   });
 
@@ -45,9 +45,9 @@ describe('d-popover', () => {
         );
       },
     });
-    await wrapper.find('.devui-btn').trigger('mouseenter');
+    await wrapper.find('.devui-button').trigger('mouseenter');
     setTimeout(() => {
-      const popoverContent = document.body.querySelector('.devui-popover-content');
+      const popoverContent = document.body.querySelector('.devui-popover__content');
       expect(popoverContent).toBeTruthy();
       wrapper.unmount();
     }, 150);
@@ -66,8 +66,35 @@ describe('d-popover', () => {
     });
     isOpen.value = true;
     await nextTick();
-    const popoverContent = document.body.querySelector('.devui-popover-content');
+    const popoverContent = document.body.querySelector('.devui-popover__content');
     expect(popoverContent).toBeTruthy();
+    wrapper.unmount();
+  });
+
+  it('show event', async () => {
+    const show = jest.fn();
+    const wrapper = mount({
+      setup() {
+        return () => <DPopover content="default" onShow={show}>{{ reference: () => <d-button>default</d-button> }}</DPopover>;
+      },
+    });
+    const btn = wrapper.find('.devui-button');
+    await btn.trigger('click');
+    expect(show).toHaveBeenCalled();
+    wrapper.unmount();
+  });
+
+  it('hide event', async () => {
+    const hide = jest.fn();
+    const wrapper = mount({
+      setup() {
+        return () => <DPopover content="default" onHide={hide}>{{ reference: () => <d-button>default</d-button> }}</DPopover>;
+      },
+    });
+    const btn = wrapper.find('.devui-button');
+    await btn.trigger('click');
+    await btn.trigger('click');
+    expect(hide).toHaveBeenCalled();
     wrapper.unmount();
   });
 });
