@@ -95,7 +95,7 @@ export default defineComponent({
     const checkboxCls = {
       [ns.b()]: true,
       active: mergedChecked,
-      halfChecked,
+      'half-checked': halfChecked,
       disabled: mergedDisabled,
       unchecked: !mergedChecked,
     };
