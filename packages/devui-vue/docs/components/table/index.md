@@ -215,7 +215,7 @@ export default defineComponent({
 <template>
   <div>
     <d-button @click="handleClick">Get CheckedRows</d-button>
-    <d-table ref="tableRef" :data="data">
+    <d-table ref="tableRef" :data="data" @check-change="checkChange" @check-all-change="checkAllChange">
       <d-column type="checkable"></d-column>
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
@@ -261,7 +261,15 @@ export default defineComponent({
       console.log(tableRef.value.getCheckedRows());
     };
 
-    return { tableRef, data, handleClick };
+    const checkChange = (checked, row) => {
+      console.log('checked row:', checked, row);
+    };
+
+    const checkAllChange = (checked) => {
+      console.log('checked:', checked);
+    }
+
+    return { tableRef, data, handleClick, checkChange, checkAllChange };
   },
 });
 </script>
@@ -983,6 +991,8 @@ export default defineComponent({
 | 事件名      | 回调参数                                                     | 说明                           | 跳转 Demo         |
 | :---------- | :----------------------------------------------------------- | :----------------------------- | :---------------- |
 | sort-change | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息 | [列排序](#列排序) |
+| check-change | `Function(checked: boolean, row)` | 勾选表格行回调事件，返回该行信息 | [表格多选](#表表多选) |
+| check-all-change | `Function(checked: boolean)` | 全选表格行回调事件，返回勾选状态 | [表格多选](#表表多选) |
 
 ### Table 方法
 
