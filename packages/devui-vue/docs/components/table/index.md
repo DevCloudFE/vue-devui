@@ -207,15 +207,15 @@ export default defineComponent({
 
 :::
 
-### 表格多选
+### 表格交互
 
-:::demo 通过添加一个`d-column`并且设置`type`属性为`checkable`即可实现表格的多选功能。`getCheckedRows`方法可以获取已选择的列表。
+:::demo 通过添加一个`d-column`并且设置`type`属性为`checkable`即可实现表格的多选功能。`getCheckedRows`方法可以获取已选择的列表。通过`cell-click`事件监听单元格点击，事件回调参数包含行索引、列索引、行数据、列数据。
 
 ```vue
 <template>
   <div>
     <d-button @click="handleClick">Get CheckedRows</d-button>
-    <d-table ref="tableRef" :data="data">
+    <d-table ref="tableRef" :data="data" @cell-click="onCellClick">
       <d-column type="checkable" width="30"></d-column>
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
@@ -260,8 +260,11 @@ export default defineComponent({
     const handleClick = () => {
       console.log(tableRef.value.getCheckedRows());
     };
+    const onCellClick = (params) => {
+      console.log(params);
+    };
 
-    return { tableRef, data, handleClick };
+    return { tableRef, data, handleClick, onCellClick };
   },
 });
 </script>
@@ -986,9 +989,10 @@ export default defineComponent({
 
 ### Table 事件
 
-| 事件名      | 回调参数                                                     | 说明                           | 跳转 Demo         |
-| :---------- | :----------------------------------------------------------- | :----------------------------- | :---------------- |
-| sort-change | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息 | [列排序](#列排序) |
+| 事件名      | 回调参数                                                     | 说明                           | 跳转 Demo             |
+| :---------- | :----------------------------------------------------------- | :----------------------------- | :-------------------- |
+| sort-change | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息 | [列排序](#列排序)     |
+| cell-click  | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息 | [表格交互](#表格交互) |
 
 ### Table 方法
 
@@ -1008,7 +1012,7 @@ export default defineComponent({
 | :-------------- | :------------------------------ | :----- | :------------------------------------------ | :-------------------- |
 | header          | `string`                        | --     | 可选，对应列的标题                          | [基本用法](#基本用法) |
 | field           | `string`                        | --     | 可选，对应列内容的字段名                    | [基本用法](#基本用法) |
-| type            | [ColumnType](#columntype)       | ''     | 可选，列的类型，设置`checkable`会显示多选框 | [表格多选](#表格多选) |
+| type            | [ColumnType](#columntype)       | ''     | 可选，列的类型，设置`checkable`会显示多选框 | [表格交互](#表格交互) |
 | width           | `string \| number`              | --     | 可选，对应列的宽度，单位`px`                |
 | min-width       | `string \| number`              | --     | 可选，对应列的最小宽度，单位`px`            |
 | fixedLeft       | `string`                        | --     | 可选，该列固定到左侧的距离，如：'100px'     | [固定列](#固定列)     |
@@ -1060,6 +1064,17 @@ type SpanMethod = (data: {
 
 ```typescript
 type BorderType = '' | 'bordered' | 'borderless';
+```
+
+#### CellClickArg
+
+```ts
+interface CellClickArg {
+  columnIndex: number;
+  rowIndex: number;
+  column: Column;
+  row: DefaultRow;
+}
 ```
 
 ### Column 类型定义
