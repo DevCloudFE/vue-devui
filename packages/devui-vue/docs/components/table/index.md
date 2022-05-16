@@ -342,7 +342,7 @@ export default defineComponent({
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
     <d-column field="date" header="Date of birth"></d-column>
-    <d-column header="Operation">
+    <d-column header="Operation" align="right">
       <template #default="scope">
         <d-button @click="handleClick(scope.row)">编辑</d-button>
       </template>
@@ -1020,6 +1020,7 @@ export default defineComponent({
 | filterable      | `boolean`                       | false  | 可选，是否对该列启用筛选功能                | [列筛选](#列筛选)     |
 | filter-multiple | `boolean`                       | true   | 可选，是否启用多选的方式来筛选              | [列筛选](#列筛选)     |
 | filter-list     | [FilterConfig[]](#filterconfig) | []     | 可选，筛选列表                              | [列筛选](#列筛选)     |
+| align           | [ColumnAlign](#columnalign)     | 'left' | 可选，配置水平对齐方式                      | [自定义列](#自定义列) |
 
 ### Column 事件
 
@@ -1097,4 +1098,10 @@ interface FilterConfig {
   value: any;
   checked?: boolean;
 }
+```
+
+#### ColumnAlign
+
+```ts
+type ColumnAlign = 'left' | 'center' | 'right';
 ```
