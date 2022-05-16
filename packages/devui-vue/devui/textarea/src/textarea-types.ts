@@ -1,6 +1,7 @@
-import type { PropType, ExtractPropTypes, Ref, ComputedRef } from 'vue';
+import type { PropType, ExtractPropTypes, Ref, ComputedRef, StyleValue } from 'vue';
 
 export type Resize = 'none' | 'vertical' | 'horizontal' | 'both' | 'inherit';
+export type TextareaAutoSize = { minRows?: number; maxRows?: number } | boolean;
 
 export const textareaProps = {
   id: {
@@ -35,6 +36,10 @@ export const textareaProps = {
     type: String as PropType<Resize>,
     default: 'none',
   },
+  autosize: {
+    type: [Object, Boolean] as PropType<TextareaAutoSize>,
+    default: false,
+  },
 } as const;
 
 export type TextareaProps = ExtractPropTypes<typeof textareaProps>;
@@ -50,4 +55,9 @@ export interface UseTextareaEvent {
 export interface UseTextareaRender {
   isFocus: Ref<boolean>;
   wrapClasses: ComputedRef<Record<string, boolean>>;
+}
+
+export interface UseTextareaAutosize {
+  textareaStyle: ComputedRef<StyleValue>;
+  resizeTextarea: () => void;
 }
