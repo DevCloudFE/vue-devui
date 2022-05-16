@@ -235,7 +235,7 @@
     min-width: 72px;
   }
 
-  &.#{$devui-prefix}-button__icon {
+  &.#{$devui-prefix}-button__icon:not(.#{$devui-prefix}-button--solid) {
     &:hover,
     &:focus {
       border: 1px solid $devui-list-item-hover-bg;
@@ -266,6 +266,14 @@
       }
     }
   }
+
+  &--circle {
+    border-radius: 100%;
+  }
+
+  &--round {
+    border-radius: 20px;
+  }
 }
 
 .#{$devui-prefix}-loading {
@@ -277,7 +285,8 @@
 }
 
 .#{$devui-prefix}-button {
-  transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+  transition:
+    background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   white-space: nowrap;
@@ -288,18 +297,14 @@
   &.#{$devui-prefix}-button__icon {
     padding: 8px;
     line-height: 1em;
-    border: 1px solid transparent;
+
+    &:not(.#{$devui-prefix}-button--circle) {
+      border: 1px solid transparent;
+    }
 
     &.#{$devui-prefix}-button--xs,
     &.#{$devui-prefix}-button--sm {
       padding: 4px;
-    }
-
-    &.#{$devui-prefix}-button--xs {
-      min-width: 24px;
-    }
-
-    &.#{$devui-prefix}-button--sm {
       min-width: 24px;
     }
 
@@ -309,6 +314,22 @@
       }
 
       min-width: 32px;
+    }
+
+    &.#{$devui-prefix}-button--circle {
+      &.#{$devui-prefix}-button--xs,
+      &.#{$devui-prefix}-button--sm {
+        width: 24px;
+      }
+
+      &.#{$devui-prefix}-button--md {
+        min-width: 28px;
+        width: 28px;
+      }
+
+      &.#{$devui-prefix}-button--lg {
+        width: 32px;
+      }
     }
   }
 

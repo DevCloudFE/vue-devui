@@ -1,7 +1,50 @@
-@import '../../styles-var/devui-var';
+@import '../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-textarea__wrap {
-  .#{$devui-prefix}-textarea__show-count {
+.#{$devui-prefix}-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px 10px;
+  color: var(--devui-text, #252b3a);
+  vertical-align: middle;
+  outline: none;
+  border: 1px solid $devui-form-control-line;
+  border-radius: $devui-border-radius;
+  background: transparent;
+  transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
+
+  &:not(.#{$devui-prefix}-textarea--error):not(.#{$devui-prefix}-textarea--disabled):hover {
+    border-color: $devui-form-control-line-hover;
+  }
+
+  &--focus:not(.#{$devui-prefix}-textarea--error) {
+    border-color: $devui-form-control-line-active;
+
+    &:hover {
+      border-color: $devui-form-control-line-active;
+    }
+  }
+
+  &--disabled {
+    border-color: $devui-disabled-line;
+    background-color: $devui-disabled-bg;
+    cursor: not-allowed;
+
+    &:hover {
+      border-color: $devui-disabled-line;
+    }
+
+    .#{$devui-prefix}-textarea__inner {
+      color: $devui-disabled-text;
+      cursor: not-allowed;
+    }
+  }
+
+  &--error {
+    border-color: $devui-danger-line;
+    background-color: $devui-danger-bg;
+  }
+
+  &__show-count {
     text-align: right;
     color: inherit;
     white-space: nowrap;

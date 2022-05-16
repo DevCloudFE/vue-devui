@@ -11,6 +11,8 @@ export type ColumnType = 'checkable' | 'index' | '';
 
 export type SortDirection = 'ASC' | 'DESC' | '';
 
+export type ColumnAlign = 'left' | 'center' | 'right';
+
 export interface FilterConfig {
   name: string;
   value: any;
@@ -73,6 +75,10 @@ export const tableColumnProps = {
   fixedRight: {
     type: String,
   },
+  align: {
+    type: String as PropType<ColumnAlign>,
+    default: 'left',
+  },
 };
 
 export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>;
@@ -93,6 +99,7 @@ export interface Column {
   filterList?: FilterConfig[];
   fixedLeft?: string;
   fixedRight?: string;
+  align: ColumnAlign;
   ctx: SetupContext;
   renderHeader?: (column: Column, store: TableStore) => VNode;
   renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) => VNode;

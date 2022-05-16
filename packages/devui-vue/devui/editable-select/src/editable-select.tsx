@@ -1,16 +1,19 @@
 import { defineComponent, withModifiers, computed, ref, SetupContext, watch } from 'vue';
 import { editableSelectProps, EditableSelectProps, OptionObjectItem } from './editable-select-types';
 import clickOutside from '../../shared/devui-directive/clickoutside';
+import loadingDirective from '../../loading/src/loading-directive';
 import { className } from '../src/utils/index';
 import './editable-select.scss';
 import { userFilterOptions } from './composables/use-filter-options';
 import { useInput } from './composables/use-input';
 import { useLazyLoad } from './composables/use-lazy-load';
 import { useKeyboardSelect } from './composables/use-keyboard-select';
+import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
 export default defineComponent({
   name: 'DEditableSelect',
   directives: {
     clickOutside,
+    dLoading: loadingDirective,
   },
   props: editableSelectProps,
   emits: ['update:modelValue', 'search', 'loadMore'],
@@ -148,7 +151,7 @@ export default defineComponent({
             </span>
           </span>
 
-          <d-flexible-overlay origin={origin.value} v-model={visible.value} position={position.value} hasBackdrop={false}>
+          <FlexibleOverlay origin={origin.value} v-model={visible.value} position={position.value} hasBackdrop={false}>
             <div
               style={{
                 width: props.width + 'px',
@@ -179,7 +182,7 @@ export default defineComponent({
                 </ul>
               </div>
             </div>
-          </d-flexible-overlay>
+          </FlexibleOverlay>
         </div>
       );
     };

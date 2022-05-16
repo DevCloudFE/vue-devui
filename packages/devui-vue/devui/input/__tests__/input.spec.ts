@@ -17,7 +17,7 @@ describe('d-input', () => {
       }
     });
     const input = wrapper.find('input');
-    expect(input.attributes('dinput')).toBe('true');
+    expect(input.classes()).toContain('devui-input__inner');
     expect(input.element.value).toBe('abc');
 
     await input.setValue('def');
@@ -87,43 +87,30 @@ describe('d-input', () => {
         error: false
       }
     });
-    const input = wrapper.find('input');
-    expect(input.classes()).not.toContain('error');
+    expect(wrapper.classes()).not.toContain('devui-input--error');
 
     await wrapper.setProps({
       error: true
     });
-    expect(input.classes()).toContain('error');
+    expect(wrapper.classes()).toContain('devui-input--error');
   });
 
   it('d-input size work', async () => {
     const wrapper = mount(DInput);
-    const input = wrapper.find('input');
-    expect(input.classes()).not.toContain('devui-input-sm');
-    expect(input.classes()).not.toContain('devui-input-lg');
+    expect(wrapper.classes()).not.toContain('devui-input--sm');
+    expect(wrapper.classes()).not.toContain('devui-input--lg');
 
     await wrapper.setProps({
       size: 'sm'
     });
-    expect(input.classes()).toContain('devui-input-sm');
-    expect(input.classes()).not.toContain('devui-input-lg');
+    expect(wrapper.classes()).toContain('devui-input--sm');
+    expect(wrapper.classes()).not.toContain('devui-input--lg');
 
     await wrapper.setProps({
       size: 'lg'
     });
-    expect(input.classes()).not.toContain('devui-input-sm');
-    expect(input.classes()).toContain('devui-input-lg');
+    expect(wrapper.classes()).not.toContain('devui-input--sm');
+    expect(wrapper.classes()).toContain('devui-input--lg');
   });
 
-  it('d-input showPassword work', async () => {
-    const wrapper = mount(DInput);
-    const input = wrapper.find('input');
-
-    expect(input.attributes('type')).toBe('text');
-
-    await wrapper.setProps({
-      showPassword: true
-    });
-    expect(input.attributes('type')).toBe('password');
-  });
 });

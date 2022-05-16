@@ -13,7 +13,7 @@ export default defineComponent({
       if (typeof flex === 'number') {
         return `${flex} ${flex} auto`;
       }
-      if (/^\d+(\.\d+)?(px|rem|em|%)$/.test(flex)) {
+      if (/^\d+(\.\d+)?(px|rem|em|%)$/.test(flex as string)) {
         return `0 0 ${flex}`;
       }
       return flex;
@@ -31,7 +31,7 @@ export default defineComponent({
     const gutterStyle = inject<Ref<CSSProperties>>('gutterStyle');
 
     return () => (
-      <div class={[ns.b(), colClassNames.value, sizeClassNames.value]} style={{ ...colStyle.value, ...gutterStyle.value }}>
+      <div class={[ns.b(), colClassNames.value, sizeClassNames.value]} style={{ ...colStyle.value, ...gutterStyle?.value }}>
         {slots.default?.()}
       </div>
     );
