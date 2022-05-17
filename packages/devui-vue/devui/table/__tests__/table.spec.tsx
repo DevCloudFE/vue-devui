@@ -2,10 +2,10 @@ import { mount } from '@vue/test-utils';
 import DTable from '../src/table';
 import DColumn from '../src/components/column/column';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import { nextTick } from 'vue';
+import { nextTick, ref } from 'vue';
 
 let data: Array<Record<string, any>> = [];
-const ns = useNamespace('table');
+const ns = useNamespace('table', true);
 
 describe('d-table', () => {
   beforeEach(() => {
@@ -357,10 +357,10 @@ describe('d-table', () => {
 
     await nextTick();
     await nextTick();
-    const table = wrapper.find(`.${ns.b()}`);
+    const table = wrapper.find(ns.b());
     const lastTh = table.findAll('th')[3];
     expect(lastTh.classes()).toContain('is-right');
-    const tableBody = wrapper.find(`.${ns.e('tbody')}`);
+    const tableBody = wrapper.find(ns.e('tbody'));
     const lastTd = tableBody.find('tr').findAll('td')[3];
     expect(lastTd.classes()).toContain('is-right');
     wrapper.unmount();
@@ -383,10 +383,35 @@ describe('d-table', () => {
 
     await nextTick();
     await nextTick();
-    const tableBody = wrapper.find(`.${ns.e('tbody')}`);
+    const tableBody = wrapper.find(ns.e('tbody'));
     const lastTd = tableBody.find('tr').findAll('td')[3];
     await lastTd.trigger('click');
     expect(onCellClick).toBeCalled();
+    wrapper.unmount();
+  });
+
+  it('show header api', async () => {
+    const showHeader = ref(true);
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DTable data={data} show-header={showHeader.value}>
+            <DColumn field="firstName" header="First Name"></DColumn>
+            <DColumn field="lastName" header="Last Name"></DColumn>
+            <DColumn field="gender" header="Gender"></DColumn>
+            <DColumn field="date" header="Date of birth"></DColumn>
+          </DTable>
+        );
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+    expect(wrapper.find(ns.e('thead')).exists()).toBeTruthy();
+
+    showHeader.value = false;
+    await nextTick();
+    expect(wrapper.find(ns.e('thead')).exists()).toBeFalsy();
     wrapper.unmount();
   });
 });

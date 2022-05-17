@@ -96,6 +96,10 @@ export default defineComponent({
         </d-radio>
       </d-radio-group>
     </div>
+    <div class="table-btn">
+      表头显隐：
+      <d-switch v-model:checked="showHeader" />
+    </div>
   </div>
   <d-table
     :table-layout="tableLayout ? 'auto' : 'fixed'"
@@ -104,6 +108,7 @@ export default defineComponent({
     :data="stripedTableData"
     :size="size"
     :border-type="borderType"
+    :show-header="showHeader"
   >
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
@@ -122,6 +127,7 @@ export default defineComponent({
     const headerBg = ref(false);
     const size = ref('sm');
     const borderType = ref('');
+    const showHeader = ref(true);
     const sizeList = [
       {
         label: 'Normal',
@@ -184,6 +190,7 @@ export default defineComponent({
       size,
       sizeList,
       borderType,
+      showHeader,
       borderTypeList,
       tableLayout,
     };
@@ -270,7 +277,7 @@ export default defineComponent({
 
     const checkAllChange = (checked) => {
       console.log('checked:', checked);
-    }
+    };
 
     return { tableRef, data, handleClick, onCellClick, checkChange, checkAllChange };
   },
@@ -988,15 +995,16 @@ export default defineComponent({
 | span-method           | [SpanMethod](#spanmethod) | --        | 可选，合并单元格的计算方法                                                 | [合并单元格](#合并单元格) |
 | border-type           | [BorderType](#bordertype) | ''        | 可选，表格边框类型，默认有行边框；`bordered`: 全边框；`borderless`: 无边框 | [表格样式](#表格样式)     |
 | empty                 | `string`                  | 'No Data' | 可选，配置未传递表格数据时需要显示的空数据文本                             | [空数据模板](#空数据模板) |
+| show-header           | `boolean`                 | true      | 可选，配置是否显示表头                                                     | [表格样式](#表格样式)     |
 
 ### Table 事件
 
-| 事件名      | 回调参数                                                     | 说明                           | 跳转 Demo         |
-| :---------- | :----------------------------------------------------------- | :----------------------------- | :---------------- |
-| sort-change | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息 | [列排序](#列排序) |
-| cell-click  | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息 | [表格交互](#表格交互) |
-| check-change | `Function(checked: boolean, row)` | 勾选表格行回调事件，返回该行信息 | [表格多选](#表表多选) |
-| check-all-change | `Function(checked: boolean)` | 全选表格行回调事件，返回勾选状态 | [表格多选](#表表多选) |
+| 事件名           | 回调参数                                                     | 说明                             | 跳转 Demo             |
+| :--------------- | :----------------------------------------------------------- | :------------------------------- | :-------------------- |
+| sort-change      | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息   | [列排序](#列排序)     |
+| cell-click       | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息   | [表格交互](#表格交互) |
+| check-change     | `Function(checked: boolean, row)`                            | 勾选表格行回调事件，返回该行信息 | [表格多选](#表表多选) |
+| check-all-change | `Function(checked: boolean)`                                 | 全选表格行回调事件，返回勾选状态 | [表格多选](#表表多选) |
 
 ### Table 方法
 
