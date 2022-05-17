@@ -12,11 +12,15 @@ export default defineComponent({
     const ns = useNamespace('checkbox');
 
     const isChecked = computed(() => props.checked || props.modelValue);
-    const mergedDisabled = computed(() => {
-      return checkboxGroupConf?.disabled.value || props.disabled;
-    });
     const mergedChecked = computed(() => {
       return checkboxGroupConf?.isItemChecked?.(props.value) ?? isChecked.value;
+    });
+    const isLimitDisabled = computed(() => {
+      const max = checkboxGroupConf?.max.value;
+      return max && checkboxGroupConf?.modelValue.value.length >= max && !mergedChecked.value;
+    });
+    const mergedDisabled = computed(() => {
+      return checkboxGroupConf?.disabled.value || props.disabled || isLimitDisabled.value;
     });
     const mergedIsShowTitle = computed(() => {
       return checkboxGroupConf?.isShowTitle.value ?? props.isShowTitle;
