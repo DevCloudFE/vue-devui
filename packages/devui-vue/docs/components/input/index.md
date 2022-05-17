@@ -82,14 +82,58 @@ export default defineComponent({
 
 :::
 
+### 输入框方法
+
+:::demo
+
+```vue
+<template>
+  <div class="devui-input-demo">
+    <d-input ref="demoInput" v-model="value1" placeholder="请输入"></d-input>
+    <d-button style="margin-top: 20px" @click="select" color="primary">选中input中的文字</d-button>
+    <d-button style="margin-left: 10px" @click="focus" color="primary">使input获取焦点</d-button>
+    <d-button style="margin-left: 10px" @click="blur" color="primary">使input失去焦点</d-button>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const demoInput = ref(null);
+    const select = () => {
+      demoInput.value.select();
+    };
+    const focus = () => {
+      demoInput.value.focus();
+    };
+    const blur = () => {
+      demoInput.value.blur();
+    };
+    return {
+      demoInput,
+      value1: ref('测试文本'),
+      select,
+      focus,
+      blur,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Input 参数
 
-| 参数名   | 类型                    | 默认值 | 说明                                             | 跳转 Demo             |
-| :------- | :---------------------- | :----- | :----------------------------------------------- | :-------------------- |
-| v-model  | `string`                | ''     | 绑定值                                           | [基本用法](#基本用法) |
-| disabled | `boolean`               | false  | 可选，文本框是否被禁用                           | [基本用法](#基本用法) |
-| error    | `boolean`               | false  | 可选，文本框是否出现输入错误                     | [基本用法](#基本用法) |
-| size     | [InputSize](#inputsize) | 'md'   | 可选，文本框尺寸，有三种选择`'lg'`,`'md'`,`'sm'` | [尺寸](#尺寸)         |
+| 参数名         | 类型                    | 默认值 | 说明                                             | 跳转 Demo             |
+| :------------- | :---------------------- | :----- | :----------------------------------------------- | :-------------------- |
+| v-model        | `string`                | ''     | 绑定值                                           | [基本用法](#基本用法) |
+| disabled       | `boolean`               | false  | 可选，文本框是否被禁用                           | [基本用法](#基本用法) |
+| error          | `boolean`               | false  | 可选，文本框是否出现输入错误                     | [基本用法](#基本用法) |
+| size           | [InputSize](#inputsize) | 'md'   | 可选，文本框尺寸，有三种选择`'lg'`,`'md'`,`'sm'` | [尺寸](#尺寸)         |
+| validate-event | `boolean`               | true   | 可选，输入时是否触发表单的校验                   |                       |
 
 ### Input 事件
 
@@ -100,6 +144,14 @@ export default defineComponent({
 | input   | `Function(e: Event)`         | 输入值改变时触发               |
 | change  | `Function(e: Event)`         | 输入框失去焦点或按下回车时触发 |
 | keydown | `Function(e: KeyboardEvent)` | 按下按键时触发                 |
+
+### Input 方法
+
+| 方法   | 说明                | 参数 |
+| :----- | :------------------ | ---- |
+| focus  | 使 input 获取焦点   | -    |
+| blur   | 使 input 失去焦点   | -    |
+| select | 选中 input 中的文字 | -    |
 
 ### Input 类型定义
 
