@@ -1,7 +1,9 @@
-import { defineComponent, ref, toRefs, Transition, Teleport, watch, nextTick } from 'vue';
+import { defineComponent, ref, toRefs, Transition, Teleport, watch, nextTick, provide } from 'vue';
 import { dropdownProps, DropdownProps } from './dropdown-types';
+import { POPPER_TRIGGER_TOKEN } from '../../popper-trigger/src/popper-trigger-types';
 import { useDropdown, useDropdownEvent, useOverlayProps } from './use-dropdown';
 import { FlexibleOverlay } from '../../overlay';
+import { PopperTrigger } from '../../popper-trigger';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './dropdown.scss';
 
@@ -21,6 +23,7 @@ export default defineComponent({
     const isOpen = ref<boolean>(false);
     const currentPosition = ref('bottom');
     const ns = useNamespace('dropdown');
+    provide(POPPER_TRIGGER_TOKEN, origin);
 
     useDropdownEvent({
       id,
@@ -47,9 +50,7 @@ export default defineComponent({
 
     return () => (
       <>
-        <div ref={origin} class={ns.e('toggle')}>
-          {slots.default?.()}
-        </div>
+        <PopperTrigger>{slots.default?.()}</PopperTrigger>
         <Teleport to="body">
           <Transition name={showAnimation.value ? `devui-dropdown-fade-${currentPosition.value}` : ''}>
             <FlexibleOverlay
