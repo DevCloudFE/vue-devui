@@ -58,7 +58,7 @@ function getBoxStyle(targetElement: Element): BoxStyle {
   return { contextStyle, paddingSize, borderSize, boxSizing };
 }
 
-export function computedTextareaHeight(targetElement: HTMLTextAreaElement | undefined, minRows = 1, maxRows?: number): TextAreaHeight {
+export function computeTextareaHeight(targetElement: HTMLTextAreaElement | undefined, minRows = 1, maxRows?: number): TextAreaHeight {
   if (targetElement === undefined) {
     return {} as TextAreaHeight;
   }
