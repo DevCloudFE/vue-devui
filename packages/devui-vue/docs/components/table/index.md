@@ -1003,8 +1003,8 @@ export default defineComponent({
 | :--------------- | :----------------------------------------------------------- | :------------------------------- | :-------------------- |
 | sort-change      | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息   | [列排序](#列排序)     |
 | cell-click       | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息   | [表格交互](#表格交互) |
-| check-change     | `Function(checked: boolean, row)`                            | 勾选表格行回调事件，返回该行信息 | [表格多选](#表表多选) |
-| check-all-change | `Function(checked: boolean)`                                 | 全选表格行回调事件，返回勾选状态 | [表格多选](#表表多选) |
+| check-change     | `Function(checked: boolean, row)`                            | 勾选表格行回调事件，返回该行信息 | [表格交互](#表格交互) |
+| check-all-change | `Function(checked: boolean)`                                 | 全选表格行回调事件，返回勾选状态 | [表格交互](#表格交互) |
 
 ### Table 方法
 
