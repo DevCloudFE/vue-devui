@@ -2,7 +2,7 @@ import { computed, ShallowRef, shallowRef } from 'vue';
 import { TextareaProps, UseTextareaAutosize } from '../textarea-types';
 import type { StyleValue } from 'vue';
 import { isObject } from 'lodash';
-import { computedTextareaHeight } from '../utils';
+import { computeTextareaHeight } from '../utils';
 
 export function useTextareaAutosize(props: TextareaProps, textarea: ShallowRef<HTMLTextAreaElement | undefined>): UseTextareaAutosize {
   const textareaHeightStyle = shallowRef<StyleValue>('');
@@ -11,11 +11,11 @@ export function useTextareaAutosize(props: TextareaProps, textarea: ShallowRef<H
     if (autosize) {
       const { minRows, maxRows } = isObject(autosize) ? autosize : { minRows: undefined, maxRows: undefined };
       textareaHeightStyle.value = {
-        ...computedTextareaHeight(textarea.value, minRows, maxRows),
+        ...computeTextareaHeight(textarea.value, minRows, maxRows),
       };
     } else {
       textareaHeightStyle.value = {
-        minHeight: computedTextareaHeight(textarea.value).minHeight,
+        minHeight: computeTextareaHeight(textarea.value).minHeight,
       };
     }
   };
