@@ -12,7 +12,15 @@ export default defineComponent({
     const { showAnimation, content } = toRefs(props);
     const origin = ref<HTMLElement>();
     const tooltipRef = ref<HTMLElement>();
-    const { visible, placement, positionArr, overlayStyles, onPositionChange, onMouseenter, onMouseleave } = useTooltip(origin, props);
+    const {
+      visible,
+      placement,
+      positionArr,
+      overlayStyles,
+      onPositionChange,
+      onMouseleave,
+      onMouseenterOverlay
+    } = useTooltip(origin, props);
     const ns = useNamespace('tooltip');
 
     return () => (
@@ -32,7 +40,7 @@ export default defineComponent({
               show-arrow
               style={overlayStyles.value}
               onPositionChange={onPositionChange}
-              onMouseenter={onMouseenter}
+              onMouseenter={onMouseenterOverlay}
               onMouseleave={onMouseleave}>
               <span innerHTML={content.value}></span>
             </FlexibleOverlay>
