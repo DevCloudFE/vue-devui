@@ -17,17 +17,17 @@ export default defineComponent({
     const ns = useNamespace('textarea');
     const { isFocus, wrapClasses } = useTextareaRender(props);
     const { onFocus, onBlur, onInput, onChange, onKeydown } = useTextareaEvent(isFocus, ctx);
-    const { textareaStyle, resizeTextarea } = useTextareaAutosize(props, textarea);
+    const { textareaStyle, updateTextareaStyle } = useTextareaAutosize(props, textarea);
 
     watch(
       () => props.modelValue,
       () => {
-        nextTick(() => resizeTextarea());
+        nextTick(() => updateTextareaStyle());
       }
     );
 
     onMounted(() => {
-      resizeTextarea();
+      updateTextareaStyle();
     });
 
     return () => (
