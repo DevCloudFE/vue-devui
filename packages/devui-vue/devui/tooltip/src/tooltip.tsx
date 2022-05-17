@@ -1,6 +1,8 @@
-import { defineComponent, ref, Teleport, toRefs, Transition } from 'vue';
+import { defineComponent, provide, ref, Teleport, toRefs, Transition } from 'vue';
 import { FlexibleOverlay } from '../../overlay';
+import { PopperTrigger } from '../../popper-trigger';
 import { TooltipProps, tooltipProps } from './tooltip-types';
+import { POPPER_TRIGGER_TOKEN } from '../../popper-trigger/src/popper-trigger-types';
 import { useTooltip } from './use-tooltip';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './tooltip.scss';
@@ -12,22 +14,16 @@ export default defineComponent({
     const { showAnimation, content } = toRefs(props);
     const origin = ref<HTMLElement>();
     const tooltipRef = ref<HTMLElement>();
-    const {
-      visible,
-      placement,
-      positionArr,
-      overlayStyles,
-      onPositionChange,
-      onMouseleave,
-      onMouseenterOverlay
-    } = useTooltip(origin, props);
+    const { visible, placement, positionArr, overlayStyles, onPositionChange, onMouseleave, onMouseenterOverlay } = useTooltip(
+      origin,
+      props
+    );
     const ns = useNamespace('tooltip');
+    provide(POPPER_TRIGGER_TOKEN, origin);
 
     return () => (
       <>
-        <div ref={origin} class={ns.e('reference')}>
-          {slots.default?.()}
-        </div>
+        <PopperTrigger>{slots.default?.()}</PopperTrigger>
         <Teleport to="body">
           <Transition name={showAnimation.value ? `devui-tooltip-fade-${placement.value}` : ''}>
             <FlexibleOverlay
