@@ -42,7 +42,7 @@ export function useTooltip(origin: Ref, props: TooltipProps): UseTooltipFn {
     placement.value = pos;
   };
 
-  const quickLeave = () =>{
+  const quickLeave = () => {
     isEnter.value = false;
     visible.value = false;
   };
@@ -61,7 +61,7 @@ export function useTooltip(origin: Ref, props: TooltipProps): UseTooltipFn {
   });
 
   let timer: NodeJS.Timeout | null;
-  watch(visible,(newVal)=> {
+  watch(visible, (newVal) => {
     if (newVal && hideAfter.value) {
       timer && clearTimeout(timer);
       timer = setTimeout(quickLeave, hideAfter.value);
