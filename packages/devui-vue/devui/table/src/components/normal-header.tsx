@@ -1,7 +1,8 @@
-import { defineComponent } from 'vue';
+import { computed, defineComponent, inject } from 'vue';
 import ColGroup from './colgroup/colgroup';
 import TableHeader from './header/header';
 import TableBody from './body/body';
+import { TABLE_TOKEN } from '../table-types';
 
 export default defineComponent({
   props: {
@@ -14,14 +15,14 @@ export default defineComponent({
     },
   },
   setup(props: { classes: Record<string, unknown>; isEmpty: boolean }) {
-    return () => {
-      return (
-        <table class={props.classes} cellpadding="0" cellspacing="0">
-          <ColGroup />
-          <TableHeader style="position:relative" />
-          {!props.isEmpty && <TableBody />}
-        </table>
-      );
-    };
+    const table = inject(TABLE_TOKEN, undefined);
+    const showHeader = computed(() => Boolean(table?.props.showHeader));
+    return () => (
+      <table class={props.classes} cellpadding="0" cellspacing="0">
+        <ColGroup />
+        {showHeader.value && <TableHeader style="position:relative" />}
+        {!props.isEmpty && <TableBody />}
+      </table>
+    );
   },
 });
