@@ -85,6 +85,9 @@ export const TableProps = {
     type: Boolean,
     default: true,
   },
+  rowKey: {
+    type: String,
+  },
 };
 
 export type TablePropsTypes = ExtractPropTypes<typeof TableProps>;
