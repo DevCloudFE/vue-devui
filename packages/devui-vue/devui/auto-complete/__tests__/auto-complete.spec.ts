@@ -1,9 +1,25 @@
 import { mount } from '@vue/test-utils';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import { nextTick, ref } from 'vue';
 import DAutoComplete from '../src/auto-complete';
+
+const ns = useNamespace('auto-complete', true);
+const dropdownNS = useNamespace('dropdown', true);
+const selectNS = useNamespace('select', true);
+
+const baseClass = ns.b();
+const unstyledClass = ns.e('list') + '-unstyled';
+const tipsClass = ns.e('popup') + '-tips';
+
+const dropdownItemClass = dropdownNS.b() + '-item';
+const dropdownMenuClass = dropdownNS.b() + '-menu';
+
+const selectOpenClass = selectNS.b() + '-open';
+
 // delay api
 const wait = (delay = 300) =>
   new Promise(resolve => setTimeout(() => resolve(true), delay));
+
 describe('auto-complete', () => {
   it('init render & KeyboardEvent ', async () => {
     const wrapper = mount({
@@ -30,22 +46,22 @@ describe('auto-complete', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-auto-complete').exists()).toBe(true);
+    expect(wrapper.find(baseClass).exists()).toBe(true);
     const input = wrapper.find('input');
     expect(input.element.value).toBe('');
     await input.trigger('click');
     await nextTick();
-    expect(wrapper.find('.devui-select-open').exists()).toBe(true);
-    expect(wrapper.find('.devui-dropdown-item').exists()).toBe(false);
-    expect(wrapper.find('.devui-auto-complete').attributes('style')).toContain(
+    expect(wrapper.find(selectOpenClass).exists()).toBe(true);
+    expect(wrapper.find(dropdownItemClass).exists()).toBe(false);
+    expect(wrapper.find(baseClass).attributes('style')).toContain(
       'width: 450px'
     );
     await input.setValue('c');
     await nextTick();
-    expect(wrapper.find('.devui-dropdown-menu').exists()).toBe(true);
+    expect(wrapper.find(dropdownMenuClass).exists()).toBe(true);
     await wait(300);
     await nextTick();
-    expect(wrapper.find('.devui-auto-complete__list-unstyled').element.childElementCount).toBe(5);
+    expect(wrapper.find(unstyledClass).element.childElementCount).toBe(5);
     input.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
     await nextTick();
     input.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
@@ -59,7 +75,7 @@ describe('auto-complete', () => {
     expect(wrapper.vm.value).toBe('C++');
     input.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await nextTick();
-    expect(wrapper.find('.devui-select-open').exists()).toBe(false);
+    expect(wrapper.find(selectOpenClass).exists()).toBe(false);
   });
 
   it('disabled ', async () => {
@@ -96,7 +112,7 @@ describe('auto-complete', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-auto-complete').exists()).toBe(true);
+    expect(wrapper.find(baseClass).exists()).toBe(true);
     const input = wrapper.find('input');
     const button = wrapper.find('button');
     expect(input.element.value).toBe('');
@@ -112,7 +128,7 @@ describe('auto-complete', () => {
     li.trigger('click');
     await nextTick();
     expect(wrapper.vm.value).toBe('C#');
-    expect(wrapper.find('.devui-select-open').exists()).toBe(false);
+    expect(wrapper.find(selectOpenClass).exists()).toBe(false);
     button.trigger('click');
     await  nextTick();
     expect(button.element.innerHTML).toBe('Enable AutoComplete');
@@ -120,6 +136,10 @@ describe('auto-complete', () => {
   });
 
   it('Customized data matching method ', async () => {
+    type ItemType = {
+      label: string;
+      disabled: boolean;
+    };
     const wrapper = mount({
       components: {'d-auto-complete': DAutoComplete },
       template: `
@@ -178,12 +198,12 @@ describe('auto-complete', () => {
             disabled:false
           }
         ]);
-        const formatter = (item) =>{
+        const formatter = (item: ItemType) =>{
           return item.label;
         };
         // trem：input输入内容
-        const searchFn =async (trem)=>{
-          const arr = [];
+        const searchFn = async (trem: string)=>{
+          const arr: ItemType[] = [];
           await new Promise((resolve)=>{
             setTimeout(() => {
               resolve(1);
@@ -205,12 +225,12 @@ describe('auto-complete', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-auto-complete').exists()).toBe(true);
+    expect(wrapper.find(baseClass).exists()).toBe(true);
     const input = wrapper.find('input');
     expect(input.element.value).toBe('');
     await input.trigger('click');
     await nextTick();
-    expect(wrapper.find('.devui-select-open').exists()).toBe(true);
+    expect(wrapper.find(selectOpenClass).exists()).toBe(true);
     await input.setValue('c');
     await nextTick();
     await wait(300);
@@ -218,7 +238,7 @@ describe('auto-complete', () => {
     expect(wrapper.find('#devui-is-searching-template').element.innerHTML).toBe('c');
     await wait(500);
     await nextTick();
-    expect(wrapper.find('.devui-auto-complete__list-unstyled').element.childElementCount).toBe(4);
+    expect(wrapper.find(unstyledClass).element.childElementCount).toBe(4);
     await input.setValue('s');
     await nextTick();
     await wait(300);
@@ -273,17 +293,17 @@ describe('auto-complete', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-auto-complete').exists()).toBe(true);
+    expect(wrapper.find(baseClass).exists()).toBe(true);
     const input = wrapper.find('input');
     expect(input.element.value).toBe('');
     await input.trigger('click');
     await nextTick();
-    expect(wrapper.find('.devui-select-open').exists()).toBe(true);
+    expect(wrapper.find(selectOpenClass).exists()).toBe(true);
     await input.setValue('c');
     await nextTick();
     await wait(300);
-    expect(wrapper.find('.devui-auto-complete__list-unstyled').exists()).toBe(true);
-    expect(wrapper.find('.devui-auto-complete__list-unstyled').element.childElementCount).toBe(5);
+    expect(wrapper.find(unstyledClass).exists()).toBe(true);
+    expect(wrapper.find(unstyledClass).element.childElementCount).toBe(5);
     expect(wrapper.find('.selected div').element.innerHTML).toBe(' 第0项: C#');
     await input.setValue('cc');
     await nextTick();
@@ -316,10 +336,10 @@ describe('auto-complete', () => {
           'CPython',
           'CoffeeScript',
         ];
-        const selectValue = (e)=>{
+        const selectValue = (e: Event)=>{
           selectValueCB(e);
         };
-        const transInputFocusEmit = (e)=>{
+        const transInputFocusEmit = (e: Event)=>{
           transInputFocusEmitCB(e);
         };
         return {
@@ -330,7 +350,7 @@ describe('auto-complete', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-auto-complete').exists()).toBe(true);
+    expect(wrapper.find(baseClass).exists()).toBe(true);
     const input = wrapper.find('input');
     expect(input.element.value).toBe('');
     await input.trigger('focus');
@@ -377,7 +397,7 @@ describe('auto-complete', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-auto-complete').exists()).toBe(true);
+    expect(wrapper.find(baseClass).exists()).toBe(true);
     const input = wrapper.find('input');
     expect(input.element.value).toBe('');
     await input.trigger('focus');
@@ -418,7 +438,7 @@ describe('auto-complete', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-auto-complete').exists()).toBe(true);
+    expect(wrapper.find(baseClass).exists()).toBe(true);
     const input = wrapper.find('input');
     expect(input.element.value).toBe('');
     await input.trigger('focus');
@@ -427,8 +447,8 @@ describe('auto-complete', () => {
     await nextTick();
     await wait(300);
     await nextTick();
-    expect(wrapper.find('.devui-select-open').exists()).toBe(true);
-    const ul = document.querySelector('.devui-auto-complete__list-unstyled');
+    expect(wrapper.find(selectOpenClass).exists()).toBe(true);
+    const ul = document.querySelector(unstyledClass);
     let lis = 0;
     if(ul&&ul.getElementsByTagName('li')){
       lis=ul.getElementsByTagName('li').length;
@@ -472,12 +492,12 @@ describe('auto-complete', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-auto-complete').exists()).toBe(true);
+    expect(wrapper.find(baseClass).exists()).toBe(true);
     const input = wrapper.find('input');
     expect(input.element.value).toBe('');
     await input.trigger('click');
     await nextTick();
-    expect(wrapper.find('ul .devui-auto-complete__popup-tips').exists()).toBe(true);
+    expect(wrapper.find(tipsClass).exists()).toBe(true);
     await input.setValue('j');
     await wait(300);
     await nextTick();
@@ -526,12 +546,13 @@ describe('auto-complete', () => {
           'C6',
           'C7',
         ]);
-        const autoCompleteRef =ref(null);
+        const autoCompleteRef = ref(null);
 
         const loadMore = () => {
           setTimeout(() => {
             source.value.push('lazyData'+source.value.length);
-            autoCompleteRef.value?.loadFinish();
+            const _value = autoCompleteRef.value as any;
+            _value.loadFinish();
           },3000);
         };
         return {
@@ -542,17 +563,17 @@ describe('auto-complete', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-auto-complete').exists()).toBe(true);
+    expect(wrapper.find(baseClass).exists()).toBe(true);
     const input = wrapper.find('input');
     expect(input.element.value).toBe('');
     await input.trigger('click');
     await input.setValue('c');
     await nextTick();
-    expect(wrapper.find('.devui-dropdown-menu').exists()).toBe(true);
+    expect(wrapper.find(dropdownMenuClass).exists()).toBe(true);
     await wait(300);
     await nextTick();
-    expect(wrapper.find('.devui-dropdown-item').exists()).toBe(true);
-    const ul = wrapper.find('.devui-auto-complete__list-unstyled');
+    expect(wrapper.find(dropdownItemClass).exists()).toBe(true);
+    const ul = wrapper.find(unstyledClass);
     const makeScroll = async (
       dom: Element,
       name: 'scrollTop',
@@ -580,7 +601,7 @@ describe('auto-complete', () => {
     await input.setValue('la');
     await wait(300);
     await nextTick();
-    expect(wrapper.find('.devui-dropdown-item').element.innerHTML).toBe('lazyData21');
+    expect(wrapper.find(dropdownItemClass).element.innerHTML).toBe('lazyData21');
   });
 });
 
