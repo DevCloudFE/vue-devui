@@ -107,7 +107,7 @@ export default defineComponent({
                 width: data.offsetWidth + 'px',
               }}></div>
           </ul>
-          {slots.default()}
+          {slots.default?.()}
         </div>
       );
     };
