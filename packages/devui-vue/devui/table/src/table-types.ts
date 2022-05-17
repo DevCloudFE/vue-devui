@@ -81,6 +81,10 @@ export const TableProps = {
     type: String,
     default: 'No Data',
   },
+  showHeader: {
+    type: Boolean,
+    default: true,
+  },
 };
 
 export type TablePropsTypes = ExtractPropTypes<typeof TableProps>;
