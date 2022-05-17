@@ -93,6 +93,10 @@ export const checkboxGroupProps = {
     type: Function as PropType<(v: string[]) => void>,
     default: undefined,
   },
+  max: {
+    type: Number,
+    default: undefined,
+  },
 } as const;
 
 interface checkboxGroupInjection {
@@ -105,6 +109,8 @@ interface checkboxGroupInjection {
   isItemChecked: (v: string) => boolean;
   itemWidth: Ref<number | undefined>;
   direction: Ref<Direction>;
+  max: Ref<number | undefined>;
+  modelValue: Ref<string[]>;
 }
 
 export const checkboxGroupInjectionKey: InjectionKey<checkboxGroupInjection> = Symbol('d-checkbox-group');
