@@ -996,6 +996,7 @@ export default defineComponent({
 | border-type           | [BorderType](#bordertype) | ''        | 可选，表格边框类型，默认有行边框；`bordered`: 全边框；`borderless`: 无边框 | [表格样式](#表格样式)     |
 | empty                 | `string`                  | 'No Data' | 可选，配置未传递表格数据时需要显示的空数据文本                             | [空数据模板](#空数据模板) |
 | show-header           | `boolean`                 | true      | 可选，配置是否显示表头                                                     | [表格样式](#表格样式)     |
+| row-key               | `string`                  | --        | 可选，行数据的 Key，用来优化 Table 渲染                                    |                           |
 
 ### Table 事件
 
