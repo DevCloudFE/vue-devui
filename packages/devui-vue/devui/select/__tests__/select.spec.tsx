@@ -147,6 +147,7 @@ describe('select', () => {
       {
         name: '多选真的很重要呢',
         value: 2,
+        disabled: false,
       },
     ]);
     const wrapper = mount({
@@ -165,6 +166,7 @@ describe('select', () => {
     expect(value.value).toEqual([]);
     await item[0].trigger('click');
     expect(value.value).toEqual([0]);
+    // todo 此处遗留，如果继续点击第三个选项，得到的value.value依然是[0]; 后续继续跟进原因。
     wrapper.unmount();
   });
 
