@@ -59,5 +59,5 @@ export interface UseTextareaRender {
 
 export interface UseTextareaAutosize {
   textareaStyle: ComputedRef<StyleValue>;
-  resizeTextarea: () => void;
+  updateTextareaStyle: () => void;
 }
