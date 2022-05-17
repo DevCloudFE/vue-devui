@@ -19,6 +19,10 @@ export const inputProps = {
     type: String as PropType<InputSize>,
     default: 'md',
   },
+  validateEvent: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type InputProps = ExtractPropTypes<typeof inputProps>;
@@ -34,4 +38,10 @@ export interface UseInputEvent {
   onInput: (e: Event) => void;
   onChange: (e: Event) => void;
   onKeydown: (e: KeyboardEvent) => void;
+}
+
+export interface UseInputFunction {
+  select: () => void;
+  blur: () => void;
+  focus: () => void;
 }
