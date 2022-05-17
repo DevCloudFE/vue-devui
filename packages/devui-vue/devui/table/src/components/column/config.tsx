@@ -13,6 +13,7 @@ export const cellMap = {
         halfchecked: store.states._halfChecked.value,
         onChange: (val: boolean) => {
           store.states._checkAll.value = val;
+          store._table.emit('check-all-change', val);
         },
       });
     },
@@ -21,6 +22,7 @@ export const cellMap = {
         modelValue: store.states._checkList.value[rowIndex],
         onChange: (val: boolean) => {
           store.states._checkList.value[rowIndex] = val;
+          store._table.emit('check-change', val, store.states._data.value[rowIndex]);
         },
       });
     },

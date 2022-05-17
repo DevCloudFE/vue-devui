@@ -1,7 +1,9 @@
 import type { ComponentInternalInstance, Ref } from 'vue';
 import { Column, SortMethod, SortDirection } from '../components/column/column-types';
+import { DefaultRow, Table } from '../table-types';
 
 export interface TableStore<T = Record<string, any>> {
+  _table: Table<DefaultRow>;
   states: {
     _data: Ref<T[]>;
     _columns: Ref<Column[]>;

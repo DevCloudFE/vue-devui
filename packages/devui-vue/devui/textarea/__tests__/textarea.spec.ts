@@ -12,9 +12,9 @@ describe('textarea test', () => {
       `,
       setup() {
         return {
-          value
+          value,
         };
-      }
+      },
     });
     const textarea = wrapper.find('textarea');
     expect(textarea.classes()).toContain('devui-textarea');
@@ -31,8 +31,8 @@ describe('textarea test', () => {
   it('d-textarea rows work', async () => {
     const wrapper = mount(DTextarea, {
       props: {
-        rows: 5
-      }
+        rows: 5,
+      },
     });
     const textarea = wrapper.find('textarea');
     expect(textarea.element.rows).toBe(5);
@@ -57,9 +57,9 @@ describe('textarea test', () => {
           onChange,
           onFocus,
           onBlur,
-          onKeydown
+          onKeydown,
         };
-      }
+      },
     });
     const textarea = wrapper.find('textarea');
 
@@ -79,14 +79,14 @@ describe('textarea test', () => {
   it('d-textarea disabled work', async () => {
     const wrapper = mount(DTextarea, {
       props: {
-        disabled: false
-      }
+        disabled: false,
+      },
     });
     const textarea = wrapper.find('textarea');
     expect(textarea.attributes('disabled')).toBe(undefined);
 
     await wrapper.setProps({
-      disabled: true
+      disabled: true,
     });
     expect(textarea.attributes('disabled')).toBe('');
   });
@@ -94,14 +94,35 @@ describe('textarea test', () => {
   it('d-textarea error work', async () => {
     const wrapper = mount(DTextarea, {
       props: {
-        error: false
-      }
+        error: false,
+      },
     });
     expect(wrapper.find('textarea').classes()).not.toContain('devui-textarea--error');
 
     await wrapper.setProps({
-      error: true
+      error: true,
     });
     expect(wrapper.find('textarea').classes()).toContain('devui-textarea--error');
+  });
+
+  it('d-textarea autosize work', async () => {
+    const wrapper = mount({
+      components: { DTextarea },
+      template: `
+        <d-textarea ref="textarea" :autosize="{ minRows: 1, maxRows: 10 }"/>
+      `,
+    });
+    const wrapper2 = mount({
+      components: { DTextarea },
+      template: `
+        <d-textarea ref="textarea" :autosize="{ minRows: 5, maxRows: 10 }"/>
+      `,
+    });
+    const textarea = wrapper.find('textarea');
+    const textarea2 = wrapper2.find('textarea');
+    await nextTick();
+    const firstStyle = textarea.attributes('style');
+    const secondStyle = textarea2.attributes('style');
+    expect(firstStyle).not.toEqual(secondStyle);
   });
 });

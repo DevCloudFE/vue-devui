@@ -1,6 +1,9 @@
-import { ExtractPropTypes } from 'vue';
+import { DefaultRow } from '../../table-types';
+import { Column } from '../column/column-types';
 
-export const TableBodyProps = {
-} as const;
-
-export type TableBodyPropsTypes = ExtractPropTypes<typeof TableBodyProps>;
+export interface CellClickArg {
+  columnIndex: number;
+  rowIndex: number;
+  column: Column;
+  row: DefaultRow;
+}
