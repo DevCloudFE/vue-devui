@@ -1,7 +1,7 @@
 import { h, Comment, Text, Fragment } from 'vue';
 import { isObject } from '@vue/shared';
 import type { VNode } from 'vue';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '../../../hooks/use-namespace';
 
 const ns = useNamespace('popper-trigger');
 

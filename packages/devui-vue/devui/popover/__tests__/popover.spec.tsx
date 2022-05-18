@@ -13,7 +13,11 @@ describe('d-popover', () => {
   it('visible', async () => {
     const wrapper = mount({
       setup() {
-        return () => <DPopover content="default">{{ reference: () => <d-button>default</d-button> }}</DPopover>;
+        return () => (
+          <DPopover content="default">
+            <d-button>default</d-button>
+          </DPopover>
+        );
       },
     });
     const btn = wrapper.find(buttonBaseClass);
@@ -30,7 +34,7 @@ describe('d-popover', () => {
       setup() {
         return () => (
           <DPopover content="info" pop-type="info">
-            {{ reference: () => <d-button>info</d-button> }}
+            <d-button>info</d-button>
           </DPopover>
         );
       },
@@ -46,7 +50,7 @@ describe('d-popover', () => {
       setup() {
         return () => (
           <DPopover content="default" trigger="hover">
-            {{ reference: () => <d-button>default</d-button> }}
+            <d-button>default</d-button>
           </DPopover>
         );
       },
@@ -65,7 +69,7 @@ describe('d-popover', () => {
       setup() {
         return () => (
           <DPopover content="default" is-open={isOpen.value} trigger="manually">
-            {{ reference: () => <d-button>default</d-button> }}
+            <d-button>default</d-button>
           </DPopover>
         );
       },
@@ -83,7 +87,7 @@ describe('d-popover', () => {
       setup() {
         return () => (
           <DPopover content="default" onShow={show}>
-            {{ reference: () => <d-button>default</d-button> }}
+            <d-button>default</d-button>
           </DPopover>
         );
       },
@@ -100,7 +104,7 @@ describe('d-popover', () => {
       setup() {
         return () => (
           <DPopover content="default" onHide={hide}>
-            {{ reference: () => <d-button>default</d-button> }}
+            <d-button>default</d-button>
           </DPopover>
         );
       },
