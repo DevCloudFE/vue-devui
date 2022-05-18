@@ -2,8 +2,8 @@ import { ref, computed } from 'vue';
 import type { SetupContext } from 'vue';
 import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
 import { className } from './utils';
-import useCacheOptions from '../hooks/use-cache-options';
-import useSelectOutsideClick from '../hooks/use-select-outside-click';
+import useCacheOptions from '../composables/use-cache-options';
+import useSelectOutsideClick from '../composables/use-select-outside-click';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default function useSelect(props: SelectProps, ctx: SetupContext): UseSelectReturnType {
@@ -102,11 +102,8 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   };
 
   const valueChange = (item: OptionObjectItem, index: number) => {
-    const { multiple, optionDisabledKey: disabledKey } = props;
+    const { multiple } = props;
     let { modelValue } = props;
-    if (disabledKey && !!item[disabledKey]) {
-      return;
-    }
     if (multiple) {
       item._checked = !item._checked;
       modelValue = mergeOptions.value.filter((item1) => item1._checked).map((item2) => item2.value);
@@ -115,15 +112,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
       ctx.emit('update:modelValue', item.value);
       toggleChange(false);
     }
-    ctx.emit('value-change', item, index);
-  };
-
-  const getItemClassName = (item: OptionObjectItem) => {
-    const { optionDisabledKey: disabledKey } = props;
-    return className(ns.e('item'), {
-      active: item.value === props.modelValue,
-      disabled: disabledKey ? !!item[disabledKey] : false,
-    });
+    ctx.emit('value-change', item.value, index);
   };
 
   const handleClear = (e: MouseEvent) => {
@@ -148,6 +137,5 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     onClick,
     handleClear,
     valueChange,
-    getItemClassName,
   };
 }
