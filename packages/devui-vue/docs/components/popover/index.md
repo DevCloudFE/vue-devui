@@ -8,40 +8,28 @@
 
 ### 基本用法
 
-:::demo 当 Popover 弹出时，会基于`reference`插槽的内容进行定位。
+:::demo 当 Popover 弹出时，会基于`default`插槽的内容进行定位。
 
 ```vue
 <template>
   <div class="popover-demo-item">
     <d-popover content="default">
-      <template #reference>
-        <d-button>default</d-button>
-      </template>
+      <d-button>default</d-button>
     </d-popover>
     <d-popover content="info!" pop-type="info" :position="['top']">
-      <template #reference>
-        <d-button variant="solid">info</d-button>
-      </template>
+      <d-button variant="solid">info</d-button>
     </d-popover>
     <d-popover content="error!" pop-type="error" :position="['left']" style="z-index: 9999">
-      <template #reference>
-        <d-button variant="solid" color="danger">error</d-button>
-      </template>
+      <d-button variant="solid" color="danger">error</d-button>
     </d-popover>
     <d-popover content="success!" pop-type="success" :position="['right']">
-      <template #reference>
-        <d-button>success</d-button>
-      </template>
+      <d-button>success</d-button>
     </d-popover>
     <d-popover content="warning!" pop-type="warning">
-      <template #reference>
-        <d-button>warning</d-button>
-      </template>
+      <d-button>warning</d-button>
     </d-popover>
     <d-popover content="no-animation!" :show-animation="false" style="max-width: 100px">
-      <template #reference>
-        <d-button>no-animation</d-button>
-      </template>
+      <d-button>no-animation</d-button>
     </d-popover>
   </div>
 </template>
@@ -57,20 +45,16 @@
 
 ### 自定义内容
 
-:::demo 自定义`reference`插槽的内容与弹出提示内容。
+:::demo 自定义`default`插槽的内容与弹出提示内容。
 
 ```vue
 <template>
   <div class="popover-demo-item">
     <d-popover content="自定义内容">
-      <template #reference>
-        <d-button variant="solid">click me!</d-button>
-      </template>
+      <d-button variant="solid">click me!</d-button>
     </d-popover>
     <d-popover content="自定义内容" trigger="hover" style="background-color: #7693f5; color: #fff">
-      <template #reference>
-        <d-button>hover me!</d-button>
-      </template>
+      <d-button>hover me!</d-button>
     </d-popover>
   </div>
 </template>
@@ -92,17 +76,13 @@
           <div>top-start</div>
         </div>
       </template>
-      <template #reference>
-        <d-button style="width: 100px;">top-start</d-button>
-      </template>
+      <d-button style="width: 100px;">top-start</d-button>
     </d-popover>
     <d-popover :position="['top']">
       <template #content>
         <div>top</div>
       </template>
-      <template #reference>
-        <d-button style="width: 100px;">top</d-button>
-      </template>
+      <d-button style="width: 100px;">top</d-button>
     </d-popover>
     <d-popover :position="['top-end']" align="end">
       <template #content>
@@ -111,9 +91,7 @@
           <div>top-end</div>
         </div>
       </template>
-      <template #reference>
-        <d-button style="width: 100px;">top-end</d-button>
-      </template>
+      <d-button style="width: 100px;">top-end</d-button>
     </d-popover>
   </div>
 
@@ -126,17 +104,13 @@
             <div>left-start</div>
           </div>
         </template>
-        <template #reference>
-          <d-button style="width: 100px;">left-start</d-button>
-        </template>
+        <d-button style="width: 100px;">left-start</d-button>
       </d-popover>
       <d-popover :position="['left']">
         <template #content>
           <div>left</div>
         </template>
-        <template #reference>
-          <d-button style="width: 100px;">left</d-button>
-        </template>
+        <d-button style="width: 100px;">left</d-button>
       </d-popover>
       <d-popover :position="['left-end']" align="end">
         <template #content>
@@ -145,9 +119,7 @@
             <div>left-end</div>
           </div>
         </template>
-        <template #reference>
-          <d-button style="width: 100px;">left-end</d-button>
-        </template>
+        <d-button style="width: 100px;">left-end</d-button>
       </d-popover>
     </div>
     <div class="popover-demo-item-vertical">
@@ -158,17 +130,13 @@
             <div>right-start</div>
           </div>
         </template>
-        <template #reference>
-          <d-button style="width: 100px;">right-start</d-button>
-        </template>
+        <d-button style="width: 100px;">right-start</d-button>
       </d-popover>
       <d-popover :position="['right']">
         <template #content>
           <div>right</div>
         </template>
-        <template #reference>
-          <d-button style="width: 100px;">right</d-button>
-        </template>
+        <d-button style="width: 100px;">right</d-button>
       </d-popover>
       <d-popover :position="['right-end']" align="end">
         <template #content>
@@ -177,9 +145,7 @@
             <div>right-end</div>
           </div>
         </template>
-        <template #reference>
-          <d-button style="width: 100px;">right-end</d-button>
-        </template>
+        <d-button style="width: 100px;">right-end</d-button>
       </d-popover>
     </div>
   </div>
@@ -191,17 +157,13 @@
           <div>bottom-start</div>
         </div>
       </template>
-      <template #reference>
-        <d-button style="width: 100px;">bottom-start</d-button>
-      </template>
+      <d-button style="width: 100px;">bottom-start</d-button>
     </d-popover>
     <d-popover :position="['bottom']">
       <template #content>
         <div>bottom</div>
       </template>
-      <template #reference>
-        <d-button style="width: 100px;">bottom</d-button>
-      </template>
+      <d-button style="width: 100px;">bottom</d-button>
     </d-popover>
     <d-popover :position="['bottom-end']" align="end">
       <template #content>
@@ -210,9 +172,7 @@
           <div>bottom-end</div>
         </div>
       </template>
-      <template #reference>
-        <d-button style="width: 100px;">bottom-end</d-button>
-      </template>
+      <d-button style="width: 100px;">bottom-end</d-button>
     </d-popover>
   </div>
 </template>
@@ -260,17 +220,13 @@
         <div>Mouse enter 500ms later.</div>
         show Me
       </template>
-      <template #reference>
-        <d-button variant="solid">MouseEnter delay 500ms</d-button>
-      </template>
+      <d-button variant="solid">MouseEnter delay 500ms</d-button>
     </d-popover>
     <d-popover :position="['bottom']" trigger="hover" :mouse-leave-delay="2000">
       <template #content>
         <div>Mouse leave 2000ms later.</div>
       </template>
-      <template #reference>
-        <d-button>MouseLeave delay 2000ms</d-button>
-      </template>
+      <d-button>MouseLeave delay 2000ms</d-button>
     </d-popover>
   </div>
 </template>
@@ -285,9 +241,7 @@
 ```vue
 <template>
   <d-popover :is-open="isOpen" trigger="manually" content="manually control">
-    <template #reference>
-      <d-button @click="onClick">Click Me</d-button>
-    </template>
+    <d-button @click="onClick">Click Me</d-button>
   </d-popover>
 </template>
 
@@ -304,6 +258,7 @@ export default defineComponent({
 });
 </script>
 ```
+
 :::
 
 ### 事件
@@ -314,9 +269,7 @@ export default defineComponent({
 <template>
   <div class="popover-demo-item">
     <d-popover content="content" @show="showFun()" @hide="hideFun()">
-      <template #reference>
-        <d-button>content</d-button>
-      </template>
+      <d-button>content</d-button>
     </d-popover>
   </div>
 </template>
@@ -327,9 +280,9 @@ export default defineComponent({
 }
 </style>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
 
-function showFun(){
+function showFun() {
   this.$notificationService.open({
     content: '显示后触发',
   });
@@ -361,17 +314,17 @@ function hideFun() {
 
 ### Popover 插槽
 
-| 名称名    | 说明                        |
-| :-------- | :-------------------------- |
-| content   | 自定义菜单内容              |
-| reference | 触发 Popover 显示的元素内容 |
+| 名称名  | 说明                        |
+| :------ | :-------------------------- |
+| default | 触发 Popover 显示的元素内容 |
+| content | 自定义弹出内容              |
 
 ### Popover 事件
 
-| 名称名    | 类型     |  说明                        |
-| :-------- | :-------- | :------------------------- |
-| show   | -        | Popover显示后触发事件           |
-| hide   | -        | Popover隐藏后触发事件           |
+| 名称名 | 类型 | 说明                   |
+| :----- | :--- | :--------------------- |
+| show   | -    | Popover 显示后触发事件 |
+| hide   | -    | Popover 隐藏后触发事件 |
 
 ### Popover 类型定义
 
