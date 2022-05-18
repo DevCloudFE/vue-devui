@@ -1,17 +1,16 @@
-import { defineComponent, Transition } from 'vue';
+import { defineComponent, provide, reactive, Transition, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
 import { selectProps, SelectProps } from './select-types';
+import { SELECT_TOKEN } from './const';
 import { Icon } from '../../icon';
 import { Checkbox } from '../../checkbox';
+import Option from './option';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './select.scss';
 
 export default defineComponent({
   name: 'DSelect',
-  components: {
-    Transition,
-  },
   props: selectProps,
   emits: ['toggle-change', 'value-change', 'update:modelValue'],
   setup(props: SelectProps, ctx: SetupContext) {
@@ -27,7 +26,6 @@ export default defineComponent({
       onClick,
       handleClear,
       valueChange,
-      getItemClassName,
     } = useSelect(props, ctx);
 
     const scrollbarNs = useNamespace('scrollbar');
@@ -39,6 +37,15 @@ export default defineComponent({
       [ns.e('dropdown-list')]: true,
       [scrollbarNs.b()]: true,
     };
+
+    provide(
+      SELECT_TOKEN,
+      reactive({
+        ...toRefs(props),
+        emit: ctx.emit,
+        valueChange,
+      })
+    );
 
     return () => {
       return (
@@ -63,14 +70,7 @@ export default defineComponent({
             <div v-show={isOpen.value} class={dropdownCls}>
               <ul class={listCls}>
                 {mergeOptions.value.map((item, i) => (
-                  <li
-                    onClick={(e: MouseEvent) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      valueChange(item, i);
-                    }}
-                    class={getItemClassName(item)}
-                    key={i}>
+                  <Option key={i} value={item.value} data={item} label={item.name} index={i}>
                     {props.multiple ? (
                       <Checkbox
                         modelValue={item._checked}
@@ -80,7 +80,7 @@ export default defineComponent({
                     ) : (
                       item.name
                     )}
-                  </li>
+                  </Option>
                 ))}
               </ul>
             </div>

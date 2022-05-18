@@ -1,4 +1,4 @@
-import { PropType, ComputedRef, ExtractPropTypes, Ref } from 'vue';
+import { PropType, ComputedRef, ExtractPropTypes, Ref, SetupContext } from 'vue';
 
 export interface OptionObjectItem {
   name: string;
@@ -65,31 +65,54 @@ export const selectProps = {
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;
 
+export type OptionModelValue = number | string;
+
 export interface UseSelectReturnType {
   containerRef: Ref<HTMLElement | undefined>;
   dropdownRef: Ref<HTMLElement | undefined>;
   isOpen: Ref<boolean>;
   selectCls: ComputedRef<string>;
-  mergeOptions: ComputedRef;
+  mergeOptions: ComputedRef<OptionObjectItem[]>;
   inputValue: ComputedRef<string>;
   selectionCls: ComputedRef<string>;
   inputCls: ComputedRef<string>;
   onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
   valueChange: (item: OptionObjectItem, index: number) => void;
-  getItemClassName: (item: OptionObjectItem) => string;
+}
+
+export interface SelectContext extends SelectProps {
+  emit: SetupContext['emit'];
+  valueChange: (item: OptionObjectItem, index: number) => void;
 }
 
 export const optionProps = {
-  modelValue: {
-    type: [String, Number, Boolean, Object] as PropType<ModelValue>,
+  value: {
+    type: [String, Number] as PropType<OptionModelValue>,
     default: '',
   },
-  label: [String, Number],
+  label: {
+    type: [String, Number] as PropType<OptionModelValue>,
+    default: '',
+  },
   disabled: {
     type: Boolean,
     default: false,
   },
+  data: {
+    type: Object as PropType<OptionObjectItem>,
+    default: () => ({}),
+  },
+  index: {
+    type: Number,
+    default: -1,
+  },
 };
 
 export type OptionProps = ExtractPropTypes<typeof optionProps>;
+
+export interface UseOptionReturnType {
+  currentLabel: ComputedRef<OptionModelValue>;
+  selectOptionCls: ComputedRef<string>;
+  optionSelect: () => void;
+}
