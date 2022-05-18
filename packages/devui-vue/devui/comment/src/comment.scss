@@ -4,31 +4,38 @@
   display: flex;
   align-items: flex-start;
 
-  &-avatar {
+  &__avatar {
     margin: 0 16px 0 0;
   }
 
-  &-head {
+  &__main {
+    width: 100%;
+  }
+
+  &__head {
     display: flex;
     align-items: center;
   }
 
-  &-author {
+  &__author {
     padding: 0 8px 0 0;
     font-size: $devui-font-size;
     color: $devui-text-weak;
+    font-weight: 800;
   }
 
-  &-datetime {
+  &__datetime {
     font-size: $devui-font-size;
     color: $devui-aide-text;
   }
 
-  &-content {
+  &__content {
+    margin-top: 8px;
+    line-height: 20px;
     font-size: $devui-text;
   }
 
-  &-actions {
+  &__actions {
     padding: 0;
     list-style-type: none;
     margin: 12px 0 0;

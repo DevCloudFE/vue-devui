@@ -1,10 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-popover-reference {
-  display: inline-block;
-}
-
-.#{$devui-prefix}-popover-content.#{$devui-prefix}-flexible-overlay {
+.#{$devui-prefix}-popover__content.#{$devui-prefix}-flexible-overlay {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -21,7 +17,7 @@
   }
 }
 
-.#{$devui-prefix}-popover-fade {
+.#{$devui-prefix}-popover--fade {
   &-bottom,
   &-top {
     &-enter-from,

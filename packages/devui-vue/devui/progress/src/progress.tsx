@@ -1,6 +1,7 @@
 import { CSSProperties, defineComponent, effect, reactive, ref, toRefs, watch } from 'vue';
 import { middleNum } from '../../shared/utils';
 import { ProgressProps, progressProps, ISvgData } from './progress-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './progress.scss';
 
 export default defineComponent({
@@ -8,14 +9,20 @@ export default defineComponent({
   props: progressProps,
   setup(props: ProgressProps) {
     const {
-      height, percentage, percentageText,
-      percentageTextPlacement, percentageTextColor,
-      barBgColor, isCircle, strokeWidth, showContent
+      height,
+      percentage,
+      percentageText,
+      percentageTextPlacement,
+      percentageTextColor,
+      barBgColor,
+      isCircle,
+      strokeWidth,
+      showContent,
     } = toRefs(props);
 
     const normalPercentage = ref(0);
 
-    effect(() =>  {
+    effect(() => {
       normalPercentage.value = middleNum(percentage.value);
     });
 
@@ -57,25 +64,43 @@ export default defineComponent({
 
     setCircleProgress();
 
-    watch([
-      height, normalPercentage, percentageText,
-      percentageTextPlacement, percentageTextColor,
-      barBgColor, isCircle, strokeWidth, showContent
-    ], () => {
-      setCircleProgress();
-    });
+    watch(
+      [
+        height,
+        normalPercentage,
+        percentageText,
+        percentageTextPlacement,
+        percentageTextColor,
+        barBgColor,
+        isCircle,
+        strokeWidth,
+        showContent,
+      ],
+      () => {
+        setCircleProgress();
+      }
+    );
 
     return {
       data,
-      normalPercentage
+      normalPercentage,
     };
   },
   render() {
     const {
-      height, normalPercentage, percentageText,
-      percentageTextPlacement, percentageTextColor,
-      barBgColor, isCircle, strokeWidth, showContent,
-      data, $slots } = this;
+      height,
+      normalPercentage,
+      percentageText,
+      percentageTextPlacement,
+      percentageTextColor,
+      barBgColor,
+      isCircle,
+      strokeWidth,
+      showContent,
+      data,
+      $slots,
+    } = this;
+    const ns = useNamespace('progress');
 
     const isOutside = percentageTextPlacement === 'outside';
     const isInsideBg = percentageTextPlacement === 'insideBg';
@@ -85,7 +110,7 @@ export default defineComponent({
         <span
           style={{
             lineHeight: height,
-            color: percentageTextColor
+            color: percentageTextColor,
           }}>
           {percentageText}
         </span>
@@ -93,50 +118,40 @@ export default defineComponent({
     };
 
     const progressLine = (
-      <div class="devui-progress-content">
+      <div class={ns.e('content')}>
         <div
-          class="devui-progress--line"
+          class={ns.e('line')}
           style={{
             height: height,
             borderRadius: height,
           }}>
           <div
-            class={["devui-progress-bar", percentageTextPlacement]}
+            class={[ns.e('bar'), percentageTextPlacement]}
             style={{
               height: height,
               borderRadius: height,
               width: `${normalPercentage}%`,
               backgroundColor: barBgColor,
-            }}
-          >
-            {
-              !isOutside && !isInsideBg ? createPercentageText() : null
-            }
+            }}>
+            {!isOutside && !isInsideBg ? createPercentageText() : null}
           </div>
-          {
-            isInsideBg ? createPercentageText() : null
-          }
+          {isInsideBg ? createPercentageText() : null}
         </div>
-        {
-          isOutside && !!percentageText ? createPercentageText() : null
-        }
+        {isOutside && !!percentageText ? createPercentageText() : null}
       </div>
     );
 
-    const textElement = <span class="devui-progress-circle-text" style={{ color: percentageTextColor }}>{normalPercentage}%</span>;
+    const textElement = (
+      <span class={ns.e('circle-text')} style={{ color: percentageTextColor }}>
+        {normalPercentage}%
+      </span>
+    );
 
     const progressCircle = (
-      <div class="devui-progress-circle">
-        <svg class="devui-progress-circle" viewBox="0 0 100 100">
+      <div class={ns.e('circle')}>
+        <svg class={ns.e('circle')} viewBox="0 0 100 100">
+          <path fill-opacity="0" stroke-width={strokeWidth} style={data.trailPath as CSSProperties} d={data.pathString} />
           <path
-            class="devui-progress-circle-trail"
-            fill-opacity="0"
-            stroke-width={strokeWidth}
-            style={data.trailPath as CSSProperties}
-            d={data.pathString}
-          />
-          <path
-            class="devui-progress-circle-path"
             d={data.pathString}
             stroke-linecap="round"
             fill-opacity="0"
@@ -150,6 +165,6 @@ export default defineComponent({
       </div>
     );
 
-    return <div class="devui-progress">{!isCircle ? progressLine : progressCircle}</div>;
+    return <div class={ns.b()}>{!isCircle ? progressLine : progressCircle}</div>;
   },
 });

@@ -13,7 +13,7 @@ export default defineComponent({
     const defaultOpt = {
       checked: false,
       isShowTitle: true,
-      halfchecked: false,
+      halfChecked: false,
       showAnimation: true,
       disabled: false,
     };
@@ -60,6 +60,8 @@ export default defineComponent({
       toggleGroupVal,
       itemWidth: toRef(props, 'itemWidth'),
       direction: toRef(props, 'direction'),
+      max: toRef(props, 'max'),
+      modelValue: toRef(props, 'modelValue'),
     });
 
     return {
@@ -91,9 +93,7 @@ export default defineComponent({
 
     return (
       <div class="devui-checkbox-group">
-        <div class={{ 'devui-checkbox-list-inline': direction === 'row' }}>
-          {children}
-        </div>
+        <div class={{ 'devui-checkbox-list-inline': direction === 'row' }}>{children}</div>
       </div>
     );
   },

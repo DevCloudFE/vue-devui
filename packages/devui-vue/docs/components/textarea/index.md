@@ -14,7 +14,7 @@
 <template>
   <h4 style="margin: 10px 0">Default</h4>
 
-  <d-textarea value="我是默认值" autofocus id="textArea" css-class="my-text-area"></d-textarea>
+  <d-textarea v-model="value1" autofocus id="textArea"></d-textarea>
 
   <h4 style="margin: 10px 0">Disabled</h4>
 
@@ -22,8 +22,74 @@
 
   <h4 style="margin: 10px 0">Error</h4>
 
-  <d-textarea placeholder="我是出错状态" error></d-textarea>
+  <d-textarea v-model="value2" placeholder="我是出错状态" error></d-textarea>
 </template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    return {
+      value1: ref('我是默认值'),
+      value2: ref(''),
+    };
+  },
+});
+</script>
+```
+
+:::
+
+### 文本框高度控制
+
+:::demo
+
+```vue
+<template>
+  <d-textarea v-model="value1" :rows="5" placeholder="文本域高度可通过 rows 属性控制"></d-textarea>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    return {
+      value1: ref(''),
+    };
+  },
+});
+</script>
+```
+
+:::
+
+### 自适应文本框
+
+设置文字输入类型的 `autosize` 属性使得根据内容自动调整的高度。 你可以给 `autosize` 提供一个包含有最大和最小高度的对象，让输入框自动调整。
+
+:::demo
+
+```vue
+<template>
+  <d-textarea v-model="value1" autosize placeholder="请输入"></d-textarea>
+  <div style="margin: 20px 0" />
+  <d-textarea v-model="value2" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入" resize="both"></d-textarea>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    return {
+      value1: ref(''),
+      value2: ref(''),
+    };
+  },
+});
+</script>
 ```
 
 :::
@@ -64,10 +130,23 @@
 ```vue
 <template>
   <h4 style="margin: 10px 0">默认</h4>
-  <d-textarea show-count placeholder="请输入"></d-textarea>
+  <d-textarea v-model="value1" show-count placeholder="请输入"></d-textarea>
   <h4 style="margin: 10px 0">显示最大字数</h4>
-  <d-textarea show-count :max-length="20" placeholder="请输入"></d-textarea>
+  <d-textarea v-model="value2" show-count maxlength="20" placeholder="请输入"></d-textarea>
 </template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    return {
+      value1: ref(''),
+      value2: ref(''),
+    };
+  },
+});
+</script>
 ```
 
 :::
@@ -79,10 +158,11 @@
 ```vue
 <template>
   <d-textarea
+    v-model="value1"
     show-count
     :max-length="20"
     placeholder="打开控制台输入文字看看"
-    @update:value="onUpdate"
+    @update:modelValue="onUpdate"
     @change="onChange"
     @focus="onFocus"
     @keydown="onKeydown"
@@ -90,10 +170,11 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 export default {
   setup() {
     const onUpdate = (value) => {
-      console.log('【d-textarea update value】： ', value);
+      console.log('【d-textarea update value】：', value);
     };
     const onChange = (value) => {
       console.log('【d-textarea change value】：', value);
@@ -104,11 +185,13 @@ export default {
     const onKeydown = (e) => {
       console.log('【d-textarea onKeydown:', e);
     };
+    const value1 = ref('');
     return {
       onUpdate,
       onChange,
       onFocus,
       onKeydown,
+      value1,
     };
   },
 };
@@ -119,16 +202,18 @@ export default {
 
 ### Textarea 参数
 
-| 参数名      | 类型              | 默认值 | 说明                         | 跳转 Demo             |
-| :---------- | :---------------- | :----- | :--------------------------- | :-------------------- |
-| id          | `string`          | -      | 可选，文本框 id              | [基本用法](#基本用法) |
-| placeholder | `string`          | -      | 可选，文本框 placeholder     | [基本用法](#基本用法) |
-| value       | `string`          | -      | 可选，文本框默认值           | [基本用法](#基本用法) |
-| disabled    | `boolean`         | false  | 可选，文本框是否被禁用       | [基本用法](#基本用法) |
-| autofocus   | `boolean`         | false  | 可选，文本框是否自动获得焦点 | [基本用法](#基本用法) |
-| error       | `boolean`         | false  | 可选，文本框是否出现输入错误 | [基本用法](#基本用法) |
-| resize      | [Resize](#resize) | 'none' | 可选，文本框是否可调整大小   | [调整大小](#调整大小) |
-| show-count  | `boolean`         | false  | 可选，文本框是否是否展示字数 | [显示字数](#显示字数) |
+| 参数名      | 类型               | 默认值 | 说明                                                                          | 跳转 Demo                         |
+| :---------- | :----------------- | :----- | :---------------------------------------------------------------------------- | :-------------------------------- |
+| id          | `string`           | -      | 可选，文本框 id                                                               | [基本用法](#基本用法)             |
+| placeholder | `string`           | -      | 可选，文本框 placeholder                                                      | [基本用法](#基本用法)             |
+| value       | `string`           | -      | 可选，文本框默认值                                                            | [基本用法](#基本用法)             |
+| disabled    | `boolean`          | false  | 可选，文本框是否被禁用                                                        | [基本用法](#基本用法)             |
+| autofocus   | `boolean`          | false  | 可选，文本框是否自动获得焦点                                                  | [基本用法](#基本用法)             |
+| error       | `boolean`          | false  | 可选，文本框是否出现输入错误                                                  | [基本用法](#基本用法)             |
+| resize      | [Resize](#resize)  | 'none' | 可选，文本框是否可调整大小                                                    | [调整大小](#调整大小)             |
+| show-count  | `boolean`          | false  | 可选，文本框是否是否展示字数                                                  | [显示字数](#显示字数)             |
+| rows        | `number / string`  | 2      | 可选，文本框高度控制                                                          | [文本框高度控制](#文本框高度控制) |
+| autosize    | `boolean / object` | false  | textarea 高度是否自适应。可以接受一个对象，比如: `{ minRows: 2, maxRows: 6 }` | [自适应文本框](#自适应文本框)     |
 
 ### Textarea 事件
 

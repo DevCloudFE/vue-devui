@@ -6,19 +6,17 @@ exports[`card should render correctly 1`] = `
 >
   <!---->
   <div
-    class="devui-card-header"
+    class="devui-card__header"
   >
     
-    <div
-      class="devui-card-header-title-area"
-    >
+    <div>
       <div
-        class="devui-card-title"
+        class="devui-card__title"
       >
         <!---->
       </div>
       <div
-        class="devui-card-subtitle"
+        class="devui-card__subtitle"
       >
         <!---->
       </div>
@@ -26,12 +24,12 @@ exports[`card should render correctly 1`] = `
   </div>
   
   <div
-    class="devui-card-content"
+    class="devui-card__content"
   >
     <!---->
   </div>
   <div
-    class="d-card-actions devui-card-actions"
+    class="devui-card__actions"
   >
     
   </div>

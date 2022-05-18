@@ -1,7 +1,8 @@
 import type { App } from 'vue';
 import Select from './src/select';
+import Option from './src/option';
 
-export { Select };
+export { Select, Option };
 
 export default {
   title: 'Select 下拉框',
@@ -9,5 +10,6 @@ export default {
   status: '10%',
   install(app: App): void {
     app.component(Select.name, Select);
+    app.component(Option.name, Option);
   },
 };

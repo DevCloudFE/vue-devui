@@ -1,6 +1,13 @@
 import { mount } from '@vue/test-utils';
 import DBreadcrumb from '../src/breadcrumb';
 import DBreadcrumbItem from '../src/breadcrumb-item';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('breadcrumb', true);
+
+const itemClass = ns.e('item');
+const separatorClass = ns.e('separator');
+const isLinkClass = '.is-link';
 
 describe('breadcrumb', () => {
   it('should breadcrumb display correctly', () => {
@@ -18,11 +25,12 @@ describe('breadcrumb', () => {
             </d-breadcrumb-item>
           </d-breadcrumb>`
     });
-    const items = wrapper.findAll('.devui-breadcrumb-item');
-    const separators = wrapper.findAll('.devui-breadcrumb-separator');
+    const items = wrapper.findAll(itemClass);
+    const separators = wrapper.findAll(separatorClass);
     expect(items.length).toBe(2);
     expect(separators.length).toBe(2);
   });
+
   it('should separator support custom', () => {
     const wrapper = mount({
       components: {
@@ -35,7 +43,7 @@ describe('breadcrumb', () => {
       </d-breadcrumb>
     `
     });
-    expect(wrapper.find('.devui-breadcrumb-separator').text()).toBe('?');
+    expect(wrapper.find(separatorClass).text()).toBe('?');
   });
 
   it('should `to` work correctly', () => {
@@ -50,6 +58,6 @@ describe('breadcrumb', () => {
       </d-breadcrumb>
     `
     });
-    expect(wrapper.find('.is-link')).toBeTruthy();
+    expect(wrapper.find(isLinkClass)).toBeTruthy();
   });
 });

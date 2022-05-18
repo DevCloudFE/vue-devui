@@ -1,38 +1,35 @@
-import {
-  defineComponent,
-  reactive,
-  ref,
-  provide,
-  onUnmounted,
-  watch
-} from 'vue';
+import { defineComponent, reactive, ref, provide, onUnmounted, watch } from 'vue';
 import DSplitterBar from './components/splitter-bar';
-import { SplitterStore, type SplitterPane} from './splitter-store';
+import { SplitterStore, type SplitterPane } from './splitter-store';
 import { splitterProps, SplitterProps, SplitterState } from './splitter-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './splitter.scss';
 
 export default defineComponent({
   name: 'DSplitter',
   components: {
-    DSplitterBar
+    DSplitterBar,
   },
   props: splitterProps,
   emits: [],
   setup(props: SplitterProps, ctx) {
     const store: SplitterStore = new SplitterStore();
     const state = reactive<SplitterState>({
-      panes: [] // 内嵌面板
+      panes: [], // 内嵌面板
     });
+    const ns = useNamespace('splitter');
 
     state.panes = ctx.slots.DSplitterPane?.() || [];
 
-    store.setPanes({ panes: state.panes as unknown as SplitterPane[]});
+    store.setPanes({ panes: state.panes as unknown as SplitterPane[] });
     provide('orientation', props.orientation);
     provide('splitterStore', store);
 
     const domRef = ref<HTMLElement>();
     const refreshSplitterContainerSize = () => {
-      if (!domRef.value) {return;}
+      if (!domRef.value) {
+        return;
+      }
       let containerSize = 0;
       if (props.orientation === 'vertical') {
         containerSize = domRef.value.clientHeight;
@@ -59,7 +56,7 @@ export default defineComponent({
 
     return () => {
       const { splitBarSize, orientation, showCollapseButton } = props;
-      const wrapperClass = ['devui-splitter', `devui-splitter-${orientation}`];
+      const wrapperClass = [ns.b(), ns.m(orientation)];
 
       return (
         <div class={wrapperClass} ref={domRef}>
@@ -74,12 +71,11 @@ export default defineComponent({
                   splitBarSize={splitBarSize}
                   orientation={orientation}
                   index={index}
-                  showCollapseButton={showCollapseButton}
-                ></d-splitter-bar>
+                  showCollapseButton={showCollapseButton}></d-splitter-bar>
               );
             })}
         </div>
       );
     };
-  }
+  },
 });

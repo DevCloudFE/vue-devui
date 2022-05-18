@@ -15,16 +15,16 @@ export const commentProps = {
     default: null,
   },
   author: {
-    type: Object as PropType<IcommentProps>,
-    default: null,
+    type: String,
+    default: '',
   },
   avatar: {
-    type: Object as PropType<IcommentProps>,
-    default: null,
+    type: String,
+    default: '',
   },
   content: {
-    type: Object as PropType<IcommentProps>,
-    default: null,
+    type: String,
+    default: '',
   },
   datetime: {
     type: Object as PropType<IcommentProps>,

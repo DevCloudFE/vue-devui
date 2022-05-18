@@ -1,9 +1,5 @@
 @import '../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-tooltip-reference {
-  display: inline-block;
-}
-
 .#{$devui-prefix}-tooltip {
   max-width: 200px;
   min-height: 26px;

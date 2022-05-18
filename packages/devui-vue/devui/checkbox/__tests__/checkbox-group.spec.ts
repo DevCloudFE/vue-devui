@@ -9,19 +9,19 @@ describe('d-checkbox-group', () => {
     const wrapper = mount({
       components: {
         DCheckboxGroup,
-        DCheckbox
+        DCheckbox,
       },
       template: `
-        <d-checkbox-group v-model:value="list">
+        <d-checkbox-group v-model="list">
           <d-checkbox value="a"></d-checkbox>
           <d-checkbox value="b"></d-checkbox>
         </d-checkbox-group>
       `,
-      setup () {
+      setup() {
         return {
-          list
+          list,
         };
-      }
+      },
     });
     const [box1, box2] = wrapper.findAll('.devui-checkbox');
 
@@ -42,35 +42,35 @@ describe('d-checkbox-group', () => {
     const wrapper = mount({
       components: {
         DCheckboxGroup,
-        DCheckbox
+        DCheckbox,
       },
       template: `
-        <d-checkbox-group v-model:value="list" :disabled="disabled" @change="onChange">
+        <d-checkbox-group v-model="list" :disabled="disabled" @change="onChange">
           <d-checkbox value="a">1</d-checkbox>
           <d-checkbox value="b">2</d-checkbox>
         </d-checkbox-group>
       `,
-      setup () {
+      setup() {
         return {
           list,
           disabled,
-          onChange
+          onChange,
         };
-      }
+      },
     });
     const label1 = wrapper.find('label');
 
     await label1.trigger('click');
     expect(list.value).toStrictEqual(['b']);
     expect(onChange).toBeCalledTimes(0);
-    expect(wrapper.findAll('.devui-checkbox').every(el => el.classes().includes('disabled'))).toBe(true);
+    expect(wrapper.findAll('.devui-checkbox').every((el) => el.classes().includes('disabled'))).toBe(true);
 
     disabled.value = false;
     await nextTick();
     await label1.trigger('click');
     expect(list.value).toStrictEqual(['b', 'a']);
     expect(onChange).toBeCalledTimes(1);
-    expect(wrapper.findAll('.devui-checkbox').some(el => el.classes().includes('disabled'))).toBe(false);
+    expect(wrapper.findAll('.devui-checkbox').some((el) => el.classes().includes('disabled'))).toBe(false);
   });
 
   it('checkbox-group direction work', async () => {
@@ -79,23 +79,23 @@ describe('d-checkbox-group', () => {
     const wrapper = mount({
       components: {
         DCheckboxGroup,
-        DCheckbox
+        DCheckbox,
       },
       template: `
-        <d-checkbox-group v-model:value="list" :direction="direction">
+        <d-checkbox-group v-model="list" :direction="direction">
           <d-checkbox value="a">1</d-checkbox>
           <d-checkbox value="b">2</d-checkbox>
         </d-checkbox-group>
       `,
-      setup () {
+      setup() {
         return {
           list,
-          direction
+          direction,
         };
-      }
+      },
     });
 
-    expect(wrapper.findAll('.devui-checkbox-column-margin').length).toBe(2);
+    expect(wrapper.findAll('.devui-checkbox__column-margin').length).toBe(2);
     expect(wrapper.find('.devui-checkbox-list-inline').exists()).toBe(false);
 
     direction.value = 'row';
@@ -109,48 +109,49 @@ describe('d-checkbox-group', () => {
     const wrapper = mount({
       components: {
         DCheckboxGroup,
-        DCheckbox
+        DCheckbox,
       },
       template: `
-        <d-checkbox-group v-model:value="list" :item-width="itemWidth">
+        <d-checkbox-group v-model="list" :item-width="itemWidth">
           <d-checkbox value="a">1</d-checkbox>
           <d-checkbox value="b">2</d-checkbox>
         </d-checkbox-group>
       `,
-      setup () {
+      setup() {
         return {
           list,
-          itemWidth
+          itemWidth,
         };
-      }
+      },
     });
 
-    expect(wrapper.findAll('.devui-checkbox-wrap').length).toBe(2);
+    expect(wrapper.findAll('.devui-checkbox__wrap').length).toBe(2);
   });
 
   it('checkbox-group options work', () => {
     const list = ref(['b']);
     const wrapper = mount({
       components: {
-        DCheckboxGroup
+        DCheckboxGroup,
       },
       template: `
-        <d-checkbox-group v-model:value="list" :options="options">
+        <d-checkbox-group v-model="list" :options="options">
         </d-checkbox-group>
       `,
-      setup () {
+      setup() {
         const options = [
           {
-            value: 'a'
-          }, {
-            value: 'b'
-          }
+            value: 'a',
+          },
+          {
+            value: 'b',
+          },
         ];
         return {
           list,
-          options
+          options,
         };
-      }
+      },
     });
 
     const boxList = wrapper.findAll('.devui-checkbox');
@@ -167,21 +168,21 @@ describe('d-checkbox-group', () => {
     const wrapper = mount({
       components: {
         DCheckboxGroup,
-        DCheckbox
+        DCheckbox,
       },
       template: `
-        <d-checkbox-group v-model:value="list" :before-change="beforeChange" @change="onChange">
+        <d-checkbox-group v-model="list" :before-change="beforeChange" @change="onChange">
           <d-checkbox value="a">1</d-checkbox>
           <d-checkbox value="b">2</d-checkbox>
         </d-checkbox-group>
       `,
-      setup () {
+      setup() {
         return {
           list,
           beforeChange,
-          onChange
+          onChange,
         };
-      }
+      },
     });
 
     const box1 = wrapper.find('label');
@@ -197,5 +198,42 @@ describe('d-checkbox-group', () => {
     expect(beforeChange).toHaveBeenCalledTimes(2);
     expect(onChange).toBeCalledTimes(1);
     expect(list.value).toStrictEqual(['b', 'a']);
+  });
+
+  it('checkbox-group max work', async () => {
+    const list = ref(['a', 'b']);
+    const max = ref(3);
+    const wrapper = mount({
+      components: {
+        DCheckboxGroup,
+        DCheckbox,
+      },
+      template: `
+        <d-checkbox-group v-model="list" :max="max">
+          <d-checkbox value="a">1</d-checkbox>
+          <d-checkbox value="b">2</d-checkbox>
+          <d-checkbox value="c">3</d-checkbox>
+          <d-checkbox value="d">4</d-checkbox>
+        </d-checkbox-group>
+      `,
+      setup() {
+        return {
+          list,
+          max,
+        };
+      },
+    });
+    const [label1, label2, label3, label4] = wrapper.findAll('label');
+
+    await label3.trigger('click');
+    await label4.trigger('click');
+    expect(list.value).toStrictEqual(['a', 'b', 'c']);
+    expect(list.value.length).toBeLessThanOrEqual(max.value);
+    expect(wrapper.findAll('.devui-checkbox').filter((el) => el.classes().includes('disabled'))?.length).toBe(1);
+
+    await label1.trigger('click');
+    await label2.trigger('click');
+    expect(list.value).toStrictEqual(['c']);
+    expect(wrapper.findAll('.devui-checkbox').filter((el) => el.classes().includes('disabled'))?.length).toBe(0);
   });
 });

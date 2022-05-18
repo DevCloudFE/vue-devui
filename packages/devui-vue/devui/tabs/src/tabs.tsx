@@ -1,13 +1,14 @@
 import { defineComponent, onBeforeMount, onMounted, onUpdated, provide, reactive, ref } from 'vue';
 import { Active, Tabs, tabsProps, TabsState } from './tabs-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './tabs.scss';
 
 export default defineComponent({
   name: 'DTabs',
   props: tabsProps,
-
   emits: ['update:modelValue', 'active-tab-change'],
   setup(props, { emit, slots }) {
+    const ns = useNamespace('tabs');
     const tabsEle = ref(null);
     const data = reactive({ offsetLeft: 0, offsetWidth: 0, id: null });
     const state: TabsState = reactive({
@@ -55,9 +56,9 @@ export default defineComponent({
         }
       });
     };
-    const ulClass: string[] = [props.type];
+    const ulClass: string[] = [ns.em('nav', props.type)];
     props.cssClass && ulClass.push(props.cssClass);
-    props.vertical && ulClass.push('devui-nav-stacked');
+    props.vertical && ulClass.push(ns.e('stacked'));
     onUpdated(() => {
       if (props.type === 'slider') {
         // 延时等待active样式切换至正确的tab
@@ -82,8 +83,8 @@ export default defineComponent({
     });
     return () => {
       return (
-        <div class="devui-tabs">
-          <ul ref={tabsEle} role="tablist" class={`devui-nav devui-nav-${ulClass.join(' ')}`}>
+        <div class={ns.b()}>
+          <ul ref={tabsEle} role="tablist" class={[ns.e('nav'), ulClass.join(' ')]}>
             {state.data.map((item, i) => {
               return (
                 <li
@@ -100,13 +101,13 @@ export default defineComponent({
               );
             })}
             <div
-              class={`devui-nav-${props.type}-animation`}
+              class={ns.e(`nav-${props.type}-animation`)}
               style={{
                 left: data.offsetLeft + 'px',
                 width: data.offsetWidth + 'px',
               }}></div>
           </ul>
-          {slots.default()}
+          {slots.default?.()}
         </div>
       );
     };

@@ -30,9 +30,8 @@
   }
 
   &__empty {
-    width: 100%;
-    font-size: $devui-font-size;
-    text-align: center;
+    padding: 40px 0;
+    background-color: $devui-base-bg;
   }
 
   &__fix-header {
@@ -53,6 +52,7 @@
 
   &--sm {
     tbody > tr > td {
+      font-size: $devui-font-size-sm;
       padding: 7px 20px 8px;
 
       &.#{$devui-prefix}-table__checkable-cell {
@@ -67,6 +67,7 @@
 
   &--md {
     tbody > tr > td {
+      font-size: $devui-font-size-md;
       padding: 11px 20px 12px;
     }
 
@@ -77,6 +78,7 @@
 
   &--lg {
     tbody > tr > td {
+      font-size: $devui-font-size-lg;
       padding: 15px 20px 16px;
     }
 

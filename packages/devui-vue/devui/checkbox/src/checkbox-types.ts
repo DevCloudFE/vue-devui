@@ -7,7 +7,7 @@ const commonProps = {
     type: String,
     default: undefined,
   },
-  halfchecked: {
+  halfChecked: {
     type: Boolean,
     default: false,
   },
@@ -31,19 +31,13 @@ const commonProps = {
     default: false,
   },
   beforeChange: {
-    type: Function as PropType<
-    (isChecked: boolean, v: string) => boolean | Promise<boolean>
-    >,
+    type: Function as PropType<(isChecked: boolean, v: string) => boolean | Promise<boolean>>,
     default: undefined,
   },
 } as const;
 
 export const checkboxProps = {
   ...commonProps,
-  halfchecked: {
-    type: Boolean,
-    default: false,
-  },
   checked: {
     type: Boolean,
     default: false,
@@ -52,10 +46,6 @@ export const checkboxProps = {
     type: String,
   },
   label: {
-    type: String,
-    default: undefined,
-  },
-  title: {
     type: String,
     default: undefined,
   },
@@ -103,6 +93,10 @@ export const checkboxGroupProps = {
     type: Function as PropType<(v: string[]) => void>,
     default: undefined,
   },
+  max: {
+    type: Number,
+    default: undefined,
+  },
 } as const;
 
 interface checkboxGroupInjection {
@@ -110,14 +104,13 @@ interface checkboxGroupInjection {
   isShowTitle: Ref<boolean>;
   color: Ref<string | undefined>;
   showAnimation: Ref<boolean>;
-  beforeChange:
-  | undefined
-  | ((isChecked: boolean, v: string) => boolean | Promise<boolean>);
+  beforeChange: undefined | ((isChecked: boolean, v: string) => boolean | Promise<boolean>);
   toggleGroupVal: (v: string) => void;
   isItemChecked: (v: string) => boolean;
   itemWidth: Ref<number | undefined>;
   direction: Ref<Direction>;
+  max: Ref<number | undefined>;
+  modelValue: Ref<string[]>;
 }
 
-export const checkboxGroupInjectionKey: InjectionKey<checkboxGroupInjection> =
-  Symbol('d-checkbox-group');
+export const checkboxGroupInjectionKey: InjectionKey<checkboxGroupInjection> = Symbol('d-checkbox-group');

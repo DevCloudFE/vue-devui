@@ -12,39 +12,39 @@
   @return math.div($i, $sum) * 100%;
 }
 
-.#{$devui-prefix}-col-span-0 {
+.#{$devui-prefix}-col__span--0 {
   display: none;
 }
 
-.#{$devui-prefix}-col-xs-span-0 {
+.#{$devui-prefix}-col__xs--span-0 {
   display: none;
 }
 
 @for $i from 1 through 24 {
-  .#{$devui-prefix}-col-offset-#{$i} {
+  .#{$devui-prefix}-col__offset--#{$i} {
     margin-left: percentage($i);
   }
-  .#{$devui-prefix}-col-pull-#{$i} {
+  .#{$devui-prefix}-col__pull--#{$i} {
     right: percentage($i);
   }
-  .#{$devui-prefix}-col-push-#{$i} {
+  .#{$devui-prefix}-col__push--#{$i} {
     left: percentage($i);
   }
-  .#{$devui-prefix}-col-span-#{$i} {
+  .#{$devui-prefix}-col__span--#{$i} {
     display: block;
     flex: 0 0 percentage($i);
     width: percentage($i);
   }
-  .#{$devui-prefix}-col-xs-offset-#{$i} {
+  .#{$devui-prefix}-col__xs--offset-#{$i} {
     margin-left: percentage($i);
   }
-  .#{$devui-prefix}-col-xs-pull-#{$i} {
+  .#{$devui-prefix}-col__xs--pull-#{$i} {
     right: percentage($i);
   }
-  .#{$devui-prefix}-col-xs-push-#{$i} {
+  .#{$devui-prefix}-col__xs--push-#{$i} {
     left: percentage($i);
   }
-  .#{$devui-prefix}-col-xs-span-#{$i} {
+  .#{$devui-prefix}-col__xs--span-#{$i} {
     display: block;
     flex: 0 0 percentage($i);
     width: percentage($i);
@@ -53,20 +53,20 @@
 
 @each $size, $value in (sm, 576), (md, 768), (lg, 992), (xl, 1200), (xxl, 1600) {
   @media screen and (min-width: #{$value}px) {
-    .#{$devui-prefix}-col-#{$size}-span-0 {
+    .#{$devui-prefix}-col__#{$size}--span-0 {
       display: none;
     }
     @for $i from 1 through 24 {
-      .#{$devui-prefix}-col-#{$size}-offset-#{$i} {
+      .#{$devui-prefix}-col__#{$size}--offset-#{$i} {
         margin-left: percentage($i);
       }
-      .#{$devui-prefix}-col-#{$size}-pull-#{$i} {
+      .#{$devui-prefix}-col__#{$size}--pull-#{$i} {
         right: percentage($i);
       }
-      .#{$devui-prefix}-col-#{$size}-push-#{$i} {
+      .#{$devui-prefix}-col__#{$size}--push-#{$i} {
         left: percentage($i);
       }
-      .#{$devui-prefix}-col-#{$size}-span-#{$i} {
+      .#{$devui-prefix}-col__#{$size}--span-#{$i} {
         display: block;
         flex: 0 0 percentage($i);
         width: percentage($i);

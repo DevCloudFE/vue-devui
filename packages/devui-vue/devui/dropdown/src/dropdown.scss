@@ -1,9 +1,5 @@
 @import '../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-dropdown-toggle {
-  display: inline-block;
-}
-
 .#{$devui-prefix}-dropdown span {
   &.icon-chevron-down,
   &.icon-select-arrow {
@@ -12,7 +8,7 @@
   }
 }
 
-.#{$devui-prefix}-dropdown-menu-wrap .#{$devui-prefix}-dropdown-menu {
+.#{$devui-prefix}-dropdown__menu-wrap .#{$devui-prefix}-dropdown-menu {
   width: 100%;
 }
 

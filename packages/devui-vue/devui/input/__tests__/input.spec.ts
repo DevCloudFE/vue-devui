@@ -12,12 +12,12 @@ describe('d-input', () => {
       `,
       setup() {
         return {
-          value
+          value,
         };
-      }
+      },
     });
     const input = wrapper.find('input');
-    expect(input.attributes('dinput')).toBe('true');
+    expect(input.classes()).toContain('devui-input__inner');
     expect(input.element.value).toBe('abc');
 
     await input.setValue('def');
@@ -47,9 +47,9 @@ describe('d-input', () => {
           onChange,
           onFocus,
           onBlur,
-          onKeydown
+          onKeydown,
         };
-      }
+      },
     });
     const input = wrapper.find('input');
 
@@ -69,14 +69,14 @@ describe('d-input', () => {
   it('d-input disabled work', async () => {
     const wrapper = mount(DInput, {
       props: {
-        disabled: false
-      }
+        disabled: false,
+      },
     });
     const input = wrapper.find('input');
     expect(input.attributes('disabled')).toBe(undefined);
 
     await wrapper.setProps({
-      disabled: true
+      disabled: true,
     });
     expect(input.attributes('disabled')).toBe('');
   });
@@ -84,46 +84,60 @@ describe('d-input', () => {
   it('d-input error work', async () => {
     const wrapper = mount(DInput, {
       props: {
-        error: false
-      }
+        error: false,
+      },
     });
-    const input = wrapper.find('input');
-    expect(input.classes()).not.toContain('error');
+    expect(wrapper.classes()).not.toContain('devui-input--error');
 
     await wrapper.setProps({
-      error: true
+      error: true,
     });
-    expect(input.classes()).toContain('error');
+    expect(wrapper.classes()).toContain('devui-input--error');
   });
 
   it('d-input size work', async () => {
     const wrapper = mount(DInput);
-    const input = wrapper.find('input');
-    expect(input.classes()).not.toContain('devui-input-sm');
-    expect(input.classes()).not.toContain('devui-input-lg');
+    expect(wrapper.classes()).not.toContain('devui-input--sm');
+    expect(wrapper.classes()).not.toContain('devui-input--lg');
 
     await wrapper.setProps({
-      size: 'sm'
+      size: 'sm',
     });
-    expect(input.classes()).toContain('devui-input-sm');
-    expect(input.classes()).not.toContain('devui-input-lg');
+    expect(wrapper.classes()).toContain('devui-input--sm');
+    expect(wrapper.classes()).not.toContain('devui-input--lg');
 
     await wrapper.setProps({
-      size: 'lg'
+      size: 'lg',
     });
-    expect(input.classes()).not.toContain('devui-input-sm');
-    expect(input.classes()).toContain('devui-input-lg');
+    expect(wrapper.classes()).not.toContain('devui-input--sm');
+    expect(wrapper.classes()).toContain('devui-input--lg');
   });
 
-  it('d-input showPassword work', async () => {
-    const wrapper = mount(DInput);
-    const input = wrapper.find('input');
-
-    expect(input.attributes('type')).toBe('text');
-
-    await wrapper.setProps({
-      showPassword: true
+  it('d-input Method:select/focus/blur work', async () => {
+    const testValue = ref('abc');
+    const wrapper = mount({
+      components: { DInput },
+      template: `
+        <d-input ref="inputDemo" v-model="testValue" />
+      `,
+      setup() {
+        return {
+          testValue,
+        };
+      },
     });
-    expect(input.attributes('type')).toBe('password');
+
+    const input = wrapper.find('input').element;
+    input.selectionEnd = 0;
+    (wrapper.vm.$refs.inputDemo as HTMLInputElement).select();
+    await nextTick();
+    expect(input.selectionEnd).toBe(input.value.length);
+
+    // TODO focus/blur
+    // 调用DOM的focus和select并不会给节点的div加上devui-input--focus
+  });
+
+  it('d-input validate-event work', async () => {
+    // TODO 需要结合form组件进行测试
   });
 });
