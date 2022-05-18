@@ -16,7 +16,7 @@ export default defineComponent({
       const content =
         tabs.state.showContent && tabs.state.active === id ? (
           <div class={ns.e('content')}>
-            <div role="tabpanel">{slots.default()}</div>
+            <div role="tabpanel">{slots.default?.()}</div>
           </div>
         ) : null;
       return content;
