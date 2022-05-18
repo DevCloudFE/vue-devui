@@ -84,11 +84,34 @@ Icon 组件默认引用 DevUI 图标库的图标，如果需要在现有 Icon �
 <d-icon class-prefix="my-icon" name="right"></d-icon>
 ```
 
+### 自定义svg
+
+可以借助 [vite-plugin-vue-svg](https://www.npmjs.com/package/vite-plugin-vue-svg)，将 svg component 传入，实现自定义 svg。
+
+```vue
+<template>
+  <d-icon :component="MySvgIcon"></d-icon>
+</template>
+<script>
+import { defineComponent } from 'vue';
+import MySvgIcon from '../../assets/logo.svg';
+
+export default defineComponent({
+  setup() {
+    return {
+      MySvgIcon,
+    };
+  },
+});
+</script>
+```
+
 ### Icon 参数
 
-|    参数名     |   类型   |   默认    | 说明                     | 跳转 Demo                         |
-| :--------- | :------ | :------- | :----------------------- | :--------------------------------- |
-|    name     | `String` |    --     | 必选，图标名称          | [基本用法](#基本用法)             |
-|    size     | `String` |  '16px'   | 可选，图标尺寸           | [尺寸](#尺寸)             |
-|    color    | `String` | '#252b3a' | 可选，图标颜色           | [颜色](#颜色)             |
-| class-prefix | `String` |  'icon'   | 可选，自定义字体图标前缀 | [自定义字体图标](#自定义字体图标) |
+| 参数名       | 类型           | 默认      | 说明                     | 跳转 Demo                         |
+| :----------- | :------------- | :-------- | :----------------------- | :-------------------------------- |
+| name         | `String`       | --        | 必选，图标名称           | [基本用法](#基本用法)             |
+| size         | `String`       | '16px'    | 可选，图标尺寸           | [尺寸](#尺寸)                     |
+| color        | `String`       | '#252b3a' | 可选，图标颜色           | [颜色](#颜色)                     |
+| class-prefix | `String`       | 'icon'    | 可选，自定义字体图标前缀 | [自定义字体图标](#自定义字体图标) |
+| component    | `VueComponent` | null      | 可选，自定义 svg 图标    | [自定义svg](#自定义svg)          |
