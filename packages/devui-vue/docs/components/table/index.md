@@ -223,7 +223,7 @@ export default defineComponent({
   <div>
     <d-button @click="handleClick">Get CheckedRows</d-button>
     <d-table ref="tableRef" :data="data" @cell-click="onCellClick" @check-change="checkChange" @check-all-change="checkAllChange">
-      <d-column type="checkable" width="30" :checkable="checkable"></d-column>
+      <d-column type="checkable" width="30" :checkable="checkable" reserve-check></d-column>
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
       <d-column field="gender" header="Gender"></d-column>
@@ -281,7 +281,7 @@ export default defineComponent({
 
     const checkable = (row, rowIndex) => {
       return row.lastName === 'Li' || false;
-    }
+    };
 
     return { tableRef, data, handleClick, onCellClick, checkChange, checkAllChange, checkable };
   },
@@ -1043,6 +1043,7 @@ export default defineComponent({
 | filter-list     | [FilterConfig[]](#filterconfig)    | []     | 可选，筛选列表                              | [列筛选](#列筛选)     |
 | align           | [ColumnAlign](#columnalign)        | 'left' | 可选，配置水平对齐方式                      | [自定义列](#自定义列) |
 | checkable       | `Function(row, rowIndex): boolean` | --     | 可选，配置行勾选状态                        | [表格交互](#表格交互) |
+| reserve-check   | `boolean`                          | false  | 可选，是否保留勾选状态                      | [表格交互](#表格交互) |
 
 ### Column 事件
 

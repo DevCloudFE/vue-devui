@@ -82,6 +82,10 @@ export const tableColumnProps = {
   checkable: {
     type: Function as PropType<(row: unknown, rowIndex: number) => boolean>,
   },
+  reserveCheck: {
+    type: Boolean,
+    default: false,
+  }
 };
 
 export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>;
