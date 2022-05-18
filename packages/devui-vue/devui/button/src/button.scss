@@ -262,6 +262,10 @@
           .#{$devui-prefix}-button__icon-fix {
             color: $devui-icon-fill-active;
           }
+
+          .button-content {
+            color: $devui-brand;
+          }
         }
       }
     }
