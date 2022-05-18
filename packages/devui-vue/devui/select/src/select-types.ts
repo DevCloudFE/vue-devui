@@ -1,4 +1,4 @@
-import { PropType, ComputedRef, ExtractPropTypes, Ref, InjectionKey, SetupContext } from 'vue';
+import { PropType, ComputedRef, ExtractPropTypes, Ref, SetupContext } from 'vue';
 
 export interface OptionObjectItem {
   name: string;
@@ -85,8 +85,6 @@ export interface SelectContext extends SelectProps {
   emit: SetupContext['emit'];
   valueChange: (item: OptionObjectItem, index: number) => void;
 }
-
-export const SELECT_TOKEN: InjectionKey<SelectContext> = Symbol('dSelect');
 
 export const optionProps = {
   value: {

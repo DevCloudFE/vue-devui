@@ -1,7 +1,8 @@
 import { defineComponent, provide, reactive, Transition, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
-import { selectProps, SelectProps, SELECT_TOKEN } from './select-types';
+import { selectProps, SelectProps } from './select-types';
+import { SELECT_TOKEN } from './const';
 import { Icon } from '../../icon';
 import { Checkbox } from '../../checkbox';
 import Option from './option';

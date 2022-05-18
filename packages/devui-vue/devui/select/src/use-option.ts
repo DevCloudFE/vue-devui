@@ -1,5 +1,6 @@
 import { computed, inject } from 'vue';
-import { OptionProps, UseOptionReturnType, SELECT_TOKEN } from './select-types';
+import { OptionProps, UseOptionReturnType } from './select-types';
+import { SELECT_TOKEN } from './const';
 import { className } from './utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 export default function useOption(props: OptionProps): UseOptionReturnType {

@@ -1,9 +1,9 @@
 import { ref, computed } from 'vue';
 import type { SetupContext } from 'vue';
-import { SelectProps, OptionObjectItem, UseSelectReturnType, OptionModelValue } from './select-types';
+import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
 import { className } from './utils';
-import useCacheOptions from '../hooks/use-cache-options';
-import useSelectOutsideClick from '../hooks/use-select-outside-click';
+import useCacheOptions from '../composables/use-cache-options';
+import useSelectOutsideClick from '../composables/use-select-outside-click';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default function useSelect(props: SelectProps, ctx: SetupContext): UseSelectReturnType {
