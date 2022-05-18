@@ -2,6 +2,7 @@ import { defineComponent, ExtractPropTypes, provide, toRef } from 'vue';
 import { checkboxGroupProps, checkboxGroupInjectionKey } from './checkbox-types';
 import DCheckbox from './checkbox';
 import './checkbox-group.scss';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DCheckboxGroup',
@@ -9,6 +10,7 @@ export default defineComponent({
   emits: ['change', 'update:modelValue'],
   setup(props: ExtractPropTypes<typeof checkboxGroupProps>, ctx) {
     const valList = toRef(props, 'modelValue');
+    const ns = useNamespace('checkbox');
 
     const defaultOpt = {
       checked: false,
@@ -68,10 +70,11 @@ export default defineComponent({
 
     return {
       defaultOpt,
+      ns,
     };
   },
   render() {
-    const { direction, $slots, defaultOpt, options } = this;
+    const { direction, $slots, defaultOpt, options, ns } = this;
     let children = $slots.default?.();
 
     if (options?.length > 0) {
@@ -94,8 +97,8 @@ export default defineComponent({
     }
 
     return (
-      <div class="devui-checkbox-group">
-        <div class={{ 'devui-checkbox-list-inline': direction === 'row' }}>{children}</div>
+      <div class={ns.e('group')}>
+        <div class={{ [ns.m('list-inline')]: direction === 'row' }}>{children}</div>
       </div>
     );
   },
