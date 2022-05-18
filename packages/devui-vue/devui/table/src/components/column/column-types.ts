@@ -79,6 +79,9 @@ export const tableColumnProps = {
     type: String as PropType<ColumnAlign>,
     default: 'left',
   },
+  checkable: {
+    type: Function as PropType<(row: unknown, rowIndex: number) => boolean>,
+  },
 };
 
 export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>;
