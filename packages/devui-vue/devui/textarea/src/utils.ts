@@ -1,6 +1,6 @@
 import { isNumber } from 'lodash';
 
-let hiddenTextarea: HTMLTextAreaElement | undefined = undefined;
+let tempTextarea: HTMLTextAreaElement | undefined = undefined;
 
 const HIDDEN_STYLE = `
   height:0 !important;
@@ -30,7 +30,7 @@ const CONTEXT_STYLE = [
   'box-sizing',
 ];
 
-type NodeStyle = {
+type BoxStyle = {
   contextStyle: string;
   boxSizing: string;
   paddingSize: number;
@@ -42,7 +42,7 @@ type TextAreaHeight = {
   minHeight?: string;
 };
 
-function calculateNodeStyling(targetElement: Element): NodeStyle {
+function getBoxStyle(targetElement: Element): BoxStyle {
   const style = window.getComputedStyle(targetElement);
 
   const boxSizing = style.getPropertyValue('box-sizing');
@@ -58,32 +58,39 @@ function calculateNodeStyling(targetElement: Element): NodeStyle {
   return { contextStyle, paddingSize, borderSize, boxSizing };
 }
 
-export function calcTextareaHeight(targetElement: HTMLTextAreaElement | undefined, minRows = 1, maxRows?: number): TextAreaHeight {
+export function computeTextareaHeight(targetElement: HTMLTextAreaElement | undefined, minRows = 1, maxRows?: number): TextAreaHeight {
   if (targetElement === undefined) {
     return {} as TextAreaHeight;
   }
 
-  if (!hiddenTextarea) {
-    hiddenTextarea = document.createElement('textarea');
-    document.body.appendChild(hiddenTextarea);
+  if (!tempTextarea) {
+    tempTextarea = document.createElement('textarea');
+    document.body.appendChild(tempTextarea);
   }
 
-  const { paddingSize, borderSize, boxSizing, contextStyle } = calculateNodeStyling(targetElement);
+  const { paddingSize, borderSize, boxSizing, contextStyle } = getBoxStyle(targetElement);
 
-  hiddenTextarea.setAttribute('style', `${contextStyle};${HIDDEN_STYLE}`);
-  hiddenTextarea.value = targetElement.value || targetElement.placeholder || '';
+  tempTextarea.setAttribute('style', `${contextStyle};${HIDDEN_STYLE}`);
+  tempTextarea.value = targetElement.value || targetElement.placeholder || '';
 
-  let height = hiddenTextarea.scrollHeight;
+  let height = tempTextarea.scrollHeight;
+  tempTextarea.value = '';
   const result = {} as TextAreaHeight;
 
   if (boxSizing === 'border-box') {
-    height = height + borderSize;
+    height += borderSize;
   } else if (boxSizing === 'content-box') {
-    height = height - paddingSize;
+    height -= paddingSize;
   }
 
-  hiddenTextarea.value = '';
-  const singleRowHeight = hiddenTextarea.scrollHeight - paddingSize;
+  const singleRowHeight = tempTextarea.scrollHeight - paddingSize;
+  tempTextarea.parentNode?.removeChild(tempTextarea);
+  tempTextarea = undefined;
+
+  if (minRows === undefined) {
+    result.height = `${height}px`;
+    return result;
+  }
 
   if (isNumber(minRows)) {
     let minHeight = singleRowHeight * minRows;
@@ -101,8 +108,6 @@ export function calcTextareaHeight(targetElement: HTMLTextAreaElement | undefine
     height = Math.min(maxHeight, height);
   }
   result.height = `${height}px`;
-  hiddenTextarea.parentNode?.removeChild(hiddenTextarea);
-  hiddenTextarea = undefined;
 
   return result;
 }

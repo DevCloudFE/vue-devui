@@ -106,6 +106,10 @@ export const checkboxGroupProps = {
     type: Boolean,
     default: false,
   },
+  max: {
+    type: Number,
+    default: undefined,
+  },
 } as const;
 
 interface checkboxGroupInjection {
@@ -120,6 +124,8 @@ interface checkboxGroupInjection {
   direction: Ref<Direction>;
   size: Ref<string>;
   border: Ref<boolean>;
+  max: Ref<number | undefined>;
+  modelValue: Ref<string[]>;
 }
 
 export const checkboxGroupInjectionKey: InjectionKey<checkboxGroupInjection> = Symbol('d-checkbox-group');

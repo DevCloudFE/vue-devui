@@ -1,6 +1,10 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import Dropdown from '../src/dropdown';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const buttonClass = useNamespace('button', true).b();
+const flexibleOverlayClass = useNamespace('flexible-overlay', true).b();
 
 describe('d-dropdown', () => {
   it('should render correctly', async () => {
@@ -24,15 +28,12 @@ describe('d-dropdown', () => {
       },
     });
 
-    const toggleElement = wrapper.find('.devui-dropdown-toggle');
-    expect(toggleElement.exists()).toBeTruthy();
-
-    const btn = wrapper.find('.devui-button');
+    const btn = wrapper.find(buttonClass);
     expect(btn.exists()).toBeTruthy();
 
     await nextTick();
-    await toggleElement.trigger('click');
-    const dropdownMenu = document.querySelector('.devui-flexible-overlay');
+    await btn.trigger('click');
+    const dropdownMenu = document.querySelector(flexibleOverlayClass);
     expect(dropdownMenu).toBeTruthy();
 
     const listMenu = document.querySelector('.list-menu');
@@ -63,9 +64,9 @@ describe('d-dropdown', () => {
     });
 
     await nextTick();
-    const toggleElement = wrapper.find('.devui-dropdown-toggle');
-    await toggleElement.trigger('mouseenter');
-    const dropdownMenu = document.querySelector('.devui-flexible-overlay');
+    const btn = wrapper.find(buttonClass);
+    await btn.trigger('mouseenter');
+    const dropdownMenu = document.querySelector(flexibleOverlayClass);
     expect(dropdownMenu).toBeTruthy();
 
     const listMenu = document.querySelector('.list-menu');
@@ -98,7 +99,7 @@ describe('d-dropdown', () => {
 
     isOpen.value = true;
     await nextTick();
-    const dropdownMenu = document.querySelector('.devui-flexible-overlay');
+    const dropdownMenu = document.querySelector(flexibleOverlayClass);
     expect(dropdownMenu).toBeTruthy();
 
     const listMenu = document.querySelector('.list-menu');
@@ -129,14 +130,14 @@ describe('d-dropdown', () => {
     });
 
     await nextTick();
-    const toggleElement = wrapper.find('.devui-dropdown-toggle');
-    await toggleElement.trigger('click');
-    const dropdownMenu = document.querySelector('.devui-flexible-overlay');
+    const btn = wrapper.find(buttonClass);
+    await btn.trigger('click');
+    const dropdownMenu = document.querySelector(flexibleOverlayClass);
     expect(dropdownMenu).toBeTruthy();
 
     const listMenu = document.querySelector('.list-menu');
     await listMenu?.dispatchEvent(new Event('click'));
-    expect(document.querySelector('.devui-flexible-overlay')).toBeTruthy();
+    expect(document.querySelector(flexibleOverlayClass)).toBeTruthy();
 
     await new Promise((resolve) => {
       setTimeout(resolve, 0);
@@ -145,7 +146,7 @@ describe('d-dropdown', () => {
     await new Promise((resolve) => {
       setTimeout(resolve, 0);
     });
-    expect(document.querySelector('.devui-flexible-overlay')).toBeFalsy();
+    expect(document.querySelector(flexibleOverlayClass)).toBeFalsy();
     dropdownMenu && dropdownMenu.parentNode?.removeChild(dropdownMenu);
     wrapper.unmount();
   });
@@ -173,8 +174,8 @@ describe('d-dropdown', () => {
     });
 
     await nextTick();
-    const toggleElement = wrapper.find('.devui-dropdown-toggle');
-    await toggleElement.trigger('click');
+    const btn = wrapper.find(buttonClass);
+    await btn.trigger('click');
     expect(onToggle).toBeCalled();
     wrapper.unmount();
   });

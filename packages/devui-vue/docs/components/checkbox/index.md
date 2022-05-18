@@ -136,6 +136,16 @@ export default defineComponent({
 
     <h4 class="title">Multi-line Checkbox</h4>
     <d-checkbox-group v-model="values5" :options="options5" :isShowTitle="false" direction="row" :itemWidth="94"></d-checkbox-group>
+
+    <h4 class="title">可选项目数量的限制</h4>
+    <d-checkbox-group
+      v-model="values6"
+      :options="options5"
+      :isShowTitle="false"
+      direction="row"
+      :itemWidth="94"
+      :max="3"
+    ></d-checkbox-group>
   </div>
 </template>
 <script>
@@ -172,6 +182,7 @@ export default defineComponent({
       'data15',
     ]);
     const values5 = ref(['data2', 'data3']);
+    const values6 = ref(['data2', 'data3']);
     return {
       options1,
       values1,
@@ -182,6 +193,7 @@ export default defineComponent({
       values4,
       options5,
       values5,
+      values6,
     };
   },
 });
@@ -376,6 +388,7 @@ export default defineComponent({
 |     color      |              `string`              |    --    | 可选，复选框颜色                                                       | [使用 CheckBoxGroup](#使用-checkboxgroup) |
 | show-animation |             `boolean`              |   true   | 可选，控制是否显示动画                                                 | [使用 CheckBoxGroup](#使用-checkboxgroup) |
 |    disabled    |             `boolean`              |  false   | 可选，是否禁用                                                         | [使用 CheckBoxGroup](#使用-checkboxgroup) |
+|      max       |              `number`              |    --    | 可选，可被勾选的 checkbox 的最大数量                                   | [使用 CheckBoxGroup](#使用-checkboxgroup) |
 | before-change  | `Function`\|<br>`Promise<boolean>` |    --    | 可选，checkbox 切换前的回调函数，<br>返回 false 可以阻止 checkbox 切换 | [使用 CheckBoxGroup](#使用-checkboxgroup) |
 |      size      |  [ICheckboxSize](#icheckboxsize)   |    md    | 可选， checkbox 尺寸                                                   | [尺寸](#尺寸和边框)                       |
 |     border     |             `boolean`              |  false   | 可选， 是否有边框，只有在 border 属性存在时生效                        | [边框](#尺寸和边框)                       |

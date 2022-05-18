@@ -62,6 +62,8 @@ export default defineComponent({
       direction: toRef(props, 'direction'),
       size: toRef(props, 'size'),
       border: toRef(props, 'border'),
+      max: toRef(props, 'max'),
+      modelValue: toRef(props, 'modelValue'),
     });
 
     return {

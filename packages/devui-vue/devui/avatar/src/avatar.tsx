@@ -1,4 +1,4 @@
-import { defineComponent, watch, toRefs, ref } from 'vue';
+import { defineComponent, watch, toRefs, ref, computed } from 'vue';
 import AvatarBodyIcon from './components/avatar-body-icon';
 import AvatarNoBodyIcon from './components/avatar-nobody-icon';
 import { AvatarProps, avatarProps } from './avatar-types';
@@ -9,13 +9,18 @@ export default defineComponent({
   name: 'DAvatar',
   props: avatarProps,
   setup(props: AvatarProps) {
-    const { name, width, height, customText, gender } = toRefs(props);
+    const { name, width, height, customText, gender, imgSrc, isRound } = toRefs(props);
     const isNobody = ref<boolean>(true);
     const isErrorImg = ref<boolean>(false);
     const fontSize = ref<number>(12);
-    const code = ref<number>();
+    const code = ref<number>(1);
     const nameDisplay = ref<string>();
+
     const ns = useNamespace('avatar');
+    const styleNS = ns.e('style');
+    const bgNS = computed(() => {
+      return ns.m(`${'background-' + code.value}`);
+    });
 
     const getBackgroundColor = (char: string): void => {
       if (gender.value) {
@@ -90,71 +95,62 @@ export default defineComponent({
     watch([name, width, height, customText, gender], () => {
       calcValues(customText.value ? customText.value : name.value);
     });
-    return {
-      showErrorAvatar,
-      isErrorImg,
-      code,
-      fontSize,
-      nameDisplay,
-      isNobody,
-      ns,
+
+    return () => {
+      const imgElement = (
+        <img
+          src={imgSrc.value}
+          alt=""
+          onError={showErrorAvatar}
+          style={{
+            height: `${height.value}px`,
+            width: `${width.value}px`,
+            borderRadius: isRound.value ? '100%' : '0',
+          }}
+        />
+      );
+      const hasImgSrc = imgSrc.value && !isErrorImg.value ? imgElement : null;
+
+      const nameElement = (
+        <span
+          class={[styleNS, bgNS.value]}
+          style={{
+            height: `${height.value}px`,
+            width: `${width.value}px`,
+            lineHeight: `${height.value}px`,
+            fontSize: `${fontSize.value}px`,
+            borderRadius: isRound.value ? '100%' : '0',
+          }}>
+          {nameDisplay.value}
+        </span>
+      );
+      const hasNameDisplay = !imgSrc.value && !isNobody.value && nameDisplay.value?.length !== 0 ? nameElement : null;
+
+      const noNameElement = (
+        <span class={styleNS} style={{ borderRadius: isRound.value ? '100%' : '0' }}>
+          <AvatarBodyIcon width={width.value} height={height.value} />
+        </span>
+      );
+      const hasNoDisplayName = !imgSrc.value && !isNobody.value && nameDisplay.value?.length === 0 ? noNameElement : null;
+
+      const noBodyElement = (
+        <span
+          class={styleNS}
+          style={{
+            borderRadius: isRound.value ? '100%' : '0',
+          }}>
+          <AvatarNoBodyIcon width={width.value} height={height.value} />
+        </span>
+      );
+      const noBody = (!imgSrc.value && isNobody.value) || isErrorImg.value ? noBodyElement : null;
+      return (
+        <span class={ns.b()}>
+          {hasImgSrc}
+          {hasNameDisplay}
+          {hasNoDisplayName}
+          {noBody}
+        </span>
+      );
     };
-  },
-  render() {
-    const { imgSrc, showErrorAvatar, height, width, isRound, isErrorImg, code, fontSize, nameDisplay, isNobody, ns } = this;
-    const imgElement = (
-      <img
-        src={imgSrc}
-        alt=""
-        onError={showErrorAvatar}
-        style={{
-          height: `${height}px`,
-          width: `${width}px`,
-          borderRadius: isRound ? '100%' : '0',
-        }}
-      />
-    );
-    const hasImgSrc = imgSrc && !isErrorImg ? imgElement : null;
-
-    const nameElement = (
-      <span
-        class={[ns.e('style'), ns.m(`background-${code}`)]}
-        style={{
-          height: `${height}px`,
-          width: `${width}px`,
-          lineHeight: `${height}px`,
-          fontSize: `${fontSize}px`,
-          borderRadius: isRound ? '100%' : '0',
-        }}>
-        {nameDisplay}
-      </span>
-    );
-    const hasNameDisplay = !imgSrc && !isNobody && nameDisplay?.length !== 0 ? nameElement : null;
-
-    const noNameElement = (
-      <span class={ns.e('style')} style={{ borderRadius: isRound ? '100%' : '0' }}>
-        <AvatarBodyIcon width={width} height={height} />
-      </span>
-    );
-    const hasNoDisplayName = !imgSrc && !isNobody && nameDisplay?.length === 0 ? noNameElement : null;
-
-    const noBodyElement = (
-      <span
-        class={ns.e('style')}
-        style={{
-          borderRadius: isRound ? '100%' : '0',
-        }}>
-        <AvatarNoBodyIcon width={width} height={height} />
-      </span>
-    );
-    const noBody = (!imgSrc && isNobody) || isErrorImg ? noBodyElement : null;
-    return (
-      <span class={ns.b()}>
-        {hasImgSrc}
-        {hasNameDisplay}
-        {hasNoDisplayName}
-        {noBody}
-      </span>
-    );
   },
 });
