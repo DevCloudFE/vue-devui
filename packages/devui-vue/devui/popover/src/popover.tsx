@@ -1,8 +1,8 @@
 import { defineComponent, toRefs, ref, Teleport, Transition, watch, provide } from 'vue';
 import { FlexibleOverlay } from '../../overlay';
-import { PopperTrigger } from '../../popper-trigger';
+import { PopperTrigger } from '../../shared/components/popper-trigger';
 import { popoverProps, PopoverProps } from './popover-types';
-import { POPPER_TRIGGER_TOKEN } from '../../popper-trigger/src/popper-trigger-types';
+import { POPPER_TRIGGER_TOKEN } from '../../shared/components/popper-trigger/src/popper-trigger-types';
 import { usePopover, usePopoverEvent } from './use-popover';
 import PopoverIcon from './popover-icon';
 import { useNamespace } from '../../shared/hooks/use-namespace';
@@ -32,7 +32,7 @@ export default defineComponent({
 
     return () => (
       <>
-        <PopperTrigger>{slots.reference?.()}</PopperTrigger>
+        <PopperTrigger>{slots.default?.()}</PopperTrigger>
         <Teleport to="body">
           <Transition name={showAnimation.value ? ns.m(`fade-${placement.value}`) : ''}>
             <FlexibleOverlay

@@ -1,9 +1,9 @@
 import { defineComponent, ref, toRefs, Transition, Teleport, watch, nextTick, provide } from 'vue';
 import { dropdownProps, DropdownProps } from './dropdown-types';
-import { POPPER_TRIGGER_TOKEN } from '../../popper-trigger/src/popper-trigger-types';
+import { POPPER_TRIGGER_TOKEN } from '../../shared/components/popper-trigger/src/popper-trigger-types';
 import { useDropdown, useDropdownEvent, useOverlayProps } from './use-dropdown';
 import { FlexibleOverlay } from '../../overlay';
-import { PopperTrigger } from '../../popper-trigger';
+import { PopperTrigger } from '../../shared/components/popper-trigger';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './dropdown.scss';
 

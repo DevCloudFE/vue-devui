@@ -1,8 +1,8 @@
 import { defineComponent, provide, ref, Teleport, toRefs, Transition } from 'vue';
 import { FlexibleOverlay } from '../../overlay';
-import { PopperTrigger } from '../../popper-trigger';
+import { PopperTrigger } from '../../shared/components/popper-trigger';
 import { TooltipProps, tooltipProps } from './tooltip-types';
-import { POPPER_TRIGGER_TOKEN } from '../../popper-trigger/src/popper-trigger-types';
+import { POPPER_TRIGGER_TOKEN } from '../../shared/components/popper-trigger/src/popper-trigger-types';
 import { useTooltip } from './use-tooltip';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './tooltip.scss';
