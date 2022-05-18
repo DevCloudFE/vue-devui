@@ -43,7 +43,7 @@ describe('d-button', () => {
         };
       }
     });
-    
+
     expect(wrapper.find(iconClass).exists()).toBeTruthy();
   });
 
@@ -111,22 +111,24 @@ describe('d-button', () => {
   });
 
   it('测试圆角按钮(shape=round)', () => {
-    const wrapper = mount({
-      setup() {
-        return () => {
-          return <Button shape="round">确定</Button>;
-        };
+    const wrapper = mount(Button, {
+      props: {
+        shape: 'round'
+      },
+      slots: {
+        default: 'I am sure'
       }
     });
     expect(wrapper.find(roundClass).exists()).toBeTruthy();
   });
 
   it('测试圆形图标按钮(shape=circle)', () => {
-    const wrapper = mount({
-      setup() {
-        return () => {
-          return <Button shape="circle">确定</Button>;
-        };
+    const wrapper = mount(Button, {
+      props: {
+        shape: 'circle'
+      },
+      slots: {
+        default: 'I am sure'
       }
     });
     expect(wrapper.find(circleClass).exists()).toBeTruthy();
