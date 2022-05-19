@@ -23,13 +23,24 @@ export const inputProps = {
     type: Boolean,
     default: true,
   },
+  prefix: {
+    type: String,
+    default: '',
+  },
+  suffix: {
+    type: String,
+    default: '',
+  },
 } as const;
 
 export type InputProps = ExtractPropTypes<typeof inputProps>;
 
 export interface UseInputRender {
   isFocus: Ref<boolean>;
-  wrapClasses: ComputedRef<Record<string, boolean>>;
+  wrapClasses: ComputedRef<Record<string, boolean | undefined>>;
+  inputClasses: ComputedRef<Record<string, boolean | undefined>>;
+  customStyle: unknown;
+  otherAttrs: unknown;
 }
 
 export interface UseInputEvent {
