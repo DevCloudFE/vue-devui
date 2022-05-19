@@ -207,6 +207,53 @@ export default defineComponent({
 
 :::
 
+### 尺寸和边框
+
+:::demo 根据条件判断，label 为'条件判断回调禁止选中'的 checkbox 终止切换状态。
+
+```vue
+<template>
+  <div>
+    <div style="margin-bottom: 10px">
+      <d-checkbox-group v-model="values1" :options="options1" direction="row" size="lg" border></d-checkbox-group>
+    </div>
+    <div style="margin-bottom: 10px">
+      <d-checkbox-group v-model="values2" :options="options1" direction="row" size="md" border></d-checkbox-group>
+    </div>
+    <div style="margin-bottom: 10px">
+      <d-checkbox-group v-model="values3" :options="options1" direction="row" size="sm" border></d-checkbox-group>
+    </div>
+    <div style="margin-bottom: 10px">
+      <d-checkbox-group v-model="values4" :options="options1" direction="row" size="xs" border></d-checkbox-group>
+    </div>
+  </div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const options1 = ref([
+      { name: '选项1', disabled: true, value: '1', id: 1 },
+      { name: '选项2', value: '2', id: 2 },
+    ]);
+    const values1 = ref([{ name: '选项2', value: '2', id: 2 }]);
+    const values2 = ref([{ name: '选项2', value: '2', id: 2 }]);
+    const values3 = ref([{ name: '选项2', value: '2', id: 2 }]);
+    const values4 = ref([{ name: '选项2', value: '2', id: 2 }]);
+    return {
+      values1,
+      values2,
+      values3,
+      values4,
+      options1,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### checkbox 根据条件终止切换状态
 
 根据条件判断，label 为'条件判断回调禁止选中'的 checkbox 终止切换状态。
@@ -308,17 +355,19 @@ export default defineComponent({
 
 ### Checkbox 参数
 
-| 参数           | 类型                         | 默认  | 说明                                                                                      | 跳转 Demo             |
-| :------------- | :--------------------------- | :---- | :---------------------------------------------------------------------------------------- | --------------------- |
-| name           | `string`                     | --    | 可选，表单域名，input 原生 name 属性                                                      | [基本用法](#基本用法) |
-| label          | `string`                     | --    | 可选，显示标签                                                                            | [基本用法](#基本用法) |
-| half-checked   | `boolean`                    | false | 可选，半选状态                                                                            | [基本用法](#基本用法) |
-| is-show-title  | `boolean`                    | true  | 可选，是否显示 title 提示，<br>默认显示参数`label`的值                                    | [基本用法](#基本用法) |
-| title          | `string`                     | --    | 可选，显示自定义 title 提示内容                                                           | [基本用法](#基本用法) |
-| color          | `string`                     | --    | 可选，复选框颜色                                                                          | [基本用法](#基本用法) |
-| show-animation | `boolean`                    | true  | 可选，控制是否显示动画                                                                    | [基本用法](#基本用法) |
-| disabled       | `boolean`                    | false | 可选，是否禁用                                                                            | [基本用法](#基本用法) |
-| before-change  | `Function\|Promise<boolean>` | --    | 可选，checkbox 切换前的回调函数，<br>返回 boolean 类型，返回 false 可以阻止 checkbox 切换 | [基本用法](#基本用法) |
+| 参数           | 类型                            | 默认  | 说明                                                                                      | 跳转 Demo             |
+| :------------- | :------------------------------ | :---- | :---------------------------------------------------------------------------------------- | --------------------- |
+| name           | `string`                        | --    | 可选，表单域名，input 原生 name 属性                                                      | [基本用法](#基本用法) |
+| label          | `string`                        | --    | 可选，显示标签                                                                            | [基本用法](#基本用法) |
+| half-checked   | `boolean`                       | false | 可选，半选状态                                                                            | [基本用法](#基本用法) |
+| is-show-title  | `boolean`                       | true  | 可选，是否显示 title 提示，<br>默认显示参数`label`的值                                    | [基本用法](#基本用法) |
+| title          | `string`                        | --    | 可选，显示自定义 title 提示内容                                                           | [基本用法](#基本用法) |
+| color          | `string`                        | --    | 可选，复选框颜色                                                                          | [基本用法](#基本用法) |
+| show-animation | `boolean`                       | true  | 可选，控制是否显示动画                                                                    | [基本用法](#基本用法) |
+| disabled       | `boolean`                       | false | 可选，是否禁用                                                                            | [基本用法](#基本用法) |
+| before-change  | `Function\|Promise<boolean>`    | --    | 可选，checkbox 切换前的回调函数，<br>返回 boolean 类型，返回 false 可以阻止 checkbox 切换 | [基本用法](#基本用法) |
+| size           | [ICheckboxSize](#icheckboxsize) | md    | 可选， checkbox 尺寸，只有在 border 属性存在时生效                                        | [尺寸](#尺寸和边框)   |
+| border         | `boolean`                       | false | 可选， 是否有边框                                                                         | [边框](#尺寸和边框)   |
 
 ### Checkbox 事件
 
@@ -339,11 +388,21 @@ export default defineComponent({
 |     color      |              `string`              |    --    | 可选，复选框颜色                                                       | [使用 CheckBoxGroup](#使用-checkboxgroup) |
 | show-animation |             `boolean`              |   true   | 可选，控制是否显示动画                                                 | [使用 CheckBoxGroup](#使用-checkboxgroup) |
 |    disabled    |             `boolean`              |  false   | 可选，是否禁用                                                         | [使用 CheckBoxGroup](#使用-checkboxgroup) |
-| before-change  | `Function`\|<br>`Promise<boolean>` |    --    | 可选，checkbox 切换前的回调函数，<br>返回 false 可以阻止 checkbox 切换 | [使用 CheckBoxGroup](#使用-checkboxgroup) |
 |      max       |              `number`              |    --    | 可选，可被勾选的 checkbox 的最大数量                                   | [使用 CheckBoxGroup](#使用-checkboxgroup) |
+| before-change  | `Function`\|<br>`Promise<boolean>` |    --    | 可选，checkbox 切换前的回调函数，<br>返回 false 可以阻止 checkbox 切换 | [使用 CheckBoxGroup](#使用-checkboxgroup) |
+|      size      |  [ICheckboxSize](#icheckboxsize)   |    md    | 可选， checkbox 尺寸                                                   | [尺寸](#尺寸和边框)                       |
+|     border     |             `boolean`              |  false   | 可选， 是否有边框，只有在 border 属性存在时生效                        | [边框](#尺寸和边框)                       |
 
 ### CheckboxGroup 事件
 
 | 事件      | 类型     | 说明                | 跳转 Demo                                |
 | :-------- | :------- | :------------------ | :--------------------------------------- |
 | on-change | `string` | checkbox 值改变事件 | [使用 CheckBoxGroup](#使用CheckBoxGroup) |
+
+### Checkbox 类型定义
+
+#### ICheckboxSize
+
+```ts
+type ICheckboxSize = 'lg' | 'md' | 'sm' | 'xs';
+```

@@ -10,6 +10,7 @@ import {
   onBeforeMount,
   SetupContext,
 } from 'vue';
+import { isFunction } from 'lodash';
 import { tableColumnProps, TableColumnProps, TableColumn } from './column-types';
 import { TABLE_TOKEN, Table, DefaultRow } from '../../table-types';
 import { createColumn, useRender } from './use-column';
@@ -21,6 +22,7 @@ export default defineComponent({
   props: tableColumnProps,
   emits: ['filter-change'],
   setup(props: TableColumnProps, ctx: SetupContext) {
+    const { reserveCheck } = toRefs(props);
     const instance = getCurrentInstance() as TableColumn;
     const column = createColumn(toRefs(props), ctx.slots);
     const owner = inject(TABLE_TOKEN) as Table<DefaultRow>;
@@ -40,6 +42,14 @@ export default defineComponent({
       const children = isSubColumn.value ? parent.vnode.el.children : owner?.hiddenColumns.value?.children;
       const columnIndex = getColumnIndex(children || [], instance.vnode.el);
       columnIndex > -1 && owner?.store.insertColumn(column, isSubColumn.value ? parent.columnConfig : null);
+
+      // 行勾选控制
+      if (isFunction(props.checkable)) {
+        owner?.store.states._data.value.forEach((row, rowIndex) => {
+          owner.store.states._checkList.value[rowIndex] = props.checkable(row, rowIndex);
+          owner.store.states._cachedCheckList =  owner.store.states._checkList.value;
+        });
+      }
     });
 
     watch(
@@ -48,6 +58,15 @@ export default defineComponent({
         owner?.store.sortColumn();
       }
     );
+
+    // 勾选状态保留
+    watch(owner?.store.states._data, () => {
+      if (reserveCheck.value) {
+        owner?.store.states._cachedCheckList?.forEach((checkedValue, rowIndex) => {
+          owner.store.states._checkList.value[rowIndex] = checkedValue;
+        });
+      }
+    });
 
     onBeforeUnmount(() => {
       owner?.store.removeColumn(column);

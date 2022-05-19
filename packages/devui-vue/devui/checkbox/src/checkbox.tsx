@@ -59,6 +59,8 @@ export default defineComponent({
     const handleClick = () => {
       canChange(!isChecked.value, props.label).then((res) => res && toggle());
     };
+    const size = computed(() => checkboxGroupConf?.size.value ?? props.size);
+    const border = computed(() => checkboxGroupConf?.border.value ?? props.border);
 
     return {
       itemWidth,
@@ -70,6 +72,8 @@ export default defineComponent({
       mergedShowAnimation,
       handleClick,
       ns,
+      size,
+      border,
     };
   },
   render() {
@@ -88,6 +92,8 @@ export default defineComponent({
       value,
       mergedColor,
       ns,
+      size,
+      border,
       $slots,
     } = this;
 
@@ -121,6 +127,10 @@ export default defineComponent({
       [ns.e('tick')]: true,
       [ns.m('no-animation')]: !mergedShowAnimation,
     };
+    const labelCls = {
+      [ns.m(size)]: border,
+      [ns.m('bordered')]: border,
+    };
     const stopPropagation = ($event: Event) => $event.stopPropagation();
 
     const inputProps = {
@@ -130,7 +140,7 @@ export default defineComponent({
     return (
       <div class={wrapperCls} style={wrapperStyle}>
         <div class={checkboxCls}>
-          <label title={labelTitle} onClick={handleClick}>
+          <label title={labelTitle} onClick={handleClick} class={labelCls} style={{ width: itemWidth ? '100%' : 'auto' }}>
             <input
               name={name || value}
               class={ns.e('input')}
