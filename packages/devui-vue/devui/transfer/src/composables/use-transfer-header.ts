@@ -37,9 +37,9 @@ export type TTransferHeaderProps = ExtractPropTypes<typeof transferHeaderProps>;
 export const transferHeaderState = (props: TTransferHeaderProps, ctx: SetupContext) => {
 
   /**
-     * allCheckedChangeHandle: 全选处理函数
-     * @param value 是否全选
-    */
+   * allCheckedChangeHandle: 全选处理函数
+   * @param value 是否全选
+  */
   const allCheckedChangeHandle = (value: boolean) => {
     ctx.emit('change', value);
   };

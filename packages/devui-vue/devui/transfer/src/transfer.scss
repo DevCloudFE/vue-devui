@@ -20,7 +20,7 @@ $devui-transfer-body-list-item-height: 32px;
       height: $devui-transfer-header-height;
       line-height: $devui-transfer-header-height;
       border-bottom: 1px solid$devui-transfer-header-border-line-color;
-      padding: 0 12px;
+      padding: 0 16px;
 
       &-allChecked {
         display: flex;
@@ -43,7 +43,7 @@ $devui-transfer-body-list-item-height: 32px;
         justify-content: center;
         align-items: center;
         width: 100%;
-        padding: 7px 12px;
+        padding: 7px 16px;
 
         .#{$devui-prefix}-search {
           width: 100%;
@@ -59,41 +59,49 @@ $devui-transfer-body-list-item-height: 32px;
         width: 100%;
 
         &-group > div > div {
-          padding: 0 12px;
+          padding: 0 16px;
           cursor: pointer;
         }
 
-        &-group > div > div:hover {
+        &-group > div > div:hover,
+        &-item:hover {
           background-color: $devui-transfer-header-border-line-color;
         }
 
         &-item {
-          height: $devui-transfer-body-list-item-height;
-          line-height: $devui-transfer-body-list-item-height;
           display: flex;
           align-items: center;
           border-top: 2px solid transparent;
           border-bottom: 2px solid transparent;
+          padding: 4px 0;
+          cursor: pointer;
 
-          label {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            height: auto;
+          .icon-drag-small {
+            cursor: move;
+            padding: 0 1px;
+            visibility: hidden;
+          }
+
+          &:hover .icon-drag-small {
+            visibility: visible;
           }
         }
 
         &-drag {
-          width: 100%;
-          display: flex;
-          align-items: center;
+          &-dragging {
+            background-color: $devui-brand-foil !important;
+          }
 
-          &__icon {
-            padding: 0 4px;
-            visibility: hidden;
-            height: 28px;
-            display: flex;
-            align-items: center;
+          &-over {
+            background-color: $devui-brand-hover;
+          }
+
+          &-over-top {
+            border-top-color: $devui-brand-active;
+          }
+
+          &-over-bottom {
+            border-bottom-color: $devui-brand-active;
           }
         }
 
@@ -156,7 +164,6 @@ $devui-transfer-body-list-item-height: 32px;
     background-color: $devui-brand-hover;
   }
 }
-
 .#{$devui-prefix}-transfer–drag-over-top {
   border-top-color: $devui-brand-active;
 }

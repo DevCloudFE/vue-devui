@@ -260,8 +260,8 @@ export default defineComponent({
 
 :::
 
-### 排序穿梭框
-可以对穿梭框源和目标框的数据进行排序。
+### 自定义排序穿梭框
+可以对穿梭框源和目标框的数据进行自定义排序。
 :::demo
 
 ```vue
@@ -272,8 +272,8 @@ export default defineComponent({
     :titles="titles"
     :sourceOption="source"
     :targetOption="target"
-    :sourceSortMethods="sortMethodsHandle"
-    :targetSortMethods="sortMethodsHandle2"
+    :sourceSortMethods="sourceSortMethodsHandle"
+    :targetSortMethods="targetSortMethodsHandle"
   >
   </d-transfer>
 </template>
@@ -378,12 +378,153 @@ export default defineComponent({
       target: originTarget,
       sourceDefaultChecked: ['2', '5', '28'],
       targetDefaultChecked: ['12', '23'],
-      sortMethodsHandle: function(data) {
+      sourceSortMethodsHandle: function(data) {
         return data.sort(() => 0.5 - Math.random())
       },
-      sortMethodsHandle2: function(data) {
+      targetSortMethodsHandle: function(data) {
         return data.reverse()
       }
+    }
+  }
+})
+</script>
+```
+
+:::
+
+:::
+
+### 拖拽排序穿梭框
+可以对穿梭框源和目标框的数据进行拖拽排序。
+:::demo
+
+```vue
+<template>
+  <d-transfer
+    v-model:source-default-checked="sourceDefaultChecked"
+    v-model:target-default-checked="targetDefaultChecked"
+    :titles="titles"
+    :sourceOption="source"
+    :targetOption="target"
+    :isSourceDrag="sourceDrag"
+    :isTargetDrag="sourceDrag"
+    :dragstart="dragstartHandle"
+    :drop="dropHandle"
+    :dragend="dragendHandle"
+  >
+  </d-transfer>
+</template>
+<script>
+import { defineComponent, reactive, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const originSource = [
+      {
+        value: '1',
+        name: '北京',
+        disabled: false,
+      },
+      {
+        value: '2',
+        name: '上海',
+        disabled: true,
+      },
+      {
+        value: '3',
+        name: '广州',
+        disabled: false,
+      },
+      {
+        value: '4',
+        name: '深圳',
+        disabled: false,
+      },
+      {
+        value: '5',
+        name: '成都',
+        disabled: false,
+      },
+      {
+        value: '6',
+        name: '杭州',
+        disabled: true,
+      },
+      {
+        value: "7",
+        name: "重庆",
+        disabled: false,
+      },
+      {
+        value: '8',
+        name: '西安',
+        disabled: false,
+      },
+      {
+        value: '9',
+        name: '苏州',
+        disabled: false,
+      },
+      {
+        value: '10',
+        name: '武汉',
+        disabled: false,
+      }
+    ]
+    const originTarget = [
+      {
+        value: '11',
+        name: '南京',
+        disabled: false,
+      },
+      {
+        value: '12',
+        name: '长沙',
+        disabled: false,
+      },
+      {
+        value: '13',
+        name: '东莞',
+        disabled: false,
+      },
+      {
+        value: '14',
+        name: '佛山',
+        disabled: false,
+      },
+      {
+        value: '15',
+        name: '宁波',
+        disabled: true,
+      },
+      {
+        value: '16',
+        name: '青岛',
+        disabled: false,
+      },
+      {
+        value: '17',
+        name: '沈阳',
+        disabled: false,
+      }
+    ]
+
+    return {
+      titles: ['sourceHeader', 'targetHeader'],
+      source: originSource,
+      target: originTarget,
+      sourceDefaultChecked: ['2', '5', '28'],
+      targetDefaultChecked: ['12', '23'],
+      sourceDrag: true,
+      dragstartHandle: (event, item) => {
+        console.log(item, 'dragstartHandle')
+      },
+      dropHandle: (event, item) => {
+        console.log(item, 'dropHandle')
+      },
+      dragendHandle: (event, item) => {
+        console.log(item, 'dragendHandle')
+      },
     }
   }
 })
