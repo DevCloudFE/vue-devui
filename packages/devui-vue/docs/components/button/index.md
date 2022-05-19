@@ -216,6 +216,17 @@ export default {
     </d-dropdown>
   </d-button-group>
 </template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    return {
+      position: ref(['bottom-start', 'top-start']),
+    };
+  },
+});
+</script>
 ```
 
 :::
