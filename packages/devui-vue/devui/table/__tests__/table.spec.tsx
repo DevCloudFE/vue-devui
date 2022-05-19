@@ -6,6 +6,9 @@ import { nextTick, ref } from 'vue';
 
 let data: Array<Record<string, any>> = [];
 const ns = useNamespace('table', true);
+const noDotNs = useNamespace('table');
+const flexibleOverlayNs = useNamespace('flexible-overlay', true);
+const tooltipNs = useNamespace('tooltip', true);
 
 describe('d-table', () => {
   beforeEach(() => {
@@ -53,9 +56,9 @@ describe('d-table', () => {
 
     await nextTick();
     await nextTick();
-    const table = wrapper.find('.devui-table');
+    const table = wrapper.find(ns.b());
     expect(table.exists()).toBeTruthy();
-    const tableBody = table.find('.devui-table__tbody');
+    const tableBody = table.find(ns.e('tbody'));
     expect(tableBody.findAll('tr').length).toBe(4);
     expect(tableBody.find('tr').findAll('td').length).toBe(4);
     wrapper.unmount();
@@ -78,11 +81,11 @@ describe('d-table', () => {
 
     await nextTick();
     await nextTick();
-    const table = wrapper.find('.devui-table');
-    const tableHeader = table.find('.devui-table__thead');
-    expect(tableHeader.findAll('th')[0].classes()).toContain('devui-table__checkable-cell');
-    const tableBody = table.find('.devui-table__tbody');
-    expect(tableBody.find('tr').find('td').classes()).toContain('devui-table__checkable-cell');
+    const table = wrapper.find(ns.b());
+    const tableHeader = table.find(ns.e('thead'));
+    expect(tableHeader.findAll('th')[0].classes()).toContain(noDotNs.e('checkable-cell'));
+    const tableBody = table.find(ns.e('tbody'));
+    expect(tableBody.find('tr').find('td').classes()).toContain(noDotNs.e('checkable-cell'));
     wrapper.unmount();
   });
 
@@ -103,10 +106,10 @@ describe('d-table', () => {
 
     await nextTick();
     await nextTick();
-    const table = wrapper.find('.devui-table');
-    const tableHeader = table.find('.devui-table__thead');
+    const table = wrapper.find(ns.b());
+    const tableHeader = table.find(ns.e('thead'));
     expect(tableHeader.findAll('th')[0].find('.title').text()).toBe('#');
-    const tableBody = table.find('.devui-table__tbody');
+    const tableBody = table.find(ns.e('tbody'));
     expect(tableBody.find('tr').find('td').text()).toBe('1');
     wrapper.unmount();
   });
@@ -128,8 +131,8 @@ describe('d-table', () => {
 
     await nextTick();
     await nextTick();
-    const table = wrapper.find('.devui-table');
-    const tableBody = table.find('.devui-table__tbody');
+    const table = wrapper.find(ns.b());
+    const tableBody = table.find(ns.e('tbody'));
     expect(tableBody.find('tr').find('td').text()).toBe('No.1');
     wrapper.unmount();
   });
@@ -151,8 +154,8 @@ describe('d-table', () => {
 
     await nextTick();
     await nextTick();
-    const table = wrapper.find('.devui-table');
-    const tableHeader = table.find('.devui-table__thead');
+    const table = wrapper.find(ns.b());
+    const tableHeader = table.find(ns.e('thead'));
     expect(tableHeader.findAll('th')[0].find('.header-container').text()).toBe('序号');
     wrapper.unmount();
   });
@@ -179,8 +182,8 @@ describe('d-table', () => {
     });
 
     await nextTick();
-    const table = wrapper.find('.devui-table');
-    const tableEmpty = table.find('.devui-table__empty');
+    const table = wrapper.find(ns.b());
+    const tableEmpty = table.find(ns.e('empty'));
     expect(tableEmpty.exists()).toBeTruthy();
     const emptySlot = tableEmpty.find('#empty-slot');
     expect(emptySlot.exists()).toBeTruthy();
@@ -209,8 +212,8 @@ describe('d-table', () => {
 
     await nextTick();
     await nextTick();
-    const table = wrapper.find('.devui-table');
-    const tableBody = table.find('.devui-table__tbody');
+    const table = wrapper.find(ns.b());
+    const tableBody = table.find(ns.e('tbody'));
     const firstTd = tableBody.find('tr').find('td');
     expect(firstTd.attributes('rowspan')).toBe('1');
     expect(firstTd.attributes('colspan')).toBe('2');
@@ -235,8 +238,8 @@ describe('d-table', () => {
 
     await nextTick();
     await nextTick();
-    const table = wrapper.find('.devui-table');
-    const tableHeader = table.find('.devui-table__thead');
+    const table = wrapper.find(ns.b());
+    const tableHeader = table.find(ns.e('thead'));
     expect(tableHeader.findAll('tr').length).toBe(2);
     expect(tableHeader.findAll('tr')[0].findAll('th').length).toBe(3);
     expect(tableHeader.findAll('tr')[1].findAll('th').length).toBe(2);
@@ -266,12 +269,12 @@ describe('d-table', () => {
     await nextTick();
     await nextTick();
 
-    const table = wrapper.find('.devui-table');
-    const tableHeader = table.find('.devui-table__thead');
+    const table = wrapper.find(ns.b());
+    const tableHeader = table.find(ns.e('thead'));
     const lastTh = tableHeader.find('tr').findAll('th')[3];
     expect(lastTh.classes()).toContain('sort-active');
 
-    const tableBody = table.find('.devui-table__tbody');
+    const tableBody = table.find(ns.e('tbody'));
     const lastTd = tableBody.find('tr').findAll('td')[3];
     expect(lastTd.text()).toBe('1990/01/11');
 
@@ -323,14 +326,14 @@ describe('d-table', () => {
     await nextTick();
     await nextTick();
 
-    const table = wrapper.find('.devui-table');
-    const tableHeader = table.find('.devui-table__thead');
+    const table = wrapper.find(ns.b());
+    const tableHeader = table.find(ns.e('thead'));
     const filterTh = tableHeader.find('tr').findAll('th')[2];
-    expect(filterTh.find('.devui-dropdown__toggle').exists()).toBeTruthy();
 
     const filterIcon = filterTh.find('.filter-icon');
+    expect(filterIcon.exists()).toBeTruthy();
     await filterIcon.trigger('click');
-    const dropdownMenu = document.querySelector('.devui-flexible-overlay');
+    const dropdownMenu = document.querySelector(flexibleOverlayNs.b());
     expect(dropdownMenu).toBeTruthy();
 
     const listItems = dropdownMenu?.querySelectorAll('.filter-item');
@@ -338,7 +341,7 @@ describe('d-table', () => {
 
     await listItems[0].dispatchEvent(new Event('click'));
     expect(handleSingleChange).toBeCalled();
-    expect(document.querySelector('.devui-flexible-overlay')?.getAttribute('style')).toContain('display: none');
+    expect(document.querySelector(flexibleOverlayNs.b())?.getAttribute('style')).toContain('display: none');
   });
 
   it('align', async () => {
