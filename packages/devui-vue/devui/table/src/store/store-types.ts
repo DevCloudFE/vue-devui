@@ -9,6 +9,7 @@ export interface TableStore<T = Record<string, any>> {
     _columns: Ref<Column[]>;
     flatColumns: Ref<Column[]>;
     _checkList: Ref<boolean[]>;
+    _cachedCheckList: boolean[];
     _checkAll: Ref<boolean>;
     _halfChecked: Ref<boolean>;
     isFixedLeft: Ref<boolean>;

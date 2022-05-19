@@ -221,8 +221,17 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-button @click="handleClick">Get CheckedRows</d-button>
-    <d-table ref="tableRef" :data="data" @cell-click="onCellClick" @check-change="checkChange" @check-all-change="checkAllChange">
+    <d-button @click="handleClick" class="mr-m mb-m">Get CheckedRows</d-button>
+    <d-button @click="insertRow" class="mr-m mb-m">Insert Row</d-button>
+    <d-button @click="deleteRow" class="mr-m mb-m">Delete Row</d-button>
+    <d-table
+      ref="tableRef"
+      :data="data"
+      row-key="firstName"
+      @cell-click="onCellClick"
+      @check-change="checkChange"
+      @check-all-change="checkAllChange"
+    >
       <d-column type="checkable" width="30" :checkable="checkable" reserve-check></d-column>
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
@@ -283,7 +292,30 @@ export default defineComponent({
       return row.lastName === 'Li' || false;
     };
 
-    return { tableRef, data, handleClick, onCellClick, checkChange, checkAllChange, checkable };
+    const insertRow = () => {
+      data.value.push({
+        firstName: 'Jeff',
+        lastName: 'You',
+        gender: 'Male',
+        date: '1989/05/19',
+      });
+    };
+
+    const deleteRow = () => {
+      data.value.splice(0, 1);
+    };
+
+    return {
+      tableRef,
+      data,
+      handleClick,
+      onCellClick,
+      checkChange,
+      checkAllChange,
+      checkable,
+      insertRow,
+      deleteRow,
+    };
   },
 });
 </script>
