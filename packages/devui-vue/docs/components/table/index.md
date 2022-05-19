@@ -423,9 +423,7 @@ export default defineComponent({
         <div>
           <span style="margin-right:4px;font-size:var(--devui-font-size,12px)">First Name</span>
           <d-popover content="some tips text" trigger="hover" :position="['top']">
-            <template #reference>
-              <d-icon name="info-o"></d-icon>
-            </template>
+            <d-icon name="info-o"></d-icon>
           </d-popover>
         </div>
       </template>
@@ -1021,23 +1019,24 @@ export default defineComponent({
 
 ### Column 参数
 
-| 参数名          | 类型                            | 默认值 | 说明                                        | 跳转 Demo             |
-| :-------------- | :------------------------------ | :----- | :------------------------------------------ | :-------------------- |
-| header          | `string`                        | --     | 可选，对应列的标题                          | [基本用法](#基本用法) |
-| field           | `string`                        | --     | 可选，对应列内容的字段名                    | [基本用法](#基本用法) |
-| type            | [ColumnType](#columntype)       | ''     | 可选，列的类型，设置`checkable`会显示多选框 | [表格交互](#表格交互) |
-| width           | `string \| number`              | --     | 可选，对应列的宽度，单位`px`                |
-| min-width       | `string \| number`              | --     | 可选，对应列的最小宽度，单位`px`            |
-| fixedLeft       | `string`                        | --     | 可选，该列固定到左侧的距离，如：'100px'     | [固定列](#固定列)     |
-| fixedRight      | `string`                        | --     | 可选，该列固定到右侧的距离，如：'100px'     | [固定列](#固定列)     |
-| formatter       | [Formatter](#formatter)         | --     | 可选，格式化列内容                          |
-| sortable        | `boolean`                       | false  | 可选，对行数据按照该列的顺序进行排序        | [列排序](#列排序)     |
-| sort-direction  | [SortDirection](#sortdirection) | ''     | 可选，设置该列的排序状态                    | [列排序](#列排序)     |
-| sort-method     | [SortMethod](#sortmethod)       | --     | 可选，用于排序的比较函数                    | [列排序](#列排序)     |
-| filterable      | `boolean`                       | false  | 可选，是否对该列启用筛选功能                | [列筛选](#列筛选)     |
-| filter-multiple | `boolean`                       | true   | 可选，是否启用多选的方式来筛选              | [列筛选](#列筛选)     |
-| filter-list     | [FilterConfig[]](#filterconfig) | []     | 可选，筛选列表                              | [列筛选](#列筛选)     |
-| align           | [ColumnAlign](#columnalign)     | 'left' | 可选，配置水平对齐方式                      | [自定义列](#自定义列) |
+| 参数名                | 类型                            | 默认值 | 说明                                        | 跳转 Demo             |
+| :-------------------- | :------------------------------ | :----- | :------------------------------------------ | :-------------------- |
+| header                | `string`                        | --     | 可选，对应列的标题                          | [基本用法](#基本用法) |
+| field                 | `string`                        | --     | 可选，对应列内容的字段名                    | [基本用法](#基本用法) |
+| type                  | [ColumnType](#columntype)       | ''     | 可选，列的类型，设置`checkable`会显示多选框 | [表格交互](#表格交互) |
+| width                 | `string \| number`              | --     | 可选，对应列的宽度，单位`px`                |
+| min-width             | `string \| number`              | --     | 可选，对应列的最小宽度，单位`px`            |
+| fixedLeft             | `string`                        | --     | 可选，该列固定到左侧的距离，如：'100px'     | [固定列](#固定列)     |
+| fixedRight            | `string`                        | --     | 可选，该列固定到右侧的距离，如：'100px'     | [固定列](#固定列)     |
+| formatter             | [Formatter](#formatter)         | --     | 可选，格式化列内容                          |
+| sortable              | `boolean`                       | false  | 可选，对行数据按照该列的顺序进行排序        | [列排序](#列排序)     |
+| sort-direction        | [SortDirection](#sortdirection) | ''     | 可选，设置该列的排序状态                    | [列排序](#列排序)     |
+| sort-method           | [SortMethod](#sortmethod)       | --     | 可选，用于排序的比较函数                    | [列排序](#列排序)     |
+| filterable            | `boolean`                       | false  | 可选，是否对该列启用筛选功能                | [列筛选](#列筛选)     |
+| filter-multiple       | `boolean`                       | true   | 可选，是否启用多选的方式来筛选              | [列筛选](#列筛选)     |
+| filter-list           | [FilterConfig[]](#filterconfig) | []     | 可选，筛选列表                              | [列筛选](#列筛选)     |
+| align                 | [ColumnAlign](#columnalign)     | 'left' | 可选，配置水平对齐方式                      | [自定义列](#自定义列) |
+| show-overflow-tooltip | `boolean`                       | false  | 可选，内容过长被隐藏时是否显示 tooltip      |                       |
 
 ### Column 事件
 
