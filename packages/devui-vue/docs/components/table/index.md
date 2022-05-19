@@ -221,9 +221,18 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-button @click="handleClick">Get CheckedRows</d-button>
-    <d-table ref="tableRef" :data="data" @cell-click="onCellClick" @check-change="checkChange" @check-all-change="checkAllChange">
-      <d-column type="checkable" width="30" :checkable="checkable"></d-column>
+    <d-button @click="handleClick" class="mr-m mb-m">Get CheckedRows</d-button>
+    <d-button @click="insertRow" class="mr-m mb-m">Insert Row</d-button>
+    <d-button @click="deleteRow" class="mr-m mb-m">Delete Row</d-button>
+    <d-table
+      ref="tableRef"
+      :data="data"
+      row-key="firstName"
+      @cell-click="onCellClick"
+      @check-change="checkChange"
+      @check-all-change="checkAllChange"
+    >
+      <d-column type="checkable" width="30" :checkable="checkable" reserve-check></d-column>
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
       <d-column field="gender" header="Gender"></d-column>
@@ -283,7 +292,30 @@ export default defineComponent({
       return row.lastName === 'Li' || false;
     };
 
-    return { tableRef, data, handleClick, onCellClick, checkChange, checkAllChange, checkable };
+    const insertRow = () => {
+      data.value.push({
+        firstName: 'Jeff',
+        lastName: 'You',
+        gender: 'Male',
+        date: '1989/05/19',
+      });
+    };
+
+    const deleteRow = () => {
+      data.value.splice(0, 1);
+    };
+
+    return {
+      tableRef,
+      data,
+      handleClick,
+      onCellClick,
+      checkChange,
+      checkAllChange,
+      checkable,
+      insertRow,
+      deleteRow,
+    };
   },
 });
 </script>
@@ -1042,6 +1074,7 @@ export default defineComponent({
 | align                 | [ColumnAlign](#columnalign)        | 'left' | 可选，配置水平对齐方式                      | [自定义列](#自定义列) |
 | checkable             | `Function(row, rowIndex): boolean` | --     | 可选，配置行勾选状态                        | [表格交互](#表格交互) |
 | show-overflow-tooltip | `boolean`                          | false  | 可选，内容过长被隐藏时是否显示 tooltip      |                       |
+| reserve-check         | `boolean`                          | false  | 可选，是否保留勾选状态                      | [表格交互](#表格交互) |
 
 ### Column 事件
 
