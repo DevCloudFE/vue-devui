@@ -1,6 +1,7 @@
 import { PropType, InjectionKey, Ref, ExtractPropTypes } from 'vue';
 
 type Direction = 'row' | 'column';
+type Size = 'lg' | 'md' | 'sm' | 'xs';
 
 const commonProps = {
   name: {
@@ -34,6 +35,10 @@ const commonProps = {
     type: Function as PropType<(isChecked: boolean, v: string) => boolean | Promise<boolean>>,
     default: undefined,
   },
+  size: {
+    type: String as PropType<Size>,
+    default: 'md',
+  },
 } as const;
 
 export const checkboxProps = {
@@ -62,6 +67,10 @@ export const checkboxProps = {
   },
   'onUpdate:modelValue': {
     type: Function as PropType<(v: boolean) => void>,
+  },
+  border: {
+    type: Boolean,
+    default: false,
   },
 } as const;
 
@@ -93,6 +102,10 @@ export const checkboxGroupProps = {
     type: Function as PropType<(v: string[]) => void>,
     default: undefined,
   },
+  border: {
+    type: Boolean,
+    default: false,
+  },
   max: {
     type: Number,
     default: undefined,
@@ -109,6 +122,8 @@ interface checkboxGroupInjection {
   isItemChecked: (v: string) => boolean;
   itemWidth: Ref<number | undefined>;
   direction: Ref<Direction>;
+  size: Ref<string>;
+  border: Ref<boolean>;
   max: Ref<number | undefined>;
   modelValue: Ref<string[]>;
 }
