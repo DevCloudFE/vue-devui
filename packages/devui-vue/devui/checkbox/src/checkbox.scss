@@ -1,5 +1,23 @@
 @import '../../styles-var/devui-var.scss';
 
+$font-size-map: (
+  lg: 14px,
+  md: 14px,
+  sm: 12px,
+  xs: 12px,
+);
+$checkbox-width-map: (
+  lg: 16px,
+  md: 16px,
+  sm: 14px,
+  xs: 14px,
+);
+$checkbox-label-height-map: (
+  lg: 40px,
+  md: 36px,
+  sm: 32px,
+  xs: 28px,
+);
 .#{$devui-prefix}-checkbox {
   position: relative;
   display: flex;
@@ -22,7 +40,7 @@
     }
   }
 
-  &.active:not(.halfchecked) .#{$devui-prefix}-checkbox__tick {
+  &.active:not(.half-checked) .#{$devui-prefix}-checkbox__tick {
     opacity: 1;
     stroke-dashoffset: 0;
     transform: scale(1);
@@ -30,8 +48,11 @@
   }
 
   &.active,
-  &.halfchecked {
+  &.half-checked {
     &:not(.disabled) .#{$devui-prefix}-checkbox__material:not(.custom-color) {
+      border-color: $devui-brand;
+    }
+    .#{$devui-prefix}-checkbox--bordered {
       border-color: $devui-brand;
     }
   }
@@ -61,7 +82,7 @@
     }
   }
 
-  &.halfchecked {
+  &.half-checked {
     .#{$devui-prefix}-checkbox__material:not(.custom-color) {
       background-color: $devui-brand;
 
@@ -74,7 +95,7 @@
     }
   }
 
-  &.halfchecked {
+  &.half-checked {
     .#{$devui-prefix}-checkbox__material.custom-color {
       & > .#{$devui-prefix}-checkbox__halfchecked-bg {
         opacity: 1;
@@ -124,7 +145,7 @@
     }
   }
 
-  &:not(.disabled).halfchecked {
+  &:not(.disabled).half-checked {
     .#{$devui-prefix}-checkbox__material:not(.custom-color) {
       &:focus,
       &:active,
@@ -157,12 +178,38 @@
   & label {
     position: relative;
     font-weight: normal;
-    height: 16px;
-    line-height: 16px;
+    height: 18px;
+    line-height: 18px;
     cursor: pointer;
     color: $devui-text;
     margin: 0;
     display: block;
+    @each $size in ('lg', 'md', 'sm', 'xs') {
+      &.#{$devui-prefix}-checkbox--#{$size} {
+        font-size: map-get($font-size-map, #{$size});
+
+        .#{$devui-prefix}-checkbox__material {
+          width: map-get($checkbox-width-map, #{$size});
+          height: map-get($checkbox-width-map, #{$size});
+
+          & > svg {
+            width: map-get($checkbox-width-map, #{$size});
+            height: map-get($checkbox-width-map, #{$size});
+          }
+        }
+
+        &.#{$devui-prefix}-checkbox--bordered {
+          height: map-get($checkbox-label-height-map, #{$size});
+          line-height: map-get($checkbox-label-height-map, #{$size});
+          padding: 0 15px 0 10px;
+        }
+      }
+    }
+
+    &.#{$devui-prefix}-checkbox--bordered {
+      border: 1px solid $devui-disabled-line;
+      border-radius: $devui-border-radius;
+    }
 
     & > span {
       display: inline-block;
@@ -190,7 +237,7 @@
       }
     }
 
-    &.halfchecked {
+    &.half-checked {
       .#{$devui-prefix}-checkbox__material {
         background-color: $devui-disabled-bg;
 

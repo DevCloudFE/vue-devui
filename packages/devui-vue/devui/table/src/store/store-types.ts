@@ -1,12 +1,15 @@
 import type { ComponentInternalInstance, Ref } from 'vue';
 import { Column, SortMethod, SortDirection } from '../components/column/column-types';
+import { DefaultRow, Table } from '../table-types';
 
 export interface TableStore<T = Record<string, any>> {
+  _table: Table<DefaultRow>;
   states: {
     _data: Ref<T[]>;
     _columns: Ref<Column[]>;
     flatColumns: Ref<Column[]>;
     _checkList: Ref<boolean[]>;
+    _cachedCheckList: boolean[];
     _checkAll: Ref<boolean>;
     _halfChecked: Ref<boolean>;
     isFixedLeft: Ref<boolean>;

@@ -8,7 +8,7 @@
 
 ### 基本用法
 
-:::demo 默认在触发元素的上方展示提示信息，可通过`position`更改展示位置；`content`可设置提示信息；`show-animation`控制是否开启动画。
+:::demo 默认在触发元素的上方展示提示信息，可通过`position`更改展示位置；`content`可设置提示信息；`show-animation`控制是否开启动画;`disabled`提示组件是否可用;`enterable`鼠标是否可以进入 tooltip;。
 
 ```vue
 <template>
@@ -28,6 +28,15 @@
     <d-tooltip content="No Animation" :show-animation="false">
       <d-button>No Animation</d-button>
     </d-tooltip>
+    <d-tooltip content="disabled" disabled>
+      <d-button>disabled</d-button>
+    </d-tooltip>
+    <d-tooltip content="鼠标不可进入tooltip" :enterable="false">
+      <d-button>鼠标不可进入tooltip</d-button>
+    </d-tooltip>
+    <d-tooltip content="tooltip出现后自动隐藏" :hide-after="1000">
+      <d-button>tooltip出现后自动隐藏</d-button>
+    </d-tooltip>
   </div>
 </template>
 
@@ -46,6 +55,7 @@ export default defineComponent({
 <style>
 .demo-btn-group > * {
   margin-right: 4px;
+  margin-bottom: 10px;
 }
 </style>
 ```
@@ -80,6 +90,9 @@ export default defineComponent({
 | show-animation    | `boolean`                                          | true   | 可选，是否显示动画                                | [基本用法](#基本用法) |
 | mouse-enter-delay | `number`                                           | 150    | 可选，鼠标移入后延时多久才显示 Tooltip，单位是 ms | [延时触发](#延时触发) |
 | mouse-leave-delay | `number`                                           | 100    | 可选，鼠标移出后延时多久才隐藏 Tooltip，单位是 ms | [延时触发](#延时触发) |
+| disabled          | `boolean`                                          | false  | 可选，Tooltip 是否可用                            | [基本用法](#基本用法) |
+| enterable         | `boolean`                                          | true   | 可选，鼠标是否可以进入到 tooltip 中               | [基本用法](#基本用法) |
+| hide-after        | `number`                                           | 0      | 可选，tooltip 出现后自动隐藏延时，单位为 ms       | [基本用法](#基本用法) |
 
 ### Tooltip 插槽
 

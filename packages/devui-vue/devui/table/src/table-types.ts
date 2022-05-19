@@ -77,6 +77,17 @@ export const TableProps = {
     type: String as PropType<BorderType>,
     default: '',
   },
+  empty: {
+    type: String,
+    default: 'No Data',
+  },
+  showHeader: {
+    type: Boolean,
+    default: true,
+  },
+  rowKey: {
+    type: String,
+  },
 };
 
 export type TablePropsTypes = ExtractPropTypes<typeof TableProps>;

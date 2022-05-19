@@ -23,6 +23,8 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
     order,
     fixedLeft,
     fixedRight,
+    align,
+    showOverflowTooltip,
   } = props;
   const column: Column = reactive({});
   column.type = type.value;
@@ -83,12 +85,32 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
     { immediate: true }
   );
 
+  watch(
+    align,
+    (alignVal) => {
+      column.align = alignVal;
+    },
+    { immediate: true }
+  );
+
+  watch(
+    showOverflowTooltip,
+    (showVal) => {
+      column.showOverflowTooltip = showVal;
+    },
+    { immediate: true }
+  );
+
   // 宽度
-  watch([width, minWidth], ([widthVal, minWidthVal]) => {
-    column.width = formatWidth(widthVal);
-    column.minWidth = formatMinWidth(minWidthVal);
-    column.realWidth = column.width || column.minWidth;
-  });
+  watch(
+    [width, minWidth],
+    ([widthVal, minWidthVal]) => {
+      column.width = formatWidth(widthVal);
+      column.minWidth = formatMinWidth(minWidthVal);
+      column.realWidth = column.width || column.minWidth;
+    },
+    { immediate: true }
+  );
 
   // 基础渲染功能
   onBeforeMount(() => {

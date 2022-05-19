@@ -16,10 +16,10 @@ export default defineComponent({
     dLoading: Loading,
   },
   props: TableProps,
-  emits: ['sort-change'],
+  emits: ['sort-change', 'cell-click', 'check-change', 'check-all-change'],
   setup(props: TablePropsTypes, ctx) {
     const table = getCurrentInstance() as Table<DefaultRow>;
-    const store = createStore(toRef(props, 'data'));
+    const store = createStore(toRef(props, 'data'), table);
     const tableId = `devui-table_${tableIdInit++}`;
     table.tableId = tableId;
     table.store = store;
@@ -51,7 +51,7 @@ export default defineComponent({
         ) : (
           <NormalHeader classes={classes.value} is-empty={isEmpty.value} />
         )}
-        {isEmpty.value && <div class={ns.e('empty')}>No Data</div>}
+        {isEmpty.value && <div class={ns.e('empty')}>{ctx.slots.empty ? ctx.slots.empty() : props.empty}</div>}
       </div>
     );
   },

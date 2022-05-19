@@ -1,6 +1,6 @@
 import { defineComponent, computed, ref, Ref, CSSProperties, onMounted, onUnmounted, provide } from 'vue';
-import { rowProps, RowProps } from './grid-types';
-import { responesScreen, Screen, RESULT_SCREEN, removeSubscribeCb } from './composables/use-screen';
+import { rowProps, RowProps, GutterScreenSizes } from './grid-types';
+import { responesScreen, Screen, RESULT_SCREEN, removeSubscribeCb, ScreenMediasKey } from './composables/use-screen';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './row.scss';
 
@@ -15,10 +15,10 @@ export default defineComponent({
     const rowClass = computed<Record<string, boolean>>(() => ({
       [ns.em('align', props.align)]: true,
       [ns.em('justify', props.justify)]: true,
-      [ns.e('wrap')]: true,
+      [ns.e('wrap')]: props.wrap,
     }));
 
-    let token;
+    let token: number;
 
     onMounted(() => {
       token = responesScreen((screen) => {
@@ -41,8 +41,8 @@ export default defineComponent({
         currentGutter = [props.gutter as number, 0];
       } else {
         RESULT_SCREEN.some((size) => {
-          const gzs = props.gutter[size];
-          if (gutterScreenSize.value[size] && gzs) {
+          const gzs = (props.gutter as GutterScreenSizes)[size];
+          if (gutterScreenSize.value[size as ScreenMediasKey] && gzs) {
             if (typeof gzs === 'number') {
               currentGutter = [gzs, 0];
             } else {

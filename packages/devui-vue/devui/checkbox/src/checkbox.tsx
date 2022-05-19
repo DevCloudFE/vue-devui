@@ -12,11 +12,15 @@ export default defineComponent({
     const ns = useNamespace('checkbox');
 
     const isChecked = computed(() => props.checked || props.modelValue);
-    const mergedDisabled = computed(() => {
-      return checkboxGroupConf?.disabled.value || props.disabled;
-    });
     const mergedChecked = computed(() => {
       return checkboxGroupConf?.isItemChecked?.(props.value) ?? isChecked.value;
+    });
+    const isLimitDisabled = computed(() => {
+      const max = checkboxGroupConf?.max.value;
+      return max && checkboxGroupConf?.modelValue.value.length >= max && !mergedChecked.value;
+    });
+    const mergedDisabled = computed(() => {
+      return checkboxGroupConf?.disabled.value || props.disabled || isLimitDisabled.value;
     });
     const mergedIsShowTitle = computed(() => {
       return checkboxGroupConf?.isShowTitle.value ?? props.isShowTitle;
@@ -55,6 +59,8 @@ export default defineComponent({
     const handleClick = () => {
       canChange(!isChecked.value, props.label).then((res) => res && toggle());
     };
+    const size = computed(() => checkboxGroupConf?.size.value ?? props.size);
+    const border = computed(() => checkboxGroupConf?.border.value ?? props.border);
 
     return {
       itemWidth,
@@ -66,6 +72,8 @@ export default defineComponent({
       mergedShowAnimation,
       handleClick,
       ns,
+      size,
+      border,
     };
   },
   render() {
@@ -76,7 +84,7 @@ export default defineComponent({
       mergedDisabled,
       mergedIsShowTitle,
       mergedShowAnimation,
-      halfchecked,
+      halfChecked,
       title,
       label,
       handleClick,
@@ -84,6 +92,8 @@ export default defineComponent({
       value,
       mergedColor,
       ns,
+      size,
+      border,
       $slots,
     } = this;
 
@@ -95,38 +105,42 @@ export default defineComponent({
     const checkboxCls = {
       [ns.b()]: true,
       active: mergedChecked,
-      halfchecked,
+      'half-checked': halfChecked,
       disabled: mergedDisabled,
       unchecked: !mergedChecked,
     };
     const labelTitle = mergedIsShowTitle ? title || label : '';
-    const bgImgStyle = (mergedColor && halfchecked) || mergedColor ? `linear-gradient(${mergedColor}, ${mergedColor})` : '';
+    const bgImgStyle = (mergedColor && halfChecked) || mergedColor ? `linear-gradient(${mergedColor}, ${mergedColor})` : '';
     const spanStyle = [
-      `border-color:${(mergedChecked || halfchecked) && mergedColor ? mergedColor : ''}`,
+      `border-color:${(mergedChecked || halfChecked) && mergedColor ? mergedColor : ''}`,
       `background-image:${bgImgStyle}`,
-      `background-color:${mergedColor && halfchecked ? mergedColor : ''}`,
+      `background-color:${mergedColor && halfChecked ? mergedColor : ''}`,
     ];
     const spanCls = {
       [ns.e('material')]: true,
       'custom-color': mergedColor,
       [ns.m('no-label')]: !label && !$slots.default,
       [ns.m('no-animation')]: !mergedShowAnimation,
-      [ns.e('default-background')]: !halfchecked,
+      [ns.e('default-background')]: !halfChecked,
     };
     const polygonCls = {
       [ns.e('tick')]: true,
       [ns.m('no-animation')]: !mergedShowAnimation,
     };
+    const labelCls = {
+      [ns.m(size)]: border,
+      [ns.m('bordered')]: border,
+    };
     const stopPropagation = ($event: Event) => $event.stopPropagation();
 
     const inputProps = {
-      indeterminate: halfchecked,
+      indeterminate: halfChecked,
     };
 
     return (
       <div class={wrapperCls} style={wrapperStyle}>
         <div class={checkboxCls}>
-          <label title={labelTitle} onClick={handleClick}>
+          <label title={labelTitle} onClick={handleClick} class={labelCls} style={{ width: itemWidth ? '100%' : 'auto' }}>
             <input
               name={name || value}
               class={ns.e('input')}

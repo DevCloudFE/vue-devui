@@ -1,6 +1,14 @@
 import { mount } from '@vue/test-utils';
 import { ref, nextTick } from 'vue';
 import DCheckbox from '../src/checkbox';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('checkbox', true);
+const baseClass = ns.b();
+const noAnimationClass = ns.m('no-animation');
+const defaultBgClass = ns.e('default-background');
+const borderClass = ns.m('bordered');
+const sizeLgClass = ns.m('lg');
 
 describe('checkbox', () => {
   it('checkbox render work', async () => {
@@ -8,13 +16,13 @@ describe('checkbox', () => {
     const wrapper = mount({
       components: { DCheckbox },
       template: `<d-checkbox v-model:checked="checked" value="a">1024</d-checkbox>`,
-      setup () {
+      setup() {
         return {
-          checked
+          checked,
         };
-      }
+      },
     });
-    const container = wrapper.find('.devui-checkbox');
+    const container = wrapper.find(baseClass);
 
     expect(wrapper.text()).toEqual('1024');
     expect(container.exists()).toBeTruthy();
@@ -31,8 +39,8 @@ describe('checkbox', () => {
     const wrapper = mount(DCheckbox, {
       props: {
         value: 'a',
-        label: '1314'
-      }
+        label: '1314',
+      },
     });
 
     expect(wrapper.text()).toEqual('1314');
@@ -41,12 +49,12 @@ describe('checkbox', () => {
 
     await wrapper.setProps({
       title: '520',
-      label: '1314'
+      label: '1314',
     });
     expect(label.attributes('title')).toEqual('520');
 
     await wrapper.setProps({
-      isShowTitle: false
+      isShowTitle: false,
     });
     expect(label.attributes('title')).toEqual('');
   });
@@ -54,16 +62,16 @@ describe('checkbox', () => {
   it('checkbox showAnimation work', async () => {
     const wrapper = mount(DCheckbox, {
       props: {
-        value: 'a'
-      }
+        value: 'a',
+      },
     });
 
-    expect(wrapper.findAll('.devui-no-animation').length).toBe(0);
+    expect(wrapper.findAll(noAnimationClass).length).toBe(0);
 
     await wrapper.setProps({
-      showAnimation: false
+      showAnimation: false,
     });
-    expect(wrapper.findAll('.devui-no-animation').length).toBe(2);
+    expect(wrapper.findAll(noAnimationClass).length).toBe(2);
   });
 
   it('checkbox disabled work', async () => {
@@ -72,20 +80,20 @@ describe('checkbox', () => {
       props: {
         value: 'a',
         disabled: true,
-        onChange
-      }
+        onChange,
+      },
     });
     const label = wrapper.find('label');
 
     await label.trigger('click');
-    expect(wrapper.find('.devui-checkbox').classes()).toContain('disabled');
+    expect(wrapper.find(baseClass).classes()).toContain('disabled');
     expect(onChange).toBeCalledTimes(0);
 
     await wrapper.setProps({
-      disabled: false
+      disabled: false,
     });
     await label.trigger('click');
-    expect(wrapper.find('.devui-checkbox').classes()).not.toContain('disabled');
+    expect(wrapper.find(baseClass).classes()).not.toContain('disabled');
     expect(onChange).toBeCalledTimes(1);
   });
 
@@ -93,19 +101,19 @@ describe('checkbox', () => {
     const wrapper = mount(DCheckbox, {
       props: {
         value: '555',
-        halfchecked: false
-      }
+        halfChecked: false,
+      },
     });
 
-    const container = wrapper.find('.devui-checkbox');
-    expect(container.classes()).not.toContain('halfchecked');
-    expect(container.find('.devui-checkbox-default-background').exists()).toBe(true);
+    const container = wrapper.find(baseClass);
+    expect(container.classes()).not.toContain('half-checked');
+    expect(container.find(defaultBgClass).exists()).toBe(true);
 
     await wrapper.setProps({
-      halfchecked: true
+      halfChecked: true,
     });
-    expect(container.classes()).toContain('halfchecked');
-    expect(container.find('.devui-checkbox-default-background').exists()).toBe(false);
+    expect(container.classes()).toContain('half-checked');
+    expect(container.find(defaultBgClass).exists()).toBe(false);
   });
 
   it('checkbox beforeChange work', async () => {
@@ -122,13 +130,13 @@ describe('checkbox', () => {
           :before-change="beforeChange">
           666
         </d-checkbox>`,
-      setup () {
+      setup() {
         return {
           beforeChange,
           onChange,
-          checked
+          checked,
         };
-      }
+      },
     });
 
     const label = wrapper.find('label');
@@ -142,5 +150,38 @@ describe('checkbox', () => {
     expect(beforeChange).toBeCalledTimes(2);
     expect(onChange).toBeCalledTimes(1);
     expect(checked.value).toBe(true);
+  });
+
+  it('checkbox border work', async () => {
+    const wrapper = mount(DCheckbox, {
+      props: {
+        value: 'data1',
+        border: false,
+      },
+    });
+
+    expect(wrapper.find(borderClass).exists()).toBe(false);
+
+    await wrapper.setProps({
+      border: true,
+    });
+    expect(wrapper.find(borderClass).exists()).toBe(true);
+  });
+
+  it('checkbox size work', async () => {
+    const wrapper = mount(DCheckbox, {
+      props: {
+        value: 'data1',
+        size: 'lg',
+        border: false,
+      },
+    });
+
+    expect(wrapper.find(sizeLgClass).exists()).toBe(false);
+
+    await wrapper.setProps({
+      border: true,
+    });
+    expect(wrapper.find(sizeLgClass).exists()).toBe(true);
   });
 });
