@@ -1,9 +1,8 @@
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
 import { className } from './utils';
 import useCacheOptions from '../composables/use-cache-options';
-import useSelectOutsideClick from '../composables/use-select-outside-click';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default function useSelect(props: SelectProps, ctx: SetupContext): UseSelectReturnType {
@@ -20,7 +19,6 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     isOpen.value = bool;
     ctx.emit('toggle-change', bool);
   };
-  useSelectOutsideClick([containerRef, dropdownRef], isOpen, toggleChange);
 
   const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
   const selectCls = computed(() => {
@@ -37,6 +35,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   // 这里对options做统一处理
   const mergeOptions = computed(() => {
     const { multiple, modelValue } = props;
+    console.log(1);
     return props.options.map((item) => {
       let option: OptionObjectItem;
       if (typeof item === 'object') {
@@ -71,6 +70,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   const getValuesOption = useCacheOptions(mergeOptions);
   // 控制输入框的显示内容
   const inputValue = computed<string>(() => {
+    console.log(2);
     if (props.multiple && Array.isArray(props.modelValue)) {
       const selectedOptions = getValuesOption(props.modelValue);
       return selectedOptions.map((item) => item?.name || '').join(',');
@@ -125,6 +125,11 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     }
   };
 
+  const handleClose = () => {
+    isOpen.value = false;
+    ctx.emit('toggle-change', false);
+  };
+
   return {
     containerRef,
     dropdownRef,
@@ -137,5 +142,6 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     onClick,
     handleClear,
     valueChange,
+    handleClose,
   };
 }

@@ -79,6 +79,7 @@ export interface UseSelectReturnType {
   onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
   valueChange: (item: OptionObjectItem, index: number) => void;
+  handleClose: () => void;
 }
 
 export interface SelectContext extends SelectProps {
