@@ -8,6 +8,8 @@ import { useInputEvent } from './composables/use-input-event';
 import { useInputFunction } from './composables/use-input-function';
 import './input.scss';
 
+import Icon from '../../icon/src/icon';
+
 export default defineComponent({
   name: 'DInput',
   inheritAttrs: false,
@@ -17,11 +19,15 @@ export default defineComponent({
     const formItemContext = inject(FORM_ITEM_TOKEN, undefined) as FormItemContext;
     const { modelValue, disabled } = toRefs(props);
     const ns = useNamespace('input');
-    const { isFocus, wrapClasses } = useInputRender(props);
+    const slotNs = useNamespace('input-slot');
+    const { isFocus, wrapClasses, inputClasses, customStyle, otherAttrs } = useInputRender(props, ctx);
     const { onFocus, onBlur, onInput, onChange, onKeydown } = useInputEvent(isFocus, props, ctx);
 
     const input = shallowRef<HTMLInputElement>();
     const { select, focus, blur } = useInputFunction(input);
+
+    const prefixVisiable = ctx.slots.prefix || props.prefix;
+    const suffixVisiable = ctx.slots.suffix || props.suffix;
 
     watch(
       () => props.modelValue,
@@ -35,19 +41,35 @@ export default defineComponent({
     ctx.expose({ select, focus, blur });
 
     return () => (
-      <div class={wrapClasses.value}>
-        <input
-          ref={input}
-          value={modelValue.value}
-          disabled={disabled.value}
-          class={ns.e('inner')}
-          {...ctx.attrs}
-          onInput={onInput}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          onChange={onChange}
-          onKeydown={onKeydown}
-        />
+      <div class={inputClasses.value} {...customStyle}>
+        {ctx.slots.prepend && <div class={slotNs.e('prepend')}>{ctx.slots.prepend?.()}</div>}
+        <div class={wrapClasses.value}>
+          {prefixVisiable && (
+            <span class={slotNs.e('prefix')}>
+              {ctx.slots.prefix && <div>{ctx.slots.prefix?.()}</div>}
+              {props.prefix && <Icon size={props.size} name={props.prefix} />}
+            </span>
+          )}
+          <input
+            ref={input}
+            value={modelValue.value}
+            disabled={disabled.value}
+            class={ns.e('inner')}
+            {...otherAttrs}
+            onInput={onInput}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            onChange={onChange}
+            onKeydown={onKeydown}
+          />
+          {suffixVisiable && (
+            <span class={slotNs.e('suffix')}>
+              {props.suffix && <Icon size={props.size} name={props.suffix} />}
+              {ctx.slots.suffix && <div>{ctx.slots.suffix?.()}</div>}
+            </span>
+          )}
+        </div>
+        {ctx.slots.append && <div class={slotNs.e('append')}>{ctx.slots.append?.()}</div>}
       </div>
     );
   },
