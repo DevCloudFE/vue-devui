@@ -30,7 +30,7 @@ export default defineComponent({
 
     return () => (
       <Teleport to="body">
-        <Transition name={showAnimation.value ? `devui-dropdown-fade-${currentPosition.value}` : ''}>
+        <Transition name={showAnimation.value ? ns.m(`fade-${currentPosition.value}`) : ''}>
           <FlexibleOverlay
             v-model={modelValue.value}
             origin={origin?.value}
