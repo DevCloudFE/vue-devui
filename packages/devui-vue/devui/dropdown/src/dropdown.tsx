@@ -52,7 +52,7 @@ export default defineComponent({
       <>
         <PopperTrigger>{slots.default?.()}</PopperTrigger>
         <Teleport to="body">
-          <Transition name={showAnimation.value ? `devui-dropdown-fade-${currentPosition.value}` : ''}>
+          <Transition name={showAnimation.value ? ns.m(`fade-${currentPosition.value}`) : ''}>
             <FlexibleOverlay
               v-model={overlayModelValue.value}
               v-show={overlayShowValue.value}
