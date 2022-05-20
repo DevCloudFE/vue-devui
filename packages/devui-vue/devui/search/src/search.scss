@@ -8,9 +8,37 @@
 
   .#{$devui-prefix}-input {
     padding: 4px 60px 4px 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid $devui-form-control-line;
+    border-radius: $devui-border-radius;
+    background-color: $devui-form-control-bg;
+    transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
+
+    &:not(.#{$devui-prefix}-input--error):not(.#{$devui-prefix}-input--disabled):hover {
+      border-color: $devui-disabled-line;
+    }
 
     &__inner {
       padding: 0;
+    }
+
+    &__wrapper {
+      border: none;
+      padding: 0;
+    }
+  }
+
+  &--focus {
+    .#{$devui-prefix}-input {
+      border-color: $devui-form-control-line-active;
+
+      &:hover {
+        border-color: $devui-form-control-line-hover !important;
+      }
     }
   }
 
@@ -94,12 +122,22 @@
   }
 
   &--disabled {
+    .#{$devui-prefix}-input {
+      cursor: not-allowed;
+      border-color: $devui-disabled-line;
+      background-color: $devui-disabled-bg;
+    }
+
     .#{$devui-prefix}-search__icon {
       cursor: not-allowed;
     }
 
     .icon-search {
       color: $devui-disabled-text !important;
+    }
+
+    .#{$devui-prefix}-input:hover {
+      border-color: $devui-form-control-line-hover;
     }
   }
 
@@ -131,7 +169,7 @@
   }
 
   &--no-border {
-    input {
+    .#{$devui-prefix}-input {
       border: none;
     }
   }
