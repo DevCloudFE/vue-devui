@@ -1,5 +1,15 @@
 import { mount } from '@vue/test-utils';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import { Button } from '..';
+
+const ns = useNamespace('button', true);
+
+const baseClass = ns.b();
+const solidClass = ns.m('solid');
+const smClass = ns.m('sm');
+const roundClass = ns.m('round');
+const circleClass = ns.m('circle');
+const iconClass = '.icon';
 
 describe('d-button', () => {
   it('variant', () => {
@@ -10,7 +20,8 @@ describe('d-button', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-button').classes()).toContain('devui-button--solid');
+
+    expect(wrapper.find(solidClass).exists()).toBeTruthy();
   });
 
   it('size', () => {
@@ -21,7 +32,19 @@ describe('d-button', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-button--sm').exists()).toBeTruthy();
+    expect(wrapper.find(smClass).exists()).toBeTruthy();
+  });
+
+  it('icon', () => {
+    const wrapper = mount(Button, {
+      setup() {
+        return () => {
+          return <Button icon="like">确定</Button>;
+        };
+      }
+    });
+
+    expect(wrapper.find(iconClass).exists()).toBeTruthy();
   });
 
   it('type', () => {
@@ -44,7 +67,7 @@ describe('d-button', () => {
         };
       }
     });
-    await wrapper.find('.devui-button').trigger('click');
+    await wrapper.find(baseClass).trigger('click');
     expect(handleClick).toBeCalled();
   });
 
@@ -95,7 +118,7 @@ describe('d-button', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-button--round').exists()).toBeTruthy();
+    expect(wrapper.find(roundClass).exists()).toBeTruthy();
   });
 
   it('测试圆形图标按钮(shape=circle)', () => {
@@ -106,6 +129,6 @@ describe('d-button', () => {
         };
       }
     });
-    expect(wrapper.find('.devui-button--circle').exists()).toBeTruthy();
+    expect(wrapper.find(circleClass).exists()).toBeTruthy();
   });
 });
