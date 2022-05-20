@@ -29,7 +29,7 @@ export default defineComponent({
         } else if (gender.value.toLowerCase() === 'female') {
           code.value = 0;
         } else {
-          throw new Error('gender must be "Male" or "Female"');
+          console.warn('gender must be "Male" or "Female"');
         }
         return;
       }

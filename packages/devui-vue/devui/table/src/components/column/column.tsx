@@ -22,6 +22,7 @@ export default defineComponent({
   props: tableColumnProps,
   emits: ['filter-change'],
   setup(props: TableColumnProps, ctx: SetupContext) {
+    const { reserveCheck } = toRefs(props);
     const instance = getCurrentInstance() as TableColumn;
     const column = createColumn(toRefs(props), ctx.slots);
     const owner = inject(TABLE_TOKEN) as Table<DefaultRow>;
@@ -46,6 +47,7 @@ export default defineComponent({
       if (isFunction(props.checkable)) {
         owner?.store.states._data.value.forEach((row, rowIndex) => {
           owner.store.states._checkList.value[rowIndex] = props.checkable(row, rowIndex);
+          owner.store.states._cachedCheckList =  owner.store.states._checkList.value;
         });
       }
     });
@@ -56,6 +58,15 @@ export default defineComponent({
         owner?.store.sortColumn();
       }
     );
+
+    // 勾选状态保留
+    watch(owner?.store.states._data, () => {
+      if (reserveCheck.value) {
+        owner?.store.states._cachedCheckList?.forEach((checkedValue, rowIndex) => {
+          owner.store.states._checkList.value[rowIndex] = checkedValue;
+        });
+      }
+    });
 
     onBeforeUnmount(() => {
       owner?.store.removeColumn(column);

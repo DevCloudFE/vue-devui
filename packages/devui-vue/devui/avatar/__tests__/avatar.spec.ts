@@ -1,10 +1,13 @@
 import { mount } from '@vue/test-utils';
-import Avatar from '../src/avatar';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { Avatar } from '..';
 
 const ns = useNamespace('avatar', true);
 
 const styleClass = ns.e('style');
+const background = ns.m('background');
+const background0 = `${background}-0`;
+const background1 = `${background}-1`;
 
 describe('avatar', () => {
   describe('name text shown correctly', () => {
@@ -73,7 +76,7 @@ describe('avatar', () => {
           gender: 'male',
         },
       });
-      expect(wrapper.find('.devui-avatar--background-1').exists()).toBe(true);
+      expect(wrapper.find(background1).exists()).toBe(true);
     });
 
     it('should be female background', () => {
@@ -83,18 +86,18 @@ describe('avatar', () => {
           gender: 'female',
         },
       });
-      expect(wrapper.find('.devui-avatar--background-0').exists()).toBe(true);
+      expect(wrapper.find(background0).exists()).toBe(true);
     });
 
-    it('gender error should throw error', () => {
-      expect(() => {
-        mount(Avatar, {
-          props: {
-            name: 'avatar',
-            gender: 'unknown',
-          },
-        });
-      }).toThrowError('gender must be "Male" or "Female"');
+    it('gender error should console warn', () => {
+      console.warn = jest.fn();
+      mount(Avatar, {
+        props: {
+          name: 'avatar',
+          gender: 'unknown',
+        },
+      });
+      expect(console.warn).toBeCalled();
     });
   });
 

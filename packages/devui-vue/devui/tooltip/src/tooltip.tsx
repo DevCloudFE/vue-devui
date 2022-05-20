@@ -25,7 +25,7 @@ export default defineComponent({
       <>
         <PopperTrigger>{slots.default?.()}</PopperTrigger>
         <Teleport to="body">
-          <Transition name={showAnimation.value ? `devui-tooltip-fade-${placement.value}` : ''}>
+          <Transition name={showAnimation.value ? ns.m(`fade-${placement.value}`) : ''}>
             <FlexibleOverlay
               v-model={visible.value}
               ref={tooltipRef}
