@@ -25,6 +25,7 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
     fixedRight,
     align,
     showOverflowTooltip,
+    resizeable,
   } = props;
   const column: Column = reactive({});
   column.type = type.value;
@@ -97,6 +98,14 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
     showOverflowTooltip,
     (showVal) => {
       column.showOverflowTooltip = showVal;
+    },
+    { immediate: true }
+  );
+
+  watch(
+    resizeable,
+    (resizeVal) => {
+      column.resizeable = resizeVal;
     },
     { immediate: true }
   );

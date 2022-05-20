@@ -15,7 +15,7 @@
 <template>
   <d-table :data="baseTableData">
     <d-column field="firstName" header="First Name"></d-column>
-    <d-column field="lastName" header="Last Name"></d-column>
+    <d-column field="lastName" header="Last Name" resizeable></d-column>
     <d-column field="gender" header="Gender"></d-column>
     <d-column field="date" header="Date of birth"></d-column>
   </d-table>
@@ -1042,6 +1042,7 @@ export default defineComponent({
 | align                 | [ColumnAlign](#columnalign)        | 'left' | 可选，配置水平对齐方式                      | [自定义列](#自定义列) |
 | checkable             | `Function(row, rowIndex): boolean` | --     | 可选，配置行勾选状态                        | [表格交互](#表格交互) |
 | show-overflow-tooltip | `boolean`                          | false  | 可选，内容过长被隐藏时是否显示 tooltip      |                       |
+| resizeable            | `boolean`                          | false  | 可选，该列宽度是否可调整                    |                       |
 
 ### Column 事件
 

@@ -86,6 +86,10 @@ export const tableColumnProps = {
   checkable: {
     type: Function as PropType<(row: unknown, rowIndex: number) => boolean>,
   },
+  resizeable: {
+    type: Boolean,
+    default: false,
+  },
 };
 
 export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>;
@@ -108,6 +112,7 @@ export interface Column {
   fixedRight?: string;
   align: ColumnAlign;
   showOverflowTooltip: boolean;
+  resizeable: boolean;
   ctx: SetupContext;
   renderHeader?: (column: Column, store: TableStore) => VNode;
   renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) => VNode;

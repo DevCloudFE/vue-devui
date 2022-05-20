@@ -26,6 +26,22 @@
         }
       }
 
+      .operable:hover {
+        background-color: $devui-list-item-hover-bg;
+      }
+
+      .resizeable:hover {
+        .resize-handle {
+          border-right: 1px solid $devui-line;
+        }
+      }
+
+      .resizeable {
+        .resize-handle:hover {
+          border-right: 2px solid $devui-form-control-line-active;
+        }
+      }
+
       .sort-active,
       .filter-active {
         background-color: $devui-list-item-hover-bg;
@@ -50,7 +66,26 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
-        cursor: default;
+      }
+
+      .resize-handle {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        cursor: col-resize;
+      }
+
+      .resize-overlay {
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 1000;
       }
     }
   }

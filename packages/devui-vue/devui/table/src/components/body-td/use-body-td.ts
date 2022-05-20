@@ -23,7 +23,7 @@ export function useBodyTd(props: BodyTdProps): UseBodyTd {
   }
 
   onMounted(() => {
-    if (inBrowser && window.ResizeObserver) {
+    if (inBrowser && window.ResizeObserver && props.column.showOverflowTooltip) {
       const observer = new window.ResizeObserver(shouldShowTooltip);
       tdRef.value && observer.observe(tdRef.value);
     }
