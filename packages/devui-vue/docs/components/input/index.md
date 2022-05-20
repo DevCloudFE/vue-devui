@@ -44,6 +44,66 @@ export default defineComponent({
 
 :::
 
+### 一键清空
+
+使用`clearable`属性可得到一个可一键清空的输入框，使用`clear`事件可在清空按钮被点击时做一些操作。
+
+:::demo
+
+```vue
+<template>
+  <div class="devui-input-demo">
+    <d-input v-model="value1" clearable @clear="handleClear" placeholder="请输入"></d-input>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const handleClear = () => {
+      console.log('clear');
+    };
+    return {
+      value1: ref(''),
+      handleClear,
+    };
+  },
+});
+</script>
+```
+
+:::
+
+### 密码框
+
+使用 `show-password` 属性可得到一个可切换显示隐藏的密码框。
+
+:::demo
+
+```vue
+<template>
+  <div class="devui-input-demo">
+    <d-input v-model="value1" show-password placeholder="请输入"></d-input>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    return {
+      value1: ref(''),
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### 尺寸
 
 :::demo 支持`sm`、`md`、`lg`三种尺寸，默认为`md`。
@@ -253,6 +313,7 @@ export default defineComponent({
 | validate-event | `boolean`               | true   | 可选，输入时是否触发表单的校验                   |                                   |
 | prefix         | `string`                | -      | 可选，自定义前缀图标                             | [带图标的输入框](#带图标的输入框) |
 | suffix         | `string`                | -      | 可选，自定义后缀图标                             | [带图标的输入框](#带图标的输入框) |
+| clearable      | `boolean`               | false  | 可选，是否可清空                                 | [一键清空](#一键清空)             |
 
 ### Input 插槽
 
@@ -265,13 +326,14 @@ export default defineComponent({
 
 ### Input 事件
 
-| 事件名  | 回调参数                     | 说明                           |
-| :------ | :--------------------------- | :----------------------------- |
-| focus   | `Function(e: FocusEvent)`    | 获取焦点时触发                 |
-| blur    | `Function(e: FocusEvent)`    | 失去焦点时触发                 |
-| input   | `Function(e: Event)`         | 输入值改变时触发               |
-| change  | `Function(e: Event)`         | 输入框失去焦点或按下回车时触发 |
-| keydown | `Function(e: KeyboardEvent)` | 按下按键时触发                 |
+| 事件名  | 回调参数                     | 说明                                          |
+| :------ | :--------------------------- | :-------------------------------------------- |
+| focus   | `Function(e: FocusEvent)`    | 获取焦点时触发                                |
+| blur    | `Function(e: FocusEvent)`    | 失去焦点时触发                                |
+| input   | `Function(e: Event)`         | 输入值改变时触发                              |
+| change  | `Function(e: Event)`         | 输入框失去焦点或按下回车时触发                |
+| keydown | `Function(e: KeyboardEvent)` | 按下按键时触发                                |
+| clear   | -                            | 在点击由 `clearable` 属性生成的清空按钮时触发 |
 
 ### Input 方法
 
