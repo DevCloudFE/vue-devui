@@ -25,6 +25,7 @@
     Underlined
     <d-select v-model="value4" :options="options" size="lg" overview="underlined"></d-select>
   </div>
+  </div>
 </template>
 
 <script>
@@ -32,13 +33,12 @@ import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const value1 = ref('');
+    const value1 = ref(1);
     const value2 = ref('');
     const value3 = ref('');
     const value4 = ref('');
     const items = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
     const options = reactive(items);
-
     return {
       value1,
       value2,
@@ -189,11 +189,80 @@ export default defineComponent({
 
 :::
 
+### 自定义下拉面板显示
+
+:::demo 通过d-option设置单个内容
+
+```vue
+<template>
+  <div>d-option</div>
+  <d-select v-model="value1" :allow-clear="true">
+    <d-option v-for="(item, index) in options.data" :key="index" :value="item.value" :name="item.name"></d-option>
+  </d-select>
+  <br/>
+  <div>d-option自定义内容及样式</div> 
+    <d-select v-model="value2" :allow-clear="true">
+      <d-option v-for="(item, index) in options1.data" :key="index" :value="item">
+        <div class="clear-float">
+          <span style="float: left;">{{item}}</span> 
+          <span style="float: right;">{{index +1}}</span>
+        </div>
+      </d-option>
+    </d-select>
+    <d-button @click="change">change</d-button>
+  <div>
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const value1 = ref('');
+    const value2 = ref('');
+    const items = new Array(6).fill(0).map((item, i) => {
+      return {
+        value: `Option ${i + 1}`,
+        name: `Option ${i + 1}`
+      }
+    });
+    const items1 = new Array(6).fill(0).map((item, i) => `Option ${i +1}`);
+    const options = reactive({
+      data: items
+    });
+    const options1 = reactive({
+      data: items1
+    });
+    const change = () => {
+      options1.data = ['Test1', 'Test2'];
+    }
+    return {
+      value1,
+      value2,
+      options,
+      options1,
+      change,
+    };
+  },
+});
+</script>
+<style>
+.clear-float:after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+}
+</style> 
+```
+
+:::
+
 ### Select 参数
 
 | 参数名              | 类型      | 默认     | 说明                                                                                                                                                           | 跳转 Demo             |
 | :------------------ | :-------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| options             | `array`   | []       | 可选, 和 searchFn 互斥，两者必须有且只有一个。                                                                                                                 | [基本用法](#基本用法) |
+| options             | `array`   | []       | 可选, 和使用option子组件互斥，两者必须有且只有一个。                                                                                                                 | [基本用法](#基本用法) |
 | multiple            | `boolean` | false    | 可选,是否支持多选                                                                                                                                              | [多选](#多选)         |
 | readonly            | `boolean` | false    | 可选,是否可以输入                                                                                                                                              |                       |
 | size                | `string`  | 'md'     | 可选,下拉选框尺寸,有三种选择'lg','md','sm'                                                                                                                     | [基本用法](#基本用法) |
@@ -209,3 +278,26 @@ export default defineComponent({
 | :------------ | :------- | :----------------------------------------------------------------- | :-------- |
 | value-change  | `string` | 可选,输出函数,当选中某个选项后,将会调用此函数,参数为当前选择项的值 |           |
 | toggle-change | `string` | 可选,输出函数,下拉打开关闭 toggle 事件                             |           |
+
+
+### Select 插槽
+
+| 名称  | 说明             |
+| ----- | ---------------- |
+| default    | 自定义Select下拉面板内容 |
+
+
+### Option 参数
+
+| 参数名   | 类型                              | 默认        | 说明                  | 跳转 Demo                 |
+| :------- | :-------------------------------- | :---------- | :-------------------- | :------------------------ |
+| value    | `string \| number`              | ''             | 必填，选项唯一标识     | [自定义下拉面板显示](#自定义下拉面板显示)             |
+| name     | `string`                        | ''             | 可选，选项显示内容     | [自定义下拉面板显示](#自定义下拉面板显示)             |
+| disabled | `boolean`                       | false          | 可选，禁用单个选项     | [自定义下拉面板显示](#自定义下拉面板显示)             |
+
+
+### Option 插槽
+
+| 名称  | 说明             |
+| ----- | ---------------- |
+| default    | 自定义单个选项显示内容 |

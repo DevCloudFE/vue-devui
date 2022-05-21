@@ -78,13 +78,15 @@ export interface UseSelectReturnType {
   inputCls: ComputedRef<string>;
   onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
-  valueChange: (item: OptionObjectItem, index: number) => void;
+  valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;
   handleClose: () => void;
+  updateInjectOptions: (item: Record<string, unknown>, operation: string) => void;
 }
 
 export interface SelectContext extends SelectProps {
   emit: SetupContext['emit'];
-  valueChange: (item: OptionObjectItem, index: number) => void;
+  valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;
+  updateInjectOptions: (item: Record<string, unknown>, operation: string) => void;
 }
 
 export const optionProps = {
@@ -92,28 +94,20 @@ export const optionProps = {
     type: [String, Number] as PropType<OptionModelValue>,
     default: '',
   },
-  label: {
-    type: [String, Number] as PropType<OptionModelValue>,
+  name: {
+    type: String,
     default: '',
   },
   disabled: {
     type: Boolean,
     default: false,
   },
-  data: {
-    type: Object as PropType<OptionObjectItem>,
-    default: () => ({}),
-  },
-  index: {
-    type: Number,
-    default: -1,
-  },
 };
 
 export type OptionProps = ExtractPropTypes<typeof optionProps>;
 
 export interface UseOptionReturnType {
-  currentLabel: ComputedRef<OptionModelValue>;
+  currentName: ComputedRef<OptionModelValue>;
   selectOptionCls: ComputedRef<string>;
   optionSelect: () => void;
 }
