@@ -1,6 +1,19 @@
 import { mount } from '@vue/test-utils';
 import DCard from '../src/card';
 import DAvatar from '../../avatar/src/avatar';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('card', true);
+const avatar = useNamespace('avatar');
+
+const avatarBaseClass = avatar.b();
+const titleClass = ns.e('title');
+const subtitleClass = ns.e('subtitle');
+const contentClass = ns.e('content');
+const actionsClass = ns.e('actions');
+const metaClass = ns.e('meta');
+const cardBlockClass = '.card-block';
+const spaceBetweenClass = `${ns.em('actions', 'align')}-spaceBetween`;
 
 describe('card', () => {
   it('should render correctly', async () => {
@@ -22,8 +35,8 @@ describe('card', () => {
         </d-card>
       `,
     });
-    const avatar = wrapper.findAllComponents({ name: 'dAvatar' })[0];
-    expect(avatar.classes()).toContain('devui-avatar');
+    const avatarComponent = wrapper.findAllComponents({ name: 'dAvatar' })[0];
+    expect(avatarComponent.classes()).toContain(avatarBaseClass);
   });
 
   it('in v-slot mode should render correctly avatar', async () => {
@@ -40,8 +53,8 @@ describe('card', () => {
         </d-card>
       `,
     });
-    const avatar = wrapper.findAllComponents({ name: 'dAvatar' })[0];
-    expect(avatar.classes()).toContain('devui-avatar');
+    const avatarComponent = wrapper.findAllComponents({ name: 'dAvatar' })[0];
+    expect(avatarComponent.classes()).toContain(avatarBaseClass);
   });
 
   it('should render correctly title', async () => {
@@ -57,7 +70,7 @@ describe('card', () => {
         </d-card>
       `,
     });
-    expect(wrapper.find('.devui-card__title').text()).toBe('DevUI');
+    expect(wrapper.find(titleClass).text()).toBe('DevUI');
   });
 
   it('in v-slot mode should render title', async () => {
@@ -73,7 +86,7 @@ describe('card', () => {
         </d-card>
       `,
     });
-    expect(wrapper.find('.devui-card__title').text()).toBe('DEVUI Course');
+    expect(wrapper.find(titleClass).text()).toBe('DEVUI Course');
   });
 
   it('should render correctly subtitle', async () => {
@@ -89,7 +102,7 @@ describe('card', () => {
         </d-card>
       `,
     });
-    expect(wrapper.find('.devui-card__subtitle').text()).toBe('DevUI');
+    expect(wrapper.find(subtitleClass).text()).toBe('DevUI');
   });
 
   it('in v-slot mode should render subtitle', async () => {
@@ -105,7 +118,7 @@ describe('card', () => {
         </d-card>
       `,
     });
-    expect(wrapper.find('.devui-card__subtitle').text()).toBe('DevUI');
+    expect(wrapper.find(subtitleClass).text()).toBe('DevUI');
   });
 
   it('should render correctly content', async () => {
@@ -121,7 +134,7 @@ describe('card', () => {
         </d-card>
       `,
     });
-    expect(wrapper.find('.devui-card__content').text()).toBe('DevUI');
+    expect(wrapper.find(contentClass).text()).toBe('DevUI');
   });
 
   it('in v-slot mode should render content', async () => {
@@ -137,7 +150,7 @@ describe('card', () => {
         </d-card>
       `,
     });
-    expect(wrapper.find('.devui-card__content').text()).toBe('DevUI');
+    expect(wrapper.find(contentClass).text()).toBe('DevUI');
   });
 
   it('should render correctly actions', async () => {
@@ -155,8 +168,8 @@ describe('card', () => {
         </d-card>
       `,
     });
-    expect(wrapper.find('.devui-card__actions').exists()).toBeTruthy();
-    expect(wrapper.find('.card-block').text()).toBe('btn');
+    expect(wrapper.find(actionsClass).exists()).toBeTruthy();
+    expect(wrapper.find(cardBlockClass).text()).toBe('btn');
   });
 
   it('in v-slot mode should render actions', async () => {
@@ -174,8 +187,8 @@ describe('card', () => {
         </d-card>
       `,
     });
-    expect(wrapper.find('.devui-card__actions').exists()).toBeTruthy();
-    expect(wrapper.find('.card-block').text()).toBe('btn');
+    expect(wrapper.find(actionsClass).exists()).toBeTruthy();
+    expect(wrapper.find(cardBlockClass).text()).toBe('btn');
   });
 
   it('should render correctly image', async () => {
@@ -188,7 +201,7 @@ describe('card', () => {
         </d-card>
       `,
     });
-    expect(wrapper.find('.devui-card__meta').attributes('src').includes('https://devui.design/components/assets/image1.png')).toBeTruthy();
+    expect(wrapper.find(metaClass).attributes('src').includes('https://devui.design/components/assets/image1.png')).toBeTruthy();
   });
 
   it('should render correctly align', async () => {
@@ -201,6 +214,6 @@ describe('card', () => {
         </d-card>
       `,
     });
-    expect(wrapper.find('.devui-card__actions--align-spaceBetween').exists()).toBeTruthy();
+    expect(wrapper.find(spaceBetweenClass).exists()).toBeTruthy();
   });
 });
