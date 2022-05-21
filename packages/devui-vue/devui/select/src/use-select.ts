@@ -69,20 +69,21 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   const getValuesOption = useCacheOptions(mergeOptions);
 
   // 这里处理d-option组件生成的Options
-  const injectOptions = new Map();
+  const injectOptions = ref(new Map());
   const updateInjectOptions = (item: Record<string, unknown> , operation:  string) => {
     if (operation === 'add') {
-      injectOptions.set(item.value, item);
+      injectOptions.value.set(item.value, item);
     } else if (operation === 'delete') {
-      injectOptions.delete(item.value);
+      injectOptions.value.delete(item.value);
     }
   };
 
   const getInjectOptions = (values: KeyType<OptionObjectItem, 'value'>[]) => {
-    return values.map((value) => injectOptions.get(value));
+    return values.map((value) => injectOptions.value.get(value));
   };
 
   // 控制输入框的显示内容
+  // todo injectOptions根据option进行收集，此computed会执行多次; Vue Test Utils: [Vue warn]: Maximum recursive updates exceeded in component <DSelect>
   const inputValue = computed<string>(() => {
     if (props.multiple && Array.isArray(props.modelValue)) {
       const selectedOptions = getInjectOptions(props.modelValue);
