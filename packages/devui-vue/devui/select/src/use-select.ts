@@ -69,17 +69,17 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   const getValuesOption = useCacheOptions(mergeOptions);
 
   // 这里处理d-option组件生成的Options
-  const injectOptions =  ref(new Map());
+  const injectOptions = new Map();
   const updateInjectOptions = (item: Record<string, unknown> , operation:  string) => {
     if (operation === 'add') {
-      injectOptions.value.set(item.value, item);
+      injectOptions.set(item.value, item);
     } else if (operation === 'delete') {
-      injectOptions.value.delete(item.value);
+      injectOptions.delete(item.value);
     }
   };
 
   const getInjectOptions = (values: KeyType<OptionObjectItem, 'value'>[]) => {
-    return values.map((value) => injectOptions.value.get(value));
+    return values.map((value) => injectOptions.get(value));
   };
 
   // 控制输入框的显示内容
