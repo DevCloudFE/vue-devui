@@ -3,7 +3,6 @@ import { OptionProps, UseOptionReturnType } from './select-types';
 import { SELECT_TOKEN } from './const';
 import { className } from './utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import { watchWithFilter } from '@vueuse/core';
 export default function useOption(props: OptionProps): UseOptionReturnType {
   const ns = useNamespace('select');
   const select = inject(SELECT_TOKEN, null);

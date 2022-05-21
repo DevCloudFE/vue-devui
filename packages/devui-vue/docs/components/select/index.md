@@ -25,7 +25,6 @@
     Underlined
     <d-select v-model="value4" :options="options" size="lg" overview="underlined"></d-select>
   </div>
-  </div>
 </template>
 
 <script>
@@ -33,7 +32,7 @@ import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const value1 = ref(1);
+    const value1 = ref('');
     const value2 = ref('');
     const value3 = ref('');
     const value4 = ref('');
@@ -209,7 +208,6 @@ export default defineComponent({
         </div>
       </d-option>
     </d-select>
-    <d-button @click="change">change</d-button>
   <div>
 </template>
 
@@ -233,15 +231,11 @@ export default defineComponent({
     const options1 = reactive({
       data: items1
     });
-    const change = () => {
-      options1.data = ['Test1', 'Test2'];
-    }
     return {
       value1,
       value2,
       options,
       options1,
-      change,
     };
   },
 });

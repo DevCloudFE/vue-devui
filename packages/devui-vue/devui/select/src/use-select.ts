@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue';
 import type { SetupContext } from 'vue';
 import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
-import { className,KeyType } from './utils';
+import { className, KeyType } from './utils';
 import useCacheOptions from '../composables/use-cache-options';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 

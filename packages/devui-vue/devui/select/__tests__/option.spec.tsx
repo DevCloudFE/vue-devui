@@ -3,7 +3,7 @@ import { ref, nextTick, reactive } from 'vue';
 import DSelect from '../src/select';
 import DOption from '../src/option';
 describe('option', () => {
-  it('测试select自定义选项内容', async () => {
+  it('select customize option work', async () => {
     const value = ref('');
     const items = new Array(6).fill(0).map((item, i) =>{
       return {
@@ -47,7 +47,7 @@ describe('option', () => {
     expect(value.value).toBe('Option 3');
     wrapper.unmount();
   });
-  it('测试option组件数据更改，下拉展示是否正常', async () => {
+  it('option items data changed work', async () => {
     const value = ref('');
     const items = new Array(6).fill(0).map((item, i) => `Option ${i +1}`);
     const options = reactive({
@@ -83,7 +83,7 @@ describe('option', () => {
     expect(value.value).toBe('Test 1');
     wrapper.unmount();
   });
-  it('测试option组件单个选项disabled是否正常', async () => {
+  it('option item disabled work', async () => {
     const value = ref('');
     const items = new Array(6).fill(0).map((item, i) => {
       return {
