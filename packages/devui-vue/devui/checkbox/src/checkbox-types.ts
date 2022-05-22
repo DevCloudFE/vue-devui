@@ -49,10 +49,11 @@ export const checkboxProps = {
   },
   value: {
     type: String,
+    default: ''
   },
   label: {
     type: String,
-    default: undefined,
+    default: '',
   },
   'onUpdate:checked': {
     type: Function as PropType<(v: boolean) => void>,
