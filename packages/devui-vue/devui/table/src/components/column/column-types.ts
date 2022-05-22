@@ -95,7 +95,7 @@ export const tableColumnProps = {
 export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>;
 
 export interface Column {
-  id?: string;
+  id: string;
   type?: ColumnType;
   field?: string;
   width?: number;
@@ -104,19 +104,20 @@ export interface Column {
   header?: string;
   order?: number;
   sortable?: boolean;
-  sortDirection: SortDirection;
+  sortDirection?: SortDirection;
   filterable?: boolean;
   filterMultiple?: boolean;
   filterList?: FilterConfig[];
   fixedLeft?: string;
   fixedRight?: string;
-  align: ColumnAlign;
-  showOverflowTooltip: boolean;
-  ctx: SetupContext;
+  align?: ColumnAlign;
+  showOverflowTooltip?: boolean;
+  ctx?: SetupContext;
+  customFilterTemplate?: Slot;
   renderHeader?: (column: Column, store: TableStore) => VNode;
   renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) => VNode;
   formatter?: Formatter;
-  sortMethod: SortMethod;
+  sortMethod?: SortMethod;
   subColumns?: Slot;
 }
 
