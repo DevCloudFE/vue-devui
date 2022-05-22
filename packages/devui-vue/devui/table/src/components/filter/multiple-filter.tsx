@@ -20,7 +20,7 @@ export default defineComponent({
       <>
         <div class="filter-all-check">
           <div class="filter-item">
-            <Checkbox v-model={_checkAll.value} halfchecked={_halfChecked.value} label="全选"></Checkbox>
+            <Checkbox v-model={_checkAll.value} halfChecked={_halfChecked.value} label="全选"></Checkbox>
           </div>
         </div>
         <div class="filter-multiple-menu">
