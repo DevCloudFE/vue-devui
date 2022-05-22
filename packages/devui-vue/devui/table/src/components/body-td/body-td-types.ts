@@ -1,4 +1,4 @@
-import type { ExtractPropTypes, PropType, VNode, RendererNode, RendererElement, Ref } from 'vue';
+import type { ExtractPropTypes, PropType, Ref, TdHTMLAttributes } from 'vue';
 import { Column } from '../column/column-types';
 
 export const bodyTdProps = {
@@ -16,7 +16,7 @@ export const bodyTdProps = {
   },
 };
 
-export type BodyTdProps = ExtractPropTypes<typeof bodyTdProps>;
+export type BodyTdProps = ExtractPropTypes<typeof bodyTdProps> & TdHTMLAttributes;
 
 export interface UseBodyTd {
   isShowTooltip: Ref<boolean>;
