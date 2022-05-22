@@ -13,7 +13,7 @@
 
 ```vue
 <template>
-  <d-table :data="baseTableData">
+  <d-table :data="baseTableData" :trackBy="(item) => item.firstName">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -109,6 +109,7 @@ export default defineComponent({
     :size="size"
     :border-type="borderType"
     :show-header="showHeader"
+    :trackBy="trackBy"
   >
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
@@ -193,6 +194,9 @@ export default defineComponent({
       showHeader,
       borderTypeList,
       tableLayout,
+      trackBy(item) {
+        return `${item.firstName}${item.lastName}`
+      }
     };
   },
 });
@@ -231,6 +235,7 @@ export default defineComponent({
       @cell-click="onCellClick"
       @check-change="checkChange"
       @check-all-change="checkAllChange"
+      :trackBy="(item) => item.id"
     >
       <d-column type="checkable" width="30" :checkable="checkable" reserve-check></d-column>
       <d-column field="firstName" header="First Name"></d-column>
@@ -249,24 +254,28 @@ export default defineComponent({
     const tableRef = ref();
     const data = ref([
       {
+        id: '0',
         firstName: 'po',
         lastName: 'Lang',
         gender: 'Male',
         date: '1990/01/15',
       },
       {
+        id: '1',
         firstName: 'john',
         lastName: 'Li',
         gender: 'Female',
         date: '1990/01/16',
       },
       {
+        id: '2',
         firstName: 'peng',
         lastName: 'Li',
         gender: 'Male',
         date: '1990/01/17',
       },
       {
+        id: '3',
         firstName: 'Dale',
         lastName: 'Yu',
         gender: 'Female',
@@ -294,6 +303,7 @@ export default defineComponent({
 
     const insertRow = () => {
       data.value.push({
+        id: `${data.value.length}`,
         firstName: 'Jeff',
         lastName: 'You',
         gender: 'Male',
@@ -330,7 +340,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-table :data="data">
+    <d-table :data="data" :trackBy="(item) => item.firstName">
       <d-column type="index" width="30"></d-column>
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
@@ -386,7 +396,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource">
+  <d-table :data="dataSource" :trackBy="(item) => item.firstName">
     <d-column type="index" width="40">
       <template #default="scope">
         {{ `No.${scope.rowIndex + 1}` }}
@@ -453,7 +463,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource">
+  <d-table :data="dataSource" :trackBy="(item) => item.firstName">
     <d-column field="firstName">
       <template #header>
         <div>
@@ -518,7 +528,7 @@ export default defineComponent({
 <template>
   <div>
     <d-button @click="handleClick">更新数据</d-button>
-    <d-table :data="emptyData" :show-loading="showLoading">
+    <d-table :data="emptyData" :show-loading="showLoading" :trackBy="(item) => item.firstName">
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
       <d-column field="gender" header="Gender"></d-column>
@@ -584,7 +594,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource" table-height="200px" fix-header>
+  <d-table :data="dataSource" table-height="200px" fix-header :trackBy="(item) => item.firstName">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -662,7 +672,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="tableDataFixedColumn" table-layout="auto">
+  <d-table :data="tableDataFixedColumn" table-layout="auto" :trackBy="(item) => item.firstName">
     <d-column field="idNo" header="ID Card Number" fixed-left="0px"></d-column>
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
@@ -741,7 +751,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource" :span-method="spanMethod" border-type="bordered">
+  <d-table :data="dataSource" :span-method="spanMethod" border-type="bordered" :trackBy="(item) => item.firstName">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -806,7 +816,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource">
+  <d-table :data="dataSource" :trackBy="(item) => item.firstName">
     <d-column field="name" header="Name">
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
@@ -862,7 +872,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource" @sort-change="handleSortChange">
+  <d-table :data="dataSource" @sort-change="handleSortChange" :trackBy="(item) => item.firstName">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name" sortable :sort-method="sortNameMethod"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -926,7 +936,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource">
+  <d-table :data="dataSource" :trackBy="(item) => item.firstName">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name" filterable :filter-list="filterList" @filter-change="handleFilterChange"></d-column>
     <d-column
@@ -1015,6 +1025,7 @@ export default defineComponent({
 | 参数名                | 类型                      | 默认值    | 说明                                                                       | 跳转 Demo                 |
 | :-------------------- | :------------------------ | :-------- | :------------------------------------------------------------------------- | :------------------------ |
 | data                  | `array`                   | []        | 可选，显示的数据                                                           | [基本用法](#基本用法)     |
+| trackBy | `Function(item): string` | -- | 必选，用于获取该行数据的特定标记 | |
 | striped               | `boolean`                 | false     | 可选，是否显示斑马纹间隔                                                   | [表格样式](#表格样式)     |
 | size                  | [TableSize](#tablesize)   | 'sm'      | 可选，表格大小，分别对应行高 40px,48px,56px                                | [表格样式](#表格样式)     |
 | max-width             | `string`                  | --        | 可选，表格最大宽度                                                         |
