@@ -1,4 +1,4 @@
-import { PropType, InjectionKey, Ref, ExtractPropTypes } from 'vue';
+import { PropType, InjectionKey, Ref, ExtractPropTypes, ComputedRef } from 'vue';
 
 type Direction = 'row' | 'column';
 type Size = 'lg' | 'md' | 'sm' | 'xs';
@@ -112,14 +112,16 @@ export const checkboxGroupProps = {
   },
 } as const;
 
+export type CheckboxGroupProps = ExtractPropTypes<typeof checkboxGroupProps>;
+
 interface checkboxGroupInjection {
   disabled: Ref<boolean>;
   isShowTitle: Ref<boolean>;
   color: Ref<string | undefined>;
   showAnimation: Ref<boolean>;
   beforeChange: undefined | ((isChecked: boolean, v: string) => boolean | Promise<boolean>);
-  toggleGroupVal: (v: string) => void;
-  isItemChecked: (v: string) => boolean;
+  toggleGroupVal: (v: string | undefined) => void;
+  isItemChecked: (v: string | undefined) => boolean;
   itemWidth: Ref<number | undefined>;
   direction: Ref<Direction>;
   size: Ref<string>;
@@ -129,3 +131,27 @@ interface checkboxGroupInjection {
 }
 
 export const checkboxGroupInjectionKey: InjectionKey<checkboxGroupInjection> = Symbol('d-checkbox-group');
+
+export type UseCheckboxFn = {
+  mergedChecked: ComputedRef<boolean | 0 | undefined>;
+  mergedDisabled: ComputedRef<boolean | 0 | undefined>;
+  mergedIsShowTitle: ComputedRef<boolean | undefined>;
+  mergedShowAnimation: ComputedRef<boolean>;
+  mergedColor: ComputedRef<string | undefined>;
+  itemWidth: number | undefined;
+  direction: string | undefined;
+  size: ComputedRef<string>;
+  border: ComputedRef<boolean>;
+  handleClick: () => void;
+};
+
+export interface GroupDefaultOpt {
+  checked: boolean;
+  isShowTitle: boolean;
+  halfChecked: boolean;
+  showAnimation: boolean;
+  disabled: boolean;
+}
+export type UseCheckboxGroupFn = {
+  defaultOpt: GroupDefaultOpt;
+};

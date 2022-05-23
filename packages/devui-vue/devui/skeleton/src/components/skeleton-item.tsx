@@ -27,11 +27,11 @@ export default defineComponent({
           for (let index = 0; index < rowNum; index++) {
             if (rowWidth[index]) {
               switch (typeof rowWidth[index]) {
-                case 'string':
-                  arr.push({ width: rowWidth[index] });
-                  break;
-                case 'number':
-                  arr.push({ width: `${rowWidth[index]}px` });
+              case 'string':
+                arr.push({ width: rowWidth[index] });
+                break;
+              case 'number':
+                arr.push({ width: `${rowWidth[index]}px` });
               }
             } else {
               arr.push({ width: 1 });
@@ -39,12 +39,12 @@ export default defineComponent({
           }
         } else {
           switch (typeof rowWidth) {
-            case 'string':
-              pushIntoArray(rowWidth);
-              break;
-            case 'number':
-              pushIntoArray(`${rowWidth}px`);
-              break;
+          case 'string':
+            pushIntoArray(rowWidth);
+            break;
+          case 'number':
+            pushIntoArray(`${rowWidth}px`);
+            break;
           }
         }
       })();
@@ -69,24 +69,24 @@ export default defineComponent({
     return () => {
       if (props.loading && props.shape) {
         switch (props.shape) {
-          case 'avatar':
-            return (
-              <>
-                <div
-                  class={[ns.em('shape', 'avatar'), renderAnimate(props.animate)]}
-                  style={renderAvatarStyle(props.avatarShape)}
-                  {...ctx.attrs}
-                />
-              </>
-            );
-          case 'paragraph':
-            return <>{renderShapeParagraph(props.row, props.rowWidth, props.round)}</>;
-          default:
-            return (
-              <>
-                <div class={[ns.em('shape', props.shape), renderAnimate(props.animate)]} {...ctx.attrs} />
-              </>
-            );
+        case 'avatar':
+          return (
+            <>
+              <div
+                class={[ns.em('shape', 'avatar'), renderAnimate(props.animate)]}
+                style={renderAvatarStyle(props.avatarShape)}
+                {...ctx.attrs}
+              />
+            </>
+          );
+        case 'paragraph':
+          return <>{renderShapeParagraph(props.row, props.rowWidth, props.round)}</>;
+        default:
+          return (
+            <>
+              <div class={[ns.em('shape', props.shape), renderAnimate(props.animate)]} {...ctx.attrs} />
+            </>
+          );
         }
       }
       return <>{slots.default?.()}</>;
