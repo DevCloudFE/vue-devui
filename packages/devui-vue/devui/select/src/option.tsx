@@ -6,7 +6,7 @@ export default defineComponent({
   name: 'DOption',
   props: optionProps,
   setup(props: OptionProps, ctx: SetupContext) {
-    const { currentLabel, selectOptionCls, optionSelect } = useOption(props);
+    const { currentName, selectOptionCls, optionSelect } = useOption(props);
     return () => {
       return (
         <li
@@ -16,7 +16,7 @@ export default defineComponent({
             optionSelect();
           }}
           class={selectOptionCls.value}>
-          {ctx.slots?.default ? ctx.slots.default() : currentLabel.value}
+          {ctx.slots?.default ? ctx.slots.default() : currentName.value}
         </li>
       );
     };

@@ -26,6 +26,8 @@ export default defineComponent({
       onClick,
       handleClear,
       valueChange,
+      handleClose,
+      updateInjectOptions
     } = useSelect(props, ctx);
 
     const scrollbarNs = useNamespace('scrollbar');
@@ -44,6 +46,7 @@ export default defineComponent({
         ...toRefs(props),
         emit: ctx.emit,
         valueChange,
+        updateInjectOptions,
       })
     );
 
@@ -69,19 +72,26 @@ export default defineComponent({
           <Transition name="fade" ref={dropdownRef}>
             <div v-show={isOpen.value} class={dropdownCls}>
               <ul class={listCls}>
-                {mergeOptions.value.map((item, i) => (
-                  <Option key={i} value={item.value} data={item} label={item.name} index={i}>
-                    {props.multiple ? (
-                      <Checkbox
-                        modelValue={item._checked}
-                        label={item.name}
-                        disabled={props.optionDisabledKey ? !!item[props.optionDisabledKey] : false}
-                      />
-                    ) : (
-                      item.name
-                    )}
-                  </Option>
-                ))}
+                {ctx.slots?.default ? ctx.slots.default()
+                  : mergeOptions.value.map((item, i) => (
+                    <Option
+                      key={i}
+                      value={item.value}
+                      name={item.name}
+                      disabled={props.optionDisabledKey ? !!item[props.optionDisabledKey] : false}
+                    >
+                      {props.multiple ? (
+                        <Checkbox
+                          modelValue={item._checked}
+                          label={item.name}
+                          disabled={props.optionDisabledKey ? !!item[props.optionDisabledKey] : false}
+                        />
+                      ) : (
+                        item.name || item.value
+                      )}
+                    </Option>
+                  ))
+                }
               </ul>
             </div>
           </Transition>
