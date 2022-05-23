@@ -12,3 +12,13 @@ export interface UseFilter {
   filterClass: ComputedRef<Record<string, boolean>>;
   handleFilter: (val: FilterConfig | FilterConfig[]) => void;
 }
+
+export interface UseBaseRender {
+  baseClass: ComputedRef<Record<string, boolean>>;
+}
+
+export interface UseDragColumnWidth {
+  resizing: Ref<boolean>;
+  dragClass: Ref<string>;
+  onMousedown: (e: MouseEvent) => void;
+}

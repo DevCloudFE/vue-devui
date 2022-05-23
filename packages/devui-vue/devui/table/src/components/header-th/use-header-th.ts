@@ -1,12 +1,9 @@
-import { ref, Ref, computed, getCurrentInstance, inject, onMounted, unref } from 'vue';
+import { ref, Ref, computed, getCurrentInstance, inject, onMounted } from 'vue';
 import { Column, FilterConfig, SortDirection } from '../column/column-types';
 import { TABLE_TOKEN } from '../../table-types';
-import { UseSort, UseFilter } from './header-th-types';
-import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import { UseSort, UseFilter, UseBaseRender, UseDragColumnWidth } from './header-th-types';
 
-const ns = useNamespace('table', true);
-
-export function useBaseRender(column: Ref<Column>) {
+export function useBaseRender(column: Ref<Column>): UseBaseRender {
   const baseClass = computed(() => ({
     operable: column.value.filterable || column.value.sortable || column.value.resizeable,
     resizeable: column.value.resizeable,
@@ -62,52 +59,58 @@ export function useFilter(column: Ref<Column>): UseFilter {
   return { filterClass, handleFilter };
 }
 
-function handleWidth(width: string | number) {
+function handleWidth(width: string | number): number | undefined {
   if (!width) {
     return;
   }
   if (typeof width === 'number') {
     return width;
   }
-  if (width.includes('%')) {
-    const tableElement = document.querySelector(ns.b());
-    const tableWidth = tableElement?.clientWidth || 0;
-    return (tableWidth * parseInt(width, 10)) / 100;
-  }
-  return parseInt(width.replace(/[^\d]+/, ''), 10);
+  return parseInt(width, 10);
 }
 
-function getFinalWidth(newWidth: number): number {
-  return newWidth;
+function getFinalWidth(newWidth: number, minWidth: string | number, maxWidth: string | number): number {
+  const realMinWidth = handleWidth(minWidth);
+  const realMaxWidth = handleWidth(maxWidth);
+
+  const overMinWidth = !realMinWidth || newWidth >= realMinWidth;
+  const underMaxWidth = !realMaxWidth || newWidth <= realMaxWidth;
+
+  const finalWidth = !overMinWidth ? realMinWidth : !underMaxWidth ? realMaxWidth : newWidth;
+  return finalWidth;
 }
 
-export function useDragColumnWidth(elementRef: Ref<HTMLElement>) {
+export function useDragColumnWidth(elementRef: Ref<HTMLElement>, column: Ref<Column>): UseDragColumnWidth {
   let initialWidth = 0;
   let mouseDownScreenX = 0;
-  let nextElement: Element | null;
   let resizeBarElement: HTMLElement;
-  let totalWidth = 0;
+  const table = inject(TABLE_TOKEN);
   const dragClass = ref('');
   const resizing = ref(false);
-  const tableElement = document.querySelector(ns.b());
+  const tableElement = table.tableRef;
 
   const onMousemove = (e: MouseEvent) => {
     const movementX = e.clientX - mouseDownScreenX;
     const newWidth = initialWidth + movementX;
-    const finalWidth = getFinalWidth(newWidth);
+    const finalWidth = getFinalWidth(newWidth, column.value.minWidth, column.value.maxWidth);
     if (resizeBarElement) {
       resizeBarElement.style.left = `${finalWidth + elementRef.value.offsetLeft}px`;
     }
+    column.value.ctx.emit('resizing', { width: finalWidth });
   };
 
   const onMouseup = (e: MouseEvent) => {
     const movementX = e.clientX - mouseDownScreenX;
     const newWidth = initialWidth + movementX;
-    const finalWidth = getFinalWidth(newWidth);
+    const finalWidth = getFinalWidth(newWidth, column.value.minWidth, column.value.maxWidth);
+    column.value.width = finalWidth;
+    column.value.realWidth = finalWidth;
+    table.updateColumnWidth();
     resizing.value = false;
-    tableElement?.classList.remove('table-selector');
+    tableElement?.value.classList.remove('table-selector');
     dragClass.value = '';
-    tableElement?.removeChild(resizeBarElement);
+    tableElement?.value.removeChild(resizeBarElement);
+    column.value.ctx.emit('resize-end', { width: finalWidth, beforeWidth: initialWidth });
     document.removeEventListener('mouseup', onMouseup);
     document.removeEventListener('mousemove', onMousemove);
   };
@@ -115,22 +118,21 @@ export function useDragColumnWidth(elementRef: Ref<HTMLElement>) {
   const onMousedown = (e: MouseEvent) => {
     const isHandle = (e.target as HTMLElement).classList.contains('resize-handle');
     if (isHandle) {
+      column.value.ctx.emit('resize-start');
       const initialOffset = elementRef.value.offsetLeft;
       initialWidth = elementRef.value.clientWidth;
       mouseDownScreenX = e.clientX;
       e.stopPropagation();
-      nextElement = elementRef.value.nextElementSibling;
       resizing.value = true;
-      totalWidth = nextElement ? initialWidth + nextElement.clientWidth : initialWidth;
 
-      tableElement?.classList.add('table-selector');
+      tableElement?.value.classList.add('table-selector');
 
       resizeBarElement = document.createElement('div');
       resizeBarElement.classList.add('resize-bar');
-      if (tableElement) {
+      if (tableElement.value) {
         resizeBarElement.style.display = 'block';
         resizeBarElement.style.left = initialOffset + initialWidth + 'px';
-        tableElement.appendChild(resizeBarElement);
+        tableElement.value.appendChild(resizeBarElement);
       }
 
       dragClass.value = 'hover-bg';

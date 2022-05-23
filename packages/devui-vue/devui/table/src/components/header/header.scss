@@ -9,7 +9,7 @@
       th {
         display: table-cell;
         text-align: left;
-        padding: 0 0 0 20px;
+        padding: 0;
         border: none;
         border-bottom: 1px solid $devui-line;
 
@@ -53,6 +53,7 @@
       position: relative;
       display: flex;
       align-items: center;
+      padding-left: 20px;
       padding-right: 8px;
 
       .title {

@@ -24,7 +24,7 @@ export default defineComponent({
     const { direction, sortClass, handleSort, clearSortOrder } = useSort(column);
     const { filterClass, handleFilter } = useFilter(column);
     const { stickyClass, stickyStyle } = useFixedColumn(column);
-    const { resizing, dragClass, onMousedown } = useDragColumnWidth(headerContainerRef);
+    const { resizing, dragClass, onMousedown } = useDragColumnWidth(headerContainerRef, column);
 
     expose({ clearSortOrder });
 

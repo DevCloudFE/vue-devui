@@ -1,11 +1,10 @@
-export function formatWidth(width: number | string): number {
+export function formatWidth(width: number | string): number | string {
+  if (width === '') {
+    return width;
+  }
   if (typeof width === 'number') {
     return width;
   }
 
-  return parseInt(width, 10) || 0;
-}
-
-export function formatMinWidth(minWidth: number | string): number {
-  return formatWidth(minWidth) || 80;
+  return parseInt(width, 10) || 80;
 }

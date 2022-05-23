@@ -3,7 +3,7 @@ import type { ToRefs, Slots, ComputedRef } from 'vue';
 import { Table, DefaultRow } from '../../table-types';
 import { Column, TableColumnProps, TableColumn } from './column-types';
 import { TableStore } from '../../store/store-types';
-import { formatWidth, formatMinWidth } from '../../utils';
+import { formatWidth } from '../../utils';
 import { cellMap } from './config';
 
 export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Column {
@@ -15,6 +15,7 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
     sortDirection,
     width,
     minWidth,
+    maxWidth,
     formatter,
     sortMethod,
     filterable,
@@ -112,11 +113,12 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
 
   // 宽度
   watch(
-    [width, minWidth],
-    ([widthVal, minWidthVal]) => {
+    [width, minWidth, maxWidth],
+    ([widthVal, minWidthVal, maxWidthVal]) => {
       column.width = formatWidth(widthVal);
-      column.minWidth = formatMinWidth(minWidthVal);
-      column.realWidth = column.width || column.minWidth;
+      column.minWidth = minWidthVal;
+      column.maxWidth = maxWidthVal;
+      column.realWidth = column.width;
     },
     { immediate: true }
   );
