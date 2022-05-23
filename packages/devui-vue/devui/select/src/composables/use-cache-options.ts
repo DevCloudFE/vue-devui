@@ -1,6 +1,6 @@
 import { ComputedRef, computed } from 'vue';
-import { OptionObjectItem } from '../src/select-types';
-import { KeyType } from '../src/utils';
+import { OptionObjectItem } from '../select-types';
+import { KeyType } from '../utils';
 
 type GetValueOptionFunc = (values: KeyType<OptionObjectItem, 'value'>[]) => (OptionObjectItem | undefined)[];
 

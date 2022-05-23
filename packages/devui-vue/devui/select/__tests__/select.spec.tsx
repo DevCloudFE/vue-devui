@@ -165,9 +165,9 @@ describe('select', () => {
     expect(item[1].classes()).toContain('disabled');
     await item[1].trigger('click');
     expect(value.value).toEqual([]);
+    // todo 此处遗留，如果继续点击第二个或者更多选项，得到的value.value依然是[]; 原因为下拉面板使用Transition组件导致。
     await item[0].trigger('click');
     expect(value.value).toEqual([0]);
-    // todo 此处遗留，如果继续点击第三个选项，得到的value.value依然是[0]; 后续继续跟进原因。
     wrapper.unmount();
   });
 
@@ -186,6 +186,38 @@ describe('select', () => {
     expect(clearIcon.exists()).toBeTruthy();
     await clearIcon.trigger('click');
     expect(value.value).toBe('');
+    wrapper.unmount();
+  });
+
+
+  it('select multiple tag work', async () => {
+    const value = ref([]);
+    const options = reactive([1, 2, 'test']);
+    const wrapper = mount({
+      setup() {
+        return () => <DSelect v-model={value.value} options={options} multiple={true}></DSelect>;
+      },
+    });
+
+    const container = wrapper.find('.devui-select');
+    const items = container.findAll('.devui-select__item');
+    const section = wrapper.find('.devui-select__multipe');
+    const multipeInput = wrapper.find('.devui-select__multipe--input');
+    expect(section.exists()).toBeTruthy();
+    expect(multipeInput.exists()).toBeTruthy();
+
+    await container.trigger('click');
+    await nextTick();
+    await items[0].trigger('click');
+    expect(value.value).toStrictEqual([1]);
+    const input = container.find<HTMLInputElement>('.devui-select__input');
+    expect(input.element.value).toBe('');
+
+    const tags = wrapper.findAll('.devui-tag');
+    expect(tags.length).toBe(1);
+    const tag = tags[0].find('.remove-button');
+    await tag.trigger('click');
+    expect(value.value).toStrictEqual([]);
     wrapper.unmount();
   });
 });

@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
 import type { SetupContext } from 'vue';
-import useOption from './use-option';
-import { optionProps, OptionProps } from './select-types';
+import useOption from '../composables/use-option';
+import { optionProps, OptionProps } from '../select-types';
 export default defineComponent({
   name: 'DOption',
   props: optionProps,
