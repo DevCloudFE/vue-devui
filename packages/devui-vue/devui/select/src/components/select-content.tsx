@@ -11,12 +11,13 @@ export default defineComponent({
     const ns = useNamespace('select');
     const clearCls = ns.e('clear');
     const arrowCls = ns.e('arrow');
-    const multipleCls = ns.e('multipe');
-    const multipleInputCls = ns.em('multipe', 'input');
+    const multipleCls = ns.e('multiple');
+    const multipleInputCls = ns.em('multiple', 'input');
     const {
-      serchQuery,
+      searchQuery,
       selectedData,
       isSelectDisable,
+      isSupportCollapseTags,
       selectionCls,
       inputCls,
       placeholder,
@@ -37,9 +38,15 @@ export default defineComponent({
               }} key={item.value}>{item.name}
               </Tag>
             )}
+            {isSupportCollapseTags.value && selectedData.value.length &&
+            (<Tag deletable onTagDelete={(e: MouseEvent) => {
+              e.preventDefault();
+              e.stopPropagation();
+              tagDelete(selectedData.value[0]);
+            }}></Tag>)}
             <div class={multipleInputCls}>
               <input
-                value={serchQuery.value}
+                value={searchQuery.value}
                 type="text"
                 class={inputCls.value}
                 placeholder={placeholder.value}

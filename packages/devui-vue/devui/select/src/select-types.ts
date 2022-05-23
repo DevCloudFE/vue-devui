@@ -53,6 +53,10 @@ export const selectProps = {
     type: String,
     default: '',
   },
+  collapseTags: {
+    type: Boolean,
+    default: false,
+  },
   onToggleChange: {
     type: Function as PropType<(bool: boolean) => void>,
     default: undefined,
@@ -125,9 +129,10 @@ export const selectContentProps = {
 export type SelectContentProps = ExtractPropTypes<typeof selectContentProps>;
 
 export interface UseSelectContentReturnType {
-  serchQuery: Ref<string>;
+  searchQuery: Ref<string>;
   selectedData: ComputedRef<OptionObjectItem[]>;
   isSelectDisable: ComputedRef<boolean>;
+  isSupportCollapseTags: ComputedRef<boolean>;
   selectionCls: ComputedRef<string>;
   inputCls: ComputedRef<string>;
   placeholder: ComputedRef<string>;

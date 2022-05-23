@@ -201,10 +201,10 @@ describe('select', () => {
 
     const container = wrapper.find('.devui-select');
     const items = container.findAll('.devui-select__item');
-    const section = wrapper.find('.devui-select__multipe');
-    const multipeInput = wrapper.find('.devui-select__multipe--input');
+    const section = wrapper.find('.devui-select__multiple');
+    const multipleInput = wrapper.find('.devui-select__multiple--input');
     expect(section.exists()).toBeTruthy();
-    expect(multipeInput.exists()).toBeTruthy();
+    expect(multipleInput.exists()).toBeTruthy();
 
     await container.trigger('click');
     await nextTick();

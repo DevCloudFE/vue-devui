@@ -7,10 +7,11 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
   const ns = useNamespace('select');
   const select = inject(SELECT_TOKEN);
 
-  const serchQuery = ref('');
+  const searchQuery = ref('');
   const selectedData = computed<OptionObjectItem[]>(() => select?.selectedOptions || []);
 
   const isSelectDisable = computed<boolean>(() => !!select?.disabled);
+  const isSupportCollapseTags = computed<boolean>(() => !!select?.collapseTags);
 
   // 是否可清空
   const mergeClearable = computed<boolean>(() => {
@@ -47,7 +48,7 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
   };
 
   return {
-    serchQuery,
+    searchQuery,
     selectedData,
     isSelectDisable,
     selectionCls,
