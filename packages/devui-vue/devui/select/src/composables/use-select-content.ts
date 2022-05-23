@@ -51,6 +51,7 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     searchQuery,
     selectedData,
     isSelectDisable,
+    isSupportCollapseTags,
     selectionCls,
     inputCls,
     placeholder,

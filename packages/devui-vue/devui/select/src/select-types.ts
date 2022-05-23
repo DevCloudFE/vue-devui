@@ -57,6 +57,10 @@ export const selectProps = {
     type: Boolean,
     default: false,
   },
+  collapseTagsTooltip: {
+    type: Boolean,
+    default: false,
+  },
   onToggleChange: {
     type: Function as PropType<(bool: boolean) => void>,
     default: undefined,
