@@ -49,12 +49,11 @@ export default defineComponent({
         tagDelete
       }) as SelectContext
     );
-    // 下拉面板暂时去除Transition组件
     return () => {
       return (
         <div class={selectCls.value} ref={containerRef} onClick={onClick}>
           <SelectContent value={inputValue.value}></SelectContent>
-          <div ref={dropdownRef}>
+          <Transition name="fade" ref={dropdownRef}>
             <div v-show={isOpen.value} class={dropdownCls}>
               <ul class={listCls}>
                 {ctx.slots?.default ? ctx.slots.default()
@@ -79,7 +78,7 @@ export default defineComponent({
                 }
               </ul>
             </div>
-          </div>
+          </Transition>
         </div>
       );
     };
