@@ -74,19 +74,22 @@ export interface UseSelectReturnType {
   selectCls: ComputedRef<string>;
   mergeOptions: ComputedRef<OptionObjectItem[]>;
   inputValue: ComputedRef<string>;
-  selectionCls: ComputedRef<string>;
-  inputCls: ComputedRef<string>;
+  selectedOptions: Ref<OptionObjectItem[]>;
   onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
   valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;
   handleClose: () => void;
   updateInjectOptions: (item: Record<string, unknown>, operation: string) => void;
+  tagDelete: (data: OptionObjectItem) => void;
 }
 
 export interface SelectContext extends SelectProps {
+  selectedOptions: OptionObjectItem[];
   emit: SetupContext['emit'];
   valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;
+  handleClear: () => void;
   updateInjectOptions: (item: Record<string, unknown>, operation: string) => void;
+  tagDelete: (data: OptionObjectItem) => void;
 }
 
 export const optionProps = {
@@ -110,4 +113,25 @@ export interface UseOptionReturnType {
   currentName: ComputedRef<OptionModelValue>;
   selectOptionCls: ComputedRef<string>;
   optionSelect: () => void;
+}
+
+export const selectContentProps = {
+  value: {
+    type: String,
+    default: '',
+  },
+};
+
+export type SelectContentProps = ExtractPropTypes<typeof selectContentProps>;
+
+export interface UseSelectContentReturnType {
+  serchQuery: Ref<string>;
+  selectedData: ComputedRef<OptionObjectItem[]>;
+  isSelectDisable: ComputedRef<boolean>;
+  selectionCls: ComputedRef<string>;
+  inputCls: ComputedRef<string>;
+  placeholder: ComputedRef<string>;
+  isMultiple: ComputedRef<boolean>;
+  handleClear: (e: MouseEvent) => void;
+  tagDelete: (data: OptionObjectItem) => void;
 }

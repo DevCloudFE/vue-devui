@@ -1,12 +1,12 @@
 import { defineComponent, provide, reactive, Transition, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
-import { selectProps, SelectProps } from './select-types';
+import { selectProps, SelectProps, SelectContext } from './select-types';
 import { SELECT_TOKEN } from './const';
-import { Icon } from '../../icon';
 import { Checkbox } from '../../checkbox';
-import Option from './option';
+import Option from './components/option';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import SelectContent from './components/select-content';
 import './select.scss';
 
 export default defineComponent({
@@ -21,19 +21,16 @@ export default defineComponent({
       selectCls,
       mergeOptions,
       inputValue,
-      selectionCls,
-      inputCls,
+      selectedOptions,
       onClick,
-      handleClear,
       valueChange,
-      handleClose,
-      updateInjectOptions
+      handleClear,
+      updateInjectOptions,
+      tagDelete
     } = useSelect(props, ctx);
 
     const scrollbarNs = useNamespace('scrollbar');
     const ns = useNamespace('select');
-    const clearCls = ns.e('clear');
-    const arrowCls = ns.e('arrow');
     const dropdownCls = ns.e('dropdown');
     const listCls = {
       [ns.e('dropdown-list')]: true,
@@ -44,31 +41,18 @@ export default defineComponent({
       SELECT_TOKEN,
       reactive({
         ...toRefs(props),
+        selectedOptions,
         emit: ctx.emit,
         valueChange,
+        handleClear,
         updateInjectOptions,
-      })
+        tagDelete
+      }) as SelectContext
     );
-
     return () => {
       return (
-        <div class={selectCls.value} ref={containerRef}>
-          <div class={selectionCls.value} onClick={onClick} ref="origin">
-            <input
-              value={inputValue.value}
-              type="text"
-              class={inputCls.value}
-              placeholder={props.placeholder}
-              readonly
-              disabled={props.disabled}
-            />
-            <span onClick={handleClear} class={clearCls}>
-              <Icon name="close" />
-            </span>
-            <span class={arrowCls}>
-              <Icon name="select-arrow" />
-            </span>
-          </div>
+        <div class={selectCls.value} ref={containerRef} onClick={onClick}>
+          <SelectContent value={inputValue.value}></SelectContent>
           <Transition name="fade" ref={dropdownRef}>
             <div v-show={isOpen.value} class={dropdownCls}>
               <ul class={listCls}>
