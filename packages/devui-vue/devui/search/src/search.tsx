@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { SearchProps, searchProps } from './search-types';
 import { getRootClass } from './composables/use-search-class';
 import { keywordsHandles } from './composables/use-search-keywords';
@@ -13,7 +13,8 @@ export default defineComponent({
   emits: ['update:modelValue', 'search'],
   setup(props: SearchProps, ctx) {
     const ns = useNamespace('search');
-    const rootClasses = getRootClass(props);
+    const isFocus = ref(false);
+    const rootClasses = getRootClass(props, isFocus);
     const { keywords, clearIconShow, onClearHandle } = keywordsHandles(ctx, props);
     const { onInputKeydown, onClickHandle, useEmitKeyword } = keydownHandles(ctx, keywords, props);
 
@@ -25,6 +26,13 @@ export default defineComponent({
       ctx.emit('update:modelValue', event);
     };
 
+    const onFocus = () => {
+      isFocus.value = true;
+    };
+    const onBlur = () => {
+      isFocus.value = false;
+    };
+
     return () => {
       const inputProps = {
         size: props.size,
@@ -32,10 +40,10 @@ export default defineComponent({
         autoFocus: props.autoFocus,
         modelValue: keywords.value,
         placeholder: props.placeholder,
-        maxLength: props.maxLength,
-        cssClass: props.cssClass,
         onKeydown: onInputKeydown,
         'onUpdate:modelValue': onInputUpdate,
+        onFocus: onFocus,
+        onBlur: onBlur,
       };
       return (
         <div class={rootClasses.value}>
