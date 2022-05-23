@@ -6,19 +6,15 @@ import svgIcon from './svg-icon';
 export default defineComponent({
   name: 'DIcon',
   props: iconProps,
-  emits: ['click'],
-  setup(props: IconProps, { attrs, emit }) {
+  setup(props: IconProps, { attrs }) {
     const { component, name, size, color, classPrefix } = toRefs(props);
     const IconComponent = component.value ? resolveDynamicComponent(component.value) : resolveDynamicComponent(svgIcon);
     const iconSize = computed(() => {
       return typeof size.value === 'number' ? `${size.value}px` : size.value;
     });
-    const onClick = () => {
-      emit('click');
-    };
 
     const svgIconDom = () => {
-      return <IconComponent onClick={onClick} name={name.value} color={color.value} size={iconSize.value} {...attrs}></IconComponent>;
+      return <IconComponent name={name.value} color={color.value} size={iconSize.value} {...attrs}></IconComponent>;
     };
 
     const imgIconDom = () => {
@@ -29,7 +25,6 @@ export default defineComponent({
           style={{
             width: iconSize.value || '',
           }}
-          onClick={onClick}
           {...attrs}
         />
       );
@@ -44,7 +39,6 @@ export default defineComponent({
             fontSize: iconSize.value,
             color: color.value,
           }}
-          onClick={onClick}
           {...attrs}></i>
       );
     };
