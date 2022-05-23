@@ -79,9 +79,17 @@ export const tableColumnProps = {
     type: String as PropType<ColumnAlign>,
     default: 'left',
   },
+  showOverflowTooltip: {
+    type: Boolean,
+    default: false,
+  },
   checkable: {
     type: Function as PropType<(row: unknown, rowIndex: number) => boolean>,
   },
+  reserveCheck: {
+    type: Boolean,
+    default: false,
+  }
 };
 
 export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>;
@@ -103,6 +111,7 @@ export interface Column {
   fixedLeft?: string;
   fixedRight?: string;
   align: ColumnAlign;
+  showOverflowTooltip: boolean;
   ctx: SetupContext;
   renderHeader?: (column: Column, store: TableStore) => VNode;
   renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) => VNode;

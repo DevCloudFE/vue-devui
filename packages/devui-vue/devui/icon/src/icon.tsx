@@ -18,40 +18,33 @@ export default defineComponent({
     };
 
     const imgIconDom = () => {
-      return <img
-        src={name.value}
-        alt={name.value.split('/')[name.value.split('/').length - 1]}
-        style={{
-          width: iconSize.value || ''
-        }}
-        {...attrs}
-      />;
+      return (
+        <img
+          src={name.value}
+          alt={name.value.split('/')[name.value.split('/').length - 1]}
+          style={{
+            width: iconSize.value || '',
+          }}
+          {...attrs}
+        />
+      );
     };
 
     const fontIconDom = () => {
       const fontIconClass = /^icon-/.test(name.value) ? name.value : `${classPrefix.value}-${name.value}`;
-      return <i
-        class={[classPrefix.value, fontIconClass]}
-        style={{
-          fontSize: iconSize.value,
-          color: color.value,
-        }}
-        {...attrs}
-      ></i>;
+      return (
+        <i
+          class={[classPrefix.value, fontIconClass]}
+          style={{
+            fontSize: iconSize.value,
+            color: color.value,
+          }}
+          {...attrs}></i>
+      );
     };
 
     return () => {
-      return (
-        <>
-          {
-            component.value
-              ? svgIconDom()
-              : isUrl(name.value)
-                ? imgIconDom()
-                : fontIconDom()
-          }
-        </>
-      );
+      return component.value ? svgIconDom() : isUrl(name.value) ? imgIconDom() : fontIconDom();
     };
-  }
+  },
 });

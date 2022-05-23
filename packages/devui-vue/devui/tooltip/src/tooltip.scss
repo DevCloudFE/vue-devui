@@ -27,7 +27,7 @@
   z-index: $devui-z-index-pop-up;
 }
 
-.#{$devui-prefix}-tooltip-fade {
+.#{$devui-prefix}-tooltip--fade {
   &-bottom,
   &-top {
     &-enter-from,
