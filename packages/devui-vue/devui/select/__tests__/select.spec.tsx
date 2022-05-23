@@ -23,6 +23,7 @@ describe('select', () => {
     expect(listItems.length).toBe(3);
     expect(listItems[0].classes()).toContain('active');
     expect(input.attributes('placeholder')).toBe('这是默认选择框');
+    await nextTick();
     expect(input.element.value).toBe('1');
 
     await input.trigger('click');
