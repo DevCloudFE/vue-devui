@@ -3,7 +3,7 @@ import { SELECT_TOKEN } from '../const';
 import { SelectContentProps, OptionObjectItem, UseSelectContentReturnType } from '../select-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { className } from '../utils';
-export default function useSelectCotent(props: SelectContentProps): UseSelectContentReturnType {
+export default function useSelectContent(props: SelectContentProps): UseSelectContentReturnType {
   const ns = useNamespace('select');
   const select = inject(SELECT_TOKEN);
 

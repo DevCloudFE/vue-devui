@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 import { Icon } from '../../../icon';
 import { Tag } from '../../../tag';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
-import useSelectCotent from '../composables/use-select-content';
+import useSelectContent from '../composables/use-select-content';
 import { selectContentProps, SelectContentProps, OptionObjectItem } from '../select-types';
 export default defineComponent({
   name: 'SelectContent',
@@ -23,7 +23,7 @@ export default defineComponent({
       isMultiple,
       handleClear,
       tagDelete
-    } = useSelectCotent(props);
+    } = useSelectContent(props);
 
     return () => {
       return (
