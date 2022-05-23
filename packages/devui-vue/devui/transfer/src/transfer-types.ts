@@ -6,8 +6,19 @@ export interface IItem {
   disabled: boolean;
 }
 
-export type TKey = string;
+export interface ICheckList {
+  value: string;
+  checked: boolean;
+}
 
+export interface IDargItemAndDropItem {
+  startIndex: number;
+  endIndex: number;
+  dragItem: IItem;
+  dropItem: IItem;
+}
+
+export type TKey = string;
 
 export const transferProps = {
   sourceDefaultChecked: {
@@ -50,6 +61,14 @@ export const transferProps = {
     type: Boolean,
     default: true
   },
+  isSourceDrag: {
+    type: Boolean,
+    default: false
+  },
+  isTargetDrag: {
+    type: Boolean,
+    default: false
+  },
   searching: {
     type: Function as PropType<(data: IItem[], keyword: TKey) => void>
   },
@@ -58,6 +77,15 @@ export const transferProps = {
   },
   targetSortMethods: {
     type: Function as PropType<(data: IItem[]) => IItem[]>
+  },
+  dragstart: {
+    type: Function as PropType<(event: DragEvent, item: IItem) => void>
+  },
+  drop: {
+    type: Function as PropType<(event: DragEvent, item: IItem) => void>
+  },
+  dragend: {
+    type: Function as PropType<(event: DragEvent, item: IItem) => void>
   }
 } as const;
 

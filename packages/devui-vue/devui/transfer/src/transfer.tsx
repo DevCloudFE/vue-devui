@@ -26,7 +26,9 @@ export default defineComponent({
       updateSourceCheckedHandle,
       updateTargetCheckedHandle,
       toMoveTargetHandle,
-      toMoveSourceHandle
+      toMoveSourceHandle,
+      updateSourceDataHandle,
+      updateTargetDataHandle
     } = transferState(props, ctx);
     return () => {
       return <div class="devui-transfer">
@@ -34,11 +36,15 @@ export default defineComponent({
         <transferPanel
           isSearch={props.isSearch}
           isKeyupSearch={props.isKeyupSearch}
+          isDrag={props.isSourceDrag}
           height={props.height}
           unit={props.unit}
           placeholder={props.placeholder}
           sortMethods={props.sourceSortMethods}
           searching={props.searching}
+          dragstart={props.dragstart}
+          drop={props.drop}
+          dragend={props.dragend}
           title={sourceTitle.value}
           data={sourceData.value}
           defaultChecked={sourceDefaultChecked.value}
@@ -52,6 +58,9 @@ export default defineComponent({
           }}
           onChangeChecked={(value: TKey[]) => {
             updateSourceCheckedHandle(value);
+          }}
+          onUpdateData={(startValue: TKey, endValue: TKey) => {
+            updateSourceDataHandle(startValue, endValue);
           }}
         >
         </transferPanel>
@@ -69,11 +78,15 @@ export default defineComponent({
         <transferPanel
           isSearch={props.isSearch}
           isKeyupSearch={props.isKeyupSearch}
+          isDrag={props.isTargetDrag}
           height={props.height}
           unit={props.unit}
           placeholder={props.placeholder}
           sortMethods={props.targetSortMethods}
           searching={props.searching}
+          dragstart={props.dragstart}
+          drop={props.drop}
+          dragend={props.dragend}
           title={targetTitle.value}
           data={targetData.value}
           defaultChecked={targetDefaultChecked.value}
@@ -87,6 +100,9 @@ export default defineComponent({
           }}
           onChangeChecked={(value: TKey[]) => {
             updateTargetCheckedHandle(value);
+          }}
+          onUpdateData={(startValue: TKey, endValue: TKey) => {
+            updateTargetDataHandle(startValue, endValue);
           }}
         >
         </transferPanel>

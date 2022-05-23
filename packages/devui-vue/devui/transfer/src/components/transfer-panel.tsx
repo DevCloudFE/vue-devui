@@ -23,7 +23,8 @@ export default defineComponent({
       query,
       changeAllCheckedHandle,
       updateModelValueHandle,
-      updateCheckedDataHandle
+      updateCheckedDataHandle,
+      updateDataHandle
     } = transferPanelState(props, ctx);
     return () => {
       return <div class="devui-transfer-panel">
@@ -47,9 +48,13 @@ export default defineComponent({
           height={props.height}
           isSearch={props.isSearch}
           isKeyupSearch={props.isKeyupSearch}
+          isDrag={props.isDrag}
           placeholder={props.placeholder}
           defaultChecked={props.defaultChecked}
           searching={props.searching}
+          dragstart={props.dragstart}
+          drop={props.drop}
+          dragend={props.dragend}
           data={fliterData.value}
           queryString={query.value}
           v-slots={{
@@ -60,6 +65,9 @@ export default defineComponent({
           }}
           onUpdateQueryString={(value: TKey) => {
             updateModelValueHandle(value);
+          }}
+          onUpdateDataPosition={(startValue: TKey, endValue: TKey) => {
+            updateDataHandle(startValue, endValue);
           }}
         ></transferBody>
       </div>;
