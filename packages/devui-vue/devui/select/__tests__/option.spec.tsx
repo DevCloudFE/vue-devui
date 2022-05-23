@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { ref, nextTick, reactive } from 'vue';
 import DSelect from '../src/select';
-import DOption from '../src/option';
+import DOption from '../src/components/option';
 describe('option', () => {
   it('select customize option work', async () => {
     const value = ref('');

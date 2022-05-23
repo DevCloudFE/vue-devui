@@ -200,15 +200,14 @@ export default defineComponent({
   </d-select>
   <br/>
   <div>d-option自定义内容及样式</div> 
-    <d-select v-model="value2" :allow-clear="true">
-      <d-option v-for="(item, index) in options1.data" :key="index" :value="item">
-        <div class="clear-float">
-          <span style="float: left;">{{item}}</span> 
-          <span style="float: right;">{{index +1}}</span>
-        </div>
-      </d-option>
-    </d-select>
-  <div>
+  <d-select v-model="value2" :allow-clear="true">
+    <d-option v-for="(item, index) in options1.data" :key="index" :value="item">
+      <div class="clear-float">
+        <span style="float: left;">{{item}}</span> 
+        <span style="float: right;">{{index +1}}</span>
+      </div>
+    </d-option>
+  </d-select>
 </template>
 
 <script>
