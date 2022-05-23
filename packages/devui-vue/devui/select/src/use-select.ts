@@ -4,6 +4,7 @@ import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-typ
 import { className, KeyType } from './utils';
 import useCacheOptions from '../composables/use-cache-options';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { onClickOutside } from '@vueuse/core';
 
 export default function useSelect(props: SelectProps, ctx: SetupContext): UseSelectReturnType {
   const ns = useNamespace('select');
@@ -19,6 +20,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     isOpen.value = bool;
     ctx.emit('toggle-change', bool);
   };
+  onClickOutside(containerRef, () => {toggleChange(false);});
 
   const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
   const selectCls = computed(() => {

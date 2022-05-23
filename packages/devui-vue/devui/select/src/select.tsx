@@ -8,11 +8,9 @@ import { Checkbox } from '../../checkbox';
 import Option from './option';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './select.scss';
-import ClickOutside from '../../shared/devui-directive/clickoutside';
 
 export default defineComponent({
   name: 'DSelect',
-  directives: { ClickOutside },
   props: selectProps,
   emits: ['toggle-change', 'value-change', 'update:modelValue'],
   setup(props: SelectProps, ctx: SetupContext) {
@@ -54,7 +52,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={selectCls.value} ref={containerRef} v-click-outside={handleClose}>
+        <div class={selectCls.value} ref={containerRef}>
           <div class={selectionCls.value} onClick={onClick} ref="origin">
             <input
               value={inputValue.value}
