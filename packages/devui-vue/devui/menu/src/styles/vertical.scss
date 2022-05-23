@@ -1,12 +1,15 @@
+.devui-submenu-menu-item-vertical-wrapper {
+  overflow: hidden;
+}
+
 .devui-menu-vertical {
   padding: 0;
   transition: width 0.5s $devui-animation-ease-in-smooth, padding 0.5s $devui-animation-ease-in-smooth;
   border-right: $devui-line 1px solid;
   background: $devui-area !important;
 
-  li,
-  ul {
-    transition: height $devui-animation-duration-slow $devui-animation-ease-in-smooth, max-height $devui-animation-duration-slow $devui-animation-ease-in-smooth;
+  * {
+    transition: all $devui-animation-duration-slow $devui-animation-ease-in-smooth;
   }
 
   ::after {
@@ -69,7 +72,7 @@
     }
   }
 
-  div {
+  div:not(.devui-submenu-menu-item-vertical-wrapper) {
     display: flex;
     flex: auto;
   }
@@ -131,40 +134,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
-    }
-  }
-
-  .devui-submenu-open {
-    & > div {
-      color: $devui-menu-item-select !important;
-    }
-
-    height: auto;
-
-    li,
-    ul {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    ul {
-      max-height: 100px;
-      overflow: hidden;
-    }
-  }
-
-  .devui-submenu-close {
-    & > div {
-      color: $devui-menu-item;
-    }
-
-    li {
-      height: 0;
-    }
-
-    ul {
-      max-height: 0;
-      overflow: hidden;
     }
   }
 
