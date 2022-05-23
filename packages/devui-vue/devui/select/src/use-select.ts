@@ -20,7 +20,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     isOpen.value = bool;
     ctx.emit('toggle-change', bool);
   };
-  onClickOutside(containerRef, () => {toggleChange(false);});
+  onClickOutside(containerRef, () => { toggleChange(false); });
 
   const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
   const selectCls = computed(() => {
