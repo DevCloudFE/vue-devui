@@ -11,10 +11,12 @@ import { defineComponent,
   toRefs,
 } from "vue";
 import { MenuItemProps, menuItemProps } from "../types/menu-item-types";
-import { useInitSelect } from '../helper/init-select';
+import { initSelect } from '../helper/init-select';
 import { addActiveParent } from '../helper/add-active-parent';
 import { useClick } from '../hook/use-click';
-
+interface clickEvent extends MouseEvent{
+  path: HTMLElement[];
+}
 
 export default defineComponent({
   name: 'DMenuItem',
@@ -28,7 +30,7 @@ export default defineComponent({
     const isCollapsed = inject('isCollapsed') as Ref<boolean>;
     const defaultSelectKey = (inject('defaultSelectKey') as string[]);
     const {disabled} = toRefs(props);
-    const isSelect = ref(useInitSelect(defaultSelectKey, key, multiple, disabled));
+    const isSelect = ref(initSelect(defaultSelectKey, key, multiple, disabled));
     const isLayer1 = ref(true);
     const rootMenuEmit = inject('rootMenuEmit') as (eventName: string, ...args: unknown[]) => void;
     const classObject: Record<string,boolean> = reactive({
@@ -46,7 +48,7 @@ export default defineComponent({
         if (!multiple){
           clearSelect(ele,e,mode.value === 'horizontal');
           if (mode.value === 'horizontal'){
-            useClick(e);
+            useClick(e as clickEvent);
           } else {
             ele.classList.add('devui-menu-item-select');
           }
@@ -74,7 +76,7 @@ export default defineComponent({
     const menuItems = ref(null);
     watch(disabled, ()=> {classObject['devui-menu-item-select'] = false;});
     watch(defaultSelectKey, (n)=>{
-      isSelect.value = useInitSelect(n,key,multiple,disabled);
+      isSelect.value = initSelect(n,key,multiple,disabled);
       classObject['devui-menu-item-select'] = isSelect.value;
     });
     onMounted(()=>{

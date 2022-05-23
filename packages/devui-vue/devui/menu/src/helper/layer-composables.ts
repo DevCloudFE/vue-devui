@@ -28,7 +28,8 @@ export function addLayer(): void{
       continue;
     } else {
       if (shiftItem.tagName === 'DIV'){
-        if (shiftItem.classList.contains('devui-menu-item-vertical-wrapper')){
+        if (shiftItem.classList.contains('devui-menu-item-vertical-wrapper') ||
+            shiftItem.classList.contains('devui-submenu-menu-item-vertical-wrapper')){
           const parent = shiftItem.parentElement;
           stack.unshift(...Array.from(shiftItem.children) as HTMLElement[]);
           if (parent?.classList.contains('devui-menu')){

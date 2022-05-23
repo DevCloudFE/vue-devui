@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ComponentInternalInstance,
   defineComponent,
@@ -7,12 +8,16 @@ import {
   Ref,
   ref,
   watchEffect,
-  watch,
+  watch
 } from 'vue';
 import { addLayer, pushElement, clearSelect,getLayer } from '../helper/layer-composables';
 import { useClick } from '../hook/use-click';
 import { useShowSubMenu } from '../hook/use-show-submenu';
 import { SubMenuProps, subMenuProps } from '../types/sub-menu-types';
+import MenuTransition from './menu-transition';
+interface clickEvent extends MouseEvent{
+  path: HTMLElement[];
+}
 export default defineComponent({
   name: 'DSubMenu',
   props: subMenuProps,
@@ -25,6 +30,7 @@ export default defineComponent({
     const indent = inject('defaultIndent');
     const isCollapsed = inject('isCollapsed') as Ref<boolean>;
     const mode = inject('mode') as Ref<string>;
+    const subMenuItemContainer = ref(null) as Ref<null>;
     const parentEmit = inject('rootMenuEmit') as (eventName: 'submenu-change', ...args: any[]) => void;
     if (key_ === 'null'){
       console.warn(`[devui][menu]: Key can not be null`);
@@ -41,7 +47,7 @@ export default defineComponent({
       const ele = e.currentTarget as HTMLElement;
       if (mode.value === 'horizontal'){
         clearSelect(ele, e, true);
-        useClick(e);
+        useClick(e as clickEvent);
       }
       if (!props.disable && mode.value !== 'horizontal'){
         const target = e.target as HTMLElement;
@@ -60,11 +66,7 @@ export default defineComponent({
             cur = cur.parentElement as HTMLElement;
           }
           if (cur.tagName === 'UL'){
-            if (cur.classList.contains('devui-submenu-open')){
-              isOpen.value = false;
-            } else {
-              isOpen.value = true;
-            }
+            isOpen.value = !isOpen.value;
           }
         }
         parentEmit('submenu-change', {type: 'submenu-change', state: isOpen.value, el: cur});
@@ -81,7 +83,7 @@ export default defineComponent({
       wrapperDom = wrapper.value as unknown as HTMLElement;
       pushElement({el: subMenu.value} as any);
     },{'flush':'post'});
-    watch(defaultOpenKeys, (n,v)=>{
+    watch(defaultOpenKeys, (n)=>{
       if (n.includes(key_)){
         isOpen.value = true;
       } else {
@@ -93,6 +95,16 @@ export default defineComponent({
       const e = subMenu.value as unknown as HTMLElement;
       addLayer();
       class_layer.value = `layer_${Array.from(e.classList).at(-1)?.replace('layer_','')}`;
+      if (mode.value === 'horizontal'){
+        (subMenu.value as unknown as Element as HTMLElement).addEventListener('mouseenter', (ev: MouseEvent)=>{
+          ev.stopPropagation();
+          useShowSubMenu('mouseenter',ev,wrapperDom);
+        });
+        (subMenu.value as unknown as Element as HTMLElement).addEventListener('mouseleave', (ev: MouseEvent)=>{
+          ev.stopPropagation();
+          useShowSubMenu('mouseleave',ev,wrapperDom);
+        });
+      }
       watch(isCollapsed, (newValue)=>{
         const layer = Number(getLayer(e));
         if (!Number.isNaN(layer)){
@@ -112,14 +124,6 @@ export default defineComponent({
           el.style.display=`flex`;
         }
       });
-      (subMenu.value as unknown as Element as HTMLElement).addEventListener('mouseenter', (ev: MouseEvent)=>{
-        ev.stopPropagation();
-        useShowSubMenu('mouseenter',ev,wrapperDom);
-      });
-      (subMenu.value as unknown as Element as HTMLElement).addEventListener('mouseleave', (ev: MouseEvent)=>{
-        ev.stopPropagation();
-        useShowSubMenu('mouseleave',ev,wrapperDom);
-      });
     });
     return () => {
       return (
@@ -128,44 +132,45 @@ export default defineComponent({
           onClick={clickHandle}
           class={
             ['devui-submenu',
-              !props['disable'] && isOpen.value && isShow.value ? 'devui-submenu-open' : 'devui-submenu-close',
               class_layer.value]
           }
           ref={subMenu}>
-          {
-            props.title ?
-              <div
-                class={['devui-submenu-title',props['disable'] && 'devui-sub-menu-disabled',]}
-                style={`padding: 0 ${indent}px`} ref={title}>
-                <span class="devui-menu-icon">{ctx.slots?.icon?.()}</span>
-                <span
-                  v-show={!isCollapsed.value} class="devui-submenu-title-content">
-                  {props.title}
-                </span>
-                <i
-                  v-show={!isCollapsed.value && mode.value !== 'horizontal'}
-                  class={
-                    {
-                      'icon icon-chevron-up': !isOpen.value,
-                      'icon icon-chevron-down': isOpen.value
-                    }
-                  }></i>
-              </div>
-              :
-              <div
-                class={['devui-submenu-title',props['disable'] && 'devui-sub-menu-disabled',]}
-                style={`padding: 0 ${indent}px`} ref={title}
-              >
-                <span class="devui-menu-icon">
-                  {ctx.slots.icon?.()}
-                </span>
-              </div>
-          }
+          <div
+            class={
+              [
+                'devui-submenu-title',
+                props['disable'] && 'devui-sub-menu-disabled'
+              ]}
+            style={`padding: 0 ${indent}px`} ref={title}>
+            <span class="devui-menu-icon">{ctx.slots?.icon?.()}</span>
+            <span
+              v-show={!isCollapsed.value} class="devui-submenu-title-content">
+              {props.title}
+            </span>
+            <i
+              v-show={!isCollapsed.value && mode.value !== 'horizontal'}
+              class={
+                {
+                  'icon icon-chevron-up': !isOpen.value,
+                  'icon icon-chevron-down': isOpen.value
+                }
+              }></i>
+          </div>
           {mode.value === 'horizontal' ?
             <div class="devui-menu-item-horizontal-wrapper devui-menu-item-horizontal-wrapper-hidden" ref={wrapper}>
               {ctx.slots.default?.()}
             </div>:
-            ctx.slots.default?.()
+            <MenuTransition>
+              <div
+                class={[
+                  "devui-submenu-menu-item-vertical-wrapper",
+                ]}
+                ref={subMenuItemContainer}
+                v-show={isOpen.value}
+              >
+                {ctx.slots.default?.()}
+              </div>
+            </MenuTransition>
           }
         </ul>
       );
