@@ -209,7 +209,7 @@ export default defineComponent({
 
 ### 尺寸和边框
 
-:::demo 根据条件判断，label 为'条件判断回调禁止选中'的 checkbox 终止切换状态。
+:::demo
 
 ```vue
 <template>

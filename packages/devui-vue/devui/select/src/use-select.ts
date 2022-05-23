@@ -1,10 +1,10 @@
 import { ref, computed } from 'vue';
 import type { SetupContext } from 'vue';
 import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
-import { className } from './utils';
+import { className, KeyType } from './utils';
 import useCacheOptions from '../composables/use-cache-options';
-import useSelectOutsideClick from '../composables/use-select-outside-click';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { onClickOutside } from '@vueuse/core';
 
 export default function useSelect(props: SelectProps, ctx: SetupContext): UseSelectReturnType {
   const ns = useNamespace('select');
@@ -20,7 +20,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     isOpen.value = bool;
     ctx.emit('toggle-change', bool);
   };
-  useSelectOutsideClick([containerRef, dropdownRef], isOpen, toggleChange);
+  onClickOutside(containerRef, () => { toggleChange(false); });
 
   const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
   const selectCls = computed(() => {
@@ -34,7 +34,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     });
   });
 
-  // 这里对options做统一处理
+  // 这里对d-select组件options做统一处理,此options只用作渲染option列表
   const mergeOptions = computed(() => {
     const { multiple, modelValue } = props;
     return props.options.map((item) => {
@@ -69,13 +69,30 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   });
   // 缓存options，用value来获取对应的optionItem
   const getValuesOption = useCacheOptions(mergeOptions);
+
+  // 这里处理d-option组件生成的Options
+  const injectOptions = ref(new Map());
+  const updateInjectOptions = (item: Record<string, unknown> , operation:  string) => {
+    if (operation === 'add') {
+      injectOptions.value.set(item.value, item);
+    } else if (operation === 'delete') {
+      injectOptions.value.delete(item.value);
+    }
+  };
+
+  const getInjectOptions = (values: KeyType<OptionObjectItem, 'value'>[]) => {
+    return values.map((value) => injectOptions.value.get(value));
+  };
+
   // 控制输入框的显示内容
+  // todo injectOptions根据option进行收集，此computed会执行多次; Vue Test Utils: [Vue warn]: Maximum recursive updates exceeded in component <DSelect>
   const inputValue = computed<string>(() => {
     if (props.multiple && Array.isArray(props.modelValue)) {
-      const selectedOptions = getValuesOption(props.modelValue);
-      return selectedOptions.map((item) => item?.name || '').join(',');
+      const selectedOptions = getInjectOptions(props.modelValue);
+      return selectedOptions.map((item) => item?.name || item?.value || '').join(',');
     } else if (!Array.isArray(props.modelValue)) {
-      return getValuesOption([props.modelValue])[0]?.name || '';
+      const selectedOption = getInjectOptions([props.modelValue])[0];
+      return selectedOption?.name || selectedOption?.value || '';
     }
     return '';
   });
@@ -101,18 +118,27 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     toggleChange(!isOpen.value);
   };
 
-  const valueChange = (item: OptionObjectItem, index: number) => {
+  const valueChange = (item: OptionObjectItem, isObjectOption: boolean) => {
     const { multiple } = props;
     let { modelValue } = props;
+    item._checked = !item._checked;
     if (multiple) {
-      item._checked = !item._checked;
-      modelValue = mergeOptions.value.filter((item1) => item1._checked).map((item2) => item2.value);
+      const checkedItems = [];
+      for(const child of injectOptions.value.values()) {
+        if (child._checked) {
+          checkedItems.push(child.value);
+        }
+      }
+      modelValue = checkedItems;
+      // 此处需要更新chckbox选中状态
+      const mergeOptionItem = getValuesOption([item.value])[0];
+      mergeOptionItem && (mergeOptionItem._checked = !mergeOptionItem._checked);
       ctx.emit('update:modelValue', modelValue);
     } else {
       ctx.emit('update:modelValue', item.value);
       toggleChange(false);
     }
-    ctx.emit('value-change', item.value, index);
+    ctx.emit('value-change', isObjectOption ? item : item.value);
   };
 
   const handleClear = (e: MouseEvent) => {
@@ -123,6 +149,11 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     } else {
       ctx.emit('update:modelValue', '');
     }
+  };
+
+  const handleClose = () => {
+    isOpen.value = false;
+    ctx.emit('toggle-change', false);
   };
 
   return {
@@ -137,5 +168,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     onClick,
     handleClear,
     valueChange,
+    handleClose,
+    updateInjectOptions
   };
 }
