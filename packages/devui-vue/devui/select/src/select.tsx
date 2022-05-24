@@ -41,6 +41,7 @@ export default defineComponent({
       SELECT_TOKEN,
       reactive({
         ...toRefs(props),
+        isOpen,
         selectedOptions,
         emit: ctx.emit,
         valueChange,

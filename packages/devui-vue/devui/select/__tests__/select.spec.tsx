@@ -220,4 +220,64 @@ describe('select', () => {
     expect(value.value).toStrictEqual([]);
     wrapper.unmount();
   });
+
+  it('select multiple collapse tags work', async () => {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive(list);
+    const wrapper = mount({
+      setup() {
+        return () => <DSelect v-model={value.value} options={options} multiple={true} collapseTags={true}></DSelect>;
+      },
+    });
+
+    const container = wrapper.find('.devui-select');
+    const items = container.findAll('.devui-select__item');
+
+    await container.trigger('click');
+    await nextTick();
+    await items[0].trigger('click');
+    await items[1].trigger('click');
+    await items[2].trigger('click');
+    const tags = wrapper.findAll('.devui-tag');
+    expect(tags.length).toBe(2);
+    const tag1 = tags[0].find('.remove-button');
+    const tag2 = tags[1].find('.remove-button');
+    expect(tag1.isVisible()).toBeTruthy();
+    expect(tag2.exists()).toBeFalsy();
+    wrapper.unmount();
+  });
+
+  it('select multiple collapse tags tooltip work', async () => {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive(list);
+    const wrapper = mount({
+      setup() {
+        return () => <DSelect
+          v-model={value.value}
+          options={options}
+          multiple={true}
+          collapseTags={true}
+          collapseTagsTooltip={true}
+        ></DSelect>;
+      },
+    });
+    const container = wrapper.find('.devui-select');
+    const items = container.findAll('.devui-select__item');
+
+    await container.trigger('click');
+    await nextTick();
+    await items[0].trigger('click');
+    await items[1].trigger('click');
+    await items[2].trigger('click');
+    const tags = wrapper.findAll('.devui-tag');
+    expect(tags.length).toBe(2);
+    await tags[1].trigger('mouseenter');
+    setTimeout(() => {
+      const popoverContent = document.body.querySelector('devui-popover__content');
+      expect(popoverContent).toBeTruthy();
+      wrapper.unmount();
+    }, 150);
+  });
 });

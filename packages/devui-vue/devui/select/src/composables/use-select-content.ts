@@ -12,10 +12,16 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
 
   const isSelectDisable = computed<boolean>(() => !!select?.disabled);
   const isSupportCollapseTags = computed<boolean>(() => !!select?.collapseTags);
+  const isSupportTagsTooltip = computed<boolean>(() => !!select?.collapseTagsTooltip);
 
   // 是否可清空
   const mergeClearable = computed<boolean>(() => {
     return !isSelectDisable.value && !!select?.allowClear && props.value.length > 0;
+  });
+
+  // 是否禁用Tooltip
+  const isDisabledTooltip = computed<boolean>(() => {
+    return !isSupportTagsTooltip.value || !!select?.isOpen;
   });
 
   const selectionCls = computed(() => {
@@ -52,6 +58,8 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     selectedData,
     isSelectDisable,
     isSupportCollapseTags,
+    isSupportTagsTooltip,
+    isDisabledTooltip,
     selectionCls,
     inputCls,
     placeholder,

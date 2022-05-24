@@ -92,6 +92,7 @@ export interface UseSelectReturnType {
 }
 
 export interface SelectContext extends SelectProps {
+  isOpen: boolean;
   selectedOptions: OptionObjectItem[];
   emit: SetupContext['emit'];
   valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;
@@ -137,6 +138,8 @@ export interface UseSelectContentReturnType {
   selectedData: ComputedRef<OptionObjectItem[]>;
   isSelectDisable: ComputedRef<boolean>;
   isSupportCollapseTags: ComputedRef<boolean>;
+  isSupportTagsTooltip: ComputedRef<boolean>;
+  isDisabledTooltip: ComputedRef<boolean>;
   selectionCls: ComputedRef<string>;
   inputCls: ComputedRef<string>;
   placeholder: ComputedRef<string>;
