@@ -15,29 +15,35 @@ export default defineComponent({
 
     return () => {
       let children = ctx.slots.default?.();
+      const getContent = () => {
+        if (children) {
+          return children;
+        } else {
+          if (props.options?.length > 0) {
+            children = props.options.map((opt) => {
+              let mergedOpt = null;
+              if (typeof opt === 'string') {
+                mergedOpt = Object.assign({}, defaultOpt, {
+                  label: opt,
+                  value: opt,
+                });
+              } else if (typeof opt === 'object') {
+                mergedOpt = Object.assign({}, defaultOpt, {
+                  ...opt,
+                  label: opt.name,
+                });
+              }
 
-      if (props.options?.length > 0) {
-        children = props.options.map((opt) => {
-          let mergedOpt = null;
-          if (typeof opt === 'string') {
-            mergedOpt = Object.assign({}, defaultOpt, {
-              label: opt,
-              value: opt,
-            });
-          } else if (typeof opt === 'object') {
-            mergedOpt = Object.assign({}, defaultOpt, {
-              ...opt,
-              label: opt.name,
+              return <DCheckbox {...mergedOpt}></DCheckbox>;
             });
           }
-
-          return <DCheckbox {...mergedOpt}></DCheckbox>;
-        });
-      }
+          return children;
+        }
+      };
 
       return (
         <div class={ns.e('group')}>
-          <div class={{ [ns.m('list-inline')]: props.direction === 'row' }}>{children}</div>
+          <div class={{ [ns.m('list-inline')]: props.direction === 'row' }}>{getContent()}</div>
         </div>
       );
     };
