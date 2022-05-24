@@ -15,13 +15,13 @@
   <div>
     Small
     <d-select v-model="value1" :options="options" size="sm"></d-select>
-
+    <br/>
     Middle
     <d-select v-model="value2" :options="options"></d-select>
-
+    <br/>
     Large
     <d-select v-model="value3" :options="options" size="lg"></d-select>
-
+    <br/>
     Underlined
     <d-select v-model="value4" :options="options" size="lg" overview="underlined"></d-select>
   </div>
@@ -58,7 +58,14 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-select v-model="value" :options="options" :multiple="true" />
+  <div>基础多选</div>
+  <d-select v-model="value1" :options="options" :multiple="true" />
+  <br/>
+  <div>collapse-tags</div>
+  <d-select v-model="value2" :options="options" :multiple="true" :collapse-tags="true" />
+  <br/>
+  <div>collapse-tags-tooltip</div>
+  <d-select v-model="value3" :options="options" :multiple="true" :collapse-tags="true" :collapse-tags-tooltip="true" />
 </template>
 
 <script>
@@ -66,12 +73,16 @@ import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const value = ref([]);
+    const value1 = ref([]);
+    const value2 = ref([]);
+    const value3 = ref([]);
     const items = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
     const options = reactive(items);
-
+    
     return {
-      value,
+      value1,
+      value2,
+      value3,
       options,
     };
   },
@@ -253,7 +264,7 @@ export default defineComponent({
 
 ### Select 参数
 
-| 参数名              | 类型      | 默认     | 说明                                                                                                                                                           | 跳转 Demo             |
+| 参数名              | 类型      | 默认     | 说 明                                                                                                                                                           | 跳转 Demo             |
 | :------------------ | :-------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
 | options             | `array`   | []       | 可选, 和使用option子组件互斥，两者必须有且只有一个。                                                                                                                 | [基本用法](#基本用法) |
 | multiple            | `boolean` | false    | 可选,是否支持多选                                                                                                                                              | [多选](#多选)         |
@@ -264,6 +275,8 @@ export default defineComponent({
 | overview            | `string`  | 'border' | 可选,决定选择框样式显示,默认有边框'border','underlined'                                                                                                        | [基本用法](#基本用法) |
 | option-disabled-key | `string`  | ''       | 可选,禁用单个选项;<br>当传入资源 options 类型为 Object,比如设置为'disabled',<br>则当对象的 disabled 属性为 true 时,该选项将禁用;<br>当设置为''时不禁用单个选项 | [禁用](#禁用)         |
 | allow-clear         | `boolean` | false    | 可选, 配置是否允许清空选值，仅单选场景适用                                                                                                                     | [可清空](#可清空)     |
+| collapse-tags        | `boolean` | false    | 可选, 配置是否允许将所选项合并为数量显示                                                                                                                     | [多选](#多选)     |
+| collapse-tags-tooltip | `boolean` | false    | 可选, 配置是否启用鼠标悬停折叠文字以显示具体所选值                                                                                                                     | [多选](#多选)     |
 
 ### Select 事件
 

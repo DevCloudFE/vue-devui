@@ -84,12 +84,12 @@ $select-item-min-height: 36px;
   color: $devui-text;
 }
 
-.#{$devui-prefix}-select__multipe {
+.#{$devui-prefix}-select__multiple {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   cursor: pointer;
-  .#{$devui-prefix}-select__multipe--input {
+  .#{$devui-prefix}-select__multiple--input {
     display: flex;
     max-width: 100%;
     min-width: 15px;

@@ -7,14 +7,21 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
   const ns = useNamespace('select');
   const select = inject(SELECT_TOKEN);
 
-  const serchQuery = ref('');
+  const searchQuery = ref('');
   const selectedData = computed<OptionObjectItem[]>(() => select?.selectedOptions || []);
 
   const isSelectDisable = computed<boolean>(() => !!select?.disabled);
+  const isSupportCollapseTags = computed<boolean>(() => !!select?.collapseTags);
+  const isSupportTagsTooltip = computed<boolean>(() => !!select?.collapseTagsTooltip);
 
   // 是否可清空
   const mergeClearable = computed<boolean>(() => {
     return !isSelectDisable.value && !!select?.allowClear && props.value.length > 0;
+  });
+
+  // 是否禁用Tooltip
+  const isDisabledTooltip = computed<boolean>(() => {
+    return !isSupportTagsTooltip.value || !!select?.isOpen;
   });
 
   const selectionCls = computed(() => {
@@ -47,9 +54,12 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
   };
 
   return {
-    serchQuery,
+    searchQuery,
     selectedData,
     isSelectDisable,
+    isSupportCollapseTags,
+    isSupportTagsTooltip,
+    isDisabledTooltip,
     selectionCls,
     inputCls,
     placeholder,
