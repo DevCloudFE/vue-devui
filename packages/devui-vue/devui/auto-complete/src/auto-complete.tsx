@@ -1,4 +1,4 @@
-import { defineComponent, provide, Transition, toRefs, ref, SetupContext, Teleport } from 'vue';
+import { defineComponent, provide, Transition, toRefs, ref, SetupContext, Teleport, computed } from 'vue';
 import { autoCompleteProps, AutoCompleteProps, DropdownPropsKey } from './auto-complete-types';
 import useCustomTemplate from './composables/use-custom-template';
 import useSearchFn from './composables/use-searchfn';
@@ -18,7 +18,7 @@ export default defineComponent({
   name: 'DAutoComplete',
   directives: { ClickOutside },
   props: autoCompleteProps,
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'clear', 'blur'],
   setup(props: AutoCompleteProps, ctx: SetupContext) {
     const {
       disabled,
@@ -48,7 +48,7 @@ export default defineComponent({
       searchFn,
       formatter
     );
-    const { onInput, onFocus, onBlur, inputRef, isFocus, visible, searchStatus, handleClose, toggleMenu } = useInputHandle(
+    const { onInput, onFocus, onBlur, onClear, inputRef, isFocus, visible, searchStatus, handleClose, toggleMenu } = useInputHandle(
       ctx,
       searchList,
       showNoResultItemTemplate,
@@ -98,8 +98,10 @@ export default defineComponent({
     });
     const origin = ref<HTMLElement>();
 
-    const prefixVisiable = ctx.slots.prefix || props.prefix;
-    const suffixVisiable = ctx.slots.suffix || props.suffix;
+    const prefixVisible = ctx.slots.prefix || props.prefix;
+    const suffixVisible = ctx.slots.suffix || props.suffix || props.clearable;
+
+    const showClearable = computed(() => props.clearable && !props.disabled);
 
     const renderBasicDropdown = () => {
       return (
@@ -138,10 +140,10 @@ export default defineComponent({
           <div class={inputClasses.value}>
             {ctx.slots.prepend && <div class={inputNs.e('prepend')}>{ctx.slots.prepend?.()}</div>}
             <div class={inputWrapperClasses.value}>
-              {prefixVisiable && (
+              {prefixVisible && (
                 <span class={inputNs.e('prefix')}>
                   {ctx.slots.prefix && <div>{ctx.slots.prefix?.()}</div>}
-                  {props.prefix && <Icon size="inhriet" name={props.prefix} />}
+                  {props.prefix && <Icon size="inherit" name={props.prefix} />}
                 </span>
               )}
               <input
@@ -157,10 +159,11 @@ export default defineComponent({
                 ref={inputRef}
                 onKeydown={handlekeyDown}
               />
-              {suffixVisiable && (
+              {suffixVisible && (
                 <span class={inputNs.e('suffix')}>
-                  {props.suffix && <Icon size="inhriet" name={props.suffix} />}
+                  {props.suffix && <Icon size="inherit" name={props.suffix} />}
                   {ctx.slots.suffix && <div>{ctx.slots.suffix?.()}</div>}
+                  {showClearable.value && <Icon size={props.size} class={ns.em('clear', 'icon')} name="close" onClick={onClear} />}
                 </span>
               )}
             </div>

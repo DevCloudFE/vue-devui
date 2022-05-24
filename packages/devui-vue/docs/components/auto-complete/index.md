@@ -73,6 +73,45 @@ export default defineComponent({
 
 :::
 
+### 尺寸
+
+支持`sm`、`md`、`lg`三种尺寸，默认为`md`。
+
+:::demo
+
+```vue
+<template>
+  <h4>Small</h4>
+  <d-auto-complete size="sm" :source="source" v-model="value1" :width="420"> </d-auto-complete>
+  <h4>Middle</h4>
+  <d-auto-complete :source="source" v-model="value2" :width="420"> </d-auto-complete>
+  <h4>Large</h4>
+  <d-auto-complete size="lg" :source="source" v-model="value3" :width="420"> </d-auto-complete>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const value1 = ref('');
+    const value2 = ref('');
+    const value3 = ref('');
+    const source = ref(['C#', 'C', 'C++']);
+    return {
+      value1,
+      value2,
+      value3,
+      source,
+    };
+  },
+});
+</script>
+
+<style></style>
+```
+
+:::
+
 ### 设置禁用
 
 通过 disabled 设置是否禁用。
@@ -416,27 +455,29 @@ export default defineComponent({
 
 ### 参数
 
-| 参数名                   | 类型                           | 默认                                      | 说明                                                              | 跳转 Demo                                           |
-| :----------------------- | :----------------------------- | :---------------------------------------- | :---------------------------------------------------------------- | :-------------------------------------------------- |
-| source                   | [`SourceType`](#sourcetype)    | --                                        | 必选，有 searchFn 的情况下可以不必选                              | [基本用法](#基本用法)                               |
-| allow-empty-value-search | `boolean`                      | false                                     | 可选，在绑定的输入框 value 为空时，是否进行搜索提示操作           | [基本用法](#基本用法)                               |
-| append-to-body           | `boolean`                      | false                                     | 可选，下拉弹出是否 append to body                                 | [基本用法](#基本用法)                               |
-| position                 | [`Placement`](#placement)      | `['bottom']`                              | 可选，指定下拉框与输入框的相对位置                                | [基本用法](#基本用法)                               |
-| disabled                 | `boolean`                      | false                                     | 可选，是否禁用指令                                                | [设置禁用](#设置禁用)                               |
-| delay                    | `number`                       | 300                                       | 可选，只有在 delay 时间经过后并且未输入新值，才做搜索查询（`ms`） | [基本用法](#基本用法)                               |
-| disabled-key             | `string`                       | --                                        | 可选，禁用单个选项                                                | [自定义数据匹配方法](#自定义数据匹配方法)           |
-| formatter                | `(item: any) => string`        | [`defaultFormatter`](#defaultFormatter)   | 可选，格式化函数                                                  | [自定义数据匹配方法](#自定义数据匹配方法)           |
-| is-searching             | `boolean`                      | false                                     | 可选，是否在搜索中，用于控制 searchingTemplate 是否显示           | [自定义数据匹配方法](#自定义数据匹配方法)           |
-| scene-type               | `string`                       | --                                        | 可选，值为 'select'、'suggest'                                    | [启用懒加载](#启用懒加载)                           |
-| search-fn                | `(term: string) => Array<any>` | [`defaultSearchFn`](#defaultSearchFn)     | 可选，自定义搜索过滤                                              | [自定义数据匹配方法](#自定义数据匹配方法)           |
-| tips-text                | `string`                       | '最近输入'                                | 可选，提示文字                                                    | [设置禁用](#设置禁用)                               |
-| latest-source            | `Array<any>`                   | --                                        | 可选， 最近输入                                                   | [最近输入](#最近输入)                               |
-| value-parser             | `(item: any) => any`           | [`defaultValueParse`](#defaultValueParse) | 可选， 对选中后数据进行处理                                       | [启用懒加载](#启用懒加载)                           |
-| enable-lazy-load         | `boolean`                      | false                                     | 可选，是否允许懒加载                                              | [启用懒加载](#启用懒加载)                           |
-| width                    | `number`                       | 400                                       | 可选，调整宽度（`px`）                                            | [基本用法](#基本用法)                               |
-| show-animation           | `boolean`                      | true                                      | 可选，是否开启动画                                                |                                                     |
-| prefix                   | `string`                       | -                                         | 可选，自定义前缀图标                                              | [带图标的输入框](../input/index.md/#带图标的输入框) |
-| suffix                   | `string`                       | -                                         | 可选，自定义后缀图标                                              | [带图标的输入框](../input/index.md/#带图标的输入框) |
+| 参数名                   | 类型                                    | 默认                                      | 说明                                                              | 跳转 Demo                                              |
+| :----------------------- | :-------------------------------------- | :---------------------------------------- | :---------------------------------------------------------------- | :----------------------------------------------------- |
+| size                     | [`AutoCompleteSize`](#autocompletesize) | 'md'                                      | 可选，输入框尺寸，有三种选择`'lg'`,`'md'`,`'sm'`                  | [尺寸](#尺寸)                                          |
+| source                   | [`SourceType`](#sourcetype)             | --                                        | 必选，有 searchFn 的情况下可以不必选                              | [基本用法](#基本用法)                                  |
+| allow-empty-value-search | `boolean`                               | false                                     | 可选，在绑定的输入框 value 为空时，是否进行搜索提示操作           | [基本用法](#基本用法)                                  |
+| append-to-body           | `boolean`                               | false                                     | 可选，下拉弹出是否 append to body                                 | [基本用法](#基本用法)                                  |
+| position                 | [`Placement`](#placement)               | `['bottom']`                              | 可选，指定下拉框与输入框的相对位置                                | [基本用法](#基本用法)                                  |
+| disabled                 | `boolean`                               | false                                     | 可选，是否禁用指令                                                | [设置禁用](#设置禁用)                                  |
+| delay                    | `number`                                | 300                                       | 可选，只有在 delay 时间经过后并且未输入新值，才做搜索查询（`ms`） | [基本用法](#基本用法)                                  |
+| disabled-key             | `string`                                | --                                        | 可选，禁用单个选项                                                | [自定义数据匹配方法](#自定义数据匹配方法)              |
+| formatter                | `(item: any) => string`                 | [`defaultFormatter`](#defaultFormatter)   | 可选，格式化函数                                                  | [自定义数据匹配方法](#自定义数据匹配方法)              |
+| is-searching             | `boolean`                               | false                                     | 可选，是否在搜索中，用于控制 searchingTemplate 是否显示           | [自定义数据匹配方法](#自定义数据匹配方法)              |
+| scene-type               | `string`                                | --                                        | 可选，值为 'select'、'suggest'                                    | [启用懒加载](#启用懒加载)                              |
+| search-fn                | `(term: string) => Array<any>`          | [`defaultSearchFn`](#defaultSearchFn)     | 可选，自定义搜索过滤                                              | [自定义数据匹配方法](#自定义数据匹配方法)              |
+| tips-text                | `string`                                | '最近输入'                                | 可选，提示文字                                                    | [设置禁用](#设置禁用)                                  |
+| latest-source            | `Array<any>`                            | --                                        | 可选， 最近输入                                                   | [最近输入](#最近输入)                                  |
+| value-parser             | `(item: any) => any`                    | [`defaultValueParse`](#defaultValueParse) | 可选， 对选中后数据进行处理                                       | [启用懒加载](#启用懒加载)                              |
+| enable-lazy-load         | `boolean`                               | false                                     | 可选，是否允许懒加载                                              | [启用懒加载](#启用懒加载)                              |
+| width                    | `number`                                | 400                                       | 可选，调整宽度（`px`）                                            | [基本用法](#基本用法)                                  |
+| show-animation           | `boolean`                               | true                                      | 可选，是否开启动画                                                |                                                        |
+| prefix                   | `string`                                | -                                         | 可选，自定义前缀图标                                              | [带图标的输入框](../input/index.md/#带图标的输入框)    |
+| suffix                   | `string`                                | -                                         | 可选，自定义后缀图标                                              | [带图标的输入框](../input/index.md/#带图标的输入框)    |
+| clearable                | `boolean`                               | false                                     | 可选，是否可清空                                                  | [参考 `d-input` 一键清空](../input/index.md/#一键清空) |
 
 ### 事件
 
@@ -527,4 +568,8 @@ item 为数据项。
 defaultValueParse = (item) => item;
 ```
 
-item 为数据项。
+#### AutoCompleteSize
+
+```ts
+type AutoCompleteSize = 'sm' | 'md' | 'lg';
+```

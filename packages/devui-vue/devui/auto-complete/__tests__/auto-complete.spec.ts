@@ -4,6 +4,7 @@ import { nextTick, ref } from 'vue';
 import DAutoComplete from '../src/auto-complete';
 
 const ns = useNamespace('auto-complete', true);
+const noDotNs = useNamespace('auto-complete');
 const dotInputNs = useNamespace('auto-complete-input', true);
 const dropdownNS = useNamespace('dropdown', true);
 const selectNS = useNamespace('select', true);
@@ -25,6 +26,10 @@ const dotAppendClass = ns.m('append');
 const dotPrependClass = ns.m('prepend');
 const dotInputPrependClass = dotInputNs.e('prepend');
 const dotInputAppendClass = dotInputNs.e('append');
+const dotNsClearIconClass = ns.em('clear', 'icon');
+
+const smClass = noDotNs.m('sm');
+const lgClass = noDotNs.m('lg');
 
 // delay api
 const wait = (delay = 300) => new Promise((resolve) => setTimeout(() => resolve(true), delay));
@@ -582,7 +587,7 @@ describe('auto-complete', () => {
     expect(wrapper.find(dropdownItemClass).element.innerHTML).toBe('lazyData21');
   });
 
-  it('d-input prefix/suffix props work', async () => {
+  it('d-auto-complete prefix/suffix props work', async () => {
     const wrapper = mount({
       components: { DAutoComplete },
       template: `
@@ -597,7 +602,7 @@ describe('auto-complete', () => {
     expect(suffix.exists()).toBe(true);
   });
 
-  it('d-input prefix/suffix/prepend/append slot work', async () => {
+  it('d-auto-complete prefix/suffix/prepend/append slot work', async () => {
     const wrapper = mount({
       components: { DAutoComplete },
       template: `
@@ -634,5 +639,74 @@ describe('auto-complete', () => {
     expect(suffix.exists()).toBe(true);
     expect(prepend.exists()).toBe(true);
     expect(append.exists()).toBe(true);
+  });
+
+  it('d-auto-complete clearable/clear work', async () => {
+    const onClear = jest.fn();
+    const wrapper = mount({
+      components: { DAutoComplete },
+      template: `
+        <d-auto-complete @clear="onClear" clearable/>
+      `,
+      setup() {
+        return {
+          onClear,
+        };
+      },
+    });
+    expect(wrapper.find(dotNsClearIconClass).exists()).toBe(true);
+    const i = wrapper.find('i');
+    await i.trigger('click');
+    expect(onClear).toBeCalledTimes(1);
+  });
+
+  it('d-auto-complete size work', async () => {
+    const wrapper = mount(DAutoComplete);
+    expect(wrapper.classes()).not.toContain(smClass);
+    expect(wrapper.classes()).not.toContain(lgClass);
+
+    await wrapper.setProps({
+      size: 'sm',
+    });
+    expect(wrapper.classes()).toContain(smClass);
+    expect(wrapper.classes()).not.toContain(lgClass);
+
+    await wrapper.setProps({
+      size: 'lg',
+    });
+    expect(wrapper.classes()).not.toContain(smClass);
+    expect(wrapper.classes()).toContain(lgClass);
+  });
+
+  it('d-auto-complete bindEvents work', async () => {
+    const onInput = jest.fn(),
+      onBlur = jest.fn(),
+      onKeyUp = jest.fn();
+    const wrapper = mount({
+      components: { DAutoComplete },
+      template: `
+        <d-auto-complete
+          @input="onInput"
+          @blur="onBlur"
+          @keyup="onKeyUp" />
+      `,
+      setup() {
+        return {
+          onInput,
+          onBlur,
+          onKeyUp,
+        };
+      },
+    });
+    const input = wrapper.find('input');
+
+    await input.trigger('input');
+    expect(onInput).toBeCalledTimes(1);
+
+    await input.trigger('blur');
+    expect(onBlur).toBeCalledTimes(1);
+
+    await input.trigger('keyup');
+    expect(onKeyUp).toBeCalledTimes(1);
   });
 });

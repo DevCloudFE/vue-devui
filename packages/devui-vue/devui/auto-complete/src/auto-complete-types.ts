@@ -25,6 +25,8 @@ export type Placement =
   | 'left-start'
   | 'left-end';
 
+export type AutoCompleteSize = 'sm' | 'md' | 'lg';
+
 export type SourceType = Array<string> | Array<SourceItemObj>;
 
 export const autoCompleteProps = {
@@ -128,6 +130,14 @@ export const autoCompleteProps = {
     type: String,
     default: '',
   },
+  size: {
+    type: String as PropType<AutoCompleteSize>,
+    default: 'md',
+  },
+  clearable: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type AutoCompleteProps = ExtractPropTypes<typeof autoCompleteProps>;
@@ -142,6 +152,19 @@ export interface UseAutoCompleteRender {
   inputClasses: ComputedRef<Record<string, boolean | undefined>>;
   inputWrapperClasses: ComputedRef<Record<string, boolean | undefined>>;
   inputInnerClasses: ComputedRef<Record<string, boolean | undefined>>;
+}
+
+export interface UseInputHandle {
+  handleClose: () => void;
+  toggleMenu: () => void;
+  onInput: (e: Event) => void;
+  onFocus: () => void;
+  onBlur: () => void;
+  onClear: () => void;
+  inputRef: Ref;
+  isFocus: Ref<boolean>;
+  visible: Ref<boolean>;
+  searchStatus: Ref<boolean>;
 }
 
 export type SearchFnType = (term: string) => SourceType;
