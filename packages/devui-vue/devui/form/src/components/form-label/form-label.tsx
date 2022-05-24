@@ -19,9 +19,7 @@ export default defineComponent({
         <span class={labelInnerClasses.value}>{ctx.slots.default?.()}</span>
         {props.helpTips && (
           <Popover content={props.helpTips} position={['top']} trigger={'hover'} pop-type={'info'}>
-            {{
-              reference: () => <HelpTipsIcon class={ns.e('label-help')} />,
-            }}
+            <HelpTipsIcon class={ns.e('label-help')} />,
           </Popover>
         )}
       </span>
