@@ -23,6 +23,7 @@ export function useAutoCompleteRender(
 
   const autoCompleteTopClasses = computed(() => ({
     [ns.b()]: true,
+    [ns.m(props.size)]: true,
     [formNs.b()]: true,
     [feedbackNs.b()]: true,
     [selectNs.b()]: visible.value,
@@ -31,7 +32,7 @@ export function useAutoCompleteRender(
   const inputClasses = computed(() => ({
     [inputNs.b()]: true,
     [ns.m('focus')]: isFocus.value,
-    [slotNs.b()]: slots.prepend || slots.append,
+    [slotNs.b()]: slots.prepend || slots.append || props.prefix || props.suffix,
     [ns.m('append')]: slots.append,
     [ns.m('prepend')]: slots.prepend,
   }));
