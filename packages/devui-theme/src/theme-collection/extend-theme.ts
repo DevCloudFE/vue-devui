@@ -188,6 +188,7 @@ export const galaxyTheme: Theme = new Theme({
     'devui-list-item-hover-text': '#F5F5F5',
     'devui-list-item-active-text': '#526ECC',
     'devui-primary-disabled': '#3f3f3f',
+    'devui-form-control-bg': '#292a2e',
     'devui-form-control-line': '#565656',
     'devui-icon-text': '#A3A3A3',
     'devui-connected-overlay-bg': '#282828',
