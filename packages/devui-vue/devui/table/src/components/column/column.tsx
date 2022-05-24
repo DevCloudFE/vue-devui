@@ -20,7 +20,7 @@ let columnIdInit = 1;
 export default defineComponent({
   name: 'DColumn',
   props: tableColumnProps,
-  emits: ['filter-change'],
+  emits: ['filter-change', 'resize-start', 'resizing', 'resize-end'],
   setup(props: TableColumnProps, ctx: SetupContext) {
     const { reserveCheck } = toRefs(props);
     const instance = getCurrentInstance() as TableColumn;
@@ -47,7 +47,7 @@ export default defineComponent({
       if (isFunction(props.checkable)) {
         owner?.store.states._data.value.forEach((row, rowIndex) => {
           owner.store.states._checkList.value[rowIndex] = props.checkable(row, rowIndex);
-          owner.store.states._cachedCheckList =  owner.store.states._checkList.value;
+          owner.store.states._cachedCheckList = owner.store.states._checkList.value;
         });
       }
     });
@@ -82,13 +82,15 @@ export default defineComponent({
         $index: -1,
       });
 
-      return <div>
-        {
-          Array.isArray(defaultSlot)
-            ? defaultSlot.filter(child => child.type.name === 'DColumn').map(child => <>{child}</>)
-            : <div></div>
-        }
-      </div>;
+      return (
+        <div>
+          {Array.isArray(defaultSlot) ? (
+            defaultSlot.filter((child) => child.type.name === 'DColumn').map((child) => <>{child}</>)
+          ) : (
+            <div></div>
+          )}
+        </div>
+      );
     };
-  }
+  },
 });
