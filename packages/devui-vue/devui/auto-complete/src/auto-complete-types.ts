@@ -1,14 +1,14 @@
-import type { PropType, ExtractPropTypes, InjectionKey, SetupContext, Ref } from 'vue';
+import type { PropType, ExtractPropTypes, InjectionKey, SetupContext, Ref, ComputedRef } from 'vue';
 export interface SourceItemObj {
   label: string;
   disabled: boolean;
   [propName: string]: unknown;
 }
 const defaultFormatter = (item: string | SourceItemObj) => {
-  if(typeof item === 'string'){
+  if (typeof item === 'string') {
     return item;
   }
-  return item!==null ? item.label || item.toString() : '';
+  return item !== null ? item.label || item.toString() : '';
 };
 const defaultValueParse = (item: string | SourceItemObj) => item;
 export type Placement =
@@ -25,98 +25,119 @@ export type Placement =
   | 'left-start'
   | 'left-end';
 
+export type AutoCompleteSize = 'sm' | 'md' | 'lg';
 
-export type SourceType = Array<string>| Array<SourceItemObj>;
+export type SourceType = Array<string> | Array<SourceItemObj>;
 
 export const autoCompleteProps = {
   modelValue: {
     type: String,
-    default: ''
+    default: '',
   },
   source: {
-    type : Array as PropType<SourceType>,
-    default: null
+    type: Array as PropType<SourceType>,
+    default: null,
   },
   allowEmptyValueSearch: {
     type: Boolean,
-    default: false
+    default: false,
   },
-  appendToBody:{
+  appendToBody: {
     type: Boolean,
-    default: false
+    default: false,
   },
-  position : {
+  position: {
     type: Array as PropType<Array<Placement>>,
     default: ['bottom-end'],
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   delay: {
     type: Number,
-    default: 300
+    default: 300,
   },
   disabledKey: {
     type: String,
-    default: null
+    default: null,
   },
   formatter: {
     type: Function as PropType<(item: string | SourceItemObj) => string>,
-    default: defaultFormatter
+    default: defaultFormatter,
   },
   isSearching: {
     type: Boolean,
-    default: false
+    default: false,
   },
   sceneType: {
     type: String,
-    default: null
+    default: null,
   },
   searchFn: {
     type: Function as PropType<(term: string) => SourceType>,
-    default: null
+    default: null,
   },
   tipsText: {
     type: String,
-    default:'最近输入'
+    default: '最近输入',
   },
   latestSource: {
     type: Array,
-    default: null
+    default: null,
   },
   valueParser: {
     type: Function as PropType<(item: string | SourceItemObj) => string>,
-    default: defaultValueParse
+    default: defaultValueParse,
   },
   enableLazyLoad: {
     type: Boolean,
-    default: false
+    default: false,
   },
   width: {
     type: Number,
-    default: 400
+    default: 400,
   },
   showAnimation: {
     type: Boolean,
-    default: true
+    default: true,
   },
   maxHeight: {
     type: Number,
-    default: 300
+    default: 300,
   },
   transInputFocusEmit: {
     type: Function as PropType<() => void>,
-    default: null
+    default: null,
   },
-  selectValue:{
+  selectValue: {
     type: Function as PropType<(val: string) => string>,
-    default: null
+    default: null,
   },
   loadMore: {
     type: Function as PropType<() => void>,
-    default: null
-  }
+    default: null,
+  },
+  placeholder: {
+    type: String,
+    default: 'Search',
+  },
+  prefix: {
+    type: String,
+    default: '',
+  },
+  suffix: {
+    type: String,
+    default: '',
+  },
+  size: {
+    type: String as PropType<AutoCompleteSize>,
+    default: 'md',
+  },
+  clearable: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type AutoCompleteProps = ExtractPropTypes<typeof autoCompleteProps>;
@@ -125,10 +146,31 @@ export interface AutoCompleteRootType {
   ctx: SetupContext;
   props: AutoCompleteProps;
 }
+
+export interface UseAutoCompleteRender {
+  autoCompleteTopClasses: ComputedRef<Record<string, boolean | undefined>>;
+  inputClasses: ComputedRef<Record<string, boolean | undefined>>;
+  inputWrapperClasses: ComputedRef<Record<string, boolean | undefined>>;
+  inputInnerClasses: ComputedRef<Record<string, boolean | undefined>>;
+}
+
+export interface UseInputHandle {
+  handleClose: () => void;
+  toggleMenu: () => void;
+  onInput: (e: Event) => void;
+  onFocus: () => void;
+  onBlur: () => void;
+  onClear: () => void;
+  inputRef: Ref;
+  isFocus: Ref<boolean>;
+  visible: Ref<boolean>;
+  searchStatus: Ref<boolean>;
+}
+
 export type SearchFnType = (term: string) => SourceType;
 export type FormatterType = (item: string | SourceItemObj) => string;
 export type DefaultFuncType = () => void;
-export type HandleSearch = (term: string,enableLazyLoad?: boolean) => void;
+export type HandleSearch = (term: string, enableLazyLoad?: boolean) => void;
 export type RecentlyFocus = (latestSource: SourceType) => void;
 export type InputDebounceCb = (value: string) => void;
 export type TransInputFocusEmit = () => unknown;
@@ -152,4 +194,4 @@ export type DropdownProps = {
   hoverIndex: Ref<number>;
   valueParser: () => void;
 };
-export const DropdownPropsKey: InjectionKey<DropdownProps>=Symbol('DropdownPropsKey');
+export const DropdownPropsKey: InjectionKey<DropdownProps> = Symbol('DropdownPropsKey');

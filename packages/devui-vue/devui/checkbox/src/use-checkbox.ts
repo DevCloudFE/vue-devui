@@ -10,7 +10,7 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
   });
   const isLimitDisabled = computed(() => {
     const max = checkboxGroupConf?.max.value;
-    return max && checkboxGroupConf?.modelValue.value.length >= max && !mergedChecked.value;
+    return !!max && checkboxGroupConf?.modelValue.value.length >= max && !mergedChecked.value;
   });
   const mergedDisabled = computed(() => {
     return checkboxGroupConf?.disabled.value || props.disabled || isLimitDisabled.value;
