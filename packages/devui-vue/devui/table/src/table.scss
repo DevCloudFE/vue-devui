@@ -4,7 +4,6 @@
   position: relative;
   width: 100%;
   overflow-x: auto;
-  padding-top: 8px;
 
   .hidden-columns {
     position: absolute;
@@ -115,4 +114,20 @@
       }
     }
   }
+
+  .resize-bar {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: $devui-form-control-line-active;
+    z-index: 9999;
+    cursor: col-resize;
+  }
+}
+
+.table-selector {
+  user-select: none;
+  cursor: col-resize;
 }

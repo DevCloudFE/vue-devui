@@ -1,18 +1,15 @@
 import { ref, Ref, computed, getCurrentInstance, inject, onMounted } from 'vue';
-import type { ComputedRef } from 'vue';
 import { Column, FilterConfig, SortDirection } from '../column/column-types';
 import { TABLE_TOKEN } from '../../table-types';
+import { UseSort, UseFilter, UseBaseRender, UseDragColumnWidth } from './header-th-types';
 
-interface UseSort {
-  direction: Ref<SortDirection>;
-  sortClass: ComputedRef<Record<string, boolean>>;
-  handleSort: (val: SortDirection) => void;
-  clearSortOrder: () => void;
-}
+export function useBaseRender(column: Ref<Column>): UseBaseRender {
+  const baseClass = computed(() => ({
+    operable: column.value.filterable || column.value.sortable || column.value.resizeable,
+    resizeable: column.value.resizeable,
+  }));
 
-interface UseFilter {
-  filterClass: ComputedRef<Record<string, boolean>>;
-  handleFilter: (val: FilterConfig | FilterConfig[]) => void;
+  return { baseClass };
 }
 
 export function useSort(column: Ref<Column>): UseSort {
@@ -60,4 +57,91 @@ export function useFilter(column: Ref<Column>): UseFilter {
   };
 
   return { filterClass, handleFilter };
+}
+
+function handleWidth(width: string | number): number | undefined {
+  if (!width) {
+    return;
+  }
+  if (typeof width === 'number') {
+    return width;
+  }
+  return parseInt(width, 10);
+}
+
+function getFinalWidth(newWidth: number, minWidth: string | number, maxWidth: string | number): number {
+  const realMinWidth = handleWidth(minWidth);
+  const realMaxWidth = handleWidth(maxWidth);
+
+  const overMinWidth = !realMinWidth || newWidth >= realMinWidth;
+  const underMaxWidth = !realMaxWidth || newWidth <= realMaxWidth;
+
+  const finalWidth = !overMinWidth ? realMinWidth : !underMaxWidth ? realMaxWidth : newWidth;
+  return finalWidth;
+}
+
+export function useDragColumnWidth(elementRef: Ref<HTMLElement>, column: Ref<Column>): UseDragColumnWidth {
+  let initialWidth = 0;
+  let mouseDownScreenX = 0;
+  let resizeBarElement: HTMLElement;
+  const table = inject(TABLE_TOKEN);
+  const dragClass = ref('');
+  const resizing = ref(false);
+  const tableElement = table.tableRef;
+
+  const onMousemove = (e: MouseEvent) => {
+    const movementX = e.clientX - mouseDownScreenX;
+    const newWidth = initialWidth + movementX;
+    const finalWidth = getFinalWidth(newWidth, column.value.minWidth, column.value.maxWidth);
+    if (resizeBarElement) {
+      resizeBarElement.style.left = `${finalWidth + elementRef.value.offsetLeft}px`;
+    }
+    column.value.ctx.emit('resizing', { width: finalWidth });
+  };
+
+  const onMouseup = (e: MouseEvent) => {
+    const movementX = e.clientX - mouseDownScreenX;
+    const newWidth = initialWidth + movementX;
+    const finalWidth = getFinalWidth(newWidth, column.value.minWidth, column.value.maxWidth);
+    column.value.width = finalWidth;
+    column.value.realWidth = finalWidth;
+    table.updateColumnWidth();
+    resizing.value = false;
+    tableElement?.value.classList.remove('table-selector');
+    dragClass.value = '';
+    tableElement?.value.removeChild(resizeBarElement);
+    column.value.ctx.emit('resize-end', { width: finalWidth, beforeWidth: initialWidth });
+    document.removeEventListener('mouseup', onMouseup);
+    document.removeEventListener('mousemove', onMousemove);
+  };
+
+  const onMousedown = (e: MouseEvent) => {
+    const isHandle = (e.target as HTMLElement).classList.contains('resize-handle');
+    if (isHandle) {
+      column.value.ctx.emit('resize-start');
+      const initialOffset = elementRef.value.offsetLeft;
+      initialWidth = elementRef.value.clientWidth;
+      mouseDownScreenX = e.clientX;
+      e.stopPropagation();
+      resizing.value = true;
+
+      tableElement?.value.classList.add('table-selector');
+
+      resizeBarElement = document.createElement('div');
+      resizeBarElement.classList.add('resize-bar');
+      if (tableElement.value) {
+        resizeBarElement.style.display = 'block';
+        resizeBarElement.style.left = initialOffset + initialWidth + 'px';
+        tableElement.value.appendChild(resizeBarElement);
+      }
+
+      dragClass.value = 'hover-bg';
+
+      document.addEventListener('mouseup', onMouseup);
+
+      document.addEventListener('mousemove', onMousemove);
+    }
+  };
+
+  return { resizing, dragClass, onMousedown };
 }
