@@ -20,6 +20,7 @@
   .#{$devui-prefix}-form-control {
     padding: 4px 0;
     width: 100%;
+    background-color: transparent;
   }
 }
 
@@ -111,6 +112,25 @@
 }
 
 .#{$devui-prefix}-auto-complete {
+  &--sm {
+    height: 26px;
+    font-size: $devui-font-size-sm;
+  }
+
+  &--md {
+    height: 28px;
+    font-size: $devui-font-size;
+  }
+
+  &--lg {
+    height: 46px;
+    font-size: $devui-font-size-lg;
+  }
+
+  &__clear--icon {
+    cursor: pointer;
+  }
+
   &-input {
     display: inline-flex;
     align-items: center;
@@ -124,6 +144,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
+      height: 100%;
       padding: 0 8px;
       border: 1px solid $devui-form-control-line;
       border-radius: $devui-border-radius;
@@ -176,6 +197,9 @@
     color: $devui-list-item-active-text;
     background-color: $devui-list-item-active-bg;
     cursor: not-allowed;
+    .#{$devui-prefix}-dropdown-origin {
+      background-color: transparent !important;
+    }
   }
 
   &--prepend {

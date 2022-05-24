@@ -244,7 +244,6 @@ describe('d-input', () => {
         };
       },
     });
-    console.log(wrapper.html());
     expect(wrapper.find(dotNsClearIconClass).exists()).toBe(true);
     const i = wrapper.find('i');
     await i.trigger('click');
