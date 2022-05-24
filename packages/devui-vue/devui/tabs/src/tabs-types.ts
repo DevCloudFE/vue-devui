@@ -1,4 +1,4 @@
-import type { ExtractPropTypes, PropType, Slot } from 'vue';
+import type { ComputedRef, ExtractPropTypes, PropType, Slot } from 'vue';
 
 export type Active = string | number | null;
 
@@ -52,3 +52,7 @@ export const tabsProps = {
 } as const;
 
 export type TabsProps = ExtractPropTypes<typeof tabsProps>;
+
+export interface UseTabsRender {
+  ulClasses: ComputedRef<Record<string, boolean>>;
+}

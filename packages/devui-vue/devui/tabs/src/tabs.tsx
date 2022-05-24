@@ -1,13 +1,14 @@
 import { defineComponent, onBeforeMount, onMounted, onUpdated, provide, reactive, ref } from 'vue';
-import { Active, Tabs, tabsProps, TabsState } from './tabs-types';
+import { Active, Tabs, tabsProps, TabsState, TabsProps } from './tabs-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useTabsRender } from './use-tabs';
 import './tabs.scss';
 
 export default defineComponent({
   name: 'DTabs',
   props: tabsProps,
   emits: ['update:modelValue', 'active-tab-change'],
-  setup(props, { emit, slots }) {
+  setup(props: TabsProps, { emit, slots }) {
     const ns = useNamespace('tabs');
     const tabsEle = ref(null);
     const data = reactive({ offsetLeft: 0, offsetWidth: 0, id: null });
@@ -20,6 +21,7 @@ export default defineComponent({
     provide<Tabs>('tabs', {
       state,
     });
+    const { ulClasses } = useTabsRender(props);
 
     const canChange = function (currentTab: Active) {
       let changeResult = Promise.resolve(true);
@@ -56,9 +58,6 @@ export default defineComponent({
         }
       });
     };
-    const ulClass: string[] = [ns.em('nav', props.type)];
-    props.cssClass && ulClass.push(props.cssClass);
-    props.vertical && ulClass.push(ns.e('stacked'));
     onUpdated(() => {
       if (props.type === 'slider') {
         // 延时等待active样式切换至正确的tab
@@ -84,7 +83,7 @@ export default defineComponent({
     return () => {
       return (
         <div class={ns.b()}>
-          <ul ref={tabsEle} role="tablist" class={[ns.e('nav'), ulClass.join(' ')]}>
+          <ul ref={tabsEle} role="tablist" class={ulClasses.value}>
             {state.data.map((item, i) => {
               return (
                 <li
