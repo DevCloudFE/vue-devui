@@ -34,7 +34,8 @@ $select-item-min-height: 36px;
     }
   }
 
-  .#{$devui-prefix}-select__input,.#{$devui-prefix}-select__selection {
+  .#{$devui-prefix}-select__input,
+  .#{$devui-prefix}-select__selection {
     border: none;
   }
 }
@@ -45,7 +46,8 @@ $select-item-min-height: 36px;
   border-color: $devui-disabled-line;
   color: $devui-disabled-text;
 
-  .#{$devui-prefix}-select__input,.#{$devui-prefix}-select__selection {
+  .#{$devui-prefix}-select__input,
+  .#{$devui-prefix}-select__selection {
     cursor: not-allowed;
     background-color: $devui-disabled-bg;
     border-color: $devui-disabled-line;
