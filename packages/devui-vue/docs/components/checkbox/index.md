@@ -269,7 +269,13 @@ export default defineComponent({
   <div>
     <div style="margin-bottom: 10px">
       <d-checkbox-group v-model="values1" size="lg" is-show-title color="rgb(255, 193, 7)">
-        <d-checkbox-button v-for="item in options1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
+        <d-checkbox-button
+          v-for="item in options1"
+          :label="item.label"
+          :value="item.value"
+          :key="item.value"
+          :title="item.title"
+        ></d-checkbox-button
       ></d-checkbox-group>
       <d-checkbox-group v-model="values1" style="margin-top: 10px;">
         <d-checkbox-button v-for="item in options1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
@@ -294,9 +300,9 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const options1 = ref([
-      { label: '选项1', disabled: true, value: 2, id: 1 },
-      { label: '选项2', value: 3, id: 2 },
-      { label: '选项3', value: 4, id: 3 },
+      { label: '选项1', disabled: true, value: 2, id: 1, title: '自定义title1' },
+      { label: '选项2', value: 3, id: 2, title: '自定义title2' },
+      { label: '选项3', value: 4, id: 3, title: '自定义title3' },
     ]);
     const values1 = ref([2]);
     return {
@@ -428,9 +434,9 @@ export default defineComponent({
 
 ### Checkbox 事件
 
-|   事件    |   类型   |                   说明                   |       跳转 Demo       |
-| :-------: | :------: | :--------------------------------------: | :-------------------: |
-| on-change | `string` | 复选框的值改变时发出的事件，值是当前状态 | [基本用法](#基本用法) |
+|  事件  |                   说明                   |       跳转 Demo       |
+| :----: | :--------------------------------------: | :-------------------: |
+| change | 复选框的值改变时发出的事件，值是当前状态 | [基本用法](#基本用法) |
 
 ### CheckboxGroup 参数
 
@@ -450,25 +456,24 @@ export default defineComponent({
 |      size      |  [ICheckboxSize](#icheckboxsize)   |    md    | 可选， checkbox 尺寸                                                   | [尺寸](#尺寸和边框)                       |
 |     border     |             `boolean`              |  false   | 可选， 是否有边框，只有在 border 属性存在时生效                        | [边框](#尺寸和边框)                       |
 
-### CheckboxButton 参数
-
-| 参数          | 类型                            | 默认  | 说明                                                                                      | 跳转 Demo                  |
-| :------------ | :------------------------------ | :---- | :---------------------------------------------------------------------------------------- | -------------------------- |
-| name          | `string`                        | --    | 可选，表单域名，input 原生 name 属性                                                      | [按钮组](#按钮组)          |
-| label         | `string`                        | --    | 可选，显示标签                                                                            | [按钮组](#按钮组)          |
-| value         | `string\|number`                | --    | 可选，选中状态的值（只有在 checkbox-group 或者绑定对象为 array 时有效）                   | [使用 按钮形态](#按钮形态) |
-| is-show-title | `boolean`                       | true  | 可选，是否显示 title 提示，<br>默认显示参数`label`的值                                    | [按钮组](#按钮组)          |
-| title         | `string`                        | --    | 可选，显示自定义 title 提示内容                                                           | [按钮组](#按钮组)          |
-| color         | `string`                        | --    | 可选，按钮颜色                                                                            | [按钮组](#按钮组)          |
-| disabled      | `boolean`                       | false | 可选，是否禁用                                                                            | [按钮组](#按钮组)          |
-| before-change | `Function\|Promise<boolean>`    | --    | 可选，checkbox 切换前的回调函数，<br>返回 boolean 类型，返回 false 可以阻止 checkbox 切换 | [按钮组](#按钮组)          |
-| size          | [ICheckboxSize](#icheckboxsize) | md    | 可选， checkbox 尺寸                                                                      | [按钮组](#按钮组)          |
-
 ### CheckboxGroup 事件
 
-| 事件      | 类型     | 说明                | 跳转 Demo                                |
-| :-------- | :------- | :------------------ | :--------------------------------------- |
-| on-change | `string` | checkbox 值改变事件 | [使用 CheckBoxGroup](#使用CheckBoxGroup) |
+| 事件   | 说明                | 跳转 Demo                                          |
+| :----- | :------------------ | :------------------------------------------------- |
+| change | checkbox 值改变事件 | [使用 change 事件](#checkbox-根据条件终止切换状态) |
+
+### CheckboxButton 参数
+
+| 参数          | 类型                            | 默认  | 说明                                                                                      | 跳转 Demo             |
+| :------------ | :------------------------------ | :---- | :---------------------------------------------------------------------------------------- | --------------------- |
+| name          | `string`                        | --    | 可选，表单域名，input 原生 name 属性                                                      | [按钮形态](#按钮形态) |
+| label         | `string`                        | --    | 可选，显示标签                                                                            | [按钮形态](#按钮形态) |
+| value         | `string\|number`                | --    | 可选，选中状态的值（只有在 checkbox-group 或者绑定对象为 array 时有效）                   | [按钮形态](#按钮形态) |
+| is-show-title | `boolean`                       | true  | 可选，是否显示 title 提示，<br>默认显示参数`label`的值                                    | [按钮形态](#按钮形态) |
+| title         | `string`                        | --    | 可选，显示自定义 title 提示内容                                                           | [按钮形态](#按钮形态) |
+| disabled      | `boolean`                       | false | 可选，是否禁用                                                                            | [按钮形态](#按钮形态) |
+| before-change | `Function\|Promise<boolean>`    | --    | 可选，checkbox 切换前的回调函数，<br>返回 boolean 类型，返回 false 可以阻止 checkbox 切换 | [按钮形态](#按钮形态) |
+| size          | [ICheckboxSize](#icheckboxsize) | md    | 可选， checkbox 尺寸                                                                      | [按钮形态](#按钮形态) |
 
 ### Checkbox 类型定义
 
