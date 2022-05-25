@@ -6,10 +6,11 @@ export default defineComponent({
   name: 'DOption',
   props: optionProps,
   setup(props: OptionProps, ctx: SetupContext) {
-    const { currentName, selectOptionCls, optionSelect } = useOption(props);
+    const { currentName, selectOptionCls, isVisible, optionSelect } = useOption(props);
     return () => {
       return (
         <li
+          v-show={isVisible.value}
           onClick={(e: MouseEvent) => {
             e.preventDefault();
             e.stopPropagation();

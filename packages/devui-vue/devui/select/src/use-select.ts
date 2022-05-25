@@ -5,6 +5,7 @@ import { className, KeyType } from './utils';
 import useCacheOptions from './composables/use-cache-options';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { onClickOutside } from '@vueuse/core';
+import { isFunction, debounce } from 'lodash';
 
 export default function useSelect(props: SelectProps, ctx: SetupContext): UseSelectReturnType {
   const ns = useNamespace('select');
@@ -20,7 +21,9 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     isOpen.value = bool;
     ctx.emit('toggle-change', bool);
   };
-  onClickOutside(containerRef, () => { toggleChange(false); });
+  onClickOutside(containerRef, () => {
+    toggleChange(false);
+  });
 
   const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
   const selectCls = computed(() => {
@@ -72,7 +75,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
 
   // 这里处理d-option组件生成的Options
   const injectOptions = ref(new Map());
-  const updateInjectOptions = (item: Record<string, unknown> , operation:  string) => {
+  const updateInjectOptions = (item: Record<string, unknown>, operation: string) => {
     if (operation === 'add') {
       injectOptions.value.set(item.value, item);
     } else if (operation === 'delete') {
@@ -91,11 +94,11 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   // 目前看该警告和下拉面板使用Transition也有关
   const inputValue = computed<string>(() => {
     if (props.multiple && Array.isArray(props.modelValue)) {
-      selectedOptions.value = getInjectOptions(props.modelValue).filter(item => !!item);
+      selectedOptions.value = getInjectOptions(props.modelValue).filter((item) => !!item);
       return selectedOptions.value.map((item) => item?.name || item?.value || '').join(',');
     } else if (!Array.isArray(props.modelValue)) {
-      selectedOptions.value = getInjectOptions([props.modelValue]).filter(item => !!item);
-      return selectedOptions.value[0]?.name  || '';
+      selectedOptions.value = getInjectOptions([props.modelValue]).filter((item) => !!item);
+      return selectedOptions.value[0]?.name || '';
     }
     return '';
   });
@@ -109,7 +112,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   const updateMultipleData = (item: OptionObjectItem) => {
     let { modelValue } = props;
     const checkedItems = [];
-    for(const child of injectOptions.value.values()) {
+    for (const child of injectOptions.value.values()) {
       if (child._checked) {
         checkedItems.push(child.value);
       }
@@ -151,6 +154,30 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     updateMultipleData(data);
   };
 
+  const filterQuery = ref('');
+  const queryChange = (query: string) => {
+    filterQuery.value = query;
+  };
+
+  const isLoading = ref(false);
+  const debounceTime = computed(() => (props.remote ? 300 : 0));
+
+  const isUpdateSuccess = () => {
+    isLoading.value = false;
+    console.log('success');
+  };
+  const handlerQueryFunc = (query: string) => {
+    if (isFunction(props.filter)) {
+      props.filter(query, isUpdateSuccess);
+    } else {
+      queryChange(query);
+    }
+  };
+
+  const debounceQueryFilter = debounce((query: string) => {
+    handlerQueryFunc(query);
+  }, debounceTime.value);
+
   return {
     containerRef,
     dropdownRef,
@@ -159,11 +186,13 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     mergeOptions,
     inputValue,
     selectedOptions,
+    filterQuery,
     onClick,
     handleClear,
     valueChange,
     handleClose,
     updateInjectOptions,
     tagDelete,
+    debounceQueryFilter,
   };
 }
