@@ -7,6 +7,7 @@
     left: 0 !important;
     top: 0 !important;
     margin: 0 !important;
+    box-shadow: none;
 
     ul {
       width: 100%;
@@ -17,8 +18,9 @@
 
 .#{$devui-prefix}-auto-complete {
   .#{$devui-prefix}-form-control {
-    padding: 4px 8px;
+    padding: 4px 0;
     width: 100%;
+    background-color: transparent;
   }
 }
 
@@ -106,5 +108,149 @@
 
   .#{$devui-prefix}-auto-complete__dropdown-latestSource ul {
     line-height: initial !important;
+  }
+}
+
+.#{$devui-prefix}-auto-complete {
+  &--sm {
+    height: 26px;
+    font-size: $devui-font-size-sm;
+  }
+
+  &--md {
+    height: 28px;
+    font-size: $devui-font-size;
+  }
+
+  &--lg {
+    height: 46px;
+    font-size: $devui-font-size-lg;
+  }
+
+  &__clear--icon {
+    cursor: pointer;
+  }
+
+  &-input {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100%;
+
+    &__wrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 0 8px;
+      border: 1px solid $devui-form-control-line;
+      border-radius: $devui-border-radius;
+      background-color: $devui-form-control-bg;
+      transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
+
+      &:not(.#{$devui-prefix}-auto-complete--disabled):hover {
+        border-color: $devui-form-control-line-hover;
+      }
+
+      > input {
+        border: none !important;
+      }
+    }
+
+    &__prepend,
+    &__append {
+      color: var(--devui-text);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
+      padding: 0 20px;
+      white-space: nowrap;
+      border: 1px solid $devui-form-control-line;
+      border-radius: $devui-border-radius;
+      background-color: $devui-form-control-bg;
+
+      .#{$devui-prefix}-button,
+      .#{$devui-prefix}-select .#{$devui-prefix}-select__input {
+        border: none;
+        background-color: transparent;
+        color: inherit;
+      }
+
+      .#{$devui-prefix}-button,
+      .#{$devui-prefix}-select__selection {
+        display: inline-block;
+        margin: 0 -20px;
+      }
+    }
+  }
+
+  &--focus .#{$devui-prefix}-auto-complete-input__wrapper {
+    border-color: $devui-form-control-line-active;
+  }
+
+  &--disabled {
+    color: $devui-list-item-active-text;
+    background-color: $devui-list-item-active-bg;
+    cursor: not-allowed;
+    .#{$devui-prefix}-dropdown-origin {
+      background-color: transparent !important;
+    }
+  }
+
+  &--prepend {
+    .#{$devui-prefix}-auto-complete-input__wrapper {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  &--append {
+    .#{$devui-prefix}-auto-complete-input__wrapper {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  &-slot {
+    display: inline-flex;
+    width: 100%;
+    align-items: stretch;
+    .#{$devui-prefix}-auto-complete-input__prepend {
+      border-right: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .#{$devui-prefix}-auto-complete-input__append {
+      border-left: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .#{$devui-prefix}-auto-complete-input__prefix,
+    .#{$devui-prefix}-auto-complete-input__suffix {
+      display: inline-flex;
+      white-space: nowrap;
+      flex-shrink: 0;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+
+    .#{$devui-prefix}-auto-complete-input__prefix {
+      > * {
+        margin-right: 8px;
+      }
+    }
+
+    .#{$devui-prefix}-auto-complete-input__suffix {
+      > * {
+        margin-left: 8px;
+      }
+    }
   }
 }

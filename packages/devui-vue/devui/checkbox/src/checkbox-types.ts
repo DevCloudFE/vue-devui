@@ -52,7 +52,7 @@ export const checkboxProps = {
   },
   label: {
     type: String,
-    default: undefined,
+    default: '',
   },
   'onUpdate:checked': {
     type: Function as PropType<(v: boolean) => void>,
@@ -138,8 +138,8 @@ interface checkboxGroupInjection {
 export const checkboxGroupInjectionKey: InjectionKey<checkboxGroupInjection> = Symbol('d-checkbox-group');
 
 export type UseCheckboxFn = {
-  mergedChecked: ComputedRef<boolean | 0 | undefined>;
-  mergedDisabled: ComputedRef<boolean | 0 | undefined>;
+  mergedChecked: ComputedRef<boolean>;
+  mergedDisabled: ComputedRef<boolean>;
   mergedIsShowTitle: ComputedRef<boolean | undefined>;
   mergedShowAnimation: ComputedRef<boolean>;
   mergedColor: ComputedRef<string | undefined>;

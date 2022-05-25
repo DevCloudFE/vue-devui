@@ -2,17 +2,17 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "dev": "pnpm dev --filter vue-devui",
-    "build": "pnpm build --filter vue-devui",
-    "build:lib": "pnpm build:lib --filter vue-devui",
-    "build:cli": "pnpm build --filter devui-cli",
+    "dev": "pnpm --filter vue-devui dev",
+    "build": "pnpm --filter vue-devui build",
+    "build:lib": "pnpm --filter vue-devui build:lib",
+    "build:cli": "pnpm --filter devui-cli build",
     "prepare": "husky install",
     "precommit": "lint-staged",
     "eslint": "eslint \"packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}\"",
     "eslint:fix": "eslint --fix \"packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}\"",
     "stylelint": "stylelint \"packages/**/{*.scss,*.css}\"",
     "stylelint:fix": "stylelint --fix \"packages/**/{*.scss,*.css}\"",
-    "test": "pnpm test --filter vue-devui"
+    "test": "pnpm --filter vue-devui test"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",

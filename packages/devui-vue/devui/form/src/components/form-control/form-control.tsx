@@ -25,9 +25,7 @@ export default defineComponent({
             content={errorMessage.value}
             pop-type="error"
             position={popPosition.value}>
-            {{
-              reference: () => <div class={ns.e('control-content')}>{ctx.slots.default?.()}</div>,
-            }}
+            <div class={ns.e('control-content')}>{ctx.slots.default?.()}</div>,
           </Popover>
           {showFeedback.value && (
             <span class={[ns.e('feedback-icon'), ns.em('feedback-icon', feedbackStatus.value)]}>
