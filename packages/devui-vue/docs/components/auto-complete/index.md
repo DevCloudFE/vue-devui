@@ -458,6 +458,7 @@ export default defineComponent({
 | 参数名                   | 类型                                    | 默认                                      | 说明                                                              | 跳转 Demo                                              |
 | :----------------------- | :-------------------------------------- | :---------------------------------------- | :---------------------------------------------------------------- | :----------------------------------------------------- |
 | size                     | [`AutoCompleteSize`](#autocompletesize) | 'md'                                      | 可选，输入框尺寸，有三种选择`'lg'`,`'md'`,`'sm'`                  | [尺寸](#尺寸)                                          |
+| placeholder              | `string`                                | 'Search'                                  | 可选，占位符                                                      | --                                                     |
 | source                   | [`SourceType`](#sourcetype)             | --                                        | 必选，有 searchFn 的情况下可以不必选                              | [基本用法](#基本用法)                                  |
 | allow-empty-value-search | `boolean`                               | false                                     | 可选，在绑定的输入框 value 为空时，是否进行搜索提示操作           | [基本用法](#基本用法)                                  |
 | append-to-body           | `boolean`                               | false                                     | 可选，下拉弹出是否 append to body                                 | [基本用法](#基本用法)                                  |
@@ -475,8 +476,8 @@ export default defineComponent({
 | enable-lazy-load         | `boolean`                               | false                                     | 可选，是否允许懒加载                                              | [启用懒加载](#启用懒加载)                              |
 | width                    | `number`                                | 400                                       | 可选，调整宽度（`px`）                                            | [基本用法](#基本用法)                                  |
 | show-animation           | `boolean`                               | true                                      | 可选，是否开启动画                                                |                                                        |
-| prefix                   | `string`                                | -                                         | 可选，自定义前缀图标                                              | [带图标的输入框](../input/index.md/#带图标的输入框)    |
-| suffix                   | `string`                                | -                                         | 可选，自定义后缀图标                                              | [带图标的输入框](../input/index.md/#带图标的输入框)    |
+| prefix                   | `string`                                | --                                        | 可选，自定义前缀图标                                              | [带图标的输入框](../input/index.md/#带图标的输入框)    |
+| suffix                   | `string`                                | --                                        | 可选，自定义后缀图标                                              | [带图标的输入框](../input/index.md/#带图标的输入框)    |
 | clearable                | `boolean`                               | false                                     | 可选，是否可清空                                                  | [参考 `d-input` 一键清空](../input/index.md/#一键清空) |
 
 ### 事件

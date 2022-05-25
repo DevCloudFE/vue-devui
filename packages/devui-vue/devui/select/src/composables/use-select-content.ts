@@ -1,4 +1,4 @@
-import { computed, inject, ref} from 'vue';
+import { computed, inject, ref } from 'vue';
 import { SELECT_TOKEN } from '../const';
 import { SelectContentProps, OptionObjectItem, UseSelectContentReturnType } from '../select-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
@@ -48,9 +48,17 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
   };
 
   const tagDelete = (data: OptionObjectItem) => {
-    if (data && data.value){
+    if (data && data.value) {
       select?.tagDelete(data);
     }
+  };
+
+  const onFocus = (e: FocusEvent) => {
+    select?.onFocus(e);
+  };
+
+  const onBlur = (e: FocusEvent) => {
+    select?.onBlur(e);
   };
 
   return {
@@ -65,6 +73,8 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     placeholder,
     isMultiple,
     handleClear,
-    tagDelete
+    tagDelete,
+    onFocus,
+    onBlur,
   };
 }

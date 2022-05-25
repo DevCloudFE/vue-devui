@@ -26,76 +26,81 @@ export default defineComponent({
       placeholder,
       isMultiple,
       handleClear,
-      tagDelete
+      tagDelete,
+      onFocus,
+      onBlur,
     } = useSelectContent(props);
 
     return () => {
       return (
         <div class={selectionCls.value}>
-          {isMultiple.value ? <div class={multipleCls}>
-            {
-              !isSupportCollapseTags.value &&
-              selectedData.value.length >= 1 &&
-              selectedData.value.map((item: OptionObjectItem) =>
-                <Tag deletable onTagDelete={(e: MouseEvent) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  tagDelete(item);
-                }} key={item.value}>
-                  {item.name}
+          {isMultiple.value ? (
+            <div class={multipleCls}>
+              {!isSupportCollapseTags.value &&
+                selectedData.value.length >= 1 &&
+                selectedData.value.map((item: OptionObjectItem) => (
+                  <Tag
+                    deletable
+                    onTagDelete={(e: MouseEvent) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      tagDelete(item);
+                    }}
+                    key={item.value}>
+                    {item.name}
+                  </Tag>
+                ))}
+              {isSupportCollapseTags.value && selectedData.value.length >= 1 && (
+                <Tag
+                  deletable
+                  onTagDelete={(e: MouseEvent) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    tagDelete(selectedData.value[0]);
+                  }}>
+                  {selectedData.value[0].name}
                 </Tag>
-              )
-            }
-            {
-              isSupportCollapseTags.value &&
-              selectedData.value.length >= 1 &&
-              (<Tag deletable onTagDelete={(e: MouseEvent) => {
-                e.preventDefault();
-                e.stopPropagation();
-                tagDelete(selectedData.value[0]);
-              }}>
-                {selectedData.value[0].name}
-              </Tag>)
-            }
-            {
-              isSupportCollapseTags.value &&
-              !isSupportTagsTooltip.value &&
-              selectedData.value.length > 1 &&
-              <Tag>{`+${selectedData.value.length -1}`}</Tag>
-            }
-            {
-              isSupportCollapseTags.value &&
-              isSupportTagsTooltip.value &&
-              selectedData.value.length > 1 &&
-              (<Popover trigger="hover" v-slots={{
-                default: () => <Tag>{`+${selectedData.value.length -1}`}</Tag>,
-                content: () => <div>
-                  {
-                    selectedData.value.map((item: OptionObjectItem) =>
-                      <Tag deletable onTagDelete={(e: MouseEvent) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        tagDelete(item);
-                      }} key={item.value}>
-                        {item.name}
-                      </Tag>
-                    )
-                  }
-                </div>
-              }}>
-              </Popover>)
-            }
-            <div class={multipleInputCls}>
-              <input
-                value={searchQuery.value}
-                type="text"
-                class={inputCls.value}
-                placeholder={placeholder.value}
-                readonly
-                disabled={isSelectDisable.value}
-              />
+              )}
+              {isSupportCollapseTags.value && !isSupportTagsTooltip.value && selectedData.value.length > 1 && (
+                <Tag>{`+${selectedData.value.length - 1}`}</Tag>
+              )}
+              {isSupportCollapseTags.value && isSupportTagsTooltip.value && selectedData.value.length > 1 && (
+                <Popover
+                  trigger="hover"
+                  v-slots={{
+                    default: () => <Tag>{`+${selectedData.value.length - 1}`}</Tag>,
+                    content: () => (
+                      <div>
+                        {selectedData.value.map((item: OptionObjectItem) => (
+                          <Tag
+                            deletable
+                            onTagDelete={(e: MouseEvent) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              tagDelete(item);
+                            }}
+                            key={item.value}>
+                            {item.name}
+                          </Tag>
+                        ))}
+                      </div>
+                    ),
+                  }}></Popover>
+              )}
+              <div class={multipleInputCls}>
+                <input
+                  value={searchQuery.value}
+                  type="text"
+                  class={inputCls.value}
+                  placeholder={placeholder.value}
+                  readonly
+                  disabled={isSelectDisable.value}
+                  onFocus={onFocus}
+                  onBlur={onBlur}
+                />
+              </div>
             </div>
-          </div> :
+          ) : (
             <input
               value={props.value}
               type="text"
@@ -103,7 +108,10 @@ export default defineComponent({
               placeholder={placeholder.value}
               readonly
               disabled={isSelectDisable.value}
-            />}
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
+          )}
           <span onClick={handleClear} class={clearCls}>
             <Icon name="close" />
           </span>

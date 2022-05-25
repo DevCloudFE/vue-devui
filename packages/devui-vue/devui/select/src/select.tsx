@@ -12,7 +12,7 @@ import './select.scss';
 export default defineComponent({
   name: 'DSelect',
   props: selectProps,
-  emits: ['toggle-change', 'value-change', 'update:modelValue'],
+  emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur'],
   setup(props: SelectProps, ctx: SetupContext) {
     const {
       containerRef,
@@ -26,7 +26,9 @@ export default defineComponent({
       valueChange,
       handleClear,
       updateInjectOptions,
-      tagDelete
+      tagDelete,
+      onFocus,
+      onBlur,
     } = useSelect(props, ctx);
 
     const scrollbarNs = useNamespace('scrollbar');
@@ -47,24 +49,26 @@ export default defineComponent({
         valueChange,
         handleClear,
         updateInjectOptions,
-        tagDelete
+        tagDelete,
+        onFocus,
+        onBlur,
       }) as SelectContext
     );
     return () => {
       return (
         <div class={selectCls.value} ref={containerRef} onClick={onClick}>
-          <SelectContent value={inputValue.value}></SelectContent>
+          <SelectContent value={inputValue.value} onFocus={onFocus} onBlur={onBlur}></SelectContent>
           <Transition name="fade" ref={dropdownRef}>
             <div v-show={isOpen.value} class={dropdownCls}>
               <ul class={listCls}>
-                {ctx.slots?.default ? ctx.slots.default()
+                {ctx.slots?.default
+                  ? ctx.slots.default()
                   : mergeOptions.value.map((item, i) => (
                     <Option
                       key={i}
                       value={item.value}
                       name={item.name}
-                      disabled={props.optionDisabledKey ? !!item[props.optionDisabledKey] : false}
-                    >
+                      disabled={props.optionDisabledKey ? !!item[props.optionDisabledKey] : false}>
                       {props.multiple ? (
                         <Checkbox
                           modelValue={item._checked}
@@ -75,8 +79,7 @@ export default defineComponent({
                         item.name || item.value
                       )}
                     </Option>
-                  ))
-                }
+                  ))}
               </ul>
             </div>
           </Transition>

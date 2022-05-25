@@ -20,7 +20,9 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     isOpen.value = bool;
     ctx.emit('toggle-change', bool);
   };
-  onClickOutside(containerRef, () => { toggleChange(false); });
+  onClickOutside(containerRef, () => {
+    toggleChange(false);
+  });
 
   const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
   const selectCls = computed(() => {
@@ -72,7 +74,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
 
   // 这里处理d-option组件生成的Options
   const injectOptions = ref(new Map());
-  const updateInjectOptions = (item: Record<string, unknown> , operation:  string) => {
+  const updateInjectOptions = (item: Record<string, unknown>, operation: string) => {
     if (operation === 'add') {
       injectOptions.value.set(item.value, item);
     } else if (operation === 'delete') {
@@ -91,11 +93,11 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   // 目前看该警告和下拉面板使用Transition也有关
   const inputValue = computed<string>(() => {
     if (props.multiple && Array.isArray(props.modelValue)) {
-      selectedOptions.value = getInjectOptions(props.modelValue).filter(item => !!item);
+      selectedOptions.value = getInjectOptions(props.modelValue).filter((item) => !!item);
       return selectedOptions.value.map((item) => item?.name || item?.value || '').join(',');
     } else if (!Array.isArray(props.modelValue)) {
-      selectedOptions.value = getInjectOptions([props.modelValue]).filter(item => !!item);
-      return selectedOptions.value[0]?.name  || '';
+      selectedOptions.value = getInjectOptions([props.modelValue]).filter((item) => !!item);
+      return selectedOptions.value[0]?.name || '';
     }
     return '';
   });
@@ -109,7 +111,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   const updateMultipleData = (item: OptionObjectItem) => {
     let { modelValue } = props;
     const checkedItems = [];
-    for(const child of injectOptions.value.values()) {
+    for (const child of injectOptions.value.values()) {
       if (child._checked) {
         checkedItems.push(child.value);
       }
@@ -151,6 +153,14 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     updateMultipleData(data);
   };
 
+  const onFocus = (e: FocusEvent) => {
+    ctx.emit('focus', e);
+  };
+
+  const onBlur = (e: FocusEvent) => {
+    ctx.emit('blur', e);
+  };
+
   return {
     containerRef,
     dropdownRef,
@@ -165,5 +175,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     handleClose,
     updateInjectOptions,
     tagDelete,
+    onFocus,
+    onBlur,
   };
 }
