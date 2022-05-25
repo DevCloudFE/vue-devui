@@ -74,13 +74,30 @@ describe('select', () => {
     const options = reactive([6, 2, 'test']);
     const toggleChange = jest.fn();
     const valueChange = jest.fn();
+    const onFocus = jest.fn();
+    const onBlur = jest.fn();
     const wrapper = mount({
       setup() {
-        return () => <DSelect v-model={value.value} options={options} onToggleChange={toggleChange} onValueChange={valueChange}></DSelect>;
+        return () => (
+          <DSelect
+            v-model={value.value}
+            options={options}
+            onToggleChange={toggleChange}
+            onValueChange={valueChange}
+            onFocus={onFocus}
+            onBlur={onBlur}></DSelect>
+        );
       },
     });
 
     const input = wrapper.find<HTMLInputElement>('.devui-select__input');
+
+    await input.trigger('focus');
+    await input.trigger('blur');
+
+    expect(onFocus).toBeCalledTimes(1);
+    expect(onBlur).toBeCalledTimes(1);
+
     await input.trigger('click');
 
     expect(toggleChange).toBeCalledTimes(1);
