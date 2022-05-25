@@ -1,56 +1,54 @@
-import type { PropType, ExtractPropTypes } from 'vue';
+import type { PropType, ExtractPropTypes, ComputedRef, Ref } from 'vue';
 
-export type ISize = 'lg' |'md' | 'sm';
+export type ISize = 'lg' | 'md' | 'sm';
 
 export const inputNumberProps = {
   placeholder: {
     type: String,
-    default: undefined
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
-  step:{
+  step: {
     type: Number,
-    default: 0
+    default: 0,
   },
   max: {
     type: Number,
-    default: Infinity
+    default: Infinity,
   },
   min: {
     type: Number,
-    default: -Infinity
+    default: -Infinity,
   },
   size: {
     type: String as PropType<ISize>,
-    default: ''
+    default: '',
   },
   modelValue: {
     type: Number,
-    default: 0
+    default: 0,
   },
-  'onUpdate:modelValue': {
-    type: Function as PropType<(v: string) => void>,
-    default: undefined
-  },
-  'onChange': {
-    type: Function as PropType<(v: string) => void>,
-    default: undefined
-  },
-  'onKeydown': {
-    type: Function as PropType<(v: KeyboardEvent) => void>,
-    default: undefined
-  },
-  'onFocus': {
-    type: Function as PropType<() => void>,
-    default: undefined
-  },
-  'onBlur': {
-    type: Function as PropType<() => void>,
-    default: undefined
-  }
 } as const;
 
 export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>;
+
+export interface UseRender {
+  isFocus: Ref<boolean>;
+  wrapClass: ComputedRef<Record<string, boolean>>;
+  controlButtonClass: ComputedRef<Record<string, boolean>>;
+  inputWrapClass: string;
+  inputInnerClass: ComputedRef<Record<string, boolean>>;
+}
+
+export interface UseEvent {
+  inputVal: Ref<number>;
+  onAdd: () => void;
+  onSubtract: () => void;
+  onInput: (val: Event) => void;
+  onFocus: (event: Event) => void;
+  onBlur: (event: Event) => void;
+  onChange: (event: Event) => void;
+  onKeydown: (event: KeyboardEvent) => void;
+}

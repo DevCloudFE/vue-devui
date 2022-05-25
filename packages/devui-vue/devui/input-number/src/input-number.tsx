@@ -1,129 +1,36 @@
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, toRefs } from 'vue';
+import type { SetupContext } from 'vue';
 import { inputNumberProps, InputNumberProps } from './input-number-types';
-import './input-number.scss';
 import Icon from '../../icon/src/icon';
+import { useRender, useEvent } from './use-input-number';
+import './input-number.scss';
 
 export default defineComponent({
   name: 'DInputNumber',
   props: inputNumberProps,
   emits: ['update:modelValue', 'change', 'input', 'focus', 'blur', 'keydown'],
-  setup(props: InputNumberProps, ctx) {
-    const inputVal = ref(props.modelValue < props.min ? props.min : props.modelValue);
+  setup(props: InputNumberProps, ctx: SetupContext) {
+    const { disabled } = toRefs(props);
+    const { isFocus, wrapClass, controlButtonClass, inputWrapClass, inputInnerClass } = useRender(props);
+    const { inputVal, onAdd, onSubtract, onInput, onFocus, onBlur, onChange, onKeydown } = useEvent(props, ctx, isFocus);
 
-    const focusVal = ref('');
-
-    // 大小
-    const isSize = computed(() => {
-      return `devui-input-number-${props.size}`;
-    });
-
-    // 判断是否禁用
-    const isDisabled = computed(() => {
-      return props.disabled;
-    });
-
-    // 新增
-    const add = () => {
-      if (props.disabled) {return;}
-      if (inputVal.value >= props.max) {return;}
-      if(props.step !== 0){
-        const maxSpaceVal = props.max - inputVal.value;
-        if(inputVal.value < props.max && maxSpaceVal < props.step){
-          inputVal.value += maxSpaceVal;
-        }else if(inputVal.value < props.max && maxSpaceVal > props.step){
-          inputVal.value += props.step;
-        }else{
-          inputVal.value += props.step;
-        }
-      }else{
-        inputVal.value += 1;
-      }
-      focusVal.value = 'active';
-      ctx.emit('change', inputVal.value);
-      ctx.emit('update:modelValue', inputVal.value);
-    };
-    // 减少
-    const subtract = () => {
-      if (props.disabled) {return;}
-      if (inputVal.value <= props.min) {return;}
-      if(props.step !== 0){
-        const minSpaceVal = inputVal.value - props.min;
-        if(inputVal.value > props.min && minSpaceVal > props.step){
-          inputVal.value -= props.step;
-        }else if (inputVal.value > props.min && minSpaceVal < props.step){
-          inputVal.value -= minSpaceVal;
-        }else{
-          inputVal.value -= props.step;
-        }
-      }else{
-        inputVal.value -= 1;
-      }
-      focusVal.value = 'active';
-      ctx.emit('change', inputVal.value);
-      ctx.emit('update:modelValue', inputVal.value);
-    };
-    const onInput = (val) => {
-      inputVal.value = parseInt(val.data);
-      ctx.emit('input', inputVal.value);
-      ctx.emit('update:modelValue', inputVal.value);
-    };
-    const onFocus = ($event: Event) => {
-      focusVal.value = 'active';
-      ctx.emit('focus', $event);
-    };
-    const onBlur = ($event: Event) => {
-      focusVal.value = '';
-      ctx.emit('blur', $event);
-    };
-    const onChange = ($event: Event) => {
-      ctx.emit('change', ($event.target as HTMLInputElement).value);
-    };
-    const onKeydown = ($event: KeyboardEvent) => {
-      ctx.emit('keydown', $event);
-    };
-    return {
-      inputVal,
-      focusVal,
-      isDisabled,
-      isSize,
-      add,
-      subtract,
-      onInput,
-      onChange,
-      onKeydown,
-      onBlur,
-      onFocus,
-    };
-  },
-  render() {
-    const {
-      focusVal,
-      placeholder,
-      add,
-      inputVal,
-      isDisabled,
-      isSize,
-      subtract,
-      onInput,
-      onChange,
-      onKeydown,
-      onBlur,
-      onFocus,
-    } = this;
-    const dInputNum = ['devui-input-number', isDisabled ? 'devui-input-disabled' : '', isSize];
-    return (
-      <div class={dInputNum}>
-        <div onBlur={onBlur} tabindex="1" class={['devui-control-buttons', focusVal.value]}>
-          <span onClick={add}><Icon size="12px" name="chevron-up"  ></Icon></span>
-          <span onClick={subtract}><Icon size="12px" name="chevron-down" ></Icon></span>
+    return () => (
+      <div class={wrapClass.value}>
+        <div onBlur={onBlur} class={controlButtonClass.value}>
+          <span onClick={onAdd}>
+            <Icon size="12px" name="chevron-up"></Icon>
+          </span>
+          <span onClick={onSubtract}>
+            <Icon size="12px" name="chevron-down"></Icon>
+          </span>
         </div>
-        <div class="devui-input-item">
+        <div class={inputWrapClass}>
           <input
             type="number"
-            value={inputVal}
-            placeholder={placeholder}
-            disabled={isDisabled}
-            class={['devui-input-style devui-input-box', focusVal.value]}
+            value={inputVal.value}
+            placeholder={props.placeholder}
+            disabled={disabled.value}
+            class={inputInnerClass.value}
             onInput={onInput}
             onChange={onChange}
             onFocus={onFocus}
