@@ -115,4 +115,26 @@ describe('d-popover', () => {
     expect(hide).toHaveBeenCalled();
     wrapper.unmount();
   });
+
+  it('popover disabled work', async () => {
+    let disabled = ref(false);
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DPopover content="default" trigger="hover" disabled={disabled.value}>
+            <d-button>default</d-button>
+          </DPopover>
+        );
+      },
+    });
+    await wrapper.find(buttonBaseClass).trigger('mouseenter');
+    const popoverContent = document.body.querySelector(popoverContentClass);
+    setTimeout(() => {
+      expect(popoverContent).toBeTruthy();
+    }, 150);
+    disabled = ref(true);
+    await nextTick();
+    expect(popoverContent).toBeFalsy();
+    wrapper.unmount();
+  });
 });
