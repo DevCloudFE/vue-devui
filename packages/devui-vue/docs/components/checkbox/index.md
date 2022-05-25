@@ -268,7 +268,7 @@ export default defineComponent({
 <template>
   <div>
     <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="values1" size="lg" is-show-title color="rgb(255, 193, 7)" text-color="#ccc">
+      <d-checkbox-group v-model="values1" size="lg" is-show-title color="rgb(255, 193, 7)">
         <d-checkbox-button v-for="item in options1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
       ></d-checkbox-group>
       <d-checkbox-group v-model="values1" style="margin-top: 10px;">
@@ -286,7 +286,6 @@ export default defineComponent({
       <d-checkbox-group v-model="values1" size="xs" disabled style="margin-top: 10px;">
         <d-checkbox-button v-for="item in options1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
       ></d-checkbox-group>
-      {{ values1 }}
     </div>
   </div>
 </template>
