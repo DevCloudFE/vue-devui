@@ -12,7 +12,7 @@ describe('checkbox-button', () => {
     const checked = ref(true);
     const wrapper = mount({
       components: { DCheckboxButton },
-      template: `<d-checkbox-button v-model:checked="checked" value="a">button</d-checkbox-button>`,
+      template: `<d-checkbox-button v-model="checked" value="a">button</d-checkbox-button>`,
       setup() {
         return {
           checked,
@@ -87,7 +87,7 @@ describe('checkbox-button', () => {
       components: { DCheckboxButton },
       template: `
         <d-checkbox-button
-          v-model:checked="checked"
+          v-model="checked"
           value="测试"
           @change="onChange"
           :before-change="beforeChange">

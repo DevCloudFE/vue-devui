@@ -268,7 +268,7 @@ export default defineComponent({
 <template>
   <div>
     <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="values1" size="lg" is-show-title color="rgb(255, 193, 7)">
+      <d-checkbox-group v-model="values1" size="lg" is-show-title color="rgb(255, 193, 7)" text-color="#ca3d3d">
         <d-checkbox-button
           v-for="item in options1"
           :label="item.label"
@@ -455,6 +455,7 @@ export default defineComponent({
 | before-change  | `Function`\|<br>`Promise<boolean>` |    --    | 可选，checkbox 切换前的回调函数，<br>返回 false 可以阻止 checkbox 切换 | [使用 CheckBoxGroup](#使用-checkboxgroup) |
 |      size      |  [ICheckboxSize](#icheckboxsize)   |    md    | 可选， checkbox 尺寸                                                   | [尺寸](#尺寸和边框)                       |
 |     border     |             `boolean`              |  false   | 可选， 是否有边框，只有在 border 属性存在时生效                        | [边框](#尺寸和边框)                       |
+|   text-color   |              `string`              |    --    | 可选， 按钮被选中的字体样式，只存在于按钮形态中                        | [按钮形态](#按钮形态)                     |
 
 ### CheckboxGroup 事件
 
