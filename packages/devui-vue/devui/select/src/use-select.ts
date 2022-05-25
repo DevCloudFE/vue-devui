@@ -164,7 +164,6 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
 
   const isUpdateSuccess = () => {
     isLoading.value = false;
-    console.log('success');
   };
   const handlerQueryFunc = (query: string) => {
     if (isFunction(props.filter)) {
