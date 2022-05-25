@@ -3,6 +3,8 @@ import { SELECT_TOKEN } from '../const';
 import { SelectContentProps, OptionObjectItem, UseSelectContentReturnType } from '../select-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { className } from '../utils';
+import { isFunction } from 'lodash';
+
 export default function useSelectContent(props: SelectContentProps): UseSelectContentReturnType {
   const ns = useNamespace('select');
   const select = inject(SELECT_TOKEN);
@@ -13,6 +15,13 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
   const isSelectDisable = computed<boolean>(() => !!select?.disabled);
   const isSupportCollapseTags = computed<boolean>(() => !!select?.collapseTags);
   const isSupportTagsTooltip = computed<boolean>(() => !!select?.collapseTagsTooltip);
+  const isReadOnly = computed<boolean>(() => {
+    if (select) {
+      return isFunction(select.filter) ? false : !(typeof select.filter === 'boolean' && select.filter);
+    } else {
+      return true;
+    }
+  });
 
   // 是否可清空
   const mergeClearable = computed<boolean>(() => {
@@ -61,6 +70,15 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     select?.onBlur(e);
   };
 
+  const queryFilter = (e: Event) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const query = (e.target as HTMLInputElement).value;
+    if (!isReadOnly.value && select?.debounceQueryFilter) {
+      select?.debounceQueryFilter(query);
+    }
+  };
+
   return {
     searchQuery,
     selectedData,
@@ -68,6 +86,7 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     isSupportCollapseTags,
     isSupportTagsTooltip,
     isDisabledTooltip,
+    isReadOnly,
     selectionCls,
     inputCls,
     placeholder,
@@ -76,5 +95,6 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     tagDelete,
     onFocus,
     onBlur,
+    queryFilter,
   };
 }

@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { reactive, ref, nextTick } from 'vue';
 import DCheckboxGroup from '../src/checkbox-group';
 import DCheckbox from '../src/checkbox';
+import DCheckboxButton from '../src/checkbox-button';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const ns = useNamespace('checkbox', true);
@@ -11,6 +12,9 @@ const listLineClass = ns.m('list-inline');
 const wrapClass = ns.e('wrap');
 const borderClass = ns.m('bordered');
 const sizeLgClass = ns.m('lg');
+
+const buttonNs = useNamespace('checkbox-button', true);
+const contentClass = buttonNs.e('content');
 
 const nsGroup = useNamespace('checkbox', false);
 const baseGroupClass = nsGroup.e('group');
@@ -271,5 +275,58 @@ describe('d-checkbox-group', () => {
 
     expect(wrapper.find(borderClass).exists()).toBe(true);
     expect(wrapper.find(sizeLgClass).exists()).toBe(true);
+  });
+
+  it('checkbox-group checkbox-button', async () => {
+    const list = ref(['b']);
+    const wrapper = mount({
+      components: {
+        DCheckboxGroup,
+        DCheckboxButton,
+      },
+      template: `
+        <d-checkbox-group v-model="list">
+          <d-checkbox-button value="a">1</d-checkbox-button>
+          <d-checkbox-button value="b">2</d-checkbox-button>
+        </d-checkbox-group>
+      `,
+      setup() {
+        return {
+          list,
+        };
+      },
+    });
+
+    const [label1, label2] = wrapper.findAll('label');
+
+    await label1.trigger('click');
+    expect(list.value).toStrictEqual(['b', 'a']);
+    await label2.trigger('click');
+    expect(list.value).toStrictEqual(['a']);
+  });
+
+  it('checkbox-button color text-color', async () => {
+    const list = ref(['a']);
+    const wrapper = mount({
+      components: {
+        DCheckboxGroup,
+        DCheckboxButton,
+      },
+      template: `
+        <d-checkbox-group v-model="list" color="red" text-color="rgb(204,204,204)">
+          <d-checkbox-button value="a">1</d-checkbox-button>
+          <d-checkbox-button value="b">2</d-checkbox-button>
+        </d-checkbox-group>
+      `,
+      setup() {
+        return {
+          list,
+        };
+      },
+    });
+
+    await nextTick();
+    const content = wrapper.findAll(contentClass);
+    expect(content[0].attributes().style).toBe('border-color: red; background-color: red; color: rgb(204, 204, 204);');
   });
 });

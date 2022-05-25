@@ -8,7 +8,8 @@
 
 ### 基本用法
 
-:::demo 通过`size`：`sm`，`md(默认)`，`lg`来设置`Select`大小，通过`overview`：`underlined`设置只有下边框样式
+通过`size`：`sm`，`md(默认)`，`lg`来设置`Select`大小，通过`overview`：`underlined`设置只有下边框样式
+:::demo
 
 ```vue
 <template>
@@ -58,7 +59,8 @@ export default defineComponent({
 
 ### 多选
 
-:::demo 通过`multiple`：`true`来开启多选
+通过`multiple`：`true`来开启多选
+:::demo
 
 ```vue
 <template>
@@ -103,7 +105,8 @@ export default defineComponent({
 
 ### 禁用
 
-:::demo 通过`disabled`：`true`来禁用`Select`，通过`option-disabled-key`来设置单个选项禁用，比如设置`disabled`字段，则对象上 disabled 为`true`时不可选择
+通过`disabled`：`true`来禁用`Select`，通过`option-disabled-key`来设置单个选项禁用，比如设置`disabled`字段，则对象上 disabled 为`true`时不可选择
+:::demo
 
 ```vue
 <template>
@@ -172,7 +175,8 @@ export default defineComponent({
 
 ### 可清空
 
-:::demo 通过`allow-clear`：`true`来设置`Select`可清空
+通过`allow-clear`：`true`来设置`Select`可清空
+:::demo
 
 ```vue
 <template>
@@ -205,7 +209,8 @@ export default defineComponent({
 
 ### 自定义下拉面板显示
 
-:::demo 通过 d-option 设置单个内容
+通过 d-option 设置单个内容
+:::demo
 
 ```vue
 <template>
@@ -266,9 +271,89 @@ export default defineComponent({
 
 :::
 
+### 筛选、搜索选项
+
+可以利用筛选、搜索功能快速查找选项
+
+添加 `filter` 属性开启筛选功能。传人值为 `true` 时，默认找出 `name` 属性包含输入值得选项。
+如果希望通过其它筛选逻辑，`filter` 可传入一个 `Function`, 输入值发生变化时调用，参数值为输入值和一个可选参数`callback`, 此 callback 主要作用是筛选完成后通知`select`组件。
+添加 `remote` 属性开启远程筛选功能。当为远程搜索时，`callback`参数会非常有用。
+:::demo
+
+```vue
+<template>
+  <div>默认筛选</div>
+  <d-select v-model="value1" :allow-clear="true" filter>
+    <d-option v-for="(item, index) in options.data" :key="index" :value="item.value" :name="item.name"></d-option>
+  </d-select>
+  <br />
+  <div>远程搜索</div>
+  <d-select v-model="value2" :allow-clear="true" :filter="filterFunc" remote>
+    <d-option v-for="(item, index) in options1.data" :key="index" :value="item.value" :name="item.name"></d-option>
+  </d-select>
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const value1 = ref('');
+    const value2 = ref('');
+    const items = new Array(6).fill(0).map((item, i) => {
+      return {
+        value: `Option ${i + 1}`,
+        name: `Option ${i + 1}`,
+      };
+    });
+    const options = reactive({
+      data: items,
+    });
+    const options1 = reactive({
+      data: [],
+    });
+    const filterFunc = (query, callback) => {
+      if (query) {
+        setTimeout(() => {
+          options1.data = items.filter((item) => {
+            return item.name.toLowerCase().includes(query.toLowerCase());
+          });
+        }, 200);
+        if (callback) {
+          callback();
+        }
+      } else {
+        options1.data = [];
+        if (callback) {
+          callback();
+        }
+      }
+    };
+    return {
+      value1,
+      value2,
+      options,
+      options1,
+      filterFunc,
+    };
+  },
+});
+</script>
+<style>
+.clear-float:after {
+  content: '';
+  display: block;
+  height: 0;
+  clear: both;
+}
+</style>
+```
+
+:::
+
 ### Select 参数
 
-| 参数名                | 类型      | 默认     | 说 明                                                                                                                                                          | 跳转 Demo             |
+| 参数名                | 类型      | 默认     | 说明                                                                                                                                                           | 跳转 Demo             |
 | :-------------------- | :-------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
 | options               | `array`   | []       | 可选, 和使用 option 子组件互斥，两者必须有且只有一个。                                                                                                         | [基本用法](#基本用法) |
 | multiple              | `boolean` | false    | 可选,是否支持多选                                                                                                                                              | [多选](#多选)         |

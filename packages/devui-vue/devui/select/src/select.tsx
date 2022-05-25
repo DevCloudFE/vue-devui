@@ -22,6 +22,7 @@ export default defineComponent({
       mergeOptions,
       inputValue,
       selectedOptions,
+      filterQuery,
       onClick,
       valueChange,
       handleClear,
@@ -29,6 +30,7 @@ export default defineComponent({
       tagDelete,
       onFocus,
       onBlur,
+      debounceQueryFilter,
     } = useSelect(props, ctx);
 
     const scrollbarNs = useNamespace('scrollbar');
@@ -45,13 +47,14 @@ export default defineComponent({
         ...toRefs(props),
         isOpen,
         selectedOptions,
-        emit: ctx.emit,
+        filterQuery,
         valueChange,
         handleClear,
         updateInjectOptions,
         tagDelete,
         onFocus,
         onBlur,
+        debounceQueryFilter,
       }) as SelectContext
     );
     return () => {

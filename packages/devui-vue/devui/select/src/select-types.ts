@@ -11,7 +11,7 @@ export type OptionItem = number | string | ({ value: string | number } & Partial
 export type Options = Array<OptionItem>;
 
 export type ModelValue = number | string | Array<number | string>;
-
+export type filterVale = boolean | ((query: string, callback?: () => void) => void);
 export const selectProps = {
   modelValue: {
     type: [String, Number, Array] as PropType<ModelValue>,
@@ -61,6 +61,14 @@ export const selectProps = {
     type: Boolean,
     default: false,
   },
+  filter: {
+    type: [Boolean, Function] as PropType<filterVale>,
+    default: false,
+  },
+  remote: {
+    type: Boolean,
+    default: false,
+  },
   onToggleChange: {
     type: Function as PropType<(bool: boolean) => void>,
     default: undefined,
@@ -83,6 +91,7 @@ export interface UseSelectReturnType {
   mergeOptions: ComputedRef<OptionObjectItem[]>;
   inputValue: ComputedRef<string>;
   selectedOptions: Ref<OptionObjectItem[]>;
+  filterQuery: Ref<string>;
   onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
   valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;
@@ -91,18 +100,20 @@ export interface UseSelectReturnType {
   tagDelete: (data: OptionObjectItem) => void;
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
+  debounceQueryFilter: (query: string) => void;
 }
 
 export interface SelectContext extends SelectProps {
   isOpen: boolean;
   selectedOptions: OptionObjectItem[];
-  emit: SetupContext['emit'];
+  filterQuery: string;
   valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;
   handleClear: () => void;
   updateInjectOptions: (item: Record<string, unknown>, operation: string) => void;
   tagDelete: (data: OptionObjectItem) => void;
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
+  debounceQueryFilter: (query: string) => void;
 }
 
 export const optionProps = {
@@ -125,6 +136,7 @@ export type OptionProps = ExtractPropTypes<typeof optionProps>;
 export interface UseOptionReturnType {
   currentName: ComputedRef<OptionModelValue>;
   selectOptionCls: ComputedRef<string>;
+  isVisible: ComputedRef<boolean>;
   optionSelect: () => void;
 }
 
@@ -144,6 +156,7 @@ export interface UseSelectContentReturnType {
   isSupportCollapseTags: ComputedRef<boolean>;
   isSupportTagsTooltip: ComputedRef<boolean>;
   isDisabledTooltip: ComputedRef<boolean>;
+  isReadOnly: ComputedRef<boolean>;
   selectionCls: ComputedRef<string>;
   inputCls: ComputedRef<string>;
   placeholder: ComputedRef<string>;
@@ -152,4 +165,5 @@ export interface UseSelectContentReturnType {
   tagDelete: (data: OptionObjectItem) => void;
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
+  queryFilter: (e: Event) => void;
 }

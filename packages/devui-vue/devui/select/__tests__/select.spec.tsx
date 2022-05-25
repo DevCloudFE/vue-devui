@@ -189,7 +189,6 @@ describe('select', () => {
     wrapper.unmount();
   });
 
-
   it('select multiple tag work', async () => {
     const value = ref([]);
     const options = reactive([1, 2, 'test']);
@@ -254,13 +253,9 @@ describe('select', () => {
     const options = reactive(list);
     const wrapper = mount({
       setup() {
-        return () => <DSelect
-          v-model={value.value}
-          options={options}
-          multiple={true}
-          collapseTags={true}
-          collapseTagsTooltip={true}
-        ></DSelect>;
+        return () => (
+          <DSelect v-model={value.value} options={options} multiple={true} collapseTags={true} collapseTagsTooltip={true}></DSelect>
+        );
       },
     });
     const container = wrapper.find('.devui-select');
@@ -275,7 +270,7 @@ describe('select', () => {
     expect(tags.length).toBe(2);
     await tags[1].trigger('mouseenter');
     setTimeout(() => {
-      const popoverContent = document.body.querySelector('devui-popover__content');
+      const popoverContent = document.body.querySelector('.devui-popover__content');
       expect(popoverContent).toBeTruthy();
       wrapper.unmount();
     }, 150);

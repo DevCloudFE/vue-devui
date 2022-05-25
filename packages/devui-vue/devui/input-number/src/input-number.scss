@@ -7,19 +7,19 @@
   line-height: 38px;
   margin-right: 12px;
 
-  &:hover:not(.#{$devui-prefix}-input-disabled) {
-    .#{$devui-prefix}-input-box {
+  &:hover:not(.#{$devui-prefix}-input-number--disabled) {
+    .#{$devui-prefix}-input-number__input-box {
       border-color: var(--devui-form-control-line-hover);
     }
 
-    .#{$devui-prefix}-control-buttons:not(.disabled) {
+    .#{$devui-prefix}-input-number__control-button:not(.disabled) {
       display: flex;
       border-color: var(--devui-form-control-line-hover);
     }
   }
 
   &:focus-within {
-    .#{$devui-prefix}-control-buttons {
+    .#{$devui-prefix}-input-number__control-button {
       display: flex;
     }
   }
@@ -29,55 +29,55 @@
     display: flex !important;
   }
 
-  &.#{$devui-prefix}-input-disabled {
+  &.#{$devui-prefix}-input-number--disabled {
     .#{$devui-prefix}-subtract,
     .#{$devui-prefix}-add,
-    .#{$devui-prefix}-input-style {
+    .#{$devui-prefix}-input-number__input-style {
       cursor: not-allowed;
       border-color: #e4e7ed;
       color: #e4e7ed;
     }
 
-    .#{$devui-prefix}-input-style {
+    .#{$devui-prefix}-input-number__input-style {
       border-color: var(--devui-disabled-line) !important;
       color: var(--devui-disabled-text) !important;
       background-color: var(--devui-disabled-bg) !important;
     }
   }
 
-  &.#{$devui-prefix}-input-number-sm {
+  &.#{$devui-prefix}-input-number--sm {
     width: 60px;
 
-    .#{$devui-prefix}-input-box {
+    .#{$devui-prefix}-input-number__input-box {
       height: 26px;
       line-height: 26px;
     }
   }
 
-  &.#{$devui-prefix}-input-number-md {
+  &.#{$devui-prefix}-input-number--md {
     width: 80px;
 
-    .#{$devui-prefix}-input-box {
+    .#{$devui-prefix}-input-number__input-box {
       height: 32px;
       line-height: 32px;
     }
   }
 
-  &.#{$devui-prefix}-input-number-lg {
+  &.#{$devui-prefix}-input-number--lg {
     width: 100px;
 
-    .#{$devui-prefix}-input-box {
+    .#{$devui-prefix}-input-number__input-box {
       height: 38px;
       line-height: 38px;
     }
   }
 
-  .#{$devui-prefix}-input-item {
+  .#{$devui-prefix}-input-number__input-wrap {
     line-height: 100%;
   }
 
-  .#{$devui-prefix}-input-style::-webkit-outer-spin-button,
-  .#{$devui-prefix}-input-style::-webkit-inner-spin-button {
+  .#{$devui-prefix}-input-number__input-style::-webkit-outer-spin-button,
+  .#{$devui-prefix}-input-number__input-style::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
@@ -108,12 +108,12 @@
     border-radius: 4px 0 0 4px;
   }
 
-  .#{$devui-prefix}-input-style {
+  .#{$devui-prefix}-input-number__input-style {
     display: block;
     -moz-appearance: textfield;
   }
 
-  .#{$devui-prefix}-input-style {
+  .#{$devui-prefix}-input-number__input-style {
     outline: none;
     background-color: var(--devui-base-bg);
     border: 1px solid var(--devui-form-control-line);
@@ -129,7 +129,7 @@
     transition: border-color 0.3s var(--devui-animation-ease-in-out-smooth);
   }
 
-  .#{$devui-prefix}-input-box {
+  .#{$devui-prefix}-input-number__input-box {
     box-sizing: border-box;
     padding: 4px 8px;
     font-size: var(--devui-font-size);
@@ -153,7 +153,7 @@
     cursor: not-allowed;
   }
 
-  .#{$devui-prefix}-control-buttons {
+  .#{$devui-prefix}-input-number__control-button {
     display: none;
     position: absolute;
     right: 0;

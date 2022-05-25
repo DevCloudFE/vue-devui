@@ -48,12 +48,17 @@ export function usePopover(
 }
 
 export function usePopoverEvent(props: PopoverProps, visible: Ref<boolean>, origin: Ref): UsePopoverEvent {
-  const { trigger, position, mouseEnterDelay, mouseLeaveDelay } = toRefs(props);
+  const { trigger, position, mouseEnterDelay, mouseLeaveDelay, disabled } = toRefs(props);
   const isClick: ComputedRef<boolean> = computed(() => trigger.value === 'click');
   const placement: Ref<string> = ref(position.value[0].split('-')[0]);
   const isEnter: Ref<boolean> = ref(false);
 
-  const onClick = () => isClick.value && (visible.value = !visible.value);
+  const onClick = () => {
+    if (disabled.value) {
+      return;
+    }
+    isClick.value && (visible.value = !visible.value);
+  };
   const enter = debounce(() => {
     isEnter.value && (visible.value = true);
   }, mouseEnterDelay.value);
@@ -61,6 +66,9 @@ export function usePopoverEvent(props: PopoverProps, visible: Ref<boolean>, orig
     !isEnter.value && (visible.value = false);
   }, mouseLeaveDelay.value);
   const onMouseenter = () => {
+    if (disabled.value) {
+      return;
+    }
     if (!isClick.value) {
       isEnter.value = true;
       enter();
@@ -72,6 +80,15 @@ export function usePopoverEvent(props: PopoverProps, visible: Ref<boolean>, orig
       leave();
     }
   };
+  const quickLeave = () => {
+    isEnter.value = false;
+    visible.value = false;
+  };
+  watch(disabled, (newVal) => {
+    if (newVal && visible.value) {
+      quickLeave();
+    }
+  });
   const handlePositionChange: (pos: string) => void = (pos: string) => {
     placement.value = pos.split('-')[0];
   };

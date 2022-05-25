@@ -21,6 +21,7 @@ export default defineComponent({
       isSupportCollapseTags,
       isSupportTagsTooltip,
       isDisabledTooltip,
+      isReadOnly,
       selectionCls,
       inputCls,
       placeholder,
@@ -29,6 +30,7 @@ export default defineComponent({
       tagDelete,
       onFocus,
       onBlur,
+      queryFilter,
     } = useSelectContent(props);
 
     return () => {
@@ -89,12 +91,14 @@ export default defineComponent({
               )}
               <div class={multipleInputCls}>
                 <input
+                  ref="input"
                   value={searchQuery.value}
                   type="text"
                   class={inputCls.value}
                   placeholder={placeholder.value}
-                  readonly
+                  readonly={isReadOnly.value}
                   disabled={isSelectDisable.value}
+                  onInput={queryFilter}
                   onFocus={onFocus}
                   onBlur={onBlur}
                 />
@@ -102,14 +106,16 @@ export default defineComponent({
             </div>
           ) : (
             <input
+              ref="input"
               value={props.value}
               type="text"
               class={inputCls.value}
               placeholder={placeholder.value}
-              readonly
+              readonly={isReadOnly.value}
               disabled={isSelectDisable.value}
               onFocus={onFocus}
               onBlur={onBlur}
+              onInput={queryFilter}
             />
           )}
           <span onClick={handleClear} class={clearCls}>

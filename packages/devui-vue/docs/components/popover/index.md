@@ -31,6 +31,9 @@
     <d-popover content="no-animation!" :show-animation="false" style="max-width: 100px">
       <d-button>no-animation</d-button>
     </d-popover>
+    <d-popover content="disabled" disabled>
+      <d-button>disabled</d-button>
+    </d-popover>
   </div>
 </template>
 <style>
@@ -311,6 +314,7 @@ function hideFun() {
 | show-animation    | `boolean`                                   | true       | 可选，是否显示动画                                                                            | [基本用法](#基本用法)     |
 | mouse-enter-delay | `number`                                    | 150        | 可选，仅在 trigger 为 hover 的时候，设置鼠标移入后延时多久才显示 Popover，单位是 `ms`         | [延时触发](#延时触发)     |
 | mouse-leave-delay | `number`                                    | 100        | 可选，仅在 trigger 为 hover 的时候，设置鼠标移出后延时多久才隐藏 popover，单位是 `ms`         | [延时触发](#延时触发)     |
+| disabled          | `boolean`                                   | false      | 可选，Popover 是否可用                                                                        | [基本用法](#基本用法)     |
 
 ### Popover 插槽
 

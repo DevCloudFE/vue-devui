@@ -5,6 +5,7 @@ import { className, KeyType } from './utils';
 import useCacheOptions from './composables/use-cache-options';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { onClickOutside } from '@vueuse/core';
+import { isFunction, debounce } from 'lodash';
 
 export default function useSelect(props: SelectProps, ctx: SetupContext): UseSelectReturnType {
   const ns = useNamespace('select');
@@ -161,6 +162,29 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     ctx.emit('blur', e);
   };
 
+  const filterQuery = ref('');
+  const queryChange = (query: string) => {
+    filterQuery.value = query;
+  };
+
+  const isLoading = ref(false);
+  const debounceTime = computed(() => (props.remote ? 300 : 0));
+
+  const isUpdateSuccess = () => {
+    isLoading.value = false;
+  };
+  const handlerQueryFunc = (query: string) => {
+    if (isFunction(props.filter)) {
+      props.filter(query, isUpdateSuccess);
+    } else {
+      queryChange(query);
+    }
+  };
+
+  const debounceQueryFilter = debounce((query: string) => {
+    handlerQueryFunc(query);
+  }, debounceTime.value);
+
   return {
     containerRef,
     dropdownRef,
@@ -169,6 +193,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     mergeOptions,
     inputValue,
     selectedOptions,
+    filterQuery,
     onClick,
     handleClear,
     valueChange,
@@ -177,5 +202,6 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     tagDelete,
     onFocus,
     onBlur,
+    debounceQueryFilter,
   };
 }
