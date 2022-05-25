@@ -22,11 +22,13 @@ export default defineComponent({
       mergeOptions,
       inputValue,
       selectedOptions,
+      filterQuery,
       onClick,
       valueChange,
       handleClear,
       updateInjectOptions,
-      tagDelete
+      tagDelete,
+      debounceQueryFilter,
     } = useSelect(props, ctx);
 
     const scrollbarNs = useNamespace('scrollbar');
@@ -43,11 +45,12 @@ export default defineComponent({
         ...toRefs(props),
         isOpen,
         selectedOptions,
-        emit: ctx.emit,
+        filterQuery,
         valueChange,
         handleClear,
         updateInjectOptions,
-        tagDelete
+        tagDelete,
+        debounceQueryFilter,
       }) as SelectContext
     );
     return () => {
@@ -57,14 +60,14 @@ export default defineComponent({
           <Transition name="fade" ref={dropdownRef}>
             <div v-show={isOpen.value} class={dropdownCls}>
               <ul class={listCls}>
-                {ctx.slots?.default ? ctx.slots.default()
+                {ctx.slots?.default
+                  ? ctx.slots.default()
                   : mergeOptions.value.map((item, i) => (
                     <Option
                       key={i}
                       value={item.value}
                       name={item.name}
-                      disabled={props.optionDisabledKey ? !!item[props.optionDisabledKey] : false}
-                    >
+                      disabled={props.optionDisabledKey ? !!item[props.optionDisabledKey] : false}>
                       {props.multiple ? (
                         <Checkbox
                           modelValue={item._checked}
@@ -75,8 +78,7 @@ export default defineComponent({
                         item.name || item.value
                       )}
                     </Option>
-                  ))
-                }
+                  ))}
               </ul>
             </div>
           </Transition>

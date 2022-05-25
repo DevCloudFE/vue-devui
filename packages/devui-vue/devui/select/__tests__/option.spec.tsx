@@ -5,25 +5,22 @@ import DOption from '../src/components/option';
 describe('option', () => {
   it('select customize option work', async () => {
     const value = ref('');
-    const items = new Array(6).fill(0).map((item, i) =>{
+    const items = new Array(6).fill(0).map((item, i) => {
       return {
         value: `Option ${i + 1}`,
-        name: `Option ${i + 1}`
+        name: `Option ${i + 1}`,
       };
     });
     const options = ref(items);
     const wrapper = mount({
       setup() {
-        return () => <DSelect v-model={value.value} allow-clear={true}>
-          {options.value.map((item, i) => (
-            <DOption
-              key={i}
-              value={item.value}
-              name={item.name}
-            >
-            </DOption>
-          ))}
-        </DSelect>;
+        return () => (
+          <DSelect v-model={value.value} allow-clear={true}>
+            {options.value.map((item, i) => (
+              <DOption key={i} value={item.value} name={item.name}></DOption>
+            ))}
+          </DSelect>
+        );
       },
     });
 
@@ -49,21 +46,19 @@ describe('option', () => {
   });
   it('option items data changed work', async () => {
     const value = ref('');
-    const items = new Array(6).fill(0).map((item, i) => `Option ${i +1}`);
+    const items = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
     const options = reactive({
-      data: items
+      data: items,
     });
     const wrapper = mount({
       setup() {
-        return () => <DSelect v-model={value.value} allow-clear={true}>
-          {options.data.map((item, i) => (
-            <DOption
-              key={i}
-              value={item}
-            >
-            </DOption>
-          ))}
-        </DSelect>;
+        return () => (
+          <DSelect v-model={value.value} allow-clear={true}>
+            {options.data.map((item, i) => (
+              <DOption key={i} value={item}></DOption>
+            ))}
+          </DSelect>
+        );
       },
     });
     const container = wrapper.find('.devui-select');
@@ -75,7 +70,7 @@ describe('option', () => {
     await listItems[2].trigger('click');
     expect(value.value).toBe('Option 3');
 
-    options.data = new Array(3).fill(0).map((item, i) => `Test ${i +1}`);
+    options.data = new Array(3).fill(0).map((item, i) => `Test ${i + 1}`);
     await nextTick();
     listItems = wrapper.findAll('.devui-select__item');
     expect(listItems.length).toBe(3);
@@ -87,25 +82,21 @@ describe('option', () => {
     const value = ref('');
     const items = new Array(6).fill(0).map((item, i) => {
       return {
-        name: `Option ${i +1}`,
-        value: `Option ${i +1}`,
-        disabled:  i % 2 ===  0
+        name: `Option ${i + 1}`,
+        value: `Option ${i + 1}`,
+        disabled: i % 2 === 0,
       };
     });
     const options = reactive(items);
     const wrapper = mount({
       setup() {
-        return () => <DSelect v-model={value.value} allow-clear={true}>
-          {options.map((item, i) => (
-            <DOption
-              key={i}
-              value={item.value}
-              name={item.name}
-              disabled={item.disabled}
-            >
-            </DOption>
-          ))}
-        </DSelect>;
+        return () => (
+          <DSelect v-model={value.value} allow-clear={true}>
+            {options.map((item, i) => (
+              <DOption key={i} value={item.value} name={item.name} disabled={item.disabled}></DOption>
+            ))}
+          </DSelect>
+        );
       },
     });
     const container = wrapper.find('.devui-select');

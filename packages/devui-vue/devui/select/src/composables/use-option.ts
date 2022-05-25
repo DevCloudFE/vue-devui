@@ -1,6 +1,6 @@
 import { computed, inject, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { OptionProps, UseOptionReturnType } from '../select-types';
-import { SELECT_TOKEN } from '../const';
+import { SELECT_TOKEN, escapeStringRegexp } from '../const';
 import { className } from '../utils';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 export default function useOption(props: OptionProps): UseOptionReturnType {
@@ -25,7 +25,7 @@ export default function useOption(props: OptionProps): UseOptionReturnType {
     return {
       name: props.name || props.value + '' || '',
       value: props.value,
-      _checked: false
+      _checked: false,
     };
   });
 
@@ -44,6 +44,16 @@ export default function useOption(props: OptionProps): UseOptionReturnType {
     }
   };
 
+  const isVisible = computed(() => {
+    if (select?.filterQuery) {
+      const reg = new RegExp(escapeStringRegexp(select?.filterQuery), 'i');
+      console.log(reg.test(currentName.value + ''));
+      return reg.test(currentName.value + '');
+    } else {
+      return true;
+    }
+  });
+
   onBeforeMount(() => {
     select?.updateInjectOptions(optionItem.value, 'add');
   });
@@ -52,20 +62,24 @@ export default function useOption(props: OptionProps): UseOptionReturnType {
   watch(
     () => props.value,
     (newVal, oldVal) => {
-      select?.updateInjectOptions({
-        value: oldVal,
-      }, 'delete');
+      select?.updateInjectOptions(
+        {
+          value: oldVal,
+        },
+        'delete'
+      );
       select?.updateInjectOptions(optionItem.value, 'add');
     }
   );
 
-  onBeforeUnmount(() =>{
+  onBeforeUnmount(() => {
     select?.updateInjectOptions(optionItem.value, 'delete');
   });
 
   return {
     currentName,
     selectOptionCls,
+    isVisible,
     optionSelect,
   };
 }
