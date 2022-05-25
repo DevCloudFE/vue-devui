@@ -1,5 +1,12 @@
 import { computed, inject, SetupContext, toRef, provide } from 'vue';
-import { CheckboxProps, UseCheckboxFn, checkboxGroupInjectionKey, CheckboxGroupProps, UseCheckboxGroupFn } from './checkbox-types';
+import {
+  CheckboxProps,
+  UseCheckboxFn,
+  checkboxGroupInjectionKey,
+  CheckboxGroupProps,
+  UseCheckboxGroupFn,
+  UseCheckboxButtonFn,
+} from './checkbox-types';
 
 export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckboxFn {
   const checkboxGroupConf = inject(checkboxGroupInjectionKey, null);
@@ -27,7 +34,7 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
   const itemWidth = checkboxGroupConf?.itemWidth.value;
   const direction = checkboxGroupConf?.direction.value;
 
-  const canChange = (checked: boolean, val: string) => {
+  const canChange = (checked: boolean, val: string | undefined) => {
     if (mergedDisabled.value) {
       return Promise.resolve(false);
     }
@@ -78,9 +85,9 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
     showAnimation: true,
     disabled: false,
   };
-  const toggleGroupVal = (val: string) => {
+  const toggleGroupVal = (val: string | number) => {
     let index = -1;
-    if (typeof valList.value[0] === 'string') {
+    if (['string', 'number'].includes(typeof valList.value[0])) {
       index = valList.value.findIndex((item) => item === val);
     } else if (typeof valList.value[0] === 'object') {
       index = valList.value.findIndex((item) => item.value === val);
@@ -103,8 +110,8 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
     ctx.emit('update:modelValue', valList.value);
     ctx.emit('change', valList.value);
   };
-  const isItemChecked = (itemVal: string) => {
-    if (typeof valList.value[0] === 'string') {
+  const isItemChecked = (itemVal: string | number) => {
+    if (['string', 'number'].includes(typeof valList.value[0])) {
       return valList.value.includes(itemVal);
     } else if (typeof valList.value[0] === 'object') {
       return valList.value.some((item) => item.value === itemVal);
@@ -125,6 +132,18 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
     border: toRef(props, 'border'),
     max: toRef(props, 'max'),
     modelValue: toRef(props, 'modelValue'),
+    textColor: toRef(props, 'textColor'),
   });
   return { defaultOpt };
+}
+
+export function useCheckboxButton(): UseCheckboxButtonFn {
+  const checkboxGroupConf = inject(checkboxGroupInjectionKey, null);
+  const mergedTextColor = computed(() => {
+    return checkboxGroupConf?.textColor.value ?? undefined;
+  });
+
+  return {
+    mergedTextColor,
+  };
 }

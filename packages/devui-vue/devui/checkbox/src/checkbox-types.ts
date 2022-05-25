@@ -32,7 +32,7 @@ const commonProps = {
     default: false,
   },
   beforeChange: {
-    type: Function as PropType<(isChecked: boolean, v: string) => boolean | Promise<boolean>>,
+    type: Function as PropType<(isChecked: boolean, v: string | undefined) => boolean | Promise<boolean>>,
     default: undefined,
   },
   size: {
@@ -48,8 +48,7 @@ export const checkboxProps = {
     default: false,
   },
   value: {
-    type: String,
-    default: ''
+    type: [Number, String] as PropType<string | number>,
   },
   label: {
     type: String,
@@ -80,7 +79,7 @@ export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>;
 export const checkboxGroupProps = {
   ...commonProps,
   modelValue: {
-    type: Array as PropType<string[]>,
+    type: Array as PropType<(string | number)[]>,
     required: true,
   },
   direction: {
@@ -111,6 +110,10 @@ export const checkboxGroupProps = {
     type: Number,
     default: undefined,
   },
+  textColor: {
+    type: String,
+    default: '',
+  },
 } as const;
 
 export type CheckboxGroupProps = ExtractPropTypes<typeof checkboxGroupProps>;
@@ -120,15 +123,16 @@ interface checkboxGroupInjection {
   isShowTitle: Ref<boolean>;
   color: Ref<string | undefined>;
   showAnimation: Ref<boolean>;
-  beforeChange: undefined | ((isChecked: boolean, v: string) => boolean | Promise<boolean>);
-  toggleGroupVal: (v: string | undefined) => void;
-  isItemChecked: (v: string | undefined) => boolean;
+  beforeChange: undefined | ((isChecked: boolean, v: string | undefined) => boolean | Promise<boolean>);
+  toggleGroupVal: (v: string | number | undefined) => void;
+  isItemChecked: (v: string | number | undefined) => boolean;
   itemWidth: Ref<number | undefined>;
   direction: Ref<Direction>;
   size: Ref<string>;
   border: Ref<boolean>;
   max: Ref<number | undefined>;
-  modelValue: Ref<string[]>;
+  modelValue: Ref<(string | number)[]>;
+  textColor: Ref<string>;
 }
 
 export const checkboxGroupInjectionKey: InjectionKey<checkboxGroupInjection> = Symbol('d-checkbox-group');
@@ -153,6 +157,11 @@ export interface GroupDefaultOpt {
   showAnimation: boolean;
   disabled: boolean;
 }
+
 export type UseCheckboxGroupFn = {
   defaultOpt: GroupDefaultOpt;
+};
+
+export type UseCheckboxButtonFn = {
+  mergedTextColor: ComputedRef<string | undefined>;
 };
