@@ -1,18 +1,18 @@
-import type { ComputedRef, ExtractPropTypes, PropType, Slot } from 'vue';
+import type { ExtractPropTypes, PropType, Slot } from 'vue';
 
 export type Active = string | number | null;
 
 export type ITabsType = 'tabs' | 'pills' | 'options' | 'wrapped' | 'slider';
 
-export interface Tabs {
-  state: TabsState;
-}
-
 export interface TabsState {
   data?: any[];
   showContent: boolean;
-  active: string;
+  active: string | number;
   slots: Slot[];
+}
+
+export interface TabsData {
+  state: TabsState;
 }
 
 export const tabsProps = {
@@ -52,7 +52,3 @@ export const tabsProps = {
 } as const;
 
 export type TabsProps = ExtractPropTypes<typeof tabsProps>;
-
-export interface UseTabsRender {
-  ulClasses: ComputedRef<Record<string, boolean>>;
-}
