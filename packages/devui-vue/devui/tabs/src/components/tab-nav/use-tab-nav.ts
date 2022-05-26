@@ -1,12 +1,12 @@
 import { computed, toRefs } from 'vue';
 import type { EmitsOptions, SetupContext, ShallowRef } from 'vue';
 import { TabsProps, Active, TabsData } from '../../tabs-types';
-import { UseTabRender, OffSetData, UseTabFunction } from './tab-nav-types';
+import { UseTabNavRender, OffSetData, UseTabNavFunction } from './tab-nav-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
 const ns = useNamespace('tabs');
 
-export function useTabRender(props: TabsProps): UseTabRender {
+export function useTabNavRender(props: TabsProps): UseTabNavRender {
   const { cssClass, vertical } = toRefs(props);
 
   const ulClasses = computed(() => ({
@@ -19,13 +19,13 @@ export function useTabRender(props: TabsProps): UseTabRender {
   return { ulClasses };
 }
 
-export function useTabFunction(
+export function useTabNavFunction(
   props: TabsProps,
   tabs: TabsData | undefined,
   data: OffSetData,
   ctx: SetupContext<EmitsOptions>,
   tabsEle: ShallowRef<HTMLUListElement | undefined>
-): UseTabFunction {
+): UseTabNavFunction {
   const canChange = function (currentTab: Active) {
     let changeResult = Promise.resolve(true);
     if (typeof props.beforeChange === 'function') {

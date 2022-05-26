@@ -1,7 +1,7 @@
 import { defineComponent, inject, onBeforeMount, onMounted, onUpdated, reactive, ref, SetupContext, shallowRef } from 'vue';
 import { TabsData, tabsProps, TabsProps } from '../../tabs-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
-import { useTabRender, useTabFunction } from './use-tab-nav';
+import { useTabNavRender, useTabNavFunction } from './use-tab-nav';
 import './tab-nav.scss';
 import { OffSetData } from './tab-nav-types';
 
@@ -14,8 +14,8 @@ export default defineComponent({
     const tabsEle = shallowRef<HTMLUListElement>();
     const data: OffSetData = reactive({ offsetLeft: 0, offsetWidth: 0, id: null });
     const tabs = inject<TabsData>('tabs');
-    const { ulClasses } = useTabRender(props);
-    const { activeClick } = useTabFunction(props, tabs, data, ctx, tabsEle);
+    const { ulClasses } = useTabNavRender(props);
+    const { activeClick } = useTabNavFunction(props, tabs, data, ctx, tabsEle);
 
     onUpdated(() => {
       if (props.type === 'slider') {
