@@ -11,7 +11,6 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
 
   const searchQuery = ref('');
   const selectedData = computed<OptionObjectItem[]>(() => {
-    console.log(select?.selectedOptions);
     return select?.selectedOptions || [];
   });
 
