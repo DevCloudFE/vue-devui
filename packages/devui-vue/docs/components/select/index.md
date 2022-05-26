@@ -279,7 +279,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>默认筛选</div>
-  <d-select v-model="value1" :allow-clear="true" filter>
+  <d-select v-model="value1" :options="options.data" :allow-clear="true" filter>
     <d-option v-for="(item, index) in options.data" :key="index" :value="item.value" :name="item.name"></d-option>
   </d-select>
   <br />
@@ -335,14 +335,36 @@ export default defineComponent({
   },
 });
 </script>
-<style>
-.clear-float:after {
-  content: '';
-  display: block;
-  height: 0;
-  clear: both;
-}
-</style>
+```
+
+:::
+
+### 新增选项
+
+添加 `allow-create` 属性开启新增选项功能。为了使 `allow-create` 正确的工作，`filter` 的值必须为 `true`。
+
+:::demo
+
+```vue
+<template>
+  <d-select v-model="value" :options="options" :allow-clear="true" multiple filter allow-create> </d-select>
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive(list);
+    return {
+      value,
+      options,
+    };
+  },
+});
+</script>
 ```
 
 :::
@@ -363,6 +385,7 @@ export default defineComponent({
 | collapse-tags-tooltip | `boolean`             | false    | 可选, 配置是否启用鼠标悬停折叠文字以显示具体所选值                                                                                                             | [多选](#多选)                     |
 | filter                | `boolean \| function` | false    | 可选, 配置是否开启筛选功能；配置为函数，为自定义搜索过滤方法值                                                                                                 | [筛选、搜索选项](#筛选、搜索选项) |
 | remote                | `boolean`             | false    | 可选, 配置是否启用远程搜索，配合 filter 函数使用值                                                                                                             | [筛选、搜索选项](#筛选、搜索选项) |
+| allow-create          | `boolean`             | false    | 可选, 配置是否启用新增选项，配合 filter 为 true 时使用值                                                                                                       | [新增选项](#新增选项)             |
 
 ### Select 事件
 

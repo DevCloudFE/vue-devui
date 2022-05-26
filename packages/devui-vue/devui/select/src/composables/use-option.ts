@@ -1,6 +1,6 @@
 import { computed, inject, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { OptionProps, UseOptionReturnType } from '../select-types';
-import { SELECT_TOKEN, escapeStringRegexp } from '../const';
+import { SELECT_TOKEN } from '../const';
 import { className } from '../utils';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 export default function useOption(props: OptionProps): UseOptionReturnType {
@@ -25,6 +25,7 @@ export default function useOption(props: OptionProps): UseOptionReturnType {
     return {
       name: props.name || props.value + '' || '',
       value: props.value,
+      create: props.create,
       _checked: false,
     };
   });
@@ -56,20 +57,6 @@ export default function useOption(props: OptionProps): UseOptionReturnType {
   onBeforeMount(() => {
     select?.updateInjectOptions(optionItem.value, 'add');
   });
-
-  // watch  监听props.value，去除旧的option，添加新的option
-  watch(
-    () => props.value,
-    (newVal, oldVal) => {
-      select?.updateInjectOptions(
-        {
-          value: oldVal,
-        },
-        'delete'
-      );
-      select?.updateInjectOptions(optionItem.value, 'add');
-    }
-  );
 
   onBeforeUnmount(() => {
     select?.updateInjectOptions(optionItem.value, 'delete');

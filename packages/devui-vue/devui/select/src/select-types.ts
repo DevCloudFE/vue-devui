@@ -69,6 +69,10 @@ export const selectProps = {
     type: Boolean,
     default: false,
   },
+  allowCreate: {
+    type: Boolean,
+    default: false,
+  },
   onToggleChange: {
     type: Function as PropType<(bool: boolean) => void>,
     default: undefined,
@@ -85,6 +89,7 @@ export type OptionModelValue = number | string;
 
 export interface UseSelectReturnType {
   containerRef: Ref<HTMLElement | undefined>;
+  selectRef: Ref<HTMLElement | undefined>;
   dropdownRef: Ref<HTMLElement | undefined>;
   isOpen: Ref<boolean>;
   selectCls: ComputedRef<string>;
@@ -101,6 +106,7 @@ export interface UseSelectReturnType {
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
   debounceQueryFilter: (query: string) => void;
+  isShowCreateOption: ComputedRef<boolean>;
 }
 
 export interface SelectContext extends SelectProps {
@@ -126,6 +132,10 @@ export const optionProps = {
     default: '',
   },
   disabled: {
+    type: Boolean,
+    default: false,
+  },
+  create: {
     type: Boolean,
     default: false,
   },
