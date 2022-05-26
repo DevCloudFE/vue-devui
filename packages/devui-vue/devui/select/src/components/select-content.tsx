@@ -27,6 +27,8 @@ export default defineComponent({
       isMultiple,
       handleClear,
       tagDelete,
+      onFocus,
+      onBlur,
       queryFilter,
     } = useSelectContent(props);
 
@@ -94,6 +96,8 @@ export default defineComponent({
                   readonly={isReadOnly.value}
                   disabled={isSelectDisable.value}
                   onInput={queryFilter}
+                  onFocus={onFocus}
+                  onBlur={onBlur}
                 />
               </div>
             </div>
@@ -106,6 +110,8 @@ export default defineComponent({
               placeholder={placeholder.value}
               readonly={isReadOnly.value}
               disabled={isSelectDisable.value}
+              onFocus={onFocus}
+              onBlur={onBlur}
               onInput={queryFilter}
             />
           )}
