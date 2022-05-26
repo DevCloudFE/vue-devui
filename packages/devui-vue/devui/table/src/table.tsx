@@ -38,6 +38,9 @@ export default defineComponent({
       getCheckedRows() {
         return store.getCheckedRows();
       },
+      expandAllRows() {
+        store.expandAllRows();
+      },
     });
 
     onMounted(async () => {
