@@ -59,6 +59,10 @@ export const popoverProps = {
     type: Number,
     default: 100,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 };
 
 export type PopoverProps = ExtractPropTypes<typeof popoverProps>;

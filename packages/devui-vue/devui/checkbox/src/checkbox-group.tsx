@@ -1,105 +1,51 @@
-import { defineComponent, ExtractPropTypes, provide, toRef } from 'vue';
-import { checkboxGroupProps, checkboxGroupInjectionKey } from './checkbox-types';
+import { defineComponent, SetupContext } from 'vue';
+import { checkboxGroupProps, CheckboxGroupProps } from './checkbox-types';
 import DCheckbox from './checkbox';
 import './checkbox-group.scss';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useCheckboxGroup } from './use-checkbox';
 
 export default defineComponent({
   name: 'DCheckboxGroup',
   props: checkboxGroupProps,
   emits: ['change', 'update:modelValue'],
-  setup(props: ExtractPropTypes<typeof checkboxGroupProps>, ctx) {
-    const valList = toRef(props, 'modelValue');
+  setup(props: CheckboxGroupProps, ctx: SetupContext) {
     const ns = useNamespace('checkbox');
+    const { defaultOpt } = useCheckboxGroup(props, ctx);
 
-    const defaultOpt = {
-      checked: false,
-      isShowTitle: true,
-      halfChecked: false,
-      showAnimation: true,
-      disabled: false,
-    };
-    const toggleGroupVal = (val: string) => {
-      let index = -1;
-      if (typeof valList.value[0] === 'string') {
-        index = valList.value.findIndex((item) => item === val);
-      } else if (typeof valList.value[0] === 'object') {
-        index = valList.value.findIndex((item) => item.value === val);
-      }
+    return () => {
+      let children = ctx.slots.default?.();
+      const getContent = () => {
+        if (children) {
+          return children;
+        } else {
+          if (props.options?.length > 0) {
+            children = props.options.map((opt) => {
+              let mergedOpt = null;
+              if (typeof opt === 'string') {
+                mergedOpt = Object.assign({}, defaultOpt, {
+                  label: opt,
+                  value: opt,
+                });
+              } else if (typeof opt === 'object') {
+                mergedOpt = Object.assign({}, defaultOpt, {
+                  ...opt,
+                  label: opt.name,
+                });
+              }
 
-      if (index === -1) {
-        if (typeof props.options[0] === 'object') {
-          const newOne = props.options.find((item) => item.value === val);
-          const res = [...valList.value, newOne];
-          ctx.emit('update:modelValue', res);
-          ctx.emit('change', res);
-          return;
+              return <DCheckbox {...mergedOpt}></DCheckbox>;
+            });
+          }
+          return children;
         }
-        const res = [...valList.value, val];
-        ctx.emit('update:modelValue', res);
-        ctx.emit('change', res);
-        return;
-      }
-      valList.value.splice(index, 1);
-      ctx.emit('update:modelValue', valList.value);
-      ctx.emit('change', valList.value);
+      };
+
+      return (
+        <div class={ns.e('group')}>
+          <div class={{ [ns.m('list-inline')]: props.direction === 'row' }}>{getContent()}</div>
+        </div>
+      );
     };
-    const isItemChecked = (itemVal: string) => {
-      if (typeof valList.value[0] === 'string') {
-        return valList.value.includes(itemVal);
-      } else if (typeof valList.value[0] === 'object') {
-        return valList.value.some((item) => item.value === itemVal);
-      }
-    };
-
-    provide(checkboxGroupInjectionKey, {
-      disabled: toRef(props, 'disabled'),
-      isShowTitle: toRef(props, 'isShowTitle'),
-      color: toRef(props, 'color'),
-      showAnimation: toRef(props, 'showAnimation'),
-      beforeChange: props.beforeChange,
-      isItemChecked,
-      toggleGroupVal,
-      itemWidth: toRef(props, 'itemWidth'),
-      direction: toRef(props, 'direction'),
-      size: toRef(props, 'size'),
-      border: toRef(props, 'border'),
-      max: toRef(props, 'max'),
-      modelValue: toRef(props, 'modelValue'),
-    });
-
-    return {
-      defaultOpt,
-      ns,
-    };
-  },
-  render() {
-    const { direction, $slots, defaultOpt, options, ns } = this;
-    let children = $slots.default?.();
-
-    if (options?.length > 0) {
-      children = options.map((opt) => {
-        let mergedOpt = null;
-        if (typeof opt === 'string') {
-          mergedOpt = Object.assign({}, defaultOpt, {
-            label: opt,
-            value: opt,
-          });
-        } else if (typeof opt === 'object') {
-          mergedOpt = Object.assign({}, defaultOpt, {
-            ...opt,
-            label: opt.name,
-          });
-        }
-
-        return <DCheckbox {...mergedOpt}></DCheckbox>;
-      });
-    }
-
-    return (
-      <div class={ns.e('group')}>
-        <div class={{ [ns.m('list-inline')]: direction === 'row' }}>{children}</div>
-      </div>
-    );
   },
 });

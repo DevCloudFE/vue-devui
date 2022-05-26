@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, reactive, ref } from 'vue';
+import { defineComponent, onMounted, ref, watch } from 'vue';
 import { RateProps, rateProps } from './rate-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './rate.scss';
@@ -8,13 +8,13 @@ export default defineComponent({
   props: rateProps,
   emits: ['change', 'update:modelValue'],
   setup(props: RateProps, ctx) {
-    const totalLevelArray = reactive<{ width: string }[]>([]);
+    const totalLevelArray = ref<{ width: string }[]>([]);
     const chooseValue = ref(0);
 
     // 根据mouseMove，mouseLeave,select等操作，改变颜色与是否选中
     const setChange = (start: number, end: number, width: string) => {
       for (let i = start; i < end; i++) {
-        totalLevelArray[i]['width'] = width;
+        totalLevelArray.value[i]['width'] = width;
       }
     };
 
@@ -26,17 +26,27 @@ export default defineComponent({
       setChange(0, intCurrentLevel, '100%');
 
       if (halfStar > 0) {
-        totalLevelArray[intCurrentLevel]['width'] = halfStar * 100 + '%';
+        totalLevelArray.value[intCurrentLevel]['width'] = halfStar * 100 + '%';
         setChange(intCurrentLevel + 1, props.count, '0');
       } else {
         setChange(intCurrentLevel, props.count, '0');
       }
     };
 
-    onMounted(() => {
+    const initLevelArray = () => {
+      totalLevelArray.value = [];
       for (let i = 0; i < props.count; i++) {
-        totalLevelArray.push({ width: '0' });
+        totalLevelArray.value.push({ width: '0' });
       }
+    };
+
+    watch([() => props.modelValue, () => props.count], () => {
+      initLevelArray();
+      initRating();
+    });
+
+    onMounted(() => {
+      initLevelArray();
       initRating();
     });
 

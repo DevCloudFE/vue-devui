@@ -1,10 +1,11 @@
 import { ref, computed } from 'vue';
 import type { SetupContext } from 'vue';
 import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
-import { className } from './utils';
-import useCacheOptions from '../composables/use-cache-options';
-import useSelectOutsideClick from '../composables/use-select-outside-click';
+import { className, KeyType } from './utils';
+import useCacheOptions from './composables/use-cache-options';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { onClickOutside } from '@vueuse/core';
+import { isFunction, debounce } from 'lodash';
 
 export default function useSelect(props: SelectProps, ctx: SetupContext): UseSelectReturnType {
   const ns = useNamespace('select');
@@ -20,7 +21,9 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     isOpen.value = bool;
     ctx.emit('toggle-change', bool);
   };
-  useSelectOutsideClick([containerRef, dropdownRef], isOpen, toggleChange);
+  onClickOutside(containerRef, () => {
+    toggleChange(false);
+  });
 
   const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
   const selectCls = computed(() => {
@@ -34,7 +37,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     });
   });
 
-  // 这里对options做统一处理
+  // 这里对d-select组件options做统一处理,此options只用作渲染option列表
   const mergeOptions = computed(() => {
     const { multiple, modelValue } = props;
     return props.options.map((item) => {
@@ -69,61 +72,118 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   });
   // 缓存options，用value来获取对应的optionItem
   const getValuesOption = useCacheOptions(mergeOptions);
+
+  // 这里处理d-option组件生成的Options
+  const injectOptions = ref(new Map());
+  const updateInjectOptions = (item: Record<string, unknown>, operation: string) => {
+    if (operation === 'add') {
+      injectOptions.value.set(item.value, item);
+    } else if (operation === 'delete') {
+      injectOptions.value.delete(item.value);
+    }
+  };
+
+  const getInjectOptions = (values: KeyType<OptionObjectItem, 'value'>[]) => {
+    return values.map((value) => injectOptions.value.get(value));
+  };
+
+  const selectedOptions = ref<OptionObjectItem[]>([]);
+
   // 控制输入框的显示内容
+  // todo injectOptions根据option进行收集，此computed会执行多次; Vue Test Utils: [Vue warn]: Maximum recursive updates exceeded in component <DSelect>
+  // 目前看该警告和下拉面板使用Transition也有关
   const inputValue = computed<string>(() => {
     if (props.multiple && Array.isArray(props.modelValue)) {
-      const selectedOptions = getValuesOption(props.modelValue);
-      return selectedOptions.map((item) => item?.name || '').join(',');
+      selectedOptions.value = getInjectOptions(props.modelValue).filter((item) => !!item);
+      return selectedOptions.value.map((item) => item?.name || item?.value || '').join(',');
     } else if (!Array.isArray(props.modelValue)) {
-      return getValuesOption([props.modelValue])[0]?.name || '';
+      selectedOptions.value = getInjectOptions([props.modelValue]).filter((item) => !!item);
+      return selectedOptions.value[0]?.name || '';
     }
     return '';
   });
-  // 是否可清空
-  const mergeClearable = computed<boolean>(() => {
-    return !props.disabled && props.allowClear && inputValue.value.length > 0;
-  });
-
-  const selectionCls = computed(() => {
-    return className(ns.e('selection'), {
-      [ns.e('clearable')]: mergeClearable.value,
-    });
-  });
-
-  const inputCls = computed(() => {
-    return className(ns.e('input'), {
-      [ns.em('input', 'lg')]: props.size === 'lg',
-      [ns.em('input', 'sm')]: props.size === 'sm',
-    });
-  });
 
   const onClick = function (e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
     toggleChange(!isOpen.value);
   };
 
-  const valueChange = (item: OptionObjectItem, index: number) => {
-    const { multiple } = props;
+  const updateMultipleData = (item: OptionObjectItem) => {
     let { modelValue } = props;
+    const checkedItems = [];
+    for (const child of injectOptions.value.values()) {
+      if (child._checked) {
+        checkedItems.push(child.value);
+      }
+    }
+    modelValue = checkedItems;
+    // 此处需要更新chckbox选中状态
+    const mergeOptionItem = getValuesOption([item.value])[0];
+    mergeOptionItem && (mergeOptionItem._checked = !mergeOptionItem._checked);
+    ctx.emit('update:modelValue', modelValue);
+  };
+
+  const valueChange = (item: OptionObjectItem, isObjectOption: boolean) => {
+    const { multiple } = props;
+    item._checked = !item._checked;
     if (multiple) {
-      item._checked = !item._checked;
-      modelValue = mergeOptions.value.filter((item1) => item1._checked).map((item2) => item2.value);
-      ctx.emit('update:modelValue', modelValue);
+      updateMultipleData(item);
     } else {
       ctx.emit('update:modelValue', item.value);
       toggleChange(false);
     }
-    ctx.emit('value-change', item.value, index);
+    ctx.emit('value-change', isObjectOption ? item : item.value);
   };
 
-  const handleClear = (e: MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleClear = () => {
     if (props.multiple) {
       ctx.emit('update:modelValue', []);
     } else {
       ctx.emit('update:modelValue', '');
     }
   };
+
+  const handleClose = () => {
+    isOpen.value = false;
+    ctx.emit('toggle-change', false);
+  };
+
+  const tagDelete = (data: OptionObjectItem) => {
+    data._checked = !data._checked;
+    updateMultipleData(data);
+  };
+
+  const onFocus = (e: FocusEvent) => {
+    ctx.emit('focus', e);
+  };
+
+  const onBlur = (e: FocusEvent) => {
+    ctx.emit('blur', e);
+  };
+
+  const filterQuery = ref('');
+  const queryChange = (query: string) => {
+    filterQuery.value = query;
+  };
+
+  const isLoading = ref(false);
+  const debounceTime = computed(() => (props.remote ? 300 : 0));
+
+  const isUpdateSuccess = () => {
+    isLoading.value = false;
+  };
+  const handlerQueryFunc = (query: string) => {
+    if (isFunction(props.filter)) {
+      props.filter(query, isUpdateSuccess);
+    } else {
+      queryChange(query);
+    }
+  };
+
+  const debounceQueryFilter = debounce((query: string) => {
+    handlerQueryFunc(query);
+  }, debounceTime.value);
 
   return {
     containerRef,
@@ -132,10 +192,16 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     selectCls,
     mergeOptions,
     inputValue,
-    selectionCls,
-    inputCls,
+    selectedOptions,
+    filterQuery,
     onClick,
     handleClear,
     valueChange,
+    handleClose,
+    updateInjectOptions,
+    tagDelete,
+    onFocus,
+    onBlur,
+    debounceQueryFilter,
   };
 }

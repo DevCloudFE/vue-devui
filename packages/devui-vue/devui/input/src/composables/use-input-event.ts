@@ -30,5 +30,10 @@ export function useInputEvent(isFocus: Ref<boolean>, props: InputProps, ctx: Set
     ctx.emit('keydown', e);
   };
 
-  return { onFocus, onBlur, onInput, onChange, onKeydown };
+  const onClear = () => {
+    ctx.emit('update:modelValue', '');
+    ctx.emit('clear');
+  };
+
+  return { onFocus, onBlur, onInput, onChange, onKeydown, onClear };
 }

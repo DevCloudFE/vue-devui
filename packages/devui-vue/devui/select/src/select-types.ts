@@ -1,4 +1,4 @@
-import { PropType, ComputedRef, ExtractPropTypes, Ref, SetupContext } from 'vue';
+import { PropType, ComputedRef, ExtractPropTypes, Ref } from 'vue';
 
 export interface OptionObjectItem {
   name: string;
@@ -11,7 +11,7 @@ export type OptionItem = number | string | ({ value: string | number } & Partial
 export type Options = Array<OptionItem>;
 
 export type ModelValue = number | string | Array<number | string>;
-
+export type filterValue = boolean | ((query: string, callback?: () => void) => void);
 export const selectProps = {
   modelValue: {
     type: [String, Number, Array] as PropType<ModelValue>,
@@ -53,6 +53,22 @@ export const selectProps = {
     type: String,
     default: '',
   },
+  collapseTags: {
+    type: Boolean,
+    default: false,
+  },
+  collapseTagsTooltip: {
+    type: Boolean,
+    default: false,
+  },
+  filter: {
+    type: [Boolean, Function] as PropType<filterValue>,
+    default: false,
+  },
+  remote: {
+    type: Boolean,
+    default: false,
+  },
   onToggleChange: {
     type: Function as PropType<(bool: boolean) => void>,
     default: undefined,
@@ -74,16 +90,30 @@ export interface UseSelectReturnType {
   selectCls: ComputedRef<string>;
   mergeOptions: ComputedRef<OptionObjectItem[]>;
   inputValue: ComputedRef<string>;
-  selectionCls: ComputedRef<string>;
-  inputCls: ComputedRef<string>;
+  selectedOptions: Ref<OptionObjectItem[]>;
+  filterQuery: Ref<string>;
   onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
-  valueChange: (item: OptionObjectItem, index: number) => void;
+  valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;
+  handleClose: () => void;
+  updateInjectOptions: (item: Record<string, unknown>, operation: string) => void;
+  tagDelete: (data: OptionObjectItem) => void;
+  onFocus: (e: FocusEvent) => void;
+  onBlur: (e: FocusEvent) => void;
+  debounceQueryFilter: (query: string) => void;
 }
 
 export interface SelectContext extends SelectProps {
-  emit: SetupContext['emit'];
-  valueChange: (item: OptionObjectItem, index: number) => void;
+  isOpen: boolean;
+  selectedOptions: OptionObjectItem[];
+  filterQuery: string;
+  valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;
+  handleClear: () => void;
+  updateInjectOptions: (item: Record<string, unknown>, operation: string) => void;
+  tagDelete: (data: OptionObjectItem) => void;
+  onFocus: (e: FocusEvent) => void;
+  onBlur: (e: FocusEvent) => void;
+  debounceQueryFilter: (query: string) => void;
 }
 
 export const optionProps = {
@@ -91,28 +121,48 @@ export const optionProps = {
     type: [String, Number] as PropType<OptionModelValue>,
     default: '',
   },
-  label: {
-    type: [String, Number] as PropType<OptionModelValue>,
+  name: {
+    type: String,
     default: '',
   },
   disabled: {
     type: Boolean,
     default: false,
   },
-  data: {
-    type: Object as PropType<OptionObjectItem>,
-    default: () => ({}),
-  },
-  index: {
-    type: Number,
-    default: -1,
-  },
 };
 
 export type OptionProps = ExtractPropTypes<typeof optionProps>;
 
 export interface UseOptionReturnType {
-  currentLabel: ComputedRef<OptionModelValue>;
+  currentName: ComputedRef<OptionModelValue>;
   selectOptionCls: ComputedRef<string>;
+  isVisible: ComputedRef<boolean>;
   optionSelect: () => void;
+}
+
+export const selectContentProps = {
+  value: {
+    type: String,
+    default: '',
+  },
+};
+
+export type SelectContentProps = ExtractPropTypes<typeof selectContentProps>;
+
+export interface UseSelectContentReturnType {
+  searchQuery: Ref<string>;
+  selectedData: ComputedRef<OptionObjectItem[]>;
+  isSelectDisable: ComputedRef<boolean>;
+  isSupportCollapseTags: ComputedRef<boolean>;
+  isDisabledTooltip: ComputedRef<boolean>;
+  isReadOnly: ComputedRef<boolean>;
+  selectionCls: ComputedRef<string>;
+  inputCls: ComputedRef<string>;
+  placeholder: ComputedRef<string>;
+  isMultiple: ComputedRef<boolean>;
+  handleClear: (e: MouseEvent) => void;
+  tagDelete: (data: OptionObjectItem) => void;
+  onFocus: (e: FocusEvent) => void;
+  onBlur: (e: FocusEvent) => void;
+  queryFilter: (e: Event) => void;
 }

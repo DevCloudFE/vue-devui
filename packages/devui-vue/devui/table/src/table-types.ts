@@ -1,4 +1,4 @@
-import { PropType, ExtractPropTypes, ComponentInternalInstance, InjectionKey, Ref } from 'vue';
+import type { PropType, ExtractPropTypes, ComponentInternalInstance, InjectionKey, Ref, ComputedRef, CSSProperties, ToRefs } from 'vue';
 import { TableStore } from './store/store-types';
 
 export type TableSize = 'sm' | 'md' | 'lg';
@@ -102,6 +102,8 @@ export interface Table<T = DefaultRow> extends ComponentInternalInstance {
   props: TablePropsTypes;
   tableId: string;
   hiddenColumns: Ref<HTMLElement | null>;
+  tableRef: Ref<HTMLElement>;
+  updateColumnWidth: () => void;
 }
 
 // export interface TableCheckStatusArg {
@@ -124,3 +126,15 @@ export interface TableMethods<T = Record<string, any>> {
 }
 
 export const TABLE_TOKEN: InjectionKey<Table> = Symbol();
+
+export interface UseTable {
+  classes: ComputedRef<Record<string, boolean>>;
+  styles: ComputedRef<CSSProperties>;
+}
+
+export type UseFixedColumn = ToRefs<{ stickyClass: ComputedRef<Record<string, boolean>>; stickyStyle: ComputedRef<CSSProperties> }>;
+
+export interface UseTableLayout {
+  tableWidth: Ref;
+  updateColumnWidth: () => void;
+}

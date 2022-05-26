@@ -16,11 +16,6 @@
   .#{$devui-prefix}-form__control-container {
     position: relative;
 
-    // 临时解决popover影响输入控件宽度的问题
-    .#{$devui-prefix}-popover-reference {
-      width: 100%;
-    }
-
     &--horizontal {
       display: flex;
       width: 100%;

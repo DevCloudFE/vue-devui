@@ -1,4 +1,4 @@
-import { defineComponent, watch, inject, toRefs, shallowRef } from 'vue';
+import { defineComponent, watch, inject, toRefs, shallowRef, ref, computed } from 'vue';
 import type { SetupContext } from 'vue';
 import { inputProps, InputProps } from './input-types';
 import { FORM_ITEM_TOKEN, FormItemContext } from '../../form/src/components/form-item/form-item-types';
@@ -14,20 +14,29 @@ export default defineComponent({
   name: 'DInput',
   inheritAttrs: false,
   props: inputProps,
-  emits: ['update:modelValue', 'focus', 'blur', 'input', 'change', 'keydown'],
+  emits: ['update:modelValue', 'focus', 'blur', 'input', 'change', 'keydown', 'clear'],
   setup(props: InputProps, ctx: SetupContext) {
     const formItemContext = inject(FORM_ITEM_TOKEN, undefined) as FormItemContext;
     const { modelValue, disabled } = toRefs(props);
     const ns = useNamespace('input');
     const slotNs = useNamespace('input-slot');
     const { isFocus, wrapClasses, inputClasses, customStyle, otherAttrs } = useInputRender(props, ctx);
-    const { onFocus, onBlur, onInput, onChange, onKeydown } = useInputEvent(isFocus, props, ctx);
+    const { onFocus, onBlur, onInput, onChange, onKeydown, onClear } = useInputEvent(isFocus, props, ctx);
 
     const input = shallowRef<HTMLInputElement>();
     const { select, focus, blur } = useInputFunction(input);
 
+    const passwordVisible = ref(false);
+    const clickPasswordIcon = () => {
+      passwordVisible.value = !passwordVisible.value;
+      focus();
+    };
+
     const prefixVisiable = ctx.slots.prefix || props.prefix;
-    const suffixVisiable = ctx.slots.suffix || props.suffix;
+    const suffixVisiable = ctx.slots.suffix || props.suffix || props.showPassword || props.clearable;
+
+    const showPwdVisible = computed(() => props.showPassword && !props.disabled);
+    const showClearable = computed(() => props.clearable && !props.disabled);
 
     watch(
       () => props.modelValue,
@@ -56,6 +65,7 @@ export default defineComponent({
             disabled={disabled.value}
             class={ns.e('inner')}
             {...otherAttrs}
+            type={props.showPassword ? (passwordVisible.value ? 'text' : 'password') : 'text'}
             onInput={onInput}
             onFocus={onFocus}
             onBlur={onBlur}
@@ -66,6 +76,15 @@ export default defineComponent({
             <span class={slotNs.e('suffix')}>
               {props.suffix && <Icon size={props.size} name={props.suffix} />}
               {ctx.slots.suffix && <div>{ctx.slots.suffix?.()}</div>}
+              {showPwdVisible.value && (
+                <Icon
+                  size={props.size}
+                  class={ns.em('password', 'icon')}
+                  name={passwordVisible.value ? 'preview' : 'preview-forbidden'}
+                  onClick={clickPasswordIcon}
+                />
+              )}
+              {showClearable.value && <Icon size={props.size} class={ns.em('clear', 'icon')} name="close" onClick={onClear} />}
             </span>
           )}
         </div>

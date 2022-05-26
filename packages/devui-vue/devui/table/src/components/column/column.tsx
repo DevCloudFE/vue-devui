@@ -19,7 +19,7 @@ let columnIdInit = 1;
 export default defineComponent({
   name: 'DColumn',
   props: tableColumnProps,
-  emits: ['filter-change'],
+  emits: ['filter-change', 'resize-start', 'resizing', 'resize-end'],
   setup(props: TableColumnProps, ctx: SetupContext) {
     const { reserveCheck } = toRefs(props);
     const owner = inject(TABLE_TOKEN) as Table<DefaultRow>;
@@ -49,13 +49,13 @@ export default defineComponent({
       columnIndex > -1 && owner?.store.insertColumn(column, isSubColumn.value ? parent.columnConfig : null);
 
       // 行勾选控制
-      // if (typeof props.checkable === 'function') {
-      //   for (const [rowIndex, row] of owner?.store.states._data.value.entries()) {
-      //     if (props.checkable(row, rowIndex)) {
-      //       owner.store.checkRow(, row);
-      //     }
-      //   }
-      // }
+      if (typeof props.checkable === 'function') {
+        for (const [rowIndex, row] of owner?.store.states._data.value.entries()) {
+          if (props.checkable(row, rowIndex)) {
+            owner.store.checkRow(true, row);
+          }
+        }
+      }
     });
 
     watch(
@@ -95,5 +95,5 @@ export default defineComponent({
         }
       </div>;
     };
-  }
+  },
 });

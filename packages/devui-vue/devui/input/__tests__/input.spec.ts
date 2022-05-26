@@ -19,6 +19,7 @@ const dotSlotPrefixClass = dotSlotNs.e('prefix');
 const dotSlotSuffixClass = dotSlotNs.e('suffix');
 const dotSlotPrependClass = dotSlotNs.e('prepend');
 const dotSlotAppendClass = dotSlotNs.e('append');
+const dotNsClearIconClass = dotNs.em('clear', 'icon');
 
 describe('d-input', () => {
   it('d-input render work', async () => {
@@ -213,5 +214,39 @@ describe('d-input', () => {
     expect(suffix.exists()).toBe(true);
     expect(prepend.exists()).toBe(true);
     expect(append.exists()).toBe(true);
+  });
+
+  it('d-input showPassword work', async () => {
+    const wrapper = mount(DInput, {
+      props: {
+        showPassword: false,
+      },
+    });
+    const input = wrapper.find('input');
+    expect(input.attributes('type')).toBe('text');
+    wrapper.setProps({
+      showPassword: true,
+    });
+    await nextTick();
+    expect(input.attributes('type')).toBe('password');
+  });
+
+  it('d-input clearable/clear work', async () => {
+    const onClear = jest.fn();
+    const wrapper = mount({
+      components: { DInput },
+      template: `
+        <d-input @clear="onClear" clearable/>
+      `,
+      setup() {
+        return {
+          onClear,
+        };
+      },
+    });
+    expect(wrapper.find(dotNsClearIconClass).exists()).toBe(true);
+    const i = wrapper.find('i');
+    await i.trigger('click');
+    expect(onClear).toBeCalledTimes(1);
   });
 });

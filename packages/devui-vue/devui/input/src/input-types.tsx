@@ -31,6 +31,14 @@ export const inputProps = {
     type: String,
     default: '',
   },
+  showPassword: {
+    type: Boolean,
+    default: false,
+  },
+  clearable: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type InputProps = ExtractPropTypes<typeof inputProps>;
@@ -49,6 +57,7 @@ export interface UseInputEvent {
   onInput: (e: Event) => void;
   onChange: (e: Event) => void;
   onKeydown: (e: KeyboardEvent) => void;
+  onClear: () => void;
 }
 
 export interface UseInputFunction {

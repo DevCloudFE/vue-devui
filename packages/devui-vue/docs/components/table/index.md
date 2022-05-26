@@ -220,7 +220,7 @@ export default defineComponent({
 
 ### 表格交互
 
-:::demo 通过添加一个`d-column`并且设置`type`属性为`checkable`即可实现表格的多选功能。`getCheckedRows`方法可以获取已选择的列表。通过`cell-click`事件监听单元格点击，事件回调参数包含行索引、列索引、行数据、列数据。
+:::demo 通过添加一个`d-column`并且设置`type`属性为`checkable`即可实现表格的多选功能。`getCheckedRows`方法可以获取已选择的列表。通过`cell-click`事件监听单元格点击，事件回调参数包含行索引、列索引、行数据、列数据。在列上配置`resizeable`属性，可实现该列拖动改变宽度，`min-width`和`max-width`设置可拖动范围，事件`resize-start`、`resizing`、`resize-end`分别在拖动开始时、进行中、结束后触发。
 
 ```vue
 <template>
@@ -237,9 +237,19 @@ export default defineComponent({
       @check-all-change="checkAllChange"
       :trackBy="(item) => item.id"
     >
-      <d-column type="checkable" width="30" :checkable="checkable" reserve-check></d-column>
-      <d-column field="firstName" header="First Name"></d-column>
-      <d-column field="lastName" header="Last Name"></d-column>
+      <d-column type="checkable" width="40" :checkable="checkable" reserve-check></d-column>
+      <d-column field="firstName" header="First Name" width="200"></d-column>
+      <d-column
+        field="lastName"
+        header="Last Name"
+        width="200"
+        resizeable
+        min-width="150"
+        max-width="250"
+        @resize-start="onResizeStart"
+        @resizing="onResizing"
+        @resize-end="onResizeEnd"
+      ></d-column>
       <d-column field="gender" header="Gender"></d-column>
       <d-column field="date" header="Date of birth"></d-column>
     </d-table>
@@ -315,6 +325,18 @@ export default defineComponent({
       data.value.splice(0, 1);
     };
 
+    const onResizeStart = (e) => {
+      console.log('resize start', e);
+    };
+
+    const onResizing = (e) => {
+      console.log('resizing', e);
+    };
+
+    const onResizeEnd = (e) => {
+      console.log('resize end', e);
+    };
+
     return {
       tableRef,
       data,
@@ -325,6 +347,9 @@ export default defineComponent({
       checkable,
       insertRow,
       deleteRow,
+      onResizeStart,
+      onResizing,
+      onResizeEnd,
     };
   },
 });
@@ -341,7 +366,7 @@ export default defineComponent({
 <template>
   <div>
     <d-table :data="data" :trackBy="(item) => item.firstName">
-      <d-column type="index" width="30"></d-column>
+      <d-column type="index" width="40"></d-column>
       <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
       <d-column field="gender" header="Gender"></d-column>
@@ -397,7 +422,7 @@ export default defineComponent({
 ```vue
 <template>
   <d-table :data="dataSource" :trackBy="(item) => item.firstName">
-    <d-column type="index" width="40">
+    <d-column type="index" width="80">
       <template #default="scope">
         {{ `No.${scope.rowIndex + 1}` }}
       </template>
@@ -1072,7 +1097,8 @@ export default defineComponent({
 | field                 | `string`                           | --     | 可选，对应列内容的字段名                    | [基本用法](#基本用法) |
 | type                  | [ColumnType](#columntype)          | ''     | 可选，列的类型，设置`checkable`会显示多选框 | [表格交互](#表格交互) |
 | width                 | `string \| number`                 | --     | 可选，对应列的宽度，单位`px`                |
-| min-width             | `string \| number`                 | --     | 可选，对应列的最小宽度，单位`px`            |
+| min-width             | `string \| number`                 | --     | 可选，拖动调整宽度时的最小宽度，单位`px`    |
+| max-width             | `string \| number`                 | --     | 可选，拖动调整宽度时的最大宽度，单位`px`    |
 | fixedLeft             | `string`                           | --     | 可选，该列固定到左侧的距离，如：'100px'     | [固定列](#固定列)     |
 | fixedRight            | `string`                           | --     | 可选，该列固定到右侧的距离，如：'100px'     | [固定列](#固定列)     |
 | formatter             | [Formatter](#formatter)            | --     | 可选，格式化列内容                          |
@@ -1085,13 +1111,17 @@ export default defineComponent({
 | align                 | [ColumnAlign](#columnalign)        | 'left' | 可选，配置水平对齐方式                      | [自定义列](#自定义列) |
 | checkable             | `Function(row, rowIndex): boolean` | --     | 可选，配置行勾选状态                        | [表格交互](#表格交互) |
 | show-overflow-tooltip | `boolean`                          | false  | 可选，内容过长被隐藏时是否显示 tooltip      |                       |
+| resizeable            | `boolean`                          | false  | 可选，该列宽度是否可调整                    |                       |
 | reserve-check         | `boolean`                          | false  | 可选，是否保留勾选状态                      | [表格交互](#表格交互) |
 
 ### Column 事件
 
-| 事件名        | 回调参数                                        | 说明                                       | 跳转 Demo         |
-| :------------ | :---------------------------------------------- | :----------------------------------------- | :---------------- |
-| filter-change | `Function(val: FilterConfig \| FilterConfig[])` | 筛选回调事件，返回选中的筛选项或筛选项数组 | [列筛选](#列筛选) |
+| 事件名        | 回调参数                                              | 说明                                       | 跳转 Demo             |
+| :------------ | :---------------------------------------------------- | :----------------------------------------- | :-------------------- |
+| filter-change | `Function(val: FilterConfig \| FilterConfig[])`       | 筛选回调事件，返回选中的筛选项或筛选项数组 | [列筛选](#列筛选)     |
+| resize-start  | `Function()`                                          | 该列宽度调整开始时的事件                   | [表格交互](#表格交互) |
+| resizing      | `Function(val: {width: number})`                      | 该列宽度调整进行中的事件                   | [表格交互](#表格交互) |
+| resize-end    | `Function(val: {width: number; beforeWidth: number})` | 该列宽度调整结束时的事件                   | [表格交互](#表格交互) |
 
 ### Column 插槽
 

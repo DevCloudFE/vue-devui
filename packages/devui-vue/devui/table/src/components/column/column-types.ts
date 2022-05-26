@@ -37,7 +37,11 @@ export const tableColumnProps = {
   },
   minWidth: {
     type: [String, Number],
-    default: 80,
+    default: '',
+  },
+  maxWidth: {
+    type: [String, Number],
+    default: '',
   },
   formatter: {
     type: Function as PropType<Formatter>,
@@ -86,10 +90,14 @@ export const tableColumnProps = {
   checkable: {
     type: Function as PropType<(row: unknown, rowIndex: number) => boolean>,
   },
+  resizeable: {
+    type: Boolean,
+    default: false,
+  },
   reserveCheck: {
     type: Boolean,
     default: false,
-  }
+  },
 };
 
 export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>;
@@ -97,10 +105,11 @@ export type TableColumnProps = ExtractPropTypes<typeof tableColumnProps>;
 export interface Column {
   id: string;
   type?: ColumnType;
-  field?: string;
-  width?: number;
-  minWidth?: number;
-  realWidth?: number;
+  field: string;
+  width: number | string;
+  minWidth: number | string;
+  maxWidth: number | string;
+  realWidth?: number | string;
   header?: string;
   order?: number;
   sortable?: boolean;
@@ -112,6 +121,7 @@ export interface Column {
   fixedRight?: string;
   align?: ColumnAlign;
   showOverflowTooltip?: boolean;
+  resizeable: boolean;
   ctx?: SetupContext;
   customFilterTemplate?: Slot;
   renderHeader?: (column: Column, store: TableStore) => VNode;

@@ -4,10 +4,6 @@ export type Resize = 'none' | 'vertical' | 'horizontal' | 'both' | 'inherit';
 export type TextareaAutoSize = { minRows?: number; maxRows?: number } | boolean;
 
 export const textareaProps = {
-  id: {
-    type: String,
-    default: undefined,
-  },
   autofocus: {
     type: Boolean,
     default: false,

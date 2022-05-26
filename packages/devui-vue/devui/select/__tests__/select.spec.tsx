@@ -23,6 +23,7 @@ describe('select', () => {
     expect(listItems.length).toBe(3);
     expect(listItems[0].classes()).toContain('active');
     expect(input.attributes('placeholder')).toBe('这是默认选择框');
+    await nextTick();
     expect(input.element.value).toBe('1');
 
     await input.trigger('click');
@@ -73,13 +74,30 @@ describe('select', () => {
     const options = reactive([6, 2, 'test']);
     const toggleChange = jest.fn();
     const valueChange = jest.fn();
+    const onFocus = jest.fn();
+    const onBlur = jest.fn();
     const wrapper = mount({
       setup() {
-        return () => <DSelect v-model={value.value} options={options} onToggleChange={toggleChange} onValueChange={valueChange}></DSelect>;
+        return () => (
+          <DSelect
+            v-model={value.value}
+            options={options}
+            onToggleChange={toggleChange}
+            onValueChange={valueChange}
+            onFocus={onFocus}
+            onBlur={onBlur}></DSelect>
+        );
       },
     });
 
     const input = wrapper.find<HTMLInputElement>('.devui-select__input');
+
+    await input.trigger('focus');
+    await input.trigger('blur');
+
+    expect(onFocus).toBeCalledTimes(1);
+    expect(onBlur).toBeCalledTimes(1);
+
     await input.trigger('click');
 
     expect(toggleChange).toBeCalledTimes(1);
@@ -164,9 +182,9 @@ describe('select', () => {
     expect(item[1].classes()).toContain('disabled');
     await item[1].trigger('click');
     expect(value.value).toEqual([]);
+    // todo 此处遗留，如果继续点击第二个或者更多选项，得到的value.value依然是[]; 原因为下拉面板使用Transition组件导致。
     await item[0].trigger('click');
     expect(value.value).toEqual([0]);
-    // todo 此处遗留，如果继续点击第三个选项，得到的value.value依然是[0]; 后续继续跟进原因。
     wrapper.unmount();
   });
 
@@ -186,5 +204,92 @@ describe('select', () => {
     await clearIcon.trigger('click');
     expect(value.value).toBe('');
     wrapper.unmount();
+  });
+
+  it('select multiple tag work', async () => {
+    const value = ref([]);
+    const options = reactive([1, 2, 'test']);
+    const wrapper = mount({
+      setup() {
+        return () => <DSelect v-model={value.value} options={options} multiple={true}></DSelect>;
+      },
+    });
+
+    const container = wrapper.find('.devui-select');
+    const items = container.findAll('.devui-select__item');
+    const section = wrapper.find('.devui-select__multiple');
+    const multipleInput = wrapper.find('.devui-select__multiple--input');
+    expect(section.exists()).toBeTruthy();
+    expect(multipleInput.exists()).toBeTruthy();
+
+    await container.trigger('click');
+    await nextTick();
+    await items[0].trigger('click');
+    expect(value.value).toStrictEqual([1]);
+    const input = container.find<HTMLInputElement>('.devui-select__input');
+    expect(input.element.value).toBe('');
+
+    const tags = wrapper.findAll('.devui-tag');
+    expect(tags.length).toBe(1);
+    const tag = tags[0].find('.remove-button');
+    await tag.trigger('click');
+    expect(value.value).toStrictEqual([]);
+    wrapper.unmount();
+  });
+
+  it('select multiple collapse tags work', async () => {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive(list);
+    const wrapper = mount({
+      setup() {
+        return () => <DSelect v-model={value.value} options={options} multiple={true} collapseTags={true}></DSelect>;
+      },
+    });
+
+    const container = wrapper.find('.devui-select');
+    const items = container.findAll('.devui-select__item');
+
+    await container.trigger('click');
+    await nextTick();
+    await items[0].trigger('click');
+    await items[1].trigger('click');
+    await items[2].trigger('click');
+    const tags = wrapper.findAll('.devui-tag');
+    expect(tags.length).toBe(2);
+    const tag1 = tags[0].find('.remove-button');
+    const tag2 = tags[1].find('.remove-button');
+    expect(tag1.isVisible()).toBeTruthy();
+    expect(tag2.exists()).toBeFalsy();
+    wrapper.unmount();
+  });
+
+  it('select multiple collapse tags tooltip work', async () => {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive(list);
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DSelect v-model={value.value} options={options} multiple={true} collapseTags={true} collapseTagsTooltip={true}></DSelect>
+        );
+      },
+    });
+    const container = wrapper.find('.devui-select');
+    const items = container.findAll('.devui-select__item');
+
+    await container.trigger('click');
+    await nextTick();
+    await items[0].trigger('click');
+    await items[1].trigger('click');
+    await items[2].trigger('click');
+    const tags = wrapper.findAll('.devui-tag');
+    expect(tags.length).toBe(2);
+    await tags[1].trigger('mouseenter');
+    setTimeout(() => {
+      const popoverContent = document.body.querySelector('.devui-popover__content');
+      expect(popoverContent).toBeTruthy();
+      wrapper.unmount();
+    }, 150);
   });
 });
