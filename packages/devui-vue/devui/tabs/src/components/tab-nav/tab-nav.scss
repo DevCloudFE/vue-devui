@@ -1,0 +1,367 @@
+@import '../../../../styles-var/devui-var.scss';
+
+$devui-tab-options-bg: $devui-list-item-hover-bg;
+
+:host {
+  display: block;
+}
+
+.#{$devui-prefix}-tabs__nav--tabs,
+.#{$devui-prefix}-tabs__nav--pills {
+  font-size: $devui-font-size;
+  background: transparent;
+  font-weight: bold;
+  list-style: none;
+
+  li {
+    cursor: pointer;
+    border: 2px solid transparent;
+
+    & a {
+      cursor: pointer;
+      border: none;
+      line-height: 30px;
+      background-color: transparent;
+      padding: 0;
+      text-decoration: none;
+      color: $devui-text;
+    }
+
+    & a:hover,
+    & a:focus,
+    & a:active {
+      outline: none;
+    }
+
+    &.disabled {
+      a {
+        color: $devui-disabled-text;
+        cursor: not-allowed;
+      }
+    }
+
+    &.active,
+    &:hover:not(.disabled) {
+      & a {
+        color: $devui-brand;
+      }
+    }
+  }
+
+  li::after {
+    content: '';
+    display: block;
+    margin: auto;
+    height: 2px;
+    width: 0;
+    background: transparent;
+    transition:
+      width $devui-animation-duration-slow $devui-animation-ease-in-out,
+      background-color $devui-animation-duration-slow $devui-animation-ease-in-out;
+  }
+
+  li.active::after {
+    width: 100%;
+    background: $devui-brand;
+  }
+}
+
+.#{$devui-prefix}-tabs__nav--options {
+  font-size: $devui-font-size;
+  background: transparent;
+  border: none;
+  border-radius: $devui-border-radius;
+
+  > li:last-of-type {
+    border-radius: 0 $devui-border-radius $devui-border-radius 0;
+  }
+
+  > li {
+    cursor: pointer;
+    border: 1px solid $devui-line;
+    border-left-width: 0;
+    background-color: $devui-base-bg;
+    float: left;
+
+    &:first-child {
+      border-left-width: 1px;
+      border-radius: $devui-border-radius 0 0 $devui-border-radius;
+    }
+
+    &:last-child {
+      border-radius: 0 $devui-border-radius $devui-border-radius 0;
+    }
+
+    & > a {
+      cursor: pointer;
+      border: none;
+      color: $devui-text;
+      line-height: 26px;
+      padding: 0 16px;
+      transition: color $devui-animation-duration-slow $devui-animation-ease-in-out;
+
+      &:hover,
+      &:focus,
+      &:active {
+        outline: none;
+      }
+    }
+
+    &.disabled {
+      border-color: $devui-disabled-line;
+
+      a {
+        color: $devui-disabled-text;
+        cursor: not-allowed;
+      }
+    }
+
+    &.active,
+    &:hover:not(.disabled) {
+      & > a {
+        color: $devui-light-text;
+
+        &:hover {
+          color: $devui-light-text;
+          background: transparent;
+        }
+      }
+    }
+
+    &.active {
+      background-color: $devui-brand;
+      border-color: $devui-brand;
+
+      &:not(:first-child)::before {
+        background-color: $devui-brand;
+      }
+
+      & + li::before {
+        background-color: $devui-brand;
+      }
+    }
+
+    &:hover:not(.active):not(.disabled) {
+      background-color: $devui-brand-active;
+      border-color: $devui-brand-active;
+
+      &:not(:first-child)::before {
+        background-color: $devui-brand-active;
+      }
+    }
+  }
+}
+
+.#{$devui-prefix}-tabs__nav--slider {
+  font-size: $devui-font-size;
+  border: none;
+  border-radius: $devui-border-radius;
+  background: $devui-tab-options-bg;
+  width: fit-content;
+  display: flex !important;
+  align-items: center;
+  position: relative;
+
+  > li {
+    cursor: pointer;
+    margin: 2px;
+    float: left;
+    position: relative;
+    z-index: 1;
+
+    &:first-child {
+      border-left-width: 1px;
+      border-radius: $devui-border-radius 0 0 $devui-border-radius;
+    }
+
+    &:last-child {
+      border-radius: 0 $devui-border-radius $devui-border-radius 0;
+    }
+
+    & a {
+      cursor: pointer;
+      border: none;
+      color: $devui-text;
+      line-height: 28px;
+      padding: 0 16px;
+
+      &:hover,
+      &:focus,
+      &:active {
+        outline: none;
+      }
+    }
+
+    &.disabled {
+      border-color: $devui-disabled-line;
+
+      a {
+        color: $devui-disabled-text;
+        cursor: not-allowed;
+      }
+    }
+
+    &.active,
+    &:hover:not(.disabled) {
+      & a {
+        color: $devui-brand-active;
+
+        &:hover {
+          color: $devui-brand-active;
+          background: transparent;
+        }
+      }
+
+      &:not(:first-child)::before {
+        content: '';
+        display: block;
+        top: -1px;
+        left: -1px;
+        width: 1px;
+        height: 'calc(100% + 2px)';
+        position: absolute;
+      }
+    }
+
+    &.active {
+      text-shadow: 0 0 0.7px $devui-brand;
+
+      &:not(:first-child)::before {
+        background-color: $devui-brand;
+      }
+
+      & + li::before {
+        background-color: $devui-brand;
+      }
+    }
+
+    &:hover:not(.active):not(.disabled) {
+      color: $devui-brand-active;
+
+      &:not(:first-child)::before {
+        background-color: $devui-brand-active;
+      }
+    }
+  }
+}
+
+.#{$devui-prefix}-tabs__nav--wrapped {
+  font-size: $devui-font-size;
+  background: transparent;
+  border-bottom: 1px solid $devui-dividing-line;
+  background-color: $devui-base-bg;
+
+  > li {
+    cursor: pointer;
+    float: left;
+    position: relative;
+    padding: 8px 16px;
+
+    & a {
+      cursor: pointer;
+      border: none;
+      color: $devui-text;
+      border-radius: $devui-border-radius $devui-border-radius 0 0;
+
+      &:hover,
+      &:focus,
+      &:active {
+        outline: none;
+      }
+    }
+
+    &.disabled {
+      border-color: $devui-disabled-line;
+
+      a {
+        color: $devui-disabled-text;
+        cursor: not-allowed;
+      }
+    }
+
+    &.active {
+      border: 1px solid $devui-dividing-line;
+      background: $devui-global-bg;
+      border-radius: $devui-border-radius $devui-border-radius 0 0;
+      font-weight: 700;
+      // 以下覆盖父元素的底部边框,解决多1px的边框造成的抖动
+      margin: -1px;
+      border-bottom-color: transparent;
+
+      & a {
+        color: $devui-brand-active;
+      }
+    }
+
+    &:hover:not(.active):not(.disabled) {
+      a {
+        color: $devui-brand;
+      }
+    }
+  }
+}
+
+.#{$devui-prefix}-tabs__nav {
+  list-style: none;
+  padding-left: 0;
+
+  li {
+    a {
+      text-decoration: none;
+
+      &.custom-width {
+        display: inline-block;
+        padding: 0;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.#{$devui-prefix}-tabs__nav--tabs:not(.#{$devui-prefix}-tabs__stacked) {
+  border-bottom: 1px $devui-line solid;
+
+  li {
+    float: left;
+    margin-left: 32px;
+    margin-bottom: -3px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.#{$devui-prefix}-tabs__nav--pills:not(.#{$devui-prefix}-tabs__stacked) {
+  > li {
+    float: left;
+    margin-left: 32px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.#{$devui-prefix}-tabs__nav::before,
+.#{$devui-prefix}-tabs__nav::after {
+  content: ' ';
+  display: table;
+}
+
+.#{$devui-prefix}-tabs__nav::after {
+  clear: both;
+}
+
+.#{$devui-prefix}-tabs__nav-slider-animation {
+  position: absolute;
+  z-index: 0;
+  background-color: $devui-base-bg;
+  border-radius: $devui-border-radius;
+  box-shadow: 0 2px 4px 0 $devui-light-shadow;
+  top: 1px;
+  height: 30px;
+  transition:
+    left $devui-animation-duration-slow $devui-animation-ease-in-out,
+    width $devui-animation-duration-slow $devui-animation-ease-in-out;
+}
