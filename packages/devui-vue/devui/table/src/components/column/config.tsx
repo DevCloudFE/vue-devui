@@ -19,10 +19,9 @@ export const cellMap = {
     },
     renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): VNode {
       return h(Checkbox, {
-        modelValue: store.states._checkList.value[rowIndex],
+        modelValue: store.isRowChecked(rowData),
         onChange: (val: boolean) => {
-          store.states._checkList.value[rowIndex] = val;
-          store.states._cachedCheckList = store.states._checkList.value;
+          store.checkRow(val, rowData);
           store._table.emit('check-change', val, store.states._data.value[rowIndex]);
         },
       });

@@ -8,8 +8,7 @@ export interface TableStore<T = Record<string, any>> {
     _data: Ref<T[]>;
     _columns: Ref<Column[]>;
     flatColumns: Ref<Column[]>;
-    _checkList: Ref<boolean[]>;
-    _cachedCheckList: boolean[];
+    _checkSet: Ref<Set<string>>;
     _checkAll: Ref<boolean>;
     _halfChecked: Ref<boolean>;
     isFixedLeft: Ref<boolean>;
@@ -21,4 +20,6 @@ export interface TableStore<T = Record<string, any>> {
   updateColumns(): void;
   getCheckedRows(): T[];
   sortData(direction: SortDirection, sortMethod: SortMethod<T>): void;
+  isRowChecked(row: T): boolean;
+  checkRow(toggle: boolean, row: T): void;
 }
