@@ -1053,8 +1053,11 @@ export default defineComponent({
 <template>
   <d-table :data="dataSource" :trackBy="(item) => item?.firstName">
     <d-column type="expand">
-      <template #default="data">
-        expand {{data.row}}
+      <template #default="rowData">
+        <div>First Name: {{rowData.row.firstName}}</div>
+        <div>Last Name: {{rowData.row.lastName}}</div>
+        <div>Gender: {{rowData.row.gender}}</div>
+        <div>Date of birth: {{rowData.row.date}}</div>
       </template>
     </d-column>
     <d-column field="firstName" header="First Name"></d-column>

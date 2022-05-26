@@ -164,7 +164,6 @@ const createExpandRow = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) 
   };
 
   const toggleRow = (row: T) => {
-    console.log('expand row');
     if (isRowExpanded(row)) {
       _expandedRows.value.delete(trackBy(row));
     } else {

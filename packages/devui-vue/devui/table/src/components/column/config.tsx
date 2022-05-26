@@ -42,7 +42,6 @@ export const cellMap = {
     },
     renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): VNode {
       return <Icon name="chevron-right" class="icon-expand-row" onClick={() => {
-        console.log('click', rowData, store);
         store.toggleRow(rowData);
       }}></Icon>;
     }

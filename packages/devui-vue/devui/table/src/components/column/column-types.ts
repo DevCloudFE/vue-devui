@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance, SetupContext } from 'vue';
+import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance, SetupContext, Slots } from 'vue';
 import { DefaultRow } from '../../table-types';
 import { TableStore } from '../../store/store-types';
 
@@ -129,6 +129,7 @@ export interface Column {
   formatter?: Formatter;
   sortMethod?: SortMethod;
   subColumns?: Slot;
+  slots: Slots;
 }
 
 export interface TableColumn extends ComponentInternalInstance {
