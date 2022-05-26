@@ -19,7 +19,6 @@ export default defineComponent({
       selectedData,
       isSelectDisable,
       isSupportCollapseTags,
-      isSupportTagsTooltip,
       isDisabledTooltip,
       isReadOnly,
       selectionCls,
@@ -61,12 +60,10 @@ export default defineComponent({
                   {selectedData.value[0].name}
                 </Tag>
               )}
-              {isSupportCollapseTags.value && !isSupportTagsTooltip.value && selectedData.value.length > 1 && (
-                <Tag>{`+${selectedData.value.length - 1}`}</Tag>
-              )}
-              {isSupportCollapseTags.value && isSupportTagsTooltip.value && selectedData.value.length > 1 && (
+              {isSupportCollapseTags.value && selectedData.value.length > 1 && (
                 <Popover
                   trigger="hover"
+                  disabled={isDisabledTooltip.value}
                   v-slots={{
                     default: () => <Tag>{`+${selectedData.value.length - 1}`}</Tag>,
                     content: () => (
