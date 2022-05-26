@@ -1051,7 +1051,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource">
+  <d-table :data="dataSource" :trackBy="(item) => item?.firstName">
     <d-column type="expand">
       <template #default="data">
         expand {{data.row}}

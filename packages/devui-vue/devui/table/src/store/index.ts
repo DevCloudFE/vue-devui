@@ -210,7 +210,7 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
   const { sortData, thList } = createSorter(dataSource, _data);
 
   const { isFixedLeft } = createFixedLogic(_columns);
-  const { _expandedRows, expandRow } = createExpandRow(dataSource, table.props.trackBy as (v: T) => string);
+  const { _expandedRows, toggleRow, isRowExpanded } = createExpandRow(dataSource, table.props.trackBy as (v: T) => string);
 
   return {
     _table: table,
@@ -230,7 +230,8 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
     removeColumn,
     updateColumns,
     getCheckedRows,
-    expandRow,
+    toggleRow,
+    isRowExpanded,
     sortData,
     isRowChecked,
     checkRow

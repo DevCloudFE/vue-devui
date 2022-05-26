@@ -30,7 +30,7 @@ export default defineComponent({
         {
           data.value.map((row: DefaultRow, rowIndex: number) => {
             return (
-              <tr key={rowIndex} class={{ 'hover-enabled': hoverEnabled.value }}>
+              <tr key={rowIndex} class={{ 'hover-enabled': hoverEnabled.value, 'expanded': table.store.isRowExpanded(row) }}>
                 {flatColumns.value.map((column: Column, columnIndex: number) => {
                   const cellId = `${rowIndex}-${columnIndex}`;
                   const [rowspan, colspan] = tableSpans.value[cellId] ?? [1, 1];

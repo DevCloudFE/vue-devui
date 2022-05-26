@@ -23,5 +23,6 @@ export interface TableStore<T = Record<string, any>> {
   sortData(direction: SortDirection, sortMethod: SortMethod<T>): void;
   isRowChecked(row: T): boolean;
   checkRow(toggle: boolean, row: T): void;
-  expandRow(): void;
+  toggleRow(row: T): void;
+  isRowExpanded(row: T): boolean;
 }

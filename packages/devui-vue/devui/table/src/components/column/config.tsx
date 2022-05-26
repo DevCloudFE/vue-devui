@@ -37,13 +37,13 @@ export const cellMap = {
     },
   },
   expand: {
-    renderHeader() {
+    renderHeader(): VNode {
       return <span></span>;
     },
-    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number) {
-      return <Icon name="chevron-right" onClick={() => {
+    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): VNode {
+      return <Icon name="chevron-right" class="icon-expand-row" onClick={() => {
         console.log('click', rowData, store);
-        store.expandRow();
+        store.toggleRow(rowData);
       }}></Icon>;
     }
   },
