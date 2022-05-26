@@ -110,7 +110,6 @@
 | avatar   | `string` | ''   | 头像     |
 | author   | `string` | ''   | 作者     |
 | datetime | `string` | ''   | 时间     |
-| actions  | `Array`  | []   | 操作按钮 |
 
 ### Comment 插槽
 
