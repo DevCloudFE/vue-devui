@@ -25,4 +25,5 @@ export interface TableStore<T = Record<string, any>> {
   checkRow(toggle: boolean, row: T): void;
   toggleRow(row: T): void;
   isRowExpanded(row: T): boolean;
+  getExpandedRows(): T;
 }

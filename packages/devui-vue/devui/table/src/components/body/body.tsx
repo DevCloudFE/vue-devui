@@ -11,7 +11,7 @@ export default defineComponent({
   name: 'DTableBody',
   setup() {
     const table = inject(TABLE_TOKEN) as Table;
-    const { _data: data, flatColumns, _expandedRows } = table.store.states;
+    const { _data: data, flatColumns } = table.store.states;
     const ns = useNamespace('table');
     const hoverEnabled = computed(() => table.props.rowHoveredHighlight);
     const { tableSpans, removeCells } = useMergeCell();
