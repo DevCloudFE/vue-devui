@@ -16,6 +16,7 @@ export interface UseFilterRender {
   showMenu: Ref<boolean>;
   filterMenuRef: Ref<HTMLElement | null>;
   filterIconRef: Ref<HTMLElement | null>;
+  iconClasses: Ref<{ [x: string]: boolean }>;
   handleIconClick: () => void;
   handleConfirm: (val: FilterConfig[]) => void;
   handleSelect: (val: FilterConfig) => void;
