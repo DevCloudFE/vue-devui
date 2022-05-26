@@ -171,10 +171,16 @@ const createExpandRow = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) 
     }
   };
 
+  const getExpandedRows = (): T[] => {
+    return dataSource.value.filter((item) => isRowExpanded(item));
+  };
+
+
   return {
     _expandedRows,
     toggleRow,
     isRowExpanded,
+    getExpandedRows,
   };
 };
 
@@ -209,7 +215,7 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
   const { sortData, thList } = createSorter(dataSource, _data);
 
   const { isFixedLeft } = createFixedLogic(_columns);
-  const { _expandedRows, toggleRow, isRowExpanded } = createExpandRow(dataSource, table.props.trackBy as (v: T) => string);
+  const { _expandedRows, toggleRow, isRowExpanded, getExpandedRows } = createExpandRow(dataSource, table.props.trackBy as (v: T) => string);
 
   return {
     _table: table,
@@ -231,8 +237,9 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
     getCheckedRows,
     toggleRow,
     isRowExpanded,
+    getExpandedRows,
     sortData,
     isRowChecked,
-    checkRow
+    checkRow,
   };
 }
