@@ -1,6 +1,6 @@
 import type { ComputedRef } from 'vue';
 
-export interface UseTabRender {
+export interface UseTabNavRender {
   ulClasses: ComputedRef<Record<string, boolean>>;
 }
 
@@ -10,6 +10,6 @@ export interface OffSetData {
   id: null;
 }
 
-export interface UseTabFunction {
+export interface UseTabNavFunction {
   activeClick: (item: any, tabEl?: any) => void;
 }
