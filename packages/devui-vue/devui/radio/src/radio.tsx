@@ -1,5 +1,5 @@
-import { defineComponent, ExtractPropTypes, SetupContext } from 'vue';
-import { radioProps } from './radio-types';
+import { defineComponent, SetupContext } from 'vue';
+import { radioProps, RadioProps } from './radio-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { useRadio } from './use-radio';
 import './radio.scss';
@@ -8,7 +8,7 @@ export default defineComponent({
   name: 'DRadio',
   props: radioProps,
   emits: ['change', 'update:modelValue'],
-  setup(props: ExtractPropTypes<typeof radioProps>, ctx: SetupContext) {
+  setup(props: RadioProps, ctx: SetupContext) {
     const ns = useNamespace('radio');
     const { isChecked, radioName, isDisabled, handleChange } = useRadio(props, ctx);
     return () => {

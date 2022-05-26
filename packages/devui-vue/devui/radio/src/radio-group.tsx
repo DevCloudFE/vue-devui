@@ -1,6 +1,6 @@
-import { defineComponent, ExtractPropTypes, SetupContext } from 'vue';
+import { defineComponent, SetupContext } from 'vue';
 import DRadio from './radio';
-import { radioGroupProps } from './radio-types';
+import { radioGroupProps, RadioGroupProps } from './radio-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { useRadioGroup } from './use-radio';
 import './radio-group.scss';
@@ -9,7 +9,7 @@ export default defineComponent({
   name: 'DRadioGroup',
   props: radioGroupProps,
   emits: ['change', 'update:modelValue'],
-  setup(props: ExtractPropTypes<typeof radioGroupProps>, ctx: SetupContext) {
+  setup(props: RadioGroupProps, ctx: SetupContext) {
     const ns = useNamespace('radio-group');
     useRadioGroup(props, ctx);
     return () => {
