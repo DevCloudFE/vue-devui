@@ -291,5 +291,49 @@ describe('select', () => {
       expect(popoverContent).toBeTruthy();
       wrapper.unmount();
     }, 150);
+    wrapper.unmount();
+  });
+
+  it('select filter work', async () => {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive(list);
+    const wrapper = mount({
+      setup() {
+        return () => <DSelect v-model={value.value} options={options} filter={true}></DSelect>;
+      },
+    });
+    const container = wrapper.find('.devui-select');
+
+    await container.trigger('click');
+    await nextTick();
+    const input = container.find<HTMLInputElement>('.devui-select__input');
+    await input.setValue('s');
+    const items = wrapper.findAll('.devui-select__item');
+    expect(items[0].isVisible()).toBe(false);
+    await input.setValue('1');
+    const newItems = wrapper.findAll('.devui-select__item');
+    expect(newItems[0].isVisible()).toBe(true);
+    wrapper.unmount();
+  });
+
+  it('select allow create work', async () => {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive(list);
+    const wrapper = mount({
+      setup() {
+        return () => <DSelect v-model={value.value} options={options} multiple={true} filter={true}></DSelect>;
+      },
+    });
+    const input = wrapper.find('.devui-select__input');
+
+    await input.trigger('click');
+    await nextTick();
+    await input.setValue('test');
+    const items = wrapper.findAll('.devui-select__item');
+    await items[0].trigger('click');
+    expect(value.value).toStrictEqual(['test']);
+    wrapper.unmount();
   });
 });
