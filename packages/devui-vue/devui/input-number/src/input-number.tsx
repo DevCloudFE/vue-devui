@@ -1,41 +1,41 @@
 import { defineComponent, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { inputNumberProps, InputNumberProps } from './input-number-types';
-import Icon from '../../icon/src/icon';
-import { useRender, useEvent } from './use-input-number';
+import { IncIcon, DecIcon } from './input-number-icons';
+import { useRender, useEvent, useExpose } from './use-input-number';
 import './input-number.scss';
 
 export default defineComponent({
   name: 'DInputNumber',
   props: inputNumberProps,
-  emits: ['update:modelValue', 'change', 'input', 'focus', 'blur', 'keydown'],
+  emits: ['update:modelValue', 'change', 'input'],
   setup(props: InputNumberProps, ctx: SetupContext) {
     const { disabled } = toRefs(props);
-    const { isFocus, wrapClass, controlButtonClass, inputWrapClass, inputInnerClass } = useRender(props);
-    const { inputVal, onAdd, onSubtract, onInput, onFocus, onBlur, onChange, onKeydown } = useEvent(props, ctx, isFocus);
+    const { wrapClass, customStyle, otherAttrs, controlButtonsClass, inputWrapClass, inputInnerClass } = useRender(props, ctx);
+    const { inputVal, minDisabled, maxDisabled, onAdd, onSubtract, onInput, onChange } = useEvent(props, ctx);
+    const { inputRef } = useExpose(ctx);
 
     return () => (
-      <div class={wrapClass.value}>
-        <div onBlur={onBlur} class={controlButtonClass.value}>
-          <span onClick={onAdd}>
-            <Icon size="12px" name="chevron-up"></Icon>
+      <div class={wrapClass.value} {...customStyle}>
+        <div class={controlButtonsClass.value}>
+          <span class={['control-button control-inc', { disabled: maxDisabled.value }]} onClick={onAdd}>
+            <IncIcon />
           </span>
-          <span onClick={onSubtract}>
-            <Icon size="12px" name="chevron-down"></Icon>
+          <span class={['control-button control-dec', { disabled: minDisabled.value }]} onClick={onSubtract}>
+            <DecIcon />
           </span>
         </div>
-        <div class={inputWrapClass}>
+        <div class={inputWrapClass.value}>
           <input
             type="number"
+            ref={inputRef}
             value={inputVal.value}
             placeholder={props.placeholder}
             disabled={disabled.value}
             class={inputInnerClass.value}
+            {...otherAttrs}
             onInput={onInput}
             onChange={onChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            onKeydown={onKeydown}
           />
         </div>
       </div>
