@@ -1,6 +1,6 @@
 import type { App } from 'vue';
 import Tabs from './src/tabs';
-import Tab from './src/tab';
+import Tab from './src/components/tab/tab';
 
 export * from './src/tabs-types';
 
@@ -13,5 +13,5 @@ export default {
   install(app: App): void {
     app.component(Tabs.name, Tabs);
     app.component(Tab.name, Tab);
-  }
+  },
 };
