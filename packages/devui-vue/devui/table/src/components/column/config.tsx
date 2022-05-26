@@ -4,6 +4,7 @@ import { DefaultRow } from '../../table-types';
 import { Column } from './column-types';
 import { TableStore } from '../../store/store-types';
 import { Checkbox } from '../../../../checkbox';
+import { Icon } from '../../../../icon';
 
 export const cellMap = {
   checkable: {
@@ -35,6 +36,17 @@ export const cellMap = {
     renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): number {
       return rowIndex + 1;
     },
+  },
+  expand: {
+    renderHeader() {
+      return <span></span>;
+    },
+    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number) {
+      return <Icon name="chevron-right" onClick={() => {
+        console.log('click', rowData, store);
+        store.expandRow();
+      }}></Icon>;
+    }
   },
   default: {
     renderHeader(column: Column): VNode {

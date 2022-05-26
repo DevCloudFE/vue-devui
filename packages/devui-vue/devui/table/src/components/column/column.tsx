@@ -22,7 +22,7 @@ export default defineComponent({
   props: tableColumnProps,
   emits: ['filter-change', 'resize-start', 'resizing', 'resize-end'],
   setup(props: TableColumnProps, ctx: SetupContext) {
-    const { reserveCheck } = toRefs(props);
+    const { reserveCheck, type } = toRefs(props);
     const instance = getCurrentInstance() as TableColumn;
     const column = createColumn(toRefs(props), ctx.slots);
     const owner = inject(TABLE_TOKEN) as Table<DefaultRow>;
@@ -84,11 +84,11 @@ export default defineComponent({
 
       return (
         <div>
-          {Array.isArray(defaultSlot) ? (
-            defaultSlot.filter((child) => child.type.name === 'DColumn').map((child) => <>{child}</>)
-          ) : (
-            <div></div>
-          )}
+          {
+            Array.isArray(defaultSlot)
+              ? defaultSlot.filter((child) => child.type.name === 'DColumn').map((child) => <>{child}</>)
+              : <div></div>
+          }
         </div>
       );
     };

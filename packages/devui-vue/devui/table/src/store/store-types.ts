@@ -14,6 +14,7 @@ export interface TableStore<T = Record<string, any>> {
     _halfChecked: Ref<boolean>;
     isFixedLeft: Ref<boolean>;
     thList: ComponentInternalInstance[];
+    _expandedRows: Ref<Set<string>>;
   };
   insertColumn(column: Column, parent: any): void;
   sortColumn(): void;
@@ -21,4 +22,5 @@ export interface TableStore<T = Record<string, any>> {
   updateColumns(): void;
   getCheckedRows(): T[];
   sortData(direction: SortDirection, sortMethod: SortMethod<T>): void;
+  expandRow(): void;
 }

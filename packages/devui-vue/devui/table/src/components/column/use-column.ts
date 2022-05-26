@@ -39,7 +39,7 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
   }
 
   function renderCell(rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) {
-    if (slots.default) {
+    if (slots.default && columnItem.type !== 'expand') {
       return slots.default({ row: rowData, rowIndex });
     }
     return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex);

@@ -21,30 +21,38 @@ export default defineComponent({
 
     return () => (
       <tbody class={ns.e('tbody')}>
-        {data.value.map((row: DefaultRow, rowIndex: number) => {
-          return (
-            <tr key={rowIndex} class={{ 'hover-enabled': hoverEnabled.value }}>
-              {flatColumns.value.map((column: Column, columnIndex: number) => {
-                const cellId = `${rowIndex}-${columnIndex}`;
-                const [rowspan, colspan] = tableSpans.value[cellId] ?? [1, 1];
+        {
+          flatColumns.value.some((column: Column) => column.type === 'expand') &&
+          <tr>
+            <td colspan={flatColumns.value.length}>expand content</td>
+          </tr>
+        }
+        {
+          data.value.map((row: DefaultRow, rowIndex: number) => {
+            return (
+              <tr key={rowIndex} class={{ 'hover-enabled': hoverEnabled.value }}>
+                {flatColumns.value.map((column: Column, columnIndex: number) => {
+                  const cellId = `${rowIndex}-${columnIndex}`;
+                  const [rowspan, colspan] = tableSpans.value[cellId] ?? [1, 1];
 
-                if (removeCells.value.includes(cellId)) {
-                  return null;
-                }
-                return (
-                  <TD
-                    column={column}
-                    index={rowIndex}
-                    row={row}
-                    rowspan={rowspan}
-                    colspan={colspan}
-                    onClick={() => onCellClick({ rowIndex, columnIndex, column, row })}
-                  />
-                );
-              })}
-            </tr>
-          );
-        })}
+                  if (removeCells.value.includes(cellId)) {
+                    return null;
+                  }
+                  return (
+                    <TD
+                      column={column}
+                      index={rowIndex}
+                      row={row}
+                      rowspan={rowspan}
+                      colspan={colspan}
+                      onClick={() => onCellClick({ rowIndex, columnIndex, column, row })}
+                    />
+                  );
+                })}
+              </tr>
+            );
+          })
+        }
       </tbody>
     );
   },
