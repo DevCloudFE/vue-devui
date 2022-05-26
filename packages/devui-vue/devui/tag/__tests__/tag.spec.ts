@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { Tag } from '../index';
+import { ref } from 'vue';
 
 describe('tag test', () => {
   it('init render', async () => {
@@ -47,25 +48,27 @@ describe('tag test', () => {
     await wrapper.setProps({ deletable: true });
     expect(wrapper.find('.remove-button').exists()).toBeTruthy();
   });
-  it('props deletable hide', async () => {
-    const wrapper = mount(Tag, {
-      propsData: {
-        deletable: true,
+  it('props deletable hide and event tagDelete', async () => {
+    const wrapper = mount({
+      components: { Tag },
+      template: `
+        <tag v-if="showTag" deletable @tagDelete="tagDelete">标签</tag>
+      `,
+      setup() {
+        const showTag = ref(true);
+        const tagDelete = () => {
+          showTag.value = false;
+        };
+        return {
+          showTag,
+          tagDelete,
+        };
       },
     });
     const btn = wrapper.find('.remove-button');
     expect(btn.exists()).toBeTruthy();
     await btn.trigger('click');
     expect(wrapper.find('.devui-tag').exists()).toBeFalsy();
-  });
-  it('event tagDelete', async () => {
-    const wrapper = mount(Tag, {
-      propsData: {
-        deletable: true,
-      },
-    });
-    await wrapper.find('.remove-button').trigger('click');
-    expect(wrapper.emitted('tagDelete').length).toBeGreaterThan(0);
   });
 
   it('props checked', async () => {

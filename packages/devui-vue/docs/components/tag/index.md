@@ -117,20 +117,20 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-tag deletable @tag-delete="handleClose">tag1</d-tag>
-    <d-tag type="primary" deletable @tag-delete="handleClose">tag2</d-tag>
-    <d-tag color="#39afcc" deletable @tag-delete="handleClose">tag3</d-tag>
+    <d-tag v-for="item in tagList" deletable :key="item" @tag-delete="() => handleClose(item)">{{ item }}</d-tag>
   </div>
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const handleClose = () => {
-      console.log('handleClose');
+    const tagList = ref(['tag1', 'tag2', 'tag3']);
+    const handleClose = (item: string) => {
+      tagList.value.splice(tagList.value.indexOf(item), 1);
     };
     return {
+      tagList,
       handleClose,
     };
   },
