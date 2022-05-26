@@ -98,6 +98,8 @@ export interface UseSelectReturnType {
   handleClose: () => void;
   updateInjectOptions: (item: Record<string, unknown>, operation: string) => void;
   tagDelete: (data: OptionObjectItem) => void;
+  onFocus: (e: FocusEvent) => void;
+  onBlur: (e: FocusEvent) => void;
   debounceQueryFilter: (query: string) => void;
 }
 
@@ -109,6 +111,8 @@ export interface SelectContext extends SelectProps {
   handleClear: () => void;
   updateInjectOptions: (item: Record<string, unknown>, operation: string) => void;
   tagDelete: (data: OptionObjectItem) => void;
+  onFocus: (e: FocusEvent) => void;
+  onBlur: (e: FocusEvent) => void;
   debounceQueryFilter: (query: string) => void;
 }
 
@@ -158,5 +162,7 @@ export interface UseSelectContentReturnType {
   isMultiple: ComputedRef<boolean>;
   handleClear: (e: MouseEvent) => void;
   tagDelete: (data: OptionObjectItem) => void;
+  onFocus: (e: FocusEvent) => void;
+  onBlur: (e: FocusEvent) => void;
   queryFilter: (e: Event) => void;
 }

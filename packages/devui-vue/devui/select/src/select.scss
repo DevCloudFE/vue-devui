@@ -18,6 +18,22 @@ $select-item-min-height: 36px;
 .#{$devui-prefix}-select {
   position: relative;
   width: 100%;
+
+  &__selection {
+    &:hover {
+      border-color: $devui-form-control-line-hover;
+    }
+  }
+
+  &--open {
+    .#{$devui-prefix}-select__selection {
+      border-color: $devui-form-control-line-active;
+
+      &:hover {
+        border-color: $devui-form-control-line-active;
+      }
+    }
+  }
 }
 
 .#{$devui-prefix}-select--underlined {

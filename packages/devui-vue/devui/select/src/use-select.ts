@@ -154,6 +154,14 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     updateMultipleData(data);
   };
 
+  const onFocus = (e: FocusEvent) => {
+    ctx.emit('focus', e);
+  };
+
+  const onBlur = (e: FocusEvent) => {
+    ctx.emit('blur', e);
+  };
+
   const filterQuery = ref('');
   const queryChange = (query: string) => {
     filterQuery.value = query;
@@ -192,6 +200,8 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     handleClose,
     updateInjectOptions,
     tagDelete,
+    onFocus,
+    onBlur,
     debounceQueryFilter,
   };
 }

@@ -64,6 +64,14 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     }
   };
 
+  const onFocus = (e: FocusEvent) => {
+    select?.onFocus(e);
+  };
+
+  const onBlur = (e: FocusEvent) => {
+    select?.onBlur(e);
+  };
+
   const queryFilter = (e: Event) => {
     e.preventDefault();
     e.stopPropagation();
@@ -86,6 +94,8 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     isMultiple,
     handleClear,
     tagDelete,
+    onFocus,
+    onBlur,
     queryFilter,
   };
 }
