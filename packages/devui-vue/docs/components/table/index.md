@@ -1051,7 +1051,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource" :trackBy="(item) => item?.firstName">
+  <d-table :data="dataSource" :trackBy="(item) => item?.firstName" @expand-change="expandChange">
     <d-column type="expand">
       <template #default="rowData">
         <div>First Name: {{rowData.row.firstName}}</div>
@@ -1099,7 +1099,11 @@ export default defineComponent({
       },
     ]);
 
-    return { dataSource };
+    const expandChange = (currentRow, expandedRows) => {
+      console.log('currentRow, expandedRows', currentRow, expandedRows);
+    }
+
+    return { dataSource, expandChange };
   },
 });
 </script>
