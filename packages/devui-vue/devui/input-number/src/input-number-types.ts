@@ -12,7 +12,7 @@ export const inputNumberProps = {
   },
   step: {
     type: Number,
-    default: 0,
+    default: 1,
   },
   max: {
     type: Number,
@@ -28,27 +28,38 @@ export const inputNumberProps = {
   },
   modelValue: {
     type: Number,
-    default: 0,
+  },
+  precision: {
+    type: Number,
   },
 } as const;
 
 export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>;
 
+export interface IState {
+  currentValue: number | string | undefined;
+  userInputValue: number | string | undefined;
+}
+
+export interface UseExpose {
+  inputRef: Ref<HTMLElement>;
+}
+
 export interface UseRender {
-  isFocus: Ref<boolean>;
-  wrapClass: ComputedRef<Record<string, boolean>>;
-  controlButtonClass: ComputedRef<Record<string, boolean>>;
-  inputWrapClass: string;
+  wrapClass: ComputedRef<unknown[]>;
+  customStyle: unknown;
+  otherAttrs: unknown;
+  controlButtonsClass: ComputedRef<Record<string, boolean>>;
+  inputWrapClass: ComputedRef<Record<string, boolean>>;
   inputInnerClass: ComputedRef<Record<string, boolean>>;
 }
 
 export interface UseEvent {
-  inputVal: Ref<number>;
+  inputVal: ComputedRef<number | string>;
+  minDisabled: ComputedRef<boolean>;
+  maxDisabled: ComputedRef<boolean>;
   onAdd: () => void;
   onSubtract: () => void;
   onInput: (val: Event) => void;
-  onFocus: (event: Event) => void;
-  onBlur: (event: Event) => void;
   onChange: (event: Event) => void;
-  onKeydown: (event: KeyboardEvent) => void;
 }

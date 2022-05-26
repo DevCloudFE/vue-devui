@@ -4,53 +4,28 @@
   position: relative;
   display: inline-block;
   width: 80px;
-  line-height: 38px;
-  margin-right: 12px;
 
-  &:hover:not(.#{$devui-prefix}-input-number--disabled) {
-    .#{$devui-prefix}-input-number__input-box {
-      border-color: var(--devui-form-control-line-hover);
+  &:hover {
+    .#{$devui-prefix}-input-number__input-box:not(.disabled) {
+      border: 1px solid $devui-form-control-line-hover;
+      padding-right: 24px;
     }
 
-    .#{$devui-prefix}-input-number__control-button:not(.disabled) {
+    .#{$devui-prefix}-input-number__control-buttons:not(.disabled) {
       display: flex;
-      border-color: var(--devui-form-control-line-hover);
+      border-color: $devui-form-control-line-hover;
     }
   }
 
   &:focus-within {
-    .#{$devui-prefix}-input-number__control-button {
+    .#{$devui-prefix}-input-number__input-box:not(.disabled) {
+      border: 1px solid $devui-form-control-line-active;
+      padding-right: 24px;
+    }
+
+    .#{$devui-prefix}-input-number__control-buttons:not(.disabled) {
       display: flex;
-    }
-  }
-
-  .active {
-    border: 1px solid var(--devui-form-control-line-active) !important;
-    display: flex !important;
-  }
-
-  &.#{$devui-prefix}-input-number--disabled {
-    .#{$devui-prefix}-subtract,
-    .#{$devui-prefix}-add,
-    .#{$devui-prefix}-input-number__input-style {
-      cursor: not-allowed;
-      border-color: #e4e7ed;
-      color: #e4e7ed;
-    }
-
-    .#{$devui-prefix}-input-number__input-style {
-      border-color: var(--devui-disabled-line) !important;
-      color: var(--devui-disabled-text) !important;
-      background-color: var(--devui-disabled-bg) !important;
-    }
-  }
-
-  &.#{$devui-prefix}-input-number--sm {
-    width: 60px;
-
-    .#{$devui-prefix}-input-number__input-box {
-      height: 26px;
-      line-height: 26px;
+      border-color: $devui-form-control-line-active;
     }
   }
 
@@ -63,97 +38,34 @@
     }
   }
 
-  &.#{$devui-prefix}-input-number--lg {
-    width: 100px;
-
-    .#{$devui-prefix}-input-number__input-box {
-      height: 38px;
-      line-height: 38px;
-    }
-  }
-
-  .#{$devui-prefix}-input-number__input-wrap {
-    line-height: 100%;
-  }
-
-  .#{$devui-prefix}-input-number__input-style::-webkit-outer-spin-button,
-  .#{$devui-prefix}-input-number__input-style::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  .#{$devui-prefix}-add,
-  .#{$devui-prefix}-subtract {
-    display: inline-block;
-    width: 50px;
-    height: 38px;
-    line-height: 38px;
-    text-align: center;
-    font-size: 16px;
-    color: #333333;
-    background: #f5f7fa;
-    cursor: pointer;
-    border: 1px solid #dcdfe6;
-  }
-
-  .#{$devui-prefix}-add {
-    float: right;
-    margin-left: -1px;
-    border-radius: 0 4px 4px 0;
-  }
-
-  .#{$devui-prefix}-subtract {
-    float: left;
-    margin-right: -1px;
-    border-radius: 4px 0 0 4px;
-  }
-
-  .#{$devui-prefix}-input-number__input-style {
-    display: block;
-    -moz-appearance: textfield;
-  }
-
-  .#{$devui-prefix}-input-number__input-style {
-    outline: none;
-    background-color: var(--devui-base-bg);
-    border: 1px solid var(--devui-form-control-line);
-    border-radius: var(--devui-border-radius);
-    padding: 4px 8px;
-    line-height: 18px;
-    font-size: var(--devui-font-size);
-    color: var(--devui-text);
-    width: 100%;
-    display: block;
-    cursor: text;
-    height: 28px;
-    transition: border-color 0.3s var(--devui-animation-ease-in-out-smooth);
-  }
-
   .#{$devui-prefix}-input-number__input-box {
     box-sizing: border-box;
     padding: 4px 8px;
-    font-size: var(--devui-font-size);
-    vertical-align: middle;
-    border-radius: var(--devui-border-radius);
+    font-size: $devui-font-size;
+    border-radius: $devui-border-radius;
+    border: 1px solid $devui-form-control-line;
     outline: none;
     width: 100%;
     line-height: 20px;
     height: 28px;
-    border-width: 1px;
-    border-style: solid;
+    display: block;
+    cursor: text;
+    -moz-appearance: textfield;
+    transition: border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
 
     &:not(.disabled) {
-      background-color: var(--devui-base-bg);
-      border-color: var(--devui-line);
-      color: var(--devui-text);
+      background-color: $devui-base-bg;
+      border-color: $devui-line;
+      color: $devui-text;
+    }
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
     }
   }
 
-  .disabled {
-    cursor: not-allowed;
-  }
-
-  .#{$devui-prefix}-input-number__control-button {
+  .#{$devui-prefix}-input-number__control-buttons {
     display: none;
     position: absolute;
     right: 0;
@@ -162,17 +74,107 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-left: 1px solid var(--devui-line);
+    border: 1px solid transparent;
+    border-left-color: $devui-line;
     box-sizing: border-box;
     line-height: 100%;
-    border-radius: 0 var(--devui-border-radius) var(--devui-border-radius) 0;
+    border-radius: 0 $devui-border-radius $devui-border-radius 0;
 
-    &:not(.disabled) {
-      cursor: pointer;
+    &.disabled {
+      border-left-color: $devui-disabled-line;
     }
 
-    & > span {
+    .control-button {
+      user-select: none;
+      box-sizing: border-box;
+      height: 50%;
+      line-height: 50%;
+      border-width: 0 1px;
+      transition: transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
       display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $devui-base-bg;
+
+      &.control-inc svg {
+        position: relative;
+        top: 2px;
+        transform: rotate(180deg);
+      }
+
+      &.control-dec svg {
+        position: relative;
+        bottom: 2px;
+      }
+
+      svg path {
+        fill: $devui-text-weak;
+      }
+
+      &:not(.disabled) {
+        cursor: pointer;
+
+        &:hover {
+          & > svg path {
+            fill: $devui-icon-fill-active-hover;
+          }
+        }
+      }
+
+      &.disabled {
+        & > svg path {
+          fill: $devui-disabled-text;
+        }
+      }
     }
+  }
+
+  .#{$devui-prefix}-input-number--lg {
+    & > .#{$devui-prefix}-input-number__input-box {
+      font-size: $devui-font-size-lg;
+      line-height: 24px;
+      height: 46px;
+    }
+
+    &.#{$devui-prefix}-input-number__control-buttons .control-button .#{$devui-prefix}-input-number__icon-arrow {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .#{$devui-prefix}-input-number--md {
+    & > .#{$devui-prefix}-input-number__input-box {
+      font-size: $devui-font-size;
+      line-height: 20px;
+      height: 28px;
+    }
+  }
+
+  .#{$devui-prefix}-input-number--sm {
+    & > .#{$devui-prefix}-input-number__input-box {
+      font-size: $devui-font-size-sm;
+      line-height: 18px;
+      height: 26px;
+    }
+
+    &.#{$devui-prefix}-input-number__control-buttons .control-button {
+      &:first-child .#{$devui-prefix}-input-number__icon-arrow {
+        width: 14px;
+        height: 14px;
+      }
+
+      &:last-child .#{$devui-prefix}-input-number__icon-arrow {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
+  .#{$devui-prefix}-input-number__input-wrap {
+    line-height: 100%;
+  }
+
+  .disabled {
+    cursor: not-allowed;
   }
 }
