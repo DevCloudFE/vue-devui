@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance, SetupContext } from 'vue';
+import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance, SetupContext, Slots } from 'vue';
 import { DefaultRow } from '../../table-types';
 import { TableStore } from '../../store/store-types';
 
@@ -7,7 +7,7 @@ export type Formatter = (row: DefaultRow, column: Column, cellValue: any, rowInd
 
 export type SortMethod<T = any> = (a: T, b: T) => boolean;
 
-export type ColumnType = 'checkable' | 'index' | '';
+export type ColumnType = 'checkable' | 'index' | 'expand' | '';
 
 export type SortDirection = 'ASC' | 'DESC' | '';
 
@@ -129,6 +129,7 @@ export interface Column {
   formatter?: Formatter;
   sortMethod?: SortMethod;
   subColumns?: Slot;
+  slots: Slots;
 }
 
 export interface TableColumn extends ComponentInternalInstance {

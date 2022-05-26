@@ -39,7 +39,7 @@ export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: S
   }
 
   function renderCell(rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) {
-    if (ctx.slots.default) {
+    if (ctx.slots.default && columnItem.type !== 'expand') {
       return ctx.slots.default({ row: rowData, rowIndex });
     }
     return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex);
@@ -131,6 +131,7 @@ export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: S
     column.formatter = formatter?.value;
     column.customFilterTemplate = ctx.slots.customFilterTemplate;
     column.subColumns = ctx.slots.subColumns;
+    column.slots = ctx.slots;
   });
 
   return column;
