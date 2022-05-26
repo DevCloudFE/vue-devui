@@ -34,7 +34,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={selectionCls.value} ref="selectContent">
+        <div class={selectionCls.value}>
           {isMultiple.value ? (
             <div class={multipleCls}>
               {!isSupportCollapseTags.value &&

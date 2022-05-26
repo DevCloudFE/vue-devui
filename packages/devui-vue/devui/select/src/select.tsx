@@ -63,7 +63,7 @@ export default defineComponent({
       return (
         <div class={selectCls.value} ref={containerRef} onClick={onClick}>
           <SelectContent ref={selectRef} value={inputValue.value}></SelectContent>
-          <div name="fade" ref={dropdownRef}>
+          <Transition name="fade" ref={dropdownRef}>
             <div v-show={isOpen.value} class={dropdownCls}>
               <ul class={listCls}>
                 {isShowCreateOption.value && (
@@ -93,7 +93,7 @@ export default defineComponent({
                   ))}
               </ul>
             </div>
-          </div>
+          </Transition>
         </div>
       );
     };
