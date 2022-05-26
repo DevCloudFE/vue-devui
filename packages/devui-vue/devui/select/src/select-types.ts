@@ -1,4 +1,4 @@
-import { PropType, ComputedRef, ExtractPropTypes, Ref, SetupContext } from 'vue';
+import { PropType, ComputedRef, ExtractPropTypes, Ref } from 'vue';
 
 export interface OptionObjectItem {
   name: string;
@@ -11,7 +11,7 @@ export type OptionItem = number | string | ({ value: string | number } & Partial
 export type Options = Array<OptionItem>;
 
 export type ModelValue = number | string | Array<number | string>;
-export type filterVale = boolean | ((query: string, callback?: () => void) => void);
+export type filterValue = boolean | ((query: string, callback?: () => void) => void);
 export const selectProps = {
   modelValue: {
     type: [String, Number, Array] as PropType<ModelValue>,
@@ -62,7 +62,7 @@ export const selectProps = {
     default: false,
   },
   filter: {
-    type: [Boolean, Function] as PropType<filterVale>,
+    type: [Boolean, Function] as PropType<filterValue>,
     default: false,
   },
   remote: {
@@ -154,7 +154,6 @@ export interface UseSelectContentReturnType {
   selectedData: ComputedRef<OptionObjectItem[]>;
   isSelectDisable: ComputedRef<boolean>;
   isSupportCollapseTags: ComputedRef<boolean>;
-  isSupportTagsTooltip: ComputedRef<boolean>;
   isDisabledTooltip: ComputedRef<boolean>;
   isReadOnly: ComputedRef<boolean>;
   selectionCls: ComputedRef<string>;
