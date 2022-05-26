@@ -12,6 +12,14 @@
         background-color: $devui-list-item-hover-bg;
       }
 
+      td .icon-expand-row:hover {
+        cursor: pointer;
+      }
+
+      &.expanded td .icon-expand-row {
+        transform: rotate(90deg);
+      }
+
       td {
         background-clip: padding-box;
         vertical-align: middle;

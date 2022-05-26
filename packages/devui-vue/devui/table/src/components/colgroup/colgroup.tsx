@@ -11,9 +11,17 @@ export default defineComponent({
     return () => (
       <colgroup>
         {columns?.value.map((column: Column, index: number) => {
-          return (
-            <col key={index} column-id={isFixed.value ? column.id : ''} width={isFixed.value ? column.realWidth : column.width || ''}></col>
-          );
+          return <col
+            key={index}
+            column-id={isFixed.value ? column.id : ''}
+            width={
+              column.type === 'expand'
+                ? 60
+                : isFixed.value
+                  ? column.realWidth
+                  : column.width || ''
+            }
+          ></col>;
         })}
       </colgroup>
     );

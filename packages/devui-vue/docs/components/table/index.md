@@ -1045,6 +1045,68 @@ export default defineComponent({
 
 :::
 
+### 展开行
+
+:::demo
+
+```vue
+<template>
+  <d-table :data="dataSource" :trackBy="(item) => item?.firstName">
+    <d-column type="expand">
+      <template #default="rowData">
+        <div>First Name: {{rowData.row.firstName}}</div>
+        <div>Last Name: {{rowData.row.lastName}}</div>
+        <div>Gender: {{rowData.row.gender}}</div>
+        <div>Date of birth: {{rowData.row.date}}</div>
+      </template>
+    </d-column>
+    <d-column field="firstName" header="First Name"></d-column>
+    <d-column field="lastName" header="Last Name"></d-column>
+    <d-column field="gender" header="Gender"></d-column>
+    <d-column field="date" header="Date of birth"></d-column>
+  </d-table>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const dataSource = ref([
+      {
+        firstName: 'Jacob',
+        lastName: 'Thornton',
+        gender: 'Female',
+        date: '1990/01/12',
+      },
+      {
+        firstName: 'Mark',
+        lastName: 'Otto',
+        date: '1990/01/11',
+        gender: 'Male',
+      },
+      {
+        firstName: 'Danni',
+        lastName: 'Chen',
+        gender: 'Female',
+        date: '1990/01/13',
+      },
+      {
+        firstName: 'Green',
+        lastName: 'Gerong',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+    ]);
+
+    return { dataSource };
+  },
+});
+</script>
+```
+
+:::
+
 ### Table 参数
 
 | 参数名                | 类型                      | 默认值    | 说明                                                                       | 跳转 Demo                 |

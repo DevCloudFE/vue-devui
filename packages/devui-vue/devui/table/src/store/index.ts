@@ -156,6 +156,28 @@ const createFixedLogic = (columns: Ref<Column[]>) => {
   return { isFixedLeft };
 };
 
+const createExpandRow = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) => {
+  const _expandedRows = ref(new Set());
+
+  const isRowExpanded = (row: T): boolean => {
+    return _expandedRows.value.has(trackBy(row));
+  };
+
+  const toggleRow = (row: T) => {
+    if (isRowExpanded(row)) {
+      _expandedRows.value.delete(trackBy(row));
+    } else {
+      _expandedRows.value.add(trackBy(row));
+    }
+  };
+
+  return {
+    _expandedRows,
+    toggleRow,
+    isRowExpanded,
+  };
+};
+
 export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): TableStore<T> {
   const _data: Ref<T[]> = ref([]);
   watch(
@@ -187,6 +209,7 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
   const { sortData, thList } = createSorter(dataSource, _data);
 
   const { isFixedLeft } = createFixedLogic(_columns);
+  const { _expandedRows, toggleRow, isRowExpanded } = createExpandRow(dataSource, table.props.trackBy as (v: T) => string);
 
   return {
     _table: table,
@@ -199,12 +222,15 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
       _halfChecked,
       isFixedLeft,
       thList,
+      _expandedRows,
     },
     insertColumn,
     sortColumn,
     removeColumn,
     updateColumns,
     getCheckedRows,
+    toggleRow,
+    isRowExpanded,
     sortData,
     isRowChecked,
     checkRow
