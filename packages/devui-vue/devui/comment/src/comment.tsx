@@ -13,22 +13,7 @@ export default defineComponent({
   props: commentProps,
   setup(props: CommentProps, { slots }) {
     const ns = useNamespace('comment');
-    const { avatar, author, datetime, actions } = toRefs(props);
-
-    const getAction = (actions: []) => {
-      if (!actions || !actions.length) {
-        return null;
-      }
-      const actionList = actions.map((action: [], index: number) => (
-        <li key={`devui-comment-action-${index}`} class={`devui-comment-action-${index}`}>
-          {action}
-        </li>
-      ));
-      return actionList;
-    };
-
-    const actionsList = Array.isArray(actions.value) ? actions.value : [actions.value];
-    const actionDom = actions.value ? <ul class={`devui-comment-actions`}>{getAction(actionsList)}</ul> : null;
+    const { avatar, author, datetime } = toRefs(props);
 
     return () => {
       return (
@@ -59,9 +44,7 @@ export default defineComponent({
             }
             <div class={ns.e('content')}>{ slots.default?.() }</div>
             {
-              slots.actions
-                ? slots.actions?.()
-                : actionDom
+              slots.actions?.()
             }
           </div>
         </div>

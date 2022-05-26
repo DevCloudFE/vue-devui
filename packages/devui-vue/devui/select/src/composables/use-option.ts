@@ -46,9 +46,8 @@ export default function useOption(props: OptionProps): UseOptionReturnType {
 
   const isVisible = computed(() => {
     if (select?.filterQuery) {
-      const reg = new RegExp(escapeStringRegexp(select?.filterQuery), 'i');
-      console.log(reg.test(currentName.value + ''));
-      return reg.test(currentName.value + '');
+      const query = select?.filterQuery.toLocaleLowerCase().trim();
+      return currentName.value.toString().toLocaleLowerCase().includes(query);
     } else {
       return true;
     }

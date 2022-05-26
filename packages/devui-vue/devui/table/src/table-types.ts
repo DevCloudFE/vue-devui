@@ -88,13 +88,16 @@ export const TableProps = {
   rowKey: {
     type: String,
   },
+  trackBy: {
+    type: Function as PropType<(v: Record<string, any>) => string>,
+  }
 };
 
 export type TablePropsTypes = ExtractPropTypes<typeof TableProps>;
 
 export type DefaultRow = TablePropsTypes['data'][number];
 
-export interface Table<T> extends ComponentInternalInstance {
+export interface Table<T = DefaultRow> extends ComponentInternalInstance {
   store: TableStore<T>;
   props: TablePropsTypes;
   tableId: string;

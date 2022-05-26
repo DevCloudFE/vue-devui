@@ -1,12 +1,12 @@
-import { watch, reactive, onBeforeMount, computed, h, getCurrentInstance } from 'vue';
+import { watch, reactive, onBeforeMount, computed, h, getCurrentInstance, Ref, VNode, SetupContext } from 'vue';
 import type { ToRefs, Slots, ComputedRef } from 'vue';
 import { Table, DefaultRow } from '../../table-types';
-import { Column, TableColumnProps, TableColumn } from './column-types';
+import { Column, TableColumnProps, TableColumn, SortDirection, SortMethod } from './column-types';
 import { TableStore } from '../../store/store-types';
 import { formatWidth } from '../../utils';
 import { cellMap } from './config';
 
-export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Column {
+export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: SetupContext): Column {
   const {
     type,
     field,
@@ -28,25 +28,25 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
     showOverflowTooltip,
     resizeable,
   } = props;
-  const column: Column = reactive({});
+  const column: Column = reactive({ id });
   column.type = type.value;
 
   function renderHeader(columnItem: Column, store: TableStore) {
-    if (slots.header) {
-      return slots.header(columnItem);
+    if (ctx.slots.header) {
+      return ctx.slots.header(columnItem);
     }
     return cellMap[type.value || 'default'].renderHeader(columnItem, store);
   }
 
   function renderCell(rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) {
-    if (slots.default && columnItem.type !== 'expand') {
-      return slots.default({ row: rowData, rowIndex });
+    if (ctx.slots.default && columnItem.type !== 'expand') {
+      return ctx.slots.default({ row: rowData, rowIndex });
     }
     return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex);
   }
 
   watch(
-    [field, header, order],
+    [field, header, order] as [Ref<string>, Ref<string>, Ref<number>],
     ([fieldVal, headerVal, orderVal]) => {
       column.field = fieldVal;
       column.header = headerVal;
@@ -57,7 +57,7 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
 
   // 排序功能
   watch(
-    [sortable, sortDirection, sortMethod],
+    [sortable, sortDirection, sortMethod] as [Ref<boolean>, Ref<SortDirection>, Ref<SortMethod>],
     ([sortableVal, sortDirectionVal, sortMethodVal]) => {
       column.sortable = sortableVal;
       column.sortDirection = sortDirectionVal;
@@ -79,7 +79,7 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
 
   // 固定左右功能
   watch(
-    [fixedLeft, fixedRight],
+    [fixedLeft, fixedRight] as Ref<string>[],
     ([left, right]) => {
       column.fixedLeft = left;
       column.fixedRight = right;
@@ -125,11 +125,12 @@ export function createColumn(props: ToRefs<TableColumnProps>, slots: Slots): Col
 
   // 基础渲染功能
   onBeforeMount(() => {
-    column.renderHeader = renderHeader;
-    column.renderCell = renderCell;
+    column.id = id;
+    column.renderHeader = renderHeader as () => VNode;
+    column.renderCell = renderCell as () => VNode;
     column.formatter = formatter?.value;
-    column.customFilterTemplate = slots.customFilterTemplate;
-    column.subColumns = slots.subColumns;
+    column.customFilterTemplate = ctx.slots.customFilterTemplate;
+    column.subColumns = ctx.slots.subColumns;
   });
 
   return column;

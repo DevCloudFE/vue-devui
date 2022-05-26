@@ -1,6 +1,6 @@
 import { Ref, ref } from "vue";
 
-export function useInitSelect(defaultSelectKeys: string[], keys: string, isMutiple: boolean, disabled: Ref<boolean>):
+export function initSelect(defaultSelectKeys: string[], keys: string, isMutiple: boolean, disabled: Ref<boolean>):
 boolean{
   const isSelect = ref(false);
   if(!isMutiple){

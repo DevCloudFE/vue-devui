@@ -10,7 +10,9 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
   const select = inject(SELECT_TOKEN);
 
   const searchQuery = ref('');
-  const selectedData = computed<OptionObjectItem[]>(() => select?.selectedOptions || []);
+  const selectedData = computed<OptionObjectItem[]>(() => {
+    return select?.selectedOptions || [];
+  });
 
   const isSelectDisable = computed<boolean>(() => !!select?.disabled);
   const isSupportCollapseTags = computed<boolean>(() => !!select?.collapseTags);
@@ -62,6 +64,14 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     }
   };
 
+  const onFocus = (e: FocusEvent) => {
+    select?.onFocus(e);
+  };
+
+  const onBlur = (e: FocusEvent) => {
+    select?.onBlur(e);
+  };
+
   const queryFilter = (e: Event) => {
     e.preventDefault();
     e.stopPropagation();
@@ -76,7 +86,6 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     selectedData,
     isSelectDisable,
     isSupportCollapseTags,
-    isSupportTagsTooltip,
     isDisabledTooltip,
     isReadOnly,
     selectionCls,
@@ -85,6 +94,8 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     isMultiple,
     handleClear,
     tagDelete,
+    onFocus,
+    onBlur,
     queryFilter,
   };
 }

@@ -113,20 +113,21 @@ export interface Column {
   header?: string;
   order?: number;
   sortable?: boolean;
-  sortDirection: SortDirection;
+  sortDirection?: SortDirection;
   filterable?: boolean;
   filterMultiple?: boolean;
   filterList?: FilterConfig[];
   fixedLeft?: string;
   fixedRight?: string;
-  align: ColumnAlign;
-  showOverflowTooltip: boolean;
+  align?: ColumnAlign;
+  showOverflowTooltip?: boolean;
   resizeable: boolean;
-  ctx: SetupContext;
+  ctx?: SetupContext;
+  customFilterTemplate?: Slot;
   renderHeader?: (column: Column, store: TableStore) => VNode;
   renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) => VNode;
   formatter?: Formatter;
-  sortMethod: SortMethod;
+  sortMethod?: SortMethod;
   subColumns?: Slot;
 }
 

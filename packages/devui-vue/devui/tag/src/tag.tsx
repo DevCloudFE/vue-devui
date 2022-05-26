@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, ref, watch, onUnmounted } from 'vue';
+import { defineComponent, toRefs, watch, onUnmounted } from 'vue';
 import { tagProps, TagProps } from './tag-types';
 import { useClass, useColor } from './composables';
 import { useNamespace } from '../../shared/hooks/use-namespace';
@@ -15,13 +15,12 @@ export default defineComponent({
     const themeColor = useColor(props);
     const tagTitle = titleContent.value || '';
     const isDefaultTag = () => !type.value && !color.value;
-    const isShow = ref(true);
 
     const handleClick = (e: MouseEvent) => {
       emit('click', e);
     };
     const handleDelete = (e: MouseEvent) => {
-      isShow.value = false;
+      e.stopPropagation();
       emit('tagDelete', e);
     };
     const closeIconEl = () => {
@@ -40,21 +39,20 @@ export default defineComponent({
     });
     onUnmounted(() => unWatch());
 
-    return () =>
-      isShow.value && (
-        <div class={ns.b()} onClick={handleClick} v-show={isShow.value}>
-          <span
-            class={tagClass.value}
-            style={{
-              display: 'block',
-              color: checked.value ? '#fff' : themeColor.value,
-              backgroundColor: checked.value ? themeColor.value : !color.value ? '' : 'var(--devui-base-bg, #ffffff)',
-            }}
-            title={tagTitle}>
-            {slots.default?.()}
-            {closeIconEl()}
-          </span>
-        </div>
-      );
+    return () => (
+      <div class={ns.b()} onClick={handleClick}>
+        <span
+          class={tagClass.value}
+          style={{
+            display: 'block',
+            color: checked.value ? '#fff' : themeColor.value,
+            backgroundColor: checked.value ? themeColor.value : !color.value ? '' : 'var(--devui-base-bg, #ffffff)',
+          }}
+          title={tagTitle}>
+          {slots.default?.()}
+          {closeIconEl()}
+        </span>
+      </div>
+    );
   },
 });

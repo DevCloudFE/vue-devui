@@ -1,5 +1,5 @@
 import { defineComponent, inject, computed } from 'vue';
-import { TABLE_TOKEN, DefaultRow } from '../../table-types';
+import { TABLE_TOKEN, DefaultRow, Table } from '../../table-types';
 import { Column } from '../column/column-types';
 import { CellClickArg } from './body-types';
 import TD from '../body-td/body-td';
@@ -10,7 +10,7 @@ import './body.scss';
 export default defineComponent({
   name: 'DTableBody',
   setup() {
-    const table = inject(TABLE_TOKEN);
+    const table = inject(TABLE_TOKEN) as Table;
     const { _data: data, flatColumns } = table.store.states;
     const ns = useNamespace('table');
     const hoverEnabled = computed(() => table.props.rowHoveredHighlight);

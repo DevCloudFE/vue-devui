@@ -12,7 +12,7 @@ import './select.scss';
 export default defineComponent({
   name: 'DSelect',
   props: selectProps,
-  emits: ['toggle-change', 'value-change', 'update:modelValue'],
+  emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur'],
   setup(props: SelectProps, ctx: SetupContext) {
     const {
       containerRef,
@@ -28,6 +28,8 @@ export default defineComponent({
       handleClear,
       updateInjectOptions,
       tagDelete,
+      onFocus,
+      onBlur,
       debounceQueryFilter,
     } = useSelect(props, ctx);
 
@@ -50,13 +52,15 @@ export default defineComponent({
         handleClear,
         updateInjectOptions,
         tagDelete,
+        onFocus,
+        onBlur,
         debounceQueryFilter,
       }) as SelectContext
     );
     return () => {
       return (
         <div class={selectCls.value} ref={containerRef} onClick={onClick}>
-          <SelectContent value={inputValue.value}></SelectContent>
+          <SelectContent value={inputValue.value} onFocus={onFocus} onBlur={onBlur}></SelectContent>
           <Transition name="fade" ref={dropdownRef}>
             <div v-show={isOpen.value} class={dropdownCls}>
               <ul class={listCls}>
