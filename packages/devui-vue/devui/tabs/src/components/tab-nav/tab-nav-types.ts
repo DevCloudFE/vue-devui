@@ -13,3 +13,7 @@ export interface OffSetData {
 export interface UseTabNavFunction {
   activeClick: (item: any, tabEl?: any) => void;
 }
+
+export interface UseTabNavEvent {
+  onTabRemove: (item: any, ev: MouseEvent) => void;
+}

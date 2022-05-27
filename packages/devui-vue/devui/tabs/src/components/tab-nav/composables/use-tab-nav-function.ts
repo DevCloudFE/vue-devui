@@ -1,23 +1,6 @@
-import { computed, toRefs } from 'vue';
 import type { EmitsOptions, SetupContext, ShallowRef } from 'vue';
-import { TabsProps, Active, TabsData } from '../../tabs-types';
-import { UseTabNavRender, OffSetData, UseTabNavFunction } from './tab-nav-types';
-import { useNamespace } from '../../../../shared/hooks/use-namespace';
-
-const ns = useNamespace('tabs');
-
-export function useTabNavRender(props: TabsProps): UseTabNavRender {
-  const { cssClass, vertical } = toRefs(props);
-
-  const ulClasses = computed(() => ({
-    [ns.e('nav')]: true,
-    [ns.em('nav', props.type)]: true,
-    [cssClass.value]: Boolean(cssClass.value),
-    [ns.e('stacked')]: vertical.value,
-  }));
-
-  return { ulClasses };
-}
+import { TabsProps, Active, TabsData } from '../../../tabs-types';
+import { OffSetData, UseTabNavFunction } from '../tab-nav-types';
 
 export function useTabNavFunction(
   props: TabsProps,
