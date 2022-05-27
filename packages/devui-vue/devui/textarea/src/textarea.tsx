@@ -33,7 +33,6 @@ export default defineComponent({
     return () => (
       <div>
         <textarea
-          id={props.id}
           ref={textarea}
           {...ctx.attrs}
           value={modelValue.value}
