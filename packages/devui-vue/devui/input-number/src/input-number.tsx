@@ -12,8 +12,8 @@ export default defineComponent({
   setup(props: InputNumberProps, ctx: SetupContext) {
     const { disabled } = toRefs(props);
     const { wrapClass, customStyle, otherAttrs, controlButtonsClass, inputWrapClass, inputInnerClass } = useRender(props, ctx);
-    const { inputVal, minDisabled, maxDisabled, onAdd, onSubtract, onInput, onChange } = useEvent(props, ctx);
     const { inputRef } = useExpose(ctx);
+    const { inputVal, minDisabled, maxDisabled, onAdd, onSubtract, onInput, onChange } = useEvent(props, ctx, inputRef);
 
     return () => (
       <div class={wrapClass.value} {...customStyle}>
