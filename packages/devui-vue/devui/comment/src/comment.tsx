@@ -1,7 +1,7 @@
 import { defineComponent, toRefs } from 'vue';
 import { commentProps, CommentProps } from './comment-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import { isUrl } from '../../shared/utils/url';
+import { isUrl, isBase64 } from '../../shared/utils/url';
 import { Avatar } from '../../avatar';
 import './comment.scss';
 
@@ -22,7 +22,10 @@ export default defineComponent({
             slots.avatar
               ? slots.avatar?.()
               : <div class={ns.e('avatar')}>
-                <Avatar imgSrc={isUrl(avatar.value) ? avatar.value : ''} name={avatar.value}></Avatar>
+                <Avatar
+                  name={avatar.value}
+                  imgSrc={(isUrl(avatar.value) || isBase64(avatar.value)) ? avatar.value : ''}
+                ></Avatar>
               </div>
           }
           <div class={ns.e('main')}>
