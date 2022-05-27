@@ -117,7 +117,7 @@ $select-item-min-height: 36px;
 .#{$devui-prefix}-select__input {
   cursor: pointer;
   width: 100%;
-  height: $select-input-height-md;
+  height: calc($select-input-height-md - 2px);
   padding: 4px $select-arrow-width 4px 10px;
   color: $devui-text;
   vertical-align: middle;
@@ -148,11 +148,11 @@ $select-item-min-height: 36px;
   }
 
   &.#{$devui-prefix}-select__input--lg {
-    height: $select-input-height-lg;
+    height: calc($select-input-height-lg - 2px);
   }
 
   &.#{$devui-prefix}-select__input--sm {
-    height: $select-input-height-sm;
+    height: calc($select-input-height-sm - 2px);
   }
 }
 
