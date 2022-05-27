@@ -157,22 +157,22 @@ export default defineComponent({
         <d-input v-model="input1" placeholder="请输入" suffix="close" />
       </d-col>
       <d-col :span="9">
-        <d-input v-model="input2" placeholder="请输入" prefix="search"/>
-      </d-col :span="9">
+        <d-input v-model="input2" placeholder="请输入" prefix="search" />
+      </d-col>
     </d-row>
     <d-row style="margin-top: 20px" :gutter="10">
       <d-col :span="3">使用插槽</d-col>
       <d-col :span="9">
         <d-input v-model="input3" placeholder="请输入">
           <template #suffix>
-            <d-icon name="close"></d-icon>
+            <d-icon name="close" style="font-size: inherit;"></d-icon>
           </template>
         </d-input>
       </d-col>
       <d-col :span="9">
         <d-input v-model="input4" placeholder="请输入">
           <template #prefix>
-            <d-icon name="search"></d-icon>
+            <d-icon name="search" style="font-size: inherit;"></d-icon>
           </template>
         </d-input>
       </d-col>
@@ -197,7 +197,6 @@ export default defineComponent({
     };
   },
 });
-
 </script>
 ```
 
@@ -221,7 +220,7 @@ export default defineComponent({
         <d-select v-model="value5" :options="options"></d-select>
       </template>
       <template #append>
-        <d-icon name="search" />
+        <d-icon name="search" style="font-size: inherit;" />
       </template>
     </d-input>
 
