@@ -293,7 +293,7 @@ export default defineComponent({
       },
     ]);
     const handleClick = () => {
-      console.log(tableRef.value.getCheckedRows());
+      console.log(tableRef.value.store.getCheckedRows());
     };
     const onCellClick = (params) => {
       console.log(params);
@@ -1102,7 +1102,7 @@ export default defineComponent({
     ]);
 
     onMounted(() => {
-      tableRef.value.expandAllRows();
+      tableRef.value.store.expandRow(dataSource.value[0]);
     });
 
     const expandChange = (currentRow, expandedRows) => {
