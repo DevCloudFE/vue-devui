@@ -12,7 +12,7 @@
 
 ```vue
 <template>
-  <d-tabs v-model="id">
+  <d-tabs closable addable v-model="id" @tabRemove="tabRemove">
     <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>
@@ -29,9 +29,14 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
+    const tabRemove = (v1, v2) => {
+      console.log(v1);
+      console.log(v2);
+    };
     const id = ref('tab1');
     return {
       id,
+      tabRemove,
     };
   },
 });

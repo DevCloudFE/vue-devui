@@ -1,14 +1,15 @@
-import { defineComponent, provide, reactive } from 'vue';
+import { defineComponent, provide, reactive, SetupContext } from 'vue';
 import { TabsData, tabsProps, TabsState, TabsProps } from './tabs-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './tabs.scss';
 import TabNav from './components/tab-nav/tab-nav';
+import { useTabsEvent } from './use-tabs';
 
 export default defineComponent({
   name: 'DTabs',
   props: tabsProps,
-  emits: ['update:modelValue', 'active-tab-change'],
-  setup(props: TabsProps, { emit, slots }) {
+  emits: ['update:modelValue', 'active-tab-change', 'tab-remove'],
+  setup(props: TabsProps, ctx: SetupContext) {
     const ns = useNamespace('tabs');
     const state: TabsState = reactive({
       data: [],
@@ -18,17 +19,22 @@ export default defineComponent({
     });
     provide<TabsData>('tabs', { state });
 
-    const updateModelValue = (value: string) => {
-      emit('update:modelValue', value);
+    const { onUpdateModelValue, onActiveTabChange, onTabRemove } = useTabsEvent(ctx);
+    const handleTabAdd = () => {
+      console.log('handleTabAdd');
     };
-    const activeTabChange = (value: string) => {
-      emit('active-tab-change', value);
-    };
+
     return () => {
+      const newButton = props.addable ? (
+        <span class={ns.e('new-tab')} onClick={handleTabAdd}>
+          <d-icon name="add"></d-icon>
+        </span>
+      ) : null;
       return (
         <div class={ns.b()}>
-          <TabNav {...props} onUpdate:modelValue={updateModelValue} onActiveTabChange={activeTabChange} />
-          {slots.default?.()}
+          {newButton}
+          <TabNav {...props} onUpdate:modelValue={onUpdateModelValue} onActiveTabChange={onActiveTabChange} onTabRemove={onTabRemove} />
+          {ctx.slots.default?.()}
         </div>
       );
     };
