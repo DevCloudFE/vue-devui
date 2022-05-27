@@ -21,15 +21,16 @@ export default defineComponent({
     const ns = useNamespace('input');
     const slotNs = useNamespace('input-slot');
     const { isFocus, wrapClasses, inputClasses, customStyle, otherAttrs } = useInputRender(props, ctx);
-    const { onFocus, onBlur, onInput, onChange, onKeydown, onClear } = useInputEvent(isFocus, props, ctx);
 
     const input = shallowRef<HTMLInputElement>();
     const { select, focus, blur } = useInputFunction(input);
 
+    const { onFocus, onBlur, onInput, onChange, onKeydown, onClear } = useInputEvent(isFocus, props, ctx, focus);
+
     const passwordVisible = ref(false);
     const clickPasswordIcon = () => {
       passwordVisible.value = !passwordVisible.value;
-      focus();
+      blur();
     };
 
     const prefixVisiable = ctx.slots.prefix || props.prefix;
