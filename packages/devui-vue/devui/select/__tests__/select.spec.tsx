@@ -309,11 +309,18 @@ describe('select', () => {
     await nextTick();
     const input = container.find<HTMLInputElement>('.devui-select__input');
     await input.setValue('s');
-    const items = wrapper.findAll('.devui-select__item');
-    expect(items[0].isVisible()).toBe(false);
+    await input.trigger('input');
+    setTimeout(() => {
+      const items = wrapper.findAll('.devui-select__item');
+      expect(items[0].isVisible()).toBe(false);
+    }, 300);
+
     await input.setValue('1');
-    const newItems = wrapper.findAll('.devui-select__item');
-    expect(newItems[0].isVisible()).toBe(true);
+    await input.trigger('input');
+    setTimeout(() => {
+      const items = wrapper.findAll('.devui-select__item');
+      expect(items[0].isVisible()).toBe(true);
+    }, 300);
     wrapper.unmount();
   });
 
@@ -331,9 +338,12 @@ describe('select', () => {
     await input.trigger('click');
     await nextTick();
     await input.setValue('test');
-    const items = wrapper.findAll('.devui-select__item');
-    await items[0].trigger('click');
-    expect(value.value).toStrictEqual(['test']);
+    await input.trigger('input');
+    setTimeout(async () => {
+      const items = wrapper.findAll('.devui-select__item');
+      await items[0].trigger('click');
+      expect(value.value).toStrictEqual(['test']);
+    }, 300);
     wrapper.unmount();
   });
 });
