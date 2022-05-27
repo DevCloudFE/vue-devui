@@ -1,1 +1,28 @@
 @import '../../style/mixins/index';
+@import '../../styles-var/devui-var.scss';
+
+.#{$devui-prefix}-tabs {
+  &__close-btn {
+    color: var(--devui-line, #adb0b8) !important;
+
+    &:hover {
+      color: $devui-text !important;
+    }
+  }
+
+  &__new-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: right;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    margin: 10px 0 10px 10px;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+}

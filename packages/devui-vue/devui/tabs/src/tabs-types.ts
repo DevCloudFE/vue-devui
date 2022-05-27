@@ -49,6 +49,20 @@ export const tabsProps = {
     type: Function as PropType<(id: Active) => boolean>,
     default: null,
   },
+  closable: {
+    type: Boolean,
+    default: false,
+  },
+  addable: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type TabsProps = ExtractPropTypes<typeof tabsProps>;
+
+export interface UseTabsEvent {
+  onUpdateModelValue: (value: string) => void;
+  onActiveTabChange: (value: string) => void;
+  onTabRemove: (item: any, ev: MouseEvent) => void;
+}
