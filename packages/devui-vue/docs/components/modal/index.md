@@ -177,18 +177,20 @@ export default defineComponent({
 
 ### Modal 参数
 
-| 参数名                   | 类型             | 默认  | 说明                                       |
-| :---------------------- | :---------------- | :----- | :------------------------------------------ |
-| v-model                | `boolean`        | false | 是否显示 Modal                             |
-| title                  | `string`         | -     | 可选，Modal 的标题                         |
-| lock-scroll            | `boolean`        | true  | 可选，是否将 body 滚动锁定                 |
-| close-on-click-overlay | `boolean`        | true  | 可选，点击遮罩层是否能关闭 Modal           |
-| before-close           | `(done) => void` | -     | 可选，关闭前的回调，调用 done 可关闭 Modal |
+| 参数名                 | 类型             | 默认值 | 说明                                       | 跳转 Demo                 |
+| :--------------------- | :--------------- | :----- | :----------------------------------------- | :------------------------ |
+| v-model                | `boolean`        | false  | 是否显示 Modal                             | [基础用法](#基础用法)     |
+| title                  | `string`         | -      | 可选，Modal 的标题                         | [基础用法](#基础用法)     |
+| lock-scroll            | `boolean`        | true   | 可选，是否将 body 滚动锁定                 |
+| close-on-click-overlay | `boolean`        | true   | 可选，点击遮罩层是否能关闭 Modal           |
+| before-close           | `(done) => void` | -      | 可选，关闭前的回调，调用 done 可关闭 Modal | [关闭前回调](#关闭前回调) |
+| escapable              | `boolean`        | true   | 可选，是否支持 esc 键关闭弹窗              |
+| show-close             | `boolean`        | true   | 可选，是否展示关闭按钮                     |
 
 ### Modal 插槽
 
-| 插槽名    | 说明              |
-| :------- | :----------------- |
+| 插槽名  | 说明              |
+| :------ | :---------------- |
 | default | Modal 内容        |
 | header  | 自定义 Modal 顶部 |
 | footer  | 自定义 Modal 底部 |
