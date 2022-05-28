@@ -20,19 +20,10 @@ export default defineComponent({
     provide<TabsData>('tabs', { state });
 
     const { onUpdateModelValue, onActiveTabChange, onTabRemove } = useTabsEvent(ctx);
-    const handleTabAdd = () => {
-      console.log('handleTabAdd');
-    };
 
     return () => {
-      const newButton = props.addable ? (
-        <span class={ns.e('new-tab')} onClick={handleTabAdd}>
-          <d-icon name="add"></d-icon>
-        </span>
-      ) : null;
       return (
         <div class={ns.b()}>
-          {newButton}
           <TabNav {...props} onUpdate:modelValue={onUpdateModelValue} onActiveTabChange={onActiveTabChange} onTabRemove={onTabRemove} />
           {ctx.slots.default?.()}
         </div>

@@ -43,15 +43,23 @@ export default defineComponent({
       }
     });
 
+    const handleTabAdd = () => {
+      console.log('handleTabAdd');
+    };
+
     return () => {
       const closeIconEl = (item) => {
         return props.closable && !item.disabled ? (
           <a class={ns.e('close-btn')} onClick={(ev: MouseEvent) => onTabRemove(item, ev)}>
-            &nbsp;
             <d-icon size="12px" name="error-o" />
           </a>
         ) : null;
       };
+      const newButton = props.addable ? (
+        <li class={ns.e('new-tab')} onClick={handleTabAdd}>
+          <d-icon name="add"></d-icon>
+        </li>
+      ) : null;
       return (
         <ul ref={tabsEle} role="tablist" class={ulClasses.value}>
           {(tabs.state.data || []).map((item, i) => {
@@ -61,7 +69,7 @@ export default defineComponent({
                 onClick={() => {
                   activeClick(item);
                 }}
-                class={(props.modelValue === (item.id || item.tabId) ? 'active' : '') + ' ' + (item.disabled ? 'disabled' : '')}
+                class={(props.modelValue === (item.id || item.tabId) ? 'active' : '') + (item.disabled ? ' disabled' : '')}
                 id={item.id || item.tabId}>
                 <a role="tab" data-toggle={item.id} aria-expanded={props.modelValue === (item.id || item.tabId)}>
                   {tabs.state.slots[i] ? tabs.state.slots[i]() : <span>{item.title}</span>}
@@ -70,6 +78,7 @@ export default defineComponent({
               </li>
             );
           })}
+          {newButton}
           <div
             class={ns.e(`nav-${props.type}-animation`)}
             style={{
