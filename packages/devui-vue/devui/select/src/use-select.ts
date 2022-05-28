@@ -209,6 +209,9 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   };
   const handlerQueryFunc = (query: string) => {
     if (isFunction(props.filter)) {
+      if (props.remote) {
+        isLoading.value = true;
+      }
       props.filter(query, isUpdateSuccess);
     } else {
       queryChange(query);
@@ -226,6 +229,24 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     return typeof props.filter === 'boolean' && props.filter && props.allowCreate && !!filterQuery.value && !hasCommonOption;
   });
 
+  // no-data-text
+  const emptyText = computed(() => {
+    if (isLoading.value) {
+      return props.loadingText;
+    }
+    if (injectOptionsArray.value.length === 0 && filterQuery.value === '') {
+      return props.noDataText;
+    }
+    if (isSupportFilter.value && filterQuery.value && injectOptionsArray.value.length > 0) {
+      return props.noMatchText;
+    }
+    return '';
+  });
+
+  const isShowEmptyText = computed(() => {
+    return !!emptyText.value && (!props.allowCreate || isLoading.value || (props.allowCreate && injectOptionsArray.value.length === 0));
+  });
+
   return {
     containerRef,
     selectRef,
@@ -236,6 +257,9 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     inputValue,
     selectedOptions,
     filterQuery,
+    emptyText,
+    isLoading,
+    isShowEmptyText,
     onClick,
     handleClear,
     valueChange,

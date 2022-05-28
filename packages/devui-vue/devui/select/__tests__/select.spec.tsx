@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { ref, reactive, nextTick } from 'vue';
+import { Query } from '../../transfer/common/use-transfer-base';
 import DSelect from '../src/select';
 
 describe('select', () => {
@@ -324,6 +325,61 @@ describe('select', () => {
     wrapper.unmount();
   });
 
+  it('select remote search work', async () => {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive({
+      data: [],
+    });
+    const filterFunc = (query: string, callback?: () => void) => {
+      if (query) {
+        setTimeout(() => {
+          options.data = list.filter((item) => {
+            return item.toLowerCase().includes(query.toLowerCase());
+          });
+          if (callback) {
+            callback();
+          }
+        }, 200);
+      } else {
+        options.data = [];
+        if (callback) {
+          callback();
+        }
+      }
+    };
+    const wrapper = mount({
+      setup() {
+        return () => <DSelect v-model={value.value} options={options.data} filter={filterFunc} remote></DSelect>;
+      },
+    });
+    const container = wrapper.find('.devui-select');
+
+    await container.trigger('click');
+    await nextTick();
+    const input = container.find<HTMLInputElement>('.devui-select__input');
+    await input.setValue('1');
+    await input.trigger('input');
+    setTimeout(() => {
+      const noMachDataItem = wrapper.find('.devui-select__dropdown--empty');
+      expect(noMachDataItem.exists()).toBeTruthy();
+      expect(noMachDataItem.text()).toBe('Loading');
+      setTimeout(() => {
+        const items = wrapper.findAll('.devui-select__item');
+        expect(items.length).toBe(1);
+        expect(items[0].isVisible()).toBe(true);
+      }, 200);
+    }, 300);
+
+    await input.setValue('1');
+    await input.trigger('input');
+    setTimeout(() => {
+      const items = wrapper.findAll('.devui-select__item');
+      expect(items[0].isVisible()).toBe(true);
+    }, 200);
+    wrapper.unmount();
+  });
+
   it('select allow create work', async () => {
     const value = ref([]);
     const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
@@ -343,6 +399,42 @@ describe('select', () => {
       const items = wrapper.findAll('.devui-select__item');
       await items[0].trigger('click');
       expect(value.value).toStrictEqual(['test']);
+    }, 300);
+    wrapper.unmount();
+  });
+  it('select no-data-text no-match-text work', async () => {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive([]);
+    const wrapper = mount({
+      setup() {
+        return () => <DSelect v-model={value.value} options={options} multiple={true} filter={true}></DSelect>;
+      },
+    });
+    const input = wrapper.find('.devui-select__input');
+
+    await input.trigger('click');
+    await nextTick();
+    const items = wrapper.findAll('.devui-select__item');
+    expect(items.length).toBe(0);
+    const noDataItem = wrapper.find('.devui-select__dropdown--empty');
+    expect(noDataItem.exists()).toBeTruthy();
+    expect(noDataItem.text()).toBe('No data');
+
+    await wrapper.setProps({ options: list });
+    const newItems = wrapper.findAll('.devui-select__item');
+    expect(newItems.length).toBe(6);
+    const newNoDataItem = wrapper.find('.devui-select__dropdown--empty');
+    expect(newNoDataItem.exists()).toBeFalsy();
+    await input.setValue('test');
+    await input.trigger('input');
+    setTimeout(async () => {
+      const lists = wrapper.findAll('.devui-select__item');
+      expect(lists.length).toBe(6);
+      expect(lists[0].isVisible()).toBe(false);
+      const noMachDataItem = wrapper.find('.devui-select__dropdown--empty');
+      expect(noMachDataItem.exists()).toBeTruthy();
+      expect(noMachDataItem.text()).toBe('No matching data');
     }, 300);
     wrapper.unmount();
   });
