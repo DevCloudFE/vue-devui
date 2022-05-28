@@ -51,7 +51,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tabs type="pills" v-model="id">
+  <d-tabs type="pills" closable addable v-model="id">
     <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>
@@ -85,7 +85,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tabs type="options" v-model="id">
+  <d-tabs type="options" closable addable v-model="id">
     <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>
@@ -119,7 +119,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tabs type="wrapped" v-model="id">
+  <d-tabs type="wrapped" closable addable v-model="id">
     <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>
@@ -153,7 +153,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tabs type="slider" v-model="id">
+  <d-tabs type="slider" closable addable v-model="id">
     <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>

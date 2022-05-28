@@ -150,6 +150,13 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
       }
     }
   }
+
+  .#{$devui-prefix}-tabs__new-tab {
+    padding: 0 16px;
+  }
+  .#{$devui-prefix}-tabs__close-btn {
+    margin-right: 12px;
+  }
 }
 
 .#{$devui-prefix}-tabs__nav--slider {
@@ -242,6 +249,13 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
         background-color: $devui-brand-active;
       }
     }
+  }
+
+  .#{$devui-prefix}-tabs__new-tab {
+    padding: 0 16px;
+  }
+  .#{$devui-prefix}-tabs__close-btn {
+    margin-right: 12px;
   }
 }
 
@@ -364,4 +378,22 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   transition:
     left $devui-animation-duration-slow $devui-animation-ease-in-out,
     width $devui-animation-duration-slow $devui-animation-ease-in-out;
+}
+
+.#{$devui-prefix}-tabs {
+  &__new-tab {
+    &:hover {
+      color: $devui-text;
+    }
+  }
+
+  &__close-btn {
+    margin-left: 12px;
+    padding: 0 !important;
+    color: var(--devui-line, #adb0b8) !important;
+
+    &:hover {
+      color: $devui-text !important;
+    }
+  }
 }
