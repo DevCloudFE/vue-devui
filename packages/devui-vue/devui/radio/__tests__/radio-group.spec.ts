@@ -2,6 +2,17 @@ import { mount } from '@vue/test-utils';
 import { ref } from 'vue';
 import DRadioGroup from '../src/radio-group';
 import DRadio from '../src/radio';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('radio-group', false);
+const baseClass = ns.b();
+
+const radioNs = useNamespace('radio', true);
+const radioBaseClass = radioNs.b();
+
+const radioNoDotNs = useNamespace('radio', false);
+const sizeNs = radioNoDotNs.m('lg');
+const borderNs = radioNoDotNs.m('bordered');
 
 describe('RadioGroup', () => {
   it('radioGroup render work', async () => {
@@ -9,7 +20,7 @@ describe('RadioGroup', () => {
     const wrapper = mount({
       components: {
         DRadioGroup,
-        DRadio
+        DRadio,
       },
       template: `
         <d-radio-group v-model="radioVal" @change="onChange">
@@ -17,20 +28,20 @@ describe('RadioGroup', () => {
           <d-radio value="Item2">Item2</d-radio>
         </d-radio-group>
       `,
-      setup () {
+      setup() {
         const radioVal = ref('Item1');
         return {
           radioVal,
-          onChange
+          onChange,
         };
-      }
+      },
     });
 
-    const radioA = wrapper.findAllComponents({ name: 'DRadio' })[0];
-    const radioB = wrapper.findAllComponents({ name: 'DRadio' })[1];
+    const radioA = wrapper.findAllComponents({ name: 'DRadio' })[0].find(radioBaseClass);
+    const radioB = wrapper.findAllComponents({ name: 'DRadio' })[1].find(radioBaseClass);
     const inputB = wrapper.findAll('input')[1];
 
-    expect(wrapper.classes()).toContain('devui-radio-group');
+    expect(wrapper.classes()).toContain(baseClass);
     expect(radioA.classes()).toContain('active');
     expect(radioB.classes()).not.toContain('active');
 
@@ -44,25 +55,25 @@ describe('RadioGroup', () => {
   it('radioGroup direction work', async () => {
     const wrapper = mount(DRadioGroup, {
       props: {
-        value: 'Item1'
-      }
+        value: 'Item1',
+      },
     });
     expect(wrapper.html()).not.toMatch('is-row');
 
     await wrapper.setProps({
       value: 'Item1',
-      direction: 'row'
+      direction: 'row',
     });
     expect(wrapper.html()).toMatch('is-row');
   });
 
   it('radioGroup beforeChange work', async () => {
-    const beforeChange = jest.fn(v => v !== 'Item2');
+    const beforeChange = jest.fn((v) => v !== 'Item2');
     const onChange = jest.fn();
     const wrapper = mount({
       components: {
         DRadioGroup,
-        DRadio
+        DRadio,
       },
       template: `
         <d-radio-group v-model="radioVal" @change="onChange" :before-change="beforeChange">
@@ -71,28 +82,30 @@ describe('RadioGroup', () => {
           <d-radio value="Item3">Item3</d-radio>
         </d-radio-group>
       `,
-      setup () {
+      setup() {
         const radioVal = ref('Item1');
         return {
           radioVal,
           onChange,
-          beforeChange
+          beforeChange,
         };
-      }
+      },
     });
 
     const [radio1, radio2, radio3] = wrapper.findAllComponents({ name: 'DRadio' });
-    expect(radio1.classes()).toContain('active');
+    const radio1Wrapper = radio1.find(radioBaseClass);
+    const radio3Wrapper = radio3.find(radioBaseClass);
+    expect(radio1Wrapper.classes()).toContain('active');
 
     await radio2.find('input').trigger('change');
-    expect(radio1.classes()).toContain('active');
+    expect(radio1Wrapper.classes()).toContain('active');
     expect(beforeChange).toBeCalledTimes(1);
     expect(onChange).toBeCalledTimes(0);
 
     beforeChange.mockReset();
     await radio3.find('input').trigger('change');
-    expect(radio1.classes()).not.toContain('active');
-    expect(radio3.classes()).toContain('active');
+    expect(radio1Wrapper.classes()).not.toContain('active');
+    expect(radio3Wrapper.classes()).toContain('active');
     expect(beforeChange).toBeCalledTimes(1);
     expect(onChange).toBeCalledTimes(1);
   });
@@ -102,7 +115,7 @@ describe('RadioGroup', () => {
     const wrapper = mount({
       components: {
         DRadioGroup,
-        DRadio
+        DRadio,
       },
       template: `
         <d-radio-group v-model="radioVal" @change="onChange">
@@ -110,13 +123,13 @@ describe('RadioGroup', () => {
           <d-radio value="Item2" disabled>Item2</d-radio>
         </d-radio-group>
       `,
-      setup () {
+      setup() {
         const radioVal = ref('Item1');
         return {
           radioVal,
-          onChange
+          onChange,
         };
-      }
+      },
     });
 
     const radio2 = wrapper.findAllComponents({ name: 'DRadio' })[1];
@@ -125,5 +138,37 @@ describe('RadioGroup', () => {
     await input2.trigger('change');
     expect(radio2.classes()).not.toContain('active');
     expect(onChange).toHaveBeenCalledTimes(0);
+  });
+
+  it('radioGroup size border work', async () => {
+    const wrapper = mount({
+      components: {
+        DRadioGroup,
+        DRadio,
+      },
+      template: `
+        <d-radio-group v-model="radioVal" size="lg" :border="border">
+          <d-radio value="Item1">Item1</d-radio>
+          <d-radio value="Item2" disabled>Item2</d-radio>
+        </d-radio-group>
+      `,
+      setup() {
+        const radioVal = ref('Item1');
+        const border = ref(false);
+        return {
+          radioVal,
+          border,
+        };
+      },
+    });
+
+    const radio1 = wrapper.findAllComponents({ name: 'DRadio' })[0];
+    const radio1Wrapper = radio1.find(radioBaseClass);
+    expect(radio1Wrapper.classes()).not.toContain(sizeNs);
+    await wrapper.setProps({
+      border: true,
+    });
+    expect(radio1Wrapper.classes()).toContain(sizeNs);
+    expect(radio1Wrapper.classes()).toContain(borderNs);
   });
 });
