@@ -260,6 +260,39 @@ export default defineComponent({
 
 :::
 
+### 尺寸和边框
+
+:::demo
+
+```vue
+<template>
+  <d-radio-group :values="list" v-model="choose" size="lg" border direction="row" style="margin-bottom: 10px;"></d-radio-group>
+  <d-radio-group :values="list" v-model="choose" size="md" border direction="row" style="margin-bottom: 10px;"></d-radio-group>
+  <d-radio-group :values="list" v-model="choose" size="sm" border direction="row" style="margin-bottom: 10px;"></d-radio-group>
+  <d-radio-group v-model="choose" size="xs" border direction="row" style="margin-bottom: 10px;">
+    <d-radio v-for="item in list" :key="item" :value="item">{{ item }} </d-radio>
+  </d-radio-group>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const list = ['Spring', 'Summer'];
+    const choose = ref('Summer');
+
+    return {
+      list,
+      choose,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Radio 参数
 
 | 参数          | 类型                         | 默认  | 说明                                                             | 跳转 Demo                               |
@@ -269,6 +302,8 @@ export default defineComponent({
 | name          | `string`                     | --    | 可选，单选项名称                                                 | [互相独立的单选项](#相互独立的单选项)   |
 | disabled      | `boolean`                    | false | 可选，是否禁用该单选项                                           | [禁用](#禁用)                           |
 | before-change | `Function / Promise`         | --    | 可选，radio 切换前的回调函数，<br>返回 false 可以阻止 radio 切换 | [回调切换](#radio-根据条件终止切换操作) |
+| border        | `boolean`                    | false | 可选， 是否有边框                                                | [边框](#尺寸和边框)                     |
+| size          | [IRadioSize](#iradiosize)    | md    | 可选， radio 尺寸，只有在 border 属性存在时生效                  | [尺寸](#尺寸和边框)                     |
 
 ### Radio 事件
 
@@ -286,9 +321,19 @@ export default defineComponent({
 | disabled      | `boolean`                    | false    | 可选，是否禁用该选项组                                                         | [radio-group 根据条件终止切换操作](#radio-group-根据条件终止切换操作) |
 | direction     | `'row'` \| `'column'`        | 'column' | 可选，设置横向或纵向排列                                                       | [横向排列](#横向排列)                                                 |
 | before-change | `Function` \| `Promise`      | --       | 可选，radio-group 切换前的回调函数，<br>返回 false 可以阻止 radio-group 的切换 | [回调切换](#radio-group-根据条件终止切换操作)                         |
+| border        | `boolean`                    | false    | 可选， 是否有边框                                                              | [边框](#尺寸和边框)                                                   |
+| size          | [IRadioSize](#iradiosize)    | md       | 可选， radio 尺寸，只有在 border 属性存在时生效                                | [尺寸](#尺寸和边框)                                                   |
 
 ### RadioGroup 事件
 
 | 事件名 | 类型                   | 说明                             | 跳转 Demo             |
 | :----- | :--------------------- | :------------------------------- | :-------------------- |
 | change | `EventEmitter<string>` | 单选项值改变时触发，返回选中的值 | [竖向排列](#竖向排列) |
+
+### Radio 类型定义
+
+#### IRadioSize
+
+```ts
+type IRadioSize = 'lg' | 'md' | 'sm' | 'xs';
+```

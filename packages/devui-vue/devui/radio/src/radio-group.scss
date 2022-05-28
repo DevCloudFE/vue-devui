@@ -14,9 +14,7 @@
     flex-direction: column;
   }
 
-  .#{$devui-prefix}-radio {
-    line-height: 28px;
-
+  .#{$devui-prefix}-radio__wrapper {
     &:not(:last-child) {
       padding-right: 20px;
     }
