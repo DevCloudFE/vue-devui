@@ -54,6 +54,11 @@
 
   .#{$devui-prefix}-dropdown-menu {
     .#{$devui-prefix}-dropdown-item:not(.disabled) {
+      &:hover {
+        background-color: $devui-list-item-hover-bg;
+        color: $devui-list-item-hover-text;
+      }
+
       &.selected,
       &.selected &:hover {
         color: $devui-list-item-active-text !important;
@@ -175,7 +180,7 @@
       background-color: $devui-form-control-bg;
 
       .#{$devui-prefix}-button,
-      .#{$devui-prefix}-select .#{$devui-prefix}-select__input {
+      .#{$devui-prefix}-select .#{$devui-prefix}-select__selection {
         border: none;
         background-color: transparent;
         color: inherit;

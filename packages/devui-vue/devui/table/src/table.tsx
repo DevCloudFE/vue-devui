@@ -16,7 +16,7 @@ export default defineComponent({
     dLoading: Loading,
   },
   props: TableProps,
-  emits: ['sort-change', 'cell-click', 'check-change', 'check-all-change'],
+  emits: ['sort-change', 'cell-click', 'check-change', 'check-all-change', 'expand-change'],
   setup(props: TablePropsTypes, ctx) {
     const table = getCurrentInstance() as Table<DefaultRow>;
     const store = createStore(toRef(props, 'data'), table);
@@ -35,9 +35,7 @@ export default defineComponent({
     table.updateColumnWidth = updateColumnWidth;
 
     ctx.expose({
-      getCheckedRows() {
-        return store.getCheckedRows();
-      },
+      store
     });
 
     onMounted(async () => {

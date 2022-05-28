@@ -163,18 +163,47 @@ const createExpandRow = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) 
     return _expandedRows.value.has(trackBy(row));
   };
 
+  const expandRow = (row: T): void => {
+    _expandedRows.value.add(trackBy(row));
+  };
+
+  const collapseRow = (row: T): void => {
+    _expandedRows.value.delete(trackBy(row));
+  };
+
   const toggleRow = (row: T) => {
     if (isRowExpanded(row)) {
-      _expandedRows.value.delete(trackBy(row));
+      collapseRow(row);
     } else {
-      _expandedRows.value.add(trackBy(row));
+      expandRow(row);
     }
+  };
+
+  const getExpandedRows = (): T[] => {
+    return dataSource.value.filter((item) => isRowExpanded(item));
+  };
+
+  const expandAllRows = (): void => {
+    dataSource.value.forEach(item => {
+      expandRow(item);
+    });
+  };
+
+  const collapseAllRows = (): void => {
+    dataSource.value.forEach(item => {
+      collapseRow(item);
+    });
   };
 
   return {
     _expandedRows,
     toggleRow,
+    expandRow,
+    collapseRow,
     isRowExpanded,
+    getExpandedRows,
+    expandAllRows,
+    collapseAllRows,
   };
 };
 
@@ -209,7 +238,16 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
   const { sortData, thList } = createSorter(dataSource, _data);
 
   const { isFixedLeft } = createFixedLogic(_columns);
-  const { _expandedRows, toggleRow, isRowExpanded } = createExpandRow(dataSource, table.props.trackBy as (v: T) => string);
+  const {
+    _expandedRows,
+    toggleRow,
+    expandRow,
+    collapseRow,
+    isRowExpanded,
+    getExpandedRows,
+    expandAllRows,
+    collapseAllRows,
+  } = createExpandRow(dataSource, table.props.trackBy as (v: T) => string);
 
   return {
     _table: table,
@@ -229,10 +267,16 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
     removeColumn,
     updateColumns,
     getCheckedRows,
-    toggleRow,
-    isRowExpanded,
     sortData,
     isRowChecked,
-    checkRow
+    checkRow,
+
+    toggleRow,
+    expandRow,
+    collapseRow,
+    isRowExpanded,
+    getExpandedRows,
+    expandAllRows,
+    collapseAllRows,
   };
 }

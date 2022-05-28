@@ -43,6 +43,7 @@ export const cellMap = {
     renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): VNode {
       return <Icon name="chevron-right" class="icon-expand-row" onClick={() => {
         store.toggleRow(rowData);
+        store._table.emit('expand-change', rowData, store.getExpandedRows());
       }}></Icon>;
     }
   },

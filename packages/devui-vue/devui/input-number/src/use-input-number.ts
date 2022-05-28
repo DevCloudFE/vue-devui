@@ -1,5 +1,5 @@
 import { computed, reactive, toRefs, watch, ref } from 'vue';
-import type { SetupContext } from 'vue';
+import type { SetupContext, Ref } from 'vue';
 import { InputNumberProps, UseEvent, UseRender, IState, UseExpose } from './input-number-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { isNull, isNumber, isUndefined } from '../../shared/utils';
@@ -65,7 +65,7 @@ function getPrecision(pre: number | undefined): number {
   return precision;
 }
 
-export function useEvent(props: InputNumberProps, ctx: SetupContext): UseEvent {
+export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: Ref): UseEvent {
   const { min, max, step, disabled } = toRefs(props);
   const state = reactive<IState>({
     currentValue: props.modelValue || '',
@@ -138,6 +138,7 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext): UseEvent {
     if (disabled.value || maxDisabled.value) {
       return;
     }
+    inputRef.value.focus();
     const newVal = computeByStep(state.currentValue || 0);
     setCurrentValue(newVal);
   };
@@ -146,6 +147,7 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext): UseEvent {
     if (disabled.value || minDisabled.value) {
       return;
     }
+    inputRef.value.focus();
     const newVal = computeByStep(state.currentValue || 0, -1);
     setCurrentValue(newVal);
   };

@@ -23,6 +23,13 @@ export interface TableStore<T = Record<string, any>> {
   sortData(direction: SortDirection, sortMethod: SortMethod<T>): void;
   isRowChecked(row: T): boolean;
   checkRow(toggle: boolean, row: T): void;
+
+  // 展开行
   toggleRow(row: T): void;
+  expandRow(row: T): void;
+  collapseRow(row: T): void;
   isRowExpanded(row: T): boolean;
+  getExpandedRows(): T[];
+  expandAllRows(): void;
+  collapseAllRows(): void;
 }

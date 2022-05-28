@@ -16,6 +16,7 @@ export default defineComponent({
   setup(props: SelectProps, ctx: SetupContext) {
     const {
       containerRef,
+      selectRef,
       dropdownRef,
       isOpen,
       selectCls,
@@ -31,6 +32,7 @@ export default defineComponent({
       onFocus,
       onBlur,
       debounceQueryFilter,
+      isShowCreateOption,
     } = useSelect(props, ctx);
 
     const scrollbarNs = useNamespace('scrollbar');
@@ -60,13 +62,19 @@ export default defineComponent({
     return () => {
       return (
         <div class={selectCls.value} ref={containerRef} onClick={onClick}>
-          <SelectContent value={inputValue.value} onFocus={onFocus} onBlur={onBlur}></SelectContent>
+          <SelectContent ref={selectRef} value={inputValue.value}></SelectContent>
           <Transition name="fade" ref={dropdownRef}>
             <div v-show={isOpen.value} class={dropdownCls}>
               <ul class={listCls}>
-                {ctx.slots?.default
-                  ? ctx.slots.default()
-                  : mergeOptions.value.map((item, i) => (
+                {isShowCreateOption.value && (
+                  <Option value={filterQuery.value} name={filterQuery.value} create>
+                    {props.multiple ? <Checkbox modelValue={false} label={filterQuery.value} /> : filterQuery.value}
+                  </Option>
+                )}
+                {ctx.slots?.default && ctx.slots.default()}
+                {!ctx.slots?.default &&
+                  mergeOptions.value.length >= 1 &&
+                  mergeOptions.value.map((item, i) => (
                     <Option
                       key={i}
                       value={item.value}

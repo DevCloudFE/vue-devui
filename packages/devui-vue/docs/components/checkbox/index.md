@@ -221,16 +221,16 @@ export default defineComponent({
 <template>
   <div>
     <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="values1" :options="options1" direction="row" size="lg" border></d-checkbox-group>
+      <d-checkbox-group v-model="borderSizeValues1" :options="borderSizeOptions1" direction="row" size="lg" border></d-checkbox-group>
     </div>
     <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="values2" :options="options1" direction="row" size="md" border></d-checkbox-group>
+      <d-checkbox-group v-model="borderSizeValues2" :options="borderSizeOptions1" direction="row" size="md" border></d-checkbox-group>
     </div>
     <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="values3" :options="options1" direction="row" size="sm" border></d-checkbox-group>
+      <d-checkbox-group v-model="borderSizeValues3" :options="borderSizeOptions1" direction="row" size="sm" border></d-checkbox-group>
     </div>
     <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="values4" :options="options1" direction="row" size="xs" border></d-checkbox-group>
+      <d-checkbox-group v-model="borderSizeValues4" :options="borderSizeOptions1" direction="row" size="xs" border></d-checkbox-group>
     </div>
   </div>
 </template>
@@ -238,20 +238,20 @@ export default defineComponent({
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
-    const options1 = ref([
+    const borderSizeOptions1 = ref([
       { name: '选项1', disabled: true, value: '1', id: 1 },
       { name: '选项2', value: '2', id: 2 },
     ]);
-    const values1 = ref([{ name: '选项2', value: '2', id: 2 }]);
-    const values2 = ref([{ name: '选项2', value: '2', id: 2 }]);
-    const values3 = ref([{ name: '选项2', value: '2', id: 2 }]);
-    const values4 = ref([{ name: '选项2', value: '2', id: 2 }]);
+    const borderSizeValues1 = ref([{ name: '选项2', value: '2', id: 2 }]);
+    const borderSizeValues2 = ref([{ name: '选项2', value: '2', id: 2 }]);
+    const borderSizeValues3 = ref([{ name: '选项2', value: '2', id: 2 }]);
+    const borderSizeValues4 = ref([{ name: '选项2', value: '2', id: 2 }]);
     return {
-      values1,
-      values2,
-      values3,
-      values4,
-      options1,
+      borderSizeValues1,
+      borderSizeValues2,
+      borderSizeValues3,
+      borderSizeValues4,
+      borderSizeOptions1,
     };
   },
 });
@@ -268,29 +268,29 @@ export default defineComponent({
 <template>
   <div>
     <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="values1" size="lg" is-show-title color="rgb(255, 193, 7)" text-color="#ca3d3d">
+      <d-checkbox-group v-model="buttonValues1" size="lg" is-show-title color="rgb(255, 193, 7)" text-color="#ca3d3d">
         <d-checkbox-button
-          v-for="item in options1"
+          v-for="item in buttonOptions1"
           :label="item.label"
           :value="item.value"
           :key="item.value"
           :title="item.title"
         ></d-checkbox-button
       ></d-checkbox-group>
-      <d-checkbox-group v-model="values1" style="margin-top: 10px;">
-        <d-checkbox-button v-for="item in options1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
+      <d-checkbox-group v-model="buttonValues1" style="margin-top: 10px;">
+        <d-checkbox-button v-for="item in buttonOptions1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
       ></d-checkbox-group>
-      <d-checkbox-group v-model="values1" size="sm" style="margin-top: 10px;">
+      <d-checkbox-group v-model="buttonValues1" size="sm" style="margin-top: 10px;">
         <d-checkbox-button
-          v-for="item in options1"
+          v-for="item in buttonOptions1"
           :label="item.label"
           :value="item.value"
           :key="item.value"
           :disabled="item.disabled"
         ></d-checkbox-button
       ></d-checkbox-group>
-      <d-checkbox-group v-model="values1" size="xs" disabled style="margin-top: 10px;">
-        <d-checkbox-button v-for="item in options1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
+      <d-checkbox-group v-model="buttonValues1" size="xs" disabled style="margin-top: 10px;">
+        <d-checkbox-button v-for="item in buttonOptions1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
       ></d-checkbox-group>
     </div>
   </div>
@@ -299,15 +299,15 @@ export default defineComponent({
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
-    const options1 = ref([
+    const buttonOptions1 = ref([
       { label: '选项1', disabled: true, value: 2, id: 1, title: '自定义title1' },
       { label: '选项2', value: 3, id: 2, title: '自定义title2' },
       { label: '选项3', value: 4, id: 3, title: '自定义title3' },
     ]);
-    const values1 = ref([2]);
+    const buttonValues1 = ref([2]);
     return {
-      values1,
-      options1,
+      buttonValues1,
+      buttonOptions1,
     };
   },
 });
@@ -327,18 +327,18 @@ export default defineComponent({
     <d-checkbox
       label="Conditional Callback Allowed"
       :isShowTitle="false"
-      v-model="checked1"
-      @change="onCheckbox1Change"
-      :beforeChange="beforeChange"
+      v-model="checkboxChecked1"
+      @change="onCheckboxEndChange"
+      :beforeChange="endBeforeChange"
     />
   </div>
   <div>
     <d-checkbox
       label="Conditional Judgment Callback Interception Selected"
       :isShowTitle="false"
-      v-model="checked2"
-      @change="onCheckbox1Change"
-      :beforeChange="beforeChange"
+      v-model="checkboxChecked2"
+      @change="onCheckboxEndChange"
+      :beforeChange="endBeforeChange"
     />
   </div>
 </template>
@@ -346,21 +346,21 @@ export default defineComponent({
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
-    const checked1 = ref(true);
-    const checked2 = ref(false);
+    const checkboxChecked1 = ref(true);
+    const checkboxChecked2 = ref(false);
 
-    const onCheckbox1Change = (value) => {
+    const onCheckboxEndChange = (value) => {
       console.log('checkbox1 checked:', value);
     };
 
-    const beforeChange = (isChecked, label) => {
+    const endBeforeChange = (isChecked, label) => {
       return label === 'Conditional Callback Allowed';
     };
     return {
-      checked1,
-      checked2,
-      onCheckbox1Change,
-      beforeChange,
+      checkboxChecked1,
+      checkboxChecked2,
+      onCheckboxEndChange,
+      endBeforeChange,
     };
   },
 });
@@ -378,12 +378,12 @@ export default defineComponent({
 <template>
   <div>
     <d-checkbox-group
-      v-model="values"
-      :options="options"
+      v-model="interceptValues"
+      :options="interceptOptions"
       :isShowTitle="false"
       direction="row"
-      @change="onCheckbox1Change"
-      :beforeChange="beforeChange"
+      @change="onCheckboxInterceptChange"
+      :beforeChange="interceptBeforeChange"
     />
   </div>
 </template>
@@ -392,21 +392,21 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const options = ref(['data1', 'data2', 'intercept', 'intercept2', 'data5', 'data6', 'data7']);
-    const values = ref(['data2', 'intercept']);
-    const onCheckbox1Change = (value) => {
+    const interceptOptions = ref(['data1', 'data2', 'intercept', 'intercept2', 'data5', 'data6', 'data7']);
+    const interceptValues = ref(['data2', 'intercept']);
+    const onCheckboxInterceptChange = (value) => {
       console.log('checkbox1 checked:', value);
     };
 
-    const beforeChange = (isChecked, label) => {
+    const interceptBeforeChange = (isChecked, label) => {
       return !label.includes('intercept');
     };
 
     return {
-      options,
-      values,
-      onCheckbox1Change,
-      beforeChange,
+      interceptOptions,
+      interceptValues,
+      onCheckboxInterceptChange,
+      interceptBeforeChange,
     };
   },
 });
@@ -453,8 +453,8 @@ export default defineComponent({
 |    disabled    |             `boolean`              |  false   | 可选，是否禁用                                                         | [使用 CheckBoxGroup](#使用-checkboxgroup) |
 |      max       |              `number`              |    --    | 可选，可被勾选的 checkbox 的最大数量                                   | [使用 CheckBoxGroup](#使用-checkboxgroup) |
 | before-change  | `Function`\|<br>`Promise<boolean>` |    --    | 可选，checkbox 切换前的回调函数，<br>返回 false 可以阻止 checkbox 切换 | [使用 CheckBoxGroup](#使用-checkboxgroup) |
-|      size      |  [ICheckboxSize](#icheckboxsize)   |    md    | 可选， checkbox 尺寸                                                   | [尺寸](#尺寸和边框)                       |
-|     border     |             `boolean`              |  false   | 可选， 是否有边框，只有在 border 属性存在时生效                        | [边框](#尺寸和边框)                       |
+|      size      |  [ICheckboxSize](#icheckboxsize)   |    md    | 可选， checkbox 尺寸，只有在 border 属性存在时生效                     | [尺寸](#尺寸和边框)                       |
+|     border     |             `boolean`              |  false   | 可选， 是否有边框                                                      | [边框](#尺寸和边框)                       |
 |   text-color   |              `string`              |    --    | 可选， 按钮被选中的字体样式，只存在于按钮形态中                        | [按钮形态](#按钮形态)                     |
 
 ### CheckboxGroup 事件

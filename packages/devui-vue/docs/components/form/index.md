@@ -13,65 +13,35 @@
 ```vue
 <template>
   <d-form :data="formModel">
-    <d-form-item field="name">
-      <d-form-label help-tips="This is the plan name.">Name</d-form-label>
-      <d-form-control extra-info="Enter a short name that meets reading habits.">
-        <d-input v-model="formModel.name" />
-      </d-form-control>
+    <d-form-item field="name" label="Name" help-tips="This is the plan name." extra-info="Enter a short name that meets reading habits.">
+      <d-input v-model="formModel.name" />
     </d-form-item>
-    <d-form-item field="description">
-      <d-form-label>Description</d-form-label>
-      <d-form-control>
-        <d-textarea v-model:value="formModel.description" />
-      </d-form-control>
+    <d-form-item field="description" label="Description">
+      <d-textarea v-model:value="formModel.description" />
     </d-form-item>
-    <d-form-item field="select">
-      <d-form-label>Select</d-form-label>
-      <d-form-control>
-        <d-select v-model="formModel.select" :options="selectOptions" />
-      </d-form-control>
+    <d-form-item field="select" label="Select">
+      <d-select v-model="formModel.select" :options="selectOptions" />
     </d-form-item>
-    <d-form-item field="tags">
-      <d-form-label>Tags</d-form-label>
-      <d-form-control>
-        <d-tag-input
-          v-model:tags="formModel.tags"
-          v-model:suggestionList="tagLists"
-          display-property="name"
-          placeholder="Tags"
-          no-data="暂无数据"
-        ></d-tag-input>
-      </d-form-control>
+    <d-form-item field="radio" label="Radio">
+      <d-radio-group direction="row" v-model="formModel.radio">
+        <d-radio value="0">Manual execution</d-radio>
+        <d-radio value="1">Daily execution</d-radio>
+        <d-radio value="2">Weekly execution</d-radio>
+      </d-radio-group>
     </d-form-item>
-    <d-form-item field="radio">
-      <d-form-label>Radio</d-form-label>
-      <d-form-control>
-        <d-radio-group direction="row" v-model="formModel.radio">
-          <d-radio value="0">Manual execution</d-radio>
-          <d-radio value="1">Daily execution</d-radio>
-          <d-radio value="2">Weekly execution</d-radio>
-        </d-radio-group>
-      </d-form-control>
+    <d-form-item field="switch" label="Switch">
+      <d-switch v-model:checked="formModel.switch"></d-switch>
     </d-form-item>
-    <d-form-item field="switch">
-      <d-form-label>Switch</d-form-label>
-      <d-form-control>
-        <d-switch v-model:checked="formModel.switch"></d-switch>
-      </d-form-control>
-    </d-form-item>
-    <d-form-item field="executionDay">
-      <d-form-label>Execution day</d-form-label>
-      <d-form-control>
-        <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
-          <d-checkbox label="Mon" value="Mon" />
-          <d-checkbox label="Tue" value="Tue" />
-          <d-checkbox label="Wed" value="Wed" />
-          <d-checkbox label="Thur" value="Thur" />
-          <d-checkbox label="Fri" value="Fri" />
-          <d-checkbox label="Sat" value="Sat" />
-          <d-checkbox label="Sun" value="Sun" />
-        </d-checkbox-group>
-      </d-form-control>
+    <d-form-item field="executionDay" label="Execution day">
+      <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
+        <d-checkbox label="Mon" value="Mon" />
+        <d-checkbox label="Tue" value="Tue" />
+        <d-checkbox label="Wed" value="Wed" />
+        <d-checkbox label="Thur" value="Thur" />
+        <d-checkbox label="Fri" value="Fri" />
+        <d-checkbox label="Sat" value="Sat" />
+        <d-checkbox label="Sun" value="Sun" />
+      </d-checkbox-group>
     </d-form-item>
     <d-form-operation class="form-demo-form-operation">
       <d-button variant="solid">提交</d-button>
@@ -89,17 +59,14 @@ export default defineComponent({
       name: '',
       description: '',
       select: 'Options2',
-      tags: [{ name: 'Options1' }],
       radio: '0',
       switch: true,
       executionDay: [],
     });
     const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
-    const tagLists = [{ name: 'Options1' }, { name: 'Options2' }, { name: 'Options3' }];
     return {
       formModel,
       selectOptions,
-      tagLists,
     };
   },
 });
@@ -139,31 +106,22 @@ export default defineComponent({
     </div>
   </div>
   <d-form :data="formModel" :label-size="size" :label-align="align">
-    <d-form-item field="name">
-      <d-form-label>Name</d-form-label>
-      <d-form-control>
-        <d-input v-model="formModel.name" />
-      </d-form-control>
+    <d-form-item field="name" label="Name">
+      <d-input v-model="formModel.name" />
     </d-form-item>
-    <d-form-item field="description">
-      <d-form-label>Description</d-form-label>
-      <d-form-control>
-        <d-textarea v-model:value="formModel.description" />
-      </d-form-control>
+    <d-form-item field="description" label="Description">
+      <d-textarea v-model:value="formModel.description" />
     </d-form-item>
-    <d-form-item field="executionDay">
-      <d-form-label>Execution day</d-form-label>
-      <d-form-control>
-        <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
-          <d-checkbox label="Mon" value="Mon" />
-          <d-checkbox label="Tue" value="Tue" />
-          <d-checkbox label="Wed" value="Wed" />
-          <d-checkbox label="Thur" value="Thur" />
-          <d-checkbox label="Fri" value="Fri" />
-          <d-checkbox label="Sat" value="Sat" />
-          <d-checkbox label="Sun" value="Sun" />
-        </d-checkbox-group>
-      </d-form-control>
+    <d-form-item field="executionDay" label="Execution day">
+      <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
+        <d-checkbox label="Mon" value="Mon" />
+        <d-checkbox label="Tue" value="Tue" />
+        <d-checkbox label="Wed" value="Wed" />
+        <d-checkbox label="Thur" value="Thur" />
+        <d-checkbox label="Fri" value="Fri" />
+        <d-checkbox label="Sat" value="Sat" />
+        <d-checkbox label="Sun" value="Sun" />
+      </d-checkbox-group>
     </d-form-item>
     <d-form-operation class="form-demo-form-operation">
       <d-button variant="solid">提交</d-button>
@@ -248,65 +206,35 @@ export default defineComponent({
 ```vue
 <template>
   <d-form layout="vertical" :data="formModel">
-    <d-form-item field="name">
-      <d-form-label>Name</d-form-label>
-      <d-form-control>
-        <d-input v-model="formModel.name" />
-      </d-form-control>
+    <d-form-item field="name" label="Name">
+      <d-input v-model="formModel.name" />
     </d-form-item>
-    <d-form-item field="description">
-      <d-form-label>Description</d-form-label>
-      <d-form-control>
-        <d-textarea v-model:value="formModel.description" />
-      </d-form-control>
+    <d-form-item field="description" label="Description">
+      <d-textarea v-model:value="formModel.description" />
     </d-form-item>
-    <d-form-item field="select">
-      <d-form-label>Select</d-form-label>
-      <d-form-control>
-        <d-select v-model="formModel.select" :options="selectOptions" />
-      </d-form-control>
+    <d-form-item field="select" label="Select">
+      <d-select v-model="formModel.select" :options="selectOptions" />
     </d-form-item>
-    <d-form-item field="tags">
-      <d-form-label>Tags</d-form-label>
-      <d-form-control>
-        <d-tag-input
-          v-model:tags="formModel.tags"
-          v-model:suggestionList="tagLists"
-          display-property="name"
-          placeholder="Tags"
-          no-data="暂无数据"
-        ></d-tag-input>
-      </d-form-control>
+    <d-form-item field="radio" label="Radio">
+      <d-radio-group direction="row" v-model="formModel.radio">
+        <d-radio value="0">Manual execution</d-radio>
+        <d-radio value="1">Daily execution</d-radio>
+        <d-radio value="2">Weekly execution</d-radio>
+      </d-radio-group>
     </d-form-item>
-    <d-form-item field="radio">
-      <d-form-label>Radio</d-form-label>
-      <d-form-control>
-        <d-radio-group direction="row" v-model="formModel.radio">
-          <d-radio value="0">Manual execution</d-radio>
-          <d-radio value="1">Daily execution</d-radio>
-          <d-radio value="2">Weekly execution</d-radio>
-        </d-radio-group>
-      </d-form-control>
+    <d-form-item field="switch" label="Switch">
+      <d-switch v-model:checked="formModel.switch"></d-switch>
     </d-form-item>
-    <d-form-item field="switch">
-      <d-form-label>Switch</d-form-label>
-      <d-form-control>
-        <d-switch v-model:checked="formModel.switch"></d-switch>
-      </d-form-control>
-    </d-form-item>
-    <d-form-item field="executionDay">
-      <d-form-label>Execution day</d-form-label>
-      <d-form-control>
-        <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
-          <d-checkbox label="Mon" value="Mon" />
-          <d-checkbox label="Tue" value="Tue" />
-          <d-checkbox label="Wed" value="Wed" />
-          <d-checkbox label="Thur" value="Thur" />
-          <d-checkbox label="Fri" value="Fri" />
-          <d-checkbox label="Sat" value="Sat" />
-          <d-checkbox label="Sun" value="Sun" />
-        </d-checkbox-group>
-      </d-form-control>
+    <d-form-item field="executionDay" label="Execution day">
+      <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
+        <d-checkbox label="Mon" value="Mon" />
+        <d-checkbox label="Tue" value="Tue" />
+        <d-checkbox label="Wed" value="Wed" />
+        <d-checkbox label="Thur" value="Thur" />
+        <d-checkbox label="Fri" value="Fri" />
+        <d-checkbox label="Sat" value="Sat" />
+        <d-checkbox label="Sun" value="Sun" />
+      </d-checkbox-group>
     </d-form-item>
     <d-form-operation class="form-demo-form-operation">
       <d-button variant="solid">提交</d-button>
@@ -324,18 +252,15 @@ export default defineComponent({
       name: '',
       description: '',
       select: 'Options2',
-      tags: [{ name: 'Options1' }],
       radio: '0',
       switch: true,
       executionDay: [],
     });
     const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
-    const tagLists = [{ name: 'Options1' }, { name: 'Options2' }, { name: 'Options3' }];
 
     return {
       formModel,
       selectOptions,
-      tagLists,
     };
   },
 });
@@ -353,65 +278,47 @@ export default defineComponent({
   <d-form layout="vertical" :data="formModel">
     <d-row :gutter="16">
       <d-col :span="7">
-        <d-form-item field="name">
-          <d-form-label help-tips="This is the plan name.">Name</d-form-label>
-          <d-form-control>
-            <d-input v-model="formModel.name" />
-          </d-form-control>
+        <d-form-item field="name" label="Name" help-tips="This is the plan name.">
+          <d-input v-model="formModel.name" />
         </d-form-item>
       </d-col>
       <d-col :span="7">
-        <d-form-item field="select">
-          <d-form-label>Select</d-form-label>
-          <d-form-control>
-            <d-select v-model="formModel.select" :options="selectOptions" />
-          </d-form-control>
+        <d-form-item field="select" label="Select">
+          <d-select v-model="formModel.select" :options="selectOptions" />
         </d-form-item>
       </d-col>
       <d-col :span="7">
-        <d-form-item field="multiSelect">
-          <d-form-label>Multiple Select</d-form-label>
-          <d-form-control>
-            <d-select v-model="formModel.multiSelect" :options="selectOptions" multiple />
-          </d-form-control>
+        <d-form-item field="multiSelect" label="Multiple Select">
+          <d-select v-model="formModel.multiSelect" :options="selectOptions" multiple />
         </d-form-item>
       </d-col>
     </d-row>
     <d-row :gutter="16">
       <d-col :span="7">
-        <d-form-item field="executionDay">
-          <d-form-label>Execution day</d-form-label>
-          <d-form-control>
-            <d-checkbox-group v-model="formModel.executionDay" label="Execution day">
-              <d-checkbox label="Mon" value="Mon" />
-              <d-checkbox label="Tue" value="Tue" />
-              <d-checkbox label="Wed" value="Wed" />
-              <d-checkbox label="Thur" value="Thur" />
-              <d-checkbox label="Fri" value="Fri" />
-              <d-checkbox label="Sat" value="Sat" />
-              <d-checkbox label="Sun" value="Sun" />
-            </d-checkbox-group>
-          </d-form-control>
+        <d-form-item field="executionDay" label="Execution day">
+          <d-checkbox-group v-model="formModel.executionDay" label="Execution day">
+            <d-checkbox label="Mon" value="Mon" />
+            <d-checkbox label="Tue" value="Tue" />
+            <d-checkbox label="Wed" value="Wed" />
+            <d-checkbox label="Thur" value="Thur" />
+            <d-checkbox label="Fri" value="Fri" />
+            <d-checkbox label="Sat" value="Sat" />
+            <d-checkbox label="Sun" value="Sun" />
+          </d-checkbox-group>
         </d-form-item>
       </d-col>
       <d-col :span="7">
-        <d-form-item field="radio">
-          <d-form-label>Radio</d-form-label>
-          <d-form-control>
-            <d-radio-group direction="row" v-model="formModel.radio">
-              <d-radio value="0">Manual execution</d-radio>
-              <d-radio value="1">Daily execution</d-radio>
-              <d-radio value="2">Weekly execution</d-radio>
-            </d-radio-group>
-          </d-form-control>
+        <d-form-item field="radio" label="Radio">
+          <d-radio-group direction="row" v-model="formModel.radio">
+            <d-radio value="0">Manual execution</d-radio>
+            <d-radio value="1">Daily execution</d-radio>
+            <d-radio value="2">Weekly execution</d-radio>
+          </d-radio-group>
         </d-form-item>
       </d-col>
       <d-col :span="7">
-        <d-form-item field="switch">
-          <d-form-label>Switch</d-form-label>
-          <d-form-control>
-            <d-switch v-model:checked="formModel.switch"></d-switch>
-          </d-form-control>
+        <d-form-item field="switch" label="Switch">
+          <d-switch v-model:checked="formModel.switch"></d-switch>
         </d-form-item>
       </d-col>
     </d-row>
@@ -452,17 +359,16 @@ export default defineComponent({
 ```vue
 <template>
   <d-form ref="formRef" layout="vertical" :data="formData" :rules="rules" show-feedback>
-    <d-form-item field="username" :rules="[{ required: true, message: '用户名不能为空', trigger: 'blur' }]" :show-feedback="false">
-      <d-form-label>用户名</d-form-label>
-      <d-form-control extra-info="some extra info">
-        <d-input v-model="formData.username" />
-      </d-form-control>
+    <d-form-item
+      field="username"
+      :rules="[{ required: true, message: '用户名不能为空', trigger: 'blur' }]"
+      :show-feedback="false"
+      label="用户名"
+    >
+      <d-input v-model="formData.username" />
     </d-form-item>
-    <d-form-item field="age">
-      <d-form-label>年龄</d-form-label>
-      <d-form-control>
-        <d-input v-model="formData.age" />
-      </d-form-control>
+    <d-form-item field="age" label="年龄">
+      <d-input v-model="formData.age" />
     </d-form-item>
     <d-form-operation class="form-operation-wrap">
       <d-button variant="solid" @click="onClick">提交</d-button>
@@ -489,6 +395,8 @@ export default defineComponent({
       setTimeout(() => {
         if (value < 18) {
           return callback(new Error('年龄不能小于18'));
+        } else {
+          callback();
         }
       }, 1000);
     };
@@ -563,14 +471,17 @@ export default defineComponent({
 
 ### FormItem 参数
 
-| 参数名        | 类型                                            | 默认值 | 说明                                                                       | 跳转 demo             |
-| :------------ | :---------------------------------------------- | :----- | :------------------------------------------------------------------------- | :-------------------- |
-| field         | `string`                                        | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性                       | [基础用法](#基础用法) |
-| required      | `boolean`                                       | false  | 可选，表单选项是否必填                                                     |                       |
-| rules         | [FormRuleItem \| FormRuleItem[]](#formruleitem) | --     | 可选，表单项的校验规则                                                     | [表单校验](#表单校验) |
-| message-type  | [MessageType](#messagetype)                     | --     | 可选，用法同父组件`message-type`参数，优先级高于父组件，默认继承父组件的值 |                       |
-| pop-position  | [PopPosition](#popposition)                     | --     | 可选，用法同父组件`pop-position`参数，优先级高于父组件，默认继承父组件的值 |                       |
-| show-feedback | `boolean`                                       | --     | 可选，是否展示校验结果反馈图标，优先级高于父组件，默认继承父组件的值       |                       |
+| 参数名          | 类型                                            | 默认值 | 说明                                                                       | 跳转 demo             |
+| :-------------- | :---------------------------------------------- | :----- | :------------------------------------------------------------------------- | :-------------------- |
+| field           | `string`                                        | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性                       | [基础用法](#基础用法) |
+| required        | `boolean`                                       | false  | 可选，表单选项是否必填                                                     |                       |
+| rules           | [FormRuleItem \| FormRuleItem[]](#formruleitem) | --     | 可选，表单项的校验规则                                                     | [表单校验](#表单校验) |
+| message-type    | [MessageType](#messagetype)                     | --     | 可选，用法同父组件`message-type`参数，优先级高于父组件，默认继承父组件的值 |                       |
+| pop-position    | [PopPosition](#popposition)                     | --     | 可选，用法同父组件`pop-position`参数，优先级高于父组件，默认继承父组件的值 |                       |
+| show-feedback   | `boolean`                                       | --     | 可选，是否展示校验结果反馈图标，优先级高于父组件，默认继承父组件的值       |                       |
+| help-tips       | `string`                                        | ''     | 可选，表单项帮助指引提示内容，空字符串表示不设置提示内容。                 | [基础用法](#基础用法) |
+| extra-info      | `string`                                        | ''     | 可选，附件信息，一般用于补充表单选项的说明                                 | [基础用法](#基础用法) |
+| feedback-status | [FeedbackStatus](#feedbackstatus)               | --     | 可选，手动指定当前 control 状态反馈                                        |                       |
 
 ### FormItem 方法
 
@@ -580,31 +491,6 @@ export default defineComponent({
 | clearValidate | `() => void` | 清除校验结果                   |
 
 ### FormItem 插槽
-
-| 插槽名  | 说明           |
-| :------ | :------------- |
-| default | 包裹单个表单项 |
-
-### FormLabel 参数
-
-| 参数名    | 类型     | 默认值 | 说明                                                       | 跳转 demo             |
-| :-------- | :------- | :----- | :--------------------------------------------------------- | :-------------------- |
-| help-tips | `string` | ''     | 可选，表单项帮助指引提示内容，空字符串表示不设置提示内容。 | [基础用法](#基础用法) |
-
-### FormLabel 插槽
-
-| 插槽名  | 说明                     |
-| :------ | :----------------------- |
-| default | 包裹单个表单项的字段说明 |
-
-### FormControl 参数
-
-| 参数名          | 类型                              | 默认值 | 说明                                       | 跳转 demo             |
-| :-------------- | :-------------------------------- | :----- | :----------------------------------------- | :-------------------- |
-| extra-info      | `string`                          | ''     | 可选，附件信息，一般用于补充表单选项的说明 | [基础用法](#基础用法) |
-| feedback-status | [FeedbackStatus](#feedbackstatus) | --     | 可选，手动指定当前 control 状态反馈        |                       |
-
-### FormControl 插槽
 
 | 插槽名  | 说明                     |
 | :------ | :----------------------- |
@@ -679,8 +565,6 @@ interface FormRuleItem extends RuleItem {
   trigger?: Array<string>;
 }
 ```
-
-### FormControl 类型定义
 
 #### FeedbackStatus
 

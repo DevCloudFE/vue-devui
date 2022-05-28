@@ -293,7 +293,7 @@ export default defineComponent({
       },
     ]);
     const handleClick = () => {
-      console.log(tableRef.value.getCheckedRows());
+      console.log(tableRef.value.store.getCheckedRows());
     };
     const onCellClick = (params) => {
       console.log(params);
@@ -1051,7 +1051,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource" :trackBy="(item) => item?.firstName">
+  <d-table ref="tableRef" :data="dataSource" :trackBy="(item) => item?.firstName" @expand-change="expandChange">
     <d-column type="expand">
       <template #default="rowData">
         <div>First Name: {{rowData.row.firstName}}</div>
@@ -1068,10 +1068,12 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 
 export default defineComponent({
   setup() {
+    const tableRef = ref();
+
     const dataSource = ref([
       {
         firstName: 'Jacob',
@@ -1099,7 +1101,15 @@ export default defineComponent({
       },
     ]);
 
-    return { dataSource };
+    onMounted(() => {
+      tableRef.value.store.expandRow(dataSource.value[0]);
+    });
+
+    const expandChange = (currentRow, expandedRows) => {
+      console.log('currentRow, expandedRows', currentRow, expandedRows);
+    }
+
+    return { dataSource, expandChange, tableRef };
   },
 });
 </script>

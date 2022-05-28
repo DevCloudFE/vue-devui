@@ -3,7 +3,7 @@ import type { Ref, SetupContext } from 'vue';
 import { FORM_ITEM_TOKEN, FormItemContext } from '../../../form/src/components/form-item/form-item-types';
 import { InputProps, UseInputEvent } from '../input-types';
 
-export function useInputEvent(isFocus: Ref<boolean>, props: InputProps, ctx: SetupContext): UseInputEvent {
+export function useInputEvent(isFocus: Ref<boolean>, props: InputProps, ctx: SetupContext, focus: () => void): UseInputEvent {
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined) as FormItemContext;
   const onFocus = (e: FocusEvent) => {
     isFocus.value = true;
@@ -33,6 +33,7 @@ export function useInputEvent(isFocus: Ref<boolean>, props: InputProps, ctx: Set
   const onClear = () => {
     ctx.emit('update:modelValue', '');
     ctx.emit('clear');
+    focus();
   };
 
   return { onFocus, onBlur, onInput, onChange, onKeydown, onClear };

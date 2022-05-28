@@ -2,7 +2,6 @@ import { ref, computed } from 'vue';
 import type { SetupContext } from 'vue';
 import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
 import { className, KeyType } from './utils';
-import useCacheOptions from './composables/use-cache-options';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { onClickOutside } from '@vueuse/core';
 import { isFunction, debounce } from 'lodash';
@@ -10,6 +9,7 @@ import { isFunction, debounce } from 'lodash';
 export default function useSelect(props: SelectProps, ctx: SetupContext): UseSelectReturnType {
   const ns = useNamespace('select');
   const containerRef = ref<HTMLElement>();
+  const selectRef = ref<HTMLElement>();
   const dropdownRef = ref<HTMLElement>();
 
   // 控制弹窗开合
@@ -70,8 +70,6 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
       return option;
     });
   });
-  // 缓存options，用value来获取对应的optionItem
-  const getValuesOption = useCacheOptions(mergeOptions);
 
   // 这里处理d-option组件生成的Options
   const injectOptions = ref(new Map());
@@ -84,10 +82,26 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
   };
 
   const getInjectOptions = (values: KeyType<OptionObjectItem, 'value'>[]) => {
-    return values.map((value) => injectOptions.value.get(value));
+    return values.map((value) => {
+      if (props.multiple && props.allowCreate) {
+        const option = injectOptions.value.get(value);
+        if (option) {
+          return option;
+        }
+        const newOption = {
+          name: value,
+          value: value,
+          _checked: false,
+        };
+        return value ? newOption : option;
+      } else {
+        return injectOptions.value.get(value);
+      }
+    });
   };
 
   const selectedOptions = ref<OptionObjectItem[]>([]);
+  const filterQuery = ref('');
 
   // 控制输入框的显示内容
   // todo injectOptions根据option进行收集，此computed会执行多次; Vue Test Utils: [Vue warn]: Maximum recursive updates exceeded in component <DSelect>
@@ -109,31 +123,46 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     toggleChange(!isOpen.value);
   };
 
-  const updateMultipleData = (item: OptionObjectItem) => {
-    let { modelValue } = props;
-    const checkedItems = [];
-    for (const child of injectOptions.value.values()) {
-      if (child._checked) {
-        checkedItems.push(child.value);
-      }
-    }
-    modelValue = checkedItems;
-    // 此处需要更新chckbox选中状态
-    const mergeOptionItem = getValuesOption([item.value])[0];
-    mergeOptionItem && (mergeOptionItem._checked = !mergeOptionItem._checked);
-    ctx.emit('update:modelValue', modelValue);
+  const isSupportFilter = computed(() => isFunction(props.filter) || (typeof props.filter === 'boolean' && props.filter));
+
+  const getSelectInput = () => {
+    const selectContentRefs = selectRef.value?.$refs;
+    return selectContentRefs.input as HTMLElement;
   };
 
   const valueChange = (item: OptionObjectItem, isObjectOption: boolean) => {
     const { multiple } = props;
-    item._checked = !item._checked;
+    let { modelValue } = props;
     if (multiple) {
-      updateMultipleData(item);
+      const checkedItems = Array.isArray(modelValue) ? modelValue.slice() : [];
+      const index = checkedItems.indexOf(item.value);
+      const option = getInjectOptions([item.value])[0];
+      if (option) {
+        option._checked = !option._checked;
+      }
+      if (index > -1) {
+        checkedItems.splice(index);
+      } else {
+        checkedItems.push(item.value);
+      }
+      modelValue = checkedItems;
+      ctx.emit('update:modelValue', modelValue);
+      if (item.create) {
+        filterQuery.value = '';
+      }
+      if (isSupportFilter.value && getSelectInput()) {
+        getSelectInput()?.focus();
+      }
     } else {
       ctx.emit('update:modelValue', item.value);
       toggleChange(false);
     }
     ctx.emit('value-change', isObjectOption ? item : item.value);
+  };
+
+  const handleClose = () => {
+    isOpen.value = false;
+    ctx.emit('toggle-change', false);
   };
 
   const handleClear = () => {
@@ -142,16 +171,22 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     } else {
       ctx.emit('update:modelValue', '');
     }
-  };
-
-  const handleClose = () => {
-    isOpen.value = false;
-    ctx.emit('toggle-change', false);
+    if (isOpen.value) {
+      handleClose();
+    }
   };
 
   const tagDelete = (data: OptionObjectItem) => {
+    let { modelValue } = props;
     data._checked = !data._checked;
-    updateMultipleData(data);
+    const checkedItems = [];
+    for (const child of injectOptions.value.values()) {
+      if (child._checked) {
+        checkedItems.push(child.value);
+      }
+    }
+    modelValue = checkedItems;
+    ctx.emit('update:modelValue', modelValue);
   };
 
   const onFocus = (e: FocusEvent) => {
@@ -162,7 +197,6 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     ctx.emit('blur', e);
   };
 
-  const filterQuery = ref('');
   const queryChange = (query: string) => {
     filterQuery.value = query;
   };
@@ -185,8 +219,16 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     handlerQueryFunc(query);
   }, debounceTime.value);
 
+  // allow-create
+  const injectOptionsArray = computed(() => Array.from(injectOptions.value.values()));
+  const isShowCreateOption = computed(() => {
+    const hasCommonOption = injectOptionsArray.value.filter((item) => !item.create).some((item) => item.name === filterQuery.value);
+    return typeof props.filter === 'boolean' && props.filter && props.allowCreate && !!filterQuery.value && !hasCommonOption;
+  });
+
   return {
     containerRef,
+    selectRef,
     dropdownRef,
     isOpen,
     selectCls,
@@ -203,5 +245,6 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     onFocus,
     onBlur,
     debounceQueryFilter,
+    isShowCreateOption,
   };
 }
