@@ -54,6 +54,11 @@
 
   .#{$devui-prefix}-dropdown-menu {
     .#{$devui-prefix}-dropdown-item:not(.disabled) {
+      &:hover {
+        background-color: $devui-list-item-hover-bg;
+        color: $devui-list-item-hover-text;
+      }
+
       &.selected,
       &.selected &:hover {
         color: $devui-list-item-active-text !important;

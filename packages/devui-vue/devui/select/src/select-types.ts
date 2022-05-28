@@ -73,6 +73,18 @@ export const selectProps = {
     type: Boolean,
     default: false,
   },
+  noDataText: {
+    type: String,
+    default: '无数据',
+  },
+  noMatchText: {
+    type: String,
+    default: '找不到相关记录',
+  },
+  loadingText: {
+    type: String,
+    default: '加载中',
+  },
   onToggleChange: {
     type: Function as PropType<(bool: boolean) => void>,
     default: undefined,
@@ -97,6 +109,9 @@ export interface UseSelectReturnType {
   inputValue: ComputedRef<string>;
   selectedOptions: Ref<OptionObjectItem[]>;
   filterQuery: Ref<string>;
+  emptyText: ComputedRef<string>;
+  isLoading: Ref<boolean>;
+  isShowEmptyText: ComputedRef<boolean>;
   onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
   valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;

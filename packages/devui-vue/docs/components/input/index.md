@@ -15,15 +15,15 @@
   <div class="devui-input-demo">
     <h4>Default</h4>
 
-    <d-input v-model="value1" placeholder="请输入" autofocus></d-input>
+    <d-input v-model="valueBasic1" placeholder="请输入" autofocus></d-input>
 
     <h4>Disabled</h4>
 
-    <d-input v-model="value2" placeholder="请输入" disabled></d-input>
+    <d-input v-model="valueBasic2" placeholder="请输入" disabled></d-input>
 
     <h4>Error</h4>
 
-    <d-input v-model="value3" placeholder="请输入" error></d-input>
+    <d-input v-model="valueBasic3" placeholder="请输入" error></d-input>
   </div>
 </template>
 
@@ -32,10 +32,13 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
+    const valueBasic1 = ref('');
+    const valueBasic2 = ref('');
+    const valueBasic3 = ref('');
     return {
-      value1: ref(''),
-      value2: ref(''),
-      value3: ref(''),
+      valueBasic1,
+      valueBasic2,
+      valueBasic3,
     };
   },
 });
@@ -53,7 +56,7 @@ export default defineComponent({
 ```vue
 <template>
   <div class="devui-input-demo">
-    <d-input v-model="value1" clearable @clear="handleClear" placeholder="请输入"></d-input>
+    <d-input v-model="valueClear" clearable @clear="handleClear" placeholder="请输入"></d-input>
   </div>
 </template>
 
@@ -65,8 +68,9 @@ export default defineComponent({
     const handleClear = () => {
       console.log('clear');
     };
+    const valueClear = ref('');
     return {
-      value1: ref(''),
+      valueClear,
       handleClear,
     };
   },
@@ -85,7 +89,7 @@ export default defineComponent({
 ```vue
 <template>
   <div class="devui-input-demo">
-    <d-input v-model="value1" show-password placeholder="请输入"></d-input>
+    <d-input v-model="valuePsw" show-password placeholder="请输入"></d-input>
   </div>
 </template>
 
@@ -94,8 +98,9 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
+    const valuePsw = ref('');
     return {
-      value1: ref(''),
+      valuePsw,
     };
   },
 });
@@ -113,15 +118,15 @@ export default defineComponent({
   <div>
     <h4>Small</h4>
 
-    <d-input v-model="value1" size="sm" placeholder="请输入"></d-input>
+    <d-input v-model="valueSm" size="sm" placeholder="请输入"></d-input>
 
     <h4>Middle</h4>
 
-    <d-input v-model="value2" placeholder="请输入"></d-input>
+    <d-input v-model="valueMd" placeholder="请输入"></d-input>
 
     <h4>Large</h4>
 
-    <d-input v-model="value3" size="lg" placeholder="请输入"></d-input>
+    <d-input v-model="valueLg" size="lg" placeholder="请输入"></d-input>
   </div>
 </template>
 
@@ -130,10 +135,13 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
+    const valueSm = ref('');
+    const valueMd = ref('');
+    const valueLg = ref('');
     return {
-      value1: ref(''),
-      value2: ref(''),
-      value3: ref(''),
+      valueSm,
+      valueMd,
+      valueLg,
     };
   },
 });
@@ -154,25 +162,25 @@ export default defineComponent({
     <d-row :gutter="10">
       <d-col :span="3">使用属性</d-col>
       <d-col :span="9">
-        <d-input v-model="input1" placeholder="请输入" suffix="close" />
+        <d-input v-model="valueIcon1" placeholder="请输入" suffix="close" />
       </d-col>
       <d-col :span="9">
-        <d-input v-model="input2" placeholder="请输入" prefix="search"/>
-      </d-col :span="9">
+        <d-input v-model="valueIcon2" placeholder="请输入" prefix="search" />
+      </d-col>
     </d-row>
     <d-row style="margin-top: 20px" :gutter="10">
       <d-col :span="3">使用插槽</d-col>
       <d-col :span="9">
-        <d-input v-model="input3" placeholder="请输入">
+        <d-input v-model="valueIcon3" placeholder="请输入">
           <template #suffix>
-            <d-icon name="close"></d-icon>
+            <d-icon name="close" style="font-size: inherit;"></d-icon>
           </template>
         </d-input>
       </d-col>
       <d-col :span="9">
-        <d-input v-model="input4" placeholder="请输入">
+        <d-input v-model="valueIcon4" placeholder="请输入">
           <template #prefix>
-            <d-icon name="search"></d-icon>
+            <d-icon name="search" style="font-size: inherit;"></d-icon>
           </template>
         </d-input>
       </d-col>
@@ -185,19 +193,18 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const input1 = ref('');
-    const input2 = ref('');
-    const input3 = ref('');
-    const input4 = ref('');
+    const valueIcon1 = ref('');
+    const valueIcon2 = ref('');
+    const valueIcon3 = ref('');
+    const valueIcon4 = ref('');
     return {
-      input1,
-      input2,
-      input3,
-      input4,
+      valueIcon1,
+      valueIcon2,
+      valueIcon3,
+      valueIcon4,
     };
   },
 });
-
 </script>
 ```
 
@@ -212,24 +219,24 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-input v-model="value1" placeholder="请输入">
+    <d-input v-model="valueSlot1" placeholder="请输入">
       <template #prepend>https://</template>
     </d-input>
 
-    <d-input class="devui-input-demo__mt" v-model="value2" placeholder="请输入">
+    <d-input class="devui-input-demo__mt" v-model="valueSlot2" placeholder="请输入">
       <template #prepend>
-        <d-select v-model="value5" :options="options"></d-select>
+        <d-select v-model="valueSlot5" :options="options"></d-select>
       </template>
       <template #append>
-        <d-icon name="search" />
+        <d-icon name="search" style="font-size: inherit;" />
       </template>
     </d-input>
 
-    <d-input class="devui-input-demo__mt" v-model="value3" placeholder="请输入">
+    <d-input class="devui-input-demo__mt" v-model="valueSlot3" placeholder="请输入">
       <template #append>.com</template>
     </d-input>
 
-    <d-input class="devui-input-demo__mt" v-model="value4" placeholder="请输入">
+    <d-input class="devui-input-demo__mt" v-model="valueSlot4" placeholder="请输入">
       <template #append>
         <d-button icon="search"></d-button>
       </template>
@@ -244,12 +251,17 @@ export default defineComponent({
   setup() {
     const items = ['http://', 'https://'];
     const options = reactive(items);
+    const valueSlot1 = ref('');
+    const valueSlot2 = ref('');
+    const valueSlot3 = ref('');
+    const valueSlot4 = ref('');
+    const valueSlot5 = ref('');
     return {
-      value1: ref(''),
-      value2: ref(''),
-      value3: ref(''),
-      value4: ref(''),
-      value5: ref(''),
+      valueSlot1,
+      valueSlot2,
+      valueSlot3,
+      valueSlot4,
+      valueSlot5,
       options,
     };
   },
@@ -266,7 +278,7 @@ export default defineComponent({
 ```vue
 <template>
   <div class="devui-input-demo">
-    <d-input ref="demoInput" v-model="value1" placeholder="请输入"></d-input>
+    <d-input ref="demoInput" v-model="valueFunc" placeholder="请输入"></d-input>
     <d-button style="margin-top: 20px" @click="select" color="primary">选中input中的文字</d-button>
     <d-button style="margin-left: 10px" @click="focus" color="primary">使input获取焦点</d-button>
     <d-button style="margin-left: 10px" @click="blur" color="primary">使input失去焦点</d-button>
@@ -288,9 +300,10 @@ export default defineComponent({
     const blur = () => {
       demoInput.value.blur();
     };
+    const valueFunc = ref('测试文本');
     return {
       demoInput,
-      value1: ref('测试文本'),
+      valueFunc,
       select,
       focus,
       blur,

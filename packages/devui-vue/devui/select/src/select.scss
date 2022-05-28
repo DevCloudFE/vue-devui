@@ -278,3 +278,8 @@ $select-item-min-height: 36px;
   opacity: 0;
   transition: transform, opacity $transition-base-time ease-in;
 }
+.#{$devui-prefix}-select__dropdown--empty {
+  text-align: center;
+  font-size: $select-item-font-size;
+  color: $devui-disabled-text;
+}
