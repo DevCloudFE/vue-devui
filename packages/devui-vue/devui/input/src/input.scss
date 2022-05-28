@@ -14,17 +14,13 @@
     transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
     height: 100%;
 
-    &:not(.#{$devui-prefix}-input--error):not(.#{$devui-prefix}-input--disabled):hover {
+    &:not(.#{$devui-prefix}-input--error):not(.#{$devui-prefix}-input--disabled):not(.#{$devui-prefix}-input--focus):hover {
       border-color: $devui-form-control-line-hover;
     }
   }
 
   &--focus:not(.#{$devui-prefix}-input--error) {
     border-color: $devui-form-control-line-active;
-
-    &:hover {
-      border-color: $devui-form-control-line-active !important;
-    }
   }
 
   &--disabled {

@@ -12,16 +12,12 @@
   background: transparent;
   transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
 
-  &:not(.#{$devui-prefix}-textarea--error):not(.#{$devui-prefix}-textarea--disabled):hover {
+  &:not(.#{$devui-prefix}-textarea--error):not(.#{$devui-prefix}-textarea--disabled):not(.#{$devui-prefix}-textarea--focus):hover {
     border-color: $devui-form-control-line-hover;
   }
 
   &--focus:not(.#{$devui-prefix}-textarea--error) {
     border-color: $devui-form-control-line-active;
-
-    &:hover {
-      border-color: $devui-form-control-line-active !important;
-    }
   }
 
   &--disabled {
