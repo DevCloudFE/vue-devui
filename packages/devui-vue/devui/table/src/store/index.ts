@@ -163,11 +163,19 @@ const createExpandRow = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) 
     return _expandedRows.value.has(trackBy(row));
   };
 
+  const expandRow = (row: T): void => {
+    _expandedRows.value.add(trackBy(row));
+  };
+
+  const collapseRow = (row: T): void => {
+    _expandedRows.value.delete(trackBy(row));
+  };
+
   const toggleRow = (row: T) => {
     if (isRowExpanded(row)) {
-      _expandedRows.value.delete(trackBy(row));
+      collapseRow(row);
     } else {
-      _expandedRows.value.add(trackBy(row));
+      expandRow(row);
     }
   };
 
@@ -177,16 +185,25 @@ const createExpandRow = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) 
 
   const expandAllRows = (): void => {
     dataSource.value.forEach(item => {
-      _expandedRows.value.add(trackBy(item));
+      expandRow(item);
+    });
+  };
+
+  const collapseAllRows = (): void => {
+    dataSource.value.forEach(item => {
+      collapseRow(item);
     });
   };
 
   return {
     _expandedRows,
     toggleRow,
+    expandRow,
+    collapseRow,
     isRowExpanded,
     getExpandedRows,
     expandAllRows,
+    collapseAllRows,
   };
 };
 
@@ -224,9 +241,12 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
   const {
     _expandedRows,
     toggleRow,
+    expandRow,
+    collapseRow,
     isRowExpanded,
     getExpandedRows,
-    expandAllRows
+    expandAllRows,
+    collapseAllRows,
   } = createExpandRow(dataSource, table.props.trackBy as (v: T) => string);
 
   return {
@@ -247,12 +267,16 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
     removeColumn,
     updateColumns,
     getCheckedRows,
-    toggleRow,
-    isRowExpanded,
-    getExpandedRows,
-    expandAllRows,
     sortData,
     isRowChecked,
     checkRow,
+
+    toggleRow,
+    expandRow,
+    collapseRow,
+    isRowExpanded,
+    getExpandedRows,
+    expandAllRows,
+    collapseAllRows,
   };
 }

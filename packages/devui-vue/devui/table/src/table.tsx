@@ -35,12 +35,7 @@ export default defineComponent({
     table.updateColumnWidth = updateColumnWidth;
 
     ctx.expose({
-      getCheckedRows() {
-        return store.getCheckedRows();
-      },
-      expandAllRows() {
-        store.expandAllRows();
-      },
+      store
     });
 
     onMounted(async () => {
