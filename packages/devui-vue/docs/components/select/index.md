@@ -279,7 +279,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>默认筛选</div>
-  <d-select v-model="value1" :options="options.data" :allow-clear="true" filter>
+  <d-select v-model="value1" :allow-clear="true" filter>
     <d-option v-for="(item, index) in options.data" :key="index" :value="item.value" :name="item.name"></d-option>
   </d-select>
   <br />
@@ -296,6 +296,7 @@ export default defineComponent({
   setup() {
     const value1 = ref('');
     const value2 = ref('');
+    const value3 = ref('');
     const items = new Array(6).fill(0).map((item, i) => {
       return {
         value: `Option ${i + 1}`,
@@ -314,10 +315,10 @@ export default defineComponent({
           options1.data = items.filter((item) => {
             return item.name.toLowerCase().includes(query.toLowerCase());
           });
+          if (callback) {
+            callback();
+          }
         }, 200);
-        if (callback) {
-          callback();
-        }
       } else {
         options1.data = [];
         if (callback) {
@@ -328,6 +329,7 @@ export default defineComponent({
     return {
       value1,
       value2,
+      value3,
       options,
       options1,
       filterFunc,
@@ -371,21 +373,24 @@ export default defineComponent({
 
 ### Select 参数
 
-| 参数名                | 类型                  | 默认     | 说明                                                                                                                                                           | 跳转 Demo                         |
-| :-------------------- | :-------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| options               | `array`               | []       | 可选, 和使用 option 子组件互斥，两者必须有且只有一个。                                                                                                         | [基本用法](#基本用法)             |
-| multiple              | `boolean`             | false    | 可选,是否支持多选                                                                                                                                              | [多选](#多选)                     |
-| size                  | `string`              | 'md'     | 可选,下拉选框尺寸,有三种选择'lg','md','sm'                                                                                                                     | [基本用法](#基本用法)             |
-| disabled              | `boolean`             | false    | 可选,是否禁用下拉框                                                                                                                                            | [禁用](#禁用)                     |
-| placeholder           | `string`              | '请选择' | 可选,输入框的 placeholder                                                                                                                                      |                                   |
-| overview              | `string`              | 'border' | 可选,决定选择框样式显示,默认有边框'border','underlined'                                                                                                        | [基本用法](#基本用法)             |
-| option-disabled-key   | `string`              | ''       | 可选,禁用单个选项;<br>当传入资源 options 类型为 Object,比如设置为'disabled',<br>则当对象的 disabled 属性为 true 时,该选项将禁用;<br>当设置为''时不禁用单个选项 | [禁用](#禁用)                     |
-| allow-clear           | `boolean`             | false    | 可选, 配置是否允许清空选值，仅单选场景适用                                                                                                                     | [可清空](#可清空)                 |
-| collapse-tags         | `boolean`             | false    | 可选, 配置是否允许将所选项合并为数量显示                                                                                                                       | [多选](#多选)                     |
-| collapse-tags-tooltip | `boolean`             | false    | 可选, 配置是否启用鼠标悬停折叠文字以显示具体所选值                                                                                                             | [多选](#多选)                     |
-| filter                | `boolean \| function` | false    | 可选, 配置是否开启筛选功能；配置为函数，为自定义搜索过滤方法值                                                                                                 | [筛选、搜索选项](#筛选、搜索选项) |
-| remote                | `boolean`             | false    | 可选, 配置是否启用远程搜索，配合 filter 函数使用值                                                                                                             | [筛选、搜索选项](#筛选、搜索选项) |
-| allow-create          | `boolean`             | false    | 可选, 配置是否启用新增选项，配合 filter 为 true 时使用值                                                                                                       | [新增选项](#新增选项)             |
+| 参数名                | 类型                  | 默认               | 说明                                                                                                                                                           | 跳转 Demo                         |
+| :-------------------- | :-------------------- | :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| options               | `array`               | []                 | 可选, 和使用 option 子组件互斥，两者必须有且只有一个。                                                                                                         | [基本用法](#基本用法)             |
+| multiple              | `boolean`             | false              | 可选,是否支持多选                                                                                                                                              | [多选](#多选)                     |
+| size                  | `string`              | 'md'               | 可选,下拉选框尺寸,有三种选择'lg','md','sm'                                                                                                                     | [基本用法](#基本用法)             |
+| disabled              | `boolean`             | false              | 可选,是否禁用下拉框                                                                                                                                            | [禁用](#禁用)                     |
+| placeholder           | `string`              | '请选择'           | 可选,输入框的 placeholder                                                                                                                                      |                                   |
+| overview              | `string`              | 'border'           | 可选,决定选择框样式显示,默认有边框'border','underlined'                                                                                                        | [基本用法](#基本用法)             |
+| option-disabled-key   | `string`              | ''                 | 可选,禁用单个选项;<br>当传入资源 options 类型为 Object,比如设置为'disabled',<br>则当对象的 disabled 属性为 true 时,该选项将禁用;<br>当设置为''时不禁用单个选项 | [禁用](#禁用)                     |
+| allow-clear           | `boolean`             | false              | 可选, 配置是否允许清空选值，仅单选场景适用                                                                                                                     | [可清空](#可清空)                 |
+| collapse-tags         | `boolean`             | false              | 可选, 配置是否允许将所选项合并为数量显示                                                                                                                       | [多选](#多选)                     |
+| collapse-tags-tooltip | `boolean`             | false              | 可选, 配置是否启用鼠标悬停折叠文字以显示具体所选值                                                                                                             | [多选](#多选)                     |
+| filter                | `boolean \| function` | false              | 可选, 配置是否开启筛选功能；配置为函数，为自定义搜索过滤方法                                                                                                   | [筛选、搜索选项](#筛选、搜索选项) |
+| remote                | `boolean`             | false              | 可选, 配置是否启用远程搜索，配合 filter 函数使用                                                                                                               | [筛选、搜索选项](#筛选、搜索选项) |
+| allow-create          | `boolean`             | false              | 可选, 配置是否启用新增选项，配合 filter 为 true 时使用                                                                                                         | [新增选项](#新增选项)             |
+| no-data-text          | `string`              | 'No data'          | 可选, 无选项时显示的文本，也可通过 empty 插槽自定义                                                                                                            | [筛选、搜索选项](#筛选、搜索选项) |
+| no-match-text         | `string`              | 'No matching data' | 可选, 搜索条件无匹配时显示的文本，也可通过 empty 插槽自定义                                                                                                    | [筛选、搜索选项](#筛选、搜索选项) |
+| loading-text          | `string`              | 'Loading'          | 可选, 远程搜索时显示的文本                                                                                                                                     | [筛选、搜索选项](#筛选、搜索选项) |
 
 ### Select 事件
 
@@ -401,6 +406,7 @@ export default defineComponent({
 | 名称    | 说明                       |
 | :------ | :------------------------- |
 | default | 自定义 Select 下拉面板内容 |
+| empty   | 自定义无选项时下拉面板内容 |
 
 ### Option 参数
 
