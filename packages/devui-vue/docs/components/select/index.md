@@ -387,12 +387,14 @@ export default defineComponent({
       data: [],
     });
     const loading = ref(false);
-    const toggleChange = () => {
-      loading.value = true;
-      setTimeout(() => {
-        options.data = list;
-        loading.value = false;
-      }, 3000);
+    const toggleChange = (bool) => {
+      if (bool) {
+        loading.value = true;
+        setTimeout(() => {
+          options.data = list;
+          loading.value = false;
+        }, 3000);
+      }
     };
     return {
       value,
@@ -426,8 +428,8 @@ export default defineComponent({
 | allow-create          | `boolean`             | false            | 可选, 配置是否启用新增选项，配合 filter 为 true 时使用                                                                                                         | [新增选项](#新增选项)             |
 | no-data-text          | `string`              | '无数据'         | 可选, 无选项时显示的文本，也可通过 empty 插槽自定义                                                                                                            | [筛选、搜索选项](#筛选、搜索选项) |
 | no-match-text         | `string`              | '找不到相关记录' | 可选, 搜索条件无匹配时显示的文本，也可通过 empty 插槽自定义                                                                                                    | [筛选、搜索选项](#筛选、搜索选项) |
-| loading               | `boolean`             | false            | 可选, 配置下拉选项是否远程加载，配合 loading-text 使用                                                                                                         | [筛选、搜索选项](#筛选、搜索选项) |
-| loading-text          | `string`              | '加载中'         | 可选, 远程搜索时显示的文本                                                                                                                                     | [筛选、搜索选项](#筛选、搜索选项) |
+| loading               | `boolean`             | false            | 可选, 配置下拉选项是否远程加载，配合 loading-text 使用                                                                                                         | [远程加载数据](#远程加载数据)     |
+| loading-text          | `string`              | '加载中'         | 可选, 远程搜索时显示的文本                                                                                                                                     | [远程加载数据](#远程加载数据)     |
 
 ### Select 事件
 

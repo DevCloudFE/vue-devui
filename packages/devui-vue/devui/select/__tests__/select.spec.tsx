@@ -434,4 +434,45 @@ describe('select', () => {
     }, 300);
     wrapper.unmount();
   });
+
+  it('select remote loading work', async () => {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive({
+      data: [],
+    });
+    const remoteLoading = ref(false);
+    const toggleChange = (bool: boolean) => {
+      if (bool) {
+        remoteLoading.value = true;
+        setTimeout(() => {
+          options.data = list;
+          remoteLoading.value = false;
+        }, 3000);
+      }
+    };
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DSelect v-model={value.value} options={options.data} loading={remoteLoading.value} onToggleChange={toggleChange}></DSelect>
+        );
+      },
+    });
+    const container = wrapper.find('.devui-select');
+
+    await container.trigger('click');
+    await nextTick();
+    const items = wrapper.findAll('.devui-select__item');
+    expect(items.length).toBe(0);
+    const remoteLoadingItem = wrapper.find('.devui-select__dropdown--empty');
+    expect(remoteLoadingItem.exists()).toBeTruthy();
+    expect(remoteLoadingItem.text()).toBe('加载中');
+    setTimeout(() => {
+      const newLoadingItem = wrapper.find('.devui-select__dropdown--empty');
+      expect(newLoadingItem.exists()).toBeFalsy();
+      const remoteItems = wrapper.findAll('.devui-select__item');
+      expect(remoteItems.length).toBe(6);
+    }, 3000);
+    wrapper.unmount();
+  });
 });
