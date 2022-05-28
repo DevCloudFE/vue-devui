@@ -4,6 +4,11 @@ import DModal from '../src/modal';
 import DModalHeader from '../src/components/header';
 import DModalFooter from '../src/components/footer';
 import DIcon from '../../icon/src/icon';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('modal', true);
+const noDotNs = useNamespace('modal');
+const buttonNoDotNs = useNamespace('button');
 
 describe('d-modal', () => {
   beforeEach(() => {
@@ -41,13 +46,12 @@ describe('d-modal', () => {
 
     visible.value = true;
     await nextTick();
-    const modal = document.querySelector('.devui-modal');
+    const modal = document.querySelector(ns.b());
     expect(modal).toBeTruthy();
     expect(modal?.childElementCount).toBe(3);
     expect(modal?.childNodes[0].className).toContain('btn-close');
-    expect(modal?.childNodes[1].className).toContain('devui-modal-header');
-    expect(modal?.childNodes[2].className).toContain('devui-modal-body');
-    wrapper.unmount();
+    expect(modal?.childNodes[1].className).toContain(noDotNs.e('header'));
+    expect(modal?.childNodes[2].className).toContain(noDotNs.e('body'));
   });
 
   it('custom header', async () => {
@@ -78,7 +82,7 @@ describe('d-modal', () => {
 
     visible.value = true;
     await nextTick();
-    const modalHeader = document.querySelector('.devui-modal-header');
+    const modalHeader = document.querySelector(ns.e('header'));
     expect(modalHeader?.children[0].className).toContain('icon-like');
     expect(modalHeader?.children[1].innerHTML).toContain('Good Title');
     expect(modalHeader?.childElementCount).toBe(2);
@@ -113,9 +117,9 @@ describe('d-modal', () => {
 
     visible.value = true;
     await nextTick();
-    const modalHeader = document.querySelector('.devui-modal-footer');
-    expect(modalHeader?.children[0].className).toContain('devui-btn');
-    expect(modalHeader?.children[1].className).toContain('devui-btn');
+    const modalHeader = document.querySelector(ns.e('footer'));
+    expect(modalHeader?.children[0].className).toContain(buttonNoDotNs.b());
+    expect(modalHeader?.children[1].className).toContain(buttonNoDotNs.b());
     expect(modalHeader?.childElementCount).toBe(2);
     wrapper.unmount();
   });
