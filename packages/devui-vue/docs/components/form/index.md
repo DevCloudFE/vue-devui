@@ -22,15 +22,6 @@
     <d-form-item field="select" label="Select">
       <d-select v-model="formModel.select" :options="selectOptions" />
     </d-form-item>
-    <d-form-item field="tags" label="Tags">
-      <d-tag-input
-        v-model:tags="formModel.tags"
-        v-model:suggestionList="tagLists"
-        display-property="name"
-        placeholder="Tags"
-        no-data="暂无数据"
-      ></d-tag-input>
-    </d-form-item>
     <d-form-item field="radio" label="Radio">
       <d-radio-group direction="row" v-model="formModel.radio">
         <d-radio value="0">Manual execution</d-radio>
@@ -68,17 +59,14 @@ export default defineComponent({
       name: '',
       description: '',
       select: 'Options2',
-      tags: [{ name: 'Options1' }],
       radio: '0',
       switch: true,
       executionDay: [],
     });
     const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
-    const tagLists = [{ name: 'Options1' }, { name: 'Options2' }, { name: 'Options3' }];
     return {
       formModel,
       selectOptions,
-      tagLists,
     };
   },
 });
@@ -227,15 +215,6 @@ export default defineComponent({
     <d-form-item field="select" label="Select">
       <d-select v-model="formModel.select" :options="selectOptions" />
     </d-form-item>
-    <d-form-item field="tags" label="Tags">
-      <d-tag-input
-        v-model:tags="formModel.tags"
-        v-model:suggestionList="tagLists"
-        display-property="name"
-        placeholder="Tags"
-        no-data="暂无数据"
-      ></d-tag-input>
-    </d-form-item>
     <d-form-item field="radio" label="Radio">
       <d-radio-group direction="row" v-model="formModel.radio">
         <d-radio value="0">Manual execution</d-radio>
@@ -273,18 +252,15 @@ export default defineComponent({
       name: '',
       description: '',
       select: 'Options2',
-      tags: [{ name: 'Options1' }],
       radio: '0',
       switch: true,
       executionDay: [],
     });
     const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
-    const tagLists = [{ name: 'Options1' }, { name: 'Options2' }, { name: 'Options3' }];
 
     return {
       formModel,
       selectOptions,
-      tagLists,
     };
   },
 });
