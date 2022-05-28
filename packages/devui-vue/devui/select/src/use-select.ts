@@ -77,7 +77,9 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     if (operation === 'add') {
       injectOptions.value.set(item.value, item);
     } else if (operation === 'delete') {
-      injectOptions.value.delete(item.value);
+      if (injectOptions.value.get(item.value)) {
+        injectOptions.value.delete(item.value);
+      }
     }
   };
 
@@ -201,18 +203,12 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     filterQuery.value = query;
   };
 
-  const isLoading = ref(false);
+  const isLoading = computed(() => typeof props.loading === 'boolean' && props.loading);
   const debounceTime = computed(() => (props.remote ? 300 : 0));
 
-  const isUpdateSuccess = () => {
-    isLoading.value = false;
-  };
   const handlerQueryFunc = (query: string) => {
     if (isFunction(props.filter)) {
-      if (props.remote) {
-        isLoading.value = true;
-      }
-      props.filter(query, isUpdateSuccess);
+      props.filter(query);
     } else {
       queryChange(query);
     }
@@ -231,14 +227,18 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
 
   // no-data-text
   const emptyText = computed(() => {
+    const visibleOptionsCount = injectOptionsArray.value.filter((item) => {
+      const label = item.name || item.value;
+      return label.toString().toLocaleLowerCase().includes(filterQuery.value.toLocaleLowerCase());
+    }).length;
     if (isLoading.value) {
       return props.loadingText;
     }
-    if (injectOptionsArray.value.length === 0 && filterQuery.value === '') {
-      return props.noDataText;
-    }
-    if (isSupportFilter.value && filterQuery.value && injectOptionsArray.value.length > 0) {
+    if (isSupportFilter.value && filterQuery.value && injectOptionsArray.value.length > 0 && visibleOptionsCount === 0) {
       return props.noMatchText;
+    }
+    if (injectOptionsArray.value.length === 0) {
+      return props.noDataText;
     }
     return '';
   });
