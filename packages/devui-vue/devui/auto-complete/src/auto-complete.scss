@@ -196,6 +196,10 @@
 
   &--focus .#{$devui-prefix}-auto-complete-input__wrapper {
     border-color: $devui-form-control-line-active;
+
+    &:hover {
+      border-color: $devui-form-control-line-active;
+    }
   }
 
   &--disabled {
