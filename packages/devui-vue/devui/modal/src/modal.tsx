@@ -15,7 +15,7 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props: ModalProps, { slots, attrs, emit, expose }) {
     const ns = useNamespace('modal');
-    const { modelValue, lockScroll, closeOnClickOverlay, title } = toRefs(props);
+    const { modelValue, lockScroll, closeOnClickOverlay, title, showClose } = toRefs(props);
     const { handleVisibleChange } = useModal(props, emit);
     expose({ handleVisibleChange });
 
@@ -31,7 +31,13 @@ export default defineComponent({
         <FixedOverlay {...fixedOverlayProps}>
           <Transition name={ns.m('wipe')}>
             <div class={ns.b()} {...attrs}>
-              <Icon name="close" class="btn-close" size="var(--devui-font-size-md,12px)" onClick={() => handleVisibleChange(false)}></Icon>
+              {showClose.value && (
+                <Icon
+                  name="close"
+                  class="btn-close"
+                  size="var(--devui-font-size-md,12px)"
+                  onClick={() => handleVisibleChange(false)}></Icon>
+              )}
               {slots.header ? slots.header() : title.value && <DModalHeader>{title.value}</DModalHeader>}
               <DModalBody>{slots.default?.()}</DModalBody>
               {slots.footer?.()}
