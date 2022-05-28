@@ -24,6 +24,9 @@ export default defineComponent({
       inputValue,
       selectedOptions,
       filterQuery,
+      emptyText,
+      isLoading,
+      isShowEmptyText,
       onClick,
       valueChange,
       handleClear,
@@ -42,6 +45,7 @@ export default defineComponent({
       [ns.e('dropdown-list')]: true,
       [scrollbarNs.b()]: true,
     };
+    const dropdownEmptyCls = ns.em('dropdown', 'empty');
 
     provide(
       SELECT_TOKEN,
@@ -65,7 +69,7 @@ export default defineComponent({
           <SelectContent ref={selectRef} value={inputValue.value}></SelectContent>
           <Transition name="fade" ref={dropdownRef}>
             <div v-show={isOpen.value} class={dropdownCls}>
-              <ul class={listCls}>
+              <ul class={listCls} v-show={!isLoading.value}>
                 {isShowCreateOption.value && (
                   <Option value={filterQuery.value} name={filterQuery.value} create>
                     {props.multiple ? <Checkbox modelValue={false} label={filterQuery.value} /> : filterQuery.value}
@@ -92,6 +96,12 @@ export default defineComponent({
                     </Option>
                   ))}
               </ul>
+              {isShowEmptyText.value && (
+                <div>
+                  {ctx.slots?.empty && ctx.slots.empty()}
+                  {!ctx.slots?.empty && <p class={dropdownEmptyCls}>{emptyText.value}</p>}
+                </div>
+              )}
             </div>
           </Transition>
         </div>
