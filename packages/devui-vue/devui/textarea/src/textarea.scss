@@ -20,7 +20,7 @@
     border-color: $devui-form-control-line-active;
 
     &:hover {
-      border-color: $devui-form-control-line-active;
+      border-color: $devui-form-control-line-active !important;
     }
   }
 

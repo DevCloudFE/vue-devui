@@ -19,7 +19,7 @@
     transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
 
     &:not(.#{$devui-prefix}-input--error):not(.#{$devui-prefix}-input--disabled):hover {
-      border-color: $devui-disabled-line;
+      border-color: $devui-form-control-line-hover;
     }
 
     &__inner {
@@ -37,7 +37,7 @@
       border-color: $devui-form-control-line-active;
 
       &:hover {
-        border-color: $devui-form-control-line-hover !important;
+        border-color: $devui-form-control-line-active !important;
       }
     }
   }
