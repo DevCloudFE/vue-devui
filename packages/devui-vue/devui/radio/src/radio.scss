@@ -96,6 +96,10 @@ $radio-label-height-map: (
     .#{$devui-prefix}-radio__label {
       color: $devui-disabled-text;
     }
+
+    &.#{$devui-prefix}-radio--bordered {
+      border-color: $devui-disabled-line;
+    }
   }
 
   /* 选择图标-容器 */
