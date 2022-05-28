@@ -296,7 +296,6 @@ export default defineComponent({
   setup() {
     const value1 = ref('');
     const value2 = ref('');
-    const value3 = ref('');
     const items = new Array(6).fill(0).map((item, i) => {
       return {
         value: `Option ${i + 1}`,
@@ -329,7 +328,6 @@ export default defineComponent({
     return {
       value1,
       value2,
-      value3,
       options,
       options1,
       filterFunc,
