@@ -20,6 +20,14 @@ export const modalProps = {
   beforeClose: {
     type: Function as PropType<(done: () => void) => void>,
   },
+  escapable: {
+    type: Boolean,
+    default: true,
+  },
+  showClose: {
+    type: Boolean,
+    default: true,
+  },
 };
 
 export type EmitName = 'update:modelValue';
