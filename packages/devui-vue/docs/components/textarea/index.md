@@ -14,7 +14,7 @@
 <template>
   <h4 style="margin: 10px 0">Default</h4>
 
-  <d-textarea v-model="value1" autofocus id="textArea"></d-textarea>
+  <d-textarea v-model="valueDefault" autofocus id="textArea"></d-textarea>
 
   <h4 style="margin: 10px 0">Disabled</h4>
 
@@ -22,7 +22,7 @@
 
   <h4 style="margin: 10px 0">Error</h4>
 
-  <d-textarea v-model="value2" placeholder="我是出错状态" error></d-textarea>
+  <d-textarea v-model="valueError" placeholder="我是出错状态" error></d-textarea>
 </template>
 
 <script>
@@ -30,9 +30,11 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
+    const valueDefault = ref('我是默认值');
+    const valueError = ref('');
     return {
-      value1: ref('我是默认值'),
-      value2: ref(''),
+      valueDefault,
+      valueError,
     };
   },
 });
@@ -47,7 +49,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-textarea v-model="value1" :rows="5" placeholder="文本域高度可通过 rows 属性控制"></d-textarea>
+  <d-textarea v-model="valueHeight" :rows="5" placeholder="文本域高度可通过 rows 属性控制"></d-textarea>
 </template>
 
 <script>
@@ -55,8 +57,9 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
+    const valueHeight = ref('');
     return {
-      value1: ref(''),
+      valueHeight,
     };
   },
 });
@@ -73,9 +76,9 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-textarea v-model="value1" autosize placeholder="请输入"></d-textarea>
+  <d-textarea v-model="valueAutoSize1" autosize placeholder="请输入"></d-textarea>
   <div style="margin: 20px 0" />
-  <d-textarea v-model="value2" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入" resize="both"></d-textarea>
+  <d-textarea v-model="valueAutoSize2" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入" resize="both"></d-textarea>
 </template>
 
 <script>
@@ -83,9 +86,11 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
+    const valueAutoSize1 = ref('');
+    const valueAutoSize2 = ref('');
     return {
-      value1: ref(''),
-      value2: ref(''),
+      valueAutoSize1,
+      valueAutoSize2,
     };
   },
 });
@@ -130,9 +135,9 @@ export default defineComponent({
 ```vue
 <template>
   <h4 style="margin: 10px 0">默认</h4>
-  <d-textarea v-model="value1" show-count placeholder="请输入"></d-textarea>
+  <d-textarea v-model="valueCount1" show-count placeholder="请输入"></d-textarea>
   <h4 style="margin: 10px 0">显示最大字数</h4>
-  <d-textarea v-model="value2" show-count maxlength="20" placeholder="请输入"></d-textarea>
+  <d-textarea v-model="valueCount2" show-count maxlength="20" placeholder="请输入"></d-textarea>
 </template>
 
 <script>
@@ -140,9 +145,11 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
+    const valueCount1 = ref('');
+    const valueCount2 = ref('');
     return {
-      value1: ref(''),
-      value2: ref(''),
+      valueCount1,
+      valueCount2,
     };
   },
 });
