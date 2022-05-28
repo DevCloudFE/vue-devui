@@ -6,6 +6,12 @@
   position: relative;
   @include flex;
 
+  &:not(.#{$devui-prefix}-search--error):not(.#{$devui-prefix}-search--disabled):not(.#{$devui-prefix}-search--focus):hover {
+    .#{$devui-prefix}-input {
+      border-color: $devui-form-control-line-hover;
+    }
+  }
+
   .#{$devui-prefix}-input {
     padding: 4px 60px 4px 8px;
     display: inline-flex;
@@ -17,10 +23,6 @@
     border-radius: $devui-border-radius;
     background-color: $devui-form-control-bg;
     transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
-
-    &:not(.#{$devui-prefix}-input--error):not(.#{$devui-prefix}-input--disabled):hover {
-      border-color: $devui-disabled-line;
-    }
 
     &__inner {
       padding: 0;
@@ -35,10 +37,6 @@
   &--focus {
     .#{$devui-prefix}-input {
       border-color: $devui-form-control-line-active;
-
-      &:hover {
-        border-color: $devui-form-control-line-hover !important;
-      }
     }
   }
 
@@ -134,10 +132,6 @@
 
     .icon-search {
       color: $devui-disabled-text !important;
-    }
-
-    .#{$devui-prefix}-input:hover {
-      border-color: $devui-form-control-line-hover;
     }
   }
 
