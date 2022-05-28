@@ -75,15 +75,15 @@ export const selectProps = {
   },
   noDataText: {
     type: String,
-    default: 'No data',
+    default: '无数据',
   },
   noMatchText: {
     type: String,
-    default: 'No matching data',
+    default: '找不到相关记录',
   },
   loadingText: {
     type: String,
-    default: 'Loading',
+    default: '加载中',
   },
   onToggleChange: {
     type: Function as PropType<(bool: boolean) => void>,
