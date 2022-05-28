@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils';
 import { ref, reactive, nextTick } from 'vue';
-import { Query } from '../../transfer/common/use-transfer-base';
 import DSelect from '../src/select';
 
 describe('select', () => {
