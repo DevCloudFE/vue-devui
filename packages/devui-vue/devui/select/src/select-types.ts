@@ -79,7 +79,7 @@ export const selectProps = {
   },
   noMatchText: {
     type: String,
-    default: 'No Matching data',
+    default: 'No matching data',
   },
   loadingText: {
     type: String,
