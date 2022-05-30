@@ -1,24 +1,21 @@
 @import '../../../styles-var/devui-var';
 
-.#{$devui-prefix}-overlay__background {
+.#{$devui-prefix}-fixed-overlay {
   position: fixed;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
+  background-color: $devui-shadow;
+  z-index: 1050;
+}
 
-  &--color {
-    background: rgba(0, 0, 0, 0.4);
-  }
+.#{$devui-prefix}-fixed-overlay--fade-enter-active,
+.#{$devui-prefix}-fixed-overlay--fade-leave-active {
+  transition: opacity 0.1s cubic-bezier(0, 0, 1, 1);
+}
 
-  .#{$devui-prefix}-overlay {
-    position: relative;
-    z-index: 1000;
-    pointer-events: auto;
-  }
-
-  &--disabled {
-    pointer-events: none;
-  }
+.#{$devui-prefix}-fixed-overlay--fade-enter-from,
+.#{$devui-prefix}-fixed-overlay--fade-leave-to {
+  opacity: 0;
 }

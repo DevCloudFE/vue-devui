@@ -1,26 +1,27 @@
-import { defineComponent, renderSlot } from 'vue';
-import { CommonOverlay } from '../base-overlay';
-import { fixedOverlayProps, FixedOverlayProps, overlayEmits } from './fixed-overlay-types';
-import { useOverlayLogic } from './use-fixed-overlay';
+import { defineComponent, SetupContext, toRefs, Transition } from 'vue';
+import { fixedOverlayProps, FixedOverlayProps } from './fixed-overlay-types';
+import { useFixedOverlay } from './use-fixed-overlay';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 import './fixed-overlay.scss';
 
 export const FixedOverlay = defineComponent({
   name: 'DFixedOverlay',
+  inheritAttrs: false,
   props: fixedOverlayProps,
-  emits: overlayEmits,
-  setup(props: FixedOverlayProps, ctx) {
-    const { backgroundClass, overlayClass, handleBackdropClick, handleOverlayBubbleCancel } = useOverlayLogic(props, ctx);
+  emits: ['update:modelValue', 'click'],
+  setup(props: FixedOverlayProps, ctx: SetupContext) {
+    const { modelValue } = toRefs(props);
+    const ns = useNamespace('fixed-overlay');
+    const { onClick } = useFixedOverlay(props, ctx);
 
     return () => (
-      <CommonOverlay>
-        {props.visible && (
-          <div class={backgroundClass.value} style={props.backgroundStyle} onClick={handleBackdropClick}>
-            <div class={overlayClass.value} style={props.overlayStyle} onClick={handleOverlayBubbleCancel}>
-              {renderSlot(ctx.slots, 'default')}
-            </div>
+      <Transition name={ns.m('fade')}>
+        {modelValue.value && (
+          <div class={ns.b()} {...ctx.attrs} onClick={onClick}>
+            {ctx.slots.default?.()}
           </div>
         )}
-      </CommonOverlay>
+      </Transition>
     );
   },
 });
