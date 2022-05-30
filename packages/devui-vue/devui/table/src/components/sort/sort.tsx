@@ -1,5 +1,6 @@
 import { defineComponent } from 'vue';
 import { sortProps, SortProps } from './sort-types';
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import './sort.scss';
 
 export default defineComponent({
@@ -14,16 +15,16 @@ export default defineComponent({
     const changeDirection = () => {
       ctx.emit('sort', directionMap[props.sortDirection || 'default']);
     };
+    const ns = useNamespace('table');
 
     return () => (
-      <span onClick={changeDirection} class="sort-clickable">
+      <span onClick={changeDirection} class={ns.e('sort-clickable')}>
         <i
           class={[
-            'datatable-svg',
             {
-              'sort-icon-default': !props.sortDirection,
-              'sort-icon-asc': props.sortDirection === 'ASC',
-              'sort-icon-desc': props.sortDirection === 'DESC',
+              [ns.e('sort-default')]: !props.sortDirection,
+              [ns.e('sort-asc')]: props.sortDirection === 'ASC',
+              [ns.e('sort-desc')]: props.sortDirection === 'DESC',
             },
           ]}>
           <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
