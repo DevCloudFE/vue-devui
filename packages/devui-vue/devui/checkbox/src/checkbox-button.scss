@@ -33,12 +33,12 @@ $button-padding-map: (
     color: $devui-text;
     padding: 10px 20px;
     cursor: pointer;
-    border: 1px solid $devui-line;
+    border: 1px solid $devui-disabled-line;
     border-left: none;
     display: inline-block;
     line-height: 1;
     user-select: none;
-    box-shadow: -1px 0 0 0 #e5f0fb;
+    box-shadow: -1px 0 0 0 #dfe1e6;
     @each $size in ('lg', 'md', 'sm', 'xs') {
       &.#{$devui-prefix}-checkbox-button--#{$size} {
         font-size: map-get($font-size-map, #{$size});
@@ -58,6 +58,7 @@ $button-padding-map: (
       .#{$devui-prefix}-checkbox-button__content {
         color: #ffffff;
         background-color: $devui-icon-fill-active-disabled;
+        border-color: $devui-icon-fill-active-disabled;
       }
     }
   }
@@ -75,7 +76,7 @@ $button-padding-map: (
     .#{$devui-prefix}-checkbox-button__content {
       border-top-left-radius: $devui-border-radius;
       border-bottom-left-radius: $devui-border-radius;
-      border-left: 1px solid $devui-line;
+      border-left: 1px solid $devui-disabled-line;
       box-shadow: none;
     }
   }
