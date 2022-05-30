@@ -433,12 +433,14 @@ export default defineComponent({
 
 ### Select 事件
 
-| 事件名        | 类型                      | 说明                                                                | 跳转 Demo |
-| :------------ | :------------------------ | :------------------------------------------------------------------ | :-------- |
-| value-change  | `string`                  | 可选，输出函数,当选中某个选项后,将会调用此函数,参数为当前选择项的值 |           |
-| toggle-change | `string`                  | 可选，输出函数,下拉打开关闭 toggle 事件                             |           |
-| focus         | `Function(e: FocusEvent)` | 可选，获取焦点时触发                                                |
-| blur          | `Function(e: FocusEvent)` | 可选，失去焦点时触发                                                |
+| 事件名        | 类型                      | 说明                                                       | 跳转 Demo |
+| :------------ | :------------------------ | :--------------------------------------------------------- | :-------- |
+| value-change  | `Function(data)`          | 可选，当选中某个选项后,将会调用此函数,参数为当前选择项的值 |           |
+| toggle-change | `Function(bool)`          | 可选，下拉打开关闭 toggle 事件                             |           |
+| focus         | `Function(e: FocusEvent)` | 可选，获取焦点时触发                                       |
+| blur          | `Function(e: FocusEvent)` | 可选，失去焦点时触发                                       |
+| clear         | `Function()`              | 可选, 通过右侧删除图标清空所有选项时触发                   |
+| remove-tag    | `Function(data)`          | 可选，多选时删除单个 tag 时触发，参数为当前 tag 的值       |
 
 ### Select 插槽
 
@@ -446,6 +448,13 @@ export default defineComponent({
 | :------ | :------------------------- |
 | default | 自定义 Select 下拉面板内容 |
 | empty   | 自定义无选项时下拉面板内容 |
+
+### Select 方法
+
+| 名称  | 说明                     |
+| :---- | :----------------------- |
+| focus | 使选择器的输入框获取焦点 |
+| blur  | 使选择器的输入框失去焦点 |
 
 ### Option 参数
 

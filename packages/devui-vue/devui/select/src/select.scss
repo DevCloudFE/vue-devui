@@ -25,7 +25,8 @@ $select-item-min-height: 36px;
     }
   }
 
-  &--open {
+  &--open,
+  &--focus {
     .#{$devui-prefix}-select__selection {
       border-color: $devui-form-control-line-active;
 
