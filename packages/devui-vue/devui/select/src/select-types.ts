@@ -105,7 +105,6 @@ export type OptionModelValue = number | string;
 
 export interface UseSelectReturnType {
   containerRef: Ref<HTMLElement | undefined>;
-  selectRef: Ref<HTMLElement | undefined>;
   dropdownRef: Ref<HTMLElement | undefined>;
   isOpen: Ref<boolean>;
   selectCls: ComputedRef<string>;
@@ -194,4 +193,10 @@ export interface UseSelectContentReturnType {
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
   queryFilter: (e: Event) => void;
+}
+
+export interface UseSelectFunctionReturn {
+  isSelectFocus: Ref<boolean>;
+  blur: () => void;
+  focus: () => void;
 }
