@@ -268,7 +268,7 @@ export default defineComponent({
 <template>
   <div>
     <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="buttonValues1" size="lg" is-show-title color="rgb(255, 193, 7)" text-color="#ca3d3d">
+      <d-checkbox-group v-model="buttonValues1" size="lg" is-show-title color="#FA9841" text-color="#fff">
         <d-checkbox-button
           v-for="item in buttonOptions1"
           :label="item.label"
@@ -277,10 +277,10 @@ export default defineComponent({
           :title="item.title"
         ></d-checkbox-button
       ></d-checkbox-group>
-      <d-checkbox-group v-model="buttonValues1" style="margin-top: 10px;">
+      <d-checkbox-group v-model="buttonValues2" style="margin-top: 10px;">
         <d-checkbox-button v-for="item in buttonOptions1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
       ></d-checkbox-group>
-      <d-checkbox-group v-model="buttonValues1" size="sm" style="margin-top: 10px;">
+      <d-checkbox-group v-model="buttonValues3" size="sm" style="margin-top: 10px;">
         <d-checkbox-button
           v-for="item in buttonOptions1"
           :label="item.label"
@@ -289,7 +289,7 @@ export default defineComponent({
           :disabled="item.disabled"
         ></d-checkbox-button
       ></d-checkbox-group>
-      <d-checkbox-group v-model="buttonValues1" size="xs" disabled style="margin-top: 10px;">
+      <d-checkbox-group v-model="buttonValues4" size="xs" disabled style="margin-top: 10px;">
         <d-checkbox-button v-for="item in buttonOptions1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
       ></d-checkbox-group>
     </div>
@@ -305,8 +305,14 @@ export default defineComponent({
       { label: '选项3', value: 4, id: 3, title: '自定义title3' },
     ]);
     const buttonValues1 = ref([2]);
+    const buttonValues2 = ref([2]);
+    const buttonValues3 = ref([2]);
+    const buttonValues4 = ref([2]);
     return {
       buttonValues1,
+      buttonValues2,
+      buttonValues3,
+      buttonValues4,
       buttonOptions1,
     };
   },
