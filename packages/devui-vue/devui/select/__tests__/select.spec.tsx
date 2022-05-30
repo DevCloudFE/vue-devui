@@ -330,26 +330,23 @@ describe('select', () => {
     const options = reactive({
       data: [],
     });
-    const filterFunc = (query: string, callback?: () => void) => {
+    const loading = ref(false);
+    const filterFunc = (query: string) => {
       if (query) {
+        loading.value = true;
         setTimeout(() => {
           options.data = list.filter((item) => {
             return item.toLowerCase().includes(query.toLowerCase());
           });
-          if (callback) {
-            callback();
-          }
+          loading.value = false;
         }, 200);
       } else {
         options.data = [];
-        if (callback) {
-          callback();
-        }
       }
     };
     const wrapper = mount({
       setup() {
-        return () => <DSelect v-model={value.value} options={options.data} filter={filterFunc} remote></DSelect>;
+        return () => <DSelect v-model={value.value} options={options.data} filter={filterFunc} remote loading={loading.value}></DSelect>;
       },
     });
     const container = wrapper.find('.devui-select');
@@ -362,7 +359,7 @@ describe('select', () => {
     setTimeout(() => {
       const noMachDataItem = wrapper.find('.devui-select__dropdown--empty');
       expect(noMachDataItem.exists()).toBeTruthy();
-      expect(noMachDataItem.text()).toBe('Loading');
+      expect(noMachDataItem.text()).toBe('加载中');
       setTimeout(() => {
         const items = wrapper.findAll('.devui-select__item');
         expect(items.length).toBe(1);
@@ -418,7 +415,7 @@ describe('select', () => {
     expect(items.length).toBe(0);
     const noDataItem = wrapper.find('.devui-select__dropdown--empty');
     expect(noDataItem.exists()).toBeTruthy();
-    expect(noDataItem.text()).toBe('No data');
+    expect(noDataItem.text()).toBe('无数据');
 
     await wrapper.setProps({ options: list });
     const newItems = wrapper.findAll('.devui-select__item');
@@ -433,8 +430,49 @@ describe('select', () => {
       expect(lists[0].isVisible()).toBe(false);
       const noMachDataItem = wrapper.find('.devui-select__dropdown--empty');
       expect(noMachDataItem.exists()).toBeTruthy();
-      expect(noMachDataItem.text()).toBe('No matching data');
+      expect(noMachDataItem.text()).toBe('找不到相关记录');
     }, 300);
+    wrapper.unmount();
+  });
+
+  it('select remote loading work', async () => {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive({
+      data: [],
+    });
+    const remoteLoading = ref(false);
+    const toggleChange = (bool: boolean) => {
+      if (bool) {
+        remoteLoading.value = true;
+        setTimeout(() => {
+          options.data = list;
+          remoteLoading.value = false;
+        }, 3000);
+      }
+    };
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DSelect v-model={value.value} options={options.data} loading={remoteLoading.value} onToggleChange={toggleChange}></DSelect>
+        );
+      },
+    });
+    const container = wrapper.find('.devui-select');
+
+    await container.trigger('click');
+    await nextTick();
+    const items = wrapper.findAll('.devui-select__item');
+    expect(items.length).toBe(0);
+    const remoteLoadingItem = wrapper.find('.devui-select__dropdown--empty');
+    expect(remoteLoadingItem.exists()).toBeTruthy();
+    expect(remoteLoadingItem.text()).toBe('加载中');
+    setTimeout(() => {
+      const newLoadingItem = wrapper.find('.devui-select__dropdown--empty');
+      expect(newLoadingItem.exists()).toBeFalsy();
+      const remoteItems = wrapper.findAll('.devui-select__item');
+      expect(remoteItems.length).toBe(6);
+    }, 3000);
     wrapper.unmount();
   });
 });
