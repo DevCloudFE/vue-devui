@@ -318,6 +318,46 @@ export default defineComponent({
 
 :::
 
+### 按钮形态
+
+数组源可为普通数组、对象数组等。
+
+:::demo
+
+```vue
+<template>
+  <d-radio-group direction="row" v-model="buttonChoose1">
+    <d-radio-button v-for="item in buttonList1" :key="item" :value="item"> The Radio value is: {{ item }} </d-radio-button>
+  </d-radio-group>
+  <d-radio-group direction="row" v-model="buttonChoose2">
+    <d-radio-button v-for="item in buttonList2" :key="item.name" :value="item.name"> The Radio value is: {{ item.name }} </d-radio-button>
+  </d-radio-group>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const buttonList1 = ref(['Item1', 'Item2', 'Item3']);
+    let buttonChoose1 = ref('Item1');
+
+    const buttonList2 = [{ name: 'Item1' }, { name: 'Item2' }, { name: 'Item3' }];
+    let buttonChoose2 = ref('Item3');
+
+    return {
+      buttonList1,
+      buttonChoose1,
+      buttonList2,
+      buttonChoose2,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Radio 参数
 
 | 参数          | 类型                         | 默认  | 说明                                                             | 跳转 Demo                               |
