@@ -39,11 +39,11 @@
 }
 
 .filter-icon {
-  display: inline-block;
-  vertical-align: middle;
-  cursor: pointer;
+  flex: 1;
+  display: block;
   height: 16px;
-  margin-top: -1px; // 解决漏斗形状视觉效果不局中
+  text-align: right;
+  cursor: pointer;
 
   > svg g {
     fill: $devui-dividing-line;

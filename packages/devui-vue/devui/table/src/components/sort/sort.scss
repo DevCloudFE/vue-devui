@@ -1,16 +1,16 @@
 @import '../../../../styles-var/devui-var.scss';
 
-.sort-clickable {
-  cursor: pointer;
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 8px;
+.#{$devui-prefix}-table__sort-clickable {
+  flex: 1;
+  height: 20px;
   line-height: 20px;
+  margin-left: 8px;
+  margin-right: 4px;
+  vertical-align: -0.55em;
+  cursor: pointer;
 }
 
-.sort-icon-default {
+.#{$devui-prefix}-table__sort-default {
   > svg g use {
     fill: $devui-dividing-line;
   }
@@ -26,8 +26,8 @@
   }
 }
 
-.sort-icon-asc,
-.sort-icon-desc {
+.#{$devui-prefix}-table__sort-asc,
+.#{$devui-prefix}-table__sort-desc {
   > svg g use {
     fill: $devui-icon-fill-active;
   }
@@ -43,13 +43,13 @@
   }
 }
 
-.sort-icon-asc {
+.#{$devui-prefix}-table__sort-asc {
   > svg g polygon:last-of-type {
     opacity: 0.3;
   }
 }
 
-.sort-icon-desc {
+.#{$devui-prefix}-table__sort-desc {
   > svg g polygon:first-of-type {
     opacity: 0.3;
   }
