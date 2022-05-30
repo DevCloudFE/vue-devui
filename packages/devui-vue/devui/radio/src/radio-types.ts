@@ -1,5 +1,6 @@
 import type { InjectionKey, PropType, Ref, ExtractPropTypes, ComputedRef } from 'vue';
 export type valueTypes = string | number | boolean;
+export type sizeTypes = 'lg' | 'md' | 'sm' | 'xs';
 
 /** radio、radio-group 共用 props */
 const radioCommonProps = {
@@ -23,6 +24,10 @@ const radioCommonProps = {
     type: Boolean,
     default: false,
   },
+  size: {
+    type: String as PropType<sizeTypes>,
+    default: 'md',
+  },
 };
 
 /** radio 的 props */
@@ -33,6 +38,10 @@ export const radioProps = {
     type: [Number, String, Boolean] as PropType<valueTypes>,
     required: true,
     default: null,
+  },
+  border: {
+    type: Boolean,
+    default: false,
   },
 } as const;
 
@@ -49,6 +58,10 @@ export const radioGroupProps = {
     type: String as PropType<'row' | 'column'>,
     default: 'column',
   },
+  border: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type RadioProps = ExtractPropTypes<typeof radioProps>;
@@ -61,6 +74,8 @@ interface RadioGroupInjection {
   disabled: Ref<boolean>;
   beforeChange: (value: valueTypes) => boolean | Promise<boolean>;
   emitChange: (value: valueTypes) => void;
+  border: Ref<boolean>;
+  size: Ref<string>;
 }
 
 /** radio-group 注入 radio 的 key 值 */
@@ -71,4 +86,6 @@ export type UseRadioFn = {
   radioName: ComputedRef<string | undefined>;
   isDisabled: ComputedRef<boolean | undefined>;
   handleChange: (event: Event) => Promise<void>;
+  border: ComputedRef<boolean>;
+  size: ComputedRef<string>;
 };
