@@ -203,8 +203,8 @@
   }
 
   &--disabled {
-    color: $devui-list-item-active-text;
-    background-color: $devui-list-item-active-bg;
+    color: $devui-disabled-text;
+    background-color: $devui-disabled-bg;
     cursor: not-allowed;
     .#{$devui-prefix}-dropdown-origin {
       background-color: transparent !important;
