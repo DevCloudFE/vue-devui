@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref, computed, Ref } from 'vue';
 import type { SetupContext } from 'vue';
 import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
 import { className, KeyType } from './utils';
@@ -6,10 +6,15 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 import { onClickOutside } from '@vueuse/core';
 import { isFunction, debounce } from 'lodash';
 
-export default function useSelect(props: SelectProps, ctx: SetupContext): UseSelectReturnType {
+export default function useSelect(
+  props: SelectProps,
+  ctx: SetupContext,
+  focus: () => void,
+  blur: () => void,
+  isSelectFocus: Ref<boolean>
+): UseSelectReturnType {
   const ns = useNamespace('select');
   const containerRef = ref<HTMLElement>();
-  const selectRef = ref<HTMLElement>();
   const dropdownRef = ref<HTMLElement>();
 
   // 控制弹窗开合
@@ -34,6 +39,7 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
       [ns.m('sm')]: props.size === 'sm',
       [ns.m('underlined')]: props.overview === 'underlined',
       [ns.m('disabled')]: props.disabled,
+      [ns.m('focus')]: isSelectFocus.value,
     });
   });
 
@@ -127,11 +133,6 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
 
   const isSupportFilter = computed(() => isFunction(props.filter) || (typeof props.filter === 'boolean' && props.filter));
 
-  const getSelectInput = () => {
-    const selectContentRefs = selectRef.value?.$refs;
-    return selectContentRefs.input as HTMLElement;
-  };
-
   const valueChange = (item: OptionObjectItem, isObjectOption: boolean) => {
     const { multiple } = props;
     let { modelValue } = props;
@@ -152,8 +153,8 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
       if (item.create) {
         filterQuery.value = '';
       }
-      if (isSupportFilter.value && getSelectInput()) {
-        getSelectInput()?.focus();
+      if (isSupportFilter.value) {
+        focus();
       }
     } else {
       ctx.emit('update:modelValue', item.value);
@@ -173,8 +174,10 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     } else {
       ctx.emit('update:modelValue', '');
     }
+    ctx.emit('clear');
     if (isOpen.value) {
       handleClose();
+      blur();
     }
   };
 
@@ -189,14 +192,21 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
     }
     modelValue = checkedItems;
     ctx.emit('update:modelValue', modelValue);
+    ctx.emit('remove-tag', data.value);
   };
 
   const onFocus = (e: FocusEvent) => {
     ctx.emit('focus', e);
+    if (!props.disabled) {
+      isSelectFocus.value = true;
+    }
   };
 
   const onBlur = (e: FocusEvent) => {
     ctx.emit('blur', e);
+    if (!props.disabled) {
+      isSelectFocus.value = false;
+    }
   };
 
   const queryChange = (query: string) => {
@@ -249,7 +259,6 @@ export default function useSelect(props: SelectProps, ctx: SetupContext): UseSel
 
   return {
     containerRef,
-    selectRef,
     dropdownRef,
     isOpen,
     selectCls,
