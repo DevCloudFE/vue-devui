@@ -11,7 +11,7 @@ export type OptionItem = number | string | ({ value: string | number } & Partial
 export type Options = Array<OptionItem>;
 
 export type ModelValue = number | string | Array<number | string>;
-export type filterValue = boolean | ((query: string, callback?: () => void) => void);
+export type filterValue = boolean | ((query: string) => void);
 export const selectProps = {
   modelValue: {
     type: [String, Number, Array] as PropType<ModelValue>,
@@ -80,6 +80,10 @@ export const selectProps = {
   noMatchText: {
     type: String,
     default: '找不到相关记录',
+  },
+  loading: {
+    type: Boolean,
+    default: false,
   },
   loadingText: {
     type: String,
