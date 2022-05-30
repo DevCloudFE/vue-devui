@@ -106,7 +106,7 @@ export default defineComponent({
     const renderBasicDropdown = () => {
       return (
         <Transition name={showAnimation ? 'fade' : ''}>
-          <FlexibleOverlay show-arrow origin={origin.value} position={position.value} v-model={visible.value}>
+          <FlexibleOverlay origin={origin.value} position={position.value} v-model={visible.value}>
             <div
               class={ns.e('menu')}
               style={{
