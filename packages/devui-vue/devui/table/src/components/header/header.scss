@@ -58,7 +58,7 @@
 
       .title {
         display: inline-block;
-        width: calc(100% - 18px);
+        max-width: calc(100% - 18px);
         font-size: $devui-font-size;
         color: $devui-text;
         font-weight: 700;
