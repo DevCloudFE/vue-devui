@@ -32,12 +32,12 @@
   </div>
 
   <div class="basic-option">
-    <d-switch v-model:checked="restrictOneOpen"></d-switch>
+    <d-switch v-model="restrictOneOpen"></d-switch>
     Only one level-1 menu can be expanded.
     <!--限制只能展开一个一级菜单-->
   </div>
   <div class="basic-option">
-    <d-switch v-model:checked="accordionTypeEmbed"></d-switch>
+    <d-switch v-model="accordionTypeEmbed"></d-switch>
     Embedded menu (no shadow)
     <!--内嵌菜单形式（无阴影）-->
   </div>
@@ -577,7 +577,7 @@ export default defineComponent({
   </div>
 
   <div class="multi-child-option">
-    <d-switch v-model:checked="autoOpenActiveMenu"></d-switch>
+    <d-switch v-model="autoOpenActiveMenu"></d-switch>
     auto expend active menu
     <!--自动展开激活的菜单-->
   </div>

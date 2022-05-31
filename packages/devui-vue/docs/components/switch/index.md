@@ -12,9 +12,9 @@
 
 ```vue
 <template>
-  <d-switch v-model:checked="checkedSmall" size="sm"></d-switch>
-  <d-switch v-model:checked="uncheckedMiddle"></d-switch>
-  <d-switch v-model:checked="checkedLarge" size="lg"></d-switch>
+  <d-switch v-model="checkedSmall" size="sm"></d-switch>
+  <d-switch v-model="uncheckedMiddle"></d-switch>
+  <d-switch v-model="checkedLarge" size="lg"></d-switch>
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
@@ -42,8 +42,8 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-switch v-model:checked="checkedDisabled" :disabled="true"></d-switch>
-  <d-switch v-model:checked="checkedDisabled1" :disabled="true"></d-switch>
+  <d-switch v-model="checkedDisabled" :disabled="true"></d-switch>
+  <d-switch v-model="checkedDisabled1" :disabled="true"></d-switch>
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
@@ -69,12 +69,12 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-switch v-model:checked="checkedColor" color="#FECC55"></d-switch>
-  <d-switch v-model:checked="checkedContent">
+  <d-switch v-model="checkedColor" color="#FECC55"></d-switch>
+  <d-switch v-model="checkedContent">
     <template #checkedContent>开</template>
     <template #uncheckedContent>关</template>
   </d-switch>
-  <d-switch color="#50D4AB" v-model:checked="checkedIcon">
+  <d-switch color="#50D4AB" v-model="checkedIcon">
     <template #checkedContent>
       <i class="icon-right"></i>
     </template>
@@ -107,9 +107,9 @@ export default defineComponent({
 
 | 参数             | 类型                    | 默认  | 说明                         | 跳转 Demo                 |
 | :--------------- | :---------------------- | :---- | :--------------------------- | :------------------------ |
+| v-model          | `boolean`               | --    | 绑定值                       | [基本用法](#size)         |
 | size             | `sm \| md \| lg`        | `md`  | 可选，开关尺寸大小           | [size](#size)             |
 | color            | `string`                | --    | 可选，开关打开时的自定义颜色 | [自定义样式](#自定义样式) |
-| checked          | `boolean`               | false | 可选，开关是否打开，默认关闭 | [基本用法](#size)         |
 | disabled         | `boolean`               | false | 可选，是否禁用开关           | [基本用法](#size)         |
 | checkedContent   | `string \| HTMLElement` | ''    | 可选，开关打开时说明         | [自定义样式](#自定义样式) |
 | uncheckedContent | `string \| HTMLElement` | ''    | 可选，开关关闭时说明         | [自定义样式](#自定义样式) |
