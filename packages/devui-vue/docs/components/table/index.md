@@ -70,15 +70,15 @@ export default defineComponent({
   <div class="table-btn-groups">
     <div class="table-btn">
       自动表格布局：
-      <d-switch v-model:checked="tableLayout" />
+      <d-switch v-model="tableLayout" />
     </div>
     <div class="table-btn">
       斑马纹：
-      <d-switch v-model:checked="striped" />
+      <d-switch v-model="striped" />
     </div>
     <div class="table-btn">
       表头背景色：
-      <d-switch v-model:checked="headerBg" />
+      <d-switch v-model="headerBg" />
     </div>
     <div class="table-btn">
       表格大小：
@@ -98,7 +98,7 @@ export default defineComponent({
     </div>
     <div class="table-btn">
       表头显隐：
-      <d-switch v-model:checked="showHeader" />
+      <d-switch v-model="showHeader" />
     </div>
   </div>
   <d-table
@@ -195,8 +195,8 @@ export default defineComponent({
       borderTypeList,
       tableLayout,
       trackBy(item) {
-        return `${item.firstName}${item.lastName}`
-      }
+        return `${item.firstName}${item.lastName}`;
+      },
     };
   },
 });
@@ -1054,10 +1054,10 @@ export default defineComponent({
   <d-table ref="tableRef" :data="dataSource" :trackBy="(item) => item?.firstName" @expand-change="expandChange">
     <d-column type="expand">
       <template #default="rowData">
-        <div>First Name: {{rowData.row.firstName}}</div>
-        <div>Last Name: {{rowData.row.lastName}}</div>
-        <div>Gender: {{rowData.row.gender}}</div>
-        <div>Date of birth: {{rowData.row.date}}</div>
+        <div>First Name: {{ rowData.row.firstName }}</div>
+        <div>Last Name: {{ rowData.row.lastName }}</div>
+        <div>Gender: {{ rowData.row.gender }}</div>
+        <div>Date of birth: {{ rowData.row.date }}</div>
       </template>
     </d-column>
     <d-column field="firstName" header="First Name"></d-column>
@@ -1107,7 +1107,7 @@ export default defineComponent({
 
     const expandChange = (currentRow, expandedRows) => {
       console.log('currentRow, expandedRows', currentRow, expandedRows);
-    }
+    };
 
     return { dataSource, expandChange, tableRef };
   },
@@ -1122,7 +1122,7 @@ export default defineComponent({
 | 参数名                | 类型                      | 默认值    | 说明                                                                       | 跳转 Demo                 |
 | :-------------------- | :------------------------ | :-------- | :------------------------------------------------------------------------- | :------------------------ |
 | data                  | `array`                   | []        | 可选，显示的数据                                                           | [基本用法](#基本用法)     |
-| trackBy | `Function(item): string` | -- | 必选，用于获取该行数据的特定标记 | |
+| trackBy               | `Function(item): string`  | --        | 必选，用于获取该行数据的特定标记                                           |                           |
 | striped               | `boolean`                 | false     | 可选，是否显示斑马纹间隔                                                   | [表格样式](#表格样式)     |
 | size                  | [TableSize](#tablesize)   | 'sm'      | 可选，表格大小，分别对应行高 40px,48px,56px                                | [表格样式](#表格样式)     |
 | max-width             | `string`                  | --        | 可选，表格最大宽度                                                         |

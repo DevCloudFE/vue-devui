@@ -29,31 +29,31 @@
   <div class="skeleton-btn-groups">
     <div class="skeleton-btn">
       展示骨架屏：
-      <d-switch v-model:checked="loading" />
+      <d-switch v-model="loading" />
     </div>
     <div class="skeleton-btn">
       动画：
-      <d-switch v-model:checked="animate" />
+      <d-switch v-model="animate" />
     </div>
     <div class="skeleton-btn">
       显示头像：
-      <d-switch v-model:checked="avatar" />
+      <d-switch v-model="avatar" />
     </div>
     <div class="skeleton-btn">
       显示标题：
-      <d-switch v-model:checked="title" />
+      <d-switch v-model="title" />
     </div>
     <div class="skeleton-btn">
       显示段落：
-      <d-switch v-model:checked="paragraph" />
+      <d-switch v-model="paragraph" />
     </div>
     <div class="skeleton-btn">
       头像圆角：
-      <d-switch v-model:checked="roundAvatar" />
+      <d-switch v-model="roundAvatar" />
     </div>
     <div class="skeleton-btn">
       段落和标题圆角：
-      <d-switch v-model:checked="round" />
+      <d-switch v-model="round" />
     </div>
   </div>
   <d-skeleton

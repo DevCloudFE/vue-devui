@@ -30,7 +30,7 @@
       </d-radio-group>
     </d-form-item>
     <d-form-item field="switch" label="Switch">
-      <d-switch v-model:checked="formModel.switch"></d-switch>
+      <d-switch v-model="formModel.switch"></d-switch>
     </d-form-item>
     <d-form-item field="executionDay" label="Execution day">
       <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
@@ -223,7 +223,7 @@ export default defineComponent({
       </d-radio-group>
     </d-form-item>
     <d-form-item field="switch" label="Switch">
-      <d-switch v-model:checked="formModel.switch"></d-switch>
+      <d-switch v-model="formModel.switch"></d-switch>
     </d-form-item>
     <d-form-item field="executionDay" label="Execution day">
       <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
@@ -318,7 +318,7 @@ export default defineComponent({
       </d-col>
       <d-col :span="7">
         <d-form-item field="switch" label="Switch">
-          <d-switch v-model:checked="formModel.switch"></d-switch>
+          <d-switch v-model="formModel.switch"></d-switch>
         </d-form-item>
       </d-col>
     </d-row>
