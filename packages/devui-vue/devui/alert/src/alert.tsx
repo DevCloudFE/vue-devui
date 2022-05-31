@@ -11,7 +11,6 @@ export default defineComponent({
   emits: ['close'],
   setup(props, ctx) {
     const ns = useNamespace('alert');
-    const closeNs = useNamespace('close');
     const hide = ref(false);
     const closing = ref(false);
     const alertEl = ref();
@@ -51,7 +50,7 @@ export default defineComponent({
             <div class={ns.e('content')}>
               <span>{ctx.slots.default?.()}</span>
               {props.closeable ? (
-                <div class={closeNs.b()} onClick={close}>
+                <div class={ns.e('close-icon')} onClick={close}>
                   <AlertCloseIcon />
                 </div>
               ) : null}

@@ -19,12 +19,12 @@
 
   .#{$devui-prefix}-alert__content {
     display: flex;
-    padding: 0 15px 0 4px;
+    padding: 0 16px 0 4px;
     word-break: normal;
     word-wrap: break-word;
   }
 
-  .#{$devui-prefix}-close {
+  .#{$devui-prefix}-alert__close-icon {
     color: $devui-text;
     opacity: 1;
     line-height: 26px;
@@ -49,7 +49,7 @@
     border-color: $devui-success-line;
     color: $devui-text;
 
-    .#{$devui-prefix}-close {
+    .#{$devui-prefix}-alert__close-icon {
       & > svg path {
         fill: $devui-success-line;
       }
@@ -61,7 +61,7 @@
     border-color: $devui-info-line;
     color: $devui-text;
 
-    .#{$devui-prefix}-close {
+    .#{$devui-prefix}-alert__close-icon {
       & > svg path {
         fill: $devui-info-line;
       }
@@ -73,7 +73,7 @@
     border-color: $devui-warning-line;
     color: $devui-text;
 
-    .#{$devui-prefix}-close {
+    .#{$devui-prefix}-alert__close-icon {
       & > svg path {
         fill: $devui-warning-line;
       }
@@ -85,7 +85,7 @@
     border-color: $devui-danger-line;
     color: $devui-text;
 
-    .#{$devui-prefix}-close {
+    .#{$devui-prefix}-alert__close-icon {
       & > svg path {
         fill: $devui-danger-line;
       }
@@ -96,7 +96,7 @@
     border-color: $devui-line;
     color: $devui-text;
 
-    .#{$devui-prefix}-close {
+    .#{$devui-prefix}-alert__close-icon {
       & > svg path {
         fill: $devui-text-weak;
       }
