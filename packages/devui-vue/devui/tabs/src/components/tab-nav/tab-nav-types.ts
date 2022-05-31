@@ -16,4 +16,5 @@ export interface UseTabNavFunction {
 
 export interface UseTabNavEvent {
   onTabRemove: (item: any, ev: MouseEvent) => void;
+  onTabAdd: () => void;
 }

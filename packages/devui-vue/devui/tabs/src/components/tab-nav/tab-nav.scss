@@ -152,7 +152,8 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
   }
 
   .#{$devui-prefix}-tabs__new-tab {
-    padding: 0 16px;
+    padding: 2px 16px 0;
+    align-self: normal;
   }
   .#{$devui-prefix}-tabs__close-btn {
     margin-right: 12px;
@@ -316,6 +317,8 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
 }
 
 .#{$devui-prefix}-tabs__nav {
+  display: flex;
+  align-items: center;
   list-style: none;
   padding-left: 0;
 
@@ -389,11 +392,10 @@ $devui-tab-options-bg: $devui-list-item-hover-bg;
 
   &__close-btn {
     margin-left: 12px;
-    padding: 0 !important;
-    color: var(--devui-line, #adb0b8) !important;
+    color: var(--devui-line, #adb0b8);
 
     &:hover {
-      color: $devui-text !important;
+      color: $devui-text;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, onUnmounted } from 'vue';
 import { tabProps } from './tab-types';
 import type { TabsData } from '../../tabs-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
@@ -9,9 +9,13 @@ export default defineComponent({
   props: tabProps,
   setup(props, { slots }) {
     const tabs = inject<TabsData>('tabs');
-    tabs.state.slots.push(slots.title);
-    tabs.state.data.push(props);
+    tabs?.state.slots.push(slots.title);
+    tabs?.state.data?.push(props);
     const ns = useNamespace('tab');
+
+    onUnmounted(() => {
+      tabs.state.data = tabs.state.data.filter((tab) => tab.id !== props.id);
+    });
     return () => {
       const { id } = props;
       const content =
