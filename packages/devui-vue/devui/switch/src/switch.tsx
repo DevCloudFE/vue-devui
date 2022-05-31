@@ -7,7 +7,7 @@ import './switch.scss';
 export default defineComponent({
   name: 'DSwitch',
   props: switchProps,
-  emits: ['change', 'update:checked', 'update:modelValue'],
+  emits: ['change', 'update:modelValue'],
   setup(props: SwitchProps, ctx: SetupContext) {
     const ns = useNamespace('switch');
     const { toggle, checked } = useSwitch(props, ctx);
