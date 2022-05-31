@@ -93,6 +93,29 @@ export default {
 
 :::
 
+### 文字居中
+
+:::demo
+
+```vue
+<template>
+  <div class="alert-demo-3">
+    <d-alert type="success" center>success</d-alert>
+    <d-alert type="danger" center>danger</d-alert>
+    <d-alert type="warning" center>warning</d-alert>
+    <d-alert type="info" center>info</d-alert>
+    <d-alert type="simple" center>simple</d-alert>
+  </div>
+</template>
+<style>
+.alert-demo-3 .devui-alert {
+  margin-bottom: 20px;
+}
+</style>
+```
+
+:::
+
 ### Alert 参数
 
 | 参数名       | 类型                    | 默认   | 说明                                    | 跳转 Demo                         |
@@ -102,6 +125,7 @@ export default {
 | closeable    | `boolean`               | true   | 可选，默认显示关闭按钮                  | [基本用法](#可关闭的提示)         |
 | dismiss-time | `number`                | --     | 可选，自动关闭 alert 的延迟时间（`ms`） |
 | show-icon    | `boolean`               | true   | 可选，是否使用默认的类型图标            | [不使用默认图标](#不使用默认图标) |
+| center       | `boolean`               | false  | 可选，是否使文字居中显示                | [文字居中](#文字居中)             |
 
 ### Alert 事件
 
