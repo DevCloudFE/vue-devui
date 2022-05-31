@@ -267,7 +267,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tabs type="slider" v-model="editableId" closable addable @tabAdd="tabAdd" @tabRemove="tabRemove">
+  <d-tabs v-model="editableId" closable addable @tabAdd="tabAdd" @tabRemove="tabRemove">
     <d-tab v-for="tab in tabs" :key="tab.id" :id="tab.id" :title="tab.title">
       <p>{{ tab.title }} Content</p>
     </d-tab>
