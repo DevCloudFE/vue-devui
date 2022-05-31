@@ -7,14 +7,31 @@
   padding: 8px 16px;
   line-height: 24px;
   border-radius: $devui-border-radius;
-  word-break: normal;
-  word-wrap: break-word;
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 
-  .#{$devui-prefix}-close {
+  &.#{$devui-prefix}-alert--center {
+    justify-content: center;
+  }
+
+  .#{$devui-prefix}-alert__content {
+    display: flex;
+    padding: 0 16px 0 4px;
+    word-break: normal;
+    word-wrap: break-word;
+  }
+
+  .#{$devui-prefix}-alert__close-icon {
     color: $devui-text;
     opacity: 1;
     line-height: 26px;
     height: 24px;
+    position: absolute;
+    right: 16px;
+    top: 8px;
 
     & > svg path {
       fill: $devui-light-text;
@@ -32,7 +49,7 @@
     border-color: $devui-success-line;
     color: $devui-text;
 
-    .#{$devui-prefix}-close {
+    .#{$devui-prefix}-alert__close-icon {
       & > svg path {
         fill: $devui-success-line;
       }
@@ -44,7 +61,7 @@
     border-color: $devui-info-line;
     color: $devui-text;
 
-    .#{$devui-prefix}-close {
+    .#{$devui-prefix}-alert__close-icon {
       & > svg path {
         fill: $devui-info-line;
       }
@@ -56,7 +73,7 @@
     border-color: $devui-warning-line;
     color: $devui-text;
 
-    .#{$devui-prefix}-close {
+    .#{$devui-prefix}-alert__close-icon {
       & > svg path {
         fill: $devui-warning-line;
       }
@@ -68,7 +85,7 @@
     border-color: $devui-danger-line;
     color: $devui-text;
 
-    .#{$devui-prefix}-close {
+    .#{$devui-prefix}-alert__close-icon {
       & > svg path {
         fill: $devui-danger-line;
       }
@@ -79,7 +96,7 @@
     border-color: $devui-line;
     color: $devui-text;
 
-    .#{$devui-prefix}-close {
+    .#{$devui-prefix}-alert__close-icon {
       & > svg path {
         fill: $devui-text-weak;
       }
