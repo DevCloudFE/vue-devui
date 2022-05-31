@@ -8,7 +8,7 @@ export interface TabsState {
   data?: any[];
   showContent: boolean;
   active: string | number;
-  slots: Slot[];
+  slots: any[];
 }
 
 export interface TabsData {
@@ -62,7 +62,8 @@ export const tabsProps = {
 export type TabsProps = ExtractPropTypes<typeof tabsProps>;
 
 export interface UseTabsEvent {
-  onUpdateModelValue: (value: string) => void;
+  onUpdateModelValue: (value: string | number) => void;
   onActiveTabChange: (value: string) => void;
   onTabRemove: (item: any, ev: MouseEvent) => void;
+  onTabAdd: () => void;
 }

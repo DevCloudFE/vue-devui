@@ -35,7 +35,6 @@ export function useTabNavFunction(
       const tab = tabs.state.data.find((itemOption) => itemOption.id === item.id);
       if (tab && !tab.disabled) {
         tabs.state.active = item.id;
-        ctx.emit('update:modelValue', tab.id);
         if (props.type === 'slider' && tabEl && tabsEle) {
           data.offsetLeft = tabEl.getBoundingClientRect().left - tabsEle.value.nativeElement.getBoundingClientRect().left;
           data.offsetWidth = tabEl.getBoundingClientRect().width;
