@@ -14,6 +14,9 @@ export function useTabsEvent(ctx: SetupContext): UseTabsEvent {
   const onTabAdd = () => {
     ctx.emit('tab-add');
   };
+  const onAddOrDeleteTabChange = (id: string | undefined, type: string) => {
+    ctx.emit('add-or-delete-tab-change', id, type);
+  };
 
-  return { onUpdateModelValue, onActiveTabChange, onTabRemove, onTabAdd };
+  return { onUpdateModelValue, onActiveTabChange, onTabRemove, onTabAdd, onAddOrDeleteTabChange };
 }

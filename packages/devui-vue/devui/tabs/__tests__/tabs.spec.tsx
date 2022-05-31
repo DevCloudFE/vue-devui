@@ -101,4 +101,36 @@ describe('Tabs', () => {
     expect(tabAdd).toBeCalledTimes(1);
     // TODO tab组件无法正常渲染
   });
+
+  it('tabs event work', async () => {
+    const onAddOrDeleteTabChange = jest.fn();
+    wrapper = mount({
+      components: {
+        'd-tabs': Tabs,
+        'd-tab': Tab,
+      },
+      template: `
+        <d-tabs v-model="editableId" addable @add-or-delete-tab-change="onAddOrDeleteTabChange">
+          <d-tab v-for="tab in tabs" :key="tab.id" :id="tab.id" :title="tab.title">
+            <p>{{ tab.title }} Content</p>
+          </d-tab>
+        </d-tabs>
+      `,
+      setup() {
+        const editableId = ref('tab1');
+        const tabs = ref([{ id: 'tab1', title: 'Tab1' }]);
+
+        return {
+          editableId,
+          tabs,
+          onAddOrDeleteTabChange,
+        };
+      },
+    });
+    const newBtn = wrapper.find(dotTabsNewTab);
+    expect(newBtn.exists()).toBe(true);
+
+    await newBtn.trigger('click');
+    expect(onAddOrDeleteTabChange).toBeCalledTimes(1);
+  });
 });

@@ -57,6 +57,10 @@ export const tabsProps = {
     type: Boolean,
     default: false,
   },
+  closableIds: {
+    type: Array,
+    default: () => [],
+  },
 } as const;
 
 export type TabsProps = ExtractPropTypes<typeof tabsProps>;
@@ -66,4 +70,5 @@ export interface UseTabsEvent {
   onActiveTabChange: (value: string) => void;
   onTabRemove: (item: any, ev: MouseEvent) => void;
   onTabAdd: () => void;
+  onAddOrDeleteTabChange: (id: string | undefined, type: string) => void;
 }

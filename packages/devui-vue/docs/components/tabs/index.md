@@ -267,7 +267,15 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tabs v-model="editableId" closable addable @tab-add="tabAdd" @tab-remove="tabRemove">
+  <d-tabs
+    v-model="editableId"
+    closable
+    addable
+    :closable-ids="['tab1', 'tab2']"
+    @tab-add="tabAdd"
+    @tab-remove="tabRemove"
+    @add-or-delete-tab-change="onAddOrDeleteTabChange"
+  >
     <d-tab v-for="tab in tabs" :key="tab.id" :id="tab.id" :title="tab.title">
       <p>{{ tab.title }} Content</p>
     </d-tab>
@@ -285,9 +293,12 @@ export default defineComponent({
       { id: 'tab3', title: 'Tab3' },
     ]);
     const tabAdd = () => {
-      let length = tabs.value.length + 1;
-      let newTab = { id: `tab${length}`, title: `Tab${length}` };
-      tabs.value.push(newTab);
+      for (let i = 1; i <= tabs.value.length + 1; i++) {
+        if (!tabs.value.find((item) => item.id === `tab${i}`)) {
+          tabs.value.push({ id: `tab${i}`, title: `Tab${i}` });
+          break;
+        }
+      }
     };
     const tabRemove = (targetTab) => {
       if (tabs.value.length === 1) {
@@ -310,11 +321,17 @@ export default defineComponent({
       editableId.value = activeName;
       tabs.value = tempTabs.filter((tab) => tab.id !== targetTab.id);
     };
+
+    const onAddOrDeleteTabChange = (id, type) => {
+      console.log(id);
+      console.log(type);
+    };
     return {
       editableId,
       tabs,
       tabAdd,
       tabRemove,
+      onAddOrDeleteTabChange,
     };
   },
 });
@@ -373,14 +390,16 @@ export default defineComponent({
 | reactivable   | `boolean`               | false  | 可选，点击当前处于激活态的 tab 时是否触发`active-tab-change`事件，<br>`true`为允许触发，`false`为不允许触发 |
 | closable      | `boolean`               | false  | 可选，是否显示删除 tab 图标                                                                                 |
 | addable       | `boolean`               | false  | 可选，是否显示添加 tab 图标                                                                                 |
+| closableIds   | `Array<string>`         | []     | 可选，指定可删除的选项卡 id。默认为空数组，所有 tab 都可以删除                                              |
 
 ### Tabs 事件
 
-| 参数              | 类型                       | 说明                                                   |
-| ----------------- | -------------------------- | ------------------------------------------------------ |
-| active-tab-change | `function(string\|number)` | 可选，选项卡切换的回调函数，返回当前激活选项卡的 id    |
-| tab-remove        | `function(tab, event)`     | 可选，点击 tab 移除按钮时触发， `tab`是删除的 tab 对象 |
-| tab-add           |                            | 可选，点击 tab 新增按钮时触发                          |
+| 参数                     | 类型                       | 说明                                                                               |
+| ------------------------ | -------------------------- | ---------------------------------------------------------------------------------- |
+| active-tab-change        | `function(string\|number)` | 可选，选项卡切换的回调函数，返回当前激活选项卡的 id                                |
+| tab-remove               | `function(tab, event)`     | 可选，点击 tab 移除按钮时触发， `tab`是删除的 tab 对象                             |
+| tab-add                  | `function()`               | 可选，点击 tab 新增按钮时触发                                                      |
+| add-or-delete-tab-change | `function(string\|number)` | 可选，添加、删除 tab 的回调函数，返回操作的选项卡 id 和 operation（add \| delete） |
 
 ### Tab 参数
 
