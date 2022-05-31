@@ -15,6 +15,21 @@ $button-padding-map: (
 .#{$devui-prefix}-radio-button {
   display: inline-block;
   position: relative;
+  font-size: 14px;
+  color: $devui-text;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid $devui-line;
+  border-left: none;
+  line-height: 1;
+  user-select: none;
+  box-shadow: -1px 0 0 0 #dfe1e6;
+  @each $size in ('lg', 'md', 'sm', 'xs') {
+    &.#{$devui-prefix}-radio-button--#{$size} {
+      font-size: map-get($font-size-map, #{$size});
+      padding: map-get($button-padding-map, #{$size});
+    }
+  }
 
   &__input {
     opacity: 0;
@@ -28,62 +43,33 @@ $button-padding-map: (
     pointer-events: none;
   }
 
-  &__content {
-    font-size: 14px;
-    color: $devui-text;
-    padding: 10px 20px;
-    cursor: pointer;
-    border: 1px solid $devui-line;
-    border-left: none;
-    display: inline-block;
-    line-height: 1;
-    user-select: none;
-    box-shadow: -1px 0 0 0 #e5f0fb;
-    @each $size in ('lg', 'md', 'sm', 'xs') {
-      &.#{$devui-prefix}-radio-button--#{$size} {
-        font-size: map-get($font-size-map, #{$size});
-        padding: map-get($button-padding-map, #{$size});
-      }
-    }
-  }
-
   &.active {
-    .#{$devui-prefix}-radio-button__content {
-      color: #ffffff;
-      background-color: $devui-brand;
-      border-color: $devui-brand;
-    }
+    color: #ffffff;
+    background-color: $devui-brand;
+    border-color: $devui-brand;
 
     &.disabled {
-      .#{$devui-prefix}-radio-button__content {
-        color: #ffffff;
-        background-color: $devui-icon-fill-active-disabled;
-      }
+      color: #ffffff;
+      background-color: $devui-icon-fill-active-disabled;
     }
   }
 
   &.disabled {
-    .#{$devui-prefix}-radio-button__content {
-      cursor: not-allowed;
-      color: $devui-disabled-text;
-      background-color: #ffffff;
-      border-color: $devui-disabled-line;
-    }
+    cursor: not-allowed;
+    color: $devui-disabled-text;
+    background-color: #ffffff;
+    border-color: $devui-disabled-line;
   }
 
   &:first-child {
-    .#{$devui-prefix}-radio-button__content {
-      border-top-left-radius: $devui-border-radius;
-      border-bottom-left-radius: $devui-border-radius;
-      border-left: 1px solid $devui-line;
-      box-shadow: none;
-    }
+    border-top-left-radius: $devui-border-radius;
+    border-bottom-left-radius: $devui-border-radius;
+    border-left: 1px solid $devui-disabled-line;
+    box-shadow: none;
   }
 
   &:last-child {
-    .#{$devui-prefix}-radio-button__content {
-      border-top-right-radius: $devui-border-radius;
-      border-bottom-right-radius: $devui-border-radius;
-    }
+    border-top-right-radius: $devui-border-radius;
+    border-bottom-right-radius: $devui-border-radius;
   }
 }

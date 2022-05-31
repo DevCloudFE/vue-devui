@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { ref } from 'vue';
 import DRadioGroup from '../src/radio-group';
 import DRadio from '../src/radio';
+import DRadioButton from '../src/radio-button';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const ns = useNamespace('radio-group', false);
@@ -13,6 +14,9 @@ const radioBaseClass = radioNs.b();
 const radioNoDotNs = useNamespace('radio', false);
 const sizeNs = radioNoDotNs.m('lg');
 const borderNs = radioNoDotNs.m('bordered');
+
+const buttonNs = useNamespace('radio-button', true);
+const buttonBaseClass = buttonNs.b();
 
 describe('RadioGroup', () => {
   it('radioGroup render work', async () => {
@@ -170,5 +174,29 @@ describe('RadioGroup', () => {
     });
     expect(radio1Wrapper.classes()).toContain(sizeNs);
     expect(radio1Wrapper.classes()).toContain(borderNs);
+  });
+
+  it('radio-button fill text-color', async () => {
+    const choose = ref('a');
+    const wrapper = mount({
+      components: {
+        DRadioGroup,
+        DRadioButton,
+      },
+      template: `
+        <d-radio-group v-model="choose" fill="red" text-color="rgb(204,204,204)">
+          <d-radio-button value="a">1</d-radio-button>
+          <d-radio-button value="b">2</d-radio-button>
+        </d-radio-group>
+      `,
+      setup() {
+        return {
+          choose,
+        };
+      },
+    });
+
+    const content = wrapper.find(buttonBaseClass);
+    expect(content.attributes().style).toBe('border-color: red; background-color: red; color: rgb(204, 204, 204);');
   });
 });
