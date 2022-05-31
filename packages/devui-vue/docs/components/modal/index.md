@@ -146,35 +146,6 @@ export default defineComponent({
 
 :::
 
-### 服务方式调用
-
-:::demo 通过`inject('MODAL_SERVICE_TOKEN')`获取`ModalService`实例，调用实例上的`open`方法打开 Modal。
-
-```vue
-<template>
-  <d-button @click="open">打开 modal</d-button>
-</template>
-<script>
-import { ref, defineComponent, inject, onMounted, h } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const modalService = inject('MODAL_SERVICE_TOKEN');
-    const open = () => {
-      const result = modalService.open({
-        title: 'Start Snapshot Version',
-        content: () => h('div', {}, [h('div', {}, ['name: Tom']), h('div', {}, ['age: 10']), h('div', {}, ['address: Chengdu'])]),
-      });
-    };
-
-    return { open };
-  },
-});
-</script>
-```
-
-:::
-
 ### Modal 参数
 
 | 参数名                 | 类型             | 默认值 | 说明                                       | 跳转 Demo                 |
