@@ -352,6 +352,7 @@ export default defineComponent({
 
     onMounted(() => {
       treeRef.value.treeFactory.mergeTreeNodes();
+      treeRef.value.treeFactory.expandAllNodes();
     });
 
     return {
