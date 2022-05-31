@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from 'vue';
+import type { PropType, ExtractPropTypes, Ref } from 'vue';
 
 export const modalProps = {
   modelValue: {
@@ -28,12 +28,28 @@ export const modalProps = {
     type: Boolean,
     default: true,
   },
+  showOverlay: {
+    type: Boolean,
+    default: true,
+  },
+  appendToBody: {
+    type: Boolean,
+    default: true,
+  },
 };
 
 export type EmitName = 'update:modelValue';
 
 export type EmitEventFn = (event: EmitName, result?: boolean) => void;
 
-export type UseModalFn = { handleVisibleChange: (val: boolean) => void };
+export interface UseModal {
+  onCloseBtnClick: () => void;
+  onOverlayClick: () => void;
+}
+
+export interface UseModalRender {
+  showContainer: Ref<boolean>;
+  showModal: Ref<boolean>;
+}
 
 export type ModalProps = ExtractPropTypes<typeof modalProps>;

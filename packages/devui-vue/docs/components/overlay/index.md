@@ -13,7 +13,7 @@
 ```vue
 <template>
   <d-button @click="visible = !visible">显示固定遮罩层</d-button>
-  <d-fixed-overlay v-model:visible="visible" background-class="demo-fixed-overlay-bg" background-block>
+  <d-fixed-overlay v-model="visible" class="demo-fixed-overlay-bg">
     <div class="demo-fixed-overlay-container">Hello DevUI!</div>
   </d-fixed-overlay>
 </template>
@@ -25,24 +25,26 @@ export default defineComponent({
     const visible = ref(false);
 
     return { visible };
-  }
+  },
 });
 </script>
-<style>
-  .demo-fixed-overlay-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 10vw;
-    height: 10vh;
-    background: #fff;
-    color: #000;
-  }
 
-  .demo-fixed-overlay-bg {
-    align-items: center;
-    justify-content: center;
-  }
+<style>
+.demo-fixed-overlay-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10vw;
+  height: 10vh;
+  background: #fff;
+  color: #000;
+}
+
+.demo-fixed-overlay-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
 ```
 
@@ -56,7 +58,7 @@ export default defineComponent({
 <template>
   <div>
     <div ref="origin" class="demo-flexible-overlay-origin">origin</div>
-    <br>
+    <br />
     <d-button @click="visible = !visible">{{ title }}</d-button>
     <d-flexible-overlay v-model="visible" :origin="origin" :position="position" show-arrow class="custom-overlay">
       Hello DevUI!
@@ -90,7 +92,7 @@ export default defineComponent({
   justify-content: center;
   width: 100px;
   height: 100px;
-  background: #E9EDFA;
+  background: #e9edfa;
   color: #252b3a;
 }
 
@@ -107,17 +109,11 @@ export default defineComponent({
 
 ### FixedOverlay 参数
 
-| 参数名            | 类型                       | 默认  | 说明                                                                             |
-| :---------------- | :------------------------- | :---- | :------------------------------------------------------------------------------- |
-| visible           | `boolean`                  | false | 可选，遮罩层是否可见                                                             |
-| onUpdate:visible  | `(value: boolean) => void` | --    | 可选，遮罩层取消可见事件                                                         |
-| background-block  | `boolean`                  | false | 可选，如果为 true，背景不能滚动                                                  |
-| background-class  | `string`                   | --    | 可选，背景的样式类                                                               |
-| background-style  | `CSSProperties`            | --    | 可选，背景的样式                                                                 |
-| on-backdrop-click | `() => void`               | --    | 可选，点击背景触发的事件                                                         |
-| backdrop-close    | `boolean`                  | false | 可选，如果为 true，点击背景将触发 `onUpdate:visible`，<br>默认参数是 false       |
-| has-backdrop      | `boolean`                  | true  | 可选，如果为 false，背景元素的 `point-event` 会设为 `none`，<br>且不显示默认背景 |
-| overlay-style     | `CSSProperties`            | --    | 可选，遮罩层的样式                                                               |
+| 参数名                 | 类型      | 默认  | 说明                     | 跳转 Demo                 |
+| :--------------------- | :-------- | :---- | :----------------------- | :------------------------ |
+| v-model                | `boolean` | false | 可选，遮罩层是否可见     | [固定遮罩层](#固定遮罩层) |
+| lock-scroll            | `boolean` | true  | 可选，是否锁定背景滚动   |                           |
+| close-on-click-overlay | `boolean` | true  | 可选，是否点击遮罩层关闭 |                           |
 
 ### FlexibleOverlay 参数
 

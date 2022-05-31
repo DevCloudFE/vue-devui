@@ -1,4 +1,4 @@
-import { defineComponent, provide, reactive, Transition, toRefs } from 'vue';
+import { defineComponent, provide, reactive, ref, Transition, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
 import { selectProps, SelectProps, SelectContext } from './select-types';
@@ -7,16 +7,18 @@ import { Checkbox } from '../../checkbox';
 import Option from './components/option';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import SelectContent from './components/select-content';
+import useSelectFunction from './composables/use-select-function';
 import './select.scss';
 
 export default defineComponent({
   name: 'DSelect',
   props: selectProps,
-  emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur'],
+  emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur', 'remove-tag', 'clear'],
   setup(props: SelectProps, ctx: SetupContext) {
+    const selectRef = ref<HTMLElement>();
+    const { isSelectFocus, focus, blur } = useSelectFunction(props, selectRef);
     const {
       containerRef,
-      selectRef,
       dropdownRef,
       isOpen,
       selectCls,
@@ -36,7 +38,7 @@ export default defineComponent({
       onBlur,
       debounceQueryFilter,
       isShowCreateOption,
-    } = useSelect(props, ctx);
+    } = useSelect(props, ctx, focus, blur, isSelectFocus);
 
     const scrollbarNs = useNamespace('scrollbar');
     const ns = useNamespace('select');
@@ -46,7 +48,7 @@ export default defineComponent({
       [scrollbarNs.b()]: true,
     };
     const dropdownEmptyCls = ns.em('dropdown', 'empty');
-
+    ctx.expose({ focus, blur });
     provide(
       SELECT_TOKEN,
       reactive({

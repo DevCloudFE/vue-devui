@@ -48,7 +48,7 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     });
   });
 
-  const placeholder = computed<string>(() => select?.placeholder || '');
+  const placeholder = computed<string>(() => (props.value.length > 0 ? '' : select?.placeholder || ''));
 
   const isMultiple = computed<boolean>(() => !!select?.multiple);
 

@@ -11,7 +11,7 @@ export type OptionItem = number | string | ({ value: string | number } & Partial
 export type Options = Array<OptionItem>;
 
 export type ModelValue = number | string | Array<number | string>;
-export type filterValue = boolean | ((query: string, callback?: () => void) => void);
+export type filterValue = boolean | ((query: string) => void);
 export const selectProps = {
   modelValue: {
     type: [String, Number, Array] as PropType<ModelValue>,
@@ -81,6 +81,10 @@ export const selectProps = {
     type: String,
     default: '找不到相关记录',
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
   loadingText: {
     type: String,
     default: '加载中',
@@ -101,7 +105,6 @@ export type OptionModelValue = number | string;
 
 export interface UseSelectReturnType {
   containerRef: Ref<HTMLElement | undefined>;
-  selectRef: Ref<HTMLElement | undefined>;
   dropdownRef: Ref<HTMLElement | undefined>;
   isOpen: Ref<boolean>;
   selectCls: ComputedRef<string>;
@@ -190,4 +193,10 @@ export interface UseSelectContentReturnType {
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
   queryFilter: (e: Event) => void;
+}
+
+export interface UseSelectFunctionReturn {
+  isSelectFocus: Ref<boolean>;
+  blur: () => void;
+  focus: () => void;
 }

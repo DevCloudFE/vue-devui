@@ -1,6 +1,14 @@
 import { mount } from '@vue/test-utils';
 import { ref } from 'vue';
 import DRadio from '../src/radio';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const nsClass = useNamespace('radio', true);
+const baseClass = nsClass.b();
+
+const ns = useNamespace('radio', false);
+const sizeNs = ns.m('lg');
+const borderNs = ns.m('bordered');
 
 describe('Radio', () => {
   /** 测试是否正常渲染 */
@@ -18,9 +26,10 @@ describe('Radio', () => {
       },
     });
 
-    expect(wrapper.classes()).toContain('devui-radio');
-    expect(wrapper.classes()).not.toContain('active');
-    expect(wrapper.text()).toEqual('ItemA');
+    const container = wrapper.find(baseClass);
+    expect(container.exists()).toBeTruthy();
+    expect(container.classes()).not.toContain('active');
+    expect(container.text()).toEqual('ItemA');
 
     const input = wrapper.find('input');
     await input.trigger('change');
@@ -48,7 +57,8 @@ describe('Radio', () => {
         onChange,
       },
     });
-    expect(wrapper.classes()).toContain('disabled');
+    const container = wrapper.find(baseClass);
+    expect(container.classes()).toContain('disabled');
     const input = wrapper.find('input');
     await input.trigger('change');
     expect(onChange).toBeCalledTimes(0);
@@ -64,11 +74,12 @@ describe('Radio', () => {
         onChange,
       },
     });
-    expect(wrapper.classes()).toContain('disabled');
+    const container = wrapper.find(baseClass);
+    expect(container.classes()).toContain('disabled');
     await wrapper.setProps({
       disabled: false,
     });
-    expect(wrapper.classes()).not.toContain('disabled');
+    expect(container.classes()).not.toContain('disabled');
   });
 
   /** 测试 beforeChange */
@@ -97,5 +108,22 @@ describe('Radio', () => {
     await input.trigger('change');
     expect(beforeChangeFalse).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledTimes(0);
+  });
+
+  it('radio size and border work', async () => {
+    const wrapper = mount(DRadio, {
+      props: {
+        value: 'Item1',
+        border: false,
+        size: 'lg',
+      },
+    });
+    const container = wrapper.find(baseClass);
+    expect(container.classes()).not.toContain(sizeNs);
+    await wrapper.setProps({
+      border: true,
+    });
+    expect(container.classes()).toContain(borderNs);
+    expect(container.classes()).toContain(sizeNs);
   });
 });

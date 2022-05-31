@@ -55,7 +55,7 @@ In basic usage, the label is above the data box.
     <d-form-item prop="workOn">
       <d-form-label>Did you get off work?</d-form-label>
       <d-form-control>
-        <d-switch v-model:checked="formModel.workOn"></d-switch>
+        <d-switch v-model="formModel.workOn"></d-switch>
       </d-form-control>
     </d-form-item>
     <d-form-item prop="interestedDomain">
@@ -175,7 +175,7 @@ Left-right layout of labels.
     <d-form-item prop="workOn">
       <d-form-label>Did you get off work?</d-form-label>
       <d-form-control>
-        <d-switch v-model:checked="formModel.workOn"></d-switch>
+        <d-switch v-model="formModel.workOn"></d-switch>
       </d-form-control>
     </d-form-item>
     <d-form-item prop="interestedDomain">
@@ -300,7 +300,7 @@ Pop-up form. The recommended pop-up box size is 400px, 550px, 700px, and 900px. 
         <d-form-item prop="workOn">
           <d-form-label>Did you get off work?</d-form-label>
           <d-form-control>
-            <d-switch v-model:checked="formModel.workOn"></d-switch>
+            <d-switch v-model="formModel.workOn"></d-switch>
           </d-form-control>
         </d-form-item>
         <d-form-item prop="interestedDomain">
@@ -441,7 +441,7 @@ Multiple lists.The value of layout should be `columns` ，together with the colu
     <d-form-item prop="goOffWork" class="column-item">
       <d-form-label>Did you get off work?</d-form-label>
       <d-form-control>
-        <d-switch v-model:checked="formModel.workOn"></d-switch>
+        <d-switch v-model="formModel.workOn"></d-switch>
       </d-form-control>
     </d-form-item>
     <d-form-item prop="interestedDomain" class="column-item">

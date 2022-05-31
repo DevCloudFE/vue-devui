@@ -5,6 +5,7 @@ export interface IUseToggle {
   expandNode: (node: IInnerTreeNode) => void;
   collapseNode: (node: IInnerTreeNode) => void;
   toggleNode: (node: IInnerTreeNode) => void;
+  expandAllNodes: () => void;
 }
 
 export default function () {
@@ -32,10 +33,17 @@ export default function () {
       }
     };
 
+    const expandAllNodes = (): void => {
+      data.value.forEach((node: IInnerTreeNode) => {
+        expandNode(node);
+      });
+    };
+
     return {
       expandNode,
       collapseNode,
       toggleNode,
+      expandAllNodes,
     };
   };
 }

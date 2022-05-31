@@ -1,14 +1,36 @@
 @import '../../styles-var/devui-var.scss';
 
+$font-size-map: (
+  lg: 14px,
+  md: 14px,
+  sm: 12px,
+  xs: 12px,
+);
+$radio-width-map: (
+  lg: 16px,
+  md: 16px,
+  sm: 14px,
+  xs: 14px,
+);
+$radio-label-height-map: (
+  lg: 40px,
+  md: 36px,
+  sm: 32px,
+  xs: 28px,
+);
+
 .#{$devui-prefix}-radio {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   font-size: $devui-font-size;
   line-height: 1.5;
   font-weight: normal;
   cursor: pointer;
   color: $devui-text;
+
+  &__wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
 
   &:hover {
     .#{$devui-prefix}-radio__label {
@@ -43,12 +65,17 @@
     .#{$devui-prefix}-radio__material-inner {
       opacity: 1;
       transform: scale(1);
-      transition: transform $devui-animation-duration-base $devui-animation-ease-in-out,
+      transition:
+        transform $devui-animation-duration-base $devui-animation-ease-in-out,
         opacity $devui-animation-duration-base $devui-animation-ease-in-out;
 
       &.disabled {
         fill: $devui-icon-fill-active-disabled;
       }
+    }
+
+    &.#{$devui-prefix}-radio--bordered {
+      border-color: $devui-primary-hover;
     }
   }
 
@@ -68,6 +95,10 @@
 
     .#{$devui-prefix}-radio__label {
       color: $devui-disabled-text;
+    }
+
+    &.#{$devui-prefix}-radio--bordered {
+      border-color: $devui-disabled-line;
     }
   }
 
@@ -106,6 +137,7 @@
     margin-left: 8px;
     font-size: $devui-font-size;
     transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    line-height: 1;
   }
 
   &__input {
@@ -116,5 +148,34 @@
     display: none;
     overflow: hidden;
     pointer-events: none;
+  }
+
+  &--bordered {
+    border: 1px solid $devui-disabled-line;
+    border-radius: $devui-border-radius;
+    padding: 0 15px 0 10px;
+  }
+  @each $size in ('lg', 'md', 'sm', 'xs') {
+    &.#{$devui-prefix}-radio--#{$size} {
+      .#{$devui-prefix}-radio__label {
+        font-size: map-get($font-size-map, #{$size});
+      }
+
+      .#{$devui-prefix}-radio__material {
+        width: map-get($radio-width-map, #{$size});
+        height: map-get($radio-width-map, #{$size});
+        line-height: map-get($radio-width-map, #{$size});
+
+        & > svg {
+          width: map-get($radio-width-map, #{$size});
+          height: map-get($radio-width-map, #{$size});
+        }
+      }
+
+      &.#{$devui-prefix}-radio--bordered {
+        height: map-get($radio-label-height-map, #{$size});
+        line-height: map-get($radio-label-height-map, #{$size});
+      }
+    }
   }
 }

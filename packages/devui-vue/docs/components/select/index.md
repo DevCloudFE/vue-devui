@@ -272,8 +272,8 @@ export default defineComponent({
 可以利用筛选、搜索功能快速查找选项
 
 添加 `filter` 属性开启筛选功能。传人值为 `true` 时，默认找出 `name` 属性包含输入值得选项。
-如果希望通过其它筛选逻辑，`filter` 可传入一个 `Function`, 输入值发生变化时调用，参数值为输入值和一个可选参数`callback`, 此 `callback` 主要作用是筛选完成后通知`select`组件。
-添加 `remote` 属性开启远程筛选功能。当为远程搜索时，`callback`参数会非常有用。
+如果希望通过其它筛选逻辑，`filter` 可传入一个 `Function`, 输入值发生变化时调用，参数为输入值。
+添加 `remote` 属性开启远程搜索功能。当为远程搜索时，配合`loading` 属性使用，加载时显示`loading-text`定义文本。
 :::demo
 
 ```vue
@@ -284,7 +284,7 @@ export default defineComponent({
   </d-select>
   <br />
   <div>远程搜索</div>
-  <d-select v-model="value2" :allow-clear="true" :filter="filterFunc" remote>
+  <d-select v-model="value2" :allow-clear="true" :filter="filterFunc" remote placeholder="请输入搜索关键字" :loading="loading">
     <d-option v-for="(item, index) in options1.data" :key="index" :value="item.value" :name="item.name"></d-option>
   </d-select>
 </template>
@@ -296,6 +296,7 @@ export default defineComponent({
   setup() {
     const value1 = ref('');
     const value2 = ref('');
+    const loading = ref(false);
     const items = new Array(6).fill(0).map((item, i) => {
       return {
         value: `Option ${i + 1}`,
@@ -308,21 +309,17 @@ export default defineComponent({
     const options1 = reactive({
       data: [],
     });
-    const filterFunc = (query, callback) => {
+    const filterFunc = (query) => {
       if (query) {
+        loading.value = true;
         setTimeout(() => {
           options1.data = items.filter((item) => {
             return item.name.toLowerCase().includes(query.toLowerCase());
           });
-          if (callback) {
-            callback();
-          }
+          loading.value = false;
         }, 200);
       } else {
         options1.data = [];
-        if (callback) {
-          callback();
-        }
       }
     };
     return {
@@ -330,6 +327,7 @@ export default defineComponent({
       value2,
       options,
       options1,
+      loading,
       filterFunc,
     };
   },
@@ -369,6 +367,48 @@ export default defineComponent({
 
 :::
 
+### 远程加载数据
+
+:::demo
+
+```vue
+<template>
+  <d-select v-model="value" :options="options.data" :allow-clear="true" :loading="loading" @toggleChange="toggleChange"></d-select>
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const value = ref([]);
+    const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive({
+      data: [],
+    });
+    const loading = ref(false);
+    const toggleChange = (bool) => {
+      if (bool) {
+        loading.value = true;
+        setTimeout(() => {
+          options.data = list;
+          loading.value = false;
+        }, 3000);
+      }
+    };
+    return {
+      value,
+      options,
+      loading,
+      toggleChange,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Select 参数
 
 | 参数名                | 类型                  | 默认             | 说明                                                                                                                                                           | 跳转 Demo                         |
@@ -388,16 +428,19 @@ export default defineComponent({
 | allow-create          | `boolean`             | false            | 可选, 配置是否启用新增选项，配合 filter 为 true 时使用                                                                                                         | [新增选项](#新增选项)             |
 | no-data-text          | `string`              | '无数据'         | 可选, 无选项时显示的文本，也可通过 empty 插槽自定义                                                                                                            | [筛选、搜索选项](#筛选、搜索选项) |
 | no-match-text         | `string`              | '找不到相关记录' | 可选, 搜索条件无匹配时显示的文本，也可通过 empty 插槽自定义                                                                                                    | [筛选、搜索选项](#筛选、搜索选项) |
-| loading-text          | `string`              | '加载中'         | 可选, 远程搜索时显示的文本                                                                                                                                     | [筛选、搜索选项](#筛选、搜索选项) |
+| loading               | `boolean`             | false            | 可选, 配置下拉选项是否远程加载，配合 loading-text 使用                                                                                                         | [远程加载数据](#远程加载数据)     |
+| loading-text          | `string`              | '加载中'         | 可选, 远程搜索时显示的文本                                                                                                                                     | [远程加载数据](#远程加载数据)     |
 
 ### Select 事件
 
-| 事件名        | 类型                      | 说明                                                                | 跳转 Demo |
-| :------------ | :------------------------ | :------------------------------------------------------------------ | :-------- |
-| value-change  | `string`                  | 可选，输出函数,当选中某个选项后,将会调用此函数,参数为当前选择项的值 |           |
-| toggle-change | `string`                  | 可选，输出函数,下拉打开关闭 toggle 事件                             |           |
-| focus         | `Function(e: FocusEvent)` | 可选，获取焦点时触发                                                |
-| blur          | `Function(e: FocusEvent)` | 可选，失去焦点时触发                                                |
+| 事件名        | 类型                      | 说明                                                       | 跳转 Demo |
+| :------------ | :------------------------ | :--------------------------------------------------------- | :-------- |
+| value-change  | `Function(data)`          | 可选，当选中某个选项后,将会调用此函数,参数为当前选择项的值 |           |
+| toggle-change | `Function(boolean)`       | 可选，下拉打开关闭 toggle 事件                             |           |
+| focus         | `Function(e: FocusEvent)` | 可选，获取焦点时触发                                       |
+| blur          | `Function(e: FocusEvent)` | 可选，失去焦点时触发                                       |
+| clear         | `Function()`              | 可选, 通过右侧删除图标清空所有选项时触发                   |
+| remove-tag    | `Function(value)`         | 可选，多选时删除单个 tag 时触发，参数为当前 tag 的值       |
 
 ### Select 插槽
 
@@ -405,6 +448,13 @@ export default defineComponent({
 | :------ | :------------------------- |
 | default | 自定义 Select 下拉面板内容 |
 | empty   | 自定义无选项时下拉面板内容 |
+
+### Select 方法
+
+| 名称  | 说明                     |
+| :---- | :----------------------- |
+| focus | 使选择器的输入框获取焦点 |
+| blur  | 使选择器的输入框失去焦点 |
 
 ### Option 参数
 

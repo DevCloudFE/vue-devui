@@ -13,6 +13,7 @@ const successIconClass = ns.em('icon', 'success');
 const warningIconClass = ns.em('icon', 'warning');
 const errorIconClass = ns.em('icon', 'error');
 const infoIconClass = ns.em('icon', 'info');
+const centerClass = ns.m('center');
 
 describe('alert', () => {
   describe('alert basic', () => {
@@ -46,7 +47,7 @@ describe('alert', () => {
           type: 'warning',
         },
       });
-    
+
       expect(wrapper.find(warningIconClass).exists()).toBe(true);
     });
     it('alert should has error type', () => {
@@ -131,6 +132,21 @@ describe('alert', () => {
       setTimeout(() => {
         expect(wrapper.find(baseClass).exists()).toBe(false);
       }, 0);
+    });
+  });
+
+  describe('alert center', () => {
+    it('alert should center', () => {
+      const wrapper = mount(Alert, {
+        props: {
+          center: true,
+        },
+      });
+      expect(wrapper.find(centerClass).exists()).toBe(true);
+    });
+    it('alert should not center', () => {
+      const wrapper = mount(Alert);
+      expect(wrapper.find(centerClass).exists()).toBe(false);
     });
   });
 });

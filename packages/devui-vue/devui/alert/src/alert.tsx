@@ -11,7 +11,6 @@ export default defineComponent({
   emits: ['close'],
   setup(props, ctx) {
     const ns = useNamespace('alert');
-    const closeNs = useNamespace('close');
     const hide = ref(false);
     const closing = ref(false);
     const alertEl = ref();
@@ -39,18 +38,23 @@ export default defineComponent({
     return () => {
       return !hide.value ? (
         <Transition name={ns.b()} onAfterLeave={afterLeave}>
-          <div ref={alertEl} v-show={!closing.value} class={[ns.b(), ns.m(props.type), props.cssClass, closing.value && ns.m('close')]}>
-            {props.closeable ? (
-              <div class={closeNs.b()} onClick={close}>
-                <AlertCloseIcon/>
-              </div>
-            ) : null}
+          <div
+            ref={alertEl}
+            v-show={!closing.value}
+            class={[ns.b(), ns.m(props.type), props.cssClass, closing.value && ns.m('close'), props.center && ns.m('center')]}>
             {props.showIcon !== false && props.type !== 'simple' ? (
               <span class={ns.e('icon-wrap')}>
-                <AlertTypeIcon type={props.type}/>
+                <AlertTypeIcon type={props.type} />
               </span>
             ) : null}
-            {ctx.slots.default?.()}
+            <div class={ns.e('content')}>
+              <span>{ctx.slots.default?.()}</span>
+              {props.closeable ? (
+                <div class={ns.e('close-icon')} onClick={close}>
+                  <AlertCloseIcon />
+                </div>
+              ) : null}
+            </div>
           </div>
         </Transition>
       ) : null;

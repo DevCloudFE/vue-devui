@@ -146,35 +146,6 @@ export default defineComponent({
 
 :::
 
-### 服务方式调用
-
-:::demo 通过`inject('MODAL_SERVICE_TOKEN')`获取`ModalService`实例，调用实例上的`open`方法打开 Modal。
-
-```vue
-<template>
-  <d-button @click="open">打开 modal</d-button>
-</template>
-<script>
-import { ref, defineComponent, inject, onMounted, h } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const modalService = inject('MODAL_SERVICE_TOKEN');
-    const open = () => {
-      const result = modalService.open({
-        title: 'Start Snapshot Version',
-        content: () => h('div', {}, [h('div', {}, ['name: Tom']), h('div', {}, ['age: 10']), h('div', {}, ['address: Chengdu'])]),
-      });
-    };
-
-    return { open };
-  },
-});
-</script>
-```
-
-:::
-
 ### Modal 参数
 
 | 参数名                 | 类型             | 默认值 | 说明                                       | 跳转 Demo                 |
@@ -182,10 +153,12 @@ export default defineComponent({
 | v-model                | `boolean`        | false  | 是否显示 Modal                             | [基础用法](#基础用法)     |
 | title                  | `string`         | -      | 可选，Modal 的标题                         | [基础用法](#基础用法)     |
 | lock-scroll            | `boolean`        | true   | 可选，是否将 body 滚动锁定                 |
-| close-on-click-overlay | `boolean`        | true   | 可选，点击遮罩层是否能关闭 Modal           |
+| close-on-click-overlay | `boolean`        | true   | 可选，点击空白处是否能关闭 Modal           |
 | before-close           | `(done) => void` | -      | 可选，关闭前的回调，调用 done 可关闭 Modal | [关闭前回调](#关闭前回调) |
-| escapable              | `boolean`        | true   | 可选，是否支持 esc 键关闭弹窗              |
-| show-close             | `boolean`        | true   | 可选，是否展示关闭按钮                     |
+| escapable              | `boolean`        | true   | 可选，是否支持 esc 键关闭弹窗              |                           |
+| show-close             | `boolean`        | true   | 可选，是否展示关闭按钮                     |                           |
+| show-overlay           | `boolean`        | true   | 可选，是否展示遮罩层                       |                           |
+| append-to-body         | `boolean`        | true   | 可选，是否将 Modal 提升到 body 层          |                           |
 
 ### Modal 插槽
 

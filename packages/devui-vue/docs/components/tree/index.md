@@ -15,7 +15,7 @@
   <d-tree :data="data"></d-tree>
 </template>
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -25,21 +25,19 @@ export default defineComponent({
         children: [
           {
             label: 'Parent node 1-1',
-            children: [
-              { label: 'Leaf node 1-1-1' }
-            ]
+            children: [{ label: 'Leaf node 1-1-1' }],
           },
-          { label: 'Leaf node 1-2' }
-        ]
+          { label: 'Leaf node 1-2' },
+        ],
       },
-      { label: 'Leaf node 2' }
+      { label: 'Leaf node 2' },
     ]);
 
     return {
-      data
-    }
-  }
-})
+      data,
+    };
+  },
+});
 </script>
 ```
 
@@ -52,7 +50,7 @@ export default defineComponent({
 ```vue
 <template>
   <div class="flex flex-row" style="height: 28px;">
-    <label class="flex items-center mr-xl"><span class="inline-block mr-xs">开启勾选</span><d-switch v-model:checked="openCheck"></d-switch></label>
+    <label class="flex items-center mr-xl"><span class="inline-block mr-xs">开启勾选</span><d-switch v-model="openCheck"></d-switch></label>
     <d-radio-group v-if="openCheck" v-model="currentStrategy" direction="row">
       <d-radio v-for="strategy of checkStrategy" :key="strategy" :value="strategy">{{ strategy }}</d-radio>
     </d-radio-group>
@@ -61,7 +59,7 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref, watch } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -75,15 +73,12 @@ export default defineComponent({
         children: [
           {
             label: 'Parent node 1-1',
-            children: [
-              { label: 'Leaf node 1-1-1' },
-              { label: 'Leaf node 1-1-2' }
-            ]
+            children: [{ label: 'Leaf node 1-1-1' }, { label: 'Leaf node 1-1-2' }],
           },
-          { label: 'Leaf node 1-2' }
-        ]
+          { label: 'Leaf node 1-2' },
+        ],
       },
-      { label: 'Leaf node 2' }
+      { label: 'Leaf node 2' },
     ]);
 
     watch(openCheck, (newVal) => {
@@ -98,29 +93,27 @@ export default defineComponent({
             children: [
               {
                 label: 'Parent node 1-1',
-                children: [
-                  { label: 'Leaf node 1-1-1' },
-                  { label: 'Leaf node 1-1-2' }
-                ]
+                children: [{ label: 'Leaf node 1-1-1' }, { label: 'Leaf node 1-1-2' }],
               },
-              { label: 'Leaf node 1-2' }
-            ]
+              { label: 'Leaf node 1-2' },
+            ],
           },
-          { label: 'Leaf node 2' }
+          { label: 'Leaf node 2' },
         ];
       }
     });
-    
+
     return {
       data,
       openCheck,
       checkStrategy,
       currentStrategy,
-    }
-  }
-})
+    };
+  },
+});
 </script>
 ```
+
 :::
 
 ### 默认状态
@@ -133,7 +126,7 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -144,29 +137,28 @@ export default defineComponent({
         children: [
           {
             label: 'Parent node 1-1',
-            children: [
-              { label: 'Leaf node 1-1-1' }
-            ]
+            children: [{ label: 'Leaf node 1-1-1' }],
           },
           {
             label: 'Leaf node 1-2',
-            checked: true
-          }
-        ]
+            checked: true,
+          },
+        ],
       },
       {
         label: 'Leaf node 2',
-        selected: true
-      }
+        selected: true,
+      },
     ]);
-    
+
     return {
-      data
-    }
-  }
-})
+      data,
+    };
+  },
+});
 </script>
 ```
+
 :::
 
 ### 禁用状态
@@ -179,7 +171,7 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -193,29 +185,28 @@ export default defineComponent({
             disableToggle: true,
             disableSelect: true,
             disableCheck: true,
-            children: [
-              { label: 'Leaf node 1-1-1' }
-            ]
+            children: [{ label: 'Leaf node 1-1-1' }],
           },
           {
             label: 'Leaf node 1-2',
-            disableCheck: true
-          }
-        ]
+            disableCheck: true,
+          },
+        ],
       },
       {
         label: 'Leaf node 2',
-        disableSelect: true
-      }
+        disableSelect: true,
+      },
     ]);
-    
+
     return {
       data,
-    }
-  }
-})
+    };
+  },
+});
 </script>
 ```
+
 :::
 
 ### 自定义图标
@@ -225,24 +216,41 @@ export default defineComponent({
 ```vue
 <template>
   <d-tree :data="data">
-    <template #content="{nodeData}">
-      <svg style="margin-right: 8px" viewBox="0 0 16 16" width="16" height="16"><path :d="`${
-        nodeData.isLeaf
-        ? 'M13,6 L9,6 L9,5 L9,2 L3,2 L3,14 L13,14 L13,6 Z M12.5857864,5 L10,2.41421356 L10,5 L12.5857864,5 Z M2,1 L10,1 L14,5 L14,15 L2,15 L2,1 Z'
-        : nodeData.expanded
-          ? 'M16,6 L14,14 L2,14 L0,6 L16,6 Z M14.7192236,7 L1.28077641,7 L2.78077641,13 L13.2192236,13 L14.7192236,7 Z M6,1 L8,3 L15,3 L15,5 L14,5 L14,4 L7.58578644,4 L5.58578644,2 L2,2 L2,5 L1,5 L1,1 L6,1 Z'
-          : 'M14,6 L14,5 L7.58578644,5 L5.58578644,3 L2,3 L2,6 L14,6 Z M14,7 L2,7 L2,13 L14,13 L14,7 Z M1,2 L6,2 L8,4 L15,4 L15,14 L1,14 L1,2 Z'
-      }`" stroke-width="1" fill="#8a8e99"></path></svg>
-      {{nodeData.label}}
+    <template #content="{ nodeData }">
+      <svg style="margin-right: 8px" viewBox="0 0 16 16" width="16" height="16">
+        <path
+          :d="`${
+            nodeData.isLeaf
+              ? 'M13,6 L9,6 L9,5 L9,2 L3,2 L3,14 L13,14 L13,6 Z M12.5857864,5 L10,2.41421356 L10,5 L12.5857864,5 Z M2,1 L10,1 L14,5 L14,15 L2,15 L2,1 Z'
+              : nodeData.expanded
+              ? 'M16,6 L14,14 L2,14 L0,6 L16,6 Z M14.7192236,7 L1.28077641,7 L2.78077641,13 L13.2192236,13 L14.7192236,7 Z M6,1 L8,3 L15,3 L15,5 L14,5 L14,4 L7.58578644,4 L5.58578644,2 L2,2 L2,5 L1,5 L1,1 L6,1 Z'
+              : 'M14,6 L14,5 L7.58578644,5 L5.58578644,3 L2,3 L2,6 L14,6 Z M14,7 L2,7 L2,13 L14,13 L14,7 Z M1,2 L6,2 L8,4 L15,4 L15,14 L1,14 L1,2 Z'
+          }`"
+          stroke-width="1"
+          fill="#8a8e99"
+        ></path>
+      </svg>
+      {{ nodeData.label }}
     </template>
-    <template #icon="{nodeData, toggleNode}">
+    <template #icon="{ nodeData, toggleNode }">
       <span v-if="nodeData.isLeaf" class="devui-tree-node__indent"></span>
-      <span v-else @click="(event) => {
-          event.stopPropagation();
-          toggleNode(nodeData);
-        }"
+      <span
+        v-else
+        @click="
+          (event) => {
+            event.stopPropagation();
+            toggleNode(nodeData);
+          }
+        "
       >
-        <svg :style="{ transform: nodeData.expanded ? 'rotate(90deg)': '', marginLeft: '-2.5px', marginRight: '14.5px', cursor: 'pointer' }" viewBox="0 0 1024 1024" width="12" height="12"><path d="M204.58705 951.162088 204.58705 72.836889 819.41295 511.998977Z" fill="#8a8e99"></path></svg>
+        <svg
+          :style="{ transform: nodeData.expanded ? 'rotate(90deg)' : '', marginLeft: '-2.5px', marginRight: '14.5px', cursor: 'pointer' }"
+          viewBox="0 0 1024 1024"
+          width="12"
+          height="12"
+        >
+          <path d="M204.58705 951.162088 204.58705 72.836889 819.41295 511.998977Z" fill="#8a8e99"></path>
+        </svg>
       </span>
     </template>
   </d-tree>
@@ -258,21 +266,19 @@ export default defineComponent({
         children: [
           {
             label: 'Parent node 1-1',
-            children: [
-              { label: 'Leaf node 1-1-1' }
-            ]
+            children: [{ label: 'Leaf node 1-1-1' }],
           },
-          { label: 'Leaf node 1-2' }
-        ]
+          { label: 'Leaf node 1-2' },
+        ],
       },
-      { label: 'Leaf node 2' }
+      { label: 'Leaf node 2' },
     ]);
 
     return {
       data,
-    }
-  }
-})
+    };
+  },
+});
 </script>
 ```
 
@@ -303,13 +309,13 @@ export default defineComponent({
                 label: 'Parent node 1-1-1',
                 children: [
                   {
-                    label: 'Parent node 1-1-1-1'
-                  }
-                ]
-              }
-            ]
+                    label: 'Parent node 1-1-1-1',
+                  },
+                ],
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         label: 'Parent node 2',
@@ -318,14 +324,14 @@ export default defineComponent({
             label: 'Parent node 2-1',
             children: [
               {
-                label: 'Leaf node 2-1-1'
+                label: 'Leaf node 2-1-1',
               },
               {
-                label: 'Leaf node 2-1-2'
+                label: 'Leaf node 2-1-2',
               },
-            ]
+            ],
           },
-        ]
+        ],
       },
       {
         label: 'Parent node 3',
@@ -337,29 +343,30 @@ export default defineComponent({
                 label: 'Leaf node 3-1-1',
                 children: [
                   {
-                    label: 'Leaf node 3-1-1-1'
-                  }
-                ]
-              }
-            ]
+                    label: 'Leaf node 3-1-1-1',
+                  },
+                ],
+              },
+            ],
           },
           {
-            label: 'Leaf node 3-2'
-          }
-        ]
-      }
+            label: 'Leaf node 3-2',
+          },
+        ],
+      },
     ]);
 
     onMounted(() => {
       treeRef.value.treeFactory.mergeTreeNodes();
+      treeRef.value.treeFactory.expandAllNodes();
     });
 
     return {
       data,
       treeRef,
-    }
-  }
-})
+    };
+  },
+});
 </script>
 ```
 
