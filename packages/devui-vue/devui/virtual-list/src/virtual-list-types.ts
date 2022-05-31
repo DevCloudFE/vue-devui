@@ -33,7 +33,6 @@ export const virtualListProps = {
   },
   itemKey: {
     type: [String, Number, Function] as PropType<string | number | ((item: Record<string, never>) => string | number)>,
-    required: true,
   },
 } as const;
 

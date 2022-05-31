@@ -64,7 +64,9 @@ export default defineComponent({
         if (typeof val === 'function') {
           itemKey.value = val as unknown as ItemKeyFunction;
         } else {
-          itemKey.value = item => item?.[val];
+          if (val) {
+            itemKey.value = item => item?.[val];
+          }
         }
       },
       { immediate: true },
@@ -73,7 +75,7 @@ export default defineComponent({
     const fillerInnerRef = ref<HTMLDivElement>();
     const barRef = ref<IScrollBarExposeFunction>();
     const getKey = (item: Record<string, never>) => {
-      if (!itemKey.value) { return; }
+      if (!itemKey.value || !props.itemKey) { return; }
       return itemKey.value(item);
     };
 
@@ -160,8 +162,11 @@ export default defineComponent({
         const scrollTopHeight = scrollTop + height;
         for (let i = 0; i < mergedDataValue.length; i += 1) {
           const mergedDataItem = mergedDataValue[i];
-          const key = getKey(mergedDataItem);
-          let cacheHeight = heights.get(key);
+          let cacheHeight;
+          if (props.itemKey) {
+            const key = getKey(mergedDataItem);
+            cacheHeight = heights.get(key);
+          }
           if (cacheHeight === undefined) {
             cacheHeight = 20;
           }
