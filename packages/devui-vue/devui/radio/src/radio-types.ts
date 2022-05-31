@@ -11,7 +11,7 @@ const radioCommonProps = {
   },
   /** 单选框的名称 */
   name: {
-    type: String as PropType<string | null>,
+    type: String as PropType<string | undefined>,
     default: null,
   },
   /** 值改变之前触发的事件 */
@@ -62,6 +62,14 @@ export const radioGroupProps = {
     type: Boolean,
     default: false,
   },
+  fill: {
+    type: String,
+    default: '',
+  },
+  textColor: {
+    type: String,
+    default: '',
+  },
 } as const;
 
 export type RadioProps = ExtractPropTypes<typeof radioProps>;
@@ -69,13 +77,15 @@ export type RadioGroupProps = ExtractPropTypes<typeof radioGroupProps>;
 
 /** radio-group 注入字段的接口 */
 interface RadioGroupInjection {
-  modelValue: Ref<string>;
-  name: Ref<string>;
+  modelValue: Ref<string | number | boolean>;
+  name: Ref<string | undefined>;
   disabled: Ref<boolean>;
   beforeChange: (value: valueTypes) => boolean | Promise<boolean>;
   emitChange: (value: valueTypes) => void;
   border: Ref<boolean>;
   size: Ref<string>;
+  fill: Ref<string | undefined>;
+  textColor: Ref<string | undefined>;
 }
 
 /** radio-group 注入 radio 的 key 值 */
@@ -88,4 +98,9 @@ export type UseRadioFn = {
   handleChange: (event: Event) => Promise<void>;
   border: ComputedRef<boolean>;
   size: ComputedRef<string>;
+};
+
+export type UseRadioButtonFn = {
+  mergedColor: ComputedRef<string | undefined>;
+  mergedTextColor: ComputedRef<string | undefined>;
 };

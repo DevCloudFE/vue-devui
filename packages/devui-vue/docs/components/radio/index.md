@@ -326,11 +326,19 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-radio-group direction="row" v-model="buttonChoose1">
-    <d-radio-button v-for="item in buttonList1" :key="item" :value="item"> The Radio value is: {{ item }} </d-radio-button>
+  <d-radio-group direction="row" v-model="buttonChoose1" size="lg" style="margin-bottom: 10px;" fill="rgb(255,193,7)" text-color="#ca3d3d">
+    <d-radio-button v-for="item in buttonList1" :key="item" :value="item"> {{ item }} </d-radio-button>
   </d-radio-group>
-  <d-radio-group direction="row" v-model="buttonChoose2">
-    <d-radio-button v-for="item in buttonList2" :key="item.name" :value="item.name"> The Radio value is: {{ item.name }} </d-radio-button>
+  <d-radio-group direction="row" v-model="buttonChoose2" size="md" style="margin-bottom: 10px;">
+    <d-radio-button v-for="item in buttonList2" :key="item.name" :value="item.name">{{ item.name }} </d-radio-button>
+  </d-radio-group>
+  <d-radio-group direction="row" v-model="buttonChoose3" size="sm" style="margin-bottom: 10px;">
+    <d-radio-button v-for="item in buttonList3" :key="item.name" :value="item.name" :disabled="item.disabled"
+      >{{ item.name }}
+    </d-radio-button>
+  </d-radio-group>
+  <d-radio-group direction="row" v-model="buttonChoose4" size="xs" style="margin-bottom: 10px;" disabled>
+    <d-radio-button v-for="item in buttonList2" :key="item.name" :value="item.name">{{ item.name }} </d-radio-button>
   </d-radio-group>
 </template>
 
@@ -339,17 +347,23 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const buttonList1 = ref(['Item1', 'Item2', 'Item3']);
-    let buttonChoose1 = ref('Item1');
+    const buttonList1 = ref(['radio1', 'radio2', 'radio3']);
+    let buttonChoose1 = ref('radio1');
 
-    const buttonList2 = [{ name: 'Item1' }, { name: 'Item2' }, { name: 'Item3' }];
-    let buttonChoose2 = ref('Item3');
+    const buttonList2 = [{ name: 'radio1' }, { name: 'radio2' }, { name: 'radio3' }];
+    let buttonChoose2 = ref('radio1');
+    const buttonList3 = [{ name: 'radio1', disabled: true }, { name: 'radio2' }, { name: 'radio3' }];
+    let buttonChoose3 = ref('radio1');
+    let buttonChoose4 = ref('radio1');
 
     return {
       buttonList1,
       buttonChoose1,
       buttonList2,
       buttonChoose2,
+      buttonList3,
+      buttonChoose3,
+      buttonChoose4,
     };
   },
 });
@@ -388,12 +402,22 @@ export default defineComponent({
 | before-change | `Function` \| `Promise`      | --       | 可选，radio-group 切换前的回调函数，<br>返回 false 可以阻止 radio-group 的切换 | [回调切换](#radio-group-根据条件终止切换操作)                         |
 | border        | `boolean`                    | false    | 可选， 是否有边框                                                              | [边框](#尺寸和边框)                                                   |
 | size          | [IRadioSize](#iradiosize)    | md       | 可选， radio 尺寸，只有在 border 属性存在时生效                                | [尺寸](#尺寸和边框)                                                   |
+| fill          | `string`                     | --       | 可选，按钮形式的 Radio 激活时的填充色和边框色                                  | [按钮形态](#按钮形态)                                                 |
+| text-color    | `string`                     | --       | 可选， 按钮被选中的字体样式，只存在于按钮形态中                                | [按钮形态](#按钮形态)                                                 |
 
 ### RadioGroup 事件
 
 | 事件名 | 类型                   | 说明                             | 跳转 Demo             |
 | :----- | :--------------------- | :------------------------------- | :-------------------- |
 | change | `EventEmitter<string>` | 单选项值改变时触发，返回选中的值 | [竖向排列](#竖向排列) |
+
+### RadioButton 参数
+
+| 参数     | 类型                         | 默认  | 说明                   | 跳转 Demo             |
+| :------- | :--------------------------- | :---- | :--------------------- | :-------------------- |
+| value    | `string \|number \| boolean` | --    | 必选，单选项值         | [按钮形态](#按钮形态) |
+| name     | `string`                     | --    | 可选，单选项名称       | [按钮形态](#按钮形态) |
+| disabled | `boolean`                    | false | 可选，是否禁用该单选项 | [按钮形态](#按钮形态) |
 
 ### Radio 类型定义
 

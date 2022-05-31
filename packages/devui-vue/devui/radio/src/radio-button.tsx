@@ -1,8 +1,8 @@
 import { defineComponent, SetupContext } from 'vue';
 import { radioProps, RadioProps } from './radio-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import { useRadio } from './use-radio';
-import './radio.scss';
+import { useRadio, useRadioButton } from './use-radio';
+import './radio-button.scss';
 
 export default defineComponent({
   name: 'DRadioButton',
@@ -10,18 +10,23 @@ export default defineComponent({
   emits: ['change', 'update:modelValue'],
   setup(props: RadioProps, ctx: SetupContext) {
     const ns = useNamespace('radio-button');
-    const { isChecked, radioName, isDisabled, handleChange } = useRadio(props, ctx);
+    const { isChecked, radioName, isDisabled, handleChange, size } = useRadio(props, ctx);
+    const { mergedTextColor, mergedColor } = useRadioButton();
     return () => {
-      const labelCls = [
-        ns.b(),
-        {
-          active: isChecked.value,
-          disabled: isDisabled.value,
-        },
-      ];
+      const labelCls = {
+        active: isChecked.value,
+        disabled: isDisabled.value,
+        [ns.b()]: true,
+        [ns.m(size.value)]: true,
+      };
 
+      const spanStyle = [
+        `border-color:${isChecked.value && mergedColor.value ? mergedColor.value : ''}`,
+        `background-color:${isChecked.value && mergedColor.value ? mergedColor.value : ''}`,
+        `color:${isChecked.value && mergedTextColor.value ? mergedTextColor.value : ''}`,
+      ];
       return (
-        <label class={labelCls}>
+        <label class={labelCls} style={spanStyle}>
           <input
             type="radio"
             name={radioName.value}

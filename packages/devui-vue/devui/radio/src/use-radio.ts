@@ -1,5 +1,5 @@
 import { computed, inject, SetupContext, toRef, provide } from 'vue';
-import { RadioProps, RadioGroupProps, radioGroupInjectionKey, UseRadioFn, valueTypes } from './radio-types';
+import { RadioProps, RadioGroupProps, radioGroupInjectionKey, UseRadioFn, valueTypes, UseRadioButtonFn } from './radio-types';
 
 export function useRadio(props: RadioProps, ctx: SetupContext): UseRadioFn {
   const radioGroupConf = inject(radioGroupInjectionKey, null);
@@ -85,5 +85,22 @@ export function useRadioGroup(props: RadioGroupProps, ctx: SetupContext): void {
     size: toRef(props, 'size'),
     beforeChange: props.beforeChange,
     emitChange,
+    fill: toRef(props, 'fill'),
+    textColor: toRef(props, 'textColor'),
   });
+}
+
+export function useRadioButton(): UseRadioButtonFn {
+  const radioGroupConf = inject(radioGroupInjectionKey, null);
+  const mergedTextColor = computed(() => {
+    return radioGroupConf?.textColor.value ?? undefined;
+  });
+  const mergedColor = computed(() => {
+    return radioGroupConf?.fill.value ?? undefined;
+  });
+
+  return {
+    mergedTextColor,
+    mergedColor,
+  };
 }
