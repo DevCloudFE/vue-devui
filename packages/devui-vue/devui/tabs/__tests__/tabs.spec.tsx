@@ -42,7 +42,7 @@ describe('Tabs', () => {
     expect(wrapper.find(dotTabContent).exists()).toBe(true);
   });
 
-  it('addable & closable work', async () => {
+  it('addable & closeable work', async () => {
     const tabAdd = jest.fn();
     wrapper = mount({
       components: {
@@ -50,7 +50,7 @@ describe('Tabs', () => {
         'd-tab': Tab,
       },
       template: `
-        <d-tabs v-model="editableId" closable addable @tabAdd="tabAdd" @tabRemove="tabRemove">
+        <d-tabs v-model="editableId" closeable addable @tabAdd="tabAdd" @tabRemove="tabRemove">
           <d-tab v-for="tab in tabs" :key="tab.id" :id="tab.id" :title="tab.title">
             <p>{{ tab.title }} Content</p>
           </d-tab>

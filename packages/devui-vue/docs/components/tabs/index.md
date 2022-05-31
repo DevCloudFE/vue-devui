@@ -269,9 +269,9 @@ export default defineComponent({
 <template>
   <d-tabs
     v-model="editableId"
-    closable
+    closeable
     addable
-    :closable-ids="['tab1', 'tab2']"
+    :closeable-ids="['tab1', 'tab2']"
     @tab-add="tabAdd"
     @tab-remove="tabRemove"
     @add-or-delete-tab-change="onAddOrDeleteTabChange"
@@ -388,9 +388,9 @@ export default defineComponent({
 | vertical      | `boolean`               | false  | 可选，是否垂直显                                                                                            |
 | before-change | `function\|Promise`     | --     | tab 切换前的回调函数,返回 boolean 类型，返回 false 可以阻止 tab 的切换                                      |
 | reactivable   | `boolean`               | false  | 可选，点击当前处于激活态的 tab 时是否触发`active-tab-change`事件，<br>`true`为允许触发，`false`为不允许触发 |
-| closable      | `boolean`               | false  | 可选，是否显示删除 tab 图标                                                                                 |
+| closeable     | `boolean`               | false  | 可选，是否显示删除 tab 图标                                                                                 |
 | addable       | `boolean`               | false  | 可选，是否显示添加 tab 图标                                                                                 |
-| closableIds   | `Array<string>`         | []     | 可选，指定可删除的选项卡 id。默认为空数组，所有 tab 都可以删除                                              |
+| closeableIds  | `Array<string>`         | []     | 可选，指定可删除的选项卡 id。默认为空数组，所有 tab 都可以删除                                              |
 
 ### Tabs 事件
 

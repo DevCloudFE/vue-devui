@@ -71,10 +71,10 @@ export function useTabNavFunction(
   };
 
   const tabCanClose = (id: string) => {
-    if (!isArray(props.closableIds)) {
+    if (!isArray(props.closeableIds)) {
       return true;
     }
-    return props.closableIds.includes(id);
+    return props.closeableIds.includes(id);
   };
 
   return { update, activeClick, beforeMount, mounted, tabCanClose };

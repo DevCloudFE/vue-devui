@@ -36,7 +36,7 @@ export default defineComponent({
 
     return () => {
       const closeIconEl = (item) => {
-        return props.closable && !item.disabled && tabCanClose(item.id) ? (
+        return props.closeable && !item.disabled && tabCanClose(item.id) ? (
           <span class={ns.e('close-btn')} onClick={(ev: MouseEvent) => onTabRemove(item, ev)}>
             <d-icon size="12px" name="error-o" />
           </span>

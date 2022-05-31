@@ -49,7 +49,7 @@ export const tabsProps = {
     type: Function as PropType<(id: Active) => boolean>,
     default: null,
   },
-  closable: {
+  closeable: {
     type: Boolean,
     default: false,
   },
@@ -57,7 +57,7 @@ export const tabsProps = {
     type: Boolean,
     default: false,
   },
-  closableIds: {
+  closeableIds: {
     type: Array,
     default: () => [],
   },
