@@ -23,6 +23,10 @@ export const alertProps = {
     type: Number,
     default: 0,
   },
+  center: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type AlertProps = ExtractPropTypes<typeof alertProps>;
