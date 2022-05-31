@@ -1,0 +1,77 @@
+@import '../../styles-var/devui-var';
+
+.#{$devui-prefix}-collapse {
+  font-size: $devui-font-size;
+  background: $devui-base-bg;
+  width: 100%;
+  overflow-y: auto;
+}
+
+:host {
+  display: block;
+}
+
+.#{$devui-prefix}-collapse__item {
+  .#{$devui-prefix}-collapse--overflow-ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+.#{$devui-prefix}-collapse__item-title {
+  display: block;
+  height: 40px;
+  width: 100%;
+  padding: 0 10px;
+  font-weight: 400;
+  line-height: 40px;
+  color: $devui-text-weak;
+  background: transparent;
+  cursor: pointer;
+
+  &.#{$devui-prefix}-collapse--disabled {
+    color: $devui-disabled-text;
+    cursor: not-allowed;
+  }
+
+  &:not(.#{$devui-prefix}-collapse--disabled) {
+    &:hover {
+      background: $devui-list-item-hover-bg;
+      color: $devui-list-item-hover-text;
+    }
+
+    &.#{$devui-prefix}-collapse--router-active,
+    &.#{$devui-prefix}-collapse--active:not(.#{$devui-prefix}-collapse--open) {
+      color: $devui-brand-active;
+      font-weight: bold;
+    }
+  }
+}
+
+/* 展开图标相关 */
+.#{$devui-prefix}-collapse__item > .#{$devui-prefix}-collapse__item-title {
+  position: relative;
+
+  & > .#{$devui-prefix}-collapse__open-icon {
+    display: inline-block;
+    text-indent: 0;
+    pointer-events: none; /* 让鼠标穿透 */
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    transition: transform ease-out 0.3s;
+  }
+
+  &.#{$devui-prefix}-collapse--open > .#{$devui-prefix}-collapse__open-icon {
+    transform: rotate(180deg);
+    transform-origin: center;
+  }
+}
+
+/* 展开内容相关 */
+.#{$devui-prefix}-collapse__item-content {
+  padding: 0 30px 20px 10px;
+}
