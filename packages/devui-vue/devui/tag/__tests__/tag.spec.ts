@@ -1,11 +1,20 @@
 import { mount } from '@vue/test-utils';
 import { Tag } from '../index';
 import { ref } from 'vue';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('tag', true);
+const baseClass = ns.b();
+const itemClass = ns.e('item');
+
+const nsNoDot = useNamespace('tag', false);
+const primaryClass = nsNoDot.m('primary');
+const lgClass = nsNoDot.m('lg');
 
 describe('tag test', () => {
   it('init render', async () => {
     const wrapper = mount(Tag);
-    expect(wrapper.find('.devui-tag').exists()).toBeTruthy();
+    expect(wrapper.find(baseClass).exists()).toBeTruthy();
   });
   it('props type', () => {
     const wrapper = mount(Tag, {
@@ -13,7 +22,8 @@ describe('tag test', () => {
         type: 'primary',
       },
     });
-    expect(wrapper.find('.devui-tag .devui-tag-item').classes()).toContain('devui-tag-primary');
+    const itemTag = wrapper.find(itemClass);
+    expect(itemTag.classes()).toContain(primaryClass);
   });
   it('props color', () => {
     const wrapper = mount(Tag, {
@@ -21,7 +31,7 @@ describe('tag test', () => {
         color: 'red-w98', // #f66f6a rgb(246, 111, 106)
       },
     });
-    expect(wrapper.find('.devui-tag .devui-tag-item').attributes('style')).toContain('rgb(246, 111, 106)');
+    expect(wrapper.find(itemClass).attributes('style')).toContain('rgb(246, 111, 106)');
   });
   it('props color custom', () => {
     const wrapper = mount(Tag, {
@@ -29,14 +39,14 @@ describe('tag test', () => {
         color: '#aa2116', // rgb(170, 33, 22)
       },
     });
-    expect(wrapper.find('.devui-tag .devui-tag-item').attributes('style')).toContain('rgb(170, 33, 22)');
+    expect(wrapper.find(itemClass).attributes('style')).toContain('rgb(170, 33, 22)');
   });
   it('props titleContent', () => {
     const titleContent = 'tagTitle test';
     const wrapper = mount(Tag, {
       props: { titleContent },
     });
-    expect(wrapper.get('.devui-tag .devui-tag-item').attributes('title')).toBe(titleContent);
+    expect(wrapper.get(itemClass).attributes('title')).toBe(titleContent);
   });
   it('props deletable show', async () => {
     const wrapper = mount(Tag, {
@@ -77,9 +87,9 @@ describe('tag test', () => {
         color: 'red-w98', // 对应颜色：rgb(246, 111, 106)
       },
     });
-    expect(wrapper.find('.devui-tag .devui-tag-item').attributes('style')).toContain('color: rgb(246, 111, 106);');
+    expect(wrapper.find(itemClass).attributes('style')).toContain('color: rgb(246, 111, 106);');
     await wrapper.setProps({ checked: true });
-    expect(wrapper.find('.devui-tag .devui-tag-item').attributes('style')).toContain('background-color: rgb(246, 111, 106);');
+    expect(wrapper.find(itemClass).attributes('style')).toContain('background-color: rgb(246, 111, 106);');
     expect(wrapper.emitted('checkedChange').length).toBeGreaterThan(0);
   });
   it('event checkedChange', async () => {
@@ -112,5 +122,15 @@ describe('tag test', () => {
       },
     });
     expect(wrapper.find('i').classes()).toContain('icon-like');
+  });
+
+  it('Tag size work', () => {
+    const wrapper = mount(Tag, {
+      propsData: {
+        size: 'lg',
+      },
+    });
+    const itemTag = wrapper.find(itemClass);
+    expect(itemTag.classes()).toContain(lgClass);
   });
 });
