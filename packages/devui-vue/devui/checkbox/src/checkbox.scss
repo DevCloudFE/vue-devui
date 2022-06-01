@@ -1,10 +1,10 @@
 @import '../../styles-var/devui-var.scss';
 
 $font-size-map: (
-  lg: 14px,
-  md: 14px,
-  sm: 12px,
-  xs: 12px,
+  lg: $devui-font-size-lg,
+  md: $devui-font-size-lg,
+  sm: $devui-font-size-sm,
+  xs: $devui-font-size-sm,
 );
 $checkbox-width-map: (
   lg: 16px,
