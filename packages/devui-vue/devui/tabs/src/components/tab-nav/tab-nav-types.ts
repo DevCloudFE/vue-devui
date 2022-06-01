@@ -15,7 +15,7 @@ export interface UseTabNavFunction {
   activeClick: (item: any, tabEl?: any) => void;
   beforeMount: () => void;
   mounted: () => void;
-  tabCanClose: (id: string) => boolean;
+  tabCanClose: (item: any) => boolean;
 }
 
 export interface UseTabNavEvent {

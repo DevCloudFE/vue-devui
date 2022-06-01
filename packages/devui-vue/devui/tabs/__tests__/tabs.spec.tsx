@@ -103,14 +103,14 @@ describe('Tabs', () => {
   });
 
   it('tabs event work', async () => {
-    const onAddOrDeleteTabChange = jest.fn();
+    const onTabChange = jest.fn();
     wrapper = mount({
       components: {
         'd-tabs': Tabs,
         'd-tab': Tab,
       },
       template: `
-        <d-tabs v-model="editableId" addable @add-or-delete-tab-change="onAddOrDeleteTabChange">
+        <d-tabs v-model="editableId" addable @tab-change="onTabChange">
           <d-tab v-for="tab in tabs" :key="tab.id" :id="tab.id" :title="tab.title">
             <p>{{ tab.title }} Content</p>
           </d-tab>
@@ -123,7 +123,7 @@ describe('Tabs', () => {
         return {
           editableId,
           tabs,
-          onAddOrDeleteTabChange,
+          onTabChange,
         };
       },
     });
@@ -131,6 +131,6 @@ describe('Tabs', () => {
     expect(newBtn.exists()).toBe(true);
 
     await newBtn.trigger('click');
-    expect(onAddOrDeleteTabChange).toBeCalledTimes(1);
+    expect(onTabChange).toBeCalledTimes(1);
   });
 });

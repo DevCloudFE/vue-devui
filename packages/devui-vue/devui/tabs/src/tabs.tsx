@@ -8,7 +8,7 @@ import { useTabsEvent } from './use-tabs';
 export default defineComponent({
   name: 'DTabs',
   props: tabsProps,
-  emits: ['update:modelValue', 'active-tab-change', 'tab-remove', 'tab-add', 'add-or-delete-tab-change'],
+  emits: ['update:modelValue', 'active-tab-change', 'tab-remove', 'tab-add', 'tab-change'],
   setup(props: TabsProps, ctx: SetupContext) {
     const ns = useNamespace('tabs');
     const state: TabsState = reactive({
@@ -19,7 +19,7 @@ export default defineComponent({
     });
     provide<TabsData>('tabs', { state });
 
-    const { onUpdateModelValue, onActiveTabChange, onTabRemove, onTabAdd, onAddOrDeleteTabChange } = useTabsEvent(ctx);
+    const { onUpdateModelValue, onActiveTabChange, onTabRemove, onTabAdd, onTabChange } = useTabsEvent(ctx);
 
     watch(
       () => state.active,
@@ -36,7 +36,7 @@ export default defineComponent({
             onActiveTabChange={onActiveTabChange}
             onTabRemove={onTabRemove}
             onTabAdd={onTabAdd}
-            onAddOrDeleteTabChange={onAddOrDeleteTabChange}
+            onTabChange={onTabChange}
           />
           {ctx.slots.default?.()}
         </div>

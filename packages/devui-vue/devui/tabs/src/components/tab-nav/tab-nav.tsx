@@ -10,7 +10,7 @@ import { OffSetData } from './tab-nav-types';
 export default defineComponent({
   name: 'DTabNav',
   props: tabsProps,
-  emits: ['active-tab-change', 'tab-remove', 'tab-add', 'add-or-delete-tab-change'],
+  emits: ['active-tab-change', 'tab-remove', 'tab-add', 'tab-change'],
   setup(props: TabsProps, ctx: SetupContext) {
     const ns = useNamespace('tabs');
     const tabsEle = shallowRef<HTMLUListElement>();
@@ -36,7 +36,7 @@ export default defineComponent({
 
     return () => {
       const closeIconEl = (item) => {
-        return props.closeable && !item.disabled && tabCanClose(item.id) ? (
+        return tabCanClose(item) ? (
           <span class={ns.e('close-btn')} onClick={(ev: MouseEvent) => onTabRemove(item, ev)}>
             <d-icon size="12px" name="error-o" />
           </span>

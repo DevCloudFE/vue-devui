@@ -1,7 +1,6 @@
 import type { EmitsOptions, SetupContext, ShallowRef } from 'vue';
 import { TabsProps, Active, TabsData } from '../../../tabs-types';
 import { OffSetData, UseTabNavFunction } from '../tab-nav-types';
-import { isArray } from 'lodash';
 
 export function useTabNavFunction(
   props: TabsProps,
@@ -70,11 +69,8 @@ export function useTabNavFunction(
     }
   };
 
-  const tabCanClose = (id: string) => {
-    if (!isArray(props.closeableIds)) {
-      return true;
-    }
-    return props.closeableIds.includes(id);
+  const tabCanClose = (item) => {
+    return (props.closeable || item.closeable) && !item.disabled;
   };
 
   return { update, activeClick, beforeMount, mounted, tabCanClose };
