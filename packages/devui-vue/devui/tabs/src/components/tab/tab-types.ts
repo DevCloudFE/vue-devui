@@ -13,6 +13,10 @@ export const tabProps = {
     type: Boolean,
     default: false,
   },
+  closeable: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type TabProps = ExtractPropTypes<typeof tabProps>;

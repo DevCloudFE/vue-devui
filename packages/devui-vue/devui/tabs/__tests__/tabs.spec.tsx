@@ -42,7 +42,7 @@ describe('Tabs', () => {
     expect(wrapper.find(dotTabContent).exists()).toBe(true);
   });
 
-  it('addable & closable work', async () => {
+  it('addable & closeable work', async () => {
     const tabAdd = jest.fn();
     wrapper = mount({
       components: {
@@ -50,7 +50,7 @@ describe('Tabs', () => {
         'd-tab': Tab,
       },
       template: `
-        <d-tabs v-model="editableId" closable addable @tabAdd="tabAdd" @tabRemove="tabRemove">
+        <d-tabs v-model="editableId" closeable addable @tabAdd="tabAdd" @tabRemove="tabRemove">
           <d-tab v-for="tab in tabs" :key="tab.id" :id="tab.id" :title="tab.title">
             <p>{{ tab.title }} Content</p>
           </d-tab>
@@ -100,5 +100,37 @@ describe('Tabs', () => {
     await newBtn.trigger('click');
     expect(tabAdd).toBeCalledTimes(1);
     // TODO tab组件无法正常渲染
+  });
+
+  it('tabs event work', async () => {
+    const onTabChange = jest.fn();
+    wrapper = mount({
+      components: {
+        'd-tabs': Tabs,
+        'd-tab': Tab,
+      },
+      template: `
+        <d-tabs v-model="editableId" addable @tab-change="onTabChange">
+          <d-tab v-for="tab in tabs" :key="tab.id" :id="tab.id" :title="tab.title">
+            <p>{{ tab.title }} Content</p>
+          </d-tab>
+        </d-tabs>
+      `,
+      setup() {
+        const editableId = ref('tab1');
+        const tabs = ref([{ id: 'tab1', title: 'Tab1' }]);
+
+        return {
+          editableId,
+          tabs,
+          onTabChange,
+        };
+      },
+    });
+    const newBtn = wrapper.find(dotTabsNewTab);
+    expect(newBtn.exists()).toBe(true);
+
+    await newBtn.trigger('click');
+    expect(onTabChange).toBeCalledTimes(1);
   });
 });
