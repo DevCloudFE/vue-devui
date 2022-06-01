@@ -43,7 +43,7 @@ export default defineComponent({
 });
 </script>
 <style>
-.collapse-demo-1 .devui-collapse {
+.collapse-demo-1 {
   margin-bottom: 20px;
 }
 </style>

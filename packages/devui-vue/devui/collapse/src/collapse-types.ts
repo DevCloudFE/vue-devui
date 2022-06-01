@@ -5,10 +5,6 @@ export const collapseProps = {
     type: [String, Number, Array] as PropType<ModelValue>,
     default: '',
   },
-  'onUpdate:modelValue': {
-    type: Function as PropType<(val: ModelValue) => void>,
-    default: undefined,
-  },
   accordion: {
     type: Boolean,
     default: false,
