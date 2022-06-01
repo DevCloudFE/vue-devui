@@ -72,9 +72,9 @@ export default ${bigCamelCase(serviceName)};
 // 创建scss模板
 exports.createStyleTemplate = ({ componentName }) => `\
 // 引入主题变量
-// @import '../../styles-var/devui-var.scss';
+@import '../../styles-var/devui-var.scss';
 
-.${CSS_CLASS_PREFIX}-${componentName} {
+.#{$devui-prefix}-${componentName} {
   //
 }
 `;
@@ -126,7 +126,7 @@ export { ${[
     hasService ? bigCamelCase(serviceName) : null
   ]
     .filter((p) => p !== null)
-    .join(', ')} }
+    .join(', ')} };
 
 export default {
   title: '${bigCamelCase(componentName)} ${title}',
@@ -135,7 +135,7 @@ export default {
   install(app: App): void {
     ${installStr}
   }
-}
+};
 `;
 };
 
