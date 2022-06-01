@@ -1,12 +1,11 @@
-@import '../../../../styles-var/devui-var';
-@import '../../../../style/devui';
+@import '../../../../styles-var/devui-var.scss';
 
 $toolbar-height: 32px;
 $cell-size: 28px;
 
 .#{$devui-prefix}-calendar-toolbar {
   height: $toolbar-height;
-  font-weight: $font-title-weight;
+  font-weight: $devui-font-title-weight;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,7 +15,7 @@ $cell-size: 28px;
     width: $cell-size;
     height: $cell-size;
     line-height: $cell-size;
-    color: $text-color;
+    color: $devui-text;
     display: block;
     text-align: center;
     flex-shrink: 1;
@@ -25,7 +24,7 @@ $cell-size: 28px;
     text-decoration: none;
 
     &:hover {
-      color: $text-color;
+      color: $devui-text;
       text-decoration: none;
     }
 

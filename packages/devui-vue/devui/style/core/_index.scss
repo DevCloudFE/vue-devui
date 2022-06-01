@@ -1,8 +1,14 @@
-@import '../mixins/index';
-@import 'normalize';
-@import 'reset';
-@import 'common';
-@import 'dropdown';
-@import 'imagePreview';
-@import 'form';
-@import 'cdk';
+@import './normalize';
+@import './reset';
+@import './common';
+@import './layout';
+@import './dropdown';
+@import './image-preview';
+@import './form';
+
+@import './animation';
+@import './color';
+@import './corner';
+@import './font';
+@import './shadow';
+@import './z-index';

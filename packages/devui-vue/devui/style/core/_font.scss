@@ -1,4 +1,4 @@
-// 字号大小变量
+@import '../../styles-var/private/font';
 
 $devui-font-size: var(--devui-font-size, 12px); //正文、卡片副标题
 $devui-font-size-card-title: var(--devui-font-size-card-title, 14px); //卡片标题
@@ -28,3 +28,38 @@ $line-height-base: 1.5;
   font-weight: $font-title-weight;
   line-height: $line-height-base;
 }
+
+$font-family: 'HuaweiFont', helvetica, arial, 'PingFang', 'Microsoft YaHei', 'Hiragino Sans GB', 'Microsoft JhengHei', sans-serif;
+
+.#{$devui-prefix}-font-size-base {
+  font-size: $devui-font-size; // 12px
+}
+
+.#{$devui-prefix}-font-base {
+  @include font-content(); // 12px normal 1.5
+}
+
+.#{$devui-prefix}-font-size-modal-title {
+  font-size: $devui-font-size-modal-title; // 18px
+}
+
+.#{$devui-prefix}-font-modal-title {
+  @include font-title($devui-font-size-modal-title); // 18px bold 1.5
+}
+
+.#{$devui-prefix}-font-size-page-title {
+  font-size: $devui-font-size-page-title; // 16px
+}
+
+.#{$devui-prefix}-font-page-title {
+  @include font-title(); // 16px bold 1.5
+}
+
+.#{$devui-prefix}-font-size-secondary-title {
+  font-size: $devui-font-size-card-title; // 14px
+}
+
+.#{$devui-prefix}-font-secondary-title {
+  @include font-title($devui-font-size-card-title); // 14px bold 1.5
+}
+
