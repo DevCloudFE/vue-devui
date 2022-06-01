@@ -1,6 +1,6 @@
 @use 'sass:math';
 
-@import '../../styles-var/devui-var';
+@import '../../styles-var/devui-var.scss';
 
 .#{$devui-prefix}-col {
   position: relative;

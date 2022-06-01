@@ -1,7 +1,8 @@
-@import '../style/theme/color';
-@import '../style/theme/font';
-@import '../style/theme/shadow';
-@import '../style/theme/corner';
-@import '../style/theme/animation';
-@import '../style/theme/z-index';
-@import '../style/variable';
+@import './private/animation';
+@import './private/color';
+@import './private/corner';
+@import './private/font';
+@import './private/shadow';
+@import './private/z-index';
+
+$devui-prefix: devui;
