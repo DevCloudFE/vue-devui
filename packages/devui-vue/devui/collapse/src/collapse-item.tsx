@@ -9,7 +9,7 @@ export default defineComponent({
   props: collapseItemProps,
   setup(props, ctx) {
     const ns = useNamespace('collapse');
-    const transitionNs = useNamespace('collapse-transition');
+    const collapseContent = shallowRef<HTMLElement>();
     const collapse = inject(SELECT_TOKEN, null);
     const isOpen = computed(() => {
       if (props.disabled) {
@@ -28,29 +28,6 @@ export default defineComponent({
         collapse?.collapseItemClick(props.name);
       }
     };
-    const collapseContent = shallowRef<HTMLElement>();
-    onMounted(() => {
-      if (collapseContent.value) {
-        const dom = collapseContent.value;
-        if (isOpen.value) {
-          dom.style.height = `${dom.offsetHeight}px`;
-        }
-      }
-    });
-
-    const enter = (element: Element) => {
-      const el = element as HTMLElement;
-      el.style.height = '';
-      const height = el.offsetHeight;
-      el.style.height = '0px';
-      // 需要执行一次才会生效
-      el.offsetHeight;
-      el.style.height = `${height}px`;
-    };
-    const leave = (element: Element) => {
-      const el = element as HTMLElement;
-      el.style.height = '0px';
-    };
 
     return () => {
       return (
@@ -68,7 +45,7 @@ export default defineComponent({
               <Icon name="select-arrow" size="16px" />
             </span>
           </div>
-          <Transition name={transitionNs.b()} onEnter={enter} onLeave={leave}>
+          <Transition name="fade">
             <div v-show={isOpen.value} ref={collapseContent} class={ns.e('item-content')}>
               {ctx.slots.default?.()}
             </div>
