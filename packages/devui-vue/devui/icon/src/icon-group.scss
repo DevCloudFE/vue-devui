@@ -1,0 +1,19 @@
+@import '../../styles-var/devui-var.scss';
+
+.#{$devui-prefix}-icon-group {
+  display: inline-flex;
+  align-items: center;
+
+  & > .#{$devui-prefix}-icon__container:not(.#{$devui-prefix}-icon--operable) {
+    padding: 8px;
+    margin-left: 0;
+
+    &:first-child {
+      margin-left: -8px;
+    }
+  }
+
+  & > *:not(:first-child) {
+    margin-left: 0;
+  }
+}

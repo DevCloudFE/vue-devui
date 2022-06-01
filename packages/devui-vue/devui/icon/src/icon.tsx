@@ -1,50 +1,33 @@
-import { computed, defineComponent, resolveDynamicComponent, toRefs } from 'vue';
-import { isUrl } from '../../shared/utils/url';
+import { computed, defineComponent, SetupContext, toRefs } from 'vue';
 import { iconProps, IconProps } from './icon-types';
-import svgIcon from './svg-icon';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useIconDom } from './composables/use-icon-dom';
 
 export default defineComponent({
   name: 'DIcon',
   props: iconProps,
-  setup(props: IconProps, { attrs }) {
-    const { component, name, size, color, classPrefix } = toRefs(props);
-    const IconComponent = component.value ? resolveDynamicComponent(component.value) : resolveDynamicComponent(svgIcon);
-    const iconSize = computed(() => {
-      return typeof size.value === 'number' ? `${size.value}px` : size.value;
-    });
-
-    const svgIconDom = () => {
-      return <IconComponent name={name.value} color={color.value} size={iconSize.value} {...attrs}></IconComponent>;
+  setup(props: IconProps, ctx: SetupContext) {
+    const { disabled, operable } = toRefs(props);
+    const { iconDom } = useIconDom(props, ctx);
+    const ns = useNamespace('icon');
+    const wrapClassed = computed(() => ({
+      [ns.e('container')]: true,
+      [ns.m('disabled')]: disabled.value,
+      [ns.m('operable')]: operable.value,
+    }));
+    const onClick = (e: Event) => {
+      if (disabled.value) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      }
     };
 
-    const imgIconDom = () => {
-      return (
-        <img
-          src={name.value}
-          alt={name.value.split('/')[name.value.split('/').length - 1]}
-          style={{
-            width: iconSize.value || '',
-          }}
-          {...attrs}
-        />
-      );
-    };
-
-    const fontIconDom = () => {
-      const fontIconClass = /^icon-/.test(name.value) ? name.value : `${classPrefix.value}-${name.value}`;
-      return (
-        <i
-          class={[classPrefix.value, fontIconClass]}
-          style={{
-            fontSize: iconSize.value,
-            color: color.value,
-          }}
-          {...attrs}></i>
-      );
-    };
-
-    return () => {
-      return component.value ? svgIconDom() : isUrl(name.value) ? imgIconDom() : fontIconDom();
-    };
+    return () => (
+      <div class={wrapClassed.value} onClick={onClick}>
+        {ctx.slots.prefix?.()}
+        {iconDom()}
+        {ctx.slots.suffix?.()}
+      </div>
+    );
   },
 });
