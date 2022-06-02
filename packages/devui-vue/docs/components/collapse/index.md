@@ -16,22 +16,21 @@
 <template>
   <div class="collapse-demo">
     <d-collapse v-model="collapseValue">
-      <d-collapse-item title="一致性 Consistency" name="consistency">
-        <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-        <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+      <d-collapse-item title="沉浸 Immersive" name="immersive">
+        <div>
+          沉浸式体验包括人的感官体验和认知体验，当用户的个人技能与面对的挑战互相匹配，并且长时间处在稳定状态时，用户达到心流状态并且不易被外界因素所干扰。
+        </div>
       </d-collapse-item>
-      <d-collapse-item title="反馈 Feedback" name="feedback">
-        <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
-        <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
+      <d-collapse-item title="灵活 Flexible" name="flexible">
+        <div>
+          自带各类完整的模板和典型场景，与此同时，DevUI提供超过50个独立原子级组件，用户可以自由组合，用小组件拼接出符合自身产品需要的分子级控件；
+        </div>
+        <div>可以根据自身的产品需求灵活选择，既可以直接使用现有的典型页面模板，也可以从小控件做起，利用现有资源拼接自己的页面。</div>
       </d-collapse-item>
-      <d-collapse-item title="效率 Efficiency" name="efficiency">
-        <div>简化流程：设计简单直观的操作流程；</div>
-        <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而做出决策；</div>
-        <div>帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。</div>
-      </d-collapse-item>
-      <d-collapse-item title="可控 Controllability" name="controllability" disabled>
-        <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
-        <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
+      <d-collapse-item title="至简 Simple" name="simple" disabled>
+        <div>坚持以用户为中心去进行设计，注重直观可达性，把服务示例化以帮助用户快速融入到使用中去。</div>
+        <div>同时，DevUI提供大量的快捷键，并且图形化信息反馈和引导，简化使用的流程、降低使用的门槛。</div>
+        <div>让用户能够所见即所得，做到快速上手，便捷实用。</div>
       </d-collapse-item>
     </d-collapse>
   </div>
@@ -41,7 +40,7 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const collapseValue = ref(['consistency']);
+    const collapseValue = ref(['immersive']);
     return {
       collapseValue,
     };
@@ -67,22 +66,21 @@ export default defineComponent({
 <template>
   <div class="collapse-demo">
     <d-collapse v-model="collapseAccordionValue" accordion>
-      <d-collapse-item title="一致性 Consistency" name="consistency">
-        <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-        <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+      <d-collapse-item title="沉浸 Immersive" name="immersive">
+        <div>
+          沉浸式体验包括人的感官体验和认知体验，当用户的个人技能与面对的挑战互相匹配，并且长时间处在稳定状态时，用户达到心流状态并且不易被外界因素所干扰。
+        </div>
       </d-collapse-item>
-      <d-collapse-item title="反馈 Feedback" name="feedback">
-        <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
-        <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
+      <d-collapse-item title="灵活 Flexible" name="flexible">
+        <div>
+          自带各类完整的模板和典型场景，与此同时，DevUI提供超过50个独立原子级组件，用户可以自由组合，用小组件拼接出符合自身产品需要的分子级控件；
+        </div>
+        <div>可以根据自身的产品需求灵活选择，既可以直接使用现有的典型页面模板，也可以从小控件做起，利用现有资源拼接自己的页面。</div>
       </d-collapse-item>
-      <d-collapse-item title="效率 Efficiency" name="efficiency">
-        <div>简化流程：设计简单直观的操作流程；</div>
-        <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而做出决策；</div>
-        <div>帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。</div>
-      </d-collapse-item>
-      <d-collapse-item title="可控 Controllability" name="controllability">
-        <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
-        <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
+      <d-collapse-item title="至简 Simple" name="simple">
+        <div>坚持以用户为中心去进行设计，注重直观可达性，把服务示例化以帮助用户快速融入到使用中去。</div>
+        <div>同时，DevUI提供大量的快捷键，并且图形化信息反馈和引导，简化使用的流程、降低使用的门槛。</div>
+        <div>让用户能够所见即所得，做到快速上手，便捷实用。</div>
       </d-collapse-item>
     </d-collapse>
   </div>
@@ -92,7 +90,7 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const collapseAccordionValue = ref('consistency');
+    const collapseAccordionValue = ref('immersive');
     return {
       collapseAccordionValue,
     };
@@ -113,26 +111,25 @@ export default defineComponent({
 <template>
   <div class="collapse-demo">
     <d-collapse v-model="collapseValue1">
-      <d-collapse-item name="consistency">
+      <d-collapse-item name="immersive">
         <template #title>
-          一致性 Consistency
+          沉浸 Immersive
           <d-icon name="like"></d-icon>
         </template>
-        <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-        <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+        <div>
+          沉浸式体验包括人的感官体验和认知体验，当用户的个人技能与面对的挑战互相匹配，并且长时间处在稳定状态时，用户达到心流状态并且不易被外界因素所干扰。
+        </div>
       </d-collapse-item>
-      <d-collapse-item title="反馈 Feedback" name="feedback">
-        <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
-        <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
+      <d-collapse-item title="灵活 Flexible" name="flexible">
+        <div>
+          自带各类完整的模板和典型场景，与此同时，DevUI提供超过50个独立原子级组件，用户可以自由组合，用小组件拼接出符合自身产品需要的分子级控件；
+        </div>
+        <div>可以根据自身的产品需求灵活选择，既可以直接使用现有的典型页面模板，也可以从小控件做起，利用现有资源拼接自己的页面。</div>
       </d-collapse-item>
-      <d-collapse-item title="效率 Efficiency" name="efficiency">
-        <div>简化流程：设计简单直观的操作流程；</div>
-        <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而做出决策；</div>
-        <div>帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。</div>
-      </d-collapse-item>
-      <d-collapse-item title="可控 Controllability" name="controllability">
-        <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
-        <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
+      <d-collapse-item title="至简 Simple" name="simple">
+        <div>坚持以用户为中心去进行设计，注重直观可达性，把服务示例化以帮助用户快速融入到使用中去。</div>
+        <div>同时，DevUI提供大量的快捷键，并且图形化信息反馈和引导，简化使用的流程、降低使用的门槛。</div>
+        <div>让用户能够所见即所得，做到快速上手，便捷实用。</div>
       </d-collapse-item>
     </d-collapse>
   </div>
@@ -142,7 +139,7 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const collapseValue1 = ref('consistency');
+    const collapseValue1 = ref('immersive');
     return {
       collapseValue1,
     };
