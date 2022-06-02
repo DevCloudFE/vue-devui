@@ -20,9 +20,9 @@ export const cellMap = {
     },
     renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): VNode {
       return h(Checkbox, {
-        modelValue: store.isRowChecked(rowData),
+        modelValue: store.isRowChecked(rowData, rowIndex),
         onChange: (val: boolean) => {
-          store.checkRow(val, rowData);
+          store.checkRow(val, rowData, rowIndex);
           store._table.emit('check-change', val, store.states._data.value[rowIndex]);
         },
       });
