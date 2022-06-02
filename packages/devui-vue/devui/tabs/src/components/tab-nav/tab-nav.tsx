@@ -16,7 +16,7 @@ export default defineComponent({
     const tabsEle = shallowRef<HTMLUListElement>();
     const data: OffSetData = reactive({ offsetLeft: 0, offsetWidth: 0, id: null });
     const tabs = inject<TabsData>('tabs');
-    const { ulClasses } = useTabNavRender(props);
+    const { ulClasses, aClasses, customStyle } = useTabNavRender(props);
     const { update, beforeMount, mounted, activeClick, tabCanClose } = useTabNavFunction(props, tabs, data, ctx, tabsEle);
     const { onTabRemove, onTabAdd } = useTabNavEvent(ctx);
 
@@ -58,10 +58,17 @@ export default defineComponent({
                 }}
                 class={(props.modelValue === (item.id || item.tabId) ? 'active' : '') + (item.disabled ? ' disabled' : '')}
                 id={item.id || item.tabId}>
-                <a role="tab" data-toggle={item.id} aria-expanded={props.modelValue === (item.id || item.tabId)}>
-                  {tabs?.state.slots[i] ? tabs.state.slots[i]() : <span>{item.title}</span>}
-                </a>
-                {closeIconEl(item)}
+                <span class={ns.e('nav-content')}>
+                  <a
+                    role="tab"
+                    data-toggle={item.id}
+                    aria-expanded={props.modelValue === (item.id || item.tabId)}
+                    class={aClasses.value}
+                    style={customStyle}>
+                    {tabs?.state.slots[i] ? tabs.state.slots[i]() : <span>{item.title}</span>}
+                  </a>
+                  {closeIconEl(item)}
+                </span>
               </li>
             );
           })}
