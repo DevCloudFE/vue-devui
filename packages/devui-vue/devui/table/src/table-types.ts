@@ -89,7 +89,10 @@ export const TableProps = {
     type: String,
   },
   trackBy: {
-    type: Function as PropType<(v: Record<string, any>) => string>,
+    type: Function as PropType<(v: Record<string, any>, index: number) => string>,
+    default(v: Record<string, any>, index: number): string {
+      return `${index}`;
+    }
   }
 };
 

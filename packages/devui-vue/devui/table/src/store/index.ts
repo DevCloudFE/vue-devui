@@ -3,6 +3,7 @@ import { Column, SortMethod, SortDirection } from '../components/column/column-t
 import { DefaultRow, Table } from '../table-types';
 import { TableStore } from './store-types';
 
+
 function replaceColumn(array: any[], column: any) {
   return array.map((item) => {
     if (item.id === column.id) {
@@ -27,7 +28,7 @@ function doFlattenColumns(columns: any) {
   return result;
 }
 
-const createColumnGenerator = <T>() => {
+function createColumnGenerator(this: void) {
   const _columns: Ref<Column[]> = ref([]);
   const flatColumns: Ref<Column[]> = ref([]);
 
@@ -64,26 +65,34 @@ const createColumnGenerator = <T>() => {
     flatColumns.value = [].concat(doFlattenColumns(_columns.value));
   };
 
-  return { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns };
-};
+  return {
+    _columns,
+    flatColumns,
+    insertColumn,
+    removeColumn,
+    sortColumn,
+    updateColumns
+  };
+}
 
-const createSelection = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) => {
+
+function createSelection<T>(this: void, dataSource: Ref<T[]>, trackBy: (item: T, index: number) => string) {
   const _checkSet: Ref<Set<string>> = ref(new Set());
 
-  const checkRow = (toggle: boolean, row: T) => {
+  const checkRow = (toggle: boolean, row: T, index: number) => {
     if (toggle) {
-      _checkSet.value.add(trackBy(row));
+      _checkSet.value.add(trackBy(row, index));
     } else {
-      _checkSet.value.delete(trackBy(row));
+      _checkSet.value.delete(trackBy(row, index));
     }
   };
 
-  const isRowChecked = (row: T) => {
-    return _checkSet.value.has(trackBy(row));
+  const isRowChecked = (row: T, index: number) => {
+    return _checkSet.value.has(trackBy(row, index));
   };
 
   const getCheckedRows = (): T[] => {
-    return dataSource.value.filter((item) => isRowChecked(item));
+    return dataSource.value.filter((item, index) => isRowChecked(item, index));
   };
 
   const _checkAllRecord: Ref<boolean> = ref(false);
@@ -91,8 +100,8 @@ const createSelection = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) 
     get: () => _checkAllRecord.value,
     set: (val: boolean) => {
       _checkAllRecord.value = val;
-      dataSource.value.forEach((item) => {
-        checkRow(val, item);
+      dataSource.value.forEach((item, index) => {
+        checkRow(val, item, index);
       });
     },
   });
@@ -108,7 +117,7 @@ const createSelection = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) 
       let allFalse = true;
       const items = dataSource.value;
       for (let i = 0; i < items.length; i++) {
-        const checked = isRowChecked(items[i]);
+        const checked = isRowChecked(items[i], i);
         allTrue &&= checked;
         allFalse &&= !checked;
       }
@@ -120,7 +129,7 @@ const createSelection = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) 
   );
 
   watch(dataSource, (value) => {
-    _checkAllRecord.value = value.findIndex(item => !isRowChecked(item)) === -1;
+    _checkAllRecord.value = value.findIndex((item, index) => !isRowChecked(item, index)) === -1;
   });
 
   return {
@@ -131,9 +140,9 @@ const createSelection = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) 
     checkRow,
     isRowChecked
   };
-};
+}
 
-const createSorter = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
+function createSorter<T>(this: void, dataSource: Ref<T[]>, _data: Ref<T[]>) {
   const sortData = (direction: SortDirection, sortMethod: SortMethod<T>) => {
     if (direction === 'ASC') {
       _data.value = _data.value.sort((a, b) => (sortMethod ? (sortMethod(a, b) ? 1 : -1) : 0));
@@ -146,18 +155,26 @@ const createSorter = <T>(dataSource: Ref<T[]>, _data: Ref<T[]>) => {
 
   const thList: ComponentInternalInstance[] = [];
   return { sortData, thList };
-};
+}
 
-const createFixedLogic = (columns: Ref<Column[]>) => {
+function createFixedLogic(this: void, columns: Ref<Column[]>) {
   const isFixedLeft = computed(() => {
     return columns.value.reduce((prev, current) => prev || !!current.fixedLeft, false);
   });
 
   return { isFixedLeft };
-};
+}
 
+
+/**
+ * 创建 TableStore
+ * @param dataSource 数据源
+ * @param table 表对象
+ * @returns TableStore
+ */
 export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): TableStore<T> {
   const _data: Ref<T[]> = ref([]);
+  //
   watch(
     dataSource,
     (value: T[]) => {
