@@ -1,6 +1,6 @@
 import { defineComponent, provide, reactive, toRefs } from 'vue';
 import { SELECT_TOKEN } from './const';
-import { collapseProps, CollapseContext, ModelValue } from './collapse-types';
+import { collapseProps, CollapseContext, CollapseActiveData } from './collapse-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './collapse.scss';
 
@@ -11,7 +11,7 @@ export default defineComponent({
   setup(props, ctx) {
     const ns = useNamespace('collapse');
     const scrollbarNs = useNamespace('scrollbar');
-    const getLists = (data: ModelValue) => {
+    const getLists = (data: CollapseActiveData) => {
       if (!data && data !== 0) {
         return [];
       }

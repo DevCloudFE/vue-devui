@@ -1,8 +1,8 @@
 import { ExtractPropTypes, PropType } from 'vue';
-export type ModelValue = number | string | Array<number | string>;
+export type CollapseActiveData = number | string | Array<number | string>;
 export const collapseProps = {
   modelValue: {
-    type: [String, Number, Array] as PropType<ModelValue>,
+    type: [String, Number, Array] as PropType<CollapseActiveData>,
     default: '',
     required: true,
   },
