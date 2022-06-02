@@ -11,7 +11,11 @@ export interface OffSetData {
 }
 
 export interface UseTabNavFunction {
+  update: () => void;
   activeClick: (item: any, tabEl?: any) => void;
+  beforeMount: () => void;
+  mounted: () => void;
+  tabCanClose: (item: any) => boolean;
 }
 
 export interface UseTabNavEvent {

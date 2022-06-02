@@ -1,4 +1,25 @@
-@import '../../styles-var/devui-var';
+@import '../../styles-var/devui-var.scss';
+
+$font-size-map: (
+  lg: $devui-font-size-lg,
+  md: $devui-font-size-lg,
+  sm: $devui-font-size-sm,
+  xs: $devui-font-size-sm,
+);
+
+$tag-height-map: (
+  lg: 32px,
+  md: 28px,
+  sm: 24px,
+  xs: 20px,
+);
+
+$tag-line-height-map: (
+  lg: 30px,
+  md: 26px,
+  sm: 22px,
+  xs: 18px,
+);
 
 $devui-tag-normal-config: (
   default: (
@@ -38,7 +59,7 @@ $devui-tag-normal-config: (
     display: block;
     position: relative;
     padding: 0 8px;
-    min-height: 20px;
+    height: 20px;
     border: 1px solid;
     border-radius: $devui-border-radius;
     font-size: $devui-font-size;
@@ -49,6 +70,13 @@ $devui-tag-normal-config: (
         @each $key, $value in map-get($devui-tag-normal-config, $type) {
           #{$key}: $value;
         }
+      }
+    }
+    @each $size in ('lg', 'md', 'sm', 'xs') {
+      &.#{$devui-prefix}-tag--#{$size} {
+        font-size: map-get($font-size-map, #{$size});
+        height: map-get($tag-height-map, #{$size});
+        line-height: map-get($tag-line-height-map, #{$size});
       }
     }
   }

@@ -7,6 +7,8 @@ export default function (props: TagProps): ComputedRef<string> {
   const ns = useNamespace('tag');
   return computed(() => {
     const { type, color, deletable } = props;
-    return `${ns.e('item')} ${ns.m(type || (color ? 'colorful' : '') || 'default')} ${deletable ? ns.m('deletable') : ''}`;
+    return `${ns.e('item')} ${ns.m(type || (color ? 'colorful' : '') || 'default')} ${deletable ? ns.m('deletable') : ''} ${ns.m(
+      props.size
+    )}`;
   });
 }

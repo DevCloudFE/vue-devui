@@ -1,5 +1,19 @@
 $devui-menu-item-margin: 10px;
 
+// Menu
+
+// color
+
+$devui-menu-item: var(--devui-menu-item);
+$devui-menu-item-sub: var(--devui-menu-item-sub);
+$devui-menu-item-disabled: var(--devui-menu-disabled);
+$devui-menu-item-select: var(--devui-menu-item-hover);
+
+$devui-menu-item-selectBar: var(--devui-primary-hover, #5e7ce0);
+$devui-menu-active-parent: var(--devui-icon-fill-active);
+$devui-menu-bg: var(--devui-global-bg-normal);
+$devui-menu-bg-level: var(--devui-global-bg);
+
 @import '../../styles-var/devui-var.scss';
 @import './styles/clear.scss';
 @import './styles/horizontal.scss';

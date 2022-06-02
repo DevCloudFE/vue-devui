@@ -1,10 +1,10 @@
 @import '../../styles-var/devui-var.scss';
 
 $font-size-map: (
-  lg: 14px,
-  md: 14px,
-  sm: 12px,
-  xs: 12px,
+  lg: $devui-font-size-lg,
+  md: $devui-font-size-lg,
+  sm: $devui-font-size-sm,
+  xs: $devui-font-size-sm,
 );
 $button-padding-map: (
   lg: 12px 20px,
@@ -23,7 +23,6 @@ $button-padding-map: (
   border-left: none;
   line-height: 1;
   user-select: none;
-  box-shadow: -1px 0 0 0 #dfe1e6;
   @each $size in ('lg', 'md', 'sm', 'xs') {
     &.#{$devui-prefix}-radio-button--#{$size} {
       font-size: map-get($font-size-map, #{$size});
