@@ -11,6 +11,7 @@ import {
 
 export type Layout = 'horizontal' | 'vertical';
 export type LabelSize = 'sm' | 'md' | 'lg';
+export type FormSize = 'sm' | 'md' | 'lg';
 export type LabelAlign = 'start' | 'center' | 'end';
 export type FormData = Record<string, any>;
 
@@ -55,6 +56,13 @@ export const formProps = {
   showFeedback: {
     type: Boolean,
     default: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  size: {
+    type: String as PropType<FormSize>,
   },
 } as const;
 

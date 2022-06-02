@@ -17,7 +17,6 @@ export const inputProps = {
   },
   size: {
     type: String as PropType<InputSize>,
-    default: 'md',
   },
   validateEvent: {
     type: Boolean,
@@ -44,6 +43,8 @@ export const inputProps = {
 export type InputProps = ExtractPropTypes<typeof inputProps>;
 
 export interface UseInputRender {
+  inputDisabled: ComputedRef<boolean>;
+  inputSize: ComputedRef<InputSize | ''>;
   isFocus: Ref<boolean>;
   wrapClasses: ComputedRef<Record<string, boolean | undefined>>;
   inputClasses: ComputedRef<Record<string, boolean | undefined>>;
