@@ -37,7 +37,11 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/9566362?v=4',
       homepage: 'https://github.com/kagol',
-    }
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
+      homepage: 'https://github.com/xingyan95'
+    },
   ],
   overlay: [
     {
@@ -51,6 +55,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/23261843?v=4',
       homepage: 'https://github.com/to0simple'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
+      homepage: 'https://github.com/xingyan95'
     },
   ],
   panel: [

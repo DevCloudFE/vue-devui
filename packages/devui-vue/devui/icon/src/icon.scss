@@ -1,6 +1,96 @@
 @import '../../styles-var/devui-var.scss';
 
+$devui-icon-background-hover: var(--devui-icon-background-hover, $devui-list-item-hover-bg);
+$devui-icon-background-active: var(--devui-icon-background-active, $devui-list-item-active-bg);
+
+.#{$devui-prefix}-icon {
+  &__container {
+    display: inline-flex;
+    align-items: center;
+    color: $devui-icon-fill;
+
+    & > *:not(:last-child) {
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    i {
+      vertical-align: middle;
+      transition: all $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+    }
+  }
+
+  &--disabled {
+    color: $devui-disabled-text;
+    cursor: not-allowed;
+
+    i {
+      color: $devui-disabled-text;
+    }
+  }
+
+  &--operable {
+    &:not(.#{$devui-prefix}-icon--disabled) {
+      cursor: pointer;
+      transition: color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+
+      i {
+        cursor: pointer;
+      }
+    }
+
+    &:hover:not(.#{$devui-prefix}-icon--disabled) {
+      color: $devui-icon-fill-hover;
+
+      &.#{$devui-prefix}-icon__container {
+        background-color: $devui-icon-background-hover;
+      }
+
+      i {
+        color: $devui-icon-fill-hover;
+      }
+    }
+
+    &:active:not(.#{$devui-prefix}-icon--disabled) {
+      color: var(--devui-icon-active-color, $devui-icon-fill-active);
+
+      &.#{$devui-prefix}-icon__container {
+        background-color: $devui-icon-background-active;
+      }
+
+      i {
+        color: var(--devui-icon-active-color, $devui-icon-fill-active);
+      }
+    }
+
+    &.#{$devui-prefix}-icon__container {
+      height: 32px;
+      padding: 0 8px;
+      margin-left: -8px;
+      border-radius: $devui-border-radius;
+      transition: all $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+    }
+  }
+
+  &--spin {
+    animation: iconSpin 2.5s linear infinite;
+  }
+}
+
 .#{$devui-prefix}-svg-icon {
   vertical-align: middle;
 }
 
+@keyframes iconSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
