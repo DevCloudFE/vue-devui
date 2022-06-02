@@ -1,0 +1,48 @@
+@import '../../styles-var/devui-var.scss';
+
+.#{$devui-prefix}-step {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+
+  &:last-child {
+    flex-basis: auto !important;
+    flex-shrink: 0;
+  }
+
+  &__dot {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: $devui-brand-foil;
+    color: $devui-text;
+  }
+
+  &__title {
+    color: $devui-placeholder;
+  }
+
+  &.active {
+    .#{$devui-prefix}-step__dot {
+      background-color: $devui-brand;
+      color: $devui-light-text;
+    }
+
+    .#{$devui-prefix}-step__title {
+      color: $devui-brand;
+    }
+  }
+
+  &.finished {
+    .#{$devui-prefix}-step__dot {
+      background-color: $devui-success;
+    }
+
+    .#{$devui-prefix}-step__title {
+      color: $devui-success;
+    }
+  }
+}
