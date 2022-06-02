@@ -352,6 +352,81 @@ export default defineComponent({
 
 :::
 
+### 尺寸控制
+
+:::demo 通过`size`属性可控制所有控件的尺寸。
+
+```vue
+<template>
+  <d-form :data="formModel" disabled size="sm">
+    <d-form-item field="name" label="Name" help-tips="This is the plan name." extra-info="Enter a short name that meets reading habits.">
+      <d-input v-model="formModel.name" />
+    </d-form-item>
+    <d-form-item field="description" label="Description">
+      <d-textarea v-model:value="formModel.description" />
+    </d-form-item>
+    <d-form-item field="select" label="Select">
+      <d-select v-model="formModel.select" :options="selectOptions" />
+    </d-form-item>
+    <d-form-item field="radio" label="Radio">
+      <d-radio-group direction="row" v-model="formModel.radio">
+        <d-radio value="0">Manual execution</d-radio>
+        <d-radio value="1">Daily execution</d-radio>
+        <d-radio value="2">Weekly execution</d-radio>
+      </d-radio-group>
+    </d-form-item>
+    <d-form-item field="switch" label="Switch">
+      <d-switch v-model="formModel.switch"></d-switch>
+    </d-form-item>
+    <d-form-item field="executionDay" label="Execution day">
+      <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
+        <d-checkbox label="Mon" value="Mon" />
+        <d-checkbox label="Tue" value="Tue" />
+        <d-checkbox label="Wed" value="Wed" />
+        <d-checkbox label="Thur" value="Thur" />
+        <d-checkbox label="Fri" value="Fri" />
+        <d-checkbox label="Sat" value="Sat" />
+        <d-checkbox label="Sun" value="Sun" />
+      </d-checkbox-group>
+    </d-form-item>
+    <d-form-operation class="form-demo-form-operation">
+      <d-button variant="solid">提交</d-button>
+      <d-button>取消</d-button>
+    </d-form-operation>
+  </d-form>
+</template>
+
+<script>
+import { defineComponent, reactive, ref, nextTick } from 'vue';
+
+export default defineComponent({
+  setup() {
+    let formModel = reactive({
+      name: '',
+      description: '',
+      select: 'Options2',
+      radio: '0',
+      switch: true,
+      executionDay: [],
+    });
+    const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
+    return {
+      formModel,
+      selectOptions,
+    };
+  },
+});
+</script>
+
+<style>
+.form-demo-form-operation > * {
+  margin-right: 8px;
+}
+</style>
+```
+
+:::
+
 ### 表单校验
 
 :::demo
@@ -447,6 +522,8 @@ export default defineComponent({
 | pop-position            | [PopPosition](#popposition) | ['right','bottom'] | 可选，消息显示为 popover 时，popover 弹出方向                      |                       |
 | validate-on-rule-change | `boolean`                   | false              | 可选，是否在 rules 改变后立即触发一次验证                          |                       |
 | show-feedback           | `boolean`                   | false              | 可选，是否展示校验结果反馈图标                                     |                       |
+| disabled                | `boolean`                   | false              | 可选，是否禁用该表单内的所有组件。                                 |                       |
+| size                    | [FormSize](#formsize)       | --                 | 可选，用于控制该表单内组件的尺寸                                   |                       |
 
 ### Form 事件
 
@@ -544,6 +621,12 @@ type PopPosition =
   | 'bottom-end'
   | 'left-start'
   | 'left-end';
+```
+
+#### FormSize
+
+```ts
+type FormSize = 'sm' | 'md' | 'lg';
 ```
 
 #### FormValidateCallback
