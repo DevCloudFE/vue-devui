@@ -1,7 +1,9 @@
-import type { ComputedRef } from 'vue';
+import type { ComputedRef, StyleValue } from 'vue';
 
 export interface UseTabNavRender {
   ulClasses: ComputedRef<Record<string, boolean>>;
+  aClasses: ComputedRef<Record<string, boolean>>;
+  customStyle: StyleValue;
 }
 
 export interface OffSetData {

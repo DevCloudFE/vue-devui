@@ -80,7 +80,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tabs type="options" v-model="id">
+  <d-tabs type="options" v-model="id" custom-width="100px">
     <d-tab id="tab1" title="Tab1">
       <p>Tab1 Content</p>
     </d-tab>
