@@ -1,20 +1,32 @@
-import { defineComponent, toRefs } from 'vue';
-import type { SetupContext } from 'vue';
+import { defineComponent, provide, ref, toRefs, watch } from 'vue';
 import { stepsProps, StepsProps } from './steps-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import './steps.scss';
+import { ACTIVE_STEP, STEPS } from './const';
 
 export default defineComponent({
   name: 'DSteps',
   props: stepsProps,
-  emits: [],
-  setup(props: StepsProps, ctx: SetupContext) {
-    // 直接解构 props 会导致响应式失效，需要使用 toRefs 进行包裹
-    // const { data } = toRefs(props);
-    // console.log(data.value);
+  emits: ['update:modelValue'],
+  setup(props: StepsProps, { slots }) {
+    const { modelValue } = toRefs(props);
+    const ns = useNamespace('steps');
+
+    const activeStep = ref(modelValue.value);
+    provide(ACTIVE_STEP, activeStep);
+
+    const steps = ref([]);
+    provide(STEPS, steps);
+
+    watch(modelValue, (newVal) => {
+      activeStep.value = newVal;
+    });
 
     return () => {
       return (
-        <div class="devui-steps"></div>
+        <div class={ns.b()}>
+          { slots.default?.() }
+        </div>
       );
     };
   }

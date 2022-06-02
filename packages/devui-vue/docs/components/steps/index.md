@@ -1,18 +1,23 @@
 # Steps 步骤条
 
-// todo 组件描述
+引导用户按步骤完成任务。
 
 #### 何时使用
 
-// todo 使用场景描述
+当需要按特定的步骤完成任务时使用。
 
 ### 基本用法
 
-:::demo // todo 基本用法描述
+:::demo
 
 ```vue
 <template>
-  <d-steps>{{ data }}</d-steps>
+  <d-steps v-model="activeStep">
+    <d-step title="基本信息"></d-step>
+    <d-step title="选择代码源"></d-step>
+    <d-step title="选择构建模板"></d-step>
+  </d-steps>
+  <d-button @click="nextStep" class="demo-steps-basic-next-step">下一步</d-button>
 </template>
 
 <script>
@@ -20,19 +25,27 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const data = ref('步骤条');
+    const activeStep = ref(0);
+
+    const nextStep = () => {
+      if (activeStep.value > 2) {
+        activeStep.value = 0;
+      } else {
+        activeStep.value++;
+      }
+    };
 
     return {
-      data
-    }
-  }
-})
+      activeStep,
+      nextStep,
+    };
+  },
+});
 </script>
 
 <style lang="scss">
-// demo中的样式不支持 scoped，需要使用约定的class名称包裹，格式：demo-componentname-demoname
-.demo-steps-basic {
-  // css
+.demo-steps-basic-next-step {
+  margin-top: 24px;
 }
 </style>
 ```
@@ -41,35 +54,12 @@ export default defineComponent({
 
 ### Steps 参数
 
-| 参数名 | 类型 | 默认值 | 说明 | 跳转 Demo |
-| :---- | :---- | :---- | :---- | :--------- |
-|      |   `string`   |      |      |     [基本用法](#基本用法)      |
-|      |   [IXxx](#ixxx)   |      |      |           |
-|      |      |      |      |           |
+| 参数名  | 类型     | 默认值 | 说明           | 跳转 Demo             |
+| :------ | :------- | :----- | :------------- | :-------------------- |
+| v-model | `number` | 0      | 当前激活的步骤 | [基本用法](#基本用法) |
 
-### Steps 事件
+### Step 参数
 
-| 事件名 | 回调参数 | 说明 | 跳转 Demo |
-| :---- | :---- | :---- | :--------- |
-|      |      |      |           |
-|      |      |      |           |
-|      |      |      |           |
-
-### Steps 插槽
-
-| 插槽名 | 说明 | 跳转 Demo |
-| :---- | :---- | :--------- |
-|   default   |      |           |
-|      |      |           |
-|      |      |           |
-
-### Steps 类型定义
-
-#### IXxx
-
-```ts
-interface IXxx {
-  xxx: string;
-}
-```
-
+| 参数名 | 类型     | 默认值 | 说明             | 跳转 Demo             |
+| :----- | :------- | :----- | :--------------- | :-------------------- |
+| title  | `string` | --     | 必选，步骤的标题 | [基本用法](#基本用法) |
