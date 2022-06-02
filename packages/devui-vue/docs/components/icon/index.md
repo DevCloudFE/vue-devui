@@ -23,6 +23,57 @@
 
 :::
 
+### 附带描述信息
+
+:::demo 利用`prefix`和`suffix`可分别设置图标的前置和后置内容，`operable`设置可交互图标，`disabled`设置禁用态，`rotate`设置图标旋转角度或自动旋转。
+
+```vue
+<template>
+  <d-icon name="setting" operable>
+    <template #prefix>
+      <span>设置</span>
+    </template>
+  </d-icon>
+  <br />
+  <br />
+  <d-icon name="setting" operable>
+    <template #suffix>
+      <span>设置</span>
+    </template>
+  </d-icon>
+  <br />
+  <br />
+  <d-icon name="https://devui.design/components/assets/logo.svg" size="16px" operable>
+    <template #suffix>
+      <span>Logo</span>
+    </template>
+  </d-icon>
+  <br />
+  <br />
+  <d-icon name="refresh" rotate="infinite" operable>
+    <template #suffix>
+      <span>运行中</span>
+    </template>
+  </d-icon>
+  <br />
+  <br />
+  <d-icon name="edit" :rotate="180">
+    <template #suffix>
+      <span>编辑</span>
+    </template>
+  </d-icon>
+  <br />
+  <br />
+  <d-icon name="edit" disabled>
+    <template #suffix>
+      <span>无权编辑</span>
+    </template>
+  </d-icon>
+</template>
+```
+
+:::
+
 ### 颜色
 
 :::demo 通过`color`属性指定图标的颜色。
@@ -48,6 +99,29 @@
     <d-icon name="insert-image"></d-icon>
     <d-icon name="insert-image" size="32px"></d-icon>
   </div>
+</template>
+```
+
+:::
+
+### 图标组
+
+:::demo 常用图标组使用场景
+
+```vue
+<template>
+  <h5>可操作图标</h5>
+  <d-icon-group>
+    <d-icon name="add" operable disabled size="16px"></d-icon>
+    <d-icon name="edit" operable size="16px"></d-icon>
+    <d-icon name="delete" operable size="16px"></d-icon>
+  </d-icon-group>
+  <h5>静态图标</h5>
+  <d-icon-group>
+    <d-icon name="add" disabled size="16px"></d-icon>
+    <d-icon name="edit" size="16px"></d-icon>
+    <d-icon name="delete" size="16px"></d-icon>
+  </d-icon-group>
 </template>
 ```
 
@@ -84,7 +158,7 @@ Icon 组件默认引用 DevUI 图标库的图标，如果需要在现有 Icon �
 <d-icon class-prefix="my-icon" name="right"></d-icon>
 ```
 
-### 自定义svg
+### 自定义 svg
 
 可以借助 [vite-plugin-vue-svg](https://www.npmjs.com/package/vite-plugin-vue-svg)，将 svg component 传入，实现自定义 svg。
 
@@ -108,10 +182,20 @@ export default defineComponent({
 
 ### Icon 参数
 
-| 参数名       | 类型           | 默认      | 说明                     | 跳转 Demo                         |
-| :----------- | :------------- | :-------- | :----------------------- | :-------------------------------- |
-| name         | `String`       | --        | 必选，图标名称           | [基本用法](#基本用法)             |
-| size         | `String`       | '16px'    | 可选，图标尺寸           | [尺寸](#尺寸)                     |
-| color        | `String`       | '#252b3a' | 可选，图标颜色           | [颜色](#颜色)                     |
-| class-prefix | `String`       | 'icon'    | 可选，自定义字体图标前缀 | [自定义字体图标](#自定义字体图标) |
-| component    | `VueComponent` | null      | 可选，自定义 svg 图标    | [自定义svg](#自定义svg)          |
+| 参数名       | 类型                   | 默认值    | 说明                                                         | 跳转 Demo                         |
+| :----------- | :--------------------- | :-------- | :----------------------------------------------------------- | :-------------------------------- |
+| name         | `string`               | --        | 必选，图标名称                                               | [基本用法](#基本用法)             |
+| size         | `string`               | '16px'    | 可选，图标尺寸                                               | [尺寸](#尺寸)                     |
+| color        | `string`               | '#252b3a' | 可选，图标颜色                                               | [颜色](#颜色)                     |
+| class-prefix | `string`               | 'icon'    | 可选，自定义字体图标前缀                                     | [自定义字体图标](#自定义字体图标) |
+| component    | `VueComponent`         | null      | 可选，自定义 svg 图标                                        | [自定义 svg](#自定义svg)          |
+| operable     | `boolean`              | false     | 可选，图标是否可操作                                         | [附带描述信息](#附带描述信息)     |
+| disabled     | `boolean`              | false     | 可选，图标是否禁用                                           | [附带描述信息](#附带描述信息)     |
+| rotate       | `number \| 'infinite'` | --        | 可选，`infinite`表示设置图标自动旋转，数字值表示图标旋转角度 | [附带描述信息](#附带描述信息)     |
+
+### Icon 插槽
+
+| 插槽名 | 说明         |
+| :----- | :----------- |
+| prefix | 图标前置内容 |
+| suffix | 图标后置内容 |

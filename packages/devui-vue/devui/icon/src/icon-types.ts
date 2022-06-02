@@ -23,6 +23,17 @@ export const iconProps = {
     type: String,
     default: DEFAULT_PREFIX,
   },
+  operable: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  rotate: {
+    type: [Number, String],
+  },
 };
 
 export const svgIconProps = {
@@ -33,14 +44,18 @@ export const svgIconProps = {
   },
   color: {
     type: String,
-    default: 'inherit'
+    default: 'inherit',
   },
   size: {
     type: [Number, String],
-    default: 'inherit'
+    default: 'inherit',
   },
 };
 
 export type IconProps = ExtractPropTypes<typeof iconProps>;
 
 export type SvgIconProps = ExtractPropTypes<typeof svgIconProps>;
+
+export interface UseIconDom {
+  iconDom: () => JSX.Element;
+}
