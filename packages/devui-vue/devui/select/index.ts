@@ -7,7 +7,7 @@ export { Select, Option };
 export default {
   title: 'Select 下拉框',
   category: '数据录入',
-  status: '70%',
+  status: '90%',
   install(app: App): void {
     app.component(Select.name, Select);
     app.component(Option.name, Option);

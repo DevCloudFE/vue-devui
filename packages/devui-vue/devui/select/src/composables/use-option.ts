@@ -1,4 +1,4 @@
-import { computed, inject, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, inject, onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import { OptionProps, UseOptionReturnType } from '../select-types';
 import { SELECT_TOKEN } from '../const';
 import { className } from '../utils';
