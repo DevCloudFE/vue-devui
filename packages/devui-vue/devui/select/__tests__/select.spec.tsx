@@ -1,6 +1,30 @@
 import { mount } from '@vue/test-utils';
 import { ref, reactive, nextTick } from 'vue';
 import DSelect from '../src/select';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('select', true);
+const notDotNs = useNamespace('select');
+const baseClass = ns.b();
+const selectOpenCls = notDotNs.m('open');
+const dropdownCls = ns.e('dropdown');
+const selectItemCls = ns.e('item');
+const selectInputCls = ns.e('input');
+const clearCls = ns.e('clear');
+const arrowCls = ns.e('arrow');
+const selectSMCls = notDotNs.m('sm');
+const selectLGCls = notDotNs.m('lg');
+const selectUnderlinedCls = notDotNs.m('underlined');
+const selectDisabledCls = notDotNs.m('disabled');
+const multipleCls = ns.e('multiple');
+const multipleInputCls = ns.em('multiple', 'input');
+const dropdownEmptyCls = ns.em('dropdown', 'empty');
+
+const tagNs = useNamespace('tag', true);
+const tagBaseClass = tagNs.b();
+
+const popoverNs = useNamespace('popover', true);
+const popoverContentCls = popoverNs.e('content');
 
 describe('select', () => {
   it('select render work', async () => {
@@ -11,11 +35,11 @@ describe('select', () => {
         return () => <DSelect v-model={value.value} options={options} placeholder="这是默认选择框"></DSelect>;
       },
     });
-    const container = wrapper.find('.devui-select');
-    let dropdown = wrapper.find('.devui-select__dropdown');
-    let listItems = wrapper.findAll('.devui-select__item');
-    const input = wrapper.find<HTMLInputElement>('.devui-select__input');
-    const arrow = wrapper.find('.devui-select__arrow');
+    const container = wrapper.find(baseClass);
+    let dropdown = wrapper.find(dropdownCls);
+    let listItems = wrapper.findAll(selectItemCls);
+    const input = wrapper.find<HTMLInputElement>(selectInputCls);
+    const arrow = wrapper.find(arrowCls);
 
     expect(container.exists()).toBeTruthy();
     expect(dropdown.isVisible()).toBeFalsy();
@@ -29,20 +53,20 @@ describe('select', () => {
     await input.trigger('click');
     await nextTick();
     // isVisible不会自动更新需要重新获取
-    dropdown = wrapper.find('.devui-select__dropdown');
+    dropdown = wrapper.find(dropdownCls);
     expect(dropdown.isVisible()).toBeTruthy();
-    expect(container.classes()).toContain('devui-select--open');
+    expect(container.classes()).toContain(selectOpenCls);
 
     await listItems[2].trigger('click');
     await nextTick();
 
     // isVisible不会自动更新需要重新获取
-    dropdown = wrapper.find('.devui-select__dropdown');
+    dropdown = wrapper.find(dropdownCls);
     expect(value.value).toBe('string');
     expect(dropdown.isVisible()).toBeFalsy();
     expect(input.element.value).toBe('string');
     // class不会自动更新需要重新获取
-    listItems = wrapper.findAll('.devui-select__item');
+    listItems = wrapper.findAll(selectItemCls);
     expect(listItems[2].classes()).toContain('active');
     wrapper.unmount();
   });
@@ -54,18 +78,18 @@ describe('select', () => {
       },
     });
 
-    let container = wrapper.find('.devui-select');
-    expect(container.classes()).toContain('devui-select--sm');
-    expect(container.classes()).toContain('devui-select--underlined');
+    let container = wrapper.find(baseClass);
+    expect(container.classes()).toContain(selectSMCls);
+    expect(container.classes()).toContain(selectUnderlinedCls);
 
     await wrapper.setProps({
       size: 'lg',
       overview: 'border',
     });
 
-    container = wrapper.find('.devui-select');
-    expect(container.classes()).toContain('devui-select--lg');
-    expect(container.classes()).not.toContain('devui-select--underlined');
+    container = wrapper.find(baseClass);
+    expect(container.classes()).toContain(selectLGCls);
+    expect(container.classes()).not.toContain(selectUnderlinedCls);
     wrapper.unmount();
   });
 
@@ -90,7 +114,7 @@ describe('select', () => {
       },
     });
 
-    const input = wrapper.find<HTMLInputElement>('.devui-select__input');
+    const input = wrapper.find<HTMLInputElement>(selectInputCls);
 
     await input.trigger('focus');
     await input.trigger('blur');
@@ -104,7 +128,7 @@ describe('select', () => {
     expect(valueChange).toBeCalledTimes(0);
     expect(value.value).toBe(2);
 
-    const listItems = wrapper.findAll('.devui-select__item');
+    const listItems = wrapper.findAll(selectItemCls);
     await listItems[2].trigger('click');
 
     expect(toggleChange).toBeCalledTimes(2);
@@ -122,15 +146,15 @@ describe('select', () => {
       },
     });
 
-    const container = wrapper.find('.devui-select');
-    const item = container.findAll('.devui-select__item');
+    const container = wrapper.find(baseClass);
+    const item = container.findAll(selectItemCls);
 
     await container.trigger('click');
     await item[1].trigger('click');
     expect(value.value).toBe(2);
     value.value = 1;
     await nextTick();
-    const input = container.find<HTMLInputElement>('.devui-select__input');
+    const input = container.find<HTMLInputElement>(selectInputCls);
     expect(input.element.value).toBe('1');
     wrapper.unmount();
   });
@@ -142,10 +166,10 @@ describe('select', () => {
       },
     });
 
-    const container = wrapper.find('.devui-select');
-    expect(container.classes()).toContain('devui-select--disabled');
+    const container = wrapper.find(baseClass);
+    expect(container.classes()).toContain(selectDisabledCls);
 
-    const input = wrapper.find('.devui-select__input');
+    const input = wrapper.find(selectInputCls);
     expect(input.attributes()).toHaveProperty('disabled');
     wrapper.unmount();
   });
@@ -174,8 +198,8 @@ describe('select', () => {
       },
     });
 
-    const container = wrapper.find('.devui-select');
-    const item = container.findAll('.devui-select__item');
+    const container = wrapper.find(baseClass);
+    const item = container.findAll(selectItemCls);
 
     await container.trigger('click');
     await nextTick();
@@ -188,6 +212,26 @@ describe('select', () => {
     wrapper.unmount();
   });
 
+  it('select multiple work', async () => {
+    const value = ref([]);
+    const options = reactive([0, 1, 2]);
+    const wrapper = mount({
+      setup() {
+        return () => <DSelect v-model={value.value} options={options} multiple={true}></DSelect>;
+      },
+    });
+    const container = wrapper.find(baseClass);
+    const item = container.findAll(selectItemCls);
+
+    await container.trigger('click');
+    await nextTick();
+    await item[0].trigger('click');
+    await item[1].trigger('click');
+    await item[2].trigger('click');
+    expect(value.value).toEqual([0, 1, 2]);
+    wrapper.unmount();
+  });
+
   it('select clear work', async () => {
     const value = ref(1);
     const options = reactive([1, 2, 3]);
@@ -197,8 +241,8 @@ describe('select', () => {
       },
     });
 
-    const container = wrapper.find('.devui-select');
-    const clearIcon = container.find('.devui-select__clear');
+    const container = wrapper.find(baseClass);
+    const clearIcon = container.find(clearCls);
 
     expect(clearIcon.exists()).toBeTruthy();
     await clearIcon.trigger('click');
@@ -215,10 +259,10 @@ describe('select', () => {
       },
     });
 
-    const container = wrapper.find('.devui-select');
-    const items = container.findAll('.devui-select__item');
-    const section = wrapper.find('.devui-select__multiple');
-    const multipleInput = wrapper.find('.devui-select__multiple--input');
+    const container = wrapper.find(baseClass);
+    const items = container.findAll(selectItemCls);
+    const section = wrapper.find(multipleCls);
+    const multipleInput = wrapper.find(multipleInputCls);
     expect(section.exists()).toBeTruthy();
     expect(multipleInput.exists()).toBeTruthy();
 
@@ -226,10 +270,10 @@ describe('select', () => {
     await nextTick();
     await items[0].trigger('click');
     expect(value.value).toStrictEqual([1]);
-    const input = container.find<HTMLInputElement>('.devui-select__input');
+    const input = container.find<HTMLInputElement>(selectInputCls);
     expect(input.element.value).toBe('');
 
-    const tags = wrapper.findAll('.devui-tag');
+    const tags = wrapper.findAll(tagBaseClass);
     expect(tags.length).toBe(1);
     const tag = tags[0].find('.remove-button');
     await tag.trigger('click');
@@ -247,15 +291,15 @@ describe('select', () => {
       },
     });
 
-    const container = wrapper.find('.devui-select');
-    const items = container.findAll('.devui-select__item');
+    const container = wrapper.find(baseClass);
+    const items = container.findAll(selectItemCls);
 
     await container.trigger('click');
     await nextTick();
     await items[0].trigger('click');
     await items[1].trigger('click');
     await items[2].trigger('click');
-    const tags = wrapper.findAll('.devui-tag');
+    const tags = wrapper.findAll(tagBaseClass);
     expect(tags.length).toBe(2);
     const tag1 = tags[0].find('.remove-button');
     const tag2 = tags[1].find('.remove-button');
@@ -275,19 +319,19 @@ describe('select', () => {
         );
       },
     });
-    const container = wrapper.find('.devui-select');
-    const items = container.findAll('.devui-select__item');
+    const container = wrapper.find(baseClass);
+    const items = container.findAll(selectItemCls);
 
     await container.trigger('click');
     await nextTick();
     await items[0].trigger('click');
     await items[1].trigger('click');
     await items[2].trigger('click');
-    const tags = wrapper.findAll('.devui-tag');
+    const tags = wrapper.findAll(tagBaseClass);
     expect(tags.length).toBe(2);
     await tags[1].trigger('mouseenter');
     setTimeout(() => {
-      const popoverContent = document.body.querySelector('.devui-popover__content');
+      const popoverContent = document.body.querySelector(popoverContentCls);
       expect(popoverContent).toBeTruthy();
       wrapper.unmount();
     }, 150);
@@ -303,22 +347,22 @@ describe('select', () => {
         return () => <DSelect v-model={value.value} options={options} filter={true}></DSelect>;
       },
     });
-    const container = wrapper.find('.devui-select');
+    const container = wrapper.find(baseClass);
 
     await container.trigger('click');
     await nextTick();
-    const input = container.find<HTMLInputElement>('.devui-select__input');
+    const input = container.find<HTMLInputElement>(selectInputCls);
     await input.setValue('s');
     await input.trigger('input');
     setTimeout(() => {
-      const items = wrapper.findAll('.devui-select__item');
+      const items = wrapper.findAll(selectItemCls);
       expect(items[0].isVisible()).toBe(false);
     }, 300);
 
     await input.setValue('1');
     await input.trigger('input');
     setTimeout(() => {
-      const items = wrapper.findAll('.devui-select__item');
+      const items = wrapper.findAll(selectItemCls);
       expect(items[0].isVisible()).toBe(true);
     }, 300);
     wrapper.unmount();
@@ -349,19 +393,19 @@ describe('select', () => {
         return () => <DSelect v-model={value.value} options={options.data} filter={filterFunc} remote loading={loading.value}></DSelect>;
       },
     });
-    const container = wrapper.find('.devui-select');
+    const container = wrapper.find(baseClass);
 
     await container.trigger('click');
     await nextTick();
-    const input = container.find<HTMLInputElement>('.devui-select__input');
+    const input = container.find<HTMLInputElement>(selectInputCls);
     await input.setValue('1');
     await input.trigger('input');
     setTimeout(() => {
-      const noMachDataItem = wrapper.find('.devui-select__dropdown--empty');
+      const noMachDataItem = wrapper.find(dropdownEmptyCls);
       expect(noMachDataItem.exists()).toBeTruthy();
       expect(noMachDataItem.text()).toBe('加载中');
       setTimeout(() => {
-        const items = wrapper.findAll('.devui-select__item');
+        const items = wrapper.findAll(selectItemCls);
         expect(items.length).toBe(1);
         expect(items[0].isVisible()).toBe(true);
       }, 200);
@@ -370,7 +414,7 @@ describe('select', () => {
     await input.setValue('1');
     await input.trigger('input');
     setTimeout(() => {
-      const items = wrapper.findAll('.devui-select__item');
+      const items = wrapper.findAll(selectItemCls);
       expect(items[0].isVisible()).toBe(true);
     }, 200);
     wrapper.unmount();
@@ -385,14 +429,14 @@ describe('select', () => {
         return () => <DSelect v-model={value.value} options={options} multiple={true} filter={true}></DSelect>;
       },
     });
-    const input = wrapper.find('.devui-select__input');
+    const input = wrapper.find(selectInputCls);
 
     await input.trigger('click');
     await nextTick();
     await input.setValue('test');
     await input.trigger('input');
     setTimeout(async () => {
-      const items = wrapper.findAll('.devui-select__item');
+      const items = wrapper.findAll(selectItemCls);
       await items[0].trigger('click');
       expect(value.value).toStrictEqual(['test']);
     }, 300);
@@ -407,28 +451,28 @@ describe('select', () => {
         return () => <DSelect v-model={value.value} options={options} multiple={true} filter={true}></DSelect>;
       },
     });
-    const input = wrapper.find('.devui-select__input');
+    const input = wrapper.find(selectInputCls);
 
     await input.trigger('click');
     await nextTick();
-    const items = wrapper.findAll('.devui-select__item');
+    const items = wrapper.findAll(selectItemCls);
     expect(items.length).toBe(0);
-    const noDataItem = wrapper.find('.devui-select__dropdown--empty');
+    const noDataItem = wrapper.find(dropdownEmptyCls);
     expect(noDataItem.exists()).toBeTruthy();
     expect(noDataItem.text()).toBe('无数据');
 
     await wrapper.setProps({ options: list });
-    const newItems = wrapper.findAll('.devui-select__item');
+    const newItems = wrapper.findAll(selectItemCls);
     expect(newItems.length).toBe(6);
-    const newNoDataItem = wrapper.find('.devui-select__dropdown--empty');
+    const newNoDataItem = wrapper.find(dropdownEmptyCls);
     expect(newNoDataItem.exists()).toBeFalsy();
     await input.setValue('test');
     await input.trigger('input');
     setTimeout(async () => {
-      const lists = wrapper.findAll('.devui-select__item');
+      const lists = wrapper.findAll(selectItemCls);
       expect(lists.length).toBe(6);
       expect(lists[0].isVisible()).toBe(false);
-      const noMachDataItem = wrapper.find('.devui-select__dropdown--empty');
+      const noMachDataItem = wrapper.find(dropdownEmptyCls);
       expect(noMachDataItem.exists()).toBeTruthy();
       expect(noMachDataItem.text()).toBe('找不到相关记录');
     }, 300);
@@ -458,19 +502,19 @@ describe('select', () => {
         );
       },
     });
-    const container = wrapper.find('.devui-select');
+    const container = wrapper.find(baseClass);
 
     await container.trigger('click');
     await nextTick();
-    const items = wrapper.findAll('.devui-select__item');
+    const items = wrapper.findAll(selectItemCls);
     expect(items.length).toBe(0);
-    const remoteLoadingItem = wrapper.find('.devui-select__dropdown--empty');
+    const remoteLoadingItem = wrapper.find(dropdownEmptyCls);
     expect(remoteLoadingItem.exists()).toBeTruthy();
     expect(remoteLoadingItem.text()).toBe('加载中');
     setTimeout(() => {
-      const newLoadingItem = wrapper.find('.devui-select__dropdown--empty');
+      const newLoadingItem = wrapper.find(dropdownEmptyCls);
       expect(newLoadingItem.exists()).toBeFalsy();
-      const remoteItems = wrapper.findAll('.devui-select__item');
+      const remoteItems = wrapper.findAll(selectItemCls);
       expect(remoteItems.length).toBe(6);
     }, 3000);
     wrapper.unmount();
