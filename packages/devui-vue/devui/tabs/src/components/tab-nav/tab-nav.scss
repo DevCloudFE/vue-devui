@@ -322,7 +322,6 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
   &--right {
     display: block;
     float: right;
-    padding-left: 2px;
     border-bottom: none;
     margin-left: 10px;
 
@@ -359,7 +358,6 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
   &--left {
     display: block;
     float: left;
-    padding-right: 2px;
     border-bottom: none;
     margin-right: 10px;
 
@@ -388,13 +386,6 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
       width: 2px;
       background: $devui-brand;
     }
-  }
-
-  &--right:not(.#{$devui-prefix}-tabs__nav--pills):not(.#{$devui-prefix}-tabs__nav--options):not(.#{$devui-prefix}-tabs__nav--slider) {
-    border-left: 1px solid $devui-dividing-line;
-  }
-  &--left:not(.#{$devui-prefix}-tabs__nav--pills):not(.#{$devui-prefix}-tabs__nav--options):not(.#{$devui-prefix}-tabs__nav--slider) {
-    border-right: 1px solid $devui-dividing-line;
   }
 }
 
@@ -467,7 +458,6 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
 
       > li {
         padding: 8px 16px;
-        margin-left: -3px;
       }
     }
     .#{$devui-prefix}-tabs__nav--slider {
@@ -479,10 +469,17 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
         display: none;
       }
     }
+    .#{$devui-prefix}-tabs__nav--slider {
+      .#{$devui-prefix}-tabs__nav-slider-animation {
+        left: 1px;
+      }
+    }
   }
 
   &--right {
     .#{$devui-prefix}-tabs__nav--wrapped {
+      border-left: 1px solid $devui-dividing-line;
+
       > li {
         & a {
           border-radius: 0 $devui-border-radius $devui-border-radius 0;
@@ -495,10 +492,16 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
         }
       }
     }
+
+    .#{$devui-prefix}-tabs__nav--tabs {
+      border-left: 1px solid $devui-line;
+    }
   }
 
   &--left {
     .#{$devui-prefix}-tabs__nav--wrapped {
+      border-right: 1px solid $devui-dividing-line;
+
       > li {
         & a {
           border-radius: $devui-border-radius 0 0 $devui-border-radius;
@@ -511,10 +514,9 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
         }
       }
     }
-    .#{$devui-prefix}-tabs__nav--slider {
-      .#{$devui-prefix}-tabs__nav-slider-animation {
-        left: 2px;
-      }
+
+    .#{$devui-prefix}-tabs__nav--tabs {
+      border-right: 1px solid $devui-line;
     }
   }
 }
