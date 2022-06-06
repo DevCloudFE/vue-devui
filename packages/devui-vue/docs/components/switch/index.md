@@ -135,19 +135,24 @@ export default defineComponent({
 
 ### Switch 参数
 
-| 参数             | 类型                        | 默认  | 说明                         | 跳转 Demo                     |
-| :--------------- | :-------------------------- | :---- | :--------------------------- | :---------------------------- |
-| v-model          | `string\| number \|boolean` | --    | 绑定值                       | [基本用法](#size)             |
-| size             | `sm \| md \| lg`            | `md`  | 可选，开关尺寸大小           | [size](#size)                 |
-| color            | `string`                    | --    | 可选，开关打开时的自定义颜色 | [自定义样式](#自定义样式)     |
-| disabled         | `boolean`                   | false | 可选，是否禁用开关           | [基本用法](#size)             |
-| checkedContent   | `string \| HTMLElement`     | ''    | 可选，开关打开时说明         | [自定义样式](#自定义样式)     |
-| uncheckedContent | `string \| HTMLElement`     | ''    | 可选，开关关闭时说明         | [自定义样式](#自定义样式)     |
-| active-value     | `string\| number \|boolean` | true  | 可选，开关打开时的值         | [自定义绑定值](#自定义绑定值) |
-| inactive-value   | `string\| number \|boolean` | true  | 可选，开关关闭时的值         | [自定义绑定值](#自定义绑定值) |
+| 参数           | 类型                        | 默认  | 说明                         | 跳转 Demo                     |
+| :------------- | :-------------------------- | :---- | :--------------------------- | :---------------------------- |
+| v-model        | `string\| number \|boolean` | --    | 绑定值                       | [基本用法](#size)             |
+| size           | `sm \| md \| lg`            | `md`  | 可选，开关尺寸大小           | [size](#size)                 |
+| color          | `string`                    | --    | 可选，开关打开时的自定义颜色 | [自定义样式](#自定义样式)     |
+| disabled       | `boolean`                   | false | 可选，是否禁用开关           | [基本用法](#size)             |
+| active-value   | `string\| number \|boolean` | true  | 可选，开关打开时的值         | [自定义绑定值](#自定义绑定值) |
+| inactive-value | `string\| number \|boolean` | true  | 可选，开关关闭时的值         | [自定义绑定值](#自定义绑定值) |
 
 ### Switch 事件
 
 | 事件   | 类型                    | 说明                                  |
 | :----- | :---------------------- | :------------------------------------ |
 | change | `EventEmitter<boolean>` | 可选,开关打开返回 true,关闭返回 false |
+
+### Switch 插槽
+
+| 名称             | 说明           | 参数 | 跳转 Demo                 |
+| :--------------- | :------------- | :--- | :------------------------ |
+| checkedContent   | 打开状态的文案 | --   | [自定义样式](#自定义样式) |
+| uncheckedContent | 关闭状态的文案 | --   | [自定义样式](#自定义样式) |
