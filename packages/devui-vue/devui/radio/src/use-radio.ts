@@ -65,7 +65,7 @@ export function useRadio(props: RadioProps, ctx: SetupContext): UseRadioFn {
   watch(
     () => props.modelValue,
     () => {
-      formItemContext?.validate('change').catch((err) => console.log(err));
+      formItemContext?.validate('change').catch((err) => console.warn(err));
     }
   );
   return {
@@ -89,7 +89,7 @@ export function useRadioGroup(props: RadioGroupProps, ctx: SetupContext): void {
   watch(
     () => props.modelValue,
     () => {
-      formItemContext?.validate('change').catch((err) => console.log(err));
+      formItemContext?.validate('change').catch((err) => console.warn(err));
     }
   );
 
