@@ -14,9 +14,9 @@ export default defineComponent({
   setup(props: TabsProps, ctx: SetupContext) {
     const ns = useNamespace('tabs');
     const tabsEle = shallowRef<HTMLUListElement>();
-    const data: OffSetData = reactive({ offsetLeft: 0, offsetWidth: 0, id: null });
+    const data: OffSetData = reactive({ offsetLeft: 0, offsetWidth: 0, offsetTop: 0, offsetHeight: 0, id: null });
     const tabs = inject<TabsData>('tabs');
-    const { ulClasses, aClasses, customStyle } = useTabNavRender(props);
+    const { ulClasses, aClasses, customStyle, sliderAnimationStyle } = useTabNavRender(props, data);
     const { update, beforeMount, mounted, activeClick, tabCanClose } = useTabNavFunction(props, tabs, data, ctx, tabsEle);
     const { onTabRemove, onTabAdd } = useTabNavEvent(ctx);
 
@@ -73,12 +73,7 @@ export default defineComponent({
             );
           })}
           {newButton}
-          <div
-            class={ns.e(`nav-${props.type}-animation`)}
-            style={{
-              left: data.offsetLeft + 'px',
-              width: data.offsetWidth + 'px',
-            }}></div>
+          <div class={ns.e(`nav-${props.type}-animation`)} style={sliderAnimationStyle.value}></div>
         </ul>
       );
     };

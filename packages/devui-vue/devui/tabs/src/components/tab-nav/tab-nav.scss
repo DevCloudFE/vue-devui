@@ -11,7 +11,6 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
 .#{$devui-prefix}-tabs__nav--pills {
   font-size: $devui-font-size;
   background: transparent;
-  font-weight: bold;
   list-style: none;
 
   li {
@@ -64,6 +63,10 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
   li.active::after {
     width: 100%;
     background: $devui-brand;
+  }
+
+  .#{$devui-prefix}-tabs__new-tab {
+    padding: 2px 0 0;
   }
 }
 
@@ -123,13 +126,11 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
       }
     }
   }
-
-  .#{$devui-prefix}-tabs__new-tab {
-    padding: 2px 16px 0;
-    align-self: normal;
-  }
   .#{$devui-prefix}-tabs__close-btn {
     margin-right: 12px;
+  }
+  .#{$devui-prefix}-tabs__new-tab {
+    padding: 2px 16px 0;
   }
 }
 
@@ -139,14 +140,13 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
   border-radius: $devui-border-radius;
   background: $devui-tab-slider-bg;
   width: fit-content;
-  display: flex !important;
+  display: flex;
   align-items: center;
   position: relative;
 
   > li {
     cursor: pointer;
     margin: 2px;
-    float: left;
     position: relative;
     z-index: 1;
 
@@ -192,44 +192,22 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
           background: transparent;
         }
       }
-
-      &:not(:first-child)::before {
-        content: '';
-        display: block;
-        top: -1px;
-        left: -1px;
-        width: 1px;
-        height: 'calc(100% + 2px)';
-        position: absolute;
-      }
     }
 
     &.active {
       text-shadow: 0 0 0.7px $devui-brand;
-
-      &:not(:first-child)::before {
-        background-color: $devui-brand;
-      }
-
-      & + li::before {
-        background-color: $devui-brand;
-      }
     }
 
     &:hover:not(.active):not(.disabled) {
       color: $devui-brand-active;
-
-      &:not(:first-child)::before {
-        background-color: $devui-brand-active;
-      }
     }
   }
 
-  .#{$devui-prefix}-tabs__new-tab {
-    padding: 0 16px;
-  }
   .#{$devui-prefix}-tabs__close-btn {
     margin-right: 12px;
+  }
+  .#{$devui-prefix}-tabs__new-tab {
+    padding: 2px 16px 0;
   }
 }
 
@@ -241,7 +219,6 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
 
   > li {
     cursor: pointer;
-    float: left;
     position: relative;
     padding: 8px 16px;
 
@@ -271,7 +248,6 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
       border: 1px solid $devui-dividing-line;
       background: $devui-global-bg;
       border-radius: $devui-border-radius $devui-border-radius 0 0;
-      font-weight: 700;
       // 以下覆盖父元素的底部边框,解决多1px的边框造成的抖动
       margin: -1px;
       border-bottom-color: transparent;
@@ -285,6 +261,29 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
       a {
         color: $devui-brand;
       }
+    }
+  }
+}
+
+.#{$devui-prefix}-tabs__nav--tabs {
+  border-bottom: 1px $devui-line solid;
+
+  li {
+    margin-left: 32px;
+    margin-bottom: -3px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.#{$devui-prefix}-tabs__nav--pills {
+  > li {
+    margin-left: 32px;
+
+    &:first-child {
+      margin-left: 0;
     }
   }
 }
@@ -306,6 +305,97 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
       }
     }
   }
+
+  &--right,
+  &--left {
+    margin: 0;
+    .#{$devui-prefix}-tabs__nav-slider-animation {
+      transition:
+        top $devui-animation-duration-slow $devui-animation-ease-in-out,
+        height $devui-animation-duration-slow $devui-animation-ease-in-out;
+    }
+    .#{$devui-prefix}-tabs__new-tab {
+      text-align: center;
+    }
+  }
+
+  &--right {
+    display: block;
+    float: right;
+    padding-left: 2px;
+    border-bottom: none;
+    margin-left: 10px;
+
+    > li {
+      margin-left: 0;
+      padding: 0 16px;
+      position: relative;
+    }
+
+    > li::after {
+      display: none;
+    }
+
+    > li::before {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      left: -5px;
+      margin: auto;
+      height: 0;
+      width: 2px;
+      background: transparent;
+      transition:
+        height $devui-animation-duration-slow $devui-animation-ease-in-out,
+        background-color $devui-animation-duration-slow $devui-animation-ease-in-out;
+    }
+
+    > li.active::before {
+      height: 100%;
+      background: $devui-brand;
+    }
+  }
+
+  &--left {
+    display: block;
+    float: left;
+    padding-right: 2px;
+    border-bottom: none;
+    margin-right: 10px;
+
+    > li {
+      margin-left: 0;
+      padding: 0 16px;
+      position: relative;
+    }
+
+    > li::after {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      right: -5px;
+      margin: auto;
+      height: 0;
+      width: 2px;
+      background: transparent;
+      transition:
+        height $devui-animation-duration-slow $devui-animation-ease-in-out,
+        background-color $devui-animation-duration-slow $devui-animation-ease-in-out;
+    }
+
+    > li.active::after {
+      height: 100%;
+      width: 2px;
+      background: $devui-brand;
+    }
+  }
+
+  &--right:not(.#{$devui-prefix}-tabs__nav--pills):not(.#{$devui-prefix}-tabs__nav--options):not(.#{$devui-prefix}-tabs__nav--slider) {
+    border-left: 1px solid $devui-dividing-line;
+  }
+  &--left:not(.#{$devui-prefix}-tabs__nav--pills):not(.#{$devui-prefix}-tabs__nav--options):not(.#{$devui-prefix}-tabs__nav--slider) {
+    border-right: 1px solid $devui-dividing-line;
+  }
 }
 
 .#{$devui-prefix}-tabs__nav-content {
@@ -315,41 +405,6 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
 
 .#{$devui-prefix}-tabs__nav--options {
   padding-left: 2px;
-}
-
-.#{$devui-prefix}-tabs__nav--tabs:not(.#{$devui-prefix}-tabs__stacked) {
-  border-bottom: 1px $devui-line solid;
-
-  li {
-    float: left;
-    margin-left: 32px;
-    margin-bottom: -3px;
-
-    &:first-child {
-      margin-left: 0;
-    }
-  }
-}
-
-.#{$devui-prefix}-tabs__nav--pills:not(.#{$devui-prefix}-tabs__stacked) {
-  > li {
-    float: left;
-    margin-left: 32px;
-
-    &:first-child {
-      margin-left: 0;
-    }
-  }
-}
-
-.#{$devui-prefix}-tabs__nav::before,
-.#{$devui-prefix}-tabs__nav::after {
-  content: ' ';
-  display: table;
-}
-
-.#{$devui-prefix}-tabs__nav::after {
-  clear: both;
 }
 
 .#{$devui-prefix}-tabs__nav-slider-animation {
@@ -366,18 +421,100 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
 }
 
 .#{$devui-prefix}-tabs {
+  &__new-tab,
+  &__close-btn {
+    .#{$devui-prefix}-icon__container {
+      &:hover {
+        color: $devui-text;
+      }
+
+      > i {
+        transition: none;
+      }
+    }
+  }
+
   &__new-tab {
-    &:hover {
-      color: $devui-text;
+    .#{$devui-prefix}-icon__container {
+      color: $devui-aide-text;
     }
   }
 
   &__close-btn {
-    margin-left: 12px;
-    color: var(--devui-line, #adb0b8);
+    .#{$devui-prefix}-icon__container {
+      color: $devui-form-control-line;
+    }
 
-    &:hover {
-      color: $devui-text;
+    margin-left: 12px;
+  }
+
+  &--right,
+  &--left {
+    .#{$devui-prefix}-tabs__nav--options,
+    .#{$devui-prefix}-tabs__nav--wrapped {
+      border-bottom: 1px solid $devui-dividing-line;
+
+      > li::after {
+        display: none;
+      }
+
+      > li::before {
+        display: none;
+      }
+    }
+    .#{$devui-prefix}-tabs__nav--wrapped {
+      border-bottom: none;
+
+      > li {
+        padding: 8px 16px;
+        margin-left: -3px;
+      }
+    }
+    .#{$devui-prefix}-tabs__nav--slider {
+      > li::after {
+        display: none;
+      }
+
+      > li::before {
+        display: none;
+      }
+    }
+  }
+
+  &--right {
+    .#{$devui-prefix}-tabs__nav--wrapped {
+      > li {
+        & a {
+          border-radius: 0 $devui-border-radius $devui-border-radius 0;
+        }
+
+        &.active {
+          border-radius: 0 $devui-border-radius $devui-border-radius 0;
+          border-bottom-color: $devui-dividing-line;
+          border-left-color: transparent;
+        }
+      }
+    }
+  }
+
+  &--left {
+    .#{$devui-prefix}-tabs__nav--wrapped {
+      > li {
+        & a {
+          border-radius: $devui-border-radius 0 0 $devui-border-radius;
+        }
+
+        &.active {
+          border-radius: $devui-border-radius 0 0 $devui-border-radius;
+          border-bottom-color: $devui-dividing-line;
+          border-right-color: transparent;
+        }
+      }
+    }
+    .#{$devui-prefix}-tabs__nav--slider {
+      .#{$devui-prefix}-tabs__nav-slider-animation {
+        left: 2px;
+      }
     }
   }
 }

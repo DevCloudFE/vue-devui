@@ -1,8 +1,10 @@
-import type { ExtractPropTypes, PropType, Slot } from 'vue';
+import type { ComputedRef, ExtractPropTypes, PropType } from 'vue';
 
 export type Active = string | number | null;
 
 export type ITabsType = 'tabs' | 'pills' | 'options' | 'wrapped' | 'slider';
+
+export type ITabPositionType = 'top' | 'right' | 'bottom' | 'left';
 
 export interface TabsState {
   data?: any[];
@@ -29,10 +31,6 @@ export const tabsProps = {
     type: Boolean,
     default: true,
   },
-  vertical: {
-    type: Boolean,
-    default: false,
-  },
   reactivable: {
     type: Boolean,
     default: true,
@@ -57,6 +55,10 @@ export const tabsProps = {
     type: Boolean,
     default: false,
   },
+  tabPosition: {
+    type: String as () => ITabPositionType,
+    default: 'top',
+  },
 } as const;
 
 export type TabsProps = ExtractPropTypes<typeof tabsProps>;
@@ -67,4 +69,8 @@ export interface UseTabsEvent {
   onTabRemove: (item: any, ev: MouseEvent) => void;
   onTabAdd: () => void;
   onTabChange: (id: string | undefined, type: string) => void;
+}
+
+export interface UseTabsRender {
+  tabsClasses: ComputedRef<Record<string, boolean>>;
 }

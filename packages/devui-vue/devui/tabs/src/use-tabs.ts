@@ -1,5 +1,9 @@
+import { computed } from 'vue';
 import type { SetupContext } from 'vue';
-import type { UseTabsEvent } from './tabs-types';
+import type { UseTabsEvent, TabsProps, UseTabsRender } from './tabs-types';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('tabs');
 
 export function useTabsEvent(ctx: SetupContext): UseTabsEvent {
   const onUpdateModelValue = (value: string | number) => {
@@ -19,4 +23,13 @@ export function useTabsEvent(ctx: SetupContext): UseTabsEvent {
   };
 
   return { onUpdateModelValue, onActiveTabChange, onTabRemove, onTabAdd, onTabChange };
+}
+
+export function useTabsRender(props: TabsProps): UseTabsRender {
+  const tabsClasses = computed(() => ({
+    [ns.b()]: true,
+    [ns.m(props.tabPosition)]: true,
+  }));
+
+  return { tabsClasses };
 }
