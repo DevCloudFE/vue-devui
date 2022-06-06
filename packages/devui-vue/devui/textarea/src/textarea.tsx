@@ -1,4 +1,5 @@
-import { defineComponent, nextTick, onMounted, SetupContext, shallowRef, toRefs, watch } from 'vue';
+import { defineComponent, inject, nextTick, onMounted, SetupContext, shallowRef, toRefs, watch } from 'vue';
+import { FORM_ITEM_TOKEN, FormItemContext } from '../../form';
 import { textareaProps, TextareaProps } from './textarea-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { useTextareaRender } from './composables/use-textarea-render';
@@ -12,16 +13,20 @@ export default defineComponent({
   props: textareaProps,
   emits: ['update:modelValue', 'focus', 'blur', 'change', 'keydown'],
   setup(props: TextareaProps, ctx: SetupContext) {
-    const { modelValue, disabled } = toRefs(props);
+    const { modelValue } = toRefs(props);
+    const formItemContext = inject(FORM_ITEM_TOKEN, undefined) as FormItemContext;
     const textarea = shallowRef<HTMLTextAreaElement>();
     const ns = useNamespace('textarea');
-    const { isFocus, wrapClasses } = useTextareaRender(props);
-    const { onFocus, onBlur, onInput, onChange, onKeydown } = useTextareaEvent(isFocus, ctx);
+    const { isFocus, textareaDisabled, wrapClasses } = useTextareaRender(props);
+    const { onFocus, onBlur, onInput, onChange, onKeydown } = useTextareaEvent(isFocus, props, ctx);
     const { textareaStyle, updateTextareaStyle } = useTextareaAutosize(props, textarea);
 
     watch(
       () => props.modelValue,
       () => {
+        if (props.validateEvent) {
+          formItemContext?.validate('change').catch((err) => console.warn(err));
+        }
         nextTick(() => updateTextareaStyle());
       }
     );
@@ -38,7 +43,7 @@ export default defineComponent({
           value={modelValue.value}
           autofocus={props.autofocus}
           placeholder={props.placeholder}
-          disabled={disabled.value}
+          disabled={textareaDisabled.value}
           style={textareaStyle.value}
           class={wrapClasses.value}
           onInput={onInput}

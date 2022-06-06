@@ -442,6 +442,9 @@ export default defineComponent({
     >
       <d-input v-model="formData.username" />
     </d-form-item>
+    <d-form-item field="userInfo" label="用户信息">
+      <d-textarea v-model="formData.userInfo"></d-textarea>
+    </d-form-item>
     <d-form-item field="age" label="年龄">
       <d-input v-model="formData.age" />
     </d-form-item>
@@ -461,6 +464,7 @@ export default defineComponent({
     const formRef = ref(null);
     const formData = reactive({
       username: '',
+      userInfo: '',
       age: '',
     });
     const checkAge = (rule, value, callback) => {
@@ -477,6 +481,7 @@ export default defineComponent({
     };
     const rules = {
       username: [{ min: 3, max: 6, message: '用户名需不小于3个字符，不大于6个字符', trigger: 'change' }],
+      userInfo: [{ required: true, message: '用户信息不能为空', trigger: 'blur' }],
       age: [{ validator: checkAge }],
     };
 
