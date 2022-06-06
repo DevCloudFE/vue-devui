@@ -1,6 +1,14 @@
 import { mount } from '@vue/test-utils';
 import { ref, nextTick } from 'vue';
 import DSwitch from '../src/switch';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('switch', false);
+const baseClass = ns.b();
+const disabledClass = ns.m('disabled');
+const checkedClass = ns.m('checked');
+const smSizeClass = ns.m('sm');
+const lgSizeClass = ns.m('lg');
 
 describe('d-switch', () => {
   it('switch render work', async () => {
@@ -17,13 +25,13 @@ describe('d-switch', () => {
       },
     });
 
-    expect(wrapper.classes()).toContain('devui-switch');
-    expect(wrapper.classes()).not.toContain('devui-checked');
+    expect(wrapper.classes()).toContain(baseClass);
+    expect(wrapper.classes()).not.toContain(checkedClass);
 
     checked.value = true;
     await nextTick();
 
-    expect(wrapper.classes()).toContain('devui-checked');
+    expect(wrapper.classes()).toContain(checkedClass);
   });
 
   it('switch disabled work', async () => {
@@ -35,7 +43,7 @@ describe('d-switch', () => {
       },
     });
 
-    expect(wrapper.classes()).toContain('devui-disabled');
+    expect(wrapper.classes()).toContain(disabledClass);
 
     await wrapper.trigger('click');
     expect(onChange).toBeCalledTimes(0);
@@ -45,7 +53,7 @@ describe('d-switch', () => {
     });
     await wrapper.trigger('click');
 
-    expect(wrapper.classes()).not.toContain('devui-disabled');
+    expect(wrapper.classes()).not.toContain(disabledClass);
     expect(onChange).toBeCalledTimes(1);
   });
 
@@ -56,13 +64,13 @@ describe('d-switch', () => {
       },
     });
 
-    expect(wrapper.classes()).toContain('devui-switch-sm');
+    expect(wrapper.classes()).toContain(smSizeClass);
 
     await wrapper.setProps({
       size: 'lg',
     });
-    expect(wrapper.classes()).not.toContain('devui-switch-sm');
-    expect(wrapper.classes()).toContain('devui-switch-lg');
+    expect(wrapper.classes()).not.toContain(smSizeClass);
+    expect(wrapper.classes()).toContain(lgSizeClass);
   });
 
   it('switch beforeChange work', async () => {
@@ -108,5 +116,28 @@ describe('d-switch', () => {
     await nextTick();
 
     expect(wrapper.text()).toBe('开');
+  });
+
+  it('switch active-value inactive-value work', async () => {
+    const checked = ref('打开');
+    const wrapper = mount({
+      components: { DSwitch },
+      template: `
+        <d-switch v-model="checked" active-value="打开" active-value="关闭"></d-switch>
+      `,
+      setup() {
+        return {
+          checked,
+        };
+      },
+    });
+
+    expect(wrapper.classes()).toContain(baseClass);
+    expect(wrapper.classes()).toContain(checkedClass);
+
+    checked.value = '关闭';
+    await nextTick();
+
+    expect(wrapper.classes()).not.toContain(checkedClass);
   });
 });

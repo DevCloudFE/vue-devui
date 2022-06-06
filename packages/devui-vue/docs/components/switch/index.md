@@ -103,16 +103,48 @@ export default defineComponent({
 
 :::
 
+### 自定义绑定值
+
+:::demo switch 打开关闭时可以自定义值，打开时为 active-value，关闭时为 inactive-value
+
+```vue
+<template>
+  <d-switch v-model="activeValue1" active-value="打开" inactive-value="关闭"></d-switch>
+  <d-switch v-model="activeValue2" :active-value="1" :inactive-value="0"></d-switch>
+  <d-switch v-model="activeValue3" :active-value="true" :inactive-value="false"></d-switch>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const activeValue1 = ref('打开');
+    const activeValue2 = ref(0);
+    const activeValue3 = ref(true);
+    return {
+      activeValue1,
+      activeValue2,
+      activeValue3,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Switch 参数
 
-| 参数             | 类型                    | 默认  | 说明                         | 跳转 Demo                 |
-| :--------------- | :---------------------- | :---- | :--------------------------- | :------------------------ |
-| v-model          | `boolean`               | --    | 绑定值                       | [基本用法](#size)         |
-| size             | `sm \| md \| lg`        | `md`  | 可选，开关尺寸大小           | [size](#size)             |
-| color            | `string`                | --    | 可选，开关打开时的自定义颜色 | [自定义样式](#自定义样式) |
-| disabled         | `boolean`               | false | 可选，是否禁用开关           | [基本用法](#size)         |
-| checkedContent   | `string \| HTMLElement` | ''    | 可选，开关打开时说明         | [自定义样式](#自定义样式) |
-| uncheckedContent | `string \| HTMLElement` | ''    | 可选，开关关闭时说明         | [自定义样式](#自定义样式) |
+| 参数             | 类型                        | 默认  | 说明                         | 跳转 Demo                     |
+| :--------------- | :-------------------------- | :---- | :--------------------------- | :---------------------------- |
+| v-model          | `string\| number \|boolean` | --    | 绑定值                       | [基本用法](#size)             |
+| size             | `sm \| md \| lg`            | `md`  | 可选，开关尺寸大小           | [size](#size)                 |
+| color            | `string`                    | --    | 可选，开关打开时的自定义颜色 | [自定义样式](#自定义样式)     |
+| disabled         | `boolean`                   | false | 可选，是否禁用开关           | [基本用法](#size)             |
+| checkedContent   | `string \| HTMLElement`     | ''    | 可选，开关打开时说明         | [自定义样式](#自定义样式)     |
+| uncheckedContent | `string \| HTMLElement`     | ''    | 可选，开关关闭时说明         | [自定义样式](#自定义样式)     |
+| active-value     | `string\| number \|boolean` | true  | 可选，开关打开时的值         | [自定义绑定值](#自定义绑定值) |
+| inactive-value   | `string\| number \|boolean` | true  | 可选，开关关闭时的值         | [自定义绑定值](#自定义绑定值) |
 
 ### Switch 事件
 
