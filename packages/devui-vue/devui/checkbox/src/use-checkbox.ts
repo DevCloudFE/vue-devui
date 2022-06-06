@@ -1,4 +1,5 @@
-import { computed, inject, SetupContext, toRef, provide } from 'vue';
+import { computed, inject, SetupContext, toRef, provide, watch } from 'vue';
+import { FORM_TOKEN, FORM_ITEM_TOKEN } from '../../form';
 import {
   CheckboxProps,
   UseCheckboxFn,
@@ -9,6 +10,8 @@ import {
 } from './checkbox-types';
 
 export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckboxFn {
+  const formContext = inject(FORM_TOKEN, undefined);
+  const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   const checkboxGroupConf = inject(checkboxGroupInjectionKey, null);
 
   const isChecked = computed(() => props.checked || props.modelValue);
@@ -20,7 +23,7 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
     return !!max && checkboxGroupConf?.modelValue.value.length >= max && !mergedChecked.value;
   });
   const mergedDisabled = computed(() => {
-    return checkboxGroupConf?.disabled.value || props.disabled || isLimitDisabled.value;
+    return checkboxGroupConf?.disabled.value || props.disabled || formContext?.disabled || isLimitDisabled.value;
   });
   const mergedIsShowTitle = computed(() => {
     return checkboxGroupConf?.isShowTitle.value ?? props.isShowTitle;
@@ -59,8 +62,14 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
   const handleClick = () => {
     canChange(!isChecked.value, props.label).then((res) => res && toggle());
   };
-  const size = computed(() => checkboxGroupConf?.size.value ?? props.size);
+  const size = computed(() => formContext?.size || checkboxGroupConf?.size.value || props.size);
   const border = computed(() => checkboxGroupConf?.border.value ?? props.border);
+  watch(
+    () => props.modelValue,
+    () => {
+      formItemContext?.validate('change').catch((err) => console.warn(err));
+    }
+  );
   return {
     mergedChecked,
     mergedDisabled,
@@ -76,6 +85,7 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
 }
 
 export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): UseCheckboxGroupFn {
+  const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   const valList = toRef(props, 'modelValue');
 
   const defaultOpt = {
@@ -117,6 +127,13 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
       return valList.value.some((item) => item.value === itemVal);
     }
   };
+  watch(
+    () => props.modelValue,
+    () => {
+      formItemContext?.validate('change').catch((err) => console.warn(err));
+    },
+    { deep: true }
+  );
 
   provide(checkboxGroupInjectionKey, {
     disabled: toRef(props, 'disabled'),
