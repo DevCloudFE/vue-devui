@@ -142,7 +142,7 @@ export default defineComponent({
             <div class={inputWrapperClasses.value}>
               {prefixVisible && (
                 <span class={inputNs.e('prefix')}>
-                  {ctx.slots.prefix && <div>{ctx.slots.prefix?.()}</div>}
+                  {ctx.slots.prefix && ctx.slots.prefix?.()}
                   {props.prefix && <Icon size="inherit" name={props.prefix} />}
                 </span>
               )}
@@ -162,7 +162,7 @@ export default defineComponent({
               {suffixVisible && (
                 <span class={inputNs.e('suffix')}>
                   {props.suffix && <Icon size="inherit" name={props.suffix} />}
-                  {ctx.slots.suffix && <div>{ctx.slots.suffix?.()}</div>}
+                  {ctx.slots.suffix && ctx.slots.suffix?.()}
                   {showClearable.value && <Icon size={props.size} class={ns.em('clear', 'icon')} name="close" onClick={onClear} />}
                 </span>
               )}
