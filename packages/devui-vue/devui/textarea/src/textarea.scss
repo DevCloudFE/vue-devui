@@ -47,4 +47,8 @@
     pointer-events: none;
     font-size: $devui-font-size;
   }
+
+  &--feedback {
+    padding-right: 28px;
+  }
 }

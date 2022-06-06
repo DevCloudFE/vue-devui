@@ -36,6 +36,10 @@ export const textareaProps = {
     type: [Object, Boolean] as PropType<TextareaAutoSize>,
     default: false,
   },
+  validateEvent: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type TextareaProps = ExtractPropTypes<typeof textareaProps>;
@@ -50,6 +54,7 @@ export interface UseTextareaEvent {
 
 export interface UseTextareaRender {
   isFocus: Ref<boolean>;
+  textareaDisabled: ComputedRef<boolean>;
   wrapClasses: ComputedRef<Record<string, boolean>>;
 }
 
