@@ -32,11 +32,14 @@ export default defineComponent({
         <div class={stepClass.value} style={{
           flexBasis: '50%'
         }}>
-          {
-            activeStep.value > steps.value.indexOf(instance)
-              ? <Icon name="right-o" color="var(--devui-success)" size="24px"></Icon>
-              : <span class={ns.e('dot')}>{ currentStepIndex + 1 }</span>
-          }
+          <div class={ns.e('dot-container')}>
+            {
+              activeStep.value > steps.value.indexOf(instance)
+                ? <Icon name="right-o" color="var(--devui-success)" size="24px"></Icon>
+                : <span class={ns.e('dot')}>{ currentStepIndex + 1 }</span>
+            }
+            <div class={ns.e('line')}></div>
+          </div>
           <span class={ns.e('title')}>{ title.value }</span>
         </div>
       );
