@@ -448,6 +448,17 @@ export default defineComponent({
     <d-form-item field="age" label="年龄">
       <d-input v-model="formData.age" />
     </d-form-item>
+    <d-form-item field="executionDay" label="Execution day">
+      <d-checkbox-group v-model="formData.executionDay" label="Execution day" direction="row">
+        <d-checkbox label="Mon" value="Mon" />
+        <d-checkbox label="Tue" value="Tue" />
+        <d-checkbox label="Wed" value="Wed" />
+        <d-checkbox label="Thur" value="Thur" />
+        <d-checkbox label="Fri" value="Fri" />
+        <d-checkbox label="Sat" value="Sat" />
+        <d-checkbox label="Sun" value="Sun" />
+      </d-checkbox-group>
+    </d-form-item>
     <d-form-operation class="form-operation-wrap">
       <d-button variant="solid" @click="onClick">提交</d-button>
       <d-button @click="onClear">清除校验结果</d-button>
@@ -457,7 +468,7 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, reactive, ref, watch } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -466,6 +477,7 @@ export default defineComponent({
       username: '',
       userInfo: '',
       age: '',
+      executionDay: [],
     });
     const checkAge = (rule, value, callback) => {
       if (!value) {
@@ -483,6 +495,7 @@ export default defineComponent({
       username: [{ min: 3, max: 6, message: '用户名需不小于3个字符，不大于6个字符', trigger: 'change' }],
       userInfo: [{ required: true, message: '用户信息不能为空', trigger: 'blur' }],
       age: [{ validator: checkAge }],
+      executionDay: [{ type: 'array', required: true, message: '请至少选择一个执行时间', trigger: 'change' }],
     };
 
     const onClick = () => {
