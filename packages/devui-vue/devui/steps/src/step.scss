@@ -8,6 +8,14 @@
   &:last-child {
     flex-basis: auto !important;
     flex-shrink: 0;
+
+    .#{$devui-prefix}-step__line {
+      display: none;
+    }
+  }
+
+  &__dot-container {
+    position: relative;
   }
 
   &__dot {
@@ -19,6 +27,15 @@
     border-radius: 50%;
     background-color: $devui-brand-foil;
     color: $devui-text;
+  }
+
+  &__line {
+    position: absolute;
+    top: 12px;
+    left: 24px;
+    width: calc(100% - 24px);
+    height: 1px;
+    background-color: $devui-line;
   }
 
   &__title {
