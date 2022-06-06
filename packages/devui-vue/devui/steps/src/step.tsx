@@ -30,7 +30,7 @@ export default defineComponent({
     return () => {
       return (
         <div class={stepClass.value} style={{
-          flexBasis: '50%'
+          flexBasis: `${100 / (steps.value.length - 1)}%`
         }}>
           <div class={ns.e('dot-container')}>
             {
