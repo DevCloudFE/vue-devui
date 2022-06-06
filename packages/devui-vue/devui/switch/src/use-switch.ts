@@ -1,4 +1,4 @@
-import { computed, SetupContext } from 'vue';
+import { computed, SetupContext, watch } from 'vue';
 import { SwitchProps, UseSwitchFn } from './switch-types';
 
 export function useSwitch(props: SwitchProps, ctx: SetupContext): UseSwitchFn {
@@ -13,18 +13,24 @@ export function useSwitch(props: SwitchProps, ctx: SetupContext): UseSwitchFn {
 
     return Promise.resolve(true);
   };
+  const checked = computed(() => {
+    return props.modelValue === props.activeValue;
+  });
+  watch(checked, () => {
+    if (![props.activeValue, props.inactiveValue].includes(props.modelValue)) {
+      ctx.emit('update:modelValue', props.inactiveValue);
+    }
+  });
   const toggle = () => {
     canChange().then((res) => {
       if (!res) {
         return;
       }
-      ctx.emit('update:modelValue', !props.modelValue);
-      ctx.emit('change', !props.modelValue);
+      const val = !checked.value ? props.activeValue : props.inactiveValue;
+      ctx.emit('update:modelValue', val);
+      ctx.emit('change', val);
     });
   };
-  const checked = computed(() => {
-    return props.modelValue;
-  });
   return {
     toggle,
     checked,
