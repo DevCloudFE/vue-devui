@@ -9,7 +9,7 @@ export default defineComponent({
   name: 'DStep',
   props: stepProps,
   setup(props: StepProps) {
-    const { title } = toRefs(props);
+    const { title, description } = toRefs(props);
     const ns = useNamespace('step');
     const instance = getCurrentInstance();
 
@@ -54,6 +54,7 @@ export default defineComponent({
             <div class={ns.e('line')}></div>
           </div>
           <span class={ns.e('title')}>{ title.value }</span>
+          { description.value && <span class={ns.e('description') }>{ description.value }</span>}
         </div>
       );
     };
