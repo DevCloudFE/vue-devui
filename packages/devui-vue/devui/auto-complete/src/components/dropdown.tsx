@@ -9,6 +9,7 @@ export default defineComponent({
     const propsData = inject(DropdownPropsKey) as DropdownProps;
     const {
       visible,
+      isDisabled,
       selectedIndex,
       selectOptionClick,
       searchList,
@@ -22,7 +23,7 @@ export default defineComponent({
       hoverIndex,
       valueParser,
     } = propsData;
-    const { disabled, maxHeight, formatter, disabledKey, isSearching } = propsData.props;
+    const { maxHeight, formatter, disabledKey, isSearching } = propsData.props;
     const ns = useNamespace('auto-complete');
     const noDataNs = useNamespace('no-data-tip');
     const dropdownMenuNs = useNamespace('dropdown-menu');
@@ -42,7 +43,7 @@ export default defineComponent({
           class={[
             dropdownMenuNs.b(),
             ns.e('dropdown-menu-cdk'),
-            disabled && 'disabled',
+            isDisabled.value && 'disabled',
             latestSource.value && ns.e('dropdown-latestSource'),
           ]}
           v-show={

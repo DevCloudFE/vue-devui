@@ -1,14 +1,18 @@
-import { computed, toRefs, ref } from 'vue';
+import { computed, ComputedRef, inject, watch } from 'vue';
 import type { SetupContext, Ref } from 'vue';
-import { AutoCompleteProps, UseAutoCompleteRender } from '../auto-complete-types';
+import { FORM_ITEM_TOKEN } from '../../../form';
+import { AutoCompleteProps, UseAutoCompleteRender, AutoCompleteSize } from '../auto-complete-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 export function useAutoCompleteRender(
   props: AutoCompleteProps,
   ctx: SetupContext,
   visible: Ref<boolean>,
-  isFocus: Ref<boolean>
+  isFocus: Ref<boolean>,
+  isDisabled: ComputedRef<boolean>,
+  autoCompleteSize: ComputedRef<AutoCompleteSize>
 ): UseAutoCompleteRender {
+  const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   const ns = useNamespace('auto-complete');
   const inputNs = useNamespace('auto-complete-input');
   const slotNs = useNamespace('auto-complete-slot');
@@ -18,12 +22,12 @@ export function useAutoCompleteRender(
   const formControlNs = useNamespace('form-control');
   const dropdownNs = useNamespace('dropdown-origin');
   const dropdownOpenNs = useNamespace('dropdown-origin-open');
-  const { disabled } = toRefs(props);
   const slots = ctx.slots;
+  const isValidatorError = computed(() => formItemContext?.validateState === 'error');
 
   const autoCompleteTopClasses = computed(() => ({
     [ns.b()]: true,
-    [ns.m(props.size)]: true,
+    [ns.m(autoCompleteSize.value)]: true,
     [formNs.b()]: true,
     [feedbackNs.b()]: true,
     [selectNs.b()]: visible.value,
@@ -39,7 +43,9 @@ export function useAutoCompleteRender(
 
   const inputWrapperClasses = computed(() => ({
     [inputNs.e('wrapper')]: true,
-    [ns.m('disabled')]: disabled.value,
+    [inputNs.em('wrapper', 'error')]: isValidatorError.value,
+    [inputNs.em('wrapper', 'feedback')]: Boolean(formItemContext?.validateState) && formItemContext?.showFeedback,
+    [ns.m('disabled')]: isDisabled.value,
   }));
 
   const inputInnerClasses = computed(() => [
@@ -47,9 +53,16 @@ export function useAutoCompleteRender(
       [formControlNs.b()]: true,
       [dropdownNs.b()]: true,
       [dropdownOpenNs.b()]: isFocus.value,
-      ['disabled']: disabled.value,
+      ['disabled']: isDisabled.value,
     },
   ]);
+
+  watch(
+    () => props.modelValue,
+    () => {
+      formItemContext?.validate('change').catch((err) => console.log(err));
+    }
+  );
 
   return { autoCompleteTopClasses, inputClasses, inputWrapperClasses, inputInnerClasses };
 }

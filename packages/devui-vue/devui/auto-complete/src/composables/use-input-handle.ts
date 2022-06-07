@@ -13,7 +13,7 @@ export default function useInputHandle(
   searchList: Ref<SourceType>,
   showNoResultItemTemplate: Ref<boolean>,
   modelValue: Ref<string>,
-  disabled: Ref<boolean>,
+  isDisabled: Ref<boolean>,
   delay: Ref<number>,
   handleSearch: HandleSearch,
   transInputFocusEmit: Ref<TransInputFocusEmit>,
@@ -69,7 +69,7 @@ export default function useInputHandle(
     showNoResultItemTemplate.value = false;
   };
   const toggleMenu = () => {
-    if (!disabled.value) {
+    if (!isDisabled.value) {
       if (visible.value) {
         handleClose();
       } else {
