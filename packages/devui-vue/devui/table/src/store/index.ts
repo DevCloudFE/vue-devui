@@ -142,7 +142,7 @@ function createSelection<T>(this: void, dataSource: Ref<T[]>, trackBy: (item: T,
   };
 }
 
-function createSorter<T>(this: void, dataSource: Ref<T[]>, _data: Ref<T[]>) {
+function createSorter<T>(dataSource: Ref<T[]>, _data: Ref<T[]>) {
   const sortData = (direction: SortDirection, sortMethod: SortMethod<T>) => {
     if (direction === 'ASC') {
       _data.value = _data.value.sort((a, b) => (sortMethod ? (sortMethod(a, b) ? 1 : -1) : 0));
@@ -157,7 +157,7 @@ function createSorter<T>(this: void, dataSource: Ref<T[]>, _data: Ref<T[]>) {
   return { sortData, thList };
 }
 
-function createFixedLogic(this: void, columns: Ref<Column[]>) {
+function createFixedLogic(columns: Ref<Column[]>) {
   const isFixedLeft = computed(() => {
     return columns.value.reduce((prev, current) => prev || !!current.fixedLeft, false);
   });
