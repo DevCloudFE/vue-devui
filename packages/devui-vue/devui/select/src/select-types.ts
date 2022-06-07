@@ -12,6 +12,7 @@ export type Options = Array<OptionItem>;
 
 export type ModelValue = number | string | Array<number | string>;
 export type filterValue = boolean | ((query: string) => void);
+export type SelectSize = 'sm' | 'md' | 'lg';
 export const selectProps = {
   modelValue: {
     type: [String, Number, Array] as PropType<ModelValue>,
@@ -26,7 +27,7 @@ export const selectProps = {
     default: () => [],
   },
   size: {
-    type: String as PropType<'sm' | 'md' | 'lg'>,
+    type: String as PropType<SelectSize>,
     default: 'md',
   },
   overview: {
@@ -104,6 +105,8 @@ export type SelectProps = ExtractPropTypes<typeof selectProps>;
 export type OptionModelValue = number | string;
 
 export interface UseSelectReturnType {
+  selectDisabled: ComputedRef<boolean>;
+  selectSize: ComputedRef<SelectSize>;
   containerRef: Ref<HTMLElement | undefined>;
   dropdownRef: Ref<HTMLElement | undefined>;
   isOpen: Ref<boolean>;
@@ -128,6 +131,8 @@ export interface UseSelectReturnType {
 }
 
 export interface SelectContext extends SelectProps {
+  selectDisabled: boolean;
+  selectSize: string;
   isOpen: boolean;
   selectedOptions: OptionObjectItem[];
   filterQuery: string;

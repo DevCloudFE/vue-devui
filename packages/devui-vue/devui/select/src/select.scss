@@ -20,14 +20,14 @@ $select-item-min-height: 36px;
   width: 100%;
 
   &__selection {
-    &:hover {
+    &:not(.#{$devui-prefix}-select__selection--error):hover {
       border-color: $devui-form-control-line-hover;
     }
   }
 
   &--open,
   &--focus {
-    .#{$devui-prefix}-select__selection {
+    .#{$devui-prefix}-select__selection:not(.#{$devui-prefix}-select__selection--error) {
       border-color: $devui-form-control-line-active;
 
       &:hover {
@@ -101,6 +101,11 @@ $select-item-min-height: 36px;
   border-radius: $devui-border-radius;
   background-color: $devui-form-control-bg;
   color: $devui-text;
+
+  &--error {
+    border-color: $devui-danger-line;
+    background-color: $devui-danger-bg;
+  }
 }
 
 .#{$devui-prefix}-select__multiple {
@@ -123,7 +128,7 @@ $select-item-min-height: 36px;
   color: $devui-text;
   vertical-align: middle;
   outline: none;
-  background-color: $devui-form-control-bg;
+  background: none;
   box-sizing: border-box;
   border: none;
   @include border-transition();
@@ -186,9 +191,17 @@ $select-item-min-height: 36px;
   }
 }
 
+.#{$devui-prefix}-select__clear--feedback {
+  right: 28px;
+}
+
 .#{$devui-prefix}-select__arrow {
   transform: rotate3d(0, 0, 1, 0deg);
   transition: transform $transition-base-time ease-out;
+}
+
+.#{$devui-prefix}-select__arrow--feedback {
+  right: 28px;
 }
 
 .#{$devui-prefix}-select__dropdown {
