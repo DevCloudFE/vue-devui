@@ -10,17 +10,17 @@ export default defineComponent({
   emits: ['change', 'update:modelValue'],
   setup(props: SwitchProps, ctx: SetupContext) {
     const ns = useNamespace('switch');
-    const { toggle, checked } = useSwitch(props, ctx);
+    const { toggle, checked, switchDisabled, switchSize } = useSwitch(props, ctx);
     return () => {
       const outerCls = {
         [ns.b()]: true,
-        [ns.m(props.size)]: true,
+        [ns.m(switchSize.value)]: true,
         [ns.m('checked')]: checked.value,
-        [ns.m('disabled')]: props.disabled,
+        [ns.m('disabled')]: switchDisabled.value,
       };
       const outerStyle = [
-        `background: ${checked.value && !props.disabled ? props.color : ''}`,
-        `border-color: ${checked.value && !props.disabled ? props.color : ''}`,
+        `background: ${checked.value && !switchDisabled.value ? props.color : ''}`,
+        `border-color: ${checked.value && !switchDisabled.value ? props.color : ''}`,
       ];
 
       const checkedContent = renderSlot(useSlots(), 'checkedContent');
