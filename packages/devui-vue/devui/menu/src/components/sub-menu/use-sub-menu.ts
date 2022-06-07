@@ -1,3 +1,11 @@
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
+
+const ns = useNamespace('menu');
+const subNs = useNamespace('submenu');
+
+const menuItemHorizontalWrapperHidden = `${ns.b()}-item-horizontal-wrapper-hidden`;
+const menuItemHorizontalWrapperShow = `${ns.b()}-item-horizontal-wrapper-show`;
+
 type mouseEventName = 'mouseenter' | 'mouseleave';
 export function useShowSubMenu(eventName: mouseEventName, e: MouseEvent, wrapper: HTMLElement): void {
   const target = e.currentTarget as EventTarget as HTMLElement;
@@ -6,10 +14,10 @@ export function useShowSubMenu(eventName: mouseEventName, e: MouseEvent, wrapper
   const wrapperChildren = wrapper.children;
   wrapper.style.padding = `0 20px !important`;
   if (eventName === 'mouseenter') {
-    wrapper.classList.remove('devui-menu-item-horizontal-wrapper-hidden');
-    wrapper.classList.add('devui-menu-item-horizontal-wrapper-show');
+    wrapper.classList.remove(menuItemHorizontalWrapperHidden);
+    wrapper.classList.add(menuItemHorizontalWrapperShow);
     if (targetParent?.tagName === 'DIV') {
-      wrapper.classList.add('devui-menu-item-horizontal-wrapper-level');
+      wrapper.classList.add(`${ns.b()}-item-horizontal-wrapper-level`);
       const { top, left } = target.getClientRects()[0];
       const x = left + targetParent.clientWidth;
       const y = top;
@@ -23,8 +31,8 @@ export function useShowSubMenu(eventName: mouseEventName, e: MouseEvent, wrapper
     }
     for (let i = 0; i < wrapperChildren.length; i++) {
       const ul = wrapperChildren[i];
-      if (ul.tagName === 'UL' && ul.classList.contains('devui-submenu')) {
-        const levelUlWrapper = ul.getElementsByClassName('devui-menu-item-horizontal-wrapper')[0];
+      if (ul.tagName === 'UL' && ul.classList.contains(subNs.b())) {
+        const levelUlWrapper = ul.getElementsByClassName(`${ns.b()}-item-horizontal-wrapper`)[0];
         (ul as HTMLElement).addEventListener('mouseenter', (ev: MouseEvent) => {
           ev.stopPropagation();
           useShowSubMenu('mouseenter', ev, levelUlWrapper as Element as HTMLElement);
@@ -37,7 +45,7 @@ export function useShowSubMenu(eventName: mouseEventName, e: MouseEvent, wrapper
     }
   }
   if (eventName === 'mouseleave') {
-    wrapper.classList.remove('devui-menu-item-horizontal-wrapper-show');
-    wrapper.classList.add('devui-menu-item-horizontal-wrapper-hidden');
+    wrapper.classList.remove(menuItemHorizontalWrapperShow);
+    wrapper.classList.add(menuItemHorizontalWrapperHidden);
   }
 }
