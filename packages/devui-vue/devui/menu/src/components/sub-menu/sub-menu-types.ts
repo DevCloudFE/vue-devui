@@ -1,14 +1,14 @@
-import { ExtractPropTypes } from "vue";
+import { ExtractPropTypes } from 'vue';
 
 export const subMenuProps = {
   title: {
     type: String,
-    default: ''
+    default: '',
   },
   disable: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 } as const;
 
 export type SubMenuProps = ExtractPropTypes<typeof subMenuProps>;
