@@ -18,6 +18,8 @@ export default defineComponent({
     const selectRef = ref<HTMLElement>();
     const { isSelectFocus, focus, blur } = useSelectFunction(props, selectRef);
     const {
+      selectDisabled,
+      selectSize,
       containerRef,
       dropdownRef,
       isOpen,
@@ -53,6 +55,8 @@ export default defineComponent({
       SELECT_TOKEN,
       reactive({
         ...toRefs(props),
+        selectDisabled,
+        selectSize,
         isOpen,
         selectedOptions,
         filterQuery,
