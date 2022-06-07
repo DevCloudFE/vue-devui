@@ -1,9 +1,13 @@
-import { computed, SetupContext, watch } from 'vue';
+import { computed, inject, SetupContext, watch } from 'vue';
+import { FORM_TOKEN } from '../../form';
 import { SwitchProps, UseSwitchFn } from './switch-types';
 
 export function useSwitch(props: SwitchProps, ctx: SetupContext): UseSwitchFn {
+  const formContext = inject(FORM_TOKEN, undefined);
+  const switchDisabled = computed(() => formContext?.disabled || props.disabled);
+  const switchSize = computed(() => formContext?.size || props.size);
   const canChange = () => {
-    if (props.disabled) {
+    if (switchDisabled.value) {
       return Promise.resolve(false);
     }
     if (props.beforeChange) {
@@ -31,8 +35,5 @@ export function useSwitch(props: SwitchProps, ctx: SetupContext): UseSwitchFn {
       ctx.emit('change', val);
     });
   };
-  return {
-    toggle,
-    checked,
-  };
+  return { toggle, checked, switchDisabled, switchSize };
 }

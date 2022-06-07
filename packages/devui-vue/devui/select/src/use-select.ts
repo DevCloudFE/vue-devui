@@ -1,10 +1,11 @@
-import { ref, computed, Ref } from 'vue';
+import { ref, computed, Ref, inject, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
 import { className, KeyType } from './utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { onClickOutside } from '@vueuse/core';
 import { isFunction, debounce } from 'lodash';
+import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
 
 export default function useSelect(
   props: SelectProps,
@@ -13,14 +14,19 @@ export default function useSelect(
   blur: () => void,
   isSelectFocus: Ref<boolean>
 ): UseSelectReturnType {
+  const formContext = inject(FORM_TOKEN, undefined);
+  const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   const ns = useNamespace('select');
   const containerRef = ref<HTMLElement>();
   const dropdownRef = ref<HTMLElement>();
 
+  const selectDisabled = computed(() => formContext?.disabled || props.disabled);
+  const selectSize = computed(() => formContext?.size || props.size);
+
   // 控制弹窗开合
   const isOpen = ref<boolean>(false);
   const toggleChange = (bool: boolean) => {
-    if (props.disabled) {
+    if (selectDisabled.value) {
       return;
     }
     isOpen.value = bool;
@@ -35,10 +41,10 @@ export default function useSelect(
     return className(ns.b(), {
       [ns.m('open')]: isOpen.value,
       [dropdownMenuMultipleNs.b()]: props.multiple,
-      [ns.m('lg')]: props.size === 'lg',
-      [ns.m('sm')]: props.size === 'sm',
+      [ns.m('lg')]: selectSize.value === 'lg',
+      [ns.m('sm')]: selectSize.value === 'sm',
       [ns.m('underlined')]: props.overview === 'underlined',
-      [ns.m('disabled')]: props.disabled,
+      [ns.m('disabled')]: selectDisabled.value,
       [ns.m('focus')]: isSelectFocus.value,
     });
   });
@@ -197,14 +203,14 @@ export default function useSelect(
 
   const onFocus = (e: FocusEvent) => {
     ctx.emit('focus', e);
-    if (!props.disabled) {
+    if (!selectDisabled.value) {
       isSelectFocus.value = true;
     }
   };
 
   const onBlur = (e: FocusEvent) => {
     ctx.emit('blur', e);
-    if (!props.disabled) {
+    if (!selectDisabled.value) {
       isSelectFocus.value = false;
     }
   };
@@ -257,7 +263,17 @@ export default function useSelect(
     return !!emptyText.value && (!props.allowCreate || isLoading.value || (props.allowCreate && injectOptionsArray.value.length === 0));
   });
 
+  watch(
+    () => props.modelValue,
+    () => {
+      formItemContext?.validate('change').catch((err) => console.warn(err));
+    },
+    { deep: true }
+  );
+
   return {
+    selectDisabled,
+    selectSize,
     containerRef,
     dropdownRef,
     isOpen,
