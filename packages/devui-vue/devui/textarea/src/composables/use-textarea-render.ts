@@ -17,7 +17,7 @@ export function useTextareaRender(props: TextareaProps): UseTextareaRender {
     [ns.m('focus')]: isFocus.value,
     [ns.m('disabled')]: textareaDisabled.value,
     [ns.m('error')]: error.value || isValidateError.value,
-    [ns.m('feedback')]: Boolean(formItemContext?.showFeedback),
+    [ns.m('feedback')]: Boolean(formItemContext?.validateState) && formItemContext?.showFeedback,
   }));
 
   return { isFocus, textareaDisabled, wrapClasses };
