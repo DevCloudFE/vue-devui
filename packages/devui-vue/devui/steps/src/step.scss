@@ -6,7 +6,10 @@
   flex-shrink: 1;
 
   &:last-child {
-    flex-basis: auto !important;
+    &:not(.center) {
+      flex-basis: auto !important;
+    }
+
     flex-shrink: 0;
 
     .#{$devui-prefix}-step__line {
@@ -42,13 +45,18 @@
     color: $devui-placeholder;
   }
 
+  &__description {
+    color: $devui-placeholder;
+    font-size: 12px;
+  }
+
   &.active {
     .#{$devui-prefix}-step__dot {
       background-color: $devui-brand;
       color: $devui-light-text;
     }
 
-    .#{$devui-prefix}-step__title {
+    .#{$devui-prefix}-step__title, .#{$devui-prefix}-step__description {
       color: $devui-brand;
     }
   }
@@ -58,8 +66,16 @@
       background-color: $devui-success;
     }
 
-    .#{$devui-prefix}-step__title {
+    .#{$devui-prefix}-step__title, .#{$devui-prefix}-step__description {
       color: $devui-success;
+    }
+  }
+
+  &.center {
+    text-align: center;
+
+    .#{$devui-prefix}-step__line {
+      left: calc(50% + 12px);
     }
   }
 }

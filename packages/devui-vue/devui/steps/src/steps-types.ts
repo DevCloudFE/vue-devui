@@ -8,6 +8,10 @@ export const stepsProps = {
   space: {
     type: Number,
   },
+  alignCenter: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type StepsProps = ExtractPropTypes<typeof stepsProps>;
