@@ -1,0 +1,10 @@
+@import '../../styles-var/devui-var.scss';
+
+.#{$devui-prefix}-date-picker-pro {
+  display: inline-block;
+  background-color: $devui-base-bg;
+
+  .#{$devui-prefix}-date-picker-pro__single-picker {
+    position: relative;
+  }
+}
