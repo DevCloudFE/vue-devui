@@ -20,7 +20,7 @@ $select-item-min-height: 36px;
   width: 100%;
 
   &__selection {
-    &:not(.#{$devui-prefix}-select__selection--error):hover {
+    &:hover {
       border-color: $devui-form-control-line-hover;
     }
   }
@@ -105,6 +105,10 @@ $select-item-min-height: 36px;
   &--error {
     border-color: $devui-danger-line;
     background-color: $devui-danger-bg;
+
+    &:hover {
+      border-color: $devui-danger-line;
+    }
   }
 }
 
