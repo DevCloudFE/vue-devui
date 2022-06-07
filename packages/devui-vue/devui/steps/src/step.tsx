@@ -1,9 +1,9 @@
-import { computed, defineComponent, getCurrentInstance, inject, Ref, toRefs } from 'vue';
+import { computed, defineComponent, getCurrentInstance, inject, toRefs } from 'vue';
 import { stepProps, StepProps } from './step-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { Icon } from '../../icon';
+import { ACTIVE_STEP, STEPS, STEPS_PROPS } from './const';
 import './step.scss';
-import { ACTIVE_STEP, STEPS, STEPS_SPACE } from './const';
 
 export default defineComponent({
   name: 'DStep',
@@ -18,23 +18,26 @@ export default defineComponent({
     const steps = inject(STEPS);
     steps.value.push(instance);
 
-    const stepsSpace = inject(STEPS_SPACE);
+    const stepsProps = inject(STEPS_PROPS);
 
     const currentStepIndex = steps.value.indexOf(instance);
 
     const stepClass = computed(() => {
       const activeClass = activeStep.value === currentStepIndex ? ' active' : '';
       const finishedClass = activeStep.value > currentStepIndex ? ' finished' : '';
+      const centerClass =  stepsProps.alignCenter ? ' center' : '';
 
-      return `${ns.b()}${activeClass}${finishedClass}`;
+      return `${ns.b()}${activeClass}${finishedClass}${centerClass}`;
     });
     const stepStyle = computed(() => {
       const styleObj = {};
 
-      if (stepsSpace) {
-        styleObj.width = `${stepsSpace}px`;
+      if (stepsProps.space) {
+        styleObj.width = `${stepsProps.space}px`;
       } else {
-        styleObj.flexBasis = `${100 / (steps.value.length - 1)}%`;
+        styleObj.flexBasis = stepsProps.alignCenter
+          ? `${100 / steps.value.length}%`
+          : `${100 / (steps.value.length - 1)}%`;
       }
       return styleObj;
     });

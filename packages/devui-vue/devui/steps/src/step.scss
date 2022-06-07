@@ -6,7 +6,10 @@
   flex-shrink: 1;
 
   &:last-child {
-    flex-basis: auto !important;
+    &:not(.center) {
+      flex-basis: auto !important;
+    }
+
     flex-shrink: 0;
 
     .#{$devui-prefix}-step__line {
@@ -60,6 +63,14 @@
 
     .#{$devui-prefix}-step__title {
       color: $devui-success;
+    }
+  }
+
+  &.center {
+    text-align: center;
+
+    .#{$devui-prefix}-step__line {
+      left: calc(50% + 12px);
     }
   }
 }

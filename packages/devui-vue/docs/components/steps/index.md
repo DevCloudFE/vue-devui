@@ -52,12 +52,43 @@ export default defineComponent({
 
 :::
 
+### 居中对齐
+
+:::demo
+
+```vue
+<template>
+  <d-steps v-model="activeStepAlignCenter" align-center>
+    <d-step title="基本信息"></d-step>
+    <d-step title="选择代码源"></d-step>
+    <d-step title="选择构建模板"></d-step>
+  </d-steps>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const activeStepAlignCenter = ref(1);
+
+    return {
+      activeStepAlignCenter,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Steps 参数
 
-| 参数名  | 类型     | 默认值 | 说明              | 跳转 Demo             |
-| :------ | :------- | :----- | :---------------- | :-------------------- |
-| v-model | `number` | 0      | 当前激活的步骤    | [基本用法](#基本用法) |
-| space   | `number` | --     | 可选，step 的间距 |                       |
+| 参数名       | 类型      | 默认值 | 说明              | 跳转 Demo             |
+| :----------- | :-------- | :----- | :---------------- | :-------------------- |
+| v-model      | `number`  | 0      | 当前激活的步骤    | [基本用法](#基本用法) |
+| space        | `number`  | --     | 可选，step 的间距 |                       |
+| align-center | `boolean` | false  | 可选，居中对齐    | [居中对齐](#居中对齐) |
 
 ### Step 参数
 
