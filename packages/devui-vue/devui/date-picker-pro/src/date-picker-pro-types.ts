@@ -1,4 +1,4 @@
-import type { ExtractPropTypes, PropType } from 'vue';
+import type { ExtractPropTypes, PropType, Ref } from 'vue';
 
 export const pickerProProps = {
   modelValue: {
@@ -16,3 +16,18 @@ export const pickerProProps = {
 } as const;
 
 export type PickerProProps = ExtractPropTypes<typeof pickerProProps>;
+
+export interface pickerProState {
+  show: boolean;
+  value: string;
+  placeholder: string;
+}
+
+export interface UseDatePickerProReturnType {
+  containerRef: Ref<HTMLElement | undefined>;
+  originRef: Ref<HTMLElement | undefined>;
+  inputRef: Ref<HTMLElement | undefined>;
+  overlayRef: Ref<HTMLElement | undefined>;
+  state: pickerProState;
+  onFocus: (e: MouseEvent) => void;
+}
