@@ -12,7 +12,7 @@
 
 ```vue
 <template>
-  <d-datepicker-pro v-model="pickerProValue" class="mb20 wh250" />
+  <d-date-picker-pro v-model="datePickerProValue" class="mb20 wh250" />
 </template>
 
 <script lang="ts">
@@ -20,10 +20,10 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const pickerProValue = ref<string>('');
+    const datePickerProValue = ref<string>('');
 
     return {
-      pickerProValue,
+      datePickerProValue,
     };
   },
 });

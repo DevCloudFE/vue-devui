@@ -1,9 +1,9 @@
 import { shallowRef, reactive, ref } from 'vue';
 import type { SetupContext } from 'vue';
-import { PickerProProps, UseDatePickerProReturnType } from './date-picker-pro-types';
+import { DatePickerProProps, UseDatePickerProReturnType } from './date-picker-pro-types';
 import { onClickOutside } from '@vueuse/core';
 
-export default function usePickerPro(props: PickerProProps, ctx: SetupContext): UseDatePickerProReturnType {
+export default function usePickerPro(props: DatePickerProProps, ctx: SetupContext): UseDatePickerProReturnType {
   const containerRef = shallowRef<HTMLElement>();
   const originRef = ref<HTMLElement>();
   const inputRef = shallowRef<HTMLElement>();

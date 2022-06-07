@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType, Ref } from 'vue';
 
-export const pickerProProps = {
+export const datePickerProProps = {
   modelValue: {
     type: [Date, String, Number] as PropType<number | string | Date>,
     default: '',
@@ -15,9 +15,9 @@ export const pickerProProps = {
   },
 } as const;
 
-export type PickerProProps = ExtractPropTypes<typeof pickerProProps>;
+export type DatePickerProProps = ExtractPropTypes<typeof datePickerProProps>;
 
-export interface pickerProState {
+export interface datePickerProState {
   show: boolean;
   value: string;
   placeholder: string;
@@ -28,6 +28,6 @@ export interface UseDatePickerProReturnType {
   originRef: Ref<HTMLElement | undefined>;
   inputRef: Ref<HTMLElement | undefined>;
   overlayRef: Ref<HTMLElement | undefined>;
-  state: pickerProState;
+  state: datePickerProState;
   onFocus: (e: MouseEvent) => void;
 }

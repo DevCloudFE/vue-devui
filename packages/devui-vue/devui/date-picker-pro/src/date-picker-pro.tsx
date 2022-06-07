@@ -1,6 +1,6 @@
 import { defineComponent, Transition, ref } from 'vue';
 import type { SetupContext } from 'vue';
-import { pickerProProps, PickerProProps } from './date-picker-pro-types';
+import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types';
 import usePickerPro from './use-picker-pro';
 import { Input } from '../../input';
 import { FlexibleOverlay } from '../../overlay';
@@ -8,11 +8,11 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 import './date-picker-pro.scss';
 
 export default defineComponent({
-  name: 'DDatepickerPro',
-  props: pickerProProps,
+  name: 'DDatePickerPro',
+  props: datePickerProProps,
   emits: ['update:modelValue', 'toggle-change'],
-  setup(props: PickerProProps, ctx: SetupContext) {
-    const ns = useNamespace('datepicker-pro');
+  setup(props: DatePickerProProps, ctx: SetupContext) {
+    const ns = useNamespace('date-picker-pro');
     const { containerRef, originRef, inputRef, overlayRef, state, onFocus } = usePickerPro(props, ctx);
     const position = ref(['bottom']);
     return () => {
