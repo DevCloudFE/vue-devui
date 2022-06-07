@@ -26,7 +26,7 @@
   }
 
   ::after {
-    transition: all 200ms $devui-animation-ease-in-smooth;
+    transition: all $devui-animation-duration-fast $devui-animation-ease-in-smooth;
     background: transparent;
   }
 
@@ -101,7 +101,7 @@
     }
 
     div.devui-menu-item-horizontal-wrapper {
-      transition: all 0.8s $devui-animation-ease-in-smooth;
+      transition: all $devui-animation-duration-fast $devui-animation-ease-in-smooth;
       background: $devui-menu-bg;
     }
 
@@ -132,7 +132,7 @@
     }
 
     div.devui-menu-item-horizontal-wrapper-hidden {
-      transition: all 0.8s $devui-animation-ease-in-smooth;
+      transition: all $devui-animation-duration-fast $devui-animation-ease-in-smooth;
       position: fixed;
       // margin-top: -5px;
       padding: 0 !important;

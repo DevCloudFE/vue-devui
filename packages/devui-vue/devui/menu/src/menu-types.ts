@@ -1,31 +1,31 @@
-import { ExtractPropTypes } from "vue";
+import { ExtractPropTypes } from 'vue';
 
 export type menuMode = 'vertical' | 'horizontal';
 
 export const menuProps = {
-  width:{
+  width: {
     type: String,
     default: '',
   },
   collapsed: {
     type: Boolean,
-    default: false
+    default: false,
   },
   collapsedIndent: {
     type: Number,
-    default: 24
+    default: 24,
   },
   indentSize: {
     type: Number,
-    default: 24
+    default: 24,
   },
-  multiple:{
+  multiple: {
     type: Boolean,
     default: false,
   },
   openKeys: {
     type: Array,
-    default: []
+    default: [],
   },
   defaultSelectKeys: {
     type: Array,
@@ -33,8 +33,8 @@ export const menuProps = {
   },
   mode: {
     type: String as () => menuMode,
-    default: 'vertical'
-  }
+    default: 'vertical',
+  },
 } as const;
 
 export type MenuProps = ExtractPropTypes<typeof menuProps>;
