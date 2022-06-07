@@ -55,7 +55,7 @@ export default defineComponent({
         <div class={wrapClasses.value}>
           {prefixVisible && (
             <span class={slotNs.e('prefix')}>
-              {ctx.slots.prefix && <div>{ctx.slots.prefix?.()}</div>}
+              {ctx.slots.prefix && ctx.slots.prefix?.()}
               {props.prefix && <Icon size={inputSize.value} name={props.prefix} />}
             </span>
           )}
@@ -75,7 +75,7 @@ export default defineComponent({
           {suffixVisible && (
             <span class={slotNs.e('suffix')}>
               {props.suffix && <Icon size={inputSize.value} name={props.suffix} />}
-              {ctx.slots.suffix && <div>{ctx.slots.suffix?.()}</div>}
+              {ctx.slots.suffix && ctx.slots.suffix?.()}
               {showPwdVisible.value && (
                 <Icon
                   size={inputSize.value}
