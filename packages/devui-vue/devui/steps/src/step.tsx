@@ -3,7 +3,7 @@ import { stepProps, StepProps } from './step-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { Icon } from '../../icon';
 import './step.scss';
-import { ACTIVE_STEP, STEPS } from './const';
+import { ACTIVE_STEP, STEPS, STEPS_SPACE } from './const';
 
 export default defineComponent({
   name: 'DStep',
@@ -18,6 +18,8 @@ export default defineComponent({
     const steps = inject(STEPS);
     steps.value.push(instance);
 
+    const stepsSpace = inject(STEPS_SPACE);
+
     const currentStepIndex = steps.value.indexOf(instance);
 
     const stepClass = computed(() => {
@@ -26,12 +28,20 @@ export default defineComponent({
 
       return `${ns.b()}${activeClass}${finishedClass}`;
     });
+    const stepStyle = computed(() => {
+      const styleObj = {};
+
+      if (stepsSpace) {
+        styleObj.width = `${stepsSpace}px`;
+      } else {
+        styleObj.flexBasis = `${100 / (steps.value.length - 1)}%`;
+      }
+      return styleObj;
+    });
 
     return () => {
       return (
-        <div class={stepClass.value} style={{
-          flexBasis: `${100 / (steps.value.length - 1)}%`
-        }}>
+        <div class={stepClass.value} style={stepStyle.value}>
           <div class={ns.e('dot-container')}>
             {
               activeStep.value > steps.value.indexOf(instance)
