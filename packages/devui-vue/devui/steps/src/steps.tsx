@@ -2,7 +2,7 @@ import { defineComponent, provide, ref, toRefs, watch } from 'vue';
 import { stepsProps, StepsProps } from './steps-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './steps.scss';
-import { ACTIVE_STEP, STEPS, STEPS_SPACE } from './const';
+import { ACTIVE_STEP, STEPS, STEPS_PROPS } from './const';
 
 export default defineComponent({
   name: 'DSteps',
@@ -15,7 +15,7 @@ export default defineComponent({
     const activeStep = ref(modelValue.value);
     provide(ACTIVE_STEP, activeStep);
 
-    provide(STEPS_SPACE, space?.value);
+    provide(STEPS_PROPS, props);
 
     const steps = ref([]);
     provide(STEPS, steps);
