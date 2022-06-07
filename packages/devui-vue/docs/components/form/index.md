@@ -433,7 +433,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="formRef" layout="vertical" :data="formData" :rules="rules" show-feedback>
+  <d-form ref="formRef" layout="vertical" :data="formData" :rules="rules" show-feedback message-type="text">
     <d-form-item
       field="username"
       :rules="[{ required: true, message: '用户名不能为空', trigger: 'blur' }]"
@@ -447,6 +447,13 @@ export default defineComponent({
     </d-form-item>
     <d-form-item field="age" label="年龄">
       <d-input v-model="formData.age" />
+    </d-form-item>
+    <d-form-item field="radio" label="Radio">
+      <d-radio-group direction="row" v-model="formData.radio">
+        <d-radio value="0">Manual execution</d-radio>
+        <d-radio value="1">Daily execution</d-radio>
+        <d-radio value="2">Weekly execution</d-radio>
+      </d-radio-group>
     </d-form-item>
     <d-form-item field="executionDay" label="Execution day">
       <d-checkbox-group v-model="formData.executionDay" label="Execution day" direction="row">
@@ -478,6 +485,7 @@ export default defineComponent({
       userInfo: '',
       age: '',
       executionDay: [],
+      radio: '',
     });
     const checkAge = (rule, value, callback) => {
       if (!value) {
@@ -496,6 +504,7 @@ export default defineComponent({
       userInfo: [{ required: true, message: '用户信息不能为空', trigger: 'blur' }],
       age: [{ validator: checkAge }],
       executionDay: [{ type: 'array', required: true, message: '请至少选择一个执行时间', trigger: 'change' }],
+      radio: [{ required: true, message: '请选择', trigger: 'change' }],
     };
 
     const onClick = () => {

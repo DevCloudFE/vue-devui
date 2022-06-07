@@ -1,12 +1,15 @@
-import { computed, inject, SetupContext, toRef, provide } from 'vue';
+import { computed, inject, SetupContext, toRef, provide, watch } from 'vue';
+import { FORM_TOKEN, FORM_ITEM_TOKEN } from '../../form';
 import { RadioProps, RadioGroupProps, radioGroupInjectionKey, UseRadioFn, valueTypes, UseRadioButtonFn } from './radio-types';
 
 export function useRadio(props: RadioProps, ctx: SetupContext): UseRadioFn {
+  const formContext = inject(FORM_TOKEN, undefined);
+  const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   const radioGroupConf = inject(radioGroupInjectionKey, null);
 
   /** 是否禁用 */
   const isDisabled = computed(() => {
-    return props.disabled || radioGroupConf?.disabled.value;
+    return formContext?.disabled || props.disabled || radioGroupConf?.disabled.value;
   });
   /** 判断是否勾选 */
   const isChecked = computed(() => {
@@ -57,8 +60,14 @@ export function useRadio(props: RadioProps, ctx: SetupContext): UseRadioFn {
   });
 
   const size = computed(() => {
-    return radioGroupConf?.size.value || props.size;
+    return formContext?.size || radioGroupConf?.size.value || props.size;
   });
+  watch(
+    () => props.modelValue,
+    () => {
+      formItemContext?.validate('change').catch((err) => console.warn(err));
+    }
+  );
   return {
     isChecked,
     radioName,
@@ -70,11 +79,19 @@ export function useRadio(props: RadioProps, ctx: SetupContext): UseRadioFn {
 }
 
 export function useRadioGroup(props: RadioGroupProps, ctx: SetupContext): void {
+  const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   /** change 事件 */
   const emitChange = (radioValue: valueTypes) => {
     ctx.emit('update:modelValue', radioValue);
     ctx.emit('change', radioValue);
   };
+
+  watch(
+    () => props.modelValue,
+    () => {
+      formItemContext?.validate('change').catch((err) => console.warn(err));
+    }
+  );
 
   // 注入给子组件
   provide(radioGroupInjectionKey, {
