@@ -82,6 +82,36 @@ export default defineComponent({
 
 :::
 
+### 带描述的步骤条
+
+:::demo
+
+```vue
+<template>
+  <d-steps v-model="activeStepDescription">
+    <d-step title="基本信息" description="填写名称、选择归属项目等基本信息"></d-step>
+    <d-step title="选择代码源" description="选择代码仓库、分支等信息"></d-step>
+    <d-step title="选择构建模板" description="根据项目类型选择合适的构建模板"></d-step>
+  </d-steps>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const activeStepDescription = ref(1);
+
+    return {
+      activeStepDescription,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Steps 参数
 
 | 参数名       | 类型      | 默认值 | 说明              | 跳转 Demo             |
@@ -92,6 +122,7 @@ export default defineComponent({
 
 ### Step 参数
 
-| 参数名 | 类型     | 默认值 | 说明             | 跳转 Demo             |
-| :----- | :------- | :----- | :--------------- | :-------------------- |
-| title  | `string` | --     | 必选，步骤的标题 | [基本用法](#基本用法) |
+| 参数名      | 类型     | 默认值 | 说明             | 跳转 Demo                         |
+| :---------- | :------- | :----- | :--------------- | :-------------------------------- |
+| title       | `string` | --     | 必选，步骤的标题 | [基本用法](#基本用法)             |
+| description | `string` | --     | 可选，步骤的描述 | [带描述的步骤条](#带描述的步骤条) |

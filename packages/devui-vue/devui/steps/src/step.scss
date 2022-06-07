@@ -45,13 +45,18 @@
     color: $devui-placeholder;
   }
 
+  &__description {
+    color: $devui-placeholder;
+    font-size: 12px;
+  }
+
   &.active {
     .#{$devui-prefix}-step__dot {
       background-color: $devui-brand;
       color: $devui-light-text;
     }
 
-    .#{$devui-prefix}-step__title {
+    .#{$devui-prefix}-step__title, .#{$devui-prefix}-step__description {
       color: $devui-brand;
     }
   }
@@ -61,7 +66,7 @@
       background-color: $devui-success;
     }
 
-    .#{$devui-prefix}-step__title {
+    .#{$devui-prefix}-step__title, .#{$devui-prefix}-step__description {
       color: $devui-success;
     }
   }
