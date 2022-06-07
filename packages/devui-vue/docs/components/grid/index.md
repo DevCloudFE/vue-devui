@@ -49,11 +49,10 @@
   line-height: 44px;
 }
 .docs-devui-row .devui-col:nth-of-type(2n + 1) {
-  background: #f8f8f8;
+  background: var(--devui-global-bg);
 }
 .docs-devui-row .devui-col:nth-of-type(2n) {
-  background: #99b0ff;
-  color: #fff;
+  background: var(--devui-brand);
 }
 </style>
 ```
@@ -187,10 +186,10 @@
   background: transparent !important;
 }
 .col-gutter:nth-of-type(2n + 1) > .col-child {
-  background: #f8f8f8;
+  background: var(--devui-global-bg);
 }
 .col-gutter:nth-of-type(2n) > .col-child {
-  background: #99b0ff;
+  background: var(--devui-brand);
 }
 </style>
 ```
