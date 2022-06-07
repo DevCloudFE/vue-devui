@@ -406,19 +406,67 @@ export default defineComponent({
 
 :::
 
+### 标签位置的设置
+
+可以通过 `tab-position` 设置标签的位置，一共有四个方向的设置 `'top' | 'right' | 'bottom' | 'left'`
+
+:::demo
+
+```vue
+<template>
+  <div>
+    <d-radio-group direction="row" v-model="tabPosition">
+      <d-radio-button v-for="item in groupFilterList1" :key="item" :value="item">
+        {{ item }}
+      </d-radio-button>
+    </d-radio-group>
+    <d-tabs :tab-position="tabPosition" v-model="tabPositionId">
+      <d-tab id="tab1" title="Tab1">
+        <p>Tab1 Content</p>
+      </d-tab>
+      <d-tab id="tab2" title="Tab2">
+        <p>Tab2 Content</p>
+      </d-tab>
+      <d-tab id="tab3" title="Tab3">
+        <p>Tab3 Content</p>
+      </d-tab>
+    </d-tabs>
+  </div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const tabPositionId = ref('tab1');
+    const tabPosition = ref('top');
+    const groupFilterList1 = ref(['top', 'right', 'bottom', 'left']);
+    return {
+      tabPositionId,
+      tabPosition,
+      groupFilterList1,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Tabs 参数
 
-| 参数          | 类型                    | 默认   | 说明                                                                                                        |
-| ------------- | ----------------------- | ------ | ----------------------------------------------------------------------------------------------------------- |
-| type          | [ITabsType](#itabstype) | 'tabs' | 可选，选项卡组的类型                                                                                        |
-| show-content  | `boolean`               | true   | 可选，是否显示选项卡对应的内容                                                                              |
-| v-model       | `string`                | --     | 可选，当前激活的选项卡，值为选项卡的 id                                                                     |
-| custom-width  | `string`                | --     | 可选，自定义选项卡的宽                                                                                      |
-| vertical      | `boolean`               | false  | 可选，是否垂直显                                                                                            |
-| before-change | `function\|Promise`     | --     | tab 切换前的回调函数,返回 boolean 类型，返回 false 可以阻止 tab 的切换                                      |
-| reactivable   | `boolean`               | false  | 可选，点击当前处于激活态的 tab 时是否触发`active-tab-change`事件，<br>`true`为允许触发，`false`为不允许触发 |
-| closeable     | `boolean`               | false  | 可选，是否显示删除 tab 图标                                                                                 |
-| addable       | `boolean`               | false  | 可选，是否显示添加 tab 图标                                                                                 |
+| 参数          | 类型                                  | 默认   | 说明                                                                                                        |
+| ------------- | ------------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------- |
+| type          | [ITabsType](#itabstype)               | 'tabs' | 可选，选项卡组的类型                                                                                        |
+| show-content  | `boolean`                             | true   | 可选，是否显示选项卡对应的内容                                                                              |
+| v-model       | `string`                              | --     | 可选，当前激活的选项卡，值为选项卡的 id                                                                     |
+| custom-width  | `string`                              | --     | 可选，自定义选项卡的宽                                                                                      |
+| vertical      | `boolean`                             | false  | 可选，是否垂直显                                                                                            |
+| before-change | `function\|Promise`                   | --     | tab 切换前的回调函数,返回 boolean 类型，返回 false 可以阻止 tab 的切换                                      |
+| reactivable   | `boolean`                             | false  | 可选，点击当前处于激活态的 tab 时是否触发`active-tab-change`事件，<br>`true`为允许触发，`false`为不允许触发 |
+| closeable     | `boolean`                             | false  | 可选，是否显示删除 tab 图标                                                                                 |
+| addable       | `boolean`                             | false  | 可选，是否显示添加 tab 图标                                                                                 |
+| tab-position  | [ITabPositionType](#itabpositiontype) | 'top'  | 可选，选项卡所在的位置                                                                                      |
 
 ### Tabs 事件
 
@@ -450,4 +498,10 @@ export default defineComponent({
 
 ```ts
 type ITabsType = 'tabs' | 'pills' | 'options' | 'wrapped' | 'slider';
+```
+
+#### ITabPositionType
+
+```ts
+type ITabPositionType = 'top' | 'right' | 'bottom' | 'left';
 ```

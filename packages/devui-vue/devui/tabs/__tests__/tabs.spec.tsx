@@ -15,6 +15,10 @@ const dotTabsNavPills = dotTabsNs.e('nav--pills');
 const dotTabsNavOptions = dotTabsNs.e('nav--options');
 const dotTabsNavWrapped = dotTabsNs.e('nav--wrapped');
 const dotTabsNavSlider = dotTabsNs.e('nav--slider');
+const dotTabsNavTop = dotTabsNs.e('nav--top');
+const dotTabsNavRight = dotTabsNs.e('nav--right');
+const dotTabsNavBottom = dotTabsNs.e('nav--bottom');
+const dotTabsNavLeft = dotTabsNs.e('nav--left');
 
 describe('Tabs', () => {
   let wrapper: VueWrapper<ComponentPublicInstance>;
@@ -235,5 +239,50 @@ describe('Tabs', () => {
 
     await nextTick();
     expect(wrapper.find('#tab1').text()).toBe('abc');
+  });
+
+  it('tab-position worked', async () => {
+    wrapper = mount({
+      setup() {
+        const id = ref('tab1');
+
+        return () => {
+          return (
+            <Tabs v-model={id.value}>
+              <Tab id="tab1" title="Tab1">
+                Tab1 Content
+              </Tab>
+              <Tab id="tab2" title="Tab2">
+                Tab2 Content
+              </Tab>
+              <Tab id="tab3" title="Tab3">
+                Tab3 Content
+              </Tab>
+            </Tabs>
+          );
+        };
+      },
+    });
+
+    await nextTick();
+    expect(wrapper.find(dotTabsNavTop).exists()).toBe(true);
+
+    wrapper.setProps({
+      tabPosition: 'right',
+    });
+    await nextTick();
+    expect(wrapper.find(dotTabsNavRight).exists()).toBe(true);
+
+    wrapper.setProps({
+      tabPosition: 'bottom',
+    });
+    await nextTick();
+    expect(wrapper.find(dotTabsNavBottom).exists()).toBe(true);
+
+    wrapper.setProps({
+      tabPosition: 'left',
+    });
+    await nextTick();
+    expect(wrapper.find(dotTabsNavLeft).exists()).toBe(true);
   });
 });

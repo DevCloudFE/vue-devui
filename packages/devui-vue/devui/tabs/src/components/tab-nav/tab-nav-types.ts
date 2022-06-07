@@ -4,11 +4,14 @@ export interface UseTabNavRender {
   ulClasses: ComputedRef<Record<string, boolean>>;
   aClasses: ComputedRef<Record<string, boolean>>;
   customStyle: StyleValue;
+  sliderAnimationStyle: ComputedRef<Record<string, string | undefined>>;
 }
 
 export interface OffSetData {
   offsetLeft: number;
   offsetWidth: number;
+  offsetTop: number;
+  offsetHeight: number;
   id: null;
 }
 

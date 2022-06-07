@@ -15,7 +15,12 @@ export function useTabNavFunction(
       setTimeout(() => {
         const tabEle = tabsEle.value.querySelector('#' + props.modelValue + '.active');
         if (tabEle) {
-          data.offsetLeft = tabEle.getBoundingClientRect().left - tabsEle.value.getBoundingClientRect().left;
+          if (['top', 'bottom'].includes(props.tabPosition)) {
+            data.offsetLeft = tabEle.getBoundingClientRect().left - tabsEle.value.getBoundingClientRect().left;
+          } else {
+            data.offsetTop = tabEle.getBoundingClientRect().top - tabsEle.value.getBoundingClientRect().top;
+            data.offsetHeight = tabEle.getBoundingClientRect().height;
+          }
           data.offsetWidth = tabEle.getBoundingClientRect().width;
         }
       });
@@ -49,7 +54,12 @@ export function useTabNavFunction(
       if (tab && !tab.disabled) {
         tabs.state.active = item.id;
         if (props.type === 'slider' && tabEl && tabsEle) {
-          data.offsetLeft = tabEl.getBoundingClientRect().left - tabsEle.value.nativeElement.getBoundingClientRect().left;
+          if (['left', 'right'].includes(props.tabPosition)) {
+            data.offsetLeft = tabEl.getBoundingClientRect().left - tabsEle.value.nativeElement.getBoundingClientRect().left;
+          } else {
+            data.offsetTop = tabEl.getBoundingClientRect().top - tabsEle.value.nativeElement.getBoundingClientRect().top;
+            data.offsetHeight = tabEl.getBoundingClientRect().height;
+          }
           data.offsetWidth = tabEl.getBoundingClientRect().width;
         }
         ctx.emit('active-tab-change', tab.id);

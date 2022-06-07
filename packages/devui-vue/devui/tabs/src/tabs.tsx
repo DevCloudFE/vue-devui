@@ -1,16 +1,14 @@
 import { defineComponent, provide, reactive, SetupContext, watch } from 'vue';
 import { TabsData, tabsProps, TabsState, TabsProps } from './tabs-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
 import './tabs.scss';
 import TabNav from './components/tab-nav/tab-nav';
-import { useTabsEvent } from './use-tabs';
+import { useTabsEvent, useTabsRender } from './use-tabs';
 
 export default defineComponent({
   name: 'DTabs',
   props: tabsProps,
   emits: ['update:modelValue', 'active-tab-change', 'tab-remove', 'tab-add', 'tab-change'],
   setup(props: TabsProps, ctx: SetupContext) {
-    const ns = useNamespace('tabs');
     const state: TabsState = reactive({
       data: [],
       active: props.modelValue,
@@ -20,6 +18,7 @@ export default defineComponent({
     provide<TabsData>('tabs', { state });
 
     const { onUpdateModelValue, onActiveTabChange, onTabRemove, onTabAdd, onTabChange } = useTabsEvent(ctx);
+    const { tabsClasses } = useTabsRender(props);
 
     watch(
       () => state.active,
@@ -29,18 +28,11 @@ export default defineComponent({
     );
 
     return () => {
-      return (
-        <div class={ns.b()}>
-          <TabNav
-            {...props}
-            onActiveTabChange={onActiveTabChange}
-            onTabRemove={onTabRemove}
-            onTabAdd={onTabAdd}
-            onTabChange={onTabChange}
-          />
-          {ctx.slots.default?.()}
-        </div>
+      const tabNav = (
+        <TabNav {...props} onActiveTabChange={onActiveTabChange} onTabRemove={onTabRemove} onTabAdd={onTabAdd} onTabChange={onTabChange} />
       );
+      const content = ctx.slots.default?.();
+      return <div class={tabsClasses.value}>{props.tabPosition === 'bottom' ? [content, tabNav] : [tabNav, content]}</div>;
     };
   },
 });
