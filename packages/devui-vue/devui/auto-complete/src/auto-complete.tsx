@@ -1,4 +1,4 @@
-import { defineComponent, provide, Transition, toRefs, ref, SetupContext, Teleport, computed } from 'vue';
+import { defineComponent, provide, Transition, toRefs, ref, SetupContext, Teleport, computed, inject } from 'vue';
 import { autoCompleteProps, AutoCompleteProps, DropdownPropsKey } from './auto-complete-types';
 import useCustomTemplate from './composables/use-custom-template';
 import useSearchFn from './composables/use-searchfn';
@@ -13,6 +13,7 @@ import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './auto-complete.scss';
 import { Icon } from '../../icon';
+import { FORM_TOKEN } from '../../form';
 
 export default defineComponent({
   name: 'DAutoComplete',
@@ -20,6 +21,7 @@ export default defineComponent({
   props: autoCompleteProps,
   emits: ['update:modelValue', 'clear', 'blur'],
   setup(props: AutoCompleteProps, ctx: SetupContext) {
+    const formContext = inject(FORM_TOKEN, undefined);
     const {
       disabled,
       modelValue,
@@ -40,6 +42,8 @@ export default defineComponent({
     } = toRefs(props);
     const ns = useNamespace('auto-complete');
     const inputNs = useNamespace('auto-complete-input');
+    const isDisabled = computed(() => formContext?.disabled || disabled.value);
+    const autoCompleteSize = computed(() => formContext?.size || props.size);
 
     const { handleSearch, searchList, showNoResultItemTemplate, recentlyFocus } = useSearchFn(
       ctx,
@@ -53,7 +57,7 @@ export default defineComponent({
       searchList,
       showNoResultItemTemplate,
       modelValue,
-      disabled,
+      isDisabled,
       delay,
       handleSearch,
       transInputFocusEmit,
@@ -77,11 +81,14 @@ export default defineComponent({
       props,
       ctx,
       visible,
-      isFocus
+      isFocus,
+      isDisabled,
+      autoCompleteSize
     );
     provide(DropdownPropsKey, {
       props,
       visible,
+      isDisabled,
       term: '',
       searchList: searchList,
       selectedIndex,
@@ -101,7 +108,7 @@ export default defineComponent({
     const prefixVisible = ctx.slots.prefix || props.prefix;
     const suffixVisible = ctx.slots.suffix || props.suffix || props.clearable;
 
-    const showClearable = computed(() => props.clearable && !props.disabled);
+    const showClearable = computed(() => props.clearable && !isDisabled.value);
 
     const renderBasicDropdown = () => {
       return (
@@ -147,7 +154,7 @@ export default defineComponent({
                 </span>
               )}
               <input
-                disabled={disabled.value}
+                disabled={isDisabled.value}
                 type="text"
                 onClick={toggleMenu}
                 class={inputInnerClasses.value}
@@ -163,7 +170,9 @@ export default defineComponent({
                 <span class={inputNs.e('suffix')}>
                   {props.suffix && <Icon size="inherit" name={props.suffix} />}
                   {ctx.slots.suffix && ctx.slots.suffix?.()}
-                  {showClearable.value && <Icon size={props.size} class={ns.em('clear', 'icon')} name="close" onClick={onClear} />}
+                  {showClearable.value && (
+                    <Icon size={autoCompleteSize.value} class={ns.em('clear', 'icon')} name="close" onClick={onClear} />
+                  )}
                 </span>
               )}
             </div>
