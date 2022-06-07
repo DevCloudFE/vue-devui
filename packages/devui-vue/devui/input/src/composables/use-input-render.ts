@@ -24,7 +24,7 @@ export function useInputRender(props: InputProps, ctx: SetupContext): UseInputRe
     [ns.m('focus')]: isFocus.value,
     [ns.m('disabled')]: inputDisabled.value,
     [ns.m('error')]: error.value || isValidateError.value,
-    [ns.m('feedback')]: formItemContext?.showFeedback,
+    [ns.m('feedback')]: Boolean(formItemContext?.validateState) && formItemContext?.showFeedback,
   }));
 
   const inputClasses = computed(() => [
