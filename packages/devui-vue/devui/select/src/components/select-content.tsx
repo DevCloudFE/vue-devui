@@ -1,17 +1,25 @@
-import { defineComponent } from 'vue';
+import { defineComponent, inject, computed } from 'vue';
 import { Icon } from '../../../icon';
 import { Tag } from '../../../tag';
 import { Popover } from '../../../popover';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useSelectContent from '../composables/use-select-content';
 import { selectContentProps, SelectContentProps, OptionObjectItem } from '../select-types';
+import { FORM_ITEM_TOKEN } from '../../../form';
 export default defineComponent({
   name: 'SelectContent',
   props: selectContentProps,
   setup(props: SelectContentProps) {
+    const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
     const ns = useNamespace('select');
-    const clearCls = ns.e('clear');
-    const arrowCls = ns.e('arrow');
+    const clearCls = computed(() => ({
+      [ns.e('clear')]: true,
+      [ns.em('clear', 'feedback')]: Boolean(formItemContext?.validateState) && formItemContext?.showFeedback,
+    }));
+    const arrowCls = computed(() => ({
+      [ns.e('arrow')]: true,
+      [ns.em('arrow', 'feedback')]: Boolean(formItemContext?.validateState) && formItemContext?.showFeedback,
+    }));
     const multipleCls = ns.e('multiple');
     const multipleInputCls = ns.em('multiple', 'input');
     const {
@@ -115,10 +123,10 @@ export default defineComponent({
               onInput={queryFilter}
             />
           )}
-          <span onClick={handleClear} class={clearCls}>
+          <span onClick={handleClear} class={clearCls.value}>
             <Icon name="close" />
           </span>
-          <span class={arrowCls}>
+          <span class={arrowCls.value}>
             <Icon name="select-arrow" />
           </span>
         </div>

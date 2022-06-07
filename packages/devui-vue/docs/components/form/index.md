@@ -448,6 +448,9 @@ export default defineComponent({
     <d-form-item field="age" label="年龄">
       <d-input v-model="formData.age" />
     </d-form-item>
+    <d-form-item field="select" label="Select">
+      <d-select v-model="formData.select" :options="selectOptions" allow-clear />
+    </d-form-item>
     <d-form-item field="radio" label="Radio">
       <d-radio-group direction="row" v-model="formData.radio">
         <d-radio value="0">Manual execution</d-radio>
@@ -484,9 +487,11 @@ export default defineComponent({
       username: '',
       userInfo: '',
       age: '',
+      select: '',
       executionDay: [],
       radio: '',
     });
+    const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
     const checkAge = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('年龄不能为空'));
@@ -503,6 +508,7 @@ export default defineComponent({
       username: [{ min: 3, max: 6, message: '用户名需不小于3个字符，不大于6个字符', trigger: 'change' }],
       userInfo: [{ required: true, message: '用户信息不能为空', trigger: 'blur' }],
       age: [{ validator: checkAge }],
+      select: [{ required: true, message: '请选择', trigger: 'change' }],
       executionDay: [{ type: 'array', required: true, message: '请至少选择一个执行时间', trigger: 'change' }],
       radio: [{ required: true, message: '请选择', trigger: 'change' }],
     };
@@ -522,7 +528,7 @@ export default defineComponent({
       formRef.value.resetFields();
     };
 
-    return { formRef, formData, rules, onClick, onClear, onReset };
+    return { formRef, formData, selectOptions, rules, onClick, onClear, onReset };
   },
 });
 </script>
