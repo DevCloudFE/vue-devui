@@ -1,10 +1,19 @@
 import { Ref, ref } from 'vue';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
+
 interface clickEvent extends MouseEvent {
   path?: HTMLElement[] | Element[];
 }
 const elements: JSX.Element[] = [];
 let parents: HTMLElement[] = [];
 const defaultIndent: Ref<number> = ref(24);
+const ns = useNamespace('menu');
+const subNs = useNamespace('submenu');
+const menuClass = ns.b();
+const menuItemHorizontalWrapper = `${ns.b()}-item-horizontal-wrapper`;
+const menuItemSelect = `${ns.b()}-item-select`;
+const menuActiveParent = `${ns.b()}-active-parent`;
+
 export function setDefaultIndent(indent: number): void {
   defaultIndent.value = indent;
 }
@@ -21,19 +30,19 @@ export function addLayer(): void {
   const getLayerFromClass = (className: string) => /layer_(\d*)/gim.exec(className)?.[1];
   while (stack.length) {
     const shiftItem = stack.shift() as HTMLElement;
-    if (shiftItem?.classList.contains('devui-menu')) {
+    if (shiftItem?.classList.contains(menuClass)) {
       const children = shiftItem.children;
       stack.unshift(...(Array.from(children) as HTMLElement[]));
       continue;
     } else {
       if (shiftItem.tagName === 'DIV') {
         if (
-          shiftItem.classList.contains('devui-menu-item-vertical-wrapper') ||
-          shiftItem.classList.contains('devui-submenu-menu-item-vertical-wrapper')
+          shiftItem.classList.contains(`${ns.b()}-item-vertical-wrapper`) ||
+          shiftItem.classList.contains(`${subNs.b()}-menu-item-vertical-wrapper`)
         ) {
           const parent = shiftItem.parentElement;
           stack.unshift(...(Array.from(shiftItem.children) as HTMLElement[]));
-          if (parent?.classList.contains('devui-menu')) {
+          if (parent?.classList.contains(menuClass)) {
             shiftItem.classList.add('layer_1');
           } else {
             let layer: string | number | undefined = getLayerFromClass((parent?.classList.value || '') as string);
@@ -56,7 +65,7 @@ export function addLayer(): void {
         }
         const classList = parent?.classList.value || '';
         let layer: string | undefined | number = getLayerFromClass(classList as string);
-        if (parent?.classList.contains('devui-menu')) {
+        if (parent?.classList.contains(menuClass)) {
           layer = 1;
           shiftItem.classList.add(`layer_${2}`);
         } else {
@@ -80,7 +89,7 @@ function getRoot(path: HTMLElement[]): HTMLElement {
   let rootElement: HTMLElement | null = null;
   for (let i = 0; i < paths.length; i++) {
     const p = paths[i];
-    if (p?.classList?.contains('devui-menu-horizontal')) {
+    if (p?.classList?.contains(`${ns.b()}-horizontal`)) {
       rootElement = p;
     }
   }
@@ -97,13 +106,13 @@ function clearSelect_isHorizontal(ele: HTMLElement, event: clickEvent) {
   }
   while (stack.length) {
     const shiftItem = stack.shift();
-    if (shiftItem?.tagName === 'UL' || shiftItem?.classList.contains('devui-menu-item-horizontal-wrapper')) {
+    if (shiftItem?.tagName === 'UL' || shiftItem?.classList.contains(menuItemHorizontalWrapper)) {
       const children = shiftItem?.children;
       stack.unshift(...Array.from(children as unknown as Element[]));
     }
     if (shiftItem !== element) {
-      shiftItem?.classList.remove('devui-menu-item-select');
-      shiftItem?.classList.remove('devui-menu-active-parent');
+      shiftItem?.classList.remove(menuItemSelect);
+      shiftItem?.classList.remove(menuActiveParent);
     }
   }
 }
@@ -113,7 +122,7 @@ function clearSelect_notHorizontal(ele: HTMLElement, event: clickEvent) {
   const path = event.path || (event.composedPath && event.composedPath());
   for (let i = 0; i < path.length; i++) {
     const e = path[i] as HTMLElement;
-    if (!e.classList.contains('devui-menu')) {
+    if (!e.classList.contains(menuClass)) {
       stack.push(...Array.from(e.children));
     } else {
       stack.push(...Array.from(e.children));
@@ -122,15 +131,15 @@ function clearSelect_notHorizontal(ele: HTMLElement, event: clickEvent) {
   }
   while (stack.length) {
     const shiftItem = stack.shift();
-    if (shiftItem?.tagName === 'UL' || shiftItem?.classList.contains('devui-menu-item-horizontal-wrapper')) {
+    if (shiftItem?.tagName === 'UL' || shiftItem?.classList.contains(menuItemHorizontalWrapper)) {
       stack.push(...Array.from(shiftItem?.children as unknown as Element[]));
     }
     if (shiftItem !== ele) {
       if (shiftItem?.tagName === 'DIV') {
         stack.unshift(...Array.from(shiftItem?.children));
       }
-      shiftItem?.classList.remove('devui-menu-item-select');
-      shiftItem?.classList.remove('devui-menu-active-parent');
+      shiftItem?.classList.remove(menuItemSelect);
+      shiftItem?.classList.remove(menuActiveParent);
     }
   }
 }

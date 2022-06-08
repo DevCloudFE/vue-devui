@@ -1,4 +1,7 @@
 import { Ref, ref } from 'vue';
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
+
+const ns = useNamespace('menu');
 
 export function initSelect(defaultSelectKeys: string[], keys: string, isMultiple: boolean, disabled: Ref<boolean>): boolean {
   const isSelect = ref(false);
@@ -20,9 +23,9 @@ export function initSelect(defaultSelectKeys: string[], keys: string, isMultiple
 
 export function addActiveParent(ele: HTMLElement): HTMLElement {
   let cur = ele.parentElement as HTMLElement;
-  while (!cur.classList.contains('devui-menu')) {
+  while (!cur.classList.contains(ns.b())) {
     if (cur.firstElementChild?.tagName === 'DIV') {
-      cur?.firstElementChild?.classList.add('devui-menu-active-parent');
+      cur?.firstElementChild?.classList.add(`${ns.b()}-active-parent`);
     }
     cur = cur.parentElement as HTMLElement;
   }

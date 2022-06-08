@@ -3,6 +3,13 @@ import { defineComponent, getCurrentInstance, onMounted, ref, Transition, watch,
 import { MenuItemProps, menuItemProps } from './menu-item-types';
 import { initSelect, addActiveParent } from './use-menu-item';
 import { useClick } from '../../composables/use-click';
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
+
+const ns = useNamespace('menu');
+
+const menuItemSelect = `${ns.b()}-item-select`;
+const menuItemDisabled = `${ns.b()}-item-disabled`;
+
 interface clickEvent extends MouseEvent {
   path: HTMLElement[];
 }
@@ -23,11 +30,11 @@ export default defineComponent({
     const isLayer1 = ref(true);
     const rootMenuEmit = inject('rootMenuEmit') as (eventName: string, ...args: unknown[]) => void;
     const classObject: Record<string, boolean> = reactive({
-      'devui-menu-item': true,
-      'devui-menu-item-isCollapsed': isCollapsed.value,
-      'devui-isCollapsed-item': isCollapsed.value,
-      'devui-menu-item-select': isSelect.value,
-      'devui-menu-item-disabled': disabled.value,
+      [`${ns.b()}-item`]: true,
+      [`${ns.b()}-item-isCollapsed`]: isCollapsed.value,
+      [`${ns.b()}-isCollapsed-item`]: isCollapsed.value,
+      [menuItemSelect]: isSelect.value,
+      [menuItemDisabled]: disabled.value,
     });
     const onClick = (e: MouseEvent) => {
       e.preventDefault();
@@ -39,15 +46,15 @@ export default defineComponent({
           if (mode.value === 'horizontal') {
             useClick(e as clickEvent);
           } else {
-            ele.classList.add('devui-menu-item-select');
+            ele.classList.add(menuItemSelect);
           }
         } else {
-          if (ele.classList.contains('devui-menu-item-select')) {
-            ele.classList.remove('devui-menu-item-select');
+          if (ele.classList.contains(menuItemSelect)) {
+            ele.classList.remove(menuItemSelect);
             rootMenuEmit('deselect', { type: 'deselect', el: ele, e });
             return;
           } else {
-            ele.classList.add('devui-menu-item-select');
+            ele.classList.add(menuItemSelect);
           }
         }
         rootMenuEmit('select', { type: 'select', el: ele, e });
@@ -58,23 +65,26 @@ export default defineComponent({
       }
       if (mode.value === 'horizontal') {
         const ul = ele.parentElement?.parentElement;
-        ul?.classList.add('devui-menu-active-parent');
+        ul?.classList.add(`${ns.b()}-active-parent`);
       }
     };
-    const icons = <span class="devui-menu-icon">{ctx.slots.icon?.()}</span>;
+    const icons = <span class={`${ns.b()}-icon`}>{ctx.slots.icon?.()}</span>;
     const menuItems = ref(null);
     watch(disabled, () => {
-      classObject['devui-menu-item-select'] = false;
+      classObject[menuItemSelect] = false;
     });
-    watch(defaultSelectKey, (n) => {
-      isSelect.value = initSelect(n, key, multiple, disabled);
-      classObject['devui-menu-item-select'] = isSelect.value;
-    });
+    watch(
+      () => defaultSelectKey,
+      (n) => {
+        isSelect.value = initSelect(n, key, multiple, disabled);
+        classObject[menuItemSelect] = isSelect.value;
+      }
+    );
     onMounted(() => {
       let oldPadding = '';
       const ele = menuItems.value as unknown as HTMLElement;
       if (mode.value === 'vertical') {
-        if (ele.parentElement?.parentElement?.classList.contains('devui-menu')) {
+        if (ele.parentElement?.parentElement?.classList.contains(ns.b())) {
           isLayer1.value = true;
           if (isLayer1.value) {
             ele.style.paddingRight = ``;
@@ -104,9 +114,9 @@ export default defineComponent({
     });
     return () => {
       return mode.value === 'vertical' ? (
-        <div class="devui-menu-item-vertical-wrapper">
+        <div class={`${ns.b()}-item-vertical-wrapper`}>
           <li
-            class={[classObject, props['disabled'] ? 'devui-menu-item-disabled' : '', isLayer1.value ? 'layer_1' : '']}
+            class={[classObject, props['disabled'] ? menuItemDisabled : '', isLayer1.value ? 'layer_1' : '']}
             onClick={onClick}
             ref={menuItems}>
             {ctx.slots.icon !== undefined && icons}
@@ -123,7 +133,7 @@ export default defineComponent({
         </div>
       ) : (
         <li
-          class={[classObject, props['disabled'] ? 'devui-menu-item-disabled' : '', isLayer1.value ? 'layer_1' : '']}
+          class={[classObject, props['disabled'] ? menuItemDisabled : '', isLayer1.value ? 'layer_1' : '']}
           onClick={onClick}
           ref={menuItems}>
           {ctx.slots.icon !== undefined && icons}

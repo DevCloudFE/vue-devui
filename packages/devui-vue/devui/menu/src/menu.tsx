@@ -3,12 +3,15 @@ import { menuProps, MenuProps } from './menu-types';
 import './menu.scss';
 import { setDefaultIndent } from './composables/use-layer-operate';
 import SubMenu from './components/sub-menu/sub-menu';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DMenu',
   props: menuProps,
   emits: ['select', 'dselect', 'submenu-change'],
   setup(props: MenuProps, ctx) {
+    const ns = useNamespace('menu');
+
     const isCollapsed = computed(() => props.collapsed);
     const mode = computed(() => props['mode']);
     provide('isCollapsed', isCollapsed);
@@ -34,7 +37,7 @@ export default defineComponent({
           (entries: IntersectionObserverEntry[]) => {
             entries.forEach((v: IntersectionObserverEntry) => {
               if (!v.isIntersecting) {
-                if (!v.target.classList.contains('devui-menu-overflow-container')) {
+                if (!v.target.classList.contains(`${ns.b()}-overflow-container`)) {
                   overflowItemLength.value += 1;
                   const cloneNode = v.target.cloneNode(true) as Element as HTMLElement;
                   (v.target as Element as HTMLElement).style.visibility = 'hidden';
@@ -47,7 +50,7 @@ export default defineComponent({
                 }
               } else {
                 if (
-                  !v.target.classList.contains('devui-menu-overflow-container') &&
+                  !v.target.classList.contains(`${ns.b()}-overflow-container`) &&
                   (v.target as HTMLElement).style.visibility === 'hidden'
                 ) {
                   ob.unobserve(v.target);
@@ -77,7 +80,7 @@ export default defineComponent({
       return (
         <ul
           ref={menuRoot}
-          class={[`devui-menu`, `devui-menu-${props['mode']}`, props['collapsed'] ? 'devui-menu-collapsed' : '']}
+          class={[`${ns.b()}`, `${ns.b()}-${props['mode']}`, props['collapsed'] ? `${ns.b()}-collapsed` : '']}
           style={[
             props['collapsed'] ? `width:${props['collapsedIndent'] * 2}px` : `width: ${props['width']}`,
             'overflow: hidden',
@@ -86,8 +89,9 @@ export default defineComponent({
           {ctx.slots.default?.()}
           <SubMenu
             ref={overflow_container}
+            key="overflowContainer"
             title="..."
-            class="devui-menu-overflow-container"
+            class={`${ns.b()}-overflow-container`}
             v-show={overflowItemLength.value > 0}></SubMenu>
         </ul>
       );

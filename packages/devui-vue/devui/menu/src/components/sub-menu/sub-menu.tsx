@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ComponentInternalInstance, defineComponent, getCurrentInstance, inject, onMounted, Ref, ref, watchEffect, watch } from 'vue';
+import { defineComponent, getCurrentInstance, inject, onMounted, ref, watchEffect, watch } from 'vue';
+import type { ComponentInternalInstance, Ref } from 'vue';
 import { addLayer, pushElement, clearSelect, getLayer } from '../../composables/use-layer-operate';
 import { useClick } from '../../composables/use-click';
 import { useShowSubMenu } from './use-sub-menu';
 import { SubMenuProps, subMenuProps } from './sub-menu-types';
 import MenuTransition from '../menu-transition/menu-transition';
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
+
+const ns = useNamespace('menu');
+const subNs = useNamespace('submenu');
+
 interface clickEvent extends MouseEvent {
   path: HTMLElement[];
 }
@@ -45,7 +51,7 @@ export default defineComponent({
         const target = e.target as HTMLElement;
         let cur = e.target as HTMLElement;
         if (target.tagName === 'UL') {
-          if (target.classList.contains('devui-submenu-open')) {
+          if (target.classList.contains(`${subNs.b()}-open`)) {
             isOpen.value = !isOpen.value;
           } else {
             isOpen.value = isOpen.value;
@@ -67,26 +73,28 @@ export default defineComponent({
     const wrapper = ref(null);
     let wrapperDom: HTMLElement;
     const subMenu = ref(null);
-    let title = ref(null);
+    const title = ref(null);
     let oldPadding = '';
     const class_layer = ref('');
     watchEffect(
       () => {
-        title = title.value as any;
         wrapperDom = wrapper.value as unknown as HTMLElement;
         pushElement({ el: subMenu.value } as any);
       },
       { flush: 'post' }
     );
-    watch(defaultOpenKeys, (n) => {
-      if (n.includes(key_)) {
-        isOpen.value = true;
-      } else {
-        isOpen.value = false;
+    watch(
+      () => defaultOpenKeys,
+      (n) => {
+        if (n.includes(key_)) {
+          isOpen.value = true;
+        } else {
+          isOpen.value = false;
+        }
       }
-    });
+    );
     onMounted(() => {
-      const el = title as unknown as HTMLElement;
+      const el = title.value as unknown as HTMLElement;
       const e = subMenu.value as unknown as HTMLElement;
       addLayer();
       class_layer.value = `layer_${Array.from(e.classList).at(-1)?.replace('layer_', '')}`;
@@ -122,10 +130,10 @@ export default defineComponent({
     });
     return () => {
       return (
-        <ul v-show={isShow.value} onClick={clickHandle} class={['devui-submenu', class_layer.value]} ref={subMenu}>
-          <div class={['devui-submenu-title', props['disable'] && 'devui-sub-menu-disabled']} style={`padding: 0 ${indent}px`} ref={title}>
-            <span class="devui-menu-icon">{ctx.slots?.icon?.()}</span>
-            <span v-show={!isCollapsed.value} class="devui-submenu-title-content">
+        <ul v-show={isShow.value} onClick={clickHandle} class={[subNs.b(), class_layer.value]} ref={subMenu}>
+          <div class={[`${subNs.b()}-title`, props['disable'] && `${subNs.b()}-disabled`]} style={`padding: 0 ${indent}px`} ref={title}>
+            <span class={`${ns.b()}-icon`}>{ctx.slots?.icon?.()}</span>
+            <span v-show={!isCollapsed.value} class={`${subNs.b()}-title-content`}>
               {props.title}
             </span>
             <i
@@ -136,12 +144,12 @@ export default defineComponent({
               }}></i>
           </div>
           {mode.value === 'horizontal' ? (
-            <div class="devui-menu-item-horizontal-wrapper devui-menu-item-horizontal-wrapper-hidden" ref={wrapper}>
+            <div class={`${ns.b()}-item-horizontal-wrapper ${ns.b()}-item-horizontal-wrapper-hidden`} ref={wrapper}>
               {ctx.slots.default?.()}
             </div>
           ) : (
             <MenuTransition>
-              <div class={['devui-submenu-menu-item-vertical-wrapper']} ref={subMenuItemContainer} v-show={isOpen.value}>
+              <div class={[`${subNs.b()}-menu-item-vertical-wrapper`]} ref={subMenuItemContainer} v-show={isOpen.value}>
                 {ctx.slots.default?.()}
               </div>
             </MenuTransition>

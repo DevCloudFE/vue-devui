@@ -12,30 +12,23 @@ Menu 组件通常用于导航.
 
 ```vue
 <template>
-  <d-menu mode="horizontal" :default-select-keys="['item1']">
-    <d-menu-item :key="'item1'">
+  <d-menu mode="horizontal" :default-select-keys="['home']" style="margin-bottom: 120px">
+    <d-menu-item key="home">
       <template #icon>
         <i class="icon-homepage"></i>
       </template>
       首页
     </d-menu-item>
-    <d-sub-menu title="课程">
-      <d-menu-item>
-        C
-      </d-menu-item>
-      <d-sub-menu title="Python">
-        <d-menu-item>
-          基础
-        </d-menu-item>
-        <d-menu-item>
-          进阶
-        </d-menu-item>
+    <d-sub-menu title="课程" key="course">
+      <d-menu-item key="c"> C </d-menu-item>
+      <d-sub-menu title="Python" key="python">
+        <d-menu-item key="basic"> 基础 </d-menu-item>
+        <d-menu-item key="advanced"> 进阶 </d-menu-item>
       </d-sub-menu>
     </d-sub-menu>
-    <d-menu-item>个人</d-menu-item>
-    <d-menu-item href="https://www.baidu.com"> Link To Baidu </d-menu-item>
+    <d-menu-item key="person">个人</d-menu-item>
+    <d-menu-item key="custom" href="https://www.baidu.com"> Link To Baidu </d-menu-item>
   </d-menu>
-  <br /><br /><br /><br /><br /><br />
 </template>
 ```
 
@@ -43,9 +36,10 @@ Menu 组件通常用于导航.
 
 ### 自定义图标
 
-有时我们需要为子菜单或菜单项定义一些图标，此时我们可以使用```icon```插槽来为菜单定义icon。同时我们也可以使用css来对插槽进行定制化的修改.
+有时我们需要为子菜单或菜单项定义一些图标，此时我们可以使用`icon`插槽来为菜单定义 icon。同时我们也可以使用 css 来对插槽进行定制化的修改.
 
 :::demo
+
 ```vue
 <template>
   <d-menu mode="horizontal">
@@ -55,12 +49,11 @@ Menu 组件通常用于导航.
       </template>
       主页
     </d-menu-item>
-    <d-menu-item key="classes">
-      课程
-    </d-menu-item>
+    <d-menu-item key="course"> 课程 </d-menu-item>
   </d-menu>
 </template>
 ```
+
 :::
 
 ### 垂直菜单
@@ -72,24 +65,24 @@ Menu 组件通常用于导航.
 ```vue
 <template>
   <d-menu mode="vertical" :default-select-keys="['item1']" width="256px">
-    <d-menu-item key="item1" :disabled="isDisabled">
+    <d-menu-item key="item1">
       <template #icon>
         <i class="icon-homepage"></i>
       </template>
       <span>Home</span>
     </d-menu-item>
-    <d-sub-menu title="System">
+    <d-sub-menu title="System" key="system">
       <template #icon>
         <i class="icon-system"></i>
       </template>
-      <d-menu-item>
+      <d-menu-item key="system">
         <span>System item</span>
       </d-menu-item>
-      <d-sub-menu title="Setting">
+      <d-sub-menu title="Setting" key="setting">
         <template #icon>
           <i class="icon-setting"></i>
         </template>
-        <d-menu-item>
+        <d-menu-item key="setting">
           <span>Setting item</span>
         </d-menu-item>
       </d-sub-menu>
@@ -110,16 +103,16 @@ Menu 组件通常用于导航.
 <template>
   <d-menu width="256px" mode="vertical" :open-keys="['sub1', 'sub3']">
     <d-sub-menu key="sub1" title="sub1">
-      <d-menu-item> Sub1 > item1 </d-menu-item>
-      <d-menu-item> Sub1 > item2 </d-menu-item>
+      <d-menu-item key="Sub1-item1"> Sub1 > item1 </d-menu-item>
+      <d-menu-item key="Sub1-item2"> Sub1 > item2 </d-menu-item>
     </d-sub-menu>
     <d-sub-menu key="sub2" title="sub2">
-      <d-menu-item> Sub2 > item1 </d-menu-item>
-      <d-menu-item> Sub2 > item2 </d-menu-item>
+      <d-menu-item key="Sub2-item1"> Sub2 > item1 </d-menu-item>
+      <d-menu-item key="Sub2-item2"> Sub2 > item2 </d-menu-item>
     </d-sub-menu>
     <d-sub-menu key="sub3" title="sub3">
-      <d-menu-item> Sub3 > item1 </d-menu-item>
-      <d-menu-item> Sub3 > item2 </d-menu-item>
+      <d-menu-item key="Sub3-item1"> Sub3 > item1 </d-menu-item>
+      <d-menu-item key="Sub3-item2"> Sub3 > item2 </d-menu-item>
     </d-sub-menu>
   </d-menu>
 </template>
@@ -143,18 +136,18 @@ Menu 组件通常用于导航.
       </template>
       <span>Home</span>
     </d-menu-item>
-    <d-sub-menu title="System">
+    <d-sub-menu title="System" key="system">
       <template #icon>
         <i class="icon-system"></i>
       </template>
-      <d-menu-item>
+      <d-menu-item key="system">
         <span>System item</span>
       </d-menu-item>
-      <d-sub-menu title="Setting">
+      <d-sub-menu title="Setting" key="setting">
         <template #icon>
           <i class="icon-setting"></i>
         </template>
-        <d-menu-item>
+        <d-menu-item key="setting">
           <span>Setting item</span>
         </d-menu-item>
       </d-sub-menu>
@@ -185,11 +178,11 @@ const changeCollapsed = () => {
   <d-menu :default-select-keys="['item1']" multiple width="256px">
     <d-menu-item key="item1"> Item1 </d-menu-item>
     <d-menu-item key="item2"> Item2 </d-menu-item>
-    <d-sub-menu title="Setting">
+    <d-sub-menu title="Setting" key="icon-setting">
       <template #icon>
         <i class="icon-setting"></i>
       </template>
-      <d-menu-item>
+      <d-menu-item key="setting">
         <span>Setting item</span>
       </d-menu-item>
     </d-sub-menu>
@@ -215,18 +208,18 @@ const changeCollapsed = () => {
       </template>
       <span>Home</span>
     </d-menu-item>
-    <d-sub-menu title="System">
+    <d-sub-menu title="System" key="icon-system">
       <template #icon>
         <i class="icon-system"></i>
       </template>
-      <d-menu-item>
+      <d-menu-item key="system">
         <span>System item</span>
       </d-menu-item>
-      <d-sub-menu title="Setting">
+      <d-sub-menu title="Setting" key="icon-setting">
         <template #icon>
           <i class="icon-setting"></i>
         </template>
-        <d-menu-item>
+        <d-menu-item key="setting">
           <span>Setting item</span>
         </d-menu-item>
       </d-sub-menu>
@@ -252,56 +245,54 @@ const changeDisabled = () => {
 
 ### d-menu 参数
 
-| 参数                | 类型       | 默认       | 说明                       | 跳转 Demo                 | 全局配置项 |
-| ------------------- | ---------- | ---------- | -------------------------- | ------------------------- | ---------- |
-| width               | String     | ''         | 用于控制菜单宽度           | [响应式参数](#响应式参数) |            |
-| collapsed           | Boolean    | false      | 用于决定菜单是否收起       | [收缩面板](#收缩面板)     |            |
-| collapsed-indent    | Number     | 24         | 收起时图表距离菜单的距离   | /                         |            |
-| indent-size         | Number | 24         | 未收起时二级菜单的缩进大小 | /                         |            |
-| multiple            | Boolean    | false      | 是否可以多选               | /                         |            |
-| mode                | menuMode   | 'vertical' | 菜单类型                   | [基本用法](#基本用法)     |            |
-| open-keys           | Array      | []         | 默认展开的子菜单 key 值    | [默认展](#默认展开)       |            |
-| default-select-keys | Array      | []         | 默认选择菜单项 key 值      | /                         |            |
+| 参数                | 类型     | 默认       | 说明                       | 跳转 Demo                 | 全局配置项 |
+| ------------------- | -------- | ---------- | -------------------------- | ------------------------- | ---------- |
+| width               | String   | ''         | 用于控制菜单宽度           | [响应式参数](#响应式参数) |            |
+| collapsed           | Boolean  | false      | 用于决定菜单是否收起       | [收缩面板](#收缩面板)     |            |
+| collapsed-indent    | Number   | 24         | 收起时图表距离菜单的距离   | /                         |            |
+| indent-size         | Number   | 24         | 未收起时二级菜单的缩进大小 | /                         |            |
+| multiple            | Boolean  | false      | 是否可以多选               | /                         |            |
+| mode                | menuMode | 'vertical' | 菜单类型                   | [基本用法](#基本用法)     |            |
+| open-keys           | Array    | []         | 默认展开的子菜单 key 值    | [默认展](#默认展开)       |            |
+| default-select-keys | Array    | []         | 默认选择菜单项 key 值      | /                         |            |
 
 ### d-menu 事件
 
-| 事件           | 类型                                                                       | 说明                                                 | 跳转 Demo |
-| -------------- | -------------------------------------------------------------------------- | ---------------------------------------------------- | --------- |
-| select         | ```(e: {type:'select', el: HTMLElement})=>void```                          | 选中菜单项时触发该事件,被禁用的选项不会被触发        |           |
-| dselect        | ```(e: {type: 'dselect', el: HTMLElement})=>void```                        | 取消选中时触发该事件，如果菜单不是多选菜单不会被触发 |           |
-| submenu-change | ```(e: {type: 'submenu-change': el: HTMLElement: state: boolean})=>void``` | 子菜单状态被更改时会触发                             |
+| 事件           | 类型                                                                   | 说明                                                 | 跳转 Demo |
+| -------------- | ---------------------------------------------------------------------- | ---------------------------------------------------- | --------- |
+| select         | `(e: {type:'select', el: HTMLElement})=>void`                          | 选中菜单项时触发该事件,被禁用的选项不会被触发        |           |
+| dselect        | `(e: {type: 'dselect', el: HTMLElement})=>void`                        | 取消选中时触发该事件，如果菜单不是多选菜单不会被触发 |           |
+| submenu-change | `(e: {type: 'submenu-change': el: HTMLElement: state: boolean})=>void` | 子菜单状态被更改时会触发                             |
 
-### d-menu-item 
+### d-menu-item
 
-
-| 参数 | 类型 | 默认 | 说明 | 跳转 Demo | 全局配置项 |
-| :----: | :----: | :----: | :----: | :---------: | ---------- |
-|disable|boolean|false|是否禁用|||
-|key|string|''|菜单项的key值，需唯一|||
-|href|string|''|单击菜单项后跳转的页面|[基本用法](#基本用法)|
+|  参数   |  类型   | 默认  |          说明           |       跳转 Demo       | 全局配置项 |
+| :-----: | :-----: | :---: | :---------------------: | :-------------------: | ---------- |
+| disable | boolean | false |        是否禁用         |                       |            |
+|   key   | string  |  ''   | 菜单项的 key 值，需唯一 |                       |            |
+|  href   | string  |  ''   | 单击菜单项后跳转的页面  | [基本用法](#基本用法) |
 
 ### d-sub-menu
 
-| 参数 | 类型 | 默认 | 说明 | 跳转 Demo | 全局配置项 |
-| :----: | :----: | :----: | :----: | :---------: | ---------- |
-|title|String|''|子菜单标题|||
-|disable|boolean|false|是否禁用子菜单|||
+|  参数   |  类型   | 默认  |      说明      | 跳转 Demo | 全局配置项 |
+| :-----: | :-----: | :---: | :------------: | :-------: | ---------- |
+|  title  | String  |  ''   |   子菜单标题   |           |            |
+| disable | boolean | false | 是否禁用子菜单 |           |            |
 
 ### d-menu-item 插槽
 
-| 插槽名 | 说明 |
-| :---: | :--: |
-|icon|用于定义菜单项的icon|
+| 插槽名 |         说明          |
+| :----: | :-------------------: |
+|  icon  | 用于定义菜单项的 icon |
 
 ### d-sub-menu 插槽
 
-| 插槽名 | 说明 |
-| :---: |:---:|
-|icon|用于定义子菜单标题的icon|
+| 插槽名 |           说明            |
+| :----: | :-----------------------: |
+|  icon  | 用于定义子菜单标题的 icon |
 
 ### 接口及其定义
 
-``` typescript
+```typescript
 export type menuMode = 'vertical' | 'horizontal';
 ```
-
