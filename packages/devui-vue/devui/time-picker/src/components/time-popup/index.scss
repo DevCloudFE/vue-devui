@@ -3,7 +3,7 @@
 .#{$devui-prefix}-time-popup {
   height: 310px;
   background-color: $devui-connected-overlay-bg;
-  box-shadow: 0 0 2px 2px $devui-shadow;
+  box-shadow: 0 2px 8px 0 $devui-shadow;
   border-radius: $devui-border-radius;
   overflow: hidden;
   position: fixed;

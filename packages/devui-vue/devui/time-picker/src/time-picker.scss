@@ -9,6 +9,7 @@
   border: 1px solid $devui-form-control-line;
   position: relative;
   transition: 0.2s;
+  border-radius: $devui-border-radius;
 
   &:hover {
     border: 1px solid $devui-form-control-line-hover;
@@ -20,6 +21,7 @@
     width: 100%;
     background-color: $devui-base-bg;
     color: $devui-text;
+    padding: 0 8px;
   }
 
   .time-input-icon {
@@ -28,12 +30,14 @@
     align-items: center;
     cursor: pointer;
     background-color: $devui-base-bg;
+    border-radius: $devui-border-radius;
 
     div {
       text-align: right;
       height: 25px;
       line-height: 22px;
       padding: 0 4px;
+      border-radius: $devui-border-radius;
     }
   }
 }
