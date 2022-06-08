@@ -10,9 +10,8 @@ export default defineComponent({
   name: 'DTimePicker',
   components: { TimePopup },
   props: timePickerProps,
-  emits: ['selectedTimeChage','update:modelValue'],
+  emits: ['change', 'update:modelValue'],
   setup(props: TimePickerProps, ctx) {
-
     const activeHour = ref('00');
     const activeMinute = ref('00');
     const activeSecond = ref('00');
@@ -23,7 +22,8 @@ export default defineComponent({
       showPopup,
       devuiTimePicker,
       inputDom,
-      left,top,
+      left,
+      top,
       showClearIcon,
       firsthandActiveTime,
       chooseTime,
@@ -34,14 +34,23 @@ export default defineComponent({
       clearAll,
       timePopupDom,
       vModeValue,
-      getPopupPosition
-    } = useTimePicker(activeHour,activeMinute,activeSecond,props.minTime,props.maxTime,format,props.autoOpen,props.disabled,props.modelValue);
+      getPopupPosition,
+    } = useTimePicker(
+      activeHour,
+      activeMinute,
+      activeSecond,
+      props.minTime,
+      props.maxTime,
+      format,
+      props.autoOpen,
+      props.disabled,
+      props.modelValue
+    );
 
-
-    const selectedTimeChage = (e: MouseEvent) => {
+    const selectedTimeChange = () => {
       isActive.value = false;
       showPopup.value = false;
-      ctx.emit('selectedTimeChage', vModeValue.value);
+      ctx.emit('change', vModeValue.value);
     };
 
     onMounted(() => {
@@ -49,66 +58,62 @@ export default defineComponent({
       isOutOpen();
       vModelIsBeyond();
       document.addEventListener('click', clickVerifyFun);
-      document.addEventListener('click',getTimeValue);
-      document.addEventListener('scroll',getPopupPosition);
-      window.addEventListener('resize',getPopupPosition);
+      document.addEventListener('click', getTimeValue);
+      document.addEventListener('scroll', getPopupPosition);
+      window.addEventListener('resize', getPopupPosition);
     });
     onUnmounted(() => {
       document.removeEventListener('click', clickVerifyFun);
-      document.removeEventListener('click',getTimeValue);
-      document.removeEventListener('scroll',getPopupPosition);
-      window.removeEventListener('resize',getPopupPosition);
+      document.removeEventListener('click', getTimeValue);
+      document.removeEventListener('scroll', getPopupPosition);
+      window.removeEventListener('resize', getPopupPosition);
     });
 
-    watch(vModeValue,(newValue: string)=>{
-      ctx.emit('update:modelValue',vModeValue.value);
-      if(newValue != props.minTime && newValue != '00:00'){
+    watch(vModeValue, (newValue: string) => {
+      ctx.emit('update:modelValue', vModeValue.value);
+      if (newValue !== props.minTime && newValue !== '00:00') {
         showClearIcon.value = true;
-      }else{
+      } else {
         showClearIcon.value = false;
       }
     });
 
     ctx.expose({
-      clearAll,chooseTime
+      clearAll,
+      chooseTime,
     });
 
     return () => {
       return (
         <>
-          <div class={`devui-time-picker ${isActive.value ? 'time-picker-active' : ''} ${props.disabled ? 'picker-disabled' : ''}`}
-            ref={devuiTimePicker}
-          >
-            <TimePopup
-              ref={timePopupDom}
-              showPopup={showPopup.value}
-              popupTop={top.value}
-              popupLeft={left.value}
-              popupWidth={props.timePickerWidth}
-              popupFormat={ props.format.toLowerCase() }
-              minTime={props.minTime}
-              maxTime={props.maxTime}
-              bindData={firsthandActiveTime.value}
-              onSubData={selectedTimeChage}
-            >
-              {
-                ctx.slots.customViewTemplate?.()
-              }
-            </TimePopup>
-            <input ref={inputDom}
+          <div
+            class={`devui-time-picker ${isActive.value ? 'time-picker-active' : ''} ${props.disabled ? 'picker-disabled' : ''}`}
+            ref={devuiTimePicker}>
+            {showPopup.value && (
+              <TimePopup
+                ref={timePopupDom}
+                showPopup={showPopup.value}
+                popupTop={top.value}
+                popupLeft={left.value}
+                popupWidth={props.timePickerWidth}
+                popupFormat={props.format.toLowerCase()}
+                minTime={props.minTime}
+                maxTime={props.maxTime}
+                bindData={firsthandActiveTime.value}
+                onSubmitData={selectedTimeChange}>
+                {ctx.slots.customViewTemplate?.()}
+              </TimePopup>
+            )}
+            <input
+              ref={inputDom}
               type="text"
               value={vModeValue.value}
               placeholder={`${props.placeholder}`}
               disabled={props.disabled}
-              class='time-input' />
-            <div class='time-input-icon'>
-              <div onClick={clearAll}>
-                {
-                  showClearIcon.value
-                    ? <Icon size="small" name="close" />
-                    :''
-                }
-              </div>
+              class="time-input"
+            />
+            <div class="time-input-icon">
+              <div onClick={clearAll}>{showClearIcon.value ? <Icon size="small" name="close" /> : ''}</div>
               <div>
                 <Icon size="small" name="time" />
               </div>
@@ -117,5 +122,5 @@ export default defineComponent({
         </>
       );
     };
-  }
+  },
 });
