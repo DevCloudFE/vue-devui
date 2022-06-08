@@ -11,6 +11,8 @@ import { useNamespace } from '../../../../shared/hooks/use-namespace';
 const ns = useNamespace('menu');
 const subNs = useNamespace('submenu');
 
+const subMenuClass = subNs.b();
+
 interface clickEvent extends MouseEvent {
   path: HTMLElement[];
 }
@@ -30,6 +32,7 @@ export default defineComponent({
     const mode = inject('mode') as Ref<string>;
     const subMenuItemContainer = ref(null) as Ref<null>;
     const parentEmit = inject('rootMenuEmit') as (eventName: 'submenu-change', ...args: any[]) => void;
+    const isHorizontal = mode.value === 'horizontal';
     if (key_ === 'null') {
       console.warn(`[devui][menu]: Key can not be null`);
     } else {
@@ -43,7 +46,11 @@ export default defineComponent({
       e.preventDefault();
       e.stopPropagation();
       const ele = e.currentTarget as HTMLElement;
-      if (mode.value === 'horizontal') {
+
+      if (ele.classList.contains(subMenuClass) && isHorizontal) {
+        return;
+      }
+      if (isHorizontal) {
         clearSelect(ele, e, true);
         useClick(e as clickEvent);
       }
@@ -51,7 +58,7 @@ export default defineComponent({
         const target = e.target as HTMLElement;
         let cur = e.target as HTMLElement;
         if (target.tagName === 'UL') {
-          if (target.classList.contains(`${subNs.b()}-open`)) {
+          if (target.classList.contains(`${subMenuClass}-open`)) {
             isOpen.value = !isOpen.value;
           } else {
             isOpen.value = isOpen.value;
@@ -98,7 +105,7 @@ export default defineComponent({
       const e = subMenu.value as unknown as HTMLElement;
       addLayer();
       class_layer.value = `layer_${Array.from(e.classList).at(-1)?.replace('layer_', '')}`;
-      if (mode.value === 'horizontal') {
+      if (isHorizontal) {
         (subMenu.value as unknown as Element as HTMLElement).addEventListener('mouseenter', (ev: MouseEvent) => {
           ev.stopPropagation();
           useShowSubMenu('mouseenter', ev, wrapperDom);
@@ -130,26 +137,30 @@ export default defineComponent({
     });
     return () => {
       return (
-        <ul v-show={isShow.value} onClick={clickHandle} class={[subNs.b(), class_layer.value]} ref={subMenu}>
-          <div class={[`${subNs.b()}-title`, props['disabled'] && `${subNs.b()}-disabled`]} style={`padding: 0 ${indent}px`} ref={title}>
+        <ul v-show={isShow.value} onClick={clickHandle} class={[subMenuClass, class_layer.value]} ref={subMenu}>
+          <div
+            class={[`${subMenuClass}-title`, props['disabled'] && `${subMenuClass}-disabled`]}
+            style={`padding: 0 ${indent}px`}
+            ref={title}>
             <span class={`${ns.b()}-icon`}>{ctx.slots?.icon?.()}</span>
-            <span v-show={!isCollapsed.value} class={`${subNs.b()}-title-content`}>
+            <span v-show={!isCollapsed.value} class={`${subMenuClass}-title-content`}>
               {props.title}
             </span>
             <i
-              v-show={!isCollapsed.value && mode.value !== 'horizontal'}
+              v-show={!isCollapsed.value}
               class={{
-                'icon icon-chevron-up': !isOpen.value,
-                'icon icon-chevron-down': isOpen.value,
+                'icon icon-chevron-up': class_layer.value !== `layer_${subMenuClass}`,
+                'icon icon-chevron-right': class_layer.value === `layer_${subMenuClass}`,
+                'is-opened': isOpen.value,
               }}></i>
           </div>
-          {mode.value === 'horizontal' ? (
+          {isHorizontal ? (
             <div class={`${ns.b()}-item-horizontal-wrapper ${ns.b()}-item-horizontal-wrapper-hidden`} ref={wrapper}>
               {ctx.slots.default?.()}
             </div>
           ) : (
             <MenuTransition>
-              <div class={[`${subNs.b()}-menu-item-vertical-wrapper`]} ref={subMenuItemContainer} v-show={isOpen.value}>
+              <div class={[`${subMenuClass}-menu-item-vertical-wrapper`]} ref={subMenuItemContainer} v-show={isOpen.value}>
                 {ctx.slots.default?.()}
               </div>
             </MenuTransition>
