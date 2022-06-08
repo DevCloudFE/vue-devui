@@ -1,4 +1,6 @@
-import type { ExtractPropTypes } from 'vue';
+import type { ExtractPropTypes, PropType } from 'vue';
+
+export type IStepsDirection = 'horizontal' | 'vertical';
 
 export const stepsProps = {
   modelValue: {
@@ -11,6 +13,10 @@ export const stepsProps = {
   alignCenter: {
     type: Boolean,
     default: false,
+  },
+  direction: {
+    type: String as PropType<IStepsDirection>,
+    default: 'horizontal',
   },
 } as const;
 

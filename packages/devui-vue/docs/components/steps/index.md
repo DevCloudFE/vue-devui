@@ -142,13 +142,46 @@ export default defineComponent({
 
 :::
 
+### 竖向步骤条
+
+:::demo
+
+```vue
+<template>
+  <div style="height: 260px;">
+    <d-steps v-model="activeStepDirection" direction="vertical">
+      <d-step title="基本信息"></d-step>
+      <d-step title="选择代码源"></d-step>
+      <d-step title="选择构建模板" description="根据项目类型选择合适的构建模板"></d-step>
+    </d-steps>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const activeStepDirection = ref(1);
+
+    return {
+      activeStepDirection,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Steps 参数
 
-| 参数名       | 类型      | 默认值 | 说明              | 跳转 Demo             |
-| :----------- | :-------- | :----- | :---------------- | :-------------------- |
-| v-model      | `number`  | 0      | 当前激活的步骤    | [基本用法](#基本用法) |
-| space        | `number`  | --     | 可选，step 的间距 |                       |
-| align-center | `boolean` | false  | 可选，居中对齐    | [居中对齐](#居中对齐) |
+| 参数名       | 类型                                | 默认值       | 说明              | 跳转 Demo                 |
+| :----------- | :---------------------------------- | :----------- | :---------------- | :------------------------ |
+| v-model      | `number`                            | 0            | 当前激活的步骤    | [基本用法](#基本用法)     |
+| space        | `number`                            | --           | 可选，step 的间距 |                           |
+| align-center | `boolean`                           | false        | 可选，居中对齐    | [居中对齐](#居中对齐)     |
+| direction    | [IStepsDirection](#istepsdirection) | 'horizontal' | 可选，步骤条方向  | [竖向步骤条](#竖向步骤条) |
 
 ### Step 参数
 
@@ -163,3 +196,11 @@ export default defineComponent({
 | 名称 | 说明       | 参数              | 跳转 Demo |
 | :--- | :--------- | :---------------- | :-------- |
 | icon | 步骤的图标 | `color`，图标颜色 | --        |
+
+### Steps 类型定义
+
+#### IStepsDirection
+
+```ts
+export type IStepsDirection = 'horizontal' | 'vertical';
+```

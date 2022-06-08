@@ -70,8 +70,10 @@ export default defineComponent({
             { renderDot() }
             <div class={ns.e('line')}></div>
           </div>
-          <span class={ns.e('title')}>{ title.value }</span>
-          { description.value && <span class={ns.e('description') }>{ description.value }</span>}
+          <div class={ns.e('content')}>
+            <span class={ns.e('title')}>{ title.value }</span>
+            { description.value && <span class={ns.e('description') }>{ description.value }</span>}
+          </div>
         </div>
       );
     };

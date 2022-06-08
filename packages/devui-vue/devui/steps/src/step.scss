@@ -21,6 +21,11 @@
     position: relative;
   }
 
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__dot {
     display: inline-flex;
     justify-content: center;

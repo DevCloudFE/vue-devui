@@ -2,4 +2,25 @@
 
 .#{$devui-prefix}-steps {
   display: flex;
+
+  &.vertical {
+    flex-direction: column;
+    height: 100%;
+
+    .#{$devui-prefix}-step {
+      flex-direction: row;
+
+      &__line {
+        width: 1px;
+        height: 100%;
+        left: 12px;
+        top: 24px;
+      }
+
+      &__content {
+        margin-left: 8px;
+        padding-top: 2px;
+      }
+    }
+  }
 }
