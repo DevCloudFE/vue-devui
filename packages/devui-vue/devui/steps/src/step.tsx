@@ -8,8 +8,8 @@ import './step.scss';
 export default defineComponent({
   name: 'DStep',
   props: stepProps,
-  setup(props: StepProps) {
-    const { title, description } = toRefs(props);
+  setup(props: StepProps, { slots }) {
+    const { title, description, icon } = toRefs(props);
     const ns = useNamespace('step');
     const instance = getCurrentInstance();
 
@@ -42,15 +42,32 @@ export default defineComponent({
       return styleObj;
     });
 
+    const iconColor = computed(() => {
+      const isActive = activeStep.value === currentStepIndex;
+      const isFinished = activeStep.value > currentStepIndex;
+
+      return isActive
+        ? 'var(--devui-brand)'
+        : isFinished
+          ? 'var(--devui-success)'
+          : 'var(--devui-placeholder)';
+    });
+
+    const renderDot = () => {
+      return slots.icon
+        ? slots.icon?.(iconColor.value)
+        : icon.value
+          ? <Icon name={icon.value} color={iconColor.value} size="24px"></Icon>
+          : activeStep.value > steps.value.indexOf(instance)
+            ? <Icon name="right-o" color="var(--devui-success)" size="24px"></Icon>
+            : <span class={ns.e('dot')}>{ currentStepIndex + 1 }</span>;
+    };
+
     return () => {
       return (
         <div class={stepClass.value} style={stepStyle.value}>
           <div class={ns.e('dot-container')}>
-            {
-              activeStep.value > steps.value.indexOf(instance)
-                ? <Icon name="right-o" color="var(--devui-success)" size="24px"></Icon>
-                : <span class={ns.e('dot')}>{ currentStepIndex + 1 }</span>
-            }
+            { renderDot() }
             <div class={ns.e('line')}></div>
           </div>
           <span class={ns.e('title')}>{ title.value }</span>
