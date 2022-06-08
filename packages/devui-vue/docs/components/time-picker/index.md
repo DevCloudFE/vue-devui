@@ -14,7 +14,7 @@
 <template>
   <div>
     <h4 class="my-10">basic</h4>
-    <d-time-picker placeholder="请选择时间" />
+    <d-time-picker v-model="time01" placeholder="请选择时间" />
   </div>
   <div>
     <h4 class="my-10">default open</h4>
@@ -31,8 +31,10 @@ import { ref, defineComponent, nextTick } from 'vue';
 export default defineComponent({
   setup(props, ctx) {
     let vModelValue = ref('12:30:40');
+    let time01 = ref('');
     return {
       vModelValue,
+      time01,
     };
   },
 });
