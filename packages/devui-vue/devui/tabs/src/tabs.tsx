@@ -32,7 +32,12 @@ export default defineComponent({
         <TabNav {...props} onActiveTabChange={onActiveTabChange} onTabRemove={onTabRemove} onTabAdd={onTabAdd} onTabChange={onTabChange} />
       );
       const content = ctx.slots.default?.();
-      return <div class={tabsClasses.value}>{props.tabPosition === 'bottom' ? [content, tabNav] : [tabNav, content]}</div>;
+      return (
+        <div class={tabsClasses.value}>
+          {props.tabPosition === 'bottom' ? [content, tabNav] : [tabNav, content]}
+          <div style={'clear: both'}></div>
+        </div>
+      );
     };
   },
 });

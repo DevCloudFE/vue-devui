@@ -90,11 +90,6 @@ export default defineComponent({
   },
 });
 </script>
-<style>
-.source {
-  overflow: unset !important;
-}
-</style>
 ```
 
 :::
