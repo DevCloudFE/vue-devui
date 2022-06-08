@@ -8,6 +8,8 @@
   }
 
   .source {
+    overflow: unset !important;
+
     .demo-spacing {
       & > * {
         margin: 0 8px 8px 0;
@@ -50,7 +52,7 @@
   }
 }
 
-[class^=version-tag] {
+[class^='version-tag'] {
   display: inline-block;
   padding: 0 4px;
   line-height: 20px;

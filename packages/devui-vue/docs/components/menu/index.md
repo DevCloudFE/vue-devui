@@ -245,39 +245,39 @@ const changeDisabled = () => {
 
 ### d-menu 参数
 
-| 参数                | 类型     | 默认       | 说明                       | 跳转 Demo                 | 全局配置项 |
-| ------------------- | -------- | ---------- | -------------------------- | ------------------------- | ---------- |
-| width               | String   | ''         | 用于控制菜单宽度           | [响应式参数](#响应式参数) |            |
-| collapsed           | Boolean  | false      | 用于决定菜单是否收起       | [收缩面板](#收缩面板)     |            |
-| collapsed-indent    | Number   | 24         | 收起时图表距离菜单的距离   | /                         |            |
-| indent-size         | Number   | 24         | 未收起时二级菜单的缩进大小 | /                         |            |
-| multiple            | Boolean  | false      | 是否可以多选               | /                         |            |
-| mode                | menuMode | 'vertical' | 菜单类型                   | [基本用法](#基本用法)     |            |
-| open-keys           | Array    | []         | 默认展开的子菜单 key 值    | [默认展](#默认展开)       |            |
-| default-select-keys | Array    | []         | 默认选择菜单项 key 值      | /                         |            |
+| 参数                | 类型                  | 默认       | 说明                       | 跳转 Demo                 |
+| ------------------- | --------------------- | ---------- | -------------------------- | ------------------------- |
+| width               | String                | ''         | 用于控制菜单宽度           | [响应式参数](#响应式参数) |
+| collapsed           | Boolean               | false      | 用于决定菜单是否收起       | [收缩菜单](#收缩菜单)     |
+| collapsed-indent    | Number                | 24         | 收起时图表距离菜单的距离   | /                         |
+| indent-size         | Number                | 24         | 未收起时二级菜单的缩进大小 | /                         |
+| multiple            | Boolean               | false      | 是否可以多选               | [取消多选](#取消多选)     |
+| mode                | [menuMode](#menumode) | 'vertical' | 菜单类型                   | [基本用法](#基本用法)     |
+| open-keys           | Array                 | []         | 默认展开的子菜单 key 值    | [默认展开](#默认展开)     |
+| default-select-keys | Array                 | []         | 默认选择菜单项 key 值      | [基本用法](#基本用法)     |
 
 ### d-menu 事件
 
 | 事件           | 类型                                                                   | 说明                                                 | 跳转 Demo |
 | -------------- | ---------------------------------------------------------------------- | ---------------------------------------------------- | --------- |
-| select         | `(e: {type:'select', el: HTMLElement})=>void`                          | 选中菜单项时触发该事件,被禁用的选项不会被触发        |           |
-| dselect        | `(e: {type: 'dselect', el: HTMLElement})=>void`                        | 取消选中时触发该事件，如果菜单不是多选菜单不会被触发 |           |
-| submenu-change | `(e: {type: 'submenu-change': el: HTMLElement: state: boolean})=>void` | 子菜单状态被更改时会触发                             |
+| select         | `(e: {type:'select', el: HTMLElement})=>void`                          | 选中菜单项时触发该事件,被禁用的选项不会被触发        | -         |
+| dselect        | `(e: {type: 'dselect', el: HTMLElement})=>void`                        | 取消选中时触发该事件，如果菜单不是多选菜单不会被触发 | -         |
+| submenu-change | `(e: {type: 'submenu-change': el: HTMLElement: state: boolean})=>void` | 子菜单状态被更改时会触发                             | -         |
 
 ### d-menu-item
 
-|  参数   |  类型   | 默认  |          说明           |       跳转 Demo       | 全局配置项 |
-| :-----: | :-----: | :---: | :---------------------: | :-------------------: | ---------- |
-| disable | boolean | false |        是否禁用         |                       |            |
-|   key   | string  |  ''   | 菜单项的 key 值，需唯一 |                       |            |
-|  href   | string  |  ''   | 单击菜单项后跳转的页面  | [基本用法](#基本用法) |
+|   参数   |  类型   | 默认  |          说明           |       跳转 Demo       |
+| :------: | :-----: | :---: | :---------------------: | :-------------------: |
+| disabled | boolean | false |        是否禁用         |           -           |
+|   key    | string  |  ''   | 菜单项的 key 值，需唯一 |           -           |
+|   href   | string  |  ''   | 单击菜单项后跳转的页面  | [基本用法](#基本用法) |
 
 ### d-sub-menu
 
-|  参数   |  类型   | 默认  |      说明      | 跳转 Demo | 全局配置项 |
-| :-----: | :-----: | :---: | :------------: | :-------: | ---------- |
-|  title  | String  |  ''   |   子菜单标题   |           |            |
-| disable | boolean | false | 是否禁用子菜单 |           |            |
+|   参数   |  类型   | 默认  |      说明      |       跳转 Demo       |
+| :------: | :-----: | :---: | :------------: | :-------------------: |
+|  title   | String  |  ''   |   子菜单标题   | [基本用法](#基本用法) |
+| disabled | boolean | false | 是否禁用子菜单 |           -           |
 
 ### d-menu-item 插槽
 
@@ -291,7 +291,9 @@ const changeDisabled = () => {
 | :----: | :-----------------------: |
 |  icon  | 用于定义子菜单标题的 icon |
 
-### 接口及其定义
+### menu 类型定义
+
+#### menuMode
 
 ```typescript
 export type menuMode = 'vertical' | 'horizontal';
