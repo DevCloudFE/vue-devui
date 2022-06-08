@@ -50,13 +50,13 @@ export default defineComponent({
         } else {
           if (ele.classList.contains(menuItemSelect)) {
             ele.classList.remove(menuItemSelect);
-            rootMenuEmit('deselect', { type: 'deselect', el: ele, e });
+            rootMenuEmit('deselect', { type: 'deselect', key, el: ele, e });
             return;
           } else {
             ele.classList.add(menuItemSelect);
           }
         }
-        rootMenuEmit('select', { type: 'select', el: ele, e });
+        rootMenuEmit('select', { type: 'select', key, el: ele, e });
       }
       if (mode.value === 'vertical') {
         const target = e.currentTarget as HTMLElement;
