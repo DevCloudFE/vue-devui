@@ -112,6 +112,36 @@ export default defineComponent({
 
 :::
 
+### 自定义图标
+
+:::demo
+
+```vue
+<template>
+  <d-steps v-model="activeStepCustomIcon">
+    <d-step title="基本信息" icon="classroom-post-answers-large"></d-step>
+    <d-step title="选择代码源" icon="code"></d-step>
+    <d-step title="选择构建模板" icon="icon-build-with-tool"></d-step>
+  </d-steps>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const activeStepCustomIcon = ref(1);
+
+    return {
+      activeStepCustomIcon,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Steps 参数
 
 | 参数名       | 类型      | 默认值 | 说明              | 跳转 Demo             |
@@ -122,7 +152,14 @@ export default defineComponent({
 
 ### Step 参数
 
-| 参数名      | 类型     | 默认值 | 说明             | 跳转 Demo                         |
-| :---------- | :------- | :----- | :--------------- | :-------------------------------- |
-| title       | `string` | --     | 必选，步骤的标题 | [基本用法](#基本用法)             |
-| description | `string` | --     | 可选，步骤的描述 | [带描述的步骤条](#带描述的步骤条) |
+| 参数名      | 类型     | 默认值 | 说明                   | 跳转 Demo                         |
+| :---------- | :------- | :----- | :--------------------- | :-------------------------------- |
+| title       | `string` | --     | 必选，步骤的标题       | [基本用法](#基本用法)             |
+| description | `string` | --     | 可选，步骤的描述       | [带描述的步骤条](#带描述的步骤条) |
+| icon        | `string` | --     | 可选，自定义步骤的图标 | [自定义图标](#自定义图标)         |
+
+### Step 插槽
+
+| 名称 | 说明       | 参数              | 跳转 Demo |
+| :--- | :--------- | :---------------- | :-------- |
+| icon | 步骤的图标 | `color`，图标颜色 | --        |

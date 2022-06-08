@@ -8,6 +8,9 @@ export const stepProps = {
   description: {
     type: String,
   },
+  icon: {
+    type: String,
+  },
 } as const;
 
 export type StepProps = ExtractPropTypes<typeof stepProps>;
