@@ -31,3 +31,26 @@ export interface UseDatePickerProReturnType {
   state: datePickerProState;
   onFocus: (e: MouseEvent) => void;
 }
+
+export interface CalendarDateItem {
+  day: string;
+  date: Date;
+  inMonth: boolean;
+  isToday: boolean;
+  isActive?: boolean;
+}
+
+export interface YearAndMonthItem {
+  year: number;
+  month?: number;
+  isMonth?: boolean;
+  active?: boolean;
+  displayWeeks?: CalendarDateItem[][];
+}
+
+export interface UseCalendarPanelReturnType {
+  yearAndMonthList: Ref<YearAndMonthItem[]>;
+  allMonthList: Ref<YearAndMonthItem[]>;
+  isListCollapse: Ref<boolean>;
+  handlerSelectDate: (day: CalendarDateItem) => void;
+}

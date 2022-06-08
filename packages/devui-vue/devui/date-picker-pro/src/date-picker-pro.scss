@@ -8,3 +8,117 @@
     position: relative;
   }
 }
+
+.#{$devui-prefix}-date-picker-pro__panel {
+  width: max-content;
+
+  &-content {
+    display: flex;
+  }
+}
+
+.#{$devui-prefix}-date-picker-pro__calendar-panel {
+  text-align: center;
+  display: flex;
+
+  &--year-list {
+    padding: 8px 0;
+    display: inline-block;
+    width: 80px;
+    height: 305px;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      width: 0 !important;
+    }
+
+    &-item {
+      background-color: $devui-base-bg;
+
+      .#{$devui-prefix}-date-picker-pro__year-title {
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 30px;
+        cursor: pointer;
+      }
+      .#{$devui-prefix}-date-picker-pro__month-title {
+        font-size: 12px;
+        line-height: 30px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &--main {
+    padding: 4px;
+    display: inline-block;
+    width: 253px;
+    height: 305px;
+    font-size: 12px;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      width: 0 !important;
+    }
+  }
+}
+
+.#{$devui-prefix}-date-picker-pro__tbody-wrapper {
+  height: 270px;
+  width: 100%;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
+}
+
+.#{$devui-prefix}-date-picker-pro__calendar-table {
+  border-spacing: 0;
+  margin: 0;
+
+  .#{$devui-prefix}-date-picker-pro__table-week-header td {
+    width: 35px;
+    height: 22px;
+    padding: 0;
+  }
+
+  .#{$devui-prefix}-date-picker-pro__table-month-title {
+    text-align: start;
+    line-height: 26px;
+    color: $devui-aide-text;
+    padding-left: 8px;
+  }
+
+  .#{$devui-prefix}-date-picker-pro__table-month-content {
+    color: $devui-text;
+    border-spacing: 0 4px;
+    border-collapse: separate;
+
+    .#{$devui-prefix}-date-picker-pro__table-date {
+      padding: 0 4px;
+      width: 30px;
+
+      span {
+        cursor: pointer;
+        display: block;
+        width: 22px;
+        height: 22px;
+        line-height: 22px;
+        border-radius: $devui-border-radius-feedback;
+      }
+    }
+  }
+}
+
+.#{$devui-prefix}-date-picker-pro__calendar-table tr,
+.#{$devui-prefix}-date-picker-pro__calendar-table td {
+  border: none;
+  padding: 0;
+}
