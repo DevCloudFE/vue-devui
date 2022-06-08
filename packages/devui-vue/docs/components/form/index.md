@@ -496,9 +496,9 @@ export default defineComponent({
       username: '',
       userInfo: '',
       age: '',
-      select: '',
+      select: 'Options2',
       autoComplete: '',
-      executionDay: [],
+      executionDay: ['Tue'],
       radio: '',
     });
     const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
