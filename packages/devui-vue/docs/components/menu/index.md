@@ -261,7 +261,7 @@ const changeDisabled = () => {
 | 事件           | 类型                                                                   | 说明                                                 | 跳转 Demo |
 | -------------- | ---------------------------------------------------------------------- | ---------------------------------------------------- | --------- |
 | select         | `(e: {type:'select', el: HTMLElement})=>void`                          | 选中菜单项时触发该事件,被禁用的选项不会被触发        | -         |
-| dselect        | `(e: {type: 'dselect', el: HTMLElement})=>void`                        | 取消选中时触发该事件，如果菜单不是多选菜单不会被触发 | -         |
+| deselect       | `(e: {type: 'deselect', el: HTMLElement})=>void`                       | 取消选中时触发该事件，如果菜单不是多选菜单不会被触发 | -         |
 | submenu-change | `(e: {type: 'submenu-change': el: HTMLElement: state: boolean})=>void` | 子菜单状态被更改时会触发                             | -         |
 
 ### d-menu-item

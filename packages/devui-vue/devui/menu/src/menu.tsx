@@ -8,7 +8,7 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 export default defineComponent({
   name: 'DMenu',
   props: menuProps,
-  emits: ['select', 'dselect', 'submenu-change'],
+  emits: ['select', 'deselect', 'submenu-change'],
   setup(props: MenuProps, ctx) {
     const ns = useNamespace('menu');
 
