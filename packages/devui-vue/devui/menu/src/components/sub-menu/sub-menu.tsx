@@ -74,7 +74,7 @@ export default defineComponent({
             isOpen.value = !isOpen.value;
           }
         }
-        parentEmit('submenu-change', { type: 'submenu-change', state: isOpen.value, el: cur });
+        parentEmit('submenu-change', { type: 'submenu-change', state: isOpen.value, key: key_, el: cur });
       }
     };
     const wrapper = ref(null);

@@ -1,45 +1,81 @@
-import { mount, shallowMount } from '@vue/test-utils';
-import { reactive, ref } from 'vue';
+import { mount, VueWrapper } from '@vue/test-utils';
+import { ComponentPublicInstance, nextTick, ref } from 'vue';
 import { Menu, SubMenu, MenuItem } from '../index';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
-const factory_Menu = (value: Record<string, unknown>) => shallowMount(Menu, value);
+const ns = useNamespace('menu');
+const dotNs = useNamespace('menu', true);
+const dotSubNs = useNamespace('submenu', true);
+
+const menuVertical = ns.b() + '-vertical';
+const menuHorizontal = ns.b() + '-horizontal';
+const dotMenuItem = dotNs.b() + '-item';
+const dotMenuItemVerticalWrapper = dotNs.b() + '-item-vertical-wrapper';
+const dotSubMenu = dotSubNs.b();
 
 describe('menu test', () => {
-  it('menu - defaultMode test', async () => {
-    //
-    const menu = factory_Menu({});
-    expect(menu.classes().indexOf('vertical')).toBe(1);
-  });
-  it('menu - dynamic - mode', async () => {
-    const menu = factory_Menu({
-      props: {
-        mode: 'horizontal',
+  let wrapper: VueWrapper<ComponentPublicInstance>;
+
+  it('menu - basic render test', async () => {
+    wrapper = mount({
+      components: {
+        'd-menu': Menu,
+        'd-sub-menu': SubMenu,
+        'd-menu-item': MenuItem,
       },
+      template: `
+      <d-menu>
+        <d-menu-item key="home">首页</d-menu-item>
+        <d-sub-menu title="课程" key="course">
+          <d-menu-item key="c"> C </d-menu-item>
+          <d-sub-menu title="Python" key="python">
+            <d-menu-item key="basic"> 基础 </d-menu-item>
+            <d-menu-item key="advanced"> 进阶 </d-menu-item>
+          </d-sub-menu>
+        </d-sub-menu>
+        <d-menu-item key="person">个人</d-menu-item>
+        <d-menu-item key="custom" href="https://www.baidu.com"> Link To Baidu </d-menu-item>
+      </d-menu>
+      `,
     });
-    expect(menu.classes().indexOf('horizontal')).not.toBe(-1);
+
+    await nextTick();
+
+    expect(wrapper.classes().includes(menuVertical)).toBe(true);
+    expect(wrapper.find(dotSubMenu).exists()).toBe(true);
+    expect(wrapper.find(dotMenuItem).exists()).toBe(true);
+    expect(wrapper.find(dotMenuItemVerticalWrapper).exists()).toBe(true);
+    await wrapper.setProps({
+      mode: 'horizontal',
+    });
+    expect(wrapper.classes().includes(menuHorizontal)).toBe(true);
   });
 
   // 参数动态测试 - defaultSelectKeys
-  it('menu - dynamic attr - defaultSelectKeys ', async () => {
+  it('menu defaultSelectKeys work', async () => {
     //
-    const wrapper = mount({
+    wrapper = mount({
       components: {
-        Menu,
-        SubMenu,
-        MenuItem,
+        'd-menu': Menu,
+        'd-sub-menu': SubMenu,
+        'd-menu-item': MenuItem,
       },
       template: `
-        <Menu :default-select-keys="selectKeys">
-          <MenuItem key='test'>
+        <d-menu :default-select-keys="selectKeys">
+          <d-menu-item key='test'>
             Test
-          </MenuItem>
-        </Menu>
+          </d-menu-item>
+          <d-menu-item key='test2'>
+            Test2
+          </d-menu-item>
+        </d-menu>
         <button @click="clickHandle">Change key</button>
       `,
       setup() {
         const selectKeys = ref(['test']);
         const clickHandle = () => {
-          selectKeys.value.pop();
+          selectKeys.value[0] = 'test2';
+          console.log(selectKeys.value);
         };
         return {
           selectKeys,
@@ -47,34 +83,39 @@ describe('menu test', () => {
         };
       },
     });
-    expect(wrapper.find('li').classes().indexOf('devui-menu-item-select')).not.toBe(-1);
-    await wrapper.find('button').trigger('click');
-    expect(wrapper.find('li').classes().indexOf('devui-menu-item-select')).toBe(-1);
+    await nextTick();
+    expect(wrapper.findAll('li')[0].classes().includes('devui-menu-item-select')).toBe(true);
+    expect(wrapper.findAll('li')[1].classes().includes('devui-menu-item-select')).toBe(false);
   });
+
   // 参数动态测试 - openKeys
   it('menu - dynamic attr - openKeys', async () => {
     //
-    const wrapper = mount({
-      components: { Menu, SubMenu, MenuItem },
+    wrapper = mount({
+      components: {
+        'd-menu': Menu,
+        'd-sub-menu': SubMenu,
+        'd-menu-item': MenuItem,
+      },
       template: `
-        <Menu :open-keys="defaultOpenKey">
-          <SubMenu key="1">
-            <MenuItem>
+        <d-menu :open-keys="defaultOpenKey">
+          <d-sub-menu key="1">
+            <d-menu-item key="SubMenu>Item1">
               SubMenu > Item 1
-            </MenuItem>
-            <MenuItem>
+            </d-menu-item>
+            <d-menu-item key="SubMenu>Item2">
               SubMenu > Item 2
-            </MenuItem>
-          </SubMenu>
-          <SubMenu key="2">
-            <MenuItem>
+            </d-menu-item>
+          </d-sub-menu>
+          <d-sub-menu key="2" >
+            <d-menu-item key="SubMenu2>Item1">
               SubMenu2 > Item 1
-            </MenuItem>
-            <MenuItem>
+            </d-menu-item>
+            <d-menu-item key="SubMenu2>Item2">
               SubMenu2 > Item 2
-            </MenuItem>
-          </SubMenu>
-        </Menu>
+            </d-menu-item>
+          </d-sub-menu>
+        </d-menu>
         <button @click=change>Click to Change openKeys</button>
       `,
       setup() {
@@ -92,10 +133,7 @@ describe('menu test', () => {
         };
       },
     });
-    console.log(wrapper.findAll('ul')[2].classes());
-    await wrapper.find('button').trigger('click');
-    console.log(wrapper.findAll('ul')[2].classes());
-    await wrapper.find('button').trigger('click');
-    console.log(wrapper.findAll('ul')[2].classes());
+    expect(wrapper.findAll('i')[0].classes().includes('is-opened')).toBe(true);
+    expect(wrapper.findAll('i')[1].classes().includes('is-opened')).toBe(false);
   });
 });
