@@ -4,6 +4,7 @@ import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types'
 import usePickerPro from './use-picker-pro';
 import { Input } from '../../input';
 import { FlexibleOverlay } from '../../overlay';
+import DatePickerProPanel from './components/date-picker-panel';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './date-picker-pro.scss';
 
@@ -23,7 +24,7 @@ export default defineComponent({
           </div>
           <Transition name="fade">
             <FlexibleOverlay v-model={state.show} v-show={state.show} ref={overlayRef} origin={originRef.value} position={position.value}>
-              <div class={ns.e('panel')}>日历选择</div>
+              <DatePickerProPanel></DatePickerProPanel>
             </FlexibleOverlay>
           </Transition>
         </div>
