@@ -47,7 +47,7 @@ export default defineComponent({
         clearSelect(ele, e, true);
         useClick(e as clickEvent);
       }
-      if (!props.disable && mode.value !== 'horizontal') {
+      if (!props.disabled && mode.value !== 'horizontal') {
         const target = e.target as HTMLElement;
         let cur = e.target as HTMLElement;
         if (target.tagName === 'UL') {
@@ -131,7 +131,7 @@ export default defineComponent({
     return () => {
       return (
         <ul v-show={isShow.value} onClick={clickHandle} class={[subNs.b(), class_layer.value]} ref={subMenu}>
-          <div class={[`${subNs.b()}-title`, props['disable'] && `${subNs.b()}-disabled`]} style={`padding: 0 ${indent}px`} ref={title}>
+          <div class={[`${subNs.b()}-title`, props['disabled'] && `${subNs.b()}-disabled`]} style={`padding: 0 ${indent}px`} ref={title}>
             <span class={`${ns.b()}-icon`}>{ctx.slots?.icon?.()}</span>
             <span v-show={!isCollapsed.value} class={`${subNs.b()}-title-content`}>
               {props.title}

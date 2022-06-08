@@ -5,7 +5,7 @@ export const subMenuProps = {
     type: String,
     default: '',
   },
-  disable: {
+  disabled: {
     type: Boolean,
     default: false,
   },

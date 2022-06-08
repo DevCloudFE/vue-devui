@@ -261,7 +261,9 @@ export default defineComponent({
 
 添加和删除选项卡
 
-### tabs
+#### tabs
+
+在 d-tabs 上设置 `closeable`、`addable`可显示关闭和新增 tab 的按钮。`tab-add`和`tab-remove`事件分别在添加和删除按钮被点击时触发。
 
 :::demo
 
@@ -332,9 +334,9 @@ export default defineComponent({
 
 :::
 
-### tab
+#### tab
 
-tab 的关闭按钮可单独控制，tabs 的 `closeable`属性为 true 时，tab 的`closeable`属性不生效。
+d-tab 的关闭按钮可单独控制，d-tabs 的 `closeable`属性为 true 时，d-tab 的`closeable`属性不生效。
 
 :::demo
 
