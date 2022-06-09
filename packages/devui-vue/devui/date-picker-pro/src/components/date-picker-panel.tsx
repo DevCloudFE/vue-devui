@@ -8,11 +8,11 @@ import type { Dayjs } from 'dayjs';
 export default defineComponent({
   name: 'DatePickerProPanel',
   props: datePickerProPanelProps,
-  emits: ['selected-date'],
+  emits: ['selectedDate'],
   setup(props: DatePickerProPanelProps, ctx: SetupContext) {
     const ns = useNamespace('date-picker-pro');
     const onSelectedDate = (date: Dayjs) => {
-      ctx.emit('selected-date', date);
+      ctx.emit('selectedDate', date);
     };
 
     return () => {

@@ -83,8 +83,11 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
   });
 
   const handlerSelectDate = (day: CalendarDateItem) => {
+    if (!day.inMonth) {
+      return;
+    }
     selectDate.value = dayjs(new Date(day.date.setHours(0, 0, 0))).locale('zh-cn');
-    ctx.emit('selected-date', selectDate.value);
+    ctx.emit('selectedDate', selectDate.value);
   };
 
   return { yearAndMonthList, allMonthList, isListCollapse, handlerSelectDate };

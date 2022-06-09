@@ -52,7 +52,7 @@ export default defineComponent({
 
 ### DatePickerPro 事件
 
-| 事件名        | 类型                      | 说明                             | 跳转 Demo |
-| :------------ | :------------------------ | :------------------------------- | :-------- |
-| toggle-change | `(bool: boolean) => void` | 可选，选择器打开关闭 toggle 事件 |           |
-| confirm-event | `(date: Date) => void`    | 可选，用户确定选定的值时触发     |           |
+| 事件名       | 类型                      | 说明                             | 跳转 Demo |
+| :----------- | :------------------------ | :------------------------------- | :-------- |
+| toggleChange | `(bool: boolean) => void` | 可选，选择器打开关闭 toggle 事件 |           |
+| confirmEvent | `(date: Date) => void`    | 可选，用户确定选定的值时触发     |           |

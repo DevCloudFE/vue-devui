@@ -6,7 +6,6 @@ import { Input } from '../../input';
 import { FlexibleOverlay } from '../../overlay';
 import DatePickerProPanel from './components/date-picker-panel';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import './date-picker-pro.scss';
 
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
@@ -14,6 +13,8 @@ import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import weekYear from 'dayjs/plugin/weekYear.js';
 import dayOfYear from 'dayjs/plugin/dayOfYear.js';
+
+import './date-picker-pro.scss';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(advancedFormat);
@@ -24,7 +25,7 @@ dayjs.extend(dayOfYear);
 export default defineComponent({
   name: 'DDatePickerPro',
   props: datePickerProProps,
-  emits: ['update:modelValue', 'toggle-change', 'confirm-event'],
+  emits: ['update:modelValue', 'toggleChange', 'confirmEvent'],
   setup(props: DatePickerProProps, ctx: SetupContext) {
     const ns = useNamespace('date-picker-pro');
     const {

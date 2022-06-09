@@ -16,7 +16,7 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
 
   const toggleChange = (bool: boolean) => {
     isPanelShow.value = bool;
-    ctx.emit('toggle-change', bool);
+    ctx.emit('toggleChange', bool);
   };
 
   onClickOutside(containerRef, () => {
@@ -74,7 +74,7 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
     if (!isDateEquals(props.modelValue, result)) {
       const formatDate = getFormatterDate(date, props.format);
       ctx.emit('update:modelValue', date ? formatDate : date);
-      ctx.emit('confirm-event', date);
+      ctx.emit('confirmEvent', date);
     }
     toggleChange(false);
   };

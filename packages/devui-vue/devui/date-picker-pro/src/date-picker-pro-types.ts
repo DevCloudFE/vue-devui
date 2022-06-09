@@ -13,14 +13,6 @@ export const datePickerProProps = {
     type: String,
     default: '请选择日期',
   },
-  onToggleChange: {
-    type: Function as PropType<(bool: boolean) => void>,
-    default: undefined,
-  },
-  onConfirmEvent: {
-    type: Function as PropType<(date: Date) => void>,
-    default: undefined,
-  },
 } as const;
 
 export type DatePickerProProps = ExtractPropTypes<typeof datePickerProProps>;
@@ -78,10 +70,6 @@ export const datePickerProPanelProps = {
   },
   dateValue: {
     type: [Object, Array] as PropType<Dayjs | Dayjs[]>,
-  },
-  onSelectedDate: {
-    type: Function as PropType<(date: Dayjs) => void>,
-    default: undefined,
   },
 } as const;
 

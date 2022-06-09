@@ -8,7 +8,7 @@ import { YearAndMonthItem, datePickerProPanelProps, DatePickerProPanelProps } fr
 export default defineComponent({
   name: 'CalendarPanel',
   props: datePickerProPanelProps,
-  emits: ['selected-date'],
+  emits: ['selectedDate'],
   setup(props: DatePickerProPanelProps, ctx: SetupContext) {
     const ns = useNamespace('date-picker-pro');
     const { yearAndMonthList, allMonthList, isListCollapse, handlerSelectDate } = useCalendarPanel(props, ctx);
