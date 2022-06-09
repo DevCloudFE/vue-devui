@@ -9,7 +9,7 @@ export default defineComponent({
   props: stepsProps,
   emits: ['update:modelValue'],
   setup(props: StepsProps, { slots }) {
-    const { modelValue, direction } = toRefs(props);
+    const { modelValue, direction, simple } = toRefs(props);
     const ns = useNamespace('steps');
 
     const activeStep = ref(modelValue.value);
@@ -26,8 +26,9 @@ export default defineComponent({
 
     const stepsClass = computed(() => {
       const directionClass = direction.value === 'vertical' ? ' vertical' : '';
+      const simpleClass = simple.value ? ' simple' : '';
 
-      return `${ns.b()}${directionClass}`;
+      return `${ns.b()}${directionClass}${simpleClass}`;
     });
 
     return () => {

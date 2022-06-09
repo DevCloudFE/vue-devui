@@ -6,7 +6,7 @@
   flex-shrink: 1;
 
   &:last-child {
-    &:not(.center) {
+    &:not(.center):not(.#{$devui-prefix}-step--simple) {
       flex-basis: auto !important;
     }
 
