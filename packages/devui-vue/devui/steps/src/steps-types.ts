@@ -18,6 +18,10 @@ export const stepsProps = {
     type: String as PropType<IStepsDirection>,
     default: 'horizontal',
   },
+  simple: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type StepsProps = ExtractPropTypes<typeof stepsProps>;

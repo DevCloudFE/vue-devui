@@ -204,23 +204,64 @@ export default defineComponent({
 
 :::
 
+### 简洁模式
+
+:::demo
+
+```vue
+<template>
+  <d-steps v-model="activeStepSimple" simple>
+    <d-step title="基本信息"></d-step>
+    <d-step title="选择代码源"></d-step>
+    <d-step title="选择构建模板"></d-step>
+  </d-steps>
+  <d-button @click="nextStepSimple" class="demo-steps-basic-next-step">下一步</d-button>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const activeStepSimple = ref(1);
+
+    const nextStepSimple = () => {
+      if (activeStepSimple.value > 2) {
+        activeStepSimple.value = 0;
+      } else {
+        activeStepSimple.value++;
+      }
+    };
+
+    return {
+      activeStepSimple,
+      nextStepSimple,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Steps 参数
 
-| 参数名       | 类型                                | 默认值       | 说明              | 跳转 Demo                 |
-| :----------- | :---------------------------------- | :----------- | :---------------- | :------------------------ |
-| v-model      | `number`                            | 0            | 当前激活的步骤    | [基本用法](#基本用法)     |
-| space        | `number`                            | --           | 可选，step 的间距 |                           |
-| align-center | `boolean`                           | false        | 可选，居中对齐    | [居中对齐](#居中对齐)     |
-| direction    | [IStepsDirection](#istepsdirection) | 'horizontal' | 可选，步骤条方向  | [竖向步骤条](#竖向步骤条) |
+| 参数名       | 类型                                | 默认值       | 说明               | 跳转 Demo                 |
+| :----------- | :---------------------------------- | :----------- | :----------------- | :------------------------ |
+| v-model      | `number`                            | 0            | 当前激活的步骤     | [基本用法](#基本用法)     |
+| space        | `number`                            | --           | 可选，step 的间距  |                           |
+| align-center | `boolean`                           | false        | 可选，居中对齐     | [居中对齐](#居中对齐)     |
+| direction    | [IStepsDirection](#istepsdirection) | 'horizontal' | 可选，步骤条方向   | [竖向步骤条](#竖向步骤条) |
+| simple       | `boolean`                           | false        | 可选，是否简洁模式 | [简洁模式](#简洁模式)     |
 
 ### Step 参数
 
-| 参数名      | 类型     | 默认值 | 说明                   | 跳转 Demo                         |
-| :---------- | :------- | :----- | :--------------------- | :-------------------------------- |
-| title       | `string` | --     | 必选，步骤的标题       | [基本用法](#基本用法)             |
-| description | `string` | --     | 可选，步骤的描述       | [带描述的步骤条](#带描述的步骤条) |
-| icon        | `string` | --     | 可选，自定义步骤的图标 | [自定义图标](#自定义图标)         |
-| status | [IStepStatus](#istepstatus) | -- | 可选，步骤的状态 | [自定义状态](#自定义状态) |
+| 参数名      | 类型                        | 默认值 | 说明                   | 跳转 Demo                         |
+| :---------- | :-------------------------- | :----- | :--------------------- | :-------------------------------- |
+| title       | `string`                    | --     | 必选，步骤的标题       | [基本用法](#基本用法)             |
+| description | `string`                    | --     | 可选，步骤的描述       | [带描述的步骤条](#带描述的步骤条) |
+| icon        | `string`                    | --     | 可选，自定义步骤的图标 | [自定义图标](#自定义图标)         |
+| status      | [IStepStatus](#istepstatus) | --     | 可选，步骤的状态       | [自定义状态](#自定义状态)         |
 
 ### Step 插槽
 

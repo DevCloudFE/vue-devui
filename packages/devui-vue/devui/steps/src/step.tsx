@@ -26,9 +26,10 @@ export default defineComponent({
       const activeClass = activeStep.value === currentStepIndex ? ' active' : '';
       const finishedClass = activeStep.value > currentStepIndex ? ' finished' : '';
       const centerClass =  stepsProps.alignCenter ? ' center' : '';
-      const statusClass = ` ${status?.value}` || '';
+      const statusClass = status?.value ? ` ${status?.value}` : '';
+      const simpleClass = stepsProps.simple ? ` ${ns.m('simple')}` : '';
 
-      return `${ns.b()}${activeClass}${finishedClass}${centerClass}${statusClass}`;
+      return `${ns.b()}${activeClass}${finishedClass}${centerClass}${statusClass}${simpleClass}`;
     });
     const stepStyle = computed(() => {
       const styleObj = {};
@@ -36,7 +37,7 @@ export default defineComponent({
       if (stepsProps.space) {
         styleObj.width = `${stepsProps.space}px`;
       } else {
-        styleObj.flexBasis = stepsProps.alignCenter
+        styleObj.flexBasis = (stepsProps.alignCenter || stepsProps.simple)
           ? `${100 / steps.value.length}%`
           : `${100 / (steps.value.length - 1)}%`;
       }
@@ -74,16 +75,24 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={stepClass.value} style={stepStyle.value}>
-          <div class={ns.e('dot-container')}>
-            { renderDot() }
-            <div class={ns.e('line')}></div>
-          </div>
-          <div class={ns.e('content')}>
-            <span class={ns.e('title')}>{ title.value }</span>
-            { description.value && <span class={ns.e('description') }>{ description.value }</span>}
-          </div>
-        </div>
+        <>
+          {
+            stepsProps.simple
+              ? <div class={stepClass.value} style={stepStyle.value}>
+                { title.value }
+              </div>
+              : <div class={stepClass.value} style={stepStyle.value}>
+                <div class={ns.e('dot-container')}>
+                  { renderDot() }
+                  <div class={ns.e('line')}></div>
+                </div>
+                <div class={ns.e('content')}>
+                  <span class={ns.e('title')}>{ title.value }</span>
+                  { description.value && <span class={ns.e('description') }>{ description.value }</span>}
+                </div>
+              </div>
+          }
+        </>
       );
     };
   }
