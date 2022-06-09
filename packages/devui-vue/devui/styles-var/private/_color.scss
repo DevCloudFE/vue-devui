@@ -31,7 +31,7 @@ $devui-block: var(--devui-block, $devui-white-5); // 大面积的不可折叠区
 $devui-area: var(--devui-area, $devui-gray-5); // 可折叠区块的背景色（展开区域颜色）
 $devui-danger: var(--devui-danger, $devui-red-50); // 失败、错误、告警
 $devui-warning: var(--devui-warning, $devui-yellow-50); // 警告、需注意类型提示
-$devui-waiting: var(--devui-waiting, $devui-blue-20); // 等待中
+$devui-waiting: var(--devui-waiting, #9faad7); // 等待中
 $devui-success: var(--devui-success, $devui-green-50); // 成功、正确
 $devui-info: var(--devui-info, $devui-blue-50); // 通知、一般提示、执行中
 $devui-initial: var(--devui-initial, $devui-blue-10); // 初始化、未执行
