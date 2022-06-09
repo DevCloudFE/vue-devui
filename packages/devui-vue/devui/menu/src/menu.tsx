@@ -22,6 +22,7 @@ export default defineComponent({
     provide('mode', mode);
     provide('collapsedIndent', ref(props['collapsedIndent']));
     provide('rootMenuEmit', ctx.emit);
+    provide('useRouter', props.router);
     setDefaultIndent(props['indentSize']);
     const menuRoot = ref(null);
     const overflow_container = ref(null);

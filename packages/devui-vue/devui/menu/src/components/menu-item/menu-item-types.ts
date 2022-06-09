@@ -1,4 +1,5 @@
-import { ExtractPropTypes } from 'vue';
+import type { ExtractPropTypes, PropType } from 'vue';
+import type { NavigationFailure, RouteLocationRaw } from 'vue-router';
 
 export const menuItemProps = {
   disabled: {
@@ -9,6 +10,14 @@ export const menuItemProps = {
     type: String,
     default: '',
   },
+  route: {
+    type: [String, Object] as PropType<RouteLocationRaw>,
+  },
 } as const;
 
 export type MenuItemProps = ExtractPropTypes<typeof menuItemProps>;
+
+export interface ChangeRouteResult {
+  route: RouteLocationRaw;
+  routerResult: Promise<void | NavigationFailure | undefined>;
+}
