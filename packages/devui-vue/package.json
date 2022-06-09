@@ -46,6 +46,7 @@
     "@vue/shared": "^3.2.33",
     "@vueuse/core": "^7.7.1",
     "async-validator": "^4.0.2",
+    "dayjs": "^1.11.3",
     "devui-theme": "workspace:^0.0.1",
     "fs-extra": "^10.0.0",
     "lodash": "^4.17.21",

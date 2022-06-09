@@ -1,14 +1,17 @@
 import { defineComponent } from 'vue';
+import type { SetupContext } from 'vue';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useCalendarPanel from '../composables/use-calendar-panel';
 import { yearMonthsArr, weekDaysArr, getYearMonthStr } from '../const';
-import { YearAndMonthItem } from '../date-picker-pro-types';
+import { YearAndMonthItem, datePickerProPanelProps, DatePickerProPanelProps } from '../date-picker-pro-types';
 
 export default defineComponent({
   name: 'CalendarPanel',
-  setup() {
+  props: datePickerProPanelProps,
+  emits: ['selectedDate'],
+  setup(props: DatePickerProPanelProps, ctx: SetupContext) {
     const ns = useNamespace('date-picker-pro');
-    const { yearAndMonthList, allMonthList, isListCollapse, handlerSelectDate } = useCalendarPanel();
+    const { yearAndMonthList, allMonthList, isListCollapse, handlerSelectDate } = useCalendarPanel(props, ctx);
     return () => {
       return (
         <div class={ns.e('calendar-panel')}>
