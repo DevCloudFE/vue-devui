@@ -5,7 +5,7 @@
   display: inline-block;
 
   &__content {
-    font-size: $devui-font-size;
+    font-size: $devui-font-size-sm;
     color: $devui-light-text;
   }
 
@@ -14,7 +14,7 @@
     min-width: 16px;
     height: 16px;
     line-height: 16px;
-    border-radius: 8px;
+    border-radius: $devui-border-radius-full;
     background: $devui-brand;
     text-align: center;
   }
@@ -36,7 +36,7 @@
   }
 
   &--info {
-    background: $devui-info;
+    background: $devui-brand;
   }
 
   &--common {
