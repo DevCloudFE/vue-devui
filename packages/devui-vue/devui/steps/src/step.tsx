@@ -9,7 +9,7 @@ export default defineComponent({
   name: 'DStep',
   props: stepProps,
   setup(props: StepProps, { slots }) {
-    const { title, description, icon } = toRefs(props);
+    const { title, description, icon, status } = toRefs(props);
     const ns = useNamespace('step');
     const instance = getCurrentInstance();
 
@@ -26,8 +26,9 @@ export default defineComponent({
       const activeClass = activeStep.value === currentStepIndex ? ' active' : '';
       const finishedClass = activeStep.value > currentStepIndex ? ' finished' : '';
       const centerClass =  stepsProps.alignCenter ? ' center' : '';
+      const statusClass = ` ${status?.value}` || '';
 
-      return `${ns.b()}${activeClass}${finishedClass}${centerClass}`;
+      return `${ns.b()}${activeClass}${finishedClass}${centerClass}${statusClass}`;
     });
     const stepStyle = computed(() => {
       const styleObj = {};
@@ -53,14 +54,22 @@ export default defineComponent({
           : 'var(--devui-placeholder)';
     });
 
+    const statusMap = {
+      finish: <Icon name="right-o" color="var(--devui-success)" size="24px"></Icon>,
+      success: <Icon name="right-o" color="var(--devui-success)" size="24px"></Icon>,
+      error: <Icon name="error-o" color="var(--devui-danger)" size="24px"></Icon>,
+    };
+
     const renderDot = () => {
       return slots.icon
         ? slots.icon?.(iconColor.value)
         : icon.value
           ? <Icon name={icon.value} color={iconColor.value} size="24px"></Icon>
-          : activeStep.value > steps.value.indexOf(instance)
-            ? <Icon name="right-o" color="var(--devui-success)" size="24px"></Icon>
-            : <span class={ns.e('dot')}>{ currentStepIndex + 1 }</span>;
+          : (status.value && statusMap[status.value])
+            ? statusMap[status.value]
+            : activeStep.value > steps.value.indexOf(instance)
+              ? <Icon name="right-o" color="var(--devui-success)" size="24px"></Icon>
+              : <span class={ns.e('dot')}>{ currentStepIndex + 1 }</span>;
     };
 
     return () => {
