@@ -35,6 +35,10 @@ export const menuProps = {
     type: String as () => menuMode,
     default: 'vertical',
   },
+  router: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type MenuProps = ExtractPropTypes<typeof menuProps>;

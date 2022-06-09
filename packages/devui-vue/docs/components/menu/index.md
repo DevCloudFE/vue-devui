@@ -268,15 +268,16 @@ const changeDisabled = () => {
 
 ### d-menu 参数
 
-| 参数                | 类型                  | 默认       | 说明                         | 跳转 Demo                 |
-| ------------------- | --------------------- | ---------- | ---------------------------- | ------------------------- |
-| width               | String                | ''         | 用于控制菜单宽度             | [响应式参数](#响应式参数) |
-| collapsed           | Boolean               | false      | 用于决定菜单是否收起         | [收缩菜单](#收缩菜单)     |
-| collapsed-indent    | Number                | 24         | 收起时图标距离左右边框的距离 | [收缩菜单](#收缩菜单)     |
-| multiple            | Boolean               | false      | 是否可以多选                 | [取消多选](#取消多选)     |
-| mode                | [menuMode](#menumode) | 'vertical' | 菜单类型                     | [基本用法](#基本用法)     |
-| open-keys           | Array                 | []         | 默认展开的子菜单 key 值      | [默认展开](#默认展开)     |
-| default-select-keys | Array                 | []         | 默认选择菜单项 key 值        | [基本用法](#基本用法)     |
+| 参数                | 类型                  | 默认       | 说明                                                                            | 跳转 Demo                 |
+| ------------------- | --------------------- | ---------- | ------------------------------------------------------------------------------- | ------------------------- |
+| width               | String                | ''         | 用于控制菜单宽度                                                                | [响应式参数](#响应式参数) |
+| collapsed           | Boolean               | false      | 用于决定菜单是否收起                                                            | [收缩菜单](#收缩菜单)     |
+| collapsed-indent    | Number                | 24         | 收起时图标距离左右边框的距离                                                    | [收缩菜单](#收缩菜单)     |
+| multiple            | Boolean               | false      | 是否可以多选                                                                    | [取消多选](#取消多选)     |
+| mode                | [menuMode](#menumode) | 'vertical' | 菜单类型                                                                        | [基本用法](#基本用法)     |
+| open-keys           | Array                 | []         | 默认展开的子菜单 key 值                                                         | [默认展开](#默认展开)     |
+| default-select-keys | Array                 | []         | 默认选择菜单项 key 值                                                           | [基本用法](#基本用法)     |
+| router              | Boolean               | false      | 是否启用`vue-router`模式。启用该模式会在激活导航时以 key 作为 path 进行路由跳转 | -                         |
 
 ### d-menu 事件
 
@@ -293,6 +294,7 @@ const changeDisabled = () => {
 | disabled | boolean | false |        是否禁用         |           -           |
 |   key    | string  |  ''   | 菜单项的 key 值，需唯一 |           -           |
 |   href   | string  |  ''   | 单击菜单项后跳转的页面  | [基本用法](#基本用法) |
+|  route   | object  |   -   |   Vue Router 路径对象   |           -           |
 
 ### d-sub-menu
 
