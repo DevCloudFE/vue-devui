@@ -31,6 +31,7 @@ export const infinityTheme: Theme = new Theme({
     'devui-font-size-card-title': '16px',
     'devui-shadow-length-fullscreen-overlay': '0 0 6px 0',
     'devui-border-radius-card': '8px',
+    'devui-border-radius-full': '100px',
     'devui-waiting': '#beccfa',
     'devui-danger-bg': '#ffd5d4',
   },
