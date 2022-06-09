@@ -2,14 +2,16 @@ import { devuiDarkTheme, devuiLightTheme, Theme } from '../theme';
 export const infinityTheme: Theme = new Theme({
   id: 'infinity-theme',
   name: '无限主题',
-  data: { ...devuiLightTheme.data, 'devui-brand-foil': '#F2F2F3',
+  data: {
+    ...devuiLightTheme.data,
+    'devui-brand-foil': '#F2F2F3',
     'devui-global-bg': '#F8F8FA',
     'devui-base-bg': '#ffffff',
     'devui-text': '#252B3A',
     'devui-aide-text': '#71757f',
     'devui-placeholder': '#babbc0',
     'devui-disabled-text': '#cfd0d3',
-    'devui-disabled-bg': '#f5f5f6',
+    'devui-disabled-bg': '#f5f5f5',
     'devui-line': '#D7D8DA',
     'devui-dividing-line': '#F2F2F3',
     'devui-list-item-hover-bg': '#F2F2F3',
@@ -18,8 +20,9 @@ export const infinityTheme: Theme = new Theme({
     'devui-list-item-selected-bg': '#F2F5FC',
     'devui-list-item-hover-text': '#252b3a',
     'devui-list-item-active-text': '#252B3A',
-    'devui-form-control-line-hover': '#A3A6AC',
+    'devui-form-control-line-hover': '#9b9fa8',
     'devui-form-control-line': '#D7D8DA',
+    'devui-form-control-bg': '#ffffff',
     'devui-icon-text': '#babbc0',
     'devui-label-bg': '#E9EDFA',
     'devui-border-radius': '4px',
@@ -27,7 +30,15 @@ export const infinityTheme: Theme = new Theme({
     'devui-font-size-md': '14px',
     'devui-font-size-card-title': '16px',
     'devui-shadow-length-fullscreen-overlay': '0 0 6px 0',
-    'devui-border-radius-card': '4px'},
+    'devui-border-radius-card': '8px',
+    'devui-border-radius-full': '100px',
+    'devui-waiting': '#beccfa',
+    'devui-danger-bg': '#ffd5d4',
+    'devui-shape-icon-fill': '#d7d8da',
+    'devui-shape-icon-fill-hover': '#babbc0',
+    'devui-shape-icon-fill-active': '#babbc0',
+    'devui-shape-icon-fill-disabled': '#f5f5f5',
+  },
   extends: 'devui-light-theme',
   isDark: false,
 });
@@ -71,11 +82,10 @@ export const provenceTheme: Theme = new Theme({
     'devui-embed-search-bg': '#F4F2FF',
     'devui-connected-overlay-line': '#7B69EE',
     'devui-primary-disabled': '#d8d2fa',
-    'devui-icon-fill-active-disabled': '#d8d2fa'
-
+    'devui-icon-fill-active-disabled': '#d8d2fa',
   },
   extends: 'infinity-theme',
-  isDark: false
+  isDark: false,
 });
 
 export const sweetTheme: Theme = new Theme({
@@ -120,7 +130,7 @@ export const sweetTheme: Theme = new Theme({
     'devui-icon-fill-active-disabled': '#fad1e6',
   },
   extends: 'infinity-theme',
-  isDark: false
+  isDark: false,
 });
 
 export const deepTheme: Theme = new Theme({
@@ -163,7 +173,7 @@ export const deepTheme: Theme = new Theme({
     'devui-icon-fill-active-disabled': '#bebfc4',
   },
   extends: 'infinity-theme',
-  isDark: false
+  isDark: false,
 });
 
 export const galaxyTheme: Theme = new Theme({
@@ -207,8 +217,8 @@ export const galaxyTheme: Theme = new Theme({
     'devui-font-size-md': '14px',
     'devui-font-size-card-title': '16px',
     'devui-shadow-length-fullscreen-overlay': '0 0 6px 0',
-    'devui-border-radius-card': '4px'
+    'devui-border-radius-card': '4px',
   },
   extends: 'devui-dark-theme',
-  isDark: true
+  isDark: true,
 });

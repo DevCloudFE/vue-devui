@@ -3,13 +3,13 @@
 .#{$devui-prefix}-textarea {
   width: 100%;
   box-sizing: border-box;
-  padding: 4px 10px;
+  padding: 4px 8px;
   color: var(--devui-text, #252b3a);
   vertical-align: middle;
   outline: none;
   border: 1px solid $devui-form-control-line;
   border-radius: $devui-border-radius;
-  background: transparent;
+  background: $devui-form-control-bg;
   transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
 
   &:not(.#{$devui-prefix}-textarea--error):not(.#{$devui-prefix}-textarea--disabled):not(.#{$devui-prefix}-textarea--focus):hover {
@@ -23,6 +23,7 @@
   &--disabled {
     border-color: $devui-disabled-line;
     background-color: $devui-disabled-bg;
+    color: $devui-disabled-text;
     cursor: not-allowed;
 
     &:hover {
