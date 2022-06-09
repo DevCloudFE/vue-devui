@@ -123,6 +123,7 @@ importers:
       chalk: ^4.1.2
       commander: ^8.1.0
       conventional-changelog-cli: ^2.2.2
+      dayjs: ^1.11.3
       devui-cli: workspace:^0.0.2
       devui-theme: workspace:^0.0.1
       fs-extra: ^10.0.0
@@ -151,6 +152,7 @@ importers:
       '@vue/shared': 3.2.33
       '@vueuse/core': 7.7.1_vue@3.2.31
       async-validator: 4.0.7
+      dayjs: 1.11.3
       devui-theme: link:../devui-theme
       fs-extra: 10.0.0
       lodash: 4.17.21
@@ -4075,6 +4077,10 @@ packages:
   /dateformat/3.0.3:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
     dev: true
+
+  /dayjs/1.11.3:
+    resolution: {integrity: sha512-xxwlswWOlGhzgQ4TKzASQkUhqERI3egRNqgV4ScR8wlANA/A9tZ7miXa44vTTKEq5l7vWoL5G57bG3zA+Kow0A==}
+    dev: false
 
   /de-indent/1.0.2:
     resolution: {integrity: sha1-sgOOhG3DO6pXlhKNCAS0VbjB4h0=}

@@ -1,15 +1,18 @@
 import { ref, onBeforeMount } from 'vue';
+import type { SetupContext } from 'vue';
 import { DAY_DURATION } from '../const';
-import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType } from '../date-picker-pro-types';
+import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
+import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
 
-export default function useCalendarPanel(): UseCalendarPanelReturnType {
+export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: SetupContext): UseCalendarPanelReturnType {
   const yearAndMonthList = ref<YearAndMonthItem[]>([]);
   const allMonthList = ref<YearAndMonthItem[]>([]);
   const isListCollapse = ref(false);
   const today = ref<Date>(new Date());
-  const calendarRange = [2020, 2030];
+  const calendarRange = [2020, 2025];
   const calendarCacheData = new Map();
-  const selectDate = ref<Date>();
+  const selectDate = ref<Dayjs>();
   const fillLeft = (num: number) => {
     return num < 10 ? `0${num}` : `${num}`;
   };
@@ -80,7 +83,8 @@ export default function useCalendarPanel(): UseCalendarPanelReturnType {
   });
 
   const handlerSelectDate = (day: CalendarDateItem) => {
-    selectDate.value = new Date(day.date.setHours(0, 0, 0));
+    selectDate.value = dayjs(new Date(day.date.setHours(0, 0, 0))).locale('zh-cn');
+    ctx.emit('selected-date', selectDate.value);
   };
 
   return { yearAndMonthList, allMonthList, isListCollapse, handlerSelectDate };
