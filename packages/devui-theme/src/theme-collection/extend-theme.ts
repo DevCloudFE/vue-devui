@@ -14,6 +14,7 @@ export const infinityTheme: Theme = new Theme({
     'devui-disabled-bg': '#f5f5f5',
     'devui-line': '#D7D8DA',
     'devui-dividing-line': '#F2F2F3',
+    'devui-area': '#f5f5f5',
     'devui-list-item-hover-bg': '#F2F2F3',
     'devui-list-item-active-bg': '#F2F5FC',
     'devui-list-item-active-hover-bg': '#F2F5FC',
