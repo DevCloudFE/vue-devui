@@ -174,6 +174,36 @@ export default defineComponent({
 
 :::
 
+### 自定义状态
+
+:::demo
+
+```vue
+<template>
+  <d-steps v-model="activeStepStatus">
+    <d-step title="基本信息"></d-step>
+    <d-step title="选择代码源" status="error"></d-step>
+    <d-step title="选择构建模板"></d-step>
+  </d-steps>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const activeStepStatus = ref(1);
+
+    return {
+      activeStepStatus,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Steps 参数
 
 | 参数名       | 类型                                | 默认值       | 说明              | 跳转 Demo                 |
@@ -190,6 +220,7 @@ export default defineComponent({
 | title       | `string` | --     | 必选，步骤的标题       | [基本用法](#基本用法)             |
 | description | `string` | --     | 可选，步骤的描述       | [带描述的步骤条](#带描述的步骤条) |
 | icon        | `string` | --     | 可选，自定义步骤的图标 | [自定义图标](#自定义图标)         |
+| status | [IStepStatus](#istepstatus) | -- | 可选，步骤的状态 | [自定义状态](#自定义状态) |
 
 ### Step 插槽
 
@@ -203,4 +234,10 @@ export default defineComponent({
 
 ```ts
 export type IStepsDirection = 'horizontal' | 'vertical';
+```
+
+#### IStepStatus
+
+```ts
+export type IStepStatus = 'wait' | 'process' | 'finish' | 'success' | 'error';
 ```

@@ -83,4 +83,60 @@
       left: calc(50% + 12px);
     }
   }
+
+  // 步骤条状态
+  &.wait {
+    .devui-step__dot {
+      background-color: $devui-brand-foil;
+      color: $devui-text;
+    }
+
+    .devui-step__title {
+      color: $devui-placeholder;
+    }
+  }
+
+  &.process {
+    .devui-step__dot {
+      background-color: $devui-brand;
+      color: $devui-light-text;
+    }
+
+    .devui-step__title {
+      color: $devui-brand;
+    }
+  }
+
+  &.finish {
+    .devui-step__dot {
+      background-color: $devui-success;
+      color: $devui-light-text;
+    }
+
+    .devui-step__title {
+      color: $devui-success;
+    }
+  }
+
+  &.success {
+    .devui-step__dot {
+      background-color: $devui-success;
+      color: $devui-light-text;
+    }
+
+    .devui-step__title {
+      color: $devui-success;
+    }
+  }
+
+  &.error {
+    .devui-step__dot {
+      background-color: $devui-danger;
+      color: $devui-light-text;
+    }
+
+    .devui-step__title {
+      color: $devui-danger;
+    }
+  }
 }
