@@ -1,5 +1,7 @@
 import { Ref, ref } from 'vue';
+import type { Router } from 'vue-router';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import type { ChangeRouteResult, MenuItemProps } from './menu-item-types';
 
 const ns = useNamespace('menu');
 
@@ -30,4 +32,15 @@ export function addActiveParent(ele: HTMLElement): HTMLElement {
     cur = cur.parentElement as HTMLElement;
   }
   return cur;
+}
+
+export function changeRoute(props: MenuItemProps, router: Router, useRouter: boolean, key: string): ChangeRouteResult | undefined {
+  if (useRouter && router) {
+    const route = props.route || key;
+    const routerResult = router.push(route).then((res) => {
+      return res;
+    });
+    return { route, routerResult };
+  }
+  return undefined;
 }
