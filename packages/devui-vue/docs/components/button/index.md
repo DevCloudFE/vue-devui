@@ -132,7 +132,7 @@ export default {
     <d-button icon="connect" variant="text">Link</d-button>
     <d-button icon="delete" variant="text" title="Delete"></d-button>
     <d-button shape="round" title="Add">Add</d-button>
-    <d-button variant="solid" icon="filter" shape="circle" title="Add"></d-button>
+    <d-button variant="solid" icon="filter" shape="circle" title="Add" size="lg"></d-button>
     <d-button icon="delete" shape="circle" title="Delete"></d-button>
   </div>
 </template>
@@ -142,13 +142,16 @@ export default {
 
 ### 按钮组
 
-将多个按钮作为一组放入按钮组容器中。按钮组可通过size设置尺寸，并与下拉菜单混合使用。
+将多个按钮作为一组放入按钮组容器中。按钮组可通过 size 设置尺寸，并与下拉菜单混合使用。
 
 :::demo
 
 ```vue
-
 <template>
+  <d-button-group>
+    <d-button variant="solid">按钮名称</d-button>
+    <d-button icon="icon-select-arrow" variant="solid"></d-button>
+  </d-button-group>
   <p>尺寸：xs</p>
   <d-button-group size="xs">
     <d-button disabled>上海</d-button>
@@ -233,16 +236,15 @@ export default defineComponent({
 
 ### Button 参数
 
-| 参数名   | 类型                              | 默认        | 说明                  | 跳转 Demo                 |
-| :------- | :-------------------------------- | :---------- | :-------------------- | :------------------------ |
-| variant  | [IButtonVariant](#ibuttonvariant) | 'outline'   | 可选，按钮形态        | [形态](#形态)             |
-| color    | [IButtonColor](#ibuttoncolor)     | 'secondary' | 可选，按钮主题        | [主题色](#主题色)         |
-| size     | [IButtonSize](#ibuttonsize)       | 'md'        | 可选，按钮尺寸        | [尺寸](#尺寸)             |
-| icon     | `string`                          | --          | 可选，自定义按钮图标  | [图标按钮](#图标按钮)     |
+| 参数名   | 类型                              | 默认        | 说明                      | 跳转 Demo                 |
+| :------- | :-------------------------------- | :---------- | :------------------------ | :------------------------ |
+| variant  | [IButtonVariant](#ibuttonvariant) | 'outline'   | 可选，按钮形态            | [形态](#形态)             |
+| color    | [IButtonColor](#ibuttoncolor)     | 'secondary' | 可选，按钮主题            | [主题色](#主题色)         |
+| size     | [IButtonSize](#ibuttonsize)       | 'md'        | 可选，按钮尺寸            | [尺寸](#尺寸)             |
+| icon     | `string`                          | --          | 可选，自定义按钮图标      | [图标按钮](#图标按钮)     |
 | shape    | [IButtonShape](#ibuttonshape)     | --          | 可选，按钮形状(圆形/圆角) | [图标按钮](#图标按钮)     |
-| disabled | `boolean`                         | false       | 可选，是否禁用 button | [禁用状态](#禁用状态)     |
-| loading  | `boolean`                         | false       | 可选，设置加载中状态  | [加载中状态](#加载中状态) |
-
+| disabled | `boolean`                         | false       | 可选，是否禁用 button     | [禁用状态](#禁用状态)     |
+| loading  | `boolean`                         | false       | 可选，设置加载中状态      | [加载中状态](#加载中状态) |
 
 ### Button 类型定义
 
@@ -263,6 +265,7 @@ type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 ```ts
 type IButtonColor = 'primary' | 'secondary' | 'danger';
 ```
+
 #### IButtonShape
 
 ```ts
@@ -271,9 +274,9 @@ type IButtonShape = 'circle' | 'round';
 
 ### ButtonGroup 参数
 
-| 参数名   | 类型                              | 默认        | 说明                  | 跳转 Demo                 |
-| :------- | :-------------------------------- | :---------- | :-------------------- | :------------------------ |
-| size     | [IButtonSize](#iButtonGroupSize)       | 'md'        | 可选，按钮组尺寸        | [按钮组](#按钮组)             |
+| 参数名 | 类型                             | 默认 | 说明             | 跳转 Demo         |
+| :----- | :------------------------------- | :--- | :--------------- | :---------------- |
+| size   | [IButtonSize](#iButtonGroupSize) | 'md' | 可选，按钮组尺寸 | [按钮组](#按钮组) |
 
 ### ButtonGroup 类型定义
 

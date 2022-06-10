@@ -18,6 +18,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    color: $devui-text;
     box-sizing: border-box;
     border: 1px solid $devui-form-control-line;
     border-radius: $devui-border-radius;
@@ -75,14 +76,16 @@
     right: 0;
     top: 0;
     font-size: 16px;
-    @include size(36px, 28px);
+    width: 36px;
+    height: 100%;
     @include flex;
   }
 
   &--sm {
     .#{$devui-prefix}-input {
       &.#{$devui-prefix}-input--sm {
-        padding-right: 56px;
+        font-size: $devui-font-size;
+        padding-right: 24px;
       }
     }
 
@@ -122,6 +125,7 @@
   &--disabled {
     .#{$devui-prefix}-input {
       cursor: not-allowed;
+      color: $devui-disabled-text;
       border-color: $devui-disabled-line;
       background-color: $devui-disabled-bg;
     }

@@ -114,7 +114,7 @@ $checkbox-label-height-map: (
     user-select: none;
     border: 1px solid $devui-line;
     border-radius: $devui-border-radius;
-    background: linear-gradient($devui-brand, $devui-brand) no-repeat center/0%;
+    background: linear-gradient($devui-brand, $devui-brand) no-repeat 50%/0;
     margin-right: 8px;
     vertical-align: text-bottom;
 
@@ -177,9 +177,9 @@ $checkbox-label-height-map: (
 
   & label {
     position: relative;
-    font-weight: normal;
-    height: 18px;
-    line-height: 18px;
+    font-weight: 400;
+    height: 16px;
+    line-height: 16px;
     cursor: pointer;
     color: $devui-text;
     margin: 0;

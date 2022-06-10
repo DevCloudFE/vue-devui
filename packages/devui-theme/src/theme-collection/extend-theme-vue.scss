@@ -7,7 +7,7 @@ body[ui-theme='deep-theme'],
 body[ui-theme='galaxy-theme'] {
   // TODO: 组件支持全局配置默认尺寸参数后删除
   // button default size change to '32px'
-  .devui-btn:not(.devui-btn-xs):not(.devui-btn-sm):not(.devui-btn-lg) {
+  .#{$devui-prefix}-button:not(.#{$devui-prefix}-button--xs):not(.#{$devui-prefix}-button--sm):not(.#{$devui-prefix}-button--lg) {
     height: 32px;
     line-height: 32px;
   }
@@ -39,16 +39,16 @@ body[ui-theme='galaxy-theme'] {
     min-height: 32px;
   }
 
-  d-search .devui-search {
-    .devui-input:not(.devui-input-sm):not(.devui-input-lg) {
+  .#{$devui-prefix}-search {
+    .#{$devui-prefix}-input:not(.#{$devui-prefix}-input--sm):not(.#{$devui-prefix}-input--lg) {
       height: 32px;
     }
 
-    .devui-search-icon {
+    .#{$devui-prefix}-search-icon {
       line-height: 32px;
     }
 
-    .devui-search-clear:not(.devui-search-clear-lg):not(.devui-search-clear-sm) {
+    .#{$devui-prefix}-search-clear:not(.#{$devui-prefix}-search-clear-lg):not(.#{$devui-prefix}-search-clear-sm) {
       line-height: 32px;
     }
   }
