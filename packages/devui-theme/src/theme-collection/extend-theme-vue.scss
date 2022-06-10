@@ -39,16 +39,16 @@ body[ui-theme='galaxy-theme'] {
     min-height: 32px;
   }
 
-  d-search .devui-search {
-    .devui-input:not(.devui-input-sm):not(.devui-input-lg) {
+  .#{$devui-prefix}-search {
+    .#{$devui-prefix}-input:not(.#{$devui-prefix}-input--sm):not(.#{$devui-prefix}-input--lg) {
       height: 32px;
     }
 
-    .devui-search-icon {
+    .#{$devui-prefix}-search-icon {
       line-height: 32px;
     }
 
-    .devui-search-clear:not(.devui-search-clear-lg):not(.devui-search-clear-sm) {
+    .#{$devui-prefix}-search-clear:not(.#{$devui-prefix}-search-clear-lg):not(.#{$devui-prefix}-search-clear-sm) {
       line-height: 32px;
     }
   }
