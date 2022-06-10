@@ -1,9 +1,10 @@
 import { clearSelect } from '../../composables/use-layer-operate';
 import { defineComponent, getCurrentInstance, onMounted, ref, Transition, watch, inject, Ref, reactive, toRefs } from 'vue';
 import { MenuItemProps, menuItemProps } from './menu-item-types';
-import { initSelect, addActiveParent } from './use-menu-item';
+import { initSelect, addActiveParent, changeRoute } from './use-menu-item';
 import { useClick } from '../../composables/use-click';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import { Router } from 'vue-router';
 
 const ns = useNamespace('menu');
 
@@ -29,6 +30,9 @@ export default defineComponent({
     const isSelect = ref(initSelect(defaultSelectKey, key, multiple, disabled));
     const isLayer1 = ref(true);
     const rootMenuEmit = inject('rootMenuEmit') as (eventName: string, ...args: unknown[]) => void;
+    const useRouter = inject('useRouter') as boolean;
+    const router = instance?.appContext.config.globalProperties.$router as Router;
+
     const classObject: Record<string, boolean> = reactive({
       [`${ns.b()}-item`]: true,
       [`${ns.b()}-item-isCollapsed`]: isCollapsed.value,
@@ -37,9 +41,9 @@ export default defineComponent({
       [menuItemDisabled]: disabled.value,
     });
     const onClick = (e: MouseEvent) => {
-      e.preventDefault();
       e.stopPropagation();
       const ele = e.currentTarget as HTMLElement;
+      let changeRouteResult = undefined;
       if (!props.disabled) {
         if (!multiple) {
           clearSelect(ele, e, mode.value === 'horizontal');
@@ -48,16 +52,21 @@ export default defineComponent({
           } else {
             ele.classList.add(menuItemSelect);
           }
+          changeRouteResult = changeRoute(props, router, useRouter, key);
         } else {
           if (ele.classList.contains(menuItemSelect)) {
             ele.classList.remove(menuItemSelect);
-            rootMenuEmit('deselect', { type: 'deselect', el: ele, e });
+            rootMenuEmit('deselect', { type: 'deselect', key, el: ele, e });
             return;
           } else {
             ele.classList.add(menuItemSelect);
           }
         }
-        rootMenuEmit('select', { type: 'select', el: ele, e });
+        if (changeRouteResult === undefined) {
+          rootMenuEmit('select', { type: 'select', key, el: ele, e });
+        } else {
+          rootMenuEmit('select', { type: 'select', key, el: ele, e, route: changeRouteResult });
+        }
       }
       if (mode.value === 'vertical') {
         const target = e.currentTarget as HTMLElement;

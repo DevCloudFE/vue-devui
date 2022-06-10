@@ -1,4 +1,4 @@
-import { defineComponent, provide, ref, toRefs, watch } from 'vue';
+import { computed, defineComponent, provide, ref, toRefs, watch } from 'vue';
 import { stepsProps, StepsProps } from './steps-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './steps.scss';
@@ -9,7 +9,7 @@ export default defineComponent({
   props: stepsProps,
   emits: ['update:modelValue'],
   setup(props: StepsProps, { slots }) {
-    const { modelValue, space } = toRefs(props);
+    const { modelValue, direction, simple } = toRefs(props);
     const ns = useNamespace('steps');
 
     const activeStep = ref(modelValue.value);
@@ -24,9 +24,16 @@ export default defineComponent({
       activeStep.value = newVal;
     });
 
+    const stepsClass = computed(() => {
+      const directionClass = direction.value === 'vertical' ? ' vertical' : '';
+      const simpleClass = simple.value ? ' simple' : '';
+
+      return `${ns.b()}${directionClass}${simpleClass}`;
+    });
+
     return () => {
       return (
-        <div class={ns.b()}>
+        <div class={stepsClass.value}>
           { slots.default?.() }
         </div>
       );

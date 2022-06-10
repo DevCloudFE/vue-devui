@@ -8,7 +8,7 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 export default defineComponent({
   name: 'DMenu',
   props: menuProps,
-  emits: ['select', 'dselect', 'submenu-change'],
+  emits: ['select', 'deselect', 'submenu-change'],
   setup(props: MenuProps, ctx) {
     const ns = useNamespace('menu');
 
@@ -22,6 +22,7 @@ export default defineComponent({
     provide('mode', mode);
     provide('collapsedIndent', ref(props['collapsedIndent']));
     provide('rootMenuEmit', ctx.emit);
+    provide('useRouter', props.router);
     setDefaultIndent(props['indentSize']);
     const menuRoot = ref(null);
     const overflow_container = ref(null);
