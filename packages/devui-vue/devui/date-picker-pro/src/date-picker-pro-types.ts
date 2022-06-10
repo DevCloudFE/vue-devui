@@ -53,10 +53,17 @@ export interface YearAndMonthItem {
 }
 
 export interface UseCalendarPanelReturnType {
+  yearScrollRef: Ref<HTMLElement | undefined>;
+  monthScrollRef: Ref<HTMLElement | undefined>;
   yearAndMonthList: Ref<YearAndMonthItem[]>;
   allMonthList: Ref<YearAndMonthItem[]>;
   isListCollapse: Ref<boolean>;
   handlerSelectDate: (day: CalendarDateItem) => void;
+  handlerYearCollapse: (date?: Date) => void;
+  handlerClickMonth: (year: number, month: number | undefined) => void;
+  handleScrollYearList: (e: UIEvent) => void;
+  handleScrollMonthList: (e: UIEvent) => void;
+  isDateSelected: (date: Date) => boolean;
 }
 
 export const datePickerProPanelProps = {

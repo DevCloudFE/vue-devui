@@ -19,7 +19,11 @@ export default defineComponent({
       return (
         <div class={ns.e('panel')}>
           <div class={ns.e('panel-content')}>
-            <CalendarPanel dateValue={props.dateValue} format={props.format} onSelectedDate={onSelectedDate}></CalendarPanel>
+            <CalendarPanel
+              dateValue={props.dateValue}
+              format={props.format}
+              visible={props.visible}
+              onSelectedDate={onSelectedDate}></CalendarPanel>
           </div>
         </div>
       );
