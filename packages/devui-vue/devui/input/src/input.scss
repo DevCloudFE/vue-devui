@@ -27,6 +27,7 @@
   }
 
   &--disabled {
+    color: $devui-disabled-text;
     border-color: $devui-disabled-line;
     background-color: $devui-disabled-bg;
     cursor: not-allowed;
