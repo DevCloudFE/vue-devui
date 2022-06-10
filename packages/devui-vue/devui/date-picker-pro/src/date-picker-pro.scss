@@ -34,7 +34,7 @@
     }
 
     &-item {
-      background-color: $devui-base-bg;
+      background-color: $devui-global-bg;
 
       .#{$devui-prefix}-date-picker-pro__year-title {
         font-size: 14px;
@@ -46,6 +46,12 @@
         font-size: 12px;
         line-height: 30px;
         cursor: pointer;
+      }
+      &.#{$devui-prefix}-date-picker-pro__year-title-active {
+        background-color: $devui-base-bg;
+      }
+      &:hover:not(.#{$devui-prefix}-date-picker-pro__year-title-active) {
+        background-color: $devui-list-item-selected-bg;
       }
     }
   }
@@ -99,6 +105,7 @@
     color: $devui-text;
     border-spacing: 0 4px;
     border-collapse: separate;
+    margin: 0;
 
     .#{$devui-prefix}-date-picker-pro__table-date {
       padding: 0 4px;
@@ -111,6 +118,13 @@
         height: 22px;
         line-height: 22px;
         border-radius: $devui-border-radius-feedback;
+      }
+
+      &.#{$devui-prefix}-date-picker-pro__table-date-selected {
+        span {
+          background-color: $devui-brand-active;
+          color: $devui-light-text;
+        }
       }
     }
   }

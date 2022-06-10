@@ -11,16 +11,48 @@ export default defineComponent({
   emits: ['selectedDate'],
   setup(props: DatePickerProPanelProps, ctx: SetupContext) {
     const ns = useNamespace('date-picker-pro');
-    const { yearAndMonthList, allMonthList, isListCollapse, handlerSelectDate } = useCalendarPanel(props, ctx);
+    const {
+      yearScrollRef,
+      monthScrollRef,
+      yearAndMonthList,
+      allMonthList,
+      isListCollapse,
+      handlerSelectDate,
+      handlerYearCollapse,
+      handlerClickMonth,
+      handleScrollYearList,
+      handleScrollMonthList,
+      isDateSelected,
+    } = useCalendarPanel(props, ctx);
     return () => {
       return (
         <div class={ns.e('calendar-panel')}>
-          <div class={ns.em('calendar-panel', 'year-list')}>
+          <div ref={yearScrollRef} class={ns.em('calendar-panel', 'year-list')} onScroll={handleScrollYearList}>
             {yearAndMonthList.value.map((item: YearAndMonthItem, index: number) => (
-              <div class={ns.em('calendar-panel', 'year-list-item')} key={index}>
-                {!item.isMonth && !isListCollapse.value && <div class={ns.e('year-title')}>{item.year}</div>}
-                {!item.isMonth && isListCollapse.value && <div class={ns.e('year-title')}>{item.year}</div>}
-                {item.isMonth && <div class={ns.e('month-title')}>{yearMonthsArr[item.month || 0]}</div>}
+              <div class={[ns.em('calendar-panel', 'year-list-item'), item.active && ns.e('year-title-active')]} key={index}>
+                {!item.isMonth && !isListCollapse.value && (
+                  <div class={ns.e('year-title')} onClick={() => handlerYearCollapse()}>
+                    {item.year}
+                  </div>
+                )}
+                {!item.isMonth && isListCollapse.value && (
+                  <div
+                    class={ns.e('year-title')}
+                    onClick={() => {
+                      handlerClickMonth(item.year, 0);
+                    }}>
+                    {item.year}
+                  </div>
+                )}
+                {item.isMonth && (
+                  <div
+                    class={ns.e('month-title')}
+                    onClick={() => {
+                      handlerClickMonth(item.year, item.month);
+                    }}>
+                    {yearMonthsArr[item.month || 0]}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -36,7 +68,7 @@ export default defineComponent({
               <tbody>
                 <tr>
                   <td colspan="7">
-                    <div class={ns.e('tbody-wrapper')}>
+                    <div ref={monthScrollRef} class={ns.e('tbody-wrapper')} onScroll={handleScrollMonthList}>
                       {allMonthList.value.map((month: YearAndMonthItem, monthIndex: number) => (
                         <div key={monthIndex}>
                           <div class={ns.e('table-month-title')}>{getYearMonthStr(month.year, (month.month || 0) + 1)}</div>
@@ -48,7 +80,7 @@ export default defineComponent({
                                     {week.map((day, dayIndex: number) => (
                                       <td
                                         key={dayIndex}
-                                        class={[day.inMonth && ns.e('table-date')]}
+                                        class={[day.inMonth && ns.e('table-date'), isDateSelected(day.date) && ns.e('table-date-selected')]}
                                         onClick={(e: MouseEvent) => {
                                           e.preventDefault();
                                           e.stopPropagation();
