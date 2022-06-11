@@ -2,6 +2,7 @@ import { defineComponent, ref, watch, onMounted } from 'vue';
 import { initializeTimeData, setTimeAstrict } from '../../utils';
 import TimeList from '../popup-line/index';
 import { Button } from '../../../../button/index';
+import { popupTimeObj } from '../../types';
 
 import './index.scss';
 export default defineComponent({
@@ -44,7 +45,7 @@ export default defineComponent({
       default: '00:00:00',
     },
   },
-  emits: ['submitData'],
+  emits: ['submitData', 'change'],
   setup(props, ctx) {
     const popupDome = ref<Node>();
     const timeListDom = ref();
@@ -53,6 +54,7 @@ export default defineComponent({
     const secondList = initializeTimeData('second');
     onMounted(() => {
       setTimeAstrict(hourList, minuteList, secondList, props.minTime, props.maxTime, props.popupFormat);
+      console.log(props.bindData,777);
       timeListDom.value.setOuterTime(props.bindData);
     });
 
@@ -70,6 +72,9 @@ export default defineComponent({
     const changTimeData = () => {
       return timeListDom.value.getNewTime();
     };
+    const changeData = (value: popupTimeObj) => {
+      ctx.emit('change', value);
+    };
 
     const subDataFun = (e: MouseEvent) => {
       e.stopPropagation();
@@ -86,7 +91,7 @@ export default defineComponent({
           <div
             ref={popupDome}
             class={`devui-time-popup ${props.showPopup ? 'devui-show-time-popup' : ''}`}
-            style={{ width: props.popupWidth + 'px', top: props.popupTop + 'px', left: props.popupLeft + 'px' }}>
+            style={{ width: props.popupWidth + 'px' }}>
             <TimeList
               ref={timeListDom}
               hourList={hourList}
@@ -95,7 +100,7 @@ export default defineComponent({
               minTime={props.minTime}
               maxTime={props.maxTime}
               format={props.popupFormat}
-            />
+              onChange={changeData}></TimeList>
 
             <div class="devui-time-popup-btn">
               <div class="popup-slots">{ctx.slots.default?.()}</div>

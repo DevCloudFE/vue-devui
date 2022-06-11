@@ -2,56 +2,18 @@
 
 .#{$devui-prefix}-time-picker {
   width: 200px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid $devui-form-control-line;
-  position: relative;
-  transition: 0.2s;
-  border-radius: $devui-border-radius;
-
-  &:hover {
-    border: 1px solid $devui-form-control-line-hover;
-  }
-
-  .time-input {
-    border: none;
-    outline: none;
-    width: 100%;
-    background-color: $devui-base-bg;
-    color: $devui-text;
-    padding: 0 8px;
-  }
 
   .time-input-icon {
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    background-color: $devui-base-bg;
-    border-radius: $devui-border-radius;
-
-    div {
-      text-align: right;
-      height: 25px;
-      line-height: 22px;
-      padding: 0 4px;
-      border-radius: $devui-border-radius;
-    }
   }
-}
 
-.time-picker-active {
-  border: 1px solid $devui-form-control-line-active !important;
-}
-
-.picker-disabled {
-  background-color: $devui-unavailable;
-  cursor: no-drop;
-
-  :not(.time-input-icon) {
-    background-color: $devui-unavailable;
-    cursor: no-drop;
+  .clear-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 10px;
   }
 }

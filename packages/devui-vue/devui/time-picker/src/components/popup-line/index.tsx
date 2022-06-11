@@ -1,4 +1,4 @@
-import { ref, defineComponent, PropType } from 'vue';
+import { ref, defineComponent, PropType, SetupContext } from 'vue';
 import { usePopupLine } from './composables/use-popup-line';
 import { ArrType, TimeListItem } from '../../types';
 import TimeScroll from '../time-scroll';
@@ -34,8 +34,9 @@ export default defineComponent({
       default: '23:59:59',
     },
   },
+  emits: ['change'],
 
-  setup(props, ctx) {
+  setup(props, ctx: SetupContext) {
     const timeListDom = ref<Element>();
     const { getNewTime, activeTimeFun, resetTimeValue, resetScrollTop } = usePopupLine(
       props.hourList as Array<ArrType>,
@@ -44,7 +45,8 @@ export default defineComponent({
       props.minTime,
       props.maxTime,
       props.format,
-      timeListDom
+      timeListDom,
+      ctx
     );
 
     const setOuterTime = (time: string) => {

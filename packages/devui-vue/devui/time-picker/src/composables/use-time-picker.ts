@@ -1,33 +1,40 @@
-import { Ref, ref } from 'vue';
-import { TimeObj, UseTimerPickerFn } from '../types';
-import { getPositionFun } from '../utils';
+import { Ref, ref,computed } from 'vue';
+import { TimeObj, UseTimerPickerFn, popupTimeObj } from '../types';
+import { TimePickerProps } from '../time-picker-types';
+import { onClickOutside } from '@vueuse/core';
 
-export default function useTimePicker(
-  hh: Ref,
-  mm: Ref,
-  ss: Ref,
-  minTime: string,
-  maxTime: string,
-  format: string,
-  autoOpen: boolean,
-  disabled: boolean,
-  value: string
-): UseTimerPickerFn {
-  const isActive = ref(false);
+export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string, props: TimePickerProps): UseTimerPickerFn {
   const showPopup = ref(false);
   const devuiTimePicker = ref();
-  const inputDom = ref();
-  const left = ref(-100);
-  const top = ref(-100);
+  const inputDom = ref<HTMLElement>();
+  const overlayRef = ref<HTMLElement>();
   const timePopupDom = ref();
   const timePickerValue = ref('');
   const showClearIcon = ref(false);
   const firsthandActiveTime = ref(`${hh.value}:${mm.value}:${ss.value}`);
-  const vModeValue = ref(value);
+  const vModeValue = ref(props.modelValue);
 
-  const getPopupPosition = () => {
-    getPositionFun(devuiTimePicker.value, left, top);
+  const formatTime = () => {
+    let modelValue = vModeValue.value || "00:00:00";
+    if (['hh:mm','mm:ss'].includes(format)) {
+      modelValue = vModeValue.value || "00:00";
+    }
+    const timeArr = modelValue.split(":");
+    let trueValue = "00:00:00";
+    if (format === 'hh:mm:ss') {
+      trueValue = modelValue;
+    } else if (format === 'mm:hh:ss') {
+      trueValue = `${timeArr[1]}:${timeArr[0]}:${timeArr[2]}`;
+    } else if (format === 'hh:mm') {
+      trueValue = `${timeArr[0]}:${timeArr[1]}:${ss.value}`;
+    } else if (format === 'mm:ss') {
+      trueValue = `${hh.value}:${timeArr[0]}:${timeArr[1]}`;
+    }
+    return trueValue;
   };
+  const trueTimeValue = computed(()=> {
+    return formatTime();
+  });
 
   const setInputValue = (h: string, m: string, s: string) => {
     if (format === 'hh:mm:ss') {
@@ -40,76 +47,61 @@ export default function useTimePicker(
       vModeValue.value = `${m}:${s}`;
     }
   };
-
-  const mouseInIputFun = () => {
-    if (firsthandActiveTime.value === '00:00:00') {
-      const vModelValueArr = value.split(':');
-      const minTimeValueArr = minTime.split(':');
-      const maxTimeValueArr = maxTime.split(':');
-
-      vModeValue.value === '' ? (vModeValue.value = '00:00:00') : '';
-
-      if (value > minTime && value < maxTime) {
-        firsthandActiveTime.value = value;
-        setInputValue(vModelValueArr[0], vModelValueArr[1], vModelValueArr[2]);
-      } else if (value > maxTime) {
-        firsthandActiveTime.value = maxTime;
-        setInputValue(maxTimeValueArr[0], maxTimeValueArr[1], maxTimeValueArr[2]);
-      } else {
-        firsthandActiveTime.value = minTime;
-        setInputValue(minTimeValueArr[0], minTimeValueArr[1], minTimeValueArr[2]);
-      }
+  const initData = ()=> {
+    vModeValue.value = vModeValue.value || "00:00:00";
+    if (vModeValue.value > props.maxTime) {
+      firsthandActiveTime.value = props.maxTime;
+    } else if (vModeValue.value < props.minTime) {
+      firsthandActiveTime.value = props.minTime;
+    } else {
+      firsthandActiveTime.value = props.modelValue;
     }
-    isActive.value = true;
+    const time = vModeValue.value.split(":");
+    setInputValue(time[0], time[1], time[2]);
+  };
+  initData();
+
+  const changeTimeData = ({ activeHour, activeMinute, activeSecond }: popupTimeObj) => {
+    hh.value = activeHour.value || "00";
+    mm.value = activeMinute.value || "00";
+    ss.value = activeSecond.value || "00";
+    firsthandActiveTime.value = `${hh.value}:${mm.value}:${ss.value}`;
+    setInputValue(hh.value, mm.value, ss.value);
+  };
+
+  const mouseInputFun = () => {
+    if (!vModeValue.value) {
+      vModeValue.value = '00:00:00';
+    }
+    const minTimeValueArr = props.minTime.split(':');
+    const maxTimeValueArr = props.maxTime.split(':');
+
+    if (vModeValue.value > props.maxTime) {
+      setInputValue(maxTimeValueArr[0], maxTimeValueArr[1], maxTimeValueArr[2]);
+    } else if (vModeValue.value < props.minTime) {
+      setInputValue(minTimeValueArr[0], minTimeValueArr[1], minTimeValueArr[2]);
+    }
     showPopup.value = true;
   };
 
   const clickVerifyFun = (e: any) => {
     e.stopPropagation();
-    isActive.value = false;
-    showPopup.value = false;
 
-    if (disabled) {
+    if (props.disabled || props.readonly) {
       return;
     }
-
-    const path = (e.composedPath && e.composedPath()) || e.path;
-    const inInputDom = path.includes(devuiTimePicker.value);
-    inInputDom && mouseInIputFun();
+    mouseInputFun();
   };
 
-  /**
-   * 判断v-model 绑定的时间是否超出 最大值 最小值 范围
-   * 如果带有格式化 ， 将执行格式化
-   *  */
-  const vModelIsBeyond = () => {
-    if (vModeValue.value !== '' && vModeValue.value < minTime) {
-      vModeValue.value = minTime;
-    } else if (vModeValue.value !== '' && vModeValue.value > maxTime) {
-      vModeValue.value = maxTime;
-    }
-
-    const vModelValueArr = vModeValue.value.split(':');
-    vModeValue.value && setInputValue(vModelValueArr[0], vModelValueArr[1], vModelValueArr[2]);
-  };
-
-  const getTimeValue = (e: MouseEvent) => {
-    e.stopPropagation();
-    if (showPopup.value) {
-      hh.value = timePopupDom.value.changTimeData().activeHour.value;
-      mm.value = timePopupDom.value.changTimeData().activeMinute.value;
-      ss.value = timePopupDom.value.changTimeData().activeSecond.value;
-      firsthandActiveTime.value = `${hh.value}:${mm.value}:${ss.value}`;
-      setInputValue(hh.value, mm.value, ss.value);
-    }
-  };
+  onClickOutside(devuiTimePicker, () => {
+    showPopup.value = false;
+  });
 
   const clearAll = (e: MouseEvent) => {
     e.stopPropagation();
-    showPopup.value = false;
 
-    if (minTime !== '00:00:00') {
-      const minTimeArr = minTime.split(':');
+    if (props.minTime !== '00:00:00') {
+      const minTimeArr = props.minTime.split(':');
       hh.value = minTimeArr[0];
       mm.value = minTimeArr[1];
       ss.value = minTimeArr[2];
@@ -123,18 +115,9 @@ export default function useTimePicker(
   };
 
   const isOutOpen = () => {
-    if (autoOpen) {
-      const timeArr = vModeValue.value.split(':');
-      hh.value = timeArr[0];
-      mm.value = timeArr[1];
-      ss.value = timeArr[2];
-
-      firsthandActiveTime.value = vModeValue.value;
-
-      setInputValue(hh.value, mm.value, ss.value);
-
-      isActive.value = true;
-      showPopup.value = autoOpen;
+    if (props.autoOpen) {
+      mouseInputFun();
+      showPopup.value = props.autoOpen;
     }
   };
 
@@ -161,23 +144,20 @@ export default function useTimePicker(
   };
 
   return {
-    isActive,
     showPopup,
+    trueTimeValue,
     devuiTimePicker,
     timePickerValue,
     inputDom,
     timePopupDom,
-    left,
-    top,
     showClearIcon,
     firsthandActiveTime,
     vModeValue,
-    getPopupPosition,
-    getTimeValue,
     clickVerifyFun,
     isOutOpen,
-    vModelIsBeyond,
     clearAll,
     chooseTime,
+    overlayRef,
+    changeTimeData,
   };
 }
