@@ -77,4 +77,16 @@
     height: 6px;
     border-radius: 50%;
   }
+
+  &--show {
+    visibility: visible;
+    opacity: 1;
+    transition: all $devui-animation-duration-fast $devui-animation-ease-out;
+  }
+
+  &--hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: all $devui-animation-duration-fast $devui-animation-ease-in;
+  }
 }

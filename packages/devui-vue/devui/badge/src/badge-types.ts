@@ -21,7 +21,7 @@ export const badgeProps = {
   status: {
     type: String as PropType<BadgeStatusType>,
     validator: (val: string): boolean => badgeStatusType.includes(val),
-    default: 'info'
+    default: 'info',
   },
   position: {
     type: String as PropType<BadgePositionType>,
@@ -36,6 +36,10 @@ export const badgeProps = {
   },
   textColor: {
     type: String,
+  },
+  hidden: {
+    type: Boolean,
+    default: false,
   },
 };
 

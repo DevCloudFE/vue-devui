@@ -16,6 +16,7 @@ export default defineComponent({
         props.status && ns.m(props.status),
         ctx.slots.default && props.position && ns.m(props.position),
         ctx.slots.default && ns.m('fixed'),
+        props.hidden ? ns.m('hidden') : ns.m('show'),
       ].join(' ');
     });
 
