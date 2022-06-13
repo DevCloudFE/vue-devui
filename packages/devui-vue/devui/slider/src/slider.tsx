@@ -20,23 +20,7 @@ export default defineComponent({
     const newPostion = ref<number>(0);
     // 当前的位置以百分比显示
     const percentDispaly = ref<string>('');
-    // 输入框内的值
-    function handleOnInput(event: Event) {
-      inputValue.value = parseInt((event.target as HTMLInputElement).value);
-      if (!inputValue.value) {
-        inputValue.value = props.min;
-        percentDispaly.value = '0%';
-      } else {
-        if (inputValue.value < props.min || inputValue.value > props.max) {
-          return;
-        }
-        const re = /^(?:[1-9]?\d|100)$/;
-        if (re.test(`${inputValue.value}`)) {
-          percentDispaly.value = ((inputValue.value - props.min) * 100) / (props.max - props.min) + '%';
-          ctx.emit('update:modelValue', inputValue.value);
-        }
-      }
-    }
+
     function setPostion(newPosition: number) {
       // 获取slider的实际长度的像素
       const clientWidth = !!sliderRunway.value ? sliderRunway.value.clientWidth : 0;
@@ -100,15 +84,6 @@ export default defineComponent({
       window.removeEventListener('mousemove', onDragging);
       window.removeEventListener('mouseup', onDragEnd);
     }
-    const renderShowInput = () => {
-      return props.showInput ? (
-        <div class={ns.e('input-wrap')}>
-          <input onInput={handleOnInput} value={inputValue.value + ''} disabled={props.disabled}></input>
-        </div>
-      ) : (
-        ''
-      );
-    };
     // 当传入modelValue时用以定位button的位置
     if (props.modelValue > props.max) {
       percentDispaly.value = '100%';
@@ -161,9 +136,6 @@ export default defineComponent({
       );
     };
 
-    const color = computed(() => {
-      return props.disabled ? '' : props.color;
-    });
     return () => (
       <div class={ns.b()}>
         {/* 整个的长度 */}
@@ -173,10 +145,10 @@ export default defineComponent({
           onMousedown={handleRunwayMousedown}
           onMouseout={() => (popoverShow.value = false)}>
           {/* 滑动后左边的进度条 */}
-          <div class={[ns.e('bar'), disableClass.value]} style={{ width: percentDispaly.value, backgroundColor: color.value }}></div>
+          <div class={[ns.e('bar'), disableClass.value]} style={{ width: percentDispaly.value }}></div>
           <div
             class={[ns.e('button'), disableClass.value]}
-            style={{ left: percentDispaly.value, borderColor: color.value }}
+            style={{ left: percentDispaly.value }}
             onMousedown={handleButtonMousedown}
             onMouseenter={() => (popoverShow.value = true)}
             onMouseout={() => (popoverShow.value = false)}></div>
@@ -184,7 +156,6 @@ export default defineComponent({
         </div>
         <span class={ns.e('min-count')}>{props.min}</span>
         <span class={ns.e('max-count')}>{props.max}</span>
-        {renderShowInput()}
       </div>
     );
   },

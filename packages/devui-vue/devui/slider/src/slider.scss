@@ -119,19 +119,4 @@
     font-size: $devui-font-size;
     color: $devui-text;
   }
-
-  .#{$devui-prefix}-slider__input-wrap {
-    font-size: $devui-font-size;
-    position: absolute;
-    right: -60px;
-    top: -12px;
-    padding: 5px 10px;
-    cursor: text;
-    margin-left: 20px;
-
-    input {
-      width: 40px;
-      text-align: center;
-    }
-  }
 }

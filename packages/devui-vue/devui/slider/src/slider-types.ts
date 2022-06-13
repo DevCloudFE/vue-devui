@@ -16,21 +16,14 @@ export const sliderProps = {
     type: Number,
     default: 0,
   },
-  showInput: {
-    type: Boolean,
-    default: false,
-  },
   step: {
     type: Number,
     default: 1,
   },
-  tipsRenderer:{
+  tipsRenderer: {
     type: String,
     default: '',
   },
-  color:{
-    type: String,
-    default: '',
-  }
 } as const;
+
 export type SliderProps = ExtractPropTypes<typeof sliderProps>;
