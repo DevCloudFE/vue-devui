@@ -40,7 +40,7 @@ export default defineComponent({
       onFocus,
       onSelectedDate,
     } = usePickerPro(props, ctx);
-    const position = ref(['bottom']);
+    const position = ref(['bottom-start']);
     return () => {
       return (
         <div class={ns.b()} ref={containerRef}>
@@ -58,6 +58,7 @@ export default defineComponent({
                 dateValue={dateValue.value}
                 visible={isPanelShow.value}
                 format={props.format}
+                showTime={props.showTime}
                 onSelectedDate={onSelectedDate}></DatePickerProPanel>
             </FlexibleOverlay>
           </Transition>

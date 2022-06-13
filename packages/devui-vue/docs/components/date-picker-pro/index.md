@@ -42,6 +42,42 @@ export default defineComponent({
 
 :::
 
+### 显示时间
+
+:::demo
+
+```vue
+<template>
+  <d-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250" :showTime="true" format="YYYY-MM-DD HH:mm:ss" />
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const datePickerProValue1 = ref<string>('');
+
+    return {
+      datePickerProValue1,
+    };
+  },
+});
+</script>
+
+<style>
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.wh250 {
+  width: 250px;
+}
+</style>
+```
+
+:::
+
 ### DatePickerPro 参数
 
 | 参数名      | 类型     | 默认         | 说明                       | 跳转 Demo                 |

@@ -69,14 +69,16 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
     return dayjs(date).locale('zh-cn').format(format);
   };
 
-  const onSelectedDate = (date: Dayjs) => {
+  const onSelectedDate = (date: Dayjs, isConfirm?: boolean) => {
     const result = date ? date.toDate() : date;
     if (!isDateEquals(props.modelValue, result)) {
       const formatDate = getFormatterDate(date, props.format);
       ctx.emit('update:modelValue', date ? formatDate : date);
-      ctx.emit('confirmEvent', date);
+      if (isConfirm) {
+        ctx.emit('confirmEvent', date);
+        toggleChange(false);
+      }
     }
-    toggleChange(false);
   };
 
   return { containerRef, originRef, inputRef, overlayRef, isPanelShow, placeholder, dateValue, displayDateValue, onFocus, onSelectedDate };
