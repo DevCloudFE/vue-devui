@@ -1,13 +1,25 @@
 @import '../../styles-var/devui-var.scss';
 
+$devui-btn-padding: var(--devui-btn-padding, 0 20px);
+$devui-btn-common-bg: var(--devui-btn-common-bg, $devui-base-bg);
+$devui-btn-common-bg-hover: var(--devui-btn-common-bg-hover, $devui-base-bg);
+$devui-btn-common-bg-active: var(--devui-btn-common-bg-active, $devui-base-bg);
+$devui-btn-common-color-hover: var(--devui-btn-common-color-hover, $devui-brand-active);
+$devui-btn-common-color-active: var(--devui-btn-common-color-active, $devui-brand-active);
+$devui-btn-common-border-color: var(--devui-btn-common-border-color, $devui-line);
+$devui-btn-common-border-color-hover: var(--devui-btn-common-border-color-hover, $devui-form-control-line-active);
+$devui-btn-common-border-color-active: var(--devui-btn-common-border-color-active, $devui-form-control-line-active);
+$devui-btn-sm-padding: var(--devui-btn-sm-padding, 0 16px);
+$devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
+
 .#{$devui-prefix}-button {
-  padding: 0 20px;
+  padding: $devui-btn-padding;
   font-size: $devui-font-size-md;
   height: 28px;
   line-height: $devui-line-height-base;
-  border: none;
   border-radius: $devui-border-radius;
   border-width: 1px;
+  border-color: transparent;
   background-color: transparent;
 
   &:hover {
@@ -26,20 +38,31 @@
     color: $devui-light-text;
     min-width: 64px;
 
+    i {
+      color: $devui-light-text;
+    }
+
     &--secondary {
       color: $devui-text;
-      background-color: $devui-dividing-line;
+      border-color: $devui-btn-common-border-color;
+      background-color: $devui-btn-common-bg;
 
       &:hover {
-        opacity: 0.8;
+        color: $devui-btn-common-color-hover;
+        border-color: $devui-btn-common-border-color-hover;
+        background-color: $devui-btn-common-bg-hover;
       }
 
       &:focus {
-        opacity: 0.8;
+        color: $devui-btn-common-color-active;
+        border-color: $devui-btn-common-border-color-active;
+        background-color: $devui-btn-common-bg-hover;
       }
 
       &:active {
-        opacity: 0.8;
+        color: $devui-btn-common-color-active;
+        border-color: $devui-btn-common-border-color-active;
+        background-color: $devui-btn-common-bg-hover;
       }
 
       &:disabled {
@@ -186,7 +209,11 @@
       color: $devui-brand-active;
 
       &:hover {
-        color: $devui-brand-active-focus;
+        color: $devui-link-active;
+      }
+
+      &:not(:disabled):hover {
+        text-decoration: underline;
       }
 
       &:focus {
@@ -222,14 +249,14 @@
   }
 
   &--sm {
-    padding: 0 16px;
+    padding: $devui-btn-sm-padding;
     height: 24px;
     font-size: $devui-font-size-sm;
     min-width: 56px;
   }
 
   &--lg {
-    padding: 0 24px;
+    padding: $devui-btn-lg-padding;
     height: 32px;
     font-size: $devui-font-size-lg;
     min-width: 72px;
@@ -289,18 +316,19 @@
 }
 
 .#{$devui-prefix}-button {
-  transition:
-    background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+  transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-style: solid;
 
   &.#{$devui-prefix}-button__icon {
     padding: 8px;
     line-height: 1em;
+    min-width: unset;
 
     &:not(.#{$devui-prefix}-button--circle) {
       border: 1px solid transparent;
@@ -324,11 +352,6 @@
       &.#{$devui-prefix}-button--xs,
       &.#{$devui-prefix}-button--sm {
         width: 24px;
-      }
-
-      &.#{$devui-prefix}-button--md {
-        min-width: 28px;
-        width: 28px;
       }
 
       &.#{$devui-prefix}-button--lg {

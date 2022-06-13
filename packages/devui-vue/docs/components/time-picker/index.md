@@ -98,14 +98,20 @@ export default defineComponent({
   <div>
     <h4 class="my-10">mm:HH:ss</h4>
     <d-time-picker format="mm:HH:ss" v-model="vModelValueFirst" />
+    <br />
+    当前选中时间：<button>{{ vModelValueFirst }}</button>
   </div>
   <div>
     <h4 class="my-10">hh:mm</h4>
-    <d-time-picker format="hh:mm" />
+    <d-time-picker format="hh:mm" v-model="hhmm" />
+    <br />
+    当前选中时间：<button>{{ hhmm }}</button>
   </div>
   <div>
     <h4 class="my-10">MM:ss</h4>
-    <d-time-picker format="MM:ss" />
+    <d-time-picker format="MM:ss" v-model="mmss" />
+    <br />
+    当前选中时间：<button>{{ mmss }}</button>
   </div>
 </template>
 <script>
@@ -113,6 +119,8 @@ import { ref, defineComponent, watch } from 'vue';
 export default defineComponent({
   setup(props, ctx) {
     let vModelValueFirst = ref('23:10:20');
+    let hhmm = ref('11:12:34');
+    let mmss = ref('23:10:20');
 
     watch(vModelValueFirst, (newValue, oldValue) => {
       console.log(newValue, oldValue);
@@ -120,6 +128,8 @@ export default defineComponent({
 
     return {
       vModelValueFirst,
+      mmss,
+      hhmm,
     };
   },
 });

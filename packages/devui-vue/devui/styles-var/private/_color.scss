@@ -28,7 +28,7 @@ $devui-link-light-active: var(--devui-link-light-active, $devui-blue-20); // 深
 $devui-line: var(--devui-line, $devui-slate-30); // 边框分割线，仅用于边框
 $devui-dividing-line: var(--devui-dividing-line, $devui-zinc-10); // 内容分割线，用于内容之间的分割
 $devui-block: var(--devui-block, $devui-white-5); // 大面积的不可折叠区块的背景色（例如顶部导航背景色）
-$devui-area: var(--devui-area, $devui-gray-5); // 可折叠区块的背景色（展开区域颜色）
+$devui-area: var(--devui-area, #f8f8f8); // 可折叠区块的背景色（展开区域颜色）
 $devui-danger: var(--devui-danger, $devui-red-50); // 失败、错误、告警
 $devui-warning: var(--devui-warning, $devui-yellow-50); // 警告、需注意类型提示
 $devui-waiting: var(--devui-waiting, #9faad7); // 等待中

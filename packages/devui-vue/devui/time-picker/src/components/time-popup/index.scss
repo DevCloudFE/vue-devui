@@ -1,29 +1,6 @@
 @import '../../../../styles-var/devui-var.scss';
-
-.#{$devui-prefix}-time-popup {
-  height: 310px;
-  background-color: $devui-connected-overlay-bg;
-  box-shadow: 0 2px 8px 0 $devui-shadow;
-  border-radius: $devui-border-radius;
-  overflow: hidden;
-  position: fixed;
-  z-index: -1;
-  visibility: hidden;
-  opacity: 0;
-  transition: 0.3s;
-  transition-property: visibility, opacity, z-index;
-}
-
-.#{$devui-prefix}-show-time-popup {
-  visibility: visible;
-  z-index: $devui-z-index-dropdown;
-  opacity: 1;
-  transition-property: visibility, opacity, z-index;
-}
-
 .#{$devui-prefix}-time-popup-btn {
-  height: 60px;
-  padding: 0 10px;
+  padding: 8px 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
