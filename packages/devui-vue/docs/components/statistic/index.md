@@ -79,13 +79,7 @@ export default {
 <template>
   <d-row :gutter="16">
     <d-col :span="12">
-      <d-statistic
-        :value="336969"
-        style="margin-right: 50px"
-        group-separator=","
-        :value-style="{ fontWeight: 'bold', fontSize: '30px' }"
-        animation
-      >
+      <d-statistic :value="336969" class="statistic-demo" group-separator="," animation>
         <template #title>
           <span :style="{ marginRight: '10px' }">文章阅读数</span>
           <d-icon name="help" />
@@ -93,25 +87,12 @@ export default {
         <template #extra>
           <span :style="{ fontSize: '13px', marginRight: '10px' }">较前日</span>
           <d-icon color="#F56C6C" name="arrow-down" />
-          <d-statistic
-            style="display: inline-block;"
-            group-separator=","
-            :value-style="{ fontSize: '15px', color: '#F56C6C', letterSpacing: '2px' }"
-            value="1399"
-            animation
-          />
+          <d-statistic group-separator="," class="statistic-extra-demo" value="1399" animation />
         </template>
       </d-statistic>
     </d-col>
     <d-col :span="12">
-      <d-statistic
-        :value="5565566"
-        style="margin-right: 50px"
-        group-separator=","
-        :value-style="{ fontWeight: 'bold', fontSize: '30px' }"
-        animation
-        :animation-duration="5000"
-      >
+      <d-statistic :value="5565566" group-separator="," class="statistic-demo" animation :animation-duration="5000">
         <template #title>
           <span :style="{ marginRight: '10px' }">文章点赞数</span>
           <d-icon name="help" />
@@ -119,19 +100,26 @@ export default {
         <template #extra>
           <span :style="{ fontSize: '13px', marginRight: '10px' }">较前日</span>
           <d-icon color="#67C23A" name="arrow-up" />
-          <d-statistic
-            style="display: inline-block;"
-            :value-style="{ fontSize: '15px', color: '#67C23A', letterSpacing: '2px' }"
-            value="6669"
-            animation
-            group-separator=","
-            :animation-duration="5000"
-          />
+          <d-statistic class="statistic-extra-demo" value="6669" animation group-separator="," :animation-duration="5000" />
         </template>
       </d-statistic>
     </d-col>
   </d-row>
 </template>
+
+<style>
+.statistic-demo {
+  margin-right: 50px;
+}
+.statistic-extra-demo {
+  display: inline-block;
+}
+.statistic-demo .devui-statistic__content,
+.statistic-extra-demo .devui-statistic__content {
+  font-weight: bold;
+  font-size: 30px;
+}
+</style>
 ```
 
 :::
@@ -179,7 +167,6 @@ export default {
 | suffix             | `string \| v-slot` | -     | 设置数值的后缀   |
 | prefix             | `string \| v-slot` | -     | 设置数值的前缀   |
 | extra              | `string \| v-slot` | -     | 额外内容         |
-| value-style        | `style`            | -     | 内容样式         |
 | animation-duration | `number`           | 2000  | 动画持续时间     |
 | value-from         | `number`           | 0     | 动画初始值       |
 | animation          | `boolean`          | false | 是否开启动画     |
