@@ -4,23 +4,15 @@ import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { timeArr } from '../const';
 import DTimeList from '../../../time-picker/src/components/popup-line';
 import useTimePickerPanel from '../composables/use-time-picker-panel';
+import { TimerPickerPanelProps, timerPickerPanelProps } from '../date-picker-pro-types';
 
 export default defineComponent({
   name: 'TimerPickerPanel',
-  props: {
-    visible: {
-      type: Boolean,
-      default: false,
-    },
-    bindData: {
-      type: String,
-      default: '',
-    },
-  },
-  emits: ['selectedDate'],
-  setup(props, ctx: SetupContext) {
+  props: timerPickerPanelProps,
+  emits: ['selectedTime'],
+  setup(props: TimerPickerPanelProps, ctx: SetupContext) {
     const ns = useNamespace('date-picker-pro');
-    const { timeListDom, hourList, minuteList, secondList } = useTimePickerPanel(props, ctx);
+    const { timeListDom, hourList, minuteList, secondList, handlerTimeSelected } = useTimePickerPanel(props, ctx);
 
     return () => {
       return (
@@ -31,7 +23,12 @@ export default defineComponent({
             ))}
           </div>
           <div class={ns.em('panel-time', 'content')}>
-            <DTimeList ref={timeListDom} hourList={hourList} minuteList={minuteList} secondList={secondList}></DTimeList>
+            <DTimeList
+              ref={timeListDom}
+              hourList={hourList}
+              minuteList={minuteList}
+              secondList={secondList}
+              onChange={handlerTimeSelected}></DTimeList>
           </div>
         </div>
       );
