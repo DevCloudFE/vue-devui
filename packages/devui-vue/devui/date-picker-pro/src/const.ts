@@ -6,3 +6,4 @@ export const getYearMonthStr = (year: number, month: number): string => {
 };
 export const yearItemHeight = 30; // 日历面板左侧对应年份一个item高度
 export const calendarItemHeight = 186; // 一个月份的日历面板的高度
+export const timeArr = ['时', '分', '秒'];

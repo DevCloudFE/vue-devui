@@ -1,5 +1,7 @@
 import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
 import type { Dayjs } from 'dayjs';
+import { ArrType } from '../../time-picker/src/types';
+
 export const datePickerProProps = {
   modelValue: {
     type: [Date, String, Number] as PropType<number | string | Date>,
@@ -13,15 +15,13 @@ export const datePickerProProps = {
     type: String,
     default: '请选择日期',
   },
+  showTime: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type DatePickerProProps = ExtractPropTypes<typeof datePickerProProps>;
-
-export interface datePickerProState {
-  show: boolean;
-  value: string;
-  placeholder: string;
-}
 
 export interface UseDatePickerProReturnType {
   containerRef: Ref<HTMLElement | undefined>;
@@ -33,7 +33,7 @@ export interface UseDatePickerProReturnType {
   dateValue: ComputedRef<Dayjs | undefined>;
   displayDateValue: ComputedRef<string>;
   onFocus: (e: MouseEvent) => void;
-  onSelectedDate: (date: Dayjs) => void;
+  onSelectedDate: (date: Dayjs, isConfirm?: boolean) => void;
 }
 
 export interface CalendarDateItem {
@@ -50,6 +50,14 @@ export interface YearAndMonthItem {
   isMonth?: boolean;
   active?: boolean;
   displayWeeks?: CalendarDateItem[][];
+}
+
+export interface UseDatePickerReturnType {
+  calendarPanelRef: Ref<HTMLElement | undefined>;
+  timeData: Ref<string>;
+  onSelectedDate: (date: Dayjs) => void;
+  handlerConfirm: () => void;
+  handlerSelectedTime: (time: string) => void;
 }
 
 export interface UseCalendarPanelReturnType {
@@ -73,11 +81,42 @@ export const datePickerProPanelProps = {
   },
   format: {
     type: String,
-    default: 'YYYY/MM/DD',
+    default: 'YYYY-MM-DD',
   },
   dateValue: {
     type: [Object, Array] as PropType<Dayjs | Dayjs[]>,
   },
+  showTime: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type DatePickerProPanelProps = ExtractPropTypes<typeof datePickerProPanelProps>;
+
+export interface TimePickerItem {
+  activeHour: Ref<string>;
+  activeMinute: Ref<string>;
+  activeSecond: Ref<string>;
+}
+
+export const timerPickerPanelProps = {
+  visible: {
+    type: Boolean,
+    default: false,
+  },
+  bindData: {
+    type: String,
+    default: '',
+  },
+} as const;
+
+export type TimerPickerPanelProps = ExtractPropTypes<typeof timerPickerPanelProps>;
+
+export interface UseTimePickerPanelReturnType {
+  timeListDom: Ref<HTMLElement | undefined>;
+  hourList: Array<ArrType>;
+  minuteList: Array<ArrType>;
+  secondList: Array<ArrType>;
+  handlerTimeSelected: (date: TimePickerItem) => void;
+}

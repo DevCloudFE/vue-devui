@@ -15,6 +15,12 @@
   &-content {
     display: flex;
   }
+
+  &-footer {
+    border-top: 1px solid $devui-dividing-line;
+    padding: 8px;
+    text-align: center;
+  }
 }
 
 .#{$devui-prefix}-date-picker-pro__calendar-panel {
@@ -37,13 +43,13 @@
       background-color: $devui-global-bg;
 
       .#{$devui-prefix}-date-picker-pro__year-title {
-        font-size: 14px;
+        font-size: $devui-font-size-md;
         font-weight: bold;
         line-height: 30px;
         cursor: pointer;
       }
       .#{$devui-prefix}-date-picker-pro__month-title {
-        font-size: 12px;
+        font-size: $devui-font-size-sm;
         line-height: 30px;
         cursor: pointer;
       }
@@ -61,7 +67,7 @@
     display: inline-block;
     width: 253px;
     height: 305px;
-    font-size: 12px;
+    font-size: $devui-font-size-sm;
     overflow: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -120,6 +126,12 @@
         border-radius: $devui-border-radius-feedback;
       }
 
+      &.#{$devui-prefix}-date-picker-pro__table-date-today {
+        span {
+          color: $devui-brand;
+        }
+      }
+
       &.#{$devui-prefix}-date-picker-pro__table-date-selected {
         span {
           background-color: $devui-brand-active;
@@ -134,4 +146,61 @@
 .#{$devui-prefix}-date-picker-pro__calendar-table td {
   border: none;
   padding: 0;
+}
+
+.#{$devui-prefix}-date-picker-pro__panel-time {
+  display: inline-block;
+  border-left: 1px solid $devui-dividing-line;
+  height: 305px;
+  text-align: center;
+  width: 115px;
+
+  &--title {
+    display: flex;
+    height: 30px;
+
+    &-item {
+      flex: 1 1 0%;
+      line-height: 30px;
+    }
+  }
+  .#{$devui-prefix}-time-list {
+    height: 275px;
+    border: none;
+
+    .time-item .time-ul {
+      .time-li {
+        padding: 2px 7px;
+        line-height: 22px;
+
+        &:hover {
+          background-color: transparent;
+        }
+
+        span {
+          font-size: $devui-font-size-sm;
+          border-radius: $devui-border-radius-feedback;
+
+          &:hover {
+            background-color: $devui-list-item-hover-bg;
+            color: $devui-list-item-hover-text;
+          }
+        }
+      }
+
+      .active-li {
+        background-color: transparent;
+
+        span {
+          background-color: $devui-brand-active;
+          color: $devui-light-text;
+
+          &:hover {
+            background-color: $devui-brand-active;
+            color: $devui-light-text;
+          }
+        }
+      }
+    }
+  }
 }
