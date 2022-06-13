@@ -1,6 +1,18 @@
 import { mount } from '@vue/test-utils';
 import DTimePicker from '../src/time-picker';
 import { nextTick, ref } from 'vue';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+
+const ns = useNamespace('time-picker', true);
+const baseClass = ns.b();
+
+const noDotNs = useNamespace('time-picker', false);
+const noDotBaseClass = noDotNs.b();
+
+const inputNs = useNamespace('input', true);
+const inputInnerClass = inputNs.e('inner');
+const inputDisabledClass = inputNs.m('disabled');
+const inputSizeClass = inputNs.m('lg');
 
 describe('time-picker test', () => {
   it('time-picker init render', async () => {
@@ -13,14 +25,14 @@ describe('time-picker test', () => {
       },
     });
 
-    const container = wrapper.find('.devui-time-picker');
-    const input = wrapper.find('.devui-input__inner');
+    const container = wrapper.find(baseClass);
+    const input = wrapper.find(inputInnerClass);
     await input.trigger('focus');
     const timeUl = container.findAll('.time-ul');
     expect(timeUl[0].element.childElementCount).toBe(24);
     expect(timeUl[1].element.childElementCount).toBe(60);
     expect(timeUl[2].element.childElementCount).toBe(60);
-    expect(container.classes()).toContain('devui-time-picker');
+    expect(container.classes()).toContain(noDotBaseClass);
   });
 
   it('time-picker disabled work', async () => {
@@ -30,8 +42,7 @@ describe('time-picker test', () => {
       },
     });
 
-    expect(wrapper.find('.devui-time-picker').classes()).toContain('picker-disabled');
-    expect(wrapper.find<HTMLInputElement>('.devui-input__inner').element.disabled).toBe(true);
+    expect(wrapper.find(inputDisabledClass)).toBeTruthy();
   });
 
   it('time-picker default open work', async () => {
@@ -46,8 +57,9 @@ describe('time-picker test', () => {
       },
     });
 
-    const timeInput = wrapper.find<HTMLInputElement>('.devui-input__inner');
-    const container = wrapper.find('.devui-time-picker');
+    await nextTick();
+    const timeInput = wrapper.find<HTMLInputElement>(inputInnerClass);
+    const container = wrapper.find(baseClass);
     const timePopup = container.find('.devui-time-popup');
 
     await nextTick();
@@ -68,7 +80,7 @@ describe('time-picker test', () => {
       },
     });
 
-    const timeInput = wrapper.find<HTMLInputElement>('.devui-input__inner');
+    const timeInput = wrapper.find<HTMLInputElement>(inputInnerClass);
     await timeInput.trigger('focus');
     await nextTick();
     // 如果 v-mode 的时间超出 限制范围，将返回最小时间值
@@ -87,7 +99,7 @@ describe('time-picker test', () => {
       },
     });
 
-    const timeInput = wrapper.find<HTMLInputElement>('.devui-input__inner');
+    const timeInput = wrapper.find<HTMLInputElement>(inputInnerClass);
     await timeInput.trigger('focus');
     await nextTick();
     expect(timeInput.element.value).toBe('22:46:20');
@@ -98,16 +110,16 @@ describe('time-picker test', () => {
       components: { DTimePicker },
       template: `<d-time-picker v-model="vModelValue" format='mm:ss'></d-time-picker>`,
       setup() {
-        const vModelValue = ref('30:00');
+        const vModelValue = ref('12:12:30');
         return {
           vModelValue,
         };
       },
     });
 
-    const timeInput = wrapper.find<HTMLInputElement>('.devui-input__inner');
+    const timeInput = wrapper.find<HTMLInputElement>(inputInnerClass);
     await nextTick();
-    expect(timeInput.element.value).toBe('30:00');
+    expect(timeInput.element.value).toBe('12:30');
   });
 
   it('time-picker format hh:mm work', async () => {
@@ -115,14 +127,14 @@ describe('time-picker test', () => {
       components: { DTimePicker },
       template: `<d-time-picker v-model="vModelValue" format='hh:mm'></d-time-picker>`,
       setup() {
-        const vModelValue = ref('23:30');
+        const vModelValue = ref('23:30:20');
         return {
           vModelValue,
         };
       },
     });
 
-    const timeInput = wrapper.find<HTMLInputElement>('.devui-input__inner');
+    const timeInput = wrapper.find<HTMLInputElement>(inputInnerClass);
     await nextTick();
     expect(timeInput.element.value).toBe('23:30');
   });
@@ -171,7 +183,7 @@ describe('time-picker test', () => {
       },
     });
 
-    const timeInput = wrapper.find<HTMLInputElement>('.devui-input__inner');
+    const timeInput = wrapper.find<HTMLInputElement>(inputInnerClass);
     await timeInput.trigger('focus');
     const slotBottomNow = wrapper.find<HTMLElement>('.slot-bottom-now');
     const slotBottomOne = wrapper.find<HTMLElement>('.slot-bottom-one');
@@ -180,5 +192,39 @@ describe('time-picker test', () => {
 
     await slotBottomOne.trigger('click');
     expect(timeInput.element.value).toMatch(/21/);
+  });
+
+  it('time-picker size work', async () => {
+    const wrapper = mount({
+      components: { DTimePicker },
+      template: `<d-time-picker v-model="vModelValue" size="lg"></d-time-picker>`,
+      setup() {
+        const vModelValue = ref('23:30:20');
+        return {
+          vModelValue,
+        };
+      },
+    });
+
+    await nextTick();
+    expect(wrapper.find(inputSizeClass)).toBeTruthy();
+  });
+
+  it('time-picker readonly work', async () => {
+    const wrapper = mount({
+      components: { DTimePicker },
+      template: `<d-time-picker v-model="vModelValue" readonly></d-time-picker>`,
+      setup() {
+        const vModelValue = ref('23:30:20');
+        return {
+          vModelValue,
+        };
+      },
+    });
+
+    await nextTick();
+    const timeInput = wrapper.find<HTMLInputElement>(inputInnerClass);
+    await timeInput.trigger('focus');
+    expect(wrapper.find('.devui-time-popup').exists()).toBeFalsy();
   });
 });

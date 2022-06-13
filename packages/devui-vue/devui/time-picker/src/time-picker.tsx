@@ -62,7 +62,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={`${ns.b()} ${props.disabled ? 'picker-disabled' : ''}`} ref={devuiTimePicker}>
+        <div class={`${ns.b()}`} ref={devuiTimePicker}>
           <div ref={inputDom}>
             <DInput
               modelValue={vModeValue.value}

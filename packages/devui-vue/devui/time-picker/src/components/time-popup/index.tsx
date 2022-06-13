@@ -54,7 +54,6 @@ export default defineComponent({
     const secondList = initializeTimeData('second');
     onMounted(() => {
       setTimeAstrict(hourList, minuteList, secondList, props.minTime, props.maxTime, props.popupFormat);
-      console.log(props.bindData,777);
       timeListDom.value.setOuterTime(props.bindData);
     });
 
