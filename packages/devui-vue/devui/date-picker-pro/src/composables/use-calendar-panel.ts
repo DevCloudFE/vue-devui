@@ -133,11 +133,12 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     if (props.visible) {
       let toDate: Date;
       if (props.dateValue) {
-        toDate = Array.isArray(props.dateValue) ? props.dateValue[0].toDate() : props.dateValue.toDate();
+        const date = Array.isArray(props.dateValue) ? props.dateValue[0] : props.dateValue;
+        selectDate.value = date;
+        toDate = date.toDate();
       } else {
         toDate = today.value;
       }
-      selectDate.value = dayjs(toDate).locale('zh-cn');
       goToShowDate(toDate);
     }
   };
@@ -208,6 +209,10 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     return false;
   };
 
+  const updateSelectedDate = (date: Dayjs) => {
+    selectDate.value = date;
+  };
+  ctx.expose({ updateSelectedDate });
   return {
     yearScrollRef,
     monthScrollRef,

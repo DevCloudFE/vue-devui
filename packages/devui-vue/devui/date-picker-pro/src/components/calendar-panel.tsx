@@ -80,7 +80,11 @@ export default defineComponent({
                                     {week.map((day, dayIndex: number) => (
                                       <td
                                         key={dayIndex}
-                                        class={[day.inMonth && ns.e('table-date'), isDateSelected(day.date) && ns.e('table-date-selected')]}
+                                        class={[
+                                          day.inMonth && ns.e('table-date'),
+                                          isDateSelected(day.date) && ns.e('table-date-selected'),
+                                          day.isToday && ns.e('table-date-today'),
+                                        ]}
                                         onClick={(e: MouseEvent) => {
                                           e.preventDefault();
                                           e.stopPropagation();
