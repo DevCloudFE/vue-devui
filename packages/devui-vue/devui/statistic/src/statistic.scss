@@ -8,30 +8,30 @@
   line-height: 1.5715;
   list-style: none;
 
-  &-title {
+  &__title {
     margin-bottom: 4px;
     font-size: 14px;
   }
 
-  &-content {
+  &__content {
     font-size: 24px;
     display: flex;
     align-items: center;
   }
 
-  &-prefix {
+  &__prefix {
     margin-right: 6px;
     display: flex;
     align-items: center;
   }
 
-  &-suffix {
+  &__suffix {
     margin-left: 6px;
     display: flex;
     align-items: center;
   }
 
-  &--value {
+  &__value {
     display: inline-block;
   }
 }
