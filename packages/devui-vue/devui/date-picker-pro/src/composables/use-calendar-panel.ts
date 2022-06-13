@@ -2,8 +2,8 @@ import { ref, onBeforeMount, nextTick } from 'vue';
 import type { SetupContext } from 'vue';
 import { DAY_DURATION, yearItemHeight, calendarItemHeight } from '../const';
 import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
-import dayjs, { Dayjs } from 'dayjs';
-
+import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
 import { throttle } from 'lodash';
 
 export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: SetupContext): UseCalendarPanelReturnType {
