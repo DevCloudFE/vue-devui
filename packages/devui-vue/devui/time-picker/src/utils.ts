@@ -1,22 +1,5 @@
-import { Ref, reactive } from 'vue';
+import { reactive } from 'vue';
 import { ArrType, timeDataType } from './types';
-
-/**
- * 动态调整弹窗位置
- * @param element
- * @returns { top , left }
- */
-export function getPositionFun(el: Element, left: Ref, top: Ref): void {
-  const inputDom = el.getBoundingClientRect();
-  const button = window.innerHeight - (inputDom.top + 20);
-  if (button > inputDom.top + 20) {
-    left.value = inputDom.x;
-    top.value = inputDom.top + 20 + 10;
-  } else {
-    left.value = inputDom.x;
-    top.value = inputDom.top - 316;
-  }
-}
 
 /**
  * 初始化数据
