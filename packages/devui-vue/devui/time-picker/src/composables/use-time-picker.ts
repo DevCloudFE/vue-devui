@@ -1,4 +1,4 @@
-import { Ref, ref,computed } from 'vue';
+import { Ref, ref, computed } from 'vue';
 import { TimeObj, UseTimerPickerFn, popupTimeObj } from '../types';
 import { TimePickerProps } from '../time-picker-types';
 import { onClickOutside } from '@vueuse/core';
@@ -15,12 +15,12 @@ export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string,
   const vModeValue = ref(props.modelValue);
 
   const formatTime = () => {
-    let modelValue = vModeValue.value || "00:00:00";
-    if (['hh:mm','mm:ss'].includes(format)) {
-      modelValue = vModeValue.value || "00:00";
+    let modelValue = vModeValue.value || '00:00:00';
+    if (['hh:mm', 'mm:ss'].includes(format)) {
+      modelValue = vModeValue.value || '00:00';
     }
-    const timeArr = modelValue.split(":");
-    let trueValue = "00:00:00";
+    const timeArr = modelValue.split(':');
+    let trueValue = '00:00:00';
     if (format === 'hh:mm:ss') {
       trueValue = modelValue;
     } else if (format === 'mm:hh:ss') {
@@ -32,7 +32,7 @@ export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string,
     }
     return trueValue;
   };
-  const trueTimeValue = computed(()=> {
+  const trueTimeValue = computed(() => {
     return formatTime();
   });
 
@@ -47,24 +47,19 @@ export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string,
       vModeValue.value = `${m}:${s}`;
     }
   };
-  const initData = ()=> {
-    vModeValue.value = vModeValue.value || "00:00:00";
-    if (vModeValue.value > props.maxTime) {
-      firsthandActiveTime.value = props.maxTime;
-    } else if (vModeValue.value < props.minTime) {
-      firsthandActiveTime.value = props.minTime;
-    } else {
+  const initData = () => {
+    if (vModeValue.value) {
       firsthandActiveTime.value = props.modelValue;
+      const time = vModeValue.value.split(':');
+      setInputValue(time[0], time[1], time[2]);
     }
-    const time = vModeValue.value.split(":");
-    setInputValue(time[0], time[1], time[2]);
   };
   initData();
 
   const changeTimeData = ({ activeHour, activeMinute, activeSecond }: popupTimeObj) => {
-    hh.value = activeHour.value || "00";
-    mm.value = activeMinute.value || "00";
-    ss.value = activeSecond.value || "00";
+    hh.value = activeHour.value || '00';
+    mm.value = activeMinute.value || '00';
+    ss.value = activeSecond.value || '00';
     firsthandActiveTime.value = `${hh.value}:${mm.value}:${ss.value}`;
     setInputValue(hh.value, mm.value, ss.value);
   };
@@ -77,8 +72,10 @@ export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string,
     const maxTimeValueArr = props.maxTime.split(':');
 
     if (vModeValue.value > props.maxTime) {
+      firsthandActiveTime.value = props.maxTime;
       setInputValue(maxTimeValueArr[0], maxTimeValueArr[1], maxTimeValueArr[2]);
     } else if (vModeValue.value < props.minTime) {
+      firsthandActiveTime.value = props.minTime;
       setInputValue(minTimeValueArr[0], minTimeValueArr[1], minTimeValueArr[2]);
     }
     showPopup.value = true;

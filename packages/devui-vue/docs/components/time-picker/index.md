@@ -97,7 +97,7 @@ export default defineComponent({
   </div>
   <div>
     <h4 class="my-10">mm:HH:ss</h4>
-    <d-time-picker format="mm:HH:ss" v-model="vModelValueFirst" />{{ vModelValueFirst }}
+    <d-time-picker format="mm:HH:ss" v-model="vModelValueFirst" />
     <br />
     当前选中时间：<button>{{ vModelValueFirst }}</button>
   </div>

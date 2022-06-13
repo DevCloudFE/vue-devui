@@ -46,7 +46,7 @@ export default defineComponent({
       isOutOpen();
     });
 
-    watch(vModeValue, (newValue: string) => {
+    watch(trueTimeValue, (newValue: string) => {
       ctx.emit('update:modelValue', trueTimeValue.value);
       if (newValue !== props.minTime && newValue !== '00:00') {
         showClearIcon.value = true;
