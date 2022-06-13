@@ -23,7 +23,7 @@ export default function(){
             if (excludeNodes.map(innerNode => innerNode.id).includes(item.id)) {
               continue;
             }
-            if (item.expanded !== true) {
+            if (item.expanded !== true && !item.isLeaf) {
               excludeNodes = getChildren(item);
             }
             result.push(item);
