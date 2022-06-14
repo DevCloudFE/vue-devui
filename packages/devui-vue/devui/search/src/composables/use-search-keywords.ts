@@ -17,6 +17,7 @@ export const keywordsHandles = (ctx: SetupContext<EmitProps[]>, props: SearchPro
   const onClearHandle = () => {
     keywords.value = '';
     ctx.emit('update:modelValue', '');
+    ctx.emit('search', '');
   };
   const clearIconShow = computed(() => keywords.value.length > 0);
   return {
