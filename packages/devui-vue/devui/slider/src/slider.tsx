@@ -1,6 +1,7 @@
 import { defineComponent, ref, computed, onMounted, SetupContext } from 'vue';
 import { sliderProps, SliderProps } from './slider-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { isFunction } from '../../shared/utils';
 import './slider.scss';
 
 export default defineComponent({
@@ -15,7 +16,7 @@ export default defineComponent({
     const ns = useNamespace('slider');
     const popoverShow = ref(false);
     const sliderRunway = ref<HTMLDivElement | null>(null);
-    const inputValue = ref<number>(props.modelValue);
+    const currentValue = ref<number>(props.modelValue);
     const currentPosition = ref<number>(0);
     const newPosition = ref<number>(0);
     // 当前的位置以百分比显示
@@ -37,7 +38,7 @@ export default defineComponent({
       // 要是刚好划过半段切刚好超出最大长度的情况进行限定
       if (Math.round(value) >= sliderWidth) {
         currentPosition.value = sliderWidth;
-        inputValue.value = props.max;
+        currentValue.value = props.max;
         percentDisplay.value = '100%';
         ctx.emit('update:modelValue', props.max);
         return;
@@ -45,10 +46,10 @@ export default defineComponent({
       // 向左偏移百分比的值
       percentDisplay.value = Math.round((value * 100) / sliderWidth) + '%';
       // 更新输入框的值
-      inputValue.value = Math.round((value * (props.max - props.min)) / sliderWidth) + props.min;
+      currentValue.value = Math.round((value * (props.max - props.min)) / sliderWidth) + props.min;
       // 设置当前所在的位置
       currentPosition.value = position;
-      ctx.emit('update:modelValue', inputValue.value);
+      ctx.emit('update:modelValue', currentValue.value);
     }
     function dragStart(event: MouseEvent) {
       // 防止mouseup触发父元素的click事件
@@ -95,7 +96,7 @@ export default defineComponent({
     // 一挂载就进行当前位置的计算，以后的移动基于当前的位置移动
     onMounted(() => {
       const sliderWidth = !!sliderRunway.value ? sliderRunway.value.clientWidth : 0;
-      currentPosition.value = (sliderWidth * (inputValue.value - props.min)) / (props.max - props.min);
+      currentPosition.value = (sliderWidth * (currentValue.value - props.min)) / (props.max - props.min);
     });
     function handleButtonMousedown(event: MouseEvent) {
       popoverShow.value = true;
@@ -127,24 +128,16 @@ export default defineComponent({
     const disableClass = computed(() => {
       return props.disabled ? ' disabled' : '';
     });
-    const popover = () => {
-      return (
-        <div class={ns.e('popover')} style={{ left: percentDisplay.value, opacity: popoverShow.value ? 1 : 0 }}>
-          <div class={ns.e('popover-arrow')}></div>
-          <div class={ns.e('popover-content')}>{inputValue.value + ' ' + props.tipsRenderer}</div>
-        </div>
-      );
-    };
+
+    const tipsContent = computed(() => (isFunction(props.tipsRenderer) ? props.tipsRenderer(currentValue.value) : '') as string);
 
     return () => (
       <div class={ns.b()}>
-        {/* 整个的长度 */}
         <div
           ref={sliderRunway}
           class={[ns.e('runway'), disableClass.value]}
           onMousedown={handleRunwayMousedown}
           onMouseout={() => (popoverShow.value = false)}>
-          {/* 滑动后左边的进度条 */}
           <div class={[ns.e('bar'), disableClass.value]} style={{ width: percentDisplay.value }}></div>
           <div
             class={[ns.e('button'), disableClass.value]}
@@ -152,7 +145,12 @@ export default defineComponent({
             onMousedown={handleButtonMousedown}
             onMouseenter={() => (popoverShow.value = true)}
             onMouseout={() => (popoverShow.value = false)}></div>
-          {props.tipsRenderer === 'null' ? '' : popover()}
+          {props.tipsRenderer === null ? null : popoverShow.value ? (
+            <div class={ns.e('popover')} style={{ left: percentDisplay.value }}>
+              <div class={ns.e('popover-arrow')}></div>
+              <div class={ns.e('popover-content')}>{tipsContent.value}</div>
+            </div>
+          ) : null}
         </div>
       </div>
     );

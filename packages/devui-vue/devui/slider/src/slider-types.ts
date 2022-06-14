@@ -1,4 +1,4 @@
-import type { ExtractPropTypes } from 'vue';
+import type { ExtractPropTypes, PropType } from 'vue';
 export const sliderProps = {
   disabled: {
     type: Boolean,
@@ -21,8 +21,8 @@ export const sliderProps = {
     default: 1,
   },
   tipsRenderer: {
-    type: String,
-    default: '',
+    type: [Function, null] as PropType<(val: number) => string | null>,
+    default: () => (value: number) => `${value}`,
   },
 } as const;
 
