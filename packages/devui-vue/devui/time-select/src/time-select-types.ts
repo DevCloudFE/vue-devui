@@ -60,6 +60,8 @@ export type useTimeSelectFn = {
   options: ComputedRef<TimeListType[]>;
   select: Ref<HTMLElement | undefined>;
   clearData: (value: string) => void;
+  focusFun: (e: FocusEvent) => void;
+  blurFun: (e: FocusEvent) => void;
 };
 
 export interface Time {

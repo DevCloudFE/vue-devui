@@ -7,17 +7,14 @@ module.exports = {
     '^.+\\.(ts|tsx|js|jsx)$': [
       'babel-jest',
       {
-        presets: [
-          ['@babel/preset-env', { targets: { node: 'current' } }],
-          ['@babel/preset-typescript'],
-        ],
+        presets: [['@babel/preset-env', { targets: { node: 'current' } }], ['@babel/preset-typescript']],
         plugins: ['@vue/babel-plugin-jsx'],
       },
     ],
   },
   transformIgnorePatterns: ['node_modules/?!(lodash-es)'],
   // The glob patterns Jest uses to detect test files
-  testMatch: ['**/**/*.spec.(ts|tsx)'],
+  testRegex: 'time-select.spec.ts',
 
   // An array of file extensions your modules use
   moduleFileExtensions: ['js', 'json', 'ts', 'tsx'],
