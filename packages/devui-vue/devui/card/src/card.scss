@@ -13,6 +13,9 @@ $card-content-font-size: $devui-font-size;
   padding: 16px 20px;
   border-radius: $card-border-radius;
   box-shadow: $devui-shadow-length-base $devui-light-shadow;
+  transition:
+    box-shadow $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+    transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
 }
 
 .#{$devui-prefix}-card__title {
@@ -71,4 +74,12 @@ $card-content-font-size: $devui-font-size;
 
 .#{$devui-prefix}-card__meta:first-child {
   margin-top: -$card-block-space;
+}
+
+.#{$devui-prefix}-card {
+  &__shadow--hover:hover,
+  &__shadow--always {
+    box-shadow: $devui-shadow-length-hover $devui-light-shadow;
+    transform: translateY(-5px);
+  }
 }

@@ -2,7 +2,7 @@
 
 exports[`card should render correctly 1`] = `
 <div
-  class="card-container devui-card"
+  class="card-container devui-card devui-card__shadow--hover"
 >
   <!---->
   <div
