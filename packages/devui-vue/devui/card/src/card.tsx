@@ -17,7 +17,7 @@ export default defineComponent({
     });
 
     return () => (
-      <div class={['card-container', ns.b()]}>
+      <div class={['card-container', ns.b(), ns.em('shadow', props.shadow)]}>
         {slots.default?.()}
         <div class={ns.e('header')}>
           {slots.avatar?.() ? <div class={ns.e('avatar')}>{slots.avatar?.()}</div> : ''}

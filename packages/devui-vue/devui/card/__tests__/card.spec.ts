@@ -14,6 +14,9 @@ const actionsClass = ns.e('actions');
 const metaClass = ns.e('meta');
 const cardBlockClass = '.card-block';
 const spaceBetweenClass = `${ns.em('actions', 'align')}-spaceBetween`;
+const alwaysShadowClass = ns.em('shadow', 'always');
+const hoverShadowClass = ns.em('shadow', 'hover');
+const neverShadowClass = ns.em('shadow', 'never');
 
 describe('card', () => {
   it('should render correctly', async () => {
@@ -25,7 +28,7 @@ describe('card', () => {
     const wrapper = mount({
       components: {
         DCard,
-        DAvatar
+        DAvatar,
       },
       template: `
         <d-card class="d-card">
@@ -43,7 +46,7 @@ describe('card', () => {
     const wrapper = mount({
       components: {
         DCard,
-        DAvatar
+        DAvatar,
       },
       template: `
         <d-card class="d-card">
@@ -215,5 +218,28 @@ describe('card', () => {
       `,
     });
     expect(wrapper.find(spaceBetweenClass).exists()).toBeTruthy();
+  });
+
+  it('should render correctly shadow', async () => {
+    const wrapper = mount({
+      components: {
+        DCard,
+      },
+      template: `
+        <d-card >
+        </d-card>
+      `,
+    });
+    expect(wrapper.find(hoverShadowClass).exists()).toBeTruthy();
+
+    await wrapper.setProps({
+      shadow: 'always',
+    });
+    expect(wrapper.find(alwaysShadowClass).exists()).toBeTruthy();
+
+    await wrapper.setProps({
+      shadow: 'never',
+    });
+    expect(wrapper.find(neverShadowClass).exists()).toBeTruthy();
   });
 });
