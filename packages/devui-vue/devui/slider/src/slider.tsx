@@ -1,7 +1,8 @@
-import { defineComponent, ref, computed, onMounted, SetupContext } from 'vue';
+import { defineComponent, computed, SetupContext } from 'vue';
 import { sliderProps, SliderProps } from './slider-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { isFunction } from '../../shared/utils';
+import { useSliderEvent } from './use-slider';
 import './slider.scss';
 
 export default defineComponent({
@@ -9,122 +10,12 @@ export default defineComponent({
   props: sliderProps,
   emits: ['update:modelValue'],
   setup(props: SliderProps, ctx: SetupContext) {
-    let isClick = true;
-    let startPosition = 0;
-    let startX = 0;
-
     const ns = useNamespace('slider');
-    const popoverShow = ref(false);
-    const sliderRunway = ref<HTMLDivElement | null>(null);
-    const currentValue = ref<number>(props.modelValue);
-    const currentPosition = ref<number>(0);
-    const newPosition = ref<number>(0);
-    // 当前的位置以百分比显示
-    const percentDisplay = ref<string>('');
+    const { sliderRunway, popoverShow, percentDisplay, currentValue, handleRunwayMousedown, handleButtonMousedown } = useSliderEvent(
+      props,
+      ctx
+    );
 
-    function setPosition(position: number) {
-      // 获取slider的实际长度的像素
-      const clientWidth = !!sliderRunway.value ? sliderRunway.value.clientWidth : 0;
-      const sliderWidth: number = Math.round(clientWidth);
-      if (position < 0) {
-        position = 0;
-      }
-      // 计算slider的实际像素每段的长度
-      const LengthPerStep = sliderWidth / ((props.max - props.min) / props.step);
-      // 计算实际位移的取整段数
-      const steps = Math.round(position / LengthPerStep);
-      // 实际的偏移像素
-      const value: number = steps * LengthPerStep;
-      // 要是刚好划过半段切刚好超出最大长度的情况进行限定
-      if (Math.round(value) >= sliderWidth) {
-        currentPosition.value = sliderWidth;
-        currentValue.value = props.max;
-        percentDisplay.value = '100%';
-        ctx.emit('update:modelValue', props.max);
-        return;
-      }
-      // 向左偏移百分比的值
-      percentDisplay.value = Math.round((value * 100) / sliderWidth) + '%';
-      // 更新输入框的值
-      currentValue.value = Math.round((value * (props.max - props.min)) / sliderWidth) + props.min;
-      // 设置当前所在的位置
-      currentPosition.value = position;
-      ctx.emit('update:modelValue', currentValue.value);
-    }
-    function dragStart(event: MouseEvent) {
-      // 防止mouseup触发父元素的click事件
-      isClick = false;
-      // 获取当前的x坐标值
-      startX = event.clientX;
-      // 把当前值给startPosition，以便后面再重新拖拽时,会以当前的位置计算偏移
-      startPosition = currentPosition.value;
-      newPosition.value = startPosition;
-    }
-    /**
-     *
-     * @param event 鼠标事件
-     * currentPosition:当前移动的X的坐标
-     * offset:当前x坐标减去初始x坐标的偏移
-     *
-     */
-    function onDragging(event: MouseEvent) {
-      popoverShow.value = true;
-      const currentX = event.clientX;
-      const pxOffset = currentX - startX;
-      // 移动的x方向上的偏移+初始位置等于新位置
-      newPosition.value = startPosition + pxOffset;
-      setPosition(newPosition.value);
-    }
-    function onDragEnd() {
-      popoverShow.value = false;
-      // 防止mouseup后立即执行click事件，mouseup后
-      // 会立即执行click,但是isClick=true 是100ms才出发，因此不会执行click事件，就跳出来了
-      setTimeout(() => {
-        isClick = true;
-      }, 100);
-      window.removeEventListener('mousemove', onDragging);
-      window.removeEventListener('mouseup', onDragEnd);
-    }
-    // 当传入modelValue时用以定位button的位置
-    if (props.modelValue > props.max) {
-      percentDisplay.value = '100%';
-    } else if (props.modelValue < props.min) {
-      percentDisplay.value = '0%';
-    } else {
-      percentDisplay.value = ((props.modelValue - props.min) * 100) / (props.max - props.min) + '%';
-    }
-    // 一挂载就进行当前位置的计算，以后的移动基于当前的位置移动
-    onMounted(() => {
-      const sliderWidth = !!sliderRunway.value ? sliderRunway.value.clientWidth : 0;
-      currentPosition.value = (sliderWidth * (currentValue.value - props.min)) / (props.max - props.min);
-    });
-    function handleButtonMousedown(event: MouseEvent) {
-      popoverShow.value = true;
-      // props.disabled状态是不能点击拖拽的
-      if (props.disabled) {
-        return;
-      }
-      // 阻止默认事件
-      event.preventDefault();
-      dragStart(event);
-      // 当鼠标开始移动时，进行坐标计算
-      window.addEventListener('mousemove', onDragging);
-      // 当鼠标抬起时，停止计算
-      window.addEventListener('mouseup', onDragEnd);
-    }
-    // 当在滑动条触发鼠标事件时处理,
-    function handleRunwayMousedown(event: MouseEvent) {
-      if (!props.disabled && isClick) {
-        const _e = event.target as Element;
-        startX = _e.getBoundingClientRect().left;
-        const currentX = event.clientX;
-        setPosition(currentX - startX);
-        handleButtonMousedown(event);
-      } else {
-        return;
-      }
-    }
-    // 添加disabled类
     const disableClass = computed(() => {
       return props.disabled ? ' disabled' : '';
     });
