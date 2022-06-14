@@ -37,11 +37,13 @@ export default {
 
 ### 多文件上传
 
+使用`multiple`属性可以支持多文件上传，同时使用`limit`属性设置文件数的上限，当上传数超过限制时会触发`on-exceed`钩子函数。
+
 :::demo
 
 ```vue
 <template>
-  <d-upload v-model="uploadedFiles" :upload-options="uploadOptions" multiple />
+  <d-upload v-model="uploadedFiles" :upload-options="uploadOptions" multiple :limit="2" :on-exceed="handleExceed" />
 </template>
 <script>
 import { ref } from 'vue';
@@ -52,10 +54,15 @@ export default {
     const uploadOptions = ref({
       uri: 'https://run.mocky.io/v3/132b3ea3-23ea-436b-aed4-c43ef9d116f0',
     });
-
+    const handleExceed = (files, uploadFiles) => {
+      console.log(files);
+      console.log(uploadFiles);
+      throw new Error('文件数上限为 2');
+    };
     return {
       uploadedFiles,
       uploadOptions,
+      handleExceed,
     };
   },
 };
@@ -267,13 +274,17 @@ export default {
 
 | 参数名         | 类型                              | 默认  | 说明                                                                                         | 跳转 Demo                     |
 | :------------- | :-------------------------------- | :---- | :------------------------------------------------------------------------------------------- | :---------------------------- |
-| accept         | `string`                          | --    | 可选，规定能够通过文件上传进行提交的文件类型,<br>例如 `accept: '.xls,.xlsx,.png'`            | [任意区域上传](#任意区域上传) |
-| before-upload  | `boolean Promise<boolean> `       | \--   | 可选，上传前的回调，通过返回`true` or `false`，<br>控制文件是否上传,参数为文件信息及上传配置 | [任意区域上传](#任意区域上传) |
+| accept         | `string`                          | -     | 可选，规定能够通过文件上传进行提交的文件类型,<br>例如 `accept: '.xls,.xlsx,.png'`            | [任意区域上传](#任意区域上传) |
+| before-upload  | `boolean Promise<boolean> `       | -     | 可选，上传前的回调，通过返回`true` or `false`，<br>控制文件是否上传,参数为文件信息及上传配置 | [任意区域上传](#任意区域上传) |
 | disabled       | `boolean`                         | false | 可选，是否禁用上传组件                                                                       | [禁止上传](#禁止上传)         |
 | droppable      | `boolean`                         | false | 可选，是否支持拖拽                                                                           | [拖动文件上传](#拖动文件上传) |
 | multiple       | `boolean`                         | false | 可选，是否支持多选文件                                                                       | [多文件上传](#多文件上传)     |
-| upload-options | [IUploadOptions](#iuploadoptions) | \--   | 可选，上传配置                                                                               | [基本用法](#基本用法)         |
-| uploaded-files | `Array<Object>`                   | []    | 可选，获取已上传的文件列表                                                                   | [基本用法](#基本用法)         |
+| upload-options | [IUploadOptions](#iuploadoptions) | -     | 可选，上传配置                                                                               | [基本用法](#基本用法)         |
+| uploaded-files | `Array<Object>`                   | -     | 可选，获取已上传的文件列表                                                                   | [基本用法](#基本用法)         |
+| on-success     | `function([{file, response}])`    | -     | 可选，文件上传成功时的钩子                                                                   | [任意区域上传](#任意区域上传) |
+| on-error       | `function({file, response})`      | -     | 可选，文件上传失败时的钩子                                                                   | [任意区域上传](#任意区域上传) |
+| on-exceed      | `function(files, uploadFiles)`    | -     | 可选，文件上传数超出限制时的钩子                                                             | [多文件上传](#多文件上传)     |
+| limit          | `number`                          | -     | 可选，允许上传文件的最大数量                                                                 | [多文件上传](#多文件上传)     |
 
 ### Upload 事件
 
