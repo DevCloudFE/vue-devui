@@ -101,10 +101,21 @@ export function useTimeSelect(props: TimeSelectProps, ctx: SetupContext): useTim
     ctx.emit('update:modelValue', value);
   };
 
+  const focusFun = (e: FocusEvent) => {
+    console.log(111);
+    ctx.emit('focus', e);
+  };
+
+  const blurFun = (e: FocusEvent) => {
+    ctx.emit('blur', e);
+  };
+
   return {
     options,
     changeData,
     select,
     clearData,
+    focusFun,
+    blurFun,
   };
 }

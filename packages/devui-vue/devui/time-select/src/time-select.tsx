@@ -9,7 +9,7 @@ export default defineComponent({
   props: timeSelectProps,
   emits: ['change', 'blur', 'focus', 'update:modelValue'],
   setup(props: TimeSelectProps, ctx: SetupContext) {
-    const { options, changeData, select, clearData } = useTimeSelect(props, ctx);
+    const { options, changeData, select, clearData, focusFun, blurFun } = useTimeSelect(props, ctx);
     return () => {
       return (
         <>
@@ -23,7 +23,9 @@ export default defineComponent({
             disabled={props.disabled}
             allow-clear={props.clearable}
             size={props.size}
-            onClear={clearData}></Select>
+            onClear={clearData}
+            onFocus={focusFun}
+            onBlur={blurFun}></Select>
         </>
       );
     };

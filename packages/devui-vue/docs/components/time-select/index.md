@@ -14,7 +14,7 @@
 <template>
   <div>
     <h4 class="my-10">basic</h4>
-    <d-time-select v-model="time01" placeholder="请选择时间" />{{ time01 }}
+    <d-time-select v-model="time01" placeholder="请选择时间" />
     <h4 class="my-10">step</h4>
     <d-time-select v-model="time01" placeholder="请选择时间" step="00:10" />
     <h4 class="my-10">min-time、max-time</h4>
@@ -63,7 +63,7 @@ export default defineComponent({
 
 :::
 
-### 获取数据方式
+### 事件
 
 :::demo
 
@@ -71,7 +71,7 @@ export default defineComponent({
 <template>
   <div>
     <h4 class="my-10">selectedTimeChange</h4>
-    <d-time-select v-model="timeData01" @change="selectedTimeChange" />
+    <d-time-select v-model="timeData01" @change="selectedTimeChange" @focus="focusFun" @blur="blurFun" />
   </div>
 </template>
 
@@ -86,10 +86,18 @@ export default defineComponent({
     const selectedTimeChange = (time) => {
       console.log(time);
     };
+    const focusFun = (e) => {
+      console.log(e);
+    };
+    const blurFun = (e) => {
+      console.log(e);
+    };
 
     return {
       selectedTimeChange,
       timeData01,
+      focusFun,
+      blurFun,
     };
   },
 });
@@ -108,8 +116,8 @@ d-time-select 参数
 | disabled    | boolean                     | false   | 禁用状态         | [基本用法](#基本用法) |
 | size        | [ITimeSelect](#itimeselect) | md      | 输入框尺寸       | --                    |
 | placeholder | string                      | --      | 占位内容         | [基本用法](#基本用法) |
-| min-time    | string                      | '00:00' | 可选，最小时间点 | [基本用法](#基本用法) |
-| max-time    | string                      | '24:00' | 可选，最大时间点 | [基本用法](#基本用法) |
+| min-time    | string                      | '00:00' | 可选，最早时间点 | [基本用法](#基本用法) |
+| max-time    | string                      | '24:00' | 可选，最晚时间点 | [基本用法](#基本用法) |
 | start       | string                      | '00:00' | 可选，开始时间   | [基本用法](#基本用法) |
 | end         | string                      | '24:00' | 可选，结束时间   | [基本用法](#基本用法) |
 | step        | string                      | '00:30' | 可选，间隔时间   | [基本用法](#基本用法) |
@@ -117,9 +125,9 @@ d-time-select 参数
 
 d-time-select 事件
 
-| 事件   | 说明                 | 跳转 Demo                 |
-| ------ | -------------------- | ------------------------- |
-| change | 可选，选定数据时触发 | [基本用法](#获取数据方式) |
+| 事件   | 说明                 | 跳转 Demo         |
+| ------ | -------------------- | ----------------- |
+| change | 可选，选定数据时触发 | [基本用法](#事件) |
 
 ### TimeSelect 类型定义
 
