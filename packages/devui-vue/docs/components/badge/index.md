@@ -162,18 +162,55 @@
 
 :::
 
+### 隐藏徽章
+
+通过 `hidden` 属性设置徽章是否可见
+
+::: demo
+
+```vue
+<template>
+  <d-badge :hidden="isHidden" :count="6" status="danger" class="badge-item">未读消息</d-badge>
+  <d-badge :hidden="isHidden" status="danger" show-dot class="badge-dot-item">
+    <d-icon name="feedback" />
+  </d-badge>
+  <br />
+  <d-button @click="hiddenNum">隐藏</d-button>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const isHidden = ref(false);
+    const hiddenNum = () => {
+      isHidden.value = !isHidden.value;
+    };
+    return {
+      isHidden,
+      hiddenNum,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Badge 参数
 
-| 参数名     | 类型                                    | 默认        | 说明                                                                                                                   |
-| :--------- | :-------------------------------------- | :---------- | :--------------------------------------------------------------------------------------------------------------------- |
-| count      | `number`                                | --          | 可选，设置基本徽章和计数徽章中显示的数目                                                                               |
-| max-count  | `number`                                | 99          | 可选，设置基本徽章和计数徽章最大可显示数目，<br>当 count > `max-count` 时显示 `max-count+`                             |
-| show-dot   | `boolean`                               | false       | 可选，true 时为点状徽章(有包裹)或状态徽章(无包裹)，<br>false 时为基本徽章(有包裹)或计数徽章(无包裹)                    |
-| status     | [BadgeStatusType](#badgestatustype)     | 'info'   | 可选，状态色                                                                                                           |
-| position   | [BadgePositionType](#badgepositiontype) | 'top-right' | 可选，徽标位置                                                                                                         |
-| bg-color   | `string`                                | --          | 可选，自定义徽标色，此时 status 参数设置的徽章状态色失效                                                               |
-| text-color | `string`                                | --          | 可选, 可自定义徽标文字颜色                                                                                             |
+| 参数名     | 类型                                    | 默认        | 说明                                                                                                                       |
+| :--------- | :-------------------------------------- | :---------- | :------------------------------------------------------------------------------------------------------------------------- |
+| count      | `number`                                | --          | 可选，设置基本徽章和计数徽章中显示的数目                                                                                   |
+| max-count  | `number`                                | 99          | 可选，设置基本徽章和计数徽章最大可显示数目，<br>当 count > `max-count` 时显示 `max-count+`                                 |
+| show-dot   | `boolean`                               | false       | 可选，true 时为点状徽章(有包裹)或状态徽章(无包裹)，<br>false 时为基本徽章(有包裹)或计数徽章(无包裹)                        |
+| status     | [BadgeStatusType](#badgestatustype)     | 'info'      | 可选，状态色                                                                                                               |
+| position   | [BadgePositionType](#badgepositiontype) | 'top-right' | 可选，徽标位置                                                                                                             |
+| bg-color   | `string`                                | --          | 可选，自定义徽标色，此时 status 参数设置的徽章状态色失效                                                                   |
+| text-color | `string`                                | --          | 可选, 可自定义徽标文字颜色                                                                                                 |
 | offset     | `[number, number]`                      | --          | 可选，有包裹时徽标位置偏移量，格式为[x,y]，单位为 px。<br>x 为相对 right 或 left 的偏移量，y 为相对 top 或 bottom 的偏移量 |
+| hidden     | `boolean`                               | false       | 可选，是否显示徽章                                                                                                         |
 
 ### Badge 类型定义
 
