@@ -102,7 +102,6 @@ export function useTimeSelect(props: TimeSelectProps, ctx: SetupContext): useTim
   };
 
   const focusFun = (e: FocusEvent) => {
-    console.log(111);
     ctx.emit('focus', e);
   };
 
