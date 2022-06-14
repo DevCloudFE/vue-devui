@@ -10,10 +10,13 @@ import useDatePicker from '../composables/use-date-picker';
 export default defineComponent({
   name: 'DatePickerProPanel',
   props: datePickerProPanelProps,
-  emits: ['selectedDate'],
+  emits: ['selectedDate', 'changeRangeType'],
   setup(props: DatePickerProPanelProps, ctx: SetupContext) {
     const ns = useNamespace('date-picker-pro');
-    const { calendarPanelRef, timeData, onSelectedDate, handlerConfirm, handlerSelectedTime } = useDatePicker(props, ctx);
+    const { calendarPanelRef, timeData, onSelectedDate, handlerConfirm, handlerSelectedTime, onChangeRangeType } = useDatePicker(
+      props,
+      ctx
+    );
 
     return () => {
       return (
@@ -24,7 +27,11 @@ export default defineComponent({
               dateValue={props.dateValue}
               format={props.format}
               visible={props.visible}
-              onSelectedDate={onSelectedDate}></CalendarPanel>
+              showTime={props.showTime}
+              isRangeType={props.isRangeType}
+              onSelectedDate={onSelectedDate}
+              onChangeRangeType={onChangeRangeType}
+              focusType={props.focusType}></CalendarPanel>
             {props.showTime && <TimerPickerPanel visible={props.visible} bindData={timeData.value} onSelectedTime={handlerSelectedTime} />}
           </div>
           {props.showTime && (

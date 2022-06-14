@@ -1,12 +1,12 @@
 import { defineComponent, Transition, ref } from 'vue';
 import type { SetupContext } from 'vue';
-import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types';
-import usePickerPro from './use-picker-pro';
-import { Input } from '../../input';
-import { FlexibleOverlay } from '../../overlay';
-import DatePickerProPanel from './components/date-picker-panel';
-import { Icon } from '../../icon';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { rangeDatePickerProProps, RangeDatePickerProProps } from '../range-date-picker-types';
+import { FlexibleOverlay } from '../../../overlay';
+import DatePickerProPanel from './date-picker-panel';
+import { Input } from '../../../input';
+import { Icon } from '../../../icon';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
+import useRangePickerPro from '../composables/use-range-date-picker-pro';
 
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
@@ -15,7 +15,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear';
 import weekYear from 'dayjs/plugin/weekYear.js';
 import dayOfYear from 'dayjs/plugin/dayOfYear.js';
 
-import './date-picker-pro.scss';
+import '../date-picker-pro.scss';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(advancedFormat);
@@ -24,15 +24,16 @@ dayjs.extend(weekYear);
 dayjs.extend(dayOfYear);
 
 export default defineComponent({
-  name: 'DDatePickerPro',
-  props: datePickerProProps,
+  name: 'DRangeDatePickerPro',
+  props: rangeDatePickerProProps,
   emits: ['update:modelValue', 'toggleChange', 'confirmEvent'],
-  setup(props: DatePickerProProps, ctx: SetupContext) {
-    const ns = useNamespace('date-picker-pro');
+  setup(props: RangeDatePickerProProps, ctx: SetupContext) {
+    const ns = useNamespace('range-date-picker-pro');
     const {
       containerRef,
       originRef,
-      inputRef,
+      startInputRef,
+      endInputRef,
       overlayRef,
       placeholder,
       isPanelShow,
@@ -41,24 +42,39 @@ export default defineComponent({
       isMouseEnter,
       showCloseIcon,
       onFocus,
+      focusType,
       onSelectedDate,
       handlerClearTime,
-    } = usePickerPro(props, ctx);
+      onChangeRangeType,
+    } = useRangePickerPro(props, ctx);
     const position = ref(['bottom-start']);
     return () => {
       return (
-        <div class={ns.b()} ref={containerRef}>
+        <div class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width')]} ref={containerRef}>
           <div
-            class={ns.e('single-picker')}
+            class={ns.e('ranger-picker')}
             ref={originRef}
             onmouseover={() => (isMouseEnter.value = true)}
             onmouseout={() => (isMouseEnter.value = false)}>
             <Input
-              ref={inputRef}
-              modelValue={displayDateValue.value}
-              placeholder={placeholder.value}
-              onFocus={onFocus}
+              ref={startInputRef}
+              modelValue={displayDateValue.value[0]}
+              placeholder={placeholder.value[0]}
+              onFocus={(e: MouseEvent) => {
+                e.stopPropagation();
+                onFocus('start');
+              }}
               prefix="calendar"
+            />
+            <span class={ns.e('separator')}>{props.separator}</span>
+            <Input
+              ref={endInputRef}
+              modelValue={displayDateValue.value[1]}
+              placeholder={placeholder.value[1]}
+              onFocus={(e: MouseEvent) => {
+                e.stopPropagation();
+                onFocus('end');
+              }}
               v-slots={{
                 suffix: () => (
                   <Icon
@@ -81,7 +97,10 @@ export default defineComponent({
                 visible={isPanelShow.value}
                 format={props.format}
                 showTime={props.showTime}
-                onSelectedDate={onSelectedDate}></DatePickerProPanel>
+                isRangeType={true}
+                focusType={focusType.value}
+                onSelectedDate={onSelectedDate}
+                onChangeRangeType={onChangeRangeType}></DatePickerProPanel>
             </FlexibleOverlay>
           </Transition>
         </div>

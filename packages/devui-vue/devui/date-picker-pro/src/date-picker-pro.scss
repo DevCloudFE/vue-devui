@@ -1,11 +1,25 @@
 @import '../../styles-var/devui-var.scss';
 
+$input-height-md: 28px;
+
 .#{$devui-prefix}-date-picker-pro {
   display: inline-block;
   background-color: $devui-base-bg;
 
   .#{$devui-prefix}-date-picker-pro__single-picker {
     position: relative;
+
+    .#{$devui-prefix}-input-slot__suffix {
+      cursor: pointer;
+    }
+
+    .#{$devui-prefix}-date-picker-pro--icon-visible {
+      visibility: visible;
+    }
+
+    .#{$devui-prefix}-date-picker-pro--icon-hidden {
+      visibility: hidden;
+    }
   }
 }
 
@@ -201,6 +215,63 @@
           }
         }
       }
+    }
+  }
+}
+
+// 日期范围选择器
+.#{$devui-prefix}-range-date-picker-pro {
+  display: inline-block;
+  background-color: $devui-base-bg;
+
+  &.#{$devui-prefix}-range-date-picker-pro__range-width {
+    width: 300px;
+  }
+
+  &.#{$devui-prefix}-range-date-picker-pro__range-time-width {
+    width: 400px;
+  }
+
+  .#{$devui-prefix}-range-date-picker-pro__ranger-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 24px;
+    border: 1px solid $devui-form-control-line;
+    border-radius: $devui-border-radius;
+    background-color: $devui-form-control-bg;
+    transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
+
+    &:hover {
+      border-color: $devui-form-control-line-hover;
+    }
+
+    .#{$devui-prefix}-input {
+      display: inline-block;
+      height: calc($input-height-md - 2px);
+
+      &__wrapper {
+        border: none;
+      }
+    }
+
+    .#{$devui-prefix}-range-date-picker-pro__separator {
+      display: inline-block;
+      padding: 0 4px;
+    }
+    .#{$devui-prefix}-input-slot__suffix {
+      cursor: pointer;
+    }
+
+    .#{$devui-prefix}-range-date-picker-pro--icon-visible {
+      visibility: visible;
+    }
+
+    .#{$devui-prefix}-range-date-picker-pro--icon-hidden {
+      visibility: hidden;
     }
   }
 }
