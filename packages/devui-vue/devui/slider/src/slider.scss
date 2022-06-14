@@ -2,7 +2,7 @@
 
 .#{$devui-prefix}-slider {
   position: relative;
-  width: 90%;
+  width: 100%;
   display: block;
 
   &.disabled {
@@ -101,37 +101,6 @@
         border-radius: $devui-border-radius-feedback;
         background-color: $devui-feedback-overlay-bg;
       }
-    }
-  }
-
-  .#{$devui-prefix}-slider__min-count {
-    position: absolute;
-    top: 15px;
-    left: 0;
-    font-size: $devui-font-size;
-    color: $devui-text;
-  }
-
-  .#{$devui-prefix}-slider__max-count {
-    position: absolute;
-    top: 15px;
-    right: 0;
-    font-size: $devui-font-size;
-    color: $devui-text;
-  }
-
-  .#{$devui-prefix}-slider__input-wrap {
-    font-size: $devui-font-size;
-    position: absolute;
-    right: -60px;
-    top: -12px;
-    padding: 5px 10px;
-    cursor: text;
-    margin-left: 20px;
-
-    input {
-      width: 40px;
-      text-align: center;
     }
   }
 }

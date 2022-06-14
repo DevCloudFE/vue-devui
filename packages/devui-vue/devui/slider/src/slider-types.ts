@@ -1,4 +1,4 @@
-import type { ExtractPropTypes } from 'vue';
+import type { ExtractPropTypes, PropType, Ref } from 'vue';
 export const sliderProps = {
   disabled: {
     type: Boolean,
@@ -16,21 +16,23 @@ export const sliderProps = {
     type: Number,
     default: 0,
   },
-  showInput: {
-    type: Boolean,
-    default: false,
-  },
   step: {
     type: Number,
     default: 1,
   },
-  tipsRenderer:{
-    type: String,
-    default: '',
+  tipsRenderer: {
+    type: [Function, null] as PropType<(val: number) => string | null>,
+    default: () => (value: number) => `${value}`,
   },
-  color:{
-    type: String,
-    default: '',
-  }
 } as const;
+
 export type SliderProps = ExtractPropTypes<typeof sliderProps>;
+
+export interface UseSliderEvent {
+  sliderRunway: Ref<HTMLDivElement | undefined>;
+  popoverShow: Ref<boolean>;
+  percentDisplay: Ref<string>;
+  currentValue: Ref<number>;
+  handleRunwayMousedown: (e: MouseEvent) => void;
+  handleButtonMousedown: (e: MouseEvent) => void;
+}
