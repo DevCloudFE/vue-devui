@@ -42,7 +42,9 @@ export function omit<T>(obj: T, ...keys: Array<keyof T>): { [key: string]: unkno
  * - 'parentId'：父节点
  * - 'level'：所属的节点层级
  * - 'isLeaf'：是否是叶子节点，用于决定是否渲染展开/收起按钮
- * - 'idType'(没有传入 id 的节点会生成一个随机的 id，idType 用来标识 id 是否是随机生成的)
+ * - 'idType'：(没有传入 id 的节点会生成一个随机的 id，idType 用来标识 id 是否是随机生成的)
+ * - 'parentChildNode'：父级子节点数量
+ * - 'curentIndex'：当前节点在父节点的索引
  */
 export function generateInnerTree(
   tree: ITreeNode[],
@@ -52,14 +54,16 @@ export function generateInnerTree(
 ): IInnerTreeNode[] {
   level++;
 
-  return tree.reduce((acc: ITreeNode[], item: ITreeNode) => {
-    const newItem = Object.assign({}, item);
+  return tree.reduce((acc: IInnerTreeNode[], item: ITreeNode, currentIndex) => {
+    const newItem: Partial<IInnerTreeNode> = Object.assign({}, item);
     if (newItem.id === undefined) {
       newItem.id = randomId();
       newItem.idType = 'random';
     }
 
     newItem.level = level;
+    newItem.parentChildNode = tree.length;
+    newItem.currentIndex = currentIndex;
 
     if (path.length > 0 && path[path.length - 1]?.level >= level) {
       while (path[path.length - 1]?.level >= level) {

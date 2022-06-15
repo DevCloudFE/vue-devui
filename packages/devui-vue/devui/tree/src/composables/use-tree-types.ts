@@ -22,6 +22,8 @@ export interface IInnerTreeNode extends ITreeNode {
   idType?: 'random';
   parentId?: string;
   isLeaf?: boolean;
+  parentChildNode?: number;
+  currentIndex?: number;
 }
 
 export type valueof<T> = T[keyof T];
