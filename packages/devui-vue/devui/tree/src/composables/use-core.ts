@@ -1,4 +1,4 @@
-import { computed, ComputedRef, Ref } from 'vue';
+import { computed, ComputedRef, Ref, onUnmounted } from 'vue';
 import { IInnerTreeNode, ITreeNode, IUseCore, valueof } from './use-tree-types';
 import { generateInnerTree } from './utils';
 
@@ -8,12 +8,20 @@ const DEFAULT_CONFIG = {
 };
 
 export default function(){
+  const nodeMap = new Map<string, IInnerTreeNode[]>();
   return function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
     const getLevel = (node: IInnerTreeNode): number => {
       return data.value.find((item) => item.id === node.id).level;
     };
 
     const getChildren = (node: IInnerTreeNode, userConfig = DEFAULT_CONFIG): IInnerTreeNode[] => {
+      if (node.isLeaf) { return []; }
+      if (node.id && nodeMap.has(node.id)) {
+        const cacheNode = nodeMap.get(node.id);
+        if (cacheNode) {
+          return cacheNode;
+        }
+      }
       const getInnerExpendedTree = (): ComputedRef<IInnerTreeNode[]> => {
         return computed(() => {
           let excludeNodes: IInnerTreeNode[] = [];
@@ -42,6 +50,9 @@ export default function(){
         } else if (getLevel(node) === treeData.value[i].level - 1) {
           result.push(treeData.value[i]);
         }
+      }
+      if (node.id) {
+        nodeMap.set(node.id, result);
       }
       return result;
     };
@@ -78,12 +89,18 @@ export default function(){
     };
 
     const setNodeValue = (node: IInnerTreeNode, key: keyof IInnerTreeNode, value: valueof<IInnerTreeNode>): void => {
+      nodeMap.clear();
       data.value[getIndex(node)][key] = value;
     };
 
     const setTree = (newTree: ITreeNode[]): void => {
+      nodeMap.clear();
       data.value = generateInnerTree(newTree);
     };
+
+    onUnmounted(() => {
+      nodeMap.clear();
+    });
 
     return {
       getLevel,

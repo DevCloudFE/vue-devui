@@ -25,7 +25,7 @@ export default defineComponent({
     const { toggleSelectNode, toggleCheckNode, toggleNode, getChildren } = inject(USE_TREE_TOKEN) as Partial<IUseTree>;
     const ns = useNamespace('tree');
 
-    const { nodeClass, nodeStyle, nodeContentClass, nodeVLineClass, nodeVLineStyle, nodeHLineClass } = useTreeNode(
+    const { nodeClass, nodeStyle, nodeContentClass, nodeVLineClass, nodeVLineStyles, nodeHLineClass } = useTreeNode(
       data as ComputedRef<IInnerTreeNode>
     );
 
@@ -47,7 +47,7 @@ export default defineComponent({
         halfchecked: halfChecked.value,
         modelValue: data.value?.checked,
         'onUpdate:modelValue': () => {
-          toggleCheckNode(data.value);
+          toggleCheckNode?.(data.value);
         },
         onClick: (event: MouseEvent) => {
           event.stopPropagation();
@@ -55,17 +55,19 @@ export default defineComponent({
       };
       return (
         <div class={nodeClass.value} style={nodeStyle.value}>
-          <span class={nodeVLineClass.value} style={nodeVLineStyle.value}></span>
+          {nodeVLineStyles.value.map((item) => (
+            <span class={nodeVLineClass.value} style={item}></span>
+          ))}
           <div
             class={nodeContentClass.value}
             onClick={() => {
-              toggleSelectNode(data.value);
+              toggleSelectNode?.(data.value);
             }}>
             <span class={nodeHLineClass.value}></span>
             {slots.icon ? renderSlot(useSlots(), 'icon', { nodeData: data, toggleNode }) : <DTreeNodeToggle data={data.value} />}
             <div class={ns.em('node-content', 'value-wrapper')} style={{ height: `${NODE_HEIGHT}px` }}>
               {check.value && <Checkbox {...checkboxProps} />}
-              {slots.default ? renderSlot(useSlots(), 'default', { nodeData: data }) : <DTreeNodeContent data={data} />}
+              {slots.default ? renderSlot(useSlots(), 'default', { nodeData: data }) : <DTreeNodeContent data={data.value} />}
             </div>
           </div>
         </div>

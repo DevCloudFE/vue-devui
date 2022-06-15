@@ -351,10 +351,10 @@ $keyframe-blue: #5e7ce0;
 }
 
 .#{$devui-prefix}-tree__node-hline {
-  width: 8px;
+  width: 9px;
   height: 1px;
   background-color: $devui-dividing-line;
   position: absolute;
-  left: -14px;
+  left: -15px;
   top: 50%;
 }

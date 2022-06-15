@@ -10,6 +10,9 @@ export const treeProps = {
     type: [Boolean, String] as PropType<ICheck>,
     default: false
   },
+  height: {
+    type: [Number, String] as PropType<number | string>,
+  },
 };
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>;
