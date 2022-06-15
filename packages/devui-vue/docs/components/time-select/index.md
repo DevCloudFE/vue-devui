@@ -14,7 +14,7 @@
 <template>
   <div>
     <h4 class="my-10">basic</h4>
-    <d-time-select v-model="time01" placeholder="请选择时间" />
+    <d-time-select v-model="time00" placeholder="请选择时间" />
     <h4 class="my-10">step</h4>
     <d-time-select v-model="time01" placeholder="请选择时间" step="00:10" />
     <h4 class="my-10">min-time、max-time</h4>
@@ -40,11 +40,13 @@
 import { ref, defineComponent, nextTick } from 'vue';
 export default defineComponent({
   setup(props, ctx) {
+    let time00 = ref('');
     let time01 = ref('');
     let time02 = ref('03:30');
     let time03 = ref('09:30');
     let time04 = ref('09:30');
     return {
+      time00,
       time01,
       time02,
       time03,

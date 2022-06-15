@@ -5,7 +5,6 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const ns = useNamespace('select', true);
 const baseClass = ns.b();
-
 const dropdownCls = ns.e('dropdown');
 const selectItemCls = ns.e('item');
 const selectInputCls = ns.e('input');
@@ -141,20 +140,25 @@ describe('TimeSelect', () => {
         const modelValue = ref('00:30');
         return {
           modelValue,
+          onChange,
+          onFocus,
+          onBlur,
         };
       },
     });
 
     const input = wrapper.find(selectInputCls);
     await input.trigger('focus');
-    await nextTick();
     expect(onFocus).toBeCalledTimes(1);
 
     await input.trigger('blur');
     expect(onBlur).toBeCalledTimes(1);
 
     await input.trigger('click');
-    expect(onChange).toBeCalledTimes(1);
+    const listItems = wrapper.findAll(selectItemCls);
+    await listItems[2].trigger('click');
+
+    expect(onChange).toBeCalled();
 
     wrapper.unmount();
   });
