@@ -88,16 +88,20 @@ export const TableProps = {
   rowKey: {
     type: String,
   },
+  defaultExpandAll: {
+    type: Boolean,
+    default: false,
+  },
   trackBy: {
     type: Function as PropType<(v: Record<string, any>) => string>,
-  }
+  },
 };
 
 export type TablePropsTypes = ExtractPropTypes<typeof TableProps>;
 
 export type DefaultRow = TablePropsTypes['data'][number];
 
-export interface Table<T = DefaultRow> extends ComponentInternalInstance {
+export interface ITable<T = DefaultRow> extends ComponentInternalInstance {
   store: TableStore<T>;
   props: TablePropsTypes;
   tableId: string;
@@ -125,7 +129,7 @@ export interface TableMethods<T = Record<string, any>> {
   // cancelEditingStatus(): void
 }
 
-export const TABLE_TOKEN: InjectionKey<Table> = Symbol();
+export const TABLE_TOKEN: InjectionKey<ITable> = Symbol();
 
 export interface UseTable {
   classes: ComputedRef<Record<string, boolean>>;
