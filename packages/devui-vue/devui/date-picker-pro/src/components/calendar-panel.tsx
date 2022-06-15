@@ -8,7 +8,7 @@ import { YearAndMonthItem, datePickerProPanelProps, DatePickerProPanelProps } fr
 export default defineComponent({
   name: 'CalendarPanel',
   props: datePickerProPanelProps,
-  emits: ['selectedDate'],
+  emits: ['selectedDate', 'changeRangeType'],
   setup(props: DatePickerProPanelProps, ctx: SetupContext) {
     const ns = useNamespace('date-picker-pro');
     const {

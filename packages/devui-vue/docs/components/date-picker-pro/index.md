@@ -64,16 +64,37 @@ export default defineComponent({
   },
 });
 </script>
+```
 
-<style>
-.mb20 {
-  margin-bottom: 20px;
-}
+:::
 
-.wh250 {
-  width: 250px;
-}
-</style>
+### 范围选择器
+
+:::demo
+
+```vue
+<template>
+  <div>basic range picker</div>
+  <d-range-date-picker-pro v-model="rangeDatePickerProValue" class="mb20" format="YYYY-MM-DD" />
+  <div>time range picker</div>
+  <d-range-date-picker-pro v-model="rangeDatePickerProValue1" class="mb20" :showTime="true" format="YYYY-MM-DD HH:mm:ss" />
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const rangeDatePickerProValue = ref<string[]>(['', '']);
+    const rangeDatePickerProValue1 = ref<string[]>(['', '']);
+
+    return {
+      rangeDatePickerProValue,
+      rangeDatePickerProValue1,
+    };
+  },
+});
+</script>
 ```
 
 :::
