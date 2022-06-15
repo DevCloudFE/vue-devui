@@ -65,6 +65,47 @@ export default defineComponent({
 
 :::
 
+### 固定时间范围
+
+:::demo
+
+```vue
+<template>
+  <div>
+    <d-row :gutter="5">
+      <d-col>
+        <d-time-select v-model="startTime" placeholder="请选择开始时间" />
+      </d-col>
+      <d-col>
+        <d-time-select v-model="endTime" placeholder="请选择结束时间" :min-time="startTime" />
+      </d-col>
+    </d-row>
+  </div>
+</template>
+
+<script>
+import { ref, defineComponent, nextTick } from 'vue';
+export default defineComponent({
+  setup(props, ctx) {
+    let startTime = ref('');
+    let endTime = ref('');
+    return {
+      startTime,
+      endTime,
+    };
+  },
+});
+</script>
+
+<style>
+.my-10 {
+  margin: 10px 0px;
+}
+</style>
+```
+
+:::
+
 ### 事件
 
 :::demo
