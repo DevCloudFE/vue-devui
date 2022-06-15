@@ -1,7 +1,7 @@
 import { defineComponent, inject, computed } from 'vue';
 import { TABLE_TOKEN, DefaultRow, Table } from '../../table-types';
 import { Column } from '../column/column-types';
-import { CellClickArg } from './body-types';
+import { CellClickArg, RowClickArg } from './body-types';
 import TD from '../body-td/body-td';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { useMergeCell } from './use-body';
@@ -18,13 +18,19 @@ export default defineComponent({
     const onCellClick = (cellClickArg: CellClickArg) => {
       table.emit('cell-click', cellClickArg);
     };
+    const onRowClick = (rowClickArg: RowClickArg) => {
+      table.emit('row-click', rowClickArg);
+    };
 
     return () => (
       <tbody class={ns.e('tbody')}>
-        {
-          data.value.map((row: DefaultRow, rowIndex: number) => {
-            const tableRow = () => {
-              return <tr key={rowIndex} class={{ 'hover-enabled': hoverEnabled.value, 'expanded': table.store.isRowExpanded(row) }}>
+        {data.value.map((row: DefaultRow, rowIndex: number) => {
+          const tableRow = () => {
+            return (
+              <tr
+                key={rowIndex}
+                class={{ 'hover-enabled': hoverEnabled.value, expanded: table.store.isRowExpanded(row) }}
+                onClick={() => onRowClick({ row })}>
                 {flatColumns.value.map((column: Column, columnIndex: number) => {
                   const cellId = `${rowIndex}-${columnIndex}`;
                   const [rowspan, colspan] = tableSpans.value[cellId] ?? [1, 1];
@@ -43,28 +49,33 @@ export default defineComponent({
                     />
                   );
                 })}
-              </tr>;
-            };
+              </tr>
+            );
+          };
 
-            const expandedRow = () => {
-              return flatColumns.value.some((column: Column) => column.type === 'expand') &&
-              <tr>
-                <td colspan={flatColumns.value.length}>
-                  {
-                    flatColumns.value.filter((column: Column) => column.type === 'expand')?.[0]?.slots?.default?.({
-                      row
-                    })
-                  }
-                </td>
-              </tr>;
-            };
+          const expandedRow = () => {
+            return (
+              flatColumns.value.some((column: Column) => column.type === 'expand') && (
+                <tr>
+                  <td colspan={flatColumns.value.length}>
+                    {flatColumns.value
+                      .filter((column: Column) => column.type === 'expand')?.[0]
+                      ?.slots?.default?.({
+                        row,
+                      })}
+                  </td>
+                </tr>
+              )
+            );
+          };
 
-            return <>
-              { tableRow() }
-              { table.store.isRowExpanded(row) && expandedRow() }
-            </>;
-          })
-        }
+          return (
+            <>
+              {tableRow()}
+              {table.store.isRowExpanded(row) && expandedRow()}
+            </>
+          );
+        })}
       </tbody>
     );
   },

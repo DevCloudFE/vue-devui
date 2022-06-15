@@ -7,3 +7,7 @@ export interface CellClickArg {
   column: Column;
   row: DefaultRow;
 }
+
+export interface RowClickArg {
+  row: DefaultRow;
+}
