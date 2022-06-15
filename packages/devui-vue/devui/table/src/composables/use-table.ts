@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 import type { ComputedRef, CSSProperties, Ref } from 'vue';
 import { Column } from '../components/column/column-types';
-import { Table, DefaultRow, TablePropsTypes, UseTable, UseFixedColumn, UseTableLayout } from '../table-types';
+import { ITable, DefaultRow, TablePropsTypes, UseTable, UseFixedColumn, UseTableLayout } from '../table-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 export function useTable(props: TablePropsTypes, tableWidth: Ref): UseTable {
@@ -41,7 +41,7 @@ export const useFixedColumn = (column: Ref<Column>): UseFixedColumn => {
   return { stickyClass, stickyStyle };
 };
 
-export function useTableLayout(table: Table<DefaultRow>): UseTableLayout {
+export function useTableLayout(table: ITable<DefaultRow>): UseTableLayout {
   const tableWidth = ref();
 
   const updateColgroupWidth = () => {

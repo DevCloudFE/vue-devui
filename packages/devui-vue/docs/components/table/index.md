@@ -1106,12 +1106,13 @@ export default defineComponent({
       },
     ]);
 
-    onMounted(() => {
+    /* onMounted(() => {
       tableRef.value.store.expandRow(dataSource.value[0]);
-    });
+    }); */
 
     const expandChange = (currentRow, expandedRows) => {
-      console.log('currentRow, expandedRows', currentRow, expandedRows);
+      console.log('currentRow', currentRow);
+      console.log('expandedRows', expandedRows);
     };
 
     return { dataSource, expandChange, tableRef };
