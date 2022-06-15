@@ -89,6 +89,10 @@
         z-index: 1000;
       }
     }
+
+    .#{$devui-prefix}-table__checkable-cell .header-container {
+      padding-left: 0;
+    }
   }
 }
 
