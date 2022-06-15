@@ -40,27 +40,27 @@ export function useTimeSelect(props: TimeSelectProps, ctx: SetupContext): useTim
 
   const start = computed(() => {
     const startTime = parseTimeToNumber(props.start);
-    return formatTime(startTime);
+    return startTime ? formatTime(startTime) : '00:00';
   });
 
   const end = computed(() => {
     const endTime = parseTimeToNumber(props.end);
-    return formatTime(endTime);
+    return endTime ? formatTime(endTime) : '24:00';
   });
 
   const step = computed(() => {
     const stepTime = parseTimeToNumber(props.step);
-    return formatTime(stepTime);
+    return stepTime ? formatTime(stepTime) : '00:30';
   });
 
   const minTime = computed(() => {
     const min = parseTimeToNumber(props.minTime);
-    return formatTime(min);
+    return min ? formatTime(min) : null;
   });
 
   const maxTime = computed(() => {
     const max = parseTimeToNumber(props.maxTime);
-    return formatTime(max);
+    return max ? formatTime(max) : null;
   });
 
   const compareTime = (time1: string, time2: string): number => {
@@ -84,7 +84,7 @@ export function useTimeSelect(props: TimeSelectProps, ctx: SetupContext): useTim
         list.push({
           value: currentTime,
           name: currentTime,
-          disabled: compareTime(current, minTime.value) <= 0 || compareTime(current, maxTime.value) > 0,
+          disabled: compareTime(current, minTime.value || '-1:-1') <= 0 || compareTime(current, maxTime.value || '24:00') > 0,
         });
         current = nextTime(current, step.value);
       }
