@@ -26,6 +26,7 @@ export default defineComponent({
       multiple,
       accept,
       webkitdirectory,
+      limit,
     } = toRefs(props);
     const ns = useNamespace('upload');
     const inputGroupNs = useNamespace('input-group');
@@ -34,7 +35,7 @@ export default defineComponent({
     const { triggerSelectFiles, _validateFiles, triggerDropFiles, checkAllFilesSize } = useSelectFiles();
     const { fileUploaders, addFile, getFullFiles, deleteFile, upload, resetSameNameFiles, removeFiles, _oneTimeUpload, getSameNameFiles } =
       useUpload();
-    const isDropOVer = ref(false);
+    const isDropOver = ref(false);
     const alertMsg = (errorMsg?: string) => {
       NotificationService.open({
         type: 'warning',
@@ -62,7 +63,7 @@ export default defineComponent({
       }
     };
     const onFileOver = (event: boolean) => {
-      isDropOVer.value = event;
+      isDropOver.value = event;
       ctx.emit('fileOver', event);
     };
     // 删除已上传文件
@@ -106,13 +107,13 @@ export default defineComponent({
         const uploadObservable: Promise<IFileResponse[]> = oneTimeUpload.value ? _oneTimeUpload() : upload(fileUploader);
         uploadObservable
           ?.then((results: IFileResponse[]) => {
-            props['on-success'] && props['on-success'](results);
+            props.onSuccess && props.onSuccess(results);
             const newFiles = results.map((result) => result.file);
             const newUploadedFiles = [...newFiles, ...modelValue.value];
             ctx.emit('update:modelValue', newUploadedFiles);
           })
           .catch((error: IFileResponse) => {
-            props['on-error'] && props['on-error'](error);
+            props.onError && props.onError(error);
           });
       });
     };
@@ -121,11 +122,17 @@ export default defineComponent({
       resetSameNameFiles();
       promise
         .then((files) => {
+          if (limit.value && modelValue.value.length + files.length > limit.value) {
+            props.onExceed && props.onExceed(files, modelValue.value);
+            return;
+          }
+
           files.forEach((file) => {
             // 单文件上传前先清空数组
             if (!multiple.value) {
               removeFiles();
             }
+
             addFile(file, uploadOptions?.value);
           });
           checkValid();
@@ -160,7 +167,7 @@ export default defineComponent({
     };
 
     const onFileDrop = (files: File[]) => {
-      isDropOVer.value = false;
+      isDropOver.value = false;
       _dealFiles(triggerDropFiles(files));
       ctx.emit('fileDrop', files);
     };
@@ -170,7 +177,7 @@ export default defineComponent({
         <div
           class={ns.b()}
           v-file-drop={{ droppable, isSingle: !multiple, onFileDrop, onFileOver }}
-          style={`border: ${isDropOVer.value ? '1px solid #15bf15' : '0'}`}>
+          style={`border: ${isDropOver.value ? '1px solid #15bf15' : '0'}`}>
           {ctx.slots.default?.() ? (
             <div onClick={handleClick}>{ctx.slots.default()}</div>
           ) : (
