@@ -2,8 +2,8 @@ import { ref, onBeforeMount, nextTick } from 'vue';
 import type { SetupContext } from 'vue';
 import { DAY_DURATION, yearItemHeight, calendarItemHeight } from '../const';
 import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
-import dayjs from 'dayjs';
-import type { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+
 import { throttle } from 'lodash';
 
 export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: SetupContext): UseCalendarPanelReturnType {
@@ -16,10 +16,12 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
   const calendarRange = [2020, 2025];
   const calendarCacheData = new Map();
   const selectDate = ref<Dayjs>();
+  const rangeSelectDate = ref<(Dayjs | null)[]>([]);
+  const currentMonthIndex = ref<number>(0);
+
   const fillLeft = (num: number) => {
     return num < 10 ? `0${num}` : `${num}`;
   };
-  const currentMonthIndex = ref<number>(0);
 
   const getDisplayWeeks = (year: number, month: number): CalendarDateItem[][] => {
     const firstDayOfMonth = new Date(year, month, 1);
@@ -130,17 +132,29 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
   };
 
   const initCalendarShow = () => {
-    if (props.visible) {
-      let toDate: Date;
-      if (props.dateValue) {
-        const date = Array.isArray(props.dateValue) ? props.dateValue[0] : props.dateValue;
-        selectDate.value = date;
-        toDate = date.toDate();
-      } else {
-        toDate = today.value;
-      }
-      goToShowDate(toDate);
+    if (!props.visible) {
+      return;
     }
+    let toDate: Date;
+    if (Array.isArray(props.dateValue) && props.dateValue[0]) {
+      // 初始化时, 日历面板会默认展示时间范围选择的startDate
+      const date = props.dateValue[0];
+      toDate = date.toDate();
+      // 赋值rangeSelectDate
+      if (props.dateValue[0]) {
+        rangeSelectDate.value[0] = props.dateValue[0];
+      }
+      if (props.dateValue[1]) {
+        rangeSelectDate.value[1] = props.dateValue[1];
+      }
+    } else if (!Array.isArray(props.dateValue) && props.dateValue) {
+      const date = props.dateValue;
+      selectDate.value = date;
+      toDate = date.toDate();
+    } else {
+      toDate = today.value;
+    }
+    goToShowDate(toDate);
   };
 
   onBeforeMount(() => {
@@ -150,12 +164,48 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     initCalendarShow();
   });
 
+  // 对时间范围选择模式下，对startDate,endDate做一些修正
+  const fixRangeDate = () => {
+    const start = rangeSelectDate.value[0]?.toDate()?.getTime();
+    const end = rangeSelectDate.value[1]?.toDate()?.getTime();
+    if (start && end && end < start) {
+      if (props.focusType === 'start') {
+        rangeSelectDate.value[1] = null;
+      } else if (props.focusType === 'end') {
+        rangeSelectDate.value[0] = null;
+      }
+    }
+  };
+
+  const handlerSetRangerDate = (day: CalendarDateItem) => {
+    if (props.focusType === 'start') {
+      rangeSelectDate.value[0] = dayjs(new Date(day.date.setHours(0, 0, 0))).locale('zh-cn');
+    } else if (props.focusType === 'end') {
+      rangeSelectDate.value[1] = dayjs(new Date(day.date.setHours(23, 59, 59))).locale('zh-cn');
+    }
+    fixRangeDate();
+  };
+
   const handlerSelectDate = (day: CalendarDateItem) => {
     if (!day.inMonth) {
       return;
     }
     selectDate.value = dayjs(new Date(day.date.setHours(0, 0, 0))).locale('zh-cn');
-    ctx.emit('selectedDate', selectDate.value);
+    if (props.isRangeType) {
+      handlerSetRangerDate(day);
+    }
+    if (props.isRangeType && !props.showTime) {
+      if (props.focusType === 'start') {
+        ctx.emit('changeRangeType', 'end');
+      } else if (props.focusType === 'end' && !rangeSelectDate.value[0]) {
+        rangeSelectDate.value[0] = selectDate.value;
+      }
+    }
+    if (props.isRangeType) {
+      ctx.emit('selectedDate', rangeSelectDate.value);
+    } else {
+      ctx.emit('selectedDate', selectDate.value);
+    }
   };
 
   const handlerYearCollapse = (date?: Date) => {
@@ -209,7 +259,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     return false;
   };
 
-  const updateSelectedDate = (date: Dayjs) => {
+  const updateSelectedDate = (date: Dayjs | undefined) => {
     selectDate.value = date;
   };
   ctx.expose({ updateSelectedDate });

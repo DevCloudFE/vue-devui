@@ -32,8 +32,12 @@ export interface UseDatePickerProReturnType {
   placeholder: ComputedRef<string>;
   dateValue: ComputedRef<Dayjs | undefined>;
   displayDateValue: ComputedRef<string>;
+  isMouseEnter: Ref<boolean>;
+  showCloseIcon: ComputedRef<boolean>;
   onFocus: (e: MouseEvent) => void;
-  onSelectedDate: (date: Dayjs, isConfirm?: boolean) => void;
+  onSelectedDate: (date: Dayjs | Dayjs[], isConfirm?: boolean) => void;
+  handlerClearTime: (e: MouseEvent) => void;
+  onChangeRangeType: (type: string) => void;
 }
 
 export interface CalendarDateItem {
@@ -58,6 +62,7 @@ export interface UseDatePickerReturnType {
   onSelectedDate: (date: Dayjs) => void;
   handlerConfirm: () => void;
   handlerSelectedTime: (time: string) => void;
+  onChangeRangeType: (type: string) => void;
 }
 
 export interface UseCalendarPanelReturnType {
@@ -89,6 +94,14 @@ export const datePickerProPanelProps = {
   showTime: {
     type: Boolean,
     default: false,
+  },
+  isRangeType: {
+    type: Boolean,
+    default: false,
+  },
+  focusType: {
+    type: String,
+    default: 'start',
   },
 } as const;
 
