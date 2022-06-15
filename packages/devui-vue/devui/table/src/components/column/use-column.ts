@@ -1,6 +1,6 @@
 import { watch, reactive, onBeforeMount, computed, h, getCurrentInstance, Ref, VNode, SetupContext } from 'vue';
-import type { ToRefs, Slots, ComputedRef } from 'vue';
-import { Table, DefaultRow } from '../../table-types';
+import type { ToRefs, ComputedRef } from 'vue';
+import { ITable, DefaultRow } from '../../table-types';
 import { Column, TableColumnProps, TableColumn, SortDirection, SortMethod } from './column-types';
 import { TableStore } from '../../store/store-types';
 import { formatWidth } from '../../utils';
@@ -138,7 +138,7 @@ export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: S
 }
 
 export function useRender<T>(): {
-  columnOrTableParent: ComputedRef<Table<T> | TableColumn>;
+  columnOrTableParent: ComputedRef<ITable<T> | TableColumn>;
   getColumnIndex: (children: Array<unknown>, child: unknown) => number;
 } {
   const instance = getCurrentInstance() as TableColumn;

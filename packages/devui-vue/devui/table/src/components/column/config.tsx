@@ -11,7 +11,7 @@ export const cellMap = {
     renderHeader(column: Column, store: TableStore): VNode {
       return h(Checkbox, {
         modelValue: store.states._checkAll.value,
-        halfchecked: store.states._halfChecked.value,
+        halfChecked: store.states._halfChecked.value,
         onChange: (val: boolean) => {
           store.states._checkAll.value = val;
           store._table.emit('check-all-change', val);
@@ -41,11 +41,15 @@ export const cellMap = {
       return <span></span>;
     },
     renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): VNode {
-      return <Icon name="chevron-right" class="icon-expand-row" onClick={() => {
-        store.toggleRow(rowData);
-        store._table.emit('expand-change', rowData, store.getExpandedRows());
-      }}></Icon>;
-    }
+      return (
+        <Icon
+          name="chevron-right"
+          class="icon-expand-row"
+          onClick={() => {
+            store.toggleRowExpansion(rowData);
+          }}></Icon>
+      );
+    },
   },
   default: {
     renderHeader(column: Column): VNode {

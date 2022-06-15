@@ -2,6 +2,8 @@ import type { App } from 'vue';
 import Table from './src/table';
 import Column from './src/components/column/column';
 
+export * from './src/table-types';
+
 export { Table, Column };
 
 export default {

@@ -16,9 +16,9 @@ export default defineComponent({
       [ns.m('operable')]: operable.value,
     }));
     const onClick = (e: Event) => {
+      e.stopImmediatePropagation();
       if (disabled.value) {
         e.preventDefault();
-        e.stopImmediatePropagation();
       }
     };
 
