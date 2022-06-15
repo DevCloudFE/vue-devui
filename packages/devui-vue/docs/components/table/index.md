@@ -233,6 +233,7 @@ export default defineComponent({
       :data="data"
       row-key="firstName"
       @cell-click="onCellClick"
+      @row-click="onRowClick"
       @check-change="checkChange"
       @check-all-change="checkAllChange"
       :trackBy="(item) => item.id"
@@ -296,7 +297,10 @@ export default defineComponent({
       console.log(tableRef.value.store.getCheckedRows());
     };
     const onCellClick = (params) => {
-      console.log(params);
+      console.log('cell-click', params);
+    };
+    const onRowClick = (params) => {
+      console.log('row-click', params);
     };
 
     const checkChange = (checked, row) => {
@@ -342,6 +346,7 @@ export default defineComponent({
       data,
       handleClick,
       onCellClick,
+      onRowClick,
       checkChange,
       checkAllChange,
       checkable,
@@ -1142,12 +1147,13 @@ export default defineComponent({
 
 ### Table 事件
 
-| 事件名           | 回调参数                                                     | 说明                             | 跳转 Demo             |
-| :--------------- | :----------------------------------------------------------- | :------------------------------- | :-------------------- |
-| sort-change      | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息   | [列排序](#列排序)     |
-| cell-click       | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息   | [表格交互](#表格交互) |
-| check-change     | `Function(checked: boolean, row)`                            | 勾选表格行回调事件，返回该行信息 | [表格交互](#表格交互) |
-| check-all-change | `Function(checked: boolean)`                                 | 全选表格行回调事件，返回勾选状态 | [表格交互](#表格交互) |
+| 事件名           | 回调参数                                                     | 说明                                   | 跳转 Demo             |
+| :--------------- | :----------------------------------------------------------- | :------------------------------------- | :-------------------- |
+| sort-change      | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息         | [列排序](#列排序)     |
+| cell-click       | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息         | [表格交互](#表格交互) |
+| check-change     | `Function(checked: boolean, row)`                            | 勾选表格行回调事件，返回该行信息       | [表格交互](#表格交互) |
+| check-all-change | `Function(checked: boolean)`                                 | 全选表格行回调事件，返回勾选状态       | [表格交互](#表格交互) |
+| row-click        | `Function(obj: RowClickArg)`                                 | 某一行被点击时触发该事件，返回该行信息 | [表格交互](#表格交互) |
 
 ### Table 方法
 
@@ -1236,6 +1242,14 @@ interface CellClickArg {
   columnIndex: number;
   rowIndex: number;
   column: Column;
+  row: DefaultRow;
+}
+```
+
+#### RowClickArg
+
+```ts
+interface RowClickArg {
   row: DefaultRow;
 }
 ```
