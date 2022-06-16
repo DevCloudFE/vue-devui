@@ -1,11 +1,11 @@
 import { shallowRef, ref, computed } from 'vue';
 import type { SetupContext } from 'vue';
-import { RangeDatePickerProProps } from '../range-date-picker-types';
+import { RangeDatePickerProProps, UseRangePickerProReturnType } from '../range-date-picker-types';
 import { onClickOutside } from '@vueuse/core';
 import type { Dayjs } from 'dayjs';
 import { formatDayjsToStr, isDateEquals, getFormatterDate, parserDate } from '../utils';
 
-export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: SetupContext): any {
+export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: SetupContext): UseRangePickerProReturnType {
   const containerRef = shallowRef<HTMLElement>();
   const originRef = ref<HTMLElement>();
   const startInputRef = shallowRef<HTMLElement>();
@@ -65,7 +65,7 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     return ['', ''];
   });
 
-  const showCloseIcon = computed(() => isMouseEnter.value);
+  const showCloseIcon = computed(() => isMouseEnter.value && (displayDateValue.value[0] !== '' || displayDateValue.value[1] !== ''));
 
   const onSelectedDate = (date: Dayjs[], isConfirm?: boolean) => {
     const [startDate, endDate] = date;
@@ -77,7 +77,8 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
       const endFormatDate = getFormatterDate(endDate, props.format);
       ctx.emit('update:modelValue', [selectStart ? startFormatDate : '', selectEnd ? endFormatDate : '']);
       if (isConfirm) {
-        ctx.emit('confirmEvent', date);
+        // 回调参数为Date类型
+        ctx.emit('confirmEvent', [selectStart, selectEnd]);
         toggleChange(false);
       }
     }
@@ -87,9 +88,14 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     e.stopPropagation();
     e.preventDefault();
     ctx.emit('update:modelValue', ['', '']);
+    ctx.emit('confirmEvent', [null, null]);
+    // 当面板未关闭时，清空后focusType置位start
+    if (isPanelShow.value) {
+      focusType.value = 'start';
+    }
   };
 
-  const onChangeRangeType = (type: string) => {
+  const onChangeRangeFocusType = (type: string) => {
     focusType.value = type;
   };
 
@@ -109,6 +115,6 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     onFocus,
     onSelectedDate,
     handlerClearTime,
-    onChangeRangeType,
+    onChangeRangeFocusType,
   };
 }

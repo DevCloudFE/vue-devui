@@ -146,10 +146,61 @@ $input-height-md: 28px;
         }
       }
 
-      &.#{$devui-prefix}-date-picker-pro__table-date-selected {
+      &.#{$devui-prefix}-date-picker-pro__table-date-selected,
+      &.#{$devui-prefix}-date-picker-pro__table-date-start,
+      &.#{$devui-prefix}-date-picker-pro__table-date-end {
         span {
           background-color: $devui-brand-active;
           color: $devui-light-text;
+        }
+      }
+      &.#{$devui-prefix}-date-picker-pro__table-date-in-range {
+        background-color: $devui-list-item-hover-bg;
+
+        span:hover {
+          background-color: $devui-range-item-hover-bg;
+        }
+      }
+
+      &.#{$devui-prefix}-date-picker-pro__table-date-start:not(.#{$devui-prefix}-date-picker-pro__table-date-end) {
+        position: relative;
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 8px;
+          height: 22px;
+          background-color: $devui-list-item-hover-bg;
+          right: 0;
+          top: 0;
+        }
+
+        &:not(:hover):not(.#{$devui-prefix}-date-picker-pro__table-date-selected)::after {
+          display: none;
+        }
+
+        span {
+          border-radius: $devui-border-radius-feedback 0 0 $devui-border-radius-feedback;
+        }
+      }
+
+      &.#{$devui-prefix}-date-picker-pro__table-date-end:not(.#{$devui-prefix}-date-picker-pro__table-date-start) {
+        position: relative;
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 5px;
+          height: 22px;
+          background-color: $devui-list-item-hover-bg;
+          left: 0;
+          top: 0;
+        }
+
+        span {
+          border-radius: 0 $devui-border-radius-feedback $devui-border-radius-feedback 0;
         }
       }
     }
@@ -255,6 +306,17 @@ $input-height-md: 28px;
 
       &__wrapper {
         border: none;
+      }
+    }
+
+    .#{$devui-prefix}-range-date-picker-pro__active-input {
+      .#{$devui-prefix}-input__inner {
+        color: $devui-brand;
+      }
+    }
+    .#{$devui-prefix}-range-date-picker-pro__normal-input {
+      .#{$devui-prefix}-input__inner {
+        color: $devui-text;
       }
     }
 
