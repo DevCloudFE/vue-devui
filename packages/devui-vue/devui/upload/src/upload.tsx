@@ -75,7 +75,7 @@ export default defineComponent({
       ctx.emit('update:modelValue', newUploadedFiles);
     };
     const onDeleteFile = (event: Event, file: File, status: UploadStatus) => {
-      event.stopPropagation();
+      event?.stopPropagation();
       if (status === UploadStatus.uploaded) {
         deleteUploadedFile(file);
       }
@@ -111,9 +111,11 @@ export default defineComponent({
             const newFiles = results.map((result) => result.file);
             const newUploadedFiles = [...newFiles, ...modelValue.value];
             ctx.emit('update:modelValue', newUploadedFiles);
+            props.onChange && props.onChange(newFiles, newUploadedFiles);
           })
           .catch((error: IFileResponse) => {
             props.onError && props.onError(error);
+            props.onChange && props.onChange([error.file], modelValue.value);
           });
       });
     };
@@ -126,6 +128,8 @@ export default defineComponent({
             props.onExceed && props.onExceed(files, modelValue.value);
             return;
           }
+
+          props.onChange && props.onChange(files, modelValue.value);
 
           files.forEach((file) => {
             // 单文件上传前先清空数组
@@ -171,6 +175,18 @@ export default defineComponent({
       _dealFiles(triggerDropFiles(files));
       ctx.emit('fileDrop', files);
     };
+
+    const submit = (event?: Event, fileUploader?: FileUploader) => {
+      fileUpload(event, fileUploader);
+    };
+
+    const clearFiles = (event: MouseEvent) => {
+      fileUploaders.value.forEach((fileUploader) => {
+        onDeleteFile(event, fileUploader.file, fileUploader.status);
+      });
+    };
+
+    ctx.expose({ submit, clearFiles });
 
     return () => (
       <div>
