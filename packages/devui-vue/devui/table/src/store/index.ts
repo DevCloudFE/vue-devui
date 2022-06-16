@@ -159,14 +159,6 @@ const createFixedLogic = (columns: Ref<Column[]>) => {
 
 export function createStore<T>(dataSource: Ref<T[]>, table: ITable<DefaultRow>): TableStore<T> {
   const _data: Ref<T[]> = ref([]);
-  watch(
-    dataSource,
-    (value: T[]) => {
-      _data.value = [...value];
-    },
-    { deep: true, immediate: true }
-  );
-
   const { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
 
   const { _checkAll, _checkSet, _halfChecked, getCheckedRows, isRowChecked, checkRow } = createSelection(
@@ -177,7 +169,16 @@ export function createStore<T>(dataSource: Ref<T[]>, table: ITable<DefaultRow>):
   const { sortData, thList } = createSorter(dataSource, _data);
 
   const { isFixedLeft } = createFixedLogic(_columns);
-  const { isRowExpanded, toggleRowExpansion } = useExpand(_data);
+  const { isRowExpanded, updateExpandRows, setExpandRows, toggleRowExpansion } = useExpand(_data);
+
+  watch(
+    dataSource,
+    (value: T[]) => {
+      _data.value = [...value];
+      updateExpandRows();
+    },
+    { deep: true, immediate: true }
+  );
 
   return {
     _table: table,
@@ -200,6 +201,7 @@ export function createStore<T>(dataSource: Ref<T[]>, table: ITable<DefaultRow>):
     isRowChecked,
     checkRow,
     isRowExpanded,
+    setExpandRows,
     toggleRowExpansion,
   };
 }
