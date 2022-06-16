@@ -1056,7 +1056,14 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table ref="tableRef" :data="dataSource" :trackBy="(item) => item?.firstName" @expand-change="expandChange">
+  <d-table
+    ref="tableRef"
+    :data="dataSource"
+    :trackBy="(item) => item?.firstName"
+    row-key="id"
+    :expand-row-keys="['1', '3']"
+    @expand-change="expandChange"
+  >
     <d-column type="expand">
       <template #default="rowData">
         <div>First Name: {{ rowData.row.firstName }}</div>
@@ -1081,24 +1088,28 @@ export default defineComponent({
 
     const dataSource = ref([
       {
+        id: '1',
         firstName: 'Jacob',
         lastName: 'Thornton',
         gender: 'Female',
         date: '1990/01/12',
       },
       {
+        id: '2',
         firstName: 'Mark',
         lastName: 'Otto',
         date: '1990/01/11',
         gender: 'Male',
       },
       {
+        id: '3',
         firstName: 'Danni',
         lastName: 'Chen',
         gender: 'Female',
         date: '1990/01/13',
       },
       {
+        id: '4',
         firstName: 'Green',
         lastName: 'Gerong',
         gender: 'Male',

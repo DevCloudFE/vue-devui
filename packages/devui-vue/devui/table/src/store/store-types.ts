@@ -13,7 +13,6 @@ export interface TableStore<T = Record<string, any>> {
     _halfChecked: Ref<boolean>;
     isFixedLeft: Ref<boolean>;
     thList: ComponentInternalInstance[];
-    _expandedRows: Ref<Set<string>>;
   };
   insertColumn(column: Column, parent: any): void;
   sortColumn(): void;
@@ -27,9 +26,12 @@ export interface TableStore<T = Record<string, any>> {
   // 展开行
   toggleRowExpansion(row: T): void;
   isRowExpanded(row: T): boolean;
+  setExpandRows: (rowKeys: string[]) => void;
 }
 
 export interface UseExpand {
   isRowExpanded: (row: DefaultRow) => boolean;
+  updateExpandRows: () => void;
+  setExpandRows: (rowKeys: string[]) => void;
   toggleRowExpansion: (row: DefaultRow, expanded?: boolean) => void;
 }
