@@ -4,7 +4,7 @@ import { ArrType } from '../../time-picker/src/types';
 
 export const datePickerProProps = {
   modelValue: {
-    type: [Date, String, Number] as PropType<number | string | Date>,
+    type: [Date, String] as PropType<Date | string>,
     default: '',
   },
   format: {
