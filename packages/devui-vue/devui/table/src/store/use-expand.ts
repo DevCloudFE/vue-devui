@@ -7,7 +7,16 @@ import { getRowKeysMap, toggleRowExpandStatus } from '../utils';
 export function useExpand(dataSource: Ref<DefaultRow[]>): UseExpand {
   const tableInstance = getCurrentInstance() as ITable<DefaultRow>;
   const rowKey = tableInstance.props.rowKey || '';
+  const defaultExpandAll = ref(tableInstance.props.defaultExpandAll);
   const _expandedRows: Ref<DefaultRow[]> = ref([]);
+
+  const updateExpandRows = () => {
+    if (defaultExpandAll.value) {
+      _expandedRows.value = dataSource.value.slice();
+    } else {
+      _expandedRows.value = [];
+    }
+  };
 
   const setExpandRows = (rowKeys: string[]) => {
     const data = dataSource.value || [];
@@ -34,6 +43,8 @@ export function useExpand(dataSource: Ref<DefaultRow[]>): UseExpand {
 
   return {
     isRowExpanded,
+    updateExpandRows,
+    setExpandRows,
     toggleRowExpansion,
   };
 }
