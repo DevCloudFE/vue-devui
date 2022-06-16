@@ -27,6 +27,7 @@ export default defineComponent({
       accept,
       webkitdirectory,
       limit,
+      httpRequest,
     } = toRefs(props);
     const ns = useNamespace('upload');
     const inputGroupNs = useNamespace('input-group');
@@ -102,6 +103,12 @@ export default defineComponent({
       canUpload().then((_canUpload) => {
         if (!_canUpload) {
           removeFiles();
+          return;
+        }
+        if (typeof httpRequest?.value === 'function') {
+          const files = fileUploaders.value.map((tempFileUploader) => tempFileUploader.file);
+          httpRequest.value(files);
+
           return;
         }
         const uploadObservable: Promise<IFileResponse[]> = oneTimeUpload.value ? _oneTimeUpload() : upload(fileUploader);
