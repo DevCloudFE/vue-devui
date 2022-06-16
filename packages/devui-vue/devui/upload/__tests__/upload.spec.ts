@@ -72,8 +72,9 @@ describe('upload', () => {
     const wrapper = mount(TestComponent);
     expect(wrapper.find(`${dotInputGroupClass}.disabled`).exists()).toBe(true);
   });
-  it('should work with `before-upload auto-upload withoutBtn` prop', async () => {
+  it('should work with `before-upload auto-upload withoutBtn http-request` prop', async () => {
     const beforeUpload = jest.fn(async () => true);
+    const httpRequest = jest.fn(async () => true);
 
     const TestComponent = {
       components: {
@@ -85,6 +86,7 @@ describe('upload', () => {
           v-model:uploaded-files="uploadedFiles"
           :before-upload="beforeUpload"
           :auto-upload="true"
+          :http-request="httpRequest"
           :withoutBtn="true"
         />
         `,
@@ -97,6 +99,7 @@ describe('upload', () => {
           uploadedFiles,
           uploadOptions,
           beforeUpload,
+          httpRequest,
         };
       },
     };
@@ -115,6 +118,8 @@ describe('upload', () => {
     const evt = new Event('change');
     await input.dispatchEvent(evt);
     expect(beforeUpload).toHaveBeenCalled();
+    await nextTick();
+    expect(httpRequest).toHaveBeenCalled();
     expect(wrapper.find(`${dotUploadClass} button`).exists()).toBe(false);
   });
   it('should work with `placeholder` prop', async () => {

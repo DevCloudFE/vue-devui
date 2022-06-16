@@ -135,6 +135,10 @@ export const uploadProps = {
     type: Number,
     default: 0,
   },
+  httpRequest: {
+    type: Function as PropType<(files: File[]) => void>,
+    default: undefined,
+  },
 } as const;
 
 export type UploadProps = ExtractPropTypes<typeof uploadProps>;
