@@ -3,7 +3,7 @@ import type { SetupContext } from 'vue';
 import { DatePickerProProps, UseDatePickerProReturnType } from './date-picker-pro-types';
 import { onClickOutside } from '@vueuse/core';
 import type { Dayjs } from 'dayjs';
-import { formatDayjsToStr, isDateEquals, getFormatterDate, parserDate } from './utils';
+import { formatDayjsToStr, isDateEquals, parserDate } from './utils';
 
 export default function usePickerPro(props: DatePickerProProps, ctx: SetupContext): UseDatePickerProReturnType {
   const containerRef = shallowRef<HTMLElement>();
@@ -31,7 +31,7 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
   const dateValue = computed(() => {
     let result;
     if (props.modelValue) {
-      result = parserDate(props.modelValue, props.format);
+      result = parserDate(props.modelValue);
     }
     return result;
   });
@@ -49,12 +49,11 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
   const onSelectedDate = (date: Dayjs, isConfirm?: boolean) => {
     const result = date ? date.toDate() : date;
     if (!isDateEquals(props.modelValue, result)) {
-      const formatDate = getFormatterDate(date, props.format);
-      ctx.emit('update:modelValue', date ? formatDate : date);
-      if (isConfirm) {
-        ctx.emit('confirmEvent', date);
-        toggleChange(false);
-      }
+      ctx.emit('update:modelValue', result ? result : '');
+    }
+    if (isConfirm) {
+      ctx.emit('confirmEvent', result ? result : '');
+      toggleChange(false);
     }
   };
 
@@ -62,6 +61,7 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
     e.stopPropagation();
     e.preventDefault();
     ctx.emit('update:modelValue', '');
+    ctx.emit('confirmEvent', '');
   };
 
   return {

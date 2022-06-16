@@ -3,15 +3,15 @@ import type { Dayjs } from 'dayjs';
 
 export const rangeDatePickerProProps = {
   modelValue: {
-    type: Array as PropType<(number | string | Date)[]>,
-    default: '',
+    type: Array as PropType<(Date | string)[]>,
+    default: ['', ''],
   },
   format: {
     type: String,
     default: 'YYYY/MM/DD',
   },
   placeholder: {
-    type: [Array] as PropType<string[]>,
+    type: Array as PropType<string[]>,
     default: ['请选择日期', '请选择日期'],
   },
   showTime: {

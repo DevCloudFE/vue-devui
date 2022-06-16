@@ -2,6 +2,7 @@ import { ref, onMounted, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { initializeTimeData } from '../../../time-picker/src/utils';
 import { TimePickerItem, TimerPickerPanelProps } from '../date-picker-pro-types';
+import { resetActiveTimeData } from '../utils';
 
 export default function useTimePickerPanel(props: TimerPickerPanelProps, ctx: SetupContext): any {
   const timeListDom = ref();
@@ -18,10 +19,14 @@ export default function useTimePickerPanel(props: TimerPickerPanelProps, ctx: Se
   watch(
     () => [props.visible, props.bindData],
     ([visible, newTimeVal], [, oldTimeVal]) => {
-      if (visible || newTimeVal !== oldTimeVal) {
+      if (newTimeVal && (visible || newTimeVal !== oldTimeVal)) {
         timeListDom.value.setOuterTime(newTimeVal);
       } else {
         timeListDom.value.resetScrollTop();
+        // 需重置active
+        resetActiveTimeData(hourList);
+        resetActiveTimeData(minuteList);
+        resetActiveTimeData(secondList);
       }
     }
   );

@@ -70,7 +70,9 @@ export default defineComponent({
 
 ### 日期格式
 
-通过`format`指定绑定值的格式。 为 Dayjs 支持的 format 参数
+通过`format`指定输入框显示的日期格式, 详见 [Format](#format)
+
+例如：`YYYY-MM-DD`
 
 :::demo
 
@@ -149,12 +151,12 @@ export default defineComponent({
 
 ### DatePickerPro 参数
 
-| 参数名      | 类型                        | 默认                                  | 说明                                                     | 跳转 Demo             |
-| :---------- | :-------------------------- | :------------------------------------ | :------------------------------------------------------- | :-------------------- |
-| v-model     | [IDatePicker](#idatepicker) | ''                                    | 必选，选中项绑定的值                                     | [基本用法](#基本用法) |
-| format      | `string`                    | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式) |
-| placeholder | `string`                    | '请选择日期'                          | 可选，输入框的 placeholder                               | [基本用法](#基本用法) |
-| showTime    | `boolean`                   | false                                 | 可选，是否显示时分秒                                     | [显示时间](#显示时间) |
+| 参数名      | 类型              | 默认                                  | 说明                                                     | 跳转 Demo             |
+| :---------- | :---------------- | :------------------------------------ | :------------------------------------------------------- | :-------------------- |
+| v-model     | `Date`            | ''                                    | 必选，选中项绑定的值                                     | [基本用法](#基本用法) |
+| format      | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式) |
+| placeholder | `string`          | '请选择日期'                          | 可选，输入框的 placeholder                               | [基本用法](#基本用法) |
+| showTime    | `boolean`         | false                                 | 可选，是否显示时分秒                                     | [显示时间](#显示时间) |
 
 ### DatePickerPro 事件
 
@@ -165,20 +167,40 @@ export default defineComponent({
 
 ### DatePickerPro 类型定义
 
-#### IDatePicker
+#### Format
 
 ```ts
-type IDatePicker = Date | number | string;
+type Format = string;
 ```
+
+日期格式 `format` 支持的标识列表
+
+| 标识 | 示例    | 描述            |
+| :--- | :------ | :-------------- |
+| YY   | 22      | 年，两位数      |
+| YYYY | 2022    | 年，四位数      |
+| M    | 1-12    | 月，从 1 开始   |
+| MM   | 01-12   | 月，两位数字    |
+| MMM  | Jan-Dec | 月，英文缩写    |
+| D    | 1-31    | 日              |
+| DD   | 01-31   | 日，两位数      |
+| H    | 0-23    | 24 小时         |
+| HH   | 00-23   | 24 小时，两位数 |
+| h    | 1-12    | 12 小时         |
+| hh   | 01-12   | 12 小时，两位数 |
+| m    | 0-59    | 分钟            |
+| mm   | 00-59   | 分钟，两位数    |
+| s    | 0-59    | 秒              |
+| ss   | 00-59   | 秒，两位数      |
 
 ### RangeDatePickerPro 参数
 
-| 参数名      | 类型                                  | 默认                                  | 说明                                                     | 跳转 Demo                 |
-| :---------- | :------------------------------------ | :------------------------------------ | :------------------------------------------------------- | :------------------------ |
-| v-model     | [IRangeDatePicker](#irangedatepicker) | ''                                    | 必选，选中项绑定的值                                     | [范围选择器](#范围选择器) |
-| format      | `string`                              | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)     |
-| placeholder | `Array`                               | ['请选择日期', '请选择日期']          | 可选，输入框的 placeholder                               | [范围选择器](#范围选择器) |
-| showTime    | `boolean`                             | false                                 | 可选，是否显示时分秒                                     | [范围选择器](#范围选择器) |
+| 参数名      | 类型              | 默认                                  | 说明                                                     | 跳转 Demo                 |
+| :---------- | :---------------- | :------------------------------------ | :------------------------------------------------------- | :------------------------ |
+| v-model     | `[Date, Date]`    | ['','']                               | 必选，选中项绑定的值                                     | [范围选择器](#范围选择器) |
+| format      | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)     |
+| placeholder | `Array`           | ['请选择日期', '请选择日期']          | 可选，输入框的 placeholder                               | [范围选择器](#范围选择器) |
+| showTime    | `boolean`         | false                                 | 可选，是否显示时分秒                                     | [范围选择器](#范围选择器) |
 
 ### RangeDatePickerPro 事件
 
@@ -186,11 +208,3 @@ type IDatePicker = Date | number | string;
 | :----------- | :------------------------ | :--------------------------------- | :-------- |
 | toggleChange | `(bool: boolean) => void` | 可选，选择器打开关闭 toggle 事件   |           |
 | confirmEvent | `(date: Date[]) => void`  | 可选，用户确定选定的时间范围时触发 |           |
-
-### RangeDatePickerPro 类型定义
-
-#### IRangeDatePicker
-
-```ts
-type IDatePicker = (Date | number | string)[];
-```
