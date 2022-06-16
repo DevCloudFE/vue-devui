@@ -3,7 +3,7 @@ import type { Dayjs } from 'dayjs';
 
 export const rangeDatePickerProProps = {
   modelValue: {
-    type: [Array] as PropType<(number | string | Date)[]>,
+    type: Array as PropType<(number | string | Date)[]>,
     default: '',
   },
   format: {
