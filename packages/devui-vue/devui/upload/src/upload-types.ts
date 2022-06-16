@@ -49,7 +49,7 @@ export interface IFileResponse<T = unknown> {
 }
 
 type DynamicUploadOptionsFn = (files: unknown, uploadOptions: unknown) => IUploadOptions;
-type ChangeFn = (_: unknown) => void;
+type ChangeFn = (files: File[], uploadFiles: File[]) => void;
 type BeforeUploadFn = (file: UnwrapRef<FileUploader[]>) => boolean | Promise<boolean>;
 
 export const uploadProps = {
