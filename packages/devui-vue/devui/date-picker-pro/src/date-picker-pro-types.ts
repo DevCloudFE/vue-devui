@@ -9,7 +9,7 @@ export const datePickerProProps = {
   },
   format: {
     type: String,
-    default: 'YYYY-MM-DD',
+    default: 'YYYY/MM/DD',
   },
   placeholder: {
     type: String,
@@ -35,9 +35,8 @@ export interface UseDatePickerProReturnType {
   isMouseEnter: Ref<boolean>;
   showCloseIcon: ComputedRef<boolean>;
   onFocus: (e: MouseEvent) => void;
-  onSelectedDate: (date: Dayjs | Dayjs[], isConfirm?: boolean) => void;
+  onSelectedDate: (date: Dayjs, isConfirm?: boolean) => void;
   handlerClearTime: (e: MouseEvent) => void;
-  onChangeRangeType: (type: string) => void;
 }
 
 export interface CalendarDateItem {
@@ -62,7 +61,7 @@ export interface UseDatePickerReturnType {
   onSelectedDate: (date: Dayjs) => void;
   handlerConfirm: () => void;
   handlerSelectedTime: (time: string) => void;
-  onChangeRangeType: (type: string) => void;
+  onChangeRangeFocusType: (type: string) => void;
 }
 
 export interface UseCalendarPanelReturnType {
@@ -77,6 +76,9 @@ export interface UseCalendarPanelReturnType {
   handleScrollYearList: (e: UIEvent) => void;
   handleScrollMonthList: (e: UIEvent) => void;
   isDateSelected: (date: Date) => boolean;
+  isStartDate: (date: Date) => boolean;
+  isInRangeDate: (date: Date) => boolean;
+  isEndDate: (date: Date) => boolean;
 }
 
 export const datePickerProPanelProps = {
@@ -86,7 +88,7 @@ export const datePickerProPanelProps = {
   },
   format: {
     type: String,
-    default: 'YYYY-MM-DD',
+    default: 'YYYY/MM/DD',
   },
   dateValue: {
     type: [Object, Array] as PropType<Dayjs | Dayjs[]>,

@@ -2,8 +2,8 @@ import { ref, onBeforeMount, nextTick } from 'vue';
 import type { SetupContext } from 'vue';
 import { DAY_DURATION, yearItemHeight, calendarItemHeight } from '../const';
 import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
-import dayjs, { Dayjs } from 'dayjs';
-
+import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
 import { throttle } from 'lodash';
 
 export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: SetupContext): UseCalendarPanelReturnType {
@@ -13,7 +13,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
   const allMonthList = ref<YearAndMonthItem[]>([]);
   const isListCollapse = ref(false);
   const today = ref<Date>(new Date());
-  const calendarRange = [2020, 2025];
+  let calendarRange: number[] = [];
   const calendarCacheData = new Map();
   const selectDate = ref<Dayjs>();
   const rangeSelectDate = ref<(Dayjs | null)[]>([]);
@@ -135,14 +135,16 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     if (!props.visible) {
       return;
     }
-    let toDate: Date;
-    if (Array.isArray(props.dateValue) && props.dateValue[0]) {
-      // 初始化时, 日历面板会默认展示时间范围选择的startDate
-      const date = props.dateValue[0];
-      toDate = date.toDate();
+    let toDate: Date | undefined;
+    if (Array.isArray(props.dateValue)) {
       // 赋值rangeSelectDate
       if (props.dateValue[0]) {
+        // 初始化时, 日历面板会默认展示时间范围选择的startDate
+        const date = props.dateValue[0];
+        toDate = date.toDate();
         rangeSelectDate.value[0] = props.dateValue[0];
+      } else {
+        toDate = today.value;
       }
       if (props.dateValue[1]) {
         rangeSelectDate.value[1] = props.dateValue[1];
@@ -154,13 +156,16 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     } else {
       toDate = today.value;
     }
-    goToShowDate(toDate);
+    if (toDate) {
+      goToShowDate(toDate);
+    }
   };
 
   onBeforeMount(() => {
-    initCalendarData();
     today.value = new Date();
+    calendarRange = [today.value.getFullYear() - 3, today.value.getFullYear() + 3];
     // 初始化先展示v-model对应的时间，如果没有展示today对应的时间
+    initCalendarData();
     initCalendarShow();
   });
 
@@ -196,7 +201,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     if (props.isRangeType && !props.showTime) {
       if (props.focusType === 'start') {
-        ctx.emit('changeRangeType', 'end');
+        ctx.emit('changeRangeFocusType', 'end');
       } else if (props.focusType === 'end' && !rangeSelectDate.value[0]) {
         rangeSelectDate.value[0] = selectDate.value;
       }
@@ -261,8 +266,39 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
 
   const updateSelectedDate = (date: Dayjs | undefined) => {
     selectDate.value = date;
+    if (date) {
+      goToShowDate(date.toDate());
+    }
   };
   ctx.expose({ updateSelectedDate });
+  const isStartDate = (date: Date) => {
+    if (!props.isRangeType) {
+      return false;
+    }
+    return date.toDateString() === rangeSelectDate.value[0]?.toDate()?.toDateString();
+  };
+
+  const isInRangeDate = (date: Date) => {
+    if (!props.isRangeType) {
+      return false;
+    }
+    const dateTime = date.getTime();
+    const dateStr = date.toDateString();
+    return (
+      rangeSelectDate.value[0]?.toDate()?.getTime() < dateTime &&
+      rangeSelectDate.value[1]?.toDate()?.getTime() > dateTime &&
+      rangeSelectDate.value[0]?.toDate()?.toDateString() !== dateStr &&
+      rangeSelectDate.value[1]?.toDate()?.toDateString() !== dateStr
+    );
+  };
+
+  const isEndDate = (date: Date) => {
+    if (!props.isRangeType) {
+      return false;
+    }
+    return date.toDateString() === rangeSelectDate.value[1]?.toDate()?.toDateString();
+  };
+
   return {
     yearScrollRef,
     monthScrollRef,
@@ -275,5 +311,8 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     handleScrollYearList,
     handleScrollMonthList,
     isDateSelected,
+    isStartDate,
+    isInRangeDate,
+    isEndDate,
   };
 }

@@ -1,4 +1,4 @@
-import { ref, computed, watchEffect } from 'vue';
+import { ref, computed, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { DatePickerProPanelProps, UseDatePickerReturnType } from '../date-picker-pro-types';
 import dayjs from 'dayjs';
@@ -7,7 +7,7 @@ import type { Dayjs } from 'dayjs';
 export default function useDatePicker(props: DatePickerProPanelProps, ctx: SetupContext): UseDatePickerReturnType {
   const calendarPanelRef = ref();
   const currentDate = ref<Dayjs>();
-  const currentRangeDate = ref<Dayjs[]>([]);
+  const currentRangeDate = ref<(Dayjs | null)[]>([]);
   const timeData = ref<string>('');
 
   const getSelectedDate = (date: Dayjs) => {
@@ -17,7 +17,7 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
     return dayjs(curDateTime).locale('zh-cn');
   };
 
-  const getRangeSelectedDate = (date: Dayjs[]) => {
+  const getRangeSelectedDate = (date: (Dayjs | null)[]) => {
     // 日期范围加上时间
     const [startDate, endDate] = date;
     if (props.focusType === 'start') {
@@ -33,10 +33,8 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
     if (Array.isArray(date)) {
       currentRangeDate.value = date;
       if (props.focusType === 'start') {
-        currentDate.value = date[0];
         timeData.value = '00:00:00';
       } else {
-        currentDate.value = date[1];
         timeData.value = '23:59:59';
       }
       // 时间范围选择模式，在不显示时间时，startDate及endDate同时存在时，关闭面板
@@ -62,38 +60,59 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
   const retDefaultDateValue = () => {
     currentDate.value = undefined;
     timeData.value = '';
-    calendarPanelRef?.value?.updateSelectedDate(undefined);
+    setTimeout(() => {
+      calendarPanelRef?.value?.updateSelectedDate(undefined);
+    });
   };
 
-  watchEffect(() => {
-    if (Array.isArray(props.dateValue)) {
-      let date;
-      if (props.focusType === 'start') {
-        date = props.dateValue[0];
-      } else {
-        // 在选择了startDate后，自动聚焦到endStart， 此时面板展示startDate时间
-        date = props.dateValue[1] || props.dateValue[0];
-      }
-      if (date) {
+  watch(
+    [() => props.dateValue, () => props.focusType],
+    ([dateValue, focusType]) => {
+      if (Array.isArray(dateValue)) {
+        if (dateValue[0]) {
+          currentRangeDate.value[0] = dateValue[0];
+        } else {
+          currentRangeDate.value[0] = null;
+        }
+        if (dateValue[1]) {
+          currentRangeDate.value[1] = dateValue[1];
+        } else {
+          currentRangeDate.value[1] = null;
+        }
+        let date: Dayjs;
+        if (focusType === 'start') {
+          date = dateValue[0];
+        } else {
+          // 在选择了startDate后，自动聚焦到endStart， 此时面板展示startDate时间
+          date = dateValue[1] || dateValue[0];
+        }
+        if (date) {
+          currentDate.value = date;
+          timeData.value = date.format(timeFormat.value);
+          setTimeout(() => {
+            calendarPanelRef?.value?.updateSelectedDate(date);
+          });
+        } else {
+          retDefaultDateValue();
+        }
+      } else if (dateValue) {
+        const date = dateValue;
         currentDate.value = date;
         timeData.value = date.format(timeFormat.value);
-        calendarPanelRef?.value?.updateSelectedDate(date);
       } else {
         retDefaultDateValue();
       }
-    } else if (props.dateValue) {
-      const date = props.dateValue;
-      currentDate.value = date;
-      timeData.value = date.format(timeFormat.value);
-    } else {
-      retDefaultDateValue();
-    }
-  });
+    },
+    { immediate: true, deep: true }
+  );
 
   const handlerConfirm = () => {
     if (props.isRangeType) {
       if (props.focusType === 'start') {
-        ctx.emit('changeRangeType', 'end');
+        if (!currentRangeDate.value[0]) {
+          return;
+        }
+        ctx.emit('changeRangeFocusType', 'end');
       }
       if (props.focusType === 'end') {
         ctx.emit('selectedDate', getRangeSelectedDate(currentRangeDate.value), true);
@@ -141,8 +160,8 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
     }
   };
 
-  const onChangeRangeType = (type: string) => {
-    ctx.emit('changeRangeType', type);
+  const onChangeRangeFocusType = (type: string) => {
+    ctx.emit('changeRangeFocusType', type);
   };
 
   return {
@@ -151,6 +170,6 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
     onSelectedDate,
     handlerConfirm,
     handlerSelectedTime,
-    onChangeRangeType,
+    onChangeRangeFocusType,
   };
 }
