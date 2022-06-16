@@ -8,20 +8,7 @@ import { Icon } from '../../../icon';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useRangePickerPro from '../composables/use-range-date-picker-pro';
 
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import advancedFormat from 'dayjs/plugin/advancedFormat.js';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import weekYear from 'dayjs/plugin/weekYear.js';
-import dayOfYear from 'dayjs/plugin/dayOfYear.js';
-
 import '../date-picker-pro.scss';
-
-dayjs.extend(customParseFormat);
-dayjs.extend(advancedFormat);
-dayjs.extend(weekOfYear);
-dayjs.extend(weekYear);
-dayjs.extend(dayOfYear);
 
 export default defineComponent({
   name: 'DRangeDatePickerPro',

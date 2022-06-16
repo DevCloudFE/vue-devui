@@ -3,7 +3,7 @@ import type { SetupContext } from 'vue';
 import { RangeDatePickerProProps, UseRangePickerProReturnType } from '../range-date-picker-types';
 import { onClickOutside } from '@vueuse/core';
 import type { Dayjs } from 'dayjs';
-import { formatDayjsToStr, isDateEquals, getFormatterDate, parserDate } from '../utils';
+import { formatDayjsToStr, isDateEquals, parserDate } from '../utils';
 
 export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: SetupContext): UseRangePickerProReturnType {
   const containerRef = shallowRef<HTMLElement>();
@@ -46,10 +46,10 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     let start;
     let end;
     if (props.modelValue[0]) {
-      start = parserDate(props.modelValue[0], props.format);
+      start = parserDate(props.modelValue[0]);
     }
     if (props.modelValue[1]) {
-      end = parserDate(props.modelValue[1], props.format);
+      end = parserDate(props.modelValue[1]);
     }
     return [start, end];
   });
@@ -73,14 +73,12 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     const selectEnd = endDate ? endDate.toDate() : endDate;
     const [start, end] = props.modelValue;
     if (!isDateEquals(start, selectStart) || !isDateEquals(end, selectEnd)) {
-      const startFormatDate = getFormatterDate(startDate, props.format);
-      const endFormatDate = getFormatterDate(endDate, props.format);
-      ctx.emit('update:modelValue', [selectStart ? startFormatDate : '', selectEnd ? endFormatDate : '']);
-      if (isConfirm) {
-        // 回调参数为Date类型
-        ctx.emit('confirmEvent', [selectStart, selectEnd]);
-        toggleChange(false);
-      }
+      ctx.emit('update:modelValue', [selectStart ? selectStart : '', selectEnd ? selectEnd : '']);
+    }
+    if (isConfirm) {
+      // 回调参数为Date类型
+      ctx.emit('confirmEvent', [selectStart ? selectStart : '', selectEnd ? selectEnd : '']);
+      toggleChange(false);
     }
   };
 
@@ -88,7 +86,7 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     e.stopPropagation();
     e.preventDefault();
     ctx.emit('update:modelValue', ['', '']);
-    ctx.emit('confirmEvent', [null, null]);
+    ctx.emit('confirmEvent', ['', '']);
     // 当面板未关闭时，清空后focusType置位start
     if (isPanelShow.value) {
       focusType.value = 'start';

@@ -7,21 +7,7 @@ import { FlexibleOverlay } from '../../overlay';
 import DatePickerProPanel from './components/date-picker-panel';
 import { Icon } from '../../icon';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import advancedFormat from 'dayjs/plugin/advancedFormat.js';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import weekYear from 'dayjs/plugin/weekYear.js';
-import dayOfYear from 'dayjs/plugin/dayOfYear.js';
-
 import './date-picker-pro.scss';
-
-dayjs.extend(customParseFormat);
-dayjs.extend(advancedFormat);
-dayjs.extend(weekOfYear);
-dayjs.extend(weekYear);
-dayjs.extend(dayOfYear);
 
 export default defineComponent({
   name: 'DDatePickerPro',
