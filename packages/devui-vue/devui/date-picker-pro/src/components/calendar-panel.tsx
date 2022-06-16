@@ -8,7 +8,7 @@ import { YearAndMonthItem, datePickerProPanelProps, DatePickerProPanelProps } fr
 export default defineComponent({
   name: 'CalendarPanel',
   props: datePickerProPanelProps,
-  emits: ['selectedDate', 'changeRangeType'],
+  emits: ['selectedDate', 'changeRangeFocusType'],
   setup(props: DatePickerProPanelProps, ctx: SetupContext) {
     const ns = useNamespace('date-picker-pro');
     const {
@@ -23,6 +23,9 @@ export default defineComponent({
       handleScrollYearList,
       handleScrollMonthList,
       isDateSelected,
+      isStartDate,
+      isInRangeDate,
+      isEndDate,
     } = useCalendarPanel(props, ctx);
     return () => {
       return (
@@ -84,6 +87,9 @@ export default defineComponent({
                                           day.inMonth && ns.e('table-date'),
                                           isDateSelected(day.date) && ns.e('table-date-selected'),
                                           day.isToday && ns.e('table-date-today'),
+                                          isStartDate(day.date) && ns.e('table-date-start'),
+                                          isInRangeDate(day.date) && ns.e('table-date-in-range'),
+                                          isEndDate(day.date) && ns.e('table-date-end'),
                                         ]}
                                         onClick={(e: MouseEvent) => {
                                           e.preventDefault();

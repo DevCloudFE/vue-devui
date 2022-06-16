@@ -45,9 +45,10 @@ export default defineComponent({
       focusType,
       onSelectedDate,
       handlerClearTime,
-      onChangeRangeType,
+      onChangeRangeFocusType,
     } = useRangePickerPro(props, ctx);
     const position = ref(['bottom-start']);
+
     return () => {
       return (
         <div class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width')]} ref={containerRef}>
@@ -56,34 +57,39 @@ export default defineComponent({
             ref={originRef}
             onmouseover={() => (isMouseEnter.value = true)}
             onmouseout={() => (isMouseEnter.value = false)}>
-            <Input
-              ref={startInputRef}
-              modelValue={displayDateValue.value[0]}
-              placeholder={placeholder.value[0]}
-              onFocus={(e: MouseEvent) => {
-                e.stopPropagation();
-                onFocus('start');
-              }}
-              prefix="calendar"
-            />
+            <span class={isPanelShow.value && focusType.value === 'start' ? ns.e('active-input') : ns.e('normal-input')}>
+              <Input
+                ref={startInputRef}
+                modelValue={displayDateValue.value[0]}
+                placeholder={placeholder.value[0]}
+                onFocus={(e: MouseEvent) => {
+                  e.stopPropagation();
+                  onFocus('start');
+                }}
+                prefix="calendar"
+              />
+            </span>
+
             <span class={ns.e('separator')}>{props.separator}</span>
-            <Input
-              ref={endInputRef}
-              modelValue={displayDateValue.value[1]}
-              placeholder={placeholder.value[1]}
-              onFocus={(e: MouseEvent) => {
-                e.stopPropagation();
-                onFocus('end');
-              }}
-              v-slots={{
-                suffix: () => (
-                  <Icon
-                    class={showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden')}
-                    name="error-o"
-                    onClick={handlerClearTime}></Icon>
-                ),
-              }}
-            />
+            <span class={isPanelShow.value && focusType.value === 'end' ? ns.e('active-input') : ns.e('normal-input')}>
+              <Input
+                ref={endInputRef}
+                modelValue={displayDateValue.value[1]}
+                placeholder={placeholder.value[1]}
+                onFocus={(e: MouseEvent) => {
+                  e.stopPropagation();
+                  onFocus('end');
+                }}
+                v-slots={{
+                  suffix: () => (
+                    <Icon
+                      class={showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden')}
+                      name="error-o"
+                      onClick={handlerClearTime}></Icon>
+                  ),
+                }}
+              />
+            </span>
           </div>
           <Transition name="fade">
             <FlexibleOverlay v-model={isPanelShow.value} ref={overlayRef} origin={originRef.value} position={position.value}>
@@ -95,7 +101,7 @@ export default defineComponent({
                 isRangeType={true}
                 focusType={focusType.value}
                 onSelectedDate={onSelectedDate}
-                onChangeRangeType={onChangeRangeType}></DatePickerProPanel>
+                onChangeRangeFocusType={onChangeRangeFocusType}></DatePickerProPanel>
             </FlexibleOverlay>
           </Transition>
         </div>
