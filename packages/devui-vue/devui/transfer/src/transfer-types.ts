@@ -1,7 +1,7 @@
-import { PropType, ExtractPropTypes } from "vue";
+import { PropType, ExtractPropTypes } from 'vue';
 
 export interface IItem {
-  value: string;
+  value: string | number;
   name: string;
   disabled: boolean;
 }
@@ -21,73 +21,80 @@ export interface IDargItemAndDropItem {
 export type TKey = string;
 
 export const transferProps = {
+  modelValue: {
+    type: Array as PropType<string | number[]>,
+    default: () => [],
+  },
+  data: {
+    type: Array as PropType<IItem[]>,
+    default: () => [],
+  },
   sourceDefaultChecked: {
     type: Array as PropType<string[]>,
-    default: () => []
+    default: () => [],
   },
   targetDefaultChecked: {
     type: Array as PropType<string[]>,
-    default: () => []
+    default: () => [],
   },
   titles: {
     type: Array as PropType<string[]>,
-    default: () => ['sourceHeader', 'targetHeader']
+    default: () => ['sourceHeader', 'targetHeader'],
   },
   sourceOption: {
     type: Array as PropType<IItem[]>,
-    default: () => []
+    default: () => [],
   },
   targetOption: {
     type: Array as PropType<IItem[]>,
-    default: () => []
+    default: () => [],
   },
   isSearch: {
     type: Boolean,
-    default: false
+    default: false,
   },
   height: {
     type: Number,
-    default: 320
+    default: 320,
   },
   unit: {
     type: String,
-    default: '项'
+    default: '项',
   },
   placeholder: {
     type: String,
-    default: '请输入关键词搜索'
+    default: '请输入关键词搜索',
   },
   isKeyupSearch: {
     type: Boolean,
-    default: true
+    default: true,
   },
   isSourceDrag: {
     type: Boolean,
-    default: false
+    default: false,
   },
   isTargetDrag: {
     type: Boolean,
-    default: false
+    default: false,
   },
   searching: {
-    type: Function as PropType<(data: IItem[], keyword: TKey) => void>
+    type: Function as PropType<(data: IItem[], keyword: TKey) => void>,
   },
   sourceSortMethods: {
-    type: Function as PropType<(data: IItem[]) => IItem[]>
+    type: Function as PropType<(data: IItem[]) => IItem[]>,
   },
   targetSortMethods: {
-    type: Function as PropType<(data: IItem[]) => IItem[]>
+    type: Function as PropType<(data: IItem[]) => IItem[]>,
   },
   dragstart: {
-    type: Function as PropType<(event: DragEvent, item: IItem) => void>
+    type: Function as PropType<(event: DragEvent, item: IItem) => void>,
   },
   drop: {
-    type: Function as PropType<(event: DragEvent, item: IItem) => void>
+    type: Function as PropType<(event: DragEvent, item: IItem) => void>,
   },
   dragend: {
-    type: Function as PropType<(event: DragEvent, item: IItem) => void>
-  }
+    type: Function as PropType<(event: DragEvent, item: IItem) => void>,
+  },
 } as const;
 
 export type TTransferProps = ExtractPropTypes<typeof transferProps>;
-
