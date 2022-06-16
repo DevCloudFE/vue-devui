@@ -5,56 +5,52 @@ import { IItem, TKey, ICheckList } from '../transfer-types';
 export const transferBodyProps = {
   height: {
     type: Number,
-    default: 320
+    default: 320,
   },
   data: {
     type: Array as PropType<IItem[]>,
-    default: () => []
+    default: () => [],
   },
   defaultChecked: {
     type: Array as PropType<string[]>,
-    default: () => []
+    default: () => [],
   },
   isSearch: {
     type: Boolean,
-    default: false
+    default: false,
   },
   queryString: {
     type: String,
-    default: ''
+    default: '',
   },
   placeholder: {
     type: String,
-    default: '请输入关键词搜索'
+    default: '请输入关键词搜索',
   },
   isKeyupSearch: {
     type: Boolean,
-    default: true
+    default: true,
   },
   searching: {
-    type: Function as PropType<(data: IItem[], keyword: TKey) => void>
+    type: Function as PropType<(data: IItem[], keyword: TKey) => void>,
   },
   isDrag: {
     type: Boolean,
-    default: false
+    default: false,
   },
   onChange: {
     type: Function as PropType<(v: string[]) => void>,
-    default: undefined
-  },
-  updateQueryString: {
-    type: Function as PropType<(value: TKey) => void>,
-    default: undefined
+    default: undefined,
   },
   dragstart: {
-    type: Function as PropType<(event: DragEvent, item: IItem) => void>
+    type: Function as PropType<(event: DragEvent, item: IItem) => void>,
   },
   drop: {
-    type: Function as PropType<(event: DragEvent, item: IItem) => void>
+    type: Function as PropType<(event: DragEvent, item: IItem) => void>,
   },
   dragend: {
-    type: Function as PropType<(event: DragEvent, item: IItem) => void>
-  }
+    type: Function as PropType<(event: DragEvent, item: IItem) => void>,
+  },
 } as const;
 
 export type TTransferBodyProps = ExtractPropTypes<typeof transferBodyProps>;
@@ -72,7 +68,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
   /**
    * updateFilterQueryHandle: 更新搜索框modelValue
    * @param value 搜索框值
-  */
+   */
   const updateFilterQueryHandle = (value: TKey) => {
     ctx.emit('updateQueryString', value);
   };
@@ -80,14 +76,17 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
    * updateCheckedListModels: 更新穿梭框选中的model
    * @param idx 索引
    * @param value 值
-  */
+   */
   const updateCheckedListModels = (idx: number, value: boolean): void => {
     checkedListModels.value[idx].checked = value;
-    ctx.emit('change', checkedListModels.value.filter(item => item.checked).map(item => item.value));
+    ctx.emit(
+      'change',
+      checkedListModels.value.filter((item) => item.checked).map((item) => item.value)
+    );
   };
   /**
    * resetState: 重置状态
-  */
+   */
   const resetState = () => {
     dragOverNodeKey.value = '';
     dropPosition.value = null;
@@ -96,13 +95,13 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
   /**
    * calcDropPosition: 计算拖拽位置
    * @param event DragEvent
-  */
+   */
   const calcDropPosition = (event: DragEvent): number => {
     const { clientY } = event;
     if (!dragRef.value) {
       return -1;
     }
-    const { top, bottom, height } = (event.target as HTMLElement).getBoundingClientRect();// dragRef.value.getBoundingClientRect();
+    const { top, bottom, height } = (event.target as HTMLElement).getBoundingClientRect(); // dragRef.value.getBoundingClientRect();
     const des = Math.max(height * 0.25, 2);
 
     if (clientY <= top + des) {
@@ -117,8 +116,8 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
    * dragstartHandle: 拖拽开始事件
    * @param event DragEvent
    * @param item 当前拖拽项
-  */
-  const dragstartHandle = (event: DragEvent, item: IItem,) => {
+   */
+  const dragstartHandle = (event: DragEvent, item: IItem) => {
     event.stopPropagation();
     dragRef.value = event.target as HTMLElement;
     if (props.dragstart && typeof props.dragstart === 'function') {
@@ -130,7 +129,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
    * @param event Event
    * @param item 当前拖拽项
    * @param reset 是否重置
-  */
+   */
   const setCurrentDragItem = (event: Event, item: IItem, reset: boolean): void => {
     event.stopPropagation();
     dragHighlight.value = reset ? item.value : null;
@@ -140,7 +139,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
    * setDragOverNodeKeyHandle: 设置经过的item
    * @param event DragEvent
    * @param item 当前经过item
-  */
+   */
   const setDragOverNodeKeyHandle = (event: DragEvent, item: IItem) => {
     event.preventDefault();
     event.stopPropagation();
@@ -158,7 +157,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
    * dragoverHandle: 拖拽经过事件处理函数
    * @param event DragEvent
    * @param item 当前经过item
-  */
+   */
   const dragoverHandle = (event: DragEvent, item: IItem) => {
     event.preventDefault();
     event.stopPropagation();
@@ -174,7 +173,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
    * dragleaveHandle: 拖拽离开事件处理函数
    * @param event DragEvent
    * @param item 离开item
-  */
+   */
   const dragleaveHandle = (event: DragEvent, item: IItem) => {
     event.stopPropagation();
   };
@@ -182,7 +181,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
    * dropHandle: 拖拽放置事件处理函数
    * @param event DragEvent
    * @param item 放置的item
-  */
+   */
   const dropHandle = (event: DragEvent, item: IItem) => {
     event.preventDefault();
     event.stopPropagation();
@@ -195,7 +194,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
    * dragendHandle: 拖拽完成事件处理函数
    * @param event DragEvent
    * @param item 放置的item
-  */
+   */
   const dragendHandle = (event: DragEvent, item: IItem) => {
     event.stopPropagation();
     if (props.dragend && typeof props.dragend === 'function') {
@@ -207,10 +206,10 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
   watchEffect(() => {
     const models: Array<ICheckList> = [];
     query.value = props.queryString;
-    props.data.map(item => {
+    props.data.map((item) => {
       models.push({
         value: item.value,
-        checked: props.defaultChecked.includes(item.value)
+        checked: props.defaultChecked.includes(item.value),
       });
     });
     checkedListModels.value = models;
@@ -233,8 +232,6 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
     dragleaveHandle,
     dropHandle,
     dragendHandle,
-    dragstartHandle
+    dragstartHandle,
   };
 };
-
-
