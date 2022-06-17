@@ -32,17 +32,17 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
     };
   };
   /**
-   * updteSourceAllCheckedHandle: 更新源穿梭框全选
+   * updateSourceAllCheckedHandle: 更新源穿梭框全选
    * @param value 是否全选
    */
-  const updteSourceAllCheckedHandle = (value: IItem[]) => {
+  const updateSourceAllCheckedHandle = (value: IItem[]) => {
     sourceChecked.value = value;
   };
   /**
-   * updteTargetAllCheckedHandle: 更新目标穿梭框全选
+   * updateTargetAllCheckedHandle: 更新目标穿梭框全选
    * @param value 是否全选
    */
-  const updteTargetAllCheckedHandle = (value: IItem[]) => {
+  const updateTargetAllCheckedHandle = (value: IItem[]) => {
     targetChecked.value = value;
   };
   /**
@@ -196,8 +196,8 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
     targetChecked,
     sourceDirection,
     targetDirection,
-    updteSourceAllCheckedHandle,
-    updteTargetAllCheckedHandle,
+    updateSourceAllCheckedHandle,
+    updateTargetAllCheckedHandle,
     updateSourceCheckedHandle,
     updateTargetCheckedHandle,
     toMoveTargetHandle,

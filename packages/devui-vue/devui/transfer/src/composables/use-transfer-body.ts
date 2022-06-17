@@ -1,4 +1,4 @@
-import { PropType, ExtractPropTypes, computed, ref, watchEffect, watch } from 'vue';
+import { PropType, ExtractPropTypes, computed, ref, watchEffect } from 'vue';
 import type { SetupContext } from 'vue';
 import { IItem, TKey, ICheckList } from '../transfer-types';
 
@@ -81,7 +81,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
     checkedListModels.value[idx].checked = value;
     ctx.emit(
       'change',
-      checkedListModels.value.filter((item) => item.checked).map((item) => item.value)
+      checkedListModels.value.filter((item) => item.checked)
     );
   };
   /**
@@ -206,10 +206,14 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
   watchEffect(() => {
     const models: Array<ICheckList> = [];
     query.value = props.queryString;
-    props.data.map((item) => {
+    const checkedValues = props.defaultChecked.map((item) => {
+      return item.value;
+    });
+    props.data.forEach((item) => {
       models.push({
         value: item.value,
-        checked: props.defaultChecked.includes(item.value),
+        name: item.name,
+        checked: checkedValues.includes(item.value),
       });
     });
     checkedListModels.value = models;

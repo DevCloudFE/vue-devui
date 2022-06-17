@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 import type { SetupContext } from 'vue';
 import transferPanel from './components/transfer-panel';
 import transferOperate from './components/transfer-operate';
-import { transferProps, TTransferProps, TKey } from './transfer-types';
+import { transferProps, TTransferProps, TKey, IItem } from './transfer-types';
 import { transferState } from './composables/use-transfer';
 import './transfer.scss';
 
@@ -26,8 +26,8 @@ export default defineComponent({
       targetChecked,
       sourceDirection,
       targetDirection,
-      updteSourceAllCheckedHandle,
-      updteTargetAllCheckedHandle,
+      updateSourceAllCheckedHandle,
+      updateTargetAllCheckedHandle,
       updateSourceCheckedHandle,
       updateTargetCheckedHandle,
       toMoveTargetHandle,
@@ -57,12 +57,11 @@ export default defineComponent({
             direction={sourceDirection.value}
             v-slots={{
               header: ctx.slots.sourceHeader,
-              body: ctx.slots.sourceBody,
             }}
-            onUpdteAllChecked={(value: TKey[]) => {
-              updteSourceAllCheckedHandle(value);
+            onUpdteAllChecked={(value: IItem[]) => {
+              updateSourceAllCheckedHandle(value);
             }}
-            onChangeChecked={(value: TKey[]) => {
+            onChangeChecked={(value: IItem[]) => {
               updateSourceCheckedHandle(value);
             }}
             onUpdateData={(startValue: TKey, endValue: TKey) => {
@@ -96,12 +95,11 @@ export default defineComponent({
             direction={targetDirection.value}
             v-slots={{
               header: ctx.slots.targetHeader,
-              body: ctx.slots.targetBody,
             }}
-            onUpdteAllChecked={(value: TKey[]) => {
-              updteTargetAllCheckedHandle(value);
+            onUpdteAllChecked={(value: IItem[]) => {
+              updateTargetAllCheckedHandle(value);
             }}
-            onChangeChecked={(value: TKey[]) => {
+            onChangeChecked={(value: IItem[]) => {
               updateTargetCheckedHandle(value);
             }}
             onUpdateData={(startValue: TKey, endValue: TKey) => {
