@@ -73,7 +73,7 @@ export default defineComponent({
                   <td colspan="7">
                     <div ref={monthScrollRef} class={ns.e('tbody-wrapper')} onScroll={handleScrollMonthList}>
                       {allMonthList.value.map((month: YearAndMonthItem, monthIndex: number) => (
-                        <div key={monthIndex}>
+                        <div class={ns.e('table-month')} key={monthIndex}>
                           <div class={ns.e('table-month-title')}>{getYearMonthStr(month.year, (month.month || 0) + 1)}</div>
                           <table class={ns.e('table-month-content')}>
                             <tbody>

@@ -56,7 +56,7 @@ export default defineComponent({
             />
           </div>
           <Transition name="fade">
-            <FlexibleOverlay v-model={isPanelShow.value} ref={overlayRef} origin={originRef.value} position={position.value}>
+            <FlexibleOverlay v-model={isPanelShow.value} ref={overlayRef} origin={originRef.value} align="start" position={position.value}>
               <DatePickerProPanel
                 dateValue={dateValue.value}
                 visible={isPanelShow.value}
