@@ -109,7 +109,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     nextTick(() => {
       const scrollEl = yearScrollRef.value;
-      scrollEl && scrollEl.scroll(0, scrollHeight);
+      scrollEl?.scroll?.(0, scrollHeight);
     });
   };
 
@@ -120,7 +120,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     nextTick(() => {
       const scrollEl = monthScrollRef.value;
-      scrollEl && scrollEl.scroll(0, scrollHeight);
+      scrollEl?.scroll?.(0, scrollHeight);
     });
   };
 
