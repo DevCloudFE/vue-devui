@@ -30,11 +30,11 @@ export const transferProps = {
     default: () => [],
   },
   sourceDefaultChecked: {
-    type: Array as PropType<string[]>,
+    type: Array as PropType<string | number[]>,
     default: () => [],
   },
   targetDefaultChecked: {
-    type: Array as PropType<string[]>,
+    type: Array as PropType<string | number[]>,
     default: () => [],
   },
   titles: {
