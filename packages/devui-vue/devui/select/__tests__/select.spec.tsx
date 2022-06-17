@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { ref, reactive, nextTick } from 'vue';
 import DSelect from '../src/select';
+import { Button } from '../../button';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const ns = useNamespace('select', true);
@@ -212,12 +213,12 @@ describe('select', () => {
     wrapper.unmount();
   });
 
-  it('select multiple work', async () => {
+  it('select multiple and multiple-limit work', async () => {
     const value = ref([]);
     const options = reactive([0, 1, 2]);
     const wrapper = mount({
       setup() {
-        return () => <DSelect v-model={value.value} options={options} multiple={true}></DSelect>;
+        return () => <DSelect v-model={value.value} options={options} multiple={true} multipleLimit={3}></DSelect>;
       },
     });
     const container = wrapper.find(baseClass);
@@ -229,6 +230,37 @@ describe('select', () => {
     await item[1].trigger('click');
     await item[2].trigger('click');
     expect(value.value).toEqual([0, 1, 2]);
+    // multiple-limit TODO，item的class没法动态更新
+
+    wrapper.unmount();
+  });
+
+  it('select toggleChange work', async () => {
+    const value = ref([]);
+    const options = reactive([0]);
+    const demoSelect = ref(null);
+    const toggleChange = () => {
+      demoSelect.value.toggleChange(true);
+    };
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <div>
+            <DSelect ref={demoSelect} v-model={value.value} options={options}></DSelect>
+            <Button onClick={toggleChange}>展开</Button>
+          </div>
+        );
+      },
+    });
+    let dropdown = wrapper.find(dropdownCls);
+    expect(dropdown.attributes('style')).toContain('display: none;');
+
+    const button = wrapper.find('button');
+    button.trigger('click');
+    await nextTick();
+    dropdown = wrapper.find(dropdownCls);
+    expect(dropdown.attributes('style')).toBeUndefined();
+
     wrapper.unmount();
   });
 
