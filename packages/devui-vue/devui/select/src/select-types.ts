@@ -98,6 +98,10 @@ export const selectProps = {
     type: Function as PropType<(item: OptionItem, index: number) => void>,
     default: undefined,
   },
+  multipleLimit: {
+    type: Number,
+    default: 0,
+  },
 } as const;
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;
@@ -126,6 +130,8 @@ export interface UseSelectReturnType {
   tagDelete: (data: OptionObjectItem) => void;
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
+  isDisabled: (item: OptionObjectItem) => boolean;
+  toggleChange: (bool: boolean) => void;
   debounceQueryFilter: (query: string) => void;
   isShowCreateOption: ComputedRef<boolean>;
 }

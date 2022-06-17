@@ -39,6 +39,8 @@ export default defineComponent({
       onFocus,
       onBlur,
       debounceQueryFilter,
+      isDisabled,
+      toggleChange,
       isShowCreateOption,
     } = useSelect(props, ctx, focus, blur, isSelectFocus);
 
@@ -50,7 +52,7 @@ export default defineComponent({
       [scrollbarNs.b()]: true,
     };
     const dropdownEmptyCls = ns.em('dropdown', 'empty');
-    ctx.expose({ focus, blur });
+    ctx.expose({ focus, blur, toggleChange });
     provide(
       SELECT_TOKEN,
       reactive({
@@ -85,17 +87,9 @@ export default defineComponent({
                 {!ctx.slots?.default &&
                   mergeOptions.value.length >= 1 &&
                   mergeOptions.value.map((item, i) => (
-                    <Option
-                      key={i}
-                      value={item.value}
-                      name={item.name}
-                      disabled={props.optionDisabledKey ? !!item[props.optionDisabledKey] : false}>
+                    <Option key={i} value={item.value} name={item.name} disabled={isDisabled(item)}>
                       {props.multiple ? (
-                        <Checkbox
-                          modelValue={item._checked}
-                          label={item.name}
-                          disabled={props.optionDisabledKey ? !!item[props.optionDisabledKey] : false}
-                        />
+                        <Checkbox modelValue={item._checked} label={item.name} disabled={isDisabled(item)} />
                       ) : (
                         item.name || item.value
                       )}
