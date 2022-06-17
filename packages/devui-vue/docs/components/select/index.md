@@ -55,13 +55,13 @@ export default defineComponent({
 
 ### 多选
 
-通过`multiple`：`true`来开启多选
+通过`multiple`：`true`来开启多选，通过设置`multiple-limit`来限制可以选择的数量
 :::demo
 
 ```vue
 <template>
   <div>基础多选</div>
-  <d-select v-model="value1" :options="options" :multiple="true" />
+  <d-select v-model="value1" :options="options" :multiple="true" :multiple-limit="2" />
   <br />
   <div>collapse-tags</div>
   <d-select v-model="value2" :options="options" :multiple="true" :collapse-tags="true" />
@@ -190,6 +190,46 @@ export default defineComponent({
       value1,
       value2,
       options,
+    };
+  },
+});
+</script>
+```
+
+:::
+
+### 下拉列表显隐方法
+
+通过`toggleChange`方法可以在代码中控制下拉列表的展示和隐藏。
+:::demo
+
+```vue
+<template>
+  <div>
+    <d-button @click="toggleChange" style="margin-bottom: 10px">展开 / 隐藏</d-button>
+    <d-select ref="demoSelect" v-model="toggleValue" :options="options"></d-select>
+  </div>
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const toggleValue = ref('');
+    const visitable = ref(false);
+    const items = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const options = reactive(items);
+    const demoSelect = ref(null);
+    const toggleChange = () => {
+      visitable.value = !visitable.value;
+      demoSelect.value.toggleChange(visitable.value);
+    };
+    return {
+      toggleValue,
+      options,
+      demoSelect,
+      toggleChange,
     };
   },
 });
@@ -425,6 +465,7 @@ export default defineComponent({
 | no-match-text         | `string`              | '找不到相关记录' | 可选, 搜索条件无匹配时显示的文本，也可通过 empty 插槽自定义                                                                                                    | [筛选、搜索选项](#筛选、搜索选项) |
 | loading               | `boolean`             | false            | 可选, 配置下拉选项是否远程加载，配合 loading-text 使用                                                                                                         | [远程加载数据](#远程加载数据)     |
 | loading-text          | `string`              | '加载中'         | 可选, 远程搜索时显示的文本                                                                                                                                     | [远程加载数据](#远程加载数据)     |
+| multiple-limit        | `number`              | '0'              | 可选, multiple 属性设置为 true 时生效，表示用户最多可以选择的项目数， 为 0 则不限制                                                                            | [多选](#多选)                     |
 
 ### Select 事件
 
@@ -446,10 +487,11 @@ export default defineComponent({
 
 ### Select 方法
 
-| 名称  | 说明                     |
-| :---- | :----------------------- |
-| focus | 使选择器的输入框获取焦点 |
-| blur  | 使选择器的输入框失去焦点 |
+| 名称         | 说明                        | 跳转 Demo                             |
+| :----------- | :-------------------------- | :------------------------------------ |
+| focus        | 使选择器的输入框获取焦点    | -                                     |
+| blur         | 使选择器的输入框失去焦点    | -                                     |
+| toggleChange | 使选择器的下拉列表显示/隐藏 | [下拉列表显隐方法](#下拉列表显隐方法) |
 
 ### Option 参数
 

@@ -263,6 +263,20 @@ export default function useSelect(
     return !!emptyText.value && (!props.allowCreate || isLoading.value || (props.allowCreate && injectOptionsArray.value.length === 0));
   });
 
+  const isDisabled = (item: OptionObjectItem): boolean => {
+    const checkOptionDisabledKey = props.optionDisabledKey ? !!item[props.optionDisabledKey] : false;
+    if (!props.multiple) {
+      return checkOptionDisabledKey;
+    } else {
+      let tempModelValue = [];
+      tempModelValue = props.modelValue as Array<any>;
+      return (
+        checkOptionDisabledKey ||
+        (!!props.multipleLimit && props.multipleLimit <= tempModelValue.length && !tempModelValue.includes(item.value))
+      );
+    }
+  };
+
   watch(
     () => props.modelValue,
     () => {
@@ -293,6 +307,8 @@ export default function useSelect(
     tagDelete,
     onFocus,
     onBlur,
+    isDisabled,
+    toggleChange,
     debounceQueryFilter,
     isShowCreateOption,
   };
