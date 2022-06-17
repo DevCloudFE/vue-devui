@@ -1,7 +1,7 @@
 import type { ComputedRef } from 'vue';
-import { computed, inject } from 'vue';
-import { NODE_HEIGHT, NODE_INDENT, USE_TREE_TOKEN } from '../const';
-import { IInnerTreeNode, IUseTree } from '../composables/use-tree-types';
+import { computed } from 'vue';
+import { NODE_HEIGHT, NODE_INDENT } from '../const';
+import { IInnerTreeNode } from '../composables/use-tree-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 const ns = useNamespace('tree');
@@ -12,25 +12,34 @@ export interface IUseTreeNode {
   nodeContentClass: ComputedRef<(string | false | undefined)[]>;
   nodeTitleClass: ComputedRef<(string | false | undefined)[]>;
   nodeVLineClass: ComputedRef<(string | false | undefined)[]>;
-  nodeVLineStyle: ComputedRef<{ height: string; left: string; top: string }>;
+  nodeVLineStyles: ComputedRef<{ height: string; left: string; top: string }[]>;
   nodeHLineClass: ComputedRef<(string | false | undefined)[]>;
 }
 
 export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTreeNode {
-  const { getChildren } = inject(USE_TREE_TOKEN) as Partial<IUseTree>;
 
   const nodeClass = computed(() => [ns.e('node'), data.value?.expanded && ns.em('node', 'open')]);
   const nodeStyle = computed(() => {
     return { paddingLeft: `${NODE_INDENT * (data.value?.level - 1)}px` };
   });
 
-  const nodeVLineClass = computed(() => [!data.value?.isLeaf && data.value?.expanded && ns.e('node-vline')]);
-  const nodeVLineStyle = computed(() => {
-    return {
-      height: `${NODE_HEIGHT * (getChildren(data.value, { expanded: true }).length - 1) + NODE_HEIGHT / 2 + 1}px`,
-      left: `${NODE_INDENT * (data.value?.level - 1) + 9}px`,
-      top: `${NODE_HEIGHT}px`,
-    };
+  const nodeVLineClass = computed(() => [data.value?.level !== 1 && ns.e('node-vline')]);
+  const nodeVLineStyles = computed(() => {
+    if (!data.value || data.value.level === 1) {
+      return [];
+    }
+    const { currentIndex = 0, parentChildNode = 0, level, expanded, isLeaf } = data.value;
+    return Array
+      .from({ length: data.value.level - 1 })
+      .map((_, index) => ({
+        height: `${
+          (currentIndex + 1) === parentChildNode && index === 0
+            ? (isLeaf || !expanded ? NODE_HEIGHT / 2 : NODE_HEIGHT)
+            : NODE_HEIGHT
+        }px`,
+        left: `${NODE_INDENT * (level - index - 2) + 9}px`,
+        top: `0px`,
+      }));
   });
   const nodeHLineClass = computed(() => [data.value?.level !== 1 && ns.e('node-hline')]);
 
@@ -44,7 +53,7 @@ export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTree
     nodeContentClass,
     nodeTitleClass,
     nodeVLineClass,
-    nodeVLineStyle,
+    nodeVLineStyles,
     nodeHLineClass,
   };
 }

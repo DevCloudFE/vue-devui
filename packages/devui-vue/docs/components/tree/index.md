@@ -372,6 +372,45 @@ export default defineComponent({
 
 :::
 
+### 虚拟滚动
+
+:::demo 使用虚拟滚动处理大数据量的加载问题。
+
+```vue
+<template>
+  <d-tree :data="data" :height="300" ref="treeRef"></d-tree>
+</template>
+<script lang="ts">
+import { defineComponent, ref, onMounted } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const treeRef = ref(null);
+    const data = ref([
+      ...Array.from({ length: 100 }).map((_, index) => ({
+        label: 'Parent node ' + index,
+        children: index % 2 === 0 ? 
+          Array.from({ length: 10 }).map((_, index2) => ({
+            label: 'Leaf node ' + index + '-' + index2 
+          })) : undefined
+      }))
+    ]);
+
+    onMounted(() => {
+      treeRef.value.treeFactory.expandAllNodes();
+    });
+    
+    return {
+      data,
+      treeRef,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Tree 参数
 
 | 参数名 | 类型                        | 默认值 | 说明                   | 跳转 Demo             |
@@ -393,6 +432,7 @@ export default defineComponent({
 | :----- | :---------------------- | :----- | :--------------------- |
 | data   | [ITreeNode](#itreenode) | []     | 可选，节点数据         |
 | check  | [ICheck](#icheck)       | false  | 可选，是否启用勾选功能 |
+| height  | `number`       | -  | 可选，设置启用虚拟滚动 |
 
 ### Tree 类型定义
 

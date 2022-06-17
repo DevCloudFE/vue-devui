@@ -1,9 +1,9 @@
 import type { ComponentInternalInstance, Ref } from 'vue';
 import { Column, SortMethod, SortDirection } from '../components/column/column-types';
-import { DefaultRow, Table } from '../table-types';
+import { DefaultRow, ITable } from '../table-types';
 
 export interface TableStore<T = Record<string, any>> {
-  _table: Table<DefaultRow>;
+  _table: ITable<DefaultRow>;
   states: {
     _data: Ref<T[]>;
     _columns: Ref<Column[]>;
@@ -13,7 +13,6 @@ export interface TableStore<T = Record<string, any>> {
     _halfChecked: Ref<boolean>;
     isFixedLeft: Ref<boolean>;
     thList: ComponentInternalInstance[];
-    _expandedRows: Ref<Set<string>>;
   };
   insertColumn(column: Column, parent: any): void;
   sortColumn(): void;
@@ -25,11 +24,14 @@ export interface TableStore<T = Record<string, any>> {
   checkRow(toggle: boolean, row: T): void;
 
   // 展开行
-  toggleRow(row: T): void;
-  expandRow(row: T): void;
-  collapseRow(row: T): void;
+  toggleRowExpansion(row: T): void;
   isRowExpanded(row: T): boolean;
-  getExpandedRows(): T[];
-  expandAllRows(): void;
-  collapseAllRows(): void;
+  setExpandRows: (rowKeys: string[]) => void;
+}
+
+export interface UseExpand {
+  isRowExpanded: (row: DefaultRow) => boolean;
+  updateExpandRows: () => void;
+  setExpandRows: (rowKeys: string[]) => void;
+  toggleRowExpansion: (row: DefaultRow, expanded?: boolean) => void;
 }

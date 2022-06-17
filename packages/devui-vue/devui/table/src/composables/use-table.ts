@@ -1,10 +1,11 @@
-import { computed, ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import type { ComputedRef, CSSProperties, Ref } from 'vue';
 import { Column } from '../components/column/column-types';
-import { Table, DefaultRow, TablePropsTypes, UseTable, UseFixedColumn, UseTableLayout } from '../table-types';
+import { ITable, DefaultRow, TableProps, UseTable, UseFixedColumn, UseTableLayout } from '../table-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { TableStore } from '../store/store-types';
 
-export function useTable(props: TablePropsTypes, tableWidth: Ref): UseTable {
+export function useTable(props: TableProps, tableWidth: Ref): UseTable {
   const ns = useNamespace('table');
   const classes = computed(() => ({
     [ns.e('view')]: true,
@@ -41,7 +42,7 @@ export const useFixedColumn = (column: Ref<Column>): UseFixedColumn => {
   return { stickyClass, stickyStyle };
 };
 
-export function useTableLayout(table: Table<DefaultRow>): UseTableLayout {
+export function useTableLayout(table: ITable<DefaultRow>): UseTableLayout {
   const tableWidth = ref();
 
   const updateColgroupWidth = () => {
@@ -109,4 +110,12 @@ export function useTableLayout(table: Table<DefaultRow>): UseTableLayout {
   };
 
   return { tableWidth, updateColumnWidth };
+}
+
+export function useTableWatcher(props: TableProps, store: TableStore): void {
+  watchEffect(() => {
+    if (props.expandRowKeys) {
+      store.setExpandRows(props.expandRowKeys);
+    }
+  });
 }

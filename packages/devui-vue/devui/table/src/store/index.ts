@@ -1,7 +1,8 @@
 import { watch, Ref, ref, computed, unref, ComponentInternalInstance } from 'vue';
 import { Column, SortMethod, SortDirection } from '../components/column/column-types';
-import { DefaultRow, Table } from '../table-types';
+import { DefaultRow, ITable } from '../table-types';
 import { TableStore } from './store-types';
+import { useExpand } from './use-expand';
 
 function replaceColumn(array: any[], column: any) {
   return array.map((item) => {
@@ -120,7 +121,7 @@ const createSelection = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) 
   );
 
   watch(dataSource, (value) => {
-    _checkAllRecord.value = value.findIndex(item => !isRowChecked(item)) === -1;
+    _checkAllRecord.value = value.findIndex((item) => !isRowChecked(item)) === -1;
   });
 
   return {
@@ -129,7 +130,7 @@ const createSelection = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) 
     _halfChecked,
     getCheckedRows,
     checkRow,
-    isRowChecked
+    isRowChecked,
   };
 };
 
@@ -156,98 +157,28 @@ const createFixedLogic = (columns: Ref<Column[]>) => {
   return { isFixedLeft };
 };
 
-const createExpandRow = <T>(dataSource: Ref<T[]>, trackBy: (item: T) => string) => {
-  const _expandedRows = ref(new Set());
-
-  const isRowExpanded = (row: T): boolean => {
-    return _expandedRows.value.has(trackBy(row));
-  };
-
-  const expandRow = (row: T): void => {
-    _expandedRows.value.add(trackBy(row));
-  };
-
-  const collapseRow = (row: T): void => {
-    _expandedRows.value.delete(trackBy(row));
-  };
-
-  const toggleRow = (row: T) => {
-    if (isRowExpanded(row)) {
-      collapseRow(row);
-    } else {
-      expandRow(row);
-    }
-  };
-
-  const getExpandedRows = (): T[] => {
-    return dataSource.value.filter((item) => isRowExpanded(item));
-  };
-
-  const expandAllRows = (): void => {
-    dataSource.value.forEach(item => {
-      expandRow(item);
-    });
-  };
-
-  const collapseAllRows = (): void => {
-    dataSource.value.forEach(item => {
-      collapseRow(item);
-    });
-  };
-
-  return {
-    _expandedRows,
-    toggleRow,
-    expandRow,
-    collapseRow,
-    isRowExpanded,
-    getExpandedRows,
-    expandAllRows,
-    collapseAllRows,
-  };
-};
-
-export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): TableStore<T> {
+export function createStore<T>(dataSource: Ref<T[]>, table: ITable<DefaultRow>): TableStore<T> {
   const _data: Ref<T[]> = ref([]);
-  watch(
-    dataSource,
-    (value: T[]) => {
-      _data.value = [...value];
-    },
-    { deep: true, immediate: true }
+  const { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
+
+  const { _checkAll, _checkSet, _halfChecked, getCheckedRows, isRowChecked, checkRow } = createSelection(
+    _data,
+    table.props.trackBy as (v: T) => string
   );
-
-  const {
-    _columns,
-    flatColumns,
-    insertColumn,
-    removeColumn,
-    sortColumn,
-    updateColumns
-  } = createColumnGenerator();
-
-  const {
-    _checkAll,
-    _checkSet,
-    _halfChecked,
-    getCheckedRows,
-    isRowChecked,
-    checkRow
-  } = createSelection(_data, table.props.trackBy as (v: T) => string);
 
   const { sortData, thList } = createSorter(dataSource, _data);
 
   const { isFixedLeft } = createFixedLogic(_columns);
-  const {
-    _expandedRows,
-    toggleRow,
-    expandRow,
-    collapseRow,
-    isRowExpanded,
-    getExpandedRows,
-    expandAllRows,
-    collapseAllRows,
-  } = createExpandRow(dataSource, table.props.trackBy as (v: T) => string);
+  const { isRowExpanded, updateExpandRows, setExpandRows, toggleRowExpansion } = useExpand(_data);
+
+  watch(
+    dataSource,
+    (value: T[]) => {
+      _data.value = [...value];
+      updateExpandRows();
+    },
+    { deep: true, immediate: true }
+  );
 
   return {
     _table: table,
@@ -260,7 +191,6 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
       _halfChecked,
       isFixedLeft,
       thList,
-      _expandedRows,
     },
     insertColumn,
     sortColumn,
@@ -270,13 +200,8 @@ export function createStore<T>(dataSource: Ref<T[]>, table: Table<DefaultRow>): 
     sortData,
     isRowChecked,
     checkRow,
-
-    toggleRow,
-    expandRow,
-    collapseRow,
     isRowExpanded,
-    getExpandedRows,
-    expandAllRows,
-    collapseAllRows,
+    setExpandRows,
+    toggleRowExpansion,
   };
 }

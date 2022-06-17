@@ -11,7 +11,7 @@ export type SpanMethod = (data: {
   columnIndex: number;
 }) => number[] | { rowspan: number; colspan: number };
 
-export const TableProps = {
+export const tableProps = {
   data: {
     type: Array as PropType<Record<string, any>[]>,
     default: [],
@@ -88,18 +88,25 @@ export const TableProps = {
   rowKey: {
     type: String,
   },
+  defaultExpandAll: {
+    type: Boolean,
+    default: false,
+  },
+  expandRowKeys: {
+    type: Array as PropType<string[]>,
+  },
   trackBy: {
     type: Function as PropType<(v: Record<string, any>) => string>,
-  }
+  },
 };
 
-export type TablePropsTypes = ExtractPropTypes<typeof TableProps>;
+export type TableProps = ExtractPropTypes<typeof tableProps>;
 
-export type DefaultRow = TablePropsTypes['data'][number];
+export type DefaultRow = TableProps['data'][number];
 
-export interface Table<T = DefaultRow> extends ComponentInternalInstance {
+export interface ITable<T = DefaultRow> extends ComponentInternalInstance {
   store: TableStore<T>;
-  props: TablePropsTypes;
+  props: TableProps;
   tableId: string;
   hiddenColumns: Ref<HTMLElement | null>;
   tableRef: Ref<HTMLElement>;
@@ -125,7 +132,7 @@ export interface TableMethods<T = Record<string, any>> {
   // cancelEditingStatus(): void
 }
 
-export const TABLE_TOKEN: InjectionKey<Table> = Symbol();
+export const TABLE_TOKEN: InjectionKey<ITable> = Symbol();
 
 export interface UseTable {
   classes: ComputedRef<Record<string, boolean>>;

@@ -1,6 +1,6 @@
 import { provide, defineComponent, getCurrentInstance, computed, toRef, ref, onMounted, nextTick } from 'vue';
-import { Table, TableProps, TablePropsTypes, TABLE_TOKEN, DefaultRow } from './table-types';
-import { useTable, useTableLayout } from './composables/use-table';
+import { ITable, tableProps, TableProps, TABLE_TOKEN, DefaultRow } from './table-types';
+import { useTable, useTableLayout, useTableWatcher } from './composables/use-table';
 import { createStore } from './store';
 import FixHeader from './components/fix-header';
 import NormalHeader from './components/normal-header';
@@ -15,10 +15,10 @@ export default defineComponent({
   directives: {
     dLoading: Loading,
   },
-  props: TableProps,
+  props: tableProps,
   emits: ['sort-change', 'cell-click', 'row-click', 'check-change', 'check-all-change', 'expand-change'],
-  setup(props: TablePropsTypes, ctx) {
-    const table = getCurrentInstance() as Table<DefaultRow>;
+  setup(props: TableProps, ctx) {
+    const table = getCurrentInstance() as ITable<DefaultRow>;
     const store = createStore(toRef(props, 'data'), table);
     const tableId = `devui-table_${tableIdInit++}`;
     const tableRef = ref();
@@ -27,6 +27,7 @@ export default defineComponent({
     provide(TABLE_TOKEN, table);
     const { tableWidth, updateColumnWidth } = useTableLayout(table);
     const { classes, styles } = useTable(props, tableWidth);
+    useTableWatcher(props, store);
     const isEmpty = computed(() => props.data.length === 0);
     const ns = useNamespace('table');
     const hiddenColumns = ref(null);

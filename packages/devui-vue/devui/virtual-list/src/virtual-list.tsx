@@ -168,7 +168,7 @@ export default defineComponent({
             cacheHeight = heights.get(key);
           }
           if (cacheHeight === undefined) {
-            cacheHeight = 20;
+            cacheHeight = props.itemHeight || 20;
           }
           const currentItemBottom = itemTop + cacheHeight;
           if (startIndex === undefined && currentItemBottom >= scrollTop) {
