@@ -109,7 +109,8 @@ export default defineComponent({
             <DCheckbox
               label={item.name}
               key={item.value}
-              modelValue={checkedListModels.value[idx].checked}
+              disabled={item.disabled}
+              modelValue={checkedListModels.value[idx] && checkedListModels.value[idx].checked}
               onChange={(value) => {
                 updateCheckedListModels(idx, value);
               }}
@@ -119,9 +120,7 @@ export default defineComponent({
       });
     };
     return () => {
-      return ctx.slots.body && typeof ctx.slots.body === 'function' ? (
-        ctx.slots.body()
-      ) : (
+      return (
         <div class="devui-transfer-panel-body">
           {props.isSearch && renderSearch()}
           <div class="devui-transfer-panel-body-list" style={{ height: bodyHeight.value }}>
