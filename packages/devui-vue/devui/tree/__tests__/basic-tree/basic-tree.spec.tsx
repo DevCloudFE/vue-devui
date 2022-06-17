@@ -11,11 +11,22 @@ describe('Basic tree', () => {
     wrapper = mount({
       setup() {
         const treeRef = ref<any>(null);
+        const data = ref(basicTreeData);
         onMounted(() => {
           treeRef.value.treeFactory.expandAllNodes();
         });
+        const onDisable = () => {
+          const obj = [...data.value];
+          obj[0].disableToggle = true;
+          data.value = obj;
+        };
         return () => {
-          return <Tree data={basicTreeData} ref={treeRef} />;
+          return (
+            <>
+              <Tree data={data.value} ref={treeRef} />
+              <button onClick={onDisable}>click</button>
+            </>
+          );
         };
       },
     });
@@ -108,7 +119,39 @@ describe('Basic tree', () => {
     expect(nodes[0].classes()).toContain('devui-tree__node--open');
   });
 
-  it.todo('Should render the style of node connection line correctly.');
+  it('Should render the style of node connection line correctly.', () => {
+    const nodes = wrapper.findAll('.devui-tree__node');
 
-  it.todo('The node should be disabled and unclickable when disableToggle is set to true.');
+    expect(nodes).toHaveLength(5);
+
+    expect(nodes[0].find('.devui-tree__node-folder > svg').exists()).toBe(true);
+    expect(nodes[0].find('.devui-tree__node-vline').exists()).not.toBe(true);
+    expect(nodes[0].find('.devui-tree__node-hline').exists()).not.toBe(true);
+
+    expect(nodes[1].find('.devui-tree__node-folder > svg').exists()).toBe(true);
+    expect(nodes[1].find('.devui-tree__node-vline').exists()).toBe(true);
+    expect(nodes[1].find('.devui-tree__node-hline').exists()).toBe(true);
+
+    expect(nodes[2].find('.devui-tree__node-folder > svg').exists()).not.toBe(true);
+    const vline2 = nodes[2].findAll('.devui-tree__node-vline');
+    expect(vline2).toHaveLength(2);
+    expect(vline2[1].attributes().style).toBe('height: 30px; left: 9px; top: 0px;');
+    expect(vline2[0].attributes().style).toBe('height: 15px; left: 33px; top: 0px;');
+    expect(nodes[2].find('.devui-tree__node-hline').exists()).toBe(true);
+
+    expect(nodes[3].find('.devui-tree__node-folder > svg').exists()).not.toBe(true);
+    const vline3 = nodes[3].findAll('.devui-tree__node-vline');
+    expect(vline3).toHaveLength(1);
+    expect(vline3[0].attributes().style).toBe('height: 15px; left: 9px; top: 0px;');
+    expect(nodes[3].find('.devui-tree__node-hline').exists()).toBe(true);
+
+    expect(nodes[4].find('.devui-tree__node-folder > svg').exists()).not.toBe(true);
+    expect(nodes[4].find('.devui-tree__node-vline').exists()).not.toBe(true);
+    expect(nodes[4].find('.devui-tree__node-hline').exists()).not.toBe(true);
+  });
+
+  it('The node should be disabled and unclickable when disableToggle is set to true.', async () => {
+    await wrapper.get('button').trigger('click');
+    expect(wrapper.find('.toggle-disabled').exists()).toBe(true);
+  });
 });
