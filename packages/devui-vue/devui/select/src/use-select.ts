@@ -150,7 +150,7 @@ export default function useSelect(
         option._checked = !option._checked;
       }
       if (index > -1) {
-        checkedItems.splice(index);
+        checkedItems.splice(index, 1);
       } else {
         checkedItems.push(item.value);
       }
