@@ -2,6 +2,7 @@ import type { App } from 'vue';
 import Tree from './src/tree';
 
 export * from './src/tree-types';
+export * from './src/composables/use-tree-types';
 
 export { Tree };
 

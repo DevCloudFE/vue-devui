@@ -1,5 +1,5 @@
 import { defineComponent, provide, ref, renderSlot, toRefs, useSlots, watch } from 'vue';
-import type { IInnerTreeNode } from './composables/use-tree-types';
+import type { IInnerTreeNode, ICheckStrategy } from './composables/use-tree-types';
 import DTreeNode from './components/tree-node';
 import DTreeNodeContent from './components/tree-node-content';
 import DTreeNodeToggle from './components/tree-node-toggle';
@@ -12,6 +12,7 @@ import useMergeNodes from './composables/use-merge-nodes';
 import { USE_TREE_TOKEN, NODE_HEIGHT } from './const';
 import { TreeProps, treeProps } from './tree-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { formatCheckStatus } from './utils';
 import './tree.scss';
 
 export default defineComponent({
@@ -23,12 +24,12 @@ export default defineComponent({
 
     const userPlugins = [useSelect(), useOperate(), useMergeNodes()];
 
-    const checkOptions = ref({
-      checkStrategy: check.value || 'both',
+    const checkOptions = ref<{ checkStrategy: ICheckStrategy }>({
+      checkStrategy: formatCheckStatus(check.value)
     });
 
     watch(check, (newVal) => {
-      checkOptions.value.checkStrategy = newVal;
+      checkOptions.value.checkStrategy = formatCheckStatus(newVal);
     });
 
     if (check.value) {

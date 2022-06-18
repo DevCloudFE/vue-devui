@@ -19,35 +19,42 @@ export default function (
       setNodeValue(node, 'checked', false);
     };
 
-    const controlParentNodeChecked = (node: IInnerTreeNode): void => {
+    const controlParentNodeChecked = (node: IInnerTreeNode, checked: boolean): void => {
+      if (!node.parentId) {
+        return;
+      }
       const parentNode = getParent(node);
       if (!parentNode) {
         return;
       }
-      const siblingNodes = getChildren(parentNode, { recursive: false });
-      const checkedSiblingNodes = siblingNodes.filter(item => item.checked);
-
-      // 根据子节点的勾选情况，动态设置父节点的 checked 属性
-      const toggleParentChecked = () => {
-        if (checkedSiblingNodes.length === 0) {
-          setNodeValue(parentNode, 'checked', false);
-        } else if (checkedSiblingNodes.length === siblingNodes.length) {
+      // 子节点是否有选中
+      let childChecked = checked;
+      // 子节点选中后触发
+      if (checked) {
+        if (!parentNode.checked) {
           setNodeValue(parentNode, 'checked', true);
         }
-      };
-
-      if (parentNode.parentId) {
-        toggleParentChecked();
-
-        // 递归往上设置父节点的 checked 属性
-        controlParentNodeChecked(parentNode);
       } else {
-        toggleParentChecked();
+        // 子节点取消后触发
+        const siblingNodes = getChildren(parentNode);
+        const checkedSiblingNodes = siblingNodes.filter(item => item.checked && item.id !== node.id);
+        // 子节点全部是取消状态
+        if (checkedSiblingNodes.length === 0) {
+          setNodeValue(parentNode, 'checked', false);
+        } else {
+          setNodeValue(parentNode, 'checked', true);
+          childChecked = true;
+        }
+      }
+      if (parentNode.parentId) {
+        // 递归往上设置父节点的 checked 属性
+        controlParentNodeChecked(parentNode, childChecked);
       }
     };
 
     const toggleCheckNode = (node: IInnerTreeNode): void => {
-      if (getNode(node).checked) {
+      const checked = getNode(node).checked;
+      if (checked) {
         setNodeValue(node, 'checked', false);
 
         if (['downward', 'both'].includes(options.value.checkStrategy)) {
@@ -62,7 +69,7 @@ export default function (
       }
 
       if (['upward', 'both'].includes(options.value.checkStrategy)) {
-        controlParentNodeChecked(node);
+        controlParentNodeChecked(node, !checked);
       }
     };
 
