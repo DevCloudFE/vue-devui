@@ -272,28 +272,3 @@ $max-width: 1440px;
     }
   }
 }
-
-[ui-theme=infinity-theme],
-[ui-theme=galaxy-theme] {
-  .nav-bar {
-    background-color: $devui-base-bg !important;
-  }
-}
-
-[ui-theme=sweet-theme],
-[ui-theme=provence-theme],
-[ui-theme=deep-theme] {
-  .nav-bar {
-    background-color: $devui-brand !important;
-
-    a {
-      color: #ffffff !important;
-    }
-
-    svg,
-    path,
-    polygon {
-      fill: #ffffff !important;
-    }
-  }
-}
