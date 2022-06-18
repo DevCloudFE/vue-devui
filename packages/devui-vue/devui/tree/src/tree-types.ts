@@ -1,5 +1,5 @@
-import { ExtractPropTypes, PropType } from 'vue';
-import { ICheck, ITreeNode } from './composables/use-tree-types';
+import type { ExtractPropTypes, PropType } from 'vue';
+import type { ICheck, ITreeNode } from './composables/use-tree-types';
 
 export const treeProps = {
   data: {
