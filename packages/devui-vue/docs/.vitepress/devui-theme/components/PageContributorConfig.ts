@@ -16,6 +16,14 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/39021499?v=4',
       homepage: 'https://github.com/daviForevel'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
+      homepage: 'https://github.com/vaebe'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
+    },
   ],
   dragdrop: [
     {
@@ -31,6 +39,14 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/20532893?v=4',
       homepage: 'https://github.com/MICD0704'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
+      homepage: 'https://github.com/vaebe'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
     },
   ],
   icon: [
@@ -78,6 +94,14 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/29355875?v=4',
       homepage: 'https://github.com/SituC'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/32949033?v=4',
+      homepage: 'https://github.com/newer2333'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
+      homepage: 'https://github.com/vaebe'
+    },
   ],
   status: [
     {
@@ -120,6 +144,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4?s=100',
       homepage: 'https://github.com/naluduo233'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
+    },
   ],
   dropdown: [
     {
@@ -130,11 +158,19 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
       homepage: 'https://github.com/xingyan95'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
+    },
   ],
   menu: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/31283122?v=4',
       homepage: 'https://github.com/GaoNeng-wWw'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/32949033?v=4',
+      homepage: 'https://github.com/newer2333'
     },
   ],
   'nav-sprite': [
@@ -147,6 +183,12 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/24663941?v=4',
       homepage: 'https://github.com/554246839'
+    },
+  ],
+  steps: [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/9566362?v=4',
+      homepage: 'https://github.com/kagol'
     },
   ],
   'steps-guide': [
@@ -164,6 +206,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/32949033?v=4',
       homepage: 'https://github.com/newer2333'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
+      homepage: 'https://github.com/xingyan95'
+    },
   ],
 
   // 反馈
@@ -176,6 +222,14 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/10958003?v=4',
       homepage: 'https://github.com/liuxdi'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/39021499?v=4',
+      homepage: 'https://github.com/daviForevel'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
+    },
   ],
   drawer: [
     {
@@ -187,6 +241,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/24663941?v=4',
       homepage: 'https://github.com/554246839'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
+      homepage: 'https://github.com/vaebe'
     },
   ],
   modal: [
@@ -268,11 +326,23 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/32949033?v=4',
       homepage: 'https://github.com/newer2333'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
+    },
   ],
   cascader: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/29355875?v=4',
       homepage: 'https://github.com/SituC'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/8649913?v=4',
+      homepage: 'https://github.com/lj1990111'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
+      homepage: 'https://github.com/vaebe'
     },
   ],
   checkbox: [
@@ -289,6 +359,12 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://github.com/lj1990111'
     },
   ],
+  collapse: [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/39021499?v=4',
+      homepage: 'https://github.com/daviForevel'
+    },
+  ],
   'color-picker': [
     {
       avatar: 'https://avatars.githubusercontent.com/u/66500121?v=4',
@@ -300,8 +376,16 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/1510444?v=4',
       homepage: 'https://github.com/imnull'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
+      homepage: 'https://github.com/vaebe'
+    },
   ],
   'date-picker-pro': [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/39021499?v=4',
+      homepage: 'https://github.com/daviForevel'
+    },
     {
       avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4?s=100',
       homepage: 'https://github.com/naluduo233'
@@ -315,6 +399,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/40349890?v=4',
       homepage: 'https://github.com/chenxi24'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
     },
   ],
   form: [
@@ -390,6 +478,14 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
       homepage: 'https://github.com/xingyan95'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/54826175?v=4',
+      homepage: 'https://github.com/ming-bin'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
+    },
   ],
   switch: [
     {
@@ -399,6 +495,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: '',
       homepage: 'https://gitee.com/vergil_lu'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/8649913?v=4',
+      homepage: 'https://github.com/lj1990111'
     },
   ],
   'tag-input': [
@@ -426,11 +526,19 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/58691226?v=4',
       homepage: 'https://github.com/qq154239735'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/8649913?v=4',
+      homepage: 'https://github.com/lj1990111'
+    },
   ],
   transfer: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/15258339?v=4',
       homepage: 'https://github.com/ForeseeBear'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/8649913?v=4',
+      homepage: 'https://github.com/lj1990111'
     },
   ],
   'tree-select': [
@@ -444,6 +552,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/48074435?v=4',
       homepage: 'https://github.com/elsaooo'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/32949033?v=4',
+      homepage: 'https://github.com/newer2333'
+    },
   ],
 
   // 数据展示
@@ -456,6 +568,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/40119767?v=4',
       homepage: 'https://github.com/linxiang07'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
+    },
   ],
   badge: [
     {
@@ -466,11 +582,31 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/20532893?v=4',
       homepage: 'https://github.com/MICD0704'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/32949033?v=4',
+      homepage: 'https://github.com/newer2333'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
+      homepage: 'https://github.com/vaebe'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
+    },
   ],
   card: [
     {
       avatar: '',
       homepage: 'https://gitee.com/vergil_lu'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/32949033?v=4',
+      homepage: 'https://github.com/newer2333'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
     },
   ],
   carousel: [
@@ -478,11 +614,19 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/7751774?v=4',
       homepage: 'https://github.com/Roading'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
+    },
   ],
   comment: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/40553790?v=4',
       homepage: 'https://github.com/nextniko'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/9566362?v=4',
+      homepage: 'https://github.com/kagol'
     },
   ],
   countdown: [
@@ -524,6 +668,14 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/67035714?v=4',
       homepage: 'https://github.com/devin974'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/32949033?v=4',
+      homepage: 'https://github.com/newer2333'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
+    },
   ],
   'quadrant-diagram': [
     {
@@ -535,6 +687,18 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/48074435?v=4',
       homepage: 'https://github.com/elsaooo'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
+      homepage: 'https://github.com/xingyan95'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
+      homepage: 'https://github.com/vaebe'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
     },
   ],
   skeleton: [
@@ -580,6 +744,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/38075730?v=4',
       homepage: 'https://github.com/c0dedance'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/8649913?v=4',
+      homepage: 'https://github.com/lj1990111'
+    },
   ],
   timeline: [
     {
@@ -609,12 +777,19 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://github.com/linxiang07'
     },
   ],
-
   // 布局
   grid: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/54826175?v=4',
       homepage: 'https://github.com/ming-bin'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/76561071?v=4',
+      homepage: 'https://github.com/liyao1520'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
+      homepage: 'https://github.com/Lonely-shang'
     },
   ],
   layout: [
@@ -627,6 +802,12 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4?s=100',
       homepage: 'https://github.com/naluduo233'
+    },
+  ],
+  'virtual-list': [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/40119767?v=4',
+      homepage: 'https://github.com/linxiang07'
     },
   ],
 }
