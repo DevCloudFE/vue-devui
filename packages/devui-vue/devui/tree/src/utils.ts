@@ -1,5 +1,5 @@
-import { TreeData, TreeItem } from './deprecated-tree-types';
-
+import type { ICheck, ICheckStrategy } from './composables/use-tree-types';
+import type { TreeData, TreeItem } from './deprecated-tree-types';
 
 export const omit = (obj: Record<string, unknown>, key: string): Record<string, unknown> => {
   return Object.entries(obj)
@@ -56,9 +56,20 @@ const _deleteNode = (ids: Array<string>, data: Array<TreeItem>, index = 0): Arra
   });
   return data;
 };
+
 export const deleteNode = (id: string, data: Array<TreeItem>): Array<TreeItem> => {
   if (id.includes('_')) {
     return _deleteNode(id.split('_'), data);
   }
   return data.filter(({ id: d }) => d !== id);
+};
+
+/**
+ * true 默认为 both，false 默认为 none。
+ * "true" defaults to "both" and "false" to "none".
+ */
+export const formatCheckStatus = (check: ICheck): ICheckStrategy => {
+  return typeof check === 'boolean' ?
+    check ? 'both' : 'none'
+    : check;
 };
