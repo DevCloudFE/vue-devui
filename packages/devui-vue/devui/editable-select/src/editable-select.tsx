@@ -1,4 +1,4 @@
-import { defineComponent, withModifiers, computed, ref, SetupContext, watch } from 'vue';
+import { defineComponent, withModifiers, computed, ref, SetupContext, watch, Teleport, Transition } from 'vue';
 import { editableSelectProps, EditableSelectProps, OptionObjectItem } from './editable-select-types';
 import clickOutside from '../../shared/devui-directive/clickoutside';
 import loadingDirective from '../../loading/src/loading-directive';
@@ -9,23 +9,33 @@ import { useInput } from './composables/use-input';
 import { useLazyLoad } from './composables/use-lazy-load';
 import { useKeyboardSelect } from './composables/use-keyboard-select';
 import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useCacheFilteredOptions } from './composables/use-cache-filtered-options';
+import { Placement } from '../../overlay';
 export default defineComponent({
   name: 'DEditableSelect',
   directives: {
     clickOutside,
     dLoading: loadingDirective,
   },
+
   props: editableSelectProps,
   emits: ['update:modelValue', 'search', 'loadMore'],
   setup(props: EditableSelectProps, ctx: SetupContext) {
+    const ns = useNamespace('editable-select');
+    const dropdownNS = useNamespace('editable-select-dropdown');
+
     // Ref
     const dropdownRef = ref();
     const origin = ref();
 
-    const position = ref(['bottom']);
+    const position = ref<Placement[]>(['bottom']);
+
     const visible = ref(false);
     const inputValue = ref(props.modelValue);
+    const cacheInput = ref();
     const loading = ref(props.loading);
+
     // 标准化options，统一处理成[{}]的形式
     const normalizeOptions = computed(() => {
       return props.options.map((option) => {
@@ -43,6 +53,9 @@ export default defineComponent({
     });
     // 非远程搜索的情况下对数组进行过滤
     const filteredOptions = userFilterOptions(normalizeOptions, inputValue, props.filterOption);
+
+    // 缓存filteredOptions，用value来获取对应的option
+    const { getOptionValue } = useCacheFilteredOptions(filteredOptions);
 
     const emptyText = computed(() => {
       /**
@@ -80,12 +93,18 @@ export default defineComponent({
     // 输入框变化后的逻辑
     const { handleInput } = useInput(inputValue, ctx);
 
-    const handleClick = (option: OptionObjectItem) => {
+    const handleClick = (option: OptionObjectItem, index: number) => {
       const { optionDisabledKey: disabledKey } = props;
       if (disabledKey && !!option[disabledKey]) {
         return;
       }
-      ctx.emit('update:modelValue', option.label);
+
+      inputValue.value = option.label;
+      cacheInput.value = option.label;
+      selectedIndex.value = index;
+
+      const value = getOptionValue(option.label);
+      ctx.emit('update:modelValue', value + '');
       closeMenu();
     };
     // 键盘选择
@@ -93,6 +112,7 @@ export default defineComponent({
       dropdownRef,
       visible,
       inputValue,
+      cacheInput,
       filteredOptions,
       props.optionDisabledKey,
       props.filterOption,
@@ -102,29 +122,21 @@ export default defineComponent({
       toggleMenu
     );
 
-    watch(
-      () => props.modelValue,
-      (newVal) => {
-        if (newVal) {
-          inputValue.value = newVal;
-        }
-      }
-    );
     const getItemCls = (option: OptionObjectItem, index: number) => {
       const { optionDisabledKey: disabledKey } = props;
-      return className('devui-dropdown-item', {
+      return className(`${dropdownNS.e('item')}`, {
         disabled: disabledKey ? !!option[disabledKey] : false,
         selected: index === selectedIndex.value,
-        'devui-dropdown-bg': index === hoverIndex.value,
+        [`${dropdownNS.m('bg')}`]: index === hoverIndex.value,
       });
     };
     // 渲染下拉列表,根据appendToBody属性判断是否渲染在body下
 
     return () => {
-      const selectCls = className('devui-editable-select devui-form-group devui-has-feedback', {
-        'devui-select-open': visible.value === true,
+      const selectCls = className(`${ns.b()} devui-form-group devui-has-feedback`, {
+        [`${ns.m('open')}`]: visible.value === true,
       });
-      const inputCls = className('devui-form-control devui-dropdown-origin', {
+      const inputCls = className(`${ns.e('input')} devui-dropdown-origin devui-form-control`, {
         'devui-dropdown-origin-open': visible.value === true,
       });
       return (
@@ -150,39 +162,45 @@ export default defineComponent({
               <d-icon name="select-arrow" />
             </span>
           </span>
-
-          <FlexibleOverlay origin={origin.value} v-model={visible.value} position={position.value} hasBackdrop={false}>
-            <div
-              style={{
-                width: props.width + 'px',
-              }}>
-              <div class="devui-dropdown-menu " v-dLoading={props.loading} v-show={visible.value}>
-                <ul
-                  ref={dropdownRef}
-                  class="devui-list-unstyled scroll-height"
+          <Teleport to="body">
+            <Transition name="fade">
+              <FlexibleOverlay origin={origin.value} v-model={visible.value} position={position.value}>
+                <div
                   style={{
-                    maxHeight: props.maxHeight + 'px',
+                    width: props.width + 'px',
                   }}
-                  onScroll={loadMore}>
-                  {filteredOptions.value.map((option, index) => {
-                    return (
-                      <li
-                        class={getItemCls(option, index)}
-                        onClick={(e: MouseEvent) => {
-                          e.stopPropagation();
-                          handleClick(option);
-                        }}>
-                        {ctx.slots.item ? ctx.slots.item(option) : option.label}
+                  class={`${dropdownNS.b()}`}>
+                  <div class={`${dropdownNS.e('wrap')}`} v-dLoading={props.loading} v-show={visible.value}>
+                    <ul
+                      ref={dropdownRef}
+                      class={`${dropdownNS.e('list')}`}
+                      style={{
+                        maxHeight: props.maxHeight + 'px',
+                      }}
+                      onScroll={loadMore}>
+                      {filteredOptions.value.map((option, index) => {
+                        return (
+                          <li
+                            class={getItemCls(option, index)}
+                            onClick={(e: MouseEvent) => {
+                              e.stopPropagation();
+                              handleClick(option, index);
+                            }}>
+                            {ctx.slots.item ? ctx.slots.item(option) : option.label}
+                          </li>
+                        );
+                      })}
+                      <li class={`${dropdownNS.e('empty')}`} v-show={!filteredOptions.value.length}>
+                        <div class={`${dropdownNS.em('empty', 'tip')}`}>
+                          {ctx.slots.noResultItem ? ctx.slots.noResultItem() : emptyText.value}
+                        </div>
                       </li>
-                    );
-                  })}
-                  <li class="devui-no-result-template" v-show={!filteredOptions.value.length}>
-                    <div class="devui-no-data-tip">{ctx.slots.noResultItem ? ctx.slots.noResultItem() : emptyText.value}</div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </FlexibleOverlay>
+                    </ul>
+                  </div>
+                </div>
+              </FlexibleOverlay>
+            </Transition>
+          </Teleport>
         </div>
       );
     };
