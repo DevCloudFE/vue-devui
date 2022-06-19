@@ -1,12 +1,13 @@
 import { mount } from '@vue/test-utils';
 import { reactive, ref } from 'vue';
 import { EditableSelect } from '../index';
+
 const createData = (len = 5) => {
   return reactive(
     Array.from({ length: len }).map((_, index) => {
       return {
         label: `label${index}`,
-        value: index
+        value: index,
       };
     })
   );
@@ -26,7 +27,7 @@ describe('editable-select test', () => {
   test('should render correctly', async () => {
     const wrapper = mount({
       components: {
-        'editable-select': EditableSelect
+        'editable-select': EditableSelect,
       },
       template: `<editable-select v-model="value" :options="options"></editable-select>`,
       setup() {
@@ -34,13 +35,12 @@ describe('editable-select test', () => {
         const options = createData();
         return {
           value,
-          options
+          options,
         };
-      }
+      },
     });
 
     const input = wrapper.find('input');
-
     expect(wrapper.find('.devui-dropdown-item').exists()).toBeFalsy();
 
     await input.trigger('click');
@@ -56,7 +56,7 @@ describe('editable-select test', () => {
   test('select on click ', async () => {
     const wrapper = mount({
       components: {
-        'editable-select': EditableSelect
+        'editable-select': EditableSelect,
       },
       template: `<editable-select v-model="value" :options="options"></editable-select>`,
       setup() {
@@ -64,9 +64,9 @@ describe('editable-select test', () => {
         const options = createData();
         return {
           value,
-          options
+          options,
         };
-      }
+      },
     });
 
     const input = wrapper.find('input');
@@ -81,9 +81,9 @@ describe('editable-select test', () => {
   test('disabled select', async () => {
     const wrapper = mount({
       components: {
-        'editable-select': EditableSelect
+        'editable-select': EditableSelect,
       },
-      template: `<editable-select disabled></editable-select>`
+      template: `<editable-select disabled></editable-select>`,
     });
     expect(wrapper.find('input').element.disabled).toBe(true);
   });
@@ -91,7 +91,7 @@ describe('editable-select test', () => {
   test('disabled option', async () => {
     const wrapper = mount({
       components: {
-        'editable-select': EditableSelect
+        'editable-select': EditableSelect,
       },
       template: `<editable-select v-model="value" :options="options" option-disabled-key="disabled"></editable-select>`,
       setup() {
@@ -99,24 +99,24 @@ describe('editable-select test', () => {
         const options = reactive([
           {
             label: 'label0',
-            value: 0
+            value: 0,
           },
           {
             label: 'label1',
             value: 1,
-            disabled: true
+            disabled: true,
           },
           {
             label: 'label2',
             value: 2,
-            disabled: false
-          }
+            disabled: false,
+          },
         ]);
         return {
           value,
-          options
+          options,
         };
-      }
+      },
     });
 
     const input = wrapper.find('input');
@@ -139,7 +139,7 @@ describe('editable-select test', () => {
     const handleSearch = jest.fn();
     const wrapper = mount({
       components: {
-        'editable-select': EditableSelect
+        'editable-select': EditableSelect,
       },
       template: `<editable-select v-model="value" :options="options" @search="handleSearch"></editable-select>`,
       setup() {
@@ -148,9 +148,9 @@ describe('editable-select test', () => {
         return {
           value,
           options,
-          handleSearch
+          handleSearch,
         };
-      }
+      },
     });
     const input = wrapper.find('input');
     await input.setValue('label');
@@ -161,7 +161,7 @@ describe('editable-select test', () => {
   test('filter option', async () => {
     const wrapper = mount({
       components: {
-        'editable-select': EditableSelect
+        'editable-select': EditableSelect,
       },
       template: `<editable-select v-model="value" :options="options" filter-option></editable-select>`,
       setup() {
@@ -169,9 +169,9 @@ describe('editable-select test', () => {
         const options = createData();
         return {
           value,
-          options
+          options,
         };
-      }
+      },
     });
     const input = wrapper.find('input');
     await input.setValue('label0');
@@ -183,7 +183,7 @@ describe('editable-select test', () => {
     const filterOption = jest.fn();
     const wrapper = mount({
       components: {
-        'editable-select': EditableSelect
+        'editable-select': EditableSelect,
       },
       template: `<editable-select v-model="value" :options="options" :filter-option="filterOption"></editable-select>`,
       setup() {
@@ -192,9 +192,9 @@ describe('editable-select test', () => {
         return {
           value,
           options,
-          filterOption
+          filterOption,
         };
-      }
+      },
     });
     const input = wrapper.find('input');
     await input.setValue('label0');
@@ -205,7 +205,7 @@ describe('editable-select test', () => {
   test('render slot', async () => {
     const wrapper = mount({
       components: {
-        'editable-select': EditableSelect
+        'editable-select': EditableSelect,
       },
       template: `<editable-select v-model="value" :options="options">
                     <template #item="slotProps">
@@ -222,9 +222,9 @@ describe('editable-select test', () => {
         const options = createData();
         return {
           value,
-          options
+          options,
         };
-      }
+      },
     });
     const input = wrapper.find('input');
     await input.trigger('click');
@@ -242,15 +242,15 @@ describe('editable-select test', () => {
       const evt = new CustomEvent('scroll', {
         detail: {
           target: {
-            [name]: offset
-          }
-        }
+            [name]: offset,
+          },
+        },
       });
       eventTarget.dispatchEvent(evt);
     };
     const wrapper = mount({
       components: {
-        'editable-select': EditableSelect
+        'editable-select': EditableSelect,
       },
       template: `<editable-select v-model="value" :options="options" @loadMore="handleLoad" :maxHeight="300" ></editable-select>`,
       setup() {
@@ -259,9 +259,9 @@ describe('editable-select test', () => {
         return {
           value,
           options,
-          handleLoad: loadmore
+          handleLoad: loadmore,
         };
-      }
+      },
     });
 
     const input = wrapper.find('input');
@@ -277,7 +277,7 @@ describe('editable-select test', () => {
   test('keyboard operations', async () => {
     const wrapper = mount({
       components: {
-        'editable-select': EditableSelect
+        'editable-select': EditableSelect,
       },
       template: `<editable-select v-model="value" :options="options"></editable-select>`,
       setup() {
@@ -285,9 +285,9 @@ describe('editable-select test', () => {
         const options = createData();
         return {
           value,
-          options
+          options,
         };
-      }
+      },
     });
     const input = wrapper.find('input');
     await input.trigger('click');
