@@ -9,6 +9,7 @@ export const useKeyboardSelect = (
   dropdownRef: Ref,
   visible: Ref<boolean>,
   inputValue: Ref<string>,
+  cacheInput: Ref<string>,
   filteredOptions: ComputedRef<OptionObjectItem[]>,
   optionDisabledKey: string,
   filterOption: boolean | ((val: string, option: OptionObjectItem) => boolean) | undefined,
@@ -38,11 +39,8 @@ export const useKeyboardSelect = (
     });
   };
   const handleEscape = () => {
-    if (inputValue.value) {
-      inputValue.value = '';
-    } else {
-      closeMenu();
-    }
+    inputValue.value = cacheInput.value;
+    closeMenu();
   };
 
   const handleEnter = () => {
@@ -51,7 +49,7 @@ export const useKeyboardSelect = (
       return toggleMenu();
     }
 
-    len && len === 1 ? handleClick(filteredOptions.value[0]) : handleClick(filteredOptions.value[hoverIndex.value]);
+    len && len === 1 ? handleClick(filteredOptions.value[0], 1) : handleClick(filteredOptions.value[hoverIndex.value], hoverIndex.value);
     return closeMenu();
   };
 

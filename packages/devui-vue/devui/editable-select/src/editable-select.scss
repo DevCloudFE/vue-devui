@@ -1,5 +1,4 @@
 @import '../../styles-var/devui-var.scss';
-
 .#{$devui-prefix}-editable-select {
   .#{$devui-prefix}-select-chevron-icon {
     display: inline-flex;
@@ -11,43 +10,85 @@
     display: none;
   }
 
-  .#{$devui-prefix}-no-data-tip {
-    user-select: none;
-    cursor: not-allowed;
+  &.#{$devui-prefix}-form-group {
+    position: relative;
   }
-
   .#{$devui-prefix}-form-control {
-    padding-right: 24px;
-  }
-
-  .#{$devui-prefix}-dropdown-menu {
-    width: 100%;
-    margin: 0;
+    background-color: var(--devui-base-bg);
+    padding: 4px 8px;
+    border: 1px solid var(--devui-form-control-line);
     display: block;
-    // TODO: 全局样式被污染，暂时只能这么写
-    top: auto !important;
-    left: auto !important;
+    width: 100%;
+    height: 28px;
+    border-radius: var(--devui-border-radius, 2px);
+    outline: 0;
+    transition: border-color 0.3s var(--devui-animation-ease-in-out-smooth);
+    padding-right: 24px;
   }
 
   .#{$devui-prefix}-dropdown-menu-cdk {
     position: static;
   }
 
-  .#{$devui-prefix}-dropdown-item {
-    cursor: pointer;
-    display: block;
-    width: 100%;
-    padding: 8px 12px;
-    clear: both;
-    border: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    line-height: 14px;
+  .#{$devui-prefix}-popup-tips {
+    color: $devui-text-weak;
+    padding: 4px 12px;
   }
 
-  .#{$devui-prefix}-dropdown-menu {
-    .#{$devui-prefix}-dropdown-item:not(.disabled) {
+  .devui-dropdown-origin.devui-dropdown-origin-open {
+    outline: none;
+    border-color: var(--devui-connected-overlay-line);
+  }
+}
+
+.#{$devui-prefix}-editable-select.#{$devui-prefix}-editable-select--open {
+  .#{$devui-prefix}-select-chevron-icon {
+    transform: rotate(180deg);
+  }
+
+  .#{$devui-prefix}-select-chevron-icon svg path {
+    fill: $devui-text-weak;
+  }
+}
+
+.#{$devui-prefix}-editable-select.#{$devui-prefix}-form-group.#{$devui-prefix}-has-feedback > .#{$devui-prefix}-form-control-feedback {
+  line-height: 26px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  pointer-events: none;
+}
+.#{$devui-prefix}-editable-select-dropdown {
+  .#{$devui-prefix}-editable-select-dropdown__wrap {
+    width: 100%;
+    margin: 0;
+    display: block;
+  }
+  .#{$devui-prefix}-editable-select-dropdown__wrap {
+    .#{$devui-prefix}-editable-select-dropdown__list {
+      margin: 0;
+      overflow-y: auto;
+      padding: 0;
+    }
+
+    .#{$devui-prefix}-editable-select-dropdown__item {
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      clear: both;
+      border: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      line-height: 14px;
+    }
+    .#{$devui-prefix}-editable-select-dropdown__item:not(.disabled) {
       &.selected {
         color: $devui-list-item-active-text;
         background-color: $devui-list-item-active-bg;
@@ -55,8 +96,14 @@
     }
   }
 
-  .#{$devui-prefix}-no-result-template,
-  .#{$devui-prefix}-is-searching-template {
+  /* 选项disabled */
+  .#{$devui-prefix}-editable-select-dropdown__item.disabled,
+  .#{$devui-prefix}-deditable-select-dropdown__item.disabled:hover {
+    cursor: not-allowed;
+    color: $devui-disabled-text;
+  }
+
+  .#{$devui-prefix}-editable-select-dropdown__empty {
     display: block;
     width: 100%;
     padding: 8px 12px;
@@ -76,40 +123,11 @@
       background-color: $devui-unavailable;
     }
   }
-
-  /* 选项disabled */
-  .#{$devui-prefix}-dropdown-item.disabled,
-  .#{$devui-prefix}-dropdown-item.disabled:hover {
+  .#{$devui-prefix}-editable-select-dropdown__empty--tip {
+    user-select: none;
     cursor: not-allowed;
-    color: $devui-disabled-text;
   }
-
-  ul.#{$devui-prefix}-list-unstyled {
-    margin: 0;
-    overflow-y: auto;
-    padding: 0;
-  }
-
-  .#{$devui-prefix}-dropdown-bg {
+  .#{$devui-prefix}-editable-select-dropdown--bg {
     background: $devui-list-item-hover-bg;
   }
-
-  .#{$devui-prefix}-popup-tips {
-    color: $devui-text-weak;
-    padding: 4px 12px;
-  }
-}
-
-.#{$devui-prefix}-editable-select.#{$devui-prefix}-select-open {
-  .#{$devui-prefix}-select-chevron-icon {
-    transform: rotate(180deg);
-  }
-
-  .#{$devui-prefix}-select-chevron-icon svg path {
-    fill: $devui-text-weak;
-  }
-}
-
-.#{$devui-prefix}-editable-select.#{$devui-prefix}-form-group.#{$devui-prefix}-has-feedback > .#{$devui-prefix}-form-control-feedback {
-  line-height: 26px;
 }
