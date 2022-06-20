@@ -37,6 +37,8 @@ const ScrollStyle: CSSProperties = {
 
 type ItemKeyFunction = (_item: Record<string, never>) => string | number;
 
+const DEFAULT_HEIGHT = 20;
+
 export default defineComponent({
   name: 'DVirtualList',
   props: virtualListProps,
@@ -168,7 +170,7 @@ export default defineComponent({
             cacheHeight = heights.get(key);
           }
           if (cacheHeight === undefined) {
-            cacheHeight = props.itemHeight || 20;
+            cacheHeight = props.itemHeight || DEFAULT_HEIGHT;
           }
           const currentItemBottom = itemTop + cacheHeight;
           if (startIndex === undefined && currentItemBottom >= scrollTop) {
@@ -322,6 +324,12 @@ export default defineComponent({
       },
       { flush: 'post' },
     );
+
+    ctx.expose({
+      onScrollTo(index: number) {
+        syncScrollTop(index * (props.itemHeight || DEFAULT_HEIGHT));
+      }
+    });
 
     return () => {
       const Component = props.component as keyof HTMLAttributes;
