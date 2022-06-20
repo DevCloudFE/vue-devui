@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType } from 'vue';
-import { IItem, ITitles, IModel, TState } from '../types';
+import { IItem, ITitles, IModel, TState, filterValue } from '../types';
 import { transferCommon } from './use-transfer-common';
 
 export const transferProps = {
@@ -30,8 +30,8 @@ export const transferProps = {
     type: String,
     default: (): string => '320px',
   },
-  isSearch: {
-    type: Boolean,
+  filter: {
+    type: [Boolean, Function] as PropType<filterValue>,
     default: (): boolean => false,
   },
   isSourceDroppable: {
@@ -49,7 +49,7 @@ export const transferProps = {
   slots: {
     type: Object,
   },
-  searching: {
+  search: {
     type: Function as unknown as () => (direction: string, keyword: string, targetOption: TState) => void,
   },
   transferring: {

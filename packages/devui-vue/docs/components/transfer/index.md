@@ -19,6 +19,7 @@
     v-model="selectValue"
     :titles="titles"
     :data="source"
+    @change="changeFun"
   >
   </d-transfer>
 </template>
@@ -80,6 +81,9 @@ export default defineComponent({
       },
     ]);
     const selectValue = ref(['1', '2']);
+    const changeFun = (value, direction, arr) => {
+      console.log(value, direction, arr);
+    };
 
     return {
       selectValue,
@@ -87,6 +91,7 @@ export default defineComponent({
       source: originSource,
       sourceDefaultChecked: ['2', '5', '28'],
       targetDefaultChecked: ['12', '23'],
+      changeFun,
     };
   },
 });
@@ -102,13 +107,24 @@ export default defineComponent({
 
 ```vue
 <template>
+  <p>默认搜索</p>
   <d-transfer
-    v-model:source-default-checked="sourceDefaultChecked"
-    v-model:target-default-checked="targetDefaultChecked"
+    :source-default-checked="sourceDefaultChecked"
+    :target-default-checked="targetDefaultChecked"
     :titles="titles"
     :data="source"
-    :isSearch="isSearch"
-    :searching="searchingHandle"
+    :filter="filter"
+    v-model="checkedValues1"
+  >
+  </d-transfer>
+  <p>自定义搜索方法</p>
+  <d-transfer
+    :source-default-checked="sourceDefaultChecked"
+    :target-default-checked="targetDefaultChecked"
+    :titles="titles"
+    :data="source"
+    :filter="filterFun"
+    v-model="checkedValues2"
   >
   </d-transfer>
 </template>
@@ -170,15 +186,21 @@ export default defineComponent({
       },
     ];
 
+    const filterFun = (item, key) => {
+      return item.value.includes(key);
+    };
+    const checkedValues1 = ref(['2']);
+    const checkedValues2 = ref([]);
+
     return {
+      checkedValues1,
+      checkedValues2,
       titles: ['sourceHeader', 'targetHeader'],
       source: originSource,
-      sourceDefaultChecked: ['2', '5', '28'],
-      targetDefaultChecked: ['12', '23'],
-      isSearch: true,
-      searchingHandle: (direction, data, keyword) => {
-        console.log(direction, data, keyword);
-      },
+      sourceDefaultChecked: ['5', '7'],
+      targetDefaultChecked: ['12', '2'],
+      filter: true,
+      filterFun,
     };
   },
 });
@@ -199,8 +221,7 @@ export default defineComponent({
     :target-default-checked="targetDefaultChecked"
     :titles="titles"
     :data="source"
-    :sourceSortMethods="sourceSortMethodsHandle"
-    :targetSortMethods="targetSortMethodsHandle"
+    :sortMethods="sourceSortMethodsHandle"
   >
   </d-transfer>
 </template>
@@ -269,9 +290,6 @@ export default defineComponent({
       targetDefaultChecked: ['12', '23'],
       sourceSortMethodsHandle: function (data) {
         return data.sort(() => 0.5 - Math.random());
-      },
-      targetSortMethodsHandle: function (data) {
-        return data.reverse();
       },
     };
   },
@@ -397,8 +415,7 @@ export default defineComponent({
     :target-default-checked="targetDefaultChecked"
     :titles="titles"
     :data="source"
-    :sourceSortMethods="sourceSortMethodsHandle"
-    :targetSortMethods="targetSortMethodsHandle"
+    :sortMethods="sourceSortMethodsHandle"
   >
   </d-transfer>
 </template>
@@ -468,9 +485,6 @@ export default defineComponent({
       sourceSortMethodsHandle: function (data) {
         return data.sort(() => 0.5 - Math.random());
       },
-      targetSortMethodsHandle: function (data) {
-        return data.reverse();
-      },
     };
   },
 });
@@ -483,18 +497,15 @@ export default defineComponent({
 
 d-transfer 参数
 
-| **参数**  | **类型**                             | **默认** | **说明**                                                               | **跳转 Demo**         |
-| --------- | ------------------------------------ | -------- | ---------------------------------------------------------------------- | --------------------- |
-| v-model   | `Array`                              | []       | 可选参数，选中项绑定值，对应右侧穿梭框选项                             | [基本用法](#基本用法) |
-| data      | `Array[{key,name,disabled}] `        | []       | 可选参数，穿梭框源数据                                                 | [基本用法](#基本用法) |
-| titles    | `Array`                              | []       | 可选参数，穿梭框标题                                                   | [基本用法](#基本用法) |
-| height    | `Array`                              | 320px    | 可选参数，穿梭框高度                                                   | [基本用法](#基本用法) |
-| isSearch  | `Array`                              | true     | 可选参数，是否可以搜索                                                 | [基本用法](#基本用法) |
-| disabled  | `Array`                              | false    | 可选参数 穿梭框禁止使用                                                | [基本用法](#基本用法) |
-| searching | `EventEmitter<{direction, keyword}>` | --       | 当搜索时触发，返回目标穿梭框和搜索文字，不设置此事件则会使用默认方法； | [基本用法](#基本用法) |
+| **参数** | **类型**                        | **默认** | **说明**                                      | **跳转 Demo**             |
+| -------- | ------------------------------- | -------- | --------------------------------------------- | ------------------------- |
+| v-model  | `Array`                         | []       | 可选参数，选中项绑定值，对应右侧穿梭框选项    | [基本用法](#基本用法)     |
+| data     | `Array[{value,name,disabled}] ` | []       | 可选参数，穿梭框源数据                        | [基本用法](#基本用法)     |
+| titles   | `Array`                         | []       | 可选参数，穿梭框标题                          | [基本用法](#基本用法)     |
+| height   | `Array`                         | 320px    | 可选参数，穿梭框高度                          | [基本用法](#基本用法)     |
+| filter   | `boolean \| function`           | false    | 可选参数，是否可以搜索,函数时为自定义过滤方法 | [搜索穿梭框](#搜索穿梭框) |
 
 d-transfer 事件
 | **事件** | **类型** | **说明** | **跳转 Demo** |
 | ------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------- |
-| change | `EventEmitter<{direction, keyword}>` | 当搜索时触发，返回目标穿梭框和搜索文字，不设置此事件则会使用默认方法； | [基本用法](#基本用法) |
-| onDragEnd | `(direction: string, dragItem: TransferItem, dropItem: TransferItem) => void` | 节点结束拖拽的回调； | [基本用法](#基本用法) |
+| change | `EventEmitter<{value, direction,移动的数组}>` | 右侧列表变化时触发，当前值、数据移动方向（source、target）、发生移动的数据数组 | [基本用法](#基本用法) |

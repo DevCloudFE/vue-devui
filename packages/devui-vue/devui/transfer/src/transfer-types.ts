@@ -20,6 +20,8 @@ export interface IDargItemAndDropItem {
 
 export type TKey = string;
 
+export type filterValue = boolean | ((data: IItem, key: string) => IItem[]);
+
 export const transferProps = {
   modelValue: {
     type: Array as PropType<string | number[]>,
@@ -49,8 +51,8 @@ export const transferProps = {
     type: Array as PropType<IItem[]>,
     default: () => [],
   },
-  isSearch: {
-    type: Boolean,
+  filter: {
+    type: [Boolean, Function] as PropType<filterValue>,
     default: false,
   },
   height: {
@@ -77,13 +79,10 @@ export const transferProps = {
     type: Boolean,
     default: false,
   },
-  searching: {
+  search: {
     type: Function as PropType<(data: IItem[], keyword: TKey) => void>,
   },
-  sourceSortMethods: {
-    type: Function as PropType<(data: IItem[]) => IItem[]>,
-  },
-  targetSortMethods: {
+  sortMethods: {
     type: Function as PropType<(data: IItem[]) => IItem[]>,
   },
   dragstart: {

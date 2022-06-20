@@ -1,6 +1,6 @@
 import { PropType, ExtractPropTypes, computed, ref, watch, watchEffect } from 'vue';
 import type { SetupContext } from 'vue';
-import { IItem, TKey } from '../transfer-types';
+import { IItem, TKey, filterValue } from '../transfer-types';
 
 export const transferPanelProps = {
   title: {
@@ -19,8 +19,8 @@ export const transferPanelProps = {
     type: Array as PropType<TKey[]>,
     default: () => [],
   },
-  isSearch: {
-    type: Boolean,
+  filter: {
+    type: [Boolean, Function] as PropType<filterValue>,
     default: false,
   },
   unit: {
@@ -35,7 +35,7 @@ export const transferPanelProps = {
     type: Boolean,
     default: true,
   },
-  searching: {
+  search: {
     type: Function as PropType<(direction: TKey, data: IItem[], keyword: TKey) => void>,
   },
   direction: {
@@ -72,27 +72,31 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
   const allChecked = ref(false);
   const query = ref('');
   const bodyHeight = computed(() => `${props.height}px`);
-  const fliterData = computed(() => {
+  const filterData = computed(() => {
     return props.data.filter((item) => {
-      return item.name.toLocaleUpperCase().includes(query.value.toLocaleUpperCase());
+      if (typeof props.filter === 'function') {
+        return props.filter(item, query.value);
+      } else {
+        return item.name.toLocaleUpperCase().includes(query.value.toLocaleUpperCase());
+      }
     });
   });
   const checkableData = computed(() => {
-    return fliterData.value.filter((item) => {
+    return filterData.value.filter((item) => {
       return !item.disabled;
     });
   });
   const allNum = computed(() => {
-    return fliterData.value.length;
+    return filterData.value.length;
   });
   const checkedNum = computed(() => {
-    return fliterData.value.length ? props.defaultChecked.length : fliterData.value.length;
+    return filterData.value.length ? props.defaultChecked.length : filterData.value.length;
   });
   const allHalfchecked = computed(() => {
     if (allChecked.value) {
       return false;
     } else {
-      return !!(fliterData.value.length && props.defaultChecked.length > 0);
+      return !!(filterData.value.length && props.defaultChecked.length > 0);
     }
   });
 
@@ -131,7 +135,7 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
    */
   const updateModelValueHandle = (value: TKey) => {
     query.value = value;
-    props.searching && typeof props.searching === 'function' && props.searching(props.direction, fliterData.value, value);
+    props.search && typeof props.search === 'function' && props.search(props.direction, filterData.value, value);
   };
   /**
    * updateDataHandle: 更新数据
@@ -156,7 +160,7 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
 
   return {
     bodyHeight,
-    fliterData,
+    filterData,
     checkableData,
     allChecked,
     allHalfchecked,
