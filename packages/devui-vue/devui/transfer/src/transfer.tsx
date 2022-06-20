@@ -13,7 +13,7 @@ export default defineComponent({
     transferOperate,
   },
   props: transferProps,
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'change'],
   setup(props: TTransferProps, ctx: SetupContext) {
     const {
       sourceTitle,
@@ -40,14 +40,14 @@ export default defineComponent({
         <div class="devui-transfer">
           {ctx.slots.header && ctx.slots.header()}
           <transferPanel
-            isSearch={props.isSearch}
+            filter={props.filter}
             isKeyupSearch={props.isKeyupSearch}
             isDrag={props.isSourceDrag}
             height={props.height}
             unit={props.unit}
             placeholder={props.placeholder}
-            sortMethods={props.sourceSortMethods}
-            searching={props.searching}
+            sortMethods={props.sortMethods}
+            search={props.search}
             dragstart={props.dragstart}
             drop={props.drop}
             dragend={props.dragend}
@@ -78,14 +78,14 @@ export default defineComponent({
               toMoveSourceHandle();
             }}></transferOperate>
           <transferPanel
-            isSearch={props.isSearch}
+            filter={props.filter}
             isKeyupSearch={props.isKeyupSearch}
             isDrag={props.isTargetDrag}
             height={props.height}
             unit={props.unit}
             placeholder={props.placeholder}
-            sortMethods={props.targetSortMethods}
-            searching={props.searching}
+            sortMethods={props.sortMethods}
+            search={props.search}
             dragstart={props.dragstart}
             drop={props.drop}
             dragend={props.dragend}

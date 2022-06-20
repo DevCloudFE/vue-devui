@@ -19,7 +19,7 @@ export default defineComponent({
       allHalfchecked,
       allNum,
       checkedNum,
-      fliterData,
+      filterData,
       query,
       changeAllCheckedHandle,
       updateModelValueHandle,
@@ -39,22 +39,22 @@ export default defineComponent({
             v-slots={{
               header: ctx.slots.header,
             }}
-            searching={props.searching}
+            search={props.search}
             onChange={(value: boolean): void => {
               changeAllCheckedHandle(value);
             }}></transferHeader>
           <transferBody
             height={props.height}
-            isSearch={props.isSearch}
+            filter={props.filter}
             isKeyupSearch={props.isKeyupSearch}
             isDrag={props.isDrag}
             placeholder={props.placeholder}
             defaultChecked={props.defaultChecked}
-            searching={props.searching}
+            search={props.search}
             dragstart={props.dragstart}
             drop={props.drop}
             dragend={props.dragend}
-            data={fliterData.value}
+            data={filterData.value}
             queryString={query.value}
             onChange={(value: string[]) => {
               updateCheckedDataHandle(value);

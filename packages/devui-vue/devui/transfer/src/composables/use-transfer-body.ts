@@ -1,6 +1,6 @@
 import { PropType, ExtractPropTypes, computed, ref, watchEffect } from 'vue';
 import type { SetupContext } from 'vue';
-import { IItem, TKey, ICheckList } from '../transfer-types';
+import { IItem, TKey, ICheckList, filterValue } from '../transfer-types';
 
 export const transferBodyProps = {
   height: {
@@ -15,8 +15,8 @@ export const transferBodyProps = {
     type: Array as PropType<string[]>,
     default: () => [],
   },
-  isSearch: {
-    type: Boolean,
+  filter: {
+    type: [Boolean, Function] as PropType<filterValue>,
     default: false,
   },
   queryString: {
@@ -31,7 +31,7 @@ export const transferBodyProps = {
     type: Boolean,
     default: true,
   },
-  searching: {
+  search: {
     type: Function as PropType<(data: IItem[], keyword: TKey) => void>,
   },
   isDrag: {

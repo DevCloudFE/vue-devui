@@ -122,7 +122,7 @@ export default defineComponent({
     return () => {
       return (
         <div class="devui-transfer-panel-body">
-          {props.isSearch && renderSearch()}
+          {props.filter && renderSearch()}
           <div class="devui-transfer-panel-body-list" style={{ height: bodyHeight.value }}>
             {props.isDrag ? renderDragList() : renderList()}
           </div>
