@@ -12,7 +12,11 @@
 
 ```vue
 <template>
-  <d-virtual-list :data="data">
+  <div style="margin-bottom: 12px">
+    <d-button @click="onScorllTo" size="sm" style="margin-right: 6px;">scorll to</d-button>
+    <d-input-number v-model="num" placeholder="请输入" :min="0" :max="data.length - 1" size="sm" />
+  </div>
+  <d-virtual-list :data="data" ref="vlRef" >
     <template #item="{ value }">
       <div>children{{ value }}</div>
     </template>
@@ -29,7 +33,12 @@ export default {
         .from({ length: 5000 })
         .map((_, index) => ({ value: index }))
     );
-    return { data };
+    const num = ref(0);
+    const vlRef = ref(null);
+    const onScorllTo = () => {
+      vlRef.value.onScrollTo(num.value);
+    };
+    return { data, num, vlRef, onScorllTo };
   },
 };
 </script>
