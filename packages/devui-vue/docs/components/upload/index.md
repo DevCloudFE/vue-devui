@@ -357,7 +357,7 @@ export default {
 | on-exceed      | `function(files, uploadFiles)`    | -     | 可选，文件上传数超出限制时的钩子                                                             | [多文件上传](#多文件上传)         |
 | on-change      | `function(files, uploadFiles)`    | -     | 可选，文件状态改变时的钩子，添加文件、上传文件成功和上传文件失败时都会被调用                 | [多文件上传](#多文件上传)         |
 | on-progress    | `function(files, uploadFiles)`    | -     | 可选，文件上传时的钩子                                                                       | [任意区域上传](#任意区域上传)     |
-| on-preview     | `function(file)`                  | -     | 可选，点击文件列表中已上传的文件时的钩子                                                     | [多文件上传](#多文件上传)         |
+| on-preview     | `function(file)`                  | -     | 可选，点击文件列表中的文件时的钩子                                                           | [多文件上传](#多文件上传)         |
 | limit          | `number`                          | -     | 可选，允许上传文件的最大数量                                                                 | [多文件上传](#多文件上传)         |
 | auto-upload    | `boolean`                         | true  | 可选，是否在选取文件后立即上传                                                               | [手动上传和清空](#手动上传和清空) |
 | http-request   | `function(files)`                 | -     | 可选，覆盖默认的上传行为，files 为选择的文件对象列表                                         | -                                 |
