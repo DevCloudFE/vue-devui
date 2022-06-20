@@ -45,6 +45,7 @@ export default defineComponent({
               placeholder={placeholder.value}
               onFocus={onFocus}
               prefix="calendar"
+              size={props.size}
               v-slots={{
                 suffix: () => (
                   <Icon
