@@ -1,4 +1,4 @@
-import { Ref } from 'vue';
+import { Ref, SetupContext } from 'vue';
 import { IInnerTreeNode, IUseCore } from './use-tree-types';
 
 export interface IUseSelect {
@@ -8,7 +8,7 @@ export interface IUseSelect {
 }
 
 export default function () {
-  return function useSelect(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseSelect {
+  return function useSelect(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseSelect {
     const { setNodeValue } = core;
 
     let prevActiveNode: IInnerTreeNode;
@@ -22,11 +22,13 @@ export default function () {
       }
 
       setNodeValue(node, 'selected', true);
+      context.emit('select-change', node);
       prevActiveNode = node;
     };
 
     const deselectNode = (node: IInnerTreeNode): void => {
       setNodeValue(node, 'selected', false);
+      context.emit('select-change', node);
     };
 
     const toggleSelectNode = (node: IInnerTreeNode): void => {
