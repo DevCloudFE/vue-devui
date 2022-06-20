@@ -1,4 +1,4 @@
-import { defineComponent, provide, ref, renderSlot, toRefs, useSlots, watch } from 'vue';
+import { defineComponent, provide, ref, renderSlot, SetupContext, toRefs, useSlots, watch } from 'vue';
 import type { IInnerTreeNode, ICheckStrategy } from './composables/use-tree-types';
 import DTreeNode from './components/tree-node';
 import DTreeNodeContent from './components/tree-node-content';
@@ -18,7 +18,9 @@ import './tree.scss';
 export default defineComponent({
   name: 'DTree',
   props: treeProps,
-  setup(props: TreeProps, { slots, expose }) {
+  emits: ['toggle-change', 'check-change', 'select-change'],
+  setup(props: TreeProps, context: SetupContext) {
+    const { slots, expose } = context;
     const { data, check } = toRefs(props);
     const ns = useNamespace('tree');
 
@@ -36,7 +38,7 @@ export default defineComponent({
       userPlugins.push(useCheck(checkOptions));
     }
 
-    const treeFactory = useTree(data.value, userPlugins);
+    const treeFactory = useTree(data.value, userPlugins, context);
 
     const { setTree, getExpendedTree, toggleNode } = treeFactory;
 
