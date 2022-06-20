@@ -13,10 +13,9 @@ const monthListClass = ns.e('tbody-wrapper');
 const tableMonthClass = ns.e('table-month');
 
 const noDotNs = useNamespace('date-picker-pro', false);
-const noDotBaseClass = noDotNs.b();
 const noDotYearActiveClass = noDotNs.e('year-title-active');
 
-describe('time-picker test', () => {
+describe('date-picker-pro test', () => {
   it('date-picker-pro init render', async () => {
     const datePickerProValue = ref('');
     const wrapper = mount({
@@ -84,11 +83,14 @@ describe('time-picker test', () => {
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
 
     const date = new Date();
-    const selectIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate() + 1;
+    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
+    const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
     const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
-    expect(datePickerProValue.value?.toLocaleDateString()).toBe(`${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate() + 1}`);
+    expect(datePickerProValue.value?.toLocaleDateString()).toBe(
+      `${date.getFullYear()}/${date.getMonth() + 1}/${todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1}`
+    );
 
     const pickerPanelNew = container.find(pickerPanelClass);
     expect(pickerPanelNew.exists()).toBeFalsy();
@@ -141,14 +143,17 @@ describe('time-picker test', () => {
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
 
     const date = new Date();
-    const selectIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate() + 1;
+    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
+    const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
     const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
     const vm = wrapper.vm;
     const inputNew = vm.$el.querySelector('input');
     expect(inputNew.value).toBe(
-      `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}-${date.getDate() + 1}`
+      `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}-${
+        todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1
+      }`
     );
 
     wrapper.unmount();
@@ -179,15 +184,20 @@ describe('time-picker test', () => {
     expect(timeUl[2].element.childElementCount).toBe(60);
 
     const date = new Date();
-    const selectIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate() + 1;
+    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
+    const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
     const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
-    expect(datePickerProValue.value?.toLocaleString()).toBe(`${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate() + 1} 00:00:00`);
+    expect(datePickerProValue.value?.toLocaleString()).toBe(
+      `${date.getFullYear()}/${date.getMonth() + 1}/${todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1} 00:00:00`
+    );
 
     const liItems = timeUl[0].findAll('.time-li');
     await liItems[3].trigger('click');
-    expect(datePickerProValue.value?.toLocaleString()).toBe(`${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate() + 1} 03:00:00`);
+    expect(datePickerProValue.value?.toLocaleString()).toBe(
+      `${date.getFullYear()}/${date.getMonth() + 1}/${todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1} 03:00:00`
+    );
 
     const pickerPanelFooter = container.find(ns.e('panel-footer'));
     const button = pickerPanelFooter.find('button');
@@ -222,7 +232,8 @@ describe('time-picker test', () => {
     const pickerPanel = container.find(pickerPanelClass);
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
     const date = new Date();
-    const selectIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate() + 1;
+    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
+    const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
     const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
