@@ -55,7 +55,13 @@ export default defineComponent({
       <d-radio v-for="strategy of checkStrategy" :key="strategy" :value="strategy">{{ strategy }}</d-radio>
     </d-radio-group>
   </div>
-  <d-tree :data="data" :check="currentStrategy"></d-tree>
+  <d-tree
+    :data="data"
+    :check="currentStrategy"
+    @toggle-change="toggleChange"
+    @check-change="checkChange"
+    @select-change="selectChange"
+  ></d-tree>
 </template>
 
 <script>
@@ -103,11 +109,26 @@ export default defineComponent({
       }
     });
 
+    const toggleChange = (node) => {
+      console.log('toggleChange node:', node);
+    };
+
+    const checkChange = (node) => {
+      console.log('checkChange node:', node);
+    };
+
+    const selectChange = (node) => {
+      console.log('selectChange node:', node);
+    };
+
     return {
       data,
       openCheck,
       checkStrategy,
       currentStrategy,
+      toggleChange,
+      checkChange,
+      selectChange,
     };
   },
 });
@@ -389,17 +410,19 @@ export default defineComponent({
     const data = ref([
       ...Array.from({ length: 100 }).map((_, index) => ({
         label: 'Parent node ' + index,
-        children: index % 2 === 0 ? 
-          Array.from({ length: 10 }).map((_, index2) => ({
-            label: 'Leaf node ' + index + '-' + index2 
-          })) : undefined
-      }))
+        children:
+          index % 2 === 0
+            ? Array.from({ length: 10 }).map((_, index2) => ({
+                label: 'Leaf node ' + index + '-' + index2,
+              }))
+            : undefined,
+      })),
     ]);
 
     onMounted(() => {
       treeRef.value.treeFactory.expandAllNodes();
     });
-    
+
     return {
       data,
       treeRef,
@@ -418,6 +441,14 @@ export default defineComponent({
 | data   | [ITreeNode\[\]](#itreenode) | []     | 可选，树形结构数据     | [基本用法](#基本用法) |
 | check  | [ICheck](#icheck)           | false  | 可选，是否启用勾选功能 | [可勾选](#可勾选)     |
 
+### Tree 事件
+
+| 事件名        | 回调参数         | 说明                                        | 跳转 Demo         |
+| :------------ | :--------------- | :------------------------------------------ | :---------------- |
+| toggle-change | `Function(node)` | 节点展开/收起的回调事件，返回选中的节点对象 | [可勾选](#可勾选) |
+| check-change  | `Function(node)` | 节点勾选的回调事件，返回选中的节点对象      | [可勾选](#可勾选) |
+| select-change | `Function(node)` | 节点选中的回调事件，返回选中的节点对象      | [可勾选](#可勾选) |
+
 ### Tree 插槽
 
 | 插槽名  | 说明                |
@@ -432,7 +463,7 @@ export default defineComponent({
 | :----- | :---------------------- | :----- | :--------------------- |
 | data   | [ITreeNode](#itreenode) | []     | 可选，节点数据         |
 | check  | [ICheck](#icheck)       | false  | 可选，是否启用勾选功能 |
-| height  | `number`       | -  | 可选，设置启用虚拟滚动 |
+| height | `number`                | -      | 可选，设置启用虚拟滚动 |
 
 ### Tree 类型定义
 

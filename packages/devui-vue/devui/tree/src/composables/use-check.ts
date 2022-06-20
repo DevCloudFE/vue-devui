@@ -1,4 +1,4 @@
-import { ref, Ref } from 'vue';
+import { ref, Ref, SetupContext } from 'vue';
 import { ICheckStrategy, IInnerTreeNode, IUseCore } from './use-tree-types';
 export interface IUseCheck {
   checkNode: (node: IInnerTreeNode) => void;
@@ -8,15 +8,17 @@ export interface IUseCheck {
 export default function (
   options: Ref<{ checkStrategy: ICheckStrategy }> = ref({ checkStrategy: 'both' as ICheckStrategy })
 ) {
-  return function useCheck(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseCheck {
+  return function useCheck(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseCheck {
     const { setNodeValue, getNode, getChildren, getParent } = core;
 
     const checkNode = (node: IInnerTreeNode): void => {
       setNodeValue(node, 'checked', true);
+      context.emit('check-change', node);
     };
 
     const uncheckNode = (node: IInnerTreeNode): void => {
       setNodeValue(node, 'checked', false);
+      context.emit('check-change', node);
     };
 
     const controlParentNodeChecked = (node: IInnerTreeNode, checked: boolean): void => {
@@ -56,12 +58,14 @@ export default function (
       const checked = getNode(node).checked;
       if (checked) {
         setNodeValue(node, 'checked', false);
+        context.emit('check-change', node);
 
         if (['downward', 'both'].includes(options.value.checkStrategy)) {
           getChildren(node).forEach(item => setNodeValue(item, 'checked', false));
         }
       } else {
         setNodeValue(node, 'checked', true);
+        context.emit('check-change', node);
 
         if (['downward', 'both'].includes(options.value.checkStrategy)) {
           getChildren(node).forEach(item => setNodeValue(item, 'checked', true));

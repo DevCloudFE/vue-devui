@@ -1,5 +1,5 @@
-import { Ref } from 'vue';
-import { IInnerTreeNode, IUseCore } from '../tree-types';
+import { Ref, SetupContext } from 'vue';
+import { IInnerTreeNode, IUseCore } from './use-tree-types';
 
 export interface IUseToggle {
   expandNode: (node: IInnerTreeNode) => void;
@@ -9,27 +9,29 @@ export interface IUseToggle {
 }
 
 export default function () {
-  return function useToggle(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseToggle {
+  return function useToggle(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseToggle {
     const { getNode, setNodeValue } = core;
 
     const expandNode = (node: IInnerTreeNode): void => {
       if (node.disableToggle) { return; }
 
       setNodeValue(node, 'expanded', true);
+      context.emit('toggle-change', node);
     };
 
     const collapseNode = (node: IInnerTreeNode): void => {
       if (node.disableToggle) { return; }
       setNodeValue(node, 'expanded', false);
+      context.emit('toggle-change', node);
     };
 
     const toggleNode = (node: IInnerTreeNode): void => {
       if (node.disableToggle) { return; }
 
       if (getNode(node).expanded) {
-        setNodeValue(node, 'expanded', false);
+        collapseNode(node);
       } else {
-        setNodeValue(node, 'expanded', true);
+        expandNode(node);
       }
     };
 
