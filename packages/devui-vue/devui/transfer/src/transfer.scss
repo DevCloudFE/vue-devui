@@ -3,7 +3,7 @@
 $devui-transfer-border-color: #adb0b8;
 $devui-transfer-border-radius: 2px;
 $devui-transfer-header-height: 40px;
-$devui-transfer-header-border-line-color:#dfe1e6;
+$devui-transfer-header-border-line-color: #dfe1e6;
 $devui-transfer-body-list-item-height: 32px;
 
 .#{$devui-prefix}-transfer {
@@ -140,15 +140,6 @@ $devui-transfer-body-list-item-height: 32px;
     &-group {
       display: flex;
       flex-direction: column;
-
-      &-left .#{$devui-prefix}-btn,
-      &-right .#{$devui-prefix}-btn {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        padding: 0;
-        min-width: 36px !important;
-      }
 
       &-right {
         margin-top: 12px;

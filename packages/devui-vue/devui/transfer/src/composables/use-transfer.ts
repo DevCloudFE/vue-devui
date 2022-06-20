@@ -17,6 +17,8 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
   const targetDisabled = computed(() => {
     return sourceChecked.value.length === 0;
   });
+  const activeDirection = ref('source');
+  const activeMoveItems = ref<IItem[]>([]);
 
   /**
    * getTransferData: 处理穿梭框数据
@@ -24,8 +26,8 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
   const getTransferData = () => {
     return {
       data: (() => {
-        if (props.data && typeof props.sourceSortMethods === 'function') {
-          return props.sourceSortMethods(props.data) ?? [];
+        if (props.data && typeof props.sortMethods === 'function') {
+          return props.sortMethods(props.data) ?? [];
         }
         return props.data;
       })(),
@@ -64,6 +66,7 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
       return item.value;
     });
     ctx.emit('update:modelValue', targetValues);
+    ctx.emit('change', targetValues, activeDirection.value, activeMoveItems.value);
   };
   /**
    * toMoveTargetHandle: 源选中穿梭到目标
@@ -83,6 +86,8 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
     });
     sourceChecked.value = [];
     targetData.value = targetData.value.concat(notIncluded);
+    activeDirection.value = 'target';
+    activeMoveItems.value = notIncluded;
   };
   /**
    * toMoveSourceHandle: 目标选中穿梭到源
@@ -102,6 +107,8 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
     });
     targetChecked.value = [];
     sourceData.value = sourceData.value.concat(notIncluded);
+    activeDirection.value = 'source';
+    activeMoveItems.value = notIncluded;
   };
 
   watch(targetData, () => {

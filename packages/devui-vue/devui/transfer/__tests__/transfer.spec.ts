@@ -44,7 +44,7 @@ const SOURCE_DATA = [
     key: '福建',
     value: '福建',
     disabled: false,
-  }
+  },
 ];
 const TARGET_DATA = [
   {
@@ -71,7 +71,7 @@ const TARGET_DATA = [
     key: '重庆',
     value: '重庆',
     disabled: false,
-  }
+  },
 ];
 
 describe('d-transfer', () => {
@@ -80,7 +80,7 @@ describe('d-transfer', () => {
     const targetOption = ref(TARGET_DATA);
     const wrapper = mount({
       components: {
-        DTransfer
+        DTransfer,
       },
       template: `
                 <d-transfer
@@ -96,49 +96,46 @@ describe('d-transfer', () => {
           modelValues: ref(['成都', '绵阳']),
           titles: ref(['sourceHeader', 'targetHeader']),
           source: sourceOption,
-          target: targetOption
+          target: targetOption,
         };
-      }
+      },
     });
 
     /**
-         * 测试穿梭框源是否正确渲染 start
-        */
+     * 测试穿梭框源是否正确渲染 start
+     */
     expect(wrapper.find('.devui-transfer').exists()).toBeTruthy();
     expect(wrapper.findAll('.devui-transfer-source .devui-transfer-panel-body .devui-checkbox').length).toBe(8);
     expect(wrapper.findAll('.devui-transfer-target .devui-transfer-panel-body .devui-checkbox').length).toBe(5);
     /**
-          * 测试穿梭框源是否正确渲染 end
-        */
-
+     * 测试穿梭框源是否正确渲染 end
+     */
 
     /**
-         * 测试穿梭框源数据中disable start
-        */
+     * 测试穿梭框源数据中disable start
+     */
     const disableds = wrapper.findAll('.devui-transfer .devui-transfer-source .disabled');
     expect(disableds.length).toBe(2);
-    expect(disableds.filter(item => ['上海', '广州'].includes(item.text())).length).toBe(2);
+    expect(disableds.filter((item) => ['上海', '广州'].includes(item.text())).length).toBe(2);
     /**
-         * 测试穿梭框源数据中disable end
-        */
-
+     * 测试穿梭框源数据中disable end
+     */
 
     /**
-         * 测试穿梭框默认选中值 start
-        */
+     * 测试穿梭框默认选中值 start
+     */
     await nextTick();
     const sourceChecked = wrapper.find('.devui-transfer-source .active');
     expect(sourceChecked.text()).toBe('成都');
     const targetChecked = wrapper.find('.devui-transfer-target .active');
     expect(targetChecked.text()).toBe('绵阳');
     /**
-         * 测试穿梭框默认选中值 end
-        */
-
+     * 测试穿梭框默认选中值 end
+     */
 
     /**
-         * 测试穿梭框左右穿梭 start
-        */
+     * 测试穿梭框左右穿梭 start
+     */
     // 源按钮
     const leftButton = wrapper.find('.devui-transfer .devui-transfer-panel-operation-group-left button');
     expect(leftButton);
@@ -154,36 +151,39 @@ describe('d-transfer', () => {
     await nextTick();
     expect(rightButton.attributes('disabled')).toEqual('');
     /**
-         * 测试穿梭框左右穿梭 end
-        */
-
+     * 测试穿梭框左右穿梭 end
+     */
 
     /**
-         * 测试穿梭框左、右全选 start
-        */
+     * 测试穿梭框左、右全选 start
+     */
     // 源全选
     const sourceAllInput = wrapper.find('.devui-transfer-source .devui-transfer-panel-header-allChecked .devui-checkbox-input');
     sourceAllInput.trigger('click');
     await nextTick();
-    const newSourceAllInput = wrapper.find<HTMLInputElement>('.devui-transfer-source .devui-transfer-panel-header-allChecked .devui-checkbox-input');
+    const newSourceAllInput = wrapper.find<HTMLInputElement>(
+      '.devui-transfer-source .devui-transfer-panel-header-allChecked .devui-checkbox-input'
+    );
     expect(newSourceAllInput.element.checked).toBeTruthy();
     // 目标全选
     const targetAllInput = wrapper.find('.devui-transfer-target .devui-transfer-panel-header-allChecked .devui-checkbox-input');
     targetAllInput.trigger('click');
     await nextTick();
-    const newTargetAllInput = wrapper.find<HTMLInputElement>('.devui-transfer-target .devui-transfer-panel-header-allChecked .devui-checkbox-input');
+    const newTargetAllInput = wrapper.find<HTMLInputElement>(
+      '.devui-transfer-target .devui-transfer-panel-header-allChecked .devui-checkbox-input'
+    );
     expect(newTargetAllInput.element.checked).toBeTruthy();
     /**
-         * 测试穿梭框左、右全选 end
-        */
+     * 测试穿梭框左、右全选 end
+     */
   });
 
-  it('d-transfer searching work', async () => {
+  it('d-transfer search work', async () => {
     const sourceOption = ref(SOURCE_DATA);
     const targetOption = ref(TARGET_DATA);
     const wrapper = mount({
       components: {
-        DTransfer
+        DTransfer,
       },
       template: `
                 <d-transfer
@@ -191,7 +191,7 @@ describe('d-transfer', () => {
                     :titles="titles"
                     :sourceOption="source"
                     :targetOption="target"
-                    :isSearch="isSearch"
+                    :filter="filter"
                 >
                 </d-transfer>
             `,
@@ -201,14 +201,14 @@ describe('d-transfer', () => {
           titles: ref(['sourceHeader', 'targetHeader']),
           source: sourceOption,
           target: targetOption,
-          isSearch: ref(true)
+          filter: ref(true),
         };
-      }
+      },
     });
 
     /**
-         * 测试搜索功能 start
-        */
+     * 测试搜索功能 start
+     */
     // 源搜索功能
     expect(wrapper.find('.devui-transfer-source .devui-search').exists()).toBe(true);
     const sourceSearch = wrapper.find<HTMLInputElement>('.devui-transfer-source .devui-search input[type="text"]');
@@ -239,9 +239,8 @@ describe('d-transfer', () => {
     await nextTick();
     expect(wrapper.find<HTMLInputElement>('.devui-transfer-target .devui-search input[type="text"]').element.value).toBe('');
     /**
-         * 测试搜索功能 end
-        */
-
+     * 测试搜索功能 end
+     */
   });
 
   // it('d-transfer tooltips work', async () => {
@@ -283,7 +282,6 @@ describe('d-transfer', () => {
   //      * 测试穿梭框渲染 end
   //     */
 
-
   //     /**
   //      * 测试穿梭框tooltip start
   //     */
@@ -297,7 +295,6 @@ describe('d-transfer', () => {
   //     expect(targetTooltips.length).toBe(5)
   //     expect(sourceTooltips[0].find('.tooltip').exists()).toBe(false)
 
-
   //     const sourceBody = wrapper.find('.devui-transfer-source .devui-transfer-panel-body')
   //     const checkboxC = sourceBody.findComponent(DTooltip)
   //     const slotElement = checkboxC.find('.devui-checkbox-column-margin')
@@ -305,7 +302,6 @@ describe('d-transfer', () => {
   //     console.log(slotElement.classes())
   //     await nextTick()
   //     console.log(checkboxC.find('.tooltip'))
-
 
   //     /**
   //      * 测试穿梭框tooltip end
@@ -317,7 +313,7 @@ describe('d-transfer', () => {
     const targetOption = ref(TARGET_DATA);
     const wrapper = mount({
       components: {
-        DTransfer
+        DTransfer,
       },
       template: `
                 <d-transfer
@@ -336,11 +332,10 @@ describe('d-transfer', () => {
           titles: ref(['sourceHeader', 'targetHeader']),
           source: sourceOption,
           target: targetOption,
-          isSourceDroppable: ref(true)
+          isSourceDroppable: ref(true),
         };
-      }
+      },
     });
-
 
     // /**
     //  * 测试穿梭框拖拽排序 start
@@ -364,24 +359,24 @@ describe('d-transfer', () => {
     //  * 测试穿梭框拖拽排序 end
     // */
     /**
-         * 测试穿梭框拖拽排序 start
-        */
+     * 测试穿梭框拖拽排序 start
+     */
     const left = wrapper.find('.devui-transfer-source');
     const leftTransfer = left.findComponent({ name: 'DTransferBase' });
     const leftOption = leftTransfer.props().sourceOption;
-    const startDragItemIndex = leftOption.findIndex(item => item.value === '成都');
-    const startDropItemIndex = leftOption.findIndex(item => item.value === '上海');
+    const startDragItemIndex = leftOption.findIndex((item) => item.value === '成都');
+    const startDropItemIndex = leftOption.findIndex((item) => item.value === '上海');
     expect(startDragItemIndex).toBe(4);
     expect(startDropItemIndex).toBe(1);
     leftTransfer.props().onDragend(leftOption[startDragItemIndex], leftOption[startDropItemIndex]);
     await nextTick();
-    const endDragItemIndex = leftOption.findIndex(item => item.value === '成都');
-    const endDropItemIndex = leftOption.findIndex(item => item.value === '上海');
+    const endDragItemIndex = leftOption.findIndex((item) => item.value === '成都');
+    const endDropItemIndex = leftOption.findIndex((item) => item.value === '上海');
     expect(endDragItemIndex).toBe(1);
     expect(endDropItemIndex).toBe(4);
     /**
-         * 测试穿梭框拖拽排序 end
-        */
+     * 测试穿梭框拖拽排序 end
+     */
   });
 
   it('d-transfer target drag work', async () => {
@@ -389,7 +384,7 @@ describe('d-transfer', () => {
     const targetOption = ref(TARGET_DATA);
     const wrapper = mount({
       components: {
-        DTransfer
+        DTransfer,
       },
       template: `
                 <d-transfer
@@ -408,30 +403,29 @@ describe('d-transfer', () => {
           titles: ref(['sourceHeader', 'targetHeader']),
           source: sourceOption,
           target: targetOption,
-          isSourceDroppable: ref(true)
+          isSourceDroppable: ref(true),
         };
-      }
+      },
     });
 
-
     /**
-         * 测试穿梭框拖拽排序 start
-        */
+     * 测试穿梭框拖拽排序 start
+     */
     const transfer = wrapper.findComponent({ name: 'DTransfer' });
     const rightTransfer = wrapper.find('.devui-transfer-target').findComponent({ name: 'DTransferBase' });
     const rightOption = transfer.props().targetOption;
-    const startDragItemIndex = rightOption.findIndex(item => item.value === '大连');
-    const startDropItemIndex = rightOption.findIndex(item => item.value === '广元');
+    const startDragItemIndex = rightOption.findIndex((item) => item.value === '大连');
+    const startDropItemIndex = rightOption.findIndex((item) => item.value === '广元');
     expect(startDragItemIndex).toBe(3);
     expect(startDropItemIndex).toBe(1);
     rightTransfer.props().onDragend(rightOption[startDragItemIndex], rightOption[startDropItemIndex]);
     await nextTick();
-    const endDragItemIndex = rightOption.findIndex(item => item.value === '大连');
-    const endDropItemIndex = rightOption.findIndex(item => item.value === '广元');
+    const endDragItemIndex = rightOption.findIndex((item) => item.value === '大连');
+    const endDropItemIndex = rightOption.findIndex((item) => item.value === '广元');
     expect(endDragItemIndex).toBe(3);
     expect(endDropItemIndex).toBe(1);
     /**
-         * 测试穿梭框拖拽排序 end
-        */
+     * 测试穿梭框拖拽排序 end
+     */
   });
 });
