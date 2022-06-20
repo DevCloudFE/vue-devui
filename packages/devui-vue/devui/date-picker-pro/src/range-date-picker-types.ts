@@ -1,5 +1,6 @@
 import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
 import type { Dayjs } from 'dayjs';
+import type { InputSize } from '../../input/src/input-types';
 
 export const rangeDatePickerProProps = {
   modelValue: {
@@ -21,6 +22,10 @@ export const rangeDatePickerProProps = {
   separator: {
     type: String,
     default: '-',
+  },
+  size: {
+    type: String as PropType<InputSize>,
+    default: 'md',
   },
 } as const;
 
