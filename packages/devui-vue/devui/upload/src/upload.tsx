@@ -37,6 +37,7 @@ export default defineComponent({
     const { fileUploaders, addFile, getFullFiles, deleteFile, upload, resetSameNameFiles, removeFiles, _oneTimeUpload, getSameNameFiles } =
       useUpload();
     const isDropOver = ref(false);
+    const selectedFiles = ref<File[]>([]);
     const alertMsg = (errorMsg?: string) => {
       NotificationService.open({
         type: 'warning',
@@ -112,6 +113,7 @@ export default defineComponent({
           return;
         }
         const uploadObservable: Promise<IFileResponse[]> = oneTimeUpload.value ? _oneTimeUpload() : upload(fileUploader);
+        props.onProgress && props.onProgress(selectedFiles.value, modelValue.value);
         uploadObservable
           ?.then((results: IFileResponse[]) => {
             props.onSuccess && props.onSuccess(results);
@@ -151,10 +153,10 @@ export default defineComponent({
           if (uploadOptions?.value && uploadOptions.value.checkSameName && sameNameFiles.length) {
             alertMsg(getExistSameNameFilesMsg(sameNameFiles));
           }
-          const selectedFiles = fileUploaders.value
+          selectedFiles.value = fileUploaders.value
             .filter((fileUploader) => fileUploader.status === UploadStatus.preLoad)
             .map((fileUploader) => fileUploader.file);
-          ctx.emit('fileSelect', selectedFiles);
+          ctx.emit('fileSelect', selectedFiles.value);
           if (autoUpload.value) {
             fileUpload();
           }
@@ -193,6 +195,11 @@ export default defineComponent({
       });
     };
 
+    const clickSelectedFile = (event: Event, file: File) => {
+      event?.stopPropagation();
+      props.onPreview && props.onPreview(file);
+    };
+
     ctx.expose({ submit, clearFiles });
 
     return () => (
@@ -213,7 +220,8 @@ export default defineComponent({
                       key={index}
                       class={[ns.e('file-item'), ns.e('file-tag')]}
                       style="display: inline-block; margin: 0 2px 2px 0"
-                      title={fileUploader.file.name}>
+                      title={fileUploader.file.name}
+                      onClick={(event: Event) => clickSelectedFile(event, fileUploader.file)}>
                       <span class={[ns.e('filename'), fileUploader.status === UploadStatus.failed ? ns.m('failed-color') : '']}>
                         {fileUploader.file.name}
                       </span>

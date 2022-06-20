@@ -50,6 +50,7 @@ export default {
     :limit="2"
     :on-exceed="handleExceed"
     :on-change="handleChange"
+    :on-preview="onPreview"
   />
 </template>
 <script>
@@ -70,11 +71,16 @@ export default {
       console.log('onChange：', files);
       console.log('onChange：', uploadFiles);
     };
+
+    const onPreview = (file) => {
+      console.log('previewFile: ', file);
+    };
     return {
       uploadedFiles,
       uploadOptions,
       handleExceed,
       handleChange,
+      onPreview,
     };
   },
 };
@@ -201,6 +207,7 @@ export default {
     droppable
     :on-success="onSuccess"
     :on-error="onError"
+    :on-progress="onProgress"
     :before-upload="beforeUpload"
     @file-over="fileOver"
     @file-drop="fileDrop"
@@ -266,6 +273,11 @@ export default {
       console.log(error);
     };
 
+    const onProgress = (selectFile, uploadedFiles) => {
+      console.log('selectFile: ', selectFile);
+      console.log('uploadedFiles: ', uploadedFiles);
+    };
+
     const fileOver = (fileInfo) => {
       console.log('fileInfo:', fileInfo);
     };
@@ -295,6 +307,7 @@ export default {
       beforeUpload,
       onSuccess,
       onError,
+      onProgress,
       fileOver,
       fileDrop,
       fileSelect,
@@ -343,6 +356,8 @@ export default {
 | on-error       | `function({file, response})`      | -     | 可选，文件上传失败时的钩子                                                                   | [任意区域上传](#任意区域上传)     |
 | on-exceed      | `function(files, uploadFiles)`    | -     | 可选，文件上传数超出限制时的钩子                                                             | [多文件上传](#多文件上传)         |
 | on-change      | `function(files, uploadFiles)`    | -     | 可选，文件状态改变时的钩子，添加文件、上传文件成功和上传文件失败时都会被调用                 | [多文件上传](#多文件上传)         |
+| on-progress    | `function(files, uploadFiles)`    | -     | 可选，文件上传时的钩子                                                                       | [任意区域上传](#任意区域上传)     |
+| on-preview     | `function(file)`                  | -     | 可选，点击文件列表中已上传的文件时的钩子                                                     | [多文件上传](#多文件上传)         |
 | limit          | `number`                          | -     | 可选，允许上传文件的最大数量                                                                 | [多文件上传](#多文件上传)         |
 | auto-upload    | `boolean`                         | true  | 可选，是否在选取文件后立即上传                                                               | [手动上传和清空](#手动上传和清空) |
 | http-request   | `function(files)`                 | -     | 可选，覆盖默认的上传行为，files 为选择的文件对象列表                                         | -                                 |
