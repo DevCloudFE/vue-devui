@@ -1,6 +1,7 @@
 import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
 import type { Dayjs } from 'dayjs';
 import { ArrType } from '../../time-picker/src/types';
+import type { InputSize } from '../../input/src/input-types';
 
 export const datePickerProProps = {
   modelValue: {
@@ -18,6 +19,10 @@ export const datePickerProProps = {
   showTime: {
     type: Boolean,
     default: false,
+  },
+  size: {
+    type: String as PropType<InputSize>,
+    default: 'md',
   },
 } as const;
 
