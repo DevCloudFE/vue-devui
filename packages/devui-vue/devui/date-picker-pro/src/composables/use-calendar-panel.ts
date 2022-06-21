@@ -1,4 +1,4 @@
-import { ref, onBeforeMount, nextTick } from 'vue';
+import { ref, onBeforeMount, nextTick, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { DAY_DURATION, yearItemHeight, calendarItemHeight } from '../const';
 import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
@@ -298,6 +298,14 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     return date.toDateString() === rangeSelectDate.value[1]?.toDate()?.toDateString();
   };
+
+  watch(
+    () => props.dateValue,
+    () => {
+      initCalendarShow();
+    },
+    { deep: true }
+  );
 
   return {
     yearScrollRef,

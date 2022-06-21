@@ -1,4 +1,4 @@
-import { defineComponent, Transition, ref } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots } from 'vue';
 import type { SetupContext } from 'vue';
 import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types';
 import usePickerPro from './use-picker-pro';
@@ -22,6 +22,7 @@ export default defineComponent({
       overlayRef,
       placeholder,
       isPanelShow,
+      format,
       dateValue,
       displayDateValue,
       isMouseEnter,
@@ -32,6 +33,9 @@ export default defineComponent({
     } = usePickerPro(props, ctx);
     const position = ref(['bottom-start']);
     return () => {
+      const vSlots = {
+        shortcutOptions: ctx.slots?.shortcutOptions && (() => renderSlot(useSlots(), 'shortcutOptions')),
+      };
       return (
         <div class={ns.b()} ref={containerRef}>
           <div
@@ -61,9 +65,10 @@ export default defineComponent({
               <DatePickerProPanel
                 dateValue={dateValue.value}
                 visible={isPanelShow.value}
-                format={props.format}
+                format={format.value}
                 showTime={props.showTime}
-                onSelectedDate={onSelectedDate}></DatePickerProPanel>
+                onSelectedDate={onSelectedDate}
+                v-slots={vSlots}></DatePickerProPanel>
             </FlexibleOverlay>
           </Transition>
         </div>
