@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import DTable from '../src/table';
 import DColumn from '../src/components/column/column';
+import { Button } from '../../button';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { nextTick, ref } from 'vue';
 
@@ -8,7 +9,6 @@ let data: Array<Record<string, any>> = [];
 const ns = useNamespace('table', true);
 const noDotNs = useNamespace('table');
 const flexibleOverlayNs = useNamespace('flexible-overlay', true);
-const tooltipNs = useNamespace('tooltip', true);
 
 describe('d-table', () => {
   beforeEach(() => {
@@ -278,7 +278,7 @@ describe('d-table', () => {
     const lastTd = tableBody.find('tr').findAll('td')[3];
     expect(lastTd.text()).toBe('1990/01/11');
 
-    const sortIcon = lastTh.find('.sort-clickable');
+    const sortIcon = lastTh.find(ns.e('sort-clickable'));
     await sortIcon.trigger('click');
     expect(lastTd.text()).toBe('1990/01/14');
     expect(handleSortChange).toBeCalled();
@@ -416,5 +416,75 @@ describe('d-table', () => {
     await nextTick();
     expect(wrapper.find(ns.e('thead')).exists()).toBeFalsy();
     wrapper.unmount();
+  });
+
+  it('table method test work', async () => {
+    const wrapper = mount({
+      setup() {
+        const tableRef = ref();
+        const checkedRows = ref([]);
+        const getCheckedRow = () => {
+          checkedRows.value = tableRef.value.store.getCheckedRows();
+        };
+        const toggleRowSelection = () => {
+          tableRef.value.store.toggleRowSelection(data[1]);
+          checkedRows.value = tableRef.value.store.getCheckedRows();
+        };
+        const toggleRowExpansion = () => {
+          tableRef.value.store.toggleRowExpansion(data[2]);
+        };
+        const checkable = (row) => {
+          return row.lastName.endsWith('n');
+        };
+        return () => (
+          <div>
+            <Button onClick={getCheckedRow} class="mr-m mb-m">
+              Get CheckedRows
+            </Button>
+            <Button onClick={toggleRowSelection} class="mr-m mb-m">
+              toggleRowSelection
+            </Button>
+            <Button onClick={toggleRowExpansion} class="mr-m mb-m">
+              toggleRowExpansion
+            </Button>
+            <DTable ref={tableRef} data={data} row-key="firstName" trackBy={(item) => item.firstName} expand-row-keys={['Jacob', 'Mark']}>
+              <DColumn type="expand"></DColumn>
+              <DColumn type="checkable" width="40" checkable={checkable} reserve-check></DColumn>
+              <DColumn field="firstName" header="First Name"></DColumn>
+              <DColumn field="lastName" header="Last Name"></DColumn>
+              <DColumn field="gender" header="Gender"></DColumn>
+              <DColumn field="date" header="Date of birth"></DColumn>
+            </DTable>
+            <p>{checkedRows.value.length}</p>
+          </div>
+        );
+      },
+    });
+
+    await nextTick();
+
+    // getCheckedRows
+    const p = wrapper.find('p');
+    expect(p.element.textContent).toBe('0');
+    const buttons = wrapper.findAll('button');
+    await buttons[0].trigger('click');
+    await nextTick();
+    expect(p.element.textContent).toBe('2');
+
+    // toggleRowSelection
+    await buttons[1].trigger('click');
+    expect(p.element.textContent).toBe('3');
+    await buttons[1].trigger('click');
+    expect(p.element.textContent).toBe('2');
+
+    // toggleRowExpansion
+    let expandedList = wrapper.findAll('.expanded');
+    expect(expandedList.length).toBe(2);
+    await buttons[2].trigger('click');
+    expandedList = wrapper.findAll('.expanded');
+    expect(expandedList.length).toBe(3);
+    await buttons[2].trigger('click');
+    expandedList = wrapper.findAll('.expanded');
+    expect(expandedList.length).toBe(2);
   });
 });
