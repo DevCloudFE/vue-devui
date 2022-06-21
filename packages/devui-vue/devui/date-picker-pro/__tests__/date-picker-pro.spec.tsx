@@ -15,6 +15,8 @@ const tableMonthClass = ns.e('table-month');
 const noDotNs = useNamespace('date-picker-pro', false);
 const noDotYearActiveClass = noDotNs.e('year-title-active');
 
+const inputNs = useNamespace('input', true);
+
 describe('date-picker-pro test', () => {
   it('date-picker-pro init render', async () => {
     const datePickerProValue = ref('');
@@ -266,6 +268,20 @@ describe('date-picker-pro test', () => {
     await icon.trigger('click');
     const inputNew = vm.$el.querySelector('input');
     expect(inputNew.value).toBe('');
+
+    wrapper.unmount();
+  });
+
+  it('date-picker-pro size test', async () => {
+    const datePickerProValue = ref<Date | string>('');
+    const wrapper = mount({
+      setup() {
+        return () => <DDatePickerPro v-model={datePickerProValue.value} size="lg"></DDatePickerPro>;
+      },
+    });
+    const container = wrapper.find(baseClass);
+    const input = container.find(inputNs.m('lg'));
+    expect(input.exists()).toBeTruthy();
 
     wrapper.unmount();
   });
