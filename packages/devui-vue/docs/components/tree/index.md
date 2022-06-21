@@ -61,6 +61,7 @@ export default defineComponent({
     @toggle-change="toggleChange"
     @check-change="checkChange"
     @select-change="selectChange"
+    @node-click="nodeClick"
   ></d-tree>
 </template>
 
@@ -121,6 +122,10 @@ export default defineComponent({
       console.log('selectChange node:', node);
     };
 
+    const nodeClick = (node) => {
+      console.log('nodeClick node:', node);
+    };
+
     return {
       data,
       openCheck,
@@ -129,6 +134,7 @@ export default defineComponent({
       toggleChange,
       checkChange,
       selectChange,
+      nodeClick,
     };
   },
 });
@@ -448,6 +454,7 @@ export default defineComponent({
 | toggle-change | `Function(node)` | 节点展开/收起的回调事件，返回选中的节点对象 | [可勾选](#可勾选) |
 | check-change  | `Function(node)` | 节点勾选的回调事件，返回选中的节点对象      | [可勾选](#可勾选) |
 | select-change | `Function(node)` | 节点选中的回调事件，返回选中的节点对象      | [可勾选](#可勾选) |
+| node-click    | `Function(node)` | 节点点击事件，返回点击的节点对象            | [可勾选](#可勾选) |
 
 ### Tree 插槽
 
