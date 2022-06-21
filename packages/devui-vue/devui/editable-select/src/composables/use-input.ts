@@ -10,7 +10,6 @@ export const useInput = (inputValue: Ref<string>, ctx: SetupContext): userInputR
   const handleInput = (event: Event) => {
     const value = (event.target as HTMLInputElement).value;
     inputValue.value = value;
-    ctx.emit('update:modelValue', value);
     onInputChange(value);
   };
 

@@ -12,7 +12,18 @@
 
 ```vue
 <template>
-  <d-date-picker-pro v-model="datePickerProValue" class="mb20 wh250" />
+  <div class="picker-pro-format-demo mr30">
+    <div class="mb10">Small</div>
+    <d-date-picker-pro v-model="datePickerProValue" class="mb20 wh250" size="sm" />
+  </div>
+  <div class="picker-pro-format-demo mr30">
+    <div class="mb10">Middle</div>
+    <d-date-picker-pro v-model="datePickerProValue2" class="mb20 wh250" />
+  </div>
+  <div class="picker-pro-format-demo mr30">
+    <div class="mb10">Large</div>
+    <d-date-picker-pro v-model="datePickerProValue3" class="mb20 wh250" size="lg" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -21,9 +32,13 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const datePickerProValue = ref<string>('');
+    const datePickerProValue2 = ref<string>('');
+    const datePickerProValue3 = ref<string>('');
 
     return {
       datePickerProValue,
+      datePickerProValue2,
+      datePickerProValue3,
     };
   },
 });
@@ -78,7 +93,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div class="picker-pro-format-demo  mr30">
+  <div class="picker-pro-format-demo mr30">
     <div class="mb10">日期格式： YYYY-MM-DD</div>
     <d-date-picker-pro v-model="pickerProFormatValue" class="mb20 wh250" format="YYYY-MM-DD" />
   </div>
@@ -157,6 +172,7 @@ export default defineComponent({
 | format      | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式) |
 | placeholder | `string`          | '请选择日期'                          | 可选，输入框的 placeholder                               | [基本用法](#基本用法) |
 | showTime    | `boolean`         | false                                 | 可选，是否显示时分秒                                     | [显示时间](#显示时间) |
+| size        | `string`          | 'md'                                  | 可选，输入框的尺寸                                       | [基本用法](#基本用法) |
 
 ### DatePickerPro 事件
 
@@ -201,6 +217,7 @@ type Format = string;
 | format      | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)     |
 | placeholder | `Array`           | ['请选择日期', '请选择日期']          | 可选，输入框的 placeholder                               | [范围选择器](#范围选择器) |
 | showTime    | `boolean`         | false                                 | 可选，是否显示时分秒                                     | [范围选择器](#范围选择器) |
+| size        | `string`          | 'md'                                  | 可选，输入框的尺寸                                       |                           |
 
 ### RangeDatePickerPro 事件
 

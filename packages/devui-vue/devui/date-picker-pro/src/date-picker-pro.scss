@@ -1,6 +1,8 @@
 @import '../../styles-var/devui-var.scss';
 
+$input-height-sm: 26px;
 $input-height-md: 28px;
+$input-height-lg: 46px;
 
 .#{$devui-prefix}-date-picker-pro {
   display: inline-block;
@@ -283,7 +285,7 @@ $input-height-md: 28px;
     width: 400px;
   }
 
-  .#{$devui-prefix}-range-date-picker-pro__ranger-picker {
+  .#{$devui-prefix}-range-date-picker-pro__range-picker {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -300,12 +302,24 @@ $input-height-md: 28px;
       border-color: $devui-form-control-line-hover;
     }
 
+    .#{$devui-prefix}-range-date-picker-pro__input {
+      flex: 1 1;
+    }
+
     .#{$devui-prefix}-input {
       display: inline-block;
       height: calc($input-height-md - 2px);
 
       &__wrapper {
         border: none;
+      }
+
+      &.#{$devui-prefix}-input--sm {
+        height: calc($input-height-sm - 2px);
+      }
+
+      &.#{$devui-prefix}-input--lg {
+        height: calc($input-height-lg - 2px);
       }
     }
 
@@ -334,6 +348,16 @@ $input-height-md: 28px;
 
     .#{$devui-prefix}-range-date-picker-pro--icon-hidden {
       visibility: hidden;
+    }
+  }
+
+  &--open {
+    .#{$devui-prefix}-range-date-picker-pro__range-picker {
+      border-color: $devui-form-control-line-active;
+
+      &:hover {
+        border-color: $devui-form-control-line-active;
+      }
     }
   }
 }

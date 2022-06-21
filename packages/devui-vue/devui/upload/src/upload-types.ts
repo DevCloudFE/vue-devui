@@ -127,6 +127,14 @@ export const uploadProps = {
     type: Function as PropType<(files: File[], uploadFiles: File[]) => void>,
     default: undefined,
   },
+  onProgress: {
+    type: Function as PropType<(files: File[], uploadFiles: File[]) => void>,
+    default: undefined,
+  },
+  onPreview: {
+    type: Function as PropType<(file: File) => void>,
+    default: undefined,
+  },
   oneTimeUpload: {
     type: Boolean,
     default: false,

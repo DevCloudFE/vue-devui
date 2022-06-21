@@ -38,13 +38,15 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width')]} ref={containerRef}>
+        <div
+          class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width'), isPanelShow.value && ns.m('open')]}
+          ref={containerRef}>
           <div
-            class={ns.e('ranger-picker')}
+            class={ns.e('range-picker')}
             ref={originRef}
             onmouseover={() => (isMouseEnter.value = true)}
             onmouseout={() => (isMouseEnter.value = false)}>
-            <span class={isPanelShow.value && focusType.value === 'start' ? ns.e('active-input') : ns.e('normal-input')}>
+            <span class={[isPanelShow.value && focusType.value === 'start' ? ns.e('active-input') : ns.e('normal-input'), ns.e('input')]}>
               <Input
                 ref={startInputRef}
                 modelValue={displayDateValue.value[0]}
@@ -53,12 +55,13 @@ export default defineComponent({
                   e.stopPropagation();
                   onFocus('start');
                 }}
+                size={props.size}
                 prefix="calendar"
               />
             </span>
 
             <span class={ns.e('separator')}>{props.separator}</span>
-            <span class={isPanelShow.value && focusType.value === 'end' ? ns.e('active-input') : ns.e('normal-input')}>
+            <span class={[isPanelShow.value && focusType.value === 'end' ? ns.e('active-input') : ns.e('normal-input'), ns.e('input')]}>
               <Input
                 ref={endInputRef}
                 modelValue={displayDateValue.value[1]}
@@ -67,6 +70,7 @@ export default defineComponent({
                   e.stopPropagation();
                   onFocus('end');
                 }}
+                size={props.size}
                 v-slots={{
                   suffix: () => (
                     <Icon
@@ -79,7 +83,7 @@ export default defineComponent({
             </span>
           </div>
           <Transition name="fade">
-            <FlexibleOverlay v-model={isPanelShow.value} ref={overlayRef} origin={originRef.value} position={position.value}>
+            <FlexibleOverlay v-model={isPanelShow.value} ref={overlayRef} origin={originRef.value} align="start" position={position.value}>
               <DatePickerProPanel
                 dateValue={dateValue.value}
                 visible={isPanelShow.value}

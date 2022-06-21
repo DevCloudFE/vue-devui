@@ -182,7 +182,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
   };
 
-  const handlerSetRangerDate = (day: CalendarDateItem) => {
+  const handlerSetRangeDate = (day: CalendarDateItem) => {
     if (props.focusType === 'start') {
       rangeSelectDate.value[0] = dayjs(new Date(day.date.setHours(0, 0, 0))).locale('zh-cn');
     } else if (props.focusType === 'end') {
@@ -197,7 +197,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     selectDate.value = dayjs(new Date(day.date.setHours(0, 0, 0))).locale('zh-cn');
     if (props.isRangeType) {
-      handlerSetRangerDate(day);
+      handlerSetRangeDate(day);
     }
     if (props.isRangeType && !props.showTime) {
       if (props.focusType === 'start') {

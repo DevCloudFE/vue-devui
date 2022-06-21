@@ -253,4 +253,53 @@ describe('upload', () => {
     await nextTick();
     expect(wrapper.find(dotProgressClass).exists()).toBe(true);
   });
+  it('should work with `on-progress on-preview` hooks', async () => {
+    const onProgress = jest.fn();
+    const onPreview = jest.fn();
+
+    const TestComponent = {
+      components: {
+        'd-upload': DUpload,
+      },
+      template: `
+        <div>
+          <d-upload v-model="uploadedFiles" :upload-options="uploadOptions" :on-progress="onProgress" :on-preview="onPreview" />
+        </div>
+        `,
+      setup() {
+        const uploadedFiles = ref([]);
+        const uploadOptions = ref({
+          uri: 'https://run.mocky.io/v3/132b3ea3-23ea-436b-aed4-c43ef9d116f0',
+        });
+
+        return {
+          uploadedFiles,
+          uploadOptions,
+          onProgress,
+          onPreview,
+        };
+      },
+    };
+    const wrapper = mount(TestComponent);
+    const uploadElment = wrapper.find(dotInputGroupClass);
+    await uploadElment.trigger('click');
+    await nextTick();
+    const input = document.getElementById('d-upload-temp');
+    const fileList = [
+      new File(['test'], 'file1.txt', {
+        type: 'text/plain',
+        lastModified: Date.now(),
+      }),
+    ];
+    getMockFile(input, fileList);
+    const evt = new Event('change');
+    await input.dispatchEvent(evt);
+    await nextTick();
+    expect(onProgress).toHaveBeenCalled();
+
+    const uploadedFile = wrapper.find('li');
+    await uploadedFile.trigger('click');
+    await nextTick();
+    expect(onPreview).toHaveBeenCalled();
+  });
 });
