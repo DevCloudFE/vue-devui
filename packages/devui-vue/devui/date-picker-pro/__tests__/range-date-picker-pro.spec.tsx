@@ -14,6 +14,8 @@ const tableMonthClass = datePickerNs.e('table-month');
 const noDotDatePickerNs = useNamespace('date-picker-pro', false);
 const noDotYearActiveClass = noDotDatePickerNs.e('year-title-active');
 
+const inputNs = useNamespace('input', true);
+
 describe('range-date-picker-pro test', () => {
   it('range-date-picker-pro init render', async () => {
     const datePickerProValue = ref(['', '']);
@@ -206,7 +208,7 @@ describe('range-date-picker-pro test', () => {
     );
     expect(inputs[1].value).toBe('');
 
-    const rangePicker = container.find(rangeDatePickerNs.e('ranger-picker'));
+    const rangePicker = container.find(rangeDatePickerNs.e('range-picker'));
     await rangePicker.trigger('mouseover');
     const icon = rangePicker.find(rangeDatePickerNs.m('icon-visible'));
     expect(icon.exists()).toBeTruthy();
@@ -214,6 +216,22 @@ describe('range-date-picker-pro test', () => {
     const inputNews = vm.$el.querySelectorAll('input');
     expect(inputNews[0].value).toBe('');
     expect(inputNews[1].value).toBe('');
+
+    wrapper.unmount();
+  });
+
+  it('range-date-picker-pro size test', async () => {
+    const datePickerProValue = ref<(Date | string)[]>(['', '']);
+    const wrapper = mount({
+      setup() {
+        return () => <DRangeDatePickerPro v-model={datePickerProValue.value} size="lg"></DRangeDatePickerPro>;
+      },
+    });
+    const container = wrapper.find(baseClass);
+    const inputs = container.findAll(inputNs.m('lg'));
+    expect(inputs.length).toBe(2);
+    expect(inputs[0].exists()).toBeTruthy();
+    expect(inputs[1].exists()).toBeTruthy();
 
     wrapper.unmount();
   });
