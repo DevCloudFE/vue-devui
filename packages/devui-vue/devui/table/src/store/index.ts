@@ -1,9 +1,9 @@
+import { isBoolean } from '../../../shared/utils';
 import { watch, Ref, ref, computed, unref, ComponentInternalInstance } from 'vue';
 import { Column, SortMethod, SortDirection } from '../components/column/column-types';
 import { DefaultRow, ITable } from '../table-types';
 import { TableStore } from './store-types';
 import { useExpand } from './use-expand';
-
 
 function replaceColumn(array: any[], column: any) {
   return array.map((item) => {
@@ -72,12 +72,11 @@ function createColumnGenerator() {
     insertColumn,
     removeColumn,
     sortColumn,
-    updateColumns
+    updateColumns,
   };
 }
 
-
-function createSelection<T>(dataSource: Ref<T[]>, trackBy: (item: T, index: number) => string) {
+function createSelection<T>(dataSource: Ref<T[]>, trackBy: (item: T, index?: number | undefined) => string) {
   const _checkSet: Ref<Set<string>> = ref(new Set());
 
   const checkRow = (toggle: boolean, row: T, index: number) => {
@@ -85,6 +84,32 @@ function createSelection<T>(dataSource: Ref<T[]>, trackBy: (item: T, index: numb
       _checkSet.value.add(trackBy(row, index));
     } else {
       _checkSet.value.delete(trackBy(row, index));
+    }
+  };
+
+  const toggleRowSelection = (row: T, checked?: boolean, index?: number) => {
+    const isIncluded = _checkSet.value.has(trackBy(row, index));
+
+    const addRow = () => {
+      _checkSet.value.add(trackBy(row, index));
+    };
+
+    const deleteRow = () => {
+      _checkSet.value.delete(trackBy(row, index));
+    };
+
+    if (isBoolean(checked)) {
+      if (checked && !isIncluded) {
+        addRow();
+      } else if (!checked && isIncluded) {
+        deleteRow();
+      }
+    } else {
+      if (isIncluded) {
+        deleteRow();
+      } else {
+        addRow();
+      }
     }
   };
 
@@ -140,6 +165,7 @@ function createSelection<T>(dataSource: Ref<T[]>, trackBy: (item: T, index: numb
     getCheckedRows,
     checkRow,
     isRowChecked,
+    toggleRowSelection,
   };
 }
 
@@ -176,7 +202,7 @@ export function createStore<T>(dataSource: Ref<T[]>, table: ITable<DefaultRow>):
   const _data: Ref<T[]> = ref([]);
   const { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
 
-  const { _checkAll, _checkSet, _halfChecked, getCheckedRows, isRowChecked, checkRow } = createSelection(
+  const { _checkAll, _checkSet, _halfChecked, getCheckedRows, isRowChecked, checkRow, toggleRowSelection } = createSelection(
     _data,
     table.props.trackBy as (v: T) => string
   );
@@ -218,5 +244,6 @@ export function createStore<T>(dataSource: Ref<T[]>, table: ITable<DefaultRow>):
     isRowExpanded,
     setExpandRows,
     toggleRowExpansion,
+    toggleRowSelection,
   };
 }

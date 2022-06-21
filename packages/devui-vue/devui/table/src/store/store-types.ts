@@ -47,6 +47,8 @@ export interface TableStore<T = Record<string, any>> {
   toggleRowExpansion(row: T): void;
   isRowExpanded(row: T): boolean;
   setExpandRows: (rowKeys: string[]) => void;
+  // 设置行选中状态
+  toggleRowSelection: (row: T) => void;
 }
 
 export interface UseExpand {
