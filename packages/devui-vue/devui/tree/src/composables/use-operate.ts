@@ -1,11 +1,5 @@
 import { Ref } from 'vue';
-import { IInnerTreeNode, ITreeNode, IUseCore } from './use-tree-types';
-
-export interface IUseOperate {
-  insertBefore: (parentNode: ITreeNode, node: ITreeNode, referenceNode: ITreeNode,) => void;
-  removeNode: (node: ITreeNode) => void;
-  editNode: (node: IInnerTreeNode, label: string) => void;
-}
+import { IInnerTreeNode, ITreeNode, IUseCore, IUseOperate } from './use-tree-types';
 
 export default function () {
   return function useOperate(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseOperate {
