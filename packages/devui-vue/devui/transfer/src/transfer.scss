@@ -1,9 +1,6 @@
 @import '../../styles-var/devui-var.scss';
 
-$devui-transfer-border-color: #adb0b8;
-$devui-transfer-border-radius: 2px;
 $devui-transfer-header-height: 40px;
-$devui-transfer-header-border-line-color: #dfe1e6;
 $devui-transfer-body-list-item-height: 32px;
 
 .#{$devui-prefix}-transfer {
@@ -11,15 +8,15 @@ $devui-transfer-body-list-item-height: 32px;
 
   &__panel {
     width: 300px;
-    border: 1px solid $devui-transfer-border-color;
-    border-radius: $devui-transfer-border-radius;
+    border: 1px solid $devui-line;
+    border-radius: $devui-border-radius;
 
     &--header {
       display: flex;
       justify-content: space-between;
       height: $devui-transfer-header-height;
       line-height: $devui-transfer-header-height;
-      border-bottom: 1px solid$devui-transfer-header-border-line-color;
+      border-bottom: 1px solid $devui-line;
       padding: 0 16px;
 
       &-allChecked {
@@ -65,7 +62,7 @@ $devui-transfer-body-list-item-height: 32px;
 
         &-group > div > div:hover,
         &-item:hover {
-          background-color: $devui-transfer-header-border-line-color;
+          background-color: $devui-line;
         }
 
         &-item {
