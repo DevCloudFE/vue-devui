@@ -1,10 +1,6 @@
 import { ref, Ref, SetupContext } from 'vue';
-import { ICheckStrategy, IInnerTreeNode, IUseCore } from './use-tree-types';
-export interface IUseCheck {
-  checkNode: (node: IInnerTreeNode) => void;
-  uncheckNode: (node: IInnerTreeNode) => void;
-  toggleCheckNode: (node: IInnerTreeNode) => void;
-}
+import { ICheckStrategy, IInnerTreeNode, IUseCore, IUseCheck } from './use-tree-types';
+
 export default function (
   options: Ref<{ checkStrategy: ICheckStrategy }> = ref({ checkStrategy: 'both' as ICheckStrategy })
 ) {
@@ -77,10 +73,15 @@ export default function (
       }
     };
 
+    const getCheckedNodes = () => {
+      return data.value.filter(node => node.checked);
+    };
+
     return {
       checkNode,
       uncheckNode,
       toggleCheckNode,
+      getCheckedNodes,
     };
   };
 }
