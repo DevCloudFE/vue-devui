@@ -13,7 +13,7 @@
 ```vue
 <template>
   <div style="margin-bottom: 12px">
-    <d-button @click="onScorllTo" size="sm" style="margin-right: 6px;">scorll to</d-button>
+    <d-button @click="onScrollTo" size="sm" style="margin-right: 6px;">scorll to</d-button>
     <d-input-number v-model="num" placeholder="请输入" :min="0" :max="data.length - 1" size="sm" />
   </div>
   <d-virtual-list :data="data" ref="vlRef" >
@@ -35,10 +35,10 @@ export default {
     );
     const num = ref(0);
     const vlRef = ref(null);
-    const onScorllTo = () => {
-      vlRef.value.onScrollTo(num.value);
+    const onScrollTo = () => {
+      vlRef.value.scrollTo(num.value);
     };
-    return { data, num, vlRef, onScorllTo };
+    return { data, num, vlRef, onScrollTo };
   },
 };
 </script>

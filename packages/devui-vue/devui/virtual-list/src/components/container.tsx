@@ -24,6 +24,8 @@ export default defineComponent({
           top: 0,
         };
       }
+    }, {
+      immediate: true,
     });
 
     return () => (
