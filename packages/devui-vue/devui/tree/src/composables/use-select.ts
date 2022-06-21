@@ -1,11 +1,5 @@
 import { Ref, SetupContext } from 'vue';
-import { IInnerTreeNode, IUseCore } from './use-tree-types';
-
-export interface IUseSelect {
-  selectNode: (node: IInnerTreeNode) => void;
-  deselectNode: (node: IInnerTreeNode) => void;
-  toggleSelectNode: (node: IInnerTreeNode) => void;
-}
+import { IInnerTreeNode, IUseCore, IUseSelect } from './use-tree-types';
 
 export default function () {
   return function useSelect(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseSelect {
