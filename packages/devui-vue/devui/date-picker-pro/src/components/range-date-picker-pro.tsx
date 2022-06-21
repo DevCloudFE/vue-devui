@@ -38,9 +38,11 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width')]} ref={containerRef}>
+        <div
+          class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width'), isPanelShow.value && ns.m('open')]}
+          ref={containerRef}>
           <div
-            class={ns.e('ranger-picker')}
+            class={ns.e('range-picker')}
             ref={originRef}
             onmouseover={() => (isMouseEnter.value = true)}
             onmouseout={() => (isMouseEnter.value = false)}>
@@ -81,7 +83,7 @@ export default defineComponent({
             </span>
           </div>
           <Transition name="fade">
-            <FlexibleOverlay v-model={isPanelShow.value} ref={overlayRef} origin={originRef.value} position={position.value}>
+            <FlexibleOverlay v-model={isPanelShow.value} ref={overlayRef} origin={originRef.value} align="start" position={position.value}>
               <DatePickerProPanel
                 dateValue={dateValue.value}
                 visible={isPanelShow.value}

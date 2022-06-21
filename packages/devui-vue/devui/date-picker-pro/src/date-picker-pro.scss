@@ -285,7 +285,7 @@ $input-height-lg: 46px;
     width: 400px;
   }
 
-  .#{$devui-prefix}-range-date-picker-pro__ranger-picker {
+  .#{$devui-prefix}-range-date-picker-pro__range-picker {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -348,6 +348,16 @@ $input-height-lg: 46px;
 
     .#{$devui-prefix}-range-date-picker-pro--icon-hidden {
       visibility: hidden;
+    }
+  }
+
+  &--open {
+    .#{$devui-prefix}-range-date-picker-pro__range-picker {
+      border-color: $devui-form-control-line-active;
+
+      &:hover {
+        border-color: $devui-form-control-line-active;
+      }
     }
   }
 }
