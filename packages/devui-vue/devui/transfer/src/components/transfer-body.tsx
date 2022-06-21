@@ -6,6 +6,7 @@ import DSearch from '../../../search/src/search';
 import DIcon from '../../../icon/src/icon';
 import { TKey } from '../transfer-types';
 import { transferBodyProps, TTransferBodyProps, transferBodyState } from '../composables/use-transfer-body';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DTransferBody',
@@ -18,6 +19,7 @@ export default defineComponent({
   props: transferBodyProps,
   emits: ['change', 'update:modelValue', 'updateQueryString', 'updateDataPosition'],
   setup(props: TTransferBodyProps, ctx: SetupContext) {
+    const ns = useNamespace('transfer');
     const {
       bodyHeight,
       query,
@@ -37,7 +39,7 @@ export default defineComponent({
     } = transferBodyState(props, ctx);
     const renderSearch = () => {
       return (
-        <div class="devui-transfer-panel-body-search">
+        <div class={ns.em('panel', 'body-search')}>
           <DSearch
             modelValue={query.value}
             placeholder={props.placeholder}
@@ -51,13 +53,13 @@ export default defineComponent({
     };
     const renderList = () => {
       if (!props.data.length) {
-        return <div class="devui-transfer-panel-body-list-empty">暂无数据</div>;
+        return <div class={ns.em('panel', 'body-list-empty')}>暂无数据</div>;
       }
       return (
         <DCheckboxGroup
           modelValue={props.defaultChecked}
           options={props.data}
-          class={'devui-transfer-panel-body-list-group'}
+          class={ns.em('panel', 'body-list-group')}
           onChange={(value) => {
             ctx.emit('change', value);
           }}
@@ -66,18 +68,18 @@ export default defineComponent({
     };
     const renderDragList = () => {
       if (!props.data.length) {
-        return <div class="devui-transfer-panel-body-list-empty">暂无数据</div>;
+        return <div class={ns.em('panel', 'body-list-empty')}>暂无数据</div>;
       }
       return props.data.map((item, idx) => {
         const isEqual = dragOverNodeKey.value === item.value;
         return (
           <div
             class={{
-              'devui-transfer-panel-body-list-item': true,
-              'devui-transfer-panel-body-list-drag-dragging': dragHighlight.value === item.value,
-              'devui-transfer-panel-body-list-drag-over': isEqual && dropPosition.value === 0,
-              'devui-transfer-panel-body-list-drag-over-top': isEqual && dropPosition.value === -1,
-              'devui-transfer-panel-body-list-drag-over-bottom': isEqual && dropPosition.value === 1,
+              [ns.em('panel', 'body-list-item')]: true,
+              [ns.em('panel', 'body-list-drag-dragging')]: dragHighlight.value === item.value,
+              [ns.em('panel', 'body-list-drag-over')]: isEqual && dropPosition.value === 0,
+              [ns.em('panel', 'body-list-drag-over-top')]: isEqual && dropPosition.value === -1,
+              [ns.em('panel', 'body-list-drag-over-bottom')]: isEqual && dropPosition.value === 1,
             }}
             onDragstart={(event) => {
               dragstartHandle(event, item);
@@ -121,9 +123,9 @@ export default defineComponent({
     };
     return () => {
       return (
-        <div class="devui-transfer-panel-body">
+        <div class={ns.em('panel', 'body')}>
           {props.filter && renderSearch()}
-          <div class="devui-transfer-panel-body-list" style={{ height: bodyHeight.value }}>
+          <div class={ns.em('panel', 'body-list')} style={{ height: bodyHeight.value }}>
             {props.isDrag ? renderDragList() : renderList()}
           </div>
         </div>

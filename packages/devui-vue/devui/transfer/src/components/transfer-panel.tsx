@@ -4,6 +4,7 @@ import { transferPanelProps, TTransferPanelProps, transferPanelState } from '../
 import transferHeader from './transfer-header';
 import transferBody from './transfer-body';
 import { TKey } from '../transfer-types';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DTransferPanel',
@@ -14,6 +15,7 @@ export default defineComponent({
   props: transferPanelProps,
   emits: ['updteAllChecked', 'changeButtonState', 'changeChecked'],
   setup(props: TTransferPanelProps, ctx: SetupContext) {
+    const ns = useNamespace('transfer');
     const {
       allChecked,
       allHalfchecked,
@@ -28,7 +30,7 @@ export default defineComponent({
     } = transferPanelState(props, ctx);
     return () => {
       return (
-        <div class="devui-transfer-panel">
+        <div class={ns.e('panel')}>
           <transferHeader
             title={props.title}
             checkedNum={checkedNum.value}
