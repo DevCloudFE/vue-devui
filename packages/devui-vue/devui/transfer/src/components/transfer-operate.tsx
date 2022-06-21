@@ -2,6 +2,7 @@ import { defineComponent } from 'vue';
 import type { SetupContext } from 'vue';
 import { transferOperateProps, TTransferOperateProps, transferHeaderState } from '../composables/use-transfer-operate';
 import DButton from '../../../button/src/button';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DTransferOperate',
@@ -10,16 +11,17 @@ export default defineComponent({
   },
   props: transferOperateProps,
   setup(props: TTransferOperateProps, ctx: SetupContext) {
+    const ns = useNamespace('transfer');
     const { toTargetHandle, toSourceHandle } = transferHeaderState(props, ctx);
     return () => {
       return (
-        <div class="devui-transfer-operate">
+        <div class={ns.e('operate')}>
           {ctx.slots.operate && typeof ctx.slots.operate === 'function' ? (
             ctx.slots.operate()
           ) : (
-            <div class="devui-transfer-operate-group">
+            <div class={ns.em('operate', 'group')}>
               <DButton
-                class="devui-transfer-operate-group-left"
+                class={ns.em('operate', 'group-left')}
                 shape="circle"
                 size="lg"
                 disabled={props.targetDisabled}
@@ -28,7 +30,7 @@ export default defineComponent({
                 color={!props.targetDisabled ? 'primary' : 'secondary'}
                 onClick={() => toTargetHandle()}></DButton>
               <DButton
-                class="devui-transfer-operate-group-right"
+                class={ns.em('operate', 'group-right')}
                 shape="circle"
                 size="lg"
                 disabled={props.sourceDisabled}
