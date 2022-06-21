@@ -96,11 +96,11 @@ export const tableProps = {
     type: Array as PropType<string[]>,
   },
   trackBy: {
-    type: Function as PropType<(v: Record<string, any>, index: number) => string>,
-    default(v: Record<string, any>, index: number): string {
+    type: Function as PropType<(v: Record<string, any>, index?: number | undefined) => string>,
+    default(v: Record<string, any>, index?: number | undefined): string {
       return `${index}`;
-    }
-  }
+    },
+  },
 };
 
 export type TableProps = ExtractPropTypes<typeof tableProps>;
