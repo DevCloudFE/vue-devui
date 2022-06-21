@@ -216,7 +216,7 @@ export default defineComponent({
 
 ### 表格交互
 
-:::demo 通过添加一个`d-column`并且设置`type`属性为`checkable`即可实现表格的多选功能。`getCheckedRows`方法可以获取已选择的列表。通过`cell-click`事件监听单元格点击，事件回调参数包含行索引、列索引、行数据、列数据。在列上配置`resizeable`属性，可实现该列拖动改变宽度，`min-width`和`max-width`设置可拖动范围，事件`resize-start`、`resizing`、`resize-end`分别在拖动开始时、进行中、结束后触发。
+:::demo 通过添加一个`d-column`并且设置`type`属性为`checkable`即可实现表格的多选功能。`getCheckedRows`方法可以获取已选择的列表。`toggleRowSelection`方法可以切换某一行的选中状态。通过`cell-click`事件监听单元格点击，事件回调参数包含行索引、列索引、行数据、列数据。在列上配置`resizeable`属性，可实现该列拖动改变宽度，`min-width`和`max-width`设置可拖动范围，事件`resize-start`、`resizing`、`resize-end`分别在拖动开始时、进行中、结束后触发。
 
 ```vue
 <template>
@@ -224,6 +224,7 @@ export default defineComponent({
     <d-button @click="handleClick" class="mr-m mb-m">Get CheckedRows</d-button>
     <d-button @click="insertRow" class="mr-m mb-m">Insert Row</d-button>
     <d-button @click="deleteRow" class="mr-m mb-m">Delete Row</d-button>
+    <d-button @click="toggleRow" class="mr-m mb-m">Toggle Row</d-button>
     <d-table
       ref="tableRef"
       :data="data"
@@ -307,6 +308,10 @@ export default defineComponent({
       console.log('checked:', checked, selection);
     };
 
+    const toggleRow = () => {
+      tableRef.value.store.toggleRowSelection(data.value[0]);
+    };
+
     const checkable = (row, rowIndex) => {
       return row.lastName === 'Li' || false;
     };
@@ -351,6 +356,7 @@ export default defineComponent({
       onResizeStart,
       onResizing,
       onResizeEnd,
+      toggleRow,
     };
   },
 });
@@ -1052,27 +1058,30 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table
-    ref="tableRef"
-    :data="dataSource"
-    :trackBy="(item) => item?.firstName"
-    row-key="id"
-    :expand-row-keys="['1', '3']"
-    @expand-change="expandChange"
-  >
-    <d-column type="expand">
-      <template #default="rowData">
-        <div>First Name: {{ rowData.row.firstName }}</div>
-        <div>Last Name: {{ rowData.row.lastName }}</div>
-        <div>Gender: {{ rowData.row.gender }}</div>
-        <div>Date of birth: {{ rowData.row.date }}</div>
-      </template>
-    </d-column>
-    <d-column field="firstName" header="First Name"></d-column>
-    <d-column field="lastName" header="Last Name"></d-column>
-    <d-column field="gender" header="Gender"></d-column>
-    <d-column field="date" header="Date of birth"></d-column>
-  </d-table>
+  <div>
+    <d-button @click="toggleRowExpansion" class="mr-m mb-m">toggleRowExpansion</d-button>
+    <d-table
+      ref="tableRef"
+      :data="dataSource"
+      :trackBy="(item) => item?.firstName"
+      row-key="id"
+      :expand-row-keys="['1', '3']"
+      @expand-change="expandChange"
+    >
+      <d-column type="expand">
+        <template #default="rowData">
+          <div>First Name: {{ rowData.row.firstName }}</div>
+          <div>Last Name: {{ rowData.row.lastName }}</div>
+          <div>Gender: {{ rowData.row.gender }}</div>
+          <div>Date of birth: {{ rowData.row.date }}</div>
+        </template>
+      </d-column>
+      <d-column field="firstName" header="First Name"></d-column>
+      <d-column field="lastName" header="Last Name"></d-column>
+      <d-column field="gender" header="Gender"></d-column>
+      <d-column field="date" header="Date of birth"></d-column>
+    </d-table>
+  </div>
 </template>
 
 <script>
@@ -1122,7 +1131,11 @@ export default defineComponent({
       console.log('expandedRows', expandedRows);
     };
 
-    return { dataSource, expandChange, tableRef };
+    const toggleRowExpansion = () => {
+      tableRef.value.store.toggleRowExpansion(dataSource.value[0]);
+    };
+
+    return { dataSource, expandChange, tableRef, toggleRowExpansion };
   },
 });
 </script>
@@ -1132,26 +1145,26 @@ export default defineComponent({
 
 ### Table 参数
 
-| 参数名                | 类型                      | 默认值    | 说明                                                                       | 跳转 Demo                 |
-| :-------------------- | :------------------------ | :-------- | :------------------------------------------------------------------------- | :------------------------ |
-| data                  | `array`                   | []        | 可选，显示的数据                                                           | [基本用法](#基本用法)     |
-| trackBy | `Function(item, index: number): string` | (item, index) => \`${index}\` | 可选，用于获取该行数据的特定标记 | [表格交互](#表格交互) |
-| striped               | `boolean`                 | false     | 可选，是否显示斑马纹间隔                                                   | [表格样式](#表格样式)     |
-| size                  | [TableSize](#tablesize)   | 'sm'      | 可选，表格大小，分别对应行高 40px,48px,56px                                | [表格样式](#表格样式)     |
-| max-width             | `string`                  | --        | 可选，表格最大宽度                                                         |
-| max-height            | `boolean`                 | --        | 可选，表格最大高度                                                         |
-| table-width           | `string`                  | --        | 可选，表格宽度                                                             |
-| table-height          | `string`                  | --        | 可选，表格高度                                                             |
-| row-hovered-highlight | `boolean`                 | true      | 可选，鼠标在该行上时，高亮该行                                             | [表格样式](#表格样式)     |
-| fix-header            | `boolean`                 | false     | 可选，固定头部                                                             | [固定表头](#固定表头)     |
-| show-loading          | `boolean`                 | false     | 可选，显示加载动画                                                         | [空数据模板](#空数据模板) |
-| header-bg             | `boolean`                 | false     | 可选，头部背景                                                             | [表格样式](#表格样式)     |
-| table-layout          | `'fixed' \| 'auto'`       | 'fixed'   | 可选，表格布局，可选值为'auto'                                             | [表格样式](#表格样式)     |
-| span-method           | [SpanMethod](#spanmethod) | --        | 可选，合并单元格的计算方法                                                 | [合并单元格](#合并单元格) |
-| border-type           | [BorderType](#bordertype) | ''        | 可选，表格边框类型，默认有行边框；`bordered`: 全边框；`borderless`: 无边框 | [表格样式](#表格样式)     |
-| empty                 | `string`                  | 'No Data' | 可选，配置未传递表格数据时需要显示的空数据文本                             | [空数据模板](#空数据模板) |
-| show-header           | `boolean`                 | true      | 可选，配置是否显示表头                                                     | [表格样式](#表格样式)     |
-| row-key               | `string`                  | --        | 可选，行数据的 Key，用来优化 Table 渲染                                    |                           |
+| 参数名                | 类型                                    | 默认值                        | 说明                                                                       | 跳转 Demo                 |
+| :-------------------- | :-------------------------------------- | :---------------------------- | :------------------------------------------------------------------------- | :------------------------ |
+| data                  | `array`                                 | []                            | 可选，显示的数据                                                           | [基本用法](#基本用法)     |
+| trackBy               | `Function(item, index: number): string` | (item, index) => \`${index}\` | 可选，用于获取该行数据的特定标记                                           | [表格交互](#表格交互)     |
+| striped               | `boolean`                               | false                         | 可选，是否显示斑马纹间隔                                                   | [表格样式](#表格样式)     |
+| size                  | [TableSize](#tablesize)                 | 'sm'                          | 可选，表格大小，分别对应行高 40px,48px,56px                                | [表格样式](#表格样式)     |
+| max-width             | `string`                                | --                            | 可选，表格最大宽度                                                         |
+| max-height            | `boolean`                               | --                            | 可选，表格最大高度                                                         |
+| table-width           | `string`                                | --                            | 可选，表格宽度                                                             |
+| table-height          | `string`                                | --                            | 可选，表格高度                                                             |
+| row-hovered-highlight | `boolean`                               | true                          | 可选，鼠标在该行上时，高亮该行                                             | [表格样式](#表格样式)     |
+| fix-header            | `boolean`                               | false                         | 可选，固定头部                                                             | [固定表头](#固定表头)     |
+| show-loading          | `boolean`                               | false                         | 可选，显示加载动画                                                         | [空数据模板](#空数据模板) |
+| header-bg             | `boolean`                               | false                         | 可选，头部背景                                                             | [表格样式](#表格样式)     |
+| table-layout          | `'fixed' \| 'auto'`                     | 'fixed'                       | 可选，表格布局，可选值为'auto'                                             | [表格样式](#表格样式)     |
+| span-method           | [SpanMethod](#spanmethod)               | --                            | 可选，合并单元格的计算方法                                                 | [合并单元格](#合并单元格) |
+| border-type           | [BorderType](#bordertype)               | ''                            | 可选，表格边框类型，默认有行边框；`bordered`: 全边框；`borderless`: 无边框 | [表格样式](#表格样式)     |
+| empty                 | `string`                                | 'No Data'                     | 可选，配置未传递表格数据时需要显示的空数据文本                             | [空数据模板](#空数据模板) |
+| show-header           | `boolean`                               | true                          | 可选，配置是否显示表头                                                     | [表格样式](#表格样式)     |
+| row-key               | `string`                                | --                            | 可选，行数据的 Key，用来优化 Table 渲染                                    |                           |
 
 ### Table 事件
 
@@ -1165,9 +1178,11 @@ export default defineComponent({
 
 ### Table 方法
 
-| 方法名         | 类型       | 说明                 |
-| :------------- | :--------- | :------------------- |
-| getCheckedRows | `() => []` | 获取当前选中的行数据 |
+| 方法名             | 类型                      | 说明                                                                                                             |
+| :----------------- | :------------------------ | :--------------------------------------------------------------------------------------------------------------- |
+| getCheckedRows     | `() => []`                | 获取当前选中的行数据                                                                                             |
+| toggleRowExpansion | `(row, expended) => void` | 用于可展开的表格，切换某一行的展开状态。 如果使用了第二个参数，则是设置这一行是否展示（expended 为 true 则展开） |
+| toggleRowSelection | `(row, checked) => void`  | 用于可选择的表格，切换某一行的选中状态。 如果使用了第二个参数，则是设置这一行是否选中（checked 为 true 则选中）  |
 
 ### Table 插槽
 
