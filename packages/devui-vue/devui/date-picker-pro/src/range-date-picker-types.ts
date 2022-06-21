@@ -9,7 +9,6 @@ export const rangeDatePickerProProps = {
   },
   format: {
     type: String,
-    default: 'YYYY/MM/DD',
   },
   placeholder: {
     type: Array as PropType<string[]>,
@@ -39,6 +38,7 @@ export interface UseRangePickerProReturnType {
   overlayRef: Ref<HTMLElement | undefined>;
   isPanelShow: Ref<boolean>;
   placeholder: ComputedRef<string[]>;
+  format: ComputedRef<string>;
   dateValue: ComputedRef<(Dayjs | undefined)[]>;
   displayDateValue: ComputedRef<string[]>;
   isMouseEnter: Ref<boolean>;

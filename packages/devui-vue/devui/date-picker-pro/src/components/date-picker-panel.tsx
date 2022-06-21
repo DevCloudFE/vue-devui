@@ -33,6 +33,7 @@ export default defineComponent({
               onChangeRangeFocusType={onChangeRangeFocusType}
               focusType={props.focusType}></CalendarPanel>
             {props.showTime && <TimerPickerPanel visible={props.visible} bindData={timeData.value} onSelectedTime={handlerSelectedTime} />}
+            {ctx.slots?.shortcutOptions && <div class={ns.e('panel-shortcut-options')}>{ctx.slots?.shortcutOptions()}</div>}
           </div>
           {props.showTime && (
             <div class={ns.e('panel-footer')}>

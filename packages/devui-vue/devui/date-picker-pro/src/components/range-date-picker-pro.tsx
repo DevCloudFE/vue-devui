@@ -1,4 +1,4 @@
-import { defineComponent, Transition, ref } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots } from 'vue';
 import type { SetupContext } from 'vue';
 import { rangeDatePickerProProps, RangeDatePickerProProps } from '../range-date-picker-types';
 import { FlexibleOverlay } from '../../../overlay';
@@ -24,6 +24,7 @@ export default defineComponent({
       overlayRef,
       placeholder,
       isPanelShow,
+      format,
       dateValue,
       displayDateValue,
       isMouseEnter,
@@ -37,6 +38,10 @@ export default defineComponent({
     const position = ref(['bottom-start']);
 
     return () => {
+      const vSlots = {
+        shortcutOptions: ctx.slots?.shortcutOptions && (() => renderSlot(useSlots(), 'shortcutOptions')),
+      };
+
       return (
         <div
           class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width'), isPanelShow.value && ns.m('open')]}
@@ -87,12 +92,13 @@ export default defineComponent({
               <DatePickerProPanel
                 dateValue={dateValue.value}
                 visible={isPanelShow.value}
-                format={props.format}
+                format={format.value}
                 showTime={props.showTime}
                 isRangeType={true}
                 focusType={focusType.value}
                 onSelectedDate={onSelectedDate}
-                onChangeRangeFocusType={onChangeRangeFocusType}></DatePickerProPanel>
+                onChangeRangeFocusType={onChangeRangeFocusType}
+                v-slots={vSlots}></DatePickerProPanel>
             </FlexibleOverlay>
           </Transition>
         </div>

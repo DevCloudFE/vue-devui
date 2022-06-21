@@ -37,6 +37,21 @@ $input-height-lg: 46px;
     padding: 8px;
     text-align: center;
   }
+
+  // 右侧快捷操作\
+  &-shortcut-options {
+    padding: 8px 16px;
+    display: inline-block;
+    height: 305px;
+    font-size: $devui-font-size-sm;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      width: 0 !important;
+    }
+  }
 }
 
 .#{$devui-prefix}-date-picker-pro__calendar-panel {

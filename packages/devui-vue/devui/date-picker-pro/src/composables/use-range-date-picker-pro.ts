@@ -42,6 +42,10 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     toggleChange(true);
   };
 
+  const format = computed(() => {
+    return props.showTime ? props.format || 'YYYY/MM/DD HH:mm:ss' : props.format || 'YYYY/MM/DD';
+  });
+
   const dateValue = computed(() => {
     let start;
     let end;
@@ -55,8 +59,8 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   });
 
   const displayDateValue = computed(() => {
-    const startFormatDate = formatDayjsToStr(dateValue.value[0], props.format);
-    const endFormatDate = formatDayjsToStr(dateValue.value[1], props.format);
+    const startFormatDate = formatDayjsToStr(dateValue.value[0], format.value);
+    const endFormatDate = formatDayjsToStr(dateValue.value[1], format.value);
     if (startFormatDate) {
       return endFormatDate ? [startFormatDate, endFormatDate] : [startFormatDate, ''];
     } else if (endFormatDate) {
@@ -105,6 +109,7 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     overlayRef,
     isPanelShow,
     placeholder,
+    format,
     dateValue,
     displayDateValue,
     isMouseEnter,

@@ -10,7 +10,6 @@ export const datePickerProProps = {
   },
   format: {
     type: String,
-    default: 'YYYY/MM/DD',
   },
   placeholder: {
     type: String,
@@ -35,6 +34,7 @@ export interface UseDatePickerProReturnType {
   overlayRef: Ref<HTMLElement | undefined>;
   isPanelShow: Ref<boolean>;
   placeholder: ComputedRef<string>;
+  format: ComputedRef<string>;
   dateValue: ComputedRef<Dayjs | undefined>;
   displayDateValue: ComputedRef<string>;
   isMouseEnter: Ref<boolean>;

@@ -83,6 +83,118 @@ export default defineComponent({
 
 :::
 
+### 自定义快捷选项
+
+:::demo
+
+```vue
+<template>
+  <d-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250" :showTime="true">
+    <template #shortcutOptions>
+      <slot name="shortcutOptions">
+        <ul class="date-picker-right-panel">
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(-30);
+                }
+              "
+            >
+              一个月前
+            </d-button>
+            <span>{{ getDateString(-30) }}</span>
+          </li>
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(-14);
+                }
+              "
+            >
+              两周前
+            </d-button>
+            <span>{{ getDateString(-14) }}</span>
+          </li>
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(-7);
+                }
+              "
+            >
+              一周前
+            </d-button>
+            <span>{{ getDateString(-7) }}</span>
+          </li>
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(0);
+                }
+              "
+            >
+              今天
+            </d-button>
+            <span>{{ getDateString(0) }}</span>
+          </li>
+        </ul>
+      </slot>
+    </template>
+  </d-date-picker-pro>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const datePickerProValue1 = ref<string | Date>('');
+    const setDate = (days: number) => {
+      datePickerProValue1.value = new Date(new Date().getTime() + days * 24 * 3600 * 1000);
+    };
+    const getDateString = (days: number) => {
+      const date = new Date(new Date().getTime() + days * 24 * 3600 * 1000);
+      return `${date.getMonth() + 1}月${date.getDate()}日`;
+    };
+
+    return {
+      datePickerProValue1,
+      setDate,
+      getDateString,
+    };
+  },
+});
+</script>
+<style>
+.date-picker-right-panel {
+  padding: 0;
+  li {
+    list-style-type: none;
+    button {
+      width: 66px;
+    }
+    span {
+      margin-left: 8px;
+    }
+  }
+}
+</style>
+```
+
+:::
+
 ### 日期格式
 
 通过`format`指定输入框显示的日期格式, 详见 [Format](#format)
@@ -164,6 +276,89 @@ export default defineComponent({
 
 :::
 
+### 自定义日期范围快捷选项
+
+:::demo
+
+```vue
+<template>
+  <d-range-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250" :showTime="true">
+    <template #shortcutOptions>
+      <slot name="shortcutOptions">
+        <ul class="date-picker-right-panel">
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(-30);
+                }
+              "
+            >
+              一个月前
+            </d-button>
+          </li>
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(-14);
+                }
+              "
+            >
+              一周前
+            </d-button>
+          </li>
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  selectThisWeek();
+                }
+              "
+            >
+              当前周
+            </d-button>
+          </li>
+        </ul>
+      </slot>
+    </template>
+  </d-range-date-picker-pro>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const datePickerProValue1 = ref<string | Date[]>(['', '']);
+    const setDate = (days: number) => {
+      datePickerProValue1.value = [new Date(new Date().getTime() + days * 24 * 3600 * 1000), new Date()];
+    };
+    const selectThisWeek = () => {
+      const tody = new Date();
+      const start = new Date(new Date().setDate(tody.getDate() - tody.getDay()));
+      const end = new Date(new Date().setDate(start.getDate() + 6));
+      datePickerProValue1.value = [start, end];
+    };
+
+    return {
+      datePickerProValue1,
+      setDate,
+      selectThisWeek,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### DatePickerPro 参数
 
 | 参数名      | 类型              | 默认                                  | 说明                                                     | 跳转 Demo             |
@@ -180,6 +375,12 @@ export default defineComponent({
 | :----------- | :------------------------ | :------------------------------- | :-------- |
 | toggleChange | `(bool: boolean) => void` | 可选，选择器打开关闭 toggle 事件 |           |
 | confirmEvent | `(date: Date) => void`    | 可选，用户确定选定的值时触发     |           |
+
+### DatePickerPro 插槽
+
+| 名称            | 说明                                          | 跳转 Demo                         |
+| :-------------- | :-------------------------------------------- | :-------------------------------- |
+| shortcutOptions | 自定义 DatePickerPro 日历面板左侧快捷选项内容 | [自定义快捷选项](#自定义快捷选项) |
 
 ### DatePickerPro 类型定义
 
@@ -225,3 +426,9 @@ type Format = string;
 | :----------- | :------------------------ | :--------------------------------- | :-------- |
 | toggleChange | `(bool: boolean) => void` | 可选，选择器打开关闭 toggle 事件   |           |
 | confirmEvent | `(date: Date[]) => void`  | 可选，用户确定选定的时间范围时触发 |           |
+
+### RangeDatePickerPro 插槽
+
+| 名称            | 说明                                               | 跳转 Demo                                         |
+| :-------------- | :------------------------------------------------- | :------------------------------------------------ |
+| shortcutOptions | 自定义 RangeDatePickerPro 日历面板左侧快捷选项内容 | [自定义日期范围快捷选项](#自定义日期范围快捷选项) |

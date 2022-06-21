@@ -28,6 +28,10 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
     toggleChange(true);
   };
 
+  const format = computed(() => {
+    return props.showTime ? props.format || 'YYYY/MM/DD HH:mm:ss' : props.format || 'YYYY/MM/DD';
+  });
+
   const dateValue = computed(() => {
     let result;
     if (props.modelValue) {
@@ -37,7 +41,7 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
   });
 
   const displayDateValue = computed(() => {
-    const formatDate = formatDayjsToStr(dateValue.value, props.format);
+    const formatDate = formatDayjsToStr(dateValue.value, format.value);
     if (formatDate) {
       return formatDate;
     }
@@ -71,6 +75,7 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
     overlayRef,
     isPanelShow,
     placeholder,
+    format,
     dateValue,
     displayDateValue,
     isMouseEnter,
