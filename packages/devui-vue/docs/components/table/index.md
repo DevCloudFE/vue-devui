@@ -299,12 +299,12 @@ export default defineComponent({
       console.log('row-click', params);
     };
 
-    const checkChange = (checked, row) => {
-      console.log('checked row:', checked, row);
+    const checkChange = (checked, row, selection) => {
+      console.log('checked row:', checked, row, selection);
     };
 
-    const checkAllChange = (checked) => {
-      console.log('checked:', checked);
+    const checkAllChange = (checked, selection) => {
+      console.log('checked:', checked, selection);
     };
 
     const checkable = (row, rowIndex) => {
@@ -1155,13 +1155,13 @@ export default defineComponent({
 
 ### Table 事件
 
-| 事件名           | 回调参数                                                     | 说明                                   | 跳转 Demo             |
-| :--------------- | :----------------------------------------------------------- | :------------------------------------- | :-------------------- |
-| sort-change      | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息         | [列排序](#列排序)     |
-| cell-click       | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息         | [表格交互](#表格交互) |
-| check-change     | `Function(checked: boolean, row)`                            | 勾选表格行回调事件，返回该行信息       | [表格交互](#表格交互) |
-| check-all-change | `Function(checked: boolean)`                                 | 全选表格行回调事件，返回勾选状态       | [表格交互](#表格交互) |
-| row-click        | `Function(obj: RowClickArg)`                                 | 某一行被点击时触发该事件，返回该行信息 | [表格交互](#表格交互) |
+| 事件名           | 回调参数                                                     | 说明                                                 | 跳转 Demo             |
+| :--------------- | :----------------------------------------------------------- | :--------------------------------------------------- | :-------------------- |
+| sort-change      | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息                       | [列排序](#列排序)     |
+| cell-click       | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息                       | [表格交互](#表格交互) |
+| check-change     | `Function(checked: boolean, row, selection)`                 | 勾选表格行回调事件，返回该行信息和表格所有选中行数据 | [表格交互](#表格交互) |
+| check-all-change | `Function(checked: boolean, selection)`                      | 全选表格行回调事件，返回勾选状态和表格所有选中行数据 | [表格交互](#表格交互) |
+| row-click        | `Function(obj: RowClickArg)`                                 | 某一行被点击时触发该事件，返回该行信息               | [表格交互](#表格交互) |
 
 ### Table 方法
 
