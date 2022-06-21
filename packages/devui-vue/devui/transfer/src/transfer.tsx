@@ -5,6 +5,7 @@ import transferOperate from './components/transfer-operate';
 import { transferProps, TTransferProps, TKey, IItem } from './transfer-types';
 import { transferState } from './composables/use-transfer';
 import './transfer.scss';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DTransfer',
@@ -15,6 +16,7 @@ export default defineComponent({
   props: transferProps,
   emits: ['update:modelValue', 'change'],
   setup(props: TTransferProps, ctx: SetupContext) {
+    const ns = useNamespace('transfer');
     const {
       sourceTitle,
       targetTitle,
@@ -37,7 +39,7 @@ export default defineComponent({
     } = transferState(props, ctx);
     return () => {
       return (
-        <div class="devui-transfer">
+        <div class={ns.b()}>
           {ctx.slots.header && ctx.slots.header()}
           <transferPanel
             filter={props.filter}
@@ -55,6 +57,7 @@ export default defineComponent({
             data={sourceData.value}
             defaultChecked={sourceChecked.value}
             direction={sourceDirection.value}
+            class={ns.e('source')}
             v-slots={{
               header: ctx.slots.sourceHeader,
             }}
@@ -93,6 +96,7 @@ export default defineComponent({
             data={targetData.value}
             defaultChecked={targetChecked.value}
             direction={targetDirection.value}
+            class={ns.e('target')}
             v-slots={{
               header: ctx.slots.targetHeader,
             }}
