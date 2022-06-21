@@ -46,6 +46,7 @@ export interface IUseCheck {
   checkNode: (node: IInnerTreeNode) => void;
   uncheckNode: (node: IInnerTreeNode) => void;
   toggleCheckNode: (node: IInnerTreeNode) => void;
+  getCheckedNodes: () => IInnerTreeNode[];
 }
 
 export interface IUseDisable {
