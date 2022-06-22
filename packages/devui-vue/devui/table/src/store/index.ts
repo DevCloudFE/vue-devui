@@ -1,9 +1,10 @@
 import { isBoolean } from '../../../shared/utils';
 import { watch, Ref, ref, computed, unref, ComponentInternalInstance } from 'vue';
 import { Column, SortMethod, SortDirection } from '../components/column/column-types';
-import { DefaultRow, ITable } from '../table-types';
+import { DefaultRow, ITable, RowKeyType } from '../table-types';
 import { TableStore } from './store-types';
 import { useExpand } from './use-expand';
+import { getRowIdentity } from '../utils';
 
 function replaceColumn(array: any[], column: any) {
   return array.map((item) => {
@@ -76,26 +77,27 @@ function createColumnGenerator() {
   };
 }
 
-function createSelection<T>(dataSource: Ref<T[]>, trackBy: (item: T, index?: number | undefined) => string) {
+function createSelection<T>(dataSource: Ref<T[]>, rowKey: RowKeyType) {
   const _checkSet: Ref<Set<string>> = ref(new Set());
-
   const checkRow = (toggle: boolean, row: T, index: number) => {
+    const key = getRowIdentity(row, rowKey, index);
     if (toggle) {
-      _checkSet.value.add(trackBy(row, index));
+      _checkSet.value.add(key);
     } else {
-      _checkSet.value.delete(trackBy(row, index));
+      _checkSet.value.delete(key);
     }
   };
 
   const toggleRowSelection = (row: T, checked?: boolean, index?: number) => {
-    const isIncluded = _checkSet.value.has(trackBy(row, index));
+    const key = getRowIdentity(row, rowKey, index);
+    const isIncluded = _checkSet.value.has(key);
 
     const addRow = () => {
-      _checkSet.value.add(trackBy(row, index));
+      _checkSet.value.add(key);
     };
 
     const deleteRow = () => {
-      _checkSet.value.delete(trackBy(row, index));
+      _checkSet.value.delete(key);
     };
 
     if (isBoolean(checked)) {
@@ -114,7 +116,7 @@ function createSelection<T>(dataSource: Ref<T[]>, trackBy: (item: T, index?: num
   };
 
   const isRowChecked = (row: T, index: number) => {
-    return _checkSet.value.has(trackBy(row, index));
+    return _checkSet.value.has(getRowIdentity(row, rowKey, index));
   };
 
   const getCheckedRows = (): T[] => {
@@ -204,7 +206,7 @@ export function createStore<T>(dataSource: Ref<T[]>, table: ITable<DefaultRow>):
 
   const { _checkAll, _checkSet, _halfChecked, getCheckedRows, isRowChecked, checkRow, toggleRowSelection } = createSelection(
     _data,
-    table.props.trackBy as (v: T) => string
+    table.props.rowKey as RowKeyType
   );
 
   const { sortData, thList } = createSorter(dataSource, _data);

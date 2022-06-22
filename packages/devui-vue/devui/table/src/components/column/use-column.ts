@@ -132,6 +132,7 @@ export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: S
     column.customFilterTemplate = ctx.slots.customFilterTemplate;
     column.subColumns = ctx.slots.subColumns;
     column.slots = ctx.slots;
+    column.ctx = ctx;
   });
 
   return column;
