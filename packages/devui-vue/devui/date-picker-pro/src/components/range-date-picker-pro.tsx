@@ -39,7 +39,7 @@ export default defineComponent({
 
     return () => {
       const vSlots = {
-        shortcutOptions: ctx.slots?.shortcutOptions && (() => renderSlot(useSlots(), 'shortcutOptions')),
+        rightArea: ctx.slots?.rightArea && (() => renderSlot(useSlots(), 'rightArea')),
       };
 
       return (
