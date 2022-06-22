@@ -326,7 +326,7 @@ export default defineComponent({
     );
 
     ctx.expose({
-      onScrollTo(index: number) {
+      scrollTo(index: number) {
         syncScrollTop(index * (props.itemHeight || DEFAULT_HEIGHT));
       }
     });
