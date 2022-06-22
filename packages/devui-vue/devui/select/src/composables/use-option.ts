@@ -41,7 +41,7 @@ export default function useOption(props: OptionProps): UseOptionReturnType {
 
   const optionSelect = (): void => {
     if (!props.disabled) {
-      select?.valueChange(optionItem.value, isObjectOption.value);
+      select?.valueChange(optionItem.value);
     }
   };
 
@@ -55,11 +55,11 @@ export default function useOption(props: OptionProps): UseOptionReturnType {
   });
 
   onBeforeMount(() => {
-    select?.updateInjectOptions(optionItem.value, 'add');
+    select?.updateInjectOptions(optionItem.value, 'add', isObjectOption.value);
   });
 
   onBeforeUnmount(() => {
-    select?.updateInjectOptions(optionItem.value, 'delete');
+    select?.updateInjectOptions(optionItem.value, 'delete', isObjectOption.value);
   });
 
   return {
