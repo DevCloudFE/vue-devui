@@ -124,9 +124,9 @@ export interface UseSelectReturnType {
   isShowEmptyText: ComputedRef<boolean>;
   onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
-  valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;
+  valueChange: (item: OptionObjectItem) => void;
   handleClose: () => void;
-  updateInjectOptions: (item: Record<string, unknown>, operation: string) => void;
+  updateInjectOptions: (item: Record<string, unknown>, operation: string, isObject: boolean) => void;
   tagDelete: (data: OptionObjectItem) => void;
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
@@ -142,9 +142,9 @@ export interface SelectContext extends SelectProps {
   isOpen: boolean;
   selectedOptions: OptionObjectItem[];
   filterQuery: string;
-  valueChange: (item: OptionObjectItem, isObjectOption: boolean) => void;
+  valueChange: (item: OptionObjectItem) => void;
   handleClear: () => void;
-  updateInjectOptions: (item: Record<string, unknown>, operation: string) => void;
+  updateInjectOptions: (item: Record<string, unknown>, operation: string, isObject: boolean) => void;
   tagDelete: (data: OptionObjectItem) => void;
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
