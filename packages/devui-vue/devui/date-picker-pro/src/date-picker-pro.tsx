@@ -34,7 +34,7 @@ export default defineComponent({
     const position = ref(['bottom-start']);
     return () => {
       const vSlots = {
-        shortcutOptions: ctx.slots?.shortcutOptions && (() => renderSlot(useSlots(), 'shortcutOptions')),
+        rightArea: ctx.slots?.rightArea && (() => renderSlot(useSlots(), 'rightArea')),
       };
       return (
         <div class={ns.b()} ref={containerRef}>

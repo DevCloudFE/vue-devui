@@ -237,7 +237,7 @@ describe('range-date-picker-pro test', () => {
     wrapper.unmount();
   });
 
-  it('date-picker-pro shortcutOptions slot', async () => {
+  it('date-picker-pro rightArea slot', async () => {
     const datePickerProValue = ref<(Date | string)[]>(['', '']);
     const setDate = (days: number) => {
       datePickerProValue.value = [new Date(new Date().getTime() + days * 24 * 3600 * 1000), new Date()];
@@ -248,7 +248,7 @@ describe('range-date-picker-pro test', () => {
           <DRangeDatePickerPro
             v-model={datePickerProValue.value}
             v-slots={{
-              shortcutOptions: () => (
+              rightArea: () => (
                 <ul>
                   <li>
                     <DButton
@@ -273,10 +273,10 @@ describe('range-date-picker-pro test', () => {
     await nextTick();
     await nextTick();
     const pickerPanel = container.find(pickerPanelClass);
-    const shortcutOptions = pickerPanel.find(datePickerNs.e('panel-shortcut-options'));
-    expect(shortcutOptions.exists()).toBeTruthy();
+    const rightArea = pickerPanel.find(datePickerNs.e('panel-right-area'));
+    expect(rightArea.exists()).toBeTruthy();
 
-    const button = shortcutOptions.find('button');
+    const button = rightArea.find('button');
     expect(button.exists()).toBeTruthy();
     const date = new Date();
     await button.trigger('click');
