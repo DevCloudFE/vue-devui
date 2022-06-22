@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import DDatePickerPro from '../src/date-picker-pro';
 import { nextTick, ref } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import DButton from '../../button/src/button';
 
 const ns = useNamespace('date-picker-pro', true);
 const baseClass = ns.b();
@@ -282,6 +283,63 @@ describe('date-picker-pro test', () => {
     const container = wrapper.find(baseClass);
     const input = container.find(inputNs.m('lg'));
     expect(input.exists()).toBeTruthy();
+
+    wrapper.unmount();
+  });
+
+  it('date-picker-pro shortcutOptions slot', async () => {
+    const datePickerProValue = ref<Date | string>('');
+    const setDate = (days: number) => {
+      datePickerProValue.value = new Date(new Date().getTime() + days * 24 * 3600 * 1000);
+    };
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DDatePickerPro
+            v-model={datePickerProValue.value}
+            v-slots={{
+              shortcutOptions: () => (
+                <ul>
+                  <li>
+                    <DButton
+                      variant="text"
+                      color="primary"
+                      onClick={() => {
+                        setDate(-30);
+                      }}>
+                      一个月前
+                    </DButton>
+                  </li>
+                </ul>
+              ),
+            }}></DDatePickerPro>
+        );
+      },
+    });
+    const container = wrapper.find(baseClass);
+    const input = container.find('input');
+    expect(input.exists()).toBeTruthy();
+    await input.trigger('focus');
+    await nextTick();
+    await nextTick();
+    const pickerPanel = container.find(pickerPanelClass);
+    const shortcutOptions = pickerPanel.find(ns.e('panel-shortcut-options'));
+    expect(shortcutOptions.exists()).toBeTruthy();
+
+    const button = shortcutOptions.find('button');
+    expect(button.exists()).toBeTruthy();
+    const date = new Date();
+    await button.trigger('click');
+
+    await nextTick();
+    const vm = wrapper.vm;
+    const inputNew = vm.$el.querySelector('input');
+    const newDate = new Date(date.getTime() - 30 * 24 * 3600 * 1000);
+    expect(inputNew.value).toBe(
+      `${newDate.getFullYear()}/${
+        newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1
+      }/${newDate.getDate()}`
+    );
 
     wrapper.unmount();
   });
