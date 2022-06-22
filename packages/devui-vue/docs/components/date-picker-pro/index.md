@@ -83,15 +83,15 @@ export default defineComponent({
 
 :::
 
-### 自定义快捷选项
+### 自定义日历面板右侧内容
 
 :::demo
 
 ```vue
 <template>
   <d-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250" :showTime="true">
-    <template #shortcutOptions>
-      <slot name="shortcutOptions">
+    <template #rightArea>
+      <slot name="rightArea">
         <ul class="date-picker-right-panel">
           <li>
             <d-button
@@ -276,15 +276,15 @@ export default defineComponent({
 
 :::
 
-### 自定义日期范围快捷选项
+### 自定义日期范围面板右侧内容
 
 :::demo
 
 ```vue
 <template>
   <d-range-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250" :showTime="true">
-    <template #shortcutOptions>
-      <slot name="shortcutOptions">
+    <template #rightArea>
+      <slot name="rightArea">
         <ul class="date-picker-right-panel">
           <li>
             <d-button
@@ -378,9 +378,9 @@ export default defineComponent({
 
 ### DatePickerPro 插槽
 
-| 名称            | 说明                                          | 跳转 Demo                         |
-| :-------------- | :-------------------------------------------- | :-------------------------------- |
-| shortcutOptions | 自定义 DatePickerPro 日历面板左侧快捷选项内容 | [自定义快捷选项](#自定义快捷选项) |
+| 名称      | 说明                                                     | 跳转 Demo                                         |
+| :-------- | :------------------------------------------------------- | :------------------------------------------------ |
+| rightArea | 自定义 DatePickerPro 日历面板右侧内容， 如：日期快捷选项 | [自定义日历面板右侧内容](#自定义日历面板右侧内容) |
 
 ### DatePickerPro 类型定义
 
@@ -429,6 +429,6 @@ type Format = string;
 
 ### RangeDatePickerPro 插槽
 
-| 名称            | 说明                                               | 跳转 Demo                                         |
-| :-------------- | :------------------------------------------------- | :------------------------------------------------ |
-| shortcutOptions | 自定义 RangeDatePickerPro 日历面板左侧快捷选项内容 | [自定义日期范围快捷选项](#自定义日期范围快捷选项) |
+| 名称      | 说明                                                              | 跳转 Demo                                                 |
+| :-------- | :---------------------------------------------------------------- | :-------------------------------------------------------- |
+| rightArea | 自定义 RangeDatePickerPro 日历面板右侧内容， 如：日期范围快捷选项 | [自定义日期范围面板右侧内容](#自定义日期范围面板右侧内容) |
