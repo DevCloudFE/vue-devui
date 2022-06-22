@@ -22,6 +22,7 @@ export default function useSelect(
 
   const selectDisabled = computed(() => formContext?.disabled || props.disabled);
   const selectSize = computed(() => formContext?.size || props.size);
+  const isObjectOption = ref(false);
 
   // 控制弹窗开合
   const isOpen = ref<boolean>(false);
@@ -50,6 +51,7 @@ export default function useSelect(
   });
 
   // 这里对d-select组件options做统一处理,此options只用作渲染option列表
+  const cacheOptions = new Map();
   const mergeOptions = computed(() => {
     const { multiple, modelValue } = props;
     return props.options.map((item) => {
@@ -79,13 +81,17 @@ export default function useSelect(
           option._checked = false;
         }
       }
+      cacheOptions.set(option.value, option);
       return option;
     });
   });
 
+  // 缓存options，用value来获取对应的optionItem
+  const getValuesOption = (values: KeyType<OptionObjectItem, 'value'>[]) => values.map((value) => cacheOptions.get(value));
+
   // 这里处理d-option组件生成的Options
   const injectOptions = ref(new Map());
-  const updateInjectOptions = (item: Record<string, unknown>, operation: string) => {
+  const updateInjectOptions = (item: Record<string, unknown>, operation: string, isObject: boolean) => {
     if (operation === 'add') {
       injectOptions.value.set(item.value, item);
     } else if (operation === 'delete') {
@@ -93,6 +99,7 @@ export default function useSelect(
         injectOptions.value.delete(item.value);
       }
     }
+    isObjectOption.value = isObject;
   };
 
   const getInjectOptions = (values: KeyType<OptionObjectItem, 'value'>[]) => {
@@ -122,10 +129,10 @@ export default function useSelect(
   // 目前看该警告和下拉面板使用Transition也有关
   const inputValue = computed<string>(() => {
     if (props.multiple && Array.isArray(props.modelValue)) {
-      selectedOptions.value = getInjectOptions(props.modelValue).filter((item) => !!item);
+      selectedOptions.value = getInjectOptions(props.modelValue).filter((item) => (item ? true : false));
       return selectedOptions.value.map((item) => item?.name || item?.value || '').join(',');
     } else if (!Array.isArray(props.modelValue)) {
-      selectedOptions.value = getInjectOptions([props.modelValue]).filter((item) => !!item);
+      selectedOptions.value = getInjectOptions([props.modelValue]).filter((item) => (item ? true : false));
       return selectedOptions.value[0]?.name || '';
     }
     return '';
@@ -139,7 +146,31 @@ export default function useSelect(
 
   const isSupportFilter = computed(() => isFunction(props.filter) || (typeof props.filter === 'boolean' && props.filter));
 
-  const valueChange = (item: OptionObjectItem, isObjectOption: boolean) => {
+  const getMultipleSelected = (items: (string | number)[]) => {
+    if (mergeOptions.value.length) {
+      ctx.emit(
+        'value-change',
+        getValuesOption(items).filter((item) => (item ? true : false))
+      );
+    } else if (isObjectOption.value) {
+      const selectItems = getInjectOptions(items).filter((item) => (item ? true : false));
+      ctx.emit('value-change', selectItems);
+    } else {
+      ctx.emit('value-change', items);
+    }
+  };
+
+  const getSingleSelected = (item: OptionObjectItem) => {
+    if (mergeOptions.value.length) {
+      ctx.emit('value-change', getValuesOption([item.value])[0]);
+    } else if (isObjectOption.value) {
+      ctx.emit('value-change', item);
+    } else {
+      ctx.emit('value-change', item.value);
+    }
+  };
+
+  const valueChange = (item: OptionObjectItem) => {
     const { multiple } = props;
     let { modelValue } = props;
     if (multiple) {
@@ -148,6 +179,10 @@ export default function useSelect(
       const option = getInjectOptions([item.value])[0];
       if (option) {
         option._checked = !option._checked;
+      }
+      const mergeOption = getValuesOption([item.value])[0];
+      if (mergeOption) {
+        mergeOption._checked = !mergeOption._checked;
       }
       if (index > -1) {
         checkedItems.splice(index, 1);
@@ -162,11 +197,12 @@ export default function useSelect(
       if (isSupportFilter.value) {
         focus();
       }
+      getMultipleSelected(checkedItems);
     } else {
       ctx.emit('update:modelValue', item.value);
       toggleChange(false);
+      getSingleSelected(item);
     }
-    ctx.emit('value-change', isObjectOption ? item : item.value);
   };
 
   const handleClose = () => {
@@ -177,8 +213,10 @@ export default function useSelect(
   const handleClear = () => {
     if (props.multiple) {
       ctx.emit('update:modelValue', []);
+      ctx.emit('value-change', []);
     } else {
       ctx.emit('update:modelValue', '');
+      ctx.emit('value-change', '');
     }
     ctx.emit('clear');
     if (isOpen.value) {
@@ -199,6 +237,7 @@ export default function useSelect(
     modelValue = checkedItems;
     ctx.emit('update:modelValue', modelValue);
     ctx.emit('remove-tag', data.value);
+    getMultipleSelected(checkedItems);
   };
 
   const onFocus = (e: FocusEvent) => {
