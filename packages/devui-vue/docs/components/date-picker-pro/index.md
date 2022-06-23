@@ -83,12 +83,13 @@ export default defineComponent({
 
 :::
 
-### 自定义日历面板右侧内容
+### 自定义日历面板区域
 
 :::demo
 
 ```vue
 <template>
+  <div class="mb10">right area</div>
   <d-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250" :showTime="true">
     <template #rightArea>
       <slot name="rightArea">
@@ -153,6 +154,29 @@ export default defineComponent({
       </slot>
     </template>
   </d-date-picker-pro>
+  <div class="mb10">footer area</div>
+  <d-date-picker-pro v-model="datePickerProValue2" class="mb20 wh250" :showTime="true">
+    <template #footerArea>
+      <slot name="footerArea">
+        <div class="date-picker-footer">
+          <d-button
+            variant="solid"
+            color="secondary"
+            @click="setToday"
+          >
+            今天
+          </d-button>
+          <d-button
+            variant="solid"
+            color="secondary"
+            @click="clearDate"
+          >
+            清除时间
+          </d-button>
+        </ul>
+      </slot>
+    </template>
+  </d-date-picker-pro>
 </template>
 
 <script lang="ts">
@@ -161,6 +185,7 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const datePickerProValue1 = ref<string | Date>('');
+    const datePickerProValue2 = ref<string | Date>('');
     const setDate = (days: number) => {
       datePickerProValue1.value = new Date(new Date().getTime() + days * 24 * 3600 * 1000);
     };
@@ -168,11 +193,20 @@ export default defineComponent({
       const date = new Date(new Date().getTime() + days * 24 * 3600 * 1000);
       return `${date.getMonth() + 1}月${date.getDate()}日`;
     };
+    const setToday = () => {
+      datePickerProValue2.value = new Date(new Date().getTime());
+    };
+    const clearDate = () => {
+      datePickerProValue2.value = '';
+    }
 
     return {
       datePickerProValue1,
+      datePickerProValue2,
       setDate,
       getDateString,
+      setToday,
+      clearDate,
     };
   },
 });
@@ -188,6 +222,13 @@ export default defineComponent({
     span {
       margin-left: 8px;
     }
+  }
+}
+.date-picker-footer {
+  display: flex;
+  justify-content: end;
+  button {
+    margin-left: 10px;
   }
 }
 </style>
@@ -276,12 +317,13 @@ export default defineComponent({
 
 :::
 
-### 自定义日期范围面板右侧内容
+### 自定义日期范围面板区域
 
 :::demo
 
 ```vue
 <template>
+  <div class="mb10">right area</div>
   <d-range-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250" :showTime="true">
     <template #rightArea>
       <slot name="rightArea">
@@ -329,6 +371,29 @@ export default defineComponent({
       </slot>
     </template>
   </d-range-date-picker-pro>
+  <div class="mb10">footer area</div>
+  <d-range-date-picker-pro ref="footerCustom" v-model="datePickerProValue2" class="mb20 wh250" :showTime="true">
+    <template #footerArea>
+      <slot name="footerArea">
+        <div class="date-picker-footer">
+          <d-button
+            variant="solid"
+            color="secondary"
+            @click="clearStartDate"
+          >
+            清除开始时间
+          </d-button>
+          <d-button
+            variant="solid"
+            color="secondary"
+            @click="clearEndDate"
+          >
+            清除结束时间
+          </d-button>
+        </ul>
+      </slot>
+    </template>
+  </d-range-date-picker-pro>
 </template>
 
 <script lang="ts">
@@ -337,6 +402,7 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const datePickerProValue1 = ref<string | Date[]>(['', '']);
+    const datePickerProValue2 = ref<string | Date[]>(['', '']);
     const setDate = (days: number) => {
       datePickerProValue1.value = [new Date(new Date().getTime() + days * 24 * 3600 * 1000), new Date()];
     };
@@ -347,10 +413,27 @@ export default defineComponent({
       datePickerProValue1.value = [start, end];
     };
 
+    const footerCustom = ref();
+
+    const clearStartDate = () => {
+      const [start, end] = datePickerProValue2.value;
+      datePickerProValue2.value = ['', end];
+      footerCustom?.value.focusChange('start');
+    }
+    const clearEndDate = () => {
+      const [start, end] = datePickerProValue2.value;
+      datePickerProValue2.value = [start, ''];
+      footerCustom?.value.focusChange('end');
+    }
+
     return {
       datePickerProValue1,
+      datePickerProValue2,
       setDate,
       selectThisWeek,
+      footerCustom,
+      clearStartDate,
+      clearEndDate,
     };
   },
 });
@@ -378,9 +461,10 @@ export default defineComponent({
 
 ### DatePickerPro 插槽
 
-| 名称      | 说明                                                     | 跳转 Demo                                         |
-| :-------- | :------------------------------------------------------- | :------------------------------------------------ |
-| rightArea | 自定义 DatePickerPro 日历面板右侧内容， 如：日期快捷选项 | [自定义日历面板右侧内容](#自定义日历面板右侧内容) |
+| 名称       | 说明                                                     | 跳转 Demo                                 |
+| :--------- | :------------------------------------------------------- | :---------------------------------------- |
+| rightArea  | 自定义 DatePickerPro 日历面板右侧内容， 如：日期快捷选项 | [自定义日历面板区域](#自定义日历面板区域) |
+| footerArea | 自定义 DatePickerPro 日历面板下侧内容                    | [自定义日历面板区域](#自定义日历面板区域) |
 
 ### DatePickerPro 类型定义
 
@@ -429,6 +513,7 @@ type Format = string;
 
 ### RangeDatePickerPro 插槽
 
-| 名称      | 说明                                                              | 跳转 Demo                                                 |
-| :-------- | :---------------------------------------------------------------- | :-------------------------------------------------------- |
-| rightArea | 自定义 RangeDatePickerPro 日历面板右侧内容， 如：日期范围快捷选项 | [自定义日期范围面板右侧内容](#自定义日期范围面板右侧内容) |
+| 名称       | 说明                                                              | 跳转 Demo                                         |
+| :--------- | :---------------------------------------------------------------- | :------------------------------------------------ |
+| rightArea  | 自定义 RangeDatePickerPro 日历面板右侧内容， 如：日期范围快捷选项 | [自定义日期范围面板区域](#自定义日期范围面板区域) |
+| footerArea | 自定义 RangeDatePickerPro 日历面板下侧内容                        | [自定义日期范围面板区域](#自定义日期范围面板区域) |

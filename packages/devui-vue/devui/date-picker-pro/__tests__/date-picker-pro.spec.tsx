@@ -343,4 +343,53 @@ describe('date-picker-pro test', () => {
 
     wrapper.unmount();
   });
+
+  it('date-picker-pro footerArea slot', async () => {
+    const datePickerProValue = ref<Date | string>('');
+    const setToday = () => {
+      datePickerProValue.value = new Date();
+    };
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DDatePickerPro
+            v-model={datePickerProValue.value}
+            v-slots={{
+              footerArea: () => (
+                <div>
+                  <DButton color="primary" onClick={setToday}>
+                    今天
+                  </DButton>
+                </div>
+              ),
+            }}></DDatePickerPro>
+        );
+      },
+    });
+    const container = wrapper.find(baseClass);
+    const input = container.find('input');
+    expect(input.exists()).toBeTruthy();
+    await input.trigger('focus');
+    await nextTick();
+    await nextTick();
+    const pickerPanel = container.find(pickerPanelClass);
+    const footerArea = pickerPanel.find(ns.e('panel-footer'));
+    expect(footerArea.exists()).toBeTruthy();
+
+    const button = footerArea.find('button');
+    expect(button.exists()).toBeTruthy();
+    await button.trigger('click');
+
+    await nextTick();
+    const vm = wrapper.vm;
+    const inputNew = vm.$el.querySelector('input');
+    const newDate = new Date();
+    expect(inputNew.value).toBe(
+      `${newDate.getFullYear()}/${
+        newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1
+      }/${newDate.getDate()}`
+    );
+
+    wrapper.unmount();
+  });
 });

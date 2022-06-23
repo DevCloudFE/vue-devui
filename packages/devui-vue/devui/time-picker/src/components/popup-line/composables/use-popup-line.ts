@@ -8,6 +8,7 @@ const usePopupLine = (
   minTime: string,
   maxTime: string,
   format: string,
+  itemHeight: number,
   timeListDom: Ref,
   ctx: SetupContext
 ): UsePopupLineFn => {
@@ -108,10 +109,9 @@ const usePopupLine = (
       hh = parseInt(timeValueArr[0]);
       mm = parseInt(timeValueArr[1]);
       ss = parseInt(timeValueArr[2]);
-
-      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = hh * 32;
-      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = mm * 32;
-      timeListDom.value.children[2].lastElementChild.children[0].scrollTop = ss * 32;
+      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = hh * itemHeight;
+      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = mm * itemHeight;
+      timeListDom.value.children[2].lastElementChild.children[0].scrollTop = ss * itemHeight;
 
       activeHour.value = timeValueArr[0];
       activeMinute.value = timeValueArr[1];
@@ -128,9 +128,9 @@ const usePopupLine = (
       mm = parseInt(timeValueArr[1]);
       ss = parseInt(timeValueArr[2]);
 
-      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = mm * 32;
-      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = hh * 32;
-      timeListDom.value.children[2].lastElementChild.children[0].scrollTop = ss * 32;
+      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = mm * itemHeight;
+      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = hh * itemHeight;
+      timeListDom.value.children[2].lastElementChild.children[0].scrollTop = ss * itemHeight;
 
       activeHour.value = timeValueArr[0];
       activeMinute.value = timeValueArr[1];
@@ -146,8 +146,8 @@ const usePopupLine = (
       hh = parseInt(timeValueArr[0]);
       mm = parseInt(timeValueArr[1]);
 
-      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = hh * 32;
-      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = mm * 32;
+      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = hh * itemHeight;
+      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = mm * itemHeight;
 
       activeHour.value = timeValueArr[0];
       activeMinute.value = timeValueArr[1];
@@ -161,8 +161,8 @@ const usePopupLine = (
       mm = parseInt(timeValueArr[1]);
       ss = parseInt(timeValueArr[2]);
 
-      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = mm * 32;
-      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = ss * 32;
+      timeListDom.value.children[0].lastElementChild.children[0].scrollTop = mm * itemHeight;
+      timeListDom.value.children[1].lastElementChild.children[0].scrollTop = ss * itemHeight;
 
       activeHour.value = timeValueArr[0];
       activeMinute.value = timeValueArr[1];
@@ -215,7 +215,7 @@ const usePopupLine = (
       return false;
     } else {
       setTimeActive(item, index);
-      e.target.parentElement.parentElement.scrollTop = index * 32;
+      e.target.parentElement.parentElement.scrollTop = index * itemHeight;
     }
     ctx.emit('change', { activeHour, activeMinute, activeSecond });
   };
