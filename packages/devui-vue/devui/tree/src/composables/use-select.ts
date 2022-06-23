@@ -33,10 +33,15 @@ export default function () {
       }
     };
 
+    const getSelectedNode = (): IInnerTreeNode => {
+      return data.value.find(node => node.selected);
+    };
+
     return {
       selectNode,
       deselectNode,
       toggleSelectNode,
+      getSelectedNode,
     };
   };
 }
