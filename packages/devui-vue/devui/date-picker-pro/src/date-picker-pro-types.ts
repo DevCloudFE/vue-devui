@@ -96,7 +96,7 @@ export const datePickerProPanelProps = {
     default: 'YYYY/MM/DD',
   },
   dateValue: {
-    type: [Object, Array] as PropType<Dayjs | Dayjs[]>,
+    type: [Object, Array] as PropType<Dayjs | undefined | (Dayjs | undefined)[]>,
   },
   showTime: {
     type: Boolean,
