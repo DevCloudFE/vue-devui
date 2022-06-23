@@ -3,6 +3,7 @@ import DRangeDatePickerPro from '../src/components/range-date-picker-pro';
 import { nextTick, ref } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import DButton from '../../button/src/button';
+import { divide } from 'lodash';
 
 const datePickerNs = useNamespace('date-picker-pro', true);
 const rangeDatePickerNs = useNamespace('range-date-picker-pro', true);
@@ -237,7 +238,7 @@ describe('range-date-picker-pro test', () => {
     wrapper.unmount();
   });
 
-  it('date-picker-pro rightArea slot', async () => {
+  it('range-date-picker-pro rightArea slot', async () => {
     const datePickerProValue = ref<(Date | string)[]>(['', '']);
     const setDate = (days: number) => {
       datePickerProValue.value = [new Date(new Date().getTime() + days * 24 * 3600 * 1000), new Date()];
@@ -293,6 +294,59 @@ describe('range-date-picker-pro test', () => {
     );
     expect(inputNews[1].value).toBe(
       `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getDate()}`
+    );
+
+    wrapper.unmount();
+  });
+
+  it('range-date-picker-pro footerArea slot', async () => {
+    const datePickerProValue = ref<(Date | string)[]>(['', '']);
+    const setToday = () => {
+      datePickerProValue.value = [new Date(new Date().getTime()), new Date(new Date().getTime() + 1 * 24 * 3600 * 1000)];
+    };
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DRangeDatePickerPro
+            v-model={datePickerProValue.value}
+            v-slots={{
+              footerArea: () => (
+                <div>
+                  <d-button variant="solid" color="secondary" onClick={setToday}>
+                    今天
+                  </d-button>
+                </div>
+              ),
+            }}></DRangeDatePickerPro>
+        );
+      },
+    });
+    const container = wrapper.find(baseClass);
+    const inputs = container.findAll('input');
+    await inputs[0].trigger('focus');
+    await nextTick();
+    await nextTick();
+    const pickerPanel = container.find(pickerPanelClass);
+    const footerArea = pickerPanel.find(datePickerNs.e('panel-footer'));
+    expect(footerArea.exists()).toBeTruthy();
+
+    const button = footerArea.find('button');
+    expect(button.exists()).toBeTruthy();
+    const date = new Date();
+    await button.trigger('click');
+
+    await nextTick();
+    const vm = wrapper.vm;
+    const inputNews = vm.$el.querySelectorAll('input');
+    expect(inputNews.length).toBe(2);
+    const newDate = new Date(date.getTime() + 1 * 24 * 3600 * 1000);
+    expect(inputNews[0].value).toBe(
+      `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getDate()}`
+    );
+    expect(inputNews[1].value).toBe(
+      `${newDate.getFullYear()}/${
+        newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1
+      }/${newDate.getDate()}`
     );
 
     wrapper.unmount();

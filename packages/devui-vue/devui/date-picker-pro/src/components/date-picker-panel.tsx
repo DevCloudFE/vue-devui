@@ -35,11 +35,14 @@ export default defineComponent({
             {props.showTime && <TimerPickerPanel visible={props.visible} bindData={timeData.value} onSelectedTime={handlerSelectedTime} />}
             {ctx.slots?.rightArea && <div class={ns.e('panel-right-area')}>{ctx.slots?.rightArea()}</div>}
           </div>
-          {props.showTime && (
+          {ctx.slots?.footerArea && <div class={ns.e('panel-footer')}>{ctx.slots?.footerArea()}</div>}
+          {!ctx.slots?.footerArea && props.showTime && (
             <div class={ns.e('panel-footer')}>
-              <Button variant="solid" onClick={handlerConfirm}>
-                确定
-              </Button>
+              <div class={ns.e('panel-footer-center')}>
+                <Button variant="solid" onClick={handlerConfirm}>
+                  确定
+                </Button>
+              </div>
             </div>
           )}
         </div>

@@ -99,7 +99,20 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
 
   const onChangeRangeFocusType = (type: string) => {
     focusType.value = type;
+    if (focusType.value === 'start') {
+      setTimeout(() => {
+        startInputRef.value?.focus();
+      });
+    } else {
+      setTimeout(() => {
+        endInputRef.value?.focus();
+      });
+    }
   };
+
+  ctx.expose({
+    focusChange: onChangeRangeFocusType,
+  });
 
   return {
     containerRef,

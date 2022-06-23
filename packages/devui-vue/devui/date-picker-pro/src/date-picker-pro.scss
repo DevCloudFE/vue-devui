@@ -35,7 +35,10 @@ $input-height-lg: 46px;
   &-footer {
     border-top: 1px solid $devui-dividing-line;
     padding: 8px;
-    text-align: center;
+
+    &-center {
+      text-align: center;
+    }
   }
 
   // 右侧快捷操作\
@@ -47,6 +50,7 @@ $input-height-lg: 46px;
     overflow: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    border-left: 1px solid $devui-dividing-line;
 
     &::-webkit-scrollbar {
       width: 0 !important;
@@ -247,39 +251,44 @@ $input-height-lg: 46px;
     }
   }
   .#{$devui-prefix}-time-list {
-    height: 275px;
     border: none;
 
-    .time-item .time-ul {
-      .time-li {
-        padding: 2px 7px;
-        line-height: 22px;
+    .time-item {
+      border: none;
 
-        &:hover {
-          background-color: transparent;
-        }
-
-        span {
-          font-size: $devui-font-size-sm;
-          border-radius: $devui-border-radius-feedback;
+      .time-ul {
+        .time-li {
+          padding: 0 7px;
+          line-height: 22px;
+          height: 22px;
+          margin-bottom: 8px;
 
           &:hover {
-            background-color: $devui-list-item-hover-bg;
-            color: $devui-list-item-hover-text;
+            background-color: transparent;
+          }
+
+          span {
+            font-size: $devui-font-size-sm;
+            border-radius: $devui-border-radius-feedback;
+
+            &:hover {
+              background-color: $devui-list-item-hover-bg;
+              color: $devui-list-item-hover-text;
+            }
           }
         }
-      }
 
-      .active-li {
-        background-color: transparent;
+        .active-li {
+          background-color: transparent;
 
-        span {
-          background-color: $devui-brand-active;
-          color: $devui-light-text;
-
-          &:hover {
+          span {
             background-color: $devui-brand-active;
             color: $devui-light-text;
+
+            &:hover {
+              background-color: $devui-brand-active;
+              color: $devui-light-text;
+            }
           }
         }
       }

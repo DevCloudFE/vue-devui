@@ -33,6 +33,10 @@ export default defineComponent({
       type: String,
       default: '23:59:59',
     },
+    itemHeight: {
+      type: Number,
+      default: 32,
+    },
   },
   emits: ['change'],
 
@@ -45,6 +49,7 @@ export default defineComponent({
       props.minTime,
       props.maxTime,
       props.format,
+      props.itemHeight,
       timeListDom,
       ctx
     );
