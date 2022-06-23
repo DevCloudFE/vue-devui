@@ -7,11 +7,12 @@ const DEFAULT_CONFIG = {
   recursive: true, // 是否需要获取非直接子节点
 };
 
-export default function(){
-  const nodeMap = new Map<string, IInnerTreeNode[]>();
+const nodeMap = new Map<string, IInnerTreeNode[]>();
+
+export default function() {
   return function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
     const getLevel = (node: IInnerTreeNode): number => {
-      return data.value.find((item) => item.id === node.id).level;
+      return data.value.find((item) => item.id === node.id)?.level;
     };
 
     const getChildren = (node: IInnerTreeNode, userConfig = DEFAULT_CONFIG): IInnerTreeNode[] => {
@@ -98,6 +99,10 @@ export default function(){
       data.value = generateInnerTree(newTree);
     };
 
+    const getTree = () => {
+      return data.value;
+    };
+
     onUnmounted(() => {
       nodeMap.clear();
     });
@@ -111,6 +116,7 @@ export default function(){
       getNode,
       setNodeValue,
       setTree,
+      getTree,
     };
   };
 }
