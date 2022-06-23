@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue';
+import { defineComponent, h } from 'vue';
 import type { SetupContext } from 'vue';
 import DCheckbox from '../../../checkbox/src/checkbox';
 import DCheckboxGroup from '../../../checkbox/src/checkbox-group';
@@ -7,6 +7,7 @@ import DIcon from '../../../icon/src/icon';
 import { TKey } from '../transfer-types';
 import { transferBodyProps, TTransferBodyProps, transferBodyState } from '../composables/use-transfer-body';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
+import '../transfer.scss';
 
 export default defineComponent({
   name: 'DTransferBody',
@@ -51,6 +52,22 @@ export default defineComponent({
         </div>
       );
     };
+    const renderCheckboxInner = (data) => {
+      if (props.renderContent) {
+        return props.renderContent(h, data);
+      } else {
+        return data.name;
+      }
+    };
+    const renderCheckbox = () => {
+      return props.data.map((data) => {
+        return (
+          <DCheckbox disabled={data.disabled} value={data.value} class="transfer-checkbox">
+            {renderCheckboxInner(data)}
+          </DCheckbox>
+        );
+      });
+    };
     const renderList = () => {
       if (!props.data.length) {
         return <div class={ns.em('panel', 'body-list-empty')}>暂无数据</div>;
@@ -58,12 +75,12 @@ export default defineComponent({
       return (
         <DCheckboxGroup
           modelValue={props.defaultChecked}
-          options={props.data}
           class={ns.em('panel', 'body-list-group')}
           onChange={(value) => {
             ctx.emit('change', value);
-          }}
-        />
+          }}>
+          {renderCheckbox()}
+        </DCheckboxGroup>
       );
     };
     const renderDragList = () => {
