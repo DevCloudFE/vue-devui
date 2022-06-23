@@ -3,7 +3,6 @@ import DRangeDatePickerPro from '../src/components/range-date-picker-pro';
 import { nextTick, ref } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import DButton from '../../button/src/button';
-import { divide } from 'lodash';
 
 const datePickerNs = useNamespace('date-picker-pro', true);
 const rangeDatePickerNs = useNamespace('range-date-picker-pro', true);
@@ -299,7 +298,7 @@ describe('range-date-picker-pro test', () => {
     wrapper.unmount();
   });
 
-  it('range-date-picker-pro footerArea slot', async () => {
+  it('range-date-picker-pro footer slot', async () => {
     const datePickerProValue = ref<(Date | string)[]>(['', '']);
     const setToday = () => {
       datePickerProValue.value = [new Date(new Date().getTime()), new Date(new Date().getTime() + 1 * 24 * 3600 * 1000)];
@@ -310,7 +309,7 @@ describe('range-date-picker-pro test', () => {
           <DRangeDatePickerPro
             v-model={datePickerProValue.value}
             v-slots={{
-              footerArea: () => (
+              footer: () => (
                 <div>
                   <d-button variant="solid" color="secondary" onClick={setToday}>
                     今天
@@ -327,10 +326,10 @@ describe('range-date-picker-pro test', () => {
     await nextTick();
     await nextTick();
     const pickerPanel = container.find(pickerPanelClass);
-    const footerArea = pickerPanel.find(datePickerNs.e('panel-footer'));
-    expect(footerArea.exists()).toBeTruthy();
+    const footer = pickerPanel.find(datePickerNs.e('panel-footer'));
+    expect(footer.exists()).toBeTruthy();
 
-    const button = footerArea.find('button');
+    const button = footer.find('button');
     expect(button.exists()).toBeTruthy();
     const date = new Date();
     await button.trigger('click');
