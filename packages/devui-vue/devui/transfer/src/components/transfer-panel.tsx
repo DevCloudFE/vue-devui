@@ -13,7 +13,7 @@ export default defineComponent({
     transferBody,
   },
   props: transferPanelProps,
-  emits: ['updteAllChecked', 'changeButtonState', 'changeChecked'],
+  emits: ['updateAllChecked', 'changeButtonState', 'changeChecked'],
   setup(props: TTransferPanelProps, ctx: SetupContext) {
     const ns = useNamespace('transfer');
     const {
@@ -58,6 +58,7 @@ export default defineComponent({
             dragend={props.dragend}
             data={filterData.value}
             queryString={query.value}
+            renderContent={props.renderContent}
             onChange={(value: string[]) => {
               updateCheckedDataHandle(value);
             }}

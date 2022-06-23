@@ -159,3 +159,12 @@ $devui-transfer-body-list-item-height: 32px;
 .#{$devui-prefix}-transfer–drag-over-bottom {
   border-bottom-color: $devui-brand-active;
 }
+
+.transfer-checkbox .devui-checkbox label {
+  display: flex;
+  width: 100% !important;
+}
+
+.transfer-checkbox .devui-checkbox label .devui-checkbox__material {
+  flex-shrink: 0;
+}
