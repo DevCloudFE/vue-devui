@@ -1,11 +1,12 @@
 import { computed, inject, onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import { OptionProps, UseOptionReturnType } from '../select-types';
-import { SELECT_TOKEN } from '../const';
+import { SELECT_TOKEN, OPTION_GROUP_TOKEN } from '../const';
 import { className } from '../utils';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 export default function useOption(props: OptionProps): UseOptionReturnType {
   const ns = useNamespace('select');
   const select = inject(SELECT_TOKEN, null);
+  const optionGroup = inject(OPTION_GROUP_TOKEN, null);
   const currentName = computed(() => {
     return props.name || props.value;
   });
@@ -30,17 +31,19 @@ export default function useOption(props: OptionProps): UseOptionReturnType {
     };
   });
 
+  const isDisabled = computed(() => props.disabled || (optionGroup?.disabled ? true : false));
+
   const isObjectOption = ref(!!props.name);
 
   const selectOptionCls = computed(() => {
     return className(ns.e('item'), {
       active: isOptionSelected.value,
-      disabled: props.disabled,
+      disabled: isDisabled.value,
     });
   });
 
   const optionSelect = (): void => {
-    if (!props.disabled) {
+    if (!isDisabled.value) {
       select?.valueChange(optionItem.value);
     }
   };
