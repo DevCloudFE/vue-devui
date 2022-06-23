@@ -57,11 +57,12 @@ export default defineComponent({
             data={sourceData.value}
             defaultChecked={sourceChecked.value}
             direction={sourceDirection.value}
+            renderContent={props.renderContent}
             class={ns.e('source')}
             v-slots={{
               header: ctx.slots.sourceHeader,
             }}
-            onUpdteAllChecked={(value: IItem[]) => {
+            onUpdateAllChecked={(value: IItem[]) => {
               updateSourceAllCheckedHandle(value);
             }}
             onChangeChecked={(value: IItem[]) => {
@@ -96,11 +97,12 @@ export default defineComponent({
             data={targetData.value}
             defaultChecked={targetChecked.value}
             direction={targetDirection.value}
+            renderContent={props.renderContent}
             class={ns.e('target')}
             v-slots={{
               header: ctx.slots.targetHeader,
             }}
-            onUpdteAllChecked={(value: IItem[]) => {
+            onUpdateAllChecked={(value: IItem[]) => {
               updateTargetAllCheckedHandle(value);
             }}
             onChangeChecked={(value: IItem[]) => {

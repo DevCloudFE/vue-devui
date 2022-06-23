@@ -1,4 +1,4 @@
-import { PropType, ExtractPropTypes, computed, ref, watchEffect } from 'vue';
+import { PropType, ExtractPropTypes, computed, ref, watchEffect, RenderFunction, VNode } from 'vue';
 import type { SetupContext } from 'vue';
 import { IItem, TKey, ICheckList, filterValue } from '../transfer-types';
 
@@ -51,6 +51,9 @@ export const transferBodyProps = {
   dragend: {
     type: Function as PropType<(event: DragEvent, item: IItem) => void>,
   },
+  renderContent: {
+    type: Function as PropType<(h: RenderFunction, option: IItem) => VNode>,
+  },
 } as const;
 
 export type TTransferBodyProps = ExtractPropTypes<typeof transferBodyProps>;
@@ -60,7 +63,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
   const query = ref('');
   const checkedListModels = ref<Array<ICheckList>>([]);
   const dragHighlight = ref<TKey | null>(null);
-  const dragOverNodeKey = ref('');
+  const dragOverNodeKey = ref();
   const dropPosition = ref<number | null>(null);
   const dragTimer = ref<number>(0);
   const dragRef = ref<HTMLElement | null>(null);
@@ -81,7 +84,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
     checkedListModels.value[idx].checked = value;
     ctx.emit(
       'change',
-      checkedListModels.value.filter((item) => item.checked)
+      checkedListModels.value.filter((item) => item.checked).map((item) => item.value)
     );
   };
   /**
@@ -206,14 +209,11 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
   watchEffect(() => {
     const models: Array<ICheckList> = [];
     query.value = props.queryString;
-    const checkedValues = props.defaultChecked.map((item) => {
-      return item.value;
-    });
     props.data.forEach((item) => {
       models.push({
         value: item.value,
         name: item.name,
-        checked: checkedValues.includes(item.value),
+        checked: props.defaultChecked.includes(item.value),
       });
     });
     checkedListModels.value = models;

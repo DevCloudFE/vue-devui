@@ -5,8 +5,8 @@ import { TTransferProps, IItem, TKey, IDargItemAndDropItem } from '../transfer-t
 export const transferState = (props: TTransferProps, ctx: SetupContext) => {
   const sourceTitle = computed(() => props.titles[0]);
   const targetTitle = computed(() => props.titles[1]);
-  const sourceChecked = ref<IItem[]>([]);
-  const targetChecked = ref<IItem[]>([]);
+  const sourceChecked = ref<TKey[]>([]);
+  const targetChecked = ref<TKey[]>([]);
   const sourceData = ref<IItem[]>([]);
   const targetData = ref<IItem[]>([]);
   const sourceDirection = ref('source');
@@ -37,28 +37,28 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
    * updateSourceAllCheckedHandle: 更新源穿梭框全选
    * @param value 是否全选
    */
-  const updateSourceAllCheckedHandle = (value: IItem[]) => {
+  const updateSourceAllCheckedHandle = (value: TKey[]) => {
     sourceChecked.value = value;
   };
   /**
    * updateTargetAllCheckedHandle: 更新目标穿梭框全选
    * @param value 是否全选
    */
-  const updateTargetAllCheckedHandle = (value: IItem[]) => {
+  const updateTargetAllCheckedHandle = (value: TKey[]) => {
     targetChecked.value = value;
   };
   /**
    * updateSourceCheckedHandle: 更新源选中值
    * @param value 是否可用
    */
-  const updateSourceCheckedHandle = (value: IItem[]) => {
+  const updateSourceCheckedHandle = (value: TKey[]) => {
     sourceChecked.value = value;
   };
   /**
    * updateTargetCheckedHandle: 更新目标选中值
    * @param value 是否可用
    */
-  const updateTargetCheckedHandle = (value: IItem[]) => {
+  const updateTargetCheckedHandle = (value: TKey[]) => {
     targetChecked.value = value;
   };
   const updateModelValue = () => {
@@ -73,12 +73,8 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
    */
   const toMoveTargetHandle = () => {
     const notIncluded: IItem[] = [];
-    const checkedValues: TKey[] = [];
-    sourceChecked.value.forEach((item) => {
-      checkedValues.push(item.value);
-    });
     sourceData.value = sourceData.value.filter((item) => {
-      if (!checkedValues.includes(item.value)) {
+      if (!sourceChecked.value.includes(item.value)) {
         return true;
       }
       notIncluded.push(item);
@@ -94,12 +90,8 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
    */
   const toMoveSourceHandle = () => {
     const notIncluded: IItem[] = [];
-    const checkedValues: TKey[] = [];
-    targetChecked.value.forEach((item) => {
-      checkedValues.push(item.value);
-    });
     targetData.value = targetData.value.filter((item) => {
-      if (!checkedValues.includes(item.value)) {
+      if (!targetChecked.value.includes(item.value)) {
         return true;
       }
       notIncluded.push(item);
@@ -167,14 +159,14 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
 
   onMounted(() => {
     const { data } = getTransferData();
-    const sourceValues: IItem[] = [];
-    const targetValues: IItem[] = [];
+    const sourceValues: TKey[] = [];
+    const targetValues: TKey[] = [];
     data.forEach((item) => {
       if (props.sourceDefaultChecked.includes(item.value) && item.disabled === false) {
-        sourceValues.push(item);
+        sourceValues.push(item.value);
       }
       if (props.targetDefaultChecked.includes(item.value) && item.disabled === false) {
-        targetValues.push(item);
+        targetValues.push(item.value);
       }
     });
     const sourceOption: IItem[] = [];
