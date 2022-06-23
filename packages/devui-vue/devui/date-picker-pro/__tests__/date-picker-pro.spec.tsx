@@ -344,7 +344,7 @@ describe('date-picker-pro test', () => {
     wrapper.unmount();
   });
 
-  it('date-picker-pro footerArea slot', async () => {
+  it('date-picker-pro footer slot', async () => {
     const datePickerProValue = ref<Date | string>('');
     const setToday = () => {
       datePickerProValue.value = new Date();
@@ -355,7 +355,7 @@ describe('date-picker-pro test', () => {
           <DDatePickerPro
             v-model={datePickerProValue.value}
             v-slots={{
-              footerArea: () => (
+              footer: () => (
                 <div>
                   <DButton color="primary" onClick={setToday}>
                     今天
@@ -373,10 +373,10 @@ describe('date-picker-pro test', () => {
     await nextTick();
     await nextTick();
     const pickerPanel = container.find(pickerPanelClass);
-    const footerArea = pickerPanel.find(ns.e('panel-footer'));
-    expect(footerArea.exists()).toBeTruthy();
+    const footer = pickerPanel.find(ns.e('panel-footer'));
+    expect(footer.exists()).toBeTruthy();
 
-    const button = footerArea.find('button');
+    const button = footer.find('button');
     expect(button.exists()).toBeTruthy();
     await button.trigger('click');
 

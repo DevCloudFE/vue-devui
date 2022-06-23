@@ -154,10 +154,10 @@ export default defineComponent({
       </slot>
     </template>
   </d-date-picker-pro>
-  <div class="mb10">footer area</div>
+  <div class="mb10">footer</div>
   <d-date-picker-pro v-model="datePickerProValue2" class="mb20 wh250" :showTime="true">
-    <template #footerArea>
-      <slot name="footerArea">
+    <template #footer>
+      <slot name="footer">
         <div class="date-picker-footer">
           <d-button
             variant="solid"
@@ -371,10 +371,10 @@ export default defineComponent({
       </slot>
     </template>
   </d-range-date-picker-pro>
-  <div class="mb10">footer area</div>
+  <div class="mb10">footer</div>
   <d-range-date-picker-pro ref="footerCustom" v-model="datePickerProValue2" class="mb20 wh250" :showTime="true">
-    <template #footerArea>
-      <slot name="footerArea">
+    <template #footer>
+      <slot name="footer">
         <div class="date-picker-footer">
           <d-button
             variant="solid"
@@ -461,10 +461,10 @@ export default defineComponent({
 
 ### DatePickerPro 插槽
 
-| 名称       | 说明                                                     | 跳转 Demo                                 |
-| :--------- | :------------------------------------------------------- | :---------------------------------------- |
-| rightArea  | 自定义 DatePickerPro 日历面板右侧内容， 如：日期快捷选项 | [自定义日历面板区域](#自定义日历面板区域) |
-| footerArea | 自定义 DatePickerPro 日历面板下侧内容                    | [自定义日历面板区域](#自定义日历面板区域) |
+| 名称      | 说明                                                     | 跳转 Demo                                 |
+| :-------- | :------------------------------------------------------- | :---------------------------------------- |
+| rightArea | 自定义 DatePickerPro 日历面板右侧内容， 如：日期快捷选项 | [自定义日历面板区域](#自定义日历面板区域) |
+| footer    | 自定义 DatePickerPro 日历面板下侧内容                    | [自定义日历面板区域](#自定义日历面板区域) |
 
 ### DatePickerPro 类型定义
 
@@ -513,7 +513,7 @@ type Format = string;
 
 ### RangeDatePickerPro 插槽
 
-| 名称       | 说明                                                              | 跳转 Demo                                         |
-| :--------- | :---------------------------------------------------------------- | :------------------------------------------------ |
-| rightArea  | 自定义 RangeDatePickerPro 日历面板右侧内容， 如：日期范围快捷选项 | [自定义日期范围面板区域](#自定义日期范围面板区域) |
-| footerArea | 自定义 RangeDatePickerPro 日历面板下侧内容                        | [自定义日期范围面板区域](#自定义日期范围面板区域) |
+| 名称      | 说明                                                              | 跳转 Demo                                         |
+| :-------- | :---------------------------------------------------------------- | :------------------------------------------------ |
+| rightArea | 自定义 RangeDatePickerPro 日历面板右侧内容， 如：日期范围快捷选项 | [自定义日期范围面板区域](#自定义日期范围面板区域) |
+| footer    | 自定义 RangeDatePickerPro 日历面板下侧内容                        | [自定义日期范围面板区域](#自定义日期范围面板区域) |

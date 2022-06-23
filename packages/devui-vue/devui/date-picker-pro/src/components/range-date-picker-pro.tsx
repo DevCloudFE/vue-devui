@@ -40,7 +40,7 @@ export default defineComponent({
     return () => {
       const vSlots = {
         rightArea: ctx.slots?.rightArea && (() => renderSlot(useSlots(), 'rightArea')),
-        footerArea: ctx.slots?.footerArea && (() => renderSlot(useSlots(), 'footerArea')),
+        footer: ctx.slots?.footer && (() => renderSlot(useSlots(), 'footer')),
       };
 
       return (
