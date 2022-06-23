@@ -302,6 +302,69 @@ export default defineComponent({
 
 :::
 
+### 将选项进行分组
+
+通过 d-option-group 设置选项分组，它的 label 属性为分组名
+:::demo
+
+```vue
+<template>
+  <d-select v-model="groupValue" :allow-clear="true" class="select-option-group">
+    <d-option-group label="分组一">
+      <d-option v-for="(item, index) in options1.data" :key="index" :value="item.value" :name="item.name"></d-option>
+    </d-option-group>
+    <d-option-group label="分组二" :disabled="true">
+      <d-option v-for="(item, index) in options2.data" :key="index" :value="item.value" :name="item.name"></d-option>
+    </d-option-group>
+  </d-select>
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const groupValue = ref('');
+    const items = new Array(6).fill(0).map((item, i) => {
+      return {
+        value: `Option ${i + 1}`,
+        name: `Option ${i + 1}`,
+      };
+    });
+    const items1 = new Array(6).fill(0).map((item, i) => {
+      return {
+        value: `Test ${i + 1}`,
+        name: `Test ${i + 1}`,
+      };
+    });
+    const options1 = reactive({
+      data: items,
+    });
+    const options2 = reactive({
+      data: items1,
+    });
+    return {
+      groupValue,
+      options1,
+      options2,
+    };
+  },
+});
+</script>
+<style>
+.select-option-group {
+  ul {
+    padding: 0;
+    li {
+      list-style-type: none;
+    }
+  }
+}
+</style>
+```
+
+:::
+
 ### 筛选、搜索选项
 
 可以利用筛选、搜索功能快速查找选项
@@ -480,10 +543,10 @@ export default defineComponent({
 
 ### Select 插槽
 
-| 名称    | 说明                       |
-| :------ | :------------------------- |
-| default | 自定义 Select 下拉面板内容 |
-| empty   | 自定义无选项时下拉面板内容 |
+| 名称    | 说明                                              |
+| :------ | :------------------------------------------------ |
+| default | 自定义 Select 下拉面板内容（OptionGroup/ Option） |
+| empty   | 自定义无选项时下拉面板内容                        |
 
 ### Select 方法
 
@@ -492,6 +555,19 @@ export default defineComponent({
 | focus        | 使选择器的输入框获取焦点    | -                                     |
 | blur         | 使选择器的输入框失去焦点    | -                                     |
 | toggleChange | 使选择器的下拉列表显示/隐藏 | [下拉列表显隐方法](#下拉列表显隐方法) |
+
+### OptionGroup 参数
+
+| 参数名   | 类型      | 默认  | 说明                             | 跳转 Demo                         |
+| :------- | :-------- | :---- | :------------------------------- | :-------------------------------- |
+| label    | `string`  | ''    | 可选，分组的组名                 | [将选项进行分组](#将选项进行分组) |
+| disabled | `boolean` | false | 可选，是否禁用该分组下的所有选项 | [将选项进行分组](#将选项进行分组) |
+
+### OptionGroup 插槽
+
+| 名称    | 说明                             |
+| :------ | :------------------------------- |
+| default | 自定义单个选项显示内容（Option） |
 
 ### Option 参数
 

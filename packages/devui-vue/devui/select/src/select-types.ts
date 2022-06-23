@@ -211,3 +211,17 @@ export interface UseSelectFunctionReturn {
   blur: () => void;
   focus: () => void;
 }
+
+export const optionGroupProps = {
+  label: {
+    type: String,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+};
+
+export type OptionGroupProps = ExtractPropTypes<typeof optionGroupProps>;
+
+export type OptionGroupContext = OptionGroupProps;
