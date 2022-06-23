@@ -40,6 +40,7 @@ export interface IUseCore {
   getNode: (node: IInnerTreeNode) => IInnerTreeNode;
   setNodeValue: (node: IInnerTreeNode, key: keyof IInnerTreeNode, value: valueof<IInnerTreeNode>) => void;
   setTree: (newTree: IInnerTreeNode[]) => void;
+  getTree: () => IInnerTreeNode[];
 }
 
 export interface IUseCheck {
@@ -68,6 +69,7 @@ export interface IUseSelect {
   selectNode: (node: IInnerTreeNode) => void;
   deselectNode: (node: IInnerTreeNode) => void;
   toggleSelectNode: (node: IInnerTreeNode) => void;
+  getSelectedNode: () => IInnerTreeNode;
 }
 
 export interface IUseToggle {
