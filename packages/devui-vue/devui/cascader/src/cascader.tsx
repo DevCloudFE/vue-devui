@@ -1,6 +1,6 @@
 // 公共库
 import { cloneDeep } from 'lodash';
-import { defineComponent, ref, Ref, reactive, watch, toRef } from 'vue';
+import { defineComponent, ref, Ref, reactive, watch, toRef, Transition } from 'vue';
 
 // 组件
 import DCascaderList from '../components/cascader-list';
@@ -18,23 +18,20 @@ import './cascader.scss';
 export default defineComponent({
   name: 'DCascader',
   props: cascaderProps,
+  emits: ['update:modelValue'],
   setup(props: CascaderProps, ctx) {
-    const origin = ref(null);
-    const cascaderOptions = reactive<[CascaderItem[]]>(cloneDeep([ props?.options ]));
+    const origin = ref<HTMLElement>();
+    const overlay = ref<HTMLElement>();
+    const cascaderOptions = reactive<[CascaderItem[]]>(cloneDeep([props?.options]));
     const multiple = toRef(props, 'multiple');
     const inputValue = ref('');
     const tagList = reactive<CascaderItem[]>([]); // 多选模式下选中的值数组，用于生成tag
     const rootStyle = useRootStyle(props);
-    let initIptValue = props.value.length > 0 ? true : false; // 有value默认值时，初始化输出内容
+    const showClearable = ref(false);
+    let initIptValue = props.modelValue.length > 0 ? true : false; // 有value默认值时，初始化输出内容
 
-    const position = reactive({
-      originX: 'left',
-      originY: 'bottom',
-      overlayX: 'left',
-      overlayY: 'top'
-    } as const);
     // popup弹出层
-    const { menuShow, menuOpenClass, openPopup, stopDefault, updateStopDefaultType } = popupHandles(props);
+    const { menuShow, menuOpenClass, openPopup, stopDefault, updateStopDefaultType, devuiCascader } = popupHandles(props);
     // 配置class
     const rootClasses = useRootClassName(props, menuShow);
     // 传递给cascaderItem的props
@@ -43,7 +40,7 @@ export default defineComponent({
       if (!showPath) {
         inputValueCache.value = label;
       } else {
-        inputValueCache.value += (label + (arr?.length > 0 ? ' / ' : ''));
+        inputValueCache.value += label + (arr?.length > 0 ? ' / ' : '');
       }
     };
     /**
@@ -54,7 +51,9 @@ export default defineComponent({
      * @param index value的下标，起始为0
      */
     const updateCascaderView = (value: CascaderValueType, currentOption: CascaderItem[], index: number) => {
-      if (index === value.length) {return;}
+      if (index === value.length) {
+        return;
+      }
       const i = value[index] as number;
       // 当前的子级
       const current = currentOption[i];
@@ -69,6 +68,14 @@ export default defineComponent({
         cascaderOptions.splice(index + 1, cascaderOptions.length - 1);
       }
     };
+
+    /**
+     * 根据value筛选每列中选中item
+     */
+    const getCurrentOption = (currentOption: CascaderItem[], i: number) => {
+      return currentOption.filter((item) => item?.value === i)[0];
+    };
+
     /**
      * 选中项输出
      * 需要区分单选或多选模式
@@ -79,7 +86,9 @@ export default defineComponent({
     const updateCascaderValue = (value: CascaderValueType, currentOption: CascaderItem[], index: number) => {
       if (!multiple.value) {
         // 单选模式
-        if (index === value.length) {return;}
+        if (index === value.length) {
+          return;
+        }
         const i = value[index] as number;
         // 当前的子级
         const current = getCurrentOption(currentOption, i);
@@ -97,15 +106,9 @@ export default defineComponent({
       }
     };
     /**
-     * 根据value筛选每列中选中item
-     */
-    const getCurrentOption = (currentOption: CascaderItem[], i: number) => {
-      return currentOption.filter(item => item?.value === i)[0];
-    };
-    /**
      * 监听视图更新
      */
-    watch(cascaderItemNeedProps.activeIndexs, val => {
+    watch(cascaderItemNeedProps.activeIndexs, (val) => {
       // TODO 多选模式下优化切换选择后的视图切换
       cascaderOptions.splice(val.length, cascaderOptions.length - 1);
       updateCascaderView(val, cascaderOptions[0], 0);
@@ -113,61 +116,89 @@ export default defineComponent({
     /**
      * 监听点击最终的节点输出内容
      */
-    watch(() => cascaderItemNeedProps.confirmInputValueFlg.value, () => {
-      // 单选和多选模式初始化
-      multiple.value
-        ? initTagList(tagList)
-        : initSingleIptValue(cascaderItemNeedProps.inputValueCache);
-      // 输出确认的选中值
-      cascaderItemNeedProps.value = reactive(cloneDeep(cascaderItemNeedProps.valueCache));
-      menuShow.value = false;
-      // 点击确定过后禁止再次选中
-      updateStopDefaultType();
-      // 更新值
-      updateCascaderValue(cascaderItemNeedProps.value, cascaderOptions[0], 0);
-      inputValue.value = cascaderItemNeedProps.inputValueCache.value;
-      // 单选模式默认回显视图的选中态
-      // 多选模式不默认视图打开状态，因为选中了太多个，无法确定展示哪一种选中态
-      if (initIptValue && !multiple.value) {
-        initActiveIndexs(props.value, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs);
-        initIptValue = false; // 只需要初始化一次，之后不再执行
+    watch(
+      () => cascaderItemNeedProps.confirmInputValueFlg.value,
+      () => {
+        // 单选和多选模式初始化
+        multiple.value ? initTagList(tagList) : initSingleIptValue(cascaderItemNeedProps.inputValueCache);
+        // 输出确认的选中值
+        cascaderItemNeedProps.value = reactive(cloneDeep(cascaderItemNeedProps.valueCache));
+        menuShow.value = false;
+        // 点击确定过后禁止再次选中
+        updateStopDefaultType();
+        // 更新值
+        updateCascaderValue(cascaderItemNeedProps.value, cascaderOptions[0], 0);
+        inputValue.value = cascaderItemNeedProps.inputValueCache.value;
+        // 单选模式默认回显视图的选中态
+        // 多选模式不默认视图打开状态，因为选中了太多个，无法确定展示哪一种选中态
+        if (initIptValue && !multiple.value) {
+          initActiveIndexs(props.modelValue, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs);
+          initIptValue = false; // 只需要初始化一次，之后不再执行
+        }
+        ctx.emit('update:modelValue', cascaderItemNeedProps.value);
+      },
+      {
+        immediate: true,
       }
-    }, {
-      immediate: true
-    });
+    );
+    const showClear = () => {
+      showClearable.value = true;
+    };
+    const hideClear = () => {
+      showClearable.value = false;
+    };
+    const clearData = (e) => {
+      e.stopPropagation();
+      inputValue.value = '';
+      menuShow.value = false;
+      ctx.emit('update:modelValue', []);
+    };
 
     return () => (
-      <>
-        <div class={rootClasses.value} style={rootStyle.inputWidth} onClick={openPopup} ref={origin} {...ctx.attrs}>
-          { multiple.value
-            ? <DMultipleBox placeholder={props.placeholder} activeOptions={tagList}></DMultipleBox>
-            : <d-input
-              disabled={props.disabled}
-              placeholder={props.placeholder}
-              modelValue={inputValue.value}
-            ></d-input>
-          }
-          <div class="devui-cascader__icon devui-drop-icon-animation">
-            <d-icon name="select-arrow" size="12px"></d-icon>
-          </div>
-        </div>
-        <d-flexible-overlay origin={origin} backgroundStyle={'background: transparent'} v-model={[menuShow.value, 'visible']} position={position}>
-          <div class="devui-drop-menu-animation">
-            <div class={`${menuOpenClass.value} devui-dropdown-menu`}>
-              {cascaderOptions.map((item, index) => {
-                return <DCascaderList
-                  cascaderItems={item}
-                  ul-index={index}
-                  cascaderItemNeedProps={cascaderItemNeedProps}
-                  cascaderOptions={cascaderOptions}
-                  dropdownWidth={props.dropdownWidth}
-                  {...props}
-                ></DCascaderList>;
-              })}
+      <div ref={devuiCascader}>
+        <div
+          class={rootClasses.value}
+          style={rootStyle.inputWidth}
+          ref={origin}
+          onClick={openPopup}
+          {...ctx.attrs}
+          onMouseenter={showClear}
+          onMouseleave={hideClear}>
+          {multiple.value ? (
+            <DMultipleBox placeholder={props.placeholder} activeOptions={tagList}></DMultipleBox>
+          ) : (
+            <d-input disabled={props.disabled} placeholder={props.placeholder} modelValue={inputValue.value}></d-input>
+          )}
+          {!showClearable.value && (
+            <div class="devui-cascader__icon devui-drop-icon-animation">
+              <d-icon name="select-arrow" size="12px"></d-icon>
             </div>
-          </div>
-        </d-flexible-overlay>
-      </>
+          )}
+          {showClearable.value && props.clearable && (
+            <div class="devui-cascader__icon devui-cascader__close" onClick={clearData}>
+              <d-icon name="close" size="12px"></d-icon>
+            </div>
+          )}
+        </div>
+        <Transition name="fade">
+          <d-flexible-overlay origin={origin.value} backgroundStyle={'background: transparent'} ref={overlay} v-model={menuShow.value}>
+            <div class="devui-drop-menu-animation">
+              <div class={`${menuOpenClass.value} devui-dropdown-menu`}>
+                {cascaderOptions.map((item, index) => {
+                  return (
+                    <DCascaderList
+                      cascaderItems={item}
+                      ul-index={index}
+                      cascaderItemNeedProps={cascaderItemNeedProps}
+                      cascaderOptions={cascaderOptions}
+                      {...props}></DCascaderList>
+                  );
+                })}
+              </div>
+            </div>
+          </d-flexible-overlay>
+        </Transition>
+      </div>
     );
   },
 });
