@@ -14,10 +14,10 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
   const placeholder = computed(() => props.placeholder);
   const isMouseEnter = ref(false);
 
-  const toggleChange = (bool: boolean) => {
-    isPanelShow.value = bool;
-    ctx.emit('toggleChange', bool);
-    if (!bool) {
+  const toggleChange = (isShow: boolean) => {
+    isPanelShow.value = isShow;
+    ctx.emit('toggleChange', isShow);
+    if (!isShow) {
       ctx.emit('blur');
     }
   };
