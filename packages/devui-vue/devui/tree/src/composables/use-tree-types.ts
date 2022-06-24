@@ -60,7 +60,7 @@ export interface IUseDisable {
 }
 
 export interface IUseOperate {
-  insertBefore: (parentNode: ITreeNode, node: ITreeNode, referenceNode: ITreeNode) => void;
+  insertBefore: (parentNode: ITreeNode, node: ITreeNode, referenceNode?: ITreeNode) => void;
   removeNode: (node: ITreeNode) => void;
   editNode: (node: ITreeNode, label: string) => void;
 }
@@ -89,3 +89,7 @@ export type IUseTree = {
 export type ICheckStrategy = 'upward' | 'downward' | 'both' | 'none';
 
 export type ICheck = boolean | ICheckStrategy;
+
+export type IOperateItem = 'add' | 'delete' | 'edit';
+
+export type IOperate = boolean | IOperateItem | Array<IOperateItem>;
