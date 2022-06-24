@@ -2,6 +2,7 @@ import { ref, defineComponent, PropType, SetupContext } from 'vue';
 import { usePopupLine } from './composables/use-popup-line';
 import { ArrType, TimeListItem } from '../../types';
 import TimeScroll from '../time-scroll';
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
 import './index.scss';
 
@@ -41,6 +42,7 @@ export default defineComponent({
   emits: ['change'],
 
   setup(props, ctx: SetupContext) {
+    const ns = useNamespace('time-list');
     const timeListDom = ref<Element>();
     const { getNewTime, activeTimeFun, resetTimeValue, resetScrollTop } = usePopupLine(
       props.hourList as Array<ArrType>,
@@ -104,7 +106,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class="devui-time-list" ref={timeListDom}>
+        <div class={ns.b()} ref={timeListDom}>
           {formatTimeUl()}
         </div>
       );
