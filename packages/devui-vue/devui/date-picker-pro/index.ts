@@ -9,7 +9,7 @@ export { DatePickerPro, DRangeDatePickerPro };
 export default {
   title: 'DatePickerPro 日期选择器',
   category: '数据录入',
-  status: '15%',
+  status: '50%',
   install(app: App): void {
     app.component(DatePickerPro.name, DatePickerPro);
     app.component(DRangeDatePickerPro.name, DRangeDatePickerPro);
