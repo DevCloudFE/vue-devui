@@ -22,7 +22,7 @@ export default defineComponent({
   setup(props: TreeProps, context: SetupContext) {
     const { slots, expose } = context;
     const treeInstance = getCurrentInstance();
-    const { data, check } = toRefs(props);
+    const { data, check, operate } = toRefs(props);
     const ns = useNamespace('tree');
 
     const userPlugins = [useSelect(), useOperate(), useMergeNodes()];
@@ -60,7 +60,7 @@ export default defineComponent({
           nodeData: treeNode,
         })
       ) : (
-        <DTreeNode data={treeNode} check={check.value}>
+        <DTreeNode data={treeNode} check={check.value} operate={operate.value}>
           {{
             default: () =>
               slots.content ? renderSlot(useSlots(), 'content', { nodeData: treeNode }) : <DTreeNodeContent data={treeNode} />,
