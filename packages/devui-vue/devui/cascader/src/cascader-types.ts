@@ -1,7 +1,7 @@
 import type { PropType, ExtractPropTypes, Ref } from 'vue';
 import { UnwrapNestedRefs } from '@vue/reactivity';
 
-type TriggerTypes = 'hover'|'click';
+type TriggerTypes = 'hover' | 'click';
 
 export interface CascaderItem {
   label: string;
@@ -29,7 +29,7 @@ export const cascaderProps = {
    */
   trigger: {
     type: String as PropType<TriggerTypes>,
-    default: 'hover'
+    default: 'hover',
   },
   /**
    * 可选，单位 px，用于控制组件输入框宽度和下拉的宽度
@@ -38,7 +38,7 @@ export const cascaderProps = {
    */
   width: {
     type: Number || String,
-    default: 200
+    default: 200,
   },
   /**
    * 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等
@@ -47,7 +47,7 @@ export const cascaderProps = {
    */
   dropdownWidth: {
     type: Number || String,
-    default: 200
+    default: 200,
   },
   /**
    * 必选，级联器的菜单信息
@@ -57,7 +57,7 @@ export const cascaderProps = {
   options: {
     type: Array as PropType<CascaderItem[]>,
     default: [],
-    required: true
+    required: true,
   },
   /**
    * 可选，级联器是否开启多选模式，开启后为 checkbox 选择
@@ -66,23 +66,26 @@ export const cascaderProps = {
    */
   multiple: {
     type: Boolean,
-    default: false
+    default: false,
   },
   /**
    * 可选，级联器选中项是否显示路径，仅单选模式下生效
    */
   showPath: {
     type: Boolean,
-    default: false
+    default: false,
   },
   /**
    * 可选，需要选中项的value集合
    * @type {CascaderValueType}
    * @default []
    */
-  value: {
+  modelValue: {
     type: Array as PropType<CascaderValueType>,
-    default: []
+    default: [],
+  },
+  'onUpdate:modelValue': {
+    type: Function as PropType<(v: boolean) => void>,
   },
   /**
    * 可选，级联器是否禁用
@@ -91,7 +94,7 @@ export const cascaderProps = {
    */
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   /**
    * 可选，没有选择时的输入框展示信息
@@ -100,11 +103,15 @@ export const cascaderProps = {
    */
   placeholder: {
     type: String,
-    default: ''
+    default: '',
   },
   change: {
     type: Function as PropType<(v: CascaderValueType, k: CascaderItem[]) => void>,
-    default: undefined
+    default: undefined,
+  },
+  clearable: {
+    type: Boolean,
+    default: true,
   },
 } as const;
 
@@ -114,7 +121,8 @@ export interface PopupTypes {
   menuShow: Ref<boolean>;
   menuOpenClass: Ref<string>;
   stopDefault: Ref<boolean>;
-  openPopup:  (e?: MouseEvent) => void;
+  devuiCascader: Ref<HTMLElement | undefined>;
+  openPopup: (e?: MouseEvent) => void;
   updateStopDefaultType: () => void;
 }
 
@@ -157,10 +165,12 @@ export const cascaderulProps = {
    */
   cascaderItems: {
     type: Array as PropType<CascaderItem[]>,
-    default: (): CascaderItem[] => ([{
-      label: '',
-      value: null
-    }]),
+    default: (): CascaderItem[] => [
+      {
+        label: '',
+        value: null,
+      },
+    ],
   },
   /**
    * 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等
@@ -169,7 +179,7 @@ export const cascaderulProps = {
    */
   dropdownWidth: {
     type: Number || String,
-    default: 200
+    default: 200,
   },
   /**
    * 当前选中的ul下标
@@ -178,23 +188,27 @@ export const cascaderulProps = {
    */
   ulIndex: {
     type: Number,
-    default: 0
+    default: 0,
   },
   cascaderItemNeedProps: {
     type: Object as PropType<CascaderItemNeedType>,
-    default: (): CascaderItemNeedType => ({})
+    default: (): CascaderItemNeedType => ({}),
   },
   stopDefault: {
     type: Boolean,
-    default: false
+    default: false,
   },
   cascaderOptions: {
     type: Array as unknown as PropType<[CascaderItem[]]>,
-    default: (): [CascaderItem[]] => ([[{
-      label: '',
-      value: null
-    }]])
-  }
+    default: (): [CascaderItem[]] => [
+      [
+        {
+          label: '',
+          value: null,
+        },
+      ],
+    ],
+  },
 };
 export type CascaderulProps = ExtractPropTypes<typeof cascaderulProps>;
 
