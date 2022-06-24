@@ -17,6 +17,9 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
   const toggleChange = (bool: boolean) => {
     isPanelShow.value = bool;
     ctx.emit('toggleChange', bool);
+    if (!bool) {
+      ctx.emit('blur');
+    }
   };
 
   onClickOutside(containerRef, () => {
@@ -26,6 +29,7 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
   const onFocus = function (e: MouseEvent) {
     e.stopPropagation();
     toggleChange(true);
+    ctx.emit('focus', e);
   };
 
   const format = computed(() => {

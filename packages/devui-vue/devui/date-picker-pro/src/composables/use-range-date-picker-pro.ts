@@ -19,6 +19,9 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   const toggleChange = (bool: boolean) => {
     isPanelShow.value = bool;
     ctx.emit('toggleChange', bool);
+    if (!bool) {
+      ctx.emit('blur');
+    }
   };
 
   onClickOutside(containerRef, () => {
@@ -40,6 +43,10 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
       });
     }
     toggleChange(true);
+  };
+
+  const focusHandler = function (e: MouseEvent) {
+    ctx.emit('focus', e);
   };
 
   const format = computed(() => {
@@ -129,6 +136,7 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     showCloseIcon,
     focusType,
     onFocus,
+    focusHandler,
     onSelectedDate,
     handlerClearTime,
     onChangeRangeFocusType,

@@ -12,7 +12,7 @@ import './date-picker-pro.scss';
 export default defineComponent({
   name: 'DDatePickerPro',
   props: datePickerProProps,
-  emits: ['update:modelValue', 'toggleChange', 'confirmEvent'],
+  emits: ['update:modelValue', 'toggleChange', 'confirmEvent', 'focus', 'blur'],
   setup(props: DatePickerProProps, ctx: SetupContext) {
     const ns = useNamespace('date-picker-pro');
     const {
@@ -51,6 +51,7 @@ export default defineComponent({
               onFocus={onFocus}
               prefix="calendar"
               size={props.size}
+              disabled={props.disabled}
               v-slots={{
                 suffix: () => (
                   <Icon
