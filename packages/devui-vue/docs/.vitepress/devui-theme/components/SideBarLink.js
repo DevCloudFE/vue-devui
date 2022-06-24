@@ -20,7 +20,7 @@ const stairStepAccessTable = function (source, sourceRangeArray, targetArray) {
 const statusRange = [49, 99];
 const colors = ['var(--devui-danger, #f66f6a)', 'var(--devui-warning, #fac20a)', 'var(--devui-success, #50d4ab)'];
 
-const WHITE_LIST_READY_COMPONENTS = ['select', 'tooltip', 'table', 'tabs', 'form', 'dropdown', 'drawer', 'date-picker', 'input-number', 'tree'];
+const WHITE_LIST_READY_COMPONENTS = ['select', 'tooltip', 'table', 'tabs', 'form', 'dropdown', 'drawer', 'date-picker-pro', 'input-number', 'tree'];
 
 export const SideBarLink = (props) => {
   const route = useRoute();
