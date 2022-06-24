@@ -149,17 +149,21 @@ describe('range-date-picker-pro test', () => {
 
     wrapper.unmount();
   });
-  it('range-date-picker-pro event toggleChange confirmEvent', async () => {
+  it('range-date-picker-pro event toggleChange confirmEvent focus blur', async () => {
     const datePickerProValue = ref<(Date | string)[]>(['', '']);
     const onToggleChange = jest.fn();
     const onConfirmEvent = jest.fn();
+    const onFocus = jest.fn();
+    const onBlur = jest.fn();
     const wrapper = mount({
       setup() {
         return () => (
           <DRangeDatePickerPro
             v-model={datePickerProValue.value}
             onToggleChange={onToggleChange}
-            onConfirmEvent={onConfirmEvent}></DRangeDatePickerPro>
+            onConfirmEvent={onConfirmEvent}
+            onFocus={onFocus}
+            onBlur={onBlur}></DRangeDatePickerPro>
         );
       },
     });
@@ -170,6 +174,7 @@ describe('range-date-picker-pro test', () => {
     await nextTick();
     await nextTick();
     expect(onToggleChange).toBeCalledTimes(1);
+    expect(onFocus).toBeCalledTimes(1);
 
     const pickerPanel = container.find(pickerPanelClass);
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
@@ -182,12 +187,15 @@ describe('range-date-picker-pro test', () => {
     await nextTick();
     expect(onConfirmEvent).toBeCalledTimes(0);
     expect(onToggleChange).toBeCalledTimes(1);
+    expect(onFocus).toBeCalledTimes(1);
 
     await Items[selectIndex + 1].trigger('click');
     await nextTick();
     // todo 选择第二个日期时，focusType判断仍然是start。 demo中是正确的，单测原因需进一步确定
     expect(onConfirmEvent).toBeCalledTimes(1);
     expect(onToggleChange).toBeCalledTimes(2);
+    expect(onBlur).toBeCalledTimes(1);
+
     wrapper.unmount();
   });
   it('range-date-picker-pro clear date', async () => {

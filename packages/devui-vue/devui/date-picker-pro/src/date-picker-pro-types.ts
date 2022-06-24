@@ -23,6 +23,10 @@ export const datePickerProProps = {
     type: String as PropType<InputSize>,
     default: 'md',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type DatePickerProProps = ExtractPropTypes<typeof datePickerProProps>;

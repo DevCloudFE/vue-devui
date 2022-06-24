@@ -26,6 +26,10 @@ export const rangeDatePickerProProps = {
     type: String as PropType<InputSize>,
     default: 'md',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type RangeDatePickerProProps = ExtractPropTypes<typeof rangeDatePickerProProps>;
@@ -45,6 +49,7 @@ export interface UseRangePickerProReturnType {
   showCloseIcon: ComputedRef<boolean>;
   focusType: Ref<string>;
   onFocus: (type: string) => void;
+  focusHandler: (e: MouseEvent) => void;
   onSelectedDate: (date: Dayjs[], isConfirm?: boolean) => void;
   handlerClearTime: (e: MouseEvent) => void;
   onChangeRangeFocusType: (type: string) => void;

@@ -210,17 +210,21 @@ describe('date-picker-pro test', () => {
 
     wrapper.unmount();
   });
-  it('date-picker-pro event toggleChange confirmEvent', async () => {
+  it('date-picker-pro event toggleChange confirmEvent focus blur', async () => {
     const datePickerProValue = ref<Date | string>('');
     const onToggleChange = jest.fn();
     const onConfirmEvent = jest.fn();
+    const onFocus = jest.fn();
+    const onBlur = jest.fn();
     const wrapper = mount({
       setup() {
         return () => (
           <DDatePickerPro
             v-model={datePickerProValue.value}
             onToggleChange={onToggleChange}
-            onConfirmEvent={onConfirmEvent}></DDatePickerPro>
+            onConfirmEvent={onConfirmEvent}
+            onFocus={onFocus}
+            onBlur={onBlur}></DDatePickerPro>
         );
       },
     });
@@ -231,6 +235,7 @@ describe('date-picker-pro test', () => {
     await nextTick();
     await nextTick();
     expect(onToggleChange).toBeCalledTimes(1);
+    expect(onFocus).toBeCalledTimes(1);
 
     const pickerPanel = container.find(pickerPanelClass);
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
@@ -242,6 +247,8 @@ describe('date-picker-pro test', () => {
     await Items[selectIndex].trigger('click');
     expect(onConfirmEvent).toBeCalledTimes(1);
     expect(onToggleChange).toBeCalledTimes(2);
+    expect(onBlur).toBeCalledTimes(1);
+
     wrapper.unmount();
   });
 

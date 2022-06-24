@@ -442,15 +442,45 @@ export default defineComponent({
 
 :::
 
+### 禁用选择器
+
+:::demo
+
+```vue
+<template>
+  <d-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250 mr30" :disabled="true" />
+  <d-range-date-picker-pro v-model="datePickerProValue2" class="mb20 wh250" :disabled="true" />
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const datePickerProValue1 = ref<string>('');
+    const datePickerProValue2 = ref<string[]>(['', '']);
+
+    return {
+      datePickerProValue1,
+      datePickerProValue2,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### DatePickerPro 参数
 
-| 参数名      | 类型              | 默认                                  | 说明                                                     | 跳转 Demo             |
-| :---------- | :---------------- | :------------------------------------ | :------------------------------------------------------- | :-------------------- |
-| v-model     | `Date`            | ''                                    | 必选，选中项绑定的值                                     | [基本用法](#基本用法) |
-| format      | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式) |
-| placeholder | `string`          | '请选择日期'                          | 可选，输入框的 placeholder                               | [基本用法](#基本用法) |
-| showTime    | `boolean`         | false                                 | 可选，是否显示时分秒                                     | [显示时间](#显示时间) |
-| size        | `string`          | 'md'                                  | 可选，输入框的尺寸                                       | [基本用法](#基本用法) |
+| 参数名      | 类型              | 默认                                  | 说明                                                     | 跳转 Demo                 |
+| :---------- | :---------------- | :------------------------------------ | :------------------------------------------------------- | :------------------------ |
+| v-model     | `Date`            | ''                                    | 必选，选中项绑定的值                                     | [基本用法](#基本用法)     |
+| format      | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)     |
+| placeholder | `string`          | '请选择日期'                          | 可选，输入框的 placeholder                               | [基本用法](#基本用法)     |
+| showTime    | `boolean`         | false                                 | 可选，是否显示时分秒                                     | [显示时间](#显示时间)     |
+| size        | `string`          | 'md'                                  | 可选，输入框的尺寸                                       | [基本用法](#基本用法)     |
+| disabled    | `boolean`         | false                                 | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器) |
 
 ### DatePickerPro 事件
 
@@ -458,6 +488,8 @@ export default defineComponent({
 | :----------- | :------------------------ | :------------------------------- | :-------- |
 | toggleChange | `(bool: boolean) => void` | 可选，选择器打开关闭 toggle 事件 |           |
 | confirmEvent | `(date: Date) => void`    | 可选，用户确定选定的值时触发     |           |
+| focus        | `(e: MouseEvent) => void` | 可选，输入框获取焦点时触发       |           |
+| blur         | `() => void`              | 可选，输入框失去焦点时触发       |           |
 
 ### DatePickerPro 插槽
 
@@ -503,6 +535,7 @@ type Format = string;
 | placeholder | `Array`           | ['请选择日期', '请选择日期']          | 可选，输入框的 placeholder                               | [范围选择器](#范围选择器) |
 | showTime    | `boolean`         | false                                 | 可选，是否显示时分秒                                     | [范围选择器](#范围选择器) |
 | size        | `string`          | 'md'                                  | 可选，输入框的尺寸                                       |                           |
+| disabled    | `boolean`         | false                                 | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器) |
 
 ### RangeDatePickerPro 事件
 
@@ -510,6 +543,8 @@ type Format = string;
 | :----------- | :------------------------ | :--------------------------------- | :-------- |
 | toggleChange | `(bool: boolean) => void` | 可选，选择器打开关闭 toggle 事件   |           |
 | confirmEvent | `(date: Date[]) => void`  | 可选，用户确定选定的时间范围时触发 |           |
+| focus        | `(e: MouseEvent) => void` | 可选，输入框获取焦点时触发         |           |
+| blur         | `() => void`              | 可选，输入框失去焦点时触发         |           |
 
 ### RangeDatePickerPro 插槽
 

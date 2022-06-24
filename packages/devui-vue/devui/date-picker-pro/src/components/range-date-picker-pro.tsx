@@ -13,7 +13,7 @@ import '../date-picker-pro.scss';
 export default defineComponent({
   name: 'DRangeDatePickerPro',
   props: rangeDatePickerProProps,
-  emits: ['update:modelValue', 'toggleChange', 'confirmEvent'],
+  emits: ['update:modelValue', 'toggleChange', 'confirmEvent', 'focus', 'blur'],
   setup(props: RangeDatePickerProProps, ctx: SetupContext) {
     const ns = useNamespace('range-date-picker-pro');
     const {
@@ -30,6 +30,7 @@ export default defineComponent({
       isMouseEnter,
       showCloseIcon,
       onFocus,
+      focusHandler,
       focusType,
       onSelectedDate,
       handlerClearTime,
@@ -48,7 +49,7 @@ export default defineComponent({
           class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width'), isPanelShow.value && ns.m('open')]}
           ref={containerRef}>
           <div
-            class={ns.e('range-picker')}
+            class={[ns.e('range-picker'), props.disabled && ns.m('disabled')]}
             ref={originRef}
             onmouseover={() => (isMouseEnter.value = true)}
             onmouseout={() => (isMouseEnter.value = false)}>
@@ -60,9 +61,11 @@ export default defineComponent({
                 onFocus={(e: MouseEvent) => {
                   e.stopPropagation();
                   onFocus('start');
+                  focusHandler(e);
                 }}
                 size={props.size}
                 prefix="calendar"
+                disabled={props.disabled}
               />
             </span>
 
@@ -75,8 +78,10 @@ export default defineComponent({
                 onFocus={(e: MouseEvent) => {
                   e.stopPropagation();
                   onFocus('end');
+                  focusHandler(e);
                 }}
                 size={props.size}
+                disabled={props.disabled}
                 v-slots={{
                   suffix: () => (
                     <Icon
