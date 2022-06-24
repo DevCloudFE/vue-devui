@@ -16,10 +16,10 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   const isMouseEnter = ref<boolean>(false);
   const focusType = ref<string>('start');
 
-  const toggleChange = (bool: boolean) => {
-    isPanelShow.value = bool;
-    ctx.emit('toggleChange', bool);
-    if (!bool) {
+  const toggleChange = (isShow: boolean) => {
+    isPanelShow.value = isShow;
+    ctx.emit('toggleChange', isShow);
+    if (!isShow) {
       ctx.emit('blur');
     }
   };
