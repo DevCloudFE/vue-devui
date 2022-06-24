@@ -8,7 +8,7 @@ export { Menu, SubMenu, MenuItem };
 export default {
   title: 'Menu 菜单',
   category: '布局',
-  status: '70%', // TODO: 组件若开发完成则填入"100%"，并删除该注释
+  status: '80%',
   install(app: App): void {
     app.component(Menu.name, Menu);
     app.component(MenuItem.name, MenuItem);

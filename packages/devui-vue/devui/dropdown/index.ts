@@ -8,7 +8,7 @@ export { Dropdown, DropdownMenu };
 export default {
   title: 'Dropdown 下拉菜单',
   category: '导航',
-  status: '10%',
+  status: '50%',
   install(app: App): void {
     app.component(Dropdown.name, Dropdown);
     app.component(DropdownMenu.name, DropdownMenu);
