@@ -1,6 +1,7 @@
 import { defineComponent, onBeforeUnmount, onMounted, onUnmounted } from 'vue';
 import { TimePickerProps, timePickerProps } from '../../time-picker-types';
 import useTimeScroll from './composables/use-time-scroll';
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
 import './index.scss';
 
@@ -8,6 +9,7 @@ export default defineComponent({
   name: 'DTimeScroll',
   props: timePickerProps,
   setup(props, ctx) {
+    const ns = useNamespace('scroll-box');
     const {
       scrollBoxDom,
       scrollThumbDom,
@@ -46,7 +48,7 @@ export default defineComponent({
     return () => {
       return (
         <>
-          <div ref={scrollBoxDom} class="devui-scroll-box">
+          <div ref={scrollBoxDom} class={ns.b()}>
             <div
               ref={scrollContentDom}
               class={`box-content ${isDown.value || !props.showAnimation ? 'box-content-behavior-auto' : ''}`}
