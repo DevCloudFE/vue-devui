@@ -10,7 +10,7 @@ export default function () {
     const insertBefore = (
       parentNode: ITreeNode,
       node: ITreeNode,
-      referenceNode: ITreeNode,
+      referenceNode?: ITreeNode,
     ): void => {
       const children = getChildren(parentNode, {
         recursive: false,

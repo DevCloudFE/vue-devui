@@ -405,7 +405,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-tree :data="data" ref="treeRef" @select-change="selectChange"></d-tree>
+  <d-tree :data="data" ref="treeRef" operate @select-change="selectChange"></d-tree>
   <d-button variant="solid" size="sm" @click="addNode">Add</d-button>
   <d-button size="sm" class="ml-xs" @click="deleteNode">Delete</d-button>
 </template>

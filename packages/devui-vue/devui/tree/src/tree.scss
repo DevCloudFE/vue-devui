@@ -62,7 +62,6 @@ $keyframe-blue: #5e7ce0;
   .#{$devui-prefix}-tree__node-content--value-wrapper {
     display: inline-flex;
     align-items: center;
-    width: 100%;
     height: 30px;
 
     .#{$devui-prefix}-tree__node-loading {
@@ -357,4 +356,21 @@ $keyframe-blue: #5e7ce0;
   position: absolute;
   left: -15px;
   top: 50%;
+}
+
+.#{$devui-prefix}-tree__node-operation-area {
+  margin-left: 8px;
+
+  .devui-icon__container {
+    margin-left: 8px;
+    margin-top: 8px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
