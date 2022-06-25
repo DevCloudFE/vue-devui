@@ -240,7 +240,7 @@ export default defineComponent({
 <template>
   <d-cascader
     :options="options"
-    :value="value1"
+    v-model="value1"
     placeholder="请选择"
     trigger="click"
     :width="300"
@@ -249,7 +249,7 @@ export default defineComponent({
   ></d-cascader>
 </template>
 <script>
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 export default defineComponent({
   setup() {
     const options = reactive([
@@ -351,12 +351,11 @@ export default defineComponent({
         icon: 'folder',
       },
     ]);
-    const value1 = [
+    const value1 = ref([
       [1, 4, 8],
       [1, 4, 9, 81],
       [1, 41],
-    ];
-    // const value1 = []
+    ]);
     const onToggleChange = (event) => {
       console.log(event);
     };
@@ -374,16 +373,17 @@ export default defineComponent({
 
 ### API
 
-|     参数      |               类型                |  默认   | 说明                                                                  | 跳转 Demo             | 全局配置项 |
-| :-----------: | :-------------------------------: | :-----: | :-------------------------------------------------------------------- | --------------------- | ---------- |
-|    trigger    |        `'hover'\|'click'`         | 'hover' | 可选，指定展开次级菜单的方式                                          | [基本用法](#基本用法) |            |
-|    options    | [`CascaderItem[]`](#CascaderItem) |   []    | 必选，级联器的菜单信息                                                | [基本用法](#基本用法) |            |
-|  placeholder  |             `string`              |   ''    | 可选，没有选择时的输入框展示信息                                      | [基本用法](#基本用法) |            |
-|   disabled    |             `boolean`             |  false  | 可选，级联器是否禁用                                                  | [基本用法](#基本用法) |            |
-|     value     |     `number[] \| [number[]]`      |   []    | 可选，单选时为`number[]`，多选时为`[number[]]`，选中项的 value 值集合 | [基本用法](#基本用法) |            |
-|   multiple    |             `boolean`             |  false  | 可选，级联器是否开启多选模式，开启后为 checkbox 选择                  | [基本用法](#多选模式) |            |
-|     width     |        `number \| string`         |   200   | 可选，单位 px，用于控制组件输入框宽度和下拉的宽度                     | [基本用法](#多选模式) |            |
-| dropdownWidth |        `number \| string`         |   200   | 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等        | [基本用法](#多选模式) |            |
+|     参数      |               类型                |  默认   | 说明                                                                  | 跳转 Demo             |
+| :-----------: | :-------------------------------: | :-----: | :-------------------------------------------------------------------- | --------------------- |
+|    trigger    |        `'hover'\|'click'`         | 'hover' | 可选，指定展开次级菜单的方式                                          | [基本用法](#基本用法) |
+|    options    | [`CascaderItem[]`](#CascaderItem) |   []    | 必选，级联器的菜单信息                                                | [基本用法](#基本用法) |
+|  placeholder  |             `string`              |   ''    | 可选，没有选择时的输入框展示信息                                      | [基本用法](#基本用法) |
+|   disabled    |             `boolean`             |  false  | 可选，级联器是否禁用                                                  | [基本用法](#基本用法) |
+|     value     |     `number[] \| [number[]]`      |   []    | 可选，单选时为`number[]`，多选时为`[number[]]`，选中项的 value 值集合 | [基本用法](#基本用法) |
+|   multiple    |             `boolean`             |  false  | 可选，级联器是否开启多选模式，开启后为 checkbox 选择                  | [基本用法](#多选模式) |
+|     width     |        `number \| string`         |   200   | 可选，单位 px，用于控制组件输入框宽度和下拉的宽度                     | [基本用法](#多选模式) |
+| dropdownWidth |        `number \| string`         |   200   | 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等        | [基本用法](#多选模式) |
+|   clearable   |             `boolean`             |  true   | 可选，是否支持清空选项                                                | [基本用法](#基本用法) |
 
 ### 接口 & 类型定义
 

@@ -1,17 +1,19 @@
 @import '../../../style/mixins/flex';
 @import '../../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-cascader-ul {
-  height: 180px;
-  background: $devui-connected-overlay-bg;
-  display: block;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  overflow-y: auto;
-  border-left: 1px solid $devui-dividing-line;
+.#{$devui-prefix}-cascader {
+  &__ul {
+    height: 180px;
+    background: $devui-connected-overlay-bg;
+    display: block;
+    list-style: none;
+    margin: 0;
+    overflow-y: auto;
+    border-left: 1px solid $devui-dividing-line;
+    padding: 12px;
+  }
 
-  &.#{$devui-prefix}-drop-no-data {
+  &__drop-no-data {
     color: $devui-disabled-text;
     padding: 8px;
     display: block;
