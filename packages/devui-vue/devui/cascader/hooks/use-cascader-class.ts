@@ -3,14 +3,15 @@
  */
 import { computed, ComputedRef, Ref } from 'vue';
 import { CascaderProps, CascaderulProps, CascaderItemPropsType } from '../src/cascader-types';
-// import { UseClassNameType } from '../components/cascader-item/cascader-item-types'
+import { useNamespace } from '../../shared/hooks/use-namespace';
+const ns = useNamespace('cascader');
 
 // 根节点class
 export const useRootClassName = (props: CascaderProps, menuShow: Ref<boolean>): ComputedRef => {
   return computed(() => ({
-    'devui-cascader devui-dropdown devui-dropdown-animation': true,
-    'devui-dropdown__open': menuShow.value,
-    'devui-cascader__disbaled': props.disabled,
+    [`${ns.b()} ${ns.e('dropdown')} ${ns.em('dropdown', 'animation')}`]: true,
+    [ns.em('dropdown', 'open')]: menuShow.value,
+    [ns.e('disbaled')]: props.disabled,
   }));
 };
 
@@ -20,21 +21,21 @@ export const useListClassName = (props: CascaderItemPropsType): ComputedRef => {
   const isActive = itemProps?.valueCache[props.ulIndex] === props.cascaderItem?.value;
   const isDisabled = props.cascaderItem?.disabled;
   return computed(() => ({
-    'devui-cascader-li devui-dropdown-item': true,
-    'devui-leaf-active': isActive,
-    'disabled': isDisabled
+    [`${ns.e('li')} dropdown-item`]: true,
+    'leaf-active': isActive,
+    disabled: isDisabled,
   }));
 };
 
 // 弹出层列 class
 export const useUlClassName = (props: CascaderulProps): ComputedRef => {
   return computed(() => ({
-    'devui-cascader-ul': true,
-    'devui-drop-no-data': props?.cascaderItems?.length === 0
+    [ns.e('ul')]: true,
+    [ns.e('drop-no-data')]: props?.cascaderItems?.length === 0,
   }));
 };
 
 // 为弹出层打开添加全局class
 export const dropdownOpenClass = (status: boolean): string => {
-  return status ? 'devui-drop-menu-wrapper' : '';
+  return status ? `${ns.e('drop-menu-wrapper')}` : '';
 };
