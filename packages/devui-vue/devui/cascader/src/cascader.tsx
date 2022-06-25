@@ -1,18 +1,14 @@
-// 公共库
 import { cloneDeep } from 'lodash';
 import { defineComponent, ref, Ref, reactive, watch, toRef, Transition } from 'vue';
-
-// 组件
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import DCascaderList from '../components/cascader-list';
 import DMultipleBox from '../components/cascader-multiple/index';
-
-// 事件
 import { cascaderProps, CascaderItem, CascaderProps, CascaderValueType } from './cascader-types';
 import { useCascaderItem } from '../hooks/use-cascader-item';
 import { useRootClassName } from '../hooks/use-cascader-class';
 import { useRootStyle } from '../hooks/use-cascader-style';
 import { popupHandles } from '../hooks/use-cascader-popup';
-import { initMultipleCascaderItem, initTagList } from '../hooks/use-cascader-multiple';
+import { initMultipleCascaderItem, initTagList, getMultiModelValues } from '../hooks/use-cascader-multiple';
 import { initSingleIptValue, initActiveIndexs } from '../hooks/use-cascader-single';
 import './cascader.scss';
 export default defineComponent({
@@ -20,12 +16,13 @@ export default defineComponent({
   props: cascaderProps,
   emits: ['update:modelValue'],
   setup(props: CascaderProps, ctx) {
+    const ns = useNamespace('cascader');
     const origin = ref<HTMLElement>();
     const overlay = ref<HTMLElement>();
     const cascaderOptions = reactive<[CascaderItem[]]>(cloneDeep([props?.options]));
     const multiple = toRef(props, 'multiple');
     const inputValue = ref('');
-    const tagList = reactive<CascaderItem[]>([]); // 多选模式下选中的值数组，用于生成tag
+    const tagList = ref<CascaderItem[]>([]); // 多选模式下选中的值数组，用于生成tag
     const rootStyle = useRootStyle(props);
     const showClearable = ref(false);
     let initIptValue = props.modelValue.length > 0 ? true : false; // 有value默认值时，初始化输出内容
@@ -35,7 +32,7 @@ export default defineComponent({
     // 配置class
     const rootClasses = useRootClassName(props, menuShow);
     // 传递给cascaderItem的props
-    const { cascaderItemNeedProps } = useCascaderItem(props, stopDefault, tagList);
+    const { cascaderItemNeedProps } = useCascaderItem(props, stopDefault, tagList.value);
     const getInputValue = (label: string, arr: CascaderItem[], inputValueCache: Ref<string>, showPath?: boolean) => {
       if (!showPath) {
         inputValueCache.value = label;
@@ -101,7 +98,7 @@ export default defineComponent({
         // 多选模式
         const rootColumn = cascaderOptions[0] || []; // 第一列
         value.forEach((targetValue) => {
-          initMultipleCascaderItem(targetValue, rootColumn, tagList);
+          initMultipleCascaderItem(targetValue, rootColumn, tagList.value);
         });
       }
     };
@@ -120,7 +117,7 @@ export default defineComponent({
       () => cascaderItemNeedProps.confirmInputValueFlg.value,
       () => {
         // 单选和多选模式初始化
-        multiple.value ? initTagList(tagList) : initSingleIptValue(cascaderItemNeedProps.inputValueCache);
+        multiple.value ? initTagList(tagList.value) : initSingleIptValue(cascaderItemNeedProps.inputValueCache);
         // 输出确认的选中值
         cascaderItemNeedProps.value = reactive(cloneDeep(cascaderItemNeedProps.valueCache));
         menuShow.value = false;
@@ -141,49 +138,58 @@ export default defineComponent({
         immediate: true,
       }
     );
+    watch(
+      () => tagList,
+      () => {
+        if (multiple.value) {
+          ctx.emit('update:modelValue', getMultiModelValues(tagList.value));
+        }
+      },
+      {
+        immediate: true,
+        deep: true,
+      }
+    );
     const showClear = () => {
       showClearable.value = true;
     };
     const hideClear = () => {
       showClearable.value = false;
     };
-    const clearData = (e) => {
+    const clearData = (e: MouseEvent) => {
       e.stopPropagation();
-      inputValue.value = '';
       menuShow.value = false;
+      inputValue.value = '';
       ctx.emit('update:modelValue', []);
+      menuShow.value = false;
+      cascaderOptions.splice(1, cascaderOptions.length - 1);
+      ctx.emit('update:modelValue', []);
+      cascaderItemNeedProps.valueCache = reactive([]);
     };
 
     return () => (
-      <div ref={devuiCascader}>
-        <div
-          class={rootClasses.value}
-          style={rootStyle.inputWidth}
-          ref={origin}
-          onClick={openPopup}
-          {...ctx.attrs}
-          onMouseenter={showClear}
-          onMouseleave={hideClear}>
+      <div ref={devuiCascader} style={rootStyle.inputWidth}>
+        <div class={rootClasses.value} ref={origin} onClick={openPopup} {...ctx.attrs} onMouseenter={showClear} onMouseleave={hideClear}>
           {multiple.value ? (
-            <DMultipleBox placeholder={props.placeholder} activeOptions={tagList}></DMultipleBox>
+            <DMultipleBox placeholder={props.placeholder} activeOptions={tagList.value}></DMultipleBox>
           ) : (
             <d-input disabled={props.disabled} placeholder={props.placeholder} modelValue={inputValue.value}></d-input>
           )}
           {!showClearable.value && (
-            <div class="devui-cascader__icon devui-drop-icon-animation">
+            <div class={`${ns.e('icon')} ${ns.m('drop-icon-animation')}`}>
               <d-icon name="select-arrow" size="12px"></d-icon>
             </div>
           )}
           {showClearable.value && props.clearable && (
-            <div class="devui-cascader__icon devui-cascader__close" onClick={clearData}>
+            <div class={`${ns.e('icon')} ${ns.e('close')}`} onClick={clearData}>
               <d-icon name="close" size="12px"></d-icon>
             </div>
           )}
         </div>
         <Transition name="fade">
           <d-flexible-overlay origin={origin.value} backgroundStyle={'background: transparent'} ref={overlay} v-model={menuShow.value}>
-            <div class="devui-drop-menu-animation">
-              <div class={`${menuOpenClass.value} devui-dropdown-menu`}>
+            <div class={ns.e('drop-menu-animation')}>
+              <div class={`${menuOpenClass.value} ${ns.e('dropdown-menu')}`}>
                 {cascaderOptions.map((item, index) => {
                   return (
                     <DCascaderList

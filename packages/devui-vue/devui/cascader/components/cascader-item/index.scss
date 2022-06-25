@@ -1,59 +1,62 @@
 @import '../../../style/mixins/flex';
 @import '../../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-cascader-li {
-  &.#{$devui-prefix}-dropdown-item {
-    height: 32px;
-    padding: 8px 12px;
-    color: $devui-text;
-    cursor: pointer;
-    @include flex(flex-start);
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-
-  .cascader-li__wraper {
-    flex: 1;
-    @include flex(flex-start);
-  }
-
-  .dropdown-item-label {
-    display: inline-block;
-    flex: 1;
-    width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: $devui-font-size;
-  }
-
-  &.#{$devui-prefix}-leaf-active {
-    background: $devui-list-item-hover-bg;
-
-    span {
-      color: $devui-brand-active;
-    }
-  }
-
-  &.disabled {
-    background-color: $devui-disabled-bg;
-    cursor: not-allowed;
-  }
-
-  .cascader-li {
-    &__checkbox {
-      margin-right: 4px;
-    }
-
-    &__icon {
-      margin-right: 4px;
-      font-size: $devui-font-size-icon;
+.#{$devui-prefix}-cascader {
+  &__li {
+    &.dropdown-item {
+      height: 32px;
+      padding: 8px 12px;
       color: $devui-text;
+      cursor: pointer;
+      @include flex(flex-start);
 
-      &.disabled {
-        color: $devui-disabled-text !important;
+      margin-top: 4px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .cascader-li__wraper {
+      flex: 1;
+      @include flex(flex-start);
+    }
+
+    .dropdown-item-label {
+      display: inline-block;
+      flex: 1;
+      width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: $devui-font-size;
+    }
+
+    &.leaf-active {
+      background: $devui-list-item-hover-bg;
+
+      span {
+        color: $devui-brand-active;
+      }
+    }
+
+    &.disabled {
+      background-color: $devui-disabled-bg;
+      cursor: not-allowed;
+    }
+
+    .cascader-li {
+      &__checkbox {
+        margin-right: 4px;
+      }
+
+      &__icon {
+        margin-right: 4px;
+        font-size: $devui-font-size-icon;
+        color: $devui-text;
+
+        &.disabled {
+          color: $devui-disabled-text !important;
+        }
       }
     }
   }
