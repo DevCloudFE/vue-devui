@@ -358,4 +358,49 @@ describe('range-date-picker-pro test', () => {
 
     wrapper.unmount();
   });
+
+  it('range-date-picker-pro calenderRange limitDateRange', async () => {
+    const datePickerProValue = ref<(Date | string)[]>(['', '']);
+    const limitDateRange = ref<Date[]>([
+      new Date(new Date().getTime() - 24 * 3600 * 1000),
+      new Date(new Date().getTime() + 24 * 3600 * 1000),
+    ]);
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DRangeDatePickerPro
+            v-model={datePickerProValue.value}
+            calenderRange={[2022, 2025]}
+            limitDateRange={limitDateRange.value}></DRangeDatePickerPro>
+        );
+      },
+    });
+    const container = wrapper.find(baseClass);
+    expect(container.exists()).toBeTruthy();
+    const inputs = container.findAll('input');
+    await inputs[0].trigger('focus');
+    await nextTick();
+    await nextTick();
+    const pickerPanel = container.find(pickerPanelClass);
+    expect(pickerPanel.exists()).toBeTruthy();
+
+    const yearListItems = pickerPanel.findAll(yearListItemClass);
+    expect(yearListItems.length).toBe(4 + 4 * 12);
+    const weekHeader = pickerPanel.find(weekHeaderClass);
+    expect(weekHeader.findAll('td').length).toBe(7);
+    const tableMonthItems = pickerPanel.findAll(tableMonthClass);
+    expect(tableMonthItems.length).toBe(4 * 12);
+
+    const date = new Date();
+    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
+    const selectIndex = todayIndex > 20 ? todayIndex - 2 : todayIndex + 2;
+    const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(datePickerNs.e('table-month-content'));
+    const Items = monthContentContainer.findAll('td');
+    expect(Items[selectIndex].classes().includes(noDotDatePickerNs.e('table-date-disabled'))).toBe(true);
+    await Items[selectIndex].trigger('click');
+    expect(inputs[0].element.value).toBe('');
+    expect(inputs[1].element.value).toBe('');
+
+    wrapper.unmount();
+  });
 });

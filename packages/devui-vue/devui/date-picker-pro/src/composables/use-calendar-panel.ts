@@ -1,4 +1,4 @@
-import { ref, onBeforeMount, nextTick, watch } from 'vue';
+import { ref, onBeforeMount, nextTick, watch, computed } from 'vue';
 import type { SetupContext } from 'vue';
 import { DAY_DURATION, yearItemHeight, calendarItemHeight } from '../const';
 import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
@@ -18,6 +18,21 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
   const selectDate = ref<Dayjs>();
   const rangeSelectDate = ref<(Dayjs | undefined)[]>([]);
   const currentMonthIndex = ref<number>(0);
+
+  const minDate = computed(() => {
+    if (props.limitDateRange && props.limitDateRange[0]) {
+      return props.limitDateRange[0];
+    } else {
+      return new Date(calendarRange[0], 0, 1);
+    }
+  });
+  const maxDate = computed(() => {
+    if (props.limitDateRange && props.limitDateRange[1]) {
+      return props.limitDateRange[1];
+    } else {
+      return new Date(calendarRange[1], 11, 31);
+    }
+  });
 
   const fillLeft = (num: number) => {
     return num < 10 ? `0${num}` : `${num}`;
@@ -163,7 +178,12 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
 
   onBeforeMount(() => {
     today.value = new Date();
-    calendarRange = [today.value.getFullYear() - 3, today.value.getFullYear() + 3];
+    if (props.calenderRange) {
+      calendarRange = props.calenderRange;
+    } else {
+      calendarRange = [today.value.getFullYear() - 3, today.value.getFullYear() + 3];
+    }
+
     // 初始化先展示v-model对应的时间，如果没有展示today对应的时间
     initCalendarData();
     initCalendarShow();
@@ -191,8 +211,19 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     fixRangeDate();
   };
 
+  const isDisabled = (date: Date) => {
+    if (!date) {
+      return true;
+    }
+    const isInRange =
+      (date.getTime() > minDate.value.getTime() && date.getTime() < maxDate.value.getTime()) ||
+      date.toDateString() === minDate.value.toDateString() ||
+      date.toDateString() === maxDate.value.toDateString();
+    return !isInRange;
+  };
+
   const handlerSelectDate = (day: CalendarDateItem) => {
-    if (!day.inMonth) {
+    if (!day.inMonth || isDisabled(day.date)) {
       return;
     }
     selectDate.value = dayjs(new Date(day.date.setHours(0, 0, 0))).locale('zh-cn');
@@ -334,5 +365,6 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     isStartDate,
     isInRangeDate,
     isEndDate,
+    isDisabled,
   };
 }

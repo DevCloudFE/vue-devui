@@ -29,9 +29,11 @@ export default defineComponent({
               visible={props.visible}
               showTime={props.showTime}
               isRangeType={props.isRangeType}
+              focusType={props.focusType}
+              calenderRange={props.calenderRange}
+              limitDateRange={props.limitDateRange}
               onSelectedDate={onSelectedDate}
-              onChangeRangeFocusType={onChangeRangeFocusType}
-              focusType={props.focusType}></CalendarPanel>
+              onChangeRangeFocusType={onChangeRangeFocusType}></CalendarPanel>
             {props.showTime && <TimerPickerPanel visible={props.visible} bindData={timeData.value} onSelectedTime={handlerSelectedTime} />}
             {ctx.slots?.rightArea && <div class={ns.e('panel-right-area')}>{ctx.slots?.rightArea()}</div>}
           </div>
