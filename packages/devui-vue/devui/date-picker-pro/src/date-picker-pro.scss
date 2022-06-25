@@ -232,6 +232,13 @@ $input-height-lg: 46px;
           border-radius: 0 $devui-border-radius-feedback $devui-border-radius-feedback 0;
         }
       }
+
+      &.#{$devui-prefix}-date-picker-pro__table-date-disabled {
+        span {
+          color: $devui-disabled-text;
+          cursor: not-allowed;
+        }
+      }
     }
   }
 }

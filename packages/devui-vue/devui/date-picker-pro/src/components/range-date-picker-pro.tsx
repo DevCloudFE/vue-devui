@@ -116,6 +116,8 @@ export default defineComponent({
                 showTime={props.showTime}
                 isRangeType={true}
                 focusType={focusType.value}
+                calenderRange={props.calenderRange}
+                limitDateRange={props.limitDateRange}
                 onSelectedDate={onSelectedDate}
                 onChangeRangeFocusType={onChangeRangeFocusType}
                 v-slots={vSlots}></DatePickerProPanel>

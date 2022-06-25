@@ -74,6 +74,8 @@ export default defineComponent({
                 visible={isPanelShow.value}
                 format={format.value}
                 showTime={props.showTime}
+                calenderRange={props.calenderRange}
+                limitDateRange={props.limitDateRange}
                 onSelectedDate={onSelectedDate}
                 v-slots={vSlots}></DatePickerProPanel>
             </FlexibleOverlay>

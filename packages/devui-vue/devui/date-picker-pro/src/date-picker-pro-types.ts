@@ -27,6 +27,12 @@ export const datePickerProProps = {
     type: Boolean,
     default: false,
   },
+  calenderRange: {
+    type: Array as PropType<number[]>,
+  },
+  limitDateRange: {
+    type: Array as PropType<Date[]>,
+  },
 } as const;
 
 export type DatePickerProProps = ExtractPropTypes<typeof datePickerProProps>;
@@ -91,6 +97,7 @@ export interface UseCalendarPanelReturnType {
   isStartDate: (date: Date) => boolean;
   isInRangeDate: (date: Date) => boolean;
   isEndDate: (date: Date) => boolean;
+  isDisabled: (date: Date) => boolean;
 }
 
 export const datePickerProPanelProps = {
@@ -116,6 +123,12 @@ export const datePickerProPanelProps = {
   focusType: {
     type: String,
     default: 'start',
+  },
+  calenderRange: {
+    type: Array as PropType<number[]>,
+  },
+  limitDateRange: {
+    type: Array as PropType<Date[]>,
   },
 } as const;
 
