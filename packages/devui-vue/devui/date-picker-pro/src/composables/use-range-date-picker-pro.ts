@@ -1,11 +1,15 @@
-import { shallowRef, ref, computed } from 'vue';
+import { shallowRef, ref, computed, inject, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { RangeDatePickerProProps, UseRangePickerProReturnType } from '../range-date-picker-types';
 import { onClickOutside } from '@vueuse/core';
 import type { Dayjs } from 'dayjs';
 import { formatDayjsToStr, isDateEquals, parserDate } from '../utils';
+import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../../form';
 
 export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: SetupContext): UseRangePickerProReturnType {
+  const formContext = inject(FORM_TOKEN, undefined);
+  const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
+
   const containerRef = shallowRef<HTMLElement>();
   const originRef = ref<HTMLElement>();
   const startInputRef = shallowRef<HTMLElement>();
@@ -15,6 +19,10 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   const placeholder = computed(() => props.placeholder);
   const isMouseEnter = ref<boolean>(false);
   const focusType = ref<string>('start');
+
+  const pickerDisabled = computed(() => formContext?.disabled || props.disabled);
+  const pickerSize = computed(() => formContext?.size || props.size);
+  const isValidateError = computed(() => formItemContext?.validateState === 'error');
 
   const toggleChange = (isShow: boolean) => {
     isPanelShow.value = isShow;
@@ -121,6 +129,14 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     focusChange: onChangeRangeFocusType,
   });
 
+  watch(
+    () => props.modelValue,
+    () => {
+      formItemContext?.validate('change').catch((err) => console.warn(err));
+    },
+    { deep: true }
+  );
+
   return {
     containerRef,
     originRef,
@@ -135,6 +151,9 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     isMouseEnter,
     showCloseIcon,
     focusType,
+    pickerDisabled,
+    pickerSize,
+    isValidateError,
     onFocus,
     focusHandler,
     onSelectedDate,
