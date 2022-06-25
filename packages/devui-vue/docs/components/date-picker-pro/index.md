@@ -471,16 +471,57 @@ export default defineComponent({
 
 :::
 
+### 设置日历面板可选时间范围
+
+添加 `calenderRange` 属性设置选择器日历面板显示的时间范围。
+添加 `limitDateRange` 属性设置选择器日历面板可选择的时间范围。
+
+:::demo
+
+```vue
+<template>
+  <d-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250 mr30" :calenderRange="[2022, 2025]" :limitDateRange="limitDateRange" />
+  <d-range-date-picker-pro
+    v-model="datePickerProValue2"
+    class="mb20 wh250"
+    :calenderRange="[2022, 2025]"
+    :limitDateRange="limitDateRange"
+  />
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const datePickerProValue1 = ref<string>('');
+    const datePickerProValue2 = ref<string[]>(['', '']);
+    const limitDateRange = ref<Date[]>([new Date(2022, 1, 5), new Date(2023, 1, 5)]);
+
+    return {
+      datePickerProValue1,
+      datePickerProValue2,
+      limitDateRange,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### DatePickerPro 参数
 
-| 参数名      | 类型              | 默认                                  | 说明                                                     | 跳转 Demo                 |
-| :---------- | :---------------- | :------------------------------------ | :------------------------------------------------------- | :------------------------ |
-| v-model     | `Date`            | ''                                    | 必选，选中项绑定的值                                     | [基本用法](#基本用法)     |
-| format      | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)     |
-| placeholder | `string`          | '请选择日期'                          | 可选，输入框的 placeholder                               | [基本用法](#基本用法)     |
-| showTime    | `boolean`         | false                                 | 可选，是否显示时分秒                                     | [显示时间](#显示时间)     |
-| size        | `string`          | 'md'                                  | 可选，输入框的尺寸                                       | [基本用法](#基本用法)     |
-| disabled    | `boolean`         | false                                 | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器) |
+| 参数名         | 类型              | 默认                                                        | 说明                                                     | 跳转 Demo                                             |
+| :------------- | :---------------- | :---------------------------------------------------------- | :------------------------------------------------------- | :---------------------------------------------------- |
+| v-model        | `Date`            | ''                                                          | 必选，选中项绑定的值                                     | [基本用法](#基本用法)                                 |
+| format         | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss'                       | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)                                 |
+| placeholder    | `string`          | '请选择日期'                                                | 可选，输入框的 placeholder                               | [基本用法](#基本用法)                                 |
+| showTime       | `boolean`         | false                                                       | 可选，是否显示时分秒                                     | [显示时间](#显示时间)                                 |
+| size           | `string`          | 'md'                                                        | 可选，输入框的尺寸                                       | [基本用法](#基本用法)                                 |
+| disabled       | `boolean`         | false                                                       | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器)                             |
+| calenderRange  | `[number,number]` | [new Date().getFullYear() - 3,new Date().getFullYear() + 3] | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| limitDateRange | `[Date,Date]`     | [new Date(calenderRange[0]), new Date(calenderRange[1])]    | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
 
 ### DatePickerPro 事件
 
@@ -528,14 +569,16 @@ type Format = string;
 
 ### RangeDatePickerPro 参数
 
-| 参数名      | 类型              | 默认                                  | 说明                                                     | 跳转 Demo                 |
-| :---------- | :---------------- | :------------------------------------ | :------------------------------------------------------- | :------------------------ |
-| v-model     | `[Date, Date]`    | ['','']                               | 必选，选中项绑定的值                                     | [范围选择器](#范围选择器) |
-| format      | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)     |
-| placeholder | `Array`           | ['请选择日期', '请选择日期']          | 可选，输入框的 placeholder                               | [范围选择器](#范围选择器) |
-| showTime    | `boolean`         | false                                 | 可选，是否显示时分秒                                     | [范围选择器](#范围选择器) |
-| size        | `string`          | 'md'                                  | 可选，输入框的尺寸                                       |                           |
-| disabled    | `boolean`         | false                                 | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器) |
+| 参数名         | 类型              | 默认                                                        | 说明                                                     | 跳转 Demo                                             |
+| :------------- | :---------------- | :---------------------------------------------------------- | :------------------------------------------------------- | :---------------------------------------------------- |
+| v-model        | `[Date, Date]`    | ['','']                                                     | 必选，选中项绑定的值                                     | [范围选择器](#范围选择器)                             |
+| format         | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss'                       | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)                                 |
+| placeholder    | `Array`           | ['请选择日期', '请选择日期']                                | 可选，输入框的 placeholder                               | [范围选择器](#范围选择器)                             |
+| showTime       | `boolean`         | false                                                       | 可选，是否显示时分秒                                     | [范围选择器](#范围选择器)                             |
+| size           | `string`          | 'md'                                                        | 可选，输入框的尺寸                                       |                                                       |
+| disabled       | `boolean`         | false                                                       | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器)                             |
+| calenderRange  | `[number,number]` | [new Date().getFullYear() - 3,new Date().getFullYear() + 3] | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| limitDateRange | `[Date,Date]`     | [new Date(calenderRange[0]), new Date(calenderRange[1])]    | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
 
 ### RangeDatePickerPro 事件
 
