@@ -16,7 +16,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
   let calendarRange: number[] = [];
   const calendarCacheData = new Map();
   const selectDate = ref<Dayjs>();
-  const rangeSelectDate = ref<(Dayjs | null)[]>([]);
+  const rangeSelectDate = ref<(Dayjs | undefined)[]>([]);
   const currentMonthIndex = ref<number>(0);
 
   const fillLeft = (num: number) => {
@@ -175,9 +175,9 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     const end = rangeSelectDate.value[1]?.toDate()?.getTime();
     if (start && end && end < start) {
       if (props.focusType === 'start') {
-        rangeSelectDate.value[1] = null;
+        rangeSelectDate.value[1] = undefined;
       } else if (props.focusType === 'end') {
-        rangeSelectDate.value[0] = null;
+        rangeSelectDate.value[0] = undefined;
       }
     }
   };
@@ -264,13 +264,6 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     return false;
   };
 
-  const updateSelectedDate = (date: Dayjs | undefined) => {
-    selectDate.value = date;
-    if (date) {
-      goToShowDate(date.toDate());
-    }
-  };
-  ctx.expose({ updateSelectedDate });
   const isStartDate = (date: Date) => {
     if (!props.isRangeType) {
       return false;
@@ -300,9 +293,28 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
   };
 
   watch(
-    () => props.dateValue,
-    () => {
-      initCalendarShow();
+    [() => props.dateValue, () => props.focusType],
+    ([dateValue, focusType]) => {
+      if (Array.isArray(dateValue)) {
+        rangeSelectDate.value = dateValue;
+        let date: Dayjs | undefined;
+        if (focusType === 'start') {
+          date = dateValue[0];
+        } else {
+          // 在选择了startDate后，自动聚焦到endStart， 此时面板展示startDate时间
+          date = dateValue[1] || dateValue[0];
+        }
+        if (date) {
+          goToShowDate(date.toDate());
+        } else {
+          selectDate.value = date;
+        }
+      } else {
+        selectDate.value = dateValue;
+        if (dateValue) {
+          goToShowDate(dateValue.toDate());
+        }
+      }
     },
     { deep: true }
   );

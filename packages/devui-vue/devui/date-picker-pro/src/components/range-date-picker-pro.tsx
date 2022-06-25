@@ -32,6 +32,9 @@ export default defineComponent({
       onFocus,
       focusHandler,
       focusType,
+      pickerDisabled,
+      pickerSize,
+      isValidateError,
       onSelectedDate,
       handlerClearTime,
       onChangeRangeFocusType,
@@ -49,11 +52,16 @@ export default defineComponent({
           class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width'), isPanelShow.value && ns.m('open')]}
           ref={containerRef}>
           <div
-            class={[ns.e('range-picker'), props.disabled && ns.m('disabled')]}
+            class={[ns.e('range-picker'), pickerDisabled.value && ns.m('disabled'), isValidateError.value && ns.m('error')]}
             ref={originRef}
             onmouseover={() => (isMouseEnter.value = true)}
             onmouseout={() => (isMouseEnter.value = false)}>
-            <span class={[isPanelShow.value && focusType.value === 'start' ? ns.e('active-input') : ns.e('normal-input'), ns.e('input')]}>
+            <span
+              class={[
+                isPanelShow.value && focusType.value === 'start' ? ns.e('active-input') : ns.e('normal-input'),
+                ns.e('input'),
+                ns.e('start'),
+              ]}>
               <Input
                 ref={startInputRef}
                 modelValue={displayDateValue.value[0]}
@@ -63,14 +71,19 @@ export default defineComponent({
                   onFocus('start');
                   focusHandler(e);
                 }}
-                size={props.size}
+                size={pickerSize.value}
+                disabled={pickerDisabled.value}
                 prefix="calendar"
-                disabled={props.disabled}
               />
             </span>
 
             <span class={ns.e('separator')}>{props.separator}</span>
-            <span class={[isPanelShow.value && focusType.value === 'end' ? ns.e('active-input') : ns.e('normal-input'), ns.e('input')]}>
+            <span
+              class={[
+                isPanelShow.value && focusType.value === 'end' ? ns.e('active-input') : ns.e('normal-input'),
+                ns.e('input'),
+                ns.e('end'),
+              ]}>
               <Input
                 ref={endInputRef}
                 modelValue={displayDateValue.value[1]}
@@ -80,14 +93,15 @@ export default defineComponent({
                   onFocus('end');
                   focusHandler(e);
                 }}
-                size={props.size}
-                disabled={props.disabled}
+                size={pickerSize.value}
+                disabled={pickerDisabled.value}
                 v-slots={{
                   suffix: () => (
                     <Icon
                       class={showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden')}
                       name="error-o"
-                      onClick={handlerClearTime}></Icon>
+                      onClick={handlerClearTime}
+                      style="font-size: inherit;"></Icon>
                   ),
                 }}
               />

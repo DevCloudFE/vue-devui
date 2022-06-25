@@ -1,11 +1,15 @@
-import { shallowRef, ref, computed } from 'vue';
+import { shallowRef, ref, computed, inject, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { DatePickerProProps, UseDatePickerProReturnType } from './date-picker-pro-types';
 import { onClickOutside } from '@vueuse/core';
 import type { Dayjs } from 'dayjs';
 import { formatDayjsToStr, isDateEquals, parserDate } from './utils';
+import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
 
 export default function usePickerPro(props: DatePickerProProps, ctx: SetupContext): UseDatePickerProReturnType {
+  const formContext = inject(FORM_TOKEN, undefined);
+  const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
+
   const containerRef = shallowRef<HTMLElement>();
   const originRef = ref<HTMLElement>();
   const inputRef = shallowRef<HTMLElement>();
@@ -13,6 +17,10 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
   const isPanelShow = ref(false);
   const placeholder = computed(() => props.placeholder);
   const isMouseEnter = ref(false);
+
+  const pickerDisabled = computed(() => formContext?.disabled || props.disabled);
+  const pickerSize = computed(() => formContext?.size || props.size);
+  const isValidateError = computed(() => formItemContext?.validateState === 'error');
 
   const toggleChange = (isShow: boolean) => {
     isPanelShow.value = isShow;
@@ -72,6 +80,14 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
     ctx.emit('confirmEvent', '');
   };
 
+  watch(
+    () => props.modelValue,
+    () => {
+      formItemContext?.validate('change').catch((err) => console.warn(err));
+    },
+    { deep: true }
+  );
+
   return {
     containerRef,
     originRef,
@@ -84,6 +100,9 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
     displayDateValue,
     isMouseEnter,
     showCloseIcon,
+    pickerDisabled,
+    pickerSize,
+    isValidateError,
     onFocus,
     onSelectedDate,
     handlerClearTime,

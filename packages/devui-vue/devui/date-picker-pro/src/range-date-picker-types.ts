@@ -48,6 +48,9 @@ export interface UseRangePickerProReturnType {
   isMouseEnter: Ref<boolean>;
   showCloseIcon: ComputedRef<boolean>;
   focusType: Ref<string>;
+  pickerDisabled: ComputedRef<boolean>;
+  pickerSize: ComputedRef<string>;
+  isValidateError: ComputedRef<boolean>;
   onFocus: (type: string) => void;
   focusHandler: (e: MouseEvent) => void;
   onSelectedDate: (date: Dayjs[], isConfirm?: boolean) => void;

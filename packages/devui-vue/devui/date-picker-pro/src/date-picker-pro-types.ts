@@ -43,6 +43,9 @@ export interface UseDatePickerProReturnType {
   displayDateValue: ComputedRef<string>;
   isMouseEnter: Ref<boolean>;
   showCloseIcon: ComputedRef<boolean>;
+  pickerDisabled: ComputedRef<boolean>;
+  pickerSize: ComputedRef<string>;
+  isValidateError: ComputedRef<boolean>;
   onFocus: (e: MouseEvent) => void;
   onSelectedDate: (date: Dayjs, isConfirm?: boolean) => void;
   handlerClearTime: (e: MouseEvent) => void;

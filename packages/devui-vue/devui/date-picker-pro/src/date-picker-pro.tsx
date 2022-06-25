@@ -27,6 +27,9 @@ export default defineComponent({
       displayDateValue,
       isMouseEnter,
       showCloseIcon,
+      pickerDisabled,
+      pickerSize,
+      isValidateError,
       onFocus,
       onSelectedDate,
       handlerClearTime,
@@ -50,14 +53,16 @@ export default defineComponent({
               placeholder={placeholder.value}
               onFocus={onFocus}
               prefix="calendar"
-              size={props.size}
-              disabled={props.disabled}
+              size={pickerSize.value}
+              disabled={pickerDisabled.value}
+              error={isValidateError.value}
               v-slots={{
                 suffix: () => (
                   <Icon
                     class={showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden')}
                     name="error-o"
-                    onClick={handlerClearTime}></Icon>
+                    onClick={handlerClearTime}
+                    style="font-size: inherit;"></Icon>
                 ),
               }}
             />
