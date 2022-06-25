@@ -110,6 +110,10 @@ $input-height-lg: 46px;
     &::-webkit-scrollbar {
       width: 0 !important;
     }
+
+    td {
+      text-align: center;
+    }
   }
 }
 
@@ -326,7 +330,7 @@ $input-height-lg: 46px;
     background-color: $devui-form-control-bg;
     transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
 
-    &:not(.#{$devui-prefix}-range-date-picker-pro--disabled):hover {
+    &:not(.#{$devui-prefix}-range-date-picker-pro--error):not(.#{$devui-prefix}-range-date-picker-pro--disabled):hover {
       border-color: $devui-form-control-line-hover;
     }
 
@@ -337,6 +341,7 @@ $input-height-lg: 46px;
     .#{$devui-prefix}-input {
       display: inline-block;
       height: calc($input-height-md - 2px);
+      width: 100%;
 
       &__wrapper {
         border: none;
@@ -348,6 +353,12 @@ $input-height-lg: 46px;
 
       &.#{$devui-prefix}-input--lg {
         height: calc($input-height-lg - 2px);
+      }
+    }
+
+    .#{$devui-prefix}-range-date-picker-pro__start {
+      .#{$devui-prefix}-input--feedback {
+        padding-right: 0;
       }
     }
 
@@ -393,13 +404,17 @@ $input-height-lg: 46px;
         cursor: not-allowed;
       }
     }
+    &.#{$devui-prefix}-range-date-picker-pro--error {
+      border-color: $devui-danger-line;
+      background-color: $devui-danger-bg;
+    }
   }
 
   &--open {
     .#{$devui-prefix}-range-date-picker-pro__range-picker {
       border-color: $devui-form-control-line-active;
 
-      &:not(.#{$devui-prefix}-range-date-picker-pro--disabled):hover {
+      &:not(.#{$devui-prefix}-range-date-picker-pro--error):not(.#{$devui-prefix}-range-date-picker-pro--disabled):hover {
         border-color: $devui-form-control-line-active;
       }
     }
