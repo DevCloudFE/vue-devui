@@ -54,7 +54,8 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
   };
 
   const timeFormat = computed(() => {
-    return props.format.replace(/\W?D{1,2}|\W?Do|\W?d{1,4}|\W?M{1,4}|\W?Y{2,4}/g, '').trim();
+    const format = props.format || 'YYYY/MM/DD';
+    return format.replace(/\W?D{1,2}|\W?Do|\W?d{1,4}|\W?M{1,4}|\W?Y{2,4}/g, '').trim();
   });
 
   const retDefaultDateValue = () => {

@@ -24,14 +24,7 @@ export default defineComponent({
           <div class={ns.e('panel-content')}>
             <CalendarPanel
               ref={calendarPanelRef}
-              dateValue={props.dateValue}
-              format={props.format}
-              visible={props.visible}
-              showTime={props.showTime}
-              isRangeType={props.isRangeType}
-              focusType={props.focusType}
-              calenderRange={props.calenderRange}
-              limitDateRange={props.limitDateRange}
+              {...props}
               onSelectedDate={onSelectedDate}
               onChangeRangeFocusType={onChangeRangeFocusType}></CalendarPanel>
             {props.showTime && <TimerPickerPanel visible={props.visible} bindData={timeData.value} onSelectedTime={handlerSelectedTime} />}

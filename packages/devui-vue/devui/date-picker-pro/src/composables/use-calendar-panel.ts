@@ -308,12 +308,14 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     const dateTime = date.getTime();
     const dateStr = date.toDateString();
-    return (
-      rangeSelectDate.value[0]?.toDate()?.getTime() < dateTime &&
+    const isIn =
+      rangeSelectDate.value[0] &&
+      rangeSelectDate.value[0].toDate()?.getTime() < dateTime &&
+      rangeSelectDate.value[1] &&
       rangeSelectDate.value[1]?.toDate()?.getTime() > dateTime &&
       rangeSelectDate.value[0]?.toDate()?.toDateString() !== dateStr &&
-      rangeSelectDate.value[1]?.toDate()?.toDateString() !== dateStr
-    );
+      rangeSelectDate.value[1]?.toDate()?.toDateString() !== dateStr;
+    return isIn ? true : false;
   };
 
   const isEndDate = (date: Date) => {
