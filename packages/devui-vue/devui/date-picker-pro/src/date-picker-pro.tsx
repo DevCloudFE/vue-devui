@@ -70,12 +70,10 @@ export default defineComponent({
           <Transition name="fade">
             <FlexibleOverlay v-model={isPanelShow.value} ref={overlayRef} origin={originRef.value} align="start" position={position.value}>
               <DatePickerProPanel
+                {...props}
                 dateValue={dateValue.value}
                 visible={isPanelShow.value}
                 format={format.value}
-                showTime={props.showTime}
-                calenderRange={props.calenderRange}
-                limitDateRange={props.limitDateRange}
                 onSelectedDate={onSelectedDate}
                 v-slots={vSlots}></DatePickerProPanel>
             </FlexibleOverlay>
