@@ -23,7 +23,7 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
-    const deadline = ref(Date.now() + 100 *1000);
+    const deadline = ref(Date.now() + 100 * 1000);
     const changeTime = (n) => {
     }
     const finishTime = () => {
@@ -61,7 +61,7 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
-    const deadline = ref(Date.now() + 2 * 60 * 60 *1000);
+    const deadline = ref(Date.now() + 2 * 60 * 60 * 1000);
     const changeTime = (n) => {
     }
     const finishTime = () => {
@@ -99,7 +99,7 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
-    const deadline = ref(new Date().getTime() + 369 * 24 * 60 * 60 *1000 + 5000);
+    const deadline = ref(new Date().getTime() + 369 * 24 * 60 * 60 * 1000 + 5000);
 
     const changeTime = (n) => {
     }
@@ -123,8 +123,8 @@ export default defineComponent({
 
 
 
-注：当format某一项时间没有的情况下，会将没有的那一项值累积到下一项。 
-例如：当没有M(月)的时候，会将月的值*30累加到日，根据format格式化的值会从通过时间onchange的legalTime值返回，如下：
+注：当 format 某一项时间没有的情况下，会将没有的那一项值累积到下一项。 
+例如：当没有 M(月)的时候，会将月的值 *30 累加到日，根据 format 格式化的值会从通过时间 onchange 的 legalTime 值返回，如下：
 :::demo 
 
 ```vue
