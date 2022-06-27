@@ -19,6 +19,7 @@ export function useInputEvent(isFocus: Ref<boolean>, props: InputProps, ctx: Set
   };
 
   const onInput = (e: Event) => {
+    ctx.emit('input', (e.target as HTMLInputElement).value);
     ctx.emit('update:modelValue', (e.target as HTMLInputElement).value);
   };
 
