@@ -78,6 +78,11 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
     e.preventDefault();
     ctx.emit('update:modelValue', '');
     ctx.emit('confirmEvent', '');
+    if (isPanelShow.value) {
+      setTimeout(() => {
+        inputRef.value?.focus();
+      });
+    }
   };
 
   watch(

@@ -1,41 +1,21 @@
 import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
 import type { Dayjs } from 'dayjs';
-import type { InputSize } from '../../input/src/input-types';
+import { datePickerProCommonProps } from './date-picker-pro-types';
 
 export const rangeDatePickerProProps = {
   modelValue: {
     type: Array as PropType<(Date | string)[]>,
     default: ['', ''],
   },
-  format: {
-    type: String,
-  },
   placeholder: {
     type: Array as PropType<string[]>,
     default: ['请选择日期', '请选择日期'],
-  },
-  showTime: {
-    type: Boolean,
-    default: false,
   },
   separator: {
     type: String,
     default: '-',
   },
-  size: {
-    type: String as PropType<InputSize>,
-    default: 'md',
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  calenderRange: {
-    type: Array as PropType<number[]>,
-  },
-  limitDateRange: {
-    type: Array as PropType<Date[]>,
-  },
+  ...datePickerProCommonProps,
 } as const;
 
 export type RangeDatePickerProProps = ExtractPropTypes<typeof rangeDatePickerProProps>;

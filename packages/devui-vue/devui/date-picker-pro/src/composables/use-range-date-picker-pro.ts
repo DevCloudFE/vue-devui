@@ -36,23 +36,6 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     toggleChange(false);
   });
 
-  const onFocus = function (type: string) {
-    if (!isPanelShow.value) {
-      type = 'start';
-    }
-    focusType.value = type;
-    if (focusType.value === 'start') {
-      setTimeout(() => {
-        startInputRef.value?.focus();
-      });
-    } else {
-      setTimeout(() => {
-        endInputRef.value?.focus();
-      });
-    }
-    toggleChange(true);
-  };
-
   const focusHandler = function (e: MouseEvent) {
     ctx.emit('focus', e);
   };
@@ -101,17 +84,6 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     }
   };
 
-  const handlerClearTime = (e: MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    ctx.emit('update:modelValue', ['', '']);
-    ctx.emit('confirmEvent', ['', '']);
-    // 当面板未关闭时，清空后focusType置位start
-    if (isPanelShow.value) {
-      focusType.value = 'start';
-    }
-  };
-
   const onChangeRangeFocusType = (type: string) => {
     focusType.value = type;
     if (focusType.value === 'start') {
@@ -125,9 +97,28 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     }
   };
 
+  const handlerClearTime = (e: MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    ctx.emit('update:modelValue', ['', '']);
+    ctx.emit('confirmEvent', ['', '']);
+    // 当面板未关闭时，清空后focusType置位start
+    if (isPanelShow.value) {
+      onChangeRangeFocusType('start');
+    }
+  };
+
   ctx.expose({
     focusChange: onChangeRangeFocusType,
   });
+
+  const onFocus = function (type: string) {
+    if (!isPanelShow.value) {
+      type = 'start';
+    }
+    onChangeRangeFocusType(type);
+    toggleChange(true);
+  };
 
   watch(
     () => props.modelValue,

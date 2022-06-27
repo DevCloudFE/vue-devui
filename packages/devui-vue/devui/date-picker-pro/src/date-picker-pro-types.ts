@@ -3,17 +3,9 @@ import type { Dayjs } from 'dayjs';
 import { ArrType } from '../../time-picker/src/types';
 import type { InputSize } from '../../input/src/input-types';
 
-export const datePickerProProps = {
-  modelValue: {
-    type: [Date, String] as PropType<Date | string>,
-    default: '',
-  },
+export const datePickerProCommonProps = {
   format: {
     type: String,
-  },
-  placeholder: {
-    type: String,
-    default: '请选择日期',
   },
   showTime: {
     type: Boolean,
@@ -33,6 +25,18 @@ export const datePickerProProps = {
   limitDateRange: {
     type: Array as PropType<Date[]>,
   },
+};
+
+export const datePickerProProps = {
+  modelValue: {
+    type: [Date, String] as PropType<Date | string>,
+    default: '',
+  },
+  placeholder: {
+    type: String,
+    default: '请选择日期',
+  },
+  ...datePickerProCommonProps,
 } as const;
 
 export type DatePickerProProps = ExtractPropTypes<typeof datePickerProProps>;
@@ -105,16 +109,8 @@ export const datePickerProPanelProps = {
     type: Boolean,
     default: false,
   },
-  format: {
-    type: String,
-    default: 'YYYY/MM/DD',
-  },
   dateValue: {
     type: [Object, Array] as PropType<Dayjs | undefined | (Dayjs | undefined)[]>,
-  },
-  showTime: {
-    type: Boolean,
-    default: false,
   },
   isRangeType: {
     type: Boolean,
@@ -124,12 +120,7 @@ export const datePickerProPanelProps = {
     type: String,
     default: 'start',
   },
-  calenderRange: {
-    type: Array as PropType<number[]>,
-  },
-  limitDateRange: {
-    type: Array as PropType<Date[]>,
-  },
+  ...datePickerProCommonProps,
 } as const;
 
 export type DatePickerProPanelProps = ExtractPropTypes<typeof datePickerProPanelProps>;
