@@ -95,7 +95,7 @@ const findNextColumn = (targetValues: number[], options: CascaderItem[], index: 
  * @param rootNode 选项的第一列
  * @param tagList 选中的tag集合
  */
-export const initMultipleCascaderItem = (targetValues: number[], rootColumn: CascaderItem[], tagList: CascaderItem[]): void => {
+export const initMultipleCascaderItem = (targetValues: (number | string)[], rootColumn: CascaderItem[], tagList: CascaderItem[]): void => {
   findNextColumn(targetValues, rootColumn, 0, tagList);
 };
 
