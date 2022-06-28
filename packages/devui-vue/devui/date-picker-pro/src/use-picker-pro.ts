@@ -53,7 +53,7 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
   });
 
   const displayDateValue = computed(() => {
-    const formatDate = formatDayjsToStr(dateValue.value, format.value);
+    const formatDate = formatDayjsToStr(dateValue.value, format.value, props.type);
     if (formatDate) {
       return formatDate;
     }

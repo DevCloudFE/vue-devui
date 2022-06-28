@@ -2,11 +2,15 @@ import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import { ArrType } from '../../time-picker/src/types';
 
-export const formatDayjsToStr = (date: Dayjs | undefined, format: string): string | null => {
+export const formatDayjsToStr = (date: Dayjs | undefined, format: string, type: string): string | null => {
   if (!date) {
     return null;
   }
-  return date.format(format);
+  if (type === 'year') {
+    return date.year().toString();
+  } else {
+    return date.format(format);
+  }
 };
 
 export const isDateEquals = (pre: Date | any, cur: Date | any): boolean => {

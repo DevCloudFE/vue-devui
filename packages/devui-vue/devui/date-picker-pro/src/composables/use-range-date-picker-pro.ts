@@ -57,8 +57,8 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   });
 
   const displayDateValue = computed(() => {
-    const startFormatDate = formatDayjsToStr(dateValue.value[0], format.value);
-    const endFormatDate = formatDayjsToStr(dateValue.value[1], format.value);
+    const startFormatDate = formatDayjsToStr(dateValue.value[0], format.value, props.type);
+    const endFormatDate = formatDayjsToStr(dateValue.value[1], format.value, props.type);
     if (startFormatDate) {
       return endFormatDate ? [startFormatDate, endFormatDate] : [startFormatDate, ''];
     } else if (endFormatDate) {

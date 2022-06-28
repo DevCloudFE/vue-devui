@@ -286,6 +286,37 @@ export default defineComponent({
 
 :::
 
+### 年月选择器
+
+通过`type`指定选择器类型
+
+:::demo
+
+```vue
+<template>
+  <div class="picker-pro-format-demo mr30">
+    <div class="mb10">year picker</div>
+    <d-date-picker-pro v-model="pickerProFormatValue" class="mb20 wh250" type="year" />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const pickerProFormatValue = ref<string>('');
+
+    return {
+      pickerProFormatValue,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### 范围选择器
 
 :::demo
@@ -296,6 +327,8 @@ export default defineComponent({
   <d-range-date-picker-pro v-model="rangeDatePickerProValue" class="mb20" />
   <div class="mb10">time range picker</div>
   <d-range-date-picker-pro v-model="rangeDatePickerProValue1" class="mb20" :showTime="true" format="YYYY/MM/DD HH:mm:ss" />
+  <div class="mb10">year range picker</div>
+  <d-range-date-picker-pro v-model="rangeDatePickerProValue2" class="mb20 wh250" type="year" />
 </template>
 
 <script lang="ts">
@@ -305,10 +338,12 @@ export default defineComponent({
   setup() {
     const rangeDatePickerProValue = ref<string[]>(['', '']);
     const rangeDatePickerProValue1 = ref<string[]>(['', '']);
+    const rangeDatePickerProValue2 = ref<string[]>(['', '']);
 
     return {
       rangeDatePickerProValue,
       rangeDatePickerProValue1,
+      rangeDatePickerProValue2,
     };
   },
 });
@@ -473,18 +508,18 @@ export default defineComponent({
 
 ### 设置日历面板可选时间范围
 
-添加 `calenderRange` 属性设置选择器日历面板显示的时间范围。
+添加 `calendarRange` 属性设置选择器日历面板显示的时间范围。
 添加 `limitDateRange` 属性设置选择器日历面板可选择的时间范围。
 
 :::demo
 
 ```vue
 <template>
-  <d-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250 mr30" :calenderRange="[2022, 2025]" :limitDateRange="limitDateRange" />
+  <d-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250 mr30" :calendarRange="[2022, 2025]" :limitDateRange="limitDateRange" />
   <d-range-date-picker-pro
     v-model="datePickerProValue2"
     class="mb20 wh250"
-    :calenderRange="[2022, 2025]"
+    :calendarRange="[2022, 2025]"
     :limitDateRange="limitDateRange"
   />
 </template>
@@ -520,8 +555,9 @@ export default defineComponent({
 | showTime       | `boolean`         | false                                                       | 可选，是否显示时分秒                                     | [显示时间](#显示时间)                                 |
 | size           | `string`          | 'md'                                                        | 可选，输入框的尺寸                                       | [基本用法](#基本用法)                                 |
 | disabled       | `boolean`         | false                                                       | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器)                             |
-| calenderRange  | `[number,number]` | [new Date().getFullYear() - 3,new Date().getFullYear() + 3] | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
-| limitDateRange | `[Date,Date]`     | [new Date(calenderRange[0]), new Date(calenderRange[1])]    | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| calendarRange  | `[number,number]` | [new Date().getFullYear() - 3,new Date().getFullYear() + 3] | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| limitDateRange | `[Date,Date]`     | [new Date(calendarRange[0]), new Date(calendarRange[1])]    | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| type           | `string`          | 'date'                                                      | 可选，设置日期选择器类型(date/year)                      | [年月选择器](#年月选择器)                             |
 
 ### DatePickerPro 事件
 
@@ -575,10 +611,12 @@ type Format = string;
 | format         | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss'                       | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)                                 |
 | placeholder    | `Array`           | ['请选择日期', '请选择日期']                                | 可选，输入框的 placeholder                               | [范围选择器](#范围选择器)                             |
 | showTime       | `boolean`         | false                                                       | 可选，是否显示时分秒                                     | [范围选择器](#范围选择器)                             |
+| separator      | `string`          | '-'                                                         | 可选，范围选择器的分割符                                 | [范围选择器](#范围选择器)                             |
 | size           | `string`          | 'md'                                                        | 可选，输入框的尺寸                                       |                                                       |
 | disabled       | `boolean`         | false                                                       | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器)                             |
-| calenderRange  | `[number,number]` | [new Date().getFullYear() - 3,new Date().getFullYear() + 3] | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
-| limitDateRange | `[Date,Date]`     | [new Date(calenderRange[0]), new Date(calenderRange[1])]    | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| calendarRange  | `[number,number]` | [new Date().getFullYear() - 3,new Date().getFullYear() + 3] | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| limitDateRange | `[Date,Date]`     | [new Date(calendarRange[0]), new Date(calendarRange[1])]    | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| type           | `string`          | 'date'                                                      | 可选，设置日期选择器类型(date/year)                      | [范围选择器](#范围选择器)                             |
 
 ### RangeDatePickerPro 事件
 
