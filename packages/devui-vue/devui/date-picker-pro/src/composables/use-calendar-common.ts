@@ -1,11 +1,11 @@
 import { ref, computed } from 'vue';
-import { DatePickerProPanelProps } from '../date-picker-pro-types';
+import { DatePickerProPanelProps, UseCalendarCommonReturnType } from '../date-picker-pro-types';
 import type { Dayjs } from 'dayjs';
 
-export default function useCalendarCommon(props: DatePickerProPanelProps): any {
-  const today = ref<Date>();
+export default function useCalendarCommon(props: DatePickerProPanelProps): UseCalendarCommonReturnType {
+  const today = ref<Date>(new Date());
   const calendarRange = ref<number[]>([]);
-  const selectDate = ref<Dayjs>();
+  const selectDate = ref<Dayjs | undefined>();
   const rangeSelectDate = ref<(Dayjs | undefined)[]>([]);
 
   const minDate = computed(() => {
