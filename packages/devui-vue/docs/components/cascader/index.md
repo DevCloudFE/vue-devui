@@ -218,7 +218,17 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-cascader :options="options" v-model="value1" placeholder="请选择" trigger="click" :width="300" filterable :debounce="500"></d-cascader>
+  <d-cascader
+    :options="options"
+    v-model="value1"
+    placeholder="请选择"
+    trigger="click"
+    :width="300"
+    filterable
+    :debounce="500"
+    :before-filter="beforeFilter"
+    @change="changeFun"
+  ></d-cascader>
   <div>选择的value值：{{ value1 }}</div>
 </template>
 <script>
@@ -318,10 +328,20 @@ export default defineComponent({
     const onToggleChange = (event) => {
       console.log(event);
     };
+    const beforeFilter = (val) => {
+      return new Promise((resolve, reject) => {
+        resolve();
+      });
+    };
+    const changeFun = (value) => {
+      console.log(value);
+    };
     return {
       options,
       value1,
       onToggleChange,
+      beforeFilter,
+      changeFun,
     };
   },
 });
@@ -332,19 +352,26 @@ export default defineComponent({
 
 ### API
 
-|     参数      |               类型                |  默认   | 说明                                                                  | 跳转 Demo             |
-| :-----------: | :-------------------------------: | :-----: | :-------------------------------------------------------------------- | --------------------- |
-|    trigger    |        `'hover'\|'click'`         | 'hover' | 可选，指定展开次级菜单的方式                                          | [基本用法](#基本用法) |
-|    options    | [`CascaderItem[]`](#CascaderItem) |   []    | 必选，级联器的菜单信息                                                | [基本用法](#基本用法) |
-|  placeholder  |             `string`              |   ''    | 可选，没有选择时的输入框展示信息                                      | [基本用法](#基本用法) |
-|   disabled    |             `boolean`             |  false  | 可选，级联器是否禁用                                                  | [基本用法](#基本用法) |
-|     value     |     `number[] \| [number[]]`      |   []    | 可选，单选时为`number[]`，多选时为`[number[]]`，选中项的 value 值集合 | [基本用法](#基本用法) |
-|   multiple    |             `boolean`             |  false  | 可选，级联器是否开启多选模式，开启后为 checkbox 选择                  | [基本用法](#多选模式) |
-|     width     |        `number \| string`         |   200   | 可选，单位 px，用于控制组件输入框宽度和下拉的宽度                     | [基本用法](#多选模式) |
-| dropdownWidth |        `number \| string`         |   200   | 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等        | [基本用法](#多选模式) |
-|   clearable   |             `boolean`             |  true   | 可选，是否支持清空选项                                                | [基本用法](#基本用法) |
-|  filterable   |             `boolean`             |  true   | 可选，是否可搜索选项                                                  | [可搜索](#可搜索)     |
-|   debounce    |             `number`              |   300   | 可选，搜索关键词输入去抖延迟                                          | [可搜索](#可搜索)     |
+|     参数      |               类型                |  默认   | 说明                                                                                                 | 跳转 Demo             |
+| :-----------: | :-------------------------------: | :-----: | :--------------------------------------------------------------------------------------------------- | --------------------- |
+|    trigger    |        `'hover'\|'click'`         | 'hover' | 可选，指定展开次级菜单的方式                                                                         | [基本用法](#基本用法) |
+|    options    | [`CascaderItem[]`](#CascaderItem) |   []    | 必选，级联器的菜单信息                                                                               | [基本用法](#基本用法) |
+|  placeholder  |             `string`              |   ''    | 可选，没有选择时的输入框展示信息                                                                     | [基本用法](#基本用法) |
+|   disabled    |             `boolean`             |  false  | 可选，级联器是否禁用                                                                                 | [基本用法](#基本用法) |
+|     value     |     `number[] \| [number[]]`      |   []    | 可选，单选时为`number[]`，多选时为`[number[]]`，选中项的 value 值集合                                | [基本用法](#基本用法) |
+|   multiple    |             `boolean`             |  false  | 可选，级联器是否开启多选模式，开启后为 checkbox 选择                                                 | [基本用法](#多选模式) |
+|     width     |        `number \| string`         |   200   | 可选，单位 px，用于控制组件输入框宽度和下拉的宽度                                                    | [基本用法](#多选模式) |
+| dropdownWidth |        `number \| string`         |   200   | 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等                                       | [基本用法](#多选模式) |
+|   clearable   |             `boolean`             |  true   | 可选，是否支持清空选项                                                                               | [基本用法](#基本用法) |
+|  filterable   |             `boolean`             |  true   | 可选，是否可搜索选项                                                                                 | [可搜索](#可搜索)     |
+|   debounce    |             `number`              |   300   | 可选，搜索关键词输入去抖延迟                                                                         | [可搜索](#可搜索)     |
+| before-filter |         `function(value)`         |   --    | 可选,过滤函数调用前的钩子函数。该函数返回值时 false 或者被拒绝的 Promise，接下来的过滤逻辑将不会执行 | [可搜索](#可搜索)     |
+
+### CheckboxGroup 事件
+
+| 事件   | 说明                   | 跳转 Demo         |
+| :----- | :--------------------- | :---------------- |
+| change | 绑定值变化时触发的事件 | [可搜索](#可搜索) |
 
 ### 接口 & 类型定义
 
