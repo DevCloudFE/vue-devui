@@ -193,36 +193,6 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     return !isInRange;
   };
 
-  const isStartDate = (date: Date) => {
-    if (!props.isRangeType) {
-      return false;
-    }
-    return date.toDateString() === rangeSelectDate.value[0]?.toDate()?.toDateString();
-  };
-
-  const isInRangeDate = (date: Date) => {
-    if (!props.isRangeType) {
-      return false;
-    }
-    const dateTime = date.getTime();
-    const dateStr = date.toDateString();
-    const isIn =
-      rangeSelectDate.value[0] &&
-      rangeSelectDate.value[0].toDate()?.getTime() < dateTime &&
-      rangeSelectDate.value[1] &&
-      rangeSelectDate.value[1]?.toDate()?.getTime() > dateTime &&
-      rangeSelectDate.value[0]?.toDate()?.toDateString() !== dateStr &&
-      rangeSelectDate.value[1]?.toDate()?.toDateString() !== dateStr;
-    return isIn ? true : false;
-  };
-
-  const isEndDate = (date: Date) => {
-    if (!props.isRangeType) {
-      return false;
-    }
-    return date.toDateString() === rangeSelectDate.value[1]?.toDate()?.toDateString();
-  };
-
   const handlerSelectDate = (day: CalendarDateItem) => {
     if (!day.inMonth || isDisabled(day.date)) {
       return;
@@ -294,6 +264,36 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
       return selectDate.value.toDate().toDateString() === date.toDateString();
     }
     return false;
+  };
+
+  const isStartDate = (date: Date) => {
+    if (!props.isRangeType) {
+      return false;
+    }
+    return date.toDateString() === rangeSelectDate.value[0]?.toDate()?.toDateString();
+  };
+
+  const isInRangeDate = (date: Date) => {
+    if (!props.isRangeType) {
+      return false;
+    }
+    const dateTime = date.getTime();
+    const dateStr = date.toDateString();
+    const isIn =
+      rangeSelectDate.value[0] &&
+      rangeSelectDate.value[0].toDate()?.getTime() < dateTime &&
+      rangeSelectDate.value[1] &&
+      rangeSelectDate.value[1]?.toDate()?.getTime() > dateTime &&
+      rangeSelectDate.value[0]?.toDate()?.toDateString() !== dateStr &&
+      rangeSelectDate.value[1]?.toDate()?.toDateString() !== dateStr;
+    return isIn ? true : false;
+  };
+
+  const isEndDate = (date: Date) => {
+    if (!props.isRangeType) {
+      return false;
+    }
+    return date.toDateString() === rangeSelectDate.value[1]?.toDate()?.toDateString();
   };
 
   watch(

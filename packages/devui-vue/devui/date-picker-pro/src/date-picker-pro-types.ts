@@ -155,3 +155,19 @@ export interface UseTimePickerPanelReturnType {
   secondList: Array<ArrType>;
   handlerTimeSelected: (date: TimePickerItem) => void;
 }
+
+export interface UseCalendarCommonReturnType {
+  today: Ref<Date>;
+  calendarRange: Ref<number[]>;
+  selectDate: Ref<Dayjs | undefined>;
+  rangeSelectDate: Ref<(Dayjs | undefined)[]>;
+  minDate: ComputedRef<Date>;
+  maxDate: ComputedRef<Date>;
+  fixRangeDate: () => void;
+}
+export interface UseYearCalendarPanelReturnType {
+  yarListScrollRef: Ref<HTMLElement | undefined>;
+  yearList: Ref<number[][]>;
+  getYearItemCls: (year: number) => any;
+  handlerSelectYear: (year: number) => void;
+}

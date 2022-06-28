@@ -17,7 +17,7 @@ export default defineComponent({
       return (
         <div class={ns.e('year-calendar-panel')}>
           <div ref={yarListScrollRef} class={ns.e('year-list')}>
-            {yearList.value.map((years: [], index: number) => (
+            {yearList.value.map((years: number[], index: number) => (
               <div class={ns.e('year-list-item')} key={index}>
                 {years.map((year: number) => (
                   <div
