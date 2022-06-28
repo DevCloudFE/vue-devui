@@ -19,11 +19,15 @@ export const datePickerProCommonProps = {
     type: Boolean,
     default: false,
   },
-  calenderRange: {
+  calendarRange: {
     type: Array as PropType<number[]>,
   },
   limitDateRange: {
     type: Array as PropType<Date[]>,
+  },
+  type: {
+    type: String,
+    default: 'date',
   },
 };
 
