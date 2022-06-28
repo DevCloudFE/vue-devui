@@ -1,5 +1,5 @@
-import { isBoolean } from '../../shared/utils';
-import { DefaultRow } from './table-types';
+import { isBoolean, isFunction, isString } from '../../shared/utils';
+import { DefaultRow, RowKeyType } from './table-types';
 
 export function formatWidth(width: number | string): number | string {
   if (width === '') {
@@ -12,17 +12,22 @@ export function formatWidth(width: number | string): number | string {
   return parseInt(width, 10) || 80;
 }
 
-export function getRowIdentity(row: DefaultRow, rowKey: string): string {
-  const paths = rowKey.split('.');
-  let obj = row;
+export function getRowIdentity(row: DefaultRow, rowKey: RowKeyType, index?: number): string {
+  if (isFunction(rowKey)) {
+    return rowKey(row, index) as string;
+  } else if (isString(rowKey)) {
+    const paths = rowKey.split('.');
+    let obj = row;
 
-  for (const p of paths) {
-    obj = obj[p];
+    for (const p of paths) {
+      obj = obj[p];
+    }
+    return `${obj}`;
   }
-  return `${obj}`;
+  return '';
 }
 
-export function getRowKeysMap(data: DefaultRow[], rowKey: string): Record<string, { row: DefaultRow; index: number }> {
+export function getRowKeysMap(data: DefaultRow[], rowKey: RowKeyType): Record<string, { row: DefaultRow; index: number }> {
   const rowKeyMap: Record<string, any> = {};
   (data || []).forEach((row: DefaultRow, index: number) => {
     rowKeyMap[getRowIdentity(row, rowKey)] = { row, index };

@@ -1,7 +1,7 @@
-import type { ComputedRef } from 'vue';
-import { computed, defineComponent, inject, PropType, renderSlot, toRefs, useSlots } from 'vue';
+import type { ComputedRef, PropType } from 'vue';
+import { ref, computed, defineComponent, inject, renderSlot, toRefs, useSlots } from 'vue';
 import { NODE_HEIGHT, TREE_INSTANCE, USE_TREE_TOKEN } from '../const';
-import { IInnerTreeNode, IUseTree, ICheck } from '../composables/use-tree-types';
+import { IInnerTreeNode, IUseTree, ICheck, IOperate } from '../composables/use-tree-types';
 import DTreeNodeToggle from './tree-node-toggle';
 import { Checkbox } from '../../../checkbox';
 import DTreeNodeContent from './tree-node-content';
@@ -20,14 +20,33 @@ export default defineComponent({
       type: [Boolean, String] as PropType<ICheck>,
       default: false,
     },
+    operate: {
+      type: [Boolean, String, Array] as PropType<IOperate>,
+      default: false,
+    },
   },
   setup(props, { slots }) {
-    const { data, check } = toRefs(props);
-    const { toggleSelectNode, toggleCheckNode, toggleNode, getChildren } = inject(USE_TREE_TOKEN) as Partial<IUseTree>;
+    const { data, check, operate } = toRefs(props);
+    const {
+      toggleSelectNode,
+      toggleCheckNode,
+      toggleNode,
+      getChildren,
+      insertBefore,
+      removeNode
+    } = inject(USE_TREE_TOKEN) as Partial<IUseTree>;
     const treeInstance = inject(TREE_INSTANCE);
     const ns = useNamespace('tree');
 
-    const { nodeClass, nodeStyle, nodeContentClass, nodeVLineClass, nodeVLineStyles, nodeHLineClass } = useTreeNode(
+    const {
+      nodeClass,
+      nodeStyle,
+      nodeContentClass,
+      nodeVLineClass,
+      nodeVLineStyles,
+      nodeHLineClass,
+      nodeOperationAreaClass
+    } = useTreeNode(
       data as ComputedRef<IInnerTreeNode>
     );
 
@@ -45,21 +64,37 @@ export default defineComponent({
       }
     });
 
+    const checkboxProps = {
+      key: data.value?.id,
+      disabled: data.value?.disableCheck,
+      halfChecked: halfChecked.value,
+      modelValue: data.value?.checked,
+      'onUpdate:modelValue': () => {
+        toggleCheckNode?.(data.value);
+      },
+      onClick: (event: MouseEvent) => {
+        event.stopPropagation();
+      },
+    };
+
+    const isShowOperationArea = ref(false);
+
+    const showOperationArea = () => {
+      isShowOperationArea.value = true;
+    };
+
+    const hideOperationArea = () => {
+      isShowOperationArea.value = false;
+    };
+
     return () => {
-      const checkboxProps = {
-        key: data.value?.id,
-        disabled: data.value?.disableCheck,
-        halfChecked: halfChecked.value,
-        modelValue: data.value?.checked,
-        'onUpdate:modelValue': () => {
-          toggleCheckNode?.(data.value);
-        },
-        onClick: (event: MouseEvent) => {
-          event.stopPropagation();
-        },
-      };
       return (
-        <div class={nodeClass.value} style={nodeStyle.value}>
+        <div
+          class={nodeClass.value}
+          style={nodeStyle.value}
+          onMouseenter={showOperationArea}
+          onMouseleave={hideOperationArea}
+        >
           {nodeVLineStyles.value.map((item) => (
             <span class={nodeVLineClass.value} style={item}></span>
           ))}
@@ -75,6 +110,17 @@ export default defineComponent({
               {check.value && <Checkbox {...checkboxProps} />}
               {slots.default ? renderSlot(useSlots(), 'default', { nodeData: data }) : <DTreeNodeContent data={data.value} />}
             </div>
+            {
+              operate.value && isShowOperationArea.value &&
+              <div class={nodeOperationAreaClass.value}>
+                <d-icon name="add" onClick={() => {
+                  insertBefore(data.value, { label: '新节点' });
+                }}></d-icon>
+                <d-icon name="delete" onClick={() => {
+                  removeNode(data.value);
+                }}></d-icon>
+              </div>
+            }
           </div>
         </div>
       );

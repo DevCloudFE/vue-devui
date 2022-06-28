@@ -392,6 +392,9 @@ export default defineComponent({
         <d-checkbox label="Sun" value="Sun" />
       </d-checkbox-group>
     </d-form-item>
+    <d-form-item field="datePickerPro" label="Date Picker Pro">
+      <d-date-picker-pro v-model="formModel.datePickerPro"></d-date-picker-pro>
+    </d-form-item>
     <d-form-operation class="form-demo-form-operation">
       <d-button variant="solid">提交</d-button>
       <d-button>取消</d-button>
@@ -412,6 +415,7 @@ export default defineComponent({
       radio: '0',
       switch: true,
       executionDay: [],
+      datePickerPro: '',
     });
     const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
     const source = ref(['C#', 'C', 'C++']);
@@ -478,6 +482,12 @@ export default defineComponent({
         <d-checkbox label="Sun" value="Sun" />
       </d-checkbox-group>
     </d-form-item>
+    <d-form-item field="datePickerPro" label="Date Picker Pro">
+      <d-date-picker-pro v-model="formData.datePickerPro"></d-date-picker-pro>
+    </d-form-item>
+    <d-form-item field="rangeDatePickerPro" label="Range Date Picker Pro">
+      <d-range-date-picker-pro v-model="formData.rangeDatePickerPro"></d-range-date-picker-pro>
+    </d-form-item>
     <d-form-operation class="form-operation-wrap">
       <d-button variant="solid" @click="onClick">提交</d-button>
       <d-button @click="onClear">清除校验结果</d-button>
@@ -500,6 +510,8 @@ export default defineComponent({
       autoComplete: '',
       executionDay: ['Tue'],
       radio: '',
+      datePickerPro: '',
+      rangeDatePickerPro: ['', ''],
     });
     const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
     const source = ref(['C#', 'C', 'C++']);
@@ -515,6 +527,19 @@ export default defineComponent({
         }
       }, 1000);
     };
+
+    const checkRangeDatePickerPro = (rule, value, callback) => {
+      if (!value || (!value[0] && !value[1])) {
+        return callback(new Error('请选择日期范围'));
+      } else if (!value[0]) {
+        return callback(new Error('请选择开始日期'));
+      } else if (!value[1]) {
+        return callback(new Error('请选择结束日期'));
+      } else {
+        return callback();
+      }
+    };
+
     const rules = {
       username: [{ min: 3, max: 6, message: '用户名需不小于3个字符，不大于6个字符', trigger: 'change' }],
       userInfo: [{ required: true, message: '用户信息不能为空', trigger: 'blur' }],
@@ -523,6 +548,8 @@ export default defineComponent({
       autoComplete: [{ required: true, message: '请选择', trigger: 'change' }],
       executionDay: [{ type: 'array', required: true, message: '请至少选择一个执行时间', trigger: 'change' }],
       radio: [{ required: true, message: '请选择', trigger: 'change' }],
+      datePickerPro: [{ required: true, message: '请选择日期', trigger: 'change' }],
+      rangeDatePickerPro: [{ validator: checkRangeDatePickerPro }, { required: true, message: '请选择日期范围', trigger: 'change' }],
     };
 
     const onClick = () => {

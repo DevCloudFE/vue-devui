@@ -3,6 +3,7 @@ import { initializeTimeData, setTimeAstrict } from '../../utils';
 import TimeList from '../popup-line/index';
 import { Button } from '../../../../button/index';
 import { popupTimeObj } from '../../types';
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
 import './index.scss';
 export default defineComponent({
@@ -47,6 +48,7 @@ export default defineComponent({
   },
   emits: ['submitData', 'change'],
   setup(props, ctx) {
+    const ns = useNamespace('time-popup');
     const popupDome = ref<Node>();
     const timeListDom = ref();
     const hourList = initializeTimeData('hour');
@@ -87,10 +89,7 @@ export default defineComponent({
     return () => {
       return (
         <>
-          <div
-            ref={popupDome}
-            class={`devui-time-popup ${props.showPopup ? 'devui-show-time-popup' : ''}`}
-            style={{ width: props.popupWidth + 'px' }}>
+          <div ref={popupDome} class={ns.b()} style={{ width: props.popupWidth + 'px' }}>
             <TimeList
               ref={timeListDom}
               hourList={hourList}
@@ -101,7 +100,7 @@ export default defineComponent({
               format={props.popupFormat}
               onChange={changeData}></TimeList>
 
-            <div class="devui-time-popup-btn">
+            <div class={ns.m('btn')}>
               <div class="popup-slots">{ctx.slots.default?.()}</div>
               <div onClick={subDataFun}>
                 <Button variant="solid" color="secondary" size="sm">

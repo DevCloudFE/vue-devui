@@ -1,11 +1,6 @@
-import { Ref } from 'vue';
-import { IInnerTreeNode, ITreeNode, IUseCore } from './use-tree-types';
-
-export interface IUseOperate {
-  insertBefore: (parentNode: ITreeNode, node: ITreeNode, referenceNode: ITreeNode,) => void;
-  removeNode: (node: ITreeNode) => void;
-  editNode: (node: IInnerTreeNode, label: string) => void;
-}
+import { Ref, ref } from 'vue';
+import { randomId } from '../../../shared/utils';
+import { IInnerTreeNode, ITreeNode, IUseCore, IUseOperate } from './use-tree-types';
 
 export default function () {
   return function useOperate(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseOperate {
@@ -15,9 +10,11 @@ export default function () {
     const insertBefore = (
       parentNode: ITreeNode,
       node: ITreeNode,
-      referenceNode: ITreeNode,
+      referenceNode?: ITreeNode,
     ): void => {
-      const children = getChildren(parentNode);
+      const children = getChildren(parentNode, {
+        recursive: false,
+      });
       const lastChild = children[children.length - 1];
       let insertedIndex = getIndex(parentNode) + 1;
 
@@ -30,16 +27,24 @@ export default function () {
       setNodeValue(parentNode, 'expanded', true);
       setNodeValue(parentNode, 'isLeaf', false);
 
-      const currentNode = {
+      setNodeValue(lastChild, 'parentChildNode', children.length + 1);
+
+      const currentNode = ref({
         ...node,
         level: getLevel(parentNode) + 1,
         parentId: parentNode.id,
         isLeaf: true,
-      };
+        parentChildNode: children.length + 1,
+        currentIndex: lastChild?.currentIndex + 1,
+      });
+
+      if (currentNode.value.id === undefined) {
+        currentNode.value.id = randomId();
+      }
 
       data.value = data.value.slice(0, insertedIndex)
         .concat(
-          currentNode,
+          currentNode.value,
           data.value.slice(insertedIndex, data.value.length)
         );
     };

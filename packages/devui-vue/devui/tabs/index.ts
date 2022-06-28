@@ -9,7 +9,7 @@ export { Tabs, Tab };
 export default {
   title: 'Tabs 选项卡',
   category: '导航',
-  status: '60%',
+  status: '100%',
   install(app: App): void {
     app.component(Tabs.name, Tabs);
     app.component(Tab.name, Tab);

@@ -3,18 +3,9 @@ import type { Dayjs } from 'dayjs';
 import { ArrType } from '../../time-picker/src/types';
 import type { InputSize } from '../../input/src/input-types';
 
-export const datePickerProProps = {
-  modelValue: {
-    type: [Date, String] as PropType<Date | string>,
-    default: '',
-  },
+export const datePickerProCommonProps = {
   format: {
     type: String,
-    default: 'YYYY/MM/DD',
-  },
-  placeholder: {
-    type: String,
-    default: '请选择日期',
   },
   showTime: {
     type: Boolean,
@@ -24,6 +15,28 @@ export const datePickerProProps = {
     type: String as PropType<InputSize>,
     default: 'md',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  calenderRange: {
+    type: Array as PropType<number[]>,
+  },
+  limitDateRange: {
+    type: Array as PropType<Date[]>,
+  },
+};
+
+export const datePickerProProps = {
+  modelValue: {
+    type: [Date, String] as PropType<Date | string>,
+    default: '',
+  },
+  placeholder: {
+    type: String,
+    default: '请选择日期',
+  },
+  ...datePickerProCommonProps,
 } as const;
 
 export type DatePickerProProps = ExtractPropTypes<typeof datePickerProProps>;
@@ -35,10 +48,14 @@ export interface UseDatePickerProReturnType {
   overlayRef: Ref<HTMLElement | undefined>;
   isPanelShow: Ref<boolean>;
   placeholder: ComputedRef<string>;
+  format: ComputedRef<string>;
   dateValue: ComputedRef<Dayjs | undefined>;
   displayDateValue: ComputedRef<string>;
   isMouseEnter: Ref<boolean>;
   showCloseIcon: ComputedRef<boolean>;
+  pickerDisabled: ComputedRef<boolean>;
+  pickerSize: ComputedRef<string>;
+  isValidateError: ComputedRef<boolean>;
   onFocus: (e: MouseEvent) => void;
   onSelectedDate: (date: Dayjs, isConfirm?: boolean) => void;
   handlerClearTime: (e: MouseEvent) => void;
@@ -84,6 +101,7 @@ export interface UseCalendarPanelReturnType {
   isStartDate: (date: Date) => boolean;
   isInRangeDate: (date: Date) => boolean;
   isEndDate: (date: Date) => boolean;
+  isDisabled: (date: Date) => boolean;
 }
 
 export const datePickerProPanelProps = {
@@ -91,16 +109,8 @@ export const datePickerProPanelProps = {
     type: Boolean,
     default: false,
   },
-  format: {
-    type: String,
-    default: 'YYYY/MM/DD',
-  },
   dateValue: {
-    type: [Object, Array] as PropType<Dayjs | Dayjs[]>,
-  },
-  showTime: {
-    type: Boolean,
-    default: false,
+    type: [Object, Array] as PropType<Dayjs | undefined | (Dayjs | undefined)[]>,
   },
   isRangeType: {
     type: Boolean,
@@ -110,6 +120,7 @@ export const datePickerProPanelProps = {
     type: String,
     default: 'start',
   },
+  ...datePickerProCommonProps,
 } as const;
 
 export type DatePickerProPanelProps = ExtractPropTypes<typeof datePickerProPanelProps>;

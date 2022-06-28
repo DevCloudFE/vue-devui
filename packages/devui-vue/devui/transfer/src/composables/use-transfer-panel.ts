@@ -1,4 +1,4 @@
-import { PropType, ExtractPropTypes, computed, ref, watch, watchEffect } from 'vue';
+import { PropType, ExtractPropTypes, computed, ref, watch, watchEffect, RenderFunction, VNode } from 'vue';
 import type { SetupContext } from 'vue';
 import { IItem, TKey, filterValue } from '../transfer-types';
 
@@ -36,7 +36,7 @@ export const transferPanelProps = {
     default: true,
   },
   search: {
-    type: Function as PropType<(direction: TKey, data: IItem[], keyword: TKey) => void>,
+    type: Function as PropType<(direction: string, data: IItem[], keyword: TKey) => void>,
   },
   direction: {
     type: String,
@@ -58,11 +58,14 @@ export const transferPanelProps = {
   dragend: {
     type: Function as PropType<(event: DragEvent, item: IItem) => void>,
   },
-  onUpdteAllChecked: {
+  onUpdateAllChecked: {
     type: Function as PropType<(value: boolean) => void>,
   },
   onChangeChecked: {
     type: Function as PropType<([]: TKey) => void>,
+  },
+  renderContent: {
+    type: Function as PropType<(h: RenderFunction, option: IItem) => VNode>,
   },
 } as const;
 
@@ -105,8 +108,11 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
    * @param value 是否全选
    */
   const changeAllCheckedHandle = (value: boolean): void => {
-    const checkeds = value ? checkableData.value : [];
-    ctx.emit('updteAllChecked', checkeds);
+    const checkableDataValues = checkableData.value.map((item) => {
+      return item.value;
+    });
+    const checkeds = value ? checkableDataValues : [];
+    ctx.emit('updateAllChecked', checkeds);
   };
   /**
    * updateAllCheckedHandle: 更新全选

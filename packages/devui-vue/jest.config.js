@@ -7,10 +7,7 @@ module.exports = {
     '^.+\\.(ts|tsx|js|jsx)$': [
       'babel-jest',
       {
-        presets: [
-          ['@babel/preset-env', { targets: { node: 'current' } }],
-          ['@babel/preset-typescript']
-        ],
+        presets: [['@babel/preset-env', { targets: { node: 'current' } }], ['@babel/preset-typescript']],
         plugins: ['@vue/babel-plugin-jsx'],
       },
     ],

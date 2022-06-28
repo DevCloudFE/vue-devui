@@ -24,21 +24,20 @@ export default defineComponent({
           <div class={ns.e('panel-content')}>
             <CalendarPanel
               ref={calendarPanelRef}
-              dateValue={props.dateValue}
-              format={props.format}
-              visible={props.visible}
-              showTime={props.showTime}
-              isRangeType={props.isRangeType}
+              {...props}
               onSelectedDate={onSelectedDate}
-              onChangeRangeFocusType={onChangeRangeFocusType}
-              focusType={props.focusType}></CalendarPanel>
+              onChangeRangeFocusType={onChangeRangeFocusType}></CalendarPanel>
             {props.showTime && <TimerPickerPanel visible={props.visible} bindData={timeData.value} onSelectedTime={handlerSelectedTime} />}
+            {ctx.slots?.rightArea && <div class={ns.e('panel-right-area')}>{ctx.slots?.rightArea()}</div>}
           </div>
-          {props.showTime && (
+          {ctx.slots?.footer && <div class={ns.e('panel-footer')}>{ctx.slots?.footer()}</div>}
+          {!ctx.slots?.footer && props.showTime && (
             <div class={ns.e('panel-footer')}>
-              <Button variant="solid" onClick={handlerConfirm}>
-                确定
-              </Button>
+              <div class={ns.e('panel-footer-center')}>
+                <Button variant="solid" onClick={handlerConfirm}>
+                  确定
+                </Button>
+              </div>
             </div>
           )}
         </div>

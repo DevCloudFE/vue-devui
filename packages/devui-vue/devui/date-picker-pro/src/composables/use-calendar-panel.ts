@@ -1,4 +1,4 @@
-import { ref, onBeforeMount, nextTick } from 'vue';
+import { ref, onBeforeMount, nextTick, watch, computed } from 'vue';
 import type { SetupContext } from 'vue';
 import { DAY_DURATION, yearItemHeight, calendarItemHeight } from '../const';
 import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
@@ -16,8 +16,23 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
   let calendarRange: number[] = [];
   const calendarCacheData = new Map();
   const selectDate = ref<Dayjs>();
-  const rangeSelectDate = ref<(Dayjs | null)[]>([]);
+  const rangeSelectDate = ref<(Dayjs | undefined)[]>([]);
   const currentMonthIndex = ref<number>(0);
+
+  const minDate = computed(() => {
+    if (props.limitDateRange && props.limitDateRange[0]) {
+      return props.limitDateRange[0];
+    } else {
+      return new Date(calendarRange[0], 0, 1);
+    }
+  });
+  const maxDate = computed(() => {
+    if (props.limitDateRange && props.limitDateRange[1]) {
+      return props.limitDateRange[1];
+    } else {
+      return new Date(calendarRange[1], 11, 31);
+    }
+  });
 
   const fillLeft = (num: number) => {
     return num < 10 ? `0${num}` : `${num}`;
@@ -163,7 +178,12 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
 
   onBeforeMount(() => {
     today.value = new Date();
-    calendarRange = [today.value.getFullYear() - 3, today.value.getFullYear() + 3];
+    if (props.calenderRange) {
+      calendarRange = props.calenderRange;
+    } else {
+      calendarRange = [today.value.getFullYear() - 3, today.value.getFullYear() + 3];
+    }
+
     // 初始化先展示v-model对应的时间，如果没有展示today对应的时间
     initCalendarData();
     initCalendarShow();
@@ -175,9 +195,9 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     const end = rangeSelectDate.value[1]?.toDate()?.getTime();
     if (start && end && end < start) {
       if (props.focusType === 'start') {
-        rangeSelectDate.value[1] = null;
+        rangeSelectDate.value[1] = undefined;
       } else if (props.focusType === 'end') {
-        rangeSelectDate.value[0] = null;
+        rangeSelectDate.value[0] = undefined;
       }
     }
   };
@@ -191,8 +211,19 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     fixRangeDate();
   };
 
+  const isDisabled = (date: Date) => {
+    if (!date) {
+      return true;
+    }
+    const isInRange =
+      (date.getTime() > minDate.value.getTime() && date.getTime() < maxDate.value.getTime()) ||
+      date.toDateString() === minDate.value.toDateString() ||
+      date.toDateString() === maxDate.value.toDateString();
+    return !isInRange;
+  };
+
   const handlerSelectDate = (day: CalendarDateItem) => {
-    if (!day.inMonth) {
+    if (!day.inMonth || isDisabled(day.date)) {
       return;
     }
     selectDate.value = dayjs(new Date(day.date.setHours(0, 0, 0))).locale('zh-cn');
@@ -264,13 +295,6 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     return false;
   };
 
-  const updateSelectedDate = (date: Dayjs | undefined) => {
-    selectDate.value = date;
-    if (date) {
-      goToShowDate(date.toDate());
-    }
-  };
-  ctx.expose({ updateSelectedDate });
   const isStartDate = (date: Date) => {
     if (!props.isRangeType) {
       return false;
@@ -284,12 +308,14 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     const dateTime = date.getTime();
     const dateStr = date.toDateString();
-    return (
-      rangeSelectDate.value[0]?.toDate()?.getTime() < dateTime &&
+    const isIn =
+      rangeSelectDate.value[0] &&
+      rangeSelectDate.value[0].toDate()?.getTime() < dateTime &&
+      rangeSelectDate.value[1] &&
       rangeSelectDate.value[1]?.toDate()?.getTime() > dateTime &&
       rangeSelectDate.value[0]?.toDate()?.toDateString() !== dateStr &&
-      rangeSelectDate.value[1]?.toDate()?.toDateString() !== dateStr
-    );
+      rangeSelectDate.value[1]?.toDate()?.toDateString() !== dateStr;
+    return isIn ? true : false;
   };
 
   const isEndDate = (date: Date) => {
@@ -298,6 +324,33 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     return date.toDateString() === rangeSelectDate.value[1]?.toDate()?.toDateString();
   };
+
+  watch(
+    [() => props.dateValue, () => props.focusType],
+    ([dateValue, focusType]) => {
+      if (Array.isArray(dateValue)) {
+        rangeSelectDate.value = dateValue;
+        let date: Dayjs | undefined;
+        if (focusType === 'start') {
+          date = dateValue[0];
+        } else {
+          // 在选择了startDate后，自动聚焦到endStart， 此时面板展示startDate时间
+          date = dateValue[1] || dateValue[0];
+        }
+        if (date) {
+          goToShowDate(date.toDate());
+        } else {
+          selectDate.value = date;
+        }
+      } else {
+        selectDate.value = dateValue;
+        if (dateValue) {
+          goToShowDate(dateValue.toDate());
+        }
+      }
+    },
+    { deep: true }
+  );
 
   return {
     yearScrollRef,
@@ -314,5 +367,6 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     isStartDate,
     isInRangeDate,
     isEndDate,
+    isDisabled,
   };
 }

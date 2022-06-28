@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import DDatePickerPro from '../src/date-picker-pro';
 import { nextTick, ref } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import DButton from '../../button/src/button';
 
 const ns = useNamespace('date-picker-pro', true);
 const baseClass = ns.b();
@@ -209,17 +210,21 @@ describe('date-picker-pro test', () => {
 
     wrapper.unmount();
   });
-  it('date-picker-pro event toggleChange confirmEvent', async () => {
+  it('date-picker-pro event toggleChange confirmEvent focus blur', async () => {
     const datePickerProValue = ref<Date | string>('');
     const onToggleChange = jest.fn();
     const onConfirmEvent = jest.fn();
+    const onFocus = jest.fn();
+    const onBlur = jest.fn();
     const wrapper = mount({
       setup() {
         return () => (
           <DDatePickerPro
             v-model={datePickerProValue.value}
             onToggleChange={onToggleChange}
-            onConfirmEvent={onConfirmEvent}></DDatePickerPro>
+            onConfirmEvent={onConfirmEvent}
+            onFocus={onFocus}
+            onBlur={onBlur}></DDatePickerPro>
         );
       },
     });
@@ -230,6 +235,7 @@ describe('date-picker-pro test', () => {
     await nextTick();
     await nextTick();
     expect(onToggleChange).toBeCalledTimes(1);
+    expect(onFocus).toBeCalledTimes(1);
 
     const pickerPanel = container.find(pickerPanelClass);
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
@@ -241,6 +247,8 @@ describe('date-picker-pro test', () => {
     await Items[selectIndex].trigger('click');
     expect(onConfirmEvent).toBeCalledTimes(1);
     expect(onToggleChange).toBeCalledTimes(2);
+    expect(onBlur).toBeCalledTimes(1);
+
     wrapper.unmount();
   });
 
@@ -282,6 +290,156 @@ describe('date-picker-pro test', () => {
     const container = wrapper.find(baseClass);
     const input = container.find(inputNs.m('lg'));
     expect(input.exists()).toBeTruthy();
+
+    wrapper.unmount();
+  });
+
+  it('date-picker-pro rightArea slot', async () => {
+    const datePickerProValue = ref<Date | string>('');
+    const setDate = (days: number) => {
+      datePickerProValue.value = new Date(new Date().getTime() + days * 24 * 3600 * 1000);
+    };
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DDatePickerPro
+            v-model={datePickerProValue.value}
+            v-slots={{
+              rightArea: () => (
+                <ul>
+                  <li>
+                    <DButton
+                      variant="text"
+                      color="primary"
+                      onClick={() => {
+                        setDate(-30);
+                      }}>
+                      一个月前
+                    </DButton>
+                  </li>
+                </ul>
+              ),
+            }}></DDatePickerPro>
+        );
+      },
+    });
+    const container = wrapper.find(baseClass);
+    const input = container.find('input');
+    expect(input.exists()).toBeTruthy();
+    await input.trigger('focus');
+    await nextTick();
+    await nextTick();
+    const pickerPanel = container.find(pickerPanelClass);
+    const rightArea = pickerPanel.find(ns.e('panel-right-area'));
+    expect(rightArea.exists()).toBeTruthy();
+
+    const button = rightArea.find('button');
+    expect(button.exists()).toBeTruthy();
+    const date = new Date();
+    await button.trigger('click');
+
+    await nextTick();
+    const vm = wrapper.vm;
+    const inputNew = vm.$el.querySelector('input');
+    const newDate = new Date(date.getTime() - 30 * 24 * 3600 * 1000);
+    expect(inputNew.value).toBe(
+      `${newDate.getFullYear()}/${
+        newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1
+      }/${newDate.getDate()}`
+    );
+
+    wrapper.unmount();
+  });
+
+  it('date-picker-pro footer slot', async () => {
+    const datePickerProValue = ref<Date | string>('');
+    const setToday = () => {
+      datePickerProValue.value = new Date();
+    };
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DDatePickerPro
+            v-model={datePickerProValue.value}
+            v-slots={{
+              footer: () => (
+                <div>
+                  <DButton color="primary" onClick={setToday}>
+                    今天
+                  </DButton>
+                </div>
+              ),
+            }}></DDatePickerPro>
+        );
+      },
+    });
+    const container = wrapper.find(baseClass);
+    const input = container.find('input');
+    expect(input.exists()).toBeTruthy();
+    await input.trigger('focus');
+    await nextTick();
+    await nextTick();
+    const pickerPanel = container.find(pickerPanelClass);
+    const footer = pickerPanel.find(ns.e('panel-footer'));
+    expect(footer.exists()).toBeTruthy();
+
+    const button = footer.find('button');
+    expect(button.exists()).toBeTruthy();
+    await button.trigger('click');
+
+    await nextTick();
+    const vm = wrapper.vm;
+    const inputNew = vm.$el.querySelector('input');
+    const newDate = new Date();
+    expect(inputNew.value).toBe(
+      `${newDate.getFullYear()}/${
+        newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1
+      }/${newDate.getDate()}`
+    );
+
+    wrapper.unmount();
+  });
+
+  it('date-picker-pro calenderRange limitDateRange', async () => {
+    const datePickerProValue = ref<Date | string>('');
+    const limitDateRange = ref<Date[]>([
+      new Date(new Date().getTime() - 24 * 3600 * 1000),
+      new Date(new Date().getTime() + 24 * 3600 * 1000),
+    ]);
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DDatePickerPro
+            v-model={datePickerProValue.value}
+            calenderRange={[2022, 2025]}
+            limitDateRange={limitDateRange.value}></DDatePickerPro>
+        );
+      },
+    });
+    const container = wrapper.find(baseClass);
+    expect(container.exists()).toBeTruthy();
+    const input = container.find('input');
+    await input.trigger('focus');
+    await nextTick();
+    await nextTick();
+    const pickerPanel = container.find(pickerPanelClass);
+    expect(pickerPanel.exists()).toBeTruthy();
+
+    const yearListItems = pickerPanel.findAll(yearListItemClass);
+    expect(yearListItems.length).toBe(4 + 4 * 12);
+    const weekHeader = pickerPanel.find(weekHeaderClass);
+    expect(weekHeader.findAll('td').length).toBe(7);
+    const tableMonthItems = pickerPanel.findAll(tableMonthClass);
+    expect(tableMonthItems.length).toBe(4 * 12);
+
+    const date = new Date();
+    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
+    const selectIndex = todayIndex > 20 ? todayIndex - 2 : todayIndex + 2;
+    const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(ns.e('table-month-content'));
+    const Items = monthContentContainer.findAll('td');
+    expect(Items[selectIndex].classes().includes(noDotNs.e('table-date-disabled'))).toBe(true);
+    await Items[selectIndex].trigger('click');
+    expect(datePickerProValue.value).toBe('');
 
     wrapper.unmount();
   });

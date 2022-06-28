@@ -28,6 +28,7 @@ export default defineComponent({
               hourList={hourList}
               minuteList={minuteList}
               secondList={secondList}
+              itemHeight={30}
               onChange={handlerTimeSelected}></DTimeList>
           </div>
         </div>

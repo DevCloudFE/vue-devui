@@ -1,11 +1,15 @@
-import { shallowRef, ref, computed } from 'vue';
+import { shallowRef, ref, computed, inject, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { RangeDatePickerProProps, UseRangePickerProReturnType } from '../range-date-picker-types';
 import { onClickOutside } from '@vueuse/core';
 import type { Dayjs } from 'dayjs';
 import { formatDayjsToStr, isDateEquals, parserDate } from '../utils';
+import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../../form';
 
 export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: SetupContext): UseRangePickerProReturnType {
+  const formContext = inject(FORM_TOKEN, undefined);
+  const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
+
   const containerRef = shallowRef<HTMLElement>();
   const originRef = ref<HTMLElement>();
   const startInputRef = shallowRef<HTMLElement>();
@@ -16,31 +20,29 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   const isMouseEnter = ref<boolean>(false);
   const focusType = ref<string>('start');
 
-  const toggleChange = (bool: boolean) => {
-    isPanelShow.value = bool;
-    ctx.emit('toggleChange', bool);
+  const pickerDisabled = computed(() => formContext?.disabled || props.disabled);
+  const pickerSize = computed(() => formContext?.size || props.size);
+  const isValidateError = computed(() => formItemContext?.validateState === 'error');
+
+  const toggleChange = (isShow: boolean) => {
+    isPanelShow.value = isShow;
+    ctx.emit('toggleChange', isShow);
+    if (!isShow) {
+      ctx.emit('blur');
+    }
   };
 
   onClickOutside(containerRef, () => {
     toggleChange(false);
   });
 
-  const onFocus = function (type: string) {
-    if (!isPanelShow.value) {
-      type = 'start';
-    }
-    focusType.value = type;
-    if (focusType.value === 'start') {
-      setTimeout(() => {
-        startInputRef.value?.focus();
-      });
-    } else {
-      setTimeout(() => {
-        endInputRef.value?.focus();
-      });
-    }
-    toggleChange(true);
+  const focusHandler = function (e: MouseEvent) {
+    ctx.emit('focus', e);
   };
+
+  const format = computed(() => {
+    return props.showTime ? props.format || 'YYYY/MM/DD HH:mm:ss' : props.format || 'YYYY/MM/DD';
+  });
 
   const dateValue = computed(() => {
     let start;
@@ -55,8 +57,8 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   });
 
   const displayDateValue = computed(() => {
-    const startFormatDate = formatDayjsToStr(dateValue.value[0], props.format);
-    const endFormatDate = formatDayjsToStr(dateValue.value[1], props.format);
+    const startFormatDate = formatDayjsToStr(dateValue.value[0], format.value);
+    const endFormatDate = formatDayjsToStr(dateValue.value[1], format.value);
     if (startFormatDate) {
       return endFormatDate ? [startFormatDate, endFormatDate] : [startFormatDate, ''];
     } else if (endFormatDate) {
@@ -82,6 +84,19 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     }
   };
 
+  const onChangeRangeFocusType = (type: string) => {
+    focusType.value = type;
+    if (focusType.value === 'start') {
+      setTimeout(() => {
+        startInputRef.value?.focus();
+      });
+    } else {
+      setTimeout(() => {
+        endInputRef.value?.focus();
+      });
+    }
+  };
+
   const handlerClearTime = (e: MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
@@ -89,13 +104,29 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     ctx.emit('confirmEvent', ['', '']);
     // 当面板未关闭时，清空后focusType置位start
     if (isPanelShow.value) {
-      focusType.value = 'start';
+      onChangeRangeFocusType('start');
     }
   };
 
-  const onChangeRangeFocusType = (type: string) => {
-    focusType.value = type;
+  ctx.expose({
+    focusChange: onChangeRangeFocusType,
+  });
+
+  const onFocus = function (type: string) {
+    if (!isPanelShow.value) {
+      type = 'start';
+    }
+    onChangeRangeFocusType(type);
+    toggleChange(true);
   };
+
+  watch(
+    () => props.modelValue,
+    () => {
+      formItemContext?.validate('change').catch((err) => console.warn(err));
+    },
+    { deep: true }
+  );
 
   return {
     containerRef,
@@ -105,12 +136,17 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     overlayRef,
     isPanelShow,
     placeholder,
+    format,
     dateValue,
     displayDateValue,
     isMouseEnter,
     showCloseIcon,
     focusType,
+    pickerDisabled,
+    pickerSize,
+    isValidateError,
     onFocus,
+    focusHandler,
     onSelectedDate,
     handlerClearTime,
     onChangeRangeFocusType,

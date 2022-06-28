@@ -181,4 +181,44 @@ describe('d-transfer', () => {
     await nextTick();
     expect(wrapper.find<HTMLInputElement>(`${targetClass} input[type="text"]`).element.value).toBe('');
   });
+
+  it('d-transfer render-content work', async () => {
+    const sourceOption = ref(SOURCE_DATA);
+    const modelValues = ref(['武汉']);
+    const titles = ref(['sourceHeader', 'targetHeader']);
+    const filter = ref(true);
+    const renderContent = (h, option) => {
+      return h('span', { style: { color: '#5e7ce0' } }, [option.value, option.name]);
+    };
+    const wrapper = mount({
+      components: {
+        DTransfer,
+      },
+      template: `
+                <d-transfer
+                    v-model="modelValues"
+                    :titles="titles"
+                    :data="source"
+                    :filter="filter"
+                    :render-content="renderContent"
+                >
+                </d-transfer>
+            `,
+      setup() {
+        return {
+          modelValues,
+          titles,
+          source: sourceOption,
+          filter,
+          renderContent,
+        };
+      },
+    });
+    await new Promise((resolve) => {
+      setTimeout(resolve, 500);
+    });
+    const firstCheckbox = wrapper.find(`${sourceClass} ${bodyClass} .devui-checkbox`);
+    expect(firstCheckbox.text()).toBe('北京北京');
+    expect(firstCheckbox.findAll('span')[2].attributes().style).toBe('color: rgb(94, 124, 224);');
+  });
 });

@@ -14,6 +14,7 @@ export interface IUseTreeNode {
   nodeVLineClass: ComputedRef<(string | false | undefined)[]>;
   nodeVLineStyles: ComputedRef<{ height: string; left: string; top: string }[]>;
   nodeHLineClass: ComputedRef<(string | false | undefined)[]>;
+  nodeOperationAreaClass: ComputedRef<(string | undefined)[]>;
 }
 
 export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTreeNode {
@@ -47,6 +48,8 @@ export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTree
 
   const nodeTitleClass = computed(() => [ns.e('node-title'), data.value?.disableSelect && 'select-disabled']);
 
+  const nodeOperationAreaClass = computed(() => ns.e('node-operation-area'));
+
   return {
     nodeClass,
     nodeStyle,
@@ -55,5 +58,6 @@ export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTree
     nodeVLineClass,
     nodeVLineStyles,
     nodeHLineClass,
+    nodeOperationAreaClass,
   };
 }

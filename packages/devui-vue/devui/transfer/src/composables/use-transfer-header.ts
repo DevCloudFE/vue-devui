@@ -31,7 +31,7 @@ export const transferHeaderProps = {
     type: Function as PropType<(value: boolean) => void>,
   },
   search: {
-    type: Function as PropType<(direction: TKey, data: IItem[], keyword: TKey) => void>,
+    type: Function as PropType<(direction: string, data: IItem[], keyword: TKey) => void>,
   },
 } as const;
 

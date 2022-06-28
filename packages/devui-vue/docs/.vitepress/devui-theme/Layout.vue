@@ -129,10 +129,6 @@ function unique(arr) {
 const contributors = computed(() => {
   return unique(Object.values(CONTRIBUTORS_MAP).flat());
 })
-
-const becomeContributor = () => {
-  router.go('/contributing/');
-}
 </script>
 
 <template>
@@ -211,7 +207,7 @@ const becomeContributor = () => {
         :spacing="20"
         :avatarSize="48"
       />
-      <Button class="btn-become-contributor" variant="solid" color="primary" @click="becomeContributor">成为贡献者</Button>
+      <a href="/contributing/"><Button class="btn-become-contributor" variant="solid" color="primary">成为贡献者</Button></a>
     </div>
   </div>
 

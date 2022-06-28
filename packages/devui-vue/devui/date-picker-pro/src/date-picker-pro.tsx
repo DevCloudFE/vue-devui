@@ -1,4 +1,4 @@
-import { defineComponent, Transition, ref } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots } from 'vue';
 import type { SetupContext } from 'vue';
 import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types';
 import usePickerPro from './use-picker-pro';
@@ -12,7 +12,7 @@ import './date-picker-pro.scss';
 export default defineComponent({
   name: 'DDatePickerPro',
   props: datePickerProProps,
-  emits: ['update:modelValue', 'toggleChange', 'confirmEvent'],
+  emits: ['update:modelValue', 'toggleChange', 'confirmEvent', 'focus', 'blur'],
   setup(props: DatePickerProProps, ctx: SetupContext) {
     const ns = useNamespace('date-picker-pro');
     const {
@@ -22,16 +22,24 @@ export default defineComponent({
       overlayRef,
       placeholder,
       isPanelShow,
+      format,
       dateValue,
       displayDateValue,
       isMouseEnter,
       showCloseIcon,
+      pickerDisabled,
+      pickerSize,
+      isValidateError,
       onFocus,
       onSelectedDate,
       handlerClearTime,
     } = usePickerPro(props, ctx);
     const position = ref(['bottom-start']);
     return () => {
+      const vSlots = {
+        rightArea: ctx.slots?.rightArea && (() => renderSlot(useSlots(), 'rightArea')),
+        footer: ctx.slots?.footer && (() => renderSlot(useSlots(), 'footer')),
+      };
       return (
         <div class={ns.b()} ref={containerRef}>
           <div
@@ -45,13 +53,16 @@ export default defineComponent({
               placeholder={placeholder.value}
               onFocus={onFocus}
               prefix="calendar"
-              size={props.size}
+              size={pickerSize.value}
+              disabled={pickerDisabled.value}
+              error={isValidateError.value}
               v-slots={{
                 suffix: () => (
                   <Icon
                     class={showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden')}
                     name="error-o"
-                    onClick={handlerClearTime}></Icon>
+                    onClick={handlerClearTime}
+                    style="font-size: inherit;"></Icon>
                 ),
               }}
             />
@@ -59,11 +70,12 @@ export default defineComponent({
           <Transition name="fade">
             <FlexibleOverlay v-model={isPanelShow.value} ref={overlayRef} origin={originRef.value} align="start" position={position.value}>
               <DatePickerProPanel
+                {...props}
                 dateValue={dateValue.value}
                 visible={isPanelShow.value}
-                format={props.format}
-                showTime={props.showTime}
-                onSelectedDate={onSelectedDate}></DatePickerProPanel>
+                format={format.value}
+                onSelectedDate={onSelectedDate}
+                v-slots={vSlots}></DatePickerProPanel>
             </FlexibleOverlay>
           </Transition>
         </div>

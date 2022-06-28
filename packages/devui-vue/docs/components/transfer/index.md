@@ -114,6 +114,7 @@ export default defineComponent({
     :titles="titles"
     :data="source"
     :filter="filter"
+    placeholder="请输入"
     v-model="checkedValues1"
   >
   </d-transfer>
@@ -403,17 +404,114 @@ export default defineComponent({
 
 :::
 
+### 自定义渲染内容
+
+自定义渲染内容。
+:::demo
+
+```vue
+<template>
+  <d-transfer
+    :source-default-checked="sourceDefaultChecked"
+    :target-default-checked="targetDefaultChecked"
+    v-model="selectValue"
+    :titles="titles"
+    :data="source"
+    :render-content="renderContent"
+  >
+  </d-transfer>
+</template>
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const originSource = ref([
+      {
+        value: '1',
+        name: '北京',
+        disabled: false,
+      },
+      {
+        value: '2',
+        name: '上海',
+        disabled: true,
+      },
+      {
+        value: '3',
+        name: '广州',
+        disabled: false,
+      },
+      {
+        value: '4',
+        name: '深圳',
+        disabled: false,
+      },
+      {
+        value: '5',
+        name: '成都',
+        disabled: false,
+      },
+      {
+        value: '6',
+        name: '杭州',
+        disabled: true,
+      },
+      {
+        value: '7',
+        name: '重庆',
+        disabled: false,
+      },
+      {
+        value: '8',
+        name: '西安',
+        disabled: false,
+      },
+      {
+        value: '9',
+        name: '苏州',
+        disabled: false,
+      },
+      {
+        value: '10',
+        name: '武汉',
+        disabled: false,
+      },
+    ]);
+    const selectValue = ref(['1', '2']);
+
+    const renderContent = (h, option) => {
+      return h('span', { style: { color: '#5e7ce0' } }, [option.name]);
+    };
+
+    return {
+      selectValue,
+      titles: ['sourceHeader', 'targetHeader'],
+      source: originSource,
+      sourceDefaultChecked: ['2', '5', '28'],
+      targetDefaultChecked: ['12', '23'],
+      renderContent,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### API
 
 d-transfer 参数
 
-| **参数** | **类型**                        | **默认** | **说明**                                      | **跳转 Demo**             |
-| -------- | ------------------------------- | -------- | --------------------------------------------- | ------------------------- |
-| v-model  | `Array`                         | []       | 可选参数，选中项绑定值，对应右侧穿梭框选项    | [基本用法](#基本用法)     |
-| data     | `Array[{value,name,disabled}] ` | []       | 可选参数，穿梭框源数据                        | [基本用法](#基本用法)     |
-| titles   | `Array`                         | []       | 可选参数，穿梭框标题                          | [基本用法](#基本用法)     |
-| height   | `Array`                         | 320px    | 可选参数，穿梭框高度                          | [基本用法](#基本用法)     |
-| filter   | `boolean \| function`           | false    | 可选参数，是否可以搜索,函数时为自定义过滤方法 | [搜索穿梭框](#搜索穿梭框) |
+| **参数**       | **类型**                        | **默认**         | **说明**                                      | **跳转 Demo**                     |
+| -------------- | ------------------------------- | ---------------- | --------------------------------------------- | --------------------------------- |
+| v-model        | `Array`                         | []               | 可选参数，选中项绑定值，对应右侧穿梭框选项    | [基本用法](#基本用法)             |
+| data           | `Array[{value,name,disabled}] ` | []               | 可选参数，穿梭框源数据                        | [基本用法](#基本用法)             |
+| titles         | `Array`                         | []               | 可选参数，穿梭框标题                          | [基本用法](#基本用法)             |
+| height         | `Array`                         | 320px            | 可选参数，穿梭框高度                          | [基本用法](#基本用法)             |
+| filter         | `boolean \| function`           | false            | 可选参数，是否可以搜索,函数时为自定义过滤方法 | [搜索穿梭框](#搜索穿梭框)         |
+| render-content | `function(h,option)`            | --               | 可选参数，自定义数据项渲染函数                | [自定义渲染内容](#自定义渲染内容) |
+| placeholder    | `string`                        | 请输入关键字搜索 | 可选参数，搜索框的占位符                      | [搜索穿梭框](#搜索穿梭框)         |
 
 d-transfer 事件
 | **事件** | **类型** | **说明** | **跳转 Demo** |

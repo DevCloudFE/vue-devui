@@ -399,6 +399,74 @@ export default defineComponent({
 
 :::
 
+### 操作按钮
+
+:::demo 可定义外部操作按钮、悬浮按钮。
+
+```vue
+<template>
+  <d-tree :data="data" ref="treeRef" operate @select-change="selectChange"></d-tree>
+  <d-button variant="solid" size="sm" @click="addNode">Add</d-button>
+  <d-button size="sm" class="ml-xs" @click="deleteNode">Delete</d-button>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const treeRef = ref();
+    const selectedNode = ref();
+    const data = ref([
+      {
+        label: 'Parent node 1',
+        id: 'node-1',
+        children: [
+          {
+            label: 'Parent node 1-1',
+            id: 'node-1-1',
+            children: [{ label: 'Leaf node 1-1-1', id: 'node-1-1-1' }],
+          },
+          { label: 'Leaf node 1-2', id: 'node-1-2' },
+        ],
+      },
+      { label: 'Leaf node 2', id: 'node-2' },
+    ]);
+
+    const addNode = () => {
+      if (!selectedNode.value) {
+        return;
+      }
+      treeRef.value.treeFactory.insertBefore(
+        selectedNode.value,
+        { label: '新节点' },
+      );
+    };
+
+    const deleteNode = () => {
+      if (!selectedNode.value) {
+        return;
+      }
+      treeRef.value.treeFactory.removeNode(selectedNode.value);
+    };
+
+    const selectChange = (selected) => {
+      selectedNode.value = selected;
+    };
+
+    return {
+      treeRef,
+      data,
+      addNode,
+      deleteNode,
+      selectChange,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### 虚拟滚动
 
 :::demo 使用虚拟滚动处理大数据量的加载问题。

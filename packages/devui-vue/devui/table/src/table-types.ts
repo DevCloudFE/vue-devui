@@ -3,6 +3,7 @@ import { TableStore } from './store/store-types';
 
 export type TableSize = 'sm' | 'md' | 'lg';
 export type BorderType = '' | 'bordered' | 'borderless';
+export type RowKeyType = string | ((v: Record<string, any>, index?: number | undefined) => string);
 
 export type SpanMethod = (data: {
   row: any;
@@ -86,7 +87,8 @@ export const tableProps = {
     default: true,
   },
   rowKey: {
-    type: String,
+    type: [Function as PropType<(v: Record<string, any>, index?: number | undefined) => string>, String],
+    default: 'id',
   },
   defaultExpandAll: {
     type: Boolean,
@@ -94,12 +96,6 @@ export const tableProps = {
   },
   expandRowKeys: {
     type: Array as PropType<string[]>,
-  },
-  trackBy: {
-    type: Function as PropType<(v: Record<string, any>, index?: number | undefined) => string>,
-    default(v: Record<string, any>, index?: number | undefined): string {
-      return `${index}`;
-    },
   },
 };
 

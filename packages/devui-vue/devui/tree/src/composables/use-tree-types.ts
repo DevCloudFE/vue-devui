@@ -40,6 +40,7 @@ export interface IUseCore {
   getNode: (node: IInnerTreeNode) => IInnerTreeNode;
   setNodeValue: (node: IInnerTreeNode, key: keyof IInnerTreeNode, value: valueof<IInnerTreeNode>) => void;
   setTree: (newTree: IInnerTreeNode[]) => void;
+  getTree: () => IInnerTreeNode[];
 }
 
 export interface IUseCheck {
@@ -59,7 +60,7 @@ export interface IUseDisable {
 }
 
 export interface IUseOperate {
-  insertBefore: (parentNode: ITreeNode, node: ITreeNode, referenceNode: ITreeNode) => void;
+  insertBefore: (parentNode: ITreeNode, node: ITreeNode, referenceNode?: ITreeNode) => void;
   removeNode: (node: ITreeNode) => void;
   editNode: (node: ITreeNode, label: string) => void;
 }
@@ -68,6 +69,7 @@ export interface IUseSelect {
   selectNode: (node: IInnerTreeNode) => void;
   deselectNode: (node: IInnerTreeNode) => void;
   toggleSelectNode: (node: IInnerTreeNode) => void;
+  getSelectedNode: () => IInnerTreeNode;
 }
 
 export interface IUseToggle {
@@ -87,3 +89,7 @@ export type IUseTree = {
 export type ICheckStrategy = 'upward' | 'downward' | 'both' | 'none';
 
 export type ICheck = boolean | ICheckStrategy;
+
+export type IOperateItem = 'add' | 'delete' | 'edit';
+
+export type IOperate = boolean | IOperateItem | Array<IOperateItem>;

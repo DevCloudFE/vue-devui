@@ -1,12 +1,5 @@
 import { Ref, SetupContext } from 'vue';
-import { IInnerTreeNode, IUseCore } from './use-tree-types';
-
-export interface IUseToggle {
-  expandNode: (node: IInnerTreeNode) => void;
-  collapseNode: (node: IInnerTreeNode) => void;
-  toggleNode: (node: IInnerTreeNode) => void;
-  expandAllNodes: () => void;
-}
+import { IInnerTreeNode, IUseCore, IUseToggle } from './use-tree-types';
 
 export default function () {
   return function useToggle(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseToggle {

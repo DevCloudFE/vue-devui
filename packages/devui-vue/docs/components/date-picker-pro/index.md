@@ -83,6 +83,159 @@ export default defineComponent({
 
 :::
 
+### 自定义日历面板区域
+
+:::demo
+
+```vue
+<template>
+  <div class="mb10">right area</div>
+  <d-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250" :showTime="true">
+    <template #rightArea>
+      <slot name="rightArea">
+        <ul class="date-picker-right-panel">
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(-30);
+                }
+              "
+            >
+              一个月前
+            </d-button>
+            <span>{{ getDateString(-30) }}</span>
+          </li>
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(-14);
+                }
+              "
+            >
+              两周前
+            </d-button>
+            <span>{{ getDateString(-14) }}</span>
+          </li>
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(-7);
+                }
+              "
+            >
+              一周前
+            </d-button>
+            <span>{{ getDateString(-7) }}</span>
+          </li>
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(0);
+                }
+              "
+            >
+              今天
+            </d-button>
+            <span>{{ getDateString(0) }}</span>
+          </li>
+        </ul>
+      </slot>
+    </template>
+  </d-date-picker-pro>
+  <div class="mb10">footer</div>
+  <d-date-picker-pro v-model="datePickerProValue2" class="mb20 wh250" :showTime="true">
+    <template #footer>
+      <slot name="footer">
+        <div class="date-picker-footer">
+          <d-button
+            variant="solid"
+            color="secondary"
+            @click="setToday"
+          >
+            今天
+          </d-button>
+          <d-button
+            variant="solid"
+            color="secondary"
+            @click="clearDate"
+          >
+            清除时间
+          </d-button>
+        </ul>
+      </slot>
+    </template>
+  </d-date-picker-pro>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const datePickerProValue1 = ref<string | Date>('');
+    const datePickerProValue2 = ref<string | Date>('');
+    const setDate = (days: number) => {
+      datePickerProValue1.value = new Date(new Date().getTime() + days * 24 * 3600 * 1000);
+    };
+    const getDateString = (days: number) => {
+      const date = new Date(new Date().getTime() + days * 24 * 3600 * 1000);
+      return `${date.getMonth() + 1}月${date.getDate()}日`;
+    };
+    const setToday = () => {
+      datePickerProValue2.value = new Date(new Date().getTime());
+    };
+    const clearDate = () => {
+      datePickerProValue2.value = '';
+    }
+
+    return {
+      datePickerProValue1,
+      datePickerProValue2,
+      setDate,
+      getDateString,
+      setToday,
+      clearDate,
+    };
+  },
+});
+</script>
+<style>
+.date-picker-right-panel {
+  padding: 0;
+  li {
+    list-style-type: none;
+    button {
+      width: 66px;
+    }
+    span {
+      margin-left: 8px;
+    }
+  }
+}
+.date-picker-footer {
+  display: flex;
+  justify-content: end;
+  button {
+    margin-left: 10px;
+  }
+}
+</style>
+```
+
+:::
+
 ### 日期格式
 
 通过`format`指定输入框显示的日期格式, 详见 [Format](#format)
@@ -164,15 +317,211 @@ export default defineComponent({
 
 :::
 
+### 自定义日期范围面板区域
+
+:::demo
+
+```vue
+<template>
+  <div class="mb10">right area</div>
+  <d-range-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250" :showTime="true">
+    <template #rightArea>
+      <slot name="rightArea">
+        <ul class="date-picker-right-panel">
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(-30);
+                }
+              "
+            >
+              一个月前
+            </d-button>
+          </li>
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  setDate(-14);
+                }
+              "
+            >
+              一周前
+            </d-button>
+          </li>
+          <li>
+            <d-button
+              variant="text"
+              color="primary"
+              @click="
+                () => {
+                  selectThisWeek();
+                }
+              "
+            >
+              当前周
+            </d-button>
+          </li>
+        </ul>
+      </slot>
+    </template>
+  </d-range-date-picker-pro>
+  <div class="mb10">footer</div>
+  <d-range-date-picker-pro ref="footerCustom" v-model="datePickerProValue2" class="mb20 wh250" :showTime="true">
+    <template #footer>
+      <slot name="footer">
+        <div class="date-picker-footer">
+          <d-button
+            variant="solid"
+            color="secondary"
+            @click="clearStartDate"
+          >
+            清除开始时间
+          </d-button>
+          <d-button
+            variant="solid"
+            color="secondary"
+            @click="clearEndDate"
+          >
+            清除结束时间
+          </d-button>
+        </ul>
+      </slot>
+    </template>
+  </d-range-date-picker-pro>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const datePickerProValue1 = ref<string | Date[]>(['', '']);
+    const datePickerProValue2 = ref<string | Date[]>(['', '']);
+    const setDate = (days: number) => {
+      datePickerProValue1.value = [new Date(new Date().getTime() + days * 24 * 3600 * 1000), new Date()];
+    };
+    const selectThisWeek = () => {
+      const tody = new Date();
+      const start = new Date(new Date().setDate(tody.getDate() - tody.getDay()));
+      const end = new Date(new Date().setDate(start.getDate() + 6));
+      datePickerProValue1.value = [start, end];
+    };
+
+    const footerCustom = ref();
+
+    const clearStartDate = () => {
+      const [start, end] = datePickerProValue2.value;
+      datePickerProValue2.value = ['', end];
+      footerCustom?.value.focusChange('start');
+    }
+    const clearEndDate = () => {
+      const [start, end] = datePickerProValue2.value;
+      datePickerProValue2.value = [start, ''];
+      footerCustom?.value.focusChange('end');
+    }
+
+    return {
+      datePickerProValue1,
+      datePickerProValue2,
+      setDate,
+      selectThisWeek,
+      footerCustom,
+      clearStartDate,
+      clearEndDate,
+    };
+  },
+});
+</script>
+```
+
+:::
+
+### 禁用选择器
+
+:::demo
+
+```vue
+<template>
+  <d-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250 mr30" :disabled="true" />
+  <d-range-date-picker-pro v-model="datePickerProValue2" class="mb20 wh250" :disabled="true" />
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const datePickerProValue1 = ref<string>('');
+    const datePickerProValue2 = ref<string[]>(['', '']);
+
+    return {
+      datePickerProValue1,
+      datePickerProValue2,
+    };
+  },
+});
+</script>
+```
+
+:::
+
+### 设置日历面板可选时间范围
+
+添加 `calenderRange` 属性设置选择器日历面板显示的时间范围。
+添加 `limitDateRange` 属性设置选择器日历面板可选择的时间范围。
+
+:::demo
+
+```vue
+<template>
+  <d-date-picker-pro v-model="datePickerProValue1" class="mb20 wh250 mr30" :calenderRange="[2022, 2025]" :limitDateRange="limitDateRange" />
+  <d-range-date-picker-pro
+    v-model="datePickerProValue2"
+    class="mb20 wh250"
+    :calenderRange="[2022, 2025]"
+    :limitDateRange="limitDateRange"
+  />
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const datePickerProValue1 = ref<string>('');
+    const datePickerProValue2 = ref<string[]>(['', '']);
+    const limitDateRange = ref<Date[]>([new Date(2022, 1, 5), new Date(2023, 1, 5)]);
+
+    return {
+      datePickerProValue1,
+      datePickerProValue2,
+      limitDateRange,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### DatePickerPro 参数
 
-| 参数名      | 类型              | 默认                                  | 说明                                                     | 跳转 Demo             |
-| :---------- | :---------------- | :------------------------------------ | :------------------------------------------------------- | :-------------------- |
-| v-model     | `Date`            | ''                                    | 必选，选中项绑定的值                                     | [基本用法](#基本用法) |
-| format      | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式) |
-| placeholder | `string`          | '请选择日期'                          | 可选，输入框的 placeholder                               | [基本用法](#基本用法) |
-| showTime    | `boolean`         | false                                 | 可选，是否显示时分秒                                     | [显示时间](#显示时间) |
-| size        | `string`          | 'md'                                  | 可选，输入框的尺寸                                       | [基本用法](#基本用法) |
+| 参数名         | 类型              | 默认                                                        | 说明                                                     | 跳转 Demo                                             |
+| :------------- | :---------------- | :---------------------------------------------------------- | :------------------------------------------------------- | :---------------------------------------------------- |
+| v-model        | `Date`            | ''                                                          | 必选，选中项绑定的值                                     | [基本用法](#基本用法)                                 |
+| format         | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss'                       | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)                                 |
+| placeholder    | `string`          | '请选择日期'                                                | 可选，输入框的 placeholder                               | [基本用法](#基本用法)                                 |
+| showTime       | `boolean`         | false                                                       | 可选，是否显示时分秒                                     | [显示时间](#显示时间)                                 |
+| size           | `string`          | 'md'                                                        | 可选，输入框的尺寸                                       | [基本用法](#基本用法)                                 |
+| disabled       | `boolean`         | false                                                       | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器)                             |
+| calenderRange  | `[number,number]` | [new Date().getFullYear() - 3,new Date().getFullYear() + 3] | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| limitDateRange | `[Date,Date]`     | [new Date(calenderRange[0]), new Date(calenderRange[1])]    | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
 
 ### DatePickerPro 事件
 
@@ -180,6 +529,15 @@ export default defineComponent({
 | :----------- | :------------------------ | :------------------------------- | :-------- |
 | toggleChange | `(bool: boolean) => void` | 可选，选择器打开关闭 toggle 事件 |           |
 | confirmEvent | `(date: Date) => void`    | 可选，用户确定选定的值时触发     |           |
+| focus        | `(e: MouseEvent) => void` | 可选，输入框获取焦点时触发       |           |
+| blur         | `() => void`              | 可选，输入框失去焦点时触发       |           |
+
+### DatePickerPro 插槽
+
+| 名称      | 说明                                                     | 跳转 Demo                                 |
+| :-------- | :------------------------------------------------------- | :---------------------------------------- |
+| rightArea | 自定义 DatePickerPro 日历面板右侧内容， 如：日期快捷选项 | [自定义日历面板区域](#自定义日历面板区域) |
+| footer    | 自定义 DatePickerPro 日历面板下侧内容                    | [自定义日历面板区域](#自定义日历面板区域) |
 
 ### DatePickerPro 类型定义
 
@@ -211,13 +569,16 @@ type Format = string;
 
 ### RangeDatePickerPro 参数
 
-| 参数名      | 类型              | 默认                                  | 说明                                                     | 跳转 Demo                 |
-| :---------- | :---------------- | :------------------------------------ | :------------------------------------------------------- | :------------------------ |
-| v-model     | `[Date, Date]`    | ['','']                               | 必选，选中项绑定的值                                     | [范围选择器](#范围选择器) |
-| format      | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss' | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)     |
-| placeholder | `Array`           | ['请选择日期', '请选择日期']          | 可选，输入框的 placeholder                               | [范围选择器](#范围选择器) |
-| showTime    | `boolean`         | false                                 | 可选，是否显示时分秒                                     | [范围选择器](#范围选择器) |
-| size        | `string`          | 'md'                                  | 可选，输入框的尺寸                                       |                           |
+| 参数名         | 类型              | 默认                                                        | 说明                                                     | 跳转 Demo                                             |
+| :------------- | :---------------- | :---------------------------------------------------------- | :------------------------------------------------------- | :---------------------------------------------------- |
+| v-model        | `[Date, Date]`    | ['','']                                                     | 必选，选中项绑定的值                                     | [范围选择器](#范围选择器)                             |
+| format         | [Format](#format) | 'YYYY/MM/DD' \| 'YYYY/MM/DD HH:mm:ss'                       | 可选，绑定值的日期格式，根据是否 showTime 区别不同默认值 | [日期格式](#日期格式)                                 |
+| placeholder    | `Array`           | ['请选择日期', '请选择日期']                                | 可选，输入框的 placeholder                               | [范围选择器](#范围选择器)                             |
+| showTime       | `boolean`         | false                                                       | 可选，是否显示时分秒                                     | [范围选择器](#范围选择器)                             |
+| size           | `string`          | 'md'                                                        | 可选，输入框的尺寸                                       |                                                       |
+| disabled       | `boolean`         | false                                                       | 可选，是否禁用选择器                                     | [禁用选择器](#禁用选择器)                             |
+| calenderRange  | `[number,number]` | [new Date().getFullYear() - 3,new Date().getFullYear() + 3] | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
+| limitDateRange | `[Date,Date]`     | [new Date(calenderRange[0]), new Date(calenderRange[1])]    | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
 
 ### RangeDatePickerPro 事件
 
@@ -225,3 +586,12 @@ type Format = string;
 | :----------- | :------------------------ | :--------------------------------- | :-------- |
 | toggleChange | `(bool: boolean) => void` | 可选，选择器打开关闭 toggle 事件   |           |
 | confirmEvent | `(date: Date[]) => void`  | 可选，用户确定选定的时间范围时触发 |           |
+| focus        | `(e: MouseEvent) => void` | 可选，输入框获取焦点时触发         |           |
+| blur         | `() => void`              | 可选，输入框失去焦点时触发         |           |
+
+### RangeDatePickerPro 插槽
+
+| 名称      | 说明                                                              | 跳转 Demo                                         |
+| :-------- | :---------------------------------------------------------------- | :------------------------------------------------ |
+| rightArea | 自定义 RangeDatePickerPro 日历面板右侧内容， 如：日期范围快捷选项 | [自定义日期范围面板区域](#自定义日期范围面板区域) |
+| footer    | 自定义 RangeDatePickerPro 日历面板下侧内容                        | [自定义日期范围面板区域](#自定义日期范围面板区域) |

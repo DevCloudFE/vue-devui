@@ -447,7 +447,7 @@ describe('d-table', () => {
             <Button onClick={toggleRowExpansion} class="mr-m mb-m">
               toggleRowExpansion
             </Button>
-            <DTable ref={tableRef} data={data} row-key="firstName" trackBy={(item) => item.firstName} expand-row-keys={['Jacob', 'Mark']}>
+            <DTable ref={tableRef} data={data} row-key="firstName" expand-row-keys={['Jacob', 'Mark']}>
               <DColumn type="expand"></DColumn>
               <DColumn type="checkable" width="40" checkable={checkable} reserve-check></DColumn>
               <DColumn field="firstName" header="First Name"></DColumn>

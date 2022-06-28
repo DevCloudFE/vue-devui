@@ -41,7 +41,7 @@
     border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   cursor: pointer;
-  height: 100%;
+  align-self: normal;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -53,7 +53,6 @@
   cursor: pointer;
   display: block;
   width: 100%;
-  min-height: 28px;
   height: unset;
   padding: 4px 8px;
   font-size: $devui-font-size;

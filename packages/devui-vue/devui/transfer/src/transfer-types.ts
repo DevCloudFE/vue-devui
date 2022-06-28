@@ -1,4 +1,4 @@
-import { PropType, ExtractPropTypes } from 'vue';
+import { PropType, ExtractPropTypes, VNode, RenderFunction } from 'vue';
 
 export interface IItem {
   value: string | number;
@@ -7,8 +7,9 @@ export interface IItem {
 }
 
 export interface ICheckList {
-  value: string;
+  value: string | number;
   checked: boolean;
+  name: string;
 }
 
 export interface IDargItemAndDropItem {
@@ -18,7 +19,7 @@ export interface IDargItemAndDropItem {
   dropItem: IItem;
 }
 
-export type TKey = string;
+export type TKey = string | number;
 
 export type filterValue = boolean | ((data: IItem, key: string) => IItem[]);
 
@@ -93,6 +94,9 @@ export const transferProps = {
   },
   dragend: {
     type: Function as PropType<(event: DragEvent, item: IItem) => void>,
+  },
+  renderContent: {
+    type: Function as PropType<(h: RenderFunction, option: IItem) => VNode>,
   },
 } as const;
 

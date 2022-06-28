@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import DRangeDatePickerPro from '../src/components/range-date-picker-pro';
 import { nextTick, ref } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import DButton from '../../button/src/button';
 
 const datePickerNs = useNamespace('date-picker-pro', true);
 const rangeDatePickerNs = useNamespace('range-date-picker-pro', true);
@@ -148,17 +149,21 @@ describe('range-date-picker-pro test', () => {
 
     wrapper.unmount();
   });
-  it('range-date-picker-pro event toggleChange confirmEvent', async () => {
+  it('range-date-picker-pro event toggleChange confirmEvent focus blur', async () => {
     const datePickerProValue = ref<(Date | string)[]>(['', '']);
     const onToggleChange = jest.fn();
     const onConfirmEvent = jest.fn();
+    const onFocus = jest.fn();
+    const onBlur = jest.fn();
     const wrapper = mount({
       setup() {
         return () => (
           <DRangeDatePickerPro
             v-model={datePickerProValue.value}
             onToggleChange={onToggleChange}
-            onConfirmEvent={onConfirmEvent}></DRangeDatePickerPro>
+            onConfirmEvent={onConfirmEvent}
+            onFocus={onFocus}
+            onBlur={onBlur}></DRangeDatePickerPro>
         );
       },
     });
@@ -169,6 +174,7 @@ describe('range-date-picker-pro test', () => {
     await nextTick();
     await nextTick();
     expect(onToggleChange).toBeCalledTimes(1);
+    expect(onFocus).toBeCalledTimes(1);
 
     const pickerPanel = container.find(pickerPanelClass);
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
@@ -181,12 +187,15 @@ describe('range-date-picker-pro test', () => {
     await nextTick();
     expect(onConfirmEvent).toBeCalledTimes(0);
     expect(onToggleChange).toBeCalledTimes(1);
+    expect(onFocus).toBeCalledTimes(1);
 
     await Items[selectIndex + 1].trigger('click');
     await nextTick();
     // todo 选择第二个日期时，focusType判断仍然是start。 demo中是正确的，单测原因需进一步确定
     expect(onConfirmEvent).toBeCalledTimes(1);
     expect(onToggleChange).toBeCalledTimes(2);
+    expect(onBlur).toBeCalledTimes(1);
+
     wrapper.unmount();
   });
   it('range-date-picker-pro clear date', async () => {
@@ -232,6 +241,165 @@ describe('range-date-picker-pro test', () => {
     expect(inputs.length).toBe(2);
     expect(inputs[0].exists()).toBeTruthy();
     expect(inputs[1].exists()).toBeTruthy();
+
+    wrapper.unmount();
+  });
+
+  it('range-date-picker-pro rightArea slot', async () => {
+    const datePickerProValue = ref<(Date | string)[]>(['', '']);
+    const setDate = (days: number) => {
+      datePickerProValue.value = [new Date(new Date().getTime() + days * 24 * 3600 * 1000), new Date()];
+    };
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DRangeDatePickerPro
+            v-model={datePickerProValue.value}
+            v-slots={{
+              rightArea: () => (
+                <ul>
+                  <li>
+                    <DButton
+                      variant="text"
+                      color="primary"
+                      onClick={() => {
+                        setDate(-30);
+                      }}>
+                      一个月前
+                    </DButton>
+                  </li>
+                </ul>
+              ),
+            }}></DRangeDatePickerPro>
+        );
+      },
+    });
+    const container = wrapper.find(baseClass);
+    const inputs = container.findAll('input');
+    expect(inputs.length).toBe(2);
+    await inputs[0].trigger('focus');
+    await nextTick();
+    await nextTick();
+    const pickerPanel = container.find(pickerPanelClass);
+    const rightArea = pickerPanel.find(datePickerNs.e('panel-right-area'));
+    expect(rightArea.exists()).toBeTruthy();
+
+    const button = rightArea.find('button');
+    expect(button.exists()).toBeTruthy();
+    const date = new Date();
+    await button.trigger('click');
+
+    await nextTick();
+    const vm = wrapper.vm;
+    const inputNews = vm.$el.querySelectorAll('input');
+    expect(inputNews.length).toBe(2);
+    const newDate = new Date(date.getTime() - 30 * 24 * 3600 * 1000);
+    expect(inputNews[0].value).toBe(
+      `${newDate.getFullYear()}/${
+        newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1
+      }/${newDate.getDate()}`
+    );
+    expect(inputNews[1].value).toBe(
+      `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getDate()}`
+    );
+
+    wrapper.unmount();
+  });
+
+  it('range-date-picker-pro footer slot', async () => {
+    const datePickerProValue = ref<(Date | string)[]>(['', '']);
+    const setToday = () => {
+      datePickerProValue.value = [new Date(new Date().getTime()), new Date(new Date().getTime() + 1 * 24 * 3600 * 1000)];
+    };
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DRangeDatePickerPro
+            v-model={datePickerProValue.value}
+            v-slots={{
+              footer: () => (
+                <div>
+                  <d-button variant="solid" color="secondary" onClick={setToday}>
+                    今天
+                  </d-button>
+                </div>
+              ),
+            }}></DRangeDatePickerPro>
+        );
+      },
+    });
+    const container = wrapper.find(baseClass);
+    const inputs = container.findAll('input');
+    await inputs[0].trigger('focus');
+    await nextTick();
+    await nextTick();
+    const pickerPanel = container.find(pickerPanelClass);
+    const footer = pickerPanel.find(datePickerNs.e('panel-footer'));
+    expect(footer.exists()).toBeTruthy();
+
+    const button = footer.find('button');
+    expect(button.exists()).toBeTruthy();
+    const date = new Date();
+    await button.trigger('click');
+
+    await nextTick();
+    const vm = wrapper.vm;
+    const inputNews = vm.$el.querySelectorAll('input');
+    expect(inputNews.length).toBe(2);
+    const newDate = new Date(date.getTime() + 1 * 24 * 3600 * 1000);
+    expect(inputNews[0].value).toBe(
+      `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getDate()}`
+    );
+    expect(inputNews[1].value).toBe(
+      `${newDate.getFullYear()}/${
+        newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1
+      }/${newDate.getDate()}`
+    );
+
+    wrapper.unmount();
+  });
+
+  it('range-date-picker-pro calenderRange limitDateRange', async () => {
+    const datePickerProValue = ref<(Date | string)[]>(['', '']);
+    const limitDateRange = ref<Date[]>([
+      new Date(new Date().getTime() - 24 * 3600 * 1000),
+      new Date(new Date().getTime() + 24 * 3600 * 1000),
+    ]);
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DRangeDatePickerPro
+            v-model={datePickerProValue.value}
+            calenderRange={[2022, 2025]}
+            limitDateRange={limitDateRange.value}></DRangeDatePickerPro>
+        );
+      },
+    });
+    const container = wrapper.find(baseClass);
+    expect(container.exists()).toBeTruthy();
+    const inputs = container.findAll('input');
+    await inputs[0].trigger('focus');
+    await nextTick();
+    await nextTick();
+    const pickerPanel = container.find(pickerPanelClass);
+    expect(pickerPanel.exists()).toBeTruthy();
+
+    const yearListItems = pickerPanel.findAll(yearListItemClass);
+    expect(yearListItems.length).toBe(4 + 4 * 12);
+    const weekHeader = pickerPanel.find(weekHeaderClass);
+    expect(weekHeader.findAll('td').length).toBe(7);
+    const tableMonthItems = pickerPanel.findAll(tableMonthClass);
+    expect(tableMonthItems.length).toBe(4 * 12);
+
+    const date = new Date();
+    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
+    const selectIndex = todayIndex > 20 ? todayIndex - 2 : todayIndex + 2;
+    const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(datePickerNs.e('table-month-content'));
+    const Items = monthContentContainer.findAll('td');
+    expect(Items[selectIndex].classes().includes(noDotDatePickerNs.e('table-date-disabled'))).toBe(true);
+    await Items[selectIndex].trigger('click');
+    expect(inputs[0].element.value).toBe('');
+    expect(inputs[1].element.value).toBe('');
 
     wrapper.unmount();
   });
