@@ -2,13 +2,13 @@ import { ref, onBeforeMount, nextTick, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { chunk } from 'lodash';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
-import { DatePickerProPanelProps } from '../date-picker-pro-types';
+import { DatePickerProPanelProps, UseYearCalendarPanelReturnType } from '../date-picker-pro-types';
 import { yearCalendarItemHeight } from '../const';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import useCalendarCommon from './use-calendar-common';
 
-export default function useYearCalendarPanel(props: DatePickerProPanelProps, ctx: SetupContext): any {
+export default function useYearCalendarPanel(props: DatePickerProPanelProps, ctx: SetupContext): UseYearCalendarPanelReturnType {
   const ns = useNamespace('date-picker-pro');
   const yarListScrollRef = ref();
   const yearList = ref<number[][]>([]);
