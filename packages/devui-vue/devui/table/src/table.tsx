@@ -1,4 +1,4 @@
-import { provide, defineComponent, getCurrentInstance, computed, toRef, ref, onMounted, nextTick } from 'vue';
+import { provide, defineComponent, getCurrentInstance, computed, toRef, ref, onMounted, nextTick, watch } from 'vue';
 import { ITable, tableProps, TableProps, TABLE_TOKEN, DefaultRow } from './table-types';
 import { useTable, useTableLayout, useTableWatcher } from './composables/use-table';
 import { createStore } from './store';
@@ -34,6 +34,12 @@ export default defineComponent({
     table.hiddenColumns = hiddenColumns;
     table.tableRef = tableRef;
     table.updateColumnWidth = updateColumnWidth;
+    watch(
+      () => props.data,
+      () => {
+        store.updateRows();
+      }
+    );
 
     ctx.expose({
       store,
@@ -42,6 +48,8 @@ export default defineComponent({
     onMounted(async () => {
       await nextTick();
       store.updateColumns();
+      store.updateFirstDefaultColumn();
+      store.updateRows();
       updateColumnWidth();
     });
 

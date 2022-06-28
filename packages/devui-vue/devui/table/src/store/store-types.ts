@@ -11,6 +11,12 @@ export interface TableStore<T = Record<string, any>> {
   states: {
     // 外部数据源
     _data: Ref<T[]>;
+    // 展开的行数据
+    flatRows: Ref<T[]>;
+    // 树形表格中隐藏行的key
+    hiddenRowKeys: Ref<string[]>;
+    // 树形表格中行的等级
+    rowLevelMap: Ref<Record<string, number>>;
     // 列数据
     _columns: Ref<Column[]>;
     // 展开的列数据
@@ -25,6 +31,8 @@ export interface TableStore<T = Record<string, any>> {
     isFixedLeft: Ref<boolean>;
     // table header 组件实例
     thList: ComponentInternalInstance[];
+    // 第一个type为''列的id
+    firstDefaultColumn: Ref<string>;
   };
   // 插入列
   insertColumn(column: Column, parent: any): void;
@@ -34,6 +42,8 @@ export interface TableStore<T = Record<string, any>> {
   removeColumn(column: Column): void;
   // 更新列
   updateColumns(): void;
+  // 更新行
+  updateRows(): void;
   // 获取勾选行
   getCheckedRows(): T[];
   // 排序数据
@@ -41,7 +51,7 @@ export interface TableStore<T = Record<string, any>> {
   // 特定行数据是否勾选
   isRowChecked(row: T, index: number): boolean;
   // 保存勾选行的信息
-  checkRow(toggle: boolean, row: T, index: number): void;
+  checkRow(toggle: boolean, row: T, index?: number): void;
 
   // 展开行
   toggleRowExpansion(row: T): void;
@@ -49,6 +59,8 @@ export interface TableStore<T = Record<string, any>> {
   setExpandRows: (rowKeys: string[]) => void;
   // 设置行选中状态
   toggleRowSelection: (row: T) => void;
+  // 更新 firstDefaultColumn
+  updateFirstDefaultColumn: () => void;
 }
 
 export interface UseExpand {

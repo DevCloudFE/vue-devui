@@ -1,5 +1,5 @@
 import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance, SetupContext, Slots } from 'vue';
-import { DefaultRow } from '../../table-types';
+import { DefaultRow, TableProps } from '../../table-types';
 import { TableStore } from '../../store/store-types';
 
 // eslint-disable-next-line no-use-before-define
@@ -125,7 +125,7 @@ export interface Column {
   ctx?: SetupContext;
   customFilterTemplate?: Slot;
   renderHeader?: (column: Column, store: TableStore) => VNode;
-  renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) => VNode;
+  renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number, props?: TableProps) => VNode;
   formatter?: Formatter;
   sortMethod?: SortMethod;
   subColumns?: Slot;

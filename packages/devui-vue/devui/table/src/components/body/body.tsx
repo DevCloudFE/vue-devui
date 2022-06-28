@@ -4,17 +4,17 @@ import { Column } from '../column/column-types';
 import { CellClickArg, RowClickArg } from './body-types';
 import TD from '../body-td/body-td';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
-import { useMergeCell } from './use-body';
+import { useMergeCell, useBodyRender } from './use-body';
 import './body.scss';
 
 export default defineComponent({
   name: 'DTableBody',
   setup() {
     const table = inject(TABLE_TOKEN) as ITable;
-    const { _data: data, flatColumns } = table.store.states;
+    const { flatColumns, flatRows } = table.store.states;
     const ns = useNamespace('table');
-    const hoverEnabled = computed(() => table.props.rowHoveredHighlight);
     const { tableSpans, removeCells } = useMergeCell();
+    const { getTableRowClass } = useBodyRender();
     const onCellClick = (cellClickArg: CellClickArg) => {
       table.emit('cell-click', cellClickArg);
     };
@@ -24,12 +24,9 @@ export default defineComponent({
 
     return () => (
       <tbody class={ns.e('tbody')}>
-        {data.value.map((row: DefaultRow, rowIndex: number) => (
+        {flatRows.value.map((row: DefaultRow, rowIndex: number) => (
           <>
-            <tr
-              key={rowIndex}
-              class={{ 'hover-enabled': hoverEnabled.value, expanded: table.store.isRowExpanded(row) }}
-              onClick={() => onRowClick({ row })}>
+            <tr key={rowIndex} class={getTableRowClass(row)} onClick={() => onRowClick({ row })}>
               {flatColumns.value.map((column: Column, columnIndex: number) => {
                 const cellId = `${rowIndex}-${columnIndex}`;
                 const [rowspan, colspan] = tableSpans.value[cellId] ?? [1, 1];
