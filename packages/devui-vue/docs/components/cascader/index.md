@@ -48,7 +48,6 @@ export default defineComponent({
                   {
                     label: 'option1-1-2-1',
                     value: 81,
-                    isLeaf: true,
                   },
                 ],
               },
@@ -57,17 +56,14 @@ export default defineComponent({
           {
             label: 'option1-2',
             value: 41,
-            isLeaf: true,
           },
           {
             label: 'option1-3',
             value: 42,
-            isLeaf: true,
           },
           {
             label: 'option1-4',
             value: 43,
-            isLeaf: true,
           },
         ],
       },
@@ -82,12 +78,10 @@ export default defineComponent({
               {
                 label: 'option2-1-1',
                 value: 51,
-                isLeaf: true,
               },
               {
                 label: 'option2-1-2',
                 value: 61,
-                isLeaf: true,
                 disabled: true,
               },
             ],
@@ -99,19 +93,16 @@ export default defineComponent({
               {
                 label: 'option2-2-1',
                 value: 512,
-                isLeaf: true,
               },
               {
                 label: 'option2-2-2',
                 value: 611,
-                isLeaf: true,
               },
             ],
           },
           {
             label: 'option2-3',
             value: 712,
-            isLeaf: true,
           },
         ],
       },
@@ -119,7 +110,6 @@ export default defineComponent({
         label: 'option3',
         value: 3,
         children: [],
-        isLeaf: true,
         disabled: true,
       },
     ]);
@@ -144,7 +134,6 @@ export default defineComponent({
                   {
                     label: 'option1.1-1-2-1',
                     value: 81,
-                    isLeaf: true,
                   },
                 ],
               },
@@ -153,17 +142,14 @@ export default defineComponent({
           {
             label: 'option1.1-2',
             value: 41,
-            isLeaf: true,
           },
           {
             label: 'option1.1-3',
             value: 42,
-            isLeaf: true,
           },
           {
             label: 'option1.1-4',
             value: 43,
-            isLeaf: true,
           },
         ],
       },
@@ -178,12 +164,10 @@ export default defineComponent({
               {
                 label: 'option2.1-1-1',
                 value: 51,
-                isLeaf: true,
               },
               {
                 label: 'option2.1-1-2',
                 value: 61,
-                isLeaf: true,
                 disabled: true,
               },
             ],
@@ -195,19 +179,16 @@ export default defineComponent({
               {
                 label: 'option2.1-2-1',
                 value: 512,
-                isLeaf: true,
               },
               {
                 label: 'option2.1-2-2',
                 value: 611,
-                isLeaf: true,
               },
             ],
           },
           {
             label: 'option2.1-3',
             value: 712,
-            isLeaf: true,
           },
         ],
       },
@@ -215,7 +196,6 @@ export default defineComponent({
         label: 'option3.1',
         value: 3,
         children: [],
-        isLeaf: true,
         disabled: true,
       },
     ]);
@@ -232,21 +212,14 @@ export default defineComponent({
 
 :::
 
-### 多选模式
+### 可搜索
 
 :::demo
 
 ```vue
 <template>
-  <d-cascader
-    :options="options"
-    v-model="value1"
-    placeholder="请选择"
-    trigger="click"
-    :width="300"
-    :dropdownWidth="300"
-    :multiple="true"
-  ></d-cascader>
+  <d-cascader :options="options" v-model="value1" placeholder="请选择" trigger="click" :width="300" filterable :debounce="500"></d-cascader>
+  <div>选择的value值：{{ value1 }}</div>
 </template>
 <script>
 import { defineComponent, reactive, ref } from 'vue';
@@ -273,7 +246,6 @@ export default defineComponent({
                   {
                     label: 'option1-1-2-1',
                     value: 81,
-                    isLeaf: true,
                   },
                 ],
               },
@@ -282,17 +254,14 @@ export default defineComponent({
           {
             label: 'option1-2',
             value: 41,
-            isLeaf: true,
           },
           {
             label: 'option1-3',
             value: 42,
-            isLeaf: true,
           },
           {
             label: 'option1-4',
             value: 43,
-            isLeaf: true,
           },
         ],
         icon: 'folder',
@@ -308,12 +277,10 @@ export default defineComponent({
               {
                 label: 'option2-1-1',
                 value: 51,
-                isLeaf: true,
               },
               {
                 label: 'option2-1-2',
                 value: 61,
-                isLeaf: true,
                 disabled: true,
               },
             ],
@@ -325,19 +292,16 @@ export default defineComponent({
               {
                 label: 'option2-2-1',
                 value: 512,
-                isLeaf: true,
               },
               {
                 label: 'option2-2-2',
                 value: 611,
-                isLeaf: true,
               },
             ],
           },
           {
             label: 'option2-3',
             value: 712,
-            isLeaf: true,
           },
         ],
         icon: 'folder',
@@ -346,16 +310,11 @@ export default defineComponent({
         label: 'option3',
         value: 3,
         children: [],
-        isLeaf: true,
         disabled: true,
         icon: 'folder',
       },
     ]);
-    const value1 = ref([
-      [1, 4, 8],
-      [1, 4, 9, 81],
-      [1, 41],
-    ]);
+    const value1 = ref([1, 4, 8]);
     const onToggleChange = (event) => {
       console.log(event);
     };
@@ -384,6 +343,8 @@ export default defineComponent({
 |     width     |        `number \| string`         |   200   | 可选，单位 px，用于控制组件输入框宽度和下拉的宽度                     | [基本用法](#多选模式) |
 | dropdownWidth |        `number \| string`         |   200   | 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等        | [基本用法](#多选模式) |
 |   clearable   |             `boolean`             |  true   | 可选，是否支持清空选项                                                | [基本用法](#基本用法) |
+|  filterable   |             `boolean`             |  true   | 可选，是否可搜索选项                                                  | [可搜索](#可搜索)     |
+|   debounce    |             `number`              |   300   | 可选，搜索关键词输入去抖延迟                                          | [可搜索](#可搜索)     |
 
 ### 接口 & 类型定义
 
@@ -398,7 +359,5 @@ interface CascaderItem {
   children?: CascaderItem[];
   disabled?: boolean;
   icon?: string;
-  // 用户可以传入自定义属性，并在dropDownItemTemplate中使用
-  [prop: string]: any;
 }
 ```

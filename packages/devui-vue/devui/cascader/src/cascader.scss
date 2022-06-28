@@ -61,6 +61,23 @@
     padding-bottom: 0;
     @include flex('flex-start');
   }
+
+  &__panel {
+    padding: 12px 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  &__suggest-list {
+    padding: 5px 12px;
+    cursor: pointer;
+    font-weight: 400;
+
+    &:hover {
+      color: $devui-brand-active;
+      background-color: $devui-list-item-hover-bg;
+    }
+  }
 }
 
 .#{$devui-prefix}-cascader__dropdown--open {
