@@ -1135,6 +1135,121 @@ export default defineComponent({
 
 :::
 
+### 树形表格
+
+:::demo 支持树类型的数据展示。当 row 中包含`children`字段时，被视为树形数据。渲染嵌套数据需要`row-key`。使用`indent`可以控制子节点的缩进。暂不支持树形表格和展开行同时使用，展开行优先级较高。
+
+```vue
+<template>
+  <d-table :indent="32" @check-change="treeCheckChange" :data="baseTreeTableData" row-key="firstName">
+    <d-column type="index"></d-column>
+    <d-column field="firstName" header="First Name" show-overflow-tooltip></d-column>
+    <d-column field="lastName" header="Last Name"></d-column>
+    <d-column field="gender" header="Gender"></d-column>
+    <d-column field="date" header="Date of birth"></d-column>
+  </d-table>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const baseTreeTableData = ref([
+      {
+        firstName: 'Mark1',
+        lastName: 'Otto',
+        date: '1990/01/11',
+        gender: 'Male1',
+        children: [
+          {
+            firstName: 'Mark2',
+            lastName: 'Otto',
+            date: '1990/01/11',
+            gender: 'Male',
+          },
+          {
+            firstName: 'Mark3',
+            lastName: 'Otto',
+            date: '1990/01/11',
+            gender: 'Male',
+            children: [
+              {
+                firstName: 'Mark31',
+                lastName: 'Otto',
+                date: '1990/01/11',
+                gender: 'Male',
+              },
+              {
+                firstName: 'Mark32',
+                lastName: 'Otto',
+                date: '1990/01/11',
+                gender: 'Male',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        firstName: 'Jacob',
+        lastName: 'Thornton',
+        gender: 'Female',
+        date: '1990/01/12',
+        children: [
+          {
+            firstName: 'Jacob2',
+            lastName: 'Otto',
+            date: '1990/01/11',
+            gender: 'Male',
+          },
+          {
+            firstName: 'Jacob3',
+            lastName: 'Otto',
+            date: '1990/01/11',
+            gender: 'Male',
+            children: [
+              {
+                firstName: 'Jacob31',
+                lastName: 'Otto',
+                date: '1990/01/11',
+                gender: 'Male',
+              },
+              {
+                firstName: 'Jacob32',
+                lastName: 'Otto',
+                date: '1990/01/11',
+                gender: 'Male',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        firstName: 'Danni',
+        lastName: 'Chen',
+        gender: 'Male',
+        date: '1990/01/13',
+      },
+      {
+        firstName: 'green',
+        lastName: 'gerong',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+    ]);
+
+    const treeCheckChange = (val, row, selection) => {
+      console.log('treeCheckChange', selection);
+    };
+
+    return { baseTreeTableData, treeCheckChange };
+  },
+});
+</script>
+```
+
+:::
+
 ### Table 参数
 
 | 参数名                | 类型                                              | 默认值    | 说明                                                                                                                                           | 跳转 Demo                                                      |
@@ -1156,6 +1271,7 @@ export default defineComponent({
 | empty                 | `string`                                          | 'No Data' | 可选，配置未传递表格数据时需要显示的空数据文本                                                                                                 | [空数据模板](#空数据模板)                                      |
 | show-header           | `boolean`                                         | true      | 可选，配置是否显示表头                                                                                                                         | [表格样式](#表格样式)                                          |
 | row-key               | `string \| Function(item, index: number): string` | --        | 可选，行数据的 Key，用来优化 Table 渲染，类型为 string 时，支持多层访问：`item.user.id`，但不支持 `item.user[0].id`，此种情况请使用 Function。 | [表格交互(Function)](#表格交互) <br> [展开行(string)](#展开行) |
+| indent                | `number`                                          | 16        | 可选，展示树形数据时，树节点的缩进                                                                                                             | [树形表格](#树形表格)                                          |
 
 ### Table 事件
 

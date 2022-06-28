@@ -97,6 +97,10 @@ export const tableProps = {
   expandRowKeys: {
     type: Array as PropType<string[]>,
   },
+  indent: {
+    type: Number,
+    default: 16,
+  },
 };
 
 export type TableProps = ExtractPropTypes<typeof tableProps>;

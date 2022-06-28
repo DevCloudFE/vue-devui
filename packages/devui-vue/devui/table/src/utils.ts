@@ -1,5 +1,6 @@
+import { ref, Ref } from 'vue';
 import { isBoolean, isFunction, isString } from '../../shared/utils';
-import { DefaultRow, RowKeyType } from './table-types';
+import { DefaultRow, ITable, RowKeyType } from './table-types';
 
 export function formatWidth(width: number | string): number | string {
   if (width === '') {
@@ -64,4 +65,30 @@ export function toggleRowExpandStatus(rowsArr: DefaultRow[], row: DefaultRow, st
   }
 
   return isChanged;
+}
+
+export function toggleRowVisible(expand: boolean, table: ITable<DefaultRow>, key: string): void {
+  const rowLevelMap = table?.store.states.rowLevelMap.value || {};
+  const levelKeys = Object.keys(rowLevelMap);
+  const hiddenRowKeys = table?.store.states.hiddenRowKeys;
+  let start = false;
+  for (let index = 0; index < levelKeys.length; index++) {
+    if (levelKeys[index] === key) {
+      start = true;
+      index++;
+    }
+    if (start && rowLevelMap[levelKeys[index]] !== rowLevelMap[key] + 1) {
+      break;
+    }
+    if (start && rowLevelMap[levelKeys[index]] === rowLevelMap[key] + 1) {
+      const targetKeyIndex = hiddenRowKeys.value.indexOf(levelKeys[index]);
+      if (expand) {
+        hiddenRowKeys.value.splice(targetKeyIndex, 1);
+      } else {
+        if (!hiddenRowKeys.value.includes(levelKeys[index])) {
+          hiddenRowKeys.value.push(levelKeys[index]);
+        }
+      }
+    }
+  }
 }

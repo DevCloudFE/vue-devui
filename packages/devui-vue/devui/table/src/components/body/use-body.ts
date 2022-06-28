@@ -1,7 +1,12 @@
-import { inject, computed } from 'vue';
+import { inject, computed, Ref } from 'vue';
 import { TABLE_TOKEN } from '../../table-types';
+import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import { UseBodyRender, UseMergeCell } from './body-types';
+import { getRowIdentity } from '../../utils';
 
-export function useMergeCell() {
+const ns = useNamespace('table');
+
+export function useMergeCell(): UseMergeCell {
   const table = inject(TABLE_TOKEN);
   const { _data: data, _columns: columns } = table.store.states;
 
@@ -61,4 +66,24 @@ export function useMergeCell() {
   });
 
   return { tableSpans, removeCells };
+}
+
+export function useBodyRender(): UseBodyRender {
+  const table = inject(TABLE_TOKEN);
+  const hoverEnabled = computed(() => table?.props.rowHoveredHighlight);
+  const rowLevelMap = table?.store.states.rowLevelMap || ({} as Ref<Record<string, number>>);
+  const rowKey = table?.props.rowKey || 'id';
+  const getTableRowClass = (row: Record<string, any>) => {
+    const level = rowLevelMap.value[getRowIdentity(row, rowKey)];
+
+    return {
+      [ns.e('row')]: true,
+      ['hover-enabled']: hoverEnabled.value,
+      ['expanded']: table?.store.isRowExpanded(row),
+      [ns.em('row', `level-${level}`)]: level !== undefined,
+      ['is-hidden']: table?.store.states.hiddenRowKeys.value.includes(getRowIdentity(row, rowKey)),
+    };
+  };
+
+  return { getTableRowClass };
 }

@@ -20,7 +20,7 @@ export default defineComponent({
       return (
         <Tooltip content={tooltipContent.value} disabled={!isShowTooltip.value}>
           <td ref={tdRef} class={stickyClass.value} style={stickyStyle.value} {...ctx.attrs}>
-            {props.column.renderCell?.(props.row, props.column, table.store, props.index)}
+            {props.column.renderCell?.(props.row, props.column, table.store, props.index, table.props)}
           </td>
         </Tooltip>
       );

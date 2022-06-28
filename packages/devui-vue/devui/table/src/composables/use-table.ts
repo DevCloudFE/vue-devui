@@ -4,6 +4,7 @@ import { Column } from '../components/column/column-types';
 import { ITable, DefaultRow, TableProps, UseTable, UseFixedColumn, UseTableLayout } from '../table-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { TableStore } from '../store/store-types';
+import { watch } from 'fs-extra';
 
 export function useTable(props: TableProps, tableWidth: Ref): UseTable {
   const ns = useNamespace('table');
