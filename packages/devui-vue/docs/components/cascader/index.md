@@ -325,9 +325,6 @@ export default defineComponent({
       },
     ]);
     const value1 = ref([1, 4, 8]);
-    const onToggleChange = (event) => {
-      console.log(event);
-    };
     const beforeFilter = (val) => {
       return new Promise((resolve, reject) => {
         resolve();
@@ -339,7 +336,6 @@ export default defineComponent({
     return {
       options,
       value1,
-      onToggleChange,
       beforeFilter,
       changeFun,
     };
