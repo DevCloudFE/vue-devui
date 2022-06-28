@@ -427,3 +427,82 @@ $input-height-lg: 46px;
     }
   }
 }
+
+// 年选择器
+.#{$devui-prefix}-date-picker-pro__year-calendar-panel {
+  height: 200px;
+  width: 204px;
+  padding: 8px 12px;
+
+  .#{$devui-prefix}-date-picker-pro__year-list {
+    width: 184px;
+    height: 186px;
+    overflow: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    &:hover {
+      overflow-y: overlay;
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+    }
+
+    .#{$devui-prefix}-date-picker-pro__year-list-item {
+      display: flex;
+      padding: 4px 0;
+      height: 48px;
+    }
+    .#{$devui-prefix}-date-picker-pro__year-item-title {
+      width: 60px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 12px;
+      text-align: center;
+      cursor: pointer;
+      border-radius: var(--devui-border-radius-feedback, 4px);
+
+      &:hover:not(.#{$devui-prefix}-date-picker-pro__year-active):not(.#{$devui-prefix}-date-picker-pro__year-disabled) {
+        background-color: $devui-list-item-hover-bg;
+      }
+
+      &.#{$devui-prefix}-date-picker-pro__this-year {
+        color: $devui-brand;
+      }
+
+      &.#{$devui-prefix}-date-picker-pro__year-active {
+        background: $devui-brand-active;
+        color: $devui-light-text;
+      }
+
+      &.#{$devui-prefix}-date-picker-pro__year-in-range:not(.#{$devui-prefix}-date-picker-pro__year-active) {
+        background: $devui-list-item-hover-bg;
+        border-radius: 0;
+
+        &:hover {
+          background-color: $devui-range-item-hover-bg;
+          border-radius: var(--devui-border-radius-feedback, 4px);
+        }
+      }
+
+      &.#{$devui-prefix}-date-picker-pro__year-start:not(.#{$devui-prefix}-date-picker-pro__year-end):not(:hover) {
+        border-radius: $devui-border-radius-feedback 0 0 $devui-border-radius-feedback;
+      }
+
+      &.#{$devui-prefix}-date-picker-pro__year-end:not(.#{$devui-prefix}-date-picker-pro__year-start):not(:hover) {
+        border-radius: 0 $devui-border-radius-feedback $devui-border-radius-feedback 0;
+      }
+
+      &.#{$devui-prefix}-date-picker-pro__year-disabled {
+        color: $devui-disabled-text;
+        cursor: not-allowed;
+        border-radius: 0;
+      }
+    }
+  }
+}

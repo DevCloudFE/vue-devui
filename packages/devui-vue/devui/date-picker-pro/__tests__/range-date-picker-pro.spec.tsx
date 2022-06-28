@@ -359,7 +359,7 @@ describe('range-date-picker-pro test', () => {
     wrapper.unmount();
   });
 
-  it('range-date-picker-pro calenderRange limitDateRange', async () => {
+  it('range-date-picker-pro calendarRange limitDateRange', async () => {
     const datePickerProValue = ref<(Date | string)[]>(['', '']);
     const limitDateRange = ref<Date[]>([
       new Date(new Date().getTime() - 24 * 3600 * 1000),
@@ -370,7 +370,7 @@ describe('range-date-picker-pro test', () => {
         return () => (
           <DRangeDatePickerPro
             v-model={datePickerProValue.value}
-            calenderRange={[2022, 2025]}
+            calendarRange={[2022, 2025]}
             limitDateRange={limitDateRange.value}></DRangeDatePickerPro>
         );
       },
