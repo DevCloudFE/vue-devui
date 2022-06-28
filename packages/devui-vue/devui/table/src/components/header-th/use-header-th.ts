@@ -53,7 +53,7 @@ export function useFilter(column: Ref<Column>): UseFilter {
   }));
   const handleFilter = (val: FilterConfig | FilterConfig[]) => {
     filter.value = val;
-    column.value.ctx.emit('filter-change', val);
+    column.value.ctx?.emit('filter-change', val);
   };
 
   return { filterClass, handleFilter };
@@ -96,7 +96,7 @@ export function useDragColumnWidth(elementRef: Ref<HTMLElement>, column: Ref<Col
     if (resizeBarElement) {
       resizeBarElement.style.left = `${finalWidth + elementRef.value.offsetLeft}px`;
     }
-    column.value.ctx.emit('resizing', { width: finalWidth });
+    column.value.ctx?.emit('resizing', { width: finalWidth });
   };
 
   const onMouseup = (e: MouseEvent) => {
@@ -110,7 +110,7 @@ export function useDragColumnWidth(elementRef: Ref<HTMLElement>, column: Ref<Col
     tableElement?.value.classList.remove('table-selector');
     dragClass.value = '';
     tableElement?.value.removeChild(resizeBarElement);
-    column.value.ctx.emit('resize-end', { width: finalWidth, beforeWidth: initialWidth });
+    column.value.ctx?.emit('resize-end', { width: finalWidth, beforeWidth: initialWidth });
     document.removeEventListener('mouseup', onMouseup);
     document.removeEventListener('mousemove', onMousemove);
   };
@@ -118,7 +118,7 @@ export function useDragColumnWidth(elementRef: Ref<HTMLElement>, column: Ref<Col
   const onMousedown = (e: MouseEvent) => {
     const isHandle = (e.target as HTMLElement).classList.contains('resize-handle');
     if (isHandle) {
-      column.value.ctx.emit('resize-start');
+      column.value.ctx?.emit('resize-start');
       const initialOffset = elementRef.value.offsetLeft;
       initialWidth = elementRef.value.clientWidth;
       mouseDownScreenX = e.clientX;

@@ -1,6 +1,6 @@
 import { watch, reactive, onBeforeMount, computed, h, getCurrentInstance, Ref, VNode, SetupContext } from 'vue';
 import type { ToRefs, ComputedRef } from 'vue';
-import { ITable, DefaultRow } from '../../table-types';
+import { ITable, DefaultRow, RowKeyType, TableProps } from '../../table-types';
 import { Column, TableColumnProps, TableColumn, SortDirection, SortMethod } from './column-types';
 import { TableStore } from '../../store/store-types';
 import { formatWidth } from '../../utils';
@@ -38,11 +38,11 @@ export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: S
     return cellMap[type.value || 'default'].renderHeader(columnItem, store);
   }
 
-  function renderCell(rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number) {
+  function renderCell(rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number, tableProps: TableProps) {
     if (ctx.slots.default && columnItem.type !== 'expand') {
       return ctx.slots.default({ row: rowData, rowIndex });
     }
-    return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex);
+    return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex, tableProps);
   }
 
   watch(

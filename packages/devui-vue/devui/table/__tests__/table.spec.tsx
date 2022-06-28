@@ -276,7 +276,7 @@ describe('d-table', () => {
 
     const tableBody = table.find(ns.e('tbody'));
     const lastTd = tableBody.find('tr').findAll('td')[3];
-    expect(lastTd.text()).toBe('1990/01/11');
+    expect(lastTd.text()).toBe('1990/01/12');
 
     const sortIcon = lastTh.find(ns.e('sort-clickable'));
     await sortIcon.trigger('click');
@@ -486,5 +486,69 @@ describe('d-table', () => {
     await buttons[2].trigger('click');
     expandedList = wrapper.findAll('.expanded');
     expect(expandedList.length).toBe(2);
+  });
+
+  it('table tree test work', async () => {
+    const wrapper = mount({
+      setup() {
+        const baseTreeTableData = [
+          {
+            firstName: 'Mark1',
+            lastName: 'Otto',
+            date: '1990/01/11',
+            gender: 'Male1',
+            children: [
+              {
+                firstName: 'Mark2',
+                lastName: 'Otto',
+                date: '1990/01/11',
+                gender: 'Male',
+              },
+              {
+                firstName: 'Mark3',
+                lastName: 'Otto',
+                date: '1990/01/11',
+                gender: 'Male',
+              },
+            ],
+          },
+        ];
+
+        return () => (
+          <div>
+            <DTable indent={32} data={baseTreeTableData} row-key="firstName">
+              <DColumn type="index"></DColumn>
+              <DColumn field="firstName" header="First Name" show-overflow-tooltip></DColumn>
+              <DColumn field="lastName" header="Last Name"></DColumn>
+              <DColumn field="gender" header="Gender"></DColumn>
+              <DColumn field="date" header="Date of birth"></DColumn>
+            </DTable>
+          </div>
+        );
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const indent = wrapper.find(ns.e('indent'));
+    expect(indent.attributes('style')).toContain('padding-left: 32px;');
+
+    const trs = wrapper.findAll('tr');
+    expect(trs.length).toBe(4);
+
+    let hiddenTrs = wrapper.findAll('.is-hidden');
+    expect(hiddenTrs.length).toBe(2);
+
+    const expandIcon = wrapper.find('.icon-chevron-right');
+    await expandIcon.trigger('click');
+    await nextTick();
+    hiddenTrs = wrapper.findAll('.is-hidden');
+    expect(hiddenTrs.length).toBe(0);
+
+    await expandIcon.trigger('click');
+    await nextTick();
+    hiddenTrs = wrapper.findAll('.is-hidden');
+    expect(hiddenTrs.length).toBe(2);
   });
 });
