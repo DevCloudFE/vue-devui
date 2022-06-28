@@ -1,5 +1,4 @@
-import type { PropType, ExtractPropTypes, Ref } from 'vue';
-import { UnwrapNestedRefs } from '@vue/reactivity';
+import type { PropType, ExtractPropTypes, Ref, UnwrapNestedRefs } from 'vue';
 
 type TriggerTypes = 'hover' | 'click';
 
@@ -112,6 +111,14 @@ export const cascaderProps = {
   clearable: {
     type: Boolean,
     default: true,
+  },
+  filterable: {
+    type: Boolean,
+    default: false,
+  },
+  debounce: {
+    type: Number,
+    default: 300,
   },
 } as const;
 

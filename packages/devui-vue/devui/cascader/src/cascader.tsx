@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { defineComponent, ref, Ref, reactive, watch, toRef, Transition } from 'vue';
+import { defineComponent, ref, Ref, reactive, watch, toRef, Transition, SetupContext } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import DCascaderList from '../components/cascader-list';
 import DMultipleBox from '../components/cascader-multiple/index';
@@ -8,6 +8,7 @@ import { useCascaderItem } from '../hooks/use-cascader-item';
 import { useRootClassName } from '../hooks/use-cascader-class';
 import { useRootStyle } from '../hooks/use-cascader-style';
 import { popupHandles } from '../hooks/use-cascader-popup';
+import { useCascader } from '../hooks/use-cascader';
 import { initMultipleCascaderItem, initTagList, getMultiModelValues } from '../hooks/use-cascader-multiple';
 import { initSingleIptValue, initActiveIndexs } from '../hooks/use-cascader-single';
 import './cascader.scss';
@@ -15,7 +16,7 @@ export default defineComponent({
   name: 'DCascader',
   props: cascaderProps,
   emits: ['update:modelValue'],
-  setup(props: CascaderProps, ctx) {
+  setup(props: CascaderProps, ctx: SetupContext) {
     const ns = useNamespace('cascader');
     const origin = ref<HTMLElement>();
     const overlay = ref<HTMLElement>();
@@ -25,6 +26,7 @@ export default defineComponent({
     const tagList = ref<CascaderItem[]>([]); // 多选模式下选中的值数组，用于生成tag
     const rootStyle = useRootStyle(props);
     const showClearable = ref(false);
+    const position = ref(['bottom-start']);
     let initIptValue = props.modelValue.length > 0 ? true : false; // 有value默认值时，初始化输出内容
 
     // popup弹出层
@@ -163,9 +165,23 @@ export default defineComponent({
       ctx.emit('update:modelValue', []);
       menuShow.value = false;
       cascaderOptions.splice(1, cascaderOptions.length - 1);
-      ctx.emit('update:modelValue', []);
-      cascaderItemNeedProps.valueCache = reactive([]);
+      cascaderItemNeedProps.inputValueCache.value = '';
+      cascaderItemNeedProps.valueCache.splice(0);
     };
+
+    const { handleInput, suggestionsList, isSearching, chooseSuggestion } = useCascader(
+      props,
+      ctx,
+      menuShow,
+      inputValue,
+      cascaderOptions,
+      cascaderItemNeedProps
+    );
+    watch(menuShow, (val) => {
+      if (!val) {
+        isSearching.value = false;
+      }
+    });
 
     return () => (
       <div ref={devuiCascader} style={rootStyle.inputWidth}>
@@ -173,7 +189,12 @@ export default defineComponent({
           {multiple.value ? (
             <DMultipleBox placeholder={props.placeholder} activeOptions={tagList.value}></DMultipleBox>
           ) : (
-            <d-input disabled={props.disabled} placeholder={props.placeholder} modelValue={inputValue.value}></d-input>
+            <d-input
+              disabled={props.disabled}
+              placeholder={props.placeholder}
+              modelValue={inputValue.value}
+              readonly={!props.filterable}
+              onInput={handleInput}></d-input>
           )}
           {!showClearable.value && (
             <div class={`${ns.e('icon')} ${ns.m('drop-icon-animation')}`}>
@@ -187,20 +208,39 @@ export default defineComponent({
           )}
         </div>
         <Transition name="fade">
-          <d-flexible-overlay origin={origin.value} backgroundStyle={'background: transparent'} ref={overlay} v-model={menuShow.value}>
+          <d-flexible-overlay
+            origin={origin.value}
+            backgroundStyle={'background: transparent'}
+            ref={overlay}
+            v-model={menuShow.value}
+            position={position.value}
+            align="start">
             <div class={ns.e('drop-menu-animation')}>
-              <div class={`${menuOpenClass.value} ${ns.e('dropdown-menu')}`}>
-                {cascaderOptions.map((item, index) => {
-                  return (
-                    <DCascaderList
-                      cascaderItems={item}
-                      ul-index={index}
-                      cascaderItemNeedProps={cascaderItemNeedProps}
-                      cascaderOptions={cascaderOptions}
-                      {...props}></DCascaderList>
-                  );
-                })}
-              </div>
+              {!isSearching.value && (
+                <div class={`${menuOpenClass.value} ${ns.e('dropdown-menu')}`}>
+                  {cascaderOptions.map((item, index) => {
+                    return (
+                      <DCascaderList
+                        cascaderItems={item}
+                        ul-index={index}
+                        cascaderItemNeedProps={cascaderItemNeedProps}
+                        cascaderOptions={cascaderOptions}
+                        {...props}></DCascaderList>
+                    );
+                  })}
+                </div>
+              )}
+              {props.filterable && isSearching.value && (
+                <div class={ns.e('panel')}>
+                  {suggestionsList.value.map((item) => {
+                    return (
+                      <div class={ns.e('suggest-list')} onClick={() => chooseSuggestion(cloneDeep(item))}>
+                        {item.labelsString}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </d-flexible-overlay>
         </Transition>
