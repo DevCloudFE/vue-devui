@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, Ref, UnwrapNestedRefs } from 'vue';
+import type { PropType, ExtractPropTypes, Ref, UnwrapNestedRefs, ComputedRef, UnwrapRef } from 'vue';
 
 type TriggerTypes = 'hover' | 'click';
 
@@ -17,7 +17,7 @@ export interface CascaderItem {
   [prop: string]: any;
 }
 
-type CascaderModelValue = number[];
+type CascaderModelValue = (number | string)[];
 export type CascaderValueType = CascaderModelValue | [CascaderModelValue];
 export const cascaderProps = {
   /**
@@ -120,6 +120,10 @@ export const cascaderProps = {
     type: Number,
     default: 300,
   },
+  beforeFilter: {
+    type: Function as PropType<(value: string) => boolean | Promise<any>>,
+    default: () => true,
+  },
 } as const;
 
 export type CascaderProps = ExtractPropTypes<typeof cascaderProps>;
@@ -139,9 +143,6 @@ export interface OptionsCallback {
   changeCascaderIndexs: (optionItem: CascaderItem, ulIndex: number) => void;
 }
 
-// type cascaderItemExtendsProps = 'trigger'
-// export type PickCascader = Pick<CascaderProps, cascaderItemExtendsProps>
-// export interface CascaderItemNeedType extends PickCascader {
 export interface CascaderItemNeedType {
   valueCache?: CascaderValueType;
   trigger?: TriggerTypes;
@@ -155,7 +156,6 @@ export interface CascaderItemNeedType {
 }
 export interface UseCascaderItemCallback {
   cascaderItemNeedProps: CascaderItemNeedType;
-  // getInputValue: (a: string, b?: CascaderItem[], c?: Ref<boolean>) => void
 }
 
 export type CheckedType = 'checked' | 'halfChecked';
@@ -175,7 +175,7 @@ export const cascaderulProps = {
     default: (): CascaderItem[] => [
       {
         label: '',
-        value: null,
+        value: '',
       },
     ],
   },
@@ -211,7 +211,7 @@ export const cascaderulProps = {
       [
         {
           label: '',
-          value: null,
+          value: '',
         },
       ],
     ],
@@ -237,3 +237,35 @@ export interface MultiplePropsType {
 export interface UpdateStatusCallback {
   updateStatus: (node: CascaderItem, options: CaascaderOptionsType, ulIndex: number) => void;
 }
+
+export interface suggestionListType {
+  values: (string | number)[];
+  labels: string[];
+  labelsString?: string;
+  disabled?: boolean;
+}
+
+export type UseCascaderFn = {
+  origin: Ref<HTMLElement | undefined>;
+  overlay: Ref<HTMLElement | undefined>;
+  menuShow: Ref<boolean>;
+  cascaderItemNeedProps: CascaderItemNeedType;
+  devuiCascader: Ref<HTMLElement | undefined>;
+  rootClasses: ComputedRef<string>;
+  menuOpenClass: Ref<string>;
+  inputValue: Ref<string>;
+  openPopup: () => void;
+  rootStyle: RootStyleFeedback;
+  showClearable: Ref<boolean>;
+  position: Ref<string[]>;
+  cascaderOptions: UnwrapRef<[CascaderItem[]]>;
+  tagList: Ref<CascaderItem[]>;
+  showClear: () => void;
+  hideClear: () => void;
+  clearData: (e: MouseEvent) => void;
+  handleInput: (val: string) => void;
+  multiple: Ref<boolean>;
+  suggestionsList: Ref<suggestionListType[]>;
+  isSearching: Ref<boolean>;
+  chooseSuggestion: (item: CascaderItem) => void;
+};
