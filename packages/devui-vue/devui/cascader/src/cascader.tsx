@@ -6,8 +6,11 @@ import DMultipleBox from '../components/cascader-multiple/index';
 import { cascaderProps, CascaderProps } from './cascader-types';
 import { useCascader } from '../hooks/use-cascader';
 import './cascader.scss';
+import { FlexibleOverlay } from '../../overlay';
+import DInput from '../../input/src/input';
 export default defineComponent({
   name: 'DCascader',
+  components: { DInput },
   props: cascaderProps,
   emits: ['update:modelValue', 'change'],
   setup(props: CascaderProps, ctx: SetupContext) {
@@ -43,12 +46,13 @@ export default defineComponent({
           {multiple.value ? (
             <DMultipleBox placeholder={props.placeholder} activeOptions={tagList.value}></DMultipleBox>
           ) : (
-            <d-input
+            <DInput
               disabled={props.disabled}
               placeholder={props.placeholder}
               modelValue={inputValue.value}
               readonly={!props.filterable}
-              onInput={handleInput}></d-input>
+              size={props.size}
+              onInput={handleInput}></DInput>
           )}
           {!showClearable.value && (
             <div class={`${ns.e('icon')} ${ns.m('drop-icon-animation')}`}>
@@ -62,7 +66,7 @@ export default defineComponent({
           )}
         </div>
         <Transition name="fade">
-          <d-flexible-overlay
+          <FlexibleOverlay
             origin={origin.value}
             backgroundStyle={'background: transparent'}
             ref={overlay}
@@ -96,7 +100,7 @@ export default defineComponent({
                 </div>
               )}
             </div>
-          </d-flexible-overlay>
+          </FlexibleOverlay>
         </Transition>
       </div>
     );

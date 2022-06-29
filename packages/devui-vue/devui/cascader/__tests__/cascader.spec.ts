@@ -1,0 +1,232 @@
+import { mount } from '@vue/test-utils';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+import { ref, reactive, nextTick } from 'vue';
+import DCascader from '../src/cascader';
+
+const ns = useNamespace('cascader', true);
+const baseClass = ns.b();
+const dropMenuWrapperClass = ns.e('drop-menu-wrapper');
+const ulClass = ns.e('ul');
+const liClass = ns.e('li');
+const closeClass = ns.e('close');
+const panelClass = ns.e('panel');
+const suggestListClass = ns.e('suggest-list');
+
+const inputNs = useNamespace('input', true);
+const inputInnerClass = inputNs.e('inner');
+const inputDisabledClass = inputNs.m('disabled');
+
+const OPTIONS = [
+  {
+    label: 'option1.1',
+    value: 1,
+    children: [
+      {
+        label: 'option1.1-1',
+        value: 4,
+        children: [
+          {
+            label: 'option1.1-1-1',
+            value: 8,
+            children: [],
+          },
+          {
+            label: 'option1.1-1-2',
+            value: 9,
+            children: [
+              {
+                label: 'option1.1-1-2-1',
+                value: 81,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: 'option1.1-2',
+        value: 41,
+      },
+      {
+        label: 'option1.1-3',
+        value: 42,
+      },
+      {
+        label: 'option1.1-4',
+        value: 43,
+      },
+    ],
+  },
+  {
+    label: 'option2.1',
+    value: 2,
+    children: [
+      {
+        label: 'option2.1-1',
+        value: 5,
+        children: [
+          {
+            label: 'option2.1-1-1',
+            value: 51,
+          },
+          {
+            label: 'option2.1-1-2',
+            value: 61,
+            disabled: true,
+          },
+        ],
+      },
+      {
+        label: 'option2.1-2',
+        value: 6,
+        children: [
+          {
+            label: 'option2.1-2-1',
+            value: 512,
+          },
+          {
+            label: 'option2.1-2-2',
+            value: 611,
+          },
+        ],
+      },
+      {
+        label: 'option2.1-3',
+        value: 712,
+      },
+    ],
+  },
+  {
+    label: 'option3.1',
+    value: 3,
+    children: [],
+    disabled: true,
+  },
+];
+
+describe('cascader', () => {
+  it('cascader render work', async () => {
+    const value = ref([2, 712]);
+    const options = reactive(OPTIONS);
+    const wrapper = mount({
+      components: { DCascader },
+      template: `<d-cascader v-model="value" :options="options"></d-cascader>`,
+      setup() {
+        return {
+          value,
+          options,
+        };
+      },
+    });
+    const container = wrapper.find(baseClass);
+    expect(container.exists()).toBeTruthy();
+
+    const input = wrapper.find(inputInnerClass);
+    expect(input.element.value).toBe('option2.1-3');
+
+    await input.trigger('click');
+    await nextTick();
+    expect(wrapper.find(dropMenuWrapperClass).exists()).toBeTruthy();
+
+    const ulList = wrapper.findAll(ulClass);
+    const firstUlLis = ulList[0].findAll(liClass);
+    expect(firstUlLis[1].classes()).toContain('leaf-active');
+    const selectUlLis = ulList[1].findAll(liClass);
+    expect(selectUlLis[2].classes()).toContain('leaf-active');
+  });
+
+  it('cascader showPath work', async () => {
+    const value = ref([2, 712]);
+    const options = reactive(OPTIONS);
+    const wrapper = mount({
+      components: { DCascader },
+      template: `<d-cascader v-model="value" :options="options" showPath></d-cascader>`,
+      setup() {
+        return {
+          value,
+          options,
+        };
+      },
+    });
+    const container = wrapper.find(baseClass);
+    expect(container.exists()).toBeTruthy();
+
+    const input = wrapper.find(inputInnerClass);
+    expect(input.element.value).toBe('option2.1 / option2.1-3');
+  });
+
+  it('cascader clearable work', async () => {
+    const value = ref([2, 712]);
+    const options = reactive(OPTIONS);
+    const wrapper = mount({
+      components: { DCascader },
+      template: `<d-cascader v-model="value" :options="options" showPath clearable></d-cascader>`,
+      setup() {
+        return {
+          value,
+          options,
+        };
+      },
+    });
+    const container = wrapper.find(baseClass);
+    expect(container.exists()).toBeTruthy();
+
+    container.trigger('mouseenter');
+    await nextTick();
+    const closeIcon = wrapper.find(closeClass);
+    expect(closeIcon.exists()).toBeTruthy();
+
+    closeIcon.trigger('click');
+    await nextTick();
+    const input = wrapper.find(inputInnerClass);
+    expect(input.element.value).toBe('');
+  });
+
+  it('cascader disabled work', async () => {
+    const value = ref([]);
+    const options = reactive(OPTIONS);
+    const wrapper = mount({
+      components: { DCascader },
+      template: `<d-cascader v-model="value" :options="options" disabled></d-cascader>`,
+      setup() {
+        return {
+          value,
+          options,
+        };
+      },
+    });
+    const container = wrapper.find(baseClass);
+    expect(container.exists()).toBeTruthy();
+
+    const disabledInput = wrapper.find(inputDisabledClass);
+    expect(disabledInput.exists()).toBeTruthy();
+  });
+
+  it('cascader filterable work', async () => {
+    const value = ref([]);
+    const options = reactive(OPTIONS);
+    const wrapper = mount({
+      components: { DCascader },
+      template: `<d-cascader v-model="value" :options="options" showPath filterable></d-cascader>`,
+      setup() {
+        return {
+          value,
+          options,
+        };
+      },
+    });
+    const container = wrapper.find(baseClass);
+    expect(container.exists()).toBeTruthy();
+
+    const input = wrapper.find(inputInnerClass);
+    input.setValue('3');
+    await new Promise((resolve) => {
+      setTimeout(resolve, 300);
+    });
+
+    const panel = wrapper.find(panelClass);
+    expect(panel.exists()).toBeTruthy();
+
+    const suggestionList = wrapper.findAll(suggestListClass);
+    expect(suggestionList.length).toBe(2);
+  });
+});

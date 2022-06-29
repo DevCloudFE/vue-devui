@@ -150,6 +150,9 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     }
   );
   const showClear = () => {
+    if (props.disabled) {
+      return;
+    }
     showClearable.value = true;
   };
   const hideClear = () => {
@@ -181,6 +184,7 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     if (parentNode.children && parentNode.children.length) {
       parentNode.children.forEach((child) => {
         child.parent = parentNode;
+        // 父级为disbled，子级添加为disabled
         if (parentNode.disabled) {
           child.disabled = true;
         }

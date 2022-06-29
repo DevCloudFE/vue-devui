@@ -18,6 +18,7 @@ export interface CascaderItem {
 }
 
 type CascaderModelValue = (number | string)[];
+export type InputSize = 'sm' | 'md' | 'lg';
 export type CascaderValueType = CascaderModelValue | [CascaderModelValue];
 export const cascaderProps = {
   /**
@@ -123,6 +124,10 @@ export const cascaderProps = {
   beforeFilter: {
     type: Function as PropType<(value: string) => boolean | Promise<any>>,
     default: () => true,
+  },
+  size: {
+    type: String as PropType<InputSize>,
+    default: 'md',
   },
 } as const;
 
