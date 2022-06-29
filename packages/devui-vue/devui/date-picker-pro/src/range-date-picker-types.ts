@@ -1,35 +1,21 @@
 import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
 import type { Dayjs } from 'dayjs';
-import type { InputSize } from '../../input/src/input-types';
+import { datePickerProCommonProps } from './date-picker-pro-types';
 
 export const rangeDatePickerProProps = {
   modelValue: {
     type: Array as PropType<(Date | string)[]>,
     default: ['', ''],
   },
-  format: {
-    type: String,
-  },
   placeholder: {
     type: Array as PropType<string[]>,
-    default: ['请选择日期', '请选择日期'],
-  },
-  showTime: {
-    type: Boolean,
-    default: false,
+    default: ['请选择开始日期', '请选择结束日期'],
   },
   separator: {
     type: String,
     default: '-',
   },
-  size: {
-    type: String as PropType<InputSize>,
-    default: 'md',
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+  ...datePickerProCommonProps,
 } as const;
 
 export type RangeDatePickerProProps = ExtractPropTypes<typeof rangeDatePickerProProps>;
@@ -48,6 +34,9 @@ export interface UseRangePickerProReturnType {
   isMouseEnter: Ref<boolean>;
   showCloseIcon: ComputedRef<boolean>;
   focusType: Ref<string>;
+  pickerDisabled: ComputedRef<boolean>;
+  pickerSize: ComputedRef<string>;
+  isValidateError: ComputedRef<boolean>;
   onFocus: (type: string) => void;
   focusHandler: (e: MouseEvent) => void;
   onSelectedDate: (date: Dayjs[], isConfirm?: boolean) => void;

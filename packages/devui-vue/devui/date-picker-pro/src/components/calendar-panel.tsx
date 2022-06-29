@@ -26,6 +26,7 @@ export default defineComponent({
       isStartDate,
       isInRangeDate,
       isEndDate,
+      isDisabled,
     } = useCalendarPanel(props, ctx);
     return () => {
       return (
@@ -90,6 +91,7 @@ export default defineComponent({
                                           isStartDate(day.date) && ns.e('table-date-start'),
                                           isInRangeDate(day.date) && ns.e('table-date-in-range'),
                                           isEndDate(day.date) && ns.e('table-date-end'),
+                                          isDisabled(day.date) && ns.e('table-date-disabled'),
                                         ]}
                                         onClick={(e: MouseEvent) => {
                                           e.preventDefault();

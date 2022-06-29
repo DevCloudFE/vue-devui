@@ -1,12 +1,19 @@
-
 export const getFormatTime = (leftTime: number): Map<string, number> => {
-  const timeformat = new Map([['Y', 0], ['M', 0], ['D', 0], ['H', 0], ['m', 0], ['s', 0], ['S', 0]]);
+  const timeformat = new Map([
+    ['Y', 0],
+    ['M', 0],
+    ['D', 0],
+    ['H', 0],
+    ['m', 0],
+    ['s', 0],
+    ['S', 0],
+  ]);
   const year = Math.floor(leftTime / (365 * 24 * 60 * 60 * 1000));
-  const month = Math.floor(leftTime / (30 * 24 * 60 * 60 * 1000) % 12);
-  const day = Math.floor(leftTime / (24 * 60 * 60 * 1000) % 30);
-  const hour = Math.floor(leftTime / (60 * 60 * 1000) % 24);
-  const minute = Math.floor(leftTime / (60 * 1000) % 60);
-  const second = Math.floor(leftTime / 1000 % 60);
+  const month = Math.floor((leftTime / (30 * 24 * 60 * 60 * 1000)) % 12);
+  const day = Math.floor((leftTime / (24 * 60 * 60 * 1000)) % 30);
+  const hour = Math.floor((leftTime / (60 * 60 * 1000)) % 24);
+  const minute = Math.floor((leftTime / (60 * 1000)) % 60);
+  const second = Math.floor((leftTime / 1000) % 60);
   const millsecond = leftTime % 1000;
   timeformat.set('Y', year);
   timeformat.set('M', month);
@@ -19,8 +26,24 @@ export const getFormatTime = (leftTime: number): Map<string, number> => {
 };
 
 export const getLegalTime = (s: Set<string>, timeformat: Map<string, number>): Map<string, number> => {
-  const dateValue = new Map([['Y', 0], ['M', 0], ['D', 0], ['H', 0], ['m', 0], ['s', 0], ['S', 0]]);
-  const m = new Map([['Y', 12], ['M', 30], ['D', 24], ['H', 60], ['m', 60], ['s', 1000], ['S', 1]]);
+  const dateValue = new Map([
+    ['Y', 0],
+    ['M', 0],
+    ['D', 0],
+    ['H', 0],
+    ['m', 0],
+    ['s', 0],
+    ['S', 0],
+  ]);
+  const m = new Map([
+    ['Y', 12],
+    ['M', 30],
+    ['D', 24],
+    ['H', 60],
+    ['m', 60],
+    ['s', 1000],
+    ['S', 1],
+  ]);
   let storage = 0;
   for (const k of dateValue.keys()) {
     if (s.has(k)) {
@@ -35,7 +58,6 @@ export const getLegalTime = (s: Set<string>, timeformat: Map<string, number>): M
   }
   return dateValue;
 };
-
 
 interface ITimeSplit {
   k: string;
@@ -78,4 +100,25 @@ export const numFormat = (n: number, len: number): number | string => {
     }
     return str + n;
   }
+};
+
+export const intervalTimer = (callback: (...args: any[]) => any, interval = 0) => {
+  let counter = 1;
+  let timeoutId: any;
+  const startTime = Date.now();
+
+  function main() {
+    const nowTime = Date.now();
+    const nextTime = startTime + counter * interval;
+    timeoutId = setTimeout(main, interval - (nowTime - nextTime));
+
+    counter += 1;
+    callback();
+  }
+
+  timeoutId = setTimeout(main, interval);
+
+  return () => {
+    clearTimeout(timeoutId);
+  };
 };

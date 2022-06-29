@@ -6,7 +6,7 @@
 
   position: relative;
 
-  >div:nth-child(1) {
+  > div:nth-child(1) {
     width: 100%;
   }
 
@@ -23,6 +23,10 @@
     }
   }
 
+  &__close {
+    cursor: pointer;
+  }
+
   &__disbaled {
     .icon {
       color: $devui-disabled-text !important;
@@ -34,43 +38,50 @@
     padding-right: 16px;
   }
 
-  .#{$devui-prefix}-drop-menu-wrapper {
+  &__drop-menu-wrapper {
     display: block;
     margin: 4px 0;
     font-size: 0;
     white-space: nowrap;
     padding: 0;
   }
-}
 
-.#{$devui-prefix}-drop-icon-animation {
-  transition: transform 0.2s linear;
-}
+  &--drop-icon-animation {
+    transition: transform 0.2s linear;
+  }
 
-.#{$devui-prefix}-drop-menu-animation {
-  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-  // opacity: 0;
-  // position: absolute;
-  // float: left;
-  z-index: 1000;
-  // transform: scaleY(0.7) translateY(-5px);
-  margin-top: 1px;
+  &__drop-menu-animation {
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    z-index: 1000;
+    margin-top: 1px;
+  }
 
-  .#{$devui-prefix}-dropdown-menu {
+  &__dropdown-menu {
     width: auto;
     padding-bottom: 0;
     @include flex('flex-start');
   }
-}
 
-.#{$devui-prefix}-dropdown__open {
-  .#{$devui-prefix}-cascader__icon {
-    transform: rotate(180deg);
+  &__panel {
+    padding: 12px 0;
+    max-height: 300px;
+    overflow-y: auto;
   }
 
-  .#{$devui-prefix}-drop-menu-animation {
-    transform-origin: 0 0%;
-    transform: scaleY(0.9999) translateY(0);
-    opacity: 1;
+  &__suggest-list {
+    padding: 5px 12px;
+    cursor: pointer;
+    font-weight: 400;
+
+    &:hover {
+      color: $devui-brand-active;
+      background-color: $devui-list-item-hover-bg;
+    }
+  }
+}
+
+.#{$devui-prefix}-cascader__dropdown--open {
+  .#{$devui-prefix}-cascader__icon {
+    transform: rotate(180deg);
   }
 }

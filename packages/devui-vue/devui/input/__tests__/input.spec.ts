@@ -51,7 +51,8 @@ describe('d-input', () => {
     const onChange = jest.fn(),
       onFocus = jest.fn(),
       onBlur = jest.fn(),
-      onKeydown = jest.fn();
+      onKeydown = jest.fn(),
+      onInput = jest.fn();
     const wrapper = mount({
       components: { DInput },
       template: `
@@ -59,7 +60,8 @@ describe('d-input', () => {
           @change="onChange"
           @focus="onFocus"
           @blur="onBlur"
-          @keydown="onKeydown" />
+          @keydown="onKeydown"
+          @input="onInput" />
       `,
       setup() {
         return {
@@ -67,6 +69,7 @@ describe('d-input', () => {
           onFocus,
           onBlur,
           onKeydown,
+          onInput,
         };
       },
     });
@@ -83,6 +86,9 @@ describe('d-input', () => {
 
     await input.trigger('keydown');
     expect(onKeydown).toBeCalledTimes(1);
+
+    await input.trigger('input');
+    expect(onInput).toBeCalledTimes(1);
   });
 
   it('d-input disabled work', async () => {

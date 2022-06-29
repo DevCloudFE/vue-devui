@@ -54,15 +54,13 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
   };
 
   const timeFormat = computed(() => {
-    return props.format.replace(/\W?D{1,2}|\W?Do|\W?d{1,4}|\W?M{1,4}|\W?Y{2,4}/g, '').trim();
+    const format = props.format || 'YYYY/MM/DD';
+    return format.replace(/\W?D{1,2}|\W?Do|\W?d{1,4}|\W?M{1,4}|\W?Y{2,4}/g, '').trim();
   });
 
   const retDefaultDateValue = () => {
     currentDate.value = undefined;
     timeData.value = '';
-    setTimeout(() => {
-      calendarPanelRef?.value?.updateSelectedDate(undefined);
-    });
   };
 
   watch(
@@ -79,7 +77,7 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
         } else {
           currentRangeDate.value[1] = null;
         }
-        let date: Dayjs;
+        let date: Dayjs | undefined;
         if (focusType === 'start') {
           date = dateValue[0];
         } else {
@@ -89,9 +87,6 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
         if (date) {
           currentDate.value = date;
           timeData.value = date.format(timeFormat.value);
-          setTimeout(() => {
-            calendarPanelRef?.value?.updateSelectedDate(date);
-          });
         } else {
           retDefaultDateValue();
         }
@@ -136,7 +131,6 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
           const nowDate = dayjs().locale('zh-cn');
           currentRangeDate.value[0] = nowDate;
           ctx.emit('selectedDate', getRangeSelectedDate(currentRangeDate.value), false);
-          calendarPanelRef?.value?.updateSelectedDate(nowDate);
         }
       }
       if (props.focusType === 'end') {
@@ -145,7 +139,6 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
         } else {
           currentRangeDate.value[1] = currentRangeDate.value[0];
           ctx.emit('selectedDate', getRangeSelectedDate(currentRangeDate.value), false);
-          calendarPanelRef?.value?.updateSelectedDate(currentRangeDate.value[1]);
         }
       }
     } else {
@@ -155,7 +148,6 @@ export default function useDatePicker(props: DatePickerProPanelProps, ctx: Setup
         // 如果没有选中日期, 选中时间后默认选中当天时间
         const nowDate = dayjs().locale('zh-cn');
         ctx.emit('selectedDate', getSelectedDate(nowDate), false);
-        calendarPanelRef?.value?.updateSelectedDate(nowDate);
       }
     }
   };

@@ -44,6 +44,12 @@
       color: $devui-icon-fill-active-hover;
       background-color: $devui-list-item-hover-bg;
     }
+
+    & i {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   }
 }
 

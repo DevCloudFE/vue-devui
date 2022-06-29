@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, ComputedRef, Ref } from 'vue';
+import type { PropType, ExtractPropTypes, ComputedRef, Ref, CSSProperties, InputHTMLAttributes } from 'vue';
 
 export type ISize = 'lg' | 'md' | 'sm';
 
@@ -47,8 +47,8 @@ export interface UseExpose {
 
 export interface UseRender {
   wrapClass: ComputedRef<unknown[]>;
-  customStyle: unknown;
-  otherAttrs: unknown;
+  customStyle: { style: CSSProperties };
+  otherAttrs: InputHTMLAttributes;
   controlButtonsClass: ComputedRef<Record<string, boolean>>;
   inputWrapClass: ComputedRef<Record<string, boolean>>;
   inputInnerClass: ComputedRef<Record<string, boolean>>;
