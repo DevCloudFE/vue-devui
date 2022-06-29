@@ -5,6 +5,7 @@ import CalendarPanel from './calendar-panel';
 import TimerPickerPanel from './time-picker-panel';
 import { Button } from '../../../button';
 import YearCalendarPanel from './year-calendar-panel';
+import MonthCalendarPanel from './month-calendar-panel';
 import { datePickerProPanelProps, DatePickerProPanelProps } from '../date-picker-pro-types';
 import useDatePicker from '../composables/use-date-picker';
 
@@ -39,6 +40,12 @@ export default defineComponent({
                 {...props}
                 onSelectedDate={onSelectedDate}
                 onChangeRangeFocusType={onChangeRangeFocusType}></YearCalendarPanel>
+            )}
+            {props.type === 'month' && (
+              <MonthCalendarPanel
+                {...props}
+                onSelectedDate={onSelectedDate}
+                onChangeRangeFocusType={onChangeRangeFocusType}></MonthCalendarPanel>
             )}
             {ctx.slots?.rightArea && <div class={ns.e('panel-right-area')}>{ctx.slots?.rightArea()}</div>}
           </div>
