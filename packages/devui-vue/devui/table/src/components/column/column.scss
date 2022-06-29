@@ -1,7 +1,24 @@
 @import '../../../../styles-var/devui-var.scss';
 
 .#{$devui-prefix}-table {
-  .#{$devui-prefix}-icon__container .icon {
-    margin-top: -4px;
+  &__tbody {
+    tr {
+      .#{$devui-prefix}-table__tree--cell {
+        .#{$devui-prefix}-icon__container {
+          padding-right: 8px;
+          color: var(--devui-form-control-line);
+          transform: translate(0, 20%);
+          cursor: pointer;
+
+          &:hover {
+            color: var(--devui-text);
+          }
+
+          > i {
+            transition: none;
+          }
+        }
+      }
+    }
   }
 }

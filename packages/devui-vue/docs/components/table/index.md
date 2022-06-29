@@ -1142,7 +1142,11 @@ export default defineComponent({
 ```vue
 <template>
   <d-table :indent="32" @check-change="treeCheckChange" :data="baseTreeTableData" row-key="firstName">
-    <d-column type="index"></d-column>
+    <d-column type="index">
+      <template #default="scope">
+        {{ `No.${scope.rowIndex + 1}` }}
+      </template>
+    </d-column>
     <d-column field="firstName" header="First Name" show-overflow-tooltip></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>

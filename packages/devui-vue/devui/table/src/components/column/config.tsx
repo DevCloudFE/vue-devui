@@ -1,4 +1,4 @@
-import { h } from 'vue';
+import { h, SetupContext } from 'vue';
 import type { VNode } from 'vue';
 import { DefaultRow, TableProps } from '../../table-types';
 import { Column } from './column-types';
@@ -60,41 +60,50 @@ export const cellMap = {
     renderHeader(column: Column): VNode {
       return h('span', { class: 'title' }, column.header ?? '');
     },
-    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number, props: TableProps): VNode {
-      const value = column.field ? rowData[column.field] : '';
-      let columnValue: VNode;
-      if (column.formatter) {
-        columnValue = column.formatter(rowData, column, value, rowIndex);
+    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number, props: TableProps, ctx: SetupContext): VNode {
+      let columnValue: any;
+      if (ctx.slots.default) {
+        columnValue = ctx.slots.default({ row: rowData, rowIndex });
+      } else {
+        const value = column.field ? rowData[column.field] : '';
+        if (column.formatter) {
+          columnValue = column.formatter(rowData, column, value, rowIndex);
+        }
+        columnValue = value?.toString?.() ?? '';
       }
-      columnValue = value?.toString?.() ?? '';
+
+      const hasExpandColumn = store.states.flatColumns.value.some((column2) => column2.type === 'expand');
+      const hasChildren = store.states._data.value.some((row) => row.children?.length);
+
       const level = store.states.rowLevelMap.value[getRowIdentity(rowData, props.rowKey)] || 0;
       const indentDom = h('span', { class: `${ns.e('indent')}`, style: { paddingLeft: `${level * props.indent}px` } }, '');
 
-      const showIndentDom = store.states.firstDefaultColumn.value === column.id && level;
-      // 暂不支持展开行(column的type==expand)和树形表格同时使用，展开行优先级高
-      const showExpendIconDom =
-        store.states.firstDefaultColumn.value === column.id &&
-        rowData.children?.length &&
-        !store.states.flatColumns.value.some((column2) => column2.type === 'expand');
+      const isTreeCell = store.states.firstDefaultColumn.value === column.id;
+      const showIndentDom = isTreeCell && level;
+
+      const showExpendIconDom = isTreeCell && rowData.children?.length;
       const expendIconDom = (
         <Icon
-          name="chevron-right"
-          class="icon-expand-row"
+          size={16}
+          name={store.isRowExpanded(rowData) ? 'open-folder' : 'close-folder'}
           onClick={() => {
             store.toggleRowExpansion(rowData);
-          }}></Icon>
+          }}
+          style={showExpendIconDom ? '' : 'visibility: hidden;'}></Icon>
       );
 
       const cellDom = [];
       if (showIndentDom) {
         cellDom.push(indentDom);
       }
-      if (showExpendIconDom) {
+      // 暂不支持展开行(column的type==expand)和树形表格同时使用，展开行优先级高
+      if (hasChildren && !hasExpandColumn && isTreeCell) {
         cellDom.push(expendIconDom);
       }
+
       cellDom.push(columnValue);
 
-      return h('div', { class: `${ns.e('cell')}` }, cellDom);
+      return h('div', { class: `${ns.e('cell')} ${isTreeCell && hasChildren ? ns.em('tree', 'cell') : ''}` }, cellDom);
     },
   },
 };
