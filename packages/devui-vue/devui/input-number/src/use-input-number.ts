@@ -1,5 +1,5 @@
 import { computed, reactive, toRefs, watch, ref } from 'vue';
-import type { SetupContext, Ref } from 'vue';
+import type { SetupContext, Ref, CSSProperties } from 'vue';
 import { InputNumberProps, UseEvent, UseRender, IState, UseExpose } from './input-number-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { isNull, isNumber, isUndefined } from '../../shared/utils';
@@ -8,7 +8,7 @@ const ns = useNamespace('input-number');
 
 export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender {
   const { style, class: customClass, ...otherAttrs } = ctx.attrs;
-  const customStyle = { style };
+  const customStyle = { style: style as CSSProperties };
 
   const wrapClass = computed(() => [
     {
@@ -131,8 +131,8 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
     state.currentValue = newVal;
   };
 
-  const minDisabled = computed(() => isNumber(state.currentValue) && computeByStep(state.currentValue, -1) < props.min);
-  const maxDisabled = computed(() => isNumber(state.currentValue) && computeByStep(state.currentValue) > props.max);
+  const minDisabled = computed(() => isNumber(state.currentValue) && (computeByStep(state.currentValue, -1) as number) < props.min);
+  const maxDisabled = computed(() => isNumber(state.currentValue) && (computeByStep(state.currentValue) as number) > props.max);
 
   const onAdd = () => {
     if (disabled.value || maxDisabled.value) {
