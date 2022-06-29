@@ -81,9 +81,8 @@ export function toggleRowVisible(expand: boolean, table: ITable<DefaultRow>, key
       break;
     }
     if (start && rowLevelMap[levelKeys[index]] === rowLevelMap[key] + 1) {
-      const targetKeyIndex = hiddenRowKeys.value.indexOf(levelKeys[index]);
       if (expand) {
-        hiddenRowKeys.value.splice(targetKeyIndex, 1);
+        hiddenRowKeys.value = hiddenRowKeys.value.filter((rowKey) => rowKey !== levelKeys[index]);
       } else {
         if (!hiddenRowKeys.value.includes(levelKeys[index])) {
           hiddenRowKeys.value.push(levelKeys[index]);
