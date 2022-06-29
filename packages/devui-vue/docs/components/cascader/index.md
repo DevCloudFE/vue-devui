@@ -362,8 +362,9 @@ export default defineComponent({
 |  filterable   |             `boolean`             |  true   | 可选，是否可搜索选项                                                                                 | [可搜索](#可搜索)     |
 |   debounce    |             `number`              |   300   | 可选，搜索关键词输入去抖延迟                                                                         | [可搜索](#可搜索)     |
 | before-filter |         `function(value)`         |   --    | 可选,过滤函数调用前的钩子函数。该函数返回值时 false 或者被拒绝的 Promise，接下来的过滤逻辑将不会执行 | [可搜索](#可搜索)     |
+|     size      |             `string`              |  'md'   | 文本框的尺寸                                                                                         | --                    |
 
-### CheckboxGroup 事件
+### Cascader 事件
 
 | 事件   | 说明                   | 跳转 Demo         |
 | :----- | :--------------------- | :---------------- |
