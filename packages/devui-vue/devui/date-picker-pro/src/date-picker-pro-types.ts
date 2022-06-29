@@ -165,9 +165,36 @@ export interface UseCalendarCommonReturnType {
   maxDate: ComputedRef<Date>;
   fixRangeDate: () => void;
 }
+
 export interface UseYearCalendarPanelReturnType {
   yarListScrollRef: Ref<HTMLElement | undefined>;
   yearList: Ref<number[][]>;
   getYearItemCls: (year: number) => any;
   handlerSelectYear: (year: number) => void;
+}
+
+export interface UseCalendarSelectedReturnType {
+  today: Ref<Date>;
+  calendarRange: Ref<number[]>;
+  selectDate: Ref<Dayjs | undefined>;
+  rangeSelectDate: Ref<(Dayjs | undefined)[]>;
+  minDate: ComputedRef<Date>;
+  maxDate: ComputedRef<Date>;
+  fixRangeDate: () => void;
+  getToDate: (dateValue: Dayjs | undefined | (Dayjs | undefined)[]) => Dayjs | undefined;
+  emitSelectedDate: () => void;
+  isStartDate: (date: Date) => boolean;
+  isInRangeDate: (date: Date) => boolean;
+  isEndDate: (date: Date) => boolean;
+}
+
+export interface UseMonthCalendarPanelReturnType {
+  yearScrollRef: Ref<HTMLElement | undefined>;
+  monthScrollRef: Ref<HTMLElement | undefined>;
+  yearList: Ref<YearAndMonthItem[]>;
+  monthList: number[][];
+  handlerSelectYear: (year: number) => void;
+  handlerMonthScroll: (e: MouseEvent) => void;
+  getMonthItemCls: (year: number, month: number) => any;
+  handlerSelectMonth: (year: number, month: number) => void;
 }

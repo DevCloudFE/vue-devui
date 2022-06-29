@@ -8,6 +8,9 @@ export const formatDayjsToStr = (date: Dayjs | undefined, format: string, type: 
   }
   if (type === 'year') {
     return date.year().toString();
+  } else if (type === 'month') {
+    const month = date.month() + 1 < 10 ? '0' + (date.month() + 1) : date.month() + 1;
+    return `${date.year()}-${month}`;
   } else {
     return date.format(format);
   }

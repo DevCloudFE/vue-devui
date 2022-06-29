@@ -6,14 +6,15 @@ import { DatePickerProPanelProps, UseYearCalendarPanelReturnType } from '../date
 import { yearCalendarItemHeight } from '../const';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
-import useCalendarCommon from './use-calendar-common';
+import useCalendarSelected from './use-calendar-selected';
 
 export default function useYearCalendarPanel(props: DatePickerProPanelProps, ctx: SetupContext): UseYearCalendarPanelReturnType {
   const ns = useNamespace('date-picker-pro');
   const yarListScrollRef = ref();
   const yearList = ref<number[][]>([]);
 
-  const { today, calendarRange, selectDate, rangeSelectDate, minDate, maxDate, fixRangeDate } = useCalendarCommon(props);
+  const { today, calendarRange, selectDate, rangeSelectDate, minDate, maxDate, fixRangeDate, getToDate, emitSelectedDate } =
+    useCalendarSelected(props, ctx);
 
   const initYearList = () => {
     calendarRange.value[0] = props.calendarRange?.[0] || 1970;
@@ -36,35 +37,13 @@ export default function useYearCalendarPanel(props: DatePickerProPanelProps, ctx
     }
   };
 
-  const handlerShowPanel = (dateValue: Dayjs | undefined | (Dayjs | undefined)[]) => {
-    let toDate: Dayjs | undefined;
-    if (Array.isArray(dateValue)) {
-      if (dateValue[0]) {
-        // 初始化时, 日历面板会默认展示时间范围选择的startDate
-        const date = dateValue[0];
-        toDate = date;
-        rangeSelectDate.value[0] = dateValue[0];
-      } else {
-        toDate = dayjs(today.value).locale('zh-cn');
-      }
-      if (dateValue[1]) {
-        rangeSelectDate.value[1] = dateValue[1];
-      }
-    } else if (!Array.isArray(dateValue) && dateValue) {
-      toDate = dateValue;
-      selectDate.value = dateValue;
-    } else {
-      toDate = dayjs(today.value).locale('zh-cn');
-    }
-    if (toDate) {
-      goToShowYear(toDate);
-    }
-  };
-
   onBeforeMount(() => {
     today.value = new Date();
     initYearList();
-    handlerShowPanel(props.dateValue);
+    const toDate = getToDate(props.dateValue);
+    if (props.visible && toDate) {
+      goToShowYear(toDate);
+    }
   });
 
   const isThisYear = (year: number): boolean => {
@@ -164,18 +143,7 @@ export default function useYearCalendarPanel(props: DatePickerProPanelProps, ctx
     if (props.isRangeType) {
       handlerSetRangeDate(year);
     }
-    if (props.isRangeType) {
-      if (props.focusType === 'start') {
-        ctx.emit('changeRangeFocusType', 'end');
-      } else if (props.focusType === 'end' && !rangeSelectDate.value[0]) {
-        rangeSelectDate.value[0] = selectDate.value;
-      }
-    }
-    if (props.isRangeType) {
-      ctx.emit('selectedDate', rangeSelectDate.value);
-    } else {
-      ctx.emit('selectedDate', selectDate.value);
-    }
+    emitSelectedDate();
   };
   return { yarListScrollRef, yearList, getYearItemCls, handlerSelectYear };
 }
