@@ -1,10 +1,9 @@
-import { computed, ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect, watch } from 'vue';
 import type { ComputedRef, CSSProperties, Ref } from 'vue';
 import { Column } from '../components/column/column-types';
 import { ITable, DefaultRow, TableProps, UseTable, UseFixedColumn, UseTableLayout } from '../table-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { TableStore } from '../store/store-types';
-import { watch } from 'fs-extra';
 
 export function useTable(props: TableProps, tableWidth: Ref): UseTable {
   const ns = useNamespace('table');
@@ -119,4 +118,10 @@ export function useTableWatcher(props: TableProps, store: TableStore): void {
       store.setExpandRows(props.expandRowKeys);
     }
   });
+  watch(
+    () => props.data,
+    () => {
+      store.updateRows();
+    }
+  );
 }

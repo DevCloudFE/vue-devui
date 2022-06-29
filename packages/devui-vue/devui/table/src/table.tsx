@@ -34,12 +34,6 @@ export default defineComponent({
     table.hiddenColumns = hiddenColumns;
     table.tableRef = tableRef;
     table.updateColumnWidth = updateColumnWidth;
-    watch(
-      () => props.data,
-      () => {
-        store.updateRows();
-      }
-    );
 
     ctx.expose({
       store,
