@@ -98,7 +98,7 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   };
 
   const handlerClearTime = (e: MouseEvent) => {
-    if (!isPanelShow.value) {
+    if (!showCloseIcon.value) {
       return;
     }
     e.stopPropagation();
