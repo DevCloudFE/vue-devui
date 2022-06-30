@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from 'vue';
+import type { ExtractPropTypes, Ref } from 'vue';
 
 export type Position = {
   bottom: string;
@@ -23,5 +23,7 @@ export const backTopProps = {
     default: 300
   }
 } as const;
+
+export type IBackTopRef = Ref<HTMLElement | null>;
 
 export type BackTopProps = ExtractPropTypes<typeof backTopProps>;

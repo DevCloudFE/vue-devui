@@ -1,16 +1,18 @@
 import { onMounted, computed, ref } from 'vue';
-import { BackTopProps } from '../back-top-types';
+import type { ComputedRef } from 'vue';
+import { BackTopProps, IBackTopRef } from '../back-top-types';
 import { useTarget, useEventListener, useThrottle } from '.';
-export default function (props: BackTopProps, backTopRef) {
+type ICurrentTarget = HTMLElement & Window & typeof globalThis;
+export default function (props: BackTopProps, backTopRef: IBackTopRef): ComputedRef<boolean> {
   const visibleHeight = props.visibleHeight;
   const currScrollTop = ref(0);
+  let currTarget: ICurrentTarget;
   const ThrottleCBFn = function () {
     currScrollTop.value = currTarget === window ? window.pageYOffset : currTarget.scrollTop;
   };
 
-  let currTarget = null;
   onMounted(() => {
-    currTarget = useTarget(props, backTopRef);
+    currTarget = useTarget(props, backTopRef) as ICurrentTarget;
     // 监听滚动事件 手动更新ScrollTop
     useEventListener(currTarget, 'scroll', useThrottle(ThrottleCBFn, 150));
   });
