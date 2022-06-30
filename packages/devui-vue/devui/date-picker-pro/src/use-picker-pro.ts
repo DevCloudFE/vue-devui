@@ -74,6 +74,9 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
   };
 
   const handlerClearTime = (e: MouseEvent) => {
+    if (!showCloseIcon.value) {
+      return;
+    }
     e.stopPropagation();
     e.preventDefault();
     ctx.emit('update:modelValue', '');
