@@ -1,4 +1,4 @@
-import { PropType } from 'vue';
+import { PropType, ExtractPropTypes } from 'vue';
 
 export type ArrowTrigger = 'hover' | 'never' | 'always';
 export type DotTrigger = 'click' | 'hover';
@@ -41,3 +41,6 @@ export const carouselProps = {
     type: Function as unknown as () => ((index: number) => void)
   },
 } as const;
+
+
+export type CarouselProps = ExtractPropTypes<typeof carouselProps>;
