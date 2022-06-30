@@ -540,14 +540,13 @@ describe('d-table', () => {
     let hiddenTrs = wrapper.findAll('.is-hidden');
     expect(hiddenTrs.length).toBe(2);
 
-    const closeFolderIcon = wrapper.find('.icon-close-folder');
-    await closeFolderIcon.trigger('click');
+    const toggleFolderIcon = wrapper.find(ns.e('tree-operate'));
+    await toggleFolderIcon.trigger('click');
     await nextTick();
     hiddenTrs = wrapper.findAll('.is-hidden');
     expect(hiddenTrs.length).toBe(0);
 
-    const openFolderIcon = wrapper.find('.icon-open-folder');
-    await openFolderIcon.trigger('click');
+    await toggleFolderIcon.trigger('click');
     await nextTick();
     hiddenTrs = wrapper.findAll('.is-hidden');
     expect(hiddenTrs.length).toBe(2);

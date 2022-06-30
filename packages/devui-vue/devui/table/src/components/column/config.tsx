@@ -8,6 +8,8 @@ import { Icon } from '../../../../icon';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { getRowIdentity } from '../../utils';
 import './column.scss';
+import { IconOpen } from '../../../../tree/src/components/icon-open';
+import { IconClose } from '../../../../tree/src/components/icon-close';
 
 const ns = useNamespace('table');
 
@@ -83,13 +85,14 @@ export const cellMap = {
 
       const showExpendIconDom = isTreeCell && rowData.children?.length;
       const expendIconDom = (
-        <Icon
-          size={16}
-          name={store.isRowExpanded(rowData) ? 'open-folder' : 'close-folder'}
+        <span
+          class={ns.e('tree-operate')}
           onClick={() => {
             store.toggleRowExpansion(rowData);
           }}
-          style={showExpendIconDom ? '' : 'visibility: hidden;'}></Icon>
+          style={showExpendIconDom ? '' : 'visibility: hidden;'}>
+          {store.isRowExpanded(rowData) ? <IconOpen /> : <IconClose />}
+        </span>
       );
 
       const cellDom = [];
@@ -103,7 +106,7 @@ export const cellMap = {
 
       cellDom.push(columnValue);
 
-      return h('div', { class: `${ns.e('cell')} ${isTreeCell && hasChildren ? ns.em('tree', 'cell') : ''}` }, cellDom);
+      return h('div', { class: `${ns.e('cell')} ` }, cellDom);
     },
   },
 };

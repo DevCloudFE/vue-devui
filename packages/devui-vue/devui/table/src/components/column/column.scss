@@ -3,20 +3,40 @@
 .#{$devui-prefix}-table {
   &__tbody {
     tr {
-      .#{$devui-prefix}-table__tree--cell {
-        .#{$devui-prefix}-icon__container {
-          padding-right: 8px;
-          color: var(--devui-form-control-line);
+      .#{$devui-prefix}-table__tree-operate {
+        padding-right: 8px;
+        cursor: pointer;
+
+        > svg.svg-icon rect {
+          stroke: $devui-disabled-text;
+        }
+
+        > svg.svg-icon path {
+          fill: $devui-disabled-text;
+        }
+
+        > svg.svg-icon.svg-icon-close rect:last-child {
+          fill: $devui-disabled-text;
+          stroke: none;
+        }
+
+        &:hover {
+          > svg.svg-icon rect {
+            stroke: $devui-icon-fill-active;
+          }
+
+          > svg.svg-icon path {
+            fill: $devui-icon-fill-active;
+          }
+
+          > svg.svg-icon.svg-icon-close rect:last-child {
+            fill: $devui-icon-fill-active;
+            stroke: none;
+          }
+        }
+
+        .svg-icon {
           transform: translate(0, 20%);
-          cursor: pointer;
-
-          &:hover {
-            color: var(--devui-text);
-          }
-
-          > i {
-            transition: none;
-          }
         }
       }
     }
