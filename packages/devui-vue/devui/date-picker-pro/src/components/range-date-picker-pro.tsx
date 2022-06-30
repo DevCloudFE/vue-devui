@@ -4,7 +4,8 @@ import { rangeDatePickerProProps, RangeDatePickerProProps } from '../range-date-
 import { FlexibleOverlay } from '../../../overlay';
 import DatePickerProPanel from './date-picker-panel';
 import { Input } from '../../../input';
-import { Icon } from '../../../icon';
+import { IconCalendar } from './icon-calendar';
+import { IconClose } from './icon-close';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useRangePickerPro from '../composables/use-range-date-picker-pro';
 
@@ -73,7 +74,13 @@ export default defineComponent({
                 }}
                 size={pickerSize.value}
                 disabled={pickerDisabled.value}
-                prefix="calendar"
+                v-slots={{
+                  prefix: () => (
+                    <span class={ns.e('range-picker-icon')}>
+                      <IconCalendar></IconCalendar>
+                    </span>
+                  ),
+                }}
               />
             </span>
 
@@ -97,11 +104,11 @@ export default defineComponent({
                 disabled={pickerDisabled.value}
                 v-slots={{
                   suffix: () => (
-                    <Icon
-                      class={showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden')}
-                      name="error-o"
-                      onClick={handlerClearTime}
-                      style="font-size: inherit;"></Icon>
+                    <span
+                      class={[showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden'), 'close-icon']}
+                      onClick={handlerClearTime}>
+                      <IconClose></IconClose>
+                    </span>
                   ),
                 }}
               />

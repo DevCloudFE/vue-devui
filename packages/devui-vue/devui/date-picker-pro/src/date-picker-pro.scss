@@ -11,8 +11,31 @@ $input-height-lg: 46px;
   .#{$devui-prefix}-date-picker-pro__single-picker {
     position: relative;
 
+    &-icon {
+      display: inline-flex;
+      align-items: center;
+    }
+
     .#{$devui-prefix}-input-slot__suffix {
       cursor: pointer;
+    }
+
+    .close-icon {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      line-height: 12px;
+      align-items: center;
+
+      svg path {
+        fill: $devui-shape-icon-fill;
+      }
+
+      &:hover {
+        svg path {
+          fill: $devui-shape-icon-fill-active;
+        }
+      }
     }
 
     .#{$devui-prefix}-date-picker-pro--icon-visible {
@@ -165,6 +188,12 @@ $input-height-lg: 46px;
         border-radius: $devui-border-radius-feedback;
       }
 
+      &:not(.#{$devui-prefix}-date-picker-pro__table-date-selected):not(.#{$devui-prefix}-date-picker-pro__table-date-disabled):hover {
+        span {
+          background-color: $devui-range-item-hover-bg;
+        }
+      }
+
       &.#{$devui-prefix}-date-picker-pro__table-date-today {
         span {
           color: $devui-brand;
@@ -175,8 +204,8 @@ $input-height-lg: 46px;
       &.#{$devui-prefix}-date-picker-pro__table-date-start,
       &.#{$devui-prefix}-date-picker-pro__table-date-end {
         span {
-          background-color: $devui-brand-active;
-          color: $devui-light-text;
+          background-color: $devui-list-item-active-bg;
+          color: $devui-list-item-active-text;
         }
       }
       &.#{$devui-prefix}-date-picker-pro__table-date-in-range {
@@ -297,12 +326,12 @@ $input-height-lg: 46px;
           background-color: transparent;
 
           span {
-            background-color: $devui-brand-active;
-            color: $devui-light-text;
+            background-color: $devui-list-item-active-bg;
+            color: $devui-list-item-active-text;
 
             &:hover {
-              background-color: $devui-brand-active;
-              color: $devui-light-text;
+              background-color: $devui-list-item-active-bg;
+              color: $devui-list-item-active-text;
             }
           }
         }
@@ -386,6 +415,29 @@ $input-height-lg: 46px;
     }
     .#{$devui-prefix}-input-slot__suffix {
       cursor: pointer;
+    }
+
+    &-icon {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .close-icon {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      line-height: 12px;
+      align-items: center;
+
+      svg path {
+        fill: $devui-shape-icon-fill;
+      }
+
+      &:hover {
+        svg path {
+          fill: $devui-shape-icon-fill-active;
+        }
+      }
     }
 
     .#{$devui-prefix}-range-date-picker-pro--icon-visible {
@@ -477,8 +529,8 @@ $input-height-lg: 46px;
       }
 
       &.#{$devui-prefix}-date-picker-pro__year-active {
-        background: $devui-brand-active;
-        color: $devui-light-text;
+        background-color: $devui-list-item-active-bg;
+        color: $devui-list-item-active-text;
       }
 
       &.#{$devui-prefix}-date-picker-pro__year-in-range:not(.#{$devui-prefix}-date-picker-pro__year-active) {
@@ -604,8 +656,8 @@ $input-height-lg: 46px;
 
         &.#{$devui-prefix}-date-picker-pro__month-active {
           span {
-            background: $devui-brand-active;
-            color: $devui-light-text;
+            background-color: $devui-list-item-active-bg;
+            color: $devui-list-item-active-text;
           }
         }
 

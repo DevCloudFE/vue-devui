@@ -98,6 +98,9 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   };
 
   const handlerClearTime = (e: MouseEvent) => {
+    if (!isPanelShow.value) {
+      return;
+    }
     e.stopPropagation();
     e.preventDefault();
     ctx.emit('update:modelValue', ['', '']);

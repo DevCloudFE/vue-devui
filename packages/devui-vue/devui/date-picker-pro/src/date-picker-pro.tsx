@@ -5,7 +5,8 @@ import usePickerPro from './use-picker-pro';
 import { Input } from '../../input';
 import { FlexibleOverlay } from '../../overlay';
 import DatePickerProPanel from './components/date-picker-panel';
-import { Icon } from '../../icon';
+import { IconCalendar } from './components/icon-calendar';
+import { IconClose } from './components/icon-close';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './date-picker-pro.scss';
 
@@ -52,17 +53,19 @@ export default defineComponent({
               modelValue={displayDateValue.value}
               placeholder={placeholder.value}
               onFocus={onFocus}
-              prefix="calendar"
               size={pickerSize.value}
               disabled={pickerDisabled.value}
               error={isValidateError.value}
               v-slots={{
+                prefix: () => (
+                  <span class={ns.e('single-picker-icon')}>
+                    <IconCalendar></IconCalendar>
+                  </span>
+                ),
                 suffix: () => (
-                  <Icon
-                    class={showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden')}
-                    name="error-o"
-                    onClick={handlerClearTime}
-                    style="font-size: inherit;"></Icon>
+                  <span class={['close-icon', showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden')]} onClick={handlerClearTime}>
+                    <IconClose></IconClose>
+                  </span>
                 ),
               }}
             />
