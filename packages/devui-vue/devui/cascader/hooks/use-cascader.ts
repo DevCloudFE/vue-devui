@@ -279,6 +279,9 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
   }, props.debounce);
 
   const handleInput = (val: string) => {
+    if (!props.filterable) {
+      return;
+    }
     val ? handleFilter(val) : hideSuggestion();
   };
 
@@ -304,6 +307,12 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     },
     { immediate: true, deep: true }
   );
+  const onFocus = (e: FocusEvent) => {
+    ctx.emit('focus', e);
+  };
+  const onBlur = (e: FocusEvent) => {
+    ctx.emit('blur', e);
+  };
   return {
     origin,
     overlay,
@@ -327,5 +336,7 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     suggestionsList,
     isSearching,
     chooseSuggestion,
+    onFocus,
+    onBlur,
   };
 };
