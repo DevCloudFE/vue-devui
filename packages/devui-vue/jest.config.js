@@ -14,7 +14,8 @@ module.exports = {
   },
   transformIgnorePatterns: ['node_modules/?!(lodash-es)'],
   // The glob patterns Jest uses to detect test files
-  testMatch: ['**/**/*.spec.(ts|tsx)'],
+  // testMatch: ['**/**/*.spec.(ts|tsx)'],
+  testRegex: '__tests__/month-picker.spec.tsx',
 
   // An array of file extensions your modules use
   moduleFileExtensions: ['js', 'json', 'ts', 'tsx'],
