@@ -125,7 +125,14 @@ export interface Column {
   ctx?: SetupContext;
   customFilterTemplate?: Slot;
   renderHeader?: (column: Column, store: TableStore) => VNode;
-  renderCell?: (rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number, props?: TableProps) => VNode;
+  renderCell?: (
+    rowData: DefaultRow,
+    columnItem: Column,
+    store: TableStore,
+    rowIndex: number,
+    props?: TableProps,
+    ctx?: SetupContext
+  ) => VNode;
   formatter?: Formatter;
   sortMethod?: SortMethod;
   subColumns?: Slot;

@@ -39,10 +39,10 @@ export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: S
   }
 
   function renderCell(rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number, tableProps: TableProps) {
-    if (ctx.slots.default && columnItem.type !== 'expand') {
+    if (ctx.slots.default && columnItem.type === 'index') {
       return ctx.slots.default({ row: rowData, rowIndex });
     }
-    return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex, tableProps);
+    return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex, tableProps, ctx);
   }
 
   watch(

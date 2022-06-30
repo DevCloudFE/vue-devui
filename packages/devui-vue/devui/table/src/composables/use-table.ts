@@ -122,6 +122,7 @@ export function useTableWatcher(props: TableProps, store: TableStore): void {
     () => props.data,
     () => {
       store.updateRows();
-    }
+    },
+    { deep: true }
   );
 }
