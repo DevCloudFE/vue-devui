@@ -68,11 +68,9 @@ export const paginationProps = {
   },
   totalItemText: {
     type: String,
-    default: '所有条目'
   },
   goToText: {
     type: String,
-    default: '跳至'
   },
   showJumpButton: {
     type: Boolean,

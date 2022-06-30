@@ -1,10 +1,11 @@
-import { defineComponent, computed, nextTick, toRefs } from 'vue';
+import { defineComponent, computed, nextTick, toRefs, getCurrentInstance } from 'vue';
 import { paginationProps, PaginationProps } from './pagination-types';
 import { liteSelectOptions } from './utils';
 import ConfigMenu from './components/config-menu';
 import JumpPage from './components/jump-page';
 import PageNumBtn from './components/page-nums';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { createI18nTranslate } from '../../locale/create';
 import './pagination.scss';
 
 export default defineComponent({
@@ -17,6 +18,9 @@ export default defineComponent({
   props: paginationProps,
   emits: ['pageIndexChange', 'pageSizeChange', 'update:pageSize', 'update:pageIndex'],
   setup(props: PaginationProps, { emit, slots }) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DPagination', app);
+
     const {
       autoHide,
       pageSizeOptions,
@@ -117,7 +121,7 @@ export default defineComponent({
               // 总页数显示
               (!lite.value || (lite.value && showPageSelector.value)) && canViewTotal.value && (
                 <div class={ns.e('total-size')}>
-                  {totalItemText.value}: {total.value}
+                  {totalItemText.value || t('totalItemText')}: {total.value}
                 </div>
               )
             }
@@ -156,7 +160,7 @@ export default defineComponent({
               canJumpPage.value && !lite.value && (
                 <jump-page
                   {...{
-                    goToText: goToText.value,
+                    goToText: goToText.value || t('goToText'),
                     size: size.value,
                     pageIndex: pageIndex.value,
                     totalPages: totalPages.value,
