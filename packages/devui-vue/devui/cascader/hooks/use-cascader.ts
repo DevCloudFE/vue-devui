@@ -1,12 +1,13 @@
-import { debounce, cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash';
 import { ref, SetupContext, toRef, reactive, Ref, watch } from 'vue';
 import { initActiveIndexs, initSingleIptValue } from './use-cascader-single';
 import { initMultipleCascaderItem, initTagList, getMultiModelValues } from './use-cascader-multiple';
-import { CascaderItem, CascaderValueType, CascaderProps, suggestionListType, UseCascaderFn } from '../src/cascader-types';
+import { CascaderItem, CascaderValueType, CascaderProps, UseCascaderFn } from '../src/cascader-types';
 import { popupHandles } from './use-cascader-popup';
 import { useCascaderItem } from './use-cascader-item';
 import { useRootStyle } from './use-cascader-style';
 import { useRootClassName } from './use-cascader-class';
+import { useFilter } from './use-filter';
 
 export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascaderFn => {
   const origin = ref<HTMLElement>();
@@ -19,10 +20,6 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
   const showClearable = ref(false);
   const position = ref(['bottom-start']);
   let initIptValue = props.modelValue.length > 0 ? true : false; // 有value默认值时，初始化输出内容
-  const suggestions = ref<suggestionListType[]>([]);
-  const suggestionsList = ref<suggestionListType[]>([]);
-  const isSearching = ref(false);
-  const searchText = ref('');
 
   // popup弹出层
   const { menuShow, menuOpenClass, openPopup, stopDefault, updateStopDefaultType, devuiCascader } = popupHandles(props);
@@ -169,137 +166,6 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     cascaderItemNeedProps.valueCache.splice(0);
   };
 
-  // 以下为搜索逻辑
-  watch(menuShow, (val) => {
-    if (!val) {
-      isSearching.value = false;
-    }
-  });
-
-  const isPromise = (obj: boolean | Promise<any>): boolean => {
-    return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
-  };
-
-  const setChildrenParent = (parentNode: CascaderItem) => {
-    if (parentNode.children && parentNode.children.length) {
-      parentNode.children.forEach((child) => {
-        child.parent = parentNode;
-        // 父级为disbled，子级添加为disabled
-        if (parentNode.disabled) {
-          child.disabled = true;
-        }
-      });
-    }
-    return parentNode;
-  };
-
-  const addParent = (data: CascaderItem[]) => {
-    data.forEach((item) => {
-      if (item.children && item.children.length) {
-        setChildrenParent(item);
-        addParent(item.children);
-      } else {
-        item.isLeaf = true;
-      }
-    });
-    return data;
-  };
-
-  const allNodes = addParent(cloneDeep(props.options));
-  const flatNodes = (data: CascaderItem[] = []) => {
-    return data.reduce((res: CascaderItem[], node) => {
-      if (node.children) {
-        res.push(node);
-        res = res.concat(flatNodes(node.children));
-      } else {
-        res.push(node);
-      }
-      return res;
-    }, []);
-  };
-  const flatAllNodes = flatNodes(allNodes);
-  const filterLeafs = () => {
-    const leafs = flatAllNodes.filter((item) => {
-      return item.isLeaf && !item.disabled;
-    });
-    return leafs;
-  };
-
-  const findParentValues = (item: CascaderItem, values: (string | number)[] = []) => {
-    values.push(item.value);
-    if (item.parent) {
-      findParentValues(item.parent, values);
-    }
-    return values;
-  };
-  const findParentLabels = (item: CascaderItem, values: string[] = []) => {
-    values.push(item.label);
-    if (item.parent) {
-      findParentLabels(item.parent, values);
-    }
-    return values;
-  };
-  const leafsData = filterLeafs();
-  const labelsAndValues = () => {
-    const suggestionList: suggestionListType[] = [];
-    leafsData.forEach((item) => {
-      suggestionList.push({ values: findParentValues(item, []).reverse(), labels: findParentLabels(item, []).reverse() });
-    });
-    suggestionList.forEach((value) => {
-      value.labelsString = value.labels.join('/');
-    });
-    return suggestionList;
-  };
-  suggestions.value = labelsAndValues();
-
-  const caclSuggestions = () => {
-    suggestionsList.value = suggestions.value.filter((item) => {
-      return item.labelsString?.toLowerCase().includes(searchText.value.toString().toLowerCase()) && !item.disabled;
-    });
-    isSearching.value = true;
-  };
-
-  const hideSuggestion = () => {
-    isSearching.value = false;
-  };
-
-  const handleFilter = debounce((val) => {
-    searchText.value = val;
-    const pass = props.beforeFilter(val);
-    if (isPromise(pass)) {
-      pass.then(caclSuggestions).catch(() => {
-        // catch错误
-      });
-    } else if (pass !== false) {
-      caclSuggestions();
-    } else {
-      hideSuggestion();
-    }
-    menuShow.value = true;
-  }, props.debounce);
-
-  const handleInput = (val: string) => {
-    if (!props.filterable) {
-      return;
-    }
-    val ? handleFilter(val) : hideSuggestion();
-  };
-
-  const chooseSuggestion = (item: CascaderItem) => {
-    if (props.showPath) {
-      inputValue.value = item.labelsString;
-    } else {
-      const labels = item.labelsString.split('/');
-      inputValue.value = labels[labels.length - 1];
-    }
-    ctx.emit('update:modelValue', item.values);
-    cascaderItemNeedProps.valueCache.splice(0);
-    cascaderItemNeedProps.valueCache.splice(0, 0, ...item.values);
-    initActiveIndexs(item.values, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs);
-    updateCascaderView(cascaderItemNeedProps.activeIndexs, cascaderOptions[0], 0);
-    menuShow.value = false;
-  };
-
   watch(
     () => props.modelValue,
     (newVal) => {
@@ -313,6 +179,15 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
   const onBlur = (e: FocusEvent) => {
     ctx.emit('blur', e);
   };
+  const { handleInput, suggestionsList, isSearching, chooseSuggestion } = useFilter(
+    props,
+    ctx,
+    menuShow,
+    cascaderItemNeedProps,
+    updateCascaderView,
+    inputValue,
+    cascaderOptions
+  );
   return {
     origin,
     overlay,

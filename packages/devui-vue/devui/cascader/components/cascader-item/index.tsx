@@ -4,6 +4,8 @@ import { useListClassName } from '../../hooks/use-cascader-class';
 import { updateCheckOptionStatus } from '../../hooks/use-cascader-multiple';
 import { singleChoose } from '../../hooks/use-cascader-single';
 import './index.scss';
+import { Icon } from '../../../icon';
+import { Checkbox } from '../../../checkbox';
 export const DCascaderItem = (props: CascaderItemPropsType) => {
   const { cascaderItem, ulIndex, liIndex, cascaderItemNeedProps, cascaderOptions } = props;
   const { multiple, stopDefault, valueCache, activeIndexs, trigger, confirmInputValueFlg, tagList } = cascaderItemNeedProps;
@@ -52,7 +54,7 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
     <li class={rootClasses.value}>
       {multiple && (
         <div class="cascader-li__checkbox">
-          <d-checkbox
+          <Checkbox
             checked={cascaderItem?.checked}
             disabled={cascaderItem.disabled}
             halfchecked={cascaderItem?.halfChecked}
@@ -63,13 +65,13 @@ export const DCascaderItem = (props: CascaderItemPropsType) => {
       <div class="cascader-li__wraper" {...mouseenter} onClick={mouseClick}>
         {cascaderItem.icon && (
           <div class={'cascader-li__icon' + (cascaderItem.disabled ? ' disabled' : '')}>
-            <d-icon name={cascaderItem.icon} size="inherit"></d-icon>
+            <Icon name={cascaderItem.icon} size="inherit"></Icon>
           </div>
         )}
         <div class="dropdown-item-label">
           <span>{cascaderItem.label}</span>
         </div>
-        {cascaderItem?.children?.length > 0 && <d-icon name="chevron-right" size="16px" color="inherit"></d-icon>}
+        {cascaderItem?.children?.length > 0 && <Icon name="chevron-right" size="16px" color="inherit"></Icon>}
       </div>
     </li>
   );
