@@ -1,5 +1,6 @@
-import { defineComponent, ref, watch, onMounted, onBeforeUnmount, Fragment, Comment } from 'vue';
-import { carouselProps, DotTrigger } from './types';
+import { defineComponent, ref, watch, onMounted, onBeforeUnmount, Fragment, Comment, toRefs } from 'vue';
+import type { VNode } from 'vue';
+import { carouselProps, DotTrigger, CarouselProps } from './types';
 import Icon from '../../icon/src/icon';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './carousel.scss';
@@ -8,9 +9,9 @@ export default defineComponent({
   name: 'DCarousel',
   props: carouselProps,
   emits: ['update:activeIndex'],
-  setup(props, { emit }) {
+  setup(props: CarouselProps, { emit }) {
     const ns = useNamespace('carousel');
-    const { arrowTrigger, autoplay, autoplaySpeed, dotTrigger, activeIndex, activeIndexChange } = props;
+    const { arrowTrigger, autoplay, autoplaySpeed, dotTrigger, activeIndex, activeIndexChange } = toRefs(props);
     const transitionSpeed = 500;
 
     const itemCount = ref(0);
@@ -23,26 +24,26 @@ export default defineComponent({
     watch(
       () => arrowTrigger,
       () => {
-        showArrow.value = arrowTrigger === 'always';
+        showArrow.value = arrowTrigger.value === 'always';
       },
       { immediate: true }
     );
     watch(
       () => activeIndex,
       () => {
-        currentIndex.value = activeIndex;
+        currentIndex.value = activeIndex.value;
       },
       { immediate: true }
     );
 
     // 翻页位移
     const translatePosition = (size: number) => {
-      if (containerRef.value) containerRef.value.style.left = `${-size * 100}%`;
+      if (containerRef.value) {containerRef.value.style.left = `${-size * 100}%`;}
     };
     // 调整首尾翻页后的动画
     const adjustTransition = (targetEl: HTMLElement) => {
       setTimeout(() => {
-        if (containerRef.value) containerRef.value.style.transition = '';
+        if (containerRef.value) {containerRef.value.style.transition = '';}
 
         targetEl.style.transform = '';
         translatePosition(currentIndex.value);
@@ -55,6 +56,23 @@ export default defineComponent({
         const wrapperRect = wrapperRef.value.getBoundingClientRect();
 
         targetEl.style.transform = `translateX(${(firstToLast ? -itemCount.value : itemCount.value) * wrapperRect.width}px)`;
+      }
+    };
+
+    // 清除自动轮播任务
+    const clearScheduledTransition = () => {
+      if (scheduledId.value) {
+        clearTimeout(scheduledId.value);
+        scheduledId.value = null;
+      }
+    };
+    // 自动轮播调度任务
+    const autoScheduleTransition = (callback?: () => void) => {
+      clearScheduledTransition();
+      if (autoplay && autoplaySpeed.value) {
+        scheduledId.value = setTimeout(() => {
+          callback?.();
+        }, autoplaySpeed.value);
       }
     };
 
@@ -90,8 +108,10 @@ export default defineComponent({
 
       currentIndex.value = latestIndex;
       emit('update:activeIndex', latestIndex);
-      activeIndexChange?.(latestIndex);
-      autoScheduleTransition();
+      activeIndexChange?.value?.(latestIndex);
+      autoScheduleTransition(() => {
+        goto(currentIndex.value + 1);
+      });
     };
     // 向前切换
     const prev = () => {
@@ -104,34 +124,18 @@ export default defineComponent({
 
     // 切换箭头监听事件，用于处理hover方式
     const arrowMouseEvent = (type: 'enter' | 'leave') => {
-      if (arrowTrigger !== 'hover') return;
+      if (arrowTrigger.value !== 'hover') {return;}
 
       showArrow.value = type === 'enter';
     };
     // 指示器触发切换函数
     const switchStep = (index: number, type: DotTrigger) => {
-      if (type === dotTrigger) goto(index);
+      if (type === dotTrigger.value) {goto(index);}
     };
 
-    // 清除自动轮播任务
-    const clearScheduledTransition = () => {
-      if (scheduledId.value) {
-        clearTimeout(scheduledId.value);
-        scheduledId.value = null;
-      }
-    };
-    // 自动轮播调度任务
-    const autoScheduleTransition = () => {
-      clearScheduledTransition();
-      if (autoplay && autoplaySpeed) {
-        scheduledId.value = setTimeout(() => {
-          next();
-        }, autoplaySpeed);
-      }
-    };
     const changeItemCount = (val: number) => {
       itemCount.value = val;
-      autoScheduleTransition();
+      autoScheduleTransition(next);
     };
 
     onMounted(() => {
@@ -140,7 +144,7 @@ export default defineComponent({
         containerRef.value.style.left = '0%';
       }
 
-      autoScheduleTransition();
+      autoScheduleTransition(next);
     });
     onBeforeUnmount(() => {
       clearScheduledTransition();
@@ -184,12 +188,13 @@ export default defineComponent({
 
       $slots,
     } = this;
-    const slot: any[] = $slots.default?.() ?? [];
+    const slot: VNode[] = $slots.default?.() ?? ([] as VNode[]);
 
     // 在jsx中，使用map生成slot项会在外层包裹一个Fragment
     let children = slot;
     if (children.length === 1 && children[0].type === Fragment) {
-      children = (children[0].children || []).filter((item) => item?.type !== Comment);
+      children = ((children[0].children || []) as VNode[])
+        .filter((item) => item?.type !== Comment);
     }
     if (children.length !== itemCount) {
       changeItemCount(children.length);
