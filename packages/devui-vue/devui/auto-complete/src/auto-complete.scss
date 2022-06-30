@@ -43,13 +43,18 @@
     cursor: pointer;
     display: block;
     width: 100%;
+    min-height: 36px;
+    line-height: 20px;
     padding: 8px 12px;
     clear: both;
     border: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    line-height: 14px;
+
+    &:not(:first-child) {
+      margin-top: 4px;
+    }
   }
 
   .#{$devui-prefix}-dropdown-menu {
@@ -123,7 +128,7 @@
   }
 
   &--md {
-    height: 28px;
+    height: 32px;
     font-size: $devui-font-size;
   }
 
@@ -273,4 +278,8 @@
       }
     }
   }
+}
+
+.#{$devui-prefix}-auto-complete__menu {
+  margin: -8px 0;
 }

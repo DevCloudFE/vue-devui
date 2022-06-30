@@ -1,7 +1,7 @@
 @import '../../styles-var/devui-var.scss';
 
 .#{$devui-prefix}-input {
-  height: 28px;
+  height: 32px;
   font-size: $devui-font-size;
 
   &__wrapper {
@@ -108,14 +108,13 @@
 
       .#{$devui-prefix}-button,
       .#{$devui-prefix}-select .#{$devui-prefix}-select__selection {
-        border: none;
-        background-color: transparent;
+        border: none !important;
+        background-color: transparent !important;
         color: inherit;
       }
 
       .#{$devui-prefix}-button,
       .#{$devui-prefix}-select__selection {
-        display: inline-block;
         margin: 0 -20px;
       }
     }

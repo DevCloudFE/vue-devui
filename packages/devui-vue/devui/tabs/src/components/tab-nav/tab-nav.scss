@@ -24,7 +24,7 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
       background-color: transparent;
       padding: 0;
       text-decoration: none;
-      color: $devui-text;
+      color: $devui-aide-text;
     }
 
     & a:hover,
@@ -87,7 +87,7 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
 
     & span > a {
       border: none;
-      color: $devui-text;
+      color: $devui-aide-text;
       line-height: 26px;
       padding: 0 16px;
 
@@ -162,7 +162,7 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
     & a {
       cursor: pointer;
       border: none;
-      color: $devui-text;
+      color: $devui-aide-text;
       line-height: 28px;
       padding: 0 16px;
 
@@ -225,7 +225,7 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
     & a {
       cursor: pointer;
       border: none;
-      color: $devui-text;
+      color: $devui-aide-text;
       border-radius: $devui-border-radius $devui-border-radius 0 0;
 
       &:hover,
