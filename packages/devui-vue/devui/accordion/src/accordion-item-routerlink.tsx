@@ -1,7 +1,8 @@
 import { defineComponent, toRefs, computed, inject } from 'vue';
+import type { AnchorHTMLAttributes } from 'vue';
 import { useRoute } from 'vue-router';
 import { accordionProps } from './accordion-types';
-import { AccordionItemClickEvent, AccordionMenuItem, AccordionLinkableItem } from './accordion.type';
+import type { AccordionItemClickEvent, AccordionMenuItem, AccordionLinkableItem, IAccordionContext } from './accordion.type';
 import DAccordionItem from './accordion-item';
 import { getRootSlots } from './utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
@@ -12,7 +13,10 @@ export default defineComponent({
     DAccordionItem,
   },
   props: {
-    item: Object as () => AccordionLinkableItem,
+    item: {
+      type: Object as () => AccordionLinkableItem,
+      required: true
+    },
     deepth: {
       type: Number,
       default: 0,
@@ -29,7 +33,7 @@ export default defineComponent({
 
     const route = useRoute();
     const rootSlots = getRootSlots();
-    const accordionCtx = inject('accordionContext') as any;
+    const accordionCtx = inject<IAccordionContext>('accordionContext');
 
     const title = computed(() => {
       return item.value && item.value[titleKey.value];
@@ -54,7 +58,7 @@ export default defineComponent({
 
     const linkItemClickFn = (itemEvent: AccordionItemClickEvent) => {
       if (item.value && !disabled.value) {
-        accordionCtx.itemClickFn(itemEvent);
+        accordionCtx?.itemClickFn(itemEvent);
       }
     };
 
@@ -62,8 +66,8 @@ export default defineComponent({
       return (
         <>
           <div class={[ns.e('splitter'), deepValue === 0 && ns.e('parent-list')]} style={{ left: deepValue * 20 + 10 + 'px' }}></div>
-          {(!rootSlots.itemTemplate || itemTemplate.value === false) && <>{title.value}</>}
-          {rootSlots.itemTemplate &&
+          {(!rootSlots?.itemTemplate || itemTemplate.value === false) && <>{title.value}</>}
+          {rootSlots?.itemTemplate &&
             itemTemplate.value !== false &&
             rootSlots.itemTemplate?.({
               parent: parentValue,
@@ -87,7 +91,7 @@ export default defineComponent({
                     class={[ns.m('overflow-ellipsis'), routerLinkActive.value && ns.m('router-active')]}
                     custom
                     title={title.value}
-                    onClick={(e) =>
+                    onClick={(e: MouseEvent) =>
                       linkItemClickFn({
                         item: item.value,
                         parent: parentValue,
@@ -99,10 +103,10 @@ export default defineComponent({
                 )}
                 {!isUsedVueRouter.value && (
                   <a
-                    href={link.value}
+                    href={link.value as AnchorHTMLAttributes['href']}
                     target={linkDefaultTarget.value}
                     class={ns.m('overflow-ellipsis')}
-                    title={title.value}
+                    title={title.value as AnchorHTMLAttributes['title']}
                     onClick={(e) =>
                       linkItemClickFn({
                         item: item.value,
@@ -116,7 +120,7 @@ export default defineComponent({
               </>
             )}
             {disabled.value && (
-              <a class={ns.m('overflow-ellipsis')} title={title.value}>
+              <a class={ns.m('overflow-ellipsis')} title={title.value as AnchorHTMLAttributes['title']}>
                 {renderContent()}
               </a>
             )}

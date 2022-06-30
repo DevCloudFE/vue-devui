@@ -3,7 +3,7 @@ import { AccordionMenuType } from './accordion.type';
 
 export const accordionProps = {
   data: {
-    type: Array as () => Array<any> | AccordionMenuType,
+    type: Array as () => AccordionMenuType,
     default: null,
   },
   /* Key值定义, 用于自定义数据结构 */
