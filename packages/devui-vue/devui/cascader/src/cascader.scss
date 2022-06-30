@@ -40,7 +40,6 @@
 
   &__drop-menu-wrapper {
     display: block;
-    margin: 4px 0;
     font-size: 0;
     white-space: nowrap;
     padding: 0;
@@ -53,7 +52,6 @@
   &__drop-menu-animation {
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
     z-index: 1000;
-    margin-top: 1px;
   }
 
   &__dropdown-menu {
@@ -63,15 +61,17 @@
   }
 
   &__panel {
-    padding: 12px 0;
+    padding: 12px 12px;
     max-height: 300px;
     overflow-y: auto;
   }
 
   &__suggest-list {
+    height: 32px;
     padding: 5px 12px;
     cursor: pointer;
     font-weight: 400;
+    border-radius: $devui-border-radius;
 
     &:hover {
       color: $devui-brand-active;
