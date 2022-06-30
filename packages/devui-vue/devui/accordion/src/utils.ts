@@ -44,7 +44,7 @@ const precheckTree = (ds: AccordionMenuType): AccordionMenuType => {
 };
 
 
-const getRootSlots = () => {
+const getRootSlots = (): ComponentInternalInstance['slots'] | undefined => {
   const rootComponentName = 'DAccordion';
   /**
    * 获取父组件

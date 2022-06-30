@@ -1,7 +1,7 @@
 import { defineComponent, onMounted, provide, toRefs, watch } from 'vue';
 import AccordionList from './accordion-list';
 import { accordionProps, AccordionProps } from './accordion-types';
-import { AccordionItemClickEvent, AccordionMenuItem, AccordionMenuToggleEvent } from './accordion.type';
+import type { AccordionItemClickEvent, AccordionMenuItem, AccordionMenuToggleEvent, IAccordionContext } from './accordion.type';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './accordion.scss';
 
@@ -15,9 +15,9 @@ export default defineComponent({
 
     let clickActiveItem: AccordionMenuItem | undefined = undefined; // 记录用户点击的激活菜单项
 
-    const flatten = (arr: Array<any>, childrenKey = 'children', includeParent = false, includeLeaf = true) => {
+    const flatten = (arr: AccordionProps['data'], curChildrenKey = 'children', includeParent = false, includeLeaf = true) => {
       return arr.reduce((acc, cur) => {
-        const children = cur[childrenKey];
+        const children = cur[curChildrenKey];
         if (children === undefined) {
           if (includeLeaf) {
             acc.push(cur);
@@ -27,11 +27,21 @@ export default defineComponent({
             acc.push(cur);
           }
           if (Array.isArray(children)) {
-            acc.push(...flatten(children, childrenKey, includeParent));
+            acc.push(...flatten(children, curChildrenKey, includeParent));
           }
         }
         return acc;
-      }, []);
+      }, [] as AccordionProps['data']);
+    };
+
+    // 激活子菜单项并去掉其他子菜单的激活
+    const activeItemFn = (item: AccordionProps['data'][0]) => {
+      if (clickActiveItem && clickActiveItem[activeKey.value]) {
+        clickActiveItem[activeKey.value] = false;
+      }
+      item[activeKey.value] = true;
+      clickActiveItem = item;
+      emit('activeItemChange', clickActiveItem);
     };
 
     const initActiveItem = () => {
@@ -47,17 +57,8 @@ export default defineComponent({
       }
     };
 
-    // 激活子菜单项并去掉其他子菜单的激活
-    const activeItemFn = (item) => {
-      if (clickActiveItem && clickActiveItem[activeKey.value]) {
-        clickActiveItem[activeKey.value] = false;
-      }
-      item[activeKey.value] = true;
-      clickActiveItem = item;
-      emit('activeItemChange', clickActiveItem);
-    };
     // 打开或关闭一级菜单，如果有限制只能展开一项则关闭其他一级菜单
-    const openMenuFn = (item, open) => {
+    const openMenuFn = (item: AccordionMenuToggleEvent['item'], open: boolean) => {
       if (open && restrictOneOpen.value) {
         data.value.forEach((itemtemp) => {
           itemtemp[openKey.value] = false;
@@ -89,7 +90,7 @@ export default defineComponent({
       flatten(data.value, childrenKey.value, true, false).forEach((item) => (item[openKey.value] = undefined));
     };
 
-    provide('accordionContext', {
+    provide<IAccordionContext>('accordionContext', {
       itemClickFn,
       linkItemClickFn,
       menuToggleFn,
@@ -111,7 +112,7 @@ export default defineComponent({
     );
     watch(
       data.value,
-      (current, preV) => {
+      () => {
         initActiveItem();
       },
       {
@@ -122,7 +123,7 @@ export default defineComponent({
     return () => {
       return (
         <div class={[ns.e('menu'), ns.m('show-animate'), scrollbarNs.b(), accordionType.value === 'normal' && ns.m('menu-normal')]}>
-          <AccordionList {...(props as any)} data={data.value} deepth={0} parent={null}></AccordionList>
+          <AccordionList {...props} data={data.value} deepth={0} parent={undefined}></AccordionList>
         </div>
       );
     };

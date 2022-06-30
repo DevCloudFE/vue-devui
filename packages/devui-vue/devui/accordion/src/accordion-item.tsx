@@ -1,13 +1,17 @@
 import { defineComponent, toRefs, computed, inject } from 'vue';
+import type { HTMLAttributes } from 'vue';
 import { accordionProps } from './accordion-types';
-import { AccordionItemClickEvent, AccordionMenuItem } from './accordion.type';
+import type { AccordionItemClickEvent, AccordionMenuItem, IAccordionContext } from './accordion.type';
 import { getRootSlots } from '../src/utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 export default defineComponent({
   name: 'DAccordionItem',
   props: {
-    item: Object as () => AccordionMenuItem,
+    item: {
+      type: Object as () => AccordionMenuItem,
+      required: true,
+    },
     deepth: {
       type: Number,
       default: 0,
@@ -23,7 +27,7 @@ export default defineComponent({
     const ns = useNamespace('accordion');
 
     const rootSlots = getRootSlots();
-    const accordionCtx = inject('accordionContext') as any;
+    const accordionCtx = inject<IAccordionContext>('accordionContext');
 
     const parentValue = parent.value;
     const deepValue = deepth.value;
@@ -44,7 +48,7 @@ export default defineComponent({
 
     const itemClick = (itemEvent: AccordionItemClickEvent) => {
       if (item.value && !disabled.value) {
-        accordionCtx.itemClickFn(itemEvent);
+        accordionCtx?.itemClickFn(itemEvent);
       }
     };
 
@@ -58,7 +62,7 @@ export default defineComponent({
               childActived.value && ns.m('active'),
               disabled.value && ns.m('disabled'),
             ]}
-            title={title.value}
+            title={title.value as HTMLAttributes['title']}
             style={{ textIndent: deepValue * 20 + 'px' }}
             onClick={(e) =>
               itemClick({
@@ -68,8 +72,8 @@ export default defineComponent({
               })
             }>
             <div class={[ns.e('splitter'), deepValue === 0 && ns.e('parent-list')]} style={{ left: deepValue * 20 + 10 + 'px' }}></div>
-            {(!rootSlots.itemTemplate || itemTemplate.value === false) && <>{title.value}</>}
-            {rootSlots.itemTemplate &&
+            {(!rootSlots?.itemTemplate || itemTemplate.value === false) && <>{title.value}</>}
+            {rootSlots?.itemTemplate &&
               itemTemplate.value !== false &&
               rootSlots.itemTemplate?.({
                 parent: parentValue,
