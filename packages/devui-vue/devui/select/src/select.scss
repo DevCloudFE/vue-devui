@@ -18,6 +18,7 @@ $select-item-min-height: 36px;
 .#{$devui-prefix}-select {
   position: relative;
   width: 100%;
+  font-size: $devui-font-size;
 
   &__selection {
     &:hover {
@@ -34,6 +35,34 @@ $select-item-min-height: 36px;
         border-color: $devui-form-control-line-active;
       }
     }
+  }
+
+  .#{$devui-prefix}-tag {
+    margin: 4px 0 4px 4px;
+    .#{$devui-prefix}-tag__item.#{$devui-prefix}-tag--md {
+      height: 20px;
+      line-height: 18px;
+    }
+
+    .#{$devui-prefix}-tag__item.#{$devui-prefix}-tag--default {
+      background-color: $devui-label-bg;
+    }
+  }
+
+  &--sm {
+    font-size: $devui-font-size-sm;
+    .#{$devui-prefix}-tag {
+      margin: 2px 0 2px 4px;
+
+      .devui-tag__item.devui-tag--sm {
+        height: 18px;
+        line-height: 16px;
+      }
+    }
+  }
+
+  &--lg {
+    font-size: $devui-font-size-lg;
   }
 }
 
@@ -71,9 +100,13 @@ $select-item-min-height: 36px;
     color: $devui-disabled-text;
   }
 
-  .#{$devui-prefix}-select__arrow {
+  .#{$devui-prefix}-select__arrow,
+  .#{$devui-prefix}-select__clear {
     cursor: not-allowed;
-    color: $devui-disabled-text;
+
+    svg path {
+      fill: $devui-disabled-text;
+    }
   }
 }
 
@@ -190,8 +223,8 @@ $select-item-min-height: 36px;
 .#{$devui-prefix}-select__clear {
   display: none;
 
-  &:hover {
-    color: $devui-icon-fill-active;
+  svg path {
+    fill: $devui-text-weak;
   }
 }
 
@@ -202,6 +235,10 @@ $select-item-min-height: 36px;
 .#{$devui-prefix}-select__arrow {
   transform: rotate3d(0, 0, 1, 0deg);
   transition: transform $transition-base-time ease-out;
+
+  svg path {
+    fill: $devui-icon-text;
+  }
 }
 
 .#{$devui-prefix}-select__arrow--feedback {
@@ -260,6 +297,25 @@ $select-item-min-height: 36px;
     background-color: $devui-disabled-bg;
     color: $devui-disabled-text;
   }
+}
+
+.#{$devui-prefix}-select--sm .#{$devui-prefix}-select__item {
+  font-size: $devui-font-size-sm;
+
+  .#{$devui-prefix}-checkbox .#{$devui-prefix}-checkbox__material {
+    width: $devui-font-size-sm;
+    height: $devui-font-size-sm;
+
+    & > svg {
+      width: $devui-font-size-sm;
+      height: $devui-font-size-sm;
+    }
+  }
+}
+
+.#{$devui-prefix}-select--lg .#{$devui-prefix}-select__item {
+  font-size: $devui-font-size-lg;
+  padding: 11px 10px;
 }
 
 .#{$devui-prefix}-scrollbar {

@@ -52,6 +52,8 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     });
   });
 
+  const tagSize = computed(() => select?.selectSize || 'sm');
+
   const placeholder = computed<string>(() => (props.value.length > 0 ? '' : select?.placeholder || ''));
 
   const isMultiple = computed<boolean>(() => !!select?.multiple);
@@ -94,6 +96,7 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     isReadOnly,
     selectionCls,
     inputCls,
+    tagSize,
     placeholder,
     isMultiple,
     handleClear,

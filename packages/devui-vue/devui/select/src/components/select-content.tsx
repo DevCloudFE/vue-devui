@@ -1,5 +1,6 @@
 import { defineComponent, inject, computed } from 'vue';
-import { Icon } from '../../../icon';
+import AlertCloseIcon from '../../../alert/src/components/alert-close-icon';
+import SelectArrowIcon from './select-arrow-icon';
 import { Tag } from '../../../tag';
 import { Popover } from '../../../popover';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
@@ -31,6 +32,7 @@ export default defineComponent({
       isReadOnly,
       selectionCls,
       inputCls,
+      tagSize,
       placeholder,
       isMultiple,
       handleClear,
@@ -55,7 +57,8 @@ export default defineComponent({
                       e.stopPropagation();
                       tagDelete(item);
                     }}
-                    key={item.value}>
+                    key={item.value}
+                    size={tagSize.value}>
                     {item.name}
                   </Tag>
                 ))}
@@ -66,7 +69,8 @@ export default defineComponent({
                     e.preventDefault();
                     e.stopPropagation();
                     tagDelete(selectedData.value[0]);
-                  }}>
+                  }}
+                  size={tagSize.value}>
                   {selectedData.value[0].name}
                 </Tag>
               )}
@@ -86,7 +90,8 @@ export default defineComponent({
                               e.stopPropagation();
                               tagDelete(item);
                             }}
-                            key={item.value}>
+                            key={item.value}
+                            size={tagSize.value}>
                             {item.name}
                           </Tag>
                         ))}
@@ -124,10 +129,10 @@ export default defineComponent({
             />
           )}
           <span onClick={handleClear} class={clearCls.value}>
-            <Icon name="close" />
+            <AlertCloseIcon />
           </span>
           <span class={arrowCls.value}>
-            <Icon name="select-arrow" />
+            <SelectArrowIcon />
           </span>
         </div>
       );
