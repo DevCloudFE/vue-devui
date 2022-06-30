@@ -12,7 +12,7 @@ export default defineComponent({
   name: 'DCascader',
   components: { DInput },
   props: cascaderProps,
-  emits: ['update:modelValue', 'change'],
+  emits: ['update:modelValue', 'change', 'focus', 'blur'],
   setup(props: CascaderProps, ctx: SetupContext) {
     const ns = useNamespace('cascader');
     const {
@@ -38,6 +38,8 @@ export default defineComponent({
       suggestionsList,
       isSearching,
       chooseSuggestion,
+      onFocus,
+      onBlur,
     } = useCascader(props, ctx);
 
     return () => (
@@ -50,9 +52,10 @@ export default defineComponent({
               disabled={props.disabled}
               placeholder={props.placeholder}
               modelValue={inputValue.value}
-              readonly={!props.filterable}
               size={props.size}
-              onInput={handleInput}></DInput>
+              onInput={handleInput}
+              onFocus={onFocus}
+              onBlur={onBlur}></DInput>
           )}
           {!showClearable.value && (
             <div class={`${ns.e('icon')} ${ns.m('drop-icon-animation')}`}>
@@ -66,13 +69,7 @@ export default defineComponent({
           )}
         </div>
         <Transition name="fade">
-          <FlexibleOverlay
-            origin={origin.value}
-            backgroundStyle={'background: transparent'}
-            ref={overlay}
-            v-model={menuShow.value}
-            position={position.value}
-            align="start">
+          <FlexibleOverlay origin={origin.value} ref={overlay} v-model={menuShow.value} position={position.value} align="start">
             <div class={ns.e('drop-menu-animation')}>
               {!isSearching.value && (
                 <div class={`${menuOpenClass.value} ${ns.e('dropdown-menu')}`}>

@@ -273,4 +273,6 @@ export type UseCascaderFn = {
   suggestionsList: Ref<suggestionListType[]>;
   isSearching: Ref<boolean>;
   chooseSuggestion: (item: CascaderItem) => void;
+  onFocus: (e: FocusEvent) => void;
+  onBlur: (e: FocusEvent) => void;
 };
