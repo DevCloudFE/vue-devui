@@ -366,9 +366,11 @@ export default defineComponent({
 
 ### Cascader 事件
 
-| 事件   | 说明                   | 跳转 Demo         |
-| :----- | :--------------------- | :---------------- |
-| change | 绑定值变化时触发的事件 | [可搜索](#可搜索) |
+| 事件   | 说明                   | 回调参数                  |
+| :----- | :--------------------- | :------------------------ |
+| change | 绑定值变化时触发的事件 | `Function(value)`         |
+| blur   | 失去焦点时触发         | `Function(e: FocusEvent)` |
+| focus  | 获取焦点时触发         | `Function(e: FocusEvent)` |
 
 ### 接口 & 类型定义
 
