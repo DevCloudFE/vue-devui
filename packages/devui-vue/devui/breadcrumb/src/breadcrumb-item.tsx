@@ -10,9 +10,9 @@ export default defineComponent({
     const separatorIcon = inject('separatorIcon');
     const ns = useNamespace('breadcrumb');
     const linkClass = props.to ? 'is-link' : '';
-    const link = ref(null);
+    const link = ref<HTMLElement | null>(null);
     const instance = getCurrentInstance();
-    const router = instance.appContext.config.globalProperties.$router;
+    const router = instance?.appContext.config.globalProperties.$router;
     const handleClickLink = () => {
       if (!props.to || !router) {
         return;
@@ -20,11 +20,11 @@ export default defineComponent({
       props.replace ? router.replace(props.to) : router.push(props.to);
     };
     onMounted(() => {
-      link.value.addEventListener('click', handleClickLink);
+      link.value?.addEventListener('click', handleClickLink);
     });
 
     onBeforeUnmount(() => {
-      link.value.removeEventListener('click', handleClickLink);
+      link.value?.removeEventListener('click', handleClickLink);
     });
 
     return () => {
@@ -34,7 +34,7 @@ export default defineComponent({
       return (
         <div class={ns.e('item')}>
           <span ref={link} class={linkClass}>
-            {slots?.default()}
+            {slots?.default?.()}
           </span>
           {renderBreadcrumbSperator()}
         </div>
