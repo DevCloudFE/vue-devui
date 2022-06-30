@@ -3,7 +3,7 @@ type AccordionMenuItemLinkType = 'routerLink' | 'hrefLink' | string;
 export interface AccordionBase {
   title: string;
   disabled?: boolean;
-  [prop: string]: any;
+  [prop: string]: unknown;
 }
 interface IAccordionActiveable {
   active?: boolean;
@@ -44,15 +44,15 @@ export type AccordionMenuType = Array<AccordionMenuItem>;
 
 /* 基础事件类型 */
 export interface AccordionMenuToggleEvent {
-  item: any;
+  item: AccordionMenuItem;
   open: boolean;
-  parent: any;
+  parent: AccordionMenuItem;
   event: MouseEvent;
 }
 export interface AccordionItemClickEvent {
-  item: any;
-  prevActiveItem?: any;
-  parent: any;
+  item: AccordionLinkableItem;
+  prevActiveItem?: AccordionMenuItem;
+  parent: AccordionLinkableItem;
   event: MouseEvent;
 }
 
@@ -62,7 +62,7 @@ export interface AccordionSubMenuItem {
   title: string;
   active?: boolean;
   disabled?: boolean;
-  [prop: string]: any;
+  [prop: string]: unknown;
 }
 /** @deprecated  use `AccordionLinkableItem` instead*/
 export interface AccordionSubMenuItemHrefLink {
@@ -71,7 +71,7 @@ export interface AccordionSubMenuItemHrefLink {
   target?: string;
   active?: boolean;
   disabled?: boolean;
-  [prop: string]: any;
+  [prop: string]: unknown;
 }
 /** @deprecated  use `AccordionLinkableItem` instead*/
 export interface AccordionSubMenuItemRouterLink {
@@ -80,7 +80,7 @@ export interface AccordionSubMenuItemRouterLink {
   target?: string;
   active?: boolean;
   disabled?: boolean;
-  [prop: string]: any;
+  [prop: string]: unknown;
 }
 /** @deprecated  use `AccordionLinkableItem` instead*/
 export interface AccordionSubMenuItemDynamicLink {
@@ -90,5 +90,11 @@ export interface AccordionSubMenuItemDynamicLink {
   target?: string;
   active?: boolean;
   disabled?: boolean;
-  [prop: string]: any;
+  [prop: string]: unknown;
+}
+
+export interface IAccordionContext {
+  itemClickFn: (itemEvent: AccordionItemClickEvent) => void;
+  linkItemClickFn: (itemEvent: AccordionItemClickEvent) => void;
+  menuToggleFn: (menuEvent: AccordionMenuToggleEvent) => void;
 }

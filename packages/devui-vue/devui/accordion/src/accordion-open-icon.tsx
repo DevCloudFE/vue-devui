@@ -1,12 +1,14 @@
-const OpenIcon = () => {
+const OpenIcon = (): JSX.Element => {
+  const svgProps = {
+    width: '1em',
+    height: '1em',
+    viewBox: '0 0 16 16',
+    version: '1.1',
+    xmlns: 'http://www.w3.org/2000/svg',
+    'xmlns:xlink': 'http://www.w3.org/1999/xlink',
+  };
   return (
-    <svg
-      width="1em"
-      height="1em"
-      viewBox="0 0 16 16"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink">
+    <svg {...svgProps} >
       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path
           d="M12.1464466,6.85355339 L8.35355339,10.6464466 C8.15829124,10.8417088 \
