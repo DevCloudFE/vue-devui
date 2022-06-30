@@ -178,8 +178,6 @@ describe('date-picker-pro year type test', () => {
     expect(inputs[1].element.value).toBe(end.toString());
     expect(yearItems[startYearIndex].classes().includes(noDotYearStartYearClass)).toBe(true);
     expect(yearItems[endYearIndex].classes().includes(noDotYearEndYearClass)).toBe(true);
-    expect(inputs[0].element.value).toBe(start.toString());
-    expect(inputs[1].element.value).toBe(end.toString());
 
     wrapper.unmount();
   });
