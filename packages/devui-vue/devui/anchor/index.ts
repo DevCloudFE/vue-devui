@@ -5,13 +5,6 @@ import dAnchorLink from './src/d-anchor-link';
 import dAnchor from './src/d-anchor';
 import './src/anchor.scss';
 
-Anchor.install = function(Vue: App) {
-  Vue.directive(dAnchor.name, dAnchor);
-  Vue.directive(dAnchorLink.name, dAnchorLink);
-  Vue.directive(dAnchorBox.name, dAnchorBox);
-  Vue.component(Anchor.name, Anchor);
-};
-
 export { Anchor };
 
 export default {
@@ -19,6 +12,9 @@ export default {
   category: '导航',
   status: '50%',
   install(app: App): void {
-    app.use(Anchor as any);
+    app.directive(dAnchor.name, dAnchor);
+    app.directive(dAnchorLink.name, dAnchorLink);
+    app.directive(dAnchorBox.name, dAnchorBox);
+    app.component(Anchor.name, Anchor);
   }
 };

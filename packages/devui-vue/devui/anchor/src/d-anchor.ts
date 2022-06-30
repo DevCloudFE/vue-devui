@@ -4,7 +4,7 @@ interface Bind {
 }
 
 export default  {
-  name: 'd-anchor',
+  name: 'DAnchor',
   // 挂载事件到dom
   // 1.点击对应link高亮
   // 2.href+#+bing.value
@@ -18,9 +18,8 @@ export default  {
     el.className = 'section-block';
     // anchor-active-by-scroll
     el.setAttribute('name',binding.value);
-    el.onclick = e => {
+    el.onclick = () => {
       hightLightFn(binding.value);
-
     };
   }
 };

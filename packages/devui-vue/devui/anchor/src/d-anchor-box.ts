@@ -1,8 +1,27 @@
-import { setActiveLink, onScroll,  } from './utils';
+import { setActiveLink, onScroll } from './utils';
 import { inBrowser, randomId } from '../../shared/utils';
 
+const cssChange = (
+  mysidebar: HTMLElement,
+  postion: string,
+  top: number,
+  left: number
+) => {
+  mysidebar.style.position = postion;
+  mysidebar.style.top = top + 'px';
+  mysidebar.style.left = left + 'px';
+};
+
+const addEvent = (function () {
+  if (inBrowser && 'addEventListener' in window) {
+    return function (elm: Element, type: string, handle: EventListenerOrEventListenerObject) {
+      elm.addEventListener(type, handle, false);
+    };
+  }
+})();
+
 export default {
-  name: 'd-anchor-box',
+  name: 'DAnchorBox',
   // 滚动区域
   // 1.监听window滚动或滚动容器滚动，切换link+active,改变#
   mounted(el: HTMLElement): void {
@@ -57,7 +76,7 @@ export default {
       }
     };
 
-    addEvent(div, 'scroll', function () {
+    addEvent?.(div, 'scroll', function () {
       if (document.getElementsByClassName('scrollTarget').length) {
         cssChange(
           mysidebar,
@@ -71,25 +90,8 @@ export default {
     //  监听window滚动或滚动容器滚动，切换link+active,改变#
     setActiveLink(timeId);
     document.getElementsByClassName('scrollTarget').length
-      ? addEvent(div, 'scroll', onScroll)
+      ? addEvent?.(div, 'scroll', onScroll)
       : window.addEventListener('scroll', onScroll);
   },
 };
 
-const cssChange = (
-  mysidebar: HTMLElement,
-  postion: string,
-  top: number,
-  left: number
-) => {
-  mysidebar.style.position = postion;
-  mysidebar.style.top = top + 'px';
-  mysidebar.style.left = left + 'px';
-};
-const addEvent = (function () {
-  if (inBrowser && window.addEventListener) {
-    return function (elm, type, handle) {
-      elm.addEventListener(type, handle, false);
-    };
-  }
-})();
