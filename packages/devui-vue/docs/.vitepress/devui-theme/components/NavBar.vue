@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, getCurrentInstance } from 'vue'
 import {
   ThemeServiceInit,
   infinityTheme, provenceTheme, sweetTheme, deepTheme, galaxyTheme
@@ -10,6 +10,9 @@ import ToggleSideBarButton from './ToggleSideBarButton.vue'
 import ZhLang from './icons/ZhLang.vue'
 import EnLang from './icons/EnLang.vue'
 import ThemePicker from './ThemePicker.vue'
+import { Locale } from '@devui/locale'
+import enUS from '@devui/locale/lang/en-us'
+import zhCN from '@devui/locale/lang/zh-cn'
 
 // 主题切换
 const THEME_MAP = {
@@ -47,6 +50,24 @@ function useTranslation(target) {
 }
 
 defineEmits(['toggle'])
+
+const LANG_MAP = {
+  'zh-CN': '中文',
+  'en-US': 'English',
+}
+
+const currentLang = ref('zh-CN');
+const app = getCurrentInstance();
+const switchLang = () => {
+  if (currentLang.value === 'zh-CN') {
+    Locale.use('en-US', enUS);
+    currentLang.value = 'en-US';
+  } else {
+    Locale.use('zh-CN', zhCN);
+    currentLang.value = 'zh-CN';
+  }
+  app.appContext.config.globalProperties.langMessages.value = Locale.messages();
+};
 </script>
 
 <template>
@@ -72,6 +93,12 @@ defineEmits(['toggle'])
           >
             <ZhLang v-if="defaultLanguage === 'zh-CN'"></ZhLang>
             <EnLang v-else></EnLang>
+          </div>
+          <div
+            class="custom-nav-item ml-m"
+            @click="switchLang"
+          >
+            {{ LANG_MAP[currentLang] }}
           </div>
           <div class="custom-nav-item flex items-center ml-m">
             <ThemePicker v-model="currentTheme"></ThemePicker>
