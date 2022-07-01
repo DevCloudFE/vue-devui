@@ -1,10 +1,11 @@
-import { defineComponent } from 'vue';
+import { defineComponent, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
 import { transferPanelProps, TTransferPanelProps, transferPanelState } from '../composables/use-transfer-panel';
 import transferHeader from './transfer-header';
 import transferBody from './transfer-body';
 import { TKey } from '../transfer-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { createI18nTranslate } from '../../../locale/create';
 
 export default defineComponent({
   name: 'DTransferPanel',
@@ -15,6 +16,9 @@ export default defineComponent({
   props: transferPanelProps,
   emits: ['updateAllChecked', 'changeButtonState', 'changeChecked'],
   setup(props: TTransferPanelProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DTransfer', app);
+
     const ns = useNamespace('transfer');
     const {
       allChecked,
@@ -34,7 +38,7 @@ export default defineComponent({
           <transferHeader
             title={props.title}
             checkedNum={checkedNum.value}
-            unit={props.unit}
+            unit={props.unit || t('panelUnit')}
             checked={allChecked.value}
             halfchecked={allHalfchecked.value}
             total={allNum.value}

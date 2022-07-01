@@ -27,7 +27,9 @@ export default function () {
       setNodeValue(parentNode, 'expanded', true);
       setNodeValue(parentNode, 'isLeaf', false);
 
-      setNodeValue(lastChild, 'parentChildNode', children.length + 1);
+      if (lastChild) {
+        setNodeValue(lastChild, 'parentChildNode', children.length + 1);
+      }
 
       const currentNode = ref({
         ...node,

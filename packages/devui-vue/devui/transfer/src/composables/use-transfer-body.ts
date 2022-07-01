@@ -25,7 +25,7 @@ export const transferBodyProps = {
   },
   placeholder: {
     type: String,
-    default: '请输入关键词搜索',
+    default: '',
   },
   isKeyupSearch: {
     type: Boolean,
@@ -104,7 +104,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
     if (!dragRef.value) {
       return -1;
     }
-    const { top, bottom, height } = (event.target as HTMLElement).getBoundingClientRect(); // dragRef.value.getBoundingClientRect();
+    const { top, bottom, height } = (event.target as HTMLElement).getBoundingClientRect();
     const des = Math.max(height * 0.25, 2);
 
     if (clientY <= top + des) {

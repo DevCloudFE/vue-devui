@@ -7,6 +7,7 @@ import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useSelectContent from '../composables/use-select-content';
 import { selectContentProps, SelectContentProps, OptionObjectItem } from '../select-types';
 import { FORM_ITEM_TOKEN } from '../../../form';
+
 export default defineComponent({
   name: 'SelectContent',
   props: selectContentProps,

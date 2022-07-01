@@ -39,7 +39,8 @@ export const inputProps = {
     default: false,
   },
   placeholder: {
-    type: [String, Number] as PropType<string | number>,
+    type: String,
+    default: '',
   },
 } as const;
 

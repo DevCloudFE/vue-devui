@@ -82,6 +82,10 @@ export default function() {
     };
 
     const getIndex = (node: IInnerTreeNode): number => {
+      if (!node) {
+        return -1;
+      }
+
       return data.value.findIndex((item) => item.id === node.id);
     };
 
@@ -91,7 +95,9 @@ export default function() {
 
     const setNodeValue = (node: IInnerTreeNode, key: keyof IInnerTreeNode, value: valueof<IInnerTreeNode>): void => {
       nodeMap.clear();
-      data.value[getIndex(node)][key] = value;
+      if (getIndex(node) !== -1) {
+        data.value[getIndex(node)][key] = value;
+      }
     };
 
     const setTree = (newTree: ITreeNode[]): void => {

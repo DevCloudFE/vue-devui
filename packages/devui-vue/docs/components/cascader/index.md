@@ -355,7 +355,6 @@ export default defineComponent({
 |    options    | [`CascaderItem[]`](#CascaderItem) |   []    | 必选，级联器的菜单信息                                                                               | [基本用法](#基本用法) |
 |  placeholder  |             `string`              |   ''    | 可选，没有选择时的输入框展示信息                                                                     | [基本用法](#基本用法) |
 |   disabled    |             `boolean`             |  false  | 可选，级联器是否禁用                                                                                 | [基本用法](#基本用法) |
-|   multiple    |             `boolean`             |  false  | 可选，级联器是否开启多选模式，开启后为 checkbox 选择                                                 | [基本用法](#多选模式) |
 |     width     |        `number \| string`         |   200   | 可选，单位 px，用于控制组件输入框宽度和下拉的宽度                                                    | [基本用法](#多选模式) |
 | dropdownWidth |        `number \| string`         |   200   | 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等                                       | [基本用法](#多选模式) |
 |   clearable   |             `boolean`             |  true   | 可选，是否支持清空选项                                                                               | [基本用法](#基本用法) |

@@ -12,7 +12,8 @@ export default function useSelect(
   ctx: SetupContext,
   focus: () => void,
   blur: () => void,
-  isSelectFocus: Ref<boolean>
+  isSelectFocus: Ref<boolean>,
+  t: (path: string) => any
 ): UseSelectReturnType {
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
@@ -287,13 +288,13 @@ export default function useSelect(
       return label.toString().toLocaleLowerCase().includes(filterQuery.value.toLocaleLowerCase());
     }).length;
     if (isLoading.value) {
-      return props.loadingText;
+      return props.loadingText || t('loadingText');
     }
     if (isSupportFilter.value && filterQuery.value && injectOptionsArray.value.length > 0 && visibleOptionsCount === 0) {
-      return props.noMatchText;
+      return props.noMatchText || t('noMatchText');
     }
     if (injectOptionsArray.value.length === 0) {
-      return props.noDataText;
+      return props.noDataText || t('noDataText');
     }
     return '';
   });
