@@ -1,14 +1,18 @@
-import { computed, ref, defineComponent, Teleport, onMounted } from 'vue';
+import { computed, ref, defineComponent, Teleport, onMounted, getCurrentInstance } from 'vue';
 import { stepsGuideProps, StepsGuideProps, Step } from './steps-guide-types';
 import { useStepsGuidePosition, useStepsGuideCtrl } from '../composables';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './steps-guide.scss';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DStepsGuide',
   props: stepsGuideProps,
   emits: ['guide-close', 'update:stepIndex'],
   setup(props: StepsGuideProps, ctx) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DStepsGuide', app);
+
     const ns = useNamespace('steps-guide');
     const stepIndexData = ref<number>((props.stepIndex ?? 0) as number);
     const stepIndex = computed<number>({
@@ -60,17 +64,17 @@ export default defineComponent({
                 <div class={ns.e('btn')}>
                   {stepIndex.value > 0 ? (
                     <div class={ns.e('prev-step')} onClick={() => setCurrentIndex(stepIndex.value - 1)}>
-                      {'上一步'}
+                      {t('previous')}
                     </div>
                   ) : null}
                   {stepIndex.value === stepsCount.value - 1 ? (
-                    <div onClick={closeGuide}>{'我知道啦'}</div>
+                    <div onClick={closeGuide}>{t('ok')}</div>
                   ) : (
                     <div
                       onClick={() => {
                         setCurrentIndex(stepIndex.value + 1);
                       }}>
-                      {'我知道啦,继续'}
+                      {t('continue')}
                     </div>
                   )}
                 </div>

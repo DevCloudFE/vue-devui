@@ -75,7 +75,7 @@ export const uploadProps = {
   },
   placeholder: {
     type: String,
-    default: '选择文件',
+    default: '',
   },
   modelValue: {
     type: Array as PropType<File[]>,

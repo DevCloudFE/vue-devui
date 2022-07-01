@@ -1,4 +1,4 @@
-import { defineComponent, h } from 'vue';
+import { defineComponent, getCurrentInstance, h } from 'vue';
 import type { SetupContext } from 'vue';
 import DCheckbox from '../../../checkbox/src/checkbox';
 import DCheckboxGroup from '../../../checkbox/src/checkbox-group';
@@ -8,6 +8,7 @@ import { TKey } from '../transfer-types';
 import { transferBodyProps, TTransferBodyProps, transferBodyState } from '../composables/use-transfer-body';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import '../transfer.scss';
+import { createI18nTranslate } from '../../../locale/create';
 
 export default defineComponent({
   name: 'DTransferBody',
@@ -20,6 +21,9 @@ export default defineComponent({
   props: transferBodyProps,
   emits: ['change', 'update:modelValue', 'updateQueryString', 'updateDataPosition'],
   setup(props: TTransferBodyProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DTransferBody', app);
+
     const ns = useNamespace('transfer');
     const {
       bodyHeight,
@@ -43,7 +47,7 @@ export default defineComponent({
         <div class={ns.em('panel', 'body-search')}>
           <DSearch
             modelValue={query.value}
-            placeholder={props.placeholder}
+            placeholder={props.placeholder || t('placeholder')}
             is-keyup-search={props.isKeyupSearch}
             size="sm"
             onSearch={(value: TKey) => {
@@ -71,7 +75,7 @@ export default defineComponent({
     };
     const renderList = () => {
       if (!props.data.length) {
-        return <div class={ns.em('panel', 'body-list-empty')}>暂无数据</div>;
+        return <div class={ns.em('panel', 'body-list-empty')}>{t('noData')}</div>;
       }
       return (
         <DCheckboxGroup
@@ -86,7 +90,7 @@ export default defineComponent({
     };
     const renderDragList = () => {
       if (!props.data.length) {
-        return <div class={ns.em('panel', 'body-list-empty')}>暂无数据</div>;
+        return <div class={ns.em('panel', 'body-list-empty')}>{t('noData')}</div>;
       }
       return props.data.map((item, idx) => {
         const isEqual = dragOverNodeKey.value === item.value;

@@ -6,7 +6,7 @@ import type { Dayjs } from 'dayjs';
 import { formatDayjsToStr, isDateEquals, parserDate } from './utils';
 import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
 
-export default function usePickerPro(props: DatePickerProProps, ctx: SetupContext): UseDatePickerProReturnType {
+export default function usePickerPro(props: DatePickerProProps, ctx: SetupContext, t: (path: string) => any): UseDatePickerProReturnType {
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
 
@@ -15,7 +15,7 @@ export default function usePickerPro(props: DatePickerProProps, ctx: SetupContex
   const inputRef = shallowRef<HTMLElement>();
   const overlayRef = shallowRef<HTMLElement>();
   const isPanelShow = ref(false);
-  const placeholder = computed(() => props.placeholder);
+  const placeholder = computed(() => props.placeholder || t('placeholder'));
   const isMouseEnter = ref(false);
 
   const pickerDisabled = computed(() => formContext?.disabled || props.disabled);

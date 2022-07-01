@@ -1,4 +1,5 @@
-import { defineComponent, ref, computed, nextTick, watch, SetupContext } from 'vue';
+import { defineComponent, ref, computed, nextTick, watch, SetupContext, getCurrentInstance } from 'vue';
+import { createI18nTranslate } from '../../locale/create';
 import removeBtnSvg from './icon-remove';
 import { Suggestion, TagInputProps, tagInputProps } from './tag-input-types';
 import './tag-input.scss';
@@ -16,6 +17,9 @@ export default defineComponent({
   props: tagInputProps,
   emits: ['update:tags', 'update:suggestionList', 'valueChange'],
   setup(props: TagInputProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DTagInput', app);
+
     const add = (arr: Suggestion[], target: Suggestion) => {
       const res = Object.assign({}, target);
       delete res.__index;
@@ -36,15 +40,15 @@ export default defineComponent({
       let suggestions = props.suggestionList.map((item, index: number) => {
         return {
           __index: index,
-          ...item
+          ...item,
         };
       });
       if (tagInputVal.value === '') {
         return suggestions;
       }
-      return suggestions = props.caseSensitivity
-        ? suggestions.filter(item => item[props.displayProperty].indexOf(tagInputVal.value) !== -1)
-        : suggestions.filter(item => item[props.displayProperty].toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1);
+      return (suggestions = props.caseSensitivity
+        ? suggestions.filter((item) => item[props.displayProperty].indexOf(tagInputVal.value) !== -1)
+        : suggestions.filter((item) => item[props.displayProperty].toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1));
     });
 
     const selectIndex = ref(0);
@@ -53,10 +57,10 @@ export default defineComponent({
     });
     const onSelectIndexChange = (isUp = false) => {
       if (isUp) {
-        selectIndex.value < mergedSuggestions.value.length - 1 ? selectIndex.value++ : selectIndex.value = 0;
+        selectIndex.value < mergedSuggestions.value.length - 1 ? selectIndex.value++ : (selectIndex.value = 0);
         return;
       }
-      selectIndex.value > 0 ? selectIndex.value-- : selectIndex.value = mergedSuggestions.value.length - 1;
+      selectIndex.value > 0 ? selectIndex.value-- : (selectIndex.value = mergedSuggestions.value.length - 1);
     };
 
     const tagInputRef = ref<HTMLInputElement | null>(null);
@@ -69,13 +73,17 @@ export default defineComponent({
     };
     const handleEnter = () => {
       let res = { [props.displayProperty]: tagInputVal.value };
-      if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) {return false;}
+      if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) {
+        return false;
+      }
       if (props.tags.findIndex((item) => item[props.displayProperty] === tagInputVal.value) > -1) {
         tagInputVal.value = '';
         return false;
       }
-      if (mergedSuggestions.value.length === 0 &&
-        (tagInputVal.value.length < props.minLength || tagInputVal.value.length > props.maxLength)) {
+      if (
+        mergedSuggestions.value.length === 0 &&
+        (tagInputVal.value.length < props.minLength || tagInputVal.value.length > props.maxLength)
+      ) {
         tagInputVal.value = '';
         return false;
       }
@@ -95,7 +103,9 @@ export default defineComponent({
       case KEYS_MAP.tab:
       case KEYS_MAP.enter:
       case KEYS_MAP.space:
-        if (!props.isAddBySpace && KEYS_MAP.space) {return;}
+        if (!props.isAddBySpace && KEYS_MAP.space) {
+          return;
+        }
         handleEnter();
         break;
       case KEYS_MAP.down:
@@ -147,7 +157,8 @@ export default defineComponent({
       isShowSuggestion,
       mergedSuggestions,
       selectIndex,
-      isTagsLimit
+      isTagsLimit,
+      t,
     };
   },
   render() {
@@ -172,7 +183,8 @@ export default defineComponent({
       noData,
       mergedSuggestions,
       selectIndex,
-      maxTags
+      maxTags,
+      t,
     } = this;
 
     const inputBoxCls = {
@@ -185,35 +197,28 @@ export default defineComponent({
     const tagInputCls = {
       input: true,
       'devui-input': true,
-      'invalid-tag': false
+      'invalid-tag': false,
     };
-    const tagInputStyle = [
-      `display:${disabled ? 'none' : 'block'};`
-    ];
+    const tagInputStyle = [`display:${disabled ? 'none' : 'block'};`];
 
-    const noDataTpl = <li class="devui-suggestion-item devui-disabled">
-      {noData}
-    </li>;
+    const noDataTpl = <li class="devui-suggestion-item devui-disabled">{noData}</li>;
 
     return (
       <div class="devui-tags-host" tabindex="-1">
         <div class={inputBoxCls} style={['box-shadow: none;']}>
           <ul class="devui-tag-list" title={disabled ? disabledText : ''}>
-            {
-              tags.map((tag, tagIdx) => {
-                return (
-                  <li class="devui-tag-item">
-                    <span>{tag[displayProperty]}</span>
-                    {
-                      !disabled &&
-                      <a class="remove-button" onMousedown={($event) => removeTag($event, tagIdx)}>
-                        {removeBtnSvg}
-                      </a>
-                    }
-                  </li>
-                );
-              })
-            }
+            {tags.map((tag, tagIdx) => {
+              return (
+                <li class="devui-tag-item">
+                  <span>{tag[displayProperty]}</span>
+                  {!disabled && (
+                    <a class="remove-button" onMousedown={($event) => removeTag($event, tagIdx)}>
+                      {removeBtnSvg}
+                    </a>
+                  )}
+                </li>
+              );
+            })}
           </ul>
           <input
             type="text"
@@ -225,35 +230,33 @@ export default defineComponent({
             onFocus={onInputFocus}
             onBlur={onInputBlur}
             onInput={($event: InputEvent) => onInput($event)}
-            placeholder={isTagsLimit ? `${maxTagsText} ${maxTags}` : placeholder}
+            placeholder={isTagsLimit ? `${maxTagsText || t('maxTagsText')} ${maxTags}` : placeholder}
             spellcheck={spellcheck}
             disabled={isTagsLimit}
           />
         </div>
-        {
-          !isShowSuggestion ? '' : (
-            <div class="devui-tags-autocomplete devui-dropdown-menu">
-              <ul class="devui-suggestion-list">
-                {
-                  mergedSuggestions.length === 0 ?
-                    noDataTpl :
-                    mergedSuggestions.map((item: Suggestion, index: number) => {
-                      return (
-                        <li
-                          class={{ 'devui-suggestion-item': true, selected: index === selectIndex }}
-                          onMousedown={($event) => {
-                            onSuggestionItemClick($event, index);
-                          }}>
-                          {item[displayProperty]}
-                        </li>
-                      );
-                    })
-                }
-              </ul>
-            </div>
-          )
-        }
+        {!isShowSuggestion ? (
+          ''
+        ) : (
+          <div class="devui-tags-autocomplete devui-dropdown-menu">
+            <ul class="devui-suggestion-list">
+              {mergedSuggestions.length === 0
+                ? noDataTpl
+                : mergedSuggestions.map((item: Suggestion, index: number) => {
+                  return (
+                    <li
+                      class={{ 'devui-suggestion-item': true, selected: index === selectIndex }}
+                      onMousedown={($event) => {
+                        onSuggestionItemClick($event, index);
+                      }}>
+                      {item[displayProperty]}
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+        )}
       </div>
     );
-  }
+  },
 });

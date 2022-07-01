@@ -1,4 +1,4 @@
-import { defineComponent, ref, watch, reactive, computed, withDirectives, onMounted, inject } from 'vue';
+import { defineComponent, ref, watch, reactive, computed, withDirectives, onMounted, inject, getCurrentInstance } from 'vue';
 
 import DToolTip from '../../../tooltip/src/tooltip';
 import { setStyle } from '../../../shared/utils/set-style';
@@ -8,6 +8,7 @@ import type { SplitterStore, DragState, SplitterPane } from '../splitter-store';
 import { splitterBarProps, SplitterBarProps } from './splitter-bar-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import './splitter-bar.scss';
+import { createI18nTranslate } from '../../../locale/create';
 
 export default defineComponent({
   name: 'DSplitterBar',
@@ -16,6 +17,9 @@ export default defineComponent({
   },
   props: splitterBarProps,
   setup(props: SplitterBarProps) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DSplitterBar', app);
+
     const ns = useNamespace('splitter');
     const store = inject<SplitterStore>('splitterStore');
     const state = reactive({
@@ -200,11 +204,11 @@ export default defineComponent({
 
     const renderCollapsedTip = () => {
       if (!props || props.index === undefined) {
-        return '收起';
+        return t('collapse');
       }
       const { pane, nearPane } = queryPanes(props.index, props.index + 1);
       const isCollapsed = pane?.component?.props?.collapsed || nearPane?.component?.props?.collapsed;
-      return isCollapsed ? '展开' : '收起';
+      return isCollapsed ? t('expand') : t('collapse');
     };
 
     return () => {

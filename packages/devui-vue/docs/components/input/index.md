@@ -15,7 +15,7 @@
   <div class="devui-input-demo">
     <h4>Default</h4>
 
-    <d-input v-model="valueBasic1" placeholder="请输入" autofocus></d-input>
+    <d-input v-model="valueBasic1" autofocus></d-input>
 
     <h4>Disabled</h4>
 

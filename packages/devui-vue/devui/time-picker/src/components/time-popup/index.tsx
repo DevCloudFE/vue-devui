@@ -1,4 +1,4 @@
-import { defineComponent, ref, watch, onMounted } from 'vue';
+import { defineComponent, ref, watch, onMounted, getCurrentInstance } from 'vue';
 import { initializeTimeData, setTimeAstrict } from '../../utils';
 import TimeList from '../popup-line/index';
 import { Button } from '../../../../button/index';
@@ -6,6 +6,7 @@ import { popupTimeObj } from '../../types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
 import './index.scss';
+import { createI18nTranslate } from '../../../../locale/create';
 export default defineComponent({
   name: 'DTimePopup',
   components: {
@@ -48,6 +49,9 @@ export default defineComponent({
   },
   emits: ['submitData', 'change'],
   setup(props, ctx) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DTimePopup', app);
+
     const ns = useNamespace('time-popup');
     const popupDome = ref<Node>();
     const timeListDom = ref();
@@ -104,7 +108,7 @@ export default defineComponent({
               <div class="popup-slots">{ctx.slots.default?.()}</div>
               <div onClick={subDataFun}>
                 <Button variant="solid" color="secondary" size="sm">
-                  确定
+                  {t('ok')}
                 </Button>
               </div>
             </div>

@@ -25,7 +25,7 @@ export const transferHeaderProps = {
   },
   unit: {
     type: String,
-    default: '项',
+    default: '',
   },
   onChange: {
     type: Function as PropType<(value: boolean) => void>,
