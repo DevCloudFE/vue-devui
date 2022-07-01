@@ -47,14 +47,14 @@ export const getLegalTime = (s: Set<string>, timeformat: Map<string, number>): M
   let storage = 0;
   for (const k of dateValue.keys()) {
     if (s.has(k)) {
-      dateValue.set(k, timeformat.get(k) + storage);
+      dateValue.set(k, (timeformat.get(k) || 0) + storage);
       storage = 0;
     } else {
-      storage += timeformat.get(k) * m.get(k);
+      storage += (timeformat.get(k) || 0) * (m.get(k) || 0);
     }
   }
-  if (!s.has('S') && timeformat.get('S') > 500) {
-    dateValue.set('s', dateValue.get('s') + 1);
+  if (!s.has('S') && (timeformat.get('S') || 0) > 500) {
+    dateValue.set('s', (dateValue.get('s') || 0) + 1);
   }
   return dateValue;
 };
@@ -102,9 +102,9 @@ export const numFormat = (n: number, len: number): number | string => {
   }
 };
 
-export const intervalTimer = (callback: (...args: any[]) => any, interval = 0) => {
+export const intervalTimer = (callback: () => void, interval = 0): () => void => {
   let counter = 1;
-  let timeoutId: any;
+  let timeoutId: NodeJS.Timeout;
   const startTime = Date.now();
 
   function main() {

@@ -2,6 +2,8 @@ import { mount } from '@vue/test-utils';
 import { Countdown } from '../index';
 import { nextTick } from 'vue';
 
+type IValueStyle = { color: string; 'font-size': string };
+
 describe('countdown test', () => {
   it('countdown default render', async () => {
     // todo
@@ -42,7 +44,7 @@ describe('countdown test', () => {
       }
     });
     await nextTick();
-    expect(Math.abs(time -Date.now() - wrapper.emitted('onChange')[0][0].leftTime) < 16).toEqual(true);
+    expect(Math.abs(time - Date.now() - (wrapper.emitted('onChange')?.[0] as {leftTime: number}[])?.[0].leftTime) < 16).toEqual(true);
   });
 
   it('countdown prefix and suffix', async () => {
@@ -63,7 +65,7 @@ describe('countdown test', () => {
 
   it('countdown valueStyle', async () => {
     const time = Date.now() + 5000;
-    const valueStyle = {'color': 'rgb(94, 124, 224)', 'font-size': '20px'};
+    const valueStyle: IValueStyle = {'color': 'rgb(94, 124, 224)', 'font-size': '20px'};
     const wrapper = await mount(Countdown, {
       props: {
         format: 'HHH:mm:ss SSS',
@@ -74,7 +76,7 @@ describe('countdown test', () => {
     const { style } = wrapper.find('.countdown-content').attributes();
     let styleStr = '';
     for (const k in valueStyle) {
-      styleStr += `${k}: ${valueStyle[k]}; `;
+      styleStr += `${k}: ${valueStyle[k as keyof IValueStyle]}; `;
     }
     expect(style).toEqual(styleStr.slice(0,-1));
   });

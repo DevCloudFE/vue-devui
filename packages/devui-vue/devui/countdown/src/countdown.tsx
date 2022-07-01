@@ -17,7 +17,7 @@ export default defineComponent({
       const fomatMap = new Set(['Y', 'M', 'D', 'H', 'm', 's', 'S']);
       const t = timeFormat.reduce((pre, cur) => {
         if (fomatMap.has(cur.k)) {
-          return pre + numFormat(legalTime.get(cur.k), cur.n);
+          return pre + numFormat(legalTime.get(cur.k) || 0, cur.n);
         }
         return pre + cur.k;
       }, '');
