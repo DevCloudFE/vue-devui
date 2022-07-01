@@ -14,10 +14,9 @@ export interface CascaderItem {
   _loading?: boolean;
   icon?: string;
   // 用户可以传入自定义属性，并在dropDownItemTemplate中使用
-  [prop: string]: any;
+  [prop: string]: unknown;
 }
-
-type CascaderModelValue = (number | string)[];
+export type CascaderModelValue = (string | number)[];
 export type InputSize = 'sm' | 'md' | 'lg';
 export type CascaderValueType = CascaderModelValue | [CascaderModelValue];
 export const cascaderProps = {
@@ -122,7 +121,7 @@ export const cascaderProps = {
     default: 300,
   },
   beforeFilter: {
-    type: Function as PropType<(value: string) => boolean | Promise<any>>,
+    type: Function as PropType<(value: string) => boolean | Promise<unknown>>,
     default: () => true,
   },
   size: {
@@ -244,11 +243,18 @@ export interface UpdateStatusCallback {
 }
 
 export interface suggestionListType {
-  values: (string | number)[];
+  values: CascaderModelValue;
   labels: string[];
   labelsString?: string;
   disabled?: boolean;
 }
+
+export type UseFilterFn = {
+  handleInput: (val: string) => void;
+  suggestionsList: Ref<suggestionListType[]>;
+  isSearching: Ref<boolean>;
+  chooseSuggestion: (item: suggestionListType) => void;
+};
 
 export type UseCascaderFn = {
   origin: Ref<HTMLElement | undefined>;
@@ -272,14 +278,7 @@ export type UseCascaderFn = {
   multiple: Ref<boolean>;
   suggestionsList: Ref<suggestionListType[]>;
   isSearching: Ref<boolean>;
-  chooseSuggestion: (item: CascaderItem) => void;
+  chooseSuggestion: (item: suggestionListType) => void;
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
-};
-
-export type UseFilterFn = {
-  handleInput: (val: string) => void;
-  suggestionsList: Ref<suggestionListType[]>;
-  isSearching: Ref<boolean>;
-  chooseSuggestion: (item: CascaderItem) => void;
 };

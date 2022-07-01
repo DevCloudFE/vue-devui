@@ -38,6 +38,9 @@ export const inputProps = {
     type: Boolean,
     default: false,
   },
+  placeholder: {
+    type: [String, Number] as PropType<string | number>,
+  },
 } as const;
 
 export type InputProps = ExtractPropTypes<typeof inputProps>;

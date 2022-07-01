@@ -4,7 +4,7 @@
 import DTag from '../cascader-tag/';
 import { MultiplePropsType } from '../../src/cascader-types';
 import './index.scss';
-export default (props: MultiplePropsType) => {
+export default (props: MultiplePropsType): JSX.Element => {
   return (
     <div class="devui-tags-input">
       <div class="devui-tags-box">
