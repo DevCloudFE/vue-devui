@@ -16,7 +16,7 @@ $devui-transfer-body-list-item-height: 32px;
       justify-content: space-between;
       height: $devui-transfer-header-height;
       line-height: $devui-transfer-header-height;
-      border-bottom: 1px solid $devui-line;
+      border-bottom: 1px solid $devui-dividing-line;
       padding: 0 16px;
 
       &-allChecked {
@@ -24,6 +24,8 @@ $devui-transfer-body-list-item-height: 32px;
       }
 
       &-num {
+        color: $devui-aide-text;
+
         &-unit {
           margin-left: 4px;
         }
@@ -40,7 +42,7 @@ $devui-transfer-body-list-item-height: 32px;
         justify-content: center;
         align-items: center;
         width: 100%;
-        padding: 7px 16px;
+        padding: 7px 16px 0 16px;
 
         .#{$devui-prefix}-search {
           width: 100%;
@@ -53,16 +55,12 @@ $devui-transfer-body-list-item-height: 32px;
 
       &-list {
         overflow: auto;
+        padding-top: 8px;
         width: 100%;
 
         &-group > div > div {
           padding: 0 16px;
           cursor: pointer;
-        }
-
-        &-group > div > div:hover,
-        &-item:hover {
-          background-color: $devui-line;
         }
 
         &-item {
@@ -72,6 +70,8 @@ $devui-transfer-body-list-item-height: 32px;
           border-bottom: 2px solid transparent;
           padding: 4px 0;
           cursor: pointer;
+          height: 36px;
+          line-height: 36px;
 
           .icon-drag-small {
             cursor: move;
@@ -132,14 +132,19 @@ $devui-transfer-body-list-item-height: 32px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    padding: 0 20px;
+    padding: 0 12px;
 
     &--group {
       display: flex;
       flex-direction: column;
 
+      .#{$devui-prefix}-button__icon.#{$devui-prefix}-button--circle.#{$devui-prefix}-button--lg {
+        width: 36px;
+        height: 36px;
+      }
+
       &-right {
-        margin-top: 12px;
+        margin-top: 20px;
       }
     }
   }
@@ -151,6 +156,11 @@ $devui-transfer-body-list-item-height: 32px;
   &-drag-over {
     background-color: $devui-brand-hover;
   }
+
+  .transfer-checkbox {
+    height: 36px;
+    line-height: 36px;
+  }
 }
 .#{$devui-prefix}-transfer–drag-over-top {
   border-top-color: $devui-brand-active;
@@ -160,11 +170,11 @@ $devui-transfer-body-list-item-height: 32px;
   border-bottom-color: $devui-brand-active;
 }
 
-.transfer-checkbox .devui-checkbox label {
+.transfer-checkbox .#{$devui-prefix}-checkbox label {
   display: flex;
   width: 100% !important;
 }
 
-.transfer-checkbox .devui-checkbox label .devui-checkbox__material {
+.transfer-checkbox .#{$devui-prefix}-checkbox label .#{$devui-prefix}-checkbox__material {
   flex-shrink: 0;
 }
