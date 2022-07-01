@@ -18,7 +18,7 @@ export const useRootClassName = (props: CascaderProps, menuShow: Ref<boolean>): 
 // 弹出层项 class
 export const useListClassName = (props: CascaderItemPropsType): ComputedRef => {
   const itemProps = props?.cascaderItemNeedProps;
-  const isActive = itemProps?.valueCache[props.ulIndex] === props.cascaderItem?.value;
+  const isActive = itemProps?.valueCache?.[props.ulIndex] === props.cascaderItem?.value;
   const isDisabled = props.cascaderItem?.disabled;
   return computed(() => ({
     [`${ns.e('li')} dropdown-item`]: true,

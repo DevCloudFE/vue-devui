@@ -11,7 +11,7 @@ interface PropsType {
   tagList: CascaderItem[];
 }
 
-export default (props: PropsType) => {
+export default (props: PropsType): JSX.Element => {
   const { tagList, tag } = props;
   const deleteCurrentTag = (e: Event) => {
     e.stopPropagation();
