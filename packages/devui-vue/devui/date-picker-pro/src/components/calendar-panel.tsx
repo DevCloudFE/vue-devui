@@ -1,15 +1,18 @@
-import { defineComponent } from 'vue';
+import { defineComponent, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useCalendarPanel from '../composables/use-calendar-panel';
-import { yearMonthsArr, weekDaysArr, getYearMonthStr } from '../const';
 import { YearAndMonthItem, datePickerProPanelProps, DatePickerProPanelProps } from '../date-picker-pro-types';
+import { createI18nTranslate } from '../../../locale/create';
 
 export default defineComponent({
   name: 'CalendarPanel',
   props: datePickerProPanelProps,
   emits: ['selectedDate', 'changeRangeFocusType'],
   setup(props: DatePickerProPanelProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DDatePickerPro', app);
+
     const ns = useNamespace('date-picker-pro');
     const {
       yearScrollRef,
@@ -54,7 +57,7 @@ export default defineComponent({
                     onClick={() => {
                       handlerClickMonth(item.year, item.month);
                     }}>
-                    {yearMonthsArr[item.month || 0]}
+                    {t(`month${item.month ? item.month + 1 : 1}`)}
                   </div>
                 )}
               </div>
@@ -64,7 +67,7 @@ export default defineComponent({
             <table class={ns.e('calendar-table')}>
               <thead>
                 <tr class={ns.e('table-week-header')}>
-                  {weekDaysArr.map((child) => (
+                  {t('getWeekDays')().map((child) => (
                     <td>{child}</td>
                   ))}
                 </tr>
@@ -75,7 +78,7 @@ export default defineComponent({
                     <div ref={monthScrollRef} class={ns.e('tbody-wrapper')} onScroll={handleScrollMonthList}>
                       {allMonthList.value.map((month: YearAndMonthItem, monthIndex: number) => (
                         <div class={ns.e('table-month')} key={monthIndex}>
-                          <div class={ns.e('table-month-title')}>{getYearMonthStr(month.year, (month.month || 0) + 1)}</div>
+                          <div class={ns.e('table-month-title')}>{t('getYearMonthStr')(month.year, (month.month || 0) + 1)}</div>
                           <table class={ns.e('table-month-content')}>
                             <tbody>
                               {month.displayWeeks &&

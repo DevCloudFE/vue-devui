@@ -1,4 +1,4 @@
-import type { ExtractPropTypes, PropType } from "vue";
+import type { ExtractPropTypes, PropType } from 'vue';
 
 export interface Suggestion {
   __index?: number;
@@ -8,60 +8,60 @@ export interface Suggestion {
 export const tagInputProps = {
   tags: {
     type: Array as PropType<Suggestion[]>,
-    default: (): [] => []
+    default: (): [] => [],
   },
   displayProperty: {
     type: String,
-    default: 'name'
+    default: 'name',
   },
   placeholder: {
     type: String,
-    default: ''
+    default: '',
   },
   minLength: {
     type: Number,
-    default: 3
+    default: 3,
   },
   maxLength: {
     type: Number,
-    default: Number.MAX_SAFE_INTEGER
+    default: Number.MAX_SAFE_INTEGER,
   },
   maxTags: {
     type: Number,
-    default: Number.MAX_SAFE_INTEGER
+    default: Number.MAX_SAFE_INTEGER,
   },
   maxTagsText: {
     type: String,
-    default: '已达到最大个数：'
+    default: '',
   },
   spellcheck: {
     type: Boolean,
-    default: true
+    default: true,
   },
   suggestionList: {
     type: Array as PropType<Suggestion[]>,
-    default: (): [] => []
+    default: (): [] => [],
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   isAddBySpace: {
     type: Boolean,
-    default: true
+    default: true,
   },
   disabledText: {
     type: String,
-    default: ''
+    default: '',
   },
   noData: {
     type: String,
-    default: ''
+    default: '',
   },
   caseSensitivity: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 } as const;
 
 export type TagInputProps = ExtractPropTypes<typeof tagInputProps>;

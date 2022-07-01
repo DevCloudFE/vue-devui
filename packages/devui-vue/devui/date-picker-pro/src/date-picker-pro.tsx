@@ -1,4 +1,4 @@
-import { defineComponent, Transition, ref, renderSlot, useSlots } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
 import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types';
 import usePickerPro from './use-picker-pro';
@@ -9,12 +9,16 @@ import { IconCalendar } from './components/icon-calendar';
 import { IconClose } from './components/icon-close';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './date-picker-pro.scss';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DDatePickerPro',
   props: datePickerProProps,
   emits: ['update:modelValue', 'toggleChange', 'confirmEvent', 'focus', 'blur'],
   setup(props: DatePickerProProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DDatePickerPro', app);
+
     const ns = useNamespace('date-picker-pro');
     const {
       containerRef,
@@ -34,7 +38,7 @@ export default defineComponent({
       onFocus,
       onSelectedDate,
       handlerClearTime,
-    } = usePickerPro(props, ctx);
+    } = usePickerPro(props, ctx, t);
     const position = ref(['bottom-start']);
     return () => {
       const vSlots = {
@@ -51,7 +55,7 @@ export default defineComponent({
             <Input
               ref={inputRef}
               modelValue={displayDateValue.value}
-              placeholder={placeholder.value}
+              placeholder={placeholder.value || t('placeholder')}
               onFocus={onFocus}
               size={pickerSize.value}
               disabled={pickerDisabled.value}
