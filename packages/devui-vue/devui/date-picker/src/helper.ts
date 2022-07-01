@@ -1,18 +1,6 @@
 import type { Ref } from 'vue';
 import { formatDate, formatRange } from './utils';
-
-export type TState = {
-  range?: boolean;
-  current?: Date;
-  next?: Date;
-  start?: Date;
-  end?: Date;
-  hover?: Date;
-  show?: boolean;
-  input?: string;
-  value?: string;
-  placeholder?: string;
-};
+import type { TState, DatePickerProps, DatePickerPopupProps } from './date-picker-types';
 
 /**
  * Calendar 面板年月切换逻辑
@@ -21,7 +9,7 @@ export type TState = {
  * @param pos
  * @param date
  */
-export const handleCalendarSwitchState = (state: TState, index: number, pos: number, date: Date) => {
+export const handleCalendarSwitchState = (state: TState, index: number, pos: number, date: Date): void => {
   switch (index) {
   case 0: // previous year
     const preYear = new Date(date);
@@ -52,7 +40,7 @@ export const handleCalendarSwitchState = (state: TState, index: number, pos: num
  * @param props
  * @returns
  */
-export const formatValue = (state: TState, props: any) => {
+export const formatValue = (state: TState, props: DatePickerProps): string => {
   const { format = 'y/MM/dd', range, rangeSpliter = '-' } = props || {};
   if (range) {
     if (!state.start) {
@@ -83,9 +71,9 @@ export const formatValue = (state: TState, props: any) => {
  * @param props
  * @returns
  */
-export const formatPlaceholder = (props: any) => {
+export const formatPlaceholder = (props: DatePickerProps): string => {
   if (!props) {return '';}
-  const format = props.format || `y/MM/dd`;
+  const format: string = props.format || `y/MM/dd`;
   const sp = props.rangeSpliter || '-';
   return props.range ? `${format} ${sp} ${format}` : format;
 };
@@ -95,7 +83,7 @@ export const formatPlaceholder = (props: any) => {
  * @param id
  * @param output
  */
-export const handleValue = (id: string | undefined, output: string) => {
+export const handleValue = (id: string | undefined, output: string): void => {
   if (id && typeof id === 'string') {
     const el = document.querySelector(id);
     if (el instanceof HTMLInputElement) {
@@ -108,8 +96,9 @@ export const handleValue = (id: string | undefined, output: string) => {
  * 获取绑定节点
  * @returns
  */
-export const getAttachInputDom = (props: any) => {
-  const { attach, attachInputDom = attach } = props || {};
+export const getAttachInputDom = (props: DatePickerPopupProps): Element | null => {
+  const { attach } = props;
+  const attachInputDom = attach;
   if (!attachInputDom || typeof attachInputDom !== 'string') {
     return null;
   }
@@ -133,7 +122,7 @@ export const handlePositionFactory = (state: {
   attachInputDom?: string;
   show?: boolean;
   st?: boolean;
-}, props: any, container: Ref<Element>) => () => {
+}, props: DatePickerPopupProps, container: Ref<Element | null>) => (): void => {
   if (!state.show) {
     state.x = `-100%`;
     state.y = `-100%`;
@@ -145,7 +134,7 @@ export const handlePositionFactory = (state: {
     return;
   }
   const { left, top, height } = el.getBoundingClientRect();
-  const { height: _height } = container.value.getBoundingClientRect();
+  const { height: _height } = (container.value as Element).getBoundingClientRect();
   const bottom = window.innerHeight - top - height;
   state.x = `${left}px`;
   if (bottom > top) {

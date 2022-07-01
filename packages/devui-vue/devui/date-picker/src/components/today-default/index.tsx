@@ -3,7 +3,7 @@ type TProps = {
   disabled?: boolean;
 };
 
-const TodayDefault = (props: TProps) => {
+const TodayDefault = (props: TProps): JSX.Element => {
   const { onSelected = () => 0, disabled = false } = props;
   return (
     <div class={`today-container ${disabled ? 'disabled' : ''}`}>

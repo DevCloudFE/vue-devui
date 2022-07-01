@@ -5,7 +5,7 @@ import Toolbar from '../toolbar';
 import TodayDefault from '../today-default';
 import './index.scss';
 
-const CalendarDatePanel = (props: TDatePanelProps) => {
+const CalendarDatePanel = (props: TDatePanelProps): JSX.Element => {
   const today = new Date();
   return (
     <div class="devui-calendar-panel">
@@ -41,8 +41,8 @@ const CalendarDatePanel = (props: TDatePanelProps) => {
       {props.type !== 'range' ? (
         <TodayDefault
           disabled={!betweenDate(today, props.dateMin, props.dateMax)}
-          onSelected={today => {
-            typeof props.onToday === 'function' && props.onToday(today, 0);
+          onSelected={(curToday) => {
+            typeof props.onToday === 'function' && props.onToday(curToday, 0);
           }}
         />
       ) : null}
