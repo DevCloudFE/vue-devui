@@ -125,7 +125,6 @@ const updateParentNodeStatus = (node: CascaderItem, options: CaascaderOptionsTyp
   }
   findChildrenCheckedStatusToUpdateParent(node);
   ulIndex -= 1;
-  // const parentNode = getParentNode(node.value, options, ulIndex)
   const parentNode = node?.parent;
   updateParentNodeStatus(parentNode as CascaderItem, options, ulIndex);
 };
@@ -189,29 +188,10 @@ export const updateCheckOptionStatus = (tagList: CascaderItem[]): UpdateStatusCa
     // 更新当前点击的node
     updateCurNodeStatus(node, ulIndex);
     ulIndex -= 1;
-    // const parentNode = getParentNode(node.value, options, ulIndex)
-    const parentNode = (node?.parent as CascaderItem);
+    const parentNode = node?.parent;
     updateParentNodeStatus(parentNode, options, ulIndex);
   };
   return {
     updateStatus,
   };
 };
-/**
- * 子节点获取父节点
- * 已在子节点创建父节点，此段代码不再使用
- */
-// const getParentNode = (childValue: string | number, options: CaascaderOptionsType, ulIndex: number): CascaderItem => {
-//   if (ulIndex < 0) return
-//   const queue = [...options[ulIndex]]
-//   let cur: CascaderItem
-//   while(queue.length) {
-//     cur = queue.shift()
-//     if (cur.children && cur.children.find(t => t.value === childValue)) {
-//       break
-//     } else if (cur.children) {
-//       queue.push(...cur.children)
-//     }
-//   }
-//   return cur
-// }
