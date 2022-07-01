@@ -31,7 +31,7 @@ export const useFilter = (
     }
   });
 
-  const isPromise = (obj: boolean | Promise<any>): boolean => {
+  const isPromise = (obj: boolean | Promise<unknown>): boolean => {
     return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
   };
 
@@ -83,14 +83,14 @@ export const useFilter = (
   const findParentValues = (item: CascaderItem, values: (string | number)[] = []) => {
     values.push(item.value);
     if (item.parent) {
-      findParentValues(item.parent, values);
+      findParentValues(item.parent as CascaderItem, values);
     }
     return values;
   };
   const findParentLabels = (item: CascaderItem, values: string[] = []) => {
     values.push(item.label);
     if (item.parent) {
-      findParentLabels(item.parent, values);
+      findParentLabels(item.parent as CascaderItem, values);
     }
     return values;
   };
@@ -122,7 +122,7 @@ export const useFilter = (
     searchText.value = val;
     const pass = props.beforeFilter(val);
     if (isPromise(pass)) {
-      pass.then(caclSuggestions).catch(() => {
+      (pass as Promise<unknown>).then(caclSuggestions).catch(() => {
         // catch错误
       });
     } else if (pass !== false) {
@@ -140,18 +140,18 @@ export const useFilter = (
     val ? handleFilter(val) : hideSuggestion();
   };
 
-  const chooseSuggestion = (item: CascaderItem) => {
+  const chooseSuggestion = (item: suggestionListType) => {
     if (props.showPath) {
-      inputValue.value = item.labelsString;
+      inputValue.value = item.labelsString as string;
     } else {
-      const labels = item.labelsString.split(' / ');
+      const labels = (item.labelsString as string).split(' / ');
       inputValue.value = labels[labels.length - 1];
     }
     ctx.emit('update:modelValue', item.values);
-    cascaderItemNeedProps.valueCache.splice(0);
-    cascaderItemNeedProps.valueCache.splice(0, 0, ...item.values);
-    initActiveIndexs(item.values, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs);
-    updateCascaderView(cascaderItemNeedProps.activeIndexs, cascaderOptions[0], 0);
+    cascaderItemNeedProps.valueCache?.splice(0);
+    cascaderItemNeedProps.valueCache?.splice(0, 0, ...item.values);
+    initActiveIndexs(item.values, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs as number[]);
+    updateCascaderView(cascaderItemNeedProps.activeIndexs as number[], cascaderOptions[0], 0);
     menuShow.value = false;
   };
   return {
