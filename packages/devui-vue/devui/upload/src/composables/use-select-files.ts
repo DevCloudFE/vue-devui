@@ -1,6 +1,5 @@
 import { ref } from 'vue';
 import type { IFileOptions, IUploadOptions } from '../upload-types';
-import { getNotAllowedFileTypeMsg, getBeyondMaximalFileSizeMsg, getAllFilesBeyondMaximalFileSizeMsg } from '../i18n-upload';
 
 export interface IReturnMessage {
   checkError: boolean;
@@ -14,7 +13,7 @@ export interface IUseSelectFiles {
   checkAllFilesSize: (fileSize: number, maximumSize: number) => IReturnMessage | void;
 }
 
-export const useSelectFiles = (): IUseSelectFiles => {
+export const useSelectFiles = (t: (path: string) => any): IUseSelectFiles => {
   const BEYOND_MAXIMAL_FILE_SIZE_MSG = ref('');
   const simulateClickEvent = (input: HTMLInputElement) => {
     const evt = document.createEvent('MouseEvents');
@@ -87,13 +86,13 @@ export const useSelectFiles = (): IUseSelectFiles => {
     if (!isAllowedFileType(accept, file)) {
       return {
         checkError: true,
-        errorMsg: getNotAllowedFileTypeMsg(file.name, accept),
+        errorMsg: t('getNotAllowedFileTypeMsg')(file.name, accept),
       };
     }
     if (uploadOptions && beyondMaximalSize(file.size, uploadOptions.maximumSize)) {
       return {
         checkError: true,
-        errorMsg: getBeyondMaximalFileSizeMsg(file.name, uploadOptions.maximumSize || 0),
+        errorMsg: t('getBeyondMaximalFileSizeMsg')(file.name, uploadOptions.maximumSize || 0),
       };
     }
     return { checkError: false, errorMsg: undefined };
@@ -108,7 +107,7 @@ export const useSelectFiles = (): IUseSelectFiles => {
   };
   const checkAllFilesSize = (fileSize: number, maximumSize: number) => {
     if (beyondMaximalSize(fileSize, maximumSize)) {
-      BEYOND_MAXIMAL_FILE_SIZE_MSG.value = getAllFilesBeyondMaximalFileSizeMsg(maximumSize);
+      BEYOND_MAXIMAL_FILE_SIZE_MSG.value = t('getAllFilesBeyondMaximalFileSizeMsg')(maximumSize);
       return { checkError: true, errorMsg: BEYOND_MAXIMAL_FILE_SIZE_MSG.value };
     }
   };

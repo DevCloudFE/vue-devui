@@ -1,4 +1,4 @@
-import { defineComponent, provide, reactive, ref, Transition, toRefs } from 'vue';
+import { defineComponent, provide, reactive, ref, Transition, toRefs, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
 import { selectProps, SelectProps, SelectContext } from './select-types';
@@ -9,12 +9,16 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 import SelectContent from './components/select-content';
 import useSelectFunction from './composables/use-select-function';
 import './select.scss';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DSelect',
   props: selectProps,
   emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur', 'remove-tag', 'clear'],
   setup(props: SelectProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DSelect', app);
+
     const selectRef = ref<HTMLElement>();
     const { isSelectFocus, focus, blur } = useSelectFunction(props, selectRef);
     const {
@@ -42,7 +46,7 @@ export default defineComponent({
       isDisabled,
       toggleChange,
       isShowCreateOption,
-    } = useSelect(props, ctx, focus, blur, isSelectFocus);
+    } = useSelect(props, ctx, focus, blur, isSelectFocus, t);
 
     const scrollbarNs = useNamespace('scrollbar');
     const ns = useNamespace('select');

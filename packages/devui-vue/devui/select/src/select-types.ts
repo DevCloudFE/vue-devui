@@ -36,7 +36,7 @@ export const selectProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择',
+    default: '',
   },
   multiple: {
     type: Boolean,
@@ -76,11 +76,11 @@ export const selectProps = {
   },
   noDataText: {
     type: String,
-    default: '无数据',
+    default: '',
   },
   noMatchText: {
     type: String,
-    default: '找不到相关记录',
+    default: '',
   },
   loading: {
     type: Boolean,
@@ -88,7 +88,7 @@ export const selectProps = {
   },
   loadingText: {
     type: String,
-    default: '加载中',
+    default: '',
   },
   onToggleChange: {
     type: Function as PropType<(bool: boolean) => void>,

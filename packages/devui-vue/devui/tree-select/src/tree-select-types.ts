@@ -30,11 +30,11 @@ export const treeSelectProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择',
+    default: '',
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   multiple: {
     type: Boolean,
@@ -50,11 +50,11 @@ export const treeSelectProps = {
   },
   allowClear: {
     type: Boolean,
-    default: false
+    default: false,
   },
   enableLabelization: {
     type: Boolean,
-    default: false
+    default: false,
   },
   onToggleChange: {
     type: Function as PropType<(bool: boolean) => void>,

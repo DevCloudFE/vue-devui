@@ -1,4 +1,4 @@
-import { defineComponent, inject, computed } from 'vue';
+import { defineComponent, inject, computed, getCurrentInstance } from 'vue';
 import { Icon } from '../../../icon';
 import { Tag } from '../../../tag';
 import { Popover } from '../../../popover';
@@ -6,10 +6,14 @@ import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useSelectContent from '../composables/use-select-content';
 import { selectContentProps, SelectContentProps, OptionObjectItem } from '../select-types';
 import { FORM_ITEM_TOKEN } from '../../../form';
+import { createI18nTranslate } from '../../../locale/create';
 export default defineComponent({
   name: 'SelectContent',
   props: selectContentProps,
   setup(props: SelectContentProps) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DSelect', app);
+
     const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
     const ns = useNamespace('select');
     const clearCls = computed(() => ({
@@ -100,7 +104,7 @@ export default defineComponent({
                   value={searchQuery.value}
                   type="text"
                   class={inputCls.value}
-                  placeholder={placeholder.value}
+                  placeholder={placeholder.value || t('placeholder')}
                   readonly={isReadOnly.value}
                   disabled={isSelectDisable.value}
                   onInput={queryFilter}
@@ -115,7 +119,7 @@ export default defineComponent({
               value={props.value}
               type="text"
               class={inputCls.value}
-              placeholder={placeholder.value}
+              placeholder={placeholder.value || t('placeholder')}
               readonly={isReadOnly.value}
               disabled={isSelectDisable.value}
               onFocus={onFocus}

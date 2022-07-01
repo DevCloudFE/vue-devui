@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue';
+import { defineComponent, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
 import transferPanel from './components/transfer-panel';
 import transferOperate from './components/transfer-operate';
@@ -6,6 +6,7 @@ import { transferProps, TTransferProps, TKey, IItem } from './transfer-types';
 import { transferState } from './composables/use-transfer';
 import './transfer.scss';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DTransfer',
@@ -16,6 +17,9 @@ export default defineComponent({
   props: transferProps,
   emits: ['update:modelValue', 'change'],
   setup(props: TTransferProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DTransfer', app);
+
     const ns = useNamespace('transfer');
     const {
       sourceTitle,
@@ -46,7 +50,7 @@ export default defineComponent({
             isKeyupSearch={props.isKeyupSearch}
             isDrag={props.isSourceDrag}
             height={props.height}
-            unit={props.unit}
+            unit={props.unit || t('unit')}
             placeholder={props.placeholder}
             sortMethods={props.sortMethods}
             search={props.search}
@@ -86,7 +90,7 @@ export default defineComponent({
             isKeyupSearch={props.isKeyupSearch}
             isDrag={props.isTargetDrag}
             height={props.height}
-            unit={props.unit}
+            unit={props.unit || t('unit')}
             placeholder={props.placeholder}
             sortMethods={props.sortMethods}
             search={props.search}

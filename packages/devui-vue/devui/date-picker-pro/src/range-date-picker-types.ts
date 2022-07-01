@@ -9,7 +9,7 @@ export const rangeDatePickerProProps = {
   },
   placeholder: {
     type: Array as PropType<string[]>,
-    default: ['请选择开始日期', '请选择结束日期'],
+    default: ['', ''],
   },
   separator: {
     type: String,

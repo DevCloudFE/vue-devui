@@ -25,11 +25,11 @@ export const transferPanelProps = {
   },
   unit: {
     type: String,
-    default: '项',
+    default: '',
   },
   placeholder: {
     type: String,
-    default: '请输入关键词搜索',
+    default: '',
   },
   isKeyupSearch: {
     type: Boolean,

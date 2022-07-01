@@ -38,7 +38,7 @@ export const datePickerProProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择日期',
+    default: '',
   },
   ...datePickerProCommonProps,
 } as const;

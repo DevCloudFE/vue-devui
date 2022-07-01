@@ -1,9 +1,10 @@
-import { defineComponent } from 'vue';
+import { defineComponent, getCurrentInstance } from 'vue';
 import type { PropType, SetupContext } from 'vue';
 import { FilterConfig } from '../column/column-types';
 import { Button } from '../../../../button';
 import { Checkbox } from '../../../../checkbox';
 import { useFilterMultiple } from './use-filter';
+import { createI18nTranslate } from '../../../../locale/create';
 
 export default defineComponent({
   props: {
@@ -14,13 +15,16 @@ export default defineComponent({
   },
   emits: ['confirm'],
   setup(props, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DTable', app);
+
     const { _checkList, _checkAll, _halfChecked, handleConfirm } = useFilterMultiple(props.filterList, ctx);
 
     return () => (
       <>
         <div class="filter-all-check">
           <div class="filter-item">
-            <Checkbox v-model={_checkAll.value} halfChecked={_halfChecked.value} label="全选"></Checkbox>
+            <Checkbox v-model={_checkAll.value} halfChecked={_halfChecked.value} label={t('selectAll')}></Checkbox>
           </div>
         </div>
         <div class="filter-multiple-menu">
@@ -32,7 +36,7 @@ export default defineComponent({
         </div>
         <div class="filter-operation">
           <Button variant="text" onClick={handleConfirm}>
-            确定
+            {t('ok')}
           </Button>
         </div>
       </>
