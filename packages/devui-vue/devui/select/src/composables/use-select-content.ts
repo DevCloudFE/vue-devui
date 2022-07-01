@@ -1,15 +1,19 @@
-import { computed, inject, ref } from 'vue';
+import { computed, inject, ref, getCurrentInstance } from 'vue';
 import { SELECT_TOKEN } from '../const';
 import { FORM_ITEM_TOKEN } from '../../../form';
 import { SelectContentProps, OptionObjectItem, UseSelectContentReturnType } from '../select-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { className } from '../utils';
 import { isFunction } from 'lodash';
+import { createI18nTranslate } from '../../../locale/create';
 
 export default function useSelectContent(props: SelectContentProps): UseSelectContentReturnType {
   const ns = useNamespace('select');
   const select = inject(SELECT_TOKEN);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
+
+  const app = getCurrentInstance();
+  const t = createI18nTranslate('DSelect', app);
 
   const searchQuery = ref('');
   const selectedData = computed<OptionObjectItem[]>(() => {
@@ -54,7 +58,7 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
 
   const tagSize = computed(() => select?.selectSize || 'sm');
 
-  const placeholder = computed<string>(() => (props.value.length > 0 ? '' : select?.placeholder || ''));
+  const placeholder = computed<string>(() => (props.value.length > 0 ? '' : select?.placeholder || t('placeholder')));
 
   const isMultiple = computed<boolean>(() => !!select?.multiple);
 
@@ -65,7 +69,7 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
   };
 
   const tagDelete = (data: OptionObjectItem) => {
-    if (data && data.value) {
+    if (data && (data.value || data.value === 0)) {
       select?.tagDelete(data);
     }
   };
