@@ -4,7 +4,7 @@ import TimePicker from '../timepicker';
 
 import './index.scss';
 
-const Calendar = (props: TProps) => {
+const Calendar = (props: TProps): JSX.Element => {
   const { showTime = false } = props;
   let { current } = props;
   if (!(current instanceof Date)) {

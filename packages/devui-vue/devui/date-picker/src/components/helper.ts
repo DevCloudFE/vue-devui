@@ -1,5 +1,5 @@
 import { invokeCallback, subDateDay, betweenDate } from './utils';
-import { TDateCell, TDatePanelDataProps, TDatePanelProps } from './types';
+import type { TDateCell, TDatePanelDataProps, TDatePanelProps, TDatePanelType } from './types';
 
 export const getDateKey = (date: Date): string => {
   return date.toDateString();
@@ -7,7 +7,7 @@ export const getDateKey = (date: Date): string => {
 
 export const cellClassName = (props: TDatePanelDataProps, day: TDateCell, base = 'cell'): string => {
 
-  if(!betweenDate(day.date, props.dateMin, props.dateMax)) {
+  if(!betweenDate(day.date, props.dateMin as Date, props.dateMax as Date)) {
     return `${base} disabled`;
   } else if(day.current !== 0) {
     return `${base} not-current`;
@@ -37,7 +37,7 @@ export const cellClassName = (props: TDatePanelDataProps, day: TDateCell, base =
 };
 
 export const trigEvent = (props: TDatePanelProps, day: TDateCell): void => {
-  if(!betweenDate(day.date, props.dateMin, props.dateMax)) {
+  if(!betweenDate(day.date, props.dateMin as Date, props.dateMax as Date)) {
     return;
   }
 
@@ -54,7 +54,7 @@ export const trigEvent = (props: TDatePanelProps, day: TDateCell): void => {
     }
   } else {
     invokeCallback(props.onSelected, day.date);
-    typeof props.onChange === 'function' && props.onChange(props.type, props);
+    typeof props.onChange === 'function' && props.onChange(props.type as TDatePanelType, props);
   }
 };
 

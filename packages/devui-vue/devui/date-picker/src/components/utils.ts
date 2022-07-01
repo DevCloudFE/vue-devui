@@ -53,7 +53,7 @@ const getMonthDays = (year: number, month: number) => {
   return dates;
 };
 
-export const getMonthWeeklyDays = (date: any = new Date()) => {
+export const getMonthWeeklyDays = (date: Date = new Date()): TDateCell[][] => {
   if (!(date instanceof Date)) {
     date = new Date();
   }
@@ -68,14 +68,14 @@ export const getMonthWeeklyDays = (date: any = new Date()) => {
 
 export const WEEK_DAYS = ['日', '一', '二', '三', '四', '五', '六'];
 
-export const invokeCallback = (cb: any, ...args: any[]) => {
+export const invokeCallback = <T>(cb: T, ...args: unknown[]): void => {
   typeof cb === 'function' && cb(...args);
 };
 
 /**
  * a - b 的月数
  */
-export const subDateMonth = (a: Date, b: Date) => {
+export const subDateMonth = (a: Date, b: Date): number => {
   const am = a.getFullYear() * 12 + a.getMonth();
   const bm = b.getFullYear() * 12 + b.getMonth();
   return am - bm;
@@ -89,7 +89,7 @@ const ONE_DAY = 1000 * 60 * 60 * 24;
  * @param b
  * @returns
  */
-export const subDateDay = (a: Date, b: Date) => {
+export const subDateDay = (a: Date, b: Date): number => {
   const ad = new Date(a.getFullYear(), a.getMonth(), a.getDate()).getTime();
   const bd = new Date(b.getFullYear(), b.getMonth(), b.getDate()).getTime();
   return (ad - bd) / ONE_DAY;
@@ -103,7 +103,7 @@ export const subDateDay = (a: Date, b: Date) => {
 * @param min 不能小于这个值
 * @returns
 */
-export const compareDate = (small: Date | undefined, big: Date | undefined, mode: 'year' | 'month', min: number) => {
+export const compareDate = (small: Date | undefined, big: Date | undefined, mode: 'year' | 'month', min: number): boolean => {
   if (!small || !big) {
     return true;
   }
@@ -114,25 +114,8 @@ export const compareDate = (small: Date | undefined, big: Date | undefined, mode
   }
 };
 
-export const parseDate = (str?: string): Date | null => {
-  if(!str || typeof str !== 'string') {
-    return null;
-  }
 
-  const [dateStr = '', timeStr = ''] = str.split(/([ ]|T)+/);
-  if(!dateStr) {
-    return null;
-  }
-  const [y, m, d] = dateStr.split(/[^\d]+/);
-  const year = _parseInt(y), month = _parseInt(m), date = _parseInt(d) || 1;
-  if(!year || !month) {
-    return null;
-  }
-  const time = parseTime(timeStr);
-  return new Date(year, month - 1, date, ...time);
-};
-
-const _parseInt = (str: any, dftVal?: number) => {
+const _parseInt = <T>(str: T, dftVal?: number) => {
   if(!str || typeof str !== 'string') {
     return dftVal;
   }
@@ -144,25 +127,27 @@ const _parseInt = (str: any, dftVal?: number) => {
 };
 
 export const parseTime = (str?: string): [number, number, number, number] => {
-  const [h, m, s, ms] = str.split(/[\:\.]+/);
-  return [_parseInt(h, 0), _parseInt(m, 0), _parseInt(s, 0), _parseInt(ms, 0)];
+  const [h, m, s, ms] = str?.split(/[\:\.]+/) || [];
+  return [_parseInt(h, 0) || 0, _parseInt(m, 0) || 0, _parseInt(s, 0) || 0, _parseInt(ms, 0) || 0];
 };
 
 type TDateCounterType = 'd' | 'm' | 'y';
 
-export const compareDateSort = (d1: Date, d2: Date, type: TDateCounterType = 'd') => {
-  const t1 = dateCounter(d1, type), t2 = dateCounter(d2, type);
-  return t1 < t2 ? -1 : t1 > t2 ? 1 : 0;
-};
 
-export const dateCounter = (date: Date, type: TDateCounterType) => {
+export const dateCounter = (date: Date, type: TDateCounterType): number => {
   switch(type) {
   case 'y': return date.getFullYear();
   case 'm': return date.getFullYear() * 12 + date.getMonth();
   }
   return date.getTime() / ONE_DAY >> 0;
 };
-export const borderDateFactory = (factor: (d1: Date, d2: Date) => Date) => (...ds: Date[]) => {
+
+export const compareDateSort = (d1: Date, d2: Date, type: TDateCounterType = 'd'): number => {
+  const t1 = dateCounter(d1, type), t2 = dateCounter(d2, type);
+  return t1 < t2 ? -1 : t1 > t2 ? 1 : 0;
+};
+
+export const borderDateFactory = (factor: (d1: Date, d2: Date) => Date) => (...ds: Date[]): Date => {
   return ds.length < 2 ? ds[0] || new Date() : ds.reduce((r, v) => factor(r, v));
 };
 export const getMinDate = borderDateFactory((d1: Date, d2: Date) => compareDateSort(d1, d2) < 0 ? d1 : d2);
@@ -175,7 +160,7 @@ export const getMaxDate = borderDateFactory((d1: Date, d2: Date) => compareDateS
  * @param right 最大日期
  * @returns boolean
  */
-export const betweenDate = (date: Date, left: any, right: any): boolean => {
+export const betweenDate = (date: Date, left: Date, right: Date): boolean => {
   if(left instanceof Date && compareDateSort(left, date, 'd') > 0) {
     return false;
   }
@@ -183,4 +168,23 @@ export const betweenDate = (date: Date, left: any, right: any): boolean => {
     return false;
   }
   return true;
+};
+
+
+export const parseDate = (str?: string): Date | undefined => {
+  if(!str || typeof str !== 'string') {
+    return;
+  }
+
+  const [dateStr = '', timeStr = ''] = str.split(/([ ]|T)+/);
+  if(!dateStr) {
+    return;
+  }
+  const [y, m, d] = dateStr.split(/[^\d]+/);
+  const year = _parseInt(y), month = _parseInt(m), date = _parseInt(d) || 1;
+  if(!year || !month) {
+    return;
+  }
+  const time = parseTime(timeStr);
+  return new Date(year, month - 1, date, ...time);
 };

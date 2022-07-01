@@ -1,13 +1,12 @@
 import { defineComponent, reactive } from 'vue';
 import VerticalSliderFunction from '../vertical-slider';
+import { timePickerProps, TimePickerProps } from '../../date-picker-types';
 
 import './index.scss';
 
 const TimePicker = defineComponent({
-  props: {
-    time: { type: Date }
-  },
-  setup(props) {
+  props: timePickerProps,
+  setup(props: TimePickerProps) {
 
     const { time = new Date() } = props || {};
     const state = reactive({
@@ -24,8 +23,6 @@ const TimePicker = defineComponent({
         <div class="devui-calendar-timepicker">
           <div class="head">
             <div class="chars">
-              {/* <span>{`:`}</span>
-              <span>{`:`}</span> */}
               <span>
                 {state.hour.toString().padStart(2, '0')}:
                 {state.minute.toString().padStart(2, '0')}:
@@ -37,17 +34,17 @@ const TimePicker = defineComponent({
             <VerticalSliderFunction
               items={hours}
               selectedIndex={state.hour}
-              onChange={(_: any, idx: number) => state.hour = idx}
+              onChange={(_: Event, idx: number) => state.hour = idx}
             />
             <VerticalSliderFunction
               items={minutes}
               selectedIndex={state.minute}
-              onChange={(_: any, idx: number) => state.minute = idx}
+              onChange={(_: Event, idx: number) => state.minute = idx}
             />
             <VerticalSliderFunction
               items={minutes}
               selectedIndex={state.second}
-              onChange={(_: any, idx: number) => state.second = idx}
+              onChange={(_: Event, idx: number) => state.second = idx}
             />
           </div>
         </div>

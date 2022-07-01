@@ -1,18 +1,11 @@
 import { defineComponent, reactive, onMounted, ref } from 'vue';
+import { verticalSliderProps, VerticalSliderProps } from '../../date-picker-types';
 
 import './index.scss';
 
 const VerticalSlider = defineComponent({
-  props: {
-    size: { type: Number, default: 26 },
-    items: { type: Array },
-    selectedIndex: { type: Number },
-    className: { type: String },
-    itemClassNormal: { type: String },
-    itemClassSelected: { type: String },
-    onChange: { type: Function }
-  },
-  setup(props) {
+  props: verticalSliderProps,
+  setup(props: VerticalSliderProps) {
 
     const {
       items = [0,1,2,3,4,5,6,7,8,9],
@@ -67,8 +60,10 @@ const VerticalSlider = defineComponent({
       pos_start = null;
       state.y = max_y - state.selectedIndex * size;
       state.transition = 'transform 0.1s';
-      pos_cache[0] = state.x;
-      pos_cache[1] = state.y;
+      if (pos_cache) {
+        pos_cache[0] = state.x;
+        pos_cache[1] = state.y;
+      }
       if(typeof onChange === 'function') {
         const idx = state.selectedIndex;
         const val = items[idx];
@@ -77,8 +72,8 @@ const VerticalSlider = defineComponent({
     };
 
     onMounted(() => {
-      const { height: ch } = container.value.getBoundingClientRect();
-      const { height: mh } = movbar.value.getBoundingClientRect();
+      const { height: ch } = (container.value as HTMLElement).getBoundingClientRect();
+      const { height: mh } = (movbar.value as HTMLElement).getBoundingClientRect();
       max_y = (ch - size) / 2;
       min_y = (ch + size) / 2 - mh;
       pos_cache = [0, max_y - state.selectedIndex * size];
@@ -98,8 +93,8 @@ const VerticalSlider = defineComponent({
           }}>
             {
               items.map((c, i) => {
-                const className = i === state.selectedIndex ? itemClassSelected : itemClassNormal;
-                return <span class={`slider-item ${className}`} style={{ height: `${size}px`, lineHeight: `${size}px` }}>{c}</span>;
+                const curClassName = i === state.selectedIndex ? itemClassSelected : itemClassNormal;
+                return <span class={`slider-item ${curClassName}`} style={{ height: `${size}px`, lineHeight: `${size}px` }}>{c}</span>;
               })
             }
           </div>

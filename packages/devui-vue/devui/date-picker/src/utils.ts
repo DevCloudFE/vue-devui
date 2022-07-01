@@ -20,7 +20,7 @@ const fixStart = (n: number, m: string, max = 2, ch = '0') => {
  * @param fmt
  * @param d
  */
-export const formatDate = (fmt: string, d: Date) => {
+export const formatDate = (fmt: string, d: Date): string => {
   const usage = getDateTime(d);
   let res = fmt;
   res = res.replace(/y+/g, m => {
@@ -38,7 +38,7 @@ export const formatDate = (fmt: string, d: Date) => {
   return res;
 };
 
-export const formatRange = (fmt: string, a: Date, b: Date, conn = '-') => {
+export const formatRange = (fmt: string, a: Date, b: Date, conn = '-'): string => {
   const ab = [a, b];
   if(a.getTime() > b.getTime()) {
     ab.reverse();
@@ -52,7 +52,7 @@ export const formatRange = (fmt: string, a: Date, b: Date, conn = '-') => {
  * @param b
  * @returns
  */
-export const isIn = (a: Node | null, b: any) => {
+export const isIn = (a: Node | null, b: Node | null): boolean => {
   if (!b) {
     return false;
   }
@@ -65,26 +65,26 @@ export const isIn = (a: Node | null, b: any) => {
   return false;
 };
 
-type EventItem = { el: Node | Window; cb: (...args: any[]) => any; name: string; capture: boolean };
+type EventItem = { el: Node | Window; cb: EventListenerOrEventListenerObject; name: string; capture: boolean };
 export class EventManager {
   private readonly items: EventItem[];
   constructor() {
     this.items = [];
   }
 
-  append(el: Node | Window, name: string, cb: (...args: any[]) => any, capture = false) {
+  append(el: Node | Window, name: string, cb: EventListenerOrEventListenerObject, capture = false): void {
     el.addEventListener(name, cb, capture);
     this.items.push({ el, name, cb, capture });
   }
 
-  dispose() {
+  dispose(): void {
     this.items.splice(0, this.items.length).forEach(({ el, name, cb, capture }) => {
       el.removeEventListener(name, cb, capture);
     });
   }
 }
 
-export const traceNode = (el: Node) => {
+export const traceNode = (el: Node): Node[] => {
   const els: Node[] = [];
   while (el.parentNode) {
     els.push(el.parentNode);
@@ -96,13 +96,13 @@ export const traceNode = (el: Node) => {
 /**
  * 函数安全调用
  */
-export const invokeFunction = (fn: any, ...args: any[]) => {
+export const invokeFunction = <T>(fn?: (...args: T[]) => void, ...args: T[]): void => {
   if (typeof fn === 'function') {
     fn(...args);
   }
 };
 
-export const getMinDate = (a?: Date, b?: Date) => {
+export const getMinDate = (a?: Date, b?: Date): Date | undefined => {
   if(a && b) {
     return a > b ? b : a;
   }
