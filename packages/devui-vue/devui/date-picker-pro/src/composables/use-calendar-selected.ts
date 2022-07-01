@@ -63,7 +63,7 @@ export default function useCalendarSelected(props: DatePickerProPanelProps, ctx:
 
   const emitSelectedDate = () => {
     if (props.isRangeType) {
-      if (props.focusType === 'start') {
+      if (props.focusType === 'start' && (props.type !== 'date' || (props.type === 'date' && !props.showTime))) {
         ctx.emit('changeRangeFocusType', 'end');
       } else if (props.focusType === 'end' && !rangeSelectDate.value[0]) {
         rangeSelectDate.value[0] = selectDate.value;
