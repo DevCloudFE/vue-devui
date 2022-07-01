@@ -34,7 +34,7 @@ export default defineComponent({
       return (
         <label title={labelTitle} onClick={handleClick} class={labelCls}>
           <input
-            name={props.name || props.value}
+            name={(props.name || props.value) as string}
             class={ns.e('input')}
             type="checkbox"
             checked={mergedChecked.value}

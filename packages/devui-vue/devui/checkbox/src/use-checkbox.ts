@@ -1,4 +1,5 @@
-import { computed, inject, SetupContext, toRef, provide, watch } from 'vue';
+import { computed, inject, toRef, provide, watch } from 'vue';
+import type { SetupContext, Ref } from 'vue';
 import { FORM_TOKEN, FORM_ITEM_TOKEN } from '../../form';
 import {
   CheckboxProps,
@@ -84,9 +85,11 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
   };
 }
 
+type IModelValue = Ref<(string | number | { value: string })[]>;
+
 export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): UseCheckboxGroupFn {
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
-  const valList = toRef(props, 'modelValue');
+  const valList = toRef(props, 'modelValue') as IModelValue;
 
   const defaultOpt = {
     checked: false,
@@ -95,12 +98,12 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
     showAnimation: true,
     disabled: false,
   };
-  const toggleGroupVal = (val: string | number) => {
+  const toggleGroupVal = (val: string | number | undefined) => {
     let index = -1;
     if (['string', 'number'].includes(typeof valList.value[0])) {
       index = valList.value.findIndex((item) => item === val);
     } else if (typeof valList.value[0] === 'object') {
-      index = valList.value.findIndex((item) => item.value === val);
+      index = (valList.value as { value: string }[]).findIndex((item) => item.value === val);
     }
 
     if (index === -1) {
@@ -120,11 +123,11 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
     ctx.emit('update:modelValue', valList.value);
     ctx.emit('change', valList.value);
   };
-  const isItemChecked = (itemVal: string | number) => {
+  const isItemChecked = (itemVal: string | number | undefined) => {
     if (['string', 'number'].includes(typeof valList.value[0])) {
-      return valList.value.includes(itemVal);
+      return valList.value.includes(itemVal as never);
     } else if (typeof valList.value[0] === 'object') {
-      return valList.value.some((item) => item.value === itemVal);
+      return (valList.value as { value: string }[]).some((item) => item.value === itemVal);
     }
   };
   watch(
