@@ -1,7 +1,7 @@
 import { defineComponent, computed, inject, Transition, onMounted, shallowRef } from 'vue';
 import { collapseItemProps } from './collapse-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import OpenIcon from '../../accordion/src/accordion-open-icon';
+import OpenIcon from './collapse-open-icon';
 import { SELECT_TOKEN } from './const';
 
 export default defineComponent({
