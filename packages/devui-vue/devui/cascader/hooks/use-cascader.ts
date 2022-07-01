@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash';
 import { ref, SetupContext, toRef, reactive, Ref, watch } from 'vue';
 import { initActiveIndexs, initSingleIptValue } from './use-cascader-single';
 import { initMultipleCascaderItem, initTagList, getMultiModelValues } from './use-cascader-multiple';
-import type { CascaderItem, CascaderValueType, CascaderProps, UseCascaderFn, CascaderModelValue } from '../src/cascader-types';
+import type { CascaderItem, CascaderValueType, CascaderProps, UseCascaderFn } from '../src/cascader-types';
 import { popupHandles } from './use-cascader-popup';
 import { useCascaderItem } from './use-cascader-item';
 import { useRootStyle } from './use-cascader-style';
@@ -94,17 +94,17 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
       // 多选模式
       const rootColumn = cascaderOptions[0] || []; // 第一列
       value.forEach((targetValue) => {
-        initMultipleCascaderItem(targetValue as CascaderModelValue, rootColumn, tagList.value);
+        initMultipleCascaderItem(targetValue, rootColumn, tagList.value);
       });
     }
   };
   /**
    * 监听视图更新
    */
-  watch(() => cascaderItemNeedProps.activeIndexs, (val) => {
+  watch(cascaderItemNeedProps.activeIndexs as CascaderValueType, (val) => {
     // TODO 多选模式下优化切换选择后的视图切换
     cascaderOptions.splice(val?.length || 0, cascaderOptions.length - 1);
-    updateCascaderView(val as CascaderValueType, cascaderOptions[0], 0);
+    updateCascaderView(val, cascaderOptions[0], 0);
   });
   /**
    * 监听点击最终的节点输出内容
