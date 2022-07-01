@@ -103,7 +103,7 @@ export default defineComponent({
                 <d-icon
                   name="add"
                   onClick={() => {
-                    insertBefore(data.value, { label: t('newNode') });
+                    insertBefore(data.value, { label: t('newNode') || 'New node' });
                   }}></d-icon>
                 <d-icon
                   name="delete"
