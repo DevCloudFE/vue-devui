@@ -55,18 +55,20 @@ export default defineComponent({
       }
     });
 
-    const checkboxProps = {
-      key: data.value?.id,
-      disabled: data.value?.disableCheck,
-      halfChecked: halfChecked.value,
-      modelValue: data.value?.checked,
-      'onUpdate:modelValue': () => {
-        toggleCheckNode?.(data.value);
-      },
-      onClick: (event: MouseEvent) => {
-        event.stopPropagation();
-      },
-    };
+    const checkboxProps = computed(() => {
+      return {
+        key: data.value?.id,
+        disabled: data.value?.disableCheck,
+        halfChecked: halfChecked.value,
+        modelValue: data.value?.checked,
+        'onUpdate:modelValue': () => {
+          toggleCheckNode?.(data.value);
+        },
+        onClick: (event: MouseEvent) => {
+          event.stopPropagation();
+        },
+      };
+    });
 
     const isShowOperationArea = ref(false);
 
@@ -93,7 +95,7 @@ export default defineComponent({
             <span class={nodeHLineClass.value}></span>
             {slots.icon ? renderSlot(useSlots(), 'icon', { nodeData: data, toggleNode }) : <DTreeNodeToggle data={data.value} />}
             <div class={ns.em('node-content', 'value-wrapper')} style={{ height: `${NODE_HEIGHT}px` }}>
-              {check.value && <Checkbox {...checkboxProps} />}
+              {check.value && <Checkbox {...checkboxProps.value} />}
               {slots.default ? renderSlot(useSlots(), 'default', { nodeData: data }) : <DTreeNodeContent data={data.value} />}
             </div>
             {operate.value && isShowOperationArea.value && (
