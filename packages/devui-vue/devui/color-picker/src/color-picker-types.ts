@@ -1,7 +1,8 @@
 import type { PropType, ExtractPropTypes } from 'vue';
 export const colorPickerProps = {
   modelValue: {
-    type: [Object, String] as PropType<string | number>
+    type: [Object, String] as PropType<string | number>,
+    default: {}
   },
   mode: {
     type: String

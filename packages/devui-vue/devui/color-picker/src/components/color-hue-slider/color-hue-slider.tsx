@@ -1,25 +1,28 @@
 import { computed, defineComponent, ref, onMounted } from 'vue';
-import { colorPickerHueSliderProps } from './color-picker-hue-slider-types';
+import { colorPickerHueSliderProps, ColorPickerHueSliderProps } from './color-picker-hue-slider-types';
 import { DOMUtils } from '../../utils/dom-dragger';
 import { fromHSVA } from '../../utils/color-utils';
 import './color-hue-slider.scss';
+type ColorPickerColor = NonNullable<ColorPickerHueSliderProps['modelValue']>;
+type DefaultTransition = { transition: string };
 export default defineComponent({
   name: 'ColorHueSlider',
   props: colorPickerHueSliderProps,
   emits: ['update:modelValue'],
-  setup(props, ctx) {
-    const DEFAULT_TRANSITION = { transition: 'all 0.3s ease' };
+  setup(props: ColorPickerHueSliderProps, ctx) {
+    const DEFAULT_TRANSITION: DefaultTransition = { transition: 'all 0.3s ease' };
     const barElement = ref<HTMLElement | null>(null);
     const cursorElement = ref<HTMLElement | null>(null);
-    const clickTransfrom = ref(DEFAULT_TRANSITION);
+    const clickTransfrom = ref<DefaultTransition | null>(DEFAULT_TRANSITION);
     const getCursorLeft = () => {
       if (barElement.value && cursorElement.value) {
         const rect = barElement.value.getBoundingClientRect();
         const offsetWidth = cursorElement.value.offsetWidth;
-        if (props.modelValue.hue === 360) {
+        if (props.modelValue?.hue === 360) {
           return rect.width - offsetWidth / 2;
         }
-        return ((props.modelValue.hue % 360) * (rect.width - offsetWidth)) / 360 + offsetWidth / 2;
+        return (((props.modelValue as ColorPickerColor).hue % 360)
+          * (rect.width - offsetWidth)) / 360 + offsetWidth / 2;
       }
       return 0;
     };
@@ -46,9 +49,9 @@ export default defineComponent({
           'update:modelValue',
           fromHSVA({
             h: hue,
-            s: props.modelValue.hsva.s,
-            v: props.modelValue.hsva.v,
-            a: props.modelValue.hsva.a
+            s: (props.modelValue as ColorPickerColor).hsva.s,
+            v: (props.modelValue as ColorPickerColor).hsva.v,
+            a: (props.modelValue as ColorPickerColor).hsva.a
           })
         );
       }
