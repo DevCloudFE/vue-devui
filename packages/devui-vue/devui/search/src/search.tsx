@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue';
+import { defineComponent, getCurrentInstance, ref } from 'vue';
 import { SearchProps, searchProps } from './search-types';
 import { getRootClass } from './composables/use-search-class';
 import { keywordsHandles } from './composables/use-search-keywords';
@@ -6,12 +6,16 @@ import { keydownHandles } from './composables/use-search-keydown';
 import DInput from '../../input/src/input';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './search.scss';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DSearch',
   props: searchProps,
   emits: ['update:modelValue', 'search'],
   setup(props: SearchProps, ctx) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DSearch', app);
+
     const ns = useNamespace('search');
     const isFocus = ref(false);
     const rootClasses = getRootClass(props, isFocus);
@@ -39,7 +43,7 @@ export default defineComponent({
         disabled: props.disabled,
         autoFocus: props.autoFocus,
         modelValue: keywords.value,
-        placeholder: props.placeholder,
+        placeholder: props.placeholder || t('placeholder'),
         onKeydown: onInputKeydown,
         'onUpdate:modelValue': onInputUpdate,
         onFocus: onFocus,

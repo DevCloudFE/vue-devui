@@ -10,7 +10,7 @@ export const searchProps = {
   },
   placeholder: {
     type: String,
-    default: '请输入关键字',
+    default: '',
   },
   maxLength: {
     type: Number,

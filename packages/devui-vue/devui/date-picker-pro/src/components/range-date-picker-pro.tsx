@@ -1,4 +1,4 @@
-import { defineComponent, Transition, ref, renderSlot, useSlots } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
 import { rangeDatePickerProProps, RangeDatePickerProProps } from '../range-date-picker-types';
 import { FlexibleOverlay } from '../../../overlay';
@@ -10,12 +10,16 @@ import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useRangePickerPro from '../composables/use-range-date-picker-pro';
 
 import '../date-picker-pro.scss';
+import { createI18nTranslate } from '../../../locale/create';
 
 export default defineComponent({
   name: 'DRangeDatePickerPro',
   props: rangeDatePickerProProps,
   emits: ['update:modelValue', 'toggleChange', 'confirmEvent', 'focus', 'blur'],
   setup(props: RangeDatePickerProProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DDatePickerPro', app);
+
     const ns = useNamespace('range-date-picker-pro');
     const {
       containerRef,
@@ -66,7 +70,7 @@ export default defineComponent({
               <Input
                 ref={startInputRef}
                 modelValue={displayDateValue.value[0]}
-                placeholder={placeholder.value[0]}
+                placeholder={placeholder.value[0] || t('startPlaceholder')}
                 onFocus={(e: MouseEvent) => {
                   e.stopPropagation();
                   onFocus('start');
@@ -94,7 +98,7 @@ export default defineComponent({
               <Input
                 ref={endInputRef}
                 modelValue={displayDateValue.value[1]}
-                placeholder={placeholder.value[1]}
+                placeholder={placeholder.value[1] || t('endPlaceholder')}
                 onFocus={(e: MouseEvent) => {
                   e.stopPropagation();
                   onFocus('end');

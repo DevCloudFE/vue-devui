@@ -1,4 +1,4 @@
-import { defineComponent, reactive, ref, toRefs, provide } from 'vue';
+import { defineComponent, reactive, ref, toRefs, provide, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
 import { treeProps, TreeProps, TreeItem, TreeRootType, Nullable } from './deprecated-tree-types';
 import { CHECK_CONFIG } from './config';
@@ -17,12 +17,16 @@ import { IconClose } from './components/icon-close';
 import NodeContent from './tree-node-content';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './tree.scss';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DTree',
   props: treeProps,
   emits: ['nodeSelected'],
   setup(props: TreeProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DTree', app);
+
     const { data, checkable, draggable, dropType, checkableRelation: cbr } = toRefs(reactive({ ...props, data: preCheckTree(props.data) }));
     const node = ref<Nullable<HTMLElement>>(null);
     const { mergeData } = useMergeNode(data);
@@ -88,7 +92,7 @@ export default defineComponent({
         renderLoading: (elementId) => {
           return Loading.open({
             target: document.getElementById(elementId),
-            message: '加载中...',
+            message: `${t('loading')}...`,
             positionType: 'relative',
             zIndex: 1,
           });

@@ -1,4 +1,4 @@
-import { defineComponent, withModifiers, computed, ref, SetupContext, watch, Teleport, Transition } from 'vue';
+import { defineComponent, withModifiers, computed, ref, SetupContext, watch, Teleport, Transition, getCurrentInstance } from 'vue';
 import { editableSelectProps, EditableSelectProps, OptionObjectItem } from './editable-select-types';
 import clickOutside from '../../shared/devui-directive/clickoutside';
 import loadingDirective from '../../loading/src/loading-directive';
@@ -12,6 +12,7 @@ import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { useCacheFilteredOptions } from './composables/use-cache-filtered-options';
 import { Placement } from '../../overlay';
+import { createI18nTranslate } from '../../locale/create';
 export default defineComponent({
   name: 'DEditableSelect',
   directives: {
@@ -22,6 +23,9 @@ export default defineComponent({
   props: editableSelectProps,
   emits: ['update:modelValue', 'search', 'loadMore'],
   setup(props: EditableSelectProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DEditableSelect', app);
+
     const ns = useNamespace('editable-select');
     const dropdownNS = useNamespace('editable-select-dropdown');
 
@@ -66,9 +70,9 @@ export default defineComponent({
       let text = '';
       // 不传filterOption时默认为true
       if (props.filterOption !== false && !filteredOptions.value.length) {
-        text = '找不到相关记录';
+        text = t('noRelatedRecords');
       } else if (props.filterOption === false && !filteredOptions.value.length) {
-        text = '没有数据';
+        text = t('noData');
       }
       return text;
     });

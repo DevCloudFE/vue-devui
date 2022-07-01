@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue';
+import { defineComponent, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import CalendarPanel from './calendar-panel';
@@ -8,12 +8,16 @@ import YearCalendarPanel from './year-calendar-panel';
 import MonthCalendarPanel from './month-calendar-panel';
 import { datePickerProPanelProps, DatePickerProPanelProps } from '../date-picker-pro-types';
 import useDatePicker from '../composables/use-date-picker';
+import { createI18nTranslate } from '../../../locale/create';
 
 export default defineComponent({
   name: 'DatePickerProPanel',
   props: datePickerProPanelProps,
   emits: ['selectedDate', 'changeRangeFocusType'],
   setup(props: DatePickerProPanelProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DDatePickerPro', app);
+
     const ns = useNamespace('date-picker-pro');
     const { calendarPanelRef, timeData, onSelectedDate, handlerConfirm, handlerSelectedTime, onChangeRangeFocusType } = useDatePicker(
       props,
@@ -54,7 +58,7 @@ export default defineComponent({
             <div class={ns.e('panel-footer')}>
               <div class={ns.e('panel-footer-center')}>
                 <Button variant="solid" onClick={handlerConfirm}>
-                  确定
+                  {t('ok')}
                 </Button>
               </div>
             </div>

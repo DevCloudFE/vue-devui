@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject, toRefs } from 'vue';
+import { computed, defineComponent, getCurrentInstance, inject, toRefs } from 'vue';
 import type { AccordionMenuItem, IAccordionContext } from './accordion.type';
 import DAccordionMenu from './accordion-menu';
 import DAccordionItem from './accordion-item';
@@ -7,6 +7,7 @@ import DAccordionItemRouterlink from './accordion-item-routerlink';
 import { accordionProps } from './accordion-types';
 import { getRootSlots } from '../src/utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DAccordionList',
@@ -35,6 +36,9 @@ export default defineComponent({
   },
 
   setup(props, { attrs }) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DAccordion', app);
+
     const {
       childrenKey,
       deepth,
@@ -73,7 +77,7 @@ export default defineComponent({
             <ul class={[ns.e('list')]} {...attrs}>
               {data.value.map((item) => {
                 return (
-                  <li class={ns.e('item')} key={(item[titleKey.value]) as string}>
+                  <li class={ns.e('item')} key={item[titleKey.value] as string}>
                     {/* // TODO 菜单类型 d-accordion-menu */}
                     {item[childrenKey.value] !== undefined && (
                       <div class={ns.e('menu-item')}>
@@ -149,7 +153,7 @@ export default defineComponent({
                 loading.value && (!rootSlots?.loadingTemplate || loadingTemplate.value === false) && (
                   <li class={ns.e('item')}>
                     <div class={[ns.e('item-title'), ns.m('overflow-ellipsis')]} style={{ textIndent: deepValue * 20 + 'px' }}>
-                      加载中...
+                      {t('loading')}...
                     </div>
                   </li>
                 )
@@ -157,24 +161,24 @@ export default defineComponent({
               {
                 // 自定义加载
                 loading.value &&
-                  rootSlots?.loadingTemplate &&
-                  loadingTemplate.value !== false &&
-                  rootSlots.loadingTemplate?.({
-                    item: parent.value,
-                    deepth: deepValue,
-                  })
+                    rootSlots?.loadingTemplate &&
+                    loadingTemplate.value !== false &&
+                    rootSlots.loadingTemplate?.({
+                      item: parent.value,
+                      deepth: deepValue,
+                    })
               }
               {
                 // 无数据
                 showNoContent.value &&
-                  !loading.value &&
-                  noContent.value &&
-                  (!rootSlots?.noContentTemplate || noContentTemplate.value === false) && (
+                    !loading.value &&
+                    noContent.value &&
+                    (!rootSlots?.noContentTemplate || noContentTemplate.value === false) && (
                   <li class={ns.e('item')}>
                     <div
                       class={[ns.e('item-title'), ns.m('overflow-ellipsis'), ns.m('disabled')]}
                       style={{ textIndent: deepValue * 20 + 'px' }}>
-                        没有数据
+                      {t('noData')}
                     </div>
                   </li>
                 )
@@ -182,14 +186,14 @@ export default defineComponent({
               {
                 // 自定义加载
                 showNoContent.value &&
-                  !loading.value &&
-                  noContent.value &&
-                  rootSlots?.noContentTemplate &&
-                  noContentTemplate.value !== false &&
-                  rootSlots.noContentTemplate?.({
-                    item: parent.value,
-                    deepth: deepValue,
-                  })
+                    !loading.value &&
+                    noContent.value &&
+                    rootSlots?.noContentTemplate &&
+                    noContentTemplate.value !== false &&
+                    rootSlots.noContentTemplate?.({
+                      item: parent.value,
+                      deepth: deepValue,
+                    })
               }
             </ul>
           )}

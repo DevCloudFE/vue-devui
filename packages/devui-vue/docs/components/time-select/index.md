@@ -14,24 +14,24 @@
 <template>
   <div>
     <h4 class="my-10">basic</h4>
-    <d-time-select v-model="time00" placeholder="请选择时间" />
+    <d-time-select v-model="time00" />
     <h4 class="my-10">step</h4>
-    <d-time-select v-model="time01" placeholder="请选择时间" step="00:10" />
+    <d-time-select v-model="time01" step="00:10" />
     <h4 class="my-10">min-time、max-time</h4>
     <div style="margin-top: 10px;">
-      <d-time-select v-model="time02" placeholder="请选择时间" min-time="02:20" max-time="18:30" />
+      <d-time-select v-model="time02" min-time="02:20" max-time="18:30" />
     </div>
     <h4 class="my-10">min-time、max-time、start、end</h4>
     <div style="margin-top: 10px;">
-      <d-time-select v-model="time03" placeholder="请选择时间" min-time="09:30" max-time="18:30" start="09:00" end="16:30" />
+      <d-time-select v-model="time03" min-time="09:30" max-time="18:30" start="09:00" end="16:30" />
     </div>
     <h4 class="my-10">disabled</h4>
     <div style="margin-top: 10px;">
-      <d-time-select v-model="time04" placeholder="请选择时间" disabled />
+      <d-time-select v-model="time04" disabled />
     </div>
     <h4 class="my-10">不可清除</h4>
     <div style="margin-top: 10px;">
-      <d-time-select v-model="time04" placeholder="请选择时间" :clearable="false" />
+      <d-time-select v-model="time04" :clearable="false" />
     </div>
   </div>
 </template>
@@ -74,10 +74,10 @@ export default defineComponent({
   <div>
     <d-row :gutter="5">
       <d-col>
-        <d-time-select v-model="startTime" placeholder="请选择开始时间" />
+        <d-time-select v-model="startTime" />
       </d-col>
       <d-col>
-        <d-time-select v-model="endTime" placeholder="请选择结束时间" :min-time="startTime" />
+        <d-time-select v-model="endTime" :min-time="startTime" />
       </d-col>
     </d-row>
   </div>
@@ -153,18 +153,18 @@ export default defineComponent({
 
 d-time-select 参数
 
-| 参数        | 类型                        | 默认    | 说明             | 跳转 Demo             |
-| ----------- | --------------------------- | ------- | ---------------- | --------------------- |
-| v-model     | string                      | --      | 选中项绑定值     | [基本用法](#基本用法) |
-| disabled    | boolean                     | false   | 禁用状态         | [基本用法](#基本用法) |
-| size        | [ITimeSelect](#itimeselect) | md      | 输入框尺寸       | --                    |
-| placeholder | string                      | --      | 占位内容         | [基本用法](#基本用法) |
-| min-time    | string                      | '00:00' | 可选，最早时间点 | [基本用法](#基本用法) |
-| max-time    | string                      | '24:00' | 可选，最晚时间点 | [基本用法](#基本用法) |
-| start       | string                      | '00:00' | 可选，开始时间   | [基本用法](#基本用法) |
-| end         | string                      | '24:00' | 可选，结束时间   | [基本用法](#基本用法) |
-| step        | string                      | '00:30' | 可选，间隔时间   | [基本用法](#基本用法) |
-| clearable   | boolean                     | true    | 可选，是否可清除 | [基本用法](#基本用法) |
+| 参数        | 类型                        | 默认         | 说明             | 跳转 Demo             |
+| ----------- | --------------------------- | ------------ | ---------------- | --------------------- |
+| v-model     | string                      | --           | 选中项绑定值     | [基本用法](#基本用法) |
+| disabled    | boolean                     | false        | 禁用状态         | [基本用法](#基本用法) |
+| size        | [ITimeSelect](#itimeselect) | md           | 输入框尺寸       | --                    |
+| placeholder | string                      | '请选择时间' | 占位内容         | [基本用法](#基本用法) |
+| min-time    | string                      | '00:00'      | 可选，最早时间点 | [基本用法](#基本用法) |
+| max-time    | string                      | '24:00'      | 可选，最晚时间点 | [基本用法](#基本用法) |
+| start       | string                      | '00:00'      | 可选，开始时间   | [基本用法](#基本用法) |
+| end         | string                      | '24:00'      | 可选，结束时间   | [基本用法](#基本用法) |
+| step        | string                      | '00:30'      | 可选，间隔时间   | [基本用法](#基本用法) |
+| clearable   | boolean                     | true         | 可选，是否可清除 | [基本用法](#基本用法) |
 
 d-time-select 事件
 

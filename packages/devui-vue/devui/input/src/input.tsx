@@ -1,4 +1,4 @@
-import { defineComponent, watch, inject, toRefs, shallowRef, ref, computed } from 'vue';
+import { defineComponent, watch, inject, toRefs, shallowRef, ref, computed, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
 import Icon from '../../icon/src/icon';
 import { inputProps, InputProps } from './input-types';
@@ -8,6 +8,7 @@ import { useInputRender } from './composables/use-input-render';
 import { useInputEvent } from './composables/use-input-event';
 import { useInputFunction } from './composables/use-input-function';
 import './input.scss';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DInput',
@@ -15,6 +16,9 @@ export default defineComponent({
   props: inputProps,
   emits: ['update:modelValue', 'focus', 'blur', 'input', 'change', 'keydown', 'clear'],
   setup(props: InputProps, ctx: SetupContext) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DInput', app);
+
     const formItemContext = inject(FORM_ITEM_TOKEN, undefined) as FormItemContext;
     const { modelValue } = toRefs(props);
     const ns = useNamespace('input');
@@ -64,6 +68,7 @@ export default defineComponent({
             value={modelValue.value}
             disabled={inputDisabled.value}
             class={ns.e('inner')}
+            placeholder={props.placeholder || t('placeholder')}
             {...otherAttrs}
             type={props.showPassword ? (passwordVisible.value ? 'text' : 'password') : 'text'}
             onInput={onInput}
