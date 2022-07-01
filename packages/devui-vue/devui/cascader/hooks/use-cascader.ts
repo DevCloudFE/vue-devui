@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash';
 import { ref, SetupContext, toRef, reactive, Ref, watch } from 'vue';
 import { initActiveIndexs, initSingleIptValue } from './use-cascader-single';
 import { initMultipleCascaderItem, initTagList, getMultiModelValues } from './use-cascader-multiple';
-import { CascaderItem, CascaderValueType, CascaderProps, UseCascaderFn } from '../src/cascader-types';
+import type { CascaderItem, CascaderValueType, CascaderProps, UseCascaderFn } from '../src/cascader-types';
 import { popupHandles } from './use-cascader-popup';
 import { useCascaderItem } from './use-cascader-item';
 import { useRootStyle } from './use-cascader-style';
@@ -101,31 +101,31 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
   /**
    * 监听视图更新
    */
-  watch(cascaderItemNeedProps.activeIndexs, (val) => {
+  watch(cascaderItemNeedProps.activeIndexs as CascaderValueType, (val) => {
     // TODO 多选模式下优化切换选择后的视图切换
-    cascaderOptions.splice(val.length, cascaderOptions.length - 1);
+    cascaderOptions.splice(val?.length || 0, cascaderOptions.length - 1);
     updateCascaderView(val, cascaderOptions[0], 0);
   });
   /**
    * 监听点击最终的节点输出内容
    */
   watch(
-    () => cascaderItemNeedProps.confirmInputValueFlg.value,
+    () => cascaderItemNeedProps.confirmInputValueFlg?.value,
     () => {
       // 单选和多选模式初始化
       multiple.value ? initTagList(tagList.value) : initSingleIptValue(cascaderItemNeedProps.inputValueCache);
       // 输出确认的选中值
-      cascaderItemNeedProps.value = reactive(cloneDeep(cascaderItemNeedProps.valueCache));
+      cascaderItemNeedProps.value = reactive(cloneDeep(cascaderItemNeedProps.valueCache as CascaderValueType));
       menuShow.value = false;
       // 点击确定过后禁止再次选中
       updateStopDefaultType();
       // 更新值
-      updateCascaderValue(cascaderItemNeedProps.value, cascaderOptions[0], 0);
-      inputValue.value = cascaderItemNeedProps.inputValueCache.value;
+      updateCascaderValue(cascaderItemNeedProps.value as CascaderValueType, cascaderOptions[0], 0);
+      inputValue.value = cascaderItemNeedProps.inputValueCache?.value as string;
       // 单选模式默认回显视图的选中态
       // 多选模式不默认视图打开状态，因为选中了太多个，无法确定展示哪一种选中态
       if (initIptValue && !multiple.value) {
-        initActiveIndexs(props.modelValue, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs);
+        initActiveIndexs(props.modelValue, cascaderOptions[0], 0, cascaderItemNeedProps.activeIndexs as number[]);
         initIptValue = false; // 只需要初始化一次，之后不再执行
       }
       ctx.emit('update:modelValue', cascaderItemNeedProps.value);
@@ -162,8 +162,10 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     ctx.emit('update:modelValue', []);
     menuShow.value = false;
     cascaderOptions.splice(1, cascaderOptions.length - 1);
-    cascaderItemNeedProps.inputValueCache.value = '';
-    cascaderItemNeedProps.valueCache.splice(0);
+    if (cascaderItemNeedProps.inputValueCache) {
+      cascaderItemNeedProps.inputValueCache.value = '';
+    }
+    cascaderItemNeedProps.valueCache?.splice(0);
   };
 
   watch(

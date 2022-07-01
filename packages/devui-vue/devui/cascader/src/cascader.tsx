@@ -6,7 +6,7 @@ import DMultipleBox from '../components/cascader-multiple/index';
 import { cascaderProps, CascaderProps } from './cascader-types';
 import { useCascader } from '../hooks/use-cascader';
 import './cascader.scss';
-import { FlexibleOverlay } from '../../overlay';
+import { FlexibleOverlay, Placement } from '../../overlay';
 import DInput from '../../input/src/input';
 export default defineComponent({
   name: 'DCascader',
@@ -55,7 +55,8 @@ export default defineComponent({
               size={props.size}
               onInput={handleInput}
               onFocus={onFocus}
-              onBlur={onBlur}></DInput>
+              onBlur={onBlur}
+            />
           )}
           {!showClearable.value && (
             <div class={`${ns.e('icon')} ${ns.m('drop-icon-animation')}`}>
@@ -69,7 +70,13 @@ export default defineComponent({
           )}
         </div>
         <Transition name="fade">
-          <FlexibleOverlay origin={origin.value} ref={overlay} v-model={menuShow.value} position={position.value} align="start">
+          <FlexibleOverlay
+            origin={origin.value}
+            ref={overlay}
+            v-model={menuShow.value}
+            position={position.value as Placement[]}
+            align="start"
+          >
             <div class={ns.e('drop-menu-animation')}>
               {!isSearching.value && (
                 <div class={`${menuOpenClass.value} ${ns.e('dropdown-menu')}`}>
