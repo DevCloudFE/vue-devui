@@ -224,7 +224,7 @@ export default defineComponent({
                     <li
                       key={index}
                       class={[ns.e('file-item'), ns.e('file-tag')]}
-                      style="display: inline-block; margin: 0 2px 2px 0"
+                      style="display: inline-block;"
                       title={fileUploader.file.name}
                       onClick={(event: Event) => clickSelectedFile(event, fileUploader.file)}>
                       <span class={[ns.e('filename'), fileUploader.status === UploadStatus.failed ? ns.m('failed-color') : '']}>

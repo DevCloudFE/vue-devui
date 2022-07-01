@@ -49,6 +49,7 @@ export default defineComponent({
             modelValue={query.value}
             placeholder={props.placeholder || t('placeholder')}
             is-keyup-search={props.isKeyupSearch}
+            size="sm"
             onSearch={(value: TKey) => {
               updateFilterQueryHandle(value);
             }}

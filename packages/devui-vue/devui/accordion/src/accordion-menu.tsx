@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'vue';
 import type { AccordionMenuItem, AccordionMenuToggleEvent, IAccordionContext } from './accordion.type';
 import AccordionList from './accordion-list';
 import { accordionProps } from './accordion-types';
-import OpenIcon from './accordion-open-icon';
+import OpenIcon from '../../collapse/src/collapse-open-icon';
 import { getRootSlots } from '../src/utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
@@ -15,7 +15,7 @@ export default defineComponent({
   props: {
     item: {
       type: Object as () => AccordionMenuItem,
-      required: true
+      required: true,
     },
     deepth: {
       type: Number,
@@ -132,8 +132,7 @@ export default defineComponent({
               {...props}
               deepth={deepValue + 1}
               data={(children.value || []) as Array<AccordionMenuItem>}
-              parent={item.value}
-            ></AccordionList>
+              parent={item.value}></AccordionList>
           </div>
         </>
       );

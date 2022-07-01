@@ -197,6 +197,7 @@ export interface UseSelectContentReturnType {
   isReadOnly: ComputedRef<boolean>;
   selectionCls: ComputedRef<string>;
   inputCls: ComputedRef<string>;
+  tagSize: ComputedRef<string>;
   placeholder: ComputedRef<string>;
   isMultiple: ComputedRef<boolean>;
   handleClear: (e: MouseEvent) => void;

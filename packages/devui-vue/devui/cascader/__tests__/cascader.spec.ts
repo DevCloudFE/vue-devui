@@ -206,7 +206,7 @@ describe('cascader', () => {
     const options = reactive(OPTIONS);
     const wrapper = mount({
       components: { DCascader },
-      template: `<d-cascader v-model="value" :options="options" showPath filterable></d-cascader>`,
+      template: `<d-cascader v-model="value" :options="options" filterable></d-cascader>`,
       setup() {
         return {
           value,
@@ -228,5 +228,9 @@ describe('cascader', () => {
 
     const suggestionList = wrapper.findAll(suggestListClass);
     expect(suggestionList.length).toBe(2);
+
+    suggestionList[1].trigger('click');
+    await nextTick();
+    expect(input.element.value).toBe('option2.1-3');
   });
 });

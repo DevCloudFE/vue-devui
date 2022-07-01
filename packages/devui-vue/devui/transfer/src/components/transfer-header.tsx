@@ -26,7 +26,7 @@ export default defineComponent({
           <div class={ns.em('panel', 'header-allChecked')}>
             <DCheckbox
               modelValue={props.checked}
-              halfchecked={props.halfchecked}
+              halfChecked={props.halfchecked}
               onChange={(value: boolean) => {
                 allCheckedChangeHandle(value);
               }}>

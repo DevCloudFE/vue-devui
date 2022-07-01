@@ -16,7 +16,7 @@ export default defineComponent({
     provide('separatorIcon', separatorIcon);
     const ns = useNamespace('breadcrumb');
 
-    const renderBreadcrumbItemRouted = (item) => {
+    const renderBreadcrumbItemRouted = (item: SourceConfig) => {
       return (
         <d-breadcrumb-item to={`path: ${item.link}`} replace={item.replace}>
           {item.title}
@@ -43,7 +43,7 @@ export default defineComponent({
       });
     };
     return () => {
-      return <div class={ns.b()}>{props.source && props.source.length ? renderBreadItemList(props.source) : slots?.default()}</div>;
+      return <div class={ns.b()}>{props.source && props.source.length ? renderBreadItemList(props.source) : slots?.default?.()}</div>;
     };
   },
 });

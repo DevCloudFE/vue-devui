@@ -276,3 +276,10 @@ export type UseCascaderFn = {
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
 };
+
+export type UseFilterFn = {
+  handleInput: (val: string) => void;
+  suggestionsList: Ref<suggestionListType[]>;
+  isSearching: Ref<boolean>;
+  chooseSuggestion: (item: CascaderItem) => void;
+};

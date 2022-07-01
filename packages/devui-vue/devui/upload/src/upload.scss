@@ -30,12 +30,9 @@
   white-space: nowrap;
   font-size: $devui-font-size-icon;
   font-weight: normal;
-  line-height: 1;
   color: $devui-text;
   background-color: $devui-area;
-  border-top: 1px solid $devui-form-control-line;
-  border-bottom: 1px solid $devui-form-control-line;
-  border-right: 1px solid $devui-form-control-line;
+  border: 1px solid $devui-form-control-line;
   border-radius: 0 $devui-border-radius $devui-border-radius 0;
   transition:
     border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
@@ -53,28 +50,28 @@
   cursor: pointer;
   display: block;
   width: 100%;
-  height: unset;
   padding: 4px 8px;
   font-size: $devui-font-size;
-  line-height: 1.5;
+  line-height: 32px;
   background-image: none;
   border: 1px solid $devui-form-control-line;
   border-radius: $devui-border-radius 0 0 $devui-border-radius;
+  border-right: none;
   transition:
     border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     box-shadow $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
 
   &.#{$devui-prefix}-upload__files-list {
     max-height: 52px;
-    padding: 2px 2px 0 2px;
+    padding: 0 3px;
     overflow-x: hidden;
     overflow-y: auto;
     max-width: 100%;
     margin: 0;
 
     .#{$devui-prefix}-upload__file-item {
-      height: 22px;
-      line-height: 22px;
+      height: 26px;
+      line-height: 26px;
       padding: 0 48px 0 12px;
     }
 
@@ -140,8 +137,8 @@
   }
 
   .#{$devui-prefix}-upload__placeholder {
-    max-height: 28px;
-    line-height: 18px;
+    max-height: 32px;
+    line-height: 22px;
     max-width: 100%;
     overflow: hidden;
     white-space: nowrap;
