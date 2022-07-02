@@ -18,7 +18,7 @@ describe('d-input-number', () => {
     const inputNumber = wrapper.find(ns.b());
     expect(inputNumber.exists()).toBeTruthy();
     const inputInner = wrapper.find(ns.e('input-box'));
-    expect(inputInner.element.value).toBe('0');
+    expect((inputInner.element as HTMLInputElement).value).toBe('0');
     wrapper.unmount();
   });
 
@@ -46,14 +46,14 @@ describe('d-input-number', () => {
     });
 
     const inputInner = wrapper.find(ns.e('input-box'));
-    expect(inputInner.element.value).toBe('1');
+    expect((inputInner.element as HTMLInputElement).value).toBe('1');
 
     const decIcon = wrapper.find('.control-dec');
     expect(decIcon.classes()).toContain('disabled');
 
     const incIcon = wrapper.find('.control-inc');
     await incIcon.trigger('click');
-    expect(wrapper.find(ns.e('input-box')).element.value).toBe('2');
+    expect((inputInner.element as HTMLInputElement).value).toBe('2');
     expect(wrapper.find('.control-inc').classes()).toContain('disabled');
     wrapper.unmount();
   });
@@ -67,15 +67,15 @@ describe('d-input-number', () => {
     });
 
     const inputInner = wrapper.find(ns.e('input-box'));
-    expect(inputInner.element.value).toBe('0');
+    expect((inputInner.element as HTMLInputElement).value).toBe('0');
 
     const incIcon = wrapper.find('.control-inc');
     await incIcon.trigger('click');
-    expect(wrapper.find(ns.e('input-box')).element.value).toBe('3');
+    expect((inputInner.element as HTMLInputElement).value).toBe('3');
 
     const decIcon = wrapper.find('.control-dec');
     await decIcon.trigger('click');
-    expect(wrapper.find(ns.e('input-box')).element.value).toBe('0');
+    expect((inputInner.element as HTMLInputElement).value).toBe('0');
     wrapper.unmount();
   });
 
@@ -88,16 +88,16 @@ describe('d-input-number', () => {
     });
 
     const inputInner = wrapper.find(ns.e('input-box'));
-    expect(inputInner.element.value).toBe('1.00');
+    expect((inputInner.element as HTMLInputElement).value).toBe('1.00');
 
     const incIcon = wrapper.find('.control-inc');
     await incIcon.trigger('click');
-    expect(wrapper.find(ns.e('input-box')).element.value).toBe('1.10');
+    expect((inputInner.element as HTMLInputElement).value).toBe('1.10');
 
     const decIcon = wrapper.find('.control-dec');
     await decIcon.trigger('click');
     await decIcon.trigger('click');
-    expect(wrapper.find(ns.e('input-box')).element.value).toBe('0.90');
+    expect((inputInner.element as HTMLInputElement).value).toBe('0.90');
     wrapper.unmount();
   });
 
