@@ -51,34 +51,34 @@ describe('fullscreen', () => {
   });
 
   it('mode attribute shoule be rendered correctly', async () => {
-    const wrapper = mount(Dfullscreen, {
+    const innerWrapper = mount(Dfullscreen, {
       props: {
         modelValue: false,
       },
     });
 
-    await wrapper.setProps({ modelValue: true });
-    expect(wrapper.classes()).toContain('devui-fullscreen');
-    await wrapper.setProps({ modelValue: false });
+    await innerWrapper.setProps({ modelValue: true });
+    expect(innerWrapper.classes()).toContain('devui-fullscreen');
+    await innerWrapper.setProps({ modelValue: false });
 
-    await wrapper.setProps({ mode: 'immersive',modelValue: true  });
-    expect(wrapper.classes().length).toBe(0);
+    await innerWrapper.setProps({ mode: 'immersive',modelValue: true  });
+    expect(innerWrapper.classes().length).toBe(0);
   });
 
   it('z-index attribute shoule be rendered correctly', async () => {
-    const wrapper = mount(Dfullscreen, {
+    const innerWrapper = mount(Dfullscreen, {
       props: {
         modelValue: false,
         zIndex: 100
       },
     });
 
-    await wrapper.setProps({ modelValue: true });
-    expect(wrapper.attributes('style')).toContain('z-index: 100');
+    await innerWrapper.setProps({ modelValue: true });
+    expect(innerWrapper.attributes('style')).toContain('z-index: 100');
   });
 
   it('slot shoule be rendered correctly', async () => {
-    const wrapper = mount(Dfullscreen, {
+    const innerWrapper = mount(Dfullscreen, {
       props: {
         modelValue: false
       },
@@ -86,10 +86,9 @@ describe('fullscreen', () => {
         default: () => h('div', { id: 'defaultSlot'}, 'I am Fullscreen.')
       }
     });
-    
-    const dom = wrapper.find('#defaultSlot');
+    const dom = innerWrapper.find('#defaultSlot');
 
     expect(dom.exists()).toBeTruthy();
     expect(dom.element.textContent).toBe('I am Fullscreen.');
-  })
+  });
 });
