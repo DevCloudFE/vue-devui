@@ -214,7 +214,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
 
   const handlerClickMonth = (year: number, month: number | undefined) => {
     const date = new Date(year, month || 0, 1);
-    const selectYear = yearAndMonthList.value.find((child) => child.active)?.year || selectDate.value?.year() || calendarRange.value[0];
+    // const selectYear = yearAndMonthList.value.find((child) => child.active)?.year || selectDate.value?.year() || calendarRange.value[0];
     if (isListCollapse.value) {
       handlerYearCollapse(date);
     } else {
@@ -224,6 +224,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
 
   const handleScrollYearList = (e: UIEvent) => {
     let { scrollTop: newScrollTop } = e.currentTarget as Element;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     newScrollTop = newScrollTop > 0 ? newScrollTop : 0;
   };
 

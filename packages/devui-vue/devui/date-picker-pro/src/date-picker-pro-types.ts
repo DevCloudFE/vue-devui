@@ -58,7 +58,7 @@ export interface UseDatePickerProReturnType {
   isMouseEnter: Ref<boolean>;
   showCloseIcon: ComputedRef<boolean>;
   pickerDisabled: ComputedRef<boolean>;
-  pickerSize: ComputedRef<string>;
+  pickerSize: ComputedRef<'sm' | 'md' | 'lg'>;
   isValidateError: ComputedRef<boolean>;
   onFocus: (e: MouseEvent) => void;
   onSelectedDate: (date: Dayjs, isConfirm?: boolean) => void;
@@ -159,7 +159,7 @@ export interface UseTimePickerPanelReturnType {
 export interface UseYearCalendarPanelReturnType {
   yarListScrollRef: Ref<HTMLElement | undefined>;
   yearList: Ref<number[][]>;
-  getYearItemCls: (year: number) => any;
+  getYearItemCls: (year: number) => Record<string, boolean>;
   handlerSelectYear: (year: number) => void;
 }
 
@@ -185,6 +185,6 @@ export interface UseMonthCalendarPanelReturnType {
   monthList: number[][];
   handlerSelectYear: (year: number) => void;
   handlerMonthScroll: (e: MouseEvent) => void;
-  getMonthItemCls: (year: number, month: number) => any;
+  getMonthItemCls: (year: number, month: number) =>  Record<string, boolean>;
   handlerSelectMonth: (year: number, month: number) => void;
 }

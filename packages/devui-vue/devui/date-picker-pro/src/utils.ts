@@ -16,7 +16,7 @@ export const formatDayjsToStr = (date: Dayjs | undefined, format: string, type: 
   }
 };
 
-export const isDateEquals = (pre: Date | any, cur: Date | any): boolean => {
+export const isDateEquals = (pre: Date | unknown, cur: Date | unknown): boolean => {
   const preDate = pre instanceof Date;
   const curDate = cur instanceof Date;
   return preDate && curDate ? pre.getTime() === cur.getTime() : pre === cur;

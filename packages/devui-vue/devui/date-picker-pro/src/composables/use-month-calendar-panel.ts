@@ -147,7 +147,7 @@ export default function useMonthCalendarPanel(props: DatePickerProPanelProps, ct
     return isInRangeDate(date);
   };
 
-  const getMonthItemCls = (year: number, month: number) => {
+  const getMonthItemCls = (year: number, month: number): Record<string, boolean> => {
     return {
       [ns.e('month-item')]: true,
       [ns.e('this-month')]: isThisMonth(year, month),

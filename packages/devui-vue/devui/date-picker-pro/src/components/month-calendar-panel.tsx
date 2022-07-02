@@ -40,7 +40,7 @@ export default defineComponent({
             ))}
           </div>
           <div class={ns.e('month-wrapper')}>
-            <div class={ns.e('month-list')} ref={monthScrollRef} onScroll={handlerMonthScroll}>
+            <div class={ns.e('month-list')} ref={monthScrollRef} onScroll={(e: UIEvent) => {handlerMonthScroll(e as MouseEvent);}}>
               {yearList.value.map((year: YearAndMonthItem) => (
                 <div class={ns.e('table-month')}>
                   <div class={ns.e('table-month-title')}>{year.year + t('year')}</div>
