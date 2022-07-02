@@ -5,7 +5,7 @@ export default defineComponent({
   name: 'DNavSprite',
   props: navSpriteProps,
   emits: ['afterNavInit'],
-  setup(props) {
+  setup() {
     return {};
   }
 });

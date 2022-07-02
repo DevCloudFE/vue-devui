@@ -1,4 +1,5 @@
 import { defineComponent, provide, ref, computed, onMounted } from 'vue';
+import type { ComponentPublicInstance } from 'vue';
 import { menuProps, MenuProps } from './menu-types';
 import './menu.scss';
 import { setDefaultIndent } from './composables/use-layer-operate';
@@ -25,10 +26,9 @@ export default defineComponent({
     provide('useRouter', props.router);
     setDefaultIndent(props['indentSize']);
     const menuRoot = ref(null);
-    const overflow_container = ref(null);
+    const overflow_container = ref<ComponentPublicInstance | null>(null);
     const overflowItemLength = ref(0);
     onMounted(() => {
-      //
       if (props['mode'] === 'horizontal') {
         const overflowContainer = overflow_container.value?.$el as unknown as HTMLElement;
         const root = menuRoot.value as unknown as HTMLElement;
