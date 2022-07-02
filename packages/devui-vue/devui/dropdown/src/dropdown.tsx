@@ -16,8 +16,8 @@ export default defineComponent({
   emits: ['toggle'],
   setup(props: DropdownProps, { slots, attrs, emit, expose }) {
     const { visible, position, align, offset, destroyOnHide, shiftOffset, showAnimation } = toRefs(props);
-    const origin = ref<HTMLElement>();
-    const dropdownRef = ref<HTMLElement>();
+    const origin = ref<HTMLElement | undefined>();
+    const dropdownRef = ref<HTMLElement | undefined>();
     const overlayRef = ref();
     const id = `dropdown_${dropdownId++}`;
     const isOpen = ref<boolean>(false);

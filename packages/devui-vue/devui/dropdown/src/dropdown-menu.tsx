@@ -15,7 +15,7 @@ export default defineComponent({
     const ns = useNamespace('dropdown');
 
     onClickOutside(dropdownMenuRef, (value) => {
-      if (clickOutside.value?.() && !origin?.value?.contains(value.target)) {
+      if (clickOutside.value?.() && !origin?.value?.contains(value.target as Node)) {
         emit('update:modelValue', false);
       }
     });
