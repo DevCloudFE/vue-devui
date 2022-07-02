@@ -35,7 +35,7 @@ export interface UseRangePickerProReturnType {
   showCloseIcon: ComputedRef<boolean>;
   focusType: Ref<string>;
   pickerDisabled: ComputedRef<boolean>;
-  pickerSize: ComputedRef<string>;
+  pickerSize: ComputedRef<'sm' | 'md' | 'lg'>;
   isValidateError: ComputedRef<boolean>;
   onFocus: (type: string) => void;
   focusHandler: (e: MouseEvent) => void;

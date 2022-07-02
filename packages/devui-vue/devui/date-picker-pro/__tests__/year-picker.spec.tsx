@@ -22,7 +22,7 @@ const rangeBaseClass = rangeDatePickerNs.b();
 
 describe('date-picker-pro year type test', () => {
   it('year picker init render and select year', async () => {
-    const datePickerProValue = ref<Date | string>('');
+    const datePickerProValue = ref<Date>();
     const wrapper = mount({
       setup() {
         return () => <DDatePickerPro v-model={datePickerProValue.value} type="year"></DDatePickerPro>;
@@ -115,7 +115,7 @@ describe('date-picker-pro year type test', () => {
   });
 
   it('year range picker init render and select year', async () => {
-    const datePickerProValue = ref<(Date | string)[]>(['', '']);
+    const datePickerProValue = ref<(Date)[]>([]);
     const wrapper = mount({
       setup() {
         return () => <DRangeDatePickerPro v-model={datePickerProValue.value} type="year"></DRangeDatePickerPro>;

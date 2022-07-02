@@ -59,8 +59,8 @@ export default defineComponent({
           <div
             class={[ns.e('range-picker'), pickerDisabled.value && ns.m('disabled'), isValidateError.value && ns.m('error')]}
             ref={originRef}
-            onmouseover={() => (isMouseEnter.value = true)}
-            onmouseout={() => (isMouseEnter.value = false)}>
+            onMouseover={() => (isMouseEnter.value = true)}
+            onMouseout={() => (isMouseEnter.value = false)}>
             <span
               class={[
                 isPanelShow.value && focusType.value === 'start' ? ns.e('active-input') : ns.e('normal-input'),

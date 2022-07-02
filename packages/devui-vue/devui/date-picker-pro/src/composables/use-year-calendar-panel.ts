@@ -86,7 +86,7 @@ export default function useYearCalendarPanel(props: DatePickerProPanelProps, ctx
     return isIn ? true : false;
   };
 
-  const getYearItemCls = (year: number) => {
+  const getYearItemCls = (year: number): Record<string, boolean> => {
     return {
       [ns.e('year-item-title')]: true,
       [ns.e('this-year')]: isThisYear(year),

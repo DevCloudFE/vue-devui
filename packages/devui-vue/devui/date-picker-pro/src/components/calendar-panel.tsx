@@ -67,7 +67,7 @@ export default defineComponent({
             <table class={ns.e('calendar-table')}>
               <thead>
                 <tr class={ns.e('table-week-header')}>
-                  {t('getWeekDays')().map((child) => (
+                  {t('getWeekDays')().map((child: string) => (
                     <td>{child}</td>
                   ))}
                 </tr>
