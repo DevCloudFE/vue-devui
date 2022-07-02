@@ -18,8 +18,6 @@ export type Placement =
 export type Alignment = 'start' | 'end';
 export type OffsetOptions = { mainAxis?: number; crossAxis?: number };
 
-type ReadonlyRef<T> = Readonly<Ref<T>>;
-
 export type EmitEvent = (event: 'toggle', result: boolean) => void;
 
 export const dropdownProps = {
@@ -73,8 +71,8 @@ export type DropdownProps = ExtractPropTypes<typeof dropdownProps>;
 export interface UseDropdownProps {
   id: string;
   isOpen: Ref<boolean>;
-  origin: ReadonlyRef<any>;
-  dropdownRef: ReadonlyRef<any>;
+  origin: Ref<HTMLElement | undefined>;
+  dropdownRef: Ref<HTMLElement | undefined>;
   props: DropdownProps;
   emit: EmitEvent;
 }
