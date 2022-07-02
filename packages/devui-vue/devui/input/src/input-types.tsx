@@ -52,8 +52,8 @@ export interface UseInputRender {
   isFocus: Ref<boolean>;
   wrapClasses: ComputedRef<Record<string, boolean | undefined>>;
   inputClasses: ComputedRef<Record<string, boolean | undefined>>;
-  customStyle: unknown;
-  otherAttrs: unknown;
+  customStyle: Record<string, unknown>;
+  otherAttrs: Record<string, unknown>;
 }
 
 export interface UseInputEvent {

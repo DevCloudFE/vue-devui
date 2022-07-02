@@ -1,4 +1,4 @@
-import { defineComponent, reactive, PropType } from 'vue';
+import { defineComponent, reactive, PropType, toRefs } from 'vue';
 import Input from '../../input/src/input';
 import { inputProps } from '../../input/src/input-types';
 import Icon from '../../icon/src/icon';
@@ -29,24 +29,24 @@ const inputIconProps = {
 export default defineComponent({
   name: 'DInputIcon',
   props: inputIconProps,
-  setup(props, ctx) {
-    const { name, onIconclick, onChange, iconBgColor, iconColor, ...inputProps } = props;
+  setup(props) {
+    const { name, iconBgColor, iconColor, ...restProps } = toRefs(props);
     const state = reactive({ value: '' });
     const onInputChange = (v: string) => {
       state.value = v;
-      typeof onChange === 'function' && onChange(state.value);
+      typeof props.onChange === 'function' && props.onChange(state.value);
     };
     const onIconClick = (e: MouseEvent) => {
-      typeof onIconclick === 'function' && onIconclick(state.value, e);
+      typeof props.onIconclick === 'function' && props.onIconclick(state.value, e);
     };
     return () => {
       return (
         <div class="d-input-icon-container">
           <label>
-            <Input { ...inputProps } onChange={onInputChange} />
+            <Input { ...restProps } onChange={onInputChange} />
           </label>
-          <span onClick={onIconClick} style={{ backgroundColor: iconBgColor }}>
-            <Icon size="small" name={name} color={iconColor} />
+          <span onClick={onIconClick} style={{ backgroundColor: iconBgColor.value }}>
+            <Icon size="small" name={name.value} color={iconColor.value} />
           </span>
         </div>
       );
