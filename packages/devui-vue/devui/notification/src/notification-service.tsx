@@ -9,7 +9,7 @@ const defaultOptions: NotificationOption = {
   type: 'normal',
 };
 
-function initInstance(props: NotificationOption, content: string): App {
+function initInstance(props: NotificationOption, content?: string): App {
   const container = document.createElement('div');
   const app: App = createApp({
     setup() {
@@ -53,7 +53,7 @@ export default class NotificationService {
     props.modelValue = true;
 
     clearTimeout(timer);
-    if (options.duration) {
+    if (options.duration && props.onClose) {
       timer = setTimeout(props.onClose, options.duration);
     }
   }
