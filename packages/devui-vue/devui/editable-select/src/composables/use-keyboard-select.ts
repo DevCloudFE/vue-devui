@@ -14,7 +14,7 @@ export const useKeyboardSelect = (
   optionDisabledKey: string,
   filterOption: boolean | ((val: string, option: OptionObjectItem) => boolean) | undefined,
   loading: Ref<boolean>,
-  handleClick: (options: OptionObjectItem) => void,
+  handleClick: (options: OptionObjectItem, index: number) => void,
   closeMenu: () => void,
   toggleMenu: () => void
 ): useKeyboardSelectReturnType => {

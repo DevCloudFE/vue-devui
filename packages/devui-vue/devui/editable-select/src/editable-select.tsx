@@ -1,4 +1,5 @@
 import { defineComponent, withModifiers, computed, ref, SetupContext, watch, Teleport, Transition, getCurrentInstance } from 'vue';
+import type { Ref } from 'vue';
 import { editableSelectProps, EditableSelectProps, OptionObjectItem } from './editable-select-types';
 import clickOutside from '../../shared/devui-directive/clickoutside';
 import loadingDirective from '../../loading/src/loading-directive';
@@ -97,7 +98,7 @@ export default defineComponent({
     // 输入框变化后的逻辑
     const { handleInput } = useInput(inputValue, ctx);
 
-    const handleClick = (option: OptionObjectItem, index: number) => {
+    const handleClick = (option: OptionObjectItem, index: number, curSelectedIndex: Ref<number>) => {
       const { optionDisabledKey: disabledKey } = props;
       if (disabledKey && !!option[disabledKey]) {
         return;
@@ -105,7 +106,7 @@ export default defineComponent({
 
       inputValue.value = option.label;
       cacheInput.value = option.label;
-      selectedIndex.value = index;
+      curSelectedIndex.value = index;
 
       const value = getOptionValue(option.label);
       ctx.emit('update:modelValue', value + '');
@@ -121,7 +122,7 @@ export default defineComponent({
       props.optionDisabledKey,
       props.filterOption,
       loading,
-      handleClick,
+      (option, index) => handleClick(option, index, selectedIndex),
       closeMenu,
       toggleMenu
     );
@@ -188,7 +189,7 @@ export default defineComponent({
                             class={getItemCls(option, index)}
                             onClick={(e: MouseEvent) => {
                               e.stopPropagation();
-                              handleClick(option, index);
+                              handleClick(option, index, selectedIndex);
                             }}>
                             {ctx.slots.item ? ctx.slots.item(option) : option.label}
                           </li>
