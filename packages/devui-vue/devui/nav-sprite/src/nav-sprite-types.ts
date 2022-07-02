@@ -1,4 +1,3 @@
-import { PropType } from 'vue';
 export type SpriteMode = 'default' | 'sprite';
 
 export interface SpriteOption {
