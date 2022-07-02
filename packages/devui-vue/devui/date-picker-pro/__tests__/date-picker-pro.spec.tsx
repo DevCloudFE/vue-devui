@@ -7,10 +7,10 @@ import DButton from '../../button/src/button';
 const ns = useNamespace('date-picker-pro', true);
 const baseClass = ns.b();
 const pickerPanelClass = ns.e('panel');
-const yearListClass = ns.em('calendar-panel', 'year-list');
+// const yearListClass = ns.em('calendar-panel', 'year-list');
 const yearListItemClass = ns.em('calendar-panel', 'year-list-item');
 const weekHeaderClass = ns.e('table-week-header');
-const monthListClass = ns.e('tbody-wrapper');
+// const monthListClass = ns.e('tbody-wrapper');
 const tableMonthClass = ns.e('table-month');
 
 const noDotNs = useNamespace('date-picker-pro', false);
@@ -54,9 +54,9 @@ describe('date-picker-pro test', () => {
     expect(yearListItems[yearIndex].classes().includes(noDotYearActiveClass)).toBe(true);
     expect(pickerPanel.exists()).toBeTruthy();
 
-    const vm = wrapper.vm;
-    const yearList = vm.$el.querySelector(yearListClass);
-    const monthList = vm.$el.querySelector(monthListClass);
+    // const vm = wrapper.vm;
+    // const yearList = vm.$el.querySelector(yearListClass);
+    // const monthList = vm.$el.querySelector(monthListClass);
 
     const monthContentContainer = tableMonthItems[monthIndex].find(ns.e('table-month-content'));
     expect(monthContentContainer.exists()).toBeTruthy();
@@ -70,7 +70,7 @@ describe('date-picker-pro test', () => {
   });
 
   it('date-picker-pro select date', async () => {
-    const datePickerProValue = ref<Date | string>('');
+    const datePickerProValue = ref<Date>();
     const wrapper = mount({
       setup() {
         return () => <DDatePickerPro v-model={datePickerProValue.value}></DDatePickerPro>;

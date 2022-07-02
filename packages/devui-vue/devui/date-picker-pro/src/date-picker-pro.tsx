@@ -3,7 +3,7 @@ import type { SetupContext } from 'vue';
 import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types';
 import usePickerPro from './use-picker-pro';
 import { Input } from '../../input';
-import { FlexibleOverlay } from '../../overlay';
+import { FlexibleOverlay, Placement } from '../../overlay';
 import DatePickerProPanel from './components/date-picker-panel';
 import { IconCalendar } from './components/icon-calendar';
 import { IconClose } from './components/icon-close';
@@ -39,7 +39,7 @@ export default defineComponent({
       onSelectedDate,
       handlerClearTime,
     } = usePickerPro(props, ctx, t);
-    const position = ref(['bottom-start']);
+    const position = ref<Placement[]>(['bottom-start']);
     return () => {
       const vSlots = {
         rightArea: ctx.slots?.rightArea && (() => renderSlot(useSlots(), 'rightArea')),
@@ -50,8 +50,9 @@ export default defineComponent({
           <div
             class={ns.e('single-picker')}
             ref={originRef}
-            onmouseover={() => (isMouseEnter.value = true)}
-            onmouseout={() => (isMouseEnter.value = false)}>
+            onMouseover={() => (isMouseEnter.value = true)}
+            onMouseout={() => (isMouseEnter.value = false)}
+          >
             <Input
               ref={inputRef}
               modelValue={displayDateValue.value}
@@ -63,12 +64,12 @@ export default defineComponent({
               v-slots={{
                 prefix: () => (
                   <span class={ns.e('single-picker-icon')}>
-                    <IconCalendar></IconCalendar>
+                    <IconCalendar />
                   </span>
                 ),
                 suffix: () => (
                   <span class={['close-icon', showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden')]} onClick={handlerClearTime}>
-                    <IconClose></IconClose>
+                    <IconClose />
                   </span>
                 ),
               }}
@@ -82,7 +83,8 @@ export default defineComponent({
                 visible={isPanelShow.value}
                 format={format.value}
                 onSelectedDate={onSelectedDate}
-                v-slots={vSlots}></DatePickerProPanel>
+                v-slots={vSlots}
+              />
             </FlexibleOverlay>
           </Transition>
         </div>

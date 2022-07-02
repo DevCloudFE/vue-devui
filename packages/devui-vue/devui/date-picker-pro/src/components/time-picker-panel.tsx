@@ -21,7 +21,7 @@ export default defineComponent({
       return (
         <div class={ns.e('panel-time')}>
           <div class={ns.em('panel-time', 'title')}>
-            {t('getTimeArr')().map((child) => (
+            {t('getTimeArr')().map((child: string) => (
               <span class={ns.em('panel-time', 'title-item')}> {child}</span>
             ))}
           </div>
@@ -32,7 +32,8 @@ export default defineComponent({
               minuteList={minuteList}
               secondList={secondList}
               itemHeight={30}
-              onChange={handlerTimeSelected}></DTimeList>
+              onChange={handlerTimeSelected}
+            />
           </div>
         </div>
       );
