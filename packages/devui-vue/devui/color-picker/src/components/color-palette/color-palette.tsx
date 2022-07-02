@@ -2,21 +2,23 @@ import { defineComponent, ref, onMounted, computed, getCurrentInstance, watch, i
 import { DOMUtils } from '../../utils/dom-dragger';
 import { fromHSVA } from '../../utils/color-utils';
 import { clamp } from '../../utils/helpers';
-import { colorPickerPaletteProps } from './color-picker-palette-types';
-import { provideColorOptions } from '../../utils/color-utils-types';
+import { colorPickerPaletteProps, ColorPickerPaletteProps } from './color-picker-palette-types';
+import { ProvideColorOptions } from '../../utils/color-utils-types';
 import './color-palette.scss';
+
+type DefaultTransition = { transition: string };
 export default defineComponent({
   name: 'ColorPallete',
   props: colorPickerPaletteProps,
   emits: ['update:modelValue', 'changeTextColor'],
-  setup(props: colorPickerPaletteProps, ctx) {
-    const DEFAULT_TRANSITION = { transition: 'all 0.3s ease' };
-    const dotSizeInject: provideColorOptions = inject('provideData');
+  setup(props: ColorPickerPaletteProps, ctx) {
+    const DEFAULT_TRANSITION: DefaultTransition = { transition: 'all 0.3s ease' };
+    const dotSizeInject = inject('provideData') as ProvideColorOptions;
 
-    const clickTransfrom = ref(DEFAULT_TRANSITION);
-    const paletteElement = ref<HTMLElement | null>();
-    const canvasElement = ref<HTMLCanvasElement | null>();
-    const handlerElement = ref<HTMLElement | null>();
+    const clickTransfrom = ref<DefaultTransition | null>(DEFAULT_TRANSITION);
+    const paletteElement = ref<HTMLElement | null>(null);
+    const canvasElement = ref<HTMLCanvasElement | null>(null);
+    const handlerElement = ref<HTMLElement | null>(null);
     const paletteInstance = getCurrentInstance();
 
     const cursorTop = ref(0);
@@ -25,7 +27,7 @@ export default defineComponent({
       return {
         width: `${dotSizeInject.dotSize}px`,
         height: `${dotSizeInject.dotSize}px`,
-        transform: `translate(-${dotSizeInject.dotSize / 2}px,  -${dotSizeInject.dotSize / 2}px)`
+        transform: `translate(-${dotSizeInject?.dotSize || 0 / 2}px,  -${dotSizeInject?.dotSize || 0 / 2}px)`
       };
     });
     const getCursorStyle = computed(() => {
@@ -36,27 +38,31 @@ export default defineComponent({
       };
     });
     function renderCanvas() {
-      const canvas = canvasElement.value.getContext('2d');
-      const parentWidth = paletteElement.value.offsetWidth;
-      canvasElement.value.width = parentWidth;
-      canvasElement.value.height = props.height;
-      const saturationGradient = canvas.createLinearGradient(0, 0, parentWidth, 0);
-      saturationGradient.addColorStop(0, 'hsla(0, 0%, 100%, 1)'); // white
-      saturationGradient.addColorStop(1, `hsla(${props.modelValue.hue}, 100%, 50%, 1)`);
-      canvas.fillStyle = saturationGradient;
-      canvas.fillRect(0, 0, parentWidth, props.height);
-      const valueGradient = canvas.createLinearGradient(0, 0, 0, props.height);
-      valueGradient.addColorStop(0, 'hsla(0, 0%, 100%, 0)'); // transparent
-      valueGradient.addColorStop(1, 'hsla(0, 0%, 0%, 1)'); // black
-      canvas.fillStyle = valueGradient;
-      canvas.fillRect(0, 0, parentWidth, props.height);
+      if (canvasElement.value) {
+        const canvas = canvasElement.value.getContext('2d');
+        if (canvas) {
+          const parentWidth = paletteElement.value?.offsetWidth || 0;
+          canvasElement.value.width = parentWidth;
+          canvasElement.value.height = props.height;
+          const saturationGradient = canvas.createLinearGradient(0, 0, parentWidth as number, 0);
+          saturationGradient.addColorStop(0, 'hsla(0, 0%, 100%, 1)'); // white
+          saturationGradient.addColorStop(1, `hsla(${props.modelValue.hue}, 100%, 50%, 1)`);
+          canvas.fillStyle = saturationGradient;
+          canvas.fillRect(0, 0, parentWidth, props.height);
+          const valueGradient = canvas.createLinearGradient(0, 0, 0, props.height);
+          valueGradient.addColorStop(0, 'hsla(0, 0%, 100%, 0)'); // transparent
+          valueGradient.addColorStop(1, 'hsla(0, 0%, 0%, 1)'); // black
+          canvas.fillStyle = valueGradient;
+          canvas.fillRect(0, 0, parentWidth, props.height);
+        }
+      }
     }
 
     function handleDrag(event: MouseEvent) {
-      const parentWidth = paletteElement.value.offsetWidth;
+      const parentWidth = paletteElement.value?.offsetWidth || 0;
       if (paletteInstance) {
         const el = canvasElement.value;
-        const rect = el?.getBoundingClientRect();
+        const rect = el?.getBoundingClientRect() as DOMRect;
         let left = event.clientX - rect.left;
         let top = event.clientY - rect.top;
         left = clamp(left, 0, parentWidth);
@@ -91,7 +97,7 @@ export default defineComponent({
     }
     function updatePosition() {
       if (paletteInstance) {
-        const parentWidth = paletteElement.value.offsetWidth;
+        const parentWidth = paletteElement.value?.offsetWidth || 0;
         cursorLeft.value = Number(props.modelValue?.hsva.s) * parentWidth;
         cursorTop.value = (1 - Number(props.modelValue?.hsva.v)) * props.height;
       }

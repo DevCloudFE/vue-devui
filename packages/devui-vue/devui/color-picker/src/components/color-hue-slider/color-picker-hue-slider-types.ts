@@ -24,4 +24,4 @@ export const colorPickerHueSliderProps = {
   }
 } as const;
 
-export type colorPickerHueSliderProps = ExtractPropTypes<typeof colorPickerHueSliderProps>;
+export type ColorPickerHueSliderProps = ExtractPropTypes<typeof colorPickerHueSliderProps>;

@@ -1,6 +1,6 @@
 import { defineComponent, ref, watch, nextTick, inject, getCurrentInstance } from 'vue';
 import { colorPickerProps, ColorPickerProps } from './color-picker-panel-types';
-import { provideColorOptions } from '../../utils/color-utils-types';
+import { ProvideColorOptions } from '../../utils/color-utils-types';
 import { Tabs } from '../../../../tabs';
 import colorPalette from '../color-palette/color-palette';
 import colorHueSlider from '../color-hue-slider/color-hue-slider';
@@ -27,8 +27,8 @@ export default defineComponent({
     const app = getCurrentInstance();
     const t = createI18nTranslate('DColorPicker', app);
 
-    const injectData: provideColorOptions = inject('provideData');
-    const paletteElement = ref(null);
+    const injectData = inject('provideData') as ProvideColorOptions;
+    const paletteElement = ref<HTMLElement & { renderCanvas: () => void } | null>(null);
     const showAlpha = injectData.showAlpha;
     const tab = ref('basic');
     function changeTextColor(isChange: boolean) {
