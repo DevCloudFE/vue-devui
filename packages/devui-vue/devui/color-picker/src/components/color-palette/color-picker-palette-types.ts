@@ -13,4 +13,4 @@ export const colorPickerPaletteProps = {
   }
 } as const;
 
-export type colorPickerPaletteProps = ExtractPropTypes<typeof colorPickerPaletteProps>;
+export type ColorPickerPaletteProps = ExtractPropTypes<typeof colorPickerPaletteProps>;

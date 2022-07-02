@@ -10,7 +10,10 @@ export function chunk(str: string, size = 1): string[] {
   }
   return chunked;
 }
-export function mergeObjects(source, target): any {
+export function mergeObjects<
+  T extends Record<string, unknown>,
+  K extends Record<string, unknown>
+>(source: T, target: K): Record<string, unknown> {
   return Object.assign(source, target);
 }
 export function parseHex(value: string): number {
@@ -43,6 +46,6 @@ export function keepDecimal(value: number, digits = 0): number {
   const COUNT_VALUE = 10 ** digits;
   return Math.round(value * COUNT_VALUE) / COUNT_VALUE;
 }
-export function has(obj: any, key: string[]): boolean {
+export function has<T extends Record<string, unknown>>(obj: T, key: string[]): boolean {
   return key.every((k) => obj.hasOwnProperty(k));
 }

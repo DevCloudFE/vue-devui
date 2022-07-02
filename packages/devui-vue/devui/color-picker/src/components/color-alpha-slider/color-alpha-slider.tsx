@@ -9,7 +9,7 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props: colorPickerAlphaSliderProps, ctx) {
     const DEFAULT_TRANSITION = { transition: 'all 0.3s ease' };
-    const clickTransfrom = ref(DEFAULT_TRANSITION);
+    const clickTransfrom = ref<{ transition: string } | null>(DEFAULT_TRANSITION);
     const barElement = ref<HTMLElement | null>(null);
     const cursorElement = ref<HTMLElement | null>(null);
 

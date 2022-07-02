@@ -11,6 +11,7 @@ import {
   readonly,
   Transition
 } from 'vue';
+import type { StyleValue } from 'vue';
 import {
   useReactive,
   colorPickerResize,
@@ -38,16 +39,30 @@ export default defineComponent({
       showHistory: useReactive(() => props.showHistory)
     };
     provide('provideData', readonly(provideData));
-    const initialColor = ref(null);
-    const colorCubeRef = ref<HTMLElement | null>();
-    const pickerRef = ref<HTMLElement | null>();
-    const containerRef = ref<HTMLElement | null>();
+    const initialColor = ref<Partial<ColorPickerColor>>();
+    const colorCubeRef = ref<HTMLElement | null>(null);
+    const pickerRef = ref<HTMLElement | null>(null);
+    const containerRef = ref<HTMLElement | null>(null);
     const left = ref(0);
     const top = ref(0);
     const isChangeTextColor = ref(true);
     const showColorPicker = ref(false);
     const formItemText = ref(`${props.mode ?? DEFAUTL_MODE}`);
     const mode = ref(unref(props.mode));
+
+    // 更新用户输入颜色 2021.12.10
+    function updateUserColor(color: Partial<ColorPickerColor>) {
+      initialColor.value = color;
+      // 提取颜色 2021.12.10
+      const value = extractColor(initialColor.value as ColorPickerColor, props.modelValue, mode.value as string, props.showAlpha);
+      emit('update:modelValue', value);
+    }
+    function resize() {
+      return colorPickerResize(colorCubeRef, top, left);
+    }
+    function isExhibition(event: Event) {
+      return isExhibitionColorPicker(event as PointerEvent, colorCubeRef, pickerRef, showColorPicker);
+    }
     onMounted(() => {
       // resize 响应式 colorpicker
       window.addEventListener('resize', resize);
@@ -56,17 +71,17 @@ export default defineComponent({
     });
     // ** computeds
     // colorpicker panel 组件位置
-    const colorPickerPostion = computed(() => {
+    const colorPickerPostion = computed<StyleValue>(() => {
       if (colorCubeRef.value) {
         return {
           transform: `translate(${left.value}px, ${top.value}px)`
         };
       }
-      return null;
+      return {};
     });
     // 交互触发item 颜色 面板  动态修改alpha后要还原 alpha 2021.12.18
     const tiggerColor = computed(() => {
-      const currentColor = initialColor.value.rgba;
+      const currentColor = (initialColor.value as ColorPickerColor).rgba;
       const trigger = { ...currentColor, a: props.showAlpha ? currentColor.a : 1 };
       return {
         backgroundColor: `${RGBAtoCSS(trigger)}`
@@ -74,12 +89,12 @@ export default defineComponent({
     });
     // 交互面板 的value 值 动态展示 根据不同 type
     const formItemValue = computed(() => {
-      return extractColor(initialColor.value, '', formItemText.value, props.showAlpha);
+      return extractColor(initialColor.value as ColorPickerColor, '', formItemText.value, props.showAlpha);
     });
     // 动态 根据当前 透明度修改文本颜色 tips：根据不同 面板颜色 目前 不够优雅
     const textColor = computed(() => {
       // 数字代表 hsv 中的value 值 纵轴 动态切换 文本颜色
-      return changeColorValue(initialColor.value, 0.5);
+      return changeColorValue(initialColor.value as ColorPickerColor, 0.5);
     });
     // ** emits
     // 动态 交互面板 文本展示颜色  tips：根据不同 面板颜色 目前 不够优雅
@@ -103,9 +118,11 @@ export default defineComponent({
         const textPalette = colorCubeRef.value?.getBoundingClientRect();
         newValue &&
           nextTick(() => {
-            pickerRef.value.style.transform = `translate(${textPalette.left + 'px'}, ${
-              textPalette.top + window.scrollY + textPalette.height + 'px'
-            })`;
+            if (pickerRef.value) {
+              pickerRef.value.style.transform = `translate(${textPalette?.left + 'px'}, ${
+                (textPalette?.top || 0) + window.scrollY + (textPalette?.height || 0) + 'px'
+              })`;
+            }
           });
       }
     );
@@ -118,19 +135,7 @@ export default defineComponent({
       },
       { immediate: true }
     );
-    // 更新用户输入颜色 2021.12.10
-    function updateUserColor(color) {
-      initialColor.value = color;
-      // 提取颜色 2021.12.10
-      const value = extractColor(initialColor.value, props.modelValue, mode.value, props.showAlpha);
-      emit('update:modelValue', value);
-    }
-    function resize() {
-      return colorPickerResize(colorCubeRef, top, left);
-    }
-    function isExhibition(event: Event) {
-      return isExhibitionColorPicker(event, colorCubeRef, pickerRef, showColorPicker);
-    }
+
     return () => {
       return (
         <div class='devui-color-picker' ref={colorCubeRef}>
