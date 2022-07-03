@@ -1,7 +1,7 @@
 import { defineComponent, inject, computed } from 'vue';
 import AlertCloseIcon from '../../../alert/src/components/alert-close-icon';
 import SelectArrowIcon from './select-arrow-icon';
-import { Tag } from '../../../tag';
+import { Tag, SizeType } from '../../../tag';
 import { Popover } from '../../../popover';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useSelectContent from '../composables/use-select-content';
@@ -59,7 +59,7 @@ export default defineComponent({
                       tagDelete(item);
                     }}
                     key={item.value}
-                    size={tagSize.value}>
+                    size={tagSize.value as SizeType}>
                     {item.name}
                   </Tag>
                 ))}
@@ -71,7 +71,7 @@ export default defineComponent({
                     e.stopPropagation();
                     tagDelete(selectedData.value[0]);
                   }}
-                  size={tagSize.value}>
+                  size={tagSize.value as SizeType}>
                   {selectedData.value[0].name}
                 </Tag>
               )}
@@ -92,7 +92,7 @@ export default defineComponent({
                               tagDelete(item);
                             }}
                             key={item.value}
-                            size={tagSize.value}>
+                            size={tagSize.value as SizeType}>
                             {item.name}
                           </Tag>
                         ))}
