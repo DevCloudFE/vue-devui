@@ -240,7 +240,7 @@ describe('select', () => {
     const options = reactive([0]);
     const demoSelect = ref(null);
     const toggleChange = () => {
-      demoSelect.value.toggleChange(true);
+      demoSelect.value?.toggleChange(true);
     };
     const wrapper = mount({
       setup() {
@@ -413,7 +413,7 @@ describe('select', () => {
         setTimeout(() => {
           options.data = list.filter((item) => {
             return item.toLowerCase().includes(query.toLowerCase());
-          });
+          }) as never[];
           loading.value = false;
         }, 200);
       } else {
@@ -522,7 +522,7 @@ describe('select', () => {
       if (bool) {
         remoteLoading.value = true;
         setTimeout(() => {
-          options.data = list;
+          options.data = list as never[];
           remoteLoading.value = false;
         }, 3000);
       }
