@@ -1,5 +1,5 @@
 import { computed, inject, toRefs } from 'vue';
-import { FormControlProps, UseFormControl } from './form-control-types';
+import { FormControlProps, UseFormControl, UseFormControlValidate } from './form-control-types';
 import { FormItemContext, FORM_ITEM_TOKEN, LabelData, LABEL_DATA } from '../form-item/form-item-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
@@ -23,7 +23,7 @@ export function useFormControl(props: FormControlProps): UseFormControl {
   return { controlClasses, controlContainerClasses };
 }
 
-export function useFormControlValidate() {
+export function useFormControlValidate(): UseFormControlValidate {
   const formItemContext = inject(FORM_ITEM_TOKEN) as FormItemContext;
   const feedbackStatus = computed(() => formItemContext.validateState);
   const showFeedback = computed(() => formItemContext.showFeedback && Boolean(formItemContext.validateState));

@@ -44,7 +44,7 @@ export default function useFormValidation(itemContexts: FormItemContext[]): UseF
     return Promise.reject(errors);
   };
 
-  const validateFields = async (fields: string[] = [], callback: any) => {
+  const validateFields = async (fields: string[] = [], callback?: FormValidateCallback) => {
     try {
       const result = await execValidateFields(fields);
       if (result) {

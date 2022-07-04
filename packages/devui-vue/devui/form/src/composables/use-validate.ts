@@ -1,16 +1,18 @@
+import type { Rules, Values } from 'async-validator';
 import AsyncValidator from 'async-validator';
+import type { UseValidate } from '../form-types';
 
-export default function useValidate() {
+export default function useValidate(): UseValidate {
 
   // 校验函数
-  const validate = (descriptor, validateObject) => {
+  const validate = (descriptor: Rules, validateObject: Values) => {
     const validator = new AsyncValidator(descriptor);
     return validator.validate(validateObject);
   };
 
   // 创建内置校验器
   const createDevUIBuiltinValidator = (rule) => {
-    let res = {...rule};
+    let res = { ...rule };
     if(res.min !== undefined) {
       res = {
         ...res,
@@ -115,5 +117,5 @@ export default function useValidate() {
     return res;
   };
 
-  return {validate, createDevUIBuiltinValidator};
+  return { validate, createDevUIBuiltinValidator };
 }
