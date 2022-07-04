@@ -9,6 +9,7 @@
       color: $devui-text;
       cursor: pointer;
       border-radius: $devui-border-radius;
+      box-sizing: border-box;
       @include flex(flex-start);
 
       margin-top: 4px;
