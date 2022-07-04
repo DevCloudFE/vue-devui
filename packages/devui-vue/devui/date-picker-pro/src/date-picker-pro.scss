@@ -136,6 +136,7 @@ $input-height-lg: 46px;
 
     td {
       text-align: center;
+      font-size: $devui-font-size-sm;
     }
   }
 }
@@ -612,6 +613,7 @@ $input-height-lg: 46px;
         text-align: center;
         border: none;
         padding: 0;
+        font-size: $devui-font-size-sm;
       }
     }
 

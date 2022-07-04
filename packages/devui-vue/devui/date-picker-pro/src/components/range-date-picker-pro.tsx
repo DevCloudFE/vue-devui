@@ -44,7 +44,7 @@ export default defineComponent({
       handlerClearTime,
       onChangeRangeFocusType,
     } = useRangePickerPro(props, ctx);
-    const position = ref(['bottom-start']);
+    const position = ref(['bottom-start', 'top-start']);
 
     return () => {
       const vSlots = {

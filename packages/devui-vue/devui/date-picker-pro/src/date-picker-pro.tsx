@@ -39,7 +39,7 @@ export default defineComponent({
       onSelectedDate,
       handlerClearTime,
     } = usePickerPro(props, ctx, t);
-    const position = ref<Placement[]>(['bottom-start']);
+    const position = ref<Placement[]>(['bottom-start', 'top-start']);
     return () => {
       const vSlots = {
         rightArea: ctx.slots?.rightArea && (() => renderSlot(useSlots(), 'rightArea')),
@@ -51,8 +51,7 @@ export default defineComponent({
             class={ns.e('single-picker')}
             ref={originRef}
             onMouseover={() => (isMouseEnter.value = true)}
-            onMouseout={() => (isMouseEnter.value = false)}
-          >
+            onMouseout={() => (isMouseEnter.value = false)}>
             <Input
               ref={inputRef}
               modelValue={displayDateValue.value}
