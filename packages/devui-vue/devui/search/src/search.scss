@@ -70,7 +70,6 @@
   &__icon {
     pointer-events: all;
     cursor: pointer;
-    padding: 0 8px;
     position: absolute;
     z-index: 1;
     right: 0;
@@ -85,7 +84,7 @@
     .#{$devui-prefix}-input {
       &.#{$devui-prefix}-input--sm {
         font-size: $devui-font-size;
-        padding-right: 24px;
+        padding-right: 60px;
       }
     }
 
@@ -106,7 +105,7 @@
       padding: 4px 36px 4px 10px;
 
       &.#{$devui-prefix}-input--lg {
-        padding-right: 70px;
+        padding-right: 75px;
       }
     }
 
@@ -116,7 +115,7 @@
     }
 
     .#{$devui-prefix}-search__clear {
-      @include size(30px, 100%);
+      @include size(40px, 100%);
 
       right: 46px;
     }

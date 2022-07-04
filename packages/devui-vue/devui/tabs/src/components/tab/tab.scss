@@ -1,6 +1,7 @@
 @import '../../../../styles-var/devui-var.scss';
 
 .#{$devui-prefix}-tab__content {
-  margin-top: 20px;
+  margin-top: 10px;
   overflow: hidden;
+  padding: 10px 0;
 }
