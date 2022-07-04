@@ -4,7 +4,7 @@ import { Icon } from '../../icon';
 import useTimePicker from './composables/use-time-picker';
 import TimePopup from './components/time-popup/index';
 import DInput from '../../input/src/input';
-import { FlexibleOverlay } from '../../overlay';
+import { FlexibleOverlay, Placement } from '../../overlay';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 import './time-picker.scss';
@@ -20,6 +20,7 @@ export default defineComponent({
     const activeMinute = ref('00');
     const activeSecond = ref('00');
     const format = props.format.toLowerCase();
+    const position = ref(['bottom-start', 'top-start']);
 
     const {
       showPopup,
@@ -83,7 +84,12 @@ export default defineComponent({
               }}></DInput>
           </div>
           <Transition name="fade">
-            <FlexibleOverlay v-model={showPopup.value} ref={overlayRef} origin={inputDom.value}>
+            <FlexibleOverlay
+              v-model={showPopup.value}
+              ref={overlayRef}
+              origin={inputDom.value}
+              position={position.value as Placement[]}
+              align="start">
               <TimePopup
                 ref={timePopupDom}
                 showPopup={showPopup.value}
