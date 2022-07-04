@@ -62,8 +62,8 @@ export default {
     ok: '我知道啦',
   },
   table: {
-    selectAll: 'Select all',
-    ok: 'OK',
+    selectAll: '全选',
+    ok: '确定',
   },
   timePopup: {
     ok: '确定',
