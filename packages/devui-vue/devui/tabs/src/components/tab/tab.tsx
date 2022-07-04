@@ -14,12 +14,14 @@ export default defineComponent({
     const ns = useNamespace('tab');
 
     onUnmounted(() => {
-      tabs.state.data = tabs.state.data.filter((tab) => tab.id !== props.id);
+      if (tabs) {
+        tabs.state.data = tabs.state.data?.filter((tab) => tab.id !== props.id);
+      }
     });
     return () => {
       const { id } = props;
       const content =
-        tabs.state.showContent && tabs.state.active === id ? (
+        tabs?.state.showContent && tabs.state.active === id ? (
           <div class={ns.e('content')}>
             <div role="tabpanel">{slots.default?.()}</div>
           </div>

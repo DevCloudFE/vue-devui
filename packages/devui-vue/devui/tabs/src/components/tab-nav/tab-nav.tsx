@@ -1,5 +1,5 @@
-import { defineComponent, inject, onBeforeMount, onMounted, onUpdated, reactive, ref, SetupContext, shallowRef, watch } from 'vue';
-import { TabsData, tabsProps, TabsProps } from '../../tabs-types';
+import { defineComponent, inject, onBeforeMount, onMounted, onUpdated, reactive, SetupContext, shallowRef, watch } from 'vue';
+import { TabsData, tabsProps, TabsProps, TabsStateData } from '../../tabs-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { useTabNavRender } from './composables/use-tab-nav-render';
 import { useTabNavFunction } from './composables/use-tab-nav-function';
@@ -35,7 +35,7 @@ export default defineComponent({
     );
 
     return () => {
-      const closeIconEl = (item) => {
+      const closeIconEl = (item: TabsStateData) => {
         return tabCanClose(item) ? (
           <span class={ns.e('close-btn')} onClick={(ev: MouseEvent) => onTabRemove(item, ev)}>
             <d-icon size="12px" name="error-o" />
@@ -65,7 +65,7 @@ export default defineComponent({
                     aria-expanded={props.modelValue === (item.id || item.tabId)}
                     class={aClasses.value}
                     style={customStyle}>
-                    {tabs?.state.slots[i] ? tabs.state.slots[i]() : <span>{item.title}</span>}
+                    {tabs?.state.slots[i] ? (tabs.state.slots[i]?.()) : <span>{item.title}</span>}
                   </a>
                   {closeIconEl(item)}
                 </span>
