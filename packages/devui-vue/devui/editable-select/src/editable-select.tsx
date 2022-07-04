@@ -108,7 +108,7 @@ export default defineComponent({
       cacheInput.value = option.label;
       curSelectedIndex.value = index;
 
-      const value = getOptionValue(option.label);
+      const value = getOptionValue(option);
       ctx.emit('update:modelValue', value + '');
       closeMenu();
     };

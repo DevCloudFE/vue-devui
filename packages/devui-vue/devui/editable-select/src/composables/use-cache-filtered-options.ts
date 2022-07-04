@@ -1,21 +1,20 @@
 import { computed, ComputedRef } from 'vue';
 import { OptionObjectItem } from '../editable-select-types';
 
-type OptionLabel = OptionObjectItem['label'];
 type OptionValue = OptionObjectItem['value'];
 interface getOptionValueFunc {
-  getOptionValue: (label: string) => string | number | undefined;
+  getOptionValue: (option: OptionObjectItem) => string | number | undefined;
 }
 
 export const useCacheFilteredOptions = (filteredOptions: ComputedRef<OptionObjectItem[]>): getOptionValueFunc => {
   const cacheFilteredOptions = computed(() => {
-    const map = new Map<OptionLabel, OptionValue>();
+    const map = new Map<OptionObjectItem, OptionValue>();
     filteredOptions.value.forEach((item) => {
-      map.set(item.label, item.value);
+      map.set(item, item.value);
     });
     return map;
   });
-  const getOptionValue = (label: string) => cacheFilteredOptions.value.get(label);
+  const getOptionValue = (option: OptionObjectItem) => cacheFilteredOptions.value.get(option);
   return {
     getOptionValue,
   };
