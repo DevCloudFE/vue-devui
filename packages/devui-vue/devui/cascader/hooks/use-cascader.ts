@@ -18,7 +18,7 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
   const tagList = ref<CascaderItem[]>([]); // 多选模式下选中的值数组，用于生成tag
   const rootStyle = useRootStyle(props);
   const showClearable = ref(false);
-  const position = ref(['bottom-start']);
+  const position = ref(['bottom-start', 'top-start']);
   let initIptValue = props.modelValue.length > 0 ? true : false; // 有value默认值时，初始化输出内容
 
   // popup弹出层
