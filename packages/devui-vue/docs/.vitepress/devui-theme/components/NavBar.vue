@@ -97,6 +97,7 @@ const switchLang = () => {
           <div
             class="custom-nav-item ml-m"
             @click="switchLang"
+            v-if="false"
           >
             {{ LANG_MAP[currentLang] }}
           </div>
