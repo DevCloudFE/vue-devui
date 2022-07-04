@@ -12,10 +12,11 @@ import {
   FormRuleItem,
   UseFormItemValidate,
   MessageType,
+  UseFormItemRule
 } from './form-item-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 
-function getFieldValue(obj: Record<string, any>, path: string) {
+function getFieldValue(obj: Record<string, unknown>, path: string) {
   return {
     get value() {
       return get(obj, path);
@@ -45,7 +46,7 @@ export function useFormItem(
   return { itemClasses, isRequired };
 }
 
-export function useFormItemRule(props: FormItemProps) {
+export function useFormItemRule(props: FormItemProps): UseFormItemRule {
   const formContext = inject(FORM_TOKEN) as FormContext;
   const _rules = computed(() => {
     const rules = (props.rules ? castArray(props.rules) : []) as FormRuleItem[];
@@ -72,7 +73,7 @@ export function useFormItemValidate(props: FormItemProps, _rules: ComputedRef<Fo
   const formContext = inject(FORM_TOKEN) as FormContext;
   const validateState = ref<FormItemValidateState>('');
   const validateMessage = ref('');
-  let initFieldValue: any = undefined;
+  let initFieldValue: unknown = undefined;
   let isResetting = false;
   const computedField = computed(() => {
     return typeof props.field === 'string' ? props.field : '';
@@ -97,7 +98,7 @@ export function useFormItemValidate(props: FormItemProps, _rules: ComputedRef<Fo
           return rule.trigger === triggerVal;
         }
       })
-      .map(({ trigger, ...rule }) => rule);
+      .map(({ ...rule }) => rule);
   };
 
   const onValidateSuccess = () => {
