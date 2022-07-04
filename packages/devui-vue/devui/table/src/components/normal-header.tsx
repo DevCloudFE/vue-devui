@@ -2,7 +2,7 @@ import { computed, defineComponent, inject } from 'vue';
 import ColGroup from './colgroup/colgroup';
 import TableHeader from './header/header';
 import TableBody from './body/body';
-import { TABLE_TOKEN } from '../table-types';
+import { TABLE_TOKEN, ITableInstanceAndDefaultRow } from '../table-types';
 
 export default defineComponent({
   props: {
@@ -15,7 +15,7 @@ export default defineComponent({
     },
   },
   setup(props: { classes: Record<string, unknown>; isEmpty: boolean }) {
-    const table = inject(TABLE_TOKEN, undefined);
+    const table = inject(TABLE_TOKEN, undefined) as ITableInstanceAndDefaultRow;
     const showHeader = computed(() => Boolean(table?.props.showHeader));
     return () => (
       <table class={props.classes} cellpadding="0" cellspacing="0">

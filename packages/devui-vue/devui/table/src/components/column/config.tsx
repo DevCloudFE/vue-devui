@@ -1,7 +1,7 @@
 import { h, SetupContext } from 'vue';
 import type { VNode } from 'vue';
 import { DefaultRow, TableProps } from '../../table-types';
-import { Column } from './column-types';
+import { Column, LevelColumn } from './column-types';
 import { TableStore } from '../../store/store-types';
 import { Checkbox } from '../../../../checkbox';
 import { Icon } from '../../../../icon';
@@ -47,14 +47,15 @@ export const cellMap = {
     renderHeader(): VNode {
       return <span></span>;
     },
-    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number): VNode {
+    renderCell(rowData: DefaultRow, column: Column, store: TableStore): VNode {
       return (
         <Icon
           name="chevron-right"
           class="icon-expand-row"
           onClick={() => {
             store.toggleRowExpansion(rowData);
-          }}></Icon>
+          }}
+        />
       );
     },
   },
@@ -63,11 +64,11 @@ export const cellMap = {
       return h('span', { class: 'title' }, column.header ?? '');
     },
     renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number, props: TableProps, ctx: SetupContext): VNode {
-      let columnValue: any;
+      let columnValue: VNode[] | VNode | string;
       if (ctx.slots.default) {
         columnValue = ctx.slots.default({ row: rowData, rowIndex });
       } else {
-        const value = column.field ? rowData[column.field] : '';
+        const value = (column.field ? rowData[column.field] : '') as string;
         if (column.formatter) {
           columnValue = column.formatter(rowData, column, value, rowIndex);
         }
@@ -75,7 +76,7 @@ export const cellMap = {
       }
 
       const hasExpandColumn = store.states.flatColumns.value.some((column2) => column2.type === 'expand');
-      const hasChildren = store.states._data.value.some((row) => row.children?.length);
+      const hasChildren = store.states._data.value.some((row) => (row as unknown as LevelColumn).children?.length);
 
       const level = store.states.rowLevelMap.value[getRowIdentity(rowData, props.rowKey)] || 0;
       const indentDom = h('span', { class: `${ns.e('indent')}`, style: { paddingLeft: `${level * props.indent}px` } }, '');
@@ -83,7 +84,7 @@ export const cellMap = {
       const isTreeCell = store.states.firstDefaultColumn.value === column.id;
       const showIndentDom = isTreeCell && level;
 
-      const showExpendIconDom = isTreeCell && rowData.children?.length;
+      const showExpendIconDom = isTreeCell && (rowData as unknown as LevelColumn).children?.length;
       const expendIconDom = (
         <span
           class={ns.e('tree-operate')}

@@ -23,13 +23,13 @@ export function useBodyTd(props: BodyTdProps): UseBodyTd {
     const padding =
       parseInt(window.getComputedStyle(tdRef.value)['paddingLeft'], 10) +
       parseInt(window.getComputedStyle(tdRef.value)['paddingRight'], 10);
-    isShowTooltip.value = props.column.showOverflowTooltip && rangeWidth + padding > tdRef.value.offsetWidth;
+    isShowTooltip.value = !!(props.column.showOverflowTooltip && rangeWidth + padding > tdRef.value.offsetWidth);
   }
 
   onMounted(() => {
     if (inBrowser && window.ResizeObserver && props.column.showOverflowTooltip) {
-      const observer = new window.ResizeObserver(shouldShowTooltip);
-      tdRef.value && observer.observe(tdRef.value);
+      const innerObserver = new window.ResizeObserver(shouldShowTooltip);
+      tdRef.value && innerObserver.observe(tdRef.value);
     }
     tooltipContent.value = getTooltipContent();
   });
