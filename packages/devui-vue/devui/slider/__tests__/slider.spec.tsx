@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { nextTick, ref } from 'vue';
+import { ref } from 'vue';
 import DSlider from '../src/slider';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 

@@ -1,4 +1,5 @@
 import { defineComponent } from 'vue';
+import type { SetupContext } from 'vue';
 import { skeletonProps, SkeletonProps } from './skeleton-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './skeleton.scss';
@@ -6,20 +7,25 @@ import './skeleton.scss';
 export default defineComponent({
   name: 'DSkeleton',
   props: skeletonProps,
-  setup(props: SkeletonProps, ctx) {
+  setup(props: SkeletonProps, ctx: SetupContext) {
     const { slots } = ctx;
     const ns = useNamespace('skeleton');
 
-    function renderAnimate(isAnimated) {
+    function renderAnimate(isAnimated: SkeletonProps['animate']) {
       return isAnimated ? ns.e('animated') : '';
     }
-    function renderBorderRadius(isRound) {
+    function renderBorderRadius(isRound: SkeletonProps['round']) {
       return isRound ? 'border-radius: 1em;' : '';
     }
-    function renderParagraph(isShown, rowNum, rowWidth, round) {
+    function renderParagraph(
+      isShown: SkeletonProps['paragraph'],
+      rowNum: SkeletonProps['row'],
+      rowWidth: SkeletonProps['rowWidth'],
+      round: SkeletonProps['round']
+    ) {
       const arr = [];
 
-      function pushIntoArray(type) {
+      function pushIntoArray(type: SkeletonProps['rowWidth']) {
         for (let index = 0; index < rowNum; index++) {
           arr.push({ width: type });
         }
@@ -29,11 +35,11 @@ export default defineComponent({
           for (let index = 0; index < rowNum; index++) {
             if (rowWidth[index]) {
               switch (typeof rowWidth[index]) {
-                case 'string':
-                  arr.push({ width: rowWidth[index] });
-                  break;
-                case 'number':
-                  arr.push({ width: `${rowWidth[index]}px` });
+              case 'string':
+                arr.push({ width: rowWidth[index] });
+                break;
+              case 'number':
+                arr.push({ width: `${rowWidth[index]}px` });
               }
             } else {
               arr.push({ width: 1 });
@@ -41,12 +47,12 @@ export default defineComponent({
           }
         } else {
           switch (typeof rowWidth) {
-            case 'string':
-              pushIntoArray(rowWidth);
-              break;
-            case 'number':
-              pushIntoArray(`${rowWidth}px`);
-              break;
+          case 'string':
+            pushIntoArray(rowWidth);
+            break;
+          case 'number':
+            pushIntoArray(`${rowWidth}px`);
+            break;
           }
         }
       })();
@@ -60,35 +66,35 @@ export default defineComponent({
       );
     }
 
-    function renderAvatarStyle(avatarSize, avatarShape) {
+    function renderAvatarStyle(avatarSize: SkeletonProps['avatarSize'], avatarShape: SkeletonProps['avatarShape']) {
       function renderAvatarShape() {
         return avatarShape === 'square' ? '' : 'border-radius:50%;';
       }
       function renderAvatarSize() {
         switch (typeof avatarSize) {
-          case 'string':
-            return `width:${avatarSize};height:${avatarSize};`;
-          case 'number':
-            return `width:${avatarSize}px;height:${avatarSize}px;`;
+        case 'string':
+          return `width:${avatarSize};height:${avatarSize};`;
+        case 'number':
+          return `width:${avatarSize}px;height:${avatarSize}px;`;
         }
       }
 
-      return renderAvatarSize(avatarSize) + renderAvatarShape(avatarShape);
+      return renderAvatarSize() + renderAvatarShape();
     }
-    function renderTitle(isVisible, titleWidth, isRound) {
+    function renderTitle(isVisible: SkeletonProps['title'], titleWidth: SkeletonProps['titleWidth'], isRound: SkeletonProps['round']) {
       function renderTitleWidth() {
         switch (typeof titleWidth) {
-          case 'string':
-            return `width: ${titleWidth};`;
-          case 'number':
-            return `width: ${titleWidth}px;`;
+        case 'string':
+          return `width: ${titleWidth};`;
+        case 'number':
+          return `width: ${titleWidth}px;`;
         }
       }
       function renderTitleVisibility() {
         return isVisible ? null : 'visibility: hidden;';
       }
 
-      return renderTitleWidth(titleWidth) + renderBorderRadius(isRound) + renderTitleVisibility(isVisible);
+      return renderTitleWidth() + renderBorderRadius(isRound) + renderTitleVisibility();
     }
     function renderDefaultSkeleton() {
       return (
