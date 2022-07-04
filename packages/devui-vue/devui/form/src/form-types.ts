@@ -1,4 +1,4 @@
-import type { ValidateError, ValidateFieldsError } from 'async-validator';
+import type { ValidateError, ValidateFieldsError, Rules, Values } from 'async-validator';
 import type { PropType, ExtractPropTypes, InjectionKey, SetupContext } from 'vue';
 import {
   FormItemContext,
@@ -13,7 +13,7 @@ export type Layout = 'horizontal' | 'vertical';
 export type LabelSize = 'sm' | 'md' | 'lg';
 export type FormSize = 'sm' | 'md' | 'lg';
 export type LabelAlign = 'start' | 'center' | 'end';
-export type FormData = Record<string, any>;
+export type FormData = Record<string, unknown>;
 
 export type FormRules = Partial<Record<string, Array<FormRuleItem>>>;
 export interface ValidateFailure {
@@ -74,7 +74,7 @@ export interface UseFieldCollection {
 
 export interface UseFormValidation {
   validate: (callback?: FormValidateCallback) => FormValidateResult;
-  validateFields: (fields: string[], callback: any) => FormValidateResult;
+  validateFields: (fields: string[], callback: FormValidateCallback) => FormValidateResult;
   resetFields: (fields: string[]) => void;
   clearValidate: (fields: string[]) => void;
 }
@@ -89,11 +89,16 @@ export interface FormContext extends FormProps {
 
 export const FORM_TOKEN: InjectionKey<FormContext> = Symbol('dForm');
 
-export interface DValidateResult {
-  errors: any;
-  fields: any;
+export interface DValidateResult<E = never, F = never> {
+  errors: E;
+  fields: F;
 }
 
 export interface DFormValidateSubmitData {
   callback(valid: boolean, result: DValidateResult): void;
+}
+
+export interface UseValidate {
+  validate: (descriptor: Rules, validateObject: Values) => Promise<Values>;
+  createDevUIBuiltinValidator: (rule: FormRules) => void;
 }
