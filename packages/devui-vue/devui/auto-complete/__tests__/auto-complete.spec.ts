@@ -538,8 +538,8 @@ describe('auto-complete', () => {
         const loadMore = () => {
           setTimeout(() => {
             source.value.push('lazyData' + source.value.length);
-            const _value = autoCompleteRef.value as any;
-            _value.loadFinish();
+            const _value = autoCompleteRef.value as HTMLElement & { loadFinish: () => void } | null;
+            _value?.loadFinish();
           }, 3000);
         };
         return {
