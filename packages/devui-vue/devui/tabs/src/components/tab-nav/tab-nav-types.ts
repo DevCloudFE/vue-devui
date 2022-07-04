@@ -1,4 +1,5 @@
 import type { ComputedRef, StyleValue } from 'vue';
+import type { TabsStateData } from '../../tabs-types';
 
 export interface UseTabNavRender {
   ulClasses: ComputedRef<Record<string, boolean>>;
@@ -17,13 +18,13 @@ export interface OffSetData {
 
 export interface UseTabNavFunction {
   update: () => void;
-  activeClick: (item: any, tabEl?: any) => void;
+  activeClick: (item: TabsStateData, tabEl?: Element) => void;
   beforeMount: () => void;
   mounted: () => void;
-  tabCanClose: (item: any) => boolean;
+  tabCanClose: (item: TabsStateData) => boolean;
 }
 
 export interface UseTabNavEvent {
-  onTabRemove: (item: any, ev: MouseEvent) => void;
+  onTabRemove: (item: TabsStateData, ev: MouseEvent) => void;
   onTabAdd: () => void;
 }

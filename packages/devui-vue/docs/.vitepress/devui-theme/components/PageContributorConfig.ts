@@ -203,12 +203,20 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://gitee.com/flxy1028'
     },
     {
+      avatar: 'https://avatars.githubusercontent.com/u/9566362?v=4',
+      homepage: 'https://github.com/kagol'
+    },
+    {
       avatar: 'https://avatars.githubusercontent.com/u/32949033?v=4',
       homepage: 'https://github.com/newer2333'
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
       homepage: 'https://github.com/xingyan95'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/40119767?v=4',
+      homepage: 'https://github.com/linxiang07'
     },
   ],
 
