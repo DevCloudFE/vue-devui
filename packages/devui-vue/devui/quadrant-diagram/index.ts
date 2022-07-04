@@ -1,10 +1,6 @@
 import type { App } from 'vue';
 import QuadrantDiagram from './src/quadrant-diagram';
 
-QuadrantDiagram.install = function (app: App) {
-  app.component(QuadrantDiagram.name, QuadrantDiagram);
-};
-
 export { QuadrantDiagram };
 
 export default {
@@ -12,6 +8,6 @@ export default {
   category: '数据展示',
   status: '10%',
   install(app: App): void {
-    app.use(QuadrantDiagram as any);
+    app.component(QuadrantDiagram.name, QuadrantDiagram);
   }
 };
