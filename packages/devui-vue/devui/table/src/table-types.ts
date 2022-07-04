@@ -3,18 +3,18 @@ import { TableStore } from './store/store-types';
 
 export type TableSize = 'sm' | 'md' | 'lg';
 export type BorderType = '' | 'bordered' | 'borderless';
-export type RowKeyType = string | ((v: Record<string, any>, index?: number | undefined) => string);
+export type RowKeyType = string | ((v: Record<string, unknown>, index?: number | undefined) => string);
 
 export type SpanMethod = (data: {
-  row: any;
-  column: any;
+  row: unknown;
+  column: unknown;
   rowIndex: number;
   columnIndex: number;
 }) => number[] | { rowspan: number; colspan: number };
 
 export const tableProps = {
   data: {
-    type: Array as PropType<Record<string, any>[]>,
+    type: Array as PropType<Record<string, unknown>[]>,
     default: [],
   },
   striped: {
@@ -87,7 +87,7 @@ export const tableProps = {
     default: true,
   },
   rowKey: {
-    type: [Function as PropType<(v: Record<string, any>, index?: number | undefined) => string>, String],
+    type: [Function as PropType<(v: Record<string, unknown>, index?: number | undefined) => string>, String],
     default: 'id',
   },
   defaultExpandAll: {
@@ -126,7 +126,7 @@ export interface ITable<T = DefaultRow> extends ComponentInternalInstance {
 //   open: boolean; // 子表格是否展开
 // }
 
-export interface TableMethods<T = Record<string, any>> {
+export interface TableMethods<T = Record<string, unknown>> {
   getCheckedRows(): T[];
   // setRowCheckStatus(arg: TableCheckStatusArg): void
   // setTableCheckStatus(arg: RowToggleStatusEventArg): void
@@ -148,3 +148,6 @@ export interface UseTableLayout {
   tableWidth: Ref;
   updateColumnWidth: () => void;
 }
+
+
+export type ITableInstanceAndDefaultRow = ComponentInternalInstance & ITable<DefaultRow>;

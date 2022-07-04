@@ -1,5 +1,5 @@
-import { provide, defineComponent, getCurrentInstance, computed, toRef, ref, onMounted, nextTick, watch } from 'vue';
-import { ITable, tableProps, TableProps, TABLE_TOKEN, DefaultRow } from './table-types';
+import { provide, defineComponent, getCurrentInstance, computed, toRef, ref, onMounted, nextTick } from 'vue';
+import { tableProps, TableProps, TABLE_TOKEN, ITableInstanceAndDefaultRow } from './table-types';
 import { useTable, useTableLayout, useTableWatcher } from './composables/use-table';
 import { createStore } from './store';
 import FixHeader from './components/fix-header';
@@ -18,13 +18,13 @@ export default defineComponent({
   props: tableProps,
   emits: ['sort-change', 'cell-click', 'row-click', 'check-change', 'check-all-change', 'expand-change'],
   setup(props: TableProps, ctx) {
-    const table = getCurrentInstance() as ITable<DefaultRow>;
+    const table = getCurrentInstance() as ITableInstanceAndDefaultRow;
     const store = createStore(toRef(props, 'data'), table);
     const tableId = `devui-table_${tableIdInit++}`;
     const tableRef = ref();
     table.tableId = tableId;
     table.store = store;
-    provide(TABLE_TOKEN, table);
+    provide<ITableInstanceAndDefaultRow>(TABLE_TOKEN, table);
     const { tableWidth, updateColumnWidth } = useTableLayout(table);
     const { classes, styles } = useTable(props, tableWidth);
     useTableWatcher(props, store);

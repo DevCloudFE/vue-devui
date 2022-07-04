@@ -4,11 +4,17 @@ import { Column } from '../column/column-types';
 export const bodyTdProps = {
   column: {
     type: Object as PropType<Column>,
-    default: () => ({}),
+    default: (): unknown => ({}),
   },
   row: {
-    type: Object,
-    default: () => ({}),
+    type: Object as PropType<Record<string, unknown>>,
+    default: (): Record<string, unknown> => ({}),
+  },
+  rowspan: {
+    type: Number,
+  },
+  colspan: {
+    type: Number,
   },
   index: {
     type: Number,

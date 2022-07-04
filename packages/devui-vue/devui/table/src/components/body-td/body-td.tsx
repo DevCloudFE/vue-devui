@@ -1,7 +1,7 @@
 import { defineComponent, toRef, inject } from 'vue';
 import type { SetupContext } from 'vue';
 import { bodyTdProps, BodyTdProps } from './body-td-types';
-import { TABLE_TOKEN, ITable } from '../../table-types';
+import { TABLE_TOKEN, ITableInstanceAndDefaultRow } from '../../table-types';
 import { Tooltip } from '../../../../tooltip';
 import { useFixedColumn } from '../../composables/use-table';
 import { useBodyTd } from './use-body-td';
@@ -12,7 +12,7 @@ export default defineComponent({
   props: bodyTdProps,
   setup(props: BodyTdProps, ctx: SetupContext) {
     const column = toRef(props, 'column');
-    const table = inject(TABLE_TOKEN) as ITable;
+    const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
     const { stickyClass, stickyStyle } = useFixedColumn(column);
     const { tdRef, isShowTooltip, tooltipContent } = useBodyTd(props);
 

@@ -1,16 +1,16 @@
 import { inject, computed, Ref } from 'vue';
-import { TABLE_TOKEN } from '../../table-types';
+import { TABLE_TOKEN, ITableInstanceAndDefaultRow } from '../../table-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
-import { UseBodyRender, UseMergeCell } from './body-types';
+import { UseBodyRender, UseMergeCell, CellClickArg } from './body-types';
 import { getRowIdentity } from '../../utils';
 
 const ns = useNamespace('table');
 
 export function useMergeCell(): UseMergeCell {
-  const table = inject(TABLE_TOKEN);
+  const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
   const { _data: data, _columns: columns } = table.store.states;
 
-  const getSpan = (row: any, column: any, rowIndex: number, columnIndex: number) => {
+  const getSpan = (row: Record<string, unknown>, column: CellClickArg['column'], rowIndex: number, columnIndex: number) => {
     const fn = table?.props.spanMethod;
     let rowspan = 1;
     let colspan = 1;
@@ -69,11 +69,11 @@ export function useMergeCell(): UseMergeCell {
 }
 
 export function useBodyRender(): UseBodyRender {
-  const table = inject(TABLE_TOKEN);
+  const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
   const hoverEnabled = computed(() => table?.props.rowHoveredHighlight);
   const rowLevelMap = table?.store.states.rowLevelMap || ({} as Ref<Record<string, number>>);
   const rowKey = table?.props.rowKey || 'id';
-  const getTableRowClass = (row: Record<string, any>) => {
+  const getTableRowClass = (row: Record<string, unknown>): Record<string, unknown> => {
     const level = rowLevelMap.value[getRowIdentity(row, rowKey)];
 
     return {

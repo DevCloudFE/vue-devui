@@ -1,5 +1,5 @@
-import { defineComponent, inject, computed } from 'vue';
-import { TABLE_TOKEN, DefaultRow, ITable } from '../../table-types';
+import { defineComponent, inject } from 'vue';
+import { TABLE_TOKEN, DefaultRow, ITableInstanceAndDefaultRow } from '../../table-types';
 import { Column } from '../column/column-types';
 import { CellClickArg, RowClickArg } from './body-types';
 import TD from '../body-td/body-td';
@@ -10,7 +10,7 @@ import './body.scss';
 export default defineComponent({
   name: 'DTableBody',
   setup() {
-    const table = inject(TABLE_TOKEN) as ITable;
+    const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
     const { flatColumns, flatRows } = table.store.states;
     const ns = useNamespace('table');
     const { tableSpans, removeCells } = useMergeCell();

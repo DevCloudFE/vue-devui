@@ -1,6 +1,6 @@
 import { ref, Ref, computed, getCurrentInstance, inject, onMounted } from 'vue';
 import { Column, FilterConfig, SortDirection } from '../column/column-types';
-import { TABLE_TOKEN } from '../../table-types';
+import { TABLE_TOKEN, ITableInstanceAndDefaultRow } from '../../table-types';
 import { UseSort, UseFilter, UseBaseRender, UseDragColumnWidth } from './header-th-types';
 
 export function useBaseRender(column: Ref<Column>): UseBaseRender {
@@ -13,9 +13,9 @@ export function useBaseRender(column: Ref<Column>): UseBaseRender {
 }
 
 export function useSort(column: Ref<Column>): UseSort {
-  const table = inject(TABLE_TOKEN);
+  const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
   const store = table.store;
-  const direction = ref<SortDirection>(column.value.sortDirection);
+  const direction = ref<SortDirection | undefined>(column.value.sortDirection);
   const sortClass = computed(() => ({
     'sort-active': Boolean(direction.value),
   }));
@@ -84,7 +84,7 @@ export function useDragColumnWidth(elementRef: Ref<HTMLElement>, column: Ref<Col
   let initialWidth = 0;
   let mouseDownScreenX = 0;
   let resizeBarElement: HTMLElement;
-  const table = inject(TABLE_TOKEN);
+  const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
   const dragClass = ref('');
   const resizing = ref(false);
   const tableElement = table.tableRef;

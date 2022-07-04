@@ -5,7 +5,7 @@ import { Button } from '../../button';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { nextTick, ref } from 'vue';
 
-let data: Array<Record<string, any>> = [];
+let data: Array<Record<string, unknown>> = [];
 const ns = useNamespace('table', true);
 const noDotNs = useNamespace('table');
 const flexibleOverlayNs = useNamespace('flexible-overlay', true);
@@ -194,7 +194,7 @@ describe('d-table', () => {
   it('merge cell', async () => {
     const wrapper = mount({
       setup() {
-        const spanMethod = ({ row, column, rowIndex, columnIndex }) => {
+        const spanMethod = ({ rowIndex, columnIndex }) => {
           if (rowIndex === 0 && columnIndex === 0) {
             return { rowspan: 1, colspan: 2 };
           }
