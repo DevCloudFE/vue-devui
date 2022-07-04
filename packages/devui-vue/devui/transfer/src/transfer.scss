@@ -72,6 +72,7 @@ $devui-transfer-body-list-item-height: 32px;
           cursor: pointer;
           height: 36px;
           line-height: 36px;
+          font-size: $devui-font-size;
 
           .icon-drag-small {
             cursor: move;
@@ -160,6 +161,7 @@ $devui-transfer-body-list-item-height: 32px;
   .transfer-checkbox {
     height: 36px;
     line-height: 36px;
+    font-size: $devui-font-size;
   }
 }
 .#{$devui-prefix}-transfer–drag-over-top {
