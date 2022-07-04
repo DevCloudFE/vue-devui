@@ -4,7 +4,7 @@ import { FilterConfig } from '../column/column-types';
 export const filterProps = {
   filterList: {
     type: Array as PropType<FilterConfig[]>,
-    default: () => [],
+    default: (): FilterConfig[] => [],
   },
   multiple: {
     type: Boolean,

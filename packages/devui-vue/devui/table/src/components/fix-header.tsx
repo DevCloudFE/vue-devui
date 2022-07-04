@@ -3,7 +3,7 @@ import ColGroup from './colgroup/colgroup';
 import TableHeader from './header/header';
 import TableBody from './body/body';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
-import { TABLE_TOKEN } from '../table-types';
+import { TABLE_TOKEN, ITableInstanceAndDefaultRow } from '../table-types';
 
 export default defineComponent({
   props: {
@@ -17,7 +17,7 @@ export default defineComponent({
   },
   setup(props: { classes: Record<string, unknown>; isEmpty: boolean }) {
     const ns = useNamespace('table');
-    const table = inject(TABLE_TOKEN, undefined);
+    const table = inject(TABLE_TOKEN, undefined) as ITableInstanceAndDefaultRow;
     const showHeader = computed(() => Boolean(table?.props.showHeader));
 
     return () => (

@@ -1,11 +1,11 @@
 import { inject, defineComponent, computed } from 'vue';
-import { TABLE_TOKEN } from '../../table-types';
+import { TABLE_TOKEN, ITableInstanceAndDefaultRow } from '../../table-types';
 import { Column } from '../column/column-types';
 
 export default defineComponent({
   name: 'DColGroup',
   setup() {
-    const parent = inject(TABLE_TOKEN);
+    const parent = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
     const columns = parent?.store.states.flatColumns;
     const isFixed = computed(() => parent?.props.tableLayout === 'fixed');
     return () => (

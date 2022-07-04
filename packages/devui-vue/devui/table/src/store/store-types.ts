@@ -4,7 +4,7 @@ import { DefaultRow, ITable } from '../table-types';
 
 // TableStore 对象
 // 主要是为了方便维护 Table 中的各种状态
-export interface TableStore<T = Record<string, any>> {
+export interface TableStore<T = Record<string, unknown>> {
   // 内置 table 对象
   _table: ITable<DefaultRow>;
   // 具体存储的数据
@@ -35,7 +35,7 @@ export interface TableStore<T = Record<string, any>> {
     firstDefaultColumn: Ref<string>;
   };
   // 插入列
-  insertColumn(column: Column, parent: any): void;
+  insertColumn(column: Column, parent: unknown): void;
   // 对列排序
   sortColumn(): void;
   // 移除列

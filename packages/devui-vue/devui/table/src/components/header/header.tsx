@@ -4,7 +4,7 @@ import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { useHeader } from './use-header';
 import './header.scss';
 import '../body/body.scss';
-import { Column } from '../column/column-types';
+import { LevelColumn } from '../column/column-types';
 
 export default defineComponent({
   name: 'DTableHeader',
@@ -16,7 +16,7 @@ export default defineComponent({
       <thead class={ns.e('thead')}>
         {headerRows.value.map((subColumns) => (
           <tr>
-            {subColumns.map((column: Column, columnIndex: number) => {
+            {subColumns.map((column: LevelColumn, columnIndex: number) => {
               return <TH
                 key={columnIndex}
                 column={column}

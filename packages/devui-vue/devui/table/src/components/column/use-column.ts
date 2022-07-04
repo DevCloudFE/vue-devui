@@ -1,8 +1,8 @@
-import { watch, reactive, onBeforeMount, computed, h, getCurrentInstance, Ref, VNode, SetupContext } from 'vue';
+import { watch, reactive, onBeforeMount, computed, getCurrentInstance, Ref, VNode, SetupContext } from 'vue';
 import type { ToRefs, ComputedRef } from 'vue';
-import { ITable, DefaultRow, RowKeyType, TableProps } from '../../table-types';
-import { Column, TableColumnProps, TableColumn, SortDirection, SortMethod } from './column-types';
-import { TableStore } from '../../store/store-types';
+import { ITable, DefaultRow, TableProps } from '../../table-types';
+import type { Column, TableColumnProps, TableColumn, SortDirection, SortMethod } from './column-types';
+import type { TableStore } from '../../store/store-types';
 import { formatWidth } from '../../utils';
 import { cellMap } from './config';
 
@@ -28,7 +28,7 @@ export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: S
     showOverflowTooltip,
     resizeable,
   } = props;
-  const column: Column = reactive({ id });
+  const column: Partial<Column> = reactive({ id });
   column.type = type.value;
 
   function renderHeader(columnItem: Column, store: TableStore) {
@@ -135,7 +135,7 @@ export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: S
     column.ctx = ctx;
   });
 
-  return column;
+  return column as Column;
 }
 
 export function useRender<T>(): {
@@ -144,7 +144,7 @@ export function useRender<T>(): {
 } {
   const instance = getCurrentInstance() as TableColumn;
   const columnOrTableParent = computed(() => {
-    let parent: any = instance?.parent;
+    let parent = instance?.parent as TableColumn;
     while (parent && !parent.tableId && !parent.columnId) {
       parent = parent.parent;
     }

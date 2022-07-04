@@ -19,5 +19,5 @@ export interface UseMergeCell {
 }
 
 export interface UseBodyRender {
-  getTableRowClass: (row: DefaultRow) => ComputedRef<Record<string, boolean | undefined>>;
+  getTableRowClass: (row: DefaultRow) => Record<string, unknown>;
 }
