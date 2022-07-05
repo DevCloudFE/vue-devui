@@ -10,7 +10,9 @@ const chalkEslint = chalk.hex('#4b32c3');
 
 const chalkUnitTest = chalk.hex('#99425b');
 
-const chalkError = chalk.hex('#ff0000');
+const chalkError = chalk.hex('#F66F6A');
+
+const chalkSuccess = chalk.hex('#3DCCA6');
 
 const entryDir = path.resolve(__dirname, '../../devui');
 
@@ -22,11 +24,14 @@ const completeComponents = fs.readdirSync(entryDir).filter((name) => {
 
 const eslintCheckSingle = async (name) => {
   log(chalkEslint(`Start ESLint check ${name}...`));
+
   const eslintResult = await shell.exec(`eslint --color "./devui/${name}/**/{*.ts,*.tsx}"`);
+
   if (eslintResult.stdout !== '') {
     shell.echo(chalkError('Error: ESLint failed.'));
     shell.exit(1);
   }
+
   log(chalkEslint(`ESLint check ${name} finished!`));
 };
 
@@ -36,12 +41,16 @@ const eslintCheckSome = async (components) => {
   for (const name of componentArr) {
     await eslintCheckSingle(name);
   }
+
+  log(chalkSuccess('Congratulations, all components have passed the ESLint check!'));
 };
 
 const eslintCheckAll = async () => {
   for (const name of completeComponents) {
     await eslintCheckSingle(name);
   }
+
+  log(chalkSuccess('Congratulations, all components have passed the ESLint check!'));
 };
 
 const eslintCheck = async (components) => {
