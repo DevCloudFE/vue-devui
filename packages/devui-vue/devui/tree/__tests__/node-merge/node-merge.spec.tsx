@@ -1,8 +1,13 @@
-import type { ComponentPublicInstance } from 'vue';
+import type { ComponentPublicInstance, ComponentInternalInstance } from 'vue';
 import { ref, onMounted } from 'vue';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { Tree } from '../../';
 import { nodeMergeData } from './node-merge-data';
+
+type ITreeFactory = {
+  expandAllNodes: () => void;
+  mergeTreeNodes: () => void;
+};
 
 describe('Tree node merge', () => {
   let wrapper: VueWrapper<ComponentPublicInstance>;
@@ -10,10 +15,10 @@ describe('Tree node merge', () => {
   beforeAll(() => {
     wrapper = mount({
       setup() {
-        const treeRef = ref<any>(null);
+        const treeRef = ref<ComponentInternalInstance & { treeFactory: ITreeFactory } | null>(null);
         onMounted(() => {
-          treeRef.value.treeFactory.mergeTreeNodes();
-          treeRef.value.treeFactory.expandAllNodes();
+          treeRef.value?.treeFactory.mergeTreeNodes();
+          treeRef.value?.treeFactory.expandAllNodes();
         });
         return () => {
           return <Tree data={nodeMergeData} ref={treeRef} />;
