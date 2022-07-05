@@ -136,6 +136,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/newer2333"><img src="https://avatars.githubusercontent.com/u/32949033?v=4?s=100" width="100px;" alt=""/><br /><sub><b>newer2333</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=newer2333" title="Code">💻</a></td>
     <td align="center"><a href="https://husky-bear.gitee.io/blob/"><img src="https://avatars.githubusercontent.com/u/50540342?v=4?s=100" width="100px;" alt=""/><br /><sub><b>哈士奇-黄</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Husky-Yellow" title="Code">💻</a></td>
     <td align="center"><a href="http://innei.ren"><img src="https://avatars.githubusercontent.com/u/41265413?v=4?s=100" width="100px;" alt=""/><br /><sub><b>寻</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Innei" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/aolyang"><img src="https://avatars.githubusercontent.com/u/72056179?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Anthonio OuYang</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=aolyang" title="Code">💻</a></td>
   </tr>
 </table>
 
