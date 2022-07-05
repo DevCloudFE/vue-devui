@@ -10,6 +10,8 @@ const chalkEslint = chalk.hex('#4b32c3');
 
 const chalkUnitTest = chalk.hex('#99425b');
 
+const chalkError = chalk.hex('#ff0000');
+
 const entryDir = path.resolve(__dirname, '../../devui');
 
 const completeComponents = fs.readdirSync(entryDir).filter((name) => {
@@ -20,7 +22,11 @@ const completeComponents = fs.readdirSync(entryDir).filter((name) => {
 
 const eslintCheckSingle = async (name) => {
   log(chalkEslint(`Start ESLint check ${name}...`));
-  await shell.exec(`eslint --color "./devui/${name}/**/{*.ts,*.tsx}"`);
+  const eslintResult = await shell.exec(`eslint --color "./devui/${name}/**/{*.ts,*.tsx}"`);
+  if (eslintResult.stdout !== '') {
+    shell.echo(chalkError('Error: ESLint failed.'));
+    shell.exit(1);
+  }
   log(chalkEslint(`ESLint check ${name} finished!`));
 };
 
