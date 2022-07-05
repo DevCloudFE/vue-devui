@@ -445,6 +445,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Innei",
+      "name": "寻",
+      "avatar_url": "https://avatars.githubusercontent.com/u/41265413?v=4",
+      "profile": "http://innei.ren",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
