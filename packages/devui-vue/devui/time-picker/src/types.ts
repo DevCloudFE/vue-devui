@@ -52,8 +52,23 @@ export type UsePopupLineFn = {
   activeHour: Ref<string>;
   activeMinute: Ref<string>;
   activeSecond: Ref<string>;
-  activeTimeFun: (e: any, item: ArrType, index: number) => void;
+  activeTimeFun: (e: MouseEvent, item: ArrType, index: number) => void;
   resetTimeValue: (time: string) => void;
   getNewTime: () => void;
   resetScrollTop: () => void;
+};
+
+export type UseTimeScroll = {
+  scrollThumbDom: Ref<HTMLElement | null>;
+  scrollTrackDom: Ref<HTMLElement | null>;
+  scrollContentDom: Ref<HTMLElement | null>;
+  scrollBoxDom: Ref<HTMLElement | null>;
+  isDown: Ref<boolean>;
+  getScrollHeight: () => void;
+  setVirtualScroll: () => void;
+  clickTrackFun: (e: MouseEvent) => void;
+  mouseDownThum: () => void;
+  mouseOutThum: (e: MouseEvent) => void;
+  thumbMouseMove: (e: MouseEvent & { path?: string }) => void;
+  getScrollWidth: () => number;
 };

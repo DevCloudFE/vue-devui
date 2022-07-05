@@ -1,41 +1,44 @@
 import { ref } from 'vue';
+import type { UseTimeScroll } from '../../../types';
 
-export default function useTimeScroll(): any {
-  const scrollBoxDom = ref();
-  const scrollContentDom = ref();
-  const scrollThumbDom = ref();
-  const scrollTrackDom = ref();
+export default function useTimeScroll(): UseTimeScroll {
+  const scrollBoxDom = ref<HTMLElement | null>(null);
+  const scrollContentDom = ref<HTMLElement | null>(null);
+  const scrollThumbDom = ref<HTMLElement | null>(null);
+  const scrollTrackDom = ref<HTMLElement | null>(null);
 
   const isDown = ref(false);
 
   // 获取滚动条 thumb高度
   const getScrollHeight = () => {
-    const thumbHeight = (scrollContentDom.value.clientHeight / scrollContentDom.value.scrollHeight) * 100;
-    scrollThumbDom.value.style.height = thumbHeight + '%';
+    const thumbHeight = ((scrollContentDom.value?.clientHeight || 0) / (scrollContentDom.value?.scrollHeight || 0)) * 100;
+    scrollThumbDom.value && (scrollThumbDom.value.style.height = thumbHeight + '%');
   };
 
   // 设置滚动条 thumb位置
   const setVirtualScroll = () => {
-    const thumbMoveY = (scrollContentDom.value.scrollTop * 100) / scrollContentDom.value.clientHeight;
-    scrollThumbDom.value.style.transform = `translateY(${thumbMoveY}%)`;
+    const thumbMoveY = ((scrollContentDom.value?.scrollTop || 0) * 100) / (scrollContentDom.value?.clientHeight || 0);
+    scrollThumbDom.value && (scrollThumbDom.value.style.transform = `translateY(${thumbMoveY}%)`);
   };
 
   // 点击轨道 thumb滚动到相应位置
   const clickTrackFun = (e: MouseEvent) => {
-    const offsetNum = scrollTrackDom.value.getBoundingClientRect().top - e.clientY;
+    const offsetNum = (scrollTrackDom.value?.getBoundingClientRect?.()?.top || 0) - e.clientY;
     const offset = Math.abs(offsetNum > 0 ? 0 : offsetNum);
-    const thumbCenter = scrollThumbDom.value.offsetHeight / 2;
-    const thumbPosition = ((offset - thumbCenter) * 100) / scrollContentDom.value.offsetHeight;
-    scrollContentDom.value.scrollTop = (thumbPosition * scrollContentDom.value.scrollHeight) / 100;
-    scrollContentDom.value.style.top = scrollContentDom.value.scrollTop + 'px';
+    const thumbCenter = (scrollThumbDom.value?.offsetHeight || 0) / 2;
+    const thumbPosition = ((offset - thumbCenter) * 100) / (scrollContentDom.value?.offsetHeight || 0);
+    if (scrollContentDom.value) {
+      scrollContentDom.value.scrollTop = (thumbPosition * scrollContentDom.value.scrollHeight) / 100;
+      scrollContentDom.value.style.top = scrollContentDom.value.scrollTop + 'px';
+    }
   };
 
-  const thumbMouseMove = (e: any) => {
+  const thumbMouseMove = (e: MouseEvent & { path?: string }) => {
     const path = (e.composedPath && e.composedPath()) || e.path;
-    if (path.includes(scrollBoxDom.value) || isDown.value) {
-      scrollTrackDom.value.style.opacity = 1;
+    if (scrollBoxDom.value && path.includes(scrollBoxDom.value) || isDown.value) {
+      scrollTrackDom.value && (scrollTrackDom.value.style.opacity = '1');
     } else {
-      scrollTrackDom.value.style.opacity = 0;
+      scrollTrackDom.value && (scrollTrackDom.value.style.opacity = '0');
     }
     if (!isDown.value) {
       return;
@@ -46,7 +49,7 @@ export default function useTimeScroll(): any {
   // 鼠标拖到
   const mouseDownThum = () => {
     isDown.value = true;
-    scrollTrackDom.value.style.opacity = 1;
+    scrollTrackDom.value && (scrollTrackDom.value.style.opacity = '1');
   };
   // 鼠标离开
   const mouseOutThum = (e: MouseEvent) => {
