@@ -436,6 +436,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Husky-Yellow",
+      "name": "哈士奇-黄",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50540342?v=4",
+      "profile": "https://husky-bear.gitee.io/blob/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
