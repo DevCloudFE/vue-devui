@@ -144,6 +144,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
+## Partner project
+
+- [H5-Dooring - 让H5制作，更简单](http://h5.dooring.cn/)
+
 ## License
 
 [MIT](https://github.com/DevCloudFE/vue-devui/blob/dev/LICENSE)
