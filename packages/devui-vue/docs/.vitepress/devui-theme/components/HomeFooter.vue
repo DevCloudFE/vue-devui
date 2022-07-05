@@ -56,10 +56,16 @@ const { frontmatter } = useData()
 .container {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   padding: 2rem 1.5rem 2.25rem;
 
   .footer-item {
+    margin-right: 20px;
     font-size: 14px;
+
+    &:last-child {
+      margin-right: 0;
+    }
 
     ul {
       list-style: none;
