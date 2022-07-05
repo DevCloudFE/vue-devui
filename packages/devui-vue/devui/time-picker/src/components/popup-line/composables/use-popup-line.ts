@@ -99,7 +99,6 @@ const usePopupLine = (
   // 指定时间
   const resetTimeValue = (time: string) => {
     const timeValueArr = time.split(':');
-    const minTiveArr = minTime.split(':');
 
     let hh = 0;
     let mm = 0;
@@ -210,12 +209,15 @@ const usePopupLine = (
     }
   };
 
-  const activeTimeFun = (e: any, item: ArrType, index: number) => {
+  const activeTimeFun = (e: MouseEvent, item: ArrType, index: number) => {
     if (item.isDisabled) {
       return false;
     } else {
       setTimeActive(item, index);
-      e.target.parentElement.parentElement.scrollTop = index * itemHeight;
+      if ((e?.target as HTMLElement)?.parentElement) {
+        const pdom =  (e?.target as HTMLElement)?.parentElement;
+        pdom && pdom.parentElement && (pdom.parentElement.scrollTop = index * itemHeight);
+      }
     }
     ctx.emit('change', { activeHour, activeMinute, activeSecond });
   };

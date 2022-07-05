@@ -81,7 +81,7 @@ export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string,
     showPopup.value = true;
   };
 
-  const clickVerifyFun = (e: any) => {
+  const clickVerifyFun = (e: MouseEvent) => {
     e.stopPropagation();
 
     if (props.disabled || props.readonly) {

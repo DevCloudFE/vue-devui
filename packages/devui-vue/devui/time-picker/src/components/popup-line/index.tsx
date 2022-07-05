@@ -93,8 +93,8 @@ export default defineComponent({
 
       const timeFormatArr = (props.format as string).split(':');
 
-      return timeFormatArr.map((timeItem) => {
-        return TimeUl(timeList[timeItem]);
+      return timeFormatArr.map((timeItem: string) => {
+        return TimeUl(timeList[timeItem as keyof TimeListItem]);
       });
     };
 
