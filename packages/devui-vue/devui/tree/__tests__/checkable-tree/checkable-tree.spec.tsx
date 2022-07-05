@@ -1,8 +1,10 @@
-import type { ComponentPublicInstance } from 'vue';
+import type { ComponentPublicInstance, ComponentInternalInstance } from 'vue';
 import { onMounted, ref } from 'vue';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { Tree, ICheck } from '../../';
 import { checkableTreeData } from './checkable-tree-data';
+
+type ITreeFactory = { expandAllNodes: () => void };
 
 describe('Checkable tree', () => {
   let wrapper: VueWrapper<ComponentPublicInstance>;
@@ -11,11 +13,11 @@ describe('Checkable tree', () => {
   beforeAll(() => {
     const mountData = {
       setup() {
-        const treeRef = ref<any>(null);
+        const treeRef = ref<ComponentInternalInstance & { treeFactory: ITreeFactory } | null>(null);
         const check = ref<ICheck>('none');
         const data = ref(checkableTreeData);
         onMounted(() => {
-          treeRef.value.treeFactory.expandAllNodes();
+          treeRef.value?.treeFactory.expandAllNodes();
         });
         const onChangeCheck = () => {
           const obj = [...data.value];
