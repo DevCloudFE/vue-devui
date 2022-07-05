@@ -1,8 +1,10 @@
-import type { ComponentPublicInstance } from 'vue';
+import type { ComponentPublicInstance, ComponentInternalInstance } from 'vue';
 import { ref, onMounted } from 'vue';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { Tree } from '../../';
 import { basicTreeData } from './basic-tree-data';
+
+type ITreeFactory = { expandAllNodes: () => void };
 
 describe('Basic tree', () => {
   let wrapper: VueWrapper<ComponentPublicInstance>;
@@ -10,10 +12,10 @@ describe('Basic tree', () => {
   beforeAll(() => {
     wrapper = mount({
       setup() {
-        const treeRef = ref<any>(null);
+        const treeRef = ref<ComponentInternalInstance & { treeFactory: ITreeFactory } | null>(null);
         const data = ref(basicTreeData);
         onMounted(() => {
-          treeRef.value.treeFactory.expandAllNodes();
+          treeRef.value?.treeFactory.expandAllNodes();
         });
         const onDisable = () => {
           const obj = [...data.value];

@@ -13,7 +13,9 @@ export interface IUseSelectFiles {
   checkAllFilesSize: (fileSize: number, maximumSize: number) => IReturnMessage | void;
 }
 
-export const useSelectFiles = (t: (path: string) => any): IUseSelectFiles => {
+type IReturnFuntion = (val: string | number, accept?: string | number) => string;
+
+export const useSelectFiles = (t: (path: string) => IReturnFuntion): IUseSelectFiles => {
   const BEYOND_MAXIMAL_FILE_SIZE_MSG = ref('');
   const simulateClickEvent = (input: HTMLInputElement) => {
     const evt = document.createEvent('MouseEvents');
