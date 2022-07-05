@@ -102,8 +102,8 @@ export default defineComponent({
               minTime={props.minTime}
               maxTime={props.maxTime}
               format={props.popupFormat}
-              onChange={changeData}></TimeList>
-
+              onChange={changeData}
+            />
             <div class={ns.m('btn')}>
               <div class="popup-slots">{ctx.slots.default?.()}</div>
               <div onClick={subDataFun}>
