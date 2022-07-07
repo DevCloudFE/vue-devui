@@ -50,7 +50,7 @@ export default defineComponent({
         onBlur: onBlur,
       };
       return (
-        <div class={rootClasses.value}>
+        <label class={rootClasses.value}>
           {props.iconPosition === 'left' && (
             <div class={ns.e('icon')} onClick={onClickHandle}>
               <d-icon name="search" size="inherit" key="search"></d-icon>
@@ -67,7 +67,7 @@ export default defineComponent({
               <d-icon name="search" size="inherit" key="search"></d-icon>
             </div>
           )}
-        </div>
+        </label>
       );
     };
   },
