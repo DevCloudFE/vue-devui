@@ -600,6 +600,7 @@ describe('d-table', () => {
                   cellEdit: (scope) => (
                     <Input
                       ref={firstNameRef}
+                      placeholder="请输入"
                       modelValue={scope.row.firstName}
                       onChange={(value) => changeInput(scope.row, scope.rowIndex, 'firstName', value)}
                       onBlur={() => blur(scope.row, scope.rowIndex, 'firstName')}
@@ -625,7 +626,7 @@ describe('d-table', () => {
     const cellItem = tdItems[0].find(ns.e('cell'));
     expect(cellItem.exists()).toBeTruthy();
     expect(cellItem.classes().includes('editable-cell')).toBe(true);
-    // todo  input的国际化报错， 具体原因有待分析，目前将input组件的placeholder默认值去除国际化，此用例可通过
+
     await tdItems[0].trigger('click');
     const input = cellItem.find('input');
     expect(input.exists()).toBeTruthy();

@@ -58,7 +58,7 @@ export function useBodyTd(props: BodyTdProps, ctx: SetupContext): UseBodyTd {
     return mode || 'readonly';
   });
 
-  const onCellClick = (e: MouseEvent) => {
+  const onCellClick = () => {
     // 先将其它单元格置为非编辑态
     const modeMap = table.store.states.tableCellModeMap.value;
     const cellKey = getCellKsy();
