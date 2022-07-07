@@ -29,5 +29,5 @@ export interface UseBodyTd {
   tooltipContent: Ref<string>;
   tdRef: Ref<HTMLElement | undefined>;
   cellMode: ComputedRef<string>;
-  onCellClick: (e: MouseEvent) => void;
+  onCellClick: () => void;
 }
