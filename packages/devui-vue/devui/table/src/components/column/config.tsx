@@ -72,14 +72,14 @@ export const cellMap = {
       cellMode: ComputedRef<string>,
       ctx: SetupContext
     ): VNode {
-      let columnValue: any;
+      let columnValue: VNode[] | VNode | string;
       if (cellMode.value === 'edit') {
         columnValue = ctx.slots.cellEdit ? ctx.slots.cellEdit({ row: rowData, rowIndex }) : '';
       } else {
         if (ctx.slots.cell) {
           columnValue = <div class="cell-text">{ctx.slots.cell({ row: rowData, rowIndex })}</div>;
         } else {
-          const value = column.field ? rowData[column.field] : '';
+          const value = (column.field ? rowData[column.field] : '') as string;
           if (column.formatter) {
             columnValue = column.formatter(rowData, column, value, rowIndex);
           }
