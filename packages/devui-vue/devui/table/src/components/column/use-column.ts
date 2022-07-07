@@ -38,11 +38,18 @@ export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: S
     return cellMap[type.value || 'default'].renderHeader(columnItem, store);
   }
 
-  function renderCell(rowData: DefaultRow, columnItem: Column, store: TableStore, rowIndex: number, tableProps: TableProps) {
+  function renderCell(
+    rowData: DefaultRow,
+    columnItem: Column,
+    store: TableStore,
+    rowIndex: number,
+    tableProps: TableProps,
+    cellMode: string
+  ) {
     if (ctx.slots.default && columnItem.type === 'index') {
       return ctx.slots.default({ row: rowData, rowIndex });
     }
-    return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex, tableProps, ctx);
+    return cellMap[type.value || 'default'].renderCell(rowData, columnItem, store, rowIndex, tableProps, cellMode, ctx);
   }
 
   watch(

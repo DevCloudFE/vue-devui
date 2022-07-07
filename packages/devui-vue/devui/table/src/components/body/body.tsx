@@ -41,7 +41,7 @@ export default defineComponent({
                     row={row}
                     rowspan={rowspan}
                     colspan={colspan}
-                    onClick={() => onCellClick({ rowIndex, columnIndex, column, row })}
+                    onCellClick={() => onCellClick({ rowIndex, columnIndex, column, row })}
                   />
                 );
               })}

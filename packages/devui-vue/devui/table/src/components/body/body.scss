@@ -1,5 +1,7 @@
 @import '../../../../styles-var/devui-var.scss';
 
+$input-height-md: 28px;
+
 .#{$devui-prefix}-table {
   &__tbody {
     tr {
@@ -40,6 +42,34 @@
 
         &.is-right {
           text-align: right;
+        }
+
+        .editable-cell {
+          position: relative;
+          cursor: pointer;
+
+          &:hover::after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border: 1px solid $devui-line;
+            border-radius: $devui-border-radius;
+            pointer-events: none;
+          }
+        }
+
+        .#{$devui-prefix}-table__cell {
+          .cell-text {
+            height: $input-height-md;
+            line-height: $input-height-md;
+            padding-left: 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
       }
     }

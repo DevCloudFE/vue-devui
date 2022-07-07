@@ -112,6 +112,7 @@ export interface UseSelectReturnType {
   selectDisabled: ComputedRef<boolean>;
   selectSize: ComputedRef<SelectSize>;
   containerRef: Ref<HTMLElement | undefined>;
+  originRef: Ref<HTMLElement | undefined>;
   dropdownRef: Ref<HTMLElement | undefined>;
   isOpen: Ref<boolean>;
   selectCls: ComputedRef<string>;
@@ -122,6 +123,7 @@ export interface UseSelectReturnType {
   emptyText: ComputedRef<string>;
   isLoading: Ref<boolean>;
   isShowEmptyText: ComputedRef<boolean>;
+  dropdownWidth: ComputedRef<string>;
   onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
   valueChange: (item: OptionObjectItem) => void;
