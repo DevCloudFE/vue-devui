@@ -33,6 +33,8 @@ export interface TableStore<T = Record<string, unknown>> {
     thList: ComponentInternalInstance[];
     // 第一个type为''列的id
     firstDefaultColumn: Ref<string>;
+    // 单元格状态
+    tableCellModeMap: Ref<Map<string, string>>;
   };
   // 插入列
   insertColumn(column: Column, parent: unknown): void;
@@ -61,6 +63,10 @@ export interface TableStore<T = Record<string, unknown>> {
   toggleRowSelection: (row: T) => void;
   // 更新 firstDefaultColumn
   updateFirstDefaultColumn: () => void;
+  // 更新单元格状态
+  setCellMode: (row: DefaultRow, rowIndex: number, fields: string | string[], cellMode: string) => void;
+  // 重置所有单元格状态为只读状态
+  resetCellMode: () => void;
 }
 
 export interface UseExpand {
@@ -68,4 +74,10 @@ export interface UseExpand {
   updateExpandRows: () => void;
   setExpandRows: (rowKeys: string[]) => void;
   toggleRowExpansion: (row: DefaultRow, expanded?: boolean) => void;
+}
+
+export interface UseEditTableCell {
+  tableCellModeMap: Ref<Map<string, string>>;
+  setCellMode: (row: DefaultRow, rowIndex: number, fields: string | string[], cellMode: string) => void;
+  resetCellMode: () => void;
 }

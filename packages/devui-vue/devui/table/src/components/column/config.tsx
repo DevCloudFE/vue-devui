@@ -1,4 +1,4 @@
-import { h, SetupContext } from 'vue';
+import { h, SetupContext, ComputedRef } from 'vue';
 import type { VNode } from 'vue';
 import { DefaultRow, TableProps } from '../../table-types';
 import { Column, LevelColumn } from './column-types';
@@ -59,11 +59,53 @@ export const cellMap = {
       );
     },
   },
+  editable: {
+    renderHeader(column: Column): VNode {
+      return h('span', { class: 'title' }, column.header ?? '');
+    },
+    renderCell(
+      rowData: DefaultRow,
+      column: Column,
+      store: TableStore,
+      rowIndex: number,
+      props: TableProps,
+      cellMode: ComputedRef<string>,
+      ctx: SetupContext
+    ): VNode {
+      let columnValue: any;
+      if (cellMode.value === 'edit') {
+        columnValue = ctx.slots.cellEdit ? ctx.slots.cellEdit({ row: rowData, rowIndex }) : '';
+      } else {
+        if (ctx.slots.cell) {
+          columnValue = <div class="cell-text">{ctx.slots.cell({ row: rowData, rowIndex })}</div>;
+        } else {
+          const value = column.field ? rowData[column.field] : '';
+          if (column.formatter) {
+            columnValue = column.formatter(rowData, column, value, rowIndex);
+          }
+          columnValue = <div class="cell-text">{value?.toString?.() ?? ''}</div>;
+        }
+      }
+      return h(
+        'div',
+        { class: [ns.e('cell'), column.type === 'editable' && cellMode?.value === 'readonly' && 'editable-cell'] },
+        columnValue
+      );
+    },
+  },
   default: {
     renderHeader(column: Column): VNode {
       return h('span', { class: 'title' }, column.header ?? '');
     },
-    renderCell(rowData: DefaultRow, column: Column, store: TableStore, rowIndex: number, props: TableProps, ctx: SetupContext): VNode {
+    renderCell(
+      rowData: DefaultRow,
+      column: Column,
+      store: TableStore,
+      rowIndex: number,
+      props: TableProps,
+      cellMode: ComputedRef<string>,
+      ctx: SetupContext
+    ): VNode {
       let columnValue: VNode[] | VNode | string;
       if (ctx.slots.default) {
         columnValue = ctx.slots.default({ row: rowData, rowIndex });

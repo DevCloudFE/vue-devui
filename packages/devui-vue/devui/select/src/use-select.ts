@@ -25,6 +25,14 @@ export default function useSelect(
   const selectSize = computed(() => formContext?.size || props.size);
   const isObjectOption = ref(false);
 
+  const originRef = ref<HTMLElement>();
+  const dropdownWidth = computed(() => {
+    if (!originRef?.value?.clientWidth) {
+      return '100%';
+    }
+    return originRef.value.clientWidth + 'px';
+  });
+
   // 控制弹窗开合
   const isOpen = ref<boolean>(false);
   const toggleChange = (bool: boolean) => {
@@ -201,8 +209,8 @@ export default function useSelect(
       getMultipleSelected(checkedItems);
     } else {
       ctx.emit('update:modelValue', item.value);
-      toggleChange(false);
       getSingleSelected(item);
+      toggleChange(false);
     }
   };
 
@@ -288,13 +296,13 @@ export default function useSelect(
       return label.toString().toLocaleLowerCase().includes(filterQuery.value.toLocaleLowerCase());
     }).length;
     if (isLoading.value) {
-      return props.loadingText || t('loadingText') as string;
+      return props.loadingText || (t('loadingText') as string);
     }
     if (isSupportFilter.value && filterQuery.value && injectOptionsArray.value.length > 0 && visibleOptionsCount === 0) {
-      return props.noMatchText || t('noMatchText') as string;
+      return props.noMatchText || (t('noMatchText') as string);
     }
     if (injectOptionsArray.value.length === 0) {
-      return props.noDataText || t('noDataText') as string;
+      return props.noDataText || (t('noDataText') as string);
     }
     return '';
   });
@@ -329,6 +337,7 @@ export default function useSelect(
     selectDisabled,
     selectSize,
     containerRef,
+    originRef,
     dropdownRef,
     isOpen,
     selectCls,
@@ -339,6 +348,7 @@ export default function useSelect(
     emptyText,
     isLoading,
     isShowEmptyText,
+    dropdownWidth,
     onClick,
     handleClear,
     valueChange,

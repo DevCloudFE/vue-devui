@@ -488,6 +488,119 @@ export default defineComponent({
 
 :::
 
+### 编辑单元格
+
+:::demo 通过`d-column`子组件提供的`cell`、`cellEdit`插槽以及属性`type`设置为`editable`实现编辑单元格。此功能需配合`row-key`属性使用。
+
+```vue
+<template>
+  <d-table ref="tableRef" :data="dataSource" row-key="id" @cellClick="cellClick">
+    <d-column type="index" width="80">
+      <template #default="scope">
+        {{ `No.${scope.rowIndex + 1}` }}
+      </template>
+    </d-column>
+    <d-column field="firstName" header="First Name" type="editable">
+      <template #cell="scope">
+        {{ scope.row.firstName }}
+      </template>
+      <template #cellEdit="scope">
+        <d-input
+          ref="firstNameRef"
+          v-model="scope.row.firstName"
+          @change="(value) => change(scope.row, scope.rowIndex, 'firstName', value)"
+          @blur="() => blur(scope.row, scope.rowIndex, 'firstName')"
+        />
+      </template>
+    </d-column>
+    <d-column field="lastName" header="Last Name" type="editable">
+      <template #cell="scope">
+        {{ scope.row.lastName }}
+      </template>
+      <template #cellEdit="scope">
+        <d-input
+          ref="lastNameRef"
+          v-model="scope.row.lastName"
+          @change="(value) => change(scope.row, scope.rowIndex, 'lastName', value)"
+          @blur="() => blur(scope.row, scope.rowIndex, 'lastName')"
+        />
+      </template>
+    </d-column>
+    <d-column field="gender" header="Gender" type="editable">
+      <template #cell="scope">
+        {{ scope.row.gender }}
+      </template>
+      <template #cellEdit="scope">
+        <d-select
+          ref="genderRef"
+          v-model="scope.row.gender"
+          :options="options"
+          @valueChange="(value) => change(scope.row, scope.rowIndex, 'gender', value)"
+          @blur="() => blur(scope.row, scope.rowIndex, 'gender')"
+        />
+      </template>
+    </d-column>
+  </d-table>
+</template>
+
+<script>
+import { defineComponent, ref, nextTick } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const tableRef = ref();
+    const firstNameRef = ref();
+    const lastNameRef = ref();
+    const genderRef = ref();
+    const dataSource = ref([
+      {
+        firstName: 'Mark',
+        lastName: 'Otto',
+        gender: 'Male',
+        id: 'Mark',
+      },
+      {
+        firstName: 'Jacob',
+        lastName: 'Thornton',
+        gender: 'Female',
+        id: 'Jacob',
+      },
+    ]);
+
+    const options = ref(['Female', 'Male']);
+
+    const change = (row, rowIndex, field, value) => {
+      dataSource.value[rowIndex][field] = typeof value === 'object' ? value.value : value;
+      tableRef.value.store.setCellMode(row, rowIndex, field, 'readonly');
+    };
+    const blur = (row, rowIndex, field) => {
+      // select组件blur事件先于valueChange事件执行，故此处需要添加定时器
+      setTimeout(() => {
+        tableRef.value.store.setCellMode(row, rowIndex, field, 'readonly');
+      }, 100);
+    };
+
+    const cellClick = (obj) => {
+      tableRef.value.store.setCellMode(obj.row, obj.rowIndex, obj.column.field, 'edit');
+      const refMap = {
+        firstName: firstNameRef,
+        lastName: lastNameRef,
+        gender: genderRef,
+      };
+      const targetRef = refMap[obj.column.field];
+      nextTick(() => {
+        targetRef?.value?.focus();
+      });
+    };
+
+    return { tableRef, firstNameRef, lastNameRef, genderRef, dataSource, options, change, blur, cellClick };
+  },
+});
+</script>
+```
+
+:::
+
 ### 自定义表头
 
 :::demo 通过`d-column`子组件提供的`header`插槽可以实现自定义表头。
@@ -1289,11 +1402,13 @@ export default defineComponent({
 
 ### Table 方法
 
-| 方法名             | 类型                      | 说明                                                                                                             |
-| :----------------- | :------------------------ | :--------------------------------------------------------------------------------------------------------------- |
-| getCheckedRows     | `() => []`                | 获取当前选中的行数据                                                                                             |
-| toggleRowExpansion | `(row, expended) => void` | 用于可展开的表格，切换某一行的展开状态。 如果使用了第二个参数，则是设置这一行是否展示（expended 为 true 则展开） |
-| toggleRowSelection | `(row, checked) => void`  | 用于可选择的表格，切换某一行的选中状态。 如果使用了第二个参数，则是设置这一行是否选中（checked 为 true 则选中）  |
+| 方法名             | 类型                                       | 说明                                                                                                             |
+| :----------------- | :----------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
+| getCheckedRows     | `() => []`                                 | 获取当前选中的行数据                                                                                             |
+| toggleRowExpansion | `(row, expended) => void`                  | 用于可展开的表格，切换某一行的展开状态。 如果使用了第二个参数，则是设置这一行是否展示（expended 为 true 则展开） |
+| toggleRowSelection | `(row, checked) => void`                   | 用于可选择的表格，切换某一行的选中状态。 如果使用了第二个参数，则是设置这一行是否选中（checked 为 true 则选中）  |
+| setCellMode        | `(row, rowIndex, field, cellMode) => void` | 用于可编辑单元格的表格，`cellMode`参数: `readonly`为只读状态， `edit`为编辑状态，单元格根据不同状态渲染不同内容  |
+| resetCellMode      | `() => void`                               | 用于可编辑单元格的表格，重置所有可编辑单元格为只读状态                                                           |
 
 ### Table 插槽
 
@@ -1337,10 +1452,12 @@ export default defineComponent({
 
 ### Column 插槽
 
-| 插槽名  | 说明                     | 参数                |
-| :------ | :----------------------- | :------------------ |
-| default | 默认插槽，自定义列内容   | `{ row, rowIndex }` |
-| header  | 表头插槽，自定义表头内容 |                     |
+| 插槽名   | 说明                                                     | 参数                |
+| :------- | :------------------------------------------------------- | :------------------ |
+| default  | 默认插槽，自定义列内容                                   | `{ row, rowIndex }` |
+| header   | 表头插槽，自定义表头内容                                 |                     |
+| cell     | 内容只读态插槽（配合可编辑单元格功能使用），自定义列内容 | `{ row, rowIndex }` |
+| cellEdit | 内容编辑态插槽（配合可编辑单元格功能使用），自定义列内容 | `{ row, rowIndex }` |
 
 ### Table 类型定义
 
@@ -1395,7 +1512,7 @@ interface RowClickArg {
 #### ColumnType
 
 ```ts
-type ColumnType = 'checkable' | 'index' | '';
+type ColumnType = 'checkable' | 'index' | 'expand' | 'editable' | '';
 ```
 
 #### Formatter
