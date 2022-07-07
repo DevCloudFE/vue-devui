@@ -1,4 +1,4 @@
-import type { ExtractPropTypes, PropType, Ref, TdHTMLAttributes } from 'vue';
+import type { ComputedRef, ExtractPropTypes, PropType, Ref, TdHTMLAttributes } from 'vue';
 import { Column } from '../column/column-types';
 
 export const bodyTdProps = {
@@ -28,4 +28,6 @@ export interface UseBodyTd {
   isShowTooltip: Ref<boolean>;
   tooltipContent: Ref<string>;
   tdRef: Ref<HTMLElement | undefined>;
+  cellMode: ComputedRef<string>;
+  onCellClick: (e: MouseEvent) => void;
 }

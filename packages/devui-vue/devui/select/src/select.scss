@@ -246,16 +246,7 @@ $select-item-min-height: 36px;
 }
 
 .#{$devui-prefix}-select__dropdown {
-  position: absolute;
-  width: calc(100% - 2px);
   overflow: auto;
-  top: 100%;
-  left: 0;
-  margin: 5px 0;
-  border-radius: $devui-border-radius;
-  background: $devui-base-bg;
-  box-shadow: 0 2px 5px 0 $devui-shadow;
-  z-index: 999;
 }
 
 .#{$devui-prefix}-select__dropdown-list {

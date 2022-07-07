@@ -134,7 +134,10 @@ $input-height-lg: 46px;
       width: 0 !important;
     }
 
-    td {
+    .#{$devui-prefix}-date-picker-pro__calendar-table tr,
+    .#{$devui-prefix}-date-picker-pro__calendar-table td {
+      border: none;
+      padding: 0;
       text-align: center;
       font-size: $devui-font-size-sm;
     }
@@ -271,12 +274,6 @@ $input-height-lg: 46px;
       }
     }
   }
-}
-
-.#{$devui-prefix}-date-picker-pro__calendar-table tr,
-.#{$devui-prefix}-date-picker-pro__calendar-table td {
-  border: none;
-  padding: 0;
 }
 
 .#{$devui-prefix}-date-picker-pro__panel-time {

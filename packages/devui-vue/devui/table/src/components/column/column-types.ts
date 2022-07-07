@@ -1,10 +1,10 @@
-import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance, SetupContext, Slots } from 'vue';
+import type { PropType, ExtractPropTypes, VNode, Slot, ComponentInternalInstance, SetupContext, Slots, ComputedRef } from 'vue';
 import { DefaultRow, TableProps } from '../../table-types';
 import { TableStore } from '../../store/store-types';
 
 export type SortMethod<T = unknown> = (a: T, b: T) => boolean;
 
-export type ColumnType = 'checkable' | 'index' | 'expand' | '';
+export type ColumnType = 'checkable' | 'index' | 'expand' | 'editable' | '';
 
 export type SortDirection = 'ASC' | 'DESC' | '';
 
@@ -47,13 +47,13 @@ export interface Column {
     store: TableStore,
     rowIndex: number,
     props?: TableProps,
+    cellMode?: ComputedRef<string>,
     ctx?: SetupContext
   ) => VNode;
   formatter?: BaseFormatter<Column>;
   sortMethod?: SortMethod;
   subColumns?: Slot;
   slots: Slots;
-
 }
 
 export type LevelColumn = {

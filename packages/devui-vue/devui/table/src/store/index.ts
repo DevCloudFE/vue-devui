@@ -4,6 +4,7 @@ import type { Column, SortMethod, SortDirection, LevelColumn } from '../componen
 import type { DefaultRow, ITable, RowKeyType } from '../table-types';
 import type { TableStore } from './store-types';
 import { useExpand } from './use-expand';
+import { useEditTableCell } from './use-edit-table-cell';
 import { getRowIdentity } from '../utils';
 
 function replaceColumn(array: LevelColumn[], column: LevelColumn) {
@@ -280,6 +281,8 @@ export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T
   const { isFixedLeft } = createFixedLogic(_columns);
   const { isRowExpanded, updateExpandRows, setExpandRows, toggleRowExpansion } = useExpand(_data, table);
 
+  const { tableCellModeMap, setCellMode, resetCellMode } = useEditTableCell();
+
   watch(
     dataSource,
     (value: T[]) => {
@@ -304,6 +307,7 @@ export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T
       isFixedLeft,
       thList,
       firstDefaultColumn,
+      tableCellModeMap,
     },
     insertColumn,
     sortColumn,
@@ -319,5 +323,7 @@ export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T
     toggleRowExpansion,
     toggleRowSelection,
     updateFirstDefaultColumn,
+    setCellMode,
+    resetCellMode,
   };
 }

@@ -4,6 +4,7 @@ import DColumn from '../src/components/column/column';
 import { Button } from '../../button';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { nextTick, ref } from 'vue';
+import { Input } from '../../input';
 
 let data: Array<Record<string, unknown>> = [];
 const ns = useNamespace('table', true);
@@ -550,5 +551,89 @@ describe('d-table', () => {
     await nextTick();
     hiddenTrs = wrapper.findAll('.is-hidden');
     expect(hiddenTrs.length).toBe(2);
+  });
+
+  it('table edit cell work', async () => {
+    const wrapper = mount({
+      setup() {
+        const tableRef = ref();
+        const firstNameRef = ref();
+        const baseTreeTableData = ref([
+          {
+            firstName: 'Mark',
+            lastName: 'Otto',
+            gender: 'Male',
+            id: 'Mark',
+          },
+          {
+            firstName: 'Jacob',
+            lastName: 'Thornton',
+            gender: 'Female',
+            id: 'Jacob',
+          },
+        ]);
+
+        const changeInput = (row, rowIndex, field, value) => {
+          baseTreeTableData.value[rowIndex][field] = value;
+          tableRef.value.store.setCellMode(row, rowIndex, field, 'readonly');
+        };
+
+        const cellClick = (obj) => {
+          tableRef.value.store.setCellMode(obj.row, obj.rowIndex, obj.column.field, 'edit');
+          nextTick(() => {
+            firstNameRef?.value?.focus();
+          });
+        };
+        const blur = (row, rowIndex, field) => {
+          tableRef.value.store.setCellMode(row, rowIndex, field, 'readonly');
+        };
+
+        return () => (
+          <div>
+            <DTable ref={tableRef} data={baseTreeTableData.value} row-key="id" onCellClick={cellClick}>
+              <DColumn
+                field="firstName"
+                header="First Name"
+                type="editable"
+                v-slots={{
+                  cell: (scope) => <span>{scope.row.firstName}</span>,
+                  cellEdit: (scope) => (
+                    <Input
+                      ref={firstNameRef}
+                      modelValue={scope.row.firstName}
+                      onChange={(value) => changeInput(scope.row, scope.rowIndex, 'firstName', value)}
+                      onBlur={() => blur(scope.row, scope.rowIndex, 'firstName')}
+                    />
+                  ),
+                }}></DColumn>
+              <DColumn field="lastName" header="Last Name"></DColumn>
+              <DColumn field="gender" header="Gender"></DColumn>
+            </DTable>
+          </div>
+        );
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const table = wrapper.find(ns.b());
+    expect(table.exists()).toBeTruthy();
+    const tableBody = table.find(ns.e('tbody'));
+    const tdItems = tableBody.find('tr').findAll('td');
+    expect(tdItems.length).toBe(3);
+    const cellItem = tdItems[0].find(ns.e('cell'));
+    expect(cellItem.exists()).toBeTruthy();
+    expect(cellItem.classes().includes('editable-cell')).toBe(true);
+    // todo  input的国际化报错， 具体原因有待分析，目前将input组件的placeholder默认值去除国际化，此用例可通过
+    await tdItems[0].trigger('click');
+    const input = cellItem.find('input');
+    expect(input.exists()).toBeTruthy();
+    input.setValue('Mark1');
+    await input.trigger('keydown.enter');
+
+    const inputNew = cellItem.find('input');
+    expect(inputNew.exists()).toBeFalsy();
+    expect(cellItem.text()).toBe('Mark1');
   });
 });
