@@ -22,6 +22,7 @@ describe('card', () => {
   it('should render correctly', async () => {
     const wrapper = mount(DCard);
     expect(wrapper.element).toMatchSnapshot();
+    console.log(alwaysShadowClass);
   });
 
   it('should render correctly avatar', async () => {
