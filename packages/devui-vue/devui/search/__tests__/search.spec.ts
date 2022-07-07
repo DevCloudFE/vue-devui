@@ -67,6 +67,7 @@ describe('search test', () => {
     await clear.trigger('click');
     expect(input.element.value).toBe('');
     expect(value.value).toBe('');
+    expect(input.element === document.activeElement).toBe(true);
 
     // test disabled
     expect(input.attributes('disabled')).toBe(undefined);
@@ -98,10 +99,12 @@ describe('search test', () => {
     });
     const search = wrapper.find(dotSearchClass);
     const searchBtn = search.find(dotIconSearchClass);
+    const input = search.find('input');
     await searchBtn.trigger('click');
     await onSearch((str) => {
       expect(str).toBe('test');
     });
     expect(onSearch).toBeCalledTimes(1);
+    expect(input.element === document.activeElement).toBe(true);
   });
 });
