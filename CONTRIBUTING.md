@@ -44,3 +44,17 @@ Vue DevUI 是一个多人合作的开源项目，为了避免多人同时开发�
 1. 完善组件中英文文档
 2. 完善组件的单元测试
 3. 完成组件[自检清单](https://github.com/DevCloudFE/vue-devui/wiki/%E7%BB%84%E4%BB%B6%E8%87%AA%E6%A3%80%E6%B8%85%E5%8D%95)
+
+代码在提交之前会自动执行 ESLint 检查，并且在 Github PR 提交门禁中也加上了 ESLint 检查任务，所以在提交之前请确保你的代码符合 ESLint 规范，ESLint 检查不通过，PR 将无法合入哦。
+
+你可通过执行以下命令来手动执行代码检查：
+
+```bash
+# 执行 ESLint 检查
+pnpm cli --filter vue-devui -- code-check -t eslint
+pnpm cli --filter vue-devui -- code-check -t eslint -c alert,button
+
+# 执行单元测试
+pnpm cli --filter vue-devui -- code-check -t unit-test
+pnpm cli --filter vue-devui -- code-check -t unit-test -c alert,button
+```
