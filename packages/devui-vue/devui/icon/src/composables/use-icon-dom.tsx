@@ -20,7 +20,7 @@ export function useIconDom(props: IconProps, ctx: SetupContext): UseIconDom {
         src={name.value}
         alt={name.value.split('/')[name.value.split('/').length - 1]}
         class={[rotate?.value === 'infinite' && ns.m('spin')]}
-        style={{ width: iconSize.value || '', transform: `rotate(${rotate?.value}deg)` }}
+        style={{ width: iconSize.value || '', transform: `rotate(${rotate?.value}deg)`, verticalAlign: 'middle' }}
         {...ctx.attrs}
       />
     );
