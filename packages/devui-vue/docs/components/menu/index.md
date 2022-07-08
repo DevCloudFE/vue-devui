@@ -8,11 +8,11 @@ Menu 组件通常用于导航.
 
 ### 基本用法
 
-:::demo
+:::demo 如果屏幕尺寸过小，则会出现省略号
 
 ```vue
 <template>
-  <d-menu mode="horizontal" :default-select-keys="['home']" style="margin-bottom: 120px">
+  <d-menu mode="horizontal" :default-select-keys="['home']" style="margin-bottom: 120px" :width="width + 'px'">
     <d-menu-item key="home">
       <template #icon>
         <i class="icon-homepage"></i>
@@ -29,7 +29,14 @@ Menu 组件通常用于导航.
     <d-menu-item key="person">个人</d-menu-item>
     <d-menu-item key="custom" href="https://www.baidu.com"> Link To Baidu </d-menu-item>
   </d-menu>
+  <d-slider :min="0" :max="480" v-model="width"></d-slider>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+let width = ref(480);
+</script>
+
 ```
 
 :::
@@ -118,6 +125,64 @@ Menu 组件通常用于导航.
 </template>
 ```
 
+:::
+
+
+### 仅一项展开
+
+:::demo 通过子菜单状态改变事件修改```open-keys```数组达到效果
+
+``` vue
+  <template>
+    <d-menu @submenu-change="submenuChange" :default-select-keys="['item1']" :open-keys="openKeys" width="256px">
+      <d-sub-menu title="submenu-1" key="submenu-1">
+        <template #icon>
+          <i class="icon-infomation"></i>
+        </template>
+        <d-menu-item key="subemenu-item-1">
+          <span>submenu-item-1</span>
+        </d-menu-item>
+      </d-sub-menu>
+      <d-sub-menu title="submenu-2" key="submenu-2">
+        <template #icon>
+          <i class="icon-setting"></i>
+        </template>
+        <d-menu-item key="submenu-item-2">
+          <span>submenu-item-2</span>
+        </d-menu-item>
+      </d-sub-menu>
+      <d-sub-menu title="submenu-3" key="submenu-3">
+        <template #icon>
+          <i class="icon-setting"></i>
+        </template>
+        <d-menu-item key="submenu-item-2">
+          <span>submenu-item-2</span>
+        </d-menu-item>
+      </d-sub-menu>
+    </d-menu>
+  </template>
+
+  <script>
+  import { defineComponent, ref } from 'vue';
+
+  export default defineComponent({
+    setup() {
+      const openKeys = ref(['submenu-1']);
+      const submenuChange = (e) => {
+        console.log(e)
+        openKeys.value.forEach(element => {
+          openKeys.value.shift()
+        });
+        openKeys.value.push(e.key)
+      };
+      return {
+        openKeys,
+        submenuChange,
+      };
+    },
+  });
+  </script>
+```
 :::
 
 ### 收缩菜单
@@ -249,7 +314,7 @@ export default defineComponent({
     </d-sub-menu>
   </d-menu>
   <br />
-  <d-slider :min="0" :max="480" v-model="width" tipsRenderer="px"></d-slider>
+  <d-slider :min="0" :max="480" v-model="width"></d-slider>
 </template>
 
 <script lang="ts" setup>
