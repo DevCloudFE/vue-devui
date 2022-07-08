@@ -1,5 +1,5 @@
 import { clearSelect } from '../../composables/use-layer-operate';
-import { defineComponent, getCurrentInstance, onMounted, ref, Transition, watch, inject, Ref, reactive, toRefs } from 'vue';
+import { defineComponent, getCurrentInstance, onMounted, ref, Transition, watch, inject, Ref, reactive, toRefs, computed } from 'vue';
 import { MenuItemProps, menuItemProps } from './menu-item-types';
 import { initSelect, addActiveParent, changeRoute } from './use-menu-item';
 import { useClick } from '../../composables/use-click';
@@ -33,13 +33,12 @@ export default defineComponent({
     const useRouter = inject('useRouter') as boolean;
     const router = instance?.appContext.config.globalProperties.$router as Router;
 
-    const classObject: Record<string, boolean> = reactive({
+    const classObject = computed(()=>({
       [`${ns.b()}-item`]: true,
       [`${ns.b()}-item-isCollapsed`]: isCollapsed.value,
-      [`${ns.b()}-isCollapsed-item`]: isCollapsed.value,
       [menuItemSelect]: isSelect.value,
       [menuItemDisabled]: disabled.value,
-    });
+    }));
     const onClick = (e: MouseEvent) => {
       e.stopPropagation();
       const ele = e.currentTarget as HTMLElement;
@@ -80,13 +79,13 @@ export default defineComponent({
     const icons = <span class={`${ns.b()}-icon`}>{ctx.slots.icon?.()}</span>;
     const menuItems = ref(null);
     watch(disabled, () => {
-      classObject[menuItemSelect] = false;
+      classObject.value[menuItemSelect] = false;
     });
     watch(
       () => defaultSelectKey,
       (n) => {
         isSelect.value = initSelect(n, key, multiple, disabled);
-        classObject[menuItemSelect] = isSelect.value;
+        classObject.value[menuItemSelect] = isSelect.value;
       }
     );
     onMounted(() => {
@@ -121,11 +120,12 @@ export default defineComponent({
         }
       }
     });
+
     return () => {
       return mode.value === 'vertical' ? (
         <div class={`${ns.b()}-item-vertical-wrapper`}>
           <li
-            class={[classObject, props['disabled'] ? menuItemDisabled : '', isLayer1.value ? 'layer_1' : '']}
+            class={classObject.value}
             onClick={onClick}
             ref={menuItems}>
             {ctx.slots.icon !== undefined && icons}
@@ -142,7 +142,7 @@ export default defineComponent({
         </div>
       ) : (
         <li
-          class={[classObject, props['disabled'] ? menuItemDisabled : '', isLayer1.value ? 'layer_1' : '']}
+          class={classObject.value}
           onClick={onClick}
           ref={menuItems}>
           {ctx.slots.icon !== undefined && icons}

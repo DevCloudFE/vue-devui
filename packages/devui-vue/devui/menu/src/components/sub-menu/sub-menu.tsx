@@ -22,11 +22,11 @@ export default defineComponent({
   setup(props: SubMenuProps, ctx) {
     const isShow = ref(true);
     const {
-      vnode: { key },
+      vnode: { key }
     } = getCurrentInstance() as ComponentInternalInstance;
     const key_ = String(key);
     const isOpen = ref(false);
-    const defaultOpenKeys = inject('openKeys') as string[];
+    const defaultOpenKeys = inject('openKeys') as Ref<string[]>;
     const indent = inject('defaultIndent');
     const isCollapsed = inject('isCollapsed') as Ref<boolean>;
     const mode = inject('mode') as Ref<string>;
@@ -36,7 +36,7 @@ export default defineComponent({
     if (key_ === 'null') {
       console.warn(`[devui][menu]: Key can not be null`);
     } else {
-      if (defaultOpenKeys.includes(key_)) {
+      if (defaultOpenKeys.value.includes(key_)) {
         isOpen.value = true;
       } else {
         isOpen.value = false;
@@ -93,12 +93,12 @@ export default defineComponent({
     watch(
       () => defaultOpenKeys,
       (n) => {
-        if (n.includes(key_)) {
+        if (n.value.includes(key_)) {
           isOpen.value = true;
         } else {
           isOpen.value = false;
         }
-      }
+      },{deep: true}
     );
     onMounted(() => {
       const el = title.value as unknown as HTMLElement;
@@ -147,7 +147,7 @@ export default defineComponent({
               {props.title}
             </span>
             <i
-              v-show={!isCollapsed.value}
+              v-show={!isCollapsed.value && key !== 'overflowContainer'}
               class={{
                 'icon icon-chevron-up': class_layer.value !== `layer_${subMenuClass}`,
                 'icon icon-chevron-right': class_layer.value === `layer_${subMenuClass}`,
