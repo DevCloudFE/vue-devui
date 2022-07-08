@@ -10,10 +10,6 @@
   border-right: $devui-line 1px solid;
   background: $devui-area !important;
 
-  * {
-    transition: all $devui-animation-duration-fast $devui-animation-ease-in-smooth;
-  }
-
   ::after {
     transition: all $devui-animation-duration-fast $devui-animation-ease-in-smooth;
     background: transparent;
@@ -29,11 +25,6 @@
       margin: 0 !important;
       background: $devui-block;
     }
-  }
-
-  li.#{$devui-prefix}-menu-isCollapsed-item {
-    padding: 0;
-    margin: auto;
   }
 
   &.#{$devui-prefix}-menu-collapsed {
