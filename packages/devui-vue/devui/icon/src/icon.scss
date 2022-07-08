@@ -5,8 +5,7 @@ $devui-icon-background-active: var(--devui-icon-background-active, $devui-list-i
 
 .#{$devui-prefix}-icon {
   &__container {
-    display: inline-flex;
-    align-items: center;
+    display: inline-block;
     color: $devui-icon-fill;
 
     & > *:not(:last-child) {
@@ -65,6 +64,7 @@ $devui-icon-background-active: var(--devui-icon-background-active, $devui-list-i
 
     &.#{$devui-prefix}-icon__container {
       height: 32px;
+      line-height: 32px;
       padding: 0 8px;
       margin-left: -8px;
       border-radius: $devui-border-radius;
