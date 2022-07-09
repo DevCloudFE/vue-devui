@@ -67,6 +67,8 @@ describe('search test', () => {
     await clear.trigger('click');
     expect(input.element.value).toBe('');
     expect(value.value).toBe('');
+
+    // test input focus after trigger clear button
     expect(input.element === document.activeElement).toBe(true);
 
     // test disabled
@@ -105,6 +107,8 @@ describe('search test', () => {
       expect(str).toBe('test');
     });
     expect(onSearch).toBeCalledTimes(1);
+
+    // test input focus after trigger search button
     expect(input.element === document.activeElement).toBe(true);
   });
 });
