@@ -38,7 +38,7 @@ $button-padding-map: (
     display: inline-block;
     line-height: 1;
     user-select: none;
-    box-shadow: -1px 0 0 0 #dfe1e6;
+    box-shadow: -1px 0 0 0 $devui-disabled-line;
     @each $size in ('lg', 'md', 'sm', 'xs') {
       &.#{$devui-prefix}-checkbox-button--#{$size} {
         font-size: map-get($font-size-map, #{$size});
