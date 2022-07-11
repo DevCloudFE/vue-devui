@@ -139,6 +139,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/aolyang"><img src="https://avatars.githubusercontent.com/u/72056179?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Anthonio OuYang</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=aolyang" title="Code">💻</a></td>
     <td align="center"><a href="https://yyblog.top"><img src="https://avatars.githubusercontent.com/u/57666140?v=4?s=100" width="100px;" alt=""/><br /><sub><b>FlingYP</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=flingyp" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/xzxldl55"><img src="https://avatars.githubusercontent.com/u/22699218?v=4?s=100" width="100px;" alt=""/><br /><sub><b>xzxldl55</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xzxldl55" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
