@@ -45,7 +45,7 @@ export default defineComponent({
 
 ### 节点懒加载
 
-:::demo 通过设置节点 `isLeaf` 参数为 `false`, 组件方法 `lazyLoad` 方法实现节点懒加载。
+:::demo 通过设置该节点 `isLeaf` 参数为 `false`, 组件回调 `lazyLoad` 方法实现节点懒加载。
 
 ```vue
 <template>

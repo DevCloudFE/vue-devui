@@ -67,7 +67,7 @@ export default defineComponent({
               slots.content ? renderSlot(useSlots(), 'content', { nodeData: treeNode }) : <DTreeNodeContent data={treeNode} />,
             icon: () =>
               slots.icon ? renderSlot(useSlots(), 'icon', { nodeData: treeNode, toggleNode }) : <DTreeNodeToggle data={treeNode} />,
-            loading: () => (slots.icon ? renderSlot(useSlots(), 'loading', { nodeData: treeNode }) : <DTreeNodeLoading data={treeNode} />),
+            loading: () => (slots.loading ? renderSlot(useSlots(), 'loading', { nodeData: treeNode }) : <DTreeNodeLoading />),
           }}
         </DTreeNode>
       );
