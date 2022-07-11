@@ -3,8 +3,10 @@ import { onMounted, ref } from 'vue';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { Tree, ICheck } from '../../';
 import { checkableTreeData } from './checkable-tree-data';
+import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 type ITreeFactory = { expandAllNodes: () => void };
+const checkBoxNs = useNamespace('checkbox', true);
 
 describe('Checkable tree', () => {
   let wrapper: VueWrapper<ComponentPublicInstance>;
@@ -13,7 +15,7 @@ describe('Checkable tree', () => {
   beforeAll(() => {
     const mountData = {
       setup() {
-        const treeRef = ref<ComponentInternalInstance & { treeFactory: ITreeFactory } | null>(null);
+        const treeRef = ref<(ComponentInternalInstance & { treeFactory: ITreeFactory }) | null>(null);
         const check = ref<ICheck>('none');
         const data = ref(checkableTreeData);
         onMounted(() => {
@@ -36,11 +38,21 @@ describe('Checkable tree', () => {
           return (
             <>
               <Tree data={data.value} check={check.value} ref={treeRef} />
-              <button class="check" onClick={onChangeCheck}>click</button>
-              <button class="both" onClick={() => onChangeCheckMode('both')}>both</button>
-              <button class="downward" onClick={() => onChangeCheckMode('downward')}>downward</button>
-              <button class="upward" onClick={() => onChangeCheckMode('upward')}>upward</button>
-              <button class="disable" onClick={onChangeDisableCheck}>click</button>
+              <button class="check" onClick={onChangeCheck}>
+                click
+              </button>
+              <button class="both" onClick={() => onChangeCheckMode('both')}>
+                both
+              </button>
+              <button class="downward" onClick={() => onChangeCheckMode('downward')}>
+                downward
+              </button>
+              <button class="upward" onClick={() => onChangeCheckMode('upward')}>
+                upward
+              </button>
+              <button class="disable" onClick={onChangeDisableCheck}>
+                click
+              </button>
             </>
           );
         };
@@ -56,7 +68,7 @@ describe('Checkable tree', () => {
   });
 
   it('Should render checkbox correctly.', () => {
-    const childNodeList = wrapper.findAll('.devui-checkbox');
+    const childNodeList = wrapper.findAll(checkBoxNs.b());
     childNodeList.forEach((item) => {
       expect(item.exists()).toBe(true);
       expect(item.classes()).toContain('unchecked');
@@ -64,7 +76,7 @@ describe('Checkable tree', () => {
   });
 
   it('In the none mode, the selected state of the node should be switched correctly.', async () => {
-    const childNodeList = wrapper.findAll('.devui-checkbox');
+    const childNodeList = wrapper.findAll(checkBoxNs.b());
     for await (const item of childNodeList) {
       expect(item.classes()).toContain('unchecked');
       await item.get('label').trigger('click');
@@ -76,7 +88,7 @@ describe('Checkable tree', () => {
 
   it('In the upward mode, the selected state of the node should be switched correctly.', async () => {
     wrapper.get('.upward').trigger('click');
-    const childNodeList = wrapper.findAll('.devui-checkbox');
+    const childNodeList = wrapper.findAll(checkBoxNs.b());
     await childNodeList[4].get('label').trigger('click');
     expect(childNodeList[4].classes()).toContain('active');
     expect(childNodeList[0].classes()).toContain('half-checked');
@@ -98,7 +110,7 @@ describe('Checkable tree', () => {
 
   it('In the downward mode, the selected state of the node should be switched correctly.', async () => {
     wrapper.get('.downward').trigger('click');
-    const childNodeList = wrapper.findAll('.devui-checkbox');
+    const childNodeList = wrapper.findAll(checkBoxNs.b());
     expect(childNodeList[0].classes()).toContain('unchecked');
     await childNodeList[0].get('label').trigger('click');
     for (const item of childNodeList.slice(0, 5)) {
@@ -119,7 +131,7 @@ describe('Checkable tree', () => {
   });
   it('In the both mode, the selected state of the node should be switched correctly.', async () => {
     wrapper.get('.both').trigger('click');
-    const childNodeList = wrapper.findAll('.devui-checkbox');
+    const childNodeList = wrapper.findAll(checkBoxNs.b());
     await childNodeList[1].get('label').trigger('click');
     expect(childNodeList[0].classes()).toContain('half-checked');
     expect(childNodeList[1].classes()).toContain('active');
@@ -133,14 +145,14 @@ describe('Checkable tree', () => {
   });
 
   it('The checkbox should be checked when setting checked to true.', async () => {
-    expect(wrapper2.findAll('.devui-checkbox')[0].classes()).toContain('unchecked');
+    expect(wrapper2.findAll(checkBoxNs.b())[0].classes()).toContain('unchecked');
     await wrapper2.get('.check').trigger('click');
-    expect(wrapper2.findAll('.devui-checkbox')[0].classes()).toContain('active');
+    expect(wrapper2.findAll(checkBoxNs.b())[0].classes()).toContain('active');
   });
 
-  it('The checkbox can\'t  be checked when setting disableCheck to true.', async () => {
-    expect(wrapper2.findAll('.devui-checkbox')[0].classes()).toContain('active');
+  it("The checkbox can't  be checked when setting disableCheck to true.", async () => {
+    expect(wrapper2.findAll(checkBoxNs.b())[0].classes()).toContain('active');
     await wrapper2.get('.disable').trigger('click');
-    expect(wrapper2.findAll('.devui-checkbox')[0].classes()).toContain('active');
+    expect(wrapper2.findAll(checkBoxNs.b())[0].classes()).toContain('active');
   });
 });

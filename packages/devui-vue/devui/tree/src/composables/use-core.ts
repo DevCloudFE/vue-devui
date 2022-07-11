@@ -6,16 +6,17 @@ const DEFAULT_CONFIG = {
   expanded: false, // 是否只从展开了的节点中获取数据
   recursive: true, // 是否需要获取非直接子节点
 };
-
-export default function(): (data: Ref<IInnerTreeNode[]>) => IUseCore {
-  const nodeMap = new Map<string, IInnerTreeNode[]>();
+const nodeMap = new Map<string, IInnerTreeNode[]>();
+export default function (): (data: Ref<IInnerTreeNode[]>) => IUseCore {
   return function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
     const getLevel = (node: IInnerTreeNode): number => {
       return data.value.find((item) => item.id === node.id)?.level;
     };
 
     const getChildren = (node: IInnerTreeNode, userConfig = DEFAULT_CONFIG): IInnerTreeNode[] => {
-      if (node.isLeaf) { return []; }
+      if (node.isLeaf) {
+        return [];
+      }
       if (node.id && nodeMap.has(node.id)) {
         const cacheNode = nodeMap.get(node.id);
         if (cacheNode) {
@@ -28,7 +29,7 @@ export default function(): (data: Ref<IInnerTreeNode[]>) => IUseCore {
           const result = [];
           for (let i = 0, len = data?.value.length; i < len; i++) {
             const item = data?.value[i];
-            if (excludeNodes.map(innerNode => innerNode.id).includes(item.id)) {
+            if (excludeNodes.map((innerNode) => innerNode.id).includes(item.id)) {
               continue;
             }
             if (item.expanded !== true && !item.isLeaf) {
@@ -65,10 +66,9 @@ export default function(): (data: Ref<IInnerTreeNode[]>) => IUseCore {
       return computed(() => {
         let excludeNodes: IInnerTreeNode[] = [];
         const result = [];
-
         for (let i = 0, len = data?.value.length; i < len; i++) {
           const item = data?.value[i];
-          if (excludeNodes.map(node => node.id).includes(item.id)) {
+          if (excludeNodes.map((node) => node.id).includes(item.id)) {
             continue;
           }
           if (item.expanded !== true) {

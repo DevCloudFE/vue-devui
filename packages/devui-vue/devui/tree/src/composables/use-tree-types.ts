@@ -22,18 +22,23 @@ export interface IInnerTreeNode extends ITreeNode {
   idType?: 'random';
   parentId?: string;
   isLeaf?: boolean;
-  parentChildNode?: number;
+  parentChildNodeCount?: number;
   currentIndex?: number;
+  loading?: boolean; // 节点是否显示加载中
+  childNodeCount?: number; // 该节点的子节点的数量
 }
 
 export type valueof<T> = T[keyof T];
 
 export interface IUseCore {
   getLevel: (node: IInnerTreeNode) => number;
-  getChildren: (node: IInnerTreeNode, config?: {
-    expanded?: boolean;
-    recursive?: boolean;
-  }) => IInnerTreeNode[];
+  getChildren: (
+    node: IInnerTreeNode,
+    config?: {
+      expanded?: boolean;
+      recursive?: boolean;
+    }
+  ) => IInnerTreeNode[];
   getParent: (node: IInnerTreeNode) => IInnerTreeNode;
   getExpendedTree: () => ComputedRef<IInnerTreeNode[]>;
   getIndex: (node: IInnerTreeNode) => number;
@@ -84,7 +89,13 @@ export interface IUseMergeNodes {
 
 export type IUseTree = {
   treeData: Ref<IInnerTreeNode[]>;
-} & IUseCore & IUseToggle & IUseSelect & IUseCheck & IUseDisable & IUseOperate & IUseMergeNodes;
+} & IUseCore &
+IUseToggle &
+IUseSelect &
+IUseCheck &
+IUseDisable &
+IUseOperate &
+IUseMergeNodes;
 
 export type ICheckStrategy = 'upward' | 'downward' | 'both' | 'none';
 
@@ -93,3 +104,12 @@ export type ICheck = boolean | ICheckStrategy;
 export type IOperateItem = 'add' | 'delete' | 'edit';
 
 export type IOperate = boolean | IOperateItem | Array<IOperateItem>;
+
+export interface LazyNodeResult {
+  treeItems: ITreeNode[];
+  node: IInnerTreeNode;
+}
+
+export interface IUseLazyLoad {
+  lazyLoadNodes: (node: IInnerTreeNode) => void;
+}
