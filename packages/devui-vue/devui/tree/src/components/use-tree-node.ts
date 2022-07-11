@@ -18,7 +18,6 @@ export interface IUseTreeNode {
 }
 
 export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTreeNode {
-
   const nodeClass = computed(() => [ns.e('node'), data.value?.expanded && ns.em('node', 'open')]);
   const nodeStyle = computed(() => {
     return { paddingLeft: `${NODE_INDENT * (data.value?.level - 1)}px` };
@@ -29,18 +28,14 @@ export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTree
     if (!data.value || data.value.level === 1) {
       return [];
     }
-    const { currentIndex = 0, parentChildNode = 0, level, expanded, isLeaf } = data.value;
-    return Array
-      .from({ length: data.value.level - 1 })
-      .map((_, index) => ({
-        height: `${
-          (currentIndex + 1) === parentChildNode && index === 0
-            ? (isLeaf || !expanded ? NODE_HEIGHT / 2 : NODE_HEIGHT)
-            : NODE_HEIGHT
-        }px`,
-        left: `${NODE_INDENT * (level - index - 2) + 9}px`,
-        top: `0px`,
-      }));
+    const { currentIndex = 0, parentChildNodeCount = 0, level, expanded, isLeaf } = data.value;
+    return Array.from({ length: data.value.level - 1 }).map((_, index) => ({
+      height: `${
+        currentIndex + 1 === parentChildNodeCount && index === 0 ? (isLeaf || !expanded ? NODE_HEIGHT / 2 : NODE_HEIGHT) : NODE_HEIGHT
+      }px`,
+      left: `${NODE_INDENT * (level - index - 2) + 9}px`,
+      top: `0px`,
+    }));
   });
   const nodeHLineClass = computed(() => [data.value?.level !== 1 && ns.e('node-hline')]);
 

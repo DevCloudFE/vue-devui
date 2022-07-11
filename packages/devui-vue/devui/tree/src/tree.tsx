@@ -3,6 +3,7 @@ import type { IInnerTreeNode, ICheckStrategy } from './composables/use-tree-type
 import DTreeNode from './components/tree-node';
 import DTreeNodeContent from './components/tree-node-content';
 import DTreeNodeToggle from './components/tree-node-toggle';
+import DTreeNodeLoading from './components/tree-node-loading';
 import { VirtualList } from '../../virtual-list';
 import useTree from './composables/use-tree';
 import useCheck from './composables/use-check';
@@ -18,7 +19,7 @@ import './tree.scss';
 export default defineComponent({
   name: 'DTree',
   props: treeProps,
-  emits: ['toggle-change', 'check-change', 'select-change', 'node-click'],
+  emits: ['toggle-change', 'check-change', 'select-change', 'node-click', 'lazy-load'],
   setup(props: TreeProps, context: SetupContext) {
     const { slots, expose } = context;
     const treeInstance = getCurrentInstance();
@@ -28,7 +29,7 @@ export default defineComponent({
     const userPlugins = [useSelect(), useOperate(), useMergeNodes()];
 
     const checkOptions = ref<{ checkStrategy: ICheckStrategy }>({
-      checkStrategy: formatCheckStatus(check.value)
+      checkStrategy: formatCheckStatus(check.value),
     });
 
     watch(check, (newVal) => {
@@ -66,6 +67,7 @@ export default defineComponent({
               slots.content ? renderSlot(useSlots(), 'content', { nodeData: treeNode }) : <DTreeNodeContent data={treeNode} />,
             icon: () =>
               slots.icon ? renderSlot(useSlots(), 'icon', { nodeData: treeNode, toggleNode }) : <DTreeNodeToggle data={treeNode} />,
+            loading: () => (slots.icon ? renderSlot(useSlots(), 'loading', { nodeData: treeNode }) : <DTreeNodeLoading data={treeNode} />),
           }}
         </DTreeNode>
       );
@@ -74,8 +76,8 @@ export default defineComponent({
       const Component = props.height ? VirtualList : 'div';
       const treeData = getExpendedTree?.().value;
       const vSlotsProps = {
-        default: props.height || (() => treeData?.map(renderDTreeNode)),
-        item: props.height && ((treeNode: IInnerTreeNode) => renderDTreeNode(treeNode))
+        default: () => treeData?.map(renderDTreeNode),
+        item: props.height && ((treeNode: IInnerTreeNode) => renderDTreeNode(treeNode)),
       };
       let virtualListProps = {};
       if (props.height) {
@@ -85,13 +87,7 @@ export default defineComponent({
           itemHeight: NODE_HEIGHT,
         };
       }
-      return (
-        <Component
-          class={ns.b()}
-          {...virtualListProps}
-          v-slots={vSlotsProps}
-        />
-      );
+      return <Component class={ns.b()} {...virtualListProps} v-slots={vSlotsProps} />;
     };
   },
 });

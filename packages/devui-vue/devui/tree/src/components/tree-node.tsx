@@ -1,8 +1,9 @@
-import { ComputedRef, getCurrentInstance, PropType , ref, computed, defineComponent, inject, renderSlot, toRefs, useSlots } from 'vue';
+import { ComputedRef, getCurrentInstance, PropType, ref, computed, defineComponent, inject, renderSlot, toRefs, useSlots } from 'vue';
 
 import { NODE_HEIGHT, TREE_INSTANCE, USE_TREE_TOKEN } from '../const';
 import { IInnerTreeNode, IUseTree, ICheck, IOperate } from '../composables/use-tree-types';
 import DTreeNodeToggle from './tree-node-toggle';
+import DTreeNodeLoading from './tree-node-loading';
 import { Checkbox } from '../../../checkbox';
 import DTreeNodeContent from './tree-node-content';
 import useTreeNode from './use-tree-node';
@@ -31,7 +32,7 @@ export default defineComponent({
     const t = createI18nTranslate('DTree', app);
 
     const { data, check, operate } = toRefs(props);
-    const { toggleSelectNode, toggleCheckNode, toggleNode, getChildren, insertBefore, removeNode } = inject(
+    const { toggleSelectNode, toggleCheckNode, toggleNode, getChildren, insertBefore, removeNode, getNode } = inject(
       USE_TREE_TOKEN
     ) as Partial<IUseTree>;
     const treeInstance = inject(TREE_INSTANCE);
@@ -97,6 +98,7 @@ export default defineComponent({
             <div class={ns.em('node-content', 'value-wrapper')} style={{ height: `${NODE_HEIGHT}px` }}>
               {check.value && <Checkbox {...checkboxProps.value} />}
               {slots.default ? renderSlot(useSlots(), 'default', { nodeData: data }) : <DTreeNodeContent data={data.value} />}
+              {getNode?.(data.value)?.loading ? slots.loading ? renderSlot(useSlots(), 'loading') : <DTreeNodeLoading /> : ''}
             </div>
             {operate.value && isShowOperationArea.value && (
               <div class={nodeOperationAreaClass.value}>
