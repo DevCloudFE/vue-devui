@@ -63,6 +63,7 @@ $keyframe-blue: #5e7ce0;
     display: inline-flex;
     align-items: center;
     height: 30px;
+    overflow: hidden;
 
     .#{$devui-prefix}-tree__node-loading {
       margin-left: 50px;
@@ -99,6 +100,7 @@ $keyframe-blue: #5e7ce0;
     border: 1px dashed transparent;
     border-radius: $devui-border-radius;
     max-width: 100%;
+    flex: 1;
 
     &:not(.disabled) {
       cursor: pointer;
@@ -339,7 +341,8 @@ $keyframe-blue: #5e7ce0;
   font-size: 0;
 }
 
-.#{$devui-prefix}-tree__node, .#{$devui-prefix}-tree__node-content {
+.#{$devui-prefix}-tree__node,
+.#{$devui-prefix}-tree__node-content {
   position: relative;
 }
 

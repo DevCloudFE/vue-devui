@@ -43,6 +43,75 @@ export default defineComponent({
 
 :::
 
+### 节点懒加载
+
+:::demo 通过设置节点 `isLeaf` 参数为 `false`, 组件方法 `lazyLoad` 方法实现节点懒加载。
+
+```vue
+<template>
+  <d-tree :data="data" @lazy-load="lazyLoad"></d-tree>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const data = ref([
+      {
+        label: 'Parent node 1',
+        children: [
+          {
+            label: 'Parent node 1-1 - dynamic loading',
+            isLeaf: false,
+          },
+          { label: 'Leaf node 1-2' },
+        ],
+      },
+      { label: 'Leaf node 2 - dynamic loading', isLeaf: false },
+    ]);
+
+    const lazyLoad = (node, callback) => {
+      setTimeout(() => {
+        const data = [
+          {
+            label: 'child node 1',
+            expanded: true,
+            children: [
+              {
+                label: 'child node 1-1',
+              },
+              {
+                label: 'child node 1-2',
+              },
+            ],
+          },
+          {
+            label: 'child node 2',
+            children: [
+              {
+                label: 'child node 2-1',
+              },
+            ],
+          },
+        ];
+        callback({
+          treeItems: data,
+          node,
+        });
+      }, 500);
+    };
+
+    return {
+      data,
+      lazyLoad,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### 可勾选
 
 :::demo 通过`check`开启勾选功能。
@@ -436,10 +505,7 @@ export default defineComponent({
       if (!selectedNode.value) {
         return;
       }
-      treeRef.value.treeFactory.insertBefore(
-        selectedNode.value,
-        { label: '新节点' },
-      );
+      treeRef.value.treeFactory.insertBefore(selectedNode.value, { label: '新节点' });
     };
 
     const deleteNode = () => {
@@ -517,20 +583,22 @@ export default defineComponent({
 
 ### Tree 事件
 
-| 事件名        | 回调参数         | 说明                                        | 跳转 Demo         |
-| :------------ | :--------------- | :------------------------------------------ | :---------------- |
-| toggle-change | `Function(node)` | 节点展开/收起的回调事件，返回选中的节点对象 | [可勾选](#可勾选) |
-| check-change  | `Function(node)` | 节点勾选的回调事件，返回选中的节点对象      | [可勾选](#可勾选) |
-| select-change | `Function(node)` | 节点选中的回调事件，返回选中的节点对象      | [可勾选](#可勾选) |
-| node-click    | `Function(node)` | 节点点击事件，返回点击的节点对象            | [可勾选](#可勾选) |
+| 事件名        | 回调参数                   | 说明                                         | 跳转 Demo                 |
+| :------------ | :------------------------- | :------------------------------------------- | :------------------------ |
+| toggle-change | `Function(node)`           | 节点展开/收起的回调事件，返回选中的节点对象  | [可勾选](#可勾选)         |
+| check-change  | `Function(node)`           | 节点勾选的回调事件，返回选中的节点对象       | [可勾选](#可勾选)         |
+| select-change | `Function(node)`           | 节点选中的回调事件，返回选中的节点对象       | [可勾选](#可勾选)         |
+| node-click    | `Function(node)`           | 节点点击事件，返回点击的节点对象             | [可勾选](#可勾选)         |
+| lazy-node     | `Function(node, callback)` | 节点懒加载事件，返回点击的节点对象及回调函数 | [节点懒加载](#节点懒加载) |
 
 ### Tree 插槽
 
-| 插槽名  | 说明                |
-| :------ | :------------------ |
-| default | 自定义节点          |
-| content | 自定义节点内容      |
-| icon    | 自定义展开/收起按钮 |
+| 插槽名  | 说明                                |
+| :------ | :---------------------------------- |
+| default | 自定义节点                          |
+| content | 自定义节点内容                      |
+| icon    | 自定义展开/收起按钮                 |
+| loading | 自定义节点懒加载时 loading 显示内容 |
 
 ### TreeNode 参数
 
