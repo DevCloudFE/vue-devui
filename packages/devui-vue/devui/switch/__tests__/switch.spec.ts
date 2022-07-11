@@ -123,7 +123,7 @@ describe('d-switch', () => {
     const wrapper = mount({
       components: { DSwitch },
       template: `
-        <d-switch v-model="checked" active-value="打开" active-value="关闭"></d-switch>
+        <d-switch v-model="checked" active-value="打开" inactive-value="关闭"></d-switch>
       `,
       setup() {
         return {
