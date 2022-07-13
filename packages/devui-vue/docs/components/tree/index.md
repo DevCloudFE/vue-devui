@@ -533,12 +533,186 @@ export default defineComponent({
 
 :::
 
+### 搜索过滤
+
+:::demo 通过 `treeFactory` 中的`treeSearch`方法可以搜索节点或者过滤节点。
+
+```vue
+<template>
+  <d-search class="mb10" style="width: 300px" is-keyup-search placeholder="search your node..." :delay="1000" @search="onSearch"></d-search>
+  <d-search
+    class="mb10"
+    style="width: 300px"
+    is-keyup-search
+    placeholder="filter your node..."
+    :delay="1000"
+    @search="onSearch1"
+  ></d-search>
+  <d-row class="mb10" align="middle">
+    <d-search
+      style="width: 300px"
+      is-keyup-search
+      placeholder="filter your node by custom key..."
+      :delay="1000"
+      @search="onSearch2"
+    ></d-search>
+    <span class="ml8">
+      <d-tooltip position="top" content="使用自定义的属性搜索匹配树节点">
+        <d-icon name="help" />
+      </d-tooltip>
+    </span>
+  </d-row>
+  <d-row class="mb10" align="middle">
+    <d-search style="width: 300px" is-keyup-search placeholder="filter your node by Regex..." :delay="1000" @search="onSearch3"></d-search>
+    <span class="ml8">
+      <d-tooltip position="top" content="使用正则表达式限定搜索范围">
+        <d-icon name="help" />
+      </d-tooltip>
+    </span>
+  </d-row>
+  <d-tree ref="treeRef" :data="data"></d-tree>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const treeRef = ref();
+    const data = ref([
+      {
+        label: 'parent node 1',
+        customSearchValue: 'a',
+      },
+      {
+        label: 'parent node 2',
+        customSearchValue: 'b',
+        children: [
+          {
+            label: 'child node 2-1',
+            customSearchValue: 'c',
+            children: [
+              {
+                label: 'child node 2-1-1',
+                customSearchValue: 'd',
+              },
+              {
+                label: 'child node 2-1-2',
+                customSearchValue: 'e',
+              },
+            ],
+          },
+          {
+            label: 'child node 2-2',
+            customSearchValue: 'f',
+            children: [
+              {
+                label: 'child node 2-2-1',
+                customSearchValue: 'g',
+              },
+              {
+                label: 'child node 2-2-2',
+                customSearchValue: 'h',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: 'parent node 3',
+        customSearchValue: 'i',
+        children: [
+          {
+            label: 'child node 3-1',
+            customSearchValue: 'j',
+          },
+          {
+            label: 'child node 3-2',
+            customSearchValue: 'k',
+          },
+        ],
+      },
+      {
+        label: 'parent node 4',
+        customSearchValue: 'l',
+        children: [
+          {
+            label: 'child node 4-1',
+            customSearchValue: 'm',
+          },
+          {
+            label: 'child node 4-2',
+            customSearchValue: 'n',
+          },
+        ],
+      },
+      {
+        label: 'parent node 5',
+        customSearchValue: 'o',
+        children: [
+          {
+            label: 'child node 5-1',
+            customSearchValue: 'p',
+          },
+          {
+            label: 'child node 5-2',
+            customSearchValue: 'q',
+          },
+        ],
+      },
+    ]);
+    const onSearch = (value) => {
+      treeRef.value.treeFactory.treeSearch(value, false);
+    };
+    const onSearch1 = (value) => {
+      treeRef.value.treeFactory.treeSearch(value, true);
+    };
+    const onSearch2 = (value) => {
+      treeRef.value.treeFactory.treeSearch(value, true, 'customSearchValue');
+    };
+    const onSearch3 = (value) => {
+      const regex = new RegExp('^' + value + '[\s\S]*');
+      treeRef.value.treeFactory.treeSearch(value, true, undefined, regex);
+    };
+
+    return {
+      treeRef,
+      data,
+      onSearch,
+      onSearch1,
+      onSearch2,
+      onSearch3,
+    };
+  },
+});
+</script>
+<style>
+.mb10 {
+  margin-bottom: 10px;
+}
+.ml8 {
+  margin-left: 8px;
+}
+</style>
+```
+
+:::
+
 ### 虚拟滚动
 
 :::demo 使用虚拟滚动处理大数据量的加载问题。
 
 ```vue
 <template>
+  <d-search class="mb10" style="width: 300px" is-keyup-search placeholder="search your node..." :delay="1000" @search="onSearch"></d-search>
+  <d-search
+    class="mb10"
+    style="width: 300px"
+    is-keyup-search
+    placeholder="filter your node..."
+    :delay="1000"
+    @search="onSearch1"
+  ></d-search>
   <d-tree :data="data" :height="300" ref="treeRef"></d-tree>
 </template>
 <script lang="ts">
@@ -563,9 +737,18 @@ export default defineComponent({
       treeRef.value.treeFactory.expandAllNodes();
     });
 
+    const onSearch = (value) => {
+      treeRef.value.treeFactory.treeSearch(value, false);
+    };
+    const onSearch1 = (value) => {
+      treeRef.value.treeFactory.treeSearch(value, true);
+    };
+
     return {
       data,
       treeRef,
+      onSearch,
+      onSearch1,
     };
   },
 });
