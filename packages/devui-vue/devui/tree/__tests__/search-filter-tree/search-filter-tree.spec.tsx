@@ -15,7 +15,7 @@ describe('Tree node search filter', () => {
       setup() {
         const treeRef = ref<ComponentInternalInstance | null>(null);
         const onSearch = (value) => {
-          treeRef.value.treeFactory.treeSearch(value, false);
+          treeRef.value.treeFactory.searchTree(value, { isFilter: false });
         };
         return () => {
           return (
@@ -62,7 +62,7 @@ describe('Tree node search filter', () => {
       setup() {
         const treeRef = ref<ComponentInternalInstance | null>(null);
         const onSearch = (value) => {
-          treeRef.value.treeFactory.treeSearch(value, true);
+          treeRef.value.treeFactory.searchTree(value, { isFilter: true });
         };
         return () => {
           return (
