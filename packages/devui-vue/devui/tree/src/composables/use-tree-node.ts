@@ -1,7 +1,7 @@
 import type { ComputedRef } from 'vue';
 import { computed } from 'vue';
 import { NODE_HEIGHT, NODE_INDENT } from '../const';
-import { IInnerTreeNode } from '../composables/use-tree-types';
+import { IInnerTreeNode } from './use-tree-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 const ns = useNamespace('tree');
@@ -15,6 +15,8 @@ export interface IUseTreeNode {
   nodeVLineStyles: ComputedRef<{ height: string; left: string; top: string }[]>;
   nodeHLineClass: ComputedRef<(string | false | undefined)[]>;
   nodeOperationAreaClass: ComputedRef<(string | undefined)[]>;
+  temp: ComputedRef<string[]>;
+  highlightCls: string;
 }
 
 export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTreeNode {
@@ -45,6 +47,16 @@ export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTree
 
   const nodeOperationAreaClass = computed(() => ns.e('node-operation-area'));
 
+  const temp = computed(() => {
+    const matchItem = data.value?.matchedText || '';
+    const label = data.value?.label || '';
+    const reg = (str: string) => str.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+    const regExp = new RegExp('(' + reg(matchItem) + ')', 'gi');
+    return label.split(regExp);
+  });
+
+  const highlightCls = ns.e('match-highlight');
+
   return {
     nodeClass,
     nodeStyle,
@@ -54,5 +66,7 @@ export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTree
     nodeVLineStyles,
     nodeHLineClass,
     nodeOperationAreaClass,
+    temp,
+    highlightCls,
   };
 }

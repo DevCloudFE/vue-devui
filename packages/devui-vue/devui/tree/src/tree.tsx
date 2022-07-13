@@ -10,6 +10,7 @@ import useCheck from './composables/use-check';
 import useSelect from './composables/use-select';
 import useOperate from './composables/use-operate';
 import useMergeNodes from './composables/use-merge-nodes';
+import useSearchFilter from './composables/use-search-filter';
 import { USE_TREE_TOKEN, NODE_HEIGHT, TREE_INSTANCE } from './const';
 import { TreeProps, treeProps } from './tree-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
@@ -25,8 +26,9 @@ export default defineComponent({
     const treeInstance = getCurrentInstance();
     const { data, check, operate } = toRefs(props);
     const ns = useNamespace('tree');
+    const normalRef = ref();
 
-    const userPlugins = [useSelect(), useOperate(), useMergeNodes()];
+    const userPlugins = [useSelect(), useOperate(), useMergeNodes(), useSearchFilter()];
 
     const checkOptions = ref<{ checkStrategy: ICheckStrategy }>({
       checkStrategy: formatCheckStatus(check.value),
@@ -42,7 +44,7 @@ export default defineComponent({
 
     const treeFactory = useTree(data.value, userPlugins, context);
 
-    const { setTree, getExpendedTree, toggleNode } = treeFactory;
+    const { setTree, getExpendedTree, toggleNode, virtualListRef } = treeFactory;
 
     // 外部同步内部
     watch(data, setTree);
@@ -87,7 +89,7 @@ export default defineComponent({
           itemHeight: NODE_HEIGHT,
         };
       }
-      return <Component class={ns.b()} {...virtualListProps} v-slots={vSlotsProps} />;
+      return <Component ref={props.height ? virtualListRef : normalRef} class={ns.b()} {...virtualListProps} v-slots={vSlotsProps} />;
     };
   },
 });
