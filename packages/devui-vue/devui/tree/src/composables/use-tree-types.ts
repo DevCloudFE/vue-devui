@@ -26,6 +26,10 @@ export interface IInnerTreeNode extends ITreeNode {
   currentIndex?: number;
   loading?: boolean; // 节点是否显示加载中
   childNodeCount?: number; // 该节点的子节点的数量
+  isMatched?: boolean; // 搜索过滤时是否匹配该节点
+  childrenMatched?: boolean; // 搜索过滤时是否有子节点存在匹配
+  isHide?: boolean; // 过滤后是否不显示该节点
+  matchedText?: string; // 节点匹配的文字（需要高亮显示）
 }
 
 export type valueof<T> = T[keyof T];
@@ -39,6 +43,7 @@ export interface IUseCore {
       recursive?: boolean;
     }
   ) => IInnerTreeNode[];
+  clearNodeMap: () => void;
   getParent: (node: IInnerTreeNode) => IInnerTreeNode;
   getExpendedTree: () => ComputedRef<IInnerTreeNode[]>;
   getIndex: (node: IInnerTreeNode) => number;
@@ -87,6 +92,14 @@ export interface IUseMergeNodes {
   mergeTreeNodes: () => void;
 }
 
+export interface IUseLazyLoad {
+  lazyLoadNodes: (node: IInnerTreeNode) => void;
+}
+export interface IUseSearchFilter {
+  virtualListRef: Ref<HTMLElement | undefined>;
+  treeSearch: (target: string, filter: boolean, keyword?: string, pattern?: RegExp) => void;
+}
+
 export type IUseTree = {
   treeData: Ref<IInnerTreeNode[]>;
 } & IUseCore &
@@ -95,7 +108,9 @@ IUseSelect &
 IUseCheck &
 IUseDisable &
 IUseOperate &
-IUseMergeNodes;
+IUseMergeNodes &
+IUseLazyLoad &
+IUseSearchFilter;
 
 export type ICheckStrategy = 'upward' | 'downward' | 'both' | 'none';
 
@@ -108,8 +123,4 @@ export type IOperate = boolean | IOperateItem | Array<IOperateItem>;
 export interface LazyNodeResult {
   treeItems: ITreeNode[];
   node: IInnerTreeNode;
-}
-
-export interface IUseLazyLoad {
-  lazyLoadNodes: (node: IInnerTreeNode) => void;
 }

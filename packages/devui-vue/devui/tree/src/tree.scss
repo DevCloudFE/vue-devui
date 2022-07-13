@@ -105,6 +105,11 @@ $keyframe-blue: #5e7ce0;
     &:not(.disabled) {
       cursor: pointer;
     }
+
+    .#{$devui-prefix}-tree__match-highlight {
+      font-weight: bold;
+      color: $devui-brand;
+    }
   }
 
   .#{$devui-prefix}-tree-node__edit {

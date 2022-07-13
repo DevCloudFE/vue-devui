@@ -46,9 +46,9 @@ export default function (): (data: Ref<IInnerTreeNode[]>) => IUseCore {
       const startIndex = treeData.value.findIndex((item) => item.id === node.id);
 
       for (let i = startIndex + 1; i < treeData.value.length && getLevel(node) < treeData.value[i].level; i++) {
-        if (config.recursive) {
+        if (config.recursive && !treeData.value[i].isHide) {
           result.push(treeData.value[i]);
-        } else if (getLevel(node) === treeData.value[i].level - 1) {
+        } else if (getLevel(node) === treeData.value[i].level - 1 && !treeData.value[i].isHide) {
           result.push(treeData.value[i]);
         }
       }
@@ -56,6 +56,10 @@ export default function (): (data: Ref<IInnerTreeNode[]>) => IUseCore {
         nodeMap.set(node.id, result);
       }
       return result;
+    };
+
+    const clearNodeMap = () => {
+      nodeMap.clear();
     };
 
     const getParent = (node: IInnerTreeNode): IInnerTreeNode => {
@@ -68,7 +72,7 @@ export default function (): (data: Ref<IInnerTreeNode[]>) => IUseCore {
         const result = [];
         for (let i = 0, len = data?.value.length; i < len; i++) {
           const item = data?.value[i];
-          if (excludeNodes.map((node) => node.id).includes(item.id)) {
+          if (excludeNodes.map((node) => node.id).includes(item.id) || item.isHide) {
             continue;
           }
           if (item.expanded !== true) {
@@ -93,14 +97,14 @@ export default function (): (data: Ref<IInnerTreeNode[]>) => IUseCore {
     };
 
     const setNodeValue = (node: IInnerTreeNode, key: keyof IInnerTreeNode, value: valueof<IInnerTreeNode>): void => {
-      nodeMap.clear();
+      clearNodeMap();
       if (getIndex(node) !== -1) {
         data.value[getIndex(node)][key] = value;
       }
     };
 
     const setTree = (newTree: ITreeNode[]): void => {
-      nodeMap.clear();
+      clearNodeMap();
       data.value = generateInnerTree(newTree);
     };
 
@@ -109,12 +113,13 @@ export default function (): (data: Ref<IInnerTreeNode[]>) => IUseCore {
     };
 
     onUnmounted(() => {
-      nodeMap.clear();
+      clearNodeMap();
     });
 
     return {
       getLevel,
       getChildren,
+      clearNodeMap,
       getParent,
       getExpendedTree,
       getIndex,
