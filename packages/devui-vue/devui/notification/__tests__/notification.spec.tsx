@@ -2,7 +2,9 @@ import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import DNotification from '../src/notification';
 import NotificationService from '../src/notification-service';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 
+const ns = useNamespace('notification', true);
 describe('d-notification', () => {
   it('render correctly when using component', async () => {
     const wrapper = mount({
@@ -16,9 +18,9 @@ describe('d-notification', () => {
       },
     });
     await nextTick();
-    const notification = wrapper.find('.devui-notification');
-    const notificationTitle = notification.find('.devui-notification-title');
-    const notificationContent = notification.find('.devui-notification-content');
+    const notification = wrapper.find(ns.b());
+    const notificationTitle = notification.find(ns.e('title'));
+    const notificationContent = notification.find(ns.e('content'));
     expect(notification.exists()).toBeTruthy();
     expect(notificationTitle.text()).toBe('标题');
     expect(notificationContent.text()).toBe('通知提示内容');
@@ -37,8 +39,8 @@ describe('d-notification', () => {
         content: '通知框消息内容',
       });
       await nextTick();
-      notification = document.querySelector('.devui-notification');
-      const notificationContent = document.querySelector('.devui-notification-content');
+      notification = document.querySelector(ns.b());
+      const notificationContent = document.querySelector(ns.e('content'));
       expect(notification).toBeTruthy();
       expect(notificationContent?.innerHTML).toBe('通知框消息内容');
     });
@@ -49,8 +51,8 @@ describe('d-notification', () => {
         content: '通知框消息内容',
       });
       await nextTick();
-      notification = document.querySelector('.devui-notification');
-      const notificationTitle = document.querySelector('.devui-notification-title');
+      notification = document.querySelector(ns.b());
+      const notificationTitle = document.querySelector(ns.e('title'));
       expect(notificationTitle?.innerHTML).toBe('消息标题');
     });
 
@@ -61,9 +63,9 @@ describe('d-notification', () => {
         type: 'success',
       });
       await nextTick();
-      notification = document.querySelector('.devui-notification');
-      const notificationImage = document.querySelector('.devui-notification-image');
-      expect(notificationImage?.className).toContain('devui-notification-image-success');
+      notification = document.querySelector(ns.b());
+      const notificationImage = document.querySelector(ns.e('image'));
+      expect(notificationImage?.className).toContain(ns.em('image', 'success').slice(1));
     });
 
     it('duration', async () => {
@@ -73,12 +75,12 @@ describe('d-notification', () => {
         duration: 1000,
       });
       await nextTick();
-      notification = document.querySelector('.devui-notification');
+      notification = document.querySelector(ns.b());
       expect(notification).toBeTruthy();
       await new Promise((resolve) => {
         setTimeout(resolve, 1000);
       });
-      expect(document.querySelector('.devui-notification')).toBeFalsy();
+      expect(document.querySelector(ns.b())).toBeFalsy();
       notification = null;
     });
 
