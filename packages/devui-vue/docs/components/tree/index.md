@@ -535,7 +535,7 @@ export default defineComponent({
 
 ### 搜索过滤
 
-:::demo 通过 `treeFactory` 中的`treeSearch`方法可以搜索节点或者过滤节点。
+:::demo 通过 `treeFactory` 中的`searchTree`方法可以搜索节点或者过滤节点。
 
 ```vue
 <template>
@@ -662,17 +662,17 @@ export default defineComponent({
       },
     ]);
     const onSearch = (value) => {
-      treeRef.value.treeFactory.treeSearch(value, false);
+      treeRef.value.treeFactory.searchTree(value, { isFilter: false });
     };
     const onSearch1 = (value) => {
-      treeRef.value.treeFactory.treeSearch(value, true);
+      treeRef.value.treeFactory.searchTree(value, { isFilter: true });
     };
     const onSearch2 = (value) => {
-      treeRef.value.treeFactory.treeSearch(value, true, 'customSearchValue');
+      treeRef.value.treeFactory.searchTree(value, { isFilter: true, matchKey: 'customSearchValue' });
     };
     const onSearch3 = (value) => {
       const regex = new RegExp('^' + value + '[\s\S]*');
-      treeRef.value.treeFactory.treeSearch(value, true, undefined, regex);
+      treeRef.value.treeFactory.searchTree(value, { isFilter: true, pattern: regex });
     };
 
     return {
@@ -738,10 +738,10 @@ export default defineComponent({
     });
 
     const onSearch = (value) => {
-      treeRef.value.treeFactory.treeSearch(value, false);
+      treeRef.value.treeFactory.searchTree(value, { isFilter: false });
     };
     const onSearch1 = (value) => {
-      treeRef.value.treeFactory.treeSearch(value, true);
+      treeRef.value.treeFactory.searchTree(value, { isFilter: true });
     };
 
     return {

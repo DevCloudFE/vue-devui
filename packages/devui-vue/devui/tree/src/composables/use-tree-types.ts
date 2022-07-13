@@ -95,9 +95,16 @@ export interface IUseMergeNodes {
 export interface IUseLazyLoad {
   lazyLoadNodes: (node: IInnerTreeNode) => void;
 }
+
+export interface SearchFilterOption {
+  isFilter: boolean; // 是否是过滤节点
+  matchKey?: string; // node节点中匹配搜索过滤的字段名
+  pattern?: RegExp; // 搜索过滤时匹配的正则表达式
+}
+
 export interface IUseSearchFilter {
   virtualListRef: Ref<HTMLElement | undefined>;
-  treeSearch: (target: string, filter: boolean, keyword?: string, pattern?: RegExp) => void;
+  searchTree: (target: string, option: SearchFilterOption) => void;
 }
 
 export type IUseTree = {
