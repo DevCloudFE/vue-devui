@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { Tree } from '../..';
 import { Search } from '../../../search';
-import { searchFilterData } from './search-flter-data';
+import { searchFilterData } from './search-filter-data';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 const ns = useNamespace('tree', true);
