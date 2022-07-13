@@ -37,9 +37,9 @@ describe('ripple', () => {
       color: 'currentColor',
       initialOpacity: 0.2,
       finalOpacity: 0.1,
-      duration: 0.8,
+      duration: 400,
       easing: 'ease-out',
-      delayTime: 75,
+      delay: 75,
       disabled: false
     });
   });
