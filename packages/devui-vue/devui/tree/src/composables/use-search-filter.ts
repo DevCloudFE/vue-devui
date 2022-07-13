@@ -1,5 +1,5 @@
 import { Ref, ref } from 'vue';
-import { IInnerTreeNode, IUseCore, IUseSearchFilter } from './use-tree-types';
+import { IInnerTreeNode, IUseCore, IUseSearchFilter, SearchFilterOption } from './use-tree-types';
 import { trim } from 'lodash';
 export default function () {
   return function useSearchFilter(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseSearchFilter {
@@ -17,15 +17,15 @@ export default function () {
       }
     };
 
-    const dealMatchedData = (target: string, keyword: string | undefined, pattern: RegExp | undefined) => {
+    const dealMatchedData = (target: string, matchKey: string | undefined, pattern: RegExp | undefined) => {
       const trimmedTarget = trim(target).toLocaleLowerCase();
       for (let i = 0; i < data.value.length; i++) {
-        const key = keyword ? data.value[i][keyword] : data.value[i].label;
+        const key = matchKey ? data.value[i][matchKey] : data.value[i].label;
         const selfMatched = pattern ? pattern.test(key) : key.toLocaleLowerCase().includes(trimmedTarget);
         data.value[i].isMatched = selfMatched;
         // 需要向前找父节点，处理父节点的childrenMatched、expand参数(子节点匹配到时，父节点需要展开)
         if (selfMatched) {
-          data.value[i].matchedText = keyword ? data.value[i].label : trimmedTarget;
+          data.value[i].matchedText = matchKey ? data.value[i].label : trimmedTarget;
           let L = i - 1;
           const set = new Set();
           if (data.value[i].parentId) {
@@ -61,22 +61,22 @@ export default function () {
     const getFirstMatchIndex = (): number => {
       let index = 0;
       const showTreeData = getExpendedTree().value;
-      while (!showTreeData[index].isMatched && index < showTreeData.length - 1) {
+      while (index <= showTreeData.length - 1 && !showTreeData[index].isMatched) {
         index++;
       }
-      return index;
+      return index >= showTreeData.length ? 0 : index;
     };
 
-    const treeSearch = (target: string, filter = false, keyword?: string, pattern?: RegExp): void => {
+    const searchTree = (target: string, option: SearchFilterOption): void => {
       // 搜索前需要先将nodeMap清空, 重置搜索相关参数
       clearNodeMap();
       resetTreeData();
       if (!target) {
         return;
       }
-      dealMatchedData(target, keyword, pattern);
+      dealMatchedData(target, option.matchKey, option.pattern);
       // 对于过滤操作，需要设置节点是否需要隐藏
-      if (filter) {
+      if (option.isFilter) {
         dealHideData();
       }
       // 虚拟滚动，需要得到第一个匹配的节点，然后滚动至该节点
@@ -88,7 +88,7 @@ export default function () {
 
     return {
       virtualListRef,
-      treeSearch,
+      searchTree,
     };
   };
 }
