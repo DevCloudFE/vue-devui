@@ -11,7 +11,7 @@ export default defineComponent({
   name: 'DTextarea',
   inheritAttrs: false,
   props: textareaProps,
-  emits: ['update:modelValue', 'focus', 'blur', 'change', 'keydown'],
+  emits: ['update:modelValue', 'focus', 'blur', 'change', 'keydown', 'update'],
   setup(props: TextareaProps, ctx: SetupContext) {
     const { modelValue } = toRefs(props);
     const formItemContext = inject(FORM_ITEM_TOKEN, undefined) as FormItemContext;
