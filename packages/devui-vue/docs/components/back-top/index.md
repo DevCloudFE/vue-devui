@@ -16,7 +16,7 @@
 <template>
   <div>
     <div>这里看不到我嘿嘿，下滑试试</div>
-    <d-back-top />
+    <d-back-top @click="handleClick" />
     <d-back-top bottom="100px">
       <d-icon name="chevron-up"></d-icon>
     </d-back-top>
@@ -24,15 +24,19 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
+    const handleClick = (e: MouseEvent) => {
+      console.log('backTop', e);
+    };
     return {
-      msg: 'BackTop 回到顶部 组件文档示例'
-    }
-  }
-})
+      msg: 'BackTop 回到顶部 组件文档示例',
+      handleClick,
+    };
+  },
+});
 </script>
 
 <style></style>
@@ -57,11 +61,11 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  setup() {}
-})
+  setup() {},
+});
 </script>
 
 <style>
@@ -86,31 +90,26 @@ export default defineComponent({
       <li class="backtop-demo-item" v-for="(item, index) of list" :key="item">
         {{ index + 1 + '. ' + item }}
       </li>
-      <d-back-top
-        target=".devui-scroll-content"
-        :visibleHeight="100"
-        bottom="5px"
-        right="5px"
-      ></d-back-top>
+      <d-back-top target=".devui-scroll-content" :visibleHeight="100" bottom="5px" right="5px"></d-back-top>
     </ul>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
-    const msg = 'DevUI倡导沉浸、灵活、至简的设计价值观'
-    const list = []
+    const msg = 'DevUI倡导沉浸、灵活、至简的设计价值观';
+    const list = [];
     for (let i = 0; i < 20; i++) {
-      list.push(msg)
+      list.push(msg);
     }
     return {
-      list
-    }
-  }
-})
+      list,
+    };
+  },
+});
 </script>
 
 <style>
@@ -150,8 +149,6 @@ d-back-top 参数
 
 d-back-top 事件
 
-| 事件 | 类型 | 说明 | 跳转 Demo |
-| ---- | ---- | ---- | --------- |
-|      |      |      |           |
-|      |      |      |           |
-|      |      |      |           |
+| 事件名 | 回调参数                  | 说明                 |
+| :----- | :------------------------ | :------------------- |
+| click  | `Function(e: MouseEvent)` | 点击回到顶部按钮触发 |
