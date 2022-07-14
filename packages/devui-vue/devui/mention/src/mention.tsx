@@ -4,7 +4,7 @@ import DTextarea from '../../textarea/src/textarea';
 import DIcon from '../../icon/src/icon';
 import './mention.scss';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import { debounce } from 'lodash-es';
+import { debounce } from 'lodash';
 
 export default defineComponent({
   name: 'DMention',
