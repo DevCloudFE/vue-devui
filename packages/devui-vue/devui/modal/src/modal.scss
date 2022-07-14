@@ -1,101 +1,57 @@
 @import '../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-modal__container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: $devui-z-index-modal;
-  outline: 0;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
 .#{$devui-prefix}-modal {
-  position: relative;
-  width: 300px;
-  margin: auto;
-  border-radius: $devui-border-radius;
-  border: none;
-  opacity: 1;
-  transform: translateY(0);
-  background-color: $devui-fullscreen-overlay-bg;
-  background-clip: padding-box;
-  outline: 0;
-  box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
+  &__overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-  .btn-close {
-    position: absolute;
-    right: 16px;
-    top: 16px;
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
-    text-align: center;
-    color: #000000;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-    -webkit-appearance: none;
+  &__content {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: $devui-z-index-modal;
 
-    &:hover {
-      color: $devui-icon-fill-active-hover;
-      background-color: $devui-list-item-hover-bg;
+    &-wrap {
+      background: #ffffff;
     }
 
-    & i {
-      position: absolute;
-      right: 0;
-      top: 0;
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      padding-bottom: 10px;
+      margin-right: 16px;
+      word-break: break-all;
+
+      &-close {
+        z-index: $devui-z-index-modal;
+        cursor: pointer;
+      }
+    }
+
+    &-body {
+      padding: 30px 20px;
+      word-break: break-all;
+      color: #606266;
+      font-size: 14px;
+    }
+
+    &-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 10px 20px 20px 20px;
     }
   }
 }
-
-.#{$devui-prefix}-modal-content {
-  background: $devui-fullscreen-overlay-bg;
-  border-radius: $devui-border-radius;
-}
-
-.#{$devui-prefix}-modal__header {
-  width: 100%;
-  height: 56px;
-  padding: 32px 32px 0;
-  font-size: $devui-font-size-card-title;
-  font-weight: bold;
-  box-sizing: border-box;
-  border: none;
-  user-select: none;
-
-  .header-alert-icon {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 8px;
-    line-height: 16px;
-    text-align: center;
-  }
-}
-
-.#{$devui-prefix}-modal__body {
-  padding: 20px 32px;
-  font-size: $devui-font-size;
-  color: $devui-text-weak;
-  box-sizing: border-box;
-}
-
-.#{$devui-prefix}-modal__footer {
-  width: 100%;
-  border-top: none;
-  text-align: center;
-  padding: 0 32px 24px;
-  box-sizing: border-box;
-
-  & > * {
-    margin: 0 4px;
-  }
-}
-
 .#{$devui-prefix}-modal--wipe {
   &-enter-active {
     transition: opacity 0.1s cubic-bezier(0.16, 0.75, 0.5, 1), transform 0.1s cubic-bezier(0, 0, 1, 1);
