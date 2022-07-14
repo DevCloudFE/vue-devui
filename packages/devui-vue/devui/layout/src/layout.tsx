@@ -8,11 +8,10 @@ export default defineComponent({
   emits: [],
   setup(props, { slots }) {
     const ns = useNamespace('layout');
-    const ns_aside = useNamespace('layout-aside');
     return () => {
       const slotDefault = slots.default?.() as VNode[];
       const isAside = slotDefault.some((item) => (item.type as VNodeTypes & { name: string }).name === 'DAside');
-      const classNames = `${isAside ? ns_aside.b() : ''} ${ns.b()}`;
+      const classNames = `${isAside ? ns.e('aside') : ''} ${ns.b()}`;
       return <div class={classNames}>{slotDefault}</div>;
     };
   },
