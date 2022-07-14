@@ -19,7 +19,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/button/#图标按钮">图标按钮 icon</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Welcome PR">✅</d-tooltip> <a href="/components/button/#按钮组">按钮组</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @vaebe">✅</d-tooltip> <a href="/components/button/#按钮组">按钮组</a></d-col>
   <d-col :span="8"></d-col>
   <d-col :span="8"></d-col>
 </d-row>
@@ -122,7 +122,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @maizhiyuan">✅</d-tooltip> <a href="/components/sticky/#基本功能">基本功能</a></d-col>
-  <d-col :span="8"><d-tooltip content="Developing by @maizhiyuan">✅</d-tooltip> <a href="/components/sticky/#滚动容器">滚动容器</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @maizhiyuan">✅</d-tooltip> <a href="/components/sticky/#滚动容器">滚动容器</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
@@ -199,8 +199,18 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 ### Menu 菜单 <span class="version-tag-2">v2.0</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Welcome PR">✅</d-tooltip> <a href="/components/menu/#基本功能">基本功能</a></d-col>
-  <d-col :span="8"></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/menu/#基本功能">基本功能</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/menu/#自定义图标">自定义图标</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/menu/#垂直菜单">垂直菜单</a></d-col>
+</d-row>
+<d-row :gutter="[0, 8]">
+  <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/dropdown/#默认展开">默认展开</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/dropdown/#仅一项展开">仅一项展开</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/dropdown/#收缩菜单">收缩菜单</a></d-col>
+</d-row>
+<d-row :gutter="[0, 8]">
+  <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/dropdown/#取消多选">取消多选</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/dropdown/#响应式参数">响应式参数</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
@@ -243,7 +253,12 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @flxy1028">✅</d-tooltip> <a href="/components/tabs/#自定义模板">自定义模板</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @flxy1028">✅</d-tooltip> <a href="/components/tabs/#拦截tab切换">拦截tab切换</a></d-col>
-  <d-col :span="8"><d-tooltip content="Developing by @flxy1028">✅</d-tooltip> <a href="/components/tabs/#自定义tabs显示和排列">自定义tabs显示和排列</a></d-col>
+  <d-col :span="8"><d-tooltip content="Developing by @newer2333">✅</d-tooltip> <a href="/components/tabs/#添加-删除">添加/删除</a></d-col>
+</d-row>
+<d-row :gutter="[0, 8]">
+  <d-col :span="8"><d-tooltip content="Contributed by @newer2333">✅</d-tooltip> <a href="/components/tabs/#标签位置的设置">标签位置的设置</a></d-col>
+  <d-col :span="8"></d-col>
+  <d-col :span="8"></d-col>
 </d-row>
 
 ### Alert 警告 <span class="version-tag-1">v1.0</span>
@@ -450,18 +465,18 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 ### DatePickerPro 日期选择器 ⭐<span class="version-tag-2">v2.0</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/date-picker-pro/#基本功能">基本功能</a></d-col>
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/date-picker-pro/#显示时间">显示时间</a></d-col>
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/date-picker-pro/#自定义扩展区域">自定义扩展区域</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @daviForevel">✅</d-tooltip> <a href="/components/date-picker-pro/#基本功能">基本功能</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @daviForevel">✅</d-tooltip> <a href="/components/date-picker-pro/#显示时间">显示时间</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @daviForevel">✅</d-tooltip> <a href="/components/date-picker-pro/#自定义扩展区域">自定义扩展区域</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/date-picker-pro/#年月选择器">年月选择器</a></d-col>
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/date-picker-pro/#范围选择器">范围选择器</a></d-col>
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/date-picker-pro/#自定义范围选择器模板">自定义范围选择器模板</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @daviForevel">✅</d-tooltip> <a href="/components/date-picker-pro/#年月选择器">年月选择器</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @daviForevel">✅</d-tooltip> <a href="/components/date-picker-pro/#范围选择器">范围选择器</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @daviForevel">✅</d-tooltip> <a href="/components/date-picker-pro/#自定义范围选择器模板">自定义范围选择器模板</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/date-picker-pro/#自定义宿主">自定义宿主</a></d-col>
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/date-picker-pro/#日历面板模式">日历面板模式</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @daviForevel">⌛</d-tooltip> <a href="/components/date-picker-pro/#自定义宿主">自定义宿主</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @daviForevel">⌛</d-tooltip> <a href="/components/date-picker-pro/#日历面板模式">日历面板模式</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
