@@ -12,14 +12,14 @@ export default defineComponent({
   },
   setup(props) {
     const { data } = toRefs(props);
-    const { nodeTitleClass, matchContents, highlightCls } = useTreeNode(data as ComputedRef<IInnerTreeNode>);
+    const { nodeTitleClass, matchedContents, highlightCls } = useTreeNode(data as ComputedRef<IInnerTreeNode>);
 
     return () => {
       return (
         <span class={nodeTitleClass.value}>
           {!data.value?.matchedText && data.value?.label}
           {data.value?.matchedText &&
-            matchContents.value.map((item: string, index: number) => (index % 2 === 0 ? item : <span class={highlightCls}>{item}</span>))}
+            matchedContents.value.map((item: string, index: number) => (index % 2 === 0 ? item : <span class={highlightCls}>{item}</span>))}
         </span>
       );
     };

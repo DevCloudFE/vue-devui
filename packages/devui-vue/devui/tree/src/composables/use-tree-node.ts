@@ -15,7 +15,7 @@ export interface IUseTreeNode {
   nodeVLineStyles: ComputedRef<{ height: string; left: string; top: string }[]>;
   nodeHLineClass: ComputedRef<(string | false | undefined)[]>;
   nodeOperationAreaClass: ComputedRef<(string | undefined)[]>;
-  matchContents: ComputedRef<string[]>;
+  matchedContents: ComputedRef<string[]>;
   highlightCls: string;
 }
 
@@ -47,7 +47,7 @@ export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTree
 
   const nodeOperationAreaClass = computed(() => ns.e('node-operation-area'));
 
-  const matchContents = computed(() => {
+  const matchedContents = computed(() => {
     const matchItem = data.value?.matchedText || '';
     const label = data.value?.label || '';
     const reg = (str: string) => str.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -66,7 +66,7 @@ export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTree
     nodeVLineStyles,
     nodeHLineClass,
     nodeOperationAreaClass,
-    matchContents,
+    matchedContents,
     highlightCls,
   };
 }
