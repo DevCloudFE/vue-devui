@@ -54,7 +54,7 @@ describe('Layout test', () => {
     const header = outerLayout.find(ns.e('header'));
     expect(header.text()).toBe('Header');
     const innerLayout = outerLayout.find('#innerLayout');
-    const aside = innerLayout.find(ns.e('aside'));
+    const aside = innerLayout.find(ns.em('aside', 'inner'));
     const content = innerLayout.find(ns.e('content'));
     expect(content.text()).toBe('Content');
     expect(aside.text()).toBe('Aside');
