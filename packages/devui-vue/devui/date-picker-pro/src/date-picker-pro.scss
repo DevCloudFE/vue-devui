@@ -593,11 +593,13 @@ $input-height-lg: 46px;
   }
   .#{$devui-prefix}-date-picker-pro__month-wrapper {
     height: 300px;
+    width: 208px;
     padding: 4px;
     display: inline-block;
 
     .#{$devui-prefix}-date-picker-pro__month-list {
       height: 100%;
+      width: 100%;
       overflow: auto;
       scrollbar-width: none;
 

@@ -21,6 +21,7 @@ export const datePickerProCommonProps = {
   },
   calendarRange: {
     type: Array as PropType<number[]>,
+    default: [1970, 2099],
   },
   limitDateRange: {
     type: Array as PropType<Date[]>,
@@ -99,7 +100,6 @@ export interface UseCalendarPanelReturnType {
   handlerSelectDate: (day: CalendarDateItem) => void;
   handlerYearCollapse: (date?: Date) => void;
   handlerClickMonth: (year: number, month: number | undefined) => void;
-  handleScrollYearList: (e: UIEvent) => void;
   handleScrollMonthList: (e: UIEvent) => void;
   isDateSelected: (date: Date) => boolean;
   isStartDate: (date: Date) => boolean;
@@ -185,6 +185,6 @@ export interface UseMonthCalendarPanelReturnType {
   monthList: number[][];
   handlerSelectYear: (year: number) => void;
   handlerMonthScroll: (e: MouseEvent) => void;
-  getMonthItemCls: (year: number, month: number) =>  Record<string, boolean>;
+  getMonthItemCls: (year: number, month: number) => Record<string, boolean>;
   handlerSelectMonth: (year: number, month: number) => void;
 }
