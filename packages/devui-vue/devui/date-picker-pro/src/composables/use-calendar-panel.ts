@@ -1,6 +1,6 @@
-import { ref, onBeforeMount, nextTick, watch } from 'vue';
+import { ref, onBeforeMount, nextTick, watch, onMounted } from 'vue';
 import type { SetupContext } from 'vue';
-import { DAY_DURATION, yearItemHeight, calendarItemHeight } from '../const';
+import { DAY_DURATION, calendarItemHeight } from '../const';
 import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
@@ -115,24 +115,24 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
 
   const goToYearDate = (index: number) => {
     updateYearActive(index);
-    let scrollHeight = (index - 4) * yearItemHeight;
-    if (scrollHeight < 0) {
-      scrollHeight = 0;
+    let scrollIndex = index - 4;
+    if (scrollIndex < 0) {
+      scrollIndex = 0;
     }
     nextTick(() => {
       const scrollEl = yearScrollRef.value;
-      scrollEl?.scroll?.(0, scrollHeight);
+      scrollEl?.scrollTo?.(scrollIndex);
     });
   };
 
   const goToMonthDate = () => {
-    let scrollHeight = currentMonthIndex.value * calendarItemHeight;
-    if (scrollHeight < 0) {
-      scrollHeight = 0;
+    let scrollIndex = currentMonthIndex.value;
+    if (scrollIndex < 0) {
+      scrollIndex = 0;
     }
     nextTick(() => {
       const scrollEl = monthScrollRef.value;
-      scrollEl?.scroll?.(0, scrollHeight);
+      scrollEl?.scrollTo?.(scrollIndex);
     });
   };
 
@@ -155,14 +155,13 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
 
   onBeforeMount(() => {
     today.value = new Date();
-    if (props.calendarRange) {
-      calendarRange.value = props.calendarRange;
-    } else {
-      calendarRange.value = [today.value.getFullYear() - 3, today.value.getFullYear() + 3];
-    }
+    calendarRange.value = props.calendarRange;
 
     // 初始化先展示v-model对应的时间，如果没有展示today对应的时间
     initCalendarData();
+  });
+
+  onMounted(() => {
     initCalendarShow();
   });
 
@@ -214,18 +213,11 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
 
   const handlerClickMonth = (year: number, month: number | undefined) => {
     const date = new Date(year, month || 0, 1);
-    // const selectYear = yearAndMonthList.value.find((child) => child.active)?.year || selectDate.value?.year() || calendarRange.value[0];
     if (isListCollapse.value) {
       handlerYearCollapse(date);
     } else {
       goToShowDate(date);
     }
-  };
-
-  const handleScrollYearList = (e: UIEvent) => {
-    let { scrollTop: newScrollTop } = e.currentTarget as Element;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    newScrollTop = newScrollTop > 0 ? newScrollTop : 0;
   };
 
   const debounceScrollMonth = throttle((newScrollTop) => {
@@ -285,7 +277,6 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     handlerSelectDate,
     handlerYearCollapse,
     handlerClickMonth,
-    handleScrollYearList,
     handleScrollMonthList,
     isDateSelected,
     isStartDate,
