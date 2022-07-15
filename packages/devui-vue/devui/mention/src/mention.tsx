@@ -67,6 +67,7 @@ export default defineComponent({
       e.stopPropagation();
       e.preventDefault();
       showSuggestions.value = false;
+      value.value = value.value.slice(0, 1);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       value.value += (item as any)[props.dmValueParse.value];
     };
@@ -99,6 +100,7 @@ export default defineComponent({
           e.stopPropagation();
           e.preventDefault();
           showSuggestions.value = false;
+          value.value = value.value.slice(0, 1);
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           value.value += (result.value[currentIndex.value] as any)[props.dmValueParse.value];
           emit('select', result.value[currentIndex.value]);
