@@ -1,7 +1,7 @@
 import { ref, onBeforeMount, nextTick, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
-import { yearItemHeight, monthCalendarItemHeight } from '../const';
+import { monthCalendarItemHeight } from '../const';
 import { DatePickerProPanelProps, YearAndMonthItem, UseMonthCalendarPanelReturnType } from '../date-picker-pro-types';
 import { throttle } from 'lodash';
 import dayjs from 'dayjs';
@@ -57,24 +57,24 @@ export default function useMonthCalendarPanel(props: DatePickerProPanelProps, ct
 
   const goToYearDate = () => {
     updateYearActive();
-    let scrollHeight = (currentYearIndex.value - 4) * yearItemHeight;
-    if (scrollHeight < 0) {
-      scrollHeight = 0;
+    let scrollIndex = currentYearIndex.value - 4;
+    if (scrollIndex < 0) {
+      scrollIndex = 0;
     }
     nextTick(() => {
       const scrollEl = yearScrollRef.value;
-      scrollEl?.scroll?.(0, scrollHeight);
+      scrollEl?.scrollTo?.(scrollIndex);
     });
   };
 
   const goToMonthDate = () => {
-    let scrollHeight = currentYearIndex.value * monthCalendarItemHeight;
-    if (scrollHeight < 0) {
-      scrollHeight = 0;
+    let scrollIndex = currentYearIndex.value;
+    if (scrollIndex < 0) {
+      scrollIndex = 0;
     }
     nextTick(() => {
       const scrollEl = monthScrollRef.value;
-      scrollEl?.scroll?.(0, scrollHeight);
+      scrollEl?.scrollTo?.(scrollIndex);
     });
   };
 
@@ -87,11 +87,7 @@ export default function useMonthCalendarPanel(props: DatePickerProPanelProps, ct
 
   onBeforeMount(() => {
     today.value = new Date();
-    if (props.calendarRange) {
-      calendarRange.value = props.calendarRange;
-    } else {
-      calendarRange.value = [today.value.getFullYear() - 25, today.value.getFullYear() + 25];
-    }
+    calendarRange.value = props.calendarRange;
     initYearList();
     const toDate = getToDate(props.dateValue);
     if (props.visible && toDate) {
@@ -100,7 +96,8 @@ export default function useMonthCalendarPanel(props: DatePickerProPanelProps, ct
   });
 
   const handlerSelectYear = (year: number) => {
-    console.log(year);
+    const toDate = dayjs(new Date(year, 0, 1)).locale('zh-cn');
+    goToShowDate(toDate);
   };
 
   const debounceScrollMonth = throttle((newScrollTop) => {
