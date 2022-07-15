@@ -55,9 +55,11 @@ export default defineComponent({
     };
 
     const handleFocus = () => {
-      if (value.value === '@') {
-        showSuggestions.value = true;
-      }
+      props.mentionTrigger.map((item) => {
+        if (value.value === item) {
+          showSuggestions.value = true;
+        }
+      });
     };
 
     const clickItem = (item: IMentionSuggestionItem, e: MouseEvent) => {

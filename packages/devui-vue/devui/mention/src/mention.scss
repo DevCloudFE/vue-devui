@@ -6,13 +6,13 @@
   &__suggestions {
     position: absolute;
     left: 24px;
-    z-index: var(--devui-z-index-framework);
+    z-index: $devui-z-index-framework;
     background: #ffffff;
     min-width: 120px;
     max-height: 250px;
     overflow-x: hidden;
     overflow-y: auto;
-    box-shadow: var(--devui-shadow-length-base, 0 1px 4px 0) var(--devui-light-shadow, rgba(37, 43, 58, 0.1));
+    box-shadow: $devui-shadow-length-base $devui-light-shadow;
 
     &-item {
       display: flex;
