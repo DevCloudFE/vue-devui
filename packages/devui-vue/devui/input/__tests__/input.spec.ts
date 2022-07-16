@@ -21,6 +21,10 @@ const dotSlotPrependClass = dotSlotNs.e('prepend');
 const dotSlotAppendClass = dotSlotNs.e('append');
 const dotNsClearIconClass = dotNs.em('clear', 'icon');
 
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 describe('d-input', () => {
   it('d-input render work', async () => {
     const value = ref('abc');
