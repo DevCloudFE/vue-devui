@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { ref } from 'vue';
+import { nextTick, ref } from 'vue';
 import DSlider from '../src/slider';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
@@ -30,7 +30,7 @@ describe('d-slider', () => {
     wrapper.unmount();
   });
 
-  it('slider tipsRenderer work', () => {
+  it('slider tipsRenderer work', async () => {
     const value = ref(5);
     const tips = (val: number) => `${val} apples`;
     const wrapper = mount({
@@ -38,6 +38,8 @@ describe('d-slider', () => {
         return () => <DSlider v-model={value.value} tipsRenderer={tips}></DSlider>;
       },
     });
+    wrapper.find(ns.e('button')).trigger('mouseenter');
+    await nextTick();
     const popover = wrapper.find(ns.e('popover'));
     expect(popover.exists()).toBeTruthy();
     const popoverContent = wrapper.find(ns.e('popover-content'));
