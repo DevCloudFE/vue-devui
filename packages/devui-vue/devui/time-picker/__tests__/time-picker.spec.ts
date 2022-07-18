@@ -3,6 +3,10 @@ import DTimePicker from '../src/time-picker';
 import { nextTick, ref } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const ns = useNamespace('time-picker', true);
 const baseClass = ns.b();
 

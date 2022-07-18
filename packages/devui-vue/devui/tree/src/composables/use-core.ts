@@ -6,8 +6,9 @@ const DEFAULT_CONFIG = {
   expanded: false, // 是否只从展开了的节点中获取数据
   recursive: true, // 是否需要获取非直接子节点
 };
-const nodeMap = new Map<string, IInnerTreeNode[]>();
+
 export default function (): (data: Ref<IInnerTreeNode[]>) => IUseCore {
+  const nodeMap = new Map<string, IInnerTreeNode[]>();
   return function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
     const getLevel = (node: IInnerTreeNode): number => {
       return data.value.find((item) => item.id === node.id)?.level;
