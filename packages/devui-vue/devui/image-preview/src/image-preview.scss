@@ -93,6 +93,11 @@
       align-items: center;
       justify-content: center;
       color: $devui-text;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      outline: 0;
+      padding: 0;
     }
 
     .#{$devui-prefix}-image-preview__index {
@@ -117,6 +122,4 @@
   bottom: 0;
   z-index: calc(#{$devui-z-index-modal} - 1);
   background: $devui-shadow;
-  border-radius: $devui-border-radius;
-  box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
 }
