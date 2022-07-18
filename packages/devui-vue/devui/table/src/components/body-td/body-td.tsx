@@ -1,4 +1,4 @@
-import { defineComponent, toRef, inject } from 'vue';
+import { defineComponent, toRefs, inject } from 'vue';
 import type { SetupContext } from 'vue';
 import { bodyTdProps, BodyTdProps } from './body-td-types';
 import { TABLE_TOKEN, ITableInstanceAndDefaultRow } from '../../table-types';
@@ -12,7 +12,7 @@ export default defineComponent({
   props: bodyTdProps,
   emits: ['cellClick'],
   setup(props: BodyTdProps, ctx: SetupContext) {
-    const column = toRef(props, 'column');
+    const { column, rowspan, colspan } = toRefs(props);
     const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
     const { stickyClass, stickyStyle } = useFixedColumn(column);
     const { tdRef, isShowTooltip, tooltipContent, cellMode, onCellClick } = useBodyTd(props, ctx);
@@ -20,7 +20,15 @@ export default defineComponent({
     return () => {
       return (
         <Tooltip content={tooltipContent.value} disabled={!isShowTooltip.value}>
-          <td ref={tdRef} class={stickyClass.value} style={stickyStyle.value} {...ctx.attrs} onClick={onCellClick}>
+          <td
+            ref={tdRef}
+            class={stickyClass.value}
+            style={stickyStyle.value}
+            {...ctx.attrs}
+            rowspan={rowspan?.value}
+            colspan={colspan?.value}
+            onClick={onCellClick}
+          >
             {props.column.renderCell?.(props.row, props.column, table.store, props.index, table.props, cellMode)}
           </td>
         </Tooltip>
