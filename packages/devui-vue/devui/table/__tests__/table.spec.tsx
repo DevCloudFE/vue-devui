@@ -236,9 +236,6 @@ describe('d-table', () => {
         );
       },
     });
-    console.log('====================================');
-    console.log(wrapper.html());
-    console.log('====================================');
 
     await nextTick();
     await nextTick();
