@@ -135,7 +135,7 @@ import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    let formModel = reactive({
+    const formModel = reactive({
       name: '',
       description: '',
       executionDay: [],
