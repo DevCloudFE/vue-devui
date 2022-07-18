@@ -13,7 +13,7 @@ export default defineComponent({
     const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
     const store = table.store;
     const headerContainerRef = ref();
-    const { column } = toRefs(props);
+    const { column, colspan, rowspan } = toRefs(props);
     const { baseClass } = useBaseRender(column);
     const { direction, sortClass, handleSort, clearSortOrder } = useSort(column);
     const { filterClass, handleFilter } = useFilter(column);
@@ -21,9 +21,13 @@ export default defineComponent({
     const { resizing, dragClass, onMousedown } = useDragColumnWidth(headerContainerRef, column);
 
     expose({ clearSortOrder });
-
     return () => (
-      <th class={[baseClass.value, stickyClass.value, sortClass.value, filterClass.value, dragClass.value]} style={stickyStyle.value}>
+      <th
+        class={[baseClass.value, stickyClass.value, sortClass.value, filterClass.value, dragClass.value]}
+        style={stickyStyle.value}
+        colspan={colspan?.value}
+        rowspan={rowspan?.value}
+      >
         <div ref={headerContainerRef} class="header-container" onMousedown={onMousedown}>
           {column.value.renderHeader?.(column.value, store)}
           {column.value.filterable && (
