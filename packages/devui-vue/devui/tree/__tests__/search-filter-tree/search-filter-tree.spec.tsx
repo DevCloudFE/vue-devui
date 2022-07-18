@@ -6,6 +6,10 @@ import { Search } from '../../../search';
 import { searchFilterData } from './search-filter-data';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 
+jest.mock('../../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const ns = useNamespace('tree', true);
 const searchNs = useNamespace('search', true);
 

@@ -5,6 +5,10 @@ import { Tree } from '../../';
 import { basicTreeData } from './basic-tree-data';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 
+jest.mock('../../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const ns = useNamespace('tree', true);
 const noDotNs = useNamespace('tree');
 type ITreeFactory = { expandAllNodes: () => void };

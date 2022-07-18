@@ -5,6 +5,10 @@ import { Tree, ICheck } from '../../';
 import { checkableTreeData } from './checkable-tree-data';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 
+jest.mock('../../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 type ITreeFactory = { expandAllNodes: () => void };
 const checkBoxNs = useNamespace('checkbox', true);
 
