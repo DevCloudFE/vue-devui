@@ -4,6 +4,10 @@ import { CarouselItem, Carousel  } from '../index';
 import { Button } from '../../button';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const ns = useNamespace('carousel', true);
 const button = useNamespace('button', true);
 
@@ -219,7 +223,7 @@ describe('d-carousel', () => {
         'd-carousel-item': CarouselItem,
       },
       template: `
-        <d-carousel ref="carousel" height="200px" :activeIndexChange="onChange" autoplay :autoplaySpeed="3000">
+        <d-carousel ref="carousel" height="200px" :activeIndexChange="onChange" autoplay :autoplaySpeed="2000">
           <d-carousel-item>Page 1</d-carousel-item>
           <d-carousel-item>Page 2</d-carousel-item>
           <d-carousel-item>Page 3</d-carousel-item>
@@ -240,9 +244,9 @@ describe('d-carousel', () => {
       }
     });
 
-    await wait(4500);
+    await wait(2100);
     expect(wrapper.vm.activeIndex).toBe(1);
-    await wait(4600);
-    expect(wrapper.vm.activeIndex).toBe(3);
-  }, 10000);
+    await wait(2100);
+    expect(wrapper.vm.activeIndex).toBe(2);
+  });
 });
