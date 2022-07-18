@@ -496,15 +496,6 @@ $input-height-lg: 46px;
       width: 0;
     }
 
-    &:hover {
-      overflow-y: overlay;
-      scrollbar-width: thin;
-
-      &::-webkit-scrollbar {
-        width: 4px;
-      }
-    }
-
     .#{$devui-prefix}-date-picker-pro__year-list-item {
       display: flex;
       padding: 4px 0;

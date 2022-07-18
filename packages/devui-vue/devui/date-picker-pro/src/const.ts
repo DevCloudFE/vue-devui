@@ -8,3 +8,6 @@ export const yearListHeight = 305; // 日期模式下左侧年月虚拟列表的
 export const calendarListHeight = 270; // 日期模式下中间月份虚拟列表高度
 
 export const monthPickerHeight = 300; // 月选择器模式下左侧年月虚拟列表的高度
+
+export const yearPickerHeight = 186; // 年选择器模式下年份虚拟列表的高度
+export const yearPickerItemHeight = 48; // 年选择器模式下单行年份的高度
