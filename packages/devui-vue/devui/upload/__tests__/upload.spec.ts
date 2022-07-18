@@ -3,6 +3,10 @@ import { ref, nextTick, reactive } from 'vue';
 import DUpload from '../src/upload';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const dotNs = useNamespace('upload', true);
 const dotInputGroupNs = useNamespace('input-group', true);
 const dotProgressNs = useNamespace('progress', true);

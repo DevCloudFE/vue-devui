@@ -3,6 +3,10 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 import { nextTick, ref } from 'vue';
 import DAutoComplete from '../src/auto-complete';
 
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const ns = useNamespace('auto-complete', true);
 const noDotNs = useNamespace('auto-complete');
 const dotInputNs = useNamespace('auto-complete-input', true);
