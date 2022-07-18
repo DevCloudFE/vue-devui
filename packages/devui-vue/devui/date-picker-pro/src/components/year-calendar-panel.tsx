@@ -3,7 +3,7 @@ import type { SetupContext } from 'vue';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useYearCalendarPanel from '../composables/use-year-calendar-panel';
 import { datePickerProPanelProps, DatePickerProPanelProps } from '../date-picker-pro-types';
-import { yearPickerHeight, yearPickerItemHeight } from '../const';
+import { yearPickerHeight, yearCalendarItemHeight } from '../const';
 import { VirtualList } from '../../../virtual-list';
 
 export default defineComponent({
@@ -43,7 +43,7 @@ export default defineComponent({
             class={ns.e('year-list')}
             data={yearList.value}
             height={yearPickerHeight}
-            itemHeight={yearPickerItemHeight}
+            itemHeight={yearCalendarItemHeight}
             v-slots={yearItemSlots}></VirtualList>
         </div>
       );
