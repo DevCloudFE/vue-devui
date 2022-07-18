@@ -16,6 +16,8 @@ const chalkSuccess = chalk.hex('#3DCCA6');
 
 const entryDir = path.resolve(__dirname, '../../devui');
 
+const unitTestFailedComponents = [];
+
 const completeComponents = fs.readdirSync(entryDir).filter((name) => {
   const componentDir = path.resolve(entryDir, name);
   const isDir = fs.lstatSync(componentDir).isDirectory();
@@ -65,7 +67,18 @@ const eslintCheck = async (components) => {
 
 const unitTestSingle = async (name) => {
   log(chalkUnitTest(`Start unit test ${name}...`));
-  await shell.exec(`pnpm test --filter vue-devui -- --colors --noStackTrace --testMatch **/**/${name}/**/*.spec.{ts,tsx}`);
+
+  const unitTestResult = await shell.exec(`pnpm test --filter vue-devui -- \
+  --colors --noStackTrace --testMatch **/**/${name}/**/*.spec.{ts,tsx}`);
+
+  if (/failed|ERR_/.test(unitTestResult.stderr)) {
+    unitTestFailedComponents.push(name);
+    shell.echo(chalkError('Error: Unit test failed.'));
+
+    // 注释这一行可以统计未通过单元测试的组件列表
+    shell.exit(1);
+  }
+
   log(chalkUnitTest(`Unit test ${name} finished!`));
 };
 
@@ -91,6 +104,9 @@ const unitTest = async (components) => {
     await unitTestAll();
   }
   log(chalkUnitTest('Unit test finished!'));
+
+  log(chalkUnitTest(`The following components failed the unit test:`));
+  log(chalkError(`${unitTestFailedComponents.join('\n')}`));
 };
 
 exports.codeCheck = async function () {
