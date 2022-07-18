@@ -26,13 +26,13 @@ export default function useYearCalendarPanel(props: DatePickerProPanelProps, ctx
   const goToShowYear = (date: Dayjs) => {
     if (date) {
       const index = Math.floor((date.year() - calendarRange.value[0]) / 3);
-      let scrollHeight = (index - 1) * yearCalendarItemHeight;
-      if (scrollHeight < 0) {
-        scrollHeight = 0;
+      let scrollIndex = index - 1;
+      if (scrollIndex < 0) {
+        scrollIndex = 0;
       }
       nextTick(() => {
         const scrollEl = yarListScrollRef.value;
-        scrollEl?.scroll?.(0, scrollHeight);
+        scrollEl?.scrollTo?.(scrollIndex);
       });
     }
   };
