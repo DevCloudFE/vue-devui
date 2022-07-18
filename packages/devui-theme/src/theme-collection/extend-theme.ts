@@ -24,7 +24,7 @@ export const infinityTheme: Theme = new Theme({
     'devui-form-control-line-hover': '#9b9fa8',
     'devui-form-control-line': '#D7D8DA',
     'devui-form-control-bg': '#ffffff',
-    'devui-icon-text': '#babbc0',
+    'devui-icon-text': '#71757f',
     'devui-label-bg': '#E9EDFA',
     'devui-border-radius': '4px',
     'devui-font-size': '14px',
