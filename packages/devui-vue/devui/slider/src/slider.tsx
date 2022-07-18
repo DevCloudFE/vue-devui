@@ -35,7 +35,8 @@ export default defineComponent({
             style={{ left: percentDisplay.value }}
             onMousedown={handleButtonMousedown}
             onMouseenter={() => (popoverShow.value = true)}
-            onMouseout={() => (popoverShow.value = false)}></div>
+            onMouseout={() => (popoverShow.value = false)}
+          />
           {props.tipsRenderer === null ? null : popoverShow.value ? (
             <div class={ns.e('popover')} style={{ left: percentDisplay.value }}>
               <div class={ns.e('popover-arrow')}></div>
