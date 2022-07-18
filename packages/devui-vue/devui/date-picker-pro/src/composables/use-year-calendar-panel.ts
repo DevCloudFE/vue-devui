@@ -3,7 +3,6 @@ import type { SetupContext } from 'vue';
 import { chunk } from 'lodash';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { DatePickerProPanelProps, UseYearCalendarPanelReturnType } from '../date-picker-pro-types';
-import { yearCalendarItemHeight } from '../const';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import useCalendarSelected from './use-calendar-selected';
