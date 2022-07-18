@@ -12,7 +12,8 @@
     "eslint:fix": "eslint --fix \"packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}\"",
     "stylelint": "stylelint \"packages/**/{*.scss,*.css}\"",
     "stylelint:fix": "stylelint --fix \"packages/**/{*.scss,*.css}\"",
-    "test": "pnpm --filter vue-devui test"
+    "test": "pnpm --filter vue-devui test",
+    "coverage": "pnpm --filter vue-devui coverage"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",

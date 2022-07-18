@@ -28,6 +28,7 @@
     "build": "pnpm generate:theme && node --max-old-space-size=4096 node_modules/vitepress/bin/vitepress.js build docs && cp public/* docs/.vitepress/dist/assets && cp docs/assets/* docs/.vitepress/dist/assets",
     "build:lib": "pnpm predev -- -e prod && pnpm build:components && pnpm changelog && pnpm release",
     "test": "jest --config jest.config.js",
+    "coverage": "jest --config jest.config.js --coverage",
     "build:components": "node ./devui-cli/index.js build",
     "generate:theme": "node ./devui-cli/index.js generate:theme",
     "generate:dts": "node ./devui-cli/index.js generate:dts",
