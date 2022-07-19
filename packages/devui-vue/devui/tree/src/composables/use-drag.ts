@@ -1,11 +1,33 @@
+// TODO 待迁移到新架构中
 import { reactive, ref, watch } from 'vue';
 import type { Ref } from 'vue';
-import { TreeItem, IDropType, Nullable } from '../deprecated-tree-types';
 import cloneDeep from 'lodash/cloneDeep';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 const ns = useNamespace('tree');
 const ACTIVE_NODE = ns.em('node-content', 'value-wrapper');
+
+interface TreeItem {
+  id?: string;
+  label: string;
+  isParent?: boolean;
+  level?: number;
+  open?: boolean;
+  addable?: boolean;
+  editable?: boolean;
+  deletable?: boolean;
+  children?: Array<TreeItem>;
+  [key: string]: unknown;
+}
+
+interface IDropType {
+  dropPrev?: boolean;
+  dropNext?: boolean;
+  dropInner?: boolean;
+}
+
+type Nullable<T> = null | T;
+
 interface DragState {
   dropType?: 'prev' | 'next' | 'inner';
   draggingNode?: Nullable<HTMLElement>;
