@@ -4,13 +4,13 @@ import { nextTick, ref } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import Drawer from '../src/drawer';
 
-const drawerClasses = useNamespace('drawer', true);
-const baseClasses = drawerClasses.b();
+const drawerNs = useNamespace('drawer', true);
+const noDotDrawerNs = useNamespace('drawer');
+const baseClasses = drawerNs.b();
 
 const getEl = (selector: string) => document.body.querySelector(selector);
 const getDrawer = () => getEl(baseClasses);
-const getOverlay = () => getEl(drawerClasses.e('overlay'));
-
+const getOverlay = () => getEl(drawerNs.e('overlay'));
 
 describe('d-drawer', () => {
   // html dom, overlay
@@ -24,7 +24,9 @@ describe('d-drawer', () => {
       },
       setup(props) {
         return () => (
-          <Drawer modelValue showOverlay={props.showOverlay}>default innerHTML</Drawer>
+          <Drawer modelValue showOverlay={props.showOverlay}>
+            default innerHTML
+          </Drawer>
         );
       },
     });
@@ -33,7 +35,7 @@ describe('d-drawer', () => {
     let overlay = getOverlay();
 
     expect(drawer).toBeTruthy();
-    expect(drawer?.className).toContain('devui-drawer--right');
+    expect(drawer?.className).toContain(noDotDrawerNs.m('right'));
     expect(drawer?.innerHTML).toEqual('default innerHTML');
 
     expect(overlay).toBeTruthy();
@@ -53,8 +55,7 @@ describe('d-drawer', () => {
     const visible = ref(false);
     const wrapper = mount({
       setup() {
-
-        const toggle = () => visible.value = !visible.value;
+        const toggle = () => (visible.value = !visible.value);
         return () => (
           <>
             <button onClick={toggle}>toggle</button>
@@ -63,7 +64,6 @@ describe('d-drawer', () => {
         );
       },
     });
-
 
     let drawer = getDrawer();
     const button = wrapper.find('button');
@@ -111,7 +111,7 @@ describe('d-drawer', () => {
       setup() {
         const position = ref<'left' | 'right'>('left');
 
-        const toggle = () => position.value = ({ left: 'right', right: 'left' } as const)[position.value];
+        const toggle = () => (position.value = ({ left: 'right', right: 'left' } as const)[position.value]);
         return () => (
           <>
             <button onClick={toggle}>toggle</button>
@@ -125,11 +125,11 @@ describe('d-drawer', () => {
     const button = wrapper.find('button');
 
     expect(drawer).toBeTruthy();
-    expect(drawer?.className).toContain('devui-drawer--left');
+    expect(drawer?.className).toContain(noDotDrawerNs.m('left'));
 
     await button?.trigger('click');
     drawer = getDrawer();
-    expect(drawer?.className).toContain('devui-drawer--right');
+    expect(drawer?.className).toContain(noDotDrawerNs.m('right'));
 
     wrapper.unmount();
   });
@@ -171,5 +171,4 @@ describe('d-drawer', () => {
 
     wrapper.unmount();
   });
-
 });
