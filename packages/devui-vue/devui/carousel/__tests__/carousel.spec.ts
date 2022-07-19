@@ -1,8 +1,9 @@
 import { ref, nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
-import { CarouselItem, Carousel  } from '../index';
+import { CarouselItem, Carousel } from '../index';
 import { Button } from '../../button';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { wait } from '../../shared/utils';
 
 jest.mock('../../locale/create', () => ({
   createI18nTranslate: () => jest.fn(),
@@ -20,9 +21,6 @@ const arrowLeftClass = '.arrow-left';
 const arrowRightClass = '.arrow-right';
 
 const buttonBaseClass = button.b();
-
-const wait = (ms = 100) =>
-  new Promise(resolve => setTimeout(() => resolve(true), ms));
 
 describe('d-carousel', () => {
   it('arrowTrigger-never', () => {
@@ -100,9 +98,9 @@ describe('d-carousel', () => {
 
         return {
           activeIndex,
-          onChange
+          onChange,
         };
-      }
+      },
     });
 
     await nextTick();
@@ -134,9 +132,9 @@ describe('d-carousel', () => {
 
         return {
           activeIndex,
-          onChange
+          onChange,
         };
-      }
+      },
     });
     await nextTick();
     wrapper.findAll(dotItemClass)[1].trigger('mouseenter');
@@ -190,7 +188,7 @@ describe('d-carousel', () => {
           onGoFirst,
           onChange,
         };
-      }
+      },
     });
 
     await nextTick();
@@ -239,9 +237,9 @@ describe('d-carousel', () => {
 
         return {
           activeIndex,
-          onChange
+          onChange,
         };
-      }
+      },
     });
 
     await wait(2100);

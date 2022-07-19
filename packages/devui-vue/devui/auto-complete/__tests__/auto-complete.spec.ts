@@ -1,7 +1,8 @@
 import { mount } from '@vue/test-utils';
-import { useNamespace } from '../../shared/hooks/use-namespace';
 import { nextTick, ref } from 'vue';
 import DAutoComplete from '../src/auto-complete';
+import { useNamespace } from '../../shared/hooks/use-namespace';
+import { wait } from '../../shared/utils';
 
 jest.mock('../../locale/create', () => ({
   createI18nTranslate: () => jest.fn(),
@@ -34,9 +35,6 @@ const dotNsClearIconClass = ns.em('clear', 'icon');
 
 const smClass = noDotNs.m('sm');
 const lgClass = noDotNs.m('lg');
-
-// delay api
-const wait = (delay = 300) => new Promise((resolve) => setTimeout(() => resolve(true), delay));
 
 describe('auto-complete', () => {
   it('init render & KeyboardEvent ', async () => {
@@ -542,7 +540,7 @@ describe('auto-complete', () => {
         const loadMore = () => {
           setTimeout(() => {
             source.value.push('lazyData' + source.value.length);
-            const _value = autoCompleteRef.value as HTMLElement & { loadFinish: () => void } | null;
+            const _value = autoCompleteRef.value as (HTMLElement & { loadFinish: () => void }) | null;
             _value?.loadFinish();
           }, 3000);
         };
