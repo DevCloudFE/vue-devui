@@ -2,6 +2,11 @@ import { mount } from '@vue/test-utils';
 import { ref, nextTick } from 'vue';
 import DTransfer from '../src/transfer';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const ns = useNamespace('transfer', true);
 const baseClass = ns.b();
 const sourceClass = ns.e('source');

@@ -1,5 +1,10 @@
 import { mount } from '@vue/test-utils';
 import StepsGuideDemo from './steps-guide-demo';
+
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 document.body.innerHTML = `
   <button class="top-left">Top-left</button>
   <button class="top">Top</button>
