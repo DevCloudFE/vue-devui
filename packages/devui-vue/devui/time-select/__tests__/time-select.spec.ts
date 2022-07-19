@@ -3,6 +3,10 @@ import { ref, nextTick } from 'vue';
 import DTimeSelect from '../src/time-select';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const ns = useNamespace('select', true);
 const baseClass = ns.b();
 const dropdownCls = ns.e('dropdown');
@@ -31,13 +35,13 @@ describe('TimeSelect', () => {
 
     const container = wrapper.find(baseClass);
     const dropdown = wrapper.find(dropdownCls);
-    const listItems = wrapper.findAll(selectItemCls);
     const input = wrapper.find<HTMLInputElement>(selectInputCls);
 
     expect(container.exists()).toBeTruthy();
-    expect(dropdown.isVisible()).toBeFalsy();
+    expect(dropdown.exists()).toBeFalsy();
     await input.trigger('click');
     await nextTick();
+    const listItems = wrapper.findAll(selectItemCls);
     expect(listItems.length).toBe(23);
     expect(listItems[0].classes()).toContain('active');
     expect(input.element.value).toBe('01:00');
