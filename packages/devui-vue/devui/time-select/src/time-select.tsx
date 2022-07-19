@@ -29,7 +29,8 @@ export default defineComponent({
             size={props.size}
             onClear={clearData}
             onFocus={focusFun}
-            onBlur={blurFun}></Select>
+            onBlur={blurFun}
+          />
         </>
       );
     };
