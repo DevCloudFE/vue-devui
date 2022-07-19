@@ -2,6 +2,10 @@ import { mount } from '@vue/test-utils';
 import { reactive, nextTick } from 'vue';
 import DTagInput from '../src/tag-input';
 
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const customMount = (state) => mount({
   components: { DTagInput },
   template: `
