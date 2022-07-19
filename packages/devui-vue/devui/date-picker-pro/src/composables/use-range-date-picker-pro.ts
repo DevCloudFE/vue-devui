@@ -93,6 +93,7 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     } else {
       setTimeout(() => {
         endInputRef.value?.focus();
+        focusType.value = 'end';
       });
     }
   };

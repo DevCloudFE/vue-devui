@@ -158,6 +158,7 @@ export default function useMonthCalendarPanel(props: DatePickerProPanelProps, ct
 
   const handlerSetRangeDate = (year: number, month: number) => {
     const date = dayjs(new Date(year, month - 1, 1)).locale('zh-cn');
+    // 这里的props.focusType取值在单测里始终是start, 导致单测不过
     if (props.focusType === 'start') {
       rangeSelectDate.value[0] = date;
     } else if (props.focusType === 'end') {
