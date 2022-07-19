@@ -7,8 +7,11 @@ import DIcon from '../../icon/src/icon';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const ns = useNamespace('modal', true);
+const iconNs = useNamespace('icon', true);
 const noDotNs = useNamespace('modal');
+const noDotIconNs = useNamespace('icon');
 const buttonNoDotNs = useNamespace('button');
+const wait = (delay = 300) => new Promise((resolve) => setTimeout(() => resolve(true), delay));
 
 describe('d-modal', () => {
   beforeEach(() => {
@@ -26,7 +29,7 @@ describe('d-modal', () => {
   });
   it('render correctly', async () => {
     const visible = ref(false);
-    mount({
+    const wrapper = mount({
       setup() {
         return () => (
           <DModal v-model={visible.value} title="Start Snapshot Version">
@@ -45,6 +48,7 @@ describe('d-modal', () => {
     });
 
     visible.value = true;
+    await wait(100);
     await nextTick();
     const modal = document.querySelector(ns.b());
     expect(modal).toBeTruthy();
@@ -52,6 +56,7 @@ describe('d-modal', () => {
     expect((modal?.childNodes[0] as HTMLElement).className).toContain('btn-close');
     expect((modal?.childNodes[1] as HTMLElement).className).toContain(noDotNs.e('header'));
     expect((modal?.childNodes[2] as HTMLElement).className).toContain(noDotNs.e('body'));
+    wrapper.unmount();
   });
 
   it('custom header', async () => {
@@ -81,9 +86,10 @@ describe('d-modal', () => {
     });
 
     visible.value = true;
+    await wait(100);
     await nextTick();
     const modalHeader = document.querySelector(ns.e('header'));
-    expect(modalHeader?.children[0].className).toContain('icon-like');
+    expect(modalHeader?.children[0].className).toContain(noDotIconNs.e('container'));
     expect(modalHeader?.children[1].innerHTML).toContain('Good Title');
     expect(modalHeader?.childElementCount).toBe(2);
     wrapper.unmount();
@@ -116,6 +122,7 @@ describe('d-modal', () => {
     });
 
     visible.value = true;
+    await wait(100);
     await nextTick();
     const modalHeader = document.querySelector(ns.e('footer'));
     expect(modalHeader?.children[0].className).toContain(buttonNoDotNs.b());
@@ -125,7 +132,7 @@ describe('d-modal', () => {
   });
 
   it('before-close', async () => {
-    const visible = ref(true);
+    const visible = ref(false);
     const beforeClose = jest.fn();
     const wrapper = mount({
       setup() {
@@ -145,8 +152,10 @@ describe('d-modal', () => {
       },
     });
 
+    visible.value = true;
+    await wait(100);
     await nextTick();
-    const btnClose = document.querySelector('.btn-close');
+    const btnClose = document.querySelector(iconNs.e('container'));
     await btnClose?.dispatchEvent(new Event('click'));
     expect(beforeClose).toBeCalled();
     wrapper.unmount();
