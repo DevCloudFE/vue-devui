@@ -8,4 +8,4 @@ export * from './random-id';
 export * from './set-style';
 export * from './middle-num';
 export * from './is';
-export * from './unit-test';
+export * from './wait';
