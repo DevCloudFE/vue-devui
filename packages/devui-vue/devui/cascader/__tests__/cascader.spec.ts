@@ -3,6 +3,10 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 import { ref, reactive, nextTick } from 'vue';
 import DCascader from '../src/cascader';
 
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 const ns = useNamespace('cascader', true);
 const baseClass = ns.b();
 const dropMenuWrapperClass = ns.e('drop-menu-wrapper');

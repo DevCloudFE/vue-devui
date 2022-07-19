@@ -2,6 +2,10 @@ import { mount } from '@vue/test-utils';
 import { ref } from 'vue';
 import DTreeSelect from '../src/tree-select';
 
+jest.mock('../../locale/create', () => ({
+  createI18nTranslate: () => jest.fn(),
+}));
+
 describe('tree-select', () => {
 
   it('tree-select should render correctly', async () => {
