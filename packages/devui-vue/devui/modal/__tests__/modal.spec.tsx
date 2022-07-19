@@ -5,13 +5,13 @@ import DModalHeader from '../src/components/header';
 import DModalFooter from '../src/components/footer';
 import DIcon from '../../icon/src/icon';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { wait } from '../../shared/utils/';
 
 const ns = useNamespace('modal', true);
 const iconNs = useNamespace('icon', true);
 const noDotNs = useNamespace('modal');
 const noDotIconNs = useNamespace('icon');
 const buttonNoDotNs = useNamespace('button');
-const wait = (delay = 300) => new Promise((resolve) => setTimeout(() => resolve(true), delay));
 
 describe('d-modal', () => {
   beforeEach(() => {
