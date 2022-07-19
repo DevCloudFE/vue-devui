@@ -36,9 +36,11 @@ export const DCascaderItem = (props: CascaderItemPropsType): JSX.Element => {
     }
     updateValues();
   };
-  const mouseenter = isTriggerHover ? {
-    onMouseenter: mouseEnter,
-  } : {};
+  const mouseenter = isTriggerHover
+    ? {
+        onMouseenter: mouseEnter,
+      }
+    : {};
   // 鼠标click
   const mouseClick = () => {
     if (disbaled.value) {
@@ -75,11 +77,7 @@ export const DCascaderItem = (props: CascaderItemPropsType): JSX.Element => {
         <div class="dropdown-item-label">
           <span>{cascaderItem.label}</span>
         </div>
-        {
-          cascaderItem?.children?.length
-          && cascaderItem?.children?.length  > 0
-          && <Icon name="chevron-right" size="16px" color="inherit" />
-        }
+        {Boolean(cascaderItem?.children?.length) && <Icon name="chevron-right" size="16px" color="inherit" />}
       </div>
     </li>
   );
