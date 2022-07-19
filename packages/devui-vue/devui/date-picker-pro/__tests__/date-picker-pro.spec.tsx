@@ -1,29 +1,39 @@
 import { mount } from '@vue/test-utils';
 import DDatePickerPro from '../src/date-picker-pro';
-import { nextTick, ref } from 'vue';
+import { nextTick, ref, getCurrentInstance } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import DButton from '../../button/src/button';
+import { Locale } from '../../locale';
 
 const ns = useNamespace('date-picker-pro', true);
 const baseClass = ns.b();
 const pickerPanelClass = ns.e('panel');
-// const yearListClass = ns.em('calendar-panel', 'year-list');
 const yearListItemClass = ns.em('calendar-panel', 'year-list-item');
+const yearActiveClass = ns.e('year-title-active');
 const weekHeaderClass = ns.e('table-week-header');
-// const monthListClass = ns.e('tbody-wrapper');
 const tableMonthClass = ns.e('table-month');
 
 const noDotNs = useNamespace('date-picker-pro', false);
-const noDotYearActiveClass = noDotNs.e('year-title-active');
 
 const inputNs = useNamespace('input', true);
+
+// 因为 jest 不支持 ResizeObserver，需要 mock 实现
+window.ResizeObserver =
+  window.ResizeObserver ||
+  jest.fn().mockImplementation(() => ({
+    disconnect: jest.fn(),
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+  }));
 
 describe('date-picker-pro test', () => {
   it('date-picker-pro init render', async () => {
     const datePickerProValue = ref('');
     const wrapper = mount({
       setup() {
-        return () => <DDatePickerPro v-model={datePickerProValue.value}></DDatePickerPro>;
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
+        return () => <DDatePickerPro v-model={datePickerProValue.value} placeholder="请选择日期"></DDatePickerPro>;
       },
     });
 
@@ -37,35 +47,12 @@ describe('date-picker-pro test', () => {
     const pickerPanel = container.find(pickerPanelClass);
     expect(pickerPanel.exists()).toBeTruthy();
 
-    const yearListItems = pickerPanel.findAll(yearListItemClass);
-    expect(yearListItems.length).toBe(7 + 7 * 12);
+    const yearActiveItem = pickerPanel.find(yearActiveClass);
+    expect(yearActiveItem.exists()).toBeTruthy();
     const weekHeader = pickerPanel.find(weekHeaderClass);
     expect(weekHeader.findAll('td').length).toBe(7);
-    const tableMonthItems = pickerPanel.findAll(tableMonthClass);
-    expect(tableMonthItems.length).toBe(7 * 12);
-
-    const date = new Date();
-    const yearIndex = 3 * 13 + date.getMonth() + 1;
-    const monthIndex = 3 * 12 + date.getMonth();
-    const dayIndex = date.getDate();
-    const dayWeekIndex = date.getDay();
-    const emptyNum = 7 - ((dayIndex - dayWeekIndex) % 7);
-
-    expect(yearListItems[yearIndex].classes().includes(noDotYearActiveClass)).toBe(true);
-    expect(pickerPanel.exists()).toBeTruthy();
-
-    // const vm = wrapper.vm;
-    // const yearList = vm.$el.querySelector(yearListClass);
-    // const monthList = vm.$el.querySelector(monthListClass);
-
-    const monthContentContainer = tableMonthItems[monthIndex].find(ns.e('table-month-content'));
-    expect(monthContentContainer.exists()).toBeTruthy();
-    const Items = monthContentContainer.findAll('td');
-    expect(Items.length).toBe(7 * 6);
-
-    expect(Items[emptyNum].find('span').text()).toBe('');
-    expect(Items[emptyNum + 1].find('span').text()).not.toBe('');
-    expect(Items[emptyNum + dayIndex].classes().includes(noDotNs.e('table-date-today'))).toBe(true);
+    const activeTody = pickerPanel.find(ns.e('table-date-today'));
+    expect(activeTody.exists()).toBeTruthy();
     wrapper.unmount();
   });
 
@@ -73,7 +60,9 @@ describe('date-picker-pro test', () => {
     const datePickerProValue = ref<Date>();
     const wrapper = mount({
       setup() {
-        return () => <DDatePickerPro v-model={datePickerProValue.value}></DDatePickerPro>;
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
+        return () => <DDatePickerPro v-model={datePickerProValue.value} placeholder="请选择日期"></DDatePickerPro>;
       },
     });
     const container = wrapper.find(baseClass);
@@ -88,7 +77,8 @@ describe('date-picker-pro test', () => {
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
     const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
-    const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(ns.e('table-month-content'));
+    // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
+    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
     expect(datePickerProValue.value?.toLocaleDateString()).toBe(
@@ -105,7 +95,9 @@ describe('date-picker-pro test', () => {
     const datePickerProValue = ref<Date | string>('');
     const wrapper = mount({
       setup() {
-        return () => <DDatePickerPro v-model={datePickerProValue.value}></DDatePickerPro>;
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
+        return () => <DDatePickerPro v-model={datePickerProValue.value} placeholder="请选择日期"></DDatePickerPro>;
       },
     });
 
@@ -121,7 +113,8 @@ describe('date-picker-pro test', () => {
 
     const date = new Date();
     const selectIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
-    const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(ns.e('table-month-content'));
+    // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
+    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     expect(Items[selectIndex].classes().includes(noDotNs.e('table-date-selected'))).toBe(true);
 
@@ -132,7 +125,9 @@ describe('date-picker-pro test', () => {
     const datePickerProValue = ref<Date | string>('');
     const wrapper = mount({
       setup() {
-        return () => <DDatePickerPro v-model={datePickerProValue.value} format="YYYY-MM-DD"></DDatePickerPro>;
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
+        return () => <DDatePickerPro v-model={datePickerProValue.value} format="YYYY-MM-DD" placeholder="请选择日期"></DDatePickerPro>;
       },
     });
 
@@ -148,7 +143,8 @@ describe('date-picker-pro test', () => {
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
     const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
-    const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(ns.e('table-month-content'));
+    // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
+    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
     const vm = wrapper.vm;
@@ -166,7 +162,9 @@ describe('date-picker-pro test', () => {
     const datePickerProValue = ref<Date | string>('');
     const wrapper = mount({
       setup() {
-        return () => <DDatePickerPro v-model={datePickerProValue.value} showTime={true}></DDatePickerPro>;
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
+        return () => <DDatePickerPro v-model={datePickerProValue.value} showTime={true} placeholder="请选择日期"></DDatePickerPro>;
       },
     });
 
@@ -189,7 +187,8 @@ describe('date-picker-pro test', () => {
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
     const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
-    const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(ns.e('table-month-content'));
+    // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
+    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
     expect(datePickerProValue.value?.toLocaleString()).toBe(
@@ -218,13 +217,16 @@ describe('date-picker-pro test', () => {
     const onBlur = jest.fn();
     const wrapper = mount({
       setup() {
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
         return () => (
           <DDatePickerPro
             v-model={datePickerProValue.value}
             onToggleChange={onToggleChange}
             onConfirmEvent={onConfirmEvent}
             onFocus={onFocus}
-            onBlur={onBlur}></DDatePickerPro>
+            onBlur={onBlur}
+            placeholder="请选择日期"></DDatePickerPro>
         );
       },
     });
@@ -242,7 +244,8 @@ describe('date-picker-pro test', () => {
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
     const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
-    const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(ns.e('table-month-content'));
+    // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
+    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
     expect(onConfirmEvent).toBeCalledTimes(1);
@@ -256,7 +259,9 @@ describe('date-picker-pro test', () => {
     const datePickerProValue = ref<Date | string>('');
     const wrapper = mount({
       setup() {
-        return () => <DDatePickerPro v-model={datePickerProValue.value}></DDatePickerPro>;
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
+        return () => <DDatePickerPro v-model={datePickerProValue.value} placeholder="请选择日期"></DDatePickerPro>;
       },
     });
     const date = new Date();
@@ -284,7 +289,9 @@ describe('date-picker-pro test', () => {
     const datePickerProValue = ref<Date | string>('');
     const wrapper = mount({
       setup() {
-        return () => <DDatePickerPro v-model={datePickerProValue.value} size="lg"></DDatePickerPro>;
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
+        return () => <DDatePickerPro v-model={datePickerProValue.value} size="lg" placeholder="请选择日期"></DDatePickerPro>;
       },
     });
     const container = wrapper.find(baseClass);
@@ -301,6 +308,8 @@ describe('date-picker-pro test', () => {
     };
     const wrapper = mount({
       setup() {
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
         return () => (
           <DDatePickerPro
             v-model={datePickerProValue.value}
@@ -319,7 +328,8 @@ describe('date-picker-pro test', () => {
                   </li>
                 </ul>
               ),
-            }}></DDatePickerPro>
+            }}
+            placeholder="请选择日期"></DDatePickerPro>
         );
       },
     });
@@ -358,6 +368,8 @@ describe('date-picker-pro test', () => {
     };
     const wrapper = mount({
       setup() {
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
         return () => (
           <DDatePickerPro
             v-model={datePickerProValue.value}
@@ -369,7 +381,8 @@ describe('date-picker-pro test', () => {
                   </DButton>
                 </div>
               ),
-            }}></DDatePickerPro>
+            }}
+            placeholder="请选择日期"></DDatePickerPro>
         );
       },
     });
@@ -406,13 +419,18 @@ describe('date-picker-pro test', () => {
       new Date(new Date().getTime() - 24 * 3600 * 1000),
       new Date(new Date().getTime() + 24 * 3600 * 1000),
     ]);
+    const year = new Date().getFullYear();
+    const calendarRange = [year, year];
     const wrapper = mount({
       setup() {
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
         return () => (
           <DDatePickerPro
             v-model={datePickerProValue.value}
-            calendarRange={[2022, 2025]}
-            limitDateRange={limitDateRange.value}></DDatePickerPro>
+            calendarRange={calendarRange}
+            limitDateRange={limitDateRange.value}
+            placeholder="请选择日期"></DDatePickerPro>
         );
       },
     });
@@ -426,16 +444,17 @@ describe('date-picker-pro test', () => {
     expect(pickerPanel.exists()).toBeTruthy();
 
     const yearListItems = pickerPanel.findAll(yearListItemClass);
-    expect(yearListItems.length).toBe(4 + 4 * 12);
+    expect(yearListItems.length).toBe(13);
     const weekHeader = pickerPanel.find(weekHeaderClass);
     expect(weekHeader.findAll('td').length).toBe(7);
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
-    expect(tableMonthItems.length).toBe(4 * 12);
+    expect(tableMonthItems.length).toBe(12);
 
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
     const selectIndex = todayIndex > 20 ? todayIndex - 2 : todayIndex + 2;
-    const monthContentContainer = tableMonthItems[3 * 12 + date.getMonth()].find(ns.e('table-month-content'));
+    // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
+    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     expect(Items[selectIndex].classes().includes(noDotNs.e('table-date-disabled'))).toBe(true);
     await Items[selectIndex].trigger('click');
