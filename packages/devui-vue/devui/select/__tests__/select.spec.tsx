@@ -38,15 +38,13 @@ describe('select', () => {
     });
     const container = wrapper.find(baseClass);
     let dropdown = wrapper.find(dropdownCls);
-    let listItems = wrapper.findAll(selectItemCls);
     const input = wrapper.find<HTMLInputElement>(selectInputCls);
     const arrow = wrapper.find(arrowCls);
 
     expect(container.exists()).toBeTruthy();
-    expect(dropdown.isVisible()).toBeFalsy();
+    expect(dropdown.exists()).toBeFalsy();
     expect(arrow.isVisible()).toBeTruthy();
-    expect(listItems.length).toBe(3);
-    expect(listItems[0].classes()).toContain('active');
+
     expect(input.attributes('placeholder')).toBe('这是默认选择框');
     await nextTick();
     expect(input.element.value).toBe('1');
@@ -57,6 +55,9 @@ describe('select', () => {
     dropdown = wrapper.find(dropdownCls);
     expect(dropdown.isVisible()).toBeTruthy();
     expect(container.classes()).toContain(selectOpenCls);
+    let listItems = wrapper.findAll(selectItemCls);
+    expect(listItems.length).toBe(3);
+    expect(listItems[0].classes()).toContain('active');
 
     await listItems[2].trigger('click');
     await nextTick();
@@ -148,9 +149,9 @@ describe('select', () => {
     });
 
     const container = wrapper.find(baseClass);
-    const item = container.findAll(selectItemCls);
 
     await container.trigger('click');
+    const item = container.findAll(selectItemCls);
     await item[1].trigger('click');
     expect(value.value).toBe(2);
     value.value = 1;
@@ -200,10 +201,10 @@ describe('select', () => {
     });
 
     const container = wrapper.find(baseClass);
-    const item = container.findAll(selectItemCls);
 
     await container.trigger('click');
     await nextTick();
+    const item = container.findAll(selectItemCls);
     expect(item[1].classes()).toContain('disabled');
     await item[1].trigger('click');
     expect(value.value).toEqual([]);
@@ -222,10 +223,10 @@ describe('select', () => {
       },
     });
     const container = wrapper.find(baseClass);
-    const item = container.findAll(selectItemCls);
 
     await container.trigger('click');
     await nextTick();
+    const item = container.findAll(selectItemCls);
     await item[0].trigger('click');
     await item[1].trigger('click');
     await item[2].trigger('click');
@@ -253,13 +254,13 @@ describe('select', () => {
       },
     });
     let dropdown = wrapper.find(dropdownCls);
-    expect(dropdown.attributes('style')).toContain('display: none;');
+    expect(dropdown.exists()).toBeFalsy();
 
     const button = wrapper.find('button');
     button.trigger('click');
     await nextTick();
     dropdown = wrapper.find(dropdownCls);
-    expect(dropdown.attributes('style')).toBeUndefined();
+    expect(dropdown.attributes('style')).toBe('width: 100%; visibility: visible;');
 
     wrapper.unmount();
   });
@@ -292,7 +293,6 @@ describe('select', () => {
     });
 
     const container = wrapper.find(baseClass);
-    const items = container.findAll(selectItemCls);
     const section = wrapper.find(multipleCls);
     const multipleInput = wrapper.find(multipleInputCls);
     expect(section.exists()).toBeTruthy();
@@ -300,6 +300,7 @@ describe('select', () => {
 
     await container.trigger('click');
     await nextTick();
+    const items = container.findAll(selectItemCls);
     await items[0].trigger('click');
     expect(value.value).toStrictEqual([1]);
     const input = container.find<HTMLInputElement>(selectInputCls);
@@ -324,10 +325,10 @@ describe('select', () => {
     });
 
     const container = wrapper.find(baseClass);
-    const items = container.findAll(selectItemCls);
 
     await container.trigger('click');
     await nextTick();
+    const items = container.findAll(selectItemCls);
     await items[0].trigger('click');
     await items[1].trigger('click');
     await items[2].trigger('click');
@@ -352,10 +353,10 @@ describe('select', () => {
       },
     });
     const container = wrapper.find(baseClass);
-    const items = container.findAll(selectItemCls);
 
     await container.trigger('click');
     await nextTick();
+    const items = container.findAll(selectItemCls);
     await items[0].trigger('click');
     await items[1].trigger('click');
     await items[2].trigger('click');
@@ -542,7 +543,7 @@ describe('select', () => {
     expect(items.length).toBe(0);
     const remoteLoadingItem = wrapper.find(dropdownEmptyCls);
     expect(remoteLoadingItem.exists()).toBeTruthy();
-    expect(remoteLoadingItem.text()).toBe('加载中');
+    expect(remoteLoadingItem.text()).toBe('加载中...');
     setTimeout(() => {
       const newLoadingItem = wrapper.find(dropdownEmptyCls);
       expect(newLoadingItem.exists()).toBeFalsy();

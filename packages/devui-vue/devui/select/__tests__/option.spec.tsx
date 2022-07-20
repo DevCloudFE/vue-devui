@@ -37,12 +37,11 @@ describe('option', () => {
 
     const container = wrapper.find(baseClass);
     let dropdown = wrapper.find(dropdownCls);
-    const listItems = wrapper.findAll(selectItemCls);
+
     const input = wrapper.find<HTMLInputElement>(selectInputCls);
 
     expect(container.exists()).toBeTruthy();
-    expect(dropdown.isVisible()).toBeFalsy();
-    expect(listItems.length).toBe(6);
+    expect(dropdown.exists()).toBeFalsy();
 
     await input.trigger('click');
     await nextTick();
@@ -50,6 +49,8 @@ describe('option', () => {
     dropdown = wrapper.find(dropdownCls);
     expect(dropdown.isVisible()).toBeTruthy();
     expect(container.classes()).toContain(selectOpenCls);
+    const listItems = wrapper.findAll(selectItemCls);
+    expect(listItems.length).toBe(6);
 
     await listItems[2].trigger('click');
     expect(value.value).toBe('Option 3');
@@ -73,11 +74,11 @@ describe('option', () => {
       },
     });
     const container = wrapper.find(baseClass);
-    let listItems = wrapper.findAll(selectItemCls);
 
-    expect(listItems.length).toBe(6);
     await container.trigger('click');
     await nextTick();
+    let listItems = wrapper.findAll(selectItemCls);
+    expect(listItems.length).toBe(6);
     await listItems[2].trigger('click');
     expect(value.value).toBe('Option 3');
 
@@ -111,9 +112,9 @@ describe('option', () => {
       },
     });
     const container = wrapper.find(baseClass);
-    const listItems = wrapper.findAll(selectItemCls);
 
     await container.trigger('click');
+    const listItems = wrapper.findAll(selectItemCls);
     await listItems[1].trigger('click');
     expect(value.value).toBe('Option 2');
     await listItems[0].trigger('click');
