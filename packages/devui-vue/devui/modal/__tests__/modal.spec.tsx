@@ -28,7 +28,7 @@ describe('d-modal', () => {
     overlayAnchor && document.body.removeChild(overlayAnchor);
   });
   it('render correctly', async () => {
-    const visible = ref(false);
+    const visible = ref(true);
     const wrapper = mount({
       setup() {
         return () => (
@@ -47,7 +47,6 @@ describe('d-modal', () => {
       },
     });
 
-    visible.value = true;
     await wait(100);
     await nextTick();
     const modal = document.querySelector(ns.b());
@@ -85,6 +84,8 @@ describe('d-modal', () => {
       },
     });
 
+    await wait(100);
+    await nextTick();
     visible.value = true;
     await wait(100);
     await nextTick();
@@ -121,6 +122,8 @@ describe('d-modal', () => {
       },
     });
 
+    await wait(100);
+    await nextTick();
     visible.value = true;
     await wait(100);
     await nextTick();
@@ -152,6 +155,8 @@ describe('d-modal', () => {
       },
     });
 
+    await wait(100);
+    await nextTick();
     visible.value = true;
     await wait(100);
     await nextTick();
