@@ -11,7 +11,7 @@ describe('timeline test', () => {
         <div>测试2</div>
         <template #time><div>2021-11-10</div></template>
         <template #dot><i class="icon-right-o" /></template>
-        <template #extra><span>附加元素</span><template>
+        <template #extra><span>附加元素</span></template>
       </d-timeline-item>
       <d-timeline-item time="2021-11-11" type="success">测试3</d-timeline-item>
       <d-timeline-item time="2021-11-12" type="warning">测试4</d-timeline-item>
