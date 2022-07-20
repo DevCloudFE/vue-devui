@@ -77,6 +77,12 @@ $input-height-md: 28px;
     .is-hidden {
       display: none;
     }
+
+  }
+
+  &__lazy__flag {
+    width: 0;
+    height: 0;
   }
 }
 
