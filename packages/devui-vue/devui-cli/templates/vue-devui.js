@@ -24,6 +24,7 @@ exports.createVueDevuiTemplate = (exportModules = []) => {
 import type { App } from 'vue';
 
 ${imports.join('\n')}
+import './style/devui.scss';
 
 const installs = [
   ${installs.join(',\n  ')}
