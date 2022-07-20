@@ -55,6 +55,10 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
           link: '/quick-start/',
         },
         {
+          text: '按需引入',
+          link: '/on-demand/',
+        },
+        {
           text: '主题定制',
           link: '/theme-guide/',
         },
@@ -67,6 +71,10 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
         {
           text: 'Quick Start',
           link: '/en-US/quick-start/',
+        },
+        {
+          text: 'On-demand Import',
+          link: '/on-demand/',
         },
         {
           text: 'Theme Guide',

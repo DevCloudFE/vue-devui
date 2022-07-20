@@ -6,14 +6,14 @@
  
 内置主题：
  
-- 浅色主题`devuiLightTheme`（默认主题，`DevUI蓝`主题）
+- 浅色主题`devuiLightTheme`
 - 深色主题`devuiDarkTheme`
 - 绿色主题`devuiGreenTheme`
 - 绿色深色主题`devuiGreenDarkTheme`
  
 扩展主题：
  
-- 无限主题`infinityTheme`
+- 无限主题`infinityTheme`（默认主题）
 - 紫罗兰主题`provenceTheme`
 - 蜜糖主题`sweetTheme`
 - 深邃夜空主题`deepTheme`
