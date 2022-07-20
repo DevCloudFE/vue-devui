@@ -13,7 +13,7 @@ exports.createVueDevuiTemplate = (exportModules = []) => {
       .replace('..', '.')
       .replace('/' + INDEX_FILE_NAME, '');
 
-    const importStr = `import ${m.default}, { ${m.parts.join(', ')} } from '${relativePath}'`;
+    const importStr = `import ${m.default}, { ${m.parts.join(', ')} } from '${relativePath}';`;
 
     packages.push(...m.parts);
     imports.push(importStr);
@@ -21,24 +21,24 @@ exports.createVueDevuiTemplate = (exportModules = []) => {
   });
 
   const template = `\
-import type { App } from 'vue'
+import type { App } from 'vue';
 
 ${imports.join('\n')}
 
 const installs = [
-  ${installs.join(',\n\t')}
-]
+  ${installs.join(',\n  ')}
+];
 
 export {
-  ${packages.join(',\n\t')}
-}
+  ${packages.join(',\n  ')}
+};
 
 export default {
   version: '${VERSION}',
   install(app: App): void {
-    installs.forEach((p) => app.use(p as any))
+    installs.forEach((p) => app.use(p));
   }
-}
+};
 `;
 
   return template;
