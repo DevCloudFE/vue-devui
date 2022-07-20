@@ -101,6 +101,10 @@ export const tableProps = {
     type: Number,
     default: 16,
   },
+  lazy: {
+    type: Boolean,
+    default: false,
+  },
 };
 
 export type TableProps = ExtractPropTypes<typeof tableProps>;

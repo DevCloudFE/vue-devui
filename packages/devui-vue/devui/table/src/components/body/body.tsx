@@ -4,7 +4,7 @@ import { Column } from '../column/column-types';
 import { CellClickArg, RowClickArg } from './body-types';
 import TD from '../body-td/body-td';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
-import { useMergeCell, useBodyRender } from './use-body';
+import { useMergeCell, useBodyRender, useLazyLoad } from './use-body';
 import './body.scss';
 
 export default defineComponent({
@@ -15,6 +15,7 @@ export default defineComponent({
     const ns = useNamespace('table');
     const { tableSpans, removeCells } = useMergeCell();
     const { getTableRowClass } = useBodyRender();
+    const { lazy, lazyFlagRef } = useLazyLoad();
     const onCellClick = (cellClickArg: CellClickArg) => {
       table.emit('cell-click', cellClickArg);
     };
@@ -59,6 +60,7 @@ export default defineComponent({
             )}
           </>
         ))}
+        {lazy && <span ref={lazyFlagRef} class={ns.e('lazy__flag')}></span>}
       </tbody>
     );
   },
