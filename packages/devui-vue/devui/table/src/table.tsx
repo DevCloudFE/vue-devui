@@ -16,7 +16,7 @@ export default defineComponent({
     dLoading: Loading,
   },
   props: tableProps,
-  emits: ['sort-change', 'cell-click', 'row-click', 'check-change', 'check-all-change', 'expand-change'],
+  emits: ['sort-change', 'cell-click', 'row-click', 'check-change', 'check-all-change', 'expand-change', 'load-more'],
   setup(props: TableProps, ctx) {
     const table = getCurrentInstance() as ITableInstanceAndDefaultRow;
     const store = createStore(toRef(props, 'data'), table);

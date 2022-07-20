@@ -5,6 +5,7 @@ import { Button } from '../../button';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { nextTick, ref } from 'vue';
 import { Input } from '../../input';
+import 'intersection-observer';
 
 let data: Array<Record<string, unknown>> = [];
 const ns = useNamespace('table', true);
@@ -636,5 +637,41 @@ describe('d-table', () => {
     const inputNew = cellItem.find('input');
     expect(inputNew.exists()).toBeFalsy();
     expect(cellItem.text()).toBe('Mark1');
+  });
+
+  it('table lazy mode work', async () => {
+    const wrapper = mount({
+      setup() {
+        const handleLoadMore = () => {
+
+          // TODO: add exception to test emit event(Jest don't have IntersectionObserver)
+          // The 'intersection-observer' polyfill don't work in Jest env? It's just prevent error report in DTable.
+          data.push({
+            firstName: 'loadMore',
+            lastName: 'loadMore',
+            gender: 'Female',
+            date: '1990/01/12',
+          });
+        };
+
+        return () => (
+          <DTable data={data} table-height="100px" lazy={true} onLoadMore={handleLoadMore}>
+            <DColumn field="firstName" header="First Name"></DColumn>
+            <DColumn field="lastName" header="Last Name"></DColumn>
+            <DColumn field="gender" header="Gender"></DColumn>
+            <DColumn field="date" header="Date of birth"></DColumn>
+          </DTable>
+        );
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+    const table = wrapper.find(ns.b());
+    const lazyEle = table.find(ns.e('lazy__flag'));
+
+    // test lazyFlagElement exist
+    expect(lazyEle.exists()).toBeTruthy();
+    wrapper.unmount();
   });
 });
