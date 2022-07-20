@@ -53,12 +53,11 @@ describe('optionGroup', () => {
 
     const container = wrapper.find(baseClass);
     let dropdown = wrapper.find(dropdownCls);
-    const listItems = wrapper.findAll(selectItemCls);
+
     const input = wrapper.find<HTMLInputElement>(selectInputCls);
 
     expect(container.exists()).toBeTruthy();
-    expect(dropdown.isVisible()).toBeFalsy();
-    expect(listItems.length).toBe(12);
+    expect(dropdown.exists()).toBeFalsy();
 
     await input.trigger('click');
     await nextTick();
@@ -72,6 +71,8 @@ describe('optionGroup', () => {
     expect(groupTitle.exists()).toBeTruthy();
     expect(groupTitle.text()).toBe('分组一');
 
+    const listItems = wrapper.findAll(selectItemCls);
+    expect(listItems.length).toBe(12);
     await listItems[2].trigger('click');
     expect(value.value).toBe('Option 3');
     wrapper.unmount();
