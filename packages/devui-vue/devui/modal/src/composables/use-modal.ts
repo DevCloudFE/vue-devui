@@ -60,6 +60,9 @@ export function useModalRender(props: ModalProps): UseModalRender {
           showContainer.value = false;
         }, 100);
       }
+    },
+    {
+      immediate: true,
     }
   );
 
