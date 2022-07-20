@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import dayjs from 'dayjs';
 import DDatePickerPro from '../src/date-picker-pro';
 import { nextTick, ref, getCurrentInstance } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
@@ -81,7 +82,7 @@ describe('date-picker-pro test', () => {
     const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
-    expect(datePickerProValue.value?.toLocaleDateString()).toBe(
+    expect(dayjs(datePickerProValue.value).format('YYYY/M/D')).toBe(
       `${date.getFullYear()}/${date.getMonth() + 1}/${todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1}`
     );
 
@@ -191,13 +192,13 @@ describe('date-picker-pro test', () => {
     const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
-    expect(datePickerProValue.value?.toLocaleString()).toBe(
-      `${date.getFullYear()}/${date.getMonth() + 1}/${todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1} 00:00:00`
+    expect(dayjs(datePickerProValue.value).format('YYYY/M/D hh:mm:ss')).toBe(
+      `${date.getFullYear()}/${date.getMonth() + 1}/${todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1} 12:00:00`
     );
 
     const liItems = timeUl[0].findAll('.time-li');
     await liItems[3].trigger('click');
-    expect(datePickerProValue.value?.toLocaleString()).toBe(
+    expect(dayjs(datePickerProValue.value).format('YYYY/M/D hh:mm:ss')).toBe(
       `${date.getFullYear()}/${date.getMonth() + 1}/${todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1} 03:00:00`
     );
 

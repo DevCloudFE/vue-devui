@@ -88,12 +88,16 @@ const unitTestSome = async (components) => {
   for (const name of componentArr) {
     await unitTestSingle(name);
   }
+
+  log(chalkSuccess('Congratulations, all components have passed the unit test!'));
 };
 
 const unitTestAll = async () => {
   for (const name of completeComponents) {
     await unitTestSingle(name);
   }
+
+  log(chalkSuccess('Congratulations, all components have passed the unit test!'));
 };
 
 const unitTest = async (components) => {
