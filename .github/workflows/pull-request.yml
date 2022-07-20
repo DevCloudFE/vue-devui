@@ -40,5 +40,5 @@ jobs:
       - name: ESLint
         run: pnpm cli --filter vue-devui -- code-check -t eslint
 
-      # - name: Unit test
-      #   run: pnpm cli --filter vue-devui -- code-check -t unit-test
+      - name: Unit test
+        run: pnpm test
