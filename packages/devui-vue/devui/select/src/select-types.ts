@@ -192,7 +192,7 @@ export interface UseSelectContentReturnType {
   tagSize: ComputedRef<string>;
   placeholder: ComputedRef<string>;
   isMultiple: ComputedRef<boolean>;
-  disPlayInputValue: ComputedRef<string>;
+  displayInputValue: ComputedRef<string>;
   handleClear: (e: MouseEvent) => void;
   tagDelete: (data: OptionObjectItem) => void;
   onFocus: (e: FocusEvent) => void;

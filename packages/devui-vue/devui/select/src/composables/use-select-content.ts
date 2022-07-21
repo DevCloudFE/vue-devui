@@ -32,7 +32,7 @@ export default function useSelectContent(): UseSelectContentReturnType {
     }
   });
 
-  const disPlayInputValue = computed(() => {
+  const displayInputValue = computed(() => {
     if (select?.selectedOptions) {
       return select.selectedOptions.length > 1
         ? select.selectedOptions.map((item) => item?.name || item?.value || '').join(',')
@@ -44,7 +44,7 @@ export default function useSelectContent(): UseSelectContentReturnType {
 
   // 是否可清空
   const mergeClearable = computed<boolean>(() => {
-    return !isSelectDisable.value && !!select?.allowClear && (disPlayInputValue.value ? true : false);
+    return !isSelectDisable.value && !!select?.allowClear && (displayInputValue.value ? true : false);
   });
 
   // 是否禁用Tooltip
@@ -68,7 +68,7 @@ export default function useSelectContent(): UseSelectContentReturnType {
 
   const tagSize = computed(() => select?.selectSize || 'sm');
 
-  const placeholder = computed<string>(() => (disPlayInputValue.value ? '' : select?.placeholder || t('placeholder')));
+  const placeholder = computed<string>(() => (displayInputValue.value ? '' : select?.placeholder || t('placeholder')));
 
   const isMultiple = computed<boolean>(() => !!select?.multiple);
 
@@ -113,7 +113,7 @@ export default function useSelectContent(): UseSelectContentReturnType {
     tagSize,
     placeholder,
     isMultiple,
-    disPlayInputValue,
+    displayInputValue,
     handleClear,
     tagDelete,
     onFocus,

@@ -35,7 +35,7 @@ export default defineComponent({
       tagSize,
       placeholder,
       isMultiple,
-      disPlayInputValue,
+      displayInputValue,
       handleClear,
       tagDelete,
       onFocus,
@@ -118,7 +118,7 @@ export default defineComponent({
           ) : (
             <input
               ref="input"
-              value={disPlayInputValue.value}
+              value={displayInputValue.value}
               type="text"
               class={inputCls.value}
               placeholder={placeholder.value}
