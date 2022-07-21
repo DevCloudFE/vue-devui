@@ -1,13 +1,13 @@
 import { computed, inject, ref, getCurrentInstance } from 'vue';
 import { SELECT_TOKEN } from '../const';
 import { FORM_ITEM_TOKEN } from '../../../form';
-import { SelectContentProps, OptionObjectItem, UseSelectContentReturnType } from '../select-types';
+import { OptionObjectItem, UseSelectContentReturnType } from '../select-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { className } from '../utils';
 import { isFunction } from 'lodash';
 import { createI18nTranslate } from '../../../locale/create';
 
-export default function useSelectContent(props: SelectContentProps): UseSelectContentReturnType {
+export default function useSelectContent(): UseSelectContentReturnType {
   const ns = useNamespace('select');
   const select = inject(SELECT_TOKEN);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
@@ -32,9 +32,19 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     }
   });
 
+  const disPlayInputValue = computed(() => {
+    if (select?.selectedOptions) {
+      return select.selectedOptions.length > 1
+        ? select.selectedOptions.map((item) => item?.name || item?.value || '').join(',')
+        : select.selectedOptions[0]?.name || '';
+    } else {
+      return '';
+    }
+  });
+
   // 是否可清空
   const mergeClearable = computed<boolean>(() => {
-    return !isSelectDisable.value && !!select?.allowClear && props.value.length > 0;
+    return !isSelectDisable.value && !!select?.allowClear && (disPlayInputValue.value ? true : false);
   });
 
   // 是否禁用Tooltip
@@ -58,7 +68,7 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
 
   const tagSize = computed(() => select?.selectSize || 'sm');
 
-  const placeholder = computed<string>(() => (props.value.length > 0 ? '' : select?.placeholder || t('placeholder')));
+  const placeholder = computed<string>(() => (disPlayInputValue.value ? '' : select?.placeholder || t('placeholder')));
 
   const isMultiple = computed<boolean>(() => !!select?.multiple);
 
@@ -103,6 +113,7 @@ export default function useSelectContent(props: SelectContentProps): UseSelectCo
     tagSize,
     placeholder,
     isMultiple,
+    disPlayInputValue,
     handleClear,
     tagDelete,
     onFocus,
