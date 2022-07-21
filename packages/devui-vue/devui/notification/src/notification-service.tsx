@@ -11,6 +11,14 @@ const defaultOptions: NotificationOption = {
 
 function initInstance(props: NotificationOption, content?: string): App {
   const container = document.createElement('div');
+  container.classList.add('notification__warpper');
+  const lastChild = document.body.lastElementChild;
+  let offset_Top = 50;
+  if (lastChild?.classList.contains('notification__warpper')){
+    const notification = lastChild.lastElementChild as HTMLElement;
+    const {height,top} = notification.getClientRects()[0];
+    offset_Top = height+top;
+  }
   const app: App = createApp({
     setup() {
       onUnmounted(() => {
@@ -18,7 +26,7 @@ function initInstance(props: NotificationOption, content?: string): App {
       });
 
       return () => (
-        <Notification {...props} onDestroy={app.unmount}>
+        <Notification {...props} onDestroy={app.unmount} style={[`top: ${offset_Top}px`]}>
           {content}
         </Notification>
       );
