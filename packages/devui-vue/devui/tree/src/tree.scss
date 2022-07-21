@@ -55,6 +55,7 @@ $keyframe-blue: #5e7ce0;
     }
 
     &:not(.active):hover {
+      transition: background-color 0.5s;
       background-color: $devui-list-item-hover-bg;
     }
   }
