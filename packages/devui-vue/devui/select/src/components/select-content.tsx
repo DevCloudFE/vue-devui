@@ -5,13 +5,12 @@ import { Tag, SizeType } from '../../../tag';
 import { Popover } from '../../../popover';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import useSelectContent from '../composables/use-select-content';
-import { selectContentProps, SelectContentProps, OptionObjectItem } from '../select-types';
+import { OptionObjectItem } from '../select-types';
 import { FORM_ITEM_TOKEN } from '../../../form';
 
 export default defineComponent({
   name: 'SelectContent',
-  props: selectContentProps,
-  setup(props: SelectContentProps) {
+  setup() {
     const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
     const ns = useNamespace('select');
     const clearCls = computed(() => ({
@@ -36,12 +35,13 @@ export default defineComponent({
       tagSize,
       placeholder,
       isMultiple,
+      disPlayInputValue,
       handleClear,
       tagDelete,
       onFocus,
       onBlur,
       queryFilter,
-    } = useSelectContent(props);
+    } = useSelectContent();
 
     return () => {
       return (
@@ -118,7 +118,7 @@ export default defineComponent({
           ) : (
             <input
               ref="input"
-              value={props.value}
+              value={disPlayInputValue.value}
               type="text"
               class={inputCls.value}
               placeholder={placeholder.value}

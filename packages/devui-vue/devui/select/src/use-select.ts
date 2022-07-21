@@ -130,21 +130,16 @@ export default function useSelect(
     });
   };
 
-  const selectedOptions = ref<OptionObjectItem[]>([]);
   const filterQuery = ref('');
 
-  // 控制输入框的显示内容
-  // todo injectOptions根据option进行收集，此computed会执行多次; Vue Test Utils: [Vue warn]: Maximum recursive updates exceeded in component <DSelect>
-  // 目前看该警告和下拉面板使用Transition也有关
-  const inputValue = computed<string>(() => {
+  // 当前选中的项
+  const selectedOptions = computed<OptionObjectItem[]>(() => {
     if (props.multiple && Array.isArray(props.modelValue)) {
-      selectedOptions.value = getInjectOptions(props.modelValue).filter((item) => (item ? true : false));
-      return selectedOptions.value.map((item) => item?.name || item?.value || '').join(',');
+      return getInjectOptions(props.modelValue).filter((item) => (item ? true : false));
     } else if (!Array.isArray(props.modelValue)) {
-      selectedOptions.value = getInjectOptions([props.modelValue]).filter((item) => (item ? true : false));
-      return selectedOptions.value[0]?.name || '';
+      return getInjectOptions([props.modelValue]).filter((item) => (item ? true : false));
     }
-    return '';
+    return [];
   });
 
   const onClick = function (e: MouseEvent) {
@@ -236,9 +231,11 @@ export default function useSelect(
 
   const tagDelete = (data: OptionObjectItem) => {
     let { modelValue } = props;
-    data._checked = !data._checked;
     const checkedItems = [];
     for (const child of injectOptions.value.values()) {
+      if (data.value === child.value) {
+        child._checked = false;
+      }
       if (child._checked) {
         checkedItems.push(child.value);
       }
@@ -342,7 +339,6 @@ export default function useSelect(
     isOpen,
     selectCls,
     mergeOptions,
-    inputValue,
     selectedOptions,
     filterQuery,
     emptyText,
