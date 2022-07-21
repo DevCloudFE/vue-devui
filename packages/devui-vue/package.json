@@ -53,7 +53,7 @@
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.20",
     "mitt": "^3.0.0",
-    "vue": "^3.1.1",
+    "vue": "3.2.31",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
