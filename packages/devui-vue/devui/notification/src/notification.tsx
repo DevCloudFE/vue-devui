@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, Transition } from 'vue';
+import { defineComponent, toRefs, Transition} from 'vue';
 import { notificationProps, NotificationProps } from './notification-types';
 import Close from './notification-icon-close';
 import TypeIcon from './notification-image';
@@ -15,7 +15,6 @@ export default defineComponent({
     const { classes } = useNotification(props);
     const { interrupt, removeReset, close, handleDestroy } = useEvent(props, emit);
     const ns = useNamespace('notification');
-
     return () => (
       <Transition name="notification-fade" onAfterLeave={handleDestroy}>
         {modelValue.value && (

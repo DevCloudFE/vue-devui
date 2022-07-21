@@ -17,7 +17,6 @@ export function useEvent(
 ): { interrupt: VoidFn; removeReset: VoidFn; close: VoidFn; handleDestroy: VoidFn } {
   let timer: NodeJS.Timeout | null = null;
   let timestamp: number;
-
   const close = () => {
     timer && clearTimeout(timer);
     timer = null;
