@@ -309,7 +309,6 @@ describe('select', () => {
     expect(tags.length).toBe(1);
     const tag = tags[0].find('.remove-button');
     await tag.trigger('click');
-    await nextTick();
     expect(value.value).toStrictEqual([]);
     wrapper.unmount();
   });
