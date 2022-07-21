@@ -19,7 +19,6 @@ export function useTextareaEvent(isFocus: Ref<boolean>, props: TextareaProps, ct
 
   const onInput = (e: Event) => {
     ctx.emit('update:modelValue', (e.target as HTMLInputElement).value);
-    ctx.emit('update', (e.target as HTMLInputElement).value);
   };
 
   const onChange = (e: Event) => {
