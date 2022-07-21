@@ -146,6 +146,7 @@ export default defineComponent({
     const data = ref([
       {
         label: 'Parent node 1',
+        selected: true,
         children: [
           {
             label: 'Parent node 1-1',
