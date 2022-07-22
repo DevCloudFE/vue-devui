@@ -1,15 +1,9 @@
-import type { ExtractPropTypes, PropType } from 'vue';
-
-export type ModelValue = number | string;
+import type { ExtractPropTypes, InjectionKey, Ref } from 'vue';
 
 export const skeletonProps = {
-  row: {
+  rows: {
     type: Number,
-    default: 0,
-  },
-  animate: {
-    type: Boolean,
-    default: true,
+    default: 3,
   },
   round: {
     type: Boolean,
@@ -19,34 +13,13 @@ export const skeletonProps = {
     type: Boolean,
     default: true,
   },
-  avatar: {
-    type: Boolean,
-    default: false,
-  },
-  title: {
+  showAnimation: {
     type: Boolean,
     default: true,
-  },
-  paragraph: {
-    type: Boolean,
-    default: true,
-  },
-  avatarSize: {
-    type: [String, Number] as PropType<ModelValue>,
-    default: '40px',
-  },
-  avatarShape: {
-    type: String as PropType<'round' | 'square'>,
-    default: 'round',
-  },
-  titleWidth: {
-    type: [String, Number] as PropType<ModelValue>,
-    default: '40%',
-  },
-  rowWidth: {
-    type: [Number, String, Array] as PropType<number | string | Array<number | string>>,
-    default: ['100%'],
   },
 } as const;
 
 export type SkeletonProps = ExtractPropTypes<typeof skeletonProps>;
+
+export const roundInjectionKey: InjectionKey<Ref<boolean>> = Symbol('round');
+export const animationInjectionKey: InjectionKey<Ref<boolean>> = Symbol('showAnimation');

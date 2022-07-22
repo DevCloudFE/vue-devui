@@ -1,61 +1,78 @@
 @import '../../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-skeleton__shape--avatar,
-.#{$devui-prefix}-skeleton__shape--image,
-.#{$devui-prefix}-skeleton__shape--title,
-.#{$devui-prefix}-skeleton__shape--button {
-  background-color: #f2f2f2;
-}
+.#{$devui-prefix}-skeleton-item {
+  background-color: $devui-list-item-hover-bg;
 
-.#{$devui-prefix}-skeleton__shape--avatar {
-  width: 40px;
-  height: 40px;
-  background-color: #f2f2f2;
-}
+  &--round {
+    border-radius: $devui-border-radius;
+  }
 
-.#{$devui-prefix}-skeleton__shape--image {
-  width: 200px;
-  height: 150px;
-  border-radius: 4px;
-}
-
-.#{$devui-prefix}-skeleton__shape--title {
-  width: 40%;
-  height: 24px;
-}
-
-.#{$devui-prefix}-skeleton__shape--paragraph {
-  &__item {
-    background-color: #f2f2f2;
+  &--square {
     width: 100%;
     height: 16px;
-    margin-bottom: 10px;
   }
 
-  &__item:last-child {
-    width: 60%;
-  }
-}
+  &--circle {
+    border-radius: 50%;
+    &.#{$devui-prefix}-skeleton-item {
+      &--sm {
+        width: 20px;
+        height: 20px;
+      }
 
-.#{$devui-prefix}-skeleton__shape--button {
-  width: 115px;
-  height: 32px;
+      &--md {
+        width: 40px;
+        height: 40px;
+      }
+
+      &--lg {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+
+  &--image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      width: 40%;
+      height: 40%;
+    }
+
+    &.#{$devui-prefix}-skeleton-item {
+      &--sm {
+        width: 50px;
+        height: 50px;
+      }
+
+      &--md {
+        width: 100px;
+        height: 100px;
+      }
+
+      &--lg {
+        width: 200px;
+        height: 200px;
+      }
+    }
+  }
+
+  &--animation {
+    &.#{$devui-prefix}-skeleton-item {
+      background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%)
+        $devui-list-item-hover-bg;
+      background-size: 200% 100%;
+      background-position-x: 180%;
+      animation: 2s skeletonLoading ease-in-out infinite;
+    }
+  }
 }
 
 @keyframes skeletonLoading {
   to {
     background-position-x: -20%;
   }
-}
-
-.#{$devui-prefix}-skeleton__animated .#{$devui-prefix}-skeleton__shape--avatar,
-.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape--avatar,
-.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape--image,
-.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape--title,
-.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape--paragraph > .#{$devui-prefix}-skeleton__shape--paragraph-item,
-.#{$devui-prefix}-skeleton__animated.#{$devui-prefix}-skeleton__shape--button {
-  background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%) #f2f2f2;
-  background-size: 200% 100%;
-  background-position-x: 180%;
-  animation: 2s skeletonLoading ease-in-out infinite;
 }
