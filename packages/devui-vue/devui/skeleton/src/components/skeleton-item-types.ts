@@ -1,39 +1,21 @@
-import type { ExtractPropTypes, PropType } from 'vue';
+import type { ExtractPropTypes, PropType, ComputedRef } from 'vue';
 
-export type ModelValue = number | string;
+export type IVariant = 'image' | 'circle' | 'square';
+export type ISize = 'lg' | 'md' | 'sm';
 
-export const itemProps = {
-  row: {
-    type: Number,
-    default: 0,
+export const skeletonItemProps = {
+  variant: {
+    type: String as PropType<IVariant>,
+    default: 'square',
   },
-  animate: {
-    type: Boolean,
-    default: true,
-  },
-  round: {
-    type: Boolean,
-    default: false,
-  },
-  loading: {
-    type: Boolean,
-    default: true,
-  },
-  avatarShape: {
-    type: String as PropType<'round' | 'square'>,
-    default: 'round',
-  },
-  titleWidth: {
-    type: [String, Number] as PropType<ModelValue>,
-    default: '40%',
-  },
-  rowWidth: {
-    type: [Number, String, Array] as PropType<number | string | Array<number | string>>,
-    default: ['100%'],
-  },
-  shape: {
-    type: String as PropType<'avatar' | 'image' | 'title' | 'paragraph' | 'button'>,
+  size: {
+    type: String as PropType<ISize>,
+    default: 'md',
   },
 } as const;
 
-export type ItemProps = ExtractPropTypes<typeof itemProps>;
+export type SkeletonItemProps = ExtractPropTypes<typeof skeletonItemProps>;
+
+export interface UseSkeletonItem {
+  classes: ComputedRef<Record<string, boolean>>;
+}
