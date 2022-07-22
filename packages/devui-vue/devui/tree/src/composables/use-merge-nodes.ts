@@ -4,7 +4,7 @@ import { IInnerTreeNode, IUseCore, IUseMergeNodes } from './use-tree-types';
 
 export default function () {
   return function useMergeNodes(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseMergeNodes {
-    const { setNodeValue, getChildren, clearNodeMap } = core;
+    const { setNodeValue, getChildren } = core;
     const { removeNode } = useOperate()(data, core);
 
     const mergeTreeNodes = () => {
@@ -31,8 +31,6 @@ export default function () {
         }
       };
 
-      // 合并节点时，getChildren只是获取直接子节点，需要将原来的nodeMap清空。（nodeMap中保存的是所有子节点）
-      clearNodeMap();
       data.value
         .filter((item) => item.level === 1)
         .forEach((item) => {
