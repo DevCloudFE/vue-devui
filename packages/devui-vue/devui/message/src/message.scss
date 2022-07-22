@@ -1,0 +1,111 @@
+@import '../../styles-var/devui-var.scss';
+
+.#{$devui-prefix}-message {
+  position: fixed;
+  z-index: $devui-z-index-message;
+  padding: 10px 15px;
+  border-radius: $devui-border-radius-feedback;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 80px;
+  display: flex;
+  align-items: center;
+  border-width: 1px;
+  border-style: solid;
+  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+  background-color: $devui-base-bg;
+  transition: top 0.5s ease;
+
+  &--success {
+    background-color: $devui-success-bg;
+    border-color: $devui-success-line;
+  }
+
+  &--info {
+    background-color: $devui-info-bg;
+    border-color: $devui-info-line;
+  }
+
+  &--warning {
+    background-color: $devui-warning-bg;
+    border-color: $devui-warning-line;
+  }
+
+  &--error {
+    background-color: $devui-danger-bg;
+    border-color: $devui-danger-line;
+  }
+}
+.#{$devui-prefix}-message__close {
+  margin-left: auto;
+  padding-left: 10px;
+  margin-top: -2px;
+}
+// 图标样式
+.#{$devui-prefix}-message__image {
+  margin-top: 1px;
+  display: inline-block;
+  width: $devui-font-size-icon;
+  min-width: $devui-font-size-icon;
+  min-height: $devui-font-size-icon;
+  height: $devui-font-size-icon;
+  padding: 0;
+  line-height: 1;
+  margin-right: 10px;
+
+  &--success {
+    color: $devui-success;
+  }
+
+  &--info {
+    color: $devui-info;
+  }
+
+  &--warning {
+    color: $devui-warning;
+  }
+
+  &--error {
+    color: $devui-danger;
+  }
+}
+
+// 消息文本内容
+.#{$devui-prefix}-message__content {
+  font-size: $devui-font-size-message;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+
+  &--success {
+    color: $devui-success;
+  }
+
+  &--info {
+    color: $devui-info;
+  }
+
+  &--warning {
+    color: $devui-warning;
+  }
+
+  &--error {
+    color: $devui-danger;
+  }
+}
+
+.message-fade {
+  &-enter-active,
+  &-leave-active {
+    transform: translate(-50%, 0);
+    transition: all 0.5s ease;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translate(-50%, -200%);
+  }
+}
