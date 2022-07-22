@@ -16,8 +16,10 @@ function initInstance(props: NotificationOption, content?: string): App {
   let offset_Top = 50;
   if (lastChild?.classList.contains('notification__warpper')){
     const notification = lastChild.lastElementChild as HTMLElement;
-    const {height,top} = notification.getClientRects()[0];
-    offset_Top = height+top;
+    const rects = notification.getBoundingClientRect();
+    const height = rects.height;
+    const top = rects.top;
+    offset_Top = height + top;
   }
   const app: App = createApp({
     setup() {
