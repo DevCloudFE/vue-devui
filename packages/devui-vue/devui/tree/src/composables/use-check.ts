@@ -1,6 +1,6 @@
 import { ref, Ref, SetupContext } from 'vue';
 import { ICheckStrategy, IInnerTreeNode, IUseCore, IUseCheck } from './use-tree-types';
-
+type ISetNodeValue = Parameters<IUseCore['setNodeValue']>;
 export default function (
   options: Ref<{ checkStrategy: ICheckStrategy }> = ref({ checkStrategy: 'both' as ICheckStrategy })
 ) {
@@ -10,6 +10,12 @@ export default function (
     const checkNode = (node: IInnerTreeNode): void => {
       setNodeValue(node, 'checked', true);
       context.emit('check-change', node);
+    };
+
+    const setNodeValueInAvailable = (node: ISetNodeValue[0], key: ISetNodeValue[1], value: ISetNodeValue[2]) => {
+      if (!node.disableCheck) {
+        setNodeValue(node, key, value);
+      }
     };
 
     const uncheckNode = (node: IInnerTreeNode): void => {
@@ -30,7 +36,7 @@ export default function (
       // 子节点选中后触发
       if (checked) {
         if (!parentNode.checked) {
-          setNodeValue(parentNode, 'checked', true);
+          setNodeValueInAvailable(parentNode, 'checked', true);
         }
       } else {
         // 子节点取消后触发
@@ -38,9 +44,9 @@ export default function (
         const checkedSiblingNodes = siblingNodes.filter(item => item.checked && item.id !== node.id);
         // 子节点全部是取消状态
         if (checkedSiblingNodes.length === 0) {
-          setNodeValue(parentNode, 'checked', false);
+          setNodeValueInAvailable(parentNode, 'checked', false);
         } else {
-          setNodeValue(parentNode, 'checked', true);
+          setNodeValueInAvailable(parentNode, 'checked', true);
           childChecked = true;
         }
       }
@@ -57,14 +63,14 @@ export default function (
         context.emit('check-change', node);
 
         if (['downward', 'both'].includes(options.value.checkStrategy)) {
-          getChildren(node).forEach(item => setNodeValue(item, 'checked', false));
+          getChildren(node).forEach(item => setNodeValueInAvailable(item, 'checked', false));
         }
       } else {
         setNodeValue(node, 'checked', true);
         context.emit('check-change', node);
 
         if (['downward', 'both'].includes(options.value.checkStrategy)) {
-          getChildren(node).forEach(item => setNodeValue(item, 'checked', true));
+          getChildren(node).forEach(item => setNodeValueInAvailable(item, 'checked', true));
         }
       }
 
