@@ -88,38 +88,22 @@ export default defineComponent({
 
 :::
 
-### d-draggable 指令
+### Draggable 参数
 
-d-draggable 参数
+| 参数      | 类型                      | 默认      | 说明                                             | 跳转 Demo             |
+| --------- | ------------------------- | --------- | ------------------------------------------------ | --------------------- |
+| dragData  | any                       | --        | 可选，转递给 DropEvent事件的数据                 | [基本用法](#基本用法) |
+| dragScope | string \| Array\<string\> | 'default' | 可选，限制 drop 的位置，必须匹配对应的 dropScope | [基本用法](#基本用法) |
 
-| 参数 | 类型 | 默认 | 说明 | 跳转 Demo | 全局配置项 |
-| ---- | ---- | ---- | ---- | --------- | --------- |
-|   dragData   |   any   |   --   |   可选，转递给 DropEvent事件的数据   |      [基本用法](#基本用法)     |           |
-|   dragScope   |   string \| Array\<string\>   |   'default'   |   可选，限制 drop 的位置，必须匹配对应的 dropScope   |      [基本用法](#基本用法)     |           |
-
-d-draggable 事件
+### Draggable 事件
 
 | 事件 | 类型 | 说明 | 跳转 Demo |
 | ---- | ---- | ---- | --------- |
 |   dragStartEvent   |   EventEmitter\<DragEvent\>   |   开始拖动的 DragStart 事件   |      [基本用法](#基本用法)     |
 |   dragEndEvent   |   EventEmitter\<DragEvent\>   |   拖动结束的 DragEnd 事件   |      [基本用法](#基本用法)     |
 |   dropEndEvent   |   EventEmitter\<DragEvent\>   |   放置结束的 Drop 事件   |      [基本用法](#基本用法)     |
-
-### d-droppable 指令
-
-d-droppable 参数
-
-| 参数 | 类型 | 默认 | 说明 | 跳转 Demo | 全局配置项 |
-| ---- | ---- | ---- | ---- | --------- | --------- |
-|   dropScope   |   string | Array\<string\>   |   'default'   |   可选，限制 drop 的区域，对应 dragScope   |     [基本用法](#基本用法)      |           |
-
-d-droppable 事件
-
-| 事件 | 类型 | 说明 | 跳转 Demo |
-| ---- | ---- | ---- | --------- |
 |   dragEnterEvent   |   EventEmitter\<DragEvent\>   |   drag 元素进入的 dragenter 事件   |     [基本用法](#基本用法)      |
 |   dragOverEvent   |   EventEmitter\<DragEvent\>   |   drag 元素在 drop 区域上的 dragover 事件   |     [基本用法](#基本用法)      |
 |   dragLeaveEvent   |   EventEmitter\<DragEvent\>   |   drag 元素离开的 dragleave 事件   |     [基本用法](#基本用法)      |
 |   dropEvent   |   EventEmitter\<DropEvent\>   |   放置一个元素, 接收的事件，其中 nativeEvent 表示原生的 drop 事件，其他见定义注释   |      [基本用法](#基本用法)     |
-
 
