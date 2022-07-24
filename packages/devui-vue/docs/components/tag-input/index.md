@@ -118,7 +118,7 @@ export default defineComponent({
 
 :::
 
-### d-tag-input 参数
+### TagInput 参数
 
 |      参数       |   类型    |          默认           |                 说明                 | 跳转 Demo             | 全局配置项 |
 | :-------------: | :-------: | :---------------------: | :----------------------------------: | :-------------------- | ---------- |
@@ -136,7 +136,7 @@ export default defineComponent({
 |    disabled     | `boolean` |          false          |       可选，disabled 灰化状态        |    [disabled](#disabled)                   |
 |  showAnimation  | `boolean` |          true           |          可选，是否开启动画          |                       | ✔          |
 
-### d-tags-input 事件
+### TagInput 事件
 
 |    事件     |  说明                                                     | 跳转 Demo             |
 | :---------: | :------------------------------------------------------- | --------------------- |

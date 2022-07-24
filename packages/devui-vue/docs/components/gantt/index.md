@@ -49,9 +49,7 @@ export default defineComponent({
 
 :::
 
-### d-gantt
-
-d-gantt 参数
+### Gantt 参数
 
 | 参数 | 类型 | 默认 | 说明 | 跳转 Demo | 全局配置项 |
 | ---- | ---- | ---- | ---- | --------- | ---------- |
