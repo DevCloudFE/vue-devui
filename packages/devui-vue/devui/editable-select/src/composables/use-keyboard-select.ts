@@ -5,7 +5,8 @@ interface useKeyboardSelectReturnType {
   hoverIndex: Ref<number>;
   selectedIndex: Ref<number>;
 }
-export const useKeyboardSelect = (
+
+export function useKeyboardSelect(
   dropdownRef: Ref,
   visible: Ref<boolean>,
   inputValue: Ref<string>,
@@ -17,7 +18,7 @@ export const useKeyboardSelect = (
   handleClick: (options: OptionObjectItem, index: number) => void,
   closeMenu: () => void,
   toggleMenu: () => void
-): useKeyboardSelectReturnType => {
+): useKeyboardSelectReturnType {
   const hoverIndex = ref(0);
   const selectedIndex = ref(0);
   const updateHoveringIndex = (index: number) => {
@@ -102,4 +103,4 @@ export const useKeyboardSelect = (
     }
   };
   return { handleKeydown, hoverIndex, selectedIndex };
-};
+}

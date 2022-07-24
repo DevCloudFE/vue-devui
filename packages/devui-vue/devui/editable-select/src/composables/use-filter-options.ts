@@ -1,27 +1,23 @@
 import { computed, Ref, ComputedRef } from 'vue';
 import { OptionObjectItem } from '../editable-select-types';
+interface useFilterOptionsReturnType {
+  filteredOptions: ComputedRef<OptionObjectItem[]>;
+}
 
-const getFilterFunc = () => (val: string, option: OptionObjectItem) =>
-  option.label.toLocaleLowerCase().indexOf(val.toLocaleLowerCase()) > -1;
-
-export const userFilterOptions = (
+export function useFilterOptions(
+  enableLazyLoad: boolean,
   normalizeOptions: ComputedRef<OptionObjectItem[]>,
   inputValue: Ref<string>,
-  filterOption: boolean | ((val: string, option: OptionObjectItem) => boolean) | undefined
-): ComputedRef<OptionObjectItem[]> =>
-  computed(() => {
-    const filteredOptions: OptionObjectItem[] = [];
-
-    if (!inputValue.value || filterOption === false) {
+  searchFn: (option: OptionObjectItem, term: string) => boolean
+): useFilterOptionsReturnType {
+  const filteredOptions = computed(() => {
+    if (!inputValue.value || enableLazyLoad) {
       return normalizeOptions.value;
     }
 
-    const filterFunc = typeof filterOption === 'function' ? filterOption : getFilterFunc();
-
-    normalizeOptions.value.forEach((option) => {
-      if (filterFunc(inputValue.value, option)) {
-        filteredOptions.push(option);
-      }
+    return normalizeOptions.value.filter((option) => {
+      return searchFn(option, inputValue.value);
     });
-    return filteredOptions;
   });
+  return { filteredOptions };
+}
