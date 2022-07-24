@@ -3,12 +3,12 @@ import type { ExtractPropTypes, PropType } from 'vue';
 export type MessageType = 'normal' | 'success' | 'error' | 'warning' | 'info';
 
 export const messageProps = {
-  id:{
+  id: {
     type: String,
     default: '',
   },
   // 是否显示
-  visible:{
+  visible: {
     type: Boolean,
     default: false,
   },
@@ -23,26 +23,26 @@ export const messageProps = {
     default: 'normal',
   },
   // 是否展示边框
-  bordered:{
+  bordered: {
     type: Boolean,
     default: true,
   },
   // 是否展示阴影
-  shadow:{
+  shadow: {
     type: Boolean,
     default: true,
   },
-  // 提示时间
+  // 延迟时间
   duration: {
     type: Number,
     default: 3000,
   },
   // 展示可关闭按钮
-  showClose:{
+  showClose: {
     type: Boolean,
     default: false,
   },
-  // 关闭按钮
+  // 关闭回调
   onClose: {
     type: Function as PropType<() => void>,
   },

@@ -7,7 +7,7 @@ describe('d-message', () => {
 
   describe('service', () => {
     it('render correctly when using service', async () => {
-      message.open({
+      message({
         message: 'message content',
       });
       await nextTick();
@@ -18,7 +18,7 @@ describe('d-message', () => {
     });
 
     it('message type', async () => {
-      message.open({
+      message({
         message: 'success type',
         type: 'success',
       });
@@ -28,7 +28,7 @@ describe('d-message', () => {
     });
 
     it('message showClose', async () => {
-      message.open({
+      message({
         message: 'message showClose param',
         type: 'success',
         showClose: true,
@@ -40,7 +40,7 @@ describe('d-message', () => {
 
     it('close callback', async () => {
       const closeCallback = jest.fn();
-      message.open({
+      message({
         message: 'message close callback',
         duration: 1000,
         onClose: closeCallback,
