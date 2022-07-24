@@ -29,7 +29,7 @@ export default defineComponent({
       props.onClose?.();
     };
 
-
+    // 鼠标移入后结束定时器
     const interrupt = () => {
       if (timer) {
         clearTimeout(timer);
@@ -37,17 +37,20 @@ export default defineComponent({
       }
     };
 
+    // 鼠标移出后重新计算时间 如果超时则直接移除message
     const removeReset = () => {
-      if (!props.visible) {
+      if (props.visible) {
         const remainTime = props.duration - (Date.now() - timestamp);
         timer = setTimeout(close, remainTime);
       }
     };
 
+    // 监听 visible 变化
     watch(
       () => props.visible,
       (val) => {
         if (val) {
+          // 记录当前执行值
           timestamp = Date.now();
           if (props.duration) {
             timer = setTimeout(close, props.duration);
@@ -61,8 +64,8 @@ export default defineComponent({
       [ns.m(type.value)]: true,
     }));
 
+    // 偏移量
     const lastOffset = computed(() => getLastOffset(props.id));
-
     const styles = computed(() => {
       const messageStyles: StyleValue = {};
       if(!bordered.value){
@@ -80,7 +83,9 @@ export default defineComponent({
         [ns.em('image', type.value)]: true,
       }));
       return (
-        !type.value || type.value === 'normal' ? '': <span class={iconClasses.value} >
+        !(!type.value || type.value === 'normal')
+        &&
+        <span class={iconClasses.value} >
           {
             type.value &&
           (
@@ -110,9 +115,9 @@ export default defineComponent({
 
     const renderClose = computed(() =>{
       return (
-        showClose.value ? <span class={[ns.e('close')]} onClick={close}>
+        showClose.value && <span class={[ns.e('close')]} onClick={close}>
           <Close></Close>
-        </span> : ''
+        </span>
       );
     });
 

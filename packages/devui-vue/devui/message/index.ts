@@ -8,7 +8,7 @@ export { Message };
 export default {
   title: 'Message 全局提示',
   category: '反馈',
-  status: '99%',
+  status: '100%',
   install(app: App): void {
     app.config.globalProperties.$message = Message;
   },
