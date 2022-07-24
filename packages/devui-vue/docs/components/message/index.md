@@ -31,9 +31,9 @@ export default {
   },
   methods: {
     open (type) {
-      this.$message.open({
+      this.$message({
         type,
-        message:'this is a message.'
+        message: 'this is a message.'
       });
     }
   }
@@ -64,14 +64,14 @@ export default {
   },
   methods: {
     closeIcon () {
-      this.$message.open({
+      this.$message({
         type:'success',
         message:'Show close button.',
         showClose: true,
       });
     },
     notClose () {
-      this.$message.open({
+      this.$message({
         type:'info',
         message:'Do not automatically close messages.',
         showClose: true,
@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     open () {
-      this.$message.open({
+      this.$message({
         type:'success',
         message:'show message 5000ms.',
         duration: 5000,
@@ -146,21 +146,21 @@ export default {
   },
   methods: {
     closeBordered () {
-      this.$message.open({
+      this.$message({
         type:'success',
         message:'close bordered.',
         bordered: false,
       });
     },
     closeShadow () {
-      this.$message.open({
+      this.$message({
         type:'info',
         message:'close shadow.',
         shadow: false,
       });
     },
     closeBAndS () {
-      this.$message.open({
+      this.$message({
         type:'error',
         message:'close shadow.',
         bordered: false,
@@ -194,7 +194,7 @@ export default {
   },
   methods: {
     closeMessage () {
-      this.$message.open({
+      this.$message({
         type:'success',
         message:'close message.',
         onClose: () => {
@@ -208,6 +208,43 @@ export default {
 ```
 
 :::
+
+#### 多种用法
+调用message 消息的时候可以有多种调用方法和多种使用方式。
+
+##### 调用方式
+```javascript
+# 第一种 全局调用
+this.$message('I call message globally');
+
+# 第二种 引入局部调用
+import { message } from 'vue-devui'
+message('I call message locally')
+```
+
+##### 使用方式
+```javascript
+import { message } from 'vue-devui'
+
+# 传入字符串直接使用默认参数
+message('I am a default message');
+
+# 传入对象设置参数
+message({
+  message:'I am message',
+  type: 'info',
+  bordered: false,
+});
+
+# 直接选择类型调用
+message.error('I am a error message');
+message.error({
+  message:'I am a error message',
+  bordered: false,
+  shadow: false,
+});
+```
+
 ### Message 参数
 
 | 参数名   | 类型               | 默认     | 说明                       | 跳转                          |
@@ -220,11 +257,6 @@ export default {
 | bordered | `Boolean`| 'true'   | 设置是否展示边框         | [阴影和边框设置](#阴影和边框设置)   |
 | on-close | `() => void` | '' | 设置消息关闭时的回调 | [关闭回调](#关闭回调)         |
 
-### Message 插槽
-
-| 插槽名  | 说明                         |
-| :------ | :--------------------------- |
-| default | 默认插槽，组件方式使用时有效 |
 
 ### 类型定义
 
