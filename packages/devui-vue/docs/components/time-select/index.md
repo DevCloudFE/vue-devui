@@ -149,9 +149,7 @@ export default defineComponent({
 
 :::
 
-### d-time-select
-
-d-time-select 参数
+### TimeSelect 参数
 
 | 参数        | 类型                        | 默认         | 说明             | 跳转 Demo             |
 | ----------- | --------------------------- | ------------ | ---------------- | --------------------- |
@@ -166,7 +164,7 @@ d-time-select 参数
 | step        | string                      | '00:30'      | 可选，间隔时间   | [基本用法](#基本用法) |
 | clearable   | boolean                     | true         | 可选，是否可清除 | [基本用法](#基本用法) |
 
-d-time-select 事件
+### TimeSelect 事件
 
 | 事件   | 说明                 | 跳转 Demo         |
 | ------ | -------------------- | ----------------- |
