@@ -5,22 +5,27 @@ export interface OptionObjectItem {
   value: string | number;
   [key: string]: unknown;
 }
-export type OptionType = string | number | OptionObjectItem;
+export type Option = string | number | Partial<OptionObjectItem>;
 
-export type OptionsType = Array<OptionType>;
+export type Options = Array<Option>;
 
 export const editableSelectProps = {
+  modelValue: {
+    type: String,
+    default: '',
+  },
   options: {
-    type: Array as PropType<OptionsType>,
+    type: Array as PropType<Options>,
     default: () => [],
+  },
+  allowClear: {
+    type: Boolean,
+    default: false,
   },
   disabled: {
     type: Boolean,
   },
-  loading: {
-    type: Boolean,
-  },
-  optionDisabledKey: {
+  disabledKey: {
     type: String,
     default: '',
   },
@@ -28,15 +33,21 @@ export const editableSelectProps = {
     type: String,
     default: 'Search',
   },
-  modelValue: {
-    type: String,
-    default: '',
-  },
   width: {
     type: Number,
   },
   maxHeight: {
     type: Number,
+  },
+  loading: {
+    type: Boolean,
+  },
+  enableLazyLoad: {
+    type: Boolean,
+    default: false,
+  },
+  searchFn: {
+    type: Function as PropType<(option: OptionObjectItem, term: string) => boolean>,
   },
   filterOption: {
     type: [Function, Boolean] as PropType<boolean | ((input: string, option: OptionObjectItem) => boolean)>,

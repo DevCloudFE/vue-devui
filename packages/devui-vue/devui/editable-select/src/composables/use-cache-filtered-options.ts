@@ -6,7 +6,7 @@ interface getOptionValueFunc {
   getOptionValue: (option: OptionObjectItem) => string | number | undefined;
 }
 
-export const useCacheFilteredOptions = (filteredOptions: ComputedRef<OptionObjectItem[]>): getOptionValueFunc => {
+export function useCacheFilteredOptions(filteredOptions: ComputedRef<OptionObjectItem[]>): getOptionValueFunc {
   const cacheFilteredOptions = computed(() => {
     const map = new Map<OptionObjectItem, OptionValue>();
     filteredOptions.value.forEach((item) => {
@@ -18,4 +18,4 @@ export const useCacheFilteredOptions = (filteredOptions: ComputedRef<OptionObjec
   return {
     getOptionValue,
   };
-};
+}
