@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, watch, onUnmounted, nextTick } from 'vue';
+import { defineComponent, ref, onMounted, watch, onUnmounted, nextTick, computed } from 'vue';
 import { IMentionSuggestionItem, mentionProps, type MentionProps } from './mention-types';
 import DTextarea from '../../textarea/src/textarea';
 import DIcon from '../../icon/src/icon';
@@ -13,16 +13,16 @@ export default defineComponent({
     DIcon,
   },
   props: mentionProps,
-  emits: ['select', 'search'],
+  emits: ['select', 'change'],
   setup(props: MentionProps, { slots, emit }) {
     const ns = useNamespace('mention');
     const value = ref<string>('');
     const showSuggestions = ref<boolean>(false);
+    const currentIndex = ref<number>(0);
+    const suggestionsHeight = ref<number>();
+    const loading = computed(() => props.mentionLoading);
     const suggestions = ref<IMentionSuggestionItem[]>([]);
     const result = ref<IMentionSuggestionItem[]>([]);
-    const currentIndex = ref<number>(0);
-    const loading = ref<boolean>(false);
-    const suggestionsHeight = ref<number>();
 
     const handleUpdate = debounce((val: string) => {
       if (props.mentionTrigger.includes(val[0])) {
@@ -34,18 +34,15 @@ export default defineComponent({
             suggestionsHeight.value = -Number(height.replace('px', ''));
           });
         }
-        if (val.length === 1) {
-          result.value = suggestions.value;
-        } else {
-          result.value = suggestions.value.filter((item) =>
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (item as any)[props.dmValueParse.value].toLocaleLowerCase().includes(val.slice(1).toLocaleLowerCase())
-          );
-        }
+        result.value = (suggestions.value as IMentionSuggestionItem[]).filter((item: IMentionSuggestionItem) =>
+          String(item[props.dmValueParse.value as keyof IMentionSuggestionItem])
+            .toLocaleLowerCase()
+            .includes(val.slice(1).toLocaleLowerCase())
+        );
       } else {
         showSuggestions.value = false;
       }
-      emit('search', val.slice(1));
+      emit('change', val.slice(1));
     }, 300);
 
     const handleBlur = () => {
@@ -55,7 +52,7 @@ export default defineComponent({
     };
 
     const handleFocus = () => {
-      if (value.value === '@') {
+      if (props.mentionTrigger.includes(value.value)) {
         showSuggestions.value = true;
       }
     };
@@ -65,8 +62,7 @@ export default defineComponent({
       e.stopPropagation();
       e.preventDefault();
       showSuggestions.value = false;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      value.value += (item as any)[props.dmValueParse.value];
+      value.value += item[props.dmValueParse.value as keyof IMentionSuggestionItem];
     };
 
     const arrowKeyDown = (e: KeyboardEvent) => {
@@ -97,8 +93,7 @@ export default defineComponent({
           e.stopPropagation();
           e.preventDefault();
           showSuggestions.value = false;
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          value.value += (result.value[currentIndex.value] as any)[props.dmValueParse.value];
+          value.value += result.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem];
           emit('select', result.value[currentIndex.value]);
         }
       }
@@ -111,14 +106,6 @@ export default defineComponent({
         result.value = val as IMentionSuggestionItem[];
       },
       { immediate: true, deep: true }
-    );
-
-    watch(
-      () => props.mentionLoading,
-      (val) => {
-        loading.value = val;
-      },
-      { immediate: true }
     );
 
     onMounted(() => {
@@ -151,7 +138,7 @@ export default defineComponent({
                     return (
                       <div
                         id={`devui-suggestions-item-${index}`}
-                        class={`${ns.e('suggestions-item')} 
+                        class={`${ns.e('suggestions-item')}
                     ${currentIndex.value === index ? `${ns.e('suggestions-item-active')}` : ''}`}
                         key={item.id}
                         onClick={(e) => clickItem(item, e)}>

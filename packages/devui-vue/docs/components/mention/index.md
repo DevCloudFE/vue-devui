@@ -139,7 +139,7 @@ const mentionSuggestions = [
 ```vue
 <template>
   <div class="demo-spacing">
-    <d-mention :mentionSuggestions="suggestions" :mentionLoading="loading" @search="onSearchChange"></d-mention>
+    <d-mention :mentionSuggestions="suggestions" :mentionLoading="loading" @change="onSearchChange"></d-mention>
   </div>
 </template>
 
