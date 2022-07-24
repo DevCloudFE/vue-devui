@@ -1,66 +1,102 @@
 import { reactive } from 'vue';
 import { MessageOption, VoidFn } from './message-types';
 import { instances, initInstance, deleteInstance } from './instance';
+import { isString } from '@vue/shared';
 
 const defaultOptions: MessageOption = {
   duration: 3000,
   type: 'normal',
 };
 
-export default class MessageService {
 
-  static seed = 0;
+const normalizeOptions = (params?: MessageOption | string) => {
+  const options: MessageOption =
+    !params || isString(params)
+      ? { message: params }
+      : params;
 
-  static open(options: MessageOption): void{
-    const originOnClose: VoidFn | null = options.onClose || null;
-    const message = options.message;
-    let timer;
-    delete options.message;
+  const normalized = {
+    ...defaultOptions,
+    ...options,
+  };
 
-    const props = reactive({
-      ...defaultOptions,
-      ...options,
-      onClose: () => {
-        props.visible = false;
-        deleteInstance(props.id);
-        originOnClose?.();
-      },
-    });
+  return normalized;
+};
 
-    this.seed ++;
-    const id = `message_${this.seed}`;
-    props.id = id;
-    const messageContext = initInstance(id,props, message);
-    props.visible = true;
-    instances.push(messageContext);
-    clearTimeout(timer);
-    if (options.duration && props.onClose) {
-      timer = setTimeout(props.onClose, options.duration);
-    }
-  }
 
-  static success(options: MessageOption): void{
-    this.open({
-      ...options,
-      type:'success'
-    });
-  }
-  static error(options: MessageOption): void{
-    this.open({
-      ...options,
-      type:'error'
-    });
-  }
-  static warning(options: MessageOption): void{
-    this.open({
-      ...options,
-      type:'warning'
-    });
-  }
-  static info(options: MessageOption): void{
-    this.open({
-      ...options,
-      type:'info'
-    });
+let seed = 0;
+function open(options: MessageOption): void{
+  const originOnClose: VoidFn | null = options.onClose || null;
+  const messageContent = options.message;
+  let timer;
+  delete options.message;
+
+  const props = reactive({
+    ...defaultOptions,
+    ...options,
+    onClose: () => {
+      props.visible = false;
+      deleteInstance(props.id);
+      originOnClose?.();
+    },
+  });
+
+  seed ++;
+  const id = `message_${seed}`;
+  props.id = id;
+  const messageContext = initInstance(id,props, messageContent);
+  props.visible = true;
+  instances.push(messageContext);
+  clearTimeout(timer);
+  if (options.duration && props.onClose) {
+    timer = setTimeout(props.onClose, options.duration);
   }
 }
+
+function message(params: MessageOption | string): void{
+  const options: MessageOption = normalizeOptions(params);
+  open({
+    ...options,
+  });
+}
+
+function success(params: MessageOption | string): void{
+  const options: MessageOption = normalizeOptions(params);
+  open({
+    ...options,
+    type:'success'
+  });
+}
+
+function error(params: MessageOption | string): void{
+  const options: MessageOption = normalizeOptions(params);
+  open({
+    ...options,
+    type:'error'
+  });
+}
+
+function warning(params: MessageOption | string): void{
+  const options: MessageOption = normalizeOptions(params);
+  open({
+    ...options,
+    type:'warning'
+  });
+}
+
+function info(params: MessageOption | string): void{
+  const options: MessageOption = normalizeOptions(params);
+  open({
+    ...options,
+    type:'info'
+  });
+}
+
+const Message = Object.assign(message,{
+  success,
+  error,
+  warning,
+  info,
+});
+
+export default Message;
