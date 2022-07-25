@@ -83,9 +83,10 @@ export interface IUseSelect {
 }
 
 export interface IUseToggle {
-  expandNode: (node: ITreeNode) => void;
-  collapseNode: (node: ITreeNode) => void;
-  toggleNode: (node: ITreeNode) => void;
+  expandNode: (node: IInnerTreeNode) => void;
+  collapseNode: (node: IInnerTreeNode) => void;
+  toggleNode: (node: IInnerTreeNode) => void;
+  expandAllNodes: () => void;
 }
 
 export interface IUseMergeNodes {
