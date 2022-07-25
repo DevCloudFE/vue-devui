@@ -4,6 +4,7 @@ import { getRootClass } from './composables/use-search-class';
 import { keywordsHandles } from './composables/use-search-keywords';
 import { keydownHandles } from './composables/use-search-keydown';
 import DInput from '../../input/src/input';
+import { Icon } from '../../icon';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './search.scss';
 import { createI18nTranslate } from '../../locale/create';
@@ -53,18 +54,18 @@ export default defineComponent({
         <label class={rootClasses.value}>
           {props.iconPosition === 'left' && (
             <div class={ns.e('icon')} onClick={onClickHandle}>
-              <d-icon name="search" size="inherit" key="search"></d-icon>
+              <Icon name="search" size="inherit" key="search"></Icon>
             </div>
           )}
           <DInput {...inputProps}></DInput>
           {clearIconShow.value && (
             <div class={ns.e('clear')} onClick={onClearHandle}>
-              <d-icon name="close" size="inherit" key="close"></d-icon>
+              <Icon name="close" size="inherit" key="close"></Icon>
             </div>
           )}
           {props.iconPosition === 'right' && (
             <div class={ns.e('icon')} onClick={onClickHandle}>
-              <d-icon name="search" size="inherit" key="search"></d-icon>
+              <Icon name="search" size="inherit" key="search"></Icon>
             </div>
           )}
         </label>
