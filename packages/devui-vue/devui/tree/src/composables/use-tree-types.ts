@@ -96,6 +96,12 @@ export interface IUseLazyLoad {
   lazyLoadNodes: (node: IInnerTreeNode) => void;
 }
 
+export interface IUseInitSelectCollection {
+  setInitSelectedNode: (node: IInnerTreeNode) => void;
+  getInitSelectedNodes: () => IInnerTreeNode[];
+  clearInitSelectedNodes: () => void;
+}
+
 export interface SearchFilterOption {
   isFilter: boolean; // 是否是过滤节点
   matchKey?: string; // node节点中匹配搜索过滤的字段名
@@ -110,14 +116,14 @@ export interface IUseSearchFilter {
 export type IUseTree = {
   treeData: Ref<IInnerTreeNode[]>;
 } & IUseCore &
-IUseToggle &
-IUseSelect &
-IUseCheck &
-IUseDisable &
-IUseOperate &
-IUseMergeNodes &
-IUseLazyLoad &
-IUseSearchFilter;
+  IUseToggle &
+  IUseSelect &
+  IUseCheck &
+  IUseDisable &
+  IUseOperate &
+  IUseMergeNodes &
+  IUseLazyLoad &
+  IUseSearchFilter;
 
 export type ICheckStrategy = 'upward' | 'downward' | 'both' | 'none';
 
