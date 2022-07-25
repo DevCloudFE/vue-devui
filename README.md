@@ -141,6 +141,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/xzxldl55"><img src="https://avatars.githubusercontent.com/u/22699218?v=4?s=100" width="100px;" alt=""/><br /><sub><b>xzxldl55</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xzxldl55" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/79E"><img src="https://avatars.githubusercontent.com/u/71202421?v=4?s=100" width="100px;" alt=""/><br /><sub><b>79</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=79E" title="Code">💻</a></td>
   </tr>
 </table>
 
