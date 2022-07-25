@@ -272,6 +272,10 @@ const contributors = computed(() => {
       max-width: unset;
     }
 
+    a:hover {
+      text-decoration: none;
+    }
+
     .btn-become-contributor {
       margin-top: 1rem;
     }
