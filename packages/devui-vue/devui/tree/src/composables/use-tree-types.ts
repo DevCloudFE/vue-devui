@@ -117,14 +117,14 @@ export interface IUseSearchFilter {
 export type IUseTree = {
   treeData: Ref<IInnerTreeNode[]>;
 } & IUseCore &
-  IUseToggle &
-  IUseSelect &
-  IUseCheck &
-  IUseDisable &
-  IUseOperate &
-  IUseMergeNodes &
-  IUseLazyLoad &
-  IUseSearchFilter;
+IUseToggle &
+IUseSelect &
+IUseCheck &
+IUseDisable &
+IUseOperate &
+IUseMergeNodes &
+IUseLazyLoad &
+IUseSearchFilter;
 
 export type ICheckStrategy = 'upward' | 'downward' | 'both' | 'none';
 
