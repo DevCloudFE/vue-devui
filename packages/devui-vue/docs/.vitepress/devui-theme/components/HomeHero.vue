@@ -61,6 +61,11 @@ const heroText = computed(() => frontmatter.value.heroText || site.value.title)
   margin: 2.5rem 0 2.75rem;
   padding: 0 1.5rem;
   text-align: center;
+
+  .image {
+    width: auto !important;
+    height: 260px !important;
+  }
 }
 
 @media (min-width: 420px) {
