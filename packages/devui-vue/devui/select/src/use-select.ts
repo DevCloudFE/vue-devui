@@ -4,7 +4,6 @@ import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-typ
 import { className, KeyType } from './utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { onClickOutside } from '@vueuse/core';
-import { isFunction, debounce } from 'lodash';
 import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
 
 export default function useSelect(
@@ -12,8 +11,7 @@ export default function useSelect(
   ctx: SetupContext,
   focus: () => void,
   blur: () => void,
-  isSelectFocus: Ref<boolean>,
-  t: (path: string) => unknown
+  isSelectFocus: Ref<boolean>
 ): UseSelectReturnType {
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
@@ -130,7 +128,7 @@ export default function useSelect(
     });
   };
 
-  const filterQuery = ref('');
+  const injectOptionsArray = computed(() => Array.from(injectOptions.value.values()));
 
   // 当前选中的项
   const selectedOptions = computed<OptionObjectItem[]>(() => {
@@ -148,22 +146,6 @@ export default function useSelect(
     toggleChange(!isOpen.value);
   };
 
-  const isSupportFilter = computed(() => isFunction(props.filter) || (typeof props.filter === 'boolean' && props.filter));
-
-  const getMultipleSelected = (items: (string | number)[]) => {
-    if (mergeOptions.value.length) {
-      ctx.emit(
-        'value-change',
-        getValuesOption(items).filter((item) => (item ? true : false))
-      );
-    } else if (isObjectOption.value) {
-      const selectItems = getInjectOptions(items).filter((item) => (item ? true : false));
-      ctx.emit('value-change', selectItems);
-    } else {
-      ctx.emit('value-change', items);
-    }
-  };
-
   const getSingleSelected = (item: OptionObjectItem) => {
     if (mergeOptions.value.length) {
       ctx.emit('value-change', getValuesOption([item.value])[0]);
@@ -175,38 +157,9 @@ export default function useSelect(
   };
 
   const valueChange = (item: OptionObjectItem) => {
-    const { multiple } = props;
-    let { modelValue } = props;
-    if (multiple) {
-      const checkedItems = Array.isArray(modelValue) ? modelValue.slice() : [];
-      const index = checkedItems.indexOf(item.value);
-      const option = getInjectOptions([item.value])[0];
-      if (option) {
-        option._checked = !option._checked;
-      }
-      const mergeOption = getValuesOption([item.value])[0];
-      if (mergeOption) {
-        mergeOption._checked = !mergeOption._checked;
-      }
-      if (index > -1) {
-        checkedItems.splice(index, 1);
-      } else {
-        checkedItems.push(item.value);
-      }
-      modelValue = checkedItems;
-      ctx.emit('update:modelValue', modelValue);
-      if (item.create) {
-        filterQuery.value = '';
-      }
-      if (isSupportFilter.value) {
-        focus();
-      }
-      getMultipleSelected(checkedItems);
-    } else {
-      ctx.emit('update:modelValue', item.value);
-      getSingleSelected(item);
-      toggleChange(false);
-    }
+    ctx.emit('update:modelValue', item.value);
+    getSingleSelected(item);
+    toggleChange(false);
   };
 
   const handleClose = () => {
@@ -229,23 +182,6 @@ export default function useSelect(
     }
   };
 
-  const tagDelete = (data: OptionObjectItem) => {
-    let { modelValue } = props;
-    const checkedItems = [];
-    for (const child of injectOptions.value.values()) {
-      if (data.value === child.value) {
-        child._checked = false;
-      }
-      if (child._checked) {
-        checkedItems.push(child.value);
-      }
-    }
-    modelValue = checkedItems;
-    ctx.emit('update:modelValue', modelValue);
-    ctx.emit('remove-tag', data.value);
-    getMultipleSelected(checkedItems);
-  };
-
   const onFocus = (e: FocusEvent) => {
     ctx.emit('focus', e);
     if (!selectDisabled.value) {
@@ -259,54 +195,6 @@ export default function useSelect(
       isSelectFocus.value = false;
     }
   };
-
-  const queryChange = (query: string) => {
-    filterQuery.value = query;
-  };
-
-  const isLoading = computed(() => typeof props.loading === 'boolean' && props.loading);
-  const debounceTime = computed(() => (props.remote ? 300 : 0));
-
-  const handlerQueryFunc = (query: string) => {
-    if (isFunction(props.filter)) {
-      props.filter(query);
-    } else {
-      queryChange(query);
-    }
-  };
-
-  const debounceQueryFilter = debounce((query: string) => {
-    handlerQueryFunc(query);
-  }, debounceTime.value);
-
-  // allow-create
-  const injectOptionsArray = computed(() => Array.from(injectOptions.value.values()));
-  const isShowCreateOption = computed(() => {
-    const hasCommonOption = injectOptionsArray.value.filter((item) => !item.create).some((item) => item.name === filterQuery.value);
-    return typeof props.filter === 'boolean' && props.filter && props.allowCreate && !!filterQuery.value && !hasCommonOption;
-  });
-
-  // no-data-text
-  const emptyText = computed(() => {
-    const visibleOptionsCount = injectOptionsArray.value.filter((item) => {
-      const label = item.name || item.value;
-      return label.toString().toLocaleLowerCase().includes(filterQuery.value.toLocaleLowerCase());
-    }).length;
-    if (isLoading.value) {
-      return props.loadingText || (t('loadingText') as string);
-    }
-    if (isSupportFilter.value && filterQuery.value && injectOptionsArray.value.length > 0 && visibleOptionsCount === 0) {
-      return props.noMatchText || (t('noMatchText') as string);
-    }
-    if (injectOptionsArray.value.length === 0) {
-      return props.noDataText || (t('noDataText') as string);
-    }
-    return '';
-  });
-
-  const isShowEmptyText = computed(() => {
-    return !!emptyText.value && (!props.allowCreate || isLoading.value || (props.allowCreate && injectOptionsArray.value.length === 0));
-  });
 
   const isDisabled = (item: OptionObjectItem): boolean => {
     const checkOptionDisabledKey = props.optionDisabledKey ? !!item[props.optionDisabledKey] : false;
@@ -338,24 +226,22 @@ export default function useSelect(
     dropdownRef,
     isOpen,
     selectCls,
+    isObjectOption,
     mergeOptions,
+    injectOptions,
+    injectOptionsArray,
     selectedOptions,
-    filterQuery,
-    emptyText,
-    isLoading,
-    isShowEmptyText,
     dropdownWidth,
     onClick,
     handleClear,
     valueChange,
     handleClose,
     updateInjectOptions,
-    tagDelete,
     onFocus,
     onBlur,
     isDisabled,
     toggleChange,
-    debounceQueryFilter,
-    isShowCreateOption,
+    getValuesOption,
+    getInjectOptions,
   };
 }

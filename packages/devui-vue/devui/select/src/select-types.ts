@@ -1,5 +1,6 @@
 import { PropType, ComputedRef, ExtractPropTypes, Ref } from 'vue';
-
+import { updateFunc } from '../../statistic/src/utils/animation';
+import { KeyType } from './utils';
 export interface OptionObjectItem {
   name: string;
   value: string | number;
@@ -116,25 +117,23 @@ export interface UseSelectReturnType {
   dropdownRef: Ref<HTMLElement | undefined>;
   isOpen: Ref<boolean>;
   selectCls: ComputedRef<string>;
+  isObjectOption: Ref<boolean>;
   mergeOptions: Ref<OptionObjectItem[]>;
+  injectOptions: Ref<Map<string | number, Record<string, unknown>>>;
+  injectOptionsArray: ComputedRef<OptionObjectItem[]>;
   selectedOptions: ComputedRef<OptionObjectItem[]>;
-  filterQuery: Ref<string>;
-  emptyText: ComputedRef<string>;
-  isLoading: Ref<boolean>;
-  isShowEmptyText: ComputedRef<boolean>;
   dropdownWidth: ComputedRef<string>;
   onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
   valueChange: (item: OptionObjectItem) => void;
   handleClose: () => void;
   updateInjectOptions: (item: Record<string, unknown>, operation: string, isObject: boolean) => void;
-  tagDelete: (data: OptionObjectItem) => void;
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
   isDisabled: (item: OptionObjectItem) => boolean;
   toggleChange: (bool: boolean) => void;
-  debounceQueryFilter: (query: string) => void;
-  isShowCreateOption: ComputedRef<boolean>;
+  getValuesOption: (values: KeyType<OptionObjectItem, 'value'>[]) => unknown[];
+  getInjectOptions: (values: KeyType<OptionObjectItem, 'value'>[]) => unknown[];
 }
 
 export interface SelectContext extends SelectProps {
@@ -144,6 +143,7 @@ export interface SelectContext extends SelectProps {
   selectedOptions: OptionObjectItem[];
   filterQuery: string;
   valueChange: (item: OptionObjectItem) => void;
+  multipleValueChange: (item: OptionObjectItem) => void;
   handleClear: () => void;
   updateInjectOptions: (item: Record<string, unknown>, operation: string, isObject: boolean) => void;
   tagDelete: (data: OptionObjectItem) => void;
@@ -219,3 +219,46 @@ export const optionGroupProps = {
 export type OptionGroupProps = ExtractPropTypes<typeof optionGroupProps>;
 
 export type OptionGroupContext = OptionGroupProps;
+
+export interface allowCreateOption {
+  filterQuery: Ref<string>;
+  injectOptionsArray: ComputedRef<OptionObjectItem[]>;
+}
+
+export interface useAllowCreateReturn {
+  isShowCreateOption: ComputedRef<boolean>;
+}
+
+export interface useFilterReturn {
+  filterQuery: Ref<string>;
+  isSupportFilter: ComputedRef<boolean>;
+  debounceQueryFilter: (query: string) => void;
+}
+
+export interface useMultipleOption {
+  filterQuery: Ref<string>;
+  isSupportFilter: ComputedRef<boolean>;
+  isObjectOption: Ref<boolean>;
+  mergeOptions: Ref<OptionObjectItem[]>;
+  injectOptions: Ref<Map<string | number, Record<string, unknown>>>;
+  getValuesOption: (values: KeyType<OptionObjectItem, 'value'>[]) => unknown[];
+  getInjectOptions: (values: KeyType<OptionObjectItem, 'value'>[]) => unknown[];
+}
+
+export interface useMultipleReturn {
+  multipleValueChange: (item: OptionObjectItem) => void;
+  tagDelete: (data: OptionObjectItem) => void;
+}
+
+export interface useNoDataOption {
+  filterQuery: Ref<string>;
+  isSupportFilter: ComputedRef<boolean>;
+  injectOptionsArray: ComputedRef<OptionObjectItem[]>;
+  t: (path: string) => unknown;
+}
+
+export interface useNoDataReturn {
+  isLoading: Ref<boolean>;
+  emptyText: ComputedRef<string>;
+  isShowEmptyText: ComputedRef<boolean>;
+}

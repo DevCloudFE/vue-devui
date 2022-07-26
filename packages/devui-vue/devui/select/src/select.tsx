@@ -8,6 +8,10 @@ import Option from './components/option';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import SelectContent from './components/select-content';
 import useSelectFunction from './composables/use-select-function';
+import useFilterSelect from './composables/use-filter-select';
+import useMultipleSelect from './composables/use-multiple-select';
+import useNoDataText from './composables/use-no-data-text';
+import useAllowCreate from './composables/use-allow-create';
 import './select.scss';
 import { createI18nTranslate } from '../../locale/create';
 import { FlexibleOverlay, Placement } from '../../overlay';
@@ -22,6 +26,7 @@ export default defineComponent({
 
     const selectRef = ref<HTMLElement>();
     const { isSelectFocus, focus, blur } = useSelectFunction(props, selectRef);
+    const { filterQuery, isSupportFilter, debounceQueryFilter } = useFilterSelect(props);
     const {
       selectDisabled,
       selectSize,
@@ -30,25 +35,42 @@ export default defineComponent({
       dropdownRef,
       isOpen,
       selectCls,
+      isObjectOption,
       mergeOptions,
+      injectOptions,
+      injectOptionsArray,
       selectedOptions,
-      filterQuery,
-      emptyText,
-      isLoading,
-      isShowEmptyText,
       dropdownWidth,
       onClick,
       valueChange,
       handleClear,
       updateInjectOptions,
-      tagDelete,
       onFocus,
       onBlur,
-      debounceQueryFilter,
       isDisabled,
       toggleChange,
-      isShowCreateOption,
-    } = useSelect(props, ctx, focus, blur, isSelectFocus, t);
+      getValuesOption,
+      getInjectOptions,
+    } = useSelect(props, ctx, focus, blur, isSelectFocus);
+
+    const { multipleValueChange, tagDelete } = useMultipleSelect(props, ctx, {
+      filterQuery,
+      isSupportFilter,
+      isObjectOption,
+      mergeOptions,
+      injectOptions,
+      getValuesOption,
+      getInjectOptions,
+    });
+
+    const { isShowCreateOption } = useAllowCreate(props, { filterQuery, injectOptionsArray });
+
+    const { isLoading, emptyText, isShowEmptyText } = useNoDataText(props, {
+      filterQuery,
+      isSupportFilter,
+      injectOptionsArray,
+      t,
+    });
 
     const scrollbarNs = useNamespace('scrollbar');
     const ns = useNamespace('select');
@@ -76,6 +98,7 @@ export default defineComponent({
         selectedOptions,
         filterQuery,
         valueChange,
+        multipleValueChange,
         handleClear,
         updateInjectOptions,
         tagDelete,
