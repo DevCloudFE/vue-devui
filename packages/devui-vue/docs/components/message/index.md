@@ -25,19 +25,19 @@
 <script>
 import { defineComponent, ref, reactive } from 'vue';
 
-export default {
-  data() {
-    return {}
-  },
-  methods: {
-    open (type) {
+export default defineComponent({
+  setup() {
+
+    function open (type) { 
       this.$message({
         type,
         message: 'this is a message.'
-      });
+      })
     }
+    
+    return { open };
   }
-};
+});
 </script>
 ```
 :::
@@ -58,19 +58,18 @@ export default {
 <script>
 import { defineComponent, ref, reactive } from 'vue';
 
-export default {
-  data() {
-    return {}
-  },
-  methods: {
-    closeIcon () {
+export default defineComponent({
+  setup() {
+
+    function closeIcon () {
       this.$message({
         type:'success',
         message:'Show close button.',
         showClose: true,
       });
-    },
-    notClose () {
+    }
+
+    function notClose () {
       this.$message({
         type:'info',
         message:'Do not automatically close messages.',
@@ -78,8 +77,10 @@ export default {
         duration: 0
       });
     }
+    
+    return { closeIcon, notClose };
   }
-};
+});
 </script>
 ```
 
@@ -100,12 +101,10 @@ export default {
 <script>
 import { defineComponent, ref, reactive } from 'vue';
 
-export default {
-  data() {
-    return {}
-  },
-  methods: {
-    open () {
+export default defineComponent({
+  setup() {
+
+    function open () { 
       this.$message({
         type:'success',
         message:'show message 5000ms.',
@@ -113,8 +112,10 @@ export default {
         showClose: true,
       });
     }
+    
+    return { open };
   }
-};
+});
 </script>
 ```
 
@@ -140,26 +141,26 @@ export default {
 <script>
 import { defineComponent, ref, reactive } from 'vue';
 
-export default {
-  data() {
-    return {}
-  },
-  methods: {
-    closeBordered () {
+export default defineComponent({
+  setup() {
+
+    function closeBordered () {
       this.$message({
         type:'success',
         message:'close bordered.',
         bordered: false,
       });
-    },
-    closeShadow () {
+    }
+
+    function closeShadow () {
       this.$message({
         type:'info',
         message:'close shadow.',
         shadow: false,
       });
-    },
-    closeBAndS () {
+    }
+
+    function closeBAndS () {
       this.$message({
         type:'error',
         message:'close shadow.',
@@ -167,8 +168,10 @@ export default {
         shadow: false,
       });
     }
+    
+    return { closeBordered, closeShadow, closeBAndS };
   }
-};
+});
 </script>
 ```
 
@@ -188,12 +191,10 @@ export default {
 <script>
 import { defineComponent, ref, reactive } from 'vue';
 
-export default {
-  data() {
-    return {}
-  },
-  methods: {
-    closeMessage () {
+export default defineComponent({
+  setup() {
+
+    function closeMessage () {
       this.$message({
         type:'success',
         message:'close message.',
@@ -202,8 +203,10 @@ export default {
         },
       });
     }
+    
+    return { closeMessage };
   }
-};
+});
 </script>
 ```
 
