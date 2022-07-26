@@ -7,6 +7,7 @@ const {
   SITES_COMPONENTS_DIR_NAME_EN,
 } = require('../shared/constant');
 const logger = require('../shared/logger');
+const { isReadyToRelease } = require('../shared/utils');
 
 // function buildComponentOptions(text, name, status) {
 //   return { text, link: `/${SITES_COMPONENTS_DIR_NAME}/${kebabCase(name)}/`, status }
@@ -24,6 +25,7 @@ function generateZhMenus(componentsInfo) {
         text: info.title,
         link: `/${SITES_COMPONENTS_DIR_NAME}/${kebabCase(info.name)}/`,
         status: info.status,
+        hide: !isReadyToRelease(kebabCase(info.name)),
       });
     } else {
       logger.warning(`组件 ${info.name} 的分类 ${info.category} 不存在！`);
@@ -40,6 +42,7 @@ function generateEnMenus(componentsInfo) {
         text: info.name,
         link: `/${SITES_COMPONENTS_DIR_NAME_EN}/${kebabCase(info.name)}/`,
         status: info.status,
+        hide: !isReadyToRelease(kebabCase(info.name)),
       });
     }
   });
