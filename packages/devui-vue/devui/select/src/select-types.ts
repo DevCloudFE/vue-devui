@@ -116,9 +116,8 @@ export interface UseSelectReturnType {
   dropdownRef: Ref<HTMLElement | undefined>;
   isOpen: Ref<boolean>;
   selectCls: ComputedRef<string>;
-  mergeOptions: ComputedRef<OptionObjectItem[]>;
-  inputValue: ComputedRef<string>;
-  selectedOptions: Ref<OptionObjectItem[]>;
+  mergeOptions: Ref<OptionObjectItem[]>;
+  selectedOptions: ComputedRef<OptionObjectItem[]>;
   filterQuery: Ref<string>;
   emptyText: ComputedRef<string>;
   isLoading: Ref<boolean>;
@@ -181,15 +180,6 @@ export interface UseOptionReturnType {
   optionSelect: () => void;
 }
 
-export const selectContentProps = {
-  value: {
-    type: String,
-    default: '',
-  },
-};
-
-export type SelectContentProps = ExtractPropTypes<typeof selectContentProps>;
-
 export interface UseSelectContentReturnType {
   searchQuery: Ref<string>;
   selectedData: ComputedRef<OptionObjectItem[]>;
@@ -202,6 +192,7 @@ export interface UseSelectContentReturnType {
   tagSize: ComputedRef<string>;
   placeholder: ComputedRef<string>;
   isMultiple: ComputedRef<boolean>;
+  displayInputValue: ComputedRef<string>;
   handleClear: (e: MouseEvent) => void;
   tagDelete: (data: OptionObjectItem) => void;
   onFocus: (e: FocusEvent) => void;

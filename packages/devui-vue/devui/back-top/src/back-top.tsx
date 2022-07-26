@@ -8,7 +8,6 @@ import './back-top.scss';
 export default defineComponent({
   name: 'DBackTop',
   props: backTopProps,
-  emits: ['click'],
   setup(props: BackTopProps, ctx) {
     const slots = ctx.slots;
     const backTopRef = ref(null);
@@ -24,7 +23,6 @@ export default defineComponent({
           left: 0,
           behavior: 'smooth', // 平滑滚动
         });
-      ctx.emit('click', e);
     };
 
     return () => (

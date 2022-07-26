@@ -55,6 +55,7 @@ $keyframe-blue: #5e7ce0;
     }
 
     &:not(.active):hover {
+      transition: background-color 0.5s;
       background-color: $devui-list-item-hover-bg;
     }
   }
@@ -371,7 +372,6 @@ $keyframe-blue: #5e7ce0;
 
   .devui-icon__container {
     margin-left: 8px;
-    margin-top: 8px;
 
     &:first-child {
       margin-left: 0;

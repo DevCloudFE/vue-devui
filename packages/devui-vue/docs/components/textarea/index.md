@@ -169,7 +169,6 @@ export default defineComponent({
     show-count
     :max-length="20"
     placeholder="打开控制台输入文字看看"
-    @update="onUpdate"
     @update:modelValue="onUpdate"
     @change="onChange"
     @focus="onFocus"
@@ -183,7 +182,6 @@ export default {
   setup() {
     const onUpdate = (value) => {
       console.log('【d-textarea update value】：', value);
-      console.log('【d-textarea update】：', value);
     };
     const onChange = (value) => {
       console.log('【d-textarea change value】：', value);

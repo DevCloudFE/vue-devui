@@ -31,7 +31,6 @@ export default defineComponent({
       isOpen,
       selectCls,
       mergeOptions,
-      inputValue,
       selectedOptions,
       filterQuery,
       emptyText,
@@ -89,7 +88,7 @@ export default defineComponent({
       return (
         <div class={selectCls.value} ref={containerRef} onClick={onClick}>
           <div ref={originRef}>
-            <SelectContent ref={selectRef} value={inputValue.value}></SelectContent>
+            <SelectContent ref={selectRef}></SelectContent>
           </div>
           <Transition name="fade">
             <FlexibleOverlay
@@ -109,8 +108,8 @@ export default defineComponent({
                   {ctx.slots?.default && ctx.slots.default()}
                   {!ctx.slots?.default &&
                     mergeOptions.value.length >= 1 &&
-                    mergeOptions.value.map((item, i) => (
-                      <Option key={i} value={item.value} name={item.name} disabled={isDisabled(item)}>
+                    mergeOptions.value.map((item) => (
+                      <Option key={item.value} value={item.value} name={item.name} disabled={isDisabled(item)}>
                         {props.multiple ? (
                           <Checkbox modelValue={item._checked} label={item.name} disabled={isDisabled(item)} />
                         ) : (

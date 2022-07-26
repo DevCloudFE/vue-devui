@@ -1,15 +1,12 @@
 import type { ComponentPublicInstance, ComponentInternalInstance } from 'vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, nextTick } from 'vue';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { Tree, ICheck } from '../../';
-import { checkableTreeData } from './checkable-tree-data';
+import { checkableTreeData, disabledCheckableTreeData } from './checkable-tree-data';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 
-jest.mock('../../../locale/create', () => ({
-  createI18nTranslate: () => jest.fn(),
-}));
-
 type ITreeFactory = { expandAllNodes: () => void };
+const ns = useNamespace('tree', true);
 const checkBoxNs = useNamespace('checkbox', true);
 
 describe('Checkable tree', () => {
@@ -158,5 +155,32 @@ describe('Checkable tree', () => {
     expect(wrapper2.findAll(checkBoxNs.b())[0].classes()).toContain('active');
     await wrapper2.get('.disable').trigger('click');
     expect(wrapper2.findAll(checkBoxNs.b())[0].classes()).toContain('active');
+  });
+
+  it("When the parent node is checked, the child node in disabled status should not be checked", async () => {
+    const curWrapper = mount({
+      setup() {
+        const data = ref(disabledCheckableTreeData);
+        return () => {
+          return (
+            <>
+              <Tree data={data.value} check />
+            </>
+          );
+        };
+      }
+    });
+    await nextTick();
+    const nodes = curWrapper.findAll(ns.e('node'));
+    const checkbox = checkBoxNs.b();
+    expect(nodes).toHaveLength(4);
+    expect(nodes[0].find(checkbox).classes()).toContain('unchecked');
+    expect(nodes[1].find(checkbox).classes()).toContain('unchecked');
+    expect(nodes[2].find(checkbox).classes()).toContain('unchecked');
+    await nodes[0].get('label').trigger('click');
+    expect(nodes[0].find(checkbox).classes()).toContain('active');
+    expect(nodes[1].find(checkbox).classes()).toContain('unchecked');
+    expect(nodes[2].find(checkbox).classes()).toContain('unchecked');
+    curWrapper.unmount();
   });
 });

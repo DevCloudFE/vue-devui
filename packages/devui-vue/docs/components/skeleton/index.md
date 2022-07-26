@@ -8,70 +8,36 @@
 
 ### 基本用法
 
-最基本的占位效果。
-
-:::demo
+:::demo 默认排版：一个标题+三个段落，标题宽度为`40%`，中间两个段落宽度为`100%`，最后一个段落宽度为`60%`。
 
 ```vue
 <template>
-  <d-skeleton :row="3" />
+  <d-skeleton></d-skeleton>
 </template>
 ```
 
 :::
 
-### 复杂组合
+### 自定义排版
 
-:::demo
+:::demo 当默认排版不满足需求时，可自定义排版结构，通过`class`和`style`可自定义宽高等样式。
 
 ```vue
 <template>
-  <div class="skeleton-btn-groups">
-    <div class="skeleton-btn">
-      展示骨架屏：
-      <d-switch v-model="loading" />
-    </div>
-    <div class="skeleton-btn">
-      动画：
-      <d-switch v-model="animate" />
-    </div>
-    <div class="skeleton-btn">
-      显示头像：
-      <d-switch v-model="avatar" />
-    </div>
-    <div class="skeleton-btn">
-      显示标题：
-      <d-switch v-model="title" />
-    </div>
-    <div class="skeleton-btn">
-      显示段落：
-      <d-switch v-model="paragraph" />
-    </div>
-    <div class="skeleton-btn">
-      头像圆角：
-      <d-switch v-model="roundAvatar" />
-    </div>
-    <div class="skeleton-btn">
-      段落和标题圆角：
-      <d-switch v-model="round" />
-    </div>
-  </div>
-  <d-skeleton
-    :row="3"
-    :animate="animate"
-    :avatar="avatar"
-    :avatar-shape="roundAvatar ? '' : 'square'"
-    :title="title"
-    :paragraph="paragraph"
-    :loading="loading"
-    :round="round"
-  >
+  <d-button @click="loading = !loading">显示/隐藏</d-button>
+  <br />
+  <br />
+  <d-skeleton :loading="loading">
     <div>
-      <div>row one</div>
-      <div>row two</div>
-      <div>row three</div>
-      <div>row four</div>
+      <d-avatar name="MyAvatar" :width="36" :height="36"></d-avatar>
+      <p style="width: 150px;">内容比较短的一段文字</p>
+      <d-button variant="solid">一个按钮</d-button>
     </div>
+    <template #placeholder>
+      <d-skeleton-item variant="circle" style="width: 36px; height: 36px;"></d-skeleton-item>
+      <d-skeleton-item style="width: 150px; height: 24px; margin: 1rem 0;"></d-skeleton-item>
+      <d-skeleton-item round style="width: 90px; height: 32px;"></d-skeleton-item>
+    </template>
   </d-skeleton>
 </template>
 <script>
@@ -80,97 +46,128 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const loading = ref(true);
-    const animate = ref(true);
-    const avatar = ref(true);
-    const title = ref(true);
-    const paragraph = ref(true);
-    const roundAvatar = ref(true);
-    const round = ref(false);
 
-    return {
-      loading,
-      animate,
-      avatar,
-      title,
-      paragraph,
-      roundAvatar,
-      round,
-    };
+    return { loading };
   },
 });
 </script>
-<style>
-.skeleton-btn-groups {
-  display: flex;
-  margin-bottom: 1rem;
-}
-.skeleton-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-</style>
 ```
 
 :::
 
 ### 细粒度模式
 
-提供细粒度的骨架屏元素，给予开发者更灵活的定制能力。
-:::demo
+:::demo `d-skeleton-item`组件提供两种抽象类型：`circle`、`square`，一种具象类型：`image`。针对`circle`和`image`两种类型提供`size`参数，内置了三种大小。`d-skeleton`组件提供`round`和`show-animation`参数分别设置圆角和动画。
 
 ```vue
 <template>
-  <d-skeleton-item :shape="'avatar'" style="margin-left:55px;width:80px;height:80px;" />
-    <d-skeleton-item :shape="'image'" />   <d-skeleton-item :shape="'title'" />  
-  <d-skeleton-item :shape="'paragraph'" :row="3" :row-width="['75%', '50%']" />   <d-skeleton-item :shape="'button'" />
+  <div class="demo-skeleton-wrapper">
+    <div>
+      大小：
+      <d-radio-group direction="row" v-model="size">
+        <d-radio v-for="item in sizeList" :key="item.label" :value="item.value">
+          {{ item.label }}
+        </d-radio>
+      </d-radio-group>
+    </div>
+    <div>
+      圆角：
+      <d-switch v-model="round" />
+    </div>
+    <div>
+      动画：
+      <d-switch v-model="animate" />
+    </div>
+  </div>
+  <d-skeleton :round="round" :show-animation="animate">
+    <template #placeholder>
+      <d-skeleton-item></d-skeleton-item>
+      <br />
+      <d-skeleton-item variant="circle" :size="size"></d-skeleton-item>
+      <br />
+      <d-skeleton-item variant="image" :size="size"></d-skeleton-item>
+    </template>
+  </d-skeleton>
 </template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const size = ref('md');
+    const round = ref(false);
+    const animate = ref(true);
+    const sizeList = [
+      {
+        label: 'Small',
+        value: 'sm',
+      },
+      {
+        label: 'Middle',
+        value: 'md',
+      },
+      {
+        label: 'Large',
+        value: 'lg',
+      },
+    ];
+
+    return { size, round, animate, sizeList };
+  },
+});
+</script>
+
+<style>
+.demo-skeleton-wrapper {
+  display: flex;
+  margin-bottom: 1rem;
+}
+.demo-skeleton-wrapper > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 1.2rem;
+  margin-bottom: 12px;
+}
+</style>
 ```
 
 :::
 
 ### Skeleton 参数
 
-| 参数名    | 类型      | 默认    | 说明                                          |
-| :-------- | :-------- | :------ | :-------------------------------------------- |
-| loading   | `boolean` | `true`  | 是否显示骨架屏，传 `false` 时会展示子组件内容 |
-| animate   | `boolean` | `true`  | 是否开启动画                                  |
-| avatar    | `boolean` | `false` | 是否显示头像占位图                            |
-| title     | `boolean` | `true`  | 是否显示标题占位图                            |
-| paragraph | `boolean` | `true`  | 是否显示段落占位图                            |
-| round     | `boolean` | `false` | 是否将标题和段落显示为圆角风格                |
+| 参数名         | 类型      | 默认    | 说明                                                | 跳转 Demo                 |
+| :------------- | :-------- | :------ | :-------------------------------------------------- | :------------------------ |
+| loading        | `boolean` | `true`  | 是否显示骨架屏，传 `false` 时会展示加载完成后的内容 | [自定义排版](#自定义排版) |
+| show-animation | `boolean` | `true`  | 是否开启动画                                        | [细粒度模式](#细粒度模式) |
+| round          | `boolean` | `false` | 是否显示圆角风格                                    | [细粒度模式](#细粒度模式) |
+| rows           | `number`  | `3`     | 默认排版，可配置段落显示行数                        |                           |
 
-### Skeleton Avatar 参数
+### Skeleton 插槽
 
-| 参数         | 类型               | 默认    | 说明                             |
-| :----------- | :----------------- | :------ | :------------------------------- |
-| avatar-size  | `number \| string` | `40px`  | 头像占位图大小                   |
-| avatar-shape | `string`           | `round` | 头像占位图形状，可选值为`square` |
-
-### Skeleton Title 参数
-
-| 参数        | 类型               | 默认  | 说明                 |
-| :---------- | :----------------- | :---- | :------------------- |
-| title-width | `number \| string` | `40%` | 设置标题占位图的宽度 |
-
-### Skeleton Paragraph 参数
-
-| 参数      | 类型                                       | 默认       | 说明                                       |
-| :-------- | :----------------------------------------- | :--------- | :----------------------------------------- |
-| row       | `number`                                   | `0`        | 段落占位图行数                             |
-| row-width | `number \| string \| (number \| string)[]` | `["100%"]` | 段落占位图宽度，可传数组来设置每一行的宽度 |
+| 插槽名      | 说明                 |
+| :---------- | :------------------- |
+| default     | 加载完成后显示的内容 |
+| placeholder | 自定义骨架屏结构     |
 
 ### SkeletonItem 参数
 
-细粒度模式
+| 参数    | 类型                  | 默认     | 说明                                    | 跳转 Demo                 |
+| :------ | :-------------------- | :------- | :-------------------------------------- | :------------------------ |
+| variant | [IVariant](#ivariant) | `square` | 骨架屏形态                              | [细粒度模式](#细粒度模式) |
+| size    | [ISize](#isize)       | `md`     | 针对`image`和`circle`形态，内置三种大小 | [细粒度模式](#细粒度模式) |
 
-| 参数名  | 类型      | 默认   | 说明                                                    |
-| :------ | :-------- | :----- | :------------------------------------------------------ |
-| shape   | `string`  | -      | 可选值为`avatar`,`image`,`title`,`paragraph`,`button`。 |
-| animate | `boolean` | `true` | 是否开启动画                                            |
+### SkeletonItem 类型定义
 
-### SkeletonItem Avatar 参数
+#### IVariant
 
-| 参数名       | 类型     | 默认    | 说明                             |
-| :----------- | :------- | :------ | :------------------------------- |
-| avatar-shape | `string` | `round` | 头像占位图形状，可选值为`square` |
+```ts
+type IVariant = 'image' | 'circle' | 'square';
+```
+
+#### ISize
+
+```ts
+type ISize = 'lg' | 'md' | 'sm';
+```

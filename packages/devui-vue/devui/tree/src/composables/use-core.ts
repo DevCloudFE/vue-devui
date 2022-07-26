@@ -18,7 +18,14 @@ export default function (): (data: Ref<IInnerTreeNode[]>) => IUseCore {
       if (node.isLeaf) {
         return [];
       }
-      if (node.id && nodeMap.has(node.id)) {
+      let mapKey = node.id || '';
+      if (userConfig.expanded) {
+        mapKey += '_expanded';
+      }
+      if (userConfig.recursive) {
+        mapKey += '_recursive';
+      }
+      if (node.id && nodeMap.has(mapKey)) {
         const cacheNode = nodeMap.get(node.id);
         if (cacheNode) {
           return cacheNode;
@@ -54,7 +61,7 @@ export default function (): (data: Ref<IInnerTreeNode[]>) => IUseCore {
         }
       }
       if (node.id) {
-        nodeMap.set(node.id, result);
+        nodeMap.set(mapKey, result);
       }
       return result;
     };

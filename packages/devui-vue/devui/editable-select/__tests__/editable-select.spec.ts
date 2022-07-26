@@ -3,7 +3,6 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 import { reactive, ref } from 'vue';
 import { EditableSelect, OptionObjectItem } from '../index';
 const ns = useNamespace('editable-select', true);
-const dropdownNS = useNamespace('editable-select-dropdown', true);
 
 const createData = (len = 5) => {
   return reactive(
@@ -44,15 +43,15 @@ describe('editable-select test', () => {
     });
 
     const input = wrapper.find('input');
-    expect(wrapper.find(`${dropdownNS.e('item')}`).exists()).toBeFalsy();
+    expect(wrapper.find('.devui-dropdown-item').exists()).toBeFalsy();
 
     await input.trigger('click');
     const flexibleOverlay = wrapper.getComponent({ name: 'DFlexibleOverlay' });
 
-    expect(flexibleOverlay.find(`${dropdownNS.e('item')}`).exists()).toBeTruthy();
+    expect(flexibleOverlay.find(`.devui-dropdown-item`).exists()).toBeTruthy();
     expect(wrapper.classes()).toContain('devui-editable-select--open');
 
-    const options = flexibleOverlay.findAll(`${dropdownNS.e('item')}`);
+    const options = flexibleOverlay.findAll(`.devui-dropdown-item`);
 
     expect(options.length).toBe(5);
   });
@@ -78,7 +77,7 @@ describe('editable-select test', () => {
 
     const flexibleOverlay = wrapper.getComponent({ name: 'DFlexibleOverlay' });
 
-    const options = flexibleOverlay.find(`${dropdownNS.e('item')}`);
+    const options = flexibleOverlay.find(`.devui-dropdown-item`);
 
     await options.trigger('click');
 
@@ -100,7 +99,7 @@ describe('editable-select test', () => {
       components: {
         'editable-select': EditableSelect,
       },
-      template: `<editable-select v-model="value" :options="options" option-disabled-key="disabled"></editable-select>`,
+      template: `<editable-select v-model="value" :options="options" disabled-key="disabled"></editable-select>`,
       setup() {
         const value = ref('');
         const options = reactive([
@@ -130,7 +129,7 @@ describe('editable-select test', () => {
     await input.trigger('click');
 
     const flexibleOverlay = wrapper.getComponent({ name: 'DFlexibleOverlay' });
-    const options = flexibleOverlay.findAll(`${dropdownNS.e('item')}`);
+    const options = flexibleOverlay.findAll(`.devui-dropdown-item`);
 
     expect(options[1].classes()).toContain('disabled');
 
@@ -185,7 +184,7 @@ describe('editable-select test', () => {
     await input.setValue('label0');
     await input.trigger('click');
     const flexibleOverlay = wrapper.getComponent({ name: 'DFlexibleOverlay' });
-    expect(flexibleOverlay.findAll(`${dropdownNS.e('item')}`).length).toBe(1);
+    expect(flexibleOverlay.findAll(`.devui-dropdown-item`).length).toBe(1);
   });
 
   test('custom filter options', async () => {
@@ -211,9 +210,9 @@ describe('editable-select test', () => {
 
     await input.trigger('click');
     const flexibleOverlay = wrapper.getComponent({ name: 'DFlexibleOverlay' });
-    expect(flexibleOverlay.findAll(`${dropdownNS.e('item')}`).length).toBe(1);
+    expect(flexibleOverlay.findAll(`.devui-dropdown-item`).length).toBe(1);
 
-    expect(flexibleOverlay.find(`${dropdownNS.e('item')}`).text()).toBe('label0');
+    expect(flexibleOverlay.find(`.devui-dropdown-item`).text()).toBe('label0');
   });
 
   test('render slot', async () => {
@@ -243,7 +242,7 @@ describe('editable-select test', () => {
     const input = wrapper.find('input');
     await input.trigger('click');
     const flexibleOverlay = wrapper.getComponent({ name: 'DFlexibleOverlay' });
-    const options = flexibleOverlay.findAll(`${dropdownNS.e('item')}`);
+    const options = flexibleOverlay.findAll(`.devui-dropdown-item`);
     expect(options.length).toBe(5);
     await input.setValue('aaa');
     expect(flexibleOverlay.find('#noResultItemTemplate').element.textContent).toBe('暂无数据');
@@ -267,7 +266,8 @@ describe('editable-select test', () => {
       components: {
         'editable-select': EditableSelect,
       },
-      template: `<editable-select v-model="value" :options="options" @loadMore="handleLoad" :maxHeight="300" ></editable-select>`,
+      template: `<editable-select v-model="value"  enable-lazy-load  :options="options" @loadMore="handleLoad" :maxHeight="300" >
+      </editable-select>`,
       setup() {
         const value = ref('');
         const options = createData(20);
@@ -282,8 +282,7 @@ describe('editable-select test', () => {
     const input = wrapper.find('input');
     await input.trigger('click');
     const flexibleOverlay = wrapper.getComponent({ name: 'DFlexibleOverlay' });
-    const ul = flexibleOverlay.find(`${dropdownNS.e('list')}`);
-
+    const ul = flexibleOverlay.find(`.devui-editable-select__list--unstyled`);
     await makeScroll(ul.element, 'scrollTop', 300);
 
     expect(loadmore).toBeCalled();

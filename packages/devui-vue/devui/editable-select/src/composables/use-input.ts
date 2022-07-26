@@ -2,7 +2,8 @@ import { SetupContext, Ref } from 'vue';
 interface userInputReturnType {
   handleInput: (event: Event) => void;
 }
-export const useInput = (inputValue: Ref<string>, ctx: SetupContext): userInputReturnType => {
+
+export function useInput(inputValue: Ref<string>, ctx: SetupContext): userInputReturnType {
   const onInputChange = (value: string) => {
     ctx.emit('search', value);
   };
@@ -16,4 +17,4 @@ export const useInput = (inputValue: Ref<string>, ctx: SetupContext): userInputR
   return {
     handleInput,
   };
-};
+}

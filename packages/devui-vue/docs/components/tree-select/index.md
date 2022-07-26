@@ -555,12 +555,7 @@ export default defineComponent({
 
 :::
 
-
-
-
-### API
-
-d-select-tree 参数
+### TreeSelect 参数
 
 | 参数         | 类型    | 默认  | 说明                                                                | 跳转                                 |
 | ------------ | ------- | ----- | ------------------------------------------------------------------- | ------------------------------------ |
@@ -572,9 +567,7 @@ d-select-tree 参数
 |   leafOnly   |  boolean  |  false  | 可选，值为 true 时仅可选择叶子节点                                  | [仅叶子节点可选](#仅叶子节点可选)     |
 |enableLabelization| boolean | false | 可选，值为 true 时仅可选择叶子节点                                  | [标签化](#标签化)     |
 
-
 ### 接口 & 类型定义
-
 
 ```ts
 interface TreeItem {

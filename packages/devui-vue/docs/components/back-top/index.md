@@ -16,7 +16,7 @@
 <template>
   <div>
     <div>这里看不到我嘿嘿，下滑试试</div>
-    <d-back-top @click="handleClick" />
+    <d-back-top />
     <d-back-top bottom="100px">
       <d-icon name="chevron-up"></d-icon>
     </d-back-top>
@@ -28,12 +28,8 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
-    const handleClick = (e: MouseEvent) => {
-      console.log('backTop', e);
-    };
     return {
       msg: 'BackTop 回到顶部 组件文档示例',
-      handleClick,
     };
   },
 });
@@ -135,9 +131,7 @@ export default defineComponent({
 
 :::
 
-### d-back-top
-
-d-back-top 参数
+### BackTop 参数
 
 |     参数      |   类型   |   默认   |                                 说明                                  |       跳转 Demo       |
 | :-----------: | :------: | :------: | :-------------------------------------------------------------------: | :-------------------: |
@@ -146,9 +140,3 @@ d-back-top 参数
 | visibleHeight | `number` |   300    | 可选，滚动高度达到 visibleHeight 所设值后展示回到顶部按钮，单位为`px` |   [示例](#基本用法)   |
 |    target     | `string` | 'window' |                      可选，触发滚动的元素选择器                       | [示例](#嵌入容器内部) |
 |               |          |          |                                                                       |                       |
-
-d-back-top 事件
-
-| 事件名 | 回调参数                  | 说明                 |
-| :----- | :------------------------ | :------------------- |
-| click  | `Function(e: MouseEvent)` | 点击回到顶部按钮触发 |

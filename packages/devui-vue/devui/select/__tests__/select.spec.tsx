@@ -208,7 +208,6 @@ describe('select', () => {
     expect(item[1].classes()).toContain('disabled');
     await item[1].trigger('click');
     expect(value.value).toEqual([]);
-    // todo 此处遗留，如果继续点击第二个或者更多选项，得到的value.value依然是[]; 原因为下拉面板使用Transition组件导致。
     await item[0].trigger('click');
     expect(value.value).toEqual([0]);
     wrapper.unmount();

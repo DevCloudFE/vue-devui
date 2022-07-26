@@ -13,7 +13,7 @@
 
 ```vue
 <template>
-  <d-editable-select v-model="value" :options="options" filter-option :width="450"></d-editable-select>
+  <d-editable-select v-model="value" :options="options" :width="450"></d-editable-select>
 </template>
 
 <script>
@@ -53,18 +53,23 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-editable-select v-model="value" disabled filter-option :width="450" :options="options"></d-editable-select>
-  <br />
-  <d-editable-select v-model="value1" filter-option :width="450" :options="options1" option-disabled-key="disabled"></d-editable-select>
+  <d-row type="flex">
+    <d-col :flex="4">
+      <d-editable-select v-model="value" :disabled="isDisabled" disabled-key="disabled" :width="450" :options="options"></d-editable-select>
+    </d-col>
+    <d-col :flex="2">
+      <d-button id="primaryBtn" @click="toggle" style="margin-left:10px">
+        {{ isDisabled ? 'Enable EditableSelect' : 'Disable EditableSelect' }}
+      </d-button>
+    </d-col>
+  </d-row>
 </template>
 <script>
 import { defineComponent, reactive, ref } from 'vue';
 export default defineComponent({
   setup() {
     const value = ref('');
-    const value1 = ref('');
-    const options = reactive(['label0', 'label1', 'label2']);
-    const options1 = reactive([
+    const options = reactive([
       {
         label: 'label0',
         value: 0,
@@ -80,11 +85,16 @@ export default defineComponent({
         disabled: false,
       },
     ]);
+    const isDisabled = ref(false);
+
+    const toggle = () => {
+      isDisabled.value = !isDisabled.value;
+    };
     return {
       value,
-      value1,
       options,
-      options1,
+      isDisabled,
+      toggle,
     };
   },
 });
@@ -99,7 +109,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-editable-select v-model="value" :width="450" :options="options" :filter-option="filterOption"></d-editable-select>
+  <d-editable-select v-model="value" :width="450" :options="options" :search-fn="searchFn"></d-editable-select>
 </template>
 <script>
 import { defineComponent, ref, reactive } from 'vue';
@@ -122,11 +132,11 @@ export default defineComponent({
         disabled: false,
       },
     ]);
-    const filterOption = (inputValue: string, option: any) => option.label.indexOf(inputValue) > -1;
+    const searchFn = (option, inputValue) => option.label.indexOf(inputValue) > -1;
     return {
       value,
       options,
-      filterOption,
+      searchFn,
     };
   },
 });
@@ -141,13 +151,13 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-editable-select v-model="value" :width="450" filter-option :options="options">
+  <d-editable-select v-model="value" :width="450" :options="options">
     <template #item="slotProps">
       <div>第{{ slotProps.value }}项: {{ slotProps.label }}</div>
     </template>
-    <template #noResultItem>
+    <template #noResultItem="slotProps">
       <div>
-        {{ `没有匹配项` }}
+        {{ `没有匹配项${slotProps}` }}
       </div>
     </template>
   </d-editable-select>
@@ -165,12 +175,10 @@ export default defineComponent({
       {
         label: 'label1',
         value: 1,
-        disabled: true,
       },
       {
         label: 'label2',
         value: 2,
-        disabled: false,
       },
     ]);
     return {
@@ -193,7 +201,7 @@ export default defineComponent({
   <d-editable-select
     v-model="value"
     :options="options"
-    :filter-option="false"
+    enable-lazy-load
     :max-height="300"
     :width="450"
     :loading="loading"
@@ -258,29 +266,50 @@ export default defineComponent({
 
 :::
 
-### 参数
+### EditableSelect 参数
 
-| 参数名              | 类型                                                | 默认     | 说明                                                                                                                             | 跳转 Demo              |
-| :------------------- | :--------------------------------------------------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------- | :---------------------- |
-| options             | `Array`                                             | []       | 可选，数据列表                                                                                                                   | [基本用法](#基本用法)  |
-| placeholder         | `string`                                            | 'Search' | 可选，下拉框的默认提示文字                                                                                                       | [基本用法](#基本用法)  |
-| max-height          | `number`                                            | --       | 可选，下拉框最大高度                                                                                                             | [基本用法](#基本用法)  |
-| width               | `number`                                            | --       | 可选，输入框宽度                                                                                                                 | [基本用法](#基本用法)` |
-| disabled            | `boolean`                                           | false    | 可选，值为 true 禁用                                                                                                             | [设置禁用](#设置禁用)  |
-| option-disabled-key | `string`                                            | ''       | 可选，设置禁用选项的 Key 值                                                                                                      | [设置禁用](#设置禁用)  |
-| loading             | `boolean`                                           | false    | 可选，控制 loading 状态                                                                                                          | [懒加载](#懒加载)      |
-| filter-option       | `boolean` \| <br>`(inputvalue, options) => boolean` | true     | 可选，当其为一个函数时，<br>会接收 inputvalue option 两个参数，<br>当 option 符合筛选条件时，<br>应返回 true，反之则返回 false。 |
+| 参数名           | 类型                                               | 默认                           | 说明                           | 跳转 Demo              |
+| :--------------- | :------------------------------------------------- | :----------------------------- | :----------------------------- | :--------------------- |
+| v-model          | `string`                                           | ''                             | 可选，绑定选中对象，可双向绑定 | [基本用法](#基本用法)  |
+| options          | `Array`                                            | []                             | 可选，数据列表                 | [基本用法](#基本用法)  |
+| allow-clear      | `boolean`                                          | false                          | 可选，是否允许清除             | [基本用法](#基本用法)  |
+| placeholder      | `string`                                           | 'Search'                       | 可选，下拉框的默认提示文字     | [基本用法](#基本用法)  |
+| max-height       | `number`                                           | --                             | 可选，下拉框最大高度           | [基本用法](#基本用法)  |
+| width            | `number`                                           | --                             | 可选，输入框宽度               | [基本用法](#基本用法)` |
+| disabled         | `boolean`                                          | false                          | 可选，值为 true 禁用           | [设置禁用](#设置禁用)  |
+| disabled-key     | `string`                                           | ''                             | 可选，设置禁用选项的 Key 值    | [设置禁用](#设置禁用)  |
+| loading          | `boolean`                                          | false                          | 可选，控制 loading 状态        | [懒加载](#懒加载)      |
+| search-fn        | `(option:OptionObjectItem,term: string) =>boolean` | [`defaultSearchFn`](#类型定义) | 可选，自定义搜索过滤           | [基本用法](#基本用法)  |
+| enable-lazy-load | `boolean`                                          | false                          | 可选，是否允许懒加载           | [懒加载](#懒加载)      |
 
-### 事件
+### EditableSelect 事件
 
 | 事件名    | 类型                        | 说明                                          | 跳转 Demo                                 |
-| :--------- | :--------------------------- | :--------------------------------------------- | :----------------------------------------- |
+| :-------- | :-------------------------- | :-------------------------------------------- | :---------------------------------------- |
 | load-more | `(inputvalue:string)=>void` | 可选, 懒加载触发事件，配合 filter-option 使用 | [懒加载](#懒加载)                         |
 | search    | `(inputvalue:string)=>void` | 可选,文本框值变化时回调                       | [自定义数据匹配方法](#自定义数据匹配方法) |
 
-### 插槽
+### EditableSelect 插槽
 
-| 插槽名               | 说明                                    | 跳转 Demo                         |
-| :-------------------- | :--------------------------------------- | :--------------------------------- |
-| itemTemplate         | 可选，下拉菜单条目的模板                | [自定义模板展示](#自定义模板展示) |
-| noResultItemTemplate | 可选，下拉菜单条目搜索后,没有结果的模板 | [自定义模板展示](#自定义模板展示) |
+| 插槽名       | 说明                                    | 跳转 Demo                         |
+| :----------- | :-------------------------------------- | :-------------------------------- |
+| item         | 可选，下拉菜单条目的模板                | [自定义模板展示](#自定义模板展示) |
+| noResultItem | 可选，下拉菜单条目搜索后,没有结果的模板 | [自定义模板展示](#自定义模板展示) |
+
+### 类型定义
+
+#### OptionObjectItem
+
+```ts
+export interface OptionObjectItem {
+  label: string;
+  value: string | number;
+  [key: string]: unknown;
+}
+```
+
+#### DefaultSearchFn
+
+```ts
+DefaultSearchFn = (option: OptionObjectItem, term: string) => option.label.toLocaleLowerCase().includes(term.trim().toLocaleLowerCase());
+```
