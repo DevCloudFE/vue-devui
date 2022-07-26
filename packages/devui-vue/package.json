@@ -45,7 +45,7 @@
     "@floating-ui/dom": "^0.4.4",
     "@types/lodash-es": "^4.17.4",
     "@vue/shared": "^3.2.33",
-    "@vueuse/core": "^7.7.1",
+    "@vueuse/core": "8.9.4",
     "async-validator": "^4.0.2",
     "dayjs": "^1.11.3",
     "devui-theme": "workspace:^0.0.1",
