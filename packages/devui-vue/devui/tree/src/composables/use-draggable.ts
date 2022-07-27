@@ -181,9 +181,6 @@ export default function (props: TreeProps, data: Ref<IInnerTreeNode[]>) {
             if (dragState.dropType) {
               let result = handlerDropData(dragNodeId, dropNode.id, dragState.dropType);
               result = formatBasicTree(result);
-              console.log('====================================');
-              console.log(result);
-              console.log('====================================');
               data.value = result;
             }
           }
