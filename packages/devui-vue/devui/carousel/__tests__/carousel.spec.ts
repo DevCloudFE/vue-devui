@@ -82,7 +82,7 @@ describe('d-carousel', () => {
         'd-carousel-item': CarouselItem,
       },
       template: `
-        <d-carousel ref="carousel" height="200px" :activeIndexChange="onChange">
+        <d-carousel ref="carousel" height="200px" @activeIndexChange="onChange">
           <d-carousel-item>Page 1</d-carousel-item>
           <d-carousel-item>Page 2</d-carousel-item>
           <d-carousel-item>Page 3</d-carousel-item>
@@ -116,7 +116,7 @@ describe('d-carousel', () => {
         'd-carousel-item': CarouselItem,
       },
       template: `
-        <d-carousel ref="carousel" height="200px" :activeIndexChange="onChange" dotTrigger="hover">
+        <d-carousel ref="carousel" height="200px" @activeIndexChange="onChange" dotTrigger="hover">
           <d-carousel-item>Page 1</d-carousel-item>
           <d-carousel-item>Page 2</d-carousel-item>
           <d-carousel-item>Page 3</d-carousel-item>
@@ -150,7 +150,7 @@ describe('d-carousel', () => {
         'd-button': Button,
       },
       template: `
-        <d-carousel ref="carousel" height="200px" arrowTrigger="always" :activeIndexChange="onChange">
+        <d-carousel ref="carousel" height="200px" arrowTrigger="always" @activeIndexChange="onChange">
           <d-carousel-item v-for="item in items" :key="item">{{ item }} </d-carousel-item>
         </d-carousel>
         <div class="carousel-demo-operate">
@@ -221,7 +221,7 @@ describe('d-carousel', () => {
         'd-carousel-item': CarouselItem,
       },
       template: `
-        <d-carousel ref="carousel" height="200px" :activeIndexChange="onChange" autoplay :autoplaySpeed="2000">
+        <d-carousel ref="carousel" height="200px" @activeIndexChange="onChange" autoplay :autoplaySpeed="2000">
           <d-carousel-item>Page 1</d-carousel-item>
           <d-carousel-item>Page 2</d-carousel-item>
           <d-carousel-item>Page 3</d-carousel-item>
