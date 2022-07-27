@@ -1,4 +1,5 @@
 import { randomId, omit } from '../../../shared/utils';
+import useInitSelectCollection from './use-init-select-collection';
 import { IInnerTreeNode, ITreeNode } from './use-tree-types';
 
 export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
@@ -38,8 +39,9 @@ export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
  * - 'isLeaf'：是否是叶子节点，用于决定是否渲染展开/收起按钮
  * - 'idType'：(没有传入 id 的节点会生成一个随机的 id，idType 用来标识 id 是否是随机生成的)
  * - 'parentChildNodeCount'：父级子节点数量
- * - 'curentIndex'：当前节点在父节点的索引
+ * - 'currentIndex'：当前节点在父节点的索引
  */
+const { setInitSelectedNode } = useInitSelectCollection();
 export function generateInnerTree(tree: ITreeNode[], key = 'children', level = 0, path: ITreeNode[] = []): IInnerTreeNode[] {
   level++;
 
@@ -48,6 +50,10 @@ export function generateInnerTree(tree: ITreeNode[], key = 'children', level = 0
     if (newItem.id === undefined) {
       newItem.id = randomId();
       newItem.idType = 'random';
+    }
+
+    if (newItem.selected) {
+      setInitSelectedNode(newItem);
     }
 
     newItem.level = level;

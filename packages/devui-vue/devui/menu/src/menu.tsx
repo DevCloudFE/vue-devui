@@ -40,15 +40,13 @@ export default defineComponent({
         const root = menuRoot.value as unknown as HTMLElement;
         const children = root.children;
         const container = overflowContainer.children[1];
-        let preItem: HTMLElement | null;
         const ob = new IntersectionObserver(
           (entries: IntersectionObserverEntry[]) => {
             entries.forEach((v: IntersectionObserverEntry) => {
               if (!v.isIntersecting) {
                 const cloneNode = v.target.cloneNode(true) as Element as HTMLElement;
-                preItem = v.target as Element as HTMLElement;
                 if (v.target.classList.contains(`${ns.b()}-overflow-container`)){
-                  if (flag && v.target.previousElementSibling){
+                  if (flag && v.target.previousElementSibling && container.children.length){
                     root.appendChild(v.target.previousElementSibling);
                   } else {flag = true;}
                 } else {
@@ -66,10 +64,11 @@ export default defineComponent({
                   !v.target.classList.contains(`${ns.b()}-overflow-container`) &&
                   (v.target as HTMLElement).style.visibility === 'hidden'
                 ) {
-                  console.log(v.target, preItem, v.target === preItem);
                   ob.unobserve(v.target);
-                  const el = container.children[container.children.length - 1];
-                  root.insertBefore(el, overflowContainer);
+                  const el = container.lastChild;
+                  if (el){
+                    root.insertBefore(el, overflowContainer);
+                  }
                   const obItem = overflowContainer.previousElementSibling;
                   if (obItem) {
                     ob.observe(obItem);
@@ -78,7 +77,6 @@ export default defineComponent({
                     const sub = obItem;
                     const wrapper = obItem.children[1] as HTMLElement;
                     (sub as HTMLElement).addEventListener('mouseenter', (ev: MouseEvent) => {
-                      console.log('emit');
                       ev.stopPropagation();
                       useShowSubMenu('mouseenter', ev, wrapper);
                     });

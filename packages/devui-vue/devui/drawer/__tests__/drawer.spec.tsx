@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
-
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import Drawer from '../src/drawer';
 
@@ -77,7 +76,7 @@ describe('d-drawer', () => {
     expect(drawer).toBeTruthy();
 
     // click outside
-    document.dispatchEvent(new Event('click'));
+    document.dispatchEvent(new Event('click', { bubbles: true }));
     await nextTick();
     drawer = getDrawer();
     expect(drawer).toBeFalsy();
@@ -164,7 +163,7 @@ describe('d-drawer', () => {
     await nextTick();
     expect(onOpen).toBeCalled();
 
-    document.dispatchEvent(new Event('click'));
+    document.dispatchEvent(new Event('click', { bubbles: true }));
     await nextTick();
     expect(onBeforeClose).toBeCalled();
     expect(onClose).toBeCalled();

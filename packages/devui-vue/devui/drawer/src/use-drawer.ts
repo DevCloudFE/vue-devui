@@ -1,5 +1,5 @@
 import { computed, onUnmounted, ref, watch } from 'vue';
-import { onClickOutside } from '@vueuse/core';
+import { onClickOutside, OnClickOutsideOptions } from '@vueuse/core';
 import { DrawerEmit, DrawerProps, UseDrawerFn } from './drawer-types';
 import { lockScroll } from '../../shared/utils/lock-scroll';
 import { useNamespace } from '../../shared/hooks/use-namespace';
@@ -26,7 +26,7 @@ export function useDrawer(props: DrawerProps, emit: DrawerEmit): UseDrawerFn {
     e.code === 'Escape' && execClose();
   };
 
-  onClickOutside(drawerRef, execClose);
+  onClickOutside(drawerRef, execClose, { capture: false } as OnClickOutsideOptions);
 
   const removeBodyAdditions = () => {
     lockScrollCb?.();

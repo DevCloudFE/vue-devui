@@ -84,9 +84,10 @@ export interface IUseSelect {
 }
 
 export interface IUseToggle {
-  expandNode: (node: ITreeNode) => void;
-  collapseNode: (node: ITreeNode) => void;
-  toggleNode: (node: ITreeNode) => void;
+  expandNode: (node: IInnerTreeNode) => void;
+  collapseNode: (node: IInnerTreeNode) => void;
+  toggleNode: (node: IInnerTreeNode) => void;
+  expandAllNodes: () => void;
 }
 
 export interface IUseMergeNodes {
@@ -95,6 +96,12 @@ export interface IUseMergeNodes {
 
 export interface IUseLazyLoad {
   lazyLoadNodes: (node: IInnerTreeNode) => void;
+}
+
+export interface IUseInitSelectCollection {
+  setInitSelectedNode: (node: IInnerTreeNode) => void;
+  getInitSelectedNodes: () => IInnerTreeNode[];
+  clearInitSelectedNodes: () => void;
 }
 
 export interface SearchFilterOption {

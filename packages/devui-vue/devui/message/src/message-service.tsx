@@ -95,6 +95,4 @@ const Message = Object.assign(message , {
   info,
 });
 
-console.log(Message);
-
 export default Message;
