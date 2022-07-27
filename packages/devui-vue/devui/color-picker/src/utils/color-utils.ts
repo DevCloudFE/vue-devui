@@ -1,7 +1,7 @@
 // Utilities
 import { ref } from 'vue';
 import { chunk, padEnd, has, keepDecimal } from './helpers';
-import omit from '../../../shared/utils/omit';
+import { omit } from '../../../shared/utils';
 import {
   ColorPickerColor,
   position,

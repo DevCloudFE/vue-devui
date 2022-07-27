@@ -1,4 +1,4 @@
-import { ComputedRef, Ref } from 'vue';
+import type { ComputedRef, Ref } from 'vue';
 
 // 外部数据结构先只考虑嵌套结构
 export interface ITreeNode {
@@ -18,6 +18,7 @@ export interface ITreeNode {
 
 // 内部数据结构使用扁平结构
 export interface IInnerTreeNode extends ITreeNode {
+  id: string;
   level: number;
   idType?: 'random';
   parentId?: string;
@@ -107,18 +108,6 @@ export interface IUseSearchFilter {
   searchTree: (target: string, option: SearchFilterOption) => void;
 }
 
-export type IUseTree = {
-  treeData: Ref<IInnerTreeNode[]>;
-} & IUseCore &
-IUseToggle &
-IUseSelect &
-IUseCheck &
-IUseDisable &
-IUseOperate &
-IUseMergeNodes &
-IUseLazyLoad &
-IUseSearchFilter;
-
 export type ICheckStrategy = 'upward' | 'downward' | 'both' | 'none';
 
 export type ICheck = boolean | ICheckStrategy;
@@ -131,3 +120,41 @@ export interface LazyNodeResult {
   treeItems: ITreeNode[];
   node: IInnerTreeNode;
 }
+
+export interface IDropType {
+  dropPrev?: boolean;
+  dropNext?: boolean;
+  dropInner?: boolean;
+}
+
+export interface DragState {
+  dropType?: keyof Required<IDropType>;
+  draggingNode?: HTMLElement | null;
+  draggingTreeNode?: IInnerTreeNode | null;
+}
+
+export interface IUseDraggable {
+  onDragstart: (event: DragEvent, treeNode: IInnerTreeNode) => void;
+  onDragover: (event: DragEvent) => void;
+  onDragleave: (event: DragEvent) => void;
+  onDrop: (event: DragEvent, dropNode: IInnerTreeNode) => void;
+}
+
+export interface IDropNode {
+  target: ITreeNode[];
+  index: number;
+  item: ITreeNode;
+}
+
+export type IUseTree = {
+  treeData: Ref<IInnerTreeNode[]>;
+} & IUseCore &
+IUseToggle &
+IUseSelect &
+IUseCheck &
+IUseDisable &
+IUseOperate &
+IUseMergeNodes &
+IUseLazyLoad &
+IUseSearchFilter &
+IUseDraggable;

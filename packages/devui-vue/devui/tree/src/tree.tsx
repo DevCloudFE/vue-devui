@@ -11,10 +11,11 @@ import useSelect from './composables/use-select';
 import useOperate from './composables/use-operate';
 import useMergeNodes from './composables/use-merge-nodes';
 import useSearchFilter from './composables/use-search-filter';
+import useDraggable from './composables/use-draggable';
 import { USE_TREE_TOKEN, NODE_HEIGHT, TREE_INSTANCE } from './const';
 import { TreeProps, treeProps } from './tree-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import { formatCheckStatus } from './utils';
+import { formatCheckStatus, formatBasicTree } from './utils';
 import './tree.scss';
 
 export default defineComponent({
@@ -24,9 +25,10 @@ export default defineComponent({
   setup(props: TreeProps, context: SetupContext) {
     const { slots, expose } = context;
     const treeInstance = getCurrentInstance();
-    const { data, check, operate } = toRefs(props);
+    const { check, draggable, operate } = toRefs(props);
     const ns = useNamespace('tree');
     const normalRef = ref();
+    const data = ref<IInnerTreeNode[]>(formatBasicTree(props.data));
 
     const userPlugins = [useSelect(), useOperate(), useMergeNodes(), useSearchFilter()];
 
@@ -34,20 +36,31 @@ export default defineComponent({
       checkStrategy: formatCheckStatus(check.value),
     });
 
-    watch(check, (newVal) => {
-      checkOptions.value.checkStrategy = formatCheckStatus(newVal);
-    });
-
     if (check.value) {
       userPlugins.push(useCheck(checkOptions));
     }
 
-    const treeFactory = useTree(data.value, userPlugins, context);
+    if (draggable.value) {
+      userPlugins.push(useDraggable(props, data));
+    }
+
+    const treeFactory = useTree(data.value, userPlugins as never[], context);
 
     const { setTree, getExpendedTree, toggleNode, virtualListRef } = treeFactory;
 
     // 外部同步内部
     watch(data, setTree);
+
+    watch(
+      () => props.data,
+      (newVal) => {
+        data.value = formatBasicTree(newVal);
+      }
+    );
+
+    watch(check, (newVal) => {
+      checkOptions.value.checkStrategy = formatCheckStatus(newVal);
+    });
 
     provide(USE_TREE_TOKEN, treeFactory);
     provide(TREE_INSTANCE, treeInstance);
@@ -63,7 +76,7 @@ export default defineComponent({
           nodeData: treeNode,
         })
       ) : (
-        <DTreeNode data={treeNode} check={check.value} operate={operate.value}>
+        <DTreeNode data={treeNode} check={check.value} draggable={draggable.value} operate={operate.value}>
           {{
             default: () =>
               slots.content ? renderSlot(useSlots(), 'content', { nodeData: treeNode }) : <DTreeNodeContent data={treeNode} />,
