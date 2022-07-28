@@ -44,6 +44,10 @@
     &.disabled {
       background-color: $devui-disabled-bg;
       cursor: not-allowed;
+
+      .dropdown-item-label {
+        color: $devui-disabled-text;
+      }
     }
 
     .cascader-li {
