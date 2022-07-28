@@ -1,7 +1,7 @@
 import { reactive, ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import type { TreeProps } from '../tree-types';
-import type { DragState, IUseDraggable, IDropNode, IInnerTreeNode, ITreeNode } from './use-tree-types';
+import type { DragState, IUseDraggable, IDropNode, IInnerTreeNode, ITreeNode, IDropType } from './use-tree-types';
 import cloneDeep from 'lodash/cloneDeep';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { formatBasicTree } from '../utils';
@@ -121,7 +121,13 @@ export default function (props: TreeProps, data: Ref<IInnerTreeNode[]>) {
         if (!data) {
           return;
         }
-        const { dropPrev, dropNext, dropInner } = props.dropType;
+        let curDropType: IDropType = {};
+        if (typeof props.draggable === 'object') {
+          curDropType = props.draggable;
+        } else if (props.draggable === true) {
+          curDropType = { dropInner: true };
+        }
+        const { dropPrev, dropNext, dropInner } = curDropType;
 
         let innerDropType: DragState['dropType'];
 

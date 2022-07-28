@@ -766,7 +766,7 @@ export default defineComponent({
   <h6><p>Default</p></h6>
   <d-tree :data="data" draggable ></d-tree>
   <h6><p>Sortable</p></h6>
-  <d-tree :data="data" draggable :dropType="{ dropPrev: true, dropNext: true, dropInner: true }"></d-tree>
+  <d-tree :data="data" :draggable="{ dropPrev: true, dropNext: true, dropInner: true }"></d-tree>
 </template>
 
 <script>

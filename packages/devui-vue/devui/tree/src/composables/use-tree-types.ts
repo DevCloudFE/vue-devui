@@ -115,9 +115,17 @@ export interface IUseSearchFilter {
   searchTree: (target: string, option: SearchFilterOption) => void;
 }
 
+export interface IDropType {
+  dropPrev?: boolean;
+  dropNext?: boolean;
+  dropInner?: boolean;
+}
+
 export type ICheckStrategy = 'upward' | 'downward' | 'both' | 'none';
 
 export type ICheck = boolean | ICheckStrategy;
+
+export type IDraggable = boolean | IDropType;
 
 export type IOperateItem = 'add' | 'delete' | 'edit';
 
@@ -126,12 +134,6 @@ export type IOperate = boolean | IOperateItem | Array<IOperateItem>;
 export interface LazyNodeResult {
   treeItems: ITreeNode[];
   node: IInnerTreeNode;
-}
-
-export interface IDropType {
-  dropPrev?: boolean;
-  dropNext?: boolean;
-  dropInner?: boolean;
 }
 
 export interface DragState {
