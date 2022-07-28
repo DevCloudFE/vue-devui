@@ -5,7 +5,7 @@ import { isFunction, debounce } from 'lodash';
 export default function useFilter(props: SelectProps): useFilterReturn {
   const filterQuery = ref('');
   const debounceTime = computed(() => (props.remote ? 300 : 0));
-  const isSupportFilter = computed(() => isFunction(props.filter) || (typeof props.filter === 'boolean' && props.filter));
+  const isSupportFilter = computed(() => isFunction(props.filter) || props.filter === true);
 
   const queryChange = (query: string) => {
     filterQuery.value = query;

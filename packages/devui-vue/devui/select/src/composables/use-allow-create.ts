@@ -7,7 +7,7 @@ export default function useAllowCreate(props: SelectProps, option: allowCreateOp
   // allow-create
   const isShowCreateOption = computed(() => {
     const hasCommonOption = injectOptionsArray.value.filter((item) => !item.create).some((item) => item.name === filterQuery.value);
-    return typeof props.filter === 'boolean' && props.filter && props.allowCreate && !!filterQuery.value && !hasCommonOption;
+    return props.filter === true && props.allowCreate && !!filterQuery.value && !hasCommonOption;
   });
 
   return {
