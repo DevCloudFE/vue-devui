@@ -8,7 +8,7 @@ import Option from './components/option';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import SelectContent from './components/select-content';
 import useSelectFunction from './composables/use-select-function';
-import useFilterSelect from './composables/use-filter-select';
+import useFilter from './composables/use-filter';
 import useMultipleSelect from './composables/use-multiple-select';
 import useNoDataText from './composables/use-no-data-text';
 import useAllowCreate from './composables/use-allow-create';
@@ -26,7 +26,7 @@ export default defineComponent({
 
     const selectRef = ref<HTMLElement>();
     const { isSelectFocus, focus, blur } = useSelectFunction(props, selectRef);
-    const { filterQuery, isSupportFilter, debounceQueryFilter } = useFilterSelect(props);
+    const { filterQuery, isSupportFilter, debounceQueryFilter } = useFilter(props);
     const {
       selectDisabled,
       selectSize,
