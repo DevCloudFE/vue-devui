@@ -1,5 +1,4 @@
 import { PropType, ComputedRef, ExtractPropTypes, Ref } from 'vue';
-import { updateFunc } from '../../statistic/src/utils/animation';
 import { KeyType } from './utils';
 export interface OptionObjectItem {
   name: string;
