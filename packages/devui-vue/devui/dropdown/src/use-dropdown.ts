@@ -6,7 +6,8 @@ import { UseDropdownProps, EmitEvent, DropdownProps, UseOverlayFn } from './drop
 const dropdownMap = new Map();
 
 function subscribeEvent(
-  dom: Element | Document | null | undefined, type: string,
+  dom: Element | Document | null | undefined,
+  type: string,
   callback: EventListenerOrEventListenerObject
 ): () => void {
   dom?.addEventListener(type, callback);
@@ -15,14 +16,7 @@ function subscribeEvent(
   };
 }
 
-export const useDropdownEvent = ({
-  id,
-  isOpen,
-  origin,
-  dropdownRef,
-  props,
-  emit
-}: UseDropdownProps): void => {
+export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit }: UseDropdownProps): void => {
   let overlayEnter = false;
   let originEnter = false;
   const { trigger, closeScope, closeOnMouseLeaveMenu } = toRefs(props);
@@ -97,9 +91,9 @@ export const useDropdownEvent = ({
         subscribeEvent(dropdownEl, 'mouseleave', (e: Event) => {
           overlayEnter = false;
           if (
-            (e as MouseEvent).relatedTarget
-            && (originEl?.contains((e as MouseEvent).relatedTarget as Node)
-            || dropdownMap.get(id).child?.contains((e as MouseEvent).relatedTarget))
+            (e as MouseEvent).relatedTarget &&
+            (originEl?.contains((e as MouseEvent).relatedTarget as Node) ||
+              dropdownMap.get(id).child?.contains((e as MouseEvent).relatedTarget))
           ) {
             return;
           }
@@ -183,7 +177,7 @@ export function useOverlayProps(props: DropdownProps, currentPosition: Ref<strin
     [`${overlayClass.value}`]: true,
   }));
   const handlePositionChange = (pos: string) => {
-    currentPosition.value = pos.includes('top') || pos.includes('end') ? 'top' : 'bottom';
+    currentPosition.value = pos.includes('top') || pos.includes('right-end') || pos.includes('left-end') ? 'top' : 'bottom';
   };
 
   watch(isOpen, (isOpenVal) => {
