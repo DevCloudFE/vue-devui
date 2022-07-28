@@ -8,10 +8,10 @@ import './carousel.scss';
 export default defineComponent({
   name: 'DCarousel',
   props: carouselProps,
-  emits: ['update:activeIndex'],
-  setup(props: CarouselProps, { emit }) {
+  emits: ['update:activeIndex', 'activeIndexChange'],
+  setup(props: CarouselProps, { emit, slots, expose }) {
     const ns = useNamespace('carousel');
-    const { arrowTrigger, autoplay, autoplaySpeed, dotTrigger, activeIndex, activeIndexChange } = toRefs(props);
+    const { height, showDots, dotPosition, arrowTrigger, autoplay, autoplaySpeed, dotTrigger, activeIndex } = toRefs(props);
     const transitionSpeed = 500;
 
     const itemCount = ref(0);
@@ -38,12 +38,16 @@ export default defineComponent({
 
     // 翻页位移
     const translatePosition = (size: number) => {
-      if (containerRef.value) {containerRef.value.style.left = `${-size * 100}%`;}
+      if (containerRef.value) {
+        containerRef.value.style.left = `${-size * 100}%`;
+      }
     };
     // 调整首尾翻页后的动画
     const adjustTransition = (targetEl: HTMLElement) => {
       setTimeout(() => {
-        if (containerRef.value) {containerRef.value.style.transition = '';}
+        if (containerRef.value) {
+          containerRef.value.style.transition = '';
+        }
 
         targetEl.style.transform = '';
         translatePosition(currentIndex.value);
@@ -69,7 +73,7 @@ export default defineComponent({
     // 自动轮播调度任务
     const autoScheduleTransition = (callback?: () => void) => {
       clearScheduledTransition();
-      if (autoplay && autoplaySpeed.value) {
+      if (autoplay.value && autoplaySpeed.value) {
         scheduledId.value = setTimeout(() => {
           callback?.();
         }, autoplaySpeed.value);
@@ -108,7 +112,7 @@ export default defineComponent({
 
       currentIndex.value = latestIndex;
       emit('update:activeIndex', latestIndex);
-      activeIndexChange?.value?.(latestIndex);
+      emit('activeIndexChange', latestIndex);
       autoScheduleTransition(() => {
         goto(currentIndex.value + 1);
       });
@@ -124,13 +128,17 @@ export default defineComponent({
 
     // 切换箭头监听事件，用于处理hover方式
     const arrowMouseEvent = (type: 'enter' | 'leave') => {
-      if (arrowTrigger.value !== 'hover') {return;}
+      if (arrowTrigger.value !== 'hover') {
+        return;
+      }
 
       showArrow.value = type === 'enter';
     };
     // 指示器触发切换函数
     const switchStep = (index: number, type: DotTrigger) => {
-      if (type === dotTrigger.value) {goto(index);}
+      if (type === dotTrigger.value) {
+        goto(index);
+      }
     };
 
     const changeItemCount = (val: number) => {
@@ -150,94 +158,63 @@ export default defineComponent({
       clearScheduledTransition();
     });
 
-    return {
-      wrapperRef,
-      containerRef,
+    expose({ prev, next, goto });
 
-      showArrow,
-      currentIndex,
-      itemCount,
-      changeItemCount,
+    return () => {
+      const slot: VNode[] = slots.default?.() ?? ([] as VNode[]);
 
-      goto,
-      prev,
-      next,
-      arrowMouseEvent,
-      switchStep,
-      ns,
-    };
-  },
+      // 在jsx中，使用map生成slot项会在外层包裹一个Fragment
+      let children = slot;
+      if (children.length === 1 && children[0].type === Fragment) {
+        children = ((children[0].children || []) as VNode[]).filter((item) => item?.type !== Comment);
+      }
+      if (children.length !== itemCount.value) {
+        changeItemCount(children.length);
+      }
 
-  render() {
-    const {
-      showArrow,
-      currentIndex,
-      itemCount,
-
-      arrowTrigger,
-      height,
-      showDots,
-      dotPosition,
-
-      prev,
-      next,
-      arrowMouseEvent,
-      switchStep,
-      changeItemCount,
-      ns,
-
-      $slots,
-    } = this;
-    const slot: VNode[] = $slots.default?.() ?? ([] as VNode[]);
-
-    // 在jsx中，使用map生成slot项会在外层包裹一个Fragment
-    let children = slot;
-    if (children.length === 1 && children[0].type === Fragment) {
-      children = ((children[0].children || []) as VNode[])
-        .filter((item) => item?.type !== Comment);
-    }
-    if (children.length !== itemCount) {
-      changeItemCount(children.length);
-    }
-
-    return (
-      <div class={ns.b()} style={{ height }} onMouseenter={() => arrowMouseEvent('enter')} onMouseleave={() => arrowMouseEvent('leave')}>
-        {/* carousel arrow */}
-        {arrowTrigger !== 'never' && showArrow ? (
-          <div class={ns.e('arrow')}>
-            <button class="arrow-left" onClick={() => prev()}>
-              <Icon name="arrow-left" />
-            </button>
-            <button class="arrow-right" onClick={() => next()}>
-              <Icon name="arrow-right" />
-            </button>
+      return (
+        <div
+          class={ns.b()}
+          style={{ height: height.value }}
+          onMouseenter={() => arrowMouseEvent('enter')}
+          onMouseleave={() => arrowMouseEvent('leave')}>
+          {/* carousel arrow */}
+          {arrowTrigger.value !== 'never' && showArrow.value ? (
+            <div class={ns.e('arrow')}>
+              <button class="arrow-left" onClick={() => prev()}>
+                <Icon name="arrow-left" />
+              </button>
+              <button class="arrow-right" onClick={() => next()}>
+                <Icon name="arrow-right" />
+              </button>
+            </div>
+          ) : null}
+          {/* carousel items */}
+          <div class={ns.e('item-wrapper')} ref={wrapperRef}>
+            <div
+              class={ns.e('item-container')}
+              style={{
+                width: `${itemCount.value * 100}%`,
+              }}
+              ref={containerRef}>
+              {slot}
+            </div>
           </div>
-        ) : null}
-        {/* carousel items */}
-        <div class={ns.e('item-wrapper')} ref="wrapperRef">
-          <div
-            class={ns.e('item-container')}
-            style={{
-              width: `${itemCount * 100}%`,
-            }}
-            ref="containerRef">
-            {slot}
-          </div>
+
+          {/* carousel dots */}
+          {itemCount.value > 0 && showDots.value ? (
+            <ul class={[ns.e('dots'), dotPosition.value]}>
+              {children.map((_, index) => (
+                <li
+                  class={{ 'dot-item': true, active: currentIndex.value === index }}
+                  onClick={() => switchStep(index, 'click')}
+                  onMouseenter={() => switchStep(index, 'hover')}
+                />
+              ))}
+            </ul>
+          ) : null}
         </div>
-
-        {/* carousel dots */}
-        {itemCount > 0 && showDots ? (
-          <ul class={[ns.e('dots'), dotPosition]}>
-            {children.map((_, index) => (
-              <li
-                class={{ 'dot-item': true, active: currentIndex === index }}
-                onClick={() => switchStep(index, 'click')}
-                onMouseenter={() => switchStep(index, 'hover')}
-              />
-            ))}
-          </ul>
-        ) : null}
-      </div>
-    );
+      );
+    };
   },
 });
