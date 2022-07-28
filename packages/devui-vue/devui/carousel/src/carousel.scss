@@ -87,12 +87,12 @@
 
       &:hover {
         cursor: pointer;
-        background: $devui-list-item-hover-bg;
+        background: $devui-icon-fill-hover;
       }
 
       &.active {
         width: 24px;
-        background: $devui-list-item-active-bg;
+        background: $devui-icon-fill-active;
         transition: all $devui-animation-duration-slow $devui-animation-ease-in-smooth;
       }
     }
