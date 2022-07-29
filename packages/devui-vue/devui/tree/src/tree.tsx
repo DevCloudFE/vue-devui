@@ -1,16 +1,19 @@
 import { defineComponent, getCurrentInstance, provide, ref, renderSlot, SetupContext, toRefs, useSlots, watch } from 'vue';
-import type { IInnerTreeNode, ICheckStrategy } from './composables/use-tree-types';
 import DTreeNode from './components/tree-node';
 import DTreeNodeContent from './components/tree-node-content';
 import DTreeNodeToggle from './components/tree-node-toggle';
 import DTreeNodeLoading from './components/tree-node-loading';
 import { VirtualList } from '../../virtual-list';
-import useTree from './composables/use-tree';
-import useCheck from './composables/use-check';
-import useSelect from './composables/use-select';
-import useOperate from './composables/use-operate';
-import useMergeNodes from './composables/use-merge-nodes';
-import useSearchFilter from './composables/use-search-filter';
+import {
+  useTree,
+  useCheckFn,
+  useSelectFn,
+  useOperateFn,
+  useMergeNodesFn,
+  useSearchFilterFn,
+  IInnerTreeNode,
+  ICheckStrategy,
+} from './composables';
 import { USE_TREE_TOKEN, NODE_HEIGHT, TREE_INSTANCE } from './const';
 import { TreeProps, treeProps } from './tree-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
@@ -28,7 +31,7 @@ export default defineComponent({
     const ns = useNamespace('tree');
     const normalRef = ref();
 
-    const userPlugins = [useSelect(), useOperate(), useMergeNodes(), useSearchFilter()];
+    const userPlugins = [useSelectFn(), useOperateFn(), useMergeNodesFn(), useSearchFilterFn()];
 
     const checkOptions = ref<{ checkStrategy: ICheckStrategy }>({
       checkStrategy: formatCheckStatus(check.value),
@@ -39,7 +42,7 @@ export default defineComponent({
     });
 
     if (check.value) {
-      userPlugins.push(useCheck(checkOptions));
+      userPlugins.push(useCheckFn(checkOptions));
     }
 
     const treeFactory = useTree(data.value, userPlugins, context);

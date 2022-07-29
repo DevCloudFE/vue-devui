@@ -19,7 +19,7 @@ export interface IUseTreeNode {
   highlightCls: string;
 }
 
-export default function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTreeNode {
+export function useTreeNode(data: ComputedRef<IInnerTreeNode>): IUseTreeNode {
   const nodeClass = computed(() => [ns.e('node'), data.value?.expanded && ns.em('node', 'open')]);
   const nodeStyle = computed(() => {
     return { paddingLeft: `${NODE_INDENT * (data.value?.level - 1)}px` };

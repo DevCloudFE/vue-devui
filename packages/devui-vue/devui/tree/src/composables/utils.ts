@@ -1,5 +1,5 @@
 import { randomId } from '../../../shared/utils';
-import useInitSelectCollection from './use-init-select-collection';
+import { useInitSelectCollection } from './use-init-select-collection';
 import { IInnerTreeNode, ITreeNode } from './use-tree-types';
 
 export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
