@@ -1,13 +1,12 @@
 import type { ComputedRef, ComponentInternalInstance } from 'vue';
 import { getCurrentInstance, ref, computed, defineComponent, inject, renderSlot, toRefs, useSlots } from 'vue';
 import { NODE_HEIGHT, TREE_INSTANCE, USE_TREE_TOKEN } from '../const';
-import type { IInnerTreeNode, IUseTree } from '../composables/use-tree-types';
 import { treeNodeProps, TreeNodeProps } from '../tree-types';
+import { IInnerTreeNode, IUseTree, useTreeNode } from '../composables';
 import DTreeNodeToggle from './tree-node-toggle';
 import DTreeNodeLoading from './tree-node-loading';
 import { Checkbox } from '../../../checkbox';
 import DTreeNodeContent from './tree-node-content';
-import useTreeNode from '../composables/use-tree-node';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { omit } from '../../../shared/utils';
 import { formatCheckStatus } from '../utils';

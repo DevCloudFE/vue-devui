@@ -935,8 +935,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   timeline: [
     {
-      avatar: '',
-      homepage: 'https://gitee.com/jenson-miao'
+      avatar: 'https://avatars.githubusercontent.com/u/46488783?v=4',
+      homepage: 'https://github.com/JensonMiao'
     },
   ],
   tree: [

@@ -18,6 +18,7 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@ls-lint/ls-lint": "^1.10.0",
+    "@types/lodash": "^4.14.182",
     "all-contributors-cli": "^6.20.0",
     "esbuild-register": "^2.6.0",
     "eslint": "^7.28.0",

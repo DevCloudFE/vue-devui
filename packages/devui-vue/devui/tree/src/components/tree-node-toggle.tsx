@@ -1,6 +1,6 @@
 import { defineComponent, inject, PropType, toRefs } from 'vue';
 import { USE_TREE_TOKEN } from '../const';
-import { ITreeNode, IUseTree } from '../composables/use-tree-types';
+import { ITreeNode, IUseTree } from '../composables';
 import { IconClose } from './icon-close';
 import { IconOpen } from './icon-open';
 import { useNamespace } from '../../../shared/hooks/use-namespace';

@@ -1,0 +1,43 @@
+@import '../../styles-var/devui-var.scss';
+
+.#{$devui-prefix}-mention {
+  position: relative;
+
+  &__suggestions {
+    position: absolute;
+    left: 24px;
+    z-index: $devui-z-index-framework;
+    background: #ffffff;
+    min-width: 120px;
+    max-height: 250px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-shadow: var(--devui-shadow-length-base, 0 1px 4px 0) var(--devui-light-shadow, rgba(37, 43, 58, 0.1));
+
+    &-item {
+      display: flex;
+      align-items: center;
+      padding: 6px 14px;
+      cursor: pointer;
+
+      &:hover {
+        background: #eeeeee;
+      }
+
+      &-active {
+        background: #f2f5fa;
+      }
+    }
+
+    &-loading {
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: 10px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+  }
+}

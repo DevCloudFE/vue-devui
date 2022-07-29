@@ -4,7 +4,7 @@ import type { ICheck, IOperate, ITreeNode, IDraggable, IInnerTreeNode } from './
 const commonProps = {
   check: {
     type: [Boolean, String] as PropType<ICheck>,
-    default: false
+    default: false,
   },
   draggable: {
     type: [Boolean, Object] as PropType<IDraggable>,
@@ -24,7 +24,7 @@ export const treeProps = {
   ...commonProps,
   height: {
     type: [Number, String] as PropType<number | string>,
-  }
+  },
 };
 
 export const treeNodeProps = {
