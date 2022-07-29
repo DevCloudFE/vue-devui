@@ -1,7 +1,7 @@
 import { Ref } from 'vue';
 import { IInnerTreeNode, IUseCore, IUseDisable } from './use-tree-types';
 
-export default function() {
+export function useDisableFn() {
   return function useDisable(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseDisable {
     const { setNodeValue } = core;
 
