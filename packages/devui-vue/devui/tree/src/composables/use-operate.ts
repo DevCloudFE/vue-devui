@@ -2,8 +2,8 @@ import { Ref, ref } from 'vue';
 import { randomId } from '../../../shared/utils';
 import { IInnerTreeNode, ITreeNode, IUseCore, IUseOperate } from './use-tree-types';
 
-export function useOperateFn() {
-  return function useOperate(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseOperate {
+export function useOperate() {
+  return function useOperateFn(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseOperate {
     const { setNodeValue, getChildren, getIndex, getLevel } = core;
 
     const insertBefore = (parentNode: ITreeNode, node: ITreeNode, referenceNode?: ITreeNode): void => {

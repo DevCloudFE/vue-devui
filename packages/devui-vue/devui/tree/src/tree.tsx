@@ -4,16 +4,7 @@ import DTreeNodeContent from './components/tree-node-content';
 import DTreeNodeToggle from './components/tree-node-toggle';
 import DTreeNodeLoading from './components/tree-node-loading';
 import { VirtualList } from '../../virtual-list';
-import {
-  useTree,
-  useCheckFn,
-  useSelectFn,
-  useOperateFn,
-  useMergeNodesFn,
-  useSearchFilterFn,
-  IInnerTreeNode,
-  ICheckStrategy,
-} from './composables';
+import { useTree, useCheck, useSelect, useOperate, useMergeNodes, useSearchFilter, IInnerTreeNode, ICheckStrategy } from './composables';
 import { USE_TREE_TOKEN, NODE_HEIGHT, TREE_INSTANCE } from './const';
 import { TreeProps, treeProps } from './tree-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
@@ -31,7 +22,7 @@ export default defineComponent({
     const ns = useNamespace('tree');
     const normalRef = ref();
 
-    const userPlugins = [useSelectFn(), useOperateFn(), useMergeNodesFn(), useSearchFilterFn()];
+    const userPlugins = [useSelect(), useOperate(), useMergeNodes(), useSearchFilter()];
 
     const checkOptions = ref<{ checkStrategy: ICheckStrategy }>({
       checkStrategy: formatCheckStatus(check.value),
@@ -42,7 +33,7 @@ export default defineComponent({
     });
 
     if (check.value) {
-      userPlugins.push(useCheckFn(checkOptions));
+      userPlugins.push(useCheck(checkOptions));
     }
 
     const treeFactory = useTree(data.value, userPlugins, context);
