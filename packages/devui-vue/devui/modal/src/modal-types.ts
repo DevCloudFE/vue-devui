@@ -1,5 +1,7 @@
 import type { PropType, ExtractPropTypes, Ref } from 'vue';
 
+export type ModalType = 'success' | 'failed' | 'warning' | 'info' | '';
+
 export const modalProps = {
   modelValue: {
     type: Boolean,
@@ -10,6 +12,10 @@ export const modalProps = {
     default: '',
   },
   lockScroll: {
+    type: Boolean,
+    default: true,
+  },
+  draggable: {
     type: Boolean,
     default: true,
   },
@@ -28,6 +34,10 @@ export const modalProps = {
     type: Boolean,
     default: true,
   },
+  showAnimation: {
+    type: Boolean,
+    default: true,
+  },
   showOverlay: {
     type: Boolean,
     default: true,
@@ -36,6 +46,18 @@ export const modalProps = {
     type: Boolean,
     default: true,
   },
+  type: {
+    type: String as PropType<ModalType>,
+    default: ''
+  },
+  width: {
+    type: [Number, String],
+    default: 300
+  },
+  top: {
+    type: [Number, String],
+    default: '15vh'
+  }
 };
 
 export type EmitName = 'update:modelValue';
