@@ -780,11 +780,11 @@ export default defineComponent({
       },
       {
         label: 'parent node 2',
-        open: true,
+        expanded: true,
         children: [
           {
             label: 'leaf node 2-1',
-            open: true,
+            expanded: true,
             children: [
               {
                 label: 'leaf node 2-1-1'
@@ -809,7 +809,7 @@ export default defineComponent({
       },
       {
         label: 'parent node 3',
-        open: true,
+        expanded: true,
         children: [
           {
             label: 'leaf node 3-1'
@@ -821,7 +821,7 @@ export default defineComponent({
       },
       {
         label: 'parent node 4',
-        open: true,
+        expanded: true,
         children: [
           {
             label: 'leaf node 4-1'
@@ -833,7 +833,7 @@ export default defineComponent({
       },
       {
         label: 'parent node 5',
-        open: true,
+        expanded: true,
         children: [
           {
             label: 'leaf node 5-1'

@@ -7,7 +7,7 @@ const commonProps = {
     default: false
   },
   draggable: {
-    type: [Boolean, String] as PropType<IDraggable>,
+    type: [Boolean, Object] as PropType<IDraggable>,
     default: false
   },
   operate: {
