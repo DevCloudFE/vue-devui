@@ -11,7 +11,8 @@
     "esModuleInterop": true,
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
     "paths": {
-      "hooks/*": ["./devui/shared/hooks/*"]
+      "hooks/*": ["./devui/shared/hooks/*"],
+      "@devui/*": ["./devui/*"],
     }
   },
   "include": ["devui/**/*.ts", "devui/**/*.d.ts", "devui/**/*.tsx", "devui/**/*.vue"]
