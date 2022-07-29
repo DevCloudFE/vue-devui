@@ -9,15 +9,18 @@
 :::demo
 
 ```vue
+
 <template>
-  <div class="slider-wrapper">
-    <d-slider :min="minValue" :max="maxValue" v-model="inputValue"></d-slider>
+  <d-slider :min="minValue" :max="maxValue" v-model="inputValue"></d-slider>
+  <div class="flex-space-between">
     <span>{{ minValue }}</span>
     <span>{{ maxValue }}</span>
   </div>
 </template>
+
 <script>
 import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   setup() {
     const inputValue = ref(12);
@@ -32,16 +35,10 @@ export default defineComponent({
 });
 </script>
 
-<style>
-.slider-wrapper {
-  position: relative;
-}
-.slider-wrapper span {
-  position: absolute;
-  top: 16px;
-}
-.slider-wrapper span:last-child {
-  right: 0;
+<style scoped>
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
 ```
@@ -53,15 +50,17 @@ export default defineComponent({
 :::demo
 
 ```vue
+
 <template>
-  <div class="slider-wrapper">
-    <d-slider :min="minValue" :max="maxValue" v-model="inputValue" :step="step"></d-slider>
+  <d-slider :min="minValue" :max="maxValue" v-model="inputValue" :step="step"></d-slider>
+  <div class="flex-space-between">
     <span>{{ minValue }}</span>
     <span>{{ maxValue }}</span>
   </div>
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   setup() {
     const inputValue = ref(8);
@@ -77,6 +76,13 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+</style>
 ```
 
 :::
@@ -86,18 +92,23 @@ export default defineComponent({
 :::demo
 
 ```vue
+
 <template>
-  <div class="slider-wrapper composite-slider" style="width: 90%">
-    <d-slider :min="minValue" :max="maxValue" v-model="inputValue"></d-slider>
-    <div class="snapshot-value">
-      <d-input v-model="inputValue" style="width: 40px"></d-input>
+  <div class="flex-space-between">
+    <div class="slider-wrapper">
+      <d-slider :min="minValue" :max="maxValue" v-model="inputValue"></d-slider>
+      <div class="flex-space-between">
+        <span>{{ minValue }}</span>
+        <span>{{ maxValue }}</span>
+      </div>
     </div>
-    <span>{{ minValue }}</span>
-    <span style="right: 10%">{{ maxValue }}</span>
+    <d-input-number class="snapshot-value" v-model="inputValue" :min="0" :max="20"></d-input-number>
   </div>
+
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   setup() {
     const inputValue = ref(10);
@@ -112,13 +123,18 @@ export default defineComponent({
 });
 </script>
 
-<style>
-.composite-slider {
+<style scoped>
+.flex-space-between {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
 }
+
+.slider-wrapper {
+  width: calc(100% - 100px);
+}
+
 .snapshot-value {
-  display: inline-block;
+  width: 80px;
   margin-left: 20px;
 }
 </style>
@@ -131,15 +147,17 @@ export default defineComponent({
 :::demo
 
 ```vue
+
 <template>
-  <div class="slider-wrapper">
-    <d-slider :min="minValue" :max="maxValue" disabled v-model="disabledValue"></d-slider>
+  <d-slider :min="minValue" :max="maxValue" disabled v-model="disabledValue"></d-slider>
+  <div class="flex-space-between">
     <span>{{ minValue }}</span>
     <span>{{ maxValue }}</span>
   </div>
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   setup() {
     const disabledValue = ref(5);
@@ -153,6 +171,13 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+</style>
 ```
 
 :::
@@ -163,29 +188,34 @@ export default defineComponent({
 :::demo
 
 ```vue
+
 <template>
   <div>
-    <div class="slider-wrapper">
-      <d-slider :min="minValue" :max="maxValue" v-model="inputValue" :tips-renderer="tipsRender"></d-slider>
+    <d-slider :min="minValue" :max="maxValue" v-model="inputValue" :tips-renderer="tipsRender"></d-slider>
+    <div class="flex-space-between">
       <span>{{ minValue }}</span>
       <span>{{ maxValue }}</span>
     </div>
+
     <br style="margin-bottom: 20px" />
-    <div class="slider-wrapper">
-      <d-slider :min="minValue" :max="maxValue" v-model="inputValue" :tips-renderer="null"></d-slider>
+
+    <d-slider :min="minValue" :max="maxValue" v-model="inputValue" :tips-renderer="null"></d-slider>
+    <div class="flex-space-between">
       <span>{{ minValue }}</span>
       <span>{{ maxValue }}</span>
     </div>
   </div>
 </template>
+
 <script>
 import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   setup() {
     const inputValue = ref(5);
     const maxValue = ref(50);
     const minValue = ref(2);
-    const tipsRender = (val: number) => `${val} apples`;
+    const tipsRender = (val) => `${val} apples`;
     return {
       inputValue,
       maxValue,
@@ -195,6 +225,13 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+</style>
 ```
 
 :::
