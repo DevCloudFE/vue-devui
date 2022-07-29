@@ -1,11 +1,11 @@
 import { Ref } from 'vue';
-import { useOperateFn } from './use-operate';
+import { useOperate } from './use-operate';
 import { IInnerTreeNode, IUseCore, IUseMergeNodes } from './use-tree-types';
 
-export function useMergeNodesFn() {
-  return function useMergeNodes(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseMergeNodes {
+export function useMergeNodes() {
+  return function useMergeNodesFn(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseMergeNodes {
     const { setNodeValue, getChildren } = core;
-    const { removeNode } = useOperateFn()(data, core);
+    const { removeNode } = useOperate()(data, core);
 
     const mergeTreeNodes = () => {
       const mergeToNode = (node: IInnerTreeNode) => {
