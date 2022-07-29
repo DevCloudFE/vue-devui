@@ -1,8 +1,8 @@
 import { ref, Ref, SetupContext } from 'vue';
 import { ICheckStrategy, IInnerTreeNode, IUseCore, IUseCheck } from './use-tree-types';
 type ISetNodeValue = Parameters<IUseCore['setNodeValue']>;
-export function useCheckFn(options: Ref<{ checkStrategy: ICheckStrategy }> = ref({ checkStrategy: 'both' as ICheckStrategy })) {
-  return function useCheck(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseCheck {
+export function useCheck(options: Ref<{ checkStrategy: ICheckStrategy }> = ref({ checkStrategy: 'both' as ICheckStrategy })) {
+  return function useCheckFn(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseCheck {
     const { setNodeValue, getNode, getChildren, getParent } = core;
 
     const checkNode = (node: IInnerTreeNode): void => {

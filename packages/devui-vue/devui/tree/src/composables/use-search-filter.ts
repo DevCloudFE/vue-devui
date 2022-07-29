@@ -1,8 +1,8 @@
 import { Ref, ref } from 'vue';
 import { IInnerTreeNode, IUseCore, IUseSearchFilter, SearchFilterOption } from './use-tree-types';
 import { trim } from 'lodash';
-export function useSearchFilterFn() {
-  return function useSearchFilter(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseSearchFilter {
+export function useSearchFilter() {
+  return function useSearchFilterFn(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseSearchFilter {
     const { clearNodeMap, getExpendedTree } = core;
     const virtualListRef = ref();
     const resetNodeSearchProperty = () => {
