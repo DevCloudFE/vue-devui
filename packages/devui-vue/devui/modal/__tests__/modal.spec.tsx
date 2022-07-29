@@ -8,7 +8,6 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 import { wait } from '../../shared/utils/';
 
 const ns = useNamespace('modal', true);
-const iconNs = useNamespace('icon', true);
 const noDotNs = useNamespace('modal');
 const noDotIconNs = useNamespace('icon');
 const buttonNoDotNs = useNamespace('button');
