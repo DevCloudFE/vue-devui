@@ -47,7 +47,7 @@ interface IDropNode {
   item: TreeItem;
 }
 
-export default function useDraggable(
+export function useDraggable(
   draggable: boolean,
   dropType: IDropType,
   node: Ref<Nullable<HTMLElement>>,

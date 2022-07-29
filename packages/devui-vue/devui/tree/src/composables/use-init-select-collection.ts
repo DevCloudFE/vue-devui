@@ -2,7 +2,7 @@ import { IInnerTreeNode, IUseInitSelectCollection } from './use-tree-types';
 
 let selectedNodes: IInnerTreeNode[] = [];
 
-export default function useInitSelectCollection(): IUseInitSelectCollection {
+export function useInitSelectCollection(): IUseInitSelectCollection {
   const setInitSelectedNode = (node: IInnerTreeNode): void => {
     selectedNodes.push(node);
   };

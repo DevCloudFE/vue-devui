@@ -1,7 +1,7 @@
 import { Ref, SetupContext } from 'vue';
 import { IInnerTreeNode, IUseCore, IUseToggle, IUseLazyLoad } from './use-tree-types';
 
-export default function () {
+export function useToggleFn() {
   return function useToggle(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext, lazyLode: IUseLazyLoad): IUseToggle {
     const { getNode, setNodeValue } = core;
     const { lazyLoadNodes } = lazyLode;

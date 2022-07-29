@@ -1,9 +1,7 @@
 import { ref, Ref, SetupContext } from 'vue';
 import { ICheckStrategy, IInnerTreeNode, IUseCore, IUseCheck } from './use-tree-types';
 type ISetNodeValue = Parameters<IUseCore['setNodeValue']>;
-export default function (
-  options: Ref<{ checkStrategy: ICheckStrategy }> = ref({ checkStrategy: 'both' as ICheckStrategy })
-) {
+export function useCheckFn(options: Ref<{ checkStrategy: ICheckStrategy }> = ref({ checkStrategy: 'both' as ICheckStrategy })) {
   return function useCheck(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseCheck {
     const { setNodeValue, getNode, getChildren, getParent } = core;
 
@@ -41,7 +39,7 @@ export default function (
       } else {
         // 子节点取消后触发
         const siblingNodes = getChildren(parentNode);
-        const checkedSiblingNodes = siblingNodes.filter(item => item.checked && item.id !== node.id);
+        const checkedSiblingNodes = siblingNodes.filter((item) => item.checked && item.id !== node.id);
         // 子节点全部是取消状态
         if (checkedSiblingNodes.length === 0) {
           setNodeValueInAvailable(parentNode, 'checked', false);
@@ -63,14 +61,14 @@ export default function (
         context.emit('check-change', node);
 
         if (['downward', 'both'].includes(options.value.checkStrategy)) {
-          getChildren(node).forEach(item => setNodeValueInAvailable(item, 'checked', false));
+          getChildren(node).forEach((item) => setNodeValueInAvailable(item, 'checked', false));
         }
       } else {
         setNodeValue(node, 'checked', true);
         context.emit('check-change', node);
 
         if (['downward', 'both'].includes(options.value.checkStrategy)) {
-          getChildren(node).forEach(item => setNodeValueInAvailable(item, 'checked', true));
+          getChildren(node).forEach((item) => setNodeValueInAvailable(item, 'checked', true));
         }
       }
 
@@ -80,7 +78,7 @@ export default function (
     };
 
     const getCheckedNodes = () => {
-      return data.value.filter(node => node.checked);
+      return data.value.filter((node) => node.checked);
     };
 
     return {

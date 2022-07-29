@@ -2,7 +2,7 @@ import { Ref, ref } from 'vue';
 import { randomId } from '../../../shared/utils';
 import { IInnerTreeNode, ITreeNode, IUseCore, IUseOperate } from './use-tree-types';
 
-export default function () {
+export function useOperateFn() {
   return function useOperate(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseOperate {
     const { setNodeValue, getChildren, getIndex, getLevel } = core;
 

@@ -1,14 +1,14 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import type { ICheck, IOperate, ITreeNode } from './composables/use-tree-types';
+import type { ICheck, IOperate, ITreeNode } from './composables';
 
 export const treeProps = {
   data: {
     type: Object as PropType<ITreeNode[]>,
-    default: []
+    default: [],
   },
   check: {
     type: [Boolean, String] as PropType<ICheck>,
-    default: false
+    default: false,
   },
   operate: {
     type: [Boolean, String, Array] as PropType<IOperate>,
@@ -16,7 +16,7 @@ export const treeProps = {
   },
   height: {
     type: [Number, String] as PropType<number | string>,
-  }
+  },
 };
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>;

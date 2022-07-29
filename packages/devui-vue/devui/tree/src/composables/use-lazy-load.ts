@@ -2,7 +2,7 @@ import { Ref, SetupContext, ref } from 'vue';
 import { IInnerTreeNode, IUseCore, LazyNodeResult, IUseLazyLoad } from './use-tree-types';
 import { generateInnerTree } from './utils';
 
-export default function () {
+export function useLazyLoadFn() {
   return function useLazyLoad(data: Ref<IInnerTreeNode[]>, core: IUseCore, context: SetupContext): IUseLazyLoad {
     const { getNode, setNodeValue, getIndex, getChildren } = core;
 

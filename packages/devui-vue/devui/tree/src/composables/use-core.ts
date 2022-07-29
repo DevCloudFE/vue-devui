@@ -7,7 +7,7 @@ const DEFAULT_CONFIG = {
   recursive: true, // 是否需要获取非直接子节点
 };
 
-export default function (): (data: Ref<IInnerTreeNode[]>) => IUseCore {
+export function useCoreFn(): (data: Ref<IInnerTreeNode[]>) => IUseCore {
   const nodeMap = new Map<string, IInnerTreeNode[]>();
   return function useCore(data: Ref<IInnerTreeNode[]>): IUseCore {
     const getLevel = (node: IInnerTreeNode): number => {
