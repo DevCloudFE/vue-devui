@@ -13,7 +13,7 @@
 
 ```vue
 <template>
-  <d-table :data="baseTableData">
+  <d-table :data="baseTableData" style="width: 100%">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -1369,7 +1369,7 @@ export default defineComponent({
 
 ### 懒加载
 
-:::demo 使用lazy启用懒加载，当滚动表格底部时到触发loadMore事件实现懒加载。
+:::demo 使用 lazy 启用懒加载，当滚动表格底部时到触发 loadMore 事件实现懒加载。
 
 ```vue
 <template>
@@ -1386,7 +1386,7 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const showLoading = ref(false)
+    const showLoading = ref(false);
     const dataSource = ref([
       {
         firstName: 'diy0',
@@ -1450,31 +1450,31 @@ export default defineComponent({
       },
     ]);
 
-    let total = 100
-    
+    let total = 100;
+
     const loadMore = () => {
       if (dataSource.value.length >= total || showLoading.value) {
-        return
+        return;
       }
-      
-      showLoading.value = true
-      const moreData = []
-      const size = dataSource.value.length
+
+      showLoading.value = true;
+      const moreData = [];
+      const size = dataSource.value.length;
       for (let i = 0; i < 10; i++) {
         moreData.push({
           firstName: 'diy' + (i + size),
           lastName: 'more data',
           gender: 'Female',
-          date: '2022/07/20'
-        })
+          date: '2022/07/20',
+        });
       }
-      
+
       // mock ajax
       setTimeout(() => {
-        showLoading.value = false
-        dataSource.value = dataSource.value.concat(moreData)
-      }, 200)
-    }
+        showLoading.value = false;
+        dataSource.value = dataSource.value.concat(moreData);
+      }, 200);
+    };
 
     return { dataSource, loadMore, showLoading };
   },
@@ -1506,17 +1506,18 @@ export default defineComponent({
 | show-header           | `boolean`                                         | true      | 可选，配置是否显示表头                                                                                                                         | [表格样式](#表格样式)                                          |
 | row-key               | `string \| Function(item, index: number): string` | --        | 可选，行数据的 Key，用来优化 Table 渲染，类型为 string 时，支持多层访问：`item.user.id`，但不支持 `item.user[0].id`，此种情况请使用 Function。 | [表格交互(Function)](#表格交互) <br> [展开行(string)](#展开行) |
 | indent                | `number`                                          | 16        | 可选，展示树形数据时，树节点的缩进                                                                                                             | [树形表格](#树形表格)                                          |
-| lazy                  | `boolean`                                         | false     | 可选，是否懒加载数据（搭配loadMore使用）                                         | [懒加载](#懒加载)                           |
+| lazy                  | `boolean`                                         | false     | 可选，是否懒加载数据（搭配 loadMore 使用）                                                                                                     | [懒加载](#懒加载)                                              |
+
 ### Table 事件
 
-| 事件名           | 回调参数                                                     | 说明                                                 | 跳转 Demo             |
-| :--------------- | :----------------------------------------------------------- | :--------------------------------------------------- | :-------------------- |
-| sort-change      | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息                       | [列排序](#列排序)     |
-| cell-click       | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息                       | [表格交互](#表格交互) |
-| check-change     | `Function(checked: boolean, row, selection)`                 | 勾选表格行回调事件，返回该行信息和表格所有选中行数据 | [表格交互](#表格交互) |
-| check-all-change | `Function(checked: boolean, selection)`                      | 全选表格行回调事件，返回勾选状态和表格所有选中行数据 | [表格交互](#表格交互) |
-| row-click        | `Function(obj: RowClickArg)`                                 | 某一行被点击时触发该事件，返回该行信息               | [表格交互](#表格交互) |
-| load-more        | `Function()`                                                 | 滚动到表格底部触发懒加载事件（需配合props.lazy开启）  | [懒加载](#懒加载)  |
+| 事件名           | 回调参数                                                     | 说明                                                   | 跳转 Demo             |
+| :--------------- | :----------------------------------------------------------- | :----------------------------------------------------- | :-------------------- |
+| sort-change      | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息                         | [列排序](#列排序)     |
+| cell-click       | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息                         | [表格交互](#表格交互) |
+| check-change     | `Function(checked: boolean, row, selection)`                 | 勾选表格行回调事件，返回该行信息和表格所有选中行数据   | [表格交互](#表格交互) |
+| check-all-change | `Function(checked: boolean, selection)`                      | 全选表格行回调事件，返回勾选状态和表格所有选中行数据   | [表格交互](#表格交互) |
+| row-click        | `Function(obj: RowClickArg)`                                 | 某一行被点击时触发该事件，返回该行信息                 | [表格交互](#表格交互) |
+| load-more        | `Function()`                                                 | 滚动到表格底部触发懒加载事件（需配合 props.lazy 开启） | [懒加载](#懒加载)     |
 
 ### Table 方法
 
