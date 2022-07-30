@@ -1,4 +1,4 @@
-import { randomId } from '../../../shared/utils';
+import { randomId, omit } from '../../../shared/utils';
 import { useInitSelectCollection } from './use-init-select-collection';
 import { IInnerTreeNode, ITreeNode } from './use-tree-types';
 
@@ -22,12 +22,6 @@ export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
 
     return acc;
   }, []);
-}
-
-export function omit<T>(obj: T, ...keys: Array<keyof T>): { [key: string]: unknown } {
-  return Object.entries(obj)
-    .filter((item) => !keys.includes(item[0]))
-    .reduce((acc, item) => Object.assign({}, acc, { [item[0]]: item[1] }), {});
 }
 
 /**
