@@ -6,4 +6,5 @@ function omit<T extends Record<string, unknown>, K extends keyof T>(obj: T, fiel
   }
   return shallowCopy;
 }
+export { omit };
 export default omit;
