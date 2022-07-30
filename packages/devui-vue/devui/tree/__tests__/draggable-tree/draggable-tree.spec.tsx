@@ -55,7 +55,7 @@ const getDraggableTree = (draggable: TreeProps['draggable'] = true) => {
 
 describe('Draggable tree', () => {
 
-  it.only('Basic default node drag.', async () => {
+  it('Basic default node drag.', async () => {
     const wrapper = getDraggableTree();
 
     await nextTick();

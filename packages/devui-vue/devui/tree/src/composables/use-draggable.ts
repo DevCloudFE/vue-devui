@@ -1,4 +1,4 @@
-import { reactive, ref, watch } from 'vue';
+import { reactive, computed } from 'vue';
 import type { Ref } from 'vue';
 import type { TreeProps } from '../tree-types';
 import type { DragState, IUseDraggable, IDropNode, IInnerTreeNode, ITreeNode, IDropType } from './use-tree-types';
@@ -20,16 +20,12 @@ export function useDraggable(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
       draggingNode: null,
       draggingTreeNode: null,
     });
-    const treeIdMapValue = ref<Record<string | number, IInnerTreeNode>>({});
-    watch(
-      () => data.value,
-      (newValue) => {
-        treeIdMapValue.value = newValue.reduce((acc, cur) => ({
-          ...acc, [cur.id]: cur,
-        }), {});
-      },
-      { immediate: true }
-    );
+
+    const treeIdMapValue = computed<Record<string | number, IInnerTreeNode>>(() => {
+      return data.value.reduce((acc, cur) => ({
+        ...acc, [cur.id]: cur,
+      }), {});
+    });
 
     const removeDraggingStyle = (target: HTMLElement | null) => {
       target
