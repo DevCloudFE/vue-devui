@@ -19,7 +19,7 @@ export default defineComponent({
     const app = getCurrentInstance();
     const t = createI18nTranslate('DTree', app);
 
-    const { data, check, draggable, operate } = toRefs(props);
+    const { data, check, dragdrop, operate } = toRefs(props);
     const {
       toggleSelectNode,
       toggleCheckNode,
@@ -80,10 +80,10 @@ export default defineComponent({
     };
 
     return () => {
-      let draggableProps = {};
-      if (draggable.value && !data.value?.disableCheck) {
-        draggableProps = {
-          draggable: true,
+      let dragdropProps = {};
+      if (dragdrop.value && !data.value?.disableSelect) {
+        dragdropProps = {
+          dragdrop: true,
           onDragstart: (event: DragEvent) => onDragstart?.(event, data.value),
           onDragover: (event: DragEvent) => onDragover?.(event),
           onDragleave: (event: DragEvent) => onDragleave?.(event),
@@ -107,14 +107,14 @@ export default defineComponent({
               toggleSelectNode?.(data.value);
               treeInstance?.emit('node-click', data.value);
             }}
-            {...draggableProps}
+            {...dragdropProps}
           >
             {slots.icon ? renderSlot(useSlots(), 'icon', { nodeData: data, toggleNode }) : <DTreeNodeToggle data={data.value} />}
             <div class={ns.em('node-content', 'value-wrapper')} style={{ height: `${NODE_HEIGHT}px` }}>
               {check.value && <Checkbox {...checkboxProps.value} />}
               {slots.default ? renderSlot(useSlots(), 'default', { nodeData: data }) : <DTreeNodeContent data={data.value} />}
               {getNode?.(data.value)?.loading ? slots.loading ? renderSlot(useSlots(), 'loading') : <DTreeNodeLoading /> : ''}
-              {draggable.value && (
+              {dragdrop.value && (
                 <>
                   <div class={ns.em('node', 'drop-top')} />
                   <div class={ns.em('node', 'drop-bottom')} />

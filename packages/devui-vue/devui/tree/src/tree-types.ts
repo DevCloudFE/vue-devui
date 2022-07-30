@@ -6,7 +6,7 @@ const commonProps = {
     type: [Boolean, String] as PropType<ICheck>,
     default: false,
   },
-  draggable: {
+  dragdrop: {
     type: [Boolean, Object] as PropType<IDraggable>,
     default: false
   },

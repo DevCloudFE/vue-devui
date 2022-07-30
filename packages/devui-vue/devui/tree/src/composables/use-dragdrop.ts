@@ -7,7 +7,7 @@ import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { formatBasicTree } from '../utils';
 const ns = useNamespace('tree');
 
-const DropTypeMap = {
+const dropTypeMap = {
   dropPrev: ns.em('node', 'drop-prev'),
   dropNext: ns.em('node', 'drop-next'),
   dropInner: ns.em('node', 'drop-inner'),
@@ -30,7 +30,7 @@ export function useDraggable(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
     const removeDraggingStyle = (target: HTMLElement | null) => {
       target
         ?.classList
-        .remove(...Object.values(DropTypeMap));
+        .remove(...Object.values(dropTypeMap));
     };
 
     const checkIsParent = (childNodeId: number | string, parentNodeId: number | string): boolean => {
@@ -46,45 +46,45 @@ export function useDraggable(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
 
     const handlerDropData = (dragNodeId: string | number, dropNodeId: string | number, currentDropType?: string) => {
       const cloneData = cloneDeep(data.value);
-      let nowDragNode: IDropNode | undefined;
-      let nowDropNode: IDropNode | undefined;
+      let currentDragNode: IDropNode | undefined;
+      let currentDropNode: IDropNode | undefined;
       const findDragAndDropNode = (curr: ITreeNode[]) => {
         if (!Array.isArray(curr)) {
           return;
         }
         curr.every((item, index) => {
-          if (nowDragNode && nowDropNode) {
+          if (currentDragNode && currentDropNode) {
             return false;
           }
           if (item.id === dragNodeId) {
-            nowDragNode = { target: curr, index, item };
+            currentDragNode = { target: curr, index, item };
           } else if (item.id === dropNodeId) {
-            nowDropNode = { target: curr, index, item };
+            currentDropNode = { target: curr, index, item };
           }
-          if (!nowDragNode || !nowDropNode) {
+          if (!currentDragNode || !currentDropNode) {
             Array.isArray(item.children) && findDragAndDropNode(item.children);
           }
           return true;
         });
       };
       findDragAndDropNode(cloneData);
-      if (nowDragNode && nowDropNode && currentDropType) {
-        const cloneDrapNode = Object.assign({}, nowDragNode.target[nowDragNode.index]);
+      if (currentDragNode && currentDropNode && currentDropType) {
+        const cloneDrapNode = Object.assign({}, currentDragNode.target[currentDragNode.index]);
         if (currentDropType === 'dropPrev') {
-          nowDropNode.target.splice(nowDropNode.index, 0, cloneDrapNode);
+          currentDropNode.target.splice(currentDropNode.index, 0, cloneDrapNode);
         } else if (currentDropType === 'dropNext') {
-          nowDropNode.target.splice(nowDropNode.index + 1, 0, cloneDrapNode);
+          currentDropNode.target.splice(currentDropNode.index + 1, 0, cloneDrapNode);
         } else if (currentDropType === 'dropInner') {
-          const children = nowDropNode.target[nowDropNode.index].children;
+          const children = currentDropNode.target[currentDropNode.index].children;
           if (Array.isArray(children)) {
             children.unshift(cloneDrapNode);
           } else {
-            nowDropNode.target[nowDropNode.index].children = [cloneDrapNode];
+            currentDropNode.target[currentDropNode.index].children = [cloneDrapNode];
           }
         }
-        const targetIndex = nowDragNode.target.indexOf(nowDragNode.item);
+        const targetIndex = currentDragNode.target.indexOf(currentDragNode.item);
         if (targetIndex !== -1) {
-          nowDragNode.target.splice(targetIndex, 1);
+          currentDragNode.target.splice(targetIndex, 1);
         }
       }
 
@@ -108,7 +108,7 @@ export function useDraggable(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
       event.stopPropagation();
       if (!dragState.draggingNode) { return; }
 
-      if (props.draggable) {
+      if (props.dragdrop) {
 
         if (event.dataTransfer) {
           event.dataTransfer.dropEffect = 'move';
@@ -118,9 +118,9 @@ export function useDraggable(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
           return;
         }
         let curDropType: IDropType = {};
-        if (typeof props.draggable === 'object') {
-          curDropType = props.draggable;
-        } else if (props.draggable === true) {
+        if (typeof props.dragdrop === 'object') {
+          curDropType = props.dragdrop;
+        } else if (props.dragdrop === true) {
           curDropType = { dropInner: true };
         }
         const { dropPrev, dropNext, dropInner } = curDropType;
@@ -145,9 +145,9 @@ export function useDraggable(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
         if (innerDropType) {
           const classList = currentTarget?.classList;
           if (classList) {
-            if (!classList.contains(DropTypeMap[innerDropType])) {
+            if (!classList.contains(dropTypeMap[innerDropType])) {
               removeDraggingStyle(currentTarget);
-              classList.add(DropTypeMap[innerDropType]);
+              classList.add(dropTypeMap[innerDropType]);
             }
           }
         } else {
@@ -168,14 +168,14 @@ export function useDraggable(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
       event.stopPropagation();
       removeDraggingStyle(event.currentTarget as HTMLElement | null);
       if (!dragState.draggingNode) { return; }
-      if (!props.draggable) { return; }
+      if (!props.dragdrop) { return; }
 
-      const transferDataStr = event.dataTransfer?.getData('Text');
-      if (transferDataStr) {
+      const treeInfoStr = event.dataTransfer?.getData('Text');
+      if (treeInfoStr) {
         try {
-          const transferData = JSON.parse(transferDataStr);
-          if (typeof transferData === 'object' && transferData.type === 'tree-node') {
-            const dragNodeId = transferData.nodeId;
+          const treeInfo = JSON.parse(treeInfoStr);
+          if (typeof treeInfo === 'object' && treeInfo.type === 'tree-node') {
+            const dragNodeId = treeInfo.nodeId;
             const isParent = checkIsParent(dropNode.id, dragNodeId);
             if (dragNodeId === dropNode.id || isParent) {
               return;

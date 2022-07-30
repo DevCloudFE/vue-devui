@@ -28,7 +28,7 @@ export default defineComponent({
   setup(props: TreeProps, context: SetupContext) {
     const { slots, expose } = context;
     const treeInstance = getCurrentInstance();
-    const { check, draggable, operate } = toRefs(props);
+    const { check, dragdrop, operate } = toRefs(props);
     const ns = useNamespace('tree');
     const normalRef = ref();
     const data = ref<IInnerTreeNode[]>(formatBasicTree(props.data));
@@ -40,11 +40,11 @@ export default defineComponent({
     });
 
     if (check.value) {
-      userPlugins.push(useCheck(checkOptions));
+      userPlugins.push(useCheck(checkOptions) as never);
     }
 
-    if (draggable.value) {
-      userPlugins.push(useDraggable(props, data));
+    if (dragdrop.value) {
+      userPlugins.push(useDraggable(props, data) as never);
     }
 
     const treeFactory = useTree(data.value, userPlugins as never[], context);
@@ -79,7 +79,7 @@ export default defineComponent({
           nodeData: treeNode,
         })
       ) : (
-        <DTreeNode data={treeNode} check={check.value} draggable={draggable.value} operate={operate.value}>
+        <DTreeNode data={treeNode} check={check.value} dragdrop={dragdrop.value} operate={operate.value}>
           {{
             default: () =>
               slots.content ? renderSlot(useSlots(), 'content', { nodeData: treeNode }) : <DTreeNodeContent data={treeNode} />,

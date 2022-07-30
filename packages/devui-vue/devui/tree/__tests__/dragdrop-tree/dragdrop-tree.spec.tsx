@@ -2,7 +2,7 @@ import { ref, nextTick } from 'vue';
 import type { DOMWrapper } from '@vue/test-utils';
 import { mount } from '@vue/test-utils';
 import { Tree, TreeProps } from '../..';
-import { draggableTreeData } from './draggable-tree-data';
+import { dragdropTreeData } from './dragdrop-tree-data';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 
 const ns = useNamespace('tree', true);
@@ -38,14 +38,14 @@ const startDragging = async (dragNode: DOMWrapper<Element>, dropNode: DOMWrapper
   await nextTick();
 };
 
-const getDraggableTree = (draggable: TreeProps['draggable'] = true) => {
+const getDraggableTree = (dragdrop: TreeProps['dragdrop'] = true) => {
   return mount({
     setup() {
       return () => {
-        const data = ref(draggableTreeData);
+        const data = ref(dragdropTreeData);
         return (
           <>
-            <Tree data={data.value} draggable={draggable} />
+            <Tree data={data.value} dragdrop={dragdrop} />
           </>
         );
       };

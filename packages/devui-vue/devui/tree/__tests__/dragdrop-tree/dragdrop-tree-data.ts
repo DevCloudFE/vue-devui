@@ -1,6 +1,6 @@
 import type { ITreeNode } from '../..';
 
-export const draggableTreeData: ITreeNode[] = [
+export const dragdropTreeData: ITreeNode[] = [
   {
     label: 'parent node 1'
   },
