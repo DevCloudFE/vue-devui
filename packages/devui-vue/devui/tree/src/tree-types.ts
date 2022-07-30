@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue';
-import type { ICheck, IOperate, ITreeNode, IDraggable, IInnerTreeNode } from './composables/use-tree-types';
+import type { ICheck, IOperate, ITreeNode, IDragdrop, IInnerTreeNode } from './composables/use-tree-types';
 
 const commonProps = {
   check: {
@@ -7,7 +7,7 @@ const commonProps = {
     default: false,
   },
   dragdrop: {
-    type: [Boolean, Object] as PropType<IDraggable>,
+    type: [Boolean, Object] as PropType<IDragdrop>,
     default: false
   },
   operate: {

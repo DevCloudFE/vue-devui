@@ -13,8 +13,8 @@ const dropTypeMap = {
   dropInner: ns.em('node', 'drop-inner'),
 };
 
-export function useDraggable(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
-  return function useDraggableFn(): IUseDraggable {
+export function useDragdrop(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
+  return function useDragdropFn(): IUseDraggable {
     const dragState = reactive<DragState>({
       dropType: undefined,
       draggingNode: null,

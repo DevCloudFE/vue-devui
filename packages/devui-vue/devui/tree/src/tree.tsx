@@ -13,7 +13,7 @@ import {
   useSearchFilter,
   IInnerTreeNode,
   ICheckStrategy,
-  useDraggable
+  useDragdrop
 } from './composables';
 import { USE_TREE_TOKEN, NODE_HEIGHT, TREE_INSTANCE } from './const';
 import { TreeProps, treeProps } from './tree-types';
@@ -44,7 +44,7 @@ export default defineComponent({
     }
 
     if (dragdrop.value) {
-      userPlugins.push(useDraggable(props, data) as never);
+      userPlugins.push(useDragdrop(props, data) as never);
     }
 
     const treeFactory = useTree(data.value, userPlugins as never[], context);

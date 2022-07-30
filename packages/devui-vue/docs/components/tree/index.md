@@ -860,6 +860,7 @@ export default defineComponent({
 | :----- | :-------------------------- | :------ | :--------------------- | :-------------------- |
 | data   | [ITreeNode\[\]](#itreenode) | `[]`    | 可选，树形结构数据     | [基本用法](#基本用法) |
 | check  | [ICheck](#icheck)           | `false` | 可选，是否启用勾选功能 | [可勾选](#可勾选)     |
+| dragdrop  | [IDragdrop](#idragdrop)           | `false` | 可选，是否启用可拖拽功能 | [可拖拽树](#可拖拽树)     |
 
 ### Tree 事件
 
@@ -886,6 +887,7 @@ export default defineComponent({
 | :----- | :---------------------- | :------ | :--------------------- |
 | data   | [ITreeNode](#itreenode) | `[]`    | 可选，节点数据         |
 | check  | [ICheck](#icheck)       | `false` | 可选，是否启用勾选功能 |
+| dragdrop| [IDragdrop](#idragdrop)| `false` | 可选，是否启用可拖拽功能 |
 | height | `number`                | `-`     | 可选，设置启用虚拟滚动 |
 
 ### Tree 类型定义
@@ -912,6 +914,16 @@ interface ITreeNode {
 
 ```ts
 type ICheck = boolean | 'upward' | 'downward' | 'both' | 'none';
+```
+
+#### IDragdrop
+
+```ts
+type IDragdrop = boolean | {
+  dropPrev?: boolean;
+  dropNext?: boolean;
+  dropInner?: boolean;
+};
 ```
 
 ### treeFactory

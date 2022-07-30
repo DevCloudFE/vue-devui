@@ -125,7 +125,7 @@ export type ICheckStrategy = 'upward' | 'downward' | 'both' | 'none';
 
 export type ICheck = boolean | ICheckStrategy;
 
-export type IDraggable = boolean | IDropType;
+export type IDragdrop = boolean | IDropType;
 
 export type IOperateItem = 'add' | 'delete' | 'edit';
 
