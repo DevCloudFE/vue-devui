@@ -45,6 +45,7 @@ export default defineComponent({
       store.updateFirstDefaultColumn();
       store.updateRows();
       updateColumnWidth();
+      window.addEventListener('resize', updateColumnWidth);
     });
 
     return () => (
