@@ -102,7 +102,9 @@ export default defineComponent({
         <span>{{ maxValue }}</span>
       </div>
     </div>
-    <d-input-number class="snapshot-value" v-model="inputValue" :min="0" :max="20"></d-input-number>
+    <div class="snapshot-value">
+      <d-input-number  v-model="inputValue" :min="0" :max="20"></d-input-number>
+    </div>
   </div>
 
 </template>
