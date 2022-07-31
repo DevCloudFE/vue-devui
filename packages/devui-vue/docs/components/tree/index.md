@@ -769,14 +769,14 @@ export default defineComponent({
 
 ### 可拖拽树
 
-:::demo 通过OperableTree的 draggable 属性配置节点的拖拽功能，并支持外部元素拖拽入树。
+:::demo 通过OperableTree的 dragdrop 属性配置节点的拖拽功能，并支持外部元素拖拽入树。
 
 ```vue
 <template>
   <h6><p>Default</p></h6>
-  <d-tree :data="data" draggable ></d-tree>
+  <d-tree :data="data" dragdrop ></d-tree>
   <h6><p>Sortable</p></h6>
-  <d-tree :data="data" :draggable="{ dropPrev: true, dropNext: true, dropInner: true }"></d-tree>
+  <d-tree :data="data" :dragdrop="{ dropPrev: true, dropNext: true, dropInner: true }"></d-tree>
 </template>
 
 <script>
