@@ -74,7 +74,7 @@ function computeCompareElementHeight (compareElement: HTMLCollection): unknown{
  */
 function createInsertSortableShadow (sortDropArea: unknown, mouseObject: unknown, originId: string): void {
   const sortDropAreaArr: Array = [...sortDropArea.children];
-  if (sortDropAreaArr.length == 0){
+  if (sortDropAreaArr.length === 0){
     if (!document.getElementById(shadowId)){
       const shadowElement = createShadow(originId);
       sortDropArea.appendChild(shadowElement);
@@ -83,13 +83,11 @@ function createInsertSortableShadow (sortDropArea: unknown, mouseObject: unknown
     for (let index = 0; index < sortDropAreaArr.length; index++){
       const compareHeight = computeCompareElementHeight(sortDropAreaArr[index]);
       document.getElementById(shadowId) ? sortDropArea.removeChild(document.getElementById(shadowId)) : null;
-      if (index == sortDropAreaArr.length-1){
-        sortDropArea.appendChild(createShadow(originId));
-        break;
-      }
-      if (Math.floor(mouseObject.clientY)<= compareHeight){
+      if (Math.floor(mouseObject.clientY) <= (Math.floor(compareHeight / 2) + sortDropAreaArr[index].getBoundingClientRect().top)){
         sortDropArea.insertBefore(createShadow(originId), sortDropAreaArr[index]);
         break;
+      } else {
+        index === sortDropAreaArr.length - 1 && sortDropArea.appendChild(createShadow(originId));
       }
     }
   }
@@ -132,6 +130,85 @@ function deleteInsertedSortableShadow (dropSortArea: unknown): void{
   }
 }
 
+/**
+ *
+ * @param mouse
+ * @param sortableArea
+ * @returns
+ * @description 判断鼠标是否处于目标元素中
+ */
+function judgeMouseIsInSortableArea (mouse: MouseEvent, sortableArea: Element): boolean{
+  const { clientX, clientY } = mouse;
+  // 获取元素的位置
+  const eleLeft1 = sortableArea.getBoundingClientRect().left;
+  const eleLeft2 = sortableArea.getBoundingClientRect().right;
+  const eletop1 = sortableArea.getBoundingClientRect().top;
+  const eletop2 = sortableArea.getBoundingClientRect().bottom;
+
+  if ((clientX > eleLeft1) && (clientX < eleLeft2) && (clientY > eletop1) && (clientY < eletop2)){
+    return true;
+  } else {
+    return false;
+  }
+
+}
+
+/**
+ *
+ * @param mouse
+ * @param comparedArr
+ * @description         同源交换位置
+ */
+function sameOriginExchangeElementPosition (mouse: Event, comparedArr: Array, dragId: string, dropArea: Element): void{
+  if (comparedArr.length <= 1){
+    return;
+  }
+  for (let index = 0; index < comparedArr.length; index++){
+    if (mouse.clientY < comparedArr[index].getBoundingClientRect().top){
+      dropArea.insertBefore(document.getElementById(dragId), comparedArr[index]);
+      break;
+    }
+    if (index === comparedArr.length - 1 && (mouse.clientY > comparedArr[index].getBoundingClientRect().bottom)){
+      dropArea.appendChild(document.getElementById(dragId));
+      break;
+    }
+  }
+}
+
+/**
+ *
+ * @param mouse         当前鼠标对象
+ * @param comparedArr   待比较的数组
+ * @description
+ */
+function exchangeShadowPosition (mouse: Event, comparedArr: Array, dragId: string, dropArea: Element): void{
+  for (let index = 0; index < comparedArr.length; index++){
+    // 遇到shadow，直接跳过
+    if (comparedArr[index]?.id !== 'shadow0611'){
+      if (Math.floor(mouse.clientY) <= (comparedArr[index].getBoundingClientRect().top)){
+        console.log('------');
+        if (comparedArr[index-1]?.id !== 'shadow0611'){
+          if (document.getElementById('shadow0611')){
+            dropArea.removeChild(document.getElementById('shadow0611'));
+          }
+          dropArea.insertBefore(createShadow(dragId), comparedArr[index]);
+          break;
+        }
+      }
+      if (Math.floor(mouse.clientY) > (
+        comparedArr[comparedArr.length - 1].getBoundingClientRect().top)){
+        if (index === comparedArr.length - 1 && comparedArr[index]?.id !== 'shadow0611'){
+          // 如果存在shadow，则清除
+          if (document.getElementById('shadow0611')){
+            dropArea.removeChild(document.getElementById('shadow0611'));
+          }
+          dropArea.appendChild(createShadow(dragId));
+        }
+        break;
+      }
+    }
+  }
+}
 
 export {
   createShadow,
@@ -139,5 +216,8 @@ export {
   createInsertSortableShadow,
   deleteInsertedSortableShadow,
   computeCompareElementHeight,
-  insertDragElement
+  insertDragElement,
+  judgeMouseIsInSortableArea,
+  exchangeShadowPosition,
+  sameOriginExchangeElementPosition
 };
