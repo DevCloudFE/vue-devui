@@ -19,7 +19,7 @@ export default defineComponent({
   name: 'DEditableSelect',
   directives: {
     clickOutside,
-    dLoading: loadingDirective,
+    loading: loadingDirective,
   },
 
   props: editableSelectProps,
@@ -169,7 +169,7 @@ export default defineComponent({
                     width: props.width + 'px',
                   }}
                   class={`${ns.e('menu')}`}>
-                  <div class={`devui-dropdown-menu`} v-show={visible.value} v-d-loading={props.loading}>
+                  <div class={`devui-dropdown-menu`} v-show={visible.value} v-loading={props.loading}>
                     <ul
                       ref={dropdownRef}
                       class={`${ns.em('list', 'unstyled')} devui-scrollbar scroll-height`}
