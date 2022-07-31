@@ -1,11 +1,11 @@
 import { defineComponent, getCurrentInstance, inject } from 'vue';
 import { DropdownProps, DropdownPropsKey, SourceItemObj } from '../auto-complete-types';
-import dLoading from '../../../loading/src/loading-directive';
+import Loading from '../../../loading/src/loading-directive';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { createI18nTranslate } from '../../../locale/create';
 export default defineComponent({
   name: 'DAutoCompleteDropdown',
-  directives: { dLoading },
+  directives: { Loading },
   setup(props, ctx) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DAutoCompleteDropdown', app);
@@ -43,7 +43,7 @@ export default defineComponent({
     return () => {
       return (
         <div
-          v-dLoading={showLoading.value}
+          v-loading={showLoading.value}
           class={[
             dropdownMenuNs.b(),
             ns.e('dropdown-menu-cdk'),

@@ -329,6 +329,6 @@ export default {
 | message            | `string`                                                      | --                          | 可选，loading 时的提示信息                                            | [多 promise](#多promise)      |
 | loading-template-ref | `VNode`                                                       | --                          | 可选，自定义 loading 模板                                             | [自定义样式](#自定义样式)     |
 | backdrop           | `boolean`                                                     | true                        | 可选，loading 时是否显示遮罩                                          | [基本用法](#基本用法)         |
-| position-type       | `string`                                                      | relative                    | 可选，指定`dLoading`宿主元素的定位类型，<br>取值与 css position 属性一致。 | [基本用法](#基本用法)         |
+| position-type       | `string`                                                      | relative                    | 可选，指定`loading`宿主元素的定位类型，<br>取值与 css position 属性一致。 | [基本用法](#基本用法)         |
 | view               | {<br>&nbsp;&nbsp;top?: string, <br>&nbsp;&nbsp;left?: string <br>}                                 | {<br>&nbsp;&nbsp;top: '50%', <br>&nbsp;&nbsp;left: '50%'<br>} | 可选，调整 loading 的显示位置，<br>相对于宿主元素的顶部距离与左侧距离     | [基本用法](#基本用法)         |
 | z-index             | `number`                                                      | --                          | 可选，loading 加载提示的 z-index 值                                   | [基本用法](#基本用法)         |
