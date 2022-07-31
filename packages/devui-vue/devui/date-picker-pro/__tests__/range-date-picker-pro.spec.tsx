@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import dayjs from 'dayjs';
 import DRangeDatePickerPro from '../src/components/range-date-picker-pro';
 import { nextTick, ref, getCurrentInstance } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
@@ -307,14 +308,13 @@ describe('range-date-picker-pro test', () => {
     const vm = wrapper.vm;
     const inputNews = vm.$el.querySelectorAll('input');
     expect(inputNews.length).toBe(2);
-    const newDate = new Date(date.getTime() - 30 * 24 * 3600 * 1000);
+
     expect(inputNews[0].value).toBe(
-      `${newDate.getFullYear()}/${
-        newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1
-      }/${newDate.getDate()}`
+      dayjs().subtract(30, 'day').format('YYYY/MM/DD'),
     );
+
     expect(inputNews[1].value).toBe(
-      `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getDate()}`
+      `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getDate()}`,
     );
 
     wrapper.unmount();
@@ -362,15 +362,10 @@ describe('range-date-picker-pro test', () => {
     const vm = wrapper.vm;
     const inputNews = vm.$el.querySelectorAll('input');
     expect(inputNews.length).toBe(2);
-    const newDate = new Date(date.getTime() + 1 * 24 * 3600 * 1000);
-    expect(inputNews[0].value).toBe(
-      `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getDate()}`
-    );
-    expect(inputNews[1].value).toBe(
-      `${newDate.getFullYear()}/${
-        newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1
-      }/${newDate.getDate()}`
-    );
+
+    expect(inputNews[0].value).toBe(dayjs().format('YYYY/MM/DD'),);
+
+    expect(inputNews[1].value).toBe(dayjs().add(1, 'day').format('YYYY/MM/DD'));
 
     wrapper.unmount();
   });

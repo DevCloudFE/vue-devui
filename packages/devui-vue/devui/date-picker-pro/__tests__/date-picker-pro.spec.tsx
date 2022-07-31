@@ -352,12 +352,7 @@ describe('date-picker-pro test', () => {
     await nextTick();
     const vm = wrapper.vm;
     const inputNew = vm.$el.querySelector('input');
-    const newDate = new Date(date.getTime() - 30 * 24 * 3600 * 1000);
-    expect(inputNew.value).toBe(
-      `${newDate.getFullYear()}/${
-        newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1
-      }/${newDate.getDate()}`
-    );
+    expect(inputNew.value).toBe(dayjs().subtract(30, 'day').format('YYYY/MM/DD'));
 
     wrapper.unmount();
   });
@@ -404,12 +399,7 @@ describe('date-picker-pro test', () => {
     await nextTick();
     const vm = wrapper.vm;
     const inputNew = vm.$el.querySelector('input');
-    const newDate = new Date();
-    expect(inputNew.value).toBe(
-      `${newDate.getFullYear()}/${
-        newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1
-      }/${newDate.getDate()}`
-    );
+    expect(inputNew.value).toBe(dayjs().format('YYYY/MM/DD'));
 
     wrapper.unmount();
   });
