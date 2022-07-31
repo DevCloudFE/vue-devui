@@ -355,7 +355,6 @@ describe('range-date-picker-pro test', () => {
 
     const button = footer.find('button');
     expect(button.exists()).toBeTruthy();
-    const date = new Date();
     await button.trigger('click');
 
     await nextTick();
