@@ -1,12 +1,12 @@
 import { App } from 'vue';
-import Loading from './src/loading-directive';
 import LoadingService from './src/loading-service';
+import LoadingDirective from './src/loading-directive';
 
 export * from './src/loading-types';
 
 export {
   LoadingService,
-  Loading
+  LoadingDirective
 };
 
 export default {
@@ -14,7 +14,7 @@ export default {
   category: '反馈',
   status: '100%',
   install(app: App): void {
-    app.directive('dLoading', Loading);
+    app.directive('loading', LoadingDirective);
     app.config.globalProperties.$loadingService = LoadingService;
   }
 };

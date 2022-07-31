@@ -4,7 +4,7 @@ import { useTable, useTableLayout, useTableWatcher } from './composables/use-tab
 import { createStore } from './store';
 import FixHeader from './components/fix-header';
 import NormalHeader from './components/normal-header';
-import { Loading } from '../../loading';
+import { LoadingDirective } from '../../loading';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './table.scss';
 
@@ -13,7 +13,7 @@ let tableIdInit = 1;
 export default defineComponent({
   name: 'DTable',
   directives: {
-    dLoading: Loading,
+    Loading: LoadingDirective,
   },
   props: tableProps,
   emits: ['sort-change', 'cell-click', 'row-click', 'check-change', 'check-all-change', 'expand-change', 'load-more'],
@@ -48,7 +48,7 @@ export default defineComponent({
     });
 
     return () => (
-      <div ref={tableRef} class={ns.b()} style={styles.value} v-dLoading={props.showLoading}>
+      <div ref={tableRef} class={ns.b()} style={styles.value} v-loading={props.showLoading}>
         <div ref={hiddenColumns} class="hidden-columns">
           {ctx.slots.default?.()}
         </div>

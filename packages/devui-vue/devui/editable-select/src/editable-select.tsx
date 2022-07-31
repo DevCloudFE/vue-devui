@@ -1,8 +1,8 @@
 import { defineComponent, withModifiers, computed, ref, SetupContext, watch, Teleport, Transition, getCurrentInstance } from 'vue';
 import type { Ref } from 'vue';
 import { editableSelectProps, EditableSelectProps, OptionObjectItem } from './editable-select-types';
-import clickOutside from '../../shared/devui-directive/clickoutside';
-import loadingDirective from '../../loading/src/loading-directive';
+import ClickOutside from '../../shared/devui-directive/clickoutside';
+import LoadingDirective from '../../loading/src/loading-directive';
 import { className } from '../src/utils/index';
 import './editable-select.scss';
 import { useSelect } from './composables/use-select';
@@ -18,8 +18,8 @@ import { createI18nTranslate } from '../../locale/create';
 export default defineComponent({
   name: 'DEditableSelect',
   directives: {
-    clickOutside,
-    loading: loadingDirective,
+    ClickOutside,
+    Loading: LoadingDirective,
   },
 
   props: editableSelectProps,
