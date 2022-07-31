@@ -346,7 +346,6 @@ describe('date-picker-pro test', () => {
 
     const button = rightArea.find('button');
     expect(button.exists()).toBeTruthy();
-    const date = new Date();
     await button.trigger('click');
 
     await nextTick();
