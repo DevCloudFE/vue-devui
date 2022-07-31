@@ -83,7 +83,7 @@ export default defineComponent({
       let dragdropProps = {};
       if (dragdrop.value && !data.value?.disableSelect) {
         dragdropProps = {
-          dragdrop: true,
+          draggable: true,
           onDragstart: (event: DragEvent) => onDragstart?.(event, data.value),
           onDragover: (event: DragEvent) => onDragover?.(event),
           onDragleave: (event: DragEvent) => onDragleave?.(event),
