@@ -5,6 +5,8 @@ import { nextTick, ref, getCurrentInstance } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import DButton from '../../button/src/button';
 import { Locale } from '../../locale';
+import { getDateIndex, getSelectedDate, getSelectedIndex } from './utils';
+import { DATE_FORMAT, TIME_FORMAT } from './const';
 
 const ns = useNamespace('date-picker-pro', true);
 const baseClass = ns.b();
@@ -76,15 +78,14 @@ describe('date-picker-pro test', () => {
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
 
     const date = new Date();
-    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
-    const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
+    const todayIndex = getDateIndex(date);
+
+    const selectIndex = getSelectedIndex(todayIndex);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
     const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
-    expect(dayjs(datePickerProValue.value).format('YYYY/M/D')).toBe(
-      `${date.getFullYear()}/${date.getMonth() + 1}/${todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1}`
-    );
+    expect(dayjs(datePickerProValue.value).format(DATE_FORMAT)).toBe(getSelectedDate(todayIndex, date));
 
     const pickerPanelNew = container.find(pickerPanelClass);
     expect(pickerPanelNew.exists()).toBeFalsy();
@@ -113,7 +114,7 @@ describe('date-picker-pro test', () => {
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
 
     const date = new Date();
-    const selectIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
+    const selectIndex = getDateIndex(date);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
     const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
@@ -142,19 +143,15 @@ describe('date-picker-pro test', () => {
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
 
     const date = new Date();
-    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
-    const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
+    const todayIndex = getDateIndex(date);
+    const selectIndex = getSelectedIndex(todayIndex);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
     const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
     const vm = wrapper.vm;
     const inputNew = vm.$el.querySelector('input');
-    expect(inputNew.value).toBe(
-      `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}-${
-        todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1
-      }`
-    );
+    expect(dayjs(inputNew.value).format(DATE_FORMAT)).toBe(getSelectedDate(todayIndex, date));
 
     wrapper.unmount();
   });
@@ -186,20 +183,20 @@ describe('date-picker-pro test', () => {
     expect(timeUl[2].element.childElementCount).toBe(60);
 
     const date = new Date();
-    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
-    const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
+    const todayIndex = getDateIndex(date);
+    const selectIndex = getSelectedIndex(todayIndex);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
     const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
-    expect(dayjs(datePickerProValue.value).format('YYYY/M/D hh:mm:ss')).toBe(
-      `${date.getFullYear()}/${date.getMonth() + 1}/${todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1} 12:00:00`
+    expect(dayjs(datePickerProValue.value).format(TIME_FORMAT)).toBe(
+      `${getSelectedDate(todayIndex, date)} 12:00:00`
     );
 
     const liItems = timeUl[0].findAll('.time-li');
     await liItems[3].trigger('click');
-    expect(dayjs(datePickerProValue.value).format('YYYY/M/D hh:mm:ss')).toBe(
-      `${date.getFullYear()}/${date.getMonth() + 1}/${todayIndex > 20 ? date.getDate() - 1 : date.getDate() + 1} 03:00:00`
+    expect(dayjs(datePickerProValue.value).format(TIME_FORMAT)).toBe(
+      `${getSelectedDate(todayIndex, date)} 03:00:00`
     );
 
     const pickerPanelFooter = container.find(ns.e('panel-footer'));
@@ -272,9 +269,7 @@ describe('date-picker-pro test', () => {
     await nextTick();
     const vm = wrapper.vm;
     const input = vm.$el.querySelector('input');
-    expect(input.value).toBe(
-      `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getDate()}`
-    );
+    expect(input.value).toBe(dayjs(date).format(DATE_FORMAT));
     const singlePicker = container.find(ns.e('single-picker'));
     await singlePicker.trigger('mouseover');
     const icon = singlePicker.find(ns.m('icon-visible'));
@@ -351,7 +346,7 @@ describe('date-picker-pro test', () => {
     await nextTick();
     const vm = wrapper.vm;
     const inputNew = vm.$el.querySelector('input');
-    expect(inputNew.value).toBe(dayjs().subtract(30, 'day').format('YYYY/MM/DD'));
+    expect(inputNew.value).toBe(dayjs().subtract(30, 'day').format(DATE_FORMAT));
 
     wrapper.unmount();
   });
@@ -398,7 +393,7 @@ describe('date-picker-pro test', () => {
     await nextTick();
     const vm = wrapper.vm;
     const inputNew = vm.$el.querySelector('input');
-    expect(inputNew.value).toBe(dayjs().format('YYYY/MM/DD'));
+    expect(inputNew.value).toBe(dayjs().format(DATE_FORMAT));
 
     wrapper.unmount();
   });
