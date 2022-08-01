@@ -31,7 +31,8 @@ export default defineComponent({
       onDragstart,
       onDragover,
       onDragleave,
-      onDrop
+      onDrop,
+      onDragend,
     } = inject(USE_TREE_TOKEN) as Partial<IUseTree>;
     const treeInstance = inject(TREE_INSTANCE) as ComponentInternalInstance | null;
     const ns = useNamespace('tree');
@@ -88,6 +89,7 @@ export default defineComponent({
           onDragover: (event: DragEvent) => onDragover?.(event),
           onDragleave: (event: DragEvent) => onDragleave?.(event),
           onDrop: (event: DragEvent) => onDrop?.(event, data.value),
+          onDragend: (event: DragEvent) => onDragend?.(event),
         };
       }
       return (
