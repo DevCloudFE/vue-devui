@@ -5,6 +5,8 @@ import { nextTick, ref, getCurrentInstance } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import DButton from '../../button/src/button';
 import { Locale } from '../../locale';
+import { getDateIndex, getSelectedDate, getSelectedIndex } from './utils';
+import { DATE_FORMAT } from './const';
 
 const datePickerNs = useNamespace('date-picker-pro', true);
 const rangeDatePickerNs = useNamespace('range-date-picker-pro', true);
@@ -85,28 +87,22 @@ describe('range-date-picker-pro test', () => {
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
 
     const date = new Date();
-    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
-    const selectIndex = todayIndex > 20 ? todayIndex : todayIndex + 1;
+    const todayIndex = getDateIndex(date);
+    const selectIndex = getSelectedIndex(todayIndex);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
     const monthContentContainer = tableMonthItems[1].find(datePickerNs.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
     await nextTick();
-    expect(inputs[0].element.value).toBe(
-      `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${
-        todayIndex > 20 ? date.getDate() : date.getDate() + 1
-      }`
-    );
+
+    expect(dayjs(inputs[0].element.value).format(DATE_FORMAT)).toBe(getSelectedDate(todayIndex, date));
     expect(inputs[1].element.value).toBe('');
 
-    const newSelectIndex = todayIndex > 20 ? todayIndex : todayIndex + 5;
+    const newSelectIndex = getSelectedIndex(todayIndex, 5);
     await Items[newSelectIndex].trigger('click');
     await nextTick();
-    expect(inputs[0].element.value).toBe(
-      `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${
-        todayIndex > 20 ? date.getDate() : date.getDate() + 1
-      }`
-    );
+    expect(dayjs(inputs[0].element.value).format(DATE_FORMAT)).toBe(getSelectedDate(todayIndex, date, 5));
+
     // todo 选择第二个日期时，focusType判断仍然是start。 demo中是正确的，单测原因需进一步确定
     // expect(inputs[1].element.value).toBe(
     //   `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${
@@ -141,8 +137,8 @@ describe('range-date-picker-pro test', () => {
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
 
     const date = new Date();
-    const todayIndx = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
-    const selectIndex = date.getDate() > 20 ? todayIndx : todayIndx + 5;
+    const todayIndx = getDateIndex(date);
+    const selectIndex = getSelectedIndex(todayIndx, 5);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
     const monthContentContainer = tableMonthItems[1].find(datePickerNs.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
@@ -223,9 +219,7 @@ describe('range-date-picker-pro test', () => {
     await nextTick();
     const vm = wrapper.vm;
     const inputs = vm.$el.querySelectorAll('input');
-    expect(inputs[0].value).toBe(
-      `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getDate()}`
-    );
+    expect(inputs[0].value).toBe(dayjs(date).format(DATE_FORMAT));
     expect(inputs[1].value).toBe('');
 
     const rangePicker = container.find(rangeDatePickerNs.e('range-picker'));
@@ -310,12 +304,10 @@ describe('range-date-picker-pro test', () => {
     expect(inputNews.length).toBe(2);
 
     expect(inputNews[0].value).toBe(
-      dayjs().subtract(30, 'day').format('YYYY/MM/DD'),
+      dayjs().subtract(30, 'day').format(DATE_FORMAT),
     );
 
-    expect(inputNews[1].value).toBe(
-      `${date.getFullYear()}/${date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getDate()}`,
-    );
+    expect(inputNews[1].value).toBe(dayjs(date).format(DATE_FORMAT));
 
     wrapper.unmount();
   });
@@ -362,9 +354,9 @@ describe('range-date-picker-pro test', () => {
     const inputNews = vm.$el.querySelectorAll('input');
     expect(inputNews.length).toBe(2);
 
-    expect(inputNews[0].value).toBe(dayjs().format('YYYY/MM/DD'),);
+    expect(inputNews[0].value).toBe(dayjs().format(DATE_FORMAT),);
 
-    expect(inputNews[1].value).toBe(dayjs().add(1, 'day').format('YYYY/MM/DD'));
+    expect(inputNews[1].value).toBe(dayjs().add(1, 'day').format(DATE_FORMAT));
 
     wrapper.unmount();
   });

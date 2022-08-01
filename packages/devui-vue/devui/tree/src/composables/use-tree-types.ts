@@ -147,6 +147,7 @@ export interface IUseDraggable {
   onDragover: (event: DragEvent) => void;
   onDragleave: (event: DragEvent) => void;
   onDrop: (event: DragEvent, dropNode: IInnerTreeNode) => void;
+  onDragend: (event: DragEvent) => void;
 }
 
 export interface IDropNode {

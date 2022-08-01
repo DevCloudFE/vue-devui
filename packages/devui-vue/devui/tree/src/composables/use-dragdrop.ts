@@ -91,6 +91,12 @@ export function useDragdrop(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
       return cloneData;
     };
 
+    const clearDragDropInfo = () => {
+      dragState.dropType = undefined;
+      dragState.draggingNode = null;
+      dragState.draggingTreeNode = null;
+    };
+
     const onDragstart = (event: DragEvent, treeNode: IInnerTreeNode): void => {
       event.stopPropagation();
       dragState.draggingNode = event.target as HTMLElement | null;
@@ -189,10 +195,14 @@ export function useDragdrop(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
         } catch (e) {
           console.error(e);
         }
-        dragState.dropType = undefined;
-        dragState.draggingNode = null;
-        dragState.draggingTreeNode = null;
+        clearDragDropInfo();
       }
+    };
+
+    const onDragend = (event: DragEvent) => {
+      event.preventDefault();
+      event.stopPropagation();
+      clearDragDropInfo();
     };
 
     return {
@@ -200,6 +210,7 @@ export function useDragdrop(props: TreeProps, data: Ref<IInnerTreeNode[]>) {
       onDragover,
       onDragleave,
       onDrop,
+      onDragend,
     };
   };
 }
