@@ -132,7 +132,6 @@ export default defineComponent({
           class={rootClassName.value}
           style={[
             props['collapsed'] ? `width:${props['collapsedIndent'] * 2}px` : `width: ${props['width']}`,
-            // 'white-space: nowrap',
           ]}>
           {ctx.slots.default?.()}
           <SubMenu
