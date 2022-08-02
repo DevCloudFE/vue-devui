@@ -36,7 +36,7 @@ export const cascaderProps = {
    * @default 200
    */
   width: {
-    type: Number || String,
+    type: [Number, String],
     default: 200,
   },
   /**
@@ -45,7 +45,7 @@ export const cascaderProps = {
    * @default 200
    */
   dropdownWidth: {
-    type: Number || String,
+    type: [Number, String],
     default: 200,
   },
   /**
@@ -189,7 +189,7 @@ export const cascaderulProps = {
    * @default 200
    */
   dropdownWidth: {
-    type: Number || String,
+    type: [Number, String],
     default: 200,
   },
   /**
