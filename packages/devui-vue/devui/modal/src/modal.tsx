@@ -28,7 +28,7 @@ export default defineComponent({
           <div class={ns.e('container')} onClick={onOverlayClick}>
             <Transition name={ns.m('wipe')}>
               {showModal.value && (
-                <div class={ns.b()} {...attrs}>
+                <div class={ns.b()} {...attrs} onClick={(e: Event) => e.stopPropagation()}>
                   {showClose.value && (
                     <Icon name="close" class="btn-close" size="var(--devui-font-size-md,12px)" onClick={onCloseBtnClick}></Icon>
                   )}
