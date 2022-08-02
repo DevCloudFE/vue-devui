@@ -45,7 +45,6 @@ export default defineComponent({
     const clickHandle = (e: MouseEvent) => {
       e.stopPropagation();
       const ele = e.target as HTMLElement;
-      console.log(ele);
       if (ele.classList.contains(subMenuClass) && isHorizontal) {
         return;
       }
