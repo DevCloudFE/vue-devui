@@ -43,7 +43,6 @@ export default defineComponent({
     const resetOverflowContainerSelectState = (e: Element) => {
       const children = Array.from(e.children);
       for (const item of children){
-        console.log(item.classList);
         if (item.classList.contains(selectClassName)){
           overflowContainerClassName[selectClassName] = true;
           break;
