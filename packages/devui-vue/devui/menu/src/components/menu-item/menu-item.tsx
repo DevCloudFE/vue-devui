@@ -40,7 +40,6 @@ export default defineComponent({
       [menuItemDisabled]: disabled.value,
     }));
     const onClick = (e: MouseEvent) => {
-      // e.stopPropagation();
       const ele = e.currentTarget as HTMLElement;
       let changeRouteResult = undefined;
       if (!props.disabled) {

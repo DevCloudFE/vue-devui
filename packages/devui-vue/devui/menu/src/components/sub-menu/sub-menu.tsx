@@ -43,7 +43,6 @@ export default defineComponent({
       }
     }
     const clickHandle = (e: MouseEvent) => {
-      // e.preventDefault();
       e.stopPropagation();
       const ele = e.target as HTMLElement;
       console.log(ele);
