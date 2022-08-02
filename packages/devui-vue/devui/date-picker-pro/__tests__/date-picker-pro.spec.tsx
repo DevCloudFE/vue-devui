@@ -189,15 +189,11 @@ describe('date-picker-pro test', () => {
     const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
     const Items = monthContentContainer.findAll('td');
     await Items[selectIndex].trigger('click');
-    expect(dayjs(datePickerProValue.value).format(TIME_FORMAT)).toBe(
-      `${getSelectedDate(todayIndex, date)} 12:00:00`
-    );
+    expect(dayjs(datePickerProValue.value).format(TIME_FORMAT)).toBe(`${getSelectedDate(todayIndex, date)} 12:00:00`);
 
     const liItems = timeUl[0].findAll('.time-li');
     await liItems[3].trigger('click');
-    expect(dayjs(datePickerProValue.value).format(TIME_FORMAT)).toBe(
-      `${getSelectedDate(todayIndex, date)} 03:00:00`
-    );
+    expect(dayjs(datePickerProValue.value).format(TIME_FORMAT)).toBe(`${getSelectedDate(todayIndex, date)} 03:00:00`);
 
     const pickerPanelFooter = container.find(ns.e('panel-footer'));
     const button = pickerPanelFooter.find('button');
@@ -429,11 +425,11 @@ describe('date-picker-pro test', () => {
     expect(pickerPanel.exists()).toBeTruthy();
 
     const yearListItems = pickerPanel.findAll(yearListItemClass);
-    expect(yearListItems.length).toBe(13);
+    expect(yearListItems.length).toBe(11);
     const weekHeader = pickerPanel.find(weekHeaderClass);
     expect(weekHeader.findAll('td').length).toBe(7);
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
-    expect(tableMonthItems.length).toBe(12);
+    expect(tableMonthItems.length).toBe(4);
 
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();

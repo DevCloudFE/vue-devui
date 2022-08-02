@@ -303,9 +303,7 @@ describe('range-date-picker-pro test', () => {
     const inputNews = vm.$el.querySelectorAll('input');
     expect(inputNews.length).toBe(2);
 
-    expect(inputNews[0].value).toBe(
-      dayjs().subtract(30, 'day').format(DATE_FORMAT),
-    );
+    expect(inputNews[0].value).toBe(dayjs().subtract(30, 'day').format(DATE_FORMAT));
 
     expect(inputNews[1].value).toBe(dayjs(date).format(DATE_FORMAT));
 
@@ -354,7 +352,7 @@ describe('range-date-picker-pro test', () => {
     const inputNews = vm.$el.querySelectorAll('input');
     expect(inputNews.length).toBe(2);
 
-    expect(inputNews[0].value).toBe(dayjs().format(DATE_FORMAT),);
+    expect(inputNews[0].value).toBe(dayjs().format(DATE_FORMAT));
 
     expect(inputNews[1].value).toBe(dayjs().add(1, 'day').format(DATE_FORMAT));
 
@@ -391,11 +389,11 @@ describe('range-date-picker-pro test', () => {
     expect(pickerPanel.exists()).toBeTruthy();
 
     const yearListItems = pickerPanel.findAll(yearListItemClass);
-    expect(yearListItems.length).toBe(13);
+    expect(yearListItems.length).toBe(11);
     const weekHeader = pickerPanel.find(weekHeaderClass);
     expect(weekHeader.findAll('td').length).toBe(7);
     const tableMonthItems = pickerPanel.findAll(tableMonthClass);
-    expect(tableMonthItems.length).toBe(12);
+    expect(tableMonthItems.length).toBe(4);
 
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
