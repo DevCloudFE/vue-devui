@@ -36,26 +36,26 @@ describe('option', () => {
     });
 
     const container = wrapper.find(baseClass);
-    let dropdown = wrapper.find(dropdownCls);
+    let dropdown = document.querySelector(dropdownCls);
 
     const input = wrapper.find<HTMLInputElement>(selectInputCls);
 
     expect(container.exists()).toBeTruthy();
-    expect(dropdown.exists()).toBeFalsy();
+    expect(dropdown).toBeFalsy();
 
     await input.trigger('click');
     await nextTick();
-    // isVisible不会自动更新需要重新获取
-    dropdown = wrapper.find(dropdownCls);
-    expect(dropdown.isVisible()).toBeTruthy();
+    dropdown = document.querySelector(dropdownCls);
+    expect(dropdown).toBeTruthy();
     expect(container.classes()).toContain(selectOpenCls);
-    const listItems = wrapper.findAll(selectItemCls);
+    const listItems = document.querySelectorAll(selectItemCls);
     expect(listItems.length).toBe(6);
 
-    await listItems[2].trigger('click');
+    await listItems[2].dispatchEvent(new Event('click'));
     expect(value.value).toBe('Option 3');
     wrapper.unmount();
   });
+
   it('option items data changed work', async () => {
     const value = ref('');
     const items = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
@@ -77,19 +77,20 @@ describe('option', () => {
 
     await container.trigger('click');
     await nextTick();
-    let listItems = wrapper.findAll(selectItemCls);
+    let listItems = document.querySelectorAll(selectItemCls);
     expect(listItems.length).toBe(6);
-    await listItems[2].trigger('click');
+    await listItems[2].dispatchEvent(new Event('click'));
     expect(value.value).toBe('Option 3');
 
     options.data = new Array(3).fill(0).map((item, i) => `Test ${i + 1}`);
     await nextTick();
-    listItems = wrapper.findAll(selectItemCls);
+    listItems = document.querySelectorAll(selectItemCls);
     expect(listItems.length).toBe(3);
-    await listItems[0].trigger('click');
+    await listItems[0].dispatchEvent(new Event('click'));
     expect(value.value).toBe('Test 1');
     wrapper.unmount();
   });
+
   it('option item disabled work', async () => {
     const value = ref('');
     const items = new Array(6).fill(0).map((item, i) => {
@@ -114,10 +115,10 @@ describe('option', () => {
     const container = wrapper.find(baseClass);
 
     await container.trigger('click');
-    const listItems = wrapper.findAll(selectItemCls);
-    await listItems[1].trigger('click');
+    const listItems = document.querySelectorAll(selectItemCls);
+    await listItems[1].dispatchEvent(new Event('click'));
     expect(value.value).toBe('Option 2');
-    await listItems[0].trigger('click');
+    await listItems[0].dispatchEvent(new Event('click'));
     expect(value.value).toBe('Option 2');
     wrapper.unmount();
   });
