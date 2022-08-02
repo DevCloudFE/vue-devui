@@ -26,12 +26,6 @@ export default function useSelect(
   const isObjectOption = ref(false);
 
   const originRef = ref<HTMLElement>();
-  const dropdownWidth = computed(() => {
-    if (!originRef?.value?.clientWidth) {
-      return '100%';
-    }
-    return originRef.value.clientWidth + 'px';
-  });
 
   // 控制弹窗开合
   const isOpen = ref<boolean>(false);
@@ -344,7 +338,6 @@ export default function useSelect(
     emptyText,
     isLoading,
     isShowEmptyText,
-    dropdownWidth,
     onClick,
     handleClear,
     valueChange,
