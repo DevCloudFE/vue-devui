@@ -13,7 +13,6 @@ const selectItemCls = ns.e('item');
 const selectInputCls = ns.e('input');
 
 const selectOptionGroupCls = ns.e('group');
-const optionGroupTitleCls = ns.e('group-title');
 
 describe('optionGroup', () => {
   it('select customize optionGroup work', async () => {
