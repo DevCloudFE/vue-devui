@@ -38,7 +38,7 @@ export default function usePickerPro(
     () => {
       toggleChange(false);
     },
-    { capture: false }
+    { ignore: [originRef] }
   );
 
   const onFocus = function (e: MouseEvent) {

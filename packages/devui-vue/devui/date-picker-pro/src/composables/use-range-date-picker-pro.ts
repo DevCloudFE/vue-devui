@@ -36,7 +36,7 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     () => {
       toggleChange(false);
     },
-    { capture: false }
+    { ignore: [originRef] }
   );
 
   const focusHandler = function (e: MouseEvent) {

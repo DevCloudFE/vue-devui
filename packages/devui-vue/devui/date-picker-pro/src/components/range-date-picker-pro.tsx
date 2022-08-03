@@ -75,8 +75,6 @@ export default defineComponent({
                   },
                   ['stop']
                 )}
-                onClick={withModifiers(() => ({}), ['stop'])}
-                onPointerup={withModifiers(() => ({}), ['stop'])}
                 size={pickerSize.value}
                 disabled={pickerDisabled.value}
                 v-slots={{
@@ -107,8 +105,6 @@ export default defineComponent({
                   },
                   ['stop']
                 )}
-                onClick={withModifiers(() => ({}), ['stop'])}
-                onPointerup={withModifiers(() => ({}), ['stop'])}
                 size={pickerSize.value}
                 disabled={pickerDisabled.value}
                 v-slots={{

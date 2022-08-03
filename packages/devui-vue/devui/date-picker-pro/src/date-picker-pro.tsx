@@ -56,8 +56,6 @@ export default defineComponent({
               modelValue={displayDateValue.value}
               placeholder={placeholder.value || t('placeholder')}
               onFocus={withModifiers(onFocus, ['stop'])}
-              onClick={withModifiers(() => ({}), ['stop'])}
-              onPointerup={withModifiers(() => ({}), ['stop'])}
               size={pickerSize.value}
               disabled={pickerDisabled.value}
               error={isValidateError.value}
