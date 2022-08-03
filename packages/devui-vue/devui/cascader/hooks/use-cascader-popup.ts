@@ -31,7 +31,7 @@ export const popupHandles = (props: CascaderProps, overlayRef: Ref, origin: Ref)
     () => {
       menuShow.value = false;
     },
-    { capture: false, ignore: [origin] }
+    { ignore: [origin] }
   );
 
   return {
