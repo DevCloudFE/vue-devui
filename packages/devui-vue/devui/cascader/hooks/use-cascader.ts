@@ -1,5 +1,5 @@
+import { ref, SetupContext, toRef, reactive, Ref, watch, onMounted } from 'vue';
 import { cloneDeep } from 'lodash';
-import { ref, SetupContext, toRef, reactive, Ref, watch } from 'vue';
 import { initActiveIndexs, initSingleIptValue } from './use-cascader-single';
 import { initMultipleCascaderItem, initTagList, getMultiModelValues } from './use-cascader-multiple';
 import type { CascaderItem, CascaderValueType, CascaderProps, UseCascaderFn } from '../src/cascader-types';
@@ -190,6 +190,11 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     inputValue,
     cascaderOptions
   );
+
+  onMounted(() => {
+    origin.value?.addEventListener('click', openPopup);
+  });
+
   return {
     origin,
     overlay,
