@@ -92,7 +92,7 @@ export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string,
     () => {
       showPopup.value = false;
     },
-    { capture: false }
+    { capture: false, ignore: [inputDom] }
   );
 
   const clearAll = (e: MouseEvent) => {

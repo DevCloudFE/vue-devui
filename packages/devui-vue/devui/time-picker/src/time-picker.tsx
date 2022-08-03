@@ -69,8 +69,6 @@ export default defineComponent({
             readonly={props.readonly}
             size={props.size}
             onFocus={withModifiers(clickVerifyFun, ['stop'])}
-            onClick={withModifiers(() => ({}), ['stop'])}
-            onPointerup={withModifiers(() => ({}), ['stop'])}
             v-slots={{
               suffix: () => (
                 <span class="time-input-icon">
