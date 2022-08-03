@@ -36,9 +36,13 @@ export default function useSelect(
     isOpen.value = bool;
     ctx.emit('toggle-change', bool);
   };
-  onClickOutside(containerRef, () => {
-    toggleChange(false);
-  });
+  onClickOutside(
+    dropdownRef,
+    () => {
+      toggleChange(false);
+    },
+    { capture: false }
+  );
 
   const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
   const selectCls = computed(() => {
@@ -135,12 +139,6 @@ export default function useSelect(
     }
     return [];
   });
-
-  const onClick = function (e: MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleChange(!isOpen.value);
-  };
 
   const isSupportFilter = computed(() => isFunction(props.filter) || (typeof props.filter === 'boolean' && props.filter));
 
@@ -338,7 +336,6 @@ export default function useSelect(
     emptyText,
     isLoading,
     isShowEmptyText,
-    onClick,
     handleClear,
     valueChange,
     handleClose,

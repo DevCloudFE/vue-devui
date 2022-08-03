@@ -122,7 +122,6 @@ export interface UseSelectReturnType {
   emptyText: ComputedRef<string>;
   isLoading: Ref<boolean>;
   isShowEmptyText: ComputedRef<boolean>;
-  onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
   valueChange: (item: OptionObjectItem) => void;
   handleClose: () => void;

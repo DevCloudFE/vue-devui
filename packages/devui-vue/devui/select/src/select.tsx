@@ -1,4 +1,16 @@
-import { defineComponent, provide, reactive, ref, Transition, toRefs, getCurrentInstance, onMounted, Teleport, watch } from 'vue';
+import {
+  defineComponent,
+  provide,
+  reactive,
+  ref,
+  Transition,
+  toRefs,
+  getCurrentInstance,
+  onMounted,
+  Teleport,
+  watch,
+  withModifiers,
+} from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
 import { selectProps, SelectProps, SelectContext } from './select-types';
@@ -36,7 +48,6 @@ export default defineComponent({
       emptyText,
       isLoading,
       isShowEmptyText,
-      onClick,
       valueChange,
       handleClear,
       updateInjectOptions,
@@ -99,7 +110,13 @@ export default defineComponent({
     );
     return () => {
       return (
-        <div class={selectCls.value} ref={containerRef} onClick={onClick}>
+        <div
+          class={selectCls.value}
+          ref={containerRef}
+          onClick={withModifiers(() => {
+            toggleChange(!isOpen.value);
+          }, ['stop'])}
+          onPointerup={withModifiers(() => ({}), ['stop'])}>
           <SelectContent ref={selectRef}></SelectContent>
           <Teleport to="body">
             <Transition name="fade">

@@ -206,7 +206,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-button @click="toggleChange" style="margin-bottom: 10px">展开 / 隐藏</d-button>
+    <d-button @click.stop="toggleChange" @pointerup.stop="() => {}" style="margin-bottom: 10px">展开 / 隐藏</d-button>
     <d-select ref="demoSelect" v-model="toggleValue" :options="options"></d-select>
   </div>
 </template>
