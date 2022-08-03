@@ -5,8 +5,7 @@ import { onClickOutside } from '@vueuse/core';
 
 export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string, props: TimePickerProps): UseTimerPickerFn {
   const showPopup = ref(false);
-  const devuiTimePicker = ref();
-  const inputDom = ref<HTMLElement>();
+  const inputDom = ref();
   const overlayRef = ref<HTMLElement>();
   const timePopupDom = ref();
   const timePickerValue = ref('');
@@ -81,18 +80,20 @@ export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string,
     showPopup.value = true;
   };
 
-  const clickVerifyFun = (e: MouseEvent) => {
-    e.stopPropagation();
-
+  const clickVerifyFun = () => {
     if (props.disabled || props.readonly) {
       return;
     }
     mouseInputFun();
   };
 
-  onClickOutside(devuiTimePicker, () => {
-    showPopup.value = false;
-  });
+  onClickOutside(
+    overlayRef,
+    () => {
+      showPopup.value = false;
+    },
+    { capture: false }
+  );
 
   const clearAll = (e: MouseEvent) => {
     e.stopPropagation();
@@ -143,7 +144,6 @@ export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string,
   return {
     showPopup,
     trueTimeValue,
-    devuiTimePicker,
     timePickerValue,
     inputDom,
     timePopupDom,

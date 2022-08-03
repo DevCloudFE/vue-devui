@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, watch, SetupContext, Transition } from 'vue';
+import { defineComponent, ref, onMounted, watch, SetupContext, Transition, Teleport, withModifiers } from 'vue';
 import { TimePickerProps, timePickerProps } from './time-picker-types';
 import { Icon } from '../../icon';
 import useTimePicker from './composables/use-time-picker';
@@ -25,7 +25,6 @@ export default defineComponent({
     const {
       showPopup,
       trueTimeValue,
-      devuiTimePicker,
       inputDom,
       overlayRef,
       showClearIcon,
@@ -43,9 +42,7 @@ export default defineComponent({
       showPopup.value = false;
       ctx.emit('change', trueTimeValue.value);
     };
-    onMounted(() => {
-      isOutOpen();
-    });
+    onMounted(isOutOpen);
 
     watch(trueTimeValue, (newValue: string) => {
       ctx.emit('update:modelValue', trueTimeValue.value);
@@ -63,47 +60,50 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={ns.b()} ref={devuiTimePicker}>
-          <div ref={inputDom}>
-            <DInput
-              modelValue={vModeValue.value}
-              placeholder={props.placeholder}
-              disabled={props.disabled}
-              readonly={props.readonly}
-              size={props.size}
-              onFocus={clickVerifyFun}
-              v-slots={{
-                suffix: () => (
-                  <span class="time-input-icon">
-                    <span onClick={clearAll} class="clear-button">
-                      {showClearIcon.value ? <Icon size="small" name="close" /> : ''}
-                    </span>
-                    <Icon size="small" name="time" />
+        <div class={ns.b()}>
+          <DInput
+            modelValue={vModeValue.value}
+            ref={inputDom}
+            placeholder={props.placeholder}
+            disabled={props.disabled}
+            readonly={props.readonly}
+            size={props.size}
+            onFocus={withModifiers(clickVerifyFun, ['stop'])}
+            onClick={withModifiers(() => ({}), ['stop'])}
+            onPointerup={withModifiers(() => ({}), ['stop'])}
+            v-slots={{
+              suffix: () => (
+                <span class="time-input-icon">
+                  <span onClick={clearAll} class="clear-button">
+                    {showClearIcon.value ? <Icon size="small" name="close" /> : ''}
                   </span>
-                ),
-              }}></DInput>
-          </div>
-          <Transition name="fade">
-            <FlexibleOverlay
-              v-model={showPopup.value}
-              ref={overlayRef}
-              origin={inputDom.value}
-              position={position.value as Placement[]}
-              align="start">
-              <TimePopup
-                ref={timePopupDom}
-                showPopup={showPopup.value}
-                popupWidth={props.timePickerWidth}
-                popupFormat={props.format.toLowerCase()}
-                minTime={props.minTime}
-                maxTime={props.maxTime}
-                bindData={firsthandActiveTime.value}
-                onSubmitData={selectedTimeChange}
-                onChange={changeTimeData}>
-                {ctx.slots.customViewTemplate?.()}
-              </TimePopup>
-            </FlexibleOverlay>
-          </Transition>
+                  <Icon size="small" name="time" />
+                </span>
+              ),
+            }}></DInput>
+          <Teleport to="body">
+            <Transition name="fade">
+              <FlexibleOverlay
+                v-model={showPopup.value}
+                ref={overlayRef}
+                origin={inputDom.value?.$el}
+                position={position.value as Placement[]}
+                align="start">
+                <TimePopup
+                  ref={timePopupDom}
+                  showPopup={showPopup.value}
+                  popupWidth={props.timePickerWidth}
+                  popupFormat={props.format.toLowerCase()}
+                  minTime={props.minTime}
+                  maxTime={props.maxTime}
+                  bindData={firsthandActiveTime.value}
+                  onSubmitData={selectedTimeChange}
+                  onChange={changeTimeData}>
+                  {ctx.slots.customViewTemplate?.()}
+                </TimePopup>
+              </FlexibleOverlay>
+            </Transition>
+          </Teleport>
         </div>
       );
     };
