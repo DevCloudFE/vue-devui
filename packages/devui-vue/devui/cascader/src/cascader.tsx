@@ -94,13 +94,15 @@ export default defineComponent({
               )}
               {props.filterable && isSearching.value && (
                 <div class={ns.e('panel')}>
-                  {suggestionsList.value.map((item) => {
-                    return (
-                      <div class={ns.e('suggest-list')} onClick={() => chooseSuggestion(cloneDeep(item))}>
-                        {item.labelsString}
-                      </div>
-                    );
-                  })}
+                  {suggestionsList.value.length === 0
+                    ? <label style="font-weight: bold;">没有数据</label>
+                    : suggestionsList.value.map((item) => {
+                      return (
+                        <div class={ns.e('suggest-list')} onClick={() => chooseSuggestion(cloneDeep(item))}>
+                          {item.labelsString}
+                        </div>
+                      );
+                    })}
                 </div>
               )}
             </div>
