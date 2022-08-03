@@ -21,13 +21,13 @@ Menu 组件通常用于导航.
     </d-menu-item>
     <d-sub-menu title="课程" key="course">
       <d-menu-item key="c"> C </d-menu-item>
-      <d-sub-menu title="Python" key="python">
+      <d-sub-menu title="Python" key="python" disabled>
         <d-menu-item key="basic"> 基础 </d-menu-item>
         <d-menu-item key="advanced"> 进阶 </d-menu-item>
       </d-sub-menu>
     </d-sub-menu>
     <d-menu-item key="person">个人</d-menu-item>
-    <d-menu-item key="custom" href="https://www.baidu.com"> Link To Baidu </d-menu-item>
+    <d-menu-item key="custom" href="https://www.baidu.com" disabled> Link To Baidu </d-menu-item>
   </d-menu>
   <d-slider :min="0" :max="480" v-model="width"></d-slider>
 </template>
@@ -89,7 +89,7 @@ let width = ref(480);
         <template #icon>
           <i class="icon-setting"></i>
         </template>
-        <d-menu-item key="setting">
+        <d-menu-item key="setting-item">
           <span>Setting item</span>
         </d-menu-item>
       </d-sub-menu>
@@ -127,13 +127,14 @@ let width = ref(480);
 
 :::
 
-### 仅一项展开
+### 仅展开一项根子菜单
 
 :::demo 通过子菜单状态改变事件修改```open-keys```数组达到效果
 
 ``` vue
   <template>
-    <d-menu @submenu-change="submenuChange" :default-select-keys="['item1']" :open-keys="openKeys" width="256px">
+    <d-menu @submenu-change="submenuChange" :default-select-keys="['item1']" :open-keys="openKeys" width="256px"
+    >
       <d-sub-menu title="submenu-1" key="submenu-1">
         <template #icon>
           <i class="icon-infomation"></i>
@@ -141,6 +142,22 @@ let width = ref(480);
         <d-menu-item key="subemenu-item-1">
           <span>submenu-item-1</span>
         </d-menu-item>
+        <d-sub-menu title="submenu-4" key="submenu-4">
+          <template #icon>
+            <i class="icon-infomation"></i>
+          </template>
+          <d-menu-item key="subemenu-item-1">
+            <span>submenu-item-1</span>
+          </d-menu-item>
+        </d-sub-menu>
+        <d-sub-menu title="submenu-5" key="submenu-5">
+          <template #icon>
+            <i class="icon-infomation"></i>
+          </template>
+          <d-menu-item key="subemenu-item-1">
+            <span>submenu-item-1</span>
+          </d-menu-item>
+        </d-sub-menu>
       </d-sub-menu>
       <d-sub-menu title="submenu-2" key="submenu-2">
         <template #icon>
@@ -167,12 +184,16 @@ let width = ref(480);
   export default defineComponent({
     setup() {
       const openKeys = ref(['submenu-1']);
+      const rootSubMenuKeys = ref(['submenu-1','submenu-2','submenu-3']);
       const submenuChange = (e) => {
-        console.log(e)
-        openKeys.value.forEach(element => {
-          openKeys.value.shift()
-        });
-        openKeys.value.push(e.key)
+        console.log(e);
+        const {key} = e;
+        if (rootSubMenuKeys.value.includes(key)){
+          while (openKeys.value.length){
+            openKeys.value.shift();
+          }
+          openKeys.value.push(key);
+        }
       };
       return {
         openKeys,
@@ -204,14 +225,14 @@ let width = ref(480);
       <template #icon>
         <i class="icon-system"></i>
       </template>
-      <d-menu-item key="system">
+      <d-menu-item key="system-item">
         <span>System item</span>
       </d-menu-item>
       <d-sub-menu title="Setting" key="setting">
         <template #icon>
           <i class="icon-setting"></i>
         </template>
-        <d-menu-item key="setting">
+        <d-menu-item key="setting-item">
           <span>Setting item</span>
         </d-menu-item>
       </d-sub-menu>
@@ -306,7 +327,7 @@ export default defineComponent({
         <template #icon>
           <i class="icon-setting"></i>
         </template>
-        <d-menu-item key="setting">
+        <d-menu-item key="setting-item">
           <span>Setting item</span>
         </d-menu-item>
       </d-sub-menu>
