@@ -424,11 +424,11 @@ describe('date-picker-pro test', () => {
     expect(pickerPanel).toBeTruthy();
 
     const yearListItems = pickerPanel?.querySelectorAll(yearListItemClass);
-    expect(yearListItems?.length).toBe(13);
+    expect(yearListItems?.length).toBe(11);
     const weekHeader = pickerPanel?.querySelector(weekHeaderClass);
     expect(weekHeader?.getElementsByTagName('td').length).toBe(7);
     const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
-    expect(tableMonthItems?.length).toBe(12);
+    expect(tableMonthItems?.length).toBe(4);
 
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
