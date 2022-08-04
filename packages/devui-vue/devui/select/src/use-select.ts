@@ -9,6 +9,7 @@ import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
 
 export default function useSelect(
   props: SelectProps,
+  selectRef: Ref<HTMLElement | undefined>,
   ctx: SetupContext,
   focus: () => void,
   blur: () => void,
@@ -18,7 +19,6 @@ export default function useSelect(
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   const ns = useNamespace('select');
-  const containerRef = ref<HTMLElement>();
   const dropdownRef = ref<HTMLElement>();
 
   const selectDisabled = computed(() => formContext?.disabled || props.disabled);
@@ -26,12 +26,6 @@ export default function useSelect(
   const isObjectOption = ref(false);
 
   const originRef = ref<HTMLElement>();
-  const dropdownWidth = computed(() => {
-    if (!originRef?.value?.clientWidth) {
-      return '100%';
-    }
-    return originRef.value.clientWidth + 'px';
-  });
 
   // 控制弹窗开合
   const isOpen = ref<boolean>(false);
@@ -42,9 +36,13 @@ export default function useSelect(
     isOpen.value = bool;
     ctx.emit('toggle-change', bool);
   };
-  onClickOutside(containerRef, () => {
-    toggleChange(false);
-  });
+  onClickOutside(
+    dropdownRef,
+    () => {
+      toggleChange(false);
+    },
+    { ignore: [selectRef] }
+  );
 
   const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
   const selectCls = computed(() => {
@@ -141,12 +139,6 @@ export default function useSelect(
     }
     return [];
   });
-
-  const onClick = function (e: MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleChange(!isOpen.value);
-  };
 
   const isSupportFilter = computed(() => isFunction(props.filter) || (typeof props.filter === 'boolean' && props.filter));
 
@@ -333,7 +325,6 @@ export default function useSelect(
   return {
     selectDisabled,
     selectSize,
-    containerRef,
     originRef,
     dropdownRef,
     isOpen,
@@ -344,8 +335,6 @@ export default function useSelect(
     emptyText,
     isLoading,
     isShowEmptyText,
-    dropdownWidth,
-    onClick,
     handleClear,
     valueChange,
     handleClose,
