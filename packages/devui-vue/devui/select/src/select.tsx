@@ -10,6 +10,7 @@ import {
   Teleport,
   watch,
   withModifiers,
+  onUnmounted,
 } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
@@ -37,7 +38,6 @@ export default defineComponent({
     const {
       selectDisabled,
       selectSize,
-      containerRef,
       originRef,
       dropdownRef,
       isOpen,
@@ -58,7 +58,7 @@ export default defineComponent({
       isDisabled,
       toggleChange,
       isShowCreateOption,
-    } = useSelect(props, ctx, focus, blur, isSelectFocus, t);
+    } = useSelect(props, selectRef, ctx, focus, blur, isSelectFocus, t);
 
     const scrollbarNs = useNamespace('scrollbar');
     const ns = useNamespace('select');
@@ -90,6 +90,10 @@ export default defineComponent({
       window.addEventListener('resize', updateDropdownWidth);
     });
 
+    onUnmounted(() => {
+      window.removeEventListener('resize', updateDropdownWidth);
+    });
+
     provide(
       SELECT_TOKEN,
       reactive({
@@ -112,11 +116,9 @@ export default defineComponent({
       return (
         <div
           class={selectCls.value}
-          ref={containerRef}
           onClick={withModifiers(() => {
             toggleChange(!isOpen.value);
-          }, ['stop'])}
-          onPointerup={withModifiers(() => ({}), ['stop'])}>
+          }, ['stop'])}>
           <SelectContent ref={selectRef}></SelectContent>
           <Teleport to="body">
             <Transition name="fade">

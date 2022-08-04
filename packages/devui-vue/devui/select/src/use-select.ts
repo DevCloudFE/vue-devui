@@ -9,6 +9,7 @@ import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
 
 export default function useSelect(
   props: SelectProps,
+  selectRef: Ref<HTMLElement | undefined>,
   ctx: SetupContext,
   focus: () => void,
   blur: () => void,
@@ -18,7 +19,6 @@ export default function useSelect(
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   const ns = useNamespace('select');
-  const containerRef = ref<HTMLElement>();
   const dropdownRef = ref<HTMLElement>();
 
   const selectDisabled = computed(() => formContext?.disabled || props.disabled);
@@ -41,7 +41,7 @@ export default function useSelect(
     () => {
       toggleChange(false);
     },
-    { capture: false }
+    { ignore: [selectRef] }
   );
 
   const dropdownMenuMultipleNs = useNamespace('dropdown-menu-multiple');
@@ -325,7 +325,6 @@ export default function useSelect(
   return {
     selectDisabled,
     selectSize,
-    containerRef,
     originRef,
     dropdownRef,
     isOpen,

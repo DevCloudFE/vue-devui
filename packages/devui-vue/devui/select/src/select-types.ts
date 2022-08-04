@@ -111,7 +111,6 @@ export type OptionModelValue = number | string;
 export interface UseSelectReturnType {
   selectDisabled: ComputedRef<boolean>;
   selectSize: ComputedRef<SelectSize>;
-  containerRef: Ref<HTMLElement | undefined>;
   originRef: Ref<HTMLElement | undefined>;
   dropdownRef: Ref<HTMLElement | undefined>;
   isOpen: Ref<boolean>;
