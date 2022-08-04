@@ -1,3 +1,4 @@
+import { infinityTheme } from '../theme-collection';
 import { THEME_KEY } from './key-config';
 import { PrefersColorSchemeMediaQuery } from './media-query';
 import { Theme } from './theme';
@@ -56,11 +57,7 @@ export class ThemeService {
         theme = themes[themeId];
       }
     }
-    this.currentTheme = theme || {
-      id: 'empty-theme',
-      name: '',
-      data: {}
-    };
+    this.currentTheme = theme || infinityTheme;
     this.createColorTransition();
     if (!theme && allowDynamicTheme) {
       return;

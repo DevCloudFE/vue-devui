@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     outDir: 'build',
     lib: {
-      entry: path.resolve(__dirname, 'src/theme/index.ts'),
+      entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'DevuiTheme',
       fileName: (format) => `index.${format}.js`,
     },
