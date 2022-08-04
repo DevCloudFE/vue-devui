@@ -1,4 +1,4 @@
-import { defineComponent, Transition, SetupContext, provide } from 'vue';
+import { defineComponent, Transition, SetupContext, provide, Teleport } from 'vue';
 import { cloneDeep } from 'lodash';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import DCascaderList from '../components/cascader-list';
@@ -20,10 +20,9 @@ export default defineComponent({
     const ns = useNamespace('cascader');
     const {
       origin,
-      overlay,
+      overlayRef,
       menuShow,
       cascaderItemNeedProps,
-      devuiCascader,
       rootClasses,
       menuOpenClass,
       inputValue,
@@ -46,7 +45,7 @@ export default defineComponent({
     provide(POPPER_TRIGGER_TOKEN, origin);
 
     return () => (
-      <div ref={devuiCascader} style={rootStyle.inputWidth}>
+      <div style={rootStyle.inputWidth}>
         <PopperTrigger>
           {ctx.slots.host ? (
             ctx.slots.host()
@@ -78,42 +77,44 @@ export default defineComponent({
             </div>
           )}
         </PopperTrigger>
-        <Transition name="fade">
-          <FlexibleOverlay
-            origin={origin.value}
-            ref={overlay}
-            v-model={menuShow.value}
-            position={position.value as Placement[]}
-            align="start">
-            <div class={ns.e('drop-menu-animation')}>
-              {!isSearching.value && (
-                <div class={`${menuOpenClass.value} ${ns.e('dropdown-menu')}`}>
-                  {cascaderOptions.map((item, index) => {
-                    return (
-                      <DCascaderList
-                        cascaderItems={item}
-                        ul-index={index}
-                        cascaderItemNeedProps={cascaderItemNeedProps}
-                        cascaderOptions={cascaderOptions}
-                        {...props}></DCascaderList>
-                    );
-                  })}
-                </div>
-              )}
-              {props.filterable && isSearching.value && (
-                <div class={ns.e('panel')}>
-                  {suggestionsList.value.map((item) => {
-                    return (
-                      <div class={ns.e('suggest-list')} onClick={() => chooseSuggestion(cloneDeep(item))}>
-                        {item.labelsString}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </FlexibleOverlay>
-        </Transition>
+        <Teleport to="body">
+          <Transition name="fade">
+            <FlexibleOverlay
+              origin={origin.value}
+              ref={overlayRef}
+              v-model={menuShow.value}
+              position={position.value as Placement[]}
+              align="start">
+              <div class={ns.e('drop-menu-animation')}>
+                {!isSearching.value && (
+                  <div class={`${menuOpenClass.value} ${ns.e('dropdown-menu')}`}>
+                    {cascaderOptions.map((item, index) => {
+                      return (
+                        <DCascaderList
+                          cascaderItems={item}
+                          ul-index={index}
+                          cascaderItemNeedProps={cascaderItemNeedProps}
+                          cascaderOptions={cascaderOptions}
+                          {...props}></DCascaderList>
+                      );
+                    })}
+                  </div>
+                )}
+                {props.filterable && isSearching.value && (
+                  <div class={ns.e('panel')}>
+                    {suggestionsList.value.map((item) => {
+                      return (
+                        <div class={ns.e('suggest-list')} onClick={() => chooseSuggestion(cloneDeep(item))}>
+                          {item.labelsString}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </FlexibleOverlay>
+          </Transition>
+        </Teleport>
       </div>
     );
   },

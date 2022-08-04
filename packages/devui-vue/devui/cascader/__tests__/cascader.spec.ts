@@ -129,13 +129,16 @@ describe('cascader', () => {
 
     await input.trigger('click');
     await nextTick();
-    expect(wrapper.find(dropMenuWrapperClass).exists()).toBeTruthy();
+    const dropdownMenu = document.querySelector(dropMenuWrapperClass);
+    expect(dropdownMenu).toBeTruthy();
 
-    const ulList = wrapper.findAll(ulClass);
-    const firstUlLis = ulList[0].findAll(liClass);
-    expect(firstUlLis[1].classes()).toContain('leaf-active');
-    const selectUlLis = ulList[1].findAll(liClass);
-    expect(selectUlLis[2].classes()).toContain('leaf-active');
+    const ulList = document.querySelectorAll(ulClass);
+    const firstUlLis = ulList[0].querySelectorAll(liClass);
+    expect(firstUlLis[1].classList).toContain('leaf-active');
+    const selectUlLis = ulList[1].querySelectorAll(liClass);
+    expect(selectUlLis[2].classList).toContain('leaf-active');
+
+    wrapper.unmount();
   });
 
   it('cascader showPath work', async () => {
@@ -156,6 +159,8 @@ describe('cascader', () => {
 
     const input = wrapper.find(inputInnerClass);
     expect(input.element.value).toBe('option2.1 / option2.1-3');
+
+    wrapper.unmount();
   });
 
   it('cascader clearable work', async () => {
@@ -183,6 +188,8 @@ describe('cascader', () => {
     await nextTick();
     const input = wrapper.find(inputInnerClass);
     expect(input.element.value).toBe('');
+
+    wrapper.unmount();
   });
 
   it('cascader disabled work', async () => {
@@ -203,6 +210,8 @@ describe('cascader', () => {
 
     const disabledInput = wrapper.find(inputDisabledClass);
     expect(disabledInput.exists()).toBeTruthy();
+
+    wrapper.unmount();
   });
 
   it('cascader filterable work', async () => {
@@ -227,14 +236,16 @@ describe('cascader', () => {
       setTimeout(resolve, 300);
     });
 
-    const panel = wrapper.find(panelClass);
-    expect(panel.exists()).toBeTruthy();
+    const panel = document.querySelector(panelClass);
+    expect(panel).toBeTruthy();
 
-    const suggestionList = wrapper.findAll(suggestListClass);
+    const suggestionList = document.querySelectorAll(suggestListClass);
     expect(suggestionList.length).toBe(2);
 
-    suggestionList[1].trigger('click');
+    await suggestionList[1].dispatchEvent(new Event('click'));
     await nextTick();
     expect(input.element.value).toBe('option2.1-3');
+
+    wrapper.unmount();
   });
 });
