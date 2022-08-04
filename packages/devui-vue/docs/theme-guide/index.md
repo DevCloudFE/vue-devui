@@ -2,17 +2,9 @@
  
 `DevUI Theme`是`DevUI`提供的一个框架无关的通用主题定制方案，内置丰富的主题，并支持自定义主题。
  
-`DevUI Theme`提供了4种内置主题+5种扩展主题：
+`DevUI Theme`提供了5种内置主题：
  
 内置主题：
- 
-- 浅色主题`devuiLightTheme`
-- 深色主题`devuiDarkTheme`
-- 绿色主题`devuiGreenTheme`
-- 绿色深色主题`devuiGreenDarkTheme`
- 
-扩展主题：
- 
 - 无限主题`infinityTheme`（默认主题）
 - 紫罗兰主题`provenceTheme`
 - 蜜糖主题`sweetTheme`
@@ -28,24 +20,24 @@ npm i devui-theme
 ### 初始化主题
  
 ```ts
-import { ThemeServiceInit, devuiDarkTheme } from 'devui-theme';
+import { ThemeServiceInit, infinityTheme } from 'devui-theme';
  
-// 使用深色主题
-ThemeServiceInit({ devuiDarkTheme }, 'devuiDarkTheme');
+// 使用无限主题
+ThemeServiceInit({ infinityTheme }, 'infinityTheme');
 ```
  
 ### 切换主题
  
 ```ts
-import { ThemeServiceInit, devuiDarkTheme } from 'devui-theme';
+import { ThemeServiceInit, infinityTheme, galaxyTheme } from 'devui-theme';
 
 import { infinityTheme } from 'devui-theme';
  
-// 初始是`infinityTheme`无限主题
+// 初始是 infinityTheme 无限主题
 const themeService = ThemeServiceInit({ infinityTheme }, 'infinityTheme');
  
-// 可以动态切换成`devuiDarkTheme`深色主题
-themeService.applyTheme(devuiDarkTheme);
+// 可以动态切换成 galaxyTheme 追光主题
+themeService.applyTheme(galaxyTheme);
 ```
  
 ### 自定义主题
