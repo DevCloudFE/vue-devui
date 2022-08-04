@@ -32,9 +32,8 @@ export type sizeType = 'lg' | 'md' | 'sm';
 export type UseTimerPickerFn = {
   showPopup: Ref<boolean>;
   trueTimeValue: ComputedRef<string>;
-  devuiTimePicker: Ref<HTMLElement | undefined>;
   timePickerValue: Ref<string>;
-  inputDom: Ref<HTMLElement | undefined>;
+  inputDom: Ref;
   overlayRef: Ref<HTMLElement | undefined>;
   timePopupDom: Ref<HTMLElement | undefined>;
   showClearIcon: Ref<boolean>;
