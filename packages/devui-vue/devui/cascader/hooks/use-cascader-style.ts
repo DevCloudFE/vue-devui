@@ -12,6 +12,6 @@ export const useRootStyle = (props: CascaderProps): RootStyleFeedback => {
 // 弹出层样式
 export const useDropdownStyle = (props: CascaderulProps): DropdownStyleFeedback => {
   return {
-    dropdownWidth: `width: ${props?.dropdownWidth}px`,
+    dropdownWidth: `width: ${props.dropdownWidth}${typeof props.dropdownWidth === 'number' ? 'px' : ''}`,
   };
 };
