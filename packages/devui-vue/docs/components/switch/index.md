@@ -32,6 +32,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="scss">
+.devui-switch:not(:last-of-type) {
+  margin-right: 5px;
+}
+</style>
 ```
 
 :::
