@@ -1,12 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { defineComponent, getCurrentInstance, inject, onMounted, ref, watchEffect, watch } from 'vue';
 import type { ComponentInternalInstance, Ref } from 'vue';
-import { addLayer, pushElement, clearSelect, getLayer } from '../../composables/use-layer-operate';
-import { useClick } from '../../composables/use-click';
-import { useShowSubMenu } from './use-sub-menu';
-import { SubMenuProps, subMenuProps } from './sub-menu-types';
-import MenuTransition from '../menu-transition/menu-transition';
+import {
+  defineComponent,
+  getCurrentInstance,
+  inject,
+  onMounted,
+  ref,
+  watch,
+  watchEffect
+} from 'vue';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import { useClick } from '../../composables/use-click';
+import { addLayer, clearSelect, getLayer, pushElement } from '../../composables/use-layer-operate';
+import { useNearestMenuElement } from '../../composables/use-nearest-menu-element';
+import MenuTransition from '../menu-transition/menu-transition';
+import { SubMenuProps, subMenuProps } from './sub-menu-types';
+import { useShowSubMenu } from './use-sub-menu';
 
 const ns = useNamespace('menu');
 const subNs = useNamespace('submenu');
@@ -24,9 +33,9 @@ export default defineComponent({
     const {
       vnode: { key }
     } = getCurrentInstance() as ComponentInternalInstance;
-    const key_ = String(key);
-    const isOpen = ref(false);
+    let key_ = String(key);
     const defaultOpenKeys = inject('openKeys') as Ref<string[]>;
+    const isOpen = ref(defaultOpenKeys.value.includes(key_));
     const indent = inject('defaultIndent');
     const isCollapsed = inject('isCollapsed') as Ref<boolean>;
     const mode = inject('mode') as Ref<string>;
@@ -35,18 +44,11 @@ export default defineComponent({
     const isHorizontal = mode.value === 'horizontal';
     if (key_ === 'null') {
       console.warn(`[devui][menu]: Key can not be null`);
-    } else {
-      if (defaultOpenKeys.value.includes(key_)) {
-        isOpen.value = true;
-      } else {
-        isOpen.value = false;
-      }
+      key_ = `notKey-${new Date().getTime()} - ${Math.floor(Math.random()*10)}`;
     }
     const clickHandle = (e: MouseEvent) => {
-      e.preventDefault();
       e.stopPropagation();
-      const ele = e.currentTarget as HTMLElement;
-
+      const ele = useNearestMenuElement(e.target as HTMLElement);
       if (ele.classList.contains(subMenuClass) && isHorizontal) {
         return;
       }
@@ -55,26 +57,22 @@ export default defineComponent({
         useClick(e as clickEvent);
       }
       if (!props.disabled && mode.value !== 'horizontal') {
-        const target = e.target as HTMLElement;
-        let cur = e.target as HTMLElement;
-        if (target.tagName === 'UL') {
-          if (target.classList.contains(`${subMenuClass}-open`)) {
-            isOpen.value = !isOpen.value;
-          } else {
-            isOpen.value = isOpen.value;
-          }
+        const cur = useNearestMenuElement(e.target as HTMLElement);
+        const idx = defaultOpenKeys.value.indexOf(key_);
+        if (idx>=0 && cur.tagName === 'UL') {
+          defaultOpenKeys.value.splice(idx,1);
         } else {
-          while (cur && cur.tagName !== 'UL') {
-            if (cur.tagName === 'LI') {
-              break;
-            }
-            cur = cur.parentElement as HTMLElement;
-          }
-          if (cur.tagName === 'UL') {
-            isOpen.value = !isOpen.value;
+          if (cur.tagName === 'UL'){
+            defaultOpenKeys.value.push(key_);
           }
         }
-        parentEmit('submenu-change', { type: 'submenu-change', state: isOpen.value, key: key_, el: cur });
+        isOpen.value = defaultOpenKeys.value.indexOf(key_) >= 0;
+        parentEmit('submenu-change', {
+          type: 'submenu-change',
+          state: isOpen.value,
+          key: key_,
+          el: ele
+        });
       }
     };
     const wrapper = ref(null);
@@ -93,7 +91,7 @@ export default defineComponent({
     watch(
       () => defaultOpenKeys,
       (n) => {
-        if (n.value.includes(key_)) {
+        if (n.value.includes(key_)){
           isOpen.value = true;
         } else {
           isOpen.value = false;
@@ -101,11 +99,11 @@ export default defineComponent({
       },{deep: true}
     );
     onMounted(() => {
-      const el = title.value as unknown as HTMLElement;
-      const e = subMenu.value as unknown as HTMLElement;
+      const subMenuTitle = title.value as unknown as HTMLElement;
+      const subMenuWrapper = subMenu.value as unknown as HTMLElement;
       addLayer();
-      class_layer.value = `layer_${Array.from(e.classList).at(-1)?.replace('layer_', '')}`;
-      if (isHorizontal) {
+      class_layer.value = `layer_${Array.from(subMenuWrapper.classList).at(-1)?.replace('layer_', '')}`;
+      if (isHorizontal && !props.disabled) {
         (subMenu.value as unknown as Element as HTMLElement).addEventListener('mouseenter', (ev: MouseEvent) => {
           ev.stopPropagation();
           useShowSubMenu('mouseenter', ev, wrapperDom);
@@ -116,30 +114,34 @@ export default defineComponent({
         });
       }
       watch(isCollapsed, (newValue) => {
-        const layer = Number(getLayer(e));
+        const layer = Number(getLayer(subMenuWrapper));
         if (!Number.isNaN(layer)) {
           layer > 2 && (isShow.value = !isCollapsed.value);
         }
         if (newValue) {
-          el.style.padding !== '0' && (oldPadding = el.style.padding);
+          subMenuTitle.style.padding !== '0' && (oldPadding = subMenuTitle.style.padding);
           setTimeout(() => {
-            el.style.padding = '0';
-            el.style.width = '';
-            el.style.textAlign = `center`;
+            subMenuTitle.style.padding = '0';
+            subMenuTitle.style.width = '';
+            subMenuTitle.style.textAlign = `center`;
           }, 300);
-          el.style.display = `block`;
+          subMenuTitle.style.display = `block`;
         } else {
-          el.style.padding = `${oldPadding}`;
-          el.style.textAlign = ``;
-          el.style.display = `flex`;
+          subMenuTitle.style.padding = `${oldPadding}`;
+          subMenuTitle.style.textAlign = ``;
+          subMenuTitle.style.display = `flex`;
         }
       });
     });
     return () => {
       return (
-        <ul v-show={isShow.value} onClick={clickHandle} class={[subMenuClass, class_layer.value]} ref={subMenu}>
+        <ul
+          v-show={isShow.value}
+          onClick={clickHandle}
+          class={[subMenuClass, class_layer.value, props['disabled'] && `${subMenuClass}-disabled`]}
+          ref={subMenu}>
           <div
-            class={[`${subMenuClass}-title`, props['disabled'] && `${subMenuClass}-disabled`]}
+            class={[`${subMenuClass}-title`]}
             style={`padding: 0 ${indent}px`}
             ref={title}>
             <span class={`${ns.b()}-icon`}>{ctx.slots?.icon?.()}</span>
@@ -155,7 +157,11 @@ export default defineComponent({
               }}></i>
           </div>
           {isHorizontal ? (
-            <div class={`${ns.b()}-item-horizontal-wrapper ${ns.b()}-item-horizontal-wrapper-hidden`} ref={wrapper}>
+            <div
+              class={`${ns.b()}-item-horizontal-wrapper ${ns.b()}-item-horizontal-wrapper-hidden`}
+              ref={wrapper}
+              v-show={!props.disabled}
+            >
               {ctx.slots.default?.()}
             </div>
           ) : (
