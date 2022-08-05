@@ -1,9 +1,7 @@
 .#{$devui-prefix}-submenu-menu-item-vertical-wrapper {
   overflow: hidden;
 }
-.#{$devui-prefix}-submenu-menu-item {
-  color: $devui-menu-item;
-}
+
 .#{$devui-prefix}-menu-vertical {
   padding: 0;
   transition:
@@ -82,74 +80,6 @@
     opacity: 1;
     background: $devui-menu-item-selectBar;
   }
-  // sub menu
-  ul.#{$devui-prefix}-submenu {
-    margin: 0;
-    padding: 0;
-    .#{$devui-prefix}-menu-item {
-      display: flex;
-      background: $devui-area;
-
-      & > span {
-        flex: auto;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        transition: all $devui-animation-duration-fast $devui-animation-ease-in-smooth;
-        color: $devui-menu-item;
-      }
-    }
-    div.#{$devui-prefix}-submenu-title {
-      display: flex;
-      cursor: pointer;
-      width: 100%;
-      height: 40px;
-      margin: 4px 0;
-      line-height: 40px;
-      padding-left: 18px;
-      align-items: center;
-      color: $devui-menu-item;
-
-      &:nth-child(1) {
-        font-size: $devui-font-size-lg;
-      }
-
-      span.#{$devui-prefix}-submenu-title-content {
-        font-size: $devui-font-size-lg;
-        flex: auto;
-        color: $devui-menu-item;
-      }
-
-      span.#{$devui-prefix}-menu-icon {
-        text-align: center;
-      }
-
-      .icon-chevron-up {
-        transition: transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
-      }
-
-      i.icon-chevron-up.is-opened {
-        transform: rotate(180deg);
-      }
-    }
-    .#{$devui-prefix}-submenu-title:hover {
-      span {
-        color: $devui-menu-item-hover !important;
-      }
-    }
-
-    .#{$devui-prefix}-menu-item:hover {
-      span {
-        color: $devui-menu-item-select;
-      }
-    }
-
-    .#{$devui-prefix}-menu-item-select {
-      * {
-        color: $devui-menu-item-select !important;
-      }
-    }
-  }
 
   .#{$devui-prefix}-menu-item-select {
     background: $devui-primary-bg !important;
@@ -171,6 +101,12 @@
       opacity: 1;
       background: var(--devui-brand, #5e7ce0);
       transform: scaleX(1);
+    }
+  }
+
+  .#{$devui-prefix}-submenu > div:hover {
+    span.#{$devui-prefix}-submenu-title-content {
+      color: $devui-menu-item-select;
     }
   }
 
@@ -202,22 +138,75 @@
     }
   }
 
+  // sub menu
+  ul.#{$devui-prefix}-submenu {
+    margin: 0;
+    padding: 0;
+
+    div.#{$devui-prefix}-submenu-title {
+      display: flex;
+      cursor: pointer;
+      width: 100%;
+      height: 40px;
+      margin: 4px 0;
+      line-height: 40px;
+      padding-left: 18px;
+      align-items: center;
+      color: $devui-menu-item;
+
+      &:nth-child(1) {
+        font-size: $devui-font-size-lg;
+      }
+
+      span.#{$devui-prefix}-submenu-title-content {
+        font-size: $devui-font-size-lg;
+        flex: auto;
+      }
+
+      span.#{$devui-prefix}-menu-icon {
+        text-align: center;
+      }
+
+      .icon-chevron-up {
+        transition: transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+      }
+
+      i.icon-chevron-up.is-opened {
+        transform: rotate(180deg);
+      }
+    }
+
+    .#{$devui-prefix}-menu-item {
+      display: flex;
+
+      & > span {
+        flex: auto;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        transition: all $devui-animation-duration-fast $devui-animation-ease-in-smooth;
+        color: $devui-menu-item-sub;
+      }
+    }
+
+    .#{$devui-prefix}-menu-item:hover {
+      & > span {
+        color: $devui-menu-item-select;
+      }
+    }
+
+    .#{$devui-prefix}-menu-item-select {
+      * {
+        color: $devui-menu-item-select !important;
+      }
+    }
+  }
+
   ul li ~ ul > div {
     margin-top: 0 !important;
   }
-  .#{$devui-prefix}-menu-item-disabled,
-  .#{$devui-prefix}-submenu-disabled {
-    * {
-      color: $devui-menu-item-disabled !important;
-      cursor: not-allowed !important;
-      background: $devui-block !important;
-    }
-    // color: $devui-menu-item-disabled !important;
-    // cursor: not-allowed !important;
-    // background: $devui-block !important;
-  }
-  .#{$devui-prefix}-menu-item-disabled::after,
-  .#{$devui-prefix}-submenu-disabled::after {
-    content: unset;
+
+  ul li {
+    background: $devui-area !important;
   }
 }

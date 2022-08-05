@@ -170,20 +170,4 @@
       }
     }
   }
-
-  .#{$devui-prefix}-menu-item-disabled,
-  .#{$devui-prefix}-submenu-disabled {
-    span,
-    a {
-      color: $devui-menu-item-disabled !important;
-      cursor: not-allowed;
-    }
-
-    &::after {
-      content: unset !important;
-    }
-    &+.#{$devui-prefix}-menu-item-horizontal-wrapper {
-      display: none;
-    }
-  }
 }
