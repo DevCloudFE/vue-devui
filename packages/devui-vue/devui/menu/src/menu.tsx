@@ -1,4 +1,4 @@
-import { defineComponent, provide, ref, computed, onMounted, toRefs, reactive } from 'vue';
+import { defineComponent, provide, ref, computed, onMounted, toRefs } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import { menuProps, MenuProps } from './menu-types';
 import './menu.scss';
@@ -25,33 +25,14 @@ export default defineComponent({
     provide('useRouter', props.router);
     setDefaultIndent(props['indentSize']);
     const menuRoot = ref(null);
-    const overflowItemLength = ref(0);
     const overflow_container = ref<ComponentPublicInstance | null>(null);
-    const selectClassName = `${ns.b()}-item-select`;
+    const overflowItemLength = ref(0);
     const rootClassName = computed(()=>({
       [`${ns.b()}`]: true,
       [`${ns.b()}-vertical`]: mode.value === 'vertical',
       [`${ns.b()}-horizontal`]: mode.value === 'horizontal',
       [`${ns.b()}-collapsed`]: collapsed.value
     }));
-    const overflowContainerClassName = reactive({
-      [selectClassName]: false,
-      [`${ns.b()}-overflow-container`]: true
-    });
-
-    // This function used to update overflow container selected state.
-    const resetOverflowContainerSelectState = (e: Element) => {
-      const children = Array.from(e.children);
-      for (const item of children){
-        console.log(item.classList);
-        if (item.classList.contains(selectClassName)){
-          overflowContainerClassName[selectClassName] = true;
-          break;
-        } else {
-          overflowContainerClassName[selectClassName] = false;
-        }
-      }
-    };
     onMounted(() => {
       if (props['mode'] === 'horizontal') {
         let flag = false;
@@ -77,7 +58,6 @@ export default defineComponent({
                     root.appendChild(v.target);
                   }
                   container.appendChild(cloneNode);
-                  resetOverflowContainerSelectState(container);
                 }
               } else {
                 if (
@@ -85,11 +65,12 @@ export default defineComponent({
                   (v.target as HTMLElement).style.visibility === 'hidden'
                 ) {
                   ob.unobserve(v.target);
-                  root.insertBefore(v.target, overflowContainer);
-                  (v.target as HTMLElement).style.visibility = '';
+                  const el = container.lastChild;
+                  if (el){
+                    root.insertBefore(el, overflowContainer);
+                  }
                   const obItem = overflowContainer.previousElementSibling;
-                  const canObAgin = obItem && (v.boundingClientRect.width % v.target.getBoundingClientRect().width === 0);
-                  if (canObAgin) {
+                  if (obItem) {
                     ob.observe(obItem);
                   }
                   if (obItem?.classList.contains('devui-submenu')){
@@ -104,12 +85,9 @@ export default defineComponent({
                       useShowSubMenu('mouseleave', ev, wrapper);
                     });
                   }
+                  (v.target as HTMLElement).style.visibility = '';
+                  v.target.remove();
                   overflowItemLength.value -= 1;
-                  ob.observe(v.target);
-                  if (container.lastChild){
-                    container.removeChild(container.lastChild);
-                  }
-                  resetOverflowContainerSelectState(container);
                 }
               }
             });
@@ -132,14 +110,14 @@ export default defineComponent({
           class={rootClassName.value}
           style={[
             props['collapsed'] ? `width:${props['collapsedIndent'] * 2}px` : `width: ${props['width']}`,
-            // 'white-space: nowrap',
+            'white-space: nowrap',
           ]}>
           {ctx.slots.default?.()}
           <SubMenu
             ref={overflow_container}
             key="overflowContainer"
             title="..."
-            class={overflowContainerClassName}
+            class={`${ns.b()}-overflow-container`}
             v-show={overflowItemLength.value > 0 && mode.value === 'horizontal'}>
           </SubMenu>
         </ul>
