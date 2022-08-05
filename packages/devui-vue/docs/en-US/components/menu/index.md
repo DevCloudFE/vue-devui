@@ -27,7 +27,7 @@ When you need to store, arrange and display a series of options
       </d-sub-menu>
     </d-sub-menu>
     <d-menu-item key="person">个人</d-menu-item>
-    <d-menu-item key="custom" href="https://www.baidu.com" disabled> Link To Baidu </d-menu-item>
+    <d-menu-item key="custom" href="https://www.baidu.com"> Link To Baidu </d-menu-item>
   </d-menu>
   <d-slider :min="0" :max="480" v-model="width"></d-slider>
 </template>
@@ -228,8 +228,7 @@ export default defineComponent({
 
 ``` vue
   <template>
-    <d-menu @submenu-change="submenuChange" :default-select-keys="['item1']" :open-keys="openKeys" width="256px"
-    >
+    <d-menu @submenu-change="submenuChange" :default-select-keys="['item1']" :open-keys="openKeys" width="256px">
       <d-sub-menu title="submenu-1" key="submenu-1">
         <template #icon>
           <i class="icon-infomation"></i>
@@ -237,22 +236,6 @@ export default defineComponent({
         <d-menu-item key="subemenu-item-1">
           <span>submenu-item-1</span>
         </d-menu-item>
-        <d-sub-menu title="submenu-4" key="submenu-4">
-          <template #icon>
-            <i class="icon-infomation"></i>
-          </template>
-          <d-menu-item key="subemenu-item-1">
-            <span>submenu-item-1</span>
-          </d-menu-item>
-        </d-sub-menu>
-        <d-sub-menu title="submenu-5" key="submenu-5">
-          <template #icon>
-            <i class="icon-infomation"></i>
-          </template>
-          <d-menu-item key="subemenu-item-1">
-            <span>submenu-item-1</span>
-          </d-menu-item>
-        </d-sub-menu>
       </d-sub-menu>
       <d-sub-menu title="submenu-2" key="submenu-2">
         <template #icon>
@@ -279,16 +262,12 @@ export default defineComponent({
   export default defineComponent({
     setup() {
       const openKeys = ref(['submenu-1']);
-      const rootSubMenuKeys = ref(['submenu-1','submenu-2','submenu-3']);
       const submenuChange = (e) => {
-        console.log(e);
-        const {key} = e;
-        if (rootSubMenuKeys.value.includes(key)){
-          while (openKeys.value.length){
-            openKeys.value.shift();
-          }
-          openKeys.value.push(key);
-        }
+        console.log(e)
+        openKeys.value.forEach(element => {
+          openKeys.value.shift()
+        });
+        openKeys.value.push(e.key)
       };
       return {
         openKeys,

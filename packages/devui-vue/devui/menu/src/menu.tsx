@@ -38,6 +38,8 @@ export default defineComponent({
       [selectClassName]: false,
       [`${ns.b()}-overflow-container`]: true
     });
+
+    // This function used to update overflow container selected state.
     const resetOverflowContainerSelectState = (e: Element) => {
       const children = Array.from(e.children);
       for (const item of children){
