@@ -50,15 +50,17 @@ export default defineComponent({
 
     return () => (
       <div ref={tableRef} class={ns.b()} style={styles.value} v-dLoading={props.showLoading}>
-        <div ref={hiddenColumns} class="hidden-columns">
-          {ctx.slots.default?.()}
+        <div class={ns.e('container')}>
+          <div ref={hiddenColumns} class="hidden-columns">
+            {ctx.slots.default?.()}
+          </div>
+          {props.fixHeader ? (
+            <FixHeader classes={classes.value} is-empty={isEmpty.value} />
+          ) : (
+            <NormalHeader classes={classes.value} is-empty={isEmpty.value} />
+          )}
+          {isEmpty.value && <div class={ns.e('empty')}>{ctx.slots.empty ? ctx.slots.empty() : props.empty}</div>}
         </div>
-        {props.fixHeader ? (
-          <FixHeader classes={classes.value} is-empty={isEmpty.value} />
-        ) : (
-          <NormalHeader classes={classes.value} is-empty={isEmpty.value} />
-        )}
-        {isEmpty.value && <div class={ns.e('empty')}>{ctx.slots.empty ? ctx.slots.empty() : props.empty}</div>}
       </div>
     );
   },
