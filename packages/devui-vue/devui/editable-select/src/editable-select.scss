@@ -77,9 +77,12 @@
     display: block;
     top: auto !important;
     left: auto !important;
+    padding-bottom: 0;
     box-shadow: none;
+
     .#{$devui-prefix}-scrollbar {
       overflow-y: overlay;
+      margin: 0;
     }
 
     .#{$devui-prefix}-dropdown-item {
