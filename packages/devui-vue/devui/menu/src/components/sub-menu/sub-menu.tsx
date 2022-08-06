@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { randomId } from '../../../../shared/utils/random-id';
 import type { ComponentInternalInstance, Ref } from 'vue';
 import {
   defineComponent,
@@ -40,11 +40,12 @@ export default defineComponent({
     const isCollapsed = inject('isCollapsed') as Ref<boolean>;
     const mode = inject('mode') as Ref<string>;
     const subMenuItemContainer = ref(null) as Ref<null>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const parentEmit = inject('rootMenuEmit') as (eventName: 'submenu-change', ...args: any[]) => void;
     const isHorizontal = mode.value === 'horizontal';
     if (key_ === 'null') {
       console.warn(`[devui][menu]: Key can not be null`);
-      key_ = `notKey-${new Date().getTime()} - ${Math.floor(Math.random()*10)}`;
+      key_ = `randomKey-${randomId(16)}`;
     }
     const clickHandle = (e: MouseEvent) => {
       e.stopPropagation();
@@ -59,8 +60,8 @@ export default defineComponent({
       if (!props.disabled && mode.value !== 'horizontal') {
         const cur = useNearestMenuElement(e.target as HTMLElement);
         const idx = defaultOpenKeys.value.indexOf(key_);
-        if (idx>=0 && cur.tagName === 'UL') {
-          defaultOpenKeys.value.splice(idx,1);
+        if (idx >= 0 && cur.tagName === 'UL') {
+          defaultOpenKeys.value.splice(idx, 1);
         } else {
           if (cur.tagName === 'UL'){
             defaultOpenKeys.value.push(key_);
@@ -84,6 +85,7 @@ export default defineComponent({
     watchEffect(
       () => {
         wrapperDom = wrapper.value as unknown as HTMLElement;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         pushElement({ el: subMenu.value } as any);
       },
       { flush: 'post' }

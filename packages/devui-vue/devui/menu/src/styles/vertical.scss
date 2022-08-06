@@ -212,9 +212,6 @@
       cursor: not-allowed !important;
       background: $devui-block !important;
     }
-    // color: $devui-menu-item-disabled !important;
-    // cursor: not-allowed !important;
-    // background: $devui-block !important;
   }
   .#{$devui-prefix}-menu-item-disabled::after,
   .#{$devui-prefix}-submenu-disabled::after {
