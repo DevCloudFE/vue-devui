@@ -26,7 +26,7 @@ export default defineComponent({
     setDefaultIndent(props['indentSize']);
     const menuRoot = ref(null);
     const overflowItemLength = ref(0);
-    const overflow_container = ref<ComponentPublicInstance | null>(null);
+    const overflowContainer = ref<ComponentPublicInstance | null>(null);
     const selectClassName = `${ns.b()}-item-select`;
     const rootClassName = computed(()=>({
       [`${ns.b()}`]: true,
@@ -38,6 +38,7 @@ export default defineComponent({
       [selectClassName]: false,
       [`${ns.b()}-overflow-container`]: true
     });
+    // 如果一个或多个菜单元素被选中，当宽度发生变化时。如果溢出容易中有被选中的元素，那么溢出容器也应当被选中
     const resetOverflowContainerSelectState = (e: Element) => {
       const children = Array.from(e.children);
       for (const item of children){
@@ -52,40 +53,40 @@ export default defineComponent({
     onMounted(() => {
       if (props['mode'] === 'horizontal') {
         let flag = false;
-        const overflowContainer = overflow_container.value?.$el as unknown as HTMLElement;
+        const overflowContainerElement = overflowContainer.value?.$el as unknown as HTMLElement;
         const root = menuRoot.value as unknown as HTMLElement;
         const children = root.children;
-        const container = overflowContainer.children[1];
+        const container = overflowContainerElement.children[1];
         const ob = new IntersectionObserver(
           (entries: IntersectionObserverEntry[]) => {
-            entries.forEach((v: IntersectionObserverEntry) => {
-              if (!v.isIntersecting) {
-                const cloneNode = v.target.cloneNode(true) as Element as HTMLElement;
-                if (v.target.classList.contains(`${ns.b()}-overflow-container`)){
-                  if (flag && v.target.previousElementSibling && container.children.length){
-                    root.appendChild(v.target.previousElementSibling);
+            entries.forEach((entry: IntersectionObserverEntry) => {
+              if (!entry.isIntersecting) {
+                const cloneNode = entry.target.cloneNode(true) as Element as HTMLElement;
+                if (entry.target.classList.contains(`${ns.b()}-overflow-container`)){
+                  if (flag && entry.target.previousElementSibling && container.children.length){
+                    root.appendChild(entry.target.previousElementSibling);
                   } else {flag = true;}
                 } else {
                   overflowItemLength.value += 1;
-                  (v.target as Element as HTMLElement).style.visibility = 'hidden';
-                  if (overflowContainer.nextSibling) {
-                    root.insertBefore(v.target, overflowContainer.nextSibling);
+                  (entry.target as Element as HTMLElement).style.visibility = 'hidden';
+                  if (overflowContainerElement.nextSibling) {
+                    root.insertBefore(entry.target, overflowContainerElement.nextSibling);
                   } else {
-                    root.appendChild(v.target);
+                    root.appendChild(entry.target);
                   }
                   container.appendChild(cloneNode);
                   resetOverflowContainerSelectState(container);
                 }
               } else {
                 if (
-                  !v.target.classList.contains(`${ns.b()}-overflow-container`) &&
-                  (v.target as HTMLElement).style.visibility === 'hidden'
+                  !entry.target.classList.contains(`${ns.b()}-overflow-container`) &&
+                  (entry.target as HTMLElement).style.visibility === 'hidden'
                 ) {
-                  ob.unobserve(v.target);
-                  root.insertBefore(v.target, overflowContainer);
-                  (v.target as HTMLElement).style.visibility = '';
-                  const obItem = overflowContainer.previousElementSibling;
-                  const canObAgin = obItem && (v.boundingClientRect.width % v.target.getBoundingClientRect().width === 0);
+                  ob.unobserve(entry.target);
+                  root.insertBefore(entry.target, overflowContainerElement);
+                  (entry.target as HTMLElement).style.visibility = '';
+                  const obItem = overflowContainerElement.previousElementSibling;
+                  const canObAgin = obItem && (entry.boundingClientRect.width % entry.target.getBoundingClientRect().width === 0);
                   if (canObAgin) {
                     ob.observe(obItem);
                   }
@@ -102,7 +103,7 @@ export default defineComponent({
                     });
                   }
                   overflowItemLength.value -= 1;
-                  ob.observe(v.target);
+                  ob.observe(entry.target);
                   if (container.lastChild){
                     container.removeChild(container.lastChild);
                   }
@@ -132,7 +133,7 @@ export default defineComponent({
           ]}>
           {ctx.slots.default?.()}
           <SubMenu
-            ref={overflow_container}
+            ref={overflowContainer}
             key="overflowContainer"
             title="..."
             class={overflowContainerClassName}
