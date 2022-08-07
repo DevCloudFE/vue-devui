@@ -15,7 +15,6 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 .#{$devui-prefix}-button {
   padding: $devui-btn-padding;
   font-size: $devui-font-size-md;
-  height: 28px;
   line-height: $devui-line-height-base;
   border-radius: $devui-border-radius;
   border-width: 1px;
@@ -243,7 +242,7 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 
   &--xs {
     padding: 0 4px;
-    height: 24px;
+    height: 20px;
     font-size: $devui-font-size-sm;
     min-width: 48px;
   }
@@ -257,7 +256,7 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 
   &--lg {
     padding: $devui-btn-lg-padding;
-    height: 32px;
+    height: 36px;
     font-size: $devui-font-size-lg;
     min-width: 72px;
   }
@@ -316,7 +315,8 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 }
 
 .#{$devui-prefix}-button {
-  transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+  transition:
+    background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   white-space: nowrap;
