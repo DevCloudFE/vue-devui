@@ -105,6 +105,7 @@ export default defineComponent({
       filteredOptions,
       props.disabledKey,
       visible,
+      loading,
       handleClick,
       toggleMenu,
       closeMenu

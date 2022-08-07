@@ -9,6 +9,7 @@ export function useKeyboardSelect(
   filteredOptions: ComputedRef<OptionObjectItem[]>,
   disabledKey: string,
   visible: Ref<boolean>,
+  loading: Ref<boolean>,
   handleClick: (option: OptionObjectItem, index: number) => void,
   toggleMenu: () => void,
   closeMenu: () => void
@@ -72,6 +73,9 @@ export function useKeyboardSelect(
   };
   const handleKeydown = (event: KeyboardEvent) => {
     const keyCode = event.key || event.code;
+    if (loading.value) {
+      return;
+    }
     if (!visible.value) {
       return toggleMenu();
     }
