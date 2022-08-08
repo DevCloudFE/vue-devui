@@ -5,6 +5,7 @@ import { onClickOutside } from '@vueuse/core';
 import type { Dayjs } from 'dayjs';
 import { formatDayjsToStr, isDateEquals, parserDate } from './utils';
 import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
+import { DEFAULT_DATE, DEFAULT_TIME } from './const';
 
 export default function usePickerPro(
   props: DatePickerProProps,
@@ -45,7 +46,7 @@ export default function usePickerPro(
   };
 
   const format = computed(() => {
-    return props.showTime ? props.format || 'YYYY/MM/DD HH:mm:ss' : props.format || 'YYYY/MM/DD';
+    return props.showTime ? props.format || DEFAULT_TIME : props.format || DEFAULT_DATE;
   });
 
   const dateValue = computed(() => {
