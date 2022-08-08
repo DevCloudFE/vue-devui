@@ -75,6 +75,10 @@ export default defineComponent({
 
 ```vue
 <template>
+  <d-switch v-model="checkedSmContent" size="sm">
+    <template #checkedContent>开</template>
+    <template #uncheckedContent>关</template>
+  </d-switch>
   <d-switch v-model="checkedColor" color="#FECC55"></d-switch>
   <d-switch v-model="checkedContent">
     <template #checkedContent>开</template>
@@ -96,10 +100,12 @@ export default defineComponent({
   setup() {
     const checkedColor = ref(true);
     const checkedContent = ref(false);
+    const checkedSmContent = ref(false)
     const checkedIcon = ref(true);
     return {
       checkedColor,
       checkedContent,
+      checkedSmContent,
       checkedIcon,
     };
   },
