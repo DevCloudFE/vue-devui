@@ -4,7 +4,7 @@ import { IInnerTreeNode, ITreeNode, IUseCore, IUseOperate } from './use-tree-typ
 
 export function useOperate() {
   return function useOperateFn(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseOperate {
-    const { setNodeValue, getChildren, getIndex, getLevel } = core;
+    const { setNodeValue, getChildren, getIndex, getLevel, getParent } = core;
 
     const insertBefore = (parentNode: ITreeNode, node: ITreeNode, referenceNode?: ITreeNode): void => {
       const children = getChildren(parentNode, {
@@ -61,6 +61,11 @@ export function useOperate() {
           return item.id !== node.id;
         }
       });
+
+      // 子节点全部删完了，应该设置父节点为叶子结点(isLeaf)
+      if (getParent(node) && getChildren(getParent(node)).length === 0) {
+        setNodeValue(getParent(node), 'isLeaf', true);
+      }
     };
 
     const editNode = (node: IInnerTreeNode, label: string): void => {
