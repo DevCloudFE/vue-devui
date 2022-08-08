@@ -75,10 +75,11 @@
 
   &.#{$devui-prefix}-switch--lg {
     width: 58px;
-    height: 30px;
+    height: 28px;
 
     .#{$devui-prefix}-switch__inner-wrapper {
       padding-left: 28px;
+      padding-top: 2px;
       font-size: $devui-font-size-modal-title;
     }
 
@@ -88,21 +89,21 @@
     }
 
     & small {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       top: 1px;
       left: 1px;
     }
 
     &.#{$devui-prefix}-switch--checked small {
       background: $devui-light-text;
-      left: 29px;
+      left: 30px;
     }
   }
 
   &.#{$devui-prefix}-switch--sm {
     width: 30px;
-    height: 14px;
+    height: 15px;
 
     .#{$devui-prefix}-switch__inner-wrapper {
       padding-left: 12px;
