@@ -1,27 +1,27 @@
 {
   "$schema": "https://raw.githubusercontent.com/iamyoki/better-scripts/main/lib/schema.json",
   "dev": {
-    "alias": "⭐️ Dev",
+    "alias": "Dev",
     "desc": "Start a development server",
     "command": "pnpm --filter vue-devui dev"
   },
   "build": {
-    "alias": "📦 Build",
+    "alias": "Build",
     "desc": "Build theme and docs",
     "command": "pnpm --filter vue-devui build"
   },
   "build:lib": {
-    "alias": "📦 Build lib",
+    "alias": "Build lib",
     "desc": "Build components and release",
     "command": "pnpm --filter vue-devui build:lib"
   },
   "build:cli": {
-    "alias": "📦 Build cli",
+    "alias": "Build cli",
     "desc": "Build devui-cli",
     "command": "pnpm --filter devui-cli build"
   },
   "lints": {
-    "alias": "🔎 Lints",
+    "alias": "Lints",
     "desc": "Select a lint script to run",
     "scripts": {
       "eslint": ["eslint \"packages/**/{*.vue,*.js,*.ts,*.jsx,*.tsx}\"", "Lint source files"],
@@ -31,7 +31,7 @@
     }
   },
   "tests": {
-    "alias": "🧪 Tests",
+    "alias": "Tests",
     "desc": "Select a test script to run",
     "scripts": {
       "test": ["pnpm --filter vue-devui test", "Test vue-devui"],
