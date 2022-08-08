@@ -19,7 +19,7 @@ export default function useSelect(
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   const ns = useNamespace('select');
-  const dropdownRef = ref<HTMLElement>();
+  const dropdownRef = ref();
 
   const selectDisabled = computed(() => formContext?.disabled || props.disabled);
   const selectSize = computed(() => formContext?.size || props.size);
@@ -321,6 +321,12 @@ export default function useSelect(
     },
     { deep: true }
   );
+
+  watch(isOpen, (val) => {
+    if (val) {
+      dropdownRef.value?.updatePosition();
+    }
+  });
 
   return {
     selectDisabled,
