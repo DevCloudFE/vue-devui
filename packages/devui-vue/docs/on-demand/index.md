@@ -32,7 +32,7 @@ export default defineConfig({
 
 配置了以上插件，就可以直接在代码中使用`Vue DevUI`的组件，而无需在`main.ts`文件中引入`Vue DevUI`。
 
-## 手动引入
+### 手动引入
 
 在`src/main.ts`文件中写入以下内容：
 
