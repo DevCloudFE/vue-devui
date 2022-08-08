@@ -39,7 +39,6 @@ const forwardText = computed(() => {
   z-index: 1;
 
   .devui-fast-forward {
-    width: 130px;
     font-size: $devui-font-size-card-title;
     color: $devui-text;
     line-height: 24px;
@@ -72,7 +71,6 @@ const forwardText = computed(() => {
 
       a {
         display: block;
-        width: 110px;
         overflow: hidden;
         color: $devui-text;
         white-space: nowrap;
