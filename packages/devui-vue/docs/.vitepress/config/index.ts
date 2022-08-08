@@ -24,6 +24,11 @@ const config = defineConfig({
     sidebar,
     nav,
     demoblock: lang,
+    algolia: {
+      apiKey: '6520762209638bd68d6778a845e13a12',
+      indexName: 'VUE_DEVUI',
+      appId: '2NGA4ZWE9B',
+    },
     logo: '../../assets/logo.svg',
     locales: {
       '/': {

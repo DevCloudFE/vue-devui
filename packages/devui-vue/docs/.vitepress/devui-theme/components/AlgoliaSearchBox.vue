@@ -144,9 +144,23 @@ function initialize(userOptions: any) {
   <div class="algolia-search-box" id="docsearch" />
 </template>
 
-<style>
+<style lang="scss">
+.DocSearch-Modal .DocSearch-Form {
+  padding: 0 10px;
+  box-shadow: inset 0 0 0 2px var(--devui-brand);
+}
+
+.DocSearch-MagnifierLabel, .DocSearch-Reset {
+  color: var(--devui-brand);
+}
+
 .algolia-search-box {
   padding-top: 1px;
+  padding-right: 24px;
+
+  .DocSearch-Button:active, .DocSearch-Button:focus, .DocSearch-Button:hover {
+    box-shadow: inset 0 0 0 2px var(--devui-brand);
+  }
 }
 
 @media (min-width: 720px) {
