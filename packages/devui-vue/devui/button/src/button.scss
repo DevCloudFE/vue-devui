@@ -211,10 +211,6 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
         color: $devui-link-active;
       }
 
-      &:not(:disabled):hover {
-        text-decoration: underline;
-      }
-
       &:focus {
         color: $devui-brand-active-focus;
       }
