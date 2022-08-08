@@ -90,7 +90,7 @@ const removeAttribute = (el: TargetHTMLElement) => {
   el.removeAttribute('loadingtemplateref');
 };
 
-const handleProps = (el: TargetHTMLElement, vprops: LoadingOptions | null) => {
+const handleProps = (el: TargetHTMLElement, vprops: LoadingOptions | VNode['props'] | null) => {
   const props = {
     ...new LoadingOptions(),
     ...vprops
@@ -104,13 +104,13 @@ const handleProps = (el: TargetHTMLElement, vprops: LoadingOptions | null) => {
     loadingTemplateRef ? () => loadingTemplateRef : null
   );
 
-  el.style.position = props.positionType;
+  el.style.position = props.positionType || 'relative';
   el.options = props;
   el.instance = loadingInstance;
   el.mask = loadingInstance?.proxy?.$el;
 };
 
-const loadingDirective = {
+const LoadingDirective = {
   mounted: function (el: TargetHTMLElement, binding: BindingType, vnode: VNode): void {
 
     handleProps(el, vnode.props);
@@ -135,4 +135,4 @@ const loadingDirective = {
   // unmounted: function () { }
 };
 
-export default loadingDirective;
+export default LoadingDirective;

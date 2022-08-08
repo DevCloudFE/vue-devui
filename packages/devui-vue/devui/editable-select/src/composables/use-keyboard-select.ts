@@ -1,29 +1,26 @@
-import { ref, nextTick, ComputedRef, Ref } from 'vue';
+import { ComputedRef, nextTick, Ref } from 'vue';
 import { OptionObjectItem } from '../editable-select-types';
 interface useKeyboardSelectReturnType {
   handleKeydown: (event: KeyboardEvent) => void;
-  hoverIndex: Ref<number>;
-  selectedIndex: Ref<number>;
 }
-
 export function useKeyboardSelect(
   dropdownRef: Ref,
-  visible: Ref<boolean>,
-  inputValue: Ref<string>,
-  cacheInput: Ref<string>,
+  hoverIndex: Ref<number>,
   filteredOptions: ComputedRef<OptionObjectItem[]>,
-  optionDisabledKey: string,
-  filterOption: boolean | ((val: string, option: OptionObjectItem) => boolean) | undefined,
+  disabledKey: string,
+  visible: Ref<boolean>,
   loading: Ref<boolean>,
-  handleClick: (options: OptionObjectItem, index: number) => void,
-  closeMenu: () => void,
-  toggleMenu: () => void
+  handleClick: (option: OptionObjectItem, index: number) => void,
+  toggleMenu: () => void,
+  closeMenu: () => void
 ): useKeyboardSelectReturnType {
-  const hoverIndex = ref(0);
-  const selectedIndex = ref(0);
-  const updateHoveringIndex = (index: number) => {
-    hoverIndex.value = index;
+  const handleEscape = () => {
+    closeMenu();
   };
+  const handleEnter = () => {
+    handleClick(filteredOptions.value[hoverIndex.value], hoverIndex.value);
+  };
+
   const scrollToItem = (index: number) => {
     const ul = dropdownRef.value;
     const li = ul.children[index];
@@ -39,58 +36,49 @@ export function useKeyboardSelect(
       }
     });
   };
-  const handleEscape = () => {
-    inputValue.value = cacheInput.value;
-    closeMenu();
+
+  const updateIndex = (index: number) => {
+    hoverIndex.value = index;
   };
 
-  const handleEnter = () => {
+  const handleKeyboardNavigation = (direction: string, index = hoverIndex.value): void => {
     const len = filteredOptions.value.length;
-    if (!visible.value || !len) {
-      return toggleMenu();
-    }
 
-    len && len === 1 ? handleClick(filteredOptions.value[0], 1) : handleClick(filteredOptions.value[hoverIndex.value], hoverIndex.value);
-    return closeMenu();
-  };
-
-  const handleKeyboardNavigation = (direction: string): void => {
-    const len = filteredOptions.value.length;
-    if (!len || len === 1) {
+    if (len === 0) {
       return;
     }
-    if (!['ArrowDown', 'ArrowUp'].includes(direction)) {
+    if (!['ArrowUp', 'ArrowDown'].includes(direction)) {
       return;
     }
-
-    if (filterOption === false && loading.value) {
-      return;
-    }
-    let newIndex = 0;
-    newIndex = hoverIndex.value;
-
     if (direction === 'ArrowUp') {
-      newIndex -= 1;
-      if (newIndex === -1) {
-        newIndex = len - 1;
+      index -= 1;
+      if (index === -1) {
+        index = len - 1;
       }
     } else if (direction === 'ArrowDown') {
-      newIndex += 1;
-      if (newIndex === len) {
-        newIndex = 0;
+      index += 1;
+      if (index === len) {
+        index = 0;
       }
     }
-    hoverIndex.value = newIndex;
-    const option = filteredOptions.value[newIndex];
-    if (option[optionDisabledKey]) {
-      return handleKeyboardNavigation(direction);
-    }
-    updateHoveringIndex(newIndex);
-    scrollToItem(newIndex);
-  };
 
+    const option = filteredOptions.value[index];
+
+    if (option[disabledKey]) {
+      return handleKeyboardNavigation(direction, index);
+    }
+
+    updateIndex(index);
+    scrollToItem(index);
+  };
   const handleKeydown = (event: KeyboardEvent) => {
     const keyCode = event.key || event.code;
+    if (loading.value) {
+      return;
+    }
+    if (!visible.value) {
+      return toggleMenu();
+    }
     switch (keyCode) {
     case 'Escape':
       handleEscape();
@@ -102,5 +90,7 @@ export function useKeyboardSelect(
       handleKeyboardNavigation(keyCode);
     }
   };
-  return { handleKeydown, hoverIndex, selectedIndex };
+  return {
+    handleKeydown,
+  };
 }
