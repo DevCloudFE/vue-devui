@@ -44,6 +44,7 @@ export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit 
     setTimeout(() => {
       subscriptions.push(
         subscribeEvent(document, 'click', (e: Event) => {
+          e.stopPropagation();
           const dropdownValues = [...dropdownMap.values()];
           if (
             !isOpen.value ||

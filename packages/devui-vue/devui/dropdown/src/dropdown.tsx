@@ -63,6 +63,7 @@ export default defineComponent({
               offset={offset.value}
               shiftOffset={shiftOffset?.value}
               onPositionChange={handlePositionChange}
+              click-event-bubble
               class={classes.value}
               style={styles.value}>
               <div ref={dropdownRef} class={ns.e('menu-wrap')} {...attrs}>
