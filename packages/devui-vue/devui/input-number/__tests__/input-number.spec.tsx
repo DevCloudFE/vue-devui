@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { ref } from 'vue';
+import { nextTick, ref } from 'vue';
 import DInputNumber from '../src/input-number';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
@@ -114,6 +114,34 @@ describe('d-input-number', () => {
 
     const inputWrap = wrapper.find(ns.e('input-wrap'));
     expect(inputWrap.classes()).toContain(noDotNs.m('lg'));
+    wrapper.unmount();
+  });
+
+
+  it('regular expression check', async () => {
+    const num = ref(2);
+    const wrapper = mount({
+      setup() {
+        // 1到50
+        const regStr = '^([1-9]|[1-4][0-9]|50)$';
+        return () => <DInputNumber v-model={num.value} reg={regStr}></DInputNumber>;
+      },
+    });
+
+    const inputInner = wrapper.find(ns.e('input-box'));
+    expect((inputInner.element as HTMLInputElement).value).toBe('2');
+
+    num.value = 51;
+    expect((inputInner.element as HTMLInputElement).value).toBe('2');
+
+    num.value = 10;
+    await nextTick();
+    expect((inputInner.element as HTMLInputElement).value).toBe('10');
+
+    // 0 不符合要求返回上次结果 10
+    num.value = 0;
+    expect((inputInner.element as HTMLInputElement).value).toBe('10');
+
     wrapper.unmount();
   });
 });
