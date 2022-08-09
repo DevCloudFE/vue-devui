@@ -34,7 +34,6 @@ export default defineComponent({
     const rootMenuEmit = inject('rootMenuEmit') as (eventName: string, ...args: unknown[]) => void;
     const useRouter = inject('useRouter') as boolean;
     const router = instance?.appContext.config.globalProperties.$router as Router;
-    const preSelectedRecord = ref(isSelect.value);
     const classObject = computed(()=>({
       [`${ns.b()}-item`]: true,
       [`${ns.b()}-item-isCollapsed`]: isCollapsed.value,
