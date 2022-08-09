@@ -100,4 +100,6 @@ describe('d-notification', () => {
       notification = null;
     });
   });
+
+  it.todo('manual click close work well');
 });
