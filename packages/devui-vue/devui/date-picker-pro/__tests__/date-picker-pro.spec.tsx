@@ -442,4 +442,6 @@ describe('date-picker-pro test', () => {
 
     wrapper.unmount();
   });
+
+  it.todo('props disabled work well.');
 });

@@ -258,16 +258,16 @@ export default defineComponent({
 
 ### TimePicker 参数
 
-| 参数                                | 类型        | 默认       | 说明                                       | 跳转 Demo               |
-| ----------------------------------- | ----------- | ---------- | ------------------------------------------ | ----------------------- |
-| disabled                            | boolean     | false      | 可选，禁用选择                             | [基本用法](#基本用法)   |
-| timePickerWidth / time-picker-width | number      | ---        | 可选，下拉框的宽度                         | [基本用法](#基本用法)   |
-| autoOpen                            | boolean     | false      | 可选，初始化是否直接展开                   | [基本用法](#基本用法)   |
-| format                              | string      | 'hh:mm:ss' | 可选，传入格式化，控制时间格式             | [格式化](#格式限制)     |
-| minTime / min-time                  | string      | '00:00:00' | 可选，限制最小可选时间                     | [格式化](#时间区间限制) |
-| maxTime / max-time                  | string      | '23:59:59' | 可选，限制最大可选时间                     | [格式化](#时间区间限制) |
-| customViewTemplate                  | TemplateRef | --         | 可选，自定义快捷设置时间或自定义操作区内容 | [传入模板](#传入模板)   |
-| showAnimation                       | boolean     | true       | 可选，是否开启动画                         | ✔                       |
+| 参数                 | 类型        | 默认       | 说明                                       | 跳转 Demo               |
+| :------------------- | :---------- | :--------- | :----------------------------------------- | :---------------------- |
+| disabled             | boolean     | false      | 可选，禁用选择                             | [基本用法](#基本用法)   |
+| time-picker-width    | number      | ---        | 可选，下拉框的宽度                         | [基本用法](#基本用法)   |
+| auto-open            | boolean     | false      | 可选，初始化是否直接展开                   | [基本用法](#基本用法)   |
+| format               | string      | 'hh:mm:ss' | 可选，传入格式化，控制时间格式             | [格式化](#格式限制)     |
+| min-time             | string      | '00:00:00' | 可选，限制最小可选时间                     | [格式化](#时间区间限制) |
+| max-time             | string      | '23:59:59' | 可选，限制最大可选时间                     | [格式化](#时间区间限制) |
+| custom-view-template | TemplateRef | --         | 可选，自定义快捷设置时间或自定义操作区内容 | [传入模板](#传入模板)   |
+| show-animation       | boolean     | true       | 可选，是否开启动画                         |                         |
 
 ### TimePicker 事件
 

@@ -473,6 +473,7 @@ describe('select', () => {
     }, 300);
     wrapper.unmount();
   });
+
   it('select no-data-text no-match-text work', async () => {
     const value = ref([]);
     const list = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
