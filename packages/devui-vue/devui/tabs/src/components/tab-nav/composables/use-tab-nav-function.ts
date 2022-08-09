@@ -1,4 +1,4 @@
-import type { ComputedRef, EmitsOptions, SetupContext } from 'vue';
+import type { ComputedRef, EmitsOptions, SetupContext, ShallowRef } from 'vue';
 import { TabsProps, Active, TabsData, TabsStateData } from '../../../tabs-types';
 import { OffSetData, UseTabNavFunction } from '../tab-nav-types';
 
@@ -8,7 +8,7 @@ export function useTabNavFunction(
   tabsList: ComputedRef,
   data: OffSetData,
   ctx: SetupContext<EmitsOptions>,
-  tabsEle: any
+  tabsEle: ShallowRef<HTMLUListElement | undefined>
 ): UseTabNavFunction {
   const update = () => {
     if (props.type === 'slider') {

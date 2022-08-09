@@ -50,7 +50,7 @@ export default defineComponent({
       ) : null;
       return (
         <ul ref={tabsEle} role="tablist" class={ulClasses.value}>
-          {(tabsList.value || []).map((item, i) => {
+          {(tabsList.value || []).map((item) => {
             return (
               <li
                 role="presentation"
