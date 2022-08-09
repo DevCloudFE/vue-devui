@@ -5,6 +5,7 @@ import { initSelect, addActiveParent, changeRoute } from './use-menu-item';
 import { useClick } from '../../composables/use-click';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { Router } from 'vue-router';
+import { Store } from '../../composables/use-store';
 
 const ns = useNamespace('menu');
 
@@ -21,6 +22,7 @@ export default defineComponent({
   setup(props: MenuItemProps, ctx) {
     const instance = getCurrentInstance();
     const key = String(instance?.vnode.key);
+    const menuStore = inject('menuStore') as Store;
     const mode = inject('mode') as Ref<'vertical' | 'horizontal'>;
     const multiple = inject('multiple') as boolean;
     const indent = inject('defaultIndent');
@@ -32,12 +34,16 @@ export default defineComponent({
     const rootMenuEmit = inject('rootMenuEmit') as (eventName: string, ...args: unknown[]) => void;
     const useRouter = inject('useRouter') as boolean;
     const router = instance?.appContext.config.globalProperties.$router as Router;
+    const preSelectedRecord = ref(isSelect.value);
     const classObject = computed(()=>({
       [`${ns.b()}-item`]: true,
       [`${ns.b()}-item-isCollapsed`]: isCollapsed.value,
       [menuItemSelect]: isSelect.value,
       [menuItemDisabled]: disabled.value,
     }));
+    menuStore.on('menuItem:clear:select', ()=>{
+      isSelect.value = false;
+    });
     const onClick = (e: MouseEvent) => {
       e.stopPropagation();
       const ele = e.currentTarget as HTMLElement;
@@ -45,19 +51,20 @@ export default defineComponent({
       props.disabled && e.preventDefault();
       if (!props.disabled) {
         if (!multiple) {
+          menuStore.emit('menuItem:clear:select');
           clearSelect(ele, e, mode.value === 'horizontal');
           if (mode.value === 'horizontal') {
             useClick(e as clickEvent);
-          } else {
-            ele.classList.add(menuItemSelect);
           }
+          isSelect.value = true;
           changeRouteResult = changeRoute(props, router, useRouter, key);
         } else {
           if (ele.classList.contains(menuItemSelect)) {
-            ele.classList.remove(menuItemSelect);
             rootMenuEmit('deselect', { type: 'deselect', key, el: ele, e });
+            isSelect.value = false;
             return;
           } else {
+            isSelect.value = true;
             ele.classList.add(menuItemSelect);
           }
         }
