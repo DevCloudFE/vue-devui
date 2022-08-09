@@ -12,14 +12,14 @@
 
 ```vue
 <template>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag>标签一</d-tag>
     <d-tag type="primary">标签二</d-tag>
     <d-tag type="success">标签三</d-tag>
     <d-tag type="warning">标签四</d-tag>
     <d-tag type="danger">标签五</d-tag>
   </div>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag color="blue-w98">blue-w98</d-tag>
     <d-tag color="aqua-w98">aqua-w98</d-tag>
     <d-tag color="aqua-w98">aqua-w98</d-tag>
@@ -44,7 +44,11 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style>
+.tag-demo-wrapper > * {
+  margin: 4px;
+}
+</style>
 ```
 
 :::
@@ -55,7 +59,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag><d-icon name="bug" size="12px" /> bug </d-tag>
     <d-tag type="primary"><d-icon name="bug" size="12px" /> bug </d-tag>
     <d-tag color="#b05bc1"><d-icon name="bug" size="12px" /> bug </d-tag>
@@ -74,8 +78,6 @@ export default defineComponent({
   },
 });
 </script>
-
-<style></style>
 ```
 
 :::
@@ -86,7 +88,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag type="primary" :checked="isChecked" @click="tagClick">不要点我呀</d-tag>
     <d-tag color="#39afcc" :checked="isChecked" @click="tagClick">不要点我呀</d-tag>
   </div>
@@ -104,8 +106,6 @@ export default defineComponent({
   },
 });
 </script>
-
-<style></style>
 ```
 
 :::
@@ -116,7 +116,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag v-for="item in tagList" deletable :key="item" @tag-delete="() => handleClose(item)">{{ item }}</d-tag>
   </div>
 </template>
@@ -136,8 +136,6 @@ export default defineComponent({
   },
 });
 </script>
-
-<style></style>
 ```
 
 :::
@@ -148,13 +146,13 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag type="primary" size="lg">标签二</d-tag>
     <d-tag type="success" size="md">标签三</d-tag>
     <d-tag type="warning" size="sm">标签四</d-tag>
     <d-tag type="danger">标签五</d-tag>
   </div>
-  <div>
+  <div class="tag-demo-wrapper">
     <d-tag type="primary" deletable size="lg">标签一</d-tag>
     <d-tag type="primary" deletable size="md">标签二</d-tag>
     <d-tag type="primary" deletable size="sm">标签三</d-tag>
@@ -170,8 +168,6 @@ export default defineComponent({
   },
 });
 </script>
-
-<style></style>
 ```
 
 :::
