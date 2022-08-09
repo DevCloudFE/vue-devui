@@ -90,6 +90,45 @@ export default defineComponent({
 
 :::
 
+### 带下拉菜单的面包屑
+
+:::demo
+
+```vue
+<template>
+  <d-breadcrumb :source="source"></d-breadcrumb>
+</template>
+<script>
+import { defineComponent, reactive } from 'vue';
+
+export default defineComponent({
+  name: 'DBreadcrumbDemoDropdown',
+  setup() {
+    const source = reactive([
+      { title: 'DevUI', link: '/', linkType: 'routerLink', replace: true },
+      { title: 'Breadcrumb', link: 'components/breadcrumb/', noNavigation: true },
+      { title: 'aaa', noNavigation:true, showMenu: true, children: [
+        {
+          title: 'a1',
+          link: 'components/breadcrumb/'
+        },
+        {
+          title: 'a2'
+        },
+        {
+          title: 'a3'
+        }
+      ]}
+    ]);
+    return {
+      source,
+    };
+  },
+});
+</script>
+```
+
+:::
 ### Breadcrumb 参数
 
 | 参数           | 类型                              | 默认 | 说明                                               | 跳转 Demo                                     |

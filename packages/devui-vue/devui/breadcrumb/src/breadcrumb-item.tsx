@@ -1,6 +1,7 @@
 import { defineComponent, inject, onMounted, onBeforeUnmount, ref, getCurrentInstance } from 'vue';
 import { breadcrumbItemProps, BreadcrumbItemProps } from './breadcrumb-item-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+// import { getPropsSlot } from './utils'
 import './breadcrumb-item.scss';
 import DDropdownMenu from '../../dropdown/src/dropdown-menu';
 import DList from '../../list/src/list';
@@ -23,8 +24,8 @@ export default defineComponent({
     const router = instance?.appContext.config.globalProperties.$router;
 
     // const showMenu = props.showMenu
-    // const menuList = props.menuList
-
+    // const menuList = props.menuList || []
+    const originRef = ref<HTMLElement | null>(null);
     const handleClickLink = () => {
       if (!props.to || !router) {
         return;
@@ -38,32 +39,36 @@ export default defineComponent({
     onBeforeUnmount(() => {
       link.value?.removeEventListener('click', handleClickLink);
     });
+    const renderBreadcrumbSperator = () => {
+      return <span class={ns.e('separator')}>{separatorIcon}</span>;
+    };
     /**
-     * 传入有overlay形式
+     *
      * 需要DropDown下拉菜单
      */
-    // const renderBreadcrumbNode = (breadcrumbItem: JSX.Element, prefixCls: string) => {
-    //   // const dropdown = getPropsSlot(slots, props, 'overlay');  // 获取slot的方法，不知道有没有通用的，要查看一下
-    //   if (dropdown) {
-    //     return (
-    //       <DDropdownMenu overlay={overlay} placement="bottom">
-    //         <DList style="width: 100px;">
-    //           {
+    const renderBreadcrumbNode = (breadcrumbItem: JSX.Element, prefixCls: string) => {
+      // const dropdown = getPropsSlot(slots, props, 'dropdown');  // 获取slot的方法，不知道有没有通用的，要查看一下
 
-    //           }
-    //         </DList>
-    //         {/* <span class={`${prefixCls}-overlay-link`}>
-    //           {breadcrumbItem}
-    //         </span> */}
-    //       </DDropdownMenu>
-    //     );
-    //   }
-    //   return breadcrumbItem;
-    // };
-    return () => {
-      const renderBreadcrumbSperator = () => {
-        return <span class={ns.e('separator')}>{separatorIcon}</span>;
-      };
+      const isOpen = true;
+      // 显示下拉框
+      // if (showMenu) {
+      //   console.log(originRef, originRef.value, 'origin=======');
+      //   return (
+      //     <div class={ns.e('item')}>
+      //       <span ref="originRef" class={linkClass}>{slots?.default?.()}</span>
+      //       <d-dropdown-menu origin={originRef} v-model={isOpen}>
+      //         <d-list style="width: 100px;">
+      //           {
+      //             menuList.map(item => {
+      //               return <d-list-item>{item.title}</d-list-item>
+      //             })
+      //           }
+      //         </d-list>
+      //       </d-dropdown-menu>
+      //     </div>
+      //   );
+      // }
+      // normal
       return (
         <div class={ns.e('item')}>
           <span ref={link} class={linkClass}>
@@ -71,6 +76,19 @@ export default defineComponent({
           </span>
           {renderBreadcrumbSperator()}
         </div>
+      );
+    };
+    return () => {
+
+      return (
+      // <div class={ns.e('item')}>
+      //   <span ref={link} class={linkClass}>
+      //     {slots?.default?.()}
+      //   </span>
+      //   {renderBreadcrumbSperator()}
+      // </div>
+
+        renderBreadcrumbNode(link, linkClass)
       );
     };
   },

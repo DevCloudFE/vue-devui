@@ -23,10 +23,20 @@ export default defineComponent({
         </d-breadcrumb-item>
       );
     };
+    const renderBreadcrumbItemDropdown = (item: SourceConfig) => {
+      return (
+        <d-breadcrumb-item menuList={item.children} showMenu={item.showMenu}>
+          {item.title}
+        </d-breadcrumb-item>
+      );
+    };
     const renderBreadItemList = (source: SourceConfig[]) => {
       return source.map((item: SourceConfig) => {
         if (!item.noNavigation && item.linkType === 'routerLink') {
           return renderBreadcrumbItemRouted(item);
+        }
+        if (item.children && item.children.length > 0) {
+          return renderBreadcrumbItemDropdown(item);
         }
         return (
           <d-breadcrumb-item>
