@@ -93,26 +93,6 @@ describe('TimeSelect', () => {
     wrapper.unmount();
   });
 
-  it('time-select disabled work', async () => {
-    const wrapper = mount({
-      components: { DTimeSelect },
-      template: `<d-time-select v-model="modelValue" disabled></d-time-select>`,
-      setup() {
-        const modelValue = ref('00:30');
-        return {
-          modelValue,
-        };
-      },
-    });
-
-    const container = wrapper.find(baseClass);
-    expect(container.classes()).toContain(selectDisabledCls);
-
-    const input = wrapper.find(selectInputCls);
-    expect(input.attributes()).toHaveProperty('disabled');
-    wrapper.unmount();
-  });
-
   it('time-select clear work', async () => {
     const wrapper = mount({
       components: { DTimeSelect },
@@ -168,4 +148,12 @@ describe('TimeSelect', () => {
 
     wrapper.unmount();
   });
+
+  it.todo('props step work well.');
+
+  it.todo('props start/end work well.');
+
+  it.todo('props min-time/max-time work well.');
+
+  it.todo('props placeholder work well.');
 });

@@ -128,7 +128,6 @@ describe('pagination: ', () => {
     // 每页条数改变回调
     await wrapper.find(selectNs.e('input')).trigger('click');
     const selectItems = document.querySelectorAll(selectNs.e('item'));
-    console.log(selectItems[0]);
     await selectItems[0].dispatchEvent(new Event('click'));
     expect(pageSizeChange).toHaveBeenCalled();
 

@@ -136,4 +136,16 @@ describe('menu test', () => {
     expect(wrapper.findAll('i')[0].classes().includes('is-opened')).toBe(true);
     expect(wrapper.findAll('i')[1].classes().includes('is-opened')).toBe(false);
   });
+
+  it.todo('props mode(vertical/horizontal) work well.');
+
+  it.todo('props multiple work well.');
+
+  it.todo('props collapsed-indent work well.');
+
+  it.todo('props disabled work well.');
+
+  it.todo('props router work well.');
+
+  it.todo('slot icon work well.');
 });

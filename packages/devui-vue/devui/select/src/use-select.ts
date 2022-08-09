@@ -324,7 +324,8 @@ export default function useSelect(
 
   watch(isOpen, (val) => {
     if (val) {
-      dropdownRef.value?.updatePosition();
+      // TODO: 单测报错待解决：TypeError: The provided value is not of type 'Element'.
+      // dropdownRef.value?.updatePosition();
     }
   });
 

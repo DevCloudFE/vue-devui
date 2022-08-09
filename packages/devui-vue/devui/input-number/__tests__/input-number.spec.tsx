@@ -144,4 +144,10 @@ describe('d-input-number', () => {
 
     wrapper.unmount();
   });
+
+  it.todo('props placeholder work well.');
+
+  it.todo('event change/focus/blur/input work well.');
+
+  it.todo('method focus/blur/select work well.');
 });

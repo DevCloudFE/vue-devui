@@ -50,9 +50,10 @@ describe('badge', () => {
 
   it('badge offsetXY', () => {
     const wrapper = mount(DBadge, {
-      props: { offset: [-10, 10], badgePos: 'top-right' },
+      props: { offset: [-10, 10], position: 'top-right' },
       slots: { default: SLOT },
     });
+    // TODO: 未覆盖 position
     expect(wrapper.find(contentClass).attributes().style).toBe('top: 10px; right: -10px;');
   });
 
@@ -71,4 +72,10 @@ describe('badge', () => {
     expect(wrapper.find(dotHiddenClass).exists()).toBe(true);
     expect(wrapper.find(dotShowClass).exists()).toBe(false);
   });
+
+  it.todo('props status work well.');
+
+  it.todo('props show-dot work well.');
+
+  it.todo('props position work well.');
 });
