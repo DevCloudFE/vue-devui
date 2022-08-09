@@ -1,4 +1,4 @@
-import { defineComponent, Transition, SetupContext, provide, Teleport, withModifiers } from 'vue';
+import { defineComponent, Transition, SetupContext, provide, Teleport } from 'vue';
 import { cloneDeep } from 'lodash';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import DCascaderList from '../components/cascader-list';
@@ -84,9 +84,7 @@ export default defineComponent({
               ref={overlayRef}
               v-model={menuShow.value}
               position={position.value as Placement[]}
-              align="start"
-              onClick={withModifiers(() => ({}), ['stop'])}
-              onPointerup={withModifiers(() => ({}), ['stop'])}>
+              align="start">
               <div class={ns.e('drop-menu-animation')}>
                 {!isSearching.value && (
                   <div class={`${menuOpenClass.value} ${ns.e('dropdown-menu')}`}>

@@ -66,6 +66,10 @@ export const flexibleOverlayProps = {
     type: Boolean,
     default: true,
   },
+  clickEventBubble: {
+    type: Boolean,
+    default: false,
+  },
 };
 
 export type FlexibleOverlayProps = ExtractPropTypes<typeof flexibleOverlayProps>;
