@@ -140,4 +140,6 @@ describe('d-switch', () => {
 
     expect(wrapper.classes()).not.toContain(checkedClass);
   });
+
+  it.todo('props color work well.');
 });

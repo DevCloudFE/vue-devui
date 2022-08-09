@@ -184,4 +184,6 @@ describe('checkbox', () => {
     });
     expect(wrapper.find(sizeLgClass).exists()).toBe(true);
   });
+
+  it.todo('props color work well.');
 });

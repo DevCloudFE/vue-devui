@@ -310,4 +310,6 @@ describe('editable-select test', () => {
     await input.trigger('keydown', { key: 'Enter' });
     expect(input.element.value).toBe('label2');
   });
+
+  it.todo('props allow-clear work well.');
 });

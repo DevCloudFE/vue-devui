@@ -116,4 +116,10 @@ describe('d-input-number', () => {
     expect(inputWrap.classes()).toContain(noDotNs.m('lg'));
     wrapper.unmount();
   });
+
+  it.todo('props placeholder work well.');
+
+  it.todo('event change/focus/blur/input work well.');
+
+  it.todo('method focus/blur/select work well.');
 });

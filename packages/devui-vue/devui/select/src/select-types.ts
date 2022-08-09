@@ -30,6 +30,7 @@ export const selectProps = {
     type: String as PropType<SelectSize>,
     default: 'md',
   },
+  // TODO: 这个api命名不合理
   overview: {
     type: String as PropType<'border' | 'underlined'>,
     default: 'border',
