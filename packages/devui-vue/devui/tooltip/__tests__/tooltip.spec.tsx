@@ -169,4 +169,6 @@ describe('d-tooltip', () => {
 
     wrapper.unmount();
   });
+
+  it.todo('props position work well.');
 });

@@ -170,4 +170,8 @@ describe('d-drawer', () => {
 
     wrapper.unmount();
   });
+
+  it.todo('props lock-scroll should work well.');
+
+  it.todo('$drawerService should work well.');
 });

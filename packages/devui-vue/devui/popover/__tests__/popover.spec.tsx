@@ -137,4 +137,14 @@ describe('d-popover', () => {
     expect(popoverContent).toBeFalsy();
     wrapper.unmount();
   });
+
+  it.todo('props position work well.');
+
+  it.todo('props align work well.');
+
+  it.todo('props offset work well.');
+
+  it.todo('props mouse-enter-delay work well.');
+
+  it.todo('props mouse-leave-delay work well.');
 });

@@ -15,16 +15,28 @@ describe('d-icon', () => {
     });
     expect(wrapper.find('.dev-add').exists()).toBeTruthy();
   });
+
   it('size', () => {
     const wrapper = mount(Icon, {
       props: { name: 'add', size: '80px' },
     });
     expect(wrapper.find('.icon-add').attributes('style').includes('font-size: 80px')).toBeTruthy();
   });
+
   it('color', () => {
     const wrapper = mount(Icon, {
       props: { name: 'add', color: 'red' },
     });
     expect(wrapper.find('.icon-add').attributes('style').includes('color: red')).toBeTruthy();
   });
+
+  it.todo('props operable should work well.');
+
+  it.todo('props rotate should work well.');
+
+  it.todo('props disabled should work well.');
+
+  it.todo('slot(prefix/suffix) should work well.');
+
+  it.todo('icon group should work well.');
 });
