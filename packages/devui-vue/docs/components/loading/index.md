@@ -15,7 +15,7 @@
 <template>
   <d-button @click="fetchTableData" style="margin-top: 8px">click me!</d-button>
   <table
-    v-d-loading="loadingStatus"
+    v-loading="loadingStatus"
     :backdrop="true"
     position-type="relative"
     :view="{ top: '50%', left: '50%' }"
@@ -79,7 +79,7 @@ export default defineComponent({
   <d-button @click="fetchMutiplePromise" style="margin-top: 8px">click me!</d-button>
 
   <div
-    v-d-loading="promises"
+    v-loading="promises"
     message="One moment please..."
     style="margin-top: 20px; width: 100%; height: 80px; padding: 10px;"
   >
@@ -132,7 +132,7 @@ export default defineComponent({
   </d-button>
 
   <d-button
-    v-d-loading="isShowLoading2"
+    v-loading="isShowLoading2"
     @click="showLoading2"
     :loading-template-ref="temp2"
     style="margin-right: 8px; display: inline-block; width: 220px;"
@@ -141,7 +141,7 @@ export default defineComponent({
   </d-button>
 
   <d-button
-    v-d-loading="true"
+    v-loading="true"
     variant="text"
     :loading-template-ref="temp3"
     style="margin-right: 8px; display: inline-block; width: 220px;"
@@ -151,7 +151,7 @@ export default defineComponent({
 
   <div
     style="height: 80px; line-height: 80px"
-    v-d-loading="isShowLoading1"
+    v-loading="isShowLoading1"
     :loading-template-ref="temp1"
   >
     loading will show here1
@@ -324,11 +324,11 @@ export default {
 
 | 参数名           | 类型                                                      | 默认                    | 说明                                                             | 跳转 Demo                 |
 | :------------------ | :------------------------------------------------------------- | :--------------------------- | :--------------------------------------------------------------------- | :----------------------------- |
-| v-d-loading         | `Promise<any>` \| <br>`Array<Promise<any>>` \| <br>`Boolean` \| <br>`undefined` | --                          | 可选，指令方式，控制 loading 状态                                     | [基本用法](#基本用法)         |
+| v-loading         | `Promise<any>` \| <br>`Array<Promise<any>>` \| <br>`Boolean` \| <br>`undefined` | --                          | 可选，指令方式，控制 loading 状态                                     | [基本用法](#基本用法)         |
 | target             | `element`                                                     | document.body               | 可选，服务方式，Loading 需要覆盖的<br> DOM 节点                           | [服务方式调用](#服务方式调用) |
 | message            | `string`                                                      | --                          | 可选，loading 时的提示信息                                            | [多 promise](#多promise)      |
 | loading-template-ref | `VNode`                                                       | --                          | 可选，自定义 loading 模板                                             | [自定义样式](#自定义样式)     |
 | backdrop           | `boolean`                                                     | true                        | 可选，loading 时是否显示遮罩                                          | [基本用法](#基本用法)         |
-| position-type       | `string`                                                      | relative                    | 可选，指定`dLoading`宿主元素的定位类型，<br>取值与 css position 属性一致。 | [基本用法](#基本用法)         |
+| position-type       | `string`                                                      | relative                    | 可选，指定`loading`宿主元素的定位类型，<br>取值与 css position 属性一致。 | [基本用法](#基本用法)         |
 | view               | {<br>&nbsp;&nbsp;top?: string, <br>&nbsp;&nbsp;left?: string <br>}                                 | {<br>&nbsp;&nbsp;top: '50%', <br>&nbsp;&nbsp;left: '50%'<br>} | 可选，调整 loading 的显示位置，<br>相对于宿主元素的顶部距离与左侧距离     | [基本用法](#基本用法)         |
 | z-index             | `number`                                                      | --                          | 可选，loading 加载提示的 z-index 值                                   | [基本用法](#基本用法)         |

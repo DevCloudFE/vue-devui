@@ -1,8 +1,7 @@
 import { defineComponent, withModifiers, computed, ref, SetupContext, watch, Teleport, Transition, getCurrentInstance } from 'vue';
-import type { Ref } from 'vue';
 import { editableSelectProps, EditableSelectProps, OptionObjectItem } from './editable-select-types';
-import clickOutside from '../../shared/devui-directive/clickoutside';
-import loadingDirective from '../../loading/src/loading-directive';
+import ClickOutside from '../../shared/devui-directive/clickoutside';
+import LoadingDirective from '../../loading/src/loading-directive';
 import { className } from '../src/utils/index';
 import './editable-select.scss';
 import { useSelect } from './composables/use-select';
@@ -18,8 +17,8 @@ import { createI18nTranslate } from '../../locale/create';
 export default defineComponent({
   name: 'DEditableSelect',
   directives: {
-    clickOutside,
-    dLoading: loadingDirective,
+    ClickOutside,
+    Loading: LoadingDirective,
   },
 
   props: editableSelectProps,
@@ -33,13 +32,13 @@ export default defineComponent({
     // Ref
     const dropdownRef = ref();
     const origin = ref();
-
+    const hoverIndex = ref(0);
+    const selectedIndex = ref(0);
     const position = ref<Placement[]>(['bottom']);
 
     const visible = ref(false);
     const inputValue = ref(props.modelValue);
 
-    const cacheInput = ref();
     const loading = ref(props.loading);
 
     const { normalizeOptions } = useSelect(props);
@@ -83,47 +82,47 @@ export default defineComponent({
     // 输入框变化后的逻辑
     const { handleInput } = useInput(inputValue, ctx);
 
-    const handleClick = (option: OptionObjectItem, index: number, curSelectedIndex: Ref<number>) => {
+    const handleClick = (option: OptionObjectItem, index: number) => {
       const { disabledKey } = props;
       if (disabledKey && !!option[disabledKey]) {
         return;
       }
 
       inputValue.value = option.label;
-      cacheInput.value = option.label;
-      curSelectedIndex.value = index;
+
+      hoverIndex.value = selectedIndex.value;
+      selectedIndex.value = index;
 
       const value = getOptionValue(option);
       ctx.emit('update:modelValue', value + '');
       closeMenu();
     };
+
+    // 键盘选择;
+    const { handleKeydown } = useKeyboardSelect(
+      dropdownRef,
+      hoverIndex,
+      filteredOptions,
+      props.disabledKey,
+      visible,
+      loading,
+      handleClick,
+      toggleMenu,
+      closeMenu
+    );
+
     const handleClear = () => {
       inputValue.value = '';
     };
-    // 键盘选择;
-    const { handleKeydown, hoverIndex, selectedIndex } = useKeyboardSelect(
-      dropdownRef,
-      visible,
-      inputValue,
-      cacheInput,
-      filteredOptions,
-      props.disabledKey,
-      props.filterOption,
-      loading,
-      (option, index) => handleClick(option, index, selectedIndex),
-      closeMenu,
-      toggleMenu
-    );
 
     const getItemCls = (option: OptionObjectItem, index: number) => {
       const { disabledKey } = props;
       return className(`devui-dropdown-item`, {
         disabled: disabledKey ? !!option[disabledKey] : false,
-        selected: index === selectedIndex.value,
+        selected: filteredOptions.value.length === 1 || index === selectedIndex.value,
         [`${ns.em('dropdown', 'bg')}`]: index === hoverIndex.value,
       });
     };
-    // 渲染下拉列表,根据appendToBody属性判断是否渲染在body下
 
     return () => {
       const selectCls = className(
@@ -169,7 +168,7 @@ export default defineComponent({
                     width: props.width + 'px',
                   }}
                   class={`${ns.e('menu')}`}>
-                  <div class={`devui-dropdown-menu`} v-show={visible.value} v-d-loading={props.loading}>
+                  <div class={`devui-dropdown-menu`} v-show={visible.value} v-loading={props.loading}>
                     <ul
                       ref={dropdownRef}
                       class={`${ns.em('list', 'unstyled')} devui-scrollbar scroll-height`}
@@ -183,7 +182,7 @@ export default defineComponent({
                             class={getItemCls(option, index)}
                             onClick={(e: MouseEvent) => {
                               e.stopPropagation();
-                              handleClick(option, index, selectedIndex);
+                              handleClick(option, index);
                             }}>
                             {ctx.slots.item ? ctx.slots.item(option) : option.label}
                           </li>

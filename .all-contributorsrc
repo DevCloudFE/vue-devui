@@ -499,6 +499,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "JensonMiao",
+      "name": "jenson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46488783?v=4",
+      "profile": "https://github.com/JensonMiao",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "dbsdaicheng",
+      "name": "dbsdaicheng",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62135142?v=4",
+      "profile": "https://github.com/dbsdaicheng",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 10,

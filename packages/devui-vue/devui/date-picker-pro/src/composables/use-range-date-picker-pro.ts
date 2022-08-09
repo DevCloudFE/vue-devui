@@ -10,7 +10,6 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
 
-  const containerRef = shallowRef<HTMLElement>();
   const originRef = ref<HTMLElement>();
   const startInputRef = shallowRef<HTMLElement>();
   const endInputRef = shallowRef<HTMLElement>();
@@ -32,9 +31,13 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     }
   };
 
-  onClickOutside(containerRef, () => {
-    toggleChange(false);
-  });
+  onClickOutside(
+    overlayRef,
+    () => {
+      toggleChange(false);
+    },
+    { ignore: [originRef] }
+  );
 
   const focusHandler = function (e: MouseEvent) {
     ctx.emit('focus', e);
@@ -132,7 +135,6 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   );
 
   return {
-    containerRef,
     originRef,
     startInputRef,
     endInputRef,

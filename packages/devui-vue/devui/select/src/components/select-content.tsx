@@ -83,19 +83,22 @@ export default defineComponent({
                     default: () => <Tag size={tagSize.value}>{`+${selectedData.value.length - 1}`}</Tag>,
                     content: () => (
                       <div>
-                        {selectedData.value.map((item: OptionObjectItem) => (
-                          <Tag
-                            deletable
-                            onTagDelete={(e: MouseEvent) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              tagDelete(item);
-                            }}
-                            key={item.value}
-                            size={tagSize.value as SizeType}>
-                            {item.name}
-                          </Tag>
-                        ))}
+                        {selectedData.value.map(
+                          (item: OptionObjectItem, index: number) =>
+                            index !== 0 && (
+                              <Tag
+                                deletable
+                                onTagDelete={(e: MouseEvent) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  tagDelete(item);
+                                }}
+                                key={item.value}
+                                size={tagSize.value as SizeType}>
+                                {item.name}
+                              </Tag>
+                            )
+                        )}
                       </div>
                     ),
                   }}></Popover>

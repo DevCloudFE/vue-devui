@@ -47,7 +47,6 @@ export const datePickerProProps = {
 export type DatePickerProProps = ExtractPropTypes<typeof datePickerProProps>;
 
 export interface UseDatePickerProReturnType {
-  containerRef: Ref<HTMLElement | undefined>;
   originRef: Ref<HTMLElement | undefined>;
   inputRef: Ref<HTMLElement | undefined>;
   overlayRef: Ref<HTMLElement | undefined>;

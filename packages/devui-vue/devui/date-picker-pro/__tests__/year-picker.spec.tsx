@@ -47,16 +47,16 @@ describe('date-picker-pro year type test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(yearPanelClass);
-    expect(pickerPanel.exists()).toBeTruthy();
+    const pickerPanel = document.querySelector(yearPanelClass);
+    expect(pickerPanel).toBeTruthy();
 
-    const yearListItems = pickerPanel.findAll(yearListItemClass);
+    const yearListItems = document.querySelectorAll(yearListItemClass);
     expect(yearListItems.length).toBe(6);
-    const thisYearItems = pickerPanel.find(yearThisYearClass);
-    expect(thisYearItems.exists()).toBeTruthy();
+    const thisYearItems = document.querySelector(yearThisYearClass);
+    expect(thisYearItems).toBeTruthy();
 
     const year = new Date().getFullYear();
-    await thisYearItems.trigger('click');
+    await thisYearItems?.dispatchEvent(new Event('click'));
     expect(datePickerProValue.value?.getFullYear()).toBe(year);
     expect(input.element.value).toBe(year.toString());
 
@@ -78,11 +78,10 @@ describe('date-picker-pro year type test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(yearPanelClass);
 
-    const thisYearItems = pickerPanel.find(yearThisYearClass);
-    expect(thisYearItems.exists()).toBeTruthy();
-    expect(thisYearItems.classes().includes(noDotYearActiveYearClass)).toBe(true);
+    const thisYearItems = document.querySelector(yearThisYearClass);
+    expect(thisYearItems).toBeTruthy();
+    expect(thisYearItems?.classList).toContain(noDotYearActiveYearClass);
 
     wrapper.unmount();
   });
@@ -111,19 +110,18 @@ describe('date-picker-pro year type test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(yearPanelClass);
-    const yearItems = pickerPanel.findAll(yearItemClass);
+    const yearItems = document.querySelectorAll(yearItemClass);
     expect(yearItems.length).toBe(11);
 
     const year = 5;
     const startIndex = year - 2;
     const endIndex = year + 2;
-    expect(yearItems[startIndex].classes().includes(noDotYearDisabledClass)).toBe(false);
-    expect(yearItems[endIndex].classes().includes(noDotYearDisabledClass)).toBe(false);
-    expect(yearItems[startIndex - 1].classes().includes(noDotYearDisabledClass)).toBe(true);
-    expect(yearItems[endIndex + 1].classes().includes(noDotYearDisabledClass)).toBe(true);
+    expect(yearItems[startIndex].classList).not.toContain(noDotYearDisabledClass);
+    expect(yearItems[endIndex].classList).not.toContain(noDotYearDisabledClass);
+    expect(yearItems[startIndex - 1].classList).toContain(noDotYearDisabledClass);
+    expect(yearItems[endIndex + 1].classList).toContain(noDotYearDisabledClass);
 
-    await yearItems[startIndex - 1].trigger('click');
+    await yearItems[startIndex - 1].dispatchEvent(new Event('click'));
     expect(input.element.value).toBe('');
 
     wrapper.unmount();
@@ -145,20 +143,20 @@ describe('date-picker-pro year type test', () => {
     await inputs[0].trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(yearPanelClass);
-    expect(pickerPanel.exists()).toBeTruthy();
+    const pickerPanel = document.querySelector(yearPanelClass);
+    expect(pickerPanel).toBeTruthy();
 
-    const yearItems = pickerPanel.findAll(yearItemClass);
+    const yearItems = document.querySelectorAll(yearItemClass);
     const year = new Date().getFullYear();
     // 虚拟列表 当前面板呈现的当前年在yearListItems的第三行
     const yearIndex = ((year - 1970 + 1) % 3) + (3 * 2 - 1);
-    expect(yearItems[yearIndex].classes().includes(noDotYearThisYearClass)).toBe(true);
-    await yearItems[yearIndex].trigger('click');
+    expect(yearItems[yearIndex].classList).toContain(noDotYearThisYearClass);
+    await yearItems[yearIndex].dispatchEvent(new Event('click'));
 
     await inputs[1].trigger('focus');
     await nextTick();
     await nextTick();
-    await yearItems[yearIndex + 5].trigger('click');
+    await yearItems[yearIndex + 5].dispatchEvent(new Event('click'));
     // todo 选择第二个日期时，focusType判断仍然是start。 demo中是正确的，单测原因需进一步确定
     // expect(datePickerProValue.value[0]?.getFullYear()).toBe(year);
     // expect(datePickerProValue.value[1]?.getFullYear()).toBe(year + 5);
@@ -183,8 +181,7 @@ describe('date-picker-pro year type test', () => {
     await inputs[0].trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(yearPanelClass);
-    const yearItems = pickerPanel.findAll(yearItemClass);
+    const yearItems = document.querySelectorAll(yearItemClass);
 
     const year = new Date().getFullYear();
     const start = year;
@@ -194,8 +191,8 @@ describe('date-picker-pro year type test', () => {
     const endYearIndex = startYearIndex + 5;
     expect(inputs[0].element.value).toBe(start.toString());
     expect(inputs[1].element.value).toBe(end.toString());
-    expect(yearItems[startYearIndex].classes().includes(noDotYearStartYearClass)).toBe(true);
-    expect(yearItems[endYearIndex].classes().includes(noDotYearEndYearClass)).toBe(true);
+    expect(yearItems[startYearIndex].classList).toContain(noDotYearStartYearClass);
+    expect(yearItems[endYearIndex].classList).toContain(noDotYearEndYearClass);
 
     wrapper.unmount();
   });

@@ -1,7 +1,7 @@
 import { defineComponent, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { Icon } from '../../icon';
-import loadingDirective from '../../loading/src/loading-directive';
+import LoadingDirective from '../../loading/src/loading-directive';
 import { buttonProps, ButtonProps } from './button-types';
 import useButton from './use-button';
 import './button.scss';
@@ -9,7 +9,7 @@ import './button.scss';
 export default defineComponent({
   name: 'DButton',
   directives: {
-    dLoading: loadingDirective,
+    Loading: LoadingDirective,
   },
   props: buttonProps,
   emits: ['click'],
@@ -26,7 +26,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <button class={classes.value} disabled={disabled.value} v-dLoading={loading.value} onClick={onClick}>
+        <button class={classes.value} disabled={disabled.value} v-loading={loading.value} onClick={onClick}>
           {icon.value && <Icon name={icon.value} size="var(--devui-font-size, 12px)" color="" class={iconClass.value} />}
           <span class="button-content">{ctx.slots.default?.()}</span>
         </button>

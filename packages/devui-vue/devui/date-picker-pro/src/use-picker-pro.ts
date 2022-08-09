@@ -14,12 +14,11 @@ export default function usePickerPro(
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
 
-  const containerRef = shallowRef<HTMLElement>();
   const originRef = ref<HTMLElement>();
   const inputRef = shallowRef<HTMLElement>();
   const overlayRef = shallowRef<HTMLElement>();
   const isPanelShow = ref(false);
-  const placeholder = computed(() => props.placeholder || t('placeholder') as string);
+  const placeholder = computed(() => props.placeholder || (t('placeholder') as string));
   const isMouseEnter = ref(false);
 
   const pickerDisabled = computed(() => formContext?.disabled || props.disabled);
@@ -34,12 +33,15 @@ export default function usePickerPro(
     }
   };
 
-  onClickOutside(containerRef, () => {
-    toggleChange(false);
-  });
+  onClickOutside(
+    overlayRef,
+    () => {
+      toggleChange(false);
+    },
+    { ignore: [originRef] }
+  );
 
   const onFocus = function (e: MouseEvent) {
-    e.stopPropagation();
     toggleChange(true);
     ctx.emit('focus', e);
   };
@@ -101,7 +103,6 @@ export default function usePickerPro(
   );
 
   return {
-    containerRef,
     originRef,
     inputRef,
     overlayRef,

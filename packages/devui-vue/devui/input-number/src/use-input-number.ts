@@ -2,7 +2,7 @@ import { computed, reactive, toRefs, watch, ref } from 'vue';
 import type { SetupContext, Ref, CSSProperties } from 'vue';
 import { InputNumberProps, UseEvent, UseRender, IState, UseExpose } from './input-number-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import { isNull, isNumber, isUndefined } from '../../shared/utils';
+import { isNumber, isUndefined } from '../../shared/utils';
 
 const ns = useNamespace('input-number');
 
@@ -89,6 +89,7 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
       return '';
     }
     if (isNumber(currentValue)) {
+      // todo 小数精度 确认是否应该以正则处理
       currentValue = currentValue.toFixed(numPrecision.value);
     }
     return currentValue;
@@ -105,15 +106,21 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
     return toPrecision(val + step.value * addOrNot);
   };
 
-  const correctValue = (value: number | string | undefined | null, shouldUpdate?: boolean) => {
-    if (value === '' || isUndefined(value) || isNull(value) || Number.isNaN(value)) {
+  const correctValue = (value: number | string | undefined | null) => {
+    let newVal = Number(value);
+    // 不是0 是假值或者是NaN返回undefined
+    if (newVal !== 0 && (!Number(value) || Number.isNaN(newVal))) {
       return undefined;
     }
-    let newVal = Number(value);
-    newVal = toPrecision(newVal);
+
+    // 精度限制存在才做转换
+    if (!isUndefined(props.precision)) {
+      newVal = toPrecision(newVal);
+    }
+
+    // 判断数据是否大于或小于限定数值
     if (newVal > max.value || newVal < min.value) {
       newVal = newVal > max.value ? max.value : min.value;
-      shouldUpdate && ctx.emit('update:modelValue', newVal);
     }
     return newVal;
   };
@@ -121,10 +128,20 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
   const setCurrentValue = (value: number | string | undefined) => {
     const oldVal = state.currentValue;
     const newVal = correctValue(value);
+
+    state.userInputValue = undefined;
+
+    // 0 可以被更新
+    if (newVal !== 0 && !newVal) {
+      ctx.emit('update:modelValue', oldVal);
+      return;
+    }
+
+    // 新旧数据一致不做更新
     if (oldVal === newVal) {
       return;
     }
-    state.userInputValue = undefined;
+
     ctx.emit('update:modelValue', newVal);
     ctx.emit('input', newVal);
     ctx.emit('change', newVal, oldVal);
@@ -155,24 +172,17 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
   watch(
     () => props.modelValue,
     (val) => {
-      state.currentValue = correctValue(val, true);
-      state.userInputValue = undefined;
+      state.currentValue = correctValue(val);
     },
-    { immediate: true }
+    { immediate: true },
   );
 
   const onInput = (event: Event) => {
-    const value = (event.target as HTMLInputElement).value;
-    state.userInputValue = value;
+    state.userInputValue = (event.target as HTMLInputElement).value;
   };
 
   const onChange = (event: Event) => {
-    const value = (event.target as HTMLInputElement).value;
-    const newVal = value !== '' ? Number(value) : '';
-    if ((isNumber(newVal) && !Number.isNaN(newVal)) || value === '') {
-      setCurrentValue(newVal);
-    }
-    state.userInputValue = undefined;
+    setCurrentValue((event.target as HTMLInputElement).value);
   };
 
   return { inputVal, minDisabled, maxDisabled, onAdd, onSubtract, onInput, onChange };
