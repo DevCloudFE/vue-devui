@@ -22,10 +22,12 @@ describe('d-modal', () => {
     overlayAnchor.style.zIndex = '1000';
     document.body.appendChild(overlayAnchor);
   });
+
   afterEach(() => {
     const overlayAnchor = document.querySelector('#d-overlay-anchor');
     overlayAnchor && document.body.removeChild(overlayAnchor);
   });
+
   it('render correctly', async () => {
     const visible = ref(true);
     const wrapper = mount({
@@ -164,4 +166,10 @@ describe('d-modal', () => {
     expect(beforeClose).toBeCalled();
     wrapper.unmount();
   });
+
+  it.todo('props lock-scroll work well.');
+
+  it.todo('props close-on-click-overlay work well.');
+
+  it.todo('props escapable work well.');
 });

@@ -6,25 +6,27 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const ns = useNamespace('notification', true);
 describe('d-notification', () => {
-  it('render correctly when using component', async () => {
-    const wrapper = mount({
-      setup() {
-        const show = ref(true);
-        return () => (
-          <DNotification v-model={show.value} title="标题">
-            通知提示内容
-          </DNotification>
-        );
-      },
+  describe('component', () => {
+    it('render correctly when using component', async () => {
+      const wrapper = mount({
+        setup() {
+          const show = ref(true);
+          return () => (
+            <DNotification v-model={show.value} title="标题">
+              通知提示内容
+            </DNotification>
+          );
+        },
+      });
+      await nextTick();
+      const notification = wrapper.find(ns.b());
+      const notificationTitle = notification.find(ns.e('title'));
+      const notificationContent = notification.find(ns.e('content'));
+      expect(notification.exists()).toBeTruthy();
+      expect(notificationTitle.text()).toBe('标题');
+      expect(notificationContent.text()).toBe('通知提示内容');
+      wrapper.unmount();
     });
-    await nextTick();
-    const notification = wrapper.find(ns.b());
-    const notificationTitle = notification.find(ns.e('title'));
-    const notificationContent = notification.find(ns.e('content'));
-    expect(notification.exists()).toBeTruthy();
-    expect(notificationTitle.text()).toBe('标题');
-    expect(notificationContent.text()).toBe('通知提示内容');
-    wrapper.unmount();
   });
 
   describe('service', () => {
@@ -99,7 +101,7 @@ describe('d-notification', () => {
       expect(closeCallback).toBeCalled();
       notification = null;
     });
-  });
 
-  it.todo('manual click close work well');
+    it.todo('manual click close work well');
+  });
 });

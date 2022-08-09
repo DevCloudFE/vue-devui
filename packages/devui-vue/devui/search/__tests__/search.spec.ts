@@ -15,6 +15,7 @@ const dotClearSearchClass = dotSearchNs.e('clear');
 const dotIconSearchClass = dotSearchNs.e('icon');
 
 describe('search test', () => {
+  // TODO: 这个单测应该按功能进行拆分
   it('should render correctly', async () => {
     const value = ref('test');
     const size = ref('');
@@ -113,4 +114,22 @@ describe('search test', () => {
     // TODO: 在单元测试环境中，input虽然处于focus状态，但是无法通过document.activeElement获取到
     // expect(input.element === document.activeElement).toBe(true);
   });
+
+  it.todo('props size(sm/md/lg) should work well.');
+
+  it.todo('props auto-focus should work well.');
+
+  it.todo('props is-keyup-search should work well.');
+
+  it.todo('props delay should work well.');
+
+  it.todo('props disabled should work well.');
+
+  it.todo('props icon-position should work well.');
+
+  it.todo('props placeholder should work well.');
+
+  it.todo('props no-border should work well.');
+
+  it.todo('props max-length should work well.');
 });

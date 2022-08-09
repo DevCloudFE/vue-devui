@@ -41,4 +41,8 @@ describe('result test', () => {
     expect(wrapper.element.children[2].innerHTML).toEqual('This is desc slot');
     expect(wrapper.element.children[3].innerHTML).toEqual('This is extra slot');
   });
+
+  it.todo('props title work well.');
+
+  it.todo('props desc work well.');
 });

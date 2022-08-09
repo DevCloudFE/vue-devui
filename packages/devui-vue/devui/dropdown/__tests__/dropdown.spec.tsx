@@ -179,4 +179,8 @@ describe('d-dropdown', () => {
     expect(onToggle).toBeCalled();
     wrapper.unmount();
   });
+
+  it.todo('multi dropdown should work well.');
+
+  it.todo('d-dropdown-item should work well.');
 });
