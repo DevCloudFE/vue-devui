@@ -1,13 +1,14 @@
-import type { EmitsOptions, SetupContext, ShallowRef } from 'vue';
+import type { ComputedRef, EmitsOptions, SetupContext, ShallowRef } from 'vue';
 import { TabsProps, Active, TabsData, TabsStateData } from '../../../tabs-types';
 import { OffSetData, UseTabNavFunction } from '../tab-nav-types';
 
 export function useTabNavFunction(
   props: TabsProps,
   tabs: TabsData | undefined,
+  tabsList: ComputedRef,
   data: OffSetData,
   ctx: SetupContext<EmitsOptions>,
-  tabsEle: ShallowRef<HTMLUListElement & { nativeElement: Element } | undefined>
+  tabsEle: ShallowRef<HTMLUListElement | undefined>
 ): UseTabNavFunction {
   const update = () => {
     if (props.type === 'slider') {
@@ -43,16 +44,17 @@ export function useTabNavFunction(
     return changeResult;
   };
   const activeClick = (item: TabsStateData, tabEl?: Element) => {
-    if (!props.reactivable && props.modelValue === item.id) {
+    const id = item.props.id;
+    if (!props.reactivable && props.modelValue === id) {
       return;
     }
-    canChange(item.id).then((change) => {
+    canChange(id).then((change) => {
       if (!change) {
         return;
       }
-      const tab = tabs?.state?.data?.find((itemOption) => itemOption.id === item.id);
-      if (tabs && tab && !tab.disabled) {
-        tabs.state.active = item.id;
+      const tab = tabsList.value.find((itemOption) => itemOption.props.id === id);
+      if (tabs && tab && !tab.props.disabled) {
+        tabs.state.active = id;
         if (props.type === 'slider' && tabEl && tabsEle && tabsEle.value) {
           if (['left', 'right'].includes(props.tabPosition)) {
             data.offsetLeft = tabEl.getBoundingClientRect().left - tabsEle.value.nativeElement.getBoundingClientRect().left;
@@ -62,31 +64,20 @@ export function useTabNavFunction(
           }
           data.offsetWidth = tabEl.getBoundingClientRect().width;
         }
-        ctx.emit('active-tab-change', tab.id);
+        ctx.emit('active-tab-change', tab.props.id);
       }
     });
   };
 
   const beforeMount = () => {
-    if (
-      props.type !== 'slider'
-      && props.modelValue === undefined
-      && tabs?.state.data
-      && tabs.state.data.length > 0
-    ) {
-      activeClick(tabs.state.data[0]);
+    if (props.type !== 'slider' && props.modelValue === undefined && tabsList.value && tabsList.value.length > 0) {
+      activeClick(tabsList.value[0]);
     }
   };
 
   const mounted = () => {
-    if (
-      props.type === 'slider'
-      && props.modelValue === undefined
-      && tabs?.state.data
-      && tabs.state.data.length > 0
-      && tabs.state.data[0]
-    ) {
-      const tabsStateData = tabs.state.data[0];
+    if (props.type === 'slider' && props.modelValue === undefined && tabsList.value && tabsList.value.length > 0 && tabsList.value[0]) {
+      const tabsStateData = tabsList.value[0];
       const dom = tabsStateData.tabsEle?.value;
       const ele = dom?.getElementById(tabsStateData.tabId as string);
       activeClick(ele as unknown as TabsStateData);
