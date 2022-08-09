@@ -14,7 +14,7 @@
 <template>
   <d-layout>
     <d-header class="dheader">Header</d-header>
-    <d-content>Content</d-content>
+    <d-content class="dcontent">Content</d-content>
     <d-footer class="dfooter">Footer</d-footer>
   </d-layout>
 </template>
@@ -25,6 +25,11 @@
         color: #fff;
         text-align: center;
         line-height: 40px;
+    }
+    .dcontent {
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
     }
 </style>
 ```
