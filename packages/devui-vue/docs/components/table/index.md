@@ -738,11 +738,13 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource" table-height="200px" fix-header>
-    <d-column field="firstName" header="First Name"></d-column>
-    <d-column field="lastName" header="Last Name"></d-column>
-    <d-column field="gender" header="Gender"></d-column>
-    <d-column field="date" header="Date of birth"></d-column>
+  <d-table :data="dataSource" table-height="200px" fix-header style="width:100%">
+    <d-column field="firstName" header="First Name" :width="150"></d-column>
+    <d-column field="lastName" header="Last Name" :width="150"></d-column>
+    <d-column field="gender" header="Gender" :width="150"></d-column>
+    <d-column field="gender" header="Gender" :width="150"></d-column>
+    <d-column field="gender" header="Gender" :width="150"></d-column>
+    <d-column field="date" header="Date of birth" :width="150"></d-column>
   </d-table>
 </template>
 
@@ -1559,6 +1561,7 @@ export default defineComponent({
 | show-overflow-tooltip | `boolean`                          | false  | 可选，内容过长被隐藏时是否显示 tooltip      |                       |
 | resizeable            | `boolean`                          | false  | 可选，该列宽度是否可调整                    |                       |
 | reserve-check         | `boolean`                          | false  | 可选，是否保留勾选状态                      | [表格交互](#表格交互) |
+| cell-class            | `string`                           | ''     | 可选，该列单元格自定义 class                |                       |
 
 ### Column 事件
 
