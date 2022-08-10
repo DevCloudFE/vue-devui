@@ -13,6 +13,7 @@ export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender
   const wrapClass = computed(() => [
     {
       [ns.b()]: true,
+      [ns.m(props.size)]: true,
     },
     customClass,
   ]);
@@ -20,12 +21,10 @@ export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender
   const controlButtonsClass = computed(() => ({
     [ns.e('control-buttons')]: true,
     disabled: props.disabled,
-    [ns.m(props.size)]: true,
   }));
 
   const inputWrapClass = computed(() => ({
     [ns.e('input-wrap')]: true,
-    [ns.m(props.size)]: true,
   }));
 
   const inputInnerClass = computed(() => ({
