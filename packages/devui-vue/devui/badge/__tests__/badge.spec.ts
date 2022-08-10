@@ -8,6 +8,16 @@ const contentClass = ns.e('content');
 const dotClass = ns.m('dot');
 const dotHiddenClass = ns.m('hidden');
 const dotShowClass = ns.m('show');
+const infoStatusClass = ns.m('info');
+const dangerStatusClass = ns.m('danger');
+const warningStatusClass = ns.m('warning');
+const waitingStatusClass = ns.m('waiting');
+const successStatusClass = ns.m('success');
+const commonStatusClass = ns.m('common');
+const topLeftPositionClass = ns.m('top-left');
+const topRightPositionClass = ns.m('top-right');
+const bottomLeftPositionClass = ns.m('bottom-left');
+const bottomRightPositionClass = ns.m('bottom-right');
 
 const SLOT = 'This is a slot test';
 
@@ -20,12 +30,20 @@ describe('badge', () => {
     expect(wrapper.vm.count).toEqual(80);
   });
 
-  it('badge dot', () => {
+  it('badge dot', async () => {
+    // 不传递show-dot时，默认为基本徽章(即show-dot为默认的false)
     const wrapper = mount(DBadge, {
-      props: { showDot: true },
       slots: { default: SLOT },
     });
+    expect(wrapper.find(contentClass + dotClass).exists()).toBe(false);
+    await wrapper.setProps({
+      showDot: true,
+    });
     expect(wrapper.find(contentClass + dotClass).exists()).toBe(true);
+    await wrapper.setProps({
+      showDot: false,
+    });
+    expect(wrapper.find(contentClass + dotClass).exists()).toBe(false);
   });
 
   it('badge max', () => {
@@ -78,50 +96,37 @@ describe('badge', () => {
     const wrapper = mount(DBadge, {
       slots: { default: SLOT },
     });
-    expect(wrapper.find(contentClass).classes('devui-badge--info')).toBe(true);
+    expect(wrapper.find(contentClass + infoStatusClass).exists()).toBe(true);
 
     await wrapper.setProps({
       status: 'danger',
     });
-    expect(wrapper.find(contentClass).classes('devui-badge--danger')).toBe(true);
+    expect(wrapper.find(contentClass + dangerStatusClass).exists()).toBe(true);
 
     await wrapper.setProps({
       status: 'warning',
     });
-    expect(wrapper.find(contentClass).classes('devui-badge--warning')).toBe(true);
+    expect(wrapper.find(contentClass + warningStatusClass).exists()).toBe(true);
 
     await wrapper.setProps({
       status: 'waiting',
     });
-    expect(wrapper.find(contentClass).classes('devui-badge--waiting')).toBe(true);
+    expect(wrapper.find(contentClass + waitingStatusClass).exists()).toBe(true);
 
     await wrapper.setProps({
       status: 'success',
     });
-    expect(wrapper.find(contentClass).classes('devui-badge--success')).toBe(true);
+    expect(wrapper.find(contentClass + successStatusClass).exists()).toBe(true);
 
     await wrapper.setProps({
       status: 'info',
     });
-    expect(wrapper.find(contentClass).classes('devui-badge--info')).toBe(true);
+    expect(wrapper.find(contentClass + infoStatusClass).exists()).toBe(true);
 
     await wrapper.setProps({
       status: 'common',
     });
-    expect(wrapper.find(contentClass).classes('devui-badge--common')).toBe(true);
-  });
-
-  it('props show-dot work well.', async () => {
-    // 不传递show-dot时，默认为基本徽章
-    const wrapper = mount(DBadge, {
-      slots: { default: SLOT },
-    });
-    expect(wrapper.find(contentClass + dotClass).exists()).toBe(false);
-
-    await wrapper.setProps({
-      props: { showDot: false },
-    });
-    expect(wrapper.find(contentClass + dotClass).exists()).toBe(false);
+    expect(wrapper.find(contentClass + commonStatusClass).exists()).toBe(true);
   });
 
   it('props position work well.', async () => {
@@ -129,26 +134,21 @@ describe('badge', () => {
       props: { position: 'top-left' },
       slots: { default: SLOT },
     });
-    expect(wrapper.find(contentClass).classes('devui-badge--top-left')).toBe(true);
+    expect(wrapper.find(contentClass + topLeftPositionClass).exists()).toBe(true);
 
     await wrapper.setProps({
       position: 'top-right',
     });
-    expect(wrapper.find(contentClass).classes('devui-badge--top-right')).toBe(true);
+    expect(wrapper.find(contentClass + topRightPositionClass).exists()).toBe(true);
 
     await wrapper.setProps({
       position: 'bottom-left',
     });
-    expect(wrapper.find(contentClass).classes('devui-badge--bottom-left')).toBe(true);
+    expect(wrapper.find(contentClass + bottomLeftPositionClass).exists()).toBe(true);
 
     await wrapper.setProps({
       position: 'bottom-right',
     });
-    expect(wrapper.find(contentClass).classes('devui-badge--bottom-right')).toBe(true);
-
-    await wrapper.setProps({
-      status: 'bottom-right',
-    });
-    expect(wrapper.find(contentClass).classes('devui-badge--bottom-right')).toBe(true);
+    expect(wrapper.find(contentClass + bottomRightPositionClass).exists()).toBe(true);
   });
 });
