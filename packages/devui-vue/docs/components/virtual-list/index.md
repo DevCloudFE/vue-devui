@@ -8,13 +8,13 @@
 
 ### 基本用法
 
-:::demo 渲染五千条数据
+:::demo 渲染大量数据
 
 ```vue
 <template>
   <div style="margin-bottom: 12px">
-    <d-button @click="onScrollTo" size="sm" style="margin-right: 6px;">scorll to</d-button>
     <d-input-number v-model="num" placeholder="请输入" :min="0" :max="data.length - 1" size="sm" />
+    <d-button @click="onScrollTo" size="sm" style="margin-left: 6px;">Scroll to</d-button>
   </div>
   <d-virtual-list :data="data" ref="vlRef">
     <template #item="{ value }">
@@ -28,7 +28,7 @@ import { ref } from 'vue';
 
 export default {
   setup() {
-    const data = ref(Array.from({ length: 5000 }).map((_, index) => ({ value: index })));
+    const data = ref(Array.from({ length: 100000 }).map((_, index) => ({ value: index })));
     const num = ref(0);
     const vlRef = ref(null);
     const onScrollTo = () => {
@@ -44,13 +44,13 @@ export default {
 
 ### VirtualList 参数
 
-| 参数        | 类型            | 默认   | 说明             | 跳转 Demo             |
-| :---------- | :-------------- | :----- | :--------------- | :-------------------- |
-| data        | `Array<Object>` |        | 数据数组         | [基本用法](#基本用法) |
-| component   | `string`        | `div`  | 定义滚动标签     | [基本用法](#基本用法) |
-| height      | `number`        | `100`  | 滚动区域高度     | [基本用法](#基本用法) |
-| virtual     | `boolean`       | `true` | 是否启用虚拟滚动 | [基本用法](#基本用法) |
-| item-height | `number`        | 0      | 单个列表项的高度 |                       |
+| 参数        | 类型            | 默认 | 说明             | 跳转 Demo             |
+| :---------- | :-------------- | :--- | :--------------- | :-------------------- |
+| data        | `Array<Object>` | []   | 数据数组         | [基本用法](#基本用法) |
+| component   | `string`        | div  | 定义滚动标签     | [基本用法](#基本用法) |
+| height      | `number`        | 100  | 滚动区域高度     | [基本用法](#基本用法) |
+| virtual     | `boolean`       | true | 是否启用虚拟滚动 | [基本用法](#基本用法) |
+| item-height | `number`        | 20   | 单个列表项的高度 |                       |
 
 ### VirtualList 方法
 
