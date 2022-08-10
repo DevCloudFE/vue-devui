@@ -17,12 +17,12 @@
   <d-row :gutter="50">
     <d-col :span="12">
       <div class="ripple-button">
-        <div class="ripple-html-element" v-ripple="{ color: '#5e7ce0',duration: 300, delay: 300 }">HTML元素 中使用 v-ripple</div>
+        <div class="ripple-html-element" v-ripple>HTML元素 中使用 v-ripple</div>
       </div>
     </d-col>
     <d-col :span="12">
       <div class="ripple-button">
-        <div class="ripple-html-element" v-ripple="{ duration: 800 }">HTML元素 中使用 v-ripple</div>
+        <div class="ripple-html-element" v-ripple="{ duration: 500 }">HTML元素 中使用 v-ripple</div>
       </div>
     </d-col>
   </d-row>
@@ -79,9 +79,9 @@ Button 组件
 ```vue
 <template>
   <div class="demo-spacing">
-    <d-button variant="solid" v-ripple="{ duration: 300 }">Solid button</d-button>
-    <d-button v-ripple="{ duration: 300 }">Secondary button</d-button>
-    <d-button icon="add" title="Add" v-ripple="{ duration: 300 }"></d-button>
+    <d-button variant="solid" v-ripple>Solid button</d-button>
+    <d-button v-ripple>Secondary button</d-button>
+    <d-button icon="add" title="Add" v-ripple></d-button>
   </div>
 </template>
 ```
@@ -167,7 +167,8 @@ Card 组件
     text-align: center; 
     line-height: 150px;
     border: 1px solid #eee50;
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)!important;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
     user-select: none;
   }
   .ripple-change-text-color {

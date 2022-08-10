@@ -1,5 +1,5 @@
 import { createContainer } from './utils/create-container-element';
-import { createrippleElement } from './utils/create-ripple-element';
+import { createRippleElement } from './utils/create-ripple-element';
 import { getDistanceToFurthestCorner } from './utils/getdistance-tofurthestcorner';
 import { getRelativePointer } from './utils/getrelative-pointer';
 import {
@@ -19,21 +19,17 @@ const ripple = (
   const computedStyles = window.getComputedStyle(el);
   const { x, y } = getRelativePointer(event, rect);
   const size = MULTIPLE_NUMBER * getDistanceToFurthestCorner(x, y, rect);
-
   const rippleContainer = createContainer(computedStyles);
-  const rippleEl = createrippleElement(x, y, size, options);
+  const rippleEl = createRippleElement(x, y, size, options, rect);
   let originalPositionValue = '';
   let shouldDissolveripple = false;
   let token: number | null = null;
   function dissolveripple () {
     rippleEl.style.transition = 'opacity 150ms linear';
     rippleEl.style.opacity = '0';
-
     setTimeout(() => {
       rippleContainer.remove();
-
       decrementRippleCount(el);
-
       if (getRippleCount(el) === 0) {
         deleteRippleCount(el);
         el.style.position = originalPositionValue;

@@ -54,6 +54,15 @@ interface IRippleDirectiveOptions {
    * false
    */
   disabled: boolean;
+  /**
+   * ripple展示方式
+   *
+   * @note
+   * ripple在center中间开始动画
+   * @default
+   * false
+   */
+  center: boolean;
 }
 
 interface IRipplePluginOptions extends IRippleDirectiveOptions {
@@ -76,20 +85,25 @@ interface IRippleDirectiveOptionWithBinding {
   value: IRippleDirectiveOptions;
 }
 
+interface HTMLElementRectType {
+  width: number;
+  height: number;
+  top: number;
+  left: number;
+  bottom: number;
+  right: number;
+}
+
 const DEFAULT_PLUGIN_OPTIONS: IRipplePluginOptions = {
   directive: 'ripple',
   color: 'currentColor',
-  initialOpacity: 0.2,
-  finalOpacity: 0.1,
-  duration: 400,
+  initialOpacity: 0.1,
+  finalOpacity: 0.15,
+  duration: 200,
   easing: 'ease-out',
   delay: 75,
-  disabled: false
+  disabled: false,
+  center: true,
 };
 
-export {
-  DEFAULT_PLUGIN_OPTIONS,
-  IRipplePluginOptions,
-  IRippleDirectiveOptions,
-  IRippleDirectiveOptionWithBinding
-};
+export { DEFAULT_PLUGIN_OPTIONS, IRipplePluginOptions, HTMLElementRectType, IRippleDirectiveOptions, IRippleDirectiveOptionWithBinding };
