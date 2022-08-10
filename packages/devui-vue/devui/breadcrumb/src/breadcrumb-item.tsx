@@ -3,16 +3,12 @@ import { breadcrumbItemProps, BreadcrumbItemProps } from './breadcrumb-item-type
 import { useNamespace } from '../../shared/hooks/use-namespace';
 // import { getPropsSlot } from './utils'
 import './breadcrumb-item.scss';
-import DDropdownMenu from '../../dropdown/src/dropdown-menu';
-import DList from '../../list/src/list';
-import DListItem from '../../list/src/list-item';
+import DDropdown from '../../dropdown/src/dropdown';
 
 export default defineComponent({
   name: 'DBreadcrumbItem',
   components: {
-    DDropdownMenu,
-    DList,
-    DListItem
+    DDropdown
   },
   props: breadcrumbItemProps,
   setup(props: BreadcrumbItemProps, { slots }) {
@@ -23,9 +19,9 @@ export default defineComponent({
     const instance = getCurrentInstance();
     const router = instance?.appContext.config.globalProperties.$router;
 
-    // const showMenu = props.showMenu
-    // const menuList = props.menuList || []
-    const originRef = ref<HTMLElement | null>(null);
+    const showMenu = ref(props.showMenu);
+    const menuList = ref(props.menuList || []);
+
     const handleClickLink = () => {
       if (!props.to || !router) {
         return;
@@ -48,26 +44,33 @@ export default defineComponent({
      */
     const renderBreadcrumbNode = (breadcrumbItem: JSX.Element, prefixCls: string) => {
       // const dropdown = getPropsSlot(slots, props, 'dropdown');  // 获取slot的方法，不知道有没有通用的，要查看一下
-
-      const isOpen = true;
       // 显示下拉框
-      // if (showMenu) {
-      //   console.log(originRef, originRef.value, 'origin=======');
-      //   return (
-      //     <div class={ns.e('item')}>
-      //       <span ref="originRef" class={linkClass}>{slots?.default?.()}</span>
-      //       <d-dropdown-menu origin={originRef} v-model={isOpen}>
-      //         <d-list style="width: 100px;">
-      //           {
-      //             menuList.map(item => {
-      //               return <d-list-item>{item.title}</d-list-item>
-      //             })
-      //           }
-      //         </d-list>
-      //       </d-dropdown-menu>
-      //     </div>
-      //   );
-      // }
+      if (showMenu.value) {
+        return (
+          <div class={ns.e('item')}>
+            <d-dropdown trigger="hover" close-scope="blank"
+              v-slots={{
+                menu: () => (
+                  <ul class={ns.e('item-dropdown')}>
+                    {
+                      menuList.value.map(item => {
+                        return (
+                          item.link
+                            ? (<a href={item.link} target={item.target ? item.target : '_self'}>
+                              <li class={ns.e('item-dropdown-item')}>{item.title}</li>
+                            </a>)
+                            : <li class={ns.e('item-dropdown-item')}><span class={linkClass}>{item.title}</span></li>
+                        );
+                      })
+                    }
+                  </ul>
+                )
+              }}>
+              <span class={linkClass}>{slots?.default?.()}<span class="icon icon-chevron-down"></span></span>
+            </d-dropdown>
+          </div>
+        );
+      }
       // normal
       return (
         <div class={ns.e('item')}>

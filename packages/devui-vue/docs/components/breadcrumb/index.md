@@ -105,18 +105,18 @@ export default defineComponent({
   name: 'DBreadcrumbDemoDropdown',
   setup() {
     const source = reactive([
-      { title: 'DevUI', link: '/', linkType: 'routerLink', replace: true },
-      { title: 'Breadcrumb', link: 'components/breadcrumb/', noNavigation: true },
-      { title: 'aaa', noNavigation:true, showMenu: true, children: [
+      { title: 'Homepage', link: '/', linkType: 'routerLink', replace: true },
+      { title: 'DevUI', link: '/', noNavigation: true },
+      { title: 'breadcrumb', showMenu: true, link: '/components/breadcrumb/', target: '_blank', children: [
         {
-          title: 'a1',
-          link: 'components/breadcrumb/'
+          title: '基础面包屑',
+          link: '/components/breadcrumb/#基础面包屑'
         },
         {
-          title: 'a2'
+          title: '传入source'
         },
         {
-          title: 'a3'
+          title: '带下拉菜单的面包屑'
         }
       ]}
     ]);
