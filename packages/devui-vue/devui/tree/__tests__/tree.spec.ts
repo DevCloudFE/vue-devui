@@ -2,6 +2,10 @@ describe('tree', () => {
   // 测试节点懒加载功能是否正常
   it.todo('should loading child nodes dynamicly when click open button');
 
+  it.todo('Test whether treefactory is available');
+
+  it.todo('Test whether the slot is available');
+
   /**
    * basic-tree 测试嵌套节点渲染和基本交互
    * node-merge 当节点下只有一个子节点时，应该合并这些节点

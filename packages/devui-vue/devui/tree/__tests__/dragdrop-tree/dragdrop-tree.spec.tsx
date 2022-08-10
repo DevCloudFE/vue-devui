@@ -96,4 +96,6 @@ describe('Draggable tree', () => {
     expect(childNodeList1[1].text()).toBe('leaf node 5-2');
   });
 
+  it.todo('Is the tree drag event available');
+
 });
