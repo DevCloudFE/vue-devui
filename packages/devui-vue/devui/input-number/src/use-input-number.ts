@@ -107,6 +107,12 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
   };
 
   const correctValue = (value: number | string | undefined | null) => {
+    // 校验正则
+    const valueStr = value + '';
+    if (props.reg && !valueStr.match(new RegExp(props.reg))) {
+      return undefined;
+    }
+
     let newVal = Number(value);
     // 不是0 是假值或者是NaN返回undefined
     if (newVal !== 0 && (!Number(value) || Number.isNaN(newVal))) {

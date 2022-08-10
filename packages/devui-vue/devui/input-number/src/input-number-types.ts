@@ -32,6 +32,10 @@ export const inputNumberProps = {
   precision: {
     type: Number,
   },
+  reg: {
+    type: [RegExp, String] as PropType<RegExp | string>,
+    default: '',
+  },
 } as const;
 
 export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>;
