@@ -14,6 +14,7 @@ export default defineComponent({
     const separatorIcon = inject('separatorIcon');
     const ns = useNamespace('breadcrumb');
     const linkClass = props.to ? 'is-link' : '';
+    const dropdownTitleClass = props.showMenu && props.menuList?.length ? 'dropdown-title': '';
     const link = ref<HTMLElement | null>(null);
     const instance = getCurrentInstance();
     const router = instance?.appContext.config.globalProperties.$router;
@@ -63,7 +64,7 @@ export default defineComponent({
                   </ul>
                 )
               }}>
-              <span class={linkClass}>{slots?.default?.()}<span class="icon icon-chevron-down"></span></span>
+              <span class={[linkClass, dropdownTitleClass]}>{slots?.default?.()}<span class="icon icon-chevron-down"></span></span>
             </d-dropdown>
           </div>
         );
