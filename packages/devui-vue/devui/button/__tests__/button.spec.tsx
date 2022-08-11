@@ -7,8 +7,6 @@ const ns = useNamespace('button', true);
 
 const baseClass = ns.b();
 const solidClass = ns.m('solid');
-const outlineClass = ns.m('outline');
-const textClass = ns.m('text');
 const smClass = ns.m('sm');
 const roundClass = ns.m('round');
 const circleClass = ns.m('circle');
@@ -77,7 +75,7 @@ describe('d-button', () => {
     expect(wrapper.find(genColorClass('text', 'primary')).exists()).toBeTruthy();
   });
   it('size', () => {
-    const wrapper = mount(Button, {
+    const wrapper = mount({
       setup() {
         return () => {
           return <Button size="sm">确定</Button>;
