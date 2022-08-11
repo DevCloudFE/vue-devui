@@ -1,14 +1,18 @@
 const nav = [
-  { text: '组件', link: '/quick-start/' },
-  { text: '贡献指南', link: '/contributing/' },
+  { text: '文档', link: '/docs/quick-start', activeMatch: '/docs/' },
+  { text: '组件', link: '/components/overview', activeMatch: '/components/' },
+  { text: '贡献指南', link: '/contributing/index', activeMatch: '/contributing/' },
   { text: 'Playground', link: 'https://devcloudfe.github.io/devui-playground' },
   {
-    text: '文档',
+    text: '资源',
     items: [
-      { text: '更新日志', link: 'https://github.com/DevCloudFE/vue-devui/releases' },
-      { text: '设计规范', link: 'https://devui.design/design-cn/start' },
+      {
+        text: '设计',
+        link: 'https://devui.design/design-cn/start',
+      },
     ],
   },
+  { text: '更新日志', link: 'https://github.com/DevCloudFE/vue-devui/releases' },
   {
     text: '生态',
     items: [
@@ -17,9 +21,8 @@ const nav = [
       { text: 'React DevUI', link: 'https://react-devui.com/' },
       { text: 'DevUI Helper', link: 'https://github.com/DevCloudFE/DevUIHelper' },
       { text: 'DevUI Playground', link: 'https://github.com/DevCloudFE/devui-playground' },
-      { text: '图标库', link: 'https://devui.design/icon/ruleResource' },
     ],
   },
-]
+];
 
-export default nav
+export default nav;

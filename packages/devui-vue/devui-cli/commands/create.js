@@ -1,11 +1,5 @@
 const logger = require('../shared/logger');
-const {
-  bigCamelCase,
-  resolveDirFilesInfo,
-  parseExportByFileInfo,
-  parseComponentInfo,
-  isReadyToRelease
-} = require('../shared/utils');
+const { bigCamelCase, resolveDirFilesInfo, parseExportByFileInfo, parseComponentInfo, isReadyToRelease } = require('../shared/utils');
 const fs = require('fs-extra');
 const { resolve } = require('path');
 const {
@@ -24,7 +18,7 @@ const {
   VITEPRESS_SIDEBAR_FILE_NAME,
   VITEPRESS_SIDEBAR_FILE_EN,
   VITEPRESS_SIDEBAR_FILE_NAME_EN,
-  isProd
+  isProd,
 } = require('../shared/constant');
 const { isEmpty, kebabCase } = require('lodash');
 const inquirer = require('inquirer');
@@ -38,7 +32,7 @@ const {
   createServiceTemplate,
   createIndexTemplate,
   createTestsTemplate,
-  createDocumentTemplate
+  createDocumentTemplate,
 } = require('../templates/component');
 const { createVueDevuiTemplate } = require('../templates/vue-devui');
 const ora = require('ora');
@@ -61,7 +55,7 @@ async function createComponent(params = {}) {
     directiveName,
     serviceName,
     styleName,
-    testName
+    testName,
   };
 
   const componentTemplate = createComponentTemplate(_params);
@@ -92,16 +86,14 @@ async function createComponent(params = {}) {
 
     const writeFiles = [
       fs.writeFile(resolve(componentDir, INDEX_FILE_NAME), indexTemplate),
-      fs.writeFile(resolve(testsDir, `${testName}.tsx`), testsTemplate)
+      fs.writeFile(resolve(testsDir, `${testName}.tsx`), testsTemplate),
     ];
 
     if (!fs.existsSync(docsDir)) {
       fs.mkdirSync(docsDir);
       writeFiles.push(fs.writeFile(resolve(docsDir, DOCS_FILE_NAME), docTemplate));
     } else {
-      logger.warning(
-        `\n${bigCamelCase(componentName)} 组件文档已存在：${resolve(docsDir, DOCS_FILE_NAME)}`
-      );
+      logger.warning(`\n${bigCamelCase(componentName)} 组件文档已存在：${resolve(docsDir, DOCS_FILE_NAME)}`);
     }
 
     if (hasComponent || hasService) {
@@ -134,15 +126,18 @@ async function createComponent(params = {}) {
 }
 
 async function createVueDevui(params, { ignoreParseError, env }) {
-  const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS)
-    .filter(({ name }) => (env === 'prod' && isReadyToRelease(kebabCase(name))) || !env || env === 'dev');
+  const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS).filter(
+    ({ name }) => (env === 'prod' && isReadyToRelease(kebabCase(name))) || !env || env === 'dev'
+  );
 
   const exportModules = [];
 
   fileInfo.forEach((f) => {
     const em = parseExportByFileInfo(f, ignoreParseError);
 
-    if (isEmpty(em)) {return;}
+    if (isEmpty(em)) {
+      return;
+    }
 
     exportModules.push(em);
   });
@@ -166,38 +161,41 @@ async function createVitepressSidebar() {
   const generateFileConfig = {
     zh: {
       fileName: VITEPRESS_SIDEBAR_FILE_NAME,
-      location: VITEPRESS_SIDEBAR_FILE
+      location: VITEPRESS_SIDEBAR_FILE,
     },
     en: {
       fileName: VITEPRESS_SIDEBAR_FILE_NAME_EN,
-      location: VITEPRESS_SIDEBAR_FILE_EN
-    }
+      location: VITEPRESS_SIDEBAR_FILE_EN,
+    },
   };
   const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS);
+  console.log('fileInfo', fileInfo);
   const componentsInfo = [];
   fileInfo.forEach((f) => {
     const info = parseComponentInfo(f.dirname);
 
-    if (isEmpty(info) || (isProd && !isReadyToRelease(f.dirname))) {return;}
+    if (isEmpty(info) || (isProd && !isReadyToRelease(f.dirname))) {
+      return;
+    }
 
     componentsInfo.push(info);
   });
 
-  const templates = createVitepressSidebarTemplates(componentsInfo);
-  templates.forEach((template) => {
-    const { fileName, location } = generateFileConfig[template.lang];
-    const spinner = ora(`开始创建 ${fileName} 文件...`).start();
+  // const templates = createVitepressSidebarTemplates(componentsInfo);
+  // templates.forEach((template) => {
+  //   const { fileName, location } = generateFileConfig[template.lang];
+  //   const spinner = ora(`开始创建 ${fileName} 文件...`).start();
 
-    try {
-      fs.writeFile(location, template.content, { encoding: 'utf-8' });
+  //   try {
+  //     fs.writeFile(location, template.content, { encoding: 'utf-8' });
 
-      spinner.succeed(`${fileName} 文件创建成功！`);
-      logger.info(`文件地址：${location}`);
-    } catch (e) {
-      spinner.fail(e.toString());
-      process.exit(1);
-    }
-  });
+  //     spinner.succeed(`${fileName} 文件创建成功！`);
+  //     logger.info(`文件地址：${location}`);
+  //   } catch (e) {
+  //     spinner.fail(e.toString());
+  //     process.exit(1);
+  //   }
+  // });
 }
 
 exports.validateCreateType = (type) => {

@@ -53,19 +53,20 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
   const rootNavs = [
     {
       rootItems: [
-        {
-          text: '快速开始',
-          link: '/quick-start/',
-        },
-        {
-          text: '按需引入',
-          link: '/on-demand/',
-        },
-        {
-          text: '主题定制',
-          link: '/theme-guide/',
-        },
+        // {
+        //   text: '快速开始',
+        //   link: '/docs/quick-start/',
+        // },
+        // {
+        //   text: '按需引入',
+        //   link: '/docs/on-demand/',
+        // },
+        // {
+        //   text: '主题定制',
+        //   link: '/docs/theme-guide/',
+        // },
       ],
+      collapsible: true,
       handler: generateZhMenus,
       lang: 'zh',
     },
@@ -88,18 +89,17 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
       lang: 'en',
     },
   ];
-
+  console.log('rootNavs', rootNavs);
   const templates = rootNavs.map((nav) => {
     const sidebar = [].concat(...nav.rootItems, nav.handler(componentsInfo));
     return {
       lang: nav.lang,
       content: `\
       export default {
-        '/': ${JSON.stringify(sidebar, null, 2).replace(/\n/g, '\n\t')}
+        '/components': ${JSON.stringify(sidebar, null, 2).replace(/\n/g, '\n\t')}
       }
       `,
     };
   });
-
   return templates;
 };

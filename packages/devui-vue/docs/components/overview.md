@@ -1,4 +1,4 @@
-# 组件功能概览
+# 组件总览
 
 Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 
@@ -24,7 +24,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### DragDrop 拖拽 ⭐<span class="version-tag-2">v2.0</span>
+### DragDrop 拖拽 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @asdlml6">✅</d-tooltip> <a href="/components/dragdrop/#基本功能">基本功能</a></d-col>
@@ -118,7 +118,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### Sticky 便贴 <span class="version-tag-2">v2.0</span>
+### Sticky 便贴 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @maizhiyuan">✅</d-tooltip> <a href="/components/sticky/#基本功能">基本功能</a></d-col>
@@ -126,7 +126,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### Accordion 手风琴(Deprecated) <span class="version-tag-2">v2.0</span>
+### Accordion 手风琴(Deprecated) <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @liuxdi">✅</d-tooltip> <a href="/components/accordion/#基本功能">基本功能</a></d-col>
@@ -139,7 +139,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### Anchor 锚点 <span class="version-tag-2">v2.0</span>
+### Anchor 锚点 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @asian-Tmac">✅</d-tooltip> <a href="/components/anchor/#基本功能">基本功能</a></d-col>
@@ -152,7 +152,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### BackTop 回到顶部 <span class="version-tag-2">v2.0</span>
+### BackTop 回到顶部 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @c0dedance">✅</d-tooltip> <a href="/components/back-top/#基本功能">基本功能</a></d-col>
@@ -160,7 +160,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Developing by @c0dedance">✅</d-tooltip> <a href="/components/back-top/#滚动容器">滚动容器</a></d-col>
 </d-row>
 
-### Breadcrumb 面包屑 <span class="version-tag-2">v2.0</span>
+### Breadcrumb 面包屑 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @naluduo233">✅</d-tooltip> <a href="/components/breadcrumb/#基本功能">基本功能</a></d-col>
@@ -196,7 +196,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dropdown/#支持添加图标">支持添加图标</a></d-col>
 </d-row>
 
-### Menu 菜单 <span class="version-tag-2">v2.0</span>
+### Menu 菜单 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/menu/#基本功能">基本功能</a></d-col>
@@ -214,7 +214,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### NavSprite 精灵导航 <span class="version-tag-2">v2.0</span>
+### NavSprite 精灵导航 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/nav-sprite/#基本功能">基本功能</a></d-col>
@@ -235,7 +235,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### StepsGuide 操作指引 <span class="version-tag-2">v2.0</span>
+### StepsGuide 操作指引 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @populus">✅</d-tooltip> <a href="/components/steps-guide/#基本功能">基本功能</a></d-col>
@@ -290,7 +290,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Contributed by @tohalf">✅</d-tooltip> <a href="/components/loading/#服务方式调用">服务方式调用</a></d-col>
 </d-row>
 
-### Mention 提及 <span class="version-tag-2">v2.0</span>
+### Mention 提及 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/mention/#基本功能">基本功能</a></d-col>
@@ -368,7 +368,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### Toast 全局提示 <span class="version-tag-2">v2.0</span>
+### Toast 全局提示 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/toast/#基本功能">基本功能</a></d-col>
@@ -397,7 +397,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Contributed by @Denver-Ning">✅</d-tooltip> <a href="/components/auto-complete/#懒加载">懒加载</a></d-col>
 </d-row>
 
-### Cascader 级联菜单 ⭐<span class="version-tag-2">v2.0</span>
+### Cascader 级联菜单 ⭐<span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @SituC">✅</d-tooltip> <a href="/components/cascader/#基本功能">基本功能</a></d-col>
@@ -415,7 +415,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### CategorySearch 分类搜索 <span class="version-tag-2">v2.0</span>
+### CategorySearch 分类搜索 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/category-search/#基本功能">基本功能</a></d-col>
@@ -436,7 +436,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### ColorPicker 颜色选择器 <span class="version-tag-2">v2.0</span>
+### ColorPicker 颜色选择器 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @ErKeLost">✅</d-tooltip> <a href="/components/color-picker/#基本功能">基本功能</a></d-col>
@@ -462,7 +462,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### DatePickerPro 日期选择器 ⭐<span class="version-tag-2">v2.0</span>
+### DatePickerPro 日期选择器 ⭐<span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @daviForevel">✅</d-tooltip> <a href="/components/date-picker-pro/#基本功能">基本功能</a></d-col>
@@ -524,7 +524,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Contributed by @SituC">✅</d-tooltip> <a href="/components/input/#密码框">密码框</a></d-col>
 </d-row>
 
-### InputIcon 图标输入框 <span class="version-tag-2">v2.0</span>
+### InputIcon 图标输入框 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @imnull">✅</d-tooltip> <a href="/components/input-icon/#图标名称">图标名称</a></d-col>
@@ -545,7 +545,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/input-number/#限制小数">限制小数</a></d-col>
 </d-row>
 
-### MultiAutoComplete 多项自动补全 <span class="version-tag-2">v2.0</span>
+### MultiAutoComplete 多项自动补全 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/multi-auto-complete/#基本功能">基本功能</a></d-col>
@@ -615,7 +615,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### TagInput 标签输入框(Deprecated) <span class="version-tag-2">v2.0</span>
+### TagInput 标签输入框(Deprecated) <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @brenner8023">✅</d-tooltip> <a href="/components/tag-input/#基本功能">基本功能</a></d-col>
@@ -636,7 +636,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Contributed by @afterain">✅</d-tooltip> <a href="/components/textarea/#字符数限制">字符数限制</a></d-col>
 </d-row>
 
-### TimePicker 时间选择器 <span class="version-tag-2">v2.0</span>
+### TimePicker 时间选择器 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Dreamer">✅</d-tooltip> <a href="/components/time-picker/#基本功能">基本功能</a></d-col>
@@ -644,7 +644,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Developing by @Dreamer">🚧</d-tooltip> <a href="/components/time-picker/#自定义模板">自定义模板</a></d-col>
 </d-row>
 
-### Transfer 穿梭框 <span class="version-tag-2">v2.0</span>
+### Transfer 穿梭框 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @ForeseeBear">✅</d-tooltip> <a href="/components/transfer/#基本功能">基本功能</a></d-col>
@@ -657,7 +657,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### TreeSelect 树形选择框 ⭐<span class="version-tag-2">v2.0</span>
+### TreeSelect 树形选择框 ⭐<span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Minglye">✅</d-tooltip> <a href="/components/tree-select/#基本功能">基本功能</a></d-col>
@@ -722,7 +722,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Contributed by @vergil_lu">✅</d-tooltip> <a href="/components/card/#自定义区域">自定义区域</a></d-col>
 </d-row>
 
-### Carousel 轮播 <span class="version-tag-2">v2.0</span>
+### Carousel 轮播 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Roading">✅</d-tooltip> <a href="/components/carousel/#基本功能">基本功能</a></d-col>
@@ -735,7 +735,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### Collapse 折叠面板 <span class="version-tag-2">v2.0</span>
+### Collapse 折叠面板 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">✅</d-tooltip> <a href="/components/collapse/#基本功能">基本功能</a></d-col>
@@ -764,7 +764,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### Dashboard 仪表盘 <span class="version-tag-2">v2.0</span>
+### Dashboard 仪表盘 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dashboard/#基本功能">基本功能</a></d-col>
@@ -772,7 +772,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### Gantt 甘特图 ⭐<span class="version-tag-2">v2.0</span>
+### Gantt 甘特图 ⭐<span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/gantt/#基本功能">基本功能</a></d-col>
@@ -788,7 +788,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Contributed by @liuxdi">✅</d-tooltip> <a href="/components/image-preview/#设置层级">设置层级 z-index</a></d-col>
 </d-row>
 
-### List 列表 <span class="version-tag-2">v2.0</span>
+### List 列表 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @xingyan95">✅</d-tooltip> <a href="/components/list/#基本功能">基本功能</a></d-col>
@@ -804,7 +804,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### QuadrantDiagram 象限图 <span class="version-tag-2">v2.0</span>
+### QuadrantDiagram 象限图 <span class="version-tag-2">🚧 开发中</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/quadrant-diagram/#基本功能">基本功能</a></d-col>
