@@ -24,7 +24,7 @@ export const inputNumberProps = {
   },
   size: {
     type: String as PropType<ISize>,
-    default: '',
+    default: 'md',
   },
   modelValue: {
     type: Number,

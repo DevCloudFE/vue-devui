@@ -36,6 +36,7 @@ export interface Column {
   fixedLeft?: string;
   fixedRight?: string;
   align?: ColumnAlign;
+  cellClass: string;
   showOverflowTooltip?: boolean;
   resizeable: boolean;
   ctx?: SetupContext;
@@ -144,6 +145,10 @@ export const tableColumnProps = {
   reserveCheck: {
     type: Boolean,
     default: false,
+  },
+  cellClass: {
+    type: String,
+    default: '',
   },
 };
 

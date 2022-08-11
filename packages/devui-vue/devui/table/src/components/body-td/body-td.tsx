@@ -22,13 +22,12 @@ export default defineComponent({
         <Tooltip content={tooltipContent.value} disabled={!isShowTooltip.value}>
           <td
             ref={tdRef}
-            class={stickyClass.value}
+            class={[stickyClass.value, column.value.cellClass]}
             style={stickyStyle.value}
             {...ctx.attrs}
             rowspan={rowspan?.value}
             colspan={colspan?.value}
-            onClick={onCellClick}
-          >
+            onClick={onCellClick}>
             {props.column.renderCell?.(props.row, props.column, table.store, props.index, table.props, cellMode)}
           </td>
         </Tooltip>

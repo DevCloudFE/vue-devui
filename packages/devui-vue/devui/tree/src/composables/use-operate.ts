@@ -32,7 +32,7 @@ export function useOperate() {
         parentId: parentNode.id,
         isLeaf: true,
         parentChildNodeCount: children.length + 1,
-        currentIndex: lastChild?.currentIndex + 1,
+        currentIndex: lastChild && typeof lastChild.currentIndex === 'number' ? lastChild.currentIndex + 1 : 0,
       });
 
       if (currentNode.value.id === undefined) {

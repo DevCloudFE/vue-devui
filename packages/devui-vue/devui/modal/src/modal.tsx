@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, Teleport, toRefs, Transition } from 'vue';
+import { computed, defineComponent, ref, Teleport, toRefs, Transition, withModifiers } from 'vue';
 import { modalProps, ModalProps, ModalType } from './modal-types';
 import { Icon } from '../../icon';
 import { FixedOverlay } from '../../overlay';
@@ -83,7 +83,10 @@ export default defineComponent({
           <FixedOverlay v-model={modelValue.value} lock-scroll={false} style={{ zIndex: 'calc(var(--devui-z-index-modal, 1050) - 1)' }} />
         )}
         {showContainer.value && (
-          <div class={ns.e('container')} onClick={onOverlayClick}>
+          <div
+            class={ns.e('container')}
+            onClick={withModifiers(onOverlayClick, ['stop'])}
+            onPointerup={withModifiers(() => ({}), ['stop'])}>
             <Transition name={props.showAnimation ? ns.m('wipe') : ''}>
               {showModal.value && (
                 <div
@@ -91,10 +94,10 @@ export default defineComponent({
                   class={ns.b()}
                   style={{ width: modalWidth.value, marginTop: props.top }}
                   {...attrs}
-                  onClick={(e) => e.stopPropagation()}>
+                  onClick={withModifiers(() => ({}), ['stop'])}>
                   {showClose.value && (
                     <div onClick={onCloseBtnClick} class="btn-close">
-                      <Icon name="close" color="red" size="20px"></Icon>
+                      <Icon name="close" size="20px"></Icon>
                     </div>
                   )}
                   {props.type ? (

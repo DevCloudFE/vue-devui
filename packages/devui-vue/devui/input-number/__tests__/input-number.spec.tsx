@@ -109,11 +109,9 @@ describe('d-input-number', () => {
       },
     });
 
-    const controlButtons = wrapper.find(ns.e('control-buttons'));
+    const controlButtons = wrapper.find(ns.b());
     expect(controlButtons.classes()).toContain(noDotNs.m('lg'));
 
-    const inputWrap = wrapper.find(ns.e('input-wrap'));
-    expect(inputWrap.classes()).toContain(noDotNs.m('lg'));
     wrapper.unmount();
   });
 
