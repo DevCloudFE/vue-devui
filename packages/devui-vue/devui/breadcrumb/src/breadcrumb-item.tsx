@@ -1,7 +1,6 @@
 import { defineComponent, inject, onMounted, onBeforeUnmount, ref, getCurrentInstance } from 'vue';
 import { breadcrumbItemProps, BreadcrumbItemProps } from './breadcrumb-item-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-// import { getPropsSlot } from './utils'
 import './breadcrumb-item.scss';
 import DDropdown from '../../dropdown/src/dropdown';
 
@@ -39,11 +38,9 @@ export default defineComponent({
       return <span class={ns.e('separator')}>{separatorIcon}</span>;
     };
     /**
-     *
      * 需要DropDown下拉菜单
      */
-    const renderBreadcrumbNode = (breadcrumbItem: JSX.Element, prefixCls: string) => {
-      // const dropdown = getPropsSlot(slots, props, 'dropdown');  // 获取slot的方法，不知道有没有通用的，要查看一下
+    const renderBreadcrumbNode = () => {
       // 显示下拉框
       if (showMenu.value) {
         return (
@@ -82,16 +79,8 @@ export default defineComponent({
       );
     };
     return () => {
-
       return (
-      // <div class={ns.e('item')}>
-      //   <span ref={link} class={linkClass}>
-      //     {slots?.default?.()}
-      //   </span>
-      //   {renderBreadcrumbSperator()}
-      // </div>
-
-        renderBreadcrumbNode(link, linkClass)
+        renderBreadcrumbNode()
       );
     };
   },
