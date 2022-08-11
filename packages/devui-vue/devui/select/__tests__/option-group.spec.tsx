@@ -13,7 +13,6 @@ const selectItemCls = ns.e('item');
 const selectInputCls = ns.e('input');
 
 const selectOptionGroupCls = ns.e('group');
-const optionGroupTitleCls = ns.e('group-title');
 
 describe('optionGroup', () => {
   it('select customize optionGroup work', async () => {
@@ -52,28 +51,26 @@ describe('optionGroup', () => {
     });
 
     const container = wrapper.find(baseClass);
-    let dropdown = wrapper.find(dropdownCls);
-
+    let dropdown = document.querySelector(dropdownCls);
     const input = wrapper.find<HTMLInputElement>(selectInputCls);
 
     expect(container.exists()).toBeTruthy();
-    expect(dropdown.exists()).toBeFalsy();
+    expect(dropdown).toBeFalsy();
 
     await input.trigger('click');
     await nextTick();
-    // isVisible不会自动更新需要重新获取
-    dropdown = wrapper.find(dropdownCls);
-    expect(dropdown.isVisible()).toBeTruthy();
-    const optionGroups = dropdown.findAll(selectOptionGroupCls);
+    dropdown = document.querySelector(dropdownCls);
+    expect(dropdown).toBeTruthy();
+    const optionGroups = document.querySelectorAll(ns.e('group'));
     expect(optionGroups.length).toBe(2);
 
-    const groupTitle = optionGroups[0].find(optionGroupTitleCls);
-    expect(groupTitle.exists()).toBeTruthy();
-    expect(groupTitle.text()).toBe('分组一');
+    const groupTitle = optionGroups[0].firstElementChild;
+    expect(groupTitle).toBeTruthy();
+    expect(groupTitle?.textContent).toBe('分组一');
 
-    const listItems = wrapper.findAll(selectItemCls);
+    const listItems = document.querySelectorAll(selectItemCls);
     expect(listItems.length).toBe(12);
-    await listItems[2].trigger('click');
+    await listItems[2].dispatchEvent(new Event('click'));
     expect(value.value).toBe('Option 3');
     wrapper.unmount();
   });
@@ -119,14 +116,13 @@ describe('optionGroup', () => {
 
     await input.trigger('click');
     await nextTick();
-    const dropdown = wrapper.find(dropdownCls);
-    const optionGroups = dropdown.findAll(selectOptionGroupCls);
+    const optionGroups = document.querySelectorAll(selectOptionGroupCls);
     expect(optionGroups.length).toBe(2);
 
     const group = optionGroups[1];
-    const listItems = group.findAll('.disabled');
+    const listItems = group.querySelectorAll('.disabled');
     expect(listItems.length).toBe(6);
-    await listItems[2].trigger('click');
+    await listItems[2].dispatchEvent(new Event('click'));
     expect(value.value).toBe('');
 
     wrapper.unmount();

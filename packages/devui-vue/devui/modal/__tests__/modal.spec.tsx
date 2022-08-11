@@ -8,7 +8,6 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 import { wait } from '../../shared/utils/';
 
 const ns = useNamespace('modal', true);
-const iconNs = useNamespace('icon', true);
 const noDotNs = useNamespace('modal');
 const noDotIconNs = useNamespace('icon');
 const buttonNoDotNs = useNamespace('button');
@@ -23,10 +22,12 @@ describe('d-modal', () => {
     overlayAnchor.style.zIndex = '1000';
     document.body.appendChild(overlayAnchor);
   });
+
   afterEach(() => {
     const overlayAnchor = document.querySelector('#d-overlay-anchor');
     overlayAnchor && document.body.removeChild(overlayAnchor);
   });
+
   it('render correctly', async () => {
     const visible = ref(true);
     const wrapper = mount({
@@ -53,7 +54,7 @@ describe('d-modal', () => {
     expect(modal).toBeTruthy();
     expect(modal?.childElementCount).toBe(3);
     expect((modal?.childNodes[0] as HTMLElement).className).toContain('btn-close');
-    expect((modal?.childNodes[1] as HTMLElement).className).toContain(noDotNs.e('header'));
+    expect((modal?.childNodes[1].childNodes[0] as HTMLElement).className).toContain(noDotNs.e('header'));
     expect((modal?.childNodes[2] as HTMLElement).className).toContain(noDotNs.e('body'));
     wrapper.unmount();
   });
@@ -90,7 +91,7 @@ describe('d-modal', () => {
     await wait(100);
     await nextTick();
     const modalHeader = document.querySelector(ns.e('header'));
-    expect(modalHeader?.children[0].className).toContain(noDotIconNs.e('container'));
+    expect(modalHeader?.children[0]?.className).toContain(noDotIconNs.e('container'));
     expect(modalHeader?.children[1].innerHTML).toContain('Good Title');
     expect(modalHeader?.childElementCount).toBe(2);
     wrapper.unmount();
@@ -127,10 +128,10 @@ describe('d-modal', () => {
     visible.value = true;
     await wait(100);
     await nextTick();
-    const modalHeader = document.querySelector(ns.e('footer'));
-    expect(modalHeader?.children[0].className).toContain(buttonNoDotNs.b());
-    expect(modalHeader?.children[1].className).toContain(buttonNoDotNs.b());
-    expect(modalHeader?.childElementCount).toBe(2);
+    const modalFooter = document.querySelector(ns.e('footer'));
+    expect(modalFooter?.children[0].className).toContain(buttonNoDotNs.b());
+    expect(modalFooter?.children[1].className).toContain(buttonNoDotNs.b());
+    expect(modalFooter?.childElementCount).toBe(2);
     wrapper.unmount();
   });
 
@@ -160,9 +161,15 @@ describe('d-modal', () => {
     visible.value = true;
     await wait(100);
     await nextTick();
-    const btnClose = document.querySelector(iconNs.e('container'));
+    const btnClose = document.querySelector('.btn-close');
     await btnClose?.dispatchEvent(new Event('click'));
     expect(beforeClose).toBeCalled();
     wrapper.unmount();
   });
+
+  it.todo('props lock-scroll work well.');
+
+  it.todo('props close-on-click-overlay work well.');
+
+  it.todo('props escapable work well.');
 });

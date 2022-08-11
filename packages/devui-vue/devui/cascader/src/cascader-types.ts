@@ -136,7 +136,6 @@ export interface PopupTypes {
   menuShow: Ref<boolean>;
   menuOpenClass: Ref<string>;
   stopDefault: Ref<boolean>;
-  devuiCascader: Ref<HTMLElement | undefined>;
   openPopup: (e?: MouseEvent) => void;
   updateStopDefaultType: () => void;
 }
@@ -258,10 +257,9 @@ export type UseFilterFn = {
 
 export type UseCascaderFn = {
   origin: Ref<HTMLElement | undefined>;
-  overlay: Ref<HTMLElement | undefined>;
+  overlayRef: Ref<HTMLElement | undefined>;
   menuShow: Ref<boolean>;
   cascaderItemNeedProps: CascaderItemNeedType;
-  devuiCascader: Ref<HTMLElement | undefined>;
   rootClasses: ComputedRef<string>;
   menuOpenClass: Ref<string>;
   inputValue: Ref<string>;

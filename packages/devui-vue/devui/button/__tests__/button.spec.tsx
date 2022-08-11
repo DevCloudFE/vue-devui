@@ -24,6 +24,8 @@ describe('d-button', () => {
     expect(wrapper.find(solidClass).exists()).toBeTruthy();
   });
 
+  it.todo('props color(primary/secondary/danger) should work well.');
+
   it('size', () => {
     const wrapper = mount({
       setup() {

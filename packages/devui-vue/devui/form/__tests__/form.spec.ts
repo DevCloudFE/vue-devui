@@ -9,8 +9,8 @@ jest.mock('../../locale/create', () => ({
 }));
 
 const ns = useNamespace('form', true);
-describe('form', () => {
 
+describe('form', () => {
   it('render form', async () => {
     const wrapper = mount({
       components: { 'd-form': Form, 'd-form-item': FormItem, 'd-input': Input },
@@ -35,4 +35,13 @@ describe('form', () => {
     expect(wrapper.find(ns.b()).exists()).toBeTruthy();
   });
 
+  it.todo('props label-size/label-align work well.');
+
+  it.todo('props layout work well.');
+
+  it.todo('props size work well.');
+
+  it.todo('props disabled work well.');
+
+  it.todo('form validate work well.');
 });

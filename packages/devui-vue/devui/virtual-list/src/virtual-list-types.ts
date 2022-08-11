@@ -1,4 +1,5 @@
 import type { PropType, ExtractPropTypes, CSSProperties, VNodeTypes } from 'vue';
+import { DEFAULT_ITEM_HEIGHT } from './const';
 
 interface ResizeObserverSize {
   width: number;
@@ -22,7 +23,7 @@ export const virtualListProps = {
   },
   itemHeight: {
     type: Number,
-    default: 0,
+    default: DEFAULT_ITEM_HEIGHT,
   },
   virtual: {
     type: Boolean,

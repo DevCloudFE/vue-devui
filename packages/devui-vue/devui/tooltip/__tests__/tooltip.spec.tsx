@@ -39,14 +39,14 @@ describe('d-tooltip', () => {
     const btn = wrapper.find(buttonNs.b());
     await btn.trigger('mouseenter');
     await new Promise((resolve) => {
-      setTimeout(resolve, 500);
+      setTimeout(resolve, 1000);
     });
     const tooltipContent = document.querySelector(ns.b());
     expect(tooltipContent).toBeTruthy();
 
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
-      setTimeout(resolve, 500);
+      setTimeout(resolve, 1000);
     });
     expect(document.querySelector(ns.b())).toBeFalsy();
     wrapper.unmount();
@@ -169,4 +169,6 @@ describe('d-tooltip', () => {
 
     wrapper.unmount();
   });
+
+  it.todo('props position work well.');
 });

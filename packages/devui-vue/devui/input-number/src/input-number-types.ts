@@ -32,6 +32,10 @@ export const inputNumberProps = {
   precision: {
     type: Number,
   },
+  reg: {
+    type: [RegExp, String] as PropType<RegExp | string>,
+    default: '',
+  },
 } as const;
 
 export type InputNumberProps = ExtractPropTypes<typeof inputNumberProps>;
@@ -55,7 +59,7 @@ export interface UseRender {
 }
 
 export interface UseEvent {
-  inputVal: ComputedRef<number | string>;
+  inputVal: ComputedRef<number | string | undefined>;
   minDisabled: ComputedRef<boolean>;
   maxDisabled: ComputedRef<boolean>;
   onAdd: () => void;

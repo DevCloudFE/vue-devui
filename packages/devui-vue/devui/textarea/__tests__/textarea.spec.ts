@@ -125,4 +125,8 @@ describe('textarea test', () => {
     const secondStyle = textarea2.attributes('style');
     expect(firstStyle).not.toEqual(secondStyle);
   });
+
+  it.todo('props resize work well.');
+
+  it.todo('props show-count work well.');
 });

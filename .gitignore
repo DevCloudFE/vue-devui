@@ -16,3 +16,4 @@ packages/devui-vue/devui/theme/theme.scss
 packages/devui-vue/docs/.vitepress/config/sidebar.ts
 packages/devui-vue/docs/.vitepress/config/enSidebar.ts
 .pnpm-debug.log
+coverage

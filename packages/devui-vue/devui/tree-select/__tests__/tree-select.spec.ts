@@ -58,4 +58,16 @@ describe('tree-select', () => {
 
     expect(wrapper.classes()).toContain('devui-tree-select');
   });
+
+  it.todo('Whether the placeholder is valid');
+
+  it.todo('Whether the disabled is valid');
+
+  it.todo('Whether the allowClear is valid');
+
+  it.todo('Whether the multiple is valid');
+
+  it.todo('Whether the leafOnly is valid');
+
+  it.todo('Whether the enableLabelization is valid');
 });

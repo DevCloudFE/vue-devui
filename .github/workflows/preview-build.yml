@@ -21,7 +21,7 @@ jobs:
           npm install pnpm -g
           pnpm -v
           pnpm i
-          pnpm build
+          pnpm scripts run build
       - run: |
           zip -r dist.zip ./packages/devui-vue/docs/.vitepress/dist
       - name: upload dist artifact

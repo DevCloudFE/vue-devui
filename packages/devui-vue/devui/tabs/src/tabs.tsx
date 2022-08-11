@@ -1,6 +1,6 @@
 import { defineComponent, provide, reactive, SetupContext, watch } from 'vue';
 import { TabsData, tabsProps, TabsState, TabsProps } from './tabs-types';
-import './tabs.scss';
+import { TabContext } from './components/tab/tab-types';
 import TabNav from './components/tab-nav/tab-nav';
 import { useTabsEvent, useTabsRender } from './use-tabs';
 
@@ -10,12 +10,21 @@ export default defineComponent({
   emits: ['update:modelValue', 'active-tab-change', 'tab-remove', 'tab-add', 'tab-change'],
   setup(props: TabsProps, ctx: SetupContext) {
     const state: TabsState = reactive({
-      data: [],
+      data: {},
       active: props.modelValue,
       showContent: props.showContent,
-      slots: [],
     });
-    provide<TabsData>('tabs', { state });
+    const addTab = (tabCtx: TabContext) => {
+      if (tabCtx.uid) {
+        state.data[tabCtx.uid] = tabCtx;
+      }
+    };
+    const deleteTab = (uid: number | undefined) => {
+      if (uid) {
+        delete state.data[uid];
+      }
+    };
+    provide<TabsData>('tabs', { state, addTab, deleteTab });
 
     const { onUpdateModelValue, onActiveTabChange, onTabRemove, onTabAdd, onTabChange } = useTabsEvent(ctx);
     const { tabsClasses } = useTabsRender(props);

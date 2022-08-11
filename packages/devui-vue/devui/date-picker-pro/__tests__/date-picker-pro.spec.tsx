@@ -47,15 +47,15 @@ describe('date-picker-pro test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(pickerPanelClass);
-    expect(pickerPanel.exists()).toBeTruthy();
+    const pickerPanel = document.querySelector(pickerPanelClass);
+    expect(pickerPanel).toBeTruthy();
 
-    const yearActiveItem = pickerPanel.find(yearActiveClass);
-    expect(yearActiveItem.exists()).toBeTruthy();
-    const weekHeader = pickerPanel.find(weekHeaderClass);
-    expect(weekHeader.findAll('td').length).toBe(7);
-    const activeTody = pickerPanel.find(ns.e('table-date-today'));
-    expect(activeTody.exists()).toBeTruthy();
+    const yearActiveItem = pickerPanel?.querySelector(yearActiveClass);
+    expect(yearActiveItem).toBeTruthy();
+    const weekHeader = pickerPanel?.querySelector(weekHeaderClass);
+    expect(weekHeader?.getElementsByTagName('td').length).toBe(7);
+    const activeTody = pickerPanel?.querySelector(ns.e('table-date-today'));
+    expect(activeTody).toBeTruthy();
     wrapper.unmount();
   });
 
@@ -73,18 +73,18 @@ describe('date-picker-pro test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(pickerPanelClass);
-    expect(pickerPanel.exists()).toBeTruthy();
-    const tableMonthItems = pickerPanel.findAll(tableMonthClass);
+    const pickerPanel = document.querySelector(pickerPanelClass);
+    expect(pickerPanel).toBeTruthy();
+    const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
 
     const date = new Date();
     const todayIndex = getDateIndex(date);
 
     const selectIndex = getSelectedIndex(todayIndex);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
-    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
-    const Items = monthContentContainer.findAll('td');
-    await Items[selectIndex].trigger('click');
+    const monthContentContainer = tableMonthItems?.[1].querySelector(ns.e('table-month-content'));
+    const Items = monthContentContainer?.querySelectorAll('td');
+    await Items?.[selectIndex].dispatchEvent(new Event('click'));
     expect(dayjs(datePickerProValue.value).format(DATE_FORMAT)).toBe(getSelectedDate(todayIndex, date));
 
     const pickerPanelNew = container.find(pickerPanelClass);
@@ -109,16 +109,16 @@ describe('date-picker-pro test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(pickerPanelClass);
-    expect(pickerPanel.exists()).toBeTruthy();
-    const tableMonthItems = pickerPanel.findAll(tableMonthClass);
+    const pickerPanel = document.querySelector(pickerPanelClass);
+    expect(pickerPanel).toBeTruthy();
+    const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
 
     const date = new Date();
     const selectIndex = getDateIndex(date);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
-    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
-    const Items = monthContentContainer.findAll('td');
-    expect(Items[selectIndex].classes().includes(noDotNs.e('table-date-selected'))).toBe(true);
+    const monthContentContainer = tableMonthItems?.[1].querySelector(ns.e('table-month-content'));
+    const Items = monthContentContainer?.querySelectorAll('td');
+    expect(Items?.[selectIndex].classList).toContain(noDotNs.e('table-date-selected'));
 
     wrapper.unmount();
   });
@@ -138,17 +138,17 @@ describe('date-picker-pro test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(pickerPanelClass);
-    expect(pickerPanel.exists()).toBeTruthy();
-    const tableMonthItems = pickerPanel.findAll(tableMonthClass);
+    const pickerPanel = document.querySelector(pickerPanelClass);
+    expect(pickerPanel).toBeTruthy();
+    const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
 
     const date = new Date();
     const todayIndex = getDateIndex(date);
     const selectIndex = getSelectedIndex(todayIndex);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
-    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
-    const Items = monthContentContainer.findAll('td');
-    await Items[selectIndex].trigger('click');
+    const monthContentContainer = tableMonthItems?.[1].querySelector(ns.e('table-month-content'));
+    const Items = monthContentContainer?.querySelectorAll('td');
+    await Items?.[selectIndex].dispatchEvent(new Event('click'));
     const vm = wrapper.vm;
     const inputNew = vm.$el.querySelector('input');
     expect(dayjs(inputNew.value).format(DATE_FORMAT)).toBe(getSelectedDate(todayIndex, date));
@@ -171,37 +171,33 @@ describe('date-picker-pro test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(pickerPanelClass);
-    expect(pickerPanel.exists()).toBeTruthy();
-    const tableMonthItems = pickerPanel.findAll(tableMonthClass);
+    const pickerPanel = document.querySelector(pickerPanelClass);
+    expect(pickerPanel).toBeTruthy();
+    const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
 
-    const timePicker = pickerPanel.find(ns.e('panel-time'));
-    expect(timePicker.exists()).toBeTruthy();
-    const timeUl = timePicker.findAll('.time-ul');
-    expect(timeUl[0].element.childElementCount).toBe(24);
-    expect(timeUl[1].element.childElementCount).toBe(60);
-    expect(timeUl[2].element.childElementCount).toBe(60);
+    const timePicker = pickerPanel?.querySelector(ns.e('panel-time'));
+    expect(timePicker).toBeTruthy();
+    const timeUl = timePicker?.querySelectorAll('.time-ul');
+    expect(timeUl?.[0].childElementCount).toBe(24);
+    expect(timeUl?.[1].childElementCount).toBe(60);
+    expect(timeUl?.[2].childElementCount).toBe(60);
 
     const date = new Date();
     const todayIndex = getDateIndex(date);
     const selectIndex = getSelectedIndex(todayIndex);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
-    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
-    const Items = monthContentContainer.findAll('td');
-    await Items[selectIndex].trigger('click');
-    expect(dayjs(datePickerProValue.value).format(TIME_FORMAT)).toBe(
-      `${getSelectedDate(todayIndex, date)} 12:00:00`
-    );
+    const monthContentContainer = tableMonthItems?.[1].querySelector(ns.e('table-month-content'));
+    const Items = monthContentContainer?.getElementsByTagName('td');
+    await Items?.[selectIndex].dispatchEvent(new Event('click'));
+    expect(dayjs(datePickerProValue.value).format(TIME_FORMAT)).toBe(`${getSelectedDate(todayIndex, date)} 12:00:00`);
 
-    const liItems = timeUl[0].findAll('.time-li');
-    await liItems[3].trigger('click');
-    expect(dayjs(datePickerProValue.value).format(TIME_FORMAT)).toBe(
-      `${getSelectedDate(todayIndex, date)} 03:00:00`
-    );
+    const liItems = timeUl?.[0].querySelectorAll('.time-li');
+    await liItems?.[3].dispatchEvent(new Event('click'));
+    expect(dayjs(datePickerProValue.value).format(TIME_FORMAT)).toBe(`${getSelectedDate(todayIndex, date)} 03:00:00`);
 
-    const pickerPanelFooter = container.find(ns.e('panel-footer'));
-    const button = pickerPanelFooter.find('button');
-    await button.trigger('click');
+    const pickerPanelFooter = document.querySelector(ns.e('panel-footer'));
+    const button = pickerPanelFooter?.getElementsByTagName('button')[0];
+    await button?.dispatchEvent(new Event('click'));
     const pickerPanelNew = container.find(pickerPanelClass);
     expect(pickerPanelNew.exists()).toBeFalsy();
 
@@ -237,15 +233,15 @@ describe('date-picker-pro test', () => {
     expect(onToggleChange).toBeCalledTimes(1);
     expect(onFocus).toBeCalledTimes(1);
 
-    const pickerPanel = container.find(pickerPanelClass);
-    const tableMonthItems = pickerPanel.findAll(tableMonthClass);
+    const pickerPanel = document.querySelector(pickerPanelClass);
+    const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
     const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
-    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
-    const Items = monthContentContainer.findAll('td');
-    await Items[selectIndex].trigger('click');
+    const monthContentContainer = tableMonthItems?.[1].querySelector(ns.e('table-month-content'));
+    const Items = monthContentContainer?.querySelectorAll('td');
+    await Items?.[selectIndex].dispatchEvent(new Event('click'));
     expect(onConfirmEvent).toBeCalledTimes(1);
     expect(onToggleChange).toBeCalledTimes(2);
     expect(onBlur).toBeCalledTimes(1);
@@ -335,13 +331,13 @@ describe('date-picker-pro test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(pickerPanelClass);
-    const rightArea = pickerPanel.find(ns.e('panel-right-area'));
-    expect(rightArea.exists()).toBeTruthy();
+    const pickerPanel = document.querySelector(pickerPanelClass);
+    const rightArea = pickerPanel?.querySelector(ns.e('panel-right-area'));
+    expect(rightArea).toBeTruthy();
 
-    const button = rightArea.find('button');
-    expect(button.exists()).toBeTruthy();
-    await button.trigger('click');
+    const button = rightArea?.getElementsByTagName('button')[0];
+    expect(button).toBeTruthy();
+    await button?.dispatchEvent(new Event('click'));
 
     await nextTick();
     const vm = wrapper.vm;
@@ -382,13 +378,12 @@ describe('date-picker-pro test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(pickerPanelClass);
-    const footer = pickerPanel.find(ns.e('panel-footer'));
-    expect(footer.exists()).toBeTruthy();
+    const footer = document.querySelector(ns.e('panel-footer'));
+    expect(footer).toBeTruthy();
 
-    const button = footer.find('button');
-    expect(button.exists()).toBeTruthy();
-    await button.trigger('click');
+    const button = footer?.getElementsByTagName('button')[0];
+    expect(button).toBeTruthy();
+    await button?.dispatchEvent(new Event('click'));
 
     await nextTick();
     const vm = wrapper.vm;
@@ -425,26 +420,28 @@ describe('date-picker-pro test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(pickerPanelClass);
-    expect(pickerPanel.exists()).toBeTruthy();
+    const pickerPanel = document.querySelector(pickerPanelClass);
+    expect(pickerPanel).toBeTruthy();
 
-    const yearListItems = pickerPanel.findAll(yearListItemClass);
-    expect(yearListItems.length).toBe(13);
-    const weekHeader = pickerPanel.find(weekHeaderClass);
-    expect(weekHeader.findAll('td').length).toBe(7);
-    const tableMonthItems = pickerPanel.findAll(tableMonthClass);
-    expect(tableMonthItems.length).toBe(12);
+    const yearListItems = pickerPanel?.querySelectorAll(yearListItemClass);
+    expect(yearListItems?.length).toBe(11);
+    const weekHeader = pickerPanel?.querySelector(weekHeaderClass);
+    expect(weekHeader?.getElementsByTagName('td').length).toBe(7);
+    const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
+    expect(tableMonthItems?.length).toBe(4);
 
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
     const selectIndex = todayIndex > 20 ? todayIndex - 2 : todayIndex + 2;
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
-    const monthContentContainer = tableMonthItems[1].find(ns.e('table-month-content'));
-    const Items = monthContentContainer.findAll('td');
-    expect(Items[selectIndex].classes().includes(noDotNs.e('table-date-disabled'))).toBe(true);
-    await Items[selectIndex].trigger('click');
+    const monthContentContainer = tableMonthItems?.[1].querySelector(ns.e('table-month-content'));
+    const Items = monthContentContainer?.getElementsByTagName('td');
+    expect(Items?.[selectIndex].classList).toContain(noDotNs.e('table-date-disabled'));
+    await Items?.[selectIndex].dispatchEvent(new Event('click'));
     expect(datePickerProValue.value).toBe('');
 
     wrapper.unmount();
   });
+
+  it.todo('props disabled work well.');
 });

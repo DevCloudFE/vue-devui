@@ -49,9 +49,6 @@ export const editableSelectProps = {
   searchFn: {
     type: Function as PropType<(option: OptionObjectItem, term: string) => boolean>,
   },
-  filterOption: {
-    type: [Function, Boolean] as PropType<boolean | ((input: string, option: OptionObjectItem) => boolean)>,
-  },
 } as const;
 
 export type EditableSelectProps = ExtractPropTypes<typeof editableSelectProps>;

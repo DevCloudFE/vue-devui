@@ -1,0 +1,8 @@
+{
+  "folders": [
+    { "name": "root", "path": "." },
+    { "name": "devui-cli", "path": "./packages/devui-cli" },
+    { "name": "devui-theme", "path": "./packages/devui-theme" },
+    { "name": "devui-vue", "path": "./packages/devui-vue" }
+  ]
+}

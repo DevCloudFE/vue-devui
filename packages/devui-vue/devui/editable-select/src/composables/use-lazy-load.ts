@@ -12,7 +12,7 @@ export function useLazyLoad(dropdownRef: Ref<HTMLElement>, enableLazyLoad: boole
       return;
     }
 
-    if (dropdownVal.clientHeight + dropdownVal.scrollTop >= dropdownVal.scrollHeight) {
+    if (dropdownVal.clientHeight + dropdownVal.scrollTop >= dropdownVal.scrollHeight - 12) {
       ctx.emit('loadMore');
     }
   };

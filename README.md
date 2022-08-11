@@ -19,13 +19,27 @@ English | [简体中文](README.zh-CN.md)
 - 🌍 Support internationalization.
 - 🎨 Support theme customization, and built-in seven beautiful themes such as `Galaxy`, `Sweet` and `Provence`.
 
+## 🌐 Installation
+
+Install with npm
+
+```sh
+npm install vue-devui --save
+```
+
+Install with yarn
+
+```sh
+yarn add vue-devui
+```
+
+Install with pnpm
+
+```sh
+pnpm add vue-devui
+```
+
 ## 🔧 Usage
-
-The first step is to install vue devui:
-
-```
-npm i vue-devui
-```
 
 Then import `DevUI` in the `main.ts` file:
 
@@ -50,20 +64,27 @@ Then you can use the vue devui component(such as `<d-button>`) in the `App.vue` 
 
 ## 🖥️ Development
 
-```shell
+```sh
 git clone git@github.com:DevCloudFE/vue-devui.git
 cd vue-devui
-pnpm i
-pnpm dev
+pnpm install
+pnpm scripts run dev
 ```
 
 Open your browser and visit: [http://localhost:3000/](http://localhost:3000/).
+
+Or you can run other command
+
+```sh
+pnpm scripts
+```
 
 ## 🤝 Contributing
 
 Welcome to join our Vue DevUI open source project!🎉
 
 By participating in the Vue DevUI project, we can together:
+
 - 🔥 Learn the latest cool `Vite` + `Vue3` + `TypeScript` + `JSX` technology.
 - 🎁 Learn how to design and develop UI components.
 - ⭐ Hone programming skills and learn excellent programming practice.
@@ -144,6 +165,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/79E"><img src="https://avatars.githubusercontent.com/u/71202421?v=4?s=100" width="100px;" alt=""/><br /><sub><b>79</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=79E" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/SituC"><img src="https://avatars.githubusercontent.com/u/29355875?v=4?s=100" width="100px;" alt=""/><br /><sub><b>wailen</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=SituC" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/JensonMiao"><img src="https://avatars.githubusercontent.com/u/46488783?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jenson</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=JensonMiao" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/dbsdaicheng"><img src="https://avatars.githubusercontent.com/u/62135142?v=4?s=100" width="100px;" alt=""/><br /><sub><b>dbsdaicheng</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=dbsdaicheng" title="Tests">⚠️</a></td>
   </tr>
 </table>
 

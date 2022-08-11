@@ -13,19 +13,21 @@ const globalOption = {
   global: {
     components: {
       DSelect: Select,
-      DInput: Input
-    }
-  }
+      DInput: Input,
+    },
+  },
 };
 const ns = useNamespace('pagination', true);
 const selectNs = useNamespace('select', true);
+
 describe('pagination: ', () => {
   it('test pageSize', async () => {
-    const wrapper = mount({
-      components: {
-        DPagination: Pagination
-      },
-      template: `
+    const wrapper = mount(
+      {
+        components: {
+          DPagination: Pagination,
+        },
+        template: `
         <d-pagination
           size="sm"
           :total="pager.total"
@@ -38,15 +40,17 @@ describe('pagination: ', () => {
           :showJumpButton="true"
         />
       `,
-      setup() {
-        const pager = reactive({
-          total: 306,
-          pageSize: 20,
-          pageIndex: 5
-        });
-        return { pager };
-      }
-    }, globalOption);
+        setup() {
+          const pager = reactive({
+            total: 306,
+            pageSize: 20,
+            pageIndex: 5,
+          });
+          return { pager };
+        },
+      },
+      globalOption
+    );
 
     expect(wrapper.find(`${ns.e('item')}.active`).text()).toEqual('5');
     await nextTick();
@@ -68,21 +72,25 @@ describe('pagination: ', () => {
 
     // // 改变每页条数
     await wrapper.find(selectNs.e('input')).trigger('click');
-    await wrapper.findAll(selectNs.e('item'))[1].trigger('click');
+    const selectItems = document.querySelectorAll(selectNs.e('item'));
+    await selectItems[1].dispatchEvent(new Event('click'));
 
     expect((wrapper.find(selectNs.e('input')).element as HTMLInputElement).value).toEqual('10');
     const btns2 = wrapper.findAll(`a${ns.e('link')}`);
     expect(btns2.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual('<,1,...,3,4,5,...,31,>');
+
+    wrapper.unmount();
   });
 
   it('test callback', async () => {
     const pageIndexChange = jest.fn();
     const pageSizeChange = jest.fn();
-    const wrapper = mount({
-      components: {
-        DPagination: Pagination
-      },
-      template: `
+    const wrapper = mount(
+      {
+        components: {
+          DPagination: Pagination,
+        },
+        template: `
         <d-pagination
           size="lg"
           :total="pager.total"
@@ -96,15 +104,17 @@ describe('pagination: ', () => {
           @pageSizeChange="pageSizeChange"
         />
       `,
-      setup() {
-        const pager = reactive({
-          total: 306,
-          pageSize: 10,
-          pageIndex: 10
-        });
-        return { pager, pageIndexChange, pageSizeChange };
-      }
-    }, globalOption);
+        setup() {
+          const pager = reactive({
+            total: 306,
+            pageSize: 10,
+            pageIndex: 10,
+          });
+          return { pager, pageIndexChange, pageSizeChange };
+        },
+      },
+      globalOption
+    );
 
     expect(wrapper.find(ns.e('list')).classes()).toContain(ns.m('lg').slice(1));
     const btns = wrapper.findAll(`a${ns.e('link')}`);
@@ -117,16 +127,20 @@ describe('pagination: ', () => {
 
     // 每页条数改变回调
     await wrapper.find(selectNs.e('input')).trigger('click');
-    await wrapper.findAll(selectNs.e('item'))[1].trigger('click');
+    const selectItems = document.querySelectorAll(selectNs.e('item'));
+    await selectItems[0].dispatchEvent(new Event('click'));
     expect(pageSizeChange).toHaveBeenCalled();
+
+    wrapper.unmount();
   });
 
   it('test first or lastest pageIndex disabled', async () => {
-    const wrapper = mount({
-      components: {
-        DPagination: Pagination
-      },
-      template: `
+    const wrapper = mount(
+      {
+        components: {
+          DPagination: Pagination,
+        },
+        template: `
         <d-pagination
           :total="pager.total"
           v-model:pageSize="pager.pageSize"
@@ -138,15 +152,17 @@ describe('pagination: ', () => {
           :showJumpButton="true"
         />
       `,
-      setup() {
-        const pager = reactive({
-          total: 306,
-          pageSize: 20,
-          pageIndex: 1
-        });
-        return { pager };
-      }
-    }, globalOption);
+        setup() {
+          const pager = reactive({
+            total: 306,
+            pageSize: 20,
+            pageIndex: 1,
+          });
+          return { pager };
+        },
+      },
+      globalOption
+    );
 
     const btns = wrapper.findAll(ns.e('item'));
     expect(btns[0].classes()).toContain('disabled');
@@ -155,14 +171,16 @@ describe('pagination: ', () => {
     const btns1 = wrapper.findAll(ns.e('item'));
     expect(btns1[btns1.length - 1].classes()).toContain('disabled');
 
+    wrapper.unmount();
   });
 
   it('test lite', () => {
-    const wrapper = mount({
-      components: {
-        DPagination: Pagination
-      },
-      template: `
+    const wrapper = mount(
+      {
+        components: {
+          DPagination: Pagination,
+        },
+        template: `
         <d-pagination
           :total="pager.total"
           v-model:pageSize="pager.pageSize"
@@ -173,27 +191,32 @@ describe('pagination: ', () => {
           :lite="true"
         />
       `,
-      setup() {
-        const pager = reactive({
-          total: 306,
-          pageSize: 10,
-          pageIndex: 10
-        });
-        return { pager };
-      }
-    }, globalOption);
+        setup() {
+          const pager = reactive({
+            total: 306,
+            pageSize: 10,
+            pageIndex: 10,
+          });
+          return { pager };
+        },
+      },
+      globalOption
+    );
 
     expect(wrapper.find(ns.e('total-size')).text()).toContain('Total');
     expect(wrapper.findAll(`a${ns.e('link')}`).length).toBe(2);
     expect(wrapper.find(ns.e('jump-container')).exists()).toBeFalsy();
+
+    wrapper.unmount();
   });
 
   it('test super lite', () => {
-    const wrapper = mount({
-      components: {
-        DPagination: Pagination
-      },
-      template: `
+    const wrapper = mount(
+      {
+        components: {
+          DPagination: Pagination,
+        },
+        template: `
         <d-pagination
           :total="pager.total"
           v-model:pageSize="pager.pageSize"
@@ -203,28 +226,33 @@ describe('pagination: ', () => {
           :lite="true"
         />
       `,
-      setup() {
-        const pager = reactive({
-          total: 306,
-          pageSize: 10,
-          pageIndex: 10
-        });
-        return { pager };
-      }
-    }, globalOption);
+        setup() {
+          const pager = reactive({
+            total: 306,
+            pageSize: 10,
+            pageIndex: 10,
+          });
+          return { pager };
+        },
+      },
+      globalOption
+    );
 
     expect(wrapper.find(ns.e('total-size')).exists()).toBeFalsy();
     expect(wrapper.find(ns.e('page-size')).exists()).toBeFalsy();
     expect(wrapper.findAll(`a${ns.e('link')}`).length).toBe(2);
     expect(wrapper.find(ns.e('jump-container')).exists()).toBeFalsy();
+
+    wrapper.unmount();
   });
 
   it('test haveConfigMenu', async () => {
-    const wrapper = mount({
-      components: {
-        DPagination: Pagination
-      },
-      template: `
+    const wrapper = mount(
+      {
+        components: {
+          DPagination: Pagination,
+        },
+        template: `
         <d-pagination
           :total="pager.total"
           v-model:pageSize="pager.pageSize"
@@ -247,15 +275,17 @@ describe('pagination: ', () => {
           </div>
         </d-pagination>
       `,
-      setup() {
-        const pager = reactive({
-          total: 306,
-          pageSize: 10,
-          pageIndex: 10
-        });
-        return { pager };
-      }
-    }, globalOption);
+        setup() {
+          const pager = reactive({
+            total: 306,
+            pageSize: 10,
+            pageIndex: 10,
+          });
+          return { pager };
+        },
+      },
+      globalOption
+    );
 
     expect(wrapper.findAll(`a${ns.e('link')}`).length).toBe(2);
     expect(wrapper.find(ns.e('config')).exists()).toBeTruthy();
@@ -265,14 +295,17 @@ describe('pagination: ', () => {
     expect(wrapper.find(ns.e('config-container')).exists()).toBeTruthy();
     expect(wrapper.find('.config-item-words').exists()).toBeTruthy();
     expect(wrapper.find('.choosed').text()).toBe('10');
+
+    wrapper.unmount();
   });
 
   it('test special', async () => {
-    const wrapper = mount({
-      components: {
-        DPagination: Pagination
-      },
-      template: `
+    const wrapper = mount(
+      {
+        components: {
+          DPagination: Pagination,
+        },
+        template: `
         <d-pagination
           :total="pager.total"
           v-model:pageSize="pager.pageSize"
@@ -284,15 +317,17 @@ describe('pagination: ', () => {
           :showTruePageIndex="true"
         />
       `,
-      setup() {
-        const pager = reactive({
-          total: 10,
-          pageIndex: 3,
-          pageSize: 10
-        });
-        return { pager };
-      }
-    }, globalOption);
+        setup() {
+          const pager = reactive({
+            total: 10,
+            pageIndex: 3,
+            pageSize: 10,
+          });
+          return { pager };
+        },
+      },
+      globalOption
+    );
 
     const btns = wrapper.findAll(ns.e('item'));
     expect(btns.length).toBe(5);
@@ -304,11 +339,13 @@ describe('pagination: ', () => {
     expect(wrapper.findAll(`${ns.e('item')}.disabled`).length).toBe(2);
 
     await wrapper.setProps({
-      showTruePageIndex: false
+      showTruePageIndex: false,
     });
 
     expect(wrapper.findAll(ns.e('item')).length).toBe(3);
     expect(wrapper.findAll(`${ns.e('item')}.disabled`).length).toBe(2);
     expect(wrapper.find(`${ns.e('item')}.active`).text()).toBe('1');
+
+    wrapper.unmount();
   });
 });

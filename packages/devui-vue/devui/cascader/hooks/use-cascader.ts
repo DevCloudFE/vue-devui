@@ -11,7 +11,7 @@ import { useFilter } from './use-filter';
 
 export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascaderFn => {
   const origin = ref<HTMLElement>();
-  const overlay = ref<HTMLElement>();
+  const overlayRef = ref<HTMLElement>();
   const cascaderOptions = reactive<[CascaderItem[]]>(cloneDeep([props?.options]));
   const multiple = toRef(props, 'multiple');
   const inputValue = ref('');
@@ -22,7 +22,7 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
   let initIptValue = props.modelValue.length > 0 ? true : false; // 有value默认值时，初始化输出内容
 
   // popup弹出层
-  const { menuShow, menuOpenClass, openPopup, stopDefault, updateStopDefaultType, devuiCascader } = popupHandles(props);
+  const { menuShow, menuOpenClass, openPopup, stopDefault, updateStopDefaultType } = popupHandles(props, overlayRef, origin);
   // 配置class
   const rootClasses = useRootClassName(props, menuShow);
   // 传递给cascaderItem的props
@@ -197,10 +197,9 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
 
   return {
     origin,
-    overlay,
+    overlayRef,
     menuShow,
     cascaderItemNeedProps,
-    devuiCascader,
     rootClasses,
     menuOpenClass,
     inputValue,

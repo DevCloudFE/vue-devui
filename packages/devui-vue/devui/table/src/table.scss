@@ -38,11 +38,17 @@
     flex-direction: column;
     position: relative;
     height: 100%;
+    overflow: auto;
+  }
+
+  &__fix-header > &__header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
 
   &__scroll-view {
     flex: 1;
-    overflow: scroll;
   }
 
   &--layout-auto {

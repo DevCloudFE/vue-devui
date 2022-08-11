@@ -30,6 +30,7 @@ export const selectProps = {
     type: String as PropType<SelectSize>,
     default: 'md',
   },
+  // TODO: 这个api命名不合理
   overview: {
     type: String as PropType<'border' | 'underlined'>,
     default: 'border',
@@ -111,7 +112,6 @@ export type OptionModelValue = number | string;
 export interface UseSelectReturnType {
   selectDisabled: ComputedRef<boolean>;
   selectSize: ComputedRef<SelectSize>;
-  containerRef: Ref<HTMLElement | undefined>;
   originRef: Ref<HTMLElement | undefined>;
   dropdownRef: Ref<HTMLElement | undefined>;
   isOpen: Ref<boolean>;
@@ -122,8 +122,6 @@ export interface UseSelectReturnType {
   emptyText: ComputedRef<string>;
   isLoading: Ref<boolean>;
   isShowEmptyText: ComputedRef<boolean>;
-  dropdownWidth: ComputedRef<string>;
-  onClick: (e: MouseEvent) => void;
   handleClear: (e: MouseEvent) => void;
   valueChange: (item: OptionObjectItem) => void;
   handleClose: () => void;
