@@ -175,6 +175,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
       homepage: 'https://github.com/Lonely-shang'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/63281354?&v=4',
+      homepage: 'https://github.com/angelanana'
+    }
   ],
   dropdown: [
     {

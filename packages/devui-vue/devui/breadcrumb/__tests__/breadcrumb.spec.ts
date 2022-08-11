@@ -2,13 +2,14 @@ import { mount } from '@vue/test-utils';
 import DBreadcrumb from '../src/breadcrumb';
 import DBreadcrumbItem from '../src/breadcrumb-item';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-
+import { nextTick } from 'vue';
 const ns = useNamespace('breadcrumb', true);
 
 const itemClass = ns.e('item');
 const separatorClass = ns.e('separator');
 const isLinkClass = '.is-link';
-
+const dropdownClass = ns.e('item-dropdown');
+const dropdownItemClass = ns.e('item-dropdown-item');
 describe('breadcrumb', () => {
   it('should breadcrumb display correctly', () => {
     const wrapper = mount({
@@ -59,5 +60,67 @@ describe('breadcrumb', () => {
     `
     });
     expect(wrapper.find(isLinkClass)).toBeTruthy();
+  });
+
+  it('should `source` work correct', async() => {
+    const wrapper = mount({
+      props: {
+        source: {
+          type: Array,
+          default: () => []
+        }
+      },
+      components: {
+        DBreadcrumb
+      },
+      template: `
+        <d-breadcrumb :source="[
+          { title: 'Homepage', link: '/', linkType: 'routerLink', replace: true },
+          { title: 'DevUI', link: '/', noNavigation: true },
+          { title: 'breadcrumb', showMenu: true, link: '/components/breadcrumb/', target: '_blank', children: [
+            {
+              title: '基础面包屑',
+              link: '/components/breadcrumb/#基础面包屑'
+            },
+            {
+              title: '传入source'
+            },
+            {
+              title: '带下拉菜单的面包屑'
+            }
+          ]}
+        ]"></d-breadcrumb>
+      `
+    });
+    // await wrapper.setProps({
+    //   source: [
+    //     { title: 'Homepage', link: '/', linkType: 'routerLink', replace: true },
+    //     { title: 'DevUI', link: '/', noNavigation: true },
+    //     { title: 'breadcrumb', showMenu: true, link: '/components/breadcrumb/', target: '_blank', children: [
+    //       {
+    //         title: '基础面包屑',
+    //         link: '/components/breadcrumb/#基础面包屑'
+    //       },
+    //       {
+    //         title: '传入source'
+    //       },
+    //       {
+    //         title: '带下拉菜单的面包屑'
+    //       }
+    //     ]}
+    //   ]
+    // });
+    await nextTick();
+    // const dropdown = wrapper.findAll(dropdownClass);
+    const items = wrapper.findAll(itemClass);
+    // 还要写一个事件hover事件，以及上面的一些类名获取过来数量有问题
+
+    // console.log(dropdownItem, '======');
+    console.log(items, '+++++++');
+
+
+    // expect(dropdown.length).toBe(1)
+    expect(items.length).toBe(3);
+    wrapper.unmount();
   });
 });
