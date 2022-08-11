@@ -17,7 +17,7 @@ export function useModal(props: ModalProps, emit: EmitEventFn): UseModal {
   }
 
   function onKeydown(event: KeyboardEvent) {
-    if (event['keyCode'] === 27) {
+    if (event.code === 'Escape') {
       execClose();
     }
   }
