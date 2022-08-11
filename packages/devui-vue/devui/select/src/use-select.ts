@@ -277,6 +277,9 @@ export default function useSelect(
     const hasCommonOption = injectOptionsArray.value.filter((item) => !item.create).some((item) => item.name === filterQuery.value);
     return typeof props.filter === 'boolean' && props.filter && props.allowCreate && !!filterQuery.value && !hasCommonOption;
   });
+  watch(isShowCreateOption, () => {
+    dropdownRef.value?.updatePosition();
+  });
 
   // no-data-text
   const emptyText = computed(() => {
@@ -322,12 +325,15 @@ export default function useSelect(
     { deep: true }
   );
 
-  watch(isOpen, (val) => {
-    if (val) {
-      // TODO: 单测报错待解决：TypeError: The provided value is not of type 'Element'.
-      // dropdownRef.value?.updatePosition();
-    }
-  });
+  watch(
+    isOpen,
+    (val) => {
+      if (val) {
+        dropdownRef.value?.updatePosition();
+      }
+    },
+    { flush: 'post' }
+  );
 
   return {
     selectDisabled,
