@@ -23,7 +23,7 @@ export default defineComponent({
     return () => (
       <div class={ns.e('fix-header')}>
         {showHeader.value && (
-          <div style="overflow:hidden scroll;">
+          <div class={ns.e('header-wrapper')}>
             <table class={props.classes} cellpadding="0" cellspacing="0">
               <ColGroup />
               <TableHeader />
