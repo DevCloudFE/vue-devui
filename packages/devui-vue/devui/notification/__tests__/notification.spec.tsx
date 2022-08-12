@@ -102,6 +102,55 @@ describe('d-notification', () => {
       notification = null;
     });
 
-    it.todo('manual click close work well');
+    it('manual click close work well', async () => {
+      const closeCallback = jest.fn();
+      const wrapper = mount({
+        setup() {
+          const show = ref(true);
+          return () => (
+            <DNotification v-model={show.value} title="标题" onClose={closeCallback}>
+              通知框消息内容
+            </DNotification>
+          );
+        },
+      });
+      // 正常情况下，能找得到notification实例
+      const notificationElement = wrapper.find(ns.b());
+      expect(notificationElement.exists()).toBeTruthy();
+
+      // 点击非 close icon 区域
+      notificationElement.trigger('click');
+      await nextTick();
+      // 此时不会关闭，notification实例仍然存在
+      expect(closeCallback).not.toBeCalled();
+      expect(wrapper.find(ns.b()).exists()).toBeTruthy();
+
+      // 点击标题和内容区域，不触发关闭
+      const notificationTitle = notificationElement.find(ns.e('title'));
+      expect(notificationTitle.text()).toBe('标题');
+      notificationTitle.trigger('click');
+      await nextTick();
+      // 此时不会关闭，notification实例仍然存在
+      expect(closeCallback).not.toBeCalled();
+      expect(wrapper.find(ns.b()).exists()).toBeTruthy();
+
+      // 点击内容区域，不触发关闭
+      const notificationContent = notificationElement.find(ns.e('content'));
+      expect(notificationContent.text()).toBe('通知框消息内容');
+      notificationContent.trigger('click');
+      await nextTick();
+      // 此时不会关闭，notification实例仍然存在
+      expect(closeCallback).not.toBeCalled();
+      expect(wrapper.find(ns.b()).exists()).toBeTruthy();
+
+      // 点击icon close区域，会触发关闭
+      const close = notificationElement.find(ns.e('icon-close'));
+      close.trigger('click');
+      await nextTick();
+      // 手动点击关闭后，先触发onclose函数，然后关闭
+      expect(closeCallback).toBeCalled();
+      // 此时找不到实例
+      expect(wrapper.find(ns.b()).exists()).toBeFalsy();
+    });
   });
 });
