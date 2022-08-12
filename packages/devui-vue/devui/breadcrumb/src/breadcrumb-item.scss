@@ -35,6 +35,30 @@
       text-decoration: none;
     }
   }
+
+  &-dropdown {
+    padding: 0;
+    margin: 0;
+    width: 100px;
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100px;
+      padding: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $devui-list-item-hover-bg;
+        color: $devui-list-item-hover-text;
+      }
+    }
+  }
 }
 
 .#{$devui-prefix}-breadcrumb__separator {
