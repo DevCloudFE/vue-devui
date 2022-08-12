@@ -54,8 +54,8 @@
       cursor: pointer;
 
       &:hover {
-        background-color: var(--devui-list-item-hover-bg, #f2f5fc);
-        color: var(--devui-list-item-hover-text, #526ecc);
+        background-color: $devui-list-item-hover-bg;
+        color: $devui-list-item-hover-text;
       }
     }
   }
