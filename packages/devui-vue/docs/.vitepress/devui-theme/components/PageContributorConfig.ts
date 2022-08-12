@@ -2,6 +2,9 @@ interface IContributingMap {
   [key: string]: Array<{
     avatar: string;
     homepage: string;
+    founder?: boolean; // 组件创建者（从0到1创建组件）
+    leader?: boolean; // 组件负责人（负责组件特性开发、缺陷修复、单元测试、文档完善）
+    core?: boolean; // 核心开发者（对组件做出重大贡献）
   }>
 }
 
@@ -360,7 +363,17 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   result: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/27618209?v=4',
-      homepage: 'https://github.com/icjs-cc'
+      homepage: 'https://github.com/icjs-cc',
+      founder: true,
+      leader: true,
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
+      homepage: 'https://github.com/xingyan95'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/9566362?v=4',
+      homepage: 'https://github.com/kagol'
     },
   ],
   tooltip: [
@@ -386,7 +399,9 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   'auto-complete': [
     {
       avatar: 'https://avatars.githubusercontent.com/u/26324442?v=4',
-      homepage: 'https://github.com/zxlfly'
+      homepage: 'https://github.com/zxlfly',
+      founder: true,
+      leader: true,
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/66343210?v=4',
@@ -403,6 +418,17 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/40119767?v=4',
       homepage: 'https://github.com/linxiang07'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
+      homepage: 'https://github.com/vaebe'
+    },
+  ],
+  'multi-auto-complete': [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/26324442?v=4',
+      homepage: 'https://github.com/zxlfly',
+      leader: true,
     },
   ],
   cascader: [
@@ -430,7 +456,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   checkbox: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/31237954?v=4',
-      homepage: 'https://github.com/brenner8023'
+      homepage: 'https://github.com/brenner8023',
+      founder: true,
     },
     {
       avatar: '',
@@ -443,6 +470,14 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
       homepage: 'https://github.com/vaebe'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/13329558?v=4',
+      homepage: 'https://github.com/Zcating'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/40119767?v=4',
+      homepage: 'https://github.com/linxiang07'
     },
   ],
   collapse: [
@@ -488,7 +523,9 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   'editable-select': [
     {
       avatar: 'https://avatars.githubusercontent.com/u/40349890?v=4',
-      homepage: 'https://github.com/chenxi24'
+      homepage: 'https://github.com/chenxi24',
+      founder: true,
+      leader: true,
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
@@ -497,22 +534,34 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   form: [
     {
+      avatar: 'https://avatars.githubusercontent.com/u/40119767?v=4',
+      homepage: 'https://github.com/linxiang07',
+      leader: true,
+    },
+    {
       avatar: 'https://avatars.githubusercontent.com/u/42601044?v=4',
-      homepage: 'https://github.com/AlanLee97'
+      homepage: 'https://github.com/AlanLee97',
+      founder: true,
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
       homepage: 'https://github.com/xingyan95'
     },
     {
-      avatar: 'https://avatars.githubusercontent.com/u/40119767?v=4',
-      homepage: 'https://github.com/linxiang07'
+      avatar: 'https://avatars.githubusercontent.com/u/9566362?v=4',
+      homepage: 'https://github.com/kagol'
     },
   ],
   input: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/29355875?v=4',
-      homepage: 'https://github.com/SituC'
+      homepage: 'https://github.com/SituC',
+      founder: true,
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
+      homepage: 'https://github.com/vaebe',
+      leader: true,
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
@@ -526,6 +575,14 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/40119767?v=4',
       homepage: 'https://github.com/linxiang07'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/48074435?v=4',
+      homepage: 'https://github.com/elsaooo'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/39021499?v=4',
+      homepage: 'https://github.com/daviForevel',
+    },
   ],
   'input-icon': [
     {
@@ -536,21 +593,29 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   'input-number': [
     {
       avatar: 'https://avatars.githubusercontent.com/u/16344566?v=4',
-      homepage: 'https://github.com/git-Where'
+      homepage: 'https://github.com/git-Where',
+      founder: true,
+      leader: true,
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
       homepage: 'https://github.com/xingyan95'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/52314078?v=4',
+      homepage: 'https://github.com/vaebe'
+    },
   ],
   radio: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/31237954?v=4',
-      homepage: 'https://github.com/brenner8023'
+      homepage: 'https://github.com/brenner8023',
+      founder: true,
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/22795131?v=4',
-      homepage: 'https://github.com/xuehongjie'
+      homepage: 'https://github.com/xuehongjie',
+      leader: true,
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/8649913?v=4',
@@ -560,11 +625,25 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   select: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/32935349?v=4',
-      homepage: 'https://github.com/unfound'
+      homepage: 'https://github.com/unfound',
+      founder: true,
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/39021499?v=4',
-      homepage: 'https://github.com/daviForevel'
+      homepage: 'https://github.com/daviForevel',
+      core: true,
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/9566362?v=4',
+      homepage: 'https://github.com/kagol'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
+      homepage: 'https://github.com/xingyan95'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/32949033?v=4',
+      homepage: 'https://github.com/newer2333'
     },
   ],
   slider: [
@@ -610,7 +689,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   'tag-input': [
     {
       avatar: 'https://avatars.githubusercontent.com/u/31237954?v=4',
-      homepage: 'https://github.com/brenner8023'
+      homepage: 'https://github.com/brenner8023',
+      founder: true,
     },
     {
       avatar: '',
@@ -624,11 +704,13 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   textarea: [
     {
       avatar: '',
-      homepage: 'https://gitee.com/afterain'
+      homepage: 'https://gitee.com/afterain',
+      founder: true,
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/32949033?v=4',
-      homepage: 'https://github.com/newer2333'
+      homepage: 'https://github.com/newer2333',
+      core: true,
     },
   ],
   'time-picker': [
@@ -868,7 +950,17 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   skeleton: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/70649502?v=4',
-      homepage: 'https://github.com/ivestszheng'
+      homepage: 'https://github.com/ivestszheng',
+      founder: true,
+      leader: true,
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/15258339?v=4',
+      homepage: 'https://github.com/ForeseeBear'
+    },
+    {
+      avatar: '',
+      homepage: 'https://gitee.com/georgeleeo_jxd'
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/11143986?v=4',
