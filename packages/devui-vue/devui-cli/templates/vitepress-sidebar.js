@@ -23,7 +23,7 @@ function generateZhMenus(componentsInfo) {
     if (categoryMap.has(info.category)) {
       categoryMap.get(info.category).push({
         text: info.title,
-        link: `/${SITES_COMPONENTS_DIR_NAME}/${kebabCase(info.name)}/`,
+        link: `/${SITES_COMPONENTS_DIR_NAME}/${kebabCase(info.name)}`,
         status: info.status,
         hide: !isReadyToRelease(kebabCase(info.name)),
       });
@@ -53,18 +53,18 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
   const rootNavs = [
     {
       rootItems: [
-        // {
-        //   text: '快速开始',
-        //   link: '/docs/quick-start/',
-        // },
-        // {
-        //   text: '按需引入',
-        //   link: '/docs/on-demand/',
-        // },
-        // {
-        //   text: '主题定制',
-        //   link: '/docs/theme-guide/',
-        // },
+        {
+          text: '快速开始',
+          link: '/docs/quick-start',
+        },
+        {
+          text: '按需引入',
+          link: '/docs/on-demand',
+        },
+        {
+          text: '主题定制',
+          link: '/docs/theme-guide',
+        },
       ],
       collapsible: true,
       handler: generateZhMenus,
@@ -89,14 +89,15 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
       lang: 'en',
     },
   ];
-  console.log('rootNavs', rootNavs);
+  // console.log('rootNavs', JSON.stringify(rootNavs));
   const templates = rootNavs.map((nav) => {
+    console.log('nav.handler(componentsInfo)', JSON.stringify(nav.handler(componentsInfo)));
     const sidebar = [].concat(...nav.rootItems, nav.handler(componentsInfo));
     return {
       lang: nav.lang,
       content: `\
       export default {
-        '/components': ${JSON.stringify(sidebar, null, 2).replace(/\n/g, '\n\t')}
+        '/components': ${JSON.stringify(nav.handler(componentsInfo), null, 2).replace(/\n/g, '\n\t')}
       }
       `,
     };

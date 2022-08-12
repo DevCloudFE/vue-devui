@@ -23,7 +23,7 @@ exports.VITEPRESS_SIDEBAR_FILE = resolve(this.VITEPRESS_DIR, `config/${this.VITE
 exports.VITEPRESS_SIDEBAR_FILE_NAME_EN = 'enSidebar.ts';
 exports.VITEPRESS_SIDEBAR_FILE_EN = resolve(this.VITEPRESS_DIR, `config/${this.VITEPRESS_SIDEBAR_FILE_NAME_EN}`);
 // 这里的分类顺序将会影响最终生成的页面侧边栏顺序
-exports.VITEPRESS_SIDEBAR_CATEGORY = ['组件总览', '通用', '布局', '导航', '反馈', '数据录入', '数据展示'];
+exports.VITEPRESS_SIDEBAR_CATEGORY = ['通用', '布局', '导航', '反馈', '数据录入', '数据展示'];
 exports.VITEPRESS_SIDEBAR_CATEGORY_EN = ['General', 'Navigation', 'Feedback', 'Data Entry', 'Data Display', 'Layout'];
 exports.VITEPRESS_SIDEBAR_CATEGORY_ZH_TO_EN = {
   通用: 'General',

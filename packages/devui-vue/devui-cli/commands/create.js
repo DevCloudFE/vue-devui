@@ -169,7 +169,7 @@ async function createVitepressSidebar() {
     },
   };
   const fileInfo = resolveDirFilesInfo(DEVUI_DIR, VUE_DEVUI_IGNORE_DIRS);
-  console.log('fileInfo', fileInfo);
+
   const componentsInfo = [];
   fileInfo.forEach((f) => {
     const info = parseComponentInfo(f.dirname);
@@ -181,21 +181,21 @@ async function createVitepressSidebar() {
     componentsInfo.push(info);
   });
 
-  // const templates = createVitepressSidebarTemplates(componentsInfo);
-  // templates.forEach((template) => {
-  //   const { fileName, location } = generateFileConfig[template.lang];
-  //   const spinner = ora(`开始创建 ${fileName} 文件...`).start();
+  const templates = createVitepressSidebarTemplates(componentsInfo);
+  templates.forEach((template) => {
+    const { fileName, location } = generateFileConfig[template.lang];
+    const spinner = ora(`开始创建 ${fileName} 文件...`).start();
 
-  //   try {
-  //     fs.writeFile(location, template.content, { encoding: 'utf-8' });
+    try {
+      fs.writeFile(location, template.content, { encoding: 'utf-8' });
 
-  //     spinner.succeed(`${fileName} 文件创建成功！`);
-  //     logger.info(`文件地址：${location}`);
-  //   } catch (e) {
-  //     spinner.fail(e.toString());
-  //     process.exit(1);
-  //   }
-  // });
+      spinner.succeed(`${fileName} 文件创建成功！`);
+      logger.info(`文件地址：${location}`);
+    } catch (e) {
+      spinner.fail(e.toString());
+      process.exit(1);
+    }
+  });
 }
 
 exports.validateCreateType = (type) => {
@@ -237,7 +237,7 @@ exports.create = async (cwd) => {
       // 创建 devui/vue-devui.ts
       await createVueDevui(params, cwd);
       // 创建 docs/.vitepress/config/sidebar.ts enSidebar.ts
-      await createVitepressSidebar();
+      // await createVitepressSidebar();
       break;
     default:
       break;

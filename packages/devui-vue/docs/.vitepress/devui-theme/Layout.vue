@@ -18,9 +18,9 @@ const NoopComponent = () => null
 const CarbonAds = __CARBON__
   ? defineAsyncComponent(() => import('./components/CarbonAds.vue'))
   : NoopComponent
-const BuySellAds = __BSA__
-  ? defineAsyncComponent(() => import('./components/BuySellAds.vue'))
-  : NoopComponent
+// const BuySellAds = __BSA__
+//   ? defineAsyncComponent(() => import('./components/BuySellAds.vue'))
+//   : NoopComponent
 const AlgoliaSearchBox = __ALGOLIA__
   ? defineAsyncComponent(() => import('./components/AlgoliaSearchBox.vue'))
   : NoopComponent
@@ -117,12 +117,12 @@ function unique(arr) {
   let array = new Array();
   for (let i = 0; i < arr.length; i++) {
     if(map.has(arr[i].homepage)) {
-      map.set(arr[i].homepage, true); 
-    } else { 
+      map.set(arr[i].homepage, true);
+    } else {
       map.set(arr[i].homepage, false);
       array.push(arr[i]);
     }
-  } 
+  }
   return array;
 }
 
@@ -187,12 +187,12 @@ const contributors = computed(() => {
       <template #bottom>
         <slot name="page-bottom" />
         <slot name="page-bottom-ads">
-          <BuySellAds
+          <!-- <BuySellAds
             v-if="theme.carbonAds && theme.carbonAds.custom"
             :key="'custom' + page.relativePath"
             :code="theme.carbonAds.custom"
             :placement="theme.carbonAds.placement"
-          />
+          /> -->
         </slot>
       </template>
     </Page>
