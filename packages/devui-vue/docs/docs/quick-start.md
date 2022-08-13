@@ -57,8 +57,8 @@ npm run dev
 
 ### 6 按需引入
 
-参考：[按需引入](/on-demand/)
+参考：[按需引入](/docs/on-demand)
 
 ### 7 主题定制
 
-参考：[主题定制](/theme-guide/)
+参考：[主题定制](/docs/theme-guide)

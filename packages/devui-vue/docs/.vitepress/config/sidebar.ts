@@ -1,5 +1,6 @@
 export default {
   '/components': [
+    {text:"组件总览",link:"/components/overview"},
     {
       text: '通用',
       children: [
@@ -501,16 +502,41 @@ export default {
   ],
   '/docs': [
     {
-      text: '快速开始',
-      link: '/docs/quick-start',
-    },
-    {
-      text: '按需引入',
-      link: '/docs/on-demand',
-    },
-    {
-      text: '主题定制',
-      link: '/docs/theme-guide',
+      children:[
+        {
+          text: '快速开始',
+          link: '/docs/quick-start',
+        },
+        {
+          text: '按需引入',
+          link: '/docs/on-demand',
+        },
+        {
+          text: '主题定制',
+          link: '/docs/theme-guide',
+        },
+      ]
     },
   ],
+  '/contributing':[{
+    text:'贡献指南',
+    link:"/contributing/index"
+  },{
+    text:"开发规范",
+    link: '/contributing/development-specification/index',
+    children:[
+      {
+        text:'组件目录和文件组织规范',
+        link:"/contributing/development-specification/directory-organization"
+      },{
+      text:'组件 API 和 Demo 设计规范',
+      link:"/contributing/development-specification/api-demo-design"
+    },{
+      text:'组件 API 和 Demo 文档规范',
+      link:"/contributing/development-specification/component-document"
+    },{
+        text:'组件编码规范',
+        link:"/contributing/development-specification/coding-specification"
+      }]
+  }]
 };

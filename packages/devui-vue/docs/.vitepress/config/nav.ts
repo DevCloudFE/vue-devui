@@ -2,7 +2,6 @@ const nav = [
   { text: '文档', link: '/docs/quick-start', activeMatch: '/docs/' },
   { text: '组件', link: '/components/overview', activeMatch: '/components/' },
   { text: '贡献指南', link: '/contributing/index', activeMatch: '/contributing/' },
-  { text: 'Playground', link: 'https://devcloudfe.github.io/devui-playground' },
   {
     text: '资源',
     items: [
@@ -12,6 +11,7 @@ const nav = [
       },
     ],
   },
+  { text: 'Playground', link: 'https://devcloudfe.github.io/devui-playground' },
   { text: '更新日志', link: 'https://github.com/DevCloudFE/vue-devui/releases' },
   {
     text: '生态',
