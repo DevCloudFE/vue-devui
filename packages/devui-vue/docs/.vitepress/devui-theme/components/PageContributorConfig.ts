@@ -180,8 +180,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
   ],
   breadcrumb: [
     {
-      avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4?s=100',
-      homepage: 'https://github.com/naluduo233'
+      avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4',
+      homepage: 'https://github.com/jecyu'
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/34124930?v=4',
@@ -190,10 +190,6 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/63281354?v=4',
       homepage: 'https://github.com/angelanana'
-    },
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4',
-      homepage: 'https://github.com/jecyu'
     },
   ],
   dropdown: [
@@ -560,8 +556,8 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://github.com/daviForevel'
     },
     {
-      avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4?s=100',
-      homepage: 'https://github.com/naluduo233'
+      avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4',
+      homepage: 'https://github.com/jecyu'
     },
     {
       avatar: 'https://avatars.githubusercontent.com/u/50767049?v=4',
@@ -1188,10 +1184,6 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     },
   ],
   splitter: [
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4?s=100',
-      homepage: 'https://github.com/naluduo233'
-    },
     {
       avatar: 'https://avatars.githubusercontent.com/u/28448589?v=4',
       homepage: 'https://github.com/jecyu'
