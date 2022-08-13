@@ -29,7 +29,6 @@ export const useDraggable = (
     const { offsetX, offsetY } = transform;
 
     const targetRect = (targetRef.value as HTMLElement).getBoundingClientRect();
-    console.log(targetRef.value);
     const targetLeft = targetRect.left;
     const targetTop = targetRect.top;
     const targetWidth = targetRect.width;

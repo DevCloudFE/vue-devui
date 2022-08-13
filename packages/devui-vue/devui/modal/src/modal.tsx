@@ -3,7 +3,7 @@ import { modalProps, ModalProps, ModalType } from './modal-types';
 import { Icon } from '../../icon';
 import { FixedOverlay } from '../../overlay';
 import { useModal, useModalRender } from './composables/use-modal';
-import { useDraggable } from './composables/useDraggable';
+import { useDraggable } from './composables/use-draggable';
 import DModalHeader from './components/header';
 import DModalBody from './components/body';
 import { useNamespace } from '../../shared/hooks/use-namespace';
