@@ -162,7 +162,11 @@ export default defineComponent({
           </span>
           <Teleport to="body">
             <Transition name="fade">
-              <FlexibleOverlay origin={origin.value} v-model={visible.value} position={position.value}>
+              <FlexibleOverlay
+                origin={origin.value}
+                v-model={visible.value}
+                position={position.value}
+                style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
                 <div
                   style={{
                     width: props.width + 'px',

@@ -7,7 +7,7 @@
   width: 20em;
   word-break: normal;
   word-wrap: break-word;
-  z-index: 1060;
+  z-index: $devui-z-index-pop-up;
 
   a {
     &:link,

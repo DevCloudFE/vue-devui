@@ -1,9 +1,9 @@
-import { computed, defineComponent, ref, Teleport, toRefs, Transition } from 'vue';
+import { computed, defineComponent, ref, Teleport, toRefs, Transition, withModifiers } from 'vue';
 import { modalProps, ModalProps, ModalType } from './modal-types';
 import { Icon } from '../../icon';
 import { FixedOverlay } from '../../overlay';
 import { useModal, useModalRender } from './composables/use-modal';
-import { useDraggable } from './composables/useDraggable';
+import { useDraggable } from './composables/use-draggable';
 import DModalHeader from './components/header';
 import DModalBody from './components/body';
 import { useNamespace } from '../../shared/hooks/use-namespace';
@@ -27,17 +27,6 @@ export default defineComponent({
     const { showContainer, showModal } = useModalRender(props);
     const dialogRef = ref<HTMLElement>();
     const headerRef = ref<HTMLElement>();
-    const modalWidth = computed(() => {
-      if (typeof props.width === 'string') {
-        if ((props.width as string).includes('%')) {
-          return props.width;
-        } else {
-          return props.width + 'px';
-        }
-      } else {
-        return props.width + 'px';
-      }
-    });
     const draggable = computed(() => props.draggable);
     useDraggable(dialogRef, headerRef, draggable);
 
@@ -83,18 +72,13 @@ export default defineComponent({
           <FixedOverlay v-model={modelValue.value} lock-scroll={false} style={{ zIndex: 'calc(var(--devui-z-index-modal, 1050) - 1)' }} />
         )}
         {showContainer.value && (
-          <div class={ns.e('container')} onClick={onOverlayClick}>
+          <div class={ns.e('container')} onClick={withModifiers(onOverlayClick, ['self'])}>
             <Transition name={props.showAnimation ? ns.m('wipe') : ''}>
               {showModal.value && (
-                <div
-                  ref={dialogRef}
-                  class={ns.b()}
-                  style={{ width: modalWidth.value, marginTop: props.top }}
-                  {...attrs}
-                  onClick={(e) => e.stopPropagation()}>
+                <div ref={dialogRef} class={ns.b()} {...attrs}>
                   {showClose.value && (
                     <div onClick={onCloseBtnClick} class="btn-close">
-                      <Icon name="close" color="red" size="20px"></Icon>
+                      <Icon name="close" size="20px"></Icon>
                     </div>
                   )}
                   {props.type ? (

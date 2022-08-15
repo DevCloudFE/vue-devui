@@ -169,7 +169,81 @@ describe('d-modal', () => {
 
   it.todo('props lock-scroll work well.');
 
-  it.todo('props close-on-click-overlay work well.');
+  it('props close-on-click-overlay work well.', async () => {
+    const visible = ref(false);
+    const closeClickOverlay = ref(true);
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DModal v-model={visible.value} title="Start Snapshot Version" close-on-click-overlay={closeClickOverlay.value}>
+            {{
+              default: () => (
+                <>
+                  <div>name: Tom</div>
+                  <div>age: 20</div>
+                  <div>address: Chengdu</div>
+                </>
+              ),
+            }}
+          </DModal>
+        );
+      },
+    });
 
-  it.todo('props escapable work well.');
+    await wait(100);
+    await nextTick();
+    visible.value = true;
+    await wait(100);
+    await nextTick();
+    let overlay = document.querySelector(ns.e('container'));
+    await overlay?.dispatchEvent(new Event('click'));
+    await wait(100);
+    await nextTick();
+    expect(document.querySelector(ns.b())).toBeFalsy();
+
+    closeClickOverlay.value = false;
+    visible.value = true;
+    await wait(100);
+    await nextTick();
+    overlay = document.querySelector(ns.e('container'));
+    await overlay?.dispatchEvent(new Event('click'));
+    await wait(100);
+    await nextTick();
+    expect(document.querySelector(ns.b())).toBeTruthy();
+
+    wrapper.unmount();
+  });
+
+  it('props escapable work well.', async () => {
+    const visible = ref(false);
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DModal v-model={visible.value} title="Start Snapshot Version">
+            {{
+              default: () => (
+                <>
+                  <div>name: Tom</div>
+                  <div>age: 20</div>
+                  <div>address: Chengdu</div>
+                </>
+              ),
+            }}
+          </DModal>
+        );
+      },
+    });
+
+    await wait(100);
+    await nextTick();
+    visible.value = true;
+    await wait(100);
+    await nextTick();
+    await window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape' }));
+    await wait(100);
+    await nextTick();
+    expect(document.querySelector(ns.b())).toBeFalsy();
+
+    wrapper.unmount();
+  });
 });

@@ -28,7 +28,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @asdlml6">✅</d-tooltip> <a href="/components/dragdrop/#基本功能">基本功能</a></d-col>
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dragdrop/#拖拽排序">拖拽排序</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @asdlml6">✅</d-tooltip> <a href="/components/dragdrop/#拖拽排序">拖拽排序</a></d-col>
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/dragdrop/#多层树状拖拽">多层树状拖拽</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
@@ -76,7 +76,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### Panel 面板 <span class="version-tag-1">v1.0</span>
+### Panel 面板(Deprecated) <span class="version-tag-1">v1.0</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @GaoNeng-wWw">✅</d-tooltip> <a href="/components/panel/#基本功能">基本功能</a></d-col>
@@ -110,7 +110,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### Status 状态 <span class="version-tag-1">v1.0</span>
+### Status 状态(Deprecated) <span class="version-tag-1">v1.0</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @LiuSuY">✅</d-tooltip> <a href="/components/status/#类型">类型 type</a></d-col>
@@ -165,7 +165,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @naluduo233">✅</d-tooltip> <a href="/components/breadcrumb/#基本功能">基本功能</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @naluduo233">✅</d-tooltip> <a href="/components/breadcrumb/#传入source">传入source</a></d-col>
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/breadcrumb/#可下拉">可下拉</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @angelanana">✅</d-tooltip> <a href="/components/breadcrumb/#可下拉">可下拉</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @naluduo233">✅</d-tooltip> <a href="/components/breadcrumb/#自定义分隔符">自定义分隔符</a></d-col>
@@ -274,7 +274,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @lnzhangsong">✅</d-tooltip> <a href="/components/drawer/#基本功能">基本功能</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @lnzhangsong">✅</d-tooltip> <a href="/components/drawer/#关闭后不销毁">关闭后不销毁</a></d-col>
-  <d-col :span="8"><d-tooltip content="Developing by @lnzhangsong">🚧</d-tooltip> <a href="/components/drawer/#自定义模板">自定义模板</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @lnzhangsong">✅</d-tooltip> <a href="/components/drawer/#自定义模板">自定义模板</a></d-col>
 </d-row>
 
 ### Loading 加载中 <span class="version-tag-1">v1.0</span>
@@ -293,12 +293,12 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 ### Mention 提及 <span class="version-tag-2">v2.0</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/mention/#基本功能">基本功能</a></d-col>
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/mention/#异步用法">异步用法</a></d-col>
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/mention/#自定义前缀">自定义前缀</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @LadyChatterleyLover">✅</d-tooltip> <a href="/components/mention/#基本功能">基本功能</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @LadyChatterleyLover">✅</d-tooltip> <a href="/components/mention/#异步用法">异步用法</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @LadyChatterleyLover">✅</d-tooltip> <a href="/components/mention/#自定义前缀">自定义前缀</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/mention/#自定义模板">自定义模板</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @LadyChatterleyLover">✅</d-tooltip> <a href="/components/mention/#自定义模板">自定义模板</a></d-col>
   <d-col :span="8"></d-col>
   <d-col :span="8"></d-col>
 </d-row>
@@ -368,12 +368,17 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"></d-col>
 </d-row>
 
-### Toast 全局提示 <span class="version-tag-2">v2.0</span>
+### Message 全局提示 <span class="version-tag-2">v2.0</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/toast/#基本功能">基本功能</a></d-col>
-  <d-col :span="8"></d-col>
-  <d-col :span="8"></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @79e">✅</d-tooltip> <a href="/components/message/#基本功能">基本功能</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @79e">✅</d-tooltip> <a href="/components/message/#可关闭消息提示">可关闭消息提示</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @79e">✅</d-tooltip> <a href="/components/message/#超时时间">超时时间</a></d-col>
+</d-row>
+<d-row :gutter="[0, 8]">
+  <d-col :span="8"><d-tooltip content="Contributed by @79e">✅</d-tooltip> <a href="/components/auto-complete/#阴影和边框设置">阴影和边框设置</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @79e">✅</d-tooltip> <a href="/components/auto-complete/#关闭回调">关闭回调</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @79e">✅</d-tooltip> <a href="/components/auto-complete/#多种用法">多种用法</a></d-col>
 </d-row>
 
 ### Tooltip 提示 <span class="version-tag-1">v1.0</span>
@@ -524,7 +529,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
   <d-col :span="8"><d-tooltip content="Contributed by @SituC">✅</d-tooltip> <a href="/components/input/#密码框">密码框</a></d-col>
 </d-row>
 
-### InputIcon 图标输入框 <span class="version-tag-2">v2.0</span>
+### InputIcon 图标输入框(Deprecated) <span class="version-tag-2">v2.0</span>
 
 <d-row style="margin-top: 20px;" :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @imnull">✅</d-tooltip> <a href="/components/input-icon/#图标名称">图标名称</a></d-col>
@@ -541,7 +546,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 </d-row>
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @git-Where">✅</d-tooltip> <a href="/components/input-number/#设置最大长度">设置最大长度</a></d-col>
-  <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/input-number/#正则限制">正则限制</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @vaebe">✅</d-tooltip> <a href="/components/input-number/#正则限制">正则限制</a></d-col>
   <d-col :span="8"><d-tooltip content="Welcome PR">⌛</d-tooltip> <a href="/components/input-number/#限制小数">限制小数</a></d-col>
 </d-row>
 
@@ -851,7 +856,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/table/#表格交互">表格交互</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @Zcating">✅</d-tooltip> <a href="/components/table/#自定义表格选中">自定义表格选中</a></d-col>
-  <d-col :span="8"><d-tooltip content="Developing by xingyan95">🚧</d-tooltip> <a href="/components/table/#懒加载">懒加载</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @xzxldl55">✅</d-tooltip> <a href="/components/table/#懒加载">懒加载</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Developing by xingyan95">🚧</d-tooltip> <a href="/components/table/#虚拟滚动">虚拟滚动</a></d-col>
@@ -910,16 +915,16 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @gxuud">✅</d-tooltip> <a href="/components/tree/#禁用状态">禁用状态</a></d-col>
   <d-col :span="8"><d-tooltip content="Contributed by @gxuud">✅</d-tooltip> <a href="/components/tree/#自定义图标">自定义图标</a></d-col>
-  <d-col :span="8">✅ <a href="/components/tree/#懒加载">懒加载</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @daviForevel">✅</d-tooltip> <a href="/components/tree/#懒加载">懒加载</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
   <d-col :span="8"><d-tooltip content="Contributed by @sufuwang">✅</d-tooltip> <a href="/components/tree/#增删改查操作">增删改查操作</a></d-col>
-  <d-col :span="8">🚧 <a href="/components/tree/#搜索过滤">搜索过滤</a></d-col>
-  <d-col :span="8">🚧 <a href="/components/tree/#拖拽排序">拖拽排序</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @daviForevel">✅</d-tooltip> <a href="/components/tree/#搜索过滤">搜索过滤</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @linxiang07">✅</d-tooltip> <a href="/components/tree/#拖拽排序">拖拽排序</a></d-col>
 </d-row>
 <d-row :gutter="[0, 8]">
-  <d-col :span="8"><d-tooltip content="Developing by @kagol">✅</d-tooltip> <a href="/components/tree/#treeFactory">treeFactory</a></d-col>
-  <d-col :span="8">✅ <a href="/components/tree/#虚拟滚动">虚拟滚动</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @kagol">✅</d-tooltip> <a href="/components/tree/#treeFactory">treeFactory</a></d-col>
+  <d-col :span="8"><d-tooltip content="Contributed by @linxiang07">✅</d-tooltip> <a href="/components/tree/#虚拟滚动">虚拟滚动</a></d-col>
   <d-col :span="8"></d-col>
 </d-row>
 
