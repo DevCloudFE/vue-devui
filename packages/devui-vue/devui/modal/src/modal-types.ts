@@ -48,16 +48,8 @@ export const modalProps = {
   },
   type: {
     type: String as PropType<ModalType>,
-    default: ''
+    default: '',
   },
-  width: {
-    type: [Number, String],
-    default: 300
-  },
-  top: {
-    type: [Number, String],
-    default: '15vh'
-  }
 };
 
 export type EmitName = 'update:modelValue';
