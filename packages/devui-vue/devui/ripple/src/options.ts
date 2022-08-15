@@ -98,12 +98,12 @@ const DEFAULT_PLUGIN_OPTIONS: IRipplePluginOptions = {
   directive: 'ripple',
   color: 'currentColor',
   initialOpacity: 0.1,
-  finalOpacity: 0.15,
-  duration: 200,
+  finalOpacity: 0.2,
+  duration: 350,
   easing: 'ease-out',
   delay: 75,
   disabled: false,
-  center: true,
+  center: false,
 };
 
 export { DEFAULT_PLUGIN_OPTIONS, IRipplePluginOptions, HTMLElementRectType, IRippleDirectiveOptions, IRippleDirectiveOptionWithBinding };

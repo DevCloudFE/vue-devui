@@ -2,30 +2,35 @@ import { createContainer } from './utils/create-container-element';
 import { createRippleElement } from './utils/create-ripple-element';
 import { getDistanceToFurthestCorner } from './utils/getdistance-tofurthestcorner';
 import { getRelativePointer } from './utils/getrelative-pointer';
-import {
-  decrementRippleCount,
-  deleteRippleCount,
-  getRippleCount,
-  incrementRippleCount
-} from './utils/ripple-count';
+import { decrementRippleCount, deleteRippleCount, getRippleCount, incrementRippleCount } from './utils/ripple-count';
 import { IRippleDirectiveOptions } from './options';
-const MULTIPLE_NUMBER = 2.05;
-const ripple = (
-  event: PointerEvent,
-  el: HTMLElement,
-  options: IRippleDirectiveOptions
-): void => {
+// Ensure that the current element can be completely overwritten
+// const MULTIPLE_NUMBER = 1;
+const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveOptions): void => {
+  // Get Click element
   const rect = el.getBoundingClientRect();
+  // Get all styles of the currently clicked element
   const computedStyles = window.getComputedStyle(el);
-  const { x, y } = getRelativePointer(event, rect);
-  const size = MULTIPLE_NUMBER * getDistanceToFurthestCorner(x, y, rect);
+  // Create a hole ripple element 覆盖一个容器在el上面
   const rippleContainer = createContainer(computedStyles);
+  // Get the current mouse click location
+  const { x, y } = getRelativePointer(event, rect);
+  // 利用勾股定理获取鼠标点击处到el四个角的直线距离， size 就是我们点击的位置距离整个el最远的点
+  // const size = MULTIPLE_NUMBER * getDistanceToFurthestCorner(x, y, rect);
+  const size = getDistanceToFurthestCorner(x, y, rect);
   const rippleEl = createRippleElement(x, y, size, options, rect);
+  // 原始位置
   let originalPositionValue = '';
+  // 是否需要移除ripple Do you need to remove ripple
   let shouldDissolveripple = false;
   let token: number | null = null;
-  function dissolveripple () {
-    rippleEl.style.transition = 'opacity 150ms linear';
+  // function transform(el: HTMLElement, value: string) {
+  //   el.style.transform = value;
+  // }
+  // 移除方法
+  function dissolveripple() {
+    console.log('remove ripple');
+    rippleEl.style.transition = 'opacity 120ms ease-in-out';
     rippleEl.style.opacity = '0';
     setTimeout(() => {
       rippleContainer.remove();
@@ -34,50 +39,52 @@ const ripple = (
         deleteRippleCount(el);
         el.style.position = originalPositionValue;
       }
-    }, 150);
+    }, 120);
   }
-  function releaseripple (e?: PointerEvent)  {
+  // 释放方法
+  function releaseripple(e?: PointerEvent) {
     if (typeof e !== 'undefined') {
       document.removeEventListener('pointerup', releaseripple);
       document.removeEventListener('pointercancel', releaseripple);
     }
 
-    if (shouldDissolveripple) {dissolveripple();}
-    else {shouldDissolveripple = true;}
+    if (shouldDissolveripple) {
+      dissolveripple();
+    } else {
+      shouldDissolveripple = true;
+    }
   }
 
   function cancelripple() {
     clearTimeout(token);
-
     rippleContainer.remove();
     document.removeEventListener('pointerup', releaseripple);
     document.removeEventListener('pointercancel', releaseripple);
     document.removeEventListener('pointercancel', cancelripple);
   }
 
+  // 设置ripple 的 dataset[RIPPLE_COUNT]
   incrementRippleCount(el);
 
+  // 给el添加 相对定位 修改 默认值 static
   if (computedStyles.position === 'static') {
-    if (el.style.position) {originalPositionValue = el.style.position;}
+    if (el.style.position) {
+      originalPositionValue = el.style.position;
+    }
     el.style.position = 'relative';
   }
 
   rippleContainer.appendChild(rippleEl);
   el.appendChild(rippleContainer);
 
-
   document.addEventListener('pointerup', releaseripple);
   document.addEventListener('pointercancel', releaseripple);
 
   token = setTimeout(() => {
     document.removeEventListener('pointercancel', cancelripple);
-
-    requestAnimationFrame(() => {
-      rippleEl.style.transform = `translate(-50%,-50%) scale(1)`;
-      rippleEl.style.opacity = `${options.finalOpacity}`;
-
-      setTimeout(() => releaseripple(), options.duration);
-    });
+    rippleEl.style.transform = `translate(-50%,-50%) scale(2)`;
+    rippleEl.style.opacity = `${options.finalOpacity}`;
+    setTimeout(() => releaseripple(), options.duration);
   }, options.delay);
   document.addEventListener('pointercancel', cancelripple);
 };
