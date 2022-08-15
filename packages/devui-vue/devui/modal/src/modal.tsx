@@ -27,17 +27,6 @@ export default defineComponent({
     const { showContainer, showModal } = useModalRender(props);
     const dialogRef = ref<HTMLElement>();
     const headerRef = ref<HTMLElement>();
-    const modalWidth = computed(() => {
-      if (typeof props.width === 'string') {
-        if ((props.width as string).includes('%')) {
-          return props.width;
-        } else {
-          return props.width + 'px';
-        }
-      } else {
-        return props.width + 'px';
-      }
-    });
     const draggable = computed(() => props.draggable);
     useDraggable(dialogRef, headerRef, draggable);
 
@@ -83,18 +72,10 @@ export default defineComponent({
           <FixedOverlay v-model={modelValue.value} lock-scroll={false} style={{ zIndex: 'calc(var(--devui-z-index-modal, 1050) - 1)' }} />
         )}
         {showContainer.value && (
-          <div
-            class={ns.e('container')}
-            onClick={withModifiers(onOverlayClick, ['stop'])}
-            onPointerup={withModifiers(() => ({}), ['stop'])}>
+          <div class={ns.e('container')} onClick={withModifiers(onOverlayClick, ['self'])}>
             <Transition name={props.showAnimation ? ns.m('wipe') : ''}>
               {showModal.value && (
-                <div
-                  ref={dialogRef}
-                  class={ns.b()}
-                  style={{ width: modalWidth.value, marginTop: props.top }}
-                  {...attrs}
-                  onClick={withModifiers(() => ({}), ['stop'])}>
+                <div ref={dialogRef} class={ns.b()} {...attrs}>
                   {showClose.value && (
                     <div onClick={onCloseBtnClick} class="btn-close">
                       <Icon name="close" size="20px"></Icon>

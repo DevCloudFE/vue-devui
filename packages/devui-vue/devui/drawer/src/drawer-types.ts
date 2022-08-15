@@ -7,7 +7,7 @@ export const drawerProps = {
   },
   zIndex: {
     type: Number,
-    default: 1000,
+    default: 1040,
   },
   showOverlay: {
     type: Boolean,
@@ -41,7 +41,7 @@ export const drawerOverlayProps = {
   },
   onClick: {
     type: Function,
-  }
+  },
 };
 
 type DrawerEmitEvent = 'update:modelValue' | 'close' | 'open';
