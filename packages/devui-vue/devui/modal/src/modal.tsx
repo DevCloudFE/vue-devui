@@ -75,7 +75,7 @@ export default defineComponent({
           <div class={ns.e('container')} onClick={withModifiers(onOverlayClick, ['self'])}>
             <Transition name={props.showAnimation ? ns.m('wipe') : ''}>
               {showModal.value && (
-                <div ref={dialogRef} class={ns.b()} {...attrs} onClick={withModifiers(() => ({}), ['stop'])}>
+                <div ref={dialogRef} class={ns.b()} {...attrs}>
                   {showClose.value && (
                     <div onClick={onCloseBtnClick} class="btn-close">
                       <Icon name="close" size="20px"></Icon>
