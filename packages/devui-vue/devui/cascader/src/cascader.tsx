@@ -84,7 +84,8 @@ export default defineComponent({
               ref={overlayRef}
               v-model={menuShow.value}
               position={position.value as Placement[]}
-              align="start">
+              align="start"
+              style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
               <div class={ns.e('drop-menu-animation')}>
                 {!isSearching.value && (
                   <div class={`${menuOpenClass.value} ${ns.e('dropdown-menu')}`}>

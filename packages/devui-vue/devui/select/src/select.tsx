@@ -129,7 +129,10 @@ export default defineComponent({
                 align="start"
                 offset={4}
                 position={position.value}
-                style={{ visibility: isOpen.value ? 'visible' : 'hidden', 'z-index': isOpen.value ? 1000 : -1 }}>
+                style={{
+                  visibility: isOpen.value ? 'visible' : 'hidden',
+                  'z-index': isOpen.value ? 'var(--devui-z-index-dropdown, 1052)' : -1,
+                }}>
                 <div class={dropdownCls} style={{ width: `${dropdownWidth.value}`, visibility: isOpen.value ? 'visible' : 'hidden' }}>
                   <ul class={listCls} v-show={!isLoading.value}>
                     {isShowCreateOption.value && (

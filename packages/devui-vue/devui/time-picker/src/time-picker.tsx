@@ -86,7 +86,8 @@ export default defineComponent({
                 ref={overlayRef}
                 origin={inputDom.value?.$el}
                 position={position.value as Placement[]}
-                align="start">
+                align="start"
+                style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
                 <TimePopup
                   ref={timePopupDom}
                   showPopup={showPopup.value}

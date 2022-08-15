@@ -80,7 +80,8 @@ export default defineComponent({
                 ref={overlayRef}
                 origin={originRef.value}
                 align="start"
-                position={position.value}>
+                position={position.value}
+                style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
                 <DatePickerProPanel
                   {...props}
                   dateValue={dateValue.value}
