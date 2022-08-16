@@ -16,9 +16,11 @@ export const createRippleElement = (
   rippleElement.style.background = options.color;
   rippleElement.style.borderRadius = '50%';
   rippleElement.style.opacity = `${options.initialOpacity}`;
-  rippleElement.style.transform = `translate(-50%,-50%) scale(0.3)`;
-  rippleElement.style.transition = `transform ${options.duration / 1000}s ${options.easing}, opacity ${options.duration / 1000}s ${
-    options.easing
-  }`;
+  rippleElement.style.transform = `translate(-50%,-50%) scale(0)`;
+  rippleElement.style.transition = `transform ${options.duration / 1000}s cubic-bezier(0.0, 0, 0.2, 1.3), opacity ${
+    options.duration / 1000
+  }s
+    cubic-bezier(0.0, 0, 0.2, 1)
+  `;
   return rippleElement;
 };

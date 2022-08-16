@@ -101,7 +101,7 @@ const DEFAULT_PLUGIN_OPTIONS: IRipplePluginOptions = {
   finalOpacity: 0.2,
   duration: 350,
   easing: 'ease-out',
-  delay: 75,
+  delay: 60,
   disabled: false,
   center: false,
 };
