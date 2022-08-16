@@ -17,12 +17,18 @@ export default defineComponent({
         {headerRows.value.map((subColumns) => (
           <tr>
             {subColumns.map((column: LevelColumn, columnIndex: number) => {
-              return <TH
-                key={columnIndex}
-                column={column}
-                colspan={column.colSpan}
-                rowspan={column.rowSpan}
-              />;
+              return (
+                <TH
+                  key={columnIndex}
+                  column={column}
+                  colspan={column.colSpan}
+                  rowspan={column.rowSpan}
+                  class={{
+                    [ns.m('last-sticky-left')]: column.fixedLeft && !subColumns[columnIndex + 1]?.fixedLeft,
+                    [ns.m('first-sticky-right')]: column.fixedRight && !subColumns[columnIndex - 1]?.fixedRight,
+                  }}
+                />
+              );
             })}
           </tr>
         ))}
