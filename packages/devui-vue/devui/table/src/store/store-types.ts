@@ -48,8 +48,9 @@ export interface TableStore<T = Record<string, unknown>> {
   updateRows(): void;
   // 获取勾选行
   getCheckedRows(): T[];
+  collectTh(th: ComponentInternalInstance): void;
   // 排序数据
-  sortData(direction: SortDirection, sortMethod: SortMethod<T>): void;
+  sortData(direction: SortDirection, sortMethod: SortMethod<T> | undefined): void;
   // 特定行数据是否勾选
   isRowChecked(row: T, index: number): boolean;
   // 保存勾选行的信息
