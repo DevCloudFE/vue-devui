@@ -109,6 +109,18 @@ export default function useSelect(
     isObjectOption.value = isObject;
   };
 
+  const updateInjectOptionsStatus = () => {
+    if (props.multiple && Array.isArray(props.modelValue)) {
+      for (const child of injectOptions.value.values()) {
+        if (props.modelValue.includes(child.value)) {
+          child._checked = true;
+        } else {
+          child._checked = false;
+        }
+      }
+    }
+  };
+
   const getInjectOptions = (values: KeyType<OptionObjectItem, 'value'>[]) => {
     return values.map((value) => {
       if (props.multiple && props.allowCreate) {
@@ -321,6 +333,7 @@ export default function useSelect(
     () => props.modelValue,
     () => {
       formItemContext?.validate('change').catch((err) => console.warn(err));
+      updateInjectOptionsStatus();
     },
     { deep: true }
   );
