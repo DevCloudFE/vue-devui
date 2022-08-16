@@ -42,7 +42,7 @@
   <d-row>
     <d-col :span="24">
       <div class="ripple-button">
-        <div class="ripple-html-element" v-ripple="{ center: true }">HTML元素中使用v-ripple</div>
+        <div class="ripple-html-element" v-ripple="{ center: true, color: '#0984e3' }">HTML元素中使用v-ripple</div>
       </div>
     </d-col>
   </d-row>

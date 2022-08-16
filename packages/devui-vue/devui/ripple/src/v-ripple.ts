@@ -22,7 +22,7 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   // 原始位置
   let originalPositionValue = '';
   // 是否需要移除ripple Do you need to remove ripple
-  let shouldDissolveripple = false;
+  let shouldDissolveRipple = false;
   let token: number | null = null;
   // function transform(el: HTMLElement, value: string) {
   //   el.style.transform = value;
@@ -41,25 +41,25 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
     }, 120);
   }
   // 释放方法
-  function releaseripple(e?: PointerEvent) {
+  function releaseRipple(e?: PointerEvent) {
     if (typeof e !== 'undefined') {
-      document.removeEventListener('pointerup', releaseripple);
-      document.removeEventListener('pointercancel', releaseripple);
+      document.removeEventListener('pointerup', releaseRipple);
+      document.removeEventListener('pointercancel', releaseRipple);
     }
 
-    if (shouldDissolveripple) {
-      dissolveripple();
+    if (shouldDissolveRipple) {
+      dissolveRipple();
     } else {
-      shouldDissolveripple = true;
+      shouldDissolveRipple = true;
     }
   }
 
-  function cancelripple() {
+  function cancelRipple() {
     clearTimeout(token);
     rippleContainer.remove();
-    document.removeEventListener('pointerup', releaseripple);
-    document.removeEventListener('pointercancel', releaseripple);
-    document.removeEventListener('pointercancel', cancelripple);
+    document.removeEventListener('pointerup', releaseRipple);
+    document.removeEventListener('pointercancel', releaseRipple);
+    document.removeEventListener('pointercancel', cancelRipple);
   }
 
   // 设置ripple 的 dataset[RIPPLE_COUNT]
@@ -76,16 +76,16 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   rippleContainer.appendChild(rippleEl);
   el.appendChild(rippleContainer);
 
-  document.addEventListener('pointerup', releaseripple);
-  document.addEventListener('pointercancel', releaseripple);
+  document.addEventListener('pointerup', releaseRipple);
+  document.addEventListener('pointercancel', releaseRipple);
 
   token = setTimeout(() => {
-    document.removeEventListener('pointercancel', cancelripple);
+    document.removeEventListener('pointercancel', cancelRipple);
     rippleEl.style.transform = `translate(-50%,-50%) scale(2)`;
     rippleEl.style.opacity = `${options.finalOpacity}`;
-    setTimeout(() => releaseripple(), options.duration);
+    setTimeout(() => releaseRipple(), options.duration);
   }, options.delay);
-  document.addEventListener('pointercancel', cancelripple);
+  document.addEventListener('pointercancel', cancelRipple);
 };
 
 export { ripple };
