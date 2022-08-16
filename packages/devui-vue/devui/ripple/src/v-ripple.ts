@@ -28,7 +28,7 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   //   el.style.transform = value;
   // }
   // 移除方法
-  function dissolveripple() {
+  function dissolveRipple() {
     rippleEl.style.transition = 'opacity 120ms ease-in-out';
     rippleEl.style.opacity = '0';
     setTimeout(() => {
