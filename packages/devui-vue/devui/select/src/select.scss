@@ -149,6 +149,7 @@ $select-item-min-height: 36px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  padding-right: 28px;
   cursor: pointer;
   .#{$devui-prefix}-select__multiple--input {
     display: flex;

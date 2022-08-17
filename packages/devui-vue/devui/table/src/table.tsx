@@ -1,6 +1,8 @@
-import { provide, defineComponent, getCurrentInstance, computed, toRef, ref, onMounted, nextTick } from 'vue';
+import { provide, defineComponent, getCurrentInstance, computed, toRef, ref, onMounted, nextTick, withModifiers } from 'vue';
+import type { SetupContext } from 'vue';
 import { tableProps, TableProps, TABLE_TOKEN, ITableInstanceAndDefaultRow } from './table-types';
 import { useTable, useTableLayout, useTableWatcher } from './composables/use-table';
+import { useHorizontalScroll } from './composables/use-horizontal-scroll';
 import { createStore } from './store';
 import FixHeader from './components/fix-header';
 import NormalHeader from './components/normal-header';
@@ -17,9 +19,9 @@ export default defineComponent({
   },
   props: tableProps,
   emits: ['sort-change', 'cell-click', 'row-click', 'check-change', 'check-all-change', 'expand-change', 'load-more'],
-  setup(props: TableProps, ctx) {
+  setup(props: TableProps, ctx: SetupContext) {
     const table = getCurrentInstance() as ITableInstanceAndDefaultRow;
-    const store = createStore(toRef(props, 'data'), table);
+    const store = createStore(toRef(props, 'data'), table, ctx);
     const tableId = `devui-table_${tableIdInit++}`;
     const tableRef = ref();
     table.tableId = tableId;
@@ -27,6 +29,7 @@ export default defineComponent({
     provide<ITableInstanceAndDefaultRow>(TABLE_TOKEN, table);
     const { tableWidth, updateColumnWidth } = useTableLayout(table);
     const { classes, styles } = useTable(props, tableWidth);
+    const { onTableScroll } = useHorizontalScroll(table);
     useTableWatcher(props, store);
     const isEmpty = computed(() => props.data.length === 0);
     const ns = useNamespace('table');
@@ -49,7 +52,12 @@ export default defineComponent({
     });
 
     return () => (
-      <div ref={tableRef} class={ns.b()} style={styles.value} v-loading={props.showLoading}>
+      <div
+        ref={tableRef}
+        class={ns.b()}
+        style={styles.value}
+        v-loading={props.showLoading}
+        onScroll={withModifiers(onTableScroll, ['stop'])}>
         <div ref={hiddenColumns} class="hidden-columns">
           {ctx.slots.default?.()}
         </div>
