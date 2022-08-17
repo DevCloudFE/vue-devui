@@ -1,6 +1,6 @@
 import type { ComponentInternalInstance, Ref } from 'vue';
 import { Column, SortMethod, SortDirection } from '../components/column/column-types';
-import { DefaultRow, ITable } from '../table-types';
+import { DefaultRow } from '../table-types';
 
 // TableStore 对象
 // 主要是为了方便维护 Table 中的各种状态
