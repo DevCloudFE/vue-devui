@@ -257,27 +257,19 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-button @click="serviceToBody" style="margin-right: 8px; display: inline-block; width: 220px;">
+  <d-button class="mr-1" @click="serviceToBody">
     click me show full screen loading!
   </d-button>
 
-  <d-button
-    v-if="isShow"
-    @click="openTargetLoading"
-    style="margin-right: 8px; display: inline-block; width: 200px;"
-  >
+  <d-button v-if="isShow" @click="openTargetLoading">
     click me show loading in target!
   </d-button>
 
-  <d-button
-    v-else
-    @click="closeTargetLoading"
-    style="margin-right: 8px; display: inline-block; width: 200px;"
-  >
+  <d-button v-else @click="closeTargetLoading">
     click me close loading in target!
   </d-button>
 
-  <div id="me" style="margin-top: 20px; width: 100%; height: 60px; padding: 10px;">
+  <div id="me" class="mt-3" style="width: 100%; height: 60px; padding: 10px;">
     loading will show here3
   </div>
 </template>

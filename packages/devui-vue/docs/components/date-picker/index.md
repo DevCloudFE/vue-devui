@@ -13,7 +13,7 @@
 ```vue
 
 <template>
-  <p>选中的日期： {{eventValue}}</p>
+  <div class="mb-2">选中的日期： {{eventValue}}</div>
   <d-datepicker :selected-date-change="handleEventValue" />
 </template>
 
@@ -55,12 +55,12 @@ export default defineComponent({
 ```vue
 
 <template>
-  <p>开启 auto-close</p>
-  <d-datepicker auto-close class="mb20" />
+  <div class="mb-2">开启 auto-close</div>
+  <d-datepicker auto-close class="mb-1" />
   <d-datepicker :auto-close="true" />
 
-  <p>关闭 auto-close</p>
-  <d-datepicker class="mb20" />
+  <div class="mb-2 mt-3">关闭 auto-close</div>
+  <d-datepicker class="mb-1" />
   <d-datepicker :auto-close="false" />
 </template>
 
@@ -89,12 +89,12 @@ export default defineComponent({
 ```vue
 
 <template>
-  <p>开启 range</p>
-  <d-datepicker range class="mb20" />
+  <div class="mb-2">开启 range</div>
+  <d-datepicker range class="mb-1" />
   <d-datepicker :range="true" />
 
-  <p>关闭 range</p>
-  <d-datepicker class="mb20" />
+  <div class="mb-2 mt-3">关闭 range</div>
+  <d-datepicker class="mb-1" />
   <d-datepicker :range="false" />
 </template>
 
@@ -123,7 +123,7 @@ export default defineComponent({
 ```vue
 
 <template>
-  <d-datepicker format="yyyy-MM-dd hh:mm:ss" class="mb20" />
+  <d-datepicker format="yyyy-MM-dd hh:mm:ss" class="mb-1" />
   <d-datepicker format="yy-MM-dd" range />
 </template>
 
@@ -152,8 +152,7 @@ export default defineComponent({
 ```vue
 
 <template>
-  <d-input v-model="splitterText" :max-length="1" class="mb20 wh200"></d-input>
-  <p></p>
+  <d-input v-model="splitterText" :max-length="1" class="mb-1 wh200"></d-input>
   <d-datepicker range :range-spliter="splitterText" />
 </template>
 

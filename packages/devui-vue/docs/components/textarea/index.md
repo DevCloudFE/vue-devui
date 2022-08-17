@@ -12,16 +12,13 @@
 
 ```vue
 <template>
-  <h4 style="margin: 10px 0">Default</h4>
+  <div class="mb-0">Default</div>
+  <d-textarea class="mb-2" v-model="valueDefault" autofocus id="textArea"></d-textarea>
 
-  <d-textarea v-model="valueDefault" autofocus id="textArea"></d-textarea>
+  <div class="mb-0">Disabled</div>
+  <d-textarea class="mb-2" placeholder="我是被禁用状态" disabled></d-textarea>
 
-  <h4 style="margin: 10px 0">Disabled</h4>
-
-  <d-textarea placeholder="我是被禁用状态" disabled></d-textarea>
-
-  <h4 style="margin: 10px 0">Error</h4>
-
+  <div class="mb-0">Error</div>
   <d-textarea v-model="valueError" placeholder="我是出错状态" error></d-textarea>
 </template>
 
