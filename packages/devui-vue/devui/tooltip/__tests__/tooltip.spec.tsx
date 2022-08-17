@@ -172,18 +172,11 @@ describe('d-tooltip', () => {
   });
 
   it('props position work well.', async () => {
-    const wrapper = mount(
-      {
-        setup() {
-          return () => <Tooltip content="tips text">{{ default: () => <d-button>top</d-button> }}</Tooltip>;
-        },
+    const wrapper = mount({
+      setup() {
+        return () => <Tooltip content="tips text">{{ default: () => <d-button>top</d-button> }}</Tooltip>;
       },
-      {
-        props: {
-          position: 'top',
-        },
-      }
-    );
+    });
     const btn = wrapper.find(buttonNs.b());
     expect(btn.exists()).toBeTruthy();
 
