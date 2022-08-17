@@ -1,7 +1,6 @@
 import { createContainer } from './utils/create-container-element';
 import { createRippleElement } from './utils/create-ripple-element';
-import { getDistanceToFurthestCorner } from './utils/getdistance-tofurthestcorner';
-import { getRelativePointer } from './utils/getrelative-pointer';
+import { getDistanceToFurthestCorner, getRelativePointer } from './utils/get-element-position-utils';
 import { decrementRippleCount, deleteRippleCount, getRippleCount, incrementRippleCount } from './utils/ripple-count';
 import { IRippleDirectiveOptions } from './options';
 // Ensure that the current element can be completely overwritten
@@ -27,7 +26,7 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   // function transform(el: HTMLElement, value: string) {
   //   el.style.transform = value;
   // }
-  // 移除方法
+  // 显示ripple
   function dissolveRipple() {
     rippleEl.style.transition = 'opacity 120ms ease-in-out';
     rippleEl.style.opacity = '0';

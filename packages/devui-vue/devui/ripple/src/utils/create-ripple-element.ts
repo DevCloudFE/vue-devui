@@ -18,7 +18,7 @@ export const createRippleElement = (
   rippleElement.style.borderRadius = '50%';
   rippleElement.style.opacity = `${options.initialOpacity}`;
   rippleElement.style.transform = `translate(-50%,-50%) scale(0)`;
-  rippleElement.style.transition = `transform ${options.duration / 1000}s   cubic-bezier(0, 0.15, 0.25, 1)
+  rippleElement.style.transition = `transform ${options.duration / 1000}s   cubic-bezier(0, 0.5, 0.25, 1)
   , opacity ${options.duration / 1000}s
   cubic-bezier(0.0, 0, 0.2, 1)
   `;
