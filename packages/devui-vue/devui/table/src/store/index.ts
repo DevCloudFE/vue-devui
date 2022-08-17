@@ -1,5 +1,6 @@
-import { isBoolean } from '../../../shared/utils';
 import { watch, Ref, ref, computed, unref } from 'vue';
+import type { SetupContext } from 'vue';
+import { isBoolean } from '../../../shared/utils';
 import type { Column, LevelColumn } from '../components/column/column-types';
 import type { DefaultRow, ITable, RowKeyType } from '../table-types';
 import type { TableStore } from './store-types';
@@ -239,7 +240,11 @@ function createFixedLogic(columns: Ref<Column[]>) {
  * @param table 表对象
  * @returns TableStore
  */
-export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T[]>, table: ITable<DefaultRow>): TableStore<T> {
+export function createStore<T extends Record<string, unknown>>(
+  dataSource: Ref<T[]>,
+  table: ITable<DefaultRow>,
+  ctx: SetupContext
+): TableStore<T> {
   const _data: Ref<T[]> = ref([]);
   const { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
   const { flatRows, hiddenRowKeys, rowLevelMap, updateRows, firstDefaultColumn, updateFirstDefaultColumn } = createRowGenerator<T>(
@@ -261,6 +266,10 @@ export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T
 
   const { tableCellModeMap, setCellMode, resetCellMode } = useEditTableCell();
 
+  const emitTableEvent = (eventName: string, ...params: unknown[]) => {
+    ctx.emit.apply(ctx, [eventName, ...params]);
+  };
+
   watch(
     dataSource,
     (value: T[]) => {
@@ -271,7 +280,6 @@ export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T
   );
 
   return {
-    _table: table,
     states: {
       _data,
       flatRows,
@@ -304,5 +312,6 @@ export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T
     updateFirstDefaultColumn,
     setCellMode,
     resetCellMode,
+    emitTableEvent,
   };
 }
