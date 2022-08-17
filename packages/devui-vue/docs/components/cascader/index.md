@@ -13,14 +13,14 @@
 
 ```vue
 <template>
-  <h4>hover mode</h4>
-  <d-cascader :options="options" placeholder="请选择" style="width: 200px"></d-cascader>
-  <h4>click mode</h4>
-  <d-cascader :options="options" v-model="value" showPath trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
-  <h4>data empty</h4>
-  <d-cascader :options="[]" trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
-  <h4>disabled</h4>
-  <d-cascader :options="[]" disabled trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
+  <div class="mb-0">hover mode</div>
+  <d-cascader class="mb-2" :options="options" placeholder="请选择" style="width: 200px"></d-cascader>
+  <div class="mb-0">click mode</div>
+  <d-cascader class="mb-2" :options="options" v-model="value" showPath trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
+  <div class="mb-0">data empty</div>
+  <d-cascader class="mb-2" :options="[]" trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
+  <div class="mb-0">disabled</div>
+  <d-cascader class="mb-2" :options="[]" disabled trigger="click" placeholder="请选择" style="width: 200px"></d-cascader>
 </template>
 <script>
 import { defineComponent, reactive, ref } from 'vue';
@@ -129,7 +129,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-cascader v-model="value" :options="options" width="fit-content">
+  <d-cascader class="mb-2" v-model="value" :options="options" width="fit-content">
     <template #host>
       <d-button>请选择</d-button>
     </template>
@@ -254,6 +254,7 @@ export default defineComponent({
     :debounce="500"
     :before-filter="beforeFilter"
     @change="changeFun"
+    class="mb-2"
   ></d-cascader>
   <div>选择的value值：{{ value1 }}</div>
 </template>
