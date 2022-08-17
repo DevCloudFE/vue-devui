@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 import Tooltip from '../src/tooltip';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { TransformOriginMap } from '../src/use-tooltip';
 
 const ns = useNamespace('tooltip', true);
 const buttonNs = useNamespace('button', true);
@@ -170,5 +171,91 @@ describe('d-tooltip', () => {
     wrapper.unmount();
   });
 
-  it.todo('props position work well.');
+  it('props position work well.', async () => {
+    const wrapper = mount(
+      {
+        setup() {
+          return () => <Tooltip content="tips text">{{ default: () => <d-button>top</d-button> }}</Tooltip>;
+        },
+      },
+      {
+        props: {
+          position: 'top',
+        },
+      }
+    );
+    const btn = wrapper.find(buttonNs.b());
+    expect(btn.exists()).toBeTruthy();
+
+    await btn.trigger('mouseenter');
+    await new Promise((resolve) => {
+      setTimeout(resolve, 150);
+    });
+    let tooltipContent: HTMLElement | null = document.querySelector(ns.b());
+    expect(tooltipContent).toBeTruthy();
+    // 默认为 top
+    expect(tooltipContent?.style.transformOrigin).toBe(TransformOriginMap['top']);
+    await btn.trigger('mouseleave');
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
+
+    await wrapper.setProps({
+      position: 'top',
+    });
+    await btn.trigger('mouseenter');
+    await new Promise((resolve) => {
+      setTimeout(resolve, 150);
+    });
+    tooltipContent = document.querySelector(ns.b());
+    expect(tooltipContent).toBeTruthy();
+    expect(tooltipContent?.style.transformOrigin).toBe(TransformOriginMap['top']);
+    await btn.trigger('mouseleave');
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
+
+    await wrapper.setProps({
+      position: 'right',
+    });
+    await btn.trigger('mouseenter');
+    await new Promise((resolve) => {
+      setTimeout(resolve, 150);
+    });
+    tooltipContent = document.querySelector(ns.b());
+    expect(tooltipContent).toBeTruthy();
+    expect(tooltipContent?.style.transformOrigin).toBe(TransformOriginMap['right']);
+    await btn.trigger('mouseleave');
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
+
+    await wrapper.setProps({
+      position: 'bottom',
+    });
+    await btn.trigger('mouseenter');
+    await new Promise((resolve) => {
+      setTimeout(resolve, 150);
+    });
+    tooltipContent = document.querySelector(ns.b());
+    expect(tooltipContent).toBeTruthy();
+    expect(tooltipContent?.style.transformOrigin).toBe(TransformOriginMap['bottom']);
+    await btn.trigger('mouseleave');
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100);
+    });
+
+    await wrapper.setProps({
+      position: 'left',
+    });
+    await btn.trigger('mouseenter');
+    await new Promise((resolve) => {
+      setTimeout(resolve, 150);
+    });
+    tooltipContent = document.querySelector(ns.b());
+    expect(tooltipContent).toBeTruthy();
+    expect(tooltipContent?.style.transformOrigin).toBe(TransformOriginMap['left']);
+
+    wrapper.unmount();
+  });
 });

@@ -3,7 +3,7 @@ import type { Ref } from 'vue';
 import { debounce } from 'lodash';
 import { TooltipProps, BasePlacement, UseTooltipFn } from './tooltip-types';
 
-const TransformOriginMap: Record<string, string> = {
+export const TransformOriginMap: Record<string, string> = {
   top: '50% calc(100% + 8px)',
   bottom: '50% -8px',
   left: 'calc(100% + 8px)',
@@ -68,5 +68,14 @@ export function useTooltip(origin: Ref, props: TooltipProps): UseTooltipFn {
     }
   });
 
-  return { visible, placement, positionArr, overlayStyles, onPositionChange, onMouseenter, onMouseleave, onMouseenterOverlay };
+  return {
+    visible,
+    placement,
+    positionArr,
+    overlayStyles,
+    onPositionChange,
+    onMouseenter,
+    onMouseleave,
+    onMouseenterOverlay,
+  };
 }
