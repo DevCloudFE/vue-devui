@@ -72,7 +72,7 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   }
 
   rippleContainer.appendChild(rippleEl);
-  el.appendChild(rippleEl);
+  el.appendChild(rippleContainer);
 
   document.addEventListener('pointerup', releaseRipple);
   document.addEventListener('pointercancel', releaseRipple);
