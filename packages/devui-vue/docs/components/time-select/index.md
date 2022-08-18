@@ -13,26 +13,23 @@
 ```vue
 <template>
   <div>
-    <h4 class="my-10">basic</h4>
-    <d-time-select v-model="time00" />
-    <h4 class="my-10">step</h4>
-    <d-time-select v-model="time01" step="00:10" />
-    <h4 class="my-10">min-time、max-time</h4>
-    <div style="margin-top: 10px;">
-      <d-time-select v-model="time02" min-time="02:20" max-time="18:30" />
-    </div>
-    <h4 class="my-10">min-time、max-time、start、end</h4>
-    <div style="margin-top: 10px;">
-      <d-time-select v-model="time03" min-time="09:30" max-time="18:30" start="09:00" end="16:30" />
-    </div>
-    <h4 class="my-10">disabled</h4>
-    <div style="margin-top: 10px;">
-      <d-time-select v-model="time04" disabled />
-    </div>
-    <h4 class="my-10">不可清除</h4>
-    <div style="margin-top: 10px;">
-      <d-time-select v-model="time04" :clearable="false" />
-    </div>
+    <div class="mb-0">basic</div>
+    <d-time-select class="mb-2" v-model="time00" />
+
+    <div class="mb-0">step</div>
+    <d-time-select class="mb-2" v-model="time01" step="00:10" />
+
+    <div class="mb-0">min-time、max-time</div>
+    <d-time-select class="mb-2" v-model="time02" min-time="02:20" max-time="18:30" />
+
+    <div class="mb-0">min-time、max-time、start、end</div>
+    <d-time-select class="mb-2" v-model="time03" min-time="09:30" max-time="18:30" start="09:00" end="16:30" />
+
+    <div class="mb-0">disabled</div>
+    <d-time-select class="mb-2" v-model="time04" disabled />
+    
+    <div class="mb-0">不可清除</div>
+    <d-time-select class="mb-2" v-model="time04" :clearable="false" />
   </div>
 </template>
 
@@ -113,7 +110,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <h4 class="my-10">selectedTimeChange</h4>
+    <div class="mb-0">selectedTimeChange</div>
     <d-time-select v-model="timeData01" @change="selectedTimeChange" @focus="focusFun" @blur="blurFun" />
   </div>
 </template>

@@ -12,16 +12,16 @@
 
 ```vue
 <template>
-  <div>
-    <h4 class="my-10">basic</h4>
+  <div class="mb-2">
+    <div class="mb-0">basic</div>
     <d-time-picker v-model="time01" placeholder="请选择时间" />
   </div>
-  <div>
-    <h4 class="my-10">default open</h4>
+  <div class="mb-2">
+    <div class="mb-0">default open</div>
     <d-time-picker v-model="vModelValue" :time-picker-width="300" :autoOpen="true" />
   </div>
-  <div>
-    <h4 class="my-10">disabled</h4>
+  <div class="mb-2">
+    <div class="mb-0">disabled</div>
     <d-time-picker v-model="vModelValue" disabled />
   </div>
 </template>
@@ -39,12 +39,6 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-.my-10 {
-  margin: 10px 0px;
-}
-</style>
 ```
 
 :::
@@ -55,16 +49,16 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>
-    <h4 class="my-10">minTime</h4>
+  <div class="mb-2">
+    <div class="mb-0">minTime</div>
     <d-time-picker min-time="01:04:30" />
   </div>
-  <div>
-    <h4 class="my-10">maxTime</h4>
+  <div class="mb-2">
+    <div class="mb-0">maxTime</div>
     <d-time-picker max-time="22:30:30" v-model="vModelValues" />
   </div>
-  <div>
-    <h4 class="my-10">maxTime && minTime</h4>
+  <div class="mb-2">
+    <div class="mb-0">maxTime && minTime</div>
     <d-time-picker min-time="02:04:40" max-time="22:30:30" />
   </div>
 </template>
@@ -91,26 +85,23 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>
-    <h4 class="my-10">hh:mm:ss</h4>
+  <div class="mb-2">
+    <div class="mb-0">hh:mm:ss</div>
     <d-time-picker min-time="01:04:30" />
   </div>
-  <div>
-    <h4 class="my-10">mm:HH:ss</h4>
-    <d-time-picker format="mm:HH:ss" v-model="vModelValueFirst" />
-    <br />
+  <div class="mb-2">
+    <div class="mb-0">mm:HH:ss</div>
+    <d-time-picker class="mb-0" format="mm:HH:ss" v-model="vModelValueFirst" />
     当前选中时间：<button>{{ vModelValueFirst }}</button>
   </div>
-  <div>
-    <h4 class="my-10">hh:mm</h4>
-    <d-time-picker format="hh:mm" v-model="hhmm" />
-    <br />
+  <div class="mb-2">
+    <div class="mb-0">hh:mm</div>
+    <d-time-picker class="mb-0" format="hh:mm" v-model="hhmm" />
     当前选中时间：<button>{{ hhmm }}</button>
   </div>
-  <div>
-    <h4 class="my-10">MM:ss</h4>
-    <d-time-picker format="MM:ss" v-model="mmss" />
-    <br />
+  <div class="mb-2">
+    <div class="mb-0">MM:ss</div>
+    <d-time-picker class="mb-0" format="MM:ss" v-model="mmss" />
     当前选中时间：<button>{{ mmss }}</button>
   </div>
 </template>
@@ -145,7 +136,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <h4 class="my-10">自定义 customViewTemplate</h4>
+    <div class="mb-0">自定义 customViewTemplate</div>
     <d-time-picker ref="slotDemo">
       <template v-slot:customViewTemplate>
         <div class="slot-box">
@@ -217,16 +208,14 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>
-    <h4 class="my-10">selectedTimeChange</h4>
-    <d-time-picker @change="selectedTimeChange" />
-    <br />
+  <div class="mb-2">
+    <div class="mb-0">selectedTimeChange</div>
+    <d-time-picker class="mb-0" @change="selectedTimeChange" />
     当前选中时间：<button @click="getNewTimeFun">{{ time1 }}</button>
   </div>
-  <div>
-    <h4 class="my-10">v-model</h4>
-    <d-time-picker v-model="time2" />
-    <br />
+  <div class="mb-2">
+    <div class="mb-0">v-model</div>
+    <d-time-picker class="mb-0" v-model="time2" />
     当前选中时间：<button @click="getNewTimeFun">{{ time2 }}</button>
   </div>
 </template>
