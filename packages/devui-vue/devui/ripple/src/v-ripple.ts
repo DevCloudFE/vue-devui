@@ -70,7 +70,7 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
     }
     el.style.position = 'relative';
   }
-
+  // Absolute positioning prevents size overflow and position absolute 修改子元素问题
   rippleContainer.appendChild(rippleEl);
   el.appendChild(rippleContainer);
 

@@ -12,7 +12,7 @@ export const createContainer = ({
   rippleContainer.style.position = 'absolute';
   rippleContainer.style.borderRadius =
   `${borderTopLeftRadius} ${borderTopRightRadius} ${borderBottomRightRadius} ${borderBottomLeftRadius}`;
-  // rippleContainer.style.overflow = 'hidden';
+  rippleContainer.style.overflow = 'hidden';
   rippleContainer.style.pointerEvents = 'none';
 
   // 兼容 ie  苹果

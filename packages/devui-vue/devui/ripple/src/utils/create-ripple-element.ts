@@ -9,11 +9,15 @@ export const createRippleElement = (
 ): HTMLElement => {
   const rippleElement = document.createElement('div');
   rippleElement.style.position = 'absolute';
-  rippleElement.style.width = options.center ? `${rect.width}px` : `${size * 2}px`;
+  rippleElement.style.width = options.center ? `${Math.sqrt(rect.width * rect.width + rect.height * rect.height)}px` : `${size * 2}px`;
   // rippleElement.style.height = options.center ? `${size}px` : `${size}px`;
-  rippleElement.style.height = options.center ? `${rect.width}px` : `${size * 2}px`;
+  rippleElement.style.height = options.center ? `${Math.sqrt(rect.width * rect.width + rect.height * rect.height)}px` : `${size * 2}px`;
   rippleElement.style.top = options.center ? `${rect.height / 2}px` : `${y}px`;
   rippleElement.style.left = options.center ? `${rect.width / 2}px` : `${x}px`;
+  console.log(rippleElement.style.top);
+  console.log(rippleElement.style.left);
+  console.log(options.center);
+
   rippleElement.style.background = options.color;
   rippleElement.style.borderRadius = '50%';
   rippleElement.style.opacity = `${options.initialOpacity}`;

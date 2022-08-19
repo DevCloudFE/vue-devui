@@ -13,7 +13,7 @@ export default {
 
     el.addEventListener('pointerdown', (event) => {
       const options = optionMap.get(el);
-      // 必须确保disabled 属性存在 否则指令终止报错
+      // You must make sure that the disabled attribute exists or the instruction terminates with an error
       if (binding.value && binding.value.disabled) {return;}
 
       if (options === false) {return;}
