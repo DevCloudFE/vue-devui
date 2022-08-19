@@ -19,6 +19,7 @@ const tableMonthClass = ns.e('table-month');
 const noDotNs = useNamespace('date-picker-pro', false);
 
 const inputNs = useNamespace('input', true);
+const inputDisableClass = inputNs.m('disabled');
 
 // 因为 jest 不支持 ResizeObserver，需要 mock 实现
 window.ResizeObserver =
@@ -443,5 +444,26 @@ describe('date-picker-pro test', () => {
     wrapper.unmount();
   });
 
-  it.todo('props disabled work well.');
+  it('date-picker-pro disabled', async () => {
+    const datePickerProValue = ref('');
+    const wrapper = mount({
+      setup() {
+        const app = getCurrentInstance();
+        app.appContext.config.globalProperties.langMessages = ref(Locale.messages());
+        return () => <DDatePickerPro v-model={datePickerProValue.value} placeholder="请选择日期" disabled={true}></DDatePickerPro>;
+      },
+    });
+
+    const container = wrapper.find(baseClass);
+    expect(container.exists()).toBeTruthy();
+    // 测试是否生成了 disabled 相关的类
+    expect(wrapper.find(inputDisableClass).exists()).toBeTruthy();
+
+    // 测试鼠标是否能触发时间选择面板
+    const inputs = container.findAll('input');
+    await inputs[0].trigger('focus');
+    await nextTick();
+    const pickerPanel = document.querySelector(pickerPanelClass);
+    expect(pickerPanel).toBeFalsy();
+  });
 });
