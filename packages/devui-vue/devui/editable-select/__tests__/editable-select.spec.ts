@@ -315,5 +315,47 @@ describe('editable-select test', () => {
     expect(wrapper.vm.value).toBe('2');
   });
 
-  it.todo('props allow-clear work well.');
+  test('allow-clear', async () => {
+    const wrapper = mount({
+      components: {
+        'editable-select': EditableSelect,
+      },
+      template: `<editable-select v-model="value" :options="options"></editable-select>`,
+      setup() {
+        const value = ref('');
+        const options = createData();
+        return {
+          value,
+          options,
+        };
+      },
+    });
+
+    const input = wrapper.find('input');
+    await input.trigger('click');
+
+    const flexibleOverlay = wrapper.getComponent({ name: 'DFlexibleOverlay' });
+
+    const options = flexibleOverlay.findAll(`.devui-dropdown-item`);
+
+    await options[0].trigger('click');
+
+    expect(wrapper.find('input').element.value).toBe('label0');
+    expect(wrapper.vm.value).toBe('0');
+
+    const removeIcon = wrapper.find('.icon-remove');
+    await removeIcon.trigger('click');
+
+    expect(wrapper.find('input').element.value).toBe('');
+    expect(wrapper.vm.value).toBe('');
+
+    await options[1].trigger('click');
+    expect(wrapper.find('input').element.value).toBe('label1');
+    expect(wrapper.vm.value).toBe('1');
+
+    await removeIcon.trigger('click');
+
+    expect(wrapper.find('input').element.value).toBe('');
+    expect(wrapper.vm.value).toBe('');
+  });
 });
