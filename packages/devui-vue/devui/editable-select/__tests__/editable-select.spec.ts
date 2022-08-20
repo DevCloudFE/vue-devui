@@ -82,6 +82,7 @@ describe('editable-select test', () => {
     await options.trigger('click');
 
     expect(wrapper.find('input').element.value).toBe('label0');
+    expect(wrapper.vm.value).toBe('0');
   });
 
   test('disabled select', async () => {
@@ -136,10 +137,12 @@ describe('editable-select test', () => {
     await options[1].trigger('click');
 
     expect(wrapper.find('input').element.value).toBe('');
+    expect(wrapper.vm.value).toBe('');
 
     await options[2].trigger('click');
 
     expect(wrapper.find('input').element.value).toBe('label2');
+    expect(wrapper.vm.value).toBe('2');
   });
 
   test('search', async () => {
@@ -309,6 +312,7 @@ describe('editable-select test', () => {
     await input.trigger('keydown', { key: 'ArrowDown' });
     await input.trigger('keydown', { key: 'Enter' });
     expect(input.element.value).toBe('label2');
+    expect(wrapper.vm.value).toBe('2');
   });
 
   it.todo('props allow-clear work well.');
