@@ -10,11 +10,11 @@ export default defineComponent({
   props: drawerProps,
   emits: ['close', 'update:modelValue', 'open'],
   setup(props: DrawerProps, { emit, slots, attrs }) {
-    const { drawerRef, drawerClasses, handleOverlayClick } = useDrawer(props, emit);
+    const { overlayRef, drawerRef, drawerClasses, handleOverlayClick } = useDrawer(props, emit);
     return () => (
       <Teleport to="body">
         {props.showOverlay && (
-          <DrawerOverlay visible={props.modelValue} style={{ zIndex: props.zIndex - 1 }} onClick={handleOverlayClick} />
+          <DrawerOverlay ref={overlayRef} visible={props.modelValue} style={{ zIndex: props.zIndex - 1 }} onClick={handleOverlayClick} />
         )}
         <Transition name={`drawer-fly-${props.position}`}>
           {props.modelValue && (

@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, Teleport, toRefs, Transition, withModifiers } from 'vue';
+import { computed, defineComponent, ref, Teleport, toRefs, Transition } from 'vue';
 import { modalProps, ModalProps, ModalType } from './modal-types';
 import { Icon } from '../../icon';
 import { FixedOverlay } from '../../overlay';
@@ -22,9 +22,9 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props: ModalProps, { slots, attrs, emit }) {
     const ns = useNamespace('modal');
-    const { modelValue, title, showClose, showOverlay, appendToBody } = toRefs(props);
-    const { onCloseBtnClick, onOverlayClick } = useModal(props, emit);
-    const { showContainer, showModal } = useModalRender(props);
+    const { modelValue, title, showClose, showOverlay, appendToBody, closeOnClickOverlay } = toRefs(props);
+    const { execClose } = useModal(props, emit);
+    useModalRender(props);
     const dialogRef = ref<HTMLElement>();
     const headerRef = ref<HTMLElement>();
     const draggable = computed(() => props.draggable);
@@ -69,32 +69,35 @@ export default defineComponent({
     return () => (
       <Teleport to="body" disabled={!appendToBody.value}>
         {showOverlay.value && (
-          <FixedOverlay v-model={modelValue.value} lock-scroll={false} style={{ zIndex: 'calc(var(--devui-z-index-modal, 1050) - 1)' }} />
+          <FixedOverlay
+            modelValue={modelValue.value}
+            onUpdate:modelValue={execClose}
+            class={ns.e('overlay')}
+            lock-scroll={false}
+            close-on-click-overlay={closeOnClickOverlay.value}
+            style={{ zIndex: 'calc(var(--devui-z-index-modal, 1050) - 1)' }}
+          />
         )}
-        {showContainer.value && (
-          <div class={ns.e('container')} onClick={withModifiers(onOverlayClick, ['self'])}>
-            <Transition name={props.showAnimation ? ns.m('wipe') : ''}>
-              {showModal.value && (
-                <div ref={dialogRef} class={ns.b()} {...attrs}>
-                  {showClose.value && (
-                    <div onClick={onCloseBtnClick} class="btn-close">
-                      <Icon name="close" size="20px"></Icon>
-                    </div>
-                  )}
-                  {props.type ? (
-                    renderType()
-                  ) : (
-                    <div style={{ cursor: props.draggable ? 'move' : 'default' }} ref={headerRef}>
-                      {slots.header ? slots.header() : title.value && <DModalHeader>{title.value}</DModalHeader>}
-                    </div>
-                  )}
-                  <DModalBody>{slots.default?.()}</DModalBody>
-                  {slots.footer?.()}
+        <Transition name={props.showAnimation ? ns.m('wipe') : ''}>
+          {modelValue.value && (
+            <div ref={dialogRef} class={ns.b()} {...attrs}>
+              {showClose.value && (
+                <div onClick={execClose} class="btn-close">
+                  <Icon name="close" size="20px"></Icon>
                 </div>
               )}
-            </Transition>
-          </div>
-        )}
+              {props.type ? (
+                renderType()
+              ) : (
+                <div style={{ cursor: props.draggable ? 'move' : 'default' }} ref={headerRef}>
+                  {slots.header ? slots.header() : title.value && <DModalHeader>{title.value}</DModalHeader>}
+                </div>
+              )}
+              <DModalBody>{slots.default?.()}</DModalBody>
+              {slots.footer?.()}
+            </div>
+          )}
+        </Transition>
       </Teleport>
     );
   },
