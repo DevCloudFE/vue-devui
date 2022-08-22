@@ -225,7 +225,7 @@ export default defineComponent({
       <d-button @click="handleClick" class="mr-1">Get CheckedRows</d-button>
       <d-button @click="insertRow" class="mr-1">Insert Row</d-button>
       <d-button @click="deleteRow" class="mr-1">Delete Row</d-button>
-      <d-button @click="toggleRow" class="mr-1">Toggle Row</d-button>  
+      <d-button @click="toggleRow" class="mr-1">Toggle Row</d-button>
     </div>
     <d-table
       ref="tableRef"
@@ -673,14 +673,12 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-button @click="updateColumn">更新列</d-button>
     <d-button @click="handleClick">更新数据</d-button>
     <d-table :data="emptyData" :show-loading="showLoading">
-      <!-- <d-column field="firstName" header="First Name"></d-column>
+      <d-column field="firstName" header="First Name"></d-column>
       <d-column field="lastName" header="Last Name"></d-column>
       <d-column field="gender" header="Gender"></d-column>
-      <d-column field="date" header="Date of birth"></d-column> -->
-      <d-column v-for="(item, index) in columnData" :key="index" :field="item.field" :header="item.header"></d-column>
+      <d-column field="date" header="Date of birth"></d-column>
       <template #empty>
         <div style="text-align: center;">No Data</div>
       </template>
@@ -695,29 +693,6 @@ export default defineComponent({
   setup() {
     const emptyData = ref([]);
     const showLoading = ref(false);
-    const columnData = ref([]);
-    const updateColumn = () => {
-      setTimeout(() => {
-        columnData.value = [
-          {
-            field: 'firstName',
-            header: 'First Name',
-          },
-          {
-            field: 'lastName',
-            header: 'Last Name',
-          },
-          {
-            field: 'gender',
-            header: 'Gender',
-          },
-          {
-            field: 'date',
-            header: 'Date of birth',
-          },
-        ];
-      }, 1000);
-    };
     const handleClick = () => {
       showLoading.value = true;
       setTimeout(() => {
@@ -751,7 +726,7 @@ export default defineComponent({
       }, 1000);
     };
 
-    return { columnData, emptyData, showLoading, handleClick, updateColumn };
+    return { emptyData, showLoading, handleClick };
   },
 });
 </script>
