@@ -1,5 +1,5 @@
-import { onMounted, onUnmounted, watch, ref, nextTick } from 'vue';
-import { ModalProps, EmitEventFn, UseModal, UseModalRender } from '../modal-types';
+import { onMounted, onUnmounted, watch } from 'vue';
+import { ModalProps, EmitEventFn, UseModal } from '../modal-types';
 import { lockScroll } from '../../../shared/utils/lock-scroll';
 
 export function useModal(props: ModalProps, emit: EmitEventFn): UseModal {
@@ -8,12 +8,6 @@ export function useModal(props: ModalProps, emit: EmitEventFn): UseModal {
   }
   function execClose() {
     props.beforeClose ? props.beforeClose(close) : close();
-  }
-  function onOverlayClick() {
-    props.closeOnClickOverlay && execClose();
-  }
-  function onCloseBtnClick() {
-    execClose();
   }
 
   function onKeydown(event: KeyboardEvent) {
@@ -34,12 +28,10 @@ export function useModal(props: ModalProps, emit: EmitEventFn): UseModal {
     }
   });
 
-  return { onCloseBtnClick, onOverlayClick };
+  return { execClose };
 }
 
-export function useModalRender(props: ModalProps): UseModalRender {
-  const showContainer = ref(false);
-  const showModal = ref(false);
+export function useModalRender(props: ModalProps): void {
   let lockScrollCb: () => void;
   const removeBodyAdditions = () => {
     lockScrollCb?.();
@@ -49,16 +41,8 @@ export function useModalRender(props: ModalProps): UseModalRender {
     (val) => {
       if (val) {
         props.lockScroll && (lockScrollCb = lockScroll());
-        showContainer.value = true;
-        nextTick(() => {
-          showModal.value = true;
-        });
       } else {
         removeBodyAdditions();
-        showModal.value = false;
-        setTimeout(() => {
-          showContainer.value = false;
-        }, 100);
       }
     },
     {
@@ -67,6 +51,4 @@ export function useModalRender(props: ModalProps): UseModalRender {
   );
 
   onUnmounted(removeBodyAdditions);
-
-  return { showContainer, showModal };
 }
