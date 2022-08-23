@@ -3,9 +3,19 @@ import { nextTick } from 'vue';
 import Tooltip from '../src/tooltip';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { transformOriginMap } from '../src/use-tooltip';
+import { BasePlacement } from '../src/tooltip-types';
 
 const ns = useNamespace('tooltip', true);
 const buttonNs = useNamespace('button', true);
+
+const buttonClass = buttonNs.b();
+const tootipClass = ns.b();
+const tooltipPositionClassMap: Record<BasePlacement, string> = {
+  top: ns.m('top'),
+  right: ns.m('right'),
+  bottom: ns.m('bottom'),
+  left: ns.m('left'),
+};
 
 describe('d-tooltip', () => {
   it('should render correctly', async () => {
@@ -14,14 +24,14 @@ describe('d-tooltip', () => {
         return () => <Tooltip content="tips text">{{ default: () => <d-button>top</d-button> }}</Tooltip>;
       },
     });
-    const btn = wrapper.find(buttonNs.b());
+    const btn = wrapper.find(buttonClass);
     expect(btn.exists()).toBeTruthy();
 
     await btn.trigger('mouseenter');
     await new Promise((resolve) => {
       setTimeout(resolve, 150);
     });
-    const tooltipContent = document.querySelector(ns.b());
+    const tooltipContent = document.querySelector(tootipClass);
     expect(tooltipContent).toBeTruthy();
     expect(tooltipContent?.innerHTML).toContain('tips text');
     wrapper.unmount();
@@ -37,19 +47,19 @@ describe('d-tooltip', () => {
         );
       },
     });
-    const btn = wrapper.find(buttonNs.b());
+    const btn = wrapper.find(buttonClass);
     await btn.trigger('mouseenter');
     await new Promise((resolve) => {
       setTimeout(resolve, 1000);
     });
-    const tooltipContent = document.querySelector(ns.b());
+    const tooltipContent = document.querySelector(tootipClass);
     expect(tooltipContent).toBeTruthy();
 
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
       setTimeout(resolve, 1000);
     });
-    expect(document.querySelector(ns.b())).toBeFalsy();
+    expect(document.querySelector(tootipClass)).toBeFalsy();
     wrapper.unmount();
   });
 
@@ -67,12 +77,12 @@ describe('d-tooltip', () => {
       }
     );
 
-    const btn = wrapper.find(buttonNs.b());
+    const btn = wrapper.find(buttonClass);
     await btn.trigger('mouseenter');
     await new Promise((resolve) => {
       setTimeout(resolve, 150);
     });
-    const tooltipContent = document.querySelector(ns.b());
+    const tooltipContent = document.querySelector(tootipClass);
     expect(tooltipContent).toBeFalsy();
 
     await wrapper.setProps({
@@ -82,7 +92,7 @@ describe('d-tooltip', () => {
     await new Promise((resolve) => {
       setTimeout(resolve, 150);
     });
-    expect(document.querySelector(ns.b())).toBeTruthy();
+    expect(document.querySelector(tootipClass)).toBeTruthy();
 
     wrapper.unmount();
   });
@@ -101,12 +111,12 @@ describe('d-tooltip', () => {
       }
     );
 
-    const btn = wrapper.find(buttonNs.b());
+    const btn = wrapper.find(buttonClass);
     await btn.trigger('mouseenter');
     await new Promise((resolve) => {
       setTimeout(resolve, 150);
     });
-    const tooltipContent = document.querySelector(ns.b());
+    const tooltipContent = document.querySelector(tootipClass);
     expect(tooltipContent).toBeTruthy();
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
@@ -123,7 +133,7 @@ describe('d-tooltip', () => {
     await new Promise((resolve) => {
       setTimeout(resolve, 1000);
     });
-    expect(document.querySelector(ns.b())).toBeFalsy();
+    expect(document.querySelector(tootipClass)).toBeFalsy();
 
     wrapper.unmount();
   });
@@ -142,19 +152,19 @@ describe('d-tooltip', () => {
       }
     );
 
-    const btn = wrapper.find(buttonNs.b());
+    const btn = wrapper.find(buttonClass);
     await btn.trigger('mouseenter');
     await new Promise((resolve) => {
       setTimeout(resolve, 150);
     });
-    const tooltipContent = document.querySelector(ns.b());
+    const tooltipContent = document.querySelector(tootipClass);
     expect(tooltipContent).toBeTruthy();
     const evt = document.createEvent('MouseEvents');
     evt.initMouseEvent('mouseenter', true, true);
-    const tooltip = document.querySelector(ns.b()) as HTMLElement;
+    const tooltip = document.querySelector(tootipClass) as HTMLElement;
     tooltip.dispatchEvent(evt);
     await nextTick();
-    expect(document.querySelector(ns.b())).toBeTruthy();
+    expect(document.querySelector(tootipClass)).toBeTruthy();
 
     await wrapper.setProps({
       enterable: false,
@@ -166,7 +176,7 @@ describe('d-tooltip', () => {
     expect(tooltipContent).toBeTruthy();
     tooltip.dispatchEvent(evt);
     await nextTick();
-    expect(document.querySelector(ns.b())).toBeFalsy();
+    expect(document.querySelector(tootipClass)).toBeFalsy();
 
     wrapper.unmount();
   });
@@ -177,16 +187,17 @@ describe('d-tooltip', () => {
         return () => <Tooltip content="tips text">{{ default: () => <d-button>top</d-button> }}</Tooltip>;
       },
     });
-    const btn = wrapper.find(buttonNs.b());
+    const btn = wrapper.find(buttonClass);
     expect(btn.exists()).toBeTruthy();
 
     await btn.trigger('mouseenter');
     await new Promise((resolve) => {
       setTimeout(resolve, 150);
     });
-    let tooltipContent: HTMLElement | null = document.querySelector(ns.b());
+    let tooltipContent: HTMLElement | null = document.querySelector(tootipClass);
     expect(tooltipContent).toBeTruthy();
     // 默认为 top
+    expect(tooltipContent?.classList.contains(tooltipPositionClassMap['top']));
     expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['top']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
@@ -200,8 +211,9 @@ describe('d-tooltip', () => {
     await new Promise((resolve) => {
       setTimeout(resolve, 150);
     });
-    tooltipContent = document.querySelector(ns.b());
+    tooltipContent = document.querySelector(tootipClass);
     expect(tooltipContent).toBeTruthy();
+    expect(tooltipContent?.classList.contains(tooltipPositionClassMap['top']));
     expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['top']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
@@ -215,8 +227,9 @@ describe('d-tooltip', () => {
     await new Promise((resolve) => {
       setTimeout(resolve, 150);
     });
-    tooltipContent = document.querySelector(ns.b());
+    tooltipContent = document.querySelector(tootipClass);
     expect(tooltipContent).toBeTruthy();
+    expect(tooltipContent?.classList.contains(tooltipPositionClassMap['right']));
     expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['right']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
@@ -230,8 +243,9 @@ describe('d-tooltip', () => {
     await new Promise((resolve) => {
       setTimeout(resolve, 150);
     });
-    tooltipContent = document.querySelector(ns.b());
+    tooltipContent = document.querySelector(tootipClass);
     expect(tooltipContent).toBeTruthy();
+    expect(tooltipContent?.classList.contains(tooltipPositionClassMap['bottom']));
     expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['bottom']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
@@ -245,8 +259,9 @@ describe('d-tooltip', () => {
     await new Promise((resolve) => {
       setTimeout(resolve, 150);
     });
-    tooltipContent = document.querySelector(ns.b());
+    tooltipContent = document.querySelector(tootipClass);
     expect(tooltipContent).toBeTruthy();
+    expect(tooltipContent?.classList.contains(tooltipPositionClassMap['left']));
     expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['left']);
 
     wrapper.unmount();
