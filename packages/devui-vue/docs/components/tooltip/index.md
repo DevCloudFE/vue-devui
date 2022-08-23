@@ -54,8 +54,8 @@ export default defineComponent({
 
 <style>
 .demo-btn-group > * {
-  margin-right: 4px;
-  margin-bottom: 10px;
+  margin-right: 8px;
+  margin-bottom: 12px;
 }
 </style>
 ```

@@ -276,6 +276,7 @@ export default function useSelect(
       props.filter(query);
     } else {
       queryChange(query);
+      dropdownRef.value?.updatePosition();
     }
   };
 
@@ -334,6 +335,16 @@ export default function useSelect(
     () => {
       formItemContext?.validate('change').catch((err) => console.warn(err));
       updateInjectOptionsStatus();
+    },
+    { deep: true }
+  );
+
+  watch(
+    injectOptions,
+    () => {
+      if (isOpen.value) {
+        dropdownRef.value?.updatePosition();
+      }
     },
     { deep: true }
   );

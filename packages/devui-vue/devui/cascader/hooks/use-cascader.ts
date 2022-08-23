@@ -175,6 +175,16 @@ export const useCascader = (props: CascaderProps, ctx: SetupContext): UseCascade
     },
     { immediate: true, deep: true }
   );
+
+  watch(
+    () => props.options,
+    () => {
+      const len = cascaderOptions.length;
+      cascaderOptions.splice(0, len, ...cloneDeep([props.options]));
+    },
+    { deep: true }
+  );
+
   const onFocus = (e: FocusEvent) => {
     ctx.emit('focus', e);
   };

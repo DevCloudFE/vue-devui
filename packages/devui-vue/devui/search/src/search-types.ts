@@ -6,7 +6,7 @@ export type IconPosition = 'right' | 'left';
 export const searchProps = {
   size: {
     type: String as PropType<Size>,
-    default: '',
+    default: 'md',
   },
   placeholder: {
     type: String,
