@@ -124,7 +124,7 @@ importers:
       '@vuedx/typecheck': ^0.4.1
       '@vuedx/typescript-plugin-vue': ^0.4.1
       '@vueuse/core': 8.9.4
-      async-validator: ^4.0.2
+      async-validator: ^4.0.7
       babel-jest: ^27.0.2
       chalk: ^4.1.2
       commander: ^8.1.0

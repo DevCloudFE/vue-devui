@@ -443,7 +443,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form ref="formRef" layout="vertical" :data="formData" :rules="rules" show-feedback message-type="text">
+  <d-form ref="formRef" layout="vertical" :data="formData" :rules="rules" :pop-position="['right']">
     <d-form-item
       field="username"
       :rules="[{ required: true, message: '用户名不能为空', trigger: 'blur' }]"
