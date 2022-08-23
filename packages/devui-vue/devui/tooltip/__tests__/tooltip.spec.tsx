@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 import Tooltip from '../src/tooltip';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import { TransformOriginMap } from '../src/use-tooltip';
+import { transformOriginMap } from '../src/use-tooltip';
 
 const ns = useNamespace('tooltip', true);
 const buttonNs = useNamespace('button', true);
@@ -187,7 +187,7 @@ describe('d-tooltip', () => {
     let tooltipContent: HTMLElement | null = document.querySelector(ns.b());
     expect(tooltipContent).toBeTruthy();
     // 默认为 top
-    expect(tooltipContent?.style.transformOrigin).toBe(TransformOriginMap['top']);
+    expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['top']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
       setTimeout(resolve, 100);
@@ -202,7 +202,7 @@ describe('d-tooltip', () => {
     });
     tooltipContent = document.querySelector(ns.b());
     expect(tooltipContent).toBeTruthy();
-    expect(tooltipContent?.style.transformOrigin).toBe(TransformOriginMap['top']);
+    expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['top']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
       setTimeout(resolve, 100);
@@ -217,7 +217,7 @@ describe('d-tooltip', () => {
     });
     tooltipContent = document.querySelector(ns.b());
     expect(tooltipContent).toBeTruthy();
-    expect(tooltipContent?.style.transformOrigin).toBe(TransformOriginMap['right']);
+    expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['right']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
       setTimeout(resolve, 100);
@@ -232,7 +232,7 @@ describe('d-tooltip', () => {
     });
     tooltipContent = document.querySelector(ns.b());
     expect(tooltipContent).toBeTruthy();
-    expect(tooltipContent?.style.transformOrigin).toBe(TransformOriginMap['bottom']);
+    expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['bottom']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
       setTimeout(resolve, 100);
@@ -247,7 +247,7 @@ describe('d-tooltip', () => {
     });
     tooltipContent = document.querySelector(ns.b());
     expect(tooltipContent).toBeTruthy();
-    expect(tooltipContent?.style.transformOrigin).toBe(TransformOriginMap['left']);
+    expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['left']);
 
     wrapper.unmount();
   });
