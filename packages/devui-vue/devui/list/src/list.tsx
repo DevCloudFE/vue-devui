@@ -1,35 +1,28 @@
-import { computed, CSSProperties, defineComponent, provide, ref, watch } from 'vue';
+import { computed, CSSProperties, defineComponent, EmitsOptions, provide, Ref, ref, SetupContext, watch } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './list.scss';
 import { listProps } from './list-types';
 import { listKey } from './listKey';
-import { cloneDeep, throttle } from 'lodash-es';
+import { cloneDeep } from 'lodash-es';
 import { PaginationProps } from '../../pagination';
+import { useList } from './useList';
 
 export default defineComponent({
   name: 'DList',
   props: listProps,
   emits: ['scroll', 'reach-bottom', 'page-index-change', 'page-size-change'],
-  setup(props, { slots, emit }) {
+  setup(props, ctx) {
+    const { slots } = ctx;
     const ns = useNamespace('list');
-    const sizeStyle = computed<CSSProperties>(() => {
-      if (props.size === 'sm') {
-        return {
-          padding: '8px 16px',
-        };
-      } else if (props.size === 'md') {
-        return {
-          padding: '12px 24px',
-        };
-      } else if (props.size === 'lg') {
-        return {
-          padding: '16px 24px',
-        };
-      }
-      return {};
-    });
+
     const loading = computed(() => props.loading);
     const list = computed(() => cloneDeep(props.data));
+    const pagination = ref<PaginationProps>();
+    const { sizeStyle, handleScroll, sizeChange, currentChange } = useList(
+      props,
+      ctx as SetupContext<EmitsOptions>,
+      pagination as Ref<PaginationProps>
+    );
     provide(listKey, {
       data: computed(() => props.data),
       split: computed(() => props.split),
@@ -37,30 +30,6 @@ export default defineComponent({
       layout: computed(() => props.layout),
       sizeStyle: sizeStyle,
     });
-    const handleScroll = throttle((e: UIEvent) => {
-      const scrollTop = (e.target as HTMLElement)?.scrollTop;
-      const scrollHeight = (e.target as HTMLElement)?.scrollHeight;
-      const clientHeight = (e.target as HTMLElement)?.clientHeight;
-      const currentHeight = scrollTop + clientHeight + Number(props.distance);
-      emit('scroll', scrollTop);
-      if (currentHeight >= scrollHeight) {
-        emit('reach-bottom', e);
-        if (props.loadMoreFn) {
-          props.loadMoreFn();
-        }
-      }
-    }, 300);
-
-    const pagination = ref<PaginationProps>();
-
-    const currentChange = (val: number) => {
-      ((pagination.value as PaginationProps).pageIndex as number) = val;
-      emit('page-index-change', val);
-    };
-    const sizeChange = (val: number) => {
-      ((pagination.value as PaginationProps).pageSize as number) = val;
-      emit('page-size-change', val);
-    };
 
     watch(
       () => props.pagination,
