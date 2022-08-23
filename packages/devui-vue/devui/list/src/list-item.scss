@@ -1,26 +1,51 @@
 @import '../../styles-var/devui-var.scss';
 
 .#{$devui-prefix}-list-item {
+  color: #000000d9;
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 36px;
-  line-height: 36px;
-  padding: 0 8px;
-  color: $devui-text;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition:
-    color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
-    background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
+  justify-content: space-between;
+  position: relative;
 
-  &:hover {
-    color: $devui-list-item-hover-text;
-    background-color: $devui-list-item-hover-bg;
+  &--split {
+    border-bottom: 1px solid #f0f0f0;
+
+    &:last-child {
+      border-bottom: none;
+    }
   }
 
-  &:active {
-    color: $devui-list-item-active-text;
-    background-color: $devui-list-item-active-bg;
+  &__wrap {
+    display: flex;
+    align-items: center;
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+
+    &-item {
+      position: relative;
+      display: inline-block;
+      padding: 0 8px;
+      color: rgba(0, 0, 0, 0.45);
+      font-size: 14px;
+      line-height: 1.5715;
+      text-align: center;
+
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+
+    &-split {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 1px;
+      height: 14px;
+      margin-top: -7px;
+      background-color: #f0f0f0;
+    }
   }
 }

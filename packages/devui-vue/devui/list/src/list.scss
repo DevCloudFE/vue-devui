@@ -1,10 +1,28 @@
 @import '../../styles-var/devui-var.scss';
 
 .#{$devui-prefix}-list {
-  padding-bottom: 4px;
-  border-radius: $devui-border-radius;
-  box-sizing: border-box;
-  background-clip: padding-box;
-  background-color: $devui-connected-overlay-bg;
-  outline: none;
+  &--bordered {
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+  }
+
+  &__header {
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  &__footer {
+    border-top: 1px solid #f0f0f0;
+  }
+
+  &__load {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
 }
