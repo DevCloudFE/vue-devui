@@ -35,7 +35,7 @@ export default defineComponent({
       (val) => {
         pagination.value = {...val as PaginationProps};
       },
-      { deep: true, immediate: true }
+      { immediate: true }
     );
 
     return () => {
