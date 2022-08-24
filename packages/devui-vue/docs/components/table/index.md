@@ -67,20 +67,20 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div class="table-btn-groups">
-    <div class="table-btn">
+  <div class="table-btn-groups mb-2">
+    <div class="table-btn mb-1">
       自动表格布局：
       <d-switch v-model="tableLayout" />
     </div>
-    <div class="table-btn">
+    <div class="table-btn mb-1">
       斑马纹：
       <d-switch v-model="striped" />
     </div>
-    <div class="table-btn">
+    <div class="table-btn mb-1">
       表头背景色：
       <d-switch v-model="headerBg" />
     </div>
-    <div class="table-btn">
+    <div class="table-btn mb-1">
       表格大小：
       <d-radio-group direction="row" v-model="size">
         <d-radio v-for="item in sizeList" :key="item.label" :value="item.value">
@@ -88,7 +88,7 @@ export default defineComponent({
         </d-radio>
       </d-radio-group>
     </div>
-    <div class="table-btn">
+    <div class="table-btn mb-1">
       表格边框：
       <d-radio-group direction="row" v-model="borderType">
         <d-radio v-for="item in borderTypeList" :key="item.label" :value="item.value">
@@ -96,7 +96,7 @@ export default defineComponent({
         </d-radio>
       </d-radio-group>
     </div>
-    <div class="table-btn">
+    <div class="table-btn mb-1">
       表头显隐：
       <d-switch v-model="showHeader" />
     </div>
@@ -221,10 +221,12 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-button @click="handleClick" class="mr-m mb-m">Get CheckedRows</d-button>
-    <d-button @click="insertRow" class="mr-m mb-m">Insert Row</d-button>
-    <d-button @click="deleteRow" class="mr-m mb-m">Delete Row</d-button>
-    <d-button @click="toggleRow" class="mr-m mb-m">Toggle Row</d-button>
+    <div class="mb-2">
+      <d-button @click="handleClick" class="mr-1">Get CheckedRows</d-button>
+      <d-button @click="insertRow" class="mr-1">Insert Row</d-button>
+      <d-button @click="deleteRow" class="mr-1">Delete Row</d-button>
+      <d-button @click="toggleRow" class="mr-1">Toggle Row</d-button>
+    </div>
     <d-table
       ref="tableRef"
       :data="data"

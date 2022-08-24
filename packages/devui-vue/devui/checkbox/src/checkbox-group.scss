@@ -1,7 +1,7 @@
 @import '../../styles-var/devui-var.scss';
 
-:host {
-  display: block;
+.#{$devui-prefix}-checkbox__group {
+  display: inline-block;
 }
 
 .#{$devui-prefix}-checkbox--list-inline {

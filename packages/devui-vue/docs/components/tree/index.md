@@ -773,10 +773,10 @@ export default defineComponent({
 
 ```vue
 <template>
-  <h6><p>Default</p></h6>
-  <d-tree :data="data" dragdrop ></d-tree>
-  <h6><p>Sortable</p></h6>
-  <d-tree :data="data" :dragdrop="{ dropPrev: true, dropNext: true, dropInner: true }"></d-tree>
+  <div class="mb-0">Default</div>
+  <d-tree class="mb-2" :data="data" dragdrop ></d-tree>
+  <div class="mb-0">Sortable</div>
+  <d-tree class="mb-2" :data="data" :dragdrop="{ dropPrev: true, dropNext: true, dropInner: true }"></d-tree>
 </template>
 
 <script>

@@ -12,12 +12,12 @@
 
 ```vue
 <template>
-  <d-steps v-model="activeStep">
+  <d-steps v-model="activeStep" class="mb-2">
     <d-step title="基本信息"></d-step>
     <d-step title="选择代码源"></d-step>
     <d-step title="选择构建模板"></d-step>
   </d-steps>
-  <d-button @click="nextStep" class="demo-steps-basic-next-step">下一步</d-button>
+  <d-button @click="nextStep">下一步</d-button>
 </template>
 
 <script>
@@ -210,12 +210,12 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-steps v-model="activeStepSimple" simple>
+  <d-steps v-model="activeStepSimple" simple class="mb-2" >
     <d-step title="基本信息"></d-step>
     <d-step title="选择代码源"></d-step>
     <d-step title="选择构建模板"></d-step>
   </d-steps>
-  <d-button @click="nextStepSimple" class="demo-steps-basic-next-step">下一步</d-button>
+  <d-button @click="nextStepSimple">下一步</d-button>
 </template>
 
 <script>

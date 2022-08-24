@@ -107,7 +107,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <p>默认搜索</p>
+  <div class="mb-1">默认搜索</div>
   <d-transfer
     :source-default-checked="sourceDefaultChecked"
     :target-default-checked="targetDefaultChecked"
@@ -116,9 +116,10 @@ export default defineComponent({
     :filter="filter"
     placeholder="请输入"
     v-model="checkedValues1"
+    class="mb-3"
   >
   </d-transfer>
-  <p>自定义搜索方法</p>
+  <div class="mb-1">自定义搜索方法</div>
   <d-transfer
     :source-default-checked="sourceDefaultChecked"
     :target-default-checked="targetDefaultChecked"
@@ -126,6 +127,7 @@ export default defineComponent({
     :data="source"
     :filter="filterFun"
     v-model="checkedValues2"
+    class="mb-3"
   >
   </d-transfer>
 </template>

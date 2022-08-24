@@ -2,9 +2,9 @@
 
 $border-change-time: 300ms;
 $border-change-function: cubic-bezier(0.645, 0.045, 0.355, 1);
-$select-input-height-sm: 24px;
-$select-input-height-md: 28px;
-$select-input-height-lg: 44px;
+$select-input-height-sm: $devui-size-sm;
+$select-input-height-md: $devui-size-md;
+$select-input-height-lg: $devui-size-lg;
 $select-arrow-width: 28px;
 $transition-base-time: 0.25s;
 $select-dropdown-max-height: 300px;
@@ -54,7 +54,7 @@ $select-item-min-height: 36px;
     .#{$devui-prefix}-tag {
       margin: 2px 0 2px 4px;
 
-      .devui-tag__item.devui-tag--sm {
+      .#{$devui-prefix}-tag__item.#{$devui-prefix}-tag--sm {
         height: 18px;
         line-height: 16px;
       }

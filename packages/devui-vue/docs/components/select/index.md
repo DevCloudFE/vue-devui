@@ -14,17 +14,14 @@
 ```vue
 <template>
   <div>
-    Small
-    <d-select v-model="value1" :options="options" size="sm"></d-select>
-    <br />
-    Middle
-    <d-select v-model="value2" :options="options"></d-select>
-    <br />
-    Large
-    <d-select v-model="value3" :options="options" size="lg"></d-select>
-    <br />
-    Underlined
-    <d-select v-model="value4" :options="options" size="lg" overview="underlined"></d-select>
+    <div class="mb-0">Small</div>
+    <d-select class="mb-2" v-model="value1" :options="options" size="sm"></d-select>
+    <div class="mb-0">Middle</div>
+    <d-select class="mb-2" v-model="value2" :options="options"></d-select>
+    <div class="mb-0">Large</div>
+    <d-select class="mb-2" v-model="value3" :options="options" size="lg"></d-select>
+    <div class="mb-0">Underlined</div>
+    <d-select class="mb-2" v-model="value4" :options="options" size="lg" overview="underlined"></d-select>
   </div>
 </template>
 
@@ -60,14 +57,12 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>基础多选</div>
-  <d-select v-model="value1" :options="options" :multiple="true" :multiple-limit="2" />
-  <br />
-  <div>collapse-tags</div>
-  <d-select v-model="value2" :options="options" :multiple="true" :collapse-tags="true" />
-  <br />
-  <div>collapse-tags-tooltip</div>
-  <d-select v-model="value3" :options="options" :multiple="true" :collapse-tags="true" :collapse-tags-tooltip="true" />
+  <div class="mb-0">基础多选</div>
+  <d-select class="mb-2" v-model="value1" :options="options" :multiple="true" :multiple-limit="2" />
+  <div class="mb-0">collapse-tags</div>
+  <d-select class="mb-2" v-model="value2" :options="options" :multiple="true" :collapse-tags="true" />
+  <div class="mb-0">collapse-tags-tooltip</div>
+  <d-select class="mb-2" v-model="value3" :options="options" :multiple="true" :collapse-tags="true" :collapse-tags-tooltip="true" />
 </template>
 
 <script>
@@ -101,11 +96,9 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-select v-model="value1" :options="options1" :disabled="true" />
-  <br />
-  <d-select v-model="value2" :options="options2" option-disabled-key="disabled" />
-  <br />
-  <d-select v-model="value3" :options="options3" :multiple="true" option-disabled-key="notAllow" />
+  <d-select class="mb-2" v-model="value1" :options="options1" :disabled="true" />
+  <d-select class="mb-2" v-model="value2" :options="options2" option-disabled-key="disabled" />
+  <d-select class="mb-2" v-model="value3" :options="options3" :multiple="true" option-disabled-key="notAllow" />
 </template>
 
 <script>
@@ -171,8 +164,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-select v-model="value1" :options="options" :allow-clear="true" />
-  <br />
+  <d-select class="mb-2" v-model="value1" :options="options" :allow-clear="true" />
   <d-select v-model="value2" :options="options" :multiple="true" :allow-clear="true" />
 </template>
 
@@ -206,7 +198,7 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-button @click.stop="toggleChange" @pointerup.stop="() => {}" style="margin-bottom: 10px">展开 / 隐藏</d-button>
+    <d-button @click.stop="toggleChange" @pointerup.stop="() => {}"  class="mb-2">展开 / 隐藏</d-button>
     <d-select ref="demoSelect" v-model="toggleValue" :options="options"></d-select>
   </div>
 </template>
@@ -245,13 +237,12 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>d-option</div>
-  <d-select v-model="value1" :allow-clear="true">
+  <div class="mb-0">d-option</div>
+  <d-select class="mb-2" v-model="value1" :allow-clear="true">
     <d-option v-for="(item, index) in options.data" :key="index" :value="item.value" :name="item.name"></d-option>
   </d-select>
-  <br />
-  <div>d-option自定义内容及样式</div>
-  <d-select v-model="value2" :allow-clear="true">
+  <div class="mb-0">d-option自定义内容及样式</div>
+  <d-select class="mb-2" v-model="value2" :allow-clear="true">
     <d-option v-for="(item, index) in options1.data" :key="index" :value="item">
       <div class="clear-float">
         <span style="float: left;">{{ item }}</span>
@@ -376,13 +367,12 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div>默认筛选</div>
-  <d-select v-model="value1" :allow-clear="true" filter>
+  <div class="mb-0">默认筛选</div>
+  <d-select class="mb-2" v-model="value1" :allow-clear="true" filter>
     <d-option v-for="(item, index) in options.data" :key="index" :value="item.value" :name="item.name"></d-option>
   </d-select>
-  <br />
-  <div>远程搜索</div>
-  <d-select v-model="value2" :allow-clear="true" :filter="filterFunc" remote placeholder="请输入搜索关键字" :loading="loading">
+  <div class="mb-0">远程搜索</div>
+  <d-select class="mb-2" v-model="value2" :allow-clear="true" :filter="filterFunc" remote placeholder="请输入搜索关键字" :loading="loading">
     <d-option v-for="(item, index) in options1.data" :key="index" :value="item.value" :name="item.name"></d-option>
   </d-select>
 </template>

@@ -12,7 +12,7 @@
 
 ```vue
 <template>
-  <d-radio v-for="item in baseList" v-model="baseChoose" :key="item" :value="item" :style="{ marginBottom: '20px' }">
+  <d-radio v-for="item in baseList" v-model="baseChoose" :key="item" :value="item" class="mb-2">
     The Radio value is: {{ item }}
   </d-radio>
 </template>
@@ -50,7 +50,7 @@ export default defineComponent({
     :key="item"
     :value="item"
     :beforeChange="filterBeforeChange"
-    :style="{ marginBottom: '20px' }"
+    class="mb-2"
     @change="filterValChange"
   >
     The Radio value is: {{ item }}
@@ -135,7 +135,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-radio v-for="item in disabledList" v-model="disabledChoose" :key="item" :value="item" :style="{ marginBottom: '20px' }" disabled>
+  <d-radio v-for="item in disabledList" v-model="disabledChoose" :key="item" :value="item" class="mb-2" disabled>
     The Radio value is: {{ item }}
   </d-radio>
 </template>

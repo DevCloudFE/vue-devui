@@ -14,13 +14,13 @@
 <template>
   <div>
     Small
-    <d-search size="sm" auto-focus style="width: 200px" @search="onSearch"></d-search>
+    <d-search class="mt-0 mb-2" size="sm" auto-focus style="width: 200px" @search="onSearch"></d-search>
     Middle
-    <d-search style="width: 200px" is-keyup-search :delay="1000" @search="onSearch"></d-search>
+    <d-search class="mt-0 mb-2" style="width: 200px" is-keyup-search :delay="1000" @search="onSearch"></d-search>
     Large
-    <d-search size="lg" style="width: 200px" @search="onSearch"></d-search>
+    <d-search class="mt-0 mb-2" size="lg" style="width: 200px" @search="onSearch"></d-search>
     Disabled
-    <d-search disabled style="width: 200px" @search="onSearch"></d-search>
+    <d-search class="mt-0 mb-2" disabled style="width: 200px" @search="onSearch"></d-search>
   </div>
 </template>
 <script>
