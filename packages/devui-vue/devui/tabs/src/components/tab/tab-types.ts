@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType } from 'vue';
+import { ExtractPropTypes, PropType, Slots } from 'vue';
 
 export const tabProps = {
   title: {
@@ -20,3 +20,9 @@ export const tabProps = {
 } as const;
 
 export type TabProps = ExtractPropTypes<typeof tabProps>;
+
+export interface TabContext {
+  uid: number | undefined;
+  slots: Slots;
+  props: TabProps;
+}

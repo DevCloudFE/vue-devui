@@ -1,4 +1,4 @@
-import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers } from 'vue';
 import type { SetupContext } from 'vue';
 import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types';
 import usePickerPro from './use-picker-pro';
@@ -21,7 +21,6 @@ export default defineComponent({
 
     const ns = useNamespace('date-picker-pro');
     const {
-      containerRef,
       originRef,
       inputRef,
       overlayRef,
@@ -46,7 +45,7 @@ export default defineComponent({
         footer: ctx.slots?.footer && (() => renderSlot(useSlots(), 'footer')),
       };
       return (
-        <div class={ns.b()} ref={containerRef}>
+        <div class={ns.b()}>
           <div
             class={ns.e('single-picker')}
             ref={originRef}
@@ -56,7 +55,7 @@ export default defineComponent({
               ref={inputRef}
               modelValue={displayDateValue.value}
               placeholder={placeholder.value || t('placeholder')}
-              onFocus={onFocus}
+              onFocus={withModifiers(onFocus, ['stop'])}
               size={pickerSize.value}
               disabled={pickerDisabled.value}
               error={isValidateError.value}
@@ -74,18 +73,26 @@ export default defineComponent({
               }}
             />
           </div>
-          <Transition name="fade">
-            <FlexibleOverlay v-model={isPanelShow.value} ref={overlayRef} origin={originRef.value} align="start" position={position.value}>
-              <DatePickerProPanel
-                {...props}
-                dateValue={dateValue.value}
-                visible={isPanelShow.value}
-                format={format.value}
-                onSelectedDate={onSelectedDate}
-                v-slots={vSlots}
-              />
-            </FlexibleOverlay>
-          </Transition>
+          <Teleport to="body">
+            <Transition name="fade">
+              <FlexibleOverlay
+                v-model={isPanelShow.value}
+                ref={overlayRef}
+                origin={originRef.value}
+                align="start"
+                position={position.value}
+                style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
+                <DatePickerProPanel
+                  {...props}
+                  dateValue={dateValue.value}
+                  visible={isPanelShow.value}
+                  format={format.value}
+                  onSelectedDate={onSelectedDate}
+                  v-slots={vSlots}
+                />
+              </FlexibleOverlay>
+            </Transition>
+          </Teleport>
         </div>
       );
     };

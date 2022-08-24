@@ -1,13 +1,13 @@
 import { mount } from '@vue/test-utils';
 import { ref, Ref, nextTick, h, shallowReactive } from 'vue';
-import { LoadingService, Loading } from '../index';
+import { LoadingService, LoadingDirective } from '../index';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const ns = useNamespace('loading', true);
 // 全局属性
 const globalOption = {
   directives: {
-    dLoading: Loading,
+    Loading: LoadingDirective,
   },
 };
 
@@ -15,7 +15,7 @@ describe('Loading as directive', () => {
   it('loading init render', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading="true"></div>`,
+        template: `<div v-loading="true"></div>`,
       },
       {
         global: globalOption,
@@ -32,7 +32,7 @@ describe('Loading as directive', () => {
   it('loading test mask', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading="true" :backdrop="false"></div>`,
+        template: `<div v-loading="true" :backdrop="false"></div>`,
       },
       {
         global: globalOption,
@@ -46,7 +46,7 @@ describe('Loading as directive', () => {
   it('loading test positionType', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading="true" id="testLoading" positionType="absolute"></div>`,
+        template: `<div v-loading="true" id="testLoading" positionType="absolute"></div>`,
       },
       {
         global: globalOption,
@@ -64,7 +64,7 @@ describe('Loading as directive', () => {
   it('loading test loadingTemplateRef', async () => {
     const wrapper = mount(
       {
-        template: `<div v-dLoading="true" id="testLoading" :loadingTemplateRef="ele"></div>`,
+        template: `<div v-loading="true" id="testLoading" :loadingTemplateRef="ele"></div>`,
         data() {
           return {
             ele: h(
@@ -97,7 +97,7 @@ describe('Loading as directive', () => {
         template: `
           <div>
             <button id="testbtn" @click="click"></button>
-            <div v-dLoading="isShow"></div>
+            <div v-loading="isShow"></div>
           </div>
         `,
         setup() {
@@ -135,7 +135,7 @@ describe('Loading as directive', () => {
         template: `
           <div>
             <button id="testbtn" @click="click"></button>
-            <div v-dLoading="loading" id="testLoading"></div>
+            <div v-loading="loading" id="testLoading"></div>
           </div>
         `,
         setup() {
@@ -175,7 +175,7 @@ describe('Loading as directive', () => {
         template: `
           <div>
             <button id="testbtn" @click="fetchMutiplePromise"></button>
-            <div v-dLoading="promises.value" id="testLoading"></div>
+            <div v-loading="promises.value" id="testLoading"></div>
           </div>
         `,
         setup() {

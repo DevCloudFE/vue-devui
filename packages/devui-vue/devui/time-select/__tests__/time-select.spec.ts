@@ -41,10 +41,12 @@ describe('TimeSelect', () => {
     expect(dropdown.exists()).toBeFalsy();
     await input.trigger('click');
     await nextTick();
-    const listItems = wrapper.findAll(selectItemCls);
+    const listItems = document.querySelectorAll(selectItemCls);
     expect(listItems.length).toBe(23);
-    expect(listItems[0].classes()).toContain('active');
+    expect(listItems[0].classList).toContain('active');
     expect(input.element.value).toBe('01:00');
+
+    wrapper.unmount();
   });
 
   it('time-select size work', async () => {
@@ -68,26 +70,6 @@ describe('TimeSelect', () => {
 
     container = wrapper.find(baseClass);
     expect(container.classes()).toContain(selectLGCls);
-    wrapper.unmount();
-  });
-
-  it('time-select disabled work', async () => {
-    const wrapper = mount({
-      components: { DTimeSelect },
-      template: `<d-time-select v-model="modelValue" disabled></d-time-select>`,
-      setup() {
-        const modelValue = ref('00:30');
-        return {
-          modelValue,
-        };
-      },
-    });
-
-    const container = wrapper.find(baseClass);
-    expect(container.classes()).toContain(selectDisabledCls);
-
-    const input = wrapper.find(selectInputCls);
-    expect(input.attributes()).toHaveProperty('disabled');
     wrapper.unmount();
   });
 
@@ -159,11 +141,19 @@ describe('TimeSelect', () => {
     expect(onBlur).toBeCalledTimes(1);
 
     await input.trigger('click');
-    const listItems = wrapper.findAll(selectItemCls);
-    await listItems[2].trigger('click');
+    const listItems = document.querySelectorAll(selectItemCls);
+    await listItems[2].dispatchEvent(new Event('click'));
 
     expect(onChange).toBeCalled();
 
     wrapper.unmount();
   });
+
+  it.todo('props step work well.');
+
+  it.todo('props start/end work well.');
+
+  it.todo('props min-time/max-time work well.');
+
+  it.todo('props placeholder work well.');
 });

@@ -1,5 +1,5 @@
-import type { ComputedRef, ExtractPropTypes, PropType, Ref, Slot } from 'vue';
-import type { TabProps } from './components/tab/tab-types';
+import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
+import type { TabContext } from './components/tab/tab-types';
 
 export type Active = string | number | null;
 
@@ -7,21 +7,21 @@ export type ITabsType = 'tabs' | 'pills' | 'options' | 'wrapped' | 'slider';
 
 export type ITabPositionType = 'top' | 'right' | 'bottom' | 'left';
 
-export type TabsStateData = (
-  TabProps & {
-    tabId?: string;
-    tabsEle?: Ref<Document>;
-  });
+export type TabsStateData = TabContext & {
+  tabId?: string;
+  tabsEle?: Ref<Document>;
+};
 
 export interface TabsState {
-  data?: TabsStateData[];
+  data: Record<number, TabContext>;
   showContent: boolean;
   active: string | number;
-  slots: (Slot | undefined)[];
 }
 
 export interface TabsData {
   state: TabsState;
+  addTab(ctx: TabContext): void;
+  deleteTab(id: number | undefined): void;
 }
 
 export const tabsProps = {

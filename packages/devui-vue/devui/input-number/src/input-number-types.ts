@@ -24,13 +24,17 @@ export const inputNumberProps = {
   },
   size: {
     type: String as PropType<ISize>,
-    default: '',
+    default: 'md',
   },
   modelValue: {
     type: Number,
   },
   precision: {
     type: Number,
+  },
+  reg: {
+    type: [RegExp, String] as PropType<RegExp | string>,
+    default: '',
   },
 } as const;
 
@@ -55,7 +59,7 @@ export interface UseRender {
 }
 
 export interface UseEvent {
-  inputVal: ComputedRef<number | string>;
+  inputVal: ComputedRef<number | string | undefined>;
   minDisabled: ComputedRef<boolean>;
   maxDisabled: ComputedRef<boolean>;
   onAdd: () => void;

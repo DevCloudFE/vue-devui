@@ -95,6 +95,48 @@ export default defineComponent({
 
 :::
 
+### 信息提示
+
+:::demo 各种类型的信息提示框。
+
+```vue
+<template>
+  <d-button class="mr-1" @click="handleClick('success')">success</d-button>
+  <d-button class="mr-1" @click="handleClick('failed')">failed</d-button>
+  <d-button class="mr-1" @click="handleClick('warning')">warning</d-button>
+  <d-button class="mr-1" @click="handleClick('info')">info</d-button>
+  <d-modal v-model="visible" title="Start Snapshot Version" :type="type">
+    <div>name: {{ data.name }}</div>
+    <div>age: {{ data.age }}</div>
+    <div>address: {{ data.address }}</div>
+  </d-modal>
+</template>
+
+<script>
+import { defineComponent, ref, reactive } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const visible = ref(false);
+    const type = ref('');
+    const data = reactive({
+      name: 'Tom',
+      age: 20,
+      address: 'Chengdu',
+    });
+    const handleClick = (t: string) => {
+      visible.value = true;
+      type.value = t;
+    };
+
+    return { visible, data, handleClick, type };
+  },
+});
+</script>
+```
+
+:::
+
 ### 关闭前回调
 
 :::demo `before-close`在用户点击关闭按钮或者遮罩层时会被调用，可在完成某些异步操作后，通过`done`参数关闭。
@@ -148,17 +190,20 @@ export default defineComponent({
 
 ### Modal 参数
 
-| 参数名                 | 类型             | 默认值 | 说明                                       | 跳转 Demo                 |
-| :--------------------- | :--------------- | :----- | :----------------------------------------- | :------------------------ |
-| v-model                | `boolean`        | false  | 是否显示 Modal                             | [基础用法](#基础用法)     |
-| title                  | `string`         | -      | 可选，Modal 的标题                         | [基础用法](#基础用法)     |
-| lock-scroll            | `boolean`        | true   | 可选，是否将 body 滚动锁定                 |
-| close-on-click-overlay | `boolean`        | true   | 可选，点击空白处是否能关闭 Modal           |
-| before-close           | `(done) => void` | -      | 可选，关闭前的回调，调用 done 可关闭 Modal | [关闭前回调](#关闭前回调) |
-| escapable              | `boolean`        | true   | 可选，是否支持 esc 键关闭弹窗              |                           |
-| show-close             | `boolean`        | true   | 可选，是否展示关闭按钮                     |                           |
-| show-overlay           | `boolean`        | true   | 可选，是否展示遮罩层                       |                           |
-| append-to-body         | `boolean`        | true   | 可选，是否将 Modal 提升到 body 层          |                           |
+| 参数名                 | 类型                                 | 默认值 | 说明                                       | 跳转 Demo                 |
+| :--------------------- | :----------------------------------- | :----- | :----------------------------------------- | :------------------------ |
+| v-model                | `boolean`                            | false  | 是否显示 Modal                             | [基础用法](#基础用法)     |
+| title                  | `string`                             | -      | 可选，Modal 的标题                         | [基础用法](#基础用法)     |
+| lock-scroll            | `boolean`                            | true   | 可选，是否将 body 滚动锁定                 |
+| close-on-click-overlay | `boolean`                            | true   | 可选，点击空白处是否能关闭 Modal           |
+| before-close           | `(done) => void`                     | -      | 可选，关闭前的回调，调用 done 可关闭 Modal | [关闭前回调](#关闭前回调) |
+| escapable              | `boolean`                            | true   | 可选，是否支持 esc 键关闭弹窗              |                           |
+| show-close             | `boolean`                            | true   | 可选，是否展示关闭按钮                     |                           |
+| draggable              | `boolean`                            | true   | 可选，弹框是否可拖拽                       |
+| show-animation         | `boolean`                            | true   | 可选，是否显示动画                         |
+| show-overlay           | `boolean`                            | true   | 可选，是否展示遮罩层                       |                           |
+| append-to-body         | `boolean`                            | true   | 可选，是否将 Modal 提升到 body 层          |                           |
+| type                   | success \| failed \| warning \| info | -      | 可选，弹框信息提示                         |
 
 ### Modal 插槽
 

@@ -27,6 +27,7 @@ export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: S
     align,
     showOverflowTooltip,
     resizeable,
+    cellClass,
   } = props;
   const column: Partial<Column> = reactive({ id });
   column.type = type.value;
@@ -98,6 +99,14 @@ export function createColumn(id: string, props: ToRefs<TableColumnProps>, ctx: S
     align,
     (alignVal) => {
       column.align = alignVal;
+    },
+    { immediate: true }
+  );
+
+  watch(
+    cellClass,
+    (cellClassVal) => {
+      column.cellClass = cellClassVal;
     },
     { immediate: true }
   );

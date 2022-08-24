@@ -19,7 +19,7 @@ export function usePopover(
 ): { overlayStyles: ComputedRef<Record<string, number | string>> } {
   const { trigger, isOpen } = toRefs(props);
   const overlayStyles = computed(() => ({
-    zIndex: 1060,
+    zIndex: 'var(--devui-z-index-pop-up, 1060)',
     transformOrigin: TransformOriginMap[placement.value],
   }));
 

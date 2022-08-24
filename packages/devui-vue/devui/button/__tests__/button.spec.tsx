@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { Button } from '..';
+import type { IButtonVariant, IButtonColor } from '..';
 
 const ns = useNamespace('button', true);
 
@@ -10,6 +11,9 @@ const smClass = ns.m('sm');
 const roundClass = ns.m('round');
 const circleClass = ns.m('circle');
 const iconClass = '.icon';
+const genColorClass = (variant: IButtonVariant, color: IButtonColor) => {
+  return `${ns.m(variant)}--${color}`;
+};
 
 describe('d-button', () => {
   it('variant', () => {
@@ -18,10 +22,57 @@ describe('d-button', () => {
         return () => {
           return <Button variant="solid">确定</Button>;
         };
-      }
+      },
     });
 
     expect(wrapper.find(solidClass).exists()).toBeTruthy();
+  });
+
+  it('color', async () => {
+    // 不设置color和variant时，表现为 outline 下的 secondary
+    const wrapper = mount({
+      setup() {
+        return () => {
+          return <Button>确定</Button>;
+        };
+      },
+    });
+    expect(wrapper.find(genColorClass('outline', 'secondary')).exists()).toBeTruthy();
+
+    await wrapper.setProps({
+      color: 'primary',
+    });
+    expect(wrapper.find(genColorClass('outline', 'primary')).exists()).toBeTruthy();
+
+    await wrapper.setProps({
+      variant: 'outline',
+      color: 'danger',
+    });
+    expect(wrapper.find(genColorClass('outline', 'danger')).exists()).toBeTruthy();
+
+    await wrapper.setProps({
+      variant: 'solid',
+      color: 'secondary',
+    });
+    expect(wrapper.find(genColorClass('solid', 'secondary')).exists()).toBeTruthy();
+
+    await wrapper.setProps({
+      variant: 'text',
+      color: 'primary',
+    });
+    expect(wrapper.find(genColorClass('text', 'primary')).exists()).toBeTruthy();
+
+    await wrapper.setProps({
+      variant: 'solid',
+      color: 'secondary',
+    });
+    expect(wrapper.find(genColorClass('solid', 'secondary')).exists()).toBeTruthy();
+
+    await wrapper.setProps({
+      variant: 'text',
+      color: 'primary',
+    });
+    expect(wrapper.find(genColorClass('text', 'primary')).exists()).toBeTruthy();
   });
 
   it('size', () => {

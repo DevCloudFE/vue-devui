@@ -46,4 +46,6 @@ describe('d-slider', () => {
     expect(popoverContent.text()).toBe('5 apples');
     wrapper.unmount();
   });
+
+  it.todo('props step work well.');
 });

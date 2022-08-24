@@ -1,4 +1,4 @@
-import { defineComponent, provide, ref, Teleport, toRefs, Transition } from 'vue';
+import { computed, defineComponent, provide, ref, Teleport, toRefs, Transition } from 'vue';
 import { FlexibleOverlay } from '../../overlay';
 import { PopperTrigger } from '../../shared/components/popper-trigger';
 import { TooltipProps, tooltipProps } from './tooltip-types';
@@ -19,6 +19,9 @@ export default defineComponent({
       props
     );
     const ns = useNamespace('tooltip');
+    const className = computed(() => {
+      return [ns.b(), ns.m(placement.value)].join(' ');
+    });
     provide(POPPER_TRIGGER_TOKEN, origin);
 
     return () => (
@@ -29,7 +32,7 @@ export default defineComponent({
             <FlexibleOverlay
               v-model={visible.value}
               ref={tooltipRef}
-              class={ns.b()}
+              class={className.value}
               origin={origin.value}
               position={positionArr.value}
               offset={6}

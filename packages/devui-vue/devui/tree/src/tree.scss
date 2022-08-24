@@ -20,22 +20,71 @@ $keyframe-blue: #5e7ce0;
   white-space: nowrap;
   position: relative;
 
-  .#{$devui-prefix}-tree__drop {
-    &-draggable {
-      border-top: 1px solid transparent;
-      border-bottom: 1px solid transparent;
-    }
-
+  &--drop {
     &-inner {
-      color: $devui-brand;
+      .#{$devui-prefix}-tree__node {
+        &--drop-top {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background-color: $devui-brand;
+        }
+
+        &--drop-bottom {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background-color: $devui-brand;
+        }
+
+        &--drop-left {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          width: 2px;
+          background-color: $devui-brand;
+        }
+
+        &--drop-right {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          width: 2px;
+          background-color: $devui-brand;
+        }
+      }
     }
 
     &-prev {
-      border-top: 1px solid $devui-brand;
+      .#{$devui-prefix}-tree__node {
+        &--drop-top {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background-color: $devui-brand;
+        }
+      }
     }
 
-    &-next {
-      border-bottom: 1px solid $devui-brand;
+    &-next::before {
+      .#{$devui-prefix}-tree__node {
+        &--drop-bottom {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background-color: $devui-brand;
+        }
+      }
     }
   }
 
@@ -47,6 +96,7 @@ $keyframe-blue: #5e7ce0;
     width: 100%;
     border-radius: $devui-border-radius;
     padding-left: 6px;
+    cursor: pointer;
 
     &.active {
       background-color: $devui-list-item-selected-bg;

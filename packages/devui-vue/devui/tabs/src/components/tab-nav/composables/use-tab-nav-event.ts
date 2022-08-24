@@ -5,8 +5,8 @@ import type { TabsStateData } from '../../../tabs-types';
 export function useTabNavEvent(ctx: SetupContext): UseTabNavEvent {
   const onTabRemove = (item: TabsStateData, ev: MouseEvent) => {
     ev.stopPropagation();
-    ctx.emit('tab-remove', item, ev);
-    ctx.emit('tab-change', item.id, 'delete');
+    ctx.emit('tab-remove', item.props, ev);
+    ctx.emit('tab-change', item.props.id, 'delete');
   };
   const onTabAdd = () => {
     ctx.emit('tab-add');

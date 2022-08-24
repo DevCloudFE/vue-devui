@@ -1,11 +1,13 @@
+import { watch, Ref, ref, computed, unref } from 'vue';
+import type { SetupContext } from 'vue';
 import { isBoolean } from '../../../shared/utils';
-import { watch, Ref, ref, computed, unref, ComponentInternalInstance } from 'vue';
-import type { Column, SortMethod, SortDirection, LevelColumn } from '../components/column/column-types';
+import type { Column, LevelColumn } from '../components/column/column-types';
 import type { DefaultRow, ITable, RowKeyType } from '../table-types';
 import type { TableStore } from './store-types';
 import { useExpand } from './use-expand';
 import { useEditTableCell } from './use-edit-table-cell';
 import { getRowIdentity } from '../utils';
+import { useSort } from '../composables/use-sort';
 
 function replaceColumn(array: LevelColumn[], column: LevelColumn) {
   return array.map((item) => {
@@ -96,15 +98,7 @@ function doFlattenRows<T extends Record<string, unknown>>(
     if ((data as Record<string, unknown>).children) {
       rowLevelMap.value[getRowIdentity(data as Record<string, unknown>, rowKey)] = level;
       // eslint-disable-next-line prefer-spread
-      result.push.apply(
-        result,
-        doFlattenRows<T>(
-          data.children as T[],
-          level + 1,
-          rowKey,
-          rowLevelMap,
-          hiddenRowKeys
-        ));
+      result.push.apply(result, doFlattenRows<T>(data.children as T[], level + 1, rowKey, rowLevelMap, hiddenRowKeys));
     }
   });
   return result;
@@ -232,21 +226,6 @@ function createSelection<T extends Record<string, unknown>>(dataSource: Ref<T[]>
   };
 }
 
-function createSorter<T extends Record<string, unknown>>(dataSource: Ref<T[]>, _data: Ref<T[]>) {
-  const sortData = (direction: SortDirection, sortMethod: SortMethod<T>) => {
-    if (direction === 'ASC') {
-      _data.value = _data.value.sort((a, b) => (sortMethod ? (sortMethod(a, b) ? 1 : -1) : 0));
-    } else if (direction === 'DESC') {
-      _data.value = _data.value.sort((a, b) => (sortMethod ? (sortMethod(a, b) ? -1 : 1) : 0));
-    } else {
-      _data.value = [...dataSource.value];
-    }
-  };
-
-  const thList: ComponentInternalInstance[] = [];
-  return { sortData, thList };
-}
-
 function createFixedLogic(columns: Ref<Column[]>) {
   const isFixedLeft = computed(() => {
     return columns.value.reduce((prev, current) => prev || !!current.fixedLeft, false);
@@ -261,7 +240,11 @@ function createFixedLogic(columns: Ref<Column[]>) {
  * @param table 表对象
  * @returns TableStore
  */
-export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T[]>, table: ITable<DefaultRow>): TableStore<T> {
+export function createStore<T extends Record<string, unknown>>(
+  dataSource: Ref<T[]>,
+  table: ITable<DefaultRow>,
+  ctx: SetupContext
+): TableStore<T> {
   const _data: Ref<T[]> = ref([]);
   const { _columns, flatColumns, insertColumn, removeColumn, sortColumn, updateColumns } = createColumnGenerator();
   const { flatRows, hiddenRowKeys, rowLevelMap, updateRows, firstDefaultColumn, updateFirstDefaultColumn } = createRowGenerator<T>(
@@ -276,12 +259,16 @@ export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T
     flatRows
   );
 
-  const { sortData, thList } = createSorter<T>(dataSource, flatRows);
+  const { thList, collectTh, sortData } = useSort(dataSource, flatRows);
 
   const { isFixedLeft } = createFixedLogic(_columns);
   const { isRowExpanded, updateExpandRows, setExpandRows, toggleRowExpansion } = useExpand(_data, table);
 
   const { tableCellModeMap, setCellMode, resetCellMode } = useEditTableCell();
+
+  const emitTableEvent = (eventName: string, ...params: unknown[]) => {
+    ctx.emit.apply(ctx, [eventName, ...params]);
+  };
 
   watch(
     dataSource,
@@ -293,7 +280,6 @@ export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T
   );
 
   return {
-    _table: table,
     states: {
       _data,
       flatRows,
@@ -315,6 +301,7 @@ export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T
     updateColumns,
     updateRows,
     getCheckedRows,
+    collectTh,
     sortData,
     isRowChecked,
     checkRow,
@@ -325,5 +312,6 @@ export function createStore<T extends Record<string, unknown>>(dataSource: Ref<T
     updateFirstDefaultColumn,
     setCellMode,
     resetCellMode,
+    emitTableEvent,
   };
 }

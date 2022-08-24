@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, ref, Teleport, Transition, watch, provide, withModifiers } from 'vue';
+import { defineComponent, toRefs, ref, Teleport, Transition, watch, provide } from 'vue';
 import { FlexibleOverlay } from '../../overlay';
 import { PopperTrigger } from '../../shared/components/popper-trigger';
 import { popoverProps, PopoverProps } from './popover-types';
@@ -48,8 +48,6 @@ export default defineComponent({
               style={overlayStyles.value}
               {...attrs}
               onPositionChange={handlePositionChange}
-              onClick={withModifiers(() => ({}), ['stop'])}
-              onPointerup={withModifiers(() => ({}), ['stop'])}
               onMouseenter={onMouseenter}
               onMouseleave={onMouseleave}>
               <PopoverIcon type={popType.value} />

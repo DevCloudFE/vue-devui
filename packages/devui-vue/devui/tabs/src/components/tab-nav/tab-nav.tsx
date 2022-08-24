@@ -1,4 +1,4 @@
-import { defineComponent, inject, onBeforeMount, onMounted, onUpdated, reactive, SetupContext, shallowRef, watch } from 'vue';
+import { computed, defineComponent, inject, onBeforeMount, onMounted, onUpdated, reactive, SetupContext, shallowRef, watch } from 'vue';
 import { TabsData, tabsProps, TabsProps, TabsStateData } from '../../tabs-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { useTabNavRender } from './composables/use-tab-nav-render';
@@ -16,8 +16,9 @@ export default defineComponent({
     const tabsEle = shallowRef<HTMLUListElement>();
     const data: OffSetData = reactive({ offsetLeft: 0, offsetWidth: 0, offsetTop: 0, offsetHeight: 0, id: null });
     const tabs = inject<TabsData>('tabs');
+    const tabsList = computed(() => Object.values(tabs?.state.data || {}));
     const { ulClasses, aClasses, customStyle, sliderAnimationStyle } = useTabNavRender(props, data);
-    const { update, beforeMount, mounted, activeClick, tabCanClose } = useTabNavFunction(props, tabs, data, ctx, tabsEle);
+    const { update, beforeMount, mounted, activeClick, tabCanClose } = useTabNavFunction(props, tabs, tabsList, data, ctx, tabsEle);
     const { onTabRemove, onTabAdd } = useTabNavEvent(ctx);
 
     onUpdated(() => update());
@@ -27,7 +28,7 @@ export default defineComponent({
     watch(
       () => props.modelValue,
       () => {
-        const tab = tabs?.state.data?.find((item) => item.id === props.modelValue);
+        const tab = tabsList.value.find((item) => item.props.id === props.modelValue);
         if (tab) {
           activeClick(tab);
         }
@@ -49,23 +50,23 @@ export default defineComponent({
       ) : null;
       return (
         <ul ref={tabsEle} role="tablist" class={ulClasses.value}>
-          {(tabs?.state.data || []).map((item, i) => {
+          {(tabsList.value || []).map((item) => {
             return (
               <li
                 role="presentation"
                 onClick={() => {
                   activeClick(item);
                 }}
-                class={(props.modelValue === (item.id || item.tabId) ? 'active' : '') + (item.disabled ? ' disabled' : '')}
-                id={item.id || item.tabId}>
+                class={(props.modelValue === item.props.id ? 'active' : '') + (item.props.disabled ? ' disabled' : '')}
+                id={item.props.id}>
                 <span class={ns.e('nav-content')}>
                   <a
                     role="tab"
-                    data-toggle={item.id}
-                    aria-expanded={props.modelValue === (item.id || item.tabId)}
+                    data-toggle={item.props.id}
+                    aria-expanded={props.modelValue === item.props.id}
                     class={aClasses.value}
                     style={customStyle}>
-                    {tabs?.state.slots[i] ? (tabs.state.slots[i]?.()) : <span>{item.title}</span>}
+                    {item.slots.title ? item.slots.title() : <span>{item.props.title}</span>}
                   </a>
                   {closeIconEl(item)}
                 </span>

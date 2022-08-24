@@ -33,12 +33,12 @@ jobs:
 
       - name: Install deps
         run: pnpm i
-    
+
       - name: Build site
-        run: pnpm build
+        run: pnpm scripts run build
 
       - name: ESLint
         run: pnpm cli --filter vue-devui -- code-check -t eslint
 
       - name: Unit test
-        run: pnpm test
+        run: pnpm scripts run tests.test
