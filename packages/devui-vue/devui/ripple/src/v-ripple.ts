@@ -10,12 +10,12 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   const rect = el.getBoundingClientRect();
   // Get all styles of the currently clicked element
   const computedStyles = window.getComputedStyle(el);
-  // Create a hole ripple element 覆盖一个容器在el上面
-  const rippleContainer = createContainer(computedStyles);
   // Get the current mouse click location
   // 利用勾股定理获取鼠标点击处到el四个角的直线距离， diameter 就是我们点击的位置距离整个el最远的点
   // const { diameter, x, y } = MULTIPLE_NUMBER * getDistanceToFurthestCorner(event, rect);
   const { diameter, x, y } = getDistanceToFurthestCorner(event, rect);
+  // Create a hole ripple element 覆盖一个容器在el上面
+  const rippleContainer = createContainer(computedStyles);
   const rippleEl = createRippleElement(x, y, diameter * MULTIPLE_NUMBER, options, rect);
   // 原始位置
   let originalPositionValue = '';
@@ -72,7 +72,7 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   }
   // Absolute positioning prevents size overflow and position absolute 修改子元素问题
   rippleContainer.appendChild(rippleEl);
-  el.appendChild(rippleContainer);
+  el.appendChild(rippleEl);
 
   document.addEventListener('pointerup', releaseRipple);
   document.addEventListener('pointercancel', releaseRipple);

@@ -17,7 +17,7 @@
   <d-row>
     <d-col :span="24">
       <div class="ripple-button">
-        <div class="ripple-html-element" v-ripple>HTML元素中使用v-ripple</div>
+        <div class="ripple-html-element" style="color: #409EFF" v-ripple>HTML元素中使用v-ripple</div>
       </div>
     </d-col>
   </d-row>

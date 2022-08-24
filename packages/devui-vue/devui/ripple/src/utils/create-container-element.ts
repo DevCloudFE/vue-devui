@@ -14,7 +14,6 @@ export const createContainer = ({
   `${borderTopLeftRadius} ${borderTopRightRadius} ${borderBottomRightRadius} ${borderBottomLeftRadius}`;
   rippleContainer.style.overflow = 'hidden';
   rippleContainer.style.pointerEvents = 'none';
-
   // 兼容 ie  苹果
   rippleContainer.style.webkitMaskImage = '-webkit-radial-gradient(white, black)';
 
