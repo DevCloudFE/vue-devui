@@ -60,6 +60,7 @@ describe('DPanel', () => {
     });
     expect(wrapper.find('.devui-panel .devui-panel-default').element.children[0].innerHTML).toBe('<!---->');
   });
+
   it('padding-dynamic', async () => {
     const wrapper = mount({
       components: {

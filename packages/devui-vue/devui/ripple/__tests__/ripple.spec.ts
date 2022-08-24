@@ -2,12 +2,14 @@ import { nextTick, createApp } from 'vue';
 import { mount } from '@vue/test-utils';
 import Ripple from '../index';
 import { DEFAULT_PLUGIN_OPTIONS } from '../src/options';
+
 // 全局属性
 const global = {
   directives: {
     ripple: Ripple
   }
 };
+
 describe('ripple', () => {
   it('ripple should render correctly', async () => {
     const wrapper = mount(
@@ -26,6 +28,7 @@ describe('ripple', () => {
 
     expect(wrapper.find('div').exists()).toBeTruthy();
   });
+
   it('test ripple plugin', () => {
     const app = createApp({}).use(Ripple);
     expect(app.directive('ripple', Ripple)).toBeTruthy();

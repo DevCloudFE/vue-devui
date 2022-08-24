@@ -44,6 +44,7 @@ export const useDropdownEvent = ({ id, isOpen, origin, dropdownRef, props, emit 
     setTimeout(() => {
       subscriptions.push(
         subscribeEvent(document, 'click', (e: Event) => {
+          e.stopPropagation();
           const dropdownValues = [...dropdownMap.values()];
           if (
             !isOpen.value ||
@@ -170,6 +171,7 @@ export function useOverlayProps(props: DropdownProps, currentPosition: Ref<strin
   const overlayShowValue = ref<boolean>(false);
   const styles = computed(() => ({
     transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+    zIndex: 'var(--devui-z-index-dropdown, 1052)',
   }));
   const classes = computed(() => ({
     'fade-in-bottom': showAnimation.value && isOpen.value && currentPosition.value === 'bottom',

@@ -1,4 +1,4 @@
-import { defineComponent, inject, onUnmounted } from 'vue';
+import { defineComponent, getCurrentInstance, inject, onMounted, onUnmounted, reactive } from 'vue';
 import { tabProps } from './tab-types';
 import type { TabsData } from '../../tabs-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
@@ -9,14 +9,20 @@ export default defineComponent({
   props: tabProps,
   setup(props, { slots }) {
     const tabs = inject<TabsData>('tabs');
-    tabs?.state.slots.push(slots.title);
-    tabs?.state.data?.push(props);
     const ns = useNamespace('tab');
+    const instance = getCurrentInstance();
+    const tabContext = reactive({
+      uid: instance?.uid,
+      slots,
+      props,
+    });
+
+    onMounted(() => {
+      tabs?.addTab(tabContext);
+    });
 
     onUnmounted(() => {
-      if (tabs) {
-        tabs.state.data = tabs.state.data?.filter((tab) => tab.id !== props.id);
-      }
+      tabs?.deleteTab(tabContext.uid);
     });
     return () => {
       const { id } = props;

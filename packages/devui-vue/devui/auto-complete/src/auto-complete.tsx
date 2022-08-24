@@ -113,7 +113,11 @@ export default defineComponent({
     const renderBasicDropdown = () => {
       return (
         <Transition name={showAnimation ? 'fade' : ''}>
-          <FlexibleOverlay origin={origin.value} position={position.value} v-model={visible.value}>
+          <FlexibleOverlay
+            origin={origin.value}
+            position={position.value}
+            v-model={visible.value}
+            style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
             <div
               class={ns.e('menu')}
               style={{

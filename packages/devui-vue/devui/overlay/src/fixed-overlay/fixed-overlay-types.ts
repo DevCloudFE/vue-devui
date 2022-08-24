@@ -13,6 +13,9 @@ export const fixedOverlayProps = {
     type: Boolean,
     default: true,
   },
+  'update:modelValue': {
+    type: Function
+  }
 } as const;
 
 export type FixedOverlayProps = ExtractPropTypes<typeof fixedOverlayProps>;

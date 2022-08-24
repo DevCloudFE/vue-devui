@@ -24,6 +24,7 @@ import useMobileTouchMove from './hooks/use-mobile-touch-move';
 import ResizeObserverContainer from './components/container';
 import ScrollBar from './components/scroll-bar';
 import { renderChildren } from './components/item';
+import { DEFAULT_ITEM_HEIGHT } from './const';
 
 export interface ListState {
   scrollTop: number;
@@ -36,8 +37,6 @@ const ScrollStyle: CSSProperties = {
 };
 
 type ItemKeyFunction = (_item: Record<string, never>) => string | number;
-
-const DEFAULT_HEIGHT = 20;
 
 export default defineComponent({
   name: 'DVirtualList',
@@ -170,7 +169,7 @@ export default defineComponent({
             cacheHeight = heights.get(key);
           }
           if (cacheHeight === undefined) {
-            cacheHeight = props.itemHeight || DEFAULT_HEIGHT;
+            cacheHeight = props.itemHeight || DEFAULT_ITEM_HEIGHT;
           }
           const currentItemBottom = itemTop + cacheHeight;
           if (startIndex === undefined && currentItemBottom >= scrollTop) {
@@ -327,7 +326,7 @@ export default defineComponent({
 
     ctx.expose({
       scrollTo(index: number) {
-        syncScrollTop(index * (props.itemHeight || DEFAULT_HEIGHT));
+        syncScrollTop(index * (props.itemHeight || DEFAULT_ITEM_HEIGHT));
       }
     });
 

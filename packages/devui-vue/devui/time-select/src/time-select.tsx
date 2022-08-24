@@ -16,22 +16,20 @@ export default defineComponent({
     const { options, changeData, select, clearData, focusFun, blurFun } = useTimeSelect(props, ctx);
     return () => {
       return (
-        <>
-          <Select
-            ref={select}
-            modelValue={props.modelValue}
-            options={options.value}
-            onValueChange={changeData}
-            placeholder={props.placeholder || t('placeholder')}
-            option-disabled-key="disabled"
-            disabled={props.disabled}
-            allow-clear={props.clearable}
-            size={props.size}
-            onClear={clearData}
-            onFocus={focusFun}
-            onBlur={blurFun}
-          />
-        </>
+        <Select
+          ref={select}
+          modelValue={props.modelValue}
+          options={options.value}
+          onValueChange={changeData}
+          placeholder={props.placeholder || t('placeholder')}
+          option-disabled-key="disabled"
+          disabled={props.disabled}
+          allow-clear={props.clearable}
+          size={props.size}
+          onClear={clearData}
+          onFocus={focusFun}
+          onBlur={blurFun}
+        />
       );
     };
   },

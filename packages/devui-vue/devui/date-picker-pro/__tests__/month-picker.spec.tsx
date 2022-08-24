@@ -50,28 +50,28 @@ describe('date-picker-pro year type test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(monthPanelClass);
-    expect(pickerPanel.exists()).toBeTruthy();
+    const pickerPanel = document.querySelector(monthPanelClass);
+    expect(pickerPanel).toBeTruthy();
 
-    const yearList = pickerPanel.find(yearListClass);
-    expect(yearList.exists()).toBeTruthy();
-    const yearListItems = yearList.findAll(yearItemClass);
+    const yearList = pickerPanel?.querySelector(yearListClass);
+    expect(yearList).toBeTruthy();
+    const yearListItems = yearList?.querySelectorAll(yearItemClass);
     // 虚拟滚动，左侧年份列表总共渲染13个item
-    expect(yearListItems.length).toBe(13);
-    const activeYearItems = pickerPanel.find(yearActiveClass);
-    expect(activeYearItems.exists()).toBeTruthy();
+    expect(yearListItems?.length).toBe(13);
+    const activeYearItems = pickerPanel?.querySelector(yearActiveClass);
+    expect(activeYearItems).toBeTruthy();
 
     const year = new Date().getFullYear();
     const month = new Date().getMonth();
-    const monthList = pickerPanel.find(monthListClass);
-    const monthListItems = monthList.findAll(monthItemClass);
+    const monthList = pickerPanel?.querySelector(monthListClass);
+    const monthListItems = monthList?.querySelectorAll(monthItemClass);
     // 虚拟滚动，中间月份列表总共渲染4个item
-    expect(monthListItems.length).toBe(4);
+    expect(monthListItems?.length).toBe(4);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
-    const months = monthListItems[1].findAll(monthsClass);
-    expect(months.length).toBe(12);
-    expect(months[month].classes().includes(noDotMonthThisMonthClass)).toBe(true);
-    await months[month].trigger('click');
+    const months = monthListItems?.[1].querySelectorAll(monthsClass);
+    expect(months?.length).toBe(12);
+    expect(months?.[month].classList).toContain(noDotMonthThisMonthClass);
+    await months?.[month].dispatchEvent(new Event('click'));
     expect(datePickerProValue.value?.getFullYear()).toBe(year);
     expect(datePickerProValue.value?.getMonth()).toBe(month);
     expect(input.element.value).toBe(`${year}-${month + 1 >= 10 ? month + 1 : '0' + (month + 1)}`);
@@ -94,13 +94,13 @@ describe('date-picker-pro year type test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(monthPanelClass);
-    const monthItems = pickerPanel.findAll(monthItemClass);
+    const pickerPanel = document.querySelector(monthPanelClass);
+    const monthItems = pickerPanel?.querySelectorAll(monthItemClass);
 
     const month = new Date().getMonth();
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
-    const monthItem = monthItems[1].findAll(monthsClass);
-    expect(monthItem[month].classes().includes(noDotMonthActiveMonthClass)).toBe(true);
+    const monthItem = monthItems?.[1].querySelectorAll(monthsClass);
+    expect(monthItem?.[month].classList).toContain(noDotMonthActiveMonthClass);
 
     wrapper.unmount();
   });
@@ -129,19 +129,19 @@ describe('date-picker-pro year type test', () => {
     await input.trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(monthPanelClass);
-    const yearItems = pickerPanel.findAll(yearItemClass);
-    expect(yearItems.length).toBe(2);
+    const pickerPanel = document.querySelector(monthPanelClass);
+    const yearItems = pickerPanel?.querySelectorAll(yearItemClass);
+    expect(yearItems?.length).toBe(2);
 
-    const monthItems = pickerPanel.findAll(monthItemClass);
-    expect(monthItems.length).toBe(2);
-    const months = monthItems[0].findAll(monthsClass);
-    expect(months[1].classes().includes(noDotMonthDisabledClass)).toBe(false);
-    expect(months[8].classes().includes(noDotMonthDisabledClass)).toBe(false);
-    expect(months[0].classes().includes(noDotMonthDisabledClass)).toBe(true);
-    expect(months[9].classes().includes(noDotMonthDisabledClass)).toBe(true);
+    const monthItems = pickerPanel?.querySelectorAll(monthItemClass);
+    expect(monthItems?.length).toBe(2);
+    const months = monthItems?.[0].querySelectorAll(monthsClass);
+    expect(months?.[1].classList).not.toContain(noDotMonthDisabledClass);
+    expect(months?.[8].classList).not.toContain(noDotMonthDisabledClass);
+    expect(months?.[0].classList).toContain(noDotMonthDisabledClass);
+    expect(months?.[9].classList).toContain(noDotMonthDisabledClass);
 
-    await months[0].trigger('click');
+    await months?.[0].dispatchEvent(new Event('click'));
     expect(input.element.value).toBe('');
 
     wrapper.unmount();
@@ -163,30 +163,30 @@ describe('date-picker-pro year type test', () => {
     await inputs[0].trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(monthPanelClass);
-    expect(pickerPanel.exists()).toBeTruthy();
+    const pickerPanel = document.querySelector(monthPanelClass);
+    expect(pickerPanel).toBeTruthy();
 
-    const yearList = pickerPanel.find(yearListClass);
-    expect(yearList.exists()).toBeTruthy();
+    const yearList = pickerPanel?.querySelector(yearListClass);
+    expect(yearList).toBeTruthy();
 
     // const year = new Date().getFullYear();
     const month = new Date().getMonth();
-    const monthList = pickerPanel.find(monthListClass);
-    expect(yearList.exists()).toBeTruthy();
-    const monthListItems = monthList.findAll(monthItemClass);
+    const monthList = pickerPanel?.querySelector(monthListClass);
+    expect(yearList).toBeTruthy();
+    const monthListItems = monthList?.querySelectorAll(monthItemClass);
     // 虚拟滚动，中间月份列表总共渲染4个item
-    expect(monthListItems.length).toBe(4);
+    expect(monthListItems?.length).toBe(4);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
-    const months = monthListItems[1].findAll(monthsClass);
-    expect(months.length).toBe(12);
-    expect(months[month].classes().includes(noDotMonthThisMonthClass)).toBe(true);
-    await months[month].trigger('click');
+    const months = monthListItems?.[1].querySelectorAll(monthsClass);
+    expect(months?.length).toBe(12);
+    expect(months?.[month].classList).toContain(noDotMonthThisMonthClass);
+    await months?.[month].dispatchEvent(new Event('click'));
 
     await inputs[1].trigger('focus');
     await nextTick();
     await nextTick();
-    const newMonths = monthListItems[2].findAll(monthsClass);
-    await newMonths[month].trigger('click');
+    const newMonths = monthListItems?.[2].querySelectorAll(monthsClass);
+    await newMonths?.[month].dispatchEvent(new Event('click'));
 
     // todo 选择第二个日期时，focusType判断仍然是start。 demo中是正确的，单测原因需进一步确定
     // expect(datePickerProValue.value[0]?.getFullYear()).toBe(year);
@@ -217,19 +217,19 @@ describe('date-picker-pro year type test', () => {
     await inputs[0].trigger('focus');
     await nextTick();
     await nextTick();
-    const pickerPanel = container.find(monthPanelClass);
-    const monthItems = pickerPanel.findAll(monthItemClass);
+    const pickerPanel = document.querySelector(monthPanelClass);
+    const monthItems = pickerPanel?.querySelectorAll(monthItemClass);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
-    const startMonths = monthItems[1].findAll(monthsClass);
-    const endMonths = monthItems[2].findAll(monthsClass);
+    const startMonths = monthItems?.[1].querySelectorAll(monthsClass);
+    const endMonths = monthItems?.[2].querySelectorAll(monthsClass);
 
     const year = new Date().getFullYear();
     const month = new Date().getMonth();
 
     expect(inputs[0].element.value).toBe(`${year}-${month + 1 >= 10 ? month + 1 : '0' + (month + 1)}`);
     expect(inputs[1].element.value).toBe(`${year + 1}-01`);
-    expect(startMonths[month].classes().includes(noDotMonthStartMonthClass)).toBe(true);
-    expect(endMonths[0].classes().includes(noDotMonthEndMonthClass)).toBe(true);
+    expect(startMonths?.[month].classList).toContain(noDotMonthStartMonthClass);
+    expect(endMonths?.[0].classList).toContain(noDotMonthEndMonthClass);
 
     wrapper.unmount();
   });

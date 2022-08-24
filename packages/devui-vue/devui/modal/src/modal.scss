@@ -1,40 +1,28 @@
 @import '../../styles-var/devui-var.scss';
 
-.#{$devui-prefix}-modal__container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: $devui-z-index-modal;
-  outline: 0;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
 .#{$devui-prefix}-modal {
-  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
   width: 300px;
-  margin: auto;
   border-radius: $devui-border-radius;
   border: none;
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(-50%, -50%);
   background-color: $devui-fullscreen-overlay-bg;
   background-clip: padding-box;
   outline: 0;
   box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
+  z-index: $devui-z-index-modal;
 
   .btn-close {
     position: absolute;
     right: 16px;
-    top: 16px;
+    top: 20px;
     width: 20px;
     height: 20px;
     line-height: 20px;
     text-align: center;
-    color: #000000;
     cursor: pointer;
     background: transparent;
     border: 0;
@@ -51,6 +39,27 @@
       top: 0;
     }
   }
+
+  .type-content {
+    display: flex;
+    align-items: center;
+
+    &-icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+      width: 24px;
+      height: 24px;
+      line-height: 16px;
+      text-align: center;
+    }
+
+    &-text {
+      font-weight: 700;
+      vertical-align: middle;
+      font-size: 18px;
+    }
+  }
 }
 
 .#{$devui-prefix}-modal-content {
@@ -61,12 +70,11 @@
 .#{$devui-prefix}-modal__header {
   width: 100%;
   height: 56px;
-  padding: 32px 32px 0;
+  padding: 20px 20px 0;
   font-size: $devui-font-size-card-title;
   font-weight: bold;
   box-sizing: border-box;
   border: none;
-  user-select: none;
 
   .header-alert-icon {
     display: inline-block;
@@ -78,7 +86,7 @@
 }
 
 .#{$devui-prefix}-modal__body {
-  padding: 20px 32px;
+  padding: 20px;
   font-size: $devui-font-size;
   color: $devui-text-weak;
   box-sizing: border-box;
@@ -98,16 +106,16 @@
 
 .#{$devui-prefix}-modal--wipe {
   &-enter-active {
-    transition: opacity 0.1s cubic-bezier(0.16, 0.75, 0.5, 1), transform 0.1s cubic-bezier(0, 0, 1, 1);
+    transition: opacity 0.1s cubic-bezier(0.16, 0.75, 0.5, 1), top 0.1s cubic-bezier(0, 0, 1, 1);
   }
 
   &-leave-active {
-    transition: opacity 0.1s cubic-bezier(0.5, 0, 0.84, 0.25), transform 0.1s cubic-bezier(0, 0, 1, 1);
+    transition: opacity 0.1s cubic-bezier(0.5, 0, 0.84, 0.25), top 0.1s cubic-bezier(0, 0, 1, 1);
   }
 
   &-enter-from,
   &-leave-to {
     opacity: 0.2;
-    transform: translateY(-24px);
+    top: calc(50% - 24px);
   }
 }

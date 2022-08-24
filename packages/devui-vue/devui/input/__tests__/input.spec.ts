@@ -168,9 +168,7 @@ describe('d-input', () => {
     // 调用DOM的focus和select并不会给节点的div加上devui-input--focus
   });
 
-  it('d-input validate-event work', async () => {
-    // TODO 需要结合form组件进行测试
-  });
+  it.todo('d-input validate-event work');
 
   it('d-input prefix/suffix props work', async () => {
     const wrapper = mount({

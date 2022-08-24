@@ -42,6 +42,10 @@ export default defineComponent({
                     row={row}
                     rowspan={rowspan}
                     colspan={colspan}
+                    class={{
+                      [ns.m('last-sticky-left')]: column.fixedLeft && !flatColumns.value[columnIndex + 1]?.fixedLeft,
+                      [ns.m('first-sticky-right')]: column.fixedRight && !flatColumns.value[columnIndex - 1]?.fixedRight,
+                    }}
                     onCellClick={() => onCellClick({ rowIndex, columnIndex, column, row })}
                   />
                 );
