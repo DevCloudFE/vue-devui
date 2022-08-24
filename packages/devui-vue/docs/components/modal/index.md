@@ -101,10 +101,10 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-button @click="handleClick('success')">success</d-button>
-  <d-button @click="handleClick('failed')">failed</d-button>
-  <d-button @click="handleClick('warning')">warning</d-button>
-  <d-button @click="handleClick('info')">info</d-button>
+  <d-button class="mr-1" @click="handleClick('success')">success</d-button>
+  <d-button class="mr-1" @click="handleClick('failed')">failed</d-button>
+  <d-button class="mr-1" @click="handleClick('warning')">warning</d-button>
+  <d-button class="mr-1" @click="handleClick('info')">info</d-button>
   <d-modal v-model="visible" title="Start Snapshot Version" :type="type">
     <div>name: {{ data.name }}</div>
     <div>age: {{ data.age }}</div>

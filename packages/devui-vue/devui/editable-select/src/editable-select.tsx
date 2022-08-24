@@ -113,6 +113,7 @@ export default defineComponent({
 
     const handleClear = () => {
       inputValue.value = '';
+      ctx.emit('update:modelValue', '');
     };
 
     const getItemCls = (option: OptionObjectItem, index: number) => {

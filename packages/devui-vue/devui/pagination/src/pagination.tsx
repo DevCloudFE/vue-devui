@@ -113,6 +113,7 @@ export default defineComponent({
                     modelValue={currentPageSize.value}
                     onValueChange={pageSizeChange}
                     pageSizeDirection={pageSizeDirection.value}
+                    size={size.value}
                   />
                 </div>
               )
@@ -135,6 +136,7 @@ export default defineComponent({
                     modelValue={cursor.value}
                     onValueChange={litePageIndexChange}
                     pageSizeDirection={pageSizeDirection.value}
+                    size={size.value}
                   />
                 </div>
               )

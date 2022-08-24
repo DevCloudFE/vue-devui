@@ -57,13 +57,7 @@ export type EmitName = 'update:modelValue';
 export type EmitEventFn = (event: EmitName, result?: boolean) => void;
 
 export interface UseModal {
-  onCloseBtnClick: () => void;
-  onOverlayClick: () => void;
-}
-
-export interface UseModalRender {
-  showContainer: Ref<boolean>;
-  showModal: Ref<boolean>;
+  execClose: () => void;
 }
 
 export type ModalProps = ExtractPropTypes<typeof modalProps>;

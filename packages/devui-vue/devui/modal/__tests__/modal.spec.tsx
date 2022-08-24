@@ -195,7 +195,7 @@ describe('d-modal', () => {
     visible.value = true;
     await wait(100);
     await nextTick();
-    let overlay = document.querySelector(ns.e('container'));
+    let overlay = document.querySelector(ns.e('overlay'));
     await overlay?.dispatchEvent(new Event('click'));
     await wait(100);
     await nextTick();

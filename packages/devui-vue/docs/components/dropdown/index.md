@@ -75,7 +75,7 @@ export default defineComponent({
     </div>
   </div>
   <d-dropdown :visible="isOpen" :trigger="trigger" :position="position" align="start" @toggle="handleToggle">
-    <d-button>More</d-button>
+    <d-button class="mt-1">More</d-button>
     <template #menu>
       <ul class="list-menu">
         <li class="menu-item">Item 1</li>
@@ -126,7 +126,7 @@ export default defineComponent({
     </div>
   </div>
   <d-dropdown :close-scope="closeScope" :position="position" align="start" style="width: 100px;">
-    <d-button>More</d-button>
+    <d-button class="mt-1">More</d-button>
     <template #menu>
       <ul class="list-menu">
         <li class="menu-item">Item 1</li>

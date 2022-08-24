@@ -55,6 +55,7 @@ export type DrawerOverlayProps = ExtractPropTypes<typeof drawerOverlayProps>;
 export type DrawerOptions = Partial<DrawerProps> & { content?: string | Slot };
 
 export type UseDrawerFn = {
+  overlayRef: Ref<HTMLElement | undefined>;
   drawerRef: Ref<HTMLElement | undefined>;
   drawerClasses: Ref<Record<string, boolean>>;
   handleOverlayClick: () => void;
