@@ -1,4 +1,4 @@
-import { type DebouncedFunc, throttle } from 'lodash-es';
+import { type DebouncedFunc, throttle } from 'lodash';
 import { computed, type ComputedRef, type CSSProperties, type Ref, type SetupContext } from 'vue';
 import { PaginationProps } from '../../pagination/src/pagination-types';
 import { ListProps } from './list-types';

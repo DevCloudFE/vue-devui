@@ -1,9 +1,9 @@
-import { computed, CSSProperties, defineComponent, EmitsOptions, provide, Ref, ref, SetupContext, watch } from 'vue';
+import { computed, defineComponent, EmitsOptions, provide, Ref, ref, SetupContext, watch } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './list.scss';
 import { listProps } from './list-types';
 import { listKey } from './listKey';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep } from 'lodash';
 import { PaginationProps } from '../../pagination';
 import { useList } from './useList';
 
