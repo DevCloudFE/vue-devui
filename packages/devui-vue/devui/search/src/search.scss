@@ -166,8 +166,8 @@
   }
 
   &--no-border {
-    .#{$devui-prefix}-input {
-      border: none;
+    &:not(.#{$devui-prefix}-search--focus) .#{$devui-prefix}-input:not(:hover, :focus, :active) {
+      border: 1px solid transparent;
     }
   }
 }
