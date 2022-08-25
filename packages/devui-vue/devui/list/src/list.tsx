@@ -4,11 +4,18 @@ import './list.scss';
 import { listProps } from './list-types';
 import { listKey } from './listKey';
 import { cloneDeep } from 'lodash';
-import { PaginationProps } from '../../pagination';
+import { PaginationProps, Pagination } from '../../pagination';
 import { useList } from './useList';
+import { LoadingDirective } from '../../loading';
 
 export default defineComponent({
   name: 'DList',
+  components: {
+    Pagination,
+  },
+  directives: {
+    Loading: LoadingDirective,
+  },
   props: listProps,
   emits: ['scroll', 'reach-bottom', 'page-index-change', 'page-size-change'],
   setup(props, ctx) {
@@ -44,7 +51,7 @@ export default defineComponent({
         <>
           <div
             class={`${ns.b()} ${props.bordered ? ns.m('bordered') : ''}`}
-            v-d-loading={loading.value}
+            v-loading={loading.value}
             style={{
               height: props.maxHeight + 'px',
               overflow: 'auto',
@@ -83,7 +90,7 @@ export default defineComponent({
           </div>
           {props.pagination ? (
             <div class={ns.e('pagination')}>
-              <d-pagination {...pagination.value} onPageIndexChange={currentChange} onPageSizeChange={sizeChange}></d-pagination>
+              <Pagination {...pagination.value} onPageIndexChange={currentChange} onPageSizeChange={sizeChange}></Pagination>
             </div>
           ) : null}
         </>
