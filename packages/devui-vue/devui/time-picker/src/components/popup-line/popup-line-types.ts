@@ -4,15 +4,15 @@ import { ArrType } from '../../types';
 export const popupLineProps = {
   hourList: {
     type: Array as PropType<Array<ArrType>>,
-    default: () => [],
+    default: (): Array<ArrType> => [],
   },
   minuteList: {
     type: Array as PropType<Array<ArrType>>,
-    default: () => [],
+    default: (): Array<ArrType> => [],
   },
   secondList: {
     type: Array as PropType<Array<ArrType>>,
-    default: () => [],
+    default: (): Array<ArrType> => [],
   },
   format: {
     type: String,
