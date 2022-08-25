@@ -15,6 +15,7 @@ $keyframe-blue: #5e7ce0;
 }
 
 .#{$devui-prefix}-tree__node {
+  height: 30px;
   color: $devui-text-weak;
   line-height: 1.5;
   white-space: nowrap;
@@ -430,5 +431,18 @@ $keyframe-blue: #5e7ce0;
     &:hover {
       cursor: pointer;
     }
+  }
+}
+
+.#{$devui-prefix}-tree--list {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.3s cubic-bezier(0.5, 0.05, 0.5, 0.95), height 0.3s cubic-bezier(0.5, 0.05, 0.5, 0.95);
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    height: 0;
   }
 }
