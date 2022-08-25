@@ -25,9 +25,9 @@ export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string,
     } else if (format === 'mm:hh:ss') {
       trueValue = `${timeArr[1]}:${timeArr[0]}:${timeArr[2]}`;
     } else if (format === 'hh:mm') {
-      trueValue = `${timeArr[0]}:${timeArr[1]}:${ss.value}`;
+      trueValue = `${timeArr[0]}:${timeArr[1]}`;
     } else if (format === 'mm:ss') {
-      trueValue = `${hh.value}:${timeArr[0]}:${timeArr[1]}`;
+      trueValue = `${timeArr[0]}:${timeArr[1]}`;
     }
     return trueValue;
   };

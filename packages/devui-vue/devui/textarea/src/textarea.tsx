@@ -36,7 +36,7 @@ export default defineComponent({
     });
 
     return () => (
-      <div>
+      <div style="width: 100%">
         <textarea
           ref={textarea}
           {...ctx.attrs}
