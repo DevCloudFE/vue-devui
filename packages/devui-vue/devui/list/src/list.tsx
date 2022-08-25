@@ -3,7 +3,6 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 import './list.scss';
 import { listProps } from './list-types';
 import { listKey } from './listKey';
-import { cloneDeep } from 'lodash';
 import { PaginationProps, Pagination } from '../../pagination';
 import { useList } from './useList';
 import { LoadingDirective } from '../../loading';
@@ -23,7 +22,7 @@ export default defineComponent({
     const ns = useNamespace('list');
 
     const loading = computed(() => props.loading);
-    const list = computed(() => cloneDeep(props.data));
+    const list = computed(() => [...props.data]);
     const pagination = ref<PaginationProps>();
     const { sizeStyle, handleScroll, sizeChange, currentChange } = useList(
       props,
@@ -41,9 +40,9 @@ export default defineComponent({
     watch(
       () => props.pagination,
       (val) => {
-        pagination.value = cloneDeep(val);
+        pagination.value = { ...(val as PaginationProps) };
       },
-      { deep: true, immediate: true }
+      { immediate: true }
     );
 
     return () => {
