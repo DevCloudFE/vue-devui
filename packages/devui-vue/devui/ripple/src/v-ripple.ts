@@ -27,8 +27,9 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   // }
   // 显示ripple
   function dissolveRipple() {
-    rippleEl.style.transition = 'opacity 120ms ease-in-out';
+    rippleEl.style.transition = 'opacity 120ms ease in out';
     rippleEl.style.opacity = '0';
+    console.log(rippleContainer);
     setTimeout(() => {
       rippleContainer.remove();
       decrementRippleCount(el);
@@ -44,6 +45,8 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
       document.removeEventListener('pointerup', releaseRipple);
       document.removeEventListener('pointercancel', releaseRipple);
     }
+    console.log(e);
+    console.log(shouldDissolveRipple);
 
     if (shouldDissolveRipple) {
       dissolveRipple();
@@ -72,7 +75,7 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   }
   // Absolute positioning prevents size overflow and position absolute 修改子元素问题
   rippleContainer.appendChild(rippleEl);
-  el.appendChild(rippleEl);
+  el.appendChild(rippleContainer);
 
   document.addEventListener('pointerup', releaseRipple);
   document.addEventListener('pointercancel', releaseRipple);
