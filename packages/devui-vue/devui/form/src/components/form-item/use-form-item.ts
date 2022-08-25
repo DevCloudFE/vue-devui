@@ -1,5 +1,5 @@
 import { computed, inject, nextTick, onMounted, ref } from 'vue';
-import { castArray, get, isFunction, clone, isEqual, set } from 'lodash';
+import { castArray, get, isFunction, clone, isEqual, set } from 'lodash-es';
 import Schema from 'async-validator';
 import type { ComputedRef, Ref } from 'vue';
 import type { RuleItem } from 'async-validator';
