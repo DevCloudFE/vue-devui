@@ -1,4 +1,4 @@
-import { defineComponent, getCurrentInstance, provide, ref, renderSlot, SetupContext, toRefs, useSlots, watch } from 'vue';
+import { defineComponent, getCurrentInstance, provide, ref, renderSlot, SetupContext, toRefs, TransitionGroup, useSlots, watch } from 'vue';
 import DTreeNode from './components/tree-node';
 import DTreeNodeContent from './components/tree-node-content';
 import DTreeNodeToggle from './components/tree-node-toggle';
@@ -13,7 +13,7 @@ import {
   useSearchFilter,
   IInnerTreeNode,
   ICheckStrategy,
-  useDragdrop
+  useDragdrop,
 } from './composables';
 import { USE_TREE_TOKEN, NODE_HEIGHT, TREE_INSTANCE } from './const';
 import { TreeProps, treeProps } from './tree-types';
@@ -79,7 +79,7 @@ export default defineComponent({
           nodeData: treeNode,
         })
       ) : (
-        <DTreeNode data={treeNode} check={check.value} dragdrop={dragdrop.value} operate={operate.value}>
+        <DTreeNode data={treeNode} check={check.value} dragdrop={dragdrop.value} operate={operate.value} key={treeNode.id}>
           {{
             default: () =>
               slots.content ? renderSlot(useSlots(), 'content', { nodeData: treeNode }) : <DTreeNodeContent data={treeNode} />,
@@ -91,11 +91,9 @@ export default defineComponent({
       );
 
     return () => {
-      const Component = props.height ? VirtualList : 'div';
       const treeData = getExpendedTree?.().value;
       const vSlotsProps = {
-        default: () => treeData?.map(renderDTreeNode),
-        item: props.height && ((treeNode: IInnerTreeNode) => renderDTreeNode(treeNode)),
+        item: (treeNode: IInnerTreeNode) => renderDTreeNode(treeNode),
       };
       let virtualListProps = {};
       if (props.height) {
@@ -105,7 +103,13 @@ export default defineComponent({
           itemHeight: NODE_HEIGHT,
         };
       }
-      return <Component ref={props.height ? virtualListRef : normalRef} class={ns.b()} {...virtualListProps} v-slots={vSlotsProps} />;
+      return props.height ? (
+        <VirtualList ref={virtualListRef} class={ns.b()} {...virtualListProps} v-slots={vSlotsProps} />
+      ) : (
+        <div ref={normalRef} class={ns.b()}>
+          <TransitionGroup name={ns.m('list')}>{treeData?.map(renderDTreeNode)}</TransitionGroup>
+        </div>
+      );
     };
   },
 });
