@@ -75,10 +75,10 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   }
   // Absolute positioning prevents size overflow and position absolute 修改子元素问题
   rippleContainer.appendChild(rippleEl);
-  el.appendChild(rippleContainer);
+  el.appendChild(rippleEl);
 
-  document.addEventListener('pointerup', releaseRipple);
-  document.addEventListener('pointercancel', releaseRipple);
+  // document.addEventListener('pointerup', releaseRipple);
+  // document.addEventListener('pointercancel', releaseRipple);
 
   token = setTimeout(() => {
     document.removeEventListener('pointercancel', cancelRipple);
@@ -86,7 +86,7 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
     rippleEl.style.opacity = `${options.finalOpacity}`;
     setTimeout(() => releaseRipple(), options.duration);
   }, options.delay);
-  document.addEventListener('pointercancel', cancelRipple);
+  // document.addEventListener('pointercancel', cancelRipple);
 };
 
 export { ripple };
