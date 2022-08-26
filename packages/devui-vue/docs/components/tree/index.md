@@ -8,7 +8,7 @@
 
 ### 基本用法
 
-:::demo 展示嵌套树形结构的呈现、连接线、展开/收起、点击选择等功能。
+:::demo 展示嵌套树形结构的呈现、连接线、展开/收起、点击选择等功能。动画效果依赖树节点的高度，默认高度为`30px`，自定义树节点时，为了保证动画效果正常显示，建议显式设置树节点高度。
 
 ```vue
 <template>
@@ -769,24 +769,24 @@ export default defineComponent({
 
 ### 可拖拽树
 
-:::demo 通过OperableTree的 dragdrop 属性配置节点的拖拽功能，并支持外部元素拖拽入树。
+:::demo 通过 OperableTree 的 dragdrop 属性配置节点的拖拽功能，并支持外部元素拖拽入树。
 
 ```vue
 <template>
   <div class="mb-0">Default</div>
-  <d-tree class="mb-2" :data="data" dragdrop ></d-tree>
+  <d-tree class="mb-2" :data="data" dragdrop></d-tree>
   <div class="mb-0">Sortable</div>
   <d-tree class="mb-2" :data="data" :dragdrop="{ dropPrev: true, dropNext: true, dropInner: true }"></d-tree>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
     const data = ref([
       {
-        label: 'parent node 1'
+        label: 'parent node 1',
       },
       {
         label: 'parent node 2',
@@ -797,68 +797,68 @@ export default defineComponent({
             expanded: true,
             children: [
               {
-                label: 'leaf node 2-1-1'
+                label: 'leaf node 2-1-1',
               },
               {
-                label: 'leaf node 2-1-2'
-              }
-            ]
+                label: 'leaf node 2-1-2',
+              },
+            ],
           },
           {
             label: 'leaf node 2-2',
             children: [
               {
-                label: 'leaf node 2-2-1'
+                label: 'leaf node 2-2-1',
               },
               {
-                label: 'leaf node 2-2-2'
-              }
-            ]
-          }
-        ]
+                label: 'leaf node 2-2-2',
+              },
+            ],
+          },
+        ],
       },
       {
         label: 'parent node 3',
         expanded: true,
         children: [
           {
-            label: 'leaf node 3-1'
+            label: 'leaf node 3-1',
           },
           {
-            label: 'leaf node 3-2'
-          }
-        ]
+            label: 'leaf node 3-2',
+          },
+        ],
       },
       {
         label: 'parent node 4',
         expanded: true,
         children: [
           {
-            label: 'leaf node 4-1'
+            label: 'leaf node 4-1',
           },
           {
-            label: 'leaf node 4-2'
-          }
-        ]
+            label: 'leaf node 4-2',
+          },
+        ],
       },
       {
         label: 'parent node 5',
         expanded: true,
         children: [
           {
-            label: 'leaf node 5-1'
+            label: 'leaf node 5-1',
           },
           {
-            label: 'leaf node 5-2'
-          }
-        ]
-      }
+            label: 'leaf node 5-2',
+          },
+        ],
+      },
     ]);
     return {
       data,
-    }
-  }
-})
+    };
+  },
+});
 </script>
 ```
 
@@ -866,11 +866,11 @@ export default defineComponent({
 
 ### Tree 参数
 
-| 参数名 | 类型                        | 默认值  | 说明                   | 跳转 Demo             |
-| :----- | :-------------------------- | :------ | :--------------------- | :-------------------- |
-| data   | [ITreeNode\[\]](#itreenode) | `[]`    | 可选，树形结构数据     | [基本用法](#基本用法) |
-| check  | [ICheck](#icheck)           | `false` | 可选，是否启用勾选功能 | [可勾选](#可勾选)     |
-| dragdrop  | [IDragdrop](#idragdrop)           | `false` | 可选，是否启用可拖拽功能 | [可拖拽树](#可拖拽树)     |
+| 参数名   | 类型                        | 默认值  | 说明                     | 跳转 Demo             |
+| :------- | :-------------------------- | :------ | :----------------------- | :-------------------- |
+| data     | [ITreeNode\[\]](#itreenode) | `[]`    | 可选，树形结构数据       | [基本用法](#基本用法) |
+| check    | [ICheck](#icheck)           | `false` | 可选，是否启用勾选功能   | [可勾选](#可勾选)     |
+| dragdrop | [IDragdrop](#idragdrop)     | `false` | 可选，是否启用可拖拽功能 | [可拖拽树](#可拖拽树) |
 
 ### Tree 事件
 
@@ -893,12 +893,12 @@ export default defineComponent({
 
 ### TreeNode 参数
 
-| 参数名 | 类型                    | 默认值  | 说明                   |
-| :----- | :---------------------- | :------ | :--------------------- |
-| data   | [ITreeNode](#itreenode) | `[]`    | 可选，节点数据         |
-| check  | [ICheck](#icheck)       | `false` | 可选，是否启用勾选功能 |
-| dragdrop| [IDragdrop](#idragdrop)| `false` | 可选，是否启用可拖拽功能 |
-| height | `number`                | `-`     | 可选，设置启用虚拟滚动 |
+| 参数名   | 类型                    | 默认值  | 说明                     |
+| :------- | :---------------------- | :------ | :----------------------- |
+| data     | [ITreeNode](#itreenode) | `[]`    | 可选，节点数据           |
+| check    | [ICheck](#icheck)       | `false` | 可选，是否启用勾选功能   |
+| dragdrop | [IDragdrop](#idragdrop) | `false` | 可选，是否启用可拖拽功能 |
+| height   | `number`                | `-`     | 可选，设置启用虚拟滚动   |
 
 ### Tree 类型定义
 
@@ -929,11 +929,13 @@ type ICheck = boolean | 'upward' | 'downward' | 'both' | 'none';
 #### IDragdrop
 
 ```ts
-type IDragdrop = boolean | {
-  dropPrev?: boolean;
-  dropNext?: boolean;
-  dropInner?: boolean;
-};
+type IDragdrop =
+  | boolean
+  | {
+      dropPrev?: boolean;
+      dropNext?: boolean;
+      dropInner?: boolean;
+    };
 ```
 
 ### treeFactory

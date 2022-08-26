@@ -1,6 +1,7 @@
 @import '../../styles-var/devui-var.scss';
 
 .#{$devui-prefix}-input {
+  width: 100%;
   height: $devui-size-md;
   font-size: $devui-font-size;
 
