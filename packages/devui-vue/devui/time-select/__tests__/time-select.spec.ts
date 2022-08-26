@@ -149,7 +149,51 @@ describe('TimeSelect', () => {
     wrapper.unmount();
   });
 
-  it.todo('props step work well.');
+  it('time-select step work', async () => {
+    const wrapper = mount({
+      components: { DTimeSelect },
+      template: `<d-time-select v-model="modelValue" step="00:10" start="01:00" end="23:00"></d-time-select>`,
+      setup() {
+        const modelValue = ref('01:00');
+        return {
+          modelValue,
+        };
+      },
+    });
+
+    const container = wrapper.find(baseClass);
+    const dropdown = wrapper.find(dropdownCls);
+    const input = wrapper.find<HTMLInputElement>(selectInputCls);
+
+    expect(container.exists()).toBeTruthy();
+    expect(dropdown.exists()).toBeFalsy();
+    await input.trigger('click');
+    await nextTick();
+    let listItems = document.querySelectorAll(selectItemCls);
+    expect(listItems.length).toBe(133);
+    expect(listItems[0].classList).toContain('active');
+    expect(input.element.value).toBe('01:00');
+
+    await wrapper.setProps({
+      step: '01:49',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    expect(listItems.length).toBe(13);
+
+    await wrapper.setProps({
+      step: '23:49',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    expect(listItems.length).toBe(1);
+
+    wrapper.unmount();
+  });
 
   it.todo('props start/end work well.');
 
