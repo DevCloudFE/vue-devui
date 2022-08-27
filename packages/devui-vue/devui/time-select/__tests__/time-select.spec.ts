@@ -193,7 +193,64 @@ describe('TimeSelect', () => {
     wrapper.unmount();
   });
 
-  it.todo('props start/end work well.');
+  it('time-select start/end work', async () => {
+    const wrapper = mount({
+      components: { DTimeSelect },
+      template: `<d-time-select v-model="modelValue" step="00:10"></d-time-select>`,
+      setup() {
+        const modelValue = ref('');
+        return {
+          modelValue,
+        };
+      },
+    });
+
+    const container = wrapper.find(baseClass);
+    const dropdown = wrapper.find(dropdownCls);
+    const input = wrapper.find<HTMLInputElement>(selectInputCls);
+
+    expect(container.exists()).toBeTruthy();
+    expect(dropdown.exists()).toBeFalsy();
+    await input.trigger('click');
+    await nextTick();
+    let listItems = document.querySelectorAll(selectItemCls);
+    // 不传start和end，则默认为00:00 到 24:00
+    expect(listItems.length).toBe(24 * 6 + 1);
+
+    await wrapper.setProps({
+      end: '17:00',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    // 从 00:00 到 17：00
+    expect(listItems.length).toBe(17 * 6 + 1);
+
+    await wrapper.setProps({
+      start: '17:00',
+      end: '18:00',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    // 17:00 到 18:00
+    expect(listItems.length).toBe(6 + 1);
+
+    await wrapper.setProps({
+      start: '18:00',
+      end: '02:00',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    // 中间无可选时间
+    expect(listItems.length).toBe(0);
+
+    wrapper.unmount();
+  });
 
   it.todo('props min-time/max-time work well.');
 
