@@ -2,6 +2,7 @@ export default {
   pagination: {
     totalItemText: '所有条目',
     goToText: '跳至',
+    perPage: '条/页',
   },
   accordion: {
     loading: '加载中',

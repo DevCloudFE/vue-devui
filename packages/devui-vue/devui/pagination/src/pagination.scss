@@ -1,39 +1,46 @@
 @import '../../styles-var/devui-var.scss';
 
 .#{$devui-prefix}-pagination {
+  display: flex;
+  align-items: center;
   font-size: $devui-font-size;
 
   .#{$devui-prefix}-pagination__size {
-    display: inline-block;
-    max-width: 100px;
-    line-height: 24px;
-    margin: 0 12px 0 0;
     position: relative;
     vertical-align: middle;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 28px;
+    height: 32px;
+    margin: 0 8px 0 0;
+    padding: 4px 10px;
+    background-color: $devui-base-bg;
+    border-color: $devui-form-control-line;
+    border-radius: $devui-border-radius;
+    border-width: 1px;
+    border-style: solid;
+    color: $devui-text;
+    transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
+    outline: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $devui-form-control-line-hover;
+    }
+
+    &:focus {
+      border-color: $devui-form-control-line-active;
+    }
 
     &.#{$devui-prefix}-pagination__size--sm {
-      max-width: 80px;
-
-      .#{$devui-prefix}-select-input {
-        height: 24px;
-      }
+      height: 26px;
     }
 
     &.#{$devui-prefix}-pagination__size--lg {
-      max-width: 100px;
-
-      .#{$devui-prefix}-select-input {
-        height: 46px;
-      }
-
-      .#{$devui-prefix}-select-item {
-        height: 46px;
-      }
+      height: 46px;
     }
-  }
-
-  .#{$devui-prefix}-select-input {
-    height: 26px;
   }
 
   .#{$devui-prefix}-pagination__total-size {
@@ -297,5 +304,41 @@
   .config-item-words:hover {
     background-color: $devui-area;
     cursor: pointer;
+  }
+}
+
+.#{$devui-prefix}-pagination__size-list {
+  min-width: 60px;
+  padding: 12px;
+  background-clip: padding-box;
+  background-color: $devui-connected-overlay-bg;
+  border-radius: $devui-border-radius;
+  outline: none;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  li {
+    display: block;
+    width: 100%;
+    min-height: 36px;
+    line-height: 20px;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: $devui-border-radius;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
+      background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
+
+    &:hover {
+      color: $devui-list-item-hover-text;
+      background-color: $devui-list-item-hover-bg;
+    }
   }
 }
