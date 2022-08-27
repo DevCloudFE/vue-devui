@@ -32,7 +32,6 @@
 
 :::
 
-
 ### 居中
 
 :::demo 用户 可以在组件 或者 HTML 元素上任意使用 <span color="#409EFF">`v-ripple`</span> 指令 使用基本的 <span color="#409EFF">`v-ripple`</span> 指令， `v-ripple` 接收 一个对象
@@ -192,12 +191,12 @@ Card 组件
 
 ### Ripple 参数
 
-| 参数名          | 类型      | 默认        | 说明                              |
-| :-------------- | :-------- | :---------- | :-------------------------------- |
-| color           | `string`  | '#00000050' | 可选，默认当前文本颜色            |
-| initial-opacity | `number`  | 0.1         | 可选，初始交互效果透明度大小      |
-| final-opacity   | `number`  | 0.1         | 可选，结束交互效果长按透明度大小  |
-| duration        | `number`  | 400         | 可选，持续时间                    |
-| easing          | `string`  | 'ease-out'  | 可选，缓动动画                    |
-| delay           | `number`  | 75`         | 可选，延迟 debouceTime 时间后调用 |
-| disabled        | `boolean` | false       | 可选，禁止水波效果                |
+| 参数名          | 类型      | 默认                           | 说明                              |
+| :-------------- | :-------- | :----------------------------- | :-------------------------------- |
+| color           | `string`  | '#00000050'                    | 可选，默认当前文本颜色            |
+| center          | `boolean` | false                          | 可选，ripple 效果从中间开始       |
+| initial-opacity | `number`  | 0.1                            | 可选，初始交互效果透明度大小      |
+| final-opacity   | `number`  | 0.1                            | 可选，结束交互效果长按透明度大小  |
+| duration        | `number`  | 400                            | 可选，持续时间                    |
+| delay           | `number`  | 75`                            | 可选，延迟 debouceTime 时间后调用 |
+| disabled        | `boolean` | false                          | 可选，禁止水波效果                |

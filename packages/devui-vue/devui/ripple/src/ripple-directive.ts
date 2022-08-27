@@ -15,9 +15,7 @@ export default {
       const options = optionMap.get(el);
       // You must make sure that the disabled attribute exists or the instruction terminates with an error
       if (binding.value && binding.value.disabled) {return;}
-
       if (options === false) {return;}
-
       ripple(event, el, {
         ...globalOptions,
         ...options

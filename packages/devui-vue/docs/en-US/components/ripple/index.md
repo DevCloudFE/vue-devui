@@ -8,21 +8,40 @@
 
 ```vue
 <template>
-  <d-row :gutter="50">
-    <d-col :span="12">
+  <d-row>
+    <d-col :span="24">
       <div class="ripple-button">
-        <div class="ripple-htmlElement" v-ripple="{ color: '#5e7ce0',duration: 300 }">HTML element with v-ripple</div>
-      </div>
-    </d-col>
-    <d-col :span="12">
-      <div class="ripple-button">
-        <div class="ripple-htmlElement" v-ripple="{ duration: 800 }">HTML element with v-ripple</div>
+        <div class="ripple-html-element" style="color: #409EFF" v-ripple>HTML Element with v-ripple</div>
       </div>
     </d-col>
   </d-row>
 </template>
 <style scoped>
 .ripple-button {
+  margin-top: 1.5rem;
+  display: flex;
+}
+</style>
+```
+
+:::
+
+### Center
+
+:::demo
+```vue
+<template>
+  <d-row>
+    <d-col :span="24">
+      <div class="ripple-button">
+        <div class="ripple-html-element" v-ripple="{ center: true }">HTML元素中使用v-ripple</div>
+      </div>
+    </d-col>
+  </d-row>
+</template>
+<style scoped>
+.ripple-button {
+  margin-top: 1.5rem;
   display: flex;
 }
 </style>
@@ -206,6 +225,5 @@ Card Component
 | initial-opacity | `number`  |    `0.1`    | Choose Initial interaction Opacity size                                       |
 |  final-opacity  | `number`  |    `0.1`    | Choose, end the interactive effect and press the Opacity size for a long time |
 |    duration     | `number`  |    `400`    | Choose, duration                                                              |
-|     easing      | `string`  | `ease-out`  | Choose, animation easing                                                      |
 |     delay       | `number`  |    `75`     | Choose, slow animation is delayed after debouceTime time.                     |
 |    disabled     | `boolean` |   `false`   | Choose, disabled ripple effect                                                |

@@ -12,7 +12,6 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   const computedStyles = window.getComputedStyle(el);
   // Get the current mouse click location
   // 利用勾股定理获取鼠标点击处到el四个角的直线距离， diameter 就是我们点击的位置距离整个el最远的点
-  // const { diameter, x, y } = MULTIPLE_NUMBER * getDistanceToFurthestCorner(event, rect);
   const { diameter, x, y } = getDistanceToFurthestCorner(event, rect);
   // Create a hole ripple element 覆盖一个容器在el上面
   const rippleContainer = createContainer(computedStyles);
@@ -21,15 +20,12 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   let originalPositionValue = '';
   // 是否需要移除ripple Do you need to remove ripple
   let shouldDissolveRipple = false;
-  let token: number | null = null;
-  // function transform(el: HTMLElement, value: string) {
-  //   el.style.transform = value;
-  // }
-  // 显示ripple
+  let token: undefined | number = undefined;
+
+  // remove ripple
   function dissolveRipple() {
     rippleEl.style.transition = 'opacity 120ms ease in out';
     rippleEl.style.opacity = '0';
-    console.log(rippleContainer);
     setTimeout(() => {
       rippleContainer.remove();
       decrementRippleCount(el);
@@ -37,7 +33,7 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
         deleteRippleCount(el);
         el.style.position = originalPositionValue;
       }
-    }, 120);
+    }, 100);
   }
   // 释放方法
   function releaseRipple(e?: PointerEvent) {
@@ -45,9 +41,6 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
       document.removeEventListener('pointerup', releaseRipple);
       document.removeEventListener('pointercancel', releaseRipple);
     }
-    console.log(e);
-    console.log(shouldDissolveRipple);
-
     if (shouldDissolveRipple) {
       dissolveRipple();
     } else {
@@ -55,7 +48,10 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
     }
   }
 
-  function cancelRipple() {
+  function cancelRipple(e) {
+    console.log(e);
+    console.log(6666);
+
     clearTimeout(token);
     rippleContainer.remove();
     document.removeEventListener('pointerup', releaseRipple);
@@ -75,10 +71,10 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
   }
   // Absolute positioning prevents size overflow and position absolute 修改子元素问题
   rippleContainer.appendChild(rippleEl);
-  el.appendChild(rippleEl);
+  el.appendChild(rippleContainer);
 
-  // document.addEventListener('pointerup', releaseRipple);
-  // document.addEventListener('pointercancel', releaseRipple);
+  document.addEventListener('pointerup', releaseRipple);
+  document.addEventListener('pointercancel', releaseRipple);
 
   token = setTimeout(() => {
     document.removeEventListener('pointercancel', cancelRipple);
@@ -86,7 +82,7 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
     rippleEl.style.opacity = `${options.finalOpacity}`;
     setTimeout(() => releaseRipple(), options.duration);
   }, options.delay);
-  // document.addEventListener('pointercancel', cancelRipple);
+  document.addEventListener('pointercancel', cancelRipple);
 };
 
 export { ripple };
