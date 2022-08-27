@@ -154,7 +154,7 @@ describe('TimeSelect', () => {
       components: { DTimeSelect },
       template: `<d-time-select v-model="modelValue" step="00:10" start="01:00" end="23:00"></d-time-select>`,
       setup() {
-        const modelValue = ref('01:00');
+        const modelValue = ref('');
         return {
           modelValue,
         };
@@ -171,8 +171,6 @@ describe('TimeSelect', () => {
     await nextTick();
     let listItems = document.querySelectorAll(selectItemCls);
     expect(listItems.length).toBe(133);
-    expect(listItems[0].classList).toContain('active');
-    expect(input.element.value).toBe('01:00');
 
     await wrapper.setProps({
       step: '01:49',
