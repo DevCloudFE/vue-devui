@@ -152,7 +152,7 @@ describe('TimeSelect', () => {
   it('time-select step work', async () => {
     const wrapper = mount({
       components: { DTimeSelect },
-      template: `<d-time-select v-model="modelValue" step="00:10" start="01:00" end="23:00"></d-time-select>`,
+      template: `<d-time-select v-model="modelValue" start="01:00" end="23:00"></d-time-select>`,
       setup() {
         const modelValue = ref('');
         return {
@@ -170,7 +170,18 @@ describe('TimeSelect', () => {
     await input.trigger('click');
     await nextTick();
     let listItems = document.querySelectorAll(selectItemCls);
-    expect(listItems.length).toBe(133);
+    // 不传入 step 时默认为 00:30
+    expect(listItems.length).toBe((23 - 1) * 2 + 1);
+
+    await wrapper.setProps({
+      step: '00:01',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    // 传入最小单位
+    expect(listItems.length).toBe((23 - 1) * 60 + 1);
 
     await wrapper.setProps({
       step: '01:49',
@@ -179,6 +190,7 @@ describe('TimeSelect', () => {
     await input.trigger('click');
     await nextTick();
     listItems = document.querySelectorAll(selectItemCls);
+    // 传入一个非整点 step
     expect(listItems.length).toBe(13);
 
     await wrapper.setProps({
@@ -188,6 +200,7 @@ describe('TimeSelect', () => {
     await input.trigger('click');
     await nextTick();
     listItems = document.querySelectorAll(selectItemCls);
+    //  传入一个超大 step
     expect(listItems.length).toBe(1);
 
     wrapper.unmount();
