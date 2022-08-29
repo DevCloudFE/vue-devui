@@ -28,7 +28,6 @@ export const notificationProps = {
   },
   onClose: {
     type: Function as PropType<() => void>,
-    default() {},
   },
 };
 
