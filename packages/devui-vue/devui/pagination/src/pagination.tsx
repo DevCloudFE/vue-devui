@@ -30,7 +30,6 @@ export default defineComponent({
       canChangePageSize,
       lite,
       size,
-      pageSizeDirection,
       showPageSelector,
       canViewTotal,
       totalItemText,

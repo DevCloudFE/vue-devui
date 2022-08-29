@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, InjectionKey, Ref, ComputedRef, WritableComputedRef } from 'vue';
+import type { PropType, ExtractPropTypes, InjectionKey, Ref, WritableComputedRef } from 'vue';
 
 type AppendToBodyDirection = 'rightDown' | 'rightUp' | 'leftUp' | 'leftDown' | 'centerDown' | 'centerUp';
 
