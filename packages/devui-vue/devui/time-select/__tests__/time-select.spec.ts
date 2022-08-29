@@ -18,6 +18,7 @@ const notDotNs = useNamespace('select');
 const selectSMCls = notDotNs.m('sm');
 const selectLGCls = notDotNs.m('lg');
 const selectDisabledCls = notDotNs.m('disabled');
+const selectItemDisabledCls = selectItemCls + ' ' + 'disabled';
 
 describe('TimeSelect', () => {
   /** 测试是否正常渲染 */
@@ -227,7 +228,7 @@ describe('TimeSelect', () => {
     await input.trigger('click');
     await nextTick();
     let listItems = document.querySelectorAll(selectItemCls);
-    // 不传start和end，则默认为00:00 到 24:00
+    // 不传 start 和 end，则默认为 00:00 到 24:00
     expect(listItems.length).toBe(24 * 6 + 1);
 
     await wrapper.setProps({
@@ -265,7 +266,114 @@ describe('TimeSelect', () => {
     wrapper.unmount();
   });
 
-  it.todo('props min-time/max-time work well.');
+  it('time-select min-time/max-time work', async () => {
+    const wrapper = mount({
+      components: { DTimeSelect },
+      template: `<d-time-select v-model="modelValue" max-time="18:30"></d-time-select>`,
+      setup() {
+        const modelValue = ref('');
+        return {
+          modelValue,
+        };
+      },
+    });
+
+    const isAllDisabled = (listItems: NodeListOf<Element>, begin: number, end = listItems.length - 1) => {
+      return Array.from(listItems)
+        .slice(begin, end)
+        .every((x) => x.classList.contains('disabled'));
+    };
+
+    const isAllAvailable = (listItems: NodeListOf<Element>, begin: number, end = listItems.length - 1) => {
+      return Array.from(listItems)
+        .slice(begin, end)
+        .every((x) => !x.classList.contains('disabled'));
+    };
+
+    const container = wrapper.find(baseClass);
+    const dropdown = wrapper.find(dropdownCls);
+    const input = wrapper.find<HTMLInputElement>(selectInputCls);
+
+    expect(container.exists()).toBeTruthy();
+    expect(dropdown.exists()).toBeFalsy();
+    await input.trigger('click');
+    await nextTick();
+    let listItems = document.querySelectorAll(selectItemCls);
+    // 只传 max 没传 start end 的情况,会渲染 24 小时里的所有时间,但有部分被禁用
+    expect(container.find(selectItemDisabledCls).exists()).toBeTruthy;
+    expect(listItems.length).toBe(24 * 2 + 1);
+
+    // 小于等于 18:30 的时间可以被点击(18:00)
+    expect(isAllAvailable(listItems, 0, 18 * 2 + 1)).toBeTruthy();
+
+    // 等于 18:30 的时间可以被点击
+    await listItems[18 * 2 + 1].dispatchEvent(new Event('click'));
+    listItems = document.querySelectorAll(selectItemCls);
+    expect(listItems[18 * 2 + 1].classList).toContain('active');
+    expect(input.element.value).toBe('18:30');
+
+    // 大于 18:30 以后的时间不可以被点击
+    await listItems[19 * 2].dispatchEvent(new Event('click'));
+    listItems = document.querySelectorAll(selectItemCls);
+    expect(listItems[19 * 2].classList).not.toContain('active');
+    expect(input.element.value).not.toBe('19:00');
+
+    // 19:00 开始,之后的所有元素都无法点击
+    expect(isAllDisabled(listItems, 19 * 2)).toBeTruthy();
+
+    await wrapper.setProps({
+      'min-time': '03:00',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    // 传了 min 和 max, 没传 start end 的情况,会渲染 24 小时里的所有时间,但有部分被禁用
+    expect(container.find(selectItemDisabledCls).exists()).toBeTruthy;
+    expect(listItems.length).toBe(24 * 2 + 1);
+
+    // 所有小于 03:00 的时间不可以被点击
+    expect(isAllDisabled(listItems, 0, 3 * 2 - 1)).toBeTruthy();
+
+    // 等于 03:00 的时间可以被点击
+    await listItems[3 * 2].dispatchEvent(new Event('click'));
+    listItems = document.querySelectorAll(selectItemCls);
+    expect(listItems[0].classList).toContain('active');
+    expect(listItems[0].classList).not.toContain('disabled');
+    expect(input.element.value).toBe('03:00');
+
+    // 所有大于等于 03:00  小于等于 18:30 的时间可以被点击
+    expect(isAllAvailable(listItems, 3 * 2, 18 * 2 + 1)).toBeTruthy();
+
+    // 19:00 开始,之后的所有元素都无法点击
+    expect(isAllDisabled(listItems, 19 * 2)).toBeTruthy();
+
+    // 传递 min-time、max-time、start、end
+    await wrapper.setProps({
+      'min-time': '09:30',
+      'max-time': '18:30',
+      start: '08:00',
+      end: '20:00',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    // 可选时间的数目由传入的 start 和 end 决定
+    expect(container.find(selectItemDisabledCls).exists()).toBeTruthy;
+    expect(listItems.length).toBe(12 * 2 + 1);
+
+    // 所有小于 09:30 的时间不可以被点击
+    expect(isAllDisabled(listItems, 0, 2)).toBeTruthy();
+
+    // 所有大于等于 09:30 和 小于等于 18:30 的时间可以被点击
+    expect(isAllAvailable(listItems, 3, 2 * 10 + 1)).toBeTruthy();
+
+    // 所有大于 18:30 的时间都不可以被点击
+    expect(isAllDisabled(listItems, 2 * 11)).toBeTruthy();
+
+    wrapper.unmount();
+  });
 
   it.todo('props placeholder work well.');
 });
