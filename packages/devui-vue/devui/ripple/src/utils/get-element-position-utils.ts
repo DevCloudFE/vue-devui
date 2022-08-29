@@ -1,5 +1,5 @@
 // Pythagorean theorem
-export function getPythagoreanDistance(x1: number, y1: number, x2: number, y2: number): number {
+export function getBevelLength(x1: number, y1: number, x2: number, y2: number): number {
   const deltaX = x1 - x2;
   const deltaY = y1 - y2;
   return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -14,10 +14,10 @@ interface DOMRectValue {
 export function getDistanceToFurthestCorner(event: PointerEvent, { width, height, left, top }: DOMRect): DOMRectValue {
   const x = event.clientX - left;
   const y = event.clientY - top;
-  const topLeft = getPythagoreanDistance(x, y, 0, 0);
-  const topRight = getPythagoreanDistance(x, y, width, 0);
-  const bottomLeft = getPythagoreanDistance(x, y, 0, height);
-  const bottomRight = getPythagoreanDistance(x, y, width, height);
+  const topLeft = getBevelLength(x, y, 0, 0);
+  const topRight = getBevelLength(x, y, width, 0);
+  const bottomLeft = getBevelLength(x, y, 0, height);
+  const bottomRight = getBevelLength(x, y, width, height);
   const diameter = Math.max(topLeft, topRight, bottomLeft, bottomRight);
   return {
     x,
