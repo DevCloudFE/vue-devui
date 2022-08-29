@@ -68,58 +68,109 @@
     display: inline-flex;
     align-items: center;
 
+    > .disabled > a,
+    > .disabled > a:hover,
+    > .disabled > a:focus {
+      cursor: not-allowed;
+    }
+
     li.#{$devui-prefix}-pagination__item {
       cursor: pointer;
 
-      &.active {
+      &:not(.disabled).active {
         a.#{$devui-prefix}-pagination__link {
           text-decoration: none;
-          background-color: $devui-list-item-active-bg;
-          color: $devui-list-item-active-text;
+          background-color: $devui-primary;
+          color: $devui-light-text;
+          cursor: pointer;
+        }
+
+        a.#{$devui-prefix}-pagination__link:hover {
+          text-decoration: none;
+          background-color: $devui-primary;
+          color: $devui-light-text;
+          border: 1px solid transparent;
+          box-shadow: none;
+        }
+      }
+
+      .#{$devui-prefix}-pagination__link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 28px;
+        min-width: 28px;
+        margin-left: 4px;
+        padding: 0 4px;
+        line-height: 24px;
+        border-radius: $devui-border-radius;
+        border: 1px solid transparent;
+        color: $devui-text-weak;
+        transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+
+        &:hover {
+          text-decoration: none;
+          background-color: transparent;
+          color: $devui-text;
+          border: 1px solid $devui-dividing-line;
+          box-shadow: 0 1px 3px 0 $devui-light-shadow;
+        }
+
+        svg {
+          vertical-align: middle;
+
+          g polygon {
+            fill: $devui-icon-text;
+          }
         }
       }
 
       &.disabled {
         a.#{$devui-prefix}-pagination__link {
           cursor: not-allowed;
-          opacity: 0.5;
-          background-color: #ffffff;
-          color: $devui-text-weak;
+          color: $devui-disabled-text;
+
+          &:hover {
+            box-shadow: none;
+            border: none;
+          }
+
+          svg g polygon {
+            fill: $devui-disabled-text;
+          }
         }
       }
 
-      .#{$devui-prefix}-pagination__link {
-        margin-left: 5px;
-        padding: 3px 7px;
-        line-height: 1.5;
-        border-radius: $devui-border-radius;
-        color: $devui-text-weak;
-        display: flex;
-        align-items: center;
-        transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+      &:not(.disabled) {
+        a.#{$devui-prefix}-pagination__link {
+          &:active {
+            svg g polygon {
+              fill: $devui-text;
+            }
+          }
 
-        &:hover {
-          text-decoration: none;
-          background-color: $devui-list-item-hover-bg;
-          color: $devui-list-item-hover-text;
+          &:hover:not(:active) {
+            svg g polygon {
+              fill: $devui-icon-fill-active-hover;
+            }
+          }
         }
       }
     }
   }
 
-  .#{$devui-prefix}-pagination__sm > li.#{$devui-prefix}-pagination__item > a.#{$devui-prefix}-pagination__link {
-    padding: 0 5px;
-    min-width: 18px;
-    height: 22px;
-    line-height: 1.5;
+  .#{$devui-prefix}-pagination--sm > li.#{$devui-prefix}-pagination__item > a.#{$devui-prefix}-pagination__link {
+    min-width: 24px;
+    height: 24px;
+    line-height: 22px;
     font-size: $devui-font-size-sm;
   }
 
-  .#{$devui-prefix}-pagination__lg > li.#{$devui-prefix}-pagination__item > a.#{$devui-prefix}-pagination__link {
-    padding: 0 12px;
-    height: 38px;
+  .#{$devui-prefix}-pagination--lg > li.#{$devui-prefix}-pagination__item > a.#{$devui-prefix}-pagination__link {
+    min-width: 40px;
+    height: 40px;
+    line-height: 38px;
     font-size: $devui-font-size-lg;
-    line-height: 1.5;
   }
 
   .#{$devui-prefix}-pagination__jump-container {

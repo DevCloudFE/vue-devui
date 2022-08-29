@@ -44,11 +44,11 @@ export const paginationProps = {
   },
   preLink: {
     type: String,
-    default: '&lt;',
+    default: '',
   },
   nextLink: {
     type: String,
-    default: '&gt;',
+    default: '',
   },
   size: {
     type: String as PropType<Size>,

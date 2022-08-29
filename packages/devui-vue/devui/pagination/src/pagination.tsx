@@ -1,4 +1,5 @@
 import { defineComponent, computed, nextTick, toRefs, getCurrentInstance, provide } from 'vue';
+import { Select } from '../../select';
 import { paginationProps, PaginationProps, paginationInjectionKey } from './pagination-types';
 import { liteSelectOptions } from './utils';
 import ConfigMenu from './components/config-menu';
@@ -121,16 +122,14 @@ export default defineComponent({
           {
             // 极简模式下的选择页码下拉框
             lite.value && showPageSelector.value && (
-              <div class={ns.e('size')}>
-                <d-select
-                  options={litePageOptions.value}
-                  disabled={total.value === 0}
-                  modelValue={cursor.value}
-                  onValueChange={litePageIndexChange}
-                  pageSizeDirection={pageSizeDirection.value}
-                  size={size.value}
-                />
-              </div>
+              <Select
+                options={litePageOptions.value}
+                disabled={total.value === 0}
+                modelValue={cursor.value}
+                onValueChange={litePageIndexChange}
+                size={size.value}
+                style="width:100px"
+              />
             )
           }
 
