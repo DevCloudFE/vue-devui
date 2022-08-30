@@ -19,6 +19,16 @@ $devui-icon-background-active: var(--devui-icon-background-active, $devui-list-i
     }
   }
 
+  &--no-slots {
+    i {
+      display: block;
+    }
+
+    img {
+      display: block;
+    }
+  }
+
   &--disabled {
     color: $devui-disabled-text;
     cursor: not-allowed;
