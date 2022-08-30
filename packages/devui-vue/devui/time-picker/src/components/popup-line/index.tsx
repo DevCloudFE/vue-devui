@@ -1,47 +1,17 @@
-import { ref, defineComponent, PropType, SetupContext } from 'vue';
+import { ref, defineComponent } from 'vue';
+import type { SetupContext } from 'vue';
 import { usePopupLine } from './composables/use-popup-line';
 import { ArrType, TimeListItem } from '../../types';
+import { popupLineProps, PopupLineProps } from './popup-line-types';
 import TimeScroll from '../time-scroll';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
-
 import './index.scss';
 
 export default defineComponent({
   name: 'DTimeList',
-  components: { TimeScroll },
-  props: {
-    hourList: {
-      type: Array as PropType<Array<ArrType>>,
-      default: () => [],
-    },
-    minuteList: {
-      type: Array as PropType<Array<ArrType>>,
-      default: () => [],
-    },
-    secondList: {
-      type: Array as PropType<Array<ArrType>>,
-      default: () => [],
-    },
-    format: {
-      type: String,
-      default: 'hh:mm:ss',
-    },
-    minTime: {
-      type: String,
-      default: '00:00:00',
-    },
-    maxTime: {
-      type: String,
-      default: '23:59:59',
-    },
-    itemHeight: {
-      type: Number,
-      default: 32,
-    },
-  },
+  props: popupLineProps,
   emits: ['change'],
-
-  setup(props, ctx: SetupContext) {
+  setup(props: PopupLineProps, ctx: SetupContext) {
     const ns = useNamespace('time-list');
     const timeListDom = ref<Element>();
     const { getNewTime, activeTimeFun, resetTimeValue, resetScrollTop } = usePopupLine(
@@ -61,17 +31,15 @@ export default defineComponent({
     };
 
     const TimeLi = (timeArr: Array<ArrType>) => {
-      return timeArr.map((item: ArrType, index: number) => {
-        return (
-          <li
-            class={`time-li ${item.flag}Id-${index} ${item.isActive ? 'active-li' : ''} ${item.isDisabled ? 'disabled-li' : ''}`}
-            onClick={(e) => {
-              activeTimeFun(e, item, index);
-            }}>
-            <span>{item.time}</span>
-          </li>
-        );
-      });
+      return timeArr.map((item: ArrType, index: number) => (
+        <li
+          class={`time-li ${item.flag}Id-${index} ${item.isActive ? 'active-li' : ''} ${item.isDisabled ? 'disabled-li' : ''}`}
+          onClick={(e) => {
+            activeTimeFun(e, item, index);
+          }}>
+          <span>{item.time}</span>
+        </li>
+      ));
     };
 
     const TimeUl = (timeList: Array<ArrType>) => {
@@ -104,12 +72,10 @@ export default defineComponent({
       getNewTime,
     });
 
-    return () => {
-      return (
-        <div class={ns.b()} ref={timeListDom}>
-          {formatTimeUl()}
-        </div>
-      );
-    };
+    return () => (
+      <div class={ns.b()} ref={timeListDom}>
+        {formatTimeUl()}
+      </div>
+    );
   },
 });

@@ -54,6 +54,8 @@ $devui-table-inset-shadow-right: var(--devui-table-inset-shadow-right, -8px 0 8p
 
         .editable-cell {
           position: relative;
+          margin-left: -8px;
+          padding-left: 8px;
           cursor: pointer;
 
           &:hover::after {
@@ -72,17 +74,13 @@ $devui-table-inset-shadow-right: var(--devui-table-inset-shadow-right, -8px 0 8p
 
         .#{$devui-prefix}-table__cell {
           width: 100%;
-          height: $input-height-md;
-          line-height: $input-height-md;
-          padding-left: 8px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
 
           .cell-text {
-            height: $input-height-md;
-            line-height: $input-height-md;
-            padding-left: 8px;
+            height: 32px;
+            line-height: 32px;
             overflow: hidden;
             text-overflow: ellipsis;
           }

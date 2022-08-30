@@ -14,7 +14,7 @@ const forwardText = computed(() => {
 </script>
 
 <template>
-  <aside ref="container">
+  <aside ref="container" v-if="headers?.length > 0">
     <nav class="devui-content-nav">
       <h3 class="devui-fast-forward">{{ forwardText }}</h3>
       <ul class="devui-step-nav">
@@ -72,7 +72,6 @@ const forwardText = computed(() => {
 
       a {
         display: block;
-        width: 110px;
         overflow: hidden;
         color: $devui-text;
         white-space: nowrap;

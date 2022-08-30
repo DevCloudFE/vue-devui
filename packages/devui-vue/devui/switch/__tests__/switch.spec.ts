@@ -141,5 +141,36 @@ describe('d-switch', () => {
     expect(wrapper.classes()).not.toContain(checkedClass);
   });
 
-  it.todo('props color work well.');
+  it('switch color work', async () => {
+    const checked = ref(false);
+    const wrapper = mount({
+      components: { DSwitch },
+      template: `
+        <d-switch v-model="checked" color="pink"></d-switch>
+      `,
+      setup() {
+        return {
+          checked,
+        };
+      },
+    });
+
+    expect(wrapper.classes()).toContain(baseClass);
+    expect(wrapper.classes()).not.toContain(checkedClass);
+    expect(wrapper.vm.$el.style.getPropertyValue('background-color')).not.toBe('pink');
+    expect(wrapper.vm.$el.style.getPropertyValue('border-color')).not.toBe('pink');
+
+    checked.value = true;
+
+    await nextTick();
+
+    expect(wrapper.vm.$el.style.getPropertyValue('background-color')).toBe('pink');
+    expect(wrapper.vm.$el.style.getPropertyValue('border-color')).toBe('pink');
+
+    await wrapper.setProps({
+      color: 'green',
+    });
+    expect(wrapper.vm.$el.style.getPropertyValue('background-color')).toBe('green');
+    expect(wrapper.vm.$el.style.getPropertyValue('border-color')).toBe('green');
+  });
 });

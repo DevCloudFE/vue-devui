@@ -166,8 +166,13 @@
   }
 
   &--no-border {
-    .#{$devui-prefix}-input {
-      border: none;
+    .#{$devui-prefix}-input,
+    .#{$devui-prefix}-input__wrapper {
+      background-color: unset;
+    }
+
+    &:not(.#{$devui-prefix}-search--focus) .#{$devui-prefix}-input:not(:hover, :focus, :active) {
+      border: 1px solid transparent;
     }
   }
 }

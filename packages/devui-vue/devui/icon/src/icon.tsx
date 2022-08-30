@@ -15,6 +15,7 @@ export default defineComponent({
       [ns.e('container')]: true,
       [ns.m('disabled')]: disabled.value,
       [ns.m('operable')]: operable.value,
+      [ns.m('no-slots')]: !Object.keys(ctx.slots).length,
     }));
     const onClick = (e: Event) => {
       if (disabled.value) {

@@ -1,6 +1,7 @@
 import { defineComponent, PropType, computed, ExtractPropTypes } from 'vue';
 import { handlePages } from '../utils';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { PreLinkIcon, NextLinkIcon } from '../components/page-link-icons';
 
 const pageNumBtnProps = {
   size: {
@@ -68,7 +69,12 @@ export default defineComponent({
       <ul class={[ns.e('list'), size ? ns.m(size) : '']}>
         {/* 左侧上一页按钮 */}
         <li onClick={prevChange.bind(null, -1)} class={{ [ns.e('item')]: true, disabled: cursor <= 1 }}>
-          <a v-html={preLink} class={ns.e('link')}></a>
+          {preLink && <a v-html={preLink} class={ns.e('link')}></a>}
+          {!preLink && (
+            <a class={ns.e('link')}>
+              <PreLinkIcon />
+            </a>
+          )}
         </li>
         {!lite && (
           <>
@@ -134,7 +140,12 @@ export default defineComponent({
         )}
         {/* 右侧下一页按钮 */}
         <li onClick={nextChange.bind(null, -1)} class={{ [ns.e('item')]: true, disabled: cursor >= totalPages }}>
-          <a v-html={nextLink} class={ns.e('link')}></a>
+          {nextLink && <a v-html={nextLink} class={ns.e('link')}></a>}
+          {!nextLink && (
+            <a class={ns.e('link')}>
+              <NextLinkIcon />
+            </a>
+          )}
         </li>
       </ul>
     );
