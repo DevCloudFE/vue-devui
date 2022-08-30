@@ -336,10 +336,10 @@ describe('TimeSelect', () => {
     expect(isAllDisabled(listItems, 0, 3 * 2 - 1)).toBeTruthy();
 
     // 等于 03:00 的时间可以被点击
+    expect(listItems[0].classList).not.toContain('disabled');
     await listItems[3 * 2].dispatchEvent(new Event('click'));
     listItems = document.querySelectorAll(selectItemCls);
     expect(listItems[0].classList).toContain('active');
-    expect(listItems[0].classList).not.toContain('disabled');
     expect(input.element.value).toBe('03:00');
 
     // 所有大于等于 03:00  小于等于 18:30 的时间可以被点击
@@ -375,5 +375,29 @@ describe('TimeSelect', () => {
     wrapper.unmount();
   });
 
-  it.todo('props placeholder work well.');
+  it('time-select placeholder work', async () => {
+    const wrapper = mount({
+      components: { DTimeSelect },
+      template: `<d-time-select v-model="modelValue" placeholder="测试placeholder是否正常渲染"></d-time-select>`,
+      setup() {
+        const modelValue = ref('');
+        return {
+          modelValue,
+        };
+      },
+    });
+
+    const container = wrapper.find(baseClass);
+    const dropdown = wrapper.find(dropdownCls);
+    const input = wrapper.find<HTMLInputElement>(selectInputCls);
+    expect(input.attributes().placeholder).toBe('测试placeholder是否正常渲染');
+
+    await wrapper.setProps({
+      placeholder: 'placeholder',
+    });
+    await nextTick();
+
+    expect(input.attributes().placeholder).toBe('placeholder');
+
+  });
 });
