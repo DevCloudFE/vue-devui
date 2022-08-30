@@ -14,16 +14,16 @@
 <template>
   <div>
     <div class="mb-0">basic</div>
-    <d-time-select class="mb-2" v-model="time00" placeholder="test" />
+    <d-time-select class="mb-2" v-model="time00" />
 
     <div class="mb-0">step</div>
-    <d-time-select class="mb-2" v-model="time01" step="01:00" end="12:00" />
+    <d-time-select class="mb-2" v-model="time01" step="00:10" />
 
     <div class="mb-0">min-time、max-time</div>
-    <d-time-select class="mb-2" v-model="time02" min-time="03:00" max-time="18:30" />
+    <d-time-select class="mb-2" v-model="time02" min-time="02:20" max-time="18:30" />
 
     <div class="mb-0">min-time、max-time、start、end</div>
-    <d-time-select class="mb-2" v-model="time03" min-time="09:30" max-time="18:30" start="08:00" end="20:00" />
+    <d-time-select class="mb-2" v-model="time03" min-time="09:30" max-time="18:30" start="09:00" end="16:30" />
 
     <div class="mb-0">disabled</div>
     <d-time-select class="mb-2" v-model="time04" disabled />
@@ -39,7 +39,7 @@ export default defineComponent({
   setup(props, ctx) {
     let time00 = ref('');
     let time01 = ref('');
-    let time02 = ref('');
+    let time02 = ref('03:30');
     let time03 = ref('09:30');
     let time04 = ref('09:30');
     return {
@@ -71,8 +71,7 @@ export default defineComponent({
   <div>
     <d-row :gutter="5">
       <d-col>
-                <d-time-select v-model="startTime" :min-time="startTime" />
-
+        <d-time-select v-model="startTime" />
       </d-col>
       <d-col>
         <d-time-select v-model="endTime" :min-time="startTime" />
