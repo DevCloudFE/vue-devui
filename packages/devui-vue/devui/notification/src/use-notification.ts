@@ -32,7 +32,7 @@ export function useEvent(
   };
 
   const removeReset = () => {
-    if (!props.modelValue) {
+    if (props.modelValue) {
       const remainTime = props.duration - (Date.now() - timestamp);
       timer = setTimeout(close, remainTime);
     }

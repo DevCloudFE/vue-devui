@@ -31,6 +31,8 @@ export const resolveLink = (base: string, path: string) => {
 }
 
 export const resolveHeaders = (headers: PageData['headers']) => {
+  if (!headers) return;
+
   return mapHeaders(groupHeaders(headers))
 }
 
