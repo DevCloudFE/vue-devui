@@ -336,10 +336,10 @@ describe('TimeSelect', () => {
     expect(isAllDisabled(listItems, 0, 3 * 2 - 1)).toBeTruthy();
 
     // 等于 03:00 的时间可以被点击
-    expect(listItems[0].classList).not.toContain('disabled');
+    expect(listItems[3 * 2].classList).not.toContain('disabled');
     await listItems[3 * 2].dispatchEvent(new Event('click'));
     listItems = document.querySelectorAll(selectItemCls);
-    expect(listItems[0].classList).toContain('active');
+    expect(listItems[3 * 2].classList).toContain('active');
     expect(input.element.value).toBe('03:00');
 
     // 所有大于等于 03:00  小于等于 18:30 的时间可以被点击
