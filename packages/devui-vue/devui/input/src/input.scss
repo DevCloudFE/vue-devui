@@ -2,7 +2,7 @@
 
 .#{$devui-prefix}-input {
   width: 100%;
-  height: $devui-size-md;
+  height: 32px;
   font-size: $devui-font-size;
 
   &__wrapper {
@@ -49,12 +49,12 @@
   }
 
   &--sm {
-    height: $devui-size-sm;
+    height: 26px;
     font-size: $devui-font-size-sm;
   }
 
   &--lg {
-    height: $devui-size-lg;
+    height: 46px;
     font-size: $devui-font-size-lg;
   }
 
