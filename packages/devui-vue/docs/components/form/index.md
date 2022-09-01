@@ -17,7 +17,7 @@
       <d-input v-model="formModel.name" />
     </d-form-item>
     <d-form-item field="description" label="Description">
-      <d-textarea v-model:value="formModel.description" />
+      <d-textarea v-model="formModel.description" />
     </d-form-item>
     <d-form-item field="select" label="Select">
       <d-select v-model="formModel.select" :options="selectOptions" />
@@ -110,7 +110,7 @@ export default defineComponent({
       <d-input v-model="formModel.name" />
     </d-form-item>
     <d-form-item field="description" label="Description">
-      <d-textarea v-model:value="formModel.description" />
+      <d-textarea v-model="formModel.description" />
     </d-form-item>
     <d-form-item field="executionDay" label="Execution day">
       <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
@@ -210,7 +210,7 @@ export default defineComponent({
       <d-input v-model="formModel.name" />
     </d-form-item>
     <d-form-item field="description" label="Description">
-      <d-textarea v-model:value="formModel.description" />
+      <d-textarea v-model="formModel.description" />
     </d-form-item>
     <d-form-item field="select" label="Select">
       <d-select v-model="formModel.select" :options="selectOptions" />
@@ -363,7 +363,7 @@ export default defineComponent({
       <d-input v-model="formModel.name" />
     </d-form-item>
     <d-form-item field="description" label="Description">
-      <d-textarea v-model:value="formModel.description" />
+      <d-textarea v-model="formModel.description" />
     </d-form-item>
     <d-form-item field="select" label="Select">
       <d-select v-model="formModel.select" :options="selectOptions" />
