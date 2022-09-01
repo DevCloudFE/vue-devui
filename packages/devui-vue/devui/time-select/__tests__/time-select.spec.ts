@@ -175,13 +175,13 @@ describe('TimeSelect', () => {
     expect(listItems.length).toBe((23 - 1) * 2 + 1);
 
     await wrapper.setProps({
-      step: '00:01',
+      step: '0:1',
     });
 
     await input.trigger('click');
     await nextTick();
     listItems = document.querySelectorAll(selectItemCls);
-    // 传入最小单位
+    // 测试只传一位数字的情况
     expect(listItems.length).toBe((23 - 1) * 60 + 1);
 
     await wrapper.setProps({
@@ -201,8 +201,58 @@ describe('TimeSelect', () => {
     await input.trigger('click');
     await nextTick();
     listItems = document.querySelectorAll(selectItemCls);
-    //  传入一个超大 step
+    // 传入一个超大 step
     expect(listItems.length).toBe(1);
+
+    await wrapper.setProps({
+      step: '00:00',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    // 传入不合法的 step (00:00) 将变为默认的 00:30
+    expect(listItems.length).toBe((23 - 1) * 2 + 1);
+
+    await wrapper.setProps({
+      step: '-1:0',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    // 传入不合法的 step (-1:0) 将变为默认的 00:30
+    expect(listItems.length).toBe((23 - 1) * 2 + 1);
+
+    await wrapper.setProps({
+      step: '-2:20',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    // 传入不合法的 step (-2:20) 将变为默认的 00:30
+    expect(listItems.length).toBe((23 - 1) * 2 + 1);
+
+    await wrapper.setProps({
+      step: '02:-1',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    // 虽然换算成分钟是正的，但依然不合法的值 step (2:-1) 将变为默认的 00:30
+    expect(listItems.length).toBe((23 - 1) * 2 + 1);
+
+    await wrapper.setProps({
+      step: '1:0',
+    });
+
+    await input.trigger('click');
+    await nextTick();
+    listItems = document.querySelectorAll(selectItemCls);
+    // 传入带 0 但合法的 step (1:0)
+    expect(listItems.length).toBe(23);
 
     wrapper.unmount();
   });
@@ -387,8 +437,6 @@ describe('TimeSelect', () => {
       },
     });
 
-    const container = wrapper.find(baseClass);
-    const dropdown = wrapper.find(dropdownCls);
     const input = wrapper.find<HTMLInputElement>(selectInputCls);
     expect(input.attributes().placeholder).toBe('测试placeholder是否正常渲染');
 
@@ -398,6 +446,5 @@ describe('TimeSelect', () => {
     await nextTick();
 
     expect(input.attributes().placeholder).toBe('placeholder');
-
   });
 });
