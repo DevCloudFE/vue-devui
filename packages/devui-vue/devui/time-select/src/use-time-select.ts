@@ -84,7 +84,7 @@ export function useTimeSelect(props: TimeSelectProps, ctx: SetupContext): useTim
         list.push({
           value: currentTime,
           name: currentTime,
-          disabled: compareTime(current, minTime.value || '-1:-1') <= 0 || compareTime(current, maxTime.value || '24:00') > 0,
+          disabled: compareTime(current, minTime.value || '-1:-1') < 0 || compareTime(current, maxTime.value || '24:00') > 0,
         });
         current = nextTime(current, step.value);
       }
