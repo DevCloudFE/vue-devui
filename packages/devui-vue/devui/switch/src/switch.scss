@@ -107,10 +107,7 @@
     .#{$devui-prefix}-switch__inner-wrapper {
       padding-left: 12px;
       font-size: $devui-font-size-sm;
-
-      .#{$devui-prefix}-switch__inner {
-        height: 105%;
-      }
+      vertical-align: top;
     }
 
     &.#{$devui-prefix}-switch--checked .#{$devui-prefix}-switch__inner-wrapper {
