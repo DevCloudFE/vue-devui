@@ -58,15 +58,17 @@ export default defineComponent({
         style={styles.value}
         v-loading={props.showLoading}
         onScroll={withModifiers(onTableScroll, ['stop'])}>
-        <div ref={hiddenColumns} class="hidden-columns">
-          {ctx.slots.default?.()}
+        <div class={ns.e('container')}>
+          <div ref={hiddenColumns} class="hidden-columns">
+            {ctx.slots.default?.()}
+          </div>
+          {props.fixHeader ? (
+            <FixHeader classes={classes.value} is-empty={isEmpty.value} />
+          ) : (
+            <NormalHeader classes={classes.value} is-empty={isEmpty.value} />
+          )}
+          {isEmpty.value && <div class={ns.e('empty')}>{ctx.slots.empty ? ctx.slots.empty() : props.empty}</div>}
         </div>
-        {props.fixHeader ? (
-          <FixHeader classes={classes.value} is-empty={isEmpty.value} />
-        ) : (
-          <NormalHeader classes={classes.value} is-empty={isEmpty.value} />
-        )}
-        {isEmpty.value && <div class={ns.e('empty')}>{ctx.slots.empty ? ctx.slots.empty() : props.empty}</div>}
       </div>
     );
   },
