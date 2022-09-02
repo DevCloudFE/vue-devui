@@ -8,5 +8,6 @@ $devui-z-index-drawer: var(--devui-z-index-drawer, 1040);// 抽屉板
 $devui-z-index-framework: var(--devui-z-index-framework, 1000);// 框架类元素，header,sideMenu等
 
 // 内容层，根据需要设置，zIndex需小于临时层
+$devui-z-index-function-widget: var(--devui-z-index-function-widget, 999); // 功能控件类（在一个组件中处于最上层）
 
 // 背景层，根据需要设置，zIndex需小于内容层
