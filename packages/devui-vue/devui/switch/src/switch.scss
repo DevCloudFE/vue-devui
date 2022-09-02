@@ -49,6 +49,7 @@
       width: 100%;
       height: 100%;
       text-align: center;
+      overflow: hidden;
     }
   }
 
@@ -105,7 +106,11 @@
 
     .#{$devui-prefix}-switch__inner-wrapper {
       padding-left: 12px;
-      font-size: $devui-font-size;
+      font-size: $devui-font-size-sm;
+
+      .#{$devui-prefix}-switch__inner {
+        height: 105%;
+      }
     }
 
     &.#{$devui-prefix}-switch--checked .#{$devui-prefix}-switch__inner-wrapper {
