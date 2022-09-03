@@ -1,4 +1,16 @@
-import { computed, defineComponent, inject, onBeforeMount, onMounted, onUpdated, reactive, SetupContext, shallowRef, watch } from 'vue';
+import {
+  computed,
+  defineComponent,
+  inject,
+  onBeforeMount,
+  onMounted,
+  onUpdated,
+  reactive,
+  SetupContext,
+  shallowRef,
+  watch,
+  nextTick,
+} from 'vue';
 import { TabsData, tabsProps, TabsProps, TabsStateData } from '../../tabs-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { useTabNavRender } from './composables/use-tab-nav-render';
@@ -35,6 +47,16 @@ export default defineComponent({
       }
     );
 
+    const handleTabAdd = () => {
+      onTabAdd();
+      nextTick(() => {
+        // 使每次添加新tab后，滚动条都在最右侧
+        if (tabsEle.value) {
+          tabsEle.value.scrollLeft = tabsEle.value.scrollWidth;
+        }
+      });
+    };
+
     return () => {
       const closeIconEl = (item: TabsStateData) => {
         return tabCanClose(item) ? (
@@ -44,7 +66,7 @@ export default defineComponent({
         ) : null;
       };
       const newButton = props.addable ? (
-        <li class={ns.e('new-tab')} onClick={onTabAdd}>
+        <li class={ns.e('new-tab')} onClick={handleTabAdd}>
           <d-icon name="add"></d-icon>
         </li>
       ) : null;
