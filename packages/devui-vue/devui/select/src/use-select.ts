@@ -131,7 +131,7 @@ export default function useSelect(
         const newOption = {
           name: value,
           value: value,
-          _checked: false,
+          _checked: true,
         };
         return value ? newOption : option;
       } else {
@@ -236,7 +236,7 @@ export default function useSelect(
   const tagDelete = (data: OptionObjectItem) => {
     let { modelValue } = props;
     const checkedItems = [];
-    for (const child of injectOptions.value.values()) {
+    for (const child of selectedOptions.value) {
       if (data.value === child.value) {
         child._checked = false;
       }
