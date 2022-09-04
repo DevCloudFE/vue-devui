@@ -169,6 +169,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/qinwencheng"><img src="https://avatars.githubusercontent.com/u/24841685?v=4?s=100" width="100px;" alt=""/><br /><sub><b>qinwencheng</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=qinwencheng" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/angelanana"><img src="https://avatars.githubusercontent.com/u/63281354?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Angelanana</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=angelanana" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/joo1es"><img src="https://avatars.githubusercontent.com/u/76929557?v=4?s=100" width="100px;" alt=""/><br /><sub><b>joo1es</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=joo1es" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/handsomezyw"><img src="https://avatars.githubusercontent.com/u/34366225?v=4?s=100" width="100px;" alt=""/><br /><sub><b>handsomezyw</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=handsomezyw" title="Code">💻</a></td>
   </tr>
 </table>
 
