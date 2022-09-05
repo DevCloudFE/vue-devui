@@ -63,7 +63,7 @@ export default defineComponent({
       e.stopPropagation();
       e.preventDefault();
       showSuggestions.value = false;
-      textContext.value += item[props.dmValueParse.value as keyof IMentionSuggestionItem];
+      textContext.value = textContext.value.substring(0, 1) + item[props.dmValueParse.value as keyof IMentionSuggestionItem];
     };
 
     const arrowKeyDown = (e: KeyboardEvent) => {
@@ -98,7 +98,9 @@ export default defineComponent({
           e.stopPropagation();
           e.preventDefault();
           showSuggestions.value = false;
-          textContext.value += filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem];
+          textContext.value =
+            textContext.value.substring(0, 1) +
+            filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem];
           emit('select', filteredSuggestions.value[currentIndex.value]);
         }
       }
