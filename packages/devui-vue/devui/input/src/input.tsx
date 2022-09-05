@@ -89,7 +89,9 @@ export default defineComponent({
                   onClick={clickPasswordIcon}
                 />
               )}
-              {showClearable.value && <Icon size={inputSize.value} class={ns.em('clear', 'icon')} name="close" onClick={onClear} />}
+              {showClearable.value && modelValue.value.length > 0 && (
+                <Icon size={inputSize.value} class={ns.em('clear', 'icon')} name="close" onClick={onClear} />
+              )}
             </span>
           )}
         </div>

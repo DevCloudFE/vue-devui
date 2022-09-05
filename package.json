@@ -5,7 +5,8 @@
     "prepare": "husky install",
     "precommit": "lint-staged",
     "scripts": "better-scripts",
-    "dev": "pnpm scripts run dev"
+    "dev": "pnpm scripts run dev",
+    "build": "pnpm scripts run build"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",

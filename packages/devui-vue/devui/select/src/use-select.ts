@@ -298,7 +298,7 @@ export default function useSelect(
   const emptyText = computed(() => {
     const visibleOptionsCount = injectOptionsArray.value.filter((item) => {
       const label = item.name || item.value;
-      return label.toString().toLocaleLowerCase().includes(filterQuery.value.toLocaleLowerCase());
+      return label.toString().toLocaleLowerCase().includes(filterQuery.value.toLocaleLowerCase().trim());
     }).length;
     if (isLoading.value) {
       return props.loadingText || (t('loadingText') as string);

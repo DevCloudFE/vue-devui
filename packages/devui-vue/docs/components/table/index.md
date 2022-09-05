@@ -538,7 +538,6 @@ export default defineComponent({
           v-model="scope.row.gender"
           :options="options"
           @valueChange="(value) => change(scope.row, scope.rowIndex, 'gender', value)"
-          @blur="() => blur(scope.row, scope.rowIndex, 'gender')"
         />
       </template>
     </d-column>
@@ -576,10 +575,7 @@ export default defineComponent({
       tableRef.value.store.setCellMode(row, rowIndex, field, 'readonly');
     };
     const blur = (row, rowIndex, field) => {
-      // select组件blur事件先于valueChange事件执行，故此处需要添加定时器
-      setTimeout(() => {
-        tableRef.value.store.setCellMode(row, rowIndex, field, 'readonly');
-      }, 100);
+      tableRef.value.store.setCellMode(row, rowIndex, field, 'readonly');
     };
 
     const cellClick = (obj) => {
@@ -743,8 +739,6 @@ export default defineComponent({
   <d-table :data="dataSource" table-height="200px" fix-header style="width:100%">
     <d-column field="firstName" header="First Name" :width="150"></d-column>
     <d-column field="lastName" header="Last Name" :width="150"></d-column>
-    <d-column field="gender" header="Gender" :width="150"></d-column>
-    <d-column field="gender" header="Gender" :width="150"></d-column>
     <d-column field="gender" header="Gender" :width="150"></d-column>
     <d-column field="date" header="Date of birth" :width="150"></d-column>
   </d-table>
@@ -1477,7 +1471,7 @@ export default defineComponent({
       setTimeout(() => {
         showLoading.value = false;
         dataSource.value = dataSource.value.concat(moreData);
-      }, 200);
+      }, 500);
     };
 
     return { dataSource, loadMore, showLoading };

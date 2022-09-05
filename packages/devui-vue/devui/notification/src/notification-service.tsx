@@ -14,7 +14,7 @@ function initInstance(props: NotificationOption, content?: string): App {
   container.classList.add('notification__warpper');
   const lastChild = document.body.lastElementChild;
   let offset_Top = 50;
-  if (lastChild?.classList.contains('notification__warpper')){
+  if (lastChild?.classList.contains('notification__warpper')) {
     const notification = lastChild.lastElementChild as HTMLElement;
     const rects = notification.getBoundingClientRect();
     const height = rects.height;
@@ -48,7 +48,6 @@ export default class NotificationService {
   static open(options: NotificationOption): void {
     const originOnClose: VoidFn | null = options.onClose || null;
     const content = options.content;
-    let timer;
     delete options.content;
 
     const props: NotificationOption = reactive({
@@ -61,10 +60,5 @@ export default class NotificationService {
 
     initInstance(props, content);
     props.modelValue = true;
-
-    clearTimeout(timer);
-    if (options.duration && props.onClose) {
-      timer = setTimeout(props.onClose, options.duration);
-    }
   }
 }

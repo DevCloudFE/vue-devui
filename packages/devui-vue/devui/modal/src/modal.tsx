@@ -80,7 +80,7 @@ export default defineComponent({
         )}
         <Transition name={props.showAnimation ? ns.m('wipe') : ''}>
           {modelValue.value && (
-            <div ref={dialogRef} class={ns.b()} {...attrs}>
+            <div ref={dialogRef} class={ns.b()} {...attrs} onClick={(e: Event) => e.stopPropagation()}>
               {showClose.value && (
                 <div onClick={execClose} class="btn-close">
                   <Icon name="close" size="20px"></Icon>
