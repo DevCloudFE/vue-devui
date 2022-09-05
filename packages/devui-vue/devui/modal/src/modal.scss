@@ -45,13 +45,14 @@
     align-items: center;
 
     &-icon {
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       vertical-align: middle;
       margin-right: 8px;
       width: 24px;
       height: 24px;
       line-height: 16px;
-      text-align: center;
     }
 
     &-text {

@@ -237,8 +237,8 @@ describe('date-picker-pro test', () => {
     const pickerPanel = document.querySelector(pickerPanelClass);
     const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
     const date = new Date();
-    const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
-    const selectIndex = todayIndex > 20 ? todayIndex - 1 : todayIndex + 1;
+    const todayIndex = getDateIndex(date);
+    const selectIndex = getSelectedIndex(todayIndex);
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
     const monthContentContainer = tableMonthItems?.[1].querySelector(ns.e('table-month-content'));
     const Items = monthContentContainer?.querySelectorAll('td');

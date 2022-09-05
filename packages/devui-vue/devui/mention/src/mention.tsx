@@ -46,10 +46,14 @@ export default defineComponent({
       emit('change', val.slice(1));
     }, 300);
 
-    const handleBlur = () => {
-      setTimeout(() => {
-        showSuggestions.value = false;
-      }, 100);
+    const handleBlur = (e: Event) => {
+      const { target } = e;
+      const ele = document.querySelector('.devui-mention');
+      if (!(ele?.contains(target as Element))) {
+        setTimeout(() => {
+          showSuggestions.value = false;
+        }, 100);
+      }
     };
 
     const handleFocus = () => {
@@ -63,7 +67,7 @@ export default defineComponent({
       e.stopPropagation();
       e.preventDefault();
       showSuggestions.value = false;
-      textContext.value += item[props.dmValueParse.value as keyof IMentionSuggestionItem];
+      textContext.value = textContext.value.substring(0, 1) + item[props.dmValueParse.value as keyof IMentionSuggestionItem];
     };
 
     const arrowKeyDown = (e: KeyboardEvent) => {
@@ -98,7 +102,9 @@ export default defineComponent({
           e.stopPropagation();
           e.preventDefault();
           showSuggestions.value = false;
-          textContext.value += filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem];
+          textContext.value =
+            textContext.value.substring(0, 1) +
+            filteredSuggestions.value[currentIndex.value][props.dmValueParse.value as keyof IMentionSuggestionItem];
           emit('select', filteredSuggestions.value[currentIndex.value]);
         }
       }
@@ -116,17 +122,19 @@ export default defineComponent({
     onMounted(() => {
       window.addEventListener('keydown', arrowKeyDown);
       window.addEventListener('keydown', enterKeyDown);
+      document.addEventListener('click', handleBlur);
     });
 
     onUnmounted(() => {
       window.removeEventListener('keydown', arrowKeyDown);
       window.removeEventListener('keydown', enterKeyDown);
+      document.removeEventListener('click', handleBlur);
     });
 
     return () => {
       return (
         <div class={ns.b()}>
-          <d-textarea v-model={textContext.value} onUpdate={handleUpdate} onBlur={handleBlur} onFocus={handleFocus}></d-textarea>
+          <d-textarea v-model={textContext.value} onUpdate={handleUpdate} onFocus={handleFocus}></d-textarea>
           {showSuggestions.value ? (
             loading.value ? (
               <div class={[`${ns.e('suggestions')} ${ns.e('suggestions-loading')}`]}>加载中... </div>

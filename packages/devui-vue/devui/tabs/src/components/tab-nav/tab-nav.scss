@@ -293,6 +293,16 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
   align-items: center;
   list-style: none;
   padding-left: 0;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  user-select: none;
+  // 隐藏滚动条
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   li {
     a {

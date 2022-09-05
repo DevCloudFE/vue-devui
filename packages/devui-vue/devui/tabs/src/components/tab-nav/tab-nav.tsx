@@ -1,4 +1,17 @@
-import { computed, defineComponent, inject, onBeforeMount, onMounted, onUpdated, reactive, SetupContext, shallowRef, watch } from 'vue';
+import {
+  computed,
+  defineComponent,
+  inject,
+  onBeforeMount,
+  onMounted,
+  onUpdated,
+  onUnmounted,
+  reactive,
+  SetupContext,
+  shallowRef,
+  watch,
+  nextTick,
+} from 'vue';
 import { TabsData, tabsProps, TabsProps, TabsStateData } from '../../tabs-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { useTabNavRender } from './composables/use-tab-nav-render';
@@ -21,9 +34,60 @@ export default defineComponent({
     const { update, beforeMount, mounted, activeClick, tabCanClose } = useTabNavFunction(props, tabs, tabsList, data, ctx, tabsEle);
     const { onTabRemove, onTabAdd } = useTabNavEvent(ctx);
 
+    // 添加新的tab选项
+    const handleTabAdd = () => {
+      onTabAdd();
+      nextTick(() => {
+        // 使每次添加新tab后，滚动条都在最右侧
+        if (tabsEle.value) {
+          tabsEle.value.scrollLeft = tabsEle.value.scrollWidth;
+        }
+      });
+    };
+
+    // 鼠标是否在滑动
+    let isSlide = false;
+    // tab滑动
+    const handleSlideTab = (mousedownEvent: MouseEvent) => {
+      if (tabsEle.value) {
+        // 鼠标按下x坐标
+        const mousedownX = mousedownEvent.clientX;
+        // 当前滚动条距离
+        const scrollLeft = tabsEle.value.scrollLeft;
+        isSlide = true;
+        // 监听鼠标滑动
+        tabsEle.value.addEventListener('mousemove', (mousemoveEvent: MouseEvent) => {
+          if (isSlide && tabsEle.value) {
+            // 当前鼠标移动x坐标
+            const mousemoveX = mousemoveEvent.clientX;
+            // 滑动距离
+            const scrollWidth = mousemoveX - mousedownX;
+            tabsEle.value.scrollLeft = scrollLeft - scrollWidth;
+          }
+        });
+        tabsEle.value.addEventListener('mouseup', () => {
+          isSlide = false;
+        });
+        tabsEle.value.addEventListener('mouseleave', () => {
+          isSlide = false;
+        });
+      }
+    };
+
     onUpdated(() => update());
     onBeforeMount(() => beforeMount());
-    onMounted(() => mounted());
+    onMounted(() => {
+      mounted();
+      // tab超出容器后监听滑动
+      if (tabsEle.value) {
+        tabsEle.value.addEventListener('mousedown', handleSlideTab);
+      }
+    });
+    onUnmounted(() => {
+      if (tabsEle.value) {
+        tabsEle.value.removeEventListener('mousedown', handleSlideTab);
+      }
+    });
 
     watch(
       () => props.modelValue,
@@ -44,7 +108,7 @@ export default defineComponent({
         ) : null;
       };
       const newButton = props.addable ? (
-        <li class={ns.e('new-tab')} onClick={onTabAdd}>
+        <li class={ns.e('new-tab')} onClick={handleTabAdd}>
           <d-icon name="add"></d-icon>
         </li>
       ) : null;

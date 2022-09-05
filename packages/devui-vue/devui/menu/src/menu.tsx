@@ -6,6 +6,8 @@ import { setDefaultIndent } from './composables/use-layer-operate';
 import SubMenu from './components/sub-menu/sub-menu';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { useShowSubMenu } from './components/sub-menu/use-sub-menu';
+import { randomId } from '../../shared/utils';
+import { useStore } from './composables/use-store';
 
 export default defineComponent({
   name: 'DMenu',
@@ -14,6 +16,11 @@ export default defineComponent({
   setup(props: MenuProps, ctx) {
     const ns = useNamespace('menu');
     const {openKeys, mode, collapsed} = toRefs(props);
+    // This ID is only for internal use. So we unwanted use reactivity
+    const menuId = randomId(16);
+    // register menu to recordTable.
+    const store = useStore(menuId);
+    provide('menuStore', store);
     provide('isCollapsed', collapsed);
     provide('defaultIndent', props['indentSize']);
     provide('multiple', props['multiple']);

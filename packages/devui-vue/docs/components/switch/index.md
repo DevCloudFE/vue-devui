@@ -32,6 +32,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="scss">
+.devui-switch:not(:last-of-type) {
+  margin-right: 5px;
+}
+</style>
 ```
 
 :::
@@ -71,10 +77,6 @@ export default defineComponent({
 <template>
   <div style="display: flex;">
     <d-switch class="mr-1" v-model="checkedColor" color="#FECC55"></d-switch>
-    <d-switch class="mr-1" v-model="checkedContent">
-      <template #checkedContent>开</template>
-      <template #uncheckedContent>关</template>
-    </d-switch>
     <d-switch class="mr-1" color="#50D4AB" v-model="checkedIcon">
       <template #checkedContent>
         <i class="icon-right"></i>
@@ -82,7 +84,19 @@ export default defineComponent({
       <template #uncheckedContent>
         <i class="icon-error"></i>
       </template>
-    </d-switch>    
+    </d-switch>
+    <d-switch v-model="checkedSmContent" size="sm">
+      <template #checkedContent>开</template>
+      <template #uncheckedContent>关</template>
+    </d-switch>
+    <d-switch v-model="checkedContent">
+      <template #checkedContent>开</template>
+      <template #uncheckedContent>关</template>
+    </d-switch>
+    <d-switch v-model="checkedLgContent" size="lg">
+      <template #checkedContent>开</template>
+      <template #uncheckedContent>关</template>
+    </d-switch>
   </div>
 
 </template>
@@ -93,10 +107,14 @@ export default defineComponent({
   setup() {
     const checkedColor = ref(true);
     const checkedContent = ref(false);
+    const checkedSmContent = ref(false);
+    const checkedLgContent = ref(false);
     const checkedIcon = ref(true);
     return {
       checkedColor,
       checkedContent,
+      checkedSmContent,
+      checkedLgContent,
       checkedIcon,
     };
   },

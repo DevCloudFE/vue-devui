@@ -1471,7 +1471,7 @@ export default defineComponent({
       setTimeout(() => {
         showLoading.value = false;
         dataSource.value = dataSource.value.concat(moreData);
-      }, 200);
+      }, 500);
     };
 
     return { dataSource, loadMore, showLoading };

@@ -15,7 +15,6 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 .#{$devui-prefix}-button {
   padding: $devui-btn-padding;
   font-size: $devui-font-size-md;
-  height: 28px;
   line-height: $devui-line-height-base;
   border-radius: $devui-border-radius;
   border-width: 1px;
@@ -210,10 +209,6 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 
       &:hover {
         color: $devui-link-active;
-      }
-
-      &:not(:disabled):hover {
-        text-decoration: underline;
       }
 
       &:focus {
