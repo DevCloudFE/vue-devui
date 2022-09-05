@@ -48,7 +48,7 @@ const ripple = (event: PointerEvent, el: HTMLElement, options: IRippleDirectiveO
     }
   }
 
-  function cancelRipple(e) {
+  function cancelRipple() {
     clearTimeout(token);
     rippleContainer.remove();
     document.removeEventListener('pointerup', releaseRipple);
