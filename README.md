@@ -12,14 +12,16 @@ English | [简体中文](README.zh-CN.md)
 
 🌈 Features：
 
-- 📦 40 high-quality components that are simple, easy to use, and flexible.
+- 📦 55 high-quality components that are simple, easy to use, and flexible.
 - 🔑 Support for TypeScript.
 - ⛰️ Support for Nuxt3.
 - ⚡ Support for on-demand import.
 - 🌍 Support internationalization.
 - 🎨 Support theme customization, and built-in seven beautiful themes such as `Galaxy`, `Sweet` and `Provence`.
 
-## 🌐 Installation
+## 🔧 Usage
+
+First install vue-devui with npm, yarn or pnpm.
 
 Install with npm
 
@@ -39,7 +41,6 @@ Install with pnpm
 pnpm add vue-devui
 ```
 
-## 🔧 Usage
 
 Then import `DevUI` in the `main.ts` file:
 
@@ -68,7 +69,7 @@ Then you can use the vue devui component(such as `<d-button>`) in the `App.vue` 
 git clone git@github.com:DevCloudFE/vue-devui.git
 cd vue-devui
 pnpm install
-pnpm scripts run dev
+pnpm dev
 ```
 
 Open your browser and visit: [http://localhost:3000/](http://localhost:3000/).
