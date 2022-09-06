@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { useToc } from '../composables/useToc'
 import { useActiveSidebarLinks } from '../composables/activeBar'
+import { CURRENT_LANG, ZH_CN } from '../const'
 
 const headers = useToc()
 const marker = ref()
@@ -9,7 +10,7 @@ const container = ref()
 // 滚动监听
 useActiveSidebarLinks(container, marker)
 const forwardText = computed(() => {
-  return localStorage.getItem('preferred_lang') === 'zh-CN' ? '快速前往' : 'Forward'
+  return CURRENT_LANG === ZH_CN ? '快速前往' : 'Forward'
 })
 </script>
 
