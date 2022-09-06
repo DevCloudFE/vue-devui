@@ -2,7 +2,7 @@ import type { ComputedRef, ExtractPropTypes, PropType ,InjectionKey, Ref } from 
 
 export type IButtonVariant = 'solid' | 'outline' | 'text';
 export type IButtonColor = 'secondary' | 'primary' | 'danger';
-export type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
+export type IButtonSize = 'lg' | 'md' | 'sm';
 export type IButtonShape = 'round' | 'circle';
 
 export const buttonProps = {
