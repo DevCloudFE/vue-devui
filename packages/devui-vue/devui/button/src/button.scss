@@ -236,13 +236,6 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
     }
   }
 
-  &--xs {
-    padding: 0 4px;
-    height: $devui-size-sm;
-    font-size: $devui-font-size-sm;
-    min-width: 48px;
-  }
-
   &--sm {
     padding: $devui-btn-sm-padding;
     height: $devui-size-sm;
@@ -330,7 +323,6 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
       border: 1px solid transparent;
     }
 
-    &.#{$devui-prefix}-button--xs,
     &.#{$devui-prefix}-button--sm {
       padding: 4px;
       min-width: 24px;
@@ -347,7 +339,6 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
     &.#{$devui-prefix}-button--circle {
       width: $devui-size-md;
 
-      &.#{$devui-prefix}-button--xs,
       &.#{$devui-prefix}-button--sm {
         width: $devui-size-sm;
       }
