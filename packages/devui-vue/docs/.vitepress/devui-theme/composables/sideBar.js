@@ -4,6 +4,8 @@ import { useActiveSidebarLinks } from '../composables/activeSidebarLink';
 import { getSideBarConfig } from '../support/sideBar';
 import enSidebar from '../../config/enSidebar'
 import sidebar from '../../config/sidebar'
+import { CURRENT_LANG, ZH_CN } from '../const';
+
 export function useSideBar() {
     const route = useRoute();
     const { site } = useData();
@@ -17,12 +19,12 @@ export function useSideBar() {
         if (frontSidebar === false) {
             return [];
         }
-        // if it's `atuo`, render headers of the current page
+        // if it's `auto`, render headers of the current page
         if (frontSidebar === 'auto') {
             return resolveAutoSidebar(headers, sidebarDepth);
         }
         // now, there's no sidebar setting at frontmatter; let's see the configs
-        const themeSidebar = getSideBarConfig(localStorage.getItem('preferred_lang') === 'zh-CN' ? sidebar : enSidebar , route.data.relativePath);
+        const themeSidebar = getSideBarConfig(CURRENT_LANG === ZH_CN ? sidebar : enSidebar , route.data.relativePath);
         if (themeSidebar === false) {
             return [];
         }

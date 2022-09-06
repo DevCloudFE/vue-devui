@@ -23,7 +23,7 @@ const { frontmatter } = useData()
         <ul>
           <li><a href="https://devui.design/" target="_blank">Ng DevUI</a></li>
           <li><a href="https://vue-devui.github.io/" target="_blank">Vue DevUI</a></li>
-          <li><a href="https://react-devui.com/" target="_blank">React DevUI</a></li>
+          <li><a href="https://react-devui.surge.sh/" target="_blank">React DevUI</a></li>
           <li><a href="https://devui.design/admin-page/home" target="_blank">Ng DevUI Admin</a></li>
           <li><a href="https://devui.design/icon/ruleResource" target="_blank">DevUI Icons</a></li>
           <li><a href="https://devcloudfe.github.io/devui-playground" target="_blank">DevUI Playground</a></li>
