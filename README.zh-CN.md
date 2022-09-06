@@ -12,7 +12,7 @@
 
 🌈 特性：
 
-- 📦 包含 40 个简洁、易用、灵活的高质量组件
+- 📦 包含 55 个简洁、易用、灵活的高质量组件
 - 🔑 支持 TypeScript
 - ⛰️ 支持 Nuxt3
 - ⚡ 支持按需引入
@@ -62,6 +62,12 @@ pnpm dev
 ```
 
 打开浏览器访问：[http://localhost:3000/](http://localhost:3000/)
+
+或者你也可以运行以下命令：
+
+```sh
+pnpm scripts
+```
 
 ## 🤝 参与贡献
 
@@ -138,6 +144,21 @@ pnpm dev
     <td align="center"><a href="https://github.com/daviForevel"><img src="https://avatars.githubusercontent.com/u/39021499?v=4?s=100" width="100px;" alt=""/><br /><sub><b>daviForevel</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=daviForevel" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/lj1990111"><img src="https://avatars.githubusercontent.com/u/8649913?v=4?s=100" width="100px;" alt=""/><br /><sub><b>lj1990111</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=lj1990111" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/newer2333"><img src="https://avatars.githubusercontent.com/u/32949033?v=4?s=100" width="100px;" alt=""/><br /><sub><b>newer2333</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=newer2333" title="Code">💻</a></td>
+    <td align="center"><a href="https://husky-bear.gitee.io/blob/"><img src="https://avatars.githubusercontent.com/u/50540342?v=4?s=100" width="100px;" alt=""/><br /><sub><b>哈士奇-黄</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Husky-Yellow" title="Code">💻</a></td>
+    <td align="center"><a href="http://innei.ren"><img src="https://avatars.githubusercontent.com/u/41265413?v=4?s=100" width="100px;" alt=""/><br /><sub><b>寻</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Innei" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/aolyang"><img src="https://avatars.githubusercontent.com/u/72056179?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Anthonio OuYang</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=aolyang" title="Code">💻</a></td>
+    <td align="center"><a href="https://yyblog.top"><img src="https://avatars.githubusercontent.com/u/57666140?v=4?s=100" width="100px;" alt=""/><br /><sub><b>FlingYP</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=flingyp" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/xzxldl55"><img src="https://avatars.githubusercontent.com/u/22699218?v=4?s=100" width="100px;" alt=""/><br /><sub><b>xzxldl55</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xzxldl55" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/79E"><img src="https://avatars.githubusercontent.com/u/71202421?v=4?s=100" width="100px;" alt=""/><br /><sub><b>79</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=79E" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/SituC"><img src="https://avatars.githubusercontent.com/u/29355875?v=4?s=100" width="100px;" alt=""/><br /><sub><b>wailen</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=SituC" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/JensonMiao"><img src="https://avatars.githubusercontent.com/u/46488783?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jenson</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=JensonMiao" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/dbsdaicheng"><img src="https://avatars.githubusercontent.com/u/62135142?v=4?s=100" width="100px;" alt=""/><br /><sub><b>dbsdaicheng</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=dbsdaicheng" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/qinwencheng"><img src="https://avatars.githubusercontent.com/u/24841685?v=4?s=100" width="100px;" alt=""/><br /><sub><b>qinwencheng</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=qinwencheng" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/angelanana"><img src="https://avatars.githubusercontent.com/u/63281354?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Angelanana</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=angelanana" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/joo1es"><img src="https://avatars.githubusercontent.com/u/76929557?v=4?s=100" width="100px;" alt=""/><br /><sub><b>joo1es</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=joo1es" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/handsomezyw"><img src="https://avatars.githubusercontent.com/u/34366225?v=4?s=100" width="100px;" alt=""/><br /><sub><b>handsomezyw</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=handsomezyw" title="Code">💻</a></td>
   </tr>
 </table>
 
