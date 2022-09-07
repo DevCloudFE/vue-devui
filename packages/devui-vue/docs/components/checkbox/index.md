@@ -97,6 +97,7 @@ export default defineComponent({
 .checkbox-basic-demo .devui-checkbox {
   margin-bottom: 10px;
 }
+
 .checkbox-basic-demo .inline-row .devui-select {
   width: 150px;
   margin-right: 10px;
@@ -111,6 +112,7 @@ export default defineComponent({
 :::demo
 
 ```vue
+
 <template>
   <div class="checkbox-group-demo">
     <h4 class="title">Input Object Array</h4>
@@ -120,7 +122,8 @@ export default defineComponent({
     <d-checkbox-group v-model="values2" :options="options2" :isShowTitle="false" direction="row"></d-checkbox-group>
 
     <h4 class="title">Disabled Group</h4>
-    <d-checkbox-group v-model="values2" :options="options2" :isShowTitle="false" direction="row" :disabled="true"></d-checkbox-group>
+    <d-checkbox-group v-model="values2" :options="options2" :isShowTitle="false" direction="row" :disabled="true"
+    ></d-checkbox-group>
 
     <h4 class="title">Custom Selected Color</h4>
     <d-checkbox-group
@@ -132,10 +135,12 @@ export default defineComponent({
     ></d-checkbox-group>
 
     <h4 class="title">Set showAnimation false</h4>
-    <d-checkbox-group v-model="values4" :options="options3" :isShowTitle="false" direction="row" :showAnimation="false"></d-checkbox-group>
+    <d-checkbox-group v-model="values4" :options="options3" :isShowTitle="false" direction="row" :showAnimation="false"
+    ></d-checkbox-group>
 
     <h4 class="title">Multi-line Checkbox</h4>
-    <d-checkbox-group v-model="values5" :options="options5" :isShowTitle="false" direction="row" :itemWidth="94"></d-checkbox-group>
+    <d-checkbox-group v-model="values5" :options="options5" :isShowTitle="false" direction="row" :itemWidth="94"
+    ></d-checkbox-group>
 
     <h4 class="title">可选项目数量的限制</h4>
     <d-checkbox-group
@@ -218,39 +223,37 @@ export default defineComponent({
 :::demo
 
 ```vue
+
 <template>
-  <div>
-    <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="borderSizeValues1" :options="borderSizeOptions1" direction="row" size="lg" border></d-checkbox-group>
-    </div>
-    <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="borderSizeValues2" :options="borderSizeOptions1" direction="row" size="md" border></d-checkbox-group>
-    </div>
-    <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="borderSizeValues3" :options="borderSizeOptions1" direction="row" size="sm" border></d-checkbox-group>
-    </div>
-    <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="borderSizeValues4" :options="borderSizeOptions1" direction="row" size="xs" border></d-checkbox-group>
-    </div>
-  </div>
+  <h4>Small</h4>
+  <d-checkbox-group v-model="borderSizeValues1" :options="borderSizeOptions1" direction="row" size="sm" border
+  ></d-checkbox-group>
+
+  <h4>Middle</h4>
+  <d-checkbox-group v-model="borderSizeValues2" :options="borderSizeOptions1" direction="row" size="md" border
+  ></d-checkbox-group>
+
+  <h4>Large</h4>
+  <d-checkbox-group v-model="borderSizeValues3" :options="borderSizeOptions1" direction="row" size="lg" border
+  ></d-checkbox-group>
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   setup() {
     const borderSizeOptions1 = ref([
-      { name: '选项1', disabled: true, value: '1', id: 1 },
-      { name: '选项2', value: '2', id: 2 },
+      { name: 'Summer', value: '1', id: 1 },
+      { name: 'Spring', disabled: true, value: '2', id: 2 },
     ]);
-    const borderSizeValues1 = ref([{ name: '选项2', value: '2', id: 2 }]);
-    const borderSizeValues2 = ref([{ name: '选项2', value: '2', id: 2 }]);
-    const borderSizeValues3 = ref([{ name: '选项2', value: '2', id: 2 }]);
-    const borderSizeValues4 = ref([{ name: '选项2', value: '2', id: 2 }]);
+    const borderSizeValues1 = ref([{ name: 'Summer', value: '1', id: 1 }]);
+    const borderSizeValues2 = ref([{ name: 'Summer', value: '1', id: 1 }]);
+    const borderSizeValues3 = ref([{ name: 'Summer', value: '1', id: 1 }]);
+
     return {
       borderSizeValues1,
       borderSizeValues2,
       borderSizeValues3,
-      borderSizeValues4,
       borderSizeOptions1,
     };
   },
@@ -262,41 +265,46 @@ export default defineComponent({
 
 ### 按钮形态
 
+需要把 `d-checkbox` 替换成 `d-checkbox-button`， 数组源可为普通数组、对象数组等。
+
 :::demo
 
 ```vue
+
 <template>
-  <div>
-    <div style="margin-bottom: 10px">
-      <d-checkbox-group v-model="buttonValues1" size="lg" is-show-title color="#FA9841" text-color="#fff">
-        <d-checkbox-button
-          v-for="item in buttonOptions1"
-          :label="item.label"
-          :value="item.value"
-          :key="item.value"
-          :title="item.title"
-        ></d-checkbox-button
-      ></d-checkbox-group>
-      <d-checkbox-group v-model="buttonValues2" style="margin-top: 10px;">
-        <d-checkbox-button v-for="item in buttonOptions1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
-      ></d-checkbox-group>
-      <d-checkbox-group v-model="buttonValues3" size="sm" style="margin-top: 10px;">
-        <d-checkbox-button
-          v-for="item in buttonOptions1"
-          :label="item.label"
-          :value="item.value"
-          :key="item.value"
-          :disabled="item.disabled"
-        ></d-checkbox-button
-      ></d-checkbox-group>
-      <d-checkbox-group v-model="buttonValues4" size="xs" disabled style="margin-top: 10px;">
-        <d-checkbox-button v-for="item in buttonOptions1" :label="item.label" :value="item.value" :key="item.value"></d-checkbox-button
-      ></d-checkbox-group>
-    </div>
-  </div>
+  <h4>禁用</h4>
+  <d-checkbox-group v-model="buttonValues1" size="sm" direction="row">
+    <d-checkbox-button
+      v-for="item in buttonOptions1"
+      :label="item.label"
+      :value="item.value"
+      :key="item.value"
+      :disabled="item.disabled"
+    >
+    </d-checkbox-button>
+  </d-checkbox-group>
+
+  <h4>默认</h4>
+  <d-checkbox-group v-model="buttonValues2" direction="row">
+    <d-checkbox-button v-for="item in buttonOptions1" :label="item.label" :value="item.value" :key="item.value"
+    ></d-checkbox-button>
+  </d-checkbox-group>
+
+  <h4>自定义填充颜色、文字颜色</h4>
+  <d-checkbox-group v-model="buttonValues3" size="lg" is-show-title color="#FA9841" text-color="#fff" direction="row">
+    <d-checkbox-button
+      v-for="item in buttonOptions1"
+      :label="item.label"
+      :value="item.value"
+      :key="item.value"
+      :title="item.title"
+    >
+    </d-checkbox-button>
+  </d-checkbox-group>
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   setup() {
     const buttonOptions1 = ref([
@@ -307,12 +315,11 @@ export default defineComponent({
     const buttonValues1 = ref([2]);
     const buttonValues2 = ref([2]);
     const buttonValues3 = ref([2]);
-    const buttonValues4 = ref([2]);
+
     return {
       buttonValues1,
       buttonValues2,
       buttonValues3,
-      buttonValues4,
       buttonOptions1,
     };
   },
@@ -328,6 +335,7 @@ export default defineComponent({
 :::demo
 
 ```vue
+
 <template>
   <div style="margin-bottom: 10px">
     <d-checkbox
@@ -350,6 +358,7 @@ export default defineComponent({
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
+
 export default defineComponent({
   setup() {
     const checkboxChecked1 = ref(true);
@@ -381,6 +390,7 @@ export default defineComponent({
 :::demo
 
 ```vue
+
 <template>
   <div>
     <d-checkbox-group
@@ -487,5 +497,5 @@ export default defineComponent({
 #### ICheckboxSize
 
 ```ts
-type ICheckboxSize = 'lg' | 'md' | 'sm' | 'xs';
+type ICheckboxSize = 'lg' | 'md' | 'sm';
 ```
