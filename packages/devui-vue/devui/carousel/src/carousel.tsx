@@ -11,8 +11,8 @@ export default defineComponent({
   emits: ['update:activeIndex', 'activeIndexChange'],
   setup(props: CarouselProps, { emit, slots, expose }) {
     const ns = useNamespace('carousel');
-    const { height, showDots, dotPosition, arrowTrigger, autoplay, autoplaySpeed, dotTrigger, activeIndex } = toRefs(props);
-    const transitionSpeed = 500;
+    const { height, showDots, dotPosition, arrowTrigger, autoplay, autoplaySpeed, dotTrigger, activeIndex, transitionSpeed } =
+      toRefs(props);
 
     const itemCount = ref(0);
     const showArrow = ref(false);
@@ -51,7 +51,7 @@ export default defineComponent({
 
         targetEl.style.transform = '';
         translatePosition(currentIndex.value);
-      }, transitionSpeed);
+      }, transitionSpeed.value);
     };
 
     // 调整首尾翻动时的位置
@@ -86,7 +86,7 @@ export default defineComponent({
         return;
       }
 
-      containerRef.value.style.transition = `left ${transitionSpeed}ms ease`;
+      containerRef.value.style.transition = `left ${transitionSpeed.value}ms ease`;
 
       let latestIndex = currentIndex.value;
       if (index < 0 && currentIndex.value === 0) {
@@ -148,7 +148,7 @@ export default defineComponent({
 
     onMounted(() => {
       if (containerRef.value) {
-        containerRef.value.style.transition = `left ${transitionSpeed}ms ease`;
+        containerRef.value.style.transition = `left ${transitionSpeed.value}ms ease`;
         containerRef.value.style.left = '0%';
       }
 
@@ -209,6 +209,7 @@ export default defineComponent({
                   class={{ 'dot-item': true, active: currentIndex.value === index }}
                   onClick={() => switchStep(index, 'click')}
                   onMouseenter={() => switchStep(index, 'hover')}
+                  style={{ transition: `all ${transitionSpeed.value}ms ease` }}
                 />
               ))}
             </ul>
