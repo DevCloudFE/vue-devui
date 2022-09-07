@@ -37,10 +37,10 @@ export const carouselProps = {
     type: Number,
     default: 0,
   },
-  transitionSpeed:{
-    type:Number,
-    default:500
-  }
+  transitionSpeed: {
+    type: Number,
+    default: 500,
+  },
 } as const;
 
 export type CarouselProps = ExtractPropTypes<typeof carouselProps>;
