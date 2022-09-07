@@ -2,21 +2,18 @@
 
 $font-size-map: (
   lg: $devui-font-size-lg,
-  md: $devui-font-size-lg,
+  md: $devui-font-size-md,
   sm: $devui-font-size-sm,
-  xs: $devui-font-size-sm,
 );
 $checkbox-width-map: (
-  lg: 16px,
+  lg: 18px,
   md: 16px,
   sm: 14px,
-  xs: 14px,
 );
 $checkbox-label-height-map: (
-  lg: 40px,
-  md: 36px,
-  sm: 32px,
-  xs: 28px,
+  lg: $devui-size-lg,
+  md: $devui-size-md,
+  sm: $devui-size-sm,
 );
 .#{$devui-prefix}-checkbox {
   position: relative;
@@ -184,8 +181,10 @@ $checkbox-label-height-map: (
     color: $devui-text;
     margin: 0;
     display: block;
-    @each $size in ('lg', 'md', 'sm', 'xs') {
+    @each $size in ('lg', 'md', 'sm') {
       &.#{$devui-prefix}-checkbox--#{$size} {
+        display: flex;
+        align-items: center;
         font-size: map-get($font-size-map, #{$size});
 
         .#{$devui-prefix}-checkbox__material {
@@ -200,7 +199,6 @@ $checkbox-label-height-map: (
 
         &.#{$devui-prefix}-checkbox--bordered {
           height: map-get($checkbox-label-height-map, #{$size});
-          line-height: map-get($checkbox-label-height-map, #{$size});
           padding: 0 15px 0 10px;
         }
       }
