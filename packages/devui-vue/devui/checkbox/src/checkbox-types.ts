@@ -1,7 +1,7 @@
 import { PropType, InjectionKey, Ref, ExtractPropTypes, ComputedRef } from 'vue';
 
 type Direction = 'row' | 'column';
-type Size = 'lg' | 'md' | 'sm' | 'xs';
+type Size = 'lg' | 'md' | 'sm';
 
 const commonProps = {
   name: {

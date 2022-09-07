@@ -1,19 +1,27 @@
 @import '../../styles-var/devui-var.scss';
 
+$devui-btn-sm-padding: var(--devui-btn-sm-padding, 0 16px);
+$devui-btn-padding: var(--devui-btn-padding, 0 20px);
+$devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
+
 $font-size-map: (
   lg: $devui-font-size-lg,
-  md: $devui-font-size-lg,
+  md: $devui-font-size-md,
   sm: $devui-font-size-sm,
-  xs: $devui-font-size-sm,
 );
 $button-padding-map: (
-  lg: 12px 20px,
-  md: 10px 20px,
-  sm: 9px 15px,
-  xs: 7px 15px,
+  lg: $devui-btn-lg-padding,
+  md: $devui-btn-padding,
+  sm: $devui-btn-sm-padding,
+);
+$checkbox-label-height-map: (
+  lg: $devui-size-lg,
+  md: $devui-size-md,
+  sm: $devui-size-sm,
 );
 .#{$devui-prefix}-checkbox-button {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   position: relative;
 
   &__input {
@@ -39,10 +47,12 @@ $button-padding-map: (
     line-height: 1;
     user-select: none;
     box-shadow: -1px 0 0 0 $devui-disabled-line;
-    @each $size in ('lg', 'md', 'sm', 'xs') {
+    @each $size in ('lg', 'md', 'sm') {
       &.#{$devui-prefix}-checkbox-button--#{$size} {
         font-size: map-get($font-size-map, #{$size});
         padding: map-get($button-padding-map, #{$size});
+        height: map-get($checkbox-label-height-map, #{$size});
+        line-height: map-get($checkbox-label-height-map, #{$size});
       }
     }
   }
