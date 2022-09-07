@@ -13,6 +13,7 @@ import ThemePicker from './ThemePicker.vue'
 import { Locale } from '@devui/locale'
 import enUS from '@devui/locale/lang/en-us'
 import zhCN from '@devui/locale/lang/zh-cn'
+import { LANG_KEY, CURRENT_LANG, ZH_CN, EN_US } from '../const'
 
 // 主题切换
 const THEME_MAP = {
@@ -38,33 +39,33 @@ watch(currentTheme, (newVal) => {
 })
 
 // 国际化
-const defaultLanguage = ref(localStorage.getItem('preferred_lang'))
+const defaultLanguage = ref(CURRENT_LANG)
 function useTranslation(target) {
   defaultLanguage.value = target
-  localStorage.setItem('preferred_lang', target)
-  if (target === 'en-US') {
-    location.pathname = `/en-US${location.pathname}`
-  } else if (target === 'zh-CN') {
-    location.pathname = `${location.pathname.split('/en-US')[1]}`
+  localStorage.setItem(LANG_KEY, target)
+  if (target === EN_US) {
+    location.pathname = `/${EN_US}${location.pathname}`
+  } else if (target === ZH_CN) {
+    location.pathname = location.pathname.split(`/${EN_US}`)[1];
   }
 }
 
 defineEmits(['toggle'])
 
 const LANG_MAP = {
-  'zh-CN': '中文',
-  'en-US': 'English',
+  [ZH_CN]: '中文',
+  [EN_US]: 'English',
 }
 
-const currentLang = ref('zh-CN');
+const currentLang = ref(CURRENT_LANG);
 const app = getCurrentInstance();
 const switchLang = () => {
-  if (currentLang.value === 'zh-CN') {
-    Locale.use('en-US', enUS);
-    currentLang.value = 'en-US';
+  if (currentLang.value === ZH_CN) {
+    Locale.use(EN_US, enUS);
+    currentLang.value = EN_US;
   } else {
-    Locale.use('zh-CN', zhCN);
-    currentLang.value = 'zh-CN';
+    Locale.use(ZH_CN, zhCN);
+    currentLang.value = ZH_CN;
   }
   app.appContext.config.globalProperties.langMessages.value = Locale.messages();
 };
@@ -88,10 +89,10 @@ const switchLang = () => {
           <div
             class="custom-nav-item ml-m"
             style="font-size: 0"
-            @click="() => useTranslation(defaultLanguage === 'zh-CN' ? 'en-US' : 'zh-CN')"
+            @click="() => useTranslation(defaultLanguage === ZH_CN ? EN_US : ZH_CN)"
             v-if="false"
           >
-            <ZhLang v-if="defaultLanguage === 'zh-CN'"></ZhLang>
+            <ZhLang v-if="defaultLanguage === ZH_CN"></ZhLang>
             <EnLang v-else></EnLang>
           </div>
           <div

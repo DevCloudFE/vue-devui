@@ -8,12 +8,12 @@
   "build": {
     "alias": "Build",
     "desc": "Build theme and docs",
-    "command": "pnpm --filter vue-devui build"
+    "command": "pnpm --filter vue-devui build --reporter default"
   },
   "build:lib": {
     "alias": "Build lib",
     "desc": "Build components and release",
-    "command": "pnpm --filter vue-devui build:lib"
+    "command": "pnpm --filter vue-devui build:lib --reporter default"
   },
   "build:cli": {
     "alias": "Build cli",
@@ -34,7 +34,7 @@
     "alias": "Tests",
     "desc": "Select a test script to run",
     "scripts": {
-      "test": ["pnpm --filter vue-devui test", "Test vue-devui"],
+      "test": ["pnpm --filter vue-devui test --reporter default", "Test vue-devui"],
       "coverage": ["pnpm --filter vue-devui coverage", "Test vue-devui and gen coverage"]
     }
   }

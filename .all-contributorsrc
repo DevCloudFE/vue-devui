@@ -553,6 +553,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "iamyoki",
+      "name": "Yoki",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74389358?v=4",
+      "profile": "https://github.com/iamyoki",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "LadyChatterleyLover",
+      "name": "luopei",
+      "avatar_url": "https://avatars.githubusercontent.com/u/35223515?v=4",
+      "profile": "https://github.com/LadyChatterleyLover",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
