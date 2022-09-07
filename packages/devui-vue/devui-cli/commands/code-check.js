@@ -5,17 +5,11 @@ const chalk = require('chalk');
 const { isReadyToRelease } = require('../shared/utils');
 
 const log = console.log;
-
 const chalkEslint = chalk.hex('#4b32c3');
-
 const chalkUnitTest = chalk.hex('#99425b');
-
 const chalkError = chalk.hex('#F66F6A');
-
 const chalkSuccess = chalk.hex('#3DCCA6');
-
 const entryDir = path.resolve(__dirname, '../../devui');
-
 const unitTestFailedComponents = [];
 
 const completeComponents = fs.readdirSync(entryDir).filter((name) => {
@@ -87,8 +81,16 @@ const unitTestSome = async (components) => {
 };
 
 const unitTestAll = async () => {
-  for (const name of completeComponents) {
-    await unitTestSingle(name);
+  // 单个组件执行单元测试，总耗时太长
+  // for (const name of completeComponents) {
+  //   await unitTestSingle(name);
+  // }
+
+  const unitTestResult = await shell.exec('pnpm --filter vue-devui test --reporter default');
+  // 解决单元测试报错，但PR合入门禁不中断问题
+  if (/failed|ERR_/.test(unitTestResult.stderr)) {
+    shell.echo(chalkError('Error: Unit test failed.'));
+    shell.exit(1);
   }
 
   log(chalkSuccess('\nCongratulations, all components have passed the unit test!'));
