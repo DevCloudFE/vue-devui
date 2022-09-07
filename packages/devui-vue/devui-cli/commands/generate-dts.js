@@ -19,11 +19,11 @@ function generateIndexDts(buildDir) {
 
 exports.generateDts = () => {
   generateIndexDts(outputDir);
-
+  const availableTargetFiles = fs.readdirSync(outputDir);
   const components = fs.readdirSync(entryDir).filter(name => {
     const componentDir = path.resolve(entryDir, name);
     const isDir = fs.lstatSync(componentDir).isDirectory();
-    return isDir && fs.readdirSync(componentDir).includes('index.ts');
+    return isDir && fs.readdirSync(componentDir).includes('index.ts') && availableTargetFiles.includes(name);
   });
   const srcDts = path.resolve(outputDir, 'index.d.ts');
 

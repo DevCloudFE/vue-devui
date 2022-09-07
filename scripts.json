@@ -13,7 +13,7 @@
   "build:lib": {
     "alias": "Build lib",
     "desc": "Build components and release",
-    "command": "pnpm --filter vue-devui build:lib --reporter default"
+    "command": "pnpm --filter vue-devui build:lib"
   },
   "build:cli": {
     "alias": "Build cli",
