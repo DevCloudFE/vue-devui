@@ -46,7 +46,7 @@ export default defineComponent({
 ```vue
 <template>
   <d-carousel height="200px" :transition-speed="5000">
-    <d-carousel-item class="d-carousel-item" v-for="item in items" :key="item">{{ item }}</d-carousel-item>
+    <d-carousel-item class="d-demo-carousel-item" v-for="item in items" :key="item">{{ item }}</d-carousel-item>
   </d-carousel>
 </template>
 <script lang="ts">
@@ -62,7 +62,7 @@ export default defineComponent({
 });
 </script>
 <style>
-.d-carousel-item {
+.d-demo-carousel-item {
   text-align: center;
   line-height: 200px;
   background: var(--devui-global-bg, #f3f6f8);
