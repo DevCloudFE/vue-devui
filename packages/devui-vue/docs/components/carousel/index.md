@@ -39,6 +39,39 @@ export default defineComponent({
 
 :::
 
+### 过渡时间
+
+:::demo
+
+```vue
+<template>
+  <d-carousel height="200px" :transition-speed="5000">
+    <d-carousel-item class="d-carousel-item" v-for="item in items" :key="item">{{ item }}</d-carousel-item>
+  </d-carousel>
+</template>
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const items = ref<string[]>(['page 1', 'page 2', 'page 3', 'page 4']);
+    return {
+      items,
+    };
+  },
+});
+</script>
+<style>
+.d-carousel-item {
+  text-align: center;
+  line-height: 200px;
+  background: var(--devui-global-bg, #f3f6f8);
+}
+</style>
+```
+
+:::
+
 ### 指示器&切换箭头
 
 arrowTrigger 设为 always 可以使箭头永久显示，dotTrigger 设为 hover 可以使 hover 到点上就切换。
@@ -174,6 +207,7 @@ export default defineComponent({
 | dot-position   | `'top'\|'bottom'`            | 'bottom' | 可选，面板指示器位置                                                | [指示器&切换箭头](#指示器-切换箭头) |
 | dot-trigger    | `'click'\|'hover'`           | 'click'  | 可选，指示器触发轮播方式                                            | [指示器&切换箭头](#指示器-切换箭头) |
 | active-index   | `number`                     | 0        | 可选，初始化激活卡片索引，从 0 开始，支持`[(active-index)]`双向绑定 | [基本用法](#基本用法)               |
+| transition-speed   | `number`                     | 500        | 可选，切换到下一张所用的时间，单位ms | [基本用法](#过渡时间)               |
 
 ### Carousel 事件
 
