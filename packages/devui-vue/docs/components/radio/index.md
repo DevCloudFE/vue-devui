@@ -166,7 +166,7 @@ export default defineComponent({
 ```vue
 <template>
   <d-radio-group direction="row" v-model="directionRowChoose">
-    <d-radio v-for="item in directionRowList" :key="item" :value="item"> The Radio value is: {{ item }} </d-radio>
+    <d-radio v-for="item in directionRowList" :key="item" :value="item"> The Radio value is: {{ item }}</d-radio>
   </d-radio-group>
 </template>
 
@@ -226,10 +226,11 @@ export default defineComponent({
 ```vue
 <template>
   <d-radio-group direction="row" v-model="customChoose1">
-    <d-radio v-for="item in customList1" :key="item" :value="item"> The Radio value is: {{ item }} </d-radio>
+    <d-radio v-for="item in customList1" :key="item" :value="item"> The Radio value is: {{ item }}</d-radio>
   </d-radio-group>
   <d-radio-group direction="row" v-model="customChoose2">
-    <d-radio v-for="item in customList2" :key="item.name" :value="item.name"> The Radio value is: {{ item.name }} </d-radio>
+    <d-radio v-for="item in customList2" :key="item.name" :value="item.name"> The Radio value is: {{ item.name }}
+    </d-radio>
   </d-radio-group>
 </template>
 
@@ -263,14 +264,17 @@ export default defineComponent({
 
 ```vue
 <template>
+  <h4>Small</h4>
   <d-radio-group
     :values="sizeBorderList"
-    v-model="sizeBorderChoose1"
-    size="lg"
+    v-model="sizeBorderChoose3"
+    size="sm"
     border
     direction="row"
     style="margin-bottom: 10px;"
   ></d-radio-group>
+
+  <h4>Middle</h4>
   <d-radio-group
     :values="sizeBorderList"
     v-model="sizeBorderChoose2"
@@ -279,18 +283,16 @@ export default defineComponent({
     direction="row"
     style="margin-bottom: 10px;"
   ></d-radio-group>
+
+  <h4>Large</h4>
   <d-radio-group
     :values="sizeBorderList"
-    v-model="sizeBorderChoose3"
-    size="sm"
+    v-model="sizeBorderChoose1"
+    size="lg"
     border
-    disabled
     direction="row"
     style="margin-bottom: 10px;"
   ></d-radio-group>
-  <d-radio-group v-model="sizeBorderChoose4" size="xs" border direction="row" style="margin-bottom: 10px;">
-    <d-radio v-for="item in sizeBorderList" :key="item" :value="item">{{ item }} </d-radio>
-  </d-radio-group>
 </template>
 
 <script>
@@ -302,14 +304,12 @@ export default defineComponent({
     const sizeBorderChoose1 = ref('Spring');
     const sizeBorderChoose2 = ref('Spring');
     const sizeBorderChoose3 = ref('Spring');
-    const sizeBorderChoose4 = ref('Spring');
 
     return {
       sizeBorderList,
       sizeBorderChoose1,
       sizeBorderChoose2,
       sizeBorderChoose3,
-      sizeBorderChoose4,
     };
   },
 });
@@ -320,25 +320,30 @@ export default defineComponent({
 
 ### 按钮形态
 
-数组源可为普通数组、对象数组等。
+需要把 `d-radio` 替换成 `d-radio-button`， 数组源可为普通数组、对象数组等。
 
 :::demo
 
 ```vue
+
 <template>
-  <d-radio-group direction="row" v-model="buttonChoose1" size="lg" style="margin-bottom: 10px;" fill="rgb(255,193,7)" text-color="#ca3d3d">
-    <d-radio-button v-for="item in buttonList1" :key="item" :value="item"> {{ item }} </d-radio-button>
-  </d-radio-group>
-  <d-radio-group direction="row" v-model="buttonChoose2" size="md" style="margin-bottom: 10px;">
-    <d-radio-button v-for="item in buttonList2" :key="item.name" :value="item.name">{{ item.name }} </d-radio-button>
-  </d-radio-group>
-  <d-radio-group direction="row" v-model="buttonChoose3" size="sm" style="margin-bottom: 10px;">
-    <d-radio-button v-for="item in buttonList3" :key="item.name" :value="item.name" :disabled="item.disabled"
-      >{{ item.name }}
+  <h4>禁用</h4>
+  <d-radio-group direction="row" v-model="buttonChoose1" size="sm" style="margin-bottom: 10px;">
+    <d-radio-button v-for="item in buttonList1" :key="item.name" :value="item.name" :disabled="item.disabled"
+    >{{ item.name }}
     </d-radio-button>
   </d-radio-group>
-  <d-radio-group direction="row" v-model="buttonChoose4" size="xs" style="margin-bottom: 10px;" disabled>
-    <d-radio-button v-for="item in buttonList2" :key="item.name" :value="item.name">{{ item.name }} </d-radio-button>
+
+  <h4>默认</h4>
+  <d-radio-group direction="row" v-model="buttonChoose2" size="md" style="margin-bottom: 10px;">
+    <d-radio-button v-for="item in buttonList2" :key="item.name" :value="item.name">{{ item.name }}</d-radio-button>
+  </d-radio-group>
+
+  <h4>自定义填充颜色、文字颜色</h4>
+  <d-radio-group direction="row" v-model="buttonChoose3" size="lg" style="margin-bottom: 10px;" fill="rgb(255,193,7)"
+                 text-color="#ca3d3d"
+  >
+    <d-radio-button v-for="item in buttonList3" :key="item" :value="item"> {{ item }}</d-radio-button>
   </d-radio-group>
 </template>
 
@@ -347,15 +352,18 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const buttonList1 = ref(['radio1', 'radio2', 'radio3']);
-    let buttonChoose1 = ref('radio1');
+    const buttonList1 = [{
+      name: 'Spring',
+      disabled: true
+    }, { name: 'Summer' }, { name: 'Autumn' }, { name: 'Winter' }];
+    let buttonChoose1 = ref('Summer');
+    
+    const buttonList2 = [{ name: 'Spring' }, { name: 'Summer' }, { name: 'Autumn' }, { name: 'Winter' }];
+    let buttonChoose2 = ref('Spring');
 
-    const buttonList2 = [{ name: 'radio1' }, { name: 'radio2' }, { name: 'radio3' }];
-    let buttonChoose2 = ref('radio1');
-    const buttonList3 = [{ name: 'radio1', disabled: true }, { name: 'radio2' }, { name: 'radio3' }];
-    let buttonChoose3 = ref('radio1');
-    let buttonChoose4 = ref('radio1');
-
+    const buttonList3 = ref(['Spring', 'Summer', 'Autumn', 'Winter']);
+    let buttonChoose3 = ref('Spring');
+    
     return {
       buttonList1,
       buttonChoose1,
@@ -363,7 +371,6 @@ export default defineComponent({
       buttonChoose2,
       buttonList3,
       buttonChoose3,
-      buttonChoose4,
     };
   },
 });
@@ -424,5 +431,5 @@ export default defineComponent({
 #### IRadioSize
 
 ```ts
-type IRadioSize = 'lg' | 'md' | 'sm' | 'xs';
+type IRadioSize = 'lg' | 'md' | 'sm';
 ```
