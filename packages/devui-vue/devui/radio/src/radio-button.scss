@@ -1,32 +1,42 @@
 @import '../../styles-var/devui-var.scss';
 
+$devui-btn-sm-padding: var(--devui-btn-sm-padding, 0 16px);
+$devui-btn-padding: var(--devui-btn-padding, 0 20px);
+$devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
+
 $font-size-map: (
   lg: $devui-font-size-lg,
-  md: $devui-font-size-lg,
+  md: $devui-font-size-md,
   sm: $devui-font-size-sm,
-  xs: $devui-font-size-sm,
+);
+$radio-label-height-map: (
+  lg: $devui-size-lg,
+  md: $devui-size-md,
+  sm: $devui-size-sm,
 );
 $button-padding-map: (
-  lg: 12px 20px,
-  md: 10px 20px,
-  sm: 9px 15px,
-  xs: 7px 15px,
+  lg: $devui-btn-lg-padding,
+  md: $devui-btn-padding,
+  sm: $devui-btn-sm-padding,
 );
 .#{$devui-prefix}-radio-button {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   position: relative;
-  font-size: 14px;
+  padding: $devui-btn-padding;
+  height: $devui-size-md;
+  font-size: $devui-font-size-md;
   color: $devui-text;
-  padding: 10px 20px;
   cursor: pointer;
   border: 1px solid $devui-line;
   border-left: none;
-  line-height: 1;
   user-select: none;
-  @each $size in ('lg', 'md', 'sm', 'xs') {
+  @each $size in ('lg', 'md', 'sm') {
     &.#{$devui-prefix}-radio-button--#{$size} {
       font-size: map-get($font-size-map, #{$size});
       padding: map-get($button-padding-map, #{$size});
+      height: map-get($radio-label-height-map, #{$size});
+      line-height: map-get($radio-label-height-map, #{$size});
     }
   }
 
