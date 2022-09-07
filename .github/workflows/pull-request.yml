@@ -35,10 +35,10 @@ jobs:
         run: pnpm i
 
       - name: Build site
-        run: pnpm scripts run build
+        run: pnpm build
 
       - name: ESLint
         run: pnpm cli --filter vue-devui -- code-check -t eslint
 
       - name: Unit test
-        run: pnpm scripts run tests.test
+        run: pnpm cli --filter vue-devui -- code-check -t unit-test
