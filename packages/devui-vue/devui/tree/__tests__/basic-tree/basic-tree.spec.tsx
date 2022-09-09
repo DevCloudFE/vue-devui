@@ -4,7 +4,6 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { Tree } from '../../';
 import { basicTreeData } from './basic-tree-data';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
-import { wait } from '../../../shared/utils';
 
 jest.mock('../../../locale/create', () => ({
   createI18nTranslate: () => jest.fn(),
