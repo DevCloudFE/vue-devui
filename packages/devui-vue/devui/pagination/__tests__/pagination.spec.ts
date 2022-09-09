@@ -18,7 +18,6 @@ const globalOption = {
   },
 };
 const ns = useNamespace('pagination', true);
-const selectNs = useNamespace('select', true);
 
 describe('pagination: ', () => {
   it('test pageSize', async () => {
