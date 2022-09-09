@@ -4,6 +4,7 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { Tree } from '../../';
 import { basicTreeData } from './basic-tree-data';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { wait } from '../../../shared/utils';
 
 jest.mock('../../../locale/create', () => ({
   createI18nTranslate: () => jest.fn(),
@@ -115,11 +116,11 @@ describe('Basic tree', () => {
 
     // 点击之后，节点收起
     await nodes[0].get(ns.e('node-folder')).trigger('click');
-    expect(nodes[0].classes()).not.toContain(noDotNs.em('node', 'open'));
+    expect(wrapper.findAll(ns.e('node'))[0].classes()).not.toContain(noDotNs.em('node', 'open'));
 
-    // 再次点击，节点展开
+    // // 再次点击，节点展开
     await nodes[0].get(ns.e('node-folder')).trigger('click');
-    expect(nodes[0].classes()).toContain(noDotNs.em('node', 'open'));
+    expect(wrapper.findAll(ns.e('node'))[0].classes()).toContain(noDotNs.em('node', 'open'));
   });
 
   it('Should render the style of node connection line correctly.', () => {

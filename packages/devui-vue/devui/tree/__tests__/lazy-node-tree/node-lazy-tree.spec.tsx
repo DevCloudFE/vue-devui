@@ -38,7 +38,7 @@ describe('Tree node lazyLoad', () => {
     wrapper.unmount();
   });
 
-  it('node dynamic loading', async () => {
+  it.only('node dynamic loading', async () => {
     expect(wrapper.findAll(ns.e('node'))).toHaveLength(2);
     const TREE_NODE_DICT = ['Parent node 1', 'Leaf node 2 - dynamic loading'];
     const titleList = wrapper.findAll(ns.e('node-title'));
@@ -52,7 +52,7 @@ describe('Tree node lazyLoad', () => {
     const icon = loadingItem.find(ns.e('node-folder'));
     await icon.trigger('click');
 
-    const loadingContent = loadingItem.find(loadingNs.b());
+    const loadingContent = wrapper.findAll(ns.e('node-content'))[1].find(loadingNs.b());
     expect(loadingContent.exists()).toBeTruthy();
 
     await new Promise((resolve) => {

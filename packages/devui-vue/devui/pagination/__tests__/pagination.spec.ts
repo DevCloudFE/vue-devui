@@ -54,10 +54,10 @@ describe('pagination: ', () => {
 
     expect(wrapper.find(`${ns.e('item')}.active`).text()).toEqual('5');
     await nextTick();
-    expect((wrapper.find(selectNs.e('input')).element as HTMLInputElement).value).toEqual('20');
+    expect(wrapper.find('.devui-icon__container span').text()).toEqual('20');
 
     const btns = wrapper.findAll(`a${ns.e('link')}`);
-    expect(btns.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual('<,1,...,4,5,6,...,16,>');
+    expect(btns.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual(',1,...,4,5,6,...,16,');
     expect(wrapper.find(ns.e('list')).classes()).toContain(ns.m('sm').slice(1));
 
     // // 跳转按钮
@@ -68,16 +68,16 @@ describe('pagination: ', () => {
     await btns[0].trigger('click');
     expect(wrapper.find(`${ns.e('item')}.active`).text()).toEqual('4');
     const btns1 = wrapper.findAll(`a${ns.e('link')}`);
-    expect(btns1.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual('<,1,...,3,4,5,...,16,>');
+    expect(btns1.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual(',1,...,3,4,5,...,16,');
 
     // // 改变每页条数
-    await wrapper.find(selectNs.e('input')).trigger('click');
-    const selectItems = document.querySelectorAll(selectNs.e('item'));
+    await wrapper.find('.devui-icon__container span').trigger('click');
+    const selectItems = document.querySelectorAll('.devui-pagination__size-list li');
     await selectItems[1].dispatchEvent(new Event('click'));
 
-    expect((wrapper.find(selectNs.e('input')).element as HTMLInputElement).value).toEqual('10');
+    expect(wrapper.find('.devui-icon__container span').text()).toEqual('10');
     const btns2 = wrapper.findAll(`a${ns.e('link')}`);
-    expect(btns2.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual('<,1,...,3,4,5,...,31,>');
+    expect(btns2.map((ele: DOMWrapper<Element>) => ele.text()).join()).toEqual(',1,...,3,4,5,...,31,');
 
     wrapper.unmount();
   });
@@ -119,15 +119,15 @@ describe('pagination: ', () => {
     expect(wrapper.find(ns.e('list')).classes()).toContain(ns.m('lg').slice(1));
     const btns = wrapper.findAll(`a${ns.e('link')}`);
     const pageIndexs = btns.map((ele: DOMWrapper<Element>) => ele.text());
-    expect(pageIndexs.join()).toEqual('<,1,...,6,7,8,9,10,11,12,13,...,31,>');
+    expect(pageIndexs.join()).toEqual(',1,...,6,7,8,9,10,11,12,13,...,31,');
 
     // 当前页改变回调
     await btns[0].trigger('click');
     expect(pageIndexChange).toHaveBeenCalled();
 
     // 每页条数改变回调
-    await wrapper.find(selectNs.e('input')).trigger('click');
-    const selectItems = document.querySelectorAll(selectNs.e('item'));
+    await wrapper.find('.devui-icon__container span').trigger('click');
+    const selectItems = document.querySelectorAll('.devui-pagination__size-list li');
     await selectItems[0].dispatchEvent(new Event('click'));
     expect(pageSizeChange).toHaveBeenCalled();
 
