@@ -27,7 +27,7 @@ export default {
     el.addEventListener('dragover', function (event: DragEvent){
       event.preventDefault();
       const dragId = binding.instance.$root.identity;
-      if (document.getElementById(dragId)?.dataset.parent === 'sort-drop'){
+      if (document.getElementById(dragId)?.dataset.parent === 'sortable-drop-area'){
         // 说明此时是同源操作（不需要生成shadow）
         // sameOriginExchangeElementPosition(event, [...dropArea.children], dragId, dropArea);
         return;
@@ -45,7 +45,7 @@ export default {
       // 获取可放置区域
       const dropArea = [...el.childNodes][1];
       const dragId = binding.instance.$root.identity;
-      if (document.getElementById(dragId)?.dataset.parent === 'sort-drop'){
+      if (document.getElementById(dragId)?.dataset.parent === 'sortable-drop-area'){
         // 说明是同源（不产生shadow，直接替换）
         sameOriginExchangeElementPosition(event, [...dropArea.children], dragId, dropArea);
         return;
@@ -54,7 +54,7 @@ export default {
       if (document.getElementById(SHADOW_ID)){
         dropArea.replaceChild(document.getElementById(dragId), document.getElementById(SHADOW_ID));
         if (document.getElementById(dragId)){
-          document.getElementById(dragId).dataset.parent = 'sort-drop';
+          document.getElementById(dragId).dataset.parent = 'sortable-drop-area';
         }
       }
     });
