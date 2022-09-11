@@ -1,6 +1,10 @@
-import { shadowId } from './constant';
-import { changeDragState, createInsertSortableShadow, insertDragElement, judgeMouseIsInSortableArea,
-  exchangeShadowPosition, sameOriginExchangeElementPosition } from './utils';
+import { SHADOW_ID } from './const';
+import {
+  createInsertSortableShadow,
+  judgeMouseIsInSortableArea,
+  exchangeShadowPosition,
+  sameOriginExchangeElementPosition,
+} from './utils';
 
 
 export default {
@@ -22,7 +26,6 @@ export default {
     const self = el;
     el.addEventListener('dragover', function (event: DragEvent){
       event.preventDefault();
-      const dropArea = [...el.childNodes][1];
       const dragId = binding.instance.$root.identity;
       if (document.getElementById(dragId)?.dataset.parent === 'sort-drop'){
         // 说明此时是同源操作（不需要生成shadow）
@@ -30,7 +33,7 @@ export default {
         return;
       }
       // 需要判定是否存在阴影，否则会出现严重的抖动情况
-      if (!document.getElementById('shadow0611') && [...self.childNodes[1].children].length === 0){
+      if (!document.getElementById(SHADOW_ID) && [...self.childNodes[1].children].length === 0){
         createInsertSortableShadow([...self.childNodes][1], event, dragId);
       } else if ([...self.childNodes[1].children].length >= 1){
         // 说明此时想要进行换位操作
@@ -48,8 +51,8 @@ export default {
         return;
       }
       // 判断鼠标是否处于drop区域
-      if (document.getElementById(shadowId)){
-        dropArea.replaceChild(document.getElementById(dragId), document.getElementById(shadowId));
+      if (document.getElementById(SHADOW_ID)){
+        dropArea.replaceChild(document.getElementById(dragId), document.getElementById(SHADOW_ID));
         if (document.getElementById(dragId)){
           document.getElementById(dragId).dataset.parent = 'sort-drop';
         }
@@ -58,8 +61,8 @@ export default {
     // 主要用来移除shadow
     el.addEventListener('dragleave', function (event: Event){
       const dropArea = [...el.childNodes][1];
-      if (document.getElementById(shadowId) && !judgeMouseIsInSortableArea(event, el)){
-        dropArea.removeChild(document.getElementById(shadowId));
+      if (document.getElementById(SHADOW_ID) && !judgeMouseIsInSortableArea(event, el)){
+        dropArea.removeChild(document.getElementById(SHADOW_ID));
       }
     });
   }

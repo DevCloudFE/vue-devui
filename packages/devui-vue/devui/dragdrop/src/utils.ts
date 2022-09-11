@@ -1,4 +1,4 @@
-import { shadowId } from './constant';
+import { SHADOW_ID } from './const';
 
 /**
  *
@@ -24,7 +24,7 @@ function getElementStyle (id: string, styleName: string): string {
  */
 function createShadow (originId: string): HTMLElement {
   const shadow = document.createElement('div');
-  shadow.id = shadowId;
+  shadow.id = SHADOW_ID;
   shadow.style.background = 'rgb(206, 215, 255)';
   shadow.style.width = getElementStyle(originId, 'width');
   shadow.style.height = '20px';
@@ -44,7 +44,16 @@ function createShadow (originId: string): HTMLElement {
  * @description
  *    改变拖拽元素相应的状态
  */
-function changeDragState (el: string, originId: string, dragStart: string, drag: string, dragover: string, drop: string, shouldCreateShadow: string, dragFlag: string): void{
+function changeDragState (
+  el: string,
+  originId: string,
+  dragStart: string,
+  drag: string,
+  dragover: string,
+  drop: string,
+  shouldCreateShadow: string,
+  dragFlag: string
+): void{
   el.dataset.originId = originId;
   el.dataset.dragStart = dragStart;
   el.dataset.dragover = dragover;
@@ -75,14 +84,14 @@ function computeCompareElementHeight (compareElement: HTMLCollection): unknown{
 function createInsertSortableShadow (sortDropArea: unknown, mouseObject: unknown, originId: string): void {
   const sortDropAreaArr: Array = [...sortDropArea.children];
   if (sortDropAreaArr.length === 0){
-    if (!document.getElementById(shadowId)){
+    if (!document.getElementById(SHADOW_ID)){
       const shadowElement = createShadow(originId);
       sortDropArea.appendChild(shadowElement);
     }
   }else {
     for (let index = 0; index < sortDropAreaArr.length; index++){
       const compareHeight = computeCompareElementHeight(sortDropAreaArr[index]);
-      document.getElementById(shadowId) ? sortDropArea.removeChild(document.getElementById(shadowId)) : null;
+      document.getElementById(SHADOW_ID) ? sortDropArea.removeChild(document.getElementById(SHADOW_ID)) : null;
       if (Math.floor(mouseObject.clientY) <= (Math.floor(compareHeight / 2) + sortDropAreaArr[index].getBoundingClientRect().top)){
         sortDropArea.insertBefore(createShadow(originId), sortDropAreaArr[index]);
         break;
@@ -103,7 +112,7 @@ function createInsertSortableShadow (sortDropArea: unknown, mouseObject: unknown
  */
 function insertDragElement (dropAreaContainer: HTMLCollection, dragId: string, mouseObject: MouseEvent): void {
   for (let index = 0; index < [...dropAreaContainer.children].length; index++){
-    if (index == [...dropAreaContainer.children].length-1){
+    if (index === [...dropAreaContainer.children].length-1){
       dropAreaContainer.appendChild(document.getElementById(dragId));
       break;
     }
@@ -122,9 +131,9 @@ function insertDragElement (dropAreaContainer: HTMLCollection, dragId: string, m
  */
 function deleteInsertedSortableShadow (dropSortArea: unknown): void{
   if (dropSortArea){
-    if (document.getElementById(shadowId)){
-      if (dropSortArea.contains(document.getElementById(shadowId))){
-        dropSortArea.removeChild(document.getElementById(shadowId));
+    if (document.getElementById(SHADOW_ID)){
+      if (dropSortArea.contains(document.getElementById(SHADOW_ID))){
+        dropSortArea.removeChild(document.getElementById(SHADOW_ID));
       }
     }
   }
@@ -184,12 +193,12 @@ function sameOriginExchangeElementPosition (mouse: Event, comparedArr: Array, dr
 function exchangeShadowPosition (mouse: Event, comparedArr: Array, dragId: string, dropArea: Element): void{
   for (let index = 0; index < comparedArr.length; index++){
     // 遇到shadow，直接跳过
-    if (comparedArr[index]?.id !== 'shadow0611'){
+    if (comparedArr[index]?.id !== SHADOW_ID){
       if (Math.floor(mouse.clientY) <= (comparedArr[index].getBoundingClientRect().top)){
         console.log('------');
-        if (comparedArr[index-1]?.id !== 'shadow0611'){
-          if (document.getElementById('shadow0611')){
-            dropArea.removeChild(document.getElementById('shadow0611'));
+        if (comparedArr[index-1]?.id !== SHADOW_ID){
+          if (document.getElementById(SHADOW_ID)){
+            dropArea.removeChild(document.getElementById(SHADOW_ID));
           }
           dropArea.insertBefore(createShadow(dragId), comparedArr[index]);
           break;
@@ -197,10 +206,10 @@ function exchangeShadowPosition (mouse: Event, comparedArr: Array, dragId: strin
       }
       if (Math.floor(mouse.clientY) > (
         comparedArr[comparedArr.length - 1].getBoundingClientRect().top)){
-        if (index === comparedArr.length - 1 && comparedArr[index]?.id !== 'shadow0611'){
+        if (index === comparedArr.length - 1 && comparedArr[index]?.id !== SHADOW_ID){
           // 如果存在shadow，则清除
-          if (document.getElementById('shadow0611')){
-            dropArea.removeChild(document.getElementById('shadow0611'));
+          if (document.getElementById(SHADOW_ID)){
+            dropArea.removeChild(document.getElementById(SHADOW_ID));
           }
           dropArea.appendChild(createShadow(dragId));
         }
