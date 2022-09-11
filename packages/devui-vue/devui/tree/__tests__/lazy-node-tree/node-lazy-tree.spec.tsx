@@ -38,7 +38,7 @@ describe('Tree node lazyLoad', () => {
     wrapper.unmount();
   });
 
-  it.only('node dynamic loading', async () => {
+  it('node dynamic loading', async () => {
     expect(wrapper.findAll(ns.e('node'))).toHaveLength(2);
     const TREE_NODE_DICT = ['Parent node 1', 'Leaf node 2 - dynamic loading'];
     const titleList = wrapper.findAll(ns.e('node-title'));
