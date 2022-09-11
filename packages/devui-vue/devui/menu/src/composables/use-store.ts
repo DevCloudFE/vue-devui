@@ -22,7 +22,7 @@ export class Store{
   emit(eventName: string, ...args: any[]): void{
     recordTable[this.rootMenuName][eventName].forEach((fn)=>fn(...args));
   }
-  off(eventName: string, fn: (...args: []) => void): void {
+  off(eventName: string, fn: (...args: []) => void): void{
     const idx = recordTable[this.rootMenuName][eventName].indexOf(fn);
     if (idx >= 0) {
       recordTable[this.rootMenuName][eventName].splice(idx, 1);
@@ -30,7 +30,7 @@ export class Store{
   }
 }
 
-export function useStore(rootName: string): Store {
+export function useStore(rootName: string): Store{
   if (!recordTable[rootName]){
     Reflect.set(recordTable, rootName, {});
   }
