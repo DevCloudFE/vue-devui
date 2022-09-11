@@ -25,6 +25,7 @@ export default {
     el.addEventListener('drop', (event: DragEvent) => {
       event.preventDefault();
       const dragId = binding.instance.$root.identity;
+      document.getElementById(dragId).dataset.parent = 'without-drop';
       if (document.getElementById(dragId).dataset.dropArea == document.getElementById(dragId).dataset.dragArea){
         return;
       }
