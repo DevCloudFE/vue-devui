@@ -44,6 +44,7 @@ function createShadow (originId: string): HTMLElement {
  * @description
  *    改变拖拽元素相应的状态
  */
+// TODO: 这个方法参数太多，待优化
 function changeDragState (
   el: string,
   originId: string,
@@ -149,12 +150,12 @@ function deleteInsertedSortableShadow (dropSortArea: unknown): void{
 function judgeMouseIsInSortableArea (mouse: MouseEvent, sortableArea: Element): boolean{
   const { clientX, clientY } = mouse;
   // 获取元素的位置
-  const eleLeft1 = sortableArea.getBoundingClientRect().left;
-  const eleLeft2 = sortableArea.getBoundingClientRect().right;
-  const eletop1 = sortableArea.getBoundingClientRect().top;
-  const eletop2 = sortableArea.getBoundingClientRect().bottom;
+  const eleLeft = sortableArea.getBoundingClientRect().left;
+  const eleRight = sortableArea.getBoundingClientRect().right;
+  const eleTop = sortableArea.getBoundingClientRect().top;
+  const eleBottom = sortableArea.getBoundingClientRect().bottom;
 
-  if ((clientX > eleLeft1) && (clientX < eleLeft2) && (clientY > eletop1) && (clientY < eletop2)){
+  if ((clientX > eleLeft) && (clientX < eleRight) && (clientY > eleTop) && (clientY < eleBottom)){
     return true;
   } else {
     return false;
@@ -187,26 +188,25 @@ function sameOriginExchangeElementPosition (mouse: Event, comparedArr: Array, dr
 /**
  *
  * @param mouse         当前鼠标对象
- * @param comparedArr   待比较的数组
+ * @param dropAreaElements   放置区域的元素
  * @description
  */
-function exchangeShadowPosition (mouse: Event, comparedArr: Array, dragId: string, dropArea: Element): void{
-  for (let index = 0; index < comparedArr.length; index++){
+// TODO: 该方法 if 嵌套太深，待优化
+function exchangeShadowPosition (mouse: Event, dropAreaElements: Array, dragId: string, dropArea: Element): void{
+  for (let index = 0; index < dropAreaElements.length; index++){
     // 遇到shadow，直接跳过
-    if (comparedArr[index]?.id !== SHADOW_ID){
-      if (Math.floor(mouse.clientY) <= (comparedArr[index].getBoundingClientRect().top)){
-        console.log('------');
-        if (comparedArr[index-1]?.id !== SHADOW_ID){
+    if (dropAreaElements[index]?.id !== SHADOW_ID){
+      if (Math.floor(mouse.clientY) <= (dropAreaElements[index].getBoundingClientRect().top)){
+        if (dropAreaElements[index-1]?.id !== SHADOW_ID){
           if (document.getElementById(SHADOW_ID)){
             dropArea.removeChild(document.getElementById(SHADOW_ID));
           }
-          dropArea.insertBefore(createShadow(dragId), comparedArr[index]);
+          dropArea.insertBefore(createShadow(dragId), dropAreaElements[index]);
           break;
         }
       }
-      if (Math.floor(mouse.clientY) > (
-        comparedArr[comparedArr.length - 1].getBoundingClientRect().top)){
-        if (index === comparedArr.length - 1 && comparedArr[index]?.id !== SHADOW_ID){
+      if (Math.floor(mouse.clientY) > dropAreaElements[dropAreaElements.length - 1].getBoundingClientRect().top){
+        if (index === dropAreaElements.length - 1 && dropAreaElements[index]?.id !== SHADOW_ID){
           // 如果存在shadow，则清除
           if (document.getElementById(SHADOW_ID)){
             dropArea.removeChild(document.getElementById(SHADOW_ID));
