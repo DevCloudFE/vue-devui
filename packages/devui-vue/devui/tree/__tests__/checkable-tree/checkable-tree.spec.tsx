@@ -88,7 +88,7 @@ describe('Checkable tree', () => {
   });
 
   it('In the upward mode, the selected state of the node should be switched correctly.', async () => {
-    wrapper.get('.upward').trigger('click');
+    await wrapper.get('.upward').trigger('click');
     const childNodeList = wrapper.findAll(checkBoxNs.b());
     await childNodeList[4].get('label').trigger('click');
     expect(childNodeList[4].classes()).toContain('active');
@@ -110,7 +110,7 @@ describe('Checkable tree', () => {
   });
 
   it('In the downward mode, the selected state of the node should be switched correctly.', async () => {
-    wrapper.get('.downward').trigger('click');
+    await wrapper.get('.downward').trigger('click');
     const childNodeList = wrapper.findAll(checkBoxNs.b());
     expect(childNodeList[0].classes()).toContain('unchecked');
     await childNodeList[0].get('label').trigger('click');
@@ -131,7 +131,7 @@ describe('Checkable tree', () => {
     }
   });
   it('In the both mode, the selected state of the node should be switched correctly.', async () => {
-    wrapper.get('.both').trigger('click');
+    await wrapper.get('.both').trigger('click');
     const childNodeList = wrapper.findAll(checkBoxNs.b());
     await childNodeList[1].get('label').trigger('click');
     expect(childNodeList[0].classes()).toContain('half-checked');

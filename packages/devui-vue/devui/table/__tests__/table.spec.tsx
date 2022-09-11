@@ -278,7 +278,7 @@ describe('d-table', () => {
 
     const tableBody = table.find(ns.e('tbody'));
     const lastTd = tableBody.find('tr').findAll('td')[3];
-    expect(lastTd.text()).toBe('1990/01/12');
+    expect(lastTd.text()).toBe('1990/01/11');
 
     const sortIcon = lastTh.find(ns.e('sort-clickable'));
     await sortIcon.trigger('click');

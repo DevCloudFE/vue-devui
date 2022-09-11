@@ -41,9 +41,18 @@ export default defineComponent({
         }
       };
 
+
       return (
-        <div class={ns.e('group')}>
-          <div class={{ [ns.m('list-inline')]: props.direction === 'row' }}>{getContent()}</div>
+        <div
+          class={[
+            ns.e('group'),
+            {
+              'is-row': props.direction === 'row',
+              'is-column': props.direction === 'column',
+            },
+          ]}
+        >
+          {getContent()}
         </div>
       );
     };
