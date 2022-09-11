@@ -244,17 +244,23 @@ describe('d-input', () => {
     const wrapper = mount({
       components: { DInput },
       template: `
-        <d-input @clear="onClear" clearable/>
+        <d-input @clear="onTrigger" clearable v-model="value" />
       `,
       setup() {
+        const value = ref('hello wolrd');
+        const onTrigger = () => {
+          value.value = '';
+          onClear();
+        };
         return {
-          onClear,
+          onTrigger,
+          value,
         };
       },
     });
     expect(wrapper.find(dotNsClearIconClass).exists()).toBe(true);
-    const i = wrapper.find('i');
-    await i.trigger('click');
+    const iTag = wrapper.find('i');
+    await iTag.trigger('click');
     expect(onClear).toBeCalledTimes(1);
   });
 });

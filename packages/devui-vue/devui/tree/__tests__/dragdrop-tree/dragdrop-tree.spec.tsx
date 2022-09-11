@@ -59,7 +59,7 @@ describe('Draggable tree', () => {
     const wrapper = getDraggableTree();
 
     await nextTick();
-    const childNodeList = wrapper.findAll(ns.e('node-content'));
+    let childNodeList = wrapper.findAll(ns.e('node-content'));
     expect(childNodeList).toHaveLength(15);
     expect(childNodeList[0].text()).toBe('parent node 1');
     expect(childNodeList[1].text()).toBe('parent node 2');
@@ -68,6 +68,7 @@ describe('Draggable tree', () => {
     const dragNode = childNodeList[12];
     const dropNode = childNodeList[0];
     await startDragging(dragNode, dropNode, 10);
+    childNodeList = wrapper.findAll(ns.e('node-content'));
     expect(childNodeList[0].text()).toBe('parent node 1');
     expect(childNodeList[1].text()).toBe('parent node 5');
     expect(childNodeList[2].text()).toBe('leaf node 5-1');
@@ -79,20 +80,22 @@ describe('Draggable tree', () => {
     // test dropPrev
     let wrapper = getDraggableTree({ dropPrev: true, dropNext: true, dropInner: true });
     await nextTick();
-    const childNodeList = wrapper.findAll(ns.e('node-content'));
+    let childNodeList = wrapper.findAll(ns.e('node-content'));
     const dragNode = childNodeList[14];
     const dropNode = childNodeList[0];
     await startDragging(dragNode, dropNode, -1);
+    childNodeList = wrapper.findAll(ns.e('node-content'));
     expect(childNodeList[0].text()).toBe('leaf node 5-2');
     wrapper.unmount();
 
     // test dropInner
     wrapper = getDraggableTree({ dropPrev: true, dropNext: true, dropInner: true });
     await nextTick();
-    const childNodeList1 = wrapper.findAll(ns.e('node-content'));
+    let childNodeList1 = wrapper.findAll(ns.e('node-content'));
     const dragNode1 = childNodeList1[14];
     const dropNode1 = childNodeList1[0];
     await startDragging(dragNode1, dropNode1, 3);
+    childNodeList1 = wrapper.findAll(ns.e('node-content'));
     expect(childNodeList1[1].text()).toBe('leaf node 5-2');
   });
 

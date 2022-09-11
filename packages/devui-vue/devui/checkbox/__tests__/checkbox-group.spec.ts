@@ -8,7 +8,6 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 const ns = useNamespace('checkbox', true);
 const baseClass = ns.b();
 const columnMarginClass = ns.e('column-margin');
-const listLineClass = ns.m('list-inline');
 const wrapClass = ns.e('wrap');
 const borderClass = ns.m('bordered');
 const sizeLgClass = ns.m('lg');
@@ -112,11 +111,11 @@ describe('d-checkbox-group', () => {
     });
 
     expect(wrapper.findAll(columnMarginClass).length).toBe(2);
-    expect(wrapper.find(listLineClass).exists()).toBe(false);
+    expect(wrapper.find('.is-column').exists()).toBe(true);
 
     direction.value = 'row';
     await nextTick();
-    expect(wrapper.find(listLineClass).exists()).toBe(true);
+    expect(wrapper.find('.is-row').exists()).toBe(true);
   });
 
   it('checkbox-group itemWidth work', () => {
