@@ -23,7 +23,6 @@ program
   .command('build')
   .description('打包组件库')
   .hook('postAction', generateTheme)
-  .hook('postAction', generateDts)
   .action(build);
 
 program
