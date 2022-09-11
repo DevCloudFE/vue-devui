@@ -1,7 +1,7 @@
 import type { PropType, ExtractPropTypes } from 'vue';
 
 export type TagType = 'primary' | 'success' | 'warning' | 'danger';
-export type SizeType = 'lg' | 'md' | 'sm' | 'xs';
+export type SizeType = 'lg' | 'md' | 'sm';
 
 export const tagProps = {
   type: {
@@ -26,7 +26,7 @@ export const tagProps = {
   },
   size: {
     type: String as PropType<SizeType>,
-    default: 'xs',
+    default: 'md',
   },
 } as const;
 
