@@ -1,23 +1,24 @@
 @import '../../styles-var/devui-var.scss';
 
-:host {
-  display: block;
-}
-
-.#{$devui-prefix}-checkbox--list-inline {
-  min-height: 28px;
-  line-height: 28px;
-  display: flex;
+.#{$devui-prefix}-checkbox__group {
+  display: inline-flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  align-items: center;
-  margin: -8px 0 0 0;
-
-  & div:not(:last-child) {
-    margin-right: 20px;
-  }
+  align-items: flex-start;
 
   & > * {
     margin-top: 8px;
+  }
+
+  &.is-row {
+    flex-direction: row;
+
+    & div:not(:last-child) {
+      margin-right: 20px;
+    }
+  }
+
+  &.is-column {
+    flex-direction: column;
   }
 }

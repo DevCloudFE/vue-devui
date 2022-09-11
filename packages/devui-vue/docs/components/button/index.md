@@ -52,12 +52,11 @@
 
 ### 尺寸
 
-:::demo 通过`size`设置按钮尺寸，支持`xs`、`sm`、`md`、`lg`四种类型的尺寸，默认为`md`。
+:::demo 通过`size`设置按钮尺寸，支持`sm`、`md`、`lg`三种类型的尺寸，默认为`md`。
 
 ```vue
 <template>
   <div class="demo-spacing">
-    <d-button size="xs">Mini</d-button>
     <d-button size="sm">Small</d-button>
     <d-button>Medium</d-button>
     <d-button size="lg">Large</d-button>
@@ -132,8 +131,9 @@ export default {
     <d-button icon="connect" variant="text">Link</d-button>
     <d-button icon="delete" variant="text" title="Delete"></d-button>
     <d-button shape="round" title="Add">Add</d-button>
-    <d-button variant="solid" icon="filter" shape="circle" title="Add" size="lg"></d-button>
+    <d-button icon="delete" shape="circle" title="Delete" size="sm"></d-button>
     <d-button icon="delete" shape="circle" title="Delete"></d-button>
+    <d-button variant="solid" icon="filter" shape="circle" title="Add" size="lg"></d-button>
   </div>
 </template>
 ```
@@ -152,13 +152,7 @@ export default {
     <d-button variant="solid">按钮名称</d-button>
     <d-button icon="icon-select-arrow" variant="solid"></d-button>
   </d-button-group>
-  <p>尺寸：xs</p>
-  <d-button-group size="xs">
-    <d-button disabled>上海</d-button>
-    <d-button color="primary" variant="solid">北京</d-button>
-    <d-button disabled>深圳</d-button>
-  </d-button-group>
-
+  
   <p>尺寸：sm</p>
   <d-button-group size="sm">
     <d-button color="primary" variant="solid">上海</d-button>
@@ -257,7 +251,7 @@ type IButtonVariant = 'solid' | 'outline' | 'text';
 #### IButtonSize
 
 ```ts
-type IButtonSize = 'lg' | 'md' | 'sm' | 'xs';
+type IButtonSize = 'lg' | 'md' | 'sm';
 ```
 
 #### IButtonColor
@@ -283,5 +277,5 @@ type IButtonShape = 'circle' | 'round';
 #### IButtonGroupSize
 
 ```ts
-type IButtonGroupSize = 'lg' | 'md' | 'sm' | 'xs';
+type IButtonGroupSize = 'lg' | 'md' | 'sm';
 ```

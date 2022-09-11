@@ -1,7 +1,8 @@
 @import '../../styles-var/devui-var.scss';
 
 .#{$devui-prefix}-input {
-  height: 28px;
+  width: 100%;
+  height: $devui-size-md;
   font-size: $devui-font-size;
 
   &__wrapper {
@@ -48,12 +49,12 @@
   }
 
   &--sm {
-    height: 26px;
+    height: $devui-size-sm;
     font-size: $devui-font-size-sm;
   }
 
   &--lg {
-    height: 46px;
+    height: $devui-size-lg;
     font-size: $devui-font-size-lg;
   }
 

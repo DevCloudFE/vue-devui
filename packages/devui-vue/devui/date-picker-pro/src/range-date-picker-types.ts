@@ -21,7 +21,6 @@ export const rangeDatePickerProProps = {
 export type RangeDatePickerProProps = ExtractPropTypes<typeof rangeDatePickerProProps>;
 
 export interface UseRangePickerProReturnType {
-  containerRef: Ref<HTMLElement | undefined>;
   originRef: Ref<HTMLElement | undefined>;
   startInputRef: Ref<HTMLElement | undefined>;
   endInputRef: Ref<HTMLElement | undefined>;

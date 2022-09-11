@@ -27,7 +27,6 @@ export default defineComponent({
         </div>
         <div class={inputWrapClass.value}>
           <input
-            type="number"
             ref={inputRef}
             value={inputVal.value}
             placeholder={props.placeholder}

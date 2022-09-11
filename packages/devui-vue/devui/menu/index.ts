@@ -7,8 +7,8 @@ export { Menu, SubMenu, MenuItem };
 
 export default {
   title: 'Menu 菜单',
-  category: '布局',
-  status: '80%',
+  category: '导航',
+  status: '100%',
   install(app: App): void {
     app.component(Menu.name, Menu);
     app.component(MenuItem.name, MenuItem);

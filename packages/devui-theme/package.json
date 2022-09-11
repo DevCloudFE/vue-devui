@@ -4,9 +4,8 @@
   "main": "src/index.ts",
   "module": "src/index.ts",
   "scripts": {
-    "build": "pnpm build:theme && pnpm build:theme-collection && node scripts/release.js",
-    "build:theme": "vite build --config vite.config.theme.ts",
-    "build:theme-collection": "vite build --config vite.config.theme-collection.ts"
+    "build": "pnpm build:theme && node scripts/release.js",
+    "build:theme": "vite build --config vite.config.theme.ts"
   },
   "dependencies": {
     "css-vars-ponyfill": "^2.4.7",
@@ -15,8 +14,12 @@
     "vue": "^3.2.25"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^11.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
     "@vitejs/plugin-vue": "^2.2.0",
     "commander": "^9.0.0",
+    "fs-extra": "^10.0.0",
     "shelljs": "^0.8.4",
     "typescript": "^4.5.4",
     "vite": "^2.8.0",

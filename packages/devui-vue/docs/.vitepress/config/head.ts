@@ -1,5 +1,7 @@
-const head = [
-  ['link', { rel: 'icon', type: 'image/svg+xml', href: '/assets/logo.svg' }],
-]
+import { HeadConfig } from 'vitepress';
 
-export default head
+const head: HeadConfig[] = [
+  ['link', { rel: 'icon', type: 'image/svg+xml', href: '/assets/logo.svg' }],
+];
+
+export default head;

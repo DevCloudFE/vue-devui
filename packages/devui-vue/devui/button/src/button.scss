@@ -15,7 +15,6 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 .#{$devui-prefix}-button {
   padding: $devui-btn-padding;
   font-size: $devui-font-size-md;
-  height: 28px;
   line-height: $devui-line-height-base;
   border-radius: $devui-border-radius;
   border-width: 1px;
@@ -212,10 +211,6 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
         color: $devui-link-active;
       }
 
-      &:not(:disabled):hover {
-        text-decoration: underline;
-      }
-
       &:focus {
         color: $devui-brand-active-focus;
       }
@@ -241,23 +236,16 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
     }
   }
 
-  &--xs {
-    padding: 0 4px;
-    height: 24px;
-    font-size: $devui-font-size-sm;
-    min-width: 48px;
-  }
-
   &--sm {
     padding: $devui-btn-sm-padding;
-    height: 24px;
+    height: $devui-size-sm;
     font-size: $devui-font-size-sm;
     min-width: 56px;
   }
 
   &--lg {
     padding: $devui-btn-lg-padding;
-    height: 32px;
+    height: $devui-size-lg;
     font-size: $devui-font-size-lg;
     min-width: 72px;
   }
@@ -316,7 +304,8 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 }
 
 .#{$devui-prefix}-button {
-  transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+  transition:
+    background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   white-space: nowrap;
@@ -334,7 +323,6 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
       border: 1px solid transparent;
     }
 
-    &.#{$devui-prefix}-button--xs,
     &.#{$devui-prefix}-button--sm {
       padding: 4px;
       min-width: 24px;
@@ -349,13 +337,14 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
     }
 
     &.#{$devui-prefix}-button--circle {
-      &.#{$devui-prefix}-button--xs,
+      width: $devui-size-md;
+
       &.#{$devui-prefix}-button--sm {
-        width: 24px;
+        width: $devui-size-sm;
       }
 
       &.#{$devui-prefix}-button--lg {
-        width: 32px;
+        width: $devui-size-lg;
       }
     }
   }

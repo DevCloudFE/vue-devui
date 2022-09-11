@@ -9,6 +9,7 @@ const noAnimationClass = ns.m('no-animation');
 const defaultBgClass = ns.e('default-background');
 const borderClass = ns.m('bordered');
 const sizeLgClass = ns.m('lg');
+const materialClass = ns.e('material');
 
 describe('checkbox', () => {
   it('checkbox render work', async () => {
@@ -183,5 +184,45 @@ describe('checkbox', () => {
       border: true,
     });
     expect(wrapper.find(sizeLgClass).exists()).toBe(true);
+  });
+
+  it('checkbox color work', async () => {
+    const checked = ref(false);
+    const wrapper = mount({
+      components: { DCheckbox },
+      template: `
+      <d-checkbox
+        v-model:checked="checked"
+        value="666"
+        color="pink"
+        >
+        666
+      </d-checkbox>`,
+      setup() {
+        return {
+          checked,
+        };
+      },
+    });
+    let element = wrapper.find(materialClass).element as HTMLElement;
+    expect(element.style.borderColor).not.toBe('pink');
+    checked.value = true;
+    await nextTick();
+    element = wrapper.find(materialClass).element as HTMLElement;
+    expect(element.style.borderColor).toBe('pink');
+    // 根据源码，这里面将不会设置它的backgroundColor
+    expect(element.style.backgroundColor).not.toBe('pink');
+    // 找不到backgroundImage属性
+    // expect(element.style.backgroundImage).toBe('pink');
+    wrapper.setProps({
+      halfChecked: true,
+    });
+    await nextTick();
+    element = wrapper.find(materialClass).element as HTMLElement;
+
+    expect(element.style.borderColor).toBe('pink');
+    // 找不到backgroundImage属性
+    // expect(element.style.backgroundImage).toBe('linear-gradient(pink, pink)'); // can't find backgroundImage
+    expect(element.style.backgroundColor).toBe('pink');
   });
 });

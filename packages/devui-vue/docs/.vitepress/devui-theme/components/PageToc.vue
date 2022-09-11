@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { useToc } from '../composables/useToc'
 import { useActiveSidebarLinks } from '../composables/activeBar'
+import { CURRENT_LANG, ZH_CN } from '../const'
 
 const headers = useToc()
 const marker = ref()
@@ -9,12 +10,12 @@ const container = ref()
 // 滚动监听
 useActiveSidebarLinks(container, marker)
 const forwardText = computed(() => {
-  return localStorage.getItem('preferred_lang') === 'zh-CN' ? '快速前往' : 'Forward'
+  return CURRENT_LANG === ZH_CN ? '快速前往' : 'Forward'
 })
 </script>
 
 <template>
-  <aside ref="container">
+  <aside ref="container" v-if="headers?.length > 0">
     <nav class="devui-content-nav">
       <h3 class="devui-fast-forward">{{ forwardText }}</h3>
       <ul class="devui-step-nav">
@@ -72,7 +73,6 @@ const forwardText = computed(() => {
 
       a {
         display: block;
-        width: 110px;
         overflow: hidden;
         color: $devui-text;
         white-space: nowrap;

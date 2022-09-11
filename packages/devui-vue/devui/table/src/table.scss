@@ -2,6 +2,7 @@
 
 .#{$devui-prefix}-table {
   position: relative;
+  display: flex;
   width: 100%;
   overflow-x: auto;
 
@@ -9,6 +10,12 @@
     position: absolute;
     visibility: hidden;
     z-index: -1;
+  }
+
+  // fix v-dLoading can't completely covered
+  &__container {
+    flex: 1;
+    overflow: auto;
   }
 
   &__view {
@@ -38,11 +45,17 @@
     flex-direction: column;
     position: relative;
     height: 100%;
+    overflow: auto;
+  }
+
+  &__fix-header > &__header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
 
   &__scroll-view {
     flex: 1;
-    overflow: scroll;
   }
 
   &--layout-auto {
@@ -122,7 +135,7 @@
     bottom: 0;
     width: 2px;
     background-color: $devui-form-control-line-active;
-    z-index: 9999;
+    z-index: $devui-z-index-function-widget;
     cursor: col-resize;
   }
 }

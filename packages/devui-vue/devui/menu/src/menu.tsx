@@ -6,6 +6,8 @@ import { setDefaultIndent } from './composables/use-layer-operate';
 import SubMenu from './components/sub-menu/sub-menu';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { useShowSubMenu } from './components/sub-menu/use-sub-menu';
+import { randomId } from '../../shared/utils';
+import { useStore } from './composables/use-store';
 
 export default defineComponent({
   name: 'DMenu',
@@ -14,6 +16,11 @@ export default defineComponent({
   setup(props: MenuProps, ctx) {
     const ns = useNamespace('menu');
     const {openKeys, mode, collapsed} = toRefs(props);
+    // This ID is only for internal use. So we unwanted use reactivity
+    const menuId = randomId(16);
+    // register menu to recordTable.
+    const store = useStore(menuId);
+    provide('menuStore', store);
     provide('isCollapsed', collapsed);
     provide('defaultIndent', props['indentSize']);
     provide('multiple', props['multiple']);
@@ -40,15 +47,13 @@ export default defineComponent({
         const root = menuRoot.value as unknown as HTMLElement;
         const children = root.children;
         const container = overflowContainer.children[1];
-        let preItem: HTMLElement | null;
         const ob = new IntersectionObserver(
           (entries: IntersectionObserverEntry[]) => {
             entries.forEach((v: IntersectionObserverEntry) => {
               if (!v.isIntersecting) {
                 const cloneNode = v.target.cloneNode(true) as Element as HTMLElement;
-                preItem = v.target as Element as HTMLElement;
                 if (v.target.classList.contains(`${ns.b()}-overflow-container`)){
-                  if (flag && v.target.previousElementSibling){
+                  if (flag && v.target.previousElementSibling && container.children.length){
                     root.appendChild(v.target.previousElementSibling);
                   } else {flag = true;}
                 } else {
@@ -66,10 +71,11 @@ export default defineComponent({
                   !v.target.classList.contains(`${ns.b()}-overflow-container`) &&
                   (v.target as HTMLElement).style.visibility === 'hidden'
                 ) {
-                  console.log(v.target, preItem, v.target === preItem);
                   ob.unobserve(v.target);
-                  const el = container.children[container.children.length - 1];
-                  root.insertBefore(el, overflowContainer);
+                  const el = container.lastChild;
+                  if (el){
+                    root.insertBefore(el, overflowContainer);
+                  }
                   const obItem = overflowContainer.previousElementSibling;
                   if (obItem) {
                     ob.observe(obItem);
@@ -78,7 +84,6 @@ export default defineComponent({
                     const sub = obItem;
                     const wrapper = obItem.children[1] as HTMLElement;
                     (sub as HTMLElement).addEventListener('mouseenter', (ev: MouseEvent) => {
-                      console.log('emit');
                       ev.stopPropagation();
                       useShowSubMenu('mouseenter', ev, wrapper);
                     });

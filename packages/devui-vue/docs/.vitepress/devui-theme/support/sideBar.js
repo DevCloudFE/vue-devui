@@ -1,4 +1,7 @@
 import { isArray, ensureStartingSlash, removeExtention } from '../utils';
+
+const isDev = import.meta.env.DEV;
+
 export function isSideBarConfig(sidebar) {
     return sidebar === false || sidebar === 'auto' || isArray(sidebar);
 }
@@ -35,7 +38,7 @@ export function getSideBarConfig(sidebar, path) {
  */
 export function getFlatSideBarLinks(sidebar) {
     return sidebar.reduce((links, item) => {
-        if (item.link) {
+        if (item.link && (isDev || (!isDev && !item.hide))) {
             links.push({ text: item.text, link: removeExtention(item.link) });
         }
         if (isSideBarGroup(item)) {

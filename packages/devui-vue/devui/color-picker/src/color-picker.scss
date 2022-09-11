@@ -5,7 +5,7 @@
 
   &-position {
     position: absolute;
-    z-index: 9999;
+    z-index: $devui-z-index-function-widget;
     background-color: $devui-connected-overlay-bg;
     top: 0;
   }

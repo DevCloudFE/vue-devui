@@ -29,6 +29,7 @@ describe('Layout test', () => {
     const footer = layout.find(ns.e('content')).element.nextElementSibling;
     expect(footer?.innerHTML).toBe('Footer');
   });
+
   it('header-aside-content-footer layout', async () => {
     const wrapper = mount({
       components: {
@@ -60,6 +61,7 @@ describe('Layout test', () => {
     expect(aside.text()).toBe('Aside');
     expect(outerLayout.find(ns.e('footer')).text()).toBe('Footer');
   });
+
   it('aside-header-content-footer layout', async () => {
     const wrapper = mount({
       components: {

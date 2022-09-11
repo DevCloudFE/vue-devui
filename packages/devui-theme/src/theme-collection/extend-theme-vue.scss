@@ -7,7 +7,7 @@ body[ui-theme='deep-theme'],
 body[ui-theme='galaxy-theme'] {
   // TODO: 组件支持全局配置默认尺寸参数后删除
   // button default size change to '32px'
-  .#{$devui-prefix}-button:not(.#{$devui-prefix}-button--xs):not(.#{$devui-prefix}-button--sm):not(.#{$devui-prefix}-button--lg) {
+  .#{$devui-prefix}-button:not(.#{$devui-prefix}-button--sm):not(.#{$devui-prefix}-button--lg) {
     height: 32px;
     line-height: 32px;
   }

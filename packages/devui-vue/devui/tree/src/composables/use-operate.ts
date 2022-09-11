@@ -2,9 +2,9 @@ import { Ref, ref } from 'vue';
 import { randomId } from '../../../shared/utils';
 import { IInnerTreeNode, ITreeNode, IUseCore, IUseOperate } from './use-tree-types';
 
-export default function () {
-  return function useOperate(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseOperate {
-    const { setNodeValue, getChildren, getIndex, getLevel } = core;
+export function useOperate() {
+  return function useOperateFn(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseOperate {
+    const { setNodeValue, getChildren, getIndex, getLevel, getParent } = core;
 
     const insertBefore = (parentNode: ITreeNode, node: ITreeNode, referenceNode?: ITreeNode): void => {
       const children = getChildren(parentNode, {
@@ -32,7 +32,7 @@ export default function () {
         parentId: parentNode.id,
         isLeaf: true,
         parentChildNodeCount: children.length + 1,
-        currentIndex: lastChild?.currentIndex + 1,
+        currentIndex: lastChild && typeof lastChild.currentIndex === 'number' ? lastChild.currentIndex + 1 : 0,
       });
 
       if (currentNode.value.id === undefined) {
@@ -61,6 +61,11 @@ export default function () {
           return item.id !== node.id;
         }
       });
+
+      // 子节点全部删完了，应该设置父节点为叶子结点(isLeaf)
+      if (getParent(node) && getChildren(getParent(node)).length === 0) {
+        setNodeValue(getParent(node), 'isLeaf', true);
+      }
     };
 
     const editNode = (node: IInnerTreeNode, label: string): void => {

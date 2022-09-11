@@ -5,6 +5,7 @@ import { onClickOutside } from '@vueuse/core';
 import type { Dayjs } from 'dayjs';
 import { formatDayjsToStr, isDateEquals, parserDate } from './utils';
 import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
+import { DEFAULT_DATE, DEFAULT_TIME } from './const';
 
 export default function usePickerPro(
   props: DatePickerProProps,
@@ -14,12 +15,11 @@ export default function usePickerPro(
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
 
-  const containerRef = shallowRef<HTMLElement>();
   const originRef = ref<HTMLElement>();
   const inputRef = shallowRef<HTMLElement>();
   const overlayRef = shallowRef<HTMLElement>();
   const isPanelShow = ref(false);
-  const placeholder = computed(() => props.placeholder || t('placeholder') as string);
+  const placeholder = computed(() => props.placeholder || (t('placeholder') as string));
   const isMouseEnter = ref(false);
 
   const pickerDisabled = computed(() => formContext?.disabled || props.disabled);
@@ -34,18 +34,21 @@ export default function usePickerPro(
     }
   };
 
-  onClickOutside(containerRef, () => {
-    toggleChange(false);
-  });
+  onClickOutside(
+    overlayRef,
+    () => {
+      toggleChange(false);
+    },
+    { ignore: [originRef] }
+  );
 
   const onFocus = function (e: MouseEvent) {
-    e.stopPropagation();
     toggleChange(true);
     ctx.emit('focus', e);
   };
 
   const format = computed(() => {
-    return props.showTime ? props.format || 'YYYY/MM/DD HH:mm:ss' : props.format || 'YYYY/MM/DD';
+    return props.showTime ? props.format || DEFAULT_TIME : props.format || DEFAULT_DATE;
   });
 
   const dateValue = computed(() => {
@@ -101,7 +104,6 @@ export default function usePickerPro(
   );
 
   return {
-    containerRef,
     originRef,
     inputRef,
     overlayRef,

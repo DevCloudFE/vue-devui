@@ -278,7 +278,7 @@ describe('d-table', () => {
 
     const tableBody = table.find(ns.e('tbody'));
     const lastTd = tableBody.find('tr').findAll('td')[3];
-    expect(lastTd.text()).toBe('1990/01/12');
+    expect(lastTd.text()).toBe('1990/01/11');
 
     const sortIcon = lastTh.find(ns.e('sort-clickable'));
     await sortIcon.trigger('click');
@@ -289,6 +289,8 @@ describe('d-table', () => {
     expect(lastTd.text()).toBe('1990/01/12');
     expect(handleSortChange).toBeCalled();
   });
+
+  it.todo('filter multiple work well');
 
   it('filter', async () => {
     const handleSingleChange = jest.fn();
@@ -643,7 +645,6 @@ describe('d-table', () => {
     const wrapper = mount({
       setup() {
         const handleLoadMore = () => {
-
           // TODO: add exception to test emit event(Jest don't have IntersectionObserver)
           // The 'intersection-observer' polyfill don't work in Jest env? It's just prevent error report in DTable.
           data.push({
@@ -674,4 +675,8 @@ describe('d-table', () => {
     expect(lazyEle.exists()).toBeTruthy();
     wrapper.unmount();
   });
+
+  it.todo('fix header work well');
+
+  it.todo('drag column work well');
 });

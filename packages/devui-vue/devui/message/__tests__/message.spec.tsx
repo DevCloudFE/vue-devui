@@ -4,7 +4,6 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const ns = useNamespace('message', true);
 describe('d-message', () => {
-
   describe('service', () => {
     it('render correctly when using service', async () => {
       message({
@@ -52,5 +51,12 @@ describe('d-message', () => {
       expect(closeCallback).toBeCalled();
     });
 
+    it.todo('bordered should work well.');
+
+    it.todo('shadow should work well.');
+  });
+
+  describe('function', () => {
+    it.todo('function call work well.');
   });
 });

@@ -1,13 +1,13 @@
 import { ref, SetupContext } from 'vue';
 import { IInnerTreeNode, ITreeNode, IUseCore, IUseTree } from './use-tree-types';
-import useToggle from './use-toggle';
-import useCore from './use-core';
-import useLazyLoad from './use-lazy-load';
+import { useToggle } from './use-toggle';
+import { useCore } from './use-core';
+import { useLazyLoad } from './use-lazy-load';
 import { generateInnerTree } from './utils';
 
 export const DEFAULT_TREE_PLUGINS = [useToggle()];
 
-export default function useTree(tree: ITreeNode[], plugins = [], context: SetupContext): Partial<IUseTree> {
+export function useTree(tree: ITreeNode[], plugins = [], context: SetupContext): Partial<IUseTree> {
   const treeData = ref<IInnerTreeNode[]>(generateInnerTree(tree));
   const core: IUseCore = useCore()(treeData);
 

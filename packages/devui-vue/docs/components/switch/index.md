@@ -12,8 +12,8 @@
 
 ```vue
 <template>
-  <d-switch v-model="checkedSmall" size="sm"></d-switch>
-  <d-switch v-model="uncheckedMiddle"></d-switch>
+  <d-switch class="mr-1" v-model="checkedSmall" size="sm"></d-switch>
+  <d-switch class="mr-1" v-model="uncheckedMiddle"></d-switch>
   <d-switch v-model="checkedLarge" size="lg"></d-switch>
 </template>
 <script>
@@ -32,6 +32,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="scss">
+.devui-switch:not(:last-of-type) {
+  margin-right: 5px;
+}
+</style>
 ```
 
 :::
@@ -42,7 +48,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-switch v-model="checkedDisabled" :disabled="true"></d-switch>
+  <d-switch class="mr-1" v-model="checkedDisabled" :disabled="true"></d-switch>
   <d-switch v-model="checkedDisabled1" :disabled="true"></d-switch>
 </template>
 <script>
@@ -69,19 +75,30 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-switch v-model="checkedColor" color="#FECC55"></d-switch>
-  <d-switch v-model="checkedContent">
-    <template #checkedContent>开</template>
-    <template #uncheckedContent>关</template>
-  </d-switch>
-  <d-switch color="#50D4AB" v-model="checkedIcon">
-    <template #checkedContent>
-      <i class="icon-right"></i>
-    </template>
-    <template #uncheckedContent>
-      <i class="icon-error"></i>
-    </template>
-  </d-switch>
+  <div style="display: flex;">
+    <d-switch class="mr-1" v-model="checkedColor" color="#FECC55"></d-switch>
+    <d-switch class="mr-1" color="#50D4AB" v-model="checkedIcon">
+      <template #checkedContent>
+        <i class="icon-right"></i>
+      </template>
+      <template #uncheckedContent>
+        <i class="icon-error"></i>
+      </template>
+    </d-switch>
+    <d-switch v-model="checkedSmContent" size="sm">
+      <template #checkedContent>开</template>
+      <template #uncheckedContent>关</template>
+    </d-switch>
+    <d-switch v-model="checkedContent">
+      <template #checkedContent>开</template>
+      <template #uncheckedContent>关</template>
+    </d-switch>
+    <d-switch v-model="checkedLgContent" size="lg">
+      <template #checkedContent>开</template>
+      <template #uncheckedContent>关</template>
+    </d-switch>
+  </div>
+
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
@@ -90,10 +107,14 @@ export default defineComponent({
   setup() {
     const checkedColor = ref(true);
     const checkedContent = ref(false);
+    const checkedSmContent = ref(false);
+    const checkedLgContent = ref(false);
     const checkedIcon = ref(true);
     return {
       checkedColor,
       checkedContent,
+      checkedSmContent,
+      checkedLgContent,
       checkedIcon,
     };
   },
@@ -109,8 +130,8 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-switch v-model="activeValue1" active-value="打开" inactive-value="关闭"></d-switch>
-  <d-switch v-model="activeValue2" :active-value="1" :inactive-value="0"></d-switch>
+  <d-switch class="mr-1" v-model="activeValue1" active-value="打开" inactive-value="关闭"></d-switch>
+  <d-switch class="mr-1" v-model="activeValue2" :active-value="1" :inactive-value="0"></d-switch>
   <d-switch v-model="activeValue3" :active-value="true" :inactive-value="false"></d-switch>
 </template>
 <script>

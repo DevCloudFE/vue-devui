@@ -42,9 +42,9 @@ export const devuiLightTheme: Theme = new Theme({
     // 图标
     'devui-icon-text': '#252b3a',
     'devui-icon-bg': '#ffffff',
-    'devui-icon-fill': '#8a8e99',
-    'devui-icon-fill-hover': '#5e7ce0',
-    'devui-icon-fill-active': '#5e7ce0',
+    'devui-icon-fill': '#71757f',
+    'devui-icon-fill-hover': '#252b3a',
+    'devui-icon-fill-active': '#252b3a',
     'devui-icon-fill-active-hover': '#526ecc',
     // 表单
     'devui-form-control-line': '#adb0b8',

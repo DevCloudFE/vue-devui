@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
-
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { wait } from '../../shared/utils/wait';
 import Drawer from '../src/drawer';
 
 const drawerNs = useNamespace('drawer', true);
@@ -77,7 +77,8 @@ describe('d-drawer', () => {
     expect(drawer).toBeTruthy();
 
     // click outside
-    document.dispatchEvent(new Event('click'));
+    await wait(0);
+    document.dispatchEvent(new Event('click', { bubbles: true }));
     await nextTick();
     drawer = getDrawer();
     expect(drawer).toBeFalsy();
@@ -164,11 +165,16 @@ describe('d-drawer', () => {
     await nextTick();
     expect(onOpen).toBeCalled();
 
-    document.dispatchEvent(new Event('click'));
+    await wait(0);
+    document.dispatchEvent(new Event('click', { bubbles: true }));
     await nextTick();
     expect(onBeforeClose).toBeCalled();
     expect(onClose).toBeCalled();
 
     wrapper.unmount();
   });
+
+  it.todo('props lock-scroll should work well.');
+
+  it.todo('$drawerService should work well.');
 });

@@ -12,7 +12,7 @@ English | [简体中文](README.zh-CN.md)
 
 🌈 Features：
 
-- 📦 40 high-quality components that are simple, easy to use, and flexible.
+- 📦 55 high-quality components that are simple, easy to use, and flexible.
 - 🔑 Support for TypeScript.
 - ⛰️ Support for Nuxt3.
 - ⚡ Support for on-demand import.
@@ -21,11 +21,26 @@ English | [简体中文](README.zh-CN.md)
 
 ## 🔧 Usage
 
-The first step is to install vue devui:
+First install vue-devui with npm, yarn or pnpm.
 
+Install with npm
+
+```sh
+npm install vue-devui --save
 ```
-npm i vue-devui
+
+Install with yarn
+
+```sh
+yarn add vue-devui
 ```
+
+Install with pnpm
+
+```sh
+pnpm add vue-devui
+```
+
 
 Then import `DevUI` in the `main.ts` file:
 
@@ -50,20 +65,27 @@ Then you can use the vue devui component(such as `<d-button>`) in the `App.vue` 
 
 ## 🖥️ Development
 
-```shell
+```sh
 git clone git@github.com:DevCloudFE/vue-devui.git
 cd vue-devui
-pnpm i
+pnpm install
 pnpm dev
 ```
 
 Open your browser and visit: [http://localhost:3000/](http://localhost:3000/).
+
+Or you can run other command
+
+```sh
+pnpm scripts
+```
 
 ## 🤝 Contributing
 
 Welcome to join our Vue DevUI open source project!🎉
 
 By participating in the Vue DevUI project, we can together:
+
 - 🔥 Learn the latest cool `Vite` + `Vue3` + `TypeScript` + `JSX` technology.
 - 🎁 Learn how to design and develop UI components.
 - ⭐ Hone programming skills and learn excellent programming practice.
@@ -142,6 +164,17 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/xzxldl55"><img src="https://avatars.githubusercontent.com/u/22699218?v=4?s=100" width="100px;" alt=""/><br /><sub><b>xzxldl55</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xzxldl55" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/79E"><img src="https://avatars.githubusercontent.com/u/71202421?v=4?s=100" width="100px;" alt=""/><br /><sub><b>79</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=79E" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/SituC"><img src="https://avatars.githubusercontent.com/u/29355875?v=4?s=100" width="100px;" alt=""/><br /><sub><b>wailen</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=SituC" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/JensonMiao"><img src="https://avatars.githubusercontent.com/u/46488783?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jenson</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=JensonMiao" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/dbsdaicheng"><img src="https://avatars.githubusercontent.com/u/62135142?v=4?s=100" width="100px;" alt=""/><br /><sub><b>dbsdaicheng</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=dbsdaicheng" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/qinwencheng"><img src="https://avatars.githubusercontent.com/u/24841685?v=4?s=100" width="100px;" alt=""/><br /><sub><b>qinwencheng</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=qinwencheng" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/angelanana"><img src="https://avatars.githubusercontent.com/u/63281354?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Angelanana</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=angelanana" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/joo1es"><img src="https://avatars.githubusercontent.com/u/76929557?v=4?s=100" width="100px;" alt=""/><br /><sub><b>joo1es</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=joo1es" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/handsomezyw"><img src="https://avatars.githubusercontent.com/u/34366225?v=4?s=100" width="100px;" alt=""/><br /><sub><b>handsomezyw</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=handsomezyw" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/iamyoki"><img src="https://avatars.githubusercontent.com/u/74389358?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yoki</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=iamyoki" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/LadyChatterleyLover"><img src="https://avatars.githubusercontent.com/u/35223515?v=4?s=100" width="100px;" alt=""/><br /><sub><b>luopei</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=LadyChatterleyLover" title="Code">💻</a></td>
   </tr>
 </table>
 

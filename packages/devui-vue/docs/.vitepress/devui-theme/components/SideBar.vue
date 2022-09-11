@@ -38,6 +38,13 @@ defineProps({
   }
 }
 
+// mobile
+@media screen and (max-width: 600px) {
+  .sidebar {
+    overflow-y: auto;
+  }
+}
+
 @media (min-width: 720px) {
   .sidebar {
     transform: translateX(0);

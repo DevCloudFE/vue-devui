@@ -1,9 +1,9 @@
 import { Ref } from 'vue';
-import useOperate from './use-operate';
+import { useOperate } from './use-operate';
 import { IInnerTreeNode, IUseCore, IUseMergeNodes } from './use-tree-types';
 
-export default function () {
-  return function useMergeNodes(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseMergeNodes {
+export function useMergeNodes() {
+  return function useMergeNodesFn(data: Ref<IInnerTreeNode[]>, core: IUseCore): IUseMergeNodes {
     const { setNodeValue, getChildren } = core;
     const { removeNode } = useOperate()(data, core);
 

@@ -5,17 +5,11 @@ const chalk = require('chalk');
 const { isReadyToRelease } = require('../shared/utils');
 
 const log = console.log;
-
 const chalkEslint = chalk.hex('#4b32c3');
-
 const chalkUnitTest = chalk.hex('#99425b');
-
 const chalkError = chalk.hex('#F66F6A');
-
 const chalkSuccess = chalk.hex('#3DCCA6');
-
 const entryDir = path.resolve(__dirname, '../../devui');
-
 const unitTestFailedComponents = [];
 
 const completeComponents = fs.readdirSync(entryDir).filter((name) => {
@@ -25,8 +19,6 @@ const completeComponents = fs.readdirSync(entryDir).filter((name) => {
 });
 
 const eslintCheckSingle = async (name) => {
-  log(chalkEslint(`Start ESLint check ${name}...`));
-
   const eslintResult = await shell.exec(`eslint --color "./devui/${name}/**/{*.ts,*.tsx}"`);
 
   if (eslintResult.stdout !== '') {
@@ -34,7 +26,7 @@ const eslintCheckSingle = async (name) => {
     shell.exit(1);
   }
 
-  log(chalkEslint(`ESLint check ${name} finished!`));
+  log(chalkEslint(`PASS ${name}`));
 };
 
 const eslintCheckSome = async (components) => {
@@ -44,7 +36,7 @@ const eslintCheckSome = async (components) => {
     await eslintCheckSingle(name);
   }
 
-  log(chalkSuccess('Congratulations, all components have passed the ESLint check!'));
+  log(chalkSuccess('\nCongratulations, all components have passed the ESLint check!'));
 };
 
 const eslintCheckAll = async () => {
@@ -52,22 +44,18 @@ const eslintCheckAll = async () => {
     await eslintCheckSingle(name);
   }
 
-  log(chalkSuccess('Congratulations, all components have passed the ESLint check!'));
+  log(chalkSuccess('\nCongratulations, all components have passed the ESLint check!'));
 };
 
 const eslintCheck = async (components) => {
-  log(chalkEslint('Start ESLint check...'));
   if (components) {
     await eslintCheckSome(components);
   } else {
     await eslintCheckAll();
   }
-  log(chalkEslint('ESLint check finished!'));
 };
 
 const unitTestSingle = async (name) => {
-  log(chalkUnitTest(`Start unit test ${name}...`));
-
   const unitTestResult = await shell.exec(`pnpm test --filter vue-devui -- \
   --colors --noStackTrace --testMatch **/**/${name}/**/*.spec.{ts,tsx}`);
 
@@ -79,7 +67,7 @@ const unitTestSingle = async (name) => {
     shell.exit(1);
   }
 
-  log(chalkUnitTest(`Unit test ${name} finished!`));
+  log(chalkUnitTest(`PASS ${name}`));
 };
 
 const unitTestSome = async (components) => {
@@ -89,25 +77,31 @@ const unitTestSome = async (components) => {
     await unitTestSingle(name);
   }
 
-  log(chalkSuccess('Congratulations, all components have passed the unit test!'));
+  log(chalkSuccess('\nCongratulations, all components have passed the unit test!'));
 };
 
 const unitTestAll = async () => {
-  for (const name of completeComponents) {
-    await unitTestSingle(name);
+  // 单个组件执行单元测试，总耗时太长
+  // for (const name of completeComponents) {
+  //   await unitTestSingle(name);
+  // }
+
+  const unitTestResult = await shell.exec('pnpm --filter vue-devui test --reporter default');
+  // 解决单元测试报错，但PR合入门禁不中断问题
+  if (/failed|ERR_/.test(unitTestResult.stderr)) {
+    shell.echo(chalkError('Error: Unit test failed.'));
+    shell.exit(1);
   }
 
-  log(chalkSuccess('Congratulations, all components have passed the unit test!'));
+  log(chalkSuccess('\nCongratulations, all components have passed the unit test!'));
 };
 
 const unitTest = async (components) => {
-  log(chalkUnitTest('Start unit test...'));
   if (components) {
     await unitTestSome(components);
   } else {
     await unitTestAll();
   }
-  log(chalkUnitTest('Unit test finished!'));
 
   log(chalkUnitTest(`The following components failed the unit test:`));
   log(chalkError(`${unitTestFailedComponents.join('\n')}`));

@@ -1,4 +1,5 @@
-import { randomId } from '../../../shared/utils';
+import { randomId, omit } from '../../../shared/utils';
+import { useInitSelectCollection } from './use-init-select-collection';
 import { IInnerTreeNode, ITreeNode } from './use-tree-types';
 
 export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
@@ -23,12 +24,6 @@ export function flatToNested(flatTree: IInnerTreeNode[]): ITreeNode[] {
   }, []);
 }
 
-export function omit<T>(obj: T, ...keys: Array<keyof T>): { [key: string]: unknown } {
-  return Object.entries(obj)
-    .filter((item) => !keys.includes(item[0]))
-    .reduce((acc, item) => Object.assign({}, acc, { [item[0]]: item[1] }), {});
-}
-
 /**
  * 用于生成内部使用的扁平结构，对树的所有操作都是在操作这个内部的扁平结构，
  * 该数据一旦发生变化，树组件的 UI 即相应变化。
@@ -44,8 +39,9 @@ export function omit<T>(obj: T, ...keys: Array<keyof T>): { [key: string]: unkno
  * - 'isLeaf'：是否是叶子节点，用于决定是否渲染展开/收起按钮
  * - 'idType'：(没有传入 id 的节点会生成一个随机的 id，idType 用来标识 id 是否是随机生成的)
  * - 'parentChildNodeCount'：父级子节点数量
- * - 'curentIndex'：当前节点在父节点的索引
+ * - 'currentIndex'：当前节点在父节点的索引
  */
+const { setInitSelectedNode } = useInitSelectCollection();
 export function generateInnerTree(tree: ITreeNode[], key = 'children', level = 0, path: ITreeNode[] = []): IInnerTreeNode[] {
   level++;
 
@@ -54,6 +50,10 @@ export function generateInnerTree(tree: ITreeNode[], key = 'children', level = 0
     if (newItem.id === undefined) {
       newItem.id = randomId();
       newItem.idType = 'random';
+    }
+
+    if (newItem.selected) {
+      setInitSelectedNode(newItem);
     }
 
     newItem.level = level;

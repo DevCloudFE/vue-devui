@@ -12,16 +12,13 @@
 
 ```vue
 <template>
-  <h4 style="margin: 10px 0">Default</h4>
+  <div class="mb-0">Default</div>
+  <d-textarea class="mb-2" v-model="valueDefault" autofocus id="textArea"></d-textarea>
 
-  <d-textarea v-model="valueDefault" autofocus id="textArea"></d-textarea>
+  <div class="mb-0">Disabled</div>
+  <d-textarea class="mb-2" placeholder="我是被禁用状态" disabled></d-textarea>
 
-  <h4 style="margin: 10px 0">Disabled</h4>
-
-  <d-textarea placeholder="我是被禁用状态" disabled></d-textarea>
-
-  <h4 style="margin: 10px 0">Error</h4>
-
+  <div class="mb-0">Error</div>
   <d-textarea v-model="valueError" placeholder="我是出错状态" error></d-textarea>
 </template>
 
@@ -76,8 +73,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-textarea v-model="valueAutoSize1" autosize placeholder="请输入"></d-textarea>
-  <div style="margin: 20px 0" />
+  <d-textarea class="mb-2" v-model="valueAutoSize1" autosize placeholder="请输入"></d-textarea>
   <d-textarea v-model="valueAutoSize2" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入" resize="both"></d-textarea>
 </template>
 
@@ -105,24 +101,20 @@ export default defineComponent({
 
 ```vue
 <template>
-  <h4 style="margin: 10px 0">vertical</h4>
-  <d-textarea placeholder="我可以缩放" resize="vertical"></d-textarea>
+  <div class="mb-0">vertical</div>
+  <d-textarea class="mb-2" placeholder="我可以缩放" resize="vertical"></d-textarea>
 
-  <h4 style="margin: 10px 0">horizontal</h4>
+  <div class="mb-0">horizontal</div>
+  <d-textarea class="mb-2" resize="horizontal" placeholder="请输入"></d-textarea>
 
-  <d-textarea resize="horizontal" placeholder="请输入"></d-textarea>
+  <div class="mb-0">both</div>
+  <d-textarea class="mb-2" resize="both" placeholder="请输入"></d-textarea>
 
-  <h4 style="margin: 10px 0">both</h4>
+  <div class="mb-0">none</div>
+  <d-textarea class="mb-2" resize="none" placeholder="请输入"></d-textarea>
 
-  <d-textarea resize="both" placeholder="请输入"></d-textarea>
-
-  <h4 style="margin: 10px 0">none</h4>
-
-  <d-textarea resize="none" placeholder="请输入"></d-textarea>
-
-  <h4 style="margin: 10px 0">inherit</h4>
-
-  <d-textarea resize="inherit" placeholder="请输入"></d-textarea>
+  <div class="mb-0">inherit</div>
+  <d-textarea class="mb-2" resize="inherit" placeholder="请输入"></d-textarea>
 </template>
 ```
 
@@ -134,9 +126,9 @@ export default defineComponent({
 
 ```vue
 <template>
-  <h4 style="margin: 10px 0">默认</h4>
-  <d-textarea v-model="valueCount1" show-count placeholder="请输入"></d-textarea>
-  <h4 style="margin: 10px 0">显示最大字数</h4>
+  <div class="mb-0">默认</div>
+  <d-textarea class="mb-2" v-model="valueCount1" show-count placeholder="请输入"></d-textarea>
+  <div class="mb-0">显示最大字数</div>
   <d-textarea v-model="valueCount2" show-count maxlength="20" placeholder="请输入"></d-textarea>
 </template>
 

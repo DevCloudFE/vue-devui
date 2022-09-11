@@ -50,7 +50,10 @@ export function useTimeSelect(props: TimeSelectProps, ctx: SetupContext): useTim
 
   const step = computed(() => {
     const stepTime = parseTimeToNumber(props.step);
-    return stepTime ? formatTime(stepTime) : '00:30';
+    if (stepTime && stepTime.hour >= 0 && stepTime.minute >= 0 && stepTime.hour + stepTime.minute > 0) {
+      return formatTime(stepTime);
+    }
+    return '00:30';
   });
 
   const minTime = computed(() => {
@@ -84,7 +87,7 @@ export function useTimeSelect(props: TimeSelectProps, ctx: SetupContext): useTim
         list.push({
           value: currentTime,
           name: currentTime,
-          disabled: compareTime(current, minTime.value || '-1:-1') <= 0 || compareTime(current, maxTime.value || '24:00') > 0,
+          disabled: compareTime(current, minTime.value || '-1:-1') < 0 || compareTime(current, maxTime.value || '24:00') > 0,
         });
         current = nextTime(current, step.value);
       }

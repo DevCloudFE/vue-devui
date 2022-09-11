@@ -25,7 +25,8 @@ export default {
     el.addEventListener('drop', (event: DragEvent) => {
       event.preventDefault();
       const dragId = binding.instance.$root.identity;
-      if (document.getElementById(dragId).dataset.dropArea == document.getElementById(dragId).dataset.dragArea){
+      document.getElementById(dragId).dataset.parent = 'not-sortable-drop-area';
+      if (document.getElementById(dragId).dataset.dropArea === document.getElementById(dragId).dataset.dragArea){
         return;
       }
       // 如何定义可放置区域这个问题得商榷一下

@@ -13,7 +13,7 @@
 
 ```vue
 <template>
-  <d-table :data="baseTableData">
+  <d-table :data="baseTableData" style="width: 100%">
     <d-column field="firstName" header="First Name"></d-column>
     <d-column field="lastName" header="Last Name"></d-column>
     <d-column field="gender" header="Gender"></d-column>
@@ -67,20 +67,20 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div class="table-btn-groups">
-    <div class="table-btn">
+  <div class="table-btn-groups mb-2">
+    <div class="table-btn mb-1">
       自动表格布局：
       <d-switch v-model="tableLayout" />
     </div>
-    <div class="table-btn">
+    <div class="table-btn mb-1">
       斑马纹：
       <d-switch v-model="striped" />
     </div>
-    <div class="table-btn">
+    <div class="table-btn mb-1">
       表头背景色：
       <d-switch v-model="headerBg" />
     </div>
-    <div class="table-btn">
+    <div class="table-btn mb-1">
       表格大小：
       <d-radio-group direction="row" v-model="size">
         <d-radio v-for="item in sizeList" :key="item.label" :value="item.value">
@@ -88,7 +88,7 @@ export default defineComponent({
         </d-radio>
       </d-radio-group>
     </div>
-    <div class="table-btn">
+    <div class="table-btn mb-1">
       表格边框：
       <d-radio-group direction="row" v-model="borderType">
         <d-radio v-for="item in borderTypeList" :key="item.label" :value="item.value">
@@ -96,7 +96,7 @@ export default defineComponent({
         </d-radio>
       </d-radio-group>
     </div>
-    <div class="table-btn">
+    <div class="table-btn mb-1">
       表头显隐：
       <d-switch v-model="showHeader" />
     </div>
@@ -221,10 +221,12 @@ export default defineComponent({
 ```vue
 <template>
   <div>
-    <d-button @click="handleClick" class="mr-m mb-m">Get CheckedRows</d-button>
-    <d-button @click="insertRow" class="mr-m mb-m">Insert Row</d-button>
-    <d-button @click="deleteRow" class="mr-m mb-m">Delete Row</d-button>
-    <d-button @click="toggleRow" class="mr-m mb-m">Toggle Row</d-button>
+    <div class="mb-2">
+      <d-button @click="handleClick" class="mr-1">Get CheckedRows</d-button>
+      <d-button @click="insertRow" class="mr-1">Insert Row</d-button>
+      <d-button @click="deleteRow" class="mr-1">Delete Row</d-button>
+      <d-button @click="toggleRow" class="mr-1">Toggle Row</d-button>
+    </div>
     <d-table
       ref="tableRef"
       :data="data"
@@ -536,7 +538,6 @@ export default defineComponent({
           v-model="scope.row.gender"
           :options="options"
           @valueChange="(value) => change(scope.row, scope.rowIndex, 'gender', value)"
-          @blur="() => blur(scope.row, scope.rowIndex, 'gender')"
         />
       </template>
     </d-column>
@@ -574,10 +575,7 @@ export default defineComponent({
       tableRef.value.store.setCellMode(row, rowIndex, field, 'readonly');
     };
     const blur = (row, rowIndex, field) => {
-      // select组件blur事件先于valueChange事件执行，故此处需要添加定时器
-      setTimeout(() => {
-        tableRef.value.store.setCellMode(row, rowIndex, field, 'readonly');
-      }, 100);
+      tableRef.value.store.setCellMode(row, rowIndex, field, 'readonly');
     };
 
     const cellClick = (obj) => {
@@ -738,11 +736,11 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-table :data="dataSource" table-height="200px" fix-header>
-    <d-column field="firstName" header="First Name"></d-column>
-    <d-column field="lastName" header="Last Name"></d-column>
-    <d-column field="gender" header="Gender"></d-column>
-    <d-column field="date" header="Date of birth"></d-column>
+  <d-table :data="dataSource" table-height="200px" fix-header style="width:100%">
+    <d-column field="firstName" header="First Name" :width="150"></d-column>
+    <d-column field="lastName" header="Last Name" :width="150"></d-column>
+    <d-column field="gender" header="Gender" :width="150"></d-column>
+    <d-column field="date" header="Date of birth" :width="150"></d-column>
   </d-table>
 </template>
 
@@ -1369,7 +1367,7 @@ export default defineComponent({
 
 ### 懒加载
 
-:::demo 使用lazy启用懒加载，当滚动表格底部时到触发loadMore事件实现懒加载。
+:::demo 使用 lazy 启用懒加载，当滚动表格底部时到触发 loadMore 事件实现懒加载。
 
 ```vue
 <template>
@@ -1386,7 +1384,7 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const showLoading = ref(false)
+    const showLoading = ref(false);
     const dataSource = ref([
       {
         firstName: 'diy0',
@@ -1450,31 +1448,31 @@ export default defineComponent({
       },
     ]);
 
-    let total = 100
-    
+    let total = 100;
+
     const loadMore = () => {
       if (dataSource.value.length >= total || showLoading.value) {
-        return
+        return;
       }
-      
-      showLoading.value = true
-      const moreData = []
-      const size = dataSource.value.length
+
+      showLoading.value = true;
+      const moreData = [];
+      const size = dataSource.value.length;
       for (let i = 0; i < 10; i++) {
         moreData.push({
           firstName: 'diy' + (i + size),
           lastName: 'more data',
           gender: 'Female',
-          date: '2022/07/20'
-        })
+          date: '2022/07/20',
+        });
       }
-      
+
       // mock ajax
       setTimeout(() => {
-        showLoading.value = false
-        dataSource.value = dataSource.value.concat(moreData)
-      }, 200)
-    }
+        showLoading.value = false;
+        dataSource.value = dataSource.value.concat(moreData);
+      }, 500);
+    };
 
     return { dataSource, loadMore, showLoading };
   },
@@ -1506,17 +1504,18 @@ export default defineComponent({
 | show-header           | `boolean`                                         | true      | 可选，配置是否显示表头                                                                                                                         | [表格样式](#表格样式)                                          |
 | row-key               | `string \| Function(item, index: number): string` | --        | 可选，行数据的 Key，用来优化 Table 渲染，类型为 string 时，支持多层访问：`item.user.id`，但不支持 `item.user[0].id`，此种情况请使用 Function。 | [表格交互(Function)](#表格交互) <br> [展开行(string)](#展开行) |
 | indent                | `number`                                          | 16        | 可选，展示树形数据时，树节点的缩进                                                                                                             | [树形表格](#树形表格)                                          |
-| lazy                  | `boolean`                                         | false     | 可选，是否懒加载数据（搭配loadMore使用）                                         | [懒加载](#懒加载)                           |
+| lazy                  | `boolean`                                         | false     | 可选，是否懒加载数据（搭配 loadMore 使用）                                                                                                     | [懒加载](#懒加载)                                              |
+
 ### Table 事件
 
-| 事件名           | 回调参数                                                     | 说明                                                 | 跳转 Demo             |
-| :--------------- | :----------------------------------------------------------- | :--------------------------------------------------- | :-------------------- |
-| sort-change      | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息                       | [列排序](#列排序)     |
-| cell-click       | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息                       | [表格交互](#表格交互) |
-| check-change     | `Function(checked: boolean, row, selection)`                 | 勾选表格行回调事件，返回该行信息和表格所有选中行数据 | [表格交互](#表格交互) |
-| check-all-change | `Function(checked: boolean, selection)`                      | 全选表格行回调事件，返回勾选状态和表格所有选中行数据 | [表格交互](#表格交互) |
-| row-click        | `Function(obj: RowClickArg)`                                 | 某一行被点击时触发该事件，返回该行信息               | [表格交互](#表格交互) |
-| load-more        | `Function()`                                                 | 滚动到表格底部触发懒加载事件（需配合props.lazy开启）  | [懒加载](#懒加载)  |
+| 事件名           | 回调参数                                                     | 说明                                                   | 跳转 Demo             |
+| :--------------- | :----------------------------------------------------------- | :----------------------------------------------------- | :-------------------- |
+| sort-change      | `Function(obj: { field: string; direction: SortDirection })` | 排序回调事件，返回该列排序信息                         | [列排序](#列排序)     |
+| cell-click       | `Function(obj: CellClickArg)`                                | 单元格点击事件，返回单元格信息                         | [表格交互](#表格交互) |
+| check-change     | `Function(checked: boolean, row, selection)`                 | 勾选表格行回调事件，返回该行信息和表格所有选中行数据   | [表格交互](#表格交互) |
+| check-all-change | `Function(checked: boolean, selection)`                      | 全选表格行回调事件，返回勾选状态和表格所有选中行数据   | [表格交互](#表格交互) |
+| row-click        | `Function(obj: RowClickArg)`                                 | 某一行被点击时触发该事件，返回该行信息                 | [表格交互](#表格交互) |
+| load-more        | `Function()`                                                 | 滚动到表格底部触发懒加载事件（需配合 props.lazy 开启） | [懒加载](#懒加载)     |
 
 ### Table 方法
 
@@ -1558,6 +1557,7 @@ export default defineComponent({
 | show-overflow-tooltip | `boolean`                          | false  | 可选，内容过长被隐藏时是否显示 tooltip      |                       |
 | resizeable            | `boolean`                          | false  | 可选，该列宽度是否可调整                    |                       |
 | reserve-check         | `boolean`                          | false  | 可选，是否保留勾选状态                      | [表格交互](#表格交互) |
+| cell-class            | `string`                           | ''     | 可选，该列单元格自定义 class                |                       |
 
 ### Column 事件
 

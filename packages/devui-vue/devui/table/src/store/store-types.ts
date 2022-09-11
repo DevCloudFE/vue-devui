@@ -1,12 +1,10 @@
 import type { ComponentInternalInstance, Ref } from 'vue';
 import { Column, SortMethod, SortDirection } from '../components/column/column-types';
-import { DefaultRow, ITable } from '../table-types';
+import { DefaultRow } from '../table-types';
 
 // TableStore 对象
 // 主要是为了方便维护 Table 中的各种状态
 export interface TableStore<T = Record<string, unknown>> {
-  // 内置 table 对象
-  _table: ITable<DefaultRow>;
   // 具体存储的数据
   states: {
     // 外部数据源
@@ -48,8 +46,9 @@ export interface TableStore<T = Record<string, unknown>> {
   updateRows(): void;
   // 获取勾选行
   getCheckedRows(): T[];
+  collectTh(th: ComponentInternalInstance): void;
   // 排序数据
-  sortData(direction: SortDirection, sortMethod: SortMethod<T>): void;
+  sortData(direction: SortDirection, sortMethod: SortMethod<T> | undefined): void;
   // 特定行数据是否勾选
   isRowChecked(row: T, index: number): boolean;
   // 保存勾选行的信息
@@ -67,6 +66,8 @@ export interface TableStore<T = Record<string, unknown>> {
   setCellMode: (row: DefaultRow, rowIndex: number, fields: string | string[], cellMode: string) => void;
   // 重置所有单元格状态为只读状态
   resetCellMode: () => void;
+  // 触发Table组件上的事件
+  emitTableEvent: (eventName: string, ...params: unknown[]) => void;
 }
 
 export interface UseExpand {
