@@ -17,7 +17,7 @@ export function isExhibitionColorPicker(
   pickerRef: Ref<HTMLElement | null>,
   showColorPicker: Ref<boolean>
 ): void {
-  if (colorCubeRef.value?.contains?.(event.target as Node)) {
+  if (colorCubeRef.value?.contains?.(event.target as Node) && !showColorPicker.value) {
     showColorPicker.value = true;
   }
   if (!!pickerRef.value && !pickerRef.value?.contains(event.target as Node)) {
