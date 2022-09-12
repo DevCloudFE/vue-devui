@@ -11,7 +11,7 @@ import {
   readonly,
   Transition
 } from 'vue';
-import type { StyleValue } from 'vue';
+import type { StyleValue, Ref } from 'vue';
 import {
   useReactive,
   colorPickerResize,
@@ -58,16 +58,21 @@ export default defineComponent({
       emit('update:modelValue', value);
     }
     function resize() {
-      return colorPickerResize(colorCubeRef, top, left);
+      return colorPickerResize(colorCubeRef as Ref<HTMLElement>, top, left);
     }
     function isExhibition(event: Event) {
-      return isExhibitionColorPicker(event as PointerEvent, colorCubeRef, pickerRef, showColorPicker);
+      return isExhibitionColorPicker(
+        event as PointerEvent,
+        colorCubeRef as Ref<HTMLElement>,
+        pickerRef as Ref<HTMLElement>,
+        showColorPicker
+      );
     }
     onMounted(() => {
       // resize 响应式 colorpicker
       window.addEventListener('resize', resize);
       // 点击展示 colorpicker
-      window.addEventListener('click', isExhibition);
+      window.addEventListener('click', isExhibition, true);
     });
     // ** computeds
     // colorpicker panel 组件位置
@@ -152,7 +157,7 @@ export default defineComponent({
                 ]}
               ></div>
               <div class='devui-color-picker-color-value'>
-                <p style={textColor.value}>{formItemValue.value}</p>
+                <p style={textColor.value as StyleValue}>{formItemValue.value}</p>
               </div>
             </div>
           </div>
