@@ -20,7 +20,7 @@
     no-data="暂无数据"
     :minLength='1'
     :caseSensitivity="true"
-    @valueChange="changeValue"
+    @change="changeValue"
     @update:tags="changeTags"
     @update:suggestionList="changeSuggestionList"
   ></d-tag-input>
@@ -32,7 +32,7 @@ export default defineComponent({
   setup() {
     const state = reactive({
       tags: [{ name: "123" }],
-      suggestionList: [{ name: "item1" }]
+      suggestionList: [{ name: "item1" },{ name: "item2" },{ name: "item3" }, { name: "item4" }]
     })
     const changeTags = (val) => {
       console.log(val)
@@ -140,6 +140,6 @@ export default defineComponent({
 
 |    事件     |  说明                                                     | 跳转 Demo             |
 | :---------: | :------------------------------------------------------- | --------------------- |
-| valueChange | 当选中某个选项项后，将会调用此函数，参数为当前选择项的值 | [基本用法](#基本用法) |
+| change | 当选中某个选项项后，将会调用此函数，参数为当前选择项的值 | [基本用法](#基本用法) |
 | update:tags | 当选项数据发生改变时，返回新的标签列表 | [基本用法](#基本用法) |
 | update:suggestionList | 当选项数据发生变化时，返回新的可选择标签列表 | [基本用法](#基本用法) |
