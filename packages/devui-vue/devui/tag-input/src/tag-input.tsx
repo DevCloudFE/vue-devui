@@ -1,5 +1,6 @@
 import { defineComponent, ref, computed, nextTick, watch, SetupContext, getCurrentInstance } from 'vue';
 import { createI18nTranslate } from '../../locale/create';
+import clickoutsideDirective from '../../shared/devui-directive/clickoutside';
 import removeBtnSvg from './icon-remove';
 import { Suggestion, TagInputProps, tagInputProps } from './tag-input-types';
 import './tag-input.scss';
@@ -14,6 +15,9 @@ const KEYS_MAP = {
 
 export default defineComponent({
   name: 'DTagInput',
+  directives: {
+    clickoutside: clickoutsideDirective,
+  },
   props: tagInputProps,
   emits: ['update:tags', 'update:suggestionList', 'valueChange'],
   setup(props: TagInputProps, ctx: SetupContext) {
@@ -69,8 +73,14 @@ export default defineComponent({
       isInputBoxFocus.value = true;
     };
     const onInputBlur = () => {
+      // isInputBoxFocus.value = false;
+    };
+
+    // 点击元素外部区域关闭Suggestion选择
+    const closeSuggestion = () => {
       isInputBoxFocus.value = false;
     };
+
     const handleEnter = () => {
       let res = { [props.displayProperty]: tagInputVal.value };
       if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) {
@@ -119,20 +129,23 @@ export default defineComponent({
       }
     };
 
-    const removeTag = ($event: MouseEvent, tagIdx: number) => {
+    const removeTag = ($event: Event, tagIdx: number) => {
       $event.preventDefault();
       ctx.emit('update:suggestionList', add(props.suggestionList, props.tags[tagIdx]));
       const newTags = remove(props.tags, tagIdx);
       ctx.emit('valueChange', props.tags, newTags);
       ctx.emit('update:tags', newTags);
+
       nextTick(() => {
         tagInputRef.value?.focus();
       });
     };
-    const onSuggestionItemClick = ($event: MouseEvent, itemIndex: number) => {
+    const onSuggestionItemClick = ($event: Event, itemIndex: number) => {
       $event.preventDefault();
       const target = mergedSuggestions.value[itemIndex];
       const newTags = add(props.tags, target);
+
+
       const newSuggestions = remove(props.suggestionList, target.__index);
       ctx.emit('valueChange', props.tags, newTags);
       ctx.emit('update:tags', newTags);
@@ -144,119 +157,73 @@ export default defineComponent({
       return !props.disabled && !isTagsLimit.value && isInputBoxFocus.value;
     });
 
-    return {
-      tagInputRef,
-      tagInputVal,
-      isInputBoxFocus,
-      onInput,
-      onInputFocus,
-      onInputBlur,
-      removeTag,
-      onSuggestionItemClick,
-      onInputKeydown,
-      isShowSuggestion,
-      mergedSuggestions,
-      selectIndex,
-      isTagsLimit,
-      t,
-    };
-  },
-  render() {
-    const {
-      tagInputVal,
-      isInputBoxFocus,
-      disabled,
-      disabledText,
-      isTagsLimit,
-      maxTagsText,
-      displayProperty,
-      tags,
-      onInputKeydown,
-      onInputFocus,
-      onInputBlur,
-      onInput,
-      onSuggestionItemClick,
-      removeTag,
-      placeholder,
-      spellcheck,
-      isShowSuggestion,
-      noData,
-      mergedSuggestions,
-      selectIndex,
-      maxTags,
-      t,
-    } = this;
-
     const inputBoxCls = {
       'devui-tags': true,
       'devui-form-control': true,
       'devui-dropdown-origin': true,
       'devui-dropdown-origin-open': isInputBoxFocus,
-      'devui-disabled': disabled,
+      'devui-disabled': props.disabled,
     };
     const tagInputCls = {
       input: true,
       'devui-input': true,
       'invalid-tag': false,
     };
-    const tagInputStyle = [`display:${disabled ? 'none' : 'block'};`];
+    const tagInputStyle = [`display:${props.disabled ? 'none' : 'block'};`];
 
-    const noDataTpl = <li class="devui-suggestion-item devui-disabled">{noData}</li>;
+    const noDataTpl = <li class="devui-suggestion-item devui-disabled">{props.noData}</li>;
 
-    return (
-      <div class="devui-tags-host" tabindex="-1">
-        <div class={inputBoxCls} style={['box-shadow: none;']}>
-          <ul class="devui-tag-list" title={disabled ? disabledText : ''}>
-            {tags.map((tag, tagIdx) => {
-              return (
-                <li class="devui-tag-item">
-                  <span>{tag[displayProperty]}</span>
-                  {!disabled && (
-                    <a class="remove-button" onMousedown={($event) => removeTag($event, tagIdx)}>
-                      {removeBtnSvg}
-                    </a>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-          <input
-            type="text"
-            ref="tagInputRef"
-            value={tagInputVal}
-            class={tagInputCls}
-            style={tagInputStyle}
-            onKeydown={onInputKeydown}
-            onFocus={onInputFocus}
-            onBlur={onInputBlur}
-            onInput={($event: InputEvent) => onInput($event)}
-            placeholder={isTagsLimit ? `${maxTagsText || t('maxTagsText')} ${maxTags}` : placeholder}
-            spellcheck={spellcheck}
-            disabled={isTagsLimit}
-          />
-        </div>
-        {!isShowSuggestion ? (
-          ''
-        ) : (
-          <div class="devui-tags-autocomplete devui-dropdown-menu">
-            <ul class="devui-suggestion-list">
-              {mergedSuggestions.length === 0
-                ? noDataTpl
-                : mergedSuggestions.map((item: Suggestion, index: number) => {
-                  return (
-                    <li
-                      class={{ 'devui-suggestion-item': true, selected: index === selectIndex }}
-                      onMousedown={($event) => {
-                        onSuggestionItemClick($event, index);
-                      }}>
-                      {item[displayProperty]}
-                    </li>
-                  );
-                })}
-            </ul>
-          </div>
-        )}
+    return () => (<div class="devui-tags-host" tabIndex="-1" v-clickoutside={closeSuggestion}>
+      <div class={inputBoxCls} style={['box-shadow: none;']}>
+        <ul class="devui-tag-list" title={props.disabled ? props.disabledText : ''}>
+          {props.tags.map((tag, tagIdx) => {
+            return (
+              <li class="devui-tag-item">
+                <span>{tag[props.displayProperty]}</span>
+                {!props.disabled && (
+                  <a class="remove-button" onClick={($event: Event) => removeTag($event, tagIdx)}>
+                    {removeBtnSvg}
+                  </a>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+        <input
+          type="text"
+          ref="tagInputRef"
+          value={tagInputVal.value}
+          class={tagInputCls}
+          style={tagInputStyle}
+          onKeyDown={onInputKeydown}
+          onFocus={onInputFocus}
+          onBlur={onInputBlur}
+          onInput={($event: InputEvent) => onInput($event)}
+          placeholder={isTagsLimit.value ? `${props.maxTagsText || t('maxTagsText')} ${props.maxTags}` : props.placeholder}
+          spellCheck={props.spellcheck}
+          disabled={isTagsLimit.value}
+        />
       </div>
-    );
+      {isShowSuggestion.value && (
+        <div class="devui-tags-autocomplete devui-dropdown-menu">
+          <ul class="devui-suggestion-list">
+            {mergedSuggestions.value.length === 0
+              ? noDataTpl
+              : mergedSuggestions.value.map((item: Suggestion, index: number) => {
+                return (
+                  <li
+                    class={{ 'devui-suggestion-item': true, selected: index === selectIndex.value }}
+                    onClick={($event: Event) => {
+                      onSuggestionItemClick($event, index);
+                    }}
+                  >
+                    {item[props.displayProperty]}
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+      )}
+    </div>);
   },
 });
