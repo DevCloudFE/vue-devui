@@ -153,17 +153,9 @@
 }
 
 .#{$devui-prefix}-tags-autocomplete {
-  position: absolute;
-  padding-bottom: 5px;
-  z-index: $devui-z-index-dropdown;
   width: 100%;
   background-color: $devui-connected-overlay-bg;
   box-shadow: $devui-shadow-length-connected-overlay $devui-shadow;
-
-  &.#{$devui-prefix}-dropdown-menu {
-    display: block;
-    margin: 4px 0;
-  }
 
   .#{$devui-prefix}-suggestion-list {
     margin: 0;
@@ -191,7 +183,7 @@
 
         &.selected {
           color: $devui-brand;
-          background-color: $devui-list-item-hover-bg;
+          background-color: $devui-list-item-active-bg;
         }
       }
     }

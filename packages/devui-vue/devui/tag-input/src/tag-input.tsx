@@ -1,7 +1,8 @@
-import { defineComponent, ref, computed, nextTick, watch, SetupContext, getCurrentInstance } from 'vue';
+import { defineComponent, ref, computed, nextTick, watch, SetupContext, getCurrentInstance, Teleport, Transition } from 'vue';
 import { createI18nTranslate } from '../../locale/create';
-import clickoutsideDirective from '../../shared/devui-directive/clickoutside';
-import removeBtnSvg from './icon-remove';
+import ClickOutside from '../../shared/devui-directive/clickoutside';
+import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
+import removeBtnSvg from './components/icon-remove';
 import { Suggestion, TagInputProps, tagInputProps } from './tag-input-types';
 import './tag-input.scss';
 
@@ -16,7 +17,7 @@ const KEYS_MAP = {
 export default defineComponent({
   name: 'DTagInput',
   directives: {
-    clickoutside: clickoutsideDirective,
+    ClickOutside,
   },
   props: tagInputProps,
   emits: ['update:tags', 'update:suggestionList', 'valueChange'],
@@ -67,13 +68,10 @@ export default defineComponent({
       selectIndex.value > 0 ? selectIndex.value-- : (selectIndex.value = mergedSuggestions.value.length - 1);
     };
 
-    const tagInputRef = ref<HTMLInputElement | null>(null);
+    const tagInputRef = ref();
     const isInputBoxFocus = ref(false);
     const onInputFocus = () => {
       isInputBoxFocus.value = true;
-    };
-    const onInputBlur = () => {
-      // isInputBoxFocus.value = false;
     };
 
     // 点击元素外部区域关闭Suggestion选择
@@ -173,7 +171,9 @@ export default defineComponent({
 
     const noDataTpl = <li class="devui-suggestion-item devui-disabled">{props.noData}</li>;
 
-    return () => (<div class="devui-tags-host" tabIndex="-1" v-clickoutside={closeSuggestion}>
+    const origin = ref();
+
+    return () => (<div class="devui-tags-host" ref={origin} v-click-outside={closeSuggestion}>
       <div class={inputBoxCls} style={['box-shadow: none;']}>
         <ul class="devui-tag-list" title={props.disabled ? props.disabledText : ''}>
           {props.tags.map((tag, tagIdx) => {
@@ -197,33 +197,42 @@ export default defineComponent({
           style={tagInputStyle}
           onKeyDown={onInputKeydown}
           onFocus={onInputFocus}
-          onBlur={onInputBlur}
           onInput={($event: InputEvent) => onInput($event)}
           placeholder={isTagsLimit.value ? `${props.maxTagsText || t('maxTagsText')} ${props.maxTags}` : props.placeholder}
           spellCheck={props.spellcheck}
           disabled={isTagsLimit.value}
         />
       </div>
-      {isShowSuggestion.value && (
-        <div class="devui-tags-autocomplete devui-dropdown-menu">
-          <ul class="devui-suggestion-list">
-            {mergedSuggestions.value.length === 0
-              ? noDataTpl
-              : mergedSuggestions.value.map((item: Suggestion, index: number) => {
-                return (
-                  <li
-                    class={{ 'devui-suggestion-item': true, selected: index === selectIndex.value }}
-                    onClick={($event: Event) => {
-                      onSuggestionItemClick($event, index);
-                    }}
-                  >
-                    {item[props.displayProperty]}
-                  </li>
-                );
-              })}
-          </ul>
-        </div>
-      )}
+
+      <Teleport to="body">
+        <Transition name="fade">
+          <FlexibleOverlay
+            origin={origin.value}
+            v-model={isShowSuggestion.value}
+            style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)', width: '100%' }}
+          >
+            <div class="devui-tags-autocomplete devui-dropdown-menu" style={{ width: '100%' }}>
+              <ul class="devui-suggestion-list">
+                {mergedSuggestions.value.length === 0
+                  ? noDataTpl
+                  : mergedSuggestions.value.map((item: Suggestion, index: number) => {
+                    return (
+                      <li
+                        class={{ 'devui-suggestion-item': true, selected: index === selectIndex.value }}
+                        onClick={($event: Event) => {
+                          $event.stopPropagation();
+                          onSuggestionItemClick($event, index);
+                        }}
+                      >
+                        {item[props.displayProperty]}
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+          </FlexibleOverlay>
+        </Transition>
+      </Teleport>
     </div>);
   },
 });
