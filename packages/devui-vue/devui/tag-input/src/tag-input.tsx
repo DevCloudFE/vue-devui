@@ -20,7 +20,7 @@ export default defineComponent({
     ClickOutside,
   },
   props: tagInputProps,
-  emits: ['update:tags', 'update:suggestionList', 'valueChange'],
+  emits: ['update:tags', 'update:suggestionList', 'change'],
   setup(props: TagInputProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DTagInput', app);
@@ -102,7 +102,7 @@ export default defineComponent({
       }
 
       const newTags = add(props.tags, res);
-      ctx.emit('valueChange', props.tags, newTags);
+      ctx.emit('change', props.tags, newTags);
       ctx.emit('update:tags', newTags);
       mergedSuggestions.value.length === 0 && (tagInputVal.value = '');
     };
@@ -131,7 +131,7 @@ export default defineComponent({
       $event.preventDefault();
       ctx.emit('update:suggestionList', add(props.suggestionList, props.tags[tagIdx]));
       const newTags = remove(props.tags, tagIdx);
-      ctx.emit('valueChange', props.tags, newTags);
+      ctx.emit('change', props.tags, newTags);
       ctx.emit('update:tags', newTags);
 
       nextTick(() => {
@@ -145,7 +145,7 @@ export default defineComponent({
 
 
       const newSuggestions = remove(props.suggestionList, target.__index);
-      ctx.emit('valueChange', props.tags, newTags);
+      ctx.emit('change', props.tags, newTags);
       ctx.emit('update:tags', newTags);
       ctx.emit('update:suggestionList', newSuggestions);
     };
