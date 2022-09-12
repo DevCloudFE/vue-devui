@@ -5,7 +5,7 @@
   outline: none;
 }
 
-.#{$devui-prefix}-tags-host {
+.#{$devui-prefix}-tag-input {
   position: relative;
   height: 100%;
   outline: none;
@@ -154,6 +154,8 @@
 
 .#{$devui-prefix}-tags-autocomplete {
   width: 100%;
+  padding: 8px;
+  border-radius: $devui-border-radius;
   background-color: $devui-connected-overlay-bg;
   box-shadow: $devui-shadow-length-connected-overlay $devui-shadow;
 
@@ -172,6 +174,7 @@
       text-overflow: ellipsis;
       font-size: $devui-font-size;
       line-height: 20px;
+      border-radius: $devui-border-radius;
 
       &:not(.#{$devui-prefix}-disabled) {
         cursor: pointer;

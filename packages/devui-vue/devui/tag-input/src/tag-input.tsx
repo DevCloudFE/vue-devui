@@ -1,7 +1,20 @@
-import { defineComponent, ref, computed, nextTick, watch, SetupContext, getCurrentInstance, Teleport, Transition } from 'vue';
+import {
+  defineComponent,
+  ref,
+  computed,
+  nextTick,
+  watch,
+  SetupContext,
+  getCurrentInstance,
+  Teleport,
+  Transition,
+  onMounted,
+  onUnmounted,
+} from 'vue';
 import { createI18nTranslate } from '../../locale/create';
 import ClickOutside from '../../shared/devui-directive/clickoutside';
 import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import removeBtnSvg from './components/icon-remove';
 import { Suggestion, TagInputProps, tagInputProps } from './tag-input-types';
 import './tag-input.scss';
@@ -25,11 +38,14 @@ export default defineComponent({
     const app = getCurrentInstance();
     const t = createI18nTranslate('DTagInput', app);
 
+    const ns = useNamespace('tag-input');
+
     const add = (arr: Suggestion[], target: Suggestion) => {
       const res = Object.assign({}, target);
       delete res.__index;
       return arr.concat(res);
     };
+
     const remove = (arr: Suggestion[], targetIdx: number) => {
       const newArr = arr.slice();
       newArr.splice(targetIdx, 1);
@@ -41,6 +57,7 @@ export default defineComponent({
       const v = ($event.target as HTMLInputElement).value || '';
       tagInputVal.value = v.trim();
     };
+
     const mergedSuggestions = computed<Suggestion[]>(() => {
       let suggestions = props.suggestionList.map((item, index: number) => {
         return {
@@ -51,6 +68,7 @@ export default defineComponent({
       if (tagInputVal.value === '') {
         return suggestions;
       }
+
       return (suggestions = props.caseSensitivity
         ? suggestions.filter((item) => item[props.displayProperty].indexOf(tagInputVal.value) !== -1)
         : suggestions.filter((item) => item[props.displayProperty].toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1));
@@ -60,6 +78,7 @@ export default defineComponent({
     watch(mergedSuggestions, () => {
       selectIndex.value = 0;
     });
+
     const onSelectIndexChange = (isUp = false) => {
       if (isUp) {
         selectIndex.value < mergedSuggestions.value.length - 1 ? selectIndex.value++ : (selectIndex.value = 0);
@@ -106,6 +125,7 @@ export default defineComponent({
       ctx.emit('update:tags', newTags);
       mergedSuggestions.value.length === 0 && (tagInputVal.value = '');
     };
+
     const onInputKeydown = ($event: KeyboardEvent) => {
       switch ($event.key) {
       case KEYS_MAP.tab:
@@ -136,14 +156,14 @@ export default defineComponent({
 
       nextTick(() => {
         tagInputRef.value?.focus();
+        isInputBoxFocus.value = true;
       });
     };
+
     const onSuggestionItemClick = ($event: Event, itemIndex: number) => {
       $event.preventDefault();
       const target = mergedSuggestions.value[itemIndex];
       const newTags = add(props.tags, target);
-
-
       const newSuggestions = remove(props.suggestionList, target.__index);
       ctx.emit('change', props.tags, newTags);
       ctx.emit('update:tags', newTags);
@@ -155,47 +175,104 @@ export default defineComponent({
       return !props.disabled && !isTagsLimit.value && isInputBoxFocus.value;
     });
 
-    const inputBoxCls = {
-      'devui-tags': true,
-      'devui-form-control': true,
-      'devui-dropdown-origin': true,
-      'devui-dropdown-origin-open': isInputBoxFocus,
-      'devui-disabled': props.disabled,
+
+    // 已选择 tags 列表
+    const chosenTags = () => {
+      return <ul class="devui-tag-list" title={props.disabled ? props.disabledText : ''}>
+        {props.tags.map((tag, tagIdx) => {
+          return (
+            <li class="devui-tag-item">
+              <span>{tag[props.displayProperty]}</span>
+              {!props.disabled && (
+                <a class="remove-button" onClick={($event: Event) => removeTag($event, tagIdx)}>
+                  {removeBtnSvg}
+                </a>
+              )}
+            </li>
+          );
+        })}
+      </ul>;
     };
+
+    const noDataTpl = <li class="devui-suggestion-item devui-disabled">{props.noData}</li>;
+
+    const origin = ref();
+    const dropdownWidth = ref('0');
+    const updateDropdownWidth = () => {
+      dropdownWidth.value = origin?.value?.clientWidth ? origin.value.clientWidth + 'px' : '100%';
+    };
+
+    onMounted(() => {
+      updateDropdownWidth();
+      window.addEventListener('resize', updateDropdownWidth);
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', updateDropdownWidth);
+    });
+
+    // 选择建议列表
+    const suggestionList = () => {
+      const showNoData = mergedSuggestions.value.length === 0;
+      const suggestionListItem = mergedSuggestions.value.map((item: Suggestion, index: number) => {
+        return (
+          <li
+            class={{ 'devui-suggestion-item': true, selected: index === selectIndex.value }}
+            onClick={($event: Event) => {
+              onSuggestionItemClick($event, index);
+            }}
+          >
+            {item[props.displayProperty]}
+          </li>
+        );
+      });
+
+      return <Teleport to="body">
+        <Transition name="fade">
+          <FlexibleOverlay
+            origin={origin.value}
+            v-model={isShowSuggestion.value}
+            style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}
+          >
+            <div class="devui-tags-autocomplete" style={{ width: `${dropdownWidth.value}` }}>
+              <ul class="devui-suggestion-list">
+                {showNoData ? noDataTpl : suggestionListItem}
+              </ul>
+            </div>
+          </FlexibleOverlay>
+        </Transition>
+      </Teleport>;
+    };
+
+    const inputBoxCls = computed(() => {
+      return {
+        'devui-tags': true,
+        'devui-form-control': true,
+        'devui-dropdown-origin': true,
+        'devui-dropdown-origin-open': isInputBoxFocus.value,
+        'devui-disabled': props.disabled,
+      };
+    });
+
     const tagInputCls = {
       input: true,
       'devui-input': true,
       'invalid-tag': false,
     };
-    const tagInputStyle = [`display:${props.disabled ? 'none' : 'block'};`];
+    const tagInputStyle = computed(() => {
+      return [`display:${props.disabled ? 'none' : 'block'};`];
+    });
 
-    const noDataTpl = <li class="devui-suggestion-item devui-disabled">{props.noData}</li>;
-
-    const origin = ref();
-
-    return () => (<div class="devui-tags-host" ref={origin} v-click-outside={closeSuggestion}>
-      <div class={inputBoxCls} style={['box-shadow: none;']}>
-        <ul class="devui-tag-list" title={props.disabled ? props.disabledText : ''}>
-          {props.tags.map((tag, tagIdx) => {
-            return (
-              <li class="devui-tag-item">
-                <span>{tag[props.displayProperty]}</span>
-                {!props.disabled && (
-                  <a class="remove-button" onClick={($event: Event) => removeTag($event, tagIdx)}>
-                    {removeBtnSvg}
-                  </a>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+    return () => (<div class={ns.b()} ref={origin} v-click-outside={closeSuggestion}>
+      <div class={inputBoxCls.value}>
+        {chosenTags()}
         <input
           type="text"
           ref="tagInputRef"
           value={tagInputVal.value}
           class={tagInputCls}
-          style={tagInputStyle}
-          onKeyDown={onInputKeydown}
+          style={tagInputStyle.value}
+          onKeydown={onInputKeydown}
           onFocus={onInputFocus}
           onInput={($event: InputEvent) => onInput($event)}
           placeholder={isTagsLimit.value ? `${props.maxTagsText || t('maxTagsText')} ${props.maxTags}` : props.placeholder}
@@ -203,36 +280,7 @@ export default defineComponent({
           disabled={isTagsLimit.value}
         />
       </div>
-
-      <Teleport to="body">
-        <Transition name="fade">
-          <FlexibleOverlay
-            origin={origin.value}
-            v-model={isShowSuggestion.value}
-            style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)', width: '100%' }}
-          >
-            <div class="devui-tags-autocomplete devui-dropdown-menu" style={{ width: '100%' }}>
-              <ul class="devui-suggestion-list">
-                {mergedSuggestions.value.length === 0
-                  ? noDataTpl
-                  : mergedSuggestions.value.map((item: Suggestion, index: number) => {
-                    return (
-                      <li
-                        class={{ 'devui-suggestion-item': true, selected: index === selectIndex.value }}
-                        onClick={($event: Event) => {
-                          $event.stopPropagation();
-                          onSuggestionItemClick($event, index);
-                        }}
-                      >
-                        {item[props.displayProperty]}
-                      </li>
-                    );
-                  })}
-              </ul>
-            </div>
-          </FlexibleOverlay>
-        </Transition>
-      </Teleport>
+      {suggestionList()}
     </div>);
   },
 });
