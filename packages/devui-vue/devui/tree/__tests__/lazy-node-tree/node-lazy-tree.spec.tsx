@@ -52,7 +52,7 @@ describe('Tree node lazyLoad', () => {
     const icon = loadingItem.find(ns.e('node-folder'));
     await icon.trigger('click');
 
-    const loadingContent = loadingItem.find(loadingNs.b());
+    const loadingContent = wrapper.findAll(ns.e('node-content'))[1].find(loadingNs.b());
     expect(loadingContent.exists()).toBeTruthy();
 
     await new Promise((resolve) => {

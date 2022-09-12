@@ -1,6 +1,9 @@
 .#{$devui-prefix}-menu-vertical,
 .#{$devui-prefix}-menu-horizontal {
-  a {
+  a,
+  a:hover,
+  a:active,
+  a:visited {
     text-decoration: none;
   }
 

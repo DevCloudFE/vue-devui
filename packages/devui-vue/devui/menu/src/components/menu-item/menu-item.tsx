@@ -34,7 +34,6 @@ export default defineComponent({
     const rootMenuEmit = inject('rootMenuEmit') as (eventName: string, ...args: unknown[]) => void;
     const useRouter = inject('useRouter') as boolean;
     const router = instance?.appContext.config.globalProperties.$router as Router;
-
     const classObject = computed(()=>({
       [`${ns.b()}-item`]: true,
       [`${ns.b()}-item-isCollapsed`]: isCollapsed.value,
@@ -48,6 +47,7 @@ export default defineComponent({
       e.stopPropagation();
       const ele = e.currentTarget as HTMLElement;
       let changeRouteResult = undefined;
+      props.disabled && e.preventDefault();
       if (!props.disabled) {
         if (!multiple) {
           menuStore.emit('menuItem:clear:select');
@@ -85,7 +85,9 @@ export default defineComponent({
     const icons = <span class={`${ns.b()}-icon`}>{ctx.slots.icon?.()}</span>;
     const menuItems = ref(null);
     watch(disabled, () => {
-      classObject.value[menuItemSelect] = false;
+      if (!multiple){
+        classObject.value[menuItemSelect] = false;
+      }
     });
     watch(
       () => defaultSelectKey,

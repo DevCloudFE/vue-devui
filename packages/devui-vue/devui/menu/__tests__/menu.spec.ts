@@ -4,6 +4,7 @@ import { Menu, SubMenu, MenuItem } from '../index';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const ns = useNamespace('menu');
+const SubNs = useNamespace('submenu');
 const dotNs = useNamespace('menu', true);
 const dotSubNs = useNamespace('submenu', true);
 
@@ -12,6 +13,9 @@ const menuHorizontal = ns.b() + '-horizontal';
 const dotMenuItem = dotNs.b() + '-item';
 const dotMenuItemVerticalWrapper = dotNs.b() + '-item-vertical-wrapper';
 const dotSubMenu = dotSubNs.b();
+const submenuDisabled = SubNs.b() + '-disabled';
+const menuitemDisabled = ns.b() + '-item-disabled';
+
 
 describe('menu test', () => {
   let wrapper: VueWrapper<ComponentPublicInstance>;
@@ -136,7 +140,6 @@ describe('menu test', () => {
     expect(wrapper.findAll('i')[0].classes().includes('is-opened')).toBe(true);
     expect(wrapper.findAll('i')[1].classes().includes('is-opened')).toBe(false);
   });
-
   it.todo('props mode(vertical/horizontal) work well.');
 
   it.todo('props multiple work well.');
@@ -148,4 +151,30 @@ describe('menu test', () => {
   it.todo('props router work well.');
 
   it.todo('slot icon work well.');
+  it('menu - disabled', async ()=>{
+    wrapper = wrapper = mount({
+      components: {
+        'd-menu': Menu,
+        'd-sub-menu': SubMenu,
+        'd-menu-item': MenuItem,
+      },
+      template: `
+      <d-menu>
+        <d-menu-item key="home">首页</d-menu-item>
+        <d-sub-menu title="课程" key="course" class="course" disabled>
+          <d-menu-item key="c"> C </d-menu-item>
+          <d-sub-menu title="Python" key="python">
+            <d-menu-item key="basic"> 基础 </d-menu-item>
+            <d-menu-item key="advanced"> 进阶 </d-menu-item>
+          </d-sub-menu>
+        </d-sub-menu>
+        <d-menu-item key="person">个人</d-menu-item>
+        <d-menu-item key="custom" href="https://www.baidu.com" disabled> Link To Baidu </d-menu-item>
+      </d-menu>
+      `,
+    });
+    await nextTick();
+    expect(wrapper.findAll(dotMenuItem).at(-1)?.classes().includes(menuitemDisabled)).toBe(true);
+    expect(wrapper.find('.course').classes().includes(submenuDisabled)).toBe(true);
+  });
 });

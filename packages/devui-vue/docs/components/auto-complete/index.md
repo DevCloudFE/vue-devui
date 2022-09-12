@@ -81,12 +81,14 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div class="mb-0">Small</div>
-  <d-auto-complete class="mb-2" size="sm" :source="source" v-model="value1" :width="420"> </d-auto-complete>
-  <div class="mb-0">Middle</div>
-  <d-auto-complete class="mb-2" :source="source" v-model="value2" :width="420"> </d-auto-complete>
-  <div class="mb-0">Large</div>
-  <d-auto-complete class="mb-2" size="lg" :source="source" v-model="value3" :width="420"> </d-auto-complete>
+  <h4>Small</h4>
+  <d-auto-complete size="sm" :source="source" v-model="value1" :width="420"> </d-auto-complete>
+  
+  <h4>Middle</h4>
+  <d-auto-complete :source="source" v-model="value2" :width="420"> </d-auto-complete>
+  
+  <h4>Large</h4>
+  <d-auto-complete size="lg" :source="source" v-model="value3" :width="420"> </d-auto-complete>
 </template>
 
 <script>
@@ -125,7 +127,7 @@ export default defineComponent({
     </d-col>
     <d-col :flex="2">
       <d-button id="primaryBtn" @click="toggle" style="margin-left:10px">
-        {{ isDisabled ? 'Enable AutoComplete' : 'Disable AutoComplete' }}
+        {{ isDisabled ? '点击启用' : '点击禁用' }}
       </d-button>
     </d-col>
   </d-row>

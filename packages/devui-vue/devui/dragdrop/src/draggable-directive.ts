@@ -1,5 +1,5 @@
 import { changeDragState, deleteInsertedSortableShadow } from './utils';
-import { shadowId } from './constant';
+import { SHADOW_ID } from './const';
 
 export default {
   /**
@@ -24,7 +24,7 @@ export default {
     // dragstart/drag/dragend
     el.addEventListener('drag', () => {
       changeDragState(el, el.id, 'true', 'true', 'false', 'false', 'false', 'true');
-      if (binding.instance.$root.dropElement && document.getElementById(shadowId)){
+      if (binding.instance.$root.dropElement && document.getElementById(SHADOW_ID)){
         deleteInsertedSortableShadow(binding.instance.$root.dropElement);     // 如何让它仅执行1次？
         binding.instance.$root.dropElement = null;
       }
