@@ -7,7 +7,7 @@ export interface Suggestion {
 }
 
 export const tagInputProps = {
-  tags: {
+  modelValue: {
     type: Array as PropType<Suggestion[]>,
     default: (): [] => [],
   },
