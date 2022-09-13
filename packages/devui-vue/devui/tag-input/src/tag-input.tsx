@@ -12,19 +12,16 @@ import {
   onUnmounted,
 } from 'vue';
 import { createI18nTranslate } from '../../locale/create';
-import ClickOutside from '../../shared/devui-directive/clickoutside';
 import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import removeBtnSvg from './components/icon-remove';
 import { Suggestion, TagInputProps, tagInputProps } from './tag-input-types';
 import './tag-input.scss';
 import { useInputKeydown } from './composables/use-input-keydown';
+import { onClickOutside } from '@vueuse/core';
 
 export default defineComponent({
   name: 'DTagInput',
-  directives: {
-    ClickOutside,
-  },
   props: tagInputProps,
   emits: ['update:modelValue', 'update:suggestionList', 'change'],
   setup(props: TagInputProps, ctx: SetupContext) {
@@ -57,7 +54,7 @@ export default defineComponent({
     };
 
     const mergedSuggestions = computed<Suggestion[]>(() => {
-      let suggestions = props.suggestionList.map((item, index: number) => {
+      const suggestions = props.suggestionList.map((item, index: number) => {
         return {
           __index: index,
           ...item,
@@ -67,9 +64,12 @@ export default defineComponent({
         return suggestions;
       }
 
-      return (suggestions = props.caseSensitivity
-        ? suggestions.filter((item) => item[props.displayProperty].indexOf(tagInputVal.value) !== -1)
-        : suggestions.filter((item) => item[props.displayProperty].toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1));
+      // 大小写敏感
+      if (props.caseSensitivity) {
+        return suggestions.filter((item) => item[props.displayProperty].indexOf(tagInputVal.value) !== -1);
+      } else {
+        return suggestions.filter((item) => item[props.displayProperty].toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1);
+      }
     });
 
     const selectIndex = ref(0);
@@ -91,11 +91,6 @@ export default defineComponent({
       isInputBoxFocus.value = true;
     };
 
-    // 点击元素外部区域关闭Suggestion选择
-    const closeSuggestion = () => {
-      isInputBoxFocus.value = false;
-    };
-
     const handleEnter = () => {
       let res = { [props.displayProperty]: tagInputVal.value };
       if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) {
@@ -115,7 +110,7 @@ export default defineComponent({
       if (mergedSuggestions.value.length) {
         const target = mergedSuggestions.value[selectIndex.value];
         res = target;
-        ctx.emit('update:suggestionList', remove(props.suggestionList, target.__index));
+        ctx.emit('update:suggestionList', remove(props.suggestionList, target.__index as number));
       }
 
       const newTags = add(selectedTags.value, res);
@@ -128,10 +123,10 @@ export default defineComponent({
 
     const removeTag = ($event: Event, tagIdx: number) => {
       $event.preventDefault();
-      ctx.emit('update:suggestionList', add(props.suggestionList, selectedTags.value[tagIdx]));
       const newTags = remove(selectedTags.value, tagIdx);
       ctx.emit('change', selectedTags.value, newTags);
       ctx.emit('update:modelValue', newTags);
+      ctx.emit('update:suggestionList', add(props.suggestionList, selectedTags.value[tagIdx]));
 
       nextTick(() => {
         tagInputRef.value?.focus();
@@ -143,7 +138,7 @@ export default defineComponent({
       $event.preventDefault();
       const target = mergedSuggestions.value[itemIndex];
       const newTags = add(selectedTags.value, target);
-      const newSuggestions = remove(props.suggestionList, target.__index);
+      const newSuggestions = remove(props.suggestionList, target.__index as number);
       ctx.emit('change', selectedTags.value, newTags);
       ctx.emit('update:modelValue', newTags);
       ctx.emit('update:suggestionList', newSuggestions);
@@ -153,7 +148,6 @@ export default defineComponent({
     const isShowSuggestion = computed(() => {
       return !props.disabled && !isTagsLimit.value && isInputBoxFocus.value;
     });
-
 
     // 已选择 tags 列表
     const chosenTags = () => {
@@ -173,9 +167,9 @@ export default defineComponent({
       </ul>;
     };
 
-    const noDataTpl = <li class="devui-suggestion-item devui-disabled">{props.noData}</li>;
 
     const origin = ref();
+    // 获取容器宽度
     const dropdownWidth = ref('0');
     const updateDropdownWidth = () => {
       dropdownWidth.value = origin?.value?.clientWidth ? origin.value.clientWidth + 'px' : '100%';
@@ -189,6 +183,16 @@ export default defineComponent({
     onUnmounted(() => {
       window.removeEventListener('resize', updateDropdownWidth);
     });
+
+    const dropdownRef = ref();
+    // 点击外部关闭suggestionList
+    onClickOutside(
+      dropdownRef,
+      () => {
+        isInputBoxFocus.value = false;
+      },
+      { ignore: [origin] },
+    );
 
     // 选择建议列表
     const suggestionList = () => {
@@ -206,9 +210,12 @@ export default defineComponent({
         );
       });
 
+      const noDataTpl = <li class="devui-suggestion-item devui-disabled">{props.noData}</li>;
+
       return <Teleport to="body">
         <Transition name="fade">
           <FlexibleOverlay
+            ref={dropdownRef}
             origin={origin.value}
             v-model={isShowSuggestion.value}
             style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}
@@ -242,7 +249,7 @@ export default defineComponent({
       return [`display:${props.disabled ? 'none' : 'block'};`];
     });
 
-    return () => (<div class={ns.b()} ref={origin} v-click-outside={closeSuggestion}>
+    return () => (<div class={ns.b()} ref={origin}>
       <div class={inputBoxCls.value}>
         {chosenTags()}
         <input
