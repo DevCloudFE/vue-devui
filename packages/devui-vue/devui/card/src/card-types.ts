@@ -10,7 +10,7 @@ export const cardProps = {
     default: '',
   },
   shadow: {
-    type: String as PropType<'alway' | 'hover' | 'never'>,
+    type: String as PropType<'always' | 'hover' | 'never'>,
     default: 'hover',
   },
 } as const;

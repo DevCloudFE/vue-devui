@@ -266,5 +266,5 @@ type IAlignType = 'start' | 'end' | 'spaceBetween';
 #### IShadowType
 
 ```ts
-type IShadowType = 'alway' | 'hover' | 'never';
+type IShadowType = 'always' | 'hover' | 'never';
 ```
