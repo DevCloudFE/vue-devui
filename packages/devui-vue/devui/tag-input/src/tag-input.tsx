@@ -26,12 +26,17 @@ export default defineComponent({
     ClickOutside,
   },
   props: tagInputProps,
-  emits: ['update:tags', 'update:suggestionList', 'change'],
+  emits: ['update:modelValue', 'update:suggestionList', 'change'],
   setup(props: TagInputProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DTagInput', app);
 
     const ns = useNamespace('tag-input');
+
+    const selectedTags = ref<Array<Suggestion>>([]);
+    watch(() => props.modelValue, () => {
+      selectedTags.value = props.modelValue;
+    }, { immediate: true, deep: true });
 
     const add = (arr: Suggestion[], target: Suggestion) => {
       const res = Object.assign({}, target);
@@ -96,7 +101,7 @@ export default defineComponent({
       if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) {
         return false;
       }
-      if (props.tags.findIndex((item) => item[props.displayProperty] === tagInputVal.value) > -1) {
+      if (selectedTags.value.findIndex((item) => item[props.displayProperty] === tagInputVal.value) > -1) {
         tagInputVal.value = '';
         return false;
       }
@@ -113,9 +118,9 @@ export default defineComponent({
         ctx.emit('update:suggestionList', remove(props.suggestionList, target.__index));
       }
 
-      const newTags = add(props.tags, res);
-      ctx.emit('change', props.tags, newTags);
-      ctx.emit('update:tags', newTags);
+      const newTags = add(selectedTags.value, res);
+      ctx.emit('change', selectedTags.value, newTags);
+      ctx.emit('update:modelValue', newTags);
       mergedSuggestions.value.length === 0 && (tagInputVal.value = '');
     };
 
@@ -123,10 +128,10 @@ export default defineComponent({
 
     const removeTag = ($event: Event, tagIdx: number) => {
       $event.preventDefault();
-      ctx.emit('update:suggestionList', add(props.suggestionList, props.tags[tagIdx]));
-      const newTags = remove(props.tags, tagIdx);
-      ctx.emit('change', props.tags, newTags);
-      ctx.emit('update:tags', newTags);
+      ctx.emit('update:suggestionList', add(props.suggestionList, selectedTags.value[tagIdx]));
+      const newTags = remove(selectedTags.value, tagIdx);
+      ctx.emit('change', selectedTags.value, newTags);
+      ctx.emit('update:modelValue', newTags);
 
       nextTick(() => {
         tagInputRef.value?.focus();
@@ -137,14 +142,14 @@ export default defineComponent({
     const onSuggestionItemClick = ($event: Event, itemIndex: number) => {
       $event.preventDefault();
       const target = mergedSuggestions.value[itemIndex];
-      const newTags = add(props.tags, target);
+      const newTags = add(selectedTags.value, target);
       const newSuggestions = remove(props.suggestionList, target.__index);
-      ctx.emit('change', props.tags, newTags);
-      ctx.emit('update:tags', newTags);
+      ctx.emit('change', selectedTags.value, newTags);
+      ctx.emit('update:modelValue', newTags);
       ctx.emit('update:suggestionList', newSuggestions);
     };
 
-    const isTagsLimit = computed(() => props.maxTags <= props.tags.length);
+    const isTagsLimit = computed(() => props.maxTags <= selectedTags.value.length);
     const isShowSuggestion = computed(() => {
       return !props.disabled && !isTagsLimit.value && isInputBoxFocus.value;
     });
@@ -153,7 +158,7 @@ export default defineComponent({
     // 已选择 tags 列表
     const chosenTags = () => {
       return <ul class="devui-tag-list" title={props.disabled ? props.disabledText : ''}>
-        {props.tags.map((tag, tagIdx) => {
+        {selectedTags.value.map((tag, tagIdx) => {
           return (
             <li class="devui-tag-item">
               <span>{tag[props.displayProperty]}</span>
