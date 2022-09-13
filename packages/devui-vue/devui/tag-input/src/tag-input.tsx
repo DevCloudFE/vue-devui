@@ -18,14 +18,7 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 import removeBtnSvg from './components/icon-remove';
 import { Suggestion, TagInputProps, tagInputProps } from './tag-input-types';
 import './tag-input.scss';
-
-const KEYS_MAP = {
-  tab: 'Tab',
-  down: 'ArrowDown',
-  up: 'ArrowUp',
-  enter: 'Enter',
-  space: ' ',
-} as const;
+import { useInputKeydown } from './composables/use-input-keydown';
 
 export default defineComponent({
   name: 'DTagInput',
@@ -126,26 +119,7 @@ export default defineComponent({
       mergedSuggestions.value.length === 0 && (tagInputVal.value = '');
     };
 
-    const onInputKeydown = ($event: KeyboardEvent) => {
-      switch ($event.key) {
-      case KEYS_MAP.tab:
-      case KEYS_MAP.enter:
-      case KEYS_MAP.space:
-        if (!props.isAddBySpace && KEYS_MAP.space) {
-          return;
-        }
-        handleEnter();
-        break;
-      case KEYS_MAP.down:
-        onSelectIndexChange(true);
-        break;
-      case KEYS_MAP.up:
-        onSelectIndexChange();
-        break;
-      default:
-        break;
-      }
-    };
+    const { onInputKeydown } = useInputKeydown(props, handleEnter, onSelectIndexChange);
 
     const removeTag = ($event: Event, tagIdx: number) => {
       $event.preventDefault();
