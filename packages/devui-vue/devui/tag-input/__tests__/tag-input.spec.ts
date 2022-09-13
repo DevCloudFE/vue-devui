@@ -2,6 +2,12 @@ import { mount } from '@vue/test-utils';
 import { reactive, nextTick } from 'vue';
 import DTagInput from '../src/tag-input';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { Suggestion } from '../src/tag-input-types';
+
+interface StateType {
+  tags: Array<Suggestion>;
+  suggestionList: Array<Suggestion>;
+}
 
 jest.mock('../../locale/create', () => ({
   createI18nTranslate: () => jest.fn(),
@@ -9,11 +15,11 @@ jest.mock('../../locale/create', () => ({
 
 const ns = useNamespace('tag-input', true);
 
-const customMount = (state) => mount({
+const customMount = (state: StateType) => mount({
   components: { DTagInput },
   template: `
     <d-tag-input
-      v-model:tags="state.tags"
+      v-model="state.tags"
       v-model:suggestionList="state.suggestionList"
       displayProperty="cname"
     ></d-tag-input>
@@ -116,7 +122,7 @@ describe('DTagInput', () => {
     ]);
     const wrapper = mount(DTagInput, {
       props: {
-        tags,
+        modelValue: tags,
         suggestionList,
         maxTags: 1,
       },
