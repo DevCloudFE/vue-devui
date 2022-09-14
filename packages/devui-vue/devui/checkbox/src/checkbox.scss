@@ -180,7 +180,8 @@ $checkbox-label-height-map: (
     cursor: pointer;
     color: $devui-text;
     margin: 0;
-    display: block;
+    display: flex;
+    align-items: center;
     @each $size in ('lg', 'md', 'sm') {
       &.#{$devui-prefix}-checkbox--#{$size} {
         display: flex;
@@ -213,7 +214,19 @@ $checkbox-label-height-map: (
       display: inline-block;
       box-sizing: content-box;
       vertical-align: top;
+
+      &.#{$devui-prefix}-checkbox__material {
+        flex-shrink: 0; // keep the checkbox icon width
+      }
+
+      &.#{$devui-prefix}-checkbox__label-text {
+        flex-shrink: 1; // just use flex box to shrink text width. let text ellipsis
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
+
   }
 
   // 禁用状态透明色
