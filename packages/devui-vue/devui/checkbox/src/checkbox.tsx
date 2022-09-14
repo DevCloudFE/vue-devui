@@ -89,7 +89,7 @@ export default defineComponent({
                   </g>
                 </svg>
               </span>
-              {props.label || ctx.slots.default?.()}
+              <span class={ns.e('label-text')}>{props.label || ctx.slots.default?.()}</span>
             </label>
           </div>
         </div>
