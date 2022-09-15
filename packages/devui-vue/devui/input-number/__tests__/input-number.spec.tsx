@@ -115,7 +115,6 @@ describe('d-input-number', () => {
     wrapper.unmount();
   });
 
-
   it('regular expression check', async () => {
     const num = ref(2);
     const wrapper = mount({
@@ -143,7 +142,21 @@ describe('d-input-number', () => {
     wrapper.unmount();
   });
 
-  it.todo('props placeholder work well.');
+  it('placeholder work', async () => {
+    const num = ref();
+    const placeholderStr = '测试placeholderStr';
+    const wrapper = mount({
+      setup() {
+        return () => <DInputNumber v-model={num.value} placeholder={placeholderStr}></DInputNumber>;
+      },
+    });
+    const inputNumber = wrapper.find(ns.b());
+    expect(inputNumber.exists()).toBeTruthy();
+    const inputInner = wrapper.find(ns.e('input-box'));
+    expect((inputInner.element as HTMLInputElement).placeholder).toBe(placeholderStr);
+
+    wrapper.unmount();
+  });
 
   it.todo('event change/focus/blur/input work well.');
 
