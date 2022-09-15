@@ -72,7 +72,7 @@ export default defineComponent({
                   trigger="hover"
                   disabled={isDisabledTooltip.value}
                   v-slots={{
-                    default: () => <Tag size={tagSize.value}>{`+${selectedData.value.length - 1}`}</Tag>,
+                    default: () => <Tag size={tagSize.value as SizeType}>{`+${selectedData.value.length - 1}`}</Tag>,
                     content: () => (
                       <div>
                         {selectedData.value.map(

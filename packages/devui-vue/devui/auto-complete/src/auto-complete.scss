@@ -121,17 +121,17 @@
 
 .#{$devui-prefix}-auto-complete {
   &--sm {
-    height: 26px;
+    height: $devui-size-sm;
     font-size: $devui-font-size-sm;
   }
 
   &--md {
-    height: 32px;
-    font-size: $devui-font-size;
+    height: $devui-size-md;
+    font-size: $devui-font-size-md;
   }
 
   &--lg {
-    height: 46px;
+    height: $devui-size-lg;
     font-size: $devui-font-size-lg;
   }
 
