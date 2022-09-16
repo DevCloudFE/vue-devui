@@ -532,7 +532,7 @@ export const componentFeatureData: IComponent[] = [
     name: 'menu',
     cnName: '菜单',
     category: 'navigation',
-    version: 'v2.0',
+    version: 'v1.0',
     features: [
       {
         name: '',
@@ -776,7 +776,7 @@ export const componentFeatureData: IComponent[] = [
     name: 'mention',
     cnName: '提及',
     category: 'feedback',
-    version: 'v2.0',
+    version: 'v1.0',
     features: [
       {
         name: '',
@@ -928,7 +928,7 @@ export const componentFeatureData: IComponent[] = [
     name: 'read-tip ',
     cnName: '阅读提示',
     category: 'feedback',
-    version: 'v1.0',
+    version: 'v2.0',
     features: [
       {
         name: '',
@@ -1191,7 +1191,7 @@ export const componentFeatureData: IComponent[] = [
     name: 'date-picker',
     cnName: '日期选择器',
     category: 'data-entry',
-    version: 'v1.0',
+    version: 'v2.0',
     complex: true,
     deprecated: true,
     features: [
@@ -1226,7 +1226,7 @@ export const componentFeatureData: IComponent[] = [
     name: 'date-picker-pro',
     cnName: '日期选择器',
     category: 'data-entry',
-    version: 'v2.0',
+    version: 'v1.0',
     complex: true,
     features: [
       {
@@ -1514,6 +1514,7 @@ export const componentFeatureData: IComponent[] = [
     name: 'select',
     cnName: '下拉选择框',
     category: 'data-entry',
+    version: 'v1.0',
     complex: true,
     features: [
       {
@@ -1670,7 +1671,7 @@ export const componentFeatureData: IComponent[] = [
     name: 'time-picker',
     cnName: '时间选择器',
     category: 'data-entry',
-    version: 'v2.0',
+    version: 'v1.0',
     features: [
       {
         name: '',
@@ -1686,6 +1687,34 @@ export const componentFeatureData: IComponent[] = [
         name: '',
         cnName: '自定义模板',
         status: 'to-be-claimed',
+      },
+    ],
+  },
+  {
+    name: 'time-select',
+    cnName: '时间下拉选择器',
+    category: 'data-entry',
+    version: 'v1.0',
+    features: [
+      {
+        name: '',
+        cnName: '基本功能',
+        status: 'done',
+      },
+      {
+        name: '',
+        cnName: '尺寸',
+        status: 'done',
+      },
+      {
+        name: '',
+        cnName: '时间段',
+        status: 'done',
+      },
+      {
+        name: '',
+        cnName: '事件',
+        status: 'done',
       },
     ],
   },
@@ -1935,7 +1964,7 @@ export const componentFeatureData: IComponent[] = [
     name: 'collapse',
     cnName: '折叠面板',
     category: 'data-display',
-    version: 'v2.0',
+    version: 'v1.0',
     features: [
       {
         name: '',
@@ -1948,7 +1977,7 @@ export const componentFeatureData: IComponent[] = [
     name: 'comment',
     cnName: '评论',
     category: 'data-display',
-    version: 'v1.0',
+    version: 'v2.0',
     features: [
       {
         name: '',
@@ -2197,6 +2226,7 @@ export const componentFeatureData: IComponent[] = [
     name: 'table',
     cnName: '表格',
     category: 'data-display',
+    version: 'v1.0',
     complex: true,
     features: [
       {
@@ -2371,6 +2401,7 @@ export const componentFeatureData: IComponent[] = [
     name: 'tree',
     cnName: '树',
     category: 'data-display',
+    version: 'v1.0',
     complex: true,
     features: [
       {
