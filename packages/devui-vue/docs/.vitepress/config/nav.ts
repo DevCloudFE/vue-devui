@@ -14,7 +14,7 @@ const nav = [
     items: [
       { text: 'Ng DevUI', link: 'https://devui.design/' },
       { text: 'Ng DevUI Admin', link: 'https://devui.design/admin-page/home' },
-      { text: 'React DevUI', link: 'https://react-devui.com/' },
+      { text: 'React DevUI', link: 'https://react-devui.surge.sh/' },
       { text: 'DevUI Helper', link: 'https://github.com/DevCloudFE/DevUIHelper' },
       { text: 'DevUI Playground', link: 'https://github.com/DevCloudFE/devui-playground' },
       { text: '图标库', link: 'https://devui.design/icon/ruleResource' },

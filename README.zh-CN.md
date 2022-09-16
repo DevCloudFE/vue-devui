@@ -81,7 +81,39 @@ pnpm scripts
 
 如果你不知道从哪儿开始，可以阅读我们的[贡献指南](https://vue-devui.github.io/contributing/)
 
+## ✨ 维护者
+
+维护者是做出杰出贡献且在社区长期活跃的 DevUI 社区成员。
+
+- [kagol](https://github.com/kagol)
+- [xingyan95](https://github.com/xingyan95)
+- [linxiang07](https://github.com/linxiang07)
+- [Zcating](https://github.com/Zcating)
+- [TinsFox](https://github.com/TinsFox)
+- [JensonMiao](https://github.com/JensonMiao)
+- [xiejay97](https://github.com/xiejay97)
+- [daviForevel](https://github.com/daviForevel)
+- [AlanLee97](https://github.com/AlanLee97)
+- [SituC](https://github.com/SituC)
+- [lj1990111](https://github.com/lj1990111)
+- [newer2333](https://github.com/newer2333)
+- [vaebe](https://github.com/vaebe)
+- [ivestszheng](https://github.com/ivestszheng)
+- [ElsaOOo](https://github.com/ElsaOOo)
+- [asdlml6](https://github.com/asdlml6)
+- [GaoNeng-wWw](https://github.com/GaoNeng-wWw)
+- [chenxi24](https://github.com/chenxi24)
+- [ErKeLost](https://github.com/ErKeLost)
+- [brenner8023](https://github.com/brenner8023)
+
+杰出贡献包括但不仅限于以下行为：
+- 合并 10 个以上 PR
+- 提出超过 10 条被 PR 作者认可的检视意见
+- 提供建设性的优化意见并推动项目变得更好
+
 ## ✨ 贡献者
+
+贡献者是在 DevUI 社区中合并了 1 个或多个 PR 的社区成员。
 
 感谢以下 DevUI 的田主们 ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
