@@ -17,7 +17,11 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
       {{ startCase(component.name )}} {{ component.cnName }}
       <span class="component-count mr-xs">{{ component.features.length }}</span>
       <span v-if="component.complex" class="mr-xs">⭐</span>
-      <span :class="`version-tag-${component.version?.slice(1, 2)}`">{{ component.version }}</span>
+      <span :class="`version-tag-${component.version?.slice(1, 2)}`" class="mr-xs">{{ component.version }}</span>
+      <svg v-if="component.deprecated" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="16">
+          <title>Deprecated</title>
+          <path fill="#d30038" d="M38.75 78.13V36.88A1.85 1.85 0 0036.88 35h-3.75a1.85 1.85 0 00-1.88 1.88v41.25A1.85 1.85 0 0033.13 80h3.75a1.85 1.85 0 001.87-1.87zm15 0V36.88A1.85 1.85 0 0051.88 35h-3.75a1.85 1.85 0 00-1.88 1.88v41.25A1.85 1.85 0 0048.13 80h3.75a1.85 1.85 0 001.87-1.87zm15 0V36.88A1.85 1.85 0 0066.88 35h-3.75a1.85 1.85 0 00-1.88 1.88v41.25A1.85 1.85 0 0063.13 80h3.75a1.85 1.85 0 001.87-1.87zM36.88 20h26.25l-2.82-6.85a2.35 2.35 0 00-1-.65H40.74a2 2 0 00-1 .65zm54.37 1.88v3.75a1.85 1.85 0 01-1.87 1.87h-5.63v55.55c0 6.44-4.22 12-9.37 12H25.63c-5.16 0-9.38-5.27-9.38-11.72V27.5h-5.62a1.85 1.85 0 01-1.88-1.83v-3.8A1.85 1.85 0 0110.63 20h18.1l4.1-9.78A9.12 9.12 0 0140.63 5h18.75a9.1 9.1 0 017.79 5.22l4.1 9.78h18.11a1.85 1.85 0 011.87 1.87z"></path>
+      </svg>
     </h3>
     <d-row v-for="(groupFeature, index) of group(component.features)" :style="{ marginTop: index === 0 ? '20px' : '0'}" :gutter="[0, 8]">
       <d-col v-for="feature of groupFeature" :span="8">
