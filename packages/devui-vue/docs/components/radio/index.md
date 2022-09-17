@@ -90,11 +90,12 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-radio-group direction="row" v-model="groupFilterChoose1" :beforeChange="groupFilterBeforeChange">
+  <d-radio-group class="mb-2" direction="row" v-model="groupFilterChoose1" :beforeChange="groupFilterBeforeChange">
     <d-radio v-for="item in groupFilterList1" :key="item" :value="item">
       {{ item }}
     </d-radio>
   </d-radio-group>
+  <br />
   <d-radio-group v-model="groupFilterChoose2" direction="row" disabled>
     <d-radio v-for="item in groupFilterList2" :key="item" :value="item">
       {{ item }}
@@ -107,8 +108,8 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const groupFilterList1 = ref(['Item1', 'Item2', 'Item3']);
-    let groupFilterChoose1 = ref('Item1');
+    const groupFilterList1 = ref(['Spring', 'Summer', 'Autumn', 'Winter']);
+    let groupFilterChoose1 = ref('Spring');
 
     const groupFilterList2 = ['Spring', 'Summer', 'Autumn', 'Winter'];
     const groupFilterChoose2 = ref('Summer');
