@@ -19,6 +19,8 @@ describe('d-input-number', () => {
     expect(inputNumber.exists()).toBeTruthy();
     const inputInner = wrapper.find(ns.e('input-box'));
     expect((inputInner.element as HTMLInputElement).value).toBe('0');
+    const controlButtons = wrapper.findAll('.control-button');
+    expect(controlButtons.length).toBe(2);
     wrapper.unmount();
   });
 
