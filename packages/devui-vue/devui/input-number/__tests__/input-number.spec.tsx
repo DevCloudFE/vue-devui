@@ -160,26 +160,54 @@ describe('d-input-number', () => {
     wrapper.unmount();
   });
 
-  describe('event change/focus/blur/input work', () => {
-    it('event change work', async () => {
-      const changeCallback = jest.fn();
-      const num = ref(0);
-      const wrapper = mount({
-        setup() {
-          return () => <DInputNumber v-model={num.value} onChange={changeCallback}></DInputNumber>;
-        },
-      });
-      const inputNumber = wrapper.find(ns.b());
-      expect(inputNumber.exists()).toBeTruthy();
-
-      const [incButton, decButton] = wrapper.findAll('.control-button');
-      await incButton.trigger('click');
-      expect(changeCallback).toBeCalled();
-
-      await decButton.trigger('click');
-      expect(changeCallback).toHaveBeenCalledTimes(2);
-      wrapper.unmount();
+  it('event change/focus/blur/input work', async () => {
+    const changeCallback = jest.fn();
+    const blurCallback = jest.fn();
+    const focusCallback = jest.fn();
+    const inputCallback = jest.fn();
+    const num = ref(0);
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DInputNumber
+            v-model={num.value}
+            onChange={changeCallback}
+            onBlur={blurCallback}
+            onFocus={focusCallback}
+            onInput={inputCallback}
+          />
+        );
+      },
     });
+    const inputNumber = wrapper.find(ns.b());
+    expect(inputNumber.exists()).toBeTruthy();
+
+    expect(changeCallback).toBeCalledTimes(0);
+    expect(blurCallback).toBeCalledTimes(0);
+    expect(focusCallback).toBeCalledTimes(0);
+
+    const [incButton, decButton] = wrapper.findAll('.control-button');
+    await incButton.trigger('click');
+    expect(changeCallback).toBeCalledTimes(1);
+    expect(inputCallback).toBeCalledTimes(1);
+
+    await decButton.trigger('click');
+    expect(changeCallback).toBeCalledTimes(2);
+    expect(inputCallback).toBeCalledTimes(2);
+
+    const inputBox = wrapper.find(ns.e('input-box'));
+
+    await inputBox.trigger('focus');
+    expect(focusCallback).toBeCalledTimes(1);
+
+    await inputBox.trigger('blur');
+    expect(blurCallback).toBeCalledTimes(1);
+
+    await inputBox.setValue('66');
+    await inputBox.trigger('input');
+    expect(inputCallback).toBeCalledTimes(3);
+
+    wrapper.unmount();
   });
 
   it.todo('method focus/blur/select work well.');
