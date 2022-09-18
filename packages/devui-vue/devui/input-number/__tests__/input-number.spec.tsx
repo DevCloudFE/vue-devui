@@ -160,7 +160,27 @@ describe('d-input-number', () => {
     wrapper.unmount();
   });
 
-  it.todo('event change/focus/blur/input work well.');
+  describe('event change/focus/blur/input work', () => {
+    it('event change work', async () => {
+      const changeCallback = jest.fn();
+      const num = ref(0);
+      const wrapper = mount({
+        setup() {
+          return () => <DInputNumber v-model={num.value} onChange={changeCallback}></DInputNumber>;
+        },
+      });
+      const inputNumber = wrapper.find(ns.b());
+      expect(inputNumber.exists()).toBeTruthy();
+
+      const [incButton, decButton] = wrapper.findAll('.control-button');
+      await incButton.trigger('click');
+      expect(changeCallback).toBeCalled();
+
+      await decButton.trigger('click');
+      expect(changeCallback).toHaveBeenCalledTimes(2);
+      wrapper.unmount();
+    });
+  });
 
   it.todo('method focus/blur/select work well.');
 });
