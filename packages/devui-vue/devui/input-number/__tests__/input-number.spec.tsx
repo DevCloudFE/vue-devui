@@ -211,4 +211,20 @@ describe('d-input-number', () => {
   });
 
   it.todo('method focus/blur/select work well.');
+  it('method focus/blur/select work', async () => {
+    const blurCallback = jest.fn();
+    const focusCallback = jest.fn();
+    const num = ref(0);
+    const ttt = ref();
+    const wrapper = mount({
+      setup() {
+        return () => <DInputNumber v-model={num.value} onBlur={blurCallback} onFocus={focusCallback} ref={ttt} />;
+      },
+    });
+    const inputNumber = wrapper.find(ns.b());
+    expect(inputNumber.exists()).toBeTruthy();
+
+    const tttt = wrapper.vm.$refs;
+    console.log(wrapper.vm.$.exposed);
+  });
 });
