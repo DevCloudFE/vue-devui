@@ -1,0 +1,18 @@
+@import '../../styles-var/devui-var.scss';
+
+.#{$devui-prefix}-list-item-meta {
+  width: 100%;
+
+  &--title {
+    margin-bottom: 4px;
+    color: $devui-text;
+    font-size: 14px;
+    line-height: 1.5715;
+  }
+
+  &--description {
+    color: $devui-aide-text;
+    font-size: 14px;
+    line-height: 1.5715;
+  }
+}
