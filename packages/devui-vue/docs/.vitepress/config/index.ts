@@ -6,6 +6,7 @@ import markdown from './markdown'
 import lang from './lang'
 
 const config = defineConfig({
+  base: '/',
   title: 'Vue DevUI',
   description: 'Vue DevUI 组件库',
   head,
@@ -34,6 +35,10 @@ const config = defineConfig({
         lang: 'en-US',
         label: 'English'
       }
+    },
+    footer: {
+      message: 'MIT Licensed',
+      copyright: 'Copyright © 2021-present DevUI'
     }
   }
 })

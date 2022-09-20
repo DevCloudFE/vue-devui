@@ -13,8 +13,8 @@ const { isReadyToRelease } = require('../shared/utils');
 //   return { text, link: `/${SITES_COMPONENTS_DIR_NAME}/${kebabCase(name)}/`, status }
 // }
 
-function buildCategoryOptions(text, children = []) {
-  return { text, children };
+function buildCategoryOptions(text, items = []) {
+  return { text, items };
 }
 
 function generateZhMenus(componentsInfo) {
@@ -54,16 +54,21 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
     {
       rootItems: [
         {
-          text: '快速开始',
-          link: '/quick-start/',
-        },
-        {
-          text: '按需引入',
-          link: '/on-demand/',
-        },
-        {
-          text: '主题定制',
-          link: '/theme-guide/',
+          text: '开始',
+          items: [
+            {
+              text: '快速开始',
+              link: '/quick-start/',
+            },
+            {
+              text: '按需引入',
+              link: '/on-demand/',
+            },
+            {
+              text: '主题定制',
+              link: '/theme-guide/',
+            },
+          ],
         },
       ],
       handler: generateZhMenus,
@@ -72,16 +77,21 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
     {
       rootItems: [
         {
-          text: 'Quick Start',
-          link: '/en-US/quick-start/',
-        },
-        {
-          text: 'On-demand Import',
-          link: '/on-demand/',
-        },
-        {
-          text: 'Theme Guide',
-          link: '/theme-guide/',
+          text: 'Start',
+          items: [
+            {
+              text: 'Quick Start',
+              link: '/en-US/quick-start/',
+            },
+            {
+              text: 'On-demand Import',
+              link: '/on-demand/',
+            },
+            {
+              text: 'Theme Guide',
+              link: '/theme-guide/',
+            },
+          ],
         },
       ],
       handler: generateEnMenus,
