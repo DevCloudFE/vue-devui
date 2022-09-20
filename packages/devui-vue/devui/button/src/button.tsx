@@ -2,7 +2,8 @@ import { defineComponent, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { Icon } from '../../icon';
 import LoadingDirective from '../../loading/src/loading-directive';
-import { buttonProps, ButtonProps } from './button-types';
+import { buttonProps } from './api';
+import { ButtonProps } from './button-types';
 import useButton from './use-button';
 import './button.scss';
 
