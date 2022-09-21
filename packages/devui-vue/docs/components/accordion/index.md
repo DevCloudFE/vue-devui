@@ -272,13 +272,12 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-.menu {
-  width: 200px;
-}
-
+<style lang="scss" scoped>
 .menu-wrapper {
   float: left;
+  .menu {
+    width: 200px;
+  }
 }
 
 .menu-wrapper + .menu-wrapper {
