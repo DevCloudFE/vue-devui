@@ -1,7 +1,7 @@
 import { computed, ShallowRef, shallowRef } from 'vue';
 import { TextareaProps, UseTextareaAutosize } from '../textarea-types';
 import type { StyleValue } from 'vue';
-import { isObject } from 'lodash';
+import { isObject } from 'lodash-es';
 import { computeTextareaHeight } from '../utils';
 
 export function useTextareaAutosize(props: TextareaProps, textarea: ShallowRef<HTMLTextAreaElement | undefined>): UseTextareaAutosize {
