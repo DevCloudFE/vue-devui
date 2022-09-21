@@ -61,7 +61,7 @@ pnpm i
 pnpm dev
 ```
 
-打开浏览器访问：[http://localhost:3000/](http://localhost:3000/)
+打开浏览器访问：`http://localhost:3000/`
 
 或者你也可以运行以下命令：
 

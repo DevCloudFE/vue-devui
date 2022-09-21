@@ -13,7 +13,7 @@ Vue DevUI 使用 `pnpm` 构建 `monorepo` 仓库，你应该使用 [pnpm 6.x](ht
 2. Clone 个人空间项目到本地：`git clone git@github.com:username/vue-devui.git`
 3. 在 Vue DevUI 的根目录下运行`pnpm i`, 安装 node 依赖
 4. 运行 `pnpm dev`，启动组件库网站
-5. 使用浏览器访问：[http://localhost:3000/](http://localhost:3000/)
+5. 使用浏览器访问：`http://localhost:3000/`
 
 ```bash
 # username 为用户名，执行前请替换
@@ -30,7 +30,7 @@ Vue DevUI 是一个多人合作的开源项目，为了避免多人同时开发�
 
 > 提交之前需要给Commit添加GPG签名，参考：https://insights.thoughtworks.cn/how-to-sign-git-commit/
 
-1. 请确保你已经完成快速上手中的步骤，并且正常访问 [http://localhost:3000/](http://localhost:3000/)
+1. 请确保你已经完成快速上手中的步骤，并且正常访问 `http://localhost:3000/`
 2. 创建新分支 `git checkout -b username/feature1`，分支名字建议为`username/feat-xxx`/`username/fix-xxx`
 3. 本地编码，需遵循 [开发规范](/contributing/development-specification/)
 4. 遵循 [Angular Commit Message Format](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit) 进行提交（**不符合规范的提交将不会被合并**）

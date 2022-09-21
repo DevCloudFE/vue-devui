@@ -72,7 +72,7 @@ pnpm install
 pnpm dev
 ```
 
-Open your browser and visit: [http://localhost:3000/](http://localhost:3000/).
+Open your browser and visit: `http://localhost:3000/`.
 
 Or you can run other command
 
