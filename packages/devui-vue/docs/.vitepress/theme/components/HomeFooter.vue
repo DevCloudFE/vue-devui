@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { useData } from 'vitepress'
-
-const { frontmatter } = useData()
 </script>
 
 <template>
-  <footer v-if="frontmatter.footer" class="footer">
+  <footer  class="footer">
     <div class="container">
       <div class="footer-item">
         <div class="footer-item__title">社区</div>
