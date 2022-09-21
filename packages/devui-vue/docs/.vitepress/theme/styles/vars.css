@@ -119,7 +119,7 @@
 
 .vp-doc table {
   width: 100%;
-  display: inline-table;
+  display: -webkit-box;
 }
 
 .VPHome {
