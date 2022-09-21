@@ -81,20 +81,34 @@ $checkbox-label-height-map: (
       border-color: $devui-disabled-line;
     }
   }
+}
 
-  &:first-child {
-    .#{$devui-prefix}-checkbox-button__content {
-      border-top-left-radius: $devui-border-radius;
-      border-bottom-left-radius: $devui-border-radius;
-      border-left: 1px solid $devui-disabled-line;
-      box-shadow: none;
+.#{$devui-prefix}-checkbox__group {
+  &.is-row {
+    .#{$devui-prefix}-checkbox-button {
+      border-left: none;
+
+      &:first-child {
+        .#{$devui-prefix}-checkbox-button__content {
+          border-top-left-radius: $devui-border-radius;
+          border-bottom-left-radius: $devui-border-radius;
+          border-left: 1px solid $devui-disabled-line;
+          box-shadow: none;
+        }
+      }
+
+      &:last-child {
+        .#{$devui-prefix}-checkbox-button__content {
+          border-top-right-radius: $devui-border-radius;
+          border-bottom-right-radius: $devui-border-radius;
+        }
+      }
     }
   }
 
-  &:last-child {
+  &.is-column {
     .#{$devui-prefix}-checkbox-button__content {
-      border-top-right-radius: $devui-border-radius;
-      border-bottom-right-radius: $devui-border-radius;
+      border-radius: $devui-border-radius;
     }
   }
 }
