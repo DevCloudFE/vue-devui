@@ -121,3 +121,7 @@
   width: 100%;
   display: inline-table;
 }
+
+.VPHome {
+  padding-bottom: 10px !important;
+}
