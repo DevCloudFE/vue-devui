@@ -2,7 +2,7 @@
 
 Display user's avatar.
 
-#### When
+#### When to Use
 
 When users want to display their own profile avatar.
 
