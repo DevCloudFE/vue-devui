@@ -1,0 +1,13 @@
+:root {
+  --font-family-mono:
+    source-code-pro,
+    menlo,
+    monaco,
+    consolas,
+    'Courier New',
+    monospace;
+  --code-bg-color: #f9fafb;
+  --code-line-height: 24px;
+  --code-font-size: 14px;
+  --code-font-family: var(--font-family-mono);
+}

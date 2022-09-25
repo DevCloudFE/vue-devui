@@ -1,24 +1,27 @@
-import { defineConfig } from 'vitepress'
-import sidebar from './sidebar'
-import head from './head'
-import nav from './nav'
-import markdown from './markdown'
-import lang from './lang'
+import { defineConfig } from 'vitepress';
+import sidebar from './sidebar';
+import head from './head';
+import nav from './nav';
+// import markdown from './markdown'
+import lang from './lang';
+import { markdownConfig } from './plugins/markdown-plugin';
 
 const config = defineConfig({
   title: 'Vue DevUI',
   description: 'Vue DevUI 组件库',
   head,
-  markdown,
+  markdown: {
+    config: markdownConfig,
+  },
   locales: {
     '/': {
       lang: 'zh-CN',
-      label: '简体中文'
+      label: '简体中文',
     },
     '/en-US': {
       lang: 'en-US',
-      label: 'English'
-    }
+      label: 'English',
+    },
   },
   themeConfig: {
     sidebar,
@@ -28,14 +31,14 @@ const config = defineConfig({
     locales: {
       '/': {
         lang: 'zh-CN',
-        label: '简体中文'
+        label: '简体中文',
       },
       '/en-US': {
         lang: 'en-US',
-        label: 'English'
-      }
-    }
-  }
-})
+        label: 'English',
+      },
+    },
+  },
+});
 
-export default config
+export default config;
