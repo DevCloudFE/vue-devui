@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, Ref } from 'vue';
+import type { PropType, ExtractPropTypes } from 'vue';
 
 export type ModalType = 'success' | 'failed' | 'warning' | 'info' | '';
 
