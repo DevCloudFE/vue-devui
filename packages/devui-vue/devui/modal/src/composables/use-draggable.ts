@@ -1,4 +1,4 @@
-import { onBeforeUnmount, onMounted, watchEffect } from 'vue';
+import { onBeforeUnmount, onMounted, watchEffect, ref } from 'vue';
 import type { ComputedRef, Ref } from 'vue';
 function addUnit(value?: string | number, defaultUnit = 'px'): string {
   if (!value) {
@@ -13,11 +13,17 @@ function addUnit(value?: string | number, defaultUnit = 'px'): string {
   }
 }
 
+export const modalPosition = ref('translate(-50%, -50%)');
+
+interface Draggable {
+  clearPosition: () => void;
+}
+
 export const useDraggable = (
   targetRef: Ref<HTMLElement | undefined>,
   dragRef: Ref<HTMLElement | undefined>,
   draggable: ComputedRef<boolean>
-): void => {
+): Draggable => {
   let transform = {
     offsetX: 0,
     offsetY: 0,
@@ -49,7 +55,7 @@ export const useDraggable = (
         offsetX: moveX,
         offsetY: moveY,
       };
-      (targetRef.value as HTMLElement).style.transform = `translate(${addUnit(moveX)}, ${addUnit(moveY)})`;
+      modalPosition.value = `translate(calc(-50% + ${addUnit(moveX)}), calc(-50% + ${addUnit(moveY)}))`;
     };
 
     const onMouseup = () => {
@@ -86,4 +92,16 @@ export const useDraggable = (
   onBeforeUnmount(() => {
     offDraggable();
   });
+
+  const clearPosition = () => {
+    transform = {
+      offsetX: 0,
+      offsetY: 0,
+    };
+    modalPosition.value = 'translate(-50%, -50%)';
+  };
+
+  return {
+    clearPosition,
+  };
 };

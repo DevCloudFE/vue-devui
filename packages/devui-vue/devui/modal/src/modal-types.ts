@@ -50,6 +50,10 @@ export const modalProps = {
     type: String as PropType<ModalType>,
     default: '',
   },
+  keepLast: {
+    type: Boolean,
+    default: false,
+  },
 };
 
 export type EmitName = 'update:modelValue';
