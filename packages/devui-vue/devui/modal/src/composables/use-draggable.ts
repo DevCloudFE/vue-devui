@@ -49,7 +49,10 @@ export const useDraggable = (
         offsetX: moveX,
         offsetY: moveY,
       };
-      (targetRef.value as HTMLElement).style.transform = `translate(${addUnit(moveX)}, ${addUnit(moveY)})`;
+      // TODO 需要注意modal.scss的默认translate，后续建议改成使用top left
+      (targetRef.value as HTMLElement).style.transform = `
+        translate(${addUnit(moveX - targetWidth / 2)}, ${addUnit(moveY - targetHeight / 2)})
+      `;
     };
 
     const onMouseup = () => {
