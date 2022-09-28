@@ -45,7 +45,6 @@ $checkbox-label-height-map: (
     display: inline-block;
     line-height: 1;
     user-select: none;
-    box-shadow: -1px 0 0 0 $devui-disabled-line;
     @each $size in ('lg', 'md', 'sm') {
       &.#{$devui-prefix}-checkbox-button--#{$size} {
         font-size: map-get($font-size-map, #{$size});
@@ -87,6 +86,7 @@ $checkbox-label-height-map: (
     .#{$devui-prefix}-checkbox-button {
       &__content {
         border-left: none;
+        box-shadow: -1px 0 0 0 $devui-disabled-line;
       }
 
       &:first-child {
