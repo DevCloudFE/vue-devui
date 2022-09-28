@@ -79,7 +79,6 @@ $button-padding-map: (
         border-top-left-radius: $devui-border-radius;
         border-bottom-left-radius: $devui-border-radius;
         border-left: 1px solid $devui-disabled-line;
-        box-shadow: none;
       }
 
       &:last-child {
@@ -98,7 +97,6 @@ $button-padding-map: (
         border-top-left-radius: $devui-border-radius;
         border-top-right-radius: $devui-border-radius;
         border-top: 1px solid $devui-disabled-line;
-        box-shadow: none;
       }
 
       &:last-child {
