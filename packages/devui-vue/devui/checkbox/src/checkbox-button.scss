@@ -42,7 +42,6 @@ $checkbox-label-height-map: (
     padding: 10px 20px;
     cursor: pointer;
     border: 1px solid $devui-disabled-line;
-    border-left: none;
     display: inline-block;
     line-height: 1;
     user-select: none;
@@ -86,7 +85,9 @@ $checkbox-label-height-map: (
 .#{$devui-prefix}-checkbox__group {
   &.is-row {
     .#{$devui-prefix}-checkbox-button {
-      border-left: none;
+      &__content {
+        border-left: none;
+      }
 
       &:first-child {
         .#{$devui-prefix}-checkbox-button__content {
@@ -107,8 +108,31 @@ $checkbox-label-height-map: (
   }
 
   &.is-column {
-    .#{$devui-prefix}-checkbox-button__content {
-      border-radius: $devui-border-radius;
+    .#{$devui-prefix}-checkbox-button {
+      width: 100%;
+      margin-top: 0;
+
+      &__content {
+        width: 100%;
+        border-top: none;
+        box-shadow: 0 -1px 0 0 $devui-disabled-line;
+      }
+
+      &:first-child {
+        .#{$devui-prefix}-checkbox-button__content {
+          border-top-left-radius: $devui-border-radius;
+          border-top-right-radius: $devui-border-radius;
+          border-top: 1px solid $devui-disabled-line;
+          box-shadow: none;
+        }
+      }
+
+      &:last-child {
+        .#{$devui-prefix}-checkbox-button__content {
+          border-bottom-left-radius: $devui-border-radius;
+          border-bottom-right-radius: $devui-border-radius;
+        }
+      }
     }
   }
 }
