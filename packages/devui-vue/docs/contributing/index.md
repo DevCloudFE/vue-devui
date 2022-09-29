@@ -61,3 +61,22 @@ pnpm cli --filter vue-devui -- code-check -t eslint -c alert,button
 pnpm cli --filter vue-devui -- code-check -t unit-test
 pnpm cli --filter vue-devui -- code-check -t unit-test -c alert,button
 ```
+
+### 加入开源社区
+
+贡献完成之后，你可以在 PR 评论中 @all-contributors 这个机器人🤖️，将你加到贡献者列表中，比如：
+
+```
+@all-contributors please add @yourname for code.
+```
+
+你还可以提交一个 PR 修改 `PageContributorConfig.ts` 文件，主要修改你所贡献组件的 avatar 和 homepage 两个字段，这样你的头像就会展示在`官网首页`和`组件文档`中相应组件文档底部的贡献者列表中。
+
+```
+packages/devui-vue/docs/.vitepress/devui-theme/components/PageContributorConfig.ts
+```
+
+如果你对我们的开源项目感兴趣，欢迎通过以下方式加入我们的开源社区。
+
+- 添加官方小助手微信：devui-official，加入我们的技术交流群
+- 加入邮件列表：devui-contributor@googlegroups.com

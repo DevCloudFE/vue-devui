@@ -2,11 +2,12 @@ import type { ExtractPropTypes, PropType } from 'vue';
 
 export interface Suggestion {
   __index?: number;
+
   [x: string]: unknown;
 }
 
 export const tagInputProps = {
-  tags: {
+  modelValue: {
     type: Array as PropType<Suggestion[]>,
     default: (): [] => [],
   },
@@ -65,3 +66,10 @@ export const tagInputProps = {
 } as const;
 
 export type TagInputProps = ExtractPropTypes<typeof tagInputProps>;
+
+export type HandleEnter = () => void;
+export type OnSelectIndexChange = (isUp: boolean) => void;
+
+export interface UseInputKeydownReturnTypes {
+  onInputKeydown: (e: KeyboardEvent) => void;
+}

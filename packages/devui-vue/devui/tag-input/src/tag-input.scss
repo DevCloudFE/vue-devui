@@ -5,7 +5,7 @@
   outline: none;
 }
 
-.#{$devui-prefix}-tags-host {
+.#{$devui-prefix}-tag-input {
   position: relative;
   height: 100%;
   outline: none;
@@ -153,17 +153,11 @@
 }
 
 .#{$devui-prefix}-tags-autocomplete {
-  position: absolute;
-  padding-bottom: 5px;
-  z-index: $devui-z-index-dropdown;
   width: 100%;
+  padding: 8px;
+  border-radius: $devui-border-radius;
   background-color: $devui-connected-overlay-bg;
   box-shadow: $devui-shadow-length-connected-overlay $devui-shadow;
-
-  &.#{$devui-prefix}-dropdown-menu {
-    display: block;
-    margin: 4px 0;
-  }
 
   .#{$devui-prefix}-suggestion-list {
     margin: 0;
@@ -180,6 +174,7 @@
       text-overflow: ellipsis;
       font-size: $devui-font-size;
       line-height: 20px;
+      border-radius: $devui-border-radius;
 
       &:not(.#{$devui-prefix}-disabled) {
         cursor: pointer;
@@ -191,7 +186,7 @@
 
         &.selected {
           color: $devui-brand;
-          background-color: $devui-list-item-hover-bg;
+          background-color: $devui-list-item-active-bg;
         }
       }
     }

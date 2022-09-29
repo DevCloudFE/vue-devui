@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, Ref } from 'vue';
+import type { PropType, ExtractPropTypes } from 'vue';
 
 export type ModalType = 'success' | 'failed' | 'warning' | 'info' | '';
 
@@ -49,6 +49,10 @@ export const modalProps = {
   type: {
     type: String as PropType<ModalType>,
     default: '',
+  },
+  keepLast: {
+    type: Boolean,
+    default: false,
   },
 };
 

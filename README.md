@@ -93,7 +93,39 @@ By participating in the Vue DevUI project, we can together:
 
 If you don't know how to start, please read our [contributing guide](https://vue-devui.github.io/contributing/)
 
+## ✨ Maintainers
+
+Maintainers are community members who have made outstanding contributions and have been active in the DevUI community for a long time.
+
+- [kagol](https://github.com/kagol)
+- [xingyan95](https://github.com/xingyan95)
+- [linxiang07](https://github.com/linxiang07)
+- [Zcating](https://github.com/Zcating)
+- [TinsFox](https://github.com/TinsFox)
+- [JensonMiao](https://github.com/JensonMiao)
+- [xiejay97](https://github.com/xiejay97)
+- [daviForevel](https://github.com/daviForevel)
+- [AlanLee97](https://github.com/AlanLee97)
+- [SituC](https://github.com/SituC)
+- [lj1990111](https://github.com/lj1990111)
+- [newer2333](https://github.com/newer2333)
+- [vaebe](https://github.com/vaebe)
+- [ivestszheng](https://github.com/ivestszheng)
+- [ElsaOOo](https://github.com/ElsaOOo)
+- [asdlml6](https://github.com/asdlml6)
+- [GaoNeng-wWw](https://github.com/GaoNeng-wWw)
+- [chenxi24](https://github.com/chenxi24)
+- [ErKeLost](https://github.com/ErKeLost)
+- [brenner8023](https://github.com/brenner8023)
+
+Outstanding contributions include, but are not limited to, the following:
+- 10 or more PRs are merged
+- Put forward more than 10 review opinions approved by PR authors
+- Provide constructive optimization advice and promote the project to become better
+
 ## ✨ Contributors
+
+Contributors are community members who have 1 or more PR merged in DevUI.
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
