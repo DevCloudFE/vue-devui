@@ -29,7 +29,6 @@ $button-padding-map: (
   color: $devui-text;
   cursor: pointer;
   border: 1px solid $devui-line;
-  border-left: none;
   user-select: none;
   @each $size in ('lg', 'md', 'sm') {
     &.#{$devui-prefix}-radio-button--#{$size} {
@@ -69,16 +68,41 @@ $button-padding-map: (
     background-color: #ffffff;
     border-color: $devui-disabled-line;
   }
+}
 
-  &:first-child {
-    border-top-left-radius: $devui-border-radius;
-    border-bottom-left-radius: $devui-border-radius;
-    border-left: 1px solid $devui-disabled-line;
-    box-shadow: none;
+.#{$devui-prefix}-radio-group {
+  &.is-row {
+    .#{$devui-prefix}-radio-button {
+      border-left: none;
+
+      &:first-child {
+        border-top-left-radius: $devui-border-radius;
+        border-bottom-left-radius: $devui-border-radius;
+        border-left: 1px solid $devui-disabled-line;
+      }
+
+      &:last-child {
+        border-top-right-radius: $devui-border-radius;
+        border-bottom-right-radius: $devui-border-radius;
+      }
+    }
   }
 
-  &:last-child {
-    border-top-right-radius: $devui-border-radius;
-    border-bottom-right-radius: $devui-border-radius;
+  &.is-column {
+    .#{$devui-prefix}-radio-button {
+      width: 100%;
+      border-top: none;
+
+      &:first-child {
+        border-top-left-radius: $devui-border-radius;
+        border-top-right-radius: $devui-border-radius;
+        border-top: 1px solid $devui-disabled-line;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: $devui-border-radius;
+        border-bottom-right-radius: $devui-border-radius;
+      }
+    }
   }
 }
