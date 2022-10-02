@@ -3,7 +3,7 @@ import { modalProps, ModalProps, ModalType } from './modal-types';
 import { Icon } from '../../icon';
 import { FixedOverlay } from '../../overlay';
 import { useModal, useModalRender } from './composables/use-modal';
-import { useDraggable, modalPosition } from './composables/use-draggable';
+import { useDraggable } from './composables/use-draggable';
 import DModalHeader from './components/header';
 import DModalBody from './components/body';
 import { useNamespace } from '../../shared/hooks/use-namespace';
@@ -28,7 +28,7 @@ export default defineComponent({
     const dialogRef = ref<HTMLElement>();
     const headerRef = ref<HTMLElement>();
     const draggable = computed(() => props.draggable);
-    const { clearPosition } = useDraggable(dialogRef, headerRef, draggable);
+    const { clearPosition, modalPosition } = useDraggable(dialogRef, headerRef, draggable);
 
     watch(modelValue, (val) => {
       if (val && !keepLast.value) {
