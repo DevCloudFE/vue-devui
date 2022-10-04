@@ -1,13 +1,13 @@
 const path = require("path");
 const {
-  bundleComponentItem,
-  bundleGlobalDTSEnd,
-  bundleGlobalDTSStart,
-  bundleComponents,
-  bundleDirectiveItem,
-  bundleDirective,
-  bundleServiceItem,
-  bundleService
+  buildComponentItem,
+  buildGlobalDTSEnd,
+  buildGlobalDTSStart,
+  buildComponents,
+  buildDirectiveItem,
+  buildDirective,
+  buildServiceItem,
+  buildService
 } = require('../templates/dts');
 const { writeFileSync } = require('fs');
 const { useRelationTree } = require("../composables/use-relation-tree");
@@ -40,22 +40,22 @@ exports.volarSupport = (replaceIdentifier, readyToReleaseComponentName) => {
         nodeName = replaceIdentifier[foldNode.name][node.name]?.['exportKey'];
       }
       if (node.type === 'component'){
-        componentDTSItem.push(bundleComponentItem(bigCamelCase(nodeName), reference));
+        componentDTSItem.push(buildComponentItem(bigCamelCase(nodeName), reference));
       }
       if (node.type === 'directive'){
-        directiveDTSItem.push(bundleDirectiveItem(nodeName, reference));
+        directiveDTSItem.push(buildDirectiveItem(nodeName, reference));
       }
       if (node.type === 'service'){
-        serviceDTSItem.push(bundleServiceItem(nodeName, reference));
+        serviceDTSItem.push(buildServiceItem(nodeName, reference));
       }
     });
   });
   const template = `
-${bundleGlobalDTSStart()}
-${bundleComponents(componentDTSItem.join('\n'))}
-${bundleDirective(directiveDTSItem.join('\n'))}
-${bundleService(serviceDTSItem.join('\n'))}
-${bundleGlobalDTSEnd()}
+${buildGlobalDTSStart()}
+${buildComponents(componentDTSItem.join('\n'))}
+${buildDirective(directiveDTSItem.join('\n'))}
+${buildService(serviceDTSItem.join('\n'))}
+${buildGlobalDTSEnd()}
 `;
   try {
     writeFileSync('./build/global.d.ts', template);

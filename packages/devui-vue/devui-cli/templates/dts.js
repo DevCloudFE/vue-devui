@@ -1,36 +1,36 @@
-exports.bundleGlobalDTSStart = () => {
+exports.buildGlobalDTSStart = () => {
   return `
 export{}
 declare module '@vue/runtime-core' {`;
 };
-exports.bundleComponentItem = (componentName, key='') => {
+exports.buildComponentItem = (componentName, key='') => {
   return `D${componentName}: typeof import('./types/vue-devui')['${key || componentName}']`;
 };
-exports.bundleDirectiveItem = (directive, key='') => {
+exports.buildDirectiveItem = (directive, key='') => {
   return `v${directive}?: typeof import('./types/vue-devui')['${key || directive}']`;
 };
-exports.bundleServiceItem = (service,key='') => {
+exports.buildServiceItem = (service,key='') => {
   return `$${service}?: typeof import('./types/vue-devui')['${key || service}']`;
 };
-exports.bundleGlobalDTSEnd = () => {
+exports.buildGlobalDTSEnd = () => {
   return `
 }`;
 };
-exports.bundleComponents = (componentString) => {
+exports.buildComponents = (componentString) => {
   return `
   export interface GlobalComponents{
     ${componentString}
   }
 `;
 };
-exports.bundleDirective = (directiveString) => {
+exports.buildDirective = (directiveString) => {
   return `
   export interface ComponentCustomProps {
     ${directiveString}
   }
 `;
 };
-exports.bundleService = (serviceSting) => {
+exports.buildService = (serviceSting) => {
   return `
   export interface ComponentCustomProperties{
     ${serviceSting}
