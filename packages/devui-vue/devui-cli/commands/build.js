@@ -102,13 +102,13 @@ exports.build = async () => {
   } catch {}
   nuxtBuild.createNuxtPlugin();
   logger.success('准备生成global.d.ts');
-  const volarSupportBundleState = volarSupport(replaceIdentifier, readyToReleaseComponentName);
+  const volarSupportbuildState = volarSupport(replaceIdentifier, readyToReleaseComponentName);
   fs.writeFileSync('./build/index.d.ts', `
 export * from './types/vue-devui';
 import _default from './types/vue-devui';
 export default _default;
 `);
-  if (volarSupportBundleState){
+  if (volarSupportbuildState){
     logger.success('global.d.ts生成成功');
   } else {
     logger.error('global.d.ts生成失败, 因为发生错误');
