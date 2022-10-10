@@ -44,18 +44,23 @@
     }
   }
 
-  svg.svg-icon-clear path,
-  svg.svg-icon-search path {
-    fill: $devui-icon-text;
+  &__clear,
+  &__icon {
+    @include size($devui-size-md, $devui-size-md);
+    @include flex;
+
+    & svg {
+      path {
+        fill: $devui-icon-fill;
+      }
+      @include size($devui-font-size-md, $devui-font-size-md);
+    }
   }
 
   &__clear {
     position: absolute;
     right: $devui-size-md;
     cursor: pointer;
-    height: 100%;
-    @include size($devui-size-md, $devui-size-md);
-    @include flex;
 
     &::after {
       content: '';
@@ -76,9 +81,6 @@
     z-index: 1;
     right: 0;
     top: 0;
-    width: $devui-size-md;
-    height: $devui-size-md;
-    @include flex;
   }
 
   &--sm {
@@ -91,15 +93,15 @@
       }
     }
 
-    .#{$devui-prefix}-search__icon {
-      font-size: $devui-font-size-sm;
+    .#{$devui-prefix}-search__icon, .#{$devui-prefix}-search__clear {
       @include size($devui-size-sm, $devui-size-sm);
+
+      svg {
+        @include size($devui-font-size-sm, $devui-font-size-sm);
+      }
     }
 
     .#{$devui-prefix}-search__clear {
-      font-size: $devui-font-size-sm;
-      @include size($devui-size-sm, $devui-size-sm);
-
       right: $devui-size-sm;
     }
   }
@@ -114,15 +116,15 @@
       }
     }
 
-    .#{$devui-prefix}-search__icon {
-      font-size: $devui-font-size-lg;
+    .#{$devui-prefix}-search__icon, .#{$devui-prefix}-search__clear {
       @include size($devui-size-lg, $devui-size-lg);
+
+      svg {
+        @include size($devui-font-size-lg, $devui-font-size-lg);
+      }
     }
 
     .#{$devui-prefix}-search__clear {
-      font-size: $devui-font-size-lg;
-      @include size($devui-size-lg, $devui-size-lg);
-
       right: $devui-size-lg;
     }
   }

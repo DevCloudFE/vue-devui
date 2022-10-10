@@ -8,6 +8,8 @@ import { Icon } from '../../icon';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './search.scss';
 import { createI18nTranslate } from '../../locale/create';
+import SearchCloseIcon from './components/search-close-icon';
+import SearchIcon from './components/search-icon';
 
 export default defineComponent({
   name: 'DSearch',
@@ -54,18 +56,18 @@ export default defineComponent({
         <label class={rootClasses.value}>
           {props.iconPosition === 'left' && (
             <div class={ns.e('icon')} onClick={onClickHandle}>
-              <Icon name="search" size="inherit" key="search"></Icon>
+              <SearchIcon></SearchIcon>
             </div>
           )}
           <DInput {...inputProps}></DInput>
           {clearIconShow.value && (
             <div class={ns.e('clear')} onClick={onClearHandle}>
-              <Icon name="close" size="inherit" key="close"></Icon>
+              <SearchCloseIcon></SearchCloseIcon>
             </div>
           )}
           {props.iconPosition === 'right' && (
             <div class={ns.e('icon')} onClick={onClickHandle}>
-              <Icon name="search" size="inherit" key="search"></Icon>
+              <SearchIcon></SearchIcon>
             </div>
           )}
         </label>
