@@ -4,7 +4,6 @@ import { getRootClass } from './composables/use-search-class';
 import { keywordsHandles } from './composables/use-search-keywords';
 import { keydownHandles } from './composables/use-search-keydown';
 import DInput from '../../input/src/input';
-import { Icon } from '../../icon';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './search.scss';
 import { createI18nTranslate } from '../../locale/create';
