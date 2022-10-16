@@ -26,8 +26,14 @@ export default defineComponent({
     const loading = computed(() => props.loading);
     const instance = getCurrentInstance();
 
+    const isSignStr = (val: string) => {
+      const sign = new RegExp("[" + props.trigger + "]+");
+      const currentVal = val.match(sign);
+      return currentVal ? currentVal[0] : '';
+    };
+
     const handleUpdate = debounce((val: string) => {
-      if (props.trigger.includes(val[0])) {
+      if (props.trigger.includes(isSignStr(val))) {
         showSuggestions.value = true;
         if (props.position === 'top') {
           nextTick(() => {
@@ -35,11 +41,12 @@ export default defineComponent({
             suggestionsTop.value = -Number(height.replace('px', ''));
           });
         }
-        filteredSuggestions.value = (suggestions.value as IMentionSuggestionItem[]).filter((item: IMentionSuggestionItem) =>
-          String(item[props.dmValueParse.value as keyof IMentionSuggestionItem])
-            .toLocaleLowerCase()
-            .includes(val.slice(1).toLocaleLowerCase())
-        );
+
+        // filteredSuggestions.value = (suggestions.value as IMentionSuggestionItem[]).filter((item: IMentionSuggestionItem) =>
+        //   String(item[props.dmValueParse.value as keyof IMentionSuggestionItem])
+        //     .toLocaleLowerCase()
+        //     .includes(val.slice(1).toLocaleLowerCase())
+        // );
       } else {
         showSuggestions.value = false;
       }
@@ -57,7 +64,9 @@ export default defineComponent({
     };
 
     const handleFocus = () => {
-      if (props.trigger.includes(textContext.value)) {
+      const sign = new RegExp("[" + props.trigger + "]");
+      const currentVal = textContext.value.match(sign);
+      if (props.trigger.includes(currentVal ? currentVal[0] : '')) {
         showSuggestions.value = true;
       }
     };
@@ -67,7 +76,9 @@ export default defineComponent({
       e.stopPropagation();
       e.preventDefault();
       showSuggestions.value = false;
-      textContext.value = textContext.value.substring(0, 1) + item[props.dmValueParse.value as keyof IMentionSuggestionItem];
+      const regStr = isSignStr(textContext.value);
+      const dmValueParse = props.dmValueParse.value as keyof IMentionSuggestionItem;
+      textContext.value = textContext.value.replace(regStr ? regStr[0] : '', item[dmValueParse] as string);
     };
 
     const arrowKeyDown = (e: KeyboardEvent) => {
