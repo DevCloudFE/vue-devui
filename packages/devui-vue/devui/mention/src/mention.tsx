@@ -41,12 +41,6 @@ export default defineComponent({
             suggestionsTop.value = -Number(height.replace('px', ''));
           });
         }
-
-        // filteredSuggestions.value = (suggestions.value as IMentionSuggestionItem[]).filter((item: IMentionSuggestionItem) =>
-        //   String(item[props.dmValueParse.value as keyof IMentionSuggestionItem])
-        //     .toLocaleLowerCase()
-        //     .includes(val.slice(1).toLocaleLowerCase())
-        // );
       } else {
         showSuggestions.value = false;
       }
