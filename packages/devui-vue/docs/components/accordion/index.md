@@ -148,26 +148,28 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div class="menu-wrapper">
-    <div>
-      router link (recommended)
-      <!--路由链接（推荐使用）-->
+  <div class="menu-container">
+    <div class="menu-wrapper">
+      <div>
+        router link (recommended)
+        <!--路由链接（推荐使用）-->
+      </div>
+      <d-accordion :data="menu1" class="menu" linkType="routerLink"></d-accordion>
     </div>
-    <d-accordion :data="menu1" class="menu" linkType="routerLink"></d-accordion>
-  </div>
-  <div class="menu-wrapper">
-    <div>
-      original hyperlink (cross site scene)
-      <!--原生超链接（涉及跨站场景使用）-->
+    <div class="menu-wrapper">
+      <div>
+        original hyperlink (cross site scene)
+        <!--原生超链接（涉及跨站场景使用）-->
+      </div>
+      <d-accordion :data="menu2" class="menu" linkType="hrefLink"></d-accordion>
     </div>
-    <d-accordion :data="menu2" class="menu" linkType="hrefLink"></d-accordion>
-  </div>
-  <div class="menu-wrapper">
-    <div>
-      mix link (partial cross site scene)
-      <!--混合链接（部分涉及跨站场景使用）-->
+    <div class="menu-wrapper">
+      <div>
+        mix link (partial cross site scene)
+        <!--混合链接（部分涉及跨站场景使用）-->
+      </div>
+      <d-accordion :data="menu3" class="menu" linkType="dependOnLinkTypeKey"></d-accordion>
     </div>
-    <d-accordion :data="menu3" class="menu" linkType="dependOnLinkTypeKey"></d-accordion>
   </div>
 </template>
 <script lang="ts">
@@ -276,7 +278,10 @@ export default defineComponent({
 .menu {
   width: 200px;
 }
-
+.menu-container {
+  overflow: auto;
+  padding-left: 2px;
+}
 .menu-wrapper {
   float: left;
 }
@@ -755,11 +760,11 @@ export default defineComponent({
 
 ### Accordion 事件
 
-| 事件名 | 类型 | 说明 | 跳转 Demo |
-| :-------------- | :----------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- | ：--------------------- |
-| menuToggle | `EventEmitter<`[`AccordionMenuToggleEvent`](#accordionmenutoggleevent)`>` | 可选，可展开菜单展开事件，返回对象里属性 item 为点击的对象数据，open 为 true 则将要展开 false 则将要关闭， parent 为父对象数据，event 为点击事件的原生事件 | [基本用法](#基本用法) |
-| itemClick | `EventEmitter<`[`AccordionItemClickEvent`](#accordionitemclickevent)`>` | 可选，可点击菜单点击事件，返回对象里属性 item 为点击的对象数据，preActive 对象为上一次展开的对象， parent 为父对象数据，event 为点击事件的原生事件 | [基本用法](#基本用法) |
-| activeItemChange | `EventEmitter<any>` | 可选，子项切换的时候会发出新激活的子项的数据 | [基本用法](#基本用法) |
+| 事件名           | 类型                                                                      | 说明                                                                                                                                                       | 跳转 Demo             |
+| :--------------- | :------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------- |
+| menuToggle       | `EventEmitter<`[`AccordionMenuToggleEvent`](#accordionmenutoggleevent)`>` | 可选，可展开菜单展开事件，返回对象里属性 item 为点击的对象数据，open 为 true 则将要展开 false 则将要关闭， parent 为父对象数据，event 为点击事件的原生事件 | [基本用法](#基本用法) |
+| itemClick        | `EventEmitter<`[`AccordionItemClickEvent`](#accordionitemclickevent)`>`   | 可选，可点击菜单点击事件，返回对象里属性 item 为点击的对象数据，preActive 对象为上一次展开的对象， parent 为父对象数据，event 为点击事件的原生事件         | [基本用法](#基本用法) |
+| activeItemChange | `EventEmitter<any>`                                                       | 可选，子项切换的时候会发出新激活的子项的数据                                                                                                               | [基本用法](#基本用法) |
 
 ### Accordion 类型定义
 
