@@ -51,9 +51,25 @@ describe('d-message', () => {
       expect(closeCallback).toBeCalled();
     });
 
-    it.todo('bordered should work well.');
+    it('bordered should work well.', async () => {
+      message({
+        message: 'message content',
+        bordered: false,
+      });
+      await nextTick();
+      const messageDom = document.querySelector(ns.b());
+      expect(messageDom?.style?.border).toBe('non');
+    });
 
-    it.todo('shadow should work well.');
+    it.todo('shadow should work well.', async () => {
+      message({
+        message: 'message content',
+        shadow: false,
+      });
+      await nextTick();
+      const messageDom = document.querySelector(ns.b());
+      expect(messageDom?.style?.boxShadow).toBe('none');
+    });
   });
 
   describe('function', () => {
