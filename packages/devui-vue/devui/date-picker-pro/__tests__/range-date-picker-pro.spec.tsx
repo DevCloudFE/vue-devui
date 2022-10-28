@@ -126,9 +126,16 @@ describe('range-date-picker-pro test', () => {
     });
 
     const container = wrapper.find(baseClass);
-    datePickerProValue.value[0] = new Date();
+
+    const date = new Date();
+    datePickerProValue.value[0] = date;
     const time = 5 * 24 * 3600 * 1000;
-    datePickerProValue.value[1] = new Date().getDate() > 20 ? new Date() : new Date(new Date().getTime() + time);
+
+    const todayIndex = getDateIndex(date);
+    // todayIndex 大于 20 赋值当前日期 否则加五天 对应下方getSelectedIndex逻辑
+    datePickerProValue.value[1] = todayIndex > 20 ? new Date() : new Date(new Date().getTime() + time);
+    const selectIndex = getSelectedIndex(todayIndex, 5);
+
     await nextTick();
     const inputs = container.findAll('input');
     await inputs[0].trigger('focus');
@@ -138,13 +145,11 @@ describe('range-date-picker-pro test', () => {
     expect(pickerPanel).toBeTruthy();
     const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
 
-    const date = new Date();
-    const todayIndx = getDateIndex(date);
-    const selectIndex = getSelectedIndex(todayIndx, 5);
+
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
     const monthContentContainer = tableMonthItems?.[1].querySelector(datePickerNs.e('table-month-content'));
     const Items = monthContentContainer?.getElementsByTagName('td');
-    expect(Items?.[todayIndx].classList).toContain(noDotDatePickerNs.e('table-date-start'));
+    expect(Items?.[todayIndex].classList).toContain(noDotDatePickerNs.e('table-date-start'));
 
     await inputs[1].trigger('focus');
     await nextTick();
@@ -170,7 +175,8 @@ describe('range-date-picker-pro test', () => {
             onToggleChange={onToggleChange}
             onConfirmEvent={onConfirmEvent}
             onFocus={onFocus}
-            onBlur={onBlur}></DRangeDatePickerPro>
+            onBlur={onBlur}
+          ></DRangeDatePickerPro>
         );
       },
     });
@@ -277,13 +283,15 @@ describe('range-date-picker-pro test', () => {
                       color="primary"
                       onClick={() => {
                         setDate(-30);
-                      }}>
+                      }}
+                    >
                       一个月前
                     </DButton>
                   </li>
                 </ul>
               ),
-            }}></DRangeDatePickerPro>
+            }}
+          ></DRangeDatePickerPro>
         );
       },
     });
@@ -334,7 +342,8 @@ describe('range-date-picker-pro test', () => {
                   </d-button>
                 </div>
               ),
-            }}></DRangeDatePickerPro>
+            }}
+          ></DRangeDatePickerPro>
         );
       },
     });
@@ -379,7 +388,8 @@ describe('range-date-picker-pro test', () => {
           <DRangeDatePickerPro
             v-model={datePickerProValue.value}
             calendarRange={calendarRange}
-            limitDateRange={limitDateRange.value}></DRangeDatePickerPro>
+            limitDateRange={limitDateRange.value}
+          ></DRangeDatePickerPro>
         );
       },
     });
