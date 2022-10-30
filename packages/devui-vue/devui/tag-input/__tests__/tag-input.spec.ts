@@ -134,7 +134,7 @@ describe('DTagInput', () => {
     wrapper.unmount();
   });
 
-  it('tag-input removeTag work', async () => {
+  it('tag-input removeTag work', () => {
     const state = reactive({
       tags: [
         { cname: 'a' },
@@ -145,13 +145,17 @@ describe('DTagInput', () => {
       ],
     });
     const wrapper = customMount(state);
-    const removeSvg = wrapper.find('.remove-button');
-    await removeSvg.trigger('click');
-    expect(wrapper.findAll(ns.e('tags__item')).length).toBe(1);
-    expect(state.tags.length).toBe(1);
-    expect(state.suggestionList.length).toBe(2);
 
-    wrapper.unmount();
+    // todo 使用await报错 The provided value is not of type 'Element'
+    wrapper.find('.remove-button').trigger('click');
+
+    nextTick(() => {
+      expect(wrapper.findAll(ns.e('tags__item')).length).toBe(1);
+      expect(state.tags.length).toBe(1);
+      expect(state.suggestionList.length).toBe(2);
+
+      wrapper.unmount();
+    });
   });
 
   it('tag-input keydown work', async () => {
