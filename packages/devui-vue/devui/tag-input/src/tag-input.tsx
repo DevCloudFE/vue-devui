@@ -48,7 +48,7 @@ export default defineComponent({
     };
 
     const tagInputVal = ref('');
-    const onInput = ($event: InputEvent) => {
+    const onInput = ($event: Event) => {
       const v = ($event.target as HTMLInputElement).value || '';
       tagInputVal.value = v.trim();
     };
@@ -64,12 +64,16 @@ export default defineComponent({
         return suggestions;
       }
 
-      // 大小写敏感
-      if (props.caseSensitivity) {
-        return suggestions.filter((item) => item[props.displayProperty].indexOf(tagInputVal.value) !== -1);
-      } else {
-        return suggestions.filter((item) => item[props.displayProperty].toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1);
-      }
+      return suggestions.filter((item: Suggestion) => {
+        const val = item[props.displayProperty] as string;
+
+        // 大小写敏感
+        if (props.caseSensitivity) {
+          return val.indexOf(tagInputVal.value) !== -1;
+        } else {
+          return val.toLowerCase().indexOf(tagInputVal.value.toLowerCase()) !== -1;
+        }
+      });
     });
 
     const selectIndex = ref(0);
@@ -92,7 +96,7 @@ export default defineComponent({
     };
 
     const handleEnter = () => {
-      let res = { [props.displayProperty]: tagInputVal.value };
+      let res: Suggestion = { [props.displayProperty]: tagInputVal.value };
       if (tagInputVal.value === '' && mergedSuggestions.value.length === 0) {
         return false;
       }
@@ -253,9 +257,9 @@ export default defineComponent({
           class={inputCls.value}
           onKeydown={onInputKeydown}
           onFocus={onInputFocus}
-          onInput={($event: InputEvent) => onInput($event)}
+          onInput={onInput}
           placeholder={isTagsLimit.value ? `${props.maxTagsText || t('maxTagsText')} ${props.maxTags}` : props.placeholder}
-          spellCheck={props.spellcheck}
+          spellcheck={props.spellcheck}
           disabled={isTagsLimit.value}
         />
       </div>
