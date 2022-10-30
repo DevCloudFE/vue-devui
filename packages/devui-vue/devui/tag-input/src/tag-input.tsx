@@ -151,10 +151,10 @@ export default defineComponent({
 
     // 已选择 tags 列表
     const chosenTags = () => {
-      return <ul class="devui-tag-list" title={props.disabled ? props.disabledText : ''}>
+      return <ul class={ns.e('tags')} title={props.disabled ? props.disabledText : ''}>
         {selectedTags.value.map((tag, tagIdx) => {
           return (
-            <li class="devui-tag-item">
+            <li class={ns.e('tags__item')}>
               <span>{tag[props.displayProperty]}</span>
               {!props.disabled && (
                 <a class="remove-button" onClick={($event: Event) => removeTag($event, tagIdx)}>
@@ -200,7 +200,7 @@ export default defineComponent({
       const suggestionListItem = mergedSuggestions.value.map((item: Suggestion, index: number) => {
         return (
           <li
-            class={{ 'devui-suggestion-item': true, selected: index === selectIndex.value }}
+            class={{ [ns.e('suggestion-list__item')]: true, selected: index === selectIndex.value }}
             onClick={($event: Event) => {
               onSuggestionItemClick($event, index);
             }}
@@ -210,7 +210,8 @@ export default defineComponent({
         );
       });
 
-      const noDataTpl = <li class="devui-suggestion-item devui-disabled">{props.noData}</li>;
+      const noDataTplCls = `${ns.e('suggestion-list__item')} ${ns.e('suggestion-list__no-data')}`;
+      const noDataTpl = <li class={noDataTplCls}>{props.noData}</li>;
 
       return <Teleport to="body">
         <Transition name="fade">
@@ -220,44 +221,36 @@ export default defineComponent({
             v-model={isShowSuggestion.value}
             style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}
           >
-            <div class="devui-tags-autocomplete" style={{ width: `${dropdownWidth.value}` }}>
-              <ul class="devui-suggestion-list">
-                {showNoData ? noDataTpl : suggestionListItem}
-              </ul>
-            </div>
+            <ul class={ns.e('suggestion-list')} style={{ width: `${dropdownWidth.value}` }}>
+              {showNoData ? noDataTpl : suggestionListItem}
+            </ul>
           </FlexibleOverlay>
         </Transition>
       </Teleport>;
     };
 
-    const inputBoxCls = computed(() => {
+    const tagsWrapperCls = computed(() => {
       return {
-        'devui-tags': true,
-        'devui-form-control': true,
-        'devui-dropdown-origin': true,
-        'devui-dropdown-origin-open': isInputBoxFocus.value,
-        'devui-disabled': props.disabled,
+        [ns.e('tags__wrapper')]: true,
+        'is-disabled': props.disabled,
       };
     });
 
-    const tagInputCls = {
-      input: true,
-      'devui-input': true,
-      'invalid-tag': false,
-    };
-    const tagInputStyle = computed(() => {
-      return [`display:${props.disabled ? 'none' : 'block'};`];
+    const inputCls = computed(() => {
+      return {
+        [ns.e('input')]: true,
+        [ns.e('input_hide')]: props.disabled,
+      };
     });
 
     return () => (<div class={ns.b()} ref={origin}>
-      <div class={inputBoxCls.value}>
+      <div class={tagsWrapperCls.value}>
         {chosenTags()}
         <input
           type="text"
           ref="tagInputRef"
           value={tagInputVal.value}
-          class={tagInputCls}
-          style={tagInputStyle.value}
+          class={inputCls.value}
           onKeydown={onInputKeydown}
           onFocus={onInputFocus}
           onInput={($event: InputEvent) => onInput($event)}
