@@ -57,7 +57,7 @@ export const tagInputProps = {
   },
   noData: {
     type: String,
-    default: '',
+    default: '暂无数据',
   },
   caseSensitivity: {
     type: Boolean,
