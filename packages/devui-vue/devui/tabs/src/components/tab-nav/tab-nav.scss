@@ -99,7 +99,7 @@ $devui-tab-slider-bg: $devui-list-item-hover-bg;
     }
 
     &.active {
-      background-color: $devui-tab-options-bg;
+      background: $devui-global-bg;
 
       & span > a {
         color: $devui-brand;
