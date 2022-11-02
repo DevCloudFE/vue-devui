@@ -12,6 +12,11 @@ $devui-btn-common-border-color-active: var(--devui-btn-common-border-color-activ
 $devui-btn-sm-padding: var(--devui-btn-sm-padding, 0 16px);
 $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 
+@mixin btn-solid-style {
+  color: $devui-brand-active;
+  border-color: $devui-form-control-line-active;
+}
+
 .#{$devui-prefix}-button {
   padding: $devui-btn-padding;
   font-size: $devui-font-size-md;
@@ -116,29 +121,34 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
     background-color: $devui-block;
     border-style: solid;
 
+    i {
+      color: $devui-text;
+    }
+
     &--secondary {
       color: $devui-text;
       border-color: $devui-line;
 
-      &:hover {
-        color: $devui-brand-active;
-        border-color: $devui-form-control-line-active;
-      }
-
-      &:focus {
-        color: $devui-brand-active;
-        border-color: $devui-form-control-line-active;
-      }
-
+      &:hover,
+      &:focus,
       &:active {
         color: $devui-brand-active;
         border-color: $devui-form-control-line-active;
+
+        i {
+          color: $devui-brand-active;
+          border-color: $devui-form-control-line-active;
+        }
       }
 
       &:disabled {
         color: $devui-disabled-text;
         border-color: $devui-disabled-line;
         background-color: $devui-disabled-bg;
+
+        i {
+          color: $devui-disabled-text;
+        }
       }
     }
 
@@ -146,31 +156,36 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
       color: $devui-brand-active;
       border-color: $devui-form-control-line-active;
 
-      &:hover {
-        color: $devui-brand-active-focus;
-        border-color: $devui-form-control-line-active-hover;
-      }
-
-      &:focus {
-        color: $devui-brand-active-focus;
-        border-color: $devui-form-control-line-active-hover;
-      }
-
+      &:hover,
+      &:focus,
       &:active {
         color: $devui-brand-active-focus;
         border-color: $devui-form-control-line-active-hover;
+
+        i {
+          color: $devui-brand-active-focus;
+          border-color: $devui-form-control-line-active-hover;
+        }
       }
 
       &:disabled {
         opacity: 0.8;
         color: $devui-brand-active;
         border-color: $devui-form-control-line-active;
+
+        i {
+          color: $devui-brand-active;
+        }
       }
     }
 
     &--danger {
       color: $devui-contrast;
       border-color: $devui-contrast;
+
+      i {
+        color: $devui-contrast;
+      }
 
       &:hover,
       &:focus,

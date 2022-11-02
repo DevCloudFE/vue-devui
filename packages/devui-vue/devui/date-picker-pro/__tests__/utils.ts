@@ -6,9 +6,9 @@ export const getDateIndex = (date: Date): number => {
 };
 
 export const getSelectedIndex = (todayIndex: number, intervalDay = 1): number => {
-  return todayIndex > 20 ? todayIndex - 1 : todayIndex + intervalDay;
+  return todayIndex > 20 ? todayIndex : todayIndex + intervalDay;
 };
 
 export const getSelectedDate = (todayIndex: number, date: Date, intervalDay = 1): string => {
-  return todayIndex > 20 ? dayjs(date).subtract(1, 'day').format(DATE_FORMAT) : dayjs(date).add(intervalDay, 'day').format(DATE_FORMAT);
+  return todayIndex > 20 ? dayjs(date).format(DATE_FORMAT) : dayjs(date).add(intervalDay, 'day').format(DATE_FORMAT);
 };
