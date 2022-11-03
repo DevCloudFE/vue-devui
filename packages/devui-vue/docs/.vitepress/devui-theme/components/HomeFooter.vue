@@ -33,6 +33,7 @@ const { frontmatter } = useData()
         <div class="footer-item__title">友链</div>
         <ul>
           <li><a href="http://h5.dooring.cn/" target="_blank">H5-Dooring - 让H5制作，更简单</a></li>
+          <li><a href="https://www.light-tower.top/" target="_blank">灯塔 - 公益性质的反霸凌团队</a></li>
         </ul>
       </div>
     </div>
