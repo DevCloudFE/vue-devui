@@ -5,6 +5,11 @@ import { useNamespace } from '../../shared/hooks/use-namespace';
 const ns = useNamespace('message', true);
 describe('d-message', () => {
   describe('service', () => {
+    afterEach(() => {
+      const messageDom = document.querySelector(ns.b());
+      messageDom?.parentNode?.removeChild(messageDom);
+    });
+
     it('render correctly when using service', async () => {
       message({
         message: 'message content',
@@ -51,9 +56,32 @@ describe('d-message', () => {
       expect(closeCallback).toBeCalled();
     });
 
-    it.todo('bordered should work well.');
+    it('bordered should work well.', async () => {
+      message({
+        message: 'message bordered should work well',
+        bordered: false,
+      });
+      await nextTick();
+      const messageDom = document.querySelector(ns.b()) as HTMLElement;
 
-    it.todo('shadow should work well.');
+      expect(messageDom).toBeTruthy();
+      expect(messageDom.style['border-top']).toBeFalsy();
+      expect(messageDom.style['border-bottom']).toBeFalsy();
+      expect(messageDom.style['border-left']).toBeFalsy();
+      expect(messageDom.style['border-right']).toBeFalsy();
+    });
+
+    it('shadow should work well.', async () => {
+      message({
+        message: 'message shadow should work well',
+        shadow: false,
+      });
+      await nextTick();
+      const messageDom = document.querySelector(ns.b()) as HTMLElement;
+
+      expect(messageDom).toBeTruthy();
+      expect(messageDom.style['box-shadow']).toBe('none');
+    });
   });
 
   describe('function', () => {
