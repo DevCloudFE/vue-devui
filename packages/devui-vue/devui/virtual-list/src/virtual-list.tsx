@@ -240,7 +240,10 @@ export default defineComponent({
       if (Math.abs(newScrollTop - state.scrollTop) >= 1) {
         syncScrollTop(newScrollTop);
       }
-      barRef?.value?.onShowBar?.();
+
+      if (Math.abs(newScrollTop - state.scrollTop) !== 0) {
+        barRef?.value?.onShowBar?.();
+      }
       ctx.emit('scroll', e);
     };
 
