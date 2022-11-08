@@ -31,6 +31,13 @@ window.ResizeObserver =
   }));
 
 describe('date-picker-pro test', () => {
+  afterEach(() => {
+    const baseDom = document.querySelector(baseClass);
+    baseDom?.parentNode?.removeChild(baseDom);
+    const pannelDomm = document.querySelector(pickerPanelClass);
+    pannelDomm?.parentNode?.removeChild(pannelDomm);
+  });
+
   it('date-picker-pro init render', async () => {
     const datePickerProValue = ref('');
     const wrapper = mount({
@@ -429,7 +436,11 @@ describe('date-picker-pro test', () => {
     const weekHeader = pickerPanel?.querySelector(weekHeaderClass);
     expect(weekHeader?.getElementsByTagName('td').length).toBe(7);
     const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
-    expect(tableMonthItems?.length).toBe(4);
+    if (new Date().getMonth() + 1 >= 11 || new Date().getMonth() + 1 <= 1) {
+      expect(tableMonthItems?.length).toBe(3);
+    } else {
+      expect(tableMonthItems?.length).toBe(4);
+    }
 
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();
