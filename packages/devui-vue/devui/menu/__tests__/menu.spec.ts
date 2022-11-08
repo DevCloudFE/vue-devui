@@ -16,6 +16,17 @@ const dotSubMenu = dotSubNs.b();
 const submenuDisabled = SubNs.b() + '-disabled';
 const menuitemDisabled = ns.b() + '-item-disabled';
 
+// fix: TypeError: Array.from(...).at is not a function
+!Array.prototype.at && (Array.prototype.at = function at (n) {
+  // Convert the argument to an integer
+  n = Math.trunc(n) || 0; // 去掉小数点
+  // Allow negative indexing from the end
+  if (n < 0) { n += this.length; }
+  // Out-of-bounds access returns undefined
+  if (n < 0 || n >= this.length) { return undefined; }
+  // Otherwise, this is just normal property access
+  return this[n];
+});
 
 describe('menu test', () => {
   let wrapper: VueWrapper<ComponentPublicInstance>;
