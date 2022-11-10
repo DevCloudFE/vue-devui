@@ -387,9 +387,14 @@
     transition: color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
       background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
 
-    &:hover {
+    &:hover:not(.active) {
       color: $devui-list-item-hover-text;
       background-color: $devui-list-item-hover-bg;
+    }
+
+    &.active {
+      color: $devui-list-item-active-text;
+      background-color: $devui-list-item-active-bg;
     }
   }
 }
