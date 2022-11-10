@@ -384,3 +384,19 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 .clear-right-5 {
   margin-right: 5px;
 }
+
+.loading-icon__container {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 5px;
+
+  .button-icon-loading {
+    animation: rotating 1.5s linear infinite;
+  }
+}
+
+@keyframes rotating {
+  0% { transform: rotate(0); }
+
+  100% { transform: rotate(180deg); }
+}
