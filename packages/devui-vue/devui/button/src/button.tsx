@@ -26,8 +26,11 @@ export default defineComponent({
 
     return () => {
       return (
-        <button class={classes.value} disabled={disabled.value} v-loading={loading.value} onClick={onClick}>
+        <button class={classes.value} disabled={disabled.value} onClick={onClick}>
           {icon.value && <Icon name={icon.value} size="var(--devui-font-size, 12px)" color="" class={iconClass.value} />}
+          <div class="loading-icon__container" v-show={loading.value}>
+            <d-icon name="icon-loading" class="button-icon-loading" color="#BBDEFB"></d-icon>
+          </div>
           <span class="button-content">{ctx.slots.default?.()}</span>
         </button>
       );
