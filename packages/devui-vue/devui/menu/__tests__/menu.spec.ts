@@ -15,6 +15,7 @@ const dotMenuItemVerticalWrapper = dotNs.b() + '-item-vertical-wrapper';
 const dotSubMenu = dotSubNs.b();
 const submenuDisabled = SubNs.b() + '-disabled';
 const menuitemDisabled = ns.b() + '-item-disabled';
+const dotMenuItemSelect = dotNs.b() + '-item-select';
 
 // fix: TypeError: Array.from(...).at is not a function
 !Array.prototype.at && (Array.prototype.at = function at (n) {
@@ -151,13 +152,74 @@ describe('menu test', () => {
     expect(wrapper.findAll('i')[0].classes().includes('is-opened')).toBe(true);
     expect(wrapper.findAll('i')[1].classes().includes('is-opened')).toBe(false);
   });
-  it.todo('props mode(vertical/horizontal) work well.');
+  it('props mode(vertical/horizontal) work well.', async () => {
+    wrapper = mount({
+      components: {
+        'd-menu': Menu,
+        'd-menu-item': MenuItem,
+      },
+      template: `
+        <d-menu>
+          <d-menu-item key="home">首页</d-menu-item>
+          <d-menu-item key="person">个人</d-menu-item>
+          <d-menu-item key="custom" href="https://www.baidu.com"> Link To Baidu </d-menu-item>
+        </d-menu>
+      `,
+    });
+    await wrapper.setProps({
+      mode: 'horizontal',
+    });
+    expect(wrapper.classes().includes(menuHorizontal)).toBe(true);
+    await wrapper.setProps({
+      mode: 'vertical',
+    });
+    expect(wrapper.classes().includes(menuVertical)).toBe(true);
+    wrapper.unmount();
+  });
 
-  it.todo('props multiple work well.');
+  it('props multiple work well.', async () => {
+    wrapper = mount({
+      components: {
+        'd-menu': Menu,
+        'd-menu-item': MenuItem,
+      },
+      template: `
+        <d-menu multiple>
+          <d-menu-item key="home">首页</d-menu-item>
+          <d-menu-item key="person">个人</d-menu-item>
+          <d-menu-item key="custom" href="https://www.baidu.com"> Link To Baidu </d-menu-item>
+        </d-menu>
+      `,
+    });
+    wrapper.findAll(dotMenuItem)[0].trigger('click');
+    await nextTick();
+    expect(wrapper.findAll(dotMenuItemSelect)).toHaveLength(1);
+    wrapper.findAll(dotMenuItem)[1].trigger('click');
+    await nextTick();
+    expect(wrapper.findAll(dotMenuItemSelect)).toHaveLength(2);
+    wrapper.findAll(dotMenuItem)[2].trigger('click');
+    await nextTick();
+    expect(wrapper.findAll(dotMenuItemSelect)).toHaveLength(3);
+    wrapper.unmount();
+  });
 
-  it.todo('props collapsed-indent work well.');
-
-  it.todo('props disabled work well.');
+  it('props collapsed-indent work well.', async () => {
+    wrapper = mount({
+      components: {
+        'd-menu': Menu,
+        'd-menu-item': MenuItem,
+      },
+      template: `
+        <d-menu collapsed :collapsed-indent="48">
+          <d-menu-item key="home">首页</d-menu-item>
+          <d-menu-item key="person">个人</d-menu-item>
+          <d-menu-item key="custom" href="https://www.baidu.com"> Link To Baidu </d-menu-item>
+        </d-menu>
+      `,
+    });
+    expect(wrapper.attributes('style')).toContain('width: 96px');
+    wrapper.unmount();
+  });
 
   it.todo('props router work well.');
 
