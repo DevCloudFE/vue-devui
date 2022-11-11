@@ -28,7 +28,9 @@ export default defineComponent({
             menu: () => (
               <ul>
                 {pageSizeOptions.value.map((item, index) => (
-                  <li class={{ active: item === currentPageSize.value }} onClick={withModifiers(pageSizeChange.bind(null, { value: item }), ['stop'])} key={index}>
+                  <li class={{ active: item === currentPageSize.value }}
+                    onClick={withModifiers(pageSizeChange.bind(null, { value: item }), ['stop'])}
+                    key={index}>
                     {item}
                   </li>
                 ))}
