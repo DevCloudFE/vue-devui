@@ -60,7 +60,8 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
     ctx.emit('update:modelValue', current);
     ctx.emit('change', current);
   };
-  const handleClick = () => {
+  const handleClick = ($event: Event) => {
+    $event.stopPropagation();
     canChange(!isChecked.value, props.label).then((res) => res && toggle());
   };
   const size = computed(() => formContext?.size || checkboxGroupConf?.size.value || props.size);
