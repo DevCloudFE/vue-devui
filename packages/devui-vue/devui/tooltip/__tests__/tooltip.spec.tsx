@@ -201,7 +201,7 @@ describe('d-tooltip', () => {
     expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['top']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
-      setTimeout(resolve, 100);
+      setTimeout(resolve, 150);
     });
 
     await wrapper.setProps({
@@ -217,7 +217,7 @@ describe('d-tooltip', () => {
     expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['top']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
-      setTimeout(resolve, 100);
+      setTimeout(resolve, 150);
     });
 
     await wrapper.setProps({
@@ -233,7 +233,7 @@ describe('d-tooltip', () => {
     expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['right']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
-      setTimeout(resolve, 100);
+      setTimeout(resolve, 150);
     });
 
     await wrapper.setProps({
@@ -249,7 +249,7 @@ describe('d-tooltip', () => {
     expect(tooltipContent?.style.transformOrigin).toBe(transformOriginMap['bottom']);
     await btn.trigger('mouseleave');
     await new Promise((resolve) => {
-      setTimeout(resolve, 100);
+      setTimeout(resolve, 150);
     });
 
     await wrapper.setProps({
