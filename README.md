@@ -218,6 +218,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center"><a href="https://github.com/buaalkn"><img src="https://avatars.githubusercontent.com/u/89232641?v=4?s=100" width="100px;" alt=""/><br /><sub><b>buaalkn</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=buaalkn" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/hxj9102"><img src="https://avatars.githubusercontent.com/u/58357112?v=4?s=100" width="100px;" alt=""/><br /><sub><b>hxj9102</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=hxj9102" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/Whbbit1999"><img src="https://avatars.githubusercontent.com/u/60510247?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Whbbit1999</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Whbbit1999" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/zhaoShijuan"><img src="https://avatars.githubusercontent.com/u/31791365?v=4?s=100" width="100px;" alt=""/><br /><sub><b>zhaoShijuan</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=zhaoShijuan" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/XiaoRIGE"><img src="https://avatars.githubusercontent.com/u/33147011?v=4?s=100" width="100px;" alt=""/><br /><sub><b>XiaoRIGE</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=XiaoRIGE" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
