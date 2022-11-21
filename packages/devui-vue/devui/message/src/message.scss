@@ -40,7 +40,8 @@
 .#{$devui-prefix}-message__close {
   margin-left: auto;
   padding-left: 10px;
-  margin-top: -2px;
+  line-height: 0;
+  cursor: pointer;
 }
 // 图标样式
 .#{$devui-prefix}-message__image {

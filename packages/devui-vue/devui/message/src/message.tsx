@@ -31,7 +31,7 @@ export default defineComponent({
 
     // 鼠标移入后结束定时器
     const interrupt = () => {
-      if (timer) {
+      if (timer && props.duration) {
         clearTimeout(timer);
         timer = null;
       }
@@ -39,7 +39,7 @@ export default defineComponent({
 
     // 鼠标移出后重新计算时间 如果超时则直接移除message
     const removeReset = () => {
-      if (props.visible) {
+      if (props.visible && props.duration) {
         const remainTime = props.duration - (Date.now() - timestamp);
         timer = setTimeout(close, remainTime);
       }
