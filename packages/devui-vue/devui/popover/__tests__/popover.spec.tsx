@@ -10,6 +10,11 @@ const popoverContentClass = ns.e('content');
 const popoverIconClass = useNamespace('popover').e('icon');
 
 describe('d-popover', () => {
+  beforeEach(() => {
+    const popoverContent = document.body.querySelector(popoverContentClass);
+    popoverContent && popoverContent.parentNode?.removeChild(popoverContent);
+  });
+
   it('visible', async () => {
     const wrapper = mount({
       setup() {
@@ -56,11 +61,9 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('mouseenter');
-    setTimeout(() => {
-      const popoverContent = document.body.querySelector(popoverContentClass);
-      expect(popoverContent).toBeTruthy();
-      wrapper.unmount();
-    }, 150);
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const popoverContent = document.body.querySelector(popoverContentClass);
+    expect(popoverContent).toBeTruthy();
   });
 
   it('trigger manually', async () => {
@@ -117,7 +120,7 @@ describe('d-popover', () => {
   });
 
   it('popover disabled work', async () => {
-    let disabled = ref(false);
+    const disabled = ref(false);
     const wrapper = mount({
       setup() {
         return () => (
@@ -128,12 +131,12 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('mouseenter');
-    const popoverContent = document.body.querySelector(popoverContentClass);
-    setTimeout(() => {
-      expect(popoverContent).toBeTruthy();
-    }, 150);
-    disabled = ref(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+    let popoverContent = document.body.querySelector(popoverContentClass);
+    expect(popoverContent).toBeTruthy();
+    disabled.value = true;
     await nextTick();
+    popoverContent = document.body.querySelector(popoverContentClass);
     expect(popoverContent).toBeFalsy();
     wrapper.unmount();
   });
