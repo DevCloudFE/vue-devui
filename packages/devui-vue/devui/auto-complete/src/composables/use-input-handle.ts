@@ -5,7 +5,6 @@ import {
   InputDebounceCb,
   TransInputFocusEmit,
   SourceType,
-  SourceItemObj,
   UseInputHandle,
 } from '../auto-complete-types';
 export default function useInputHandle(
@@ -18,7 +17,7 @@ export default function useInputHandle(
   handleSearch: HandleSearch,
   transInputFocusEmit: Ref<TransInputFocusEmit>,
   recentlyFocus: RecentlyFocus,
-  latestSource: Ref<Array<SourceItemObj>>
+  latestSource: Ref
 ): UseInputHandle {
   const visible = ref(false);
   const inputRef = ref();
