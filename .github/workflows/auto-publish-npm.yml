@@ -8,7 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: CheckOut Code
+        uses: actions/checkout@master
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -17,25 +18,25 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Run Build Scripts
-        working-directory: ./pacakges/devui-vue/
+        working-directory: packages/devui-vue/
         run: |
+          ls
           node -v
           npm install pnpm -g
           pnpm -v
           pnpm i
-          pnpm scripts run build:lib
+          pnpm run build:lib
 
       - name: Publish
-        working-directory: ./packages/devui-vue/build
+        working-directory: packages/devui-vue/build
         run: |
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Release
-        uses: softprops/action-gh-release@v0.1.14
+        uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
