@@ -3,6 +3,7 @@ import { nextTick, ref } from 'vue';
 import DPopover from '../src/popover';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { Placement } from '../src/popover-types';
+import { wait } from '../../shared/utils';
 
 const ns = useNamespace('popover', true);
 const buttonNs = useNamespace('button', true);
@@ -63,7 +64,7 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('mouseenter');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await wait(500);
     const popoverContent = document.body.querySelector(popoverContentClass);
     expect(popoverContent).toBeTruthy();
   });
@@ -133,7 +134,7 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('mouseenter');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await wait(500);
     let popoverContent = document.body.querySelector(popoverContentClass);
     expect(popoverContent).toBeTruthy();
     disabled.value = true;
@@ -155,7 +156,7 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('click');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.bottom).toBe('-4px');
     const popoverContent = document.querySelector(popoverContentClass);
     expect(popoverContent?.getAttribute('style')?.includes('transform-origin: 50% calc(100% + 8px)')).toBe(true);
@@ -172,7 +173,7 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('click');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.top).toBe('-4px');
     expect(document.querySelector(popoverContentClass)?.getAttribute('style')?.includes('transform-origin: 50% -8px')).toBe(true);
     wrapper.unmount();
@@ -188,7 +189,7 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('click');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.right).toBe('-4px');
     expect(document.querySelector(popoverContentClass)?.getAttribute('style')?.includes('transform-origin: calc(100% + 8px)')).toBe(true);
     wrapper.unmount();
@@ -204,7 +205,7 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('click');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.left).toBe('-4px');
     expect(document.querySelector(popoverContentClass)?.getAttribute('style')?.includes('transform-origin: -8px 50%')).toBe(true);
     wrapper.unmount();
@@ -220,7 +221,7 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('click');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.left).toBe('-4px');
     expect(document.querySelector(popoverContentClass)?.getAttribute('style')?.includes('transform-origin: -8px 50%')).toBe(true);
     wrapper.unmount();
@@ -236,7 +237,7 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('click');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.left).toBe('-4px');
     expect(document.querySelector(popoverContentClass)?.getAttribute('style')?.includes('transform-origin: -8px 50%')).toBe(true);
     wrapper.unmount();
@@ -255,9 +256,9 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('mouseenter');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await wait(500);
     expect(document.querySelector(popoverContentClass)).toBeFalsy();
-    await new Promise(resolve => setTimeout(resolve, 1100));
+    await wait(1100);
     expect(document.querySelector(popoverContentClass)).toBeTruthy();
     wrapper.unmount();
   });
@@ -273,12 +274,12 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('mouseenter');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await wait(500);
     expect(document.querySelector(popoverContentClass)).toBeTruthy();
     await wrapper.find(buttonBaseClass).trigger('mouseleave');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await wait(500);
     expect(document.querySelector(popoverContentClass)).toBeTruthy();
-    await new Promise(resolve => setTimeout(resolve, 1100));
+    await wait(1100);
     expect(document.querySelector(popoverContentClass)).toBeFalsy();
     wrapper.unmount();
   });
