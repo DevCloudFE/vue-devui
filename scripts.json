@@ -8,7 +8,7 @@
   "build": {
     "alias": "Build",
     "desc": "Build theme and docs",
-    "command": "pnpm --filter vue-devui build --reporter default"
+    "command": "pnpm --filter vue-devui build"
   },
   "build:lib": {
     "alias": "Build lib",
