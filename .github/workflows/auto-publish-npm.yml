@@ -1,4 +1,4 @@
-name: Auto publish pack to npm
+name: Auto publish package to npm
 
 on:
   push:
