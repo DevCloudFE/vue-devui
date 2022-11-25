@@ -4,6 +4,7 @@ import { setStyle } from '../../../shared/utils/set-style';
 import type { SplitterStore } from '../splitter-store';
 import { splitterPaneProps, SplitterPaneProps } from './splitter-pane-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { isHTMLElement } from '../../../shared/utils';
 import './splitter-pane.scss';
 
 export default defineComponent({
@@ -103,7 +104,7 @@ export default defineComponent({
     // 收起时用于改变相邻 pane 的 flex-grow 属性来改变非自适应 pane 的 size
     const toggleNearPaneFlexGrow = (collapsed: boolean) => {
       const ele = domRef.value;
-      if (!(ele instanceof HTMLElement)) {
+      if (!isHTMLElement(ele)) {
         return;
       }
       const flexGrowClass = ns.em('pane', 'grow');

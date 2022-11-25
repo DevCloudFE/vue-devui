@@ -1,8 +1,9 @@
-import { defineComponent, reactive, ref, provide, onUnmounted, watch } from 'vue';
+import { defineComponent, reactive, ref, provide } from 'vue';
 import DSplitterBar from './components/splitter-bar';
 import { SplitterStore, type SplitterPane } from './splitter-store';
 import { splitterProps, SplitterProps, SplitterState } from './splitter-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useResizeObserver } from '@vueuse/core';
 import './splitter.scss';
 
 export default defineComponent({
@@ -39,20 +40,7 @@ export default defineComponent({
       store.setSplitter({ containerSize });
     };
 
-    const observer = new ResizeObserver(refreshSplitterContainerSize);
-    watch(domRef, (ele) => {
-      if (!ele) {
-        return;
-      }
-      refreshSplitterContainerSize();
-      if (domRef.value) {
-        observer.observe(domRef.value);
-      }
-    });
-
-    onUnmounted(() => {
-      observer.disconnect();
-    });
+    useResizeObserver(domRef, refreshSplitterContainerSize);
 
     return () => {
       const { splitBarSize, orientation, showCollapseButton } = props;

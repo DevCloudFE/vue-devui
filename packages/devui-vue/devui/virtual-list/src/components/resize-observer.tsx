@@ -76,12 +76,13 @@ export default defineComponent({
       if (instance) {
         const element = findDOMNode(instance as ComponentInternalInstance & { $el: VNode['el'] }) as Element;
         const elementChanged = element !== currentElement.value;
+        const isSupported = window && 'ResizeObserver' in window;
         if (elementChanged) {
           destroyObserver();
           currentElement.value = element;
         }
 
-        if (!resizeObserver.value && element) {
+        if (!resizeObserver.value && element && isSupported) {
           resizeObserver.value = new ResizeObserver(onTriggerResize);
           resizeObserver.value.observe(element);
         }
@@ -100,4 +101,4 @@ export default defineComponent({
       return slots.default?.()[0];
     };
   }
-});
+} as any);
