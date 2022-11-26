@@ -548,8 +548,11 @@ export default defineComponent({
       autoComplete: [{ required: true, message: '请选择', trigger: 'change' }],
       executionDay: [{ type: 'array', required: true, message: '请至少选择一个执行时间', trigger: 'change' }],
       radio: [{ required: true, message: '请选择', trigger: 'change' }],
-      datePickerPro: [{ required: true, message: '请选择日期', trigger: 'change' }],
-      rangeDatePickerPro: [{ validator: checkRangeDatePickerPro }, { required: true, message: '请选择日期范围', trigger: 'change' }],
+      datePickerPro: [{ type: 'object', required: true, message: '请选择日期', trigger: 'change' }],
+      rangeDatePickerPro: [
+        { validator: checkRangeDatePickerPro },
+        { type: 'array', required: true, message: '请选择日期范围', trigger: 'change' },
+      ],
     };
 
     const onClick = () => {
