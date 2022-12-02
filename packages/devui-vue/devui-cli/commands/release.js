@@ -17,7 +17,7 @@ const getVersion = (version) => {
 };
 
 const createPackageJson = async (version) => {
-  package.version = getVersion(version);
+  // package.version = getVersion(version);
   package.dependencies = omit(package.dependencies, 'vue');
   const fileStr = JSON.stringify(omit(package, 'scripts', 'devDependencies'), null, 2);
   await fsExtra.outputFile(path.resolve(outputDir, `package.json`), fileStr, 'utf-8');
