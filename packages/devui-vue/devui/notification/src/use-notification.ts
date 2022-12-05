@@ -25,14 +25,14 @@ export function useEvent(
   };
 
   const interrupt = () => {
-    if (timer) {
+    if (timer && props.duration) {
       clearTimeout(timer);
       timer = null;
     }
   };
 
   const removeReset = () => {
-    if (props.modelValue) {
+    if (props.modelValue && props.duration) {
       const remainTime = props.duration - (Date.now() - timestamp);
       timer = setTimeout(close, remainTime);
     }
