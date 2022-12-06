@@ -86,6 +86,8 @@ const switchLang = () => {
 
       <NavBarTitle />
 
+      <slot name="search" />
+
       <div class="flex-grow" />
 
       <div class="flex items-center">
@@ -115,8 +117,6 @@ const switchLang = () => {
           </a>
         </div>
       </div>
-
-      <slot name="search" />
     </div>
   </header>
 </template>
