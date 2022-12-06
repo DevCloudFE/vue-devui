@@ -22,7 +22,7 @@ export default defineComponent({
     colorHistory,
   },
   props: colorPickerProps,
-  emits: ['update:modelValue', 'changeTextColor', 'changeTiggerColor', 'changePaletteColor', 'changeTextModeType'],
+  emits: ['update:modelValue', 'changeTextColor', 'changeTriggerColor', 'changePaletteColor', 'changeTextModeType'],
   setup(props: ColorPickerProps, { emit }) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DColorPicker', app);
