@@ -34,6 +34,11 @@ const config = defineConfig({
         lang: 'en-US',
         label: 'English'
       }
+    },
+    algolia: {
+      appId: 'HOQD3NUZNM',
+      apiKey: '07456b4a262e8c84eb892088e5cc3791',
+      indexName: 'vue-devui'
     }
   }
 })
