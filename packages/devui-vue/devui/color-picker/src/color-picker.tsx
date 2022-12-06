@@ -31,7 +31,7 @@ export default defineComponent({
   props: colorPickerProps,
   emits: ['update:modelValue'],
   setup(props: ColorPickerProps, { emit }) {
-    const DEFAUTL_MODE = 'rgb';
+    const DEFAULT_MODE = 'rgb';
     const provideData = {
       showAlpha: useReactive(() => props.showAlpha),
       swatches: useReactive(() => props.swatches),
@@ -47,7 +47,7 @@ export default defineComponent({
     const top = ref(0);
     const isChangeTextColor = ref(true);
     const showColorPicker = ref(false);
-    const formItemText = ref(`${props.mode ?? DEFAUTL_MODE}`);
+    const formItemText = ref(`${props.mode ?? DEFAULT_MODE}`);
     const mode = ref(unref(props.mode));
 
     // 更新用户输入颜色 2021.12.10
@@ -74,7 +74,7 @@ export default defineComponent({
       // 点击展示 colorpicker
       window.addEventListener('click', isExhibition, true);
     });
-    // ** computeds
+    // ** computed
     // colorpicker panel 组件位置
     const colorPickerPostion = computed<StyleValue>(() => {
       if (colorCubeRef.value) {
@@ -85,7 +85,7 @@ export default defineComponent({
       return {};
     });
     // 交互触发item 颜色 面板  动态修改alpha后要还原 alpha 2021.12.18
-    const tiggerColor = computed(() => {
+    const triggerColor = computed(() => {
       const currentColor = (initialColor.value as ColorPickerColor).rgba;
       const trigger = { ...currentColor, a: props.showAlpha ? currentColor.a : 1 };
       return {
@@ -148,7 +148,7 @@ export default defineComponent({
             <div class='devui-color-picker-container-wrap'>
               <div
                 class='devui-color-picker-container-wrap-current-color'
-                style={tiggerColor.value}
+                style={triggerColor.value}
               ></div>
               <div
                 class={[

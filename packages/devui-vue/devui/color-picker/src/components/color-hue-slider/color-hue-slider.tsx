@@ -13,7 +13,7 @@ export default defineComponent({
     const DEFAULT_TRANSITION: DefaultTransition = { transition: 'all 0.3s ease' };
     const barElement = ref<HTMLElement | null>(null);
     const cursorElement = ref<HTMLElement | null>(null);
-    const clickTransfrom = ref<DefaultTransition | null>(DEFAULT_TRANSITION);
+    const clickTransform = ref<DefaultTransition | null>(DEFAULT_TRANSITION);
     const getCursorLeft = () => {
       if (barElement.value && cursorElement.value) {
         const rect = barElement.value.getBoundingClientRect();
@@ -32,7 +32,7 @@ export default defineComponent({
       return {
         left: left + 'px',
         top: 0,
-        ...clickTransfrom.value
+        ...clickTransform.value
       };
     });
 
@@ -67,11 +67,11 @@ export default defineComponent({
     onMounted(() => {
       const dragConfig = {
         drag: (event: Event) => {
-          clickTransfrom.value = null;
+          clickTransform.value = null;
           onMoveBar(event as MouseEvent);
         },
         end: (event: Event) => {
-          clickTransfrom.value = DEFAULT_TRANSITION;
+          clickTransform.value = DEFAULT_TRANSITION;
           onMoveBar(event as MouseEvent);
         }
       };

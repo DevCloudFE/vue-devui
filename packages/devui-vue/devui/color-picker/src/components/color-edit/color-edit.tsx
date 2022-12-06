@@ -5,7 +5,7 @@ import './color-edit.scss';
 import { fromHex, fromHexa, fromHSLA, fromHSVA, fromRGBA } from '../../utils/color-utils';
 import Schema, { Rules } from 'async-validator';
 // 默认 mode
-const DEFAUTL_MODE = 'rgb';
+const DEFAULT_MODE = 'rgb';
 
 // MODE支持模式
 const MODE_SUPPORT = ['rgb', 'hex', 'hsl', 'hsv'] as const;
@@ -65,13 +65,13 @@ export default defineComponent({
     const isShowAlpha = inject('provideData') as ProvideColorOptions;
     // 模式值
     const modelValue = computed(
-      () => `${props.mode ?? DEFAUTL_MODE}${isShowAlpha.showAlpha ? 'a' : ''}`
+      () => `${props.mode ?? DEFAULT_MODE}${isShowAlpha.showAlpha ? 'a' : ''}`
     );
     // 颜色值
     const colorValue = ref<Partial<ColorPickerColor> | undefined>(props.color);
     // 模式值类型
     const modelValueType = computed(() =>
-      (props.mode ?? DEFAUTL_MODE) === 'hex' ? 'string' : 'number'
+      (props.mode ?? DEFAULT_MODE) === 'hex' ? 'string' : 'number'
     );
 
     /**
@@ -96,7 +96,7 @@ export default defineComponent({
      */
     function onChangeModel() {
       // 安装MODE_SUPPORT列表进行更换
-      const currentIndex = MODE_SUPPORT.findIndex((x) => x === props.mode ?? DEFAUTL_MODE);
+      const currentIndex = MODE_SUPPORT.findIndex((x) => x === props.mode ?? DEFAULT_MODE);
       const mode = MODE_SUPPORT[(currentIndex + 1) % MODE_SUPPORT.length];
       emit('changeTextModeColor', mode);
     }
