@@ -42,7 +42,7 @@ onMounted(() => {
     themeService = ThemeServiceInit({
       ...THEME_MAP
     }, userCustomTheme)
-    currentTheme.value = themeService
+    currentTheme.value = themeService.currentTheme.id
   })
 })
 
