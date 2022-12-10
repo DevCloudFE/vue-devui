@@ -3,12 +3,15 @@ import { ref, nextTick } from 'vue';
 import DSwitch from '../src/switch';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
-const ns = useNamespace('switch', false);
-const baseClass = ns.b();
-const disabledClass = ns.m('disabled');
-const checkedClass = ns.m('checked');
-const smSizeClass = ns.m('sm');
-const lgSizeClass = ns.m('lg');
+const ns = useNamespace('switch', true);
+const notDotNs = useNamespace('switch', false);
+
+const baseClass = notDotNs.b();
+const containerClass = ns.e('wrapper');
+const disabledClass = notDotNs.m('disabled');
+const checkedClass = notDotNs.m('checked');
+const smSizeClass = notDotNs.m('sm');
+const lgSizeClass = notDotNs.m('lg');
 
 describe('d-switch', () => {
   it('switch render work', async () => {
@@ -26,12 +29,16 @@ describe('d-switch', () => {
     });
 
     expect(wrapper.classes()).toContain(baseClass);
-    expect(wrapper.classes()).not.toContain(checkedClass);
+    const container = wrapper.find(containerClass);
+    expect(container.exists()).toBeTruthy();
+    expect(container.classes()).not.toContain(checkedClass);
 
     checked.value = true;
     await nextTick();
 
-    expect(wrapper.classes()).toContain(checkedClass);
+    expect(container.classes()).toContain(checkedClass);
+
+    wrapper.unmount();
   });
 
   it('switch disabled work', async () => {
@@ -43,18 +50,21 @@ describe('d-switch', () => {
       },
     });
 
-    expect(wrapper.classes()).toContain(disabledClass);
+    const container = wrapper.find(containerClass);
+    expect(container.classes()).toContain(disabledClass);
 
-    await wrapper.trigger('click');
+    await container.trigger('click');
     expect(onChange).toBeCalledTimes(0);
 
     await wrapper.setProps({
       disabled: false,
     });
-    await wrapper.trigger('click');
+    await container.trigger('click');
 
-    expect(wrapper.classes()).not.toContain(disabledClass);
+    expect(container.classes()).not.toContain(disabledClass);
     expect(onChange).toBeCalledTimes(1);
+
+    wrapper.unmount();
   });
 
   it('switch size work', async () => {
@@ -71,6 +81,8 @@ describe('d-switch', () => {
     });
     expect(wrapper.classes()).not.toContain(smSizeClass);
     expect(wrapper.classes()).toContain(lgSizeClass);
+
+    wrapper.unmount();
   });
 
   it('switch beforeChange work', async () => {
@@ -83,14 +95,17 @@ describe('d-switch', () => {
       },
     });
 
-    await wrapper.trigger('click');
+    const container = wrapper.find(containerClass);
+    await container.trigger('click');
     expect(beforeChange).toBeCalledTimes(1);
     expect(onChange).toBeCalledTimes(0);
 
     beforeChange.mockReturnValue(true);
-    await wrapper.trigger('click');
+    await container.trigger('click');
     expect(beforeChange).toBeCalledTimes(2);
     expect(onChange).toBeCalledTimes(1);
+
+    wrapper.unmount();
   });
 
   it('switch slot work', async () => {
@@ -99,8 +114,8 @@ describe('d-switch', () => {
       components: { DSwitch },
       template: `
         <d-switch v-model="isChecked">
-          <template v-slot:checkedContent>开</template>
-          <template v-slot:uncheckedContent>关</template>
+        <template v-slot:checkedContent>开</template>
+        <template v-slot:uncheckedContent>关</template>
         </d-switch>
       `,
       setup() {
@@ -116,6 +131,8 @@ describe('d-switch', () => {
     await nextTick();
 
     expect(wrapper.text()).toBe('开');
+
+    wrapper.unmount();
   });
 
   it('switch active-value inactive-value work', async () => {
@@ -132,13 +149,15 @@ describe('d-switch', () => {
       },
     });
 
-    expect(wrapper.classes()).toContain(baseClass);
-    expect(wrapper.classes()).toContain(checkedClass);
+    const container = wrapper.find(containerClass);
+    expect(container.classes()).toContain(checkedClass);
 
     checked.value = '关闭';
     await nextTick();
 
-    expect(wrapper.classes()).not.toContain(checkedClass);
+    expect(container.classes()).not.toContain(checkedClass);
+
+    wrapper.unmount();
   });
 
   it('switch color work', async () => {
@@ -156,21 +175,29 @@ describe('d-switch', () => {
     });
 
     expect(wrapper.classes()).toContain(baseClass);
-    expect(wrapper.classes()).not.toContain(checkedClass);
-    expect(wrapper.vm.$el.style.getPropertyValue('background-color')).not.toBe('pink');
-    expect(wrapper.vm.$el.style.getPropertyValue('border-color')).not.toBe('pink');
+    const container = wrapper.find(containerClass);
+
+    const getContainerStyle = (key: string) => {
+      return container.wrapperElement.__vnode.el.style.getPropertyValue(key);
+    };
+
+    expect(container.classes()).not.toContain(checkedClass);
+    expect(getContainerStyle('background')).not.toBe('pink');
+    expect(getContainerStyle('border-color')).not.toBe('pink');
 
     checked.value = true;
 
     await nextTick();
 
-    expect(wrapper.vm.$el.style.getPropertyValue('background-color')).toBe('pink');
-    expect(wrapper.vm.$el.style.getPropertyValue('border-color')).toBe('pink');
+    expect(getContainerStyle('background')).toBe('pink');
+    expect(getContainerStyle('border-color')).toBe('pink');
 
     await wrapper.setProps({
       color: 'green',
     });
-    expect(wrapper.vm.$el.style.getPropertyValue('background-color')).toBe('green');
-    expect(wrapper.vm.$el.style.getPropertyValue('border-color')).toBe('green');
+    expect(getContainerStyle('background')).toBe('green');
+    expect(getContainerStyle('border-color')).toBe('green');
+
+    wrapper.unmount();
   });
 });
