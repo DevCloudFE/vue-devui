@@ -1,96 +1,104 @@
-import { ComputedRef, nextTick, Ref } from 'vue';
-import { OptionObjectItem } from '../editable-select-types';
-interface useKeyboardSelectReturnType {
-  handleKeydown: (event: KeyboardEvent) => void;
+import { Ref } from 'vue';
+import { EditableSelectProps, Option, Options } from '../editable-select-types';
+import { States } from './use-select';
+
+export interface UseKeyboardSelectReturnType {
+  onKeydown: (e: KeyboardEvent) => void;
 }
+
+const EVENT_CODE = {
+  tab: 'Tab',
+  enter: 'Enter',
+  up: 'ArrowUp', // 38
+  down: 'ArrowDown', // 40
+  esc: 'Escape',
+};
+
 export function useKeyboardSelect(
-  dropdownRef: Ref,
-  hoverIndex: Ref<number>,
-  filteredOptions: ComputedRef<OptionObjectItem[]>,
-  disabledKey: string,
-  visible: Ref<boolean>,
-  loading: Ref<boolean>,
-  handleClick: (option: OptionObjectItem, index: number) => void,
-  toggleMenu: () => void,
-  closeMenu: () => void
-): useKeyboardSelectReturnType {
-  const handleEscape = () => {
-    closeMenu();
-  };
-  const handleEnter = () => {
-    handleClick(filteredOptions.value[hoverIndex.value], hoverIndex.value);
+  props: EditableSelectProps,
+  states: States,
+  filteredOptions: Ref<Options>,
+  scrollToItem: (index: number) => void,
+  handleOptionSelect: (option: Option, byClick: boolean) => void
+): UseKeyboardSelectReturnType {
+  const updateHoveringIndex = (index: number) => {
+    states.hoveringIndex = index;
   };
 
-  const scrollToItem = (index: number) => {
-    const ul = dropdownRef.value;
-    const li = ul.children[index];
-    nextTick(() => {
-      if (li.scrollIntoViewIfNeeded) {
-        li.scrollIntoViewIfNeeded(false);
-      } else {
-        const containerInfo = ul.getBoundingClientRect();
-        const elementInfo = li.getBoundingClientRect();
-        if (elementInfo.bottom > containerInfo.bottom || elementInfo.top < containerInfo.top) {
-          li.scrollIntoView(false);
-        }
-      }
-    });
-  };
-
-  const updateIndex = (index: number) => {
-    hoverIndex.value = index;
-  };
-
-  const handleKeyboardNavigation = (direction: string, index = hoverIndex.value): void => {
-    const len = filteredOptions.value.length;
-
-    if (len === 0) {
+  const onKeyboardNavigate = (direction: 'ArrowDown' | 'ArrowUp', hoverIndex: number = states.hoveringIndex): void => {
+    if (!states.visible) {
+      states.visible = true;
       return;
     }
-    if (!['ArrowUp', 'ArrowDown'].includes(direction)) {
+
+    if (filteredOptions.value.length === 0 || props.loading) {
       return;
     }
-    if (direction === 'ArrowUp') {
-      index -= 1;
-      if (index === -1) {
-        index = len - 1;
+
+    let newIndex = 0;
+
+    if (direction === 'ArrowDown') {
+      newIndex = hoverIndex + 1;
+      if (newIndex > filteredOptions.value.length - 1) {
+        newIndex = 0;
       }
-    } else if (direction === 'ArrowDown') {
-      index += 1;
-      if (index === len) {
-        index = 0;
+    } else if (direction === 'ArrowUp') {
+      newIndex = hoverIndex - 1;
+      if (newIndex < 0) {
+        newIndex = filteredOptions.value.length - 1;
       }
     }
+    const option = filteredOptions.value[newIndex];
 
-    const option = filteredOptions.value[index];
-
-    if (option[disabledKey]) {
-      return handleKeyboardNavigation(direction, index);
+    if (option[props.disabledKey]) {
+      return onKeyboardNavigate(direction, newIndex);
+    } else {
+      updateHoveringIndex(newIndex);
+      scrollToItem(newIndex);
     }
-
-    updateIndex(index);
-    scrollToItem(index);
   };
-  const handleKeydown = (event: KeyboardEvent) => {
-    const keyCode = event.key || event.code;
-    if (loading.value) {
-      return;
+
+  const onEscOrTab = () => {
+    states.visible = false;
+  };
+
+  const onKeyboardSelect = () => {
+    if (!states.visible) {
+      return (states.visible = true);
     }
-    if (!visible.value) {
-      return toggleMenu();
+
+    const option = filteredOptions.value[states.hoveringIndex];
+    if (option) {
+      handleOptionSelect(option, false);
     }
+  };
+
+  const onKeydown = (e: KeyboardEvent) => {
+    const keyCode = e.key || e.code;
+
+    const { tab, esc, down, up, enter } = EVENT_CODE;
+
+    if (keyCode === up || keyCode === down) {
+      e.preventDefault();
+    }
+
     switch (keyCode) {
-    case 'Escape':
-      handleEscape();
+    case up:
+      onKeyboardNavigate('ArrowUp');
       break;
-    case 'Enter':
-      handleEnter();
+    case down:
+      onKeyboardNavigate('ArrowDown');
       break;
-    default:
-      handleKeyboardNavigation(keyCode);
+    case esc:
+    case tab:
+      onEscOrTab();
+      break;
+    case enter:
+      onKeyboardSelect();
+      break;
     }
   };
   return {
-    handleKeydown,
+    onKeydown,
   };
 }

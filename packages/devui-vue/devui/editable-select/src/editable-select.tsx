@@ -1,207 +1,145 @@
-import { defineComponent, withModifiers, computed, ref, SetupContext, watch, Teleport, Transition, getCurrentInstance } from 'vue';
-import { editableSelectProps, EditableSelectProps, OptionObjectItem } from './editable-select-types';
-import ClickOutside from '../../shared/devui-directive/clickoutside';
-import LoadingDirective from '../../loading/src/loading-directive';
-import { className } from '../src/utils/index';
-import './editable-select.scss';
-import { useSelect } from './composables/use-select';
-import { useFilterOptions } from './composables/use-filter-options';
-import { useInput } from './composables/use-input';
-import { useLazyLoad } from './composables/use-lazy-load';
+// 三方库依赖
+import { defineComponent, provide, ref, Teleport, toRef, toRefs, Transition, withModifiers } from 'vue';
+import { onClickOutside } from '@vueuse/core';
+// 类型文件
+import type { SetupContext } from 'vue';
+import { editableSelectProps, EditableSelectProps, SELECT_KEY } from './editable-select-types';
+// 子组件
+import Icon from '../../icon/src/icon';
+import { FlexibleOverlay } from '../../overlay';
+import Dropdown from './components/dropdown/dropdown';
+// 工具函数
+import { useSelect, useSelectSates } from './composables/use-select';
 import { useKeyboardSelect } from './composables/use-keyboard-select';
-import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
+import { useInputRender } from './composables/use-input-render';
+import { useInputEvent } from './composables/use-input-evnet';
+import { useLazyLoad } from './composables/use-lazy-load';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import { useCacheFilteredOptions } from './composables/use-cache-filtered-options';
-import { Placement } from '../../overlay';
-import { createI18nTranslate } from '../../locale/create';
+// 样式
+import './editable-select.scss';
+
 export default defineComponent({
   name: 'DEditableSelect',
-  directives: {
-    ClickOutside,
-    Loading: LoadingDirective,
-  },
-
   props: editableSelectProps,
-  emits: ['update:modelValue', 'search', 'loadMore'],
+  emits: ['update:modelValue', 'focus', 'blur', 'clear', 'change', 'visibleChange', 'loadMore'],
   setup(props: EditableSelectProps, ctx: SetupContext) {
-    const app = getCurrentInstance();
-    const t = createI18nTranslate('DEditableSelect', app);
-
+    // name space
     const ns = useNamespace('editable-select');
 
-    // Ref
-    const dropdownRef = ref();
-    const origin = ref();
-    const hoverIndex = ref(0);
-    const selectedIndex = ref(0);
-    const position = ref<Placement[]>(['bottom']);
+    // DOM & Component refs
+    const inputRef = ref<HTMLInputElement>();
+    const originRef = ref<HTMLElement>();
+    const dropdownRef = ref<HTMLElement>();
+    const overlayRef = ref<HTMLElement>();
 
-    const visible = ref(false);
-    const inputValue = ref(props.modelValue);
+    const states = useSelectSates();
+    //  data refs
+    const { appendToBody, disabled, modelValue, position, placeholder } = toRefs(props);
 
-    const loading = ref(props.loading);
-
-    const { normalizeOptions } = useSelect(props);
-
-    const searchFn =
-      props.searchFn ||
-      ((option: OptionObjectItem, term: string) => option.label.toLocaleLowerCase().includes(term.trim().toLocaleLowerCase()));
-
-    const { filteredOptions } = useFilterOptions(props.enableLazyLoad, normalizeOptions, inputValue, searchFn);
-
-    // 缓存filteredOptions，用value来获取对应的option
-    const { getOptionValue } = useCacheFilteredOptions(filteredOptions);
-
-    const emptyText = computed(() => {
-      let text: string;
-      if (props.enableLazyLoad) {
-        text = t('noData');
-      } else {
-        text = t('noRelatedRecords');
-      }
-      return text;
-    });
-    watch(
-      () => props.loading,
-      (newVal) => {
-        loading.value = newVal;
-      }
+    // input事件
+    const { onInput, onMouseenter, onMouseleave, setSoftFocus, handleBlur, handleFocus, handleClear } = useInputEvent(
+      inputRef,
+      props,
+      states,
+      ctx
     );
 
-    // 下拉列表显影切换
-    const toggleMenu = () => {
-      visible.value = !visible.value;
-    };
-
-    const closeMenu = () => {
-      visible.value = false;
-    };
-    // 懒加载
-    const { loadMore } = useLazyLoad(dropdownRef, props.enableLazyLoad, ctx);
-
-    // 输入框变化后的逻辑
-    const { handleInput } = useInput(inputValue, ctx);
-
-    const handleClick = (option: OptionObjectItem, index: number) => {
-      const { disabledKey } = props;
-      if (disabledKey && !!option[disabledKey]) {
-        return;
-      }
-
-      inputValue.value = option.label;
-
-      hoverIndex.value = selectedIndex.value;
-      selectedIndex.value = index;
-
-      const value = getOptionValue(option);
-      ctx.emit('update:modelValue', value + '');
-      closeMenu();
-    };
-
-    // 键盘选择;
-    const { handleKeydown } = useKeyboardSelect(
+    const { filteredOptions, emptyText, showClearable, toggleMenu, handleOptionSelect, scrollToItem } = useSelect(
       dropdownRef,
-      hoverIndex,
-      filteredOptions,
-      props.disabledKey,
-      visible,
-      loading,
-      handleClick,
-      toggleMenu,
-      closeMenu
+      props,
+      states,
+      setSoftFocus,
+      ctx
+    );
+    const { onKeydown } = useKeyboardSelect(props, states, filteredOptions, scrollToItem, handleOptionSelect);
+
+    const { loadMore } = useLazyLoad(dropdownRef, props, states, ctx);
+
+    provide(SELECT_KEY, {
+      dropdownRef,
+      disabledKey: props.disabledKey,
+      modelValue,
+      inputValue: toRef(states, 'inputValue'),
+      query: toRef(states, 'query'),
+      hoveringIndex: toRef(states, 'hoveringIndex'),
+      loading: toRef(props, 'loading'),
+      emptyText,
+      loadMore,
+      handleOptionSelect,
+      setSoftFocus,
+    });
+    onClickOutside(
+      originRef,
+      () => {
+        states.visible = false;
+        states.isFocus = false;
+      },
+      { ignore: [overlayRef] }
     );
 
-    const handleClear = () => {
-      inputValue.value = '';
-      ctx.emit('update:modelValue', '');
-    };
+    //  类名
+    const { inputClasses, inputWrapperClasses, inputInnerClasses, inputSuffixClasses } = useInputRender(props, states);
 
-    const getItemCls = (option: OptionObjectItem, index: number) => {
-      const { disabledKey } = props;
-      return className(`devui-dropdown-item`, {
-        disabled: disabledKey ? !!option[disabledKey] : false,
-        selected: filteredOptions.value.length === 1 || index === selectedIndex.value,
-        [`${ns.em('dropdown', 'bg')}`]: index === hoverIndex.value,
-      });
-    };
+    // 渲染自定义模板
 
-    return () => {
-      const selectCls = className(
-        `${ns.b()} devui-form-group devui-has-feedback ${inputValue.value && props.allowClear && 'allow-clear'}`,
-        {
-          [`${ns.m('open')}`]: visible.value === true,
-        }
+    // 渲染下拉框核心
+    const renderBasicDropdown = () => {
+      return (
+        <Transition name="fade">
+          <FlexibleOverlay
+            ref={overlayRef}
+            v-model={states.visible}
+            origin={originRef.value}
+            position={position.value}
+            style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
+            <Dropdown options={filteredOptions.value} width={props.width} maxHeight={props.maxHeight} v-slots={ctx.slots}></Dropdown>
+          </FlexibleOverlay>
+        </Transition>
       );
-      const inputCls = className(`devui-form-control devui-dropdown-origin`, {
-        'devui-dropdown-origin-open': visible.value === true,
-      });
+    };
+
+    // 渲染下拉框
+    const renderDropdown = () => {
+      if (appendToBody.value) {
+        return <Teleport to="body">{renderBasicDropdown()}</Teleport>;
+      } else {
+        return renderBasicDropdown();
+      }
+    };
+    return () => {
       return (
         <div
-          class={selectCls}
-          ref={origin}
-          v-click-outside={closeMenu}
+          ref={originRef}
+          class={ns.b()}
           style={{
             width: props.width + 'px',
-          }}>
-          <input
-            class={inputCls}
-            onClick={withModifiers(toggleMenu, ['self'])}
-            onInput={handleInput}
-            onKeydown={handleKeydown}
-            value={inputValue.value}
-            disabled={props.disabled}
-            placeholder={props.placeholder}
-            type="text"
-          />
-          <span class="devui-form-control-feedback">
-            <span class="devui-select-clear-icon" onClick={handleClear}>
-              <d-icon name="icon-remove"></d-icon>
-            </span>
-            <span class="devui-select-chevron-icon">
-              <d-icon name="select-arrow" />
-            </span>
-          </span>
-          <Teleport to="body">
-            <Transition name="fade">
-              <FlexibleOverlay
-                origin={origin.value}
-                v-model={visible.value}
-                position={position.value}
-                style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
-                <div
-                  style={{
-                    width: props.width + 'px',
-                  }}
-                  class={`${ns.e('menu')}`}>
-                  <div class={`devui-dropdown-menu`} v-show={visible.value} v-loading={props.loading}>
-                    <ul
-                      ref={dropdownRef}
-                      class={`${ns.em('list', 'unstyled')} devui-scrollbar scroll-height`}
-                      style={{
-                        maxHeight: props.maxHeight + 'px',
-                      }}
-                      onScroll={loadMore}>
-                      {filteredOptions.value.map((option, index) => {
-                        return (
-                          <li
-                            class={getItemCls(option, index)}
-                            onClick={(e: MouseEvent) => {
-                              e.stopPropagation();
-                              handleClick(option, index);
-                            }}>
-                            {ctx.slots.item ? ctx.slots.item(option) : option.label}
-                          </li>
-                        );
-                      })}
-                      <div class="devui-no-data-tip" v-show={!filteredOptions.value.length}>
-                        {ctx.slots.noResultItem ? ctx.slots.noResultItem(inputValue.value) : emptyText.value}
-                      </div>
-                    </ul>
-                  </div>
-                </div>
-              </FlexibleOverlay>
-            </Transition>
-          </Teleport>
+          }}
+          onClick={toggleMenu}>
+          <div class={inputClasses.value} onMouseenter={onMouseenter} onMouseleave={onMouseleave}>
+            <div class={inputWrapperClasses.value}>
+              <input
+                ref={inputRef}
+                class={inputInnerClasses.value}
+                disabled={disabled.value}
+                placeholder={placeholder.value}
+                value={states.inputValue}
+                type="text"
+                onInput={onInput}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                onKeydown={onKeydown}
+              />
+              <span class={inputSuffixClasses.value}>
+                <span class={ns.e('clear-icon')} v-show={showClearable.value} onClick={withModifiers(handleClear, ['stop'])}>
+                  <Icon name="icon-remove" />
+                </span>
+                <span class={ns.e('arrow-icon')} v-show={!showClearable.value}>
+                  <Icon name="select-arrow" />
+                </span>
+              </span>
+            </div>
+          </div>
+          {renderDropdown()}
         </div>
       );
     };
