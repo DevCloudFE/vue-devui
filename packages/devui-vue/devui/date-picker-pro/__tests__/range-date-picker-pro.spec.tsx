@@ -414,8 +414,13 @@ describe('range-date-picker-pro test', () => {
     const weekHeader = pickerPanel?.querySelector(weekHeaderClass);
     expect(weekHeader?.getElementsByTagName('td').length).toBe(7);
     const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
-    if (new Date().getMonth() + 1 >= 11 || new Date().getMonth() + 1 <= 1) {
-      expect(tableMonthItems?.length).toBe(3);
+    const curMonth = new Date().getMonth() + 1;
+    if (curMonth >= 11 || curMonth <= 1) {
+      if (curMonth === 12) {
+        expect(tableMonthItems?.length).toBe(2);
+      } else {
+        expect(tableMonthItems?.length).toBe(3);
+      }
     } else {
       expect(tableMonthItems?.length).toBe(4);
     }
