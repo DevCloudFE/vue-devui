@@ -363,8 +363,8 @@ interface ReadTipRule {
   appendToBody?: boolean; //可以继承自 ReadTipOtions
   //customData与template搭配使用，customData为传入模板的上下文，可以自定义模板内容
   dataFn?: ({
-              element,
-              rule: ReadTipRule,
-            }) => Observable<{ title?: string; content?: string; template?: TemplateRef<any>; customData?: any }>;
+    element,
+    rule: ReadTipRule,
+  }) => Observable<{ title?: string; content?: string; template?: TemplateRef<any>; customData?: any }>;
 }
 ```
