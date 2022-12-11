@@ -358,7 +358,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <div class="set-form-size">
+  <div class="form-demo-set-form-size">
     尺寸：
     <d-radio-group direction="row" v-model="formSize">
       <d-radio :value="item.value" v-for="item in sizeTypeList" :key="item.value">
@@ -466,7 +466,7 @@ export default defineComponent({
 </script>
 
 <style>
-.set-form-size{
+.form-demo-set-form-size{
   margin-bottom: 16px;
 }
 .form-demo-form-operation > * {
