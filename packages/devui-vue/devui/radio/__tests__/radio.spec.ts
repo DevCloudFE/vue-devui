@@ -119,7 +119,7 @@ describe('Radio', () => {
       },
     });
     const container = wrapper.find(baseClass);
-    expect(container.classes()).not.toContain(sizeNs);
+    expect(container.classes()).toContain(sizeNs);
     await wrapper.setProps({
       border: true,
     });

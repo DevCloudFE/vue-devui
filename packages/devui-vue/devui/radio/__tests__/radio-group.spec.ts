@@ -168,7 +168,7 @@ describe('RadioGroup', () => {
 
     const radio1 = wrapper.findAllComponents({ name: 'DRadio' })[0];
     const radio1Wrapper = radio1.find(radioBaseClass);
-    expect(radio1Wrapper.classes()).not.toContain(sizeNs);
+    expect(radio1Wrapper.classes()).toContain(sizeNs);
     await wrapper.setProps({
       border: true,
     });
