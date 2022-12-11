@@ -20,7 +20,7 @@ export default defineComponent({
         disabled: isDisabled.value,
         [ns.b()]: true,
         [ns.m('bordered')]: border.value,
-        [ns.m(size.value)]: border.value,
+        [ns.m(size.value)]: size.value,
       };
 
       return (
