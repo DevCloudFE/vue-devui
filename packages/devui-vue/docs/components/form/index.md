@@ -244,7 +244,7 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent, reactive, ref, nextTick } from 'vue';
+import { defineComponent, reactive } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -358,10 +358,26 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-form :data="formModel" disabled size="sm">
-    <d-form-item field="name" label="Name" help-tips="This is the plan name." extra-info="Enter a short name that meets reading habits.">
-      <d-input v-model="formModel.name" />
+  <div class="set-form-size">
+    尺寸：
+    <d-radio-group direction="row" v-model="formSize">
+      <d-radio :value="item.value" v-for="item in sizeTypeList" :key="item.value">
+        {{ item.label }}
+      </d-radio>
+    </d-radio-group>
+  </div>
+
+  <d-form :data="formModel" :size="formSize">
+    <d-form-item field="name" label="Name">
+      <d-input v-model="formModel.name" placeholder="请输入"/>
     </d-form-item>
+    <d-form-item field="search" label="Search">
+      <d-search v-model="formModel.search" placeholder="请输入"></d-search>
+    </d-form-item>
+    <d-form-item field="inputNumber" label="InputNumber">
+      <d-input-number v-model="formModel.inputNumber"  placeholder="请输入"></d-input-number>
+    </d-form-item>
+
     <d-form-item field="description" label="Description">
       <d-textarea v-model="formModel.description" />
     </d-form-item>
@@ -403,12 +419,30 @@ export default defineComponent({
 </template>
 
 <script>
-import { defineComponent, reactive, ref, nextTick } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   setup() {
+    const sizeTypeList = [
+      {
+        label: 'Small',
+        value: 'sm',
+      },
+      {
+        label: 'Middle',
+        value: 'md',
+      },
+      {
+        label: 'Large',
+        value: 'lg',
+      },
+    ];;
+    const formSize = ref('md');
+
     let formModel = reactive({
       name: '',
+      search: '',
+      inputNumber: 1,
       description: '',
       select: '',
       autoComplete: '',
@@ -419,7 +453,10 @@ export default defineComponent({
     });
     const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
     const source = ref(['C#', 'C', 'C++']);
+
     return {
+      sizeTypeList,
+      formSize,
       formModel,
       source,
       selectOptions,
@@ -429,6 +466,9 @@ export default defineComponent({
 </script>
 
 <style>
+.set-form-size{
+  margin-bottom: 16px;
+}
 .form-demo-form-operation > * {
   margin-right: 8px;
 }
