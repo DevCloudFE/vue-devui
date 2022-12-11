@@ -64,8 +64,11 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
     $event.stopPropagation();
     canChange(!isChecked.value, props.label).then((res) => res && toggle());
   };
-  const size = computed(() => formContext?.size || checkboxGroupConf?.size.value || props.size);
+
+  const size = computed(() => props.size || checkboxGroupConf?.size.value || formContext?.size || 'md');
+
   const border = computed(() => checkboxGroupConf?.border.value ?? props.border);
+
   watch(
     () => props.modelValue,
     () => {
@@ -89,6 +92,7 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
 type IModelValue = Ref<(string | number | { value: string })[]>;
 
 export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): UseCheckboxGroupFn {
+  const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   const valList = toRef(props, 'modelValue') as IModelValue;
 
@@ -139,6 +143,9 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
     { deep: true }
   );
 
+  // 组件 size 优先于表单 size
+  const checkboxGroupSize = computed(() => props.size || formContext?.size || '');
+
   provide(checkboxGroupInjectionKey, {
     disabled: toRef(props, 'disabled'),
     isShowTitle: toRef(props, 'isShowTitle'),
@@ -149,7 +156,7 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
     toggleGroupVal,
     itemWidth: toRef(props, 'itemWidth'),
     direction: toRef(props, 'direction'),
-    size: toRef(props, 'size'),
+    size: checkboxGroupSize,
     border: toRef(props, 'border'),
     max: toRef(props, 'max'),
     modelValue: toRef(props, 'modelValue'),
