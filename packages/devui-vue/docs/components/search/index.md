@@ -95,18 +95,18 @@ export default defineComponent({
 
 ### Search 参数
 
-| 参数名          | 类型               | 默认    | 说明                                           | 跳转 Demo                     |
-| :-------------- | :----------------- | :------ | :--------------------------------------------- | :---------------------------- |
-| size            |  [SearchSizeType](#searchsizetype) | 'md'| 可选，搜索框尺寸，有三种选择 lg、'md'、sm | [基本用法](#基本用法) |
-| placeholder     | `string`           | --      | 可选，输入框 placeholder                       | [搜索图标左置](#搜索图标左置) |
-| max-length      | `number`           | --      | 可选，输入框的 max-length                      | [双向绑定](#双向绑定)         |
-| delay           | `number`           | 300     | 可选，debounceTime 的延迟                      | [基本用法](#基本用法)         |
-| disabled        | `boolean`          | false   | 可选，输入框是否被禁用                         | [基本用法](#基本用法)         |
-| auto-focus      | `boolean`          | false   | 可选，输入框是否自动对焦                       | [基本用法](#基本用法)         |
-| is-keyup-search | `boolean`          | false   | 可选，是否支持输入值立即触发 `search`          | [基本用法](#基本用法)         |
-| icon-position   | `string`           | 'right' | 可选，搜索图标位置，有两种选择'left' / 'right' | [搜索图标左置](#搜索图标左置) |
-| no-border       | `boolean`          | false   | 可选，是否显示边框                             | [无边框](#无边框)             |
-| css-class       | `string`           | ''      | 可选，支持传入类名到输入框上                   | [双向绑定](#双向绑定)         |
+| 参数名          | 类型                                    | 默认    | 说明                                           | 跳转 Demo                     |
+| :-------------- |:--------------------------------------| :------ | :--------------------------------------------- | :---------------------------- |
+| size            | [SearchSizeType](#searchsizetype)     | 'md'| 可选，搜索框尺寸| [基本用法](#基本用法) |
+| placeholder     | `string`                              | --      | 可选，输入框 placeholder                       | [搜索图标左置](#搜索图标左置) |
+| max-length      | `number`                              | --      | 可选，输入框的 max-length                      | [双向绑定](#双向绑定)         |
+| delay           | `number`                              | 300     | 可选，debounceTime 的延迟                      | [基本用法](#基本用法)         |
+| disabled        | `boolean`                             | false   | 可选，输入框是否被禁用                         | [基本用法](#基本用法)         |
+| auto-focus      | `boolean`                             | false   | 可选，输入框是否自动对焦                       | [基本用法](#基本用法)         |
+| is-keyup-search | `boolean`                             | false   | 可选，是否支持输入值立即触发 `search`          | [基本用法](#基本用法)         |
+| icon-position   | [IconPositionType](#iconpositiontype) | 'right' | 可选，搜索图标位置 | [搜索图标左置](#搜索图标左置) |
+| no-border       | `boolean`                             | false   | 可选，是否显示边框                             | [无边框](#无边框)             |
+| css-class       | `string`                              | ''      | 可选，支持传入类名到输入框上                   | [双向绑定](#双向绑定)         |
 
 ### Search 事件
 
@@ -120,4 +120,9 @@ export default defineComponent({
 
 ```ts
 type SearchSizeType = 'sm' | 'md' | 'lg';
+```
+
+#### IconPositionType
+```ts
+type IconPositionType = 'right' | 'left';
 ```
