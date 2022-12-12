@@ -50,6 +50,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: v${{ steps.package-version.outputs.version }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{  secrets.GIT_TOKEN  }}
