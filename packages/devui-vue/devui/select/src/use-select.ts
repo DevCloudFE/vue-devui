@@ -22,7 +22,8 @@ export default function useSelect(
   const dropdownRef = ref();
 
   const selectDisabled = computed(() => formContext?.disabled || props.disabled);
-  const selectSize = computed(() => formContext?.size || props.size);
+  const selectSize = computed(() => props.size || formContext?.size || 'md');
+
   const isObjectOption = ref(false);
 
   const originRef = ref<HTMLElement>();
