@@ -1,6 +1,6 @@
 import { defineComponent, getCurrentInstance, ref } from 'vue';
 import { SearchProps, searchProps } from './search-types';
-import { getRootClass } from './composables/use-search-class';
+import { useSearchClass } from './composables/use-search-class';
 import { keywordsHandles } from './composables/use-search-keywords';
 import { keydownHandles } from './composables/use-search-keydown';
 import DInput from '../../input/src/input';
@@ -20,7 +20,7 @@ export default defineComponent({
 
     const ns = useNamespace('search');
     const isFocus = ref(false);
-    const rootClasses = getRootClass(props, isFocus);
+    const {rootClass, searchSize} = useSearchClass(props, isFocus);
     const { keywords, clearIconShow, onClearHandle } = keywordsHandles(ctx, props);
     const { onInputKeydown, onClickHandle, useEmitKeyword } = keydownHandles(ctx, keywords, props);
 
@@ -41,7 +41,7 @@ export default defineComponent({
 
     return () => {
       const inputProps = {
-        size: props.size,
+        size: searchSize.value,
         disabled: props.disabled,
         autoFocus: props.autoFocus,
         modelValue: keywords.value,
@@ -51,8 +51,9 @@ export default defineComponent({
         onFocus: onFocus,
         onBlur: onBlur,
       };
+
       return (
-        <label class={rootClasses.value}>
+        <label class={rootClass.value}>
           {props.iconPosition === 'left' && (
             <div class={ns.e('icon')} onClick={onClickHandle}>
               <SearchIcon></SearchIcon>

@@ -5,8 +5,7 @@ export type IconPosition = 'right' | 'left';
 
 export const searchProps = {
   size: {
-    type: String as PropType<Size>,
-    default: 'md',
+    type: String as PropType<Size>
   },
   placeholder: {
     type: String,
@@ -55,6 +54,11 @@ export const searchProps = {
 } as const;
 
 export type SearchProps = ExtractPropTypes<typeof searchProps>;
+
+export interface UseSearchClassTypes {
+  rootClass: ComputedRef<{ [p: string]: string | boolean }>;
+  searchSize: ComputedRef<Size>;
+}
 
 export interface KeywordsReturnTypes {
   keywords: Ref<string>;
