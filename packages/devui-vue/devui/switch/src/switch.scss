@@ -9,7 +9,7 @@
 }
 
 .#{$devui-prefix}-switch {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   width: $devui-size-md * 1.4;
   height: $devui-size-md;
