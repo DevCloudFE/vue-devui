@@ -46,11 +46,11 @@ jobs:
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      
+
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
+          tag_name: v${{ steps.package-version.outputs.version }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{  secrets.GIT_TOKEN  }}
