@@ -13,27 +13,23 @@ const disableSearchClass = searchNs.m('disabled');
 const dotSearchClass = dotSearchNs.b();
 const dotClearSearchClass = dotSearchNs.e('clear');
 const dotIconSearchClass = dotSearchNs.e('icon');
+const leftIconPositionClass = searchNs.m('left');
+const rightIconPositionClass = searchNs.m('right');
+const noBorderClass = searchNs.m('no-border');
 
 describe('search test', () => {
-  // TODO: 这个单测应该按功能进行拆分
   it('should render correctly', async () => {
     const value = ref('test');
-    const size = ref('');
-    const disabled = ref(false);
     const wrapper = mount({
       components: { DSearch },
       template: `
         <d-search
-          :size="size"
-          :disabled="disabled"
           v-model="value"
         ></d-search>
       `,
       setup() {
         return {
           value,
-          size,
-          disabled,
         };
       },
     });
@@ -42,45 +38,7 @@ describe('search test', () => {
     const input = search.find('input');
     expect(input.element.value).toBe('test');
 
-    // test size
-    expect(input.classes()).not.toContain(smSearchClass);
-    expect(input.classes()).not.toContain(lgSearchClass);
-
-    size.value = 'sm';
-    await nextTick();
-    expect(wrapper.classes()).toContain(smSearchClass);
-    expect(wrapper.classes()).not.toContain(lgSearchClass);
-    size.value = 'lg';
-    await nextTick();
-    expect(wrapper.classes()).not.toContain(smSearchClass);
-    expect(wrapper.classes()).toContain(lgSearchClass);
-
-    // test v-model
-    await input.setValue('def');
-    expect(value.value).toBe('def');
-
-    value.value = 'change value';
-    await nextTick();
-    expect(input.element.value).toBe('change value');
-
-    // test clear
-    const clear = wrapper.find(dotClearSearchClass);
-    await clear.trigger('click');
-    expect(input.element.value).toBe('');
-    expect(value.value).toBe('');
-
-    // test input focus after trigger clear button
-    // TODO: 在单元测试环境中，input虽然处于focus状态，但是无法通过document.activeElement获取到
-    // expect(input.element === document.activeElement).toBe(true);
-
-    // test disabled
-    expect(input.attributes('disabled')).toBe(undefined);
-    expect(wrapper.classes()).not.toContain(disableSearchClass);
-
-    disabled.value = true;
-    await nextTick();
-    expect(wrapper.classes()).toContain(disableSearchClass);
-    expect(input.attributes('disabled')).toBe('');
+    wrapper.unmount();
   });
 
   it('should event correctly', async () => {
@@ -103,7 +61,7 @@ describe('search test', () => {
     });
     const search = wrapper.find(dotSearchClass);
     const searchBtn = search.find(dotIconSearchClass);
-    // const input = search.find('input');
+
     await searchBtn.trigger('click');
     await onSearch((str: string) => {
       expect(str).toBe('test');
@@ -113,23 +71,202 @@ describe('search test', () => {
     // test input focus after trigger search button
     // TODO: 在单元测试环境中，input虽然处于focus状态，但是无法通过document.activeElement获取到
     // expect(input.element === document.activeElement).toBe(true);
+    wrapper.unmount();
   });
 
-  it.todo('props size(sm/md/lg) should work well.');
+  it('props v-model should work well.', async () => {
+    const value = ref('test');
+
+    const wrapper = mount({
+      components: { DSearch },
+      template: `
+        <d-search
+          v-model="value"
+        ></d-search>
+      `,
+      setup() {
+        return {
+          value,
+        };
+      },
+    });
+
+    const search = wrapper.find(dotSearchClass);
+    const input = search.find('input');
+    expect(input.element.value).toBe('test');
+
+    // test v-model
+    await input.setValue('def');
+    expect(value.value).toBe('def');
+
+    value.value = 'change value';
+    await nextTick();
+    expect(input.element.value).toBe('change value');
+
+    wrapper.unmount();
+  });
+
+  it('props size(sm/md/lg) should work well.', async () => {
+    const size = ref('');
+
+    const wrapper = mount({
+      components: { DSearch },
+      template: `
+        <d-search
+          :size="size"
+        ></d-search>
+      `,
+      setup() {
+        return {
+          size,
+        };
+      },
+    });
+
+    const search = wrapper.find(dotSearchClass);
+    const input = search.find('input');
+
+    expect(input.classes()).not.toContain(smSearchClass);
+    expect(input.classes()).not.toContain(lgSearchClass);
+
+    size.value = 'sm';
+    await nextTick();
+    expect(wrapper.classes()).toContain(smSearchClass);
+    expect(wrapper.classes()).not.toContain(lgSearchClass);
+    size.value = 'lg';
+    await nextTick();
+    expect(wrapper.classes()).not.toContain(smSearchClass);
+    expect(wrapper.classes()).toContain(lgSearchClass);
+
+    wrapper.unmount();
+  });
+
+  it('clear operation should work well.', async () => {
+    const value = ref('test');
+    const wrapper = mount({
+      components: { DSearch },
+      template: `
+        <d-search
+          v-model="value"
+        ></d-search>
+      `,
+      setup() {
+        return {
+          value,
+        };
+      },
+    });
+
+    const search = wrapper.find(dotSearchClass);
+    const input = search.find('input');
+    expect(input.element.value).toBe('test');
+
+    // test clear
+    const clear = wrapper.find(dotClearSearchClass);
+    await clear.trigger('click');
+    expect(input.element.value).toBe('');
+    expect(value.value).toBe('');
+
+    wrapper.unmount();
+  });
+
+  it('props disabled should work well.', async () => {
+    const disabled = ref(false);
+    const wrapper = mount({
+      components: { DSearch },
+      template: `
+        <d-search
+          :disabled="disabled"
+        ></d-search>
+      `,
+      setup() {
+        return {
+          disabled,
+        };
+      },
+    });
+    const search = wrapper.find(dotSearchClass);
+    const input = search.find('input');
+
+    // test disabled
+    expect(input.attributes('disabled')).toBe(undefined);
+    expect(wrapper.classes()).not.toContain(disableSearchClass);
+
+    disabled.value = true;
+    await nextTick();
+    expect(wrapper.classes()).toContain(disableSearchClass);
+    expect(input.attributes('disabled')).toBe('');
+
+    wrapper.unmount();
+  });
+
+  it('props icon-position(right/left) should work well.', async () => {
+    const iconPosition = ref('right');
+
+    const wrapper = mount({
+      components: { DSearch },
+      template: `
+        <d-search
+          :icon-position="iconPosition"
+        ></d-search>
+      `,
+      setup() {
+        return {
+          iconPosition,
+        };
+      },
+    });
+
+    const iconSearch = wrapper.find(dotIconSearchClass);
+
+    expect(iconSearch.exists()).toBe(true);
+
+    expect(wrapper.classes()).toContain(rightIconPositionClass);
+
+    iconPosition.value = 'left';
+    await nextTick();
+    expect(wrapper.classes()).toContain(leftIconPositionClass);
+
+    iconPosition.value = 'right';
+    await nextTick();
+    expect(wrapper.classes()).toContain(rightIconPositionClass);
+
+    wrapper.unmount();
+  });
+
+  it('props no-border should work well.', async () => {
+    const noBorder = ref(true);
+
+    const wrapper = mount({
+      components: { DSearch },
+      template: `
+        <d-search
+          :no-border="noBorder"
+        ></d-search>
+      `,
+      setup() {
+        return {
+          noBorder,
+        };
+      },
+    });
+
+    expect(wrapper.classes()).toContain(noBorderClass);
+
+    noBorder.value = false;
+    await nextTick();
+    expect(wrapper.classes()).not.toContain(noBorderClass);
+
+    wrapper.unmount();
+  });
+
+  it.todo('props placeholder should work well.');
 
   it.todo('props auto-focus should work well.');
 
   it.todo('props is-keyup-search should work well.');
 
   it.todo('props delay should work well.');
-
-  it.todo('props disabled should work well.');
-
-  it.todo('props icon-position should work well.');
-
-  it.todo('props placeholder should work well.');
-
-  it.todo('props no-border should work well.');
 
   it.todo('props max-length should work well.');
 });
