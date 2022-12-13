@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import DSearch from '../src/search';
 import { ref, nextTick } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { Form as DForm, FormItem as DFormItem } from '../../form';
 
 const searchNs = useNamespace('search');
 const dotSearchNs = useNamespace('search', true);
@@ -137,6 +138,48 @@ describe('search test', () => {
     await nextTick();
     expect(wrapper.classes()).not.toContain(smSearchClass);
     expect(wrapper.classes()).toContain(lgSearchClass);
+
+    wrapper.unmount();
+  });
+
+  it('props size priority', async () => {
+    const dFormSize = ref('lg');
+    const dSearchSize = ref('sm');
+
+    const wrapper = mount({
+      components: {DSearch, DForm, DFormItem},
+      template: `
+        <DForm :size="dFormSize">
+          <DFormItem>
+            <d-search
+              :size="dSearchSize"
+            ></d-search>
+          </DFormItem>
+        </DForm>`,
+      setup() {
+        return {
+          dFormSize,
+          dSearchSize
+        };
+      },
+    });
+
+    const dSearch = wrapper.find(dotSearchClass);
+    // form 与 元素同时存在size 属性，以元素为准。
+    expect(dSearch.classes()).toContain(smSearchClass);
+
+    dSearchSize.value = '';
+    await nextTick();
+
+    // 元素不存在 size ，form 存在，以表单为准
+    expect(dSearch.classes()).toContain(lgSearchClass);
+
+    dFormSize.value = '';
+    await nextTick();
+
+    // form 与 元素都不存在 size 属性，使用默认值。
+    expect(dSearch.classes()).not.toContain(smSearchClass);
+    expect(dSearch.classes()).not.toContain(lgSearchClass);
 
     wrapper.unmount();
   });
