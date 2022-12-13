@@ -201,21 +201,7 @@ describe('search test', () => {
   });
 
   it('props icon-position(right/left) should work well.', async () => {
-    const iconPosition = ref('right');
-
-    const wrapper = mount({
-      components: { DSearch },
-      template: `
-        <d-search
-          :icon-position="iconPosition"
-        ></d-search>
-      `,
-      setup() {
-        return {
-          iconPosition,
-        };
-      },
-    });
+    const wrapper = mount(DSearch);
 
     const iconSearch = wrapper.find(dotIconSearchClass);
 
@@ -223,39 +209,29 @@ describe('search test', () => {
 
     expect(wrapper.classes()).toContain(rightIconPositionClass);
 
-    iconPosition.value = 'left';
-    await nextTick();
+    await wrapper.setProps({
+      iconPosition: 'left',
+    });
     expect(wrapper.classes()).toContain(leftIconPositionClass);
 
-    iconPosition.value = 'right';
-    await nextTick();
+    await wrapper.setProps({
+      iconPosition: 'right',
+    });
     expect(wrapper.classes()).toContain(rightIconPositionClass);
 
     wrapper.unmount();
   });
 
   it('props no-border should work well.', async () => {
-    const noBorder = ref(true);
+    const wrapper = mount(DSearch);
 
-    const wrapper = mount({
-      components: { DSearch },
-      template: `
-        <d-search
-          :no-border="noBorder"
-        ></d-search>
-      `,
-      setup() {
-        return {
-          noBorder,
-        };
-      },
+    expect(wrapper.classes()).not.toContain(noBorderClass);
+
+    await wrapper.setProps({
+      noBorder: true,
     });
 
     expect(wrapper.classes()).toContain(noBorderClass);
-
-    noBorder.value = false;
-    await nextTick();
-    expect(wrapper.classes()).not.toContain(noBorderClass);
 
     wrapper.unmount();
   });
