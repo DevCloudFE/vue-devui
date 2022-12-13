@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import DTimePicker from '../src/time-picker';
 import { nextTick, ref } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { Form as DForm, FormItem as DFormItem } from '../../form';
 
 jest.mock('../../locale/create', () => ({
   createI18nTranslate: () => jest.fn(),
@@ -13,10 +14,15 @@ const baseClass = ns.b();
 const noDotNs = useNamespace('time-picker', false);
 const noDotBaseClass = noDotNs.b();
 
-const inputNs = useNamespace('input', true);
-const inputInnerClass = inputNs.e('inner');
-const inputDisabledClass = inputNs.m('disabled');
-const inputSizeClass = inputNs.m('lg');
+const dotInputNs = useNamespace('input', true);
+const inputNs = useNamespace('input');
+
+const inputClass = dotInputNs.b();
+const inputInnerClass = dotInputNs.e('inner');
+const inputDisabledClass = dotInputNs.m('disabled');
+const inputSizeSmClass = inputNs.m('sm');
+const inputSizeLgClass = inputNs.m('lg');
+
 const timePopupNs = useNamespace('time-popup', true);
 
 describe('time-picker test', () => {
@@ -225,8 +231,59 @@ describe('time-picker test', () => {
       },
     });
 
+    const container = wrapper.find(inputClass);
+    expect(container.classes()).toContain(inputSizeLgClass);
+
+    await wrapper.setProps({
+      size: 'sm',
+    });
+    expect(container.classes()).toContain(inputSizeSmClass);
+
+    await wrapper.setProps({
+      size: '',
+    });
+
+    expect(container.classes()).not.toContain(inputSizeSmClass);
+    expect(container.classes()).not.toContain(inputSizeLgClass);
+
+    wrapper.unmount();
+  });
+
+  it('time-select props size priority', async () => {
+    const dFormSize = ref('lg');
+    const dTimePickerSize = ref('sm');
+
+    const wrapper = mount({
+      components: { DTimePicker, DForm, DFormItem },
+      template: `
+        <DForm :size="dFormSize">
+        <DFormItem>
+          <d-time-picker :size="dTimePickerSize"></d-time-picker>
+        </DFormItem>
+        </DForm>`,
+      setup() {
+        return {
+          dFormSize,
+          dTimePickerSize,
+        };
+      },
+    });
+
+    const container = wrapper.find(inputClass);
+
+    // form 与 元素同时存在size 属性，以元素为准。
+    expect(container.classes()).toContain(inputSizeSmClass);
+
+    // 元素不存在 size ，form 存在，以表单为准
+    dTimePickerSize.value = '';
     await nextTick();
-    expect(wrapper.find(inputSizeClass)).toBeTruthy();
+    expect(container.classes()).toContain(inputSizeLgClass);
+
+    // form 与 元素都不存在 size 属性，使用默认值。
+    dFormSize.value = '';
+    await nextTick();
+    expect(container.classes()).not.toContain(inputSizeSmClass);
+    expect(container.classes()).not.toContain(inputSizeLgClass);
 
     wrapper.unmount();
   });
