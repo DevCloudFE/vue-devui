@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { ref, nextTick } from 'vue';
 import DTimeSelect from '../src/time-select';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { Form as DForm, FormItem as DFormItem } from '../../form';
 
 jest.mock('../../locale/create', () => ({
   createI18nTranslate: () => jest.fn(),
@@ -71,6 +72,45 @@ describe('TimeSelect', () => {
 
     container = wrapper.find(baseClass);
     expect(container.classes()).toContain(selectLGCls);
+    wrapper.unmount();
+  });
+
+  it('time-select props size priority', async () => {
+    const dFormSize = ref('lg');
+    const dTimeSelectSize = ref('sm');
+
+    const wrapper = mount({
+      components: { DTimeSelect, DForm, DFormItem },
+      template: `
+        <DForm :size="dFormSize">
+        <DFormItem>
+          <d-time-select  :size="dTimeSelectSize"></d-time-select>
+        </DFormItem>
+        </DForm>`,
+      setup() {
+        return {
+          dFormSize,
+          dTimeSelectSize,
+        };
+      },
+    });
+
+    const container = wrapper.find(baseClass);
+
+    // form 与 元素同时存在size 属性，以元素为准。
+    expect(container.classes()).toContain(selectSMCls);
+
+    // 元素不存在 size ，form 存在，以表单为准
+    dTimeSelectSize.value = '';
+    await nextTick();
+    expect(container.classes()).toContain(selectLGCls);
+
+    // form 与 元素都不存在 size 属性，使用默认值。
+    dFormSize.value = '';
+    await nextTick();
+    expect(container.classes()).not.toContain(selectSMCls);
+    expect(container.classes()).not.toContain(selectLGCls);
+
     wrapper.unmount();
   });
 
