@@ -125,8 +125,7 @@ export const cascaderProps = {
     default: () => true,
   },
   size: {
-    type: String as PropType<InputSize>,
-    default: 'md',
+    type: String as PropType<InputSize>
   },
 } as const;
 
