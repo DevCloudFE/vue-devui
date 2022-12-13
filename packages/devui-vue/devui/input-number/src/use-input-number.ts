@@ -1,19 +1,23 @@
-import { computed, reactive, toRefs, watch, ref } from 'vue';
+import { computed, reactive, toRefs, watch, ref, inject } from 'vue';
 import type { SetupContext, Ref, CSSProperties } from 'vue';
 import { InputNumberProps, UseEvent, UseRender, IState, UseExpose } from './input-number-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { isNumber, isUndefined } from '../../shared/utils';
+import { FORM_TOKEN } from '../../form';
 
 const ns = useNamespace('input-number');
 
 export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender {
+  const formContext = inject(FORM_TOKEN, undefined);
   const { style, class: customClass, ...otherAttrs } = ctx.attrs;
   const customStyle = { style: style as CSSProperties };
+
+  const inputNumberSize = computed(() => props.size || formContext?.size || 'md');
 
   const wrapClass = computed(() => [
     {
       [ns.b()]: true,
-      [ns.m(props.size)]: true,
+      [ns.m(inputNumberSize.value)]: true,
     },
     customClass,
   ]);
@@ -179,7 +183,7 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
     (val) => {
       state.currentValue = correctValue(val);
     },
-    { immediate: true },
+    { immediate: true }
   );
 
   const onInput = (event: Event) => {
