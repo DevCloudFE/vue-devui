@@ -369,24 +369,29 @@ export default defineComponent({
 
   <d-form :data="formModel" :size="formSize">
     <d-form-item field="name" label="Name">
-      <d-input v-model="formModel.name" placeholder="请输入"/>
+      <d-input v-model="formModel.name" placeholder="请输入" />
     </d-form-item>
+    
     <d-form-item field="search" label="Search">
       <d-search v-model="formModel.search" placeholder="请输入"></d-search>
     </d-form-item>
+    
     <d-form-item field="inputNumber" label="InputNumber">
-      <d-input-number v-model="formModel.inputNumber"  placeholder="请输入"></d-input-number>
+      <d-input-number v-model="formModel.inputNumber" placeholder="请输入"></d-input-number>
     </d-form-item>
 
     <d-form-item field="description" label="Description">
       <d-textarea v-model="formModel.description" />
     </d-form-item>
+    
     <d-form-item field="select" label="Select">
       <d-select v-model="formModel.select" :options="selectOptions" />
     </d-form-item>
+    
     <d-form-item field="autoComplete" label="AutoComplete">
       <d-auto-complete :source="source" v-model="formModel.autoComplete"></d-auto-complete>
     </d-form-item>
+    
     <d-form-item field="radio" label="Radio">
       <d-radio-group direction="row" v-model="formModel.radio">
         <d-radio value="0">Manual execution</d-radio>
@@ -394,9 +399,11 @@ export default defineComponent({
         <d-radio value="2">Weekly execution</d-radio>
       </d-radio-group>
     </d-form-item>
+    
     <d-form-item field="switch" label="Switch">
       <d-switch v-model="formModel.switch"></d-switch>
     </d-form-item>
+    
     <d-form-item field="executionDay" label="Execution day">
       <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
         <d-checkbox label="Mon" value="Mon" />
@@ -408,9 +415,19 @@ export default defineComponent({
         <d-checkbox label="Sun" value="Sun" />
       </d-checkbox-group>
     </d-form-item>
+    
     <d-form-item field="datePickerPro" label="Date Picker Pro">
       <d-date-picker-pro v-model="formModel.datePickerPro"></d-date-picker-pro>
     </d-form-item>
+
+    <d-form-item field="timeSelect" label="Time Select">
+      <d-time-select v-model="formModel.timeSelect" />
+    </d-form-item>
+
+    <d-form-item field="timePicker" label="Time Picker">
+      <d-time-picker v-model="formModel.timePicker" placeholder="请选择时间" />
+    </d-form-item>
+
     <d-form-operation class="form-demo-form-operation">
       <d-button variant="solid">提交</d-button>
       <d-button>取消</d-button>
@@ -436,7 +453,7 @@ export default defineComponent({
         label: 'Large',
         value: 'lg',
       },
-    ];;
+    ];
     const formSize = ref('md');
 
     let formModel = reactive({
@@ -450,7 +467,10 @@ export default defineComponent({
       switch: true,
       executionDay: [],
       datePickerPro: '',
+      timeSelect: '',
+      timePicker: ''
     });
+    
     const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
     const source = ref(['C#', 'C', 'C++']);
 
@@ -466,9 +486,12 @@ export default defineComponent({
 </script>
 
 <style>
-.form-demo-set-form-size{
+.form-demo-set-form-size {
+  display: flex;
+  align-items: center;
   margin-bottom: 16px;
 }
+
 .form-demo-form-operation > * {
   margin-right: 8px;
 }
