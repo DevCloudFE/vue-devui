@@ -30,6 +30,8 @@ describe('checkbox-button', () => {
 
     expect(container.classes()).not.toContain('active');
     expect(container.classes()).toContain('unchecked');
+
+    wrapper.unmount();
   });
 
   it('checkbox-button title work', async () => {
@@ -54,6 +56,8 @@ describe('checkbox-button', () => {
       isShowTitle: false,
     });
     expect(label.attributes('title')).toEqual('');
+
+    wrapper.unmount();
   });
 
   it('checkbox-button disabled work', async () => {
@@ -77,6 +81,8 @@ describe('checkbox-button', () => {
     await label.trigger('click');
     expect(wrapper.find(baseClass).classes()).not.toContain('disabled');
     expect(onChange).toBeCalledTimes(1);
+
+    wrapper.unmount();
   });
 
   it('checkbox-button beforeChange work', async () => {
@@ -113,6 +119,8 @@ describe('checkbox-button', () => {
     expect(beforeChange).toBeCalledTimes(2);
     expect(onChange).toBeCalledTimes(1);
     expect(checked.value).toBe(true);
+
+    wrapper.unmount();
   });
 
   it('checkbox-button size work', async () => {
@@ -124,5 +132,7 @@ describe('checkbox-button', () => {
     });
 
     expect(wrapper.find(sizeLgClass).exists()).toBe(true);
+
+    wrapper.unmount();
   });
 });

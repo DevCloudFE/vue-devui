@@ -8,14 +8,14 @@ import './color-palette.scss';
 
 type DefaultTransition = { transition: string };
 export default defineComponent({
-  name: 'ColorPallete',
+  name: 'ColorPalette',
   props: colorPickerPaletteProps,
   emits: ['update:modelValue', 'changeTextColor'],
   setup(props: ColorPickerPaletteProps, ctx) {
     const DEFAULT_TRANSITION: DefaultTransition = { transition: 'all 0.3s ease' };
     const dotSizeInject = inject('provideData') as ProvideColorOptions;
 
-    const clickTransfrom = ref<DefaultTransition | null>(DEFAULT_TRANSITION);
+    const clickTransform = ref<DefaultTransition | null>(DEFAULT_TRANSITION);
     const paletteElement = ref<HTMLElement | null>(null);
     const canvasElement = ref<HTMLCanvasElement | null>(null);
     const handlerElement = ref<HTMLElement | null>(null);
@@ -34,7 +34,7 @@ export default defineComponent({
       return {
         top: cursorTop.value + 'px',
         left: cursorLeft.value + 'px',
-        ...clickTransfrom.value
+        ...clickTransform.value
       };
     });
     function renderCanvas() {
@@ -107,11 +107,11 @@ export default defineComponent({
       if (paletteInstance && paletteInstance.vnode.el && handlerElement.value) {
         DOMUtils.triggerDragEvent(paletteInstance.vnode.el as HTMLElement, {
           drag: (event: Event) => {
-            clickTransfrom.value = null;
+            clickTransform.value = null;
             handleDrag(event as MouseEvent);
           },
           end: (event) => {
-            clickTransfrom.value = DEFAULT_TRANSITION;
+            clickTransform.value = DEFAULT_TRANSITION;
             handleDrag(event as MouseEvent);
           }
         });

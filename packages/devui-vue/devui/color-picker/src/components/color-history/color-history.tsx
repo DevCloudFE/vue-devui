@@ -7,7 +7,7 @@ import { ProvideColorOptions, ColorPickerColor } from '../../utils/color-utils-t
 import { debounce } from 'lodash';
 
 const STORAGE_KEY = 'STORAGE_COLOR_PICKER_HISTORY_KEY';
-const MAX_HISOTRY_COUNT = 8;
+const MAX_HISTORY_COUNT = 8;
 
 /**
  * 创建支持存储Store
@@ -66,7 +66,7 @@ export default defineComponent({
 
       history.value = [alphaInject.showAlpha ? value.hexa : value.hex, ...history.value].slice(
         0,
-        MAX_HISOTRY_COUNT
+        MAX_HISTORY_COUNT
       );
     }, 100);
 

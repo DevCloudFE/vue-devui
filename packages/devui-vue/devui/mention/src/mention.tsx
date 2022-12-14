@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, watch, onUnmounted, nextTick, computed, getCurrentInstance } from 'vue';
+import { defineComponent, ref, onMounted, watch, onUnmounted, computed, getCurrentInstance } from 'vue';
 import { IMentionSuggestionItem, mentionProps, type MentionProps } from './mention-types';
 import DTextarea from '../../textarea/src/textarea';
 import DIcon from '../../icon/src/icon';
@@ -30,10 +30,10 @@ export default defineComponent({
       if (props.trigger.includes(val[0])) {
         showSuggestions.value = true;
         if (props.position === 'top') {
-          nextTick(() => {
+          setTimeout(() => {
             const height = window.getComputedStyle(suggestionsDom.value as Element, null).height;
             suggestionsTop.value = -Number(height.replace('px', ''));
-          });
+          }, 0);
         }
         filteredSuggestions.value = (suggestions.value as IMentionSuggestionItem[]).filter((item: IMentionSuggestionItem) =>
           String(item[props.dmValueParse.value as keyof IMentionSuggestionItem])

@@ -83,7 +83,7 @@
 }
 
 .#{$devui-prefix}-cascader__dropdown--open {
-  .#{$devui-prefix}-cascader__icon {
+  .#{$devui-prefix}-cascader--drop-icon-animation {
     transform: rotate(180deg);
   }
 }

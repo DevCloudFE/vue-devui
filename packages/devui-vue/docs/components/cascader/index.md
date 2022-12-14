@@ -123,6 +123,125 @@ export default defineComponent({
 
 :::
 
+### 尺寸
+
+:::demo 支持`sm`、`md`、`lg`三种尺寸，默认为`md`。
+
+```vue
+<template>
+  <h4>Small</h4>
+  
+  <d-cascader  :options="options" size="sm" placeholder="请选择" style="width: 200px"></d-cascader>
+
+  <h4>Middle</h4>
+  
+  <d-cascader  :options="options" size="md" placeholder="请选择" style="width: 200px"></d-cascader>
+
+  <h4>Large</h4>
+  
+  <d-cascader  :options="options" size="lg" placeholder="请选择" style="width: 200px"></d-cascader>
+</template>
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const options = reactive([
+      {
+        label: 'option1',
+        value: 1,
+        children: [
+          {
+            label: 'option1-1',
+            value: 4,
+            children: [
+              {
+                label: 'option1-1-1',
+                value: 8,
+                children: [],
+              },
+              {
+                label: 'option1-1-2',
+                value: 9,
+                children: [
+                  {
+                    label: 'option1-1-2-1',
+                    value: 81,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            label: 'option1-2',
+            value: 41,
+          },
+          {
+            label: 'option1-3',
+            value: 42,
+          },
+          {
+            label: 'option1-4',
+            value: 43,
+          },
+        ],
+      },
+      {
+        label: 'option2',
+        value: 2,
+        children: [
+          {
+            label: 'option2-1',
+            value: 5,
+            children: [
+              {
+                label: 'option2-1-1',
+                value: 51,
+              },
+              {
+                label: 'option2-1-2',
+                value: 61,
+                disabled: true,
+              },
+            ],
+          },
+          {
+            label: 'option2-2',
+            value: 6,
+            children: [
+              {
+                label: 'option2-2-1',
+                value: 512,
+              },
+              {
+                label: 'option2-2-2',
+                value: 611,
+              },
+            ],
+          },
+          {
+            label: 'option2-3',
+            value: 712,
+          },
+        ],
+      },
+      {
+        label: 'option3',
+        value: 3,
+        children: [],
+        disabled: true,
+      },
+    ]);
+    const value = ref([1, 4, 9, 81]);
+
+    return { options, value };
+  },
+});
+</script>
+```
+
+:::
+
 ### 自定义宿主元素
 
 :::demo 可通过`host`插槽自定义展开`Cascader`菜单的宿主元素。
@@ -375,20 +494,20 @@ export default defineComponent({
 
 ### API
 
-| 参数          | 类型                              | 默认    | 说明                                                                                                 | 跳转 Demo             |
-| :------------ | :-------------------------------- | :------ | :--------------------------------------------------------------------------------------------------- | --------------------- |
-| v-model       | `(number\|string)[]`              | []      | 可选，单选时为`(number\|sring)[]`                                                                    | [基本用法](#基本用法) |
-| trigger       | `'hover'\|'click'`                | 'hover' | 可选，指定展开次级菜单的方式                                                                         | [基本用法](#基本用法) |
-| options       | [`CascaderItem[]`](#CascaderItem) | []      | 必选，级联器的菜单信息                                                                               | [基本用法](#基本用法) |
-| placeholder   | `string`                          | ''      | 可选，没有选择时的输入框展示信息                                                                     | [基本用法](#基本用法) |
-| disabled      | `boolean`                         | false   | 可选，级联器是否禁用                                                                                 | [基本用法](#基本用法) |
-| width         | `number \| string`                | 200     | 可选，单位 px，用于控制组件输入框宽度和下拉的宽度                                                    | [基本用法](#多选模式) |
-| dropdownWidth | `number \| string`                | 200     | 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等                                       | [基本用法](#多选模式) |
-| clearable     | `boolean`                         | true    | 可选，是否支持清空选项                                                                               | [基本用法](#基本用法) |
-| filterable    | `boolean`                         | true    | 可选，是否可搜索选项                                                                                 | [可搜索](#可搜索)     |
-| debounce      | `number`                          | 300     | 可选，搜索关键词输入去抖延迟                                                                         | [可搜索](#可搜索)     |
-| before-filter | `function(value)`                 | --      | 可选,过滤函数调用前的钩子函数。该函数返回值时 false 或者被拒绝的 Promise，接下来的过滤逻辑将不会执行 | [可搜索](#可搜索)     |
-| size          | [CascaderSize](#cascadersize)     | 'md'    | 文本框的尺寸                                                                                         | --                    |
+| 参数          | 类型                              | 默认    | 说明                                                                                                 | 跳转 Demo                              |
+| :------------ | :-------------------------------- | :------ | :--------------------------------------------------------------------------------------------------- |--------------------------------------|
+| v-model       | `(number\|string)[]`              | []      | 可选，单选时为`(number\                     |sring)[]`                                                                    | [基本用法](#基本用法) |
+| trigger       | `'hover'\|'click'`                | 'hover' | 可选，指定展开次级菜单的方式                       | [基本用法](#基本用法) |
+| options       | [`CascaderItem[]`](#CascaderItem) | []      | 必选，级联器的菜单信息                                                                               | [基本用法](#基本用法)                        |
+| placeholder   | `string`                          | ''      | 可选，没有选择时的输入框展示信息                                                                     | [基本用法](#基本用法)                        |
+| disabled      | `boolean`                         | false   | 可选，级联器是否禁用                                                                                 | [基本用法](#基本用法)                        |
+| width         | `number \| string`                | 200     | 可选，单位 px，用于控制组件输入框宽度和下拉的宽度           | [基本用法](#多选模式) |
+| dropdownWidth | `number \| string`                | 200     | 可选，单位 px，控制下拉列表的宽度，默认和组件输入框 width 相等 | [基本用法](#多选模式) |
+| clearable     | `boolean`                         | true    | 可选，是否支持清空选项                                                                               | [基本用法](#基本用法)                        |
+| filterable    | `boolean`                         | true    | 可选，是否可搜索选项                                                                                 | [可搜索](#可搜索)                          |
+| debounce      | `number`                          | 300     | 可选，搜索关键词输入去抖延迟                                                                         | [可搜索](#可搜索)                          |
+| before-filter | `function(value)`                 | --      | 可选,过滤函数调用前的钩子函数。该函数返回值时 false 或者被拒绝的 Promise，接下来的过滤逻辑将不会执行 | [可搜索](#可搜索)                          |
+| size          | [CascaderSize](#cascadersize)     | 'md'    | 文本框的尺寸                                                                                         | [尺寸](#尺寸)                              |
 
 ### Cascader 事件
 

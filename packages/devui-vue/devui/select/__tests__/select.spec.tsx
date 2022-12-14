@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { ref, reactive, nextTick } from 'vue';
 import DSelect from '../src/select';
+import { Form as DForm, FormItem as DFormItem } from '../../form';
 import { Button } from '../../button';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
@@ -90,6 +91,41 @@ describe('select', () => {
     container = wrapper.find(baseClass);
     expect(container.classes()).toContain(selectLGCls);
     expect(container.classes()).not.toContain(selectUnderlinedCls);
+    wrapper.unmount();
+  });
+
+  // select size priority
+  it('select size priority', async () => {
+    const dFormSize = ref('lg');
+    const dSelectSize = ref('sm');
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DForm size={dFormSize.value}>
+            <DFormItem>
+              <DSelect size={dSelectSize.value}></DSelect>
+            </DFormItem>
+          </DForm>
+        );
+      },
+    });
+
+    let container = wrapper.find(baseClass);
+    expect(container.classes()).toContain(selectSMCls);
+
+    dSelectSize.value = '';
+    await nextTick();
+
+    container = wrapper.find(baseClass);
+    expect(container.classes()).toContain(selectLGCls);
+
+    dFormSize.value = '';
+    await nextTick();
+
+    container = wrapper.find(baseClass);
+    expect(container.classes()).not.toContain(selectSMCls);
+    expect(container.classes()).not.toContain(selectLGCls);
+
     wrapper.unmount();
   });
 

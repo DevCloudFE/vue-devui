@@ -1,0 +1,36 @@
+{
+  "Modal":{
+    "Modal":{
+      "exportKey": "Modal",
+      "reference": "Modal"
+    },
+    "Body":{
+      "exportKey": "ModalBody",
+      "reference": "Modal"
+    },
+    "Header":{
+      "exportKey": "ModalHeader",
+      "reference": "Modal"
+    },
+    "Footer":{
+      "exportKey":"ModalFooter",
+      "reference": "Modal"
+    }
+  },
+  "ImagePreview":{
+    "$imagePreviewService":{
+      "exportKey": "imagePreviewService",
+      "reference": "ImagePreviewService"
+    },
+    "ImagePreviewDirective":{
+      "exportKey": "DImagePreview",
+      "reference": "ImagePreviewDirective"
+    }
+  },
+  "Message":{
+    "$message":{
+      "exportKey": "message",
+      "reference": "Message"
+    }
+  }
+}

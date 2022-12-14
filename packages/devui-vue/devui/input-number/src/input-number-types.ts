@@ -23,8 +23,7 @@ export const inputNumberProps = {
     default: -Infinity,
   },
   size: {
-    type: String as PropType<ISize>,
-    default: 'md',
+    type: String as PropType<ISize>
   },
   modelValue: {
     type: Number,

@@ -42,11 +42,9 @@ $checkbox-label-height-map: (
     padding: 10px 20px;
     cursor: pointer;
     border: 1px solid $devui-disabled-line;
-    border-left: none;
     display: inline-block;
     line-height: 1;
     user-select: none;
-    box-shadow: -1px 0 0 0 $devui-disabled-line;
     @each $size in ('lg', 'md', 'sm') {
       &.#{$devui-prefix}-checkbox-button--#{$size} {
         font-size: map-get($font-size-map, #{$size});
@@ -81,20 +79,60 @@ $checkbox-label-height-map: (
       border-color: $devui-disabled-line;
     }
   }
+}
 
-  &:first-child {
-    .#{$devui-prefix}-checkbox-button__content {
-      border-top-left-radius: $devui-border-radius;
-      border-bottom-left-radius: $devui-border-radius;
-      border-left: 1px solid $devui-disabled-line;
-      box-shadow: none;
+.#{$devui-prefix}-checkbox__group {
+  &.is-row {
+    .#{$devui-prefix}-checkbox-button {
+      &__content {
+        border-left: none;
+        box-shadow: -1px 0 0 0 $devui-disabled-line;
+      }
+
+      &:first-child {
+        .#{$devui-prefix}-checkbox-button__content {
+          border-top-left-radius: $devui-border-radius;
+          border-bottom-left-radius: $devui-border-radius;
+          border-left: 1px solid $devui-disabled-line;
+          box-shadow: none;
+        }
+      }
+
+      &:last-child {
+        .#{$devui-prefix}-checkbox-button__content {
+          border-top-right-radius: $devui-border-radius;
+          border-bottom-right-radius: $devui-border-radius;
+        }
+      }
     }
   }
 
-  &:last-child {
-    .#{$devui-prefix}-checkbox-button__content {
-      border-top-right-radius: $devui-border-radius;
-      border-bottom-right-radius: $devui-border-radius;
+  &.is-column {
+    .#{$devui-prefix}-checkbox-button {
+      width: 100%;
+      margin-top: 0;
+
+      &__content {
+        width: 100%;
+        border-top: none;
+        box-shadow: 0 -1px 0 0 $devui-disabled-line;
+      }
+
+      &:first-child {
+        .#{$devui-prefix}-checkbox-button__content {
+          border-top-left-radius: $devui-border-radius;
+          border-top-right-radius: $devui-border-radius;
+          border-top: 1px solid $devui-disabled-line;
+          box-shadow: none;
+        }
+      }
+
+      &:last-child {
+        .#{$devui-prefix}-checkbox-button__content {
+          border-bottom-left-radius: $devui-border-radius;
+          border-bottom-right-radius: $devui-border-radius;
+        }
+      }
     }
   }
 }

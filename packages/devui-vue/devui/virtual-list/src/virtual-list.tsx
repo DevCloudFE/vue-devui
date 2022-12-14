@@ -235,12 +235,16 @@ export default defineComponent({
       syncScrollTop(newTop);
     };
 
+    const oldScrollTop = ref(0);
     const onComponentScroll = (e: UIEvent) => {
       const { scrollTop: newScrollTop } = e.currentTarget as Element;
       if (Math.abs(newScrollTop - state.scrollTop) >= 1) {
         syncScrollTop(newScrollTop);
       }
-      barRef?.value?.onShowBar?.();
+      if (oldScrollTop.value) {
+        barRef?.value?.onShowBar?.();
+      }
+      oldScrollTop.value = newScrollTop;
       ctx.emit('scroll', e);
     };
 

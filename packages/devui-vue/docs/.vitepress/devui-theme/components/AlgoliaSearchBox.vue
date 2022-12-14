@@ -1,178 +1,129 @@
 <script setup lang="ts">
-import '@docsearch/css'
-import docsearch from '@docsearch/js'
-import { useRoute, useRouter, useData } from 'vitepress'
-import { getCurrentInstance, onMounted, watch } from 'vue'
-import type { DefaultTheme } from '../config'
-import type { DocSearchHit } from '@docsearch/react/dist/esm/types'
+import '@docsearch/css';
+import type { DefaultTheme } from '../config';
+import docsearch from '@docsearch/js';
+import { onMounted } from 'vue';
+import { useRouter, useRoute, useData } from 'vitepress';
 
-const props = defineProps<{
-  options: DefaultTheme.AlgoliaSearchOptions
-  multilang?: boolean
-}>()
-
-const vm = getCurrentInstance()
-const route = useRoute()
-const router = useRouter()
-
-watch(
-  () => props.options,
-  (value) => {
-    update(value)
-  }
-)
+const router = useRouter();
+const route = useRoute();
+const { theme, site } = useData();
 
 onMounted(() => {
-  initialize(props.options)
-})
+  initialize(theme.value.algolia);
+  // setTimeout(poll, 16)
+});
 
-function isSpecialClick(event: MouseEvent) {
-  return (
-    event.button === 1 ||
-    event.altKey ||
-    event.ctrlKey ||
-    event.metaKey ||
-    event.shiftKey
-  )
+function poll() {
+  // programmatically open the search box after initialize
+  const e = new Event('keydown') as any;
+
+  e.key = 'k';
+  e.metaKey = true;
+
+  window.dispatchEvent(e);
+
+  setTimeout(() => {
+    if (!document.querySelector('.DocSearch-Modal')) {
+      poll();
+    }
+  }, 16);
+}
+
+const docsearch$ = docsearch.default ?? docsearch;
+type DocSearchProps = Parameters<typeof docsearch$>[0]
+
+function initialize(userOptions: DefaultTheme.AlgoliaSearchOptions) {
+  // note: multi-lang search support is removed since the theme
+  // doesn't support multiple locales as of now.
+  const options = Object.assign<{}, {}, DocSearchProps>({}, userOptions, {
+    container: '#docsearch',
+
+    navigator: {
+      navigate({ itemUrl }) {
+        const { pathname: hitPathname } = new URL(
+          window.location.origin + itemUrl,
+        );
+
+        // router doesn't handle same-page navigation so we use the native
+        // browser location API for anchor navigation
+        if (route.path === hitPathname) {
+          window.location.assign(window.location.origin + itemUrl);
+        } else {
+          router.go(itemUrl);
+        }
+      },
+    },
+
+    transformItems(items) {
+      return items.map((item) => {
+        return Object.assign({}, item, {
+          url: getRelativePath(item.url),
+        });
+      });
+    },
+
+    // @ts-expect-error vue-tsc thinks this should return Vue JSX but it returns the required React one
+    hitComponent({ hit, children }) {
+      return {
+        __v: null,
+        type: 'a',
+        ref: undefined,
+        constructor: undefined,
+        key: undefined,
+        props: { href: hit.url, children },
+      };
+    },
+  });
+
+  docsearch$(options);
 }
 
 function getRelativePath(absoluteUrl: string) {
-  const { pathname, hash } = new URL(absoluteUrl)
-
-  return pathname + hash
-}
-
-function update(options: any) {
-  if (vm && vm.vnode.el) {
-    vm.vnode.el.innerHTML =
-      '<div class="algolia-search-box" id="docsearch"></div>'
-    initialize(options)
-  }
-}
-
-const { lang } = useData()
-
-function initialize(userOptions: any) {
-  // if the user has multiple locales, the search results should be filtered
-  // based on the language
-  const facetFilters = props.multilang ? ['language:' + lang.value] : []
-
-  docsearch(
-    Object.assign({}, userOptions, {
-      container: '#docsearch',
-
-      searchParameters: Object.assign({}, userOptions.searchParameters, {
-        // pass a custom lang facetFilter to allow multiple language search
-        // https://github.com/algolia/docsearch-configs/pull/3942
-        facetFilters: facetFilters.concat(
-          userOptions.searchParameters?.facetFilters || []
-        )
-      }),
-
-      navigator: {
-        navigate: ({ suggestionUrl }: { suggestionUrl: string }) => {
-          const { pathname: hitPathname } = new URL(
-            window.location.origin + suggestionUrl
-          )
-
-          // Router doesn't handle same-page navigation so we use the native
-          // browser location API for anchor navigation
-          if (route.path === hitPathname) {
-            window.location.assign(window.location.origin + suggestionUrl)
-          } else {
-            router.go(suggestionUrl)
-          }
-        }
-      },
-
-      transformItems: (items: DocSearchHit[]) => {
-        return items.map((item) => {
-          return Object.assign({}, item, {
-            url: getRelativePath(item.url)
-          })
-        })
-      },
-
-      hitComponent: ({
-        hit,
-        children
-      }: {
-        hit: DocSearchHit
-        children: any
-      }) => {
-        const relativeHit = hit.url.startsWith('http')
-          ? getRelativePath(hit.url as string)
-          : hit.url
-
-        return {
-          type: 'a',
-          ref: undefined,
-          constructor: undefined,
-          key: undefined,
-          props: {
-            href: hit.url,
-            onClick: (event: MouseEvent) => {
-              if (isSpecialClick(event)) {
-                return
-              }
-
-              // we rely on the native link scrolling when user is already on
-              // the right anchor because Router doesn't support duplicated
-              // history entries
-              if (route.path === relativeHit) {
-                return
-              }
-
-              // if the hits goes to another page, we prevent the native link
-              // behavior to leverage the Router loading feature
-              if (route.path !== relativeHit) {
-                event.preventDefault()
-              }
-
-              router.go(relativeHit)
-            },
-            children
-          }
-        }
-      }
-    })
-  )
+  const { pathname, hash } = new URL(absoluteUrl);
+  return (
+    pathname.replace(
+      /\.html$/,
+      site.value.cleanUrls === 'disabled' ? '.html' : '',
+    ) + hash
+  );
 }
 </script>
 
 <template>
-  <div class="algolia-search-box" id="docsearch" />
+  <div id="docsearch" />
 </template>
 
-<style>
-.algolia-search-box {
-  padding-top: 1px;
-}
-
-@media (min-width: 720px) {
-  .algolia-search-box {
-    padding-left: 8px;
-  }
-}
-
-@media (min-width: 751px) {
-  .algolia-search-box {
-    min-width: 176.3px; /* avoid layout shift */
-  }
-
-  .algolia-search-box .DocSearch-Button-Placeholder {
-    padding-left: 8px;
-    font-size: 0.9rem;
-    font-weight: 500;
-  }
-}
-
+<style lang="scss">
 .DocSearch {
+  --docsearch-key-gradient: var(--devui-brand);
+  --docsearch-key-shadow: red;
+
   --docsearch-primary-color: var(--c-brand);
-  --docsearch-highlight-color: var(--docsearch-primary-color);
-  --docsearch-searchbox-shadow: inset 0 0 0 2px var(--docsearch-primary-color);
-  --docsearch-text-color: var(--c-text-light);
-  --docsearch-muted-color: var(--c-text-lighter);
-  --docsearch-searchbox-background: #f2f2f2;
+  --docsearch-highlight-color: var(--devui-brand);
+  --docsearch-searchbox-shadow: inset 0 0 0 2px var(--devui-brand);
+  --docsearch-text-color: var(--devui-text);
+  --docsearch-muted-color: var(--devui-text);
+  --docsearch-searchbox-background: var(--devui-global-bg);
+
+  --docsearch-modal-background: var(--devui-global-bg-normal);
+  --docsearch-footer-background: var(--devui-global-bg);
+  --docsearch-searchbox-focus-background: var(--devui-base-bg);
+  --docsearch-hit-background: var(--devui-default-bg);
+  --docsearch-footer-shadow: '';
+  --docsearch-hit-shadow: '';
+
+  .DocSearch-Commands-Key, .DocSearch-Button-Key{
+    color: var(--devui-light-text);
+  }
+
+  .DocSearch-Hit-action,
+  .DocSearch-Hit-icon,
+  .DocSearch-Hit-path,
+  .DocSearch-Hit-text,
+  .DocSearch-Hit-title,
+  {
+    color: var(--devui-text-weak);
+  }
 }
 </style>

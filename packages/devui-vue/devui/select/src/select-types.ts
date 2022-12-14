@@ -28,7 +28,7 @@ export const selectProps = {
   },
   size: {
     type: String as PropType<SelectSize>,
-    default: 'md',
+    default: '',
   },
   // TODO: 这个api命名不合理
   overview: {

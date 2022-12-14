@@ -13,10 +13,9 @@ function addUnit(value?: string | number, defaultUnit = 'px'): string {
   }
 }
 
-export const modalPosition = ref('translate(-50%, -50%)');
-
 interface Draggable {
   clearPosition: () => void;
+  modalPosition: Ref<string>;
 }
 
 export const useDraggable = (
@@ -24,6 +23,8 @@ export const useDraggable = (
   dragRef: Ref<HTMLElement | undefined>,
   draggable: ComputedRef<boolean>
 ): Draggable => {
+  const modalPosition = ref('translate(-50%, -50%)');
+
   let transform = {
     offsetX: 0,
     offsetY: 0,
@@ -103,5 +104,6 @@ export const useDraggable = (
 
   return {
     clearPosition,
+    modalPosition,
   };
 };

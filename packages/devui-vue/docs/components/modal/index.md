@@ -45,6 +45,43 @@ export default defineComponent({
 
 :::
 
+### 保留最后一次关闭位置
+
+:::demo `keep-last`可使当前modal再次打开时保留上次关闭位置。
+
+```vue
+<template>
+  <d-button @click="handleClick">打开 modal</d-button>
+  <d-modal v-model="visible" title="Start Keep Last" :keep-last="true">
+    <div>name: {{ data.name }}</div>
+    <div>age: {{ data.age }}</div>
+    <div>address: {{ data.address }}</div>
+  </d-modal>
+</template>
+
+<script>
+import { defineComponent, ref, reactive } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const visible = ref(false);
+    const data = reactive({
+      name: 'Tom',
+      age: 20,
+      address: 'Chengdu',
+    });
+    const handleClick = () => {
+      visible.value = true;
+    };
+
+    return { visible, data, handleClick };
+  },
+});
+</script>
+```
+
+:::
+
 ### 自定义标题和操作按钮
 
 :::demo `header`插槽可以自定义 Modal 顶部区域，子组件`d-modal-header`为顶部区域提供了默认样式，自定义样式可通过在子组件设置`style/class`实现。`footer`插槽同理。
@@ -194,7 +231,7 @@ export default defineComponent({
 | :--------------------- | :----------------------------------- | :----- | :----------------------------------------- | :------------------------ |
 | v-model                | `boolean`                            | false  | 是否显示 Modal                             | [基础用法](#基础用法)     |
 | title                  | `string`                             | -      | 可选，Modal 的标题                         | [基础用法](#基础用法)     |
-| keep-last      | `boolean`                            | false   | 可选，是否保留上次移动位置  |
+| keep-last      | `boolean`                            | false   | 可选，是否保留上次移动位置  | [保留最后一次关闭位置](#保留最后一次关闭位置)  
 | lock-scroll            | `boolean`                            | true   | 可选，是否将 body 滚动锁定                 |
 | close-on-click-overlay | `boolean`                            | true   | 可选，点击空白处是否能关闭 Modal           |
 | before-close           | `(done) => void`                     | -      | 可选，关闭前的回调，调用 done 可关闭 Modal | [关闭前回调](#关闭前回调) |

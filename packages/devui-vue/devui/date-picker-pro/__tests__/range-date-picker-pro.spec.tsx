@@ -32,6 +32,13 @@ window.ResizeObserver =
   }));
 
 describe('range-date-picker-pro test', () => {
+  afterEach(() => {
+    const baseDom = document.querySelector(baseClass);
+    baseDom?.parentNode?.removeChild(baseDom);
+    const pannelDomm = document.querySelector(pickerPanelClass);
+    pannelDomm?.parentNode?.removeChild(pannelDomm);
+  });
+
   it('range-date-picker-pro init render', async () => {
     const datePickerProValue = ref(['', '']);
     const wrapper = mount({
@@ -126,9 +133,16 @@ describe('range-date-picker-pro test', () => {
     });
 
     const container = wrapper.find(baseClass);
-    datePickerProValue.value[0] = new Date();
+
+    const date = new Date();
+    datePickerProValue.value[0] = date;
     const time = 5 * 24 * 3600 * 1000;
-    datePickerProValue.value[1] = new Date().getDate() > 20 ? new Date() : new Date(new Date().getTime() + time);
+
+    const todayIndex = getDateIndex(date);
+    // todayIndex 大于 20 赋值当前日期 否则加五天 对应下方getSelectedIndex逻辑
+    datePickerProValue.value[1] = todayIndex > 20 ? new Date() : new Date(new Date().getTime() + time);
+    const selectIndex = getSelectedIndex(todayIndex, 5);
+
     await nextTick();
     const inputs = container.findAll('input');
     await inputs[0].trigger('focus');
@@ -138,13 +152,11 @@ describe('range-date-picker-pro test', () => {
     expect(pickerPanel).toBeTruthy();
     const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
 
-    const date = new Date();
-    const todayIndx = getDateIndex(date);
-    const selectIndex = getSelectedIndex(todayIndx, 5);
+
     // 虚拟列表 当前面板呈现月为虚拟列表的第二个tableMonthItem
     const monthContentContainer = tableMonthItems?.[1].querySelector(datePickerNs.e('table-month-content'));
     const Items = monthContentContainer?.getElementsByTagName('td');
-    expect(Items?.[todayIndx].classList).toContain(noDotDatePickerNs.e('table-date-start'));
+    expect(Items?.[todayIndex].classList).toContain(noDotDatePickerNs.e('table-date-start'));
 
     await inputs[1].trigger('focus');
     await nextTick();
@@ -170,7 +182,8 @@ describe('range-date-picker-pro test', () => {
             onToggleChange={onToggleChange}
             onConfirmEvent={onConfirmEvent}
             onFocus={onFocus}
-            onBlur={onBlur}></DRangeDatePickerPro>
+            onBlur={onBlur}
+          ></DRangeDatePickerPro>
         );
       },
     });
@@ -277,13 +290,15 @@ describe('range-date-picker-pro test', () => {
                       color="primary"
                       onClick={() => {
                         setDate(-30);
-                      }}>
+                      }}
+                    >
                       一个月前
                     </DButton>
                   </li>
                 </ul>
               ),
-            }}></DRangeDatePickerPro>
+            }}
+          ></DRangeDatePickerPro>
         );
       },
     });
@@ -334,7 +349,8 @@ describe('range-date-picker-pro test', () => {
                   </d-button>
                 </div>
               ),
-            }}></DRangeDatePickerPro>
+            }}
+          ></DRangeDatePickerPro>
         );
       },
     });
@@ -379,7 +395,8 @@ describe('range-date-picker-pro test', () => {
           <DRangeDatePickerPro
             v-model={datePickerProValue.value}
             calendarRange={calendarRange}
-            limitDateRange={limitDateRange.value}></DRangeDatePickerPro>
+            limitDateRange={limitDateRange.value}
+          ></DRangeDatePickerPro>
         );
       },
     });
@@ -397,7 +414,16 @@ describe('range-date-picker-pro test', () => {
     const weekHeader = pickerPanel?.querySelector(weekHeaderClass);
     expect(weekHeader?.getElementsByTagName('td').length).toBe(7);
     const tableMonthItems = pickerPanel?.querySelectorAll(tableMonthClass);
-    expect(tableMonthItems?.length).toBe(4);
+    const curMonth = new Date().getMonth() + 1;
+    if (curMonth >= 11 || curMonth <= 1) {
+      if (curMonth === 12) {
+        expect(tableMonthItems?.length).toBe(2);
+      } else {
+        expect(tableMonthItems?.length).toBe(3);
+      }
+    } else {
+      expect(tableMonthItems?.length).toBe(4);
+    }
 
     const date = new Date();
     const todayIndex = 7 - ((date.getDate() - date.getDay()) % 7) + date.getDate();

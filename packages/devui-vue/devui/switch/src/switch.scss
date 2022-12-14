@@ -9,111 +9,123 @@
 }
 
 .#{$devui-prefix}-switch {
-  width: 36px;
-  height: 18px;
-  border-radius: $devui-border-radius-full;
-  background: $devui-line;
-  border: 1px solid $devui-line;
-  position: relative;
-  display: inline-block;
-  box-sizing: content-box;
-  overflow: visible;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  vertical-align: bottom;
-  transition: $devui-animation-duration-slow $devui-animation-ease-in-out-smooth all;
+  display: inline-flex;
+  align-items: center;
+  width: $devui-size-md * 1.4;
+  height: $devui-size-md;
 
-  &:not(.#{$devui-prefix}-switch--checked):hover {
-    border-color: $devui-line;
-  }
-
-  &:active {
-    border-color: $devui-brand-active-focus;
-  }
-
-  &.#{$devui-prefix}-switch--checked:hover {
-    border-color: $devui-brand-active;
-  }
-
-  .#{$devui-prefix}-switch__inner-wrapper {
-    display: inline-block;
+  &__wrapper {
     width: 100%;
-    height: 100%;
-    padding-left: 16px;
-    font-size: $devui-font-size;
+    height: 62.5%;
+    border-radius: $devui-border-radius-full;
+    background: $devui-line;
+    border: 1px solid $devui-line;
+    position: relative;
+    display: inline-block;
     box-sizing: border-box;
+    overflow: visible;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    vertical-align: bottom;
+    transition: $devui-animation-duration-slow $devui-animation-ease-in-out-smooth all;
 
-    .#{$devui-prefix}-switch__inner {
-      color: $devui-light-text;
+    &:not(.#{$devui-prefix}-switch--checked):hover {
+      border-color: $devui-line;
+    }
+
+    &:active {
+      border-color: $devui-brand-active-focus;
+    }
+
+    .#{$devui-prefix}-switch__inner-wrapper {
+      display: inline-block;
       width: 100%;
       height: 100%;
-      text-align: center;
-      overflow: hidden;
+      padding-left: 14px;
+      font-size: $devui-font-size;
+      box-sizing: border-box;
+
+      .#{$devui-prefix}-switch__inner {
+        color: $devui-light-text;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        overflow: hidden;
+      }
+    }
+
+    small {
+      width: 16px;
+      height: 16px;
+      background: $devui-light-text;
+      border-radius: $devui-border-radius-full;
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      transition: $devui-animation-duration-slow $devui-animation-ease-in-out-smooth all;
     }
   }
 
-  &.#{$devui-prefix}-switch--checked .#{$devui-prefix}-switch__inner-wrapper {
+  // md
+  .#{$devui-prefix}-switch--checked .#{$devui-prefix}-switch__inner-wrapper {
     padding-left: unset;
-    padding-right: 16px;
+    padding-right: 14px;
   }
 
-  small {
-    width: 16px;
-    height: 16px;
+  .#{$devui-prefix}-switch--checked small {
     background: $devui-light-text;
-    border-radius: $devui-border-radius-full;
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    transition: $devui-animation-duration-slow $devui-animation-ease-in-out-smooth all;
+    left: 26px;
   }
 
-  &.#{$devui-prefix}-switch--checked small {
-    left: 19px;
-  }
+  // lg
+  &--lg {
+    width: $devui-size-lg * 1.4;
+    height: $devui-size-lg;
 
-  &.#{$devui-prefix}-switch--lg {
-    width: 58px;
-    height: 28px;
+    .#{$devui-prefix}-switch__wrapper {
+      height: 64%;
+    }
 
     .#{$devui-prefix}-switch__inner-wrapper {
-      padding-left: 28px;
-      padding-top: 2px;
+      padding-left: 24px;
       font-size: $devui-font-size-modal-title;
     }
 
-    &.#{$devui-prefix}-switch--checked .#{$devui-prefix}-switch__inner-wrapper {
+    .#{$devui-prefix}-switch--checked .#{$devui-prefix}-switch__inner-wrapper {
       padding-left: unset;
-      padding-right: 28px;
+      padding-right: 24px;
     }
 
     & small {
-      width: 26px;
-      height: 26px;
-      top: 1px;
-      left: 1px;
+      width: 22px;
+      height: 22px;
     }
 
-    &.#{$devui-prefix}-switch--checked small {
+    .#{$devui-prefix}-switch--checked small {
       background: $devui-light-text;
-      left: 30px;
+      left: 31px;
     }
   }
 
-  &.#{$devui-prefix}-switch--sm {
-    width: 30px;
-    height: 15px;
+  // sm
+  &--sm {
+    width: $devui-size-sm * 1.4;
+    height: $devui-size-sm;
 
-    .#{$devui-prefix}-switch__inner-wrapper {
-      padding-left: 12px;
-      font-size: $devui-font-size-sm;
-      vertical-align: top;
+    .#{$devui-prefix}-switch__wrapper {
+      height: 66%;
     }
 
-    &.#{$devui-prefix}-switch--checked .#{$devui-prefix}-switch__inner-wrapper {
+    .#{$devui-prefix}-switch__inner-wrapper {
+      line-height: 1;
+      padding-left: 12px;
+      font-size: $devui-font-size-sm;
+    }
+
+    .#{$devui-prefix}-switch--checked .#{$devui-prefix}-switch__inner-wrapper {
       padding-left: unset;
-      padding-right: 12px;
+      padding-right: 18px;
     }
 
     & small {
@@ -122,12 +134,12 @@
       position: absolute;
     }
 
-    &.#{$devui-prefix}-switch--checked small {
-      left: 17px;
+    .#{$devui-prefix}-switch--checked small {
+      left: 19px;
     }
   }
 
-  &.#{$devui-prefix}-switch--checked {
+  &--checked {
     background: $devui-brand;
     border-color: $devui-brand;
 
@@ -142,7 +154,7 @@
     }
   }
 
-  &.#{$devui-prefix}-switch--disabled {
+  &--disabled {
     &,
     &:hover,
     &:active,

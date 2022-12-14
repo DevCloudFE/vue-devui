@@ -335,6 +335,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/71202421?v=4',
       homepage: 'https://github.com/79E'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/58357112?v=4',
+      homepage: 'https://github.com/hxj9102'
+    },
   ],
   modal: [
     {
@@ -566,6 +570,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/50767049?v=4',
       homepage: 'https://github.com/jCodeLife'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/58357112?v=4',
+      homepage: 'https://github.com/hxj9102'
     },
   ],
   'editable-select': [

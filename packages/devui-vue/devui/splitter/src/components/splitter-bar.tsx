@@ -7,6 +7,7 @@ import dresize, { ResizeDirectiveProp } from '../d-resize-directive';
 import type { SplitterStore, DragState, SplitterPane } from '../splitter-store';
 import { splitterBarProps, SplitterBarProps } from './splitter-bar-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { isHTMLElement } from '../../../shared/utils';
 import './splitter-bar.scss';
 import { createI18nTranslate } from '../../../locale/create';
 
@@ -30,7 +31,7 @@ export default defineComponent({
     watch(
       [() => props.splitBarSize, domRef],
       ([curSplitBarSize, ele]) => {
-        if (!(ele instanceof HTMLElement)) {
+        if (!isHTMLElement(ele)) {
           return;
         }
         setStyle(ele, { flexBasis: curSplitBarSize });

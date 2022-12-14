@@ -8,8 +8,7 @@ export const switchProps = {
     default: false,
   },
   size: {
-    type: String as PropType<SwitchSize>,
-    default: 'md',
+    type: String as PropType<SwitchSize>
   },
   color: {
     type: String,

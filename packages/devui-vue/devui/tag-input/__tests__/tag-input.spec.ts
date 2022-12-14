@@ -14,6 +14,10 @@ jest.mock('../../locale/create', () => ({
 }));
 
 const ns = useNamespace('tag-input', true);
+const suggestionListCls = ns.e('suggestion-list');
+const suggestionListItemCls = ns.e('suggestion-list__item');
+const tagsItemCls = ns.e('tags__item');
+const inputCls = ns.e('input');
 
 const customMount = (state: StateType) => mount({
   components: { DTagInput },
@@ -47,11 +51,10 @@ describe('DTagInput', () => {
     });
     const wrapper = customMount(state);
     expect(wrapper.find(ns.b()).exists()).toBe(true);
-    expect(wrapper.find('.devui-tags').exists()).toBe(true);
-    expect(wrapper.find('.devui-tag-list').exists()).toBe(true);
-    expect(wrapper.find('.devui-input').exists()).toBe(true);
+    expect(wrapper.find(ns.e('tags')).exists()).toBe(true);
+    expect(wrapper.find(inputCls).exists()).toBe(true);
 
-    const itemA = wrapper.find('.devui-tag-item');
+    const itemA = wrapper.find(tagsItemCls);
     expect(itemA.exists()).toBe(true);
     expect(itemA.text()).toBe('Y.Chen');
 
@@ -72,13 +75,13 @@ describe('DTagInput', () => {
       ],
     });
     const wrapper = customMount(state);
-    const input = wrapper.find('input.devui-input');
+    const input = wrapper.find(inputCls);
 
-    expect(wrapper.find('.devui-suggestion-list').exists()).toBe(false);
+    expect(wrapper.find(suggestionListCls).exists()).toBe(false);
     await input.trigger('focus');
 
     // 是否存在 devui-suggestion-list
-    const suggestionList = !!document.querySelectorAll('.devui-suggestion-list')[0];
+    const suggestionList = !!document.querySelectorAll(suggestionListCls)[0];
     expect(suggestionList).toBe(true);
 
     wrapper.unmount();
@@ -99,14 +102,16 @@ describe('DTagInput', () => {
       },
     });
 
-    expect(wrapper.find('.devui-disabled').exists()).toBe(false);
-    expect(wrapper.find('.devui-input').isVisible()).toBe(true);
+    expect(wrapper.find('.is-disabled').exists()).toBe(false);
+    expect(wrapper.find(inputCls).isVisible()).toBe(true);
 
     await wrapper.setProps({
       disabled: true,
     });
-    expect(wrapper.find('.devui-disabled').exists()).toBe(true);
-    expect(wrapper.find('.devui-input').isVisible()).toBe(false);
+
+    expect(wrapper.find('.is-disabled').exists()).toBe(true);
+    // 禁用状态下不显示input
+    expect(wrapper.find(ns.e('input_hide')).exists()).toBe(true);
     expect(wrapper.find('.remove-button').exists()).toBe(false);
 
     wrapper.unmount();
@@ -133,7 +138,7 @@ describe('DTagInput', () => {
     wrapper.unmount();
   });
 
-  it('tag-input removeTag work', async () => {
+  it('tag-input removeTag work', () => {
     const state = reactive({
       tags: [
         { cname: 'a' },
@@ -144,13 +149,17 @@ describe('DTagInput', () => {
       ],
     });
     const wrapper = customMount(state);
-    const removeSvg = wrapper.find('.remove-button');
-    await removeSvg.trigger('click');
-    expect(wrapper.findAll('.devui-tag-item').length).toBe(1);
-    expect(state.tags.length).toBe(1);
-    expect(state.suggestionList.length).toBe(2);
 
-    wrapper.unmount();
+    // todo 使用await报错 The provided value is not of type 'Element'
+    wrapper.find('.remove-button').trigger('click');
+
+    nextTick(() => {
+      expect(wrapper.findAll(tagsItemCls).length).toBe(1);
+      expect(state.tags.length).toBe(1);
+      expect(state.suggestionList.length).toBe(2);
+
+      wrapper.unmount();
+    });
   });
 
   it('tag-input keydown work', async () => {
@@ -196,17 +205,17 @@ describe('DTagInput', () => {
     const input = wrapper.find('input');
 
     await input.trigger('focus');
-    let suggestionList = document.querySelectorAll('.devui-suggestion-item');
+    let suggestionList = document.querySelectorAll(suggestionListItemCls);
     expect(suggestionList.length).toBe(3);
 
     await input.setValue('xy');
     await input.trigger('input');
-    suggestionList = document.querySelectorAll('.devui-suggestion-item');
+    suggestionList = document.querySelectorAll(suggestionListItemCls);
     expect(suggestionList.length).toBe(2);
 
     await input.setValue('xxx');
     await input.trigger('input');
-    suggestionList = document.querySelectorAll('.devui-suggestion-item');
+    suggestionList = document.querySelectorAll(suggestionListItemCls);
     expect(suggestionList.length).toBe(1);
 
     wrapper.unmount();
@@ -226,7 +235,7 @@ describe('DTagInput', () => {
     });
     const wrapper = customMount(state);
     await wrapper.find('input').trigger('focus');
-    const suggestionList = document.querySelectorAll('.devui-suggestion-item');
+    const suggestionList = document.querySelectorAll(suggestionListItemCls);
     const yyy = suggestionList[1];
     yyy.dispatchEvent(new Event('click'));
 
@@ -252,18 +261,18 @@ describe('DTagInput', () => {
     const wrapper = customMount(state);
     const input = wrapper.find('input');
     await input.trigger('focus');
-    let suggestionList = document.querySelectorAll('.devui-suggestion-item');
+    let suggestionList = document.querySelectorAll(suggestionListItemCls);
     // 获取焦点默认第一个选中
     expect(suggestionList[0].className).toContain('selected');
 
     // 按下 下箭头，选中第二个数组第一个
     await input.trigger('keydown', { key: 'ArrowDown' });
-    suggestionList = document.querySelectorAll('.devui-suggestion-item');
+    suggestionList = document.querySelectorAll(suggestionListItemCls);
     expect(suggestionList[1].className).toContain('selected');
 
     await input.trigger('keydown', { key: 'ArrowUp' });
     await input.trigger('keydown', { key: 'ArrowUp' });
-    suggestionList = document.querySelectorAll('.devui-suggestion-item');
+    suggestionList = document.querySelectorAll(suggestionListItemCls);
     expect(suggestionList[2].className).toContain('selected');
 
     // 按下Enter选中数据

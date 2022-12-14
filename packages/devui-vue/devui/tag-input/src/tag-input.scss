@@ -13,131 +13,130 @@
   &:active {
     outline: 0;
   }
-}
 
-.#{$devui-prefix}-form-control.#{$devui-prefix}-tags {
-  -moz-appearance: textfield;
-  -webkit-appearance: textfield;
-  padding: 2px 4px;
-  overflow: hidden;
-  word-wrap: break-word;
-  cursor: text;
-  background-color: $devui-base-bg;
-  border: 1px solid $devui-line;
-  border-radius: $devui-border-radius;
-  height: 100%;
-  transition: border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-
-  &:hover {
-    border-color: $devui-list-item-hover-bg;
-  }
-
-  &.focused {
-    outline: 0;
-  }
-
-  &.#{$devui-prefix}-dropdown-origin:focus-within {
-    border-color: $devui-brand;
-  }
-
-  .#{$devui-prefix}-tag-list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-
-  .#{$devui-prefix}-tag-item {
-    margin: 1px;
-    padding: 0 10px;
-    display: inline-block;
-    min-height: 18px;
-    line-height: 18px;
-    border-radius: $devui-border-radius;
-    color: $devui-text;
-    background-color: $devui-label-bg;
-    position: relative;
-    border: 1px solid $devui-label-bg;
-
-    span {
-      line-height: 1.5;
-      margin-right: 25px;
-    }
-
-    .remove-button {
-      margin: 0 0 0 12px;
-      padding: 0;
-      border: none;
-      vertical-align: top;
-      font-size: $devui-font-size-page-title;
-      border-radius: 50%;
-      background-color: $devui-line;
-      width: 12px;
-      height: 12px;
-      display: inline-block;
-      line-height: 12px;
-      text-align: center;
-      transform: translateY(-50%);
-      position: absolute;
-      top: 50%;
-      right: 10px;
-
-      svg path {
-        fill: $devui-light-text; //TODO: Color-Question
-      }
-
-      &:hover {
-        text-decoration: none;
-      }
-    }
-  }
-
-  &:not(.#{$devui-prefix}-disabled) {
-    .#{$devui-prefix}-tag-item {
-      cursor: pointer;
-
-      span {
-        &:hover {
-          color: $devui-list-item-hover-text;
-        }
-      }
-
-      .remove-button {
-        &:hover {
-          background-color: $devui-list-item-hover-text;
-        }
-      }
-    }
-  }
-
-  &.#{$devui-prefix}-disabled {
+  .is-disabled {
     border-color: $devui-disabled-line;
     background-color: $devui-disabled-bg;
     cursor: not-allowed;
 
-    .#{$devui-prefix}-tag-item {
-      color: $devui-disabled-text;
-      background-color: $devui-disabled-bg;
-      border-color: $devui-disabled-line;
+    .#{$devui-prefix}-tag-input__tags {
+      min-height: 22px;
 
-      span {
-        margin-right: 0;
-      }
+      &__item {
+        color: $devui-disabled-text;
+        background-color: $devui-disabled-bg;
+        border-color: $devui-disabled-line;
 
-      .remove-button {
-        background-color: $devui-disabled-line;
+        span {
+          margin-right: 0;
+        }
 
-        svg path {
-          fill: $devui-light-text;
+        .remove-button {
+          background-color: $devui-disabled-line;
+
+          svg path {
+            fill: $devui-light-text;
+          }
         }
       }
     }
+  }
 
-    .#{$devui-prefix}-tag-list {
-      min-height: 22px;
+  // 已选择
+  &__tags__wrapper {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    padding: 2px 4px;
+    overflow: hidden;
+    word-wrap: break-word;
+    cursor: text;
+    background-color: $devui-base-bg;
+    border: 1px solid $devui-line;
+    border-radius: $devui-border-radius;
+    height: 100%;
+    transition: border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    &:hover {
+      border-color: $devui-list-item-hover-bg;
+    }
+
+    &:focus-within {
+      border-color: $devui-brand;
+    }
+
+    &.focused {
+      outline: 0;
     }
   }
 
-  input.#{$devui-prefix}-input {
+  &__tags {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    &__item {
+      margin: 1px;
+      padding: 0 10px;
+      display: inline-block;
+      min-height: 18px;
+      line-height: 18px;
+      border-radius: $devui-border-radius;
+      color: $devui-text;
+      background-color: $devui-label-bg;
+      position: relative;
+      border: 1px solid $devui-label-bg;
+
+      span {
+        line-height: 1.5;
+        margin-right: 25px;
+      }
+
+      .remove-button {
+        margin: 0 0 0 12px;
+        padding: 0;
+        border: none;
+        vertical-align: top;
+        font-size: $devui-font-size-page-title;
+        border-radius: 50%;
+        background-color: $devui-line;
+        width: 12px;
+        height: 12px;
+        display: inline-block;
+        line-height: 12px;
+        text-align: center;
+        transform: translateY(-50%);
+        position: absolute;
+        top: 50%;
+        right: 10px;
+
+        svg path {
+          fill: $devui-light-text; //TODO: Color-Question
+        }
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+      &:not(.is-disabled) {
+        cursor: pointer;
+
+        span {
+          &:hover {
+            color: $devui-list-item-hover-text;
+          }
+        }
+
+        .remove-button {
+          &:hover {
+            background-color: $devui-list-item-hover-text;
+          }
+        }
+      }
+    }
+  }
+
+  &__input {
     border: 0;
     outline: 0;
     float: left;
@@ -149,54 +148,51 @@
     &::-ms-clear {
       display: none;
     }
+
+    &_hide {
+      display: none;
+    }
   }
-}
 
-.#{$devui-prefix}-tags-autocomplete {
-  width: 100%;
-  padding: 8px;
-  border-radius: $devui-border-radius;
-  background-color: $devui-connected-overlay-bg;
-  box-shadow: $devui-shadow-length-connected-overlay $devui-shadow;
-
-  .#{$devui-prefix}-suggestion-list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    max-height: 280px;
-    overflow-y: auto;
+  // 建议列表
+  &__suggestion-list {
     position: relative;
+    width: 100%;
+    max-height: 280px;
+    padding: 8px;
+    margin: 0;
+    border-radius: $devui-border-radius;
+    background-color: $devui-connected-overlay-bg;
+    box-shadow: $devui-shadow-length-connected-overlay $devui-shadow;
+    list-style-type: none;
+    overflow-y: auto;
 
-    .#{$devui-prefix}-suggestion-item {
+    &__item {
       padding: 5px 10px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      color: $devui-text;
       font-size: $devui-font-size;
       line-height: 20px;
       border-radius: $devui-border-radius;
+      transition: color $devui-animation-duration-fast $devui-animation-ease-in-smooth, background-color $devui-animation-duration-fast $devui-animation-ease-in-smooth;
+      cursor: pointer;
 
-      &:not(.#{$devui-prefix}-disabled) {
-        cursor: pointer;
-        color: $devui-text;
-        // background-color: $devui-base-bg;
-        &:hover {
-          background-color: $devui-list-item-hover-bg;
-        }
+      &:hover {
+        background-color: $devui-list-item-hover-bg;
+      }
 
-        &.selected {
-          color: $devui-brand;
-          background-color: $devui-list-item-active-bg;
-        }
+      &.selected {
+        color: $devui-brand;
+        background-color: $devui-list-item-active-bg;
       }
     }
-  }
-}
 
-.#{$devui-prefix}-tags-autocomplete {
-  .#{$devui-prefix}-suggestion-list {
-    .#{$devui-prefix}-suggestion-item {
-      transition: color $devui-animation-duration-fast $devui-animation-ease-in-smooth, background-color $devui-animation-duration-fast $devui-animation-ease-in-smooth;
+    &__no-data {
+      color: var(--devui-disabled-text, #adb0b8);
+      background-color: var(--devui-disabled-bg, #f5f5f5);
+      cursor: not-allowed;
     }
   }
 }

@@ -2,14 +2,22 @@ import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import DPopover from '../src/popover';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { Placement } from '../src/popover-types';
+import { wait } from '../../shared/utils';
 
 const ns = useNamespace('popover', true);
 const buttonNs = useNamespace('button', true);
 const buttonBaseClass = buttonNs.b();
 const popoverContentClass = ns.e('content');
 const popoverIconClass = useNamespace('popover').e('icon');
+const popoverArrowClass = '.devui-flexible-overlay__arrow';
 
 describe('d-popover', () => {
+  beforeEach(() => {
+    const popoverContent = document.body.querySelector(popoverContentClass);
+    popoverContent && popoverContent.parentNode?.removeChild(popoverContent);
+  });
+
   it('visible', async () => {
     const wrapper = mount({
       setup() {
@@ -56,11 +64,9 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('mouseenter');
-    setTimeout(() => {
-      const popoverContent = document.body.querySelector(popoverContentClass);
-      expect(popoverContent).toBeTruthy();
-      wrapper.unmount();
-    }, 150);
+    await wait(500);
+    const popoverContent = document.body.querySelector(popoverContentClass);
+    expect(popoverContent).toBeTruthy();
   });
 
   it('trigger manually', async () => {
@@ -117,7 +123,7 @@ describe('d-popover', () => {
   });
 
   it('popover disabled work', async () => {
-    let disabled = ref(false);
+    const disabled = ref(false);
     const wrapper = mount({
       setup() {
         return () => (
@@ -128,23 +134,153 @@ describe('d-popover', () => {
       },
     });
     await wrapper.find(buttonBaseClass).trigger('mouseenter');
-    const popoverContent = document.body.querySelector(popoverContentClass);
-    setTimeout(() => {
-      expect(popoverContent).toBeTruthy();
-    }, 150);
-    disabled = ref(true);
+    await wait(500);
+    let popoverContent = document.body.querySelector(popoverContentClass);
+    expect(popoverContent).toBeTruthy();
+    disabled.value = true;
     await nextTick();
+    popoverContent = document.body.querySelector(popoverContentClass);
     expect(popoverContent).toBeFalsy();
     wrapper.unmount();
   });
 
-  it.todo('props position work well.');
+  it('props position work well.', async () => {
+    let position = ref<Array<Placement>>(['top']);
+    let wrapper = mount({
+      setup() {
+        return () => (
+          <DPopover content="default" trigger="click" position={position.value}>
+            <d-button>default</d-button>
+          </DPopover>
+        );
+      },
+    });
+    await wrapper.find(buttonBaseClass).trigger('click');
+    await wait(500);
+    expect(document.querySelector(popoverArrowClass)?.style.bottom).toBe('-4px');
+    const popoverContent = document.querySelector(popoverContentClass);
+    expect(popoverContent?.getAttribute('style')?.includes('transform-origin: 50% calc(100% + 8px)')).toBe(true);
+    wrapper.unmount();
+
+    position = ref<Array<Placement>>(['bottom']);
+    wrapper = mount({
+      setup() {
+        return () => (
+          <DPopover content="default" trigger="click" position={position.value}>
+            <d-button>default</d-button>
+          </DPopover>
+        );
+      },
+    });
+    await wrapper.find(buttonBaseClass).trigger('click');
+    await wait(500);
+    expect(document.querySelector(popoverArrowClass)?.style.top).toBe('-4px');
+    expect(document.querySelector(popoverContentClass)?.getAttribute('style')?.includes('transform-origin: 50% -8px')).toBe(true);
+    wrapper.unmount();
+
+    position = ref<Array<Placement>>(['left']);
+    wrapper = mount({
+      setup() {
+        return () => (
+          <DPopover content="default" trigger="click" position={position.value}>
+            <d-button>default</d-button>
+          </DPopover>
+        );
+      },
+    });
+    await wrapper.find(buttonBaseClass).trigger('click');
+    await wait(500);
+    expect(document.querySelector(popoverArrowClass)?.style.right).toBe('-4px');
+    expect(document.querySelector(popoverContentClass)?.getAttribute('style')?.includes('transform-origin: calc(100% + 8px)')).toBe(true);
+    wrapper.unmount();
+
+    position = ref<Array<Placement>>(['right']);
+    wrapper = mount({
+      setup() {
+        return () => (
+          <DPopover content="default" trigger="click" position={position.value}>
+            <d-button>default</d-button>
+          </DPopover>
+        );
+      },
+    });
+    await wrapper.find(buttonBaseClass).trigger('click');
+    await wait(500);
+    expect(document.querySelector(popoverArrowClass)?.style.left).toBe('-4px');
+    expect(document.querySelector(popoverContentClass)?.getAttribute('style')?.includes('transform-origin: -8px 50%')).toBe(true);
+    wrapper.unmount();
+
+    position = ref<Array<Placement>>(['right-start']);
+    wrapper = mount({
+      setup() {
+        return () => (
+          <DPopover content="default" trigger="click" position={position.value} align="start">
+            <d-button>default</d-button>
+          </DPopover>
+        );
+      },
+    });
+    await wrapper.find(buttonBaseClass).trigger('click');
+    await wait(500);
+    expect(document.querySelector(popoverArrowClass)?.style.left).toBe('-4px');
+    expect(document.querySelector(popoverContentClass)?.getAttribute('style')?.includes('transform-origin: -8px 50%')).toBe(true);
+    wrapper.unmount();
+
+    position = ref<Array<Placement>>(['right-end']);
+    wrapper = mount({
+      setup() {
+        return () => (
+          <DPopover content="default" trigger="click" position={position.value} align="end">
+            <d-button>default</d-button>
+          </DPopover>
+        );
+      },
+    });
+    await wrapper.find(buttonBaseClass).trigger('click');
+    await wait(500);
+    expect(document.querySelector(popoverArrowClass)?.style.left).toBe('-4px');
+    expect(document.querySelector(popoverContentClass)?.getAttribute('style')?.includes('transform-origin: -8px 50%')).toBe(true);
+    wrapper.unmount();
+  });
 
   it.todo('props align work well.');
 
-  it.todo('props offset work well.');
+  it('props mouse-enter-delay work well.', async () => {
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DPopover content="default" trigger="hover" mouse-enter-delay={1500}>
+            <d-button>default</d-button>
+          </DPopover>
+        );
+      },
+    });
+    await wrapper.find(buttonBaseClass).trigger('mouseenter');
+    await wait(500);
+    expect(document.querySelector(popoverContentClass)).toBeFalsy();
+    await wait(1100);
+    expect(document.querySelector(popoverContentClass)).toBeTruthy();
+    wrapper.unmount();
+  });
 
-  it.todo('props mouse-enter-delay work well.');
-
-  it.todo('props mouse-leave-delay work well.');
+  it('props mouse-leave-delay work well.', async () => {
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DPopover content="default" trigger="hover" mouse-leave-delay={1500}>
+            <d-button>default</d-button>
+          </DPopover>
+        );
+      },
+    });
+    await wrapper.find(buttonBaseClass).trigger('mouseenter');
+    await wait(500);
+    expect(document.querySelector(popoverContentClass)).toBeTruthy();
+    await wrapper.find(buttonBaseClass).trigger('mouseleave');
+    await wait(500);
+    expect(document.querySelector(popoverContentClass)).toBeTruthy();
+    await wait(1100);
+    expect(document.querySelector(popoverContentClass)).toBeFalsy();
+    wrapper.unmount();
+  });
 });

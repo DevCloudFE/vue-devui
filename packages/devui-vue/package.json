@@ -1,6 +1,6 @@
 {
   "name": "vue-devui",
-  "version": "1.2.0",
+  "version": "1.3.4-alpha.3",
   "license": "MIT",
   "description": "DevUI components based on Vite and Vue3",
   "keywords": [
@@ -30,6 +30,7 @@
     "test": "jest --config jest.config.js",
     "coverage": "jest --config jest.config.js --coverage",
     "build:components": "node ./devui-cli/index.js build",
+    "build:components:dts": "vue-tsc --declaration --emitDeclarationOnly",
     "generate:theme": "node ./devui-cli/index.js generate:theme",
     "generate:dts": "node ./devui-cli/index.js generate:dts",
     "release": "node ./devui-cli/index.js release",
@@ -66,11 +67,12 @@
     "@babel/traverse": "^7.15.4",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
-    "@docsearch/css": "^3.0.0-alpha.50",
-    "@docsearch/js": "^3.0.0-alpha.50",
+    "@docsearch/css": "^3.3.0",
+    "@docsearch/js": "^3.3.0",
     "@types/chalk": "^2.2.0",
     "@types/commander": "^2.12.2",
     "@types/jest": "^26.0.24",
+    "@types/node": "^16.11.6",
     "@types/ora": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
@@ -98,6 +100,6 @@
     "vite-svg-loader": "^2.2.0",
     "vitepress": "0.20.1",
     "vitepress-theme-demoblock": "1.3.2",
-    "vue-tsc": "^0.2.2"
+    "vue-tsc": "0.38.8"
   }
 }
