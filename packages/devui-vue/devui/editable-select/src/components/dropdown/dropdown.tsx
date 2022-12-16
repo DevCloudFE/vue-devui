@@ -36,21 +36,19 @@ export default defineComponent({
         return <li class={ns.em('item', 'no-data-tip')}>{slots.noResultItem ? slots.noResultItem() : emptyText.value}</li>;
       }
 
-      if (props.options && props.options.length >= 1) {
-        return props.options.map((option, index) => {
-          return (
-            <Option
-              label={option.label}
-              value={option.value}
-              hovering={isHovering(index)}
-              disabled={isDisabled(option)}
-              v-slots={slots.item ? { default: () => renderSlot(useSlots(), 'item', { option, index }) } : {}}
-              onSelect={() => {
-                handleOptionSelect(option, true);
-              }}></Option>
-          );
-        });
-      }
+      return props.options.map((option, index) => {
+        return (
+          <Option
+            label={option.label}
+            value={option.value}
+            hovering={isHovering(index)}
+            disabled={isDisabled(option)}
+            v-slots={slots.item ? { default: () => renderSlot(useSlots(), 'item', { option, index }) } : {}}
+            onSelect={() => {
+              handleOptionSelect(option, true);
+            }}></Option>
+        );
+      });
     };
 
     return () => {

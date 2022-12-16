@@ -3,7 +3,7 @@ import { EditableSelectProps, Option, Options } from '../editable-select-types';
 import { createI18nTranslate } from '../../../locale/create';
 import { isNil } from 'lodash-es';
 
-export interface UseSelectSatesReturnType {
+export interface UseSelectStatesReturnType {
   hoveringIndex: number;
   query: string;
   inputValue: string;
@@ -25,9 +25,9 @@ interface UseSelectReturnType {
   scrollToItem: (index: number) => void;
 }
 
-export type States = UseSelectSatesReturnType;
+export type States = UseSelectStatesReturnType;
 
-export function useSelectSates(): UseSelectSatesReturnType {
+export function useSelectStates(): UseSelectStatesReturnType {
   return reactive({
     hoveringIndex: -1,
     query: '',
@@ -44,7 +44,7 @@ export function useSelectSates(): UseSelectSatesReturnType {
 export function useSelect(
   dropdownRef: Ref,
   props: EditableSelectProps,
-  states: UseSelectSatesReturnType,
+  states: States,
   setSoftFocus: () => void,
   ctx: SetupContext
 ): UseSelectReturnType {

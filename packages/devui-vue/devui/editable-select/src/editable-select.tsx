@@ -9,7 +9,7 @@ import Icon from '../../icon/src/icon';
 import { FlexibleOverlay } from '../../overlay';
 import Dropdown from './components/dropdown/dropdown';
 // 工具函数
-import { useSelect, useSelectSates } from './composables/use-select';
+import { useSelect, useSelectStates } from './composables/use-select';
 import { useKeyboardSelect } from './composables/use-keyboard-select';
 import { useInputRender } from './composables/use-input-render';
 import { useInputEvent } from './composables/use-input-evnet';
@@ -32,7 +32,7 @@ export default defineComponent({
     const dropdownRef = ref<HTMLElement>();
     const overlayRef = ref<HTMLElement>();
 
-    const states = useSelectSates();
+    const states = useSelectStates();
     //  data refs
     const { appendToBody, disabled, modelValue, position, placeholder } = toRefs(props);
 
@@ -53,7 +53,7 @@ export default defineComponent({
     );
     const { onKeydown } = useKeyboardSelect(props, states, filteredOptions, scrollToItem, handleOptionSelect);
 
-    const { loadMore } = useLazyLoad(dropdownRef, props, states, ctx);
+    const { loadMore } = useLazyLoad(dropdownRef, props, ctx);
 
     provide(SELECT_KEY, {
       dropdownRef,
@@ -68,6 +68,7 @@ export default defineComponent({
       handleOptionSelect,
       setSoftFocus,
     });
+
     onClickOutside(
       originRef,
       () => {

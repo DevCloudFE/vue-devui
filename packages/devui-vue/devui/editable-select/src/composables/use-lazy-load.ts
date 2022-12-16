@@ -1,17 +1,14 @@
 import { Ref, SetupContext, toRefs } from 'vue';
 import { EditableSelectProps } from '../editable-select-types';
-import { States } from './use-select';
-
-interface useLazyLoadReturenType {
+interface UseLazyLoadReturnType {
   loadMore: () => void;
 }
 
 export function useLazyLoad(
   dropdownRef: Ref<HTMLElement | undefined>,
   props: EditableSelectProps,
-  states: States,
   ctx: SetupContext
-): useLazyLoadReturenType {
+): UseLazyLoadReturnType {
   const { enableLazyLoad } = toRefs(props);
   const loadMore = () => {
     if (!dropdownRef.value || !enableLazyLoad.value) {

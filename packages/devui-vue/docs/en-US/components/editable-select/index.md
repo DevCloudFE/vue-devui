@@ -313,10 +313,10 @@ You can customize how individual options are rendered and display templates when
 <template>
   <d-editable-select v-model="value" :width="450" :options="options">
     <template #item="slotProps">
-      <div>第{{ slotProps.index }}项: {{ slotProps.option.label }}</div>
+      <div>{{ slotProps.index }}: {{ slotProps.option.label }}</div>
     </template>
     <template>
-      <div>没有匹配项</div>
+      <div>No matches</div>
     </template>
   </d-editable-select>
 </template>
@@ -446,37 +446,37 @@ export default defineComponent({
 
 ### EditableSelect Parameter
 
-| 参数名                | 类型                                   | 默认值   | 说明                                         | 跳转 Demo                                                           |
-| :-------------------- | :------------------------------------- | :------- | :------------------------------------------- | :------------------------------------------------------------------ |
-| model-value / v-model | `string \| number`                     | ''       | 可选，选中项绑定值                           | [Basic usage](#Basic-usage)                                         |
-| options               | [Options](#options)                    | []       | 可选，数据列表                               | [Basic usage](#Basic-usage)                                         |
-| allow-clear           | `boolean`                              | false    | 可选，是否可以清空选项                       | [Basic usage](#Basic-usage)                                         |
-| size                  | `string`                               | 'md'     | 可选，输入框尺寸，有三种选择'lg'，'md'，'sm' | [Size](#Size)                                                       |
-| placeholder           | `string`                               | 'Select' | 可选，输入框的默认提示文字                   | [Basic usage](#Basic-usage)                                         |
-| width                 | `number`                               | --       | 可选，输入框宽度                             | [Basic usage](#Basic-usage)                                         |
-| max-height            | `number`                               | --       | 可选，下拉框最大高度                         | [Basic usage](#Basic-usage)                                         |
-| disabled              | `boolean`                              | false    | 可选，是否禁用选择器本身                     | [Disable selector ](#Disable-selector)                              |
-| disabled-key          | `string`                               | ''       | 可选，设置禁用选项的 Key 值                  | [Disabled option](#Disabled-option)                                 |
-| enable-lazy-load      | `boolean`                              | false    | 可选，是否允许懒加载                         | [Remote search](#Remote-search)                                     |
-| filter-method         | ` (inputValue:string)=>Array<Options>` | --       | 可选，自定义筛选方法                         | [Customized data matching method](#Customized-data-matching-method) |
-| remote-method         | `(inputValue:string)=>Array<Options>`  | --       | 可选，自定义远程搜索方法                     | [Remote search](#Remote-search)                                     |
+| 参数名                | 类型                                   | 默认值   | 说明                                                     | 跳转 Demo                                                           |
+| :-------------------- | :------------------------------------- | :------- | :------------------------------------------------------- | :------------------------------------------------------------------ |
+| model-value / v-model | `string \| number`                     | ''       | Optional. check item binding value                       | [Basic usage](#Basic-usage)                                         |
+| options               | [Options](#options)                    | []       | Optional. data list                                      | [Basic usage](#Basic-usage)                                         |
+| allow-clear           | `boolean`                              | false    | Optional. whether the option can be cleared              | [Basic usage](#Basic-usage)                                         |
+| size                  | `string`                               | 'md'     | Optional. input box size, three options 'lg', 'md', 'sm' | [Size](#Size)                                                       |
+| placeholder           | `string`                               | 'Select' | Optional. the default prompt text for the input box      | [Basic usage](#Basic-usage)                                         |
+| width                 | `number`                               | --       | Optional. input box width                                | [Basic usage](#Basic-usage)                                         |
+| max-height            | `number`                               | --       | Optional. maximum height of drop-down box                | [Basic usage](#Basic-usage)                                         |
+| disabled              | `boolean`                              | false    | Optional. whether to disable the selector itself         | [Disable selector ](#Disable-selector)                              |
+| disabled-key          | `string`                               | ''       | Optional. set the Key value for the Disable option       | [Disabled option](#Disabled-option)                                 |
+| enable-lazy-load      | `boolean`                              | false    | Optional. whether to allow lazy loading                  | [Remote search](#Remote-search)                                     |
+| filter-method         | ` (inputValue:string)=>Array<Options>` | --       | Optional. custom filtering method                        | [Customized data matching method](#Customized-data-matching-method) |
+| remote-method         | `(inputValue:string)=>Array<Options>`  | --       | Optional, custom remote search method                    | [Remote search](#Remote-search)                                     |
 
 ### EditableSelect methods
 
-| 事件名         | 回调参数                        | 说明                          | 跳转 Demo                       |
-| :------------- | :------------------------------ | :---------------------------- | :------------------------------ |
-| load-more      | ` (inputvalue:string)=>void`    | 可选，懒加载触发事件          | [Remote search](#Remote-search) |
-| focus          | ` (e: FocusEvent)=>void`        | 可选，当 input 获得焦点时触发 |                                 |
-| blur           | ` (e: FocusEvent)->void`        | 可选，当 input 失去焦点时触发 |                                 |
-| change         | ` (value:string\|number)=>void` | 可选，选中值发生变化时触发    |
-| visible-change | `(visible:boolean)=>void`       | 可选，下拉框显隐时触发        |
+| 事件名         | 回调参数                        | 说明                                                               | 跳转 Demo                       |
+| :------------- | :------------------------------ | :----------------------------------------------------------------- | :------------------------------ |
+| load-more      | ` (inputvalue:string)=>void`    | Optional. lazy load trigger event                                  | [Remote search](#Remote-search) |
+| focus          | ` (e: FocusEvent)=>void`        | Optional. triggered when the input gets focus                      |                                 |
+| blur           | ` (e: FocusEvent)->void`        | Optional. triggered when the input loses focus                     |                                 |
+| change         | ` (value:string\|number)=>void` | Optional. triggered when the selected value changes                |
+| visible-change | `(visible:boolean)=>void`       | Optional. triggered when the drop-down box is visible or invisible |
 
 ### EditableSelect slots
 
-| 插槽名       | 说明                                     | 跳转 Demo                                            |
-| :----------- | :--------------------------------------- | :--------------------------------------------------- |
-| item         | 可选，下拉菜单条目的模板                 | [ Custom template display](#Custom-template-display) |
-| noResultItem | 可选，下拉菜单条目搜索后，没有结果的模板 | [ Custom template display](#Custom-template-display) |
+| 插槽名       | 说明                                                                          | 跳转 Demo                                            |
+| :----------- | :---------------------------------------------------------------------------- | :--------------------------------------------------- |
+| item         | Optional. drop-down menu entry template                                       | [ Custom template display](#Custom-template-display) |
+| noResultItem | Optional. drop-down menu entry search followed by no results for the template | [ Custom template display](#Custom-template-display) |
 
 ### EditableSelect type definition
 

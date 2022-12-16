@@ -4,7 +4,7 @@ import { Options } from '../../editable-select-types';
 export const dropdownProps = {
   options: {
     type: Array as PropType<Options>,
-    default: [],
+    default: () => [],
   },
   width: {
     type: Number,
