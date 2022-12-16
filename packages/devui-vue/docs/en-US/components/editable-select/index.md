@@ -446,7 +446,7 @@ export default defineComponent({
 
 ### EditableSelect Parameter
 
-| 参数名                | 类型                                   | 默认值   | 说明                                                     | 跳转 Demo                                                           |
+| Parameter             | Type                                   | Default  | Description                                              | Jump to Demo Demo                                                   |
 | :-------------------- | :------------------------------------- | :------- | :------------------------------------------------------- | :------------------------------------------------------------------ |
 | model-value / v-model | `string \| number`                     | ''       | Optional. check item binding value                       | [Basic usage](#Basic-usage)                                         |
 | options               | [Options](#options)                    | []       | Optional. data list                                      | [Basic usage](#Basic-usage)                                         |
@@ -461,9 +461,9 @@ export default defineComponent({
 | filter-method         | ` (inputValue:string)=>Array<Options>` | --       | Optional. custom filtering method                        | [Customized data matching method](#Customized-data-matching-method) |
 | remote-method         | `(inputValue:string)=>Array<Options>`  | --       | Optional, custom remote search method                    | [Remote search](#Remote-search)                                     |
 
-### EditableSelect methods
+### EditableSelect Methods
 
-| 事件名         | 回调参数                        | 说明                                                               | 跳转 Demo                       |
+| Method         | Type                            | Description                                                        | Jump to Demo                    |
 | :------------- | :------------------------------ | :----------------------------------------------------------------- | :------------------------------ |
 | load-more      | ` (inputvalue:string)=>void`    | Optional. lazy load trigger event                                  | [Remote search](#Remote-search) |
 | focus          | ` (e: FocusEvent)=>void`        | Optional. triggered when the input gets focus                      |                                 |
@@ -471,9 +471,9 @@ export default defineComponent({
 | change         | ` (value:string\|number)=>void` | Optional. triggered when the selected value changes                |
 | visible-change | `(visible:boolean)=>void`       | Optional. triggered when the drop-down box is visible or invisible |
 
-### EditableSelect slots
+### EditableSelect Slots
 
-| 插槽名       | 说明                                                                          | 跳转 Demo                                            |
+| Name       | Description                                                                          |Jump to Demo                                            |
 | :----------- | :---------------------------------------------------------------------------- | :--------------------------------------------------- |
 | item         | Optional. drop-down menu entry template                                       | [ Custom template display](#Custom-template-display) |
 | noResultItem | Optional. drop-down menu entry search followed by no results for the template | [ Custom template display](#Custom-template-display) |
