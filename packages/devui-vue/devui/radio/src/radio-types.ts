@@ -25,8 +25,7 @@ const radioCommonProps = {
     default: false,
   },
   size: {
-    type: String as PropType<sizeTypes>,
-    default: 'md',
+    type: String as PropType<sizeTypes>
   },
 };
 

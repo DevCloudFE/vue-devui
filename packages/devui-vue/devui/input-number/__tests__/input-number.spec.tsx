@@ -2,9 +2,15 @@ import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import DInputNumber from '../src/input-number';
 import { useNamespace } from '../../shared/hooks/use-namespace';
+import { Form as DForm, FormItem as DFormItem } from '../../form';
 
 const ns = useNamespace('input-number', true);
 const noDotNs = useNamespace('input-number');
+
+const inputNumberClass = ns.b();
+const sizeSmClass = noDotNs.m('sm');
+const sizeMdClass = noDotNs.m('md');
+const sizeLgClass = noDotNs.m('lg');
 
 describe('d-input-number', () => {
   it('visible', () => {
@@ -113,6 +119,47 @@ describe('d-input-number', () => {
 
     const controlButtons = wrapper.find(ns.b());
     expect(controlButtons.classes()).toContain(noDotNs.m('lg'));
+
+    wrapper.unmount();
+  });
+
+  it('props size priority', async () => {
+    const dFormSize = ref('lg');
+    const dInputNumberSize = ref('sm');
+
+    const wrapper = mount({
+      components: { DInputNumber, DForm, DFormItem },
+      template: `
+        <DForm :size="dFormSize">
+        <DFormItem>
+          <d-input-number
+            :size="dInputNumberSize"
+          ></d-input-number>
+        </DFormItem>
+        </DForm>`,
+      setup() {
+        return {
+          dFormSize,
+          dInputNumberSize,
+        };
+      },
+    });
+
+    const dSearch = wrapper.find(inputNumberClass);
+    // form 与 元素同时存在size 属性，以元素为准。
+    expect(dSearch.classes()).toContain(sizeSmClass);
+
+    dInputNumberSize.value = '';
+    await nextTick();
+
+    // 元素不存在 size ，form 存在，以表单为准
+    expect(dSearch.classes()).toContain(sizeLgClass);
+
+    dFormSize.value = '';
+    await nextTick();
+
+    // form 与 元素都不存在 size 属性，使用默认值。
+    expect(dSearch.classes()).toContain(sizeMdClass);
 
     wrapper.unmount();
   });

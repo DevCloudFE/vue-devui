@@ -60,8 +60,9 @@ export function useRadio(props: RadioProps, ctx: SetupContext): UseRadioFn {
   });
 
   const size = computed(() => {
-    return formContext?.size || radioGroupConf?.size.value || props.size;
+    return props.size || radioGroupConf?.size.value || formContext?.size || 'md';
   });
+
   watch(
     () => props.modelValue,
     () => {
@@ -79,7 +80,9 @@ export function useRadio(props: RadioProps, ctx: SetupContext): UseRadioFn {
 }
 
 export function useRadioGroup(props: RadioGroupProps, ctx: SetupContext): void {
+  const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
+
   /** change 事件 */
   const emitChange = (radioValue: valueTypes) => {
     ctx.emit('update:modelValue', radioValue);
@@ -93,13 +96,16 @@ export function useRadioGroup(props: RadioGroupProps, ctx: SetupContext): void {
     }
   );
 
+  // 组件 size 优先于表单 size
+  const radioGroupSize = computed(() => props.size || formContext?.size || '');
+
   // 注入给子组件
   provide(radioGroupInjectionKey, {
     modelValue: toRef(props, 'modelValue'),
     name: toRef(props, 'name'),
     disabled: toRef(props, 'disabled'),
     border: toRef(props, 'border'),
-    size: toRef(props, 'size'),
+    size: radioGroupSize,
     beforeChange: props.beforeChange,
     emitChange,
     fill: toRef(props, 'fill'),

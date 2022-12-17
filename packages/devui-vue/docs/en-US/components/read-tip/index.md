@@ -95,7 +95,6 @@ const readTipOptions =  {
         position: 'left',
         title: 'This Is the Second Title',
         content: 'Class aptent taciti sociosqu ad litora torquent per conubia nostra',
-        overlayClassName: 'child-class',
         overlayClassName:'red',
       },
       {
@@ -216,7 +215,7 @@ const readTipOptions =  {
   };
 </script>
 
-<style>
+<style lang="scss">
 .read-tip-demo-icon {
   cursor: pointer;
   font-size: 16px;

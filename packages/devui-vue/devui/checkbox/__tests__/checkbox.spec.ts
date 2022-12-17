@@ -34,6 +34,8 @@ describe('checkbox', () => {
 
     expect(container.classes()).not.toContain('active');
     expect(container.classes()).toContain('unchecked');
+
+    wrapper.unmount();
   });
 
   it('checkbox title work', async () => {
@@ -58,6 +60,8 @@ describe('checkbox', () => {
       isShowTitle: false,
     });
     expect(label.attributes('title')).toEqual('');
+
+    wrapper.unmount();
   });
 
   it('checkbox showAnimation work', async () => {
@@ -73,6 +77,8 @@ describe('checkbox', () => {
       showAnimation: false,
     });
     expect(wrapper.findAll(noAnimationClass).length).toBe(2);
+
+    wrapper.unmount();
   });
 
   it('checkbox disabled work', async () => {
@@ -96,6 +102,8 @@ describe('checkbox', () => {
     await label.trigger('click');
     expect(wrapper.find(baseClass).classes()).not.toContain('disabled');
     expect(onChange).toBeCalledTimes(1);
+
+    wrapper.unmount();
   });
 
   it('checkbox halfchecked work', async () => {
@@ -115,6 +123,8 @@ describe('checkbox', () => {
     });
     expect(container.classes()).toContain('half-checked');
     expect(container.find(defaultBgClass).exists()).toBe(false);
+
+    wrapper.unmount();
   });
 
   it('checkbox beforeChange work', async () => {
@@ -151,6 +161,8 @@ describe('checkbox', () => {
     expect(beforeChange).toBeCalledTimes(2);
     expect(onChange).toBeCalledTimes(1);
     expect(checked.value).toBe(true);
+
+    wrapper.unmount();
   });
 
   it('checkbox border work', async () => {
@@ -167,6 +179,8 @@ describe('checkbox', () => {
       border: true,
     });
     expect(wrapper.find(borderClass).exists()).toBe(true);
+
+    wrapper.unmount();
   });
 
   it('checkbox size work', async () => {
@@ -178,12 +192,14 @@ describe('checkbox', () => {
       },
     });
 
-    expect(wrapper.find(sizeLgClass).exists()).toBe(false);
+    expect(wrapper.find(sizeLgClass).exists()).toBe(true);
 
     await wrapper.setProps({
       border: true,
     });
-    expect(wrapper.find(sizeLgClass).exists()).toBe(true);
+    expect(wrapper.find(borderClass).exists()).toBe(true);
+
+    wrapper.unmount();
   });
 
   it('checkbox color work', async () => {
@@ -224,5 +240,7 @@ describe('checkbox', () => {
     // 找不到backgroundImage属性
     // expect(element.style.backgroundImage).toBe('linear-gradient(pink, pink)'); // can't find backgroundImage
     expect(element.style.backgroundColor).toBe('pink');
+
+    wrapper.unmount();
   });
 });
