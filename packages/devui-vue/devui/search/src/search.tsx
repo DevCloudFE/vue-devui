@@ -44,6 +44,7 @@ export default defineComponent({
         size: searchSize.value,
         disabled: props.disabled,
         autoFocus: props.autoFocus,
+        maxlength: props.maxLength,
         modelValue: keywords.value,
         placeholder: props.placeholder || t('placeholder'),
         onKeydown: onInputKeydown,
