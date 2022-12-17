@@ -4,20 +4,20 @@ You can enter or select a value from the drop-down list box.
 
 #### When To Use
 
-You can use it easily when you want to search existed data.
+When users need to input data and select existing data at the same time, add input association function, convenient for users to search for existing data.
 
 ### Basic usage
 
-Set source to a data source.
+The value of the v-model is the value of the currently selected value attribute.
 :::demo
 
 ```vue
 <template>
-  <d-editable-select v-model="value" :options="options" filter-option :width="450"></d-editable-select>
+  <d-editable-select v-model="value" :options="options" :width="450"></d-editable-select>
 </template>
 
 <script>
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, ref, reactive } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -25,17 +25,18 @@ export default defineComponent({
     const options = reactive([
       {
         label: 'label0',
-        value: 0,
+        value: 'label0',
       },
       {
         label: 'label1',
-        value: 1,
+        value: 'label1',
       },
       {
         label: 'label2',
-        value: 2,
+        value: 'label2',
       },
     ]);
+
     return {
       value,
       options,
@@ -47,45 +48,200 @@ export default defineComponent({
 
 :::
 
-### Set disable options
+### Size
 
-Disable specified data or disable it as a whole
+Available in three sizes: sm, md, and lg. The default value is md.
 :::demo
 
 ```vue
 <template>
-  <d-editable-select v-model="value" disabled filter-option :width="450" :options="options"></d-editable-select>
-  <br />
-  <d-editable-select v-model="value1" filter-option :width="450" :options="options1" option-disabled-key="disabled"></d-editable-select>
+  <h5>small</h5>
+
+  <d-editable-select v-model="value" :options="options" :width="450" size="sm"></d-editable-select>
+
+  <h4>middle</h4>
+
+  <d-editable-select v-model="value" :options="options" :width="450"></d-editable-select>
+
+  <h3>large</h3>
+
+  <d-editable-select v-model="value" :options="options" :width="450" size="lg"></d-editable-select>
 </template>
+
 <script>
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, ref, reactive } from 'vue';
+
 export default defineComponent({
   setup() {
     const value = ref('');
-    const value1 = ref('');
-    const options = reactive(['label0', 'label1', 'label2']);
-    const options1 = reactive([
+
+    const options = reactive([
       {
         label: 'label0',
-        value: 0,
+        value: 'label0',
       },
       {
         label: 'label1',
-        value: 1,
-        disabled: true,
+        value: 'label1',
       },
       {
         label: 'label2',
-        value: 2,
-        disabled: false,
+        value: 'label2',
       },
     ]);
+
     return {
       value,
-      value1,
       options,
-      options1,
+    };
+  },
+});
+</script>
+```
+
+:::
+
+### Disable selector
+
+Disable the entire selector component
+
+If the disabled property is set, the entire selector is unavailable.
+:::demo
+
+```vue
+<template>
+  <d-row type="flex">
+    <d-col :flex="4">
+      <d-editable-select v-model="value" :disabled="isDisabled" :width="450" :options="options"></d-editable-select>
+    </d-col>
+    <d-col :flex="2">
+      <d-button id="primaryBtn" @click="toggle" style="margin-left:10px">
+        {{ isDisabled ? 'Enable EditableSelect' : 'Disable EditableSelect' }}
+      </d-button>
+    </d-col>
+  </d-row>
+</template>
+<script>
+import { defineComponent, ref, reactive } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const value = ref('');
+
+    const options = reactive([
+      {
+        label: 'label0',
+        value: 'label0',
+      },
+      {
+        label: 'label1',
+        value: 'label1',
+      },
+      {
+        label: 'label2',
+        value: 'label2',
+      },
+    ]);
+
+    const isDisabled = ref(false);
+
+    const toggle = () => {
+      isDisabled.value = !isDisabled.value;
+    };
+    return {
+      value,
+      options,
+      isDisabled,
+      toggle,
+    };
+  },
+});
+</script>
+```
+
+:::
+
+### Disabled option
+
+The disabled-key value is used to define the Key value of the disabled option.
+:::demo
+
+```vue
+<template>
+  <d-editable-select v-model="value" :width="450" :options="options" disabled-key="disabled"></d-editable-select>
+</template>
+
+<script>
+import { defineComponent, ref, reactive } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const value = ref('');
+
+    const options = reactive([
+      {
+        label: 'label0',
+        value: 'label0',
+        disabled: true,
+      },
+      {
+        label: 'label1',
+        value: 'label1',
+      },
+      {
+        label: 'label2',
+        value: 'label2',
+      },
+    ]);
+
+    return {
+      value,
+      options,
+    };
+  },
+});
+</script>
+```
+
+:::
+
+### Clear option
+
+The selector can be cleared to its initial state
+
+Setting the allow-clear property clears the selector.
+:::demo
+
+```vue
+<template>
+  <d-editable-select v-model="value" :width="450" :options="options" allow-clear></d-editable-select>
+</template>
+
+<script>
+import { defineComponent, ref, reactive } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const value = ref('');
+
+    const options = reactive([
+      {
+        label: 'label0',
+        value: 'label0',
+      },
+      {
+        label: 'label1',
+        value: 'label1',
+      },
+      {
+        label: 'label2',
+        value: 'label2',
+      },
+    ]);
+
+    return {
+      value,
+      options,
     };
   },
 });
@@ -96,40 +252,50 @@ export default defineComponent({
 
 ### Customized data matching method
 
-Use filter-optio to customize the data matching method.
+You can customize the filtering method for local search, only local search works.
 
 :::demo
 
 ```vue
 <template>
-  <d-editable-select v-model="value" :width="450" :options="options" :filter-option="filterOption"></d-editable-select>
+  <d-editable-select v-model="value" :width="450" :options="options" :filter-method="filterMethod"></d-editable-select>
 </template>
 <script>
 import { defineComponent, ref, reactive } from 'vue';
+
 export default defineComponent({
   setup() {
     const value = ref('');
-    const options = reactive([
+
+    const filterMethod = (query) => {
+      if (query) {
+        options.value = options.value.filter((item) => {
+          return item.label.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        });
+      } else {
+        options.value = [];
+      }
+    };
+
+    let options = ref([
       {
         label: 'label0',
-        value: 0,
+        value: 'label0',
       },
       {
         label: 'label1',
-        value: 1,
-        disabled: true,
+        value: 'label1',
       },
       {
         label: 'label2',
-        value: 2,
-        disabled: false,
+        value: 'label2',
       },
     ]);
-    const filterOption = (inputValue: string, option: any) => option.label.indexOf(inputValue) > -1;
+
     return {
       value,
       options,
-      filterOption,
+      filterMethod,
     };
   },
 });
@@ -140,42 +306,41 @@ export default defineComponent({
 
 ### Custom template display
 
+You can customize how individual options are rendered and display templates when no matching data is available.
 :::demo
 
 ```vue
 <template>
-  <d-editable-select v-model="value" :width="450" filter-option :options="options">
+  <d-editable-select v-model="value" :width="450" :options="options">
     <template #item="slotProps">
-      <div>第{{ slotProps.value }}项: {{ slotProps.label }}</div>
+      <div>{{ slotProps.index }}: {{ slotProps.option.label }}</div>
     </template>
-    <template #noResultItem>
-      <div>
-        {{ `没有匹配项` }}
-      </div>
+    <template>
+      <div>No matches</div>
     </template>
   </d-editable-select>
 </template>
 <script>
 import { defineComponent, ref, reactive } from 'vue';
+
 export default defineComponent({
   setup() {
     const value = ref('');
     const options = reactive([
       {
         label: 'label0',
-        value: 0,
+        value: 'label0',
       },
       {
         label: 'label1',
-        value: 1,
-        disabled: true,
+        value: 'label1',
       },
       {
         label: 'label2',
-        value: 2,
-        disabled: false,
+        value: 'label2',
       },
     ]);
+
     return {
       value,
       options,
@@ -187,72 +352,90 @@ export default defineComponent({
 
 :::
 
-### Enable lazy load
+### Remote search
 
+Search for data on the server by entering keywords
+
+To enable remote search, pass in a 'remote-method'. 'remote-method' is a 'Function' that is called when the input value changes with the current input value.
 :::demo
 
 ```vue
 <template>
   <d-editable-select
+    remote
+    enable-lazy-load
     v-model="value"
-    :options="options"
-    :filter-option="false"
     :max-height="300"
     :width="450"
+    :options="options"
     :loading="loading"
-    @load-more="loadeMore"
-    @search="handleSearch"
-  ></d-editable-select>
+    :remote-method="remoteMethod"
+    @load-more="loadMore"
+  >
+  </d-editable-select>
 </template>
 
 <script>
-import { defineComponent, reactive, ref, getCurrentInstance } from 'vue';
+import { defineComponent, ref, reactive } from 'vue';
 
 export default defineComponent({
-  setup(props, ctx) {
-    let count = 0;
-    const options = ref([]);
+  setup() {
     const value = ref('');
+    const search = ref('');
+    const options = ref([]);
     const loading = ref(false);
+    let index = 0;
+
     let timer = null;
     const fetch = () => {
+      loading.value = true;
       return new Promise((resolve) => {
         const data = [];
-        loading.value = true;
         if (timer) {
           clearTimeout(timer);
           timer = null;
         }
         timer = setTimeout(() => {
-          for (let i = 1; i <= 15; i++) {
+          for (let i = 0; i < 15; i++) {
             data.push({
-              label: `label${i + count}`,
+              label: `label${i + index}`,
               value: i,
             });
           }
-          count += 15;
           loading.value = false;
           resolve(data);
         }, 2000);
       });
     };
-    const handleSearch = async (val) => {
-      if (val !== '') {
-        const data = await fetch();
-        options.value = data;
+
+    const remoteMethod = async (query: string) => {
+      search.value = query;
+      let list = await fetch();
+      if (query) {
+        options.value = list.filter((item) => {
+          return item.label.toLowerCase().includes(query.toLowerCase());
+        });
+      } else {
+        options.value = [];
       }
     };
-    const loadeMore = async () => {
-      const data = await fetch();
-      console.log('data: ', data);
-      options.value = [...options.value, ...data];
+
+    const loadMore = async () => {
+      index += 15;
+      let list = await fetch();
+      options.value = options.value.concat(
+        list.filter((item) => {
+          return item.label.toLowerCase().includes(search.value.toLowerCase());
+        })
+      );
     };
+
     return {
-      options,
       value,
+      options,
       loading,
-      handleSearch,
-      loadeMore,
+      loadMore,
+      remoteMethod,
     };
   },
 });
@@ -261,30 +444,51 @@ export default defineComponent({
 
 :::
 
-### d-editable-select
+### EditableSelect Parameter
 
-d-editable-select Attributes
+| Parameter             | Type                                   | Default  | Description                                              | Jump to Demo Demo                                                   |
+| :-------------------- | :------------------------------------- | :------- | :------------------------------------------------------- | :------------------------------------------------------------------ |
+| model-value / v-model | `string \| number`                     | ''       | Optional. check item binding value                       | [Basic usage](#Basic-usage)                                         |
+| options               | [Options](#options)                    | []       | Optional. data list                                      | [Basic usage](#Basic-usage)                                         |
+| allow-clear           | `boolean`                              | false    | Optional. whether the option can be cleared              | [Basic usage](#Basic-usage)                                         |
+| size                  | `string`                               | 'md'     | Optional. input box size, three options 'lg', 'md', 'sm' | [Size](#Size)                                                       |
+| placeholder           | `string`                               | 'Select' | Optional. the default prompt text for the input box      | [Basic usage](#Basic-usage)                                         |
+| width                 | `number`                               | --       | Optional. input box width                                | [Basic usage](#Basic-usage)                                         |
+| max-height            | `number`                               | --       | Optional. maximum height of drop-down box                | [Basic usage](#Basic-usage)                                         |
+| disabled              | `boolean`                              | false    | Optional. whether to disable the selector itself         | [Disable selector ](#Disable-selector)                              |
+| disabled-key          | `string`                               | ''       | Optional. set the Key value for the Disable option       | [Disabled option](#Disabled-option)                                 |
+| enable-lazy-load      | `boolean`                              | false    | Optional. whether to allow lazy loading                  | [Remote search](#Remote-search)                                     |
+| filter-method         | ` (inputValue:string)=>Array<Options>` | --       | Optional. custom filtering method                        | [Customized data matching method](#Customized-data-matching-method) |
+| remote-method         | `(inputValue:string)=>Array<Options>`  | --       | Optional, custom remote search method                    | [Remote search](#Remote-search)                                     |
 
-| Attribute           | Type                                      | Default  | Description                                                                                                                                                                   | Jump to Demo                                |
-| ------------------- | ----------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| options             | `Array`                                   | []       | Optional. Data list                                                                                                                                                           | [Basic usage](#basic-usage)                 |
-| placeholder         | `string`                                  | `Search` | Optional. This field is displayed when no item is selected.                                                                                                                   | [Basic usage](#basic-usage)                 |
-| max-height          | `number`                                  | --       | Optional. Maximum height of the drop-down list box                                                                                                                            | [Basic usage](#basic-usage)                 |
-| width               | `number`                                  | --       | Optional. Controls the width of the drop-down list box.                                                                                                                       | [Basic usage](#basic-usage)                 |
-| disabled            | `boolean`                                 | false    | Optional. The value true indicates that the drop-down list box is disabled.                                                                                                   | [Basic usage](#basic-usage)                 |
-| option-disabled-key | `string`                                  | --       | Optional. Sets the key value of the disabled option.                                                                                                                          | [Set disable options](#set-disable-options) |
-| loading             | `boolean`                                 | false    | Optional, controls the loading state                                                                                                                                          | [Enable-lazy-load](#enable-lazy-load)       |
-| filter-option       | `boolean\| (inputvalue,options)=>boolean` | true     | Optional, when it is a function, it will receive two parameters of inputvalue option, when option meets the filter conditions, it should return true, otherwise return false. |
+### EditableSelect Methods
 
-d-editable-select Events
+| Method         | Type                            | Description                                                        | Jump to Demo                    |
+| :------------- | :------------------------------ | :----------------------------------------------------------------- | :------------------------------ |
+| load-more      | ` (inputvalue:string)=>void`    | Optional. lazy load trigger event                                  | [Remote search](#Remote-search) |
+| focus          | ` (e: FocusEvent)=>void`        | Optional. triggered when the input gets focus                      |                                 |
+| blur           | ` (e: FocusEvent)->void`        | Optional. triggered when the input loses focus                     |                                 |
+| change         | ` (value:string\|number)=>void` | Optional. triggered when the selected value changes                |
+| visible-change | `(visible:boolean)=>void`       | Optional. triggered when the drop-down box is visible or invisible |
 
-| Event Name | Type                        | Description                                                                            | Jump to Demo                                                        |
-| ---------- | --------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| load-more  | `(inputvalue:string)=>void` | Optional. lazy loading trigger event. This event is used together with `filter-option' | [Enable-lazy-load](#enable-lazy-load)                               |
-| search     | `(inputvalue:string)=>void` | Optional. callback when the textbox value changes                                      | [Customized-data-matching-method](#customized-data-matching-method) |
+### EditableSelect Slots
 
-d-editable-select Slots
-| Name|Description |Jump to Demo|
-| ---- | -- | ------- |
-| item | Optional, Dropdown list item template | [Custom template display](#custom-template-display) |
-| noResultItem| Optional. Template for which no result is found after the drop-down list item is searched. | [Custom template display](#custom-template-display) |
+| Name       | Description                                                                          |Jump to Demo                                            |
+| :----------- | :---------------------------------------------------------------------------- | :--------------------------------------------------- |
+| item         | Optional. drop-down menu entry template                                       | [ Custom template display](#Custom-template-display) |
+| noResultItem | Optional. drop-down menu entry search followed by no results for the template | [ Custom template display](#Custom-template-display) |
+
+### EditableSelect type definition
+
+#### Options
+
+```ts
+export type Option = {
+  label: string;
+  value: string | number;
+  disabled?: boolean;
+  [key: string]: unknown;
+};
+
+export type Options = Array<Option>;
+```
