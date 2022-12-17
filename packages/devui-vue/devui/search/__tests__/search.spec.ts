@@ -18,6 +18,8 @@ const leftIconPositionClass = searchNs.m('left');
 const rightIconPositionClass = searchNs.m('right');
 const noBorderClass = searchNs.m('no-border');
 
+const dotInputNs = useNamespace('input', true);
+
 describe('search test', () => {
   it('should render correctly', async () => {
     const value = ref('test');
@@ -279,13 +281,49 @@ describe('search test', () => {
     wrapper.unmount();
   });
 
-  it.todo('props placeholder should work well.');
+  it('props placeholder should work well.', async () => {
+    const wrapper = mount({
+      components: { DSearch },
+      template: `
+        <d-search
+          placeholder="请输入"
+        ></d-search>
+      `,
+    });
 
-  it.todo('props auto-focus should work well.');
+    expect(wrapper.find(dotInputNs.e('inner')).attributes('placeholder')).toBe('请输入');
+    wrapper.unmount();
+  });
+
+  it('props auto-focus should work well.', async () => {
+    const wrapper = mount({
+      components: { DSearch },
+      template: `
+        <d-search
+          auto-focus
+        ></d-search>
+      `,
+    });
+
+    expect(wrapper.find(dotInputNs.e('inner')).attributes('autofocus')).toBe('true');
+    wrapper.unmount();
+  });
 
   it.todo('props is-keyup-search should work well.');
 
   it.todo('props delay should work well.');
 
-  it.todo('props max-length should work well.');
+  it('props max-length should work well.', async () => {
+    const wrapper = mount({
+      components: { DSearch },
+      template: `
+        <d-search
+          :max-length="5"
+        ></d-search>
+      `,
+    });
+
+    expect(wrapper.find(dotInputNs.e('inner')).attributes('maxlength')).toBe('5');
+    wrapper.unmount();
+  });
 });
