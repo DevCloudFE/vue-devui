@@ -12,7 +12,7 @@ import Dropdown from './components/dropdown/dropdown';
 import { useSelect, useSelectStates } from './composables/use-select';
 import { useKeyboardSelect } from './composables/use-keyboard-select';
 import { useInputRender } from './composables/use-input-render';
-import { useInputEvent } from './composables/use-input-evnet';
+import { useInputEvent } from './composables/use-input-event';
 import { useLazyLoad } from './composables/use-lazy-load';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 // 样式
