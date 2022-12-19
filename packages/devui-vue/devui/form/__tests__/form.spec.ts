@@ -26,6 +26,9 @@ const textareaNs = useNamespace('textarea', true);
 const datePickerProNs = useNamespace('date-picker-pro', true);
 const buttonNs = useNamespace('button', true);
 
+// eslint-disable-next-line
+console.warn = () => {};
+
 describe('form', () => {
   it('render form', async () => {
     const wrapper = mount({
