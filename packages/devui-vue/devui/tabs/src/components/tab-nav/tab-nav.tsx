@@ -92,10 +92,12 @@ export default defineComponent({
     watch(
       () => props.modelValue,
       () => {
-        const tab = tabsList.value.find((item) => item.props.id === props.modelValue);
-        if (tab) {
-          activeClick(tab);
-        }
+        nextTick(() => {
+          const tab = tabsList.value.find((item) => item.props.id === props.modelValue);
+          if (tab) {
+            activeClick(tab);
+          }
+        });
       }
     );
 
