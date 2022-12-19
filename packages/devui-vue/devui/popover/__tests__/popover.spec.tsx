@@ -146,15 +146,23 @@ describe('d-popover', () => {
 
   it('props position work well.', async () => {
     let position = ref<Array<Placement>>(['top']);
-    let wrapper = mount({
+    let align = ref();
+    const comp = {
       setup() {
         return () => (
-          <DPopover content="default" trigger="click" position={position.value}>
+          <DPopover
+            content="default"
+            trigger="click"
+            position={position.value}
+            align={align.value}
+          >
             <d-button>default</d-button>
           </DPopover>
         );
       },
-    });
+    };
+
+    let wrapper = mount(comp);
     await wrapper.find(buttonBaseClass).trigger('click');
     await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.bottom).toBe('-4px');
@@ -163,15 +171,7 @@ describe('d-popover', () => {
     wrapper.unmount();
 
     position = ref<Array<Placement>>(['bottom']);
-    wrapper = mount({
-      setup() {
-        return () => (
-          <DPopover content="default" trigger="click" position={position.value}>
-            <d-button>default</d-button>
-          </DPopover>
-        );
-      },
-    });
+    wrapper = mount(comp);
     await wrapper.find(buttonBaseClass).trigger('click');
     await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.top).toBe('-4px');
@@ -179,15 +179,7 @@ describe('d-popover', () => {
     wrapper.unmount();
 
     position = ref<Array<Placement>>(['left']);
-    wrapper = mount({
-      setup() {
-        return () => (
-          <DPopover content="default" trigger="click" position={position.value}>
-            <d-button>default</d-button>
-          </DPopover>
-        );
-      },
-    });
+    wrapper = mount(comp);
     await wrapper.find(buttonBaseClass).trigger('click');
     await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.right).toBe('-4px');
@@ -195,15 +187,7 @@ describe('d-popover', () => {
     wrapper.unmount();
 
     position = ref<Array<Placement>>(['right']);
-    wrapper = mount({
-      setup() {
-        return () => (
-          <DPopover content="default" trigger="click" position={position.value}>
-            <d-button>default</d-button>
-          </DPopover>
-        );
-      },
-    });
+    wrapper = mount(comp);
     await wrapper.find(buttonBaseClass).trigger('click');
     await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.left).toBe('-4px');
@@ -211,15 +195,8 @@ describe('d-popover', () => {
     wrapper.unmount();
 
     position = ref<Array<Placement>>(['right-start']);
-    wrapper = mount({
-      setup() {
-        return () => (
-          <DPopover content="default" trigger="click" position={position.value} align="start">
-            <d-button>default</d-button>
-          </DPopover>
-        );
-      },
-    });
+    align = ref('start');
+    wrapper = mount(comp);
     await wrapper.find(buttonBaseClass).trigger('click');
     await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.left).toBe('-4px');
@@ -227,15 +204,8 @@ describe('d-popover', () => {
     wrapper.unmount();
 
     position = ref<Array<Placement>>(['right-end']);
-    wrapper = mount({
-      setup() {
-        return () => (
-          <DPopover content="default" trigger="click" position={position.value} align="end">
-            <d-button>default</d-button>
-          </DPopover>
-        );
-      },
-    });
+    align = ref('end');
+    wrapper = mount(comp);
     await wrapper.find(buttonBaseClass).trigger('click');
     await wait(500);
     expect(document.querySelector(popoverArrowClass)?.style.left).toBe('-4px');
