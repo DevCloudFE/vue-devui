@@ -13,6 +13,7 @@ interface TypeList {
   type: ModalType;
   text: string;
   icon: string;
+  color: string;
 }
 
 export default defineComponent({
@@ -42,21 +43,25 @@ export default defineComponent({
           type: 'success',
           text: '成功',
           icon: 'right-o',
+          color: 'var(--devui-success)',
         },
         {
           type: 'failed',
           text: '错误',
           icon: 'error-o',
+          color: 'var(--devui-danger)',
         },
         {
           type: 'warning',
           text: '警告',
           icon: 'warning-o',
+          color: 'var(--devui-warning)',
         },
         {
           type: 'info',
           text: '信息',
           icon: 'info-o',
+          color: 'var(--devui-info)',
         },
       ];
       const item = typeList.find((i) => i.type === props.type);
@@ -65,7 +70,7 @@ export default defineComponent({
           <DModalHeader>
             <div class="type-content">
               <div class="type-content-icon">
-                <Icon name={item?.icon}></Icon>
+                <Icon name={item?.icon} color={item?.color}></Icon>
               </div>
               <div class="type-content-text">{item?.text}</div>
             </div>
