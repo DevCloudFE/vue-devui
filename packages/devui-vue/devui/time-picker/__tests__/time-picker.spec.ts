@@ -172,9 +172,9 @@ describe('time-picker test', () => {
       };
       slotDemo.value.chooseTime(timeObj);
     };
+    let date = new Date();
     // 插槽内方法  --  选择当前时间
     const chooseNowFun = () => {
-      const date = new Date();
       const hour = date.getHours() > 9 ? date.getHours() : '0' + date.getHours();
       const minute = date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes();
       const second = date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds();
@@ -210,6 +210,7 @@ describe('time-picker test', () => {
     await timeInput.trigger('focus');
     const slotBottomNow = document.querySelector('.slot-bottom-now');
     const slotBottomOne = document.querySelector('.slot-bottom-one');
+    date = new Date();
     await slotBottomNow?.dispatchEvent(new Event('click'));
     expect(timeInput.element.value).toBe(chooseNowFun());
 
