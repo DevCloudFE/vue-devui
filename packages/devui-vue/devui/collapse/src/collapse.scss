@@ -33,6 +33,10 @@
   &.#{$devui-prefix}-collapse__item--disabled {
     color: $devui-disabled-text;
     cursor: not-allowed;
+
+    & > .#{$devui-prefix}-collapse__open-icon svg path {
+      fill: currentColor !important;
+    }
   }
 
   &:not(.#{$devui-prefix}-collapse__item--disabled) {
