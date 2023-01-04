@@ -10,15 +10,7 @@
 
 :::demo 通过`variant`设置按钮形态，目前支持`solid`、`outline`、`text`三种形态，默认为`outline`。
 
-```vue
-<template>
-  <div class="demo-spacing">
-    <d-button variant="solid">Solid Button</d-button>
-    <d-button>Outline Button</d-button>
-    <d-button variant="text">Text Button</d-button>
-  </div>
-</template>
-```
+button/shape
 
 :::
 
@@ -26,27 +18,7 @@
 
 :::demo 通过`color`设置按钮的主题色，目前支持`primary`、`secondary`、`danger`三种主题色，默认为`secondary`。<br>注意：如果`variant`设置成`solid`，则默认使用`primary`主题色。
 
-```vue
-<template>
-  <div class="demo-spacing">
-    <d-button variant="solid" color="primary">Primary</d-button>
-    <d-button color="primary">Primary</d-button>
-    <d-button variant="text" color="primary">Primary</d-button>
-  </div>
-
-  <div class="demo-spacing">
-    <d-button variant="solid" color="secondary">Secondary</d-button>
-    <d-button color="secondary">Secondary</d-button>
-    <d-button variant="text" color="secondary">Secondary</d-button>
-  </div>
-
-  <div class="demo-spacing">
-    <d-button variant="solid" color="danger">Danger</d-button>
-    <d-button color="danger">Danger</d-button>
-    <d-button variant="text" color="danger">Danger</d-button>
-  </div>
-</template>
-```
+button/theme
 
 :::
 
@@ -54,15 +26,7 @@
 
 :::demo 通过`size`设置按钮尺寸，支持`sm`、`md`、`lg`三种类型的尺寸，默认为`md`。
 
-```vue
-<template>
-  <div class="demo-spacing">
-    <d-button size="sm">Small</d-button>
-    <d-button>Medium</d-button>
-    <d-button size="lg">Large</d-button>
-  </div>
-</template>
-```
+button/size
 
 :::
 
@@ -70,21 +34,7 @@
 
 :::demo 通过`disabled`参数设置按钮禁用状态。
 
-```vue
-<template>
-  <div class="demo-spacing">
-    <d-button variant="solid">Solid Button</d-button>
-    <d-button>Outline Button</d-button>
-    <d-button variant="text">Text Button</d-button>
-  </div>
-
-  <div class="demo-spacing">
-    <d-button variant="solid" disabled>Solid Button</d-button>
-    <d-button disabled>Outline Button</d-button>
-    <d-button variant="text" disabled>Text Button</d-button>
-  </div>
-</template>
-```
+button/disable
 
 :::
 
@@ -92,30 +42,7 @@
 
 :::demo 通过`loading`参数设置按钮加载中状态。
 
-```vue
-<template>
-  <d-button variant="solid" :loading="showLoading" @click="handleClick">Click Me</d-button>
-</template>
-<script>
-import { ref } from 'vue';
-
-export default {
-  setup() {
-    const showLoading = ref(false);
-
-    const handleClick = () => {
-      showLoading.value = true;
-
-      setTimeout(() => {
-        showLoading.value = false;
-      }, 2000);
-    };
-
-    return { showLoading, handleClick };
-  },
-};
-</script>
-```
+button/loading
 
 :::
 
@@ -123,20 +50,7 @@ export default {
 
 :::demo
 
-```vue
-<template>
-  <div class="demo-spacing">
-    <d-button icon="add" variant="solid">New</d-button>
-    <d-button icon="filter">Filter</d-button>
-    <d-button icon="connect" variant="text">Link</d-button>
-    <d-button icon="delete" variant="text" title="Delete"></d-button>
-    <d-button shape="round" title="Add">Add</d-button>
-    <d-button icon="delete" shape="circle" title="Delete" size="sm"></d-button>
-    <d-button icon="delete" shape="circle" title="Delete"></d-button>
-    <d-button variant="solid" icon="filter" shape="circle" title="Add" size="lg"></d-button>
-  </div>
-</template>
-```
+button/icon
 
 :::
 
@@ -146,85 +60,7 @@ export default {
 
 :::demo
 
-```vue
-<template>
-  <d-button-group>
-    <d-button variant="solid">按钮名称</d-button>
-    <d-button icon="icon-select-arrow" variant="solid"></d-button>
-  </d-button-group>
-  
-  <p>尺寸：sm</p>
-  <d-button-group size="sm">
-    <d-button color="primary" variant="solid">上海</d-button>
-    <d-button>北京</d-button>
-    <d-button>深圳</d-button>
-  </d-button-group>
-
-  <p>尺寸：默认</p>
-  <d-button-group>
-    <d-button color="primary">上海</d-button>
-    <d-button>北京</d-button>
-    <d-button>深圳</d-button>
-  </d-button-group>
-
-  <p>尺寸：lg</p>
-  <d-button-group size="lg">
-    <d-button color="primary">上海</d-button>
-    <d-button>北京</d-button>
-    <d-button>深圳</d-button>
-  </d-button-group>
-
-  <p>与dropdown下拉菜单一起使用</p>
-  <d-button-group>
-    <d-dropdown style="width: 100px;" :position="position" align="start">
-      <d-button>Click Me 1</d-button>
-      <template #menu>
-        <ul class="list-menu">
-          <li class="menu-item">Item 1</li>
-          <li class="menu-item">Item 2</li>
-          <li class="menu-item">Item 3</li>
-          <li class="menu-item">Item 4</li>
-        </ul>
-      </template>
-    </d-dropdown>
-    <d-button icon="add" variant="solid">上海</d-button>
-    <d-dropdown style="width: 100px;" :position="position" align="start">
-      <d-button>Click Me 2</d-button>
-      <template #menu>
-        <ul class="list-menu">
-          <li class="menu-item">Item 1</li>
-          <li class="menu-item">Item 2</li>
-          <li class="menu-item">Item 3</li>
-          <li class="menu-item">Item 4</li>
-        </ul>
-      </template>
-    </d-dropdown>
-    <d-button icon="filter">北京</d-button>
-    <d-dropdown style="width: 100px;" :position="position" align="start">
-      <d-button>Click Me 3</d-button>
-      <template #menu>
-        <ul class="list-menu">
-          <li class="menu-item">Item 1</li>
-          <li class="menu-item">Item 2</li>
-          <li class="menu-item">Item 3</li>
-          <li class="menu-item">Item 4</li>
-        </ul>
-      </template>
-    </d-dropdown>
-  </d-button-group>
-</template>
-<script>
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  setup() {
-    return {
-      position: ref(['bottom-start', 'top-start']),
-    };
-  },
-});
-</script>
-```
+button/buttonGroup
 
 :::
 
