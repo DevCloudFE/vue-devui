@@ -41,18 +41,17 @@ Install with pnpm
 pnpm add vue-devui
 ```
 
-
 Then import `DevUI` in the `main.ts` file:
 
 ```ts
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 
 // Import Vue DevUI component and style
-import DevUI from 'vue-devui'
-import 'vue-devui/style.css'
+import DevUI from 'vue-devui';
+import 'vue-devui/style.css';
 
-createApp(App).use(DevUI).mount('#app')
+createApp(App).use(DevUI).mount('#app');
 ```
 
 Then you can use the vue devui component(such as `<d-button>`) in the `App.vue` file:
@@ -119,6 +118,7 @@ Maintainers are community members who have made outstanding contributions and ha
 - [brenner8023](https://github.com/brenner8023)
 
 Outstanding contributions include, but are not limited to, the following:
+
 - 10 or more PRs are merged
 - Put forward more than 10 review opinions approved by PR authors
 - Provide constructive optimization advice and promote the project to become better
@@ -220,6 +220,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center"><a href="https://github.com/Whbbit1999"><img src="https://avatars.githubusercontent.com/u/60510247?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Whbbit1999</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Whbbit1999" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/zhaoShijuan"><img src="https://avatars.githubusercontent.com/u/31791365?v=4?s=100" width="100px;" alt=""/><br /><sub><b>zhaoShijuan</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=zhaoShijuan" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/XiaoRIGE"><img src="https://avatars.githubusercontent.com/u/33147011?v=4?s=100" width="100px;" alt=""/><br /><sub><b>XiaoRIGE</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=XiaoRIGE" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/xiaogonggong-w"><img src="https://avatars.githubusercontent.com/u/79799040?v=4" width="100px;" alt=""/><br /><sub><b>xiaogonggong-w</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xiaogonggong-w" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/hqchqc"><img src="https://avatars.githubusercontent.com/u/51051157?v=4" width="100px;" alt=""/><br /><sub><b>hqchqc</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=hqchqc" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/Lucky-Ya-Q"><img src="https://avatars.githubusercontent.com/u/63504321?v=4" width="100px;" alt=""/><br /><sub><b>Lucky-Ya-Q</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Lucky-Ya-Q" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
@@ -233,7 +236,7 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## Partner project
 
-- [H5-Dooring - 让H5制作，更简单](http://h5.dooring.cn/)
+- [H5-Dooring - 让 H5 制作，更简单](http://h5.dooring.cn/)
 - [灯塔 - 公益性质的反霸凌团队](https://www.light-tower.top/)
 
 ## License
