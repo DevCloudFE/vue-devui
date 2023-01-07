@@ -32,14 +32,14 @@ npm i vue-devui
 在`main.ts`文件中引入`vue-devui`。
 
 ```ts
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 
 // 引入 Vue DevUI 组件库及样式
-import DevUI from 'vue-devui'
-import 'vue-devui/style.css'
+import DevUI from 'vue-devui';
+import 'vue-devui/style.css';
 
-createApp(App).use(DevUI).mount('#app')
+createApp(App).use(DevUI).mount('#app');
 ```
 
 ### 3. 使用
@@ -74,6 +74,7 @@ pnpm scripts
 欢迎你参与到 Vue DevUI 项目的建设中来！🎉
 
 通过参与 Vue DevUI 项目，我们可以一起：
+
 - 🔥 学习最新的 `Vite`+`Vue3`+`TypeScript`+`JSX` 技术
 - 🎁 学习如何设计和开发组件
 - ⭐ 磨练编程技能，学习优秀的编程实践
@@ -107,6 +108,7 @@ pnpm scripts
 - [brenner8023](https://github.com/brenner8023)
 
 杰出贡献包括但不仅限于以下行为：
+
 - 合并 10 个以上 PR
 - 提出超过 10 条被 PR 作者认可的检视意见
 - 提供建设性的优化意见并推动项目变得更好
@@ -207,6 +209,10 @@ pnpm scripts
       <td align="center"><a href="https://github.com/hxj9102"><img src="https://avatars.githubusercontent.com/u/58357112?v=4?s=100" width="100px;" alt=""/><br /><sub><b>hxj9102</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=hxj9102" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/Whbbit1999"><img src="https://avatars.githubusercontent.com/u/60510247?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Whbbit1999</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Whbbit1999" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/zhaoShijuan"><img src="https://avatars.githubusercontent.com/u/31791365?v=4?s=100" width="100px;" alt=""/><br /><sub><b>zhaoShijuan</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=zhaoShijuan" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/XiaoRIGE"><img src="https://avatars.githubusercontent.com/u/33147011?v=4?s=100" width="100px;" alt=""/><br /><sub><b>XiaoRIGE</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=XiaoRIGE" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/xiaogonggong-w"><img src="https://avatars.githubusercontent.com/u/79799040?v=4" width="100px;" alt=""/><br /><sub><b>xiaogonggong-w</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xiaogonggong-w" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/hqchqc"><img src="https://avatars.githubusercontent.com/u/51051157?v=4" width="100px;" alt=""/><br /><sub><b>hqchqc</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=hqchqc" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/Lucky-Ya-Q"><img src="https://avatars.githubusercontent.com/u/63504321?v=4" width="100px;" alt=""/><br /><sub><b>Lucky-Ya-Q</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Lucky-Ya-Q" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
@@ -220,7 +226,7 @@ pnpm scripts
 
 ## 合作项目
 
-- [H5-Dooring - 让H5制作，更简单](http://h5.dooring.cn/)
+- [H5-Dooring - 让 H5 制作，更简单](http://h5.dooring.cn/)
 - [灯塔 - 公益性质的反霸凌团队](https://www.light-tower.top/)
 
 ## 开源许可
