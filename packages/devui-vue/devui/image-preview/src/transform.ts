@@ -122,6 +122,8 @@ export default class Transform {
   reset(): void {
     this.transformX = this.TRANSFORMX;
     this.transformY = this.TRANSFORMY;
+    this.oTransformX = this.transformX;
+    this.oTransformY = this.transformY;
     this.zoom = this.ZOOM;
   }
   setPosition(): void {
