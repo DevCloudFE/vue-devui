@@ -60,9 +60,38 @@ import {
   nextTick,
   defineAsyncComponent
 } from 'vue';
-import { throttle } from 'vitepress-theme-demoblock/demoblock/throttle';
-import clipboardCopy from 'vitepress-theme-demoblock/demoblock/clipboard-copy';
-
+const clipboardCopy = async (text) => {
+  try {
+    await copyClipboardApi(text)
+  } catch (err) {
+    // ...Otherwise, use document.execCommand() fallback
+    try {
+      await copyExecCommand(text)
+    } catch (err2) {
+      throw err2 || err || makeError()
+    }
+  }
+}
+const throttle = (method, delay) => {
+  let timer = null
+  let begin = new Date()
+  return function () {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const context = this,
+      args = arguments
+    const current = new Date()
+    const remaining = delay - (current - begin)
+    clearTimeout(timer)
+    if (remaining <= 0) {
+      method.apply(context, args)
+      begin = new Date()
+    } else {
+      timer = setTimeout(function () {
+        method.apply(context, args)
+      }, remaining)
+    }
+  }
+}
 export default {
   name: 'Demo',
   props: {
@@ -71,6 +100,7 @@ export default {
     lightCode: String,
     desc: String,
     targetFilePath: String,
+    demoList: Array | undefined
   },
   setup(props) {
     const hover = ref(false)
@@ -84,9 +114,7 @@ export default {
 
     const pathArr = ref(route.path.split('/'))
     const component = computed(() => pathArr.value[pathArr.value.length - 1].split('.')[0])
-    const DemoComponent = defineAsyncComponent(() => {
-      return import(/* @vite-ignore */ props.targetFilePath)
-    })
+    const DemoComponent = props.demoList?.[props.targetFilePath]?.default ?? defineAsyncComponent(() => import(/* vite-ignore */ props.targetFilePath));
     watch(
       () => route.path,
       path => {
