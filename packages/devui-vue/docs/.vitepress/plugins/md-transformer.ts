@@ -1,6 +1,4 @@
 import { Plugin } from 'vite';
-import { readdirSync } from 'fs';
-import { join, resolve } from 'path';
 const hasDemoBlock = (str: string) => /:::demo/gim.test(str);
 export function MdTransformer(): Plugin {
   return {
