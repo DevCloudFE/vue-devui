@@ -53,7 +53,6 @@
 import { useRoute, useData } from 'vitepress';
 import { throttle } from 'lodash';
 import copy from 'clipboard-copy';
-// import clipboardCopy from
 import {
   ref,
   computed,
@@ -63,18 +62,6 @@ import {
   nextTick,
   defineAsyncComponent
 } from 'vue';
-const clipboardCopy = async (text) => {
-  try {
-    await copyClipboardApi(text)
-  } catch (err) {
-    // ...Otherwise, use document.execCommand() fallback
-    try {
-      await copyExecCommand(text)
-    } catch (err2) {
-      throw err2 || err || makeError()
-    }
-  }
-}
 export default {
   name: 'Demo',
   props: {
@@ -162,7 +149,6 @@ export default {
     }
 
     const onCopy = () => {
-      // clipboardCopy(props.sourceCode)
       copy(props.sourceCode)
       isShowTip.value = true
       setTimeout(() => {
