@@ -1,7 +1,10 @@
+import { version } from '../../../package.json';
+
 const nav = [
   { text: '组件', link: '/quick-start/' },
   { text: '贡献指南', link: '/contributing/' },
   { text: 'Playground', link: 'https://devcloudfe.github.io/devui-playground' },
+  { text: version, link: `https://github.com/DevCloudFE/vue-devui/releases/tag/v${version}` },
   {
     text: '文档',
     items: [
@@ -20,6 +23,6 @@ const nav = [
       { text: '图标库', link: 'https://devui.design/icon/ruleResource' },
     ],
   },
-]
+];
 
-export default nav
+export default nav;
