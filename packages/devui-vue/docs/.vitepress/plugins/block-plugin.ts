@@ -40,7 +40,7 @@ export const blockPlugin = (md: MarkdownIt) => {
             sourceCode="${md.utils.escapeHtml(content)}"
             lightCode="${encodeURIComponent(highlight(content, 'vue'))}"
             desc="${encodeURIComponent(localMd.render(description))}"
-            :demo-list="demoList"
+            :demoList="demoList"
             targetFilePath="${targetPath}"
           >
           ${content ? `<!--vue-demo:${content}:vue-demo-->` : ''}

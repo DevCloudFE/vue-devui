@@ -51,6 +51,9 @@
 
 <script>
 import { useRoute, useData } from 'vitepress';
+import { throttle } from 'lodash';
+import copy from 'clipboard-copy';
+// import clipboardCopy from
 import {
   ref,
   computed,
@@ -69,26 +72,6 @@ const clipboardCopy = async (text) => {
       await copyExecCommand(text)
     } catch (err2) {
       throw err2 || err || makeError()
-    }
-  }
-}
-const throttle = (method, delay) => {
-  let timer = null
-  let begin = new Date()
-  return function () {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const context = this,
-      args = arguments
-    const current = new Date()
-    const remaining = delay - (current - begin)
-    clearTimeout(timer)
-    if (remaining <= 0) {
-      method.apply(context, args)
-      begin = new Date()
-    } else {
-      timer = setTimeout(function () {
-        method.apply(context, args)
-      }, remaining)
     }
   }
 }
@@ -179,7 +162,8 @@ export default {
     }
 
     const onCopy = () => {
-      clipboardCopy(props.sourceCode)
+      // clipboardCopy(props.sourceCode)
+      copy(props.sourceCode)
       isShowTip.value = true
       setTimeout(() => {
         isShowTip.value = false
