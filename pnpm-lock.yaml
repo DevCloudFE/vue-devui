@@ -139,6 +139,7 @@ importers:
       async-validator: ^4.0.7
       babel-jest: ^27.0.2
       chalk: ^4.1.2
+      clipboard-copy: ^4.0.1
       commander: ^8.1.0
       conventional-changelog-cli: ^2.2.2
       dayjs: ^1.11.3
@@ -176,6 +177,7 @@ importers:
       '@vue/shared': 3.2.33
       '@vueuse/core': 8.9.4_vue@3.2.37
       async-validator: 4.0.7
+      clipboard-copy: 4.0.1
       dayjs: 1.11.3
       devui-theme: link:../devui-theme
       fs-extra: 10.0.0
@@ -4099,6 +4101,10 @@ packages:
     resolution: {integrity: sha512-FxqpkPPwu1HjuN93Omfm4h8uIanXofW0RxVEW3k5RKx+mJJYSthzNhp32Kzxxy3YAEZ/Dc/EWN1vZRY0+kOhbw==}
     engines: {node: '>= 10'}
     dev: true
+
+  /clipboard-copy/4.0.1:
+    resolution: {integrity: sha512-wOlqdqziE/NNTUJsfSgXmBMIrYmfd5V0HCGsR8uAKHcg+h9NENWINcfRjtWGU77wDHC8B8ijV4hMTGYbrKovng==}
+    dev: false
 
   /cliui/6.0.0:
     resolution: {integrity: sha512-t6wbgtoCXvAzst7QgXxJYqPt0usEfbgQdftEPbLL/cvv6HPE5VgvqCuAIDR0NgU52ds6rFwqrgakNLrHEjCbrQ==}
