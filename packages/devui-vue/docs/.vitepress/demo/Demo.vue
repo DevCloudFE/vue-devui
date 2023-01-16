@@ -6,7 +6,7 @@
         <component :is="DemoComponent" />
       </div>
       <div ref="meta" class="meta">
-        <div v-if="$slots.description" ref="description" class="description">
+        <div v-if="desc" ref="description" class="description">
           <div v-html="desc" />
         </div>
         <div ref="highlight" class="highlight">
@@ -111,6 +111,9 @@ export default {
     const decoded = computed(() => {
       return decodeURIComponent(props.lightCode)
     })
+    const desc = computed(() => {
+      return props?.desc ? decodeURIComponent(props.desc) : null
+    })
 
     const copyText = computed(() => {
       return isShowTip.value ? locale.value['copy-success-text'] : locale.value['copy-button-text']
@@ -195,6 +198,7 @@ export default {
       onClickControl,
       copyText,
       highlight,
+      desc,
       description,
       meta,
       control,
