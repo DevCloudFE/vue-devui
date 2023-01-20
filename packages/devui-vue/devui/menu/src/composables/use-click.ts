@@ -7,7 +7,7 @@ interface clickEvent extends MouseEvent {
 }
 
 export function useClick(e: clickEvent): void {
-  const paths = e.path;
+  const paths = e.composedPath() as HTMLElement[];
   for (let i = 0; i < paths.length; i++) {
     const path = paths[i];
     if (path.classList.contains(`${ns.b()}-horizontal`)) {
