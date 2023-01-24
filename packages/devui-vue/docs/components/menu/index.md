@@ -309,7 +309,8 @@ export default defineComponent({
 ```vue
 <template>
   <d-button @click="changeDisabled">changeDisabled</d-button>
-  <d-menu mode="vertical" :width="width + 'px'" :default-select-keys="['item1']" :collapsed="collapsed">
+  <d-button @click="addSelect">change select</d-button>
+  <d-menu mode="vertical" :width="width + 'px'" :default-select-keys="selectKeys" :collapsed="collapsed">
     <d-menu-item key="item1" :disabled="isDisabled">
       <template #icon>
         <i class="icon-homepage"></i>
@@ -341,11 +342,20 @@ export default defineComponent({
 import { ref } from 'vue';
 let collapsed = ref(false);
 let isDisabled = ref(false);
+let selectKeys = ref([]);
 let width = ref(256);
 const changeDisabled = () => {
   isDisabled.value = !isDisabled.value;
   console.log(isDisabled.value);
 };
+const addSelect = () => {
+  if (selectKeys.value.includes('system-item')){
+    selectKeys.value.pop();
+  } else {
+    selectKeys.value.push('system-item');
+  }
+  console.log(selectKeys.value);
+}
 </script>
 ```
 

@@ -27,9 +27,9 @@ export default defineComponent({
     const multiple = inject('multiple') as boolean;
     const indent = inject('defaultIndent');
     const isCollapsed = inject('isCollapsed') as Ref<boolean>;
-    const defaultSelectKey = inject('defaultSelectKey') as string[];
+    const defaultSelectKey = inject('defaultSelectKey') as Ref<string[]>;
     const { disabled } = toRefs(props);
-    const isSelect = ref(initSelect(defaultSelectKey, key, multiple, disabled));
+    const isSelect = ref(initSelect(defaultSelectKey.value, key, multiple, disabled));
     const isLayer1 = ref(true);
     const rootMenuEmit = inject('rootMenuEmit') as (eventName: string, ...args: unknown[]) => void;
     const useRouter = inject('useRouter') as boolean;
@@ -90,7 +90,7 @@ export default defineComponent({
       }
     });
     watch(
-      () => defaultSelectKey,
+      ()=>[...defaultSelectKey.value],
       (n) => {
         isSelect.value = initSelect(n, key, multiple, disabled);
         classObject.value[menuItemSelect] = isSelect.value;
