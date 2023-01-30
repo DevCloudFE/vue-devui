@@ -98,8 +98,7 @@ function getRoot(path: HTMLElement[]): HTMLElement {
 function clearSelect_isHorizontal(ele: HTMLElement, event: clickEvent) {
   let element = event.target as HTMLElement;
   let stack: Element[] = [];
-  const { path } = event;
-  const root = getRoot(path as HTMLElement[]);
+  const root = getRoot(event.composedPath() as HTMLElement[]);
   stack = [...Array.from(root.children)] as HTMLElement[];
   if (element.tagName === 'SPAN') {
     element = element.parentElement as HTMLElement;

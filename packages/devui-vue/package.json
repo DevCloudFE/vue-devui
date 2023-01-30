@@ -1,6 +1,6 @@
 {
   "name": "vue-devui",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "license": "MIT",
   "description": "DevUI components based on Vite and Vue3",
   "keywords": [
@@ -51,6 +51,7 @@
     "@vue/shared": "^3.2.33",
     "@vueuse/core": "8.9.4",
     "async-validator": "^4.0.7",
+    "clipboard-copy": "^4.0.1",
     "dayjs": "^1.11.3",
     "devui-theme": "workspace:^0.0.1",
     "fs-extra": "^10.0.0",

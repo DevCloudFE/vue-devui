@@ -15,7 +15,7 @@ export default defineComponent({
   emits: ['select', 'deselect', 'submenu-change'],
   setup(props: MenuProps, ctx) {
     const ns = useNamespace('menu');
-    const {openKeys, mode, collapsed} = toRefs(props);
+    const {openKeys, mode, collapsed, defaultSelectKeys} = toRefs(props);
     // This ID is only for internal use. So we unwanted use reactivity
     const menuId = randomId(16);
     // register menu to recordTable.
@@ -25,7 +25,7 @@ export default defineComponent({
     provide('defaultIndent', props['indentSize']);
     provide('multiple', props['multiple']);
     provide('openKeys', openKeys);
-    provide('defaultSelectKey', props.defaultSelectKeys);
+    provide('defaultSelectKey', defaultSelectKeys);
     provide('mode', mode);
     provide('collapsedIndent', props['collapsedIndent']);
     provide('rootMenuEmit', ctx.emit);

@@ -1,12 +1,16 @@
 <template>
-  <div ref="demoBlock" :class="['demo-block', blockClass, customClass ? customClass : '', { hover }]"
-    @mouseenter="hover = true" @mouseleave="hover = false">
+  <div
+    ref="demoBlock"
+    :class="['demo-block', blockClass, customClass ? customClass : '', { hover }]"
+    @mouseenter="hover = true"
+    @mouseleave="hover = false"
+  >
     <template v-if="isUseVueFile">
       <div class="source">
         <component :is="DemoComponent" />
       </div>
       <div ref="meta" class="meta">
-        <div v-if="$slots.description" ref="description" class="description">
+        <div v-if="desc" ref="description" class="description">
           <div v-html="desc" />
         </div>
         <div ref="highlight" class="highlight">
@@ -30,10 +34,7 @@
 
     <div ref="control" :class="['demo-block-control', { 'is-fixed': fixedControl }]" @click="onClickControl">
       <transition name="arrow-slide">
-        <i :class="[
-          'control-icon',
-          { 'icon-caret-down': !isExpanded, 'icon-caret-up': isExpanded, hovering: hover }
-        ]"></i>
+        <i :class="['control-icon', { 'icon-caret-down': !isExpanded, 'icon-caret-up': isExpanded, hovering: hover }]"></i>
       </transition>
       <transition name="text-slide">
         <span v-show="hover" class="control-text">{{ controlText }}</span>
@@ -51,18 +52,9 @@
 
 <script>
 import { useRoute, useData } from 'vitepress';
-import {
-  ref,
-  computed,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  nextTick,
-  defineAsyncComponent
-} from 'vue';
-import { throttle } from 'vitepress-theme-demoblock/demoblock/throttle';
-import clipboardCopy from 'vitepress-theme-demoblock/demoblock/clipboard-copy';
-
+import { throttle } from 'lodash';
+import copy from 'clipboard-copy';
+import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, defineAsyncComponent } from 'vue';
 export default {
   name: 'Demo',
   props: {
@@ -71,120 +63,123 @@ export default {
     lightCode: String,
     desc: String,
     targetFilePath: String,
+    demoList: Array | undefined,
   },
   setup(props) {
-    const hover = ref(false)
-    const fixedControl = ref(false)
-    const isExpanded = ref(false)
-    const isShowTip = ref(false)
+    const hover = ref(false);
+    const fixedControl = ref(false);
+    const isExpanded = ref(false);
+    const isShowTip = ref(false);
     const isUseVueFile = computed(() => !!props.targetFilePath);
 
-    const data = useData()
-    const route = useRoute()
+    const data = useData();
+    const route = useRoute();
 
-    const pathArr = ref(route.path.split('/'))
-    const component = computed(() => pathArr.value[pathArr.value.length - 1].split('.')[0])
-    const DemoComponent = defineAsyncComponent(() => {
-      return import(/* @vite-ignore */ props.targetFilePath)
-    })
+    const pathArr = ref(route.path.split('/'));
+    const component = computed(() => pathArr.value[pathArr.value.length - 1].split('.')[0]);
+    const DemoComponent =
+      props.demoList?.[props.targetFilePath]?.default ?? defineAsyncComponent(() => import(/* vite-ignore */ props.targetFilePath));
     watch(
       () => route.path,
-      path => {
-        pathArr.value = path.split('/')
+      (path) => {
+        pathArr.value = path.split('/');
       }
-    )
+    );
     const onClickControl = () => {
-      isExpanded.value = !isExpanded.value
-      hover.value = isExpanded.value
-    }
+      isExpanded.value = !isExpanded.value;
+      hover.value = isExpanded.value;
+    };
     const blockClass = computed(() => {
-      return `demo-${component.value}`
-    })
+      return `demo-${component.value}`;
+    });
     const locale = computed(() => {
       return (
         data.theme.value.demoblock?.[data.localePath.value] ?? {
           'hide-text': '隐藏代码',
           'show-text': '显示代码',
           'copy-button-text': '复制代码片段',
-          'copy-success-text': '复制成功'
+          'copy-success-text': '复制成功',
         }
-      )
-    })
+      );
+    });
     const decoded = computed(() => {
-      return decodeURIComponent(props.lightCode)
-    })
+      return decodeURIComponent(props.lightCode);
+    });
+    const desc = computed(() => {
+      return props?.desc ? decodeURIComponent(props.desc) : null;
+    });
 
     const copyText = computed(() => {
-      return isShowTip.value ? locale.value['copy-success-text'] : locale.value['copy-button-text']
-    })
+      return isShowTip.value ? locale.value['copy-success-text'] : locale.value['copy-button-text'];
+    });
 
     const controlText = computed(() => {
-      return isExpanded.value ? locale.value['hide-text'] : locale.value['show-text']
-    })
+      return isExpanded.value ? locale.value['hide-text'] : locale.value['show-text'];
+    });
 
     // template refs
-    const highlight = ref(null)
-    const description = ref(null)
-    const meta = ref(null)
-    const control = ref(null)
-    const demoBlock = ref(null)
+    const highlight = ref(null);
+    const description = ref(null);
+    const meta = ref(null);
+    const control = ref(null);
+    const demoBlock = ref(null);
 
     const codeAreaHeight = computed(() => {
       if (description.value) {
-        return description.value.clientHeight + highlight.value.clientHeight + 20
+        return description.value.clientHeight + highlight.value.clientHeight + 20;
       }
-      return highlight.value.clientHeight
-    })
+      return highlight.value.clientHeight;
+    });
 
     const _scrollHandler = () => {
-      const { top, bottom, left } = meta.value.getBoundingClientRect()
-      const innerHeight = window.innerHeight || document.body.clientHeight
-      fixedControl.value = bottom > innerHeight && top + 44 <= innerHeight
-      control.value.style.left = fixedControl.value ? `${left}px` : '0'
-      const dv = fixedControl.value ? 1 : 2
-      control.value.style.width = `${demoBlock.value.offsetWidth - dv}px`
-    }
-    const scrollHandler = throttle(_scrollHandler, 200)
+      const { top, bottom, left } = meta.value.getBoundingClientRect();
+      const innerHeight = window.innerHeight || document.body.clientHeight;
+      fixedControl.value = bottom > innerHeight && top + 44 <= innerHeight;
+      control.value.style.left = fixedControl.value ? `${left}px` : '0';
+      const dv = fixedControl.value ? 1 : 2;
+      control.value.style.width = `${demoBlock.value.offsetWidth - dv}px`;
+    };
+    const scrollHandler = throttle(_scrollHandler, 200);
     const removeScrollHandler = () => {
-      window.removeEventListener('scroll', scrollHandler)
-      window.removeEventListener('resize', scrollHandler)
-    }
+      window.removeEventListener('scroll', scrollHandler);
+      window.removeEventListener('resize', scrollHandler);
+    };
 
     const onCopy = () => {
-      clipboardCopy(props.sourceCode)
-      isShowTip.value = true
+      copy(props.sourceCode);
+      isShowTip.value = true;
       setTimeout(() => {
-        isShowTip.value = false
-      }, 1300)
-    }
+        isShowTip.value = false;
+      }, 1300);
+    };
 
-    watch(isExpanded, val => {
-      meta.value.style.height = val ? `${codeAreaHeight.value + 1}px` : '0'
+    watch(isExpanded, (val) => {
+      meta.value.style.height = val ? `${codeAreaHeight.value + 1}px` : '0';
       if (!val) {
-        fixedControl.value = false
-        control.value.style.left = '0'
-        control.value.style.width = `${demoBlock.value.offsetWidth - 2}px`
-        removeScrollHandler()
-        return
+        fixedControl.value = false;
+        control.value.style.left = '0';
+        control.value.style.width = `${demoBlock.value.offsetWidth - 2}px`;
+        removeScrollHandler();
+        return;
       }
       setTimeout(() => {
-        window.addEventListener('scroll', scrollHandler)
-        window.addEventListener('resize', scrollHandler)
-        _scrollHandler()
-      }, 300)
-    })
+        window.addEventListener('scroll', scrollHandler);
+        window.addEventListener('resize', scrollHandler);
+        _scrollHandler();
+      }, 300);
+    });
 
     onMounted(() => {
       nextTick(() => {
         if (!description.value) {
-          highlight.value.style.width = '100%'
+          highlight.value.style.width = '100%';
         }
-      })
-    })
+      });
+    });
 
     onBeforeUnmount(() => {
-      removeScrollHandler()
-    })
+      removeScrollHandler();
+    });
 
     return {
       blockClass,
@@ -197,16 +192,17 @@ export default {
       onClickControl,
       copyText,
       highlight,
+      desc,
       description,
       meta,
       control,
       onCopy,
       demoBlock,
       decoded,
-      DemoComponent
-    }
-  }
-}
+      DemoComponent,
+    };
+  },
+};
 </script>
 
 <style scoped>
