@@ -15,31 +15,31 @@ There are 4 types of `Message`：normal、success、error、warning、info。
 ```vue
 <template>
   <div class="demo-spacing">
-    <d-button  @click="open('normal')">normal</d-button>
-    <d-button  @click="open('success')">success</d-button>
-    <d-button  @click="open('error')">error</d-button>
-    <d-button  @click="open('warning')">warning</d-button>
-    <d-button  @click="open('info')">info</d-button>
-   </div>
+    <d-button @click="open('normal')">normal</d-button>
+    <d-button @click="open('success')">success</d-button>
+    <d-button @click="open('error')">error</d-button>
+    <d-button @click="open('warning')">warning</d-button>
+    <d-button @click="open('info')">info</d-button>
+  </div>
 </template>
 <script>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
-
-    function open (type) { 
+    function open(type) {
       this.$message({
         type,
-        message: 'this is a message.'
-      })
+        message: 'this is a message.',
+      });
     }
-    
+
     return { open };
-  }
+  },
 });
 </script>
 ```
+
 :::
 
 ### Closable Prompt
@@ -51,35 +51,34 @@ The default Message cannot be closed manually. If you need to manually close, yo
 ```vue
 <template>
   <div class="demo-spacing">
-    <d-button  @click="closeIcon()">show close icon</d-button>
-    <d-button  @click="notClose()">not close</d-button>
-   </div>
+    <d-button @click="closeIcon()">show close icon</d-button>
+    <d-button @click="notClose()">not close</d-button>
+  </div>
 </template>
 <script>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
-
-    function closeIcon () {
+    function closeIcon() {
       this.$message({
-        type:'success',
-        message:'Show close button.',
+        type: 'success',
+        message: 'Show close button.',
         showClose: true,
       });
     }
 
-    function notClose () {
+    function notClose() {
       this.$message({
-        type:'info',
-        message:'Do not automatically close messages.',
+        type: 'info',
+        message: 'Do not automatically close messages.',
         showClose: true,
-        duration: 0
+        duration: 0,
       });
     }
-    
+
     return { closeIcon, notClose };
-  }
+  },
 });
 </script>
 ```
@@ -95,30 +94,28 @@ By setting `duration` to specify the time displayed by `message` in milliseconds
 ```vue
 <template>
   <div class="demo-spacing">
-    <d-button  @click="open()">show message 5000ms</d-button>
-   </div>
+    <d-button @click="open()">show message 5000ms</d-button>
+  </div>
 </template>
 <script>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
-
-    function open () { 
+    function open() {
       this.$message({
-        type:'success',
-        message:'show message 5000ms.',
+        type: 'success',
+        message: 'show message 5000ms.',
         duration: 5000,
         showClose: true,
       });
     }
-    
+
     return { open };
-  }
+  },
 });
 </script>
 ```
-
 
 :::
 
@@ -133,44 +130,43 @@ Remove the shadow of `message` by setting `shadow` to `false`.
 ```vue
 <template>
   <div class="demo-spacing">
-    <d-button  @click="closeBordered()">close bordered</d-button>
-    <d-button  @click="closeShadow()">close shadow</d-button>
-    <d-button  @click="closeBAndS()">close bordered And shadow</d-button>
-   </div>
+    <d-button @click="closeBordered()">close bordered</d-button>
+    <d-button @click="closeShadow()">close shadow</d-button>
+    <d-button @click="closeBAndS()">close bordered And shadow</d-button>
+  </div>
 </template>
 <script>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
-
-    function closeBordered () {
+    function closeBordered() {
       this.$message({
-        type:'success',
-        message:'close bordered.',
+        type: 'success',
+        message: 'close bordered.',
         bordered: false,
       });
     }
 
-    function closeShadow () {
+    function closeShadow() {
       this.$message({
-        type:'info',
-        message:'close shadow.',
+        type: 'info',
+        message: 'close shadow.',
         shadow: false,
       });
     }
 
-    function closeBAndS () {
+    function closeBAndS() {
       this.$message({
-        type:'error',
-        message:'close shadow.',
+        type: 'error',
+        message: 'close shadow.',
         bordered: false,
         shadow: false,
       });
     }
-    
+
     return { closeBordered, closeShadow, closeBAndS };
-  }
+  },
 });
 </script>
 ```
@@ -185,27 +181,26 @@ Set the callback when closing through the onClose parameter.
 ```vue
 <template>
   <div class="demo-spacing">
-    <d-button  @click="closeMessage()">close message</d-button>
-   </div>
+    <d-button @click="closeMessage()">close message</d-button>
+  </div>
 </template>
 <script>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
-
-    function closeMessage () {
+    function closeMessage() {
       this.$message({
-        type:'success',
-        message:'close message.',
+        type: 'success',
+        message: 'close message.',
         onClose: () => {
           console.log('message closed');
         },
       });
     }
-    
+
     return { closeMessage };
-  }
+  },
 });
 </script>
 ```
@@ -217,25 +212,27 @@ export default defineComponent({
 When calling message, there can be multiple calling methods and multiple usage methods.
 
 ##### Calling Methods
+
 ```javascript
 // First: global call
 this.$message('I call message globally');
 
 // Second: import and local call
-import { message } from 'vue-devui'
-message('I call message locally')
+import { Message } from 'vue-devui';
+message('I call message locally');
 ```
 
 ##### Usage Methods
+
 ```javascript
-import { message } from 'vue-devui'
+import { Message } from 'vue-devui';
 
 // Accepting strings for default parameter
 message('I am a default message');
 
 // Accepting object for parameter
 message({
-  message:'I am message',
+  message: 'I am message',
   type: 'info',
   bordered: false,
 });
@@ -243,7 +240,7 @@ message({
 // Directly select type to call
 message.error('I am a error message');
 message.error({
-  message:'I am a error message',
+  message: 'I am a error message',
   bordered: false,
   shadow: false,
 });
@@ -251,16 +248,15 @@ message.error({
 
 ### API
 
-|      Parameter        |       Type      |      Default     |     Description   |   Jump to Demo |
-| :-------------------: | :--------------: | :---------------------: | :--------------------------------------------: | :-------------------: |
-| message  | `string` | ''  | Set message text | [Basic Usage](#basic-usage) |
-| type  | `MessageType` | 'normal'| Set message content type   | [Basic Usage](#basic-usage)   |
-| showClose | `Boolean`| false | Set the display closing button | [Closable Prompt](#closable-prompt)   |
-| duration | `number`| 3000   | Set duration         | [Duration](#duration)   |
-| shadow | `Boolean`| true   | Set whether to display shadow        | [Shadow & Bordered Setting](#shadow-bordered-setting)   |
-| bordered | `Boolean`| true   | Set whether to display border         | [Shadow & Bordered Setting](#shadow-bordered-setting)   |
-| on-close | `() => void` | - | Set the callback when the message is closed | [Close Callback](#close-callback)         |
-
+| Parameter |     Type      | Default  |                 Description                 |                     Jump to Demo                      |
+| :-------: | :-----------: | :------: | :-----------------------------------------: | :---------------------------------------------------: |
+|  message  |   `string`    |    ''    |              Set message text               |              [Basic Usage](#basic-usage)              |
+|   type    | `MessageType` | 'normal' |          Set message content type           |              [Basic Usage](#basic-usage)              |
+| showClose |   `Boolean`   |  false   |       Set the display closing button        |          [Closable Prompt](#closable-prompt)          |
+| duration  |   `number`    |   3000   |                Set duration                 |                 [Duration](#duration)                 |
+|  shadow   |   `Boolean`   |   true   |        Set whether to display shadow        | [Shadow & Bordered Setting](#shadow-bordered-setting) |
+| bordered  |   `Boolean`   |   true   |        Set whether to display border        | [Shadow & Bordered Setting](#shadow-bordered-setting) |
+| on-close  | `() => void`  |    -     | Set the callback when the message is closed |           [Close Callback](#close-callback)           |
 
 ### Message Type Definition
 
