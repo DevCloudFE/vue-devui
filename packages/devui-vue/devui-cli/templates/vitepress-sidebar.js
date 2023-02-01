@@ -65,6 +65,10 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
           text: '主题定制',
           link: '/theme-guide/',
         },
+        {
+          text: '在 Nuxt3 中使用',
+          link: '/nuxt3/',
+        },
       ],
       handler: generateZhMenus,
       lang: 'zh',
