@@ -1,0 +1,39 @@
+{
+    "data": {
+        "description": ""
+    },
+
+    "component": {
+        "default": "div",
+
+        "description": ""
+    },
+
+    "height": {
+        "default": 100,
+
+        "description": ""
+    },
+
+    "itemHeight": {
+        "default": 20,
+
+        "description": ""
+    },
+
+    "virtual": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "fullHeight": {
+        "description": ""
+    },
+
+    "itemKey": {
+        "type": [null, null, null],
+
+        "description": ""
+    }
+}
