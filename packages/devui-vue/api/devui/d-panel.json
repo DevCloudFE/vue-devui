@@ -1,0 +1,37 @@
+{
+    "type": {
+        "default": "default",
+
+        "description": ""
+    },
+
+    "cssClass": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "isCollapsed": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "beforeToggle": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "showAnimation": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "hasLeftPadding": {
+        "default": true,
+
+        "description": ""
+    }
+}

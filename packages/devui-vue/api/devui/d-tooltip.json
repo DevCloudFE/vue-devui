@@ -1,0 +1,51 @@
+{
+    "content": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "position": {
+        "type": [null, null],
+
+        "default": "top",
+
+        "description": ""
+    },
+
+    "showAnimation": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "mouseEnterDelay": {
+        "default": 150,
+
+        "description": ""
+    },
+
+    "mouseLeaveDelay": {
+        "default": 100,
+
+        "description": ""
+    },
+
+    "enterable": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "hideAfter": {
+        "default": 0,
+
+        "description": ""
+    }
+}

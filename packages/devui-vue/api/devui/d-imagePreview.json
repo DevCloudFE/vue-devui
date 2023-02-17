@@ -1,0 +1,27 @@
+{
+    "url": {
+        "default": "",
+
+        "required": true,
+
+        "description": ""
+    },
+
+    "previewUrlList": {
+        "required": true,
+
+        "description": ""
+    },
+
+    "zIndex": {
+        "required": false,
+
+        "description": ""
+    },
+
+    "backDropZIndex": {
+        "required": false,
+
+        "description": ""
+    }
+}

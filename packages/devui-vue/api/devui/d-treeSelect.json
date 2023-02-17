@@ -1,0 +1,63 @@
+{
+    "modelValue": {
+        "type": [null, null, null],
+
+        "default": "",
+
+        "description": ""
+    },
+
+    "treeData": {
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "multiple": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "leafOnly": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "searchable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "allowClear": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "enableLabelization": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "onToggleChange": {
+        "description": ""
+    },
+
+    "onValueChange": {
+        "description": ""
+    }
+}

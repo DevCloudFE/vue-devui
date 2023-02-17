@@ -1,0 +1,59 @@
+{
+    "modelValue": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "error": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "size": {
+        "description": ""
+    },
+
+    "validateEvent": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "prefix": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "suffix": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "showPassword": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "clearable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "",
+
+        "description": ""
+    }
+}

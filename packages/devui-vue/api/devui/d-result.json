@@ -1,0 +1,19 @@
+{
+    "icon": {
+        "default": "info",
+
+        "description": ""
+    },
+
+    "title": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "desc": {
+        "default": "",
+
+        "description": ""
+    }
+}

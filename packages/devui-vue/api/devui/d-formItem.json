@@ -1,0 +1,51 @@
+{
+    "label": {
+        "description": ""
+    },
+
+    "field": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "required": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "messageType": {
+        "description": ""
+    },
+
+    "popPosition": {
+        "description": ""
+    },
+
+    "rules": {
+        "type": [null, null],
+
+        "description": ""
+    },
+
+    "showFeedback": {
+        "description": ""
+    },
+
+    "helpTips": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "feedbackStatus": {
+        "description": ""
+    },
+
+    "extraInfo": {
+        "default": "",
+
+        "description": ""
+    }
+}

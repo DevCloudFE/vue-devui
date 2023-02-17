@@ -1,0 +1,43 @@
+{
+    "name": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "gender": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "width": {
+        "default": 36,
+
+        "description": ""
+    },
+
+    "height": {
+        "default": 36,
+
+        "description": ""
+    },
+
+    "isRound": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "imgSrc": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "customText": {
+        "default": null,
+
+        "description": ""
+    }
+}

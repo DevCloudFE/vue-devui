@@ -1,0 +1,13 @@
+{
+    "variant": {
+        "default": "square",
+
+        "description": ""
+    },
+
+    "size": {
+        "default": "md",
+
+        "description": ""
+    }
+}

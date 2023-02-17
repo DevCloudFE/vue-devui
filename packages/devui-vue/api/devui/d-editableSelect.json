@@ -1,0 +1,85 @@
+{
+    "modelValue": {
+        "type": [null, null],
+
+        "description": ""
+    },
+
+    "appendToBody": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "position": {
+        "default": ["bottom"],
+
+        "description": ""
+    },
+
+    "options": {
+        "description": ""
+    },
+
+    "width": {
+        "description": ""
+    },
+
+    "maxHeight": {
+        "description": ""
+    },
+
+    "size": {
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "Select",
+
+        "description": ""
+    },
+
+    "loading": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "allowClear": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "disabledKey": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "remote": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "filterMethod": {
+        "description": ""
+    },
+
+    "remoteMethod": {
+        "description": ""
+    },
+
+    "enableLazyLoad": {
+        "default": false,
+
+        "description": ""
+    }
+}

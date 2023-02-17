@@ -1,0 +1,63 @@
+{
+    "modelValue": {
+        "type": [null, null],
+
+        "default": null,
+
+        "description": ""
+    },
+
+    "type": {
+        "default": "tabs",
+
+        "description": ""
+    },
+
+    "showContent": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "reactivable": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "customWidth": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "cssClass": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "beforeChange": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "closeable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "addable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "tabPosition": {
+        "default": "top",
+
+        "description": ""
+    }
+}

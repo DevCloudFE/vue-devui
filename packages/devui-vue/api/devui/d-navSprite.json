@@ -1,0 +1,71 @@
+{
+    "target": {
+        "description": ""
+    },
+
+    "scrollTarget": {
+        "description": ""
+    },
+
+    "view": {
+        "default": {
+            "top": 0,
+
+            "bottom": 0
+        },
+
+        "description": ""
+    },
+
+    "hashSupport": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "mode": {
+        "default": "default",
+
+        "description": ""
+    },
+
+    "maxLevel": {
+        "default": 3,
+
+        "description": ""
+    },
+
+    "title": {
+        "default": "menu",
+
+        "description": ""
+    },
+
+    "indent": {
+        "default": 2,
+
+        "description": ""
+    },
+
+    "width": {
+        "default": 300,
+
+        "description": ""
+    },
+
+    "height": {
+        "default": 400,
+
+        "description": ""
+    },
+
+    "isOpen": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "spriteOption": {
+        "description": ""
+    }
+}

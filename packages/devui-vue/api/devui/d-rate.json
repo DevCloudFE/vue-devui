@@ -1,0 +1,57 @@
+{
+    "modelValue": {
+        "default": 0,
+
+        "description": ""
+    },
+
+    "read": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "count": {
+        "default": 5,
+
+        "description": ""
+    },
+
+    "type": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "color": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "icon": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "character": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "allowHalf": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "onChange": {
+        "description": ""
+    },
+
+    "onTouched": {
+        "description": ""
+    }
+}

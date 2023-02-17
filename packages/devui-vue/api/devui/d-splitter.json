@@ -1,0 +1,25 @@
+{
+    "orientation": {
+        "default": "horizontal",
+
+        "description": ""
+    },
+
+    "splitBarSize": {
+        "default": "2px",
+
+        "description": ""
+    },
+
+    "disabledBarSize": {
+        "default": "1px",
+
+        "description": ""
+    },
+
+    "showCollapseButton": {
+        "default": true,
+
+        "description": ""
+    }
+}

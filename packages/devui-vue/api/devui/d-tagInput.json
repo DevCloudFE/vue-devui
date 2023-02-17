@@ -1,0 +1,81 @@
+{
+    "modelValue": {
+        "description": ""
+    },
+
+    "displayProperty": {
+        "default": "name",
+
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "minLength": {
+        "default": 3,
+
+        "description": ""
+    },
+
+    "maxLength": {
+        "default": 9007199254740991,
+
+        "description": ""
+    },
+
+    "maxTags": {
+        "default": 9007199254740991,
+
+        "description": ""
+    },
+
+    "maxTagsText": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "spellcheck": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "suggestionList": {
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "isAddBySpace": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "disabledText": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "noData": {
+        "default": "暂无数据",
+
+        "description": ""
+    },
+
+    "caseSensitivity": {
+        "default": false,
+
+        "description": ""
+    }
+}

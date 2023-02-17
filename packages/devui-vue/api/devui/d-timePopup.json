@@ -1,0 +1,49 @@
+{
+    "showPopup": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "popupTop": {
+        "default": -100,
+
+        "description": ""
+    },
+
+    "popupLeft": {
+        "default": -100,
+
+        "description": ""
+    },
+
+    "popupWidth": {
+        "default": 300,
+
+        "description": ""
+    },
+
+    "popupFormat": {
+        "default": "hh:mm:ss",
+
+        "description": ""
+    },
+
+    "minTime": {
+        "default": "00:00:00",
+
+        "description": ""
+    },
+
+    "maxTime": {
+        "default": "23:59:59",
+
+        "description": ""
+    },
+
+    "bindData": {
+        "default": "00:00:00",
+
+        "description": ""
+    }
+}

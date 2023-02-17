@@ -1,0 +1,23 @@
+{
+    "column": {
+        "description": ""
+    },
+
+    "row": {
+        "description": ""
+    },
+
+    "rowspan": {
+        "description": ""
+    },
+
+    "colspan": {
+        "description": ""
+    },
+
+    "index": {
+        "default": 0,
+
+        "description": ""
+    }
+}

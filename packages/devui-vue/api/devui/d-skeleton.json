@@ -1,0 +1,25 @@
+{
+    "rows": {
+        "default": 3,
+
+        "description": ""
+    },
+
+    "round": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "loading": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "showAnimation": {
+        "default": true,
+
+        "description": ""
+    }
+}

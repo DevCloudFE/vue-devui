@@ -1,0 +1,19 @@
+{
+    "modelValue": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "lockScroll": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "closeOnClickOverlay": {
+        "default": true,
+
+        "description": ""
+    }
+}

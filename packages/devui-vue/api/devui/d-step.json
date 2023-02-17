@@ -1,0 +1,19 @@
+{
+    "title": {
+        "required": true,
+
+        "description": ""
+    },
+
+    "description": {
+        "description": ""
+    },
+
+    "icon": {
+        "description": ""
+    },
+
+    "status": {
+        "description": ""
+    }
+}

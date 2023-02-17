@@ -1,0 +1,19 @@
+{
+    "align": {
+        "default": "start",
+
+        "description": ""
+    },
+
+    "src": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "shadow": {
+        "default": "hover",
+
+        "description": ""
+    }
+}

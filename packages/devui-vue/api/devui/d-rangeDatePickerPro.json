@@ -1,0 +1,61 @@
+{
+    "modelValue": {
+        "default": ["", ""],
+
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": ["", ""],
+
+        "description": ""
+    },
+
+    "separator": {
+        "default": "-",
+
+        "description": ""
+    },
+
+    "format": {
+        "description": ""
+    },
+
+    "showTime": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "size": {
+        "default": "md",
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "calendarRange": {
+        "default": [
+            1970,
+
+            2099
+        ],
+
+        "description": ""
+    },
+
+    "limitDateRange": {
+        "description": ""
+    },
+
+    "type": {
+        "default": "date",
+
+        "description": ""
+    }
+}

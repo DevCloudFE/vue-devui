@@ -1,0 +1,65 @@
+{
+    "modelValue": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "00:00:00",
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "timePickerWidth": {
+        "default": 212,
+
+        "description": ""
+    },
+
+    "minTime": {
+        "default": "00:00:00",
+
+        "description": ""
+    },
+
+    "maxTime": {
+        "default": "23:59:59",
+
+        "description": ""
+    },
+
+    "format": {
+        "default": "hh:mm:ss",
+
+        "description": ""
+    },
+
+    "autoOpen": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "showAnimation": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "size": {
+        "description": ""
+    },
+
+    "readonly": {
+        "default": false,
+
+        "description": ""
+    }
+}

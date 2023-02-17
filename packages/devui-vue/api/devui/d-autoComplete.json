@@ -1,0 +1,159 @@
+{
+    "modelValue": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "source": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "allowEmptyValueSearch": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "appendToBody": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "position": {
+        "default": ["bottom-end"],
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "delay": {
+        "default": 300,
+
+        "description": ""
+    },
+
+    "disabledKey": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "formatter": {
+        "description": ""
+    },
+
+    "isSearching": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "sceneType": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "searchFn": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "tipsText": {
+        "default": "最近输入",
+
+        "description": ""
+    },
+
+    "latestSource": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "valueParser": {
+        "description": ""
+    },
+
+    "enableLazyLoad": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "width": {
+        "default": 400,
+
+        "description": ""
+    },
+
+    "showAnimation": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "maxHeight": {
+        "default": 300,
+
+        "description": ""
+    },
+
+    "transInputFocusEmit": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "selectValue": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "loadMore": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "Search",
+
+        "description": ""
+    },
+
+    "prefix": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "suffix": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "size": {
+        "default": "md",
+
+        "description": ""
+    },
+
+    "clearable": {
+        "default": false,
+
+        "description": ""
+    }
+}

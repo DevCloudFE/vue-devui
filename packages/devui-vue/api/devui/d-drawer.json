@@ -1,0 +1,47 @@
+{
+    "modelValue": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "zIndex": {
+        "default": 1040,
+
+        "description": ""
+    },
+
+    "showOverlay": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "escKeyCloseable": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "position": {
+        "default": "right",
+
+        "description": ""
+    },
+
+    "lockScroll": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "closeOnClickOverlay": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "beforeClose": {
+        "description": ""
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "data": {
+        "default": [],
+
+        "description": ""
+    },
+
+    "check": {
+        "type": [null, null],
+
+        "default": false,
+
+        "description": ""
+    },
+
+    "dragdrop": {
+        "type": [null, null],
+
+        "default": false,
+
+        "description": ""
+    },
+
+    "operate": {
+        "type": [null, null, null],
+
+        "default": false,
+
+        "description": ""
+    },
+
+    "height": {
+        "type": [null, null],
+
+        "description": ""
+    }
+}

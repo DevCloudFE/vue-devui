@@ -1,0 +1,69 @@
+{
+    "size": {
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "maxLength": {
+        "default": 9007199254740991,
+
+        "description": ""
+    },
+
+    "delay": {
+        "default": 300,
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "autoFocus": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "isKeyupSearch": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "iconPosition": {
+        "default": "right",
+
+        "description": ""
+    },
+
+    "noBorder": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "cssClass": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "modelValue": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "onUpdate:modelValue": {
+        "description": ""
+    }
+}

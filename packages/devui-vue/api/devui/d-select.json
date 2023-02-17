@@ -1,0 +1,129 @@
+{
+    "modelValue": {
+        "type": [null, null, null],
+
+        "default": "",
+
+        "description": ""
+    },
+
+    "onUpdate:modelValue": {
+        "description": ""
+    },
+
+    "options": {
+        "description": ""
+    },
+
+    "size": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "overview": {
+        "default": "border",
+
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "multiple": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "allowClear": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "optionDisabledKey": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "collapseTags": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "collapseTagsTooltip": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "filter": {
+        "type": [null, null],
+
+        "default": false,
+
+        "description": ""
+    },
+
+    "remote": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "allowCreate": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "noDataText": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "noMatchText": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "loading": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "loadingText": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "onToggleChange": {
+        "description": ""
+    },
+
+    "onValueChange": {
+        "description": ""
+    },
+
+    "multipleLimit": {
+        "default": 0,
+
+        "description": ""
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "type": {
+        "default": "info",
+
+        "description": ""
+    },
+
+    "cssClass": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "closeable": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "showIcon": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "dismissTime": {
+        "default": 0,
+
+        "description": ""
+    },
+
+    "center": {
+        "default": false,
+
+        "description": ""
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "title": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    }
+}

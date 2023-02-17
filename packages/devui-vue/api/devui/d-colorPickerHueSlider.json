@@ -1,0 +1,21 @@
+{
+    "color": {
+        "description": ""
+    },
+
+    "modelValue": {
+        "description": ""
+    },
+
+    "width": {
+        "default": 300,
+
+        "description": ""
+    },
+
+    "height": {
+        "default": 15,
+
+        "description": ""
+    }
+}

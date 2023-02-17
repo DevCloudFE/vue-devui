@@ -1,0 +1,33 @@
+{
+    "stepIndex": {
+        "description": ""
+    },
+
+    "showClose": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "showDots": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "scrollToTargetSwitch": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "zIndex": {
+        "default": 1100,
+
+        "description": ""
+    },
+
+    "stepChange": {
+        "description": ""
+    }
+}

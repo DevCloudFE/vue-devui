@@ -1,0 +1,23 @@
+{
+    "label": {
+        "description": ""
+    },
+
+    "value": {
+        "type": [null, null],
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "hovering": {
+        "default": false,
+
+        "description": ""
+    }
+}

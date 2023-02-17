@@ -1,0 +1,37 @@
+{
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "max": {
+        "default": 100,
+
+        "description": ""
+    },
+
+    "min": {
+        "default": 0,
+
+        "description": ""
+    },
+
+    "modelValue": {
+        "default": 0,
+
+        "description": ""
+    },
+
+    "step": {
+        "default": 1,
+
+        "description": ""
+    },
+
+    "tipsRenderer": {
+        "type": [null, null],
+
+        "description": ""
+    }
+}

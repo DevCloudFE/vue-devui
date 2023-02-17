@@ -1,0 +1,25 @@
+{
+    "direction": {
+        "default": "vertical",
+
+        "description": ""
+    },
+
+    "center": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "mode": {
+        "default": "normal",
+
+        "description": ""
+    },
+
+    "timePosition": {
+        "default": "left",
+
+        "description": ""
+    }
+}

@@ -1,0 +1,69 @@
+{
+    "isOpen": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "position": {
+        "default": ["bottom"],
+
+        "description": ""
+    },
+
+    "align": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "offset": {
+        "type": [null, null],
+
+        "default": 8,
+
+        "description": ""
+    },
+
+    "content": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "trigger": {
+        "default": "click",
+
+        "description": ""
+    },
+
+    "popType": {
+        "default": "default",
+
+        "description": ""
+    },
+
+    "showAnimation": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "mouseEnterDelay": {
+        "default": 150,
+
+        "description": ""
+    },
+
+    "mouseLeaveDelay": {
+        "default": 100,
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    }
+}

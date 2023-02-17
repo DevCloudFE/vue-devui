@@ -1,0 +1,63 @@
+{
+    "modelValue": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "start": {
+        "default": "00:00",
+
+        "description": ""
+    },
+
+    "end": {
+        "default": "24:00",
+
+        "description": ""
+    },
+
+    "step": {
+        "default": "00:30",
+
+        "description": ""
+    },
+
+    "minTime": {
+        "default": "-1:-1",
+
+        "description": ""
+    },
+
+    "maxTime": {
+        "default": "24:00",
+
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "size": {
+        "description": ""
+    },
+
+    "onUpdate:modelValue": {
+        "description": ""
+    },
+
+    "clearable": {
+        "default": true,
+
+        "description": ""
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "type": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "color": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "titleContent": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "checked": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "deletable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "size": {
+        "default": "md",
+
+        "description": ""
+    }
+}

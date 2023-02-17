@@ -1,0 +1,17 @@
+{
+    "modelValue": {
+        "type": [null, null, null],
+
+        "default": "",
+
+        "required": true,
+
+        "description": ""
+    },
+
+    "accordion": {
+        "default": false,
+
+        "description": ""
+    }
+}

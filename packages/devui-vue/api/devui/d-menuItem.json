@@ -1,0 +1,19 @@
+{
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "href": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "route": {
+        "type": [null, null],
+
+        "description": ""
+    }
+}

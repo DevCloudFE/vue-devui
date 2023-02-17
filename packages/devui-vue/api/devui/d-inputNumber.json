@@ -1,0 +1,49 @@
+{
+    "placeholder": {
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "step": {
+        "default": 1,
+
+        "description": ""
+    },
+
+    "max": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "min": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "size": {
+        "description": ""
+    },
+
+    "modelValue": {
+        "description": ""
+    },
+
+    "precision": {
+        "description": ""
+    },
+
+    "reg": {
+        "type": [null, null],
+
+        "default": "",
+
+        "description": ""
+    }
+}

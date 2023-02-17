@@ -1,0 +1,47 @@
+{
+    "modelValue": {
+        "type": [null, null, null],
+
+        "default": null,
+
+        "description": ""
+    },
+
+    "name": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "beforeChange": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "size": {
+        "description": ""
+    },
+
+    "value": {
+        "type": [null, null, null],
+
+        "required": true,
+
+        "default": null,
+
+        "description": ""
+    },
+
+    "border": {
+        "default": false,
+
+        "description": ""
+    }
+}

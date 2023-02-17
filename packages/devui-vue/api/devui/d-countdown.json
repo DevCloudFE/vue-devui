@@ -1,0 +1,29 @@
+{
+    "value": {
+        "required": true,
+
+        "description": ""
+    },
+
+    "format": {
+        "default": "HH:mm:ss",
+
+        "description": ""
+    },
+
+    "prefix": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "suffix": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "valueStyle": {
+        "description": ""
+    }
+}

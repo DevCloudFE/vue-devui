@@ -1,0 +1,29 @@
+{
+    "modelValue": {
+        "default": 0,
+
+        "description": ""
+    },
+
+    "space": {
+        "description": ""
+    },
+
+    "alignCenter": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "direction": {
+        "default": "horizontal",
+
+        "description": ""
+    },
+
+    "simple": {
+        "default": false,
+
+        "description": ""
+    }
+}

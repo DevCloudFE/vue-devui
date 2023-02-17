@@ -1,0 +1,27 @@
+{
+    "title": {
+        "type": [null, null],
+
+        "default": null,
+
+        "description": ""
+    },
+
+    "id": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "closeable": {
+        "default": false,
+
+        "description": ""
+    }
+}

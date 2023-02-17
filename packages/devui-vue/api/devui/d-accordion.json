@@ -1,0 +1,145 @@
+{
+    "data": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "titleKey": {
+        "default": "title",
+
+        "description": ""
+    },
+
+    "loadingKey": {
+        "default": "loading",
+
+        "description": ""
+    },
+
+    "childrenKey": {
+        "default": "children",
+
+        "description": ""
+    },
+
+    "disabledKey": {
+        "default": "disabled",
+
+        "description": ""
+    },
+
+    "activeKey": {
+        "default": "active",
+
+        "description": ""
+    },
+
+    "openKey": {
+        "default": "open",
+
+        "description": ""
+    },
+
+    "menuItemTemplate": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "itemTemplate": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "menuToggle": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "itemClick": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "activeItemChange": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "restrictOneOpen": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "autoOpenActiveMenu": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "showNoContent": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "noContentTemplate": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "loadingTemplate": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "innerListTemplate": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "linkType": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "linkTypeKey": {
+        "default": "linkType",
+
+        "description": ""
+    },
+
+    "linkKey": {
+        "default": "link",
+
+        "description": ""
+    },
+
+    "linkTargetKey": {
+        "default": "target",
+
+        "description": ""
+    },
+
+    "linkDefaultTarget": {
+        "default": "_self",
+
+        "description": ""
+    },
+
+    "accordionType": {
+        "default": "normal",
+
+        "description": ""
+    }
+}

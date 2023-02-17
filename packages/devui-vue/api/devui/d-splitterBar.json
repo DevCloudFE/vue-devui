@@ -1,0 +1,27 @@
+{
+    "index": {
+        "description": ""
+    },
+
+    "orientation": {
+        "required": true,
+
+        "description": ""
+    },
+
+    "splitBarSize": {
+        "required": true,
+
+        "description": ""
+    },
+
+    "disabledBarSize": {
+        "default": "1px",
+
+        "description": ""
+    },
+
+    "showCollapseButton": {
+        "description": ""
+    }
+}

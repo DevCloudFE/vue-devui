@@ -1,0 +1,55 @@
+{
+    "height": {
+        "default": "20px",
+
+        "description": ""
+    },
+
+    "percentage": {
+        "default": 0,
+
+        "description": ""
+    },
+
+    "percentageText": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "barBgColor": {
+        "default": "#5170ff",
+
+        "description": ""
+    },
+
+    "isCircle": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "strokeWidth": {
+        "default": 6,
+
+        "description": ""
+    },
+
+    "showContent": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "percentageTextPlacement": {
+        "default": "inside",
+
+        "description": ""
+    },
+
+    "percentageTextColor": {
+        "default": "",
+
+        "description": ""
+    }
+}

@@ -1,0 +1,59 @@
+{
+    "diagramId": {
+        "default": "1",
+
+        "description": ""
+    },
+
+    "axisConfigs": {
+        "default": {
+            "tickWidth": 10,
+
+            "spaceBetweenLabelsAxis": 20,
+
+            "xAxisLabel": "紧急度",
+
+            "yAxisLabel": "重要度",
+
+            "xAxisRange": {
+                "min": 0,
+
+                "max": 100,
+
+                "step": 10
+            },
+
+            "yAxisRange": {
+                "min": 0,
+
+                "max": 50,
+
+                "step": 5
+            },
+
+            "originPosition": {
+                "left": 30,
+
+                "bottom": 30
+            },
+
+            "axisMargin": 35,
+
+            "xWeight": 1,
+
+            "yWeight": 1
+        },
+
+        "description": ""
+    },
+
+    "view": {
+        "default": {
+            "height": 900,
+
+            "width": 950
+        },
+
+        "description": ""
+    }
+}

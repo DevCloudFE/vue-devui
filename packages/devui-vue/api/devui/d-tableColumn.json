@@ -1,0 +1,127 @@
+{
+    "type": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "header": {
+        "description": ""
+    },
+
+    "field": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "width": {
+        "type": [null, null],
+
+        "default": "",
+
+        "description": ""
+    },
+
+    "minWidth": {
+        "type": [null, null],
+
+        "default": "",
+
+        "description": ""
+    },
+
+    "maxWidth": {
+        "type": [null, null],
+
+        "default": "",
+
+        "description": ""
+    },
+
+    "formatter": {
+        "description": ""
+    },
+
+    "order": {
+        "default": 0,
+
+        "description": ""
+    },
+
+    "sortable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "sortDirection": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "sortMethod": {
+        "description": ""
+    },
+
+    "filterable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "filterMultiple": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "filterList": {
+        "default": [],
+
+        "description": ""
+    },
+
+    "fixedLeft": {
+        "description": ""
+    },
+
+    "fixedRight": {
+        "description": ""
+    },
+
+    "align": {
+        "default": "left",
+
+        "description": ""
+    },
+
+    "showOverflowTooltip": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "checkable": {
+        "description": ""
+    },
+
+    "resizeable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "reserveCheck": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "cellClass": {
+        "default": "",
+
+        "description": ""
+    }
+}

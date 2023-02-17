@@ -1,0 +1,35 @@
+{
+    "time": {
+        "description": ""
+    },
+
+    "dotColor": {
+        "description": ""
+    },
+
+    "lineStyle": {
+        "default": "solid",
+
+        "description": ""
+    },
+
+    "lineColor": {
+        "description": ""
+    },
+
+    "position": {
+        "description": ""
+    },
+
+    "timePosition": {
+        "default": "left",
+
+        "description": ""
+    },
+
+    "type": {
+        "default": "primary",
+
+        "description": ""
+    }
+}

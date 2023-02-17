@@ -1,0 +1,53 @@
+{
+    "name": {
+        "default": "",
+
+        "required": true,
+
+        "description": ""
+    },
+
+    "size": {
+        "type": [null, null],
+
+        "default": "inherit",
+
+        "description": ""
+    },
+
+    "color": {
+        "default": "inherit",
+
+        "description": ""
+    },
+
+    "component": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "classPrefix": {
+        "default": "icon",
+
+        "description": ""
+    },
+
+    "operable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "rotate": {
+        "type": [null, null],
+
+        "description": ""
+    }
+}

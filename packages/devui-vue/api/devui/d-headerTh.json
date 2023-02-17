@@ -1,0 +1,15 @@
+{
+    "column": {
+        "required": true,
+
+        "description": ""
+    },
+
+    "colspan": {
+        "description": ""
+    },
+
+    "rowspan": {
+        "description": ""
+    }
+}

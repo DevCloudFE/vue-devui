@@ -1,0 +1,29 @@
+{
+    "modelValue": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "title": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "type": {
+        "default": "normal",
+
+        "description": ""
+    },
+
+    "duration": {
+        "default": 3000,
+
+        "description": ""
+    },
+
+    "onClose": {
+        "description": ""
+    }
+}

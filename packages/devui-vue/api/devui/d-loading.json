@@ -1,0 +1,11 @@
+{
+    "view": {
+        "description": ""
+    },
+
+    "isFull": {
+        "default": false,
+
+        "description": ""
+    }
+}

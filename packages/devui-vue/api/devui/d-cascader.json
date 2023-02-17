@@ -1,0 +1,95 @@
+{
+    "trigger": {
+        "default": "hover",
+
+        "description": ""
+    },
+
+    "width": {
+        "type": [null, null],
+
+        "default": 200,
+
+        "description": ""
+    },
+
+    "dropdownWidth": {
+        "type": [null, null],
+
+        "default": 200,
+
+        "description": ""
+    },
+
+    "options": {
+        "default": [],
+
+        "required": true,
+
+        "description": ""
+    },
+
+    "multiple": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "showPath": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "modelValue": {
+        "default": [],
+
+        "description": ""
+    },
+
+    "onUpdate:modelValue": {
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "change": {
+        "description": ""
+    },
+
+    "clearable": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "filterable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "debounce": {
+        "default": 300,
+
+        "description": ""
+    },
+
+    "beforeFilter": {
+        "description": ""
+    },
+
+    "size": {
+        "description": ""
+    }
+}

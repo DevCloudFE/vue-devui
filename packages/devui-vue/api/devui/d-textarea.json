@@ -1,0 +1,55 @@
+{
+    "autofocus": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "showCount": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "placeholder": {
+        "description": ""
+    },
+
+    "modelValue": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "error": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "resize": {
+        "default": "none",
+
+        "description": ""
+    },
+
+    "autosize": {
+        "type": [null, null],
+
+        "default": false,
+
+        "description": ""
+    },
+
+    "validateEvent": {
+        "default": true,
+
+        "description": ""
+    }
+}

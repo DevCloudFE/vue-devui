@@ -1,0 +1,19 @@
+{
+    "modelValue": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "mode": {
+        "default": "normal",
+
+        "description": ""
+    },
+
+    "zIndex": {
+        "default": 10,
+
+        "description": ""
+    }
+}

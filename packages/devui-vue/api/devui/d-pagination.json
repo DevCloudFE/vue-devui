@@ -1,0 +1,135 @@
+{
+    "pageSize": {
+        "default": 10,
+
+        "description": ""
+    },
+
+    "total": {
+        "default": 0,
+
+        "description": ""
+    },
+
+    "pageSizeOptions": {
+        "description": ""
+    },
+
+    "pageSizeDirection": {
+        "description": ""
+    },
+
+    "pageIndex": {
+        "default": 1,
+
+        "description": ""
+    },
+
+    "maxItems": {
+        "default": 10,
+
+        "description": ""
+    },
+
+    "preLink": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "nextLink": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "size": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "canJumpPage": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "canChangePageSize": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "canViewTotal": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "totalItemText": {
+        "description": ""
+    },
+
+    "goToText": {
+        "description": ""
+    },
+
+    "showJumpButton": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "showTruePageIndex": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "lite": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "showPageSelector": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "haveConfigMenu": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "autoFixPageIndex": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "autoHide": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "onUpdate:pageIndex": {
+        "description": ""
+    },
+
+    "onUpdate:pageSize": {
+        "description": ""
+    },
+
+    "onPageIndexChange": {
+        "description": ""
+    },
+
+    "onPageSizeChange": {
+        "description": ""
+    }
+}

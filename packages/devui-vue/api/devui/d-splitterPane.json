@@ -1,0 +1,49 @@
+{
+    "size": {
+        "description": ""
+    },
+
+    "minSize": {
+        "description": ""
+    },
+
+    "maxSize": {
+        "description": ""
+    },
+
+    "resizable": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "collapsible": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "collapsed": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "collapseDirection": {
+        "default": "both",
+
+        "description": ""
+    },
+
+    "shrink": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "shrinkWidth": {
+        "default": 36,
+
+        "description": ""
+    }
+}

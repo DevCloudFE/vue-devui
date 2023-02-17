@@ -1,0 +1,29 @@
+{
+    "color": {
+        "description": ""
+    },
+
+    "modelValue": {
+        "default": {},
+
+        "description": ""
+    },
+
+    "rgba": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "height": {
+        "default": 15,
+
+        "description": ""
+    },
+
+    "width": {
+        "default": 300,
+
+        "description": ""
+    }
+}

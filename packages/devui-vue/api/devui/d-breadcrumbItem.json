@@ -1,0 +1,31 @@
+{
+    "showMenu": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "menuList": {
+        "description": ""
+    },
+
+    "isSearch": {
+        "dafault": false,
+
+        "description": ""
+    },
+
+    "to": {
+        "type": [null, null],
+
+        "default": "",
+
+        "description": ""
+    },
+
+    "replace": {
+        "default": false,
+
+        "description": ""
+    }
+}

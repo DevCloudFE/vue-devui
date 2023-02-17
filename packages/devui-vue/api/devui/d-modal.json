@@ -1,0 +1,77 @@
+{
+    "modelValue": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "title": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "lockScroll": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "draggable": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "closeOnClickOverlay": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "beforeClose": {
+        "description": ""
+    },
+
+    "escapable": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "showClose": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "showAnimation": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "showOverlay": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "appendToBody": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "type": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "keepLast": {
+        "default": false,
+
+        "description": ""
+    }
+}

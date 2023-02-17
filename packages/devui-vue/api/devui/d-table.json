@@ -1,0 +1,129 @@
+{
+    "data": {
+        "default": [],
+
+        "description": ""
+    },
+
+    "striped": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "scrollable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "maxWidth": {
+        "description": ""
+    },
+
+    "maxHeight": {
+        "description": ""
+    },
+
+    "tableWidth": {
+        "description": ""
+    },
+
+    "tableHeight": {
+        "description": ""
+    },
+
+    "size": {
+        "default": "sm",
+
+        "description": ""
+    },
+
+    "rowHoveredHighlight": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "fixHeader": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "checkable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "tableLayout": {
+        "default": "fixed",
+
+        "description": ""
+    },
+
+    "showLoading": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "headerBg": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "spanMethod": {
+        "description": ""
+    },
+
+    "borderType": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "empty": {
+        "default": "No Data",
+
+        "description": ""
+    },
+
+    "showHeader": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "rowKey": {
+        "type": [null, null],
+
+        "default": "id",
+
+        "description": ""
+    },
+
+    "defaultExpandAll": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "expandRowKeys": {
+        "description": ""
+    },
+
+    "indent": {
+        "default": 16,
+
+        "description": ""
+    },
+
+    "lazy": {
+        "default": false,
+
+        "description": ""
+    }
+}

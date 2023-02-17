@@ -1,0 +1,55 @@
+{
+    "width": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "collapsed": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "collapsedIndent": {
+        "default": 24,
+
+        "description": ""
+    },
+
+    "indentSize": {
+        "default": 24,
+
+        "description": ""
+    },
+
+    "multiple": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "openKeys": {
+        "default": [],
+
+        "description": ""
+    },
+
+    "defaultSelectKeys": {
+        "default": [],
+
+        "description": ""
+    },
+
+    "mode": {
+        "default": "vertical",
+
+        "description": ""
+    },
+
+    "router": {
+        "default": false,
+
+        "description": ""
+    }
+}

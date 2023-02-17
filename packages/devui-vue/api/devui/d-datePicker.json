@@ -1,0 +1,47 @@
+{
+    "selectedDateChange": {
+        "description": ""
+    },
+
+    "autoClose": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "range": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "showTime": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "format": {
+        "default": "y/MM/dd",
+
+        "description": ""
+    },
+
+    "rangeSpliter": {
+        "default": "-",
+
+        "description": ""
+    },
+
+    "attachInputDom": {
+        "description": ""
+    },
+
+    "dateMin": {
+        "description": ""
+    },
+
+    "dateMax": {
+        "description": ""
+    }
+}

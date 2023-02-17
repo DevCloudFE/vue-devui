@@ -1,0 +1,47 @@
+{
+    "modelValue": {
+        "type": [null, null, null],
+
+        "default": false,
+
+        "description": ""
+    },
+
+    "size": {
+        "description": ""
+    },
+
+    "color": {
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "beforeChange": {
+        "description": ""
+    },
+
+    "change": {
+        "description": ""
+    },
+
+    "activeValue": {
+        "type": [null, null, null],
+
+        "default": true,
+
+        "description": ""
+    },
+
+    "inactiveValue": {
+        "type": [null, null, null],
+
+        "default": false,
+
+        "description": ""
+    }
+}

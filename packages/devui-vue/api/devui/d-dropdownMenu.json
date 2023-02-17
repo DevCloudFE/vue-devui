@@ -1,0 +1,49 @@
+{
+    "modelValue": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "origin": {
+        "require": true,
+
+        "description": ""
+    },
+
+    "position": {
+        "default": ["bottom"],
+
+        "description": ""
+    },
+
+    "align": {
+        "default": null,
+
+        "description": ""
+    },
+
+    "offset": {
+        "type": [null, null],
+
+        "default": 4,
+
+        "description": ""
+    },
+
+    "clickOutside": {
+        "description": ""
+    },
+
+    "showAnimation": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "overlayClass": {
+        "default": "",
+
+        "description": ""
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "data": {
+        "description": ""
+    },
+
+    "layout": {
+        "default": "horizontal",
+
+        "description": ""
+    },
+
+    "labelSize": {
+        "default": "md",
+
+        "description": ""
+    },
+
+    "labelAlign": {
+        "default": "start",
+
+        "description": ""
+    },
+
+    "rules": {
+        "description": ""
+    },
+
+    "messageType": {
+        "default": "popover",
+
+        "description": ""
+    },
+
+    "popPosition": {
+        "default": ["right", "bottom"],
+
+        "description": ""
+    },
+
+    "validateOnRuleChange": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "showFeedback": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "size": {
+        "description": ""
+    }
+}

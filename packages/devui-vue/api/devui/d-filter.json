@@ -1,0 +1,11 @@
+{
+    "filterList": {
+        "description": ""
+    },
+
+    "multiple": {
+        "default": true,
+
+        "description": ""
+    }
+}

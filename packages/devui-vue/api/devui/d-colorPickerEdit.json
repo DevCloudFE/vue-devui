@@ -1,0 +1,15 @@
+{
+    "showAlpha": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "mode": {
+        "description": ""
+    },
+
+    "color": {
+        "description": ""
+    }
+}

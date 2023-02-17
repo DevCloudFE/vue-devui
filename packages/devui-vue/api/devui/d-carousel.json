@@ -1,0 +1,55 @@
+{
+    "arrowTrigger": {
+        "default": "hover",
+
+        "description": ""
+    },
+
+    "autoplay": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "autoplaySpeed": {
+        "default": 3000,
+
+        "description": ""
+    },
+
+    "height": {
+        "default": "100%",
+
+        "description": ""
+    },
+
+    "showDots": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "dotTrigger": {
+        "default": "click",
+
+        "description": ""
+    },
+
+    "dotPosition": {
+        "default": "bottom",
+
+        "description": ""
+    },
+
+    "activeIndex": {
+        "default": 0,
+
+        "description": ""
+    },
+
+    "transitionSpeed": {
+        "default": 500,
+
+        "description": ""
+    }
+}

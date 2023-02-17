@@ -1,0 +1,19 @@
+{
+    "startDate": {
+        "description": ""
+    },
+
+    "endDate": {
+        "description": ""
+    },
+
+    "unit": {
+        "default": "day",
+
+        "description": ""
+    },
+
+    "progressRate": {
+        "description": ""
+    }
+}

@@ -1,0 +1,59 @@
+{
+    "title": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "value": {
+        "type": [null, null],
+
+        "description": ""
+    },
+
+    "prefix": {
+        "description": ""
+    },
+
+    "suffix": {
+        "description": ""
+    },
+
+    "precision": {
+        "description": ""
+    },
+
+    "groupSeparator": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "animationDuration": {
+        "default": 2000,
+
+        "description": ""
+    },
+
+    "valueFrom": {
+        "description": ""
+    },
+
+    "animation": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "start": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "extra": {
+        "default": "",
+
+        "description": ""
+    }
+}

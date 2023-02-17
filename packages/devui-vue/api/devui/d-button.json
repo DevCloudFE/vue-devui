@@ -1,0 +1,39 @@
+{
+    "variant": {
+        "default": "outline",
+
+        "description": ""
+    },
+
+    "size": {
+        "default": "md",
+
+        "description": ""
+    },
+
+    "color": {
+        "description": ""
+    },
+
+    "icon": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "loading": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "shape": {
+        "description": ""
+    }
+}

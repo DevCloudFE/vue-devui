@@ -1,0 +1,41 @@
+{
+    "position": {
+        "default": "bottom",
+
+        "description": ""
+    },
+
+    "suggestions": {
+        "required": true,
+
+        "description": ""
+    },
+
+    "notFoundContent": {
+        "default": "No suggestion matched",
+
+        "description": ""
+    },
+
+    "loading": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "dmValueParse": {
+        "default": {
+            "value": "value",
+
+            "id": "id"
+        },
+
+        "description": ""
+    },
+
+    "trigger": {
+        "default": ["@"],
+
+        "description": ""
+    }
+}

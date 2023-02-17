@@ -1,0 +1,19 @@
+{
+    "colorMap": {
+        "description": ""
+    },
+
+    "modelValue": {
+        "description": ""
+    },
+
+    "showAlpha": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "mode": {
+        "description": ""
+    }
+}

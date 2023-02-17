@@ -1,0 +1,97 @@
+{
+    "modelValue": {
+        "description": ""
+    },
+
+    "data": {
+        "description": ""
+    },
+
+    "sourceDefaultChecked": {
+        "description": ""
+    },
+
+    "targetDefaultChecked": {
+        "description": ""
+    },
+
+    "titles": {
+        "description": ""
+    },
+
+    "sourceOption": {
+        "description": ""
+    },
+
+    "targetOption": {
+        "description": ""
+    },
+
+    "filter": {
+        "type": [null, null],
+
+        "default": false,
+
+        "description": ""
+    },
+
+    "height": {
+        "default": 320,
+
+        "description": ""
+    },
+
+    "unit": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "isKeyupSearch": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "isSourceDrag": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "isTargetDrag": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "search": {
+        "description": ""
+    },
+
+    "sortMethods": {
+        "description": ""
+    },
+
+    "dragstart": {
+        "description": ""
+    },
+
+    "drop": {
+        "description": ""
+    },
+
+    "dragend": {
+        "description": ""
+    },
+
+    "renderContent": {
+        "description": ""
+    }
+}

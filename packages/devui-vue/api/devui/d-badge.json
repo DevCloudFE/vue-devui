@@ -1,0 +1,49 @@
+{
+    "count": {
+        "type": [null, null],
+
+        "description": ""
+    },
+
+    "maxCount": {
+        "default": 99,
+
+        "description": ""
+    },
+
+    "showDot": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "status": {
+        "default": "info",
+
+        "description": ""
+    },
+
+    "position": {
+        "default": "top-right",
+
+        "description": ""
+    },
+
+    "offset": {
+        "description": ""
+    },
+
+    "bgColor": {
+        "description": ""
+    },
+
+    "textColor": {
+        "description": ""
+    },
+
+    "hidden": {
+        "default": false,
+
+        "description": ""
+    }
+}

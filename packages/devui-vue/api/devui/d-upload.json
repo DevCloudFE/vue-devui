@@ -1,0 +1,113 @@
+{
+    "accept": {
+        "description": ""
+    },
+
+    "webkitdirectory": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "uploadOptions": {
+        "description": ""
+    },
+
+    "multiple": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "autoUpload": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "placeholder": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "modelValue": {
+        "description": ""
+    },
+
+    "droppable": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "beforeUpload": {
+        "description": ""
+    },
+
+    "dynamicUploadOptionsFn": {
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "onChange": {
+        "description": ""
+    },
+
+    "fileDrop": {
+        "description": ""
+    },
+
+    "fileOver": {
+        "description": ""
+    },
+
+    "fileSelect": {
+        "description": ""
+    },
+
+    "deleteUploadedFile": {
+        "description": ""
+    },
+
+    "onError": {
+        "description": ""
+    },
+
+    "onSuccess": {
+        "description": ""
+    },
+
+    "onExceed": {
+        "description": ""
+    },
+
+    "onProgress": {
+        "description": ""
+    },
+
+    "onPreview": {
+        "description": ""
+    },
+
+    "oneTimeUpload": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "limit": {
+        "default": 0,
+
+        "description": ""
+    },
+
+    "httpRequest": {
+        "description": ""
+    }
+}

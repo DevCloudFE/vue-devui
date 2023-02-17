@@ -1,0 +1,85 @@
+{
+    "name": {
+        "description": ""
+    },
+
+    "halfChecked": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "isShowTitle": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "title": {
+        "description": ""
+    },
+
+    "color": {
+        "description": ""
+    },
+
+    "showAnimation": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "disabled": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "beforeChange": {
+        "description": ""
+    },
+
+    "size": {
+        "description": ""
+    },
+
+    "checked": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "value": {
+        "type": [null, null],
+
+        "description": ""
+    },
+
+    "label": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "onUpdate:checked": {
+        "description": ""
+    },
+
+    "onChange": {
+        "description": ""
+    },
+
+    "modelValue": {
+        "description": ""
+    },
+
+    "onUpdate:modelValue": {
+        "description": ""
+    },
+
+    "border": {
+        "default": false,
+
+        "description": ""
+    }
+}

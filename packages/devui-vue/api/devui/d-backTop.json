@@ -1,0 +1,25 @@
+{
+    "bottom": {
+        "default": "50px",
+
+        "description": ""
+    },
+
+    "right": {
+        "default": "30px",
+
+        "description": ""
+    },
+
+    "target": {
+        "default": "window",
+
+        "description": ""
+    },
+
+    "visibleHeight": {
+        "default": 300,
+
+        "description": ""
+    }
+}

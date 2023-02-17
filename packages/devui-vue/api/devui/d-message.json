@@ -1,0 +1,53 @@
+{
+    "id": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "visible": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "message": {
+        "default": "",
+
+        "description": ""
+    },
+
+    "type": {
+        "default": "normal",
+
+        "description": ""
+    },
+
+    "bordered": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "shadow": {
+        "default": true,
+
+        "description": ""
+    },
+
+    "duration": {
+        "default": 3000,
+
+        "description": ""
+    },
+
+    "showClose": {
+        "default": false,
+
+        "description": ""
+    },
+
+    "onClose": {
+        "description": ""
+    }
+}
