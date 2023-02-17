@@ -39,7 +39,8 @@
     "predev": "node ./devui-cli/index.js create -t vue-devui --ignore-parse-error",
     "prebuild": "node ./devui-cli/index.js create -t vue-devui --ignore-parse-error",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "devui-cli": "devui"
+    "devui-cli": "devui",
+    "hint": "pn tsx api/genjson.ts"
   },
   "peerDependencies": {
     "vue": "^3.2"
