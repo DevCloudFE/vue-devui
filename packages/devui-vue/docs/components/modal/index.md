@@ -308,3 +308,4 @@ export default defineComponent({
 | default | Modal 内容        |
 | header  | 自定义 Modal 顶部 |
 | footer  | 自定义 Modal 底部 |
+| content | 自定义 Modal 内容 |
