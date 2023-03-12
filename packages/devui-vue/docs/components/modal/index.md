@@ -225,6 +225,64 @@ export default defineComponent({
 
 :::
 
+### 自定义模板
+
+:::demo 弹窗支持`content` 、`footer`、`header`，三种插槽模式，用户可以根据不同场景展示相关内容，值得注意的是：当使用`content` 或者`header` 的时候 会优先渲染自定义内容
+
+```vue
+<template>
+  <d-button @click="handleClick">打开 modal</d-button>
+  <d-modal v-model="visible" title="自定义模板" :before-close="beforeClose" style="width: 500px">
+    <div>name: {{ data.name }}</div>
+    <div>age: {{ data.age }}</div>
+    <div>address: {{ data.address }}</div>
+
+    <template #content>
+      {{ data.content }}
+    </template>
+    <template #footer>
+      <d-modal-footer style="text-align: right; padding-right: 20px">
+        <d-button @click="hidden">取消</d-button>
+        <d-button @click="hidden">确认</d-button>
+      </d-modal-footer>
+    </template>
+  </d-modal>
+</template>
+
+<script>
+import { ref, defineComponent, reactive } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const visible = ref(false);
+    const data = reactive({
+      name: 'Tom',
+      age: 20,
+      address: 'Chengdu',
+      content: '自定义内容',
+    });
+    const handleClick = () => {
+      visible.value = true;
+    };
+    const hidden = () => {
+      visible.value = false;
+    };
+    const beforeClose = (done) => {
+      new Promise((resolve) => {
+        setTimeout(resolve, 1000);
+      }).then(done);
+    };
+
+    return { visible, data, handleClick, hidden, beforeClose };
+  },
+});
+</script>
+```
+
+:::
+
+
+
 ### Modal 参数
 
 | 参数名                 | 类型                                 | 默认值 | 说明                                       | 跳转 Demo                 |

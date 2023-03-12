@@ -111,7 +111,7 @@ export default defineComponent({
                   {slots.header ? slots.header() : title.value && <DModalHeader>{title.value}</DModalHeader>}
                 </div>
               )}
-              <DModalBody>{slots.default?.()}</DModalBody>
+              <DModalBody>{slots.content ? slots.content() : slots.default?.()}</DModalBody>
               {slots.footer?.()}
             </div>
           )}
