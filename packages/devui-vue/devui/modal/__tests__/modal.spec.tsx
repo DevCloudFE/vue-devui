@@ -122,6 +122,7 @@ describe('d-modal', () => {
         );
       },
     });
+
     await wait(100);
     await nextTick();
     visible.value = true;
