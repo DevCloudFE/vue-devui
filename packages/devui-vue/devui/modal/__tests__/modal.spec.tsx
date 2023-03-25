@@ -122,7 +122,6 @@ describe('d-modal', () => {
         );
       },
     });
-
     await wait(100);
     await nextTick();
     visible.value = true;
@@ -244,6 +243,48 @@ describe('d-modal', () => {
     await nextTick();
     expect(document.querySelector(ns.b())).toBeFalsy();
 
+    wrapper.unmount();
+  });
+
+  it('autofocus work well.', async () => {
+    const visible = ref(false);
+    const wrapper = mount({
+      setup() {
+        return () => (
+          <DModal v-model={visible.value} title="Start Snapshot Version">
+            {{
+              default: () => (
+                <>
+                  <div>name: Tom</div>
+                  <div>age: 20</div>
+                  <div>address: Chengdu</div>
+                </>
+              ),
+              footer: () => (
+                <DModalFooter>
+                  {/* 给取消按钮加click事件 */}
+                  <d-button class="btn-cancel" autofocus onClick={(visible.value = false)}>
+                    取消
+                  </d-button>
+                  <d-button>确认</d-button>
+                </DModalFooter>
+              ),
+            }}
+          </DModal>
+        );
+      },
+    });
+
+    await wait(100);
+    await nextTick();
+    visible.value = true;
+    await wait(100);
+    await nextTick();
+    const btnConfirm = document.querySelector('.btn-cancel');
+    await btnConfirm?.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+    await wait(100);
+    await nextTick();
+    expect(document.querySelector(ns.b())).toBeFalsy();
     wrapper.unmount();
   });
 });
