@@ -283,6 +283,50 @@ export default defineComponent({
 
 
 
+### 弹窗中的按钮配置 autofocus 自动获取焦点
+
+::: demo `button` 配置 `autofocus` 可以自动获取焦点，可以通过回车`enter`触发按钮按钮点击
+
+```vue
+<template>
+  <d-button @click="handleClick">打开 modal</d-button>
+  <d-modal v-model="visible" title="Start Snapshot Version">
+    <div>name: {{ data.name }}</div>
+    <div>age: {{ data.age }}</div>
+    <div>address: {{ data.address }}</div>
+    <template #footer>
+      <d-modal-footer style="text-align: right; padding-right: 20px;">
+        <d-button @click="hidden" autofocus>取消</d-button>
+        <d-button @click="hidden">确认</d-button>
+      </d-modal-footer>
+    </template>
+  </d-modal>
+</template>
+
+<script>
+import { defineComponent, ref, reactive } from 'vue';
+export default defineComponent({
+  setup() {
+    const visible = ref(false);
+    const data = reactive({
+      name: 'Tom',
+      age: 20,
+      address: 'Chengdu',
+    });
+    const handleClick = () => {
+      visible.value = true;
+    };
+    const hidden = () => {
+      visible.value = false;
+    };
+    return { visible, data, handleClick, hidden };
+  },
+});
+</script>
+```
+
+:::
+
 ### Modal 参数
 
 | 参数名                 | 类型                                 | 默认值 | 说明                                       | 跳转 Demo                 |
@@ -306,6 +350,6 @@ export default defineComponent({
 | 插槽名  | 说明              |
 | :------ | :---------------- |
 | default | Modal 内容        |
-| header  | 自定义 Modal 顶部 |
+| header  | 自定义 Modal 顶部，使用 title 和 header 会优先渲染 header |
 | footer  | 自定义 Modal 底部 |
-| content | 自定义 Modal 内容 |
+
