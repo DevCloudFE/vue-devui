@@ -227,7 +227,7 @@ export default defineComponent({
 
 ### 弹窗中的按钮配置 autofocus 自动获取焦点
 
-::: demo `button` 配置 `autofocus` 可以自动获取焦点，可以通过回车`enter`触发按钮按钮点击
+::: demo `button` 配置 `autofocus` 可以自动获取焦点，可以通过回车 `enter` 触发按钮按钮点击
 
 ```vue
 <template>
