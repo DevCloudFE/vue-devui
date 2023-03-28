@@ -225,57 +225,9 @@ export default defineComponent({
 
 :::
 
-### 配置按钮自动获得焦点
-
-:::demo 给 `button` 配置 `autofocus` 可以自动获得焦点，可以通过回车直接触发按钮点击
-
-```vue
-<template>
-  <d-button @click="handleClick">打开 modal</d-button>
-  <d-modal v-model="visible" title="Start Snapshot Version">
-    <div>name: {{ data.name }}</div>
-    <div>age: {{ data.age }}</div>
-    <div>address: {{ data.address }}</div>
-    <template #footer>
-      <d-modal-footer style="text-align: right; padding-right: 20px;">
-        <d-button @click="hidden" autofocus>取消</d-button>
-        <d-button @click="hidden">确认</d-button>
-      </d-modal-footer>
-    </template>
-  </d-modal>
-</template>
-
-<script>
-import { defineComponent, ref, reactive } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const visible = ref(false);
-    const data = reactive({
-      name: 'Tom',
-      age: 20,
-      address: 'Chengdu',
-    });
-
-    const handleClick = () => {
-      visible.value = true;
-    };
-
-    const hidden = () => {
-      visible.value = false;
-    };
-
-    return { visible, data, handleClick, hidden };
-  },
-});
-</script>
-```
-
-:::
-
 ### 弹窗中的按钮配置 autofocus 自动获取焦点
 
-::: demo `button` 配置 `autofocus` 可以自动获取焦点，可以通过回车`enter`触发按钮按钮点击
+::: demo `button` 配置 `autofocus` 可以自动获取焦点，可以通过回车 `enter` 触发按钮按钮点击
 
 ```vue
 <template>
