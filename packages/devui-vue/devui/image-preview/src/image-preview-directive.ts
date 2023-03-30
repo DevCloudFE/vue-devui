@@ -19,7 +19,7 @@ function unmountedPreviewImages() {
 }
 
 function getImgByEl(el: HTMLElement): Array<string> {
-  const imgs = Array.from(el.querySelectorAll('img'));
+  const imgs = [...el.querySelectorAll('img')];
   const urlList = [...imgs].map((item: HTMLImageElement) => {
     return (item.getAttribute('preview-src') || item.getAttribute('src')) ?? '';
   });
