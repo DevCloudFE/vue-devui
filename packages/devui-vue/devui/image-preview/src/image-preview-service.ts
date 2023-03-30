@@ -10,7 +10,7 @@ class ImagePreviewService {
   static $body: HTMLElement | null = null;
   static $div: HTMLDivElement | null = null;
   // 暂时的禁止滚动穿透,后续应该考虑用modal组件来渲染预览组件
-  static $overflow: string | null = '';
+  static $overflow = '';
 
   static open(props: ImagePreviewProps): void {
     this.$body = document.body;
@@ -25,7 +25,7 @@ class ImagePreviewService {
     this.$body?.style.setProperty('overflow', this.$overflow);
     this.$overflow = null;
 
-    this.$div && this.$body?.removeChild(this.$div);
+    this.$div && this.$body.removeChild(this.$div);
     this.$body = null;
     this.$div = null;
   }
