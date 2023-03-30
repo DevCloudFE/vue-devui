@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, Teleport, toRefs, Transition, watch } from 'vue';
+import { computed, defineComponent, nextTick, ref, Teleport, toRefs, Transition, watch } from 'vue';
 import { modalProps, ModalProps, ModalType } from './modal-types';
 import { Icon } from '../../icon';
 import { FixedOverlay } from '../../overlay';
@@ -34,6 +34,12 @@ export default defineComponent({
     watch(modelValue, (val) => {
       if (val && !keepLast.value) {
         clearPosition();
+        nextTick(() => {
+          const autofocus = document?.querySelector('[autofocus]');
+          if (autofocus) {
+            (autofocus as HTMLElement).focus();
+          }
+        });
       }
     });
 
