@@ -356,10 +356,6 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     {
       avatar: 'https://avatars.githubusercontent.com/u/69743874?v=4',
       homepage: 'https://github.com/wowCheng'
-    },
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/86860377?v=4',
-      homepage: 'https://github.com/sakanaovo'
     }
   ],
   notification: [
