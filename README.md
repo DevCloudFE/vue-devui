@@ -226,6 +226,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center"><a href="https://github.com/xGuangsPBD"><img src="https://avatars.githubusercontent.com/u/41880611?v=4" width="100px;" alt=""/><br /><sub><b>xGuangsPBD</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xGuangsPBD" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/cnvoid"><img src="https://avatars.githubusercontent.com/u/17289381?v=4" width="100px;" alt=""/><br /><sub><b>cnvoid</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=cnvoid" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center"><a href="https://github.com/sakanaovo"><img src="https://avatars.githubusercontent.com/u/86860377?v=4" width="100px;" alt=""/><br /><sub><b>sakanaovo</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=sakanaovo" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
