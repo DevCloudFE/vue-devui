@@ -37,7 +37,7 @@ jobs:
           node -v
           npm install pnpm -g
           pnpm -v
-          pnpm i
+          pnpm install --no-frozen-lockfile
           pnpm run build:lib
 
       - name: Publish
