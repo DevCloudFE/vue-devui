@@ -213,10 +213,10 @@ pnpm scripts
       <td align="center"><a href="https://github.com/xiaogonggong-w"><img src="https://avatars.githubusercontent.com/u/79799040?v=4" width="100px;" alt=""/><br /><sub><b>xiaogonggong-w</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xiaogonggong-w" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/hqchqc"><img src="https://avatars.githubusercontent.com/u/51051157?v=4" width="100px;" alt=""/><br /><sub><b>hqchqc</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=hqchqc" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/Lucky-Ya-Q"><img src="https://avatars.githubusercontent.com/u/63504321?v=4" width="100px;" alt=""/><br /><sub><b>Lucky-Ya-Q</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=Lucky-Ya-Q" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/xGuangsPBD"><img src="https://avatars.githubusercontent.com/u/41880611?v=4" width="100px;" alt=""/><br /><sub><b>xGuangsPBD</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xGuangsPBD" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/cnvoid"><img src="https://avatars.githubusercontent.com/u/17289381?v=4" width="100px;" alt=""/><br /><sub><b>cnvoid</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=cnvoid" title="Code">💻</a></td>
     </tr>
     <tr>
+      <td align="center"><a href="https://github.com/xGuangsPBD"><img src="https://avatars.githubusercontent.com/u/41880611?v=4" width="100px;" alt=""/><br /><sub><b>xGuangsPBD</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=xGuangsPBD" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/cnvoid"><img src="https://avatars.githubusercontent.com/u/17289381?v=4" width="100px;" alt=""/><br /><sub><b>cnvoid</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=cnvoid" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/sakanaovo"><img src="https://avatars.githubusercontent.com/u/86860377?v=4" width="100px;" alt=""/><br /><sub><b>sakanaovo</b></sub></a><br /><a href="https://github.com/DevCloudFE/vue-devui/commits?author=sakanaovo" title="Code">💻</a></td>
     </tr>
   </tbody>
