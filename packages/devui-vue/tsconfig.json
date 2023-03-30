@@ -6,7 +6,7 @@
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom","DOM.Iterable"],
     "types": ["vite/client", "jest","node"],
     "esModuleInterop": true,
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
