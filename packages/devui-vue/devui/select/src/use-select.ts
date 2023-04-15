@@ -232,6 +232,7 @@ export default function useSelect(
       handleClose();
       blur();
     }
+    filterQuery.value = '';
   };
 
   const tagDelete = (data: OptionObjectItem) => {
