@@ -1,12 +1,14 @@
 import { mount } from '@vue/test-utils';
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, reactive } from 'vue';
 import DInput from '../src/input';
+import { Form, FormItem } from '../../form';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
 const ns = useNamespace('input');
 const dotNs = useNamespace('input', true);
 const slotNs = useNamespace('input-slot');
 const dotSlotNs = useNamespace('input-slot', true);
+const inputNs = useNamespace('input', true);
 
 const innerClass = ns.e('inner');
 const smClass = ns.m('sm');
@@ -168,7 +170,57 @@ describe('d-input', () => {
     // 调用DOM的focus和select并不会给节点的div加上devui-input--focus
   });
 
-  it.todo('d-input validate-event work');
+  it('d-input validate-event work', async () => {
+    const formData = reactive({ password: '' });
+    const rules = { password: { min: 8, message: '密码至少8位', trigger: 'blur' } };
+    const enable = ref(true);
+
+    const wrapper = mount({
+      components: {
+        'd-form': Form,
+        'd-form-item': FormItem,
+        'd-input': DInput,
+      },
+      setup() {
+        return {
+          formData,
+          rules,
+          enable,
+        };
+      },
+      template: `
+        <d-form :data="formData" :rules="rules">
+          <d-form-item
+            field="password"
+            label="密码"
+          >
+            <d-input :validate-event="enable" v-model="formData.password"></d-input>
+          </d-form-item>
+        </d-form>
+      `,
+    });
+
+    const input = wrapper.find(inputNs.e('inner'));
+
+    /** input validate-event default true */
+    // min length < 8
+    input.setValue('123');
+    await input.trigger('blur');
+    expect(wrapper.find(inputNs.m('error')).exists()).toBe(true);
+
+    // min length = 8
+    input.setValue('12345678');
+    await input.trigger('blur');
+    expect(wrapper.find(inputNs.m('error')).exists()).toBe(false);
+
+    /** set input validate-event as false */
+    enable.value = false;
+    await nextTick();
+    await input.setValue('123');
+    expect((input.element as HTMLInputElement).value).toBe('123');
+    await input.trigger('blur');
+    expect(wrapper.find(inputNs.m('error')).exists()).toBe(false);
+  });
 
   it('d-input prefix/suffix props work', async () => {
     const wrapper = mount({
