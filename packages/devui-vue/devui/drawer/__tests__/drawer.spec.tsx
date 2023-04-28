@@ -3,6 +3,7 @@ import { nextTick, ref } from 'vue';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { wait } from '../../shared/utils/wait';
 import Drawer from '../src/drawer';
+import DrawerService from '../src/drawer-service';
 
 const drawerNs = useNamespace('drawer', true);
 const noDotDrawerNs = useNamespace('drawer');
@@ -176,5 +177,19 @@ describe('d-drawer', () => {
 
   it.todo('props lock-scroll should work well.');
 
-  it.todo('$drawerService should work well.');
+  it('$drawerService should work well.', async () => {
+    const drawerService = new DrawerService();
+
+    const openFn = jest.spyOn(drawerService, 'open');
+
+    const closeOptions = drawerService.open({});
+
+    expect(openFn).toBeCalledTimes(1); // open method executed successfully
+
+    const closeFn = jest.spyOn(closeOptions, 'close');
+
+    closeOptions.close();
+
+    expect(closeFn).toBeCalledTimes(1); // close method executed successfully
+  });
 });
