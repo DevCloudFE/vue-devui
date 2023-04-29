@@ -229,8 +229,6 @@ describe('menu test', () => {
   });
 
   it('props router work well.', async () => {
-    const useMenuRouter = ref(false);
-
     const onSelect = jest.fn((e) => {
       return e;
     });
@@ -250,12 +248,11 @@ describe('menu test', () => {
       },
       setup() {
         return {
-          useMenuRouter,
           onSelect,
         };
       },
       template: `
-        <d-menu :router="useMenuRouter" @select="onSelect">
+        <d-menu @select="onSelect">
           <d-menu-item key="/home">首页</d-menu-item>
         </d-menu>
       `,
