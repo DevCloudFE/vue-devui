@@ -32,15 +32,15 @@ export default defineComponent({
     const isSelect = ref(initSelect(defaultSelectKey.value, key, multiple, disabled));
     const isLayer1 = ref(true);
     const rootMenuEmit = inject('rootMenuEmit') as (eventName: string, ...args: unknown[]) => void;
-    const useRouter = inject('useRouter') as boolean;
+    const useRouter = inject('useRouter') as Ref<boolean>;
     const router = instance?.appContext.config.globalProperties.$router as Router;
-    const classObject = computed(()=>({
+    const classObject = computed(() => ({
       [`${ns.b()}-item`]: true,
       [`${ns.b()}-item-isCollapsed`]: isCollapsed.value,
       [menuItemSelect]: isSelect.value,
       [menuItemDisabled]: disabled.value,
     }));
-    menuStore.on('menuItem:clear:select', ()=>{
+    menuStore.on('menuItem:clear:select', () => {
       isSelect.value = false;
     });
     const onClick = (e: MouseEvent) => {
@@ -56,7 +56,7 @@ export default defineComponent({
             useClick(e as clickEvent);
           }
           isSelect.value = true;
-          changeRouteResult = changeRoute(props, router, useRouter, key);
+          changeRouteResult = changeRoute(props, router, useRouter.value, key);
         } else {
           if (ele.classList.contains(menuItemSelect)) {
             rootMenuEmit('deselect', { type: 'deselect', key, el: ele, e });
@@ -85,12 +85,12 @@ export default defineComponent({
     const icons = <span class={`${ns.b()}-icon`}>{ctx.slots.icon?.()}</span>;
     const menuItems = ref(null);
     watch(disabled, () => {
-      if (!multiple){
+      if (!multiple) {
         classObject.value[menuItemSelect] = false;
       }
     });
     watch(
-      ()=>[...defaultSelectKey.value],
+      () => [...defaultSelectKey.value],
       (n) => {
         isSelect.value = initSelect(n, key, multiple, disabled);
         classObject.value[menuItemSelect] = isSelect.value;
@@ -132,10 +132,7 @@ export default defineComponent({
     return () => {
       return mode.value === 'vertical' ? (
         <div class={`${ns.b()}-item-vertical-wrapper`}>
-          <li
-            class={classObject.value}
-            onClick={onClick}
-            ref={menuItems}>
+          <li class={classObject.value} onClick={onClick} ref={menuItems}>
             {ctx.slots.icon !== undefined && icons}
             {props.href === '' ? (
               <Transition name="fade">
@@ -149,10 +146,7 @@ export default defineComponent({
           </li>
         </div>
       ) : (
-        <li
-          class={classObject.value}
-          onClick={onClick}
-          ref={menuItems}>
+        <li class={classObject.value} onClick={onClick} ref={menuItems}>
           {ctx.slots.icon !== undefined && icons}
           {props.href === '' ? (
             <Transition name="fade">
