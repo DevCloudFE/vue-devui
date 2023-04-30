@@ -1,5 +1,6 @@
 import { mount, VueWrapper } from '@vue/test-utils';
 import { ComponentPublicInstance, nextTick, ref } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
 import { Menu, SubMenu, MenuItem } from '../index';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 
@@ -18,16 +19,21 @@ const menuitemDisabled = ns.b() + '-item-disabled';
 const dotMenuItemSelect = dotNs.b() + '-item-select';
 
 // fix: TypeError: Array.from(...).at is not a function
-!Array.prototype.at && (Array.prototype.at = function at (n) {
-  // Convert the argument to an integer
-  n = Math.trunc(n) || 0; // 去掉小数点
-  // Allow negative indexing from the end
-  if (n < 0) { n += this.length; }
-  // Out-of-bounds access returns undefined
-  if (n < 0 || n >= this.length) { return undefined; }
-  // Otherwise, this is just normal property access
-  return this[n];
-});
+!Array.prototype.at &&
+  (Array.prototype.at = function at(n) {
+    // Convert the argument to an integer
+    n = Math.trunc(n) || 0; // 去掉小数点
+    // Allow negative indexing from the end
+    if (n < 0) {
+      n += this.length;
+    }
+    // Out-of-bounds access returns undefined
+    if (n < 0 || n >= this.length) {
+      return undefined;
+    }
+    // Otherwise, this is just normal property access
+    return this[n];
+  });
 
 describe('menu test', () => {
   let wrapper: VueWrapper<ComponentPublicInstance>;
@@ -152,6 +158,7 @@ describe('menu test', () => {
     expect(wrapper.findAll('i')[0].classes().includes('is-opened')).toBe(true);
     expect(wrapper.findAll('i')[1].classes().includes('is-opened')).toBe(false);
   });
+
   it('props mode(vertical/horizontal) work well.', async () => {
     wrapper = mount({
       components: {
@@ -221,10 +228,65 @@ describe('menu test', () => {
     wrapper.unmount();
   });
 
-  it.todo('props router work well.');
+  it('props router work well.', async () => {
+    const onSelect = jest.fn((e) => {
+      return e;
+    });
+
+    const router = createRouter({
+      history: createWebHistory(),
+      routes: [
+        { path: '/home', name: 'Home', component: { template: '<div>首页</div>' } },
+        { path: '/about', name: 'About', component: { template: '<div>关于</div>' } },
+      ],
+    });
+
+    const component = {
+      components: {
+        'd-menu': Menu,
+        'd-menu-item': MenuItem,
+      },
+      setup() {
+        return {
+          onSelect,
+        };
+      },
+      template: `
+        <d-menu @select="onSelect">
+          <d-menu-item key="/home">首页</d-menu-item>
+        </d-menu>
+      `,
+    };
+
+    const innerWrapper = mount(component, {
+      global: {
+        plugins: [router],
+      },
+    });
+
+    const firstMenuItem = innerWrapper.find(dotMenuItem);
+    expect(firstMenuItem.exists()).toBe(true);
+
+    await innerWrapper.setProps({
+      router: false,
+    });
+    await firstMenuItem.trigger('click');
+    expect(onSelect).toBeCalledTimes(1);
+    expect(onSelect.mock.results.length).toBe(1);
+    expect(onSelect.mock.results[0].value.hasOwnProperty('route')).toBe(false);
+
+    await innerWrapper.setProps({
+      router: true,
+    });
+    await firstMenuItem.trigger('click');
+    expect(onSelect).toBeCalledTimes(2);
+    expect(onSelect.mock.results.length).toBe(2);
+    expect(onSelect.mock.results[1].value.hasOwnProperty('route')).toBe(true);
+  });
 
   it.todo('slot icon work well.');
-  it('menu - disabled', async ()=>{
+
+  it('menu - disabled', async () => {
     wrapper = wrapper = mount({
       components: {
         'd-menu': Menu,
@@ -232,18 +294,18 @@ describe('menu test', () => {
         'd-menu-item': MenuItem,
       },
       template: `
-      <d-menu>
-        <d-menu-item key="home">首页</d-menu-item>
-        <d-sub-menu title="课程" key="course" class="course" disabled>
-          <d-menu-item key="c"> C </d-menu-item>
-          <d-sub-menu title="Python" key="python">
-            <d-menu-item key="basic"> 基础 </d-menu-item>
-            <d-menu-item key="advanced"> 进阶 </d-menu-item>
+        <d-menu>
+          <d-menu-item key="home">首页</d-menu-item>
+          <d-sub-menu title="课程" key="course" class="course" disabled>
+            <d-menu-item key="c"> C </d-menu-item>
+            <d-sub-menu title="Python" key="python">
+              <d-menu-item key="basic"> 基础 </d-menu-item>
+              <d-menu-item key="advanced"> 进阶 </d-menu-item>
+            </d-sub-menu>
           </d-sub-menu>
-        </d-sub-menu>
-        <d-menu-item key="person">个人</d-menu-item>
-        <d-menu-item key="custom" href="https://www.baidu.com" disabled> Link To Baidu </d-menu-item>
-      </d-menu>
+          <d-menu-item key="person">个人</d-menu-item>
+          <d-menu-item key="custom" href="https://www.baidu.com" disabled> Link To Baidu </d-menu-item>
+        </d-menu>
       `,
     });
     await nextTick();
