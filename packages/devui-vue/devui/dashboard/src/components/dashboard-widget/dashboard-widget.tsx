@@ -1,18 +1,18 @@
 import { defineComponent, toRefs } from 'vue';
-import { dashboardWidgetProps, DashboardWidgetProps } from './dashboard-widget-types';
+import { dashboardWidgetProps, DashboardWidgetProps, EmitEvent, emitEvents } from './dashboard-widget-types';
 import { widgetClass } from '../../composables/use-dashboard';
 import useWidget from '../../composables/use-widget';
 
 export default defineComponent({
   name: 'DDashboardWidget',
   props: dashboardWidgetProps,
-  emits: [],
+  emits: emitEvents as unknown as (typeof emitEvents)[number][],
   setup(props: DashboardWidgetProps, ctx) {
-    const { widgetAttrs } = useWidget(toRefs(props));
+    const { widgetAttrs, widgetRef } = useWidget(toRefs(props), ctx.emit);
 
     return () => {
       return (
-        <div class={[widgetClass, 'grid-stack-item']} {...widgetAttrs.value}>
+        <div ref={widgetRef} class={[widgetClass, 'grid-stack-item']} {...widgetAttrs.value}>
           <div class="grid-stack-item-content">{ctx.slots.default?.()}</div>
         </div>
       );

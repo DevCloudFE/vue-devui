@@ -12,9 +12,23 @@
 
 ```vue
 <template>
-  <d-button @click="changePosition">Change Position</d-button>
+  <d-form class="control__form">
+    <p>Control first Widget</p>
+    <d-button @click="changePosition">Random Position</d-button>
+    <d-checkbox v-model="widget.noMove" :active-value="true" :inactive-value="false" label="noMove" />
+    <d-checkbox v-model="widget.noResize" :active-value="true" :inactive-value="false" label="noResize" />
+    <d-checkbox v-model="widget.locked" :active-value="true" :inactive-value="false" label="locked" />
+    <h4>minWidth:</h4>
+    <d-input-number v-model="widget.minW" :min="0" :max="12"></d-input-number>
+    <h4>minHeight:</h4>
+    <d-input-number v-model="widget.minH" :min="0" :max="12"></d-input-number>
+    <h4>maxWidth:</h4>
+    <d-input-number v-model="widget.maxW" :min="0" :max="12"></d-input-number>
+    <h4>maxHeight:</h4>
+    <d-input-number v-model="widget.maxH" :min="0" :max="12"></d-input-number>
+  </d-form>
   <d-dashboard>
-    <d-dashboard-widget :x="widget.x" :y="widget.y" :w="widget.w" :h="widget.h">
+    <d-dashboard-widget v-model:x="widget.x" v-model:y="widget.y" v-model:w="widget.w" v-model:h="widget.h" v-model:no-resize="widget.noResize" v-model:no-move="widget.noMove" v-model:locked="widget.locked" v-model:min-w="widget.minW" v-model:min-h="widget.minH" v-model:max-w="widget.maxW" v-model:max-h="widget.maxH">
       <d-countdown :value="deadline" />
     </d-dashboard-widget>
     <d-dashboard-widget>2</d-dashboard-widget>
@@ -27,27 +41,50 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const widget = ref({
+    const widget = ref({  
       x: 0,
       y: 0,
       w: 2,
-      h: 2
+      h: 2,
+      noResize: false,
+      noMove: false,
+      locked: false,
+      minW: undefined,
+      minH: undefined,
+      maxW: undefined,
+      maxH: undefined,
     })
     const deadline = ref(Date.now() + 100 * 1000);
+    const getRandomSize = () => Math.floor(Math.random() * 6);
     const changePosition = () => {
-      widget.value.x = 2;
-      widget.value.y = 2;
+      widget.value.x = getRandomSize();
+      widget.value.y = getRandomSize();
+      widget.value.w = getRandomSize();
+      widget.value.h = getRandomSize();
     }
+    const toggleResize = () => (widget.value.noResize = !widget.value.noResize);
+    const toggleMove = () => (widget.value.noMove = !widget.value.noMove);
     return {
       deadline,
       widget,
-      changePosition
+      changePosition,
+      toggleResize,
+      toggleMove
     };
   },
 });
 </script>
 
-<style></style>
+<style>
+.control__form {
+  line-height: 32px;
+  font-size: 24px;
+}
+
+.control__form .devui-checkbox {
+  margin: 8px 0;
+}
+</style>
 ```
 
 :::

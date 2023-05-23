@@ -4,20 +4,28 @@
 
 .#{$devui-prefix}-dashboard {
   --hover-translate: -4px;
+  $root: &;
 
   background-color: var(--devui-global-bg);
 
   &__widget {
+    $widget: &;
+
     overflow: hidden;
+
+    &.ui-draggable-disabled > .grid-stack-item-content,
+    #{$root}.grid-stack-static > & > .grid-stack-item-content {
+      cursor: default;
+    }
 
     & .grid-stack-item-content {
       position: relative;
-      cursor: pointer;
       overflow: auto;
       background-color: var(--devui-base-bg);
       color: var(--devui-text-weak);
       box-shadow: 0 2px 8px 0 var(--devui-light-shadow);
       transition: 0.5s;
+      cursor: pointer;
     }
 
     // resize handle 图标修改
