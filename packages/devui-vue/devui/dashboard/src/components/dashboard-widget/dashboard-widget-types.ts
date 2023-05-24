@@ -63,13 +63,13 @@ export const dashboardWidgetProps = {
   },
   // widget 节点 id，对应生成 GridStackNode 的 id
   id: {
-    type: Number || String,
+    type: [Number, String],
   },
   // 用户自定义数据，可用于区分传递等等
   data: {
     type: String,
   },
-} as const;
+};
 
 export const emitEvents = [
   'update:x',

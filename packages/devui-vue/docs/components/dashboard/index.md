@@ -27,11 +27,13 @@
     <h4>maxHeight:</h4>
     <d-input-number v-model="widget.maxH" :min="0" :max="12"></d-input-number>
   </d-form>
-  <d-dashboard>
+  <d-dashboard :show-widget-bg="true" :show-grid-block="true">
     <d-dashboard-widget v-model:x="widget.x" v-model:y="widget.y" v-model:w="widget.w" v-model:h="widget.h" v-model:no-resize="widget.noResize" v-model:no-move="widget.noMove" v-model:locked="widget.locked" v-model:min-w="widget.minW" v-model:min-h="widget.minH" v-model:max-w="widget.maxW" v-model:max-h="widget.maxH">
       <d-countdown :value="deadline" />
     </d-dashboard-widget>
-    <d-dashboard-widget>2</d-dashboard-widget>
+    <d-dashboard-widget @widgetResize="widgetResize" :w="3" :h="4">
+      <div class="card"></div>
+    </d-dashboard-widget>
     <d-dashboard-widget>3</d-dashboard-widget>
   </d-dashboard>
 </template>
@@ -54,22 +56,33 @@ export default defineComponent({
       maxW: undefined,
       maxH: undefined,
     })
+
     const deadline = ref(Date.now() + 100 * 1000);
+
     const getRandomSize = () => Math.floor(Math.random() * 6);
+
     const changePosition = () => {
       widget.value.x = getRandomSize();
       widget.value.y = getRandomSize();
       widget.value.w = getRandomSize();
       widget.value.h = getRandomSize();
     }
+
     const toggleResize = () => (widget.value.noResize = !widget.value.noResize);
+
     const toggleMove = () => (widget.value.noMove = !widget.value.noMove);
+
+    const widgetResize = ({w, h}) => {
+      console.log('widget 2 resize:', w, ' x ', h);
+    }
+
     return {
       deadline,
       widget,
       changePosition,
       toggleResize,
-      toggleMove
+      toggleMove,
+      widgetResize
     };
   },
 });

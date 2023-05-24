@@ -7,3 +7,4 @@ export const isFunction = (value: unknown): value is () => unknown => Object.pro
 export const isUndefined = (value: unknown): value is undefined => value === undefined;
 export const isNull = (value: unknown): value is null => value === null;
 export const isHTMLElement = (value: unknown): value is HTMLElement => inBrowser && 'HTMLElement' in window && value instanceof HTMLElement;
+export const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);

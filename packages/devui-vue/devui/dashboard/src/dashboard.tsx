@@ -1,6 +1,7 @@
-import { defineComponent, provide, toRefs } from 'vue';
+import { defineComponent, toRefs } from 'vue';
 import { dashboardProps, DashboardProps } from './dashboard-types';
 import useDashboard, { ns } from './composables/use-dashboard';
+import { useDashboardWidgetBg, useGridBlock } from './composables/use-dashboard-style';
 import './dashboard.scss';
 
 export default defineComponent({
@@ -22,17 +23,19 @@ export default defineComponent({
       disableResize,
       showGridBlock,
       trashSelector,
+      showWidgetBg,
     } = toRefs(props);
 
     const uniqueName = ns.m(`${Date.now()}`);
     const { gridStack } = useDashboard(props, uniqueName);
 
-    {
-      provide('rootDashboardEmit', ctx.emit);
-    }
+    const { dashboardWidgetBgClass } = useDashboardWidgetBg(showWidgetBg);
+
+    // TODO:toggle时存在问题，gridstack的基础样式会被移除？？
+    const { dashboardGridBlockClass } = useGridBlock(showGridBlock, cellHeight, margin, column, gridStack);
 
     return () => {
-      return <div class={[ns.b(), uniqueName]}>{ctx.slots.default?.()}</div>;
+      return <div class={[ns.b(), uniqueName, dashboardGridBlockClass.value, dashboardWidgetBgClass.value]}>{ctx.slots.default?.()}</div>;
     };
   },
 });

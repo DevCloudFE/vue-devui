@@ -5,7 +5,7 @@ export const dashboardProps = {
   // 高级配置用于做完全自定义的配置化，会覆盖掉下面的配置
   advancedOptions: {
     type: Object as PropType<GridStackOptions>,
-    default: {}
+    default: {},
   },
   /**
    * 设置当前dashboard列数，> 12 列时，需要自行定义css来定义样式
@@ -49,12 +49,12 @@ export const dashboardProps = {
   },
   // 每个单元格高度，默认为 auto 自动计算，趋于正方形；number 时默认单位px；string 支持 em/rem/px
   cellHeight: {
-    type: Number || String,
+    type: [Number, String],
     default: 'auto',
   },
   // widget 间距（实质上是用 inset 实现）
   margin: {
-    type: Number || String,
+    type: [Number, String],
     default: 8,
   },
   // 是否开启浮动模式；浮动模式下能够随意拖拽摆放widget位置。非浮动模式下，widget在垂直方向的上方不允许为空（类似紧凑模式的概念）
@@ -89,8 +89,13 @@ export const dashboardProps = {
   },
   // 指定当前仪表盘widget回收站的选择器
   trashSelector: {
-    type: String
-  }
-} as const;
+    type: String,
+  },
+  // 是否显示 widget 自带的背景和阴影
+  showWidgetBg: {
+    type: Boolean,
+    default: true,
+  },
+};
 
 export type DashboardProps = ExtractPropTypes<typeof dashboardProps>;

@@ -4,9 +4,33 @@
 
 .#{$devui-prefix}-dashboard {
   --hover-translate: -4px;
+  --widget-bg: none;
+  --widget-shadow: none;
+  --widget-shadow-hover: none;
   $root: &;
 
-  background-color: var(--devui-global-bg);
+  background-color: $devui-global-bg;
+
+  &.dashboard-show-widget-bg {
+    --widget-bg: var(--devui-base-bg);
+    --widget-shadow: 0 2px 8px 0 var(--devui-light-shadow);
+    --widget-shadow-hover: 0 4px 8px 0 var(--devui-shadow);
+  }
+
+  &.dashboard-show-grid-block {
+    background-color: transparent;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      pointer-events: none;
+    }
+  }
 
   &__widget {
     $widget: &;
@@ -21,9 +45,9 @@
     & .grid-stack-item-content {
       position: relative;
       overflow: auto;
-      background-color: var(--devui-base-bg);
-      color: var(--devui-text-weak);
-      box-shadow: 0 2px 8px 0 var(--devui-light-shadow);
+      color: $devui-text-weak;
+      background-color: var(--widget-bg);
+      box-shadow: var(--widget-shadow);
       transition: 0.5s;
       cursor: pointer;
     }
@@ -65,8 +89,13 @@
     &:hover {
       & .grid-stack-item-content {
         transform: translateY(var(--hover-translate));
-        box-shadow: 0 4px 8px 0 var(--devui-shadow);
+        box-shadow: var(--widget-shadow-hover);
       }
+    }
+
+    &.grid-stack-placeholder > .placeholder-content {
+      background-color: $devui-global-bg;
+      border: 1px dashed $devui-brand;
     }
   }
 }

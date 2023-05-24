@@ -1,7 +1,7 @@
-import { ToRefs, ref, onMounted, watch, computed } from 'vue';
-import { Utils, GridHTMLElement, GridItemHTMLElement, GridStack } from 'gridstack';
+import { ToRefs, ref, onMounted, watch, computed, onUnmounted } from 'vue';
+import { GridHTMLElement, GridItemHTMLElement, GridStack } from 'gridstack';
 import { DashboardWidgetProps, EmitEvent } from '../components/dashboard-widget/dashboard-widget-types';
-import useAttrsObserver from './use-attrs-observer';
+import useAttrsObserver, { dealBoolean, dealNumber } from './use-attrs-observer';
 
 const ATTRS_PROPS_MAP = new Map<string, { prop: keyof DashboardWidgetProps; type: 'string' | 'number' | 'boolean' }>([
   ['gs-x', { prop: 'x', type: 'number' }],
@@ -18,18 +18,29 @@ const ATTRS_PROPS_MAP = new Map<string, { prop: keyof DashboardWidgetProps; type
   ['gs-id', { prop: 'id', type: 'string' }],
 ]);
 
+const isAttrEqual = (oldValue: string | null, newValue: any, nullBeOne = false) => {
+  const type = typeof newValue;
+
+  if (type === 'boolean') {
+    return dealBoolean(oldValue) === newValue;
+  } else if (type === 'number') {
+    return dealNumber(oldValue, nullBeOne) === newValue;
+  }
+
+  return oldValue === newValue;
+};
+
 export default function useWidget(
   { autoPosition, x, y, w, h, minW, maxW, minH, maxH, noResize, noMove, locked, id, data }: ToRefs<DashboardWidgetProps>,
   emit: EmitEvent
 ) {
-  let gridStack: GridStack | undefined;
-  const widgetRef = ref<HTMLElement>();
+  const widgetRef = ref<GridItemHTMLElement>();
 
-  // 获取当前 widget 所在的 dashboard（PS:由于父子组件时序问题，所以得写成函数来获取）
-  const getCacheGridStack = () => gridStack || (gridStack = (widgetRef.value?.parentElement as GridHTMLElement).gridstack);
+  // 获取当前 widget 所在的 dashboard(gridstack)
+  const gridStack = computed(() => (widgetRef.value?.parentElement as GridHTMLElement).gridstack);
 
-  // 获取当前 widget
-  const getWidgetElement = () => Utils.getElement(widgetRef.value as GridItemHTMLElement) as GridItemHTMLElement;
+  // 获取当前 widgetNode
+  const widgetNode = computed(() => widgetRef.value?.gridstackNode);
 
   const widgetAttrs = computed(() => ({
     'gs-x': x.value,
@@ -47,14 +58,15 @@ export default function useWidget(
     'gs-id': id?.value,
   }));
 
-  // props响应式
-  onMounted(() => {
-    // props响应式部分参数处理
+  // props响应式部分参数处理
+  {
     watch([x, y, w, h, minW, minH, maxW, maxH], ([newX, newY, newW, newH, newMinW, newMinH, newMaxW, newMaxH]) => {
-      getCacheGridStack();
+      if (!widgetRef.value) {
+        return;
+      }
 
       // 更新布局
-      gridStack?.update(getWidgetElement(), {
+      gridStack.value?.update(widgetRef.value, {
         x: newX,
         y: newY,
         w: newW,
@@ -67,29 +79,66 @@ export default function useWidget(
     });
 
     watch(noResize, () => {
-      getCacheGridStack();
-      gridStack?.resizable(getWidgetElement(), !noResize.value);
+      if (!widgetRef.value) {
+        return;
+      }
+      gridStack.value?.resizable(widgetRef.value, !noResize.value);
     });
 
     watch(noMove, () => {
-      getCacheGridStack();
-      gridStack?.movable(getWidgetElement(), !noMove.value);
+      if (!widgetRef.value) {
+        return;
+      }
+      gridStack.value?.movable(widgetRef.value, !noMove.value);
     });
 
     watch(locked, () => {
-      getCacheGridStack();
-      gridStack?.update(getWidgetElement(), { locked: locked.value });
+      if (!widgetRef.value) {
+        return;
+      }
+      gridStack.value?.update(widgetRef.value, { locked: locked.value });
     });
-  });
+  }
 
   // 侦听用户操作/gridstack内部计算导致的 widget 参数变化，同步到外部
   {
-    const { observerAttributesChange } = useAttrsObserver(ATTRS_PROPS_MAP, emit);
+    const { observerAttributesChange } = useAttrsObserver<keyof DashboardWidgetProps, Parameters<EmitEvent>[0]>(ATTRS_PROPS_MAP, emit);
 
     onMounted(() => {
-      observerAttributesChange(getWidgetElement());
+      if (!widgetRef.value) {
+        return;
+      }
+      observerAttributesChange(widgetRef.value, (mutation, newValue) => {
+        const { attributeName, oldValue } = mutation;
+        const isEqual = isAttrEqual(oldValue, newValue, attributeName === 'gs-w' || attributeName === 'gs-h');
+
+        if (isEqual) {
+          return;
+        }
+
+        // 根据修改的属性，触发对应事件
+        switch (attributeName) {
+        case 'gs-x':
+          emit('xChange', newValue);
+          break;
+        case 'gs-y':
+          emit('yChange', newValue);
+          break;
+        case 'gs-w':
+          emit('widthChange', newValue);
+          emit('widgetResize', { w: widgetNode.value?.w, h: widgetNode.value?.h });
+          break;
+        case 'gs-h':
+          emit('heightChange', newValue);
+          emit('widgetResize', { w: widgetNode.value?.w, h: widgetNode.value?.h });
+          break;
+        }
+      });
     });
   }
+
+  onMounted(() => emit('widgetInit'));
+  onUnmounted(() => emit('widgetDestroy'));
 
   return {
     widgetAttrs,
