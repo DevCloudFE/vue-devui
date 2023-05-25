@@ -27,15 +27,15 @@ export default defineComponent({
     } = toRefs(props);
 
     const uniqueName = ns.m(`${Date.now()}`);
+
     const { gridStack } = useDashboard(props, uniqueName);
 
-    const { dashboardWidgetBgClass } = useDashboardWidgetBg(showWidgetBg);
+    useDashboardWidgetBg(showWidgetBg, gridStack);
 
-    // TODO:toggle时存在问题，gridstack的基础样式会被移除？？
-    const { dashboardGridBlockClass } = useGridBlock(showGridBlock, cellHeight, margin, column, gridStack);
+    useGridBlock(showGridBlock, cellHeight, margin, column, gridStack);
 
     return () => {
-      return <div class={[ns.b(), uniqueName, dashboardGridBlockClass.value, dashboardWidgetBgClass.value]}>{ctx.slots.default?.()}</div>;
+      return <div class={[ns.b(), uniqueName]}>{ctx.slots.default?.()}</div>;
     };
   },
 });

@@ -87,9 +87,9 @@ export const dashboardProps = {
     type: Boolean,
     default: false,
   },
-  // 指定当前仪表盘widget回收站的选择器
+  // 指定当前仪表盘widget回收站的选择器，或传入布尔值，true为只要移出dashboard即删除，false则不注册回收站
   trashSelector: {
-    type: String,
+    type: [String, Boolean],
   },
   // 是否显示 widget 自带的背景和阴影
   showWidgetBg: {
@@ -97,5 +97,9 @@ export const dashboardProps = {
     default: true,
   },
 };
+
+export const emitEvents = [] as const;
+
+export type EmitEvent = (event: (typeof emitEvents)[number], ...args: any[]) => void;
 
 export type DashboardProps = ExtractPropTypes<typeof dashboardProps>;

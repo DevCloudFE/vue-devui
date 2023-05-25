@@ -18,6 +18,8 @@
     <d-checkbox v-model="widget.noMove" :active-value="true" :inactive-value="false" label="noMove" />
     <d-checkbox v-model="widget.noResize" :active-value="true" :inactive-value="false" label="noResize" />
     <d-checkbox v-model="widget.locked" :active-value="true" :inactive-value="false" label="locked" />
+    <d-checkbox v-model="showGridBlock" :active-value="true" :inactive-value="false" label="showGridBlock" />
+    <d-checkbox v-model="showWidgetBg" :active-value="true" :inactive-value="false" label="showWidgetBg" />
     <h4>minWidth:</h4>
     <d-input-number v-model="widget.minW" :min="0" :max="12"></d-input-number>
     <h4>minHeight:</h4>
@@ -27,14 +29,33 @@
     <h4>maxHeight:</h4>
     <d-input-number v-model="widget.maxH" :min="0" :max="12"></d-input-number>
   </d-form>
-  <d-dashboard :show-widget-bg="true" :show-grid-block="true">
-    <d-dashboard-widget v-model:x="widget.x" v-model:y="widget.y" v-model:w="widget.w" v-model:h="widget.h" v-model:no-resize="widget.noResize" v-model:no-move="widget.noMove" v-model:locked="widget.locked" v-model:min-w="widget.minW" v-model:min-h="widget.minH" v-model:max-w="widget.maxW" v-model:max-h="widget.maxH">
+  <div class="my-trash-box">回收站</div>
+  <div class="other-trash-box">回收站</div>
+  <d-dashboard :show-widget-bg="showWidgetBg" :show-grid-block="showGridBlock" trash-selector="other-trash-box">
+    <d-dashboard-widget
+      v-model:x="widget.x"
+      v-model:y="widget.y"
+      v-model:w="widget.w"
+      v-model:h="widget.h"
+      v-model:no-resize="widget.noResize"
+      v-model:no-move="widget.noMove"
+      v-model:locked="widget.locked"
+      v-model:min-w="widget.minW"
+      v-model:min-h="widget.minH"
+      v-model:max-w="widget.maxW"
+      v-model:max-h="widget.maxH"
+    >
       <d-countdown :value="deadline" />
     </d-dashboard-widget>
     <d-dashboard-widget @widgetResize="widgetResize" :w="3" :h="4">
-      <div class="card"></div>
+      <div class="card">
+        <h3>哈哈哈哈</h3>
+      </div>
     </d-dashboard-widget>
     <d-dashboard-widget>3</d-dashboard-widget>
+  </d-dashboard>
+  <d-dashboard trash-selector=".my-trash-box">
+    <d-dashboard-widget>xzxldl</d-dashboard-widget>
   </d-dashboard>
 </template>
 
@@ -43,7 +64,11 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const widget = ref({  
+    const showGridBlock = ref(true);
+
+    const showWidgetBg = ref(true);
+
+    const widget = ref({
       x: 0,
       y: 0,
       w: 2,
@@ -55,7 +80,7 @@ export default defineComponent({
       minH: undefined,
       maxW: undefined,
       maxH: undefined,
-    })
+    });
 
     const deadline = ref(Date.now() + 100 * 1000);
 
@@ -66,15 +91,15 @@ export default defineComponent({
       widget.value.y = getRandomSize();
       widget.value.w = getRandomSize();
       widget.value.h = getRandomSize();
-    }
+    };
 
     const toggleResize = () => (widget.value.noResize = !widget.value.noResize);
 
     const toggleMove = () => (widget.value.noMove = !widget.value.noMove);
 
-    const widgetResize = ({w, h}) => {
+    const widgetResize = ({ w, h }) => {
       console.log('widget 2 resize:', w, ' x ', h);
-    }
+    };
 
     return {
       deadline,
@@ -82,7 +107,9 @@ export default defineComponent({
       changePosition,
       toggleResize,
       toggleMove,
-      widgetResize
+      widgetResize,
+      showGridBlock,
+      showWidgetBg,
     };
   },
 });
@@ -96,6 +123,29 @@ export default defineComponent({
 
 .control__form .devui-checkbox {
   margin: 8px 0;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  background: #fff;
+}
+
+.my-trash-box {
+  width: 200px;
+  height: 200px;
+  background: pink;
+  line-height: 200px;
+  text-align: center;
+}
+
+.other-trash-box {
+  width: 200px;
+  height: 200px;
+  background: orange;
+  line-height: 200px;
+  text-align: center;
 }
 </style>
 ```

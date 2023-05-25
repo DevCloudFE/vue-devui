@@ -37,6 +37,7 @@
 
     overflow: hidden;
 
+    // 禁止拖拽/static模式指针default
     &.ui-draggable-disabled > .grid-stack-item-content,
     #{$root}.grid-stack-static > & > .grid-stack-item-content {
       cursor: default;
@@ -93,9 +94,16 @@
       }
     }
 
+    // 拖拽时的占位DOM
     &.grid-stack-placeholder > .placeholder-content {
       background-color: $devui-global-bg;
       border: 1px dashed $devui-brand;
+    }
+
+    // 删除时
+    &.grid-stack-item-removing {
+      opacity: 0.8;
+      filter: blur(2px);
     }
   }
 }

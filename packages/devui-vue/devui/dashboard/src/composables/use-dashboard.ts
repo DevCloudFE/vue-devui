@@ -1,5 +1,5 @@
 import { GridStackOptions, GridStack, Utils, GridItemHTMLElement } from 'gridstack';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, Ref } from 'vue';
 import { DashboardProps } from '../dashboard-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { isMobile } from '../../../shared/utils';
@@ -18,6 +18,98 @@ const DEFAULT_OPTIONS: GridStackOptions = {
     handles: 'se',
   },
   alwaysShowResizeHandle: isMobile,
+};
+
+// 回收站handler注册（gridStack对于removeable的注册是全局的，这里我们需要手动进行管理，没有removeable匹配不上grid不做删除）
+const setupRemoveDropArea = (options: GridStackOptions) => {
+  const { removable, removableOptions } = options;
+  if (removable && typeof removable === 'string') {
+    const gridStackDD = GridStack.getDD();
+    const trashEl = Utils.getElement(removable);
+    gridStackDD
+      .droppable(trashEl, {
+        ...removableOptions,
+        accept: (el: GridItemHTMLElement) => {
+          // match 对应的grid下的widget
+          return el.gridstackNode?.grid?.opts.removable === removable;
+        },
+      })
+      .on(trashEl, 'dropover', (event, el) => {
+        const node = el ? el.gridstackNode : undefined;
+        if (!node || !node.grid) {return;}
+        (node as any)._isAboutToRemove = true;
+        el.classList.add('grid-stack-item-removing');
+      })
+      .on(trashEl, 'dropout', (event, el) => {
+        const node = el ? el.gridstackNode : undefined;
+        if (!node || !node.grid) {return;}
+        delete (node as any)._isAboutToRemove;
+        el.classList.remove('grid-stack-item-removing');
+      });
+  }
+};
+
+const propsChangeHandle = (props: DashboardProps, gridStack: Ref<GridStack>) => {
+  watch(
+    () => props.static,
+    () => {
+      gridStack.value.setStatic(props.static);
+    }
+  );
+  watch(
+    () => props.float,
+    () => {
+      gridStack.value.float(props.float);
+    }
+  );
+  watch(
+    () => props.animate,
+    () => {
+      gridStack.value.setAnimation(props.animate);
+    }
+  );
+  watch(
+    () => props.disableDrag,
+    () => {
+      gridStack.value.enableMove(!props.disableDrag);
+    }
+  );
+  watch(
+    () => props.disableResize,
+    () => {
+      gridStack.value.enableResize(!props.disableResize);
+    }
+  );
+  watch(
+    () => props.column,
+    () => {
+      gridStack.value.column(props.column);
+    }
+  );
+  watch(
+    () => props.minRow,
+    () => {
+      gridStack.value.opts.minRow = props.minRow;
+    }
+  );
+  watch(
+    () => props.maxRow,
+    () => {
+      gridStack.value.engine.maxRow = props.maxRow;
+    }
+  );
+  watch(
+    () => props.margin,
+    () => {
+      gridStack.value.margin(props.margin);
+    }
+  );
+  watch(
+    () => props.cellHeight,
+    () => {
+      gridStack.value.cellHeight(props.cellHeight);
+    }
+  );
 };
 
 export default function useDashboard(props: DashboardProps, uniqueName: string) {
@@ -44,76 +136,14 @@ export default function useDashboard(props: DashboardProps, uniqueName: string) 
 
   onMounted(() => {
     gridStack.value = GridStack.init(gridStackOptions, uniqueName);
-  });
 
-  // Props响应式实现
-  const propsReactiveHandle = () => {
-    watch(
-      () => props.static,
-      () => {
-        gridStack.value?.setStatic(props.static);
-      }
-    );
-    watch(
-      () => props.float,
-      () => {
-        gridStack.value?.float(props.float);
-      }
-    );
-    watch(
-      () => props.animate,
-      () => {
-        gridStack.value?.setAnimation(props.animate);
-      }
-    );
-    watch(
-      () => props.disableDrag,
-      () => {
-        gridStack.value?.enableMove(!props.disableDrag);
-      }
-    );
-    watch(
-      () => props.disableResize,
-      () => {
-        gridStack.value?.enableResize(!props.disableResize);
-      }
-    );
-    watch(
-      () => props.column,
-      () => {
-        gridStack.value?.column(props.column);
-      }
-    );
-    watch(
-      () => props.minRow,
-      () => {
-        if (gridStack.value) {
-          gridStack.value.opts.minRow = props.minRow;
-        }
-      }
-    );
-    watch(
-      () => props.maxRow,
-      () => {
-        if (gridStack.value) {
-          gridStack.value.engine.maxRow = props.maxRow;
-        }
-      }
-    );
-    watch(
-      () => props.margin,
-      () => {
-        gridStack.value?.margin(props.margin);
-      }
-    );
-    watch(
-      () => props.cellHeight,
-      () => {
-        gridStack.value?.cellHeight(props.cellHeight);
-      }
-    );
-  };
-  propsReactiveHandle();
+    if (gridStack.value) {
+      setupRemoveDropArea(gridStackOptions);
+
+      // Props变更处理(PS:这里居然无法自动缩紧类型，只好断言一下了)
+      propsChangeHandle(props, gridStack as Ref<GridStack>);
+    }
+  });
 
   return {
     gridStack,

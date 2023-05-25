@@ -1,12 +1,21 @@
-import { Ref, computed, onMounted, watch } from 'vue';
+/**
+ * 仪表盘样式处理
+ */
+
+import { Ref, onMounted, watch } from 'vue';
 import { GridStack, Utils } from 'gridstack';
 
-export function useDashboardWidgetBg(showWidgetBg: Ref<boolean>) {
-  const dashboardWidgetBgClass = computed(() => (showWidgetBg.value ? 'dashboard-show-widget-bg' : ''));
-
-  return {
-    dashboardWidgetBgClass,
-  };
+export function useDashboardWidgetBg(showWidgetBg: Ref<boolean>, gridStack: Ref<GridStack | undefined>) {
+  // BUG:如果使用ref导出className在tsx绑定的化，在toggle时存在问题，gridstack的基础样式和gridstack特性会被移除？？未找到具体原因是什么
+  //     所以这里暂时只能通过手动操作DOM来实现block背景切换
+  onMounted(() => showWidgetBg.value && gridStack.value?.el.classList.add('dashboard-show-widget-bg'));
+  watch(
+    () => showWidgetBg.value,
+    () =>
+      showWidgetBg.value
+        ? gridStack.value?.el.classList.add('dashboard-show-widget-bg')
+        : gridStack.value?.el.classList.remove('dashboard-show-widget-bg')
+  );
 }
 
 export function useGridBlock(
@@ -19,7 +28,15 @@ export function useGridBlock(
   const styleId = `dashboard-style-${Date.now()}`;
   let styleSheet: CSSStyleSheet | null;
 
-  const dashboardGridBlockClass = computed(() => (showGridBlock.value ? 'dashboard-show-grid-block' : ''));
+  // BUG:这里与上面useDashboardWidgetBg同理，只能手动操作DOM
+  onMounted(() => showGridBlock.value && gridStack.value?.el.classList.add('dashboard-show-grid-block'));
+  watch(
+    () => showGridBlock.value,
+    () =>
+      showGridBlock.value
+        ? gridStack.value?.el.classList.add('dashboard-show-grid-block')
+        : gridStack.value?.el.classList.remove('dashboard-show-grid-block')
+  );
 
   const updateGridBlockStyle = () => {
     if (!gridStack.value) {
@@ -66,8 +83,4 @@ export function useGridBlock(
   watch([cellHeightProp, marginProp, columnProp], updateGridBlockStyle, {
     flush: 'post',
   });
-
-  return {
-    dashboardGridBlockClass,
-  };
 }
