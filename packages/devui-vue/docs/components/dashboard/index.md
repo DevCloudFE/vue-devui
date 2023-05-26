@@ -29,8 +29,13 @@
     <h4>maxHeight:</h4>
     <d-input-number v-model="widget.maxH" :min="0" :max="12"></d-input-number>
   </d-form>
-  <div class="my-trash-box">回收站</div>
-  <div class="other-trash-box">回收站</div>
+  <div class="flex">
+    <div class="my-trash-box">回收站</div>
+    <div class="other-trash-box">回收站</div>
+    <div class="new-widget">
+      <div v-dashboard-dragin-widget="dragInOpts">drag me!</div>
+    </div>
+  </div>
   <d-dashboard :show-widget-bg="showWidgetBg" :show-grid-block="showGridBlock" trash-selector="other-trash-box">
     <d-dashboard-widget
       v-model:x="widget.x"
@@ -52,7 +57,9 @@
         <h3>哈哈哈哈</h3>
       </div>
     </d-dashboard-widget>
-    <d-dashboard-widget>3</d-dashboard-widget>
+    <d-dashboard-widget :data="{ myInfo: 'I\'m 3.' }">
+      <template v-slot="node">{{ node ? node.data : '' }}</template>
+    </d-dashboard-widget>
   </d-dashboard>
   <d-dashboard trash-selector=".my-trash-box">
     <d-dashboard-widget>xzxldl</d-dashboard-widget>
@@ -60,7 +67,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -101,6 +108,19 @@ export default defineComponent({
       console.log('widget 2 resize:', w, ' x ', h);
     };
 
+    const dragInOpts = {
+      helper: (e) => {
+        const newNode = e?.target?.cloneNode(true);
+        const gridStackItemContent = document.createElement('div');
+        gridStackItemContent.className = 'grid-stack-item-content';
+        gridStackItemContent.innerText = newNode.innerText + 'hello';
+
+        newNode.innerText = '';
+        newNode.appendChild(gridStackItemContent);
+        return newNode;
+      },
+    };
+
     return {
       deadline,
       widget,
@@ -110,6 +130,7 @@ export default defineComponent({
       widgetResize,
       showGridBlock,
       showWidgetBg,
+      dragInOpts,
     };
   },
 });
@@ -146,6 +167,16 @@ export default defineComponent({
   background: orange;
   line-height: 200px;
   text-align: center;
+}
+
+.new-widget {
+  width: 200px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  color: blue;
+  border: 1px dashed #f5c015;
+  margin-left: 32px;
 }
 </style>
 ```

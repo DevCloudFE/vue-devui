@@ -1,4 +1,5 @@
-import type { ExtractPropTypes } from 'vue';
+import type { ExtractPropTypes, PropType } from 'vue';
+import { GridStackNode } from 'gridstack';
 
 export const dashboardWidgetProps = {
   // 是否忽略 x，y 自动寻找空位，非响应式，仅初始化有效
@@ -67,11 +68,11 @@ export const dashboardWidgetProps = {
   },
   // 用户自定义数据，可用于区分传递等等
   data: {
-    type: String,
+    type: Object as PropType<any>,
   },
 };
 
-export const emitEvents = [
+export const widgetEmitEvents = [
   'update:x',
   'update:y',
   'update:w',
@@ -90,12 +91,14 @@ export const emitEvents = [
   'heightChange',
   'widgetInit',
   'widgetResize',
-  'widgetDestroy'
+  'widgetDestroy',
 ] as const;
 
-export type EmitEvent = (
-  event: typeof emitEvents[number],
-  ...args: any[]
-) => void;
+export type WidgetEmitEvent = (event: (typeof widgetEmitEvents)[number], ...args: any[]) => void;
 
 export type DashboardWidgetProps = ExtractPropTypes<typeof dashboardWidgetProps>;
+
+// 拓展widgetNode类型，增加我们自定义的data
+export interface DashboardWidget extends GridStackNode {
+  data?: any;
+}

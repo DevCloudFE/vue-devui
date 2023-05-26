@@ -6,12 +6,16 @@ import { isMobile } from '../../../shared/utils';
 
 export const ns = useNamespace('dashboard');
 
+// widget类名
 export const widgetClass = ns.e('widget');
+
+// 可被拖拽新增加入的widget类名
+export const acceptWidgetClass = ns.em('widget', 'new');
 
 const DEFAULT_OPTIONS: GridStackOptions = {
   class: ns.b(),
   auto: true,
-  acceptWidgets: true, // default .grid-stack-item
+  acceptWidgets: `.${acceptWidgetClass}`,
   itemClass: widgetClass,
   resizable: {
     autoHide: isMobile,
@@ -128,7 +132,7 @@ export default function useDashboard(props: DashboardProps, uniqueName: string) 
       staticGrid: props.static,
       disableDrag: props.disableDrag,
       disableResize: props.disableResize,
-      removable: props.trashSelector || false,
+      removable: props.trashSelector || false
     },
     props.advancedOptions
   );

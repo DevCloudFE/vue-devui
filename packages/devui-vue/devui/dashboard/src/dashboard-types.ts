@@ -98,8 +98,18 @@ export const dashboardProps = {
   },
 };
 
-export const emitEvents = [] as const;
+export const dashboardEmitEvents = [
+  'widgetAdded',
+  'widgetChanged',
+  'widgetRemoved',
+  'dashboardInit',
+  'update:column',
+  'update:minRow',
+  'update:maxRow',
+  'update:staticGrid',
+  'update:animation'
+] as const;
 
-export type EmitEvent = (event: (typeof emitEvents)[number], ...args: any[]) => void;
+export type DashboardEmitEvent = (event: (typeof dashboardEmitEvents)[number], ...args: any[]) => void;
 
 export type DashboardProps = ExtractPropTypes<typeof dashboardProps>;

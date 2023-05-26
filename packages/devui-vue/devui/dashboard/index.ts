@@ -1,6 +1,7 @@
 import type { App } from 'vue';
 import Dashboard from './src/dashboard';
 import DashboardWidget from './src/components/dashboard-widget/dashboard-widget';
+import DashboardDraginWidgetDirective from './src/directive/dashboard-dragin-widget';
 
 export * from './src/dashboard-types';
 
@@ -15,5 +16,6 @@ export default {
   install(app: App) {
     app.component(Dashboard.name, Dashboard);
     app.component(DashboardWidget.name, DashboardWidget);
+    app.directive(DashboardDraginWidgetDirective.name, DashboardDraginWidgetDirective);
   },
 };

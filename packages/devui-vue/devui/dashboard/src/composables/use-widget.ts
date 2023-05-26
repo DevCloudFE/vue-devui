@@ -1,6 +1,6 @@
 import { ToRefs, ref, onMounted, watch, computed, onUnmounted } from 'vue';
-import { GridHTMLElement, GridItemHTMLElement, GridStack } from 'gridstack';
-import { DashboardWidgetProps, EmitEvent } from '../components/dashboard-widget/dashboard-widget-types';
+import { GridHTMLElement, GridItemHTMLElement } from 'gridstack';
+import { DashboardWidget, DashboardWidgetProps, WidgetEmitEvent } from '../components/dashboard-widget/dashboard-widget-types';
 import useAttrsObserver, { dealBoolean, dealNumber } from './use-attrs-observer';
 
 const ATTRS_PROPS_MAP = new Map<string, { prop: keyof DashboardWidgetProps; type: 'string' | 'number' | 'boolean' }>([
@@ -32,7 +32,7 @@ const isAttrEqual = (oldValue: string | null, newValue: any, nullBeOne = false) 
 
 export default function useWidget(
   { autoPosition, x, y, w, h, minW, maxW, minH, maxH, noResize, noMove, locked, id, data }: ToRefs<DashboardWidgetProps>,
-  emit: EmitEvent
+  emit: WidgetEmitEvent
 ) {
   const widgetRef = ref<GridItemHTMLElement>();
 
@@ -40,7 +40,7 @@ export default function useWidget(
   const gridStack = computed(() => (widgetRef.value?.parentElement as GridHTMLElement).gridstack);
 
   // 获取当前 widgetNode
-  const widgetNode = computed(() => widgetRef.value?.gridstackNode);
+  const widgetNode = computed(() => widgetRef.value?.gridstackNode as DashboardWidget);
 
   const widgetAttrs = computed(() => ({
     'gs-x': x.value,
@@ -57,6 +57,12 @@ export default function useWidget(
     'gs-locked': locked.value,
     'gs-id': id?.value,
   }));
+
+  const setWidgetData = () => {
+    if (widgetNode.value) {
+      widgetNode.value.data = data?.value;
+    }
+  };
 
   // props响应式部分参数处理
   {
@@ -98,11 +104,16 @@ export default function useWidget(
       }
       gridStack.value?.update(widgetRef.value, { locked: locked.value });
     });
+
+    watch(() => data?.value, setWidgetData);
   }
 
   // 侦听用户操作/gridstack内部计算导致的 widget 参数变化，同步到外部
   {
-    const { observerAttributesChange } = useAttrsObserver<keyof DashboardWidgetProps, Parameters<EmitEvent>[0]>(ATTRS_PROPS_MAP, emit);
+    const { observerAttributesChange } = useAttrsObserver<keyof DashboardWidgetProps, Parameters<WidgetEmitEvent>[0]>(
+      ATTRS_PROPS_MAP,
+      emit
+    );
 
     onMounted(() => {
       if (!widgetRef.value) {
@@ -137,7 +148,18 @@ export default function useWidget(
     });
   }
 
-  onMounted(() => emit('widgetInit'));
+  // widgetNode 需要等待父级 gridstack 准备好才会真正的被初始化，所以不能简单认为 onMounted === widgetInit
+  const stopWatchWidgetInit = watch(
+    () => widgetNode.value,
+    () => {
+      if (widgetNode.value) {
+        emit('widgetInit');
+        setWidgetData();
+        stopWatchWidgetInit(); // 初始化完毕后取消watch
+      }
+    }
+  );
+
   onUnmounted(() => emit('widgetDestroy'));
 
   return {

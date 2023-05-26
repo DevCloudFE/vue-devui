@@ -1,5 +1,5 @@
 import { defineComponent, toRefs } from 'vue';
-import { dashboardProps, DashboardProps } from './dashboard-types';
+import { dashboardEmitEvents, dashboardProps, DashboardProps } from './dashboard-types';
 import useDashboard, { ns } from './composables/use-dashboard';
 import { useDashboardWidgetBg, useGridBlock } from './composables/use-dashboard-style';
 import './dashboard.scss';
@@ -7,7 +7,7 @@ import './dashboard.scss';
 export default defineComponent({
   name: 'DDashboard',
   props: dashboardProps,
-  emits: ['widgetAdded', 'widgetChanged', 'widgetRemoved', 'dashboardInit'],
+  emits: dashboardEmitEvents as unknown as (typeof dashboardEmitEvents)[number][],
   setup(props: DashboardProps, ctx) {
     const {
       advancedOptions,
