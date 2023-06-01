@@ -15,6 +15,7 @@
   <d-form class="control__form">
     <p>Control first Widget</p>
     <d-button @click="changePosition">Random Position</d-button>
+    <d-checkbox v-model="staticMode" :active-value="true" :inactive-value="false" label="static" />
     <d-checkbox v-model="widget.noMove" :active-value="true" :inactive-value="false" label="noMove" />
     <d-checkbox v-model="widget.noResize" :active-value="true" :inactive-value="false" label="noResize" />
     <d-checkbox v-model="widget.locked" :active-value="true" :inactive-value="false" label="locked" />
@@ -33,10 +34,12 @@
     <div class="my-trash-box">回收站</div>
     <div class="other-trash-box">回收站</div>
     <div class="new-widget">
-      <div v-dashboard-dragin-widget="dragInOpts">drag me!</div>
+      <div v-dashboard-dragin-widget="dragInOpts">
+        <div class="grid-stack-item-content">drag me!</div>
+      </div>
     </div>
   </div>
-  <d-dashboard :show-widget-bg="showWidgetBg" :show-grid-block="showGridBlock" trash-selector="other-trash-box">
+  <d-dashboard v-model:static="staticMode" :show-widget-bg="showWidgetBg" :show-grid-block="showGridBlock" trash-selector="other-trash-box" :acceptWidgets="false">
     <d-dashboard-widget
       v-model:x="widget.x"
       v-model:y="widget.y"
@@ -71,6 +74,8 @@ import { defineComponent, ref, onMounted } from 'vue';
 
 export default defineComponent({
   setup() {
+    const staticMode = ref(false);
+
     const showGridBlock = ref(true);
 
     const showWidgetBg = ref(true);
@@ -131,6 +136,7 @@ export default defineComponent({
       showGridBlock,
       showWidgetBg,
       dragInOpts,
+      staticMode,
     };
   },
 });

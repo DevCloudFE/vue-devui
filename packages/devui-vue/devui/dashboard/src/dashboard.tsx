@@ -23,12 +23,13 @@ export default defineComponent({
       disableResize,
       showGridBlock,
       trashSelector,
+      acceptWidgets,
       showWidgetBg,
     } = toRefs(props);
 
     const uniqueName = ns.m(`${Date.now()}`);
 
-    const { gridStack } = useDashboard(props, uniqueName);
+    const { gridStack } = useDashboard(props, uniqueName, ctx.emit);
 
     useDashboardWidgetBg(showWidgetBg, gridStack);
 

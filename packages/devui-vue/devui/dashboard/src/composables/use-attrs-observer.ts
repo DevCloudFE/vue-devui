@@ -6,9 +6,9 @@ import { isNull, isUndefined, MapValueType } from '../../../shared/utils';
 
 const isFalsy = (val: any) => isNull(val) || isUndefined(val);
 
-export const dealBoolean = (val: any) => isFalsy(val) || val === 'false' ? false : true;
+export const dealBoolean = (val: any) => (isFalsy(val) || val === 'false' ? false : true);
 
-export const dealNumber = (val: any, nullBeOne = false) => isNull(val) && nullBeOne ? 1 : Number(val);
+export const dealNumber = (val: any, nullBeOne = false) => (isNull(val) && nullBeOne ? 1 : Number(val));
 
 const getEmitValue = <M extends Map<any, any>, EventsType>(
   target: HTMLElement,
