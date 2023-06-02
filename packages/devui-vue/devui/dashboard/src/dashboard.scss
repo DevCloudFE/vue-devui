@@ -43,7 +43,7 @@
       cursor: default;
     }
 
-    & .grid-stack-item-content {
+    & > .grid-stack-item-content {
       position: relative;
       overflow: auto;
       color: $devui-text-weak;
@@ -88,7 +88,7 @@
     }
 
     &:hover {
-      & .grid-stack-item-content {
+      & > .grid-stack-item-content {
         transform: translateY(var(--hover-translate));
         box-shadow: var(--widget-shadow-hover);
       }

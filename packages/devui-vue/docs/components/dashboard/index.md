@@ -34,12 +34,13 @@
     <div class="my-trash-box">回收站</div>
     <div class="other-trash-box">回收站</div>
     <div class="new-widget">
-      <div v-dashboard-dragin-widget="dragInOpts">
-        <div class="grid-stack-item-content">drag me!</div>
+      <div v-dashboard-dragin-widget @dragstart="dragStart" @dragstop="dragStop">
+        <!-- <div class="grid-stack-item-content">drag me!</div> -->
+        dragMe!
       </div>
     </div>
   </div>
-  <d-dashboard v-model:static="staticMode" :show-widget-bg="showWidgetBg" :show-grid-block="showGridBlock" trash-selector="other-trash-box" :acceptWidgets="false">
+  <d-dashboard v-model:static="staticMode" :show-widget-bg="showWidgetBg" :show-grid-block="showGridBlock" trash-selector="other-trash-box" :acceptWidgets="true">
     <d-dashboard-widget
       v-model:x="widget.x"
       v-model:y="widget.y"
@@ -64,7 +65,7 @@
       <template v-slot="node">{{ node ? node.data : '' }}</template>
     </d-dashboard-widget>
   </d-dashboard>
-  <d-dashboard trash-selector=".my-trash-box">
+  <d-dashboard trash-selector=".my-trash-box" @widget-added="widgetAdded">
     <d-dashboard-widget>xzxldl</d-dashboard-widget>
   </d-dashboard>
 </template>
@@ -113,18 +114,17 @@ export default defineComponent({
       console.log('widget 2 resize:', w, ' x ', h);
     };
 
-    const dragInOpts = {
-      helper: (e) => {
-        const newNode = e?.target?.cloneNode(true);
-        const gridStackItemContent = document.createElement('div');
-        gridStackItemContent.className = 'grid-stack-item-content';
-        gridStackItemContent.innerText = newNode.innerText + 'hello';
+    const widgetAdded = (e, s) => {
+      console.log('widgetAdd:', e, s);
+    }
 
-        newNode.innerText = '';
-        newNode.appendChild(gridStackItemContent);
-        return newNode;
-      },
-    };
+    const dragStart = (e) => {
+      // console.log('dragStart: ', e);
+    }
+
+    const dragStop = (e) => {
+      // console.log('dragStop: ', e);
+    }
 
     return {
       deadline,
@@ -135,8 +135,10 @@ export default defineComponent({
       widgetResize,
       showGridBlock,
       showWidgetBg,
-      dragInOpts,
+      widgetAdded,
       staticMode,
+      dragStart,
+      dragStop
     };
   },
 });

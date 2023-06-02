@@ -33,7 +33,9 @@ const ATTRS_PROPS_MAP = new Map<string, { prop: keyof DashboardProps; type: 'str
   ['gs-animate', { prop: 'animate', type: 'boolean' }],
 ]);
 
-// 回收站handler注册（gridStack对于removeable的注册是全局的，这里我们需要手动进行管理，没有removeable匹配不上grid不做删除）
+const gridStackDD = GridStack.getDD();
+
+// 回收站handler注册（gridStack对于removeable的注册是全局的【共享垃圾桶】，这里我们手动进行管理，将共享改为独享）
 // PS:这里没有将回收站也做成指令，是因为设计上想要将 [回收站 - 仪表盘] 做一个对应的映射，即可以控制某个回收站，专属于某个仪表盘（也就是trashSelector这个prop的意义）。
 //    在这种设计下，我们的回收站注册就必须要能够接收到对应仪表盘的参数，而且最好能够做到方便，以免参数控制上造成混乱。
 //    指令的话有点难做到上面这一点，如果是将 trashSelector 作为指令值，则可能需要维护两份一样的数据，增加心智负担，而如果是像直接连接把dashboardRef传入的话，又没办法简单得到dashboardRef的inited时间来初始化垃圾桶。
@@ -41,7 +43,6 @@ const ATTRS_PROPS_MAP = new Map<string, { prop: keyof DashboardProps; type: 'str
 const setupRemoveDropArea = (options: GridStackOptions) => {
   const { removable, removableOptions } = options;
   if (removable && typeof removable === 'string') {
-    const gridStackDD = GridStack.getDD();
     const trashEl = Utils.getElement(removable);
     gridStackDD
       .droppable(trashEl, {
@@ -139,14 +140,25 @@ const setupEventHandle = (gridStack: Ref<GridStack>, emit: DashboardEmitEvent) =
   gridStack.value.on('removed', (e: Event, items: GridStackNode[]) => emit('widgetRemoved', gridStack, e, items));
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export default function useDashboard(
-  props: DashboardProps,
-  uniqueName: string,
-  emit: DashboardEmitEvent
-): {
-    gridStack: Ref<GridStack | undefined>;
-  } {
+const resetAcceptWidget = (gridStack: Ref<GridStack>) => {
+  console.log('droppable?', gridStackDD.isDroppable(gridStack.value.el));
+  // 重新覆写Drop行为
+  gridStackDD
+    .off(gridStack.value.el, 'drop')
+    .on(gridStack.value.el, 'drop', (_event: Event, el: GridItemHTMLElement, helper?: GridItemHTMLElement) => {
+      const node = el.gridstackNode;
+      console.log(node);
+      // 内部的widget拖动忽略
+      if (node && node.grid === gridStack.value && !node['_isExternal']) {
+        return false;
+      }
+
+      // drop完毕后，移除placeholder
+      gridStack.value['placeholder'].remove();
+    });
+};
+
+export default function useDashboard(props: DashboardProps, uniqueName: string, emit: DashboardEmitEvent) {
   // 初始化仪表盘配置
   const gridStackOptions: GridStackOptions = Object.assign(
     {},
@@ -185,6 +197,9 @@ export default function useDashboard(
       propsChangeHandle(props, gridStack as Ref<GridStack>);
 
       setupEventHandle(gridStack as Ref<GridStack>, emit);
+
+      // 覆写接收拖拽widget加入的handler
+      gridStackOptions.acceptWidgets && resetAcceptWidget(gridStack as Ref<GridStack>);
     }
   });
 
