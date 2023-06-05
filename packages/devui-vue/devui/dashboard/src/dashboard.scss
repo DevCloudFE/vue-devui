@@ -3,6 +3,7 @@
 @import 'gridstack/dist/gridstack-extra.min.css';
 
 .#{$devui-prefix}-dashboard {
+  --dashboard-bg: $devui-global-bg;
   --hover-translate: -4px;
   --widget-bg: none;
   --widget-shadow: none;
@@ -106,4 +107,14 @@
       filter: blur(2px);
     }
   }
+}
+
+.dashboard-dropping-widget {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--devui-base-bg);
+  color: var(--devui-text);
+  border: 1px dashed var(--devui-brand);
+  opacity: 0.6;
 }

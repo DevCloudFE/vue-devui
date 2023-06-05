@@ -15,17 +15,23 @@ type DDElementHost = Parameters<DDGridStack['isDraggable']>[0];
 
 const defaultDraginOpts: DDDragInOpt = {
   // dropping的DOM展示控制
-  helper: (e) => {
-    const parentNode = (e?.target as Node).parentElement?.cloneNode(true) as HTMLElement;
+  helper: (e: Event) => {
+    const dragEle = e.target as HTMLElement;
+    const wrapperNode = document.createElement('div');
 
-    return parentNode;
+    wrapperNode.classList.add('dashboard-dropping-widget');
+    wrapperNode.innerHTML = 'dropping to add';
+    wrapperNode.style.width = dragEle.offsetWidth + 'px';
+    wrapperNode.style.height = dragEle.offsetHeight + 'px';
+
+    return wrapperNode;
   },
   appendTo: 'body',
 };
 
 export default {
   name: 'dashboard-dragin-widget',
-  mounted: (el: HTMLElement, binding: DashboardDraginValue): void => {
+  mounted: (el: HTMLElement, binding: DashboardDraginValue) => {
     const opts = computed(() => Object.assign({}, defaultDraginOpts, binding.value || {}));
 
     // 增加默认dashboard可接受拖入类名
@@ -56,7 +62,7 @@ export default {
       });
     }
   },
-  unmounted: (el: HTMLElement): void => {
+  unmounted: (el: HTMLElement) => {
     const gridStackDD = GridStack.getDD();
 
     gridStackDD.draggable(el, 'destroy');

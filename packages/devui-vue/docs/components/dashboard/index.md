@@ -13,34 +13,42 @@
 ```vue
 <template>
   <d-form class="control__form">
-    <p>Control first Widget</p>
-    <d-button @click="changePosition">Random Position</d-button>
-    <d-checkbox v-model="staticMode" :active-value="true" :inactive-value="false" label="static" />
-    <d-checkbox v-model="widget.noMove" :active-value="true" :inactive-value="false" label="noMove" />
-    <d-checkbox v-model="widget.noResize" :active-value="true" :inactive-value="false" label="noResize" />
-    <d-checkbox v-model="widget.locked" :active-value="true" :inactive-value="false" label="locked" />
+    <p>第一个dashboard控制</p>
     <d-checkbox v-model="showGridBlock" :active-value="true" :inactive-value="false" label="showGridBlock" />
     <d-checkbox v-model="showWidgetBg" :active-value="true" :inactive-value="false" label="showWidgetBg" />
-    <h4>minWidth:</h4>
-    <d-input-number v-model="widget.minW" :min="0" :max="12"></d-input-number>
-    <h4>minHeight:</h4>
-    <d-input-number v-model="widget.minH" :min="0" :max="12"></d-input-number>
-    <h4>maxWidth:</h4>
-    <d-input-number v-model="widget.maxW" :min="0" :max="12"></d-input-number>
-    <h4>maxHeight:</h4>
-    <d-input-number v-model="widget.maxH" :min="0" :max="12"></d-input-number>
   </d-form>
-  <div class="flex">
-    <div class="my-trash-box">回收站</div>
-    <div class="other-trash-box">回收站</div>
-    <div class="new-widget">
-      <div v-dashboard-dragin-widget @dragstart="dragStart" @dragstop="dragStop">
-        <!-- <div class="grid-stack-item-content">drag me!</div> -->
-        dragMe!
+  <d-form class="control__form">
+    <p>受控widget控制</p>
+    <div class="flex">
+      <div>
+        <d-button @click="changePosition">Random Position</d-button>
+        <d-checkbox v-model="staticMode" :active-value="true" :inactive-value="false" label="static" />
+        <d-checkbox v-model="widget.noMove" :active-value="true" :inactive-value="false" label="noMove" />
+        <d-checkbox v-model="widget.noResize" :active-value="true" :inactive-value="false" label="noResize" />
+        <d-checkbox v-model="widget.locked" :active-value="true" :inactive-value="false" label="locked" />
+      </div>
+      <div>
+        <h4>minWidth:</h4>
+        <d-input-number v-model="widget.minW" :min="0" :max="12"></d-input-number>
+        <h4>minHeight:</h4>
+        <d-input-number v-model="widget.minH" :min="0" :max="12"></d-input-number>
+        <h4>maxWidth:</h4>
+        <d-input-number v-model="widget.maxW" :min="0" :max="12"></d-input-number>
+        <h4>maxHeight:</h4>
+        <d-input-number v-model="widget.maxH" :min="0" :max="12"></d-input-number>
       </div>
     </div>
-  </div>
-  <d-dashboard v-model:static="staticMode" :show-widget-bg="showWidgetBg" :show-grid-block="showGridBlock" trash-selector="other-trash-box" :acceptWidgets="true">
+  </d-form>
+  <div class="other-trash-box">dashboard1 回收站</div>
+  <p>dashboar 1</p>
+  <d-dashboard
+    v-model:static="staticMode"
+    :show-widget-bg="showWidgetBg"
+    :show-grid-block="showGridBlock"
+    trash-selector="other-trash-box"
+    :acceptWidgets="true"
+    :advanced-options="dashboard1AdvancedOptions"
+  >
     <d-dashboard-widget
       v-model:x="widget.x"
       v-model:y="widget.y"
@@ -54,19 +62,23 @@
       v-model:max-w="widget.maxW"
       v-model:max-h="widget.maxH"
     >
-      <d-countdown :value="deadline" />
-    </d-dashboard-widget>
-    <d-dashboard-widget @widgetResize="widgetResize" :w="3" :h="4">
       <div class="card">
-        <h3>哈哈哈哈</h3>
+        <p>受控者</p>
+        <d-countdown :value="deadline" />
       </div>
     </d-dashboard-widget>
-    <d-dashboard-widget :data="{ myInfo: 'I\'m 3.' }">
-      <template v-slot="node">{{ node ? node.data : '' }}</template>
-    </d-dashboard-widget>
   </d-dashboard>
+  <p>dashboard 2</p>
+  <div class="flex">
+    <div class="my-trash-box">dashboard2 回收站</div>
+    <div class="new-widget">
+      <div v-dashboard-dragin-widget @dragstart="dragStart" @dragstop="dragStop">
+        <div class="grid-stack-item-content">拖拽新增widget</div>
+      </div>
+    </div>
+  </div>
   <d-dashboard trash-selector=".my-trash-box" @widget-added="widgetAdded">
-    <d-dashboard-widget>xzxldl</d-dashboard-widget>
+    <d-dashboard-widget>widget</d-dashboard-widget>
   </d-dashboard>
 </template>
 
@@ -84,7 +96,7 @@ export default defineComponent({
     const widget = ref({
       x: 0,
       y: 0,
-      w: 2,
+      w: 3,
       h: 2,
       noResize: false,
       noMove: false,
@@ -94,6 +106,17 @@ export default defineComponent({
       maxW: undefined,
       maxH: undefined,
     });
+
+    const dashboard1AdvancedOptions = {
+      children: [
+        {
+          w: 1,
+          h: 1,
+          autoPosition: true,
+          content: 'auto render',
+        },
+      ],
+    };
 
     const deadline = ref(Date.now() + 100 * 1000);
 
@@ -116,19 +139,20 @@ export default defineComponent({
 
     const widgetAdded = (e, s) => {
       console.log('widgetAdd:', e, s);
-    }
+    };
 
     const dragStart = (e) => {
-      // console.log('dragStart: ', e);
-    }
+      console.log('dragStart: ', e);
+    };
 
     const dragStop = (e) => {
-      // console.log('dragStop: ', e);
-    }
+      console.log('dragStop: ', e);
+    };
 
     return {
       deadline,
       widget,
+      dashboard1AdvancedOptions,
       changePosition,
       toggleResize,
       toggleMove,
@@ -138,7 +162,7 @@ export default defineComponent({
       widgetAdded,
       staticMode,
       dragStart,
-      dragStop
+      dragStop,
     };
   },
 });
@@ -162,25 +186,27 @@ export default defineComponent({
 }
 
 .my-trash-box {
-  width: 200px;
-  height: 200px;
+  width: 140px;
+  height: 50px;
   background: pink;
-  line-height: 200px;
+  line-height: 50px;
   text-align: center;
+  margin-bottom: 16px;
 }
 
 .other-trash-box {
-  width: 200px;
-  height: 200px;
+  width: 140px;
+  height: 50px;
   background: orange;
-  line-height: 200px;
+  line-height: 50px;
   text-align: center;
+  margin-top: 16px;
 }
 
 .new-widget {
-  width: 200px;
-  height: 100px;
-  line-height: 100px;
+  width: 120px;
+  height: 50px;
+  line-height: 50px;
   text-align: center;
   color: blue;
   border: 1px dashed #f5c015;

@@ -10,20 +10,10 @@ export default defineComponent({
   emits: dashboardEmitEvents as unknown as (typeof dashboardEmitEvents)[number][],
   setup(props: DashboardProps, ctx) {
     const {
-      advancedOptions,
       column,
-      minRow,
-      maxRow,
       cellHeight,
       margin,
-      float,
-      animate,
-      static: StaticGrid,
-      disableDrag,
-      disableResize,
       showGridBlock,
-      trashSelector,
-      acceptWidgets,
       showWidgetBg,
     } = toRefs(props);
 

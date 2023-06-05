@@ -140,24 +140,6 @@ const setupEventHandle = (gridStack: Ref<GridStack>, emit: DashboardEmitEvent) =
   gridStack.value.on('removed', (e: Event, items: GridStackNode[]) => emit('widgetRemoved', gridStack, e, items));
 };
 
-const resetAcceptWidget = (gridStack: Ref<GridStack>) => {
-  console.log('droppable?', gridStackDD.isDroppable(gridStack.value.el));
-  // 重新覆写Drop行为
-  gridStackDD
-    .off(gridStack.value.el, 'drop')
-    .on(gridStack.value.el, 'drop', (_event: Event, el: GridItemHTMLElement, helper?: GridItemHTMLElement) => {
-      const node = el.gridstackNode;
-      console.log(node);
-      // 内部的widget拖动忽略
-      if (node && node.grid === gridStack.value && !node['_isExternal']) {
-        return false;
-      }
-
-      // drop完毕后，移除placeholder
-      gridStack.value['placeholder'].remove();
-    });
-};
-
 export default function useDashboard(props: DashboardProps, uniqueName: string, emit: DashboardEmitEvent) {
   // 初始化仪表盘配置
   const gridStackOptions: GridStackOptions = Object.assign(
@@ -197,9 +179,6 @@ export default function useDashboard(props: DashboardProps, uniqueName: string, 
       propsChangeHandle(props, gridStack as Ref<GridStack>);
 
       setupEventHandle(gridStack as Ref<GridStack>, emit);
-
-      // 覆写接收拖拽widget加入的handler
-      gridStackOptions.acceptWidgets && resetAcceptWidget(gridStack as Ref<GridStack>);
     }
   });
 
