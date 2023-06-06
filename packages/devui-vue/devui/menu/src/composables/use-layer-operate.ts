@@ -35,7 +35,7 @@ export function addLayer(): void {
       stack.unshift(...(Array.from(children) as HTMLElement[]));
       continue;
     } else {
-      if (shiftItem.tagName === 'DIV') {
+      if (shiftItem?.tagName === 'DIV') {
         if (
           shiftItem.classList.contains(`${ns.b()}-item-vertical-wrapper`) ||
           shiftItem.classList.contains(`${subNs.b()}-menu-item-vertical-wrapper`)
@@ -57,7 +57,7 @@ export function addLayer(): void {
           shiftItem.style.paddingLeft = `${(layer === 2 ? 1 : layer - 1) * defaultIndent.value}px`;
         }
       }
-      if (shiftItem.tagName === 'UL') {
+      if (shiftItem?.tagName === 'UL') {
         const parent = shiftItem.parentElement;
         const children = shiftItem.children;
         for (let i = 0; i < children.length; i++) {
@@ -73,7 +73,7 @@ export function addLayer(): void {
           layer = Number(layer) + 1;
         }
       }
-      if (shiftItem.tagName === 'LI') {
+      if (shiftItem?.tagName === 'LI') {
         const parent = shiftItem.parentElement;
         const parentClassList = parent?.classList.value || ('' as string);
         let layer: number | string | undefined = getLayerFromClass(parentClassList) as string;
