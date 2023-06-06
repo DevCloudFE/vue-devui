@@ -1,13 +1,22 @@
-import { defineComponent, provide, ref, computed, onMounted, toRefs, reactive } from 'vue';
+import {
+  defineComponent,
+  provide,
+  ref,
+  computed,
+  onMounted,
+  toRefs,
+  reactive,
+  h,
+} from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import { menuProps, MenuProps } from './menu-types';
 import './menu.scss';
 import { setDefaultIndent } from './composables/use-layer-operate';
 import SubMenu from './components/sub-menu/sub-menu';
 import { useNamespace } from '../../shared/hooks/use-namespace';
-import { useShowSubMenu } from './components/sub-menu/use-sub-menu';
 import { randomId } from '../../shared/utils';
 import { useStore } from './composables/use-store';
+import { useResizeObserver } from '@vueuse/core';
 
 export default defineComponent({
   name: 'DMenu',
@@ -32,7 +41,6 @@ export default defineComponent({
     provide('useRouter', props.router);
     setDefaultIndent(props['indentSize']);
     const menuRoot = ref(null);
-    const overflowItemLength = ref(0);
     const overflowContainer = ref<ComponentPublicInstance | null>(null);
     const selectClassName = `${ns.b()}-item-select`;
     const rootClassName = computed(()=>({
@@ -57,77 +65,35 @@ export default defineComponent({
         }
       }
     };
+    const slots = ref(ctx.slots.default?.().map((item)=>h(item)));
+    const flag = ref(false);
     onMounted(() => {
       if (props['mode'] === 'horizontal') {
-        let flag = false;
-        const overflowContainerElement = overflowContainer.value?.$el as unknown as HTMLElement;
         const root = menuRoot.value as unknown as HTMLElement;
-        const children = root.children;
-        const container = overflowContainerElement.children[1];
-        const ob = new IntersectionObserver(
-          (entries: IntersectionObserverEntry[]) => {
-            entries.forEach((entry: IntersectionObserverEntry) => {
-              if (!entry.isIntersecting) {
-                const cloneNode = entry.target.cloneNode(true) as Element as HTMLElement;
-                if (entry.target.classList.contains(`${ns.b()}-overflow-container`)){
-                  if (flag && entry.target.previousElementSibling && container.children.length){
-                    root.appendChild(entry.target.previousElementSibling);
-                  } else {flag = true;}
-                } else {
-                  overflowItemLength.value += 1;
-                  (entry.target as Element as HTMLElement).style.visibility = 'hidden';
-                  if (overflowContainerElement.nextSibling) {
-                    root.insertBefore(entry.target, overflowContainerElement.nextSibling);
-                  } else {
-                    root.appendChild(entry.target);
-                  }
-                  container.appendChild(cloneNode);
-                  resetOverflowContainerSelectState(container);
-                }
-              } else {
-                if (
-                  !entry.target.classList.contains(`${ns.b()}-overflow-container`) &&
-                  (entry.target as HTMLElement).style.visibility === 'hidden'
-                ) {
-                  ob.unobserve(entry.target);
-                  root.insertBefore(entry.target, overflowContainerElement);
-                  (entry.target as HTMLElement).style.visibility = '';
-                  const obItem = overflowContainerElement.previousElementSibling;
-                  const canObAgin = obItem && (entry.boundingClientRect.width % entry.target.getBoundingClientRect().width === 0);
-                  if (canObAgin) {
-                    ob.observe(obItem);
-                  }
-                  if (obItem?.classList.contains('devui-submenu')){
-                    const sub = obItem;
-                    const wrapper = obItem.children[1] as HTMLElement;
-                    (sub as HTMLElement).addEventListener('mouseenter', (ev: MouseEvent) => {
-                      ev.stopPropagation();
-                      useShowSubMenu('mouseenter', ev, wrapper);
-                    });
-                    (sub as HTMLElement).addEventListener('mouseleave', (ev: MouseEvent) => {
-                      ev.stopPropagation();
-                      useShowSubMenu('mouseleave', ev, wrapper);
-                    });
-                  }
-                  overflowItemLength.value -= 1;
-                  ob.observe(entry.target);
-                  if (container.lastChild){
-                    container.removeChild(container.lastChild);
-                  }
-                  resetOverflowContainerSelectState(container);
-                }
-              }
-            });
-          },
-          {
-            root: root,
-            threshold: 1,
-            rootMargin: '8px'
+        const overflowWrapper = (overflowContainer.value?.$el as HTMLElement).lastElementChild;
+        const overflowContainerElement = overflowContainer.value?.$el as HTMLElement;
+        const isOverflow = (el: HTMLElement = root) =>  {
+          return el.scrollWidth > el.offsetWidth;
+        };
+        useResizeObserver(root, async () => {
+          while (overflowWrapper?.childNodes.length !== 1){
+            const item = overflowWrapper?.lastChild;
+            if (item){
+              root.insertBefore(item, overflowContainerElement);
+            }
+            flag.value = false;
           }
-        );
-        for (let i = 0; i < children.length; i++) {
-          ob.observe(children[i]);
-        }
+          while (isOverflow() && root.children.length > 1){
+            const popChild = overflowContainerElement.previousElementSibling;
+            if (popChild){
+              overflowWrapper?.appendChild(popChild);
+              flag.value = true;
+            }
+          }
+          if (overflowWrapper){
+            resetOverflowContainerSelectState(overflowWrapper);
+          }
+        });
       }
     });
     return () => {
@@ -138,13 +104,14 @@ export default defineComponent({
           style={[
             props['collapsed'] ? `width:${props['collapsedIndent'] * 2}px` : `width: ${props['width']}`,
           ]}>
-          {ctx.slots.default?.()}
+          {slots.value}
           <SubMenu
             ref={overflowContainer}
             key="overflowContainer"
             title="..."
             class={overflowContainerClassName}
-            v-show={overflowItemLength.value > 0 && mode.value === 'horizontal'}>
+            v-show={flag.value}
+          >
           </SubMenu>
         </ul>
       );
