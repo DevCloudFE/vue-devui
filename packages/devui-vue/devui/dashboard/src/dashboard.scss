@@ -1,0 +1,120 @@
+@import '../../styles-var/devui-var.scss';
+@import 'gridstack/dist/gridstack.min.css';
+@import 'gridstack/dist/gridstack-extra.min.css';
+
+.#{$devui-prefix}-dashboard {
+  --dashboard-bg: $devui-global-bg;
+  --hover-translate: -4px;
+  --widget-bg: none;
+  --widget-shadow: none;
+  --widget-shadow-hover: none;
+  $root: &;
+
+  background-color: $devui-global-bg;
+
+  &.dashboard-show-widget-bg {
+    --widget-bg: var(--devui-base-bg);
+    --widget-shadow: 0 2px 8px 0 var(--devui-light-shadow);
+    --widget-shadow-hover: 0 4px 8px 0 var(--devui-shadow);
+  }
+
+  &.dashboard-show-grid-block {
+    background-color: transparent;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      pointer-events: none;
+    }
+  }
+
+  &__widget {
+    $widget: &;
+
+    overflow: hidden;
+
+    // 禁止拖拽/static模式指针default
+    &.ui-draggable-disabled > .grid-stack-item-content,
+    #{$root}.grid-stack-static > & > .grid-stack-item-content {
+      cursor: default;
+    }
+
+    & > .grid-stack-item-content {
+      position: relative;
+      overflow: auto;
+      color: $devui-text-weak;
+      background-color: var(--widget-bg);
+      box-shadow: var(--widget-shadow);
+      transition: 0.5s;
+      cursor: pointer;
+    }
+
+    // resize handle 图标修改
+    & > .ui-resizable-se,
+    & > .ui-resizable-sw {
+      background: none;
+      transform: translateY(-4px) rotate(-45deg);
+
+      &::before {
+        content: '';
+        width: 20px;
+        height: 20px;
+        display: block;
+        position: absolute;
+        top: -20%;
+        left: 0;
+        transform: rotate(45deg) scale(0.8);
+        background-image:
+          linear-gradient(
+            135deg,
+            transparent 0,
+            transparent 70%,
+            $devui-icon-fill 70%,
+            $devui-icon-fill 77%,
+            transparent 77%,
+            transparent 83%,
+            $devui-icon-fill 83%,
+            $devui-icon-fill 90%,
+            transparent 90%,
+            transparent 100%
+          );
+        background-size: 100%;
+        background-repeat: no-repeat;
+      }
+    }
+
+    &:hover {
+      & > .grid-stack-item-content {
+        transform: translateY(var(--hover-translate));
+        box-shadow: var(--widget-shadow-hover);
+      }
+    }
+
+    // 拖拽时的占位DOM
+    &.grid-stack-placeholder > .placeholder-content {
+      background-color: $devui-global-bg;
+      border: 1px dashed $devui-brand;
+    }
+
+    // 删除时
+    &.grid-stack-item-removing {
+      opacity: 0.8;
+      filter: blur(2px);
+    }
+  }
+}
+
+.dashboard-dropping-widget {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--devui-base-bg);
+  color: var(--devui-text);
+  border: 1px dashed var(--devui-brand);
+  opacity: 0.6;
+}

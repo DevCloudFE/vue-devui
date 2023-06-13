@@ -962,6 +962,10 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       avatar: 'https://avatars.githubusercontent.com/u/7751774?v=4',
       homepage: 'https://github.com/Roading'
     },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/22699218?v=4',
+      homepage: 'https://github.com/xzxldl55'
+    },
   ],
   gantt: [
     {
