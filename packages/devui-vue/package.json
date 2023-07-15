@@ -59,7 +59,8 @@
     "lodash-es": "^4.17.20",
     "mitt": "^3.0.0",
     "vue": "^3.2.37",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "monaco-editor": "0.34.0"
   },
   "devDependencies": {
     "@babel/parser": "^7.15.5",
