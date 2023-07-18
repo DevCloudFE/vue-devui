@@ -9,7 +9,7 @@ const { isReadyToRelease } = require('../shared/utils');
 const { execSync } = require('child_process');
 const { volarSupport } = require('./build-volar-support');
 const logger = require('../shared/logger');
-const replaceIdentifierPath = path.resolve(__dirname,'../replaceIdentifer.json');
+const replaceIdentifierPath = path.resolve(__dirname, '../replaceIdentifer.json');
 const replaceIdentifier = JSON.parse(fs.readFileSync(replaceIdentifierPath).toString());
 const entryDir = path.resolve(__dirname, '../../devui');
 const outputDir = path.resolve(__dirname, '../../build');
@@ -21,7 +21,7 @@ const baseConfig = defineConfig({
 });
 
 const rollupOptions = {
-  external: ['vue', 'vue-router', '@vueuse/core', '@floating-ui/dom'],
+  external: ['vue', 'vue-router', '@vueuse/core', '@floating-ui/dom', 'monaco-editor'],
   output: {
     globals: {
       vue: 'Vue',
@@ -103,12 +103,15 @@ exports.build = async () => {
   nuxtBuild.createNuxtPlugin();
   logger.success('准备生成global.d.ts');
   const volarSupportbuildState = volarSupport(replaceIdentifier, readyToReleaseComponentName);
-  fs.writeFileSync('./build/index.d.ts', `
+  fs.writeFileSync(
+    './build/index.d.ts',
+    `
 export * from './types/vue-devui';
 import _default from './types/vue-devui';
 export default _default;
-`);
-  if (volarSupportbuildState){
+`
+  );
+  if (volarSupportbuildState) {
     logger.success('global.d.ts生成成功');
   } else {
     logger.error('global.d.ts生成失败, 因为发生错误');
