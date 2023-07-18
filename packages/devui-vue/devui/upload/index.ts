@@ -3,7 +3,7 @@ import Upload from './src/upload';
 import fileDropDirective from './src/file-drop-directive';
 export * from './src/upload-types';
 
-export { Upload };
+export { Upload, fileDropDirective };
 
 export default {
   title: 'Upload 上传',

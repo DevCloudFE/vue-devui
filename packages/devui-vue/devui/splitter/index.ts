@@ -4,7 +4,7 @@ import SplitterPane from './src/components/splitter-pane';
 
 export * from './src/splitter-types';
 
-export { Splitter };
+export { Splitter, SplitterPane };
 
 export default {
   title: 'Splitter 分割器',
