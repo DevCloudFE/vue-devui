@@ -126,7 +126,7 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const tagList = ref(['tag1', 'tag2', 'tag3']);
-    const handleClose = (item: string) => {
+    const handleClose = (item) => {
       tagList.value.splice(tagList.value.indexOf(item), 1);
     };
     return {
@@ -172,14 +172,14 @@ export default defineComponent({
 
 ### Tag 参数
 
-| 参数          | 类型                  | 默认值   | 说明                                        | 跳转至 Demo           |
-| :------------ | :-------------------- |:------| :------------------------------------------ | :-------------------- |
-| type          | [TagType](#tagtype)   | ''    | 可选，标签的类型，指定类型后则 color 不生效 | [基本用法](#基本用法) |
-| color         | `string`              | ''    | 可选，标签的主题色                          | [基本用法](#基本用法) |
-| title-content | `string`              | ''    | 可选，设置鼠标悬浮时 title 的显示内容       | [基本用法](#基本用法) |
-| checked       | `boolean`             | false | 可选，标签选中的初始状态                    | [可被选中](#可被选中) |
-| deletable     | `boolean`             | false | 可选，设置标签是否可删除                    | [可移除的](#可移除的) |
-| size          | [SizeType](#sizetype) | 'md'  | 可选，标签尺寸                              | [不同尺寸](#不同尺寸) |
+| 参数          | 类型                  | 默认值 | 说明                                        | 跳转至 Demo           |
+| :------------ | :-------------------- | :----- | :------------------------------------------ | :-------------------- |
+| type          | [TagType](#tagtype)   | ''     | 可选，标签的类型，指定类型后则 color 不生效 | [基本用法](#基本用法) |
+| color         | `string`              | ''     | 可选，标签的主题色                          | [基本用法](#基本用法) |
+| title-content | `string`              | ''     | 可选，设置鼠标悬浮时 title 的显示内容       | [基本用法](#基本用法) |
+| checked       | `boolean`             | false  | 可选，标签选中的初始状态                    | [可被选中](#可被选中) |
+| deletable     | `boolean`             | false  | 可选，设置标签是否可删除                    | [可移除的](#可移除的) |
+| size          | [SizeType](#sizetype) | 'md'   | 可选，标签尺寸                              | [不同尺寸](#不同尺寸) |
 
 ### Tag 事件
 
