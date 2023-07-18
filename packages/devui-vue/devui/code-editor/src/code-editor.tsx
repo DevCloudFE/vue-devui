@@ -5,7 +5,7 @@ import { useCodeEditor } from './composables/use-code-editor';
 import './code-editor.scss'
 
 export default defineComponent({
-    name: 'DpCodeEditor',
+    name: 'DCodeEditor',
     props: codeEditorProps,
     emits: ['update: modelValue', 'afterEditorInit', 'click'],
     setup(props: codeEditorProps, ctx: SetupContext) {
