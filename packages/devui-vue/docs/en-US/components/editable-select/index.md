@@ -408,7 +408,7 @@ export default defineComponent({
       });
     };
 
-    const remoteMethod = async (query: string) => {
+    const remoteMethod = async (query) => {
       search.value = query;
       let list = await fetch();
       if (query) {
@@ -473,7 +473,7 @@ export default defineComponent({
 
 ### EditableSelect Slots
 
-| Name       | Description                                                                          |Jump to Demo                                            |
+| Name         | Description                                                                   | Jump to Demo                                         |
 | :----------- | :---------------------------------------------------------------------------- | :--------------------------------------------------- |
 | item         | Optional. drop-down menu entry template                                       | [ Custom template display](#Custom-template-display) |
 | noResultItem | Optional. drop-down menu entry search followed by no results for the template | [ Custom template display](#Custom-template-display) |
