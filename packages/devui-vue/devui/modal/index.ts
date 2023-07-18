@@ -1,14 +1,14 @@
 import type { App } from 'vue';
 import Modal from './src/modal';
-import Header from './src/components/header';
-import Body from './src/components/body';
-import Footer from './src/components/footer';
+import ModalHeader from './src/components/header';
+import ModalBody from './src/components/body';
+import ModalFooter from './src/components/footer';
 import { ModalService } from './src/services/modal-service';
 import { inBrowser } from '../shared/utils/common-var';
 
 export * from './src/modal-types';
 
-export { Modal };
+export { Modal, ModalHeader, ModalBody, ModalFooter };
 
 export default {
   title: 'Modal 弹窗',
@@ -16,9 +16,9 @@ export default {
   status: '100%',
   install(app: App): void {
     app.component(Modal.name, Modal);
-    app.component(Header.name, Header);
-    app.component(Body.name, Body);
-    app.component(Footer.name, Footer);
+    app.component(ModalHeader.name, ModalHeader);
+    app.component(ModalBody.name, ModalBody);
+    app.component(ModalFooter.name, ModalFooter);
 
     if (!inBrowser) {
       return;
