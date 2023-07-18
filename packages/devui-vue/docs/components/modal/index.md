@@ -161,7 +161,7 @@ export default defineComponent({
       age: 20,
       address: 'Chengdu',
     });
-    const handleClick = (t: string) => {
+    const handleClick = (t) => {
       visible.value = true;
       type.value = t;
     };

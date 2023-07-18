@@ -409,7 +409,7 @@ export default defineComponent({
       });
     };
 
-    const remoteMethod = async (query: string) => {
+    const remoteMethod = async (query) => {
       search.value = query;
       let list = await fetch();
       if (query) {

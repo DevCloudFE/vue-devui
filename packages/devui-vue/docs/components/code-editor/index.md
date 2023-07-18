@@ -11,7 +11,7 @@
 ```vue
 
 <template>
-    <dp-code-editor v-model="code" :options="{language: 'typescript' }" style="height: 220px"></dp-code-editor>
+    <d-code-editor v-model="code" :options="{language: 'typescript' }" style="height: 220px"></dp-code-editor>
 </template>
 
 <script>
