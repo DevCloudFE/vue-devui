@@ -6,7 +6,7 @@ export interface ActionItem {
   createdAt?: string;
   icon?: string;
   status?: 'color-none' | 'color-danger' | 'color-info' | 'color-success';
-  [k: string]: any;
+  [k: string]: unknown;
 }
 export interface ActionData {
   time?: string;
