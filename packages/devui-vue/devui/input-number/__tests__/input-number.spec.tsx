@@ -257,5 +257,25 @@ describe('d-input-number', () => {
     wrapper.unmount();
   });
 
-  it.todo('method focus/blur/select work well.');
+  it('method focus/blur/select work well', async () => {
+    const wrapper = mount(DInputNumber);
+
+    const focusFn = jest.spyOn(wrapper.vm, 'focus');
+    const blurFn = jest.spyOn(wrapper.vm, 'blur');
+    const selectFn = jest.spyOn(wrapper.vm, 'select');
+
+    wrapper.vm.focus();
+    expect(focusFn).toBeCalledTimes(1);
+    wrapper.vm.blur();
+    expect(blurFn).toBeCalledTimes(1);
+    wrapper.vm.select();
+    expect(selectFn).toBeCalledTimes(1);
+
+    wrapper.vm.focus();
+    expect(focusFn).toBeCalledTimes(2);
+    wrapper.vm.blur();
+    expect(blurFn).toBeCalledTimes(2);
+    wrapper.vm.select();
+    expect(selectFn).toBeCalledTimes(2);
+  });
 });

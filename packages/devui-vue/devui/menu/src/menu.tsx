@@ -15,7 +15,7 @@ export default defineComponent({
   emits: ['select', 'deselect', 'submenu-change'],
   setup(props: MenuProps, ctx) {
     const ns = useNamespace('menu');
-    const {openKeys, mode, collapsed, defaultSelectKeys} = toRefs(props);
+    const { openKeys, mode, collapsed, defaultSelectKeys, router } = toRefs(props);
     // This ID is only for internal use. So we unwanted use reactivity
     const menuId = randomId(16);
     // register menu to recordTable.
@@ -29,27 +29,27 @@ export default defineComponent({
     provide('mode', mode);
     provide('collapsedIndent', props['collapsedIndent']);
     provide('rootMenuEmit', ctx.emit);
-    provide('useRouter', props.router);
+    provide('useRouter', router);
     setDefaultIndent(props['indentSize']);
     const menuRoot = ref(null);
     const overflowItemLength = ref(0);
     const overflowContainer = ref<ComponentPublicInstance | null>(null);
     const selectClassName = `${ns.b()}-item-select`;
-    const rootClassName = computed(()=>({
+    const rootClassName = computed(() => ({
       [`${ns.b()}`]: true,
       [`${ns.b()}-vertical`]: mode.value === 'vertical',
       [`${ns.b()}-horizontal`]: mode.value === 'horizontal',
-      [`${ns.b()}-collapsed`]: collapsed.value
+      [`${ns.b()}-collapsed`]: collapsed.value,
     }));
     const overflowContainerClassName = reactive({
       [selectClassName]: false,
-      [`${ns.b()}-overflow-container`]: true
+      [`${ns.b()}-overflow-container`]: true,
     });
     // 如果一个或多个菜单元素被选中，当宽度发生变化时。如果溢出容易中有被选中的元素，那么溢出容器也应当被选中
     const resetOverflowContainerSelectState = (e: Element) => {
       const children = Array.from(e.children);
-      for (const item of children){
-        if (item.classList.contains(selectClassName)){
+      for (const item of children) {
+        if (item.classList.contains(selectClassName)) {
           overflowContainerClassName[selectClassName] = true;
           break;
         } else {
@@ -69,10 +69,12 @@ export default defineComponent({
             entries.forEach((entry: IntersectionObserverEntry) => {
               if (!entry.isIntersecting) {
                 const cloneNode = entry.target.cloneNode(true) as Element as HTMLElement;
-                if (entry.target.classList.contains(`${ns.b()}-overflow-container`)){
-                  if (flag && entry.target.previousElementSibling && container.children.length){
+                if (entry.target.classList.contains(`${ns.b()}-overflow-container`)) {
+                  if (flag && entry.target.previousElementSibling && container.children.length) {
                     root.appendChild(entry.target.previousElementSibling);
-                  } else {flag = true;}
+                  } else {
+                    flag = true;
+                  }
                 } else {
                   overflowItemLength.value += 1;
                   (entry.target as Element as HTMLElement).style.visibility = 'hidden';
@@ -93,11 +95,11 @@ export default defineComponent({
                   root.insertBefore(entry.target, overflowContainerElement);
                   (entry.target as HTMLElement).style.visibility = '';
                   const obItem = overflowContainerElement.previousElementSibling;
-                  const canObAgin = obItem && (entry.boundingClientRect.width % entry.target.getBoundingClientRect().width === 0);
+                  const canObAgin = obItem && entry.boundingClientRect.width % entry.target.getBoundingClientRect().width === 0;
                   if (canObAgin) {
                     ob.observe(obItem);
                   }
-                  if (obItem?.classList.contains('devui-submenu')){
+                  if (obItem?.classList.contains('devui-submenu')) {
                     const sub = obItem;
                     const wrapper = obItem.children[1] as HTMLElement;
                     (sub as HTMLElement).addEventListener('mouseenter', (ev: MouseEvent) => {
@@ -111,7 +113,7 @@ export default defineComponent({
                   }
                   overflowItemLength.value -= 1;
                   ob.observe(entry.target);
-                  if (container.lastChild){
+                  if (container.lastChild) {
                     container.removeChild(container.lastChild);
                   }
                   resetOverflowContainerSelectState(container);
@@ -122,7 +124,7 @@ export default defineComponent({
           {
             root: root,
             threshold: 1,
-            rootMargin: '8px'
+            rootMargin: '8px',
           }
         );
         for (let i = 0; i < children.length; i++) {
@@ -135,17 +137,14 @@ export default defineComponent({
         <ul
           ref={menuRoot}
           class={rootClassName.value}
-          style={[
-            props['collapsed'] ? `width:${props['collapsedIndent'] * 2}px` : `width: ${props['width']}`,
-          ]}>
+          style={[props['collapsed'] ? `width:${props['collapsedIndent'] * 2}px` : `width: ${props['width']}`]}>
           {ctx.slots.default?.()}
           <SubMenu
             ref={overflowContainer}
             key="overflowContainer"
             title="..."
             class={overflowContainerClassName}
-            v-show={overflowItemLength.value > 0 && mode.value === 'horizontal'}>
-          </SubMenu>
+            v-show={overflowItemLength.value > 0 && mode.value === 'horizontal'}></SubMenu>
         </ul>
       );
     };

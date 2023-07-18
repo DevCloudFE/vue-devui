@@ -21,6 +21,11 @@ export function useOperate() {
 
       setNodeValue(parentNode, 'expanded', true);
       setNodeValue(parentNode, 'isLeaf', false);
+      let childrenLen = parentNode.childNodeCount;
+      if (!childrenLen) {
+        childrenLen = 0;
+        setNodeValue(parentNode, 'childNodeCount', childrenLen + 1);
+      }
 
       if (lastChild) {
         setNodeValue(lastChild, 'parentChildNodeCount', children.length + 1);
