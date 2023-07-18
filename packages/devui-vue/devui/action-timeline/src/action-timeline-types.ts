@@ -35,7 +35,7 @@ export const actionTimelineProps = {
     type: Boolean,
     default: true,
   },
-  showStatusColor: {
+  showStatusBgColor: {
     type: Boolean,
     default: false,
   },

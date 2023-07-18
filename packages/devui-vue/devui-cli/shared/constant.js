@@ -29,7 +29,7 @@ exports.VITEPRESS_SIDEBAR_FILE_EN = resolve(
   `config/${this.VITEPRESS_SIDEBAR_FILE_NAME_EN}`
 );
 // 这里的分类顺序将会影响最终生成的页面侧边栏顺序
-exports.VITEPRESS_SIDEBAR_CATEGORY = ['通用', '导航', '反馈', '数据录入', '数据展示', '布局'];
+exports.VITEPRESS_SIDEBAR_CATEGORY = ['通用', '导航', '反馈', '数据录入', '数据展示', '布局', '演进中'];
 exports.VITEPRESS_SIDEBAR_CATEGORY_EN = [
   'General',
   'Navigation',
