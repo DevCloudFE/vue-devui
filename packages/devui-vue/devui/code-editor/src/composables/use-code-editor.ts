@@ -1,4 +1,4 @@
-import { inBrowser } from "@devui/shared/utils";
+import { inBrowser } from '../../../shared/utils/common-var';
 import { throttle } from "lodash";
 import { onBeforeMount, onMounted, ref, SetupContext, toRefs, nextTick, watch } from "vue";
 import { CodeEditorProps, Comment, Decoration, LayoutInfo, PositionInfo } from "../code-editor-types";
