@@ -2,8 +2,7 @@ import type { App } from 'vue';
 import Carousel from './src/carousel';
 import CarouselItem from './src/item';
 
-export { Carousel };
-export { CarouselItem };
+export { Carousel, CarouselItem };
 
 export default {
   title: 'Carousel 走马灯',
@@ -12,5 +11,5 @@ export default {
   install(app: App): void {
     app.component(Carousel.name, Carousel);
     app.component(CarouselItem.name, CarouselItem);
-  }
+  },
 };
