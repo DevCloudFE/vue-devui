@@ -6,7 +6,7 @@ export { CodeEditor };
 
 export default {
   title: 'Code Editor 代码编辑器',
-  category: '数据录入',
+  category: '演进中',
   status: '100%',
   install(app: App): void {
     app.component(CodeEditor.name, CodeEditor);
