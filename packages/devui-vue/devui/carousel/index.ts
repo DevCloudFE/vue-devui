@@ -7,7 +7,7 @@ export { Carousel, CarouselItem };
 export default {
   title: 'Carousel 走马灯',
   category: '数据展示',
-  status: '80%',
+  status: '100%',
   install(app: App): void {
     app.component(Carousel.name, Carousel);
     app.component(CarouselItem.name, CarouselItem);
