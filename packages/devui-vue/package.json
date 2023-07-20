@@ -54,13 +54,14 @@
     "clipboard-copy": "^4.0.1",
     "dayjs": "^1.11.3",
     "devui-theme": "workspace:^0.0.1",
+    "diff2html": "^3.4.35",
     "fs-extra": "^10.0.0",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.20",
     "mitt": "^3.0.0",
+    "monaco-editor": "0.34.0",
     "vue": "^3.2.37",
-    "vue-router": "^4.0.3",
-    "monaco-editor": "0.34.0"
+    "vue-router": "^4.0.3"
   },
   "devDependencies": {
     "@babel/parser": "^7.15.5",
