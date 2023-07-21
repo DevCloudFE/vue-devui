@@ -1,0 +1,13 @@
+@import '../../styles-var/devui-var.scss';
+
+.#{$devui-prefix}-code-review {
+  tr {
+    border: none;
+  }
+
+  th,
+  td {
+    border: none;
+    padding: 0;
+  }
+}

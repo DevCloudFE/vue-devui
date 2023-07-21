@@ -4,10 +4,9 @@ Modal dialog.
 
 #### When to use
 
-1.When requiring users to interact with the application, but without jumping to a new page and interrupting the user's workflow, you can use Modal to create a new floating layer over the current page to get user feedback or display information. 
+1.When requiring users to interact with the application, but without jumping to a new page and interrupting the user's workflow, you can use Modal to create a new floating layer over the current page to get user feedback or display information.
 
 2.Modal plays an interactive role with users. Users can enter information, read prompts, set options and other operations in Modal.
-
 
 ### Basic Usage
 
@@ -162,7 +161,7 @@ export default defineComponent({
       age: 20,
       address: 'Chengdu',
     });
-    const handleClick = (t: string) => {
+    const handleClick = (t) => {
       visible.value = true;
       type.value = t;
     };
@@ -228,26 +227,26 @@ export default defineComponent({
 
 ### API
 
-|      Parameter        |       Type      |      Default     |     Description   |   Jump to Demo |
-| :-------------------: | :--------------: | :---------------------: | :--------------------------------------------: | :-------------------: |
-| v-model                | `boolean`                            | false  | Whether Modal is displayed                             | [Basic Usage](#basic-usage)     |
-| title                  | `string`                             | -      | Optional, Title of Modal                         | [Basic Usage](#basic-usage)     |
-| keep-last              | `boolean`                            | false  | Optional, whether to keep the last moved position  | [Keep Last Closed Position](#keep-last-closed-position)  
-| lock-scroll            | `boolean`                            | true   | Optional, whether to lock the body scrolling                 |
-| close-on-click-overlay | `boolean`                            | true   | Optional, whether Modal can be closed when clicking the blank           |
-| before-close           | `(done) => void`                     | -      | Optional, callback before closing, call `done` to close Modal | [Callback Before Closing](#callback-before-closing) |
-| escapable              | `boolean`                            | true   | Optional, whether the `esc` key is supported to close the modal              |                           |
-| show-close             | `boolean`                            | true   | Optional, whether to display the close button                     |                           |
-| draggable              | `boolean`                            | true   | Optional, whether modal can be dragged                       |
-| show-animation         | `boolean`                            | true   | Optional, whether to display animation                         |
-| show-overlay           | `boolean`                            | true   | Optional, whether to display mask layer                       |                           |
-| append-to-body         | `boolean`                            | true   | Optional, whether to promote Modal to the body layer          |                           |
-| type                   | success \| failed \| warning \| info | -      | Optional, modal information prompt                         |
+|       Parameter        |                 Type                 | Default |                           Description                           |                      Jump to Demo                       |
+| :--------------------: | :----------------------------------: | :-----: | :-------------------------------------------------------------: | :-----------------------------------------------------: |
+|        v-model         |              `boolean`               |  false  |                   Whether Modal is displayed                    |               [Basic Usage](#basic-usage)               |
+|         title          |               `string`               |    -    |                    Optional, Title of Modal                     |               [Basic Usage](#basic-usage)               |
+|       keep-last        |              `boolean`               |  false  |        Optional, whether to keep the last moved position        | [Keep Last Closed Position](#keep-last-closed-position) |
+|      lock-scroll       |              `boolean`               |  true   |          Optional, whether to lock the body scrolling           |
+| close-on-click-overlay |              `boolean`               |  true   |  Optional, whether Modal can be closed when clicking the blank  |
+|      before-close      |           `(done) => void`           |    -    |  Optional, callback before closing, call `done` to close Modal  |   [Callback Before Closing](#callback-before-closing)   |
+|       escapable        |              `boolean`               |  true   | Optional, whether the `esc` key is supported to close the modal |                                                         |
+|       show-close       |              `boolean`               |  true   |          Optional, whether to display the close button          |                                                         |
+|       draggable        |              `boolean`               |  true   |             Optional, whether modal can be dragged              |
+|     show-animation     |              `boolean`               |  true   |             Optional, whether to display animation              |
+|      show-overlay      |              `boolean`               |  true   |             Optional, whether to display mask layer             |                                                         |
+|     append-to-body     |              `boolean`               |  true   |      Optional, whether to promote Modal to the body layer       |                                                         |
+|          type          | success \| failed \| warning \| info |    -    |               Optional, modal information prompt                |
 
 ### Modal Slot
 
-| Slot name  | Description    |
-| :------ | :---------------- |
-| default | Modal content        |
-| header  | Custom Modal header |
-| footer  | Custom Modal footer |
+| Slot name | Description         |
+| :-------- | :------------------ |
+| default   | Modal content       |
+| header    | Custom Modal header |
+| footer    | Custom Modal footer |
