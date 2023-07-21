@@ -62,6 +62,30 @@ export default defineComponent({
 
     provide<Ref<CSSProperties>>('gutterStyle', gutterStyle);
 
-    return () => <div class={[ns.b(), rowClass.value]}>{slots.default?.()}</div>;
+    const gutterRowStyle = computed(() => {
+      const result: Record<string, string> = {};
+      if (!props.noOuter) {
+        return result;
+      }
+      if (parseInt(gutterStyle.value.paddingLeft as string) !== 0) {
+        result['marginLeft'] = `-${gutterStyle.value.paddingLeft}`;
+      }
+      if (parseInt(gutterStyle.value.paddingRight as string) !== 0) {
+        result['marginRight'] = `-${gutterStyle.value.paddingRight}`;
+      }
+      if (parseInt(gutterStyle.value.paddingTop as string) !== 0) {
+        result['marginTop'] = `-${gutterStyle.value.paddingTop}`;
+      }
+      if (parseInt(gutterStyle.value.paddingBottom as string) !== 0) {
+        result['marginBottom'] = `-${gutterStyle.value.paddingBottom}`;
+      }
+      return result;
+    });
+
+    return () => (
+      <div class={[ns.b(), rowClass.value]} style={gutterRowStyle.value}>
+        {slots.default?.()}
+      </div>
+    );
   },
 });
