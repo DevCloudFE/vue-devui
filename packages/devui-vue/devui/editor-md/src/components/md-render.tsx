@@ -16,5 +16,5 @@ export default defineComponent({
         {ctx.slots.default?.()}
       </div>
     );
-  }
+  },
 });

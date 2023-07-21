@@ -1,9 +1,8 @@
-import type { PropType, ExtractPropTypes, InjectionKey, Ref, ComputedRef } from 'vue';
+import type { PropType, ExtractPropTypes, InjectionKey, Ref } from 'vue';
 import { DEFAULT_TOOLBAR_CONFIG, IToolbarItemConfig } from './toolbar-config';
 
-
 export interface MDThemeToolbarConfig {
-  icons: { [key: string]: string }
+  icons: { [key: string]: string };
 }
 
 export interface MDThemeConfig {
@@ -36,15 +35,15 @@ const commonProps = {
   },
   breaks: {
     type: Boolean,
-    default: true
+    default: true,
   },
   customParse: {
     type: Function as PropType<(html: string) => string>,
-    default: null
+    default: null,
   },
   renderParse: {
     type: Function as PropType<(html: string) => string>,
-    default: null
+    default: null,
   },
   mdRules: {
     type: Object,
@@ -52,56 +51,56 @@ const commonProps = {
   },
   customRendererRules: {
     type: Array as PropType<Array<ICustomRenderRule>>,
-    default: () => []
+    default: () => [],
   },
   customXssRules: {
     type: Array as PropType<Array<ICustomXssRule>>,
-    default: () => []
+    default: () => [],
   },
   mdPlugins: {
     type: Array as PropType<Array<MdPlugin>>,
-    default: () => []
-  }
-}
+    default: () => [],
+  },
+};
 
 export const editorMdProps = {
   ...commonProps,
   modelValue: {
     type: String,
-    default: ''
+    default: '',
   },
   options: {
     type: Object,
-    default: () => { },
+    default: () => ({}),
   },
   mode: {
     type: String as PropType<Mode>,
-    default: 'normal'
+    default: 'normal',
   },
   customThemeConfig: {
-    type: Object as PropType<MDThemeConfig>
+    type: Object as PropType<MDThemeConfig>,
   },
   customToolbars: {
     type: Object as PropType<Record<string, IToolbarItemConfig>>,
   },
   disableChangeEvent: {
     type: Boolean,
-    default: false
+    default: false,
   },
   editorContainerHeight: {
-    type: Number
+    type: Number,
   },
   imageUploadToServer: {
     type: Boolean,
-    default: false
+    default: false,
   },
   hidePreviewView: {
     type: Boolean,
-    default: false
+    default: false,
   },
   maxlength: {
     type: Number,
-    default: null
+    default: null,
   },
   placeholder: {
     type: String,
@@ -113,14 +112,14 @@ export const editorMdProps = {
   },
   fullscreenZIndex: {
     type: Number,
-    default: 10
+    default: 10,
   },
   hintConfig: {
     type: Object as PropType<Record<string, any>>,
   },
   customHintReplaceFn: {
-    type: Function as PropType<(prefix: string, row: any) => string>
-  }
+    type: Function as PropType<(prefix: string, row: any) => string>,
+  },
 };
 
 export type EditorMdProps = ExtractPropTypes<typeof editorMdProps>;
@@ -139,12 +138,12 @@ export const mdRenderProps = {
   ...commonProps,
   content: {
     type: String,
-    default: ''
+    default: '',
   },
   disableRender: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 };
 
 export type MdRenderProps = ExtractPropTypes<typeof mdRenderProps>;
@@ -152,8 +151,8 @@ export type MdRenderProps = ExtractPropTypes<typeof mdRenderProps>;
 export const mdToolbarItemProps = {
   config: {
     type: Object as PropType<IToolbarItemConfig>,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 };
 
 export type MdToolbarItemProps = ExtractPropTypes<typeof mdToolbarItemProps>;

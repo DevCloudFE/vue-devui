@@ -27,12 +27,12 @@ export function useEditorMdRender(props: MdRenderProps, ctx: SetupContext) {
       }
       ctx.emit('mdRenderChange', html);
     }, 300);
-  }
+  };
 
   const setChecked = (checked: boolean, index: number) => {
     const pattern = /\[(X|\s|\_|\-)\]\s(.*)/gi;
     let i = 0;
-    const result = content.value.replace(pattern, str => {
+    const result = content.value.replace(pattern, (str) => {
       const arr = str.split('<br>');
       let j = 0;
       while (j < arr.length) {
@@ -45,13 +45,18 @@ export function useEditorMdRender(props: MdRenderProps, ctx: SetupContext) {
         j++;
       }
       return arr.join('<br>');
-    })
+    });
     return result;
-  }
+  };
 
   const onPreviewClick = (e: any) => {
-
-  }
+    if (e.target?.tagName === 'INPUT' && e.target.type === 'checkbox') {
+      const result = previewRef.value.querySelectorAll('input');
+      const index = [...result].filter((el: any) => el.type === 'checkbox').findIndex((item: any) => item === e.target);
+      const checkContent = setChecked(e.target.checked, index);
+      ctx.emit('mdCheckedEvent', checkContent);
+    }
+  };
 
   return { previewRef, renderService, onPreviewClick, setContainerContent };
 }
@@ -64,7 +69,7 @@ export function useMdRenderWatcher(props: MdRenderProps, renderService: MDRender
       renderService.setRules(mdRules?.value);
     },
     {
-      immediate: true
+      immediate: true,
     }
   );
 
@@ -88,9 +93,9 @@ export function useMdRenderWatcher(props: MdRenderProps, renderService: MDRender
       setContainerContent();
     },
     {
-      immediate: true
+      immediate: true,
     }
-  )
+  );
 
   watch(
     customRendererRules,
@@ -99,9 +104,9 @@ export function useMdRenderWatcher(props: MdRenderProps, renderService: MDRender
       setContainerContent();
     },
     {
-      immediate: true
+      immediate: true,
     }
-  )
+  );
 
   watch(
     baseUrl,
@@ -110,9 +115,9 @@ export function useMdRenderWatcher(props: MdRenderProps, renderService: MDRender
       setContainerContent();
     },
     {
-      immediate: true
+      immediate: true,
     }
-  )
+  );
 
   watch(
     breaks,
@@ -121,9 +126,9 @@ export function useMdRenderWatcher(props: MdRenderProps, renderService: MDRender
       setContainerContent();
     },
     {
-      immediate: true
+      immediate: true,
     }
-  )
+  );
 
   watch(
     mdPlugins,
@@ -134,7 +139,7 @@ export function useMdRenderWatcher(props: MdRenderProps, renderService: MDRender
       }
     },
     {
-      immediate: true
+      immediate: true,
     }
-  )
+  );
 }

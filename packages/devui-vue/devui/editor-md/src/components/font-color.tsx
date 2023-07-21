@@ -39,6 +39,6 @@ export default defineComponent({
           </ul>
         </div>
       </div>
-    )
-  }
+    );
+  },
 });

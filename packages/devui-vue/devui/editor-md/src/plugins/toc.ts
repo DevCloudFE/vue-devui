@@ -1,5 +1,5 @@
-import { cloneDeep } from "lodash";
-import Token from "markdown-it/lib/token";
+import cloneDeep from 'lodash/cloneDeep';
+import Token from 'markdown-it/lib/token';
 
 const TOC = '[toc]';
 const TOC_RE = /^\[toc\]/im;
@@ -34,18 +34,18 @@ export default function (md: any, options: Record<string, any>) {
         if (lastItem.nodes.length === 0) {
           lastItem.nodes.push({
             heading: {},
-            nodes: []
+            nodes: [],
           });
         }
         lastItem = lastItem.nodes[lastItem.nodes.length - 1];
       }
       lastItem.nodes.push({
         heading: heading,
-        nodes: []
+        nodes: [],
       });
-    })
+    });
     return tree;
-  }
+  };
 
   md.core.ruler.push('init_toc', (state: any) => {
     const tokens = state.tokens;
@@ -57,7 +57,7 @@ export default function (md: any, options: Record<string, any>) {
         const heading_close = tokens[i];
         if (heading.type === 'inline') {
           let content;
-          if (heading.children && heading.children.length > 0 && heading.children[0].tyoe === 'link_open') {
+          if (heading.children && heading.children.length > 0 && heading.children[0].type === 'link_open') {
             content = heading.children[1].content;
             heading._toAnchor = safeString(content);
           } else {
@@ -75,24 +75,26 @@ export default function (md: any, options: Record<string, any>) {
     const tocTree = generateTree(headings);
     const headerRecord = new Map<string, number>();
     const tocTree2Html = (nodes: any[], indent = 0) => {
-      return nodes.map((item: any) => {
-        let node = item.heading.content ? repeatAsterisk('  ', indent) : '';
-        if (item.heading.content) {
-          if (headerRecord.has(item.heading.anchor)) {
-            headerRecord.set(item.heading.anchor, headerRecord.get(item.heading.anchor)! + 1);
-            node += ` [${item.heading.content}](#${item.heading.anchor}-${headerRecord.get(item.heading.anchor)})\n`;
+      return nodes
+        .map((item: any) => {
+          let node = `${item.heading.content ? repeatAsterisk('  ', indent) : ''}`;
+          if (item.heading.content) {
+            if (headerRecord.has(item.heading.anchor)) {
+              headerRecord.set(item.heading.anchor, headerRecord.get(item.heading.anchor)! + 1);
+              node += ` [${item.heading.content}](#${item.heading.anchor}-${headerRecord.get(item.heading.anchor)})\n`;
+            } else {
+              headerRecord.set(item.heading.anchor, 0);
+              node += ` [${item.heading.content}](#${item.heading.anchor})\n`;
+            }
           } else {
-            headerRecord.set(item.heading.anchor, 0);
-            node += ` [${item.heading.content}](#${item.heading.anchor})\n`;
+            node += '\n';
           }
-        } else {
-          node += '\n';
-        }
-        if (item.nodes.length) {
-          node += item.heading.content ? tocTree2Html(item.nodes, indent + 1) : tocTree2Html(item.nodes, indent);
-        }
-        return node;
-      }).join('');
+          if (item.nodes.length) {
+            node += item.heading.content ? tocTree2Html(item.nodes, indent + 1) : tocTree2Html(item.nodes, indent);
+          }
+          return node;
+        })
+        .join('');
     };
     const toc = tocTree2Html(tocTree.nodes);
     tocTokens = mdInstance.parse(toc, {});
@@ -107,7 +109,7 @@ export default function (md: any, options: Record<string, any>) {
       return false;
     }
     match = TOC_RE.exec(state.src);
-    match = !match ? [] : match.filter(m => m);
+    match = !match ? [] : match.filter((m) => m);
     if (match.length < 1) {
       return false;
     }
@@ -134,7 +136,7 @@ export default function (md: any, options: Record<string, any>) {
 
     const openLinkToken = {
       ...new Token('link_open', 'a', 1),
-      attrs
+      attrs,
     };
     const closeLinkToken = new Token('link_close', 'a', -1);
 
@@ -148,14 +150,15 @@ export default function (md: any, options: Record<string, any>) {
           {
             ...new Token('text', '', 0),
             content: linkOptions.anchorLinkSymbol,
-          }
+          },
+          new Token('span_close', 'span', -1),
         ];
       } else {
         return [
           {
             ...new Token('text', '', 0),
             content: linkOptions.anchorLinkSymbol,
-          }
+          },
         ];
       }
     };
@@ -168,9 +171,8 @@ export default function (md: any, options: Record<string, any>) {
 
       const actionOnArray = {
         false: 'push',
-        true: 'unshift'
+        true: 'unshift',
       };
-
 
       if (linkOptions.anchorLinkSpace) {
         linkTokens[actionOnArray[linkOptions?.anchorLinkBefore]](space());

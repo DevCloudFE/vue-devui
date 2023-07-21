@@ -17,7 +17,7 @@ export default defineComponent({
           editorIns.setCursor(cursor.line, cursor.ch - 7);
         }
       });
-    }
+    };
 
     return () => (
       <ul class="dropdown-font-size">
@@ -27,6 +27,6 @@ export default defineComponent({
           </li>
         ))}
       </ul>
-    )
-  }
-})
+    );
+  },
+});

@@ -1,6 +1,6 @@
-import { Dropdown } from '@devui/dropdown';
-import { Tooltip } from '@devui/tooltip';
 import { defineComponent, inject, reactive } from 'vue';
+import { Dropdown } from '../../../dropdown';
+import { Tooltip } from '../../../tooltip';
 import { EditorMdInjectionKey, IEditorMdInjection, MdToolbarItemProps, mdToolbarItemProps } from '../editor-md-types';
 import FontColor from './font-color';
 import FontSize from './font-size';
@@ -16,14 +16,14 @@ export default defineComponent({
         return '';
       }
       if (name === 'fullscreen') {
-        return `<center>${showFullscreen.value ? t(config.exitName!) : t(name)}</center>`
+        return `<center>${showFullscreen.value ? t(config.exitName!) : t(name)}</center>`;
       }
       let n: string | undefined = undefined;
       if (name?.includes('&')) {
         const temp = name.split('&');
         n = t(temp[0]) + ' & ' + t(temp[1]);
       }
-      return `<center>${n ?? t(name!) ?? ''}<br>${shortKey ?? ''}</center>`
+      return `<center>${n ?? t(name!) ?? ''}<br>${shortKey ?? ''}</center>`;
     };
 
     const onToolbarItemClick = () => {
@@ -42,8 +42,7 @@ export default defineComponent({
             <span
               class="md-toolbar-item"
               onClick={onToolbarItemClick}
-              innerHTML={config.id === 'fullscreen' ? (showFullscreen.value ? config.exitIcon : config.icon) : config.icon}
-            ></span>
+              innerHTML={config.id === 'fullscreen' ? (showFullscreen.value ? config.exitIcon : config.icon) : config.icon}></span>
           </Tooltip>
         )}
         {config.type === 'dropDown' && (
@@ -61,11 +60,11 @@ export default defineComponent({
                   {config.component === 'FontSize' && <FontSize />}
                   {config.component === 'FontColor' && <FontColor />}
                 </>
-              )
+              ),
             }}
           </Dropdown>
         )}
       </>
-    )
-  }
-})
+    );
+  },
+});
