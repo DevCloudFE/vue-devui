@@ -7,7 +7,6 @@ import Toolbar from './components/toolbar';
 import MdRender from './components/md-render';
 import { locale } from './utils';
 import './editor-md.scss';
-import 'codemirror/lib/codemirror.css';
 
 export default defineComponent({
   name: 'DEditorMd',
