@@ -30,7 +30,7 @@ const rollupOptions = {
     /codemirror/,
     'highlight.js',
     /markdown-it/,
-    /mermaid/,
+    /^mermaid/,
     'xss',
     'diff2html',
   ],
