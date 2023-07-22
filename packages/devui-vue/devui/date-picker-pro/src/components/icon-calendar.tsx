@@ -2,7 +2,7 @@ export const IconCalendar = (): JSX.Element => (
   <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
       <path
-        d="M5,0 L5,1 L11,1 L11,0 L12,0 L12,1 L14,1 C15.1045695,
+        d={`M5,0 L5,1 L11,1 L11,0 L12,0 L12,1 L14,1 C15.1045695,
         1 16,1.8954305 16,3 L16,14 C16,15.1045695 15.1045695,16 14,
         16 L2,16 C0.8954305,16 0,15.1045695 0,14 L0,3 C0,
         1.8954305 0.8954305,1 2,1 L4,1 L4,0 L5,0 Z M15,5 L1,
@@ -12,7 +12,7 @@ export const IconCalendar = (): JSX.Element => (
         10.5522847 3,10 L3,8 C3,7.44771525 3.44771525,7 4,7 L6,7 Z M6,
         8 L4,8 L4,10 L6,10 L6,8 Z M4,2 L2,2 C1.44771525,2 1,2.44771525 1,
         3 L1,4 L15,4 L15,3 C15,2.44771525 14.5522847,2 14,2 L12,2 L12,
-        3 L11,3 L11,2 L5,2 L5,3 L4,3 L4,2 Z"
+        3 L11,3 L11,2 L5,2 L5,3 L4,3 L4,2 Z`}
         fill="#BABBC0"></path>
     </g>
   </svg>
