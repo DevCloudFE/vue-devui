@@ -10,17 +10,19 @@ export default defineComponent({
 
     return () => (
       <div class="md-toolbar-container">
-        {toolbarConfig.value.map((item, index) => Array.isArray(item) ? (
-          <>
-            {item.map((key, idx) => (
-              <ToolbarItem config={toolbars[key]} key={`${index}-${idx}`} />
-            ))}
-            <span class="md-toolbar-span"></span>
-          </>
-        ) : (
-          <ToolbarItem config={toolbars[item]} key={index} />
-        ))}
+        {toolbarConfig.value.map((item, index) =>
+          Array.isArray(item) ? (
+            <>
+              {item.map((key, idx) => (
+                <ToolbarItem config={toolbars[key]} key={`${index}-${idx}`} />
+              ))}
+              <span class="md-toolbar-span"></span>
+            </>
+          ) : (
+            <ToolbarItem config={toolbars[item]} key={index} />
+          )
+        )}
       </div>
     );
-  }
+  },
 });

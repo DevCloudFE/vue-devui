@@ -1,9 +1,9 @@
-import { debounce } from "@devui/shared/utils";
-import { computed, nextTick, onMounted, reactive, Ref, ref, SetupContext, toRefs, watch } from "vue";
-import { EditorMdProps, Mode } from "../editor-md-types";
-import { DEFAULT_TOOLBARS } from "../toolbar-config";
-import { parseHTMLStringToDomList } from "../utils";
-import { refreshEditorCursor, _enforceMaxLength } from "./helper";
+import { computed, nextTick, onMounted, reactive, Ref, ref, SetupContext, toRefs, watch } from 'vue';
+import { debounce } from '../../../shared/utils';
+import { EditorMdProps, Mode } from '../editor-md-types';
+import { DEFAULT_TOOLBARS } from '../toolbar-config';
+import { parseHTMLStringToDomList } from '../utils';
+import { refreshEditorCursor, _enforceMaxLength } from './helper';
 
 export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
   const {
@@ -17,18 +17,18 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     customHintReplaceFn,
     hintConfig,
     disableChangeEvent,
-    modelValue
-  } = toRefs(props)
+    modelValue,
+  } = toRefs(props);
 
   const toolbars = reactive(DEFAULT_TOOLBARS);
   const editorRef = ref();
   const renderRef = ref();
   const previewHtmlList: Ref<any[]> = ref([]);
   let editorIns: any;
-  let hintShow: boolean = false;
-  let isHintLoading: boolean = false;
-  let canPreviewScrollView: boolean = false;
-  let hintList: any[] = [];
+  const hintShow = false;
+  const isHintLoading = false;
+  let canPreviewScrollView = false;
+  const hintList: any[] = [];
   let activeIndex = -1;
   let cursorHint = '';
   let cursorHintEnd = -1;
@@ -46,7 +46,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
       }
     }
     return result;
-  })
+  });
 
   const getEditorIns = () => editorIns;
 
@@ -76,7 +76,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
       if ((ele as HTMLElement).outerHTML) {
         previewHtmlList.value.push(ele.outerHTML);
       }
-    })
+    });
     setTimeout(() => {
       editorScroll();
     });
@@ -114,11 +114,11 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
 
   const setPreviousItemActive = () => {
     activeIndex = activeIndex - 1 < 0 ? hintList.length - 1 : activeIndex - 1;
-  }
+  };
 
   const setNextItemActive = () => {
     activeIndex = activeIndex + 1 <= hintList.length - 1 ? activeIndex + 1 : 0;
-  }
+  };
 
   const selectHintHandler = (row: any) => {
     const cursor = editorIns.getCursor();
@@ -127,7 +127,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     let replaceText = '';
     if (customHintReplaceFn?.value) {
       replaceText = customHintReplaceFn.value(prefix, row);
-      startCh = cursorHintStart
+      startCh = cursorHintStart;
     } else {
       replaceText = row.url ? `[${prefix + row.dispalyText}](${row.url})` : row.dispalyText;
       startCh = row.url ? cursorHintStart : cursorHintStart + prefix.length;
@@ -141,7 +141,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     ctx.emit('selectHint', row);
     editorIns.focus();
     activeIndex = -1;
-  }
+  };
 
   const cursorActivityHandler = () => {
     const cursor = editorIns.getCursor();
@@ -182,7 +182,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     // if (cursorHintStart > -1 && hint[0]) {
     //     currentHintConfig
     // }
-  }
+  };
 
   const onChange = debounce(
     () => {
@@ -211,7 +211,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
       mode: 'markdown',
       lineNumbers: false,
       lineWrapping: true,
-      ...options.value
+      ...options.value,
     });
     if (maxlength.value) {
       editorIns.setOption('maxLength', maxlength.value);
@@ -239,7 +239,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     setTimeout(() => {
       ctx.emit('contentChange', editorIns.getValue());
     }, 100);
-  }
+  };
 
   const onPaste = (e: ClipboardEvent) => {
     const clipboardData = e.clipboardData;
@@ -252,24 +252,21 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
         const item = clipboardData.items[i];
         if (item.kind === 'file' && item.type.indexOf('image') !== -1) {
           const file = item.getAsFile();
-          if (item.kind === 'file' && item.type.indexOf('image') !== -1) {
-            const file = item.getAsFile();
-            if (file?.size === 0) {
-              return;
-            }
+          if (file?.size === 0) {
+            return;
+          }
 
-            if (imageUploadToServer) {
-              const callback = ({ name, imgUrl, title }: any) => {
-                editorRef.focus();
-                editorRef.replaceSelection(`![${name}](${imgUrl} '${title}')`)
-              }
-              ctx.emit('imageUpload', { file, callback });
-            }
+          if (imageUploadToServer.value) {
+            const callback = ({ name, imgUrl, title }: any) => {
+              editorRef.value.focus();
+              editorRef.value.replaceSelection(`![${name}](${imgUrl} '${title}')`);
+            };
+            ctx.emit('imageUpload', { file, callback });
           }
         }
       }
     }
-  }
+  };
 
   onMounted(async () => {
     await import('codemirror/addon/display/placeholder.js');
@@ -277,7 +274,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     const module = await import('codemirror');
     CodeMirror = module.default;
     initEditor();
-  })
+  });
 
   watch(modelValue, (val: string) => {
     if (editorIns) {
@@ -292,24 +289,24 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     if (toolbars['image'].params) {
       toolbars['image'].params.imageUploadToServer = val;
     }
-  })
+  });
 
   watch(hidePreviewView, () => {
     refreshEditorCursor();
-  })
+  });
 
   watch(mode, (val: Mode) => {
     setTimeout(() => {
       if (editorIns) {
         refreshEditorCursor();
-        editorIns.setOption('readOnly', val === 'readonly')
+        editorIns.setOption('readOnly', val === 'readonly');
       }
     });
   });
 
   watch(maxlength, (val: number) => {
     if (editorIns) {
-      editorIns.setOption('maxlength', val);
+      editorIns.setOption('maxLength', val);
     }
   });
 
@@ -324,7 +321,6 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     onChecked,
     onPreviewScroll,
     onPreviewMouseout,
-    onPreviewMouseover
-  }
-
+    onPreviewMouseover,
+  };
 }

@@ -1,5 +1,25 @@
-import { BOLD_ICON, CODE_ICON, COLOR_ICON, FILE_ICON, FONT_SIZE_ICON, FULLSCREEN_CONTRACT_ICON, FULLSCREEN_EXPAND_ICON, H1_ICON, H2_ICON, IMAGE_ICON, ITALIC_ICON, LINK_ICON, LIST_CHECK_ICON, LIST_ORDERED_ICON, LIST_UNORDERED_ICON, REDO_ICON, STRIKE_ICON, TABLE_ICON, UNDERLINE_ICON, UNDO_ICON } from "./icons-config";
-
+import {
+  BOLD_ICON,
+  CODE_ICON,
+  COLOR_ICON,
+  FILE_ICON,
+  FONT_SIZE_ICON,
+  FULLSCREEN_CONTRACT_ICON,
+  FULLSCREEN_EXPAND_ICON,
+  H1_ICON,
+  H2_ICON,
+  IMAGE_ICON,
+  ITALIC_ICON,
+  LINK_ICON,
+  LIST_CHECK_ICON,
+  LIST_ORDERED_ICON,
+  LIST_UNORDERED_ICON,
+  REDO_ICON,
+  STRIKE_ICON,
+  TABLE_ICON,
+  UNDERLINE_ICON,
+  UNDO_ICON,
+} from './icons-config';
 
 export interface IToolbarItemConfig {
   id: string;
@@ -28,7 +48,7 @@ class ToolBarHandler {
     const cursor = editor.getCursor();
     const selection = editor.getSelection();
 
-    editor.replaceSelection('**' + selection + '**')
+    editor.replaceSelection('**' + selection + '**');
 
     editor.focus();
     if (selection === '') {
@@ -46,7 +66,7 @@ class ToolBarHandler {
     if (selection === '') {
       editor.setCursor(cursor.line, cursor.ch + 1);
     }
-  }
+  };
 
   static h1 = (editor: any): void => {
     const cursor = editor.getCursor();
@@ -60,7 +80,7 @@ class ToolBarHandler {
     } else {
       editor.replaceSelection('# ' + selection);
     }
-  }
+  };
 
   static h2 = (editor: any): void => {
     const cursor = editor.getCursor();
@@ -116,7 +136,7 @@ class ToolBarHandler {
     if (selection === '') {
       editor.setCursor(cursor.line, cursor.ch + 5);
     }
-  }
+  };
 
   static strike = (editor: any): void => {
     const cursor = editor.getCursor();
@@ -127,7 +147,7 @@ class ToolBarHandler {
     if (selection === '') {
       editor.setCursor(cursor.line, cursor.ch + 2);
     }
-  }
+  };
 
   static checkList = (editor: any): void => {
     const selection = editor.getSelection();
@@ -143,9 +163,9 @@ class ToolBarHandler {
 
       editor.replaceSelection(selectionText.join('\n'));
     }
-  }
+  };
 
-  static font = (): void => { }
+  static font = (): void => {};
 
   static link = (editor: any): void => {
     const cursor = editor.getCursor();
@@ -155,12 +175,12 @@ class ToolBarHandler {
     if (selection === '') {
       editor.setCursor(cursor.line, cursor.ch + 1);
     }
-  }
+  };
 
   static image = (editor: any, params?: any): void => {
     const stopEventPropagation = (e: any): void => {
       e.stopPropagation();
-    }
+    };
 
     if (typeof document !== 'undefined' && params.imageUploadToServer) {
       let imageUploader = document.getElementById('markdown_image_upload_input');
@@ -171,17 +191,17 @@ class ToolBarHandler {
       imageUploader = document.createElement('input');
       imageUploader.addEventListener('click', stopEventPropagation);
       imageUploader.setAttribute('type', 'file');
-      imageUploader.setAttribute('accept', 'image/bmp,image/gif,image/jpeg,image/jpg,image/png,omage/tiff');
+      imageUploader.setAttribute('accept', 'image/bmp,image/gif,image/jpeg,image/jpg,image/png,image/tiff');
       imageUploader.id = 'markdown_image_upload_input';
       imageUploader.style.display = 'none';
       document.body.appendChild(imageUploader);
       const callback = ({ name, imgUrl, title }: any) => {
         editor.focus();
-        editor.replaceSelection(`![${name}]{${imgUrl} '${title}'}`);
+        editor.replaceSelection(`![${name}](${imgUrl} '${title}')`);
       };
       imageUploader.onchange = (e: any) => {
-        const file = e.target['file'][0];
-        params.imageUploader.emit({ file, callback });
+        const file = e.target['files'][0];
+        params.imageUpload.emit({ file, callback });
       };
       imageUploader.click();
     } else {
@@ -193,12 +213,12 @@ class ToolBarHandler {
         editor.setCursor(cursor.line, cursor.ch + 2);
       }
     }
-  }
+  };
 
   static file = (editor: any, params?: any): void => {
     const stopEventPropagation = (e: any): void => {
       e.stopPropagation();
-    }
+    };
 
     let fileUploader = document.getElementById('markdown_file_upload_input');
     if (fileUploader) {
@@ -206,8 +226,8 @@ class ToolBarHandler {
       document.body.removeChild(fileUploader);
     }
     fileUploader = document.createElement('input');
-    fileUploader.addEventListener('click', stopEventPropagation);
     fileUploader.setAttribute('type', 'file');
+    fileUploader.addEventListener('click', stopEventPropagation);
     fileUploader.id = 'markdown_file_upload_input';
     fileUploader.style.display = 'none';
     document.body.appendChild(fileUploader);
@@ -224,18 +244,18 @@ class ToolBarHandler {
 
       editor.focus();
       if (showAsImage) {
-        editor.replaceSelection(`![${name}]{${url} '${title}'}`);
+        editor.replaceSelection(`![${name}](${url} '${title}')`);
       } else {
-        editor.replaceSelection(`[${name}]{${url} '${title}'}`);
+        editor.replaceSelection(`[${name}](${url} '${title}')`);
       }
     };
 
     fileUploader.onchange = (e: any) => {
       const file = e.target['files'][0];
-      params.fileUploader.emit({ file, callback });
+      params.fileUpload.emit({ file, callback });
     };
     fileUploader.click();
-  }
+  };
 
   static code = (editor: any): void => {
     const cursor = editor.getCursor();
@@ -246,7 +266,7 @@ class ToolBarHandler {
     if (selection === '') {
       editor.setCursor(cursor.line, cursor.ch + 1);
     }
-  }
+  };
 
   static table = (editor: any) => {
     const table = `|  |  |  |\n|--|--|--|\n|  |  |  |`;
@@ -257,7 +277,7 @@ class ToolBarHandler {
     editor.focus();
   };
 
-  static color = (): void => { };
+  static color = (): void => {};
 }
 
 export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
@@ -267,7 +287,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: UNDO_ICON,
     shortKey: 'Ctrl+Z',
-    handler: ToolBarHandler.undo
+    handler: ToolBarHandler.undo,
   },
   redo: {
     id: 'redo',
@@ -275,7 +295,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: REDO_ICON,
     shortKey: 'Ctrl+Y',
-    handler: ToolBarHandler.redo
+    handler: ToolBarHandler.redo,
   },
   bold: {
     id: 'bold',
@@ -283,7 +303,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: BOLD_ICON,
     shortKey: 'Ctrl+B',
-    handler: ToolBarHandler.bold
+    handler: ToolBarHandler.bold,
   },
   italic: {
     id: 'italic',
@@ -291,7 +311,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: ITALIC_ICON,
     shortKey: 'Ctrl+I',
-    handler: ToolBarHandler.italic
+    handler: ToolBarHandler.italic,
   },
   strike: {
     id: 'strike',
@@ -299,7 +319,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: STRIKE_ICON,
     shortKey: 'Ctrl+D',
-    handler: ToolBarHandler.strike
+    handler: ToolBarHandler.strike,
   },
   h1: {
     id: 'h1',
@@ -307,7 +327,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: H1_ICON,
     shortKey: 'Ctrl+1',
-    handler: ToolBarHandler.h1
+    handler: ToolBarHandler.h1,
   },
   h2: {
     id: 'h2',
@@ -315,7 +335,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: H2_ICON,
     shortKey: 'Ctrl+2',
-    handler: ToolBarHandler.h2
+    handler: ToolBarHandler.h2,
   },
   ul: {
     id: 'ul',
@@ -323,7 +343,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: LIST_UNORDERED_ICON,
     shortKey: 'Ctrl+U',
-    handler: ToolBarHandler.ul
+    handler: ToolBarHandler.ul,
   },
   ol: {
     id: 'ol',
@@ -331,7 +351,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: LIST_ORDERED_ICON,
     shortKey: 'Ctrl+O',
-    handler: ToolBarHandler.ol
+    handler: ToolBarHandler.ol,
   },
   checklist: {
     id: 'checklist',
@@ -339,7 +359,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: LIST_CHECK_ICON,
     shortKey: 'Ctrl+Alt+C',
-    handler: ToolBarHandler.checkList
+    handler: ToolBarHandler.checkList,
   },
   underline: {
     id: 'underline',
@@ -347,7 +367,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: UNDERLINE_ICON,
     shortKey: 'Ctrl+R',
-    handler: ToolBarHandler.underline
+    handler: ToolBarHandler.underline,
   },
   font: {
     id: 'font',
@@ -355,7 +375,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'dropDown',
     icon: FONT_SIZE_ICON,
     component: 'FontSize',
-    handler: ToolBarHandler.font
+    handler: ToolBarHandler.font,
   },
   link: {
     id: 'link',
@@ -363,7 +383,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: LINK_ICON,
     shortKey: 'Ctrl+L',
-    handler: ToolBarHandler.link
+    handler: ToolBarHandler.link,
   },
   image: {
     id: 'image',
@@ -371,15 +391,16 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: IMAGE_ICON,
     shortKey: 'Ctrl+G',
-    handler: ToolBarHandler.link
+    handler: ToolBarHandler.link,
   },
   file: {
     id: 'file',
     name: 'file',
     type: 'button',
     icon: FILE_ICON,
+    params: {},
     shortKey: 'Ctrl+F',
-    handler: ToolBarHandler.file
+    handler: ToolBarHandler.file,
   },
   code: {
     id: 'code',
@@ -387,7 +408,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: CODE_ICON,
     shortKey: 'Ctrl+K',
-    handler: ToolBarHandler.code
+    handler: ToolBarHandler.code,
   },
   table: {
     id: 'table',
@@ -395,7 +416,7 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: TABLE_ICON,
     shortKey: 'Ctrl+Alt+T',
-    handler: ToolBarHandler.table
+    handler: ToolBarHandler.table,
   },
   fullscreen: {
     id: 'fullscreen',
@@ -404,23 +425,23 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: FULLSCREEN_EXPAND_ICON,
     exitIcon: FULLSCREEN_CONTRACT_ICON,
-    handler: ToolBarHandler.fullscreen
+    handler: ToolBarHandler.fullscreen,
   },
   color: {
     id: 'color',
-    name: 'color',
+    name: 'color&background',
     type: 'dropDown',
     icon: COLOR_ICON,
     component: 'FontColor',
-    handler: ToolBarHandler.color
-  }
-}
+    handler: ToolBarHandler.color,
+  },
+};
 
 export const DEFAULT_TOOLBAR_CONFIG = [
   ['undo', 'redo'],
   ['h1', 'h2', 'bold', 'italic', 'strike', 'underline', 'color', 'font'],
   ['ul', 'ol', 'checklist', 'code', 'link', 'image', 'table'],
-  'fullscreen'
+  'fullscreen',
 ];
 
 export const FONT_COLORS = [
@@ -461,4 +482,4 @@ export const FONT_COLORS = [
   '#3d1466',
 ];
 
-export const FONT_SIZE_LIST = [12, 14, 16, 18, 20, 24, 36, 48].map(item => ({ name: item + 'px', value: item }));
+export const FONT_SIZE_LIST = [12, 14, 16, 18, 20, 24, 36, 48].map((item) => ({ name: item + 'px', value: item }));

@@ -1,11 +1,11 @@
-import { Fullscreen } from "@devui/fullscreen";
-import { defineComponent, toRefs, provide, ref, SetupContext } from "vue";
-import { useEditorMd } from "./composables/use-editor-md";
-import { useEditorMdTheme } from "./composables/use-editor-md-theme";
-import { EditorMdInjectionKey, EditorMdProps, editorMdProps } from "./editor-md-types";
+import { defineComponent, toRefs, provide, ref, SetupContext } from 'vue';
+import { Fullscreen } from '../../fullscreen';
+import { useEditorMd } from './composables/use-editor-md';
+import { useEditorMdTheme } from './composables/use-editor-md-theme';
+import { EditorMdInjectionKey, EditorMdProps, editorMdProps } from './editor-md-types';
 import Toolbar from './components/toolbar';
 import MdRender from './components/md-render';
-import { locale } from "./utils";
+import { locale } from './utils';
 import './editor-md.scss';
 import 'codemirror/lib/codemirror.css';
 
@@ -30,7 +30,7 @@ export default defineComponent({
       customRendererRules,
       customXssRules,
       mdPlugins,
-      fullscreenZIndex
+      fullscreenZIndex,
     } = toRefs(props);
 
     const showFullscreen = ref(false);
@@ -46,32 +46,32 @@ export default defineComponent({
       onChecked,
       onPreviewScroll,
       onPreviewMouseout,
-      onPreviewMouseover
+      onPreviewMouseover,
     } = useEditorMd(props, ctx);
 
-    const { isDarkMode } = useEditorMdTheme(() => { });
+    const { isDarkMode } = useEditorMdTheme(() => {});
 
     provide(EditorMdInjectionKey, {
       showFullscreen,
       toolbars,
       toolbarConfig,
       getEditorIns,
-      t: locale
-    })
+      t: locale,
+    });
 
     return () => (
       <Fullscreen v-model={showFullscreen.value} z-index={fullscreenZIndex.value}>
-        <div class={[
-          'dp-md-container',
-          { 'dp-md-readonly': mode.value === 'readonly', 'dp-md-editonly': mode.value === 'editonly', 'dp-md-dark': isDarkMode.value }
-        ]}>
+        <div
+          class={[
+            'dp-md-container',
+            { 'dp-md-readonly': mode.value === 'readonly', 'dp-md-editonly': mode.value === 'editonly', 'dp-md-dark': isDarkMode.value },
+          ]}>
           <div class="dp-md-toolbar-container">
             <Toolbar />
           </div>
           <div
             class={['dp-md-content-container', { 'hide-preview': hidePreviewView.value }]}
-            style={{ height: editorContainerHeight?.value + 'px' }}
-          >
+            style={{ height: editorContainerHeight?.value + 'px' }}>
             <div class="dp-md-editor">
               <textarea ref={editorRef} placeholder={placeholder.value}>
                 {modelValue.value}
@@ -90,16 +90,15 @@ export default defineComponent({
               custom-parse={customParse.value}
               render-parse={renderParse.value}
               md-rules={mdRules.value}
-              custom-render-rules={customRendererRules.value}
+              custom-renderer-rules={customRendererRules.value}
               custom-xss-rules={customXssRules.value}
               disable-render
-              md-plugin={mdPlugins.value}
+              md-plugins={mdPlugins.value}
               onMdRenderChange={previewContentChange}
               onMdCheckedEvent={onChecked}
               onScroll={onPreviewScroll}
               onMouseover={onPreviewMouseover}
-              onMouseout={onPreviewMouseout}
-            >
+              onMouseout={onPreviewMouseout}>
               {previewHtmlList.value.map((html, index) => (
                 <div innerHTML={html} key={index}></div>
               ))}
@@ -107,6 +106,6 @@ export default defineComponent({
           </div>
         </div>
       </Fullscreen>
-    )
-  }
-})
+    );
+  },
+});
