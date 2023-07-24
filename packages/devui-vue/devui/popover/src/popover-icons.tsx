@@ -21,9 +21,7 @@ export function WarningIcon(): JSX.Element {
   return (
     <svg class={[ns.e('icon'), ns.em('icon', 'warning')]} viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <polygon
-          points="7.5 1.74501946 1.39184847 13.5954649 7.08947368
-        14.2207621 13.9973698 13.5954649 10.9383683 5.61273879 8.40084114 1.27624313"></polygon>
+        <polygon points="7.5 1.74501946 1.39184847 13.5954649 7.08947368 14.2207621 13.9973698 13.5954649 10.9383683 5.61273879 8.40084114 1.27624313"></polygon>
         <path
           d={`M8.51325441,0.127397589 C8.70423071,0.228333932
           8.8605922,0.383286648 8.96244623,0.57254229 L15.8714442,13.4101975
