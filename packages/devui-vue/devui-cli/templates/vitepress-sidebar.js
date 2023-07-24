@@ -5,6 +5,7 @@ const {
   VITEPRESS_SIDEBAR_CATEGORY_EN,
   VITEPRESS_SIDEBAR_CATEGORY_ZH_TO_EN,
   SITES_COMPONENTS_DIR_NAME_EN,
+  DESIGN_TOKENS_INFO
 } = require('../shared/constant');
 const logger = require('../shared/logger');
 const { isReadyToRelease } = require('../shared/utils');
@@ -69,6 +70,10 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
           text: '在 Nuxt3 中使用',
           link: '/nuxt3/',
         },
+        {
+          "text": "Design Token",
+          "children": DESIGN_TOKENS_INFO
+        },
       ],
       handler: generateZhMenus,
       lang: 'zh',
@@ -86,6 +91,10 @@ exports.createVitepressSidebarTemplates = (componentsInfo = []) => {
         {
           text: 'Theme Guide',
           link: '/theme-guide/',
+        },
+        {
+          "text": "Design Token",
+          "children": DESIGN_TOKENS_INFO
         },
       ],
       handler: generateEnMenus,
