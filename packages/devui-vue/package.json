@@ -50,6 +50,7 @@
     "@types/lodash-es": "^4.17.4",
     "@types/codemirror": "0.0.97",
     "codemirror": "5.63.3",
+    "echarts": "5.3.3",
     "highlight.js": "10.7.3",
     "markdown-it": "12.2.0",
     "mermaid": "9.1.1",
