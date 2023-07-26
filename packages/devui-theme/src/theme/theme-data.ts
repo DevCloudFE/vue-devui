@@ -38,7 +38,7 @@ export const devuiLightTheme: Theme = new Theme({
     'devui-initial': '#e9edfa',
     'devui-unavailable': '#f5f5f6',
     'devui-shadow': 'rgba(37, 43, 58, 0.2)',
-    'devui-light-shadow': 'rgba(37, 43, 58, 0.1)',
+    'devui-light-shadow': 'rgba(37, 43, 58, 0.12)',
     // 图标
     'devui-icon-text': '#252b3a',
     'devui-icon-bg': '#ffffff',
@@ -114,7 +114,7 @@ export const devuiLightTheme: Theme = new Theme({
     'devui-border-radius-feedback': '4px',
     'devui-border-radius-card': '6px',
     // 阴影
-    'devui-shadow-length-base': '0 1px 4px 0',
+    'devui-shadow-length-base': '0 2px 6px 0',
     'devui-shadow-length-slide-left': '-2px 0 8px 0',
     'devui-shadow-length-slide-right': '2px 0 8px 0',
     'devui-shadow-length-connected-overlay': '0 2px 8px 0',

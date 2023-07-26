@@ -32,12 +32,12 @@ $devui-area: var(--devui-area, #f8f8f8); // 可折叠区块的背景色（展开
 $devui-danger: var(--devui-danger, $devui-red-50); // 失败、错误、告警
 $devui-warning: var(--devui-warning, $devui-yellow-50); // 警告、需注意类型提示
 $devui-waiting: var(--devui-waiting, #9faad7); // 等待中
-$devui-success: var(--devui-success, $devui-green-50); // 成功、正确
+$devui-success: var(--devui-success, $devui-green-60); // 成功、正确
 $devui-info: var(--devui-info, $devui-blue-50); // 通知、一般提示、执行中
 $devui-initial: var(--devui-initial, $devui-blue-10); // 初始化、未执行
 $devui-unavailable: var(--devui-unavailable, $devui-gray-5); // 不可用、禁用状态
 $devui-shadow: var(--devui-shadow, rgba(37, 43, 58, 0.2)); // 阴影色
-$devui-light-shadow: var(--devui-light-shadow, rgba(37, 43, 58, 0.1)); // 弱化阴影色
+$devui-light-shadow: var(--devui-light-shadow, rgba(37, 43, 58, 0.12)); // 弱化阴影色
 $devui-connected-overlay-shadow: var(--devui-connected-overlay-shadow, rgba(37, 43, 58, 0.12)); // 下拉菜单类阴影色
 $devui-feedback-overlay-shadow: var(--devui-feedback-overlay-shadow, rgba(37, 43, 58, 0.16)); // 信息展示类阴影色
 

@@ -8,7 +8,11 @@
 
 ```vue
 <template>
-  <d-code-review :diff="diff" output-format="side-by-side"></d-code-review>
+  <d-code-review :diff="diff" output-format="side-by-side">
+    <template #headOperate>
+      <i class="icon icon-frame-expand"></i>
+    </template>
+  </d-code-review>
 </template>
 
 <script>
@@ -32,7 +36,20 @@ export default defineComponent({
 | 参数名        | 类型                          | 默认值         | 说明                                      |
 | :------------ | :---------------------------- | :------------- | :---------------------------------------- |
 | diff          | `string`                      | ''             | 必选，diff 内容                           |
+| fold          | `boolean`                     | false          | 可选，是否折叠显示                        |
 | output-format | [OutputFormat](#outputformat) | 'line-by-line' | 可选，diff 展示格式，单栏展示或者分栏展示 |
+
+### CodeReview 事件
+
+| 事件名      | 类型                | 说明                                               |
+| :---------- | :------------------ | :------------------------------------------------- |
+| fold-change | `Function(boolean)` | 折叠状态改变时触发的事件，回传参数为当前的折叠状态 |
+
+### CodeReview 方法
+
+| 方法名     | 类型                         | 说明                                         |
+| :--------- | :--------------------------- | :------------------------------------------- |
+| toggleFold | `(status?: boolean) => void` | 切换折叠状态。可通过 status 参数设置折叠状态 |
 
 ### 接口定义
 
