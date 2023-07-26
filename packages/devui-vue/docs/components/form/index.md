@@ -32,7 +32,8 @@
     <d-form-item field="switch" label="Switch">
       <d-switch v-model="formModel.switch"></d-switch>
     </d-form-item>
-    <d-form-item field="executionDay" label="Execution day">
+    <d-form-item field="executionDay">
+      <template #label><span>Execution day</span></template>
       <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
         <d-checkbox label="Mon" value="Mon" />
         <d-checkbox label="Tue" value="Tue" />
@@ -710,6 +711,7 @@ export default defineComponent({
 | 插槽名  | 说明                     |
 | :------ | :----------------------- |
 | default | 包裹单个表单项的输入控件 |
+| label | 标签位置显示的内容 |
 
 ### Form 类型定义
 
