@@ -34,6 +34,7 @@ const rollupOptions = {
     'xss',
     /diff2html/,
     'clipboard',
+    'echarts',
   ],
   output: {
     globals: {
