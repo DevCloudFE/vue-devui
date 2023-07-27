@@ -33,6 +33,7 @@ const rollupOptions = {
     /^mermaid/,
     'xss',
     'diff2html',
+    'echarts',
   ],
   output: {
     globals: {
