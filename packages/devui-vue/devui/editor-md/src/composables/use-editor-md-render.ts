@@ -13,7 +13,7 @@ export function useEditorMdRender(props: MdRenderProps, ctx: SetupContext) {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      if (!content.value) {
+      if (content.value === undefined) {
         return;
       }
 
