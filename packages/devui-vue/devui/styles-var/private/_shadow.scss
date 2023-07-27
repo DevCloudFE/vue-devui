@@ -1,6 +1,6 @@
 // Shadow 阴影
 
-$devui-shadow-length-base: var(--devui-shadow-length-base, 0 1px 4px 0); //直接铺陈在页面上方的元素 (card等)
+$devui-shadow-length-base: var(--devui-shadow-length-base, 0 2px 6px 0); //直接铺陈在页面上方的元素 (card等)
 
 $devui-shadow-length-slide-left: var(--devui-shadow-length-slide-left, -2px 0 8px 0); //向左滑动时出现在右侧边缘的阴影 (dataTable固定右侧列向左滑动)
 $devui-shadow-length-slide-right: var(--devui-shadow-length-slide-right, 2px 0 8px 0); //向右滑动时出现在左侧边缘的阴影 (dataTable固定左侧列向右滑动)

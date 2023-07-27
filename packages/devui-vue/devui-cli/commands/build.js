@@ -32,7 +32,8 @@ const rollupOptions = {
     /markdown-it/,
     /^mermaid/,
     'xss',
-    'diff2html',
+    /diff2html/,
+    'clipboard',
     'echarts',
   ],
   output: {
