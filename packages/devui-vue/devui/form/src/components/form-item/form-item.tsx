@@ -58,7 +58,7 @@ export default defineComponent({
 
     return () => (
       <div class={itemClasses.value}>
-        <FormLabel help-tips={helpTips.value}>{label?.value}</FormLabel>
+        <FormLabel help-tips={helpTips.value}>{ctx.slots.label ? ctx.slots.label() : label?.value}</FormLabel>
         <FormControl feedback-status={feedbackStatus?.value} extra-info={extraInfo.value}>
           {ctx.slots.default?.()}
         </FormControl>
