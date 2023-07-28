@@ -40,6 +40,87 @@ export default defineComponent({
 
 :::
 
+### 代码高亮
+
+:::demo 对一个代码块进行高亮
+
+```vue
+<template>
+    <d-button variant="solid" color="primary" @click="handleCodeChange" style="margin-bottom:8px">切换 Code 内容</d-button>
+    <pre v-d-code-highlight :data-lang="lang" style="width: 500px" v-html="code">
+    </pre>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+    setup() {
+    const codeStr1 = `/* Some example CSS */
+
+@import url("something.css");
+
+body {
+  margin: 0;
+  padding: 3em 6em;
+  font-family: tahoma, arial, sans-serif;
+  color: #000;
+}
+
+#navigation a {
+  font-weight: bold;
+  text-decoration: none !important;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 1.7em;
+}
+
+h1:before, h2:before {
+  content: "some contents";
+}
+
+code {
+  font-family: courier, monospace;
+  font-size: 80%;
+  color: #418A8A;
+}`;
+
+    const codeStr2 = `export class cell {
+    public row:number;
+    public col: number;
+    public live: boolean;
+
+    constructor(row: number, col: number, live: boolean) {
+        this.row = row;
+        this.col = col;
+        this.live = live;
+    }
+}`;
+    const code = ref(codeStr1);
+    const lang = ref(`css`);
+
+    const handleCodeChange = () => {
+        if (lang.value === 'css' ) {
+            lang.value = 'typescript';
+            code.value = codeStr2;
+        } else {
+            lang.value = 'css';
+            code.value = codeStr1;
+        }
+    }
+
+    return { code, lang, handleCodeChange };
+}
+})
+</script>
+```
+
+:::
+
 ### CodeEditor参数
 
 | 参数          | 类型                            | 默认  | 说明                                                                                      | 
@@ -58,15 +139,15 @@ export default defineComponent({
 | editor-decorations     | [Decoration[]](#decoration)                       | []    | 可选, 编辑器的侧边装饰                           |
 | comments     | [Comment[]](#comment)                       | []    | 可选, 代码检视内容                           |
 
-
-### CodeEditor 事件
-
 ### CodeEditor 事件
 
 | 事件   | 回掉参数                | 说明                                          |
 | :----- | :------------------ | :------------------------------------------------- |
 | after-editor-init | `Function(instance: IStandaloneCodeEditor \| IStandaloneDiffEditor)` | 初始化完成事件，返回monaco-editor实例 |
 | click | `Function(event: IEditorMouseEvent)` | 点击编辑器不同区域返回事件 |
+
+### CodeHighlight 参数
+暂无
 
 ### 类型定义
 
