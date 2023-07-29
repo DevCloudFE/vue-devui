@@ -1,13 +1,94 @@
+@import 'diff2html/bundles/css/diff2html.min.css';
 @import '../../styles-var/devui-var.scss';
 
 .#{$devui-prefix}-code-review {
-  tr {
-    border: none;
+  box-sizing: border-box;
+  box-shadow: $devui-shadow-length-base $devui-light-shadow;
+  border-radius: $devui-border-radius-card;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    padding-right: 20px;
+    border-bottom: 1px solid $devui-dividing-line;
+    border-radius: $devui-border-radius-card;
+    background-color: $devui-global-bg-normal;
+    cursor: pointer;
+
+    &--unfold {
+      border-radius: $devui-border-radius-card $devui-border-radius-card 0 0;
+      border-bottom: 1px solid #d8d8d8;
+      box-shadow: inset 0 -1px 0 0 $devui-brand-foil;
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      padding-left: 18px;
+
+      & > span {
+        display: inline-block;
+        height: 20px;
+        line-height: 20px;
+      }
+
+      .invert {
+        transform: scale(-1);
+      }
+
+      .file-name {
+        max-width: 100%;
+        font-size: $devui-font-size-sm;
+        color: $devui-text;
+        font-weight: bold;
+        padding-left: 8px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .diff-lines {
+        font-size: $devui-font-size-sm;
+        font-weight: bold;
+
+        &.add-lines {
+          padding-left: 8px;
+          color: $devui-success;
+        }
+
+        &.delete-lines {
+          padding-left: 4px;
+          color: $devui-danger;
+          margin-right: 8px;
+        }
+      }
+    }
   }
 
-  th,
-  td {
-    border: none;
-    padding: 0;
+  &__content {
+    tr {
+      border: none;
+    }
+
+    th,
+    td {
+      border: none;
+      padding: 0;
+    }
+
+    .d2h-file-header {
+      display: none;
+    }
+
+    .d2h-file-wrapper {
+      border: none;
+    }
+
+    &.hide-content {
+      display: none;
+    }
   }
 }

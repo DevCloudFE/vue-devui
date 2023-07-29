@@ -37,6 +37,40 @@ $font-family: helvetica, arial, 'PingFang', 'Microsoft YaHei', 'Hiragino Sans GB
     border-radius: $devui-border-radius $devui-border-radius 0 0;
   }
 
+  &.dp-md-readonly,
+  &.dp-md-editonly {
+    .dp-md-content-container {
+      position: relative;
+      z-index: 0;
+    }
+
+    .dp-md-content-container .dp-md-editor,
+    .dp-md-content-container .dp-editor-md-preview-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  &.dp-md-readonly .dp-md-content-container .dp-md-editor {
+    z-index: -1;
+  }
+
+  &.dp-md-readonly .dp-md-toolbar-container {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  &.dp-md-readonly .dp-md-content-container .dp-editor-md-preview-container {
+    border-left: none;
+  }
+
+  &.dp-md-editonly .dp-md-content-container .dp-editor-md-preview-container {
+    z-index: -1;
+  }
+
   .dp-md-content-container {
     display: flex;
     height: calc(100% - 52px);
@@ -68,6 +102,7 @@ $font-family: helvetica, arial, 'PingFang', 'Microsoft YaHei', 'Hiragino Sans GB
       border-left: 1px solid $devui-dividing-line;
       border-bottom-right-radius: $devui-border-radius;
       overflow-y: auto;
+      background-color: $devui-base-bg;
     }
   }
 }

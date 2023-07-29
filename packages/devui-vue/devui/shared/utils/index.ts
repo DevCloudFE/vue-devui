@@ -5,6 +5,7 @@ export * from './dom';
 export * from './lock-scroll';
 export * from './props-util';
 export * from './random-id';
+export * from './to-clipboard';
 export * from './set-style';
 export * from './middle-num';
 export * from './is';
