@@ -23,11 +23,6 @@ export default defineComponent({
       isDark = !!themeService?.currentTheme?.isDark;
       theme = isDark ? DEVUI_ECHART_THEME.defaultDarkTheme : DEVUI_ECHART_THEME.defaultLightTheme;
 
-      echartInstacne.dispose();
-      echartInstacne = echarts.init(chartRef.value, theme);
-
-      echartInstacne.setOption(option.value, true);
-      console.log(option.value);
       emit('chartReady', echartInstacne);
     };
 
