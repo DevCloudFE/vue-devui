@@ -15,6 +15,11 @@
     "desc": "Build components and release",
     "command": "pnpm --filter vue-devui build:lib --reporter default"
   },
+  "build:lib:theme": {
+    "alias": "Build theme lib",
+    "desc": "Build theme package",
+    "command": "pnpm --filter devui-theme build"
+  },
   "build:cli": {
     "alias": "Build cli",
     "desc": "Build devui-cli",
