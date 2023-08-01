@@ -136,7 +136,7 @@ export function useCodeEditor(props: CodeEditorProps, ctx: SetupContext) {
         if (!editor || !editor.getModel()) {
             return;
         }
-        editor.getModel().modified?.setValue(modelValue.value);
+        editor.getModel().setValue(modelValue.value);
     }
 
     function setDiffEditorValue() {
