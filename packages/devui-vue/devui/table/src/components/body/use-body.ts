@@ -1,7 +1,7 @@
-import { inject, computed, Ref, ref, onMounted, onBeforeUnmount } from 'vue';
-import { TABLE_TOKEN, ITableInstanceAndDefaultRow } from '../../table-types';
+import { inject, computed, Ref, ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { TABLE_TOKEN, ITableInstanceAndDefaultRow, DefaultRow } from '../../table-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
-import { UseBodyRender, UseMergeCell, CellClickArg, UseLazyLoad } from './body-types';
+import { UseBodyRender, UseMergeCell, CellClickArg, UseLazyLoad, UseVirtualScroll } from './body-types';
 import { getRowIdentity } from '../../utils';
 
 const ns = useNamespace('table');
@@ -97,29 +97,24 @@ export function useLazyLoad(): UseLazyLoad {
   let lazyObserver: IntersectionObserver;
 
   onMounted(() => {
-
     // if lazy mode is turn on. It'll observe an empty tag to determine whether the bottom has been reached.
     if (lazy) {
-
       // when the tbody reached bottom(because the lazyFlagElement is at the bottom of tbody), the observe's callback will be triggered
       lazyObserver = new IntersectionObserver(
         (entries) => {
-
           // Not support IE
           const lazyFlagOb = entries[0];
 
           // isIntersecting is true ==> the lazyFlagElement is in viewport
           if (lazyFlagOb.isIntersecting) {
-
             // exec user props.loadMore to load more data
             // loadMore();
             table.emit('load-more');
           }
         },
         {
-
           // only fired in the table scroll event
-          root: table.tableRef.value,
+          root: table.tableContainerRef.value,
         }
       );
       lazyObserver.observe(lazyFlagRef.value);
@@ -127,7 +122,6 @@ export function useLazyLoad(): UseLazyLoad {
   });
 
   onBeforeUnmount(() => {
-
     // unload intersectionObserver
     if (lazy) {
       lazyObserver.unobserve(lazyFlagRef.value);
@@ -139,4 +133,51 @@ export function useLazyLoad(): UseLazyLoad {
     lazy,
     lazyFlagRef,
   };
+}
+
+export function useVirtualScroll(flatRows: Ref<DefaultRow[]>): UseVirtualScroll {
+  const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
+  const { virtual } = table.props;
+  const scrollOffset = ref(0);
+
+  if (!virtual) {
+    return { partRows: flatRows, scrollOffset };
+  }
+
+  const { estimateRowHeight, heightList } = table.store.states;
+
+  watch(flatRows, (value, oldValue) => {
+    value.slice(oldValue.length, value.length).forEach(() => {
+      heightList.value.push(estimateRowHeight);
+    });
+  });
+
+  const start = ref(0);
+  const count = computed(() => {
+    if (!table.tableRef.value) {
+      return 10;
+    }
+    return Math.ceil(table.tableRef.value.clientHeight / estimateRowHeight.value) + 1;
+  });
+
+  // TODO: 将scroll事件换成IntersectionObserver
+  const scroll = (e: Event) => {
+    const { scrollTop } = e.target as HTMLElement;
+
+    scrollOffset.value = scrollTop - (scrollTop % (estimateRowHeight.value * 2));
+    start.value = Math.floor(scrollOffset.value / estimateRowHeight.value);
+  };
+
+  onMounted(() => {
+    table.tableContainerRef.value.addEventListener('scroll', scroll);
+  });
+  onBeforeUnmount(() => {
+    table.tableContainerRef.value.removeEventListener('scroll', scroll);
+  });
+
+  const partRows = computed(() => {
+    return flatRows.value.slice(Math.max(start.value - 1, 0), Math.min(start.value + count.value * 2, flatRows.value.length));
+  });
+
+  return { partRows, scrollOffset };
 }

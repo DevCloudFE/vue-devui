@@ -1,10 +1,10 @@
-import { defineComponent, inject } from 'vue';
+import { defineComponent, getCurrentInstance, inject } from 'vue';
 import { TABLE_TOKEN, DefaultRow, ITableInstanceAndDefaultRow } from '../../table-types';
 import { Column } from '../column/column-types';
 import { CellClickArg, RowClickArg } from './body-types';
 import TD from '../body-td/body-td';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
-import { useMergeCell, useBodyRender, useLazyLoad } from './use-body';
+import { useMergeCell, useBodyRender, useLazyLoad, useVirtualScroll } from './use-body';
 import './body.scss';
 
 export default defineComponent({
@@ -16,6 +16,8 @@ export default defineComponent({
     const { tableSpans, removeCells } = useMergeCell();
     const { getTableRowClass } = useBodyRender();
     const { lazy, lazyFlagRef } = useLazyLoad();
+    const { partRows, scrollOffset } = useVirtualScroll(flatRows);
+
     const onCellClick = (cellClickArg: CellClickArg) => {
       table.emit('cell-click', cellClickArg);
     };
@@ -24,8 +26,8 @@ export default defineComponent({
     };
 
     return () => (
-      <tbody class={ns.e('tbody')}>
-        {flatRows.value.map((row: DefaultRow, rowIndex: number) => (
+      <tbody class={ns.e('tbody')} style={{ transform: `translateY(${scrollOffset.value}px)` }}>
+        {partRows.value.map((row: DefaultRow, rowIndex: number) => (
           <>
             <tr key={rowIndex} class={getTableRowClass(row)} onClick={() => onRowClick({ row })}>
               {flatColumns.value.map((column: Column, columnIndex: number) => {

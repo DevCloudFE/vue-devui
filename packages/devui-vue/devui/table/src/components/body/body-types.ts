@@ -26,3 +26,8 @@ export interface UseLazyLoad {
   lazy: boolean;
   lazyFlagRef: Ref;
 }
+
+export interface UseVirtualScroll {
+  partRows: ComputedRef<DefaultRow[]> | Ref<DefaultRow[]>;
+  scrollOffset: Ref<number>;
+}
