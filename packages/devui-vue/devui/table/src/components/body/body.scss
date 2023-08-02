@@ -5,6 +5,12 @@ $devui-table-inset-shadow-left: var(--devui-table-inset-shadow-left, 8px 0 8px -
 $devui-table-inset-shadow-right: var(--devui-table-inset-shadow-right, -8px 0 8px -4px);
 
 .#{$devui-prefix}-table {
+  &__virtual__scroll {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
   &__tbody {
     tr {
       font-size: $devui-font-size;

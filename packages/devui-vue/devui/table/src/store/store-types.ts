@@ -1,4 +1,4 @@
-import type { ComponentInternalInstance, Ref } from 'vue';
+import type { ComponentInternalInstance, ComputedRef, Ref } from 'vue';
 import { Column, SortMethod, SortDirection } from '../components/column/column-types';
 import { DefaultRow } from '../table-types';
 
@@ -33,6 +33,12 @@ export interface TableStore<T = Record<string, unknown>> {
     firstDefaultColumn: Ref<string>;
     // 单元格状态
     tableCellModeMap: Ref<Map<string, string>>;
+    // 预估行高
+    estimateRowHeight: Ref<number>;
+    // 虚拟滚动的高度列表
+    heightList: Ref<(Ref<number> | number)[]>;
+    // 虚拟滚动的高度
+    virtualHeight: ComputedRef<number>;
   };
   // 插入列
   insertColumn(column: Column, parent: unknown): void;
