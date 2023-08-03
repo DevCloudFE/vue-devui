@@ -15,7 +15,7 @@ export interface Comment {
   domNode?: HTMLElement;
   heightInPx?: number;
   allowEditorOverflow?: boolean;
-  offserLeft?: number;
+  offsetLeft?: number;
 }
 
 export const codeEditorProps = {

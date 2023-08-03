@@ -7,8 +7,8 @@ import './code-editor.scss'
 export default defineComponent({
     name: 'DCodeEditor',
     props: codeEditorProps,
-    emits: ['update: modelValue', 'afterEditorInit', 'click'],
-    setup(props: codeEditorProps, ctx: SetupContext) {
+    emits: ['update:modelValue', 'afterEditorInit', 'click'],
+    setup(props: CodeEditorProps, ctx: SetupContext) {
         const { editorEl } = useCodeEditor(props, ctx);
 
         return () => <div ref={editorEl} class="devui-code-editor"></div>
