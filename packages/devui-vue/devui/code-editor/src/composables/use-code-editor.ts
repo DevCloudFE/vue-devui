@@ -198,8 +198,8 @@ export function useCodeEditor(props: CodeEditorProps, ctx: SetupContext) {
     const language = options.value.language;
     if (editor) {
       if (mode.value === 'normal' || mode.value === 'review') {
-        monaco.editor.setModelLanguage(editor.getModel(), language)
-      } else if (mode.value === 'diff')
+        monaco.editor.setModelLanguage(editor.getModel(), language);
+      } else if (mode.value === 'diff') {
         const model = diffEditor.getModel();
         monaco.editor.setModelLanguage(model.modified, language);
         monaco.editor.setModelLanguage(model.original, language);
