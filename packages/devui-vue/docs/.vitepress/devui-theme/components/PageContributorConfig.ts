@@ -1174,6 +1174,16 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
     },
   ],
   // 布局
+  'git-graph': [
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/44854357?v=4',
+      homepage: 'https://github.com/huaweidevcloud'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/140487515?v=4',
+      homepage: 'https://github.com/fengjiancai'
+    }
+  ],
   grid: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/54826175?v=4',
