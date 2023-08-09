@@ -69,6 +69,12 @@
   }
 
   &__content {
+    line-height: 20px;
+
+    table {
+      margin: 0;
+    }
+
     tr {
       border: none;
     }
@@ -79,6 +85,16 @@
       padding: 0;
     }
 
+    td {
+      &.expand-icon-wrapper {
+        text-align: center;
+      }
+
+      .expand-icon {
+        display: inline-block;
+      }
+    }
+
     .d2h-file-header {
       display: none;
     }
@@ -87,8 +103,37 @@
       border: none;
     }
 
+    .d2h-code-line-ctn {
+      word-break: break-all;
+      word-wrap: break-word !important;
+      white-space: break-spaces !important;
+      display: inline-block !important;
+      line-break: anywhere;
+    }
+
+    .d2h-code-line {
+      width: 100%;
+      padding-left: 8em;
+      padding-right: 16px;
+    }
+
     &.hide-content {
       display: none;
     }
+  }
+
+  .comment-icon {
+    position: fixed;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: $devui-base-bg;
+    transform: translateX(-50%);
+    box-shadow: 0 0 1px 1px rgba(37, 43, 58, 0.16);
+    cursor: pointer;
   }
 }

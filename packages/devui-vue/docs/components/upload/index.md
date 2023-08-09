@@ -341,6 +341,103 @@ export default {
 
 :::
 
+### 图片上传示例
+
+:::demo
+
+```vue
+<template>
+  <div class="img-container" v-if="!showUpload">
+    <img class="img-preview" />
+    <div class="delete-img" @click="handleDel">
+      <d-icon name="delete" size="14px"></d-icon>
+    </div>
+  </div>
+  <d-upload class="upload-demo-new" accept=".png" :upload-options="uploadOptions" :before-upload="beforeUpload" v-if="showUpload">
+    <div class="upload-trigger">
+      <d-icon name="add" size="24px"></d-icon>
+    </div>
+  </d-upload>
+</template>
+<script>
+import { ref, watch, nextTick } from 'vue';
+
+export default {
+  setup() {
+    const showUpload = ref(true);
+    const uploadOptions = ref({
+      uri: 'https://run.mocky.io/v3/132b3ea3-23ea-436b-aed4-c43ef9d116f0',
+    });
+
+    const beforeUpload = (file) => {
+      const reader = new FileReader();
+      reader.onload = async () => {
+        showUpload.value = false;
+        await nextTick();
+        document.getElementsByClassName('img-preview')[0].src = reader.result;
+      };
+      reader.readAsDataURL(file[0].file);
+      return false;
+    };
+
+    const handleDel = () => {
+      showUpload.value = true;
+    };
+
+    return {
+      uploadOptions,
+      beforeUpload,
+      showUpload,
+      handleDel,
+    };
+  },
+};
+</script>
+
+<style>
+.upload-demo-new .upload-trigger {
+  background-color: #fff;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: 180px;
+  height: 180px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.upload-demo .upload-trigger .link {
+  color: #5e7ce0;
+}
+.img-container {
+  position: relative;
+}
+.img-preview {
+  width: 180px;
+  height: 180px;
+  border-radius: 6px;
+}
+.delete-img {
+  width: 24px;
+  height: 24px;
+  background-color: #f7f7f9;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -12px;
+  left: 168px;
+}
+</style>
+```
+
+:::
+
 ### Upload 参数
 
 | 参数名         | 类型                              | 默认  | 说明                                                                                         | 跳转 Demo                         |
