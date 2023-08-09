@@ -111,6 +111,12 @@
       line-break: anywhere;
     }
 
+    .d2h-code-line {
+      width: 100%;
+      padding-left: 8em;
+      padding-right: 16px;
+    }
+
     &.hide-content {
       display: none;
     }
