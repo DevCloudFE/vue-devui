@@ -136,7 +136,7 @@ export function useCodeEditor(props: CodeEditorProps, ctx: SetupContext) {
     if (!editor || !editor.getModel()) {
       return;
     }
-    editor.getModel().modified?.setValue(modelValue.value);
+    editor.getModel().setValue(modelValue.value);
   }
 
   function setDiffEditorValue() {
@@ -178,10 +178,10 @@ export function useCodeEditor(props: CodeEditorProps, ctx: SetupContext) {
       model = diffEditor.getModel().modified;
     }
 
-    model.onDidChangeContent(
+    model?.onDidChangeContent(
       throttle(() => {
         modifyValueFromInner = true;
-        ctx.emit('update: modelValue', model.getValue());
+        ctx.emit('update:modelValue', model.getValue());
       }, 100)
     );
   }
