@@ -41,16 +41,17 @@ function initialize(userOptions: DefaultTheme.AlgoliaSearchOptions) {
 
     navigator: {
       navigate({ itemUrl }) {
+        const _itemUrl = itemUrl.replaceAll('//', '/');
         const { pathname: hitPathname } = new URL(
-          window.location.origin + itemUrl,
+          window.location.origin + _itemUrl,
         );
-
+        
         // router doesn't handle same-page navigation so we use the native
         // browser location API for anchor navigation
         if (route.path === hitPathname) {
-          window.location.assign(window.location.origin + itemUrl);
+          window.location.assign(window.location.origin + _itemUrl);
         } else {
-          router.go(itemUrl);
+          router.go(_itemUrl);
         }
       },
     },
