@@ -5,6 +5,7 @@ import { lockScroll } from '../../../shared/utils/lock-scroll';
 export function useModal(props: ModalProps, emit: EmitEventFn): UseModal {
   function close(): void {
     emit('update:modelValue', false);
+    emit('close');
   }
   function execClose() {
     props.beforeClose ? props.beforeClose(close) : close();

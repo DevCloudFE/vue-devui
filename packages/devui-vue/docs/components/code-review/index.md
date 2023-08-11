@@ -8,7 +8,7 @@
 
 ```vue
 <template>
-  <d-code-review :diff="diff" @add-comment="onAddComment" @after-view-init="afterViewInit">
+  <d-code-review :diff="diff" @add-comment="onAddComment" @after-view-init="afterViewInit" @content-refresh="onContentRefresh">
     <template #headOperate>
       <i class="icon icon-frame-expand"></i>
     </template>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, h, onMounted } from 'vue';
+import { defineComponent, ref, h } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -112,7 +112,7 @@ export default defineComponent({
         lineNumber = right;
       } else if (left !== -1) {
         lineSide = 'left';
-        lienNumber = left;
+        lineNumber = left;
       } else {
         lineSide = 'right';
         lineNumber = right;
@@ -148,11 +148,11 @@ export default defineComponent({
       codeReviewIns = e;
     };
 
-    onMounted(() => {
+    const onContentRefresh = (e) => {
       renderComment();
-    });
+    };
 
-    return { diff, onAddComment, afterViewInit };
+    return { diff, onAddComment, afterViewInit, onContentRefresh };
   },
 });
 </script>
@@ -221,11 +221,12 @@ export default defineComponent({
 
 ### CodeReview 事件
 
-| 事件名          | 类型                                   | 说明                                                                                          |
-| :-------------- | :------------------------------------- | :-------------------------------------------------------------------------------------------- |
-| fold-change     | `Function(status: boolean)`            | 折叠状态改变时触发的事件，回传参数为当前的折叠状态                                            |
-| add-comment     | `Function(position: CommentPosition)`  | 点击添加评论图标时触发的事件，参数内容详见[CommentPosition](#commentposition)                 |
-| after-view-init | `Function(methods: CodeReviewMethods)` | 初始化完成后触发的事件，返回相关操作方法，参数内容详见[CodeReviewMethods](#codereviewmethods) |
+| 事件名          | 类型                                   | 说明                                                                                                                                        |
+| :-------------- | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
+| fold-change     | `Function(status: boolean)`            | 折叠状态改变时触发的事件，回传参数为当前的折叠状态                                                                                          |
+| add-comment     | `Function(position: CommentPosition)`  | 点击添加评论图标时触发的事件，参数内容详见[CommentPosition](#commentposition)                                                               |
+| after-view-init | `Function(methods: CodeReviewMethods)` | 初始化完成后触发的事件，返回相关操作方法，参数内容详见[CodeReviewMethods](#codereviewmethods)                                               |
+| content-refresh | `Function(diffFile: DiffFile)`         | 内容刷新后触发的事件，返回解析后的相关文件信息，参数内容详见[DiffFile](https://github.com/rtfpessoa/diff2html/blob/master/src/types.ts#L49) |
 
 ### CodeReview 插槽
 

@@ -1,21 +1,23 @@
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent, onMounted, provide } from 'vue';
 import type { SetupContext } from 'vue';
 import CodeReviewHeader from './components/code-review-header';
 import { CommentIcon } from './components/code-review-icons';
-import { codeReviewProps } from './code-review-types';
+import { codeReviewProps, CodeReviewInjectionKey } from './code-review-types';
 import type { CodeReviewProps } from './code-review-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { useCodeReview } from './composables/use-code-review';
+import { useCodeReviewFold } from './composables/use-code-review-fold';
 import { useCodeReviewComment } from './composables/use-code-review-comment';
 import './code-review.scss';
 
 export default defineComponent({
   name: 'DCodeReview',
   props: codeReviewProps,
-  emits: ['foldChange', 'addComment', 'afterViewInit'],
+  emits: ['foldChange', 'addComment', 'afterViewInit', 'contentRefresh'],
   setup(props: CodeReviewProps, ctx: SetupContext) {
     const ns = useNamespace('code-review');
-    const { renderHtml, isFold, reviewContentRef, toggleFold } = useCodeReview(props, ctx);
+    const { renderHtml, reviewContentRef, diffFile } = useCodeReview(props, ctx);
+    const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
     const {
       commentLeft,
       commentTop,
@@ -31,6 +33,8 @@ export default defineComponent({
     onMounted(() => {
       ctx.emit('afterViewInit', { toggleFold, insertComment, removeComment });
     });
+
+    provide(CodeReviewInjectionKey, { reviewContentRef, diffInfo: diffFile.value[0], isFold, rootCtx: ctx });
 
     return () => (
       <div class={ns.b()}>
