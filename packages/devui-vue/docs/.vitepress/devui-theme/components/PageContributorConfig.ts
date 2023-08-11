@@ -32,16 +32,6 @@ export const CONTRIBUTORS_MAP: IContributingMap = {
       homepage: 'https://github.com/qinwencheng'
     },
   ],
-  dragdrop: [
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/61737780?v=4',
-      homepage: 'https://github.com/asdlml6'
-    },
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/9566362?v=4',
-      homepage: 'https://github.com/kagol'
-    },
-  ],
   fullscreen: [
     {
       avatar: 'https://avatars.githubusercontent.com/u/20532893?v=4',
