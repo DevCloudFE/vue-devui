@@ -8,7 +8,14 @@
 
 ```vue
 <template>
-  <d-code-review :diff="diff" @add-comment="onAddComment" @after-view-init="afterViewInit" @content-refresh="onContentRefresh">
+  <d-code-review
+    :diff="diff"
+    :code-loader="codeLoader"
+    :expand-all-threshold="8"
+    @add-comment="onAddComment"
+    @after-view-init="afterViewInit"
+    @content-refresh="onContentRefresh"
+  >
     <template #headOperate>
       <i class="icon icon-frame-expand"></i>
     </template>
@@ -152,7 +159,35 @@ export default defineComponent({
       renderComment();
     };
 
-    return { diff, onAddComment, afterViewInit, onContentRefresh };
+    const codeLoader = ([lStart, lEnd, rStart, rEnd], update) => {
+      if (lStart >= 60) {
+        return update('');
+      }
+      const code = [
+        "var diffParser = require('./diff-parser.js').DiffParser;\n",
+        "var htmlPrinter = require('./html-printer.js').HtmlPrinter;\n",
+        "var diffParser = require('./diff-parser.js').DiffParser;\n",
+        "var htmlPrinter = require('./html-printer.js').HtmlPrinter;\n",
+        "var diffParser = require('./diff-parser.js').DiffParser;\n",
+        "var htmlPrinter = require('./html-printer.js').HtmlPrinter;\n",
+        "var diffParser = require('./diff-parser.js').DiffParser;\n",
+        "var htmlPrinter = require('./html-printer.js').HtmlPrinter;\n",
+      ];
+      const content =
+        '--- a/src/diff2html.js\n+++ b/src/diff2html.js\n@@ -' +
+        Math.min(lStart, lEnd) +
+        ',' +
+        Math.abs(lStart - lEnd - 1) +
+        ' +' +
+        Math.min(rStart, rEnd) +
+        ',' +
+        Math.abs(rStart - rEnd - 1) +
+        ' @@\n ' +
+        code.slice(0, Math.min(Math.abs(lStart - lEnd - 1), 10)).join(' ');
+      update(content);
+    };
+
+    return { diff, onAddComment, afterViewInit, onContentRefresh, codeLoader };
   },
 });
 </script>
@@ -213,11 +248,13 @@ export default defineComponent({
 
 ### CodeReview 参数
 
-| 参数名        | 类型                          | 默认值         | 说明                                      |
-| :------------ | :---------------------------- | :------------- | :---------------------------------------- |
-| diff          | `string`                      | ''             | 必选，diff 内容                           |
-| fold          | `boolean`                     | false          | 可选，是否折叠显示                        |
-| output-format | [OutputFormat](#outputformat) | 'line-by-line' | 可选，diff 展示格式，单栏展示或者分栏展示 |
+| 参数名               | 类型                                                                | 默认值         | 说明                                                                               |
+| :------------------- | :------------------------------------------------------------------ | :------------- | :--------------------------------------------------------------------------------- |
+| diff                 | `string`                                                            | ''             | 必选，diff 内容                                                                    |
+| fold                 | `boolean`                                                           | false          | 可选，是否折叠显示                                                                 |
+| output-format        | [OutputFormat](#outputformat)                                       | 'line-by-line' | 可选，diff 展示格式，单栏展示或者分栏展示                                          |
+| expand-all-threshold | `number`                                                            | 50             | 可选，展开所有代码行的阈值，低于此阈值全部展开，高于此阈值分向上和向下两个操作展开 |
+| code-loader          | `(interval: Array<number>, update: (code: string) => void) => void` | --             | 可选，展开代码回调函数，interval 为展开边界，获取展开代码后，执行 update 更新视图  |
 
 ### CodeReview 事件
 
