@@ -1,7 +1,8 @@
-import { defineComponent, onMounted, onUnmounted, PropType, ref } from 'vue';
+import { defineComponent, onMounted, onUnmounted, PropType, ref, getCurrentInstance } from 'vue';
 import { on, off } from '../../../shared/devui-directive/utils';
 import clickoutsideDirective from '../../../shared/devui-directive/clickoutside';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { createI18nTranslate } from '../../../locale/create';
 
 export default defineComponent({
   directives: {
@@ -35,7 +36,8 @@ export default defineComponent({
   render() {
     const { closeConfigMenu, currentPageSize, pageSizeChange, pageSizeOptions, isShowConfig, $slots } = this;
     const ns = useNamespace('pagination');
-
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DPagination', app);
     return (
       <div class={ns.e('config')} v-clickoutside={closeConfigMenu} ref="paginationConfig">
         <div class={ns.e('setup-icon')}>
@@ -46,7 +48,7 @@ export default defineComponent({
             {$slots.default?.()}
 
             <div class={ns.e('config-item')}>
-              <div class="config-item-title">每页条数</div>
+              <div class="config-item-title">{t('pageSize')}</div>
               <div class={ns.e('number')}>
                 {pageSizeOptions.map((v: number) => {
                   return (

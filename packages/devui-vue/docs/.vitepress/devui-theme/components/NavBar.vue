@@ -49,7 +49,9 @@ onMounted(() => {
 // 国际化
 const defaultLanguage = ref(CURRENT_LANG)
 function useTranslation(target) {
-  defaultLanguage.value = target
+  defaultLanguage.value = target;
+  console.log('LANG_KEY',LANG_KEY);
+  
   localStorage.setItem(LANG_KEY, target)
   if (target === EN_US) {
     location.pathname = `/${EN_US}${location.pathname}`
@@ -97,11 +99,11 @@ const switchLang = () => {
 
         <div class="custom-nav flex items-center ml-l">
           <div class="custom-nav-item ml-m" style="font-size: 0"
-            @click="() => useTranslation(defaultLanguage === ZH_CN ? EN_US : ZH_CN)" v-if="false">
+            @click="() => useTranslation(defaultLanguage === ZH_CN ? EN_US : ZH_CN)" >
             <ZhLang v-if="defaultLanguage === ZH_CN"></ZhLang>
             <EnLang v-else></EnLang>
           </div>
-          <div class="custom-nav-item ml-m" @click="switchLang" v-if="false">
+          <div class="custom-nav-item ml-m" @click="switchLang">
             {{ LANG_MAP[currentLang] }}
           </div>
           <div class="custom-nav-item flex items-center ml-m">

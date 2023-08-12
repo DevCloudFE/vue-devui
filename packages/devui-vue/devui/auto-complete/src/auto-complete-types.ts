@@ -1,4 +1,8 @@
 import type { PropType, ExtractPropTypes, InjectionKey, SetupContext, Ref, ComputedRef } from 'vue';
+import { createI18nTranslate } from '../../locale/create';
+import {  getCurrentInstance } from 'vue'
+const app = getCurrentInstance();
+const t = createI18nTranslate('DAutoComplete', app);
 export interface SourceItemObj {
   label: string;
   disabled: boolean;
@@ -80,7 +84,7 @@ export const autoCompleteProps = {
   },
   tipsText: {
     type: String,
-    default: '最近输入',
+    default: t('latestInput'),
   },
   latestSource: {
     type: Array,

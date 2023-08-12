@@ -1,4 +1,4 @@
-import type { ExtractPropTypes, PropType } from 'vue';
+import { ExtractPropTypes, PropType, } from 'vue';
 
 export interface Suggestion {
   __index?: number;
@@ -57,7 +57,7 @@ export const tagInputProps = {
   },
   noData: {
     type: String,
-    default: '暂无数据',
+    default: '',
   },
   caseSensitivity: {
     type: Boolean,

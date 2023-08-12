@@ -1,5 +1,5 @@
 import { TDatePanelProps } from '../types';
-import { getMonthWeeklyDays, WEEK_DAYS, betweenDate } from '../utils';
+import { getMonthWeeklyDays, betweenDate, t } from '../utils';
 import { handleDateEnter, cellClassName, trigEvent } from '../helper';
 import Toolbar from '../toolbar';
 import TodayDefault from '../today-default';
@@ -23,7 +23,7 @@ const CalendarDatePanel = (props: TDatePanelProps): JSX.Element => {
         dateMin={props.dateMin}
       />
       <ol class="head row">{
-        WEEK_DAYS.map(day => <li class="cell">{day}</li>)
+        t('getWeekDays')().map(day => <li class="cell">{day}</li>)
       }</ol>
       <ul class="body">{
         getMonthWeeklyDays(props.current).map(row => <li class="row">{

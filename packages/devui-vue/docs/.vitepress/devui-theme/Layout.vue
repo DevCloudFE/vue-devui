@@ -100,11 +100,6 @@ const removeVPStaticFlag = () => {
   });
 };
 
-const routePath = route.path;
-if (routePath.startsWith('/en-US')) {
-  const path = routePath.split('/en-US');
-  router.go(path[1]);
-}
 
 onMounted(() => {
   initLanguageConfig();

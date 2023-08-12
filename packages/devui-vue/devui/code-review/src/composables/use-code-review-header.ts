@@ -1,9 +1,13 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import type { DiffFile } from 'diff2html/lib/types';
 import { toClipboard } from '../../../shared/utils';
+import {  getCurrentInstance } from 'vue';
+import { createI18nTranslate } from '../../../locale/create';
+const app = getCurrentInstance();
+const t = createI18nTranslate('DCodeReview', app);
 
 export function useCodeReviewCopy(diffInfo: DiffFile) {
-  const copyTipsText = ref('复制文件路径');
+  const copyTipsText = computed(() => ref(t('copyFilePath')).value);
   const tipsPopType = ref('default');
 
   const onCopy = () => {

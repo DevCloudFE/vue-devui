@@ -1,5 +1,9 @@
 import { TDateCell } from './types';
+import {  getCurrentInstance } from 'vue';
+import { createI18nTranslate } from '../../../locale/create';
 
+const app = getCurrentInstance();
+export const t = createI18nTranslate('DDatePicker', app);
 const getHumanDate = (d: Date) => {
   const year = d.getFullYear();
   const month = d.getMonth() + 1;
@@ -65,8 +69,6 @@ export const getMonthWeeklyDays = (date: Date = new Date()): TDateCell[][] => {
   }
   return dayRows;
 };
-
-export const WEEK_DAYS = ['日', '一', '二', '三', '四', '五', '六'];
 
 export const invokeCallback = <T>(cb: T, ...args: unknown[]): void => {
   typeof cb === 'function' && cb(...args);

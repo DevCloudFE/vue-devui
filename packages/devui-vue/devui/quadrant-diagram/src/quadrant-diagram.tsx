@@ -47,7 +47,6 @@ export default defineComponent({
     };
 
     initAxisData();
-
     watch(view.value, () => {
       initAxisData();
     });

@@ -1,4 +1,4 @@
-import { compareDate, invokeCallback } from '../utils';
+import { compareDate, invokeCallback, t } from '../utils';
 import { Year, Month } from './svg-icon';
 import { TCalendarToolbarItemProps, TDateToolbarProps } from '../types';
 import './index.scss';
@@ -25,7 +25,7 @@ export const Title = (props: { date: Date }): JSX.Element => {
   const { date } = props;
   return (
     <a class="title">{
-      `${date.getFullYear()}年${(date.getMonth() + 1 + '').padStart(2, '0')}月`
+      `${date.getFullYear()}${t('year')}${(date.getMonth() + 1 + '').padStart(2, '0')}${t('month')}`
     }</a>
   );
 };
