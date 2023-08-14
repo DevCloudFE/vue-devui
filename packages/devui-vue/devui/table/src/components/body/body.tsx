@@ -1,4 +1,4 @@
-import { defineComponent, getCurrentInstance, inject } from 'vue';
+import { defineComponent, inject, withDirectives } from 'vue';
 import { TABLE_TOKEN, DefaultRow, ITableInstanceAndDefaultRow } from '../../table-types';
 import { Column } from '../column/column-types';
 import { CellClickArg, RowClickArg } from './body-types';
@@ -16,7 +16,7 @@ export default defineComponent({
     const { tableSpans, removeCells } = useMergeCell();
     const { getTableRowClass } = useBodyRender();
     const { lazy, lazyFlagRef } = useLazyLoad();
-    const { partRows, scrollOffset } = useVirtualScroll(flatRows);
+    const { partRows, scrollOffset, vTrReady = {} } = useVirtualScroll(flatRows);
 
     const onCellClick = (cellClickArg: CellClickArg) => {
       table.emit('cell-click', cellClickArg);
@@ -29,30 +29,33 @@ export default defineComponent({
       <tbody class={ns.e('tbody')} style={{ transform: `translateY(${scrollOffset.value}px)` }}>
         {partRows.value.map((row: DefaultRow, rowIndex: number) => (
           <>
-            <tr key={rowIndex} class={getTableRowClass(row)} onClick={() => onRowClick({ row })}>
-              {flatColumns.value.map((column: Column, columnIndex: number) => {
-                const cellId = `${rowIndex}-${columnIndex}`;
-                const [rowspan, colspan] = tableSpans.value[cellId] ?? [1, 1];
+            {withDirectives(
+              <tr key={rowIndex} data-key={rowIndex} class={getTableRowClass(row)} onClick={() => onRowClick({ row })}>
+                {flatColumns.value.map((column: Column, columnIndex: number) => {
+                  const cellId = `${rowIndex}-${columnIndex}`;
+                  const [rowspan, colspan] = tableSpans.value[cellId] ?? [1, 1];
 
-                if (removeCells.value.includes(cellId)) {
-                  return null;
-                }
-                return (
-                  <TD
-                    column={column}
-                    index={rowIndex}
-                    row={row}
-                    rowspan={rowspan}
-                    colspan={colspan}
-                    class={{
-                      [ns.m('last-sticky-left')]: column.fixedLeft && !flatColumns.value[columnIndex + 1]?.fixedLeft,
-                      [ns.m('first-sticky-right')]: column.fixedRight && !flatColumns.value[columnIndex - 1]?.fixedRight,
-                    }}
-                    onCellClick={() => onCellClick({ rowIndex, columnIndex, column, row })}
-                  />
-                );
-              })}
-            </tr>
+                  if (removeCells.value.includes(cellId)) {
+                    return null;
+                  }
+                  return (
+                    <TD
+                      column={column}
+                      index={rowIndex}
+                      row={row}
+                      rowspan={rowspan}
+                      colspan={colspan}
+                      class={{
+                        [ns.m('last-sticky-left')]: column.fixedLeft && !flatColumns.value[columnIndex + 1]?.fixedLeft,
+                        [ns.m('first-sticky-right')]: column.fixedRight && !flatColumns.value[columnIndex - 1]?.fixedRight,
+                      }}
+                      onCellClick={() => onCellClick({ rowIndex, columnIndex, column, row })}
+                    />
+                  );
+                })}
+              </tr>,
+              [[vTrReady]]
+            )}
             {flatColumns.value.some((column: Column) => column.type === 'expand') && table.store.isRowExpanded(row) && (
               <tr>
                 <td colspan={flatColumns.value.length}>

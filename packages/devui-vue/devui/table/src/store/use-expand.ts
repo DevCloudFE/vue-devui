@@ -1,4 +1,4 @@
-import { getCurrentInstance, ref } from 'vue';
+import { getCurrentInstance, nextTick, ref } from 'vue';
 import type { Ref } from 'vue';
 import { DefaultRow, ITable } from '../table-types';
 import { UseExpand } from './store-types';
@@ -52,7 +52,36 @@ export function useExpand(dataSource: Ref<DefaultRow[]>, table: ITable<DefaultRo
   const toggleRowExpansion = (row: DefaultRow, expanded?: boolean) => {
     const isChanged = toggleRowExpandStatus(_expandedRows.value, row, expanded);
     if (isChanged) {
-      tableInstance.emit('expand-change', row, _expandedRows.value.slice());
+      const tempExpandedRows = _expandedRows.value.slice();
+      tableInstance.emit('expand-change', row, tempExpandedRows);
+
+      // 暂不支持树状表格虚拟滚动
+      if (row.id) {
+        const id = Number(row.id) - 1;
+        nextTick(() => {
+          const expandedRow = table.tableContainerRef.value.querySelectorAll('tr[class]')[id];
+          if (new Set(tempExpandedRows).has(row)) {
+            // console.log('has', row);
+            const { clientHeight } = expandedRow.nextSibling as HTMLElement;
+
+            const { changeHeightList } = table.store;
+            changeHeightList(id, clientHeight);
+          } else {
+            // console.log('del', row);
+            const {
+              changeHeightList,
+              states: { heightList },
+            } = table.store;
+            if (heightList.value.length) {
+              const { top, bottom } = heightList.value[id];
+              const height = bottom - top;
+              if (height !== expandedRow.clientHeight) {
+                changeHeightList(id, height - expandedRow.clientHeight);
+              }
+            }
+          }
+        });
+      }
     }
     // 暂不支持展开行(column的type==expand)和树形表格同时使用，展开行优先级高
     if (!table.store.states.flatColumns.value.some((column) => column.type === 'expand')) {

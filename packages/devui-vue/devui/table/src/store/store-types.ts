@@ -36,7 +36,7 @@ export interface TableStore<T = Record<string, unknown>> {
     // 预估行高
     estimateRowHeight: Ref<number>;
     // 虚拟滚动的高度列表
-    heightList: Ref<(Ref<number> | number)[]>;
+    heightList: Ref<{ top: number; bottom: number }[]>;
     // 虚拟滚动的高度
     virtualHeight: ComputedRef<number>;
   };
@@ -72,6 +72,8 @@ export interface TableStore<T = Record<string, unknown>> {
   setCellMode: (row: DefaultRow, rowIndex: number, fields: string | string[], cellMode: string) => void;
   // 重置所有单元格状态为只读状态
   resetCellMode: () => void;
+  // 更新高度列表
+  changeHeightList: (index: number, height: number) => void;
   // 触发Table组件上的事件
   emitTableEvent: (eventName: string, ...params: unknown[]) => void;
 }

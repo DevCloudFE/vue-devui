@@ -1,4 +1,4 @@
-import { inject, computed, Ref, ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { inject, computed, Ref, ref, onMounted, onBeforeUnmount, watch, Directive } from 'vue';
 import { TABLE_TOKEN, ITableInstanceAndDefaultRow, DefaultRow } from '../../table-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { UseBodyRender, UseMergeCell, CellClickArg, UseLazyLoad, UseVirtualScroll } from './body-types';
@@ -147,9 +147,20 @@ export function useVirtualScroll(flatRows: Ref<DefaultRow[]>): UseVirtualScroll 
   const { estimateRowHeight, heightList } = table.store.states;
 
   watch(flatRows, (value, oldValue) => {
-    value.slice(oldValue.length, value.length).forEach(() => {
-      heightList.value.push(estimateRowHeight);
-    });
+    if (value.length !== oldValue.length) {
+      value.slice(oldValue.length, value.length).forEach(() => {
+        const last = heightList.value.slice(-1)[0];
+        heightList.value.push({
+          top: last?.bottom ?? 0,
+          bottom: (last?.bottom ?? 0) + estimateRowHeight.value,
+        });
+      });
+    } else {
+      heightList.value = value.map((_, i) => ({
+        top: i * estimateRowHeight.value,
+        bottom: (i + 1) * estimateRowHeight.value,
+      }));
+    }
   });
 
   const start = ref(0);
@@ -159,25 +170,76 @@ export function useVirtualScroll(flatRows: Ref<DefaultRow[]>): UseVirtualScroll 
     }
     return Math.ceil(table.tableRef.value.clientHeight / estimateRowHeight.value) + 1;
   });
+  const end = ref(count.value);
+
+  const binarySearch = (value: number) => {
+    const list = heightList.value;
+    let left = 0;
+    let right = list.length - 1;
+    let tempIndex = null;
+    while (left <= right) {
+      const midIndex = Math.floor((left + right) / 2);
+      const midValue = list[midIndex].bottom;
+      if (midValue === value) {
+        return midIndex + 1;
+      } else if (midValue < value) {
+        left = midIndex + 1;
+      } else if (midValue > value) {
+        if (tempIndex === null || tempIndex > midIndex) {
+          tempIndex = midIndex;
+        }
+        right--;
+      }
+    }
+    return tempIndex;
+  };
 
   // TODO: 将scroll事件换成IntersectionObserver
   const scroll = (e: Event) => {
     const { scrollTop } = e.target as HTMLElement;
 
-    scrollOffset.value = scrollTop - (scrollTop % (estimateRowHeight.value * 2));
-    start.value = Math.floor(scrollOffset.value / estimateRowHeight.value);
+    scrollOffset.value = scrollTop - (scrollTop % table.tableRef.value.clientHeight);
+
+    start.value = Math.max(binarySearch(scrollOffset.value) as number, 0);
+    end.value = Math.min(
+      (binarySearch(scrollOffset.value + table.tableRef.value.clientHeight) as number) + count.value,
+      flatRows.value.length
+    );
   };
 
   onMounted(() => {
     table.tableContainerRef.value.addEventListener('scroll', scroll);
   });
-  onBeforeUnmount(() => {
-    table.tableContainerRef.value.removeEventListener('scroll', scroll);
-  });
 
   const partRows = computed(() => {
-    return flatRows.value.slice(Math.max(start.value - 1, 0), Math.min(start.value + count.value * 2, flatRows.value.length));
+    return flatRows.value.slice(start.value, end.value);
   });
 
-  return { partRows, scrollOffset };
+  const loadObserver = new IntersectionObserver(
+    (entries) => {
+      const loadFlagOb = entries[0];
+
+      if (loadFlagOb.isIntersecting) {
+        const id = Number((loadFlagOb.target as HTMLElement).dataset.key);
+        const { changeHeightList } = table.store;
+        // console.log('loadFlagOb.target.clientHeight', loadFlagOb.target.clientHeight);
+
+        if (estimateRowHeight.value !== loadFlagOb.target.clientHeight) {
+          changeHeightList(id, loadFlagOb.target.clientHeight - estimateRowHeight.value);
+          loadObserver.unobserve(loadFlagOb.target);
+        }
+      }
+    },
+    {
+      root: table.tableContainerRef.value,
+    }
+  );
+
+  const vTrReady: Directive = {
+    mounted: (el: HTMLElement) => {
+      loadObserver.observe(el);
+    },
+  };
+
+  return { partRows, scrollOffset, vTrReady };
 }
