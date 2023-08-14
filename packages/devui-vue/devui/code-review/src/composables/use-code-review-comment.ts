@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, onUnmounted } from 'vue';
 import type { SetupContext, Ref } from 'vue';
 import type { LineSide } from '../code-review-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
@@ -90,6 +90,12 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, ctx: Se
       nextLineHost = nextLineHost.nextElementSibling;
     }
   };
+
+  window.addEventListener('scroll', resetLeftTop);
+
+  onUnmounted(() => {
+    window.removeEventListener('scroll', resetLeftTop);
+  });
 
   return {
     commentLeft,

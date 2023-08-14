@@ -56,7 +56,7 @@ export const modalProps = {
   },
 };
 
-export type EmitName = 'update:modelValue';
+export type EmitName = 'update:modelValue' | 'close';
 
 export type EmitEventFn = (event: EmitName, result?: boolean) => void;
 

@@ -20,7 +20,7 @@ export default defineComponent({
   name: 'DModal',
   inheritAttrs: false,
   props: modalProps,
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'close'],
   setup(props: ModalProps, { slots, attrs, emit }) {
     const ns = useNamespace('modal');
     const { modelValue, title, showClose, showOverlay, appendToBody, closeOnClickOverlay, keepLast } = toRefs(props);

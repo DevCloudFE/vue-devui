@@ -1,3 +1,4 @@
+@import 'highlight.js/styles/github.css';
 @import 'diff2html/bundles/css/diff2html.min.css';
 @import '../../styles-var/devui-var.scss';
 
@@ -77,6 +78,12 @@
 
     tr {
       border: none;
+
+      &:hover {
+        .d2h-info {
+          background-color: #bfcbf3;
+        }
+      }
     }
 
     th,
@@ -86,13 +93,41 @@
     }
 
     td {
+      &:first-child {
+        position: static;
+        display: table-cell;
+      }
+
       &.expand-icon-wrapper {
         text-align: center;
       }
 
       .expand-icon {
-        display: inline-block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 24px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $devui-primary;
+
+          svg g g g g {
+            fill: $devui-light-text;
+          }
+
+          svg g g polygon,
+          svg g g path {
+            fill: $devui-light-text;
+          }
+        }
       }
+    }
+
+    .expand-line {
+      height: 24px;
+      line-height: 24px;
     }
 
     .d2h-file-header {
@@ -101,6 +136,10 @@
 
     .d2h-file-wrapper {
       border: none;
+    }
+
+    .d2h-code-linenumber:after {
+      content: '';
     }
 
     .d2h-code-line-ctn {
@@ -113,7 +152,7 @@
 
     .d2h-code-line {
       width: 100%;
-      padding-left: 8em;
+      padding-left: 0;
       padding-right: 16px;
     }
 

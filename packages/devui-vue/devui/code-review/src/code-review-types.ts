@@ -4,6 +4,7 @@ import type { DiffFile } from 'diff2html/lib/types';
 export type OutputFormat = 'line-by-line' | 'side-by-side';
 export type ExpandDirection = 'up' | 'down' | 'updown' | 'all';
 export type LineSide = 'left' | 'right';
+export type IncrementCodeInsertDirection = 'up' | 'down';
 export interface CommentPosition {
   left: number;
   right: number;
@@ -32,6 +33,9 @@ export const codeReviewProps = {
   expandAllThreshold: {
     type: Number,
     default: 50,
+  },
+  codeLoader: {
+    type: Function as PropType<(interval: Array<number | undefined>, update: (code: string) => void) => void>,
   },
 };
 export type CodeReviewProps = ExtractPropTypes<typeof codeReviewProps>;
