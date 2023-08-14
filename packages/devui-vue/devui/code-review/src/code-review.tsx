@@ -16,7 +16,7 @@ export default defineComponent({
   emits: ['foldChange', 'addComment', 'afterViewInit', 'contentRefresh'],
   setup(props: CodeReviewProps, ctx: SetupContext) {
     const ns = useNamespace('code-review');
-    const { renderHtml, reviewContentRef, diffFile } = useCodeReview(props, ctx);
+    const { renderHtml, reviewContentRef, diffFile, onContentClick } = useCodeReview(props, ctx);
     const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
     const {
       commentLeft,
@@ -43,6 +43,7 @@ export default defineComponent({
           class={[ns.e('content'), { 'hide-content': isFold.value }]}
           v-html={renderHtml.value}
           ref={reviewContentRef}
+          onClick={onContentClick}
           onMouseenter={onMouseEnter}
           onMousemove={onMouseMove}
           onMouseleave={onMouseleave}></div>
