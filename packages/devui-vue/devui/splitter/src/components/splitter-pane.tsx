@@ -116,7 +116,11 @@ export default defineComponent({
       }
     };
 
-    const updateCollapsed = () => {
+    const updateCollapsed = (collapsed?: boolean) => {
+      if (typeof collapsed === 'boolean') {
+        currentVnode!.component!.props.collapsed = collapsed;
+        return;
+      }
       currentVnode!.component!.props.collapsed = !currentVnode?.component?.props.collapsed;
     }
 
