@@ -18,17 +18,8 @@ export default defineComponent({
     const ns = useNamespace('code-review');
     const { renderHtml, reviewContentRef, diffFile, onContentClick } = useCodeReview(props, ctx);
     const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
-    const {
-      commentLeft,
-      commentTop,
-      onMouseEnter,
-      onMouseMove,
-      onMouseleave,
-      onCommentMouseLeave,
-      onCommentIconClick,
-      insertComment,
-      removeComment,
-    } = useCodeReviewComment(reviewContentRef, ctx);
+    const { commentLeft, commentTop, onMouseMove, onMouseleave, onCommentMouseLeave, onCommentIconClick, insertComment, removeComment } =
+      useCodeReviewComment(reviewContentRef, props, ctx);
 
     onMounted(() => {
       ctx.emit('afterViewInit', { toggleFold, insertComment, removeComment });
@@ -40,11 +31,10 @@ export default defineComponent({
       <div class={ns.b()}>
         <CodeReviewHeader onClick={() => (isFold.value = !isFold.value)} />
         <div
-          class={[ns.e('content'), { 'hide-content': isFold.value }]}
+          class={[ns.e('content'), props.outputFormat, { 'hide-content': isFold.value }]}
           v-html={renderHtml.value}
           ref={reviewContentRef}
           onClick={onContentClick}
-          onMouseenter={onMouseEnter}
           onMousemove={onMouseMove}
           onMouseleave={onMouseleave}></div>
         <div

@@ -1,7 +1,7 @@
 import { Diff2HtmlUI } from 'diff2html/lib/ui/js/diff2html-ui';
 import type { OutputFormat, ExpandDirection, LineSide, IncrementCodeInsertDirection } from './code-review-types';
 import { UpExpandIcon, DownExpandIcon, AllExpandIcon } from './components/code-review-icons';
-import { ExpandLineReg } from './const';
+import { ExpandLineReg, TemplateMap, TableTrReg, TableTdReg, TableTbodyReg, TableTbodyAttrReg } from './const';
 
 export function notEmptyNode(node: HTMLElement) {
   const classes = node.classList;
@@ -103,9 +103,24 @@ export function parseDiffCode(container: HTMLElement, code: string, outputFormat
     matching: 'lines',
     outputFormat: outputFormat,
     highlight: true,
+    rawTemplates: TemplateMap[outputFormat],
   });
+  if (outputFormat === 'side-by-side') {
+    const diffHtmlStr = diff2HtmlUi.diffHtml;
+    const trList = diffHtmlStr.match(TableTrReg) as RegExpMatchArray;
+    const trListLength = trList.length;
+    let newTrStr = '';
+    const offset = trListLength / 2;
+    for (let i = 0; i < trListLength / 2; i++) {
+      const leftTdList = trList[i].match(TableTdReg);
+      const rightTdList = trList[i + offset].match(TableTdReg);
+      newTrStr += `<tr>${leftTdList?.join('')}${rightTdList?.join('')}</tr>`;
+    }
+    const tbodyAttr = diffHtmlStr.match(TableTbodyAttrReg)?.[1] || '';
+    const newDiffHtmlStr = diffHtmlStr.replace(TableTbodyReg, `<tbody ${tbodyAttr}>${newTrStr}</tbody>`);
+    diff2HtmlUi.diffHtml = newDiffHtmlStr;
+  }
   diff2HtmlUi.draw();
-  diff2HtmlUi.highlightCode();
 }
 
 /*
@@ -263,8 +278,13 @@ export function attachExpandUpDownButton(parentNode: HTMLElement, direction: Exp
   }
 }
 
-// 添加评论到页面
-export function addCommentToPage(lineHost: HTMLElement, commentDom: HTMLElement, lineSide: LineSide) {
+/*
+  添加评论到页面，针对单栏模式
+  lineHost: 插入在哪行下面
+  commentDom: 评论元素
+  lineSide: 插入位置，left/right
+*/
+export function addCommentToPageForSingleColumn(lineHost: HTMLElement, commentDom: HTMLElement, lineSide: LineSide) {
   const newLine = document.createElement('tr');
   const newCell = document.createElement('td');
   newCell.classList.add('comment-cell');
@@ -278,5 +298,92 @@ export function addCommentToPage(lineHost: HTMLElement, commentDom: HTMLElement,
     lineHost.parentElement?.insertBefore(newLine, lineHost.nextElementSibling);
   } else {
     lineHost.parentElement?.appendChild(newLine);
+  }
+}
+
+/*
+  添加评论到页面，针对双栏模式
+  lineHost: 插入在哪行下面
+  commentDom: 评论元素
+  lineSide: 插入位置，left/right
+*/
+export function addCommentToPageForDoubleColumn(lineHost: HTMLElement, commentDom: HTMLElement, lineSide: LineSide) {
+  const nextSibling = lineHost.nextElementSibling;
+  if (nextSibling && nextSibling.classList?.contains('comment-block')) {
+    const insertTdDom = lineSide === 'left' ? nextSibling.children[0] : nextSibling.children[1];
+    insertTdDom.classList.add('comment-cell');
+    insertTdDom.appendChild(commentDom);
+  } else {
+    const newLine = document.createElement('tr');
+    const newLeftCell = document.createElement('td');
+    const newRightCell = document.createElement('td');
+    newLeftCell.style.width = '50%';
+    newLeftCell.setAttribute('colspan', '2');
+    newRightCell.style.width = '50%';
+    newRightCell.setAttribute('colspan', '2');
+
+    if (lineSide === 'left') {
+      newLeftCell.classList.add('comment-cell');
+      newLeftCell.appendChild(commentDom);
+    } else {
+      newRightCell.classList.add('comment-cell');
+      newRightCell.appendChild(commentDom);
+    }
+    newLine.classList.add('comment-block');
+    newLine.classList.add(lineSide);
+    newLine.appendChild(newLeftCell);
+    newLine.appendChild(newRightCell);
+    if (lineHost.nextElementSibling) {
+      lineHost.parentElement?.insertBefore(newLine, lineHost.nextElementSibling);
+    } else {
+      lineHost.parentElement?.appendChild(newLine);
+    }
+  }
+}
+
+/*
+  针对单栏模式查找插入或删除评论时的参考DOM
+  parentNode: 父节点
+  lineNumber: 插入行
+  lineSide: 插入位置，left/right
+*/
+export function findReferenceDomForSingleColumn(parentNode: HTMLElement, lineNumber: number, lineSide: LineSide) {
+  const trNodes = Array.from(parentNode.querySelectorAll('tr'));
+  for (const index in trNodes) {
+    const lineIndex = parseInt(index);
+    const lineNumberBox = Array.from(trNodes[lineIndex].children)[0] as HTMLElement;
+    if (notEmptyNode(lineNumberBox)) {
+      const oldLineNumber = parseInt((lineNumberBox.children[0] as HTMLElement)?.innerText ?? -1);
+      const newLineNumber = parseInt((lineNumberBox.children[1] as HTMLElement)?.innerText ?? -1);
+
+      if ((lineSide === 'left' && oldLineNumber === lineNumber) || (lineSide === 'right' && newLineNumber === lineNumber)) {
+        return trNodes[lineIndex];
+      }
+    }
+  }
+}
+
+/*
+  针对双栏模式查找插入或删除评论时的参考DOM
+  parentNode: 父节点
+  lineNumber: 插入行
+  lineSide: 插入位置，left/right
+*/
+export function findReferenceDomForDoubleColumn(parentNode: HTMLElement, lineNumber: number, lineSide: LineSide) {
+  const trNodes = Array.from(parentNode.querySelectorAll('tr'));
+  for (const index in trNodes) {
+    const lineIndex = parseInt(index);
+    let lineNumberBox: HTMLElement;
+    if (lineSide === 'left') {
+      lineNumberBox = trNodes[lineIndex].children[0] as HTMLElement;
+    } else {
+      lineNumberBox = trNodes[lineIndex].children[2] as HTMLElement;
+    }
+    if (lineNumberBox && notEmptyNode(lineNumberBox)) {
+      const currentLineNumber = parseInt(lineNumberBox.innerText);
+      if (currentLineNumber === lineNumber) {
+        return trNodes[lineIndex];
+      }
+    }
   }
 }

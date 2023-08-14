@@ -16,6 +16,7 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
   const { outputFormat, expandAllThreshold, codeLoader } = toRefs(props);
 
   const processSideBySide = () => {
+    return;
     const [leftTable, rightTable] = reviewContentRef.value.querySelectorAll('table');
     const trNodes = Array.from(leftTable.querySelectorAll('tr'));
     const totalLines = trNodes.length;

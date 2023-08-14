@@ -1,17 +1,22 @@
-import { ref, onUnmounted } from 'vue';
+import { ref, toRefs, onUnmounted } from 'vue';
 import type { SetupContext, Ref } from 'vue';
-import type { LineSide } from '../code-review-types';
+import type { LineSide, CodeReviewProps } from '../code-review-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
-import { notEmptyNode, addCommentToPage } from '../utils';
+import {
+  notEmptyNode,
+  addCommentToPageForSingleColumn,
+  addCommentToPageForDoubleColumn,
+  findReferenceDomForSingleColumn,
+  findReferenceDomForDoubleColumn,
+} from '../utils';
 
-export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, ctx: SetupContext) {
+export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: CodeReviewProps, ctx: SetupContext) {
+  const { outputFormat } = toRefs(props);
   const ns = useNamespace('code-review');
   const commentLeft = ref(-100);
   const commentTop = ref(-100);
   let currentLeftLineNumber = -1;
   let currentRightLineNumber = -1;
-  let currentHoverTr: HTMLElement;
-  let containerRect: DOMRect;
 
   const resetLeftTop = () => {
     commentLeft.value = -100;
@@ -20,24 +25,49 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, ctx: Se
     currentRightLineNumber = -1;
   };
 
-  const onMouseEnter = (e: MouseEvent) => {
-    containerRect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-  };
-
   const onMouseMove = (e: MouseEvent) => {
     const composedPath = e.composedPath() as HTMLElement[];
     const trNode = composedPath.find((item) => item.tagName === 'TR');
     if (trNode) {
-      const lineNumberContainer = Array.from(trNode.children)[0] as HTMLElement;
-      if (notEmptyNode(lineNumberContainer)) {
-        const { top, left } = lineNumberContainer.getBoundingClientRect();
-        commentLeft.value = left;
-        commentTop.value = top;
-        currentLeftLineNumber = parseInt((lineNumberContainer.children[0] as HTMLElement)?.innerText) || -1;
-        currentRightLineNumber = parseInt((lineNumberContainer.children[1] as HTMLElement)?.innerText) || -1;
-        currentHoverTr = trNode;
+      if (outputFormat.value === 'line-by-line') {
+        const lineNumberContainer = Array.from(trNode.children)[0] as HTMLElement;
+        if (notEmptyNode(lineNumberContainer)) {
+          const { top, left } = lineNumberContainer.getBoundingClientRect();
+          commentLeft.value = left;
+          commentTop.value = top;
+          currentLeftLineNumber = parseInt((lineNumberContainer.children[0] as HTMLElement)?.innerText) || -1;
+          currentRightLineNumber = parseInt((lineNumberContainer.children[1] as HTMLElement)?.innerText) || -1;
+        } else {
+          resetLeftTop();
+        }
       } else {
-        resetLeftTop();
+        if (trNode.classList.contains('comment-block')) {
+          return resetLeftTop();
+        }
+        const tdNode = composedPath.find((item) => item.tagName === 'TD');
+        const tdIndex = Array.from(trNode.children).findIndex((item) => item === tdNode);
+        const tdNodes = Array.from(trNode.children) as HTMLElement[];
+        const leftLineNumberContainer = tdNodes[0];
+        const rightLineNumberContainer = tdNodes[2];
+        if (tdIndex < 2) {
+          if (notEmptyNode(leftLineNumberContainer)) {
+            const { top, left } = leftLineNumberContainer.getBoundingClientRect();
+            commentLeft.value = left;
+            commentTop.value = top;
+            currentLeftLineNumber = parseInt(leftLineNumberContainer.innerText);
+          } else {
+            resetLeftTop();
+          }
+        } else {
+          if (rightLineNumberContainer && notEmptyNode(rightLineNumberContainer)) {
+            const { top, left } = rightLineNumberContainer.getBoundingClientRect();
+            commentLeft.value = left;
+            commentTop.value = top;
+            currentRightLineNumber = parseInt(rightLineNumberContainer.innerText);
+          } else {
+            resetLeftTop();
+          }
+        }
       }
     }
   };
@@ -54,40 +84,55 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, ctx: Se
   };
 
   const onCommentIconClick = () => {
+    const emitObj: Partial<Record<'left' | 'right', number>> = {};
+    if (outputFormat.value === 'line-by-line') {
+      emitObj.left = currentLeftLineNumber;
+      emitObj.right = currentRightLineNumber;
+    } else if (currentLeftLineNumber !== -1) {
+      emitObj.left = currentLeftLineNumber;
+    } else {
+      emitObj.right = currentRightLineNumber;
+    }
     ctx.emit('addComment', { left: currentLeftLineNumber, right: currentRightLineNumber });
   };
 
-  const findReferenceDom = (lineNumber: number, lineSide: LineSide) => {
-    const trNodes = Array.from(reviewContentRef.value.querySelectorAll('tr'));
-    for (const index in trNodes) {
-      const lineIndex = parseInt(index);
-      const lineNumberBox = Array.from(trNodes[lineIndex].children)[0] as HTMLElement;
-      if (notEmptyNode(lineNumberBox)) {
-        const oldLineNumber = parseInt((lineNumberBox.children[0] as HTMLElement)?.innerText ?? -1);
-        const newLineNumber = parseInt((lineNumberBox.children[1] as HTMLElement)?.innerText ?? -1);
-
-        if ((lineSide === 'left' && oldLineNumber === lineNumber) || (lineSide === 'right' && newLineNumber === lineNumber)) {
-          return trNodes[lineIndex];
-        }
-      }
+  const insertComment = (lineNumber: number, lineSide: LineSide, commentDom: HTMLElement) => {
+    if (outputFormat.value === 'line-by-line') {
+      const lineHost = findReferenceDomForSingleColumn(reviewContentRef.value, lineNumber, lineSide);
+      lineHost && addCommentToPageForSingleColumn(lineHost, commentDom, lineSide);
+    } else {
+      const lineHost = findReferenceDomForDoubleColumn(reviewContentRef.value, lineNumber, lineSide);
+      lineHost && addCommentToPageForDoubleColumn(lineHost, commentDom, lineSide);
     }
   };
 
-  const insertComment = (lineNumber: number, lineSide: LineSide, commentDom: HTMLElement) => {
-    const lineHost = findReferenceDom(lineNumber, lineSide);
-    lineHost && addCommentToPage(lineHost, commentDom, lineSide);
-  };
-
   const removeComment = (lineNumber: number, lineSide: LineSide) => {
-    const lineHost = findReferenceDom(lineNumber, lineSide);
-    let nextLineHost = lineHost?.nextElementSibling;
-    while (nextLineHost) {
-      const classList = nextLineHost?.classList;
-      if (classList?.contains('comment-block') && classList.contains(lineSide)) {
-        nextLineHost.remove();
-        return;
+    if (outputFormat.value === 'line-by-line') {
+      const lineHost = findReferenceDomForSingleColumn(reviewContentRef.value, lineNumber, lineSide);
+      let nextLineHost = lineHost?.nextElementSibling;
+      while (nextLineHost) {
+        const classList = nextLineHost?.classList;
+        if (classList?.contains('comment-block') && classList.contains(lineSide)) {
+          nextLineHost.remove();
+          return;
+        }
+        nextLineHost = nextLineHost.nextElementSibling;
       }
-      nextLineHost = nextLineHost.nextElementSibling;
+    } else {
+      const lineHost = findReferenceDomForDoubleColumn(reviewContentRef.value, lineNumber, lineSide);
+      const nextLineHost = lineHost?.nextElementSibling;
+      if (nextLineHost && nextLineHost.classList.contains('comment-block')) {
+        const leftChildren = nextLineHost.children[0];
+        const rightChildren = nextLineHost.children[1];
+        if (lineSide === 'left') {
+          leftChildren.children[0].remove();
+        } else {
+          rightChildren.children[0].remove();
+        }
+        if (!leftChildren.children.length && !rightChildren.children.length) {
+          nextLineHost.remove();
+        }
+      }
     }
   };
 
@@ -100,7 +145,6 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, ctx: Se
   return {
     commentLeft,
     commentTop,
-    onMouseEnter,
     onMouseMove,
     onMouseleave,
     onCommentMouseLeave,
