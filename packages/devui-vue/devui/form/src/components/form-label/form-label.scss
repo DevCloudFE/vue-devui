@@ -46,6 +46,11 @@
     margin-right: 8px;
     margin-left: -12px;
   }
+  &-hide {
+    &::before {
+      display: none;
+    }
+  }
 }
 
 .#{$devui-prefix}-form__label-help {

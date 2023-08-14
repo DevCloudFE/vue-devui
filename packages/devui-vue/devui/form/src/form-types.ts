@@ -64,6 +64,10 @@ export const formProps = {
   size: {
     type: String as PropType<FormSize>,
   },
+  hideRequiredMark: {
+    type: Boolean,
+    default: false,
+  }
 } as const;
 
 export interface UseFieldCollection {
