@@ -7,11 +7,9 @@ export { DraggableDirective, DroppableDirective, SortableDirective };
 
 export default {
   title: 'Dragdrop 拖拽',
-  category: '通用',
-  status: '10%',
+  category: '演进中',
+  status: '100%',
   install(app: App): void {
-    app.directive('DDraggable', DraggableDirective);
-    app.directive('DDroppable', DroppableDirective);
     app.directive('DSortable', SortableDirective);
   }
 };
