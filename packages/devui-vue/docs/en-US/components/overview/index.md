@@ -34,7 +34,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 <script setup>
   import { groupBy, startCase } from 'lodash';
   import { componentFeatureData, STATUS_MAP, CATEGORY_MAP } from './feature-data';
-  import { CONTRIBUTORS_MAP } from '../../.vitepress/devui-theme/components/PageContributorConfig';
+  import { CONTRIBUTORS_MAP } from '../../../.vitepress/devui-theme/components/PageContributorConfig';
 
   function group(arr, step = 3) {
     if (!arr || arr.length === 0) return;
