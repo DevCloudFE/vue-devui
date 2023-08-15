@@ -11,7 +11,7 @@ import './editor-md.scss';
 export default defineComponent({
   name: 'DEditorMd',
   props: editorMdProps,
-  emits: ['update:modelValue', 'mdCheckedEvent', 'selectHint', 'afterEditorInit', 'contentChange', 'previewContentChange'],
+  emits: ['update:modelValue', 'mdCheckedEvent', 'selectHint', 'afterEditorInit', 'contentChange', 'previewContentChange', 'imageUpload'],
   setup(props: EditorMdProps, ctx: SetupContext) {
     const {
       mode,
@@ -64,7 +64,7 @@ export default defineComponent({
           class={[
             'dp-md-container',
             { 'dp-md-readonly': mode.value === 'readonly', 'dp-md-editonly': mode.value === 'editonly', 'dp-md-dark': isDarkMode.value },
-          ]}>
+          ]} onPaste={onPaste}>
           <div class="dp-md-toolbar-container">
             <Toolbar />
           </div>
