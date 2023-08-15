@@ -1,7 +1,7 @@
 import { Diff2HtmlUI } from 'diff2html/lib/ui/js/diff2html-ui';
 import type { OutputFormat, ExpandDirection, LineSide, IncrementCodeInsertDirection } from './code-review-types';
 import { UpExpandIcon, DownExpandIcon, AllExpandIcon } from './components/code-review-icons';
-import { ExpandLineReg, TemplateMap, TableTrReg, TableTdReg, TableTbodyReg, TableTbodyAttrReg } from './const';
+import { ExpandLineReg, TemplateMap, TableTrReg, TableTdReg, TableTbodyReg, TableTbodyAttrReg, EmptyDataLangReg } from './const';
 
 export function notEmptyNode(node: HTMLElement) {
   const classes = node.classList;
@@ -19,20 +19,67 @@ export function insertIncrementLineToPage(
   trNodes: HTMLTableRowElement[],
   direction: IncrementCodeInsertDirection
 ) {
-  // 过滤有效代码行
-  const trNodesToBeInserted = trNodes.filter((element) => element.children[0].children.length === 2);
   if (direction === 'up') {
     // 插入向上展开获取的增量代码
     const nextSibling = referenceDom.nextElementSibling as HTMLElement;
-    trNodesToBeInserted.forEach((item) => {
+    trNodes.forEach((item) => {
       referenceDom.parentNode?.insertBefore(item, nextSibling);
     });
   } else {
     // 插入向下展开获取的增量代码
-    trNodesToBeInserted.forEach((item) => {
+    trNodes.forEach((item) => {
       referenceDom.parentNode?.insertBefore(item, referenceDom);
     });
   }
+}
+
+/*
+  针对双栏模式，判断是否移除展开行节点，当第一行代码出现和展开行上下两行相连，需移除展开行
+  expandDom: 当前展开行节点
+  newExpandDom: 增量代码中，保存 @@ -x,x +y,y @@ 格式数据的节点
+  direction: 增量代码插入方向
+*/
+export function ifRemoveExpandLineForDoubleColumn(
+  expandDom: HTMLElement,
+  newExpandDom: HTMLTableRowElement,
+  direction: IncrementCodeInsertDirection
+) {
+  const matches = (newExpandDom.children[1] as HTMLElement).innerText.trim().match(ExpandLineReg);
+  if (!matches) {
+    return true;
+  }
+  const leftLineNumber = parseInt(matches[1]);
+  const addedLine = parseInt(matches[2]);
+  const rightLineNumber = parseInt(matches[3]);
+  if (direction === 'up') {
+    const prevSibling = expandDom.previousElementSibling;
+    if (!prevSibling) {
+      // 向上展开在第一行
+      if (leftLineNumber === 1 && rightLineNumber === 1) {
+        expandDom?.remove();
+        return true;
+      }
+    } else {
+      // 向上展开在中间行
+      const prevLeftLineNumber = parseInt((prevSibling.children?.[0] as HTMLElement)?.innerText);
+      const prevRightLineNumber = parseInt((prevSibling.children?.[2] as HTMLElement)?.innerText);
+      if (leftLineNumber === prevLeftLineNumber + 1 && rightLineNumber === prevRightLineNumber + 1) {
+        expandDom.remove();
+        return true;
+      }
+    }
+  } else {
+    const nextSibling = expandDom.nextElementSibling;
+    if (nextSibling) {
+      const nextLeftLineNumber = parseInt((nextSibling?.children?.[0] as HTMLElement)?.innerText);
+      const nextRightLineNumber = parseInt((nextSibling?.children?.[2] as HTMLElement)?.innerText);
+      if (leftLineNumber + addedLine === nextLeftLineNumber && rightLineNumber + addedLine === nextRightLineNumber) {
+        expandDom.remove();
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 /*
@@ -68,11 +115,13 @@ export function ifRemoveExpandLine(expandDom: HTMLElement, newExpandDom: HTMLTab
     }
   } else {
     const nextSibling = expandDom.nextElementSibling;
-    const nextLeftLineNumber = parseInt((nextSibling?.children?.[0].children?.[0] as HTMLElement)?.innerText);
-    const nextRightLineNumber = parseInt((nextSibling?.children?.[0].children?.[1] as HTMLElement)?.innerText);
-    if (leftLineNumber + addedLine === nextLeftLineNumber && rightLineNumber + addedLine === nextRightLineNumber) {
-      expandDom.remove();
-      return true;
+    if (nextSibling) {
+      const nextLeftLineNumber = parseInt((nextSibling?.children?.[0].children?.[0] as HTMLElement)?.innerText);
+      const nextRightLineNumber = parseInt((nextSibling?.children?.[0].children?.[1] as HTMLElement)?.innerText);
+      if (leftLineNumber + addedLine === nextLeftLineNumber && rightLineNumber + addedLine === nextRightLineNumber) {
+        expandDom.remove();
+        return true;
+      }
     }
   }
   return false;
@@ -106,7 +155,10 @@ export function parseDiffCode(container: HTMLElement, code: string, outputFormat
     rawTemplates: TemplateMap[outputFormat],
   });
   if (outputFormat === 'side-by-side') {
-    const diffHtmlStr = diff2HtmlUi.diffHtml;
+    let diffHtmlStr = diff2HtmlUi.diffHtml;
+    if (diffHtmlStr.match(EmptyDataLangReg)) {
+      diffHtmlStr = diffHtmlStr.replace(EmptyDataLangReg, '');
+    }
     const trList = diffHtmlStr.match(TableTrReg) as RegExpMatchArray;
     const trListLength = trList.length;
     let newTrStr = '';
@@ -150,7 +202,53 @@ export function updateExpandUpDownButton(trNode: HTMLElement) {
 }
 
 /*
-  更新展开行边界数据到 tr 节点的 data-set 上
+  针对双栏模式，更新展开行边界数据到 tr 节点的 data-set 上
+  trNode: 展开按钮所在的 tr 节点
+  expandAllThreshold: 阈值
+  position: 展开按钮所在位置，top第一行 | bottom末尾行 | middle中间行
+  updateExpandButton: 是否需要更新中间行展开按钮为全部展开，插入增量代码后更新，初始化不更新
+*/
+export function updateLineNumberInDatasetForDoubleColumn(
+  trNode: HTMLElement,
+  expandAllThreshold: number,
+  position: 'top' | 'bottom' | 'middle',
+  updateExpandButton = false
+) {
+  let nextL: number;
+  let prevL: number;
+  let nextR: number;
+  let prevR: number;
+  if (position === 'top') {
+    const nextLineNode = trNode.nextElementSibling as HTMLElement;
+    nextL = parseInt((nextLineNode.children[0] as HTMLElement).innerText) - 1;
+    prevL = Math.max(nextL - expandAllThreshold + 1, 1);
+    nextR = parseInt((nextLineNode.children[2] as HTMLElement).innerText) - 1;
+    prevR = Math.max(nextR - expandAllThreshold + 1, 1);
+  } else if (position === 'bottom') {
+    const prevLineNode = trNode.previousElementSibling as HTMLElement;
+    prevL = parseInt((prevLineNode.children[0] as HTMLElement).innerText) + 1;
+    nextL = prevL + expandAllThreshold - 1;
+    prevR = parseInt((prevLineNode.children[2] as HTMLElement).innerText) + 1;
+    nextR = prevR + expandAllThreshold - 1;
+  } else {
+    const prevLineNode = trNode.previousElementSibling as HTMLElement;
+    const nextLineNode = trNode.nextElementSibling as HTMLElement;
+    const prevLineNumber = parseInt((prevLineNode.children[0] as HTMLElement).innerText);
+    const nextLineNumber = parseInt((nextLineNode.children[0] as HTMLElement).innerText);
+    prevL = prevLineNumber + 1;
+    prevR = parseInt((prevLineNode.children[2] as HTMLElement).innerText) + 1;
+    nextL = nextLineNumber - 1;
+    nextR = parseInt((nextLineNode.children[2] as HTMLElement).innerText) - 1;
+    const isExpandAll = nextLineNumber - prevLineNumber <= expandAllThreshold;
+    if (isExpandAll && updateExpandButton) {
+      updateExpandUpDownButton(trNode);
+    }
+  }
+  setLineNumberInDataset(trNode, prevL, prevR, nextL, nextR);
+}
+
+/*
+  针对单栏模式，更新展开行边界数据到 tr 节点的 data-set 上
   trNode: 展开按钮所在的 tr 节点
   expandAllThreshold: 阈值
   position: 展开按钮所在位置，top第一行 | bottom末尾行 | middle中间行
@@ -200,7 +298,7 @@ export function updateLineNumberInDataset(
   expandDom: tr节点
   expandAllThreshold: 阈值
 */
-export function getLineNumberFormDataset(expandDom: HTMLElement, expandAllThreshold: number) {
+export function getLineNumberFromDataset(expandDom: HTMLElement, expandAllThreshold: number) {
   const attrsMap = expandDom.parentElement?.parentElement?.dataset;
   const prevL = Number(attrsMap?.prevL);
   const nextL = Number(attrsMap?.nextL);

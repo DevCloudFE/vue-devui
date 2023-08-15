@@ -2,261 +2,18 @@
 
 代码检视组件。
 
-### 两栏模式
-
-:::demo
-
-```vue
-<template>
-  <d-code-review
-    :diff="diff"
-    :code-loader="codeLoader"
-    :expand-all-threshold="8"
-    output-format="side-by-side"
-    @add-comment="onAddComment"
-    @after-view-init="afterViewInit"
-    @content-refresh="onContentRefresh"
-  >
-    <template #headOperate>
-      <i class="icon icon-frame-expand"></i>
-    </template>
-  </d-code-review>
-</template>
-
-<script>
-import { defineComponent, ref, h } from 'vue';
-
-export default defineComponent({
-  setup() {
-    const diff = `--- a/src/diff2html.js
-+++ b/src/diff2html.js
-@@ -7,7 +7,6 @@
- 
- (function() {
-   var diffParser = require('./diff-parser.js').DiffParser;
--  var fileLister = require('./file-list-printer.js').FileListPrinter;
-   var htmlPrinter = require('./html-printer.js').HtmlPrinter;
- 
-   function Diff2Html() {
-@@ -43,7 +42,7 @@
- 
-     var fileList = '';
-     if (configOrEmpty.showFiles === true) {
--      fileList = fileLister.generateFileList(diffJson, configOrEmpty);
-+      fileList = htmlPrinter.generateFileListSummary(diffJson, configOrEmpty);
-     }
- 
-     var diffOutput = '';
-`;
-
-    let codeReviewIns = {};
-
-    const comments = [
-      {
-        lineNumber: 10,
-        lineSide: 'left',
-        comment: createCommentBlock(10, 'left', 'This is a comment for delete lines.'),
-      },
-      {
-        lineNumber: 43,
-        lineSide: 'right',
-        comment: createCommentBlock(43, 'right', 'This is a comment for unchanged lines on Right.'),
-      },
-      {
-        lineNumber: 45,
-        lineSide: 'right',
-        comment: createCommentBlock(45, 'right', 'This is a comment for changed lines on Right.'),
-      },
-      {
-        lineNumber: 46,
-        lineSide: 'left',
-        comment: createCommentBlock(46, 'left', 'This is a comment for changed lines on Left.'),
-      },
-    ];
-
-    function createCommentBlock(lineNumber, lineSide, param) {
-      const container = document.createElement('div');
-      container.classList.add('comment-container');
-
-      // render函数第一个参数Component是业务自定义的组件
-      // render(h(Component), container);
-
-      // render函数在demo中不能用，故用原生dom示意
-      const head = document.createElement('div');
-      head.classList.add('head-box');
-      const user = document.createElement('span');
-      user.innerText = '张三';
-      const deleteIcon = document.createElement('i');
-      deleteIcon.className = 'icon icon-delete';
-      deleteIcon.addEventListener('click', () => {
-        const index = comments.findIndex((item) => item.lineNumber === lineNumber && item.lineSide === lineSide);
-        comments.splice(index, 1);
-        codeReviewIns.removeComment(lineNumber, lineSide);
-      });
-      head.appendChild(user);
-      head.appendChild(deleteIcon);
-
-      const span = document.createElement('span');
-      span.innerText = param;
-
-      container.appendChild(head);
-      container.appendChild(span);
-
-      return container;
-    }
-
-    const renderComment = () => {
-      comments.forEach(({ lineNumber, lineSide, comment }) => {
-        codeReviewIns.insertComment(lineNumber, lineSide, comment);
-      });
-    };
-
-    const onAddComment = ({ left, right }) => {
-      let lineSide = '';
-      let lineNumber = -1;
-      // line-by-line模式，当在未变更的行添加评论时，left和right均不为-1，业务可自行决定评论插入在left还是right，此demo插入在right。
-      if (left !== -1 && right !== -1) {
-        lineSide = 'right';
-        lineNumber = right;
-      } else if (left !== -1) {
-        lineSide = 'left';
-        lineNumber = left;
-      } else {
-        lineSide = 'right';
-        lineNumber = right;
-      }
-      const container = document.createElement('div');
-      container.classList.add('edit-comment-container');
-
-      const textarea = document.createElement('textarea');
-      textarea.setAttribute('autofocus', true);
-      const buttonBox = document.createElement('div');
-      const confirmButton = document.createElement('button');
-      const cancelButton = document.createElement('button');
-      confirmButton.innerText = '确定';
-      confirmButton.addEventListener('click', () => {
-        const inputValue = textarea.value;
-        comments.push({ lineNumber, lineSide, comment: createCommentBlock(lineNumber, lineSide, inputValue) });
-        codeReviewIns.removeComment(lineNumber, lineSide);
-        renderComment();
-      });
-      cancelButton.innerText = '取消';
-      cancelButton.addEventListener('click', () => {
-        codeReviewIns.removeComment(lineNumber, lineSide);
-      });
-      buttonBox.appendChild(confirmButton);
-      buttonBox.appendChild(cancelButton);
-
-      container.appendChild(textarea);
-      container.appendChild(buttonBox);
-      codeReviewIns.insertComment(lineNumber, lineSide, container);
-    };
-
-    const afterViewInit = (e) => {
-      codeReviewIns = e;
-    };
-
-    const onContentRefresh = (e) => {
-      renderComment();
-    };
-
-    const codeLoader = ([lStart, lEnd, rStart, rEnd], update) => {
-      if (lStart >= 60) {
-        return update('');
-      }
-      const code = [
-        "var diffParser = require('./diff-parser.js').DiffParser;\n",
-        "var htmlPrinter = require('./html-printer.js').HtmlPrinter;\n",
-        "var diffParser = require('./diff-parser.js').DiffParser;\n",
-        "var htmlPrinter = require('./html-printer.js').HtmlPrinter;\n",
-        "var diffParser = require('./diff-parser.js').DiffParser;\n",
-        "var htmlPrinter = require('./html-printer.js').HtmlPrinter;\n",
-        "var diffParser = require('./diff-parser.js').DiffParser;\n",
-        "var htmlPrinter = require('./html-printer.js').HtmlPrinter;\n",
-      ];
-      const content =
-        '--- a/src/diff2html.js\n+++ b/src/diff2html.js\n@@ -' +
-        Math.min(lStart, lEnd) +
-        ',' +
-        Math.abs(lStart - lEnd - 1) +
-        ' +' +
-        Math.min(rStart, rEnd) +
-        ',' +
-        Math.abs(rStart - rEnd - 1) +
-        ' @@\n ' +
-        code.slice(0, Math.min(Math.abs(lStart - lEnd - 1), 10)).join(' ');
-      update(content);
-    };
-
-    return { diff, onAddComment, afterViewInit, onContentRefresh, codeLoader };
-  },
-});
-</script>
-
-<style>
-.comment-container {
-  padding: 8px 12px;
-  border-top: 1px solid var(--devui-dividing-line, #dfe1e6);
-  border-bottom: 1px solid var(--devui-dividing-line, #dfe1e6);
-}
-.comment-container .head-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.comment-container .head-box > span {
-  font-size: var(--devui-font-size);
-  font-weight: bold;
-}
-.comment-container .icon-delete {
-  color: var(--devui-icon-text, #252b3a);
-  cursor: pointer;
-}
-.edit-comment-container {
-  padding: 8px 12px;
-}
-.edit-comment-container textarea {
-  width: 100%;
-  height: 70px;
-  resize: none;
-  outline: none;
-}
-.edit-comment-container textarea:focus {
-  border-color: #5e7ce0;
-}
-.edit-comment-container div {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-.edit-comment-container div button {
-  width: 64px;
-  height: 32px;
-  font-size: var(--devui-font-size);
-  color: var(--devui-text, #252b3a);
-  border-radius: 4px;
-  background-color: #d1d1d1;
-  margin-left: 4px;
-}
-.edit-comment-container div button:first-of-type {
-  color: var(--devui-light-text, #252b3a);
-  background-color: var(--devui-primary);
-}
-</style>
-```
-
-:::
-
 ### 基本用法
 
 :::demo
 
 ```vue
 <template>
+  <d-button @click="onChange">{{ outputFormat === 'line-by-line' ? '双栏' : '单栏' }}</d-button>
   <d-code-review
     :diff="diff"
     :code-loader="codeLoader"
     :expand-all-threshold="8"
+    :output-format="outputFormat"
     @add-comment="onAddComment"
     @after-view-init="afterViewInit"
     @content-refresh="onContentRefresh"
@@ -294,6 +51,7 @@ export default defineComponent({
 `;
 
     let codeReviewIns = {};
+    const outputFormat = ref('line-by-line');
 
     const comments = [
       {
@@ -353,6 +111,14 @@ export default defineComponent({
       comments.forEach(({ lineNumber, lineSide, comment }) => {
         codeReviewIns.insertComment(lineNumber, lineSide, comment);
       });
+    };
+
+    const onChange = () => {
+      if (outputFormat.value === 'line-by-line') {
+        outputFormat.value = 'side-by-side';
+      } else {
+        outputFormat.value = 'line-by-line';
+      }
     };
 
     const onAddComment = ({ left, right }) => {
@@ -432,7 +198,7 @@ export default defineComponent({
       update(content);
     };
 
-    return { diff, onAddComment, afterViewInit, onContentRefresh, codeLoader };
+    return { diff, outputFormat, onChange, onAddComment, afterViewInit, onContentRefresh, codeLoader };
   },
 });
 </script>

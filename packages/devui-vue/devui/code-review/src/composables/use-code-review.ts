@@ -29,6 +29,8 @@ export function useCodeReview(props: CodeReviewProps, ctx: SetupContext) {
     onExpandButtonClick(e);
   };
 
+  watch(outputFormat, initDiffContent);
+
   watch(diff, initDiffContent, { immediate: true });
 
   return { renderHtml, reviewContentRef, diffFile, onContentClick };

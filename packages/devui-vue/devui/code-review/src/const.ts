@@ -4,6 +4,7 @@ export const TableTrReg = /<tr[^>]*>[\s\S]*?<\/tr>/gi;
 export const TableTdReg = /<td[^>]*>[\s\S]*?<\/td>/gi;
 export const TableTbodyReg = /<tbody[^>]*>[\s\S]*?<\/tbody>/gi;
 export const TableTbodyAttrReg = /<tbody([^>]*)>/i;
+export const EmptyDataLangReg = /<div[^>]* data-lang="">[\s\S]*?<\/div>/gi;
 export const LineByLineTemplate = `<div id="{{fileHtmlId}}" class="d2h-file-wrapper" data-lang="{{file.language}}">
 <div class="d2h-file-diff">
     <div class="d2h-code-wrapper">
@@ -29,7 +30,10 @@ export const SideBySideTemplate = `<div id="{{fileHtmlId}}" class="d2h-file-wrap
     </div>
 </div>
 </div>`;
+export const EmptyTemplate = {
+  'generic-empty-diff': '',
+};
 export const TemplateMap = {
-  'line-by-line': { 'line-by-line-file-diff': LineByLineTemplate },
-  'side-by-side': { 'side-by-side-file-diff': SideBySideTemplate },
+  'line-by-line': { 'line-by-line-file-diff': LineByLineTemplate, ...EmptyTemplate },
+  'side-by-side': { 'side-by-side-file-diff': SideBySideTemplate, ...EmptyTemplate },
 };
