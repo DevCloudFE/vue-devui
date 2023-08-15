@@ -20,7 +20,7 @@ export default {
     advancedPanel: 'Advanced panel',
   },
   datePickerPro: {
-    ok: 'OK',
+    ok: 'Confirm',
     placeholder: 'select date',
     month1: 'Jan',
     month2: 'Feb',
@@ -61,14 +61,14 @@ export default {
   stepsGuide: {
     previous: 'Previous',
     continue: 'Continue',
-    ok: 'OK',
+    ok: 'Confirm',
   },
   table: {
     selectAll: 'Select all',
-    ok: 'OK',
+    ok: 'Confirm',
   },
   timePopup: {
-    ok: 'OK',
+    ok: 'Confirm',
   },
   transfer: {
     unit: '',
@@ -114,9 +114,9 @@ export default {
     placeholder: 'Please select time',
   },
   modal: {
-    success: 'Success',
-    error: 'Error',
-    warning: 'Warning',
+    success: 'Succeeded',
+    error: 'erroneous',
+    warning: 'warnings',
     info: 'Infomation'
   },
   autoComplete: {
@@ -162,8 +162,8 @@ export default {
     header: '段落样式',
     normal: 'Text',
     h1: 'Title 1',
-    h2: 'Heading 2',
-    h3: 'Heading 3',
+    h2: 'Title 2',
+    h3: 'Title 3',
     h4: 'Title 4',
     h5: 'Title 5',
     h6: 'Title 6',
@@ -192,10 +192,10 @@ export default {
     link: 'hyperlink',
     code: 'In line code',
     codeBlock: 'Code block',
-    blockQuote: 'Reference',
+    blockQuote: 'Quoting',
     superscript: 'Superscript',
     subscript: 'Subscript',
-    globalLink: 'Global Link',
+    globalLink: 'Global Links',
     emoji: 'emoji',
     fullScreen: 'Full Screen',
     exitFullScreen: 'Exit full screen',

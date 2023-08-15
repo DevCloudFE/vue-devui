@@ -38,7 +38,7 @@ yarn add vue-devui
 Install with pnpm
 
 ```sh
-pnpm add vue-devui 
+pnpm add vue-devui
 ```
 
 Then import `DevUI` in the `main.ts` file:
