@@ -15,7 +15,7 @@ import {
 } from '../utils';
 
 export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: CodeReviewProps) {
-  const { outputFormat, expandAllThreshold, codeLoader } = toRefs(props);
+  const { outputFormat, expandThreshold, expandLoader } = toRefs(props);
 
   const processSideBySide = () => {
     const trNodes = Array.from(reviewContentRef.value.querySelectorAll('tr'));
@@ -32,13 +32,13 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
         const prevLineIndex = lineIndex - 1;
         // 处理expand按钮在第一行的情况，向上展开
         if (lineIndex === 0 && nextLineIndex in trNodes) {
-          updateLineNumberInDatasetForDoubleColumn(trNodes[lineIndex], expandAllThreshold.value, 'top');
+          updateLineNumberInDatasetForDoubleColumn(trNodes[lineIndex], expandThreshold.value, 'top');
           attachExpandUpDownButton(lineNumberBox, 'up');
         } else if (lineIndex > 0 && lineIndex < totalLines - 1 && nextLineIndex in trNodes && prevLineIndex in trNodes) {
           const preLineNumber = parseInt((trNodes[prevLineIndex].children[0] as HTMLElement).innerText);
           const nextLineNumber = parseInt((trNodes[nextLineIndex].children[0] as HTMLElement).innerText);
-          const isExpandAll = nextLineNumber - preLineNumber - 1 < expandAllThreshold.value;
-          updateLineNumberInDatasetForDoubleColumn(trNodes[lineIndex], expandAllThreshold.value, 'middle');
+          const isExpandAll = nextLineNumber - preLineNumber - 1 < expandThreshold.value;
+          updateLineNumberInDatasetForDoubleColumn(trNodes[lineIndex], expandThreshold.value, 'middle');
           attachExpandUpDownButton(lineNumberBox, isExpandAll ? 'all' : 'updown');
         }
       }
@@ -48,7 +48,7 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     loadMoreLine.children[0].removeChild(loadMoreLine.children[0].children[0]);
     (loadMoreLine.children[1] as HTMLElement).innerText = '';
     trNodes[0].parentElement?.appendChild(loadMoreLine);
-    updateLineNumberInDatasetForDoubleColumn(loadMoreLine, expandAllThreshold.value, 'bottom');
+    updateLineNumberInDatasetForDoubleColumn(loadMoreLine, expandThreshold.value, 'bottom');
     attachExpandUpDownButton(loadMoreLine.children[0] as HTMLElement, 'down');
   };
 
@@ -91,18 +91,18 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     if (direction === 'up') {
       if (!referenceDom.previousElementSibling) {
         // 向上展开在第一行
-        updateLineNumberInDatasetForDoubleColumn(referenceDom, expandAllThreshold.value, 'top');
+        updateLineNumberInDatasetForDoubleColumn(referenceDom, expandThreshold.value, 'top');
       } else {
         // 向上展开在中间行
-        updateLineNumberInDatasetForDoubleColumn(referenceDom, expandAllThreshold.value, 'middle', true);
+        updateLineNumberInDatasetForDoubleColumn(referenceDom, expandThreshold.value, 'middle', true);
       }
     } else {
       if (referenceDom.nextElementSibling) {
         // 向下展开在中间行
-        updateLineNumberInDatasetForDoubleColumn(referenceDom, expandAllThreshold.value, 'middle', true);
+        updateLineNumberInDatasetForDoubleColumn(referenceDom, expandThreshold.value, 'middle', true);
       } else {
         // 向下展开在末尾
-        updateLineNumberInDatasetForDoubleColumn(referenceDom, expandAllThreshold.value, 'bottom');
+        updateLineNumberInDatasetForDoubleColumn(referenceDom, expandThreshold.value, 'bottom');
       }
     }
   };
@@ -124,15 +124,15 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
         const nextLineIndex = lineIndex + 1;
         const prevLineIndex = lineIndex - 1;
         if (lineIndex === 0 && nextLineIndex in trNodes) {
-          updateLineNumberInDataset(trNodes[lineIndex], expandAllThreshold.value, 'top');
+          updateLineNumberInDataset(trNodes[lineIndex], expandThreshold.value, 'top');
           attachExpandUpDownButton(lineNumberBox, 'up');
         } else if (lineIndex > 0 && lineIndex < totalLines - 1 && nextLineIndex in trNodes && prevLineIndex in trNodes) {
           const prevTdNodes = Array.from(trNodes[prevLineIndex].children) as HTMLElement[];
           const prevLineNumber = parseInt((prevTdNodes[0].children[0] as HTMLElement).innerText);
           const nextTdNodes = Array.from(trNodes[nextLineIndex].children) as HTMLElement[];
           const nextLineNumber = parseInt((nextTdNodes[0].children[0] as HTMLElement).innerText);
-          updateLineNumberInDataset(trNodes[lineIndex], expandAllThreshold.value, 'middle');
-          const isExpandAll = nextLineNumber - prevLineNumber <= expandAllThreshold.value;
+          updateLineNumberInDataset(trNodes[lineIndex], expandThreshold.value, 'middle');
+          const isExpandAll = nextLineNumber - prevLineNumber <= expandThreshold.value;
           attachExpandUpDownButton(lineNumberBox, isExpandAll ? 'all' : 'updown');
         }
       }
@@ -142,7 +142,7 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     loadMoreLine.children[0].removeChild(loadMoreLine.children[0].children[0]);
     (loadMoreLine.children[1] as HTMLElement).innerText = '';
     trNodes[0].parentElement?.appendChild(loadMoreLine);
-    updateLineNumberInDataset(loadMoreLine, expandAllThreshold.value, 'bottom');
+    updateLineNumberInDataset(loadMoreLine, expandThreshold.value, 'bottom');
     attachExpandUpDownButton(loadMoreLine.children[0] as HTMLElement, 'down');
   };
 
@@ -185,18 +185,18 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     if (direction === 'up') {
       if (!referenceDom.previousElementSibling) {
         // 向上展开在第一行
-        updateLineNumberInDataset(referenceDom, expandAllThreshold.value, 'top');
+        updateLineNumberInDataset(referenceDom, expandThreshold.value, 'top');
       } else {
         // 向上展开在中间行
-        updateLineNumberInDataset(referenceDom, expandAllThreshold.value, 'middle', true);
+        updateLineNumberInDataset(referenceDom, expandThreshold.value, 'middle', true);
       }
     } else {
       if (referenceDom.nextElementSibling) {
         // 向下展开在中间行
-        updateLineNumberInDataset(referenceDom, expandAllThreshold.value, 'middle', true);
+        updateLineNumberInDataset(referenceDom, expandThreshold.value, 'middle', true);
       } else {
         // 向下展开在末尾
-        updateLineNumberInDataset(referenceDom, expandAllThreshold.value, 'bottom');
+        updateLineNumberInDataset(referenceDom, expandThreshold.value, 'bottom');
       }
     }
   };
@@ -209,8 +209,8 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
         .find((item) => item.endsWith('expand'))
         ?.split('-')[0];
       const direction: ExpandDirection = expandDirection === 'up' || expandDirection === 'all' ? 'up' : 'down';
-      const [leftLineStart, leftLineEnd, rightLineStart, rightLineEnd] = getLineNumberFromDataset(expandIconDom, expandAllThreshold.value);
-      codeLoader?.value?.([leftLineStart, leftLineEnd, rightLineStart, rightLineEnd], (code: string) => {
+      const [leftLineStart, leftLineEnd, rightLineStart, rightLineEnd] = getLineNumberFromDataset(expandIconDom, expandThreshold.value);
+      expandLoader?.value?.([leftLineStart, leftLineEnd, rightLineStart, rightLineEnd], (code: string) => {
         outputFormat.value === 'line-by-line'
           ? insertIncrementCode(code, direction, expandIconDom.parentElement?.parentElement)
           : insertIncrementCodeForDoubleColumn(code, direction, expandIconDom.parentElement?.parentElement);

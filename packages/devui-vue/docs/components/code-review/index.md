@@ -9,19 +9,21 @@
 ```vue
 <template>
   <d-button @click="onChange">{{ outputFormat === 'line-by-line' ? '双栏' : '单栏' }}</d-button>
-  <d-code-review
-    :diff="diff"
-    :code-loader="codeLoader"
-    :expand-all-threshold="8"
-    :output-format="outputFormat"
-    @add-comment="onAddComment"
-    @after-view-init="afterViewInit"
-    @content-refresh="onContentRefresh"
-  >
-    <template #headOperate>
-      <i class="icon icon-frame-expand"></i>
-    </template>
-  </d-code-review>
+  <d-fullscreen v-model="isFullscreen" :z-index="100">
+    <d-code-review
+      :diff="diff"
+      :expand-loader="codeLoader"
+      :expand-threshold="8"
+      :output-format="outputFormat"
+      @add-comment="onAddComment"
+      @after-view-init="afterViewInit"
+      @content-refresh="onContentRefresh"
+    >
+      <template #headOperate>
+        <i :class="isFullscreen ? 'icon-frame-contract' : 'icon icon-frame-expand'" @click="isFullscreen = !isFullscreen"></i>
+      </template>
+    </d-code-review>
+  </d-fullscreen>
 </template>
 
 <script>
@@ -52,6 +54,7 @@ export default defineComponent({
 
     let codeReviewIns = {};
     const outputFormat = ref('line-by-line');
+    const isFullscreen = ref(false);
 
     const comments = [
       {
@@ -198,7 +201,7 @@ export default defineComponent({
       update(content);
     };
 
-    return { diff, outputFormat, onChange, onAddComment, afterViewInit, onContentRefresh, codeLoader };
+    return { diff, outputFormat, isFullscreen, onChange, onAddComment, afterViewInit, onContentRefresh, codeLoader };
   },
 });
 </script>
@@ -259,13 +262,13 @@ export default defineComponent({
 
 ### CodeReview 参数
 
-| 参数名               | 类型                                                                | 默认值         | 说明                                                                               |
-| :------------------- | :------------------------------------------------------------------ | :------------- | :--------------------------------------------------------------------------------- |
-| diff                 | `string`                                                            | ''             | 必选，diff 内容                                                                    |
-| fold                 | `boolean`                                                           | false          | 可选，是否折叠显示                                                                 |
-| output-format        | [OutputFormat](#outputformat)                                       | 'line-by-line' | 可选，diff 展示格式，单栏展示或者分栏展示                                          |
-| expand-all-threshold | `number`                                                            | 50             | 可选，展开所有代码行的阈值，低于此阈值全部展开，高于此阈值分向上和向下两个操作展开 |
-| code-loader          | `(interval: Array<number>, update: (code: string) => void) => void` | --             | 可选，展开代码回调函数，interval 为展开边界，获取展开代码后，执行 update 更新视图  |
+| 参数名           | 类型                                                                | 默认值         | 说明                                                                               |
+| :--------------- | :------------------------------------------------------------------ | :------------- | :--------------------------------------------------------------------------------- |
+| diff             | `string`                                                            | ''             | 必选，diff 内容                                                                    |
+| fold             | `boolean`                                                           | false          | 可选，是否折叠显示                                                                 |
+| output-format    | [OutputFormat](#outputformat)                                       | 'line-by-line' | 可选，diff 展示格式，单栏展示或者分栏展示                                          |
+| expand-threshold | `number`                                                            | 50             | 可选，展开所有代码行的阈值，低于此阈值全部展开，高于此阈值分向上和向下两个操作展开 |
+| expand-loader    | `(interval: Array<number>, update: (code: string) => void) => void` | --             | 可选，展开代码回调函数，interval 为展开边界，获取展开代码后，执行 update 更新视图  |
 
 ### CodeReview 事件
 

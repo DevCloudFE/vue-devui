@@ -204,13 +204,13 @@ export function updateExpandUpDownButton(trNode: HTMLElement) {
 /*
   针对双栏模式，更新展开行边界数据到 tr 节点的 data-set 上
   trNode: 展开按钮所在的 tr 节点
-  expandAllThreshold: 阈值
+  expandThreshold: 阈值
   position: 展开按钮所在位置，top第一行 | bottom末尾行 | middle中间行
   updateExpandButton: 是否需要更新中间行展开按钮为全部展开，插入增量代码后更新，初始化不更新
 */
 export function updateLineNumberInDatasetForDoubleColumn(
   trNode: HTMLElement,
-  expandAllThreshold: number,
+  expandThreshold: number,
   position: 'top' | 'bottom' | 'middle',
   updateExpandButton = false
 ) {
@@ -221,15 +221,15 @@ export function updateLineNumberInDatasetForDoubleColumn(
   if (position === 'top') {
     const nextLineNode = trNode.nextElementSibling as HTMLElement;
     nextL = parseInt((nextLineNode.children[0] as HTMLElement).innerText) - 1;
-    prevL = Math.max(nextL - expandAllThreshold + 1, 1);
+    prevL = Math.max(nextL - expandThreshold + 1, 1);
     nextR = parseInt((nextLineNode.children[2] as HTMLElement).innerText) - 1;
-    prevR = Math.max(nextR - expandAllThreshold + 1, 1);
+    prevR = Math.max(nextR - expandThreshold + 1, 1);
   } else if (position === 'bottom') {
     const prevLineNode = trNode.previousElementSibling as HTMLElement;
     prevL = parseInt((prevLineNode.children[0] as HTMLElement).innerText) + 1;
-    nextL = prevL + expandAllThreshold - 1;
+    nextL = prevL + expandThreshold - 1;
     prevR = parseInt((prevLineNode.children[2] as HTMLElement).innerText) + 1;
-    nextR = prevR + expandAllThreshold - 1;
+    nextR = prevR + expandThreshold - 1;
   } else {
     const prevLineNode = trNode.previousElementSibling as HTMLElement;
     const nextLineNode = trNode.nextElementSibling as HTMLElement;
@@ -239,7 +239,7 @@ export function updateLineNumberInDatasetForDoubleColumn(
     prevR = parseInt((prevLineNode.children[2] as HTMLElement).innerText) + 1;
     nextL = nextLineNumber - 1;
     nextR = parseInt((nextLineNode.children[2] as HTMLElement).innerText) - 1;
-    const isExpandAll = nextLineNumber - prevLineNumber <= expandAllThreshold;
+    const isExpandAll = nextLineNumber - prevLineNumber <= expandThreshold;
     if (isExpandAll && updateExpandButton) {
       updateExpandUpDownButton(trNode);
     }
@@ -250,13 +250,13 @@ export function updateLineNumberInDatasetForDoubleColumn(
 /*
   针对单栏模式，更新展开行边界数据到 tr 节点的 data-set 上
   trNode: 展开按钮所在的 tr 节点
-  expandAllThreshold: 阈值
+  expandThreshold: 阈值
   position: 展开按钮所在位置，top第一行 | bottom末尾行 | middle中间行
   updateExpandButton: 是否需要更新中间行展开按钮为全部展开，插入增量代码后更新，初始化不更新
 */
 export function updateLineNumberInDataset(
   trNode: HTMLElement,
-  expandAllThreshold: number,
+  expandThreshold: number,
   position: 'top' | 'bottom' | 'middle',
   updateExpandButton = false
 ) {
@@ -267,15 +267,15 @@ export function updateLineNumberInDataset(
   if (position === 'top') {
     const nextLineNode = trNode.nextElementSibling as HTMLElement;
     nextL = parseInt((nextLineNode.children[0].children[0] as HTMLElement).innerText) - 1;
-    prevL = Math.max(nextL - expandAllThreshold + 1, 1);
+    prevL = Math.max(nextL - expandThreshold + 1, 1);
     nextR = parseInt((nextLineNode.children[0].children[1] as HTMLElement).innerText) - 1;
-    prevR = Math.max(nextR - expandAllThreshold + 1, 1);
+    prevR = Math.max(nextR - expandThreshold + 1, 1);
   } else if (position === 'bottom') {
     const prevLineNode = trNode.previousElementSibling as HTMLElement;
     prevL = parseInt((prevLineNode.children[0].children[0] as HTMLElement).innerText) + 1;
-    nextL = prevL + expandAllThreshold - 1;
+    nextL = prevL + expandThreshold - 1;
     prevR = parseInt((prevLineNode.children[0].children[1] as HTMLElement).innerText) + 1;
-    nextR = prevR + expandAllThreshold - 1;
+    nextR = prevR + expandThreshold - 1;
   } else {
     const prevLineNode = trNode.previousElementSibling as HTMLElement;
     const nextLineNode = trNode.nextElementSibling as HTMLElement;
@@ -285,7 +285,7 @@ export function updateLineNumberInDataset(
     prevR = parseInt((prevLineNode.children[0].children[1] as HTMLElement).innerText) + 1;
     nextL = nextLineNumber - 1;
     nextR = parseInt((nextLineNode.children[0].children[1] as HTMLElement).innerText) - 1;
-    const isExpandAll = nextLineNumber - prevLineNumber <= expandAllThreshold;
+    const isExpandAll = nextLineNumber - prevLineNumber <= expandThreshold;
     if (isExpandAll && updateExpandButton) {
       updateExpandUpDownButton(trNode);
     }
@@ -296,9 +296,9 @@ export function updateLineNumberInDataset(
 /*
   从展开按钮所在 tr 节点的 date-set 上获取展开行数据
   expandDom: tr节点
-  expandAllThreshold: 阈值
+  expandThreshold: 阈值
 */
-export function getLineNumberFromDataset(expandDom: HTMLElement, expandAllThreshold: number) {
+export function getLineNumberFromDataset(expandDom: HTMLElement, expandThreshold: number) {
   const attrsMap = expandDom.parentElement?.parentElement?.dataset;
   const prevL = Number(attrsMap?.prevL);
   const nextL = Number(attrsMap?.nextL);
@@ -311,14 +311,14 @@ export function getLineNumberFromDataset(expandDom: HTMLElement, expandAllThresh
     const direction = buttonClasses.find((item) => item.endsWith('expand'))?.split('-')[0];
     if (direction === 'up') {
       leftLineEnd = nextL;
-      leftLineStart = Math.max(leftLineEnd - expandAllThreshold + 1, prevL);
+      leftLineStart = Math.max(leftLineEnd - expandThreshold + 1, prevL);
       rightLineEnd = nextR;
-      rightLineStart = Math.max(rightLineEnd - expandAllThreshold + 1, prevR);
+      rightLineStart = Math.max(rightLineEnd - expandThreshold + 1, prevR);
     } else if (direction === 'down') {
       leftLineStart = prevL;
-      leftLineEnd = Math.min(leftLineStart + expandAllThreshold - 1, nextL);
+      leftLineEnd = Math.min(leftLineStart + expandThreshold - 1, nextL);
       rightLineStart = prevR;
-      rightLineEnd = Math.min(rightLineStart + expandAllThreshold - 1, nextR);
+      rightLineEnd = Math.min(rightLineStart + expandThreshold - 1, nextR);
     } else {
       leftLineStart = prevL;
       leftLineEnd = nextL;
