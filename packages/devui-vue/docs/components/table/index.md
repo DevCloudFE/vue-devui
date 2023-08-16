@@ -1482,6 +1482,130 @@ export default defineComponent({
 
 :::
 
+### 虚拟滚动
+
+:::demo 使用 virtual 启用虚拟滚动。
+
+```vue
+<template>
+  <d-table :data="dataSource" table-height="200px" :virtual="true">
+    <d-column field="firstName" header="First Name"></d-column>
+    <d-column field="lastName" header="Last Name"></d-column>
+    <d-column field="gender" header="Gender"></d-column>
+    <d-column field="date" header="Date of birth"></d-column>
+  </d-table>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const dataSource = ref([
+      {
+        firstName: 'diy0',
+        lastName: 'Otto',
+        date: '1990/01/11',
+        gender: 'Male',
+      },
+      {
+        firstName: 'diy1',
+        lastName: 'Otto',
+        date: '1990/01/11',
+        gender: 'Male',
+      },
+      {
+        firstName: 'diy2',
+        lastName: 'Thornton',
+        gender: 'Female',
+        date: '1990/01/12',
+      },
+      {
+        firstName: 'diy3',
+        lastName: 'Chen',
+        gender: 'Male',
+        date: '1990/01/13',
+      },
+      {
+        firstName: 'diy4',
+        lastName: 'gerong',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+      {
+        firstName: 'diy5',
+        lastName: 'lang',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+      {
+        firstName: 'diy6',
+        lastName: 'li',
+        gender: 'Male',
+        date: '1990/01/14',
+      },
+      {
+        firstName: 'diy7',
+        lastName: 'li',
+        gender: 'Female',
+        date: '1990/01/14',
+      },
+      {
+        firstName: 'diy8',
+        lastName: 'Yu',
+        gender: 'Female',
+        date: '1990/01/14',
+      },
+      {
+        firstName: 'diy9',
+        lastName: 'Yu',
+        gender: 'Female',
+        date: '1990/01/14',
+      },
+    ]);
+
+    const generateData = (index) => {
+      const random = (range = 26) => {
+        let num = Math.floor(Math.random() * range);
+        if (num < 26) {
+          if (range == 52) return 65 + num;
+          return 97 + num;
+        }
+        return 71 + num;
+      };
+      const randomStr = (length) => {
+        const arr = [random(52)];
+        for (let i = 1; i < length; i++) {
+          arr.push(random());
+        }
+        return String.fromCharCode(...arr);
+      };
+      const nowTime = Date.now();
+      const originTime = new Date('1990/01/01').getTime();
+
+      return {
+        firstName: `day${index}`,
+        lastName: randomStr(Math.floor(Math.random() * 6) + 2),
+        gender: Math.random() < 0.5 ? 'Female' : 'Male',
+        date: new Date(Math.floor(Math.random() * (nowTime - originTime)) + originTime).toLocaleDateString('zh', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
+      };
+    };
+    for (let i = dataSource.value.length; i < 40; i++) {
+      dataSource.value[i] = generateData(i);
+    }
+
+    return { dataSource };
+  },
+});
+</script>
+```
+
+:::
+
 ### Table 参数
 
 | 参数名                | 类型                                              | 默认值    | 说明                                                                                                                                           | 跳转 Demo                                                      |
@@ -1505,6 +1629,7 @@ export default defineComponent({
 | row-key               | `string \| Function(item, index: number): string` | --        | 可选，行数据的 Key，用来优化 Table 渲染，类型为 string 时，支持多层访问：`item.user.id`，但不支持 `item.user[0].id`，此种情况请使用 Function。 | [表格交互(Function)](#表格交互) <br> [展开行(string)](#展开行) |
 | indent                | `number`                                          | 16        | 可选，展示树形数据时，树节点的缩进                                                                                                             | [树形表格](#树形表格)                                          |
 | lazy                  | `boolean`                                         | false     | 可选，是否懒加载数据（搭配 loadMore 使用）                                                                                                     | [懒加载](#懒加载)                                              |
+| virtual               | `boolean`                                         | false     | 可选，是否开启虚拟滚动                                                                                                                         | [虚拟滚动](#虚拟滚动)                                          |
 
 ### Table 事件
 
