@@ -266,7 +266,9 @@ export default defineComponent({
 | :--------------- | :------------------------------------------------------------------ | :------------- | :--------------------------------------------------------------------------------- |
 | diff             | `string`                                                            | ''             | 必选，diff 内容                                                                    |
 | fold             | `boolean`                                                           | false          | 可选，是否折叠显示                                                                 |
+| allow-comment    | `boolean`                                                           | true           | 可选，是否支持评论                                                                 |
 | output-format    | [OutputFormat](#outputformat)                                       | 'line-by-line' | 可选，diff 展示格式，单栏展示或者分栏展示                                          |
+| allow-expand     | `boolean`                                                           | true           | 可选，是否支持展开非 diff 折叠代码                                                 |
 | expand-threshold | `number`                                                            | 50             | 可选，展开所有代码行的阈值，低于此阈值全部展开，高于此阈值分向上和向下两个操作展开 |
 | expand-loader    | `(interval: Array<number>, update: (code: string) => void) => void` | --             | 可选，展开代码回调函数，interval 为展开边界，获取展开代码后，执行 update 更新视图  |
 

@@ -11,7 +11,7 @@ import {
 } from '../utils';
 
 export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: CodeReviewProps, ctx: SetupContext) {
-  const { outputFormat } = toRefs(props);
+  const { outputFormat, allowComment } = toRefs(props);
   const ns = useNamespace('code-review');
   const commentLeft = ref(-100);
   const commentTop = ref(-100);
@@ -136,6 +136,8 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     }
   };
 
+  const mouseEvent = allowComment.value ? { onMousemove: onMouseMove, onMouseleave: onMouseleave } : {};
+
   window.addEventListener('scroll', resetLeftTop);
 
   onUnmounted(() => {
@@ -145,8 +147,7 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
   return {
     commentLeft,
     commentTop,
-    onMouseMove,
-    onMouseleave,
+    mouseEvent,
     onCommentMouseLeave,
     onCommentIconClick,
     insertComment,

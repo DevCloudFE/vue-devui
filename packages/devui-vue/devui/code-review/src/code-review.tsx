@@ -18,7 +18,7 @@ export default defineComponent({
     const ns = useNamespace('code-review');
     const { renderHtml, reviewContentRef, diffFile, onContentClick } = useCodeReview(props, ctx);
     const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
-    const { commentLeft, commentTop, onMouseMove, onMouseleave, onCommentMouseLeave, onCommentIconClick, insertComment, removeComment } =
+    const { commentLeft, commentTop, mouseEvent, onCommentMouseLeave, onCommentIconClick, insertComment, removeComment } =
       useCodeReviewComment(reviewContentRef, props, ctx);
 
     onMounted(() => {
@@ -35,15 +35,16 @@ export default defineComponent({
           v-html={renderHtml.value}
           ref={reviewContentRef}
           onClick={onContentClick}
-          onMousemove={onMouseMove}
-          onMouseleave={onMouseleave}></div>
-        <div
-          class="comment-icon"
-          style={{ left: commentLeft.value + 'px', top: commentTop.value + 'px' }}
-          onClick={onCommentIconClick}
-          onMouseleave={onCommentMouseLeave}>
-          <CommentIcon />
-        </div>
+          {...mouseEvent}></div>
+        {props.allowComment && (
+          <div
+            class="comment-icon"
+            style={{ left: commentLeft.value + 'px', top: commentTop.value + 'px' }}
+            onClick={onCommentIconClick}
+            onMouseleave={onCommentMouseLeave}>
+            <CommentIcon />
+          </div>
+        )}
       </div>
     );
   },

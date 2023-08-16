@@ -25,6 +25,14 @@ export const codeReviewProps = {
     type: Boolean,
     default: false,
   },
+  allowComment: {
+    type: Boolean,
+    default: true,
+  },
+  allowExpand: {
+    type: Boolean,
+    default: true,
+  },
   outputFormat: {
     type: String as PropType<OutputFormat>,
     default: 'line-by-line',

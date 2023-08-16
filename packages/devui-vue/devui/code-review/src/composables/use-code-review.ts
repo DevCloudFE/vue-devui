@@ -8,7 +8,7 @@ import { useCodeReviewExpand } from './use-code-review-expand';
 import { parseDiffCode } from '../utils';
 
 export function useCodeReview(props: CodeReviewProps, ctx: SetupContext) {
-  const { diff, outputFormat } = toRefs(props);
+  const { diff, outputFormat, allowExpand } = toRefs(props);
   const renderHtml = ref('');
   const reviewContentRef = ref();
   const diffFile: Ref<DiffFile[]> = ref([]);
@@ -19,7 +19,7 @@ export function useCodeReview(props: CodeReviewProps, ctx: SetupContext) {
     nextTick(() => {
       if (inBrowser) {
         parseDiffCode(reviewContentRef.value, diff.value, outputFormat.value);
-        insertExpandButton();
+        allowExpand.value && insertExpandButton();
       }
       ctx.emit('contentRefresh', JSON.parse(JSON.stringify(diffFile.value)));
     });
