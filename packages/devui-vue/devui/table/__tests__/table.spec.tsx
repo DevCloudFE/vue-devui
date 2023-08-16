@@ -676,6 +676,80 @@ describe('d-table', () => {
     wrapper.unmount();
   });
 
+  it('table virtual scroll work', async () => {
+    const wrapper = mount({
+      setup() {
+        const generateData = (index: number) => {
+          const random = (range = 26) => {
+            const num = Math.floor(Math.random() * range);
+            if (num < 26) {
+              if (range === 52) {
+                return 65 + num;
+              }
+              return 97 + num;
+            }
+            return 71 + num;
+          };
+          const randomStr = (length: number) => {
+            const arr = [random(52)];
+            for (let i = 1; i < length; i++) {
+              arr.push(random());
+            }
+            return String.fromCharCode(...arr);
+          };
+          const nowTime = Date.now();
+          const originTime = new Date('1990/01/01').getTime();
+
+          return {
+            firstName: `day${index}`,
+            lastName: randomStr(Math.floor(Math.random() * 6) + 2),
+            gender: Math.random() < 0.5 ? 'Female' : 'Male',
+            date: new Date(Math.floor(Math.random() * (nowTime - originTime)) + originTime).toLocaleDateString('zh', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            }),
+          };
+        };
+        data = new Array(400);
+        for (let i = 0; i < data.length; i++) {
+          data[i] = generateData(i);
+        }
+
+        return () => (
+          <DTable data={data} table-height="100px" virtual={true}>
+            <DColumn field="firstName" header="First Name"></DColumn>
+            <DColumn field="lastName" header="Last Name"></DColumn>
+            <DColumn field="gender" header="Gender"></DColumn>
+            <DColumn field="date" header="Date of birth"></DColumn>
+          </DTable>
+        );
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+    const table = wrapper.find(ns.b());
+    const virtualEle = table.find(ns.e('virtual__scroll'));
+    const trEles = table.findAll('tbody tr');
+
+    // test virtualScrollElement exist
+    expect(virtualEle.exists()).toBeTruthy();
+    expect(trEles.length).toBeLessThan(data.length);
+
+    // TODO: test table row content
+    // ? table.element.scrollTop = virtualEle.element.clientHeight;
+    await nextTick();
+    await nextTick();
+
+    const trEleLast = table.find('tbody tr:last-of-type');
+    const lastFirstName = trEleLast.find('td:first-of-type');
+
+    expect(lastFirstName.text()).toBe(data[trEles.length - 1].firstName);
+
+    wrapper.unmount();
+  });
+
   it.todo('fix header work well');
 
   it.todo('drag column work well');
