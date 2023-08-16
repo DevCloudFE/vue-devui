@@ -236,7 +236,7 @@ export function useVirtualScroll(flatRows: Ref<DefaultRow[]>): UseVirtualScroll 
   );
 
   const vTrReady: Directive = {
-    mounted: (el: HTMLElement) => {
+    updated: (el: HTMLElement) => {
       loadObserver.observe(el);
     },
   };
