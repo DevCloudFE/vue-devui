@@ -28,6 +28,7 @@
   line-height: 45px;
   color: $devui-text;
   background-color: $devui-base-bg;
+  box-sizing: border-box;
   cursor: pointer;
 
   &.#{$devui-prefix}-collapse__item--disabled {
