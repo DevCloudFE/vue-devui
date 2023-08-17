@@ -2,7 +2,7 @@ import { defineComponent, watch, toRefs, ref, computed } from 'vue';
 import AvatarBodyIcon from './components/avatar-body-icon';
 import AvatarNoBodyIcon from './components/avatar-nobody-icon';
 import { AvatarProps, avatarProps } from './avatar-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './avatar.scss';
 
 export default defineComponent({
@@ -17,7 +17,7 @@ export default defineComponent({
     const nameDisplay = ref<string>();
 
     const ns = useNamespace('avatar');
-    const styleNS = ns.e('style');
+    const styleNS = ns.m('style');
     const bgNS = computed(() => {
       return ns.m(`${'background-' + code.value}`);
     });
@@ -29,7 +29,7 @@ export default defineComponent({
         } else if (gender.value.toLowerCase() === 'female') {
           code.value = 0;
         } else {
-          console.warn('gender must be "Male" or "Female"');
+          throw new Error('gender must be "Male" or "Female"');
         }
         return;
       }
@@ -113,7 +113,7 @@ export default defineComponent({
 
       const nameElement = (
         <span
-          class={[styleNS, bgNS.value]}
+          class={`${styleNS} ${bgNS.value}`}
           style={{
             height: `${height.value}px`,
             width: `${width.value}px`,

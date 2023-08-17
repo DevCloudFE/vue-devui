@@ -11,3 +11,4 @@ export * from './middle-num';
 export * from './is';
 export * from './wait';
 export * from './omit';
+export * from './use-namespace';
