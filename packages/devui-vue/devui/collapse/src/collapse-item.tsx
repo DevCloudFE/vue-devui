@@ -1,6 +1,6 @@
 import { defineComponent, computed, inject, Transition, onMounted, shallowRef } from 'vue';
 import { collapseItemProps } from './collapse-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import OpenIcon from './collapse-open-icon';
 import { SELECT_TOKEN } from './const';
 
@@ -24,7 +24,6 @@ export default defineComponent({
     });
     const handlerTitleClick = (e: MouseEvent) => {
       e.preventDefault();
-      e.stopPropagation();
       if (!props.disabled) {
         collapse?.collapseItemClick(props.name);
       }

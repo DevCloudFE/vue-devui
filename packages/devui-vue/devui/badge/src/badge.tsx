@@ -1,6 +1,6 @@
 import { defineComponent, computed } from 'vue';
 import { badgeProps, BadgeProps } from './badge-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './badge.scss';
 
 type IStyleMap = Pick<BadgeProps, 'bgColor' | 'textColor'>;

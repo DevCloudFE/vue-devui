@@ -32,7 +32,8 @@
   &__content {
     margin-top: 8px;
     line-height: 20px;
-    font-size: $devui-text;
+    font-size: $devui-font-size;
+    color: $devui-text;
   }
 
   &__actions {
