@@ -12,6 +12,7 @@
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
     "paths": {
       "hooks/*": ["./devui/shared/hooks/*"],
+      "@devui/shared/components/*": ["./devui/*"],
       "@devui/*": ["./devui/*"],
     },
     "declaration": true,
