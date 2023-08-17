@@ -120,7 +120,7 @@ export default function useMyComposable(myUseParam) {
 ### 样式文件 `my-component-scss`
 
 ```scss
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .devui-my-component {
 

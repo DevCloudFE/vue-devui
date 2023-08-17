@@ -6,7 +6,10 @@ import { MdTransformer } from './.vitepress/plugins/md-transformer';
 
 export default defineConfig({
   resolve: {
-    alias: [{ find: '@devui', replacement: resolve(__dirname, '../devui') }],
+    alias: [
+      { find: '@devui/theme', replacement: resolve(__dirname, '../../devui-theme/src') },
+      { find: '@devui', replacement: resolve(__dirname, '../devui') }
+    ],
   },
   plugins: [vueJsx({}), svgLoader(), MdTransformer()],
   optimizeDeps: {
