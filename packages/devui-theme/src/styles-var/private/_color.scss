@@ -106,6 +106,7 @@ $devui-primary-active: var(--devui-primary-active, $devui-blue-90); // 主要按
 
 $devui-contrast-hover: var(--devui-contrast-hover, #d64a52); // 突出按钮悬停
 $devui-contrast-active: var(--devui-contrast-active, #b12220); // 突出按钮激活
+$devui-contrast-disabled: var(--devui-contrast-disabled, #ffbcba); // 突出按钮禁用
 
 // 状态
 $devui-danger-line: var(--devui-danger-line, $devui-red-50); // 失败边框

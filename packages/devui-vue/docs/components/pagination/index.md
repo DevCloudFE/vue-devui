@@ -160,7 +160,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@devui/styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 /* 配置中的每一项，自定义项建议应用此样式或在此基础上修改 */
 .pagination-config-item {
