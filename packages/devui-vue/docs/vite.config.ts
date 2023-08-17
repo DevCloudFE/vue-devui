@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: '@devui/theme', replacement: resolve(__dirname, '../../devui-theme/src') },
+      { find: '@devui/shared/components', replacement: resolve(__dirname, '../devui') },
       { find: '@devui', replacement: resolve(__dirname, '../devui') }
     ],
   },

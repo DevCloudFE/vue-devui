@@ -20,7 +20,8 @@ const baseConfig = defineConfig({
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: [
-      { find: '@devui/theme', replacement: path.resolve(__dirname, '../../../devui-theme/src') }
+      { find: '@devui/theme', replacement: path.resolve(__dirname, '../../../devui-theme/src') },
+      { find: '@devui/shared/components', replacement: path.resolve(__dirname, '../../../devui') }
     ]
   }
 });
