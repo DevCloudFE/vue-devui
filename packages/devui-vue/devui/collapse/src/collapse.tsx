@@ -1,7 +1,7 @@
 import { defineComponent, provide, reactive, toRefs } from 'vue';
 import { SELECT_TOKEN } from './const';
 import { collapseProps, CollapseContext, CollapseActiveData } from './collapse-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './collapse.scss';
 
 export default defineComponent({

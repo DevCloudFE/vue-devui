@@ -1,5 +1,5 @@
 // 引入主题变量
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-editable-select {
   &-input {

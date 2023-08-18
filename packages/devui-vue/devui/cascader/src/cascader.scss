@@ -1,5 +1,5 @@
 @import '../../style/mixins/flex';
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-cascader {
   @include flex(flex-start);

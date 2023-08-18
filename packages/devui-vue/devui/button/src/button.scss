@@ -1,4 +1,4 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 $devui-btn-padding: var(--devui-btn-padding, 0 20px);
 $devui-btn-common-bg: var(--devui-btn-common-bg, $devui-base-bg);

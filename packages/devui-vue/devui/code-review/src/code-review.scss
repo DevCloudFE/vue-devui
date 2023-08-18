@@ -1,6 +1,6 @@
 @import 'highlight.js/styles/github.css';
 @import 'diff2html/bundles/css/diff2html.min.css';
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-code-review {
   box-sizing: border-box;
@@ -102,6 +102,10 @@
         text-align: center;
       }
 
+      &.comment-icon-hover {
+        background-color: #bfcbf3 !important;
+      }
+
       .expand-icon {
         display: flex;
         align-items: center;
@@ -130,15 +134,12 @@
       line-height: 24px;
     }
 
-    .d2h-file-header {
-      display: none;
-    }
-
     .d2h-file-wrapper {
       border: none;
     }
 
-    .d2h-code-linenumber:after {
+    .d2h-code-linenumber::after,
+    .d2h-code-side-linenumber::after {
       content: '';
     }
 
@@ -150,14 +151,36 @@
       line-break: anywhere;
     }
 
-    .d2h-code-line {
+    .d2h-code-line,
+    .d2h-code-side-line {
       width: 100%;
       padding-left: 0;
       padding-right: 16px;
     }
 
-    &.hide-content {
-      display: none;
+    &.side-by-side {
+      tr td:nth-of-type(3) {
+        border-left: 1px solid #eeeeee;
+      }
+
+      tr.comment-block {
+        td:last-child {
+          border-left: 1px solid #eeeeee;
+        }
+
+        .comment-cell {
+          vertical-align: top;
+        }
+      }
+
+      .d2h-file-side-diff {
+        width: 100%;
+      }
+
+      .d2h-code-side-linenumber {
+        position: static;
+        display: table-cell;
+      }
     }
   }
 

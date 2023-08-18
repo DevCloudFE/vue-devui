@@ -864,6 +864,103 @@ export default defineComponent({
 
 :::
 
+### treeFactory 常用方法
+
+:::demo
+
+```vue
+<template>
+  <d-tree :data="data" ref="treeRef"></d-tree>
+  <d-button variant="solid" size="sm" @click="toggleNode">toggle parent node 1</d-button>
+  <d-button variant="solid" size="sm" class="ml-xs" @click="activeNode">active parent node 1</d-button>
+  <d-button variant="solid" size="sm" class="ml-xs" @click="addNode">add node for node 2</d-button>
+  <d-button size="sm" class="ml-xs" @click="deleteNode">delete node 3</d-button>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const treeRef = ref();
+    const data = ref([
+      {
+        label: 'Parent node 1',
+        id: 'node-1',
+        children: [
+          {
+            label: 'Leaf node 1-1',
+            id: 'node-1-1',
+            children: [{ label: 'Leaf node 1-1-1', id: 'node-1-1-1' }],
+          },
+          { label: 'Leaf node 1-2', id: 'node-1-2' },
+        ],
+      },
+      { label: 'Node 2', id: 'node-2' },
+      { label: 'Node 3', id: 'node-3' },
+    ]);
+
+    const toggleNode = () => {
+      const treeData = treeRef.value.treeFactory.treeData.value;
+      let node;
+      treeData.forEach((item) => {
+        if (item.id === 'node-1') {
+          node = item;
+        }
+      });
+      treeRef.value.treeFactory.toggleNode(node);
+    };
+
+    const activeNode = () => {
+      const treeData = treeRef.value.treeFactory.treeData.value;
+      let node;
+      treeData.forEach((item) => {
+        if (item.id === 'node-1') {
+          node = item;
+        }
+      });
+      treeRef.value.treeFactory.toggleSelectNode(node);
+    };
+
+    const addNode = () => {
+      const treeData = treeRef.value.treeFactory.treeData.value;
+      let node;
+      treeData.forEach((item) => {
+        if (item.id === 'node-2') {
+          node = item;
+        }
+      });
+      treeRef.value.treeFactory.insertBefore(node, { label: 'new node' });
+    };
+
+    const deleteNode = () => {
+      const treeData = treeRef.value.treeFactory.treeData.value;
+      let node;
+      treeData.forEach((item) => {
+        if (item.id === 'node-3') {
+          node = item;
+        }
+      });
+      if (!node) {
+        return;
+      }
+      treeRef.value.treeFactory.removeNode(node);
+    };
+
+    return {
+      treeRef,
+      data,
+      toggleNode,
+      activeNode,
+      addNode,
+      deleteNode,
+    };
+  },
+});
+</script>
+```
+
+:::
+
 ### Tree 参数
 
 | 参数名   | 类型                        | 默认值  | 说明                     | 跳转 Demo             |
