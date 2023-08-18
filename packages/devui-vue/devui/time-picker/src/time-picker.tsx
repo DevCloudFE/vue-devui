@@ -1,11 +1,11 @@
 import { defineComponent, ref, onMounted, watch, SetupContext, Transition, Teleport, withModifiers } from 'vue';
 import { TimePickerProps, timePickerProps } from './time-picker-types';
-import { Icon } from '../../icon';
+import { Icon } from '@devui-vue/shared/components/icon';
 import useTimePicker from './composables/use-time-picker';
 import TimePopup from './components/time-popup/index';
 import DInput from '../../input/src/input';
 import { FlexibleOverlay, Placement } from '../../overlay';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 import './time-picker.scss';
 
@@ -68,10 +68,10 @@ export default defineComponent({
             disabled={props.disabled}
             readonly={props.readonly}
             size={props.size}
-            onFocus={withModifiers(clickVerifyFun, ['stop'])}
+            onFocus={clickVerifyFun}
             v-slots={{
               suffix: () => (
-                <span class="time-input-icon">
+                <span class="time-input-icon" onClick={clickVerifyFun}>
                   <span onClick={clearAll} class="clear-button">
                     {showClearIcon.value ? <Icon size="small" name="close" /> : ''}
                   </span>

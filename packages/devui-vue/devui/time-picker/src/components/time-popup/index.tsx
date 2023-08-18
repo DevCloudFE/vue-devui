@@ -5,7 +5,7 @@ import PopupLine from '../popup-line/index';
 import { Button } from '../../../../button/index';
 import { popupTimeObj } from '../../types';
 import { timePopupProps, TimePopupProps } from './time-popup-types';
-import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { createI18nTranslate } from '../../../../locale/create';
 import './index.scss';
 
