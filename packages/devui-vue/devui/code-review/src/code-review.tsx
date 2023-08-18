@@ -18,17 +18,8 @@ export default defineComponent({
     const ns = useNamespace('code-review');
     const { renderHtml, reviewContentRef, diffFile, onContentClick } = useCodeReview(props, ctx);
     const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
-    const {
-      commentLeft,
-      commentTop,
-      onMouseEnter,
-      onMouseMove,
-      onMouseleave,
-      onCommentMouseLeave,
-      onCommentIconClick,
-      insertComment,
-      removeComment,
-    } = useCodeReviewComment(reviewContentRef, ctx);
+    const { commentLeft, commentTop, mouseEvent, onCommentMouseLeave, onCommentIconClick, insertComment, removeComment } =
+      useCodeReviewComment(reviewContentRef, props, ctx);
 
     onMounted(() => {
       ctx.emit('afterViewInit', { toggleFold, insertComment, removeComment });
@@ -39,21 +30,30 @@ export default defineComponent({
     return () => (
       <div class={ns.b()}>
         <CodeReviewHeader onClick={() => (isFold.value = !isFold.value)} />
-        <div
-          class={[ns.e('content'), { 'hide-content': isFold.value }]}
-          v-html={renderHtml.value}
-          ref={reviewContentRef}
-          onClick={onContentClick}
-          onMouseenter={onMouseEnter}
-          onMousemove={onMouseMove}
-          onMouseleave={onMouseleave}></div>
-        <div
-          class="comment-icon"
-          style={{ left: commentLeft.value + 'px', top: commentTop.value + 'px' }}
-          onClick={onCommentIconClick}
-          onMouseleave={onCommentMouseLeave}>
-          <CommentIcon />
+        <div v-show={!isFold.value}>
+          {props.showBlob ? (
+            ctx.slots.blob?.()
+          ) : (
+            <div
+              class={[ns.e('content'), props.outputFormat]}
+              v-html={renderHtml.value}
+              ref={reviewContentRef}
+              onClick={(e) => {
+                onContentClick(e);
+                onCommentIconClick(e);
+              }}
+              {...mouseEvent}></div>
+          )}
         </div>
+        {props.allowComment && (
+          <div
+            class="comment-icon"
+            style={{ left: commentLeft.value + 'px', top: commentTop.value + 'px' }}
+            onClick={onCommentIconClick}
+            onMouseleave={onCommentMouseLeave}>
+            <CommentIcon />
+          </div>
+        )}
       </div>
     );
   },

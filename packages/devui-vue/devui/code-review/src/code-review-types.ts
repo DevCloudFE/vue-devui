@@ -25,16 +25,28 @@ export const codeReviewProps = {
     type: Boolean,
     default: false,
   },
+  allowComment: {
+    type: Boolean,
+    default: true,
+  },
+  allowExpand: {
+    type: Boolean,
+    default: true,
+  },
+  showBlob: {
+    type: Boolean,
+    default: false,
+  },
   outputFormat: {
     type: String as PropType<OutputFormat>,
     default: 'line-by-line',
   },
   // 展开所有代码行的阈值，低于此阈值全部展开，高于此阈值分向上和向下两个操作展开
-  expandAllThreshold: {
+  expandThreshold: {
     type: Number,
     default: 50,
   },
-  codeLoader: {
+  expandLoader: {
     type: Function as PropType<(interval: Array<number | undefined>, update: (code: string) => void) => void>,
   },
 };

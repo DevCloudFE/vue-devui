@@ -1,12 +1,13 @@
 import { mount } from '@vue/test-utils';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { h } from 'vue';
 import Alert from '../src/alert';
 
 const ns = useNamespace('alert', true);
+const close = useNamespace('close', true);
 
 const baseClass = ns.b();
-const closeClass = ns.e('close-icon');
+const closeClass = close.b();
 const iconClass = ns.e('icon');
 const successIconClass = ns.em('icon', 'success');
 const warningIconClass = ns.em('icon', 'warning');

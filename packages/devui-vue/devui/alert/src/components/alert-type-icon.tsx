@@ -1,5 +1,5 @@
 import type { AlertType } from '../alert-types';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('alert');
 const AlertTypeIcon = (props: { type: AlertType }): JSX.Element => (
