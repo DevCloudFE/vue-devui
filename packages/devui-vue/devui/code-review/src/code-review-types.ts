@@ -33,6 +33,10 @@ export const codeReviewProps = {
     type: Boolean,
     default: true,
   },
+  showBlob: {
+    type: Boolean,
+    default: false,
+  },
   outputFormat: {
     type: String as PropType<OutputFormat>,
     default: 'line-by-line',

@@ -30,12 +30,21 @@ export default defineComponent({
     return () => (
       <div class={ns.b()}>
         <CodeReviewHeader onClick={() => (isFold.value = !isFold.value)} />
-        <div
-          class={[ns.e('content'), props.outputFormat, { 'hide-content': isFold.value }]}
-          v-html={renderHtml.value}
-          ref={reviewContentRef}
-          onClick={onContentClick}
-          {...mouseEvent}></div>
+        <div v-show={!isFold.value}>
+          {props.showBlob ? (
+            ctx.slots.blob?.()
+          ) : (
+            <div
+              class={[ns.e('content'), props.outputFormat]}
+              v-html={renderHtml.value}
+              ref={reviewContentRef}
+              onClick={(e) => {
+                onContentClick(e);
+                onCommentIconClick(e);
+              }}
+              {...mouseEvent}></div>
+          )}
+        </div>
         {props.allowComment && (
           <div
             class="comment-icon"

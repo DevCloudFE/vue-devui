@@ -17,12 +17,15 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
   const commentTop = ref(-100);
   let currentLeftLineNumber = -1;
   let currentRightLineNumber = -1;
+  let lastLineNumberContainer: HTMLElement | null;
 
   const resetLeftTop = () => {
     commentLeft.value = -100;
     commentTop.value = -100;
     currentLeftLineNumber = -1;
     currentRightLineNumber = -1;
+    lastLineNumberContainer?.classList.remove('comment-icon-hover');
+    lastLineNumberContainer = null;
   };
 
   const onMouseMove = (e: MouseEvent) => {
@@ -31,7 +34,12 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     if (trNode) {
       if (outputFormat.value === 'line-by-line') {
         const lineNumberContainer = Array.from(trNode.children)[0] as HTMLElement;
+        if (lastLineNumberContainer !== lineNumberContainer) {
+          lastLineNumberContainer?.classList.remove('comment-icon-hover');
+        }
         if (notEmptyNode(lineNumberContainer)) {
+          lastLineNumberContainer = lineNumberContainer;
+          lineNumberContainer.classList.add('comment-icon-hover');
           const { top, left } = lineNumberContainer.getBoundingClientRect();
           commentLeft.value = left;
           commentTop.value = top;
@@ -50,7 +58,12 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
         const leftLineNumberContainer = tdNodes[0];
         const rightLineNumberContainer = tdNodes[2];
         if (tdIndex < 2) {
+          if (lastLineNumberContainer !== leftLineNumberContainer) {
+            lastLineNumberContainer?.classList.remove('comment-icon-hover');
+          }
           if (notEmptyNode(leftLineNumberContainer)) {
+            lastLineNumberContainer = leftLineNumberContainer;
+            leftLineNumberContainer.classList.add('comment-icon-hover');
             const { top, left } = leftLineNumberContainer.getBoundingClientRect();
             commentLeft.value = left;
             commentTop.value = top;
@@ -59,7 +72,12 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
             resetLeftTop();
           }
         } else {
+          if (lastLineNumberContainer !== rightLineNumberContainer) {
+            lastLineNumberContainer?.classList.remove('comment-icon-hover');
+          }
           if (rightLineNumberContainer && notEmptyNode(rightLineNumberContainer)) {
+            lastLineNumberContainer = rightLineNumberContainer;
+            rightLineNumberContainer.classList.add('comment-icon-hover');
             const { top, left } = rightLineNumberContainer.getBoundingClientRect();
             commentLeft.value = left;
             commentTop.value = top;
@@ -83,7 +101,16 @@ export function useCodeReviewComment(reviewContentRef: Ref<HTMLElement>, props: 
     }
   };
 
-  const onCommentIconClick = () => {
+  const onCommentIconClick = (e: Event) => {
+    if (e) {
+      const composedPath = e.composedPath() as HTMLElement[];
+      const lineNumberBox = composedPath.find(
+        (item) => item.classList?.contains('comment-icon-hover') || item.classList?.contains('comment-icon')
+      );
+      if (!lineNumberBox) {
+        return;
+      }
+    }
     const emitObj: Partial<Record<'left' | 'right', number>> = {};
     if (outputFormat.value === 'line-by-line') {
       emitObj.left = currentLeftLineNumber;

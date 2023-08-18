@@ -15,12 +15,19 @@
       :expand-loader="codeLoader"
       :expand-threshold="8"
       :output-format="outputFormat"
+      :show-blob="showBlob"
       @add-comment="onAddComment"
       @after-view-init="afterViewInit"
       @content-refresh="onContentRefresh"
     >
       <template #headOperate>
         <i :class="isFullscreen ? 'icon-frame-contract' : 'icon icon-frame-expand'" @click="isFullscreen = !isFullscreen"></i>
+      </template>
+      <template #blob>
+        <div class="blob-box">
+          <span>文件内容过长，已收起展示。</span>
+          <span class="blob-box-expand" @click="showBlob = false">仍要展开</span>
+        </div>
       </template>
     </d-code-review>
   </d-fullscreen>
@@ -55,6 +62,7 @@ export default defineComponent({
     let codeReviewIns = {};
     const outputFormat = ref('line-by-line');
     const isFullscreen = ref(false);
+    const showBlob = ref(true);
 
     const comments = [
       {
@@ -201,7 +209,7 @@ export default defineComponent({
       update(content);
     };
 
-    return { diff, outputFormat, isFullscreen, onChange, onAddComment, afterViewInit, onContentRefresh, codeLoader };
+    return { diff, outputFormat, showBlob, isFullscreen, onChange, onAddComment, afterViewInit, onContentRefresh, codeLoader };
   },
 });
 </script>
@@ -255,6 +263,17 @@ export default defineComponent({
   color: var(--devui-light-text, #252b3a);
   background-color: var(--devui-primary);
 }
+.blob-box {
+  padding: 12px 16px;
+  text-align: center;
+  cursor: pointer;
+}
+.blob-box-expand {
+  color: var(--devui-brand, #5e7ce0);
+}
+.blob-box-expand:hover {
+  text-decoration: underline;
+}
 </style>
 ```
 
@@ -267,6 +286,7 @@ export default defineComponent({
 | diff             | `string`                                                            | ''             | 必选，diff 内容                                                                    |
 | fold             | `boolean`                                                           | false          | 可选，是否折叠显示                                                                 |
 | allow-comment    | `boolean`                                                           | true           | 可选，是否支持评论                                                                 |
+| show-blob        | `boolean`                                                           | false          | 可选，是否展示缩略内容，一般大文件或二进制文件等需要展示缩略内容时使用             |
 | output-format    | [OutputFormat](#outputformat)                                       | 'line-by-line' | 可选，diff 展示格式，单栏展示或者分栏展示                                          |
 | allow-expand     | `boolean`                                                           | true           | 可选，是否支持展开非 diff 折叠代码                                                 |
 | expand-threshold | `number`                                                            | 50             | 可选，展开所有代码行的阈值，低于此阈值全部展开，高于此阈值分向上和向下两个操作展开 |
@@ -283,9 +303,10 @@ export default defineComponent({
 
 ### CodeReview 插槽
 
-| 插槽名      | 说明                       |
-| :---------- | :------------------------- |
-| headOperate | 自定义 head 右侧操作区内容 |
+| 插槽名      | 说明                                                     |
+| :---------- | :------------------------------------------------------- |
+| headOperate | 自定义 head 右侧操作区内容                               |
+| blob        | 自定义需要展示的缩略内容，文件为大文件或二进制文件时使用 |
 
 ### 接口定义
 

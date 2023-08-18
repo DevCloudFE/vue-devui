@@ -102,6 +102,10 @@
         text-align: center;
       }
 
+      &.comment-icon-hover {
+        background-color: #bfcbf3 !important;
+      }
+
       .expand-icon {
         display: flex;
         align-items: center;
@@ -134,8 +138,8 @@
       border: none;
     }
 
-    .d2h-code-linenumber:after,
-    .d2h-code-side-linenumber:after {
+    .d2h-code-linenumber::after,
+    .d2h-code-side-linenumber::after {
       content: '';
     }
 
@@ -152,10 +156,6 @@
       width: 100%;
       padding-left: 0;
       padding-right: 16px;
-    }
-
-    &.hide-content {
-      display: none;
     }
 
     &.side-by-side {
