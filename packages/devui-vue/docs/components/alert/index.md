@@ -14,14 +14,19 @@
 
 ```vue
 <template>
-  <div>
-    <d-alert class="mb-2" type="success" :closeable="false">success</d-alert>
-    <d-alert class="mb-2" type="danger" :closeable="false">danger</d-alert>
-    <d-alert class="mb-2" type="warning" :closeable="false">warning</d-alert>
-    <d-alert class="mb-2" type="info" :closeable="false">info</d-alert>
-    <d-alert class="mb-2" type="simple" :closeable="false">simple</d-alert>
+  <div class="alert-demo-1">
+    <d-alert type="success" :closeable="false">success</d-alert>
+    <d-alert type="danger" :closeable="false">danger</d-alert>
+    <d-alert type="warning" :closeable="false">warning</d-alert>
+    <d-alert type="info" :closeable="false">info</d-alert>
+    <d-alert type="simple" :closeable="false">simple</d-alert>
   </div>
 </template>
+<style scoped>
+.alert-demo-1 > * {
+  margin-bottom: 20px;
+}
+</style>
 ```
 
 :::
@@ -34,12 +39,12 @@
 
 ```vue
 <template>
-  <div>
-    <d-alert class="mb-2" type="success" @close="handleClose">success</d-alert>
-    <d-alert class="mb-2" type="danger" @close="handleClose">danger</d-alert>
-    <d-alert class="mb-2" type="warning" @close="handleClose">warning</d-alert>
-    <d-alert class="mb-2" type="info" @close="handleClose">info</d-alert>
-    <d-alert class="mb-2" type="simple" @close="handleClose">simple</d-alert>
+  <div class="alert-demo-2">
+    <d-alert type="success" @close="handleClose">success</d-alert>
+    <d-alert type="danger" @close="handleClose">danger</d-alert>
+    <d-alert type="warning" @close="handleClose">warning</d-alert>
+    <d-alert type="info" @close="handleClose">info</d-alert>
+    <d-alert type="simple" @close="handleClose">simple</d-alert>
   </div>
 </template>
 <script>
@@ -54,6 +59,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+.alert-demo-2 > * {
+  margin-bottom: 20px;
+}
+</style>
 ```
 
 :::
@@ -66,14 +76,19 @@ export default {
 
 ```vue
 <template>
-  <div>
-    <d-alert class="mb-2" type="success" :show-icon="false">success</d-alert>
-    <d-alert class="mb-2" type="danger" :show-icon="false">danger</d-alert>
-    <d-alert class="mb-2" type="warning" :show-icon="false">warning</d-alert>
-    <d-alert class="mb-2" type="info" :show-icon="false">info</d-alert>
-    <d-alert class="mb-2" type="simple" :show-icon="false">simple</d-alert>
+  <div class="alert-demo-3">
+    <d-alert type="success" :show-icon="false">success</d-alert>
+    <d-alert type="danger" :show-icon="false">danger</d-alert>
+    <d-alert type="warning" :show-icon="false">warning</d-alert>
+    <d-alert type="info" :show-icon="false">info</d-alert>
+    <d-alert type="simple" :show-icon="false">simple</d-alert>
   </div>
 </template>
+<style scoped>
+.alert-demo-3 > * {
+  margin-bottom: 20px;
+}
+</style>
 ```
 
 :::
@@ -84,14 +99,19 @@ export default {
 
 ```vue
 <template>
-  <div>
-    <d-alert class="mb-2" type="success" center>success</d-alert>
-    <d-alert class="mb-2" type="danger" center>danger</d-alert>
-    <d-alert class="mb-2" type="warning" center>warning</d-alert>
-    <d-alert class="mb-2" type="info" center>info</d-alert>
-    <d-alert class="mb-2" type="simple" center>simple</d-alert>
+  <div class="alert-demo-4">
+    <d-alert type="success" center>success</d-alert>
+    <d-alert type="danger" center>danger</d-alert>
+    <d-alert type="warning" center>warning</d-alert>
+    <d-alert type="info" center>info</d-alert>
+    <d-alert type="simple" center>simple</d-alert>
   </div>
 </template>
+<style scoped>
+.alert-demo-4 > * {
+  margin-bottom: 20px;
+}
+</style>
 ```
 
 :::

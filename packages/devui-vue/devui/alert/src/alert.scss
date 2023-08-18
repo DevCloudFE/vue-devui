@@ -18,7 +18,6 @@
   }
 
   .#{$devui-prefix}-alert__content {
-    display: flex;
     padding: 0 16px 0 4px;
     word-break: normal;
     word-wrap: break-word;
@@ -46,7 +45,6 @@
 
   &.#{$devui-prefix}-alert--success {
     background-color: $devui-success-bg;
-    border-color: $devui-success-line;
     color: $devui-text;
 
     .#{$devui-prefix}-alert__close-icon {
@@ -58,7 +56,6 @@
 
   &.#{$devui-prefix}-alert--info {
     background-color: $devui-info-bg;
-    border-color: $devui-info-line;
     color: $devui-text;
 
     .#{$devui-prefix}-alert__close-icon {
@@ -70,7 +67,6 @@
 
   &.#{$devui-prefix}-alert--warning {
     background-color: $devui-warning-bg;
-    border-color: $devui-warning-line;
     color: $devui-text;
 
     .#{$devui-prefix}-alert__close-icon {
@@ -82,7 +78,6 @@
 
   &.#{$devui-prefix}-alert--danger {
     background-color: $devui-danger-bg;
-    border-color: $devui-danger-line;
     color: $devui-text;
 
     .#{$devui-prefix}-alert__close-icon {
@@ -93,7 +88,6 @@
   }
 
   &.#{$devui-prefix}-alert--simple {
-    border-color: $devui-line;
     color: $devui-text;
 
     .#{$devui-prefix}-alert__close-icon {
@@ -167,7 +161,7 @@
   margin-right: 4px;
 }
 
-.#{$devui-prefix}-alter--close {
+.#{$devui-prefix}-alert--close {
   margin: 0;
   padding-top: 0;
   padding-bottom: 0;
