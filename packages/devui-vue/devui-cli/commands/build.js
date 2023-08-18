@@ -21,7 +21,8 @@ const baseConfig = defineConfig({
   resolve: {
     alias: [
       { find: '@devui/theme', replacement: path.resolve(__dirname, '../../../devui-theme/src') },
-      { find: '@devui/shared/components', replacement: path.resolve(__dirname, '../../../devui') }
+      { find: '@devui/shared/components', replacement: path.resolve(__dirname, '../../devui') },
+      { find: '@devui', replacement: path.resolve(__dirname, '../../devui') },
     ]
   }
 });
