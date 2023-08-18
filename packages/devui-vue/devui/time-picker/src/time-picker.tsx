@@ -1,6 +1,6 @@
 import { defineComponent, ref, onMounted, watch, SetupContext, Transition, Teleport, withModifiers } from 'vue';
 import { TimePickerProps, timePickerProps } from './time-picker-types';
-import { Icon } from '@devui-vue/shared/components/icon';
+import { Icon } from '../../icon';
 import useTimePicker from './composables/use-time-picker';
 import TimePopup from './components/time-popup/index';
 import DInput from '../../input/src/input';
