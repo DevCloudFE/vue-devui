@@ -8,18 +8,29 @@
 
 ```vue
 <template>
-  <d-code-review
-    :diff="diff"
-    :code-loader="codeLoader"
-    :expand-all-threshold="8"
-    @add-comment="onAddComment"
-    @after-view-init="afterViewInit"
-    @content-refresh="onContentRefresh"
-  >
-    <template #headOperate>
-      <i class="icon icon-frame-expand"></i>
-    </template>
-  </d-code-review>
+  <d-button @click="onChange">{{ outputFormat === 'line-by-line' ? '双栏' : '单栏' }}</d-button>
+  <d-fullscreen v-model="isFullscreen" :z-index="100">
+    <d-code-review
+      :diff="diff"
+      :expand-loader="codeLoader"
+      :expand-threshold="8"
+      :output-format="outputFormat"
+      :show-blob="showBlob"
+      @add-comment="onAddComment"
+      @after-view-init="afterViewInit"
+      @content-refresh="onContentRefresh"
+    >
+      <template #headOperate>
+        <i :class="isFullscreen ? 'icon-frame-contract' : 'icon icon-frame-expand'" @click="isFullscreen = !isFullscreen"></i>
+      </template>
+      <template #blob>
+        <div class="blob-box">
+          <span>文件内容过长，已收起展示。</span>
+          <span class="blob-box-expand" @click="showBlob = false">仍要展开</span>
+        </div>
+      </template>
+    </d-code-review>
+  </d-fullscreen>
 </template>
 
 <script>
@@ -49,6 +60,9 @@ export default defineComponent({
 `;
 
     let codeReviewIns = {};
+    const outputFormat = ref('line-by-line');
+    const isFullscreen = ref(false);
+    const showBlob = ref(true);
 
     const comments = [
       {
@@ -108,6 +122,14 @@ export default defineComponent({
       comments.forEach(({ lineNumber, lineSide, comment }) => {
         codeReviewIns.insertComment(lineNumber, lineSide, comment);
       });
+    };
+
+    const onChange = () => {
+      if (outputFormat.value === 'line-by-line') {
+        outputFormat.value = 'side-by-side';
+      } else {
+        outputFormat.value = 'line-by-line';
+      }
     };
 
     const onAddComment = ({ left, right }) => {
@@ -187,7 +209,7 @@ export default defineComponent({
       update(content);
     };
 
-    return { diff, onAddComment, afterViewInit, onContentRefresh, codeLoader };
+    return { diff, outputFormat, showBlob, isFullscreen, onChange, onAddComment, afterViewInit, onContentRefresh, codeLoader };
   },
 });
 </script>
@@ -241,6 +263,17 @@ export default defineComponent({
   color: var(--devui-light-text, #252b3a);
   background-color: var(--devui-primary);
 }
+.blob-box {
+  padding: 12px 16px;
+  text-align: center;
+  cursor: pointer;
+}
+.blob-box-expand {
+  color: var(--devui-brand, #5e7ce0);
+}
+.blob-box-expand:hover {
+  text-decoration: underline;
+}
 </style>
 ```
 
@@ -248,13 +281,16 @@ export default defineComponent({
 
 ### CodeReview 参数
 
-| 参数名               | 类型                                                                | 默认值         | 说明                                                                               |
-| :------------------- | :------------------------------------------------------------------ | :------------- | :--------------------------------------------------------------------------------- |
-| diff                 | `string`                                                            | ''             | 必选，diff 内容                                                                    |
-| fold                 | `boolean`                                                           | false          | 可选，是否折叠显示                                                                 |
-| output-format        | [OutputFormat](#outputformat)                                       | 'line-by-line' | 可选，diff 展示格式，单栏展示或者分栏展示                                          |
-| expand-all-threshold | `number`                                                            | 50             | 可选，展开所有代码行的阈值，低于此阈值全部展开，高于此阈值分向上和向下两个操作展开 |
-| code-loader          | `(interval: Array<number>, update: (code: string) => void) => void` | --             | 可选，展开代码回调函数，interval 为展开边界，获取展开代码后，执行 update 更新视图  |
+| 参数名           | 类型                                                                | 默认值         | 说明                                                                               |
+| :--------------- | :------------------------------------------------------------------ | :------------- | :--------------------------------------------------------------------------------- |
+| diff             | `string`                                                            | ''             | 必选，diff 内容                                                                    |
+| fold             | `boolean`                                                           | false          | 可选，是否折叠显示                                                                 |
+| allow-comment    | `boolean`                                                           | true           | 可选，是否支持评论                                                                 |
+| show-blob        | `boolean`                                                           | false          | 可选，是否展示缩略内容，一般大文件或二进制文件等需要展示缩略内容时使用             |
+| output-format    | [OutputFormat](#outputformat)                                       | 'line-by-line' | 可选，diff 展示格式，单栏展示或者分栏展示                                          |
+| allow-expand     | `boolean`                                                           | true           | 可选，是否支持展开非 diff 折叠代码                                                 |
+| expand-threshold | `number`                                                            | 50             | 可选，展开所有代码行的阈值，低于此阈值全部展开，高于此阈值分向上和向下两个操作展开 |
+| expand-loader    | `(interval: Array<number>, update: (code: string) => void) => void` | --             | 可选，展开代码回调函数，interval 为展开边界，获取展开代码后，执行 update 更新视图  |
 
 ### CodeReview 事件
 
@@ -267,9 +303,10 @@ export default defineComponent({
 
 ### CodeReview 插槽
 
-| 插槽名      | 说明                       |
-| :---------- | :------------------------- |
-| headOperate | 自定义 head 右侧操作区内容 |
+| 插槽名      | 说明                                                     |
+| :---------- | :------------------------------------------------------- |
+| headOperate | 自定义 head 右侧操作区内容                               |
+| blob        | 自定义需要展示的缩略内容，文件为大文件或二进制文件时使用 |
 
 ### 接口定义
 
