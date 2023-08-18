@@ -1,6 +1,6 @@
-import { ref, unref, watch, nextTick, onUnmounted } from 'vue';
-import { arrow, autoPlacement, computePosition, offset, shift } from '@floating-ui/dom';
-import { FlexibleOverlayProps, Placement, Point, UseOverlayFn, EmitEventFn, Rect } from './flexible-overlay-types';
+import { ref, unref, watch, nextTick, onUnmounted,computed,toRefs } from 'vue';
+import { arrow, autoPlacement, computePosition, offset, shift ,flip} from '@floating-ui/dom';
+import { FlexibleOverlayProps, Placement, Point,  EmitEventFn, Rect } from './flexible-overlay-types';
 import { getScrollParent } from './utils';
 
 function adjustArrowPosition(isArrowCenter: boolean, point: Point, placement: Placement, originRect: Rect): Point {
@@ -24,10 +24,22 @@ function adjustArrowPosition(isArrowCenter: boolean, point: Point, placement: Pl
   return { x, y };
 }
 
-export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn): UseOverlayFn {
+export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn) {
+  const {fitOriginWidth,autoUpdatePosition,align,position,showArrow,shiftOffset,placeStrategy} = toRefs(props);
   const overlayRef = ref<HTMLElement | undefined>();
   const arrowRef = ref<HTMLElement | undefined>();
-  let originParent = null;
+  const showOverlay = ref(false);
+  const overlayWidth = ref(0)
+  const baseOption = {strategy:'fixed'}
+  const baseMiddleware = [offset(props.offset)]
+  let originParent:HTMLElement;
+  let rect:DOMRect
+  let originObserver:ResizeObserver
+  let overlayObserver:ResizeObserver
+
+
+
+
   const updateArrowPosition = (arrowEl: HTMLElement, placement: Placement, point: Point, overlayEl: HTMLElement) => {
     const { x, y } = adjustArrowPosition(props.isArrowCenter, point, placement, overlayEl.getBoundingClientRect());
     const staticSide = {

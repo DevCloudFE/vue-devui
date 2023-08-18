@@ -1,6 +1,7 @@
 import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
 
 export type BasePlacement = 'top' | 'right' | 'bottom' | 'left';
+export type PlaceStrategy = 'most-space' | 'no-space' ;
 
 export const tooltipProps = {
   content: {
@@ -9,7 +10,7 @@ export const tooltipProps = {
   },
   position: {
     type: [String, Array] as PropType<BasePlacement | Array<BasePlacement>>,
-    default: 'top',
+    default: ['top','right','bottom','left'],
   },
   showAnimation: {
     type: Boolean,
@@ -34,6 +35,13 @@ export const tooltipProps = {
   hideAfter: {
     type: Number,
     default: 0,
+  },
+  placeStrategy:{
+    type: String as PropType<PlaceStrategy>,
+    default:'no-space'
+  },
+  scrollElement:{
+    type:[Object,String] as PropType<HTMLElement | 'auto'>
   }
 };
 

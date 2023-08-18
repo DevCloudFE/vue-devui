@@ -1,17 +1,17 @@
-import { computed, defineComponent, provide, ref, Teleport, toRefs, Transition } from 'vue';
+import { defineComponent, provide, ref, Teleport, toRefs, Transition } from 'vue';
 import { FlexibleOverlay } from '../../overlay';
 import { PopperTrigger } from '../../shared/components/popper-trigger';
 import { TooltipProps, tooltipProps } from './tooltip-types';
 import { POPPER_TRIGGER_TOKEN } from '../../shared/components/popper-trigger/src/popper-trigger-types';
 import { useTooltip } from './use-tooltip';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './tooltip.scss';
 
 export default defineComponent({
   name: 'DTooltip',
   props: tooltipProps,
   setup(props: TooltipProps, { slots }) {
-    const { showAnimation, content } = toRefs(props);
+    const { showAnimation, content, placeStrategy, scrollElement } = toRefs(props);
     const origin = ref<HTMLElement>();
     const tooltipRef = ref<HTMLElement>();
     const { visible, placement, positionArr, overlayStyles, onPositionChange, onMouseleave, onMouseenterOverlay } = useTooltip(
@@ -19,9 +19,7 @@ export default defineComponent({
       props
     );
     const ns = useNamespace('tooltip');
-    const className = computed(() => {
-      return [ns.b(), ns.m(placement.value)].join(' ');
-    });
+
     provide(POPPER_TRIGGER_TOKEN, origin);
 
     return () => (
@@ -32,16 +30,18 @@ export default defineComponent({
             <FlexibleOverlay
               v-model={visible.value}
               ref={tooltipRef}
-              class={className.value}
+              class={ns.b()}
               origin={origin.value}
               position={positionArr.value}
+              placeStrategy={placeStrategy.value}
+              scrollElement={scrollElement?.value}
               offset={6}
               show-arrow
               style={overlayStyles.value}
               onPositionChange={onPositionChange}
               onMouseenter={onMouseenterOverlay}
               onMouseleave={onMouseleave}>
-              <span innerHTML={content.value}></span>
+              <span>{content.value}</span>
             </FlexibleOverlay>
           </Transition>
         </Teleport>
