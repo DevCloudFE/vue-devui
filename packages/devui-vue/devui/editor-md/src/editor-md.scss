@@ -16,6 +16,11 @@ $font-family: helvetica, arial, 'PingFang', 'Microsoft YaHei', 'Hiragino Sans GB
     padding: 20px 0;
   }
 
+  .CodeMirror {
+    background: $devui-base-bg;
+    color: $devui-light-text;
+  }
+
   .CodeMirror pre {
     padding: 0 20px;
   }
@@ -103,6 +108,39 @@ $font-family: helvetica, arial, 'PingFang', 'Microsoft YaHei', 'Hiragino Sans GB
       border-bottom-right-radius: $devui-border-radius;
       overflow-y: auto;
       background-color: $devui-base-bg;
+    }
+  }
+
+  &.dp-md-dark {
+    span.cm-comment {
+      color: #428bdd;
+    }
+
+    span.cm-link {
+      color: #ae81ff;
+    }
+
+    span.cm-string {
+      color: #1dc116;
+    }
+
+    code {
+      color: #c7254e;
+    }
+
+    a {
+      color: #526ecc;
+      color: $devui-link;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .CodeMirror-cursor {
+      border-left: 1px solid rgb(231, 225, 225);
+    }
+
+    div.CodeMirror-selected {
+      border-left: 1px solid rgb(231, 225, 225);
     }
   }
 }

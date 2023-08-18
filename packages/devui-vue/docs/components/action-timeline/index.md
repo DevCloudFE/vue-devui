@@ -168,7 +168,7 @@ export default defineComponent({
 
 <style scoped>
 .custom-content {
-  background: #fff;
+  background: var(--devui-base-bg, #ffffff);
   box-shadow: var(--devui-shadow-length-base, 0 1px 4px 0) var(--devui-feedback-overlay-shadow, rgba(37, 43, 58, 0.16));
   border-radius: 4px;
   margin-left: 32px;

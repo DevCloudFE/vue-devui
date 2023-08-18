@@ -1,7 +1,7 @@
 import { onBeforeMount, onBeforeUnmount, onMounted, ref } from "vue";
 
 
-export function useEditorMdTheme(callback: () => void) {
+export function useCodeViewTheme(callback: () => void) {
   const isDarkMode = ref(false);
   let themeService: any;
 

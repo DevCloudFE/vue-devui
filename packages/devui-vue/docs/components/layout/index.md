@@ -22,8 +22,8 @@
 
 <style>
 .dheader, .dfooter {
-  background: #333854;
-  color: #fff;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   text-align: center;
   line-height: 40px;
 }
@@ -32,6 +32,7 @@
   height: 200px;
   line-height: 200px;
   text-align: center;
+  background-color: var(--devui-global-bg-normal, #ffffff);
 }
 </style>
 ```
@@ -55,14 +56,14 @@
 
 <style>
 .dheader, .dfooter {
-  background: #333854;
-  color: #fff;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   text-align: center;
   line-height: 40px;
 }
 
 .daside {
-  background: #f8f8f8;
+  background: var(--devui-area, #f8f8f8);
   width: 100px;
   min-height: 200px;
   display: flex;
@@ -91,8 +92,8 @@
 
 <style>
 .dheader, .dfooter {
-  background: #333854;
-  color: #fff;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   text-align: center;
   line-height: 40px;
 }
@@ -118,7 +119,7 @@
 
 <style>
 .daside {
-  background: #f8f8f8;
+  background: var(--devui-area, #f8f8f8);
   width: 100px;
   min-height: 200px;
   display: flex;
@@ -127,8 +128,8 @@
 }
 
 .dheader, .dfooter {
-  background: #333854;
-  color: #fff;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   text-align: center;
   line-height: 40px;
   min-height: 40px;
@@ -137,6 +138,7 @@
 .main-content {
   line-height: 200px;
   text-align: center;
+  background-color: var(--devui-global-bg-normal, #ffffff);
 }
 </style>
 ```
@@ -177,8 +179,8 @@
   text-align: left;
   position: relative;
   height: 40px;
-  background-color: #333854;
-  color: #fff;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
 }
 
 .dheader-1 {
@@ -186,7 +188,6 @@
   height: 40px;
   display: flex;
   align-items: center;
-  background-color: #333854;
 
   .logo-devui {
     width: 26px;
@@ -203,21 +204,21 @@
 .dcontent-1 {
   padding: 0 40px;
   height: 300px;
-  background-color: #f3f6f8;
+  background-color: var(--devui-global-bg-normal, #ffffff);
 
   .dbreadcrumb {
     margin: 8px 0;
   }
 
   .inner-content {
-    background-color: #fff;
+    background-color: var(--devui-global-bg-normal, #ffffff);
     height: 100%;
   }
 }
 
 .dfooter-1 {
-  background: #333854;
-  color: #fff;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   text-align: center;
   line-height: 40px;
   min-height: 40px;
@@ -297,6 +298,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .daside-2 {
   border-left: 1px solid transparent;
+  background: var(--devui-area, #f8f8f8);
 }
 
 .dheader-2 {
@@ -304,7 +306,8 @@ export default defineComponent({
   height: 40px;
   display: flex;
   align-items: center;
-  background-color: #333854;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
 
   .logo-devui {
     width: 26px;
@@ -320,10 +323,10 @@ export default defineComponent({
 
 .dcontent-2 {
   padding: 0 40px;
-  background-color: #f3f6f8;
+  background-color: var(--devui-global-bg-normal, #ffffff);
 
   .inner-content {
-    background-color: #fff;
+    background-color: var(--devui-global-bg-normal, #ffffff);
     padding: 16px;
     height: 100%;
   }
@@ -334,8 +337,8 @@ export default defineComponent({
 }
 
 .dfooter-2 {
-  color: #fff;
-  background-color: #333854;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   padding: 8px 24px;
 }
 

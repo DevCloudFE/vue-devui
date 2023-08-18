@@ -33,7 +33,7 @@ export default defineComponent({
 <d-input-icon name="calendar" />
 ```
 
-<div style="max-width:300px;border:1px dashed #ccc;padding:20px;display:flex;flex-direction:column;justify-content:space-around;height:300px;">
+<div style="max-width:300px;padding:20px;display:flex;flex-direction:column;justify-content:space-around;height:300px;">
 <d-input-icon modelValue="calendar" name="calendar" />
 <d-input-icon modelValue="code" name="code" />
 <d-input-icon modelValue="close" name="close" />
@@ -54,7 +54,7 @@ export default defineComponent({
 <d-input-icon name="letter-a" icon-bg-color="#afa" icon-color="#33a" />
 ```
 
-<div style="max-width:300px;border:1px dashed #ccc;padding:20px;display:flex;flex-direction:column;justify-content:space-around;height:300px;">
+<div style="max-width:300px;padding:20px;display:flex;flex-direction:column;justify-content:space-around;height:300px;">
 <d-input-icon modelValue="calendar" name="calendar" icon-bg-color="#afa" icon-color="#33a"/>
 <d-input-icon modelValue="code" name="code" icon-bg-color="#afa" icon-color="#33a" />
 <d-input-icon modelValue="close" name="close" icon-bg-color="#afa" icon-color="#33a" />
@@ -71,7 +71,7 @@ export default defineComponent({
 <d-input-icon name="calendar" @iconclick="handleIconClick" />
 ```
 
-<div style="max-width:300px;border:1px dashed #ccc;padding:20px;display:flex;flex-direction:column;justify-content:space-around;">
+<div style="max-width:300px;padding:20px;display:flex;flex-direction:column;justify-content:space-around;">
 <d-input-icon name="calendar" modelValue="click the icon --->" @iconclick="handleIconClick" />
 </div>
 
