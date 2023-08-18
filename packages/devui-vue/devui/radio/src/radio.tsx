@@ -1,6 +1,6 @@
 import { defineComponent, SetupContext } from 'vue';
 import { radioProps, RadioProps } from './radio-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { useRadio } from './use-radio';
 import './radio.scss';
 
@@ -20,7 +20,7 @@ export default defineComponent({
         disabled: isDisabled.value,
         [ns.b()]: true,
         [ns.m('bordered')]: border.value,
-        [ns.m(size.value)]: size.value,
+        [ns.m(size.value)]: border.value,
       };
 
       return (
@@ -31,7 +31,7 @@ export default defineComponent({
               name={radioName.value}
               class={ns.e('input')}
               disabled={isDisabled.value}
-              onChange={handleChange}
+              onClick={handleChange}
               value={props.value}
               checked={isChecked.value}
             />
