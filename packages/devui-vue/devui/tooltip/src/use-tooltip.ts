@@ -3,7 +3,7 @@ import type { Ref } from 'vue';
 import { debounce } from 'lodash';
 import { TooltipProps, BasePlacement, UseTooltipFn } from './tooltip-types';
 
-export const transformOriginMap: Record<BasePlacement, string> = {
+export const TransformOriginMap: Record<string, string> = {
   top: '50% calc(100% + 8px)',
   bottom: '50% -8px',
   left: 'calc(100% + 8px)',
@@ -11,14 +11,15 @@ export const transformOriginMap: Record<BasePlacement, string> = {
 };
 
 export function useTooltip(origin: Ref, props: TooltipProps): UseTooltipFn {
-  const { position, mouseEnterDelay, mouseLeaveDelay, enterable, disabled, hideAfter } = toRefs(props);
+  const { position,content, mouseEnterDelay, mouseLeaveDelay, enterable, disabled, hideAfter } = toRefs(props);
   const visible = ref<boolean>(false);
   const isEnter = ref<boolean>(false);
   const positionArr = computed(() => (typeof position.value === 'string' ? [position.value] : position.value));
   const placement = ref<BasePlacement>(positionArr.value[0]);
   const overlayStyles = computed(() => ({
-    transformOrigin: transformOriginMap[placement.value],
+    transformOrigin: TransformOriginMap[placement.value],
   }));
+  const isDisabled = computed(()=> disabled.value || !Boolean(content.value))
   const enter = debounce(() => {
     isEnter.value && (visible.value = true);
   }, mouseEnterDelay.value);
@@ -27,7 +28,7 @@ export function useTooltip(origin: Ref, props: TooltipProps): UseTooltipFn {
   }, mouseLeaveDelay.value);
 
   const onMouseenter = () => {
-    if (disabled.value) {
+    if (isDisabled.value) {
       return;
     }
     isEnter.value = true;
