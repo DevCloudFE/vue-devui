@@ -5,7 +5,7 @@ import { popoverProps, PopoverProps } from './popover-types';
 import { POPPER_TRIGGER_TOKEN } from '../../shared/components/popper-trigger/src/popper-trigger-types';
 import { usePopover, usePopoverEvent } from './use-popover';
 import PopoverIcon from './popover-icon';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './popover.scss';
 
 export default defineComponent({
@@ -13,7 +13,7 @@ export default defineComponent({
   inheritAttrs: false,
   props: popoverProps,
   emits: ['show', 'hide'],
-  setup(props: PopoverProps, { slots, attrs, emit }) {
+  setup(props: PopoverProps, { slots, attrs, emit, expose }) {
     const { content, popType, position, align, offset, showAnimation } = toRefs(props);
     const origin = ref<HTMLElement>();
     const popoverRef = ref<HTMLElement>();
@@ -22,6 +22,9 @@ export default defineComponent({
     const { overlayStyles } = usePopover(props, visible, placement, origin, popoverRef);
     const ns = useNamespace('popover');
     provide(POPPER_TRIGGER_TOKEN, origin);
+    expose({
+      triggerEl: origin,
+    });
     watch(visible, (newVal) => {
       if (newVal) {
         emit('show');
@@ -46,6 +49,7 @@ export default defineComponent({
               show-arrow
               is-arrow-center={false}
               style={overlayStyles.value}
+              place-strategy="no-space"
               {...attrs}
               onPositionChange={handlePositionChange}
               onMouseenter={onMouseenter}
