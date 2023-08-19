@@ -1,11 +1,13 @@
 import { computed, watch } from 'vue';
 import type { ComputedRef } from 'vue';
 import { NotificationProps, EmitEventFn, VoidFn } from './notification-types';
+import { useNamespace } from '@devui/shared/utils';
 
+const ns= useNamespace('notification')
 export function useNotification(props: NotificationProps): { classes: ComputedRef<Record<string, boolean>> } {
   const classes = computed(() => ({
-    'devui-notification-item-container': true,
-    [`devui-notification-message-${props.type}`]: true,
+    [ns.e('item-container')]:true,
+    [ns.em('message',props.type)]:true,
   }));
 
   return { classes };

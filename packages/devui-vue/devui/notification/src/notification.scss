@@ -22,7 +22,7 @@
   }
 }
 
-.#{$devui-prefix}-notification-item-container {
+.#{$devui-prefix}-notification__item-container {
   position: relative;
   margin: 0 0 8px 0;
   opacity: 0.95;
@@ -45,16 +45,17 @@
   right: 10px;
   cursor: pointer;
 
-  & i.icon {
-    color: $devui-light-text !important;
+  .devui-toast-close-icon {
+    fill: $devui-light-text ;
   }
 }
 
 .#{$devui-prefix}-notification__title {
-  font-size: $devui-font-size-card-title;
-  padding: 0 0 calc(0.5em - 2px) 0;
+  font-size: $devui-font-size-lg;
+  padding: 0 0 4px 0;
   display: block;
   font-weight: 700;
+  line-height: 1.5;
 }
 
 .#{$devui-prefix}-notification__image {
@@ -101,9 +102,21 @@
 .#{$devui-prefix}-notification__message {
   margin-left: 20px;
 
+  &.no-title {
+    margin-left: 0;
+
+    .#{$devui-prefix}-notification__title {
+      padding: 0;
+    }
+
+    .#{$devui-prefix}-notification__content {
+      margin-top: 0;
+    }
+  }
+
   .#{$devui-prefix}-notification__content {
-    font-size: $devui-font-size;
     margin-top: 4px;
+    line-height: 1.5;
   }
 }
 
@@ -112,8 +125,9 @@
 }
 
 .#{$devui-prefix}-notification__message p {
-  font-size: $devui-font-size;
+  margin: 0;
   margin-top: 4px;
+  line-height: 1.5;
 }
 
 .notification-fade {
