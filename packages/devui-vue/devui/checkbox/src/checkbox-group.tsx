@@ -2,7 +2,7 @@ import { defineComponent, SetupContext } from 'vue';
 import { checkboxGroupProps, CheckboxGroupProps } from './checkbox-types';
 import DCheckbox from './checkbox';
 import './checkbox-group.scss';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { useCheckboxGroup } from './use-checkbox';
 
 export default defineComponent({

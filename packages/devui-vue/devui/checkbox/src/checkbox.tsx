@@ -1,6 +1,6 @@
-import { defineComponent, SetupContext } from 'vue';
+import { defineComponent, computed, SetupContext } from 'vue';
 import { checkboxProps, CheckboxProps } from './checkbox-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { useCheckbox } from './use-checkbox';
 import './checkbox.scss';
 
@@ -24,11 +24,11 @@ export default defineComponent({
     } = useCheckbox(props, ctx);
 
     return () => {
-      const wrapperCls = {
-        [ns.e('column-margin')]: direction === 'column',
-        [ns.e('wrap')]: typeof itemWidth !== 'undefined',
-      };
-      const wrapperStyle = itemWidth ? [`width: ${itemWidth}px`] : [];
+      const wrapperCls = computed(() => ({
+        [ns.e('column-margin')]: direction?.value === 'column',
+        [ns.e('wrap')]: typeof itemWidth?.value  !== 'undefined',
+      }));
+      const wrapperStyle = computed(() => (itemWidth ? [`width: ${itemWidth.value}px`] : []));
       const checkboxCls = {
         [ns.b()]: true,
         active: mergedChecked.value,
@@ -66,9 +66,9 @@ export default defineComponent({
       };
 
       return (
-        <div class={wrapperCls} style={wrapperStyle}>
+        <div class={wrapperCls.value} style={wrapperStyle.value}>
           <div class={checkboxCls}>
-            <label title={labelTitle} onClick={handleClick} class={labelCls} style={{ width: itemWidth ? '100%' : 'auto' }}>
+            <label title={labelTitle} onClick={handleClick} class={labelCls} style={{ width: itemWidth?.value ? '100%' : 'auto' }}>
               <input
                 name={(props.name || props.value) as string}
                 class={ns.e('input')}
