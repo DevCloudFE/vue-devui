@@ -93,6 +93,8 @@ export default defineComponent({
 | disabled          | `boolean`                                          | false  | 可选，Tooltip 是否可用                            | [基本用法](#基本用法) |
 | enterable         | `boolean`                                          | true   | 可选，鼠标是否可以进入到 tooltip 中               | [基本用法](#基本用法) |
 | hide-after        | `number`                                           | 0      | 可选，tooltip 出现后自动隐藏延时，单位为 ms       | [基本用法](#基本用法) |
+| place-strategy    | `'most-space' \| 'no-space'`                       |'most-space'| 可选，弹出层渲染策略，选用`no-space`策略，则会在放不下时，按照`position`参数配置的位置自动选择    | |
+| scroll-element    | `HTMLElement \| 'auto'`                            | auto   | 可选，主动传入滚动元素，用于判断是否超出可视区，默认会自动向上查找样式设置了 overflow:auto \| overlay \| hidden 的元素，作为滚动元素       |  |
 
 ### Tooltip 插槽
 

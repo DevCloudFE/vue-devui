@@ -1,7 +1,7 @@
 import { defineComponent, toRefs, withModifiers } from 'vue';
 import { flexibleOverlayProps, FlexibleOverlayProps } from './flexible-overlay-types';
 import { useOverlay } from './use-flexible-overlay';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './flexible-overlay.scss';
 
 export const FlexibleOverlay = defineComponent({
@@ -12,14 +12,15 @@ export const FlexibleOverlay = defineComponent({
   setup(props: FlexibleOverlayProps, { slots, attrs, emit, expose }) {
     const ns = useNamespace('flexible-overlay');
     const { clickEventBubble } = toRefs(props);
-    const { arrowRef, overlayRef, updatePosition } = useOverlay(props, emit);
+    const { arrowRef, overlayRef, styles,showOverlay, updatePosition } = useOverlay(props, emit);
     expose({ updatePosition });
 
     return () =>
-      props.modelValue && (
+      showOverlay.value && (
         <div
           ref={overlayRef}
           class={ns.b()}
+          style={styles.value}
           {...attrs}
           onClick={withModifiers(() => ({}), [clickEventBubble.value ? '' : 'stop'])}
           onPointerup={withModifiers(() => ({}), ['stop'])}>
