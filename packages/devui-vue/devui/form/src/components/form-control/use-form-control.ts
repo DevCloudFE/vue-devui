@@ -1,9 +1,9 @@
 import { computed, inject, toRefs } from 'vue';
-import { FormControlProps, UseFormControl, UseFormControlValidate } from './form-control-types';
+import { FormControlProps, UseFormControlValidate } from './form-control-types';
 import { FormItemContext, FORM_ITEM_TOKEN, LabelData, LABEL_DATA } from '../form-item/form-item-types';
-import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
-export function useFormControl(props: FormControlProps): UseFormControl {
+export function useFormControl(props: FormControlProps) {
   const labelData = inject(LABEL_DATA) as LabelData;
   const ns = useNamespace('form');
   const { feedbackStatus } = toRefs(props);
@@ -20,7 +20,7 @@ export function useFormControl(props: FormControlProps): UseFormControl {
     [ns.em('control-container', 'feedback-error')]: Boolean(feedbackStatus?.value === 'error'),
   }));
 
-  return { controlClasses, controlContainerClasses };
+  return { controlClasses, controlContainerClasses, labelData };
 }
 
 export function useFormControlValidate(): UseFormControlValidate {

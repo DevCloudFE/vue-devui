@@ -1,5 +1,5 @@
 import type { ValidateError, ValidateFieldsError, Rules, Values } from 'async-validator';
-import type { PropType, ExtractPropTypes, InjectionKey, SetupContext } from 'vue';
+import type { PropType, ExtractPropTypes, InjectionKey, SetupContext, Prop } from 'vue';
 import {
   FormItemContext,
   FormRuleItem,
@@ -14,6 +14,8 @@ export type LabelSize = 'sm' | 'md' | 'lg';
 export type FormSize = 'sm' | 'md' | 'lg';
 export type LabelAlign = 'start' | 'center' | 'end';
 export type FormData = Record<string, unknown>;
+export type StyleType = 'default' | 'gray';
+export type AppendToBodyScrollStrategy = 'close' | 'reposition';
 
 export type FormRules = Partial<Record<string, Array<FormRuleItem>>>;
 export interface ValidateFailure {
@@ -67,7 +69,15 @@ export const formProps = {
   hideRequiredMark: {
     type: Boolean,
     default: false,
-  }
+  },
+  styleType: {
+    type: String as PropType<StyleType>,
+    default: 'default',
+  },
+  appendToBodyScrollStrategy: {
+    type: String as PropType<AppendToBodyScrollStrategy>,
+    default: 'reposition',
+  },
 } as const;
 
 export interface UseFieldCollection {
@@ -92,6 +102,8 @@ export interface FormContext extends FormProps {
 }
 
 export const FORM_TOKEN: InjectionKey<FormContext> = Symbol('dForm');
+
+export const STYLE_TOKEN: InjectionKey<StyleType> = Symbol('dForm');
 
 export interface DValidateResult<E = never, F = never> {
   errors: E;
