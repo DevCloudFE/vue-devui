@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
 import { ref, nextTick } from 'vue';
 import DTextarea from '../src/textarea';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
-const ns = useNamespace('textarea', true);
+const ns = useNamespace('textarea');
 
 describe('textarea test', () => {
   it('d-textarea render work', async () => {
@@ -20,7 +20,7 @@ describe('textarea test', () => {
       },
     });
     const textarea = wrapper.find('textarea');
-    expect(textarea.classes()).toContain('devui-textarea');
+    expect(textarea.classes()).toContain(ns.b());
     expect(textarea.element.value).toBe('abc');
 
     await textarea.setValue('def');
@@ -100,12 +100,12 @@ describe('textarea test', () => {
         error: false,
       },
     });
-    expect(wrapper.find('textarea').classes()).not.toContain('devui-textarea--error');
+    expect(wrapper.find('textarea').classes()).not.toContain(ns.m('error'));
 
     await wrapper.setProps({
       error: true,
     });
-    expect(wrapper.find('textarea').classes()).toContain('devui-textarea--error');
+    expect(wrapper.find('textarea').classes()).toContain(ns.m('error'));
   });
 
   it('d-textarea autosize work', async () => {
@@ -138,7 +138,7 @@ describe('textarea test', () => {
       template: `
         <d-textarea v-model="value" show-count />
       `,
-      setup () {
+      setup() {
         return {
           value,
         };
