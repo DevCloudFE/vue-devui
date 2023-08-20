@@ -1,4 +1,4 @@
-import cloneDeep from 'lodash-es/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 import { computed, nextTick, onMounted, reactive, Ref, ref, SetupContext, toRefs, watch } from 'vue';
 import { debounce } from '../../../shared/utils';
 import { EditorMdProps, Mode } from '../editor-md-types';
