@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, ComputedRef, Ref, CSSProperties, InputHTMLAttributes } from 'vue';
+import type { PropType, ExtractPropTypes, ComputedRef, Ref, CSSProperties, InputHTMLAttributes, Prop } from 'vue';
 
 export type ISize = 'lg' | 'md' | 'sm';
 
@@ -23,7 +23,7 @@ export const inputNumberProps = {
     default: -Infinity,
   },
   size: {
-    type: String as PropType<ISize>
+    type: String as PropType<ISize>,
   },
   modelValue: {
     type: Number,
@@ -34,6 +34,9 @@ export const inputNumberProps = {
   reg: {
     type: [RegExp, String] as PropType<RegExp | string>,
     default: '',
+  },
+  formatter: {
+    type: Function as PropType<(val: number | string) => number | string>,
   },
 } as const;
 

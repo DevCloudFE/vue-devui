@@ -15,6 +15,19 @@
       display: flex;
       border-color: $devui-form-control-line-hover;
     }
+
+    .#{$devui-prefix}-input-number__input-box--error:not(.disabled) {
+      border-color: $devui-danger-line;
+    }
+
+    .#{$devui-prefix}-input-number__control-buttons--error:not(.disabled) {
+      border-color: $devui-danger-line;
+      border-left-color: $devui-form-control-line-hover;
+
+      span {
+        background-color: $devui-danger-bg;
+      }
+    }
   }
 
   &:focus-within {
@@ -26,6 +39,15 @@
     .#{$devui-prefix}-input-number__control-buttons:not(.disabled) {
       display: flex;
       border-color: $devui-form-control-line-active;
+    }
+
+    .#{$devui-prefix}-input-number__input-box--error:not(.disabled) {
+      border-color: $devui-danger-line;
+    }
+
+    .#{$devui-prefix}-input-number__control-buttons--error:not(.disabled) {
+      border-color: $devui-danger-line;
+      border-left-color: $devui-form-control-line-hover;
     }
   }
 
@@ -166,5 +188,18 @@
   .#{$devui-prefix}-input-number__control-buttons .control-button .#{$devui-prefix}-input-number__icon-arrow {
     width: 16px;
     height: 16px;
+  }
+
+  .#{$devui-prefix}-input-number__input-box--error:not(.disabled) {
+    border-color: $devui-danger-line;
+  }
+
+  .#{$devui-prefix}-input-number__control-buttons--error:not(.disabled) {
+    border-color: $devui-danger-line;
+    border-left-color: $devui-form-control-line-hover;
+
+    span {
+      background-color: $devui-danger-bg;
+    }
   }
 }

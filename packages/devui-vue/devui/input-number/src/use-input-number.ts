@@ -3,7 +3,7 @@ import type { SetupContext, Ref, CSSProperties } from 'vue';
 import { InputNumberProps, UseEvent, UseRender, IState, UseExpose } from './input-number-types';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { isNumber, isUndefined } from '../../shared/utils';
-import { FORM_TOKEN } from '../../form';
+import { FORM_ITEM_TOKEN, FORM_TOKEN, FormItemContext } from '../../form';
 
 const ns = useNamespace('input-number');
 
@@ -11,6 +11,9 @@ export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender
   const formContext = inject(FORM_TOKEN, undefined);
   const { style, class: customClass, ...otherAttrs } = ctx.attrs;
   const customStyle = { style: style as CSSProperties };
+
+  const formItemContext = inject(FORM_ITEM_TOKEN, undefined) as FormItemContext;
+  const isValidateError = computed(() => formItemContext?.validateState === 'error');
 
   const inputNumberSize = computed(() => props.size || formContext?.size || 'md');
 
@@ -24,6 +27,7 @@ export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender
 
   const controlButtonsClass = computed(() => ({
     [ns.e('control-buttons')]: true,
+    [ns.em('control-buttons', 'error')]: isValidateError.value,
     disabled: props.disabled,
   }));
 
@@ -33,6 +37,7 @@ export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender
 
   const inputInnerClass = computed(() => ({
     [ns.e('input-box')]: true,
+    [ns.em('input-box', 'error')]: isValidateError.value,
     disabled: props.disabled,
   }));
 
@@ -85,7 +90,7 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
 
   const inputVal = computed(() => {
     if (!isUndefined(state.userInputValue)) {
-      return state.userInputValue;
+      return props.formatter ? props.formatter(state.userInputValue ?? 0) : state.userInputValue;
     }
     let currentValue = state.currentValue;
     if (currentValue === '' || isUndefined(currentValue) || Number.isNaN(currentValue)) {
@@ -95,7 +100,7 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
       // todo 小数精度 确认是否应该以正则处理
       currentValue = currentValue.toFixed(numPrecision.value);
     }
-    return currentValue;
+    return props.formatter ? props.formatter(currentValue ?? 0) : currentValue;
   });
 
   const toPrecision = (num: number) => {
@@ -187,7 +192,13 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
   );
 
   const onInput = (event: Event) => {
-    state.userInputValue = (event.target as HTMLInputElement).value;
+    const value = (event.target as HTMLInputElement).value;
+    if (value[0] === '-') {
+      state.userInputValue = '-' + value.substring(1).replace(/[^0-9.]/g, '');
+    } else {
+      state.userInputValue = value.replace(/[^0-9.]/g, '');
+    }
+    inputRef.value.value = props.formatter ? props.formatter(state.userInputValue) : state.userInputValue;
   };
 
   const onChange = (event: Event) => {

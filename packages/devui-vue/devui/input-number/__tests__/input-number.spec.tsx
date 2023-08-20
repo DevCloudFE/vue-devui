@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import DInputNumber from '../src/input-number';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { Form as DForm, FormItem as DFormItem } from '../../form';
 
 const ns = useNamespace('input-number', true);

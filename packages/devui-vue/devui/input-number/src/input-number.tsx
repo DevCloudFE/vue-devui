@@ -1,9 +1,10 @@
-import { defineComponent, toRefs } from 'vue';
+import { defineComponent, toRefs, watch, inject } from 'vue';
 import type { SetupContext } from 'vue';
 import { inputNumberProps, InputNumberProps } from './input-number-types';
 import { IncIcon, DecIcon } from './input-number-icons';
 import { useRender, useEvent, useExpose } from './use-input-number';
 import './input-number.scss';
+import form, { FORM_ITEM_TOKEN, FormItemContext } from '../../form';
 
 export default defineComponent({
   name: 'DInputNumber',
@@ -14,6 +15,14 @@ export default defineComponent({
     const { wrapClass, customStyle, otherAttrs, controlButtonsClass, inputWrapClass, inputInnerClass } = useRender(props, ctx);
     const { inputRef } = useExpose(ctx);
     const { inputVal, minDisabled, maxDisabled, onAdd, onSubtract, onInput, onChange } = useEvent(props, ctx, inputRef);
+    const formItemContext = inject(FORM_ITEM_TOKEN, undefined) as FormItemContext;
+
+    watch(
+      () => props.modelValue,
+      () => {
+        formItemContext?.validate('change').catch(() => {});
+      }
+    );
 
     return () => (
       <div class={wrapClass.value} {...customStyle}>
@@ -35,6 +44,7 @@ export default defineComponent({
             {...otherAttrs}
             onInput={onInput}
             onChange={onChange}
+            onBlur={() => formItemContext?.validate('blur').catch(() => {})}
           />
         </div>
       </div>
