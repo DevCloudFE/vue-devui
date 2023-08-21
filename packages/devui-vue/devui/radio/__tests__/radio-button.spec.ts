@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { ref } from 'vue';
 import DRadioButton from '../src/radio-button';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const nsClass = useNamespace('radio-button', true);
 const baseClass = nsClass.b();

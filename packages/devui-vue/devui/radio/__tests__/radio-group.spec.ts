@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import DRadioGroup from '../src/radio-group';
 import DRadio from '../src/radio';
 import DRadioButton from '../src/radio-button';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('radio-group', false);
 const baseClass = ns.b();
