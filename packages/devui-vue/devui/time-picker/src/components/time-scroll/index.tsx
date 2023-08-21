@@ -2,7 +2,7 @@ import { defineComponent, onBeforeUnmount, onMounted, onUnmounted } from 'vue';
 import type { SetupContext } from 'vue';
 import { TimePickerProps, timePickerProps } from '../../time-picker-types';
 import useTimeScroll from './composables/use-time-scroll';
-import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 import './index.scss';
 

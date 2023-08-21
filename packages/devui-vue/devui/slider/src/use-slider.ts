@@ -89,7 +89,7 @@ export function useSliderEvent(props: SliderProps, ctx: SetupContext): UseSlider
   }
 
   watch(
-    () => props.modelValue,
+    [() => props.modelValue, () => props.max, () => props.min],
     () => {
       currentValue.value = Number(props.modelValue);
 
