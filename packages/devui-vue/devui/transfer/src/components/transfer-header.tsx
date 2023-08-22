@@ -2,7 +2,7 @@ import { defineComponent, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
 import DCheckbox from '../../../checkbox/src/checkbox';
 import { transferHeaderProps, TTransferHeaderProps, transferHeaderState } from '../composables/use-transfer-header';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { createI18nTranslate } from '../../../locale/create';
 
 export default defineComponent({

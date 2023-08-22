@@ -141,20 +141,40 @@ export const transferState = (props: TTransferProps, ctx: SetupContext) => {
    * @param startValue 当前拖拽item的值
    * @param endValue 放开item的值
    */
-  const updateSourceDataHandle = (startValue: TKey, endValue: TKey) => {
-    const { startIndex, endIndex, dragItem, dropItem } = getDargItemAndDropItem(startValue, endValue, 'source');
-    sourceData.value.splice(endIndex, 1, dragItem);
-    sourceData.value.splice(startIndex, 1, dropItem);
+  const updateSourceDataHandle = (startValue: TKey, endValue: TKey, position: number) => {
+    const { startIndex, endIndex, dragItem } = getDargItemAndDropItem(startValue, endValue, 'source');
+    let end = endIndex;
+    if (position === 1) {
+      end = endIndex + 1;
+    }
+    if (startIndex < end) {
+      sourceData.value.splice(end, 0, dragItem);
+      sourceData.value.splice(startIndex, 1);
+    } else {
+      sourceData.value.splice(startIndex, 1);
+      sourceData.value.splice(end, 0, dragItem);
+    }
+    ctx.emit('sourceDragEnd', [...sourceData.value]);
   };
   /**
    * updateTargetDataHandle: 更新target数据
    * @param startValue 当前拖拽item的值
    * @param endValue 放开item的值
    */
-  const updateTargetDataHandle = (startValue: TKey, endValue: TKey) => {
-    const { startIndex, endIndex, dragItem, dropItem } = getDargItemAndDropItem(startValue, endValue, 'target');
-    targetData.value.splice(endIndex, 1, dragItem);
-    targetData.value.splice(startIndex, 1, dropItem);
+  const updateTargetDataHandle = (startValue: TKey, endValue: TKey, position: number) => {
+    const { startIndex, endIndex, dragItem } = getDargItemAndDropItem(startValue, endValue, 'target');
+    let end = endIndex;
+    if (position === 1) {
+      end = endIndex + 1;
+    }
+    if (startIndex < end) {
+      targetData.value.splice(end, 0, dragItem);
+      targetData.value.splice(startIndex, 1);
+    } else {
+      targetData.value.splice(startIndex, 1);
+      targetData.value.splice(end, 0, dragItem);
+    }
+    ctx.emit('targetDragEnd', [...targetData.value]);
   };
 
   onMounted(() => {
