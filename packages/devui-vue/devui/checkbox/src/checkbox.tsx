@@ -26,9 +26,9 @@ export default defineComponent({
     return () => {
       const wrapperCls = computed(() => ({
         [ns.e('column-margin')]: direction?.value === 'column',
-        [ns.e('wrap')]: typeof itemWidth?.value  !== 'undefined',
+        [ns.e('wrap')]: typeof itemWidth?.value !== 'undefined',
       }));
-      const wrapperStyle = computed(() => (itemWidth ? [`width: ${itemWidth.value}px`] : []));
+      const wrapperStyle = computed(() => (itemWidth?.value ? [`width: ${itemWidth.value}px`] : []));
       const checkboxCls = {
         [ns.b()]: true,
         active: mergedChecked.value,
