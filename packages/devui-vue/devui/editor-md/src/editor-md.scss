@@ -111,6 +111,10 @@ $font-family: helvetica, arial, 'PingFang', 'Microsoft YaHei', 'Hiragino Sans GB
   }
 }
 
+.dp-editor-md-preview-container.dp-md-view {
+  overflow-y: auto;
+}
+
 .dp-md-view {
   pre code {
     display: block;
