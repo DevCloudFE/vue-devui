@@ -259,8 +259,8 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
 
           if (imageUploadToServer.value) {
             const callback = ({ name, imgUrl, title }: any) => {
-              editorRef.value.focus();
-              editorRef.value.replaceSelection(`![${name}](${imgUrl} '${title}')`);
+              editorIns.focus();
+              editorIns.replaceSelection(`![${name}](${imgUrl} '${title}')`);
             };
             ctx.emit('imageUpload', { file, callback });
           }
@@ -286,16 +286,20 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     }
   });
 
-  watch(imageUploadToServer, (val: boolean) => {
-    if (toolbars['image'].params) {
-      toolbars['image'].params.imageUploadToServer = val;
-    }
-    if (toolbars['image'].params && !toolbars['image'].params.imageUpload) {
-      toolbars['image'].params.imageUpload = (data: any) => {
-        ctx.emit('imageUpload', data);
+  watch(
+    imageUploadToServer,
+    (val: boolean) => {
+      if (toolbars['image'].params) {
+        toolbars['image'].params.imageUploadToServer = val;
       }
-    }
-  }, { immediate: true });
+      if (toolbars['image'].params && !toolbars['image'].params.imageUpload) {
+        toolbars['image'].params.imageUpload = (data: any) => {
+          ctx.emit('imageUpload', data);
+        };
+      }
+    },
+    { immediate: true }
+  );
 
   watch(hidePreviewView, () => {
     refreshEditorCursor();
