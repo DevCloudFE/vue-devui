@@ -21,7 +21,6 @@
     <d-avatar name="1Avatar"></d-avatar>
   </div>
 </template>
-
 <style>
 .avatar-demo-1 .devui-avatar {
   margin-right: 10px;
@@ -33,7 +32,7 @@
 
 ### 头像的基础配置
 
-头像组件可设置宽度，高度，是否为圆形头像，同时可自定义头像的显示字段，传入自定义图片等。
+头像组件可设置宽度，高度，是否为圆形头像，同时可自定义头像的显示字段，传入自定义图片，图片加载失败控制内容显示等。
 
 :::demo
 
@@ -43,8 +42,30 @@
     <d-avatar name="Avatar" :width="28" :height="28"></d-avatar>
     <d-avatar customText="DevUI" :width="80" :height="80" :isRound="false"></d-avatar>
     <d-avatar imgSrc="/../../assets/logo.svg" :width="100" :height="100" :isRound="false"></d-avatar>
+    <d-avatar :name="name" :imgSrc="src" :width="28" :height="28" @load-error="onLoadError"></d-avatar>
   </div>
 </template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const src = ref('123.com/assets/logo.svg');
+    const name = ref('Avatar');
+
+    const onLoadError = (e) => {
+      console.log(e);
+      src.value = '';
+    }
+    return {
+      src,
+      name,
+      onLoadError
+    };
+  },
+});
+</script>
 
 <style>
 .avatar-demo-2 {
@@ -93,6 +114,11 @@
 | is-round    | `boolean`                  | true   | 可选，是否显示为圆形头像                                                            | [头像的基础配置](#头像的基础配置)         |
 | img-src     | `string`                   | --     | 可选，传入自定义图片作为头像                                                        | [头像的基础配置](#头像的基础配置)         |
 | custom-text | `string`                   | --     | 可选，传入自定义显示文字                                                            | [头像的基础配置](#头像的基础配置)         |
+
+### Avatar 事件
+|  事件  |                   说明                   |       跳转 Demo       |
+| :----: | :--------------------------------------: | :-------------------: |
+| load-error | img加载失败后的事件抛出 | [头像的基础配置](#头像的基础配置) |
 
 ### 其他说明
 

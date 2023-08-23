@@ -1,6 +1,6 @@
 {
   "name": "vue-devui",
-  "version": "1.5.7-hotfix.3",
+  "version": "1.5.12",
   "license": "MIT",
   "description": "DevUI components based on Vite and Vue3",
   "keywords": [
@@ -45,6 +45,7 @@
     "vue": "^3.2"
   },
   "dependencies": {
+    "@babel/helper-hoist-variables": "^7.22.5",
     "@devui-design/icons": "^1.3.0",
     "@floating-ui/dom": "^0.4.4",
     "@types/codemirror": "0.0.97",

@@ -663,6 +663,7 @@ export default defineComponent({
 | show-feedback           | `boolean`                   | false              | 可选，是否展示校验结果反馈图标                                     |                       |
 | disabled                | `boolean`                   | false              | 可选，是否禁用该表单内的所有组件。                                 |                       |
 | size                    | [FormSize](#formsize)       | --                 | 可选，用于控制该表单内组件的尺寸                                   |                       |
+| hide-required-mark      | `boolean`                   | false              | 可选，是否隐藏所有表单项的必选标记                                   |                       |
 
 ### Form 事件
 

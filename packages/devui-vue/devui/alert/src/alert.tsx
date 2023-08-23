@@ -2,7 +2,7 @@ import { defineComponent, ref, Transition, onMounted } from 'vue';
 import AlertCloseIcon from './components/alert-close-icon';
 import AlertTypeIcon from './components/alert-type-icon';
 import { alertProps } from './alert-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './alert.scss';
 
 export default defineComponent({
@@ -47,14 +47,12 @@ export default defineComponent({
                 <AlertTypeIcon type={props.type} />
               </span>
             ) : null}
-            <div class={ns.e('content')}>
-              <span>{ctx.slots.default?.()}</span>
-              {props.closeable ? (
-                <div class={ns.e('close-icon')} onClick={close}>
-                  <AlertCloseIcon />
-                </div>
-              ) : null}
-            </div>
+            <div class={ns.e('content')}>{ctx.slots.default?.()} </div>
+            {props.closeable ? (
+              <div class={ns.e('close-icon')} onClick={close}>
+                <AlertCloseIcon />
+              </div>
+            ) : null}
           </div>
         </Transition>
       ) : null;

@@ -1,7 +1,6 @@
 import { defineComponent, computed, SetupContext } from 'vue';
 import { sliderProps, SliderProps } from './slider-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
-import { isFunction } from '../../shared/utils';
+import { useNamespace, isFunction } from '@devui/shared/utils';
 import { useSliderEvent } from './use-slider';
 import './slider.scss';
 

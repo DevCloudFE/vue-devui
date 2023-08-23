@@ -1,7 +1,7 @@
 import { defineComponent, SetupContext } from 'vue';
 import DRadio from './radio';
 import { radioGroupProps, RadioGroupProps } from './radio-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { useRadioGroup } from './use-radio';
 import './radio-group.scss';
 

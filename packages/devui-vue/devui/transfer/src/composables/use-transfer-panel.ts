@@ -148,8 +148,8 @@ export const transferPanelState = (props: TTransferPanelProps, ctx: SetupContext
    * @param startValue 交换item的值
    * @param endValue 目标交换item的值
    */
-  const updateDataHandle = (startValue: TKey, endValue: TKey) => {
-    ctx.emit(`updateData`, startValue, endValue);
+  const updateDataHandle = (startValue: TKey, endValue: TKey, position: number) => {
+    ctx.emit(`updateData`, startValue, endValue, position);
   };
 
   watchEffect(() => {

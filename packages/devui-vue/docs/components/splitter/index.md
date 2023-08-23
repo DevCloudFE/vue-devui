@@ -238,6 +238,7 @@ export default defineComponent({
 ```vue
 <template>
   <section>
+    <d-button variant="solid" @click="handleOperation" style="margin-bottom: 10px">{{buttonDesc}}</d-button>
     <d-splitter class="splitter-border" style="height: 300px">
       <template v-slot:DSplitterPane>
         <d-splitter-pane size="30%" minSize="20%" :sizeChange="sizeChange">
@@ -246,7 +247,7 @@ export default defineComponent({
             <div>width: 30%, min-width: 20%</div>
           </div>
         </d-splitter-pane>
-        <d-splitter-pane minSize="15%" :collapsible="true" collapseDirection="before">
+        <d-splitter-pane minSize="15%" :collapsible="true" collapseDirection="before" ref="splitterPane">
           <div class="pane-content">
             <h2>Center</h2>
             <div>Specify the folding and retracting direction to fold forward</div>
@@ -269,12 +270,24 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   name: 'DSplitterDemoDirection',
   setup() {
+    const buttonDesc = ref('收起');
+    const splitterPane = ref();
+    const collapsed = ref(false);
     const sizeChange = (size) => {
       console.log(size);
     };
 
+    const handleOperation = () => {
+      splitterPane.value.updateCollapsed();
+      collapsed.value = !collapsed.value;
+      buttonDesc.value = collapsed.value ? '展开' : '收起';
+    };
+
     return {
       sizeChange,
+      buttonDesc,
+      splitterPane,
+      handleOperation,
     };
   },
 });
@@ -320,6 +333,12 @@ export default defineComponent({
 | :--------------- | :------------------------------ | :------------------------------------------ | --------------------- |
 | size-change      | `(size: string) => void`        | 大小变动时，返回改变后的值,像素值或者百分比 | [基本用法](#基本用法) |
 | collapsed-change | `(collapsed: boolean>) => void` | 折叠和展开时，返回当前 pane 是否折叠        | [基本用法](#基本用法) |
+
+### SplitterPane 方法
+
+| 方法名             | 类型                | 描述                           | 跳转 Demo             |
+| :--------------- | :--------------------| :---------------------------- | :--------------------- |
+| updateCollapsed   | `(collapsed?: boolean) => void`    | 更新面板的折叠状态，传入参数可指定面板的折叠状态    | [指定折叠收起方向](#指定折叠收起方向) |
 
 ### Splitter 类型定义
 

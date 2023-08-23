@@ -48,7 +48,7 @@ Vue DevUI 组件库包含 77 个灵活、易用、功能强大的组件。
 </script>
 
 <style lang="scss">
-@import '@devui/styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .flex-center {
   display: flex;

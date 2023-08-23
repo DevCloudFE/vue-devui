@@ -1,5 +1,5 @@
 import { FullscreenProps } from './fullscreen-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 interface CompatibleHTMLElement extends HTMLElement {
   mozRequestFullScreen?: () => void;

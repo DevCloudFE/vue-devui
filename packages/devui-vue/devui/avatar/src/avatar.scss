@@ -1,10 +1,10 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-avatar {
   display: inline-block;
 }
 
-.#{$devui-prefix}-avatar__style {
+.#{$devui-prefix}-avatar--style {
   display: inline-block;
   text-align: center;
   color: $devui-light-text;

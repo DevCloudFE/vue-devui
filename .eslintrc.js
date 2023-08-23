@@ -109,14 +109,12 @@ module.exports = {
     'max-depth': 'off',
     '@typescript-eslint/member-ordering': 'off',
     'array-callback-return': 'off',
+    'import/no-unresolved': 'off',
   },
-  "overrides": [
+  overrides: [
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
-      "parser": "@typescript-eslint/parser"
-    }
-  ]
+      files: ['*.ts', '*.tsx'],
+      parser: '@typescript-eslint/parser',
+    },
+  ],
 };

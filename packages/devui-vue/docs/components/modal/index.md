@@ -176,12 +176,11 @@ export default defineComponent({
 
 ### 关闭前回调
 
-:::demo `before-close`在用户点击关闭按钮或者遮罩层时会被调用，可在完成某些异步操作后，通过`done`参数关闭。
-
+:::demo `before-close`在用户点击关闭按钮或者遮罩层时会被调用，可在完成某些异步操作后，通过`done`参数关闭。`close`在Modal关闭时触发。
 ```vue
 <template>
   <d-button @click="handleClick">打开 modal</d-button>
-  <d-modal v-model="visible" :before-close="beforeClose" style="width: 500px;">
+  <d-modal v-model="visible" :before-close="beforeClose" @close="handleClose" style="width: 500px;">
     <div>name: {{ data.name }}</div>
     <div>age: {{ data.age }}</div>
     <div>address: {{ data.address }}</div>
@@ -216,8 +215,11 @@ export default defineComponent({
         setTimeout(resolve, 1000);
       }).then(done);
     };
+    const handleClose = () => {
+      console.log("Modal关闭")
+    }
 
-    return { visible, data, handleClick, hidden, beforeClose };
+    return { visible, data, handleClick, hidden, beforeClose, handleClose };
   },
 });
 </script>
@@ -286,6 +288,12 @@ export default defineComponent({
 | show-overlay           | `boolean`                            | true   | 可选，是否展示遮罩层                       |                                               |
 | append-to-body         | `boolean`                            | true   | 可选，是否将 Modal 提升到 body 层          |                                               |
 | type                   | success \| failed \| warning \| info | -      | 可选，弹框信息提示                         |
+
+### Modal 事件
+
+| 事件名 | 类型 | 说明              |
+| :----- | :--- | :---------------- |
+| close  | `-`  | Modal 关闭时触发 |
 
 ### Modal 插槽
 

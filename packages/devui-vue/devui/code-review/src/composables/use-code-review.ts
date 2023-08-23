@@ -1,51 +1,39 @@
-import { toRefs, ref, provide, onBeforeMount, watch } from 'vue';
-import type { SetupContext } from 'vue';
+import { toRefs, ref, watch, nextTick } from 'vue';
+import type { SetupContext, Ref } from 'vue';
+import type { DiffFile } from 'diff2html/lib/types';
 import * as Diff2Html from 'diff2html';
-import { CodeReviewInjectionKey } from '../code-review-types';
+import { inBrowser } from '../../../shared/utils/common-var';
 import type { CodeReviewProps } from '../code-review-types';
+import { useCodeReviewExpand } from './use-code-review-expand';
+import { parseDiffCode } from '../utils';
 
 export function useCodeReview(props: CodeReviewProps, ctx: SetupContext) {
-  const { diff, fold, outputFormat } = toRefs(props);
+  const { diff, outputFormat, allowExpand, showBlob } = toRefs(props);
   const renderHtml = ref('');
-  const isFold = ref(fold.value);
-  const diffFile = Diff2Html.parse(diff.value);
+  const reviewContentRef = ref();
+  const diffFile: Ref<DiffFile[]> = ref([]);
+  const { insertExpandButton, onExpandButtonClick } = useCodeReviewExpand(reviewContentRef, props);
 
   const initDiffContent = () => {
-    renderHtml.value = Diff2Html.html(diffFile, {
-      drawFileList: false,
-      matching: 'lines',
-      outputFormat: outputFormat.value,
+    diffFile.value = Diff2Html.parse(diff.value);
+    nextTick(() => {
+      if (inBrowser && !showBlob.value) {
+        parseDiffCode(reviewContentRef.value, diff.value, outputFormat.value);
+        allowExpand.value && insertExpandButton();
+        ctx.emit('contentRefresh', JSON.parse(JSON.stringify(diffFile.value)));
+      }
     });
   };
 
-  const toggleFold = (status?: boolean) => {
-    if (status !== undefined) {
-      isFold.value = status;
-    } else {
-      isFold.value = !isFold.value;
-    }
+  const onContentClick = (e: Event) => {
+    onExpandButtonClick(e);
   };
 
-  watch(fold, (val) => {
-    isFold.value = val;
-  });
+  watch(showBlob, initDiffContent);
 
-  watch(isFold, () => {
-    if (!isFold.value && renderHtml.value === '') {
-      initDiffContent();
-    }
-    ctx.emit('foldChange', isFold.value);
-  });
+  watch(outputFormat, initDiffContent);
 
-  onBeforeMount(() => {
-    if (!isFold.value) {
-      initDiffContent();
-    }
-  });
+  watch(diff, initDiffContent, { immediate: true });
 
-  provide(CodeReviewInjectionKey, { diffInfo: diffFile[0], isFold, rootCtx: ctx });
-
-  ctx.expose({ toggleFold });
-
-  return { renderHtml, isFold };
+  return { renderHtml, reviewContentRef, diffFile, onContentClick };
 }

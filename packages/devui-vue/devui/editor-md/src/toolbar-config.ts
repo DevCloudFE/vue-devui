@@ -181,7 +181,6 @@ class ToolBarHandler {
     const stopEventPropagation = (e: any): void => {
       e.stopPropagation();
     };
-
     if (typeof document !== 'undefined' && params.imageUploadToServer) {
       let imageUploader = document.getElementById('markdown_image_upload_input');
       if (imageUploader) {
@@ -201,7 +200,7 @@ class ToolBarHandler {
       };
       imageUploader.onchange = (e: any) => {
         const file = e.target['files'][0];
-        params.imageUpload.emit({ file, callback });
+        params.imageUpload({ file, callback });
       };
       imageUploader.click();
     } else {
@@ -391,7 +390,8 @@ export const DEFAULT_TOOLBARS: Record<string, IToolbarItemConfig> = {
     type: 'button',
     icon: IMAGE_ICON,
     shortKey: 'Ctrl+G',
-    handler: ToolBarHandler.link,
+    params: { imageUploadToServer: false },
+    handler: ToolBarHandler.image,
   },
   file: {
     id: 'file',

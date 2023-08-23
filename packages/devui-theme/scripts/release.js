@@ -27,8 +27,10 @@ async function copyStylesVar() {
 const extendThemePath = path.resolve(__dirname, '../src/theme-collection/extend-theme.scss');
 const extendThemeVuePath = path.resolve(__dirname, '../src/theme-collection/extend-theme-vue.scss');
 async function copyExtendTheme() {
-  await shelljs.cp('-R', extendThemePath, outputDir);
-  await shelljs.cp('-R', extendThemeVuePath, outputDir);
+  const extendThemeDir = path.resolve(__dirname, '../build/theme-collection');
+  await shelljs.mkdir(extendThemeDir);
+  await shelljs.cp('-R', extendThemePath, extendThemeDir);
+  await shelljs.cp('-R', extendThemeVuePath, extendThemeDir);
 }
 
 const typingsPath = path.resolve(__dirname, '../typings');
