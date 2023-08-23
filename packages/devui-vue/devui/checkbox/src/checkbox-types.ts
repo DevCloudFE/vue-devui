@@ -36,7 +36,8 @@ const commonProps = {
     default: undefined,
   },
   size: {
-    type: String as PropType<Size>
+    type: String as PropType<Size>,
+    default: 'md'
   },
 } as const;
 
@@ -142,8 +143,8 @@ export type UseCheckboxFn = {
   mergedIsShowTitle: ComputedRef<boolean | undefined>;
   mergedShowAnimation: ComputedRef<boolean>;
   mergedColor: ComputedRef<string | undefined>;
-  itemWidth: number | undefined;
-  direction: string | undefined;
+  itemWidth: Ref<number | undefined> | undefined;
+  direction: Ref<string | undefined> | undefined;
   size: ComputedRef<string>;
   border: ComputedRef<boolean>;
   handleClick: (event: Event) => void;

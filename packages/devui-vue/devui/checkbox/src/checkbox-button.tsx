@@ -1,6 +1,6 @@
 import { defineComponent, SetupContext } from 'vue';
 import { checkboxProps, CheckboxProps } from './checkbox-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { useCheckbox, useCheckboxButton } from './use-checkbox';
 import './checkbox-button.scss';
 
