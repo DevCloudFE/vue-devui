@@ -1,6 +1,6 @@
 import { defineComponent, renderSlot, useSlots, SetupContext } from 'vue';
 import { SwitchProps, switchProps } from './switch-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { useSwitch } from './use-switch';
 import './switch.scss';
 

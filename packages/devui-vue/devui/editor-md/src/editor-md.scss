@@ -105,6 +105,14 @@ $font-family: helvetica, arial, 'PingFang', 'Microsoft YaHei', 'Hiragino Sans GB
       background-color: $devui-base-bg;
     }
   }
+
+  .CodeMirror-empty pre.CodeMirror-placeholder.CodeMirror-line-like {
+    color: $devui-line;
+  }
+}
+
+.dp-editor-md-preview-container.dp-md-view {
+  overflow-y: auto;
 }
 
 .dp-md-view {

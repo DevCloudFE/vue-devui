@@ -6,7 +6,7 @@ import DSearch from '../../../search/src/search';
 import DIcon from '../../../icon/src/icon';
 import { TKey } from '../transfer-types';
 import { transferBodyProps, TTransferBodyProps, transferBodyState } from '../composables/use-transfer-body';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import '../transfer.scss';
 import { createI18nTranslate } from '../../../locale/create';
 
@@ -99,7 +99,6 @@ export default defineComponent({
             class={{
               [ns.em('panel', 'body-list-item')]: true,
               [ns.em('panel', 'body-list-drag-dragging')]: dragHighlight.value === item.value,
-              [ns.em('panel', 'body-list-drag-over')]: isEqual && dropPosition.value === 0,
               [ns.em('panel', 'body-list-drag-over-top')]: isEqual && dropPosition.value === -1,
               [ns.em('panel', 'body-list-drag-over-bottom')]: isEqual && dropPosition.value === 1,
             }}

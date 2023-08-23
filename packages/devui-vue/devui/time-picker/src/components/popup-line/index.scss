@@ -1,6 +1,6 @@
-@import '../../../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
-.#{$devui-prefix}-time-list {
+.#{$devui-prefix}-popup-line {
   width: 100%;
   height: 256px;
   border-bottom: 1px solid $devui-dividing-line;

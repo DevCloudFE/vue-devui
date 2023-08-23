@@ -191,7 +191,7 @@ export const transferBodyState = (props: TTransferBodyProps, ctx: SetupContext) 
     if (props.drop && typeof props.drop === 'function') {
       props.drop(event, item);
     }
-    ctx.emit('updateDataPosition', dragHighlight.value, item.value);
+    ctx.emit('updateDataPosition', dragHighlight.value, item.value, dropPosition.value);
   };
   /**
    * dragendHandle: 拖拽完成事件处理函数

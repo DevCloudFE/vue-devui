@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { ref, nextTick } from 'vue';
 import DTransfer from '../src/transfer';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 jest.mock('../../locale/create', () => ({
   createI18nTranslate: () => jest.fn(),

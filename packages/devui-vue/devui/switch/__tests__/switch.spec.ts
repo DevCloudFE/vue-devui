@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { ref, nextTick } from 'vue';
 import DSwitch from '../src/switch';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('switch', true);
 const notDotNs = useNamespace('switch', false);

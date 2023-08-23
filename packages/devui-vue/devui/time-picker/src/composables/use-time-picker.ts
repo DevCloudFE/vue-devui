@@ -81,7 +81,7 @@ export default function useTimePicker(hh: Ref, mm: Ref, ss: Ref, format: string,
   };
 
   const clickVerifyFun = () => {
-    if (props.disabled || props.readonly) {
+    if (props.disabled) {
       return;
     }
     mouseInputFun();
