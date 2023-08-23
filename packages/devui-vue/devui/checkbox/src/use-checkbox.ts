@@ -60,8 +60,7 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
     ctx.emit('update:modelValue', current);
     ctx.emit('change', current);
   };
-  const handleClick = ($event: Event) => {
-    $event.stopPropagation();
+  const handleClick = () => {
     canChange(!mergedChecked.value, props.label).then((res) => res && toggle());
   };
 
