@@ -3,7 +3,7 @@ import { ref, reactive, nextTick } from 'vue';
 import DSelect from '../src/select';
 import { Form as DForm, FormItem as DFormItem } from '../../form';
 import { Button } from '../../button';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('select', true);
 const notDotNs = useNamespace('select');

@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import { ref, nextTick, reactive } from 'vue';
 import DSelect from '../src/select';
 import DOption from '../src/components/option';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('select', true);
 const notDotNs = useNamespace('select');
