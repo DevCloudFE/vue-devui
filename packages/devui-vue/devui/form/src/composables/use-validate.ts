@@ -1,7 +1,11 @@
 import type { Rules, Values } from 'async-validator';
 import AsyncValidator from 'async-validator';
 import type { UseValidate } from '../form-types';
+import {  getCurrentInstance } from 'vue';
+import { createI18nTranslate } from '../../../locale/create';
 
+const app = getCurrentInstance();
+const t = createI18nTranslate('DForm', app);
 export default function useValidate(): UseValidate {
 
   // 校验函数
@@ -16,13 +20,13 @@ export default function useValidate(): UseValidate {
     if(res.min !== undefined) {
       res = {
         ...res,
-        message: res.message ?? `最小值为${res.min}`,
+        message: res.message ?? `${t('minValue')}${res.min}`,
         asyncValidator: (r, val) => {
           return new Promise((resolve, reject) => {
             if(val < res.min) {
-              reject('最小值为' + res.min);
+              reject(t('minValue') + res.min);
             }else {
-              resolve('校验通过');
+              resolve(t('validSuccess'));
             }
           });
         }
@@ -32,13 +36,13 @@ export default function useValidate(): UseValidate {
     if(res.max !== undefined) {
       res = {
         ...res,
-        message: res.message ?? `最大值为${res.max}`,
+        message: res.message ?? `${t('maxValue')}${res.max}`,
         asyncValidator: (r, val) => {
           return new Promise((resolve, reject) => {
             if(val > res.max) {
-              reject('最大值为' + res.max);
+              reject(t('maxValue') + res.max);
             }else {
-              resolve('校验通过');
+              resolve(t('validSuccess'));
             }
           });
         }
@@ -49,7 +53,7 @@ export default function useValidate(): UseValidate {
       res = {
         ...res,
         max: res.maxlength,
-        message: res.message ?? `最大长度为${res.maxlength}`
+        message: res.message ?? `${t('maxLength')}${res.maxlength}`
       };
       delete res.maxlength;
       delete res.asyncValidator;
@@ -59,7 +63,7 @@ export default function useValidate(): UseValidate {
       res = {
         ...res,
         min: res.minlength,
-        message: res.message ?? `最小长度为${res.minlength}`
+        message: res.message ?? `${t('minLength')}${res.minlength}`
       };
       delete res.minlength;
       delete res.asyncValidator;
@@ -69,13 +73,13 @@ export default function useValidate(): UseValidate {
     if(res.requiredTrue !== undefined) {
       res = {
         ...res,
-        message: res.message ?? `必须为true值`,
+        message: res.message ?? `${t('isTrue')}`,
         asyncValidator: (r, val) => {
           return new Promise((resolve, reject) => {
             if(!val) {
-              reject('必须为true值');
+              reject(t('isTrue'));
             }else {
-              resolve('校验通过');
+              resolve(t('validSuccess'));
             }
           });
         }
@@ -85,7 +89,7 @@ export default function useValidate(): UseValidate {
       res = {
         ...res,
         type: 'email',
-        message: res.message ?? '邮箱格式不正确'
+        message: res.message ?? t('errorEmail')
       };
       delete res.asyncValidator;
     }
@@ -93,7 +97,7 @@ export default function useValidate(): UseValidate {
       res = {
         ...res,
         type: 'pattern',
-        message: res.message ?? '正则不匹配'
+        message: res.message ?? t('errorRegular')
       };
       delete res.asyncValidator;
     }
@@ -101,13 +105,13 @@ export default function useValidate(): UseValidate {
       res = {
         ...res,
         type: 'string',
-        message: res.message ?? '不能全为空格',
+        message: res.message ?? t('notOnlySpace'),
         asyncValidator: (r, val) => {
           return new Promise((resolve, reject) => {
             if(val.trim() === '') {
-              reject('不能全为空格');
+              reject(t('notOnlySpace'));
             }else {
-              resolve('校验通过');
+              resolve(t('validSuccess'));
             }
           });
         }

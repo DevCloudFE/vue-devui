@@ -1,3 +1,5 @@
+import { t } from '../utils';
+
 type TProps = {
   onSelected?: (date: Date) => void;
   disabled?: boolean;
@@ -11,7 +13,7 @@ const TodayDefault = (props: TProps): JSX.Element => {
         class="today-button"
         disabled={disabled}
         onClick={disabled ? undefined : () => onSelected(new Date())}
-      >今天</button>
+      >{t('today')}</button>
     </div>
   );
 };

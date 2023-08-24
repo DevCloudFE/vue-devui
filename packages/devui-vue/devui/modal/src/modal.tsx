@@ -1,4 +1,4 @@
-import { computed, defineComponent, nextTick, ref, Teleport, toRefs, Transition, watch } from 'vue';
+import { computed, defineComponent, nextTick, ref, Teleport, toRefs, Transition, watch, getCurrentInstance } from 'vue';
 import { modalProps, ModalProps, ModalType } from './modal-types';
 import { Icon } from '../../icon';
 import { FixedOverlay } from '../../overlay';
@@ -8,6 +8,7 @@ import DModalHeader from './components/header';
 import DModalBody from './components/body';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './modal.scss';
+import { createI18nTranslate } from '../../locale/create';
 
 interface TypeList {
   type: ModalType;
@@ -22,6 +23,8 @@ export default defineComponent({
   props: modalProps,
   emits: ['update:modelValue', 'close'],
   setup(props: ModalProps, { slots, attrs, emit }) {
+    const app = getCurrentInstance();
+    const t = createI18nTranslate('DModal', app);
     const ns = useNamespace('modal');
     const { modelValue, title, showClose, showOverlay, appendToBody, closeOnClickOverlay, keepLast } = toRefs(props);
     const { execClose } = useModal(props, emit);
@@ -42,30 +45,29 @@ export default defineComponent({
         });
       }
     });
-
     const renderType = () => {
       const typeList: TypeList[] = [
         {
           type: 'success',
-          text: '成功',
+          text: t('success'),
           icon: 'right-o',
           color: 'var(--devui-success)',
         },
         {
           type: 'failed',
-          text: '错误',
+          text: t('error'),
           icon: 'error-o',
           color: 'var(--devui-danger)',
         },
         {
           type: 'warning',
-          text: '警告',
+          text: t('warning'),
           icon: 'warning-o',
           color: 'var(--devui-warning)',
         },
         {
           type: 'info',
-          text: '信息',
+          text: t('info'),
           icon: 'info-o',
           color: 'var(--devui-info)',
         },

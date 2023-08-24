@@ -5,6 +5,7 @@ import DIcon from '../../icon/src/icon';
 import './mention.scss';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { debounce } from 'lodash';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DMention',
@@ -25,6 +26,7 @@ export default defineComponent({
     const suggestionsDom = ref<HTMLDivElement>();
     const loading = computed(() => props.loading);
     const instance = getCurrentInstance();
+    const t = createI18nTranslate('DMention', instance);
 
     const handleUpdate = debounce((val: string) => {
       if (props.trigger.includes(val[0])) {
@@ -137,7 +139,7 @@ export default defineComponent({
           <d-textarea v-model={textContext.value} onUpdate={handleUpdate} onFocus={handleFocus}></d-textarea>
           {showSuggestions.value ? (
             loading.value ? (
-              <div class={[`${ns.e('suggestions')} ${ns.e('suggestions-loading')}`]}>加载中... </div>
+              <div class={[`${ns.e('suggestions')} ${ns.e('suggestions-loading')}`]}>{t('loading')}</div>
             ) : (
               <div
                 class={ns.e('suggestions')}

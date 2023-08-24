@@ -29,7 +29,7 @@ export default defineComponent({
     const t = createI18nTranslate('DTagInput', app);
 
     const ns = useNamespace('tag-input');
-
+    
     const selectedTags = ref<Array<Suggestion>>([]);
     watch(() => props.modelValue, () => {
       selectedTags.value = props.modelValue;
@@ -215,7 +215,7 @@ export default defineComponent({
       });
 
       const noDataTplCls = `${ns.e('suggestion-list__item')} ${ns.e('suggestion-list__no-data')}`;
-      const noDataTpl = <li class={noDataTplCls}>{props.noData}</li>;
+      const noDataTpl = <li class={noDataTplCls}>{props.noData || t('noData')}</li>;
 
       return <Teleport to="body">
         <Transition name="fade">

@@ -215,6 +215,10 @@ export default defineComponent({
     watch(view?.value as IViewConfigs, () => {
       resetAxis();
     });
+    watch(axisConfigs?.value as IAxisConfigs, () => {
+      context.value.clearRect(0,0,view?.value?.width,view?.value?.width)
+      resetAxis();
+    });
 
   },
   render() {
