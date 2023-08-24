@@ -20,7 +20,7 @@ export class MDRenderService {
       return '';
     }
   }) as any;
-  private baseUrl: string = '';
+  private baseUrl = '';
   private breaks = true;
   private renderParse: Function | undefined;
 
@@ -93,7 +93,7 @@ export class MDRenderService {
     plugins.forEach(item => {
       const { plugin, opts } = item;
       this.mdt.use(plugin, opts);
-    })
+    });
   }
 
   private onIgnoreTagAttr(tag: string, name: string, value: string, isWhiteAttr: boolean) {
@@ -115,7 +115,7 @@ export class MDRenderService {
         return `<${p1} id="${p2}-${headerRecord.get(p2)}">`;
       } else {
         headerRecord.set(p2, 0);
-        return `<${p1} id="${p2}">`
+        return `<${p1} id="${p2}">`;
       }
     });
   }
@@ -142,7 +142,7 @@ export class MDRenderService {
           right: true
         }),
       },
-    })
+    });
 
     setTimeout(() => {
       refreshMermaid();
@@ -155,7 +155,7 @@ export class MDRenderService {
     if (mdRules) {
       Object.keys(mdRules).forEach(rule => {
         this.mdt[rule].set(mdRules[rule]);
-      })
+      });
     }
   }
 }

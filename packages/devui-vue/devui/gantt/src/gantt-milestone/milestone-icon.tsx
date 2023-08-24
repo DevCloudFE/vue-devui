@@ -209,4 +209,4 @@ export const MilestoneIcon = () => (
       </g>
     </g>
   </svg>
-)
+);
