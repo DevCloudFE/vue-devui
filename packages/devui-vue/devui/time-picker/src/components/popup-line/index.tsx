@@ -4,15 +4,15 @@ import { usePopupLine } from './composables/use-popup-line';
 import { ArrType, TimeListItem } from '../../types';
 import { popupLineProps, PopupLineProps } from './popup-line-types';
 import TimeScroll from '../time-scroll';
-import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './index.scss';
 
 export default defineComponent({
-  name: 'DTimeList',
+  name: 'DPopupLine',
   props: popupLineProps,
   emits: ['change'],
   setup(props: PopupLineProps, ctx: SetupContext) {
-    const ns = useNamespace('time-list');
+    const ns = useNamespace('popup-line');
     const timeListDom = ref<Element>();
     const { getNewTime, activeTimeFun, resetTimeValue, resetScrollTop } = usePopupLine(
       props.hourList as Array<ArrType>,

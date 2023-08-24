@@ -1,4 +1,4 @@
-@import '../../../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-scroll-box {
   width: 100%;
@@ -11,6 +11,7 @@
   }
 
   .box-content {
+    position: static;
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;

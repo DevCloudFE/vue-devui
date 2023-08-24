@@ -391,6 +391,7 @@ export default defineComponent({
 | before-change | `Function / Promise`         | --    | 可选，radio 切换前的回调函数，<br>返回 false 可以阻止 radio 切换 | [回调切换](#radio-根据条件终止切换操作) |
 | border        | `boolean`                    | false | 可选， 是否有边框                                                | [边框](#尺寸和边框)                     |
 | size          | [IRadioSize](#iradiosize)    | md    | 可选， radio 尺寸，只有在 border 属性存在时生效                  | [尺寸](#尺寸和边框)                     |
+| can-cancel-select | `boolean`    | false    | 可选， 选中后，再次点击是否可取消选中                  |                      |
 
 ### Radio 事件
 

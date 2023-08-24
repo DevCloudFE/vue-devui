@@ -3,7 +3,7 @@ import { reactive, ref, nextTick } from 'vue';
 import DCheckboxGroup from '../src/checkbox-group';
 import DCheckbox from '../src/checkbox';
 import DCheckboxButton from '../src/checkbox-button';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('checkbox', true);
 const baseClass = ns.b();

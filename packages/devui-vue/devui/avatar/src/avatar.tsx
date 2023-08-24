@@ -8,7 +8,8 @@ import './avatar.scss';
 export default defineComponent({
   name: 'DAvatar',
   props: avatarProps,
-  setup(props: AvatarProps) {
+  emits: ['loadError'],
+  setup(props: AvatarProps, ctx) {
     const { name, width, height, customText, gender, imgSrc, isRound } = toRefs(props);
     const isNobody = ref<boolean>(true);
     const isErrorImg = ref<boolean>(false);
@@ -71,8 +72,9 @@ export default defineComponent({
       getBackgroundColor(nameValue.substr(0, 1));
     };
 
-    const showErrorAvatar = (): void => {
+    const showErrorAvatar = (e: Event): void => {
       isErrorImg.value = true;
+      ctx.emit('loadError', e);
     };
 
     const calcValues = (nameInput: string): void => {
@@ -142,7 +144,7 @@ export default defineComponent({
           <AvatarNoBodyIcon width={width.value} height={height.value} />
         </span>
       );
-      const noBody = (!imgSrc.value && isNobody.value) || isErrorImg.value ? noBodyElement : null;
+      const noBody = (!imgSrc.value && isNobody.value) || (imgSrc.value && isErrorImg.value) ? noBodyElement : null;
       return (
         <span class={ns.b()}>
           {hasImgSrc}
