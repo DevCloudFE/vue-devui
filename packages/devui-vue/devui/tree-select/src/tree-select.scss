@@ -8,6 +8,29 @@ $tree-select-item-font-size: 16px;
 .#{$devui-prefix}-tree-select {
   position: relative;
   width: 100%;
+
+  svg.svg-icon path {
+    fill: $devui-icon-text;
+  }
+
+  svg.svg-icon rect {
+    stroke: $devui-icon-text;
+  }
+
+  &.#{$devui-prefix}-tree__node--open:not(.#{$devui-prefix}-tree-node__customIcon) {
+    & > .#{$devui-prefix}-tree__node-content svg.svg-icon path {
+      fill: $devui-icon-fill-active;
+    }
+
+    & > .#{$devui-prefix}-tree__node-content svg.svg-icon rect {
+      stroke: $devui-icon-fill-active;
+    }
+
+    & > .#{$devui-prefix}-tree__node-content svg.svg-icon.svg-icon-close rect:last-child {
+      stroke: none;
+      fill: $devui-icon-fill-active;
+    }
+  }
 }
 
 .#{$devui-prefix}-tree-select-disabled {

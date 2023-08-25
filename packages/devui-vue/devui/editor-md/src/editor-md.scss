@@ -16,6 +16,11 @@ $font-family: helvetica, arial, 'PingFang', 'Microsoft YaHei', 'Hiragino Sans GB
     padding: 20px 0;
   }
 
+  .CodeMirror {
+    background: $devui-base-bg;
+    color: $devui-light-text;
+  }
+
   .CodeMirror pre {
     padding: 0 20px;
   }

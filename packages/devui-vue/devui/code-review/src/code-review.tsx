@@ -9,6 +9,7 @@ import { useCodeReview } from './composables/use-code-review';
 import { useCodeReviewFold } from './composables/use-code-review-fold';
 import { useCodeReviewComment } from './composables/use-code-review-comment';
 import './code-review.scss';
+import { useTheme } from '@devui/shared/utils/useTheme';
 
 export default defineComponent({
   name: 'DCodeReview',
@@ -20,7 +21,7 @@ export default defineComponent({
     const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
     const { commentLeft, commentTop, mouseEvent, onCommentMouseLeave, onCommentIconClick, insertComment, removeComment } =
       useCodeReviewComment(reviewContentRef, props, ctx);
-
+    const { isDarkMode } = useTheme(() => {});
     onMounted(() => {
       ctx.emit('afterViewInit', { toggleFold, insertComment, removeComment });
     });
@@ -28,7 +29,7 @@ export default defineComponent({
     provide(CodeReviewInjectionKey, { reviewContentRef, diffInfo: diffFile.value[0], isFold, rootCtx: ctx });
 
     return () => (
-      <div class={ns.b()}>
+      <div class={[ns.b(), { 'dp-md-dark': isDarkMode.value }]}>
         <CodeReviewHeader onClick={() => (isFold.value = !isFold.value)} />
         <div v-show={!isFold.value}>
           {props.showBlob ? (
