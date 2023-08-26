@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import DSkeleton from '../src/skeleton';
 import DSkeletonItem from '../src/components/skeleton-item';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('skeleton', true);
 const noDotNs = useNamespace('skeleton');
