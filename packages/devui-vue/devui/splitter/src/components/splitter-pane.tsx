@@ -122,7 +122,7 @@ export default defineComponent({
         return;
       }
       currentVnode!.component!.props.collapsed = !currentVnode?.component?.props.collapsed;
-    }
+    };
 
     // 暴露给外部使用
     expose({

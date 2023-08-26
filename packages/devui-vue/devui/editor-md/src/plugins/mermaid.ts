@@ -12,7 +12,7 @@ const DEFAULT_CONFIG = {
 
 function render(code: string, options: Record<string, any>) {
   try {
-    return `<div class="mermaid" id="${options.id}">${code}</div>`
+    return `<div class="mermaid" id="${options.id}">${code}</div>`;
   } catch (err: any) {
     return `<pre>${err.name}: ${err.message}</pre>`;
   }
@@ -27,10 +27,10 @@ export function mermaidRender(md: any, options = {}) {
     const token = tokens[idx];
     const code = token.content.trim();
     if (token.info.startsWith('mermaid')) {
-      return render(code, options)
+      return render(code, options);
     }
-    return defaultRenderer(tokens, idx, opts, env, self)
-  }
+    return defaultRenderer(tokens, idx, opts, env, self);
+  };
 }
 
 export function refreshMermaid(delay = 0) {

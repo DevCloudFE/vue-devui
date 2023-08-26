@@ -10,7 +10,7 @@ export function useEditorMdTheme(callback: () => void) {
       isDarkMode.value = themeService.currentTheme.id.indexOf('dark') !== -1;
       callback();
     }
-  }
+  };
 
   onBeforeMount(() => {
     themeService = window['devuiThemeService'];
@@ -25,9 +25,9 @@ export function useEditorMdTheme(callback: () => void) {
 
   onBeforeUnmount(() => {
     if (themeService && themeService.eventBus) {
-      themeService.eventBus.remove('themeChanged', themeChange)
+      themeService.eventBus.remove('themeChanged', themeChange);
     }
-  })
+  });
 
   return { isDarkMode };
 }
