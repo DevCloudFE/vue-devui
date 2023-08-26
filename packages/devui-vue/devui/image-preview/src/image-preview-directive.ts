@@ -19,15 +19,11 @@ function unmountedPreviewImages() {
 }
 
 function getImgByEl(el: HTMLElement): Array<string> {
-  const imgs = [...el.querySelectorAll('img')];
-  const urlList = imgs.map((item: HTMLImageElement) => {
-    return (item.getAttribute('preview-src') || item.getAttribute('src')) ?? '';
-  });
+  const urlList = [...el.querySelectorAll('img')].map((ele: HTMLImageElement) => ele.getAttribute('src') as string);
   return urlList;
 }
 
 function handleImg(e: MouseEvent) {
-  e.stopPropagation();
   const el = e.currentTarget as PreviewHTMLElement;
   const target = e.target as PreviewHTMLElement;
   if (target?.nodeName?.toLowerCase() === 'img') {
