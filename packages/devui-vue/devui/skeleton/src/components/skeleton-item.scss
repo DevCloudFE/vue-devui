@@ -1,4 +1,4 @@
-@import '../../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-skeleton-item {
   background-color: $devui-list-item-hover-bg;
@@ -62,7 +62,8 @@
 
   &--animation {
     &.#{$devui-prefix}-skeleton-item {
-      background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%)
+      background:
+        linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 60%)
         $devui-list-item-hover-bg;
       background-size: 200% 100%;
       background-position-x: 180%;

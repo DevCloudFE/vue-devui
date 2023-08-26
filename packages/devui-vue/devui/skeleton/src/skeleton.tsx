@@ -2,7 +2,7 @@ import { computed, defineComponent, provide, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import SkeletonItem from './components/skeleton-item';
 import { skeletonProps, SkeletonProps, roundInjectionKey, animationInjectionKey } from './skeleton-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './skeleton.scss';
 
 export default defineComponent({
