@@ -1,7 +1,7 @@
 import { defineComponent, Transition } from 'vue';
 import type { SetupContext } from 'vue';
 import { drawerOverlayProps, DrawerOverlayProps } from '../drawer-types';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './drawer-overlay.scss';
 
 export default defineComponent({
