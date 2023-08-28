@@ -14,7 +14,7 @@ import {
   MessageType,
   UseFormItemRule
 } from './form-item-types';
-import { useNamespace } from '../../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 function getFieldValue(obj: Record<string, unknown>, path: string) {
   return {
