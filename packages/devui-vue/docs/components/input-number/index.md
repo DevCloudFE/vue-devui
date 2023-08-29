@@ -223,6 +223,42 @@ export default defineComponent({
 
 :::
 
+### 格式化
+
+:::demo 通过`formatter`参数来格式化输入框中的值。
+
+```vue
+<template>
+  <div>
+    <d-input-number v-model="formatterNum" :formatter="formatter" placeholder="请输入"></d-input-number>
+  </div>
+</template>
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const formatterNum = ref(0);
+    const formatter = (val) => {
+      return val ? `${val}%` : '0%';
+    }
+    return {
+      formatterNum,
+      formatter,
+    };
+  },
+});
+</script>
+<style>
+.space {
+  padding: 5px 0;
+  font-size: 16px;
+}
+</style>
+```
+
+:::
+
 ### InputNumber 参数
 
 | 参数名      | 类型                                          | 默认值    | 说明                                 | 跳转 Demo             |
@@ -236,7 +272,7 @@ export default defineComponent({
 | precision   | `number`                                      | --        | 可选，数值精度                       | [精度](#精度)         |
 | size        | [ISize](#isize)                               | 'md'      | 可选，文本框尺寸                     | [尺寸](#尺寸)         |
 | reg         | `RegExp\| string`                             | --        | 可选，用于限制输入的正则或正则字符串 | [正则限制](#正则限制) |
-| formatter   | `(val: number \| string) => number \| string` | --        | 可选，用来格式化输入框显示内容       |                       |
+| formatter   | `(val: number \| string) => number \| string` | --        | 可选，用来格式化输入框显示内容       | [格式化](#格式化) |
 
 ### InputNumber 事件
 
