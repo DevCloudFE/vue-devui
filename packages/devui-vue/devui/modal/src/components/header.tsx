@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared';
 
 export default defineComponent({
   name: 'DModalHeader',

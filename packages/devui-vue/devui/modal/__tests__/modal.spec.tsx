@@ -4,7 +4,7 @@ import DModal from '../src/modal';
 import DModalHeader from '../src/components/header';
 import DModalFooter from '../src/components/footer';
 import DIcon from '../../icon/src/icon';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared';
 import { wait } from '../../shared/utils/';
 
 const ns = useNamespace('modal', true);

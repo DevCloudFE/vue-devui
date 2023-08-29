@@ -6,7 +6,7 @@ import { useModal, useModalRender } from './composables/use-modal';
 import { useDraggable } from './composables/use-draggable';
 import DModalHeader from './components/header';
 import DModalBody from './components/body';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared';
 import './modal.scss';
 
 interface TypeList {
