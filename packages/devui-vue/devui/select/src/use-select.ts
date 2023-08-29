@@ -214,7 +214,7 @@ export default function useSelect(
       }
       getMultipleSelected(checkedItems);
     } else {
-      selectRef.value?.clearMultipleSearchKey();
+      selectRef.value?.clearSingleSearchKey();
       ctx.emit('update:modelValue', item.value);
       getSingleSelected(item);
       toggleChange(false);
@@ -271,7 +271,7 @@ export default function useSelect(
       setTimeout(() => {
         filterQuery.value = '';
         handlerQueryFunc('');
-      });
+      }, 150);
       isSelectFocus.value = false;
     }
   };

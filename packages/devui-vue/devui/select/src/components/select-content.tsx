@@ -87,7 +87,7 @@ export default defineComponent({
               {isSupportCollapseTags.value && selectedData.value.length >= 1 && (
                 <Tag
                   deletable
-                  maxWidth={'78%'}
+                  maxWidth={'75%'}
                   class={'multiple-tag'}
                   onTagDelete={withModifiers(() => tagDelete(selectedData.value[0]), ['prevent', 'stop'])}
                   size={tagSize.value as SizeType}>
@@ -131,8 +131,6 @@ export default defineComponent({
                   readonly={isReadOnly.value || !isSupportFilter.value}
                   disabled={isSelectDisable.value}
                   onInput={queryFilter}
-                  onFocus={onFocus}
-                  onBlur={onBlur}
                 />
               </div>
             </div>

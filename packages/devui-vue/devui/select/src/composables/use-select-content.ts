@@ -42,7 +42,7 @@ export default function useSelectContent(): UseSelectContentReturnType {
     if (select?.selectedOptions) {
       return select.selectedOptions.length > 1
         ? select.selectedOptions.map((item) => item?.name || item?.value || '').join(',')
-        : select.selectedOptions[0]?.name || '';
+        : select.selectedOptions[0]?.name || (select.showEmptyWhenUnmatched ? '' : select.modelValue);
     } else {
       return '';
     }
