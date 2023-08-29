@@ -11,7 +11,7 @@ export * from './src/modal-types';
 export { Modal, ModalHeader, ModalBody, ModalFooter };
 
 export default {
-  title: 'Modal 弹窗',
+  title: 'Modal 模态框',
   category: '反馈',
   status: '100%',
   install(app: App): void {
