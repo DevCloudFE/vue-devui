@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 import type { SetupContext } from 'vue';
 import { transferOperateProps, TTransferOperateProps, transferHeaderState } from '../composables/use-transfer-operate';
 import DButton from '../../../button/src/button';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 export default defineComponent({
   name: 'DTransferOperate',

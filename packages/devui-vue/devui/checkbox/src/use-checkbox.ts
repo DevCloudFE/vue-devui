@@ -35,8 +35,8 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
   const mergedColor = computed(() => {
     return checkboxGroupConf?.color.value ?? props.color;
   });
-  const itemWidth = checkboxGroupConf?.itemWidth.value;
-  const direction = checkboxGroupConf?.direction.value;
+  const itemWidth = checkboxGroupConf?.itemWidth;
+  const direction = checkboxGroupConf?.direction;
 
   const canChange = (checked: boolean, val: string | undefined) => {
     if (mergedDisabled.value) {
@@ -54,15 +54,14 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
     return Promise.resolve(true);
   };
   const toggle = () => {
-    const current = !isChecked.value;
+    const current = !mergedChecked.value;
     checkboxGroupConf?.toggleGroupVal(props.value);
     ctx.emit('update:checked', current);
     ctx.emit('update:modelValue', current);
     ctx.emit('change', current);
   };
-  const handleClick = ($event: Event) => {
-    $event.stopPropagation();
-    canChange(!isChecked.value, props.label).then((res) => res && toggle());
+  const handleClick = () => {
+    canChange(!mergedChecked.value, props.label).then((res) => res && toggle());
   };
 
   const size = computed(() => props.size || checkboxGroupConf?.size.value || formContext?.size || 'md');
@@ -72,7 +71,7 @@ export function useCheckbox(props: CheckboxProps, ctx: SetupContext): UseCheckbo
   watch(
     () => props.modelValue,
     () => {
-      formItemContext?.validate('change').catch((err) => console.warn(err));
+      formItemContext?.validate('change').catch(() => {});
     }
   );
   return {
@@ -138,7 +137,7 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
   watch(
     () => props.modelValue,
     () => {
-      formItemContext?.validate('change').catch((err) => console.warn(err));
+      formItemContext?.validate('change').catch(() => {});
     },
     { deep: true }
   );

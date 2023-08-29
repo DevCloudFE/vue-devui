@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { ref, nextTick } from 'vue';
 import DCheckboxButton from '../src/checkbox-button';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('checkbox-button', true);
 const baseClass = ns.b();

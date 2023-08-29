@@ -2,6 +2,18 @@ import type { ExtractPropTypes, InjectionKey, PropType, SetupContext, Ref } from
 import type { DiffFile } from 'diff2html/lib/types';
 
 export type OutputFormat = 'line-by-line' | 'side-by-side';
+export type ExpandDirection = 'up' | 'down' | 'updown' | 'all';
+export type LineSide = 'left' | 'right';
+export type IncrementCodeInsertDirection = 'up' | 'down';
+export interface CommentPosition {
+  left: number;
+  right: number;
+}
+export interface CodeReviewMethods {
+  toggleFold: (status?: boolean) => void;
+  insertComment: (lineNumber: number, lineSide: LineSide, commentDom: HTMLElement) => void;
+  removeComment: (lineNumber: number, lineSide: LineSide) => void;
+}
 
 export const codeReviewProps = {
   diff: {
@@ -13,14 +25,35 @@ export const codeReviewProps = {
     type: Boolean,
     default: false,
   },
+  allowComment: {
+    type: Boolean,
+    default: true,
+  },
+  allowExpand: {
+    type: Boolean,
+    default: true,
+  },
+  showBlob: {
+    type: Boolean,
+    default: false,
+  },
   outputFormat: {
     type: String as PropType<OutputFormat>,
     default: 'line-by-line',
+  },
+  // 展开所有代码行的阈值，低于此阈值全部展开，高于此阈值分向上和向下两个操作展开
+  expandThreshold: {
+    type: Number,
+    default: 50,
+  },
+  expandLoader: {
+    type: Function as PropType<(interval: Array<number | undefined>, update: (code: string) => void) => void>,
   },
 };
 export type CodeReviewProps = ExtractPropTypes<typeof codeReviewProps>;
 
 export interface CodeReviewContext {
+  reviewContentRef: Ref<HTMLElement>;
   diffInfo: DiffFile;
   isFold: Ref<boolean>;
   rootCtx: SetupContext;

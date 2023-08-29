@@ -42,7 +42,14 @@ export function useRadio(props: RadioProps, ctx: SetupContext): UseRadioFn {
   };
 
   const handleChange = async (event: Event) => {
-    const _value = props.value;
+    let _value;
+    if (props.canCancelSelect && isChecked.value) {
+      _value = undefined;
+    } else if (isChecked.value) {
+      return;
+    } else {
+      _value = props.value;
+    }
     const canChange = await judgeCanChange(_value);
 
     // 不可以切换

@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import DTimePicker from '../src/time-picker';
 import { nextTick, ref } from 'vue';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { Form as DForm, FormItem as DFormItem } from '../../form';
 
 jest.mock('../../locale/create', () => ({

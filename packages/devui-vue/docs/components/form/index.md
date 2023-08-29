@@ -372,11 +372,11 @@ export default defineComponent({
     <d-form-item field="name" label="Name">
       <d-input v-model="formModel.name" placeholder="请输入" />
     </d-form-item>
-    
+
     <d-form-item field="search" label="Search">
       <d-search v-model="formModel.search" placeholder="请输入"></d-search>
     </d-form-item>
-    
+
     <d-form-item field="inputNumber" label="InputNumber">
       <d-input-number v-model="formModel.inputNumber" placeholder="请输入"></d-input-number>
     </d-form-item>
@@ -384,15 +384,15 @@ export default defineComponent({
     <d-form-item field="description" label="Description">
       <d-textarea v-model="formModel.description" />
     </d-form-item>
-    
+
     <d-form-item field="select" label="Select">
       <d-select v-model="formModel.select" :options="selectOptions" />
     </d-form-item>
-    
+
     <d-form-item field="autoComplete" label="AutoComplete">
       <d-auto-complete :source="source" v-model="formModel.autoComplete"></d-auto-complete>
     </d-form-item>
-    
+
     <d-form-item field="radio" label="Radio">
       <d-radio-group direction="row" v-model="formModel.radio">
         <d-radio value="0">Manual execution</d-radio>
@@ -400,11 +400,11 @@ export default defineComponent({
         <d-radio value="2">Weekly execution</d-radio>
       </d-radio-group>
     </d-form-item>
-    
+
     <d-form-item field="switch" label="Switch">
       <d-switch v-model="formModel.switch"></d-switch>
     </d-form-item>
-    
+
     <d-form-item field="executionDay" label="Execution day">
       <d-checkbox-group v-model="formModel.executionDay" label="Execution day" direction="row">
         <d-checkbox label="Mon" value="Mon" />
@@ -416,7 +416,7 @@ export default defineComponent({
         <d-checkbox label="Sun" value="Sun" />
       </d-checkbox-group>
     </d-form-item>
-    
+
     <d-form-item field="datePickerPro" label="Date Picker Pro">
       <d-date-picker-pro v-model="formModel.datePickerPro"></d-date-picker-pro>
     </d-form-item>
@@ -469,9 +469,9 @@ export default defineComponent({
       executionDay: [],
       datePickerPro: '',
       timeSelect: '',
-      timePicker: ''
+      timePicker: '',
     });
-    
+
     const selectOptions = reactive(['Options1', 'Options2', 'Options3']);
     const source = ref(['C#', 'C', 'C++']);
 
@@ -650,19 +650,22 @@ export default defineComponent({
 
 ### Form 参数
 
-| 参数名                  | 类型                        | 默认值             | 说明                                                               | 跳转 demo             |
-| :---------------------- | :-------------------------- | :----------------- | :----------------------------------------------------------------- | :-------------------- |
-| data                    | `object`                    | {}                 | 必选，表单数据                                                     | [基础用法](#基础用法) |
-| layout                  | [Layout](#layout)           | 'horizontal'       | 可选，设置表单的排列方式                                           | [垂直排列](#垂直排列) |
-| label-size              | [LabelSize](#labelsize)     | 'md'               | 可选，设置 label 的宽度，默认为 100px，sm 对应 80px，lg 对应 150px | [表单样式](#表单样式) |
-| label-align             | [LabelAlign](#labelalign)   | 'start'            | 可选，设置水平布局方式下，label 对齐方式                           | [表单样式](#表单样式) |
-| rules                   | [FormRules](#formrules)     | --                 | 可选，设置表单的校验规则                                           | [表单校验](#表单校验) |
-| message-type            | [MessageType](#messagetype) | 'popover'          | 可选，设置校验信息的提示方式                                       |                       |
-| pop-position            | [PopPosition](#popposition) | ['right','bottom'] | 可选，消息显示为 popover 时，popover 弹出方向                      |                       |
-| validate-on-rule-change | `boolean`                   | false              | 可选，是否在 rules 改变后立即触发一次验证                          |                       |
-| show-feedback           | `boolean`                   | false              | 可选，是否展示校验结果反馈图标                                     |                       |
-| disabled                | `boolean`                   | false              | 可选，是否禁用该表单内的所有组件。                                 |                       |
-| size                    | [FormSize](#formsize)       | --                 | 可选，用于控制该表单内组件的尺寸                                   |                       |
+| 参数名                         | 类型                                                      | 默认值             | 说明                                                                                            | 跳转 demo             |
+| :----------------------------- | :-------------------------------------------------------- | :----------------- | :---------------------------------------------------------------------------------------------- | :-------------------- |
+| data                           | `object`                                                  | {}                 | 必选，表单数据                                                                                  | [基础用法](#基础用法) |
+| layout                         | [Layout](#layout)                                         | 'horizontal'       | 可选，设置表单的排列方式                                                                        | [垂直排列](#垂直排列) |
+| label-size                     | [LabelSize](#labelsize)                                   | 'md'               | 可选，设置 label 的宽度，默认为 100px，sm 对应 80px，lg 对应 150px                              | [表单样式](#表单样式) |
+| label-align                    | [LabelAlign](#labelalign)                                 | 'start'            | 可选，设置水平布局方式下，label 对齐方式                                                        | [表单样式](#表单样式) |
+| rules                          | [FormRules](#formrules)                                   | --                 | 可选，设置表单的校验规则                                                                        | [表单校验](#表单校验) |
+| message-type                   | [MessageType](#messagetype)                               | 'popover'          | 可选，设置校验信息的提示方式                                                                    |                       |
+| pop-position                   | [PopPosition](#popposition)                               | ['right','bottom'] | 可选，消息显示为 popover 时，popover 弹出方向                                                   |                       |
+| validate-on-rule-change        | `boolean`                                                 | false              | 可选，是否在 rules 改变后立即触发一次验证                                                       |                       |
+| show-feedback                  | `boolean`                                                 | false              | 可选，是否展示校验结果反馈图标                                                                  |                       |
+| disabled                       | `boolean`                                                 | false              | 可选，是否禁用该表单内的所有组件。                                                              |                       |
+| size                           | [FormSize](#formsize)                                     | --                 | 可选，用于控制该表单内组件的尺寸                                                                |                       |
+| hide-required-mark             | `boolean`                                                 | false              | 可选，是否隐藏所有表单项的必选标记                                                              |                       |
+| style-type                     | [StyleType](#styletype)                                   | 'default'          | 可选，设置表单为灰色表单                                                                        |                       |
+| append-to-body-scroll-strategy | [AppendToBodyScrollStrategy](#appendtobodyscrollstrategy) | 'reposition'       | 可选，消息显示为 popover 时，滚动时 popover 处理策略，默认策略跟随宿主移动；`close`为滚动时关闭 |                       |
 
 ### Form 事件
 
@@ -687,31 +690,34 @@ export default defineComponent({
 
 ### FormItem 参数
 
-| 参数名          | 类型                                            | 默认值 | 说明                                                                       | 跳转 demo             |
-| :-------------- | :---------------------------------------------- | :----- | :------------------------------------------------------------------------- | :-------------------- |
-| field           | `string`                                        | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性                       | [基础用法](#基础用法) |
-| required        | `boolean`                                       | false  | 可选，表单选项是否必填                                                     |                       |
-| rules           | [FormRuleItem \| FormRuleItem[]](#formruleitem) | --     | 可选，表单项的校验规则                                                     | [表单校验](#表单校验) |
-| message-type    | [MessageType](#messagetype)                     | --     | 可选，用法同父组件`message-type`参数，优先级高于父组件，默认继承父组件的值 |                       |
-| pop-position    | [PopPosition](#popposition)                     | --     | 可选，用法同父组件`pop-position`参数，优先级高于父组件，默认继承父组件的值 |                       |
-| show-feedback   | `boolean`                                       | --     | 可选，是否展示校验结果反馈图标，优先级高于父组件，默认继承父组件的值       |                       |
-| help-tips       | `string`                                        | ''     | 可选，表单项帮助指引提示内容，空字符串表示不设置提示内容。                 | [基础用法](#基础用法) |
-| extra-info      | `string`                                        | ''     | 可选，附件信息，一般用于补充表单选项的说明                                 | [基础用法](#基础用法) |
-| feedback-status | [FeedbackStatus](#feedbackstatus)               | --     | 可选，手动指定当前 control 状态反馈                                        |                       |
+| 参数名          | 类型                                            | 默认值 | 说明                                                                                                             | 跳转 demo             |
+| :-------------- | :---------------------------------------------- | :----- | :--------------------------------------------------------------------------------------------------------------- | :-------------------- |
+| label           | `string`                                        | ''     | 可选，表单项的名称                                                                                               | [基础用法](#基础用法) |
+| field           | `string`                                        | ''     | 可选，指定验证表单需验证的字段，验证表单时必选该属性                                                             | [基础用法](#基础用法) |
+| required        | `boolean`                                       | false  | 可选，表单选项是否必填                                                                                           |                       |
+| rules           | [FormRuleItem \| FormRuleItem[]](#formruleitem) | --     | 可选，表单项的校验规则                                                                                           | [表单校验](#表单校验) |
+| message-type    | [MessageType](#messagetype)                     | --     | 可选，用法同父组件`message-type`参数，优先级高于父组件，默认继承父组件的值                                       |                       |
+| pop-position    | [PopPosition](#popposition)                     | --     | 可选，用法同父组件`pop-position`参数，优先级高于父组件，默认继承父组件的值                                       |                       |
+| show-feedback   | `boolean`                                       | --     | 可选，是否展示校验结果反馈图标，优先级高于父组件，默认继承父组件的值                                             |                       |
+| help-tips       | `string \|`[helptips](#helptips)                | ''     | 可选，表单项帮助指引提示内容，空字符串表示不设置提示内容。可传入对象类型的参数来自定义提示内容的样式、展开方向等 | [基础用法](#基础用法) |
+| extra-info      | `string`                                        | ''     | 可选，附件信息，一般用于补充表单选项的说明                                                                       | [基础用法](#基础用法) |
+| feedback-status | [FeedbackStatus](#feedbackstatus)               | --     | 可选，手动指定当前 control 状态反馈                                                                              |                       |
 
 ### FormItem 方法
 
-| 方法名        | 类型         | 说明                           |
-| :------------ | :----------- | :----------------------------- |
-| resetField    | `() => void` | 重置表单项的值，并移除校验结果 |
-| clearValidate | `() => void` | 清除校验结果                   |
+| 方法名        | 类型                           | 说明                           |
+| :------------ | :----------------------------- | :----------------------------- |
+| resetField    | `() => void`                   | 重置表单项的值，并移除校验结果 |
+| clearValidate | `() => void`                   | 清除校验结果                   |
+| validate      | `(trigger: string) => Promise` | 表单校验函数                   |
 
 ### FormItem 插槽
 
-| 插槽名  | 说明                     |
-| :------ | :----------------------- |
-| default | 包裹单个表单项的输入控件 |
-| label | 标签位置显示的内容 |
+| 插槽名    | 说明                     |
+| :-------- | :----------------------- |
+| default   | 包裹单个表单项的输入控件 |
+| label     | 标签位置显示的内容       |
+| extraInfo | 自定义表单项额外信息     |
 
 ### Form 类型定义
 
@@ -777,6 +783,18 @@ type FormSize = 'sm' | 'md' | 'lg';
 type FormValidateCallback = (isValid: boolean, invalidFields?: ValidateFieldsError) => void;
 ```
 
+#### StyleType
+
+```ts
+type StyleType = 'default' | 'gray';
+```
+
+#### AppendToBodyScrollStrategy
+
+```ts
+type AppendToBodyScrollStrategy = 'close' | 'reposition';
+```
+
 ### FormItem 类型定义
 
 #### FormRuleItem
@@ -793,4 +811,15 @@ interface FormRuleItem extends RuleItem {
 
 ```ts
 type FeedbackStatus = 'success' | 'error' | 'pending';
+```
+
+#### HelpTips
+
+```ts
+interface HelpTips {
+  content: string; // 提示内容
+  position?: PopPosition[]; // 展开方向
+  trigger?: 'hover' | 'click'; // 触发方式
+  popType?: string; // 提示类型
+}
 ```

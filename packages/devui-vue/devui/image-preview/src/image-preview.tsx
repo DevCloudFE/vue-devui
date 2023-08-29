@@ -2,7 +2,7 @@ import { defineComponent, Fragment, ref, computed, onMounted, onUnmounted } from
 import { imagePreviewProps, ImagePreviewProps } from './image-preview-types';
 import ImagePreviewService from './image-preview-service';
 import Transform from './transform';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './image-preview.scss';
 
 export default defineComponent({

@@ -1,4 +1,4 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 $font-size-map: (
   lg: $devui-font-size-lg,
@@ -43,7 +43,7 @@ $radio-label-height-map: (
     }
 
     .#{$devui-prefix}-radio__material-inner {
-      fill: $devui-icon-fill-active-hover;
+      fill: $devui-brand;
     }
   }
 

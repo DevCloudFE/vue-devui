@@ -18,6 +18,13 @@ const baseConfig = defineConfig({
   configFile: false,
   publicDir: false,
   plugins: [vue(), vueJsx()],
+  resolve: {
+    alias: [
+      { find: '@devui/theme', replacement: path.resolve(__dirname, '../../../devui-theme/src') },
+      { find: '@devui/shared/components', replacement: path.resolve(__dirname, '../../devui') },
+      { find: '@devui', replacement: path.resolve(__dirname, '../../devui') },
+    ]
+  }
 });
 
 const rollupOptions = {

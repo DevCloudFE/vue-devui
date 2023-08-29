@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import { reactive, ref, nextTick } from 'vue';
 import { Form, FormItem } from '../index';
 import { Input } from '../../input';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { wait } from '../../shared/utils';
 
 const formNs = useNamespace('form', true);

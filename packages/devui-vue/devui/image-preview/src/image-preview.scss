@@ -1,4 +1,4 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-image-preview {
   position: fixed;
@@ -122,4 +122,6 @@
   bottom: 0;
   z-index: calc($devui-z-index-full-page-overlay - 1);
   background: $devui-shadow;
+  border-radius: $devui-border-radius;
+  box-shadow: $devui-shadow-length-fullscreen-overlay $devui-shadow;
 }

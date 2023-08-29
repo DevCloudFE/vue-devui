@@ -15,7 +15,7 @@ export interface Comment {
   domNode?: HTMLElement;
   heightInPx?: number;
   allowEditorOverflow?: boolean;
-  offserLeft?: number;
+  offsetLeft?: number;
 }
 
 export const codeEditorProps = {
@@ -70,7 +70,7 @@ export const codeEditorProps = {
     type: Array as PropType<Comment[]>,
     default: () => []
   }
-}
+};
 
 export type CodeEditorProps = ExtractPropTypes<typeof codeEditorProps>;
 

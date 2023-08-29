@@ -1,6 +1,6 @@
 import { defineComponent, provide, reactive, SetupContext, toRefs, watch } from 'vue';
-import { formProps, FormProps, FORM_TOKEN } from './form-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { formProps, FormProps, FORM_TOKEN, STYLE_TOKEN } from './form-types';
+import { useNamespace } from '@devui/shared/utils';
 import useFieldCollection from './composables/use-field-collection';
 import useFormValidation from './composables/use-form-validation';
 
@@ -35,6 +35,11 @@ export default defineComponent({
         addItemContext,
         removeItemContext,
       })
+    );
+
+    provide(
+      STYLE_TOKEN,
+      props.styleType
     );
 
     ctx.expose({

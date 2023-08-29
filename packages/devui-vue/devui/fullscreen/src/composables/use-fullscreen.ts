@@ -45,7 +45,7 @@ export default function useFullscreen(props: FullscreenProps, slotElement: Ref<H
 
   const handleFullscreenChange = () => {
     if (!document.fullscreenElement) {
-      ctx.emit('update:modelValue');
+      ctx.emit('update:modelValue', false);
 
       exitByKeydown = true;
     } else {

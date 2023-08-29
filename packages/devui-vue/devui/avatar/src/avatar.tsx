@@ -2,13 +2,14 @@ import { defineComponent, watch, toRefs, ref, computed } from 'vue';
 import AvatarBodyIcon from './components/avatar-body-icon';
 import AvatarNoBodyIcon from './components/avatar-nobody-icon';
 import { AvatarProps, avatarProps } from './avatar-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './avatar.scss';
 
 export default defineComponent({
   name: 'DAvatar',
   props: avatarProps,
-  setup(props: AvatarProps) {
+  emits: ['loadError'],
+  setup(props: AvatarProps, ctx) {
     const { name, width, height, customText, gender, imgSrc, isRound } = toRefs(props);
     const isNobody = ref<boolean>(true);
     const isErrorImg = ref<boolean>(false);
@@ -17,7 +18,7 @@ export default defineComponent({
     const nameDisplay = ref<string>();
 
     const ns = useNamespace('avatar');
-    const styleNS = ns.e('style');
+    const styleNS = ns.m('style');
     const bgNS = computed(() => {
       return ns.m(`${'background-' + code.value}`);
     });
@@ -29,7 +30,7 @@ export default defineComponent({
         } else if (gender.value.toLowerCase() === 'female') {
           code.value = 0;
         } else {
-          console.warn('gender must be "Male" or "Female"');
+          throw new Error('gender must be "Male" or "Female"');
         }
         return;
       }
@@ -71,8 +72,9 @@ export default defineComponent({
       getBackgroundColor(nameValue.substr(0, 1));
     };
 
-    const showErrorAvatar = (): void => {
+    const showErrorAvatar = (e: Event): void => {
       isErrorImg.value = true;
+      ctx.emit('loadError', e);
     };
 
     const calcValues = (nameInput: string): void => {
@@ -113,7 +115,7 @@ export default defineComponent({
 
       const nameElement = (
         <span
-          class={[styleNS, bgNS.value]}
+          class={`${styleNS} ${bgNS.value}`}
           style={{
             height: `${height.value}px`,
             width: `${width.value}px`,
@@ -142,7 +144,7 @@ export default defineComponent({
           <AvatarNoBodyIcon width={width.value} height={height.value} />
         </span>
       );
-      const noBody = (!imgSrc.value && isNobody.value) || isErrorImg.value ? noBodyElement : null;
+      const noBody = (!imgSrc.value && isNobody.value) || (imgSrc.value && isErrorImg.value) ? noBodyElement : null;
       return (
         <span class={ns.b()}>
           {hasImgSrc}

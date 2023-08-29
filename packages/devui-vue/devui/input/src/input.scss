@@ -1,4 +1,4 @@
-@import '../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-input {
   width: 100%;
@@ -72,6 +72,10 @@
     background: none;
     outline: none;
     box-sizing: border-box;
+
+    &::placeholder {
+      color: $devui-placeholder;
+    }
   }
 
   &--prepend {
@@ -157,5 +161,34 @@
   &__clear--icon,
   &__password--icon {
     cursor: pointer;
+  }
+
+  &--gray-style:not(.#{$devui-prefix}-input--disabled) {
+    .#{$devui-prefix}-input__wrapper:not(.#{$devui-prefix}-input--error) {
+      background: $devui-gray-5;
+      border-color: $devui-gray-5;
+
+      &:hover {
+        background: $devui-gray-10;
+        border-color: $devui-gray-10;
+      }
+    }
+  }
+}
+
+body[ui-theme='galaxy-theme'] {
+  .#{$devui-prefix}-input__inner:-webkit-autofill,
+  .#{$devui-prefix}-input__inner:-webkit-autofill:hover,
+  .#{$devui-prefix}-input__inner:-webkit-autofill:focus,
+  .#{$devui-prefix}-input__inner:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    box-shadow: 0 0 0 1000px transparent inset !important;
+    caret-color: white;
+  }
+
+  .#{$devui-prefix}-input__inner:-internal-autofill-previewed,
+  .#{$devui-prefix}-input__inner:-internal-autofill-selected {
+    -webkit-text-fill-color: $devui-text;
+    transition: background-color 99999s ease-out 0.5s;
   }
 }

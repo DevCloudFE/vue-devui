@@ -1,8 +1,8 @@
 import { defineComponent, ref, watch, onMounted, onBeforeUnmount, Fragment, Comment, toRefs } from 'vue';
 import type { VNode } from 'vue';
 import { carouselProps, DotTrigger, CarouselProps } from './types';
-import Icon from '../../icon/src/icon';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { Icon } from '@devui/shared/components/icon';
+import { useNamespace } from '@devui/shared/utils';
 import './carousel.scss';
 
 export default defineComponent({
