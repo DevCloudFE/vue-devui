@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { nextTick, ref } from 'vue';
 import DAutoComplete from '../src/auto-complete';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { wait } from '../../shared/utils';
 
 jest.mock('../../locale/create', () => ({

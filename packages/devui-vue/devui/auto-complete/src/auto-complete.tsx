@@ -10,7 +10,7 @@ import { useAutoCompleteRender } from './composables/use-auto-complete-render';
 import DAutoCompleteDropdown from './components/dropdown';
 import ClickOutside from '../../shared/devui-directive/clickoutside';
 import { FlexibleOverlay } from '../../overlay/src/flexible-overlay';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './auto-complete.scss';
 import { Icon } from '../../icon';
 import { FORM_TOKEN } from '../../form';
