@@ -1,4 +1,4 @@
-import { defineComponent, provide, Transition, toRefs, ref, SetupContext, Teleport, computed, inject } from 'vue';
+import { defineComponent, provide, Transition, toRefs, ref, SetupContext, Teleport, computed, inject, getCurrentInstance } from 'vue';
 import { autoCompleteProps, AutoCompleteProps, DropdownPropsKey } from './auto-complete-types';
 import useCustomTemplate from './composables/use-custom-template';
 import useSearchFn from './composables/use-searchfn';
@@ -14,6 +14,7 @@ import { useNamespace } from '@devui/shared/utils';
 import './auto-complete.scss';
 import { Icon } from '../../icon';
 import { FORM_TOKEN } from '../../form';
+import { createI18nTranslate } from '../../locale/create';
 
 export default defineComponent({
   name: 'DAutoComplete',
@@ -44,6 +45,8 @@ export default defineComponent({
     const inputNs = useNamespace('auto-complete-input');
     const isDisabled = computed(() => formContext?.disabled || disabled.value);
     const autoCompleteSize = computed(() => formContext?.size || props.size);
+    const app = getCurrentInstance()
+    const t = createI18nTranslate('DAutoComplete', app)
 
     const { handleSearch, searchList, showNoResultItemTemplate, recentlyFocus } = useSearchFn(
       ctx,
@@ -65,7 +68,7 @@ export default defineComponent({
       latestSource
     );
     const { selectedIndex, selectOptionClick } = useSelectHandle(ctx, searchList, selectValue, handleSearch, formatter, handleClose);
-    const { showLoading, dropDownRef, loadMore } = useLazyHandle(props, ctx, handleSearch);
+    const { showLoading, dropDownRef, loadMore, loadFinish } = useLazyHandle(props, ctx, handleSearch);
     const { customRenderSolts } = useCustomTemplate(ctx, modelValue);
     const { hoverIndex, handlekeyDown } = useKeyBoardHandle(
       dropDownRef,
@@ -117,6 +120,7 @@ export default defineComponent({
             origin={origin.value}
             position={position.value}
             v-model={visible.value}
+            auto-update-position
             style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
             <div
               class={ns.e('menu')}
@@ -139,6 +143,7 @@ export default defineComponent({
         return renderBasicDropdown();
       }
     };
+    ctx.expose({ loadFinish, focus: () => inputRef.value.focus() })
     return () => {
       return (
         <div
@@ -162,7 +167,7 @@ export default defineComponent({
                 type="text"
                 onClick={toggleMenu}
                 class={inputInnerClasses.value}
-                placeholder={placeholder.value}
+                placeholder={placeholder.value || t('placeholder')}
                 onInput={onInput}
                 onFocus={onFocus}
                 onBlur={onBlur}
