@@ -29,7 +29,7 @@ export function locale(key: string): string {
     underline: '下划线',
     strike: '删除线',
     color: '字体颜色',
-    backgound: '背景色',
+    background: '背景色',
     orderedlist: '有序列表',
     unorderedlist: '无序列表',
     checklist: '任务列表',
@@ -82,7 +82,7 @@ export function locale(key: string): string {
     'counter-limit-tips': '{{countUnit}}数超出最大允许值',
     'ie-msg': '为了更好体验，请使用chrome浏览器',
     loading: '正在加载中...',
-    pasting: '您粘贴内容较多, 正在努力加载中，请耐心等待...'
+    pasting: '您粘贴内容较多, 正在努力加载中，请耐心等待...',
   };
   return localeMap[key];
 }
