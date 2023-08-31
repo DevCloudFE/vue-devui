@@ -11,6 +11,8 @@ import {
   watch,
   withModifiers,
   onUnmounted,
+  nextTick,
+  computed,
 } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
@@ -28,7 +30,7 @@ import { FlexibleOverlay, Placement } from '../../overlay';
 export default defineComponent({
   name: 'DSelect',
   props: selectProps,
-  emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur', 'remove-tag', 'clear'],
+  emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur', 'remove-tag', 'clear', 'load-more'],
   setup(props: SelectProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DSelect', app);
@@ -59,6 +61,7 @@ export default defineComponent({
       toggleChange,
       isShowCreateOption,
     } = useSelect(props, selectRef, ctx, focus, blur, isSelectFocus, t);
+    const dropdownContainer = ref();
 
     const scrollbarNs = useNamespace('scrollbar');
     const ns = useNamespace('select');
@@ -77,6 +80,14 @@ export default defineComponent({
       dropdownWidth.value = originRef?.value?.clientWidth ? originRef.value.clientWidth + 'px' : '100%';
     };
 
+    const compareHeight = computed(() => dropdownContainer.value.scrollHeight - dropdownContainer.value.clientHeight);
+    const scrollToBottom = () => {
+      const scrollTop = dropdownContainer.value.scrollTop;
+      if (scrollTop === compareHeight.value) {
+        ctx.emit('load-more');
+      }
+    };
+
     watch(selectRef, (val) => {
       if (val) {
         originRef.value = val.$el;
@@ -88,6 +99,9 @@ export default defineComponent({
       isRender.value = true;
       updateDropdownWidth();
       window.addEventListener('resize', updateDropdownWidth);
+      nextTick(() => {
+        dropdownContainer.value.addEventListener('scroll', scrollToBottom);
+      });
     });
 
     onUnmounted(() => {
@@ -134,7 +148,7 @@ export default defineComponent({
                   'z-index': isOpen.value ? 'var(--devui-z-index-dropdown, 1052)' : -1,
                 }}>
                 <div class={dropdownCls} style={{ width: `${dropdownWidth.value}`, visibility: isOpen.value ? 'visible' : 'hidden' }}>
-                  <ul class={listCls} v-show={!isLoading.value}>
+                  <ul class={listCls} v-show={!isLoading.value} ref={dropdownContainer}>
                     {isShowCreateOption.value && (
                       <Option value={filterQuery.value} name={filterQuery.value} create>
                         {props.multiple ? <Checkbox modelValue={false} label={filterQuery.value} /> : filterQuery.value}
