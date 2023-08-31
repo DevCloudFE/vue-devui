@@ -6,8 +6,8 @@ import ConfigMenu from './components/config-menu';
 import JumpPage from './components/jump-page';
 import PageNumBtn from './components/page-nums';
 import PageSize from './components/page-size';
-import { useNamespace } from '../../shared/hooks/use-namespace';
-import { createI18nTranslate } from '../../locale/create';
+import { useNamespace } from '@devui/shared/utils';
+import { createI18nTranslate } from '@devui/shared/components/locale/create';
 import './pagination.scss';
 
 export default defineComponent({
@@ -26,6 +26,7 @@ export default defineComponent({
     const {
       autoHide,
       pageSizeOptions,
+      pageSizeDirection,
       total,
       canChangePageSize,
       lite,
@@ -82,8 +83,8 @@ export default defineComponent({
     };
 
     // 每页条数改变
-    const pageSizeChange = (val: Record<string, string | number>) => {
-      currentPageSize.value = val.value as number;
+    const pageSizeChange = (val: number) => {
+      currentPageSize.value = val as number;
       // 页数改变后，如果当前页码超出最大页码时修正
       if (props.autoFixPageIndex) {
         nextTick(() => {
@@ -92,7 +93,7 @@ export default defineComponent({
           }
         });
       }
-      emit('pageSizeChange', val.value as number);
+      emit('pageSizeChange', val);
     };
 
     // 极简模式下的跳转页码
@@ -100,7 +101,7 @@ export default defineComponent({
       changeCursorEmit(page.value);
     };
 
-    provide(paginationInjectionKey, { size, currentPageSize, pageSizeOptions, pageSizeChange, t });
+    provide(paginationInjectionKey, { size, currentPageSize, pageSizeOptions, pageSizeDirection, pageSizeChange, t });
 
     return () =>
       // autoHide 为 true，并且 pageSizeOptions 最小值大于 total，则不展示分页

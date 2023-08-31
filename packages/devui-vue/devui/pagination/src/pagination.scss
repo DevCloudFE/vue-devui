@@ -41,6 +41,11 @@
     &.#{$devui-prefix}-pagination__size--lg {
       height: 46px;
     }
+
+    & > .#{$devui-prefix}-icon__container {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .#{$devui-prefix}-pagination__total-size {
@@ -384,7 +389,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
-    transition: color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
+    transition:
+      color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
       background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
 
     &:hover:not(.active) {

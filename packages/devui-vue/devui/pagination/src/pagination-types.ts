@@ -1,19 +1,6 @@
 import type { PropType, ExtractPropTypes, InjectionKey, Ref, WritableComputedRef } from 'vue';
 
-type AppendToBodyDirection = 'rightDown' | 'rightUp' | 'leftUp' | 'leftDown' | 'centerDown' | 'centerUp';
-
-interface ConnectedPosition {
-  originX: 'start' | 'center' | 'end';
-  originY: 'top' | 'center' | 'bottom';
-
-  overlayX: 'start' | 'center' | 'end';
-  overlayY: 'top' | 'center' | 'bottom';
-
-  weight?: number;
-  offsetX?: number;
-  offsetY?: number;
-  panelClass?: string | string[];
-}
+export type PageSizeDirection = 'bottom' | 'top' | 'left' | 'right';
 
 type Size = 'lg' | '' | 'sm';
 
@@ -31,8 +18,8 @@ export const paginationProps = {
     default: () => [5, 10, 20, 50],
   },
   pageSizeDirection: {
-    type: Array as PropType<Array<AppendToBodyDirection | ConnectedPosition>>,
-    default: () => ['centerDown', 'centerUp'],
+    type: Array as PropType<Array<PageSizeDirection>>,
+    default: () => ['bottom', 'top'],
   },
   pageIndex: {
     type: Number,
@@ -121,7 +108,8 @@ export interface IPagination {
   size: Ref<Size>;
   currentPageSize: WritableComputedRef<number>;
   pageSizeOptions: Ref<number[]>;
-  pageSizeChange: (val: Record<string, string | number>) => void;
+  pageSizeDirection: Ref<PageSizeDirection[]>;
+  pageSizeChange: (val: number) => void;
   t: (path: string) => void;
 }
 
