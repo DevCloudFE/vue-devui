@@ -186,8 +186,6 @@ export default function useSelect(
   const valueChange = (item: OptionObjectItem) => {
     const { multiple } = props;
     let { modelValue } = props;
-    filterQuery.value = '';
-    handlerQueryFunc('');
     if (multiple) {
       const checkedItems = Array.isArray(modelValue) ? modelValue.slice() : [];
       const index = checkedItems.indexOf(item.value);
@@ -268,10 +266,6 @@ export default function useSelect(
 
   const onBlur = () => {
     if (!selectDisabled.value) {
-      setTimeout(() => {
-        filterQuery.value = '';
-        handlerQueryFunc('');
-      }, 150);
       isSelectFocus.value = false;
     }
   };

@@ -11,6 +11,7 @@ import {
   withModifiers,
   onMounted,
   nextTick,
+  computed,
 } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
@@ -75,6 +76,13 @@ export default defineComponent({
     const dropdownEmptyCls = ns.em('dropdown', 'empty');
     ctx.expose({ focus, blur, toggleChange });
     const isRender = ref<boolean>(false);
+    const currentPosition = ref('bottom');
+    const handlePositionChange = (pos: string) => {
+      currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
+    };
+    const styles = computed(() => ({
+      transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+    }));
 
     onBeforeMount(() => {
       isRender.value = true;
@@ -123,19 +131,18 @@ export default defineComponent({
           }, [])}>
           <SelectContent ref={selectRef}></SelectContent>
           <Teleport to="body">
-            <Transition name="fade">
+            <Transition name={props.showAnimation ? `fade-${currentPosition.value}` : ''}>
               <FlexibleOverlay
+                v-show={isOpen.value}
                 v-model={isRender.value}
                 ref={dropdownRef}
                 origin={originRef.value}
                 offset={4}
                 place-strategy="no-space"
                 position={props.position}
-                style={{
-                  visibility: isOpen.value ? 'visible' : 'hidden',
-                  'z-index': isOpen.value ? 'var(--devui-z-index-dropdown, 1052)' : -1,
-                }}>
-                <div class={dropdownCls} style={{ width: `${dropdownWidth.value}px`, visibility: isOpen.value ? 'visible' : 'hidden' }}>
+                onPositionChange={handlePositionChange}
+                style={styles.value}>
+                <div class={dropdownCls} style={{ width: `${dropdownWidth.value}px` }}>
                   <ul
                     class={listCls}
                     v-show={!isLoading.value}
@@ -143,7 +150,11 @@ export default defineComponent({
                     ref={dropdownContainer}>
                     {isShowCreateOption.value && (
                       <Option value={filterQuery.value} name={filterQuery.value} create>
-                        {props.multiple ? <Checkbox modelValue={false} label={filterQuery.value} /> : filterQuery.value}
+                        {props.multiple ? (
+                          <Checkbox modelValue={false} label={filterQuery.value} class={'select-checkbox'} />
+                        ) : (
+                          filterQuery.value
+                        )}
                       </Option>
                     )}
                     {ctx.slots?.default && ctx.slots.default()}

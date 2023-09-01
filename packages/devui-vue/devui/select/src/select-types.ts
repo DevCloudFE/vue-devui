@@ -112,6 +112,10 @@ export const selectProps = {
     type: Boolean,
     default: true,
   },
+  showAnimation: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;

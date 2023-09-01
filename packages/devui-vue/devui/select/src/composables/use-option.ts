@@ -1,4 +1,4 @@
-import { computed, inject, onBeforeMount, onBeforeUnmount, ref } from 'vue';
+import { computed, inject, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { OptionProps, UseOptionReturnType } from '../select-types';
 import { SELECT_TOKEN, OPTION_GROUP_TOKEN } from '../const';
 import { className } from '../utils';
@@ -58,6 +58,10 @@ export default function useOption(props: OptionProps): UseOptionReturnType {
     } else {
       return true;
     }
+  });
+
+  watch(currentName, () => {
+    select?.updateInjectOptions(optionItem.value, 'add', isObjectOption.value);
   });
 
   onBeforeMount(() => {
