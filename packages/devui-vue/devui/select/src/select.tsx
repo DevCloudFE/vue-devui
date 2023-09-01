@@ -9,6 +9,8 @@ import {
   onBeforeMount,
   Teleport,
   withModifiers,
+  onMounted,
+  nextTick,
 } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
@@ -27,7 +29,7 @@ import { FlexibleOverlay } from '../../overlay';
 export default defineComponent({
   name: 'DSelect',
   props: selectProps,
-  emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur', 'remove-tag', 'clear'],
+  emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur', 'remove-tag', 'clear', 'load-more'],
   setup(props: SelectProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DSelect', app);
@@ -57,6 +59,7 @@ export default defineComponent({
       toggleChange,
       isShowCreateOption,
     } = useSelect(props, selectRef, ctx, focus, blur, isSelectFocus, t);
+    const dropdownContainer = ref();
     const { originRef, dropdownWidth } = useSelectMenuSize(selectRef, dropdownRef, isOpen);
 
     const scrollbarNs = useNamespace('scrollbar');
@@ -75,6 +78,20 @@ export default defineComponent({
 
     onBeforeMount(() => {
       isRender.value = true;
+    });
+
+    const scrollToBottom = () => {
+      const compareHeight = dropdownContainer.value.scrollHeight - dropdownContainer.value.clientHeight;
+      const scrollTop = dropdownContainer.value.scrollTop;
+      if (scrollTop === compareHeight) {
+        ctx.emit('load-more');
+      }
+    };
+
+    onMounted(() => {
+      nextTick(() => {
+        dropdownContainer.value.addEventListener('scroll', scrollToBottom);
+      });
     });
 
     provide(
@@ -119,7 +136,11 @@ export default defineComponent({
                   'z-index': isOpen.value ? 'var(--devui-z-index-dropdown, 1052)' : -1,
                 }}>
                 <div class={dropdownCls} style={{ width: `${dropdownWidth.value}px`, visibility: isOpen.value ? 'visible' : 'hidden' }}>
-                  <ul class={listCls} v-show={!isLoading.value} style={{ padding: isShowEmptyText.value ? '0' : '12px' }}>
+                  <ul
+                    class={listCls}
+                    v-show={!isLoading.value}
+                    style={{ padding: isShowEmptyText.value ? '0' : '12px' }}
+                    ref={dropdownContainer}>
                     {isShowCreateOption.value && (
                       <Option value={filterQuery.value} name={filterQuery.value} create>
                         {props.multiple ? <Checkbox modelValue={false} label={filterQuery.value} /> : filterQuery.value}
