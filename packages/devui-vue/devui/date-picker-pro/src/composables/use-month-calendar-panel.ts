@@ -3,7 +3,7 @@ import type { SetupContext } from 'vue';
 import { useNamespace } from '@devui/shared/utils';
 import { monthCalendarItemHeight } from '../const';
 import { DatePickerProPanelProps, YearAndMonthItem, UseMonthCalendarPanelReturnType } from '../date-picker-pro-types';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import useCalendarSelected from './use-calendar-selected';
