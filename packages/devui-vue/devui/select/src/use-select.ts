@@ -1,15 +1,15 @@
-import { ref, computed, Ref, inject, watch, onMounted } from 'vue';
+import { ref, computed, Ref, inject, watch } from 'vue';
 import type { SetupContext } from 'vue';
 import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
 import { className, KeyType } from './utils';
-import { useNamespace } from '@devui/shared/utils';
+import { useNamespace } from '../../shared/hooks/use-namespace';
 import { onClickOutside } from '@vueuse/core';
 import { isFunction, debounce } from 'lodash';
 import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
 
 export default function useSelect(
   props: SelectProps,
-  selectRef: Ref,
+  selectRef: Ref<HTMLElement | undefined>,
   ctx: SetupContext,
   focus: () => void,
   blur: () => void,
@@ -26,6 +26,8 @@ export default function useSelect(
 
   const isObjectOption = ref(false);
 
+  const originRef = ref<HTMLElement>();
+
   // 控制弹窗开合
   const isOpen = ref<boolean>(false);
   const toggleChange = (bool: boolean) => {
@@ -38,13 +40,7 @@ export default function useSelect(
   onClickOutside(
     dropdownRef,
     () => {
-      if (props.multiple && isOpen.value) {
-        selectRef.value?.clearMultipleSearchKey();
-        onBlur();
-      }
-      if (isOpen.value) {
-        toggleChange(false);
-      }
+      toggleChange(false);
     },
     { ignore: [selectRef] }
   );
@@ -186,8 +182,6 @@ export default function useSelect(
   const valueChange = (item: OptionObjectItem) => {
     const { multiple } = props;
     let { modelValue } = props;
-    filterQuery.value = '';
-    handlerQueryFunc('');
     if (multiple) {
       const checkedItems = Array.isArray(modelValue) ? modelValue.slice() : [];
       const index = checkedItems.indexOf(item.value);
@@ -214,7 +208,6 @@ export default function useSelect(
       }
       getMultipleSelected(checkedItems);
     } else {
-      selectRef.value?.clearSingleSearchKey();
       ctx.emit('update:modelValue', item.value);
       getSingleSelected(item);
       toggleChange(false);
@@ -227,8 +220,6 @@ export default function useSelect(
   };
 
   const handleClear = () => {
-    filterQuery.value = '';
-    handlerQueryFunc('');
     if (props.multiple) {
       ctx.emit('update:modelValue', []);
       ctx.emit('value-change', []);
@@ -241,6 +232,7 @@ export default function useSelect(
       handleClose();
       blur();
     }
+    filterQuery.value = '';
   };
 
   const tagDelete = (data: OptionObjectItem) => {
@@ -260,18 +252,16 @@ export default function useSelect(
     getMultipleSelected(checkedItems);
   };
 
-  const onFocus = () => {
+  const onFocus = (e: FocusEvent) => {
+    ctx.emit('focus', e);
     if (!selectDisabled.value) {
       isSelectFocus.value = true;
     }
   };
 
-  const onBlur = () => {
+  const onBlur = (e: FocusEvent) => {
+    ctx.emit('blur', e);
     if (!selectDisabled.value) {
-      setTimeout(() => {
-        filterQuery.value = '';
-        handlerQueryFunc('');
-      }, 150);
       isSelectFocus.value = false;
     }
   };
@@ -310,7 +300,7 @@ export default function useSelect(
   const emptyText = computed(() => {
     const visibleOptionsCount = injectOptionsArray.value.filter((item) => {
       const label = item.name || item.value;
-      return label.toString().toLocaleLowerCase().includes(filterQuery.value.trim().toLocaleLowerCase());
+      return label.toString().toLocaleLowerCase().includes(filterQuery.value.toLocaleLowerCase().trim());
     }).length;
     if (isLoading.value) {
       return props.loadingText || (t('loadingText') as string);
@@ -345,7 +335,7 @@ export default function useSelect(
   watch(
     () => props.modelValue,
     () => {
-      formItemContext?.validate('change').catch(() => {});
+      formItemContext?.validate('change').catch((err) => console.warn(err));
       updateInjectOptionsStatus();
     },
     { deep: true }
@@ -371,19 +361,10 @@ export default function useSelect(
     { flush: 'post' }
   );
 
-  watch(isSelectFocus, (val) => {
-    if (val) {
-      ctx.emit('focus');
-    } else {
-      ctx.emit('blur');
-    }
-  });
-
-  onMounted(updateInjectOptionsStatus);
-
   return {
     selectDisabled,
     selectSize,
+    originRef,
     dropdownRef,
     isOpen,
     selectCls,
