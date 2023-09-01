@@ -3,6 +3,20 @@ import type { Dayjs } from 'dayjs';
 import { ArrType } from '../../time-picker/src/types';
 import type { InputSize } from '../../input/src/input-types';
 
+export type Placement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
+
 export const datePickerProCommonProps = {
   format: {
     type: String,
@@ -30,6 +44,14 @@ export const datePickerProCommonProps = {
     type: String,
     default: 'date',
   },
+  position: {
+    type: Array as PropType<Array<Placement>>,
+    default: ['bottom-start']
+  },
+  allowClear: {
+    type: Boolean,
+    default: true
+  }
 };
 
 export const datePickerProProps = {
@@ -63,6 +85,8 @@ export interface UseDatePickerProReturnType {
   onFocus: (e: MouseEvent) => void;
   onSelectedDate: (date: Dayjs, isConfirm?: boolean) => void;
   handlerClearTime: (e: MouseEvent) => void;
+  onInputChange: (e: string) => void;
+  toggle: () => void;
 }
 
 export interface CalendarDateItem {
@@ -74,6 +98,7 @@ export interface CalendarDateItem {
 }
 
 export interface YearAndMonthItem {
+  id?: string,
   year: number;
   month?: number;
   isMonth?: boolean;

@@ -19,6 +19,11 @@ export default function useTimePickerPanel(props: TimerPickerPanelProps, ctx: Se
   watch(
     () => [props.visible, props.bindData],
     ([visible, newTimeVal], [, oldTimeVal]) => {
+      const reg = /(\d{2}):(\d{2}):(\d{2})/;
+      if (typeof newTimeVal === 'string') {
+        const result = newTimeVal.match(reg);
+        newTimeVal = result![0];
+      }
       if (newTimeVal && (visible || newTimeVal !== oldTimeVal)) {
         timeListDom.value.setOuterTime(newTimeVal);
       } else {

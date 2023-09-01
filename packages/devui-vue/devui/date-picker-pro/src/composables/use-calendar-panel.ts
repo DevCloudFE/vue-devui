@@ -1,5 +1,6 @@
 import { ref, onBeforeMount, nextTick, watch, onMounted } from 'vue';
 import type { SetupContext } from 'vue';
+import { v4 as uuidv4 } from 'uuid'
 import { DAY_DURATION, calendarItemHeight } from '../const';
 import { CalendarDateItem, YearAndMonthItem, UseCalendarPanelReturnType, DatePickerProPanelProps } from '../date-picker-pro-types';
 import dayjs from 'dayjs';
@@ -68,6 +69,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
 
     for (let year = calendarRange.value[0]; year <= calendarRange.value[1]; year++) {
       const yearOption: YearAndMonthItem = {
+        id: uuidv4(),
         year,
         isMonth: false,
         active: false,
@@ -81,6 +83,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
         };
         allMonthList.value.push(monthOption);
         const yearMonthOption: YearAndMonthItem = {
+          id: uuidv4(),
           year,
           month,
           isMonth: true,
@@ -121,7 +124,7 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     nextTick(() => {
       const scrollEl = yearScrollRef.value;
-      scrollEl?.scrollTo?.(scrollIndex);
+      scrollEl?.scrollToItem?.(scrollIndex);
     });
   };
 
@@ -149,7 +152,9 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     }
     const toDate = getToDate(props.dateValue);
     if (toDate) {
-      goToShowDate(toDate.toDate());
+      nextTick(() => {
+        goToShowDate(toDate.toDate());
+      })
     }
   };
 
@@ -202,7 +207,12 @@ export default function useCalendarPanel(props: DatePickerProPanelProps, ctx: Se
     const selectedMonth = activeItem?.month;
     isListCollapse.value = !isListCollapse.value;
     if (isListCollapse.value) {
-      yearAndMonthList.value = yearAndMonthList.value.filter((child) => !child.isMonth);
+      yearAndMonthList.value = yearAndMonthList.value
+        .map((child) => {
+          child.active = false;
+          return child;
+        })
+        .filter((child) => !child.isMonth);
     } else {
       initCalendarData();
     }

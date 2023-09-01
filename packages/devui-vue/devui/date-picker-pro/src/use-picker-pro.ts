@@ -1,19 +1,21 @@
-import { shallowRef, ref, computed, inject, watch } from 'vue';
+import { shallowRef, ref, computed, inject, watch, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { DatePickerProProps, UseDatePickerProReturnType } from './date-picker-pro-types';
 import { onClickOutside } from '@vueuse/core';
 import type { Dayjs } from 'dayjs';
-import { formatDayjsToStr, isDateEquals, parserDate } from './utils';
+import { debounce } from 'lodash';
+import { formatDayjsToStr, isDateEquals, parserDate, isInputDateValid } from './utils';
 import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../form';
-import { DEFAULT_DATE, DEFAULT_TIME } from './const';
 
 export default function usePickerPro(
   props: DatePickerProProps,
   ctx: SetupContext,
-  t: (path: string) => unknown
+  t: (path: string) => unknown,
+  commonT: (path: string) => string
 ): UseDatePickerProReturnType {
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
+  const { calendarRange, limitDateRange, allowClear } = toRefs(props)
 
   const originRef = ref<HTMLElement>();
   const inputRef = shallowRef<HTMLElement>();
@@ -25,6 +27,10 @@ export default function usePickerPro(
   const pickerDisabled = computed(() => formContext?.disabled || props.disabled);
   const pickerSize = computed(() => formContext?.size || props.size);
   const isValidateError = computed(() => formItemContext?.validateState === 'error');
+
+  const toggle = () => {
+    toggleChange(!isPanelShow.value)
+  }
 
   const toggleChange = (isShow: boolean) => {
     isPanelShow.value = isShow;
@@ -46,9 +52,16 @@ export default function usePickerPro(
     toggleChange(true);
     ctx.emit('focus', e);
   };
-
+  const langMap: Record<string, string> = {
+    'zh-cn': 'YYYY/MM/DD',
+    'en-us': 'MMM DD, YYYY'
+  }
+  const langTimeMap: Record<string, string> = {
+    'zh-cn': 'YYYY/MM/DD HH:mm:ss',
+    'en-us': 'MMM DD, YYYY HH:mm:ss'
+  }
   const format = computed(() => {
-    return props.showTime ? props.format || DEFAULT_TIME : props.format || DEFAULT_DATE;
+    return props.showTime ? props.format || langTimeMap[commonT('lang')] : props.format || langMap[commonT('lang')];
   });
 
   const dateValue = computed(() => {
@@ -60,14 +73,16 @@ export default function usePickerPro(
   });
 
   const displayDateValue = computed(() => {
-    const formatDate = formatDayjsToStr(dateValue.value, format.value, props.type);
+    const formatDate = formatDayjsToStr(dateValue.value, format.value, props.type, commonT('lang'));
     if (formatDate) {
       return formatDate;
     }
     return '';
   });
 
-  const showCloseIcon = computed(() => isMouseEnter.value && (props.modelValue ? true : false));
+  const showCloseIcon = computed(
+    () => !pickerDisabled.value && isMouseEnter.value && (props.modelValue ? true : false) && allowClear.value
+  );
 
   const onSelectedDate = (date: Dayjs, isConfirm?: boolean) => {
     const result = date ? date.toDate() : date;
@@ -95,10 +110,16 @@ export default function usePickerPro(
     }
   };
 
+  const onInputChange = debounce((val: string) => {
+    isInputDateValid(val, format.value, calendarRange.value, limitDateRange?.value, (validDate: string) => {
+      ctx.emit('update:modelValue', validDate)
+    });
+  }, 300);
+
   watch(
     () => props.modelValue,
     () => {
-      formItemContext?.validate('change').catch((err) => console.warn(err));
+      formItemContext?.validate('change').catch(() => { });
     },
     { deep: true }
   );
@@ -120,5 +141,7 @@ export default function usePickerPro(
     onFocus,
     onSelectedDate,
     handlerClearTime,
+    onInputChange,
+    toggle,
   };
 }

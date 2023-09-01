@@ -1,9 +1,9 @@
-import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types';
 import usePickerPro from './use-picker-pro';
 import { Input } from '../../input';
-import { FlexibleOverlay, Placement } from '../../overlay';
+import { FlexibleOverlay } from '../../overlay';
 import DatePickerProPanel from './components/date-picker-panel';
 import { IconCalendar } from './components/icon-calendar';
 import { IconClose } from './components/icon-close';
@@ -18,6 +18,8 @@ export default defineComponent({
   setup(props: DatePickerProProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DDatePickerPro', app);
+    const commonT = createI18nTranslate('DCommon', app)
+    const { position } = toRefs(props);
 
     const ns = useNamespace('date-picker-pro');
     const {
@@ -37,7 +39,10 @@ export default defineComponent({
       onFocus,
       onSelectedDate,
       handlerClearTime,
-    } = usePickerPro(props, ctx, t);
+      onInputChange,
+      toggle,
+    } = usePickerPro(props, ctx, t, commonT);
+    ctx.expose({ toggle })
     const position = ref<Placement[]>(['bottom-start', 'top-start']);
     return () => {
       const vSlots = {
@@ -49,8 +54,8 @@ export default defineComponent({
           <div
             class={ns.e('single-picker')}
             ref={originRef}
-            onMouseover={() => (isMouseEnter.value = true)}
-            onMouseout={() => (isMouseEnter.value = false)}>
+            onMouseenter={() => (isMouseEnter.value = true)}
+            onMouseleave={() => (isMouseEnter.value = false)}>
             <Input
               ref={inputRef}
               modelValue={displayDateValue.value}
@@ -59,6 +64,7 @@ export default defineComponent({
               size={pickerSize.value}
               disabled={pickerDisabled.value}
               error={isValidateError.value}
+              onUpdate:modelValue={onInputChange}
               v-slots={{
                 prefix: () => (
                   <span class={ns.e('single-picker-icon')}>
@@ -66,9 +72,10 @@ export default defineComponent({
                   </span>
                 ),
                 suffix: () => (
-                  <span class={['close-icon', showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden')]} onClick={handlerClearTime}>
-                    <IconClose />
-                  </span>
+                  showCloseIcon.value ?
+                    <span class={['close-icon', ns.m('icon-visible')]} onClick={handlerClearTime}>
+                      <IconClose />
+                    </span> : null
                 ),
               }}
             />
@@ -93,7 +100,7 @@ export default defineComponent({
               </FlexibleOverlay>
             </Transition>
           </Teleport>
-        </div>
+        </div >
       );
     };
   },
