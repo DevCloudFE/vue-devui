@@ -199,7 +199,7 @@ export default defineComponent({
 <template>
   <div>
     <d-button @click.stop="toggleChange" @pointerup.stop="() => {}"  class="mb-2">展开 / 隐藏</d-button>
-    <d-select ref="demoSelect" v-model="toggleValue" :options="options"></d-select>
+    <d-select ref="demoSelect" v-model="toggleValue" :options="options" @load-more="loadMore"></d-select>
   </div>
 </template>
 
@@ -210,18 +210,26 @@ export default defineComponent({
   setup() {
     const toggleValue = ref('');
     const visitable = ref(false);
-    const items = new Array(6).fill(0).map((item, i) => `Option ${i + 1}`);
+    const items = new Array(12).fill(0).map((item, i) => `Option ${i + 1}`);
     const options = reactive(items);
+    const newItems = new Array(2).fill(0).map((item, i) => `Option new`);
     const demoSelect = ref(null);
     const toggleChange = () => {
       visitable.value = !visitable.value;
       demoSelect.value.toggleChange(visitable.value);
+    };
+    const loadMore = () => {
+      if(options.length <= 20) {
+        options.push(...newItems);
+        console.log('load more');
+      }
     };
     return {
       toggleValue,
       options,
       demoSelect,
       toggleChange,
+      loadMore,
     };
   },
 });
@@ -530,6 +538,7 @@ export default defineComponent({
 | blur          | `Function(e: FocusEvent)` | 可选，失去焦点时触发                                           |
 | clear         | `Function()`              | 可选, 通过右侧删除图标清空所有选项时触发                       |
 | remove-tag    | `Function(value)`         | 可选，多选时删除单个 tag 时触发，参数为当前 tag 的值           |
+| load-more    | `Function()`               | 可选，下拉框有滚动条时滚动到底部触发           |[下拉列表显隐方法](#下拉列表显隐方法)|
 
 ### Select 插槽
 

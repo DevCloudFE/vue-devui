@@ -1,6 +1,6 @@
 import { computed, defineComponent, provide, ref, toRefs, watch } from 'vue';
 import { stepsProps, StepsProps } from './steps-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './steps.scss';
 import { ACTIVE_STEP, STEPS, STEPS_PROPS } from './const';
 
@@ -32,11 +32,7 @@ export default defineComponent({
     });
 
     return () => {
-      return (
-        <div class={stepsClass.value}>
-          { slots.default?.() }
-        </div>
-      );
+      return <div class={stepsClass.value}>{slots.default?.()}</div>;
     };
-  }
+  },
 });

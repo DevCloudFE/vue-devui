@@ -1,7 +1,7 @@
 import { computed, toRefs, inject } from 'vue';
 import { roundInjectionKey, animationInjectionKey } from '../skeleton-types';
 import { SkeletonItemProps, UseSkeletonItem } from '../components/skeleton-item-types';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 export function useSkeletonItem(props: SkeletonItemProps): UseSkeletonItem {
   const ns = useNamespace('skeleton-item');

@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, provide } from 'vue';
+import { defineComponent, onMounted, provide, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import CodeReviewHeader from './components/code-review-header';
 import { CommentIcon } from './components/code-review-icons';
@@ -16,6 +16,7 @@ export default defineComponent({
   emits: ['foldChange', 'addComment', 'afterViewInit', 'contentRefresh'],
   setup(props: CodeReviewProps, ctx: SetupContext) {
     const ns = useNamespace('code-review');
+    const { diffType } = toRefs(props);
     const { renderHtml, reviewContentRef, diffFile, onContentClick } = useCodeReview(props, ctx);
     const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
     const { commentLeft, commentTop, mouseEvent, onCommentMouseLeave, onCommentIconClick, insertComment, removeComment } =
@@ -25,7 +26,7 @@ export default defineComponent({
       ctx.emit('afterViewInit', { toggleFold, insertComment, removeComment });
     });
 
-    provide(CodeReviewInjectionKey, { reviewContentRef, diffInfo: diffFile.value[0], isFold, rootCtx: ctx });
+    provide(CodeReviewInjectionKey, { diffType, reviewContentRef, diffInfo: diffFile.value[0], isFold, rootCtx: ctx });
 
     return () => (
       <div class={ns.b()}>

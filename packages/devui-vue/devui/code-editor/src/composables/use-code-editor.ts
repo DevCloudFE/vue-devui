@@ -180,8 +180,11 @@ export function useCodeEditor(props: CodeEditorProps, ctx: SetupContext) {
 
     model?.onDidChangeContent(
       throttle(() => {
-        modifyValueFromInner = true;
-        ctx.emit('update:modelValue', model.getValue());
+        const editorValue = model.getValue();
+        if (modelValue.value !== editorValue) {
+          modifyValueFromInner = true;
+          ctx.emit('update:modelValue', model.getValue());
+        }
       }, 100)
     );
   }

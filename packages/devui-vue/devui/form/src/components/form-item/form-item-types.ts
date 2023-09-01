@@ -1,5 +1,5 @@
 import type { RuleItem, ValidateFieldsError } from 'async-validator';
-import type { ComputedRef, ExtractPropTypes, PropType, InjectionKey, Ref } from 'vue';
+import type { ComputedRef, ExtractPropTypes, PropType, InjectionKey, Ref, SetupContext } from 'vue';
 import { LabelAlign, LabelSize, Layout } from '../../form-types';
 import { FeedbackStatus } from '../form-control/form-control-types';
 
@@ -18,6 +18,13 @@ export type PopPosition =
   | 'bottom-end'
   | 'left-start'
   | 'left-end';
+
+export interface HelpTips {
+  content: string;
+  position?: PopPosition[];
+  trigger?: 'hover' | 'click';
+  popType?: string;
+}
 
 export interface FormRuleItem extends RuleItem {
   trigger?: Array<string>;
@@ -49,7 +56,7 @@ export const formItemProps = {
     default: undefined,
   },
   helpTips: {
-    type: String,
+    type: [String, Object] as PropType<string | HelpTips>,
     default: '',
   },
   feedbackStatus: {
@@ -70,6 +77,8 @@ export type LabelData = ComputedRef<{
   layout: Layout;
   labelSize: LabelSize;
   labelAlign: LabelAlign;
+  helpTips: string | HelpTips;
+  formItemCtx: SetupContext;
 }>;
 
 export interface FormItemContext extends FormItemProps {

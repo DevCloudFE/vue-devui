@@ -1,6 +1,7 @@
 import type { ExtractPropTypes, InjectionKey, PropType, SetupContext, Ref } from 'vue';
 import type { DiffFile } from 'diff2html/lib/types';
 
+export type DiffType = 'modify' | 'add' | 'delete' | 'rename';
 export type OutputFormat = 'line-by-line' | 'side-by-side';
 export type ExpandDirection = 'up' | 'down' | 'updown' | 'all';
 export type LineSide = 'left' | 'right';
@@ -37,6 +38,10 @@ export const codeReviewProps = {
     type: Boolean,
     default: false,
   },
+  diffType: {
+    type: String as PropType<DiffType>,
+    default: 'modify',
+  },
   outputFormat: {
     type: String as PropType<OutputFormat>,
     default: 'line-by-line',
@@ -53,6 +58,7 @@ export const codeReviewProps = {
 export type CodeReviewProps = ExtractPropTypes<typeof codeReviewProps>;
 
 export interface CodeReviewContext {
+  diffType: Ref<DiffType>;
   reviewContentRef: Ref<HTMLElement>;
   diffInfo: DiffFile;
   isFold: Ref<boolean>;

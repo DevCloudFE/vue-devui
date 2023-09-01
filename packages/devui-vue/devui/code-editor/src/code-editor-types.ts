@@ -70,7 +70,7 @@ export const codeEditorProps = {
     type: Array as PropType<Comment[]>,
     default: () => []
   }
-}
+};
 
 export type CodeEditorProps = ExtractPropTypes<typeof codeEditorProps>;
 
