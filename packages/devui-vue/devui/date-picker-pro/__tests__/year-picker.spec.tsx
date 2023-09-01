@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import DDatePickerPro from '../src/date-picker-pro';
 import DRangeDatePickerPro from '../src/components/range-date-picker-pro';
 import { nextTick, ref, getCurrentInstance } from 'vue';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { Locale } from '../../locale';
 
 const ns = useNamespace('date-picker-pro', true);

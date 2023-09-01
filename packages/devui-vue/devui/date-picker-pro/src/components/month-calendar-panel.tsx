@@ -1,6 +1,6 @@
 import { defineComponent, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import useMonthCalendarPanel from '../composables/use-month-calendar-panel';
 import { datePickerProPanelProps, DatePickerProPanelProps, YearAndMonthItem } from '../date-picker-pro-types';
 import { createI18nTranslate } from '../../../locale/create';

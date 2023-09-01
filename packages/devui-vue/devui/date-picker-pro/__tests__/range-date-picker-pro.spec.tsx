@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import dayjs from 'dayjs';
 import DRangeDatePickerPro from '../src/components/range-date-picker-pro';
 import { nextTick, ref, getCurrentInstance } from 'vue';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import DButton from '../../button/src/button';
 import { Locale } from '../../locale';
 import { getDateIndex, getSelectedDate, getSelectedIndex } from './utils';

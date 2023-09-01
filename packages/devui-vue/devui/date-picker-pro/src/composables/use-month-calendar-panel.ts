@@ -1,6 +1,6 @@
 import { ref, onBeforeMount, nextTick, watch } from 'vue';
 import type { SetupContext } from 'vue';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { monthCalendarItemHeight } from '../const';
 import { DatePickerProPanelProps, YearAndMonthItem, UseMonthCalendarPanelReturnType } from '../date-picker-pro-types';
 import { throttle } from 'lodash';

@@ -1,6 +1,6 @@
 import { defineComponent, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import DTimeList from '../../../time-picker/src/components/popup-line';
 import useTimePickerPanel from '../composables/use-time-picker-panel';
 import { TimerPickerPanelProps, timerPickerPanelProps } from '../date-picker-pro-types';

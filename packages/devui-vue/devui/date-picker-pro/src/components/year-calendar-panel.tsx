@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
 import type { SetupContext } from 'vue';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import useYearCalendarPanel from '../composables/use-year-calendar-panel';
 import { datePickerProPanelProps, DatePickerProPanelProps } from '../date-picker-pro-types';
 import { yearPickerHeight, yearCalendarItemHeight } from '../const';

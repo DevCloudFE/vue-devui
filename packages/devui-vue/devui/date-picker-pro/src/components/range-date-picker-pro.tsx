@@ -6,7 +6,7 @@ import DatePickerProPanel from './date-picker-panel';
 import { Input } from '../../../input';
 import { IconCalendar } from './icon-calendar';
 import { IconClose } from './icon-close';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import useRangePickerPro from '../composables/use-range-date-picker-pro';
 
 import '../date-picker-pro.scss';

@@ -7,7 +7,7 @@ import { FlexibleOverlay, Placement } from '../../overlay';
 import DatePickerProPanel from './components/date-picker-panel';
 import { IconCalendar } from './components/icon-calendar';
 import { IconClose } from './components/icon-close';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './date-picker-pro.scss';
 import { createI18nTranslate } from '../../locale/create';
 
