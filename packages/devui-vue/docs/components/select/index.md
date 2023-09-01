@@ -212,13 +212,17 @@ export default defineComponent({
     const visitable = ref(false);
     const items = new Array(12).fill(0).map((item, i) => `Option ${i + 1}`);
     const options = reactive(items);
+    const newItems = new Array(2).fill(0).map((item, i) => `Option new`);
     const demoSelect = ref(null);
     const toggleChange = () => {
       visitable.value = !visitable.value;
       demoSelect.value.toggleChange(visitable.value);
     };
     const loadMore = () => {
-      console.log('load more');
+      if(options.length <= 20) {
+        options.push(...newItems);
+        console.log('load more');
+      }
     };
     return {
       toggleValue,

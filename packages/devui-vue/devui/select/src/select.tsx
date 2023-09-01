@@ -79,11 +79,10 @@ export default defineComponent({
     const updateDropdownWidth = () => {
       dropdownWidth.value = originRef?.value?.clientWidth ? originRef.value.clientWidth + 'px' : '100%';
     };
-
-    const compareHeight = computed(() => dropdownContainer.value.scrollHeight - dropdownContainer.value.clientHeight);
     const scrollToBottom = () => {
+      const compareHeight = dropdownContainer.value.scrollHeight - dropdownContainer.value.clientHeight;
       const scrollTop = dropdownContainer.value.scrollTop;
-      if (scrollTop === compareHeight.value) {
+      if (scrollTop === compareHeight) {
         ctx.emit('load-more');
       }
     };
