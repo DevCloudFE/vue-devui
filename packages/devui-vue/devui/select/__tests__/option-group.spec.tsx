@@ -3,7 +3,7 @@ import { ref, nextTick } from 'vue';
 import DSelect from '../src/select';
 import DOption from '../src/components/option';
 import DOptionGroup from '../src/components/option-group';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('select', true);
 

@@ -10,12 +10,13 @@ export interface OptionObjectItem {
 export type OptionItem = number | string | ({ value: string | number } & Partial<OptionObjectItem>);
 export type Options = Array<OptionItem>;
 
-export type ModelValue = number | string | Array<number | string>;
+export type ModelValue = number | string | Array<number | string> | boolean;
 export type filterValue = boolean | ((query: string) => void);
 export type SelectSize = 'sm' | 'md' | 'lg';
+export type Position = 'top' | 'right' | 'bottom' | 'left';
 export const selectProps = {
   modelValue: {
-    type: [String, Number, Array] as PropType<ModelValue>,
+    type: [String, Number, Array, Boolean] as PropType<ModelValue>,
     default: '',
   },
   'onUpdate:modelValue': {
@@ -29,6 +30,10 @@ export const selectProps = {
   size: {
     type: String as PropType<SelectSize>,
     default: '',
+  },
+  position: {
+    type: Array as PropType<Position[]>,
+    default: () => ['bottom', 'top'],
   },
   // TODO: 这个api命名不合理
   overview: {
@@ -103,6 +108,10 @@ export const selectProps = {
     type: Number,
     default: 0,
   },
+  showEmptyWhenUnmatched: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;
@@ -112,7 +121,6 @@ export type OptionModelValue = number | string;
 export interface UseSelectReturnType {
   selectDisabled: ComputedRef<boolean>;
   selectSize: ComputedRef<SelectSize>;
-  originRef: Ref<HTMLElement | undefined>;
   dropdownRef: Ref<HTMLElement | undefined>;
   isOpen: Ref<boolean>;
   selectCls: ComputedRef<string>;
@@ -139,14 +147,16 @@ export interface SelectContext extends SelectProps {
   selectDisabled: boolean;
   selectSize: string;
   isOpen: boolean;
+  isSelectFocus: boolean;
   selectedOptions: OptionObjectItem[];
   filterQuery: string;
+  dropdownWidth: number;
   valueChange: (item: OptionObjectItem) => void;
   handleClear: () => void;
   updateInjectOptions: (item: Record<string, unknown>, operation: string, isObject: boolean) => void;
   tagDelete: (data: OptionObjectItem) => void;
-  onFocus: (e: FocusEvent) => void;
-  onBlur: (e: FocusEvent) => void;
+  onFocus: () => void;
+  onBlur: () => void;
   debounceQueryFilter: (query: string) => void;
 }
 
@@ -179,23 +189,32 @@ export interface UseOptionReturnType {
 }
 
 export interface UseSelectContentReturnType {
+  singleInputRef: Ref;
   searchQuery: Ref<string>;
+  singleSearchKey: Ref<string>;
   selectedData: ComputedRef<OptionObjectItem[]>;
   isSelectDisable: ComputedRef<boolean>;
   isSupportCollapseTags: ComputedRef<boolean>;
   isDisabledTooltip: ComputedRef<boolean>;
   isReadOnly: ComputedRef<boolean>;
+  isSupportFilter: ComputedRef<boolean>;
   selectionCls: ComputedRef<string>;
   inputCls: ComputedRef<string>;
   tagSize: ComputedRef<string>;
   placeholder: ComputedRef<string>;
+  singlePlaceholder: ComputedRef<string>;
+  singlePlaceholderWidth: ComputedRef<string>;
   isMultiple: ComputedRef<boolean>;
   displayInputValue: ComputedRef<string>;
+  isPlaceholderDark: ComputedRef<boolean>;
   handleClear: (e: MouseEvent) => void;
+  onSingleInputWrapClick: () => void;
+  onMultipleClick: (e: any) => void;
   tagDelete: (data: OptionObjectItem) => void;
   onFocus: (e: FocusEvent) => void;
   onBlur: (e: FocusEvent) => void;
   queryFilter: (e: Event) => void;
+  onArrowClick: () => void;
 }
 
 export interface UseSelectFunctionReturn {

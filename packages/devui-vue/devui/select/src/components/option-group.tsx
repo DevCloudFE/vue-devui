@@ -1,7 +1,7 @@
 import { defineComponent, provide, reactive, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { optionGroupProps, OptionGroupProps, OptionGroupContext } from '../select-types';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { OPTION_GROUP_TOKEN } from '../const';
 
 export default defineComponent({
