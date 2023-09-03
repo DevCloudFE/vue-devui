@@ -54,7 +54,7 @@ export function useEditorMdRender(props: MdRenderProps, ctx: SetupContext) {
       const result = previewRef.value.querySelectorAll('input');
       const index = [...result].filter((el: any) => el.type === 'checkbox').findIndex((item: any) => item === e.target);
       const checkContent = setChecked(e.target.checked, index);
-      ctx.emit('mdCheckedEvent', checkContent);
+      ctx.emit('checkedChange', checkContent);
     }
   };
 

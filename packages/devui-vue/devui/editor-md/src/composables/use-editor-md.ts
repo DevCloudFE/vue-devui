@@ -102,7 +102,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
   };
 
   const onChecked = (e: string) => {
-    ctx.emit('mdCheckedEvent', e);
+    ctx.emit('checkedChange', e);
   };
 
   const scrollToFocusItem = () => {
