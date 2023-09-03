@@ -1,7 +1,7 @@
 import { defineComponent, onMounted, onUnmounted, PropType, ref } from 'vue';
 import { on, off } from '../../../shared/devui-directive/utils';
 import clickoutsideDirective from '../../../shared/devui-directive/clickoutside';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 export default defineComponent({
   directives: {
