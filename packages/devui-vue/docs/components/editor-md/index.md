@@ -232,6 +232,120 @@ export default defineComponent({
 editor-md/checkbox
 :::
 
+### 配置快速提示
+
+:::demo 设置 hintConfig 后，可用于支持@选择用户等场景。
+
+```vue
+<template>
+  <d-editor-md
+    v-model="content"
+    :placeholder="'You can enter @ associate member, enter # to associate an order number...'"
+    :hint-config="hintConfig"
+    @content-change="valueChange"
+  >
+    <template #hintTemplate>
+      <ul class="list-menu" v-if="hintList && hintList.length">
+        <li class="menu-item" v-for="(item, index) of hintList" @click="hintItemClick(item)">{{ `${item.itemText}`}}</li>
+      </ul>
+    </template>
+  </d-editor-md>
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const content = ref('');
+
+    const valueChange = (val) => {
+      console.log(val);
+    };
+
+    const hintList = ref([]);
+
+    const hintItemClick = (item) => {
+      hintCallback.value && hintCallback.value(item.insertText || item.itemText);
+    };
+
+    const hintCallback = ref();
+
+    const hintConfig = {
+      '#': (e) => {
+          const { callback, cursorHint, prefix } = e;
+          const numberList = [
+            {
+              itemText: '00001',
+              insertText: '[00001](#00001)'
+            },
+            {
+              itemText: '00002',
+              insertText: '[00002](#00002)'
+            },
+            {
+              itemText: '00003',
+              insertText: '[00003](#00003)'
+            },
+            {
+              itemText: '00004',
+              insertText: '[00004](#00004)'
+            }
+          ];
+          hintList.value = numberList.filter((item) => item.itemText.indexOf(cursorHint) !== -1);
+          hintCallback.value = callback;
+      },
+      '@': {
+        handler: (e) => {
+          const { callback, cursorHint, prefix } = e;
+          const userList = [
+            {
+              itemText: 'User1'
+            },
+            {
+              itemText: 'User2'
+            },
+            {
+              itemText: 'User3'
+            },
+            {
+              itemText: 'User4'
+            }
+          ];
+          hintList.value = userList.filter((item) => item.itemText.indexOf(cursorHint) !== -1);
+          hintCallback.value = callback;
+        },
+      },
+      throttleTime: 200,
+    };
+
+    return { content, valueChange, hintConfig, hintList, hintCallback, hintItemClick };
+  },
+});
+</script>
+<style>
+.list-menu {
+  padding: 8px;
+  margin: 0;
+  width: 100px;
+}
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 4px;
+  cursor: pointer;
+}
+.menu-item:hover {
+  background-color: var(--devui-list-item-hover-bg, #f2f5fc);
+  color: var(--devui-list-item-hover-text, #526ecc);
+}
+</style>
+```
+
+:::
+
 ### EditorMd 参数
 
 | 参数名                 | 类型                                      | 默认值   | 说明                                                                                                               |
@@ -242,6 +356,7 @@ editor-md/checkbox
 | custom-parse           | `(html: string) => string`                | --       | 自定义对渲染后的 html 处理，需要接收渲染后的 html，返回自定义处理后的 html                                         |
 | md-rules               | `object`                                  | {}       | 设置 markdown 对字符串的处理方式， 可参考[markdown-it](https://www.npmjs.com/package/markdown-it?activeTab=readme) |
 | md-plugins             | [MdPlugin[]](#mdplugin)                   | --       | 设置 markdown-it 插件 |
+| hintConfig             | [MdHintConfig[]](#hintconfig)             | --       | 设置 快速提示 配置 |
 | mode                   | `'editonly' \| 'readonly' \| 'normal'`    | 'normal' | 只写/只读/双栏显示模式选择，默认 'normal' 双栏模式显示                                                             |
 | custom-renderer-rules  | [ICustomRenderRule[]](#icustomrenderrule) | []       | 自定义 markdown 对节点的渲染方式，每条规则需要指定对应节点 key,并自定义渲染函数                                    |
 | custom-xss-rules       | [ICustomXssRule[]](#icustomxssrule)       | []       | 自定义 xss 对某种 tag 的过滤方式，每条规则需要指定 tag, 并给出需要加入白名单的属性数组                             |
@@ -300,5 +415,17 @@ interface ICustomXssRule {
 export interface MdPlugin {
   plugin: any;
   opts?: Object;
+}
+```
+
+#### HintConfig
+
+```ts
+export interface HintConfigItem {
+  handler: (obj: { callback: (replaceText: string) => void; cursorHint: string; prefix: string }) => void;
+}
+export interface HintConfig {
+  throttleTime: number;  // 触发提示事件debounceTime(ms)，默认300
+  [key: string]: HintConfigItem;  // key为触发提示前缀配置
 }
 ```

@@ -63,6 +63,10 @@ const commonProps = {
   },
 };
 
+export interface HintConfigItem {
+  handler: (objs: { callback: (replaceText: string) => void; cursorHint: string; prefix: string }) => void;
+}
+
 export const editorMdProps = {
   ...commonProps,
   modelValue: {
@@ -115,7 +119,8 @@ export const editorMdProps = {
     default: 10,
   },
   hintConfig: {
-    type: Object as PropType<Record<string, any>>,
+    type: Object as PropType<Record<string, HintConfigItem | number>>,
+    default: {},
   },
   customHintReplaceFn: {
     type: Function as PropType<(prefix: string, row: any) => string>,

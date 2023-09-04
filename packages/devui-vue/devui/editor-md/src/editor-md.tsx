@@ -7,6 +7,7 @@ import Toolbar from './components/toolbar';
 import MdRender from './components/md-render';
 import { locale } from './utils';
 import './editor-md.scss';
+import { FlexibleOverlay } from '../../overlay';
 
 export default defineComponent({
   name: 'DEditorMd',
@@ -36,7 +37,10 @@ export default defineComponent({
 
     const {
       editorRef,
+      overlayRef,
+      cursorRef,
       renderRef,
+      isHintShow,
       toolbars,
       previewHtmlList,
       onPaste,
@@ -76,6 +80,14 @@ export default defineComponent({
               <textarea ref={editorRef} placeholder={placeholder.value}>
                 {modelValue.value}
               </textarea>
+              <FlexibleOverlay
+                ref={overlayRef}
+                v-model={isHintShow.value}
+                origin={cursorRef.value || undefined}
+                align="start"
+                position={['bottom-start']}>
+                {ctx.slots?.hintTemplate?.()}
+              </FlexibleOverlay>
               {Boolean(maxlength?.value) && (
                 <div class="dp-md-count">
                   {modelValue.value.length || 0}/{maxlength.value}
