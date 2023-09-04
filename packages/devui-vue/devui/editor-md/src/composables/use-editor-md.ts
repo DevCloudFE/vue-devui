@@ -194,7 +194,6 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
       hideHint();
     };
 
-    console.log(cursorHint);
     handler && handler({ prefix, cursorHint, callback });
   };
 

@@ -426,6 +426,6 @@ export interface HintConfigItem {
 }
 export interface HintConfig {
   throttleTime: number;  // 触发提示事件debounceTime(ms)，默认300
-  [string]: HintConfigItem;  // key为触发提示前缀配置
+  [key: string]: HintConfigItem;  // key为触发提示前缀配置
 }
 ```
