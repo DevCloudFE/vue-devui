@@ -111,6 +111,42 @@ $font-family: helvetica, arial, 'PingFang', 'Microsoft YaHei', 'Hiragino Sans GB
     }
   }
 
+  &.dp-md-dark {
+    span.cm-comment {
+      color: #428bdd;
+    }
+
+    span.cm-link {
+      color: #ae81ff;
+    }
+
+    span.cm-string {
+      color: #1dc116;
+    }
+
+    code {
+      color: #c7254e;
+    }
+
+    a {
+      color: #526ecc;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .CodeMirror-cursor {
+      border-left: 1px solid rgb(231, 225, 225);
+    }
+
+    div.CodeMirror-selected {
+      background-color: $devui-list-item-selected-bg;
+    }
+
+    span.cm-header {
+      color: #e0e0e0;
+    }
+  }
+
   .CodeMirror-empty pre.CodeMirror-placeholder.CodeMirror-line-like {
     color: $devui-line;
   }

@@ -21,7 +21,7 @@ export default defineComponent({
     const { isFold, toggleFold } = useCodeReviewFold(props, ctx);
     const { commentLeft, commentTop, mouseEvent, onCommentMouseLeave, onCommentIconClick, insertComment, removeComment } =
       useCodeReviewComment(reviewContentRef, props, ctx);
-    const { isDarkMode } = useTheme(() => {});
+    const { isDarkMode } = useTheme();
     onMounted(() => {
       ctx.emit('afterViewInit', { toggleFold, insertComment, removeComment });
     });

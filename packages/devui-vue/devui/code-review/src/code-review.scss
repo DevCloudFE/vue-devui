@@ -148,6 +148,7 @@
     }
 
     .d2h-code-side-linenumber,
+    .d2h-code-linenumber,
     .d2h-emptyplaceholder {
       border-left: 1px solid;
       border-right: 1px solid;
@@ -159,11 +160,13 @@
     }
 
     .d2h-code-side-line,
-    .d2h-code-side-linenumber {
+    .d2h-code-side-linenumber,
+    .d2h-code-linenumber {
       background-color: transparent;
     }
 
-    .d2h-code-side-linenumber {
+    .d2h-code-side-linenumber,
+    .d2h-code-linenumber {
       border-color: #eee;
       color: rgba(0, 0, 0, 0.3);
       height: 100%;
@@ -216,7 +219,8 @@
         width: 100%;
       }
 
-      .d2h-code-side-linenumber {
+      .d2h-code-side-linenumber,
+      .d2h-code-linenumber {
         position: static;
         display: table-cell;
       }
@@ -258,6 +262,7 @@
       td.comment-icon-hover {
         background-color: rgba(94, 124, 224, 0.2) !important;
       }
+
       &:hover .d2h-info {
         background-color: rgba(94, 124, 224, 0.2);
       }
@@ -272,7 +277,10 @@
       }
     }
 
-    .d2h-code-side-linenumber {
+    .d2h-code-side-linenumber,
+    .d2h-code-linenumber,
+    .devui-code-review__content.side-by-side tr.comment-block td:last-child,
+    .devui-code-review__content.side-by-side tr td:nth-of-type(3) {
       border-color: #262933;
       color: #646464;
 
@@ -294,7 +302,8 @@
       background-color: #1f5231;
     }
 
-    .d2h-ins.d2h-code-side-linenumber {
+    .d2h-ins.d2h-code-side-linenumber,
+    .devui-code-review__content.side-by-side tr td:nth-of-type(3).d2h-ins.d2h-code-side-linenumber {
       border-color: #29a17c;
     }
 

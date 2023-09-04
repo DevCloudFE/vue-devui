@@ -48,7 +48,7 @@ export default defineComponent({
       onPreviewMouseover,
     } = useEditorMd(props, ctx);
 
-    const { isDarkMode } = useTheme(() => {});
+    const { isDarkMode } = useTheme();
 
     provide(EditorMdInjectionKey, {
       showFullscreen,
