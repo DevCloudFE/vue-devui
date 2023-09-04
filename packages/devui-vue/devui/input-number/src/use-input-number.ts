@@ -1,9 +1,8 @@
 import { computed, reactive, toRefs, watch, ref, inject } from 'vue';
 import type { SetupContext, Ref, CSSProperties } from 'vue';
 import { InputNumberProps, UseEvent, UseRender, IState, UseExpose } from './input-number-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
-import { isNumber, isUndefined } from '../../shared/utils';
-import { FORM_ITEM_TOKEN, FORM_TOKEN, FormItemContext } from '../../form';
+import { isNumber, isUndefined, useNamespace } from '@devui/shared/utils';
+import { FORM_ITEM_TOKEN, FORM_TOKEN, FormItemContext } from '@devui/shared/components/form';
 
 const ns = useNamespace('input-number');
 
@@ -20,7 +19,6 @@ export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender
   const wrapClass = computed(() => [
     {
       [ns.b()]: true,
-      [ns.m(inputNumberSize.value)]: true,
     },
     customClass,
   ]);
@@ -29,10 +27,12 @@ export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender
     [ns.e('control-buttons')]: true,
     [ns.em('control-buttons', 'error')]: isValidateError.value,
     disabled: props.disabled,
+    [ns.m(inputNumberSize.value)]: true,
   }));
 
   const inputWrapClass = computed(() => ({
     [ns.e('input-wrap')]: true,
+    [ns.m(inputNumberSize.value)]: true,
   }));
 
   const inputInnerClass = computed(() => ({
@@ -201,8 +201,13 @@ export function useEvent(props: InputNumberProps, ctx: SetupContext, inputRef: R
     inputRef.value.value = props.formatter ? props.formatter(state.userInputValue) : state.userInputValue;
   };
 
-  const onChange = (event: Event) => {
-    setCurrentValue((event.target as HTMLInputElement).value);
+  const onChange = () => {
+    const value = state.userInputValue;
+    const newVal = value !== '' ? Number(value) : '';
+    if ((isNumber(newVal) && !Number.isNaN(newVal)) || value === '') {
+      setCurrentValue(newVal);
+    }
+    state.userInputValue = undefined;
   };
 
   return { inputVal, minDisabled, maxDisabled, onAdd, onSubtract, onInput, onChange };

@@ -54,8 +54,8 @@
   .#{$devui-prefix}-input-number__input-box {
     box-sizing: border-box;
     width: 100%;
-    height: 32px;
-    line-height: $devui-line-height-base;
+    height: 28px;
+    line-height: 20px;
     padding: 4px 8px;
     display: block;
     font-size: $devui-font-size;
@@ -142,56 +142,57 @@
     }
   }
 
+  .#{$devui-prefix}-input-number--lg {
+    & > .#{$devui-prefix}-input-number__input-box {
+      height: 46px;
+      font-size: $devui-font-size-lg;
+      line-height: 24px;
+    }
+
+    .#{$devui-prefix}-input-number__control-buttons .control-button .#{$devui-prefix}-input-number__icon-arrow {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .#{$devui-prefix}-input-number--md {
+    & > .#{$devui-prefix}-input-number__input-box {
+      font-size: $devui-font-size;
+      height: 32px;
+      line-height: 20px;
+    }
+  }
+
+  .#{$devui-prefix}-input-number--sm {
+    & > .#{$devui-prefix}-input-number__input-box {
+      font-size: $devui-font-size-sm;
+      line-height: 18px;
+      height: 26px;
+    }
+
+    &.#{$devui-prefix}-input-number__control-buttons .control-button {
+      &:first-child .#{$devui-prefix}-input-number__icon-arrow {
+        width: 14px;
+        height: 14px;
+      }
+      &:last-child .#{$devui-prefix}-input-number__icon-arrow {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
   .#{$devui-prefix}-input-number__input-wrap {
-    height: 100%;
+    line-height: 100%;
   }
 
   .disabled {
     cursor: not-allowed;
   }
-}
-
-.#{$devui-prefix}-input-number--lg {
-  height: 40px;
-  .#{$devui-prefix}-input-number__input-box {
-    font-size: $devui-font-size-lg;
-    height: 100%;
-  }
-
-  .#{$devui-prefix}-input-number__control-buttons .control-button .#{$devui-prefix}-input-number__icon-arrow {
-    width: 20px;
-    height: 20px;
-  }
-}
-
-.#{$devui-prefix}-input-number--md {
-  height: 32px;
-  .#{$devui-prefix}-input-number__input-box {
-    font-size: $devui-font-size;
-    height: 100%;
-  }
-
-  .#{$devui-prefix}-input-number__control-buttons .control-button .#{$devui-prefix}-input-number__icon-arrow {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-.#{$devui-prefix}-input-number--sm {
-  height: 24px;
-
-  .#{$devui-prefix}-input-number__input-box {
-    font-size: $devui-font-size-sm;
-    height: 100%;
-  }
-
-  .#{$devui-prefix}-input-number__control-buttons .control-button .#{$devui-prefix}-input-number__icon-arrow {
-    width: 16px;
-    height: 16px;
-  }
 
   .#{$devui-prefix}-input-number__input-box--error:not(.disabled) {
     border-color: $devui-danger-line;
+    background-color: $devui-danger-bg;
   }
 
   .#{$devui-prefix}-input-number__control-buttons--error:not(.disabled) {

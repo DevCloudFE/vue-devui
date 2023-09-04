@@ -1,5 +1,6 @@
 import type { App } from 'vue';
 import InputNumber from './src/input-number';
+export * from './src/input-number-types';
 
 export { InputNumber };
 
@@ -9,5 +10,5 @@ export default {
   status: '50%',
   install(app: App): void {
     app.component(InputNumber.name, InputNumber);
-  }
+  },
 };

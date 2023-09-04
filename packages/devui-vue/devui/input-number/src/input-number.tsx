@@ -4,7 +4,7 @@ import { inputNumberProps, InputNumberProps } from './input-number-types';
 import { IncIcon, DecIcon } from './input-number-icons';
 import { useRender, useEvent, useExpose } from './use-input-number';
 import './input-number.scss';
-import form, { FORM_ITEM_TOKEN, FormItemContext } from '../../form';
+import { FORM_ITEM_TOKEN, FormItemContext } from '@devui/shared/components/form';
 
 export default defineComponent({
   name: 'DInputNumber',
