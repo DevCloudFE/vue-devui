@@ -5,6 +5,7 @@ import { EditorMdProps, Mode } from '../editor-md-types';
 import { DEFAULT_TOOLBARS } from '../toolbar-config';
 import { parseHTMLStringToDomList } from '../utils';
 import { refreshEditorCursor, _enforceMaxLength } from './helper';
+import { throttle } from 'lodash';
 
 export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
   const {
@@ -24,17 +25,22 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
   const toolbars = reactive(cloneDeep(DEFAULT_TOOLBARS));
   const editorRef = ref();
   const renderRef = ref();
+  const overlayRef = ref();
+  const cursorRef = ref();
+  const isHintShow = ref();
   const previewHtmlList: Ref<any[]> = ref([]);
   let editorIns: any;
-  const hintShow = false;
-  const isHintLoading = false;
   let canPreviewScrollView = false;
-  const hintList: any[] = [];
+
+  /* 快速提示 */
+  let hintList: any[] = [];
   let activeIndex = -1;
   let cursorHint = '';
   let cursorHintEnd = -1;
   let cursorHintStart = -1;
   let prefix: any;
+  let hintShow = false;
+
   let CodeMirror: any;
   const prefixes = computed(() => {
     const result: string[] = [];
@@ -144,6 +150,54 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     activeIndex = -1;
   };
 
+  let timer: any;
+  const attachOverlay = () => {
+    timer = setTimeout(() => {
+      cursorRef.value = editorRef.value?.parentNode.querySelector('.CodeMirror-cursor') || undefined;
+      overlayRef.value.updatePosition();
+      isHintShow.value = true;
+      hintShow = true;
+    });
+  };
+
+  const hideHint = () => {
+    clearTimeout(timer);
+    isHintShow.value = false;
+  };
+
+  const showHint = () => {
+    if (hintShow) {
+      hideHint();
+    }
+    attachOverlay();
+  };
+
+  const getHintList = () => {
+    let handler;
+    if (typeof hintConfig.value[prefix] === 'function') {
+      handler = hintConfig.value[prefix];
+    } else if (hintConfig.value[prefix] && typeof hintConfig.value[prefix].handler === 'function') {
+      handler = hintConfig.value[prefix].handler;
+    }
+
+    const callback = (replaceText: string) => {
+      const cursor = editorIns.getCursor();
+      const endCh = cursorHintEnd;
+      const startCh = cursorHintStart;
+      if (editorIns.getLine(cursor.line).length === cursor.ch) {
+        editorIns.replaceRange(replaceText + ' ', { line: cursor.line, ch: startCh }, { line: cursor.line, ch: endCh });
+      } else {
+        editorIns.replaceRange(replaceText, { line: cursor.line, ch: startCh }, { line: cursor.line, ch: endCh });
+        editorIns.setCursor(cursor.line, editorIns.getCursor().ch + 1);
+      }
+      editorIns.focus();
+      hideHint();
+    };
+
+    console.log(cursorHint);
+    handler && handler({ prefix, cursorHint, callback });
+  };
+
   const cursorActivityHandler = () => {
     const cursor = editorIns.getCursor();
     let i = prefixes.value.length;
@@ -153,18 +207,18 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     if (selection) {
       return;
     }
-    let prefix = '';
+    let nowPrefix = '';
     let hint = '';
     while (i >= 1) {
       i--;
-      prefix = prefixes.value[i];
-      const startPos = value.lastIndexOf(prefix, cursor.ch);
+      nowPrefix = prefixes.value[i];
+      const startPos = value.lastIndexOf(nowPrefix, cursor.ch);
       const endPos = value.indexOf(' ', cursor.ch) > -1 ? value.indexOf(' ', cursor.ch) : value.length;
       hint = value.slice(startPos, cursor.ch);
       if (
         (startPos > 0 && value[startPos - 1] !== ' ') ||
         startPos < 0 ||
-        !hint.includes(prefix) ||
+        !hint.includes(nowPrefix) ||
         hint.endsWith(' ') ||
         isImgRegx.test(hint)
       ) {
@@ -179,10 +233,20 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
         break;
       }
     }
-    // todo
-    // if (cursorHintStart > -1 && hint[0]) {
-    //     currentHintConfig
-    // }
+    if (cursorHintStart > -1 && hint[0]) {
+      const spacePosition = value.lastIndexOf(' ', cursor.ch);
+      if (spacePosition > cursorHintStart) {
+        return;
+      }
+      /* cursor元素将动态变更，设置settimeout保持其可以获取到值 */
+      setTimeout(() => {
+        showHint();
+        getHintList();
+      });
+    } else {
+      hintList = [];
+      hideHint();
+    }
   };
 
   const onChange = debounce(
@@ -228,9 +292,20 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
       }
     }
 
-    editorIns.setOption('extraKeys', shortKeys);
+    editorIns.setOption(
+      'extraKeys',
+      Object.assign({
+        Esc: () => {
+          hideHint();
+        },
+      }),
+      shortKeys
+    );
 
     editorIns.on('beforeChange', _enforceMaxLength);
+
+    editorIns.on('cursorActivity', throttle(cursorActivityHandler, ((hintConfig.value && hintConfig.value.throttleTime) as number) || 300));
+
     editorIns.setSize('auto', '100%');
     refreshEditorCursor();
     editorIns.setCursor(editorIns.lineCount(), 0);
@@ -322,9 +397,12 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
 
   return {
     editorRef,
+    overlayRef,
+    cursorRef,
     renderRef,
     toolbars,
     previewHtmlList,
+    isHintShow,
     getEditorIns,
     onPaste,
     previewContentChange,
