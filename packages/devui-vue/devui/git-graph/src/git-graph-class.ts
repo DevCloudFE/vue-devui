@@ -82,7 +82,7 @@ export class GitGraph {
     this.barHeight = Math.max(this.graphHeight, this.unitTime * this.commits.length + 320);
 
     const _ref = this.commits;
-    for (let _i = 0; _i < _ref.length; _i ++) {
+    for (let _i = 0; _i < _ref.length; _i++) {
       c = _ref[_i];
       this.preparedCommits[c.id] = c;
     }
@@ -130,8 +130,8 @@ export class GitGraph {
       day = _ref[mm].date;
       if (
         curDay.getDate() !== new Date(day).getDate() ||
-				curDay.getMonth() !== new Date(day).getMonth() ||
-				curDay.getFullYear() !== new Date(day).getFullYear()
+        curDay.getMonth() !== new Date(day).getMonth() ||
+        curDay.getFullYear() !== new Date(day).getFullYear()
       ) {
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         const date = new Date(day);
@@ -183,7 +183,7 @@ export class GitGraph {
   }
 
   renderPartialGraph(refName: string) {
-    let commit ;
+    let commit;
     let end;
     let i;
     let isGraphEdge;
@@ -257,13 +257,18 @@ export class GitGraph {
       style: 'clip-path: circle(50%)'
     };
     this.setNodeAttr(img, imgAttrs);
+
+    const authorText = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+    authorText.appendChild(document.createTextNode(commit.author.name));
+    img.appendChild(authorText);
+
     this.svg.appendChild(img);
 
     if (!this.messageBoxWidth) {
       this.messageBoxWidth = this.svg.getBoundingClientRect.width - (avatar_box_x + 40);
     }
     // 画竖线
-	  let route = ['M', avatar_box_x + 15, avatar_box_y - 20, 'L', avatar_box_x + 15, avatar_box_y];
+    let route = ['M', avatar_box_x + 15, avatar_box_y - 20, 'L', avatar_box_x + 15, avatar_box_y];
     const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     const lineAttrs1 = {
       d: route.join(' '),
@@ -307,7 +312,7 @@ export class GitGraph {
     commitText.appendChild(titleText);
     this.svg.appendChild(commitText);
 
-    (commitText as any).onclick = function() {
+    (commitText as any).onclick = function () {
       const url = commit.customUrl || options?.commit_url.replace('{commitId}', commit.id);
       return window.open(url, '_blank');
     };
@@ -334,7 +339,7 @@ export class GitGraph {
       parentX1 = this.offsetX + this.unitSpace * (this.mspace - parentCommit.space);
       parentX2 = this.offsetX + this.unitSpace * (this.mspace - parent[1]);
       if (parentCommit.space <= commit.space) {
-        color =  this.colors[commit.space];
+        color = this.colors[commit.space];
       } else {
         color = this.colors[parentCommit.space];
       }
@@ -588,7 +593,7 @@ export class GitGraph {
     });
   }
 
-  textWrap (t: any, width: any, x: any) {
+  textWrap(t: any, width: any, x: any) {
     const content = t.children[0].innerHTML;
     let words = content.split('\n').filter((item: any) => item !== '');
     words = words.map((str: any) => {
