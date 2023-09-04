@@ -242,6 +242,7 @@ editor-md/checkbox
     v-model="content"
     :placeholder="'You can enter @ associate member, enter # to associate an order number...'"
     :hint-config="hintConfig"
+    fullscreen-z-index="1000"
     @content-change="valueChange"
   >
     <template #hintTemplate>
