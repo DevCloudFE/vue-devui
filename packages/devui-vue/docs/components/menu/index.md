@@ -12,7 +12,7 @@ Menu 组件通常用于导航.
 
 ```vue
 <template>
-  <d-menu mode="horizontal" :default-select-keys="['home']" style="margin-bottom: 120px" :width="width + 'px'">
+<d-menu ref="menu" mode="horizontal" :default-select-keys="['home']" :style="['margin-bottom: 120px']">
     <d-menu-item key="home">
       <template #icon>
         <i class="icon-homepage"></i>
@@ -29,19 +29,13 @@ Menu 组件通常用于导航.
     <d-menu-item key="person">个人</d-menu-item>
     <d-menu-item key="custom" href="https://www.baidu.com" disabled> Link To Baidu </d-menu-item>
   </d-menu>
-  <d-slider :min="0" :max="480" v-model="width"></d-slider>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-let width = ref(480);
-</script>
 
 ```
 
 :::
 
-### 自定义图标
+# 自定义图标
 
 有时我们需要为子菜单或菜单项定义一些图标，此时我们可以使用`icon`插槽来为菜单定义 icon。同时我们也可以使用 css 来对插槽进行定制化的修改.
 
@@ -59,6 +53,8 @@ let width = ref(480);
     <d-menu-item key="course"> 课程 </d-menu-item>
   </d-menu>
 </template>
+```
+
 ```
 
 :::
