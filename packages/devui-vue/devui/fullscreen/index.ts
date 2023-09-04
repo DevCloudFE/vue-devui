@@ -7,7 +7,7 @@ export { Fullscreen };
 
 export default {
   title: 'Fullscreen 全屏',
-  category: '基础组件',
+  category: '通用',
   install(app: App): void {
     app.component(Fullscreen.name, Fullscreen);
   },
