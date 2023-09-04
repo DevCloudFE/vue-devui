@@ -1,5 +1,5 @@
 import { defineComponent, PropType, ref, watch, toRefs, ExtractPropTypes } from 'vue';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const jumpPageProps = {
   goToText: String,
@@ -42,9 +42,16 @@ export default defineComponent({
     };
     // 跳转指定页码
     const jump = (e: KeyboardEvent | 'btn') => {
-      if (curPage > totalPages?.value) {
-        return;
+      if (isNaN(curPage)) {
+        curPage = 1;
       }
+      if (curPage > totalPages?.value) {
+        curPage = totalPages?.value;
+      }
+      if (curPage < 1) {
+        curPage = 1;
+      }
+
       if ((e === 'btn' || e.key === 'Enter') && cursor?.value !== curPage) {
         emit('changeCursorEmit', curPage);
       }

@@ -1,6 +1,6 @@
 import { defineComponent, PropType, computed, ExtractPropTypes } from 'vue';
 import { handlePages } from '../utils';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { PreLinkIcon, NextLinkIcon } from '../components/page-link-icons';
 
 const pageNumBtnProps = {

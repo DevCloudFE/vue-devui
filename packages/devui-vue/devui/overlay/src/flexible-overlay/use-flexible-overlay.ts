@@ -57,6 +57,9 @@ export function useOverlay(props: FlexibleOverlayProps, emit: EmitEventFn): UseO
     ];
     props.showArrow && middleware.push(arrow({ element: arrowEl }));
     props.shiftOffset !== undefined && middleware.push(shift());
+    if (!overlayEl) {
+      return;
+    }
     const { x, y, placement, middlewareData } = await computePosition(hostEl, overlayEl, {
       strategy: 'fixed',
       middleware,

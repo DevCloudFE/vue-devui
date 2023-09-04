@@ -30,15 +30,18 @@ export default defineComponent({
       const editorIns = getEditorIns();
       if (config.id === 'fullscreen') {
         showFullscreen.value = !showFullscreen.value;
-      } else {
-        config.handler?.(editorIns, config.params);
+        if (window) {
+          const event = new Event('resize');
+          window.dispatchEvent(event);
+        }
       }
+      config.handler?.(editorIns, config.params);
     };
 
     return () => (
       <>
         {config.type === 'button' && (
-          <Tooltip position={['top', 'bottom']} content={getTooltipContent(config.name, config.shortKey)}>
+          <Tooltip position={['top', 'bottom']} content={getTooltipContent(config.name, config.shortKey)} hide-after={1000}>
             <span
               class="md-toolbar-item"
               onClick={onToolbarItemClick}
@@ -50,7 +53,7 @@ export default defineComponent({
             {{
               default: () => (
                 <span>
-                  <Tooltip position={['top']} content={getTooltipContent(config.name)}>
+                  <Tooltip position={showFullscreen.value ? ['right'] : ['top']} content={getTooltipContent(config.name)} hide-after={1000}>
                     <span class="md-toolbar-item" onClick={() => config.handler?.()} innerHTML={config.icon}></span>
                   </Tooltip>
                 </span>

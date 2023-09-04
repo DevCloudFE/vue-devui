@@ -2,6 +2,7 @@ import type { App } from 'vue';
 import EditorMd from './src/editor-md';
 import MdRender from './src/components/md-render';
 export * from './src/editor-md-types';
+export * from './src/plugins/checkbox';
 
 export { EditorMd, MdRender };
 
@@ -12,5 +13,5 @@ export default {
   install(app: App): void {
     app.component(EditorMd.name, EditorMd);
     app.component(MdRender.name, MdRender);
-  }
+  },
 };
