@@ -12,7 +12,7 @@ export default defineComponent({
   emits: ['click'],
   setup(_, ctx: SetupContext) {
     const ns = useNamespace('code-review');
-    const { diffInfo, isFold, rootCtx } = inject(CodeReviewInjectionKey) as CodeReviewContext;
+    const { diffType, diffInfo, isFold, rootCtx } = inject(CodeReviewInjectionKey) as CodeReviewContext;
     const { copyTipsText, tipsPopType, onCopy } = useCodeReviewCopy(diffInfo);
     const onClick = (e: Event) => {
       const composedPath = e.composedPath();
@@ -26,6 +26,7 @@ export default defineComponent({
 
     return () => (
       <div class={[ns.e('header'), { [ns.em('header', 'unfold')]: !isFold.value }]} onClick={onClick}>
+        <span class={['diff-type', diffType.value]}>{diffType.value[0].toUpperCase()}</span>
         <div class="file-info">
           <FoldIcon class={{ invert: !isFold.value }} />
           <span class="file-name">{diffInfo.newName}</span>

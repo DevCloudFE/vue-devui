@@ -1,8 +1,8 @@
 import { computed, inject, toRefs, ref } from 'vue';
 import type { SetupContext } from 'vue';
-import { FORM_TOKEN, FormContext, FORM_ITEM_TOKEN, FormItemContext } from '../../../form';
+import { FORM_TOKEN, FormContext, FORM_ITEM_TOKEN, FormItemContext, STYLE_TOKEN } from '../../../form';
 import { InputProps, UseInputRender } from '../input-types';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 export function useInputRender(props: InputProps, ctx: SetupContext): UseInputRender {
   const formContext = inject(FORM_TOKEN, undefined) as FormContext;
@@ -15,6 +15,8 @@ export function useInputRender(props: InputProps, ctx: SetupContext): UseInputRe
   const slots = ctx.slots;
   const inputDisabled = computed(() => disabled.value || formContext?.disabled);
   const inputSize = computed(() => size?.value || formContext?.size || '');
+
+  const styleType = inject(STYLE_TOKEN, undefined);
 
   const { style, class: customClass, ...otherAttrs } = ctx.attrs;
   const customStyle = { style };
@@ -34,6 +36,7 @@ export function useInputRender(props: InputProps, ctx: SetupContext): UseInputRe
       [slotNs.b()]: slots.prepend || slots.append,
       [ns.m('append')]: slots.append,
       [ns.m('prepend')]: slots.prepend,
+      [ns.m('gray-style')]: styleType === 'gray',
     },
     customClass,
   ]);

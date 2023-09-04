@@ -1,4 +1,4 @@
-@import '../../../../styles-var/devui-var.scss';
+@import '@devui/theme/styles-var/devui-var.scss';
 
 .#{$devui-prefix}-form__label {
   align-self: flex-start;
@@ -35,7 +35,8 @@
 .#{$devui-prefix}-form__label-span {
   display: inline-block;
   vertical-align: middle;
-  color: $devui-text;
+  font-size: $devui-font-size;
+  color: $devui-aide-text;
 }
 
 .#{$devui-prefix}-form__label--required {
@@ -46,6 +47,7 @@
     margin-right: 8px;
     margin-left: -12px;
   }
+
   &-hide {
     &::before {
       display: none;
@@ -60,4 +62,10 @@
   vertical-align: middle;
   margin-left: 4px;
   cursor: pointer;
+}
+
+.#{$devui-prefix}-form__label-tips-popover {
+  .dv-popover__icon-wrap + span {
+    flex: 1;
+  }
 }

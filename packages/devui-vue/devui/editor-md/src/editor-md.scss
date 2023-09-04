@@ -150,6 +150,10 @@ $font-family: helvetica, arial, 'PingFang', 'Microsoft YaHei', 'Hiragino Sans GB
   .CodeMirror-empty pre.CodeMirror-placeholder.CodeMirror-line-like {
     color: $devui-line;
   }
+
+  input[type='checkbox'] + label {
+    margin-left: 6px;
+  }
 }
 
 .dp-editor-md-preview-container.dp-md-view {

@@ -42,6 +42,14 @@ export const inputProps = {
     type: String,
     default: '',
   },
+  title: {
+    type: String,
+    default: '',
+  },
+  autofocus: {
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type InputProps = ExtractPropTypes<typeof inputProps>;

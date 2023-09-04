@@ -1,7 +1,6 @@
 import { CSSProperties, defineComponent, effect, reactive, ref, toRefs, watch } from 'vue';
-import { middleNum } from '../../shared/utils';
 import { ProgressProps, progressProps, ISvgData } from './progress-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace, middleNum } from '@devui/shared/utils';
 import './progress.scss';
 
 export default defineComponent({

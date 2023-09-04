@@ -7,11 +7,12 @@ import Toolbar from './components/toolbar';
 import MdRender from './components/md-render';
 import { locale } from './utils';
 import './editor-md.scss';
+import { FlexibleOverlay } from '../../overlay';
 
 export default defineComponent({
   name: 'DEditorMd',
   props: editorMdProps,
-  emits: ['update:modelValue', 'mdCheckedEvent', 'selectHint', 'afterEditorInit', 'contentChange', 'previewContentChange', 'imageUpload'],
+  emits: ['update:modelValue', 'checkedChange', 'selectHint', 'afterEditorInit', 'contentChange', 'previewContentChange', 'imageUpload'],
   setup(props: EditorMdProps, ctx: SetupContext) {
     const {
       mode,
@@ -36,7 +37,10 @@ export default defineComponent({
 
     const {
       editorRef,
+      overlayRef,
+      cursorRef,
       renderRef,
+      isHintShow,
       toolbars,
       previewHtmlList,
       onPaste,
@@ -76,6 +80,14 @@ export default defineComponent({
               <textarea ref={editorRef} placeholder={placeholder.value}>
                 {modelValue.value}
               </textarea>
+              <FlexibleOverlay
+                ref={overlayRef}
+                v-model={isHintShow.value}
+                origin={cursorRef.value || undefined}
+                align="start"
+                position={['bottom-start']}>
+                {ctx.slots?.hintTemplate?.()}
+              </FlexibleOverlay>
               {Boolean(maxlength?.value) && (
                 <div class="dp-md-count">
                   {modelValue.value.length || 0}/{maxlength.value}
@@ -95,7 +107,7 @@ export default defineComponent({
               disable-render
               md-plugins={mdPlugins.value}
               onMdRenderChange={previewContentChange}
-              onMdCheckedEvent={onChecked}
+              onCheckedChange={onChecked}
               onScroll={onPreviewScroll}
               onMouseover={onPreviewMouseover}
               onMouseout={onPreviewMouseout}>

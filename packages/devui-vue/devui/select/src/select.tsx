@@ -11,6 +11,7 @@ import {
   watch,
   withModifiers,
   onUnmounted,
+  nextTick,
 } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
@@ -60,6 +61,7 @@ export default defineComponent({
       isShowCreateOption,
     } = useSelect(props, selectRef, ctx, focus, blur, isSelectFocus, t);
 
+    const dropdownContainer = ref();
     const scrollbarNs = useNamespace('scrollbar');
     const ns = useNamespace('select');
     const dropdownCls = ns.e('dropdown');
@@ -84,10 +86,21 @@ export default defineComponent({
       }
     });
 
+    const scrollToBottom = () => {
+      const compareHeight = dropdownContainer.value.scrollHeight - dropdownContainer.value.clientHeight;
+      const scrollTop = dropdownContainer.value.scrollTop;
+      if (scrollTop === compareHeight) {
+        ctx.emit('load-more');
+      }
+    };
+
     onMounted(() => {
       isRender.value = true;
       updateDropdownWidth();
       window.addEventListener('resize', updateDropdownWidth);
+      nextTick(() => {
+        dropdownContainer.value.addEventListener('scroll', scrollToBottom);
+      });
     });
 
     onUnmounted(() => {
@@ -134,7 +147,7 @@ export default defineComponent({
                   'z-index': isOpen.value ? 'var(--devui-z-index-dropdown, 1052)' : -1,
                 }}>
                 <div class={dropdownCls} style={{ width: `${dropdownWidth.value}`, visibility: isOpen.value ? 'visible' : 'hidden' }}>
-                  <ul class={listCls} v-show={!isLoading.value}>
+                  <ul class={listCls} v-show={!isLoading.value} ref={dropdownContainer}>
                     {isShowCreateOption.value && (
                       <Option value={filterQuery.value} name={filterQuery.value} create>
                         {props.multiple ? <Checkbox modelValue={false} label={filterQuery.value} /> : filterQuery.value}

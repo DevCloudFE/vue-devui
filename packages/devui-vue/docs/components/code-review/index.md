@@ -292,6 +292,7 @@ export default defineComponent({
 | allow-comment    | `boolean`                                                           | true           | 可选，是否支持评论                                                                 |
 | show-blob        | `boolean`                                                           | false          | 可选，是否展示缩略内容，一般大文件或二进制文件等需要展示缩略内容时使用             |
 | output-format    | [OutputFormat](#outputformat)                                       | 'line-by-line' | 可选，diff 展示格式，单栏展示或者分栏展示                                          |
+| diff-type        | [DiffType](#difftype)                                               | 'modify'       | 可选，文件 diff 类型                                                               |
 | allow-expand     | `boolean`                                                           | true           | 可选，是否支持展开非 diff 折叠代码                                                 |
 | expand-threshold | `number`                                                            | 50             | 可选，展开所有代码行的阈值，低于此阈值全部展开，高于此阈值分向上和向下两个操作展开 |
 | expand-loader    | `(interval: Array<number>, update: (code: string) => void) => void` | --             | 可选，展开代码回调函数，interval 为展开边界，获取展开代码后，执行 update 更新视图  |
@@ -318,6 +319,12 @@ export default defineComponent({
 
 ```ts
 type OutputFormat = 'line-by-line' | 'side-by-side';
+```
+
+#### DiffType
+
+```ts
+type DiffType = 'modify' | 'add' | 'delete' | 'rename';
 ```
 
 #### LineSide

@@ -243,7 +243,7 @@ export default defineComponent({
     @page-index-change="pageIndexChangeWithoutFix"
     @page-size-change="pageSizeChangeWithoutFix"
     :page-size-options="pager.pageSizeOptions"
-    :page-size-direction="['centerUp']"
+    :page-size-direction="['right']"
   />
 </template>
 <script>
@@ -423,8 +423,8 @@ export default defineComponent({
 | :------------------- | :---------------------------------------------------------------------------------------------------- | :------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------- | :-------------------- |
 | page-size            | `number`                                                                                              | 10                                                             | 可选，每页显示最大条目数量                                                                                         | [基本用法](#基本用法) |
 | total                | `number`                                                                                              | 0                                                              | 可选，显示的总条目数                                                                                               | [基本用法](#基本用法) |
-| page-size-options    | `number[] `                                                                                           | 10                                                             | 可选，分页每页最大条目数量的下拉框的数据源，<br>默认有四种选择 5, 10, 20, 50                                       | [多种配置](#多种配置) |
-| page-size-direction  | [AppendToBodyDirection](#appendtobodydirection)\[\]<br>\| [ConnectedPosition](#connectedposition)\[\] | [<br>&nbsp;&nbsp;'centerDown', <br>&nbsp;&nbsp;'centerUp'<br>] | 可选，设置分页每页条目的下拉框展示的方向                                                                           | [多种配置](#多种配置) |
+| page-size-options    | `number[]`                                                                                           | 10                                                             | 可选，分页每页最大条目数量的下拉框的数据源，<br>默认有四种选择 5, 10, 20, 50                                       | [多种配置](#多种配置) |
+| page-size-direction  | [PageSizeDirection](#pagesizedirection) | ['bottom', 'top'] | 可选，设置分页每页条目的下拉框展示的方向                                                                           | [多种配置](#多种配置) |
 | page-index           | `number`                                                                                              | 1                                                              | 可选，初始化页码                                                                                                   | [基本用法](#基本用法) |
 | max-items            | `number`                                                                                              | 10                                                             | 可选，分页最多显示几个按钮                                                                                         | [基本用法](#基本用法) |
 | pre-link             | `string`                                                                                              | --                                                             | 可选，上一页按钮显示图标，<br>默认设置为左箭头图标                                                                 | [基本用法](#基本用法) |
@@ -458,19 +458,8 @@ export default defineComponent({
 type AppendToBodyDirection = 'rightDown' | 'rightUp' | 'leftUp' | 'leftDown' | 'centerDown' | 'centerUp';
 ```
 
-#### ConnectedPosition
+#### PageSizeDirection
 
 ```ts
-interface ConnectedPosition {
-  originX: 'start' | 'center' | 'end';
-  originY: 'top' | 'center' | 'bottom';
-
-  overlayX: 'start' | 'center' | 'end';
-  overlayY: 'top' | 'center' | 'bottom';
-
-  weight?: number;
-  offsetX?: number;
-  offsetY?: number;
-  panelClass?: string | string[];
-}
+type PageSizeDirection = 'bottom' | 'top' | 'left' | 'right';
 ```

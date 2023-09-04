@@ -9,7 +9,7 @@ import { Switch } from '../../switch';
 import { Checkbox, CheckboxGroup } from '../../checkbox';
 import { DatePickerPro, DRangeDatePickerPro } from '../../date-picker-pro';
 import { Textarea } from '../../textarea';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 jest.mock('../../locale/create', () => ({
   createI18nTranslate: () => jest.fn(),

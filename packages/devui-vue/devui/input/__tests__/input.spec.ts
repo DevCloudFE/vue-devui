@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import { ref, nextTick, reactive } from 'vue';
 import DInput from '../src/input';
 import { Form, FormItem } from '../../form';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 const ns = useNamespace('input');
 const dotNs = useNamespace('input', true);

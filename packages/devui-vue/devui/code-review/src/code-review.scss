@@ -8,6 +8,7 @@
   border-radius: $devui-border-radius-card;
 
   &__header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,6 +30,40 @@
       background-color: #f8fafd;
     }
 
+    .diff-type {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 16px;
+      height: 16px;
+      font-size: $devui-font-size-sm;
+      letter-spacing: 0;
+      text-align: center;
+      line-height: 16px;
+      border-radius: 8px 0 8px 0;
+      user-select: none;
+
+      &.modify {
+        color: #fa9841;
+        background-color: rgba(250, 152, 65, 0.2);
+      }
+
+      &.add {
+        color: #3ac295;
+        background-color: rgba(58, 194, 149, 0.2);
+      }
+
+      &.delete {
+        color: #f66f6a;
+        background-color: rgba(246, 111, 106, 0.2);
+      }
+
+      &.rename {
+        color: #71757f;
+        background-color: rgba(113, 117, 127, 0.2);
+      }
+    }
+
     .file-info {
       display: flex;
       align-items: center;
@@ -40,6 +75,10 @@
         line-height: 20px;
       }
 
+      & > svg {
+        margin-right: 8px;
+      }
+
       .invert {
         transform: scale(-1);
       }
@@ -49,7 +88,6 @@
         font-size: $devui-font-size-sm;
         color: $devui-text;
         font-weight: bold;
-        padding-left: 8px;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -76,7 +114,9 @@
   &__content {
     line-height: 20px;
 
-    table {
+    table.d2h-diff-table {
+      table-layout: fixed;
+      font-size: 12px;
       margin: 0;
     }
 
@@ -217,6 +257,7 @@
 
       .d2h-file-side-diff {
         width: 100%;
+        overflow: hidden;
       }
 
       .d2h-code-side-linenumber,

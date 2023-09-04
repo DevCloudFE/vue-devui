@@ -6,7 +6,7 @@ import { useEditorMdRender, useMdRenderWatcher } from '../composables/use-editor
 export default defineComponent({
   name: 'DMdRender',
   props: mdRenderProps,
-  emits: ['mdRenderChange', 'mdCheckedEvent'],
+  emits: ['mdRenderChange', 'checkedChange'],
   setup(props: MdRenderProps, ctx: SetupContext) {
     const { previewRef, renderService, onPreviewClick, setContainerContent } = useEditorMdRender(props, ctx);
     useMdRenderWatcher(props, renderService, setContainerContent);
