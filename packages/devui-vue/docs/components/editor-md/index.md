@@ -242,7 +242,7 @@ editor-md/checkbox
     v-model="content"
     :placeholder="'You can enter @ associate member, enter # to associate an order number...'"
     :hint-config="hintConfig"
-    fullscreen-z-index="1000"
+    :fullscreen-z-index="1000"
     @content-change="valueChange"
   >
     <template #hintTemplate>
@@ -344,6 +344,137 @@ export default defineComponent({
 }
 </style>
 ```
+
+:::
+
+### TOC目录渲染
+
+:::demo 支持TOC目录生成
+
+```vue
+<template>
+  <d-editor-md v-model="content" :base-url="baseUrl"></d-editor-md>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const content = ref(`[TOC]
+# Directory
+
+## Level-1 Directory
+This is a Level-1 directory.
+
+### Level-2 Directory
+This is a Level-1 directory.
+
+## Level-1 Directory
+This is a Level-1 directory.
+`);
+    const baseUrl = location.href;
+
+    return { content, baseUrl };
+  },
+});
+</script>
+```
+
+:::
+
+### mermaid 渲染
+
+:::demo 支持mermaid流程图、甘特图、时序图等图表渲染
+
+```vue
+<template>
+  <d-editor-md v-model="content" :fullscreen-z-index="1000"></d-editor-md>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const content = ref(`# Flow Chart
+\`\`\`mermaid
+flowchart LR
+A[Hard] -->|Text| B(Round)
+B --> C{Decision}
+C -->|One| D[Result 1]
+C -->|Two| E[Result 2]
+\`\`\`
+
+# Gantt
+\`\`\`mermaid
+gantt
+    section Section
+    Completed :done,    des1, 2014-01-06,2014-01-08
+    Active        :active,  des2, 2014-01-07, 3d
+    Parallel 1   :         des3, after des1, 1d
+    Parallel 2   :         des4, after des1, 1d
+    Parallel 3   :         des5, after des3, 1d
+    Parallel 4   :         des6, after des4, 1d
+\`\`\`
+
+# Class Diagram
+\`\`\`mermaid
+classDiagram
+Class01 <|-- AveryLongClass : Cool
+<<Interface>> Class01
+Class09 --> C2 : Where am I?
+Class09 --* C3
+Class09 --|> Class07
+Class07 : equals()
+Class07 : Object[] elementData
+Class01 : size()
+Class01 : int chimp
+Class01 : int gorilla
+class Class10 {
+  <<service>>
+  int id
+  size()
+}
+\`\`\`
+
+# State Diagram
+\`\`\`mermaid
+stateDiagram-v2
+[*] --> Still
+Still --> [*]
+Still --> Moving
+Moving --> Still
+Moving --> Crash
+Crash --> [*]
+\`\`\`
+
+# Pie
+\`\`\`mermaid
+pie
+"Dogs" : 386
+"Cats" : 85
+"Rats" : 15
+\`\`\`
+
+# Sequence Diagram
+\`\`\`mermaid
+sequenceDiagram
+Alice->>John: Hello John, how are you?
+loop Healthcheck
+    John->>John: Fight against hypochondria
+end
+Note right of John: Rational thoughts!
+John-->>Alice: Great!
+John->>Bob: How about you?
+Bob-->>John: Jolly good!
+\`\`\`
+`);
+
+    return { content };
+  },
+});
+</script>
 
 :::
 
