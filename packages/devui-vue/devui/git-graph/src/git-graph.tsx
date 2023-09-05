@@ -11,6 +11,7 @@ export default defineComponent({
     const graph = new GitGraph();
     const initGraph = (element: HTMLElement, options: GitGraphData) => {
       if (element && options) {
+        element.innerHTML = '';
         graph.load(element, options, isDarkMode.value);
       }
     };

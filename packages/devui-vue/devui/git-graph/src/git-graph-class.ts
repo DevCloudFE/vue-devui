@@ -1,5 +1,5 @@
-import { cloneDeep } from "lodash";
-import { CommitInfo, GitGraphData } from "./git-graph-types";
+import { cloneDeep } from 'lodash';
+import { CommitInfo, GitGraphData } from './git-graph-types';
 
 export class GitGraph {
   element?: HTMLElement;
@@ -46,7 +46,7 @@ export class GitGraph {
     '#69DBB9',
     '#76DBEF',
     '#B1CE4F',
-    '#5DA4DC'
+    '#5DA4DC',
   ];
   toolTipList: any;
 
@@ -59,8 +59,12 @@ export class GitGraph {
     this.minutesAgo = options.params.minutesAgo || this.minutesAgo;
     this.aMinutesAgo = options.params.aMinutesAgo || this.aMinutesAgo;
     this.maxNameLength = options.params.maxNameLength || 25;
+    this.preStart = 1;
+    const commits = cloneDeep(this.options.data.commits).map((commit) => {
+      commit.hasDrawn = false;
+      return commit;
+    });
 
-    const commits = cloneDeep(this.options.data.commits);
     this.prepareData(commits);
     return this.buildGraph('refName');
   }
@@ -139,8 +143,8 @@ export class GitGraph {
           x: this.offsetX + this.unitSpace * this.mspace + 56,
           y: this.offsetY + this.unitTime * mm - 22,
           'font-size': '12px',
-          fill: '#999',
-          'text-anchor': 'start'
+          fill: this.isDark ? '#8f93a3' : '#717580',
+          'text-anchor': 'start',
         };
         this.setNodeAttr(text, attrs);
         const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
@@ -154,7 +158,7 @@ export class GitGraph {
   }
 
   setNodeAttr(node: Element, attrs: any) {
-    Object.keys(attrs).forEach(key => {
+    Object.keys(attrs).forEach((key) => {
       node.setAttribute(key, attrs[key]);
     });
   }
@@ -238,7 +242,7 @@ export class GitGraph {
       fill: '#fff',
       strokeWidth: 1,
       stroke: this.colors[commit.space],
-      style: 'cursor: pointer;'
+      style: 'cursor: pointer;',
     };
     this.setNodeAttr(circle, attrs);
     this.svg.appendChild(circle);
@@ -254,7 +258,7 @@ export class GitGraph {
       href: commit.author.avatar_url,
       x: avatar_box_x,
       y: avatar_box_y,
-      style: 'clip-path: circle(50%)'
+      style: 'clip-path: circle(50%)',
     };
     this.setNodeAttr(img, imgAttrs);
 
@@ -274,7 +278,7 @@ export class GitGraph {
       d: route.join(' '),
       stroke: '#ccc',
       fill: 'none',
-      'stroke-width': 2
+      'stroke-width': 2,
     };
     this.setNodeAttr(line1, lineAttrs1);
     this.svg.appendChild(line1);
@@ -283,7 +287,7 @@ export class GitGraph {
     const lineAttrs2 = {
       d: route.join(' '),
       stroke: '#ccc',
-      'stroke-width': 2
+      'stroke-width': 2,
     };
     this.setNodeAttr(line2, lineAttrs2);
     this.svg.appendChild(line2);
@@ -394,7 +398,7 @@ export class GitGraph {
       y: y + 4,
       'text-anchor': 'start',
       fill: 'none',
-      style: 'font-size: 10px;'
+      style: 'font-size: 10px;',
     };
 
     this.setNodeAttr(text, textAttrs);
@@ -488,7 +492,7 @@ export class GitGraph {
     this.setNodeAttr(resText, {
       x,
       y,
-      ...attrs
+      ...attrs,
     });
     const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
     tspan.appendChild(document.createTextNode(text));
@@ -521,10 +525,12 @@ export class GitGraph {
       'text-anchor': 'start',
     });
 
-    const branchText = commit.branch ? this.getText(x + 70, y + 35, commit.branch, {
-      font: '12px Arial',
-      fill: isDark ? '#73788a' : '#71757f',
-    }) : null;
+    const branchText = commit.branch
+      ? this.getText(x + 70, y + 35, commit.branch, {
+          font: '12px Arial',
+          fill: isDark ? '#73788a' : '#71757f',
+        })
+      : null;
 
     const strList = commit.message.split('\n');
     if (strList.length > 10) {
@@ -576,7 +582,7 @@ export class GitGraph {
     });
     textArr.unshift(rectShadow);
 
-    textArr.forEach(t => {
+    textArr.forEach((t) => {
       this.svg.appendChild(t);
     });
     boxWidth = messageText.getBBox().width + 20 > boxWidth ? messageText.getBBox().width + 20 : boxWidth;
