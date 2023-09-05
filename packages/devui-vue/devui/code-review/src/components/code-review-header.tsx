@@ -29,9 +29,9 @@ export default defineComponent({
         <span class={['diff-type', diffType.value]}>{diffType.value[0].toUpperCase()}</span>
         <div class="file-info">
           <FoldIcon class={{ invert: !isFold.value }} />
-          <span class="file-name">{diffInfo.newName}</span>
-          <span class="diff-lines add-lines">+{diffInfo.addedLines}</span>
-          <span class="diff-lines delete-lines">-{diffInfo.deletedLines}</span>
+          <span class="file-name">{diffInfo?.newName || ''}</span>
+          <span class="diff-lines add-lines">+{diffInfo?.addedLines || 0}</span>
+          <span class="diff-lines delete-lines">-{diffInfo?.deletedLines || 0}</span>
           <Popover content={copyTipsText.value} pop-type={tipsPopType.value} trigger="hover" position={['right']}>
             <CopyIcon class="icon-copy" onClick={onCopy} />
           </Popover>
