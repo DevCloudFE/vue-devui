@@ -226,9 +226,9 @@ export function updateLineNumberInDatasetForDoubleColumn(
     prevR = Math.max(nextR - expandThreshold + 1, 1);
   } else if (position === 'bottom') {
     const prevLineNode = trNode.previousElementSibling as HTMLElement;
-    prevL = parseInt((prevLineNode.children[0] as HTMLElement).innerText) + 1;
+    prevL = parseInt((prevLineNode?.children[0] as HTMLElement)?.innerText) + 1;
     nextL = prevL + expandThreshold - 1;
-    prevR = parseInt((prevLineNode.children[2] as HTMLElement).innerText) + 1;
+    prevR = parseInt((prevLineNode?.children[2] as HTMLElement)?.innerText) + 1;
     nextR = prevR + expandThreshold - 1;
   } else {
     const prevLineNode = trNode.previousElementSibling as HTMLElement;
@@ -244,7 +244,11 @@ export function updateLineNumberInDatasetForDoubleColumn(
       updateExpandUpDownButton(trNode);
     }
   }
+  if (isNaN(prevL) || isNaN(prevR) || isNaN(nextL) || isNaN(nextR)) {
+    return false;
+  }
   setLineNumberInDataset(trNode, prevL, prevR, nextL, nextR);
+  return true;
 }
 
 /*
@@ -272,9 +276,9 @@ export function updateLineNumberInDataset(
     prevR = Math.max(nextR - expandThreshold + 1, 1);
   } else if (position === 'bottom') {
     const prevLineNode = trNode.previousElementSibling as HTMLElement;
-    prevL = parseInt((prevLineNode.children[0].children[0] as HTMLElement).innerText) + 1;
+    prevL = parseInt((prevLineNode?.children[0].children?.[0] as HTMLElement)?.innerText) + 1;
     nextL = prevL + expandThreshold - 1;
-    prevR = parseInt((prevLineNode.children[0].children[1] as HTMLElement).innerText) + 1;
+    prevR = parseInt((prevLineNode?.children[0].children?.[1] as HTMLElement)?.innerText) + 1;
     nextR = prevR + expandThreshold - 1;
   } else {
     const prevLineNode = trNode.previousElementSibling as HTMLElement;
@@ -290,7 +294,11 @@ export function updateLineNumberInDataset(
       updateExpandUpDownButton(trNode);
     }
   }
+  if (isNaN(prevL) || isNaN(prevR) || isNaN(nextL) || isNaN(nextR)) {
+    return false;
+  }
   setLineNumberInDataset(trNode, prevL, prevR, nextL, nextR);
+  return true;
 }
 
 /*
