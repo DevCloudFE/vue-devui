@@ -45,10 +45,15 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     }
 
     const loadMoreLine = trNodes[0].cloneNode(true) as HTMLTableRowElement;
-    loadMoreLine.children[0].removeChild(loadMoreLine.children[0].children[0]);
+    if (loadMoreLine.children[0].children[0]) {
+      loadMoreLine.children[0].removeChild(loadMoreLine.children[0].children[0]);
+    }
     (loadMoreLine.children[1] as HTMLElement).innerText = '';
+    const res = updateLineNumberInDatasetForDoubleColumn(loadMoreLine, expandThreshold.value, 'bottom');
+    if (!res) {
+      return;
+    }
     trNodes[0].parentElement?.appendChild(loadMoreLine);
-    updateLineNumberInDatasetForDoubleColumn(loadMoreLine, expandThreshold.value, 'bottom');
     attachExpandUpDownButton(loadMoreLine.children[0] as HTMLElement, 'down');
   };
 
@@ -139,10 +144,15 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     }
 
     const loadMoreLine = trNodes[0].cloneNode(true) as HTMLTableRowElement;
-    loadMoreLine.children[0].removeChild(loadMoreLine.children[0].children[0]);
+    if (loadMoreLine.children[0].children[0]) {
+      loadMoreLine.children[0].removeChild(loadMoreLine.children[0].children[0]);
+    }
     (loadMoreLine.children[1] as HTMLElement).innerText = '';
+    const res = updateLineNumberInDataset(loadMoreLine, expandThreshold.value, 'bottom');
+    if (!res) {
+      return;
+    }
     trNodes[0].parentElement?.appendChild(loadMoreLine);
-    updateLineNumberInDataset(loadMoreLine, expandThreshold.value, 'bottom');
     attachExpandUpDownButton(loadMoreLine.children[0] as HTMLElement, 'down');
   };
 

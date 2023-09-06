@@ -16,9 +16,6 @@ export function useCodeReview(props: CodeReviewProps, ctx: SetupContext) {
 
   const initDiffContent = () => {
     diffFile.value = Diff2Html.parse(diff.value);
-    if (!diffFile.value.length) {
-      return;
-    }
     nextTick(() => {
       if (inBrowser && !showBlob.value) {
         parseDiffCode(reviewContentRef.value, diff.value, outputFormat.value);

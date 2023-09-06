@@ -7,13 +7,11 @@ export function useCodeReviewCopy(diffInfo: DiffFile) {
   const tipsPopType = ref('default');
 
   const onCopy = () => {
-    if (diffInfo?.newName) {
-      toClipboard(diffInfo.newName).then(() => {
-        // 点击后，popover消失，待popover问题解决后放开此处
-        /* copyTipsText.value = '复制成功';
-        tipsPopType.value = 'success'; */
-      });
-    }
+    toClipboard(diffInfo.newName).then(() => {
+      // 点击后，popover消失，待popover问题解决后放开此处
+      /* copyTipsText.value = '复制成功';
+      tipsPopType.value = 'success'; */
+    });
   };
 
   return { copyTipsText, tipsPopType, onCopy };
