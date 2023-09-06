@@ -19,9 +19,11 @@ export default defineComponent({
       props
     );
     const ns = useNamespace('tooltip');
-    const className = computed(() => {
-      return [ns.b(), ns.m(placement.value)].join(' ');
-    });
+    const className = computed(() => ({
+      [ns.b()]: true,
+      [ns.m(placement.value)]: true,
+      [ns.m('with-content')]: slots.content,
+    }));
     provide(POPPER_TRIGGER_TOKEN, origin);
 
     return () => (
@@ -41,7 +43,7 @@ export default defineComponent({
               onPositionChange={onPositionChange}
               onMouseenter={onMouseenterOverlay}
               onMouseleave={onMouseleave}>
-              <span innerHTML={content.value}></span>
+              {slots.content ? slots.content?.() : <span innerHTML={content.value}></span>}
             </FlexibleOverlay>
           </Transition>
         </Teleport>

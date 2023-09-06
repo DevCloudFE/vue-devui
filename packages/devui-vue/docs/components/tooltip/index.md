@@ -81,6 +81,46 @@ export default defineComponent({
 
 :::
 
+### 使用content插槽
+
+:::demo
+
+```vue
+<template>
+  <div class="demo-btn-group">
+    <d-tooltip>
+      <d-button>Overflow Hidden</d-button>
+      <template #content>
+        <div class="tooltip-box">{{message}}</div>
+      </template>
+    </d-tooltip>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    return {
+      message: ref('规范的组件化目的不是为了限制创造，而是为了创造者更确定、科学、高效。所有行为决策的价值归依为产品业务。产品业务永远比组件化本身更重要，业务第一。规范不是绝对、教条、冷漠、强制的，实际工作中总会有新增需求、存量优化空间、情感化设计需求超出一般通用规范。保持克制的同时，允许基于强烈业务需求的规范突破；之后如果有足够的理由迭代出组件，那么就进行组件化。'),
+    };
+  },
+});
+</script>
+
+<style>
+.tooltip-box {
+  max-height: 150px;
+  max-width: 300px;
+  overflow: auto;
+  padding: 10px;
+}
+</style>
+```
+
+:::
+
 ### Tooltip 参数
 
 | 参数名            | 类型                                               | 默认值 | 说明                                              | 跳转 Demo             |
@@ -99,6 +139,7 @@ export default defineComponent({
 | 插槽名  | 说明                   |
 | :------ | :--------------------- |
 | default | 默认插槽，设置触发元素 |
+| content | 内容插槽，自定义内容与样式 |
 
 ### Tooltip 类型定义
 
