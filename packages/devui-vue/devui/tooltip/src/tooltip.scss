@@ -74,3 +74,8 @@
     }
   }
 }
+
+.#{$devui-prefix}-tooltip--with-content {
+  max-width: unset;
+  padding: 0;
+}
