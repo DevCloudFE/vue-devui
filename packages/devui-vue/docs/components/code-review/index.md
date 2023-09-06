@@ -38,12 +38,25 @@ import { defineComponent, ref, h } from 'vue';
 
 export default defineComponent({
   setup() {
-    //const diff = "@@ -0,0 +1 @@\n+11\n\\ No newline at end of file\n";
     const diff = `--- a/src/diff2html.js
 +++ b/src/diff2html.js
-@@ -0,0 +1 @@
-+11
-\\ No newline at end of file
+@@ -7,7 +7,6 @@
+ 
+ (function() {
+   var diffParser = require('./diff-parser.js').DiffParser;
+-  var fileLister = require('./file-list-printer.js').FileListPrinter;
+   var htmlPrinter = require('./html-printer.js').HtmlPrinter;
+ 
+   function Diff2Html() {
+@@ -43,7 +42,7 @@
+ 
+     var fileList = '';
+     if (configOrEmpty.showFiles === true) {
+-      fileList = fileLister.generateFileList(diffJson, configOrEmpty);
++      fileList = htmlPrinter.generateFileListSummary(diffJson, configOrEmpty);
+     }
+ 
+     var diffOutput = '';
 `;
 
     let codeReviewIns = {};
