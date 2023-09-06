@@ -139,6 +139,7 @@ export default defineComponent({
 | 插槽名  | 说明                   |
 | :------ | :--------------------- |
 | default | 默认插槽，设置触发元素 |
+| content | 内容插槽，自定义内容与样式 |
 
 ### Tooltip 类型定义
 
