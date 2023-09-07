@@ -417,7 +417,7 @@ export default defineComponent({
           return item.label.toLowerCase().includes(query.toLowerCase());
         });
       } else {
-        options.value = [];
+        options.value.splice(0, options.value.length);
       }
     };
 
@@ -456,20 +456,20 @@ export default defineComponent({
 | placeholder           | `string`                               | 'Select' | 可选，输入框的默认提示文字                   | [基本用法](#基本用法)              |
 | width                 | `number`                               | --       | 可选，输入框宽度                             | [基本用法](#基本用法)              |
 | max-height            | `number`                               | --       | 可选，下拉框最大高度                         | [基本用法](#基本用法)              |
-| disabled              | `boolean`                              | false    | 可选，是否禁用选择器本身                     | [禁用选择器本身 ](#禁用选择器本身) |
+| disabled              | `boolean`                              | false    | 可选，是否禁用选择器本身                     | [禁用选择器本身](#禁用选择器本身) |
 | disabled-key          | `string`                               | ''       | 可选，设置禁用选项的 Key 值                  | [禁用选项](#有用选项)              |
 | enable-lazy-load      | `boolean`                              | false    | 可选，是否允许懒加载                         | [远程搜索](#远程搜索)              |
-| filter-method         | ` (inputValue:string)=>Array<Options>` | --       | 可选，自定义筛选方法                         | [自定义匹配方法](#自定义筛选方法)  |
+| filter-method         | `(inputValue:string)=>Array<Options>` | --       | 可选，自定义筛选方法                         | [自定义匹配方法](#自定义筛选方法)  |
 | remote-method         | `(inputValue:string)=>Array<Options>`  | --       | 可选，自定义远程搜索方法                     | [远程搜索](#远程搜索)              |
 
 ### EditableSelect 事件
 
 | 事件名         | 回调参数                        | 说明                          | 跳转 Demo             |
 | :------------- | :------------------------------ | :---------------------------- | :-------------------- |
-| load-more      | ` (inputvalue:string)=>void`    | 可选，懒加载触发事件          | [远程搜索](#远程搜索) |
-| focus          | ` (e: FocusEvent)=>void`        | 可选，当 input 获得焦点时触发 |                       |
-| blur           | ` (e: FocusEvent)->void`        | 可选，当 input 失去焦点时触发 |                       |
-| change         | ` (value:string\|number)=>void` | 可选，选中值发生变化时触发    |
+| load-more      | `(inputvalue:string)=>void`    | 可选，懒加载触发事件          | [远程搜索](#远程搜索) |
+| focus          | `(e: FocusEvent)=>void`        | 可选，当 input 获得焦点时触发 |                       |
+| blur           | `(e: FocusEvent)->void`        | 可选，当 input 失去焦点时触发 |                       |
+| change         | `(value:string\|number)=>void` | 可选，选中值发生变化时触发    |
 | visible-change | `(visible:boolean)=>void`       | 可选，下拉框显隐时触发        |
 
 ### EditableSelect 插槽
