@@ -67,7 +67,7 @@ export default defineComponent({
         const ob = new IntersectionObserver(
           (entries: IntersectionObserverEntry[]) => {
             entries.forEach((entry: IntersectionObserverEntry) => {
-              if (!entry.isIntersecting) {
+              if (!entry.isIntersecting && !props.disableOverflowStyle) {
                 const cloneNode = entry.target.cloneNode(true) as Element as HTMLElement;
                 if (entry.target.classList.contains(`${ns.b()}-overflow-container`)) {
                   if (flag && entry.target.previousElementSibling && container.children.length) {
@@ -144,7 +144,7 @@ export default defineComponent({
             key="overflowContainer"
             title="..."
             class={overflowContainerClassName}
-            v-show={overflowItemLength.value > 0 && mode.value === 'horizontal'}></SubMenu>
+            v-show={overflowItemLength.value > 0 && mode.value === 'horizontal' && !props.disableOverflowStyle}></SubMenu>
         </ul>
       );
     };

@@ -203,6 +203,7 @@ let width = ref(480);
   });
   </script>
 ```
+
 :::
 
 ### 收缩菜单
@@ -373,6 +374,7 @@ const addSelect = () => {
 | open-keys           | Array                 | []         | 默认展开的子菜单 key 值                                                         | [默认展开](#默认展开)     |
 | default-select-keys | Array                 | []         | 默认选择菜单项 key 值                                                           | [基本用法](#基本用法)     |
 | router              | Boolean               | false      | 是否启用`vue-router`模式。启用该模式会在激活导航时以 key 作为 path 进行路由跳转 | -                         |
+| disableOverflowStyle| Boolean               | false      | 是否禁用宽度过小时菜单的省略样式                                              | -                         |
 
 ### Menu 事件
 
