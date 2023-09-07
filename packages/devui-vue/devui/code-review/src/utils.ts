@@ -146,7 +146,7 @@ export function updateExpandLineCount(expandDom: HTMLElement, newExpandDom: HTML
 }
 
 // 解析diff
-export function parseDiffCode(container: HTMLElement, code: string, outputFormat: OutputFormat) {
+export function parseDiffCode(container: HTMLElement, code: string, outputFormat: OutputFormat, isAddCode = false) {
   const diff2HtmlUi = new Diff2HtmlUI(container, code, {
     drawFileList: false,
     matching: 'lines',
@@ -156,7 +156,7 @@ export function parseDiffCode(container: HTMLElement, code: string, outputFormat
   });
   if (outputFormat === 'side-by-side') {
     let diffHtmlStr = diff2HtmlUi.diffHtml;
-    if (diffHtmlStr.match(EmptyDataLangReg)) {
+    if (diffHtmlStr.match(EmptyDataLangReg) && isAddCode) {
       diffHtmlStr = diffHtmlStr.replace(EmptyDataLangReg, '');
     }
     const trList = diffHtmlStr.match(TableTrReg) as RegExpMatchArray;
