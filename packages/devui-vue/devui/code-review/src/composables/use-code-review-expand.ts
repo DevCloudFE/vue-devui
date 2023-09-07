@@ -45,10 +45,16 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     }
 
     const loadMoreLine = trNodes[0].cloneNode(true) as HTMLTableRowElement;
-    loadMoreLine.children[0].removeChild(loadMoreLine.children[0].children[0]);
+    if (loadMoreLine.children[0].children[0]) {
+      loadMoreLine.children[0].removeChild(loadMoreLine.children[0].children[0]);
+    }
     (loadMoreLine.children[1] as HTMLElement).innerText = '';
     trNodes[0].parentElement?.appendChild(loadMoreLine);
-    updateLineNumberInDatasetForDoubleColumn(loadMoreLine, expandThreshold.value, 'bottom');
+    const res = updateLineNumberInDatasetForDoubleColumn(loadMoreLine, expandThreshold.value, 'bottom');
+    if (!res) {
+      loadMoreLine.remove();
+      return;
+    }
     attachExpandUpDownButton(loadMoreLine.children[0] as HTMLElement, 'down');
   };
 
@@ -63,7 +69,7 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     const prefix = '--- updated_at\tJan 1, 2019, 0:0:0 AM\n+++ updated_at\tJan 1, 2019, 0:0:0 AM\n';
     const container = document.createElement('div');
     // 解析code
-    parseDiffCode(container, prefix + code, outputFormat.value);
+    parseDiffCode(container, prefix + code, outputFormat.value, true);
 
     const trNodes = Array.from(container.querySelectorAll('tr'));
     const expandLine = trNodes.find((element) => (element.children[1] as HTMLElement)?.innerText.trim().match(ExpandLineReg));
@@ -139,10 +145,16 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     }
 
     const loadMoreLine = trNodes[0].cloneNode(true) as HTMLTableRowElement;
-    loadMoreLine.children[0].removeChild(loadMoreLine.children[0].children[0]);
+    if (loadMoreLine.children[0].children[0]) {
+      loadMoreLine.children[0].removeChild(loadMoreLine.children[0].children[0]);
+    }
     (loadMoreLine.children[1] as HTMLElement).innerText = '';
     trNodes[0].parentElement?.appendChild(loadMoreLine);
-    updateLineNumberInDataset(loadMoreLine, expandThreshold.value, 'bottom');
+    const res = updateLineNumberInDataset(loadMoreLine, expandThreshold.value, 'bottom');
+    if (!res) {
+      loadMoreLine.remove();
+      return;
+    }
     attachExpandUpDownButton(loadMoreLine.children[0] as HTMLElement, 'down');
   };
 
@@ -157,7 +169,7 @@ export function useCodeReviewExpand(reviewContentRef: Ref<HTMLElement>, props: C
     const prefix = '--- updated_at\tJan 1, 2019, 0:0:0 AM\n+++ updated_at\tJan 1, 2019, 0:0:0 AM\n';
     const container = document.createElement('div');
     // 解析code
-    parseDiffCode(container, prefix + code, outputFormat.value);
+    parseDiffCode(container, prefix + code, outputFormat.value, true);
 
     const trNodes = Array.from(container.querySelectorAll('tr'));
     const expandLine = trNodes.find((element) => (element.children[1] as HTMLElement)?.innerText.trim().match(ExpandLineReg));
