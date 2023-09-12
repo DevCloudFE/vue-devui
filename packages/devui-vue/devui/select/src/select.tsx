@@ -29,7 +29,7 @@ import { FlexibleOverlay, Placement } from '../../overlay';
 export default defineComponent({
   name: 'DSelect',
   props: selectProps,
-  emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur', 'remove-tag', 'clear'],
+  emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur', 'remove-tag', 'clear', 'input-change'],
   setup(props: SelectProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DSelect', app);
