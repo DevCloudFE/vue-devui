@@ -268,6 +268,7 @@ export default function useSelect(
 
   const queryChange = (query: string) => {
     filterQuery.value = query;
+    ctx.emit('input-change', query);
   };
 
   const isLoading = computed(() => typeof props.loading === 'boolean' && props.loading);

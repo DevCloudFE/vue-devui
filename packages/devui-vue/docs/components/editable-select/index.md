@@ -215,7 +215,7 @@ export default defineComponent({
 
 ```vue
 <template>
-  <d-editable-select v-model="value" :width="450" :options="options" allow-clear></d-editable-select>
+  <d-editable-select v-model="value" :width="450" :options="options" allow-clear @input-change="handleInputChange"></d-editable-select>
 </template>
 
 <script>
@@ -240,9 +240,14 @@ export default defineComponent({
       },
     ]);
 
+    const handleInputChange = (val) => {
+      console.log(val);
+    };
+
     return {
       value,
       options,
+      handleInputChange,
     };
   },
 });
@@ -471,6 +476,7 @@ export default defineComponent({
 | blur           | `(e: FocusEvent)->void`        | 可选，当 input 失去焦点时触发 |                       |
 | change         | `(value:string\|number)=>void` | 可选，选中值发生变化时触发    |
 | visible-change | `(visible:boolean)=>void`       | 可选，下拉框显隐时触发        |
+| input-change | `(inputvalue:string)=>void`       | 可选，输入框输入内容时触发        |[可清空选项](#可清空选项)|
 
 ### EditableSelect 插槽
 

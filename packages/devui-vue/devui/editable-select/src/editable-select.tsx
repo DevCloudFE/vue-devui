@@ -21,7 +21,7 @@ import './editable-select.scss';
 export default defineComponent({
   name: 'DEditableSelect',
   props: editableSelectProps,
-  emits: ['update:modelValue', 'focus', 'blur', 'clear', 'change', 'visibleChange', 'loadMore'],
+  emits: ['update:modelValue', 'focus', 'blur', 'clear', 'change', 'visibleChange', 'loadMore', 'inputChange'],
   setup(props: EditableSelectProps, ctx: SetupContext) {
     // name space
     const ns = useNamespace('editable-select');
