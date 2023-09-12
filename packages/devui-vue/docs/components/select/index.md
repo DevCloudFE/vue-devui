@@ -376,7 +376,7 @@ export default defineComponent({
 ```vue
 <template>
   <div class="mb-0">默认筛选</div>
-  <d-select class="mb-2" v-model="value1" :allow-clear="true" filter>
+  <d-select class="mb-2" v-model="value1" :allow-clear="true" filter @input-change="handleInput">
     <d-option v-for="(item, index) in options.data" :key="index" :value="item.value" :name="item.name"></d-option>
   </d-select>
   <div class="mb-0">远程搜索</div>
@@ -418,6 +418,9 @@ export default defineComponent({
         options1.data = [];
       }
     };
+    const handleInput = (val) => {
+      console.log(val);
+    };
     return {
       value1,
       value2,
@@ -425,6 +428,7 @@ export default defineComponent({
       options1,
       loading,
       filterFunc,
+      handleInput,
     };
   },
 });
@@ -539,6 +543,7 @@ export default defineComponent({
 | clear         | `Function()`              | 可选, 通过右侧删除图标清空所有选项时触发                       |
 | remove-tag    | `Function(value)`         | 可选，多选时删除单个 tag 时触发，参数为当前 tag 的值           |
 | load-more    | `Function()`               | 可选，下拉框有滚动条时滚动到底部触发           |[下拉列表显隐方法](#下拉列表显隐方法)|
+| input-change    | `Function(value)`       | 可选，输入框输入内容时触发，参数为输入的值           |[筛选、搜索选项](#筛选、搜索选项)|
 
 ### Select 插槽
 

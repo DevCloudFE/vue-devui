@@ -64,6 +64,7 @@ export function useInputEvent(
 
   const handleInputChange = () => {
     states.query = states.inputValue;
+    ctx.emit('inputChange', states.query);
     handleQueryChange(states.query);
   };
 
