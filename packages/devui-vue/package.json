@@ -1,6 +1,6 @@
 {
   "name": "vue-devui",
-  "version": "1.5.15-feat.1",
+  "version": "1.5.15-hotfix.1",
   "license": "MIT",
   "description": "DevUI components based on Vite and Vue3",
   "keywords": [
@@ -48,6 +48,7 @@
     "@babel/helper-hoist-variables": "^7.22.5",
     "@devui-design/icons": "^1.3.0",
     "@floating-ui/dom": "^0.4.4",
+    "@iktakahiro/markdown-it-katex": "^4.0.1",
     "@types/codemirror": "0.0.97",
     "@types/lodash-es": "^4.17.4",
     "@vue/shared": "^3.2.33",
@@ -65,6 +66,7 @@
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.20",
     "markdown-it": "12.2.0",
+    "markdown-it-plantuml": "^1.4.1",
     "mermaid": "9.1.1",
     "mitt": "^3.0.0",
     "monaco-editor": "0.34.0",

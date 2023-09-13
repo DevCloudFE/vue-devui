@@ -232,6 +232,90 @@ export default defineComponent({
 editor-md/checkbox
 :::
 
+### 数学公式 渲染
+
+:::demo 通过配置md-plugins katex插件，进行数学公式渲染。
+
+```vue
+<template>
+  <d-editor-md
+    v-model="content"
+  >
+  </d-editor-md>
+  <!-- <d-editor-md
+    v-model="content"
+    :md-plugins="plugins"
+  >
+  </d-editor-md> -->
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+// import mk from '@ittakahiro/markdown-it-katex';  // 请首先安装 @ittakahiro/markdown-it-katex 依赖
+
+export default defineComponent({
+  setup() {
+    const content = ref(`$E = mc^2$
+$\\sqrt{3x-1}+(1+x)^2$  // DEMO无法进行import，使用时请放开代码中注释
+    `);
+
+    mdPlugins = [{
+      // plugin: mk
+    }];
+
+    return { content, mdPlugins };
+  },
+});
+</script>
+```
+
+:::
+
+### PlantUML 渲染
+
+:::demo 通过配置md-plugins plantuml插件，进行plantuml图渲染。
+
+```vue
+<template>
+  <d-editor-md
+    v-model="content"
+  >
+  </d-editor-md>
+  <!-- <d-editor-md
+    v-model="content"
+    :md-plugins="plugins"
+  >
+  </d-editor-md> -->
+</template>
+
+<script>
+import { defineComponent, reactive, ref } from 'vue';
+// import PlantUml from 'markdown-it-plantuml';  // 请首先安装 markdown-it-plantuml 依赖
+
+export default defineComponent({
+  setup() {
+    const content = ref(`// DEMO无法进行import，使用时请放开代码中注释
+@startuml
+Alice -> "Bob()" : Hello
+"Bob()" -> "This is very long" as Long
+' You can also declare:
+' "Bob()" -> Long as "This is very long"
+Long --> "Bob()" : ok
+@enduml`);
+
+    mdPlugins = [{
+      // plugin: PlantUml,
+      // opts: {server: 'https://www/plantuml.com/plantuml'} // 自定义server可参考plantuml官方文档进行搭建
+    }];
+
+    return { content, mdPlugins };
+  },
+});
+</script>
+```
+
+:::
+
 ### 配置快速提示
 
 :::demo 设置 hintConfig 后，可用于支持@选择用户等场景。

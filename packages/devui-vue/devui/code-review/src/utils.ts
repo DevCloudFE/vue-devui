@@ -169,7 +169,9 @@ export function parseDiffCode(container: HTMLElement, code: string, outputFormat
       newTrStr += `<tr>${leftTdList?.join('')}${rightTdList?.join('')}</tr>`;
     }
     const tbodyAttr = diffHtmlStr.match(TableTbodyAttrReg)?.[1] || '';
-    const newDiffHtmlStr = diffHtmlStr.replace(TableTbodyReg, `<tbody ${tbodyAttr}>${newTrStr}</tbody>`);
+    const emptyDiffHtmlStr = diffHtmlStr.replace(TableTbodyReg, `<tbody${tbodyAttr}></tbody>`);
+    const index = emptyDiffHtmlStr.indexOf(`<tbody${tbodyAttr}>`);
+    const newDiffHtmlStr = emptyDiffHtmlStr.slice(0, index) + newTrStr + emptyDiffHtmlStr.slice(index);
     diff2HtmlUi.diffHtml = newDiffHtmlStr;
   }
   diff2HtmlUi.draw();
