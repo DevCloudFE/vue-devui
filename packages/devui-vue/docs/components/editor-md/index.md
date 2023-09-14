@@ -259,7 +259,7 @@ export default defineComponent({
 $\\sqrt{3x-1}+(1+x)^2$  // DEMO无法进行import，使用时请放开代码中注释
     `);
 
-    mdPlugins = [{
+    const mdPlugins = [{
       // plugin: mk
     }];
 
@@ -303,7 +303,7 @@ Alice -> "Bob()" : Hello
 Long --> "Bob()" : ok
 @enduml`);
 
-    mdPlugins = [{
+    const mdPlugins = [{
       // plugin: PlantUml,
       // opts: {server: 'https://www/plantuml.com/plantuml'} // 自定义server可参考plantuml官方文档进行搭建
     }];
