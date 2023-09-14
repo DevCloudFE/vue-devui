@@ -41,11 +41,20 @@ export default defineComponent({
     return () => (
       <>
         {config.type === 'button' && (
-          <Tooltip position={['top', 'bottom']} content={getTooltipContent(config.name, config.shortKey)} hide-after={1000}>
-            <span
-              class="md-toolbar-item"
-              onClick={onToolbarItemClick}
-              innerHTML={config.id === 'fullscreen' ? (showFullscreen.value ? config.exitIcon : config.icon) : config.icon}></span>
+          <Tooltip position={['top', 'bottom']} hide-after={1000}>
+            {{
+              default: () => (
+                <span
+                  class="md-toolbar-item"
+                  onClick={onToolbarItemClick}
+                  innerHTML={config.id === 'fullscreen' ? (showFullscreen.value ? config.exitIcon : config.icon) : config.icon}>
+                </span>
+              ),
+              content: () => (
+                <span class='md-toolbar-tip-content' innerHTML={getTooltipContent(config.name, config.shortKey)}>
+                </span>
+              )
+            }}
           </Tooltip>
         )}
         {config.type === 'dropDown' && (
@@ -54,7 +63,16 @@ export default defineComponent({
               default: () => (
                 <span>
                   <Tooltip position={showFullscreen.value ? ['right'] : ['top']} content={getTooltipContent(config.name)} hide-after={1000}>
-                    <span class="md-toolbar-item" onClick={() => config.handler?.()} innerHTML={config.icon}></span>
+                    {{
+                      default: () => (
+                        <span class="md-toolbar-item" onClick={() => config.handler?.()} innerHTML={config.icon}>
+                        </span>
+                      ),
+                      content: () => (
+                        <span class='md-toolbar-tip-content' innerHTML={getTooltipContent(config.name)}>
+                        </span>
+                      )
+                    }}
                   </Tooltip>
                 </span>
               ),
