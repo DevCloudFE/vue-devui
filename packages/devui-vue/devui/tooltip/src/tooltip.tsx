@@ -43,7 +43,7 @@ export default defineComponent({
               onPositionChange={onPositionChange}
               onMouseenter={onMouseenterOverlay}
               onMouseleave={onMouseleave}>
-              {slots.content ? slots.content?.() : <span innerHTML={content.value}></span>}
+              {slots.content ? slots.content?.() : <span>{content.value}</span>}
             </FlexibleOverlay>
           </Transition>
         </Teleport>
