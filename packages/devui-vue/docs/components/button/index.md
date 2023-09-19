@@ -75,6 +75,7 @@ button/buttonGroup
 | shape    | [IButtonShape](#ibuttonshape)     | --          | 可选，按钮形状(圆形/圆角) | [图标按钮](#图标按钮)     |
 | disabled | `boolean`                         | false       | 可选，是否禁用 button     | [禁用状态](#禁用状态)     |
 | loading  | `boolean`                         | false       | 可选，设置加载中状态      | [加载中状态](#加载中状态) |
+| native-type  | [IButtonType](#ibuttontype)    | 'button'       | 可选，按钮原生type属性      |  |
 
 ### Button 类型定义
 
@@ -102,11 +103,17 @@ type IButtonColor = 'primary' | 'secondary' | 'danger';
 type IButtonShape = 'circle' | 'round';
 ```
 
+#### IButtonType
+
+```ts
+type IButtonType = 'button' | 'submit' | 'reset';
+```
+
 ### ButtonGroup 参数
 
 | 参数名 | 类型                             | 默认 | 说明             | 跳转 Demo         |
 | :----- | :------------------------------- | :--- | :--------------- | :---------------- |
-| size   | [IButtonSize](#iButtonGroupSize) | 'md' | 可选，按钮组尺寸 | [按钮组](#按钮组) |
+| size   | [IButtonSize](#ibuttongroupsize) | 'md' | 可选，按钮组尺寸 | [按钮组](#按钮组) |
 
 ### ButtonGroup 类型定义
 
