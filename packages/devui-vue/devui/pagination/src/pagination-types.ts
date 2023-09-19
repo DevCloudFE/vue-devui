@@ -99,7 +99,7 @@ export const paginationProps = {
   onPageSizeChange: {
     type: Function as PropType<(v: number) => void>,
   },
-  maxTotalPage: {
+  maxPage: {
     type: Number,
     default: 0,
   },
