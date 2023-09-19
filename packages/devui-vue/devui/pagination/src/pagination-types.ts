@@ -99,6 +99,10 @@ export const paginationProps = {
   onPageSizeChange: {
     type: Function as PropType<(v: number) => void>,
   },
+  maxPage: {
+    type: Number,
+    default: 0,
+  },
 } as const;
 
 // 组件props

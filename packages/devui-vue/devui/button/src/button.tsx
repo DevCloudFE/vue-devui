@@ -14,7 +14,7 @@ export default defineComponent({
   props: buttonProps,
   emits: ['click'],
   setup(props: ButtonProps, ctx: SetupContext) {
-    const { icon, disabled, loading } = toRefs(props);
+    const { icon, disabled, loading, nativeType } = toRefs(props);
     const { classes, iconClass } = useButton(props, ctx);
 
     const onClick = (e: MouseEvent) => {
@@ -26,7 +26,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <button class={classes.value} disabled={disabled.value} onClick={onClick}>
+        <button class={classes.value} disabled={disabled.value} onClick={onClick} type={nativeType.value}>
           {icon.value && <Icon name={icon.value} size="var(--devui-font-size, 12px)" color="" class={iconClass.value} />}
           <div class="loading-icon__container" v-show={loading.value}>
             <d-icon name="icon-loading" class="button-icon-loading" color="#BBDEFB"></d-icon>
