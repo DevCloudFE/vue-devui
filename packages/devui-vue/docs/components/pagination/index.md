@@ -442,6 +442,7 @@ export default defineComponent({
 | have-config-menu     | `boolean`                                                                                             | false                                                          | 可选，`极简模式`下是否显示配置                                                                                     | [极简模式](#极简模式) |
 | auto-fix-page-index  | `boolean`                                                                                             | true                                                           | 可选，改变 pageSize 时是否自动修正页码，<br>若`pageSizeChange`事件中会对<br>`pageIndex`做处理，则推荐设置为`false` | [极简模式](#极简模式) |
 | auto-hide            | `boolean`                                                                                             | false                                                          | 可选，是否自动隐藏，<br>当 auto-hide 为 true，<br>并且 pageSizeOptions 最小值大于 total，<br>则不展示分页          | [极简模式](#极简模式) |
+| max-total-page                 | `number`                                                                                | 0                                                             | 可选，可展示的分页最大页数                                                                                                 |    |
 
 ### Pagination 事件
 

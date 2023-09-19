@@ -43,11 +43,12 @@ export default defineComponent({
       pageIndex,
       showJumpButton,
       haveConfigMenu,
+      maxTotalPage,
     } = toRefs(props);
     const ns = useNamespace('pagination');
 
     // 总页数
-    const totalPages = computed(() => Math.ceil(props.total / props.pageSize));
+    const totalPages = computed(() => Math.min(Math.ceil(props.total / props.pageSize), maxTotalPage.value));
 
     // 极简模式下，可选的下拉选择页码
     const litePageOptions = computed(() => liteSelectOptions(totalPages.value));
