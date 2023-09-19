@@ -4,12 +4,12 @@ $panel-width: 230px;
 $panel-height: 210px;
 $panel-padding: 5px;
 $panel-row-height: 24px;
-$panel-cell-bg: #ffffff;
-$panel-cell-color: #000000;
-$panel-cell-active-bg: #0066cc;
-$panel-cell-active-color: #f1f1f1;
-$panel-cell-active-hover-bg: #0088dd;
-$panel-cell-active-hover-color: #ffffff;
+$panel-cell-bg: transparent;
+$panel-cell-color: $devui-text;
+$panel-cell-active-bg: $devui-list-item-active-bg;
+$panel-cell-active-color: $devui-list-item-active-text;
+$panel-cell-active-hover-bg: $devui-list-item-active-bg;
+$panel-cell-active-hover-color: $devui-list-item-active-text;
 
 .#{$devui-prefix}-calendar-panel {
   width: $panel-width;
@@ -37,7 +37,7 @@ $panel-cell-active-hover-color: #ffffff;
       color: $panel-cell-color;
 
       &:hover {
-        background-color: $devui-disabled-bg;
+        background-color: $devui-range-item-hover-bg;
       }
 
       &.selected {
@@ -88,16 +88,15 @@ $panel-cell-active-hover-color: #ffffff;
 
     &.disabled {
       .today-button {
-        border: 1px solid #cccccc;
         cursor: not-allowed;
       }
     }
 
     .today-button {
-      border: 1px solid #0066cc;
       border-radius: 3px;
       padding: 2px 20px;
       font-size: 12px;
+      color: $devui-brand-active;
     }
   }
 }

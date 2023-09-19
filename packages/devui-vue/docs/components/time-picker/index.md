@@ -125,6 +125,12 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+.mb-2 button {
+  color: var(--devui-text, #ced1db);
+  background-color: var(--devui-btn-common-bg, #393a3e);
+}
+</style>
 ```
 
 :::

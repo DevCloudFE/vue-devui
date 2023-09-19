@@ -11,7 +11,6 @@
 ::: demo
 
 ```vue
-
 <template>
   <d-layout>
     <d-header class="dheader">Header</d-header>
@@ -21,9 +20,10 @@
 </template>
 
 <style>
-.dheader, .dfooter {
-  background: #333854;
-  color: #fff;
+.dheader,
+.dfooter {
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   text-align: center;
   line-height: 40px;
 }
@@ -32,6 +32,7 @@
   height: 200px;
   line-height: 200px;
   text-align: center;
+  background-color: var(--devui-global-bg-normal, #ffffff);
 }
 </style>
 ```
@@ -41,7 +42,6 @@
 :::demo
 
 ```vue
-
 <template>
   <d-layout>
     <d-header class="dheader">Header</d-header>
@@ -54,15 +54,16 @@
 </template>
 
 <style>
-.dheader, .dfooter {
-  background: #333854;
-  color: #fff;
+.dheader,
+.dfooter {
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   text-align: center;
   line-height: 40px;
 }
 
 .daside {
-  background: #f8f8f8;
+  background: var(--devui-area, #f8f8f8);
   width: 100px;
   min-height: 200px;
   display: flex;
@@ -77,7 +78,6 @@
 :::demo
 
 ```vue
-
 <template>
   <d-layout>
     <d-header class="dheader">Header</d-header>
@@ -90,9 +90,10 @@
 </template>
 
 <style>
-.dheader, .dfooter {
-  background: #333854;
-  color: #fff;
+.dheader,
+.dfooter {
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   text-align: center;
   line-height: 40px;
 }
@@ -104,7 +105,6 @@
 :::demo
 
 ```vue
-
 <template>
   <d-layout>
     <d-aside class="daside">Aside</d-aside>
@@ -118,7 +118,7 @@
 
 <style>
 .daside {
-  background: #f8f8f8;
+  background: var(--devui-area, #f8f8f8);
   width: 100px;
   min-height: 200px;
   display: flex;
@@ -126,9 +126,10 @@
   justify-content: center;
 }
 
-.dheader, .dfooter {
-  background: #333854;
-  color: #fff;
+.dheader,
+.dfooter {
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   text-align: center;
   line-height: 40px;
   min-height: 40px;
@@ -137,20 +138,20 @@
 .main-content {
   line-height: 200px;
   text-align: center;
+  background-color: var(--devui-global-bg-normal, #ffffff);
 }
 </style>
 ```
 
 :::
 
-### 应用场景1
+### 应用场景 1
 
 常用上中下布局。
 
 :::demo
 
 ```vue
-
 <template>
   <d-layout>
     <d-header class="dheader-1">
@@ -177,8 +178,8 @@
   text-align: left;
   position: relative;
   height: 40px;
-  background-color: #333854;
-  color: #fff;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
 }
 
 .dheader-1 {
@@ -186,7 +187,6 @@
   height: 40px;
   display: flex;
   align-items: center;
-  background-color: #333854;
 
   .logo-devui {
     width: 26px;
@@ -203,39 +203,37 @@
 .dcontent-1 {
   padding: 0 40px;
   height: 300px;
-  background-color: #f3f6f8;
+  background-color: var(--devui-global-bg-normal, #ffffff);
 
   .dbreadcrumb {
     margin: 8px 0;
   }
 
   .inner-content {
-    background-color: #fff;
+    background-color: var(--devui-global-bg-normal, #ffffff);
     height: 100%;
   }
 }
 
 .dfooter-1 {
-  background: #333854;
-  color: #fff;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   text-align: center;
   line-height: 40px;
   min-height: 40px;
 }
 </style>
-
 ```
 
 :::
 
-### 应用场景2
+### 应用场景 2
 
 常用上中下布局及侧边栏布局。
 
 :::demo
 
 ```vue
-
 <template>
   <d-layout>
     <d-header class="dheader-2">
@@ -263,7 +261,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -280,23 +278,27 @@ export default defineComponent({
       {
         title: '内容三（默认展开）',
         open: true,
-        children: [{ title: '子内容1(禁用)', disabled: true }, {
-          title: '子内容2(默认激活)',
-          active: true
-        }, { title: '子内容3' }],
+        children: [
+          { title: '子内容1(禁用)', disabled: true },
+          {
+            title: '子内容2(默认激活)',
+            active: true,
+          },
+          { title: '子内容3' },
+        ],
       },
-    ])
+    ]);
     return {
-      menu
-    }
-  }
-})
-
+      menu,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
 .daside-2 {
   border-left: 1px solid transparent;
+  background: var(--devui-area, #f8f8f8);
 }
 
 .dheader-2 {
@@ -304,7 +306,8 @@ export default defineComponent({
   height: 40px;
   display: flex;
   align-items: center;
-  background-color: #333854;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
 
   .logo-devui {
     width: 26px;
@@ -320,10 +323,10 @@ export default defineComponent({
 
 .dcontent-2 {
   padding: 0 40px;
-  background-color: #f3f6f8;
+  background-color: var(--devui-global-bg-normal, #ffffff);
 
   .inner-content {
-    background-color: #fff;
+    background-color: var(--devui-global-bg-normal, #ffffff);
     padding: 16px;
     height: 100%;
   }
@@ -334,13 +337,11 @@ export default defineComponent({
 }
 
 .dfooter-2 {
-  color: #fff;
-  background-color: #333854;
+  background: var(--devui-base-bg-dark, #333854);
+  color: var(--devui-light-text, #ffffff);
   padding: 8px 24px;
 }
-
 </style>
-
 ```
 
 :::

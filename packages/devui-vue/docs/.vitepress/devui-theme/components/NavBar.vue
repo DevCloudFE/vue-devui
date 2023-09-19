@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import { ref, watch, getCurrentInstance, onMounted, nextTick } from 'vue'
-import {
-  ThemeServiceInit,
-  infinityTheme, provenceTheme, sweetTheme, deepTheme, galaxyTheme
-} from 'devui-theme'
-import NavBarTitle from './NavBarTitle.vue'
-import NavLinks from './NavLinks.vue'
-import ToggleSideBarButton from './ToggleSideBarButton.vue'
-import ZhLang from './icons/ZhLang.vue'
-import EnLang from './icons/EnLang.vue'
-import ThemePicker from './ThemePicker.vue'
-import { Locale } from '@devui/locale'
-import enUS from '@devui/locale/lang/en-us'
-import zhCN from '@devui/locale/lang/zh-cn'
-import { LANG_KEY, CURRENT_LANG, ZH_CN, EN_US } from '../const'
+import { ref, watch, getCurrentInstance, onBeforeMount } from 'vue';
+import { ThemeServiceInit, infinityTheme, provenceTheme, sweetTheme, deepTheme, galaxyTheme } from 'devui-theme';
+import NavBarTitle from './NavBarTitle.vue';
+import NavLinks from './NavLinks.vue';
+import ToggleSideBarButton from './ToggleSideBarButton.vue';
+import ZhLang from './icons/ZhLang.vue';
+import EnLang from './icons/EnLang.vue';
+import ThemePicker from './ThemePicker.vue';
+import { Locale } from '@devui/locale';
+import enUS from '@devui/locale/lang/en-us';
+import zhCN from '@devui/locale/lang/zh-cn';
+import { LANG_KEY, CURRENT_LANG, ZH_CN, EN_US } from '../const';
 
 // 主题切换
 const THEME_MAP = {
@@ -22,48 +19,47 @@ const THEME_MAP = {
   'sweet-theme': sweetTheme,
   'provence-theme': provenceTheme,
   'deep-theme': deepTheme,
-}
+};
 
-const themes = Object.keys(THEME_MAP)
-
-
+const themes = Object.keys(THEME_MAP);
 
 let themeService: any = null;
 
-const currentTheme = ref(themes[0])
+const currentTheme = ref(themes[0]);
 
 watch(currentTheme, (newVal) => {
-  THEME_MAP[newVal] && themeService?.applyTheme?.(THEME_MAP[newVal])
-})
+  THEME_MAP[newVal] && themeService?.applyTheme?.(THEME_MAP[newVal]);
+});
 
-onMounted(() => {
+onBeforeMount(() => {
   const userCustomTheme = localStorage.getItem('user-custom-theme') || themes[0];
-  nextTick(() => {
-    themeService = ThemeServiceInit({
-      ...THEME_MAP
-    }, userCustomTheme)
-    currentTheme.value = themeService.currentTheme.id
-  })
-})
+  themeService = ThemeServiceInit(
+    {
+      ...THEME_MAP,
+    },
+    userCustomTheme
+  );
+  currentTheme.value = themeService.currentTheme.id;
+});
 
 // 国际化
-const defaultLanguage = ref(CURRENT_LANG)
+const defaultLanguage = ref(CURRENT_LANG);
 function useTranslation(target) {
-  defaultLanguage.value = target
-  localStorage.setItem(LANG_KEY, target)
+  defaultLanguage.value = target;
+  localStorage.setItem(LANG_KEY, target);
   if (target === EN_US) {
-    location.pathname = `/${EN_US}${location.pathname}`
+    location.pathname = `/${EN_US}${location.pathname}`;
   } else if (target === ZH_CN) {
     location.pathname = location.pathname.split(`/${EN_US}`)[1];
   }
 }
 
-defineEmits(['toggle'])
+defineEmits(['toggle']);
 
 const LANG_MAP = {
   [ZH_CN]: '中文',
   [EN_US]: 'English',
-}
+};
 
 const currentLang = ref(CURRENT_LANG);
 const app = getCurrentInstance();
@@ -96,8 +92,12 @@ const switchLang = () => {
         </div>
 
         <div class="custom-nav flex items-center ml-l">
-          <div class="custom-nav-item ml-m" style="font-size: 0"
-            @click="() => useTranslation(defaultLanguage === ZH_CN ? EN_US : ZH_CN)" v-if="false">
+          <div
+            class="custom-nav-item ml-m"
+            style="font-size: 0"
+            @click="() => useTranslation(defaultLanguage === ZH_CN ? EN_US : ZH_CN)"
+            v-if="false"
+          >
             <ZhLang v-if="defaultLanguage === ZH_CN"></ZhLang>
             <EnLang v-else></EnLang>
           </div>
@@ -107,12 +107,17 @@ const switchLang = () => {
           <div class="custom-nav-item flex items-center ml-m">
             <ThemePicker v-model="currentTheme"></ThemePicker>
           </div>
-          <a class="custom-nav-item ml-m" style="font-size: 0;user-select:none"
-            href="https://github.com/DevCloudFE/vue-devui" target="_blank">
+          <a
+            class="custom-nav-item ml-m"
+            style="font-size: 0; user-select: none"
+            href="https://github.com/DevCloudFE/vue-devui"
+            target="_blank"
+          >
             <svg viewBox="0 0 20 20" width="18" height="18">
-              <path fill="var(--devui-text, #252b3a)"
-                d="M10 0a10 10 0 0 0-3.16 19.49c.5.1.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69a3.6 3.6 0 0 1 .1-2.64s.84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.4.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .26.18.58.69.48A10 10 0 0 0 10 0">
-              </path>
+              <path
+                fill="var(--devui-text, #252b3a)"
+                d="M10 0a10 10 0 0 0-3.16 19.49c.5.1.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69a3.6 3.6 0 0 1 .1-2.64s.84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.4.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85l-.01 2.75c0 .26.18.58.69.48A10 10 0 0 0 10 0"
+              ></path>
             </svg>
           </a>
         </div>

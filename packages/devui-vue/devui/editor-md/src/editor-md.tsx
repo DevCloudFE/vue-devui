@@ -1,7 +1,7 @@
 import { defineComponent, toRefs, provide, ref, SetupContext } from 'vue';
 import { Fullscreen } from '../../fullscreen';
 import { useEditorMd } from './composables/use-editor-md';
-import { useEditorMdTheme } from './composables/use-editor-md-theme';
+import { useTheme } from '@devui/shared/utils/useTheme';
 import { EditorMdInjectionKey, EditorMdProps, editorMdProps } from './editor-md-types';
 import Toolbar from './components/toolbar';
 import MdRender from './components/md-render';
@@ -52,7 +52,7 @@ export default defineComponent({
       onPreviewMouseover,
     } = useEditorMd(props, ctx);
 
-    const { isDarkMode } = useEditorMdTheme(() => {});
+    const { isDarkMode } = useTheme();
 
     provide(EditorMdInjectionKey, {
       showFullscreen,

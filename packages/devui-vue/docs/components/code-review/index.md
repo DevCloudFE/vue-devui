@@ -263,6 +263,10 @@ export default defineComponent({
   color: var(--devui-light-text, #252b3a);
   background-color: var(--devui-primary);
 }
+.edit-comment-container div button:last-of-type {
+  color: var(--devui-text);
+  background-color: var(--devui-btn-common-bg);
+}
 .blob-box {
   padding: 12px 16px;
   text-align: center;
