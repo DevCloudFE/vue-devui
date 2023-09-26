@@ -4,6 +4,12 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  height: 100%;
+  overflow: hidden;
+
+  &:hover {
+    overflow: auto;
+  }
 }
 
 .sidebar-link-item {
@@ -28,7 +34,43 @@ a.sidebar-link-item.active {
 
 @media (min-width: 720px) {
   .sidebar > .sidebar-links {
-    padding: 1.5rem 0;
+    padding: 0 12px 16px 8px;
+
+    &:hover {
+      padding-right: 8px;
+    }
+  }
+
+  .sidebar > .sidebar-links > .sidebar-link > .sidebar-link-item {
+    border-radius: $devui-border-radius-full;
+    cursor: pointer;
+
+    &:hover {
+      color: $devui-text;
+      background-color: $devui-list-item-hover-bg;
+    }
+
+    &.active {
+      color: $devui-text;
+      background-color: $devui-list-item-active-bg;
+    }
+  }
+
+  .sidebar > .sidebar-links > .sidebar-link > .sidebar-links > .sidebar-link > .sidebar-link-item {
+    line-height: 27px;
+    margin-top: 8px;
+    border-radius: $devui-border-radius-full;
+    cursor: pointer;
+
+    &:hover {
+      color: $devui-text;
+      background-color: $devui-list-item-hover-bg;
+    }
+
+    &.active {
+      color: $devui-text;
+      background-color: $devui-list-item-active-bg;
+    }
   }
 }
 
@@ -38,7 +80,8 @@ a.sidebar-link-item.active {
 
 @media (min-width: 720px) {
   .sidebar > .sidebar-links > .sidebar-link + .sidebar-link {
-    padding-top: 1.25rem;
+    padding-top: 0;
+    margin-top: 8px;
   }
 }
 
@@ -52,37 +95,20 @@ a.sidebar-link-item.active {
   font-weight: 600;
 }
 
-.sidebar
-  > .sidebar-links
-  > .sidebar-link
-  > .sidebar-links
-  > .sidebar-link
-  > .sidebar-link-item {
+.sidebar > .sidebar-links > .sidebar-link > .sidebar-links > .sidebar-link > .sidebar-link-item {
   display: flex;
   align-items: center;
   padding: 0.35rem 1.5rem 0.35rem 2rem;
-  line-height: 1.4;
+  line-height: 27px;
   font-size: 1rem;
   font-weight: 400;
 }
 
-.sidebar
-  > .sidebar-links
-  > .sidebar-link
-  > .sidebar-links
-  > .sidebar-link
-  > a.sidebar-link-item.active {
+.sidebar > .sidebar-links > .sidebar-link > .sidebar-links > .sidebar-link > a.sidebar-link-item.active {
   font-weight: 600;
 }
 
-.sidebar
-  > .sidebar-links
-  > .sidebar-link
-  > .sidebar-links
-  > .sidebar-link
-  > .sidebar-links
-  > .sidebar-link
-  > .sidebar-link-item {
+.sidebar > .sidebar-links > .sidebar-link > .sidebar-links > .sidebar-link > .sidebar-links > .sidebar-link > .sidebar-link-item {
   display: block;
   padding: 0.3rem 1.5rem 0.3rem 3rem;
   line-height: 1.4;

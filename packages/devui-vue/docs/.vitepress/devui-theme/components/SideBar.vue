@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import NavLinks from './NavLinks.vue'
-import SideBarLinks from './SideBarLinks.vue'
+import NavLinks from './NavLinks.vue';
+import SideBarLinks from './SideBarLinks.vue';
 
 defineProps({
-  open: { type: Boolean, required: true }
-})
+  open: { type: Boolean, required: true },
+});
 </script>
 
 <template>
@@ -32,17 +32,14 @@ defineProps({
   transform: translateX(-100%);
   transition: transform 0.25s ease;
   overflow-y: hidden;
-
-  &:hover {
-    overflow-y: auto;
-  }
+  padding-bottom: 16px;
 }
 
 // mobile
 @media screen and (max-width: 600px) {
-  .sidebar {
-    overflow-y: auto;
-  }
+  // .sidebar {
+  //   overflow-y: auto;
+  // }
 }
 
 @media (min-width: 720px) {
@@ -54,6 +51,8 @@ defineProps({
 @media (min-width: 960px) {
   .sidebar {
     width: 20rem;
+    padding-left: 18px;
+    border-right: 1px solid $devui-dividing-line;
   }
 }
 
