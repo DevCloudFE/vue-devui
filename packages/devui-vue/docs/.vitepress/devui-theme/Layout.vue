@@ -138,15 +138,14 @@ const contributors = computed(() => {
   <div class="theme" :class="pageClasses">
     <NavBar v-if="showNavbar" @toggle="toggleSidebar">
       <template #search>
-        <slot name="navbar-search">
-          <AlgoliaSearchBox v-if="theme.algolia" :options="theme.algolia" :multilang="isMultiLang" :key="site.lang" />
-        </slot>
+        <slot name="navbar-search"> </slot>
       </template>
     </NavBar>
 
     <SideBar :open="openSideBar">
       <template #sidebar-top>
         <slot name="sidebar-top" />
+        <AlgoliaSearchBox v-if="theme.algolia" :options="theme.algolia" :multilang="isMultiLang" :key="site.lang" />
       </template>
       <template #sidebar-bottom>
         <slot name="sidebar-bottom" />

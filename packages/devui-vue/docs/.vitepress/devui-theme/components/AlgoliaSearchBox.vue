@@ -31,7 +31,7 @@ function poll() {
 }
 
 const docsearch$ = docsearch.default ?? docsearch;
-type DocSearchProps = Parameters<typeof docsearch$>[0]
+type DocSearchProps = Parameters<typeof docsearch$>[0];
 
 function initialize(userOptions: DefaultTheme.AlgoliaSearchOptions) {
   // note: multi-lang search support is removed since the theme
@@ -42,10 +42,8 @@ function initialize(userOptions: DefaultTheme.AlgoliaSearchOptions) {
     navigator: {
       navigate({ itemUrl }) {
         const _itemUrl = itemUrl.replaceAll('//', '/');
-        const { pathname: hitPathname } = new URL(
-          window.location.origin + _itemUrl,
-        );
-        
+        const { pathname: hitPathname } = new URL(window.location.origin + _itemUrl);
+
         // router doesn't handle same-page navigation so we use the native
         // browser location API for anchor navigation
         if (route.path === hitPathname) {
@@ -82,12 +80,7 @@ function initialize(userOptions: DefaultTheme.AlgoliaSearchOptions) {
 
 function getRelativePath(absoluteUrl: string) {
   const { pathname, hash } = new URL(absoluteUrl);
-  return (
-    pathname.replace(
-      /\.html$/,
-      site.value.cleanUrls === 'disabled' ? '.html' : '',
-    ) + hash
-  );
+  return pathname.replace(/\.html$/, site.value.cleanUrls === 'disabled' ? '.html' : '') + hash;
 }
 </script>
 
@@ -102,7 +95,7 @@ function getRelativePath(absoluteUrl: string) {
 
   --docsearch-primary-color: var(--c-brand);
   --docsearch-highlight-color: var(--devui-brand);
-  --docsearch-searchbox-shadow: inset 0 0 0 2px var(--devui-brand);
+  --docsearch-searchbox-shadow: inset 0 0 0 1px var(--devui-brand);
   --docsearch-text-color: var(--devui-text);
   --docsearch-muted-color: var(--devui-text);
   --docsearch-searchbox-background: var(--devui-global-bg);
@@ -114,7 +107,8 @@ function getRelativePath(absoluteUrl: string) {
   --docsearch-footer-shadow: '';
   --docsearch-hit-shadow: '';
 
-  .DocSearch-Commands-Key, .DocSearch-Button-Key{
+  .DocSearch-Commands-Key,
+  .DocSearch-Button-Key {
     color: var(--devui-light-text);
   }
 
@@ -122,9 +116,26 @@ function getRelativePath(absoluteUrl: string) {
   .DocSearch-Hit-icon,
   .DocSearch-Hit-path,
   .DocSearch-Hit-text,
-  .DocSearch-Hit-title,
-  {
+  .DocSearch-Hit-title {
     color: var(--devui-text-weak);
   }
+}
+
+#docsearch {
+  padding: 16px 12px 16px 8px;
+}
+
+.DocSearch-Button {
+  width: 100%;
+  margin: 0;
+  border-radius: var(--devui-border-radius-full);
+}
+
+.DocSearch-Button-Placeholder {
+  color: var(--devui-placeholder);
+}
+
+.DocSearch-Button-Keys {
+  display: none;
 }
 </style>
