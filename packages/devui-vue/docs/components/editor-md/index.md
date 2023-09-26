@@ -251,7 +251,7 @@ editor-md/checkbox
 
 <script>
 import { defineComponent, reactive, ref } from 'vue';
-// import mk from '@ittakahiro/markdown-it-katex';  // 请首先安装 @ittakahiro/markdown-it-katex 依赖
+// import mk from '@iktakahiro/markdown-it-katex';  // 请首先安装 @iktakahiro/markdown-it-katex 依赖
 
 export default defineComponent({
   setup() {
@@ -267,6 +267,10 @@ $\\sqrt{3x-1}+(1+x)^2$  // DEMO无法进行import，使用时请放开代码中�
   },
 });
 </script>
+
+<style>
+@import 'katex/dist/katex.min.css';  /* 请首先安装 katex 依赖 */
+</style>
 ```
 
 :::
