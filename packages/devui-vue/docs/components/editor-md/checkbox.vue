@@ -20,7 +20,7 @@
 import { reactive, ref } from 'vue';
 // import { checkbox } from 'vue-devui/editor-md'; // demo无法进行import，使用时请放开注释
 
-const content = ref('- [x] checked \n - [ ] unchecked // demo无法进行import，使用时请放开代码中注释');
+const content = ref('[x] checked \n[ ] unchecked // demo无法进行import，使用时请放开代码中注释');
 const mdRules = reactive({
   linkify: {
     fuzzyLink: false,

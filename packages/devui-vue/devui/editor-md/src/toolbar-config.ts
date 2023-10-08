@@ -153,12 +153,12 @@ class ToolBarHandler {
     const selection = editor.getSelection();
     editor.focus();
     if (selection === '') {
-      editor.replaceSelection('- [ ] ' + selection);
+      editor.replaceSelection('[ ] ' + selection);
     } else {
       const selectionText = selection.split('\n');
 
       for (let i = 0, len = selectionText.length; i < len; i++) {
-        selectionText[i] = selectionText[i] === '' ? '' : '- [ ] ' + selectionText[i];
+        selectionText[i] = selectionText[i] === '' ? '' : '[ ] ' + selectionText[i];
       }
 
       editor.replaceSelection(selectionText.join('\n'));
