@@ -55,7 +55,7 @@ export default defineComponent({
 </script>
 
 <style>
-  .card-container {
+  div.card-container {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
@@ -204,7 +204,9 @@ export default defineComponent({
 |   drop   |   EventEmitter\<DropEvent\>   |   放置一个元素, 接收的事件，其中 nativeEvent 表示原生的 drop 事件，其他见定义注释   |      [Sortable-基本用法](#sortable-基本用法)     |
 
 ### Sortable 类型定义
+
 #### DropEvent
+
 ```ts
 type DropEvent = {
   event: DragEvent, // 原生drag事件
@@ -213,5 +215,3 @@ type DropEvent = {
   targetIndex: number // drop到的元素的index
 }
 ```
-
-
