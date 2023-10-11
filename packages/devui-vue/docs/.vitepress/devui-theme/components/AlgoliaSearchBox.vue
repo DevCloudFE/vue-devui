@@ -95,14 +95,14 @@ function getRelativePath(absoluteUrl: string) {
 
   --docsearch-primary-color: var(--c-brand);
   --docsearch-highlight-color: var(--devui-brand);
-  --docsearch-searchbox-shadow: inset 0 0 0 1px var(--devui-brand);
+  --docsearch-searchbox-shadow: inset 0 0 0 1px var(--devui-form-control-line-active);
   --docsearch-text-color: var(--devui-text);
   --docsearch-muted-color: var(--devui-text);
   --docsearch-searchbox-background: var(--devui-global-bg);
 
   --docsearch-modal-background: var(--devui-global-bg-normal);
   --docsearch-footer-background: var(--devui-global-bg);
-  --docsearch-searchbox-focus-background: var(--devui-base-bg);
+  --docsearch-searchbox-focus-background: var(--devui-gray-form-control-hover-bg);
   --docsearch-hit-background: var(--devui-default-bg);
   --docsearch-footer-shadow: '';
   --docsearch-hit-shadow: '';
