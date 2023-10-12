@@ -27,17 +27,7 @@ const validContributors = computed(() => {
 <template>
   <div class="page-contributor">
     <a v-for="contributor of validContributors" :href="contributor.homepage" target="_blank">
-      <Avatar
-        v-if="contributor.avatar"
-        class="contributor-avatar"
-        :style="{
-          marginRight: `${spacing}px`,
-          marginBottom: `${spacing - 4}px`,
-        }"
-        :imgSrc="contributor.avatar"
-        :width="avatarSize"
-        :height="avatarSize"
-      />
+      <Avatar v-if="contributor.avatar" class="contributor-avatar" :imgSrc="contributor.avatar" :width="avatarSize" :height="avatarSize" />
     </a>
   </div>
 </template>
@@ -47,8 +37,12 @@ const validContributors = computed(() => {
   display: flex;
   flex-wrap: wrap;
 
-  .contributor-avatar {
-    margin: 0 8px 4px 0;
+  a {
+    padding: 10px 10px 0;
+  }
+
+  ::v-deep .devui-avatar-img {
+    display: block;
   }
 }
 </style>
