@@ -7,6 +7,7 @@ import NavBar from './components/NavBar.vue';
 import SideBar from './components/SideBar.vue';
 import Page from './components/Page.vue';
 import HomeFooter from './components/HomeFooter.vue';
+import DevuiFooter from './components/DevuiFooter.vue';
 import { CONTRIBUTORS_MAP } from './components/PageContributorConfig';
 import PageContributor from './components/PageContributor.vue';
 import { Button } from '@devui/button';
@@ -73,6 +74,13 @@ const pageClasses = computed(() => {
     },
   ];
 });
+const homeContainerClass = computed(() => {
+  return [
+    {
+      'home-page-bg': enableHome.value,
+    },
+  ];
+});
 const initLanguageConfig = () => {
   // layout组件加载，初始化国际化语言.
   const result = location.pathname.match(/[a-zA-Z]*-[A-Z]*/);
@@ -135,74 +143,76 @@ const contributors = computed(() => {
 </script>
 
 <template>
-  <div class="theme" :class="pageClasses">
-    <NavBar v-if="showNavbar" @toggle="toggleSidebar">
-      <template #search>
-        <slot name="navbar-search">
-          <AlgoliaSearchBox v-if="theme.algolia" :options="theme.algolia" :multilang="isMultiLang" :key="site.lang" />
-        </slot>
-      </template>
-    </NavBar>
+  <div :class="homeContainerClass">
+    <div class="content-container">
+      <div class="theme" :class="pageClasses">
+        <NavBar v-if="showNavbar" @toggle="toggleSidebar">
+          <template #search>
+            <slot name="navbar-search"> </slot>
+          </template>
+        </NavBar>
 
-    <SideBar :open="openSideBar">
-      <template #sidebar-top>
-        <slot name="sidebar-top" />
-      </template>
-      <template #sidebar-bottom>
-        <slot name="sidebar-bottom" />
-      </template>
-    </SideBar>
-    <!-- TODO: make this button accessible -->
-    <div class="sidebar-mask" @click="toggleSidebar(false)" />
+        <SideBar :open="openSideBar">
+          <template #sidebar-top>
+            <slot name="sidebar-top" />
+            <AlgoliaSearchBox v-if="theme.algolia" :options="theme.algolia" :multilang="isMultiLang" :key="site.lang" />
+          </template>
+          <template #sidebar-bottom>
+            <slot name="sidebar-bottom" />
+          </template>
+        </SideBar>
+        <!-- TODO: make this button accessible -->
+        <div class="sidebar-mask" @click="toggleSidebar(false)" />
 
-    <Content v-if="isCustomLayout" />
+        <Content v-if="isCustomLayout" />
 
-    <Home v-else-if="enableHome">
-      <template #hero>
-        <slot name="home-hero" />
-      </template>
-      <template #features>
-        <slot name="home-features" />
-      </template>
-      <template #footer>
-        <slot name="home-footer" />
-      </template>
-    </Home>
+        <Home v-else-if="enableHome">
+          <template #hero>
+            <slot name="home-hero" />
+          </template>
+          <template #features>
+            <slot name="home-features" />
+          </template>
+          <template #footer>
+            <slot name="home-footer" />
+          </template>
+        </Home>
 
-    <Page v-else>
-      <template #top>
-        <slot name="page-top-ads">
-          <div id="ads-container" v-if="theme.carbonAds && theme.carbonAds.carbon">
-            <CarbonAds :key="'carbon' + page.relativePath" :code="theme.carbonAds.carbon" :placement="theme.carbonAds.placement" />
-          </div>
-        </slot>
-        <slot name="page-top" />
-      </template>
-      <template #bottom>
-        <slot name="page-bottom" />
-        <slot name="page-bottom-ads">
-          <BuySellAds
-            v-if="theme.carbonAds && theme.carbonAds.custom"
-            :key="'custom' + page.relativePath"
-            :code="theme.carbonAds.custom"
-            :placement="theme.carbonAds.placement"
-          />
-        </slot>
-      </template>
-    </Page>
-  </div>
+        <Page v-else>
+          <template #top>
+            <slot name="page-top-ads">
+              <div id="ads-container" v-if="theme.carbonAds && theme.carbonAds.carbon">
+                <CarbonAds :key="'carbon' + page.relativePath" :code="theme.carbonAds.carbon" :placement="theme.carbonAds.placement" />
+              </div>
+            </slot>
+            <slot name="page-top" />
+          </template>
+          <template #bottom>
+            <slot name="page-bottom" />
+            <slot name="page-bottom-ads">
+              <BuySellAds
+                v-if="theme.carbonAds && theme.carbonAds.custom"
+                :key="'custom' + page.relativePath"
+                :code="theme.carbonAds.custom"
+                :placement="theme.carbonAds.placement"
+              />
+            </slot>
+          </template>
+        </Page>
+      </div>
 
-  <div class="container-contributors" v-if="enableHome">
-    <div class="contributors-inner">
-      <h2>✨贡献者✨</h2>
-      <PageContributor v-if="contributors && contributors.length > 0" :contributors="contributors" :spacing="20" :avatarSize="48" />
-      <a href="/contributing/"><Button class="btn-become-contributor" variant="solid" color="primary">成为贡献者</Button></a>
+      <div class="container-contributors" v-if="enableHome">
+        <div class="contributors-inner">
+          <h2>✨贡献者✨</h2>
+          <PageContributor v-if="contributors && contributors.length > 0" :contributors="contributors" :spacing="20" :avatarSize="48" />
+          <a href="/contributing/"><Button class="btn-become-contributor" variant="solid" color="primary">成为贡献者</Button></a>
+        </div>
+      </div>
     </div>
+
+    <DevuiFooter class="footer" v-if="enableHome" />
+    <Debug v-if="false" />
   </div>
-
-  <HomeFooter />
-
-  <Debug v-if="false" />
 </template>
 
 <style lang="scss">
@@ -239,15 +249,17 @@ const contributors = computed(() => {
 // iPad/PC
 .container-contributors {
   padding: 2rem 0;
-  background: var(--devui-global-bg, #f3f6f8);
+  margin-bottom: 40px;
 
   .contributors-inner {
-    max-width: 564px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    box-shadow: 0 8px 32px rgba(150, 180, 255, 0.16);
 
     h2 {
       margin-top: 1rem;
@@ -271,12 +283,26 @@ const contributors = computed(() => {
 
     .page-contributor {
       padding: 0 20px;
-
-      & > a:nth-child(8n) > span {
-        margin: 0 !important;
-      }
     }
   }
+}
+
+.home-page-bg {
+  background-image: url('../../assets/banner-bg.png');
+  background-repeat: no-repeat;
+  background-size: 100% 50%;
+  margin-top: 50px;
+  background-color: var(--devui-global-bg-normal);
+}
+
+body[ui-theme='galaxy-theme'] {
+  .home-page-bg {
+    background-image: url('../../assets/banner-bg-dark.png');
+  }
+}
+
+.content-container {
+  min-height: calc(100vh - 214px);
 }
 
 // iPhone 6/7/8 Plus(414) Nexus 5X/6/6P(412)
@@ -336,5 +362,9 @@ const contributors = computed(() => {
       }
     }
   }
+}
+
+.footer {
+  max-width: 1200px !important;
 }
 </style>

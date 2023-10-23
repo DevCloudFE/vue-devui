@@ -1,4 +1,4 @@
-import * as hljs from 'highlight.js';
+import hljs from 'highlight.js';
 import MarkdownIt from 'markdown-it';
 import { filterXSS, getDefaultCSSWhiteList, getDefaultWhiteList, IWhiteList } from 'xss';
 import { mermaidRender, refreshMermaid } from '../plugins/mermaid';
@@ -15,10 +15,10 @@ export class MDRenderService {
       if (lang && hljs.getLanguage(lang)) {
         try {
           return hljs.highlight(str, { language: lang }).value;
-        } catch (_) { }
+        } catch (_) {}
       }
       return '';
-    }
+    },
   }) as any;
   private baseUrl = '';
   private breaks = true;
@@ -26,10 +26,12 @@ export class MDRenderService {
 
   constructor() {
     this.setDefaultXss();
-    this.mdt.use(tocAndAnchor, {
-      linkify: false,
-      anchorLink: false
-    }).use(mermaidRender, { id: 'devui-mermaid' });
+    this.mdt
+      .use(tocAndAnchor, {
+        linkify: false,
+        anchorLink: false,
+      })
+      .use(mermaidRender, { id: 'devui-mermaid' });
   }
 
   private setDefaultXss() {
@@ -46,7 +48,6 @@ export class MDRenderService {
     this.xssWhiteList['path'] = ['style', 'class', 'd', 'id', 'fill', 'stroke'];
     this.xssWhiteList['th'] = ['style'];
     this.xssWhiteList['td'] = ['style'];
-
   }
 
   setBaseUrl(url: string) {
@@ -71,7 +72,7 @@ export class MDRenderService {
 
   setCustomXssRules(rules: ICustomXssRule[]) {
     if (rules) {
-      rules.forEach(rule => {
+      rules.forEach((rule) => {
         this.xssWhiteList[rule['key']] = rule['value'];
       });
     }
@@ -79,7 +80,7 @@ export class MDRenderService {
 
   setCustomRendererRules(rules: ICustomRenderRule[]) {
     if (rules) {
-      rules.forEach(rule => {
+      rules.forEach((rule) => {
         this.mdt.renderer.rules[rule['key']] = rule['value'];
       });
     }
@@ -90,7 +91,7 @@ export class MDRenderService {
   }
 
   setPlugins(plugins: Array<MdPlugin>) {
-    plugins.forEach(item => {
+    plugins.forEach((item) => {
       const { plugin, opts } = item;
       this.mdt.use(plugin, opts);
     });
@@ -139,7 +140,7 @@ export class MDRenderService {
           top: true,
           left: true,
           bottom: true,
-          right: true
+          right: true,
         }),
       },
     });
@@ -153,7 +154,7 @@ export class MDRenderService {
 
   public setRules(mdRules: Record<string, any>): void {
     if (mdRules) {
-      Object.keys(mdRules).forEach(rule => {
+      Object.keys(mdRules).forEach((rule) => {
         this.mdt[rule].set(mdRules[rule]);
       });
     }

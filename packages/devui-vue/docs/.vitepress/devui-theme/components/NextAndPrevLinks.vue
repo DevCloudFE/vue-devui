@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { withBase } from 'vitepress'
-import { useNextAndPrevLinks } from '../composables/nextAndPrevLinks'
-import ArrowLeft from './icons/ArrowLeft.vue'
-import ArrowRight from './icons/ArrowRight.vue'
+import { withBase } from 'vitepress';
+import { useNextAndPrevLinks } from '../composables/nextAndPrevLinks';
+import ArrowLeft from './icons/ArrowLeft.vue';
+import ArrowRight from './icons/ArrowRight.vue';
 
-const { hasLinks, prev, next } = useNextAndPrevLinks()
+const { hasLinks, prev, next } = useNextAndPrevLinks();
 </script>
 
 <template>
@@ -28,7 +28,7 @@ const { hasLinks, prev, next } = useNextAndPrevLinks()
 
 <style scoped>
 .next-and-prev-link {
-  padding-top: 1rem;
+  padding: 1rem 0;
 }
 
 .container {

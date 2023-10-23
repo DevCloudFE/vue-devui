@@ -1,6 +1,6 @@
 {
   "name": "vue-devui",
-  "version": "1.5.15-hotfix.4",
+  "version": "1.6.0",
   "license": "MIT",
   "description": "DevUI components based on Vite and Vue3",
   "keywords": [
@@ -62,7 +62,8 @@
     "diff2html": "^3.4.35",
     "echarts": "5.3.3",
     "fs-extra": "^10.0.0",
-    "highlight.js": "10.7.3",
+    "highlight.js": "^11.6.0",
+    "katex": "^0.12.0",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.20",
     "markdown-it": "12.2.0",

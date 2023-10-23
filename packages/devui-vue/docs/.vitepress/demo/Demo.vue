@@ -209,7 +209,7 @@ export default {
 .demo-block {
   margin: 10px 0;
   border: solid 1px #ebebeb;
-  border-radius: 3px;
+  border-radius: 20px;
   transition: 0.2s;
 }
 
@@ -249,8 +249,8 @@ export default {
   height: 44px;
   box-sizing: border-box;
   background-color: #fff;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
   text-align: center;
   margin-top: -1px;
   color: #d3dce6;
