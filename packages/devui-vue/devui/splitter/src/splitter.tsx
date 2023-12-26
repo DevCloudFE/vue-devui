@@ -1,4 +1,4 @@
-import { defineComponent, reactive, ref, provide } from 'vue';
+import { defineComponent, reactive, ref, provide, type VNode } from 'vue';
 import DSplitterBar from './components/splitter-bar';
 import { SplitterStore, type SplitterPane } from './splitter-store';
 import { splitterProps, SplitterProps, SplitterState } from './splitter-types';
@@ -21,7 +21,15 @@ export default defineComponent({
     const ns = useNamespace('splitter');
 
     state.panes = ctx.slots.DSplitterPane?.() || [];
-
+    if (state.panes.length > 0) {
+      state.panes.forEach((item: VNode, index: number) => {
+        // 解决for循环 pane
+        if (item.children && item.children.length) {
+          state.panes.splice(index, 1);
+          state.panes = [...(item.children as VNode[]), ...state.panes];
+        }
+      });
+    }
     store.setPanes({ panes: state.panes as unknown as SplitterPane[] });
     provide('orientation', props.orientation);
     provide('splitterStore', store);
