@@ -59,10 +59,10 @@ export default function (md: any, options: Record<string, any>) {
           let content;
           if (heading.children && heading.children.length > 0 && heading.children[0].type === 'link_open') {
             content = heading.children[1].content;
-            heading._toAnchor = safeString(content);
+            heading._tocAnchor = safeString(content);
           } else {
             content = heading.content;
-            heading._toAnchor = safeString(heading.children.reduce((s, t) => s + t.content, ''));
+            heading._tocAnchor = safeString(heading.children.reduce((s, t) => s + t.content, ''));
           }
           headings.push({
             content,
