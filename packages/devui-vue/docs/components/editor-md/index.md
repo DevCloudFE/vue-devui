@@ -36,11 +36,11 @@ export default defineComponent({
 
 ### 自定义渲染
 
-:::demo 自定义从 md 到 html 的渲染规则。
+:::demo 自定义从 md 到 html 的渲染规则，也可自定义XSS过滤规则，放开指定标签。
 
 ```vue
 <template>
-  <d-editor-md v-model="content" :custom-renderer-rules="customRendererRules"></d-editor-md>
+  <d-editor-md v-model="content" :custom-renderer-rules="customRendererRules" :custom-xss-rules="customRenderRules"></d-editor-md>
 </template>
 
 <script>
@@ -48,7 +48,13 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
-    const content = ref('[link](#test)');
+    const content = ref('[link](#test)\n<kbd>kbd 标签渲染</kbd>');
+    const customRenderRules = ref([
+      {
+        key: 'kbd',
+        value: [], // 为空表示过滤所有属性，放开属性则添加对应项，如['id', 'style']
+      },
+    ])
     const customRendererRules = ref([
       {
         key: 'link_open',
@@ -69,7 +75,7 @@ export default defineComponent({
         },
       },
     ]);
-    return { content, customRendererRules };
+    return { content, customRendererRules, customRenderRules };
   },
 });
 </script>
