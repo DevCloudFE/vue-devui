@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { extend } from 'lodash';
 
 const checkboxReplace = function (md: any, options: any) {
   let lastId: number;
@@ -9,7 +9,7 @@ const checkboxReplace = function (md: any, options: any) {
     divClass: 'checkbox',
     idPrefix: 'checkbox',
   };
-  options = _.extend(defaults, options);
+  options = extend(defaults, options);
   const pattern = /\[(X|\s|\_|\-)\]\s(.*)/i;
   const createTokens = function (checked: any, label: any, Token: any) {
     let token;
