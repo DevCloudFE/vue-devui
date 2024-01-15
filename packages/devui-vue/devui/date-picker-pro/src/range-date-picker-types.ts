@@ -5,7 +5,7 @@ import { datePickerProCommonProps } from './date-picker-pro-types';
 export const rangeDatePickerProProps = {
   modelValue: {
     type: Array as PropType<(Date | string)[]>,
-    default: ['', ''],
+    default: [],
   },
   placeholder: {
     type: Array as PropType<string[]>,
@@ -41,4 +41,5 @@ export interface UseRangePickerProReturnType {
   onSelectedDate: (date: Dayjs[], isConfirm?: boolean) => void;
   handlerClearTime: (e: MouseEvent) => void;
   onChangeRangeFocusType: (type: string) => void;
+  onStartInputChange: (e: string, type: 'start' | 'end') => void;
 }

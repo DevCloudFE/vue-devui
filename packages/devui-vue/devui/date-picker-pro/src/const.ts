@@ -9,6 +9,3 @@ export const monthCalendarItemHeight = 186; // 月选择器一个年份日历面
 
 export const yearPickerHeight = 186; // 年选择器模式下年份虚拟列表的高度
 export const yearCalendarItemHeight = 48; // 年选择器日历面板单行的高度
-
-export const DEFAULT_DATE = 'YYYY/MM/DD';
-export const DEFAULT_TIME = `${DEFAULT_DATE} HH:mm:ss`;

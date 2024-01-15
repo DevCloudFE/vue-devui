@@ -1,6 +1,6 @@
 import { defineComponent, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import CalendarPanel from './calendar-panel';
 import TimerPickerPanel from './time-picker-panel';
 import { Button } from '../../../button';

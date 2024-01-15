@@ -1,11 +1,13 @@
 import { defineComponent, getCurrentInstance } from 'vue';
 import type { SetupContext } from 'vue';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
+import { RecycleScroller } from 'vue-virtual-scroller'
 import useCalendarPanel from '../composables/use-calendar-panel';
 import { YearAndMonthItem, datePickerProPanelProps, DatePickerProPanelProps } from '../date-picker-pro-types';
 import { createI18nTranslate } from '../../../locale/create';
 import { yearListHeight, yearItemHeight, calendarListHeight, calendarItemHeight } from '../const';
 import { VirtualList } from '../../../virtual-list';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 export default defineComponent({
   name: 'CalendarPanel',
@@ -34,7 +36,8 @@ export default defineComponent({
     } = useCalendarPanel(props, ctx);
     return () => {
       const yearItemSlots = {
-        item: (item: YearAndMonthItem) => {
+        default: (scoped: any) => {
+          const item = scoped.item;
           return (
             <div class={[ns.em('calendar-panel', 'year-list-item'), item.active && ns.e('year-title-active')]}>
               {!item.isMonth && !isListCollapse.value && (
@@ -106,13 +109,14 @@ export default defineComponent({
 
       return (
         <div class={ns.e('calendar-panel')}>
-          <VirtualList
-            ref={yearScrollRef}
-            class={ns.em('calendar-panel', 'year-list')}
-            data={yearAndMonthList.value}
-            height={yearListHeight}
-            itemHeight={yearItemHeight}
-            v-slots={yearItemSlots}></VirtualList>
+          <div class={ns.em('calendar-panel', 'year-list')}>
+            <RecycleScroller
+              ref={yearScrollRef}
+              items={yearAndMonthList.value}
+              itemSize={yearListHeight}
+              style={{ width: '100%', height: '100%' }}
+              v-slot={yearItemSlots}></RecycleScroller>
+          </div>
           <div class={ns.em('calendar-panel', 'main')}>
             <table class={ns.e('calendar-table')}>
               <thead>

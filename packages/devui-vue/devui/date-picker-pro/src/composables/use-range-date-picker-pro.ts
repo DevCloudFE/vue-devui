@@ -1,14 +1,19 @@
-import { shallowRef, ref, computed, inject, watch } from 'vue';
+import { shallowRef, ref, computed, inject, getCurrentInstance, watch, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { RangeDatePickerProProps, UseRangePickerProReturnType } from '../range-date-picker-types';
 import { onClickOutside } from '@vueuse/core';
 import type { Dayjs } from 'dayjs';
-import { formatDayjsToStr, isDateEquals, parserDate } from '../utils';
+import { debounce } from '@devui/shared'
+import { formatDayjsToStr, isDateEquals, parserDate, isInputDateValid } from '../utils';
 import { FORM_ITEM_TOKEN, FORM_TOKEN } from '../../../form';
+import { createI18nTranslate } from '../../../locale/create';
 
 export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: SetupContext): UseRangePickerProReturnType {
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
+  const { calendarRange, limitDateRange, allowClear } = toRefs(props);
+  const app = getCurrentInstance()
+  const t = createI18nTranslate('DCommon', app)
 
   const originRef = ref<HTMLElement>();
   const startInputRef = shallowRef<HTMLElement>();
@@ -22,7 +27,9 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   const pickerDisabled = computed(() => formContext?.disabled || props.disabled);
   const pickerSize = computed(() => formContext?.size || props.size);
   const isValidateError = computed(() => formItemContext?.validateState === 'error');
-
+  const toggle = () => {
+    toggleChange(!isPanelShow.value)
+  }
   const toggleChange = (isShow: boolean) => {
     isPanelShow.value = isShow;
     ctx.emit('toggleChange', isShow);
@@ -42,9 +49,16 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   const focusHandler = function (e: MouseEvent) {
     ctx.emit('focus', e);
   };
-
+  const langMap: Record<string, string> = {
+    'zh-cn': 'YYYY/MM/DD',
+    'en-us': 'MMM DD, YYYY'
+  }
+  const langTimeMap: Record<string, string> = {
+    'zh-cn': 'YYYY/MM/DD HH:mm:ss',
+    'en-us': 'MMM DD, YYYY HH:mm:ss'
+  }
   const format = computed(() => {
-    return props.showTime ? props.format || 'YYYY/MM/DD HH:mm:ss' : props.format || 'YYYY/MM/DD';
+    return props.showTime ? props.format || langTimeMap[t('lang')] : props.format || langMap[t('lang')];
   });
 
   const dateValue = computed(() => {
@@ -60,8 +74,8 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   });
 
   const displayDateValue = computed(() => {
-    const startFormatDate = formatDayjsToStr(dateValue.value[0], format.value, props.type);
-    const endFormatDate = formatDayjsToStr(dateValue.value[1], format.value, props.type);
+    const startFormatDate = formatDayjsToStr(dateValue.value[0], format.value, props.type, t('lang'));
+    const endFormatDate = formatDayjsToStr(dateValue.value[1], format.value, props.type, t('lang'));
     if (startFormatDate) {
       return endFormatDate ? [startFormatDate, endFormatDate] : [startFormatDate, ''];
     } else if (endFormatDate) {
@@ -70,19 +84,36 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     return ['', ''];
   });
 
-  const showCloseIcon = computed(() => isMouseEnter.value && (displayDateValue.value[0] !== '' || displayDateValue.value[1] !== ''));
+
+  const showCloseIcon = computed(
+    () =>
+      !pickerDisabled.value &&
+      isMouseEnter.value &&
+      (displayDateValue.value[0] !== '' || displayDateValue.value[1] !== '') &&
+      allowClear.value
+  );
 
   const onSelectedDate = (date: Dayjs[], isConfirm?: boolean) => {
     const [startDate, endDate] = date;
     const selectStart = startDate ? startDate.toDate() : startDate;
     const selectEnd = endDate ? endDate.toDate() : endDate;
     const [start, end] = props.modelValue;
+    const temp: any[] = []
+    if (selectStart) {
+      temp.push(selectStart)
+      if (selectEnd) {
+        temp.push(selectEnd)
+      }
+    } else if (selectEnd) {
+      temp.push('')
+      temp.push(selectEnd)
+    }
     if (!isDateEquals(start, selectStart) || !isDateEquals(end, selectEnd)) {
-      ctx.emit('update:modelValue', [selectStart ? selectStart : '', selectEnd ? selectEnd : '']);
+      ctx.emit('update:modelValue', temp);
     }
     if (isConfirm) {
       // 回调参数为Date类型
-      ctx.emit('confirmEvent', [selectStart ? selectStart : '', selectEnd ? selectEnd : '']);
+      ctx.emit('confirmEvent', temp);
       toggleChange(false);
     }
   };
@@ -106,8 +137,8 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     }
     e.stopPropagation();
     e.preventDefault();
-    ctx.emit('update:modelValue', ['', '']);
-    ctx.emit('confirmEvent', ['', '']);
+    ctx.emit('update:modelValue', []);
+    ctx.emit('confirmEvent', []);
     // 当面板未关闭时，清空后focusType置位start
     if (isPanelShow.value) {
       onChangeRangeFocusType('start');
@@ -115,6 +146,7 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
   };
 
   ctx.expose({
+    toggle,
     focusChange: onChangeRangeFocusType,
   });
 
@@ -125,11 +157,29 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     onChangeRangeFocusType(type);
     toggleChange(true);
   };
+  const onStartInputChange = debounce((val: string, type: 'start' | 'end') => {
+    isInputDateValid(val, format.value, calendarRange.value, limitDateRange?.value, (validDate: string) => {
+      const currentDate = [...props.modelValue];
+      if (type === 'start') {
+        currentDate[0] = validDate;
+      } else {
+        currentDate[0] = currentDate[0] ?? '';
+        currentDate[1] = validDate;
+      }
+      ctx.emit('update:modelValue', currentDate)
+    });
+  }, 300);
+
+  watch(isPanelShow, (show) => {
+    if (!show) {
+      formItemContext?.validate('blur').catch(() => { })
+    }
+  });
 
   watch(
     () => props.modelValue,
     () => {
-      formItemContext?.validate('change').catch((err) => console.warn(err));
+      formItemContext?.validate('change').catch(() => { });
     },
     { deep: true }
   );
@@ -155,5 +205,6 @@ export default function useRangePickerPro(props: RangeDatePickerProProps, ctx: S
     onSelectedDate,
     handlerClearTime,
     onChangeRangeFocusType,
+    onStartInputChange,
   };
 }

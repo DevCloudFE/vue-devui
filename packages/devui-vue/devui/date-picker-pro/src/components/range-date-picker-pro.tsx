@@ -1,4 +1,4 @@
-import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { rangeDatePickerProProps, RangeDatePickerProProps } from '../range-date-picker-types';
 import { FlexibleOverlay } from '../../../overlay';
@@ -6,7 +6,7 @@ import DatePickerProPanel from './date-picker-panel';
 import { Input } from '../../../input';
 import { IconCalendar } from './icon-calendar';
 import { IconClose } from './icon-close';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import useRangePickerPro from '../composables/use-range-date-picker-pro';
 
 import '../date-picker-pro.scss';
@@ -19,6 +19,7 @@ export default defineComponent({
   setup(props: RangeDatePickerProProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DDatePickerPro', app);
+    const { position } = toRefs(props)
 
     const ns = useNamespace('range-date-picker-pro');
     const {
@@ -42,8 +43,8 @@ export default defineComponent({
       onSelectedDate,
       handlerClearTime,
       onChangeRangeFocusType,
+      onStartInputChange,
     } = useRangePickerPro(props, ctx);
-    const position = ref(['bottom-start', 'top-start']);
 
     return () => {
       const vSlots = {
@@ -56,8 +57,8 @@ export default defineComponent({
           <div
             class={[ns.e('range-picker'), pickerDisabled.value && ns.m('disabled'), isValidateError.value && ns.m('error')]}
             ref={originRef}
-            onMouseover={() => (isMouseEnter.value = true)}
-            onMouseout={() => (isMouseEnter.value = false)}>
+            onMouseenter={() => (isMouseEnter.value = true)}
+            onMouseleave={() => (isMouseEnter.value = false)}>
             <span
               class={[
                 isPanelShow.value && focusType.value === 'start' ? ns.e('active-input') : ns.e('normal-input'),
@@ -68,6 +69,8 @@ export default defineComponent({
                 ref={startInputRef}
                 modelValue={displayDateValue.value[0]}
                 placeholder={placeholder.value[0] || t('startPlaceholder')}
+                onUpate:modelValue={(val) => onStartInputChange(val, 'start')}
+                validate-event={false}
                 onFocus={withModifiers(
                   (e: MouseEvent) => {
                     onFocus('start');
@@ -98,6 +101,8 @@ export default defineComponent({
                 ref={endInputRef}
                 modelValue={displayDateValue.value[1]}
                 placeholder={placeholder.value[1] || t('endPlaceholder')}
+                onUpate:modelValue={(val) => onStartInputChange(val, 'end')}
+                validate-event={false}
                 onFocus={withModifiers(
                   (e: MouseEvent) => {
                     onFocus('end');
@@ -109,11 +114,11 @@ export default defineComponent({
                 disabled={pickerDisabled.value}
                 v-slots={{
                   suffix: () => (
-                    <span
-                      class={[showCloseIcon.value ? ns.m('icon-visible') : ns.m('icon-hidden'), 'close-icon']}
-                      onClick={handlerClearTime}>
-                      <IconClose></IconClose>
-                    </span>
+                    showCloseIcon.value ?
+                      <span
+                        class={[ns.m('icon-visible'), 'close-icon']} onClick={handlerClearTime}>
+                        <IconClose />
+                      </span> : null
                   ),
                 }}
               />

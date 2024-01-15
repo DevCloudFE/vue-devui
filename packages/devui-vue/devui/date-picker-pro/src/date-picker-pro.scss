@@ -106,14 +106,17 @@ $input-height-lg: 46px;
         line-height: 30px;
         cursor: pointer;
       }
+
       .#{$devui-prefix}-date-picker-pro__month-title {
         font-size: $devui-font-size-sm;
         line-height: 30px;
         cursor: pointer;
       }
+
       &.#{$devui-prefix}-date-picker-pro__year-title-active {
         background-color: $devui-base-bg;
       }
+
       &:hover:not(.#{$devui-prefix}-date-picker-pro__year-title-active) {
         background-color: $devui-list-item-selected-bg;
       }
@@ -212,6 +215,7 @@ $input-height-lg: 46px;
           color: $devui-list-item-active-text;
         }
       }
+
       &.#{$devui-prefix}-date-picker-pro__table-date-in-range {
         background-color: $devui-list-item-hover-bg;
 
@@ -292,6 +296,7 @@ $input-height-lg: 46px;
       line-height: 30px;
     }
   }
+
   .#{$devui-prefix}-time-list {
     border: none;
 
@@ -370,6 +375,10 @@ $input-height-lg: 46px;
 
     .#{$devui-prefix}-range-date-picker-pro__input {
       flex: 1 1;
+
+      .#{$devui-prefix}-input__inner {
+        text-align: center;
+      }
     }
 
     .#{$devui-prefix}-input {
@@ -401,6 +410,7 @@ $input-height-lg: 46px;
         color: $devui-brand;
       }
     }
+
     .#{$devui-prefix}-range-date-picker-pro__normal-input {
       .#{$devui-prefix}-input__inner {
         color: $devui-text;
@@ -411,6 +421,7 @@ $input-height-lg: 46px;
       display: inline-block;
       padding: 0 4px;
     }
+
     .#{$devui-prefix}-input-slot__suffix {
       cursor: pointer;
     }
@@ -461,6 +472,7 @@ $input-height-lg: 46px;
         cursor: not-allowed;
       }
     }
+
     &.#{$devui-prefix}-range-date-picker-pro--error {
       border-color: $devui-danger-line;
       background-color: $devui-danger-bg;
@@ -501,6 +513,7 @@ $input-height-lg: 46px;
       padding: 4px 0;
       height: 48px;
     }
+
     .#{$devui-prefix}-date-picker-pro__year-item-title {
       width: 60px;
       height: 40px;
@@ -548,6 +561,7 @@ $input-height-lg: 46px;
     }
   }
 }
+
 // 月选择器
 .#{$devui-prefix}-date-picker-pro__month-calendar-panel {
   height: 300px;
@@ -577,11 +591,13 @@ $input-height-lg: 46px;
       &.#{$devui-prefix}-date-picker-pro__year-item-active {
         background-color: $devui-base-bg;
       }
+
       &:hover:not(.#{$devui-prefix}-date-picker-pro__year-item-active) {
         background-color: $devui-list-item-selected-bg;
       }
     }
   }
+
   .#{$devui-prefix}-date-picker-pro__month-wrapper {
     height: 300px;
     width: 208px;
