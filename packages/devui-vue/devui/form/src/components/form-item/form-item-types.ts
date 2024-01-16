@@ -107,5 +107,5 @@ export interface UseFormItemRule {
   _rules: ComputedRef<FormRuleItem[]>;
 }
 
-export const FORM_ITEM_TOKEN: InjectionKey<FormItemContext> = Symbol('dFormItem');
-export const LABEL_DATA: InjectionKey<LabelData> = Symbol('labelData');
+export const FORM_ITEM_TOKEN = 'dFormItem';
+export const LABEL_DATA = 'dFormLabelData';

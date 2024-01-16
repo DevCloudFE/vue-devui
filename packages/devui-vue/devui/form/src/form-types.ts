@@ -101,9 +101,9 @@ export interface FormContext extends FormProps {
   removeItemContext: (field: FormItemContext) => void;
 }
 
-export const FORM_TOKEN: InjectionKey<FormContext> = Symbol('dForm');
+export const FORM_TOKEN = 'dForm';
 
-export const STYLE_TOKEN: InjectionKey<StyleType> = Symbol('dForm');
+export const STYLE_TOKEN = 'dFormStyle';
 
 export interface DValidateResult<E = never, F = never> {
   errors: E;
