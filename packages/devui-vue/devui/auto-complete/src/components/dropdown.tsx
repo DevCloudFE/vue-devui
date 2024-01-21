@@ -1,7 +1,7 @@
 import { defineComponent, getCurrentInstance, inject } from 'vue';
 import { DropdownProps, DropdownPropsKey, SourceItemObj } from '../auto-complete-types';
 import Loading from '../../../loading/src/loading-directive';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { createI18nTranslate } from '../../../locale/create';
 export default defineComponent({
   name: 'DAutoCompleteDropdown',

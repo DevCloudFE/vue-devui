@@ -80,7 +80,7 @@ export const autoCompleteProps = {
   },
   tipsText: {
     type: String,
-    default: '最近输入',
+    default: '',
   },
   latestSource: {
     type: Array,
@@ -120,7 +120,7 @@ export const autoCompleteProps = {
   },
   placeholder: {
     type: String,
-    default: 'Search',
+    default: '',
   },
   prefix: {
     type: String,
@@ -171,7 +171,7 @@ export type SearchFnType = (term: string) => SourceType;
 export type FormatterType = (item: string | SourceItemObj) => string;
 export type DefaultFuncType = () => void;
 export type HandleSearch = (term: string, enableLazyLoad?: boolean) => void;
-export type RecentlyFocus = (latestSource: Array<SourceItemObj>) => void;
+export type RecentlyFocus = (latestSource: SourceType) => void;
 export type InputDebounceCb = (value: string) => void;
 export type TransInputFocusEmit = () => unknown;
 export type SelectOptionClick = (item: string | SourceItemObj) => void;
@@ -189,10 +189,10 @@ export type DropdownProps = {
   dropDownRef: Ref;
   showLoading: Ref<boolean>;
   loadMore: () => void;
-  latestSource: Ref;
+  latestSource: Ref<Array<SourceItemObj>>;
   modelValue: Ref<string>;
   hoverIndex: Ref<number>;
-  valueParser: Ref;
+  valueParser: () => void;
   isDisabled: ComputedRef<boolean>;
 };
 export const DropdownPropsKey: InjectionKey<DropdownProps> = Symbol('DropdownPropsKey');

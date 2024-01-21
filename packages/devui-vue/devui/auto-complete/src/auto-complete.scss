@@ -20,7 +20,14 @@
   .#{$devui-prefix}-form-control {
     padding: 4px 0;
     width: 100%;
+    color: $devui-text;
+    font-size: $devui-font-size;
+    outline: none;
     background-color: transparent;
+
+    &::placeholder {
+      color: $devui-placeholder;
+    }
   }
 }
 
@@ -64,8 +71,8 @@
 
       &.selected,
       &.selected &:hover {
-        color: $devui-list-item-active-text !important;
-        background-color: $devui-list-item-active-bg !important;
+        color: $devui-list-item-active-text  !important;
+        background-color: $devui-list-item-active-bg  !important;
       }
     }
   }
@@ -127,7 +134,7 @@
 
   &--md {
     height: $devui-size-md;
-    font-size: $devui-font-size-md;
+    font-size: $devui-font-size;
   }
 
   &--lg {
@@ -163,7 +170,7 @@
         border-color: $devui-form-control-line-hover;
       }
 
-      > input {
+      >input {
         border: none !important;
       }
 
@@ -219,6 +226,7 @@
     background-color: $devui-disabled-bg;
     border-color: $devui-disabled-line;
     cursor: not-allowed;
+
     .#{$devui-prefix}-dropdown-origin {
       cursor: not-allowed;
       background-color: transparent !important;
@@ -243,6 +251,7 @@
     display: inline-flex;
     width: 100%;
     align-items: stretch;
+
     .#{$devui-prefix}-auto-complete-input__prepend {
       border-right: 0;
       border-top-right-radius: 0;
@@ -265,14 +274,26 @@
     }
 
     .#{$devui-prefix}-auto-complete-input__prefix {
-      > * {
+      >* {
         margin-right: 8px;
       }
     }
 
     .#{$devui-prefix}-auto-complete-input__suffix {
-      > * {
+      >* {
         margin-left: 8px;
+      }
+    }
+  }
+
+  &--gray-style {
+    .#{$devui-prefix}-auto-complete-input__wrapper:not(.#{$devui-prefix}-auto-complete__wrapper--error) {
+      background: $devui-gray-5;
+      border-color: $devui-gray-5;
+
+      &:hover {
+        background-color: $devui-gray-10;
+        border-color: $devui-gray-10  !important;
       }
     }
   }

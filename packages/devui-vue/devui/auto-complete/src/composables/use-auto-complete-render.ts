@@ -1,8 +1,8 @@
 import { computed, ComputedRef, inject, watch } from 'vue';
 import type { SetupContext, Ref } from 'vue';
-import { FORM_ITEM_TOKEN } from '../../../form';
+import { FORM_ITEM_TOKEN, STYLE_TOKEN } from '../../../form';
 import { AutoCompleteProps, UseAutoCompleteRender, AutoCompleteSize } from '../auto-complete-types';
-import { useNamespace } from '../../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 
 export function useAutoCompleteRender(
   props: AutoCompleteProps,
@@ -13,6 +13,7 @@ export function useAutoCompleteRender(
   autoCompleteSize: ComputedRef<AutoCompleteSize>
 ): UseAutoCompleteRender {
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
+  const styleType = inject(STYLE_TOKEN, undefined)
   const ns = useNamespace('auto-complete');
   const inputNs = useNamespace('auto-complete-input');
   const slotNs = useNamespace('auto-complete-slot');
@@ -39,6 +40,7 @@ export function useAutoCompleteRender(
     [slotNs.b()]: slots.prepend || slots.append || props.prefix || props.suffix,
     [ns.m('append')]: slots.append,
     [ns.m('prepend')]: slots.prepend,
+    [ns.m('gray-style')]: styleType === 'gray',
   }));
 
   const inputWrapperClasses = computed(() => ({
@@ -60,7 +62,7 @@ export function useAutoCompleteRender(
   watch(
     () => props.modelValue,
     () => {
-      formItemContext?.validate('change').catch((err) => console.log(err));
+      formItemContext?.validate('change').catch(() => { });
     }
   );
 
