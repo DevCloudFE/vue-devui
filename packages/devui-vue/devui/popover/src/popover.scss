@@ -4,7 +4,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  white-space: nowrap;
+  white-space: pre-wrap;
   padding: 4px 12px;
   line-height: 1.5;
   border-radius: $devui-border-radius-feedback;

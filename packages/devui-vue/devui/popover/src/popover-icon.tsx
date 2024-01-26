@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
 import { PopType } from './popover-types';
 import { SuccessIcon, WarningIcon, InfoIcon, ErrorIcon } from './popover-icons';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import './popover-icon.scss';
 
 export default defineComponent({

@@ -25,7 +25,7 @@ export const popoverProps = {
   },
   position: {
     type: Array as PropType<Array<Placement>>,
-    default: ['bottom'],
+    default: ['top', 'right', 'bottom', 'left'],
   },
   align: {
     type: String as PropType<Alignment> | null,
