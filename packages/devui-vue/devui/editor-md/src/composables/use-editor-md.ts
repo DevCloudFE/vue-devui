@@ -88,7 +88,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
       editorScroll();
     });
     nextTick(() => {
-      ctx.emit('previewContentChange');
+      ctx.emit('previewContentChange', html);
     });
   };
 
