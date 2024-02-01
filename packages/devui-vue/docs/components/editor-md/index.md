@@ -7,7 +7,7 @@
 ```vue
 <template>
   <input v-model="content" />
-  <d-editor-md v-model="content" :md-rules="mdRules" base-url="https://test-base-url" @content-change="valueChange"></d-editor-md>
+  <d-editor-md v-model="content" :md-rules="mdRules" base-url="https://test-base-url" @content-change="valueChange" @preview-content-change="previewChange"></d-editor-md>
 </template>
 
 <script>
@@ -26,7 +26,11 @@ export default defineComponent({
       console.log(val);
     };
 
-    return { content, mdRules, valueChange };
+    const previewChange = (val) => {
+      console.log(val);
+    };
+
+    return { content, mdRules, valueChange, previewChange };
   },
 });
 </script>
@@ -596,7 +600,7 @@ Bob-->>John: Jolly good!
 | :--------------------- | :--------------------------- | :----------------------------------------------------------------- | :-------- |
 | after-editor-init      | `Function(instance: object)` | 编辑器初始化事件，返回编辑器对象                                   |           |
 | content-change         | `Function(content: string)`  | 编辑器内容改变事件，返回当前内容                                   |           |
-| preview-content-change | `Function()`                 | 预览内容改变时触发                                                 |           |
+| preview-content-change | `Function(string)`                 | 预览内容改变时触发，返回对应的html字段                                                 |           |
 | image-upload           | `Function({file, callback})` | 打开图片上传开关后，图片上传事件回调，返回文件内容与 callback 函数 |           |
 | checked-change           | `Function(content: string)` | plugins添加checkbox后，预览checkbox checked状态改变回调 |           |
 
