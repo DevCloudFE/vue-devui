@@ -1,12 +1,13 @@
 import { computed, defineComponent, nextTick, ref, Teleport, toRefs, Transition, watch } from 'vue';
 import { modalProps, ModalProps, ModalType } from './modal-types';
-import { Icon } from '../../icon';
+import { Icon } from '@devui/shared/components/icon';
 import { FixedOverlay } from '../../overlay';
-import { useModal, useModalRender } from './composables/use-modal';
+import { useModal } from './composables/use-modal';
 import { useDraggable } from './composables/use-draggable';
 import DModalHeader from './components/header';
 import DModalBody from './components/body';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { CloseIcon } from './components/modal-icons';
+import { useNamespace } from '@devui/shared';
 import './modal.scss';
 
 interface TypeList {
@@ -24,8 +25,7 @@ export default defineComponent({
   setup(props: ModalProps, { slots, attrs, emit }) {
     const ns = useNamespace('modal');
     const { modelValue, title, showClose, showOverlay, appendToBody, closeOnClickOverlay, keepLast } = toRefs(props);
-    const { execClose } = useModal(props, emit);
-    useModalRender(props);
+    const { execClose, overlayZIndex, modalZIndex } = useModal(props, emit);
     const dialogRef = ref<HTMLElement>();
     const headerRef = ref<HTMLElement>();
     const draggable = computed(() => props.draggable);
@@ -90,11 +90,11 @@ export default defineComponent({
         {showOverlay.value && (
           <FixedOverlay
             modelValue={modelValue.value}
-            {...{ 'onUpdate:modelValue': execClose }}
+            onUpdate:modelValue={execClose}
             class={ns.e('overlay')}
             lock-scroll={false}
             close-on-click-overlay={closeOnClickOverlay.value}
-            style={{ zIndex: 'calc(var(--devui-z-index-modal, 1050) - 1)' }}
+            style={{ zIndex: overlayZIndex.value }}
           />
         )}
         <Transition name={props.showAnimation ? ns.m('wipe') : ''}>
@@ -103,13 +103,8 @@ export default defineComponent({
               ref={dialogRef}
               class={ns.b()}
               {...attrs}
-              onClick={(e: Event) => e.stopPropagation()}
-              style={{ transform: modalPosition.value }}>
-              {showClose.value && (
-                <div onClick={execClose} class="btn-close">
-                  <Icon name="close" size="20px"></Icon>
-                </div>
-              )}
+              style={{ transform: modalPosition.value, zIndex: modalZIndex.value }}>
+              {showClose.value && <Icon class="btn-close" operable component={CloseIcon()} onClick={execClose} ></Icon>}
               {props.type ? (
                 renderType()
               ) : (

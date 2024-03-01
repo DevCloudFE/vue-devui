@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from 'vue';
+import type { PropType, ExtractPropTypes, Ref } from 'vue';
 
 export type ModalType = 'success' | 'failed' | 'warning' | 'info' | '';
 
@@ -62,6 +62,8 @@ export type EmitEventFn = (event: EmitName, result?: boolean) => void;
 
 export interface UseModal {
   execClose: () => void;
+  overlayZIndex: Ref<string>;
+  modalZIndex: Ref<string>;
 }
 
 export type ModalProps = ExtractPropTypes<typeof modalProps>;
