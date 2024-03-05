@@ -58,6 +58,10 @@ export default defineComponent({
         key: 'kbd',
         value: [], // 为空表示过滤所有属性，放开属性则添加对应项，如['id', 'style']
       },
+      {
+        key: 'input',
+        value: null, // value值为null，则对应标签不会被渲染
+      }
     ])
     const customRendererRules = ref([
       {
@@ -635,7 +639,7 @@ interface ICustomRenderRule {
 ```ts
 interface ICustomXssRule {
   key: string;
-  value: string[];
+  value: string[] | null;
 }
 ```
 
