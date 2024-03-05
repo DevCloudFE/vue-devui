@@ -73,7 +73,11 @@ export class MDRenderService {
   setCustomXssRules(rules: ICustomXssRule[]) {
     if (rules) {
       rules.forEach((rule) => {
-        this.xssWhiteList[rule['key']] = rule['value'];
+        if (rule['value'] === null) {
+          delete this.xssWhiteList[rule['key']];
+        } else {
+          this.xssWhiteList[rule['key']] = rule['value'];
+        }
       });
     }
   }

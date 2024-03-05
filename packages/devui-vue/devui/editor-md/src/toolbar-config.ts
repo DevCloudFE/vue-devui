@@ -75,8 +75,7 @@ class ToolBarHandler {
 
     if (cursor.ch !== 0) {
       editor.setCursor(cursor.line, 0);
-      editor.replaceSelection('# ' + selection);
-      editor.setCursor(cursor.line, cursor.ch + 2);
+      editor.replaceSelection('# ');
     } else {
       editor.replaceSelection('# ' + selection);
     }
@@ -89,8 +88,7 @@ class ToolBarHandler {
 
     if (cursor.ch !== 0) {
       editor.setCursor(cursor.line, 0);
-      editor.replaceSelection('## ' + selection);
-      editor.setCursor(cursor.line, cursor.ch + 3);
+      editor.replaceSelection('## ');
     } else {
       editor.replaceSelection('## ' + selection);
     }
