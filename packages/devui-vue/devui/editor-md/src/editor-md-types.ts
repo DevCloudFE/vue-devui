@@ -16,7 +16,7 @@ export interface MdPlugin {
 
 export interface ICustomXssRule {
   key: string;
-  value: string[];
+  value: string[] | null;
 }
 
 export interface ICustomRenderRule {
