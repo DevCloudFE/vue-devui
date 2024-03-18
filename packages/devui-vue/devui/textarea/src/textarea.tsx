@@ -1,7 +1,7 @@
 import { defineComponent, inject, nextTick, onMounted, SetupContext, shallowRef, toRefs, watch } from 'vue';
 import { FORM_ITEM_TOKEN, FormItemContext } from '../../form';
 import { textareaProps, TextareaProps } from './textarea-types';
-import { useNamespace } from '../../shared/hooks/use-namespace';
+import { useNamespace } from '@devui/shared/utils';
 import { useTextareaRender } from './composables/use-textarea-render';
 import { useTextareaEvent } from './composables/use-textarea-event';
 import { useTextareaAutosize } from './composables/use-textarea-autosize';
@@ -18,7 +18,11 @@ export default defineComponent({
     const textarea = shallowRef<HTMLTextAreaElement>();
     const ns = useNamespace('textarea');
     const { isFocus, textareaDisabled, wrapClasses } = useTextareaRender(props);
-    const { onFocus, onBlur, onInput, onChange, onKeydown } = useTextareaEvent(isFocus, props, ctx);
+    const { onFocus, onBlur, onInput, onChange, onKeydown, onCompositionStart, onCompositionUpdate, onCompositionEnd } = useTextareaEvent(
+      isFocus,
+      props,
+      ctx
+    );
     const { textareaStyle, updateTextareaStyle } = useTextareaAutosize(props, textarea);
 
     watch(
@@ -46,6 +50,9 @@ export default defineComponent({
           disabled={textareaDisabled.value}
           style={textareaStyle.value}
           class={wrapClasses.value}
+          onCompositionstart={onCompositionStart}
+          onCompositionupdate={onCompositionUpdate}
+          onCompositionend={onCompositionEnd}
           onInput={onInput}
           onFocus={onFocus}
           onBlur={onBlur}
