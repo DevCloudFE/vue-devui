@@ -1,7 +1,7 @@
 import { computed, ComputedRef, getCurrentInstance, nextTick, onMounted, reactive, ref, Ref, SetupContext, watch } from 'vue';
 import { EditableSelectProps, Option, Options } from '../editable-select-types';
 import { createI18nTranslate } from '../../../locale/create';
-import { isNil } from 'lodash';
+import { isFunction, isNil } from 'lodash';
 
 export interface UseSelectStatesReturnType {
   hoveringIndex: number;
@@ -54,9 +54,16 @@ export function useSelect(
   const t = createI18nTranslate('DEditableSelect', app);
   const cachedOptions = ref(props.options);
 
+  const hasCustomFilter = () => {
+    return (props.remote && isFunction(props.remoteMethod)) || isFunction(props.filterMethod);
+  };
+
   // computed
   const filteredOptions = computed(() => {
     return cachedOptions.value.filter((option) => {
+      if (hasCustomFilter()) {
+        return true;
+      }
       return option.label.toLocaleLowerCase().includes(states.query.toLocaleLowerCase().trim());
     });
   });
