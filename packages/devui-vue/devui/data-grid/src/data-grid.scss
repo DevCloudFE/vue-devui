@@ -1,0 +1,655 @@
+@import '@devui/theme/styles-var/devui-var.scss';
+
+$devui-table-inset-shadow-left: var(--devui-table-inset-shadow-left, 8px 0 8px -4px);
+$devui-table-inset-shadow-right: var(--devui-table-inset-shadow-right, -8px 0 8px -4px);
+
+@mixin overflow-ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@mixin resize-handle-arrow {
+	content: "";
+	position: absolute;
+	top: 50%;
+	display: block;
+	width: 0;
+	height: 0;
+	border: 5px solid transparent;
+	transform: translateY(-50%);
+	pointer-events: none;
+}
+
+.#{$devui-prefix}-data-grid {
+
+	&,
+	& * {
+		box-sizing: border-box;
+
+		&::-webkit-scrollbar {
+			width: 8px;
+			height: 8px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background-color: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 8px;
+			background-color: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			background-color: $devui-placeholder;
+		}
+
+		&::-webkit-scrollbar-corner {
+			background-color: transparent;
+		}
+	}
+}
+
+.#{$devui-prefix}-data-grid {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	max-height: inherit;
+
+	&__x-space,
+	&__y-space {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+	}
+
+	&__empty {
+		position: absolute;
+		top: 47px;
+		z-index: 5;
+		width: 100%;
+	}
+
+	&__head-wrapper {
+		position: relative;
+		flex: none;
+		overflow-x: hidden;
+
+		&::-webkit-scrollbar-thumb {
+			background-color: transparent;
+		}
+	}
+
+	&__head {
+		display: flex;
+		background-color: $devui-base-bg;
+		width: fit-content;
+	}
+
+	&__th {
+		position: relative;
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+		flex-grow: 0;
+		font-size: $devui-font-size-sm;
+		font-weight: 700;
+		padding: 0 16px;
+		border-bottom: 1px solid $devui-dividing-line;
+		color: $devui-text;
+
+		.th-title {
+			@include overflow-ellipsis();
+		}
+
+		svg.th-sort-icon {
+			margin-left: 8px;
+			visibility: hidden;
+			cursor: pointer;
+
+			g {
+				use {
+					fill: $devui-shape-icon-fill;
+				}
+
+				polygon {
+					fill: $devui-icon-bg;
+				}
+			}
+
+			&:hover {
+				g use {
+					fill: $devui-shape-icon-fill-active;
+				}
+			}
+
+			&.asc {
+				visibility: visible;
+
+				g {
+					use {
+						fill: $devui-brand;
+					}
+
+					polygon:last-of-type {
+						opacity: 0.3;
+					}
+				}
+			}
+
+			&.desc {
+				visibility: visible;
+
+				g {
+					use {
+						fill: $devui-brand;
+					}
+
+					polygon:last-of-type {
+						opacity: 0.3;
+					}
+				}
+			}
+
+			&.th-sort-default-visible {
+				visibility: visible;
+			}
+		}
+
+		svg.th-filter-icon {
+			display: block;
+			height: 16px;
+			margin-left: 8px;
+			text-align: right;
+			visibility: hidden;
+			cursor: pointer;
+
+			g {
+				fill: $devui-shape-icon-fill;
+			}
+
+			&:hover {
+				g {
+					fill: $devui-shape-icon-fill-active;
+				}
+			}
+
+			&.th-filter-default-visible {
+				visibility: visible;
+			}
+		}
+
+		&:hover {
+			border-radius: $devui-border-radius 0 0 $devui-border-radius;
+
+			.resize-handle {
+				border-right: 2px solid $devui-line;
+
+				&::before {
+					@include resize-handle-arrow();
+
+					left: -8px;
+					border-right-color: $devui-line;
+				}
+
+				&::after {
+					@include resize-handle-arrow();
+
+					left: 6px;
+					border-left-color: $devui-line;
+				}
+			}
+
+			.th-sort-icon,
+			.th-filter-icon {
+				visibility: visible;
+			}
+		}
+
+		&:last-child:hover {
+			.resize-handle {
+				&::after {
+					display: none;
+				}
+			}
+		}
+
+		.resize-handle {
+			display: inline-block;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			width: 5px;
+			cursor: col-resize;
+
+			&:hover {
+				border-right: 2px solid $devui-form-control-line-active;
+
+				&::before,
+				&::after {
+					display: none;
+				}
+			}
+		}
+	}
+
+	&__th-mini {
+		height: 24px;
+		line-height: 24px;
+	}
+
+	&__th-xs {
+		height: 32px;
+		line-height: 32px;
+	}
+
+	&__th-sm,
+	&__th-md,
+	&__th-lg {
+		height: 42px;
+		line-height: 42px;
+	}
+
+	&__th--operable:hover {
+		background-color: $devui-list-item-hover-bg;
+	}
+
+	&__th--sort-active {
+		background-color: $devui-list-item-hover-bg;
+		border-radius: $devui-border-radius 0 0 $devui-border-radius;
+	}
+
+	&__th--filter-active {
+		background-color: $devui-list-item-hover-bg;
+		border-radius: $devui-border-radius 0 0 $devui-border-radius;
+
+		svg.th-filter-icon {
+			visibility: visible;
+
+			g {
+				fill: $devui-brand;
+			}
+
+			&:hover {
+				g {
+					fill: $devui-brand;
+				}
+			}
+		}
+	}
+
+	&__body-wrapper {
+		position: relative;
+		width: 100%;
+		flex: 1;
+
+		.#{$devui-prefix}-data-grid__empty {
+			top: 0;
+		}
+	}
+
+	&__body {
+		width: fit-content;
+	}
+
+	&__tr {
+		display: flex;
+		width: fit-content;
+		background-color: $devui-base-bg;
+	}
+
+	&__td {
+		flex-shrink: 0;
+		flex-grow: 0;
+		font-size: $devui-font-size;
+		padding: 0 16px;
+		border-bottom: 1px solid $devui-dividing-line;
+		@include overflow-ellipsis();
+
+		.tree-indent-placeholder {
+			display: inline-block;
+		}
+
+		svg.toggle-tree-icon {
+			padding-right: 8px;
+			margin-top: -2px;
+			vertical-align: middle;
+			box-sizing: content-box;
+			cursor: pointer;
+		}
+
+		svg.expand-icon {
+			rect {
+				stroke: $devui-disabled-text;
+
+				&:last-child {
+					stroke: none;
+					fill: $devui-disabled-text;
+				}
+			}
+
+			&:hover {
+				rect {
+					stroke: $devui-icon-fill-active;
+
+					&:last-child {
+						stroke: none;
+						fill: $devui-icon-fill-active;
+					}
+				}
+			}
+		}
+
+		svg.fold-icon {
+			rect {
+				stroke: $devui-disabled-text;
+			}
+
+			path {
+				fill: $devui-disabled-text;
+			}
+
+			&:hover {
+				rect {
+					stroke: $devui-icon-fill-active;
+				}
+
+				path {
+					fill: $devui-icon-fill-active;
+				}
+			}
+		}
+	}
+
+	&__td--checkable {
+		display: flex;
+		align-items: center;
+	}
+
+	&__td--mini {
+		height: 24px;
+		line-height: 24px;
+	}
+
+	&__td--xs {
+		height: 30px;
+		line-height: 30px;
+	}
+
+	&__td--sm {
+		height: 42px;
+		line-height: 42px;
+	}
+
+	&__td--md {
+		height: 46px;
+		line-height: 46px;
+	}
+
+	&__td--lg {
+		height: 54px;
+		line-height: 54px;
+	}
+
+	&__last-sticky-left-cell {
+		border-right-color: transparent !important;
+	}
+
+	&__first-sticky-right-cell {
+		border-left-color: transparent !important;
+	}
+
+	&__sticky-left-head,
+	&__sticky-right-head,
+	&__sticky-left-body,
+	&__sticky-right-body {
+		position: absolute;
+		z-index: 10;
+	}
+
+	&--scroll-middle,
+	&--scroll-right {
+		.#{$devui-prefix}-data-grid__last-sticky-left-cell {
+			position: relative;
+			border-right-color: transparent !important;
+			background-color: linear-gradient(to left, transparent, $devui-base-bg 10px);
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				width: 10px;
+				pointer-events: none;
+				box-shadow: inset $devui-table-inset-shadow-left $devui-light-shadow;
+			}
+		}
+	}
+
+	&--scroll-middle,
+	&--scroll-left {
+		.#{$devui-prefix}-data-grid__first-sticky-right-cell {
+			position: relative;
+			border-left-color: transparent !important;
+			background-color: linear-gradient(to right, transparent, $devui-base-bg 10px);
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				width: 10px;
+				pointer-events: none;
+				box-shadow: inset $devui-table-inset-shadow-right $devui-light-shadow;
+			}
+		}
+	}
+
+	&__tooltip.#{$devui-prefix}-flexible-overlay {
+		max-width: 200px;
+		min-height: 26px;
+		padding: 0 16px;
+		font-size: $devui-font-size;
+		color: $devui-feedback-overlay-text;
+		letter-spacing: 0;
+		line-height: 1.5;
+		background: $devui-feedback-overlay-bg;
+		box-shadow: none;
+		overflow-wrap: break-word;
+		word-break: break-word;
+		word-wrap: break-word;
+		text-align: start;
+		border-radius: $devui-border-radius-feedback;
+		line-break: auto;
+		text-decoration: none;
+		text-shadow: none;
+		text-transform: none;
+		word-spacing: normal;
+		white-space: normal;
+		opacity: 1;
+		z-index: $devui-z-index-pop-up;
+
+		span {
+			display: block;
+			max-width: 100%;
+			max-height: inherit;
+			padding: 4px 0;
+			overflow: auto;
+		}
+	}
+
+	&__filter-wrapper {
+		font-size: $devui-font-size;
+
+		& * {
+			box-sizing: border-box;
+		}
+
+		.filter-all-check {
+			width: 200px;
+			padding: 0 8px 4px;
+			border-bottom: 1px solid $devui-dividing-line;
+		}
+
+		.filter-multiple-menu {
+			width: 200px;
+			padding: 4px 8px;
+			border-bottom: 1px solid $devui-dividing-line;
+		}
+
+		.filter-single-menu {
+			width: 200px;
+
+			.filter-menu {
+				padding: 0 8px;
+				color: $devui-text;
+				border-radius: $devui-border-radius;
+				transition: color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
+					background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
+
+				&:hover {
+					color: $devui-list-item-hover-text;
+					background-color: $devui-list-item-hover-bg;
+				}
+			}
+
+			.filter-item-active {
+				color: $devui-list-item-active-bg;
+				background-color: $devui-list-item-active-text;
+			}
+		}
+
+		.filter-operation {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 0 8px;
+			height: 26px;
+		}
+
+		.filter-item {
+			display: flex;
+			align-items: center;
+			height: 30px;
+			cursor: pointer;
+			@include overflow-ellipsis();
+		}
+	}
+
+	&--fix-header {
+		display: flex;
+		flex-flow: column nowrap;
+		overflow: unset;
+	}
+
+	&--striped {
+		.#{$devui-prefix}-data-grid__tr:nth-of-type(even) {
+			background-color: $devui-list-item-strip-bg;
+		}
+	}
+
+	&--row-hover-highlight {
+		.#{$devui-prefix}-data-grid__tr.hover-tr {
+			background-color: $devui-list-item-hover-bg;
+
+			.#{$devui-prefix}-data-grid__last-sticky-left-cell {
+				background-color: linear-gradient(to left, transparent, $devui-list-item-hover-bg 10px);
+			}
+
+			.#{$devui-prefix}-data-grid__first-sticky-right-cell {
+				background-color: linear-gradient(to right, transparent, $devui-list-item-hover-bg 10px);
+			}
+		}
+	}
+
+	&--header-bg {
+		.#{$devui-prefix}-data-grid__head {
+			background-color: $devui-list-item-strip-bg;
+		}
+	}
+
+	&--bordered {
+		.#{$devui-prefix}-data-grid__th {
+			border-top: 1px solid $devui-dividing-line;
+			border-right: 1px solid $devui-dividing-line;
+
+			&:first-child {
+				border-left: 1px solid $devui-dividing-line;
+			}
+		}
+
+		.#{$devui-prefix}-data-grid__td {
+			border-right: 1px solid $devui-dividing-line;
+
+			&:first-child {
+				border-left: 1px solid $devui-dividing-line;
+			}
+		}
+	}
+
+	&--borderless {
+		.#{$devui-prefix}-data-grid__th {
+			border: none;
+		}
+
+		.#{$devui-prefix}-data-grid__td {
+			border: none;
+		}
+	}
+
+	&--shadowed {
+		border-radius: $devui-border-radius-card;
+		box-shadow: $devui-shadow-length-base $devui-light-shadow;
+	}
+
+	&--left {
+		text-align: left;
+
+		&.#{$devui-prefix}-data-grid__th,
+		&.#{$devui-prefix}-data-grid__td {
+			justify-content: flex-start;
+		}
+	}
+
+	&--center {
+		text-align: center;
+
+		&.#{$devui-prefix}-data-grid__th,
+		&.#{$devui-prefix}-data-grid__td {
+			justify-content: center;
+		}
+	}
+
+	&--right {
+		text-align: right;
+
+		&.#{$devui-prefix}-data-grid__th,
+		&.#{$devui-prefix}-data-grid__td {
+			justify-content: flex-end;
+		}
+	}
+
+	&--is-virtual {
+		max-height: unset;
+	}
+
+	.resize-bar {
+		display: none;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		z-index: 9999;
+		width: 2px;
+		background: $devui-form-control-line-active;
+		cursor: col-resize;
+	}
+}
+
+.data-grid-selector {
+	user-select: none;
+	cursor: col-resize;
+}
