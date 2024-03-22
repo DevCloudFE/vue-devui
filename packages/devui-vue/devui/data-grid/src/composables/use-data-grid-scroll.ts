@@ -71,3 +71,25 @@ export function useDataGridScroll() {
 		resetVirtualRowData
 	}
 }
+
+// 懒加载
+export function useDataGridLazy(scrollRef: Ref<HTMLElement | undefined>) {
+	const { lazy, rootCtx } = inject(DataGridInjectionKey) as DataGridContext;
+	const emitLazyThreshold = 40;
+
+	const onScroll = debounce((e: Event) => {
+		const targetEl = e.target as HTMLElement;
+		const clientHeight = targetEl.clientHeight;
+		const scrollTop = targetEl.scrollTop;
+		const scrollHeight = targetEl.scrollHeight;
+		if (scrollHeight - scrollTop - clientHeight <= emitLazyThreshold) {
+			rootCtx.emit('loadMore')
+		}
+	}, 300);
+
+	onMounted(() => {
+		if (lazy.value && scrollRef.value) {
+			scrollRef.value.addEventListener('scroll', onScroll);
+		}
+	})
+}
