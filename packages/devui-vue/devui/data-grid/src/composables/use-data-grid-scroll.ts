@@ -1,6 +1,6 @@
 import { ref, onMounted, inject } from 'vue';
 import type { Ref } from 'vue';
-import { debounce, } from 'lodash';
+import { debounce } from 'lodash';
 import { DataGridInjectionKey } from '../data-grid-types';
 import type { InnerColumnConfig, InnerRowData, DataGridContext, ScrollYParams, ScrollXParams } from '../data-grid-types';
 import { getXStartOrEndIndex, getYStartIndex } from '../utils';
