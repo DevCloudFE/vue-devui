@@ -1,5 +1,7 @@
 import { defineComponent, provide, toRefs, ref } from "vue";
 import type { SetupContext } from 'vue';
+import FixHeadGrid from './components/fix-head-grid';
+import NormalHeadGrid from './components/normal-head-grid';
 import { dataGridProps, DataGridInjectionKey } from "./data-grid-types";
 import type { DataGridProps } from "./data-grid-types";
 import { useDataGrid, useDataGridStyle } from "./composables/use-data-grid";
@@ -93,6 +95,11 @@ export default defineComponent({
 
     return () => (
       <div ref={rootRef}>
+        {fixHeader.value ? (
+          <FixHeadGrid class={gridClasses.value} />
+        ) : (
+          <NormalHeadGrid class={[gridClasses.value, 'devui-scroll-overlay']} />
+        )}
       </div>
     );
   }
