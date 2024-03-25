@@ -105,6 +105,10 @@ export const tableProps = {
     type: Boolean,
     default: false,
   },
+  virtual: {
+    type: Boolean,
+    default: false,
+  },
 };
 
 export type TableProps = ExtractPropTypes<typeof tableProps>;
@@ -117,6 +121,7 @@ export interface ITable<T = DefaultRow> extends ComponentInternalInstance {
   tableId: string;
   hiddenColumns: Ref<HTMLElement | null>;
   tableRef: Ref<HTMLElement>;
+  tableContainerRef: Ref<HTMLElement>;
   updateColumnWidth: () => void;
 }
 
@@ -152,6 +157,5 @@ export interface UseTableLayout {
   tableWidth: Ref;
   updateColumnWidth: () => void;
 }
-
 
 export type ITableInstanceAndDefaultRow = ComponentInternalInstance & ITable<DefaultRow>;

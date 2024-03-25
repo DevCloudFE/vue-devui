@@ -24,6 +24,7 @@ export default defineComponent({
     const store = createStore(toRef(props, 'data'), table, ctx);
     const tableId = `devui-table_${tableIdInit++}`;
     const tableRef = ref();
+    const tableContainerRef = ref();
     table.tableId = tableId;
     table.store = store;
     provide<ITableInstanceAndDefaultRow>(TABLE_TOKEN, table);
@@ -36,6 +37,7 @@ export default defineComponent({
     const hiddenColumns = ref(null);
     table.hiddenColumns = hiddenColumns;
     table.tableRef = tableRef;
+    table.tableContainerRef = tableContainerRef;
     table.updateColumnWidth = updateColumnWidth;
 
     ctx.expose({
@@ -58,7 +60,7 @@ export default defineComponent({
         style={styles.value}
         v-loading={props.showLoading}
         onScroll={withModifiers(onTableScroll, ['stop'])}>
-        <div class={ns.e('container')}>
+        <div ref={tableContainerRef} class={ns.e('container')}>
           <div ref={hiddenColumns} class="hidden-columns">
             {ctx.slots.default?.()}
           </div>

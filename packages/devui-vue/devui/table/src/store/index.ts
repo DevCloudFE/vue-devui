@@ -266,6 +266,28 @@ export function createStore<T extends Record<string, unknown>>(
 
   const { tableCellModeMap, setCellMode, resetCellMode } = useEditTableCell();
 
+  const estimateRowHeight = ref(40);
+  interface heightItem {
+    top: number;
+    bottom: number;
+  }
+  const heightList = ref<heightItem[]>([]);
+  const changeHeightList = (index: number, height: number) => {
+    if (index < heightList.value.length) {
+      heightList.value.slice(index).forEach((item) => {
+        item.top += height;
+        item.bottom += height;
+      });
+    }
+  };
+  const virtualHeight = computed(() => {
+    if (!heightList.value.length) {
+      return 0;
+    }
+    return heightList.value[heightList.value.length - 1].bottom;
+    // return heightList.value.slice(-1)[0].bottom;
+  });
+
   const emitTableEvent = (eventName: string, ...params: unknown[]) => {
     ctx.emit.apply(ctx, [eventName, ...params]);
   };
@@ -294,6 +316,9 @@ export function createStore<T extends Record<string, unknown>>(
       thList,
       firstDefaultColumn,
       tableCellModeMap,
+      estimateRowHeight,
+      heightList,
+      virtualHeight,
     },
     insertColumn,
     sortColumn,
@@ -312,6 +337,7 @@ export function createStore<T extends Record<string, unknown>>(
     updateFirstDefaultColumn,
     setCellMode,
     resetCellMode,
+    changeHeightList,
     emitTableEvent,
   };
 }

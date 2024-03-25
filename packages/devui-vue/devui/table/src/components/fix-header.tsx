@@ -22,6 +22,9 @@ export default defineComponent({
     const showHeader = computed(() => Boolean(table?.props.showHeader));
     const { onTableScroll } = useHorizontalScroll(table);
 
+    const { virtual } = table.props;
+    const { virtualHeight } = table.store.states;
+
     return () => (
       <div class={ns.e('fix-header')} onScroll={withModifiers(onTableScroll, ['stop'])}>
         {showHeader.value && (
@@ -35,7 +38,12 @@ export default defineComponent({
         <div class={ns.e('scroll-view')}>
           <table class={props.classes} cellpadding="0" cellspacing="0">
             <ColGroup />
-            {!props.isEmpty && <TableBody style="flex: 1" />}
+            {!props.isEmpty && (
+              <>
+                {virtual && <div class={ns.e('virtual__scroll')} style={{ height: `${virtualHeight.value}px` }}></div>}
+                <TableBody style="flex: 1" />
+              </>
+            )}
           </table>
         </div>
       </div>

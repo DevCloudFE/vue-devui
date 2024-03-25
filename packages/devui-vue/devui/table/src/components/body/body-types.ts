@@ -1,4 +1,4 @@
-import type { ComputedRef, Ref } from 'vue';
+import type { ComputedRef, Directive, Ref } from 'vue';
 import { DefaultRow } from '../../table-types';
 import { Column } from '../column/column-types';
 
@@ -25,4 +25,10 @@ export interface UseBodyRender {
 export interface UseLazyLoad {
   lazy: boolean;
   lazyFlagRef: Ref;
+}
+
+export interface UseVirtualScroll {
+  partRows: ComputedRef<DefaultRow[]> | Ref<DefaultRow[]>;
+  scrollOffset: Ref<number>;
+  vTrReady?: Directive;
 }

@@ -16,6 +16,7 @@
   &__container {
     flex: 1;
     overflow: auto;
+    position: relative;
   }
 
   &__view {

@@ -1,7 +1,7 @@
-import { inject, computed, Ref, ref, onMounted, onBeforeUnmount } from 'vue';
-import { TABLE_TOKEN, ITableInstanceAndDefaultRow } from '../../table-types';
+import { inject, computed, Ref, ref, onMounted, onBeforeUnmount, watch, Directive } from 'vue';
+import { TABLE_TOKEN, ITableInstanceAndDefaultRow, DefaultRow } from '../../table-types';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
-import { UseBodyRender, UseMergeCell, CellClickArg, UseLazyLoad } from './body-types';
+import { UseBodyRender, UseMergeCell, CellClickArg, UseLazyLoad, UseVirtualScroll } from './body-types';
 import { getRowIdentity } from '../../utils';
 
 const ns = useNamespace('table');
@@ -97,29 +97,24 @@ export function useLazyLoad(): UseLazyLoad {
   let lazyObserver: IntersectionObserver;
 
   onMounted(() => {
-
     // if lazy mode is turn on. It'll observe an empty tag to determine whether the bottom has been reached.
     if (lazy) {
-
       // when the tbody reached bottom(because the lazyFlagElement is at the bottom of tbody), the observe's callback will be triggered
       lazyObserver = new IntersectionObserver(
         (entries) => {
-
           // Not support IE
           const lazyFlagOb = entries[0];
 
           // isIntersecting is true ==> the lazyFlagElement is in viewport
           if (lazyFlagOb.isIntersecting) {
-
             // exec user props.loadMore to load more data
             // loadMore();
             table.emit('load-more');
           }
         },
         {
-
           // only fired in the table scroll event
-          root: table.tableRef.value,
+          root: table.tableContainerRef.value,
         }
       );
       lazyObserver.observe(lazyFlagRef.value);
@@ -127,7 +122,6 @@ export function useLazyLoad(): UseLazyLoad {
   });
 
   onBeforeUnmount(() => {
-
     // unload intersectionObserver
     if (lazy) {
       lazyObserver.unobserve(lazyFlagRef.value);
@@ -139,4 +133,113 @@ export function useLazyLoad(): UseLazyLoad {
     lazy,
     lazyFlagRef,
   };
+}
+
+export function useVirtualScroll(flatRows: Ref<DefaultRow[]>): UseVirtualScroll {
+  const table = inject(TABLE_TOKEN) as ITableInstanceAndDefaultRow;
+  const { virtual } = table.props;
+  const scrollOffset = ref(0);
+
+  if (!virtual) {
+    return { partRows: flatRows, scrollOffset };
+  }
+
+  const { estimateRowHeight, heightList } = table.store.states;
+
+  watch(flatRows, (value, oldValue) => {
+    if (value.length !== oldValue.length) {
+      value.slice(oldValue.length, value.length).forEach(() => {
+        const last = heightList.value.slice(-1)[0];
+        heightList.value.push({
+          top: last?.bottom ?? 0,
+          bottom: (last?.bottom ?? 0) + estimateRowHeight.value,
+        });
+      });
+    } else {
+      heightList.value = value.map((_, i) => ({
+        top: i * estimateRowHeight.value,
+        bottom: (i + 1) * estimateRowHeight.value,
+      }));
+    }
+  });
+
+  const start = ref(0);
+  const count = computed(() => {
+    if (!table.tableRef.value) {
+      return 10;
+    }
+    return Math.ceil(table.tableRef.value.clientHeight / estimateRowHeight.value) + 1;
+  });
+  const end = ref(count.value);
+
+  const binarySearch = (value: number) => {
+    const list = heightList.value;
+    let left = 0;
+    let right = list.length - 1;
+    let tempIndex = null;
+    while (left <= right) {
+      const midIndex = Math.floor((left + right) / 2);
+      const midValue = list[midIndex].bottom;
+      if (midValue === value) {
+        return midIndex + 1;
+      } else if (midValue < value) {
+        left = midIndex + 1;
+      } else if (midValue > value) {
+        if (tempIndex === null || tempIndex > midIndex) {
+          tempIndex = midIndex;
+        }
+        right--;
+      }
+    }
+    return tempIndex;
+  };
+
+  // TODO: 将scroll事件换成IntersectionObserver
+  const scroll = (e: Event) => {
+    const { scrollTop } = e.target as HTMLElement;
+
+    scrollOffset.value = scrollTop - (scrollTop % table.tableRef.value.clientHeight);
+
+    start.value = Math.max(binarySearch(scrollOffset.value) as number, 0);
+    end.value = Math.min(
+      (binarySearch(scrollOffset.value + table.tableRef.value.clientHeight) as number) + count.value,
+      flatRows.value.length
+    );
+  };
+
+  onMounted(() => {
+    table.tableContainerRef.value.addEventListener('scroll', scroll);
+  });
+
+  const partRows = computed(() => {
+    return flatRows.value.slice(start.value, end.value);
+  });
+
+  const loadObserver = new IntersectionObserver(
+    (entries) => {
+      const loadFlagOb = entries[0];
+
+      if (loadFlagOb.isIntersecting) {
+        const id = Number((loadFlagOb.target as HTMLElement).dataset.key);
+        const { changeHeightList } = table.store;
+        // console.log('loadFlagOb.target.clientHeight', loadFlagOb.target.clientHeight);
+
+        if (estimateRowHeight.value !== loadFlagOb.target.clientHeight) {
+          changeHeightList(id, loadFlagOb.target.clientHeight - estimateRowHeight.value);
+          loadObserver.unobserve(loadFlagOb.target);
+        }
+      }
+    },
+    {
+      root: table.tableContainerRef.value,
+    }
+  );
+
+  const vTrReady: Directive = {
+    updated: (el: HTMLElement) => {
+      loadObserver.observe(el);
+    },
+  };
+
+  return { partRows, scrollOffset, vTrReady };
 }
