@@ -82,6 +82,7 @@ export default defineComponent({
     };
     const styles = computed(() => ({
       transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+      'z-index': 'var(--devui-z-index-dropdown, 1052)'
     }));
 
     const updateDropdownWidth = () => {
