@@ -39,6 +39,7 @@ $select-item-min-height: 36px;
 
   .#{$devui-prefix}-tag {
     margin: 4px 0 4px 4px;
+
     .#{$devui-prefix}-tag__item.#{$devui-prefix}-tag--md {
       height: 18px;
       line-height: 16px;
@@ -51,6 +52,7 @@ $select-item-min-height: 36px;
 
   &--sm {
     font-size: $devui-font-size-sm;
+
     .#{$devui-prefix}-tag {
       margin: 2px 0 2px 4px;
 
@@ -151,6 +153,7 @@ $select-item-min-height: 36px;
   flex-wrap: wrap;
   padding-right: 28px;
   cursor: pointer;
+
   .#{$devui-prefix}-select__multiple--input {
     display: flex;
     max-width: 100%;
@@ -330,20 +333,6 @@ $select-item-min-height: 36px;
   }
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transform: scale3d(0, 1, 0, 0.9999) translate3d(0, 1, 0, 0);
-  transform-origin: 0 0%;
-  opacity: 1;
-  transition: transform, opacity $transition-base-time ease-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  transform: scale3d(0, 1, 0, 0) translate3d(0, 1, 0, -4px);
-  opacity: 0;
-  transition: transform, opacity $transition-base-time ease-in;
-}
 .#{$devui-prefix}-select__dropdown--empty {
   text-align: center;
   font-size: $select-item-font-size;
@@ -375,5 +364,51 @@ $select-item-min-height: 36px;
     padding: 4px 12px;
     font-size: $select-item-font-size;
     color: $devui-aide-text;
+  }
+}
+
+.fade {
+  &-bottom {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleY(0.8) translateY(-4px);
+    }
+
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+      transform: scaleY(0.9999) translateY(0);
+    }
+
+    &-enter-active {
+      transition: transform 0.2s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.2s cubic-bezier(0.16, 0.75, 0.5, 1);
+    }
+
+    &-leave-active {
+      transition: transform 0.2s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.2s cubic-bezier(0.5, 0, 0.84, 0.25);
+    }
+  }
+
+  &-top {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleY(0.8) translateY(4px);
+    }
+
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+      transform: scaleY(0.9999) translateY(0);
+    }
+
+    &-enter-active {
+      transition: transform 0.2s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.2s cubic-bezier(0.16, 0.75, 0.5, 1);
+    }
+
+    &-leave-active {
+      transition: transform 0.2s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.2s cubic-bezier(0.5, 0, 0.84, 0.25);
+    }
   }
 }
