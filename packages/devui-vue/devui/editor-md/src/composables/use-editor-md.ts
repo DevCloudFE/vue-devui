@@ -215,7 +215,6 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
       const endPos = value.indexOf(' ', cursor.ch) > -1 ? value.indexOf(' ', cursor.ch) : value.length;
       hint = value.slice(startPos, cursor.ch);
       if (
-        (startPos > 0 && value[startPos - 1] !== ' ') ||
         startPos < 0 ||
         !hint.includes(nowPrefix) ||
         hint.endsWith(' ') ||
