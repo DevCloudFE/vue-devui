@@ -12,6 +12,7 @@ import {
   withModifiers,
   onUnmounted,
   nextTick,
+  computed
 } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
@@ -72,8 +73,17 @@ export default defineComponent({
     const dropdownEmptyCls = ns.em('dropdown', 'empty');
     ctx.expose({ focus, blur, toggleChange });
     const isRender = ref<boolean>(false);
+    const currentPosition = ref('bottom');
     const position = ref<Placement[]>(['bottom-start', 'top-start']);
     const dropdownWidth = ref('0');
+
+    const handlePositionChange = (pos: string) => {
+      currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
+    };
+    const styles = computed(() => ({
+      transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+      'z-index': 'var(--devui-z-index-dropdown, 1052)'
+    }));
 
     const updateDropdownWidth = () => {
       dropdownWidth.value = originRef?.value?.clientWidth ? originRef.value.clientWidth + 'px' : '100%';
@@ -134,19 +144,18 @@ export default defineComponent({
           }, ['stop'])}>
           <SelectContent ref={selectRef}></SelectContent>
           <Teleport to="body">
-            <Transition name="fade">
+            <Transition name={`fade-${currentPosition.value}`}>
               <FlexibleOverlay
+                v-show={isOpen.value}
                 v-model={isRender.value}
                 ref={dropdownRef}
                 origin={originRef.value}
                 align="start"
                 offset={4}
                 position={position.value}
-                style={{
-                  visibility: isOpen.value ? 'visible' : 'hidden',
-                  'z-index': isOpen.value ? 'var(--devui-z-index-dropdown, 1052)' : -1,
-                }}>
-                <div class={dropdownCls} style={{ width: `${dropdownWidth.value}`, visibility: isOpen.value ? 'visible' : 'hidden' }}>
+                onPositionChange={handlePositionChange}
+                style={styles.value}>
+                <div class={dropdownCls} style={{ width: `${dropdownWidth.value}` }}>
                   <ul class={listCls} v-show={!isLoading.value} ref={dropdownContainer}>
                     {isShowCreateOption.value && (
                       <Option value={filterQuery.value} name={filterQuery.value} create>
