@@ -9,6 +9,7 @@ import { FlexibleOverlay, Placement } from '../../overlay';
 import { PopperTrigger } from '../../shared/components/popper-trigger';
 import { POPPER_TRIGGER_TOKEN } from '../../shared/components/popper-trigger/src/popper-trigger-types';
 import DInput from '../../input/src/input';
+import { SelectArrowIcon, InputClearIcon } from '../../svg-icons';
 import './cascader.scss';
 
 export default defineComponent({
@@ -66,12 +67,14 @@ export default defineComponent({
               )}
               {!showClearable.value && (
                 <div class={`${ns.e('icon')} ${ns.m('drop-icon-animation')}`}>
-                  <d-icon name="select-arrow" size="12px"></d-icon>
+                  <SelectArrowIcon />
                 </div>
               )}
               {showClearable.value && props.clearable && (
                 <div class={`${ns.e('icon')} ${ns.e('close')}`} onClick={clearData}>
-                  <d-icon name="close" size="12px"></d-icon>
+                  <div class="close-icon-container">
+                    <InputClearIcon />
+                  </div>
                 </div>
               )}
             </div>
@@ -103,15 +106,17 @@ export default defineComponent({
                 )}
                 {props.filterable && isSearching.value && (
                   <div class={ns.e('panel')}>
-                    {suggestionsList.value.length === 0
-                      ? <label style="font-weight: bold;">没有数据</label>
-                      : suggestionsList.value.map((item) => {
+                    {suggestionsList.value.length === 0 ? (
+                      <label style="font-weight: bold;">没有数据</label>
+                    ) : (
+                      suggestionsList.value.map((item) => {
                         return (
                           <div class={ns.e('suggest-list')} onClick={() => chooseSuggestion(cloneDeep(item))}>
                             {item.labelsString}
                           </div>
                         );
-                      })}
+                      })
+                    )}
                   </div>
                 )}
               </div>

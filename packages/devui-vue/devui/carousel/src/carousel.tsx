@@ -1,7 +1,7 @@
 import { defineComponent, ref, watch, onMounted, onBeforeUnmount, Fragment, Comment, toRefs } from 'vue';
 import type { VNode } from 'vue';
 import { carouselProps, DotTrigger, CarouselProps } from './types';
-import { Icon } from '@devui/shared/components/icon';
+import { CarouselArrowLeft, CarouselArrowRight } from './components/carousel-icons';
 import { useNamespace } from '@devui/shared/utils';
 import './carousel.scss';
 
@@ -182,10 +182,10 @@ export default defineComponent({
           {arrowTrigger.value !== 'never' && showArrow.value ? (
             <div class={ns.e('arrow')}>
               <button class="arrow-left" onClick={() => prev()}>
-                <Icon name="arrow-left" />
+                <CarouselArrowLeft />
               </button>
               <button class="arrow-right" onClick={() => next()}>
-                <Icon name="arrow-right" />
+                <CarouselArrowRight />
               </button>
             </div>
           ) : null}

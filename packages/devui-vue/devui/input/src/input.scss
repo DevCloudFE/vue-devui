@@ -49,13 +49,23 @@
   }
 
   &--sm {
-    height: $devui-size-sm;
+    height: 26px;
     font-size: $devui-font-size-sm;
+
+    .#{$devui-prefix}-input__clear--icon {
+      width: 14px;
+      height: 14px;
+    }
   }
 
   &--lg {
-    height: $devui-size-lg;
+    height: 46px;
     font-size: $devui-font-size-lg;
+
+    .#{$devui-prefix}-input__clear--icon {
+      width: 18px;
+      height: 18px;
+    }
   }
 
   &--feedback {
@@ -161,6 +171,19 @@
   &__clear--icon,
   &__password--icon {
     cursor: pointer;
+  }
+
+  &__clear--icon {
+    path {
+      fill: $devui-shape-icon-fill;
+      transition: all $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
+    }
+
+    &:hover {
+      path {
+        fill: $devui-shape-icon-fill-hover;
+      }
+    }
   }
 
   &--gray-style:not(.#{$devui-prefix}-input--disabled) {

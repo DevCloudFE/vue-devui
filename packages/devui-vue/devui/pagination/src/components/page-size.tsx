@@ -1,5 +1,5 @@
-import { defineComponent, inject, withModifiers, ref } from 'vue';
-import { Icon } from '@devui/shared/components/icon';
+import { defineComponent, inject, computed, ref } from 'vue';
+import { SelectArrowIcon } from '../../../svg-icons';
 import { Dropdown } from '../../../dropdown';
 import { useNamespace } from '@devui/shared/utils';
 import { paginationInjectionKey, IPagination } from '../pagination-types';
@@ -8,10 +8,15 @@ export default defineComponent({
   setup() {
     const ns = useNamespace('pagination');
     const paginationContext = inject(paginationInjectionKey) as IPagination;
-    const iconRotate = ref(0);
+    const isOpen = ref(false);
     const { size, currentPageSize, pageSizeOptions, pageSizeDirection, pageSizeChange, t } = paginationContext;
+    const pageSizeClasses = computed(() => ({
+      [ns.e('size')]: true,
+      [ns.em('size', size.value)]: Boolean(size.value),
+      [ns.em('size', 'open')]: isOpen.value,
+    }));
     const onDropdownToggle = (e: boolean) => {
-      iconRotate.value = e ? 180 : 0;
+      isOpen.value = e;
     };
 
     return () => (
@@ -19,10 +24,9 @@ export default defineComponent({
         <Dropdown position={pageSizeDirection.value} class={ns.e('size-list')} onToggle={onDropdownToggle}>
           {{
             default: () => (
-              <div tabindex="0" class={[ns.e('size'), size.value ? ns.em('size', size.value) : '']}>
-                <Icon name="select-arrow" size="16px" rotate={iconRotate.value}>
-                  {{ prefix: () => <span>{currentPageSize.value}</span> }}
-                </Icon>
+              <div tabindex="0" class={pageSizeClasses.value}>
+                <span>{currentPageSize.value}</span>
+                <SelectArrowIcon />
               </div>
             ),
             menu: () => (

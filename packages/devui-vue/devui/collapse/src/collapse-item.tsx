@@ -1,7 +1,7 @@
 import { defineComponent, computed, inject, Transition, onMounted, shallowRef } from 'vue';
 import { collapseItemProps } from './collapse-types';
 import { useNamespace } from '@devui/shared/utils';
-import OpenIcon from './collapse-open-icon';
+import { SelectArrowIcon } from '../../svg-icons';
 import { SELECT_TOKEN } from './const';
 
 export default defineComponent({
@@ -65,7 +65,7 @@ export default defineComponent({
             onClick={handlerTitleClick}>
             {ctx.slots.title ? ctx.slots.title() : props.title}
             <span class={ns.e('open-icon')}>
-              <OpenIcon />
+              <SelectArrowIcon />
             </span>
           </div>
           <Transition name={transitionNs.b()} onEnter={enter} onLeave={leave}>
