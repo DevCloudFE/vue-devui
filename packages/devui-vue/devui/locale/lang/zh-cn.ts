@@ -66,6 +66,10 @@ export default {
     selectAll: '全选',
     ok: '确定',
   },
+  dataGrid: {
+    selectAll: '全选',
+    ok: '确定',
+  },
   timePopup: {
     ok: '确定',
   },
