@@ -235,19 +235,19 @@ $devui-table-inset-shadow-right: var(--devui-table-inset-shadow-right, -8px 0 8p
 		}
 	}
 
-	&__th-mini {
+	&__th--mini {
 		height: 24px;
 		line-height: 24px;
 	}
 
-	&__th-xs {
+	&__th--xs {
 		height: 32px;
 		line-height: 32px;
 	}
 
-	&__th-sm,
-	&__th-md,
-	&__th-lg {
+	&__th--sm,
+	&__th--md,
+	&__th--lg {
 		height: 42px;
 		line-height: 42px;
 	}
@@ -504,7 +504,7 @@ $devui-table-inset-shadow-right: var(--devui-table-inset-shadow-right, -8px 0 8p
 		.filter-single-menu {
 			width: 200px;
 
-			.filter-menu {
+			.filter-item {
 				padding: 0 8px;
 				color: $devui-text;
 				border-radius: $devui-border-radius;

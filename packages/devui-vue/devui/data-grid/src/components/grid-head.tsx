@@ -40,7 +40,7 @@ export default defineComponent({
 				)}
 
 				{Boolean(rightColumnData.value.length) && (
-					<div class={[ns.e('head'), ns.e('sticky-right-head')]} style={{ right: `-${bodyScrollLeft}px` }}>
+					<div class={[ns.e('head'), ns.e('sticky-right-head')]} style={{ right: `-${bodyScrollLeft.value}px` }}>
 						{rightColumnData.value.map((item, index) => (
 							<GridTh
 								columnConfig={item}
@@ -53,9 +53,9 @@ export default defineComponent({
 				)}
 
 				<div class={ns.e('head')} style={{ transform: `translate(${translateX.value}px,0)` }}>
-					{columnData.value.map((item) => {
+					{columnData.value.map((item) => (
 						<GridTh columnConfig={item} mouseenterCb={onCellMouseenter} mouseleaveCb={onCellMouseleave} />
-					})}
+					))}
 				</div>
 
 				<Teleport to='body'>

@@ -20,7 +20,7 @@ export function useDataGridColumnDrag(
 				lastColumn.maxWidth as number,
 				Math.max(lastColumn.minWidth as number, (lastColumn.width as number) + offset)
 			);
-		} else if (scrollDistance <= -0 && lastColumn.$columnId !== columnId) {
+		} else if (scrollDistance <= 0 && lastColumn.$columnId !== columnId) {
 			lastColumn.width = Math.min(
 				lastColumn.maxWidth as number,
 				Math.max(lastColumn.minWidth as number, (lastColumn.width as number) + offset)

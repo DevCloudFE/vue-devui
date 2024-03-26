@@ -25,6 +25,7 @@ import type { App } from 'vue';
 
 ${imports.join('\n')}
 import './style/devui.scss';
+import './style/index.scss';
 
 const installs = [
   ${installs.join(',\n  ')}

@@ -65,6 +65,10 @@ export default {
     selectAll: 'Select all',
     ok: 'OK',
   },
+  dataGrid: {
+    selectAll: 'Select all',
+    ok: 'OK',
+  },
   timePopup: {
     ok: 'OK',
   },
