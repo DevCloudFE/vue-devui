@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, provide, ref, SetupContext } from 'vue';
+import { defineComponent, toRefs, provide, ref, SetupContext, withModifiers } from 'vue';
 import { Fullscreen } from '../../fullscreen';
 import { useEditorMd } from './composables/use-editor-md';
 import { useEditorMdTheme } from './composables/use-editor-md-theme';
@@ -40,6 +40,7 @@ export default defineComponent({
       overlayRef,
       cursorRef,
       renderRef,
+      containerRef,
       isHintShow,
       toolbars,
       previewHtmlList,
@@ -65,6 +66,7 @@ export default defineComponent({
     return () => (
       <Fullscreen v-model={showFullscreen.value} z-index={fullscreenZIndex.value}>
         <div
+          ref={containerRef}
           class={[
             'dp-md-container',
             { 'dp-md-readonly': mode.value === 'readonly', 'dp-md-editonly': mode.value === 'editonly', 'dp-md-dark': isDarkMode.value },
@@ -85,7 +87,8 @@ export default defineComponent({
                 v-model={isHintShow.value}
                 origin={cursorRef.value || undefined}
                 align="start"
-                position={['bottom-start']}>
+                position={['bottom-start']}
+                onClick={withModifiers(() => {}, ['stop'])}>
                 {ctx.slots?.hintTemplate?.()}
               </FlexibleOverlay>
               {Boolean(maxlength?.value) && (
