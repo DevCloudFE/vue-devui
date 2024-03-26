@@ -20,6 +20,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     hintConfig,
     disableChangeEvent,
     modelValue,
+    beforeShowHint,
   } = toRefs(props);
 
   const toolbars = reactive(cloneDeep(DEFAULT_TOOLBARS));
@@ -202,6 +203,13 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     const cursor = editorIns.getCursor();
     let i = prefixes.value.length;
     const value = editorIns.getLine(cursor.line).replace(/\t/g, ' ');
+    let result = false;
+    if (beforeShowHint?.value) {
+      result = beforeShowHint.value(value);
+    }
+    if (result) {
+      return;
+    }
     const selection = editorIns.getSelection();
     const isImgRegx = /^\!\[\S+/;
     if (selection) {

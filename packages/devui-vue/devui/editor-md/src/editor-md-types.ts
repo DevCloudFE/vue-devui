@@ -125,6 +125,9 @@ export const editorMdProps = {
   customHintReplaceFn: {
     type: Function as PropType<(prefix: string, row: any) => string>,
   },
+  beforeShowHint: {
+    type: Function as PropType<(value: string) => boolean>,
+  },
 };
 
 export type EditorMdProps = ExtractPropTypes<typeof editorMdProps>;
