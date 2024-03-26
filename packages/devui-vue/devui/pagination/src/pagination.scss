@@ -26,6 +26,18 @@
     box-sizing: border-box;
     cursor: pointer;
 
+    span {
+      margin-right: 8px;
+    }
+
+    svg {
+      transition: transform $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
+
+      path {
+        fill: $devui-text;
+      }
+    }
+
     &:hover {
       border-color: $devui-form-control-line-hover;
     }
@@ -40,6 +52,12 @@
 
     &.#{$devui-prefix}-pagination__size--lg {
       height: 46px;
+    }
+
+    &.#{$devui-prefix}-pagination__size--open {
+      svg {
+        transform: rotate(180deg);
+      }
     }
 
     & > .#{$devui-prefix}-icon__container {
@@ -389,8 +407,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
-    transition:
-      color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
+    transition: color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
       background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
 
     &:hover:not(.active) {
