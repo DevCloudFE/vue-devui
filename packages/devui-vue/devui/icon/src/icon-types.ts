@@ -5,7 +5,6 @@ export const iconProps = {
   name: {
     type: String,
     default: '',
-    required: true,
   },
   size: {
     type: [Number, String],
