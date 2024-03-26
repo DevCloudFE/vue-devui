@@ -29,6 +29,7 @@ export default defineComponent({
 				<Dropdown
 					visible={isVisible.value}
 					trigger='manually'
+					align='start'
 					position={['bottom-start', 'top-start', 'bottom-end', 'top-end']}
 					class='dp-category-search-dropdown dp-dropdown-menu-fix'
 					close-scope={checkType(item.value)}

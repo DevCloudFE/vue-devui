@@ -74,6 +74,7 @@ export default defineComponent({
 							{ 'max-height': currentSelectTag.value?.type !== 'treeSelect' },
 						]}
 						trigger='manually'
+						align='start'
 						position={['bottom-start', 'top-start', 'bottom-end', 'top-end']}
 						close-scope={checkType(currentSelectTag.value)}
 						onToggle={onToggle}>

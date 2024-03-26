@@ -1,7 +1,7 @@
 @import '@devui/theme/styles-var/devui-var.scss';
 
 @mixin tag-item() {
-	.dv-tag>.dv-tag__item {
+	.#{$devui-prefix}-tag>.#{$devui-prefix}-tag__item {
 		display: block !important;
 
 		.dp-category-search-multi-tag>span,
@@ -102,7 +102,7 @@
 
 				input {
 					min-width: 240px;
-					height: 100%;
+					width: 100%;
 					height: 32px;
 					font-size: $devui-font-size-sm;
 				}
@@ -306,7 +306,7 @@ li.dp-tag-item {
 	.dp-save-filter-name {
 		padding: 16px 20px;
 
-		.dv-form__item--vertical {
+		.#{$devui-prefix}-form__item--vertical {
 			margin-bottom: 0;
 		}
 	}
@@ -316,7 +316,7 @@ li.dp-tag-item {
 		display: flex;
 		justify-content: center;
 
-		.dv-button:not(:first-child) {
+		.#{$devui-prefix}-button:not(:first-child) {
 			margin-left: 16px;
 		}
 	}
@@ -332,21 +332,21 @@ li.dp-tag-item {
 		max-height: 405px;
 	}
 
-	.dv-form {
-		.dv-form__item--horizontal {
+	.#{$devui-prefix}-form {
+		.#{$devui-prefix}-form__item--horizontal {
 			margin: 16px 8px;
 		}
 
-		.dv-form__label {
+		.#{$devui-prefix}-form__label {
 			display: none;
 		}
 
-		.dv-form__control--horizontal {
+		.#{$devui-prefix}-form__control--horizontal {
 			margin-left: 0;
 		}
 	}
 
-	.dv-input-number {
+	.#{$devui-prefix}-input-number {
 		width: 70px;
 	}
 }
@@ -380,7 +380,7 @@ li.dp-tag-item {
 	display: flex;
 	justify-content: center;
 
-	&>.dv-button:first-child {
+	&>.#{$devui-prefix}-button:first-child {
 		margin-right: 8px;
 	}
 }

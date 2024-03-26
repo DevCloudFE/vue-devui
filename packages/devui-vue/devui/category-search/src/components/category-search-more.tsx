@@ -21,6 +21,7 @@ export default defineComponent({
 						v-model={isVisible.value}
 						origin={rootRef.value}
 						ref={overlayRef}
+						align='start'
 						position={['bottom-start', 'top-start', 'bottom-end', 'top-end']}
 						class='dp-selected-tags-list'
 						onClick={() => (isVisible.value = false)}>

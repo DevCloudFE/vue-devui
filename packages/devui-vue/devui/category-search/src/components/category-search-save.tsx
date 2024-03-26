@@ -18,6 +18,7 @@ export default defineComponent({
 				<Dropdown
 					visible={isVisible.value}
 					trigger='manually'
+					align='start'
 					position={['bottom-start', 'top-start', 'bottom-end', 'top-end']}
 					close-scope='blank'
 					class='dp-save-panel'
