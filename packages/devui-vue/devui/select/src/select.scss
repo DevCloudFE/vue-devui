@@ -227,8 +227,17 @@ $select-item-min-height: 36px;
 .#{$devui-prefix}-select__clear {
   display: none;
 
-  svg path {
-    fill: $devui-text-weak;
+  svg {
+    path {
+      fill: $devui-shape-icon-fill;
+      transition: all $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
+    }
+
+    &:hover {
+      path {
+        fill: $devui-shape-icon-fill-hover;
+      }
+    }
   }
 }
 

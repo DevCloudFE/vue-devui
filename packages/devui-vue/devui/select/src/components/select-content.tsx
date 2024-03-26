@@ -1,6 +1,5 @@
 import { defineComponent, inject, computed, withModifiers } from 'vue';
-import AlertCloseIcon from '../../../alert/src/components/alert-close-icon';
-import SelectArrowIcon from './select-arrow-icon';
+import { SelectArrowIcon, InputClearIcon } from '../../../svg-icons';
 import { Tag, SizeType } from '../../../tag';
 import { Popover } from '../../../popover';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
@@ -121,7 +120,7 @@ export default defineComponent({
             />
           )}
           <span onClick={handleClear} class={clearCls.value}>
-            <AlertCloseIcon />
+            <InputClearIcon />
           </span>
           <span class={arrowCls.value}>
             <SelectArrowIcon />

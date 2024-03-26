@@ -24,7 +24,28 @@
   }
 
   &__close {
-    cursor: pointer;
+    .close-icon-container {
+      width: 14px;
+      height: 14px;
+      line-height: 14px;
+      cursor: pointer;
+
+      svg {
+        width: 14px;
+        height: 14px;
+
+        path {
+          fill: $devui-shape-icon-fill;
+          transition: all $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
+        }
+
+        &:hover {
+          path {
+            fill: $devui-shape-icon-fill-hover;
+          }
+        }
+      }
+    }
   }
 
   &__disbaled {
@@ -46,6 +67,9 @@
   }
 
   &--drop-icon-animation {
+    svg path {
+      fill: $devui-text;
+    }
     transition: transform 0.2s linear;
   }
 
@@ -83,7 +107,7 @@
 }
 
 .#{$devui-prefix}-cascader__dropdown--open {
-  .#{$devui-prefix}-cascader--drop-icon-animation {
+  .#{$devui-prefix}-cascader__icon {
     transform: rotate(180deg);
   }
 }

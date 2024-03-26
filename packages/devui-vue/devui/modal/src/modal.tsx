@@ -6,6 +6,7 @@ import { useModal, useModalRender } from './composables/use-modal';
 import { useDraggable } from './composables/use-draggable';
 import DModalHeader from './components/header';
 import DModalBody from './components/body';
+import { CloseIcon } from './components/modal-icons';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './modal.scss';
 
@@ -107,7 +108,7 @@ export default defineComponent({
               style={{ transform: modalPosition.value }}>
               {showClose.value && (
                 <div onClick={execClose} class="btn-close">
-                  <Icon name="close" size="20px"></Icon>
+                  <Icon operable component={CloseIcon()}></Icon>
                 </div>
               )}
               {props.type ? (

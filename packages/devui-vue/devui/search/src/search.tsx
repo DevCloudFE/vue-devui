@@ -7,8 +7,7 @@ import DInput from '../../input/src/input';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import './search.scss';
 import { createI18nTranslate } from '../../locale/create';
-import SearchCloseIcon from './components/search-close-icon';
-import SearchIcon from './components/search-icon';
+import { SearchIcon, InputClearIcon } from '../../svg-icons';
 
 export default defineComponent({
   name: 'DSearch',
@@ -20,7 +19,7 @@ export default defineComponent({
 
     const ns = useNamespace('search');
     const isFocus = ref(false);
-    const {rootClass, searchSize} = useSearchClass(props, isFocus);
+    const { rootClass, searchSize } = useSearchClass(props, isFocus);
     const { keywords, clearIconShow, onClearHandle } = keywordsHandles(ctx, props);
     const { onInputKeydown, onClickHandle, useEmitKeyword } = keydownHandles(ctx, keywords, props);
 
@@ -63,7 +62,7 @@ export default defineComponent({
           <DInput {...inputProps}></DInput>
           {clearIconShow.value && (
             <div class={ns.e('clear')} onClick={onClearHandle}>
-              <SearchCloseIcon></SearchCloseIcon>
+              <InputClearIcon />
             </div>
           )}
           {props.iconPosition === 'right' && (

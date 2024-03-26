@@ -5,6 +5,7 @@ import { AutoFocus } from '../../auto-focus';
 import { inputProps, InputProps } from './input-types';
 import { FORM_ITEM_TOKEN, FormItemContext } from '../../form/src/components/form-item/form-item-types';
 import { useNamespace } from '@devui/shared/utils';
+import { InputClearIcon } from '../../svg-icons';
 import { useInputRender } from './composables/use-input-render';
 import { useInputEvent } from './composables/use-input-event';
 import { useInputFunction } from './composables/use-input-function';
@@ -101,9 +102,7 @@ export default defineComponent({
                   onClick={clickPasswordIcon}
                 />
               )}
-              {showClearable.value && (
-                <Icon size={inputSize.value} class={ns.em('clear', 'icon')} name="error-o" color="#adb0b8" onClick={onClear} />
-              )}
+              {showClearable.value && <InputClearIcon class={ns.em('clear', 'icon')} onClick={onClear} />}
             </span>
           )}
         </div>
