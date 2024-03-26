@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
-import { computed, nextTick, onMounted, reactive, Ref, ref, SetupContext, toRefs, watch } from 'vue';
+import { computed, nextTick, onMounted, reactive, Ref, ref, SetupContext, toRefs, watch, onBeforeUnmount } from 'vue';
 import { debounce } from '../../../shared/utils';
 import { EditorMdProps, Mode } from '../editor-md-types';
 import { DEFAULT_TOOLBARS } from '../toolbar-config';
@@ -27,6 +27,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
   const renderRef = ref();
   const overlayRef = ref();
   const cursorRef = ref();
+  const containerRef = ref();
   const isHintShow = ref();
   const previewHtmlList: Ref<any[]> = ref([]);
   let editorIns: any;
@@ -214,12 +215,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
       const startPos = value.lastIndexOf(nowPrefix, cursor.ch);
       const endPos = value.indexOf(' ', cursor.ch) > -1 ? value.indexOf(' ', cursor.ch) : value.length;
       hint = value.slice(startPos, cursor.ch);
-      if (
-        startPos < 0 ||
-        !hint.includes(nowPrefix) ||
-        hint.endsWith(' ') ||
-        isImgRegx.test(hint)
-      ) {
+      if (startPos < 0 || !hint.includes(nowPrefix) || hint.endsWith(' ') || isImgRegx.test(hint)) {
         cursorHint = '';
         cursorHintStart = -1;
         cursorHintEnd = -1;
@@ -342,12 +338,23 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     }
   };
 
+  const onDocumentClick = (e: Event) => {
+    if (isHintShow.value && e.target !== containerRef.value && !containerRef.value?.contains(e.target)) {
+      hideHint();
+    }
+  };
+
   onMounted(async () => {
     await import('codemirror/addon/display/placeholder.js');
     await import('codemirror/mode/markdown/markdown.js');
     const module = await import('codemirror');
     CodeMirror = module.default;
     initEditor();
+    document.addEventListener('click', onDocumentClick);
+  });
+
+  onBeforeUnmount(() => {
+    document.removeEventListener('click', onDocumentClick);
   });
 
   watch(modelValue, (val: string) => {
@@ -398,6 +405,7 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
     overlayRef,
     cursorRef,
     renderRef,
+    containerRef,
     toolbars,
     previewHtmlList,
     isHintShow,
