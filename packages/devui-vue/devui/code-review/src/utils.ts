@@ -162,7 +162,7 @@ export function parseDiffCode(container: HTMLElement, code: string, outputFormat
     const trList = diffHtmlStr.match(TableTrReg) as RegExpMatchArray;
     const trListLength = trList.length;
     let newTrStr = '';
-    const offset = trListLength / 2;
+    const offset = Math.floor(trListLength / 2);
     for (let i = 0; i < trListLength / 2; i++) {
       const leftTdList = trList[i].match(TableTdReg);
       const rightTdList = trList[i + offset].match(TableTdReg);
@@ -197,10 +197,37 @@ export function setLineNumberInDataset(trNode: HTMLElement, prevL: number, prevR
 
 // 中间行展开后，折叠行数小于阈值时，将向上向下展开按钮更新为全部展开
 export function updateExpandUpDownButton(trNode: HTMLElement) {
-  trNode.children[0].children[0].remove();
-  trNode.children[0].children[0].classList.remove('up-expand');
-  trNode.children[0].children[0].classList.add('all-expand');
-  trNode.children[0].children[0].innerHTML = AllExpandIcon();
+  trNode.children[0]?.children[0]?.remove();
+  trNode.children[0]?.children[0]?.classList.remove('up-expand');
+  trNode.children[0]?.children[0]?.classList.add('all-expand');
+  trNode.children[0]?.children[0] && (trNode.children[0].children[0].innerHTML = AllExpandIcon());
+}
+
+/**
+ * 查找给定节点的前一个同级元素节点。
+ * 适用于下一行是新增行或者删除行的情况
+ *
+ * @param _node 如果折叠行后一行左边获取不到行数，则寻找第一个左边有行数的行。
+ * @returns 返回找到的后一个同级元素节点，如果没有找到则返回null。
+ */
+export function findNextElement(_node: Element): Element {
+  if (_node.children[0]?.innerText) {
+    return _node;
+  }
+  return findNextElement(_node.nextElementSibling);
+}
+/**
+ * 查找给定节点的前一个同级元素节点。
+ * 适用于上一行是新增行或者删除行或者评论行的情况
+ *
+ * @param _node 如果折叠行后一行左边获取不到行数，则寻找第一个左边有行数的行。
+ * @returns 返回找到的前一个同级元素节点，如果没有找到则返回null。
+ */
+export function findPrevElement(_node: Element): Element {
+  if (_node.children[0]?.innerText) {
+    return _node;
+  }
+  return findPrevElement(_node.previousElementSibling);
 }
 
 /*
@@ -221,20 +248,20 @@ export function updateLineNumberInDatasetForDoubleColumn(
   let nextR: number;
   let prevR: number;
   if (position === 'top') {
-    const nextLineNode = trNode.nextElementSibling as HTMLElement;
+    const nextLineNode = findNextElement(trNode.nextElementSibling) as HTMLElement;
     nextL = parseInt((nextLineNode.children[0] as HTMLElement).innerText) - 1;
     prevL = Math.max(nextL - expandThreshold + 1, 1);
     nextR = parseInt((nextLineNode.children[2] as HTMLElement).innerText) - 1;
     prevR = Math.max(nextR - expandThreshold + 1, 1);
   } else if (position === 'bottom') {
-    const prevLineNode = trNode.previousElementSibling as HTMLElement;
+    const prevLineNode = findPrevElement(trNode.previousElementSibling) as HTMLElement;
     prevL = parseInt((prevLineNode?.children[0] as HTMLElement)?.innerText) + 1;
     nextL = prevL + expandThreshold - 1;
     prevR = parseInt((prevLineNode?.children[2] as HTMLElement)?.innerText) + 1;
     nextR = prevR + expandThreshold - 1;
   } else {
-    const prevLineNode = trNode.previousElementSibling as HTMLElement;
-    const nextLineNode = trNode.nextElementSibling as HTMLElement;
+    const prevLineNode = findPrevElement(trNode.previousElementSibling) as HTMLElement;
+    const nextLineNode = findNextElement(trNode.nextElementSibling) as HTMLElement;
     const prevLineNumber = parseInt((prevLineNode.children[0] as HTMLElement).innerText);
     const nextLineNumber = parseInt((nextLineNode.children[0] as HTMLElement).innerText);
     prevL = prevLineNumber + 1;
@@ -243,6 +270,7 @@ export function updateLineNumberInDatasetForDoubleColumn(
     nextR = parseInt((nextLineNode.children[2] as HTMLElement).innerText) - 1;
     const isExpandAll = nextLineNumber - prevLineNumber <= expandThreshold;
     if (isExpandAll && updateExpandButton) {
+      trNode.style.display = 'none';
       updateExpandUpDownButton(trNode);
     }
   }
