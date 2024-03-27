@@ -1,4 +1,4 @@
-import { ref, computed, Ref, inject, watch } from 'vue';
+import { ref, computed, Ref, inject, watch, onMounted, nextTick } from 'vue';
 import type { SetupContext } from 'vue';
 import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
 import { className, KeyType } from './utils';
@@ -361,6 +361,10 @@ export default function useSelect(
     },
     { flush: 'post' }
   );
+
+  onMounted(() => {
+    nextTick(updateInjectOptionsStatus);
+  });
 
   return {
     selectDisabled,
