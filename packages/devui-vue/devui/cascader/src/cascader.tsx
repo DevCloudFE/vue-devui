@@ -1,4 +1,4 @@
-import { defineComponent, Transition, SetupContext, provide, Teleport } from 'vue';
+import { defineComponent, Transition, SetupContext, provide, Teleport, ref, computed } from 'vue';
 import { cloneDeep } from 'lodash';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import DCascaderList from '../components/cascader-list';
@@ -45,6 +45,15 @@ export default defineComponent({
     } = useCascader(props, ctx);
     provide(POPPER_TRIGGER_TOKEN, origin);
 
+    const currentPosition = ref('bottom');
+    const styles = computed(() => ({
+      transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+      'z-index': 'var(--devui-z-index-dropdown, 1052)',
+    }));
+    const handlePositionChange = (pos: string) => {
+      currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
+    };
+
     return () => (
       <div style={rootStyle.inputWidth}>
         <PopperTrigger>
@@ -81,14 +90,15 @@ export default defineComponent({
           )}
         </PopperTrigger>
         <Teleport to="body">
-          <Transition name="fade">
+          <Transition name={ns.m(`fade-${currentPosition.value}`)}>
             <FlexibleOverlay
               origin={origin.value}
               ref={overlayRef}
               v-model={menuShow.value}
               position={position.value as Placement[]}
               align="start"
-              style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
+              style={styles.value}
+              onPositionChange={handlePositionChange}>
               <div class={ns.e('drop-menu-animation')}>
                 {!isSearching.value && (
                   <div class={`${menuOpenClass.value} ${ns.e('dropdown-menu')}`}>
