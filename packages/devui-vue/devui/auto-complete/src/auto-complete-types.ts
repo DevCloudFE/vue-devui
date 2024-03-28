@@ -138,6 +138,10 @@ export const autoCompleteProps = {
     type: Boolean,
     default: false,
   },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type AutoCompleteProps = ExtractPropTypes<typeof autoCompleteProps>;

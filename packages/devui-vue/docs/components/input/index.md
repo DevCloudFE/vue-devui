@@ -333,6 +333,7 @@ export default defineComponent({
 | readonly       | `boolean`               | false  | 原生 readonly 属性，是否只读                     |                                   |
 | autocomplete   | `string`                | 'off'  | 原生 autocomplete 属性                           |                                   |
 | autofocus      | `boolean`               | false  | 自动获取焦点                                     |                                   |
+|show-glow-style|`boolean`|true|可选，是否显示悬浮发光效果||
 
 ### Input 插槽
 

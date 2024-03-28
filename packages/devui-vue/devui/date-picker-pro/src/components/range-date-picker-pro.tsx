@@ -1,4 +1,4 @@
-import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers, computed } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers, computed, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { rangeDatePickerProProps, RangeDatePickerProProps } from '../range-date-picker-types';
 import { FlexibleOverlay } from '../../../overlay';
@@ -19,6 +19,7 @@ export default defineComponent({
   setup(props: RangeDatePickerProProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DDatePickerPro', app);
+    const { showGlowStyle } = toRefs(props);
 
     const ns = useNamespace('range-date-picker-pro');
     const {
@@ -62,7 +63,12 @@ export default defineComponent({
       return (
         <div class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width'), isPanelShow.value && ns.m('open')]}>
           <div
-            class={[ns.e('range-picker'), pickerDisabled.value && ns.m('disabled'), isValidateError.value && ns.m('error')]}
+            class={[
+              ns.e('range-picker'),
+              pickerDisabled.value && ns.m('disabled'),
+              isValidateError.value && ns.m('error'),
+              showGlowStyle.value && ns.m('glow-style'),
+            ]}
             ref={originRef}
             onMouseover={() => (isMouseEnter.value = true)}
             onMouseout={() => (isMouseEnter.value = false)}>
@@ -76,6 +82,7 @@ export default defineComponent({
                 ref={startInputRef}
                 modelValue={displayDateValue.value[0]}
                 placeholder={placeholder.value[0] || t('startPlaceholder')}
+                show-glow-style={false}
                 onFocus={withModifiers(
                   (e: MouseEvent) => {
                     onFocus('start');
@@ -106,6 +113,7 @@ export default defineComponent({
                 ref={endInputRef}
                 modelValue={displayDateValue.value[1]}
                 placeholder={placeholder.value[1] || t('endPlaceholder')}
+                show-glow-style={false}
                 onFocus={withModifiers(
                   (e: MouseEvent) => {
                     onFocus('end');

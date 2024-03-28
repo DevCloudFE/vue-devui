@@ -1,4 +1,4 @@
-import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers, computed } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers, computed, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types';
 import usePickerPro from './use-picker-pro';
@@ -18,6 +18,7 @@ export default defineComponent({
   setup(props: DatePickerProProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DDatePickerPro', app);
+    const { showGlowStyle } = toRefs(props);
 
     const ns = useNamespace('date-picker-pro');
     const {
@@ -68,6 +69,7 @@ export default defineComponent({
               size={pickerSize.value}
               disabled={pickerDisabled.value}
               error={isValidateError.value}
+              show-glow-style={showGlowStyle.value}
               v-slots={{
                 prefix: () => (
                   <span class={ns.e('single-picker-icon')}>

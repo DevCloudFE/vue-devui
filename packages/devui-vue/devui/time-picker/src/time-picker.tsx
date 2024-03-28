@@ -75,6 +75,7 @@ export default defineComponent({
             placeholder={props.placeholder}
             disabled={props.disabled}
             readonly={props.readonly}
+            show-glow-style={props.showGlowStyle}
             size={props.size}
             onFocus={clickVerifyFun}
             v-slots={{

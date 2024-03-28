@@ -69,6 +69,7 @@ export default defineComponent({
                   placeholder={props.placeholder}
                   modelValue={inputValue.value}
                   size={props.size}
+                  show-glow-style={props.showGlowStyle}
                   onInput={handleInput}
                   onFocus={onFocus}
                   onBlur={onBlur}

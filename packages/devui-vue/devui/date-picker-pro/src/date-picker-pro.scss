@@ -362,9 +362,9 @@ $input-height-lg: 46px;
     border: 1px solid $devui-form-control-line;
     border-radius: $devui-border-radius;
     background-color: $devui-form-control-bg;
-    transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
+    transition: border-color 0.3s $devui-animation-ease-in-out-smooth, box-shadow $devui-animation-duration-base $devui-animation-ease-in;
 
-    &:not(.#{$devui-prefix}-range-date-picker-pro--error):not(.#{$devui-prefix}-range-date-picker-pro--disabled):hover {
+    &:not(.#{$devui-prefix}-range-date-picker-pro--error, .#{$devui-prefix}-range-date-picker-pro--disabled, .#{$devui-prefix}-range-date-picker-pro--glow-style):hover {
       border-color: $devui-form-control-line-hover;
     }
 
@@ -465,6 +465,12 @@ $input-height-lg: 46px;
       border-color: $devui-danger-line;
       background-color: $devui-danger-bg;
     }
+
+    &.#{$devui-prefix}-range-date-picker-pro--glow-style {
+      &:hover {
+        box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+      }
+    }
   }
 
   &--open {
@@ -474,6 +480,9 @@ $input-height-lg: 46px;
       &:not(.#{$devui-prefix}-range-date-picker-pro--error):not(.#{$devui-prefix}-range-date-picker-pro--disabled):hover {
         border-color: $devui-form-control-line-active;
       }
+    }
+    .#{$devui-prefix}-range-date-picker-pro--glow-style {
+      box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
     }
   }
 }

@@ -44,6 +44,7 @@ export function useAutoCompleteRender(
   const inputWrapperClasses = computed(() => ({
     [inputNs.e('wrapper')]: true,
     [inputNs.em('wrapper', 'error')]: isValidatorError.value,
+    [ns.m('glow-style')]: props.showGlowStyle,
     [inputNs.em('wrapper', 'feedback')]: Boolean(formItemContext?.validateState) && formItemContext?.showFeedback,
     [ns.m('disabled')]: isDisabled.value,
   }));
