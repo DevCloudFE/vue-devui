@@ -33,7 +33,7 @@ export default defineComponent({
       props,
       emit,
     });
-    useDropdown(id, visible, isOpen, origin, dropdownRef, currentPosition, emit);
+    useDropdown(id, visible, isOpen, origin, dropdownRef, emit);
     const { overlayModelValue, overlayShowValue, styles, classes, handlePositionChange } = useOverlayProps(props, currentPosition, isOpen);
 
     watch(overlayShowValue, (overlayShowValueVal) => {

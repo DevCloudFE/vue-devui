@@ -112,20 +112,8 @@ export function useDropdown(
   isOpen: Ref<boolean>,
   origin: Ref<HTMLElement | undefined>,
   dropdownRef: Ref<HTMLElement | undefined>,
-  popDirection: Ref<string>,
   emit: EmitEvent
 ): void {
-  const calcPopDirection = (dropdownEl: HTMLElement) => {
-    const elementHeight = dropdownEl.offsetHeight;
-    const bottomDistance = window.innerHeight - (origin.value as HTMLElement).getBoundingClientRect().bottom;
-    const isBottomEnough = bottomDistance >= elementHeight;
-    if (!isBottomEnough) {
-      popDirection.value = 'top';
-    } else {
-      popDirection.value = 'bottom';
-    }
-  };
-
   watch(
     visible,
     (newVal, oldVal) => {
@@ -152,9 +140,6 @@ export function useDropdown(
           value.child = dropdownEl;
         }
       }
-    }
-    if (dropdownEl) {
-      calcPopDirection(dropdownEl);
     }
   });
   onMounted(() => {
