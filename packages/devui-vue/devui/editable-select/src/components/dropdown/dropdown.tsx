@@ -32,7 +32,7 @@ export default defineComponent({
 
     // 渲染options
     const renderOption = () => {
-      if (props.options.length === 0) {
+      if (props.options.length === 0 && !select.loading.value) {
         return <li class={ns.em('item', 'no-data-tip')}>{slots.noResultItem ? slots.noResultItem() : emptyText.value}</li>;
       }
 
