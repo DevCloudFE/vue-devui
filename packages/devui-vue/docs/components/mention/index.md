@@ -308,11 +308,11 @@ const suggestions = [
 | position        | top / bottom                  | bottom                    | 可选，建议框位置                           | [向上展开](#向上展开)     |
 | notFoundContent | string                        | No suggestion matched     | 可选，用于在没有匹配到数据的时候的提示     | -                         |
 | loading         | boolean                       | false                     | 可选，异步加载数据源的时候是否显示加载效果 | [异步加载](#异步加载)     |
-| dmValueParse           | `{value: string, id: string}` | `{value: value, id: id} ` | 可选，建议选项的取值方法                   | [异步加载](#异步加载)     |
-| trigger         | string[]                      | `['@'] `                  | 可选，触发组件的前缀符                     | [自定义前缀](#自定义前缀) |
+| dmValueParse           | `{value: string, id: string}` | `{value: value, id: id}` | 可选，建议选项的取值方法                   | [异步加载](#异步加载)     |
+| trigger         | string[]                      | `['@']`                  | 可选，触发组件的前缀符                     | [自定义前缀](#自定义前缀) |
+|show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
 
 ### Mention 事件
-
 
 | 参数名 | 类型                                  | 默认 | 说明               | 跳转 Demo             |
 | :----- | :------------------------------------ | :--- | :----------------- | :-------------------- |

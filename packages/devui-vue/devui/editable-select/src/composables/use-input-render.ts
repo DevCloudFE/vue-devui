@@ -25,6 +25,7 @@ export function useInputRender(props: EditableSelectProps, states: States): UseI
     [ns.e('wrapper')]: true,
     [ns.em('wrapper', 'focus')]: states.isFocus,
     [ns.em('wrapper', 'disabled')]: props.disabled,
+    [ns.em('wrapper', 'glow-style')]: props.showGlowStyle,
   }));
 
   const inputInnerClasses = computed(() => ({

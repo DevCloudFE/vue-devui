@@ -18,6 +18,7 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 }
 
 .#{$devui-prefix}-button {
+  position: relative;
   padding: $devui-btn-padding;
   font-size: $devui-font-size-md;
   height: $devui-size-md;
@@ -26,6 +27,22 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
   border-width: 1px;
   border-color: transparent;
   background-color: transparent;
+  overflow: hidden;
+
+  &.mousedown:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  .water-wave {
+    position: absolute;
+    background-color: $devui-base-bg;
+    border-radius: 50%;
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%);
+    animation: waterWave $devui-animation-duration-slow $devui-animation-linear;
+  }
 
   &:hover {
     cursor: pointer;
@@ -320,8 +337,7 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 }
 
 .#{$devui-prefix}-button {
-  transition:
-    background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+  transition: background-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
     color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
   white-space: nowrap;
@@ -397,7 +413,25 @@ $devui-btn-lg-padding: var(--devui-btn-lg-padding, 0 24px);
 }
 
 @keyframes rotating {
-  0% { transform: rotate(0); }
+  0% {
+    transform: rotate(0);
+  }
 
-  100% { transform: rotate(180deg); }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes waterWave {
+  0% {
+    opacity: 0.2;
+    width: 30px;
+    height: 30px;
+  }
+
+  100% {
+    opacity: 0;
+    width: 200px;
+    height: 200px;
+  }
 }

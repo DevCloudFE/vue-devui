@@ -29,6 +29,56 @@
     }
   }
 
+  &.#{$devui-prefix}-input-number--glow-style {
+    &:hover {
+      .#{$devui-prefix}-input-number__input-box:not(.disabled) {
+        border-color: $devui-form-control-line;
+        box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+      }
+
+      .#{$devui-prefix}-input-number__control-buttons:not(.disabled) {
+        border-color: $devui-form-control-line;
+      }
+
+      .#{$devui-prefix}-input-number__input-box--error:not(.disabled) {
+        border-color: $devui-danger-line;
+      }
+
+      .#{$devui-prefix}-input-number__control-buttons--error:not(.disabled) {
+        border-color: $devui-danger-line;
+        border-left-color: $devui-form-control-line-hover;
+
+        span {
+          background-color: $devui-danger-bg;
+        }
+      }
+    }
+
+    &:focus-within {
+      .#{$devui-prefix}-input-number__input-box:not(.disabled) {
+        border-color: $devui-form-control-line-active;
+        box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+      }
+
+      .#{$devui-prefix}-input-number__control-buttons:not(.disabled) {
+        border-color: $devui-form-control-line-active;
+      }
+
+      .#{$devui-prefix}-input-number__input-box--error:not(.disabled) {
+        border-color: $devui-danger-line;
+      }
+
+      .#{$devui-prefix}-input-number__control-buttons--error:not(.disabled) {
+        border-color: $devui-danger-line;
+        border-left-color: $devui-form-control-line-hover;
+
+        span {
+          background-color: $devui-danger-bg;
+        }
+      }
+    }
+  }
+
   .#{$devui-prefix}-input-number__input-box {
     box-sizing: border-box;
     width: 100%;
@@ -42,7 +92,8 @@
     border: 1px solid $devui-form-control-line;
     cursor: text;
     -moz-appearance: textfield;
-    transition: border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+    transition: border-color $devui-animation-duration-slow $devui-animation-ease-in-out-smooth,
+      box-shadow $devui-animation-duration-base $devui-animation-ease-in;
 
     &:not(.disabled) {
       background-color: $devui-base-bg;

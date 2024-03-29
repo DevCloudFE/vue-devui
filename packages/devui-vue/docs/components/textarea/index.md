@@ -212,6 +212,7 @@ export default {
 | show-count  | `boolean`          | false  | 可选，文本框是否是否展示字数                                                  | [显示字数](#显示字数)             |
 | rows        | `number / string`  | 2      | 可选，文本框高度控制                                                          | [文本框高度控制](#文本框高度控制) |
 | autosize    | `boolean / object` | false  | textarea 高度是否自适应。可以接受一个对象，比如: `{ minRows: 2, maxRows: 6 }` | [自适应文本框](#自适应文本框)     |
+|show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
 
 ### Textarea 事件
 

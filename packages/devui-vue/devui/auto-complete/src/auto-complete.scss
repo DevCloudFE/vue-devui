@@ -135,11 +135,6 @@
     font-size: $devui-font-size-lg;
   }
 
-  &--glow-style:not(.#{$devui-prefix}-auto-complete--focus):not(.#{$devui-prefix}-auto-complete--disabled):not(.#{$devui-prefix}-auto-complete-input__wrapper--error):hover {
-    box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
-    border-color: $devui-form-control-line;
-  }
-
   &__clear--icon {
     cursor: pointer;
   }
@@ -151,6 +146,13 @@
     width: 100%;
     box-sizing: border-box;
     height: 100%;
+
+    &:not(.#{$devui-prefix}-auto-complete--focus) {
+      .#{$devui-prefix}-auto-complete--glow-style:hover {
+        box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+        border-color: $devui-form-control-line;
+      }
+    }
 
     &__wrapper {
       display: inline-flex;
@@ -211,6 +213,11 @@
     }
   }
 
+  &--glow-style:not(.#{$devui-prefix}-auto-complete--disabled):not(.#{$devui-prefix}-auto-complete-input__wrapper--error):hover {
+    box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+    border-color: $devui-form-control-line;
+  }
+
   &--focus {
     .#{$devui-prefix}-auto-complete-input__wrapper:not(.#{$devui-prefix}-auto-complete-input__wrapper--error) {
       border-color: $devui-form-control-line-active;
@@ -222,7 +229,7 @@
 
     .#{$devui-prefix}-auto-complete--glow-style:not(.#{$devui-prefix}-auto-complete-input__wrapper--error) {
       box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
-      border-color: $devui-form-control-line;
+      border-color: $devui-form-control-line-active;
     }
   }
 

@@ -5,33 +5,35 @@ export interface IMentionSuggestionItem {
   id: string | number;
 }
 
-
 export const mentionProps = {
   position: {
     type: String as PropType<'top' | 'bottom'>,
-    default: 'bottom'
+    default: 'bottom',
   },
   suggestions: {
     type: Array as PropType<IMentionSuggestionItem[]>,
-    required: true
+    required: true,
   },
   notFoundContent: {
     type: String,
-    default: 'No suggestion matched'
+    default: 'No suggestion matched',
   },
   loading: {
     type: Boolean as PropType<boolean>,
-    default: false
+    default: false,
   },
   dmValueParse: {
     type: Object as PropType<IMentionSuggestionItem>,
-    default: { value: 'value', id: 'id' }
+    default: { value: 'value', id: 'id' },
   },
   trigger: {
     type: Array as PropType<string[]>,
-    default: ['@']
-  }
+    default: ['@'],
+  },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
 };
-
 
 export type MentionProps = ExtractPropTypes<typeof mentionProps>;

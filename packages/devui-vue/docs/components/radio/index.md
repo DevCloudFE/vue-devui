@@ -392,6 +392,7 @@ export default defineComponent({
 | border        | `boolean`                    | false | 可选， 是否有边框                                                | [边框](#尺寸和边框)                     |
 | size          | [IRadioSize](#iradiosize)    | md    | 可选， radio 尺寸，只有在 border 属性存在时生效                  | [尺寸](#尺寸和边框)                     |
 | can-cancel-select | `boolean`    | false    | 可选， 选中后，再次点击是否可取消选中                  |                      |
+|show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
 
 ### Radio 事件
 

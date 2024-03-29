@@ -5,9 +5,9 @@ import { onClickOutside } from '@vueuse/core';
 import type { SetupContext } from 'vue';
 import { editableSelectProps, EditableSelectProps, SELECT_KEY } from './editable-select-types';
 // 子组件
-import Icon from '../../icon/src/icon';
 import { FlexibleOverlay } from '../../overlay';
 import Dropdown from './components/dropdown/dropdown';
+import { SelectArrowIcon, InputClearIcon } from '../../svg-icons';
 // 工具函数
 import { useSelect, useSelectStates } from './composables/use-select';
 import { useKeyboardSelect } from './composables/use-keyboard-select';
@@ -143,10 +143,10 @@ export default defineComponent({
               />
               <span class={inputSuffixClasses.value}>
                 <span class={ns.e('clear-icon')} v-show={showClearable.value} onClick={withModifiers(handleClear, ['stop'])}>
-                  <Icon name="icon-remove" />
+                  <InputClearIcon />
                 </span>
                 <span class={ns.e('arrow-icon')} v-show={!showClearable.value}>
-                  <Icon name="select-arrow" />
+                  <SelectArrowIcon />
                 </span>
               </span>
             </div>
