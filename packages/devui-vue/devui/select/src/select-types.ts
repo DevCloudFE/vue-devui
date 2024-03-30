@@ -103,6 +103,10 @@ export const selectProps = {
     type: Number,
     default: 0,
   },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;

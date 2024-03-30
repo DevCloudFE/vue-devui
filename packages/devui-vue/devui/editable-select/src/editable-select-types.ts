@@ -83,6 +83,10 @@ export const editableSelectProps = {
     type: Boolean,
     default: false,
   },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type EditableSelectProps = ExtractPropTypes<typeof editableSelectProps>;

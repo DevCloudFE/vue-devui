@@ -147,6 +147,13 @@
     box-sizing: border-box;
     height: 100%;
 
+    &:not(.#{$devui-prefix}-auto-complete--focus) {
+      .#{$devui-prefix}-auto-complete--glow-style:hover {
+        box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+        border-color: $devui-form-control-line;
+      }
+    }
+
     &__wrapper {
       display: inline-flex;
       align-items: center;
@@ -157,7 +164,7 @@
       border: 1px solid $devui-form-control-line;
       border-radius: $devui-border-radius;
       background-color: $devui-form-control-bg;
-      transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
+      transition: border-color 0.3s $devui-animation-ease-in-out-smooth, box-shadow $devui-animation-duration-base $devui-animation-ease-in;
 
       &:not(.#{$devui-prefix}-auto-complete--disabled):not(.#{$devui-prefix}-auto-complete-input__wrapper--error):hover {
         border-color: $devui-form-control-line-hover;
@@ -206,10 +213,22 @@
     }
   }
 
-  &--focus .#{$devui-prefix}-auto-complete-input__wrapper:not(.#{$devui-prefix}-auto-complete-input__wrapper--error) {
-    border-color: $devui-form-control-line-active;
+  &--glow-style:not(.#{$devui-prefix}-auto-complete--disabled):not(.#{$devui-prefix}-auto-complete-input__wrapper--error):hover {
+    box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+    border-color: $devui-form-control-line;
+  }
 
-    &:hover {
+  &--focus {
+    .#{$devui-prefix}-auto-complete-input__wrapper:not(.#{$devui-prefix}-auto-complete-input__wrapper--error) {
+      border-color: $devui-form-control-line-active;
+
+      &:hover {
+        border-color: $devui-form-control-line-active;
+      }
+    }
+
+    .#{$devui-prefix}-auto-complete--glow-style:not(.#{$devui-prefix}-auto-complete-input__wrapper--error) {
+      box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
       border-color: $devui-form-control-line-active;
     }
   }
@@ -274,6 +293,52 @@
       > * {
         margin-left: 8px;
       }
+    }
+  }
+}
+
+.#{$devui-prefix}-auto-complete--fade {
+  &-bottom {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleY(0.8) translateY(-4px);
+    }
+
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+      transform: scaleY(0.9999) translateY(0);
+    }
+
+    &-enter-active {
+      transition: transform 0.2s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.2s cubic-bezier(0.16, 0.75, 0.5, 1);
+    }
+
+    &-leave-active {
+      transition: transform 0.2s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.2s cubic-bezier(0.5, 0, 0.84, 0.25);
+    }
+  }
+
+  &-top {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0.8;
+      transform: scaleY(0.8) translateY(4px);
+    }
+
+    &-enter-to,
+    &-leave-from {
+      opacity: 1;
+      transform: scaleY(0.9999) translateY(0);
+    }
+
+    &-enter-active {
+      transition: transform 0.2s cubic-bezier(0.16, 0.75, 0.5, 1), opacity 0.2s cubic-bezier(0.16, 0.75, 0.5, 1);
+    }
+
+    &-leave-active {
+      transition: transform 0.2s cubic-bezier(0.5, 0, 0.84, 0.25), opacity 0.2s cubic-bezier(0.5, 0, 0.84, 0.25);
     }
   }
 }

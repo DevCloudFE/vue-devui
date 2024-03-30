@@ -541,6 +541,7 @@ export default defineComponent({
 | calendarRange  | `[number,number]` | [1970, 2099]                                             | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
 | limitDateRange | `[Date,Date]`     | [new Date(calendarRange[0]), new Date(calendarRange[1])] | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
 | type           | `string`          | 'date'                                                   | 可选，设置日期选择器类型(date/year/month)                | [年月选择器](#年月选择器)                             |
+|show-glow-style|`boolean`|true|可选，是否显示悬浮发光效果||
 
 ### DatePickerPro 事件
 
@@ -600,6 +601,7 @@ type Format = string;
 | calendarRange  | `[number,number]` | [1970,2099]                                              | 可选，设置日历面板显示时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
 | limitDateRange | `[Date,Date]`     | [new Date(calendarRange[0]), new Date(calendarRange[1])] | 可选，设置日历面板可选时间范围                           | [设置日历面板可选时间范围](#设置日历面板可选时间范围) |
 | type           | `string`          | 'date'                                                   | 可选，设置日期选择器类型(date/year/month)                | [范围选择器](#范围选择器)                             |
+|show-glow-style|`boolean`|true|可选，是否显示悬浮发光效果||
 
 ### RangeDatePickerPro 事件
 

@@ -30,6 +30,10 @@ export const datePickerProCommonProps = {
     type: String,
     default: 'date',
   },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
 };
 
 export const datePickerProProps = {

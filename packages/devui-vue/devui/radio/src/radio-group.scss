@@ -15,6 +15,8 @@
   }
 
   .#{$devui-prefix}-radio__wrapper {
+    height: 28px;
+
     &:not(:last-child) {
       padding-right: 20px;
     }

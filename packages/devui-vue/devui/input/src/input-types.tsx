@@ -50,6 +50,10 @@ export const inputProps = {
     type: Boolean,
     default: false,
   },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type InputProps = ExtractPropTypes<typeof inputProps>;

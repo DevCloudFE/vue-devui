@@ -1,13 +1,13 @@
 // 三方库依赖
-import { defineComponent, provide, ref, Teleport, toRef, toRefs, Transition, withModifiers } from 'vue';
+import { defineComponent, provide, ref, Teleport, toRef, toRefs, Transition, withModifiers, computed } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 // 类型文件
 import type { SetupContext } from 'vue';
 import { editableSelectProps, EditableSelectProps, SELECT_KEY } from './editable-select-types';
 // 子组件
-import Icon from '../../icon/src/icon';
 import { FlexibleOverlay } from '../../overlay';
 import Dropdown from './components/dropdown/dropdown';
+import { SelectArrowIcon, InputClearIcon } from '../../svg-icons';
 // 工具函数
 import { useSelect, useSelectStates } from './composables/use-select';
 import { useKeyboardSelect } from './composables/use-keyboard-select';
@@ -35,6 +35,7 @@ export default defineComponent({
     const states = useSelectStates();
     //  data refs
     const { appendToBody, disabled, modelValue, position, placeholder } = toRefs(props);
+    const align = computed(() => (position.value.some((item) => item.includes('start') || item.includes('end')) ? 'start' : null));
 
     // input事件
     const { onInput, onMouseenter, onMouseleave, setSoftFocus, handleBlur, handleFocus, handleClear } = useInputEvent(
@@ -80,19 +81,29 @@ export default defineComponent({
 
     //  类名
     const { inputClasses, inputWrapperClasses, inputInnerClasses, inputSuffixClasses } = useInputRender(props, states);
+    const currentPosition = ref('bottom');
+    const handlePositionChange = (pos: string) => {
+      currentPosition.value = pos.includes('top') || pos.includes('right-end') || pos.includes('left-end') ? 'top' : 'bottom';
+    };
+    const styles = computed(() => ({
+      transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+      'z-index': 'var(--devui-z-index-dropdown, 1052)',
+    }));
 
     // 渲染自定义模板
 
     // 渲染下拉框核心
     const renderBasicDropdown = () => {
       return (
-        <Transition name="fade">
+        <Transition name={ns.m(`fade-${currentPosition.value}`)}>
           <FlexibleOverlay
             ref={overlayRef}
             v-model={states.visible}
             origin={originRef.value}
             position={position.value}
-            style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
+            align={align.value}
+            style={styles.value}
+            onPositionChange={handlePositionChange}>
             <Dropdown options={filteredOptions.value} width={props.width} maxHeight={props.maxHeight} v-slots={ctx.slots}></Dropdown>
           </FlexibleOverlay>
         </Transition>
@@ -132,10 +143,10 @@ export default defineComponent({
               />
               <span class={inputSuffixClasses.value}>
                 <span class={ns.e('clear-icon')} v-show={showClearable.value} onClick={withModifiers(handleClear, ['stop'])}>
-                  <Icon name="icon-remove" />
+                  <InputClearIcon />
                 </span>
                 <span class={ns.e('arrow-icon')} v-show={!showClearable.value}>
-                  <Icon name="select-arrow" />
+                  <SelectArrowIcon />
                 </span>
               </span>
             </div>

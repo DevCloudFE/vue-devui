@@ -49,7 +49,7 @@ export default defineComponent({
     const handleBlur = (e: Event) => {
       const { target } = e;
       const ele = document.querySelector('.devui-mention');
-      if (!(ele?.contains(target as Element))) {
+      if (!ele?.contains(target as Element)) {
         setTimeout(() => {
           showSuggestions.value = false;
         }, 100);
@@ -134,7 +134,11 @@ export default defineComponent({
     return () => {
       return (
         <div class={ns.b()}>
-          <d-textarea v-model={textContext.value} onUpdate={handleUpdate} onFocus={handleFocus}></d-textarea>
+          <d-textarea
+            v-model={textContext.value}
+            show-glow-style={props.showGlowStyle}
+            onUpdate={handleUpdate}
+            onFocus={handleFocus}></d-textarea>
           {showSuggestions.value ? (
             loading.value ? (
               <div class={[`${ns.e('suggestions')} ${ns.e('suggestions-loading')}`]}>加载中... </div>

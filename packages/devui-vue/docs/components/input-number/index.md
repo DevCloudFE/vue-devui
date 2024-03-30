@@ -236,6 +236,7 @@ export default defineComponent({
 | precision   | `number`        | --         | 可选，数值精度            | [精度](#精度)          |
 | size        | [ISize](#isize) | 'md'       | 可选，文本框尺寸           | [尺寸](#尺寸)          |
 | reg         | `RegExp\| string`    |  --   | 可选，用于限制输入的正则或正则字符串 | [正则限制](#正则限制)|
+|show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
 
 ### InputNumber 事件
 

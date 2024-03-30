@@ -1,4 +1,4 @@
-import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers, computed, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types';
 import usePickerPro from './use-picker-pro';
@@ -18,6 +18,7 @@ export default defineComponent({
   setup(props: DatePickerProProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DDatePickerPro', app);
+    const { showGlowStyle } = toRefs(props);
 
     const ns = useNamespace('date-picker-pro');
     const {
@@ -39,6 +40,15 @@ export default defineComponent({
       handlerClearTime,
     } = usePickerPro(props, ctx, t);
     const position = ref<Placement[]>(['bottom-start', 'top-start']);
+    const currentPosition = ref('bottom');
+    const handlePositionChange = (pos: string) => {
+      currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
+    };
+    const styles = computed(() => ({
+      transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+      'z-index': 'var(--devui-z-index-dropdown, 1052)',
+    }));
+
     return () => {
       const vSlots = {
         rightArea: ctx.slots?.rightArea && (() => renderSlot(useSlots(), 'rightArea')),
@@ -59,6 +69,7 @@ export default defineComponent({
               size={pickerSize.value}
               disabled={pickerDisabled.value}
               error={isValidateError.value}
+              show-glow-style={showGlowStyle.value}
               v-slots={{
                 prefix: () => (
                   <span class={ns.e('single-picker-icon')}>
@@ -74,14 +85,15 @@ export default defineComponent({
             />
           </div>
           <Teleport to="body">
-            <Transition name="fade">
+            <Transition name={ns.m(`fade-${currentPosition.value}`)}>
               <FlexibleOverlay
                 v-model={isPanelShow.value}
                 ref={overlayRef}
                 origin={originRef.value}
                 align="start"
                 position={position.value}
-                style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
+                style={styles.value}
+                onPositionChange={handlePositionChange}>
                 <DatePickerProPanel
                   {...props}
                   dateValue={dateValue.value}

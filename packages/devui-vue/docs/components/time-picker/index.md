@@ -257,6 +257,7 @@ export default defineComponent({
 | max-time             | string      | '23:59:59' | 可选，限制最大可选时间                     | [格式化](#时间区间限制) |
 | custom-view-template | TemplateRef | --         | 可选，自定义快捷设置时间或自定义操作区内容 | [传入模板](#传入模板)   |
 | show-animation       | boolean     | true       | 可选，是否开启动画                         |                         |
+|show-glow-style|`boolean`|true|可选，是否显示悬浮发光效果||
 
 ### TimePicker 事件
 

@@ -447,6 +447,7 @@ export default defineComponent({
 | before-change  | `Function\|Promise<boolean>`    | --    | 可选，checkbox 切换前的回调函数，<br>返回 boolean 类型，返回 false 可以阻止 checkbox 切换 | [基本用法](#基本用法)                     |
 | size           | [ICheckboxSize](#icheckboxsize) | md    | 可选， checkbox 尺寸，只有在 border 属性存在时生效                                        | [尺寸](#尺寸和边框)                       |
 | border         | `boolean`                       | false | 可选， 是否有边框                                                                         | [边框](#尺寸和边框)                       |
+|show-glow-style|`boolean`|true|可选，是否显示悬浮发光效果||
 
 ### Checkbox 事件
 

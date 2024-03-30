@@ -40,6 +40,10 @@ export const textareaProps = {
     type: Boolean,
     default: true,
   },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
 } as const;
 
 export type TextareaProps = ExtractPropTypes<typeof textareaProps>;
