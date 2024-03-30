@@ -6,11 +6,9 @@
 }
 .#{$devui-prefix}-menu-vertical {
   padding: 0;
-  transition:
-    width $devui-animation-duration-slow $devui-animation-ease-in-smooth,
+  transition: width $devui-animation-duration-slow $devui-animation-ease-in-smooth,
     padding $devui-animation-duration-slow $devui-animation-ease-in-smooth;
   border-right: $devui-line 1px solid;
-  background: $devui-area !important;
 
   ::after {
     transition: all $devui-animation-duration-fast $devui-animation-ease-in-smooth;
@@ -60,6 +58,12 @@
     color: $devui-menu-item;
     background: $devui-block;
     display: flex;
+    transition: background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
+
+    &:hover {
+      color: $devui-list-item-hover-text;
+      background-color: $devui-list-item-hover-bg;
+    }
 
     span:nth-child(2) {
       // flex: auto;
@@ -88,7 +92,6 @@
     padding: 0;
     .#{$devui-prefix}-menu-item {
       display: flex;
-      background: $devui-area;
 
       & > span {
         flex: auto;
@@ -109,6 +112,12 @@
       padding-left: 18px;
       align-items: center;
       color: $devui-menu-item;
+      transition: background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
+
+      &:hover {
+        color: $devui-list-item-hover-text;
+        background-color: $devui-list-item-hover-bg;
+      }
 
       &:nth-child(1) {
         font-size: $devui-font-size-lg;
