@@ -11,7 +11,7 @@ export function useInputRender(props: InputProps, ctx: SetupContext): UseInputRe
   const ns = useNamespace('input');
   const slotNs = useNamespace('input-slot');
   const isFocus = ref(false);
-  const { error, size, disabled } = toRefs(props);
+  const { error, size, disabled, showGlowStyle } = toRefs(props);
   const slots = ctx.slots;
   const inputDisabled = computed(() => disabled.value || formContext?.disabled);
   const inputSize = computed(() => size?.value || formContext?.size || '');
@@ -25,6 +25,7 @@ export function useInputRender(props: InputProps, ctx: SetupContext): UseInputRe
     [ns.e('wrapper')]: true,
     [ns.m('focus')]: isFocus.value,
     [ns.m('disabled')]: inputDisabled.value,
+    [ns.m('glow-style')]: showGlowStyle.value,
     [ns.m('error')]: error.value || isValidateError.value,
     [ns.m('feedback')]: Boolean(formItemContext?.validateState) && formItemContext?.showFeedback,
   }));

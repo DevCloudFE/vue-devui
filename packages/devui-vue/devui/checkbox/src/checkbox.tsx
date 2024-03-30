@@ -35,6 +35,9 @@ export default defineComponent({
         'half-checked': props.halfChecked,
         disabled: mergedDisabled.value,
         unchecked: !mergedChecked.value,
+        [ns.m('glow-style')]: props.showGlowStyle,
+        [ns.m(`checkbox-${size.value}`)]: border.value,
+        [ns.m('checkbox-bordered')]: border.value,
       };
       const labelTitle = mergedIsShowTitle.value ? props.title || props.label : '';
       const bgImgStyle =
@@ -56,7 +59,7 @@ export default defineComponent({
         [ns.m('no-animation')]: !mergedShowAnimation.value,
       };
       const labelCls = {
-        [ns.m(size.value)]: size.value,
+        [ns.m(size.value)]: border.value,
         [ns.m('bordered')]: border.value,
       };
       const stopPropagation = ($event: Event) => $event.stopPropagation();
@@ -68,6 +71,11 @@ export default defineComponent({
       return (
         <div class={wrapperCls.value} style={wrapperStyle.value}>
           <div class={checkboxCls}>
+            {props.showGlowStyle && mergedShowAnimation.value && (
+              <div class={ns.e('glow-box')}>
+                <span class="glow-bg"></span>
+              </div>
+            )}
             <label title={labelTitle} onClick={handleClick} class={labelCls} style={{ width: itemWidth?.value ? '100%' : 'auto' }}>
               <input
                 name={(props.name || props.value) as string}
@@ -81,12 +89,9 @@ export default defineComponent({
               />
               <span style={spanStyle} class={spanCls}>
                 <span class={ns.e('halfchecked-bg')}></span>
-                <svg viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" class={ns.e('tick-wrap')}>
+                <svg viewBox="0 0 14 14" width="14" height="14" class={ns.e('tick-wrap')}>
                   <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <polygon
-                      fill-rule="nonzero"
-                      points="5.17391304 6.56521739 7.7173913 9.10869565 11.826087 5 13 6.17391304 7.7173913 11.4565217 4 7.73913043"
-                      class={polygonCls}></polygon>
+                    <path d="M 2.3 7.0 5.6 9.6 11.4 3.5" stroke="#fff" stroke-width="1.5" fill="none" class={polygonCls}></path>
                   </g>
                 </svg>
               </span>

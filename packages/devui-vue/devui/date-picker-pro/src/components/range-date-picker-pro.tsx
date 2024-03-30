@@ -1,4 +1,4 @@
-import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers } from 'vue';
+import { defineComponent, Transition, ref, renderSlot, useSlots, getCurrentInstance, Teleport, withModifiers, computed, toRefs } from 'vue';
 import type { SetupContext } from 'vue';
 import { rangeDatePickerProProps, RangeDatePickerProProps } from '../range-date-picker-types';
 import { FlexibleOverlay } from '../../../overlay';
@@ -19,6 +19,7 @@ export default defineComponent({
   setup(props: RangeDatePickerProProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DDatePickerPro', app);
+    const { showGlowStyle } = toRefs(props);
 
     const ns = useNamespace('range-date-picker-pro');
     const {
@@ -44,6 +45,14 @@ export default defineComponent({
       onChangeRangeFocusType,
     } = useRangePickerPro(props, ctx);
     const position = ref(['bottom-start', 'top-start']);
+    const currentPosition = ref('bottom');
+    const handlePositionChange = (pos: string) => {
+      currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
+    };
+    const styles = computed(() => ({
+      transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+      'z-index': 'var(--devui-z-index-dropdown, 1052)',
+    }));
 
     return () => {
       const vSlots = {
@@ -54,7 +63,12 @@ export default defineComponent({
       return (
         <div class={[ns.b(), props.showTime ? ns.e('range-time-width') : ns.e('range-width'), isPanelShow.value && ns.m('open')]}>
           <div
-            class={[ns.e('range-picker'), pickerDisabled.value && ns.m('disabled'), isValidateError.value && ns.m('error')]}
+            class={[
+              ns.e('range-picker'),
+              pickerDisabled.value && ns.m('disabled'),
+              isValidateError.value && ns.m('error'),
+              showGlowStyle.value && ns.m('glow-style'),
+            ]}
             ref={originRef}
             onMouseover={() => (isMouseEnter.value = true)}
             onMouseout={() => (isMouseEnter.value = false)}>
@@ -68,6 +82,7 @@ export default defineComponent({
                 ref={startInputRef}
                 modelValue={displayDateValue.value[0]}
                 placeholder={placeholder.value[0] || t('startPlaceholder')}
+                show-glow-style={false}
                 onFocus={withModifiers(
                   (e: MouseEvent) => {
                     onFocus('start');
@@ -98,6 +113,7 @@ export default defineComponent({
                 ref={endInputRef}
                 modelValue={displayDateValue.value[1]}
                 placeholder={placeholder.value[1] || t('endPlaceholder')}
+                show-glow-style={false}
                 onFocus={withModifiers(
                   (e: MouseEvent) => {
                     onFocus('end');
@@ -120,14 +136,15 @@ export default defineComponent({
             </span>
           </div>
           <Teleport to="body">
-            <Transition name="fade">
+            <Transition name={ns.m(`fade-${currentPosition.value}`)}>
               <FlexibleOverlay
                 v-model={isPanelShow.value}
                 ref={overlayRef}
                 origin={originRef.value}
                 align="start"
                 position={position.value}
-                style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
+                style={styles.value}
+                onPositionChange={handlePositionChange}>
                 <DatePickerProPanel
                   {...props}
                   dateValue={dateValue.value}

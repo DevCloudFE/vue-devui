@@ -24,8 +24,12 @@ const radioCommonProps = {
     type: Boolean,
     default: false,
   },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
+  },
   size: {
-    type: String as PropType<sizeTypes>
+    type: String as PropType<sizeTypes>,
   },
 };
 

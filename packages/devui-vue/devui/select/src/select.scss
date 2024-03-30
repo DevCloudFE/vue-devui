@@ -68,6 +68,31 @@ $select-item-min-height: 36px;
   }
 }
 
+.#{$devui-prefix}-select:not(.#{$devui-prefix}-select--disabled):not(.#{$devui-prefix}-select--underlined) {
+  .#{$devui-prefix}-select__selection.#{$devui-prefix}-select__selection--glow-style {
+    &:hover {
+      border-color: $devui-form-control-line;
+      box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+    }
+    &.#{$devui-prefix}-select__selection--error:hover {
+      border-color: $devui-danger-line;
+      box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+    }
+  }
+}
+
+.#{$devui-prefix}-select--open,
+.#{$devui-prefix}-select--focus {
+  .#{$devui-prefix}-select__selection.#{$devui-prefix}-select__selection--glow-style {
+    border-color: $devui-form-control-line-active !important;
+    box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+
+    &.#{$devui-prefix}-select__selection--error {
+      border-color: $devui-danger-line;
+    }
+  }
+}
+
 .#{$devui-prefix}-select--underlined {
   border-bottom: 1px solid $devui-form-control-line;
   @include border-transition();
@@ -136,6 +161,7 @@ $select-item-min-height: 36px;
   border-radius: $devui-border-radius;
   background-color: $devui-form-control-bg;
   color: $devui-text;
+  transition: border-color 0.3s $devui-animation-ease-in-out-smooth, box-shadow $devui-animation-duration-base $devui-animation-ease-in;
 
   &--error {
     border-color: $devui-danger-line;

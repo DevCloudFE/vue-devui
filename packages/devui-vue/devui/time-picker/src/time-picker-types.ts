@@ -40,11 +40,15 @@ export const timePickerProps = {
     default: true,
   },
   size: {
-    type: String as PropType<sizeType>
+    type: String as PropType<sizeType>,
   },
   readonly: {
     type: Boolean,
     default: false,
+  },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
   },
 } as const;
 

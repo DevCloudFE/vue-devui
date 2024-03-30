@@ -213,6 +213,7 @@ export default defineComponent({
 | end         | string                      | '24:00'      | 可选，结束时间                            | [时间段](#时间段)     |
 | step        | string                      | '00:30'      | 可选，间隔时间                            | [基本用法](#基本用法) |
 | clearable   | boolean                     | true         | 可选，是否可清除                          | [基本用法](#基本用法) |
+|show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
 
 ### TimeSelect 事件
 

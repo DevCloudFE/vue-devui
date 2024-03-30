@@ -17,6 +17,7 @@ export function useRender(props: InputNumberProps, ctx: SetupContext): UseRender
   const wrapClass = computed(() => [
     {
       [ns.b()]: true,
+      [ns.m('glow-style')]: props.showGlowStyle,
       [ns.m(inputNumberSize.value)]: true,
     },
     customClass,

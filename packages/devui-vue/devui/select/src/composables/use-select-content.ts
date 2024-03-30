@@ -56,6 +56,7 @@ export default function useSelectContent(): UseSelectContentReturnType {
     return className(ns.e('selection'), {
       [ns.e('clearable')]: mergeClearable.value,
       [ns.em('selection', 'error')]: isValidateError.value,
+      [ns.em('selection', 'glow-style')]: Boolean(select?.showGlowStyle),
     });
   });
 

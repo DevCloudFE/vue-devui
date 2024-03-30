@@ -15,15 +15,25 @@
     border: 1px solid $devui-form-control-line;
     border-radius: $devui-border-radius;
     background-color: $devui-form-control-bg;
-    transition: border-color 0.3s $devui-animation-ease-in-out-smooth;
+    transition: border-color 0.3s $devui-animation-ease-in-out-smooth, box-shadow $devui-animation-duration-base $devui-animation-ease-in;
     height: 100%;
 
     &:not(.#{$devui-prefix}-input--error):not(.#{$devui-prefix}-input--disabled):not(.#{$devui-prefix}-input--focus):hover {
       border-color: $devui-form-control-line-hover;
     }
+
+    &.#{$devui-prefix}-input--glow-style:not(.#{$devui-prefix}-input--error):not(.#{$devui-prefix}-input--disabled):not(.#{$devui-prefix}-input--focus):hover {
+      box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+      border-color: $devui-form-control-line;
+    }
   }
 
   &--focus:not(.#{$devui-prefix}-input--error) {
+    border-color: $devui-form-control-line-active;
+  }
+
+  &--focus.#{$devui-prefix}-input--glow-style:not(.#{$devui-prefix}-input--error) {
+    box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
     border-color: $devui-form-control-line-active;
   }
 

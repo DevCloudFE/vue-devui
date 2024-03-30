@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, watch, SetupContext, Transition, Teleport, withModifiers } from 'vue';
+import { defineComponent, ref, onMounted, watch, SetupContext, Transition, Teleport, computed } from 'vue';
 import { TimePickerProps, timePickerProps } from './time-picker-types';
 import { Icon } from '../../icon';
 import useTimePicker from './composables/use-time-picker';
@@ -21,6 +21,14 @@ export default defineComponent({
     const activeSecond = ref('00');
     const format = props.format.toLowerCase();
     const position = ref(['bottom-start', 'top-start']);
+    const currentPosition = ref('bottom');
+    const handlePositionChange = (pos: string) => {
+      currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
+    };
+    const styles = computed(() => ({
+      transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
+      'z-index': 'var(--devui-z-index-dropdown, 1052)',
+    }));
 
     const {
       showPopup,
@@ -67,6 +75,7 @@ export default defineComponent({
             placeholder={props.placeholder}
             disabled={props.disabled}
             readonly={props.readonly}
+            show-glow-style={props.showGlowStyle}
             size={props.size}
             onFocus={clickVerifyFun}
             v-slots={{
@@ -80,14 +89,15 @@ export default defineComponent({
               ),
             }}></DInput>
           <Teleport to="body">
-            <Transition name="fade">
+            <Transition name={ns.m(`fade-${currentPosition.value}`)}>
               <FlexibleOverlay
                 v-model={showPopup.value}
                 ref={overlayRef}
                 origin={inputDom.value?.$el}
                 position={position.value as Placement[]}
                 align="start"
-                style={{ zIndex: 'var(--devui-z-index-dropdown, 1052)' }}>
+                style={styles.value}
+                onPositionChange={handlePositionChange}>
                 <TimePopup
                   ref={timePopupDom}
                   showPopup={showPopup.value}

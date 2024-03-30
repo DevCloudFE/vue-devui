@@ -125,7 +125,11 @@ export const cascaderProps = {
     default: () => true,
   },
   size: {
-    type: String as PropType<InputSize>
+    type: String as PropType<InputSize>,
+  },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
   },
 } as const;
 

@@ -23,7 +23,7 @@ export const inputNumberProps = {
     default: -Infinity,
   },
   size: {
-    type: String as PropType<ISize>
+    type: String as PropType<ISize>,
   },
   modelValue: {
     type: Number,
@@ -34,6 +34,10 @@ export const inputNumberProps = {
   reg: {
     type: [RegExp, String] as PropType<RegExp | string>,
     default: '',
+  },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
   },
 } as const;
 

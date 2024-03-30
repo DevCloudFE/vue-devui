@@ -37,7 +37,11 @@ const commonProps = {
   },
   size: {
     type: String as PropType<Size>,
-    default: 'md'
+    default: 'md',
+  },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
   },
 } as const;
 
