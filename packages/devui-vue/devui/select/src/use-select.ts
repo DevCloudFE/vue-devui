@@ -124,7 +124,7 @@ export default function useSelect(
 
   const getInjectOptions = (values: KeyType<OptionObjectItem, 'value'>[]) => {
     return values.map((value) => {
-      if (props.multiple && props.allowCreate) {
+      if (props.allowCreate) {
         const option = injectOptions.value.get(value);
         if (option) {
           return option;
@@ -208,6 +208,9 @@ export default function useSelect(
       }
       getMultipleSelected(checkedItems);
     } else {
+      if (item.create) {
+        filterQuery.value = '';
+      }
       ctx.emit('update:modelValue', item.value);
       getSingleSelected(item);
       toggleChange(false);
