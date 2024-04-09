@@ -52,6 +52,10 @@ export const tooltipProps = {
     type: Number,
     default: 0,
   },
+  overlayClass: {
+    type: String,
+    default: '',
+  },
 };
 
 export type TooltipProps = ExtractPropTypes<typeof tooltipProps>;

@@ -11,7 +11,7 @@ export default defineComponent({
   name: 'DTooltip',
   props: tooltipProps,
   setup(props: TooltipProps, { slots }) {
-    const { showAnimation, content, align } = toRefs(props);
+    const { showAnimation, content, align, overlayClass } = toRefs(props);
     const origin = ref<HTMLElement>();
     const tooltipRef = ref<HTMLElement>();
     const { visible, placement, positionArr, overlayStyles, onPositionChange, onMouseleave, onMouseenterOverlay } = useTooltip(
@@ -23,6 +23,7 @@ export default defineComponent({
       [ns.b()]: true,
       [ns.m(placement.value)]: true,
       [ns.m('with-content')]: slots.content,
+      [overlayClass.value]: true,
     }));
     provide(POPPER_TRIGGER_TOKEN, origin);
 
