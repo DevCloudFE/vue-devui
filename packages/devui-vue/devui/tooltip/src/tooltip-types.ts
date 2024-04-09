@@ -1,4 +1,4 @@
-import type { ComputedRef, ExtractPropTypes, PropType, Ref } from 'vue';
+import type { ComputedRef, ExtractPropTypes, PropType, Ref, TeleportProps } from 'vue';
 
 export type Alignment = 'start' | 'end';
 export type BasePlacement =
@@ -55,6 +55,10 @@ export const tooltipProps = {
   overlayClass: {
     type: String,
     default: '',
+  },
+  teleport: {
+    type: [String, HTMLElement] as PropType<TeleportProps['to']>,
+    default: 'body',
   },
 };
 
