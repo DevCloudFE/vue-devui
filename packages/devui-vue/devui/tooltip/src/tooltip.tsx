@@ -11,7 +11,7 @@ export default defineComponent({
   name: 'DTooltip',
   props: tooltipProps,
   setup(props: TooltipProps, { slots }) {
-    const { showAnimation, content } = toRefs(props);
+    const { showAnimation, content, align, overlayClass, teleport } = toRefs(props);
     const origin = ref<HTMLElement>();
     const tooltipRef = ref<HTMLElement>();
     const { visible, placement, positionArr, overlayStyles, onPositionChange, onMouseleave, onMouseenterOverlay } = useTooltip(
@@ -23,13 +23,14 @@ export default defineComponent({
       [ns.b()]: true,
       [ns.m(placement.value)]: true,
       [ns.m('with-content')]: slots.content,
+      [overlayClass.value]: true,
     }));
     provide(POPPER_TRIGGER_TOKEN, origin);
 
     return () => (
       <>
         <PopperTrigger>{slots.default?.()}</PopperTrigger>
-        <Teleport to="body">
+        <Teleport to={teleport.value}>
           <Transition name={showAnimation.value ? ns.m(`fade-${placement.value}`) : ''}>
             <FlexibleOverlay
               v-model={visible.value}
@@ -37,6 +38,7 @@ export default defineComponent({
               class={className.value}
               origin={origin.value}
               position={positionArr.value}
+              align={align.value}
               offset={6}
               show-arrow
               style={overlayStyles.value}
