@@ -11,7 +11,7 @@ export default defineComponent({
   name: 'DTooltip',
   props: tooltipProps,
   setup(props: TooltipProps, { slots }) {
-    const { showAnimation, content } = toRefs(props);
+    const { showAnimation, content, align } = toRefs(props);
     const origin = ref<HTMLElement>();
     const tooltipRef = ref<HTMLElement>();
     const { visible, placement, positionArr, overlayStyles, onPositionChange, onMouseleave, onMouseenterOverlay } = useTooltip(
@@ -37,6 +37,7 @@ export default defineComponent({
               class={className.value}
               origin={origin.value}
               position={positionArr.value}
+              align={align.value}
               offset={6}
               show-arrow
               style={overlayStyles.value}
