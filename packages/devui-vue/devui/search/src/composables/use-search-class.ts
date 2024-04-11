@@ -24,12 +24,13 @@ export const useSearchClass = (props: SearchProps, isFocus: Ref<boolean>): UseSe
     [ns.m('focus')]: isFocus.value,
     [ns.m('disabled')]: props.disabled,
     [ns.m('no-border')]: props.noBorder,
+    [ns.m('glow-style')]: props.showGlowStyle,
     [ns.m(searchSize.value)]: !!searchSize.value,
     [ns.m(props.iconPosition)]: ICON_POSITION[props.iconPosition],
   }));
 
   return {
     rootClass,
-    searchSize
+    searchSize,
   };
 };

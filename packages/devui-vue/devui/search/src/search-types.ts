@@ -5,7 +5,7 @@ export type IconPosition = 'right' | 'left';
 
 export const searchProps = {
   size: {
-    type: String as PropType<Size>
+    type: String as PropType<Size>,
   },
   placeholder: {
     type: String,
@@ -50,6 +50,10 @@ export const searchProps = {
   'onUpdate:modelValue': {
     type: Function as PropType<(v: string) => void>,
     default: undefined,
+  },
+  showGlowStyle: {
+    type: Boolean,
+    default: true,
   },
 } as const;
 
