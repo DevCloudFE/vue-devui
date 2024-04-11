@@ -66,6 +66,10 @@ export const formItemProps = {
     type: String,
     default: '',
   },
+  isAsyncValidate: {
+    type: Boolean,
+    default: false,
+  },
 };
 
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>;

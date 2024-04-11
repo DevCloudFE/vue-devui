@@ -107,6 +107,7 @@ export default defineComponent({
 | icon-position   | [IconPositionType](#iconpositiontype) | 'right' | 可选，搜索图标位置 | [搜索图标左置](#搜索图标左置) |
 | no-border       | `boolean`                             | false   | 可选，是否显示边框                             | [无边框](#无边框)             |
 | css-class       | `string`                              | ''      | 可选，支持传入类名到输入框上                   | [双向绑定](#双向绑定)         |
+|show-glow-style|`boolean`|true|可选，是否显示悬浮发光效果||
 
 ### Search 事件
 
@@ -123,6 +124,7 @@ type SearchSizeType = 'sm' | 'md' | 'lg';
 ```
 
 #### IconPositionType
+
 ```ts
 type IconPositionType = 'right' | 'left';
 ```

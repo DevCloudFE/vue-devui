@@ -46,6 +46,7 @@ export default defineComponent({
         maxlength: props.maxLength,
         modelValue: keywords.value,
         placeholder: props.placeholder || t('placeholder'),
+        showGlowStyle: false,
         onKeydown: onInputKeydown,
         'onUpdate:modelValue': onInputUpdate,
         onFocus: onFocus,

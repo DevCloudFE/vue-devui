@@ -4,9 +4,11 @@
 
 .#{$devui-prefix}-search {
   position: relative;
+  border-radius: $devui-border-radius;
+  transition: border-color 0.3s $devui-animation-ease-in-out-smooth, box-shadow $devui-animation-duration-base $devui-animation-ease-in;
   @include flex;
 
-  &:not(.#{$devui-prefix}-search--error):not(.#{$devui-prefix}-search--disabled):not(.#{$devui-prefix}-search--focus):hover {
+  &:not(.#{$devui-prefix}-search--error):not(.#{$devui-prefix}-search--disabled):not(.#{$devui-prefix}-search--focus):not(.#{$devui-prefix}-search--glow-style):hover {
     .#{$devui-prefix}-input {
       border-color: $devui-form-control-line-hover;
     }
@@ -97,6 +99,15 @@
     z-index: 1;
     right: 0;
     top: 0;
+  }
+
+  &--glow-style {
+    &:not(.#{$devui-prefix}-search--disabled) {
+      &:hover,
+      &.#{$devui-prefix}-search--focus {
+        box-shadow: 0 0 0 4px $devui-form-control-interactive-outline;
+      }
+    }
   }
 
   &--sm {

@@ -16,7 +16,6 @@ export default defineComponent({
     const formControl = ref();
     const popoverRef = ref();
     const ns = useNamespace('form');
-    const showPopoverClick = ref(true);
     const { controlClasses, controlContainerClasses, labelData } = useFormControl(props);
     const { feedbackStatus, showFeedback, showPopover, showMessage, errorMessage, popPosition } = useFormControlValidate();
 
@@ -30,36 +29,12 @@ export default defineComponent({
       return undefined;
     });
 
-    const onDocumentClick = (e: Event) => {
-      const composedPath = e.composedPath();
-      if (composedPath.includes(popoverRef.value.triggerEl)) {
-        showPopoverClick.value = true;
-      } else {
-        showPopoverClick.value = false;
-      }
-    };
-
-    watch(showPopover, (val) => {
-      if (val) {
-        setTimeout(() => {
-          document.addEventListener('click', onDocumentClick);
-        });
-      } else {
-        showPopoverClick.value = true;
-        document.removeEventListener('click', onDocumentClick);
-      }
-    });
-
-    onUnmounted(() => {
-      document.removeEventListener('click', onDocumentClick);
-    });
-
     return () => (
       <div class={controlClasses.value} ref={formControl}>
         <div class={controlContainerClasses.value}>
           <Popover
             ref={popoverRef}
-            is-open={showPopover.value && showPopoverClick.value}
+            is-open={showPopover.value}
             trigger="manually"
             content={errorMessage.value}
             pop-type="error"
