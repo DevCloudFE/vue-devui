@@ -310,7 +310,6 @@ export function useEditorMd(props: EditorMdProps, ctx: SetupContext) {
 
     editorIns.setSize('auto', '100%');
     refreshEditorCursor();
-    editorIns.setCursor(editorIns.lineCount(), 0);
     ctx.emit('afterEditorInit', editorIns);
     editorIns.on('change', onChange);
     editorIns.on('scroll', onScroll);

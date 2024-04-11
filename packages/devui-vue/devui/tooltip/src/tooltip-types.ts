@@ -57,7 +57,7 @@ export const tooltipProps = {
     default: '',
   },
   teleport: {
-    type: [String, HTMLElement] as PropType<TeleportProps['to']>,
+    type: [String, Object] as PropType<TeleportProps['to']>,
     default: 'body',
   },
 };
