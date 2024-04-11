@@ -245,7 +245,7 @@ export function useDataGrid(props: DataGridProps, ctx: SetupContext) {
     scrollRef.value?.addEventListener('scroll', onScroll);
     if (typeof window !== 'undefined' && scrollRef.value) {
       resizeObserver = new ResizeObserver(() => {
-        if (scrollRef.value) {
+        if (scrollRef.value && sliceColumns.value.length) {
           let distance = 0;
           initOriginColumnData();
           distance = scrollRef.value!.scrollLeft;

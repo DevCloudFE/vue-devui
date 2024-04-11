@@ -12,7 +12,7 @@ import {
   FormRuleItem,
   UseFormItemValidate,
   MessageType,
-  UseFormItemRule
+  UseFormItemRule,
 } from './form-item-types';
 import { useNamespace } from '@devui/shared/utils';
 
@@ -141,7 +141,9 @@ export function useFormItemValidate(props: FormItemProps, _rules: ComputedRef<Fo
       return true;
     }
 
-    validateState.value = 'pending';
+    if (props.isAsyncValidate) {
+      validateState.value = 'pending';
+    }
 
     return execValidate(rules)
       .then(() => {
