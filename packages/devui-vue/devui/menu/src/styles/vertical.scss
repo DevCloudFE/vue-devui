@@ -6,8 +6,7 @@
 }
 .#{$devui-prefix}-menu-vertical {
   padding: 0;
-  transition:
-    width $devui-animation-duration-slow $devui-animation-ease-in-smooth,
+  transition: width $devui-animation-duration-slow $devui-animation-ease-in-smooth,
     padding $devui-animation-duration-slow $devui-animation-ease-in-smooth;
   border-right: $devui-line 1px solid;
 
@@ -48,6 +47,7 @@
 
   .#{$devui-prefix}-menu-item-vertical-wrapper {
     padding-left: 0 !important;
+    margin: 4px 0 !important;
   }
 
   .#{$devui-prefix}-menu-item {
@@ -108,7 +108,6 @@
       cursor: pointer;
       width: 100%;
       height: 40px;
-      margin: 4px 0;
       line-height: 40px;
       padding-left: 18px;
       align-items: center;
@@ -226,5 +225,19 @@
   .#{$devui-prefix}-menu-item-disabled::after,
   .#{$devui-prefix}-submenu-disabled::after {
     content: unset;
+  }
+
+  .#{$devui-prefix}-menu__arrow-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+
+    path {
+      fill: $devui-text-weak;
+    }
+
+    &.is-opened {
+      transform: rotate(180deg);
+    }
   }
 }
