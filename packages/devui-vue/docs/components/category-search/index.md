@@ -391,6 +391,7 @@ export default defineComponent({
 | save         | 自定义保存图标                                                                                                      |                                                            |                                   |
 | more         | 自定义更多图标                                                                                                      |                                                            |                                   |
 | operation    | 自定义除`clear`、`save`、`more`外的其他图标                                                                         |                                                            | [自定义扩展按钮](#自定义扩展按钮) |
+| searchIcon   | 自定义搜索图标                                                                                                      |                                                            |                                   |
 
 ### CategorySearch 方法
 
