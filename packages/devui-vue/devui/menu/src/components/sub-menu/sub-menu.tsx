@@ -1,14 +1,6 @@
 import { randomId } from '../../../../shared/utils/random-id';
 import type { ComponentInternalInstance, Ref } from 'vue';
-import {
-  defineComponent,
-  getCurrentInstance,
-  inject,
-  onMounted,
-  ref,
-  watch,
-  watchEffect
-} from 'vue';
+import { defineComponent, getCurrentInstance, inject, onMounted, ref, watch, watchEffect } from 'vue';
 import { useNamespace } from '../../../../shared/hooks/use-namespace';
 import { useClick } from '../../composables/use-click';
 import { addLayer, clearSelect, getLayer, pushElement } from '../../composables/use-layer-operate';
@@ -16,6 +8,7 @@ import { useNearestMenuElement } from '../../composables/use-nearest-menu-elemen
 import MenuTransition from '../menu-transition/menu-transition';
 import { SubMenuProps, subMenuProps } from './sub-menu-types';
 import { useShowSubMenu } from './use-sub-menu';
+import { SelectArrowIcon } from '../../../../svg-icons';
 
 const ns = useNamespace('menu');
 const subNs = useNamespace('submenu');
@@ -31,7 +24,7 @@ export default defineComponent({
   setup(props: SubMenuProps, ctx) {
     const isShow = ref(true);
     const {
-      vnode: { key }
+      vnode: { key },
     } = getCurrentInstance() as ComponentInternalInstance;
     let key_ = String(key);
     const defaultOpenKeys = inject('openKeys') as Ref<string[]>;
@@ -63,7 +56,7 @@ export default defineComponent({
         if (idx >= 0 && cur.tagName === 'UL') {
           defaultOpenKeys.value.splice(idx, 1);
         } else {
-          if (cur.tagName === 'UL'){
+          if (cur.tagName === 'UL') {
             defaultOpenKeys.value.push(key_);
           }
         }
@@ -72,7 +65,7 @@ export default defineComponent({
           type: 'submenu-change',
           state: isOpen.value,
           key: key_,
-          el: ele
+          el: ele,
         });
       }
     };
@@ -93,12 +86,13 @@ export default defineComponent({
     watch(
       () => defaultOpenKeys,
       (n) => {
-        if (n.value.includes(key_)){
+        if (n.value.includes(key_)) {
           isOpen.value = true;
         } else {
           isOpen.value = false;
         }
-      },{deep: true}
+      },
+      { deep: true }
     );
     onMounted(() => {
       const subMenuTitle = title.value as unknown as HTMLElement;
@@ -142,18 +136,19 @@ export default defineComponent({
           onClick={clickHandle}
           class={[subMenuClass, class_layer.value, props['disabled'] && `${subMenuClass}-disabled`]}
           ref={subMenu}>
-          <div
-            class={[`${subMenuClass}-title`]}
-            style={`padding: 0 ${indent}px`}
-            ref={title}>
+          <div class={[`${subMenuClass}-title`]} style={`padding: 0 ${indent}px`} ref={title}>
             <span class={`${ns.b()}-icon`}>{ctx.slots?.icon?.()}</span>
             <span v-show={!isCollapsed.value} class={`${subMenuClass}-title-content`}>
               {props.title}
             </span>
+            <SelectArrowIcon
+              v-show={!isCollapsed.value && key !== 'overflowContainer' && class_layer.value !== `layer_${subMenuClass}`}
+              class={[ns.e('arrow-icon'), { 'is-opened': isOpen.value }]}
+            />
             <i
               v-show={!isCollapsed.value && key !== 'overflowContainer'}
               class={{
-                'icon icon-chevron-up': class_layer.value !== `layer_${subMenuClass}`,
+                'icon icon-chevron-up': false,
                 'icon icon-chevron-right': class_layer.value === `layer_${subMenuClass}`,
                 'is-opened': isOpen.value,
               }}></i>
@@ -162,8 +157,7 @@ export default defineComponent({
             <div
               class={`${ns.b()}-item-horizontal-wrapper ${ns.b()}-item-horizontal-wrapper-hidden`}
               ref={wrapper}
-              v-show={!props.disabled}
-            >
+              v-show={!props.disabled}>
               {ctx.slots.default?.()}
             </div>
           ) : (

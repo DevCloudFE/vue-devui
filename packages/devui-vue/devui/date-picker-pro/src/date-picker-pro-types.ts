@@ -3,6 +3,20 @@ import type { Dayjs } from 'dayjs';
 import { ArrType } from '../../time-picker/src/types';
 import type { InputSize } from '../../input/src/input-types';
 
+export type Placement =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'top-start'
+  | 'top-end'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-end';
+
 export const datePickerProCommonProps = {
   format: {
     type: String,
@@ -33,6 +47,10 @@ export const datePickerProCommonProps = {
   showGlowStyle: {
     type: Boolean,
     default: true,
+  },
+  position: {
+    type: Array as PropType<Placement[]>,
+    default: () => ['bottom-start', 'top-start'],
   },
 };
 
