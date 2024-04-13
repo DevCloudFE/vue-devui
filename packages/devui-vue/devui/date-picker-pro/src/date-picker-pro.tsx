@@ -3,7 +3,7 @@ import type { SetupContext } from 'vue';
 import { datePickerProProps, DatePickerProProps } from './date-picker-pro-types';
 import usePickerPro from './use-picker-pro';
 import { Input } from '../../input';
-import { FlexibleOverlay, Placement } from '../../overlay';
+import { FlexibleOverlay } from '../../overlay';
 import DatePickerProPanel from './components/date-picker-panel';
 import { IconCalendar } from './components/icon-calendar';
 import { IconClose } from './components/icon-close';
@@ -18,7 +18,7 @@ export default defineComponent({
   setup(props: DatePickerProProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DDatePickerPro', app);
-    const { showGlowStyle } = toRefs(props);
+    const { showGlowStyle, position } = toRefs(props);
 
     const ns = useNamespace('date-picker-pro');
     const {
@@ -39,7 +39,6 @@ export default defineComponent({
       onSelectedDate,
       handlerClearTime,
     } = usePickerPro(props, ctx, t);
-    const position = ref<Placement[]>(['bottom-start', 'top-start']);
     const currentPosition = ref('bottom');
     const handlePositionChange = (pos: string) => {
       currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
@@ -48,6 +47,15 @@ export default defineComponent({
       transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
       'z-index': 'var(--devui-z-index-dropdown, 1052)',
     }));
+    const align = computed(() => {
+      if (position.value.some((item: string) => item.includes('start'))) {
+        return 'start';
+      }
+      if (position.value.some((item: string) => item.includes('end'))) {
+        return 'end';
+      }
+      return undefined;
+    });
 
     return () => {
       const vSlots = {
@@ -90,7 +98,7 @@ export default defineComponent({
                 v-model={isPanelShow.value}
                 ref={overlayRef}
                 origin={originRef.value}
-                align="start"
+                align={align.value}
                 position={position.value}
                 style={styles.value}
                 onPositionChange={handlePositionChange}>
