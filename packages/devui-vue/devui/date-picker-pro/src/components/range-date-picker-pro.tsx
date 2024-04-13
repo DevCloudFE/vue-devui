@@ -19,7 +19,7 @@ export default defineComponent({
   setup(props: RangeDatePickerProProps, ctx: SetupContext) {
     const app = getCurrentInstance();
     const t = createI18nTranslate('DDatePickerPro', app);
-    const { showGlowStyle } = toRefs(props);
+    const { showGlowStyle, position } = toRefs(props);
 
     const ns = useNamespace('range-date-picker-pro');
     const {
@@ -44,7 +44,6 @@ export default defineComponent({
       handlerClearTime,
       onChangeRangeFocusType,
     } = useRangePickerPro(props, ctx);
-    const position = ref(['bottom-start', 'top-start']);
     const currentPosition = ref('bottom');
     const handlePositionChange = (pos: string) => {
       currentPosition.value = pos.split('-')[0] === 'top' ? 'top' : 'bottom';
@@ -53,6 +52,15 @@ export default defineComponent({
       transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
       'z-index': 'var(--devui-z-index-dropdown, 1052)',
     }));
+    const align = computed(() => {
+      if (position.value.some((item: string) => item.includes('start'))) {
+        return 'start';
+      }
+      if (position.value.some((item: string) => item.includes('end'))) {
+        return 'end';
+      }
+      return undefined;
+    });
 
     return () => {
       const vSlots = {
@@ -141,7 +149,7 @@ export default defineComponent({
                 v-model={isPanelShow.value}
                 ref={overlayRef}
                 origin={originRef.value}
-                align="start"
+                align={align.value}
                 position={position.value}
                 style={styles.value}
                 onPositionChange={handlePositionChange}>
