@@ -19,7 +19,7 @@ export function useTable(props: TableProps, tableWidth: Ref): UseTable {
     maxHeight: props.maxHeight,
     maxWidth: props.maxWidth,
     height: props.tableHeight,
-    width: tableWidth.value ? `${tableWidth.value}px` : props.tableWidth,
+    width: props.tableWidth,
   }));
   return { classes, styles };
 }
