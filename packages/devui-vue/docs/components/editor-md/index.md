@@ -597,6 +597,7 @@ Bob-->>John: Jolly good!
 | placeholder            | `string`                                  | ''       | 编辑器无内容是的提示信息                                                                                           |
 | fullscreen-z-index     | `number`                                  | 10       | 编辑器全屏状态的 z-index                                                                                           |
 | image-upload-to-server | `boolean`                                 | false    | 是否打开图片自定义上传开关（打开后将将监听图片的复制，toolbar 图片功能上传，传出事件回调）                         |
+|editor-container-height|`number`|--|可选，编辑器内容区高度||
 
 ### EditorMd 事件
 
