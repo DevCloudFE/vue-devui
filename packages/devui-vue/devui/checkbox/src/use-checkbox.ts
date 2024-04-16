@@ -143,7 +143,7 @@ export function useCheckboxGroup(props: CheckboxGroupProps, ctx: SetupContext): 
   );
 
   // 组件 size 优先于表单 size
-  const checkboxGroupSize = computed(() => props.size || formContext?.size || '');
+  const checkboxGroupSize = computed(() => props.size || formContext?.size || 'md');
 
   provide(checkboxGroupInjectionKey, {
     disabled: toRef(props, 'disabled'),
