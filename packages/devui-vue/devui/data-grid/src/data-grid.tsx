@@ -1,10 +1,10 @@
-import { defineComponent, provide, toRefs, ref } from "vue";
+import { defineComponent, provide, toRefs, ref } from 'vue';
 import type { SetupContext } from 'vue';
 import FixHeadGrid from './components/fix-head-grid';
 import NormalHeadGrid from './components/normal-head-grid';
-import { dataGridProps, DataGridInjectionKey } from "./data-grid-types";
-import type { DataGridProps } from "./data-grid-types";
-import { useDataGrid, useDataGridStyle } from "./composables/use-data-grid";
+import { dataGridProps, DataGridInjectionKey } from './data-grid-types';
+import type { DataGridProps } from './data-grid-types';
+import { useDataGrid, useDataGridStyle } from './composables/use-data-grid';
 import './data-grid.scss';
 
 export default defineComponent({
@@ -25,7 +25,7 @@ export default defineComponent({
     'expandLoadMore',
   ],
   setup(props: DataGridProps, ctx: SetupContext) {
-    const { fixHeader, showHeader, lazy, rowClass, cellClass, size, indent, virtualScroll, resizable } = toRefs(props);
+    const { fixHeader, showHeader, lazy, rowClass, cellClass, size, indent, virtualScroll, columnVirtualScroll, resizable } = toRefs(props);
     const rootRef = ref<HTMLElement>();
     const {
       scrollRef,
@@ -65,6 +65,7 @@ export default defineComponent({
       lazy,
       indent,
       virtualScroll,
+      columnVirtualScroll,
       resizable,
       bodyContentWidth,
       bodyContentHeight,
@@ -88,7 +89,7 @@ export default defineComponent({
       toggleRowExpansion,
       toggleRowChecked,
       toggleAllRowChecked,
-      afterColumnDragend
+      afterColumnDragend,
     });
 
     ctx.expose({ sort, toggleRowChecked, toggleAllRowChecked, getCheckedRows, toggleRowExpansion, toggleAllRowExpansion, refreshRowsData });
@@ -102,5 +103,5 @@ export default defineComponent({
         )}
       </div>
     );
-  }
+  },
 });
