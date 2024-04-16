@@ -307,7 +307,7 @@ export default function useSelect(
       return label.toString().toLocaleLowerCase().includes(filterQuery.value.toLocaleLowerCase().trim());
     }).length;
     if (isLoading.value) {
-      return props.loadingText || (t('loadingText') as string);
+      return '';
     }
     if (isSupportFilter.value && filterQuery.value && injectOptionsArray.value.length > 0 && visibleOptionsCount === 0) {
       return props.noMatchText || (t('noMatchText') as string);

@@ -10,7 +10,7 @@ import { ColumnType, RowHeightMap } from '../const';
 import { calcEachColumnWidth } from '../utils';
 
 export function useDataGrid(props: DataGridProps, ctx: SetupContext) {
-  const { data, columns, size, virtualScroll } = toRefs(props);
+  const { data, columns, size, virtualScroll, columnVirtualScroll } = toRefs(props);
   const scrollRef = ref<HTMLElement>();
   const headBoxRef = ref<HTMLElement>();
   const bodyContentWidth = ref(0);
@@ -125,7 +125,7 @@ export function useDataGrid(props: DataGridProps, ctx: SetupContext) {
       }
       bodyTotalWidth += itemColumn.width as number;
     }
-    if (!virtualScroll.value) {
+    if (!(columnVirtualScroll.value ?? virtualScroll.value)) {
       renderColumnData.value = scrollXParams.originColumnData;
       translateX.value = renderColumnData.value[0]?.offsetLeft ?? 0;
     }
@@ -185,7 +185,7 @@ export function useDataGrid(props: DataGridProps, ctx: SetupContext) {
       let distance = 0;
       nextTick(() => {
         initOriginColumnData();
-        if (virtualScroll.value && scrollRef.value) {
+        if ((columnVirtualScroll.value ?? virtualScroll.value) && scrollRef.value) {
           distance = scrollRef.value.scrollLeft;
           initVirtualColumnData(distance, scrollRef.value.clientWidth);
         }
@@ -207,7 +207,7 @@ export function useDataGrid(props: DataGridProps, ctx: SetupContext) {
   watch(
     virtualColumnData,
     (val: InnerColumnConfig[]) => {
-      if (virtualScroll.value) {
+      if (columnVirtualScroll.value ?? virtualScroll.value) {
         renderColumnData.value = val;
       }
     },
@@ -231,7 +231,7 @@ export function useDataGrid(props: DataGridProps, ctx: SetupContext) {
         return;
       }
       scrollXParams.distance = scrollLeft;
-      virtualScroll.value && calcVirtualColumnData(scrollXParams);
+      (columnVirtualScroll.value ?? virtualScroll.value) && calcVirtualColumnData(scrollXParams);
     } else if (scrollTop !== scrollYParams.distance) {
       if (scrollYParams.originRowData.length === 0) {
         return;
@@ -249,7 +249,7 @@ export function useDataGrid(props: DataGridProps, ctx: SetupContext) {
           let distance = 0;
           initOriginColumnData();
           distance = scrollRef.value!.scrollLeft;
-          virtualScroll.value && initVirtualColumnData(distance, scrollRef.value!.clientWidth);
+          (columnVirtualScroll.value ?? virtualScroll.value) && initVirtualColumnData(distance, scrollRef.value!.clientWidth);
         }
       });
       resizeObserver.observe(scrollRef.value);

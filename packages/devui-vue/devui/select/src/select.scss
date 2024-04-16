@@ -372,6 +372,7 @@ $select-item-min-height: 36px;
   text-align: center;
   font-size: $select-item-font-size;
   color: $devui-disabled-text;
+  min-height: 22px;
 }
 
 .#{$devui-prefix}-select__group {

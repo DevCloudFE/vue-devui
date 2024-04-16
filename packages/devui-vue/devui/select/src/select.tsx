@@ -12,7 +12,7 @@ import {
   withModifiers,
   onUnmounted,
   nextTick,
-  computed
+  computed,
 } from 'vue';
 import type { SetupContext } from 'vue';
 import useSelect from './use-select';
@@ -26,9 +26,13 @@ import useSelectFunction from './composables/use-select-function';
 import './select.scss';
 import { createI18nTranslate } from '../../locale/create';
 import { FlexibleOverlay, Placement } from '../../overlay';
+import LoadingDirective from '../../loading/src/loading-directive';
 
 export default defineComponent({
   name: 'DSelect',
+  directives: {
+    dLoading: LoadingDirective,
+  },
   props: selectProps,
   emits: ['toggle-change', 'value-change', 'update:modelValue', 'focus', 'blur', 'remove-tag', 'clear', 'input-change'],
   setup(props: SelectProps, ctx: SetupContext) {
@@ -82,7 +86,7 @@ export default defineComponent({
     };
     const styles = computed(() => ({
       transformOrigin: currentPosition.value === 'top' ? '0% 100%' : '0% 0%',
-      'z-index': 'var(--devui-z-index-dropdown, 1052)'
+      'z-index': 'var(--devui-z-index-dropdown, 1052)',
     }));
 
     const updateDropdownWidth = () => {
@@ -155,7 +159,7 @@ export default defineComponent({
                 position={position.value}
                 onPositionChange={handlePositionChange}
                 style={styles.value}>
-                <div class={dropdownCls} style={{ width: `${dropdownWidth.value}` }}>
+                <div v-dLoading={isLoading.value} class={dropdownCls} style={{ width: `${dropdownWidth.value}` }}>
                   <ul class={listCls} v-show={!isLoading.value} ref={dropdownContainer}>
                     {isShowCreateOption.value && (
                       <Option value={filterQuery.value} name={filterQuery.value} create>
@@ -175,7 +179,7 @@ export default defineComponent({
                         </Option>
                       ))}
                   </ul>
-                  {isShowEmptyText.value && (
+                  {(isLoading.value || isShowEmptyText.value) && (
                     <div>
                       {ctx.slots?.empty && ctx.slots.empty()}
                       {!ctx.slots?.empty && <p class={dropdownEmptyCls}>{emptyText.value}</p>}
