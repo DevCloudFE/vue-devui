@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes, Ref, ComputedRef } from 'vue';
+import type { PropType, ExtractPropTypes, Ref, ComputedRef, TeleportProps } from 'vue';
 
 export type TriggerType = 'click' | 'hover' | 'manually';
 export type CloseScopeArea = 'all' | 'blank' | 'none';
@@ -63,6 +63,10 @@ export const dropdownProps = {
   destroyOnHide: {
     type: Boolean,
     default: true,
+  },
+  teleport: {
+    type: [String, Object] as PropType<TeleportProps['to']>,
+    default: 'body',
   },
 };
 

@@ -269,6 +269,7 @@ export default defineComponent({
 | show-animation            | `boolean`                                   | true       | 可选，控制是否显示动画                                                                                                       |
 | overlay-class             | `string`                                    | --         | 可选，自定义 overlay 的样式                                                                                                  |
 | destroy-on-hide           | `boolean`                                   | true       | 可选，是否在关闭 dropdown 时将其销毁                                                                                         |
+| teleport          | `string \| HTMLElement`                            | 'body' | 可选，挂载节点，等同于 Teleport 组件的[to 属性](https://cn.vuejs.org/api/built-in-components.html#teleport) |
 
 ### Dropdown 事件
 
