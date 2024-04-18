@@ -15,7 +15,7 @@ export default defineComponent({
   props: dropdownProps,
   emits: ['toggle'],
   setup(props: DropdownProps, { slots, attrs, emit, expose }) {
-    const { visible, position, align, offset, destroyOnHide, shiftOffset, showAnimation } = toRefs(props);
+    const { visible, position, align, offset, destroyOnHide, shiftOffset, showAnimation, teleport } = toRefs(props);
     const origin = ref<HTMLElement | undefined>();
     const dropdownRef = ref<HTMLElement | undefined>();
     const overlayRef = ref();
@@ -51,7 +51,7 @@ export default defineComponent({
     return () => (
       <>
         <PopperTrigger>{slots.default?.()}</PopperTrigger>
-        <Teleport to="body">
+        <Teleport to={teleport.value}>
           <Transition name={showAnimation.value ? ns.m(`fade-${currentPosition.value}`) : ''}>
             <FlexibleOverlay
               v-model={overlayModelValue.value}
