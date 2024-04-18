@@ -1,417 +1,425 @@
 @import '@devui/theme/styles-var/devui-var.scss';
 
 @mixin tag-item() {
-	.#{$devui-prefix}-tag>.#{$devui-prefix}-tag__item {
-		display: block !important;
+  .#{$devui-prefix}-tag > .#{$devui-prefix}-tag__item {
+    display: block !important;
 
-		.dp-category-search-multi-tag>span,
-		&>span {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			display: inline-block;
-			vertical-align: middle;
-			margin: 0 4px;
-		}
-	}
+    .dp-category-search-multi-tag > span,
+    & > span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 4px;
+    }
+  }
 }
 
 .dp-category-search-container {
-	position: relative;
-	border-radius: $devui-border-radius;
-	width: 100%;
-	height: 32px;
-	padding: 0 8px;
-	display: flex;
-	align-items: center;
-	background: transparent;
-	transition: border $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
-	background-color: $devui-base-bg;
-	border: 1px solid $devui-line;
+  position: relative;
+  border-radius: $devui-border-radius;
+  width: 100%;
+  height: 32px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  transition: border $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+  background-color: $devui-base-bg;
+  border: 1px solid $devui-line;
 
-	ul,
-	li {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
+  ul,
+  li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
 
-	&.container-hover {
-		&>.dp-category-search-icon svg p path {
-			fill: $devui-icon-fill-hover;
-		}
-	}
+  &.container-hover {
+    & > .dp-category-search-icon svg p path {
+      fill: $devui-icon-fill-hover;
+    }
+  }
 
-	&.dp-gray-style {
-		background-color: $devui-gray-form-control-bg;
-		border-color: transparent;
-		transition: all $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
+  &.dp-gray-style {
+    background-color: $devui-gray-form-control-bg;
+    border-color: transparent;
+    transition: all $devui-animation-duration-slow $devui-animation-ease-in-out-smooth;
 
-		&:hover {
-			background-color: $devui-gray-form-control-hover-bg;
-		}
+    &:hover {
+      background-color: $devui-gray-form-control-hover-bg;
+    }
 
-		&:focus-within {
-			background-color: $devui-base-bg;
-			border-color: $devui-brand;
-		}
+    &:focus-within {
+      background-color: $devui-base-bg;
+      border-color: $devui-brand;
+    }
 
-		.dp-category-search-input input.dp-category-search-toggle {
-			background-color: transparent !important;
-		}
-	}
+    .dp-category-search-input input.dp-category-search-toggle {
+      background-color: transparent !important;
+    }
+  }
 
-	.dp-category-search-toggle {
-		color: $devui-text;
-	}
+  .dp-category-search-toggle {
+    color: $devui-text;
+  }
 
-	.dp-category-search-line-container {
-		width: 100%;
-		height: 32px;
-		overflow: hidden;
+  .dp-category-search-line-container {
+    width: 100%;
+    height: 32px;
+    overflow: hidden;
 
-		&:hover {
-			overflow-x: auto;
-			overflow-y: overlay;
-		}
+    &:hover {
+      overflow-x: auto;
+      overflow-y: overlay;
+    }
 
-		.dp-category-search-line {
-			display: flex;
-			flex-flow: row nowrap;
-			justify-content: flex-start;
-			align-items: flex-start;
-			width: 100%;
-			height: 30px;
-			position: relative;
+    .dp-category-search-line {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 100%;
+      height: 30px;
+      position: relative;
 
-			&>li {
-				display: flex;
-				align-items: center;
-				flex-grow: 0;
-				white-space: nowrap;
-				height: 100%;
-			}
+      & > li {
+        display: flex;
+        align-items: center;
+        flex-grow: 0;
+        white-space: nowrap;
+        height: 100%;
+      }
 
-			.dp-category-search-input {
-				display: flex;
-				justify-content: flex-start;
-				flex-grow: 1;
-				align-items: center;
-				min-width: 160px;
-				padding-right: 20px;
+      .dp-category-search-input {
+        display: flex;
+        justify-content: flex-start;
+        flex-grow: 1;
+        align-items: center;
+        min-width: 160px;
+        padding-right: 20px;
 
-				input {
-					min-width: 240px;
-					width: 100%;
-					height: 32px;
-					font-size: $devui-font-size-sm;
-				}
+        input {
+          min-width: 240px;
+          width: 100%;
+          height: 32px;
+          font-size: $devui-font-size-sm;
+        }
 
-				.dp-category-search-toggle {
-					padding-left: 0;
-				}
+        .dp-category-search-toggle {
+          padding-left: 0;
+        }
 
-				.dp-category-search-keyword-in-category {
-					overflow: visible;
-				}
-			}
-		}
-	}
+        .dp-category-search-keyword-in-category {
+          overflow: visible;
+        }
+      }
+    }
+  }
 
-	input {
-		border: none;
-		background: transparent;
-		outline: none;
+  input {
+    border: none;
+    background: transparent;
+    outline: none;
 
-		&::placeholder {
-			color: $devui-placeholder;
-		}
+    &::placeholder {
+      color: $devui-placeholder;
+    }
 
-		&:focus {
-			outline: none;
-		}
-	}
+    &:focus {
+      outline: none;
+    }
+  }
 
-	.dp-input-container {
-		display: flex;
-		flex: 1;
-	}
+  .dp-input-container {
+    display: flex;
+    flex: 1;
+  }
 
-	.dp-category-search-extended-container {
-		display: flex;
-		flex-wrap: nowrap;
-		width: fit-content;
-		height: 16px;
-		margin: 8px 0 8px;
-		border-left: 1px solid $devui-line;
-		padding-left: 8px;
-	}
+  .dp-category-search-extended-container {
+    display: flex;
+    flex-wrap: nowrap;
+    width: fit-content;
+    height: 16px;
+    margin: 8px 0 8px;
+    border-left: 1px solid $devui-line;
+    padding-left: 8px;
+  }
 }
 
 .dp-category-search-icon {
-	display: flex;
-	padding-right: 8px;
-	align-items: center;
-	height: 16px;
-	cursor: pointer;
+  display: flex;
+  padding-right: 8px;
+  align-items: center;
+  height: 16px;
+  cursor: pointer;
 
-	svg g path {
-		outline: none;
-		fill: $devui-icon-fill;
-		transition: all $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
-	}
+  svg g path {
+    outline: none;
+    fill: $devui-icon-fill;
+    transition: all $devui-animation-ease-in-out-smooth $devui-animation-duration-slow;
+  }
 
-	&.disabled {
-		cursor: not-allowed;
+  &.disabled {
+    cursor: not-allowed;
 
-		svg g path {
-			fill: $devui-disabled-text;
-		}
-	}
+    svg g path {
+      fill: $devui-disabled-text;
+    }
+  }
 
-	&:not(.disabled):hover svg g path {
-		fill: $devui-icon-fill-hover;
-	}
+  &:not(.disabled):hover svg g path {
+    fill: $devui-icon-fill-hover;
+  }
 }
 
 li.dp-tag-item {
-	display: inline-block;
-	margin-right: 4px;
-	@include tag-item();
+  display: inline-block;
+  margin-right: 4px;
+  @include tag-item();
 
-	&:first-child {
-		margin-left: 4px;
-	}
+  &:first-child {
+    margin-left: 4px;
+  }
 
-	&:focus {
-		outline: none;
-	}
+  &:focus {
+    outline: none;
+  }
 
-	.dp-color-block-split-line {
-		color: $devui-aide-text;
-	}
+  .dp-color-block-split-line {
+    color: $devui-aide-text;
+  }
 
-	.dp-color-block-sm {
-		width: 8px;
-		height: 8px;
-		border-radius: $devui-border-radius;
-		margin-right: 4px;
-		display: inline-block;
-		position: relative;
-		top: -1px;
-		vertical-align: middle;
-	}
+  .dp-color-block-sm {
+    width: 8px;
+    height: 8px;
+    border-radius: $devui-border-radius;
+    margin-right: 4px;
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+  }
 }
 
 .dp-category-search-dropdown {
-	min-width: 200px;
-	overflow-x: auto;
-	white-space: nowrap;
+  min-width: 200px;
+  overflow-x: auto;
+  white-space: nowrap;
 
-	ul,
-	li {
-		padding: 0;
-		margin: 0;
-		list-style: none;
-	}
+  ul,
+  li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
 }
 
 .dp-dropdown-menu-template {
-	max-width: 300px;
-	max-height: 352px;
-	padding: 12px !important;
-	overflow: auto;
+  max-width: 300px;
+  max-height: 352px;
+  padding: 12px !important;
+  overflow: auto;
 
-	&.dp-category-search-keyword-in-category {
-		padding: 0 !important;
-	}
+  &.dp-category-search-keyword-in-category {
+    padding: 0 !important;
+  }
 
-	.dp-dropdown-item {
-		display: block;
-		width: 100%;
-		max-height: 36px;
-		line-height: 20px;
-		padding: 8px 12px !important;
-		border-radius: $devui-border-radius;
-		border: 0;
-		box-sizing: border-box;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		transition: color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
-			background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
-		cursor: pointer;
+  .dp-dropdown-item {
+    display: block;
+    width: 100%;
+    max-height: 36px;
+    line-height: 20px;
+    padding: 8px 12px !important;
+    border-radius: $devui-border-radius;
+    border: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth,
+      background-color $devui-animation-duration-fast $devui-animation-ease-in-out-smooth;
+    cursor: pointer;
 
-		&:not(:first-child) {
-			margin-top: 4px;
-		}
+    &:not(:first-child) {
+      margin-top: 4px;
+    }
 
-		&:hover {
-			color: $devui-list-item-hover-text;
-			background-color: $devui-list-item-hover-bg;
-		}
+    &:hover {
+      color: $devui-list-item-hover-text;
+      background-color: $devui-list-item-hover-bg;
+    }
 
-		&.active {
-			color: $devui-list-item-active-text;
-			background-color: $devui-list-item-active-bg;
-		}
+    &.active {
+      color: $devui-list-item-active-text;
+      background-color: $devui-list-item-active-bg;
+    }
 
-		.icon-search {
-			margin-right: 4px;
-		}
-	}
+    .icon-search {
+      margin-right: 4px;
+    }
+  }
 
-	.dp-dividing-line {
-		height: 1px;
-		width: 100%;
-		background-color: $devui-dividing-line;
-		margin-top: 4px;
-	}
+  .dp-dividing-line {
+    height: 1px;
+    width: 100%;
+    background-color: $devui-dividing-line;
+    margin-top: 4px;
+  }
 
-	.dp-dropdown-menu-tip {
-		cursor: text;
-		padding: 12px 12px 0;
-		pointer-events: none;
-		color: $devui-aide-text;
-	}
+  .dp-dropdown-menu-tip {
+    cursor: text;
+    padding: 12px 12px 0;
+    pointer-events: none;
+    color: $devui-aide-text;
+  }
 
-	.dp-color-block {
-		width: 12px;
-		height: 12px;
-		margin-right: 8px;
-		border-radius: $devui-border-radius;
-		position: relative;
-		top: -1px;
-		vertical-align: middle;
-		display: inline-block;
-	}
+  .dp-color-block {
+    width: 12px;
+    height: 12px;
+    margin-right: 8px;
+    border-radius: $devui-border-radius;
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+    display: inline-block;
+  }
+
+  .#{$devui-prefix}-checkbox__group,
+  .#{$devui-prefix}-checkbox__column-margin,
+  .#{$devui-prefix}-checkbox,
+  .#{$devui-prefix}-checkbox label,
+  .#{$devui-prefix}-checkbox__label-text {
+    max-width: 100%;
+  }
 }
 
 .dp-save-panel {
-	width: 400px;
-	height: auto;
+  width: 400px;
+  height: auto;
 
-	.dp-save-panel-title {
-		display: flex;
-		justify-content: space-between;
-		height: 48px;
-		line-height: 48px;
-		border-bottom: 1px solid $devui-dividing-line;
-		padding: 0 20px;
-		font-size: 14px;
-		font-weight: bold;
-		color: $devui-font-size-page-title;
-	}
+  .dp-save-panel-title {
+    display: flex;
+    justify-content: space-between;
+    height: 48px;
+    line-height: 48px;
+    border-bottom: 1px solid $devui-dividing-line;
+    padding: 0 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: $devui-font-size-page-title;
+  }
 
-	.dp-save-filter-name {
-		padding: 16px 20px;
+  .dp-save-filter-name {
+    padding: 16px 20px;
 
-		.#{$devui-prefix}-form__item--vertical {
-			margin-bottom: 0;
-		}
-	}
+    .#{$devui-prefix}-form__item--vertical {
+      margin-bottom: 0;
+    }
+  }
 
-	.dp-save-panel-operation-area {
-		padding-bottom: 12px;
-		display: flex;
-		justify-content: center;
+  .dp-save-panel-operation-area {
+    padding-bottom: 12px;
+    display: flex;
+    justify-content: center;
 
-		.#{$devui-prefix}-button:not(:first-child) {
-			margin-left: 16px;
-		}
-	}
+    .#{$devui-prefix}-button:not(:first-child) {
+      margin-left: 16px;
+    }
+  }
 }
 
 .dp-dropdown-menu-fix {
-	min-width: 200px;
-	margin-left: 0;
-	overflow-y: auto;
-	white-space: nowrap;
+  min-width: 200px;
+  margin-left: 0;
+  overflow-y: auto;
+  white-space: nowrap;
 
-	&.max-height {
-		max-height: 405px;
-	}
+  &.max-height {
+    max-height: 405px;
+  }
 
-	.#{$devui-prefix}-form {
-		.#{$devui-prefix}-form__item--horizontal {
-			margin: 16px 8px;
-		}
+  .#{$devui-prefix}-form {
+    .#{$devui-prefix}-form__item--horizontal {
+      margin: 16px 8px;
+    }
 
-		.#{$devui-prefix}-form__label {
-			display: none;
-		}
+    .#{$devui-prefix}-form__label {
+      display: none;
+    }
 
-		.#{$devui-prefix}-form__control--horizontal {
-			margin-left: 0;
-		}
-	}
+    .#{$devui-prefix}-form__control--horizontal {
+      margin-left: 0;
+    }
+  }
 
-	.#{$devui-prefix}-input-number {
-		width: 70px;
-	}
+  .#{$devui-prefix}-input-number {
+    width: 70px;
+  }
 }
 
 .dp-selected-tags-list {
-	ul {
-		display: flex;
-		flex-flow: row wrap;
-		align-items: center;
-		justify-content: flex-start;
-		max-height: 390px;
-		overflow: auto;
+  ul {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+    max-height: 390px;
+    overflow: auto;
 
-		li.dp-tag-item {
-			display: flex;
-			flex-grow: 0;
-			flex-flow: row wrap;
-			margin: 2px 4px 2px 0;
+    li.dp-tag-item {
+      display: flex;
+      flex-grow: 0;
+      flex-flow: row wrap;
+      margin: 2px 4px 2px 0;
 
-			&:last-child {
-				margin-right: 0;
-			}
-		}
-	}
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 .dp-dropdown-operation-area {
-	border-top: 1px solid $devui-dividing-line;
-	padding-top: 8px;
-	margin: 8px 0;
-	display: flex;
-	justify-content: center;
+  border-top: 1px solid $devui-dividing-line;
+  padding-top: 8px;
+  margin: 8px 0;
+  display: flex;
+  justify-content: center;
 
-	&>.#{$devui-prefix}-button:first-child {
-		margin-right: 8px;
-	}
+  & > .#{$devui-prefix}-button:first-child {
+    margin-right: 8px;
+  }
 }
 
 .dp-input-number-operation-area {
-	padding: 16px 16px 8px;
-	display: flex;
-	justify-content: space-evenly;
+  padding: 16px 16px 8px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .dp-no-data-text {
-	font-size: $devui-font-size;
-	color: $devui-text;
-	padding: 8px 0;
-	text-align: center;
+  font-size: $devui-font-size;
+  color: $devui-text;
+  padding: 8px 0;
+  text-align: center;
 }
 
 .dp-scrollbar::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+  width: 8px;
+  height: 8px;
 }
 
 .dp-scrollbar::-webkit-scrollbar-track {
-	background-color: transparent;
+  background-color: transparent;
 }
 
 .dp-scrollbar::-webkit-scrollbar-thumb {
-	border-radius: 8px;
-	background-color: $devui-line;
+  border-radius: 8px;
+  background-color: $devui-line;
 }
 
 .dp-scrollbar::-webkit-scrollbar-thumb:hover {
-	background-color: $devui-placeholder;
+  background-color: $devui-placeholder;
 }
