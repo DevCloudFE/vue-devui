@@ -163,8 +163,8 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0
       '@floating-ui/dom':
-        specifier: ^0.4.4
-        version: 0.4.4
+        specifier: 1.2.5
+        version: 1.2.5
       '@iktakahiro/markdown-it-katex':
         specifier: ^4.0.1
         version: 4.0.1
@@ -2147,14 +2147,20 @@ packages:
       - supports-color
     dev: true
 
-  /@floating-ui/core@0.6.1:
-    resolution: {integrity: sha512-Y30eVMcZva8o84c0HcXAtDO4BEzPJMvF6+B7x7urL2xbAqVsGJhojOyHLaoQHQYjb6OkqRq5kO+zeySycQwKqg==}
+  /@floating-ui/core@1.6.0:
+    resolution: {integrity: sha512-PcF++MykgmTj3CIyOQbKA/hDzOAiqI3mhuoN44WRCopIs1sgoDoU4oty4Jtqaj/y3oDU6fnVSm4QG0a3t5i0+g==}
+    dependencies:
+      '@floating-ui/utils': 0.2.1
     dev: false
 
-  /@floating-ui/dom@0.4.4:
-    resolution: {integrity: sha512-0Ulu3B/dqQplUUSqnTx0foSrlYuMN+GTtlJWvNJwt6Fr7/PqmlR/Y08o6/+bxDWr6p3roBJRaQ51MDZsNmEhhw==}
+  /@floating-ui/dom@1.2.5:
+    resolution: {integrity: sha512-+sAUfpQ3Frz+VCbPCqj+cZzvEESy3fjSeT/pDWkYCWOBXYNNKZfuVsHuv8/JO2zze8+Eb/Q7a6hZVgzS81fLbQ==}
     dependencies:
-      '@floating-ui/core': 0.6.1
+      '@floating-ui/core': 1.6.0
+    dev: false
+
+  /@floating-ui/utils@0.2.1:
+    resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
     dev: false
 
   /@francoischalifour/autocomplete-core@1.0.0-alpha.28:
