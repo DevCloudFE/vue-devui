@@ -111,6 +111,9 @@ export const selectProps = {
     type: String,
     default: '',
   },
+  maxLength: {
+    type: Number,
+  },
 } as const;
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;
@@ -158,26 +161,6 @@ export interface UseOptionReturnType {
   selectOptionCls: ComputedRef<string>;
   isVisible: ComputedRef<boolean>;
   optionSelect: () => void;
-}
-
-export interface UseSelectContentReturnType {
-  searchQuery: Ref<string>;
-  selectedData: ComputedRef<OptionObjectItem[]>;
-  isSelectDisable: ComputedRef<boolean>;
-  isSupportCollapseTags: ComputedRef<boolean>;
-  isDisabledTooltip: ComputedRef<boolean>;
-  isReadOnly: ComputedRef<boolean>;
-  selectionCls: ComputedRef<string>;
-  inputCls: ComputedRef<string>;
-  tagSize: ComputedRef<string>;
-  placeholder: ComputedRef<string>;
-  isMultiple: ComputedRef<boolean>;
-  displayInputValue: ComputedRef<string>;
-  handleClear: (e: MouseEvent) => void;
-  tagDelete: (data: OptionObjectItem) => void;
-  onFocus: (e: FocusEvent) => void;
-  onBlur: (e: FocusEvent) => void;
-  queryFilter: (e: Event) => void;
 }
 
 export interface UseSelectFunctionReturn {

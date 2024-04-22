@@ -533,6 +533,7 @@ export default defineComponent({
 | multiple-limit        | `number`              | '0'              | 可选, multiple 属性设置为 true 时生效，表示用户最多可以选择的项目数， 为 0 则不限制                                                                            | [多选](#多选)                     |
 |show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
 |menu-class|`string`|''|可选，自定义下拉菜单的样式名||
+|max-length|`number`|--|可选，可筛选时输入框可输入的最大长度||
 
 ### Select 事件
 
