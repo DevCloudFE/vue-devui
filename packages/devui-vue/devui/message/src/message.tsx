@@ -1,4 +1,4 @@
-import { defineComponent, toRefs, Transition, computed,StyleValue, watch } from 'vue';
+import { defineComponent, toRefs, Transition, computed, StyleValue, watch } from 'vue';
 import Close from './message-icon-close';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { messageProps, MessageProps } from './message-types';
@@ -8,10 +8,11 @@ import './message.scss';
 
 export default defineComponent({
   name: 'DMessage',
+  inheritAttrs: false,
   props: messageProps,
-  emits: ['destroy','close'],
-  setup(props: MessageProps, { emit, slots }) {
-    const { visible, message, type, bordered, shadow, showClose  } = toRefs(props);
+  emits: ['destroy', 'close'],
+  setup(props: MessageProps, { emit, attrs, slots }) {
+    const { visible, message, type, bordered, shadow, showClose } = toRefs(props);
     const ns = useNamespace('message');
 
     let timer: NodeJS.Timeout | null = null;
@@ -60,7 +61,7 @@ export default defineComponent({
     );
 
     const classes = computed(() => ({
-      [ns.b()]:true,
+      [ns.b()]: true,
       [ns.m(type.value)]: true,
     }));
 
@@ -68,78 +69,61 @@ export default defineComponent({
     const lastOffset = computed(() => getLastOffset(props.id));
     const styles = computed(() => {
       const messageStyles: StyleValue = {};
-      if(!bordered.value){
+      if (!bordered.value) {
         messageStyles['border'] = 'none';
       }
-      if(!shadow.value){
+      if (!shadow.value) {
         messageStyles['box-shadow'] = 'none';
       }
-      return {...messageStyles,top: `${lastOffset.value}px`,};
+      return { ...messageStyles, top: `${lastOffset.value}px` };
     });
 
-    const renderIcon = computed(()=>{
+    const renderIcon = computed(() => {
       const iconClasses = computed(() => ({
         [ns.e('image')]: true,
         [ns.em('image', type.value)]: true,
       }));
       return (
-        !(!type.value || type.value === 'normal')
-        &&
-        <span class={iconClasses.value} >
-          {
-            type.value &&
-          (
-            (type.value === 'success' && <SuccessIcon />) ||
-            (type.value === 'info' && <InfoIcon />) ||
-            (type.value === 'warning' && <WarningIcon />) ||
-            (type.value === 'error' && <ErrorIcon />)
-          )
-          }
-        </span>
+        !(!type.value || type.value === 'normal') && (
+          <span class={iconClasses.value}>
+            {type.value &&
+              ((type.value === 'success' && <SuccessIcon />) ||
+                (type.value === 'info' && <InfoIcon />) ||
+                (type.value === 'warning' && <WarningIcon />) ||
+                (type.value === 'error' && <ErrorIcon />))}
+          </span>
+        )
       );
     });
 
-    const renderText = computed(()=>{
+    const renderText = computed(() => {
       const textClasses = computed(() => ({
         [ns.e('content')]: true,
         [ns.em('content', type.value)]: true,
       }));
+      return <span class={textClasses.value}>{message.value ? message.value : slots.default?.()}</span>;
+    });
+
+    const renderClose = computed(() => {
       return (
-        <span class={textClasses.value}>
-          {
-            message.value ? message.value : slots.default?.()
-          }
-        </span>
+        showClose.value && (
+          <span class={[ns.e('close')]} onClick={close}>
+            <Close></Close>
+          </span>
+        )
       );
     });
 
-    const renderClose = computed(() =>{
-      return (
-        showClose.value && <span class={[ns.e('close')]} onClick={close}>
-          <Close></Close>
-        </span>
-      );
-    });
-
-    return () => {
-      return (
-        <Transition name="message-fade" onAfterLeave={handleDestroy}>
-          {
-            visible.value && (
-              <div
-                class={classes.value}
-                style={{...styles.value}}
-                onMouseenter={interrupt}
-                onMouseleave={removeReset}
-              >
-                { renderIcon.value }
-                { renderText.value }
-                { renderClose.value }
-              </div>
-            )
-          }
-        </Transition>
-      );
-    };
+    return () => (
+      <Transition name="message-fade" onAfterLeave={handleDestroy}>
+        {visible.value && (
+          <div class={classes.value} style={{ ...styles.value }} onMouseenter={interrupt} onMouseleave={removeReset} {...attrs}>
+            {renderIcon.value}
+            {renderText.value}
+            {renderClose.value}
+          </div>
+        )}
+      </Transition>
+    );
   },
 });

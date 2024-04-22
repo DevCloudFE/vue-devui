@@ -1,13 +1,13 @@
 import { computed, inject, ref, getCurrentInstance } from 'vue';
 import { SELECT_TOKEN } from '../const';
 import { FORM_ITEM_TOKEN } from '../../../form';
-import { OptionObjectItem, UseSelectContentReturnType } from '../select-types';
+import { OptionObjectItem } from '../select-types';
 import { useNamespace } from '../../../shared/hooks/use-namespace';
 import { className } from '../utils';
 import { isFunction } from 'lodash';
 import { createI18nTranslate } from '../../../locale/create';
 
-export default function useSelectContent(): UseSelectContentReturnType {
+export default function useSelectContent() {
   const ns = useNamespace('select');
   const select = inject(SELECT_TOKEN);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
@@ -103,6 +103,7 @@ export default function useSelectContent(): UseSelectContentReturnType {
   };
 
   return {
+    select,
     searchQuery,
     selectedData,
     isSelectDisable,

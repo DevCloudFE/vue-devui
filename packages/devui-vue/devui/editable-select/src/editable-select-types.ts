@@ -87,6 +87,9 @@ export const editableSelectProps = {
     type: Boolean,
     default: true,
   },
+  maxLength: {
+    type: Number,
+  },
 } as const;
 
 export type EditableSelectProps = ExtractPropTypes<typeof editableSelectProps>;

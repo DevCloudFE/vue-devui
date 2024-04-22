@@ -19,12 +19,6 @@ export type OffsetOptions = { mainAxis?: number; crossAxis?: number };
 
 export type Point = { x?: number; y?: number };
 
-export type UseOverlayFn = {
-  arrowRef: Ref<HTMLElement | undefined>;
-  overlayRef: Ref<HTMLElement | undefined>;
-  updatePosition: () => void;
-};
-
 export type EmitEventFn = (event: 'positionChange' | 'update:modelValue', result?: unknown) => void;
 
 export interface Rect {
@@ -67,6 +61,11 @@ export const flexibleOverlayProps = {
     default: true,
   },
   clickEventBubble: {
+    type: Boolean,
+    default: false,
+  },
+  // 是否和宿主元素的宽度保持一致
+  fitOriginWidth: {
     type: Boolean,
     default: false,
   },

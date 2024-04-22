@@ -12,7 +12,7 @@ export const FlexibleOverlay = defineComponent({
   setup(props: FlexibleOverlayProps, { slots, attrs, emit, expose }) {
     const ns = useNamespace('flexible-overlay');
     const { clickEventBubble } = toRefs(props);
-    const { arrowRef, overlayRef, updatePosition } = useOverlay(props, emit);
+    const { arrowRef, overlayRef, styles, updatePosition } = useOverlay(props, emit);
     expose({ updatePosition });
 
     return () =>
@@ -20,6 +20,7 @@ export const FlexibleOverlay = defineComponent({
         <div
           ref={overlayRef}
           class={ns.b()}
+          style={styles.value}
           {...attrs}
           onClick={withModifiers(() => ({}), [clickEventBubble.value ? '' : 'stop'])}
           onPointerup={withModifiers(() => ({}), ['stop'])}>
