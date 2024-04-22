@@ -334,6 +334,38 @@ Long --> "Bob()" : ok
 
 :::
 
+### emoji渲染
+
+通过配置`md-plugins` emoji插件，进行emoji表情渲染。具体使用方式参考示例代码。
+
+:::demo
+
+```vue
+<template>
+  <d-editor-md v-model="content" :md-plugins="plugins"></d-editor-md>
+</template>
+
+<script>
+import { defineComponent,ref } from 'vue';
+// import { full as emoji } from 'markdown-it-emoji'; // 请首先安装 markdown-it-emoji 依赖
+
+export default defineComponent({
+  setup(){
+    const content = ref(':joy:');
+    const plugins = [];
+    /* const plugins = [{
+      plugin: emoji,
+    }]; */
+
+    return {content,plugins}
+  }
+})
+
+</script>
+```
+
+:::
+
 ### 配置快速提示
 
 :::demo 设置 hintConfig 后，可用于支持@选择用户等场景。

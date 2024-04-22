@@ -5,6 +5,11 @@
     "desc": "Start a development server",
     "command": "pnpm --filter vue-devui dev"
   },
+  "dev:site": {
+    "alias": "Dev:Site",
+    "desc": "Start a development server",
+    "command": "pnpm --filter vue-devui dev:site"
+  },
   "build": {
     "alias": "Build",
     "desc": "Build theme and docs",
