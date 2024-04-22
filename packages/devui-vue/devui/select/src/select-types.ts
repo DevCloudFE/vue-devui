@@ -107,37 +107,15 @@ export const selectProps = {
     type: Boolean,
     default: true,
   },
+  menuClass: {
+    type: String,
+    default: '',
+  },
 } as const;
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;
 
 export type OptionModelValue = number | string;
-
-export interface UseSelectReturnType {
-  selectDisabled: ComputedRef<boolean>;
-  selectSize: ComputedRef<SelectSize>;
-  originRef: Ref<HTMLElement | undefined>;
-  dropdownRef: Ref<HTMLElement | undefined>;
-  isOpen: Ref<boolean>;
-  selectCls: ComputedRef<string>;
-  mergeOptions: Ref<OptionObjectItem[]>;
-  selectedOptions: ComputedRef<OptionObjectItem[]>;
-  filterQuery: Ref<string>;
-  emptyText: ComputedRef<string>;
-  isLoading: Ref<boolean>;
-  isShowEmptyText: ComputedRef<boolean>;
-  handleClear: (e: MouseEvent) => void;
-  valueChange: (item: OptionObjectItem) => void;
-  handleClose: () => void;
-  updateInjectOptions: (item: Record<string, unknown>, operation: string, isObject: boolean) => void;
-  tagDelete: (data: OptionObjectItem) => void;
-  onFocus: (e: FocusEvent) => void;
-  onBlur: (e: FocusEvent) => void;
-  isDisabled: (item: OptionObjectItem) => boolean;
-  toggleChange: (bool: boolean) => void;
-  debounceQueryFilter: (query: string) => void;
-  isShowCreateOption: ComputedRef<boolean>;
-}
 
 export interface SelectContext extends SelectProps {
   selectDisabled: boolean;

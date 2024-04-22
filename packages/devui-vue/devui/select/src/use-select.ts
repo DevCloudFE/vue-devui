@@ -1,6 +1,6 @@
 import { ref, computed, Ref, inject, watch, onMounted, nextTick } from 'vue';
 import type { SetupContext } from 'vue';
-import { SelectProps, OptionObjectItem, UseSelectReturnType } from './select-types';
+import { SelectProps, OptionObjectItem } from './select-types';
 import { className, KeyType } from './utils';
 import { useNamespace } from '../../shared/hooks/use-namespace';
 import { onClickOutside } from '@vueuse/core';
@@ -15,7 +15,7 @@ export default function useSelect(
   blur: () => void,
   isSelectFocus: Ref<boolean>,
   t: (path: string) => unknown
-): UseSelectReturnType {
+) {
   const formContext = inject(FORM_TOKEN, undefined);
   const formItemContext = inject(FORM_ITEM_TOKEN, undefined);
   const ns = useNamespace('select');

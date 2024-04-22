@@ -113,7 +113,7 @@ export default defineComponent({
       updateDropdownWidth();
       window.addEventListener('resize', updateDropdownWidth);
       nextTick(() => {
-        dropdownContainer.value.addEventListener('scroll', scrollToBottom);
+        dropdownContainer.value?.addEventListener('scroll', scrollToBottom);
       });
     });
 
@@ -158,9 +158,10 @@ export default defineComponent({
                 offset={4}
                 position={position.value}
                 onPositionChange={handlePositionChange}
-                style={styles.value}>
+                style={styles.value}
+                class={props.menuClass}>
                 <div v-dLoading={isLoading.value} class={dropdownCls} style={{ width: `${dropdownWidth.value}` }}>
-                  {!isShowEmptyText.value && (
+                  {Boolean(mergeOptions.value.length) && (
                     <ul class={listCls} v-show={!isLoading.value} ref={dropdownContainer}>
                       {isShowCreateOption.value && (
                         <Option value={filterQuery.value} name={filterQuery.value} create>

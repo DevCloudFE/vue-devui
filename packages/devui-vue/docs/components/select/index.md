@@ -532,6 +532,7 @@ export default defineComponent({
 | loading-text          | `string`              | '加载中'         | 可选, 远程搜索时显示的文本                                                                                                                                     | [远程加载数据](#远程加载数据)     |
 | multiple-limit        | `number`              | '0'              | 可选, multiple 属性设置为 true 时生效，表示用户最多可以选择的项目数， 为 0 则不限制                                                                            | [多选](#多选)                     |
 |show-glow-style|`boolean`|true|可选，是否展示悬浮发光效果||
+|menu-class|`string`|''|可选，自定义下拉菜单的样式名||
 
 ### Select 事件
 
